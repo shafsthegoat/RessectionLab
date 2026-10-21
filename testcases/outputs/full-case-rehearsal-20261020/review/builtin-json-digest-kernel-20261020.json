@@ -1,0 +1,197 @@
+{
+  "scope": "ONE guarded hash kernel on saved73actionendpoint and18cornercases; no engine construction/replay/cachedseek/GUI or production edit.",
+  "nativeSha256": "f0ef34d5092d61406c6bb5a8cb2f9969136341005c96ec617510e3b7d1b32d1b",
+  "stateId": "sha256:af496ffbde3ca2ab71477c9226fe9f846f08171efd308362431414584cd3c87e",
+  "payloadJsonBytes": 1342779,
+  "parityCases": [
+    {
+      "case": "payload",
+      "exactSameHashOrException": true,
+      "directPath": true,
+      "outcome": [
+        "value",
+        "sha256:af496ffbde3ca2ab71477c9226fe9f846f08171efd308362431414584cd3c87e"
+      ]
+    },
+    {
+      "case": "finiteedges",
+      "exactSameHashOrException": true,
+      "directPath": true,
+      "outcome": [
+        "value",
+        "sha256:552302b660cf3973c84e0f7d595b91ee14b9ad7ee52a1a5092fda5f97c43daa7"
+      ]
+    },
+    {
+      "case": "aliases",
+      "exactSameHashOrException": true,
+      "directPath": true,
+      "outcome": [
+        "value",
+        "sha256:c19d7a8e4624ea9d6ebf1e4fe546cda3a3fccc1f5fa991eb98903358bb243aff"
+      ]
+    },
+    {
+      "case": "tuple",
+      "exactSameHashOrException": true,
+      "directPath": false,
+      "outcome": [
+        "value",
+        "sha256:9b3a0d51de5a8a4d88e9c47071408c83bef3dab0e51bcff191ba8e09f067cd8c"
+      ]
+    },
+    {
+      "case": "mappingproxy",
+      "exactSameHashOrException": true,
+      "directPath": false,
+      "outcome": [
+        "value",
+        "sha256:015abd7f5cc57a2dd94b7590f04ad8084273905ee33ec5cebeae62276a97f862"
+      ]
+    },
+    {
+      "case": "numpy-scalars",
+      "exactSameHashOrException": true,
+      "directPath": false,
+      "outcome": [
+        "value",
+        "sha256:8930f461c67bfb3049f0db9c9f32810536c5272de129a6c3c65203d48c2d4bbf"
+      ]
+    },
+    {
+      "case": "dict-subclass",
+      "exactSameHashOrException": true,
+      "directPath": false,
+      "outcome": [
+        "value",
+        "sha256:015abd7f5cc57a2dd94b7590f04ad8084273905ee33ec5cebeae62276a97f862"
+      ]
+    },
+    {
+      "case": "list-subclass",
+      "exactSameHashOrException": true,
+      "directPath": false,
+      "outcome": [
+        "value",
+        "sha256:49a64717d5d4cb19952e6eac2946415cf6879adacf9908e7d872332d32c6e684"
+      ]
+    },
+    {
+      "case": "scalar-subclasses",
+      "exactSameHashOrException": true,
+      "directPath": false,
+      "outcome": [
+        "value",
+        "sha256:c811e03b72e712d7fa5eaff50737bbe0ab8bdebc1e35cbaaf5a1a36b9de402fe"
+      ]
+    },
+    {
+      "case": "key-subclass",
+      "exactSameHashOrException": true,
+      "directPath": false,
+      "outcome": [
+        "value",
+        "sha256:015abd7f5cc57a2dd94b7590f04ad8084273905ee33ec5cebeae62276a97f862"
+      ]
+    },
+    {
+      "case": "non-str-key",
+      "exactSameHashOrException": true,
+      "directPath": false,
+      "outcome": [
+        "error",
+        "ValueError",
+        "metadata keys must be strings"
+      ]
+    },
+    {
+      "case": "nan",
+      "exactSameHashOrException": true,
+      "directPath": false,
+      "outcome": [
+        "error",
+        "ValueError",
+        "metadata cannot contain nonfinite numbers"
+      ]
+    },
+    {
+      "case": "inf",
+      "exactSameHashOrException": true,
+      "directPath": false,
+      "outcome": [
+        "error",
+        "ValueError",
+        "metadata cannot contain nonfinite numbers"
+      ]
+    },
+    {
+      "case": "numpy-array",
+      "exactSameHashOrException": true,
+      "directPath": false,
+      "outcome": [
+        "error",
+        "TypeError",
+        "metadata must be JSON-compatible; got ndarray"
+      ]
+    },
+    {
+      "case": "deep",
+      "exactSameHashOrException": true,
+      "directPath": false,
+      "outcome": [
+        "value",
+        "sha256:5cfc2e798a18cd0c3c51904e26bf18146e5254a63f680e10a952ef8926eb490f"
+      ]
+    },
+    {
+      "case": "cycle",
+      "exactSameHashOrException": true,
+      "directPath": false,
+      "outcome": [
+        "error",
+        "RecursionError",
+        "maximum recursion depth exceeded"
+      ]
+    },
+    {
+      "case": "unsupported",
+      "exactSameHashOrException": true,
+      "directPath": false,
+      "outcome": [
+        "error",
+        "TypeError",
+        "metadata must be JSON-compatible; got object"
+      ]
+    },
+    {
+      "case": "too-large-int",
+      "exactSameHashOrException": true,
+      "directPath": true,
+      "outcome": [
+        "error",
+        "ValueError",
+        "Exceeds the limit (4300 digits) for integer string conversion; use sys.set_int_max_str_digits() to increase the limit"
+      ]
+    }
+  ],
+  "timings": {
+    "frozenLegacyFreezeThawDigest": {
+      "secondsFor3Hashes": [
+        0.27442774968221784,
+        0.3933947919867933,
+        0.3004700420424342
+      ],
+      "medianMsPerHash": 100.1566806808114
+    },
+    "guardedBuiltinWalkDigest": {
+      "secondsFor3Hashes": [
+        0.1217197091318667,
+        0.14295420795679092,
+        0.11860662512481213
+      ],
+      "medianMsPerHash": 40.5732363772889
+    }
+  },
+  "speedup": 2.468540585460288,
+  "contract": "Exact builtin JSON graph only, fresh validation eachcall. Depth>=32 and guardRecursionError fall back to literal legacy normalization; no cachedIDs or SHA removal. Requires stable input during call, as existing mutable metadata hashing does. No adversarial concurrent mutation equivalence claim. Full source/cache fingerprints would change if production adopted and cannot be bypassed."
+}

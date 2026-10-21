@@ -1,0 +1,108 @@
+{
+  "geometryInspectionOnly": true,
+  "checkpointNotReplayed": true,
+  "physicsExecution": false,
+  "sourceNative": "testcases/outputs/full-case-rehearsal-20261020/primary-v2/primary.ressectionlab",
+  "sourceStateId": "sha256:7537033873825dfdf5b66528fc0d57c746624ce1480c589fc0927596de59db6b",
+  "sourceSceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+  "sourcePosition": 58,
+  "currentAccess": {
+    "boneBoundsMm": [
+      -413.25,
+      -399.25
+    ],
+    "drillRadiusMm": 2.7426406871192848,
+    "entryPose": {
+      "position": [
+        -12.464996337890625,
+        3.441162109375,
+        -414.25
+      ],
+      "quaternion": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+    "geometricTargetCapacityCells": 307,
+    "id": "superior-122-127",
+    "outsidePose": {
+      "position": [
+        -12.464996337890625,
+        3.441162109375,
+        -366.25
+      ],
+      "quaternion": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "strategy": "dense-tapered-superior",
+    "targetEntryIndex": [
+      122,
+      127,
+      140
+    ],
+    "windowClearanceMm": 4.242640687119285
+  },
+  "wallSeconds": 0.024254790972918272,
+  "candidate": {
+    "outsidePose": {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -366.25
+      ],
+      "quaternion": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "fieldPose": {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -418.25
+      ],
+      "quaternion": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "parameters": {
+      "radiusMm": 3.0,
+      "depthMm": 2.0,
+      "forceN": 0.0,
+      "flowMm3PerSecond": 20.0
+    },
+    "instrument": "frazier_suction",
+    "slot": "right",
+    "physicalTipRadiusMm": 0.5,
+    "shaftRadiusMm": 0.5,
+    "checkedInsertionCapsuleRadiusMm": 0.67,
+    "distanceFromCurrentLeftXYMm": 27.82197872186664,
+    "distanceFromCurrentAccessXYMm": 27.16615541441225,
+    "nearbyDebrisMm3": 176.0,
+    "nearbyFluidMm3": 0.0,
+    "removedTargetColumn": [
+      119,
+      154
+    ],
+    "highestRemovedTargetIndexZ": 134,
+    "sourceSceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+    "requiresPublicPreview": true,
+    "provenance": "actual removed source target column and current shared occupancy/fields",
+    "assumptions": "generic stationary research suction field; unchanged physical shaft; no calibrated aspiration model",
+    "coordination": "deactivate and withdraw before left access approaches within 10 mm in XY"
+  },
+  "stateUnchanged": true,
+  "sourceCaseHash": "sha256:6ca9c1dee58b3635d92d576ad5b355d0a6d500892f30f07968a671b1b67a51ea"
+}

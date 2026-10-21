@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "checkpointWasPreviouslyCanonicallyVerified": true,
+  "physicsReplayed": false,
+  "result": {
+    "drilling": {
+      "inputEnergyJ": 2698.9671717171773,
+      "cuttingWorkJ": 1726.5,
+      "unusedEnergyJ": 972.4671717171714,
+      "pendingWorkJ": 0.0,
+      "removedVolumeMm3": 3453.0,
+      "storedHeatJ": 0.33692410711829535,
+      "heatGeneratedJ": 604.2750000000032,
+      "coolingLossJ": 603.9380758871985,
+      "inputEnergyResidualJ": 5.9117155615240335e-12,
+      "voxelWorkResidualJ": 0.0,
+      "heatPartitionResidualJ": 3.183231456205249e-12,
+      "thermalResidualJ": 5.6863882491597906e-09,
+      "absoluteToleranceJ": 1e-06
+    },
+    "debris": {
+      "generatedByActualDrillAndKerfEventsMm3": 3453.0,
+      "presentMm3": 3453.0,
+      "removedMm3": 0.0,
+      "escapedMm3": 0.0,
+      "residualMm3": 0.0
+    }
+  }
+}

@@ -1,0 +1,76 @@
+Post-superior fallback contract — read-only recommendation, 2026-10-20
+
+Reassess only after the superior endpoint; keep the current productive episode
+running. Prefer a bounded left trial before anterior. At saved action508,
+state sha256:2b4231ee2c4d136a2d31c42d4e498835dd2f8d60f577f6f755339ed041ffe2a5,
+27,563 original owned target cells remain, with no deformation nodes or holds.
+The exact scene remains
+sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856.
+
+Bounded source-ray evidence (1mm³/cell):
+                         Left (-X outward)     Anterior (+Y outward)
+Retained ray target       15,340                 12,436
+Window columns               906                    534
+Maximum lateral clearance    7.616mm                 5.657mm
+Target with >3mm inset     6,842                  3,668
+Outside superior rays      1,090                    911
+
+Their union adds 1,366 cells outside superior rays; anterior adds only276 beyond
+superior plus left. These are point-ray/binary-window upper bounds, not admitted
+physical tool effects. Both directions still offer target, but the large overlap
+does not justify switching before the superior endpoint. Recompute from that
+endpoint's actual removed identities before selecting a route.
+
+Concrete maximum-clearance seed poses, XYZW quaternions:
+Left native index[127,150,131], entry[-17.464996,26.441162,-423.25],
+outside[-117.464996,26.441162,-423.25], q=[0,.7071067812,0,.7071067812].
+Tool+Z points inward+X. Seed ray retains20 target cells behind27 bone cells.
+Anterior index[138,142,130], entry[-28.464996,18.441162,-424.25],
+outside[-28.464996,103.441162,-424.25], q=[.7071067812,0,0,.7071067812].
+Tool+Z points inward-Y. Seed ray retains22 target cells behind32 bone cells.
+The long bone covers are real source-label observations. They are not existing
+openings, and these staging poses have not undergone public physical preview.
+
+Smallest proposed helper adaptation:
+1. Add per-access native axis0/1, outwardIndexSign=+1, outwardRAS[-1,0,0]/
+   [0,1,0], and quaternion; preserve original targetEntryIndex, source cell IDs,
+   entry/outside poses and bounded drillRadiusMm<=3. Use a separate candidate
+   list after superior cleanup. Do not reinterpret the saved superior list.
+2. In a directional frontier helper, move the selected native array axis last
+   only as a read-only index view; transverse axes are[Y,Z] for left and[X,Z]
+   for anterior. Top/bad_top, roof, retained identities, clearance and radius-1
+   ranking disk use that axis and transverse native spacings. Reconstruct full
+   native IJK before scene.affine/ravel_multi_index; never transpose/resample
+   the actual scene, labels, memberships, guards or source identity.
+3. Replace all frontier Z comparisons with w=dot(outwardRAS, worldPoint) and
+   XY distances with the transverse projection. The outside plane is maximal
+   source-corner w+8mm. Lift along outward, traverse that exterior plane, then
+   descend inward. Carry the declared quaternion through every pose; compare
+   relative rotation (q and -q equivalent). Apply existing subvoxel offsets and
+   .02-.05mm fine entry/end spacing in the new transverse/axial coordinates.
+4. Rotate the current working/shaft capsule construction with the access axis:
+   working cover extends toward the outside by depth; shaft by1..40mm with its
+   unchanged .5mm radius. Cap clipping must use the new axial half-cell size
+   and transverse half-cell widths. Prefer the existing swept_envelopes plus
+   occupancy full-tool checks for every proposed segment; credit only preceding
+   tip effects before subsequent shaft checks. Public preview remains required.
+5. Keep one frontier action per trial initially. _batch_frontiers currently
+   compares worldXY/worldZ and must be bypassed until its plane comparisons are
+   directional. Existing rank_remaining_accesses also assumes superior XY/Z;
+   use directional capacity ranking, not the current function on left records.
+
+Reuse unchanged public exchange/place/apply/inspect/deactivate/withdraw and
+preview/step APIs. full_case_debulking.py already derives inward, transverse fan
+and retreat vectors from quaternion; full_case_withdrawal.py already derives
+outward from quaternion/source corners and supports checked recorded retracing.
+No tool geometry/physics law change is needed. Fully withdraw before changing
+orientation/exchanging; reduce aperture explicitly when required. Keep <=512
+poses/action and target-only preview deltas, full shaft/other-hand collisions
+and matching source guards. Retract any parked superior assistant if it
+conflicts; do not assume its field assists a new opening. The first trial still
+needs real drill access, narrow CUSA passage, then only admitted local core.
+
+Evidence: two-axis-fallback-residual-508.json and prior axis_access_comparison.json.
+No engine constructed, physics run, source modified or production code edited.
+Unreviewed categorical anatomy, generic apertures, whole-cell effects and UNKNOWN
+dural/attachment/functional completeness remain the same model limitations.

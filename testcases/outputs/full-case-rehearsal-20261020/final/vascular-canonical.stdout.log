@@ -1,0 +1,8 @@
+{"verifiedPosition": 10, "of": 73, "status": "accepted", "reason": null}
+{"verifiedPosition": 20, "of": 73, "status": "accepted", "reason": null}
+{"verifiedPosition": 30, "of": 73, "status": "partial", "reason": "BONE_CUTTING_IN_PROGRESS"}
+{"verifiedPosition": 40, "of": 73, "status": "accepted", "reason": null}
+{"verifiedPosition": 50, "of": 73, "status": "accepted", "reason": null}
+{"verifiedPosition": 60, "of": 73, "status": "accepted", "reason": null}
+{"verifiedPosition": 70, "of": 73, "status": "accepted", "reason": null}
+{"auditStatus": "passed", "stateId": "sha256:af496ffbde3ca2ab71477c9226fe9f846f08171efd308362431414584cd3c87e", "actions": 73, "guiReview": "pending: this script verifies engine records only; actual complete-episode Electron playback is a separate gate"}

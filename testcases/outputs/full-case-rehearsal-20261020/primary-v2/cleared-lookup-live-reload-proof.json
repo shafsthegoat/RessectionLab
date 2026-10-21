@@ -1,0 +1,18 @@
+{
+  "loadedOnly": "surgical_occupancy",
+  "actions": 476,
+  "stateIdBefore": "sha256:15544ffa8a17fc0bfe3c735d6ceae63e002b553c39a98401f007e86d6f17bd30",
+  "stateIdAfter": "sha256:15544ffa8a17fc0bfe3c735d6ceae63e002b553c39a98401f007e86d6f17bd30",
+  "engineMethodCodeIdentitiesUnchanged": [
+    "step",
+    "preview",
+    "_execute",
+    "_substep",
+    "_physical_substep",
+    "cells",
+    "occupancy"
+  ],
+  "liveOwnershipSamplesEqual": 258,
+  "clearedTransientOccupancyCache": true,
+  "noPhysicsReplay": true
+}

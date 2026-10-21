@@ -1,0 +1,107 @@
+{
+  "scope": "Direct source-mask membership with previously canonically verified vascular endpoint; no physics replay and no clearance/reachability claim.",
+  "sourceSha256": "ff5a49b8706a8ccda08d8c3e82dad3e079f85dea98cb6bd40783d2262eec9838",
+  "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+  "result": {
+    "configured": true,
+    "contractId": "sha256:bd086e3832d76c44e09ccec7e5cc64a77a27f2b2affcd76d5c51ea3fc06cebfa",
+    "originalOwnedTargetDirectCells": 0,
+    "retainedOwnedTargetDirectCells": 0,
+    "removedOwnedTargetDirectCells": 0,
+    "originalOwnedTargetDirectMm3": 0.0,
+    "retainedOwnedTargetDirectMm3": 0.0,
+    "originalOwnedTargetDenominatorCells": 43573,
+    "originalOwnedTargetDirectPercent": 0.0,
+    "perStructureNonexclusive": [
+      {
+        "structureId": "brainstem",
+        "originalOwnedTargetDirectCells": 0,
+        "retainedOwnedTargetDirectCells": 0,
+        "removedOwnedTargetDirectCells": 0,
+        "originalOwnedTargetDirectMm3": 0.0,
+        "retainedOwnedTargetDirectMm3": 0.0
+      },
+      {
+        "structureId": "left_thalamus",
+        "originalOwnedTargetDirectCells": 0,
+        "retainedOwnedTargetDirectCells": 0,
+        "removedOwnedTargetDirectCells": 0,
+        "originalOwnedTargetDirectMm3": 0.0,
+        "retainedOwnedTargetDirectMm3": 0.0
+      },
+      {
+        "structureId": "right_thalamus",
+        "originalOwnedTargetDirectCells": 0,
+        "retainedOwnedTargetDirectCells": 0,
+        "removedOwnedTargetDirectCells": 0,
+        "originalOwnedTargetDirectMm3": 0.0,
+        "retainedOwnedTargetDirectMm3": 0.0
+      },
+      {
+        "structureId": "left_caudate",
+        "originalOwnedTargetDirectCells": 0,
+        "retainedOwnedTargetDirectCells": 0,
+        "removedOwnedTargetDirectCells": 0,
+        "originalOwnedTargetDirectMm3": 0.0,
+        "retainedOwnedTargetDirectMm3": 0.0
+      },
+      {
+        "structureId": "right_caudate",
+        "originalOwnedTargetDirectCells": 0,
+        "retainedOwnedTargetDirectCells": 0,
+        "removedOwnedTargetDirectCells": 0,
+        "originalOwnedTargetDirectMm3": 0.0,
+        "retainedOwnedTargetDirectMm3": 0.0
+      },
+      {
+        "structureId": "left_putamen",
+        "originalOwnedTargetDirectCells": 0,
+        "retainedOwnedTargetDirectCells": 0,
+        "removedOwnedTargetDirectCells": 0,
+        "originalOwnedTargetDirectMm3": 0.0,
+        "retainedOwnedTargetDirectMm3": 0.0
+      },
+      {
+        "structureId": "right_putamen",
+        "originalOwnedTargetDirectCells": 0,
+        "retainedOwnedTargetDirectCells": 0,
+        "removedOwnedTargetDirectCells": 0,
+        "originalOwnedTargetDirectMm3": 0.0,
+        "retainedOwnedTargetDirectMm3": 0.0
+      },
+      {
+        "structureId": "left_pallidum",
+        "originalOwnedTargetDirectCells": 0,
+        "retainedOwnedTargetDirectCells": 0,
+        "removedOwnedTargetDirectCells": 0,
+        "originalOwnedTargetDirectMm3": 0.0,
+        "retainedOwnedTargetDirectMm3": 0.0
+      },
+      {
+        "structureId": "right_pallidum",
+        "originalOwnedTargetDirectCells": 0,
+        "retainedOwnedTargetDirectCells": 0,
+        "removedOwnedTargetDirectCells": 0,
+        "originalOwnedTargetDirectMm3": 0.0,
+        "retainedOwnedTargetDirectMm3": 0.0
+      },
+      {
+        "structureId": "left_hippocampus",
+        "originalOwnedTargetDirectCells": 0,
+        "retainedOwnedTargetDirectCells": 0,
+        "removedOwnedTargetDirectCells": 0,
+        "originalOwnedTargetDirectMm3": 0.0,
+        "retainedOwnedTargetDirectMm3": 0.0
+      },
+      {
+        "structureId": "right_hippocampus",
+        "originalOwnedTargetDirectCells": 0,
+        "retainedOwnedTargetDirectCells": 0,
+        "removedOwnedTargetDirectCells": 0,
+        "originalOwnedTargetDirectMm3": 0.0,
+        "retainedOwnedTargetDirectMm3": 0.0
+      }
+    ],
+    "meaning": "Union of original OWNED target identities directly inside the exact supplied protection masks. Per-structure counts overlap. This does not change the original target denominator or establish swept-tool clearance, reachability, or that all legal approaches were exhausted. The 2 mm guard clearance is separate."
+  }
+}

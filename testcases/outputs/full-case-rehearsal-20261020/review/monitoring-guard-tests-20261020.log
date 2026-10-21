@@ -1,0 +1,442 @@
+........FFFFFF..FFFFFF...                                                [100%]
+=================================== FAILURES ===================================
+___ test_generator_step_start_resume_throw_close_matches_legacy[next-legacy] ___
+
+kind = 'legacy', resume = 'next'
+
+    @pytest.mark.parametrize('kind',['legacy','monitor'])
+    @pytest.mark.parametrize('resume',['start','next','throw','close'])
+    def test_generator_step_start_resume_throw_close_matches_legacy(kind,resume):
+     bodies=[]
+     class Signal(Exception):pass
+     class Base:
+      def step(self):
+       bodies.append('start')
+       try:
+        yield 1
+        bodies.append('resumed')
+       except Signal:bodies.append('throwbody')
+       finally:bodies.append('finally')
+     generator=Base().step()
+     if resume!='start':assert next(generator)==1
+     before=bodies[:]
+     with pytest.raises(ForbiddenPhysicsStep):
+      with guard(kind,Base):
+       if resume in ('start','next'):next(generator)
+       elif resume=='throw':generator.throw(Signal)
+       else:generator.close()
+>    assert bodies==before
+E    AssertionError: assert ['start', 'finally'] == ['start']
+E      
+E      Left contains one more item: 'finally'
+E      Use -v to get more diff
+
+testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py:84: AssertionError
+__ test_generator_step_start_resume_throw_close_matches_legacy[next-monitor] ___
+
+kind = 'monitor', resume = 'next'
+
+    @pytest.mark.parametrize('kind',['legacy','monitor'])
+    @pytest.mark.parametrize('resume',['start','next','throw','close'])
+    def test_generator_step_start_resume_throw_close_matches_legacy(kind,resume):
+     bodies=[]
+     class Signal(Exception):pass
+     class Base:
+      def step(self):
+       bodies.append('start')
+       try:
+        yield 1
+        bodies.append('resumed')
+       except Signal:bodies.append('throwbody')
+       finally:bodies.append('finally')
+     generator=Base().step()
+     if resume!='start':assert next(generator)==1
+     before=bodies[:]
+     with pytest.raises(ForbiddenPhysicsStep):
+      with guard(kind,Base):
+       if resume in ('start','next'):next(generator)
+       elif resume=='throw':generator.throw(Signal)
+       else:generator.close()
+>    assert bodies==before
+E    AssertionError: assert ['start', 'finally'] == ['start']
+E      
+E      Left contains one more item: 'finally'
+E      Use -v to get more diff
+
+testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py:84: AssertionError
+__ test_generator_step_start_resume_throw_close_matches_legacy[throw-legacy] ___
+
+kind = 'legacy', resume = 'throw'
+
+    @pytest.mark.parametrize('kind',['legacy','monitor'])
+    @pytest.mark.parametrize('resume',['start','next','throw','close'])
+    def test_generator_step_start_resume_throw_close_matches_legacy(kind,resume):
+     bodies=[]
+     class Signal(Exception):pass
+     class Base:
+      def step(self):
+       bodies.append('start')
+       try:
+        yield 1
+        bodies.append('resumed')
+       except Signal:bodies.append('throwbody')
+       finally:bodies.append('finally')
+     generator=Base().step()
+     if resume!='start':assert next(generator)==1
+     before=bodies[:]
+     with pytest.raises(ForbiddenPhysicsStep):
+      with guard(kind,Base):
+       if resume in ('start','next'):next(generator)
+       elif resume=='throw':generator.throw(Signal)
+       else:generator.close()
+>    assert bodies==before
+E    AssertionError: assert ['start', 'finally'] == ['start']
+E      
+E      Left contains one more item: 'finally'
+E      Use -v to get more diff
+
+testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py:84: AssertionError
+__ test_generator_step_start_resume_throw_close_matches_legacy[throw-monitor] __
+
+kind = 'monitor', resume = 'throw'
+
+    @pytest.mark.parametrize('kind',['legacy','monitor'])
+    @pytest.mark.parametrize('resume',['start','next','throw','close'])
+    def test_generator_step_start_resume_throw_close_matches_legacy(kind,resume):
+     bodies=[]
+     class Signal(Exception):pass
+     class Base:
+      def step(self):
+       bodies.append('start')
+       try:
+        yield 1
+        bodies.append('resumed')
+       except Signal:bodies.append('throwbody')
+       finally:bodies.append('finally')
+     generator=Base().step()
+     if resume!='start':assert next(generator)==1
+     before=bodies[:]
+     with pytest.raises(ForbiddenPhysicsStep):
+      with guard(kind,Base):
+       if resume in ('start','next'):next(generator)
+       elif resume=='throw':generator.throw(Signal)
+       else:generator.close()
+>    assert bodies==before
+E    AssertionError: assert ['start', 'finally'] == ['start']
+E      
+E      Left contains one more item: 'finally'
+E      Use -v to get more diff
+
+testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py:84: AssertionError
+__ test_generator_step_start_resume_throw_close_matches_legacy[close-legacy] ___
+
+kind = 'legacy', resume = 'close'
+
+    @pytest.mark.parametrize('kind',['legacy','monitor'])
+    @pytest.mark.parametrize('resume',['start','next','throw','close'])
+    def test_generator_step_start_resume_throw_close_matches_legacy(kind,resume):
+     bodies=[]
+     class Signal(Exception):pass
+     class Base:
+      def step(self):
+       bodies.append('start')
+       try:
+        yield 1
+        bodies.append('resumed')
+       except Signal:bodies.append('throwbody')
+       finally:bodies.append('finally')
+     generator=Base().step()
+     if resume!='start':assert next(generator)==1
+     before=bodies[:]
+     with pytest.raises(ForbiddenPhysicsStep):
+      with guard(kind,Base):
+       if resume in ('start','next'):next(generator)
+       elif resume=='throw':generator.throw(Signal)
+       else:generator.close()
+>    assert bodies==before
+E    AssertionError: assert ['start', 'finally'] == ['start']
+E      
+E      Left contains one more item: 'finally'
+E      Use -v to get more diff
+
+testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py:84: AssertionError
+__ test_generator_step_start_resume_throw_close_matches_legacy[close-monitor] __
+
+kind = 'monitor', resume = 'close'
+
+    @pytest.mark.parametrize('kind',['legacy','monitor'])
+    @pytest.mark.parametrize('resume',['start','next','throw','close'])
+    def test_generator_step_start_resume_throw_close_matches_legacy(kind,resume):
+     bodies=[]
+     class Signal(Exception):pass
+     class Base:
+      def step(self):
+       bodies.append('start')
+       try:
+        yield 1
+        bodies.append('resumed')
+       except Signal:bodies.append('throwbody')
+       finally:bodies.append('finally')
+     generator=Base().step()
+     if resume!='start':assert next(generator)==1
+     before=bodies[:]
+     with pytest.raises(ForbiddenPhysicsStep):
+      with guard(kind,Base):
+       if resume in ('start','next'):next(generator)
+       elif resume=='throw':generator.throw(Signal)
+       else:generator.close()
+>    assert bodies==before
+E    AssertionError: assert ['start', 'finally'] == ['start']
+E      
+E      Left contains one more item: 'finally'
+E      Use -v to get more diff
+
+testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py:84: AssertionError
+_____ test_async_step_start_resume_throw_close_matches_legacy[send-legacy] _____
+
+kind = 'legacy', resume = 'send'
+
+    @pytest.mark.parametrize('kind',['legacy','monitor'])
+    @pytest.mark.parametrize('resume',['start','send','throw','close'])
+    def test_async_step_start_resume_throw_close_matches_legacy(kind,resume):
+     bodies=[]
+     class Await:
+      def __await__(self):yield 'waiting'
+     class Signal(Exception):pass
+     class Base:
+      async def step(self):
+       bodies.append('start')
+       try:
+        await Await()
+        bodies.append('resumed')
+       except Signal:bodies.append('throwbody')
+       finally:bodies.append('finally')
+     coroutine=Base().step()
+     if resume!='start':assert coroutine.send(None)=='waiting'
+     before=bodies[:]
+     with pytest.raises(ForbiddenPhysicsStep):
+      with guard(kind,Base):
+       if resume in ('start','send'):coroutine.send(None)
+       elif resume=='throw':coroutine.throw(Signal)
+       else:coroutine.close()
+>    assert bodies==before
+E    AssertionError: assert ['start', 'finally'] == ['start']
+E      
+E      Left contains one more item: 'finally'
+E      Use -v to get more diff
+
+testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py:110: AssertionError
+____ test_async_step_start_resume_throw_close_matches_legacy[send-monitor] _____
+
+kind = 'monitor', resume = 'send'
+
+    @pytest.mark.parametrize('kind',['legacy','monitor'])
+    @pytest.mark.parametrize('resume',['start','send','throw','close'])
+    def test_async_step_start_resume_throw_close_matches_legacy(kind,resume):
+     bodies=[]
+     class Await:
+      def __await__(self):yield 'waiting'
+     class Signal(Exception):pass
+     class Base:
+      async def step(self):
+       bodies.append('start')
+       try:
+        await Await()
+        bodies.append('resumed')
+       except Signal:bodies.append('throwbody')
+       finally:bodies.append('finally')
+     coroutine=Base().step()
+     if resume!='start':assert coroutine.send(None)=='waiting'
+     before=bodies[:]
+     with pytest.raises(ForbiddenPhysicsStep):
+      with guard(kind,Base):
+       if resume in ('start','send'):coroutine.send(None)
+       elif resume=='throw':coroutine.throw(Signal)
+       else:coroutine.close()
+>    assert bodies==before
+E    AssertionError: assert ['start', 'finally'] == ['start']
+E      
+E      Left contains one more item: 'finally'
+E      Use -v to get more diff
+
+testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py:110: AssertionError
+____ test_async_step_start_resume_throw_close_matches_legacy[throw-legacy] _____
+
+kind = 'legacy', resume = 'throw'
+
+    @pytest.mark.parametrize('kind',['legacy','monitor'])
+    @pytest.mark.parametrize('resume',['start','send','throw','close'])
+    def test_async_step_start_resume_throw_close_matches_legacy(kind,resume):
+     bodies=[]
+     class Await:
+      def __await__(self):yield 'waiting'
+     class Signal(Exception):pass
+     class Base:
+      async def step(self):
+       bodies.append('start')
+       try:
+        await Await()
+        bodies.append('resumed')
+       except Signal:bodies.append('throwbody')
+       finally:bodies.append('finally')
+     coroutine=Base().step()
+     if resume!='start':assert coroutine.send(None)=='waiting'
+     before=bodies[:]
+     with pytest.raises(ForbiddenPhysicsStep):
+      with guard(kind,Base):
+       if resume in ('start','send'):coroutine.send(None)
+       elif resume=='throw':coroutine.throw(Signal)
+       else:coroutine.close()
+>    assert bodies==before
+E    AssertionError: assert ['start', 'finally'] == ['start']
+E      
+E      Left contains one more item: 'finally'
+E      Use -v to get more diff
+
+testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py:110: AssertionError
+____ test_async_step_start_resume_throw_close_matches_legacy[throw-monitor] ____
+
+kind = 'monitor', resume = 'throw'
+
+    @pytest.mark.parametrize('kind',['legacy','monitor'])
+    @pytest.mark.parametrize('resume',['start','send','throw','close'])
+    def test_async_step_start_resume_throw_close_matches_legacy(kind,resume):
+     bodies=[]
+     class Await:
+      def __await__(self):yield 'waiting'
+     class Signal(Exception):pass
+     class Base:
+      async def step(self):
+       bodies.append('start')
+       try:
+        await Await()
+        bodies.append('resumed')
+       except Signal:bodies.append('throwbody')
+       finally:bodies.append('finally')
+     coroutine=Base().step()
+     if resume!='start':assert coroutine.send(None)=='waiting'
+     before=bodies[:]
+     with pytest.raises(ForbiddenPhysicsStep):
+      with guard(kind,Base):
+       if resume in ('start','send'):coroutine.send(None)
+>      elif resume=='throw':coroutine.throw(Signal)
+                            ^^^^^^^^^^^^^^^^^^^^^^^
+
+testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py:108: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py:98: in step
+    await Await()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <test_readonly_step_monitor.test_async_step_start_resume_throw_close_matches_legacy.<locals>.Await object at 0x10b8618e0>
+
+>   def __await__(self):yield 'waiting'
+                        ^^^^^^^^^^^^^^^
+E   ValueError: Cannot disable PY_THROW events. Callback removed.
+
+testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py:92: ValueError
+____ test_async_step_start_resume_throw_close_matches_legacy[close-legacy] _____
+
+kind = 'legacy', resume = 'close'
+
+    @pytest.mark.parametrize('kind',['legacy','monitor'])
+    @pytest.mark.parametrize('resume',['start','send','throw','close'])
+    def test_async_step_start_resume_throw_close_matches_legacy(kind,resume):
+     bodies=[]
+     class Await:
+      def __await__(self):yield 'waiting'
+     class Signal(Exception):pass
+     class Base:
+      async def step(self):
+       bodies.append('start')
+       try:
+        await Await()
+        bodies.append('resumed')
+       except Signal:bodies.append('throwbody')
+       finally:bodies.append('finally')
+     coroutine=Base().step()
+     if resume!='start':assert coroutine.send(None)=='waiting'
+     before=bodies[:]
+     with pytest.raises(ForbiddenPhysicsStep):
+      with guard(kind,Base):
+       if resume in ('start','send'):coroutine.send(None)
+       elif resume=='throw':coroutine.throw(Signal)
+       else:coroutine.close()
+>    assert bodies==before
+E    AssertionError: assert ['start', 'finally'] == ['start']
+E      
+E      Left contains one more item: 'finally'
+E      Use -v to get more diff
+
+testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py:110: AssertionError
+____ test_async_step_start_resume_throw_close_matches_legacy[close-monitor] ____
+
+kind = 'monitor', resume = 'close'
+
+    @pytest.mark.parametrize('kind',['legacy','monitor'])
+    @pytest.mark.parametrize('resume',['start','send','throw','close'])
+    def test_async_step_start_resume_throw_close_matches_legacy(kind,resume):
+     bodies=[]
+     class Await:
+      def __await__(self):yield 'waiting'
+     class Signal(Exception):pass
+     class Base:
+      async def step(self):
+       bodies.append('start')
+       try:
+        await Await()
+        bodies.append('resumed')
+       except Signal:bodies.append('throwbody')
+       finally:bodies.append('finally')
+     coroutine=Base().step()
+     if resume!='start':assert coroutine.send(None)=='waiting'
+     before=bodies[:]
+     with pytest.raises(ForbiddenPhysicsStep):
+      with guard(kind,Base):
+       if resume in ('start','send'):coroutine.send(None)
+       elif resume=='throw':coroutine.throw(Signal)
+>      else:coroutine.close()
+            ^^^^^^^^^^^^^^^^^
+
+testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py:109: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py:98: in step
+    await Await()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <test_readonly_step_monitor.test_async_step_start_resume_throw_close_matches_legacy.<locals>.Await object at 0x10b8b7c50>
+
+>   def __await__(self):yield 'waiting'
+                        ^^^^^^^^^^^^^^^
+E   ValueError: Cannot disable PY_THROW events. Callback removed.
+
+testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py:92: ValueError
+=============================== warnings summary ===============================
+testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py::test_async_step_start_resume_throw_close_matches_legacy[send-monitor]
+  /Users/shaf/coding_projects/RessectionLab/.venv/lib/python3.12/site-packages/_pytest/unraisableexception.py:67: PytestUnraisableExceptionWarning: Exception ignored in: <generator object test_async_step_start_resume_throw_close_matches_legacy.<locals>.Await.__await__ at 0x10b8dc400>
+  
+  Traceback (most recent call last):
+    File "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py", line 92, in __await__
+      def __await__(self):yield 'waiting'
+                          ^^^^^^^^^^^^^^^
+  ValueError: Cannot disable PY_THROW events. Callback removed.
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnraisableExceptionWarning(msg))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py::test_generator_step_start_resume_throw_close_matches_legacy[next-legacy]
+FAILED testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py::test_generator_step_start_resume_throw_close_matches_legacy[next-monitor]
+FAILED testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py::test_generator_step_start_resume_throw_close_matches_legacy[throw-legacy]
+FAILED testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py::test_generator_step_start_resume_throw_close_matches_legacy[throw-monitor]
+FAILED testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py::test_generator_step_start_resume_throw_close_matches_legacy[close-legacy]
+FAILED testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py::test_generator_step_start_resume_throw_close_matches_legacy[close-monitor]
+FAILED testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py::test_async_step_start_resume_throw_close_matches_legacy[send-legacy]
+FAILED testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py::test_async_step_start_resume_throw_close_matches_legacy[send-monitor]
+FAILED testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py::test_async_step_start_resume_throw_close_matches_legacy[throw-legacy]
+FAILED testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py::test_async_step_start_resume_throw_close_matches_legacy[throw-monitor]
+FAILED testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py::test_async_step_start_resume_throw_close_matches_legacy[close-legacy]
+FAILED testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py::test_async_step_start_resume_throw_close_matches_legacy[close-monitor]
+12 failed, 13 passed, 1 warning in 0.64s

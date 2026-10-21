@@ -1,0 +1,17 @@
+0 place accepted None 0
+1 apply partial BONE_CUTTING_IN_PROGRESS 0
+2 apply partial BONE_CUTTING_IN_PROGRESS 0
+3 apply partial BONE_CUTTING_IN_PROGRESS 0
+4 apply partial BONE_CUTTING_IN_PROGRESS 0
+5 apply partial BONE_CUTTING_IN_PROGRESS 0
+6 apply partial BONE_CUTTING_IN_PROGRESS 0
+7 apply partial BONE_CUTTING_IN_PROGRESS 0
+8 apply partial BONE_CUTTING_IN_PROGRESS 0
+9 apply partial BONE_CUTTING_IN_PROGRESS 0
+10 apply partial BONE_CUTTING_IN_PROGRESS 0
+11 apply partial UNSUPPORTED_MATERIAL 0
+12 withdraw accepted None 0
+13 exchange accepted None 0
+14 place accepted None 0
+15 apply accepted None 54.0
+{"stateId": "sha256:daa84ab326a39d8bb46c87930cd526496e790a02efd4aff82b9ed9357c384db0", "metrics": {"severedVesselConnections": 0, "activeVesselWounds": 0, "modeledVesselFluidGeneratedMm3": 0, "modeledVesselReservoirMm3": 0, "globalPerfusion": "unknown", "drillInputEnergyJ": 446.01639701965047, "drillCuttingWorkJ": 355.00000000000074, "drillUnusedEnergyJ": 91.0163970196481, "drillHeatGeneratedJ": 124.2499999999992, "drillCoolingLossJ": 107.73706937286056, "drillPendingWorkJ": 0, "drillRemovedVolumeMm3": 710.0, "drillMaxTemperatureC": 106.94797946897395, "vesselPhysicsV2": {"enabled": true, "woundCount": 0, "damagedFaceCount": 0, "woundAreaMm2": 0, "activeWounds": 0, "pressurePa": 1000.0, "vascularRemainingMm3": 100.0, "refilledMm3": 0.0, "generatedMm3": 0.0, "emittedMm3": 0, "blockedOutletReservoirMm3": 0, "conservationResidualMm3": 0.0, "globalPerfusion": "unknown"}, "brainActiveNodes": 0, "brainMaxDisplacementMm": 0.0, "brainElasticEnergyNmm": 0.0, "brainMaxNeighborDisplacementRatio": 0.0, "removedByLabelMm3": {"bone": 710.0, "tumor": 54.0}, "targetRemovedMm3": 54.0, "nonTargetRemovedMm3": 710.0, "elapsedSeconds": 52.10000000000074, "travelMm": 159.84168760302157, "contactCellSeconds": 0, "debrisMm3": 710.0, "fluidAddedMm3": 0.0, "fluidRemovedMm3": 0.0, "debrisRemovedMm3": 0.0, "debrisEscapedMm3": 0.0, "fluidPresentMm3": 0, "fluidEscapedMm3": 0.0, "thermalExposure": 0, "vesselEncounters": 0, "exposureByMaterialCellSeconds": {"bone": 293.00386943164153, "tumor": 0.305084745762712}, "unknownStimulationSites": 0, "collisions": 1, "unknownMaterialCells": 0}, "originalSha256": "ff5a49b8706a8ccda08d8c3e82dad3e079f85dea98cb6bd40783d2262eec9838"}

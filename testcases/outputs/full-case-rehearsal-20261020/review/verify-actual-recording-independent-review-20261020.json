@@ -1,0 +1,31 @@
+{
+  "status": "actionable-metadata-guard-findings",
+  "reviewedSha256": "8cba914bcbfd87c9a7b929f8d56ef5bacdc288fec0af29099921ac26086310bc",
+  "helper": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/review/verify_actual_recording.py",
+  "sourceOnlyTests": {
+    "existingSyntheticSelfcheck": "passed: valid log, engineering refusal, overlap/error/count refusal",
+    "additionalSyntheticObservationReproduction": "accepted boundaries0/0/2148 with AX denominator73 and repeated capture1; no real AX/screenshot/native/movie used; temporary synthetic files removed"
+  },
+  "findings": [
+    {
+      "priority": 2,
+      "function": "checked_observations",
+      "issue": "AX denominator is parsed but ignored; primary observations with /73 qualify.",
+      "requiredFix": "Validate parsed total against the segment expected final action count."
+    },
+    {
+      "priority": 2,
+      "function": "checked_observations",
+      "issue": "Three observations need not contain an interior progress boundary; 0,0,2148 qualifies, and same recorder capture can anchor all.",
+      "requiredFix": "Require at least one strictly interior progress boundary and strictly increasing selected capture numbers for ordered start/progress/end anchors."
+    }
+  ],
+  "sourcePreservationReview": "Movie/log opened only read-only, hashed with size/mtime before+after; AX/screenshot/native read-only and hashed in metadata. No OS capture/app/engine API present.",
+  "exclusivePublicationReview": "Existing receipt/MP4 refused; private same-filesystem temporary remux; ffmpeg -n, stream copy; packet count/PTS checked, moov beforemdat, atomic exclusive hardlink; receipt openx.",
+  "claimLimits": "Checks supplied CUA declarations, packet timestamps and AX anchors plus explicit root continuous-playback attestation; does not authenticate screenshots, decode full pixels or prove every native timeline state visible. Media-only remains timeline-unverified.",
+  "actualVideoVerified": false,
+  "newVideoCreated": false,
+  "guiCalls": 0,
+  "physicsCalls": 0,
+  "helperEdits": false
+}

@@ -1,0 +1,54 @@
+{
+  "utc": "2026-10-20T19:09:02.782976+00:00",
+  "codeCommit": "de837ad687423bbe7ef852c7ca926bc93c2c50df",
+  "startPosition": 1644,
+  "startStateId": "sha256:407c77913dd2a310b0a1402cc895bc88e79b79e06f9aa5427eadcd60402f0e41",
+  "nativeAxis": 0,
+  "candidateLimit": 8,
+  "sourceUnchanged": true,
+  "savedBoundaryEqualsLive": true,
+  "engineAndHistoryUnchangedDuringConfiguration": true,
+  "engineMethodCodesUnchanged": [
+    "step",
+    "preview",
+    "_execute",
+    "_substep",
+    "_physical_substep",
+    "cells",
+    "occupancy"
+  ],
+  "deferredSuperiorPassRetainedExactly": true,
+  "deferredSuperiorCursor": 22,
+  "candidateIds": [
+    "directional-0-148-129",
+    "directional-0-141-128",
+    "directional-0-138-130",
+    "directional-0-122-137",
+    "directional-0-132-141",
+    "directional-0-162-128",
+    "directional-0-119-139",
+    "directional-0-158-126"
+  ],
+  "checkpoint": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-bounded-left-trial-1644.ressectionlab",
+  "checkpointSha256": "7f83f387e3ae39aa9ac7fd5b9a4c23314dfcc33335c67de8506838b189033bd5",
+  "scope": "Metadata-only setup of existing source-column proposals after real public cleanup. No left reachability or target-removal claim before actual preview/step.",
+  "firstAdvance": {
+    "utc": "2026-10-20T19:14:36.363063+00:00",
+    "endPosition": 1656,
+    "newActionCount": 12,
+    "endStateId": "sha256:4baf95663068e8825ff461ee339871a2e96facf1461d7302ffd511a2a312c8c3",
+    "statuses": {
+      "accepted": 9,
+      "partial": 3
+    },
+    "directorStatus": "running",
+    "stopReason": null,
+    "targetRemovedMm3": 34262.0,
+    "activeVesselWounds": 0,
+    "woundCount": 0,
+    "savedSnapshotEqualsLive": true,
+    "continuousRecordedStateChain": true,
+    "sourceUnchanged": true,
+    "qualification": "New actual public interval, or an honestly recorded zero-action stop. No duplicated patient replay."
+  }
+}

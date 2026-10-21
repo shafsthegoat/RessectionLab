@@ -3,3 +3,10 @@ artifacts/vitaldb-recorded-component-v1/PhysioNet-CC-BY-4.0.txt -text whitespace
 artifacts/vitaldb-recorded-component-v1/upstream-MIT-LICENSE.txt -text whitespace=cr-at-eol
 # Preserve the publisher's exact source label-map formatting.
 artifacts/desktop-renderer/medivis-fidelity-v2/source-qc/TOPBRAIN-LABELMAP-CT.txt -text whitespace=-blank-at-eol
+# Published rehearsal inputs and historical evidence are checksum-bound bytes.
+testcases/outputs/full-case-rehearsal-20261020/** -text
+testcases/cases/meningioma-sub-06-standard-v2.ressectionlab -text
+testcases/environments/meningioma-sub-06/rl-protection.json -text
+testcases/environments/meningioma-sub-06/rl-protection.npz -text
+testcases/environments/meningioma-sub-06/report.json -text
+testcases/environments/meningioma-sub-06/environment.json -text

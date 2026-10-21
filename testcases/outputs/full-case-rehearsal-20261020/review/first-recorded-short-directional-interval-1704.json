@@ -1,0 +1,162 @@
+{
+  "schema": "resectionlab.actual-recorded-short-proposals.v1",
+  "startPosition": 1692,
+  "endPosition": 1704,
+  "actualNewRecordedRequests": [
+    {
+      "position": 1693,
+      "operation": "apply",
+      "poses": 365,
+      "requestedPathLengthMm": 18.19999999999999,
+      "endpointSpanMm": 18.001111076819676,
+      "maxRequestedSegmentMm": 0.05000000000006821,
+      "shortRequest": false,
+      "firstRequestedPosition": [
+        -31.34026298086411,
+        23.441162109375,
+        -426.3
+      ],
+      "lastRequestedPosition": [
+        -13.34026298086411,
+        23.441162109375,
+        -426.5
+      ]
+    },
+    {
+      "position": 1694,
+      "operation": "apply",
+      "poses": 40,
+      "requestedPathLengthMm": 1.950000000000001,
+      "endpointSpanMm": 1.950000000000001,
+      "maxRequestedSegmentMm": 0.05000000000000426,
+      "shortRequest": true,
+      "firstRequestedPosition": [
+        -13.39026298086411,
+        23.441162109375,
+        -426.5
+      ],
+      "lastRequestedPosition": [
+        -15.34026298086411,
+        23.441162109375,
+        -426.5
+      ]
+    },
+    {
+      "position": 1695,
+      "operation": "apply",
+      "poses": 40,
+      "requestedPathLengthMm": 1.9499999999999993,
+      "endpointSpanMm": 1.9499999999999993,
+      "maxRequestedSegmentMm": 0.05000000000000249,
+      "shortRequest": true,
+      "firstRequestedPosition": [
+        -15.390262980864112,
+        23.441162109375,
+        -426.5
+      ],
+      "lastRequestedPosition": [
+        -17.34026298086411,
+        23.441162109375,
+        -426.5
+      ]
+    },
+    {
+      "position": 1696,
+      "operation": "apply",
+      "poses": 111,
+      "requestedPathLengthMm": 2.200000000000003,
+      "endpointSpanMm": 2.200000000000003,
+      "maxRequestedSegmentMm": 0.02000000000000668,
+      "shortRequest": true,
+      "firstRequestedPosition": [
+        -17.34026298086411,
+        23.421162109375,
+        -426.50000000000006
+      ],
+      "lastRequestedPosition": [
+        -17.34026298086411,
+        21.221162109374998,
+        -426.5
+      ]
+    },
+    {
+      "position": 1697,
+      "operation": "apply",
+      "poses": 40,
+      "requestedPathLengthMm": 1.9500000000000006,
+      "endpointSpanMm": 1.9500000000000008,
+      "maxRequestedSegmentMm": 0.05000000000000323,
+      "shortRequest": true,
+      "firstRequestedPosition": [
+        -17.389732925219484,
+        21.228423280456596,
+        -426.5
+      ],
+      "lastRequestedPosition": [
+        -19.319060755079054,
+        21.511608952638937,
+        -426.5
+      ]
+    },
+    {
+      "position": 1698,
+      "operation": "apply",
+      "poses": 92,
+      "requestedPathLengthMm": 1.8200000000000014,
+      "endpointSpanMm": 1.8200000000000014,
+      "maxRequestedSegmentMm": 0.02000000000000582,
+      "shortRequest": true,
+      "firstRequestedPosition": [
+        -19.316156286646414,
+        21.53139693038109,
+        -426.50000000000006
+      ],
+      "lastRequestedPosition": [
+        -19.05184965927623,
+        23.332102904916688,
+        -426.5
+      ]
+    },
+    {
+      "position": 1700,
+      "operation": "withdraw",
+      "poses": 298,
+      "requestedPathLengthMm": 98.66344100984219,
+      "endpointSpanMm": 98.66344100984219,
+      "maxRequestedSegmentMm": 0.33300000000001556,
+      "shortRequest": false,
+      "firstRequestedPosition": [
+        -19.384838652604643,
+        23.334810361681004,
+        -426.5
+      ],
+      "lastRequestedPosition": [
+        -118.04501853303867,
+        24.136993547124675,
+        -426.50000000000006
+      ]
+    },
+    {
+      "position": 1704,
+      "operation": "withdraw",
+      "poses": 250,
+      "requestedPathLengthMm": 82.617490242054,
+      "endpointSpanMm": 82.617490242054,
+      "maxRequestedSegmentMm": 0.3330000000000055,
+      "shortRequest": false,
+      "firstRequestedPosition": [
+        -34.84750609583666,
+        24.441162109375,
+        -425.25
+      ],
+      "lastRequestedPosition": [
+        -117.46499633789065,
+        24.441162109375,
+        -425.25
+      ]
+    }
+  ],
+  "shortRequestCount": 5,
+  "publicExecutionProof": "primary-v2/short-directional-proposal-reload-proof.json",
+  "qualification": "Path bounds classify saved requests, not interpolated or independently inferred actual trajectories. Authoritative actual travel/removal/state chain are in the public interval proof; no physics replay."
+}

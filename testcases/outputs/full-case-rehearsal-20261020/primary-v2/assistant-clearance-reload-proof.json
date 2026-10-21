@@ -1,0 +1,38 @@
+{
+  "utc": "2026-10-20T14:34:52.700349+00:00",
+  "loadedOnly": [
+    "full_case_assist",
+    "full_case_rehearsal"
+  ],
+  "codeCommit": "1ae5f004",
+  "actions": 876,
+  "stateIdBefore": "sha256:f2897ef369a8c39ab8b778ff84f4325a6c24920c0e1f2fa8652437ee77a59e1d",
+  "stateIdAfter": "sha256:f2897ef369a8c39ab8b778ff84f4325a6c24920c0e1f2fa8652437ee77a59e1d",
+  "nativeBoundaryEqualsLiveSnapshot": true,
+  "directorMetadataUnchanged": true,
+  "engineMethodCodeIdentitiesUnchanged": [
+    "step",
+    "preview",
+    "_execute",
+    "_substep",
+    "_physical_substep",
+    "cells",
+    "occupancy"
+  ],
+  "noPhysicsReplay": true,
+  "sourceUnchanged": true,
+  "observedCoordinationTrigger": {
+    "position": 876,
+    "reason": "DECLARED_ASSISTANT_CLEARANCE",
+    "minimumLateralSeparationMm": 10.0,
+    "observedLateralDistancesMm": [
+      7.0710678118654755,
+      7.0710678118654755
+    ],
+    "resumeStage": "access_setup",
+    "sourceSceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856"
+  },
+  "checkpoint": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-assistant-clearance-876.ressectionlab",
+  "checkpointSha256": "3c6fb2436aad6db6ce4d3db49da9c33cfa175559e455a2abff2a8a1b98c9ffcb",
+  "qualification": "Proposal-only reload at genuine saved boundary; actual retirement must occur in following public actions."
+}

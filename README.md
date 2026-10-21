@@ -1,5 +1,13 @@
 # RessectionLab
 
+The [full case rehearsal collaborator handoff](artifacts/full-case-rehearsal-20261020/README.md)
+includes the saved meningioma source and substantial primary resection, same-case
+vascular rescue, checkpoints, action histories, audit evidence and portable macOS
+setup/launch/check commands on `codex/poc-first-rehearsal`. It removed 81.34% of
+the owned target before a budget-limited stop. Playback is very slow; full final
+GUI playthrough and frame-audit limitations are explicitly retained. These
+selected data files are a tracked exception to the usual local `testcases/` rule.
+
 The [Research Planning desktop integration](docs/research-planning.md) now
 compares observation-only greedy and a frozen learned continuation in the
 existing source-bound instrument workbench, with checked native replay and

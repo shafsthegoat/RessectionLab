@@ -1,0 +1,125 @@
+Window: "RessectionLab", App: Electron.
+0 standard window RessectionLab, Secondary Actions: Raise
+	1 container RessectionLab
+		2 container
+			3 HTML content RessectionLab, URL: file:///Users/shaf/coding_projects/RessectionLab/desktop/dist/index.html
+				4 container
+					5 text Ressection Lab Studio Local research
+					6 button (disabled) Open ⌘O
+						7 text Open
+						8 text ⌘O
+					9 button (disabled) Add data
+					10 button (disabled) Save
+					11 container Workspace navigation
+						12 button Cases
+						13 button Data
+						14 button 3D workspace
+						15 button Rehearse
+						16 button Description: Advanced research workflows, Help: Earlier experimental workflows
+					17 text SURGICAL RESEARCH
+					18 button Collapse case panel
+					19 container
+						20 text Rehearsal model
+						21 pop up button Description: Rehearsal model, Value: Standard instrument environment
+							22 (selected) Standard instrument environment
+					23 container Surgical instrument toolbox
+						24 text SURGICAL WORKBENCH
+						25 heading Instrument toolbox, Value: 2
+							26 text Instrument toolbox
+						27 text Research rehearsal · source anatomy preserved. Mechanics remain uncalibrated.
+						28 button (disabled) Open engineering test scene
+						29 disclosure triangle Import segmentation / geometry
+							30 text Import segmentation / geometry
+						31 button (disabled) Prepare instrument scene
+						32 text Verifying saved source-bound rehearsal… First opening can take several minutes.
+					33 container Current case: ZENODO-17486320-meningioma-sub-06-surgical-research
+						34 text ZENODO-17486320-meningioma-sub-06-surgical-research
+					35 heading Surgical research rehearsal, Value: 2
+						36 text Surgical research rehearsal
+					37 container Linked patient imaging workspace
+						38 toolbar Imaging layout and 3D controls
+							39 button Layout
+							40 button Appearance
+							41 button Clip
+							42 button Fit 3D view
+							43 toggle button Description: Show structures only, Value: 1
+							44 toggle button Description: Show scan volume with structures, Value: 0
+							45 container Source slice framing
+								46 pop up button Description: Source slice fit, Help: Display framing only. Full image restores the complete source image., Value: Fit scan content
+									47 (selected) Fit scan content
+								48 button Zoom source slices out
+								49 button Description: Reset source slice zoom, Help: Reset slice zoom to 100%
+									50 text 100
+									51 text %
+								52 button Zoom source slices in
+							53 text 3D + slices
+						54 container
+							55 text 3D Segmentation surfaces RAS · mm
+							56 container 3-D source anatomy. Drag to rotate, scroll to zoom, double-click to set linked cursor.
+								57 text Image · source-derived labels
+								58 container 3-D patient coordinates: R is right, A anterior, S superior
+									59 text R A S
+									60 text Patient axes
+								61 container
+									62 text Drag to rotate · Scroll to zoom · Right-drag to pan Double-click to link cursor
+						63 container
+							64 text Axial
+							65 text Content fit
+							66 text -428.7 mm
+							67 toggle button Description: Expand Axial Image, Value: 0
+							68 container Axial source Image, scan content fit, zoom 100 percent, neurological convention, slice position -428.7 millimeters. Click to set cursor; scroll or arrow keys change slice.
+								69 text L
+								70 text R
+								71 text A
+								72 text P
+								73 text 20
+								74 text  mm
+								75 text SOURCE IMAGE
+						76 container
+							77 text Coronal
+							78 text Content fit
+							79 text 8.0 mm
+							80 toggle button Description: Expand Coronal Image, Value: 0
+							81 container Coronal source Image, scan content fit, zoom 100 percent, neurological convention, slice position 8.0 millimeters. Click to set cursor; scroll or arrow keys change slice.
+								82 text L
+								83 text R
+								84 text S
+								85 text I
+								86 text 20
+								87 text  mm
+								88 text SOURCE IMAGE
+						89 container
+							90 text Sagittal
+							91 text Content fit
+							92 text -17.9 mm
+							93 toggle button Description: Expand Sagittal Image, Value: 0
+							94 container Sagittal source Image, scan content fit, zoom 100 percent, neurological convention, slice position -17.9 millimeters. Click to set cursor; scroll or arrow keys change slice.
+								95 text P
+								96 text A
+								97 text S
+								98 text I
+								99 text 20
+								100 text  mm
+								101 text SOURCE IMAGE
+						102 text Linked views
+						103 text RAS
+						104 text -17.9 / 8.0 / -428.7  mm
+						105 container
+							106 text Contrast
+							107 slider Description: Source Image window width, Value: 1, Secondary Actions: Increment, Decrement
+						108 text Neurological convention
+					109 text Linked physical coordinates · RAS+ mm Local imaging · cached anatomy
+					110 text Preparing local operation…
+					111 button Cancel
+					112 text RAS -17.9 / 8.0 / -428.7 mm
+	113 close button
+	114 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	115 minimize button
+116 menu bar
+	117 Electron
+	118 File
+	119 Edit
+	120 View
+	121 Window
+
+The focused UI element is 15 button Rehearse

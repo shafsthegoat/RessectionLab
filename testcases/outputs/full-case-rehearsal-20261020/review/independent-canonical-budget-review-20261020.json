@@ -1,0 +1,37 @@
+{
+  "utc": "2026-10-20T22:34:04.787227+00:00",
+  "result": "approved: no actionable issue found",
+  "scope": "Uncommitted canonical aggregate disk opt-in policy and its tests/documentation only",
+  "baseCommit": "7cbecb11a11a925bdb25065b414546532cb61da8",
+  "reviewedFileSha256": {
+    "src/resectionlab/surgical_verified_cache.py": "ae0dbae06f305efee3ea9e8e409dd2df6900ab4626a7d7251134d6b10fa1a351",
+    "docs/integrated-rehearsal.md": "db3a2cb278cd59a0c463f55a617f631534a531c080caf99135c1bb59e0c6aee9",
+    "tests/test_surgical_verified_cache.py": "53151fe861122cabbad42b9e3c0bf3dfc9c1c938eefbb5821e66e108d075da39",
+    "tests/test_surgical_observed_cache.py": "93147c7a9cdbb8caa5ae8fc38f9b7919cdcfdc2e8d771df03e9c15fb1311df76"
+  },
+  "findings": {
+    "canonicalDefaultDiskBytes": 536870912,
+    "canonicalOptInMaximumDiskBytes": 8589934592,
+    "explicitIntegerConstructorOverridesInvalidEnvironment": true,
+    "canonicalFileReadLimitBytes": 536870912,
+    "fileLimitClampedToSmallerDiskBudget": true,
+    "decompressedAndCombinedStateJsonLimitBytes": 134217728,
+    "observedPolicyUnchanged": {
+      "defaultDiskBytes": 536870912,
+      "optInMaximumDiskBytes": 8589934592,
+      "fileReadLimitBytes": 67108864
+    },
+    "sourceSnapshotImplementationCheckpointAndHmacAdmissionUnchanged": true,
+    "writerAtomicPublicationAndEvictionLogicUnchanged": true
+  },
+  "independentEngineeringTests": {
+    "command": ".venv/bin/python -m pytest tests/test_surgical_verified_cache.py tests/test_surgical_observed_cache.py tests/test_surgical_frame_replay.py -q --basetemp=testcases/outputs/full-case-rehearsal-20261020/review/independent-canonical-budget-pytest-20261020 --junitxml=testcases/outputs/full-case-rehearsal-20261020/review/independent-canonical-budget-tests-20261020.xml",
+    "passed": 50,
+    "wallSecondsReportedByPytest": 19.62,
+    "log": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/review/independent-canonical-budget-tests-20261020.log",
+    "sparseOversizedCanonicalManifestDescriptorAndPartRejectedBeforePayloadRead": true,
+    "diffCheckPassed": true
+  },
+  "capacityEvidenceQualification": "Saved1954 field measurements and distinct recorded cooling values support a bounded-headroom option. Endpoint field sums and sampled checkpoint unions do not establish actual full-cache size; the opt-in is not proof the completed branches fit. Final actual retained bytes and publication completeness must still be checked.",
+  "limits": "Tiny engineering fixtures only. No patient engine construction, restore, preview, step or replay; no patient/native/production changes, live console, GUI, commit or push."
+}

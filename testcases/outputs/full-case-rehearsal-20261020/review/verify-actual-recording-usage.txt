@@ -1,0 +1,73 @@
+Offline actual recording checks/remux; no app calls, GUI, engine or replay.
+
+Helper:
+  /Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/review/verify_actual_recording.py
+
+After actualVideo.stop() completes, root can first check media/logs only:
+  python HELPER --recording /ABS/ACTUAL-primary.mkv --segment primary --receipt /ABS/NEW-primary-media-check.json
+
+Default capture log is INPUT.mkv.capture.jsonl. --log overrides that only for
+an explicitly bound actual recorder log. All output paths must be ignored
+testcases/outputs/, new/exclusive. Inputs/logs are read-only and hashed before
+and after. ENGINEERINGHELPERTEST in paths/provenance is refused, not remuxed.
+
+Checks: one complete actual CUA session, no recorded errors, clean encoder exit,
+capture/stream/stop counts match, sequential frames, final actual capture,
+monotonic log times, paired UI intervals, no UI/screenshot overlap, correct
+wall-clock/VFR encoder flags, H264 packetcount equals capturecount, strictly
+increasing packetPTS, firstPTS near0, PTS span versus capture span within2s.
+The default2s bound includes encoderstartup/demux timing; override only with an
+explicit --timing-tolerance-seconds value0–5, recorded in output. No fixed2fps
+assumption: count and actual variablePTS control. This checks packets, not a
+full pixel decode or the surgical timeline. Media-only receipt explicitly says
+timeline-unverified and cannot produce the final MP4.
+
+Actual AX observation receipt (root fills from actual recorded observations;
+this is a SCHEMA TEMPLATE, not evidence and must not be submitted unchanged):
+{
+  "schema":"resectionlab.actual-video-observations.v1",
+  "recordingPath":"/ABS/ACTUAL-primary.mkv",
+  "segment":"primary",
+  "fromAction":0,
+  "toAction":2148,
+  "nativePath":"/ABS/FROZEN-final.ressectionlab",
+  "nativeSha256":"ACTUAL-64-HEX-DIGEST",
+  "branchText":"ACTUAL BRANCH TEXT PRESENT IN AX",
+  "continuousPlaybackObserved":true,
+  "seekOrBranchChangesDuringSegment":false,
+  "captureBindingToleranceSeconds":5,
+  "observations":[
+    {"utc":"ACTUAL-UTC","actionBoundary":0,"captureNumber":1,"axPath":"/ABS/actual-start.ax.txt","screenshotPath":"/ABS/actual-start.png"},
+    {"utc":"ACTUAL-UTC","actionBoundary":123,"captureNumber":100,"axPath":"/ABS/actual-progress.ax.txt","screenshotPath":"/ABS/actual-progress.png"},
+    {"utc":"ACTUAL-UTC","actionBoundary":2148,"captureNumber":999,"axPath":"/ABS/actual-end.ax.txt","screenshotPath":"/ABS/actual-end.png"}
+  ]
+}
+
+Use at least start, progress and end observations. Each actual AX file must show
+the claimed Recorded action boundary and branchText; times/boundaries must be
+ordered. Choose the nearest actual recorder capture number from captureJSONL
+and require its actual endUTC within<=5s of the observationUTC. AX/screenshots
+are hashed; frozen native hash is checked. The root attestation about observed
+continuous playback without seek/branch changes is explicit human/tool-run
+evidence; codec alone never establishes it. This receipt anchors observed range
+coverage and does not prove that every intermediate engine state was visible.
+
+Primary requested range is0→2148. The later causal vascular segment uses
+--segment vascular and receipt segmentvascular/fromAction42/toAction73;
+its start/progress/end AX and branch/native bindings must be its own actual
+observations, not the prior full vascular recording or engineering footage.
+
+Validate and remux an ACTUAL segment to final lossless faststart MP4:
+  python HELPER --recording /ABS/ACTUAL-primary.mkv --segment primary --observations /ABS/actual-primary-observations.json --mp4 /ABS/NEW-primary.mp4 --receipt /ABS/NEW-primary-verification.json
+
+Remux is ffmpeg -c:v copy, no synthetic frames or re-encoding. It writes only a
+private temporary file under the output directory, checks MP4 H264 packetPTS
+within1.1ms and identical packetcount, checks moov precedes mdat, then installs
+the final file with an atomic exclusive hard-link operation. Existing outputs
+are refused; MKV/log/AX/native are unchanged. Failed temporary work is removed.
+Outputs/receipt are exclusive; source stability hashes remain in the receipt.
+
+Preparation evidence: ENGINEERINGHELPERTEST_verify_actual.py passes pure
+synthetic metadata checks (valid log schema, overlap/errors/countmismatch
+refused) and proves an explicitly engineering MKV is refused before any output.
+No actual recording has been validated or remuxed by the preparing agent.

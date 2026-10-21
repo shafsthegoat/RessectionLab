@@ -1,0 +1,465 @@
+{
+  "readOnly": true,
+  "noEngineOrPhysicsExecution": true,
+  "geometryStateId": "sha256:48b3a6221048ec1081947cb9bcdc1bb8566e204f49573e613adb9729d214421d",
+  "geometryPosition": 410,
+  "traceThroughPosition": 412,
+  "intervals": [
+    {
+      "startPosition": 318,
+      "endPosition": 350,
+      "targetAddedMm3": 1979.0,
+      "boneAddedMm3": 17.0,
+      "recordedWallIntervalSeconds": 452.5223530828953,
+      "actualMetricsToolTravelMm": 220.4285754029388
+    },
+    {
+      "startPosition": 350,
+      "endPosition": 372,
+      "targetAddedMm3": 428.0,
+      "boneAddedMm3": 1.0,
+      "recordedWallIntervalSeconds": 360.861510458868,
+      "actualMetricsToolTravelMm": 317.6644525337406
+    },
+    {
+      "startPosition": 372,
+      "endPosition": 390,
+      "targetAddedMm3": 68.0,
+      "boneAddedMm3": 0.0,
+      "recordedWallIntervalSeconds": 203.60126525023952,
+      "actualMetricsToolTravelMm": 304.3401335723165
+    },
+    {
+      "startPosition": 390,
+      "endPosition": 404,
+      "targetAddedMm3": 35.0,
+      "boneAddedMm3": 0.0,
+      "recordedWallIntervalSeconds": 307.0145809999667,
+      "actualMetricsToolTravelMm": 838.5820776703304
+    },
+    {
+      "startPosition": 400,
+      "endPosition": 404,
+      "targetAddedMm3": 11.0,
+      "boneAddedMm3": 0.0,
+      "recordedWallIntervalSeconds": 177.43553095916286,
+      "actualMetricsToolTravelMm": 605.2512227095976
+    },
+    {
+      "startPosition": 404,
+      "endPosition": 412,
+      "targetAddedMm3": 9.0,
+      "boneAddedMm3": 10.0,
+      "recordedWallIntervalSeconds": 94.66749033285305,
+      "actualMetricsToolTravelMm": 246.65898413743162
+    }
+  ],
+  "sourceCapacity": {
+    "remainingOwnedTargetCells": 32018,
+    "remainingSuperiorEligibleOwnedTargetCells": 29957,
+    "coverage": {
+      "allConfiguredCapacityDisks": {
+        "distinctRetainedEligibleTargetCells": 16615,
+        "eligibleColumnsCovered": 1043
+      },
+      "unvisitedCapacityDisks": {
+        "distinctRetainedEligibleTargetCells": 16503,
+        "eligibleColumnsCovered": 1030
+      },
+      "unvisitedHelperSearchDisks": {
+        "distinctRetainedEligibleTargetCells": 28692,
+        "eligibleColumnsCovered": 1998
+      }
+    },
+    "remainingAccessCount": 95,
+    "remainingPositiveCapacityAccessCount": 95,
+    "topRemaining": [
+      {
+        "id": "superior-135-118",
+        "entryPose": {
+          "position": [
+            -25.464996337890625,
+            -5.558837890625,
+            -417.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "drillRadiusMm": 3.0,
+        "remainingGeometricCapacityCells": 358
+      },
+      {
+        "id": "superior-130-117",
+        "entryPose": {
+          "position": [
+            -20.464996337890625,
+            -6.558837890625,
+            -415.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "drillRadiusMm": 3.0,
+        "remainingGeometricCapacityCells": 347
+      },
+      {
+        "id": "superior-135-130",
+        "entryPose": {
+          "position": [
+            -25.464996337890625,
+            6.441162109375,
+            -420.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "drillRadiusMm": 3.0,
+        "remainingGeometricCapacityCells": 339
+      },
+      {
+        "id": "superior-136-134",
+        "entryPose": {
+          "position": [
+            -26.464996337890625,
+            10.441162109375,
+            -422.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "drillRadiusMm": 3.0,
+        "remainingGeometricCapacityCells": 328
+      },
+      {
+        "id": "superior-132-120",
+        "entryPose": {
+          "position": [
+            -22.464996337890625,
+            -3.558837890625,
+            -416.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "drillRadiusMm": 3.0,
+        "remainingGeometricCapacityCells": 326
+      },
+      {
+        "id": "superior-136-138",
+        "entryPose": {
+          "position": [
+            -26.464996337890625,
+            14.441162109375,
+            -423.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "drillRadiusMm": 3.0,
+        "remainingGeometricCapacityCells": 312
+      },
+      {
+        "id": "superior-133-145",
+        "entryPose": {
+          "position": [
+            -23.464996337890625,
+            21.441162109375,
+            -424.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "drillRadiusMm": 3.0,
+        "remainingGeometricCapacityCells": 292
+      },
+      {
+        "id": "superior-141-133",
+        "entryPose": {
+          "position": [
+            -31.464996337890625,
+            9.441162109375,
+            -422.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "drillRadiusMm": 3.0,
+        "remainingGeometricCapacityCells": 289
+      }
+    ]
+  },
+  "decision": {
+    "continueAdmissibleProductiveCore": true,
+    "deferWhenMostRecentDrillAddedZeroBoneAndBothLocalAndFrontierSearchesExhaust": true,
+    "retainLaterRevisitPasses": true,
+    "doNotInferPermanentUnreachabilityFromZeroBoneDrill": true,
+    "coreAttemptCapIsNotSearchExhaustion": true,
+    "candidateRankingIsNotPhysicalRemovalPrediction": true
+  },
+  "concreteInefficiency": {
+    "code": "full_case_rehearsal.py remove-stage action-is-None branch unconditionally returns to access_setup if target increased during cycle, even when last drill added zero bone. Thus existing reranking cannot run while tiny positive cycles continue.",
+    "measuredInstance": "After identical zero-bone R3 drill395, actions401-404 are four narrow frontier paths visiting the outside plane, with11 target gained over177.4355 wall seconds and605.2512mm actual tool travel; code returns to another identical drill408 after that search ends.",
+    "counterexampleToPermanentExhaustion": "Drill408 added10 bone after drills377/395 added0; source target removal can expose additional bone. Deferral should preserve later revisit."
+  },
+  "scope": "Proposal scheduling only. Preserve source anatomy, tool/shaft law, guard checks, current productive admitted effects and public preview/commit. No target-cell gain cutoff recommended.",
+  "recordedDrillComparison": [
+    {
+      "position": 321,
+      "action": {
+        "duration": 10.0,
+        "operation": "apply",
+        "pose": {
+          "position": [
+            -7.464996337890625,
+            4.441162109375,
+            -412.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "slot": "left"
+      },
+      "precedingPlace": {
+        "duration": 0.2,
+        "operation": "place",
+        "parameters": {
+          "duty": 1.0,
+          "forceN": 20.0,
+          "radiusMm": 3.0,
+          "rpm": 80000.0
+        },
+        "pose": {
+          "position": [
+            -7.464996337890625,
+            4.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "slot": "left"
+      }
+    },
+    {
+      "position": 356,
+      "action": {
+        "duration": 10.0,
+        "operation": "apply",
+        "pose": {
+          "position": [
+            -7.464996337890625,
+            4.441162109375,
+            -412.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "slot": "left"
+      },
+      "precedingPlace": {
+        "duration": 0.2,
+        "operation": "place",
+        "parameters": {
+          "duty": 1.0,
+          "forceN": 20.0,
+          "radiusMm": 3.0,
+          "rpm": 80000.0
+        },
+        "pose": {
+          "position": [
+            -7.464996337890625,
+            4.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "slot": "left"
+      }
+    },
+    {
+      "position": 377,
+      "action": {
+        "duration": 10.0,
+        "operation": "apply",
+        "pose": {
+          "position": [
+            -7.464996337890625,
+            4.441162109375,
+            -412.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "slot": "left"
+      },
+      "precedingPlace": {
+        "duration": 0.2,
+        "operation": "place",
+        "parameters": {
+          "duty": 1.0,
+          "forceN": 20.0,
+          "radiusMm": 3.0,
+          "rpm": 80000.0
+        },
+        "pose": {
+          "position": [
+            -7.464996337890625,
+            4.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "slot": "left"
+      }
+    },
+    {
+      "position": 395,
+      "action": {
+        "duration": 10.0,
+        "operation": "apply",
+        "pose": {
+          "position": [
+            -7.464996337890625,
+            4.441162109375,
+            -412.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "slot": "left"
+      },
+      "precedingPlace": {
+        "duration": 0.2,
+        "operation": "place",
+        "parameters": {
+          "duty": 1.0,
+          "forceN": 20.0,
+          "radiusMm": 3.0,
+          "rpm": 80000.0
+        },
+        "pose": {
+          "position": [
+            -7.464996337890625,
+            4.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "slot": "left"
+      }
+    },
+    {
+      "position": 408,
+      "action": {
+        "duration": 10.0,
+        "operation": "apply",
+        "pose": {
+          "position": [
+            -7.464996337890625,
+            4.441162109375,
+            -412.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "slot": "left"
+      },
+      "precedingPlace": {
+        "duration": 0.2,
+        "operation": "place",
+        "parameters": {
+          "duty": 1.0,
+          "forceN": 20.0,
+          "radiusMm": 3.0,
+          "rpm": 80000.0
+        },
+        "pose": {
+          "position": [
+            -7.464996337890625,
+            4.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "slot": "left"
+      }
+    }
+  ],
+  "identicalDrillActionAndOutsidePlacementRecords": true
+}

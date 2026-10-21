@@ -1,0 +1,44 @@
+{
+  "status": "full-vascular-timeline-actually-played",
+  "frontendCommit": "19c770e195143609c48c422566fa28747118b8e3",
+  "native": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/gui/vascular-observability-28962e66.ressectionlab",
+  "nativeSha256": "f0ef34d5092d61406c6bb5a8cb2f9969136341005c96ec617510e3b7d1b32d1b",
+  "startedFromVerifiedZero": true,
+  "playClickedOnce": true,
+  "seekOrPauseDuringRun": false,
+  "selectedSpeed": 4,
+  "smoothSurfaces": false,
+  "confirmedFinalBoundary": 73,
+  "finalActionIndexOneBased": 73,
+  "finalFrame": 2,
+  "finalFrameMaximum": 2,
+  "finalSimulatedSecondsDisplayed": 202.569,
+  "playStoppedAutomatically": true,
+  "start": {
+    "observedUtc": "2026-10-21T00:04:41.267Z",
+    "frontendCommit": "19c770e1",
+    "native": "vascular-observability-28962e66.ressectionlab",
+    "label": "play-start",
+    "ax": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/gui/vascular-observability-19c770e1-play-start.ax.txt",
+    "png": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/gui/vascular-observability-19c770e1-play-start.png",
+    "playClickedOnce": true,
+    "selectedSpeed": 4,
+    "smoothing": false,
+    "fullPlaybackComplete": false
+  },
+  "confirmedEnd": {
+    "observedUtc": "2026-10-21T00:26:40.915Z",
+    "frontendCommit": "19c770e1",
+    "native": "vascular-observability-28962e66.ressectionlab",
+    "label": "full-play-completion-confirmed",
+    "ax": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/gui/vascular-observability-19c770e1-full-play-completion-confirmed.ax.txt",
+    "png": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/gui/vascular-observability-19c770e1-full-play-completion-confirmed.png"
+  },
+  "wallSecondsPlayClickToConfirmedEnd": 1319.648,
+  "computerUseDisplay": "Color LCD nonprimary; MSI MP275Q primary left unused",
+  "limitations": [
+    "Actual displayed playback was slower than requested speed.",
+    "Tool-body framing was insufficient; camera repair independently tested afterward.",
+    "Close-up fluid visibility, final combined-file GUI acceptance and video still pending."
+  ]
+}

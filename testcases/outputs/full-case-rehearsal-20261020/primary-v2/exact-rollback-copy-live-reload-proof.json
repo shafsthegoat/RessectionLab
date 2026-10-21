@@ -1,0 +1,50 @@
+{
+  "utc": "2026-10-20T18:08:47.048850+00:00",
+  "codeCommit": "0c4045cfe59c4f6fcad11e041e982baf22ba9193",
+  "loadedOnly": [
+    "SurgicalEngine._execute",
+    "_microstep_checkpoint"
+  ],
+  "actions": 1486,
+  "stateIdBefore": "sha256:aa7df2af3a2413cfd15af35ac5d7dc39d398f395eb757a8d6154f2255101390e",
+  "stateIdAfter": "sha256:aa7df2af3a2413cfd15af35ac5d7dc39d398f395eb757a8d6154f2255101390e",
+  "oldExecuteMatchesFrozenCommit": "3e0bd07c7a5ad7b84a9cf921c20f1c2564cd2c69",
+  "oldExecuteSemanticCodeSha256": "f5bff8035aac3c5e5b6bded2435106a8e8b687d2934c778bb927378bc4531e9c",
+  "newExecuteSemanticCodeSha256": "8274e92c043298cc501d7e4f0018865fe066446a5bbbee5e5dba8c30b3061631",
+  "savedBoundaryEqualsLiveSnapshot": true,
+  "directorMetadataAndCodeUnchanged": true,
+  "otherEngineMethodCodeIdentitiesUnchanged": [
+    "step",
+    "preview",
+    "_substep",
+    "_physical_substep",
+    "cells",
+    "occupancy"
+  ],
+  "sourceUnchanged": true,
+  "exactDetachedCurrentStateJsonOrderTypes": true,
+  "exactFloatBits": true,
+  "copiedStateJsonSha256": "493d7e35daacbec00515338e7d7d5ef38b745abdbb5f7d380c2ef3610f619c28",
+  "floatBitDigest": "ae5ebffced965f234e8d3dbaaed207aeb56297d169c36a8bfb40ca142d62651c",
+  "removedAndDebrisIndependentlyOwned": true,
+  "existingComponentExemptionPreserved": true,
+  "patientActionsDuringReload": 0,
+  "checkpoint": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-exact-rollback-copy-1486.ressectionlab",
+  "checkpointSha256": "342dbf52b1bbecb72ec159705b4e0fb735b10461337070fad65c5b69703165a7",
+  "scope": "Reviewed data-graph-equivalent rollback call/helper replacement only. No module reload, patient replay, timestep/model/protection change or whole-episode speed claim.",
+  "firstActualPostReloadBatch": {
+    "utc": "2026-10-20T18:09:14.478311+00:00",
+    "startPosition": 1486,
+    "endPosition": 1488,
+    "endStateId": "sha256:54421ad2062c93254d2778915871fb249e9a86a07c42e458e8db490241a9de42",
+    "newActionCount": 2,
+    "continuousRecordedStateChain": true,
+    "savedSnapshotEqualsLive": true,
+    "statuses": {
+      "accepted": 2
+    },
+    "targetRemovedMm3": 33801.0,
+    "sourceUnchanged": true,
+    "scope": "New ordinary public preview/step interval; no legacy patient replay."
+  }
+}

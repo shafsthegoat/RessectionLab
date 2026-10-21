@@ -1,0 +1,47 @@
+[
+  {
+    "observedUtc": "2026-10-20T23:49:35.312Z",
+    "label": "rewound-zero",
+    "ax": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/gui/vascular-observability-28962e66-rewound-zero.ax.txt",
+    "png": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/gui/vascular-observability-28962e66-rewound-zero.png",
+    "visibleBoundary": "0/73",
+    "removedTargetMm3": 0,
+    "boneMm3": 0,
+    "wounds": 0,
+    "fluidMm3": 0,
+    "simulatedSeconds": 0
+  },
+  {
+    "observedUtc": "2026-10-20T23:50:07.915Z",
+    "label": "play-start",
+    "ax": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/gui/vascular-observability-28962e66-play-start.ax.txt",
+    "png": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/gui/vascular-observability-28962e66-play-start.png",
+    "action": "Clicked Play once from verified0/73 at4x; no scrub thereafter"
+  },
+  {
+    "observedUtc": "2026-10-20T23:51:10.071Z",
+    "label": "play-mid",
+    "ax": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/gui/vascular-observability-28962e66-play-mid.ax.txt",
+    "png": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/gui/vascular-observability-28962e66-play-mid.png"
+  },
+  {
+    "observedUtc": "2026-10-20T23:53:57.943Z",
+    "label": "before-smoothing-off",
+    "ax": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/gui/vascular-observability-28962e66-before-smoothing-off.ax.txt",
+    "png": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/gui/vascular-observability-28962e66-before-smoothing-off.png"
+  },
+  {
+    "observedUtc": "2026-10-20T23:56:30.834Z",
+    "label": "smoothing-off-old-pipeline",
+    "ax": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/gui/vascular-observability-28962e66-smoothing-off-old-pipeline.ax.txt",
+    "png": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/gui/vascular-observability-28962e66-smoothing-off-old-pipeline.png"
+  },
+  {
+    "observedUtc": "2026-10-21T00:01:06.344Z",
+    "label": "old-renderer-paused-for-repair",
+    "ax": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/gui/vascular-observability-28962e66-old-renderer-paused-for-repair.ax.txt",
+    "png": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/gui/vascular-observability-28962e66-old-renderer-paused-for-repair.png",
+    "reason": "Diagnosed unconditional derived conditioning; load reviewed frontend19c770e1",
+    "fullPlaybackComplete": false
+  }
+]

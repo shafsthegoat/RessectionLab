@@ -1,0 +1,63 @@
+{
+  "utc": "2026-10-20T15:18:36.381774+00:00",
+  "codeCommit": "5d05ddb3d3f79e7ac6398dc176c704829237deb5",
+  "pushed": true,
+  "sourceSha256": {
+    "src/resectionlab/full_case_cleanup.py": "52a67670abb99a45525d69644dca317a0265812ec6c1c605c084eadaaa57eb32",
+    "src/resectionlab/full_case_rehearsal.py": "f90bbe95fbf3a6a952684b5a14bf7c50c76197af29cca8ccec30fd332ddda3a0",
+    "tests/test_full_case_cleanup.py": "2c48fe318ad467ed685541cf98d8a205ac463ba48097a22af1e5f925fcff9486",
+    "tests/test_recorded_field_cleanup.py": "0da2b7254db4f1860d759f396d46c3718751b0dd2a3034d7ffe8869c235f93c2",
+    "docs/integrated-rehearsal.md": "565d9034ba0f861f40902ff622bd46ce64135993ed4abfd89902340df997a3ad"
+  },
+  "capability": "Detached endpoint configuration of bounded positive fields on actual recorded drill rays; real withdrawal and checked exterior transit before changing rays; fresh actual-pose aspiration.",
+  "readOnlyPatientFeasibility": "review/cleanup-used-drill-rays-20261020T150016Z.json",
+  "rootValidation": {
+    "relatedSuites": {
+      "tests": 67,
+      "passed": 66,
+      "failed": 1,
+      "wallSeconds": 57.85,
+      "failure": "New blocked-cleanup test expected a more specific message prefix; actual truthful SHAFT_COLLISION stop was preserved."
+    },
+    "correctedRecordedCleanupSuite": {
+      "passed": 5,
+      "wallSeconds": 21.85
+    },
+    "addedCompleteTargetEndpointCase": {
+      "passed": 1,
+      "wallSeconds": 6.61
+    },
+    "productionChangesAfterRelatedRun": false
+  },
+  "independentValidation": {
+    "reviewer": "acceptance_review",
+    "focusedTestsPassed": 57,
+    "wallSeconds": 52.63,
+    "actionableIssues": [],
+    "singleActionVsSixteenActionSlices": "Exact final engine snapshot and director metadata matched except wallSeconds.",
+    "scope": "Small explicit engineering fixtures and static admission/source review only; no patient replay."
+  },
+  "api": "configure_recorded_field_cleanup(engine, director, max_stations=48)",
+  "limits": {
+    "maxSelectedStations": 64,
+    "maxRecordedRays": 128,
+    "maxIntervalsPerRay": 512,
+    "maxPositiveCandidates": 16384,
+    "maxDwellSeconds": 10
+  },
+  "patientRuntime": {
+    "loadedDirectorCommit": "1ae5f004",
+    "newCapabilityLoaded": false,
+    "livePid": 47002,
+    "execSessionId": 5061,
+    "policy": "Keep productive live engine; reload only reviewed proposal/director modules at an exact saved boundary after its natural residual endpoint, before explicit cleanup configuration."
+  },
+  "pending": [
+    "Load reviewed capability at saved endpoint",
+    "Fresh actual patient candidate measurement",
+    "Public preview/step cleanup and source/ledger proof",
+    "Final source-frozen canonical verification and telemetry/frames",
+    "Second-monitor full Electron replay"
+  ],
+  "qualification": "Feasibility field unions and flow budgets are not aspiration claims. Existing automatic3-station cleanup remains unchanged. No patient state or source array changed by this implementation."
+}

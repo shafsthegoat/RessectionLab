@@ -1,0 +1,41 @@
+{
+  "utc": "2026-10-21T00:19:17.195179+00:00",
+  "status": "passed",
+  "helperSha256": "8cc911405399ece17e0572d8d159684ea947cf5e3f1b611e11f80331f4e2c48f",
+  "originalAndReferenceSha256Unchanged": {
+    "/Users/shaf/coding_projects/RessectionLab/testcases/cases/meningioma-sub-06-standard-v2.ressectionlab": "ff5a49b8706a8ccda08d8c3e82dad3e079f85dea98cb6bd40783d2262eec9838",
+    "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/vascular-v2/vascular.ressectionlab": "7348f05c91c2ac3cd6689807e7c00da99d21d23dac2be8722fca74eddafd6fcb",
+    "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/gui/display-reference-field.ressectionlab": "3aad5d226bdab2299b60966a9b9d2829bbd56e6e1a260460d3a838a7b544c362"
+  },
+  "rows": [
+    {
+      "case": "explicit-false",
+      "output": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/review/display-smoothing-validation-20261020/explicit-false-merged.ressectionlab",
+      "smoothSurfaces": false,
+      "reportedSmoothFieldMerged": true,
+      "sourceArrayZipPayloadSha256": {
+        "arrays.npz": "684c10ee6afb1936e41ff3d4f2ad107129c8462ea642ff8dc67a5df5e9c81019"
+      },
+      "encodedSurgicalToolboxPreserved": true,
+      "physicsCalls": 0
+    },
+    {
+      "case": "omitted",
+      "output": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/review/display-smoothing-validation-20261020/omitted-merged.ressectionlab",
+      "smoothSurfaces": true,
+      "reportedSmoothFieldMerged": false,
+      "sourceArrayZipPayloadSha256": {
+        "arrays.npz": "684c10ee6afb1936e41ff3d4f2ad107129c8462ea642ff8dc67a5df5e9c81019"
+      },
+      "encodedSurgicalToolboxPreserved": true,
+      "physicsCalls": 0
+    },
+    {
+      "case": "malformed-string",
+      "rejected": true,
+      "error": "Invalid surface display flag",
+      "outputAndProvenanceAbsent": true
+    }
+  ],
+  "scope": "Ignored display-only validation derivatives. False/malformed reference fields were synthetically inserted for testing, not saved from GUI. No original/reference/native file modified, no final artifact or GUI persistence claim, no SurgicalEngine construction/restore/preview/step/physics."
+}

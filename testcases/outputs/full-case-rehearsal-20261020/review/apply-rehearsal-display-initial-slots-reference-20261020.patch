@@ -1,0 +1,68 @@
+--- before
++++ after
+@@ -137,24 +137,32 @@
+         'catalogSourceSha256': sha(ROOT/'src/resectionlab/surgical_tools.py')}
+ 
+ 
+-def apply(native, reference, output, *, minimum_aspect=.8, margin=1.08):
++def apply(native, reference, output, *, minimum_aspect=.8, margin=1.08, initial_slots_reference=None):
+     native, reference, output = (Path(p).resolve() for p in (native, reference, output))
++    slots_reference = reference if initial_slots_reference is None else Path(initial_slots_reference).resolve()
+     provenance = output.with_suffix(output.suffix+'.display-provenance.json')
+-    if output in (native, reference) or output.exists() or provenance.exists():
++    if output in (native, reference, slots_reference) or output.exists() or provenance.exists():
+         raise ValueError('Output and provenance must be distinct new paths')
+     if not .2 <= minimum_aspect <= 4 or not 1.01 <= margin <= 2:
+         raise ValueError('Require minimum pane aspect0.2..4 and margin1.01..2')
+     output.parent.mkdir(parents=True, exist_ok=True)
+     old_profile = sys.getprofile(); sys.setprofile(deny_physics)
+     try:
+-        before_sha, reference_sha = sha(native), sha(reference)
++        before_sha, reference_sha, slots_reference_sha = sha(native), sha(reference), sha(slots_reference)
+         case, artifacts, workspace = load_workspace(native)
+         ref_case, ref_artifacts, ref_workspace = load_workspace(reference)
+         if workspace is None or ref_workspace is None: raise ValueError('Workspace-native inputs required')
+         if case.semantic_hash != ref_case.semantic_hash: raise ValueError('Display reference is a different source case')
+-        record = artifacts['surgical_toolbox']; ref_record = ref_artifacts['surgical_toolbox']
++        if slots_reference == reference:
++            slots_case, slots_artifacts, slots_workspace = ref_case, ref_artifacts, ref_workspace
++        else:
++            slots_case, slots_artifacts, slots_workspace = load_workspace(slots_reference)
++        if slots_workspace is None: raise ValueError('Workspace-native initial slots reference required')
++        if slots_case.semantic_hash != case.semantic_hash:
++            raise ValueError('Initial slots reference is a different source case')
++        record = artifacts['surgical_toolbox']; slots_record = slots_artifacts['surgical_toolbox']
+         scene_ids = {s['sceneId'] for s in record['branches'].values()}
+-        candidates = [(name, s) for name, s in ref_record['branches'].items()
++        candidates = [(name, s) for name, s in slots_record['branches'].items()
+                       if not s['actions'] and s.get('checkpoint', {}).get('position') == 0 and s['sceneId'] in scene_ids]
+         if len(scene_ids) != 1 or not candidates: raise ValueError('Matching recorded zero-action initial slots required')
+         initial_branch, initial = candidates[0]; initial_slots = initial['checkpoint']['state']['slots']
+@@ -209,12 +217,14 @@
+                         unchanged_members[name] = {'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()}
+                 assert original_manifest['artifacts']['surgical_toolbox'] == manifest['artifacts']['surgical_toolbox']
+             assert sha(native) == before_sha and sha(reference) == reference_sha
++            assert sha(slots_reference) == slots_reference_sha
+             # Hard-link publication refuses an existing output, including a race.
+             os.link(staged, output)
+         report = {'schema': 'resectionlab.rehearsal-display-merge.v1', 'status': 'passed',
+             'native': str(native), 'nativeSha256': before_sha, 'reference': str(reference), 'referenceSha256': reference_sha,
+             'output': str(output), 'outputSha256': sha(output), 'sourceCaseHash': case.semantic_hash,
+-            'initialSlotsReferenceBranch': initial_branch, 'initialSnapshotStateId': initial['stateId'],
++            'initialSlotsReference': str(slots_reference), 'initialSlotsReferenceSha256': slots_reference_sha,
++            'initialSlotsReferenceBytesPreserved': True, 'initialSlotsReferenceBranch': initial_branch, 'initialSnapshotStateId': initial['stateId'],
+             'surgicalToolboxCanonicalJsonSha256': hashlib.sha256(encoded(record)).hexdigest(), 'surgicalToolboxEncodedArtifactUnchanged': True,
+             'allOtherArtifactsUnchanged': True, 'decodedCaseManifestUnchanged': True,
+             'nonMetadataZipMemberBytesUnchanged': unchanged_members,
+@@ -231,8 +241,10 @@
+     parser.add_argument('native', type=Path); parser.add_argument('reference', type=Path); parser.add_argument('output', type=Path)
+     parser.add_argument('--minimum-pane-aspect', type=float, default=.8, help='Minimum supported 3-D pane width/height (default0.8; use0.5 for narrower panes)')
+     parser.add_argument('--margin', type=float, default=1.08, help='Camera distance margin, default1.08')
++    parser.add_argument('--initial-slots-reference', type=Path, help='Optional same-source zero-action native used only for camera initial-slot bounds; display fields still come from reference')
+     args = parser.parse_args(); report = apply(args.native, args.reference, args.output,
+-                                             minimum_aspect=args.minimum_pane_aspect, margin=args.margin)
++                                             minimum_aspect=args.minimum_pane_aspect, margin=args.margin,
++                                             initial_slots_reference=args.initial_slots_reference)
+     print(json.dumps({k: report[k] for k in ('status', 'output', 'outputSha256', 'surgicalToolboxEncodedArtifactUnchanged', 'physicsCalls', 'guiVerified')}))
+ 
+ 

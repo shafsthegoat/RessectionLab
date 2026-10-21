@@ -1,0 +1,32 @@
+# Read-only rollback-copy audit — 2026-10-20
+
+No production edits, patient engine construction, patient steps/replay, live-process interaction, or whole-action benchmarks. The saved 760-action `primary-over-sixty-percent.ressectionlab` checkpoint was read as JSON only. Its source archive checksum was unchanged across the read. Kernel code, exact checksum/state ID and timings are in `rollback-copy-kernel-audit.py` and `.json`.
+
+## Finding and bounded recommendation
+
+The existing `_execute` checkpoint in `surgical_engine.py:343` deep-copies state for every microstep, already retaining the action-immutable `flapComponents` summary through its deepcopy memo. A possible later optimization is to add **independent shallow copies**, never the original mutable containers, for only these two large flat containers:
+
+* `removed`: exact built-in list with every element an exact built-in int.
+* `debris`: exact built-in dict with every key an exact built-in str and every value an exact built-in int/float.
+
+Check these conditions afresh at every checkpoint; otherwise leave that container to ordinary deepcopy. Add `memo[id(original)] = original.copy()` only when that identity is not already present, then retain the existing ordinary deepcopy for all remaining state. This preserves value/order/float bits, independent mutable ownership, and aliases to these containers from elsewhere in state. It is not permission to share the actual list/dict, omit rollback, shorten history, or alter integration.
+
+On 34,573 removed IDs and 6,717 debris entries, including the per-call guards, the saved-state copy kernel measured median **13.363 ms current / 6.824 ms proposed**, 1.96x for the copy only (30 copies × 3 repeats). Adding fluid/contact/thermal/materialExposure fast paths measured 6.793 ms: negligible additional benefit for this endpoint, so those additions are unnecessary. No end-to-end action/replay speedup was measured or inferred. The supplied native sample predominantly captured compression while saving, and does not establish rollback as the main live cost. Root is prioritizing persistence independently.
+
+## Production writer audit
+
+Searched all `src/` Python files for direct field writes and followed generic field writes. Production removal writers are `SurgicalEngine._effect`, `surgical_effects.apply_effect` kerf/extraction, and `surgical_drilling_v2.apply`. They replace `removed` with sorted unions of scalar source-cell IDs. Production debris writers are the engine's drill removal, effect kerf, V2 drilling, generic suction's `for field in ('fluid', 'debris')`, and `tick_fields` sediment transport/escape. They insert/reassign/subtract/delete scalar quantities; no production writer mutates an object inside a debris value. Initializers create an empty dict/list.
+
+Other eligible flat fields, which need no change for this minimal recommendation: `fluid` emission/irrigation/transport/suction, `thermal` coagulation, and engine contact/material-exposure accounting all replace scalar entries. V2 drilling's `workJ`, `temperatureC`, `thermalDoseCSeconds` are nested flat scalar dictionaries but remain ordinary deepcopy here. Holds, deformation vectors/models, vessel faces/wounds/contact doses, sources, cuts, observations, slot parameters and component summaries contain nested mutable data and must not be blanket shallow-copied.
+
+Current production subclasses `_ObservedEngine`, `_ObservedFrames` and `_ProtectedEngine` delegate physical substeps and maintain separate observer/protection data; none adds nested entries to the two proposed fields. Their transactional receipt/collector behavior must still be tested against the legacy checkpoint.
+
+## Edge cases and required regressions before any implementation
+
+1. **Public mutation and invalid types:** state is publicly accessible. Never infer shape solely from its field name or from a previous checkpoint. Exact container/value types matter: NumPy scalars/arrays, numeric/string subclasses with attributes or custom `__deepcopy__`, nested mutable values, and container subclasses must use legacy deepcopy. Do not sanitize or coerce unexpected state. Keep legacy errors and cancellation behavior. Nonfinite built-in float values are immutable and copy-identical, but this optimization must not make previously invalid state admissible.
+2. **Ownership and aliasing:** compare legacy/proposed cloned graphs on repeated aliases to `removed`/`debris`; the checkpoint's list/dict must be distinct from current state while aliases within the checkpoint stay shared. Respect existing memo entries, including the existing component exemption. Mutate current and checkpoint independently by append/replacement/deletion/clear and prove neither leaks into the other. Preserve insertion order and float hexadecimal representations, including signed zero.
+3. **Subclasses and custom objects:** ordinary physical or observer subclassing is safe for exact immutable children, even if a later substep replaces a field. However arbitrary custom Python objects can observe a deepcopy memo in `__deepcopy__`; equivalence of such adversarial object graphs is not guaranteed by flat-field guards alone. If supporting arbitrary custom state graphs is required, retain legacy copying for them rather than claiming universal Python-object equivalence. Do not special-case the observed engine out of the tests.
+4. **Rollback semantics:** use an engineering subclass/guard that first changes removal, debris and nested state, then raises during a later microstep. Compare the exact partial outcome, completed fraction, canonical state/history/actions and subsequent successful continuation against a frozen legacy-copy reference. Also test first-microstep whole rejection. Exercise actual drill generation, active-other-hand suction and fluid sediment transport so deletion/reassignment rollback is covered.
+5. **Cancellation and source guards:** run existing `tests/test_surgical_cancellation.py` with checks before/during/after finalization, and existing source-mutation/replay checks. Add public accepted/partial/rejected sequence parity for v1/v2 and observed frame/telemetry engines, including preview versus commit. No cached checkpoint or signed cache may be admitted by this optimization without the existing canonical replay checks.
+
+This is a potential later exact copy optimization, not a production change or a recommendation to hot-reload the live patient engine.

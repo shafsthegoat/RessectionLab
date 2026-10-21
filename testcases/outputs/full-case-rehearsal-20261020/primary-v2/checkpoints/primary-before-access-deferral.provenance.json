@@ -1,0 +1,11 @@
+{
+  "createdUtc": "2026-10-20T12:33:18.424242+00:00",
+  "native": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-access-deferral.ressectionlab",
+  "sha256": "57f3f86e28dffbe4ac163f2af2ff7f5604460f087118e5d1a73e368e48ec3857",
+  "originalSha256": "ff5a49b8706a8ccda08d8c3e82dad3e079f85dea98cb6bd40783d2262eec9838",
+  "branchId": "full-primary",
+  "actions": 430,
+  "stateId": "sha256:afd2b887f12f8fa2c654af35eea8dda3ec474cc23381b2bfa6943583ed4d0f6c",
+  "method": "deduplicated hardlink before atomic replacement of active native",
+  "purpose": "Preserve the exact pre-deferral public-action history."
+}

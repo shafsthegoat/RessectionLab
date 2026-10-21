@@ -1,0 +1,21 @@
+{
+  "utc": "2026-10-21T00:39:52.345821+00:00",
+  "status": "approved",
+  "filesSha256": {
+    "src/resectionlab/core.py": "75a991dd54f61eec50a016f62788eca0d51dd2b332b270a8da753197a466e270",
+    "tests/test_semantic_digest.py": "32e07a06460bd4799a02a849b240ed6d35604df473d1fb26becec7e3ee272fa6"
+  },
+  "scope": "One-pass detached exact-builtin JSON copy before unchanged JSON encoding/full SHA; original freeze/thaw fallback for unsupported/deep/cyclic values. No stored digest trust or validation cache.",
+  "independentTests": {
+    "passed": 75,
+    "reportedWallSeconds": 1.02,
+    "additionalPureDataParityCases": 10,
+    "xml": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/review/independent-semantic-digest-tests-20261020.xml"
+  },
+  "findings": [
+    "Exact primitive values and str-keyed dict/list are copied into independent plain containers once. Aliases serialize equivalently; no mutable original is passed to json.dumps.",
+    "Nonfinite, NumPy, MappingProxy, tuple, container/scalar/key subclasses and other unsupported/deep/cyclic values fall back to the unchanged legacy normalization. Unsupported callbacks are not speculatively invoked.",
+    "Literal-legacy encoded bytes/digests/exception types and messages, fresh mutations and post-copy/pre-dump mutation isolation tested. Neither old nor new path claims an atomic snapshot against concurrent changes during traversal."
+  ],
+  "limits": "Pure-data/engineering tests only; no patient engine/replay/GUI or production edits by reviewer. Saved-state kernel timing belongs to worker; no whole-episode speed claim."
+}

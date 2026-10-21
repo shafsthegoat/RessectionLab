@@ -1,0 +1,107 @@
+{
+  "schema": "resectionlab.shared-rehearsal-publication-checks.v1",
+  "status": "passed-with-explicit-environment-and-historical-gui-limitations",
+  "utc": "2026-10-21T06:19:56.701728+00:00",
+  "manifestSha256": "13063dc8674548813100da32076b48e23d13a9cb0f0b6a2b4d5f794b5d9aef89",
+  "publishedManifestFiles": 1611,
+  "payloadFiles": 581,
+  "payloadLogicalBytes": 1312252037,
+  "maximumPayloadFileBytes": 36379130,
+  "gitLfsRequired": false,
+  "nativeSha256": "095659e54f381355e8f5655b6c5907990b2ac4767dc9ce58297e3bc4d6f3268d",
+  "sourceSha256": "ff5a49b8706a8ccda08d8c3e82dad3e079f85dea98cb6bd40783d2262eec9838",
+  "engineCommitUnchanged": "4087a8fa48f68712cb6acf8883a9ea38d4dbda50",
+  "freshStagedExport": {
+    "stagedTree": "2b310c17a432b696e25a2fe562a4b2f8cb8d7eb5",
+    "exportedFiles": 1612,
+    "quickCheck": {
+      "publishedFileIntegrity": "passed",
+      "files": 1611,
+      "bytes": 1324017494,
+      "historicalEngineCommit": "4087a8fa48f68712cb6acf8883a9ea38d4dbda50",
+      "publicPhysicsReplayRequested": false,
+      "savedSourceRecords": "passed",
+      "branches": {
+        "full-primary": {
+          "actions": 2148,
+          "stateId": "sha256:c97de5651109a57695fc3dd1bd49e504f57e6c0e8b45052d915232df6ba86021",
+          "removedOwnedTargetCells": 35444,
+          "retainedOwnedTargetCells": 8129
+        },
+        "full-vascular": {
+          "actions": 73,
+          "stateId": "sha256:af496ffbde3ca2ab71477c9226fe9f846f08171efd308362431414584cd3c87e",
+          "removedOwnedTargetCells": 312,
+          "retainedOwnedTargetCells": 43261
+        }
+      },
+      "scope": "Published bytes and saved source records only; no new canonical or GUI verification."
+    },
+    "originalCheckoutSourceOrDatasetReads": "forbidden-by-Python-audit-hook; none occurred",
+    "patientRunnerSubprocesses": "forbidden-by-audit-hook; none occurred",
+    "dependencyEnvironment": "Reused authoring Python dependencies, not a fresh install",
+    "actualGuiLaunched": false
+  },
+  "portableLauncherAndIntegrityRefusals": {
+    "checks": [
+      {
+        "check": "quoted-portable-launch-secondary",
+        "status": "passed",
+        "actualElectronLaunched": false
+      },
+      {
+        "check": "quoted-portable-launch-explicit-primary",
+        "status": "passed",
+        "actualElectronLaunched": false
+      },
+      {
+        "check": "unknown-option-refused",
+        "status": "passed"
+      },
+      {
+        "check": "stdlib-only-integrity-no-project-dependencies",
+        "status": "passed"
+      },
+      {
+        "check": "corrupt-payload-refused",
+        "status": "passed"
+      },
+      {
+        "check": "parent-traversal-refused",
+        "status": "passed"
+      }
+    ],
+    "patientPhysicsActions": 0,
+    "computerUseInteractions": 0
+  },
+  "pythonDependencyResolution": {
+    "status": "passed --dry-run --ignore-installed",
+    "resolvedPinnedInstallations": 52,
+    "actualFreshInstallPerformed": false,
+    "platform": "authoring Apple Silicon macOS/Python3.12"
+  },
+  "desktopBuild": {
+    "typescriptNoEmit": "passed",
+    "viteProductionBuild": "passed",
+    "dependencies": "existing installed lockfile environment; no fresh desktop install claimed"
+  },
+  "credentialScan": {
+    "initialPayloadRowsScanned": 582,
+    "credentialPatternsInTextAndNativeJsonMembers": 0,
+    "finalPayloadIsSubset": true,
+    "activeTelemetryLogRemovedAfterScan": true,
+    "privateCacheKeysAndPytestCachesNotPublished": true
+  },
+  "independentReview": {
+    "reviewer": "acceptance_review",
+    "finding": "No blocking portability or publication issue found. Shell syntax/Python AST passed; all1030source/guide hashes matched at review.",
+    "laterAdjustment": "Excluded the actively written91-byte telemetry stdout log; numerical/desktop implementation unchanged."
+  },
+  "limitations": [
+    "Fresh export reuses existing Python dependencies. Clean dependency installation and Intel/older-macOS qualification were not performed.",
+    "Quick source/file checks execute no patient physics and do not replace the already recorded canonical audit.",
+    "Original final full GUI playthroughs and final0.2second telemetry/all-frame coverage remain explicitly unverified by user-approved closeout.",
+    "No actual app launch or new physics replay was needed for this publication follow-up.",
+    "Historical absolute paths/commits/timestamps in evidence are preserved; collaborator entry points resolve their own clone root."
+  ]
+}

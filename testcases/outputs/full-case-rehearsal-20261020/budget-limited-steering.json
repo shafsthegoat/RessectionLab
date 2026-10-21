@@ -1,0 +1,30 @@
+{
+  "schema": "resectionlab.budget-limited-endpoint-steering.v1",
+  "receivedNoLaterThanUtc": "2026-10-21T00:30:36+00:00",
+  "additionalResectionDeadlineUtc": "2026-10-21T01:00:36+00:00",
+  "policy": "Finish only the currently running bounded slice; stop at its fully saved boundary even if earlier than deadline. Never resume access/removal passes. Preserve live engine/history and unfinished routes; checkpoint before public-action bounded field cleanup/release/deactivate/withdraw/inspect.",
+  "latestSavedBoundaryRead": 2114,
+  "latestOwnedTargetRemovedMm3": 35425.0,
+  "ownedInitialTargetMm3": 43573,
+  "liveEnginePid": 47002,
+  "liveExecSessionId": 5061,
+  "pauseFlagIsIntentOnly": true,
+  "actualStoppedBoundary": {
+    "status": "checkpointed-before-transition",
+    "utc": "2026-10-21T00:36:34.648198+00:00",
+    "native": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/primary.ressectionlab",
+    "checkpoint": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-budget-endpoint-2126.ressectionlab",
+    "checkpointSha256": "fce43e61bae4557ac9e0c3bdf7e26f4c343dba5369e21c11fbab9040b06b8a6b",
+    "actions": 2126,
+    "stateId": "sha256:85471c3dfb72b0af1a8f2e9d0ae1e41ba7ab82f620b3147c66876c67a1426979",
+    "ownedTargetRemovedMm3": 35444.0,
+    "ownedTargetResidualMm3": 8129.0,
+    "directorStage": "access_setup",
+    "accessIndex": 26,
+    "accessCount": 99,
+    "liveConsolePromptConfirmed": true,
+    "liveEnginePreserved": true
+  },
+  "finalVideoRequested": true,
+  "furtherResectionSchedulingPermitted": false
+}

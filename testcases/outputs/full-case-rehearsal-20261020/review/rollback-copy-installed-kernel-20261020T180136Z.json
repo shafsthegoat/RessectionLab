@@ -1,0 +1,44 @@
+{
+  "scope": "Uninstrumented copy kernel only on detached JSON state; no patient engine, replay, action/episode benchmark or live-process interaction.",
+  "native": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/primary.ressectionlab",
+  "nativeSha256AtStableRead": "862f478f33eda1c0e8359731cf05bfb712901ac210f96dff9257121bfc721ecd",
+  "branch": "full-primary",
+  "actionsAtRead": 1462,
+  "stateIdAtRead": "sha256:51ce4697fc97748fa8cb4df4098a679c7af53ba3ce5132de052eaccd4411fe0c",
+  "sourceSha256": "ff5a49b8706a8ccda08d8c3e82dad3e079f85dea98cb6bd40783d2262eec9838",
+  "sourceUnchanged": true,
+  "counts": {
+    "removed": 45048,
+    "debris": 11231,
+    "flapComponents": 7420,
+    "drillTemperature": 11407,
+    "drillDose": 11407
+  },
+  "exactJsonIncludingOrderAndNumericTypes": true,
+  "exactFloatBits": true,
+  "floatBitDigest": "62b17c00ca773f4723682b4e0f6635b704a4cdd6bf6b208153d00cdea34f5efb",
+  "mutableFieldsIndependentlyOwned": true,
+  "existingComponentExemptionPreserved": true,
+  "legacyFunctionSourceSha256": "2ff526ac26b0de5ff34ceb9983e7e9215f1bfd7375b5e43f37dedf1079168f23",
+  "candidateFunctionSourceSha256": "1eb4ca55bce7e9fa86567478d4f7045ee2535fd7ce1c922ea0381344629b812f",
+  "timings": {
+    "frozen3e0Legacy": {
+      "samplesSecondsFor5Copies": [
+        0.10059699974954128,
+        0.10198737494647503,
+        0.10266504110768437
+      ],
+      "medianMillisecondsPerCopy": 20.397474989295006
+    },
+    "installedCandidate": {
+      "samplesSecondsFor5Copies": [
+        0.05464233411476016,
+        0.053977000061422586,
+        0.05434991605579853
+      ],
+      "medianMillisecondsPerCopy": 10.869983211159706
+    }
+  },
+  "speedup": 1.8764955375785555,
+  "qualification": "One frozen literal legacy function versus the installed candidate helper. Both receive the same unchanged detached state. Guard scans and copy deallocation are included. Only removed/debris are newly memo-seeded; other fields retain deepcopy and the preexisting flap exemption. Timing is not normal action throughput."
+}

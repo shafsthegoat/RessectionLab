@@ -1,0 +1,105 @@
+Bounded post-playback renderer profile plan (prepared only; no app launched)
+
+Scope and prerequisites
+- Wait until root's current uninterrupted vascular GUI playback finishes.
+- Root alone closes/restarts that task Electron app through its ordinary UI.
+- Keep primary engine PID47002/session5061 and every unrelated app untouched.
+- Existing app sandbox:true, contextIsolation:true, nodeIntegration:false stay
+  unchanged. No --no-sandbox, no CDP, no DevTools window, no source edits.
+- Installed Electron flags were verified by root. Static inspection cannot
+  establish macOS sandbox log-write permission for future renderer/worker
+  isolates. Check actual files; main-process-only logs are not worker evidence.
+
+Launch workflow, only after the prerequisite above
+  REHEARSAL_ROOT=/Users/shaf/coding_projects/RessectionLab
+  REHEARSAL_NODE=/Users/shaf/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node
+  REHEARSAL_PROFILE="$REHEARSAL_ROOT/testcases/outputs/full-case-rehearsal-20261020/review/v8-renderer-after-fullplay"
+  REHEARSAL_CASE="$REHEARSAL_ROOT/testcases/outputs/full-case-rehearsal-20261020/gui/vascular-observability-28962e66.ressectionlab"
+
+Choose a new, unused REHEARSAL_PROFILE directory to avoid mixing isolates from
+different launches; mkdir it and its maps subdirectory. Preserve the exact
+current dist maps before later builds:
+  mkdir -p "$REHEARSAL_PROFILE/maps"
+  cp "$REHEARSAL_ROOT"/desktop/dist/assets/*.js.map "$REHEARSAL_PROFILE/maps/"
+  shasum -a 256 "$REHEARSAL_ROOT"/desktop/dist/assets/*.js "$REHEARSAL_ROOT"/desktop/dist/assets/*.js.map > "$REHEARSAL_PROFILE/asset-sha256.txt"
+
+Use the already-built task app; do not rebuild or change its code to profile:
+  cd "$REHEARSAL_ROOT/desktop"
+  "$REHEARSAL_NODE" node_modules/electron/cli.js . --force-renderer-accessibility --secondary-display --case "$REHEARSAL_CASE" --js-flags="--prof --logfile=$REHEARSAL_PROFILE/v8-renderer.log --logfile-per-isolate --prof-sampling-interval=1000 --log-source-code" > "$REHEARSAL_PROFILE/launch.stdout.txt" 2> "$REHEARSAL_PROFILE/launch.stderr.txt"
+
+This is a foreground launch command. A separate ordinary terminal can perform
+the file-only capture commands below while root owns the second-monitor UI.
+V8 --prof implies code logging; --log-source-code adds script URLs/source for
+isolate mapping. Per-isolate logs are expected to have isolate/PID prefixes;
+discover actual basenames instead of assuming filename pointer == worker ID.
+
+Root opens Rehearse, verifies raw Smooth 3D OFF, and starts observed playback.
+Wait for initial source preparation to finish before choosing the hot window.
+Check that renderer/worker log files exist and grow. If logging is denied or
+only the Electron main isolate logs, retain stderr and report the limitation;
+do not remove or weaken the sandbox to force profiling.
+
+Capture two log byte inventories about 20 seconds apart, plus root's existing
+AX/screenshot actual frame and simulated-time observations at both markers:
+  python "$REHEARSAL_ROOT/testcases/outputs/full-case-rehearsal-20261020/review/v8_tick_window.py" capture --directory "$REHEARSAL_PROFILE" --output "$REHEARSAL_PROFILE/before.json"
+  python "$REHEARSAL_ROOT/testcases/outputs/full-case-rehearsal-20261020/review/v8_tick_window.py" capture --directory "$REHEARSAL_PROFILE" --output "$REHEARSAL_PROFILE/after.json"
+
+Do not filter a still-growing log. Root ordinarily quits only the task app
+after the bounded capture to flush profiler records. This second profiling run
+does not replace the uninterrupted first full-play evidence.
+
+Offline filtering and analysis (no app or engine needed)
+  python "$REHEARSAL_ROOT/testcases/outputs/full-case-rehearsal-20261020/review/v8_tick_window.py" filter --before "$REHEARSAL_PROFILE/before.json" --after "$REHEARSAL_PROFILE/after.json" --output-dir "$REHEARSAL_PROFILE/windows"
+
+The receipt lists each input/output, exact byte bounds, selected tick count,
+raw tick timestamps, and script URLs. A newly-created isolate starts at byte0.
+Original logs are never overwritten. All non-tick code/library/source/move
+records, even outside the tick window, stay byte-identical and ordered so code
+addresses can be interpreted; only complete in-window tick records survive.
+
+For EACH relevant filtered log separately (substitute its actual filename):
+  "$REHEARSAL_NODE" --prof-process --nm=/usr/bin/false --call-graph-size=12 "$REHEARSAL_PROFILE/windows/ACTUAL-ISOLATE-v8-renderer.log.window.log" > "$REHEARSAL_PROFILE/ACTUAL-ISOLATE.profile.txt" 2> "$REHEARSAL_PROFILE/ACTUAL-ISOLATE.profile.stderr.txt"
+
+--nm=/usr/bin/false deliberately omits expensive/unreliable native symbol
+decoding from stripped Electron libraries; JavaScript/JIT names still come
+from retained code events. Do not use --ignore-unknown: report unknown ticks.
+Retain stderr and reject unsupported log grammar or pervasive unaccounted ticks.
+Bundled Node v24.19.0 processes the tiny synthetic log as2ticks/0unaccounted;
+this proves the workflow, not compatibility with every future Electron record.
+
+Map each isolate by its script-source/code-creation URLs, not filename alone:
+- incrementalSurface.worker-*.js => modeled surfaces (positions/index/normals).
+- sourcePickingBvh.worker-*.js => picking BVH construction.
+- index-*.js => main renderer/React/admission work.
+- node:electron / main.cjs only => Electron main; not surface-worker evidence.
+An isolate filename is not a native thread ID. Multiple URLs in an isolate and
+new workers must be reported honestly. Do not merge isolated address spaces.
+
+Source maps
+The exact built assets include .js.map files. Bundled Node's --source-map
+tick-processor option is BROKEN on the synthetic check (ReferenceError:d8 is
+not defined); do not rely on it. Process logs normally, then map a generated
+one-based LINE:COLUMN from a hot function against the corresponding saved map:
+  "$REHEARSAL_NODE" "$REHEARSAL_ROOT/testcases/outputs/full-case-rehearsal-20261020/review/v8_map_location.mjs" "$REHEARSAL_PROFILE/maps/incrementalSurface.worker-ACTUALHASH.js.map" LINE COLUMN
+The helper uses node:module SourceMap, no packages/browser/network. It returns
+the original file/line/column and any mapped name. Pick the map whose exact
+hashed bundle URL appears in the function name; source maps cannot recover a
+missing code entry or distinguish two files using the wrong bundle map.
+
+Decision only after profile
+Compare worker self/total ticks for indexSurface/indexedSurfaceNormals versus
+buildSourcePickingBvh/MeshBVH and main-thread/GC cost. Existing raw preparation
+still stitches/indexes/normals the whole changed layer; visual BVHs independently
+rebuild its whole source geometry. Defer readonly BVHs only if their cost is
+material (ordinary source raycasting preserves correctness); allocation-free
+indexed normals are a separate candidate only if the profile supports it.
+No broad renderer redesign or speed claim follows from the current native sample.
+
+Limits
+- Byte captures select when records reached the log, not exact wall-clock tick
+  times: buffering may shift boundaries. Use a sustained hot interval, record
+  actual frame progress, inspect raw timestamps and report this qualification.
+- Statistical profiling adds overhead. Measure eventual unprofiled GUI speed
+  separately and do not infer speed directly from tick proportions.
+- Missing renderer/worker logs under the retained sandbox is a possible result.
+- No app/engine/replay/control was executed while preparing this plan.

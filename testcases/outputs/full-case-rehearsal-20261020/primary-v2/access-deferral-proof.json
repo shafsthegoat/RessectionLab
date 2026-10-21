@@ -1,0 +1,288 @@
+{
+  "utc": "2026-10-20T12:40:16.898241+00:00",
+  "codeCommit": "af54fbffffb4819c3fd2d039d7826d4ee74bbb0d",
+  "originalSha256": "ff5a49b8706a8ccda08d8c3e82dad3e079f85dea98cb6bd40783d2262eec9838",
+  "preservedActionPrefix": 430,
+  "actualActions": 454,
+  "stateId": "sha256:a53bea5298c4944565743a0687e70ddf62f23eea274ef1af8aafce9f851896e9",
+  "stage": "cusa_setup",
+  "accessIndex": 4,
+  "currentAccess": {
+    "boneBoundsMm": [
+      -416.25,
+      -404.25
+    ],
+    "capacityStateId": "sha256:ae24800dee1c55c161beaf8b6e1dec2dd3d57f101302cf4978c15d4cbaef70fa",
+    "drillRadiusMm": 3.0,
+    "entryPose": {
+      "position": [
+        -25.464996337890625,
+        -5.558837890625,
+        -417.25
+      ],
+      "quaternion": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+    "geometricTargetCapacityCells": 358,
+    "id": "superior-135-118",
+    "outsidePose": {
+      "position": [
+        -25.464996337890625,
+        -5.558837890625,
+        -366.25
+      ],
+      "quaternion": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "remainingGeometricCapacityCells": 358,
+    "strategy": "dense-tapered-superior",
+    "targetEntryIndex": [
+      135,
+      118,
+      137
+    ],
+    "windowClearanceMm": 5.0
+  },
+  "currentCycleBoneRemovedCells": 530,
+  "currentCoreSearchExhausted": false,
+  "passIndex": 0,
+  "transitionRecords": [
+    {
+      "position": 430,
+      "stateId": "sha256:afd2b887f12f8fa2c654af35eea8dda3ec474cc23381b2bfa6943583ed4d0f6c",
+      "stage": "access_setup",
+      "phase": "access-superior-117-128",
+      "lastOutcome": {
+        "position": 430,
+        "status": "accepted",
+        "reason": null,
+        "operation": "exchange",
+        "removedCells": 0
+      },
+      "targetRemovedMm3": 11588.0,
+      "boneRemovedMm3": 3917.0
+    },
+    {
+      "position": 432,
+      "stateId": "sha256:aa44e9713b1226edbe8f7ce821a139ba49b783869d9c464c14c26e42f6829e4b",
+      "stage": "cusa_setup",
+      "phase": "access-superior-117-128",
+      "lastOutcome": {
+        "position": 432,
+        "status": "partial",
+        "reason": "UNSUPPORTED_MATERIAL",
+        "operation": "apply",
+        "removedCells": 0
+      },
+      "targetRemovedMm3": 11588.0,
+      "boneRemovedMm3": 3917.0
+    },
+    {
+      "position": 434,
+      "stateId": "sha256:2d033b98f17b79d07c6fd8b9e58d17fcb7df2b00d65d31f3628cdbcadc5b8540",
+      "stage": "cusa_setup",
+      "phase": "removal-superior-117-128",
+      "lastOutcome": {
+        "position": 434,
+        "status": "accepted",
+        "reason": null,
+        "operation": "exchange",
+        "removedCells": 0
+      },
+      "targetRemovedMm3": 11588.0,
+      "boneRemovedMm3": 3917.0
+    },
+    {
+      "position": 436,
+      "stateId": "sha256:a163de49833c8843a195acf15c033f4b1fce7edb07f31a4b1bdd8b0ac43d423a",
+      "stage": "core",
+      "phase": "removal-superior-117-128",
+      "lastOutcome": {
+        "position": 436,
+        "status": "accepted",
+        "reason": null,
+        "operation": "apply",
+        "removedCells": 4
+      },
+      "targetRemovedMm3": 11592.0,
+      "boneRemovedMm3": 3917.0
+    },
+    {
+      "position": 438,
+      "stateId": "sha256:2fb9a487b7faaa2ccc8589c16e4c4a7d1ba77f03334f57565325bd32c2fcc365",
+      "stage": "core",
+      "phase": "core-3",
+      "lastOutcome": {
+        "position": 438,
+        "status": "accepted",
+        "reason": null,
+        "operation": "apply",
+        "removedCells": 1
+      },
+      "targetRemovedMm3": 11595.0,
+      "boneRemovedMm3": 3917.0
+    },
+    {
+      "position": 440,
+      "stateId": "sha256:505d348599c7e16db706298249988c80acdfe7064752276dfc26832dadf93a71",
+      "stage": "access_setup",
+      "phase": "access-superior-117-128",
+      "lastOutcome": {
+        "position": 440,
+        "status": "accepted",
+        "reason": null,
+        "operation": "exchange",
+        "removedCells": 0
+      },
+      "targetRemovedMm3": 11595.0,
+      "boneRemovedMm3": 3917.0
+    },
+    {
+      "position": 442,
+      "stateId": "sha256:9fc22aaae2aad9c2b2f703ecd22058ebe6a2e831fbde3471b4ce648b4b110b5f",
+      "stage": "drill",
+      "phase": "access-superior-117-128",
+      "lastOutcome": {
+        "position": 442,
+        "status": "partial",
+        "reason": "BONE_CUTTING_IN_PROGRESS",
+        "operation": "apply",
+        "removedCells": 2
+      },
+      "targetRemovedMm3": 11595.0,
+      "boneRemovedMm3": 3919.0
+    },
+    {
+      "position": 444,
+      "stateId": "sha256:d212d4d42704818f927b4142dd93c5d5a59d69fd5e4e0dffa1a36c7ba2c4d0e5",
+      "stage": "cusa_setup",
+      "phase": "removal-superior-117-128",
+      "lastOutcome": {
+        "position": 444,
+        "status": "accepted",
+        "reason": null,
+        "operation": "withdraw",
+        "removedCells": 0
+      },
+      "targetRemovedMm3": 11595.0,
+      "boneRemovedMm3": 3919.0
+    },
+    {
+      "position": 446,
+      "stateId": "sha256:ae24800dee1c55c161beaf8b6e1dec2dd3d57f101302cf4978c15d4cbaef70fa",
+      "stage": "cusa_setup",
+      "phase": "removal-superior-117-128",
+      "lastOutcome": {
+        "position": 446,
+        "status": "accepted",
+        "reason": null,
+        "operation": "place",
+        "removedCells": 0
+      },
+      "targetRemovedMm3": 11595.0,
+      "boneRemovedMm3": 3919.0
+    },
+    {
+      "position": 448,
+      "stateId": "sha256:30810a1092d92e6f6c0655f719925d607de057cfb01c6804cc4df3262fb6a9f7",
+      "stage": "access_setup",
+      "phase": "access-superior-135-118",
+      "lastOutcome": {
+        "position": 448,
+        "status": "accepted",
+        "reason": null,
+        "operation": "place",
+        "removedCells": 0
+      },
+      "targetRemovedMm3": 11595.0,
+      "boneRemovedMm3": 3919.0
+    },
+    {
+      "position": 450,
+      "stateId": "sha256:a82767d9891e8311f25ffbc6d55bafe9a231df1354b6b966ffa32db488b24a9b",
+      "stage": "drill",
+      "phase": "access-superior-135-118",
+      "lastOutcome": {
+        "position": 450,
+        "status": "partial",
+        "reason": "BONE_CUTTING_IN_PROGRESS",
+        "operation": "apply",
+        "removedCells": 380
+      },
+      "targetRemovedMm3": 11595.0,
+      "boneRemovedMm3": 4403.0
+    },
+    {
+      "position": 452,
+      "stateId": "sha256:dd063169d9fd142d8a9dc5f5b7d1ee39b56561669fd238cc21174cc987be4057",
+      "stage": "cusa_setup",
+      "phase": "removal-superior-135-118",
+      "lastOutcome": {
+        "position": 452,
+        "status": "accepted",
+        "reason": null,
+        "operation": "withdraw",
+        "removedCells": 0
+      },
+      "targetRemovedMm3": 11595.0,
+      "boneRemovedMm3": 4449.0
+    },
+    {
+      "position": 454,
+      "stateId": "sha256:a53bea5298c4944565743a0687e70ddf62f23eea274ef1af8aafce9f851896e9",
+      "stage": "cusa_setup",
+      "phase": "removal-superior-135-118",
+      "lastOutcome": {
+        "position": 454,
+        "status": "accepted",
+        "reason": null,
+        "operation": "place",
+        "removedCells": 0
+      },
+      "targetRemovedMm3": 11595.0,
+      "boneRemovedMm3": 4449.0
+    }
+  ],
+  "recentPhases": [
+    {
+      "endPosition": 438,
+      "id": "core-3",
+      "label": "Controlled debulking within the checked target passage",
+      "startPosition": 436
+    },
+    {
+      "endPosition": 443,
+      "id": "access-superior-117-128",
+      "label": "Modeled skull opening \u00b7 superior-117-128",
+      "startPosition": 438
+    },
+    {
+      "endPosition": 446,
+      "id": "removal-superior-117-128",
+      "label": "Target debulking from checked frontier \u00b7 superior-117-128",
+      "startPosition": 443
+    },
+    {
+      "endPosition": 451,
+      "id": "access-superior-135-118",
+      "label": "Modeled skull opening \u00b7 superior-135-118",
+      "startPosition": 446
+    },
+    {
+      "endPosition": 454,
+      "id": "removal-superior-135-118",
+      "label": "Target debulking from checked frontier \u00b7 superior-135-118",
+      "startPosition": 451
+    }
+  ],
+  "reviewScope": "Native-record scheduling evidence only; final canonical replay remains pending."
+}

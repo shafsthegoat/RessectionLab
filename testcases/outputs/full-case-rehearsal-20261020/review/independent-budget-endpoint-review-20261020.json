@@ -1,0 +1,23 @@
+{
+  "utc": "2026-10-21T00:39:52.346637+00:00",
+  "status": "approved for reviewed actual paused2126 request",
+  "filesSha256": {
+    "src/resectionlab/full_case_rehearsal.py": "36d130f228ece0a367b612d5b0b3dc19182206e264bfe933c9394947fb34f2c9",
+    "tests/test_full_case_rehearsal.py": "ce692605bba997916e05d7b74a8cefd76f43385f3a62c1f3b9095a26c1bdce32",
+    "testcases/outputs/full-case-rehearsal-20261020/primary-v2/request_reviewed_budget_endpoint.py": "6ac9852be00fb5f50993fe47aed2e3ef044591da231c709febc6015e49f4ab1f"
+  },
+  "independentTests": {
+    "passed": 7,
+    "deselected": 39,
+    "reportedWallSeconds": 5.96,
+    "selection": "budget_endpoint or cleanup",
+    "xml": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/review/independent-budget-endpoint-tests-20261020.xml"
+  },
+  "findings": [
+    "Request validates exact source/current history/state, primary scenario, residual target, no active wounds and no duplicate request. It copies paused stage/access pass metadata and schedules existing ordinary public cleanup only.",
+    "Completed endpoint is explicitly budget-limited; unfinished opportunities retained and no maximal-removal/unresectability/exhaustion claim. Terminal budget endpoint is not automatically resumed.",
+    "Loader pins reviewed code/source and actual2126 saved/checkpoint boundary; replaces only run_slice/resume_director/request helper, retains all engine/live hash code, persists metadata without physical advance and retains pause flag."
+  ],
+  "loaderSyntaxOnlyNeverExecutedByReviewer": true,
+  "limits": "No live console/flag access or patient physics/GUI/production edits. Actual cleanup still needs public preview/commit and ledger reporting; a partial/blocked withdrawal must remain a truthful saved stop. Final native/canonical/observed/video gates pending."
+}

@@ -1,0 +1,29 @@
+{
+  "utc": "2026-10-20T22:52:31.482886+00:00",
+  "result": "approved: no actionable correctness issue found",
+  "baseCommit": "4dbdee81c5fcd35a6504b572d3e8c46d544becc0",
+  "reviewedProductionAndTestSha256": {
+    "src/resectionlab/surgical_engine.py": "c4057fb033a29453558a0de4a09606d5f5a4ce73ecce7aba2b7ce632ee083178",
+    "tests/test_surgical_rollback_copy.py": "e597306744934822c6f303d936cf9319807988ec7284fdb48c16e4938bb05430"
+  },
+  "productionScope": "Only _microstep_checkpoint extends existing deepcopy memo with independently owned guarded scalar drillingV2 maps, after existing flapComponents/removed/debris precedence. No other engine method changes.",
+  "equivalence": "Exact outer/inner builtin dict and exact str keys/int-or-float values permit shallow map copies because their leaves are immutable. Shared memo retains aliases and preexisting exemptions; every checkpoint freshly checks guard eligibility. Unsupported nested/subclass/NumPy values retain ordinary deepcopy. Adversarial custom __deepcopy__ methods observing memo timing remain outside the explicitly documented data-graph contract.",
+  "independentTests": {
+    "command": ".venv/bin/python -m pytest tests/test_surgical_rollback_copy.py tests/test_surgical_cancellation.py tests/test_surgical_telemetry_collector.py tests/test_surgical_physics_v2_integration.py -q --basetemp=testcases/outputs/full-case-rehearsal-20261020/review/independent-drilling-map-copy-pytest-20261020 --junitxml=testcases/outputs/full-case-rehearsal-20261020/review/independent-drilling-map-copy-tests-20261020.xml",
+    "passed": 57,
+    "reportedWallSeconds": 6.44,
+    "diffCheckPassed": true
+  },
+  "loaderPrepared": {
+    "path": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/load_exact_drilling_map_copy.py",
+    "sha256": "d002af38b3a0d5807ef620622c11d656658b488854e5120ef3824f7d82dfcaa7",
+    "syntaxCheckedOnly": true,
+    "executed": false,
+    "commitPin": "REVIEWED_COMMIT_TO_PIN",
+    "knownBaseCommit": "4dbdee81c5fcd35a6504b572d3e8c46d544becc0",
+    "retryPolicy": "Any preexisting integration proof/checkpoint refuses; interrupted setup or zero-action first interval requires manual review. No automatic retry/rollback.",
+    "scope": "Rebind only module._microstep_checkpoint; all module/class member objects and captured function code identities, thermal/director code, source/patient/history remain checked. Exclusive proof plus hardlinked actual boundary before exact owned pause removal. One new ordinary2-action interval then guarded12-action continuation.",
+    "postRootReviewRevision": "Graph comparison still tracks exact tuple types/aliases; ownership assertion tracks mutable dict/list identities only. After the fully audited first new2-action interval, ordinary guarded advance(1,slice_actions=12) continues without recurring full-prefix/source audit overhead or an unconditional zero-action break."
+  },
+  "limits": "Tiny engineering fixtures only. No patient engine construction, restore, preview, step, replay or live-session/GUI access. No production changes, commit or push. Loader contains a blocking placeholder and was never executed. No action/episode speed ratio claimed."
+}

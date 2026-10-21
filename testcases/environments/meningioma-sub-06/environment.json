@@ -1,0 +1,143 @@
+{
+  "schema": "resectionlab.surgical-environment.v1",
+  "frame": "RAS+",
+  "units": "mm",
+  "grid": {
+    "shape": [
+      220,
+      220,
+      181
+    ],
+    "affine": [
+      [
+        -1.0,
+        0.0,
+        0.0,
+        109.53500366210938
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        -123.558837890625
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        -554.25
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "spacingMm": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "voxelVolumeMm3": 1.0
+  },
+  "physicsSchema": "resectionlab.tissue-physics.v2",
+  "physicsHash": "sha256:d822f1cdaa7031cc49173483fb2a0d7fd8405ce94e48f1353fcf52dfa3687dc7",
+  "standardized": true,
+  "anatomy": {
+    "brain": "supplied",
+    "tumor": "supplied",
+    "bone": "supplied",
+    "vessels": "supplied"
+  },
+  "target": {
+    "regionIds": [
+      2
+    ],
+    "initialVolumeMm3": 43573.0
+  },
+  "occupancyRule": "later mapped regions own overlaps; source memberships retained",
+  "coverageMeaning": "Supplied masks do not establish completeness. Unlabeled and outside-image anatomy remain unknown.",
+  "functionalAnatomy": "unknown unless explicit source evidence is supplied",
+  "clinicalValidation": false,
+  "caseHash": "sha256:6ca9c1dee58b3635d92d576ad5b355d0a6d500892f30f07968a671b1b67a51ea",
+  "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+  "regions": [
+    {
+      "id": 1,
+      "name": "brain",
+      "material": "soft_tissue",
+      "target": false,
+      "color": "#b9c5c9"
+    },
+    {
+      "id": 2,
+      "name": "tumor",
+      "material": "tumor",
+      "target": true,
+      "color": "#9863db"
+    },
+    {
+      "id": 3,
+      "name": "bone",
+      "material": "bone",
+      "target": false,
+      "color": "#e5d6b8"
+    },
+    {
+      "id": 4,
+      "name": "vessels",
+      "material": "vessel",
+      "target": false,
+      "color": "#e54491"
+    }
+  ],
+  "physicsProfile": {
+    "bone": {
+      "ambientTemperatureC": 37.0,
+      "coolingTimeSeconds": 8.0,
+      "doseThresholdC": 43.0,
+      "heatCapacityJPerMm3K": 0.002,
+      "heatFraction": 0.35,
+      "maxForceN": 20.0,
+      "maxPowerW": 30.0,
+      "maxRadiusMm": 10.0,
+      "maxRpm": 80000.0,
+      "model": "work-limited-drill-v2",
+      "specificEnergyJPerMm3": 0.5,
+      "tangentialForceFraction": 0.1
+    },
+    "brain": {
+      "brainStiffnessNPerMm": 0.0006,
+      "bulkPenaltyRatio": 2.0,
+      "dragNsPerMm": 0.0003,
+      "fixedStepSeconds": 0.008333333333333333,
+      "holdStiffnessNPerMm": 0.02,
+      "maxDisplacementMm": 3.0,
+      "maxEdgeStrain": 0.65,
+      "maxForceN": 0.08,
+      "maxNodes": 2000,
+      "model": "local small-strain Kelvin-Voigt lattice; uncalibrated engineering assumptions",
+      "radiusMm": 4.0,
+      "tumorStiffnessNPerMm": 0.0012,
+      "units": "displacement mm; stiffness N/mm; drag N s/mm; time s"
+    },
+    "provenance": {
+      "description": "Uncalibrated engineering parameters supplied explicitly for simulator experiments; not patient measurements.",
+      "kind": "assumed-research"
+    },
+    "schema": "resectionlab.tissue-physics.v2",
+    "vessel": {
+      "clotRatePerSecond": 0.02,
+      "coagulationDose": 2.0,
+      "leakConductanceMmPerPaS": 0.0001,
+      "mechanicalDoseNs": 2.0,
+      "model": "compliant-wounds-v2",
+      "pressurePa": 1000.0,
+      "refillConductanceMm3PerPaS": 0.001,
+      "reservoirMm3": 100.0,
+      "thermalDoseCs": 200.0
+    }
+  },
+  "provenanceReport": "report.json"
+}

@@ -1,0 +1,20 @@
+{
+  "utc": "2026-10-20T13:41:03.366609+00:00",
+  "codeCommit": "3371a848b1de9693aa1a2a1cfd1ff5e071ea3ae8",
+  "focusedCommand": ".venv/bin/python -m pytest tests/test_full_case_cleanup.py tests/test_full_case_rehearsal.py -q",
+  "rootRun": {
+    "passed": 38,
+    "wallSeconds": 18.31
+  },
+  "independentReview": {
+    "agent": "acceptance_review",
+    "passed": 38,
+    "wallSeconds": 18.3,
+    "finding": "No actionable correctness issue in current integration.",
+    "additionalCheck": "One-action and batch execution matched engine snapshots and director metadata except measured wallSeconds, for complete-target and retained-target engineering fixtures.",
+    "partialApproach": "Genuine partial RETAINED_TISSUE_COLLISION recorded 9 mm3 aspiration, no arrival or dwell claim, then checked withdrawal."
+  },
+  "liveReloadProof": "primary-v2/field-cleanup-director-reload-proof.json",
+  "patientCleanupExecuted": false,
+  "scope": "Engineering tests and state-preserving director reload only. Final patient canonical acceptance and GUI replay remain pending."
+}

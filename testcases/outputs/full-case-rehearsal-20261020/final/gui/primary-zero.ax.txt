@@ -1,0 +1,307 @@
+Window: "RessectionLab", App: Electron.
+0 standard window RessectionLab, Secondary Actions: Raise
+	1 container RessectionLab
+		2 container
+			3 HTML content RessectionLab, URL: file:///Users/shaf/coding_projects/RessectionLab/desktop/dist/index.html
+				4 container
+					5 text Ressection Lab Studio Local research
+					6 button (disabled) Open ⌘O
+						7 text Open
+						8 text ⌘O
+					9 button (disabled) Add data
+					10 button (disabled) Save
+					11 container Workspace navigation
+						12 button Cases
+						13 button Data
+						14 button 3D workspace
+						15 button Rehearse
+						16 button Description: Advanced research workflows, Help: Earlier experimental workflows
+					17 text SURGICAL RESEARCH
+					18 button Collapse case panel
+					19 container
+						20 text Rehearsal model
+						21 pop up button Description: Rehearsal model, Value: Standard instrument environment
+							22 (selected) Standard instrument environment
+					23 container Surgical instrument toolbox
+						24 text SURGICAL WORKBENCH
+						25 heading Instrument toolbox, Value: 2
+							26 text Instrument toolbox
+						27 text Research rehearsal · source anatomy preserved. Mechanics remain uncalibrated.
+						28 button (disabled) Open engineering test scene
+						29 disclosure triangle Import segmentation / geometry
+							30 text Import segmentation / geometry
+						31 container Environment readiness
+							32 text Standard V2 research environment
+							33 container
+								34 text 1 × 1 × 1  mm ·  V2 mechanics  · RAS+ mm
+							35 text brain: supplied · tumor: supplied · bone: supplied · vessels: supplied
+							36 text Supplied masks do not establish completeness. Missing anatomy and function remain unknown.
+							37 container
+								38 text Protection:  strict-research .  11 declared exclusion masks; clearance 2 mm.  Anatomical completeness remains unknown.
+						39 disclosure triangle Anatomy visibility and appearance
+							40 text Anatomy visibility and appearance
+						41 toggle button (disabled) left hand Cranial drill Withdrawn · Inactive Tip -21.5 / 34.4 / -366.3 mm RAS, Value: 1
+							42 container
+								43 text left  hand
+							44 text Cranial drill
+							45 container
+								46 text Withdrawn  ·  Inactive
+							47 container
+								48 text Tip  -21.5 / 34.4 / -366.3  mm RAS
+						49 toggle button (disabled) right hand Frazier suction Withdrawn · Inactive Tip -26.5 / 10.4 / -366.3 mm RAS, Value: 0
+							50 container
+								51 text right  hand
+							52 text Frazier suction
+							53 container
+								54 text Withdrawn  ·  Inactive
+							55 container
+								56 text Tip  -26.5 / 10.4 / -366.3  mm RAS
+						57 container
+							58 text Branch
+							59 pop up button (disabled) Description: Surgical branch, Value: full-primary · 2148 actions
+								60 (selected) full-primary · 2148 actions
+						61 container
+							62 toggle button (disabled) Play replay, Value: 0
+							63 text Recorded action boundary  2148  /  2148
+						64 container
+							65 button (disabled) Previous recorded state
+							66 button (disabled) Next recorded state
+						67 container
+							68 text Replay speed
+							69 pop up button Description: Replay speed, Value: 1×
+								70 (selected) 1×
+						71 slider Description: Surgical timeline, Value: 0, Secondary Actions: Increment, Decrement
+						72 container
+							73 text Preparing recorded state  0 … Displaying the previous accepted state.
+						74 text Replay reconstructs successful engine microsteps and finalized action boundaries; tissue, tools and fluid are never interpolated.
+						75 container Full Case Rehearsal
+							76 text Full Case Rehearsal
+							77 text Compute the rehearsal in bounded slices, recording each action for replay. Pause stops after the current slice finishes.
+							78 container
+								79 button (disabled) Resume primary rehearsal
+								80 button (disabled) Start vascular injury / rescue
+								81 button Frame operative field
+							82 checkbox Smooth 3D surfaces, Value: 0
+							83 text Current bounded request continues; no further slices will start automatically.
+							84 container
+								85 text Primary rehearsal  ·  stopped  · viewing Field inspection and tool withdrawal
+							86 text Budget-limited engineering rehearsal with residual target. Further resection was stopped by the work budget; unfinished and untested routes are retained. This is not maximal feasible removal or evidence that residual target is unresectable. Missing dura, attachment and functional evidence remains UNKNOWN.
+							87 container
+								88 text Recorded phase
+								89 pop up button (disabled) Description: Jump to recorded rehearsal phase, Value: Jump to a recorded phase…
+							90 disclosure triangle Rehearsal limits
+								91 text Rehearsal limits
+							92 container Recorded source target accounting
+								93 text Original modeled target · mm³
+								94 text 43,573
+								95 text Target removed · mm³
+								96 text 35,444
+								97 text Target remaining · mm³
+								98 text 8,129
+								99 text Target removed · %
+								100 text 81.34
+							101 container
+								102 text Full source annotation:  45,115  mm³. Displayed percentages use the modeled source grid target.
+							103 container Recorded normal and unknown material accounting
+								104 text Non-target normal material removed · mm³
+								105 text 0
+								106 text Mapped unknown material removed · mm³
+								107 text Unknown
+								108 text Normal-material exposure · cell·s
+								109 text 0.43
+								110 text Unknown-material exposure · cell·s
+								111 text Unknown
+							112 text Normal removal excludes target labels; exposure is grouped by mapped material. Missing anatomy and functional injury remain UNKNOWN.
+							113 container Recorded bone wounds and fluid
+								114 text Bone removed · mm³
+								115 text 16,552
+								116 text Modeled wounds / active outlets
+								117 container
+									118 text 0  /  0
+								119 text Nonpatent local vessel faces
+								120 text 0
+								121 text Spatial fluid / outlet reservoirs · mm³
+								122 container
+									123 text 0  /  0
+								124 text Modeled blood generated · mm³
+								125 text 0
+								126 text Fluid suctioned · mm³
+								127 text 0
+								128 text Elapsed simulation · s
+								129 text 4,500.85
+							130 text Modeled blood uses the wound-source ledger; suction can include irrigation fluid. Blue glyphs scale with each cell's recorded fluid volume, not a reconstructed fluid surface. Reservoirs are counted separately; field clearance does not restore vessel patency.
+						131 disclosure triangle Research Planning · compare continuations
+							132 text Research Planning · compare continuations
+						133 disclosure triangle Source provenance and research assumptions
+							134 text Source provenance and research assumptions
+						135 disclosure triangle Exchange instrument
+							136 text Exchange instrument
+						137 heading Cranial drill, Value: 3
+							138 text Cranial drill
+						139 text Compatible: bone
+						140 container
+							141 text Viewport
+							142 pop up button (disabled) Description: Instrument interaction, Value: Navigate anatomy
+								143 (selected) Navigate anatomy
+							144 text Action
+							145 pop up button (disabled) Description: Instrument action, Value: apply
+								146 (selected) apply
+							147 text R  mm
+							148 stepper (disabled) Description: Tool position R, Value: -21.465, Secondary Actions: Increment, Decrement
+							149 text A  mm
+							150 stepper (disabled) Description: Tool position A, Value: 34.441, Secondary Actions: Increment, Decrement
+							151 text S  mm
+							152 stepper (disabled) Description: Tool position S, Value: -366.25, Secondary Actions: Increment, Decrement
+							153 text Pitch  °
+							154 stepper (disabled) Description: Tool pitch, Value: -180, Secondary Actions: Increment, Decrement
+							155 text Yaw  °
+							156 stepper (disabled) Description: Tool yaw, Value: 0, Secondary Actions: Increment, Decrement
+							157 text Roll  °
+							158 stepper (disabled) Description: Tool roll, Value: 0, Secondary Actions: Increment, Decrement
+							159 text Tip radius · mm
+							160 stepper (disabled) Description: Tip radius · mm, Value: 2, Secondary Actions: Increment, Decrement
+							161 text Drill speed · rpm
+							162 stepper (disabled) Description: Drill speed · rpm, Value: 40000, Secondary Actions: Increment, Decrement
+							163 text Contact force · N
+							164 stepper (disabled) Description: Contact force · N, Value: 1, Secondary Actions: Increment, Decrement
+							165 text Drill duty fraction
+							166 stepper (disabled) Description: Drill duty fraction, Value: 1, Secondary Actions: Increment, Decrement
+							167 text Duration · s
+							168 stepper (disabled) Description: Action duration, Value: 1, Secondary Actions: Increment, Decrement
+							169 text 0  stroke points  ·  4500.85  simulated s
+							170 button (disabled) Preview
+							171 button (disabled) Apply
+							172 button (disabled) Cancel
+						173 container Last action result
+							174 container
+								175 text Last action result  ·  accepted
+							176 container
+								177 text 100 % of requested action completed
+							178 content list
+								179 container
+									180 AXListMarker • 
+									181 text inspect
+						182 disclosure triangle Recorded V2 mechanics and fluid budget
+							183 text Recorded
+							184 text  V2 mechanics and fluid budget
+						185 container
+							186 button (disabled) Undo
+							187 button (disabled) Redo
+							188 button (disabled) Reset
+							189 button (disabled) Branch
+						190 text Target removed · mm³
+						191 text 35444.00
+						192 text Other removed · mm³
+						193 text 16552.00
+						194 text Contact · cell·s
+						195 text 0.00
+						196 text Fluid present · mm³
+						197 text 0.00
+						198 container
+							199 text Target remaining:  8129.00  mm³ /  43573.00  mm³ initial. Target assignment is a research task declaration.
+						200 disclosure triangle Recorded effect details
+							201 text Recorded
+							202 text  effect details
+						203 text Effect markers: cyan contact · orange heat · blue fluid · gray-brown debris · red first obstruction · gold cut seams / transections. Mesh seams represent retained topology graph cuts, not a physical opening or removed tissue.
+						204 disclosure triangle Action timeline
+							205 text Action timeline
+						206 disclosure triangle Material mapping · later rows own overlaps
+							207 text Material mapping · later rows own overlaps
+						208 text Preparing an exact recorded state… Cold verification can take several minutes; the previous accepted display remains visible.
+					209 container Current case: ZENODO-17486320-meningioma-sub-06-surgical-research
+						210 text ZENODO-17486320-meningioma-sub-06-surgical-research
+					211 heading Surgical research rehearsal, Value: 2
+						212 text Surgical research rehearsal
+					213 container Linked patient imaging workspace
+						214 toolbar Imaging layout and 3D controls
+							215 button Layout
+							216 button Appearance
+							217 button Clip
+							218 button Fit 3D view
+							219 toggle button Description: Show structures only, Value: 1
+							220 toggle button Description: Show scan volume with structures, Value: 0
+							221 container Source slice framing
+								222 pop up button Description: Source slice fit, Help: Display framing only. Full image restores the complete source image., Value: Fit scan content
+									223 (selected) Fit scan content
+								224 button Zoom source slices out
+								225 button Description: Reset source slice zoom, Help: Reset slice zoom to 100%
+									226 text 100
+									227 text %
+								228 button Zoom source slices in
+							229 text 3D + slices
+						230 container
+							231 text 3D Segmentation surfaces RAS · mm
+							232 container 3-D source anatomy. Drag to rotate, scroll to zoom, double-click to set linked cursor.
+								233 text Image · source-derived labels
+								234 container 3-D patient coordinates: R is right, A anterior, S superior
+									235 text R A S
+									236 text Patient axes
+								237 container
+									238 text Drag to rotate · Scroll to zoom · Right-drag to pan Double-click to link cursor
+						239 container
+							240 text Axial
+							241 text Content fit
+							242 text -428.7 mm
+							243 toggle button Description: Expand Axial Image, Value: 0
+							244 container Axial source Image, scan content fit, zoom 100 percent, neurological convention, slice position -428.7 millimeters. Click to set cursor; scroll or arrow keys change slice.
+								245 image Modeled surgical effects
+								246 text L
+								247 text R
+								248 text A
+								249 text P
+								250 text 20
+								251 text  mm
+								252 text SOURCE IMAGE
+								253 text  · MODELED EFFECT OVERLAY
+						254 container
+							255 text Coronal
+							256 text Content fit
+							257 text 8.0 mm
+							258 toggle button Description: Expand Coronal Image, Value: 0
+							259 container Coronal source Image, scan content fit, zoom 100 percent, neurological convention, slice position 8.0 millimeters. Click to set cursor; scroll or arrow keys change slice.
+								260 image Modeled surgical effects
+								261 text L
+								262 text R
+								263 text S
+								264 text I
+								265 text 20
+								266 text  mm
+								267 text SOURCE IMAGE
+								268 text  · MODELED EFFECT OVERLAY
+						269 container
+							270 text Sagittal
+							271 text Content fit
+							272 text -17.9 mm
+							273 toggle button Description: Expand Sagittal Image, Value: 0
+							274 container Sagittal source Image, scan content fit, zoom 100 percent, neurological convention, slice position -17.9 millimeters. Click to set cursor; scroll or arrow keys change slice.
+								275 image Modeled surgical effects
+								276 text P
+								277 text A
+								278 text S
+								279 text I
+								280 text 20
+								281 text  mm
+								282 text SOURCE IMAGE
+								283 text  · MODELED EFFECT OVERLAY
+						284 text Linked views
+						285 text RAS
+						286 text -17.9 / 8.0 / -428.7  mm
+						287 container
+							288 text Contrast
+							289 slider Description: Source Image window width, Value: 1, Secondary Actions: Increment, Decrement
+						290 text Neurological convention
+					291 text Linked physical coordinates · RAS+ mm Local imaging · cached anatomy
+					292 text Preparing local operation…
+					293 button Cancel
+					294 text RAS -17.9 / 8.0 / -428.7 mm
+	295 close button
+	296 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	297 minimize button
+298 menu bar
+	299 Electron
+	300 File
+	301 Edit
+	302 View
+	303 Window
+
+The focused UI element is 71 slider Description: Surgical timeline, Value: 0, Secondary Actions: Increment, Decrement

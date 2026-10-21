@@ -1,0 +1,164 @@
+{
+  "case": "current",
+  "position": 82,
+  "wallSeconds": 3.144420125056058,
+  "proposals": [
+    {
+      "kind": "core-positioning",
+      "predictedTargetCells": 0,
+      "workingRadiusMm": 0.6,
+      "requiresPublicPreview": true,
+      "strategy": "checked-core-approach-0-0",
+      "nextPocketRadiusMm": 1.5,
+      "nextPocketPredictedTargetCells": 17,
+      "maxTargetOnlyPocketRadiusMm": 6.0,
+      "maxTargetOnlyPocketPredictedTargetCells": 990
+    },
+    {
+      "kind": "core-positioning",
+      "predictedTargetCells": 0,
+      "workingRadiusMm": 0.6,
+      "requiresPublicPreview": true,
+      "strategy": "checked-core-approach--0.25-0",
+      "nextPocketRadiusMm": 1.5,
+      "nextPocketPredictedTargetCells": 18,
+      "maxTargetOnlyPocketRadiusMm": 6.0,
+      "maxTargetOnlyPocketPredictedTargetCells": 970
+    },
+    {
+      "kind": "core-positioning",
+      "predictedTargetCells": 0,
+      "workingRadiusMm": 0.6,
+      "requiresPublicPreview": true,
+      "strategy": "checked-core-approach-0-0.25",
+      "nextPocketRadiusMm": 1.5,
+      "nextPocketPredictedTargetCells": 15,
+      "maxTargetOnlyPocketRadiusMm": 6.0,
+      "maxTargetOnlyPocketPredictedTargetCells": 968
+    }
+  ]
+}
+{
+  "case": "verified516",
+  "position": 36,
+  "wallSeconds": 0.92255499958992,
+  "proposals": [
+    {
+      "kind": "core-positioning",
+      "predictedTargetCells": 0,
+      "workingRadiusMm": 0.6,
+      "requiresPublicPreview": true,
+      "strategy": "axial-retreat-12.0",
+      "nextPocketRadiusMm": 1.5,
+      "nextPocketPredictedTargetCells": 20,
+      "maxTargetOnlyPocketRadiusMm": 6.0,
+      "maxTargetOnlyPocketPredictedTargetCells": 1228
+    },
+    {
+      "kind": "core-positioning",
+      "predictedTargetCells": 0,
+      "workingRadiusMm": 0.6,
+      "requiresPublicPreview": true,
+      "strategy": "axial-retreat-8.0",
+      "nextPocketRadiusMm": 1.5,
+      "nextPocketPredictedTargetCells": 20,
+      "maxTargetOnlyPocketRadiusMm": 4.0,
+      "maxTargetOnlyPocketPredictedTargetCells": 395
+    },
+    {
+      "kind": "core-positioning",
+      "predictedTargetCells": 0,
+      "workingRadiusMm": 0.6,
+      "requiresPublicPreview": true,
+      "strategy": "axial-retreat-4.0",
+      "nextPocketRadiusMm": 1.5,
+      "nextPocketPredictedTargetCells": 20,
+      "maxTargetOnlyPocketRadiusMm": 2.5,
+      "maxTargetOnlyPocketPredictedTargetCells": 101
+    },
+    {
+      "kind": "core-positioning",
+      "predictedTargetCells": 0,
+      "workingRadiusMm": 0.6,
+      "requiresPublicPreview": true,
+      "strategy": "axial-retreat-2.0",
+      "nextPocketRadiusMm": 1.5,
+      "nextPocketPredictedTargetCells": 20,
+      "maxTargetOnlyPocketRadiusMm": 1.5,
+      "maxTargetOnlyPocketPredictedTargetCells": 20
+    }
+  ]
+}
+{
+  "case": "unexecuted-after-checked-positioning",
+  "position": null,
+  "wallSeconds": 1.8154587079770863,
+  "proposals": [
+    {
+      "kind": "core-removal",
+      "predictedTargetCells": 36,
+      "workingRadiusMm": 1.5,
+      "requiresPublicPreview": true,
+      "strategy": "aperture-pivot-fan",
+      "pivotMm": [
+        -8.464996337890625,
+        1.191162109375,
+        -410.25
+      ],
+      "lateralReachMm": 1.0599999999999996
+    },
+    {
+      "kind": "core-removal",
+      "predictedTargetCells": 36,
+      "workingRadiusMm": 1.5,
+      "requiresPublicPreview": true,
+      "strategy": "aperture-pivot-fan",
+      "pivotMm": [
+        -8.464996337890625,
+        1.191162109375,
+        -410.25
+      ],
+      "lateralReachMm": 1.0600000000000005
+    },
+    {
+      "kind": "core-removal",
+      "predictedTargetCells": 36,
+      "workingRadiusMm": 1.5,
+      "requiresPublicPreview": true,
+      "strategy": "axial-core"
+    },
+    {
+      "kind": "core-removal",
+      "predictedTargetCells": 36,
+      "workingRadiusMm": 1.5,
+      "requiresPublicPreview": true,
+      "strategy": "axial-core"
+    },
+    {
+      "kind": "core-removal",
+      "predictedTargetCells": 32,
+      "workingRadiusMm": 1.5,
+      "requiresPublicPreview": true,
+      "strategy": "aperture-pivot-fan",
+      "pivotMm": [
+        -8.464996337890625,
+        1.191162109375,
+        -410.25
+      ],
+      "lateralReachMm": 1.1199999999999999
+    },
+    {
+      "kind": "core-removal",
+      "predictedTargetCells": 32,
+      "workingRadiusMm": 1.5,
+      "requiresPublicPreview": true,
+      "strategy": "aperture-pivot-fan",
+      "pivotMm": [
+        -8.464996337890625,
+        1.191162109375,
+        -410.25
+      ],
+      "lateralReachMm": 1.1199999999999999
+    }
+  ]
+}

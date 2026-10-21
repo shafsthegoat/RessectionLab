@@ -1,0 +1,30 @@
+Statistical profiling result from testcases/outputs/full-case-rehearsal-20261020/review/synthetic-v8-prof-process.log, (2 ticks, 0 unaccounted, 0 excluded).
+
+ [Shared libraries]:
+   ticks  total  nonlib   name
+
+ [JavaScript]:
+   ticks  total  nonlib   name
+      2  100.0%  100.0%  JS: ~tiny file:///tiny.js:1:1
+
+ [C++]:
+   ticks  total  nonlib   name
+
+ [Summary]:
+   ticks  total  nonlib   name
+      2  100.0%  100.0%  JavaScript
+      0    0.0%    0.0%  C++
+      0    0.0%    0.0%  GC
+      0    0.0%          Shared libraries
+
+ [C++ entry points]:
+   ticks    cpp   total   name
+
+ [Bottom up (heavy) profile]:
+  Note: percentage shows a share of a particular caller in the total
+  amount of its parent calls.
+  Callers occupying less than 1.0% are not shown.
+
+   ticks parent  name
+      2  100.0%  JS: ~tiny file:///tiny.js:1:1
+

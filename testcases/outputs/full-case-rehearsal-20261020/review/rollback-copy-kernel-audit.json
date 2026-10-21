@@ -1,0 +1,130 @@
+{
+  "scope": "Saved JSON state kernel only; no live engine, replay or action benchmark.",
+  "native": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-over-sixty-percent.ressectionlab",
+  "nativeSha256": "f57083258895c9901c064427e36bd5e8e48da91fc334ae5948dae98ee88ead44",
+  "actions": 760,
+  "stateId": "sha256:789729f52d4d352f15b3e677d88c80da4714fa634a97e6b2d7941b15ba11bcde",
+  "counts": {
+    "contact": {
+      "type": "dict",
+      "length": 0
+    },
+    "cutEdges": {
+      "type": "list",
+      "length": 0
+    },
+    "cuts": {
+      "type": "list",
+      "length": 0
+    },
+    "debris": {
+      "type": "dict",
+      "length": 6717
+    },
+    "deformation": {
+      "type": "dict",
+      "length": 0
+    },
+    "deformationModel": {
+      "type": "dict",
+      "length": 4
+    },
+    "drillingV2": {
+      "type": "dict",
+      "length": 9
+    },
+    "flapComponents": {
+      "type": "list",
+      "length": 7417
+    },
+    "fluid": {
+      "type": "dict",
+      "length": 0
+    },
+    "holds": {
+      "type": "dict",
+      "length": 0
+    },
+    "materialExposure": {
+      "type": "dict",
+      "length": 3
+    },
+    "meshCutEdges": {
+      "type": "list",
+      "length": 0
+    },
+    "meshSeams": {
+      "type": "list",
+      "length": 0
+    },
+    "observations": {
+      "type": "list",
+      "length": 0
+    },
+    "removed": {
+      "type": "list",
+      "length": 34573
+    },
+    "separated": {
+      "type": "list",
+      "length": 0
+    },
+    "separatedAttachments": {
+      "type": "list",
+      "length": 0
+    },
+    "slots": {
+      "type": "dict",
+      "length": 2
+    },
+    "sources": {
+      "type": "list",
+      "length": 0
+    },
+    "thermal": {
+      "type": "dict",
+      "length": 0
+    },
+    "transectedEdges": {
+      "type": "list",
+      "length": 0
+    },
+    "vesselEncounters": {
+      "type": "list",
+      "length": 0
+    },
+    "vesselsV2": {
+      "type": "dict",
+      "length": 10
+    }
+  },
+  "times": {
+    "legacy": {
+      "millisecondsPerCopy": 13.362913873667518,
+      "samplesSecondsFor30": [
+        0.40088741621002555,
+        0.40099345799535513,
+        0.4001520830206573
+      ]
+    },
+    "minimal": {
+      "millisecondsPerCopy": 6.8238708190619946,
+      "samplesSecondsFor30": [
+        0.2049948750063777,
+        0.20389141701161861,
+        0.20471612457185984
+      ]
+    },
+    "all-flat": {
+      "millisecondsPerCopy": 6.793473629901807,
+      "samplesSecondsFor30": [
+        0.2038042088970542,
+        0.20491495775058866,
+        0.20274875033646822
+      ]
+    }
+  },
+  "minimalSpeedup": 1.9582600884441093,
+  "allFlatSpeedup": 1.967022263080554,
+  "implementation": "Exact builtin type guards each call, independent .copy containers seeded into deepcopy memo; existing flapComponents sharing retained."
+}

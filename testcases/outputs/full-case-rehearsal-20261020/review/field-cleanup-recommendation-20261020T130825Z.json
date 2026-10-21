@@ -1,0 +1,364 @@
+{
+  "schema": "resectionlab.readonly-end-cleanup-recommendation.v1",
+  "native": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/primary.ressectionlab",
+  "nativeSha256AtRead": "d69d746e4265055b358ceeb28f41cdcaa3b0694e76777288847488d0b6453be6",
+  "branch": "full-primary",
+  "actionsAtRead": 566,
+  "stateIdAtRead": "sha256:f9c45a9e2f39a7ed12d5a3c5c6ab5085a8a56e8e9728000b32a3f34d49677104",
+  "noPatientPhysicsExecuted": true,
+  "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+  "sourceArraysUnchanged": true,
+  "savedLedger": {
+    "generatedBoneDebrisMm3": 5192.0,
+    "presentMm3": 5014.897435897436,
+    "removedMm3": 177.1025641025651,
+    "escapedMm3": 0.0,
+    "residualMm3": -6.821210263296962e-13,
+    "fluidAddedMm3": 0.0,
+    "fluidPresentMm3": 0,
+    "wounds": 0
+  },
+  "existingRightSlot": {
+    "active": true,
+    "grip": [],
+    "inserted": true,
+    "instrument": "frazier_suction",
+    "parameters": {
+      "depthMm": 2.0,
+      "flowMm3PerSecond": 20.0,
+      "forceN": 0.0,
+      "radiusMm": 3.0
+    },
+    "position": [
+      -9.464996337890625,
+      30.441162109375,
+      -418.25
+    ],
+    "quaternion": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "outsidePose": {
+    "position": [
+      -9.464996337890625,
+      30.441162109375,
+      -366.25
+    ],
+    "quaternion": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "existingStationMassMm3": 0.0,
+  "proposedStations": [
+    {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -411.25
+      ],
+      "nearbyDebrisMm3": 250.76923076923077,
+      "physicalRayBlockedSourceCells": 0,
+      "currentlyConflictsWithLeft": false,
+      "newDebrisWithinFieldMm3": 250.76923076923077,
+      "recommendedDwellSeconds": 10.0
+    },
+    {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -407.25
+      ],
+      "nearbyDebrisMm3": 197.74358974358975,
+      "physicalRayBlockedSourceCells": 0,
+      "currentlyConflictsWithLeft": false,
+      "newDebrisWithinFieldMm3": 118.74358974358974,
+      "recommendedDwellSeconds": 6.137179487179487
+    },
+    {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -415.25
+      ],
+      "nearbyDebrisMm3": 134.76923076923077,
+      "physicalRayBlockedSourceCells": 0,
+      "currentlyConflictsWithLeft": false,
+      "newDebrisWithinFieldMm3": 55.76923076923077,
+      "recommendedDwellSeconds": 2.9884615384615385
+    }
+  ],
+  "staticRankedUnionDebrisMm3": 425.28205128205127,
+  "allStationReadings": [
+    {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -418.25
+      ],
+      "nearbyDebrisMm3": 0.0,
+      "physicalRayBlockedSourceCells": 0,
+      "currentlyConflictsWithLeft": false
+    },
+    {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -417.25
+      ],
+      "nearbyDebrisMm3": 44.92307692307692,
+      "physicalRayBlockedSourceCells": 0,
+      "currentlyConflictsWithLeft": false
+    },
+    {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -416.25
+      ],
+      "nearbyDebrisMm3": 89.84615384615384,
+      "physicalRayBlockedSourceCells": 0,
+      "currentlyConflictsWithLeft": false
+    },
+    {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -415.25
+      ],
+      "nearbyDebrisMm3": 134.76923076923077,
+      "physicalRayBlockedSourceCells": 0,
+      "currentlyConflictsWithLeft": false
+    },
+    {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -414.25
+      ],
+      "nearbyDebrisMm3": 171.76923076923077,
+      "physicalRayBlockedSourceCells": 0,
+      "currentlyConflictsWithLeft": false
+    },
+    {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -413.25
+      ],
+      "nearbyDebrisMm3": 208.76923076923077,
+      "physicalRayBlockedSourceCells": 0,
+      "currentlyConflictsWithLeft": false
+    },
+    {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -412.25
+      ],
+      "nearbyDebrisMm3": 229.76923076923077,
+      "physicalRayBlockedSourceCells": 0,
+      "currentlyConflictsWithLeft": false
+    },
+    {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -411.25
+      ],
+      "nearbyDebrisMm3": 250.76923076923077,
+      "physicalRayBlockedSourceCells": 0,
+      "currentlyConflictsWithLeft": false
+    },
+    {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -410.25
+      ],
+      "nearbyDebrisMm3": 250.76923076923077,
+      "physicalRayBlockedSourceCells": 0,
+      "currentlyConflictsWithLeft": false
+    },
+    {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -409.25
+      ],
+      "nearbyDebrisMm3": 247.76923076923077,
+      "physicalRayBlockedSourceCells": 0,
+      "currentlyConflictsWithLeft": false
+    },
+    {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -408.25
+      ],
+      "nearbyDebrisMm3": 230.76923076923077,
+      "physicalRayBlockedSourceCells": 0,
+      "currentlyConflictsWithLeft": false
+    },
+    {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -407.25
+      ],
+      "nearbyDebrisMm3": 197.74358974358975,
+      "physicalRayBlockedSourceCells": 0,
+      "currentlyConflictsWithLeft": false
+    },
+    {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -406.25
+      ],
+      "nearbyDebrisMm3": 158.66666666666666,
+      "physicalRayBlockedSourceCells": 0,
+      "currentlyConflictsWithLeft": false
+    },
+    {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -405.25
+      ],
+      "nearbyDebrisMm3": 115.66666666666667,
+      "physicalRayBlockedSourceCells": 0,
+      "currentlyConflictsWithLeft": false
+    },
+    {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -404.25
+      ],
+      "nearbyDebrisMm3": 73.74358974358974,
+      "physicalRayBlockedSourceCells": 0,
+      "currentlyConflictsWithLeft": false
+    },
+    {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -403.25
+      ],
+      "nearbyDebrisMm3": 38.82051282051282,
+      "physicalRayBlockedSourceCells": 0,
+      "currentlyConflictsWithLeft": false
+    },
+    {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -402.25
+      ],
+      "nearbyDebrisMm3": 11.923076923076923,
+      "physicalRayBlockedSourceCells": 0,
+      "currentlyConflictsWithLeft": false
+    },
+    {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -401.25
+      ],
+      "nearbyDebrisMm3": 0.0,
+      "physicalRayBlockedSourceCells": 0,
+      "currentlyConflictsWithLeft": false
+    },
+    {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -400.25
+      ],
+      "nearbyDebrisMm3": 0.0,
+      "physicalRayBlockedSourceCells": 0,
+      "currentlyConflictsWithLeft": false
+    },
+    {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -399.25
+      ],
+      "nearbyDebrisMm3": 0.0,
+      "physicalRayBlockedSourceCells": 0,
+      "currentlyConflictsWithLeft": false
+    },
+    {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -398.25
+      ],
+      "nearbyDebrisMm3": 0.0,
+      "physicalRayBlockedSourceCells": 0,
+      "currentlyConflictsWithLeft": false
+    },
+    {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -397.25
+      ],
+      "nearbyDebrisMm3": 0.0,
+      "physicalRayBlockedSourceCells": 0,
+      "currentlyConflictsWithLeft": false
+    },
+    {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -396.25
+      ],
+      "nearbyDebrisMm3": 0.0,
+      "physicalRayBlockedSourceCells": 0,
+      "currentlyConflictsWithLeft": false
+    },
+    {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -395.25
+      ],
+      "nearbyDebrisMm3": 0.0,
+      "physicalRayBlockedSourceCells": 0,
+      "currentlyConflictsWithLeft": false
+    },
+    {
+      "position": [
+        -9.464996337890625,
+        30.441162109375,
+        -394.25
+      ],
+      "nearbyDebrisMm3": 0.0,
+      "physicalRayBlockedSourceCells": 0,
+      "currentlyConflictsWithLeft": false
+    }
+  ],
+  "sequence": [
+    "Finish guarded left CUSA withdrawal, deactivate/release as required, and park its entire shaft clear using existing checked cleanup; do not teleport or create a new path.",
+    "Keep the already-inserted right Frazier, force0/radius3/flow20; stop its latch before cleanup planning and preview every ordinary action. No irrigation is needed for current dry debris law.",
+    "Visit up to3 listed station poses in increasing superior Z on the SAME previously admitted right-hand ray. Use public apply with fixed orientation; each target requires current full-tool, other-hand and protection preview. Existing0.67mm source-ray check is a conservative read-only candidate filter, not an admitted transition.",
+    "At each station, public apply for at most10s; choose dwell from currently observed local debris/20mm3/s plus0.2s, capped10s. Compare real before/after debrisRemoved/present; stop a station on no positive removal. If fields overlap, remeasure instead of treating this static ranking as a removal guarantee.",
+    "After at most3 stations or30s total dwell, deactivate right, inspect the actual residual field and ledger, reduce research field radius to0.5 via inspect if needed, and use an ordinary checked withdrawal. Inspect once both hands are inactive/withdrawn.",
+    "Report actual aspirated volume and retained debris, blocked/unattempted sites and field state. Retain historic total generated/removed/escaped ledgers; never clear dictionaries or claim all debris reachable."
+  ],
+  "qualification": [
+    "This is source-bound static geometry and field accounting only; no public preview/step/replay was executed by this reviewer.",
+    "Remaining debris outside selected spheres is not addressed by this bounded sequence. A scalar debris count alone does not prove reachability.",
+    "Suction spends its one shared flow budget on fluid first, then debris; no modeled fluid is present at this captured endpoint. Irrigation would add volume and can move sediment through neighbor relaxation; it is not required to aspirate dry modeled debris.",
+    "Static masses and current other-hand conflict checks can change as the live episode advances. Root must remeasure and preview against the live guarded engine.",
+    "Research suction radius/flow are explicit generic model settings, not calibrated clinical force, suction pressure, blood loss or outcome predictions."
+  ]
+}

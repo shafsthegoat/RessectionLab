@@ -1,0 +1,27 @@
+{
+  "utc": "2026-10-20T13:40:07.817323+00:00",
+  "loadedOnly": [
+    "full_case_rehearsal"
+  ],
+  "lazyProposalHelper": "full_case_cleanup",
+  "codeCommit": "3371a848",
+  "actions": 692,
+  "stateIdBefore": "sha256:7aaadf51c6ca5bb3e640034e40d5ab3faa318da4f738adb71096dfe3b4e05ea6",
+  "stateIdAfter": "sha256:7aaadf51c6ca5bb3e640034e40d5ab3faa318da4f738adb71096dfe3b4e05ea6",
+  "nativeBoundaryEqualsLiveSnapshot": true,
+  "directorUnchanged": true,
+  "engineMethodCodeIdentitiesUnchanged": [
+    "step",
+    "preview",
+    "_execute",
+    "_substep",
+    "_physical_substep",
+    "cells",
+    "occupancy"
+  ],
+  "noPhysicsReplay": true,
+  "sourceUnchanged": true,
+  "checkpoint": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-field-cleanup-director-692.ressectionlab",
+  "checkpointSha256": "ce7de07e26e94b8d47610b97ea9c4f8bd161312c6fa5bb42eb0af8e42a10d1c8",
+  "scope": "Director-only reload. Patient cleanup has not run; endpoint, independent canonical review and GUI acceptance remain pending."
+}

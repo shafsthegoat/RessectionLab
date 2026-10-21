@@ -1,0 +1,27 @@
+{
+  "utc": "2026-10-20T14:47:14.518314+00:00",
+  "position": 908,
+  "stateId": "sha256:e7c9e72ac9e0e3ae905d31d0e979274f02f37b305bcdaec4ae00f54b5bc6f93c",
+  "savedBoundaryExactlyEqualsLive": true,
+  "engineAndDirectorCodeUnchanged": true,
+  "sourceUnchanged": true,
+  "previousSaveIntervalActionLimit": 2,
+  "newSaveIntervalActionLimit": 12,
+  "scope": "Ignored headless runner save interval only; each action still uses unchanged public preview/step checks. No model, action, or source modification.",
+  "firstActualBatch": {
+    "startPosition": 908,
+    "endPosition": 920,
+    "endStateId": "sha256:134dbf8a066e3cbaff882823636278159aceed456212be024b8b145fdb988029",
+    "continuousRecordedStateChain": true,
+    "savedSnapshotEqualsLive": true,
+    "statuses": {
+      "accepted": 11,
+      "partial": 1
+    },
+    "targetRemovedMm3": 29342.0,
+    "ownedHealthyRemovedMm3": 0.0,
+    "ownedUnknownRemovedMm3": 0.0,
+    "verifiedUtc": "2026-10-20T14:50:59.516068+00:00",
+    "qualification": "Actual public actions; no second patient physics replay or episode-speed claim. Final canonical and GUI acceptance remain pending."
+  }
+}

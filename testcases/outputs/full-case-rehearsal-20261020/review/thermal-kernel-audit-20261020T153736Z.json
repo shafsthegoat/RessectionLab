@@ -1,0 +1,320 @@
+{
+  "scope": "One detached saved-state thermal kernel only; no patient engine construction, replay, action timing or production edit.",
+  "native": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/primary.ressectionlab",
+  "nativeSha256AtRead": "367bd249aa11b736b059ea8d9ddeefb121b09399a01d403f94d2447e992cde39",
+  "actions": 1052,
+  "stateId": "sha256:08771ea228072d3e3305b804f227e7d303917b52fb808fbb7fb13fdfeeca46ff",
+  "sourceSha256": "ff5a49b8706a8ccda08d8c3e82dad3e079f85dea98cb6bd40783d2262eec9838",
+  "implementation": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_drilling_v2.py",
+  "implementationSha256": "d246e0d02b532b9b64aee79c21151fb16660f55ecca0b626111a13cbbd006af8",
+  "voxelMm3": 1.0,
+  "boneProfile": {
+    "ambientTemperatureC": 37.0,
+    "coolingTimeSeconds": 8.0,
+    "doseThresholdC": 43.0,
+    "heatCapacityJPerMm3K": 0.002,
+    "heatFraction": 0.35,
+    "maxForceN": 20.0,
+    "maxPowerW": 30.0,
+    "maxRadiusMm": 10.0,
+    "maxRpm": 80000.0,
+    "model": "work-limited-drill-v2",
+    "specificEnergyJPerMm3": 0.5,
+    "tangentialForceFraction": 0.1
+  },
+  "temperatureCells": 8363,
+  "doseCells": 8363,
+  "temperatureRangeC": [
+    37.000000000000284,
+    71.54151807511684
+  ],
+  "zeroPowerStrictBelowThresholdCells": 8337,
+  "candidate": "Hoisted identical -expm1(-dt/tau); strict old<threshold zero-power integral bypass only; original arithmetic, assignments and key order retained.",
+  "checks": [
+    {
+      "name": "saved zero-power",
+      "dt": 0.0,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "saved zero-power",
+      "dt": 5e-324,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "saved zero-power",
+      "dt": 1e-20,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "saved zero-power",
+      "dt": 1e-16,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "saved zero-power",
+      "dt": 0.001,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "saved zero-power",
+      "dt": 0.1,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "saved zero-power",
+      "dt": 30.0,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "saved existing/new nonzero power",
+      "dt": 0.1,
+      "powerCells": 2,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "boundary profile 0",
+      "dt": 0.0,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "boundary profile 0",
+      "dt": 1e-20,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "boundary profile 0",
+      "dt": 1e-16,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "boundary profile 0",
+      "dt": 0.1,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "boundary profile 0",
+      "dt": 30.0,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "nonzero/signed-zero profile 0",
+      "dt": 0.1,
+      "powerCells": 3,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "boundary profile 1",
+      "dt": 0.0,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "boundary profile 1",
+      "dt": 1e-20,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "boundary profile 1",
+      "dt": 1e-16,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "boundary profile 1",
+      "dt": 0.1,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "boundary profile 1",
+      "dt": 30.0,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "nonzero/signed-zero profile 1",
+      "dt": 0.1,
+      "powerCells": 3,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "boundary profile 2",
+      "dt": 0.0,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "boundary profile 2",
+      "dt": 1e-20,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "boundary profile 2",
+      "dt": 1e-16,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "boundary profile 2",
+      "dt": 0.1,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "boundary profile 2",
+      "dt": 30.0,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "nonzero/signed-zero profile 2",
+      "dt": 0.1,
+      "powerCells": 3,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "boundary profile 3",
+      "dt": 0.0,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "boundary profile 3",
+      "dt": 1e-20,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "boundary profile 3",
+      "dt": 1e-16,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "boundary profile 3",
+      "dt": 0.1,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "boundary profile 3",
+      "dt": 30.0,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "boundary profile 4",
+      "dt": 0.0,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "boundary profile 4",
+      "dt": 1e-20,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "boundary profile 4",
+      "dt": 1e-16,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "boundary profile 4",
+      "dt": 0.1,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    },
+    {
+      "name": "boundary profile 4",
+      "dt": 30.0,
+      "powerCells": 0,
+      "exactJson": true,
+      "exactFloatBits": true
+    }
+  ],
+  "parityPassed": true,
+  "timings": {
+    "original": {
+      "medianMillisecondsPerCall": 8.08769790455699,
+      "samplesMillisecondsPerCall": [
+        7.950583240017295,
+        8.08769790455699,
+        8.139807323459536,
+        8.027453091926873,
+        8.302833361085504
+      ]
+    },
+    "candidate": {
+      "medianMillisecondsPerCall": 4.862208268605173,
+      "samplesMillisecondsPerCall": [
+        4.876317630987614,
+        4.8881874536164105,
+        4.7663438017480075,
+        4.756921902298927,
+        4.862208268605173
+      ]
+    }
+  },
+  "kernelSpeedup": 1.663379571125841,
+  "medianMillisecondsSavedPerCall": 3.225489635951817,
+  "guardNotes": [
+    "Equality must use legacy integral; cancellation in primitive(dt) can produce a positive floating residual.",
+    "Public wrappers validate finite nonnegative dt; validated profiles provide positive tau/capacity factors and doseThreshold>=ambient.",
+    "Equilibrium/new/cooling-loss computation still occurs for every cell, preserving any arithmetic failure and every dictionary assignment.",
+    "Extreme finite profile differences may overflow threshold to +inf; strict comparison remains valid; NaN comparison falls back.",
+    "No whole-cell omission, temperature/dose clipping, changed key order, dictionary pruning or whole-action speed claim."
+  ],
+  "sourceAndImplementationUnchanged": true
+}

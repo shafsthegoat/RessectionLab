@@ -1,0 +1,47 @@
+{
+  "utc": "2026-10-20T18:55:28.464581+00:00",
+  "codeCommit": "de837ad687423bbe7ef852c7ca926bc93c2c50df",
+  "loadedOnly": [
+    "full_case_cleanup",
+    "full_case_rehearsal"
+  ],
+  "priorDirectorCommit": "1ae5f004",
+  "actions": 1608,
+  "stateIdBefore": "sha256:42067339f6bdc643b37160407f557db39c8b25096f02c7d3cbf14ef934ad0daa",
+  "stateIdAfter": "sha256:42067339f6bdc643b37160407f557db39c8b25096f02c7d3cbf14ef934ad0daa",
+  "savedBoundaryEqualsLiveSnapshot": true,
+  "engineAndHistoryUnchanged": true,
+  "engineMethodCodeIdentitiesUnchanged": [
+    "step",
+    "preview",
+    "_execute",
+    "_substep",
+    "_physical_substep",
+    "cells",
+    "occupancy"
+  ],
+  "thermalFunctionCodesUnchanged": [
+    "validate",
+    "profile",
+    "initialize",
+    "_nonnegative",
+    "_dose_integral",
+    "_thermal",
+    "cool",
+    "begin_step",
+    "end_step",
+    "apply",
+    "contact_limited_pose",
+    "descriptor",
+    "metrics"
+  ],
+  "sourceUnchanged": true,
+  "requestSaved": true,
+  "requestedAccessIndex": 21,
+  "requestedAccessId": "superior-113-152",
+  "physicalActionsDuringReloadAndRequest": 0,
+  "originalDirectorUnchangedDuringRequestCall": true,
+  "checkpoint": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-access-deferral-1608.ressectionlab",
+  "checkpointSha256": "2cc93898e78f7f9f6c9912eb0e7ef2285f28b1fe0127ff5cb4c3a3f46f7e0bd5",
+  "qualification": "Scheduling request only. Current core is retained until its existing natural opening-finish path; ordinary guarded cleanup, a real withdrawn boundary and an admitted left trial remain separate work. No exhaustion or left reachability claim."
+}

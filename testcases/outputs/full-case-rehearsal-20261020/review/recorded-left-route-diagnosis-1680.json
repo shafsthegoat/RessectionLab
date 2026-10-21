@@ -1,0 +1,44 @@
+{
+  "schema": "resectionlab.recorded-directional-route-diagnosis.v1",
+  "utc": "2026-10-20T19:42:09.777710+00:00",
+  "qualification": "Read-only differences of already recorded consecutive live saved boundaries; no patient replay or performance variant. Path source inspection found unconditional outside-plane retreat, motivating an additional fully checked short proposal.",
+  "intervals": [
+    {
+      "startActions": 1656,
+      "endActions": 1668,
+      "startStateId": "sha256:4baf95663068e8825ff461ee339871a2e96facf1461d7302ffd511a2a312c8c3",
+      "endStateId": "sha256:d27a466b18019a220632d77ad0c7c86eae5501c1252b1732d952f3cdce3cfa63",
+      "targetRemovedMm3": 9.0,
+      "actualTravelMm": 919.4214558027961,
+      "simulatedSeconds": 51.954317508850636,
+      "consecutiveTraceWallSeconds": 629.7721617501229,
+      "endpointLastOutcome": {
+        "position": 1668,
+        "status": "accepted",
+        "reason": null,
+        "operation": "apply",
+        "removedCells": 2
+      },
+      "wounds": 0
+    },
+    {
+      "startActions": 1668,
+      "endActions": 1680,
+      "startStateId": "sha256:d27a466b18019a220632d77ad0c7c86eae5501c1252b1732d952f3cdce3cfa63",
+      "endStateId": "sha256:55e9d89afafb0b6550132ec9d7e569cbc326c9930b29a34333e58b98de2c9817",
+      "targetRemovedMm3": 12.0,
+      "actualTravelMm": 1010.7563720238322,
+      "simulatedSeconds": 56.873993722820614,
+      "consecutiveTraceWallSeconds": 713.0536112496629,
+      "endpointLastOutcome": {
+        "position": 1680,
+        "status": "accepted",
+        "reason": null,
+        "operation": "apply",
+        "removedCells": 1
+      },
+      "wounds": 0
+    }
+  ],
+  "sourcePath": "src/resectionlab/full_case_directional.py:directional_removal_candidates.path_to"
+}

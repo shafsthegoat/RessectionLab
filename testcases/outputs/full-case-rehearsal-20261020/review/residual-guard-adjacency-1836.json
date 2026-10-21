@@ -1,0 +1,1119 @@
+{
+  "readOnly": true,
+  "noEngineConstructionPreviewStepReplay": true,
+  "position": 1836,
+  "stateId": "sha256:de81de542ad001780e456ca643b612e4fffea4c35459629acdb2fafd74fc5072",
+  "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+  "identityVerification": {
+    "stableAtomicNativeRead": true,
+    "readAttempts": 1,
+    "nativeSha256": "bf69f2afd29a1824b02dd6c19d9ad022112a09cd8b9f88e8d89021e54d803bb2",
+    "sourceLabelsDigest": "sha256:9930330418c439d7d042054d7419c05d3158e2422f62ce69b034044a563ecd76",
+    "checkpointContentIdentityVerified": true,
+    "protectionContractId": "sha256:bd086e3832d76c44e09ccec7e5cc64a77a27f2b2affcd76d5c51ea3fc06cebfa",
+    "sourceBinding": "sha256:c2865797721e8decb8b41736d3544e50b95fdd3c6007dc0062cb2fdf1eb79e0e",
+    "branchId": "full-primary",
+    "actionReplayVerifiedByThisInspector": false
+  },
+  "remainingOwnedTargetCells": 8911,
+  "guardContractId": "sha256:bd086e3832d76c44e09ccec7e5cc64a77a27f2b2affcd76d5c51ea3fc06cebfa",
+  "guardConfig": {
+    "critical_max_displacement_mm": 0.0,
+    "require_critical_coverage": true
+  },
+  "clearanceMm": 2.0,
+  "sourceCellCircumsphereRadiusMm": 0.8660254037844386,
+  "guardSemantics": "Each working and physical-shaft swept capsule is excluded when distance from its centerline to any protected source-cell center <= tool capsule radius + swept inflation + clearance + source-cell circumsphere radius. Swept inflation is translation/2 +84*sin(rotationAngle/4). Protected memberships persist across allowed movements; displacement/thermal damage is also checked. This receipt has no holds/deformation, so original protected positions are current.",
+  "guardStructures": [
+    {
+      "id": "brainstem",
+      "name": "brain-stem",
+      "sourceCells": 34040,
+      "reviewStatus": "unreviewed; tumor-distorted regions require review",
+      "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-16; label=16; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:6c13edb715334e0da86d38fb9d50fb016ad6c525b4c85235cc96b558a79f443f; sampling=affine-cell circumsphere overlap",
+      "minResidualCenterDistanceMm": 42.07136793592526,
+      "residualOwnedTargetIdentityOverlapCells": 0,
+      "residualCentersWithinBaseGuardPlusPoint3Mm": 0
+    },
+    {
+      "id": "left_thalamus",
+      "name": "left thalamus",
+      "sourceCells": 11463,
+      "reviewStatus": "unreviewed; tumor-distorted regions require review",
+      "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-10; label=10; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:8142a1740d958e15e6da581ba760259943a398ed93e11fde686db92ad3001504; sampling=affine-cell circumsphere overlap",
+      "minResidualCenterDistanceMm": 21.0,
+      "residualOwnedTargetIdentityOverlapCells": 0,
+      "residualCentersWithinBaseGuardPlusPoint3Mm": 0
+    },
+    {
+      "id": "right_thalamus",
+      "name": "right thalamus",
+      "sourceCells": 11015,
+      "reviewStatus": "unreviewed; tumor-distorted regions require review",
+      "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-49; label=49; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:2bc584f4f0b7cd26964a2ac7fb0d4954bdbe4b9e4af87ba26ee91827b3114288; sampling=affine-cell circumsphere overlap",
+      "minResidualCenterDistanceMm": 29.223278392404914,
+      "residualOwnedTargetIdentityOverlapCells": 0,
+      "residualCentersWithinBaseGuardPlusPoint3Mm": 0
+    },
+    {
+      "id": "left_caudate",
+      "name": "left caudate",
+      "sourceCells": 8186,
+      "reviewStatus": "unreviewed; tumor-distorted regions require review",
+      "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-11; label=11; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:ef69e8990aa0ac3e55356b1d81f28e5f2dbe6f3a4e1cbc61a47b8ab41fc752d9; sampling=affine-cell circumsphere overlap",
+      "minResidualCenterDistanceMm": 12.083045973594572,
+      "residualOwnedTargetIdentityOverlapCells": 0,
+      "residualCentersWithinBaseGuardPlusPoint3Mm": 0
+    },
+    {
+      "id": "right_caudate",
+      "name": "right caudate",
+      "sourceCells": 8133,
+      "reviewStatus": "unreviewed; tumor-distorted regions require review",
+      "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-50; label=50; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:2d2b2062b5cae137800bb1e983236ae65b90b87e99709a45a894ec4e8877e6c1; sampling=affine-cell circumsphere overlap",
+      "minResidualCenterDistanceMm": 25.45584412271571,
+      "residualOwnedTargetIdentityOverlapCells": 0,
+      "residualCentersWithinBaseGuardPlusPoint3Mm": 0
+    },
+    {
+      "id": "left_putamen",
+      "name": "left putamen",
+      "sourceCells": 9826,
+      "reviewStatus": "unreviewed; tumor-distorted regions require review",
+      "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-12; label=12; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:4e4a09ece21e199770a520c563107c4194b92c32f0efa646f6f0dd7bed4a7dbc; sampling=affine-cell circumsphere overlap",
+      "minResidualCenterDistanceMm": 18.05547008526779,
+      "residualOwnedTargetIdentityOverlapCells": 0,
+      "residualCentersWithinBaseGuardPlusPoint3Mm": 0
+    },
+    {
+      "id": "right_putamen",
+      "name": "right putamen",
+      "sourceCells": 9683,
+      "reviewStatus": "unreviewed; tumor-distorted regions require review",
+      "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-51; label=51; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:7f82ffa268e72aad25c3dd2d34c5e58bd719fe3c27b1f8e7ed20ef0dfa6cbf69; sampling=affine-cell circumsphere overlap",
+      "minResidualCenterDistanceMm": 36.76955262170047,
+      "residualOwnedTargetIdentityOverlapCells": 0,
+      "residualCentersWithinBaseGuardPlusPoint3Mm": 0
+    },
+    {
+      "id": "left_pallidum",
+      "name": "left pallidum",
+      "sourceCells": 3024,
+      "reviewStatus": "unreviewed; tumor-distorted regions require review",
+      "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-13; label=13; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:657ecada8e8d66397ed76e05ff65b5ddd4bb53761ad4392e956d8d5cc1218714; sampling=affine-cell circumsphere overlap",
+      "minResidualCenterDistanceMm": 24.839484696748443,
+      "residualOwnedTargetIdentityOverlapCells": 0,
+      "residualCentersWithinBaseGuardPlusPoint3Mm": 0
+    },
+    {
+      "id": "right_pallidum",
+      "name": "right pallidum",
+      "sourceCells": 3195,
+      "reviewStatus": "unreviewed; tumor-distorted regions require review",
+      "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-52; label=52; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:6786d301532c766db3367d570894767817857d4cd861408b9eee86275bd072a3; sampling=affine-cell circumsphere overlap",
+      "minResidualCenterDistanceMm": 37.49666651850535,
+      "residualOwnedTargetIdentityOverlapCells": 0,
+      "residualCentersWithinBaseGuardPlusPoint3Mm": 0
+    },
+    {
+      "id": "left_hippocampus",
+      "name": "left hippocampus",
+      "sourceCells": 8789,
+      "reviewStatus": "unreviewed; tumor-distorted regions require review",
+      "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-17; label=17; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:b3409109b55b76be00df69e722a12a30895e36c8d5a4eb7b50c661b9c9e3bdf8; sampling=affine-cell circumsphere overlap",
+      "minResidualCenterDistanceMm": 43.88621651498338,
+      "residualOwnedTargetIdentityOverlapCells": 0,
+      "residualCentersWithinBaseGuardPlusPoint3Mm": 0
+    },
+    {
+      "id": "right_hippocampus",
+      "name": "right hippocampus",
+      "sourceCells": 9507,
+      "reviewStatus": "unreviewed; tumor-distorted regions require review",
+      "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-53; label=53; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:eac6e45c6be78e82808100c71d70e9a80b4de13885df238c64028f4d7bb26535; sampling=affine-cell circumsphere overlap",
+      "minResidualCenterDistanceMm": 53.319789947073126,
+      "residualOwnedTargetIdentityOverlapCells": 0,
+      "residualCentersWithinBaseGuardPlusPoint3Mm": 0
+    }
+  ],
+  "residualAdjacency": {
+    "minGuardCenterDistanceMm": 12.083045973594572,
+    "centerDistanceQuantilesMm": {
+      "min": 12.083045973594572,
+      "p10": 23.065125189341593,
+      "median": 40.80441152620633
+    },
+    "centersWithinBaseGuardMm": 0,
+    "centersWithinBaseGuardPlusPoint3Mm": 0,
+    "centersWithinBaseGuardPlusShaftPoint5Mm": 0,
+    "centersWithinBaseGuardPlusWorking1Point3Mm": 0,
+    "ownedVesselCells": 141681,
+    "minVesselCenterDistanceMm": 1.0,
+    "residualFaceAdjacentToOwnedVesselCells": 386,
+    "residualCentersWithin1MmOfVesselClosedBoxes": 779,
+    "residualCentersWithin2MmOfVesselClosedBoxes": 1390
+  },
+  "leftEntryStaticBounds": [
+    {
+      "id": "directional-0-148-129",
+      "targetEntryIndex": [
+        136,
+        148,
+        129
+      ],
+      "entryRAS": [
+        -26.464996337890625,
+        24.441162109375,
+        -425.25
+      ],
+      "entryOwnedTargetStillRetained": true,
+      "minEntryCenterToGuardCellCenterMm": 41.641325627314025,
+      "nearestGuardCellSourceId": 4922748,
+      "nearestGuardNames": [
+        "left_caudate"
+      ],
+      "bounds": [
+        {
+          "radiusMm": 0.3,
+          "pose": "at-entry-center",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {
+            "bone": 9
+          },
+          "workingRetainedLabels": {
+            "bone": 2,
+            "tumor target": 1
+          },
+          "shaftBlocksThisStaticPose": true,
+          "workingNontargetBlocksTargetOnlyAdmission": true,
+          "tipWouldIntersectOriginalEntryCell": true,
+          "representativeShaftSourceIds": [
+            5482257,
+            5521896,
+            5522077,
+            5522078
+          ],
+          "representativeNontargetWorkingSourceIds": [
+            5482257,
+            5522077
+          ]
+        },
+        {
+          "radiusMm": 0.3,
+          "pose": "just-contact-outer-cell-face",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {
+            "bone": 5
+          },
+          "workingRetainedLabels": {
+            "bone": 3,
+            "tumor target": 1
+          },
+          "shaftBlocksThisStaticPose": true,
+          "workingNontargetBlocksTargetOnlyAdmission": true,
+          "tipWouldIntersectOriginalEntryCell": true,
+          "representativeShaftSourceIds": [
+            5522077,
+            5561716,
+            5561897,
+            5561898
+          ],
+          "representativeNontargetWorkingSourceIds": [
+            5482257,
+            5522077,
+            5561897
+          ]
+        },
+        {
+          "radiusMm": 1.3,
+          "pose": "at-entry-center",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {
+            "bone": 9
+          },
+          "workingRetainedLabels": {
+            "tumor target": 5,
+            "bone": 20
+          },
+          "shaftBlocksThisStaticPose": true,
+          "workingNontargetBlocksTargetOnlyAdmission": true,
+          "tipWouldIntersectOriginalEntryCell": true,
+          "representativeShaftSourceIds": [
+            5482257,
+            5521896,
+            5522077,
+            5522078
+          ],
+          "representativeNontargetWorkingSourceIds": [
+            5402437,
+            5402618,
+            5442257,
+            5442438
+          ]
+        },
+        {
+          "radiusMm": 1.3,
+          "pose": "just-contact-outer-cell-face",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {
+            "bone": 1
+          },
+          "workingRetainedLabels": {
+            "tumor target": 2,
+            "bone": 16
+          },
+          "shaftBlocksThisStaticPose": true,
+          "workingNontargetBlocksTargetOnlyAdmission": true,
+          "tipWouldIntersectOriginalEntryCell": true,
+          "representativeShaftSourceIds": [
+            5561897
+          ],
+          "representativeNontargetWorkingSourceIds": [
+            5482077,
+            5482257,
+            5482258,
+            5482438
+          ]
+        }
+      ]
+    },
+    {
+      "id": "directional-0-141-128",
+      "targetEntryIndex": [
+        143,
+        141,
+        128
+      ],
+      "entryRAS": [
+        -33.464996337890625,
+        17.441162109375,
+        -426.25
+      ],
+      "entryOwnedTargetStillRetained": true,
+      "minEntryCenterToGuardCellCenterMm": 41.689327171351664,
+      "nearestGuardCellSourceId": 4961664,
+      "nearestGuardNames": [
+        "left_caudate"
+      ],
+      "bounds": [
+        {
+          "radiusMm": 0.3,
+          "pose": "at-entry-center",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {
+            "bone": 10,
+            "tumor target": 1
+          },
+          "workingRetainedLabels": {
+            "bone": 2,
+            "tumor target": 1
+          },
+          "shaftBlocksThisStaticPose": true,
+          "workingNontargetBlocksTargetOnlyAdmission": true,
+          "tipWouldIntersectOriginalEntryCell": true,
+          "representativeShaftSourceIds": [
+            5759729,
+            5799368,
+            5799548,
+            5799549
+          ],
+          "representativeNontargetWorkingSourceIds": [
+            5759729,
+            5799549
+          ]
+        },
+        {
+          "radiusMm": 0.3,
+          "pose": "just-contact-outer-cell-face",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {
+            "bone": 6
+          },
+          "workingRetainedLabels": {
+            "bone": 3,
+            "tumor target": 1
+          },
+          "shaftBlocksThisStaticPose": true,
+          "workingNontargetBlocksTargetOnlyAdmission": true,
+          "tipWouldIntersectOriginalEntryCell": true,
+          "representativeShaftSourceIds": [
+            5799549,
+            5839188,
+            5839368,
+            5839369
+          ],
+          "representativeNontargetWorkingSourceIds": [
+            5759729,
+            5799549,
+            5839369
+          ]
+        },
+        {
+          "radiusMm": 1.3,
+          "pose": "at-entry-center",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {
+            "bone": 10,
+            "tumor target": 1
+          },
+          "workingRetainedLabels": {
+            "bone": 20,
+            "tumor target": 13
+          },
+          "shaftBlocksThisStaticPose": true,
+          "workingNontargetBlocksTargetOnlyAdmission": true,
+          "tipWouldIntersectOriginalEntryCell": true,
+          "representativeShaftSourceIds": [
+            5759729,
+            5799368,
+            5799548,
+            5799549
+          ],
+          "representativeNontargetWorkingSourceIds": [
+            5719910,
+            5759549,
+            5759729,
+            5759730
+          ]
+        },
+        {
+          "radiusMm": 1.3,
+          "pose": "just-contact-outer-cell-face",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {
+            "bone": 1
+          },
+          "workingRetainedLabels": {
+            "bone": 19,
+            "tumor target": 7
+          },
+          "shaftBlocksThisStaticPose": true,
+          "workingNontargetBlocksTargetOnlyAdmission": true,
+          "tipWouldIntersectOriginalEntryCell": true,
+          "representativeShaftSourceIds": [
+            5839369
+          ],
+          "representativeNontargetWorkingSourceIds": [
+            5759549,
+            5759729,
+            5759730,
+            5759910
+          ]
+        }
+      ]
+    },
+    {
+      "id": "directional-0-138-130",
+      "targetEntryIndex": [
+        140,
+        138,
+        130
+      ],
+      "entryRAS": [
+        -30.464996337890625,
+        14.441162109375,
+        -424.25
+      ],
+      "entryOwnedTargetStillRetained": true,
+      "minEntryCenterToGuardCellCenterMm": 41.53311931459037,
+      "nearestGuardCellSourceId": 4960941,
+      "nearestGuardNames": [
+        "left_caudate"
+      ],
+      "bounds": [
+        {
+          "radiusMm": 0.3,
+          "pose": "at-entry-center",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {
+            "bone": 14,
+            "tumor target": 1
+          },
+          "workingRetainedLabels": {
+            "bone": 2,
+            "tumor target": 1
+          },
+          "shaftBlocksThisStaticPose": true,
+          "workingNontargetBlocksTargetOnlyAdmission": true,
+          "tipWouldIntersectOriginalEntryCell": true,
+          "representativeShaftSourceIds": [
+            5639728,
+            5679367,
+            5679547,
+            5679548
+          ],
+          "representativeNontargetWorkingSourceIds": [
+            5639728,
+            5679548
+          ]
+        },
+        {
+          "radiusMm": 0.3,
+          "pose": "just-contact-outer-cell-face",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {
+            "bone": 10
+          },
+          "workingRetainedLabels": {
+            "bone": 3,
+            "tumor target": 1
+          },
+          "shaftBlocksThisStaticPose": true,
+          "workingNontargetBlocksTargetOnlyAdmission": true,
+          "tipWouldIntersectOriginalEntryCell": true,
+          "representativeShaftSourceIds": [
+            5679548,
+            5719187,
+            5719367,
+            5719368
+          ],
+          "representativeNontargetWorkingSourceIds": [
+            5639728,
+            5679548,
+            5719368
+          ]
+        },
+        {
+          "radiusMm": 1.3,
+          "pose": "at-entry-center",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {
+            "bone": 14,
+            "tumor target": 1
+          },
+          "workingRetainedLabels": {
+            "tumor target": 21,
+            "bone": 24
+          },
+          "shaftBlocksThisStaticPose": true,
+          "workingNontargetBlocksTargetOnlyAdmission": true,
+          "tipWouldIntersectOriginalEntryCell": true,
+          "representativeShaftSourceIds": [
+            5639728,
+            5679367,
+            5679547,
+            5679548
+          ],
+          "representativeNontargetWorkingSourceIds": [
+            5560089,
+            5560270,
+            5599728,
+            5599909
+          ]
+        },
+        {
+          "radiusMm": 1.3,
+          "pose": "just-contact-outer-cell-face",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {
+            "bone": 5
+          },
+          "workingRetainedLabels": {
+            "tumor target": 10,
+            "bone": 26
+          },
+          "shaftBlocksThisStaticPose": true,
+          "workingNontargetBlocksTargetOnlyAdmission": true,
+          "tipWouldIntersectOriginalEntryCell": true,
+          "representativeShaftSourceIds": [
+            5719368,
+            5759007,
+            5759187,
+            5759189
+          ],
+          "representativeNontargetWorkingSourceIds": [
+            5639548,
+            5639728,
+            5639729,
+            5639909
+          ]
+        }
+      ]
+    },
+    {
+      "id": "directional-0-122-137",
+      "targetEntryIndex": [
+        135,
+        122,
+        137
+      ],
+      "entryRAS": [
+        -25.464996337890625,
+        -1.558837890625,
+        -417.25
+      ],
+      "entryOwnedTargetStillRetained": true,
+      "minEntryCenterToGuardCellCenterMm": 43.88621651498338,
+      "nearestGuardCellSourceId": 4839131,
+      "nearestGuardNames": [
+        "left_caudate"
+      ],
+      "bounds": [
+        {
+          "radiusMm": 0.3,
+          "pose": "at-entry-center",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {
+            "bone": 9,
+            "tumor target": 1
+          },
+          "workingRetainedLabels": {
+            "bone": 2,
+            "tumor target": 1
+          },
+          "shaftBlocksThisStaticPose": true,
+          "workingNontargetBlocksTargetOnlyAdmission": true,
+          "tipWouldIntersectOriginalEntryCell": true,
+          "representativeShaftSourceIds": [
+            5437739,
+            5477378,
+            5477558,
+            5477559
+          ],
+          "representativeNontargetWorkingSourceIds": [
+            5437739,
+            5477559
+          ]
+        },
+        {
+          "radiusMm": 0.3,
+          "pose": "just-contact-outer-cell-face",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {
+            "bone": 5
+          },
+          "workingRetainedLabels": {
+            "bone": 2,
+            "tumor target": 1
+          },
+          "shaftBlocksThisStaticPose": true,
+          "workingNontargetBlocksTargetOnlyAdmission": true,
+          "tipWouldIntersectOriginalEntryCell": true,
+          "representativeShaftSourceIds": [
+            5477559,
+            5517198,
+            5517378,
+            5517380
+          ],
+          "representativeNontargetWorkingSourceIds": [
+            5437739,
+            5477559
+          ]
+        },
+        {
+          "radiusMm": 1.3,
+          "pose": "at-entry-center",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {
+            "bone": 9,
+            "tumor target": 1
+          },
+          "workingRetainedLabels": {
+            "tumor target": 18,
+            "bone": 25
+          },
+          "shaftBlocksThisStaticPose": true,
+          "workingNontargetBlocksTargetOnlyAdmission": true,
+          "tipWouldIntersectOriginalEntryCell": true,
+          "representativeShaftSourceIds": [
+            5437739,
+            5477378,
+            5477558,
+            5477559
+          ],
+          "representativeNontargetWorkingSourceIds": [
+            5357919,
+            5358100,
+            5358281,
+            5397920
+          ]
+        },
+        {
+          "radiusMm": 1.3,
+          "pose": "just-contact-outer-cell-face",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {},
+          "workingRetainedLabels": {
+            "tumor target": 7,
+            "bone": 20
+          },
+          "shaftBlocksThisStaticPose": false,
+          "workingNontargetBlocksTargetOnlyAdmission": true,
+          "tipWouldIntersectOriginalEntryCell": true,
+          "representativeShaftSourceIds": [],
+          "representativeNontargetWorkingSourceIds": [
+            5437558,
+            5437559,
+            5437739,
+            5437740
+          ]
+        }
+      ]
+    },
+    {
+      "id": "directional-0-132-141",
+      "targetEntryIndex": [
+        116,
+        132,
+        141
+      ],
+      "entryRAS": [
+        -6.464996337890625,
+        8.441162109375,
+        -413.25
+      ],
+      "entryOwnedTargetStillRetained": true,
+      "minEntryCenterToGuardCellCenterMm": 47.275786614291256,
+      "nearestGuardCellSourceId": 4682021,
+      "nearestGuardNames": [
+        "left_caudate"
+      ],
+      "bounds": [
+        {
+          "radiusMm": 0.3,
+          "pose": "at-entry-center",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {
+            "bone": 53,
+            "tumor target": 1
+          },
+          "workingRetainedLabels": {
+            "tumor target": 1,
+            "bone": 2
+          },
+          "shaftBlocksThisStaticPose": true,
+          "workingNontargetBlocksTargetOnlyAdmission": true,
+          "tipWouldIntersectOriginalEntryCell": true,
+          "representativeShaftSourceIds": [
+            4682973,
+            4722792,
+            4722793,
+            4722794
+          ],
+          "representativeNontargetWorkingSourceIds": [
+            4682973,
+            4722793
+          ]
+        },
+        {
+          "radiusMm": 0.3,
+          "pose": "just-contact-outer-cell-face",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {
+            "bone": 50
+          },
+          "workingRetainedLabels": {
+            "tumor target": 1,
+            "bone": 3
+          },
+          "shaftBlocksThisStaticPose": true,
+          "workingNontargetBlocksTargetOnlyAdmission": true,
+          "tipWouldIntersectOriginalEntryCell": true,
+          "representativeShaftSourceIds": [
+            4722793,
+            4762612,
+            4762613,
+            4762614
+          ],
+          "representativeNontargetWorkingSourceIds": [
+            4682973,
+            4722793,
+            4762613
+          ]
+        },
+        {
+          "radiusMm": 1.3,
+          "pose": "at-entry-center",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {
+            "bone": 53,
+            "tumor target": 1
+          },
+          "workingRetainedLabels": {
+            "tumor target": 10,
+            "bone": 21
+          },
+          "shaftBlocksThisStaticPose": true,
+          "workingNontargetBlocksTargetOnlyAdmission": true,
+          "tipWouldIntersectOriginalEntryCell": true,
+          "representativeShaftSourceIds": [
+            4682973,
+            4722792,
+            4722793,
+            4722794
+          ],
+          "representativeNontargetWorkingSourceIds": [
+            4603334,
+            4603515,
+            4643154,
+            4643334
+          ]
+        },
+        {
+          "radiusMm": 1.3,
+          "pose": "just-contact-outer-cell-face",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {
+            "bone": 46
+          },
+          "workingRetainedLabels": {
+            "bone": 34,
+            "tumor target": 4
+          },
+          "shaftBlocksThisStaticPose": true,
+          "workingNontargetBlocksTargetOnlyAdmission": true,
+          "tipWouldIntersectOriginalEntryCell": true,
+          "representativeShaftSourceIds": [
+            4762613,
+            4802252,
+            4802432,
+            4802433
+          ],
+          "representativeNontargetWorkingSourceIds": [
+            4682973,
+            4682974,
+            4683154,
+            4683155
+          ]
+        }
+      ]
+    },
+    {
+      "id": "directional-0-162-128",
+      "targetEntryIndex": [
+        127,
+        162,
+        128
+      ],
+      "entryRAS": [
+        -17.464996337890625,
+        38.441162109375,
+        -426.25
+      ],
+      "entryOwnedTargetStillRetained": true,
+      "minEntryCenterToGuardCellCenterMm": 42.731721238442994,
+      "nearestGuardCellSourceId": 4924194,
+      "nearestGuardNames": [
+        "left_caudate"
+      ],
+      "bounds": [
+        {
+          "radiusMm": 0.3,
+          "pose": "at-entry-center",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {
+            "tumor target": 2,
+            "bone": 8
+          },
+          "workingRetainedLabels": {
+            "bone": 2,
+            "tumor target": 1
+          },
+          "shaftBlocksThisStaticPose": true,
+          "workingNontargetBlocksTargetOnlyAdmission": true,
+          "tipWouldIntersectOriginalEntryCell": true,
+          "representativeShaftSourceIds": [
+            5126410,
+            5166049,
+            5166229,
+            5166230
+          ],
+          "representativeNontargetWorkingSourceIds": [
+            5126410,
+            5166230
+          ]
+        },
+        {
+          "radiusMm": 0.3,
+          "pose": "just-contact-outer-cell-face",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {
+            "bone": 5
+          },
+          "workingRetainedLabels": {
+            "bone": 3,
+            "tumor target": 1
+          },
+          "shaftBlocksThisStaticPose": true,
+          "workingNontargetBlocksTargetOnlyAdmission": true,
+          "tipWouldIntersectOriginalEntryCell": true,
+          "representativeShaftSourceIds": [
+            5166230,
+            5205869,
+            5206050,
+            5206051
+          ],
+          "representativeNontargetWorkingSourceIds": [
+            5126410,
+            5166230,
+            5206050
+          ]
+        },
+        {
+          "radiusMm": 1.3,
+          "pose": "at-entry-center",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {
+            "tumor target": 2,
+            "bone": 8
+          },
+          "workingRetainedLabels": {
+            "tumor target": 21,
+            "bone": 23
+          },
+          "shaftBlocksThisStaticPose": true,
+          "workingNontargetBlocksTargetOnlyAdmission": true,
+          "tipWouldIntersectOriginalEntryCell": true,
+          "representativeShaftSourceIds": [
+            5126410,
+            5166049,
+            5166229,
+            5166230
+          ],
+          "representativeNontargetWorkingSourceIds": [
+            5046771,
+            5046952,
+            5086410,
+            5086591
+          ]
+        },
+        {
+          "radiusMm": 1.3,
+          "pose": "just-contact-outer-cell-face",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {
+            "bone": 1
+          },
+          "workingRetainedLabels": {
+            "tumor target": 11,
+            "bone": 20
+          },
+          "shaftBlocksThisStaticPose": true,
+          "workingNontargetBlocksTargetOnlyAdmission": true,
+          "tipWouldIntersectOriginalEntryCell": true,
+          "representativeShaftSourceIds": [
+            5206050
+          ],
+          "representativeNontargetWorkingSourceIds": [
+            5126230,
+            5126410,
+            5126411,
+            5126591
+          ]
+        }
+      ]
+    },
+    {
+      "id": "directional-0-119-139",
+      "targetEntryIndex": [
+        131,
+        119,
+        139
+      ],
+      "entryRAS": [
+        -21.464996337890625,
+        -4.558837890625,
+        -415.25
+      ],
+      "entryOwnedTargetStillRetained": false,
+      "minEntryCenterToGuardCellCenterMm": 44.328320518603,
+      "nearestGuardCellSourceId": 4839131,
+      "nearestGuardNames": [
+        "left_caudate"
+      ],
+      "bounds": [
+        {
+          "radiusMm": 0.3,
+          "pose": "at-entry-center",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {},
+          "workingRetainedLabels": {},
+          "shaftBlocksThisStaticPose": false,
+          "workingNontargetBlocksTargetOnlyAdmission": false,
+          "tipWouldIntersectOriginalEntryCell": false,
+          "representativeShaftSourceIds": [],
+          "representativeNontargetWorkingSourceIds": []
+        },
+        {
+          "radiusMm": 0.3,
+          "pose": "just-contact-outer-cell-face",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {},
+          "workingRetainedLabels": {},
+          "shaftBlocksThisStaticPose": false,
+          "workingNontargetBlocksTargetOnlyAdmission": false,
+          "tipWouldIntersectOriginalEntryCell": false,
+          "representativeShaftSourceIds": [],
+          "representativeNontargetWorkingSourceIds": []
+        },
+        {
+          "radiusMm": 1.3,
+          "pose": "at-entry-center",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {},
+          "workingRetainedLabels": {
+            "tumor target": 6,
+            "bone": 4
+          },
+          "shaftBlocksThisStaticPose": false,
+          "workingNontargetBlocksTargetOnlyAdmission": true,
+          "tipWouldIntersectOriginalEntryCell": false,
+          "representativeShaftSourceIds": [],
+          "representativeNontargetWorkingSourceIds": [
+            5198098,
+            5237918,
+            5238099,
+            5238280
+          ]
+        },
+        {
+          "radiusMm": 1.3,
+          "pose": "just-contact-outer-cell-face",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {},
+          "workingRetainedLabels": {},
+          "shaftBlocksThisStaticPose": false,
+          "workingNontargetBlocksTargetOnlyAdmission": false,
+          "tipWouldIntersectOriginalEntryCell": false,
+          "representativeShaftSourceIds": [],
+          "representativeNontargetWorkingSourceIds": []
+        }
+      ]
+    },
+    {
+      "id": "directional-0-158-126",
+      "targetEntryIndex": [
+        135,
+        158,
+        126
+      ],
+      "entryRAS": [
+        -25.464996337890625,
+        34.441162109375,
+        -428.25
+      ],
+      "entryOwnedTargetStillRetained": true,
+      "minEntryCenterToGuardCellCenterMm": 41.012193308819754,
+      "nearestGuardCellSourceId": 4924194,
+      "nearestGuardNames": [
+        "left_caudate"
+      ],
+      "bounds": [
+        {
+          "radiusMm": 0.3,
+          "pose": "at-entry-center",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {
+            "bone": 95,
+            "tumor target": 2
+          },
+          "workingRetainedLabels": {
+            "tumor target": 1,
+            "bone": 2
+          },
+          "shaftBlocksThisStaticPose": true,
+          "workingNontargetBlocksTargetOnlyAdmission": true,
+          "tipWouldIntersectOriginalEntryCell": true,
+          "representativeShaftSourceIds": [
+            5444244,
+            5483883,
+            5484063,
+            5484064
+          ],
+          "representativeNontargetWorkingSourceIds": [
+            5444244,
+            5484064
+          ]
+        },
+        {
+          "radiusMm": 0.3,
+          "pose": "just-contact-outer-cell-face",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {
+            "bone": 91,
+            "tumor target": 1
+          },
+          "workingRetainedLabels": {
+            "bone": 3,
+            "tumor target": 1
+          },
+          "shaftBlocksThisStaticPose": true,
+          "workingNontargetBlocksTargetOnlyAdmission": true,
+          "tipWouldIntersectOriginalEntryCell": true,
+          "representativeShaftSourceIds": [
+            5484064,
+            5523703,
+            5523883,
+            5523884
+          ],
+          "representativeNontargetWorkingSourceIds": [
+            5444244,
+            5484064,
+            5523884
+          ]
+        },
+        {
+          "radiusMm": 1.3,
+          "pose": "at-entry-center",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {
+            "bone": 95,
+            "tumor target": 2
+          },
+          "workingRetainedLabels": {
+            "tumor target": 20,
+            "bone": 25
+          },
+          "shaftBlocksThisStaticPose": true,
+          "workingNontargetBlocksTargetOnlyAdmission": true,
+          "tipWouldIntersectOriginalEntryCell": true,
+          "representativeShaftSourceIds": [
+            5444244,
+            5483883,
+            5484063,
+            5484064
+          ],
+          "representativeNontargetWorkingSourceIds": [
+            5364605,
+            5364786,
+            5404244,
+            5404425
+          ]
+        },
+        {
+          "radiusMm": 1.3,
+          "pose": "just-contact-outer-cell-face",
+          "guardHitCells": 0,
+          "shaftRetainedLabels": {
+            "bone": 87
+          },
+          "workingRetainedLabels": {
+            "bone": 37,
+            "tumor target": 9
+          },
+          "shaftBlocksThisStaticPose": true,
+          "workingNontargetBlocksTargetOnlyAdmission": true,
+          "tipWouldIntersectOriginalEntryCell": true,
+          "representativeShaftSourceIds": [
+            5523884,
+            5563523,
+            5563703,
+            5563704
+          ],
+          "representativeNontargetWorkingSourceIds": [
+            5444064,
+            5444244,
+            5444245,
+            5444425
+          ]
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Exact source masks/ownership and static full-tool geometry only; no public action or physical trajectory was admitted or tested.",
+    "Center distances are not proof that every voxel-contact pose or an alternative tilted/subvoxel route is infeasible.",
+    "A blocked exact center/contact pose does not prove the source cell cannot be removed by contact at another face or through another opening.",
+    "Guard estimates are unreviewed and do not supply motor/language cortex, tracts, optic pathways or cranial nerves. Owned vessel mask is experimental and incomplete; no completeness or clinical safety claim."
+  ]
+}

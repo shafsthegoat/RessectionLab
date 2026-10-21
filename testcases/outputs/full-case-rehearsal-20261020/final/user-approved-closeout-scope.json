@@ -1,0 +1,15 @@
+{
+  "utc": "2026-10-21T05:46:13.357719+00:00",
+  "userApprovedChoice": "Close out with those limitations (Recommended)",
+  "fullLengthGuiPlaybackRequiredForCloseout": false,
+  "remainingFramePreparationAndAuditRequiredForCloseout": false,
+  "noPerformanceRepairRequested": true,
+  "videoRequired": false,
+  "physicalLiveEnginePidPreserved": 47002,
+  "existingObservedReplayPidPreserved": 82804,
+  "orchestratorPidToStopScheduling": 77083,
+  "action": "Terminate only the non-engine orchestration parent so no later verification stages are launched. Preserve the already-running observed replay to finish and save its bounded output; no engine signal, kill or restart.",
+  "canonicalBothBranches": "passed",
+  "fullLengthFinalGuiPlayback": "unverified",
+  "remainingFrameAudit": "unverified"
+}

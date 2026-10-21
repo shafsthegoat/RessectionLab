@@ -1,0 +1,48 @@
+{
+  "reviewedAtUtc": "2026-10-21T00:49:20.226149+00:00",
+  "scope": "Read-only recorder and usage audit, existing ENGINEERINGHELPERTEST ffprobe only; no GUI/screenshot/patient calls",
+  "recorderSha256": "80111fe7dfa8905aa7f576fd688e23e728607221ac27a818e9c3c251b8455d33",
+  "usageSha256": "b2cae05323f91512251628b28e4e919f9da0b43cb615c935d1e87b54ca079676",
+  "recommendation": "No blocking source-capture/mutex/ordinary-stop issue found; actual capture probe and full-play video remain pending",
+  "captureSource": "Only bound app.getScreenshot({emit:false}); no OS/display capture API. Correct secondary-display app binding is external to this helper.",
+  "serialization": "Screenshots and withUi callbacks share one promise mutex; all relevant UI operations must use it. Encoding backpressure follows screenshot lock release.",
+  "publication": "Exclusive movie and JSONL acquisition; no prior-file overwrite. Import starts no process or screenshot.",
+  "timing": "Actual current captures streamed to ffmpeg demux-read wall-clock VFR; capture begin/end and stream backpressure separately logged. No synthetic hold frames. Requested FPS is a schedule, not guaranteed cadence.",
+  "engineeringEvidence": {
+    "movie": "ENGINEERINGHELPERTEST_recorder_1792543382821.mkv",
+    "codec": "h264",
+    "width": 1460,
+    "height": 950,
+    "packetCount": 5,
+    "packetPtsSeconds": [
+      0,
+      0.626,
+      0.921,
+      1.171,
+      1.328
+    ],
+    "lastPacketDurationSeconds": 0.001,
+    "formatDurationPresent": false,
+    "nbFramesPresent": false,
+    "captureCount": 5,
+    "encodedInputFrames": 5,
+    "captureErrors": 0,
+    "encoderErrors": 0,
+    "ffmpegExitCode": 0,
+    "scopeLimit": "Reused saved screenshot via fake app; does not establish actual CUA capture or cross-REPL background lifetime."
+  },
+  "remainingActualGates": [
+    "Secondary display/window placement and correct bound app",
+    "Capture count grows across separate CUA REPL calls before Play",
+    "Observed entire primary playback while recorder retained; all UI through same withUi",
+    "Graceful stop with zero errors/exit0 and final output packet count/PTS checked"
+  ],
+  "materialLimits": [
+    "Streamed MKV lacks format.duration and nb_frames in engineering output; derive observed duration from packet PTS plus last packet duration.",
+    "No timeout bounds screenshot, stdin drain or encoder close, so stalled-API bounded shutdown is not established.",
+    "2/6fps video samples visible GUI; it is not proof that every native microframe was rendered."
+  ],
+  "productionOrHelperEdits": false,
+  "actualGuiCalls": 0,
+  "patientPhysicsCalls": 0
+}

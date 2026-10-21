@@ -1,0 +1,870 @@
+{
+  "scope": "Read-only native JSON/checkpoint records only; no engine construction, patient physics, GUI or cache publication.",
+  "snapshots": [
+    {
+      "native": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-large-core-100.ressectionlab",
+      "nativeSha256": "201af4982c573fc2a8d703e78967566d76930eb04ce3b6185fed33bb97222e21",
+      "actions": 100,
+      "actualElapsedSeconds": 305.0131629613395,
+      "requestedDurationSeconds": 335.75310598330697,
+      "estimatedFrameCountLower": 1626,
+      "estimatedFrameCountUpper": 1725,
+      "removedCells": 4769,
+      "fields": {
+        "contact": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "cutEdges": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "cuts": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "debris": {
+          "jsonBytes": 46762,
+          "gzip1Bytes": 9437
+        },
+        "debrisMm3": {
+          "jsonBytes": 17,
+          "gzip1Bytes": 33
+        },
+        "debrisRemovedMm3": {
+          "jsonBytes": 17,
+          "gzip1Bytes": 33
+        },
+        "deformation": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "deformationModel": {
+          "jsonBytes": 65,
+          "gzip1Bytes": 78
+        },
+        "drillingV2": {
+          "jsonBytes": 197585,
+          "gzip1Bytes": 41200
+        },
+        "elapsedSeconds": {
+          "jsonBytes": 17,
+          "gzip1Bytes": 37
+        },
+        "flapComponents": {
+          "jsonBytes": 1064413,
+          "gzip1Bytes": 188703
+        },
+        "fluid": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "fluidAddedMm3": {
+          "jsonBytes": 3,
+          "gzip1Bytes": 23
+        },
+        "fluidEscapedMm3": {
+          "jsonBytes": 3,
+          "gzip1Bytes": 23
+        },
+        "fluidRemovedMm3": {
+          "jsonBytes": 3,
+          "gzip1Bytes": 23
+        },
+        "holds": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "materialExposure": {
+          "jsonBytes": 88,
+          "gzip1Bytes": 98
+        },
+        "meshCutEdges": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "meshSeams": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "observations": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "removed": {
+          "jsonBytes": 38153,
+          "gzip1Bytes": 12048
+        },
+        "separated": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "separatedAttachments": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "slots": {
+          "jsonBytes": 493,
+          "gzip1Bytes": 288
+        },
+        "sources": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "thermal": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "transectedEdges": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "travelMm": {
+          "jsonBytes": 17,
+          "gzip1Bytes": 37
+        },
+        "vesselEncounters": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "vesselsV2": {
+          "jsonBytes": 187,
+          "gzip1Bytes": 152
+        }
+      },
+      "allCompressedFieldBytes": 252543
+    },
+    {
+      "native": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-field-cleanup-director-692.ressectionlab",
+      "nativeSha256": "ce7de07e26e94b8d47610b97ea9c4f8bd161312c6fa5bb42eb0af8e42a10d1c8",
+      "actions": 692,
+      "actualElapsedSeconds": 1267.8416800672849,
+      "requestedDurationSeconds": 1341.1699314908158,
+      "estimatedFrameCountLower": 7032,
+      "estimatedFrameCountUpper": 7723,
+      "removedCells": 32096,
+      "fields": {
+        "contact": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "cutEdges": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "cuts": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "debris": {
+          "jsonBytes": 86200,
+          "gzip1Bytes": 17494
+        },
+        "debrisMm3": {
+          "jsonBytes": 17,
+          "gzip1Bytes": 33
+        },
+        "debrisRemovedMm3": {
+          "jsonBytes": 17,
+          "gzip1Bytes": 33
+        },
+        "deformation": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "deformationModel": {
+          "jsonBytes": 65,
+          "gzip1Bytes": 78
+        },
+        "drillingV2": {
+          "jsonBytes": 358200,
+          "gzip1Bytes": 67230
+        },
+        "elapsedSeconds": {
+          "jsonBytes": 18,
+          "gzip1Bytes": 38
+        },
+        "flapComponents": {
+          "jsonBytes": 1064546,
+          "gzip1Bytes": 188611
+        },
+        "fluid": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "fluidAddedMm3": {
+          "jsonBytes": 3,
+          "gzip1Bytes": 23
+        },
+        "fluidEscapedMm3": {
+          "jsonBytes": 3,
+          "gzip1Bytes": 23
+        },
+        "fluidRemovedMm3": {
+          "jsonBytes": 3,
+          "gzip1Bytes": 23
+        },
+        "holds": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "materialExposure": {
+          "jsonBytes": 89,
+          "gzip1Bytes": 98
+        },
+        "meshCutEdges": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "meshSeams": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "observations": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "removed": {
+          "jsonBytes": 256769,
+          "gzip1Bytes": 81386
+        },
+        "separated": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "separatedAttachments": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "slots": {
+          "jsonBytes": 433,
+          "gzip1Bytes": 257
+        },
+        "sources": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "thermal": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "transectedEdges": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "travelMm": {
+          "jsonBytes": 18,
+          "gzip1Bytes": 38
+        },
+        "vesselEncounters": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "vesselsV2": {
+          "jsonBytes": 188,
+          "gzip1Bytes": 154
+        }
+      },
+      "allCompressedFieldBytes": 355849
+    },
+    {
+      "native": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-exact-thermal-1076.ressectionlab",
+      "nativeSha256": "f0f143fc211f3f48aa6ab3a47482021b90c052615bb6043573b4c76e507b2fed",
+      "actions": 1076,
+      "actualElapsedSeconds": 2027.8772521485412,
+      "requestedDurationSeconds": 2138.3020959188693,
+      "estimatedFrameCountLower": 11216,
+      "estimatedFrameCountUpper": 12291,
+      "removedCells": 38836,
+      "fields": {
+        "contact": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "cutEdges": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "cuts": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "debris": {
+          "jsonBytes": 120794,
+          "gzip1Bytes": 24336
+        },
+        "debrisMm3": {
+          "jsonBytes": 17,
+          "gzip1Bytes": 33
+        },
+        "debrisRemovedMm3": {
+          "jsonBytes": 17,
+          "gzip1Bytes": 33
+        },
+        "deformation": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "deformationModel": {
+          "jsonBytes": 65,
+          "gzip1Bytes": 78
+        },
+        "drillingV2": {
+          "jsonBytes": 499567,
+          "gzip1Bytes": 88291
+        },
+        "elapsedSeconds": {
+          "jsonBytes": 18,
+          "gzip1Bytes": 38
+        },
+        "flapComponents": {
+          "jsonBytes": 1065344,
+          "gzip1Bytes": 188800
+        },
+        "fluid": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "fluidAddedMm3": {
+          "jsonBytes": 3,
+          "gzip1Bytes": 23
+        },
+        "fluidEscapedMm3": {
+          "jsonBytes": 3,
+          "gzip1Bytes": 23
+        },
+        "fluidRemovedMm3": {
+          "jsonBytes": 3,
+          "gzip1Bytes": 23
+        },
+        "holds": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "materialExposure": {
+          "jsonBytes": 87,
+          "gzip1Bytes": 98
+        },
+        "meshCutEdges": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "meshSeams": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "observations": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "removed": {
+          "jsonBytes": 310689,
+          "gzip1Bytes": 98630
+        },
+        "separated": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "separatedAttachments": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "slots": {
+          "jsonBytes": 426,
+          "gzip1Bytes": 237
+        },
+        "sources": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "thermal": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "transectedEdges": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "travelMm": {
+          "jsonBytes": 17,
+          "gzip1Bytes": 37
+        },
+        "vesselEncounters": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "vesselsV2": {
+          "jsonBytes": 188,
+          "gzip1Bytes": 153
+        }
+      },
+      "allCompressedFieldBytes": 401163
+    },
+    {
+      "native": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-exact-rollback-copy-1486.ressectionlab",
+      "nativeSha256": "342dbf52b1bbecb72ec159705b4e0fb735b10461337070fad65c5b69703165a7",
+      "actions": 1486,
+      "actualElapsedSeconds": 2757.199707446473,
+      "requestedDurationSeconds": 2901.283034004853,
+      "estimatedFrameCountLower": 15272,
+      "estimatedFrameCountUpper": 16757,
+      "removedCells": 45670,
+      "fields": {
+        "contact": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "cutEdges": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "cuts": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "debris": {
+          "jsonBytes": 164152,
+          "gzip1Bytes": 33168
+        },
+        "debrisMm3": {
+          "jsonBytes": 18,
+          "gzip1Bytes": 34
+        },
+        "debrisRemovedMm3": {
+          "jsonBytes": 17,
+          "gzip1Bytes": 33
+        },
+        "deformation": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "deformationModel": {
+          "jsonBytes": 65,
+          "gzip1Bytes": 78
+        },
+        "drillingV2": {
+          "jsonBytes": 675127,
+          "gzip1Bytes": 119612
+        },
+        "elapsedSeconds": {
+          "jsonBytes": 17,
+          "gzip1Bytes": 37
+        },
+        "flapComponents": {
+          "jsonBytes": 1065078,
+          "gzip1Bytes": 188494
+        },
+        "fluid": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "fluidAddedMm3": {
+          "jsonBytes": 3,
+          "gzip1Bytes": 23
+        },
+        "fluidEscapedMm3": {
+          "jsonBytes": 3,
+          "gzip1Bytes": 23
+        },
+        "fluidRemovedMm3": {
+          "jsonBytes": 3,
+          "gzip1Bytes": 23
+        },
+        "holds": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "materialExposure": {
+          "jsonBytes": 87,
+          "gzip1Bytes": 97
+        },
+        "meshCutEdges": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "meshSeams": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "observations": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "removed": {
+          "jsonBytes": 365361,
+          "gzip1Bytes": 115671
+        },
+        "separated": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "separatedAttachments": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "slots": {
+          "jsonBytes": 465,
+          "gzip1Bytes": 267
+        },
+        "sources": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "thermal": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "transectedEdges": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "travelMm": {
+          "jsonBytes": 17,
+          "gzip1Bytes": 37
+        },
+        "vesselEncounters": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "vesselsV2": {
+          "jsonBytes": 187,
+          "gzip1Bytes": 153
+        }
+      },
+      "allCompressedFieldBytes": 458080
+    },
+    {
+      "native": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-bounded-left-trial-1644.ressectionlab",
+      "nativeSha256": "7f83f387e3ae39aa9ac7fd5b9a4c23314dfcc33335c67de8506838b189033bd5",
+      "actions": 1644,
+      "actualElapsedSeconds": 3069.5946400336406,
+      "requestedDurationSeconds": 3227.1495055100986,
+      "estimatedFrameCountLower": 16992,
+      "estimatedFrameCountUpper": 18635,
+      "removedCells": 47054,
+      "fields": {
+        "contact": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "cutEdges": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "cuts": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "debris": {
+          "jsonBytes": 171984,
+          "gzip1Bytes": 34732
+        },
+        "debrisMm3": {
+          "jsonBytes": 17,
+          "gzip1Bytes": 33
+        },
+        "debrisRemovedMm3": {
+          "jsonBytes": 17,
+          "gzip1Bytes": 33
+        },
+        "deformation": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "deformationModel": {
+          "jsonBytes": 65,
+          "gzip1Bytes": 78
+        },
+        "drillingV2": {
+          "jsonBytes": 727624,
+          "gzip1Bytes": 123855
+        },
+        "elapsedSeconds": {
+          "jsonBytes": 18,
+          "gzip1Bytes": 36
+        },
+        "flapComponents": {
+          "jsonBytes": 1065219,
+          "gzip1Bytes": 188648
+        },
+        "fluid": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "fluidAddedMm3": {
+          "jsonBytes": 3,
+          "gzip1Bytes": 23
+        },
+        "fluidEscapedMm3": {
+          "jsonBytes": 3,
+          "gzip1Bytes": 23
+        },
+        "fluidRemovedMm3": {
+          "jsonBytes": 3,
+          "gzip1Bytes": 23
+        },
+        "holds": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "materialExposure": {
+          "jsonBytes": 86,
+          "gzip1Bytes": 97
+        },
+        "meshCutEdges": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "meshSeams": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "observations": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "removed": {
+          "jsonBytes": 376433,
+          "gzip1Bytes": 118984
+        },
+        "separated": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "separatedAttachments": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "slots": {
+          "jsonBytes": 453,
+          "gzip1Bytes": 238
+        },
+        "sources": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "thermal": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "transectedEdges": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "travelMm": {
+          "jsonBytes": 17,
+          "gzip1Bytes": 37
+        },
+        "vesselEncounters": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "vesselsV2": {
+          "jsonBytes": 188,
+          "gzip1Bytes": 153
+        }
+      },
+      "allCompressedFieldBytes": 467323
+    },
+    {
+      "native": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/primary.ressectionlab",
+      "nativeSha256": "7dcc43143cf2b4dd5bce7df37efb615cafe1c1e47650574402b9a7497b7923ce",
+      "actions": 1656,
+      "actualElapsedSeconds": 3120.740835048567,
+      "requestedDurationSeconds": 3285.3957005250923,
+      "estimatedFrameCountLower": 17260,
+      "estimatedFrameCountUpper": 18915,
+      "removedCells": 47669,
+      "fields": {
+        "contact": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "cutEdges": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "cuts": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "debris": {
+          "jsonBytes": 180594,
+          "gzip1Bytes": 36661
+        },
+        "debrisMm3": {
+          "jsonBytes": 17,
+          "gzip1Bytes": 33
+        },
+        "debrisRemovedMm3": {
+          "jsonBytes": 17,
+          "gzip1Bytes": 33
+        },
+        "deformation": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "deformationModel": {
+          "jsonBytes": 65,
+          "gzip1Bytes": 78
+        },
+        "drillingV2": {
+          "jsonBytes": 762405,
+          "gzip1Bytes": 132021
+        },
+        "elapsedSeconds": {
+          "jsonBytes": 17,
+          "gzip1Bytes": 37
+        },
+        "flapComponents": {
+          "jsonBytes": 1064820,
+          "gzip1Bytes": 188663
+        },
+        "fluid": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "fluidAddedMm3": {
+          "jsonBytes": 3,
+          "gzip1Bytes": 23
+        },
+        "fluidEscapedMm3": {
+          "jsonBytes": 3,
+          "gzip1Bytes": 23
+        },
+        "fluidRemovedMm3": {
+          "jsonBytes": 3,
+          "gzip1Bytes": 23
+        },
+        "holds": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "materialExposure": {
+          "jsonBytes": 86,
+          "gzip1Bytes": 97
+        },
+        "meshCutEdges": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "meshSeams": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "observations": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "removed": {
+          "jsonBytes": 381353,
+          "gzip1Bytes": 120610
+        },
+        "separated": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "separatedAttachments": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "slots": {
+          "jsonBytes": 484,
+          "gzip1Bytes": 264
+        },
+        "sources": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "thermal": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "transectedEdges": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "travelMm": {
+          "jsonBytes": 18,
+          "gzip1Bytes": 38
+        },
+        "vesselEncounters": {
+          "jsonBytes": 2,
+          "gzip1Bytes": 22
+        },
+        "vesselsV2": {
+          "jsonBytes": 187,
+          "gzip1Bytes": 153
+        }
+      },
+      "allCompressedFieldBytes": 479087
+    }
+  ],
+  "frameCountEstimateMeaning": "Cadence resets per action; successful dt is <=0.1s. Count includes starts and finalized boundaries. Requested actions bound actual partial durations above; no exact frame count is claimed before observed replay.",
+  "estimatedFrameCountLower": 17260,
+  "estimatedFrameCountUpper": 18915,
+  "scenarioBytes": {
+    "drillingFieldChangesEveryObservedFrame": 1681125714,
+    "everyNonFlapFieldChangesEveryObservedFrame": 3891364055,
+    "endpointNonFlapFieldBytesTimesAllFrames": 5493369960
+  },
+  "scenarioMeaning": "Endpoint-size envelopes over recorded intervals, not measurements or rigorous bounds of unseen intermediate states. Content dedup reduces repeated fields. Temperature cooling and removal can make large fields unique; actual cache coverage must be checked after same-pass collection.",
+  "intervals": [
+    {
+      "fromActions": 0,
+      "toActions": 100,
+      "elapsedSeconds": 305.0131629613395,
+      "framesUpper": 1725,
+      "endpointNonFlapFieldBytes": 63840,
+      "endpointDrillingFieldBytes": 41200
+    },
+    {
+      "fromActions": 100,
+      "toActions": 692,
+      "elapsedSeconds": 962.8285171059454,
+      "framesUpper": 5998,
+      "endpointNonFlapFieldBytes": 167238,
+      "endpointDrillingFieldBytes": 67230
+    },
+    {
+      "fromActions": 692,
+      "toActions": 1076,
+      "elapsedSeconds": 760.0355720812563,
+      "framesUpper": 4568,
+      "endpointNonFlapFieldBytes": 212363,
+      "endpointDrillingFieldBytes": 88291
+    },
+    {
+      "fromActions": 1076,
+      "toActions": 1486,
+      "elapsedSeconds": 729.3224552979318,
+      "framesUpper": 4466,
+      "endpointNonFlapFieldBytes": 269586,
+      "endpointDrillingFieldBytes": 119612
+    },
+    {
+      "fromActions": 1486,
+      "toActions": 1644,
+      "elapsedSeconds": 312.39493258716766,
+      "framesUpper": 1877,
+      "endpointNonFlapFieldBytes": 278675,
+      "endpointDrillingFieldBytes": 123855
+    },
+    {
+      "fromActions": 1644,
+      "toActions": 1656,
+      "elapsedSeconds": 51.146195014926434,
+      "framesUpper": 279,
+      "endpointNonFlapFieldBytes": 290424,
+      "endpointDrillingFieldBytes": 132021
+    }
+  ],
+  "currentObservedBudgetBytes": 536870912,
+  "perActionReservationBytes": 67108864,
+  "currentRetentionIssue": "At new action begin, _room(reserve,pending) may delete the current committed entry itself. Thus this branch exceeding about448MiB can evict all its already-published actions at once; publication count alone cannot prove complete retention.",
+  "helperReadiness": {
+    "accept_native.py": "One canonical independent force-verified replay; signed cache captures every action boundary, no observed microstep collector here.",
+    "export_observed_telemetry.py": "Cache-only admitted baseline; --prepare-frames collects during the same observed telemetry pass. Verifies publications==actions and every action manifest remains present before export.",
+    "verify_every_cached_frame.py": "Fresh-process signed admission, SHA-authenticated field blobs, every real frame restored and boundary checked; sys.setprofile refuses any physics step."
+  }
+}

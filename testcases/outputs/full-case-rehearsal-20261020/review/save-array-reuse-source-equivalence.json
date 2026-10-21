@@ -1,0 +1,28 @@
+{
+  "scope": "Saved-source encoding comparison only; no patient engine construction/replay and no whole-action speed claim.",
+  "sourceCheckpoint": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-over-sixty-percent.ressectionlab",
+  "sourceCheckpointSha256": "f57083258895c9901c064427e36bd5e8e48da91fc334ae5948dae98ee88ead44",
+  "originalSha256": "ff5a49b8706a8ccda08d8c3e82dad3e079f85dea98cb6bd40783d2262eec9838",
+  "legacyCommit": "a956f6c6",
+  "actions": 760,
+  "measurements": {
+    "legacy": {
+      "wallSeconds": 5.557251499965787,
+      "bytes": 24766096
+    },
+    "newCold": {
+      "wallSeconds": 5.227343165781349,
+      "bytes": 24766096
+    },
+    "newWarm": {
+      "wallSeconds": 4.24546012468636,
+      "bytes": 24766096
+    }
+  },
+  "primaryAndAuxiliaryNpzBytesEqual": true,
+  "allDecodedArtifactsAndWorkspaceStateEqual": true,
+  "caseManifestAndOriginalFilesEqual": true,
+  "inputsUnchanged": true,
+  "cachedPayloads": 1,
+  "cachedPayloadBytes": 20292869
+}

@@ -1,0 +1,1433 @@
+[
+  {
+    "stage": "restored",
+    "wall": 85.26550858281553,
+    "metrics": {
+      "severedVesselConnections": 0,
+      "activeVesselWounds": 0,
+      "modeledVesselFluidGeneratedMm3": 0,
+      "modeledVesselReservoirMm3": 0,
+      "globalPerfusion": "unknown",
+      "drillInputEnergyJ": 2031.0,
+      "drillCuttingWorkJ": 1316.0,
+      "drillUnusedEnergyJ": 715.0,
+      "drillHeatGeneratedJ": 460.6000000000023,
+      "drillCoolingLossJ": 402.1450411920987,
+      "drillPendingWorkJ": 0,
+      "drillRemovedVolumeMm3": 2632.0,
+      "drillMaxTemperatureC": 123.95539654283,
+      "vesselPhysicsV2": {
+        "enabled": true,
+        "woundCount": 0,
+        "damagedFaceCount": 0,
+        "woundAreaMm2": 0,
+        "activeWounds": 0,
+        "pressurePa": 1000.0,
+        "vascularRemainingMm3": 100.0,
+        "refilledMm3": 0.0,
+        "generatedMm3": 0.0,
+        "emittedMm3": 0,
+        "blockedOutletReservoirMm3": 0,
+        "conservationResidualMm3": 0.0,
+        "globalPerfusion": "unknown"
+      },
+      "brainActiveNodes": 0,
+      "brainMaxDisplacementMm": 0.0,
+      "brainElasticEnergyNmm": 0.0,
+      "brainMaxNeighborDisplacementRatio": 0.0,
+      "removedByLabelMm3": {
+        "bone": 2632.0
+      },
+      "targetRemovedMm3": 0,
+      "nonTargetRemovedMm3": 2632.0,
+      "elapsedSeconds": 83.29999999999954,
+      "travelMm": 41.71611781576172,
+      "contactCellSeconds": 0,
+      "debrisMm3": 2632.0,
+      "fluidAddedMm3": 0.0,
+      "fluidRemovedMm3": 0.0,
+      "debrisRemovedMm3": 0.0,
+      "debrisEscapedMm3": 0.0,
+      "fluidPresentMm3": 0,
+      "fluidEscapedMm3": 0.0,
+      "thermalExposure": 0,
+      "vesselEncounters": 0,
+      "exposureByMaterialCellSeconds": {
+        "bone": 558.1000000000583
+      },
+      "unknownStimulationSites": 0,
+      "collisions": 1,
+      "unknownMaterialCells": 0
+    }
+  },
+  {
+    "action": {
+      "slot": "left",
+      "operation": "withdraw",
+      "pose": {
+        "position": [
+          -10.464996337890625,
+          30.441162109375,
+          -366.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "duration": 0.1
+    },
+    "result": {
+      "status": "accepted",
+      "reason": null,
+      "completedFraction": 1.0,
+      "contactPosition": null,
+      "events": [
+        {
+          "kind": "withdraw",
+          "instrument": "Cranial drill",
+          "slot": "left"
+        }
+      ],
+      "reasonCode": null,
+      "elapsedSeconds": 0.09999999999969589,
+      "deltas": {
+        "removedCells": [],
+        "geometryRevision": "sha256:1de7f028a4f86a48403464d23bff5e46b506b4da0341830c8df1f723db9aca9c"
+      },
+      "stateId": "sha256:1de7f028a4f86a48403464d23bff5e46b506b4da0341830c8df1f723db9aca9c",
+      "metrics": {
+        "severedVesselConnections": 0,
+        "activeVesselWounds": 0,
+        "modeledVesselFluidGeneratedMm3": 0,
+        "modeledVesselReservoirMm3": 0,
+        "globalPerfusion": "unknown",
+        "drillInputEnergyJ": 2031.0,
+        "drillCuttingWorkJ": 1316.0,
+        "drillUnusedEnergyJ": 715.0,
+        "drillHeatGeneratedJ": 460.6000000000023,
+        "drillCoolingLossJ": 402.8711803524895,
+        "drillPendingWorkJ": 0,
+        "drillRemovedVolumeMm3": 2632.0,
+        "drillMaxTemperatureC": 122.8752192588417,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 0,
+          "damagedFaceCount": 0,
+          "woundAreaMm2": 0,
+          "activeWounds": 0,
+          "pressurePa": 1000.0,
+          "vascularRemainingMm3": 100.0,
+          "refilledMm3": 0.0,
+          "generatedMm3": 0.0,
+          "emittedMm3": 0,
+          "blockedOutletReservoirMm3": 0,
+          "conservationResidualMm3": 0.0,
+          "globalPerfusion": "unknown"
+        },
+        "brainActiveNodes": 0,
+        "brainMaxDisplacementMm": 0.0,
+        "brainElasticEnergyNmm": 0.0,
+        "brainMaxNeighborDisplacementRatio": 0.0,
+        "removedByLabelMm3": {
+          "bone": 2632.0
+        },
+        "targetRemovedMm3": 0,
+        "nonTargetRemovedMm3": 2632.0,
+        "elapsedSeconds": 83.39999999999924,
+        "travelMm": 86.43223563152344,
+        "contactCellSeconds": 0,
+        "debrisMm3": 2632.0,
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "debrisRemovedMm3": 0.0,
+        "debrisEscapedMm3": 0.0,
+        "fluidPresentMm3": 0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposure": 0,
+        "vesselEncounters": 0,
+        "exposureByMaterialCellSeconds": {
+          "bone": 558.1237037037624
+        },
+        "unknownStimulationSites": 0,
+        "collisions": 1,
+        "unknownMaterialCells": 0
+      }
+    },
+    "wall": 3.9523255419917405
+  },
+  {
+    "action": {
+      "slot": "left",
+      "operation": "exchange",
+      "instrument": "cusa",
+      "duration": 0.1
+    },
+    "result": {
+      "status": "accepted",
+      "reason": null,
+      "completedFraction": 1.0,
+      "contactPosition": null,
+      "events": [
+        {
+          "kind": "exchange",
+          "instrument": "CUSA / ultrasonic aspirator",
+          "slot": "left"
+        }
+      ],
+      "reasonCode": null,
+      "elapsedSeconds": 0.09999999999999432,
+      "deltas": {
+        "removedCells": [],
+        "geometryRevision": "sha256:3c09ca81bb1cc27bad070626a033be8ca1b5fa254dd225d0c7de8766343ee73b"
+      },
+      "stateId": "sha256:3c09ca81bb1cc27bad070626a033be8ca1b5fa254dd225d0c7de8766343ee73b",
+      "metrics": {
+        "severedVesselConnections": 0,
+        "activeVesselWounds": 0,
+        "modeledVesselFluidGeneratedMm3": 0,
+        "modeledVesselReservoirMm3": 0,
+        "globalPerfusion": "unknown",
+        "drillInputEnergyJ": 2031.0,
+        "drillCuttingWorkJ": 1316.0,
+        "drillUnusedEnergyJ": 715.0,
+        "drillHeatGeneratedJ": 460.6000000000023,
+        "drillCoolingLossJ": 403.5882992673994,
+        "drillPendingWorkJ": 0,
+        "drillRemovedVolumeMm3": 2632.0,
+        "drillMaxTemperatureC": 121.80846015257669,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 0,
+          "damagedFaceCount": 0,
+          "woundAreaMm2": 0,
+          "activeWounds": 0,
+          "pressurePa": 1000.0,
+          "vascularRemainingMm3": 100.0,
+          "refilledMm3": 0.0,
+          "generatedMm3": 0.0,
+          "emittedMm3": 0,
+          "blockedOutletReservoirMm3": 0,
+          "conservationResidualMm3": 0.0,
+          "globalPerfusion": "unknown"
+        },
+        "brainActiveNodes": 0,
+        "brainMaxDisplacementMm": 0.0,
+        "brainElasticEnergyNmm": 0.0,
+        "brainMaxNeighborDisplacementRatio": 0.0,
+        "removedByLabelMm3": {
+          "bone": 2632.0
+        },
+        "targetRemovedMm3": 0,
+        "nonTargetRemovedMm3": 2632.0,
+        "elapsedSeconds": 83.49999999999923,
+        "travelMm": 86.43223563152344,
+        "contactCellSeconds": 0,
+        "debrisMm3": 2632.0,
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "debrisRemovedMm3": 0.0,
+        "debrisEscapedMm3": 0.0,
+        "fluidPresentMm3": 0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposure": 0,
+        "vesselEncounters": 0,
+        "exposureByMaterialCellSeconds": {
+          "bone": 558.1237037037624
+        },
+        "unknownStimulationSites": 0,
+        "collisions": 1,
+        "unknownMaterialCells": 0
+      }
+    },
+    "wall": 0.31309745786711574
+  },
+  {
+    "action": {
+      "slot": "left",
+      "operation": "place",
+      "pose": {
+        "position": [
+          -10.464996337890625,
+          30.441162109375,
+          -366.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "parameters": {
+        "radiusMm": 1.5
+      },
+      "duration": 0.1
+    },
+    "result": {
+      "status": "accepted",
+      "reason": null,
+      "completedFraction": 1.0,
+      "contactPosition": null,
+      "events": [
+        {
+          "kind": "place",
+          "instrument": "CUSA / ultrasonic aspirator",
+          "slot": "left"
+        }
+      ],
+      "reasonCode": null,
+      "elapsedSeconds": 0.09999999999999432,
+      "deltas": {
+        "removedCells": [],
+        "geometryRevision": "sha256:18bd7d3eb66cbab1d840c365c2e781bd769267598d3cda445c2696dde81811e7"
+      },
+      "stateId": "sha256:18bd7d3eb66cbab1d840c365c2e781bd769267598d3cda445c2696dde81811e7",
+      "metrics": {
+        "severedVesselConnections": 0,
+        "activeVesselWounds": 0,
+        "modeledVesselFluidGeneratedMm3": 0,
+        "modeledVesselReservoirMm3": 0,
+        "globalPerfusion": "unknown",
+        "drillInputEnergyJ": 2031.0,
+        "drillCuttingWorkJ": 1316.0,
+        "drillUnusedEnergyJ": 715.0,
+        "drillHeatGeneratedJ": 460.6000000000023,
+        "drillCoolingLossJ": 404.2965099880791,
+        "drillPendingWorkJ": 0,
+        "drillRemovedVolumeMm3": 2632.0,
+        "drillMaxTemperatureC": 120.75495254075467,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 0,
+          "damagedFaceCount": 0,
+          "woundAreaMm2": 0,
+          "activeWounds": 0,
+          "pressurePa": 1000.0,
+          "vascularRemainingMm3": 100.0,
+          "refilledMm3": 0.0,
+          "generatedMm3": 0.0,
+          "emittedMm3": 0,
+          "blockedOutletReservoirMm3": 0,
+          "conservationResidualMm3": 0.0,
+          "globalPerfusion": "unknown"
+        },
+        "brainActiveNodes": 0,
+        "brainMaxDisplacementMm": 0.0,
+        "brainElasticEnergyNmm": 0.0,
+        "brainMaxNeighborDisplacementRatio": 0.0,
+        "removedByLabelMm3": {
+          "bone": 2632.0
+        },
+        "targetRemovedMm3": 0,
+        "nonTargetRemovedMm3": 2632.0,
+        "elapsedSeconds": 83.59999999999923,
+        "travelMm": 86.43223563152344,
+        "contactCellSeconds": 0,
+        "debrisMm3": 2632.0,
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "debrisRemovedMm3": 0.0,
+        "debrisEscapedMm3": 0.0,
+        "fluidPresentMm3": 0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposure": 0,
+        "vesselEncounters": 0,
+        "exposureByMaterialCellSeconds": {
+          "bone": 558.1237037037624
+        },
+        "unknownStimulationSites": 0,
+        "collisions": 1,
+        "unknownMaterialCells": 0
+      }
+    },
+    "wall": 0.4126932080835104
+  },
+  {
+    "stage": "candidates",
+    "count": 1,
+    "wall": 9.902788042090833,
+    "actions": [
+      {
+        "slot": "left",
+        "operation": "apply",
+        "path": [
+          {
+            "position": [
+              -10.464996337890625,
+              30.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "position": [
+              -7.464996337890625,
+              28.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "position": [
+              -7.464996337890625,
+              28.441162109375,
+              -417.05
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "parameters": {
+          "radiusMm": 1.5
+        },
+        "duration": 2.7202775637732
+      }
+    ]
+  },
+  {
+    "stage": "preview",
+    "action": {
+      "slot": "left",
+      "operation": "apply",
+      "path": [
+        {
+          "position": [
+            -10.464996337890625,
+            30.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "position": [
+            -7.464996337890625,
+            28.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "position": [
+            -7.464996337890625,
+            28.441162109375,
+            -417.05
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "parameters": {
+        "radiusMm": 1.5
+      },
+      "duration": 2.7202775637732
+    },
+    "wall": 3.8656887500546873,
+    "result": {
+      "status": "accepted",
+      "reason": null,
+      "completedFraction": 1.0,
+      "contactPosition": null,
+      "events": [
+        {
+          "kind": "apply",
+          "instrument": "CUSA / ultrasonic aspirator",
+          "slot": "left"
+        },
+        {
+          "kind": "removal",
+          "cells": 1,
+          "volumeMm3": 1.0
+        }
+      ],
+      "reasonCode": null,
+      "elapsedSeconds": 2.720277563773351,
+      "deltas": {
+        "removedCells": [
+          4646587
+        ],
+        "geometryRevision": "sha256:76bc6852c554ee332e732cbbf37bb994e178c5f3ed5d94fceef192540b49bced"
+      },
+      "stateId": "sha256:76bc6852c554ee332e732cbbf37bb994e178c5f3ed5d94fceef192540b49bced",
+      "metrics": {
+        "severedVesselConnections": 0,
+        "activeVesselWounds": 0,
+        "modeledVesselFluidGeneratedMm3": 0,
+        "modeledVesselReservoirMm3": 0,
+        "globalPerfusion": "unknown",
+        "drillInputEnergyJ": 2031.0,
+        "drillCuttingWorkJ": 1316.0,
+        "drillUnusedEnergyJ": 715.0,
+        "drillHeatGeneratedJ": 460.6000000000023,
+        "drillCoolingLossJ": 420.5262371436954,
+        "drillPendingWorkJ": 0,
+        "drillRemovedVolumeMm3": 2632.0,
+        "drillMaxTemperatureC": 96.61222129288541,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 0,
+          "damagedFaceCount": 0,
+          "woundAreaMm2": 0,
+          "activeWounds": 0,
+          "pressurePa": 1000.0,
+          "vascularRemainingMm3": 100.0,
+          "refilledMm3": 0.0,
+          "generatedMm3": 0.0,
+          "emittedMm3": 0,
+          "blockedOutletReservoirMm3": 0,
+          "conservationResidualMm3": 0.0,
+          "globalPerfusion": "unknown"
+        },
+        "brainActiveNodes": 0,
+        "brainMaxDisplacementMm": 0.0,
+        "brainElasticEnergyNmm": 0.0,
+        "brainMaxNeighborDisplacementRatio": 0.0,
+        "removedByLabelMm3": {
+          "bone": 2632.0,
+          "tumor": 1.0
+        },
+        "targetRemovedMm3": 1.0,
+        "nonTargetRemovedMm3": 2632.0,
+        "elapsedSeconds": 86.32027756377258,
+        "travelMm": 140.8377869069874,
+        "contactCellSeconds": 0,
+        "debrisMm3": 2632.0,
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "debrisRemovedMm3": 0.0,
+        "debrisEscapedMm3": 0.0,
+        "fluidPresentMm3": 0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposure": 0,
+        "vesselEncounters": 0,
+        "exposureByMaterialCellSeconds": {
+          "bone": 558.1237037037624,
+          "tumor": 0.015633779102144828
+        },
+        "unknownStimulationSites": 0,
+        "collisions": 1,
+        "unknownMaterialCells": 0
+      },
+      "preview": true
+    }
+  },
+  {
+    "action": {
+      "slot": "left",
+      "operation": "apply",
+      "path": [
+        {
+          "position": [
+            -10.464996337890625,
+            30.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "position": [
+            -7.464996337890625,
+            28.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "position": [
+            -7.464996337890625,
+            28.441162109375,
+            -417.05
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "parameters": {
+        "radiusMm": 1.5
+      },
+      "duration": 2.7202775637732
+    },
+    "result": {
+      "status": "accepted",
+      "reason": null,
+      "completedFraction": 1.0,
+      "contactPosition": null,
+      "events": [
+        {
+          "kind": "apply",
+          "instrument": "CUSA / ultrasonic aspirator",
+          "slot": "left"
+        },
+        {
+          "kind": "removal",
+          "cells": 1,
+          "volumeMm3": 1.0
+        }
+      ],
+      "reasonCode": null,
+      "elapsedSeconds": 2.720277563773351,
+      "deltas": {
+        "removedCells": [
+          4646587
+        ],
+        "geometryRevision": "sha256:76bc6852c554ee332e732cbbf37bb994e178c5f3ed5d94fceef192540b49bced"
+      },
+      "stateId": "sha256:76bc6852c554ee332e732cbbf37bb994e178c5f3ed5d94fceef192540b49bced",
+      "metrics": {
+        "severedVesselConnections": 0,
+        "activeVesselWounds": 0,
+        "modeledVesselFluidGeneratedMm3": 0,
+        "modeledVesselReservoirMm3": 0,
+        "globalPerfusion": "unknown",
+        "drillInputEnergyJ": 2031.0,
+        "drillCuttingWorkJ": 1316.0,
+        "drillUnusedEnergyJ": 715.0,
+        "drillHeatGeneratedJ": 460.6000000000023,
+        "drillCoolingLossJ": 420.5262371436954,
+        "drillPendingWorkJ": 0,
+        "drillRemovedVolumeMm3": 2632.0,
+        "drillMaxTemperatureC": 96.61222129288541,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 0,
+          "damagedFaceCount": 0,
+          "woundAreaMm2": 0,
+          "activeWounds": 0,
+          "pressurePa": 1000.0,
+          "vascularRemainingMm3": 100.0,
+          "refilledMm3": 0.0,
+          "generatedMm3": 0.0,
+          "emittedMm3": 0,
+          "blockedOutletReservoirMm3": 0,
+          "conservationResidualMm3": 0.0,
+          "globalPerfusion": "unknown"
+        },
+        "brainActiveNodes": 0,
+        "brainMaxDisplacementMm": 0.0,
+        "brainElasticEnergyNmm": 0.0,
+        "brainMaxNeighborDisplacementRatio": 0.0,
+        "removedByLabelMm3": {
+          "bone": 2632.0,
+          "tumor": 1.0
+        },
+        "targetRemovedMm3": 1.0,
+        "nonTargetRemovedMm3": 2632.0,
+        "elapsedSeconds": 86.32027756377258,
+        "travelMm": 140.8377869069874,
+        "contactCellSeconds": 0,
+        "debrisMm3": 2632.0,
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "debrisRemovedMm3": 0.0,
+        "debrisEscapedMm3": 0.0,
+        "fluidPresentMm3": 0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposure": 0,
+        "vesselEncounters": 0,
+        "exposureByMaterialCellSeconds": {
+          "bone": 558.1237037037624,
+          "tumor": 0.015633779102144828
+        },
+        "unknownStimulationSites": 0,
+        "collisions": 1,
+        "unknownMaterialCells": 0
+      }
+    },
+    "wall": 3.039348665624857
+  },
+  {
+    "stage": "candidates",
+    "count": 4,
+    "wall": 12.224149917252362,
+    "actions": [
+      {
+        "slot": "left",
+        "operation": "apply",
+        "path": [
+          {
+            "position": [
+              -7.464996337890625,
+              28.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "position": [
+              -10.464996337890625,
+              30.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "position": [
+              -10.464996337890625,
+              30.441162109375,
+              -418.05
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "parameters": {
+          "radiusMm": 1.5
+        },
+        "duration": 5.310277563773201
+      },
+      {
+        "slot": "left",
+        "operation": "apply",
+        "path": [
+          {
+            "position": [
+              -7.464996337890625,
+              28.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "position": [
+              -9.464996337890625,
+              30.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "position": [
+              -9.464996337890625,
+              30.441162109375,
+              -417.05
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "parameters": {
+          "radiusMm": 1.5
+        },
+        "duration": 5.22142135623731
+      },
+      {
+        "slot": "left",
+        "operation": "apply",
+        "path": [
+          {
+            "position": [
+              -7.464996337890625,
+              28.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "position": [
+              -10.464996337890625,
+              29.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "position": [
+              -10.464996337890625,
+              29.441162109375,
+              -417.05
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "parameters": {
+          "radiusMm": 1.5
+        },
+        "duration": 5.2381138830084195
+      },
+      {
+        "slot": "left",
+        "operation": "apply",
+        "path": [
+          {
+            "position": [
+              -7.464996337890625,
+              28.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "position": [
+              -10.464996337890625,
+              31.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "position": [
+              -10.464996337890625,
+              31.441162109375,
+              -417.05
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ],
+        "parameters": {
+          "radiusMm": 1.5
+        },
+        "duration": 5.292132034355966
+      }
+    ]
+  },
+  {
+    "stage": "preview",
+    "action": {
+      "slot": "left",
+      "operation": "apply",
+      "path": [
+        {
+          "position": [
+            -7.464996337890625,
+            28.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "position": [
+            -10.464996337890625,
+            30.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "position": [
+            -10.464996337890625,
+            30.441162109375,
+            -418.05
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "parameters": {
+        "radiusMm": 1.5
+      },
+      "duration": 5.310277563773201
+    },
+    "wall": 9.278618291020393,
+    "result": {
+      "status": "accepted",
+      "reason": null,
+      "completedFraction": 1.0,
+      "contactPosition": null,
+      "events": [
+        {
+          "kind": "apply",
+          "instrument": "CUSA / ultrasonic aspirator",
+          "slot": "left"
+        },
+        {
+          "kind": "no_material_effect",
+          "reason": "No compatible structure intersected by the working tip"
+        }
+      ],
+      "reasonCode": null,
+      "elapsedSeconds": 5.3102775637716775,
+      "deltas": {
+        "removedCells": [],
+        "geometryRevision": "sha256:fb9816ba5e6d4f611ec930a1322c4e7434b499110ed6d76918d14d0bb130c883"
+      },
+      "stateId": "sha256:fb9816ba5e6d4f611ec930a1322c4e7434b499110ed6d76918d14d0bb130c883",
+      "metrics": {
+        "severedVesselConnections": 0,
+        "activeVesselWounds": 0,
+        "modeledVesselFluidGeneratedMm3": 0,
+        "modeledVesselReservoirMm3": 0,
+        "globalPerfusion": "unknown",
+        "drillInputEnergyJ": 2031.0,
+        "drillCuttingWorkJ": 1316.0,
+        "drillUnusedEnergyJ": 715.0,
+        "drillHeatGeneratedJ": 460.6000000000023,
+        "drillCoolingLossJ": 439.9660633222204,
+        "drillPendingWorkJ": 0,
+        "drillRemovedVolumeMm3": 2632.0,
+        "drillMaxTemperatureC": 67.69426756308366,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 0,
+          "damagedFaceCount": 0,
+          "woundAreaMm2": 0,
+          "activeWounds": 0,
+          "pressurePa": 1000.0,
+          "vascularRemainingMm3": 100.0,
+          "refilledMm3": 0.0,
+          "generatedMm3": 0.0,
+          "emittedMm3": 0,
+          "blockedOutletReservoirMm3": 0,
+          "conservationResidualMm3": 0.0,
+          "globalPerfusion": "unknown"
+        },
+        "brainActiveNodes": 0,
+        "brainMaxDisplacementMm": 0.0,
+        "brainElasticEnergyNmm": 0.0,
+        "brainMaxNeighborDisplacementRatio": 0.0,
+        "removedByLabelMm3": {
+          "bone": 2632.0,
+          "tumor": 1.0
+        },
+        "targetRemovedMm3": 1.0,
+        "nonTargetRemovedMm3": 2632.0,
+        "elapsedSeconds": 91.63055512754426,
+        "travelMm": 247.04333818245135,
+        "contactCellSeconds": 0,
+        "debrisMm3": 2632.0,
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "debrisRemovedMm3": 0.0,
+        "debrisEscapedMm3": 0.0,
+        "fluidPresentMm3": 0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposure": 0,
+        "vesselEncounters": 0,
+        "exposureByMaterialCellSeconds": {
+          "bone": 558.1237037037624,
+          "tumor": 0.015633779102144828
+        },
+        "unknownStimulationSites": 0,
+        "collisions": 1,
+        "unknownMaterialCells": 0
+      },
+      "preview": true
+    }
+  },
+  {
+    "stage": "preview",
+    "action": {
+      "slot": "left",
+      "operation": "apply",
+      "path": [
+        {
+          "position": [
+            -7.464996337890625,
+            28.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "position": [
+            -9.464996337890625,
+            30.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "position": [
+            -9.464996337890625,
+            30.441162109375,
+            -417.05
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "parameters": {
+        "radiusMm": 1.5
+      },
+      "duration": 5.22142135623731
+    },
+    "wall": 5.362168792169541,
+    "result": {
+      "status": "accepted",
+      "reason": null,
+      "completedFraction": 1.0,
+      "contactPosition": null,
+      "events": [
+        {
+          "kind": "apply",
+          "instrument": "CUSA / ultrasonic aspirator",
+          "slot": "left"
+        },
+        {
+          "kind": "no_material_effect",
+          "reason": "No compatible structure intersected by the working tip"
+        }
+      ],
+      "reasonCode": null,
+      "elapsedSeconds": 5.221421356237556,
+      "deltas": {
+        "removedCells": [],
+        "geometryRevision": "sha256:998611865ef2fdd3a576e3b87538fcfbe85328d9385597d6f858de3dd73e6f36"
+      },
+      "stateId": "sha256:998611865ef2fdd3a576e3b87538fcfbe85328d9385597d6f858de3dd73e6f36",
+      "metrics": {
+        "severedVesselConnections": 0,
+        "activeVesselWounds": 0,
+        "modeledVesselFluidGeneratedMm3": 0,
+        "modeledVesselReservoirMm3": 0,
+        "globalPerfusion": "unknown",
+        "drillInputEnergyJ": 2031.0,
+        "drillCuttingWorkJ": 1316.0,
+        "drillUnusedEnergyJ": 715.0,
+        "drillHeatGeneratedJ": 460.6000000000023,
+        "drillCoolingLossJ": 439.7356041635781,
+        "drillPendingWorkJ": 0,
+        "drillRemovedVolumeMm3": 2632.0,
+        "drillMaxTemperatureC": 68.03708993327709,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 0,
+          "damagedFaceCount": 0,
+          "woundAreaMm2": 0,
+          "activeWounds": 0,
+          "pressurePa": 1000.0,
+          "vascularRemainingMm3": 100.0,
+          "refilledMm3": 0.0,
+          "generatedMm3": 0.0,
+          "emittedMm3": 0,
+          "blockedOutletReservoirMm3": 0,
+          "conservationResidualMm3": 0.0,
+          "globalPerfusion": "unknown"
+        },
+        "brainActiveNodes": 0,
+        "brainMaxDisplacementMm": 0.0,
+        "brainElasticEnergyNmm": 0.0,
+        "brainMaxNeighborDisplacementRatio": 0.0,
+        "removedByLabelMm3": {
+          "bone": 2632.0,
+          "tumor": 1.0
+        },
+        "targetRemovedMm3": 1.0,
+        "nonTargetRemovedMm3": 2632.0,
+        "elapsedSeconds": 91.54169892001013,
+        "travelMm": 245.26621403173343,
+        "contactCellSeconds": 0,
+        "debrisMm3": 2632.0,
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "debrisRemovedMm3": 0.0,
+        "debrisEscapedMm3": 0.0,
+        "fluidPresentMm3": 0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposure": 0,
+        "vesselEncounters": 0,
+        "exposureByMaterialCellSeconds": {
+          "bone": 558.1237037037624,
+          "tumor": 0.015633779102144828
+        },
+        "unknownStimulationSites": 0,
+        "collisions": 1,
+        "unknownMaterialCells": 0
+      },
+      "preview": true
+    }
+  },
+  {
+    "stage": "preview",
+    "action": {
+      "slot": "left",
+      "operation": "apply",
+      "path": [
+        {
+          "position": [
+            -7.464996337890625,
+            28.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "position": [
+            -10.464996337890625,
+            29.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "position": [
+            -10.464996337890625,
+            29.441162109375,
+            -417.05
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "parameters": {
+        "radiusMm": 1.5
+      },
+      "duration": 5.2381138830084195
+    },
+    "wall": 5.480817999690771,
+    "result": {
+      "status": "accepted",
+      "reason": null,
+      "completedFraction": 1.0,
+      "contactPosition": null,
+      "events": [
+        {
+          "kind": "apply",
+          "instrument": "CUSA / ultrasonic aspirator",
+          "slot": "left"
+        },
+        {
+          "kind": "no_material_effect",
+          "reason": "No compatible structure intersected by the working tip"
+        }
+      ],
+      "reasonCode": null,
+      "elapsedSeconds": 5.2381138830080545,
+      "deltas": {
+        "removedCells": [],
+        "geometryRevision": "sha256:c6df356335606e4d312f82a863d25acfecaf59cc142936bd4eac9e0afd653328"
+      },
+      "stateId": "sha256:c6df356335606e4d312f82a863d25acfecaf59cc142936bd4eac9e0afd653328",
+      "metrics": {
+        "severedVesselConnections": 0,
+        "activeVesselWounds": 0,
+        "modeledVesselFluidGeneratedMm3": 0,
+        "modeledVesselReservoirMm3": 0,
+        "globalPerfusion": "unknown",
+        "drillInputEnergyJ": 2031.0,
+        "drillCuttingWorkJ": 1316.0,
+        "drillUnusedEnergyJ": 715.0,
+        "drillHeatGeneratedJ": 460.6000000000023,
+        "drillCoolingLossJ": 439.77909371166834,
+        "drillPendingWorkJ": 0,
+        "drillRemovedVolumeMm3": 2632.0,
+        "drillMaxTemperatureC": 67.97239651845818,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 0,
+          "damagedFaceCount": 0,
+          "woundAreaMm2": 0,
+          "activeWounds": 0,
+          "pressurePa": 1000.0,
+          "vascularRemainingMm3": 100.0,
+          "refilledMm3": 0.0,
+          "generatedMm3": 0.0,
+          "emittedMm3": 0,
+          "blockedOutletReservoirMm3": 0,
+          "conservationResidualMm3": 0.0,
+          "globalPerfusion": "unknown"
+        },
+        "brainActiveNodes": 0,
+        "brainMaxDisplacementMm": 0.0,
+        "brainElasticEnergyNmm": 0.0,
+        "brainMaxNeighborDisplacementRatio": 0.0,
+        "removedByLabelMm3": {
+          "bone": 2632.0,
+          "tumor": 1.0
+        },
+        "targetRemovedMm3": 1.0,
+        "nonTargetRemovedMm3": 2632.0,
+        "elapsedSeconds": 91.55839144678063,
+        "travelMm": 245.60006456715564,
+        "contactCellSeconds": 0,
+        "debrisMm3": 2632.0,
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "debrisRemovedMm3": 0.0,
+        "debrisEscapedMm3": 0.0,
+        "fluidPresentMm3": 0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposure": 0,
+        "vesselEncounters": 0,
+        "exposureByMaterialCellSeconds": {
+          "bone": 558.1237037037624,
+          "tumor": 0.015633779102144828
+        },
+        "unknownStimulationSites": 0,
+        "collisions": 1,
+        "unknownMaterialCells": 0
+      },
+      "preview": true
+    }
+  },
+  {
+    "stage": "preview",
+    "action": {
+      "slot": "left",
+      "operation": "apply",
+      "path": [
+        {
+          "position": [
+            -7.464996337890625,
+            28.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "position": [
+            -10.464996337890625,
+            31.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "position": [
+            -10.464996337890625,
+            31.441162109375,
+            -417.05
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "parameters": {
+        "radiusMm": 1.5
+      },
+      "duration": 5.292132034355966
+    },
+    "wall": 5.36897995788604,
+    "result": {
+      "status": "accepted",
+      "reason": null,
+      "completedFraction": 1.0,
+      "contactPosition": null,
+      "events": [
+        {
+          "kind": "apply",
+          "instrument": "CUSA / ultrasonic aspirator",
+          "slot": "left"
+        },
+        {
+          "kind": "no_material_effect",
+          "reason": "No compatible structure intersected by the working tip"
+        }
+      ],
+      "reasonCode": null,
+      "elapsedSeconds": 5.292132034355234,
+      "deltas": {
+        "removedCells": [],
+        "geometryRevision": "sha256:a04307e70d286cfe27b21fe86c8246fe47b3ea9ccd67868233341e8f6cc3cf39"
+      },
+      "stateId": "sha256:a04307e70d286cfe27b21fe86c8246fe47b3ea9ccd67868233341e8f6cc3cf39",
+      "metrics": {
+        "severedVesselConnections": 0,
+        "activeVesselWounds": 0,
+        "modeledVesselFluidGeneratedMm3": 0,
+        "modeledVesselReservoirMm3": 0,
+        "globalPerfusion": "unknown",
+        "drillInputEnergyJ": 2031.0,
+        "drillCuttingWorkJ": 1316.0,
+        "drillUnusedEnergyJ": 715.0,
+        "drillHeatGeneratedJ": 460.6000000000023,
+        "drillCoolingLossJ": 439.9192084913299,
+        "drillPendingWorkJ": 0,
+        "drillRemovedVolumeMm3": 2632.0,
+        "drillMaxTemperatureC": 67.76396704595344,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 0,
+          "damagedFaceCount": 0,
+          "woundAreaMm2": 0,
+          "activeWounds": 0,
+          "pressurePa": 1000.0,
+          "vascularRemainingMm3": 100.0,
+          "refilledMm3": 0.0,
+          "generatedMm3": 0.0,
+          "emittedMm3": 0,
+          "blockedOutletReservoirMm3": 0,
+          "conservationResidualMm3": 0.0,
+          "globalPerfusion": "unknown"
+        },
+        "brainActiveNodes": 0,
+        "brainMaxDisplacementMm": 0.0,
+        "brainElasticEnergyNmm": 0.0,
+        "brainMaxNeighborDisplacementRatio": 0.0,
+        "removedByLabelMm3": {
+          "bone": 2632.0,
+          "tumor": 1.0
+        },
+        "targetRemovedMm3": 1.0,
+        "nonTargetRemovedMm3": 2632.0,
+        "elapsedSeconds": 91.61240959812781,
+        "travelMm": 246.68042759410687,
+        "contactCellSeconds": 0,
+        "debrisMm3": 2632.0,
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "debrisRemovedMm3": 0.0,
+        "debrisEscapedMm3": 0.0,
+        "fluidPresentMm3": 0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposure": 0,
+        "vesselEncounters": 0,
+        "exposureByMaterialCellSeconds": {
+          "bone": 558.1237037037624,
+          "tumor": 0.015633779102144828
+        },
+        "unknownStimulationSites": 0,
+        "collisions": 1,
+        "unknownMaterialCells": 0
+      },
+      "preview": true
+    }
+  }
+]

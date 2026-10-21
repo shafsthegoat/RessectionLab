@@ -1,0 +1,27 @@
+{
+  "status": "running",
+  "startedUtc": "2026-10-21T00:56:52.449008+00:00",
+  "native": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab",
+  "nativeSha256": "095659e54f381355e8f5655b6c5907990b2ac4767dc9ce58297e3bc4d6f3268d",
+  "stages": [
+    {
+      "label": "primary-canonical",
+      "status": "passed",
+      "startedUtc": "2026-10-21T00:56:52.970451+00:00",
+      "finishedUtc": "2026-10-21T05:12:53.924180+00:00",
+      "receipt": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/final/primary-canonical.json"
+    },
+    {
+      "label": "vascular-canonical",
+      "status": "passed",
+      "startedUtc": "2026-10-21T05:12:54.080473+00:00",
+      "finishedUtc": "2026-10-21T05:16:44.753018+00:00",
+      "receipt": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/final/vascular-canonical.json"
+    },
+    {
+      "label": "primary-telemetry",
+      "status": "running",
+      "startedUtc": "2026-10-21T05:16:44.906845+00:00"
+    }
+  ]
+}

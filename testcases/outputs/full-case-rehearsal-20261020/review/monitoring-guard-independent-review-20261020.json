@@ -1,0 +1,12 @@
+{
+  "reviewStatus": "approved after optimized-Python fail-closed correction",
+  "originalAssertions": 24,
+  "newAssertions": 24,
+  "exactAssertionAstMultisetEqual": true,
+  "hashes": {
+    "verify_every_cached_frame.py": "01f43a6830be807b2580a83aa2647bc4c5d686abedc873c22bab3e1ccc1f3e64",
+    "verify_every_cached_frame_monitoring.py": "9c3e20418ed5894da70b3de9860430de62e721ab662f52047a4739cfc7b68a5f",
+    "readonly_step_monitor.py": "3631bb6a6d39e7c7a5371199a2f1b79b33c9833eeb13ee5bcffc306919db7fee"
+  },
+  "scope": "Independent static review and tiny guard tests only; no full frame run, patient replay, GUI or production edits. Legacy verifier and completed proof preserved."
+}

@@ -1,0 +1,972 @@
+{
+  "interpretation": "Geometric upper bounds; ignore exact tip, shaft, guards, bone access feasibility. No source or state edits. Superior path admits bone as drillable and forbids owned normal brain/vessels. Root must exact-preview each action.",
+  "superiorPotentialCells": 40360,
+  "superiorPotentialFractionOwned": 0.9262616758084135,
+  "insetCapacity": [
+    {
+      "lateralInsetMm": 0,
+      "columnCount": 2204,
+      "ownedTargetUpperBoundCells": 40360
+    },
+    {
+      "lateralInsetMm": 1,
+      "columnCount": 1947,
+      "ownedTargetUpperBoundCells": 37168
+    },
+    {
+      "lateralInsetMm": 2,
+      "columnCount": 1681,
+      "ownedTargetUpperBoundCells": 32810
+    },
+    {
+      "lateralInsetMm": 3,
+      "columnCount": 1352,
+      "ownedTargetUpperBoundCells": 26688
+    },
+    {
+      "lateralInsetMm": 4,
+      "columnCount": 1068,
+      "ownedTargetUpperBoundCells": 21099
+    },
+    {
+      "lateralInsetMm": 5,
+      "columnCount": 737,
+      "ownedTargetUpperBoundCells": 14284
+    },
+    {
+      "lateralInsetMm": 6,
+      "columnCount": 515,
+      "ownedTargetUpperBoundCells": 9601
+    },
+    {
+      "lateralInsetMm": 8,
+      "columnCount": 204,
+      "ownedTargetUpperBoundCells": 3269
+    },
+    {
+      "lateralInsetMm": 10,
+      "columnCount": 35,
+      "ownedTargetUpperBoundCells": 468
+    }
+  ],
+  "columns": [
+    {
+      "indexXY": [
+        108,
+        136
+      ],
+      "rasXY": [
+        1.535003662109375,
+        12.441162109375
+      ],
+      "targetMinMaxZ": [
+        -436.25,
+        -412.25
+      ],
+      "targetCount": 25,
+      "aboveBone": 14,
+      "columnWindowClearanceMm": 3.605551275463989
+    },
+    {
+      "indexXY": [
+        108,
+        140
+      ],
+      "rasXY": [
+        1.535003662109375,
+        16.441162109375
+      ],
+      "targetMinMaxZ": [
+        -436.25,
+        -412.25
+      ],
+      "targetCount": 25,
+      "aboveBone": 13,
+      "columnWindowClearanceMm": 3.605551275463989
+    },
+    {
+      "indexXY": [
+        108,
+        144
+      ],
+      "rasXY": [
+        1.535003662109375,
+        20.441162109375
+      ],
+      "targetMinMaxZ": [
+        -435.25,
+        -414.25
+      ],
+      "targetCount": 22,
+      "aboveBone": 14,
+      "columnWindowClearanceMm": 4.47213595499958
+    },
+    {
+      "indexXY": [
+        108,
+        148
+      ],
+      "rasXY": [
+        1.535003662109375,
+        24.441162109375
+      ],
+      "targetMinMaxZ": [
+        -432.25,
+        -415.25
+      ],
+      "targetCount": 18,
+      "aboveBone": 14,
+      "columnWindowClearanceMm": 4.0
+    },
+    {
+      "indexXY": [
+        108,
+        152
+      ],
+      "rasXY": [
+        1.535003662109375,
+        28.441162109375
+      ],
+      "targetMinMaxZ": [
+        -422.25,
+        -417.25
+      ],
+      "targetCount": 6,
+      "aboveBone": 14,
+      "columnWindowClearanceMm": 3.1622776601683795
+    },
+    {
+      "indexXY": [
+        108,
+        156
+      ],
+      "rasXY": [
+        1.535003662109375,
+        32.441162109375
+      ],
+      "targetMinMaxZ": [
+        -423.25,
+        -419.25
+      ],
+      "targetCount": 5,
+      "aboveBone": 14,
+      "columnWindowClearanceMm": 2.8284271247461903
+    },
+    {
+      "indexXY": [
+        112,
+        136
+      ],
+      "rasXY": [
+        -2.464996337890625,
+        12.441162109375
+      ],
+      "targetMinMaxZ": [
+        -439.25,
+        -412.25
+      ],
+      "targetCount": 28,
+      "aboveBone": 14,
+      "columnWindowClearanceMm": 1.4142135623730951
+    },
+    {
+      "indexXY": [
+        112,
+        140
+      ],
+      "rasXY": [
+        -2.464996337890625,
+        16.441162109375
+      ],
+      "targetMinMaxZ": [
+        -439.25,
+        -413.25
+      ],
+      "targetCount": 27,
+      "aboveBone": 14,
+      "columnWindowClearanceMm": 2.23606797749979
+    },
+    {
+      "indexXY": [
+        112,
+        144
+      ],
+      "rasXY": [
+        -2.464996337890625,
+        20.441162109375
+      ],
+      "targetMinMaxZ": [
+        -438.25,
+        -414.25
+      ],
+      "targetCount": 25,
+      "aboveBone": 14,
+      "columnWindowClearanceMm": 3.605551275463989
+    },
+    {
+      "indexXY": [
+        112,
+        148
+      ],
+      "rasXY": [
+        -2.464996337890625,
+        24.441162109375
+      ],
+      "targetMinMaxZ": [
+        -436.25,
+        -416.25
+      ],
+      "targetCount": 21,
+      "aboveBone": 14,
+      "columnWindowClearanceMm": 7.280109889280518
+    },
+    {
+      "indexXY": [
+        112,
+        152
+      ],
+      "rasXY": [
+        -2.464996337890625,
+        28.441162109375
+      ],
+      "targetMinMaxZ": [
+        -432.25,
+        -417.25
+      ],
+      "targetCount": 16,
+      "aboveBone": 14,
+      "columnWindowClearanceMm": 7.0710678118654755
+    },
+    {
+      "indexXY": [
+        112,
+        156
+      ],
+      "rasXY": [
+        -2.464996337890625,
+        32.441162109375
+      ],
+      "targetMinMaxZ": [
+        -426.25,
+        -418.25
+      ],
+      "targetCount": 9,
+      "aboveBone": 13,
+      "columnWindowClearanceMm": 3.605551275463989
+    },
+    {
+      "indexXY": [
+        112,
+        160
+      ],
+      "rasXY": [
+        -2.464996337890625,
+        36.441162109375
+      ],
+      "targetMinMaxZ": [
+        -426.25,
+        -420.25
+      ],
+      "targetCount": 7,
+      "aboveBone": 12,
+      "columnWindowClearanceMm": 2.23606797749979
+    },
+    {
+      "indexXY": [
+        116,
+        136
+      ],
+      "rasXY": [
+        -6.464996337890625,
+        12.441162109375
+      ],
+      "targetMinMaxZ": [
+        -441.25,
+        -415.25
+      ],
+      "targetCount": 27,
+      "aboveBone": 16,
+      "columnWindowClearanceMm": 2.23606797749979
+    },
+    {
+      "indexXY": [
+        116,
+        140
+      ],
+      "rasXY": [
+        -6.464996337890625,
+        16.441162109375
+      ],
+      "targetMinMaxZ": [
+        -440.25,
+        -415.25
+      ],
+      "targetCount": 26,
+      "aboveBone": 15,
+      "columnWindowClearanceMm": 2.23606797749979
+    },
+    {
+      "indexXY": [
+        116,
+        144
+      ],
+      "rasXY": [
+        -6.464996337890625,
+        20.441162109375
+      ],
+      "targetMinMaxZ": [
+        -439.25,
+        -417.25
+      ],
+      "targetCount": 23,
+      "aboveBone": 16,
+      "columnWindowClearanceMm": 3.605551275463989
+    },
+    {
+      "indexXY": [
+        116,
+        148
+      ],
+      "rasXY": [
+        -6.464996337890625,
+        24.441162109375
+      ],
+      "targetMinMaxZ": [
+        -437.25,
+        -417.25
+      ],
+      "targetCount": 21,
+      "aboveBone": 15,
+      "columnWindowClearanceMm": 7.280109889280518
+    },
+    {
+      "indexXY": [
+        116,
+        152
+      ],
+      "rasXY": [
+        -6.464996337890625,
+        28.441162109375
+      ],
+      "targetMinMaxZ": [
+        -434.25,
+        -419.25
+      ],
+      "targetCount": 16,
+      "aboveBone": 15,
+      "columnWindowClearanceMm": 9.219544457292887
+    },
+    {
+      "indexXY": [
+        116,
+        156
+      ],
+      "rasXY": [
+        -6.464996337890625,
+        32.441162109375
+      ],
+      "targetMinMaxZ": [
+        -429.25,
+        -420.25
+      ],
+      "targetCount": 10,
+      "aboveBone": 14,
+      "columnWindowClearanceMm": 6.708203932499369
+    },
+    {
+      "indexXY": [
+        116,
+        160
+      ],
+      "rasXY": [
+        -6.464996337890625,
+        36.441162109375
+      ],
+      "targetMinMaxZ": [
+        -427.25,
+        -421.25
+      ],
+      "targetCount": 7,
+      "aboveBone": 13,
+      "columnWindowClearanceMm": 4.47213595499958
+    },
+    {
+      "indexXY": [
+        120,
+        136
+      ],
+      "rasXY": [
+        -10.464996337890625,
+        12.441162109375
+      ],
+      "targetMinMaxZ": [
+        -444.25,
+        -416.25
+      ],
+      "targetCount": 29,
+      "aboveBone": 16,
+      "columnWindowClearanceMm": 3.1622776601683795
+    },
+    {
+      "indexXY": [
+        120,
+        140
+      ],
+      "rasXY": [
+        -10.464996337890625,
+        16.441162109375
+      ],
+      "targetMinMaxZ": [
+        -442.25,
+        -418.25
+      ],
+      "targetCount": 25,
+      "aboveBone": 17,
+      "columnWindowClearanceMm": 1.4142135623730951
+    },
+    {
+      "indexXY": [
+        120,
+        144
+      ],
+      "rasXY": [
+        -10.464996337890625,
+        20.441162109375
+      ],
+      "targetMinMaxZ": [
+        -439.25,
+        -418.25
+      ],
+      "targetCount": 22,
+      "aboveBone": 16,
+      "columnWindowClearanceMm": 3.1622776601683795
+    },
+    {
+      "indexXY": [
+        120,
+        148
+      ],
+      "rasXY": [
+        -10.464996337890625,
+        24.441162109375
+      ],
+      "targetMinMaxZ": [
+        -438.25,
+        -419.25
+      ],
+      "targetCount": 20,
+      "aboveBone": 15,
+      "columnWindowClearanceMm": 5.830951894845301
+    },
+    {
+      "indexXY": [
+        120,
+        152
+      ],
+      "rasXY": [
+        -10.464996337890625,
+        28.441162109375
+      ],
+      "targetMinMaxZ": [
+        -435.25,
+        -420.25
+      ],
+      "targetCount": 16,
+      "aboveBone": 15,
+      "columnWindowClearanceMm": 9.486832980505138
+    },
+    {
+      "indexXY": [
+        120,
+        156
+      ],
+      "rasXY": [
+        -10.464996337890625,
+        32.441162109375
+      ],
+      "targetMinMaxZ": [
+        -431.25,
+        -421.25
+      ],
+      "targetCount": 11,
+      "aboveBone": 14,
+      "columnWindowClearanceMm": 9.219544457292887
+    },
+    {
+      "indexXY": [
+        120,
+        160
+      ],
+      "rasXY": [
+        -10.464996337890625,
+        36.441162109375
+      ],
+      "targetMinMaxZ": [
+        -429.25,
+        -423.25
+      ],
+      "targetCount": 7,
+      "aboveBone": 14,
+      "columnWindowClearanceMm": 5.385164807134504
+    },
+    {
+      "indexXY": [
+        124,
+        136
+      ],
+      "rasXY": [
+        -14.464996337890625,
+        12.441162109375
+      ],
+      "targetMinMaxZ": [
+        -447.25,
+        -419.25
+      ],
+      "targetCount": 29,
+      "aboveBone": 18,
+      "columnWindowClearanceMm": 1.4142135623730951
+    },
+    {
+      "indexXY": [
+        124,
+        144
+      ],
+      "rasXY": [
+        -14.464996337890625,
+        20.441162109375
+      ],
+      "targetMinMaxZ": [
+        -442.25,
+        -421.25
+      ],
+      "targetCount": 22,
+      "aboveBone": 18,
+      "columnWindowClearanceMm": 1.4142135623730951
+    },
+    {
+      "indexXY": [
+        124,
+        148
+      ],
+      "rasXY": [
+        -14.464996337890625,
+        24.441162109375
+      ],
+      "targetMinMaxZ": [
+        -438.25,
+        -422.25
+      ],
+      "targetCount": 17,
+      "aboveBone": 17,
+      "columnWindowClearanceMm": 5.0990195135927845
+    },
+    {
+      "indexXY": [
+        124,
+        152
+      ],
+      "rasXY": [
+        -14.464996337890625,
+        28.441162109375
+      ],
+      "targetMinMaxZ": [
+        -436.25,
+        -423.25
+      ],
+      "targetCount": 14,
+      "aboveBone": 17,
+      "columnWindowClearanceMm": 9.055385138137417
+    },
+    {
+      "indexXY": [
+        124,
+        156
+      ],
+      "rasXY": [
+        -14.464996337890625,
+        32.441162109375
+      ],
+      "targetMinMaxZ": [
+        -432.25,
+        -423.25
+      ],
+      "targetCount": 10,
+      "aboveBone": 15,
+      "columnWindowClearanceMm": 8.94427190999916
+    },
+    {
+      "indexXY": [
+        124,
+        160
+      ],
+      "rasXY": [
+        -14.464996337890625,
+        36.441162109375
+      ],
+      "targetMinMaxZ": [
+        -429.25,
+        -424.25
+      ],
+      "targetCount": 6,
+      "aboveBone": 14,
+      "columnWindowClearanceMm": 5.0
+    },
+    {
+      "indexXY": [
+        128,
+        136
+      ],
+      "rasXY": [
+        -18.464996337890625,
+        12.441162109375
+      ],
+      "targetMinMaxZ": [
+        -449.25,
+        -419.25
+      ],
+      "targetCount": 31,
+      "aboveBone": 17,
+      "columnWindowClearanceMm": 2.23606797749979
+    },
+    {
+      "indexXY": [
+        128,
+        140
+      ],
+      "rasXY": [
+        -18.464996337890625,
+        16.441162109375
+      ],
+      "targetMinMaxZ": [
+        -448.25,
+        -422.25
+      ],
+      "targetCount": 27,
+      "aboveBone": 18,
+      "columnWindowClearanceMm": 2.23606797749979
+    },
+    {
+      "indexXY": [
+        128,
+        144
+      ],
+      "rasXY": [
+        -18.464996337890625,
+        20.441162109375
+      ],
+      "targetMinMaxZ": [
+        -445.25,
+        -422.25
+      ],
+      "targetCount": 24,
+      "aboveBone": 17,
+      "columnWindowClearanceMm": 4.47213595499958
+    },
+    {
+      "indexXY": [
+        128,
+        148
+      ],
+      "rasXY": [
+        -18.464996337890625,
+        24.441162109375
+      ],
+      "targetMinMaxZ": [
+        -441.25,
+        -423.25
+      ],
+      "targetCount": 19,
+      "aboveBone": 17,
+      "columnWindowClearanceMm": 7.0710678118654755
+    },
+    {
+      "indexXY": [
+        128,
+        152
+      ],
+      "rasXY": [
+        -18.464996337890625,
+        28.441162109375
+      ],
+      "targetMinMaxZ": [
+        -436.25,
+        -423.25
+      ],
+      "targetCount": 14,
+      "aboveBone": 16,
+      "columnWindowClearanceMm": 10.295630140987
+    },
+    {
+      "indexXY": [
+        128,
+        156
+      ],
+      "rasXY": [
+        -18.464996337890625,
+        32.441162109375
+      ],
+      "targetMinMaxZ": [
+        -431.25,
+        -425.25
+      ],
+      "targetCount": 7,
+      "aboveBone": 16,
+      "columnWindowClearanceMm": 8.0
+    },
+    {
+      "indexXY": [
+        128,
+        160
+      ],
+      "rasXY": [
+        -18.464996337890625,
+        36.441162109375
+      ],
+      "targetMinMaxZ": [
+        -430.25,
+        -426.25
+      ],
+      "targetCount": 5,
+      "aboveBone": 15,
+      "columnWindowClearanceMm": 4.0
+    },
+    {
+      "indexXY": [
+        132,
+        136
+      ],
+      "rasXY": [
+        -22.464996337890625,
+        12.441162109375
+      ],
+      "targetMinMaxZ": [
+        -449.25,
+        -422.25
+      ],
+      "targetCount": 28,
+      "aboveBone": 18,
+      "columnWindowClearanceMm": 3.605551275463989
+    },
+    {
+      "indexXY": [
+        132,
+        140
+      ],
+      "rasXY": [
+        -22.464996337890625,
+        16.441162109375
+      ],
+      "targetMinMaxZ": [
+        -449.25,
+        -423.25
+      ],
+      "targetCount": 27,
+      "aboveBone": 18,
+      "columnWindowClearanceMm": 2.23606797749979
+    },
+    {
+      "indexXY": [
+        132,
+        144
+      ],
+      "rasXY": [
+        -22.464996337890625,
+        20.441162109375
+      ],
+      "targetMinMaxZ": [
+        -446.25,
+        -424.25
+      ],
+      "targetCount": 23,
+      "aboveBone": 18,
+      "columnWindowClearanceMm": 5.385164807134504
+    },
+    {
+      "indexXY": [
+        132,
+        148
+      ],
+      "rasXY": [
+        -22.464996337890625,
+        24.441162109375
+      ],
+      "targetMinMaxZ": [
+        -442.25,
+        -424.25
+      ],
+      "targetCount": 19,
+      "aboveBone": 17,
+      "columnWindowClearanceMm": 9.219544457292887
+    },
+    {
+      "indexXY": [
+        132,
+        152
+      ],
+      "rasXY": [
+        -22.464996337890625,
+        28.441162109375
+      ],
+      "targetMinMaxZ": [
+        -436.25,
+        -425.25
+      ],
+      "targetCount": 12,
+      "aboveBone": 17,
+      "columnWindowClearanceMm": 9.219544457292887
+    },
+    {
+      "indexXY": [
+        132,
+        156
+      ],
+      "rasXY": [
+        -22.464996337890625,
+        32.441162109375
+      ],
+      "targetMinMaxZ": [
+        -431.25,
+        -426.25
+      ],
+      "targetCount": 6,
+      "aboveBone": 16,
+      "columnWindowClearanceMm": 5.830951894845301
+    },
+    {
+      "indexXY": [
+        132,
+        160
+      ],
+      "rasXY": [
+        -22.464996337890625,
+        36.441162109375
+      ],
+      "targetMinMaxZ": [
+        -429.25,
+        -428.25
+      ],
+      "targetCount": 2,
+      "aboveBone": 15,
+      "columnWindowClearanceMm": 2.8284271247461903
+    },
+    {
+      "indexXY": [
+        136,
+        136
+      ],
+      "rasXY": [
+        -26.464996337890625,
+        12.441162109375
+      ],
+      "targetMinMaxZ": [
+        -448.25,
+        -423.25
+      ],
+      "targetCount": 26,
+      "aboveBone": 18,
+      "columnWindowClearanceMm": 6.708203932499369
+    },
+    {
+      "indexXY": [
+        136,
+        140
+      ],
+      "rasXY": [
+        -26.464996337890625,
+        16.441162109375
+      ],
+      "targetMinMaxZ": [
+        -444.25,
+        -423.25
+      ],
+      "targetCount": 22,
+      "aboveBone": 16,
+      "columnWindowClearanceMm": 6.082762530298219
+    },
+    {
+      "indexXY": [
+        136,
+        144
+      ],
+      "rasXY": [
+        -26.464996337890625,
+        20.441162109375
+      ],
+      "targetMinMaxZ": [
+        -445.25,
+        -424.25
+      ],
+      "targetCount": 22,
+      "aboveBone": 16,
+      "columnWindowClearanceMm": 7.810249675906654
+    },
+    {
+      "indexXY": [
+        136,
+        148
+      ],
+      "rasXY": [
+        -26.464996337890625,
+        24.441162109375
+      ],
+      "targetMinMaxZ": [
+        -442.25,
+        -425.25
+      ],
+      "targetCount": 18,
+      "aboveBone": 16,
+      "columnWindowClearanceMm": 9.899494936611665
+    },
+    {
+      "indexXY": [
+        136,
+        152
+      ],
+      "rasXY": [
+        -26.464996337890625,
+        28.441162109375
+      ],
+      "targetMinMaxZ": [
+        -435.25,
+        -426.25
+      ],
+      "targetCount": 10,
+      "aboveBone": 16,
+      "columnWindowClearanceMm": 7.211102550927978
+    },
+    {
+      "indexXY": [
+        136,
+        156
+      ],
+      "rasXY": [
+        -26.464996337890625,
+        32.441162109375
+      ],
+      "targetMinMaxZ": [
+        -430.25,
+        -428.25
+      ],
+      "targetCount": 3,
+      "aboveBone": 16,
+      "columnWindowClearanceMm": 3.605551275463989
+    },
+    {
+      "indexXY": [
+        136,
+        160
+      ],
+      "rasXY": [
+        -26.464996337890625,
+        36.441162109375
+      ],
+      "targetMinMaxZ": [
+        -430.25,
+        -430.25
+      ],
+      "targetCount": 1,
+      "aboveBone": 16,
+      "columnWindowClearanceMm": 1.0
+    }
+  ]
+}

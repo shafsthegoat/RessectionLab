@@ -1,0 +1,48 @@
+{
+  "scope": "Copy kernel on detached1954checkpoint JSON only; no engine import/construction/replay/action/episode or live-process interaction.",
+  "native": "testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-over-eighty-percent-target.ressectionlab",
+  "nativeSha256": "0b26a74f6772473cd237bbdd4be80042f0d0762755ccf281a305883ad9199936",
+  "actions": 1954,
+  "stateId": "sha256:5f795ad0e74900511bf71b1106b2f29c6cbc7a1dc08b744ab74644942f3b2a0b",
+  "stateJsonSha256": "31bf8935ca5f335f574e2c227ba51e1f17d03eb79e542aa1c07dc41e350249af",
+  "exactJsonOrderTypesFloatBitsAliases": true,
+  "independentMutableCopiesAndOriginalUnchanged": true,
+  "existingComponentExemptionAndMemoPrecedence": true,
+  "counts": {
+    "removed": 50143,
+    "debris": 14611,
+    "workJ": 0,
+    "temperatureC": 15238,
+    "thermalDoseCSeconds": 15238
+  },
+  "fallbackProbes": [
+    "nested",
+    "numpy-int",
+    "dict-subclass",
+    "outer-subclass"
+  ],
+  "frozenCurrentSourceSha256": "6d527a57529a6f44d679ffb726c0dc6c5d96af2b0f5b19d5b436a8bae14da976",
+  "proposedSourceSha256": "82634ba26c1a613d8645a15249b896b8137d07a56f2453f12364d0d14e53647f",
+  "frozenCurrentSource": "def _microstep_checkpoint(state):\n    \"\"\"Copy rollback state, preserving aliases and independently owned fields.\n\n    Surgical state is a JSON data graph with built-in scalar leaves. Exact\n    flat removed/debris containers can be copied in C and seeded into the\n    deepcopy memo; all other data, including unusual nested/subclass values,\n    still uses ordinary deepcopy. Fresh guards also handle public state edits.\n    This preserves data-graph semantics, not adversarial custom __deepcopy__\n    methods whose behavior depends on when another object enters the memo.\n\n    Component summaries retain their existing exemption: microsteps never\n    mutate them; finalize_action replaces them. Existing memo entries take\n    precedence even if unusual public state aliases one of these fields.\n    \"\"\"\n    components = state.get('flapComponents')\n    memo = {id(components): components} if components is not None else {}\n    for name in ('removed', 'debris'):\n        value = state.get(name)\n        if id(value) in memo:\n            continue\n        if name == 'removed':\n            flat = type(value) is list and all(type(cell) is int for cell in value)\n        else:\n            flat = type(value) is dict and all(type(key) is str and type(amount) in (int, float)\n                                               for key, amount in value.items())\n        if flat:\n            memo[id(value)] = value.copy()\n    return copy.deepcopy(state, memo)",
+  "proposedSource": "def _microstep_checkpoint(state):\n    \"\"\"Copy rollback state, preserving aliases and independently owned fields.\n\n    Surgical state is a JSON data graph with built-in scalar leaves. Exact\n    flat removed/debris containers can be copied in C and seeded into the\n    deepcopy memo; all other data, including unusual nested/subclass values,\n    still uses ordinary deepcopy. Fresh guards also handle public state edits.\n    This preserves data-graph semantics, not adversarial custom __deepcopy__\n    methods whose behavior depends on when another object enters the memo.\n\n    Component summaries retain their existing exemption: microsteps never\n    mutate them; finalize_action replaces them. Existing memo entries take\n    precedence even if unusual public state aliases one of these fields.\n    \"\"\"\n    components = state.get('flapComponents')\n    memo = {id(components): components} if components is not None else {}\n    for name in ('removed', 'debris'):\n        value = state.get(name)\n        if id(value) in memo:\n            continue\n        if name == 'removed':\n            flat = type(value) is list and all(type(cell) is int for cell in value)\n        else:\n            flat = type(value) is dict and all(type(key) is str and type(amount) in (int, float)\n                                               for key, amount in value.items())\n        if flat:\n            memo[id(value)] = value.copy()\n    drilling = state.get('drillingV2')\n    if type(drilling) is dict:\n        for name in ('workJ', 'temperatureC', 'thermalDoseCSeconds'):\n            value = drilling.get(name)\n            if id(value) in memo:\n                continue\n            if type(value) is dict and all(type(key) is str and type(amount) in (int, float)\n                                           for key, amount in value.items()):\n                memo[id(value)] = value.copy()\n    return copy.deepcopy(state, memo)",
+  "timings": {
+    "frozenCurrentRemovedDebrisMemo": {
+      "secondsForFiveCopies": [
+        0.07257491629570723,
+        0.07084212498739362,
+        0.07235274976119399
+      ],
+      "medianMillisecondsPerCopy": 14.470549952238798
+    },
+    "proposedPlusThreeDrillingMaps": {
+      "secondsForFiveCopies": [
+        0.027679458260536194,
+        0.027431709226220846,
+        0.027565041091293097
+      ],
+      "medianMillisecondsPerCopy": 5.513008218258619
+    }
+  },
+  "kernelSpeedup": 2.624801084880221,
+  "qualification": "One alternative; guard scans/copies/deallocation included. Not per-action speedup. Only exact built-in str-key numeric-value maps inside exact built-in outerdict qualify. Custom memo-introspecting __deepcopy__ parity is not promised; JSON graph contract only."
+}

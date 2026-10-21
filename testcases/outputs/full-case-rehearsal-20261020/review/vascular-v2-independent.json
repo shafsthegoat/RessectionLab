@@ -1,0 +1,981 @@
+{
+  "schema": "resectionlab.independent-native-acceptance.v1",
+  "auditStatus": "passed",
+  "episodeCompletionStatus": "complete",
+  "engineeringFixture": false,
+  "native": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/vascular-v2/vascular.ressectionlab",
+  "nativeSha256": "7348f05c91c2ac3cd6689807e7c00da99d21d23dac2be8722fca74eddafd6fcb",
+  "source": "/Users/shaf/coding_projects/RessectionLab/testcases/cases/meningioma-sub-06-standard-v2.ressectionlab",
+  "originalSha256": "ff5a49b8706a8ccda08d8c3e82dad3e079f85dea98cb6bd40783d2262eec9838",
+  "sourceUnchanged": true,
+  "caseHash": "sha256:6ca9c1dee58b3635d92d576ad5b355d0a6d500892f30f07968a671b1b67a51ea",
+  "sourceArrays": {
+    "mri": "sha256:7005b3fc2ae9c51bbbac3a2384210628e6f9541b7cbf797159d64ffbeee0f4f3",
+    "affine": "sha256:c0908ea0bbfa9cfc535aede83c964b8db13bf334a0a7a00f656884323035de9c",
+    "compartments": {
+      "bone": "sha256:12b2dbff17c451677eb1e7735ba3a1b659173e2ee19f77c40ea9be7f4e92cc4f",
+      "brain": "sha256:857a30f00f7292d1b1b452a31d5ef1f3f6efcdad5264b5dd7842c0e7b34c6128",
+      "tumor": "sha256:d23e372c7c3ccc5dd9d547860bc7511450f85624bcdcee658dd001ba9250c6d9",
+      "vessels": "sha256:1ccf2e855caec31c2ba3f57176fca88965d32b54f827dc210a72de40237807f2"
+    },
+    "source_compartments": {
+      "bone": "sha256:12b2dbff17c451677eb1e7735ba3a1b659173e2ee19f77c40ea9be7f4e92cc4f",
+      "brain": "sha256:857a30f00f7292d1b1b452a31d5ef1f3f6efcdad5264b5dd7842c0e7b34c6128",
+      "tumor": "sha256:d23e372c7c3ccc5dd9d547860bc7511450f85624bcdcee658dd001ba9250c6d9",
+      "vessels": "sha256:1ccf2e855caec31c2ba3f57176fca88965d32b54f827dc210a72de40237807f2"
+    }
+  },
+  "originalFiles": [],
+  "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+  "labelArrayHash": "sha256:9930330418c439d7d042054d7419c05d3158e2422f62ce69b034044a563ecd76",
+  "implementationFingerprint": "ca30f9d182e71a44f9b5b859bde10d704074ab619820e703cde2d9062fcac496",
+  "canonicalReplay": {
+    "forced": true,
+    "cacheUsed": false,
+    "verifiedCachePublication": {
+      "diskBytes": 8668029,
+      "maxDiskBytes": 536870912,
+      "ownedMemoryCacheBytes": 0,
+      "maxMemoryCacheBytes": 134217728,
+      "maxTransientJsonBytes": 134217728,
+      "hits": 0,
+      "misses": 0,
+      "publications": 1
+    },
+    "perActionStateAssertions": 73,
+    "statuses": {
+      "accepted": 63,
+      "partial": 10
+    },
+    "rejectedCommittedActions": 0,
+    "partialActions": [
+      {
+        "position": 2,
+        "action": {
+          "duration": 30.0,
+          "operation": "apply",
+          "pose": {
+            "position": [
+              -10.464996337890625,
+              30.441162109375,
+              -421.25
+            ],
+            "quaternion": [
+              1.0,
+              0,
+              0,
+              0
+            ]
+          },
+          "slot": "left"
+        },
+        "reason": "BONE_CUTTING_IN_PROGRESS",
+        "completedFraction": 0.6088039697750935,
+        "stateBefore": "sha256:b21057fd62fd77e251a7065036953474402b61f6311b43ea3a26f67791c18edb",
+        "stateAfter": "sha256:5cbacfe978b5b7b4d5dedc3c433d96b9f16f10b18b18d0cd192e30ae565685a5"
+      },
+      {
+        "position": 3,
+        "action": {
+          "duration": 30.0,
+          "operation": "apply",
+          "pose": {
+            "position": [
+              -10.464996337890625,
+              30.441162109375,
+              -421.25
+            ],
+            "quaternion": [
+              1.0,
+              0,
+              0,
+              0
+            ]
+          },
+          "slot": "left"
+        },
+        "reason": "BONE_CUTTING_IN_PROGRESS",
+        "completedFraction": 0.29656184962336496,
+        "stateBefore": "sha256:5cbacfe978b5b7b4d5dedc3c433d96b9f16f10b18b18d0cd192e30ae565685a5",
+        "stateAfter": "sha256:3c60100d51b55b4f1a16534e24c338d7fee685f12253eca972a76dca01585788"
+      },
+      {
+        "position": 4,
+        "action": {
+          "duration": 30.0,
+          "operation": "apply",
+          "pose": {
+            "position": [
+              -10.464996337890625,
+              30.441162109375,
+              -421.25
+            ],
+            "quaternion": [
+              1.0,
+              0,
+              0,
+              0
+            ]
+          },
+          "slot": "left"
+        },
+        "reason": "UNSUPPORTED_MATERIAL",
+        "completedFraction": 0.77,
+        "stateBefore": "sha256:3c60100d51b55b4f1a16534e24c338d7fee685f12253eca972a76dca01585788",
+        "stateAfter": "sha256:b120d67a65e3fd807d4c5b6b5b2b8026a250b9c1545a6ab4d5e805868855f9e9"
+      },
+      {
+        "position": 12,
+        "action": {
+          "duration": 10.0,
+          "operation": "apply",
+          "pose": {
+            "position": [
+              -10.464996337890625,
+              30.441162109375,
+              -421.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "slot": "left"
+        },
+        "reason": "UNSUPPORTED_MATERIAL",
+        "completedFraction": 0.9333333333333333,
+        "stateBefore": "sha256:7d209367c6bad3b0797f8cf36244e656b03612f5666a19a8d22ced5db3df4312",
+        "stateAfter": "sha256:f5461035d6148287cc73434b98ff76ab7336f868e70eb69a7b84203144a8b680"
+      },
+      {
+        "position": 16,
+        "action": {
+          "duration": 2.0,
+          "operation": "apply",
+          "pose": {
+            "position": [
+              -10.464996337890625,
+              30.441162109375,
+              -421.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "slot": "left"
+        },
+        "reason": "UNSUPPORTED_MATERIAL",
+        "completedFraction": 0.9454545454545454,
+        "stateBefore": "sha256:a04207d2cc9baf9214c54564172215b067d0fb38463b40358c6b244109cadd8b",
+        "stateAfter": "sha256:05f6327c1b118b9d1be457af36d51c6f83fd6453b3605132eb64751a3a9108a1"
+      },
+      {
+        "position": 24,
+        "action": {
+          "duration": 10.0,
+          "operation": "apply",
+          "pose": {
+            "position": [
+              -10.464996337890625,
+              30.441162109375,
+              -421.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "slot": "left"
+        },
+        "reason": "UNSUPPORTED_MATERIAL",
+        "completedFraction": 0.9212121212121213,
+        "stateBefore": "sha256:8438cdb81ec39dd6e493d8a8e1b04939d9c255ba773e6658e1c76975ff26931d",
+        "stateAfter": "sha256:b1be3cb8183ff6635e2e46d04769825cd8b6fd9bebf7293df92406ea6ebb9d18"
+      },
+      {
+        "position": 30,
+        "action": {
+          "duration": 10.0,
+          "operation": "apply",
+          "pose": {
+            "position": [
+              -9.464996337890625,
+              1.441162109375,
+              -411.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "slot": "left"
+        },
+        "reason": "BONE_CUTTING_IN_PROGRESS",
+        "completedFraction": 0.7322331164897883,
+        "stateBefore": "sha256:fda43320e2daeb29c7a513ac6985043ba5ce5eaddb976b9a80e3005c5a0b6bb4",
+        "stateAfter": "sha256:a5abe815c1d2ca5c1fd341926bcadc1859b229abc0e5f5810df41511e8b9ed09"
+      },
+      {
+        "position": 31,
+        "action": {
+          "duration": 10.0,
+          "operation": "apply",
+          "pose": {
+            "position": [
+              -9.464996337890625,
+              1.441162109375,
+              -411.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "slot": "left"
+        },
+        "reason": "UNSUPPORTED_MATERIAL",
+        "completedFraction": 0.97,
+        "stateBefore": "sha256:a5abe815c1d2ca5c1fd341926bcadc1859b229abc0e5f5810df41511e8b9ed09",
+        "stateAfter": "sha256:2be3a5735baf3937006e9a78ac1ac706efac701c5da960b332cbb5ff54b40909"
+      },
+      {
+        "position": 37,
+        "action": {
+          "duration": 10.0,
+          "operation": "apply",
+          "pose": {
+            "position": [
+              -12.464996337890625,
+              3.441162109375,
+              -414.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "slot": "left"
+        },
+        "reason": "BONE_CUTTING_IN_PROGRESS",
+        "completedFraction": 0.7577528264850054,
+        "stateBefore": "sha256:40f8e13a18c6b4920c8c325bff7d8f51598cc850de6263689beaa3996ed3d90e",
+        "stateAfter": "sha256:6ac4b0a2bd52fd2c9988ae28d0501effdf2b024d3be745e7d92d922b47dd9252"
+      },
+      {
+        "position": 38,
+        "action": {
+          "duration": 10.0,
+          "operation": "apply",
+          "pose": {
+            "position": [
+              -12.464996337890625,
+              3.441162109375,
+              -414.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "slot": "left"
+        },
+        "reason": "UNSUPPORTED_MATERIAL",
+        "completedFraction": 0.59,
+        "stateBefore": "sha256:6ac4b0a2bd52fd2c9988ae28d0501effdf2b024d3be745e7d92d922b47dd9252",
+        "stateAfter": "sha256:ba107b360267d3ad1a5f8fa7d864079d162b033414ce58d4d2664cadc4340142"
+      }
+    ],
+    "trace": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/review/vascular-v2-independent.actions.jsonl"
+  },
+  "branch": "full-vascular",
+  "parent": {
+    "branchId": "exposure-prefix",
+    "position": 42
+  },
+  "verifiedSavedPrefixStates": [
+    {
+      "branch": "exposure-prefix",
+      "position": 42,
+      "stateId": "sha256:6817a85eae927401b66d32eff4627d66c73a37da9fb19b481085c12496c38bd4"
+    },
+    {
+      "branch": "full-vascular",
+      "position": 73,
+      "stateId": "sha256:af496ffbde3ca2ab71477c9226fe9f846f08171efd308362431414584cd3c87e"
+    }
+  ],
+  "stateId": "sha256:af496ffbde3ca2ab71477c9226fe9f846f08171efd308362431414584cd3c87e",
+  "actions": 73,
+  "accounting": {
+    "materials": {
+      "soft_tissue": {
+        "originalCells": 1389147,
+        "removedCells": 0,
+        "retainedCells": 1389147,
+        "originalMm3": 1389147.0,
+        "removedMm3": 0.0,
+        "retainedMm3": 1389147.0
+      },
+      "tumor": {
+        "originalCells": 43573,
+        "removedCells": 312,
+        "retainedCells": 43261,
+        "originalMm3": 43573.0,
+        "removedMm3": 312.0,
+        "retainedMm3": 43261.0
+      },
+      "bone": {
+        "originalCells": 732802,
+        "removedCells": 3453,
+        "retainedCells": 729349,
+        "originalMm3": 732802.0,
+        "removedMm3": 3453.0,
+        "retainedMm3": 729349.0
+      },
+      "vessel": {
+        "originalCells": 141681,
+        "removedCells": 0,
+        "retainedCells": 141681,
+        "originalMm3": 141681.0,
+        "removedMm3": 0.0,
+        "retainedMm3": 141681.0
+      }
+    },
+    "materialCountingMeaning": "Exclusive OWNED source material after declared overlap precedence; not raw annotation membership or clinical healthy-tissue truth.",
+    "ownedHealthyOrUnknownNonTargetRemoval": {
+      "cells": 0,
+      "volumeMm3": 0.0,
+      "materialLabels": [
+        "soft_tissue",
+        "unknown",
+        "functional_region",
+        "membrane"
+      ],
+      "excludesDeclaredTargets": true
+    },
+    "target": {
+      "originalOwnedCells": 43573,
+      "removedOwnedCells": 312,
+      "retainedOwnedCells": 43261,
+      "originalOwnedMm3": 43573.0,
+      "removedOwnedMm3": 312.0,
+      "retainedOwnedMm3": 43261.0,
+      "residualConnectedRegions": [
+        {
+          "id": 1,
+          "cells": 43260,
+          "volumeMm3": 43260.0,
+          "sourceIndexBoundsInclusive": [
+            [
+              102,
+              103,
+              104
+            ],
+            [
+              152,
+              165,
+              144
+            ]
+          ]
+        },
+        {
+          "id": 2,
+          "cells": 1,
+          "volumeMm3": 1.0,
+          "sourceIndexBoundsInclusive": [
+            [
+              139,
+              141,
+              110
+            ],
+            [
+              139,
+              141,
+              110
+            ]
+          ]
+        }
+      ],
+      "connectivity": 6,
+      "coordinates": "original source-grid ownership, independent of display displacement"
+    }
+  },
+  "rawAnnotationMemberships": {
+    "verifiedSameSourceGridAndRasAffine": true,
+    "uniqueRemovedOwnedSourceCells": 3765,
+    "rawTargetAnnotationUnionCells": 45115,
+    "groups": {
+      "compartments": {
+        "bone": {
+          "originalAnnotationCells": 753872,
+          "removedSourceCellsWithinAnnotation": 3453,
+          "retainedSourceCellsWithinAnnotation": 750419,
+          "originalAnnotationMm3": 753872.0,
+          "removedSourceMembershipMm3": 3453.0,
+          "declaredTargetName": false,
+          "overlapWithRawTargetAnnotationCells": 1184,
+          "removedSourceCellsWithinRawTargetOverlap": 18
+        },
+        "brain": {
+          "originalAnnotationCells": 1667660,
+          "removedSourceCellsWithinAnnotation": 393,
+          "retainedSourceCellsWithinAnnotation": 1667267,
+          "originalAnnotationMm3": 1667660.0,
+          "removedSourceMembershipMm3": 393.0,
+          "declaredTargetName": false,
+          "overlapWithRawTargetAnnotationCells": 44496,
+          "removedSourceCellsWithinRawTargetOverlap": 330
+        },
+        "tumor": {
+          "originalAnnotationCells": 45115,
+          "removedSourceCellsWithinAnnotation": 330,
+          "retainedSourceCellsWithinAnnotation": 44785,
+          "originalAnnotationMm3": 45115.0,
+          "removedSourceMembershipMm3": 330.0,
+          "declaredTargetName": true,
+          "overlapWithRawTargetAnnotationCells": 45115,
+          "removedSourceCellsWithinRawTargetOverlap": 330
+        },
+        "vessels": {
+          "originalAnnotationCells": 141681,
+          "removedSourceCellsWithinAnnotation": 0,
+          "retainedSourceCellsWithinAnnotation": 141681,
+          "originalAnnotationMm3": 141681.0,
+          "removedSourceMembershipMm3": 0.0,
+          "declaredTargetName": false,
+          "overlapWithRawTargetAnnotationCells": 364,
+          "removedSourceCellsWithinRawTargetOverlap": 0
+        }
+      },
+      "source_compartments": {
+        "bone": {
+          "originalAnnotationCells": 753872,
+          "removedSourceCellsWithinAnnotation": 3453,
+          "retainedSourceCellsWithinAnnotation": 750419,
+          "originalAnnotationMm3": 753872.0,
+          "removedSourceMembershipMm3": 3453.0,
+          "declaredTargetName": false,
+          "overlapWithRawTargetAnnotationCells": 1184,
+          "removedSourceCellsWithinRawTargetOverlap": 18
+        },
+        "brain": {
+          "originalAnnotationCells": 1667660,
+          "removedSourceCellsWithinAnnotation": 393,
+          "retainedSourceCellsWithinAnnotation": 1667267,
+          "originalAnnotationMm3": 1667660.0,
+          "removedSourceMembershipMm3": 393.0,
+          "declaredTargetName": false,
+          "overlapWithRawTargetAnnotationCells": 44496,
+          "removedSourceCellsWithinRawTargetOverlap": 330
+        },
+        "tumor": {
+          "originalAnnotationCells": 45115,
+          "removedSourceCellsWithinAnnotation": 330,
+          "retainedSourceCellsWithinAnnotation": 44785,
+          "originalAnnotationMm3": 45115.0,
+          "removedSourceMembershipMm3": 330.0,
+          "declaredTargetName": true,
+          "overlapWithRawTargetAnnotationCells": 45115,
+          "removedSourceCellsWithinRawTargetOverlap": 330
+        },
+        "vessels": {
+          "originalAnnotationCells": 141681,
+          "removedSourceCellsWithinAnnotation": 0,
+          "retainedSourceCellsWithinAnnotation": 141681,
+          "originalAnnotationMm3": 141681.0,
+          "removedSourceMembershipMm3": 0.0,
+          "declaredTargetName": false,
+          "overlapWithRawTargetAnnotationCells": 364,
+          "removedSourceCellsWithinRawTargetOverlap": 0
+        }
+      }
+    },
+    "meaning": "Nonexclusive memberships of removed source cells in original supplied masks. Counts may overlap and must not be summed as removed volume. Raw brain/target overlap is unreviewed annotation overlap, not clinical healthy-tissue truth. These counts do not change the OWNED target denominator."
+  },
+  "fluid": {
+    "addedMm3": 10.400156722143281,
+    "presentMm3": 4.3242073550546,
+    "trappedOutletMm3": 0.0,
+    "removedMm3": 5.966244725738389,
+    "escapedMm3": 0.10970464135021094,
+    "residualMm3": 8.171241461241152e-14,
+    "vascular": {
+      "initialMm3": 100.0,
+      "refilledMm3": 0.9802678016897775,
+      "remainingMm3": 96.58011107954658,
+      "generatedMm3": 4.400156722143208,
+      "emittedMm3": 4.400156722143208,
+      "residualMm3": -1.3988810110276972e-14
+    }
+  },
+  "maxFluidResidualMm3": 8.526512829121202e-14,
+  "vascular": {
+    "enabled": true,
+    "woundCount": 1,
+    "damagedFaceCount": 5,
+    "areaMm2": 5.0,
+    "severedFaceCount": 5,
+    "severedPatentCount": 0,
+    "fullyClottedFaces": 5,
+    "activeWounds": 0,
+    "wounds": {
+      "vessel-v2:0": {
+        "faces": [
+          "3026883:3026884",
+          "3027064:3027065",
+          "3066884:3066885",
+          "3067065:3067066",
+          "3106885:3106886"
+        ],
+        "sourceId": "vessel-v2:0"
+      }
+    },
+    "faces": {
+      "3027064:3027065": {
+        "cells": [
+          3027064,
+          3027065
+        ],
+        "areaMm2": 1.0,
+        "axis": 2,
+        "damage": 1.0,
+        "patent": false,
+        "clot": 1.0,
+        "coagulationDose": 2.0,
+        "woundId": "vessel-v2:0"
+      },
+      "3067065:3067066": {
+        "cells": [
+          3067065,
+          3067066
+        ],
+        "areaMm2": 1.0,
+        "axis": 2,
+        "damage": 1.0,
+        "patent": false,
+        "clot": 1.0,
+        "coagulationDose": 2.0,
+        "woundId": "vessel-v2:0"
+      },
+      "3066884:3066885": {
+        "cells": [
+          3066884,
+          3066885
+        ],
+        "areaMm2": 1.0,
+        "axis": 2,
+        "damage": 1.0,
+        "patent": false,
+        "clot": 1.0,
+        "coagulationDose": 2.0,
+        "woundId": "vessel-v2:0"
+      },
+      "3026883:3026884": {
+        "cells": [
+          3026883,
+          3026884
+        ],
+        "areaMm2": 1.0,
+        "axis": 2,
+        "damage": 1.0,
+        "patent": false,
+        "clot": 1.0,
+        "coagulationDose": 2.0,
+        "woundId": "vessel-v2:0"
+      },
+      "3106885:3106886": {
+        "cells": [
+          3106885,
+          3106886
+        ],
+        "areaMm2": 1.0,
+        "axis": 2,
+        "damage": 1.0,
+        "patent": false,
+        "clot": 1.0,
+        "coagulationDose": 2.0,
+        "woundId": "vessel-v2:0"
+      }
+    },
+    "sources": [
+      {
+        "id": "vessel-v2:0",
+        "kind": "modeled-vessel-wound",
+        "modelVersion": 2,
+        "rateMm3PerSecond": 0.0,
+        "emittedMm3": 4.400156722143208,
+        "expectedEmittedMm3": 4.400156722143208,
+        "reservoirMm3": 0.0,
+        "coagulationExposure": 2.0,
+        "exposure": 0.0,
+        "bleedingActive": false,
+        "patent": false,
+        "cell": 3026883
+      }
+    ]
+  },
+  "protection": {
+    "status": "declared-masks-only",
+    "missingRequired": [],
+    "clearanceMm": 2.0,
+    "anatomicalCompleteness": "unknown",
+    "clinicalValidation": "none",
+    "unknownStructures": [
+      "motor/language cortex",
+      "corticospinal tract",
+      "optic pathways",
+      "cranial nerves"
+    ],
+    "structures": [
+      {
+        "id": "brainstem",
+        "name": "brain-stem",
+        "sourceCells": 34040,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-16; label=16; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:6c13edb715334e0da86d38fb9d50fb016ad6c525b4c85235cc96b558a79f443f; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "left_thalamus",
+        "name": "left thalamus",
+        "sourceCells": 11463,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-10; label=10; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:8142a1740d958e15e6da581ba760259943a398ed93e11fde686db92ad3001504; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "right_thalamus",
+        "name": "right thalamus",
+        "sourceCells": 11015,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-49; label=49; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:2bc584f4f0b7cd26964a2ac7fb0d4954bdbe4b9e4af87ba26ee91827b3114288; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "left_caudate",
+        "name": "left caudate",
+        "sourceCells": 8186,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-11; label=11; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:ef69e8990aa0ac3e55356b1d81f28e5f2dbe6f3a4e1cbc61a47b8ab41fc752d9; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "right_caudate",
+        "name": "right caudate",
+        "sourceCells": 8133,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-50; label=50; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:2d2b2062b5cae137800bb1e983236ae65b90b87e99709a45a894ec4e8877e6c1; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "left_putamen",
+        "name": "left putamen",
+        "sourceCells": 9826,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-12; label=12; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:4e4a09ece21e199770a520c563107c4194b92c32f0efa646f6f0dd7bed4a7dbc; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "right_putamen",
+        "name": "right putamen",
+        "sourceCells": 9683,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-51; label=51; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:7f82ffa268e72aad25c3dd2d34c5e58bd719fe3c27b1f8e7ed20ef0dfa6cbf69; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "left_pallidum",
+        "name": "left pallidum",
+        "sourceCells": 3024,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-13; label=13; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:657ecada8e8d66397ed76e05ff65b5ddd4bb53761ad4392e956d8d5cc1218714; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "right_pallidum",
+        "name": "right pallidum",
+        "sourceCells": 3195,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-52; label=52; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:6786d301532c766db3367d570894767817857d4cd861408b9eee86275bd072a3; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "left_hippocampus",
+        "name": "left hippocampus",
+        "sourceCells": 8789,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-17; label=17; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:b3409109b55b76be00df69e722a12a30895e36c8d5a4eb7b50c661b9c9e3bdf8; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "right_hippocampus",
+        "name": "right hippocampus",
+        "sourceCells": 9507,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-53; label=53; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:eac6e45c6be78e82808100c71d70e9a80b4de13885df238c64028f4d7bb26535; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      }
+    ],
+    "configured": true,
+    "mode": "strict-research",
+    "contractId": "sha256:bd086e3832d76c44e09ccec7e5cc64a77a27f2b2affcd76d5c51ea3fc06cebfa",
+    "criticalMaxDisplacementMm": 0.0
+  },
+  "sourceProtectionEvidence": {
+    "manifest": "/Users/shaf/coding_projects/RessectionLab/testcases/environments/meningioma-sub-06/rl-protection.json",
+    "manifestSha256": "9c2da4f2430c9ba0fdd506ee4bb4babe0d053644db5c0bfa4b89006be1cdbf0f",
+    "arraysSha256": "c186c5fb35aa4f660e2cc2398b73139aa18d9ede8e5f57a6093159703911015e",
+    "sourceBinding": "sha256:c2865797721e8decb8b41736d3544e50b95fdd3c6007dc0062cb2fdf1eb79e0e",
+    "contractId": "sha256:bd086e3832d76c44e09ccec7e5cc64a77a27f2b2affcd76d5c51ea3fc06cebfa",
+    "matchingMasks": 11,
+    "clearanceMm": 2.0,
+    "criticalMaxDisplacementMm": 0.0,
+    "exactCellsAndProvenanceMatch": true
+  },
+  "causalVascularChain": {
+    "required": true,
+    "completeChain": true,
+    "injury": [
+      {
+        "position": 48,
+        "instrument": "micro_scissors",
+        "sourceFaceIds": [
+          "3026883:3026884",
+          "3027064:3027065",
+          "3066884:3066885",
+          "3067065:3067066",
+          "3106885:3106886"
+        ]
+      }
+    ],
+    "passivePersistentBleeding": [
+      {
+        "position": 50,
+        "generatedDeltaMm3": 0.9703555234124224,
+        "presentDeltaMm3": 0.9703555234124224
+      },
+      {
+        "position": 51,
+        "generatedDeltaMm3": 2.2273876290720978,
+        "presentDeltaMm3": 2.2273876290720978
+      }
+    ],
+    "actualBipolarDose": [
+      {
+        "position": 55,
+        "actualFaceCoagulationDoseIncrease": 0.10699588477366258
+      },
+      {
+        "position": 56,
+        "actualFaceCoagulationDoseIncrease": 9.893004115226338
+      }
+    ],
+    "sealedIdlePositions": [
+      58,
+      72,
+      73
+    ],
+    "irrigationPositions": [
+      62,
+      63
+    ],
+    "suctionWithoutVesselRepair": [
+      {
+        "position": 68,
+        "removedDeltaMm3": 1.9662447257383855
+      },
+      {
+        "position": 69,
+        "removedDeltaMm3": 4.0000000000000036
+      }
+    ]
+  },
+  "endpointTools": {
+    "left": {
+      "instrument": "frazier_suction",
+      "position": [
+        85.53500366210938,
+        -118.558837890625,
+        -533.25
+      ],
+      "quaternion": [
+        0.5,
+        0.5,
+        -0.5,
+        -0.5
+      ],
+      "active": false,
+      "inserted": false,
+      "grip": [],
+      "parameters": {
+        "depthMm": 0.1,
+        "flowMm3PerSecond": 2.0,
+        "forceN": 0.0,
+        "radiusMm": 3.0
+      }
+    },
+    "right": {
+      "instrument": "cusa",
+      "position": [
+        6.035003662109375,
+        -14.058837890625,
+        -559.25
+      ],
+      "quaternion": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "active": false,
+      "inserted": false,
+      "grip": [],
+      "parameters": {}
+    }
+  },
+  "endpointHolds": {},
+  "directorPhases": [
+    {
+      "endPosition": 5,
+      "id": "prefix-0-bone",
+      "label": "Recorded initial skull opening",
+      "startPosition": 0
+    },
+    {
+      "endPosition": 9,
+      "id": "prefix-1-target",
+      "label": "Recorded initial target access and removal",
+      "startPosition": 5
+    },
+    {
+      "endPosition": 13,
+      "id": "prefix-2-bone",
+      "label": "Recorded initial skull opening",
+      "startPosition": 9
+    },
+    {
+      "endPosition": 21,
+      "id": "prefix-3-target",
+      "label": "Recorded initial target access and removal",
+      "startPosition": 13
+    },
+    {
+      "endPosition": 25,
+      "id": "prefix-4-bone",
+      "label": "Recorded initial skull opening",
+      "startPosition": 21
+    },
+    {
+      "endPosition": 27,
+      "id": "prefix-5-target",
+      "label": "Recorded initial target access and removal",
+      "startPosition": 25
+    },
+    {
+      "endPosition": 32,
+      "id": "prefix-6-bone",
+      "label": "Recorded initial skull opening",
+      "startPosition": 27
+    },
+    {
+      "endPosition": 34,
+      "id": "prefix-7-target",
+      "label": "Recorded initial target access and removal",
+      "startPosition": 32
+    },
+    {
+      "endPosition": 39,
+      "id": "prefix-8-bone",
+      "label": "Recorded initial skull opening",
+      "startPosition": 34
+    },
+    {
+      "endPosition": 42,
+      "id": "prefix-9-target",
+      "label": "Recorded initial target access and removal",
+      "startPosition": 39
+    },
+    {
+      "endPosition": 43,
+      "id": "inspect",
+      "label": "Inspect supplied anatomy and unknowns",
+      "startPosition": 42
+    },
+    {
+      "endPosition": 45,
+      "id": "vascular_setup",
+      "label": "Withdraw from the saved common target-removal prefix",
+      "startPosition": 43
+    },
+    {
+      "endPosition": 49,
+      "id": "injury",
+      "label": "Peripheral supplied vessel transection",
+      "startPosition": 45
+    },
+    {
+      "endPosition": 51,
+      "id": "untreated_bleeding",
+      "label": "Untreated wound persists during idle time",
+      "startPosition": 49
+    },
+    {
+      "endPosition": 59,
+      "id": "source_control",
+      "label": "Bipolar seal preserves severed nonpatency",
+      "startPosition": 51
+    },
+    {
+      "endPosition": 71,
+      "id": "field_clearance",
+      "label": "Irrigation and local aspiration with a conserved fluid budget",
+      "startPosition": 59
+    },
+    {
+      "endPosition": 72,
+      "id": "reevaluation",
+      "label": "Idle reassessment of persistent source control",
+      "startPosition": 71
+    },
+    {
+      "endPosition": 73,
+      "id": "cleanup",
+      "label": "Field inspection and tool withdrawal",
+      "startPosition": 72
+    },
+    {
+      "endPosition": 73,
+      "id": "endpoint",
+      "label": "Endpoint and explained residual",
+      "startPosition": 73
+    }
+  ],
+  "recordedUncommittedProposals": [],
+  "proposalQualification": "Saved proposal outcomes reported verbatim; these were not committed or re-executed by this audit.",
+  "physicalEventCounts": {
+    "place": 14,
+    "apply": 22,
+    "drill_work": 931,
+    "drill_contact_dwell": 4,
+    "contact_stop": 6,
+    "withdraw": 12,
+    "exchange": 13,
+    "removal": 97,
+    "inspect": 8,
+    "strand_transection": 5,
+    "deactivate": 4,
+    "local_energy": 273,
+    "irrigation": 257,
+    "aspiration": 257
+  },
+  "wallSeconds": 213.8475160417147,
+  "guiReview": "pending: no second monitor available; this script does not verify GUI behavior",
+  "limitations": [
+    "Uncalibrated supplied engineering laws; no clinical outcome claim.",
+    "Retained source target regions do not prove that every possible legal approach is exhausted."
+  ]
+}

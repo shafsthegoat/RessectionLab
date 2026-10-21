@@ -1,0 +1,55 @@
+{
+  "utc": "2026-10-20T15:51:56.243531+00:00",
+  "codeCommit": "3e0bd07c7a5ad7b84a9cf921c20f1c2564cd2c69",
+  "pushed": true,
+  "legacyThermalFileSha256": "d246e0d02b532b9b64aee79c21151fb16660f55ecca0b626111a13cbbd006af8",
+  "newThermalFileSha256": "7df9998cc74124082fe2d1d3d18e3b3cf3ab7dd4860da4a47236ea46d3bdb607",
+  "change": "Identical expm1 factor reused within a tick; zero-power dose integral bypass only for strictly subthreshold excess under nonnegative time/threshold and positive tau. All assignments, arithmetic order, boundaries and profiles retained.",
+  "detachedKernelAudit": "review/thermal-kernel-audit-20261020T153736Z.json",
+  "auditQualification": "Audit original source SHA is independently bound to5d05ddb3. Do not rerun its installed-function comparator after source edits and call that old-versus-new.",
+  "kernelExactStateComparisons": 36,
+  "kernelMedianSeconds": {
+    "legacy": 0.0080877,
+    "candidate": 0.0048622
+  },
+  "rootTests": {
+    "command": ".venv/bin/python -m pytest tests/test_surgical_drilling_v2.py tests/test_surgical_cancellation.py -q",
+    "passed": 30,
+    "wallSeconds": 1.3
+  },
+  "independentReview": {
+    "agent": "acceptance_review",
+    "actionableIssues": [],
+    "sameFocusedTestsPassed": 30,
+    "wallSeconds": 1.3,
+    "sourceBindingChecked": true
+  },
+  "liveReload": "primary-v2/exact-thermal-live-reload-proof.json",
+  "actualPostReloadInterval": {
+    "verifiedUtc": "2026-10-20T15:50:42.974326+00:00",
+    "startPosition": 1076,
+    "endPosition": 1088,
+    "endStateId": "sha256:773ed52375e0d78f4f12333eaeef21842adcb0750b046ca0b4258f13c4557810",
+    "statuses": {
+      "accepted": 12
+    },
+    "continuousRecordedStateChain": true,
+    "savedSnapshotEqualsLive": true,
+    "targetRemovedMm3": 30257.0,
+    "ownedHealthyRemovedMm3": 0.0,
+    "ownedUnknownRemovedMm3": 0.0,
+    "gracefulSavedBoundaryPausePassed": true,
+    "qualification": "Actual public action interval and saved equality, not a second legacy patient replay or a whole-episode speed claim."
+  },
+  "runtime": {
+    "pid": 47002,
+    "execSessionId": 5061,
+    "activeCommand": "advance(4000)",
+    "headlessSliceActions": 12,
+    "liveDirectorCommit": "1ae5f004",
+    "liveSavingCommit": "9b1ce926",
+    "liveThermalCommit": "3e0bd07c",
+    "recordedRayCleanupCapabilityLoaded": false
+  },
+  "qualification": "Kernel-only timing, current detached-state parity and actual saved interval verification. No whole-episode speed claim; final canonical replay, full field cleanup and actual Electron acceptance remain pending."
+}

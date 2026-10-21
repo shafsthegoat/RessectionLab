@@ -1,0 +1,36 @@
+{
+  "schema": "resectionlab.actual-playback-performance-observation.v1",
+  "createdUtc": "2026-10-21T05:43:06.735640+00:00",
+  "nativeSha256": "095659e54f381355e8f5655b6c5907990b2ac4767dc9ce58297e3bc4d6f3268d",
+  "branch": "full-primary",
+  "requestedSpeedMultiplier": 4,
+  "start": {
+    "utc": "2026-10-21T05:30:19.445Z",
+    "action": 2,
+    "frame": 12,
+    "frameCount": 151,
+    "simulatedSeconds": 2.6,
+    "axPath": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/final/gui/primary-playing-0001.ax.txt",
+    "axSha256": "cd5844232354712efbe068eee54eb7391b98e83a619cc28ff55a1bb3a3887069",
+    "screenshotPath": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/final/gui/primary-playing-0001.png"
+  },
+  "end": {
+    "utc": "2026-10-21T05:40:50.532Z",
+    "action": 4,
+    "frame": 31,
+    "frameCount": 116,
+    "simulatedSeconds": 66.4,
+    "axPath": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/final/gui/primary-playing-0006.ax.txt",
+    "axSha256": "1ed1b465c6fd048e174ce3c7a8d690fd12716610f225a1eeed20d54825a0e4a8",
+    "screenshotPath": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/final/gui/primary-playing-0006.png"
+  },
+  "observedWallSeconds": 631.087,
+  "observedSimulationSeconds": 63.800000000000004,
+  "simulationSecondsPerWallSecond": 0.10109541156766025,
+  "scope": "Early actual Electron drilling playback only; frame preparation was running simultaneously. Not a full-episode benchmark.",
+  "finding": "Playback is very slow despite selected4x. Rendering is a plausible bottleneck; these observations do not conclusively isolate the cause.",
+  "userInstruction": "ensure to report that its pretty slow, i think its a rendering issue , no need to fix it now but its worth noting",
+  "performanceFixesDeferredByUser": true,
+  "noFramesSkipped": true,
+  "fullPlaybackStillPending": true
+}

@@ -1,0 +1,234 @@
+{
+  "schema": "surgical-rl-protection-v1",
+  "sourceBinding": "sha256:c2865797721e8decb8b41736d3544e50b95fdd3c6007dc0062cb2fdf1eb79e0e",
+  "shape": [
+    220,
+    220,
+    181
+  ],
+  "affineRasMm": [
+    [
+      -1.0,
+      0.0,
+      0.0,
+      109.53500366210938
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      -123.558837890625
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      -554.25
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "arrays": "rl-protection.npz",
+  "arraysSha256": "c186c5fb35aa4f660e2cc2398b73139aa18d9ede8e5f57a6093159703911015e",
+  "required": [
+    "brainstem",
+    "left_thalamus",
+    "right_thalamus",
+    "left_caudate",
+    "right_caudate",
+    "left_putamen",
+    "right_putamen",
+    "left_pallidum",
+    "right_pallidum",
+    "left_hippocampus",
+    "right_hippocampus"
+  ],
+  "clearanceMm": 2.0,
+  "annotations": [
+    {
+      "structureId": "brainstem",
+      "displayName": "brain-stem",
+      "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-16; label=16; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:6c13edb715334e0da86d38fb9d50fb016ad6c525b4c85235cc96b558a79f443f; sampling=affine-cell circumsphere overlap",
+      "reviewStatus": "unreviewed; tumor-distorted regions require review",
+      "array": "cells_0",
+      "arrayHash": "sha256:2a3aee6abc815479819e751d223c05361ca3049d479f768461f42ba1ca86427d"
+    },
+    {
+      "structureId": "left_thalamus",
+      "displayName": "left thalamus",
+      "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-10; label=10; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:8142a1740d958e15e6da581ba760259943a398ed93e11fde686db92ad3001504; sampling=affine-cell circumsphere overlap",
+      "reviewStatus": "unreviewed; tumor-distorted regions require review",
+      "array": "cells_1",
+      "arrayHash": "sha256:1beb44d1174cf9a8514d92d27beba915dc060e61c443f6fc8e69b9327d169b90"
+    },
+    {
+      "structureId": "right_thalamus",
+      "displayName": "right thalamus",
+      "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-49; label=49; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:2bc584f4f0b7cd26964a2ac7fb0d4954bdbe4b9e4af87ba26ee91827b3114288; sampling=affine-cell circumsphere overlap",
+      "reviewStatus": "unreviewed; tumor-distorted regions require review",
+      "array": "cells_2",
+      "arrayHash": "sha256:1428a543891c86a827c816a9ced4f81c22a16b171a6e6c38b9bb4c24093d8559"
+    },
+    {
+      "structureId": "left_caudate",
+      "displayName": "left caudate",
+      "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-11; label=11; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:ef69e8990aa0ac3e55356b1d81f28e5f2dbe6f3a4e1cbc61a47b8ab41fc752d9; sampling=affine-cell circumsphere overlap",
+      "reviewStatus": "unreviewed; tumor-distorted regions require review",
+      "array": "cells_3",
+      "arrayHash": "sha256:8e522ec6f2f33c2d82b954ab6e5aa95ef4d21c61669926fc19ca6be9742dc1dd"
+    },
+    {
+      "structureId": "right_caudate",
+      "displayName": "right caudate",
+      "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-50; label=50; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:2d2b2062b5cae137800bb1e983236ae65b90b87e99709a45a894ec4e8877e6c1; sampling=affine-cell circumsphere overlap",
+      "reviewStatus": "unreviewed; tumor-distorted regions require review",
+      "array": "cells_4",
+      "arrayHash": "sha256:0037f685197577d5e053f266bab703a1423532890dc181c828a138b94d9edc36"
+    },
+    {
+      "structureId": "left_putamen",
+      "displayName": "left putamen",
+      "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-12; label=12; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:4e4a09ece21e199770a520c563107c4194b92c32f0efa646f6f0dd7bed4a7dbc; sampling=affine-cell circumsphere overlap",
+      "reviewStatus": "unreviewed; tumor-distorted regions require review",
+      "array": "cells_5",
+      "arrayHash": "sha256:9a9f11e6f7d9ee38ea9cf6577a24a20808012de5a63a8f9c4fd7e199e0c0590c"
+    },
+    {
+      "structureId": "right_putamen",
+      "displayName": "right putamen",
+      "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-51; label=51; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:7f82ffa268e72aad25c3dd2d34c5e58bd719fe3c27b1f8e7ed20ef0dfa6cbf69; sampling=affine-cell circumsphere overlap",
+      "reviewStatus": "unreviewed; tumor-distorted regions require review",
+      "array": "cells_6",
+      "arrayHash": "sha256:3d306e8d8936f9b155e454d1c75020f4eb30f154a449070fab4c87c8f6f8f966"
+    },
+    {
+      "structureId": "left_pallidum",
+      "displayName": "left pallidum",
+      "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-13; label=13; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:657ecada8e8d66397ed76e05ff65b5ddd4bb53761ad4392e956d8d5cc1218714; sampling=affine-cell circumsphere overlap",
+      "reviewStatus": "unreviewed; tumor-distorted regions require review",
+      "array": "cells_7",
+      "arrayHash": "sha256:cd1a66c06b2bf8336f76f60a56d7572ba2dc988c5dee04cf237e0e1e5f1e09d6"
+    },
+    {
+      "structureId": "right_pallidum",
+      "displayName": "right pallidum",
+      "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-52; label=52; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:6786d301532c766db3367d570894767817857d4cd861408b9eee86275bd072a3; sampling=affine-cell circumsphere overlap",
+      "reviewStatus": "unreviewed; tumor-distorted regions require review",
+      "array": "cells_8",
+      "arrayHash": "sha256:5c94bb36b5e4ad61a1581587fa0f1a2961034d57c9e24a826f3f2f90a61da400"
+    },
+    {
+      "structureId": "left_hippocampus",
+      "displayName": "left hippocampus",
+      "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-17; label=17; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:b3409109b55b76be00df69e722a12a30895e36c8d5a4eb7b50c661b9c9e3bdf8; sampling=affine-cell circumsphere overlap",
+      "reviewStatus": "unreviewed; tumor-distorted regions require review",
+      "array": "cells_9",
+      "arrayHash": "sha256:6e10e4fe8094edcd7d3857d01ca8f46d64da7dccc224b6967a08b1c3512db512"
+    },
+    {
+      "structureId": "right_hippocampus",
+      "displayName": "right hippocampus",
+      "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-53; label=53; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:eac6e45c6be78e82808100c71d70e9a80b4de13885df238c64028f4d7bb26535; sampling=affine-cell circumsphere overlap",
+      "reviewStatus": "unreviewed; tumor-distorted regions require review",
+      "array": "cells_10",
+      "arrayHash": "sha256:3fd417022f6c31e02a26f2a053cb1921c1152966ddcbb7db327b44873feb51d7"
+    }
+  ],
+  "coverage": {
+    "status": "declared-masks-only",
+    "missingRequired": [],
+    "clearanceMm": 2.0,
+    "anatomicalCompleteness": "unknown",
+    "clinicalValidation": "none",
+    "unknownStructures": [
+      "motor/language cortex",
+      "corticospinal tract",
+      "optic pathways",
+      "cranial nerves"
+    ],
+    "structures": [
+      {
+        "id": "brainstem",
+        "name": "brain-stem",
+        "sourceCells": 34040,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-16; label=16; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:6c13edb715334e0da86d38fb9d50fb016ad6c525b4c85235cc96b558a79f443f; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "left_thalamus",
+        "name": "left thalamus",
+        "sourceCells": 11463,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-10; label=10; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:8142a1740d958e15e6da581ba760259943a398ed93e11fde686db92ad3001504; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "right_thalamus",
+        "name": "right thalamus",
+        "sourceCells": 11015,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-49; label=49; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:2bc584f4f0b7cd26964a2ac7fb0d4954bdbe4b9e4af87ba26ee91827b3114288; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "left_caudate",
+        "name": "left caudate",
+        "sourceCells": 8186,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-11; label=11; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:ef69e8990aa0ac3e55356b1d81f28e5f2dbe6f3a4e1cbc61a47b8ab41fc752d9; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "right_caudate",
+        "name": "right caudate",
+        "sourceCells": 8133,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-50; label=50; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:2d2b2062b5cae137800bb1e983236ae65b90b87e99709a45a894ec4e8877e6c1; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "left_putamen",
+        "name": "left putamen",
+        "sourceCells": 9826,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-12; label=12; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:4e4a09ece21e199770a520c563107c4194b92c32f0efa646f6f0dd7bed4a7dbc; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "right_putamen",
+        "name": "right putamen",
+        "sourceCells": 9683,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-51; label=51; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:7f82ffa268e72aad25c3dd2d34c5e58bd719fe3c27b1f8e7ed20ef0dfa6cbf69; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "left_pallidum",
+        "name": "left pallidum",
+        "sourceCells": 3024,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-13; label=13; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:657ecada8e8d66397ed76e05ff65b5ddd4bb53761ad4392e956d8d5cc1218714; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "right_pallidum",
+        "name": "right pallidum",
+        "sourceCells": 3195,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-52; label=52; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:6786d301532c766db3367d570894767817857d4cd861408b9eee86275bd072a3; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "left_hippocampus",
+        "name": "left hippocampus",
+        "sourceCells": 8789,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-17; label=17; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:b3409109b55b76be00df69e722a12a30895e36c8d5a4eb7b50c661b9c9e3bdf8; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "right_hippocampus",
+        "name": "right hippocampus",
+        "sourceCells": 9507,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-53; label=53; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:eac6e45c6be78e82808100c71d70e9a80b4de13885df238c64028f4d7bb26535; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      }
+    ]
+  },
+  "contentHash": "sha256:d7abac452a30c7487cd52d7b3f841466bf16b66ad61e0901afcd0a051845d0c5"
+}

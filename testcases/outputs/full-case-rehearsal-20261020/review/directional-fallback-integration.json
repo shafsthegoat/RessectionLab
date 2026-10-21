@@ -1,0 +1,27 @@
+{
+  "utc": "2026-10-20T14:00:11.158526+00:00",
+  "codeCommit": "a956f6c6ce1836e382795801fadba6684638585b",
+  "focusedCommand": ".venv/bin/python -m pytest tests/test_full_case_directional.py tests/test_full_case_rehearsal.py tests/test_full_case_cleanup.py -q",
+  "rootRun": {
+    "passed": 53,
+    "wallSeconds": 28.91
+  },
+  "independentReview": {
+    "agent": "acceptance_review",
+    "passed": 52,
+    "wallSeconds": 28.84,
+    "finding": "No remaining actionable helper/integration issue; final added immediate-refusal engineering parameter independently covered by root final53 run.",
+    "checks": [
+      "Native flat identity and signed/anisotropic mapping preserved.",
+      "Exact source/state, stopped primary endpoint and fully released/withdrawn tools required before fallback configuration.",
+      "Old access passes, phases and cleanup records preserved as detached scheduling metadata.",
+      "Public sweeps govern exterior transit and remote rotation; partial/rejected results retain actual state and unchanged waypoint index.",
+      "Directional frontier dispatch avoids superior batching and superior-only assistant placement.",
+      "Actual engineering drill/removal plus public protection refusal tested; no patient fallback or replay performed."
+    ]
+  },
+  "activationPolicy": "Reassess exact retained source identities after the productive superior endpoint before choosing a bounded left/anterior pass.",
+  "patientActivated": false,
+  "patientPhysicsReplayed": false,
+  "scope": "Engineering/static evidence only. Does not establish patient reachability, global maximal removal or GUI acceptance."
+}

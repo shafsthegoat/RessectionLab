@@ -1,0 +1,4103 @@
+{
+  "readOnly": true,
+  "noEnginePreviewStepReplay": true,
+  "position": 1812,
+  "stateId": "sha256:3f19962c0db8ed6d46909fbd76f1cdd1f3d65e8d1de35b9d0354dec39d6bf0a0",
+  "originalSourcePath": "/Users/shaf/coding_projects/RessectionLab/testcases/cases/meningioma-sub-06-standard-v2.ressectionlab",
+  "originalSourceSha256": "ff5a49b8706a8ccda08d8c3e82dad3e079f85dea98cb6bd40783d2262eec9838",
+  "originalCaseHash": "sha256:6ca9c1dee58b3635d92d576ad5b355d0a6d500892f30f07968a671b1b67a51ea",
+  "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+  "sourceLabelsDigest": "sha256:9930330418c439d7d042054d7419c05d3158e2422f62ce69b034044a563ecd76",
+  "currentNativeIdentity": {
+    "stableAtomicNativeRead": true,
+    "readAttempts": 1,
+    "nativeSha256": "65cd604581f4884958b1485c0f604e8977bb50dee963496392079d49e0d107f9",
+    "sourceLabelsDigest": "sha256:9930330418c439d7d042054d7419c05d3158e2422f62ce69b034044a563ecd76",
+    "checkpointContentIdentityVerified": true,
+    "protectionContractId": "sha256:bd086e3832d76c44e09ccec7e5cc64a77a27f2b2affcd76d5c51ea3fc06cebfa",
+    "sourceBinding": "sha256:c2865797721e8decb8b41736d3544e50b95fdd3c6007dc0062cb2fdf1eb79e0e",
+    "branchId": "full-primary",
+    "actionReplayVerifiedByThisInspector": false
+  },
+  "remainingOwnedTargetCells": 9076,
+  "currentLeftIndex": 5,
+  "currentLeftId": "directional-0-162-128",
+  "deferredSuperiorIndex": 22,
+  "groups": {
+    "configuredLeft8": {
+      "accesses": 8,
+      "positiveAccesses": 8,
+      "distinctRetainedTargetBehindUnreachableBoneNormalFreeCells": 266,
+      "distinctRemainingBoneBeyondFixedBurrCapsules": 93,
+      "distinctRetainedTargetBehindTrulyInterleavedBone": 30,
+      "centerOriginalEntryTargetStillRetainedAccesses": 8,
+      "centerColumnPositiveAccesses": 0,
+      "rows": [
+        {
+          "id": "directional-0-148-129",
+          "nativeAxis": 0,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            1,
+            2
+          ],
+          "originalTargetEntryIndex": [
+            136,
+            148,
+            129
+          ],
+          "entryRAS": [
+            -26.464996337890625,
+            24.441162109375,
+            -425.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            104,
+            136
+          ],
+          "sourceCenterTargetDepthRange": [
+            104,
+            136
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 169,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 47,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 50,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 49
+        },
+        {
+          "id": "directional-0-141-128",
+          "nativeAxis": 0,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            1,
+            2
+          ],
+          "originalTargetEntryIndex": [
+            143,
+            141,
+            128
+          ],
+          "entryRAS": [
+            -33.464996337890625,
+            17.441162109375,
+            -426.25
+          ],
+          "drillRadiusMm": 2.5,
+          "currentCenterTargetDepthRange": [
+            126,
+            143
+          ],
+          "sourceCenterTargetDepthRange": [
+            104,
+            143
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 293,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 29,
+          "unreachableRemainingBoneCellsInFootprint": 6,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 31,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 31
+        },
+        {
+          "id": "directional-0-138-130",
+          "nativeAxis": 0,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            1,
+            2
+          ],
+          "originalTargetEntryIndex": [
+            140,
+            138,
+            130
+          ],
+          "entryRAS": [
+            -30.464996337890625,
+            14.441162109375,
+            -424.25
+          ],
+          "drillRadiusMm": 1.6622776601683795,
+          "currentCenterTargetDepthRange": [
+            121,
+            140
+          ],
+          "sourceCenterTargetDepthRange": [
+            105,
+            140
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 348,
+          "interleavedRemainingBoneCellsInFootprint": 2,
+          "targetBehindTrulyInterleavedBoneCells": 30,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 21,
+          "unreachableRemainingBoneCellsInFootprint": 24,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 88,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 88
+        },
+        {
+          "id": "directional-0-122-137",
+          "nativeAxis": 0,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            1,
+            2
+          ],
+          "originalTargetEntryIndex": [
+            135,
+            122,
+            137
+          ],
+          "entryRAS": [
+            -25.464996337890625,
+            -1.558837890625,
+            -417.25
+          ],
+          "drillRadiusMm": 1.6622776601683795,
+          "currentCenterTargetDepthRange": [
+            111,
+            135
+          ],
+          "sourceCenterTargetDepthRange": [
+            111,
+            135
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 325,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 21,
+          "unreachableRemainingBoneCellsInFootprint": 6,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 46,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 46
+        },
+        {
+          "id": "directional-0-132-141",
+          "nativeAxis": 0,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            1,
+            2
+          ],
+          "originalTargetEntryIndex": [
+            116,
+            132,
+            141
+          ],
+          "entryRAS": [
+            -6.464996337890625,
+            8.441162109375,
+            -413.25
+          ],
+          "drillRadiusMm": 1.5,
+          "currentCenterTargetDepthRange": [
+            102,
+            116
+          ],
+          "sourceCenterTargetDepthRange": [
+            102,
+            116
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 166,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 13,
+          "unreachableRemainingBoneCellsInFootprint": 4,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 21,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 21
+        },
+        {
+          "id": "directional-0-162-128",
+          "nativeAxis": 0,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            1,
+            2
+          ],
+          "originalTargetEntryIndex": [
+            127,
+            162,
+            128
+          ],
+          "entryRAS": [
+            -17.464996337890625,
+            38.441162109375,
+            -426.25
+          ],
+          "drillRadiusMm": 0.7360679774997898,
+          "currentCenterTargetDepthRange": [
+            114,
+            127
+          ],
+          "sourceCenterTargetDepthRange": [
+            114,
+            127
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 112,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 9,
+          "unreachableRemainingBoneCellsInFootprint": 3,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 10,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 10
+        },
+        {
+          "id": "directional-0-119-139",
+          "nativeAxis": 0,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            1,
+            2
+          ],
+          "originalTargetEntryIndex": [
+            131,
+            119,
+            139
+          ],
+          "entryRAS": [
+            -21.464996337890625,
+            -4.558837890625,
+            -415.25
+          ],
+          "drillRadiusMm": 0.7360679774997898,
+          "currentCenterTargetDepthRange": [
+            111,
+            131
+          ],
+          "sourceCenterTargetDepthRange": [
+            111,
+            131
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 107,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 9,
+          "unreachableRemainingBoneCellsInFootprint": 1,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 11,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 11
+        },
+        {
+          "id": "directional-0-158-126",
+          "nativeAxis": 0,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            1,
+            2
+          ],
+          "originalTargetEntryIndex": [
+            135,
+            158,
+            126
+          ],
+          "entryRAS": [
+            -25.464996337890625,
+            34.441162109375,
+            -428.25
+          ],
+          "drillRadiusMm": 0.7360679774997898,
+          "currentCenterTargetDepthRange": [
+            124,
+            135
+          ],
+          "sourceCenterTargetDepthRange": [
+            116,
+            135
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 107,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 9,
+          "unreachableRemainingBoneCellsInFootprint": 2,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 10,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 10
+        }
+      ],
+      "representativePositiveColumns": [
+        {
+          "transverseNativeIndex": [
+            138,
+            131
+          ],
+          "retainedTargetBehindBoneDepthRange": [
+            120,
+            136
+          ],
+          "unreachableBoneDepths": [
+            137
+          ],
+          "deepestFixedBurrReachCellCenterThreshold": 137.91470286081918,
+          "sourceColumnRuns": [
+            {
+              "label": 3,
+              "material": "bone",
+              "target": false,
+              "status": "removed",
+              "nativeDepthRange": [
+                145,
+                158
+              ]
+            },
+            {
+              "label": 3,
+              "material": "bone",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                139,
+                144
+              ]
+            },
+            {
+              "label": 2,
+              "material": "tumor",
+              "target": true,
+              "status": "retained",
+              "nativeDepthRange": [
+                138,
+                138
+              ]
+            },
+            {
+              "label": 3,
+              "material": "bone",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                137,
+                137
+              ]
+            },
+            {
+              "label": 2,
+              "material": "tumor",
+              "target": true,
+              "status": "retained",
+              "nativeDepthRange": [
+                120,
+                136
+              ]
+            },
+            {
+              "label": 2,
+              "material": "tumor",
+              "target": true,
+              "status": "removed",
+              "nativeDepthRange": [
+                105,
+                119
+              ]
+            },
+            {
+              "label": 1,
+              "material": "soft_tissue",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                64,
+                104
+              ]
+            },
+            {
+              "label": 3,
+              "material": "bone",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                50,
+                63
+              ]
+            }
+          ]
+        },
+        {
+          "transverseNativeIndex": [
+            147,
+            131
+          ],
+          "retainedTargetBehindBoneDepthRange": [
+            104,
+            129
+          ],
+          "unreachableBoneDepths": [
+            130,
+            131
+          ],
+          "deepestFixedBurrReachCellCenterThreshold": 132.9504902432036,
+          "sourceColumnRuns": [
+            {
+              "label": 3,
+              "material": "bone",
+              "target": false,
+              "status": "removed",
+              "nativeDepthRange": [
+                141,
+                155
+              ]
+            },
+            {
+              "label": 3,
+              "material": "bone",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                135,
+                140
+              ]
+            },
+            {
+              "label": 3,
+              "material": "bone",
+              "target": false,
+              "status": "removed",
+              "nativeDepthRange": [
+                132,
+                134
+              ]
+            },
+            {
+              "label": 3,
+              "material": "bone",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                130,
+                131
+              ]
+            },
+            {
+              "label": 2,
+              "material": "tumor",
+              "target": true,
+              "status": "retained",
+              "nativeDepthRange": [
+                124,
+                129
+              ]
+            },
+            {
+              "label": 2,
+              "material": "tumor",
+              "target": true,
+              "status": "removed",
+              "nativeDepthRange": [
+                105,
+                123
+              ]
+            },
+            {
+              "label": 2,
+              "material": "tumor",
+              "target": true,
+              "status": "retained",
+              "nativeDepthRange": [
+                104,
+                104
+              ]
+            },
+            {
+              "label": 1,
+              "material": "soft_tissue",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                88,
+                103
+              ]
+            },
+            {
+              "label": 4,
+              "material": "vessel",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                87,
+                87
+              ]
+            },
+            {
+              "label": 1,
+              "material": "soft_tissue",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                71,
+                86
+              ]
+            },
+            {
+              "label": 3,
+              "material": "bone",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                54,
+                70
+              ]
+            },
+            {
+              "label": 3,
+              "material": "bone",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                48,
+                48
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "unvisitedLeftIncludingCurrent": {
+      "accesses": 3,
+      "positiveAccesses": 3,
+      "distinctRetainedTargetBehindUnreachableBoneNormalFreeCells": 31,
+      "distinctRemainingBoneBeyondFixedBurrCapsules": 6,
+      "distinctRetainedTargetBehindTrulyInterleavedBone": 0,
+      "centerOriginalEntryTargetStillRetainedAccesses": 3,
+      "centerColumnPositiveAccesses": 0,
+      "rows": [
+        {
+          "id": "directional-0-162-128",
+          "nativeAxis": 0,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            1,
+            2
+          ],
+          "originalTargetEntryIndex": [
+            127,
+            162,
+            128
+          ],
+          "entryRAS": [
+            -17.464996337890625,
+            38.441162109375,
+            -426.25
+          ],
+          "drillRadiusMm": 0.7360679774997898,
+          "currentCenterTargetDepthRange": [
+            114,
+            127
+          ],
+          "sourceCenterTargetDepthRange": [
+            114,
+            127
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 112,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 9,
+          "unreachableRemainingBoneCellsInFootprint": 3,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 10,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 10
+        },
+        {
+          "id": "directional-0-119-139",
+          "nativeAxis": 0,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            1,
+            2
+          ],
+          "originalTargetEntryIndex": [
+            131,
+            119,
+            139
+          ],
+          "entryRAS": [
+            -21.464996337890625,
+            -4.558837890625,
+            -415.25
+          ],
+          "drillRadiusMm": 0.7360679774997898,
+          "currentCenterTargetDepthRange": [
+            111,
+            131
+          ],
+          "sourceCenterTargetDepthRange": [
+            111,
+            131
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 107,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 9,
+          "unreachableRemainingBoneCellsInFootprint": 1,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 11,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 11
+        },
+        {
+          "id": "directional-0-158-126",
+          "nativeAxis": 0,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            1,
+            2
+          ],
+          "originalTargetEntryIndex": [
+            135,
+            158,
+            126
+          ],
+          "entryRAS": [
+            -25.464996337890625,
+            34.441162109375,
+            -428.25
+          ],
+          "drillRadiusMm": 0.7360679774997898,
+          "currentCenterTargetDepthRange": [
+            124,
+            135
+          ],
+          "sourceCenterTargetDepthRange": [
+            116,
+            135
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 107,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 9,
+          "unreachableRemainingBoneCellsInFootprint": 2,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 10,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 10
+        }
+      ],
+      "representativePositiveColumns": [
+        {
+          "transverseNativeIndex": [
+            118,
+            140
+          ],
+          "retainedTargetBehindBoneDepthRange": [
+            112,
+            129
+          ],
+          "unreachableBoneDepths": [
+            130
+          ],
+          "deepestFixedBurrReachCellCenterThreshold": 130.29555913446518,
+          "sourceColumnRuns": [
+            {
+              "label": 3,
+              "material": "bone",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                139,
+                150
+              ]
+            },
+            {
+              "label": 3,
+              "material": "bone",
+              "target": false,
+              "status": "removed",
+              "nativeDepthRange": [
+                132,
+                138
+              ]
+            },
+            {
+              "label": 3,
+              "material": "bone",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                130,
+                131
+              ]
+            },
+            {
+              "label": 2,
+              "material": "tumor",
+              "target": true,
+              "status": "retained",
+              "nativeDepthRange": [
+                121,
+                129
+              ]
+            },
+            {
+              "label": 2,
+              "material": "tumor",
+              "target": true,
+              "status": "removed",
+              "nativeDepthRange": [
+                114,
+                120
+              ]
+            },
+            {
+              "label": 2,
+              "material": "tumor",
+              "target": true,
+              "status": "retained",
+              "nativeDepthRange": [
+                112,
+                113
+              ]
+            },
+            {
+              "label": 1,
+              "material": "soft_tissue",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                80,
+                111
+              ]
+            },
+            {
+              "label": 4,
+              "material": "vessel",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                74,
+                79
+              ]
+            },
+            {
+              "label": 3,
+              "material": "bone",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                59,
+                73
+              ]
+            }
+          ]
+        },
+        {
+          "transverseNativeIndex": [
+            163,
+            129
+          ],
+          "retainedTargetBehindBoneDepthRange": [
+            114,
+            123
+          ],
+          "unreachableBoneDepths": [
+            124,
+            125,
+            126
+          ],
+          "deepestFixedBurrReachCellCenterThreshold": 126.29555913446517,
+          "sourceColumnRuns": [
+            {
+              "label": 3,
+              "material": "bone",
+              "target": false,
+              "status": "removed",
+              "nativeDepthRange": [
+                155,
+                155
+              ]
+            },
+            {
+              "label": 3,
+              "material": "bone",
+              "target": false,
+              "status": "removed",
+              "nativeDepthRange": [
+                132,
+                148
+              ]
+            },
+            {
+              "label": 3,
+              "material": "bone",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                124,
+                131
+              ]
+            },
+            {
+              "label": 2,
+              "material": "tumor",
+              "target": true,
+              "status": "retained",
+              "nativeDepthRange": [
+                114,
+                123
+              ]
+            },
+            {
+              "label": 1,
+              "material": "soft_tissue",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                87,
+                113
+              ]
+            },
+            {
+              "label": 3,
+              "material": "bone",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                62,
+                86
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "deferredSuperior77": {
+      "accesses": 77,
+      "positiveAccesses": 15,
+      "distinctRetainedTargetBehindUnreachableBoneNormalFreeCells": 71,
+      "distinctRemainingBoneBeyondFixedBurrCapsules": 18,
+      "distinctRetainedTargetBehindTrulyInterleavedBone": 0,
+      "centerOriginalEntryTargetStillRetainedAccesses": 68,
+      "centerColumnPositiveAccesses": 0,
+      "rows": [
+        {
+          "id": "superior-125-116",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            125,
+            116,
+            141
+          ],
+          "entryRAS": [
+            -15.464996337890625,
+            -7.558837890625,
+            -413.25
+          ],
+          "drillRadiusMm": 2.7426406871192848,
+          "currentCenterTargetDepthRange": [
+            112,
+            141
+          ],
+          "sourceCenterTargetDepthRange": [
+            112,
+            141
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 237,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 37,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-126-158",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            126,
+            158,
+            129
+          ],
+          "entryRAS": [
+            -16.464996337890625,
+            34.441162109375,
+            -425.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            123,
+            129
+          ],
+          "sourceCenterTargetDepthRange": [
+            123,
+            129
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 207,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-128-114",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            128,
+            114,
+            140
+          ],
+          "entryRAS": [
+            -18.464996337890625,
+            -9.558837890625,
+            -414.25
+          ],
+          "drillRadiusMm": 2.7426406871192848,
+          "currentCenterTargetDepthRange": [
+            112,
+            140
+          ],
+          "sourceCenterTargetDepthRange": [
+            112,
+            140
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 261,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 37,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-136-138",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            136,
+            138,
+            131
+          ],
+          "entryRAS": [
+            -26.464996337890625,
+            14.441162109375,
+            -423.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            106,
+            131
+          ],
+          "sourceCenterTargetDepthRange": [
+            106,
+            131
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 195,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-109-151",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            109,
+            151,
+            138
+          ],
+          "entryRAS": [
+            0.535003662109375,
+            27.441162109375,
+            -416.25
+          ],
+          "drillRadiusMm": 2.5,
+          "currentCenterTargetDepthRange": [
+            126,
+            138
+          ],
+          "sourceCenterTargetDepthRange": [
+            126,
+            138
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 99,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 29,
+          "unreachableRemainingBoneCellsInFootprint": 1,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 2,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 2
+        },
+        {
+          "id": "superior-131-158",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            131,
+            158,
+            128
+          ],
+          "entryRAS": [
+            -21.464996337890625,
+            34.441162109375,
+            -426.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            124,
+            128
+          ],
+          "sourceCenterTargetDepthRange": [
+            124,
+            128
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 187,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 1,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 2,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 2
+        },
+        {
+          "id": "superior-109-155",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            109,
+            155,
+            136
+          ],
+          "entryRAS": [
+            0.535003662109375,
+            31.441162109375,
+            -418.25
+          ],
+          "drillRadiusMm": 2.5,
+          "currentCenterTargetDepthRange": [
+            130,
+            136
+          ],
+          "sourceCenterTargetDepthRange": [
+            130,
+            136
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 135,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 29,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-117-138",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            117,
+            138,
+            139
+          ],
+          "entryRAS": [
+            -7.464996337890625,
+            14.441162109375,
+            -415.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "currentCenterTargetDepthRange": [
+            113,
+            139
+          ],
+          "sourceCenterTargetDepthRange": [
+            113,
+            139
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 230,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 37,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-138-150",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            138,
+            150,
+            128
+          ],
+          "entryRAS": [
+            -28.464996337890625,
+            26.441162109375,
+            -426.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            117,
+            128
+          ],
+          "sourceCenterTargetDepthRange": [
+            117,
+            128
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 143,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-127-119",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            127,
+            119,
+            141
+          ],
+          "entryRAS": [
+            -17.464996337890625,
+            -4.558837890625,
+            -413.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "currentCenterTargetDepthRange": [
+            109,
+            141
+          ],
+          "sourceCenterTargetDepthRange": [
+            109,
+            141
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 258,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 37,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-135-111",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            135,
+            111,
+            136
+          ],
+          "entryRAS": [
+            -25.464996337890625,
+            -12.558837890625,
+            -418.25
+          ],
+          "drillRadiusMm": 2.5,
+          "currentCenterTargetDepthRange": [
+            120,
+            136
+          ],
+          "sourceCenterTargetDepthRange": [
+            120,
+            136
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 160,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 29,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-139-136",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            139,
+            136,
+            130
+          ],
+          "entryRAS": [
+            -29.464996337890625,
+            12.441162109375,
+            -424.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            110,
+            130
+          ],
+          "sourceCenterTargetDepthRange": [
+            110,
+            130
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 192,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-129-126",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            129,
+            126,
+            139
+          ],
+          "entryRAS": [
+            -19.464996337890625,
+            2.441162109375,
+            -415.25
+          ],
+          "drillRadiusMm": 2.9721359549995796,
+          "currentCenterTargetDepthRange": [
+            133,
+            139
+          ],
+          "sourceCenterTargetDepthRange": [
+            108,
+            139
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 239,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 1,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 6,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 6
+        },
+        {
+          "id": "superior-130-143",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            130,
+            143,
+            131
+          ],
+          "entryRAS": [
+            -20.464996337890625,
+            19.441162109375,
+            -423.25
+          ],
+          "drillRadiusMm": 2.5,
+          "currentCenterTargetDepthRange": [
+            107,
+            131
+          ],
+          "sourceCenterTargetDepthRange": [
+            107,
+            131
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 128,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 29,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-140-147",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            140,
+            147,
+            128
+          ],
+          "entryRAS": [
+            -30.464996337890625,
+            23.441162109375,
+            -426.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            126,
+            126
+          ],
+          "sourceCenterTargetDepthRange": [
+            118,
+            128
+          ],
+          "savedCenterEntryTargetStillRetained": false,
+          "retainedEligibleTargetCellsInFootprint": 120,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-141-139",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            141,
+            139,
+            129
+          ],
+          "entryRAS": [
+            -31.464996337890625,
+            15.441162109375,
+            -425.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            110,
+            129
+          ],
+          "sourceCenterTargetDepthRange": [
+            110,
+            129
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 157,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-143-136",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            143,
+            136,
+            130
+          ],
+          "entryRAS": [
+            -33.464996337890625,
+            12.441162109375,
+            -424.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            111,
+            130
+          ],
+          "sourceCenterTargetDepthRange": [
+            111,
+            130
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 144,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 1,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 2,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 2
+        },
+        {
+          "id": "superior-136-147",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            136,
+            147,
+            129
+          ],
+          "entryRAS": [
+            -26.464996337890625,
+            23.441162109375,
+            -425.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            110,
+            129
+          ],
+          "sourceCenterTargetDepthRange": [
+            110,
+            129
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 103,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-132-124",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            132,
+            124,
+            138
+          ],
+          "entryRAS": [
+            -22.464996337890625,
+            0.441162109375,
+            -416.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            109,
+            138
+          ],
+          "sourceCenterTargetDepthRange": [
+            109,
+            138
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 180,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-130-117",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            130,
+            117,
+            139
+          ],
+          "entryRAS": [
+            -20.464996337890625,
+            -6.558837890625,
+            -415.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            112,
+            139
+          ],
+          "sourceCenterTargetDepthRange": [
+            112,
+            139
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 184,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-128-150",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            128,
+            150,
+            130
+          ],
+          "entryRAS": [
+            -18.464996337890625,
+            26.441162109375,
+            -424.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            115,
+            130
+          ],
+          "sourceCenterTargetDepthRange": [
+            115,
+            130
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 102,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-127-145",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            127,
+            145,
+            132
+          ],
+          "entryRAS": [
+            -17.464996337890625,
+            21.441162109375,
+            -422.25
+          ],
+          "drillRadiusMm": 2.7426406871192848,
+          "currentCenterTargetDepthRange": [
+            110,
+            132
+          ],
+          "sourceCenterTargetDepthRange": [
+            110,
+            132
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 116,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 37,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-129-122",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            129,
+            122,
+            139
+          ],
+          "entryRAS": [
+            -19.464996337890625,
+            -1.558837890625,
+            -415.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "currentCenterTargetDepthRange": [
+            109,
+            139
+          ],
+          "sourceCenterTargetDepthRange": [
+            109,
+            139
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 203,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 37,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-117-115",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            117,
+            115,
+            143
+          ],
+          "entryRAS": [
+            -7.464996337890625,
+            -8.558837890625,
+            -411.25
+          ],
+          "drillRadiusMm": 2.9721359549995796,
+          "currentCenterTargetDepthRange": [
+            128,
+            143
+          ],
+          "sourceCenterTargetDepthRange": [
+            118,
+            143
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 263,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-130-147",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            130,
+            147,
+            130
+          ],
+          "entryRAS": [
+            -20.464996337890625,
+            23.441162109375,
+            -424.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            111,
+            111
+          ],
+          "sourceCenterTargetDepthRange": [
+            111,
+            130
+          ],
+          "savedCenterEntryTargetStillRetained": false,
+          "retainedEligibleTargetCellsInFootprint": 100,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-142-115",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            142,
+            115,
+            133
+          ],
+          "entryRAS": [
+            -32.464996337890625,
+            -8.558837890625,
+            -421.25
+          ],
+          "drillRadiusMm": 2.9721359549995796,
+          "currentCenterTargetDepthRange": [
+            113,
+            133
+          ],
+          "sourceCenterTargetDepthRange": [
+            113,
+            133
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 180,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 1,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 2,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 2
+        },
+        {
+          "id": "superior-124-161",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            124,
+            161,
+            129
+          ],
+          "entryRAS": [
+            -14.464996337890625,
+            37.441162109375,
+            -425.25
+          ],
+          "drillRadiusMm": 2.5,
+          "currentCenterTargetDepthRange": [
+            125,
+            129
+          ],
+          "sourceCenterTargetDepthRange": [
+            125,
+            129
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 133,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 29,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-143-120",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            143,
+            120,
+            133
+          ],
+          "entryRAS": [
+            -33.464996337890625,
+            -3.558837890625,
+            -421.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "currentCenterTargetDepthRange": [
+            130,
+            133
+          ],
+          "sourceCenterTargetDepthRange": [
+            113,
+            133
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 203,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 37,
+          "unreachableRemainingBoneCellsInFootprint": 2,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 22,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 22
+        },
+        {
+          "id": "superior-132-128",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            132,
+            128,
+            136
+          ],
+          "entryRAS": [
+            -22.464996337890625,
+            4.441162109375,
+            -418.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            131,
+            136
+          ],
+          "sourceCenterTargetDepthRange": [
+            107,
+            136
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 140,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-137-143",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            137,
+            143,
+            130
+          ],
+          "entryRAS": [
+            -27.464996337890625,
+            19.441162109375,
+            -424.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            109,
+            130
+          ],
+          "sourceCenterTargetDepthRange": [
+            109,
+            130
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 107,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-142-150",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            142,
+            150,
+            126
+          ],
+          "entryRAS": [
+            -32.464996337890625,
+            26.441162109375,
+            -428.25
+          ],
+          "drillRadiusMm": 2.5,
+          "currentCenterTargetDepthRange": [
+            123,
+            125
+          ],
+          "sourceCenterTargetDepthRange": [
+            123,
+            126
+          ],
+          "savedCenterEntryTargetStillRetained": false,
+          "retainedEligibleTargetCellsInFootprint": 111,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 29,
+          "unreachableRemainingBoneCellsInFootprint": 2,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 3,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 3
+        },
+        {
+          "id": "superior-118-142",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            118,
+            142,
+            136
+          ],
+          "entryRAS": [
+            -8.464996337890625,
+            18.441162109375,
+            -418.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "currentCenterTargetDepthRange": [
+            115,
+            136
+          ],
+          "sourceCenterTargetDepthRange": [
+            115,
+            136
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 165,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 37,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-129-155",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            129,
+            155,
+            129
+          ],
+          "entryRAS": [
+            -19.464996337890625,
+            31.441162109375,
+            -425.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            128,
+            129
+          ],
+          "sourceCenterTargetDepthRange": [
+            123,
+            129
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 153,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-115-149",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            115,
+            149,
+            137
+          ],
+          "entryRAS": [
+            -5.464996337890625,
+            25.441162109375,
+            -417.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            136,
+            137
+          ],
+          "sourceCenterTargetDepthRange": [
+            117,
+            137
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 51,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-147-136",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            147,
+            136,
+            128
+          ],
+          "entryRAS": [
+            -37.464996337890625,
+            12.441162109375,
+            -426.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "currentCenterTargetDepthRange": [
+            126,
+            128
+          ],
+          "sourceCenterTargetDepthRange": [
+            116,
+            128
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 107,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 37,
+          "unreachableRemainingBoneCellsInFootprint": 1,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 1,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 1
+        },
+        {
+          "id": "superior-139-130",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            139,
+            130,
+            132
+          ],
+          "entryRAS": [
+            -29.464996337890625,
+            6.441162109375,
+            -422.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "currentCenterTargetDepthRange": [
+            109,
+            132
+          ],
+          "sourceCenterTargetDepthRange": [
+            109,
+            132
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 145,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 37,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-143-130",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            143,
+            130,
+            131
+          ],
+          "entryRAS": [
+            -33.464996337890625,
+            6.441162109375,
+            -423.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            113,
+            131
+          ],
+          "sourceCenterTargetDepthRange": [
+            113,
+            131
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 123,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-125-148",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            125,
+            148,
+            131
+          ],
+          "entryRAS": [
+            -15.464996337890625,
+            24.441162109375,
+            -423.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            131,
+            131
+          ],
+          "sourceCenterTargetDepthRange": [
+            115,
+            131
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 87,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-141-133",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            141,
+            133,
+            132
+          ],
+          "entryRAS": [
+            -31.464996337890625,
+            9.441162109375,
+            -422.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            110,
+            132
+          ],
+          "sourceCenterTargetDepthRange": [
+            110,
+            132
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 135,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-147-130",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            147,
+            130,
+            129
+          ],
+          "entryRAS": [
+            -37.464996337890625,
+            6.441162109375,
+            -425.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            122,
+            129
+          ],
+          "sourceCenterTargetDepthRange": [
+            122,
+            129
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 129,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-120-134",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            120,
+            134,
+            138
+          ],
+          "entryRAS": [
+            -10.464996337890625,
+            10.441162109375,
+            -416.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            109,
+            138
+          ],
+          "sourceCenterTargetDepthRange": [
+            109,
+            138
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 169,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 1,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 10,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 10
+        },
+        {
+          "id": "superior-126-128",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            126,
+            128,
+            139
+          ],
+          "entryRAS": [
+            -16.464996337890625,
+            4.441162109375,
+            -415.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "currentCenterTargetDepthRange": [
+            107,
+            139
+          ],
+          "sourceCenterTargetDepthRange": [
+            107,
+            139
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 131,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 37,
+          "unreachableRemainingBoneCellsInFootprint": 1,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 2,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 2
+        },
+        {
+          "id": "superior-124-131",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            124,
+            131,
+            137
+          ],
+          "entryRAS": [
+            -14.464996337890625,
+            7.441162109375,
+            -417.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            108,
+            137
+          ],
+          "sourceCenterTargetDepthRange": [
+            108,
+            137
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 123,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-135-130",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            135,
+            130,
+            134
+          ],
+          "entryRAS": [
+            -25.464996337890625,
+            6.441162109375,
+            -420.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            131,
+            134
+          ],
+          "sourceCenterTargetDepthRange": [
+            108,
+            134
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 111,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-144-145",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            144,
+            145,
+            126
+          ],
+          "entryRAS": [
+            -34.464996337890625,
+            21.441162109375,
+            -428.25
+          ],
+          "drillRadiusMm": 2.5,
+          "currentCenterTargetDepthRange": [
+            116,
+            126
+          ],
+          "sourceCenterTargetDepthRange": [
+            116,
+            126
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 71,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 29,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-131-152",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            131,
+            152,
+            129
+          ],
+          "entryRAS": [
+            -21.464996337890625,
+            28.441162109375,
+            -425.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            129,
+            129
+          ],
+          "sourceCenterTargetDepthRange": [
+            119,
+            129
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 91,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-137-114",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            137,
+            114,
+            136
+          ],
+          "entryRAS": [
+            -27.464996337890625,
+            -9.558837890625,
+            -418.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            112,
+            136
+          ],
+          "sourceCenterTargetDepthRange": [
+            112,
+            136
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 130,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 1,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 6,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 6
+        },
+        {
+          "id": "superior-111-148",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            111,
+            148,
+            139
+          ],
+          "entryRAS": [
+            -1.464996337890625,
+            24.441162109375,
+            -415.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            138,
+            139
+          ],
+          "sourceCenterTargetDepthRange": [
+            119,
+            139
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 103,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-133-155",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            133,
+            155,
+            128
+          ],
+          "entryRAS": [
+            -23.464996337890625,
+            31.441162109375,
+            -426.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            128,
+            128
+          ],
+          "sourceCenterTargetDepthRange": [
+            123,
+            128
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 127,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-133-149",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            133,
+            149,
+            129
+          ],
+          "entryRAS": [
+            -23.464996337890625,
+            25.441162109375,
+            -425.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            114,
+            129
+          ],
+          "sourceCenterTargetDepthRange": [
+            114,
+            129
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 84,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-138-154",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            138,
+            154,
+            126
+          ],
+          "entryRAS": [
+            -28.464996337890625,
+            30.441162109375,
+            -428.25
+          ],
+          "drillRadiusMm": 2.9721359549995796,
+          "currentCenterTargetDepthRange": [
+            124,
+            126
+          ],
+          "sourceCenterTargetDepthRange": [
+            124,
+            126
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 136,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-129-134",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            129,
+            134,
+            135
+          ],
+          "entryRAS": [
+            -19.464996337890625,
+            10.441162109375,
+            -419.25
+          ],
+          "drillRadiusMm": 2.7426406871192848,
+          "currentCenterTargetDepthRange": [
+            132,
+            135
+          ],
+          "sourceCenterTargetDepthRange": [
+            105,
+            135
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 128,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 37,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-113-156",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            113,
+            156,
+            136
+          ],
+          "entryRAS": [
+            -3.464996337890625,
+            32.441162109375,
+            -418.25
+          ],
+          "drillRadiusMm": 2.7426406871192848,
+          "currentCenterTargetDepthRange": [
+            134,
+            136
+          ],
+          "sourceCenterTargetDepthRange": [
+            127,
+            136
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 102,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 37,
+          "unreachableRemainingBoneCellsInFootprint": 1,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 1,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 1
+        },
+        {
+          "id": "superior-123-156",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            123,
+            156,
+            131
+          ],
+          "entryRAS": [
+            -13.464996337890625,
+            32.441162109375,
+            -423.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            130,
+            131
+          ],
+          "sourceCenterTargetDepthRange": [
+            122,
+            131
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 85,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-134-141",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            134,
+            141,
+            130
+          ],
+          "entryRAS": [
+            -24.464996337890625,
+            17.441162109375,
+            -424.25
+          ],
+          "drillRadiusMm": 2.9721359549995796,
+          "currentCenterTargetDepthRange": [
+            106,
+            130
+          ],
+          "sourceCenterTargetDepthRange": [
+            106,
+            130
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 204,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-116-123",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            116,
+            123,
+            144
+          ],
+          "entryRAS": [
+            -6.464996337890625,
+            -0.558837890625,
+            -410.25
+          ],
+          "drillRadiusMm": 2.5,
+          "currentCenterTargetDepthRange": [
+            111,
+            144
+          ],
+          "sourceCenterTargetDepthRange": [
+            111,
+            144
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 82,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 29,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-121-115",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            121,
+            115,
+            142
+          ],
+          "entryRAS": [
+            -11.464996337890625,
+            -8.558837890625,
+            -412.25
+          ],
+          "drillRadiusMm": 2.5,
+          "currentCenterTargetDepthRange": [
+            140,
+            142
+          ],
+          "sourceCenterTargetDepthRange": [
+            118,
+            142
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 93,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 29,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-113-145",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            113,
+            145,
+            139
+          ],
+          "entryRAS": [
+            -3.464996337890625,
+            21.441162109375,
+            -415.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "currentCenterTargetDepthRange": [
+            137,
+            139
+          ],
+          "sourceCenterTargetDepthRange": [
+            117,
+            139
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 99,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 37,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-133-136",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            133,
+            136,
+            132
+          ],
+          "entryRAS": [
+            -23.464996337890625,
+            12.441162109375,
+            -422.25
+          ],
+          "drillRadiusMm": 2.7426406871192848,
+          "currentCenterTargetDepthRange": [
+            131,
+            132
+          ],
+          "sourceCenterTargetDepthRange": [
+            105,
+            132
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 123,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 37,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-139-117",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            139,
+            117,
+            135
+          ],
+          "entryRAS": [
+            -29.464996337890625,
+            -6.558837890625,
+            -419.25
+          ],
+          "drillRadiusMm": 2.5,
+          "currentCenterTargetDepthRange": [
+            111,
+            135
+          ],
+          "sourceCenterTargetDepthRange": [
+            111,
+            135
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 91,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 29,
+          "unreachableRemainingBoneCellsInFootprint": 1,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 3,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 3
+        },
+        {
+          "id": "superior-118-161",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            118,
+            161,
+            132
+          ],
+          "entryRAS": [
+            -8.464996337890625,
+            37.441162109375,
+            -422.25
+          ],
+          "drillRadiusMm": 2.5,
+          "currentCenterTargetDepthRange": [
+            127,
+            132
+          ],
+          "sourceCenterTargetDepthRange": [
+            127,
+            132
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 78,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 29,
+          "unreachableRemainingBoneCellsInFootprint": 1,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 4,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 4
+        },
+        {
+          "id": "superior-121-147",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            121,
+            147,
+            135
+          ],
+          "entryRAS": [
+            -11.464996337890625,
+            23.441162109375,
+            -419.25
+          ],
+          "drillRadiusMm": 2.9721359549995796,
+          "currentCenterTargetDepthRange": [
+            134,
+            135
+          ],
+          "sourceCenterTargetDepthRange": [
+            116,
+            135
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 88,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 2,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 5,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 5
+        },
+        {
+          "id": "superior-129-130",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            129,
+            130,
+            136
+          ],
+          "entryRAS": [
+            -19.464996337890625,
+            6.441162109375,
+            -418.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": null,
+          "sourceCenterTargetDepthRange": [
+            106,
+            136
+          ],
+          "savedCenterEntryTargetStillRetained": false,
+          "retainedEligibleTargetCellsInFootprint": 124,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-132-120",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            132,
+            120,
+            138
+          ],
+          "entryRAS": [
+            -22.464996337890625,
+            -3.558837890625,
+            -416.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            110,
+            110
+          ],
+          "sourceCenterTargetDepthRange": [
+            110,
+            138
+          ],
+          "savedCenterEntryTargetStillRetained": false,
+          "retainedEligibleTargetCellsInFootprint": 109,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-144-141",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            144,
+            141,
+            127
+          ],
+          "entryRAS": [
+            -34.464996337890625,
+            17.441162109375,
+            -427.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "currentCenterTargetDepthRange": [
+            113,
+            127
+          ],
+          "sourceCenterTargetDepthRange": [
+            113,
+            127
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 83,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 37,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-119-150",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            119,
+            150,
+            135
+          ],
+          "entryRAS": [
+            -9.464996337890625,
+            26.441162109375,
+            -419.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            118,
+            135
+          ],
+          "sourceCenterTargetDepthRange": [
+            118,
+            135
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 55,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-123-151",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            123,
+            151,
+            132
+          ],
+          "entryRAS": [
+            -13.464996337890625,
+            27.441162109375,
+            -422.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": null,
+          "sourceCenterTargetDepthRange": [
+            117,
+            132
+          ],
+          "savedCenterEntryTargetStillRetained": false,
+          "retainedEligibleTargetCellsInFootprint": 56,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-119-112",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            119,
+            112,
+            143
+          ],
+          "entryRAS": [
+            -9.464996337890625,
+            -11.558837890625,
+            -411.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "currentCenterTargetDepthRange": [
+            119,
+            143
+          ],
+          "sourceCenterTargetDepthRange": [
+            119,
+            143
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 117,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 37,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-147-126",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            147,
+            126,
+            130
+          ],
+          "entryRAS": [
+            -37.464996337890625,
+            2.441162109375,
+            -424.25
+          ],
+          "drillRadiusMm": 2.9721359549995796,
+          "currentCenterTargetDepthRange": [
+            129,
+            130
+          ],
+          "sourceCenterTargetDepthRange": [
+            125,
+            130
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 127,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-115-159",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            115,
+            159,
+            133
+          ],
+          "entryRAS": [
+            -5.464996337890625,
+            35.441162109375,
+            -421.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": null,
+          "sourceCenterTargetDepthRange": [
+            127,
+            133
+          ],
+          "savedCenterEntryTargetStillRetained": false,
+          "retainedEligibleTargetCellsInFootprint": 119,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-135-122",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            135,
+            122,
+            137
+          ],
+          "entryRAS": [
+            -25.464996337890625,
+            -1.558837890625,
+            -417.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "currentCenterTargetDepthRange": [
+            109,
+            137
+          ],
+          "sourceCenterTargetDepthRange": [
+            109,
+            137
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 82,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 37,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-133-115",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            133,
+            115,
+            138
+          ],
+          "entryRAS": [
+            -23.464996337890625,
+            -8.558837890625,
+            -416.25
+          ],
+          "drillRadiusMm": 2.9721359549995796,
+          "currentCenterTargetDepthRange": [
+            137,
+            138
+          ],
+          "sourceCenterTargetDepthRange": [
+            114,
+            138
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 174,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-110-142",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            110,
+            142,
+            141
+          ],
+          "entryRAS": [
+            -0.464996337890625,
+            18.441162109375,
+            -413.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "currentCenterTargetDepthRange": [
+            140,
+            141
+          ],
+          "sourceCenterTargetDepthRange": [
+            117,
+            141
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 83,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 37,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-121-159",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            121,
+            159,
+            131
+          ],
+          "entryRAS": [
+            -11.464996337890625,
+            35.441162109375,
+            -423.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": null,
+          "sourceCenterTargetDepthRange": [
+            124,
+            131
+          ],
+          "savedCenterEntryTargetStillRetained": false,
+          "retainedEligibleTargetCellsInFootprint": 105,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-120-130",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            120,
+            130,
+            139
+          ],
+          "entryRAS": [
+            -10.464996337890625,
+            6.441162109375,
+            -415.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": [
+            108,
+            139
+          ],
+          "sourceCenterTargetDepthRange": [
+            108,
+            139
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 53,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-117-132",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            117,
+            132,
+            140
+          ],
+          "entryRAS": [
+            -7.464996337890625,
+            8.441162109375,
+            -414.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "currentCenterTargetDepthRange": [
+            139,
+            140
+          ],
+          "sourceCenterTargetDepthRange": [
+            111,
+            140
+          ],
+          "savedCenterEntryTargetStillRetained": true,
+          "retainedEligibleTargetCellsInFootprint": 68,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 37,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        },
+        {
+          "id": "superior-116-154",
+          "nativeAxis": 2,
+          "outwardIndexSign": 1,
+          "transverseNativeAxes": [
+            0,
+            1
+          ],
+          "originalTargetEntryIndex": [
+            116,
+            154,
+            135
+          ],
+          "entryRAS": [
+            -6.464996337890625,
+            30.441162109375,
+            -419.25
+          ],
+          "drillRadiusMm": 3.0,
+          "currentCenterTargetDepthRange": null,
+          "sourceCenterTargetDepthRange": [
+            122,
+            135
+          ],
+          "savedCenterEntryTargetStillRetained": false,
+          "retainedEligibleTargetCellsInFootprint": 34,
+          "interleavedRemainingBoneCellsInFootprint": 0,
+          "targetBehindTrulyInterleavedBoneCells": 0,
+          "centerDeepBoneDepths": [],
+          "centerTargetBehindDeepBoneNormalFreeCells": 0,
+          "burrFootprintColumns": 45,
+          "unreachableRemainingBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneCellsInFootprint": 0,
+          "retainedTargetBehindDeepBoneAndNoNormalAboveCellsInFootprint": 0
+        }
+      ],
+      "representativePositiveColumns": [
+        {
+          "transverseNativeIndex": [
+            146,
+            119
+          ],
+          "retainedTargetBehindBoneDepthRange": [
+            120,
+            130
+          ],
+          "unreachableBoneDepths": [
+            131
+          ],
+          "deepestFixedBurrReachCellCenterThreshold": 131.88300476246002,
+          "sourceColumnRuns": [
+            {
+              "label": 3,
+              "material": "bone",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                131,
+                144
+              ]
+            },
+            {
+              "label": 2,
+              "material": "tumor",
+              "target": true,
+              "status": "retained",
+              "nativeDepthRange": [
+                120,
+                130
+              ]
+            },
+            {
+              "label": 1,
+              "material": "soft_tissue",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                97,
+                119
+              ]
+            },
+            {
+              "label": 4,
+              "material": "vessel",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                95,
+                96
+              ]
+            },
+            {
+              "label": 1,
+              "material": "soft_tissue",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                85,
+                94
+              ]
+            },
+            {
+              "label": 4,
+              "material": "vessel",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                82,
+                84
+              ]
+            },
+            {
+              "label": 1,
+              "material": "soft_tissue",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                75,
+                81
+              ]
+            },
+            {
+              "label": 4,
+              "material": "vessel",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                71,
+                74
+              ]
+            },
+            {
+              "label": 1,
+              "material": "soft_tissue",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                66,
+                70
+              ]
+            },
+            {
+              "label": 4,
+              "material": "vessel",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                64,
+                65
+              ]
+            },
+            {
+              "label": 1,
+              "material": "soft_tissue",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                38,
+                63
+              ]
+            },
+            {
+              "label": 4,
+              "material": "vessel",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                37,
+                37
+              ]
+            },
+            {
+              "label": 3,
+              "material": "bone",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                30,
+                36
+              ]
+            },
+            {
+              "label": 4,
+              "material": "vessel",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                23,
+                25
+              ]
+            },
+            {
+              "label": 3,
+              "material": "bone",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                8,
+                22
+              ]
+            }
+          ]
+        },
+        {
+          "transverseNativeIndex": [
+            123,
+            136
+          ],
+          "retainedTargetBehindBoneDepthRange": [
+            107,
+            135
+          ],
+          "unreachableBoneDepths": [
+            136
+          ],
+          "deepestFixedBurrReachCellCenterThreshold": 136.79289321881345,
+          "sourceColumnRuns": [
+            {
+              "label": 3,
+              "material": "bone",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                136,
+                154
+              ]
+            },
+            {
+              "label": 2,
+              "material": "tumor",
+              "target": true,
+              "status": "retained",
+              "nativeDepthRange": [
+                128,
+                135
+              ]
+            },
+            {
+              "label": 2,
+              "material": "tumor",
+              "target": true,
+              "status": "removed",
+              "nativeDepthRange": [
+                109,
+                127
+              ]
+            },
+            {
+              "label": 2,
+              "material": "tumor",
+              "target": true,
+              "status": "retained",
+              "nativeDepthRange": [
+                107,
+                108
+              ]
+            },
+            {
+              "label": 1,
+              "material": "soft_tissue",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                39,
+                106
+              ]
+            },
+            {
+              "label": 4,
+              "material": "vessel",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                37,
+                38
+              ]
+            },
+            {
+              "label": 1,
+              "material": "soft_tissue",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                36,
+                36
+              ]
+            },
+            {
+              "label": 3,
+              "material": "bone",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                33,
+                35
+              ]
+            },
+            {
+              "label": 4,
+              "material": "vessel",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                31,
+                32
+              ]
+            },
+            {
+              "label": 3,
+              "material": "bone",
+              "target": false,
+              "status": "retained",
+              "nativeDepthRange": [
+                24,
+                29
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "method": "Native +index is outward. For each actual route footprint, exact axis-aligned cell-box distance to the radius-R tip sweep bounds the deepest bone cell reachable by its fixed original endpoint. Retained target below a bone cell wholly beyond that capsule is counted only when no original nontarget/nonbone cell lies outward in the same column. Unique unions remove overlap within each configured list.",
+  "qualifications": [
+    "This is a sufficient geometric endpoint-reach limitation only, not evidence that it causes current poor target yield.",
+    "It does not prove a deeper drill pose is legal: intervening target must first be removed, and full physical shaft/working checks, guards and exact public preview remain mandatory.",
+    "Target could be accessed around bone through already cleared cavities; these counts do not establish global unreachability.",
+    "Source normal/vessel depth totals are descriptive support-cell counts, not claims all block every retained target.",
+    "No protection/physics/source/state or route record was changed."
+  ]
+}

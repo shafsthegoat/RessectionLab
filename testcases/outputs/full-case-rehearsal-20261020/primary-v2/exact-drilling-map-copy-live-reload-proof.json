@@ -1,0 +1,48 @@
+{
+  "utc": "2026-10-20T22:55:14.748195+00:00",
+  "status": "first-new-interval-verified",
+  "codeCommit": "252afcebfc66e5e0a075ee698bea3d4b92d08890",
+  "oldHelperCommit": "4dbdee81c5fcd35a6504b572d3e8c46d544becc0",
+  "loadedOnly": [
+    "surgical_engine._microstep_checkpoint"
+  ],
+  "startPosition": 2002,
+  "startStateId": "sha256:96947a6bcc4251acc925f488de1e67a5a9ed1e66ef64d0942739c3a91583c26a",
+  "checkpoint": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-exact-drilling-map-copy-2002.ressectionlab",
+  "allEngineClassMembersIncludingExecutePreserved": true,
+  "thermalAndDirectorCodePreserved": true,
+  "exactDetachedJsonOrderTypesFloatBitsAndAliasGraph": true,
+  "threeMapsIndependentlyOwned": [
+    "workJ",
+    "temperatureC",
+    "thermalDoseCSeconds"
+  ],
+  "existingComponentExemptionPreserved": true,
+  "physicalActionsDuringBinding": 0,
+  "detachedCopyJsonSha256": "5a7598b32d93a73f2fffc4b95fe1549649475ce34ae6b14a55a7a176da88101d",
+  "detachedCopyGraphSha256": "9b45063e8c805a4ce192860cfc2af6e27dd3d9369e6a4754f5c1b4a8de71099c",
+  "scope": "Helper-only equivalent rollback data copying; no module reload, patient replay or action-speed claim.",
+  "checkpointSha256": "7fa4926e37b55bfc35aa1debc5ca27b5685cd4ee20af772c98fbbb8e64333c4b",
+  "stateIdAfterBinding": "sha256:96947a6bcc4251acc925f488de1e67a5a9ed1e66ef64d0942739c3a91583c26a",
+  "sourceUnchanged": true,
+  "savedBoundaryUnchanged": true,
+  "patientHistoryAndDirectorUnchanged": true,
+  "firstNewOrdinaryPublicInterval": {
+    "startPosition": 2002,
+    "endPosition": 2004,
+    "newActionCount": 2,
+    "endStateId": "sha256:eedcc43d7bca084d351eaa602f36f7180a7c7927d32e5426e0e65572b7c58d6d",
+    "statuses": {
+      "accepted": 1,
+      "partial": 1
+    },
+    "savedNativeEqualsLive": true,
+    "fullPriorActionsAndHistoryPreserved": true,
+    "continuousRecordedStateChain": true,
+    "sourceAndCodeUnchanged": true,
+    "activeWounds": 0,
+    "woundCount": 0,
+    "directorStatus": "running",
+    "stage": "cusa_setup"
+  }
+}

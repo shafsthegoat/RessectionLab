@@ -1,0 +1,37 @@
+...........................F                                             [100%]
+=================================== FAILURES ===================================
+_____________________ test_occupied_tool_slots_fail_closed _____________________
+
+    def test_occupied_tool_slots_fail_closed():
+     m=sys.monitoring;owned=[]
+     try:
+      for tool in range(6):
+       if m.get_tool(tool) is None:
+        m.use_tool_id(tool,'guard-fixture-occupied');owned.append(tool)
+      with pytest.raises(RuntimeError,match='No monitoring tool'):
+>      with ReadOnlyStepMonitor(object):pass
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py:159: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+testcases/outputs/full-case-rehearsal-20261020/review/readonly_step_monitor.py:61: in __enter__
+    self.inventory=self._inventory()
+                   ^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <readonly_step_monitor.ReadOnlyStepMonitor object at 0x10c5af650>
+
+    def _inventory(self):
+        # This detects code/class drift; it does NOT filter global event coverage.
+        classes=set();pending=[self.engine_base]
+        while pending:
+            cls=pending.pop()
+            if cls in classes:continue
+>           classes.add(cls);pending.extend(cls.__subclasses__())
+                                            ^^^^^^^^^^^^^^^^^^^^
+E           TypeError: unbound method type.__subclasses__() needs an argument
+
+testcases/outputs/full-case-rehearsal-20261020/review/readonly_step_monitor.py:51: TypeError
+=========================== short test summary info ============================
+FAILED testcases/outputs/full-case-rehearsal-20261020/review/test_readonly_step_monitor.py::test_occupied_tool_slots_fail_closed
+1 failed, 27 passed in 0.42s

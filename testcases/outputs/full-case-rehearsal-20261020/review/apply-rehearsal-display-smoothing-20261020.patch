@@ -1,0 +1,41 @@
+--- testcases/outputs/full-case-rehearsal-20261020/review/apply_rehearsal_display.before-smoothing-20261020.py
++++ testcases/outputs/full-case-rehearsal-20261020/review/apply_rehearsal_display.py
+@@ -163,9 +163,15 @@
+         camera, fit = wide_camera(case, record, initial_slots, ref['viewer']['camera'], minimum_aspect, margin)
+         imaging = copy.deepcopy(workspace['imagingState']); primary = imaging['states']['primary']
+         primary['cursor'] = copy.deepcopy(ref['cursor']); primary['visibleLayers'] = copy.deepcopy(ref['visibleLayers'])
+-        for field in ('layerColor', 'layerOpacity'):
+-            if field in ref['viewer']: primary['viewer'][field] = copy.deepcopy(ref['viewer'][field])
++        merged_fields = ['primary.cursor', 'primary.visibleLayers']
++        for field in ('layerColor', 'layerOpacity', 'smoothSurfaces'):
++            if field in ref['viewer']:
++                if field == 'smoothSurfaces' and type(ref['viewer'][field]) is not bool:
++                    raise ValueError('Reference smoothSurfaces must be an explicit boolean')
++                primary['viewer'][field] = copy.deepcopy(ref['viewer'][field])
++                merged_fields.append('primary.viewer.'+field)
+         primary['viewer']['camera'] = camera
++        merged_fields.append('primary.viewer.camera')
+         display_artifact = copy.deepcopy(artifacts.get('workspace', {}))
+         for field in ('cursor', 'visibleLayers', 'overlayOpacity'):
+             if field in ref_artifacts.get('workspace', {}):
+@@ -173,6 +179,9 @@
+         # ImagingState and legacy workspace cursor/visibility must agree.
+         display_artifact['cursor'] = copy.deepcopy(primary['cursor'])
+         display_artifact['visibleLayers'] = copy.deepcopy(primary['visibleLayers'])
++        merged_fields.extend(['artifacts.workspace.cursor', 'artifacts.workspace.visibleLayers'])
++        if 'overlayOpacity' in ref_artifacts.get('workspace', {}):
++            merged_fields.append('artifacts.workspace.overlayOpacity')
+         with tempfile.TemporaryDirectory(prefix='.rehearsal-display-', dir=output.parent) as temp:
+             staged = Path(temp)/'display.ressectionlab'
+             with ZipFile(native) as src:
+@@ -209,9 +218,7 @@
+             'surgicalToolboxCanonicalJsonSha256': hashlib.sha256(encoded(record)).hexdigest(), 'surgicalToolboxEncodedArtifactUnchanged': True,
+             'allOtherArtifactsUnchanged': True, 'decodedCaseManifestUnchanged': True,
+             'nonMetadataZipMemberBytesUnchanged': unchanged_members,
+-            'displayFieldsMerged': ['primary.cursor', 'primary.visibleLayers', 'primary.viewer.layerColor',
+-                'primary.viewer.layerOpacity', 'primary.viewer.camera', 'artifacts.workspace.cursor',
+-                'artifacts.workspace.visibleLayers', 'artifacts.workspace.overlayOpacity'],
++            'displayFieldsMerged': merged_fields,
+             'otherViewerSettingsPreserved': True, 'wideCameraFit': fit,
+             'physicsCalls': 0, 'guiVerified': False, 'helperSha256': sha(__file__)}
+         with provenance.open('x') as stream: stream.write(json.dumps(report, indent=2, allow_nan=False)+'\n')

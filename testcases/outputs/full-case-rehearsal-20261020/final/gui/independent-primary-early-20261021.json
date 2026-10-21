@@ -1,0 +1,67 @@
+{
+  "status": "limited independent actual GUI observation completed",
+  "observedUtc": "2026-10-21T05:35:21.439Z",
+  "process": {
+    "pid": 83342,
+    "commandFlagsVerified": [
+      "--force-renderer-accessibility",
+      "--secondary-display",
+      "--case /Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab"
+    ],
+    "nativeSha256": "095659e54f381355e8f5655b6c5907990b2ac4767dc9ce58297e3bc4d6f3268d"
+  },
+  "displayGuard": {
+    "inventoryObservedBeforeBinding": true,
+    "primary": "MSI MP275Q,2560x1440,displayID3",
+    "nonprimary": "Color LCD,1512x982,displayID1,online,not mirrored",
+    "binding": "Existing Electron.app path; no launch/start/stop requested",
+    "placementQualification": "Process secondary-display guard plus current online nonprimary inventory verified; screenshot API captures bound app, not desktop."
+  },
+  "evidence": {
+    "axPath": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/final/gui/independent-primary-early-20261021.ax.txt",
+    "axSha256": "0c721f5c8dd11cc359242e7e7bcc901873642053f2e16cd130a719530646164e",
+    "screenshotPath": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/final/gui/independent-primary-early-20261021.png",
+    "screenshotSha256": "424f4fbff37bdc476032cdd825024f6b10d932edb03f2bc0d45723ca6f694f6e",
+    "screenshotMagicFormat": "JPEG"
+  },
+  "observedReplay": {
+    "branch": "full-primary",
+    "recordedBoundary": 2,
+    "totalActions": 2148,
+    "activeAction": 3,
+    "frameIndex": 43,
+    "frameCount": 151,
+    "elapsedSimulationSeconds": 38.8,
+    "withinActionSeconds": 8.6,
+    "requestedReplaySpeed": "4x",
+    "playingControl": "Pause replay",
+    "smoothingEnabled": false,
+    "left": "Cranial drill inserted, active, observed; tip[-10.5,30.4,-402.8]RAS",
+    "right": "CUSA withdrawn,inactive,observed; tip[6.0,-14.1,-559.3]RAS",
+    "boneRemovedMm3": 768,
+    "targetRemovedMm3": 0,
+    "targetRemainingMm3": 43573,
+    "modeledWoundsAndActiveOutlets": [
+      0,
+      0
+    ]
+  },
+  "visualAssessment": [
+    "Whole head/source-derived colored surfaces and both current tool/shaft glyphs fit within the 3D pane; drill is at superior entry and withdrawn assistant below head.",
+    "Axial/coronal/sagittal MRI panes and source tumor overlays visible with neurological labels and scales; linked cursor[-17.9,8.0,-428.7]RAS is separate from tool tip.",
+    "Recorded effect overlays are labeled; raw/source MRI is presented distinctly from modeled effects.",
+    "Current early skull-opening state and zero target removal are consistent with observed drill action; no endpoint or whole episode inference."
+  ],
+  "usabilityLimits": [
+    "Exact-microstep buffering and Preparing1surface banners visible; previous accepted display retained.",
+    "Surface rendering is granular/unsmoothed; smoothing checkboxOFF confirmed.",
+    "Only this current early interval was independently observed; full primary playback, later target removal, vascular GUI and reopen/persistence remain pending."
+  ],
+  "inputActions": 0,
+  "clickTypeScrollPauseSeekBranchChanges": 0,
+  "explicitEngineCalls": 0,
+  "additionalWaitsOrPolling": 0,
+  "fullPrimaryPlaybackPassed": false,
+  "guiAcceptancePassed": false,
+  "videoRequirement": "Canceled by user"
+}

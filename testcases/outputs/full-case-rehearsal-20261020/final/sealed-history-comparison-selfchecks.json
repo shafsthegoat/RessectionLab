@@ -1,0 +1,16 @@
+{
+  "status": "preparation-and-refusal-selfchecks-passed",
+  "scriptSha256": "bafdf438f53930ccbf35262f24f6ded55bbe01e57f7b9b5bc9af42efa80972cc",
+  "tests": {
+    "exactTypeIntVsFloat": true,
+    "signedZeroFloatBits": true,
+    "listOrder": true,
+    "nestedContactFields": true,
+    "objectKeyOrderExplicitlyIgnored": true,
+    "defaultRefusesBeforeCanonicalReceipt": true,
+    "noFinalReportPublished": true
+  },
+  "cacheKeyOrManifestRead": false,
+  "engineCalls": 0,
+  "comparisonPassClaim": false
+}

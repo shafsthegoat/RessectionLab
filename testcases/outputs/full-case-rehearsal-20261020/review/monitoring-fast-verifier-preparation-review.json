@@ -1,0 +1,111 @@
+{
+  "utc": "2026-10-21T00:08:52.833419+00:00",
+  "status": "prepared and tested; awaiting root promotion, no full run",
+  "filesSha256": {
+    "readonly_step_monitor.py": "3631bb6a6d39e7c7a5371199a2f1b79b33c9833eeb13ee5bcffc306919db7fee",
+    "verify_every_cached_frame_monitoring.py": "9c3e20418ed5894da70b3de9860430de62e721ab662f52047a4739cfc7b68a5f",
+    "test_readonly_step_monitor.py": "4fd841620b5baff740996edce68cfb351e03dde2b7a1336f96b3a5ba6698bef8",
+    "compare_cached_frame_guards.py": "6e31f4b9f9a0d4e3f38e45c1d11e2ac55faa78ba262faf2c330301deed027720"
+  },
+  "oldVerifierUnchangedAndRunningProcessUntouched": true,
+  "guardContract": {
+    "runtime": "CPython3.12 only; unavailable/other runtime/no tool ID/competing profile or trace refuse instead of running unguarded.",
+    "scope": "Global events for ALL present and future Python code. Exact legacy predicate: code.co_name==step and isinstance(callee_frame.self,SurgicalEngine). The active callee is sys._getframe(1), confirmed in tests. No engine monkeypatch or fixed code inventory filter.",
+    "events": [
+      "PY_START",
+      "PY_RESUME",
+      "PY_THROW"
+    ],
+    "disablePolicy": "Non-step START/RESUME event locations return DISABLE only for themselves; step locations NEVER disable, even after calls on non-engine objects. Non-step PY_THROW returns None because that event cannot disable.",
+    "failClosedChecks": "Before/after every frame plus clean context exit: tool name/event flags/callback registration/API and callback-code identities; no competing profiler/trace; Engine subclass+resolved step function/code inventory unchanged; no recorded step attempt. Inventory drift aborts the result but never narrows global event coverage.",
+    "resumptionQualification": "Already-started generator/coroutine guard exceptions unwind existing finally cleanup under both legacy and monitoring. Their normal continuation and exception handler remain blocked. Ordinary real Engine.step is blocked before its first body statement and leaves snapshot/history unchanged.",
+    "legacyLimitPreserved": "Both guards predicate on Python code named step with an Engine self. Neither claims to stop arbitrary low-level effect methods or renamed functions bypassing the public step entry; the verifier asserts no public step attempts, not adversarial arbitrary Python sandboxing.",
+    "documentation": "https://docs.python.org/3.12/library/sys.monitoring.html",
+    "optimizedRuntimeRefused": "Both verifier.main and guard constructor use explicit if not __debug__: raise RuntimeError before cache admission/tool setup. -O and PYTHONOPTIMIZE=1 subprocess tests for both targets refuse."
+  },
+  "tinyTests": {
+    "passed": 32,
+    "wallSeconds": 4.42,
+    "xml": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/review/monitoring-guard-debug-tests-20261020.xml",
+    "coverage": [
+      "actual tiny Engine public step before-body blocking",
+      "inherited and future override",
+      "same step code first used by non-engine",
+      "generator and async start/resume/throw/close legacy parity",
+      "non-step callback disabling",
+      "changed callbacks/event flags/code-class inventory fail closed",
+      "unavailable monitoring and occupied IDs fail closed",
+      "Optimized -O and PYTHONOPTIMIZE=1 startup refuses in both guard and verifier before admission"
+    ]
+  },
+  "boundedCachedComparison": {
+    "result": "passed:3 cached frames under each guard",
+    "nativeSha256": "f0ef34d5092d61406c6bb5a8cb2f9969136341005c96ec617510e3b7d1b32d1b",
+    "implementationFingerprint": "c17db978af804dbd2f1e3f8d0ba69436fb976e859264d5978df8e112abd59ca1",
+    "selections": [
+      {
+        "actionIndex": 47,
+        "frameIndex": 3,
+        "stateId": "sha256:75336b06fb05af315f7b94f11a42a326acd0ccfbef28c12ce1a7cf5483087de6"
+      },
+      {
+        "actionIndex": 55,
+        "frameIndex": 8,
+        "stateId": "sha256:7c5e45bec458f637dd05e2afac3dd7ed42585d130e8f6dd11d0455acb5f45e11"
+      },
+      {
+        "actionIndex": 68,
+        "frameIndex": 6,
+        "stateId": "sha256:f55c6adc461932391eece1dcf58867328dd2af1370532bfb95dfe7d84b7c0725"
+      }
+    ],
+    "results": [
+      {
+        "guard": "legacy-profile",
+        "seeks": 3,
+        "seekSeconds": [
+          0.4783556670881808,
+          0.48365870816633105,
+          0.4900892083533108
+        ],
+        "stateIds": [
+          "sha256:75336b06fb05af315f7b94f11a42a326acd0ccfbef28c12ce1a7cf5483087de6",
+          "sha256:7c5e45bec458f637dd05e2afac3dd7ed42585d130e8f6dd11d0455acb5f45e11",
+          "sha256:f55c6adc461932391eece1dcf58867328dd2af1370532bfb95dfe7d84b7c0725"
+        ],
+        "publicStepAttempts": {},
+        "nonStepCallbacks": null
+      },
+      {
+        "guard": "monitoring",
+        "seeks": 3,
+        "seekSeconds": [
+          0.3432835000567138,
+          0.19342270819470286,
+          0.20228749979287386
+        ],
+        "stateIds": [
+          "sha256:75336b06fb05af315f7b94f11a42a326acd0ccfbef28c12ce1a7cf5483087de6",
+          "sha256:7c5e45bec458f637dd05e2afac3dd7ed42585d130e8f6dd11d0455acb5f45e11",
+          "sha256:f55c6adc461932391eece1dcf58867328dd2af1370532bfb95dfe7d84b7c0725"
+        ],
+        "publicStepAttempts": {},
+        "nonStepCallbacks": 133
+      }
+    ],
+    "allLegacyMainAssertionAstNodesRetained": 24,
+    "zeroPublicStepAttempts": true,
+    "zeroCacheMissesAndPublications": true,
+    "sourceAndNativeUnchanged": true,
+    "scope": "Exactly3 existing authenticated vascular frames sought with each guard. No physical replay or full patient coverage; no GUI/renderer or episode throughput claim. Legacy running verifier not touched."
+  },
+  "allFrameAuditPreservation": "All24 original main() assertion AST nodes remain exactly equal as a multiset; explicit non-assert optimized-runtime refusal gates added.",
+  "notPerformed": [
+    "No full patient frame pass or physics replay",
+    "No replacement/termination/input to running legacy verifier1567",
+    "No live patient console/flags or GUI control",
+    "No production source edits or cache publications",
+    "No GUI/renderer or episode speed claim"
+  ],
+  "boundedCachedComparisonRevisionNote": "Three-frame comparison was run on the prior unoptimized guard revision. The only subsequent behavioral change is explicit refusal of optimized Python; no cache reads or physics rerun were needed for that refusal gate."
+}
