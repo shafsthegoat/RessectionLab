@@ -1,0 +1,8 @@
+0 accepted None [-10.464996337890625, 30.441162109375, -369.25] 0.0 0.009374874643981457
+1 partial BONE_CUTTING_IN_PROGRESS [-10.464996337890625, 30.441162109375, -400.90780642830487] 428.0 22.005787749774754
+2 partial BONE_CUTTING_IN_PROGRESS [-10.464996337890625, 30.441162109375, -406.9405249793233] 1662.0 35.61489858292043
+3 partial UNSUPPORTED_MATERIAL [-10.464996337890625, 30.441162109375, -410.9661178157617] 2632.0 26.290461250115186
+Traceback (most recent call last):
+  File "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/heartbeat/broad_probe.py", line 11, in <module>
+    pickle.dump(engine,open(out/'broad-probe-engine.pkl','wb'))
+TypeError: cannot pickle '_thread.RLock' object

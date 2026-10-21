@@ -1,0 +1,137 @@
+{
+  "schema": "first-release-frozen-sidecar-audit-v1",
+  "status": "failed",
+  "scope": "Packaged host Sidecar, actual bundled engine, binary transfer, source-bound renderer contracts, live rehearsal and fresh-process persistence. No Electron GUI, anatomy/physics accuracy or clinical acceptance.",
+  "isolation": "Explicit executable from emitted app; packaged host modules; neutral cwd; cleaned Python/VENV/CONDA/DYLD/LD/QT environment; narrow request allowlist. No audit hook or OS sandbox inside the frozen binary: absence of internal model imports, network or subprocess activity is not enforced or claimed.",
+  "startedUtc": "2026-10-16T10:27:04.067Z",
+  "finishedUtc": "2026-10-16T10:27:15.572Z",
+  "checks": {
+    "rootRelease": true
+  },
+  "packageBinding": {
+    "executableSha256": "bd8e656abce7e9b9e07aade58f3104cd7d2874634acef39b12fdb61201db306b",
+    "appAsarSha256": "7ded25f4150ebe6360fcc1e686448e9765491ca9dd2c33d850e061b35ab46359",
+    "packageManifestSha256": "aeb2f77676eec57b6737f550d83766e481d92976d08ceaa2168eddc3c9f91386",
+    "engineByteDifferences": [],
+    "packagedHostExecuted": true,
+    "rendererSourceContractsBound": true,
+    "compiledRendererGuiExecuted": false,
+    "embeddedPythonManifestSha256": "5396845ef6a780e6f223ea46787dc4e2e325287ed44956ca45ad9fd24eca6df0"
+  },
+  "failures": [
+    {
+      "index": 0,
+      "name": "AssertionError",
+      "details": "report.json"
+    }
+  ],
+  "requests": [
+    {
+      "operation": "ping",
+      "status": "result",
+      "elapsedMs": 3441
+    },
+    {
+      "operation": "loadCase",
+      "status": "result",
+      "elapsedMs": 578
+    },
+    {
+      "operation": "createRehearsal",
+      "status": "result",
+      "elapsedMs": 112
+    },
+    {
+      "operation": "stepRehearsal",
+      "status": "result",
+      "elapsedMs": 76
+    },
+    {
+      "operation": "stepRehearsal",
+      "status": "error",
+      "elapsedMs": 9
+    },
+    {
+      "operation": "stepRehearsal",
+      "status": "result",
+      "elapsedMs": 39
+    },
+    {
+      "operation": "stepRehearsal",
+      "status": "result",
+      "elapsedMs": 76
+    },
+    {
+      "operation": "compareRehearsal",
+      "status": "result",
+      "elapsedMs": 1034
+    },
+    {
+      "operation": "createRehearsal",
+      "status": "error",
+      "elapsedMs": 0
+    },
+    {
+      "operation": "createRehearsal",
+      "status": "error",
+      "elapsedMs": 0
+    },
+    {
+      "operation": "createRehearsal",
+      "status": "error",
+      "elapsedMs": 0
+    },
+    {
+      "operation": "createRehearsal",
+      "status": "error",
+      "elapsedMs": 1
+    },
+    {
+      "operation": "stepRehearsal",
+      "status": "result",
+      "elapsedMs": 109
+    },
+    {
+      "operation": "inspectRehearsal",
+      "status": "result",
+      "elapsedMs": 96
+    },
+    {
+      "operation": "stepRehearsal",
+      "status": "result",
+      "elapsedMs": 124
+    },
+    {
+      "operation": "stepRehearsal",
+      "status": "result",
+      "elapsedMs": 108
+    },
+    {
+      "operation": "saveCase",
+      "status": "result",
+      "elapsedMs": 1245
+    },
+    {
+      "operation": "saveCase",
+      "status": "error",
+      "elapsedMs": 1
+    },
+    {
+      "operation": "ping",
+      "status": "result",
+      "elapsedMs": 193
+    },
+    {
+      "operation": "loadCase",
+      "status": "result",
+      "elapsedMs": 579
+    },
+    {
+      "operation": "inspectRehearsal",
+      "status": "result",
+      "elapsedMs": 1096
+    }
+  ],
+  "ownedChildrenExited": true,
+  "generatedControlsAreNotPatientAcceptance": true
+}

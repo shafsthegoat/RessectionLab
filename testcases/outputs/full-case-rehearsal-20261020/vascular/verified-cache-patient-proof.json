@@ -1,0 +1,42 @@
+{
+  "mode": "independent_full_replay_and_seal",
+  "wallSeconds": 4.340658041182905,
+  "source": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/vascular/patient-vascular-rescue.ressectionlab",
+  "sourceSha256": "41dd9c9f7d1318f0a1dab817aca82fc38d3bc6214830e21bb51c5c5b82ab602c",
+  "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+  "stateId": "sha256:f88c7d2f4eae959765ec30fa94eec79bf4de6893041d663a5d2f6c4db7fb5eeb",
+  "actions": 26,
+  "snapshotExactEquality": true,
+  "cache": {
+    "diskBytes": 9037535,
+    "maxDiskBytes": 536870912,
+    "ownedMemoryCacheBytes": 0,
+    "maxMemoryCacheBytes": 134217728,
+    "maxTransientJsonBytes": 134217728,
+    "hits": 0,
+    "misses": 0,
+    "publications": 1
+  },
+  "implementation": "0183d83f5d3120c09555829e9b3c4288dc79926b35bbf73a47da7de8e29793d9",
+  "freshProcess": {
+    "mode": "fresh_cached_read",
+    "wallSeconds": 0.429603916592896,
+    "source": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/vascular/patient-vascular-rescue.ressectionlab",
+    "sourceSha256": "41dd9c9f7d1318f0a1dab817aca82fc38d3bc6214830e21bb51c5c5b82ab602c",
+    "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+    "stateId": "sha256:f88c7d2f4eae959765ec30fa94eec79bf4de6893041d663a5d2f6c4db7fb5eeb",
+    "actions": 26,
+    "snapshotExactEquality": true,
+    "cache": {
+      "diskBytes": 9815774,
+      "maxDiskBytes": 536870912,
+      "ownedMemoryCacheBytes": 0,
+      "maxMemoryCacheBytes": 134217728,
+      "maxTransientJsonBytes": 134217728,
+      "hits": 1,
+      "misses": 0,
+      "publications": 0
+    },
+    "implementation": "0183d83f5d3120c09555829e9b3c4288dc79926b35bbf73a47da7de8e29793d9"
+  }
+}

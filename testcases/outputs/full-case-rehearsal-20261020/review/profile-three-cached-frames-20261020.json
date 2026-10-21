@@ -1,0 +1,1367 @@
+{
+  "scope": "Exactly3 current authenticated cached frame seeks under global ReadOnlyStepMonitor plus bounded cProfile. Instrumented Python attribution, not normal GUI/seek speed. No physics replay/publicstep/cachepublication or full frame pass.",
+  "nativeSha256": "f0ef34d5092d61406c6bb5a8cb2f9969136341005c96ec617510e3b7d1b32d1b",
+  "sourceSha256": "ff5a49b8706a8ccda08d8c3e82dad3e079f85dea98cb6bd40783d2262eec9838",
+  "implementationFingerprint": "c17db978af804dbd2f1e3f8d0ba69436fb976e859264d5978df8e112abd59ca1",
+  "publicStepAttempts": {},
+  "verifiedStateCache": {
+    "diskBytes": 13784378,
+    "maxDiskBytes": 8589934592,
+    "maxFileBytes": 536870912,
+    "ownedMemoryCacheBytes": 0,
+    "maxMemoryCacheBytes": 134217728,
+    "maxTransientJsonBytes": 134217728,
+    "hits": 2,
+    "misses": 0,
+    "publications": 0
+  },
+  "observedFrameCache": {
+    "diskBytes": 38222770,
+    "maxDiskBytes": 8589934592,
+    "maxFileBytes": 67108864,
+    "ownedMemoryCacheBytes": 0,
+    "maxMemoryCacheBytes": 134217728,
+    "maxTransientJsonBytes": 134217728,
+    "hits": 6,
+    "misses": 0,
+    "publications": 0
+  },
+  "sourceNativeAndCurrentEngineUnchanged": true,
+  "rows": [
+    {
+      "actionIndex": 2,
+      "frameIndex": 76,
+      "stateId": "sha256:67e0cd92a3fa29f3224a9b852c320a695130624a0760604f863409c3ba5eee9f",
+      "instrumentedWallSeconds": 0.3621943751350045,
+      "pstats": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/review/cached-frame-2-instrumented-20261020.pstats",
+      "totalCalls": 1692699,
+      "primitiveCalls": 1282178,
+      "topCumulative": [
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_frame_replay.py",
+          "line": 284,
+          "name": "seek",
+          "primitiveCalls": 1,
+          "totalCalls": 1,
+          "selfSeconds": 0.00032466600000000004,
+          "cumulativeSeconds": 0.362121666
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_frame_replay.py",
+          "line": 171,
+          "name": "_seek_admitted",
+          "primitiveCalls": 1,
+          "totalCalls": 1,
+          "selfSeconds": 0.000124959,
+          "cumulativeSeconds": 0.329132541
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/core.py",
+          "line": 87,
+          "name": "semantic_digest",
+          "primitiveCalls": 3,
+          "totalCalls": 3,
+          "selfSeconds": 0.0020520810000000003,
+          "cumulativeSeconds": 0.297706458
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_frame_replay.py",
+          "line": 137,
+          "name": "_persistent_result",
+          "primitiveCalls": 1,
+          "totalCalls": 1,
+          "selfSeconds": 4.8291e-05,
+          "cumulativeSeconds": 0.293623458
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_engine.py",
+          "line": 125,
+          "name": "state_id",
+          "primitiveCalls": 1,
+          "totalCalls": 1,
+          "selfSeconds": 4.875e-06,
+          "cumulativeSeconds": 0.27241950000000004
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/core.py",
+          "line": 55,
+          "name": "freeze_json",
+          "primitiveCalls": 3,
+          "totalCalls": 146603,
+          "selfSeconds": 0.078701107,
+          "cumulativeSeconds": 0.163861834
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/core.py",
+          "line": 74,
+          "name": "<genexpr>",
+          "primitiveCalls": 8484,
+          "totalCalls": 125803,
+          "selfSeconds": 0.023968393,
+          "cumulativeSeconds": 0.160032685
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/core.py",
+          "line": 78,
+          "name": "thaw_json",
+          "primitiveCalls": 3,
+          "totalCalls": 146603,
+          "selfSeconds": 0.050836805000000006,
+          "cumulativeSeconds": 0.11660983300000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method builtins.isinstance>",
+          "primitiveCalls": 748374,
+          "totalCalls": 748374,
+          "selfSeconds": 0.069259412,
+          "cumulativeSeconds": 0.113516695
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_observed_cache.py",
+          "line": 136,
+          "name": "check",
+          "primitiveCalls": 2,
+          "totalCalls": 2,
+          "selfSeconds": 2.8541000000000003e-05,
+          "cumulativeSeconds": 0.061561292000000004
+        },
+        {
+          "file": "<frozen abc>",
+          "line": 117,
+          "name": "__instancecheck__",
+          "primitiveCalls": 185759,
+          "totalCalls": 185759,
+          "selfSeconds": 0.019767688000000002,
+          "cumulativeSeconds": 0.044257283
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_observed_cache.py",
+          "line": 72,
+          "name": "light_implementation_seal",
+          "primitiveCalls": 2,
+          "totalCalls": 2,
+          "selfSeconds": 0.003654561,
+          "cumulativeSeconds": 0.036205293
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_scene.py",
+          "line": 60,
+          "name": "require_cache_source",
+          "primitiveCalls": 2,
+          "totalCalls": 2,
+          "selfSeconds": 9.667e-06,
+          "cumulativeSeconds": 0.025327458
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method _abc._abc_instancecheck>",
+          "primitiveCalls": 185759,
+          "totalCalls": 185759,
+          "selfSeconds": 0.020726344,
+          "cumulativeSeconds": 0.024489595000000003
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_observed_cache.py",
+          "line": 244,
+          "name": "state",
+          "primitiveCalls": 1,
+          "totalCalls": 1,
+          "selfSeconds": 5.084e-06,
+          "cumulativeSeconds": 0.021093042000000003
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_verified_cache.py",
+          "line": 169,
+          "name": "_restore_state",
+          "primitiveCalls": 1,
+          "totalCalls": 1,
+          "selfSeconds": 0.000262708,
+          "cumulativeSeconds": 0.021086166
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_verified_cache.py",
+          "line": 154,
+          "name": "_decode_sized",
+          "primitiveCalls": 31,
+          "totalCalls": 31,
+          "selfSeconds": 0.001581872,
+          "cumulativeSeconds": 0.020295749000000002
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/pathlib.py",
+          "line": 1015,
+          "name": "read_bytes",
+          "primitiveCalls": 394,
+          "totalCalls": 394,
+          "selfSeconds": 0.00036583700000000004,
+          "cumulativeSeconds": 0.01761418
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/__init__.py",
+          "line": 299,
+          "name": "loads",
+          "primitiveCalls": 31,
+          "totalCalls": 31,
+          "selfSeconds": 5.7212e-05,
+          "cumulativeSeconds": 0.015143624000000001
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/decoder.py",
+          "line": 333,
+          "name": "decode",
+          "primitiveCalls": 31,
+          "totalCalls": 31,
+          "selfSeconds": 5.2082e-05,
+          "cumulativeSeconds": 0.014885292000000001
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/decoder.py",
+          "line": 344,
+          "name": "raw_decode",
+          "primitiveCalls": 31,
+          "totalCalls": 31,
+          "selfSeconds": 0.014784542000000001,
+          "cumulativeSeconds": 0.014784542000000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method builtins.all>",
+          "primitiveCalls": 8030,
+          "totalCalls": 8030,
+          "selfSeconds": 0.004840528,
+          "cumulativeSeconds": 0.014651569000000001
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/__init__.py",
+          "line": 183,
+          "name": "dumps",
+          "primitiveCalls": 33,
+          "totalCalls": 33,
+          "selfSeconds": 2.9291e-05,
+          "cumulativeSeconds": 0.014345752000000002
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/encoder.py",
+          "line": 183,
+          "name": "encode",
+          "primitiveCalls": 33,
+          "totalCalls": 33,
+          "selfSeconds": 2.5673000000000003e-05,
+          "cumulativeSeconds": 0.014312337000000001
+        }
+      ],
+      "topSelf": [
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/core.py",
+          "line": 55,
+          "name": "freeze_json",
+          "primitiveCalls": 3,
+          "totalCalls": 146603,
+          "selfSeconds": 0.078701107,
+          "cumulativeSeconds": 0.163861834
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method builtins.isinstance>",
+          "primitiveCalls": 748374,
+          "totalCalls": 748374,
+          "selfSeconds": 0.069259412,
+          "cumulativeSeconds": 0.113516695
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/core.py",
+          "line": 78,
+          "name": "thaw_json",
+          "primitiveCalls": 3,
+          "totalCalls": 146603,
+          "selfSeconds": 0.050836805000000006,
+          "cumulativeSeconds": 0.11660983300000001
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/core.py",
+          "line": 74,
+          "name": "<genexpr>",
+          "primitiveCalls": 8484,
+          "totalCalls": 125803,
+          "selfSeconds": 0.023968393,
+          "cumulativeSeconds": 0.160032685
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method _abc._abc_instancecheck>",
+          "primitiveCalls": 185759,
+          "totalCalls": 185759,
+          "selfSeconds": 0.020726344,
+          "cumulativeSeconds": 0.024489595000000003
+        },
+        {
+          "file": "<frozen abc>",
+          "line": 117,
+          "name": "__instancecheck__",
+          "primitiveCalls": 185759,
+          "totalCalls": 185759,
+          "selfSeconds": 0.019767688000000002,
+          "cumulativeSeconds": 0.044257283
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/decoder.py",
+          "line": 344,
+          "name": "raw_decode",
+          "primitiveCalls": 31,
+          "totalCalls": 31,
+          "selfSeconds": 0.014784542000000001,
+          "cumulativeSeconds": 0.014784542000000001
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/encoder.py",
+          "line": 205,
+          "name": "iterencode",
+          "primitiveCalls": 3,
+          "totalCalls": 3,
+          "selfSeconds": 0.014278500000000001,
+          "cumulativeSeconds": 0.014278500000000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<method 'read' of '_io.BufferedReader' objects>",
+          "primitiveCalls": 458,
+          "totalCalls": 458,
+          "selfSeconds": 0.010390718,
+          "cumulativeSeconds": 0.013158632
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method _io.open>",
+          "primitiveCalls": 427,
+          "totalCalls": 427,
+          "selfSeconds": 0.008950651,
+          "cumulativeSeconds": 0.009278378
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/core.py",
+          "line": 70,
+          "name": "<genexpr>",
+          "primitiveCalls": 59953,
+          "totalCalls": 59953,
+          "selfSeconds": 0.0072019960000000004,
+          "cumulativeSeconds": 0.009811041000000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method builtins.all>",
+          "primitiveCalls": 8030,
+          "totalCalls": 8030,
+          "selfSeconds": 0.004840528,
+          "cumulativeSeconds": 0.014651569000000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<method 'update' of '_hashlib.HASH' objects>",
+          "primitiveCalls": 1796,
+          "totalCalls": 1796,
+          "selfSeconds": 0.003970561,
+          "cumulativeSeconds": 0.003970561
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_observed_cache.py",
+          "line": 72,
+          "name": "light_implementation_seal",
+          "primitiveCalls": 2,
+          "totalCalls": 2,
+          "selfSeconds": 0.003654561,
+          "cumulativeSeconds": 0.036205293
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/core.py",
+          "line": 87,
+          "name": "semantic_digest",
+          "primitiveCalls": 3,
+          "totalCalls": 3,
+          "selfSeconds": 0.0020520810000000003,
+          "cumulativeSeconds": 0.297706458
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method _abc._abc_subclasscheck>",
+          "primitiveCalls": 8030,
+          "totalCalls": 8030,
+          "selfSeconds": 0.001891492,
+          "cumulativeSeconds": 0.0025144710000000003
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<method 'decompress' of 'zlib._ZlibDecompressor' objects>",
+          "primitiveCalls": 32,
+          "totalCalls": 32,
+          "selfSeconds": 0.0017132080000000001,
+          "cumulativeSeconds": 0.0017132080000000001
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_verified_cache.py",
+          "line": 154,
+          "name": "_decode_sized",
+          "primitiveCalls": 31,
+          "totalCalls": 31,
+          "selfSeconds": 0.001581872,
+          "cumulativeSeconds": 0.020295749000000002
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method posix.open>",
+          "primitiveCalls": 34,
+          "totalCalls": 34,
+          "selfSeconds": 0.001406581,
+          "cumulativeSeconds": 0.0021734560000000003
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/pathlib.py",
+          "line": 531,
+          "name": "__lt__",
+          "primitiveCalls": 2500,
+          "totalCalls": 2500,
+          "selfSeconds": 0.001290069,
+          "cumulativeSeconds": 0.00325881
+        },
+        {
+          "file": "<frozen abc>",
+          "line": 121,
+          "name": "__subclasscheck__",
+          "primitiveCalls": 8030,
+          "totalCalls": 8030,
+          "selfSeconds": 0.0012487800000000001,
+          "cumulativeSeconds": 0.0037632510000000004
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method builtins.repr>",
+          "primitiveCalls": 1008,
+          "totalCalls": 1008,
+          "selfSeconds": 0.001059866,
+          "cumulativeSeconds": 0.001092283
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/pathlib.py",
+          "line": 484,
+          "name": "_str_normcase",
+          "primitiveCalls": 394,
+          "totalCalls": 394,
+          "selfSeconds": 0.001016465,
+          "cumulativeSeconds": 0.001051253
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<method 'items' of 'dict' objects>",
+          "primitiveCalls": 8222,
+          "totalCalls": 8222,
+          "selfSeconds": 0.000944377,
+          "cumulativeSeconds": 0.000944377
+        }
+      ]
+    },
+    {
+      "actionIndex": 30,
+      "frameIndex": 25,
+      "stateId": "sha256:23c7e8f4d31df9db7cb852f840a413810e7be989a484369a14699ba41de37f31",
+      "instrumentedWallSeconds": 0.44577087508514524,
+      "pstats": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/review/cached-frame-30-instrumented-20261020.pstats",
+      "totalCalls": 1783650,
+      "primitiveCalls": 1356791,
+      "topCumulative": [
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_frame_replay.py",
+          "line": 284,
+          "name": "seek",
+          "primitiveCalls": 1,
+          "totalCalls": 1,
+          "selfSeconds": 0.000143583,
+          "cumulativeSeconds": 0.44473937500000005
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_frame_replay.py",
+          "line": 171,
+          "name": "_seek_admitted",
+          "primitiveCalls": 1,
+          "totalCalls": 1,
+          "selfSeconds": 2.0291000000000003e-05,
+          "cumulativeSeconds": 0.42361162500000005
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/core.py",
+          "line": 87,
+          "name": "semantic_digest",
+          "primitiveCalls": 3,
+          "totalCalls": 3,
+          "selfSeconds": 0.002599961,
+          "cumulativeSeconds": 0.40010612500000003
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_frame_replay.py",
+          "line": 137,
+          "name": "_persistent_result",
+          "primitiveCalls": 1,
+          "totalCalls": 1,
+          "selfSeconds": 2.0457e-05,
+          "cumulativeSeconds": 0.3982155
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_engine.py",
+          "line": 125,
+          "name": "state_id",
+          "primitiveCalls": 1,
+          "totalCalls": 1,
+          "selfSeconds": 5.292e-06,
+          "cumulativeSeconds": 0.377111167
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/core.py",
+          "line": 55,
+          "name": "freeze_json",
+          "primitiveCalls": 3,
+          "totalCalls": 154759,
+          "selfSeconds": 0.08736745500000001,
+          "cumulativeSeconds": 0.259227249
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/core.py",
+          "line": 74,
+          "name": "<genexpr>",
+          "primitiveCalls": 10753,
+          "totalCalls": 128098,
+          "selfSeconds": 0.10509723700000001,
+          "cumulativeSeconds": 0.249595641
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method builtins.isinstance>",
+          "primitiveCalls": 792748,
+          "totalCalls": 792748,
+          "selfSeconds": 0.07468358900000001,
+          "cumulativeSeconds": 0.121941586
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/core.py",
+          "line": 78,
+          "name": "thaw_json",
+          "primitiveCalls": 3,
+          "totalCalls": 154759,
+          "selfSeconds": 0.050987234000000006,
+          "cumulativeSeconds": 0.121482374
+        },
+        {
+          "file": "<frozen abc>",
+          "line": 117,
+          "name": "__instancecheck__",
+          "primitiveCalls": 193925,
+          "totalCalls": 193925,
+          "selfSeconds": 0.022924219000000003,
+          "cumulativeSeconds": 0.047257997
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_observed_cache.py",
+          "line": 136,
+          "name": "check",
+          "primitiveCalls": 2,
+          "totalCalls": 2,
+          "selfSeconds": 1.4917000000000001e-05,
+          "cumulativeSeconds": 0.044791709000000006
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method _abc._abc_instancecheck>",
+          "primitiveCalls": 193925,
+          "totalCalls": 193925,
+          "selfSeconds": 0.020963209,
+          "cumulativeSeconds": 0.024333778
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_scene.py",
+          "line": 60,
+          "name": "require_cache_source",
+          "primitiveCalls": 2,
+          "totalCalls": 2,
+          "selfSeconds": 1.2917e-05,
+          "cumulativeSeconds": 0.023043459000000002
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_observed_cache.py",
+          "line": 72,
+          "name": "light_implementation_seal",
+          "primitiveCalls": 2,
+          "totalCalls": 2,
+          "selfSeconds": 0.002367483,
+          "cumulativeSeconds": 0.021733333
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_observed_cache.py",
+          "line": 244,
+          "name": "state",
+          "primitiveCalls": 1,
+          "totalCalls": 1,
+          "selfSeconds": 2.5010000000000003e-06,
+          "cumulativeSeconds": 0.021053417
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_verified_cache.py",
+          "line": 169,
+          "name": "_restore_state",
+          "primitiveCalls": 1,
+          "totalCalls": 1,
+          "selfSeconds": 0.000218828,
+          "cumulativeSeconds": 0.021049750000000002
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_verified_cache.py",
+          "line": 154,
+          "name": "_decode_sized",
+          "primitiveCalls": 31,
+          "totalCalls": 31,
+          "selfSeconds": 0.00010882900000000001,
+          "cumulativeSeconds": 0.017610251
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method builtins.all>",
+          "primitiveCalls": 8032,
+          "totalCalls": 8032,
+          "selfSeconds": 0.005662843000000001,
+          "cumulativeSeconds": 0.016587172
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/__init__.py",
+          "line": 183,
+          "name": "dumps",
+          "primitiveCalls": 33,
+          "totalCalls": 33,
+          "selfSeconds": 2.6327e-05,
+          "cumulativeSeconds": 0.016039666
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/encoder.py",
+          "line": 183,
+          "name": "encode",
+          "primitiveCalls": 33,
+          "totalCalls": 33,
+          "selfSeconds": 2.1806e-05,
+          "cumulativeSeconds": 0.016009673000000002
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/encoder.py",
+          "line": 205,
+          "name": "iterencode",
+          "primitiveCalls": 3,
+          "totalCalls": 3,
+          "selfSeconds": 0.015979083,
+          "cumulativeSeconds": 0.015979083
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/__init__.py",
+          "line": 299,
+          "name": "loads",
+          "primitiveCalls": 31,
+          "totalCalls": 31,
+          "selfSeconds": 4.5505000000000006e-05,
+          "cumulativeSeconds": 0.015222836000000002
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/decoder.py",
+          "line": 333,
+          "name": "decode",
+          "primitiveCalls": 31,
+          "totalCalls": 31,
+          "selfSeconds": 4.6081e-05,
+          "cumulativeSeconds": 0.015020419
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/decoder.py",
+          "line": 344,
+          "name": "raw_decode",
+          "primitiveCalls": 31,
+          "totalCalls": 31,
+          "selfSeconds": 0.014936335,
+          "cumulativeSeconds": 0.014936335
+        }
+      ],
+      "topSelf": [
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/core.py",
+          "line": 74,
+          "name": "<genexpr>",
+          "primitiveCalls": 10753,
+          "totalCalls": 128098,
+          "selfSeconds": 0.10509723700000001,
+          "cumulativeSeconds": 0.249595641
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/core.py",
+          "line": 55,
+          "name": "freeze_json",
+          "primitiveCalls": 3,
+          "totalCalls": 154759,
+          "selfSeconds": 0.08736745500000001,
+          "cumulativeSeconds": 0.259227249
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method builtins.isinstance>",
+          "primitiveCalls": 792748,
+          "totalCalls": 792748,
+          "selfSeconds": 0.07468358900000001,
+          "cumulativeSeconds": 0.121941586
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/core.py",
+          "line": 78,
+          "name": "thaw_json",
+          "primitiveCalls": 3,
+          "totalCalls": 154759,
+          "selfSeconds": 0.050987234000000006,
+          "cumulativeSeconds": 0.121482374
+        },
+        {
+          "file": "<frozen abc>",
+          "line": 117,
+          "name": "__instancecheck__",
+          "primitiveCalls": 193925,
+          "totalCalls": 193925,
+          "selfSeconds": 0.022924219000000003,
+          "cumulativeSeconds": 0.047257997
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method _abc._abc_instancecheck>",
+          "primitiveCalls": 193925,
+          "totalCalls": 193925,
+          "selfSeconds": 0.020963209,
+          "cumulativeSeconds": 0.024333778
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/encoder.py",
+          "line": 205,
+          "name": "iterencode",
+          "primitiveCalls": 3,
+          "totalCalls": 3,
+          "selfSeconds": 0.015979083,
+          "cumulativeSeconds": 0.015979083
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/decoder.py",
+          "line": 344,
+          "name": "raw_decode",
+          "primitiveCalls": 31,
+          "totalCalls": 31,
+          "selfSeconds": 0.014936335,
+          "cumulativeSeconds": 0.014936335
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/core.py",
+          "line": 70,
+          "name": "<genexpr>",
+          "primitiveCalls": 65824,
+          "totalCalls": 65824,
+          "selfSeconds": 0.007757375,
+          "cumulativeSeconds": 0.010924329
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method _io.open>",
+          "primitiveCalls": 427,
+          "totalCalls": 427,
+          "selfSeconds": 0.005815837000000001,
+          "cumulativeSeconds": 0.005948501
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method builtins.all>",
+          "primitiveCalls": 8032,
+          "totalCalls": 8032,
+          "selfSeconds": 0.005662843000000001,
+          "cumulativeSeconds": 0.016587172
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<method 'read' of '_io.BufferedReader' objects>",
+          "primitiveCalls": 458,
+          "totalCalls": 458,
+          "selfSeconds": 0.004001125,
+          "cumulativeSeconds": 0.0057652530000000006
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<method 'update' of '_hashlib.HASH' objects>",
+          "primitiveCalls": 1796,
+          "totalCalls": 1796,
+          "selfSeconds": 0.0032780910000000003,
+          "cumulativeSeconds": 0.0032780910000000003
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/core.py",
+          "line": 87,
+          "name": "semantic_digest",
+          "primitiveCalls": 3,
+          "totalCalls": 3,
+          "selfSeconds": 0.002599961,
+          "cumulativeSeconds": 0.40010612500000003
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_observed_cache.py",
+          "line": 72,
+          "name": "light_implementation_seal",
+          "primitiveCalls": 2,
+          "totalCalls": 2,
+          "selfSeconds": 0.002367483,
+          "cumulativeSeconds": 0.021733333
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method _abc._abc_subclasscheck>",
+          "primitiveCalls": 8032,
+          "totalCalls": 8032,
+          "selfSeconds": 0.0018916050000000002,
+          "cumulativeSeconds": 0.002466443
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<method 'decompress' of 'zlib._ZlibDecompressor' objects>",
+          "primitiveCalls": 32,
+          "totalCalls": 32,
+          "selfSeconds": 0.001083791,
+          "cumulativeSeconds": 0.001083791
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<method 'items' of 'dict' objects>",
+          "primitiveCalls": 8122,
+          "totalCalls": 8122,
+          "selfSeconds": 0.0009707,
+          "cumulativeSeconds": 0.0009707
+        },
+        {
+          "file": "<frozen abc>",
+          "line": 121,
+          "name": "__subclasscheck__",
+          "primitiveCalls": 8032,
+          "totalCalls": 8032,
+          "selfSeconds": 0.0009041260000000001,
+          "cumulativeSeconds": 0.0033705690000000003
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<method 'items' of 'mappingproxy' objects>",
+          "primitiveCalls": 8100,
+          "totalCalls": 8100,
+          "selfSeconds": 0.000877543,
+          "cumulativeSeconds": 0.000877543
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method builtins.repr>",
+          "primitiveCalls": 1008,
+          "totalCalls": 1008,
+          "selfSeconds": 0.0008644150000000001,
+          "cumulativeSeconds": 0.000892622
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method posix.open>",
+          "primitiveCalls": 34,
+          "totalCalls": 34,
+          "selfSeconds": 0.0008598740000000001,
+          "cumulativeSeconds": 0.001440127
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/pathlib.py",
+          "line": 531,
+          "name": "__lt__",
+          "primitiveCalls": 2500,
+          "totalCalls": 2500,
+          "selfSeconds": 0.000850031,
+          "cumulativeSeconds": 0.001925372
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method _hashlib.openssl_sha256>",
+          "primitiveCalls": 36,
+          "totalCalls": 36,
+          "selfSeconds": 0.0007726230000000001,
+          "cumulativeSeconds": 0.0007726230000000001
+        }
+      ]
+    },
+    {
+      "actionIndex": 51,
+      "frameIndex": 1,
+      "stateId": "sha256:fea815d725ed0ea18aa0822c38ce20713ee79de322b859232cb60b48d39d1110",
+      "instrumentedWallSeconds": 0.5307749998755753,
+      "pstats": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/review/cached-frame-51-instrumented-20261020.pstats",
+      "totalCalls": 1806067,
+      "primitiveCalls": 1375187,
+      "topCumulative": [
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_frame_replay.py",
+          "line": 284,
+          "name": "seek",
+          "primitiveCalls": 1,
+          "totalCalls": 1,
+          "selfSeconds": 2.8583e-05,
+          "cumulativeSeconds": 0.529216958
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_frame_replay.py",
+          "line": 171,
+          "name": "_seek_admitted",
+          "primitiveCalls": 1,
+          "totalCalls": 1,
+          "selfSeconds": 2.4583e-05,
+          "cumulativeSeconds": 0.49416362500000005
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/core.py",
+          "line": 87,
+          "name": "semantic_digest",
+          "primitiveCalls": 3,
+          "totalCalls": 3,
+          "selfSeconds": 0.003005582,
+          "cumulativeSeconds": 0.47206712500000003
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_frame_replay.py",
+          "line": 137,
+          "name": "_persistent_result",
+          "primitiveCalls": 1,
+          "totalCalls": 1,
+          "selfSeconds": 4.2916e-05,
+          "cumulativeSeconds": 0.46974125000000005
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_engine.py",
+          "line": 125,
+          "name": "state_id",
+          "primitiveCalls": 1,
+          "totalCalls": 1,
+          "selfSeconds": 3.7920000000000003e-06,
+          "cumulativeSeconds": 0.44603504200000005
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/core.py",
+          "line": 55,
+          "name": "freeze_json",
+          "primitiveCalls": 3,
+          "totalCalls": 156762,
+          "selfSeconds": 0.086071771,
+          "cumulativeSeconds": 0.24290670800000003
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/core.py",
+          "line": 74,
+          "name": "<genexpr>",
+          "primitiveCalls": 11265,
+          "totalCalls": 128625,
+          "selfSeconds": 0.09068140000000001,
+          "cumulativeSeconds": 0.23210318600000002
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/core.py",
+          "line": 78,
+          "name": "thaw_json",
+          "primitiveCalls": 3,
+          "totalCalls": 156762,
+          "selfSeconds": 0.099606787,
+          "cumulativeSeconds": 0.205678292
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method builtins.isinstance>",
+          "primitiveCalls": 803730,
+          "totalCalls": 803730,
+          "selfSeconds": 0.090138091,
+          "cumulativeSeconds": 0.156060103
+        },
+        {
+          "file": "<frozen abc>",
+          "line": 117,
+          "name": "__instancecheck__",
+          "primitiveCalls": 195963,
+          "totalCalls": 195963,
+          "selfSeconds": 0.032338956,
+          "cumulativeSeconds": 0.065922012
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_observed_cache.py",
+          "line": 136,
+          "name": "check",
+          "primitiveCalls": 2,
+          "totalCalls": 2,
+          "selfSeconds": 4.2916e-05,
+          "cumulativeSeconds": 0.058830708
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method _abc._abc_instancecheck>",
+          "primitiveCalls": 195963,
+          "totalCalls": 195963,
+          "selfSeconds": 0.028077043000000003,
+          "cumulativeSeconds": 0.033583056
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_observed_cache.py",
+          "line": 72,
+          "name": "light_implementation_seal",
+          "primitiveCalls": 2,
+          "totalCalls": 2,
+          "selfSeconds": 0.0026463000000000003,
+          "cumulativeSeconds": 0.032711251000000004
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_scene.py",
+          "line": 60,
+          "name": "require_cache_source",
+          "primitiveCalls": 2,
+          "totalCalls": 2,
+          "selfSeconds": 1.5083000000000001e-05,
+          "cumulativeSeconds": 0.026076541
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_observed_cache.py",
+          "line": 244,
+          "name": "state",
+          "primitiveCalls": 1,
+          "totalCalls": 1,
+          "selfSeconds": 1.667e-06,
+          "cumulativeSeconds": 0.023621583
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_verified_cache.py",
+          "line": 169,
+          "name": "_restore_state",
+          "primitiveCalls": 1,
+          "totalCalls": 1,
+          "selfSeconds": 0.000295075,
+          "cumulativeSeconds": 0.023619083000000003
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/__init__.py",
+          "line": 183,
+          "name": "dumps",
+          "primitiveCalls": 32,
+          "totalCalls": 32,
+          "selfSeconds": 5.1834000000000006e-05,
+          "cumulativeSeconds": 0.019685251
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/encoder.py",
+          "line": 183,
+          "name": "encode",
+          "primitiveCalls": 32,
+          "totalCalls": 32,
+          "selfSeconds": 3.1414e-05,
+          "cumulativeSeconds": 0.019624835
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/encoder.py",
+          "line": 205,
+          "name": "iterencode",
+          "primitiveCalls": 3,
+          "totalCalls": 3,
+          "selfSeconds": 0.019582917000000002,
+          "cumulativeSeconds": 0.019582917000000002
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/pathlib.py",
+          "line": 1015,
+          "name": "read_bytes",
+          "primitiveCalls": 394,
+          "totalCalls": 394,
+          "selfSeconds": 0.00048392400000000005,
+          "cumulativeSeconds": 0.017801110000000002
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method builtins.all>",
+          "primitiveCalls": 8056,
+          "totalCalls": 8056,
+          "selfSeconds": 0.0055932790000000005,
+          "cumulativeSeconds": 0.016658922
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_verified_cache.py",
+          "line": 154,
+          "name": "_decode_sized",
+          "primitiveCalls": 30,
+          "totalCalls": 30,
+          "selfSeconds": 0.000146331,
+          "cumulativeSeconds": 0.016314540000000002
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<method 'read' of '_io.BufferedReader' objects>",
+          "primitiveCalls": 456,
+          "totalCalls": 456,
+          "selfSeconds": 0.012088677,
+          "cumulativeSeconds": 0.013903594
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/__init__.py",
+          "line": 299,
+          "name": "loads",
+          "primitiveCalls": 30,
+          "totalCalls": 30,
+          "selfSeconds": 5.5129e-05,
+          "cumulativeSeconds": 0.01367546
+        }
+      ],
+      "topSelf": [
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/core.py",
+          "line": 78,
+          "name": "thaw_json",
+          "primitiveCalls": 3,
+          "totalCalls": 156762,
+          "selfSeconds": 0.099606787,
+          "cumulativeSeconds": 0.205678292
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/core.py",
+          "line": 74,
+          "name": "<genexpr>",
+          "primitiveCalls": 11265,
+          "totalCalls": 128625,
+          "selfSeconds": 0.09068140000000001,
+          "cumulativeSeconds": 0.23210318600000002
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method builtins.isinstance>",
+          "primitiveCalls": 803730,
+          "totalCalls": 803730,
+          "selfSeconds": 0.090138091,
+          "cumulativeSeconds": 0.156060103
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/core.py",
+          "line": 55,
+          "name": "freeze_json",
+          "primitiveCalls": 3,
+          "totalCalls": 156762,
+          "selfSeconds": 0.086071771,
+          "cumulativeSeconds": 0.24290670800000003
+        },
+        {
+          "file": "<frozen abc>",
+          "line": 117,
+          "name": "__instancecheck__",
+          "primitiveCalls": 195963,
+          "totalCalls": 195963,
+          "selfSeconds": 0.032338956,
+          "cumulativeSeconds": 0.065922012
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method _abc._abc_instancecheck>",
+          "primitiveCalls": 195963,
+          "totalCalls": 195963,
+          "selfSeconds": 0.028077043000000003,
+          "cumulativeSeconds": 0.033583056
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/encoder.py",
+          "line": 205,
+          "name": "iterencode",
+          "primitiveCalls": 3,
+          "totalCalls": 3,
+          "selfSeconds": 0.019582917000000002,
+          "cumulativeSeconds": 0.019582917000000002
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/decoder.py",
+          "line": 344,
+          "name": "raw_decode",
+          "primitiveCalls": 30,
+          "totalCalls": 30,
+          "selfSeconds": 0.013357,
+          "cumulativeSeconds": 0.013357
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<method 'read' of '_io.BufferedReader' objects>",
+          "primitiveCalls": 456,
+          "totalCalls": 456,
+          "selfSeconds": 0.012088677,
+          "cumulativeSeconds": 0.013903594
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method _io.open>",
+          "primitiveCalls": 426,
+          "totalCalls": 426,
+          "selfSeconds": 0.008462619000000001,
+          "cumulativeSeconds": 0.008629039
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/core.py",
+          "line": 70,
+          "name": "<genexpr>",
+          "primitiveCalls": 67335,
+          "totalCalls": 67335,
+          "selfSeconds": 0.008204475000000001,
+          "cumulativeSeconds": 0.011065643
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method builtins.all>",
+          "primitiveCalls": 8056,
+          "totalCalls": 8056,
+          "selfSeconds": 0.0055932790000000005,
+          "cumulativeSeconds": 0.016658922
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<method 'update' of '_hashlib.HASH' objects>",
+          "primitiveCalls": 1796,
+          "totalCalls": 1796,
+          "selfSeconds": 0.0038690160000000003,
+          "cumulativeSeconds": 0.0038690160000000003
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method _abc._abc_subclasscheck>",
+          "primitiveCalls": 8056,
+          "totalCalls": 8056,
+          "selfSeconds": 0.0036524080000000002,
+          "cumulativeSeconds": 0.004321252
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/core.py",
+          "line": 87,
+          "name": "semantic_digest",
+          "primitiveCalls": 3,
+          "totalCalls": 3,
+          "selfSeconds": 0.003005582,
+          "cumulativeSeconds": 0.47206712500000003
+        },
+        {
+          "file": "/Users/shaf/coding_projects/RessectionLab/src/resectionlab/surgical_observed_cache.py",
+          "line": 72,
+          "name": "light_implementation_seal",
+          "primitiveCalls": 2,
+          "totalCalls": 2,
+          "selfSeconds": 0.0026463000000000003,
+          "cumulativeSeconds": 0.032711251000000004
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<method 'items' of 'mappingproxy' objects>",
+          "primitiveCalls": 8124,
+          "totalCalls": 8124,
+          "selfSeconds": 0.0012336530000000001,
+          "cumulativeSeconds": 0.0012336530000000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method posix.open>",
+          "primitiveCalls": 33,
+          "totalCalls": 33,
+          "selfSeconds": 0.001208041,
+          "cumulativeSeconds": 0.001956877
+        },
+        {
+          "file": "<frozen abc>",
+          "line": 121,
+          "name": "__subclasscheck__",
+          "primitiveCalls": 8056,
+          "totalCalls": 8056,
+          "selfSeconds": 0.001184761,
+          "cumulativeSeconds": 0.005506013000000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<method '__exit__' of '_io._IOBase' objects>",
+          "primitiveCalls": 456,
+          "totalCalls": 456,
+          "selfSeconds": 0.001114208,
+          "cumulativeSeconds": 0.001244832
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<method 'items' of 'dict' objects>",
+          "primitiveCalls": 8099,
+          "totalCalls": 8099,
+          "selfSeconds": 0.0010585730000000002,
+          "cumulativeSeconds": 0.0010585730000000002
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<method 'decompress' of 'zlib._ZlibDecompressor' objects>",
+          "primitiveCalls": 31,
+          "totalCalls": 31,
+          "selfSeconds": 0.001041961,
+          "cumulativeSeconds": 0.001041961
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/pathlib.py",
+          "line": 531,
+          "name": "__lt__",
+          "primitiveCalls": 2500,
+          "totalCalls": 2500,
+          "selfSeconds": 0.000996932,
+          "cumulativeSeconds": 0.0020427180000000002
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "name": "<built-in method builtins.repr>",
+          "primitiveCalls": 1008,
+          "totalCalls": 1008,
+          "selfSeconds": 0.000939653,
+          "cumulativeSeconds": 0.0009746560000000001
+        }
+      ]
+    }
+  ]
+}

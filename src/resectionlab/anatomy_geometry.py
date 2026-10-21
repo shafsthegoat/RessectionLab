@@ -7,6 +7,7 @@ import numpy as np
 from scipy import ndimage as ndi
 from skimage.morphology import skeletonize
 from .patient_anatomy import digest, affine, world
+from .surface_fairing import fair_surface, POLICY
 
 
 def _save_cache(path, values):
@@ -21,15 +22,12 @@ def _save_cache(path, values):
             os.unlink(temporary)
 
 
-def _poly(values, probability, smooth, *, tumor=False):
+def _poly(values, probability):
     import vtk
     from vtk.util.numpy_support import numpy_to_vtk
-
     image = vtk.vtkImageData()
     image.SetDimensions(*values.shape)
-    image.GetPointData().SetScalars(
-        numpy_to_vtk(np.asarray(values).ravel(order="F"), deep=True)
-    )
+    image.GetPointData().SetScalars(numpy_to_vtk(np.asarray(values).ravel(order="F"), deep=True))
     if probability:
         contour = vtk.vtkFlyingEdges3D()
         contour.SetValue(0, 0.5)
@@ -37,27 +35,10 @@ def _poly(values, probability, smooth, *, tumor=False):
         contour = vtk.vtkSurfaceNets3D()
         contour.SetValue(0, 1)
         contour.SetOutputMeshTypeToQuads()
-        contour.SetSmoothing(bool(smooth))
-        if smooth:
-            smoother = contour.GetSmoother()
-            smoother.SetNumberOfIterations(40 if tumor else 20)
-            smoother.SetRelaxationFactor(0.25)
-            smoother.SetConstraintDistance(1.5 if tumor else 0.5)
+        contour.SmoothingOff()
     contour.SetInputData(image)
     contour.Update()
-    output = contour.GetOutput()
-    if probability and smooth and output.GetNumberOfPoints():
-        smoothing = vtk.vtkWindowedSincPolyDataFilter()
-        smoothing.SetInputData(output)
-        smoothing.SetNumberOfIterations(40 if tumor else 15)
-        smoothing.SetPassBand(0.03 if tumor else 0.1)
-        smoothing.BoundarySmoothingOff()
-        smoothing.FeatureEdgeSmoothingOff()
-        smoothing.NonManifoldSmoothingOff()
-        smoothing.NormalizeCoordinatesOn()
-        smoothing.Update()
-        output = smoothing.GetOutput()
-    return output
+    return contour.GetOutput()
 
 
 def _arrays(poly):
@@ -96,7 +77,7 @@ def mesh(collection, row, *, cancelled=lambda: False):
     """Separate source/display mesh; same connectivity, bounded local movement."""
     key = digest(
         {
-            "algorithm": "native-vtk-tumor-v6" if row["kind"] == "tumor" else "native-vtk-v5",
+            "algorithm": POLICY["version"],
             "data": row["data"],
             "probability": row.get("probability"),
             "affine": row["affine"],
@@ -130,13 +111,13 @@ def mesh(collection, row, *, cancelled=lambda: False):
         if probability
         else cropped.astype(np.uint8)
     )
+    if probability and (not np.isfinite(values).all() or not np.array_equal(values >= .5, cropped)):
+        probability = False
+        values = cropped.astype(np.uint8)
     values = np.pad(values, 1)
     if cancelled():
         raise InterruptedError("Mesh preparation cancelled")
-    raw, faces = _arrays(_poly(values, probability, False))
-    smoothed, sf = _arrays(_poly(values, probability, True, tumor=row["kind"] == "tumor"))
-    if raw.shape != smoothed.shape or not np.array_equal(faces, sf):
-        smoothed = raw.copy()
+    raw, faces = _arrays(_poly(values, probability))
     triangles = raw[faces]
     areas = np.linalg.norm(
         np.cross(triangles[:, 1] - triangles[:, 0], triangles[:, 2] - triangles[:, 0]),
@@ -147,60 +128,22 @@ def mesh(collection, row, *, cancelled=lambda: False):
     # boundary area; omit only those faces from both versions, retaining vertices.
     faces = faces[areas > 1e-12]
     a = affine(row["affine"])
-    spacing = np.linalg.norm(a[:3, :3], axis=0)
-    delta = (smoothed - raw) @ a[:3, :3].T
-    limit = np.full(
-        len(raw), 0.5 / np.max(np.linalg.norm(np.linalg.inv(a)[:3, :3], axis=1))
-    )
-    if row["kind"] == "tumor":
-        limit[:] = min(1.0, 3 * limit[0])
-    if row["kind"] in {"vessels", "artery", "vein", "sinus"}:
-        radius = ndi.distance_transform_edt(np.pad(cropped, 1), sampling=spacing)
-        index = np.clip(np.rint(raw).astype(int), 0, np.array(radius.shape) - 1)
-        limit = np.minimum(
-            limit, 0.25 * np.maximum(radius[tuple(index.T)], min(spacing) * 0.5)
-        )
-    length = np.linalg.norm(delta, axis=1)
-    factor = np.minimum(1, limit / np.maximum(length, 1e-12))
-    smoothed = raw + (smoothed - raw) * factor[:, None]
-    # Pin faces which invert or collapse, rather than disabling an entire vessel tree.
-    for _ in range(4):
-        f0, f1 = raw[faces], smoothed[faces]
-        n0 = np.cross(f0[:, 1] - f0[:, 0], f0[:, 2] - f0[:, 0])
-        n1 = np.cross(f1[:, 1] - f1[:, 0], f1[:, 2] - f1[:, 0])
-        bad = (np.einsum("ij,ij->i", n0, n1) <= 0) | (
-            np.linalg.norm(n1, axis=1) < 0.1 * np.linalg.norm(n0, axis=1)
-        )
-        if not bad.any():
-            break
-        ids = np.unique(faces[bad])
-        smoothed[ids] = raw[ids]
-    # Pinning one face can affect its neighbours. Reject the candidate globally
-    # if the bounded repair still leaves an inverted or collapsed triangle.
-    f0, f1 = raw[faces], smoothed[faces]
-    n0 = np.cross(f0[:, 1] - f0[:, 0], f0[:, 2] - f0[:, 0])
-    n1 = np.cross(f1[:, 1] - f1[:, 0], f1[:, 2] - f1[:, 0])
-    source_valid = np.linalg.norm(n0, axis=1) > 1e-12
-    rejected = bool(
-        np.any(
-            source_valid
-            & (
-                (np.einsum("ij,ij->i", n0, n1) <= 0)
-                | (np.linalg.norm(n1, axis=1) < 0.1 * np.linalg.norm(n0, axis=1))
-            )
-        )
-    )
-    if rejected:
-        smoothed = raw.copy()
+    # Quantize in final source coordinates before all geometry safety checks.
     offset = lo - 1
     raw = (raw + offset).astype(np.float32)
-    smoothed = (smoothed + offset).astype(np.float32)
+    smoothed, diagnostics = fair_surface(raw, faces, a, row["kind"],
+        mask=np.pad(cropped, 1), mask_origin=offset, cancelled=cancelled)
+    rejected = diagnostics["restoredComponents"] > 0
     result = {
         "source": raw,
         "positions": smoothed,
         "normals": normals(smoothed, faces),
         "indices": faces,
         "smoothing_rejected": np.array(rejected),
+        "restored_components": np.array(diagnostics["restoredComponents"]),
+        "backed_off_vertices": np.array(diagnostics["backedOffVertices"]),
+        "policy_version": np.array(POLICY["version"]),
+        "fallback_reason": np.array(diagnostics.get("fallbackReason", "")),
         "source_degenerate_faces_removed": np.array(degenerate),
         "max_displacement_mm": np.array(
             np.linalg.norm((smoothed - raw) @ a[:3, :3].T, axis=1).max(initial=0)

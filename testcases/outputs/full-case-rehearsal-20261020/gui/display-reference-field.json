@@ -1,0 +1,94 @@
+{
+  "schema": "resectionlab.gui-display-reference.v1",
+  "native": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/gui/display-reference-field.ressectionlab",
+  "sha256": "3aad5d226bdab2299b60966a9b9d2829bbd56e6e1a260460d3a838a7b544c362",
+  "scope": "Original zero-action case; display-only field framing and vessel-opacity reference, not completed episode acceptance",
+  "caseSemanticHash": "sha256:6ca9c1dee58b3635d92d576ad5b355d0a6d500892f30f07968a671b1b67a51ea",
+  "originalSha256": "ff5a49b8706a8ccda08d8c3e82dad3e079f85dea98cb6bd40783d2262eec9838",
+  "sourceUnchanged": true,
+  "branchActionCounts": {
+    "main": 0
+  },
+  "display": {
+    "selectedSeriesId": null,
+    "states": {
+      "primary": {
+        "cursor": [
+          -15.889134651090231,
+          8.01669131252251,
+          -428.68486645239943
+        ],
+        "viewer": {
+          "camera": {
+            "position": [
+              41.90649711763769,
+              -66.29197810441339,
+              -362.6327158595675
+            ],
+            "target": [
+              -15.889134651090231,
+              8.01669131252251,
+              -428.68486645239943
+            ],
+            "up": [
+              0,
+              0,
+              1
+            ]
+          },
+          "layerColor": {
+            "bone": "#e5d6b8",
+            "brain": "#b9c5c9",
+            "tumor": "#9863db",
+            "vessels": "#e54491"
+          },
+          "layerOpacity": {
+            "bone": 0.08,
+            "brain": 0.12,
+            "tumor": 1,
+            "vessels": 0.18
+          },
+          "layout": "3d-focus",
+          "showPlane": false,
+          "volumeRendering": {
+            "enabled": false
+          }
+        },
+        "visibleLayers": {
+          "bone": true,
+          "brain": true,
+          "tumor": true,
+          "vessels": true
+        }
+      }
+    }
+  },
+  "artifactsWorkspace": {
+    "case_hash": "sha256:6ca9c1dee58b3635d92d576ad5b355d0a6d500892f30f07968a671b1b67a51ea",
+    "category": "pareto",
+    "cursor": [
+      -15.889134651090231,
+      8.01669131252251,
+      -428.68486645239943
+    ],
+    "overlayOpacity": 0.32,
+    "routeA": "",
+    "routeB": "",
+    "visibleLayers": {
+      "bone": true,
+      "brain": true,
+      "tumor": true,
+      "vessels": true
+    }
+  },
+  "guiActions": [
+    "Actual vessel slider Home then18 Right: AX0.18",
+    "Actual Frame operative field",
+    "Actual Save dialog: filename only, CmdShiftG to ignored gui directory, Save"
+  ],
+  "screens": [
+    "display-reference-field.png",
+    "display-reference-field.ax.txt"
+  ],
+  "completeEpisodeReplayVerified": false
+}

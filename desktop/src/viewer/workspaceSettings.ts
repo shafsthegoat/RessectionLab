@@ -4,12 +4,17 @@ export interface ViewerCameraState { position: Point3; target: Point3; up: Point
 export interface ViewerClipping { axis: 'x'|'y'|'z'; value: number; enabled: boolean; flipped?: boolean }
 /** Display choices only. No setting changes source arrays, masks or registration. */
 export interface ViewerWorkspaceSettings {
+  smoothSurfaces?: boolean;
   skullMode?: 'exterior'|'transparent'|'cutaway';
   volumeRendering?: import('./volumeTransfer').VolumeRenderingSettings;
   layout?: 'mri-review'|'3d-focus';
   activePlane?: 'axial'|'coronal'|'sagittal';
   showPlane?: boolean;
   contrast?: number;
+  sliceOverlay?: 'contour'|'fill';
+  sliceFraming?: {fit:'image'|'anatomy';zoom:number};
+  contextStyle?: 'shell'|'uniform';
+  presentation?: 'segmentation'|'vascular';
   layerOpacity?: Record<string, number>;
   layerColor?: Record<string, string>;
   camera?: ViewerCameraState | null;
@@ -18,10 +23,12 @@ export interface ViewerWorkspaceSettings {
   obliqueClip?: {enabled:boolean;normal:Point3;offset:number};
   fusion?: { seriesId: string|null; opacity: number };
 }
-export function layerAppearance(name: string, color: string, settings: ViewerWorkspaceSettings = {}) {
+export function layerAppearance(name: string, color: string, settings: ViewerWorkspaceSettings = {},kind?:string) {
   const opacity = settings.layerOpacity?.[name];
   const chosenColor = settings.layerColor?.[name];
-  return { opacity: typeof opacity === 'number' && Number.isFinite(opacity) ? Math.min(1, Math.max(0, opacity)) : .66,
+  const defaultOpacity=kind==='tumor'||['vessel','vessels','artery','vein','sinus'].includes(kind??'')?1:
+    ['brain','tissue','soft_tissue','head-envelope'].includes(kind??'')?.08:['bone','skull'].includes(kind??'')?.12:.66;
+  return { opacity: typeof opacity === 'number' && Number.isFinite(opacity) ? Math.min(1, Math.max(0, opacity)) : defaultOpacity,
     color: chosenColor && /^#[\da-f]{6}$/i.test(chosenColor) ? chosenColor : color };
 }
 export function clippingForBounds(settings: ViewerClipping|undefined, bounds: Bounds3): ViewerClipping {

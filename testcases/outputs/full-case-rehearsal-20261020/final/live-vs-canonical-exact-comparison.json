@@ -1,0 +1,71 @@
+{
+  "schema": "resectionlab.original-live-vs-final-canonical-record-comparison.v1",
+  "status": "passed",
+  "checkedUtc": "2026-10-21T05:14:12.278538+00:00",
+  "expectedActions": 2148,
+  "originalLiveRows": 2148,
+  "completeCanonicalRowsCompared": 2148,
+  "trailingIncompleteCanonicalBytesIgnored": 0,
+  "canonicalSuccessfulReceiptPresent": true,
+  "all2148AndCanonicalSuccessRequiredForPass": true,
+  "nativeSha256": "095659e54f381355e8f5655b6c5907990b2ac4767dc9ce58297e3bc4d6f3268d",
+  "implementationFingerprint": "c9f569bb96ade6b23dcedf29223484757151b084be6ebc1c205cc975a5e74fe0",
+  "originalLiveHistory": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/final/live-primary-history.jsonl",
+  "originalLiveHistorySha256": "e601eba917d6cc84ddf1e6d97659cb3db8d2b1456e2ffe374de3a1ec15ebdc80",
+  "canonicalTrace": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/final/primary-canonical.actions.jsonl",
+  "canonicalTraceSha256": "a0b499d5ae9aec6b6b625c978b85da99a9fa2086caff21cf8b2ce19a00eb3848",
+  "exactEqualCounts": {
+    "action": 2148,
+    "stateBefore": 2148,
+    "stateAfter": 2148,
+    "status": 2148,
+    "reason": 2148,
+    "reasonCode": 2148,
+    "completedFraction": 2148,
+    "elapsedSeconds": 2148,
+    "events": 2148,
+    "deltas.removedCells\u2192removedCells": 2148,
+    "deltas.geometryRevision\u2192stateAfter": 2148
+  },
+  "comparedEventKindCounts": {
+    "place": 299,
+    "apply": 1094,
+    "drill_work": 5639,
+    "drill_contact_dwell": 50,
+    "contact_stop": 152,
+    "withdraw": 295,
+    "exchange": 295,
+    "removal": 12973,
+    "inspect": 99,
+    "aspiration": 99133,
+    "activate": 1,
+    "move": 64,
+    "deactivate": 1,
+    "no_material_effect": 67
+  },
+  "mismatches": [],
+  "mismatchCount": 0,
+  "comparisonSemantics": "Exact recursive JSON types and values; float IEEE754 bits including signed zero; list/event ordering preserved; object key order ignored.",
+  "omittedOriginalLiveFields": {
+    "contactPosition": {
+      "totalRows": 2148,
+      "nonNullRows": 202,
+      "reason": "Canonical trace does not serialize this top-level descriptive outcome field; no equality claim. Contact/material/aspiration/drill payloads present in events are compared exactly."
+    },
+    "deltas.geometryRevision": {
+      "reason": "Canonical trace omits nested field; all original values independently equal stateAfter, which is compared exactly."
+    }
+  },
+  "canonicalOnlyFields": [
+    "fluid",
+    "vascularState",
+    "drillingAndDebris"
+  ],
+  "materialAndFieldOutcomeScope": "Complete events arrays (including removal, drill_work, aspiration and contact payloads), removed-cell deltas and full resulting state IDs are compared; canonical-only derived cumulative ledgers are not independently present in live outcomes. State-ID equality binds complete canonical state, not a separate direct field-by-field live-state export.",
+  "physicsCalls": 0,
+  "guiCalls": 0,
+  "limits": [
+    "Saved record equality is independent of replay execution but relies on original live export provenance. No new physical replay performed.",
+    "A growing trace or its last complete row never implies final completion; passed requires all2148 rows and matching successful forced-canonical receipt."
+  ]
+}

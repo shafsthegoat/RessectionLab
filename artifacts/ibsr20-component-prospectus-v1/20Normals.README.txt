@@ -1,0 +1,260 @@
+This data is
+
+*  (c) Copyright 1997  The General Hospital Corporation             *
+*                      All Rights Reserved                          *
+
+PLEASE REFER ALL REQUESTS FOR COPIES OF THIS DATA DIRECTLY TO THE IBSR:
+
+               http://www.cma.mgh.harvard.edu/ibsr/
+
+BY USING THIS DATA, YOU AGREE TO 1) ACKNOWLEDGE that the data came from
+the ibsr, and 2) PARTICIPATE in the ibsr by providing your resulting
+segmentations for comparison and by providing (at least) a reference to
+a description of your methods.
+
+When publishing results this data, acknowledge the source by including
+the statement, "The 20 normal MR brain data sets and their manual
+segmentations were provided by the Center for Morphometric Analysis at
+Massachusetts General Hospital and are available at 
+http://www.cma.mgh.harvard.edu/ibsr/."
+
+The purpose of this policy is to increase collaboration.  None of this
+data can be used for anything but research in automating segmentation.
+Specifically, you may not use and may not allow this data to be used
+for anatomical or morphological studies without explicit permission
+from the copyright holder.  You must also obtain permission before
+publishing any image or segmentation data or before using any of this
+data in any commercial product.
+
+=---------------------------------------------------------------------=
+
+The files in 20Normals_*.tar.Z contain images and segmentations of three
+dimensional T1-weighted MRI brain data sets for 20 normal subjects.
+
+Uncompress the files:
+
+	uncompress 20Normals_T1.tar.Z
+	uncompress 20Normals_T1_8bit.tar.Z
+	uncompress 20Normals_T1_brain.tar.Z
+	uncompress 20Normals_T1_seg.tar.Z
+
+Untar the files:
+
+	tar xf 20Normals_T1.tar
+	tar xf 20Normals_T1_8bit.tar
+	tar xf 20Normals_T1_brain.tar
+	tar xf 20Normals_T1_seg.tar
+
+This will produce three sub-directories:
+
+   20Normals_T1/       16-bit MRI data
+   20Normals_T1_8bit/  8-bit scaled 3D MRI data files
+   20Normals_T1_brain/ 8-bit scaled 3D MRI data files (brain regions only)
+   20Normals_T1_seg/   voxel values: other=0 csf=128 gray=192 white=254
+
+The first directory contains a sub-directory for each brain data set
+each holding roughly 60 positionally normalized 16-bit ".img" slices.
+Each of this files is 256x256.  The second three directories contain data
+files (.buchar) and header files (.hdr).  The header files have four
+ascii numbers that give the size of the data set:
+
+   cols rows #slices byteswap
+
+Where "cols" is the number of columns of voxels, "rows" is the number
+of rows of voxels and the origin of the image is at the top left.  The
+third number tells the number of slices.  All images are 256x256 so
+each file is 256x256x#slices.  The last number, "byteswap" is always
+set to zero.
+
+All resolutions are in mm:
+  ID#, Col Res,  Row Res,  Slice Res
+    1, 1.171751, 1.171751, 3
+    2, 1.171751, 1.171751, 3.125
+    4, 1.171751, 1.171751, 3.125
+    5, 1.171751, 1.171751, 3.125
+    6, 1.171751, 1.171751, 3.125
+    7, 1.171751, 1.171751, 3.125
+    8, 1.171751, 1.171751, 3.125
+   11, 0.9375,   0.9375,   3.2
+   12, 0.9375,   0.9375,   3
+   13, 0.9375,   0.9375,   3.1
+   15, 1.171751, 1.171751, 3.4375
+   16, 1.171751, 1.171751, 3.4375
+   17, 1.171751, 1.171751, 3.125
+  100, 0.9375,   0.9375,   3.2
+  110, 1.015625, 1.015625, 3.1
+  111, 1.015625, 1.015625, 3.1
+  112, 1.015625, 1.015625, 3.1
+  191, 1.015625, 1.015625, 3
+  202, 1.015625, 1.015625, 3.3
+  205, 1.015625, 1.015625, 3.1
+  
+Note that the segmented images have less slices than the T1 image data.
+The matching segmentation can be found using the offsets given here:
+
+Scan  Offset
+ 1 24   -4
+ 2 4    6
+ 5 8    1
+ 4 8    8
+ 6 10   0
+ 7 8    0
+ 8 4    2
+ 11 3   1
+ 12 3   0
+ 13 3   0
+ 15 3   0
+ 16 3   0
+ 17 3   3
+ 100 23 0
+ 110 3  1
+ 111 2  2
+ 112 2  1
+ 191 3  3
+ 202 3  3
+ 205 3  2
+
+NOTE: The above offsets were corrected on 23 June 2005.
+
+Assume the segmented images start at 1 (they are not numbered).  Then for
+e.g. 111_2, T1 image slice 5 (111_2_5.img) matches with segmented image 2:
+
+ T1_slice# - Offset = seg_img_slice
+
+      5    -   3    =   2
+
+Similarly, there are different numbers of slices between the 16-bit image
+files and the 8-bit image files.  The 8-bit slices are all in one '.buchar'
+file and those slices correspond to the 16-bit individual image slices
+as given here:
+
+    scan   f  l  (f=first slice, l=last slice)
+   ------ -- --
+   1   24 -1 63
+   2   4   1 65
+   4   8   7 67
+   5   8   1 60
+   16  3   1 60
+   17  3   1 63
+   100 23  1 63
+   191 3   1 63
+   202 3   1 63
+   205 3   1 63
+   205 3   1 63
+   6   10  1 63
+   7   8   1 60
+   8   4   1 63
+   11  3   1 63
+   12  3   1 63
+   13  3   1 63
+   15  3   1 60
+   110 3   0 63
+   111 2   0 63
+   112 2   1 63
+
+Note also that scan 1 24 has negative numbers because the image slice file
+names had negative numbers.
+
+MRI Image Acquisition
+
+The coronal three-dimensional T1-weighted spoiled gradient echo MRI
+scans were performed on two different imaging systems.  Ten FLASH scans
+on four males and six females were performed on a 1.5 tesla Siemens
+Magnetom MR System (Iselin, NJ) with the following parameters:  TR = 40
+msec, TE = 8 msec, flip angle = 50 degrees, field of view = 30 cm,
+slice thickness = contiguous 3.1 mm, matrix = 256x256, and averages =
+1.  Ten 3D-CAPRY scans on six males and four females were performed on
+a 1.5 tesla General Electric Signa MR System (Milwaukee, WI), with the
+following parameters: TR = 50 msec, TE = 9 msec, flip angle = 50
+degrees, field of view = 24 cm, slice thickness = contiguous 3.0mm,
+matrix = 256x256, and averages = 1.
+
+Voxel Intensity Range Reduction
+
+Each file in 20Normals_T1_8bit and 20Normals_T1_brain has been reduced
+to 8 bit from 16 bit.  This was done by thresholding intensities above
+or below 99.99% of the total number of different intensities (to
+eliminate high and low outliers) and then by scaling the remaining
+range to 0.255 IFF the range did not already fit into 0..255.  In other
+words, if there was not enough contrast in the original data, then it
+was not stretched to become 0..255.
+
+Positional normalization
+
+All data sets were positionally normalized by imposing a standard
+three-dimensional brain coordinate system on each 3D MR scan using the
+midpoints of the decussations of the anterior and posterior commisures
+and the midsagittal plane at the level of posterior commisure as points
+of reference for rotation and (nondeformation) transformation
+[Talairach and Tournoux, 1988; Filipek, Kennedy, Caviness, 1991].  The
+repositioned scans are then resliced into normalized 3.0 mm coronal,
+1.0 mm axial, and 1.0 mm sagittal scans which are used for subsequent
+analyses.
+
+Image Segmentation
+
+Segmentation was performed on the positionally normalized scan by
+trained investigators using a semi-automated intensity contour mapping
+algorithm [Kennedy, Filipek and Caviness, 1989] and also using signal
+intensity histograms.  Once the external border was determined by
+intensity contour mapping, grey-white matter borders were demarcated
+using signal intensity histograms.  Using this technique, borders are
+defined as the midpoint between the peaks of the bimodal histogram for
+a given structure and its adjacent tissue.  Other neuroanatomical
+structures were segmented similarly [Filipek, et al., 1994].
+
+
+PID SCN SEX AGE at time of scan
+1   24  F   35
+2    4  F   34
+4    8  F   29
+5    8  F   20
+16   3  F   36
+17   3  F   29
+100 23  F   23
+191  3  F   32
+202  3  F   28
+205  3  F   24
+6   10  M   22
+7    8  M   29
+8    4  M   27
+11   3  M   28
+12   3  M   38
+13   3  M   32
+15   3  M   31
+110  3  M   25
+111  2  M   27
+112  2  M   32
+
+
+REFERENCES:
+
+J. Talairach, and P. Tournoux, Co-planar stereotaxic atlas of the human
+brain,  New York: Thieme, 1988.
+
+PA Filipek, DN Kennedy, VS Caviness, Volumetric analysis of central
+nervous system neoplasm based on MRI, Pediatric Neurology, vol. 7, pp.
+347-351, 1991.
+
+DN Kennedy, PA Filipek, and VS Caviness, Anatomic segmentation and
+volumetric calculations in nuclear magnetic resonance imaging, IEEE
+Transactions on Medical Imaging, Vol. 8, pp. 1-7, 1989.
+
+PA Filipek, C Richelme, DN Kennedy, VS Caviness, The Young adult human
+brain: an MRI-based morphometric analysis, Cerebral Cortex, Vol. 4, No.
+4, pp. 344-360, 1994.
+
+
+
+If you have any problems with or questions about this data, please
+contact me.  Also, please let me know if you wish to contribute data
+to the Internet Segmentation Brain Repository.  Thanks!
+
+=---------------------------------------------------------------------=
+Andrew J. Worth, Ph.D.                         andy@cma.mgh.harvard.edu
+Center for Morphometric Analysis               +1 (617) 726-5711
+Massachusetts General Hospital                 +1 (617) 726-5677 (FAX)
+CNY-6, Building 149, 13th Street
+Charlestown MA  02129-2000   USA                   
+=---------------------------------------------------------------------=
+                http://www.cma.mgh.harvard.edu/ibsr/

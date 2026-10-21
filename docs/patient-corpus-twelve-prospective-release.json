@@ -1,0 +1,177 @@
+{
+  "active_releases_unchanged": [
+    "existing-nine-v1",
+    "existing-nine-plus-ixi265-v1"
+  ],
+  "cli_twelve_person_admission_available": false,
+  "future_activation_requirements": [
+    "An explicit later root release is required; do not change an external JSON flag to grant authority.",
+    "Before any candidate path access, retain the exact twelve-person manifest/candidate/plan checks, source metadata hashes and TRAIN restrictions.",
+    "Activate a separately frozen executable release and route its sequential/resumable qualification only to the twelve-person output; keep nine/ten catalogs and current app pins unchanged.",
+    "Freshly hash each exact canonical bundle and raw source; decode only after role/path/hash gates. Keep failures in the twelve-person denominator.",
+    "All estimated masks and registration remain unaccepted. Record missing anatomy and UNKNOWN location. No training, download, weight copy or new inference is authorized by preparation."
+  ],
+  "limitations": [
+    "Recorded bundle/source/model hashes were copied from pinned completed producer and independent audit metadata, not freshly measured from binary payloads here.",
+    "Acquired radiotherapy CT/MR do not establish healthy or tumor-free hosts; equal grids do not establish accepted registration.",
+    "Sources are cropped/defaced; skull-base, vertex and calvarium completeness remains unreviewed.",
+    "Source rights CC-BY-NC-4.0 and model Apache-2.0 terms remain distinct. Cohort/model overlap and independent accuracy remain unresolved."
+  ],
+  "live_app_reader_unchanged": true,
+  "metadata_only_preparation_command": "PYTHONPATH=src .venv/bin/python -c 'from pathlib import Path; from resectionlab.patient_corpus import prepare_prospective_release; print(prepare_prospective_release(Path.cwd()))'",
+  "output": {
+    "catalog_created": false,
+    "directory": "outputs/patient-corpus-twelve-v1",
+    "plan": "outputs/patient-corpus-twelve-v1/prepared-plan.json",
+    "plan_sha256": "d62e27b31b3df761bc440271ba7051ad7be81262597bfbf3da9bf526a143bd43"
+  },
+  "prospective_candidates": [
+    {
+      "bundle": "outputs/poc-synthrad-bc-source-v1/1BB033/SynthRAD2023-1BB033.ressectionlab",
+      "bundle_sha256": "6da3934b794ad13945ea8d1443a70c46625a75c9b8a7cf2a800d2830c906dd82",
+      "case_id": "SynthRAD2023-1BB033",
+      "coverage": "Defaced and cropped source acquisition; calvarium/skull-base/vertex coverage unreviewed",
+      "patient_group": "SynthRAD2023:1BB033",
+      "producer_reported_missing_anatomy": [
+        "tumor",
+        "vessels",
+        "ventricles",
+        "functional_evidence"
+      ],
+      "recorded_models": [
+        {
+          "anatomical_acceptance": false,
+          "cache_key": "cd74e07c2b611f9943d7",
+          "license": "Apache-2.0",
+          "manifest_path": "outputs/poc-models/SynthRAD2023-1BB033/totalsegmentator-skull/cd74e07c2b611f9943d7/inference.json",
+          "manifest_sha256": "fe916ff4a0c1bd4f7daae11253c429faffd88e2d6162ecb8b2bdb9047bb9acbc",
+          "name": "TotalSegmentator",
+          "outputs": [
+            {
+              "name": "brain_mask.nii.gz",
+              "path": "outputs/poc-models/SynthRAD2023-1BB033/totalsegmentator-skull/cd74e07c2b611f9943d7/brain_mask.nii.gz",
+              "provenance": "model_inference_unreviewed",
+              "sha256": "7800cf900931f51d4970df07cc75398fec7a98316ecb7ff9400d6a650a7a5578"
+            },
+            {
+              "name": "skull_mask.nii.gz",
+              "path": "outputs/poc-models/SynthRAD2023-1BB033/totalsegmentator-skull/cd74e07c2b611f9943d7/skull_mask.nii.gz",
+              "provenance": "model_inference_unreviewed",
+              "sha256": "5676513664ee1edeef4f7cd770db3226b811df3c8207dd61e6015711ac537e12"
+            }
+          ],
+          "parameters": {
+            "brain_label": 90,
+            "fast": true,
+            "skull_label": 91,
+            "task": "total",
+            "tta": false
+          },
+          "version": "2.12.0 / Dataset297 v2.0.0-weights",
+          "weights": [
+            {
+              "bytes": 164939235,
+              "sha256": "1e38e40356adc2706a662e365405a97f862d62a7da65f6bf81d025aee1b979ac"
+            }
+          ]
+        }
+      ],
+      "role": "TRAIN",
+      "source_files": [
+        {
+          "license": "CC-BY-NC-4.0",
+          "lineage": "publisher-preprocessed acquired radiotherapy CT/MR; scanner-native fidelity not established",
+          "path": "outputs/poc-synthrad-bc-source-v1/1BB033/ct.nii.gz",
+          "role": "imaging",
+          "sha256": "4999e29411f5c76d986eb188f59a8148f8dbad7ef8bd30abef2e155a1681cafd"
+        },
+        {
+          "license": "CC-BY-NC-4.0",
+          "lineage": "publisher-preprocessed acquired radiotherapy CT/MR; scanner-native fidelity not established",
+          "path": "outputs/poc-synthrad-bc-source-v1/1BB033/mr.nii.gz",
+          "role": "imaging",
+          "sha256": "68fe4d165a8b3063bfce58f7b75bf7b22ce52243a7dd3c0704b2a29984b7a228"
+        }
+      ],
+      "training_admitted": false
+    },
+    {
+      "bundle": "outputs/poc-synthrad-bc-source-v1/1BC077/SynthRAD2023-1BC077.ressectionlab",
+      "bundle_sha256": "171101168d1244d509fc64249cd9039a74aa9a35f35535dddc753307e80f905d",
+      "case_id": "SynthRAD2023-1BC077",
+      "coverage": "Defaced and cropped source acquisition; calvarium/skull-base/vertex coverage unreviewed",
+      "patient_group": "SynthRAD2023:1BC077",
+      "producer_reported_missing_anatomy": [
+        "tumor",
+        "vessels",
+        "ventricles",
+        "functional_evidence"
+      ],
+      "recorded_models": [
+        {
+          "anatomical_acceptance": false,
+          "cache_key": "94d62cb06df44f08b15b",
+          "license": "Apache-2.0",
+          "manifest_path": "outputs/poc-models/SynthRAD2023-1BC077/totalsegmentator-skull/94d62cb06df44f08b15b/inference.json",
+          "manifest_sha256": "d4869860fd252cd9f4f9cabdc5d6d90febc6072915040bc5f89696b4c85fc470",
+          "name": "TotalSegmentator",
+          "outputs": [
+            {
+              "name": "brain_mask.nii.gz",
+              "path": "outputs/poc-models/SynthRAD2023-1BC077/totalsegmentator-skull/94d62cb06df44f08b15b/brain_mask.nii.gz",
+              "provenance": "model_inference_unreviewed",
+              "sha256": "dba1683c3b5eb600f4d83f9d3a7ebf8c70c9796eb10cfc94367070a0eed69028"
+            },
+            {
+              "name": "skull_mask.nii.gz",
+              "path": "outputs/poc-models/SynthRAD2023-1BC077/totalsegmentator-skull/94d62cb06df44f08b15b/skull_mask.nii.gz",
+              "provenance": "model_inference_unreviewed",
+              "sha256": "bd75f0feab5ca398a746e0e7a88a598945e975d1fbf872aa950c55a7d7450aae"
+            }
+          ],
+          "parameters": {
+            "brain_label": 90,
+            "fast": true,
+            "skull_label": 91,
+            "task": "total",
+            "tta": false
+          },
+          "version": "2.12.0 / Dataset297 v2.0.0-weights",
+          "weights": [
+            {
+              "bytes": 164939235,
+              "sha256": "1e38e40356adc2706a662e365405a97f862d62a7da65f6bf81d025aee1b979ac"
+            }
+          ]
+        }
+      ],
+      "role": "TRAIN",
+      "source_files": [
+        {
+          "license": "CC-BY-NC-4.0",
+          "lineage": "publisher-preprocessed acquired radiotherapy CT/MR; scanner-native fidelity not established",
+          "path": "outputs/poc-synthrad-bc-source-v1/1BC077/ct.nii.gz",
+          "role": "imaging",
+          "sha256": "5a33487b11e9762c84f6b1ce8fb3e9f2c008e1ede78c57cd2a053c3cb14dead7"
+        },
+        {
+          "license": "CC-BY-NC-4.0",
+          "lineage": "publisher-preprocessed acquired radiotherapy CT/MR; scanner-native fidelity not established",
+          "path": "outputs/poc-synthrad-bc-source-v1/1BC077/mr.nii.gz",
+          "role": "imaging",
+          "sha256": "f41eb00d101bab4b27665a6870794d6e4eb169d70bea0f9cfc28c02625dd72c0"
+        }
+      ],
+      "training_admitted": false
+    }
+  ],
+  "purpose": "Prospectively freeze exactly the ten existing source people plus SynthRAD2023:1BB033 and SynthRAD2023:1BC077. This metadata preparation adds no qualified people or payload-read authority.",
+  "release": {
+    "id": "existing-ten-plus-synthrad-bc-v1",
+    "path": "manifests/patient-corpus-releases/existing-ten-plus-synthrad-bc-v1.json",
+    "prospective_plan_hash": "sha256:0e27cffd8bd556c12460678d33b65b85e2a5f5819a2e09b03b23450b111c1093",
+    "sha256": "d1eb5d7642ac01c46ad8d7a2464627408358d438ca0c302bcaa8c71e759bbbd1"
+  },
+  "schema": "patient-corpus-prospective-release-guide-v1",
+  "status": "prepared_only_not_released"
+}

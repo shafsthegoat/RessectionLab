@@ -1,0 +1,138 @@
+{
+  "readOnly": true,
+  "noEnginePhysicsOrSourceMutation": true,
+  "stateId": "sha256:2b4231ee2c4d136a2d31c42d4e498835dd2f8d60f577f6f755339ed041ffe2a5",
+  "position": 508,
+  "sourceSceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+  "remainingOwnedTargetCells": 27563,
+  "currentDeformationNodeCount": 0,
+  "currentHolds": false,
+  "superiorReference": {
+    "axis": 2,
+    "outwardIncreasingIndex": true,
+    "remainingPointRayOwnedTargetCells": 25610,
+    "remainingWindowColumns": 2105,
+    "maxLateralWindowClearanceMm": 10.816653826391969,
+    "capacityWithWindowInset3Mm": 16165,
+    "bestWindowNativeIndex": [
+      132,
+      150,
+      129
+    ],
+    "bestWindowRayRetainedTargetCells": 15,
+    "remainingOverlyingBoneOnBestRay": 17,
+    "entryPose": {
+      "position": [
+        -22.464996337890625,
+        26.441162109375,
+        -425.25
+      ],
+      "quaternion": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "outsidePose": {
+      "position": [
+        -22.464996337890625,
+        26.441162109375,
+        -366.25
+      ],
+      "quaternion": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "left": {
+    "axis": 0,
+    "outwardIncreasingIndex": true,
+    "remainingPointRayOwnedTargetCells": 15340,
+    "remainingWindowColumns": 906,
+    "maxLateralWindowClearanceMm": 7.615773105863909,
+    "capacityWithWindowInset3Mm": 6842,
+    "bestWindowNativeIndex": [
+      127,
+      150,
+      131
+    ],
+    "bestWindowRayRetainedTargetCells": 20,
+    "remainingOverlyingBoneOnBestRay": 27,
+    "entryPose": {
+      "position": [
+        -17.464996337890625,
+        26.441162109375,
+        -423.25
+      ],
+      "quaternion": [
+        0.0,
+        0.7071067811865476,
+        0.0,
+        0.7071067811865476
+      ]
+    },
+    "outsidePose": {
+      "position": [
+        -117.46499633789062,
+        26.441162109375,
+        -423.25
+      ],
+      "quaternion": [
+        0.0,
+        0.7071067811865476,
+        0.0,
+        0.7071067811865476
+      ]
+    },
+    "retainedCapacityOutsideCurrentSuperiorPointRays": 1090
+  },
+  "anterior": {
+    "axis": 1,
+    "outwardIncreasingIndex": true,
+    "remainingPointRayOwnedTargetCells": 12436,
+    "remainingWindowColumns": 534,
+    "maxLateralWindowClearanceMm": 5.656854249492381,
+    "capacityWithWindowInset3Mm": 3668,
+    "bestWindowNativeIndex": [
+      138,
+      142,
+      130
+    ],
+    "bestWindowRayRetainedTargetCells": 22,
+    "remainingOverlyingBoneOnBestRay": 32,
+    "entryPose": {
+      "position": [
+        -28.464996337890625,
+        18.441162109375,
+        -424.25
+      ],
+      "quaternion": [
+        0.7071067811865476,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ]
+    },
+    "outsidePose": {
+      "position": [
+        -28.464996337890625,
+        103.441162109375,
+        -424.25
+      ],
+      "quaternion": [
+        0.7071067811865476,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ]
+    },
+    "retainedCapacityOutsideCurrentSuperiorPointRays": 911
+  },
+  "combinedAlternativeOutsideSuperiorCells": 1366,
+  "anteriorAdditionalOutsideSuperiorAndLeftCells": 276,
+  "limit": "Point-ray and binary lateral-window upper bounds only. Bone/free may be traversed only after real legal access; normals/vessels block. Every whole-tool movement, working cover and source guard needs public preview. No exact physical admission or successful non-superior execution is claimed."
+}

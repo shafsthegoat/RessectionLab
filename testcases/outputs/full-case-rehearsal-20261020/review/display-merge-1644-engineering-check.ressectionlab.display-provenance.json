@@ -1,0 +1,126 @@
+{
+  "schema": "resectionlab.rehearsal-display-merge.v1",
+  "status": "passed",
+  "native": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-bounded-left-trial-1644.ressectionlab",
+  "nativeSha256": "7f83f387e3ae39aa9ac7fd5b9a4c23314dfcc33335c67de8506838b189033bd5",
+  "reference": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/gui/display-reference-field.ressectionlab",
+  "referenceSha256": "3aad5d226bdab2299b60966a9b9d2829bbd56e6e1a260460d3a838a7b544c362",
+  "output": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/review/display-merge-1644-engineering-check.ressectionlab",
+  "outputSha256": "e260f6d1a041678b9992512ce6d65dc9ff8c4fef252a113e79523357dfe71e52",
+  "sourceCaseHash": "sha256:6ca9c1dee58b3635d92d576ad5b355d0a6d500892f30f07968a671b1b67a51ea",
+  "initialSlotsReferenceBranch": "main",
+  "initialSnapshotStateId": "sha256:b20988bd32d1d21cc3cb040fab208fafc635e99a4663741e97954747cdee8e03",
+  "surgicalToolboxCanonicalJsonSha256": "497e9264cb37b7af6f9294479dae7924c448b5f7f0873309fa10b9c9b62bcae3",
+  "surgicalToolboxEncodedArtifactUnchanged": true,
+  "allOtherArtifactsUnchanged": true,
+  "decodedCaseManifestUnchanged": true,
+  "nonMetadataZipMemberBytesUnchanged": {
+    "arrays.npz": {
+      "bytes": 20292869,
+      "sha256": "684c10ee6afb1936e41ff3d4f2ad107129c8462ea642ff8dc67a5df5e9c81019"
+    }
+  },
+  "displayFieldsMerged": [
+    "primary.cursor",
+    "primary.visibleLayers",
+    "primary.viewer.layerColor",
+    "primary.viewer.layerOpacity",
+    "primary.viewer.camera",
+    "artifacts.workspace.cursor",
+    "artifacts.workspace.visibleLayers",
+    "artifacts.workspace.overlayOpacity"
+  ],
+  "otherViewerSettingsPreserved": true,
+  "wideCameraFit": {
+    "sourceGridBoundsRasMm": [
+      [
+        -109.96499633789062,
+        -124.058837890625,
+        -554.75
+      ],
+      [
+        110.03500366210938,
+        95.941162109375,
+        -373.75
+      ]
+    ],
+    "completePaddedBoundsRasMm": [
+      [
+        -117.96499633789062,
+        -132.058837890625,
+        -612.7626705684678
+      ],
+      [
+        118.03500366210938,
+        136.95383267784274,
+        -212.73732943153226
+      ]
+    ],
+    "fovDegrees": 34.0,
+    "minimumPaneAspectWidthOverHeight": 0.8,
+    "distanceMargin": 1.08,
+    "distanceMm": 974.6310704905472,
+    "largestOrientationIndependentBodyRadiusMm": 45.512670568467755,
+    "implicitWithdrawBoundsExpanded": 11,
+    "branches": {
+      "exposure-prefix": {
+        "actions": 42,
+        "requestedPosesForBoundsOnly": 38
+      },
+      "full-primary": {
+        "actions": 1644,
+        "requestedPosesForBoundsOnly": 141801
+      },
+      "tapered-frontier-prefix": {
+        "actions": 19,
+        "requestedPosesForBoundsOnly": 24
+      }
+    },
+    "allBoxCornersInsideBothFovAxes": true,
+    "initialSlots": {
+      "left": {
+        "active": false,
+        "grip": [],
+        "inserted": false,
+        "instrument": "cranial_drill",
+        "parameters": {},
+        "position": [
+          -5.964996337890625,
+          -14.058837890625,
+          -559.25
+        ],
+        "quaternion": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "right": {
+        "active": false,
+        "grip": [],
+        "inserted": false,
+        "instrument": "cusa",
+        "parameters": {},
+        "position": [
+          6.035003662109375,
+          -14.058837890625,
+          -559.25
+        ],
+        "quaternion": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    "requestedPosesMeaning": "Conservative camera bounds only; not actual-motion observations.",
+    "rendererSha256": "f35c034698ee6b951a86a4184a108d4bc9b35f7050c66f88673d8714022eff23",
+    "toolGeometrySha256": "a29189290d75c209d828a80b3d270c36cd63e4bb688d1e624a9eb28a7b1103eb",
+    "catalogSourceSha256": "472ba5c501f337ef7bb857343ed0efef7c7bf25048783a5622adf454473aa75d"
+  },
+  "physicsCalls": 0,
+  "guiVerified": false,
+  "helperSha256": "b05118627082064bb03d85a4c929e52f119daa59e0e5c1e32527213e53f2d146"
+}

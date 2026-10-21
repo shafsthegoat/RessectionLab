@@ -1,0 +1,131 @@
+{
+  "status": "passed: completed canonical/source/history gates reviewed",
+  "utc": "2026-10-21T05:29:46.093098+00:00",
+  "nativeSha256": "095659e54f381355e8f5655b6c5907990b2ac4767dc9ce58297e3bc4d6f3268d",
+  "implementationFingerprint": "c9f569bb96ade6b23dcedf29223484757151b084be6ebc1c205cc975a5e74fe0",
+  "evidenceSha256": {
+    "artifact-freeze.json": "b98ac7c09dedf53891bc0625d3483993b1737e2dac6601ce9b69ffec1c229b0d",
+    "primary-canonical.json": "7ddca4f9606b21f597c740d7c5469a1a513ed8cc300b90f3ba19cfd89d1e6d63",
+    "vascular-canonical.json": "ddae19608021dd1b73d2f829dec40a2738da4f859dc92d9da8bd704647e12a5f",
+    "independent-source-record-review.json": "460f90217c35424405c29fe55ddbb7f0ccd8a8f25fa66c33c2b7277202020f69",
+    "live-vs-authenticated-canonical-history.json": "65ea10ce27ba8d4fdf00e68c7875a9b2f20e21f1b415c7639f6d7df662b4338b"
+  },
+  "canonicalTraceRecomputation": {
+    "primary": {
+      "actions": 2148,
+      "statuses": {
+        "accepted": 1946,
+        "partial": 202
+      },
+      "traceSha256": "a0b499d5ae9aec6b6b625c978b85da99a9fa2086caff21cf8b2ce19a00eb3848",
+      "uniqueRemovedSourceCells": 51996,
+      "generatedDebrisFromActualSavedEventsMm3": 16552.0,
+      "maximumIndependentlyRecomputedResiduals": {
+        "fluidMm3": 0.0,
+        "bloodReservoirMm3": 0.0,
+        "debrisMm3": 2.8421709430404007e-12,
+        "thermalJ": 8.445790626865346e-07
+      },
+      "sourceAccountingAndEndpointsMatchPriorIndependentSourceAudit": true
+    },
+    "vascular": {
+      "actions": 73,
+      "statuses": {
+        "accepted": 63,
+        "partial": 10
+      },
+      "traceSha256": "d78558f5d60e1bb9162197859c59674875afb4454632d5a8c44b1ca457ab0730",
+      "uniqueRemovedSourceCells": 3765,
+      "generatedDebrisFromActualSavedEventsMm3": 3453.0,
+      "maximumIndependentlyRecomputedResiduals": {
+        "fluidMm3": 8.526512829121202e-14,
+        "bloodReservoirMm3": 2.235191198796116e-14,
+        "debrisMm3": 0.0,
+        "thermalJ": 5.691617843694985e-09
+      },
+      "sourceAccountingAndEndpointsMatchPriorIndependentSourceAudit": true
+    }
+  },
+  "commonPrefix42ExactRowsIncludingStatesEventsAndDerivedLedgers": true,
+  "vascularCausalChainIndependentRecordChecks": {
+    "injury": 48,
+    "passivePersistentBleeding": [
+      50,
+      51
+    ],
+    "actualDoseIncrease": [
+      55,
+      56
+    ],
+    "clot1DoseAtLeast2NonpatentBy": 56,
+    "stableIdle": [
+      58,
+      72,
+      73
+    ],
+    "irrigation": [
+      62,
+      63
+    ],
+    "suctionWithoutVesselRepair": [
+      68,
+      69
+    ]
+  },
+  "primaryTarget": {
+    "ownedOriginalMm3": 43573,
+    "removedMm3": 35444,
+    "removedPercent": 81.34395152961696,
+    "retainedMm3": 8129,
+    "residualSixConnectedRegions": 161,
+    "ownedNonTargetSoftRemovalMm3": 0,
+    "rawBrainRemovedMembership": 36402,
+    "rawTumorRemovedMembership": 35810
+  },
+  "historicalEquality": {
+    "independentTraceVsOriginalLiveComparison": "all2148 mapped fields/events/removed deltas exact types and floatbits",
+    "authenticatedCompleteOutcomeReceipt": "all2148 complete outcomes, including202 nonnull contactPositions, zero mismatch; receipt and comparator hashes match",
+    "objectKeyOrder": "ignored because canonical JSON sorts keys; list/event ordering remains exact"
+  },
+  "criticalRemainingGates": [
+    "Final primary/vascular descriptive telemetry and all-frame authenticated cache coverage not complete at this review",
+    "Actual final Electron playback/branch/persistence/usability checks pending"
+  ],
+  "videoRequirement": "Canceled by user; not an acceptance gate and no video pass claimed",
+  "observedPipelineStatus": {
+    "status": "running",
+    "startedUtc": "2026-10-21T00:56:52.449008+00:00",
+    "native": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab",
+    "nativeSha256": "095659e54f381355e8f5655b6c5907990b2ac4767dc9ce58297e3bc4d6f3268d",
+    "stages": [
+      {
+        "label": "primary-canonical",
+        "status": "passed",
+        "startedUtc": "2026-10-21T00:56:52.970451+00:00",
+        "finishedUtc": "2026-10-21T05:12:53.924180+00:00",
+        "receipt": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/final/primary-canonical.json"
+      },
+      {
+        "label": "vascular-canonical",
+        "status": "passed",
+        "startedUtc": "2026-10-21T05:12:54.080473+00:00",
+        "finishedUtc": "2026-10-21T05:16:44.753018+00:00",
+        "receipt": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/final/vascular-canonical.json"
+      },
+      {
+        "label": "primary-telemetry",
+        "status": "running",
+        "startedUtc": "2026-10-21T05:16:44.906845+00:00"
+      }
+    ]
+  },
+  "limitations": [
+    "Budget-limited endpoint, not maximal feasible removal or proof residual unresectable.",
+    "Source ownership/raw annotation overlap is not reviewed clinical truth; zero owned soft removal is not zero clinical healthy-brain injury. Strict11masks do not supply missing functional/dura/attachment evidence.",
+    "Primary15280.0297706mm3 debris remains after1271.9702294mm3 aspiration; bounded cleanup is not a fully cleared operative-field claim.",
+    "This review used saved records and authenticated-history comparison receipt; no Engine call, app use or new physical replay."
+  ],
+  "engineCalls": 0,
+  "computerUseCalls": 0,
+  "productionEdits": 0
+}

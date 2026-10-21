@@ -1,0 +1,4137 @@
+{
+  "utc": "2026-10-20T22:28:28.776776+00:00",
+  "method": "Stable saved native JSON only; exact canonical gzip1 encoder per top-level field and descriptor. No engine/scene or physics calls.",
+  "rows": [
+    {
+      "path": "testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-access-deferral-1608.ressectionlab",
+      "sha256": "2cc93898e78f7f9f6c9912eb0e7ef2285f28b1fe0127ff5cb4c3a3f46f7e0bd5",
+      "branch": "full-primary",
+      "actions": 1608,
+      "stateId": "sha256:42067339f6bdc643b37160407f557db39c8b25096f02c7d3cbf14ef934ad0daa",
+      "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "checkpointPosition": 1608,
+      "gzip1AllFieldBytes": 470897,
+      "stateDescriptorGzip1Bytes": 1221,
+      "fields": {
+        "contact": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "cutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "cuts": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "debris": {
+          "gzip1Bytes": 35721,
+          "jsonBytes": 176836,
+          "sha256": "298548d3f5a03d53c1d071284be8a5ee0485a10d785f1d520190ac953d58ab5d"
+        },
+        "debrisMm3": {
+          "gzip1Bytes": 34,
+          "jsonBytes": 18,
+          "sha256": "8c3da565860a698430173f6956434533188a832f6de6b13fa8d699bfb82fab4d"
+        },
+        "debrisRemovedMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "ce1b7d026c8f931bd974ce636f274809b6064efabd5c47ae3d07d63b47c60ac2"
+        },
+        "deformation": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "deformationModel": {
+          "gzip1Bytes": 78,
+          "jsonBytes": 65,
+          "sha256": "78819f199e296236b8ec0abdb623e00d512eb52476d0c6b81d579235d4d04097"
+        },
+        "drillingV2": {
+          "gzip1Bytes": 126559,
+          "jsonBytes": 727173,
+          "sha256": "3464f07e8caf2a524a1423b2ea73a4554954d84bccc266bb5796d9bead2e2411"
+        },
+        "elapsedSeconds": {
+          "gzip1Bytes": 38,
+          "jsonBytes": 18,
+          "sha256": "2560b97d4658de0e6bfaa84139647c762afb0189312821d3f3cacfe263ccb13c"
+        },
+        "flapComponents": {
+          "gzip1Bytes": 188648,
+          "jsonBytes": 1065219,
+          "sha256": "60f03ede2dd55c2ea6816c54056fd17044380d1b68c0ff3dda83011478b8236b"
+        },
+        "fluid": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "fluidAddedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidEscapedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidRemovedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "holds": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "materialExposure": {
+          "gzip1Bytes": 97,
+          "jsonBytes": 86,
+          "sha256": "03a6bd7cbd41fad1434f67f7dcdc6417e6ebcc52c016b30e7ca745512b37dc8f"
+        },
+        "meshCutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "meshSeams": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "observations": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "removed": {
+          "gzip1Bytes": 118848,
+          "jsonBytes": 376217,
+          "sha256": "ff427b1b1c97ec23a7609247193b54bcfa128a1bd3d18bdc69fd1efa6f97f020"
+        },
+        "separated": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "separatedAttachments": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "slots": {
+          "gzip1Bytes": 252,
+          "jsonBytes": 452,
+          "sha256": "1edf0cda658beb87db8efb853da9c0c8192a0453ea53237e720623a0324b1550"
+        },
+        "sources": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "thermal": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "transectedEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "travelMm": {
+          "gzip1Bytes": 37,
+          "jsonBytes": 17,
+          "sha256": "89beb58ea0e77b76ca8fb895fa275d24b74889951b5d8d0f2dfb648fafcf247c"
+        },
+        "vesselEncounters": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "vesselsV2": {
+          "gzip1Bytes": 153,
+          "jsonBytes": 188,
+          "sha256": "f7c59ab51f18a468460800464814c47a9476384ea4a2bbc1ba1b15ac874398f2"
+        }
+      },
+      "removedCells": 47027,
+      "debrisEntries": 12616,
+      "actionOperations": {
+        "place": 201,
+        "apply": 883,
+        "withdraw": 197,
+        "exchange": 200,
+        "inspect": 75,
+        "activate": 1,
+        "move": 50,
+        "deactivate": 1
+      },
+      "zeroDurationCommands": 0
+    },
+    {
+      "path": "testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-access-deferral.ressectionlab",
+      "sha256": "57f3f86e28dffbe4ac163f2af2ff7f5604460f087118e5d1a73e368e48ec3857",
+      "branch": "full-primary",
+      "actions": 430,
+      "stateId": "sha256:afd2b887f12f8fa2c654af35eea8dda3ec474cc23381b2bfa6943583ed4d0f6c",
+      "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "checkpointPosition": 430,
+      "gzip1AllFieldBytes": 275896,
+      "stateDescriptorGzip1Bytes": 1209,
+      "fields": {
+        "contact": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "cutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "cuts": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "debris": {
+          "gzip1Bytes": 10683,
+          "jsonBytes": 52586,
+          "sha256": "91a7d83699cef078c6f7d514a74149f2352d6d64cb3cbdff32db89db03599216"
+        },
+        "debrisMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "8db081fe77aebeb64f2e82efd3b4f8fbbd64e08aca742251bb8efdb79172b830"
+        },
+        "debrisRemovedMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "ce1b7d026c8f931bd974ce636f274809b6064efabd5c47ae3d07d63b47c60ac2"
+        },
+        "deformation": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "deformationModel": {
+          "gzip1Bytes": 78,
+          "jsonBytes": 65,
+          "sha256": "78819f199e296236b8ec0abdb623e00d512eb52476d0c6b81d579235d4d04097"
+        },
+        "drillingV2": {
+          "gzip1Bytes": 36233,
+          "jsonBytes": 222783,
+          "sha256": "3d10cfe10dcf070f827dfc927ee5117ac4a420f679ef6e0a6dd0e99239bb4180"
+        },
+        "elapsedSeconds": {
+          "gzip1Bytes": 37,
+          "jsonBytes": 17,
+          "sha256": "53f8e6db420b857ee059814b40e1ec0236a992fa4db382923d74d2172593fbbb"
+        },
+        "flapComponents": {
+          "gzip1Bytes": 188702,
+          "jsonBytes": 1064413,
+          "sha256": "de6845b072b62d11992cbc2065a9757e6cf80d4212da63614311b1b77dc54d71"
+        },
+        "fluid": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "fluidAddedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidEscapedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidRemovedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "holds": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "materialExposure": {
+          "gzip1Bytes": 98,
+          "jsonBytes": 88,
+          "sha256": "a4780f594fc4b5fa1f37bbf4cf94de8bba9453ee85aeb4af527fed9934bc87b6"
+        },
+        "meshCutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "meshSeams": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "observations": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "removed": {
+          "gzip1Bytes": 39085,
+          "jsonBytes": 124041,
+          "sha256": "57fb7224a4694f9e05a0ff72147064feb7736a1e084fadfb0ac5d9b4ab423e6e"
+        },
+        "separated": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "separatedAttachments": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "slots": {
+          "gzip1Bytes": 325,
+          "jsonBytes": 518,
+          "sha256": "d1602780eadb4ad7d35dd3f2d6e1fd6b4c6d55f3da88826dac1e29268aba0f9f"
+        },
+        "sources": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "thermal": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "transectedEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "travelMm": {
+          "gzip1Bytes": 37,
+          "jsonBytes": 17,
+          "sha256": "bc98f4df6125b2e61e047f03de3bf9557b8223559b42a9c8810c4dc0f205a9de"
+        },
+        "vesselEncounters": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "vesselsV2": {
+          "gzip1Bytes": 153,
+          "jsonBytes": 187,
+          "sha256": "7f9e037e5a6c84829cea2dcfc5d613fbc3cb3d27629c2a165c7d01945f656eec"
+        }
+      },
+      "removedCells": 15505,
+      "debrisEntries": 3741,
+      "actionOperations": {
+        "place": 59,
+        "apply": 226,
+        "withdraw": 55,
+        "exchange": 59,
+        "inspect": 20,
+        "activate": 1,
+        "move": 10
+      },
+      "zeroDurationCommands": 0
+    },
+    {
+      "path": "testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-assistant-clearance-876.ressectionlab",
+      "sha256": "3c6fb2436aad6db6ce4d3db49da9c33cfa175559e455a2abff2a8a1b98c9ffcb",
+      "branch": "full-primary",
+      "actions": 876,
+      "stateId": "sha256:f2897ef369a8c39ab8b778ff84f4325a6c24920c0e1f2fa8652437ee77a59e1d",
+      "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "checkpointPosition": 876,
+      "gzip1AllFieldBytes": 382708,
+      "stateDescriptorGzip1Bytes": 1210,
+      "fields": {
+        "contact": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "cutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "cuts": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "debris": {
+          "gzip1Bytes": 21543,
+          "jsonBytes": 106598,
+          "sha256": "57cc663b75855f3de9ebb4ee862454c19d223c7be73ebe519671c0dd5c0136f3"
+        },
+        "debrisMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "a8db1e0599f6e5b68a55a603b42ea37f704beb99658b3c714a2c59946da271d8"
+        },
+        "debrisRemovedMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "ce1b7d026c8f931bd974ce636f274809b6064efabd5c47ae3d07d63b47c60ac2"
+        },
+        "deformation": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "deformationModel": {
+          "gzip1Bytes": 78,
+          "jsonBytes": 65,
+          "sha256": "78819f199e296236b8ec0abdb623e00d512eb52476d0c6b81d579235d4d04097"
+        },
+        "drillingV2": {
+          "gzip1Bytes": 78088,
+          "jsonBytes": 441628,
+          "sha256": "936440d290e662461a3f60937e4c5df0d94fef89969e6a2dc85d161f26006628"
+        },
+        "elapsedSeconds": {
+          "gzip1Bytes": 38,
+          "jsonBytes": 18,
+          "sha256": "6cdd1f4f88e4ab3abf276ca4f72861c81572de9049c6294cee72eb3de466d4df"
+        },
+        "flapComponents": {
+          "gzip1Bytes": 188629,
+          "jsonBytes": 1064812,
+          "sha256": "835d83d73c14809102b58c33b504dc0bffd0c8ebc840b461fe38bf89770a77f5"
+        },
+        "fluid": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "fluidAddedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidEscapedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidRemovedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "holds": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "materialExposure": {
+          "gzip1Bytes": 97,
+          "jsonBytes": 88,
+          "sha256": "c8c4b8f45fbef3a6e7faf4179f486b3250301fe87710c3dfe9953c8fba829523"
+        },
+        "meshCutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "meshSeams": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "observations": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "removed": {
+          "gzip1Bytes": 93305,
+          "jsonBytes": 294393,
+          "sha256": "4e09d15399d641ec6de9fca83b1b73b110965afb044b6aca7fc4a097caf8493d"
+        },
+        "separated": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "separatedAttachments": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "slots": {
+          "gzip1Bytes": 272,
+          "jsonBytes": 487,
+          "sha256": "14a8692cd8d5c21bd951433676ad2b166fd8d545374156291319883369a3b052"
+        },
+        "sources": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "thermal": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "transectedEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "travelMm": {
+          "gzip1Bytes": 38,
+          "jsonBytes": 18,
+          "sha256": "8a469cec1403001539c306f11fb5562c15899a487adb2bb1f8324235a0168216"
+        },
+        "vesselEncounters": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "vesselsV2": {
+          "gzip1Bytes": 155,
+          "jsonBytes": 188,
+          "sha256": "387631ee93af1eaa740851ee12723eb41dd12e5a73974d17794d6b9d813abaf7"
+        }
+      },
+      "removedCells": 36799,
+      "debrisEntries": 7599,
+      "actionOperations": {
+        "place": 108,
+        "apply": 493,
+        "withdraw": 102,
+        "exchange": 107,
+        "inspect": 38,
+        "activate": 1,
+        "move": 27
+      },
+      "zeroDurationCommands": 0
+    },
+    {
+      "path": "testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-bounded-left-trial-1644.ressectionlab",
+      "sha256": "7f83f387e3ae39aa9ac7fd5b9a4c23314dfcc33335c67de8506838b189033bd5",
+      "branch": "full-primary",
+      "actions": 1644,
+      "stateId": "sha256:407c77913dd2a310b0a1402cc895bc88e79b79e06f9aa5427eadcd60402f0e41",
+      "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "checkpointPosition": 1644,
+      "gzip1AllFieldBytes": 467323,
+      "stateDescriptorGzip1Bytes": 1215,
+      "fields": {
+        "contact": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "cutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "cuts": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "debris": {
+          "gzip1Bytes": 34732,
+          "jsonBytes": 171984,
+          "sha256": "33221c3f8d3f5e283ff438731abd718ad1bc7024865f8dc0ed2a87fa423f35c3"
+        },
+        "debrisMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "7264b3cf260f50fcf66d3862af828b7f51176dc73f612c310c89475617ef83a9"
+        },
+        "debrisRemovedMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "d19d929a50c6ec62129bdfb038117fe9e97db637c3946e56a31c92966014d380"
+        },
+        "deformation": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "deformationModel": {
+          "gzip1Bytes": 78,
+          "jsonBytes": 65,
+          "sha256": "78819f199e296236b8ec0abdb623e00d512eb52476d0c6b81d579235d4d04097"
+        },
+        "drillingV2": {
+          "gzip1Bytes": 123855,
+          "jsonBytes": 727624,
+          "sha256": "7c1038c5494f30666587fec725da3fca0b8786a9918cfbf2b69e72ac47eff816"
+        },
+        "elapsedSeconds": {
+          "gzip1Bytes": 36,
+          "jsonBytes": 18,
+          "sha256": "5fc3a6b8683a36f24ad604155f7361c23e9c32c3dc3c694b9a4505271f31a1fd"
+        },
+        "flapComponents": {
+          "gzip1Bytes": 188648,
+          "jsonBytes": 1065219,
+          "sha256": "60f03ede2dd55c2ea6816c54056fd17044380d1b68c0ff3dda83011478b8236b"
+        },
+        "fluid": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "fluidAddedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidEscapedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidRemovedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "holds": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "materialExposure": {
+          "gzip1Bytes": 97,
+          "jsonBytes": 86,
+          "sha256": "8045189b846975cdc9d265b82b0b992d702bad5344cad3244d8bc92ced925527"
+        },
+        "meshCutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "meshSeams": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "observations": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "removed": {
+          "gzip1Bytes": 118984,
+          "jsonBytes": 376433,
+          "sha256": "be3c282d4ee5f7f052755cc8efe82cfd7108c847fbe774468bb982cbc1fb42ea"
+        },
+        "separated": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "separatedAttachments": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "slots": {
+          "gzip1Bytes": 238,
+          "jsonBytes": 453,
+          "sha256": "8bd09d16e516154513ee0fa74b26016be217bee54a7b1e65f8b6e5ea77e2d934"
+        },
+        "sources": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "thermal": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "transectedEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "travelMm": {
+          "gzip1Bytes": 37,
+          "jsonBytes": 17,
+          "sha256": "e706eb6ae7939d86b95d4e05454aeef5b8d6e58d74a52e93672b802d5df0f336"
+        },
+        "vesselEncounters": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "vesselsV2": {
+          "gzip1Bytes": 153,
+          "jsonBytes": 188,
+          "sha256": "68dc7c9069474090ff7a737dc97617f103af3fd6ec868ad0f868a209051ee529"
+        }
+      },
+      "removedCells": 47054,
+      "debrisEntries": 12277,
+      "actionOperations": {
+        "place": 204,
+        "apply": 902,
+        "withdraw": 201,
+        "exchange": 202,
+        "inspect": 79,
+        "activate": 1,
+        "move": 54,
+        "deactivate": 1
+      },
+      "zeroDurationCommands": 0
+    },
+    {
+      "path": "testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-cleared-lookup.ressectionlab",
+      "sha256": "1a02bf484676c7678073831d4b5999cb421b9558be5064b37c8516b53195b832",
+      "branch": "full-primary",
+      "actions": 470,
+      "stateId": "sha256:49471232604cc7489b4f83092a29dceebebdaeb604ab2d4f7395c7c13ce906c7",
+      "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "checkpointPosition": 470,
+      "gzip1AllFieldBytes": 291712,
+      "stateDescriptorGzip1Bytes": 1207,
+      "fields": {
+        "contact": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "cutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "cuts": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "debris": {
+          "gzip1Bytes": 12325,
+          "jsonBytes": 60510,
+          "sha256": "6e65d15e2114d4b016b669895b5d6efc2b04ca38788a7e4c117fa2aab39fd922"
+        },
+        "debrisMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "cf7937be9a327248af730b8149b448b7e08e10656293c727f8775feb544d3e8d"
+        },
+        "debrisRemovedMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "ce1b7d026c8f931bd974ce636f274809b6064efabd5c47ae3d07d63b47c60ac2"
+        },
+        "deformation": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "deformationModel": {
+          "gzip1Bytes": 78,
+          "jsonBytes": 65,
+          "sha256": "78819f199e296236b8ec0abdb623e00d512eb52476d0c6b81d579235d4d04097"
+        },
+        "drillingV2": {
+          "gzip1Bytes": 43846,
+          "jsonBytes": 254933,
+          "sha256": "41453921f8146335bae7ef336d9dd246a6b363bdb3b7900ee4cfe92a9e84cb2d"
+        },
+        "elapsedSeconds": {
+          "gzip1Bytes": 37,
+          "jsonBytes": 17,
+          "sha256": "dfe89c1f184b85a40a235c1704472b2399053bdbfc5a1b9199949addf6cd1929"
+        },
+        "flapComponents": {
+          "gzip1Bytes": 188614,
+          "jsonBytes": 1064546,
+          "sha256": "2f79ed241adce7183ce95e7127dbb1db532df5b30716fecb60aaac0daf3a345c"
+        },
+        "fluid": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "fluidAddedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidEscapedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidRemovedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "holds": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "materialExposure": {
+          "gzip1Bytes": 97,
+          "jsonBytes": 88,
+          "sha256": "c465821d98daf48451b195be37bd701429eb1f13a0e732d4a95205b40ac777b0"
+        },
+        "meshCutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "meshSeams": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "observations": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "removed": {
+          "gzip1Bytes": 45795,
+          "jsonBytes": 145161,
+          "sha256": "0a3c42c01fa9ca58fa397d5e06b6e4209d3ae249f04b624e95bcb518926c2cf5"
+        },
+        "separated": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "separatedAttachments": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "slots": {
+          "gzip1Bytes": 265,
+          "jsonBytes": 463,
+          "sha256": "4ca260f1cd77b43429fe089ac4349a66766893aff6e802bc5e58b0b6882b93ed"
+        },
+        "sources": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "thermal": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "transectedEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "travelMm": {
+          "gzip1Bytes": 37,
+          "jsonBytes": 17,
+          "sha256": "19d8cabebd62e29a1dbb2090f21a4b8fad7db5ed045ad55cca3e66dc69734f2d"
+        },
+        "vesselEncounters": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "vesselsV2": {
+          "gzip1Bytes": 153,
+          "jsonBytes": 187,
+          "sha256": "c16f36218211f7899a82d1aad67e8a3b4e2beb117645e883285e846bcd486e8b"
+        }
+      },
+      "removedCells": 18145,
+      "debrisEntries": 4307,
+      "actionOperations": {
+        "place": 67,
+        "apply": 245,
+        "withdraw": 61,
+        "exchange": 66,
+        "inspect": 20,
+        "activate": 1,
+        "move": 10
+      },
+      "zeroDurationCommands": 0
+    },
+    {
+      "path": "testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-exact-rollback-copy-1486.ressectionlab",
+      "sha256": "342dbf52b1bbecb72ec159705b4e0fb735b10461337070fad65c5b69703165a7",
+      "branch": "full-primary",
+      "actions": 1486,
+      "stateId": "sha256:aa7df2af3a2413cfd15af35ac5d7dc39d398f395eb757a8d6154f2255101390e",
+      "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "checkpointPosition": 1486,
+      "gzip1AllFieldBytes": 458080,
+      "stateDescriptorGzip1Bytes": 1212,
+      "fields": {
+        "contact": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "cutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "cuts": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "debris": {
+          "gzip1Bytes": 33168,
+          "jsonBytes": 164152,
+          "sha256": "8b212c51db48ca226940f7fe4e54088999f24c5bb73e0bf566d5cc57b175ede3"
+        },
+        "debrisMm3": {
+          "gzip1Bytes": 34,
+          "jsonBytes": 18,
+          "sha256": "abddfa89bbfa2b0cc8dae0d468258cf701a16eeeb0fd1c492838ffe8d265b3ee"
+        },
+        "debrisRemovedMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "ce1b7d026c8f931bd974ce636f274809b6064efabd5c47ae3d07d63b47c60ac2"
+        },
+        "deformation": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "deformationModel": {
+          "gzip1Bytes": 78,
+          "jsonBytes": 65,
+          "sha256": "78819f199e296236b8ec0abdb623e00d512eb52476d0c6b81d579235d4d04097"
+        },
+        "drillingV2": {
+          "gzip1Bytes": 119612,
+          "jsonBytes": 675127,
+          "sha256": "05ad90d7bc464e87410a7cd000457cb9359520217ca3b46da80372af423c3de2"
+        },
+        "elapsedSeconds": {
+          "gzip1Bytes": 37,
+          "jsonBytes": 17,
+          "sha256": "9106a557aec7adfa0f57c8c711fa65985e1fed1be1a655f315cd4e630167a90c"
+        },
+        "flapComponents": {
+          "gzip1Bytes": 188494,
+          "jsonBytes": 1065078,
+          "sha256": "7656765491b6d88657358195780c9c85a131ba41b04a34d36ecf014765754110"
+        },
+        "fluid": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "fluidAddedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidEscapedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidRemovedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "holds": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "materialExposure": {
+          "gzip1Bytes": 97,
+          "jsonBytes": 87,
+          "sha256": "cbf9c95a6ad3327ae2a29f65546d604b9759a87ada310afebaeb6222055e1e3c"
+        },
+        "meshCutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "meshSeams": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "observations": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "removed": {
+          "gzip1Bytes": 115671,
+          "jsonBytes": 365361,
+          "sha256": "c4e189f978205ed045994a2412c2c6cf50df83cd107db9453d5f3e6b0a667848"
+        },
+        "separated": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "separatedAttachments": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "slots": {
+          "gzip1Bytes": 267,
+          "jsonBytes": 465,
+          "sha256": "829a886b72a821053c37d673ad8ab88b0e7894e142f1b5adac16ac16b4d37eeb"
+        },
+        "sources": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "thermal": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "transectedEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "travelMm": {
+          "gzip1Bytes": 37,
+          "jsonBytes": 17,
+          "sha256": "74c0e7d7774828ad71b37bd807174345ee1b4054ace85035dbe2472b41749949"
+        },
+        "vesselEncounters": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "vesselsV2": {
+          "gzip1Bytes": 153,
+          "jsonBytes": 187,
+          "sha256": "6ded2cb6e52716bbbafe2b6483f9fab3ae0587190b51b64e581df1d5e89fa6d6"
+        }
+      },
+      "removedCells": 45670,
+      "debrisEntries": 11710,
+      "actionOperations": {
+        "place": 185,
+        "apply": 819,
+        "withdraw": 181,
+        "exchange": 184,
+        "inspect": 68,
+        "activate": 1,
+        "move": 47,
+        "deactivate": 1
+      },
+      "zeroDurationCommands": 0
+    },
+    {
+      "path": "testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-exact-thermal-1076.ressectionlab",
+      "sha256": "f0f143fc211f3f48aa6ab3a47482021b90c052615bb6043573b4c76e507b2fed",
+      "branch": "full-primary",
+      "actions": 1076,
+      "stateId": "sha256:1c773e2e4aa8cb0a5eb68f2bee32bf9b651b43adfbe27f239ecb1265e6d9ed89",
+      "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "checkpointPosition": 1076,
+      "gzip1AllFieldBytes": 401163,
+      "stateDescriptorGzip1Bytes": 1210,
+      "fields": {
+        "contact": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "cutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "cuts": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "debris": {
+          "gzip1Bytes": 24336,
+          "jsonBytes": 120794,
+          "sha256": "fff629341dc0987071c96bcc31324d71fe965d308ef1725d7e01199ce15fd21b"
+        },
+        "debrisMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "9870acd27d3ded1dfd77392c9cd5cc4149122011d988e1078b14e010871fb5a5"
+        },
+        "debrisRemovedMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "ce1b7d026c8f931bd974ce636f274809b6064efabd5c47ae3d07d63b47c60ac2"
+        },
+        "deformation": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "deformationModel": {
+          "gzip1Bytes": 78,
+          "jsonBytes": 65,
+          "sha256": "78819f199e296236b8ec0abdb623e00d512eb52476d0c6b81d579235d4d04097"
+        },
+        "drillingV2": {
+          "gzip1Bytes": 88291,
+          "jsonBytes": 499567,
+          "sha256": "794f5d4dd6ce47b85450d4d8fa415909f19402d5a0683414b41817c64b75cd46"
+        },
+        "elapsedSeconds": {
+          "gzip1Bytes": 38,
+          "jsonBytes": 18,
+          "sha256": "19c54912f346d656679dd088e06951ba0a1f623fa9db3490fdf6f95471526518"
+        },
+        "flapComponents": {
+          "gzip1Bytes": 188800,
+          "jsonBytes": 1065344,
+          "sha256": "c60d5d96d0402bdd21cae8ddad454ddf42ea9e2dab4a73724c8fafa35a844f9e"
+        },
+        "fluid": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "fluidAddedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidEscapedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidRemovedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "holds": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "materialExposure": {
+          "gzip1Bytes": 98,
+          "jsonBytes": 87,
+          "sha256": "9338af32107f2d830e6237aec4012a4c0f002df98ff3f1492c67919d0692e566"
+        },
+        "meshCutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "meshSeams": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "observations": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "removed": {
+          "gzip1Bytes": 98630,
+          "jsonBytes": 310689,
+          "sha256": "ebd0e91e5d980faa04eeb5629004503ee35212456aaa9db70585f1c44c264cec"
+        },
+        "separated": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "separatedAttachments": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "slots": {
+          "gzip1Bytes": 237,
+          "jsonBytes": 426,
+          "sha256": "53ce3a7bf56c296f534e8beda94815b4978ff3e81fb2d389850f3c9218e444b1"
+        },
+        "sources": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "thermal": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "transectedEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "travelMm": {
+          "gzip1Bytes": 37,
+          "jsonBytes": 17,
+          "sha256": "64ac1a1c59120168ea98df80a6a46cf6a8b27abed264dc6ba95a321215d9ca86"
+        },
+        "vesselEncounters": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "vesselsV2": {
+          "gzip1Bytes": 153,
+          "jsonBytes": 188,
+          "sha256": "a0a4d546d0a6b169454d24d94ebb198187789201d12b1ea07e017821fad93047"
+        }
+      },
+      "removedCells": 38836,
+      "debrisEntries": 8613,
+      "actionOperations": {
+        "place": 136,
+        "apply": 593,
+        "withdraw": 133,
+        "exchange": 136,
+        "inspect": 47,
+        "activate": 1,
+        "move": 29,
+        "deactivate": 1
+      },
+      "zeroDurationCommands": 0
+    },
+    {
+      "path": "testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-field-cleanup-director-692.ressectionlab",
+      "sha256": "ce7de07e26e94b8d47610b97ea9c4f8bd161312c6fa5bb42eb0af8e42a10d1c8",
+      "branch": "full-primary",
+      "actions": 692,
+      "stateId": "sha256:7aaadf51c6ca5bb3e640034e40d5ab3faa318da4f738adb71096dfe3b4e05ea6",
+      "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "checkpointPosition": 692,
+      "gzip1AllFieldBytes": 355849,
+      "stateDescriptorGzip1Bytes": 1199,
+      "fields": {
+        "contact": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "cutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "cuts": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "debris": {
+          "gzip1Bytes": 17494,
+          "jsonBytes": 86200,
+          "sha256": "43cb429f33023d081b87542c518cc5f39160e9542d4ea4cd65e7ec9f6a7390d3"
+        },
+        "debrisMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "a454614c9c607d5622af3de6f2f249cc2ef3d5f4833ae29d15b165d0d02d266f"
+        },
+        "debrisRemovedMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "ce1b7d026c8f931bd974ce636f274809b6064efabd5c47ae3d07d63b47c60ac2"
+        },
+        "deformation": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "deformationModel": {
+          "gzip1Bytes": 78,
+          "jsonBytes": 65,
+          "sha256": "78819f199e296236b8ec0abdb623e00d512eb52476d0c6b81d579235d4d04097"
+        },
+        "drillingV2": {
+          "gzip1Bytes": 67230,
+          "jsonBytes": 358200,
+          "sha256": "e45185ebff33c85fc01ed3c1e0247156e7a9b0db02b8fbbcb9757ddb3167f811"
+        },
+        "elapsedSeconds": {
+          "gzip1Bytes": 38,
+          "jsonBytes": 18,
+          "sha256": "40c9326a5c7b6a66d8ebf38225a22fe5b59028f27a9febe28d289796d470619b"
+        },
+        "flapComponents": {
+          "gzip1Bytes": 188611,
+          "jsonBytes": 1064546,
+          "sha256": "4bb45b7fdcccad68fd8936189153ba4f1839a99066bf1d667c6243a97e61b251"
+        },
+        "fluid": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "fluidAddedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidEscapedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidRemovedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "holds": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "materialExposure": {
+          "gzip1Bytes": 98,
+          "jsonBytes": 89,
+          "sha256": "36d83ed4fe32f3359fb3459b3ad112b7f8621039f193704d88c873f69104eb6c"
+        },
+        "meshCutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "meshSeams": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "observations": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "removed": {
+          "gzip1Bytes": 81386,
+          "jsonBytes": 256769,
+          "sha256": "4a1752ad1e5276e1bdfa38524e956e29cea60128e23b3f9d69238502dd4a519c"
+        },
+        "separated": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "separatedAttachments": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "slots": {
+          "gzip1Bytes": 257,
+          "jsonBytes": 433,
+          "sha256": "c4838fa69639620c520b08047d4dbb3395a4555838f338fad4c65d621826f43b"
+        },
+        "sources": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "thermal": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "transectedEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "travelMm": {
+          "gzip1Bytes": 38,
+          "jsonBytes": 18,
+          "sha256": "6153e4ffc22d9c60e9ca46925f71a543c92475c548a87f42f175d74f808d424b"
+        },
+        "vesselEncounters": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "vesselsV2": {
+          "gzip1Bytes": 154,
+          "jsonBytes": 188,
+          "sha256": "7130551c4df3043cb612fe2f52ab30eb2cbac6aa1cb44f411a5b5b599c1dc2c6"
+        }
+      },
+      "removedCells": 32096,
+      "debrisEntries": 6142,
+      "actionOperations": {
+        "place": 87,
+        "apply": 385,
+        "withdraw": 82,
+        "exchange": 87,
+        "inspect": 29,
+        "activate": 1,
+        "move": 21
+      },
+      "zeroDurationCommands": 0
+    },
+    {
+      "path": "testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-large-core-100.ressectionlab",
+      "sha256": "201af4982c573fc2a8d703e78967566d76930eb04ce3b6185fed33bb97222e21",
+      "branch": "full-primary",
+      "actions": 100,
+      "stateId": "sha256:3fd6b0c4118d276014220a8e994b9b65f866a33c10010953a2713b29d0772db8",
+      "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "checkpointPosition": 100,
+      "gzip1AllFieldBytes": 252543,
+      "stateDescriptorGzip1Bytes": 1203,
+      "fields": {
+        "contact": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "cutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "cuts": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "debris": {
+          "gzip1Bytes": 9437,
+          "jsonBytes": 46762,
+          "sha256": "9c75ec0d78fb9ba77e390fefc33cf9fd8a6b0b5532763cb4728e999b8fceb77a"
+        },
+        "debrisMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "dd185a72d4faa324de2de6210226e37c50ad77e7d017e11fda857034adb62cf5"
+        },
+        "debrisRemovedMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "ce1b7d026c8f931bd974ce636f274809b6064efabd5c47ae3d07d63b47c60ac2"
+        },
+        "deformation": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "deformationModel": {
+          "gzip1Bytes": 78,
+          "jsonBytes": 65,
+          "sha256": "78819f199e296236b8ec0abdb623e00d512eb52476d0c6b81d579235d4d04097"
+        },
+        "drillingV2": {
+          "gzip1Bytes": 41200,
+          "jsonBytes": 197585,
+          "sha256": "265a556dae11900b574c6a4899b6d946b42ffd144da8a9417dff14182526b8b6"
+        },
+        "elapsedSeconds": {
+          "gzip1Bytes": 37,
+          "jsonBytes": 17,
+          "sha256": "46f7c3a5db35cc7fd8aede03882577d5224891ab767c459321d2e330bb353f4d"
+        },
+        "flapComponents": {
+          "gzip1Bytes": 188703,
+          "jsonBytes": 1064413,
+          "sha256": "dc189e40781f44fc14c1ace1d2ccfd101a2895a5767cee1416d0ca40666effbd"
+        },
+        "fluid": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "fluidAddedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidEscapedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidRemovedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "holds": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "materialExposure": {
+          "gzip1Bytes": 98,
+          "jsonBytes": 88,
+          "sha256": "ee64ce5c91409615d877aa4f4c0104237c41271d86abcbd09b0e56ac53810663"
+        },
+        "meshCutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "meshSeams": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "observations": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "removed": {
+          "gzip1Bytes": 12048,
+          "jsonBytes": 38153,
+          "sha256": "cba1c19469902294ee4a4b16486afb46a78f00a504ffae1dd04640d01c86f67d"
+        },
+        "separated": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "separatedAttachments": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "slots": {
+          "gzip1Bytes": 288,
+          "jsonBytes": 493,
+          "sha256": "11ae8ddabb57e208020e225a4ec7ea493ee54b5f35e3212a327e86c30c611951"
+        },
+        "sources": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "thermal": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "transectedEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "travelMm": {
+          "gzip1Bytes": 37,
+          "jsonBytes": 17,
+          "sha256": "f1c500adbd0b63c7820946940174f0121d0a838ec6aad5e9f05de0124d99f975"
+        },
+        "vesselEncounters": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "vesselsV2": {
+          "gzip1Bytes": 152,
+          "jsonBytes": 187,
+          "sha256": "46b00656d451edaedd6b01284e1757af99a62ba29943dcced24f6953d7c23d25"
+        }
+      },
+      "removedCells": 4769,
+      "debrisEntries": 3325,
+      "actionOperations": {
+        "place": 19,
+        "apply": 43,
+        "withdraw": 15,
+        "exchange": 18,
+        "inspect": 4,
+        "activate": 1
+      },
+      "zeroDurationCommands": 0
+    },
+    {
+      "path": "testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-occupancy-optimization.ressectionlab",
+      "sha256": "798fecbb9f9dc14f14f675bae953da86fbf8df44c456d19fc177c15249506c51",
+      "branch": "full-primary",
+      "actions": 282,
+      "stateId": "sha256:e8237c9b4962b4c641dc6e9174042a1dd773b7d00b75aee6d573c4d90880461a",
+      "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "checkpointPosition": 282,
+      "gzip1AllFieldBytes": 268956,
+      "stateDescriptorGzip1Bytes": 1218,
+      "fields": {
+        "contact": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "cutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "cuts": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "debris": {
+          "gzip1Bytes": 10538,
+          "jsonBytes": 51998,
+          "sha256": "e046ced9ff55d1bdfb6613589e3eb84e57dc8b609c86ba5767f8eee5af37de07"
+        },
+        "debrisMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "1b7e50a6eb4b12df766dd0d7d97eda83a2506c8d69996249906e90d8e2cf48d8"
+        },
+        "debrisRemovedMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "ce1b7d026c8f931bd974ce636f274809b6064efabd5c47ae3d07d63b47c60ac2"
+        },
+        "deformation": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "deformationModel": {
+          "gzip1Bytes": 78,
+          "jsonBytes": 65,
+          "sha256": "78819f199e296236b8ec0abdb623e00d512eb52476d0c6b81d579235d4d04097"
+        },
+        "drillingV2": {
+          "gzip1Bytes": 37620,
+          "jsonBytes": 220490,
+          "sha256": "16d016a079197e792496a9307753219e4e7b6172f35fd242e4ec1b6fc9e6f9a1"
+        },
+        "elapsedSeconds": {
+          "gzip1Bytes": 37,
+          "jsonBytes": 17,
+          "sha256": "a15372b6d2064593d04ac9c060db7ec3e9958ef6c8d5aa299969f009dbe2d386"
+        },
+        "flapComponents": {
+          "gzip1Bytes": 188756,
+          "jsonBytes": 1064945,
+          "sha256": "28baeaae4c97dca5b343d2f71f722ab8e14e8c097bfd20935be78d6f69798351"
+        },
+        "fluid": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "fluidAddedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidEscapedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidRemovedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "holds": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "materialExposure": {
+          "gzip1Bytes": 98,
+          "jsonBytes": 87,
+          "sha256": "64ff8bd068e5984b3cb76cf3184c3e0df57685640ca86d634cff4b5d648ff5bb"
+        },
+        "meshCutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "meshSeams": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "observations": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "removed": {
+          "gzip1Bytes": 30911,
+          "jsonBytes": 98273,
+          "sha256": "2347a7adb6525f6f0cd732c272f32a5d66dcaf147cc8519ef68c4244ae28bc85"
+        },
+        "separated": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "separatedAttachments": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "slots": {
+          "gzip1Bytes": 261,
+          "jsonBytes": 459,
+          "sha256": "11d19fe364ffb84d0747cb3c8aa26661e5751d0d7f658cddf446a1d9985311f7"
+        },
+        "sources": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "thermal": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "transectedEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "travelMm": {
+          "gzip1Bytes": 38,
+          "jsonBytes": 18,
+          "sha256": "e2c6e1be4a8a5a4fe8500d8ba856ba5b2324bcfeb0fa323dec2b46ae073c029b"
+        },
+        "vesselEncounters": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "vesselsV2": {
+          "gzip1Bytes": 154,
+          "jsonBytes": 187,
+          "sha256": "528b7da0c5a62b35d4516628e3cdaef25c4061f0f7eb7f3588adb8ae92056d43"
+        }
+      },
+      "removedCells": 12284,
+      "debrisEntries": 3699,
+      "actionOperations": {
+        "place": 43,
+        "apply": 142,
+        "withdraw": 38,
+        "exchange": 42,
+        "inspect": 13,
+        "activate": 1,
+        "move": 3
+      },
+      "zeroDurationCommands": 0
+    },
+    {
+      "path": "testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-retrace-316.ressectionlab",
+      "sha256": "3c9aa655eb41839f7e1c7954d8df1d1248e832597946cefad967348abd1ccaee",
+      "branch": "full-primary",
+      "actions": 316,
+      "stateId": "sha256:0845143f34ebdb28dd393262dbe151f28ef9239bc2da52c759a94efe48663f7a",
+      "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "checkpointPosition": 316,
+      "gzip1AllFieldBytes": 270466,
+      "stateDescriptorGzip1Bytes": 1196,
+      "fields": {
+        "contact": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "cutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "cuts": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "debris": {
+          "gzip1Bytes": 10562,
+          "jsonBytes": 52110,
+          "sha256": "268a57dfd0d9d09c4918e1a2fdea8362b81aca81f0f0f86ed3c30609346119cb"
+        },
+        "debrisMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "e3283510a41ca14bda0d0a1058d40e04db2122c64e33ea2ae628ede371256e3d"
+        },
+        "debrisRemovedMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "ce1b7d026c8f931bd974ce636f274809b6064efabd5c47ae3d07d63b47c60ac2"
+        },
+        "deformation": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "deformationModel": {
+          "gzip1Bytes": 78,
+          "jsonBytes": 65,
+          "sha256": "78819f199e296236b8ec0abdb623e00d512eb52476d0c6b81d579235d4d04097"
+        },
+        "drillingV2": {
+          "gzip1Bytes": 37476,
+          "jsonBytes": 220948,
+          "sha256": "5c3d0748f96f8f53898c41e41dca74dfeadedd3cbcb20a9ca4d152df0c819fb1"
+        },
+        "elapsedSeconds": {
+          "gzip1Bytes": 37,
+          "jsonBytes": 17,
+          "sha256": "4c77d6240a0daa774cbde97c5d553cc2f5e873f308f33fea1bac77b7f259caf5"
+        },
+        "flapComponents": {
+          "gzip1Bytes": 188675,
+          "jsonBytes": 1064679,
+          "sha256": "9f1b6525795e7422ee951cae4b15dcae84c643e28d3e9a073a4a73c5ce724e97"
+        },
+        "fluid": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "fluidAddedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidEscapedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidRemovedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "holds": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "materialExposure": {
+          "gzip1Bytes": 97,
+          "jsonBytes": 87,
+          "sha256": "f2231d99f7a1e6da3634f341e11d150abc682e8e9df6e898b89d6238ab240e1b"
+        },
+        "meshCutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "meshSeams": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "observations": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "removed": {
+          "gzip1Bytes": 32561,
+          "jsonBytes": 103425,
+          "sha256": "89e340df1b35c6e8d510303b70bd49d3ac936b40f1ac414d1b02885fa9e3c1dd"
+        },
+        "separated": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "separatedAttachments": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "slots": {
+          "gzip1Bytes": 325,
+          "jsonBytes": 531,
+          "sha256": "5102fa906966ef7ce43bdd7e3e56de0545b5632a9128de29a89233b5c1d34cef"
+        },
+        "sources": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "thermal": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "transectedEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "travelMm": {
+          "gzip1Bytes": 37,
+          "jsonBytes": 17,
+          "sha256": "673f0d4e8a65b0b207451fe80b295177bb43807e6e587c441c937e1fc5a8df30"
+        },
+        "vesselEncounters": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "vesselsV2": {
+          "gzip1Bytes": 153,
+          "jsonBytes": 187,
+          "sha256": "b97d2ff823ab77b888f34cdbbc9852904d9bc5d9a5efe4ae70055c8df68a56e6"
+        }
+      },
+      "removedCells": 12928,
+      "debrisEntries": 3707,
+      "actionOperations": {
+        "place": 47,
+        "apply": 159,
+        "withdraw": 42,
+        "exchange": 46,
+        "inspect": 16,
+        "activate": 1,
+        "move": 5
+      },
+      "zeroDurationCommands": 0
+    },
+    {
+      "path": "testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-short-directional-proposals-1692.ressectionlab",
+      "sha256": "855bc29afafad25c693b406a0ecc9178a6d3bf620ac44cc814a1295c973e121e",
+      "branch": "full-primary",
+      "actions": 1692,
+      "stateId": "sha256:face68709d09adf2f1eb841a00c692269fd8c9c0f86a8e054ff533acd7ed62f7",
+      "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "checkpointPosition": 1692,
+      "gzip1AllFieldBytes": 477534,
+      "stateDescriptorGzip1Bytes": 1212,
+      "fields": {
+        "contact": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "cutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "cuts": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "debris": {
+          "gzip1Bytes": 36834,
+          "jsonBytes": 181462,
+          "sha256": "136ee6eb883aaa2aa844187397b687d88f5e08db2d6c06361c4cfa033418defe"
+        },
+        "debrisMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "cb392ed4faf38f15510ca48b5c969500dd65ad37b794c8487c2d79469ca74271"
+        },
+        "debrisRemovedMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "d19d929a50c6ec62129bdfb038117fe9e97db637c3946e56a31c92966014d380"
+        },
+        "deformation": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "deformationModel": {
+          "gzip1Bytes": 78,
+          "jsonBytes": 65,
+          "sha256": "78819f199e296236b8ec0abdb623e00d512eb52476d0c6b81d579235d4d04097"
+        },
+        "drillingV2": {
+          "gzip1Bytes": 130239,
+          "jsonBytes": 765745,
+          "sha256": "00547f726448ca45e26ed0307403cbd3473233165bae9b0181d601318b135585"
+        },
+        "elapsedSeconds": {
+          "gzip1Bytes": 38,
+          "jsonBytes": 18,
+          "sha256": "173dc4ffc62539a5ba3959e9c07bbef3f6c57151a19dd3561fe23e20a44bd157"
+        },
+        "flapComponents": {
+          "gzip1Bytes": 188481,
+          "jsonBytes": 1064687,
+          "sha256": "73ac0e14ff763ed5234194564086fdf6e22f97659d406c4317bd9bd686076c9d"
+        },
+        "fluid": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "fluidAddedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidEscapedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidRemovedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "holds": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "materialExposure": {
+          "gzip1Bytes": 97,
+          "jsonBytes": 86,
+          "sha256": "7b0bd7a1d912345e3611ca7e94c1ea90058bd521b3de85be5cb52efb5963c662"
+        },
+        "meshCutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "meshSeams": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "observations": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "removed": {
+          "gzip1Bytes": 120836,
+          "jsonBytes": 382057,
+          "sha256": "c4cbdc01c1ec5743570765a53b77e60decf515ae0a6f7eb3863697712ded0b0a"
+        },
+        "separated": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "separatedAttachments": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "slots": {
+          "gzip1Bytes": 275,
+          "jsonBytes": 482,
+          "sha256": "ab98bf141fd4de1cc003669ac32e54e049a855850ddafd87dbb54f23975e14dd"
+        },
+        "sources": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "thermal": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "transectedEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "travelMm": {
+          "gzip1Bytes": 38,
+          "jsonBytes": 18,
+          "sha256": "480d0209bf203e2f19d45bfc213295c0ca7bf1d8051016aab2f1b06138023e8d"
+        },
+        "vesselEncounters": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "vesselsV2": {
+          "gzip1Bytes": 153,
+          "jsonBytes": 188,
+          "sha256": "abc8972c4c3459e374f0c77686b25bbe27e3effe3c9df3b06610604d9d6b8fad"
+        }
+      },
+      "removedCells": 47757,
+      "debrisEntries": 12954,
+      "actionOperations": {
+        "place": 212,
+        "apply": 922,
+        "withdraw": 212,
+        "exchange": 210,
+        "inspect": 80,
+        "activate": 1,
+        "move": 54,
+        "deactivate": 1
+      },
+      "zeroDurationCommands": 0
+    },
+    {
+      "path": "testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-source-array-cache-828.ressectionlab",
+      "sha256": "b7dbc601d8556349a93fc8e1eee3c71d273532ddd9fefbf525ea8c44155dfa69",
+      "branch": "full-primary",
+      "actions": 828,
+      "stateId": "sha256:4288d0815a91d3ba258eb223653bd367c9fd7c2aef6f4193fde540915596d058",
+      "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "checkpointPosition": 828,
+      "gzip1AllFieldBytes": 376823,
+      "stateDescriptorGzip1Bytes": 1209,
+      "fields": {
+        "contact": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "cutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "cuts": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "debris": {
+          "gzip1Bytes": 20697,
+          "jsonBytes": 102300,
+          "sha256": "56406113c9be5be54ff4692bb162071b4bb909654a4e42c5b0ef1c63fa6cbe3e"
+        },
+        "debrisMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "f76626a5cc0925ccf49ee40b03f5aad1973c20c11bbe60a63bb6f18905d17555"
+        },
+        "debrisRemovedMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "ce1b7d026c8f931bd974ce636f274809b6064efabd5c47ae3d07d63b47c60ac2"
+        },
+        "deformation": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "deformationModel": {
+          "gzip1Bytes": 78,
+          "jsonBytes": 65,
+          "sha256": "78819f199e296236b8ec0abdb623e00d512eb52476d0c6b81d579235d4d04097"
+        },
+        "drillingV2": {
+          "gzip1Bytes": 74994,
+          "jsonBytes": 423885,
+          "sha256": "8a767d6d471edc4a097fc8f5db1fa5eeaf6426e41e3d739393067f6b9a20f0ee"
+        },
+        "elapsedSeconds": {
+          "gzip1Bytes": 38,
+          "jsonBytes": 18,
+          "sha256": "d0814486a0165891fc9382e4bf7fac593477f6f7b83fa3e4ebf6b7211972d2ad"
+        },
+        "flapComponents": {
+          "gzip1Bytes": 188630,
+          "jsonBytes": 1064812,
+          "sha256": "03023e82a880337ffb8576fd1d1f3badbbec20fc7437c87063bf078d69997c7c"
+        },
+        "fluid": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "fluidAddedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidEscapedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidRemovedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "holds": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "materialExposure": {
+          "gzip1Bytes": 98,
+          "jsonBytes": 88,
+          "sha256": "f8acf7708c9a05dd1796bde6faf2d174b33d5ed672bdf52465601c488e6e3bfd"
+        },
+        "meshCutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "meshSeams": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "observations": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "removed": {
+          "gzip1Bytes": 91380,
+          "jsonBytes": 288321,
+          "sha256": "28a2e375ee5f52226807745bfbc1984f91eaef73ecc2e359b32ec679b743dc58"
+        },
+        "separated": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "separatedAttachments": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "slots": {
+          "gzip1Bytes": 251,
+          "jsonBytes": 451,
+          "sha256": "e6d357be288ad8f9dab0a2bec3c77d58fd0c45998d8e1fe3da672db401bba66e"
+        },
+        "sources": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "thermal": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "transectedEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "travelMm": {
+          "gzip1Bytes": 38,
+          "jsonBytes": 18,
+          "sha256": "0abba9197e22676108a69ee54446da196c73df7473c275143ef0f5df72ce0ed8"
+        },
+        "vesselEncounters": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "vesselsV2": {
+          "gzip1Bytes": 154,
+          "jsonBytes": 188,
+          "sha256": "15c89f777cdba19e2c53fc600ca74928144bb3c03d405e251edba99d89870c76"
+        }
+      },
+      "removedCells": 36040,
+      "debrisEntries": 7292,
+      "actionOperations": {
+        "place": 103,
+        "apply": 464,
+        "withdraw": 97,
+        "exchange": 102,
+        "inspect": 35,
+        "activate": 1,
+        "move": 26
+      },
+      "zeroDurationCommands": 0
+    },
+    {
+      "path": "testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-superior-resume-1918.ressectionlab",
+      "sha256": "3cbb4c69e1c2481038d58952b452974728bf5f681f3bf39b964f101eb004ab17",
+      "branch": "full-primary",
+      "actions": 1918,
+      "stateId": "sha256:8af822a4638d906bce9995aee8f445e27f4278d492b80e7a2df15b6b8f230f54",
+      "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "checkpointPosition": 1918,
+      "gzip1AllFieldBytes": 501301,
+      "stateDescriptorGzip1Bytes": 1212,
+      "fields": {
+        "contact": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "cutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "cuts": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "debris": {
+          "gzip1Bytes": 41096,
+          "jsonBytes": 200121,
+          "sha256": "5540929cc576bfa777caffe5986e1c6cab61a9ad284bedfdc9bca9cff6991910"
+        },
+        "debrisMm3": {
+          "gzip1Bytes": 27,
+          "jsonBytes": 7,
+          "sha256": "49562901f35a2916b5c90a76483306881ccee457b6dd712782a4e23201e8e67a"
+        },
+        "debrisRemovedMm3": {
+          "gzip1Bytes": 28,
+          "jsonBytes": 17,
+          "sha256": "b592096e6ec8ec7247a806c1db8cd3d81dffabb0b819e23bf11d143e3a4685ef"
+        },
+        "deformation": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "deformationModel": {
+          "gzip1Bytes": 78,
+          "jsonBytes": 65,
+          "sha256": "78819f199e296236b8ec0abdb623e00d512eb52476d0c6b81d579235d4d04097"
+        },
+        "drillingV2": {
+          "gzip1Bytes": 144648,
+          "jsonBytes": 848390,
+          "sha256": "db9f8f232a5bd528574b837b474ba4e03993678718e2d2af1c0a5fdafbc62417"
+        },
+        "elapsedSeconds": {
+          "gzip1Bytes": 38,
+          "jsonBytes": 18,
+          "sha256": "92a9c8f078664233c7e9c92fca7e817a681d4f8a8ccfeaa03cfdc2a0c121adfc"
+        },
+        "flapComponents": {
+          "gzip1Bytes": 188581,
+          "jsonBytes": 1064147,
+          "sha256": "d2d6f68581d522472c6f9b3f9d7d103b0b1ac53bcbfeead241c227db800d8f91"
+        },
+        "fluid": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "fluidAddedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidEscapedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidRemovedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "holds": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "materialExposure": {
+          "gzip1Bytes": 97,
+          "jsonBytes": 86,
+          "sha256": "fca2bd61673359764fef20b5f35aae7ea0a08765d0767a224ef22c081a77ac24"
+        },
+        "meshCutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "meshSeams": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "observations": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "removed": {
+          "gzip1Bytes": 125850,
+          "jsonBytes": 396905,
+          "sha256": "4531e99d879cf63fbf78f1f8e7701023ff0b9bc6b73e92b643e08fbf0d177aab"
+        },
+        "separated": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "separatedAttachments": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "slots": {
+          "gzip1Bytes": 269,
+          "jsonBytes": 484,
+          "sha256": "e8de713e56ce0839ea9e58873414fb2035b34c631fba0aeec05247bd56924d14"
+        },
+        "sources": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "thermal": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "transectedEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "travelMm": {
+          "gzip1Bytes": 37,
+          "jsonBytes": 17,
+          "sha256": "848f383be671bf0f5e0e7c331fc11e706c20b99484d98e6bdf8d521ef776fb0c"
+        },
+        "vesselEncounters": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "vesselsV2": {
+          "gzip1Bytes": 153,
+          "jsonBytes": 188,
+          "sha256": "59c752f26a0667eea2317bc309314319d96ea5a3ed03ebd356bd0fcac67ec435"
+        }
+      },
+      "removedCells": 49613,
+      "debrisEntries": 14291,
+      "actionOperations": {
+        "place": 265,
+        "apply": 995,
+        "withdraw": 250,
+        "exchange": 262,
+        "inspect": 86,
+        "activate": 1,
+        "move": 58,
+        "deactivate": 1
+      },
+      "zeroDurationCommands": 0
+    },
+    {
+      "path": "testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-over-10k.ressectionlab",
+      "sha256": "c5f03005c5e5c9fff5c9665da9f3630015e431456199568e13145fb69e22efb9",
+      "branch": "full-primary",
+      "actions": 342,
+      "stateId": "sha256:6f00fefe304f7e16bcecc8ebbcf036f6bddae8fd2fd317e3e312d91fad667f1d",
+      "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "checkpointPosition": 342,
+      "gzip1AllFieldBytes": 274703,
+      "stateDescriptorGzip1Bytes": 1208,
+      "fields": {
+        "contact": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "cutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "cuts": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "debris": {
+          "gzip1Bytes": 10630,
+          "jsonBytes": 52348,
+          "sha256": "211cd7123462dca3f72276c43fa1e75702c11de7ed75ba413e4b1c4d84ab874e"
+        },
+        "debrisMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "545ca5346c7e7e6f79c97cf9b4bc4d86bceea1cd4b45851eaf3994b7f86ace24"
+        },
+        "debrisRemovedMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "ce1b7d026c8f931bd974ce636f274809b6064efabd5c47ae3d07d63b47c60ac2"
+        },
+        "deformation": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "deformationModel": {
+          "gzip1Bytes": 78,
+          "jsonBytes": 65,
+          "sha256": "78819f199e296236b8ec0abdb623e00d512eb52476d0c6b81d579235d4d04097"
+        },
+        "drillingV2": {
+          "gzip1Bytes": 37907,
+          "jsonBytes": 221884,
+          "sha256": "8336e849ad9c9186d8064d0aa6b315093251d3338352a30c9982b8ae4924b000"
+        },
+        "elapsedSeconds": {
+          "gzip1Bytes": 35,
+          "jsonBytes": 17,
+          "sha256": "3474736caa4f8828305eb93a65bf16616797b696a6d256123e879b32364d8c5f"
+        },
+        "flapComponents": {
+          "gzip1Bytes": 188703,
+          "jsonBytes": 1064413,
+          "sha256": "236b9e56e45167867e2204e28347f6868d01e8a60777a4196bf12acd32995197"
+        },
+        "fluid": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "fluidAddedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidEscapedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidRemovedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "holds": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "materialExposure": {
+          "gzip1Bytes": 98,
+          "jsonBytes": 87,
+          "sha256": "4a6215b4b1b0b7738822bd8325f196f23b1878154c08387cbedd530fb90f00af"
+        },
+        "meshCutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "meshSeams": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "observations": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "removed": {
+          "gzip1Bytes": 36272,
+          "jsonBytes": 115265,
+          "sha256": "a25dbc8cb23dc4fe5c505e915def852992208efef686656e7604e70990252bdf"
+        },
+        "separated": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "separatedAttachments": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "slots": {
+          "gzip1Bytes": 324,
+          "jsonBytes": 528,
+          "sha256": "2e1e4539ac7ddf2da26a91cda0988e858de939d23dc5b632071be9a94d84273f"
+        },
+        "sources": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "thermal": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "transectedEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "travelMm": {
+          "gzip1Bytes": 37,
+          "jsonBytes": 17,
+          "sha256": "04de4e49518a3d9a6fbb994a8de1110704c0a55d99c10e74b5af2c7834496a57"
+        },
+        "vesselEncounters": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "vesselsV2": {
+          "gzip1Bytes": 154,
+          "jsonBytes": 187,
+          "sha256": "1554cb517aa3099aa83b580d78fb14531dc167f1149acd96696cc50171278980"
+        }
+      },
+      "removedCells": 14408,
+      "debrisEntries": 3724,
+      "actionOperations": {
+        "place": 49,
+        "apply": 178,
+        "withdraw": 44,
+        "exchange": 48,
+        "inspect": 16,
+        "activate": 1,
+        "move": 6
+      },
+      "zeroDurationCommands": 0
+    },
+    {
+      "path": "testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-over-eighty-percent-target.ressectionlab",
+      "sha256": "0b26a74f6772473cd237bbdd4be80042f0d0762755ccf281a305883ad9199936",
+      "branch": "full-primary",
+      "actions": 1954,
+      "stateId": "sha256:5f795ad0e74900511bf71b1106b2f29c6cbc7a1dc08b744ab74644942f3b2a0b",
+      "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "checkpointPosition": 1954,
+      "gzip1AllFieldBytes": 508169,
+      "stateDescriptorGzip1Bytes": 1216,
+      "fields": {
+        "contact": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "cutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "cuts": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "debris": {
+          "gzip1Bytes": 41992,
+          "jsonBytes": 204601,
+          "sha256": "a438eb2540a913e023d24a46618875b03f5613db779d65932d0030746ca31fad"
+        },
+        "debrisMm3": {
+          "gzip1Bytes": 27,
+          "jsonBytes": 7,
+          "sha256": "81d6167042a1e6ed877f7176e96e369387492f3cd5db36fc8a80b796bc9f02d9"
+        },
+        "debrisRemovedMm3": {
+          "gzip1Bytes": 28,
+          "jsonBytes": 17,
+          "sha256": "b592096e6ec8ec7247a806c1db8cd3d81dffabb0b819e23bf11d143e3a4685ef"
+        },
+        "deformation": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "deformationModel": {
+          "gzip1Bytes": 78,
+          "jsonBytes": 65,
+          "sha256": "78819f199e296236b8ec0abdb623e00d512eb52476d0c6b81d579235d4d04097"
+        },
+        "drillingV2": {
+          "gzip1Bytes": 149266,
+          "jsonBytes": 866573,
+          "sha256": "e74256b9a2a623102f53b25e16daa5110bf326d1b88d0f4adf31c21442df54eb"
+        },
+        "elapsedSeconds": {
+          "gzip1Bytes": 37,
+          "jsonBytes": 17,
+          "sha256": "f17729b77d38020e921001c65308d2266d608e452bc57651405e5606950ed5eb"
+        },
+        "flapComponents": {
+          "gzip1Bytes": 188583,
+          "jsonBytes": 1064147,
+          "sha256": "1fe6b7124bc9a17c827b58d4c5152e4d6e2d350a983563133f93afe76b7694f7"
+        },
+        "fluid": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "fluidAddedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidEscapedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidRemovedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "holds": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "materialExposure": {
+          "gzip1Bytes": 97,
+          "jsonBytes": 86,
+          "sha256": "15f901635f97738d8ca194adc7f370c52210ee0d3bcfdc72502f2caaf62402db"
+        },
+        "meshCutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "meshSeams": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "observations": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "removed": {
+          "gzip1Bytes": 127214,
+          "jsonBytes": 401145,
+          "sha256": "61dbcc1cf8df5c2baab27224fbab7207bda721ea624a9bd6d2498540d2ec530c"
+        },
+        "separated": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "separatedAttachments": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "slots": {
+          "gzip1Bytes": 257,
+          "jsonBytes": 469,
+          "sha256": "5ef420bb1090f9ad193621f9cc774de35c605aa9a2ad17132917f5fdc18148e3"
+        },
+        "sources": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "thermal": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "transectedEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "travelMm": {
+          "gzip1Bytes": 38,
+          "jsonBytes": 18,
+          "sha256": "4182fee2a718ab771663eaaaea3d81a87bcfa30300c260edf97e9e765e4cb87a"
+        },
+        "vesselEncounters": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "vesselsV2": {
+          "gzip1Bytes": 153,
+          "jsonBytes": 187,
+          "sha256": "d0d8d2137aa9260dec4c46fc039caf4ce9b6f9890b08cb01d9486018cf89f095"
+        }
+      },
+      "removedCells": 50143,
+      "debrisEntries": 14611,
+      "actionOperations": {
+        "place": 271,
+        "apply": 1007,
+        "withdraw": 259,
+        "exchange": 268,
+        "inspect": 88,
+        "activate": 1,
+        "move": 59,
+        "deactivate": 1
+      },
+      "zeroDurationCommands": 0
+    },
+    {
+      "path": "testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-over-half-target.ressectionlab",
+      "sha256": "0889afee6cbc1bba114da5de24b02e5ce46d465091000f3e60b92e2053ca13be",
+      "branch": "full-primary",
+      "actions": 622,
+      "stateId": "sha256:66c3b95abcb35ea49ab207cb268e54add83ed55c614c664be66048f982d6771a",
+      "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "checkpointPosition": 622,
+      "gzip1AllFieldBytes": 340628,
+      "stateDescriptorGzip1Bytes": 1201,
+      "fields": {
+        "contact": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "cutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "cuts": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "debris": {
+          "gzip1Bytes": 16507,
+          "jsonBytes": 80964,
+          "sha256": "94b3c2b62b7285524e584d2aff9f055c18f6a9a1f09611c8f99ae77abcf5dcb4"
+        },
+        "debrisMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "971fad1646f9dc37d94852c12812e7c58c3c687d3139012dbafa1517639136b1"
+        },
+        "debrisRemovedMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "ce1b7d026c8f931bd974ce636f274809b6064efabd5c47ae3d07d63b47c60ac2"
+        },
+        "deformation": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "deformationModel": {
+          "gzip1Bytes": 78,
+          "jsonBytes": 65,
+          "sha256": "78819f199e296236b8ec0abdb623e00d512eb52476d0c6b81d579235d4d04097"
+        },
+        "drillingV2": {
+          "gzip1Bytes": 63161,
+          "jsonBytes": 336815,
+          "sha256": "257844692adf60a3f9c5b84972d43cd1c788327d7994d105d6cade518b90b801"
+        },
+        "elapsedSeconds": {
+          "gzip1Bytes": 38,
+          "jsonBytes": 18,
+          "sha256": "18f4306c239c0be6b69add01118a99e539bb64b518d2de1e65054bed880dea08"
+        },
+        "flapComponents": {
+          "gzip1Bytes": 188693,
+          "jsonBytes": 1064413,
+          "sha256": "42c29f7ef9924bc45e2d7309eb3e35f5e744c326a47669e7baa0f0fb7d5618d4"
+        },
+        "fluid": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "fluidAddedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidEscapedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidRemovedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "holds": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "materialExposure": {
+          "gzip1Bytes": 99,
+          "jsonBytes": 89,
+          "sha256": "605deb2eb180a467caa529bf4257c2bc0bff1d05525b1a6778eafa68138e10dd"
+        },
+        "meshCutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "meshSeams": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "observations": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "removed": {
+          "gzip1Bytes": 71070,
+          "jsonBytes": 224497,
+          "sha256": "8fca2f50c1dfadf0e2dd5f8735281da16010f535ce2479e50eca573427855e6d"
+        },
+        "separated": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "separatedAttachments": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "slots": {
+          "gzip1Bytes": 326,
+          "jsonBytes": 531,
+          "sha256": "34ccf856c5eef0d59683e8846f3efe8364b63ddafbbc3b3c1dae6a964f4aa453"
+        },
+        "sources": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "thermal": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "transectedEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "travelMm": {
+          "gzip1Bytes": 38,
+          "jsonBytes": 18,
+          "sha256": "96c246a4b57ac6c02d451329a9d429ac6164d81f454f919676228c935a8652db"
+        },
+        "vesselEncounters": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "vesselsV2": {
+          "gzip1Bytes": 153,
+          "jsonBytes": 188,
+          "sha256": "d14ac7209c7ec9102749eb7e8a3086eb4c4cfd97617a27cea542a623d5f32ff0"
+        }
+      },
+      "removedCells": 28062,
+      "debrisEntries": 5768,
+      "actionOperations": {
+        "place": 81,
+        "apply": 344,
+        "withdraw": 75,
+        "exchange": 80,
+        "inspect": 25,
+        "activate": 1,
+        "move": 16
+      },
+      "zeroDurationCommands": 0
+    },
+    {
+      "path": "testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-over-seventy-five-percent-target.ressectionlab",
+      "sha256": "a03476879ab5b083ddad415464603078e805b6fa70afecd20928e543c17098c2",
+      "branch": "full-primary",
+      "actions": 1352,
+      "stateId": "sha256:39383eb337ffe17d233bbf4199504496692f2118da122b1ac1732a63e878f7d6",
+      "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "checkpointPosition": 1352,
+      "gzip1AllFieldBytes": 440108,
+      "stateDescriptorGzip1Bytes": 1217,
+      "fields": {
+        "contact": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "cutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "cuts": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "debris": {
+          "gzip1Bytes": 30161,
+          "jsonBytes": 149088,
+          "sha256": "aeed8f43fbb934070e388104d20e804c56a8875516ad4ef0ba01e49cc60be16c"
+        },
+        "debrisMm3": {
+          "gzip1Bytes": 34,
+          "jsonBytes": 18,
+          "sha256": "155f1b85cf1079af80ed54bd7b28b9c525e1a9f6dcf375eb6777d678d0896b0b"
+        },
+        "debrisRemovedMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "ce1b7d026c8f931bd974ce636f274809b6064efabd5c47ae3d07d63b47c60ac2"
+        },
+        "deformation": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "deformationModel": {
+          "gzip1Bytes": 78,
+          "jsonBytes": 65,
+          "sha256": "78819f199e296236b8ec0abdb623e00d512eb52476d0c6b81d579235d4d04097"
+        },
+        "drillingV2": {
+          "gzip1Bytes": 109599,
+          "jsonBytes": 614152,
+          "sha256": "214b7a56e53ea1bbcc8c4c6c5fb0319c7ccac6063b8838618efbfd1e50a125c5"
+        },
+        "elapsedSeconds": {
+          "gzip1Bytes": 37,
+          "jsonBytes": 17,
+          "sha256": "01f2cc9b08094bb4beefedad4397cb097d008666d15c299bab206610a3da34cc"
+        },
+        "flapComponents": {
+          "gzip1Bytes": 188822,
+          "jsonBytes": 1065344,
+          "sha256": "07bcfb4f108bf64dd449a2d5ce3c2d387625b0a29609213cd35745de259907e1"
+        },
+        "fluid": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "fluidAddedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidEscapedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidRemovedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "holds": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "materialExposure": {
+          "gzip1Bytes": 98,
+          "jsonBytes": 87,
+          "sha256": "16fe83f53b2fa45630d694ad03bd915dcf139f2f2f6bc443a37a211970a23407"
+        },
+        "meshCutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "meshSeams": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "observations": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "removed": {
+          "gzip1Bytes": 110404,
+          "jsonBytes": 348417,
+          "sha256": "a6f299d0b7ed67d2dc7957b719845357756b1e34c410616a2fec0c6e2f0542b4"
+        },
+        "separated": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "separatedAttachments": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "slots": {
+          "gzip1Bytes": 252,
+          "jsonBytes": 452,
+          "sha256": "3f4e42e667700187054a876066589cddadce344a0ad6cac96b5cabf3e1f4f3fb"
+        },
+        "sources": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "thermal": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "transectedEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "travelMm": {
+          "gzip1Bytes": 38,
+          "jsonBytes": 18,
+          "sha256": "117196c4f8a9b403a1346318ef0c631ea5cd391a1ae3d3d2344b66b66ece43d7"
+        },
+        "vesselEncounters": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "vesselsV2": {
+          "gzip1Bytes": 153,
+          "jsonBytes": 187,
+          "sha256": "503c100c7a5542174849fb2b6db6f1338af109af961614aae2ef087981379c9d"
+        }
+      },
+      "removedCells": 43552,
+      "debrisEntries": 10634,
+      "actionOperations": {
+        "place": 169,
+        "apply": 747,
+        "withdraw": 165,
+        "exchange": 168,
+        "inspect": 61,
+        "activate": 1,
+        "move": 40,
+        "deactivate": 1
+      },
+      "zeroDurationCommands": 0
+    },
+    {
+      "path": "testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-over-seventy-percent-target.ressectionlab",
+      "sha256": "a5364757aa90ad116d33a6e533a4dce3f50e93ea87617e8bd3f082dd2d96f9e3",
+      "branch": "full-primary",
+      "actions": 1148,
+      "stateId": "sha256:4c348f32e59c78ccb1000cc9d57b1a8d383ebf2cd003213d7563d8dceaf4f4b2",
+      "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "checkpointPosition": 1148,
+      "gzip1AllFieldBytes": 415428,
+      "stateDescriptorGzip1Bytes": 1213,
+      "fields": {
+        "contact": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "cutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "cuts": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "debris": {
+          "gzip1Bytes": 26276,
+          "jsonBytes": 130342,
+          "sha256": "ad02499dbf7d918b7836874315127ce9cacbc0b0d67346cc361e488545cf3949"
+        },
+        "debrisMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "88d68ecb22bab23c5cf2096f7f26c22f0e278ee6d7ab2de1cfb44a043fa1dbf1"
+        },
+        "debrisRemovedMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "ce1b7d026c8f931bd974ce636f274809b6064efabd5c47ae3d07d63b47c60ac2"
+        },
+        "deformation": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "deformationModel": {
+          "gzip1Bytes": 78,
+          "jsonBytes": 65,
+          "sha256": "78819f199e296236b8ec0abdb623e00d512eb52476d0c6b81d579235d4d04097"
+        },
+        "drillingV2": {
+          "gzip1Bytes": 97273,
+          "jsonBytes": 537848,
+          "sha256": "ba6ab2629c32afdbe300d0edf3d2c6ec45e99dc6f7a20d4de4936ef5d57ee1e2"
+        },
+        "elapsedSeconds": {
+          "gzip1Bytes": 38,
+          "jsonBytes": 18,
+          "sha256": "efa707326da458ac830ae1251ed007df4dfaafa0975f0b1ddb5b31086656d4dc"
+        },
+        "flapComponents": {
+          "gzip1Bytes": 188497,
+          "jsonBytes": 1065078,
+          "sha256": "a721d84f5726562bfe01d9bb7bc41c9f3447226171428180b6de7abc82267757"
+        },
+        "fluid": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "fluidAddedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidEscapedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidRemovedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "holds": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "materialExposure": {
+          "gzip1Bytes": 97,
+          "jsonBytes": 87,
+          "sha256": "fbe225b9a30f6b626a3634e201fb7904cdc4b93b2176bea5928566321c4bc7bc"
+        },
+        "meshCutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "meshSeams": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "observations": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "removed": {
+          "gzip1Bytes": 102197,
+          "jsonBytes": 322065,
+          "sha256": "1caabe375e4921900cc8dc4fb0ae080085a42205dcfd37a7d7e8941fd2882545"
+        },
+        "separated": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "separatedAttachments": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "slots": {
+          "gzip1Bytes": 314,
+          "jsonBytes": 534,
+          "sha256": "4f1eeb34e5c6535c0571f10db377eb7db14a084c1c6289ae8ff176225c73b2df"
+        },
+        "sources": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "thermal": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "transectedEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "travelMm": {
+          "gzip1Bytes": 38,
+          "jsonBytes": 18,
+          "sha256": "a2f5a935b5057b6582387d3bbd787299be678995ea65673cb5492c67bbfa1dd8"
+        },
+        "vesselEncounters": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "vesselsV2": {
+          "gzip1Bytes": 155,
+          "jsonBytes": 188,
+          "sha256": "dfed4636c77a871743910242749ca53d33efe84488632e63d7e3fc46d4a8d560"
+        }
+      },
+      "removedCells": 40258,
+      "debrisEntries": 9295,
+      "actionOperations": {
+        "place": 145,
+        "apply": 633,
+        "withdraw": 141,
+        "exchange": 144,
+        "inspect": 51,
+        "activate": 1,
+        "move": 32,
+        "deactivate": 1
+      },
+      "zeroDurationCommands": 0
+    },
+    {
+      "path": "testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-over-sixty-percent.ressectionlab",
+      "sha256": "f57083258895c9901c064427e36bd5e8e48da91fc334ae5948dae98ee88ead44",
+      "branch": "full-primary",
+      "actions": 760,
+      "stateId": "sha256:789729f52d4d352f15b3e677d88c80da4714fa634a97e6b2d7941b15ba11bcde",
+      "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "checkpointPosition": 760,
+      "gzip1AllFieldBytes": 369042,
+      "stateDescriptorGzip1Bytes": 1208,
+      "fields": {
+        "contact": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "cutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "cuts": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "debris": {
+          "gzip1Bytes": 19093,
+          "jsonBytes": 94250,
+          "sha256": "8ab205c17c3acc3fa98e87e71423d6757f517c177c597c6a596efec6d25d3bce"
+        },
+        "debrisMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "cb712756393c22bb1375bcfd40cf11892400236e236e462a23cc882e2cd256df"
+        },
+        "debrisRemovedMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "ce1b7d026c8f931bd974ce636f274809b6064efabd5c47ae3d07d63b47c60ac2"
+        },
+        "deformation": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "deformationModel": {
+          "gzip1Bytes": 78,
+          "jsonBytes": 65,
+          "sha256": "78819f199e296236b8ec0abdb623e00d512eb52476d0c6b81d579235d4d04097"
+        },
+        "drillingV2": {
+          "gzip1Bytes": 72453,
+          "jsonBytes": 390974,
+          "sha256": "aaf4ce78bdd87dd958e6988b5ca462f85339a8b7f416fe24b2030500610b1d5d"
+        },
+        "elapsedSeconds": {
+          "gzip1Bytes": 38,
+          "jsonBytes": 18,
+          "sha256": "8edb317e7c372098eff271e54ef9b31966f651a06bc447f15937860a252c730a"
+        },
+        "flapComponents": {
+          "gzip1Bytes": 188599,
+          "jsonBytes": 1064679,
+          "sha256": "40e2a340f2d796f1e8277e852c4878d64f85a31dfda31bf6c474ce5be02bbb95"
+        },
+        "fluid": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "fluidAddedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidEscapedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidRemovedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "holds": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "materialExposure": {
+          "gzip1Bytes": 98,
+          "jsonBytes": 88,
+          "sha256": "d53d8d5ae4dc51719ffd1b01e3b1e18ec5e0444868aad3965bdfe118dd5f1837"
+        },
+        "meshCutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "meshSeams": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "observations": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "removed": {
+          "gzip1Bytes": 87709,
+          "jsonBytes": 276585,
+          "sha256": "d5fe00378eb043c8f04691f57b8c98f1af01531980e3010811e504dcba396ef5"
+        },
+        "separated": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "separatedAttachments": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "slots": {
+          "gzip1Bytes": 319,
+          "jsonBytes": 534,
+          "sha256": "7dbb27a5c4d6db9a2f05260c2630e6e98ed37eb58daa671723a1683fcc96f0fc"
+        },
+        "sources": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "thermal": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "transectedEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "travelMm": {
+          "gzip1Bytes": 36,
+          "jsonBytes": 18,
+          "sha256": "dcdec415eb58be93aa9cbcdfd8d8020d184da28da8b721f15b938920e2707cb4"
+        },
+        "vesselEncounters": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "vesselsV2": {
+          "gzip1Bytes": 154,
+          "jsonBytes": 188,
+          "sha256": "bf8afc8aa0fced1ccb015209779dd86918ff281edf65e66e2dcb526cdad83bab"
+        }
+      },
+      "removedCells": 34573,
+      "debrisEntries": 6717,
+      "actionOperations": {
+        "place": 95,
+        "apply": 426,
+        "withdraw": 89,
+        "exchange": 94,
+        "inspect": 32,
+        "activate": 1,
+        "move": 23
+      },
+      "zeroDurationCommands": 0
+    },
+    {
+      "path": "testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-over-two-thirds-target.ressectionlab",
+      "sha256": "b808970a08fb8379f81860b77bddd3116ba525fb9796db29a209cad1c6c5838c",
+      "branch": "full-primary",
+      "actions": 902,
+      "stateId": "sha256:b5596eb5df2339bbb345307c114cb8246ba00b4f9d97b98caa7e245c8a4d4e49",
+      "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "checkpointPosition": 902,
+      "gzip1AllFieldBytes": 382846,
+      "stateDescriptorGzip1Bytes": 1208,
+      "fields": {
+        "contact": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "cutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "cuts": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "debris": {
+          "gzip1Bytes": 21671,
+          "jsonBytes": 107172,
+          "sha256": "d6f7ec6a839cc083e56cd037b1cf833b72d248a340f27fb77ffbc990ad6d641c"
+        },
+        "debrisMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "2b171f2e379d0441eeeee266e00ca945b91cc42d7232e0afdfbf95511e12b965"
+        },
+        "debrisRemovedMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "ce1b7d026c8f931bd974ce636f274809b6064efabd5c47ae3d07d63b47c60ac2"
+        },
+        "deformation": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "deformationModel": {
+          "gzip1Bytes": 78,
+          "jsonBytes": 65,
+          "sha256": "78819f199e296236b8ec0abdb623e00d512eb52476d0c6b81d579235d4d04097"
+        },
+        "drillingV2": {
+          "gzip1Bytes": 77828,
+          "jsonBytes": 443067,
+          "sha256": "a10bddd6a9bd4831697446de9afefc56302c7baf6849622bd7a87c95fdc6f9c5"
+        },
+        "elapsedSeconds": {
+          "gzip1Bytes": 38,
+          "jsonBytes": 18,
+          "sha256": "765cb28974799ee003c2f0448a1930cca53d49fd6ab6205f375449edebce5e4e"
+        },
+        "flapComponents": {
+          "gzip1Bytes": 188758,
+          "jsonBytes": 1064953,
+          "sha256": "6fc061bb6ba7af73f281cb6c7507474239b561b8750af6d8d18aae09ae312aef"
+        },
+        "fluid": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "fluidAddedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidEscapedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidRemovedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "holds": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "materialExposure": {
+          "gzip1Bytes": 99,
+          "jsonBytes": 89,
+          "sha256": "7119c4cf2f22c0c68b003e159b3feb2d0f1c5208c063c2b01365586306806d52"
+        },
+        "meshCutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "meshSeams": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "observations": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "removed": {
+          "gzip1Bytes": 93479,
+          "jsonBytes": 295065,
+          "sha256": "8317265d6bddb2a91d034aaf33e8875dc30147fdc8014e90f0049aafcb50ff09"
+        },
+        "separated": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "separatedAttachments": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "slots": {
+          "gzip1Bytes": 237,
+          "jsonBytes": 426,
+          "sha256": "565fdd734e482f35f737189f17bec2a05c5ab366f48dfccc991f7dc0dc372333"
+        },
+        "sources": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "thermal": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "transectedEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "travelMm": {
+          "gzip1Bytes": 38,
+          "jsonBytes": 18,
+          "sha256": "a6ba59c908cf9478dd76b98396c3b26207d1b6d653b723a24d13da7809db5e00"
+        },
+        "vesselEncounters": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "vesselsV2": {
+          "gzip1Bytes": 155,
+          "jsonBytes": 188,
+          "sha256": "3128b29637ebf1fc6ca7070bc3ee94eee0cadb2a2d4ac8eb3e8cdd23fe0c880d"
+        }
+      },
+      "removedCells": 36883,
+      "debrisEntries": 7640,
+      "actionOperations": {
+        "place": 110,
+        "apply": 506,
+        "withdraw": 107,
+        "exchange": 110,
+        "inspect": 39,
+        "activate": 1,
+        "move": 28,
+        "deactivate": 1
+      },
+      "zeroDurationCommands": 0
+    },
+    {
+      "path": "testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-substantial-progress.ressectionlab",
+      "sha256": "3e5111252694bcfc388a762713aa4828f54971744656b6a237c7be74603f367f",
+      "branch": "full-primary",
+      "actions": 248,
+      "stateId": "sha256:0df67dfeef2aac0727e3a4afdaaf19c34c5cb62b7fbb1e70c84ebbd0d580414b",
+      "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "checkpointPosition": 248,
+      "gzip1AllFieldBytes": 260204,
+      "stateDescriptorGzip1Bytes": 1197,
+      "fields": {
+        "contact": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "cutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "cuts": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "debris": {
+          "gzip1Bytes": 9527,
+          "jsonBytes": 47070,
+          "sha256": "a78db267ec9a9d96b0172382740bf47acc163ed4a36f7efa6a0419366cd0d9f0"
+        },
+        "debrisMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "ecbc4098a1ed7483a5e28f4854cfa757c02e4d60fc4db021b80fc7645b55a33b"
+        },
+        "debrisRemovedMm3": {
+          "gzip1Bytes": 33,
+          "jsonBytes": 17,
+          "sha256": "ce1b7d026c8f931bd974ce636f274809b6064efabd5c47ae3d07d63b47c60ac2"
+        },
+        "deformation": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "deformationModel": {
+          "gzip1Bytes": 78,
+          "jsonBytes": 65,
+          "sha256": "78819f199e296236b8ec0abdb623e00d512eb52476d0c6b81d579235d4d04097"
+        },
+        "drillingV2": {
+          "gzip1Bytes": 31906,
+          "jsonBytes": 200714,
+          "sha256": "24bc425bb285224602df796b52e8331b59038716a8a0b6cd25253f5b4914369e"
+        },
+        "elapsedSeconds": {
+          "gzip1Bytes": 37,
+          "jsonBytes": 17,
+          "sha256": "34f3b1d3ff8cb05fd0a4e65cdac6b58e83551adc716760901d37aec00bcd6de8"
+        },
+        "flapComponents": {
+          "gzip1Bytes": 188701,
+          "jsonBytes": 1064413,
+          "sha256": "b82207606bf69ea1c76b833aab3ade0c584fe22c1d9691d72eb41782fe4c2fb5"
+        },
+        "fluid": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "fluidAddedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidEscapedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "fluidRemovedMm3": {
+          "gzip1Bytes": 23,
+          "jsonBytes": 3,
+          "sha256": "63046b6a91277fd07433c7b14db914a3bcf1004563f6fd30266c4bcee314be95"
+        },
+        "holds": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "materialExposure": {
+          "gzip1Bytes": 97,
+          "jsonBytes": 87,
+          "sha256": "2097b2a8f37e24b49cb4347206b21a6909a5624a244b3058802a1e590775fa39"
+        },
+        "meshCutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "meshSeams": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "observations": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "removed": {
+          "gzip1Bytes": 28877,
+          "jsonBytes": 91769,
+          "sha256": "86460239e5e9c4094b835dcc50d2917518c1ce4d70becdc2ef678ea796348eb2"
+        },
+        "separated": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "separatedAttachments": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "slots": {
+          "gzip1Bytes": 326,
+          "jsonBytes": 532,
+          "sha256": "0605f5b3f8e8ed5467d035c46ca146f9dbd2cc2db190abdeea88a4ac85c00981"
+        },
+        "sources": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "thermal": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "transectedEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "travelMm": {
+          "gzip1Bytes": 37,
+          "jsonBytes": 17,
+          "sha256": "bc7d974f44ee6df1ca9b8e66b7842e72b76a86a23b5b35de8a510cc9523e6386"
+        },
+        "vesselEncounters": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "vesselsV2": {
+          "gzip1Bytes": 153,
+          "jsonBytes": 187,
+          "sha256": "c4994e2597aae7a440a472cc77c11fbb57c4443a1a974a8205fcf32187818e1d"
+        }
+      },
+      "removedCells": 11471,
+      "debrisEntries": 3347,
+      "actionOperations": {
+        "place": 37,
+        "apply": 127,
+        "withdraw": 33,
+        "exchange": 36,
+        "inspect": 11,
+        "activate": 1,
+        "move": 3
+      },
+      "zeroDurationCommands": 0
+    },
+    {
+      "path": "testcases/outputs/full-case-rehearsal-20261020/primary-v2/primary.ressectionlab",
+      "sha256": "0b26a74f6772473cd237bbdd4be80042f0d0762755ccf281a305883ad9199936",
+      "identicalTo": "testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-over-eighty-percent-target.ressectionlab"
+    },
+    {
+      "path": "testcases/outputs/full-case-rehearsal-20261020/vascular-v2/vascular.ressectionlab",
+      "sha256": "7348f05c91c2ac3cd6689807e7c00da99d21d23dac2be8722fca74eddafd6fcb",
+      "branch": "full-vascular",
+      "actions": 73,
+      "stateId": "sha256:af496ffbde3ca2ab71477c9226fe9f846f08171efd308362431414584cd3c87e",
+      "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "checkpointPosition": 73,
+      "gzip1AllFieldBytes": 255725,
+      "stateDescriptorGzip1Bytes": 1473,
+      "fields": {
+        "contact": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "cutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "cuts": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "debris": {
+          "gzip1Bytes": 9722,
+          "jsonBytes": 48343,
+          "sha256": "d192f1cc6b00ec6a427f6093e5faa2ede1ecf580798c30cae7409e944b009aa3"
+        },
+        "debrisMm3": {
+          "gzip1Bytes": 26,
+          "jsonBytes": 6,
+          "sha256": "046737f27317d06e525654be6fbbc4a1dd14b198334672e0f26da384978d95a0"
+        },
+        "deformation": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "deformationModel": {
+          "gzip1Bytes": 78,
+          "jsonBytes": 65,
+          "sha256": "78819f199e296236b8ec0abdb623e00d512eb52476d0c6b81d579235d4d04097"
+        },
+        "drillingV2": {
+          "gzip1Bytes": 45919,
+          "jsonBytes": 193801,
+          "sha256": "f77aa4fe01a7c34918790bbf666f5c46e748565333172405762c67ebf10685db"
+        },
+        "elapsedSeconds": {
+          "gzip1Bytes": 37,
+          "jsonBytes": 17,
+          "sha256": "d0cc6342a48646b7298e7c17acd80b470005403ea3628630bfd868628cdfcdb2"
+        },
+        "flapComponents": {
+          "gzip1Bytes": 188546,
+          "jsonBytes": 1064280,
+          "sha256": "235e3119e6af97ae328679e8c31d4a6c84166be0be69d04736ccd36a2dab94b8"
+        },
+        "fluid": {
+          "gzip1Bytes": 97,
+          "jsonBytes": 133,
+          "sha256": "6ec3924cc7f75633eb8d24ca6af60190e002cc7f604e9b6c19a2c8b5977dd43f"
+        },
+        "fluidAddedMm3": {
+          "gzip1Bytes": 38,
+          "jsonBytes": 18,
+          "sha256": "6f07e83915d4a926888e0d422150780128bd7d20525ba2d8b737f095aeb90e84"
+        },
+        "fluidEscapedMm3": {
+          "gzip1Bytes": 37,
+          "jsonBytes": 19,
+          "sha256": "4c5cf0494e14d5677342ad53549297474fbd708960f68d02c7521951f81b07a9"
+        },
+        "fluidRemovedMm3": {
+          "gzip1Bytes": 37,
+          "jsonBytes": 17,
+          "sha256": "b2a1c60d3334c3b29cac89f4728ee7b93af5eb833a45446725742f28ce817ca2"
+        },
+        "holds": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "93ef07e93a3f091acc9ee70811d92bba22d858ce051ffbdbe386b3be1c0efa26"
+        },
+        "materialExposure": {
+          "gzip1Bytes": 91,
+          "jsonBytes": 79,
+          "sha256": "921250632cc253b2647bed882b4f984bfcb5ab1ad348ea1af99d9f9f93638005"
+        },
+        "meshCutEdges": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "meshSeams": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "observations": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "removed": {
+          "gzip1Bytes": 9372,
+          "jsonBytes": 30121,
+          "sha256": "351e0a11a17cfa6ba759f41a125cfbafb2685fda0c0f989f519f6a61a1a91fa6"
+        },
+        "separated": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "separatedAttachments": {
+          "gzip1Bytes": 22,
+          "jsonBytes": 2,
+          "sha256": "b10fc33372658c09f9ac8d29c823d6826b2e34bfac1dd7e4725c6ed9ebaabca5"
+        },
+        "slots": {
+          "gzip1Bytes": 250,
+          "jsonBytes": 428,
+          "sha256": "325039172baa47ba05167c26b45c41c17c664552a842caea67e67aa5d32c222f"
+        },
+        "sources": {
+          "gzip1Bytes": 200,
+          "jsonBytes": 275,
+          "sha256": "6112fccdac53a96404dde8965f5a47ca036395feb72ca27811e2e794e876e24f"
+        },
+        "thermal": {
+          "gzip1Bytes": 228,
+          "jsonBytes": 1048,
+          "sha256": "246508c514110e0bf724faa388632baa16eb59007b35a307746b50f1527be786"
+        },
+        "transectedEdges": {
+          "gzip1Bytes": 71,
+          "jsonBytes": 91,
+          "sha256": "2e7ed097496aaeb038385e5ab0ce1bd6945c25f496ec13193008447573dc522b"
+        },
+        "travelMm": {
+          "gzip1Bytes": 38,
+          "jsonBytes": 18,
+          "sha256": "d9d9e676c6bae2361310594a2f64b4a68993cdcc23a4dfc0dca46457d9d88495"
+        },
+        "vesselEncounters": {
+          "gzip1Bytes": 141,
+          "jsonBytes": 353,
+          "sha256": "30d9347b0f269841ae378a7afed84e4843d54dc32220c503087ebfc5d53b11c5"
+        },
+        "vesselsV2": {
+          "gzip1Bytes": 577,
+          "jsonBytes": 3039,
+          "sha256": "eb89ded93937799956842d0388ecc44fa5a36cbef51de35f0b8e7739a8e5464a"
+        }
+      },
+      "removedCells": 3765,
+      "debrisEntries": 3453,
+      "actionOperations": {
+        "place": 14,
+        "apply": 22,
+        "withdraw": 12,
+        "exchange": 13,
+        "inspect": 8,
+        "deactivate": 4
+      },
+      "zeroDurationCommands": 0
+    }
+  ],
+  "exactObservedCheckpointUniquePartBytesAcrossAllRows": 8298187,
+  "primaryDistinctCheckpointCount": 22,
+  "primaryObservedDistinctFieldHashes": {
+    "contact": 1,
+    "cutEdges": 1,
+    "cuts": 1,
+    "debris": 22,
+    "debrisMm3": 22,
+    "debrisRemovedMm3": 3,
+    "deformation": 1,
+    "deformationModel": 1,
+    "drillingV2": 22,
+    "elapsedSeconds": 22,
+    "flapComponents": 21,
+    "fluid": 1,
+    "fluidAddedMm3": 1,
+    "fluidEscapedMm3": 1,
+    "fluidRemovedMm3": 1,
+    "holds": 1,
+    "materialExposure": 22,
+    "meshCutEdges": 1,
+    "meshSeams": 1,
+    "observations": 1,
+    "removed": 22,
+    "separated": 1,
+    "separatedAttachments": 1,
+    "slots": 22,
+    "sources": 1,
+    "thermal": 1,
+    "transectedEdges": 1,
+    "travelMm": 22,
+    "vesselEncounters": 1,
+    "vesselsV2": 22
+  },
+  "scenarios": [
+    {
+      "fields": [
+        "removed",
+        "drillingV2"
+      ],
+      "measuredEndpointGzip1Bytes": 276480,
+      "assumedBoundaries": 1955,
+      "hypotheticalUniqueEveryBoundaryBytes": 540518400
+    },
+    {
+      "fields": [
+        "removed",
+        "drillingV2",
+        "debris"
+      ],
+      "measuredEndpointGzip1Bytes": 318472,
+      "assumedBoundaries": 1955,
+      "hypotheticalUniqueEveryBoundaryBytes": 622612760
+    },
+    {
+      "fields": [
+        "contact",
+        "cutEdges",
+        "cuts",
+        "debris",
+        "debrisMm3",
+        "debrisRemovedMm3",
+        "deformation",
+        "deformationModel",
+        "drillingV2",
+        "elapsedSeconds",
+        "flapComponents",
+        "fluid",
+        "fluidAddedMm3",
+        "fluidEscapedMm3",
+        "fluidRemovedMm3",
+        "holds",
+        "materialExposure",
+        "meshCutEdges",
+        "meshSeams",
+        "observations",
+        "removed",
+        "separated",
+        "separatedAttachments",
+        "slots",
+        "sources",
+        "thermal",
+        "transectedEdges",
+        "travelMm",
+        "vesselEncounters",
+        "vesselsV2"
+      ],
+      "measuredEndpointGzip1Bytes": 508169,
+      "assumedBoundaries": 1955,
+      "hypotheticalUniqueEveryBoundaryBytes": 993470395
+    }
+  ],
+  "interpolatedThreeFieldUniqueEveryBoundaryScenarioBytes": 367578467.0,
+  "interpolationCoversActionPositions": [
+    100,
+    1954
+  ],
+  "limits": "Only listed checkpoint payloads are exact. No complete per-action cache has been produced; distinct intermediate field count, canonical history/manifest bytes and completed action count remain unknown. Scenarios assume uniqueness and are not measured cache size."
+}

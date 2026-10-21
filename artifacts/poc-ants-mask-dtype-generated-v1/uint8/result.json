@@ -1,0 +1,184 @@
+{
+  "N4_raw": {
+    "shape": [
+      48,
+      48,
+      48
+    ],
+    "dtype": "float32",
+    "C_order_bytes_sha256": "71db79b4d45d922a8b2770bacccb6e8061becd0035d0c9900a449714d501f139"
+  },
+  "mask_boundary": {
+    "native_pixeltype": "unsigned char",
+    "numpy_dtype": "uint8",
+    "binary_values": [
+      0,
+      1
+    ],
+    "values_exact": true,
+    "support_exact": true,
+    "frame": {
+      "candidate_affine_ras_mm": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_affine_ras_mm": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "affine_max_abs_difference": 0.0,
+      "eight_cell_corner_errors_mm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "output_saved_with_original_affine": true,
+      "array_permutation_or_resampling": false
+    },
+    "representation": {
+      "shape": [
+        48,
+        48,
+        48
+      ],
+      "dtype": "uint8",
+      "C_order_bytes_sha256": "73776148163e66f83e4884723af9a82edc785a6fbab2c970fd0137dad193f82f"
+    }
+  },
+  "native_frame": {
+    "candidate_affine_ras_mm": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "source_affine_ras_mm": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "affine_max_abs_difference": 0.0,
+    "eight_cell_corner_errors_mm": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "output_saved_with_original_affine": true,
+    "array_permutation_or_resampling": false
+  },
+  "N4_parameters": {
+    "shrink_factor": 4,
+    "convergence": {
+      "iters": [
+        30,
+        20,
+        10
+      ],
+      "tol": 1e-07
+    },
+    "spline_param": 150,
+    "rescale_intensities": false,
+    "return_bias_field": false,
+    "verbose": true
+  },
+  "input_unchanged": true,
+  "status": "generated_arm_completed",
+  "anatomy_accepted": false,
+  "patient_inputs_read": false,
+  "clinical_validity_inferred": false
+}

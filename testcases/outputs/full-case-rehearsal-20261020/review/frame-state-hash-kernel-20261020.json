@@ -1,0 +1,32 @@
+{
+  "scope": "Saved endpoint JSON kernel only; no engine/scene construction, cached-frame seek, replay, GUI or live-process modification.",
+  "native": "testcases/outputs/full-case-rehearsal-20261020/gui/vascular-observability-28962e66.ressectionlab",
+  "nativeSha256": "f0ef34d5092d61406c6bb5a8cb2f9969136341005c96ec617510e3b7d1b32d1b",
+  "branch": "full-vascular",
+  "actions": 73,
+  "stateId": "sha256:af496ffbde3ca2ab71477c9226fe9f846f08171efd308362431414584cd3c87e",
+  "payloadJsonBytes": 1342779,
+  "flapComponentsJsonBytes": 1064280,
+  "exactCanonicalJsonAndStateId": true,
+  "originalUnchanged": true,
+  "timings": {
+    "genericSemanticDigest": {
+      "secondsFor3Hashes": [
+        0.29762049997225404,
+        0.29916445910930634,
+        0.2714775833301246
+      ],
+      "medianMsPerHash": 99.20683332408468
+    },
+    "directBuiltinJsonDigest": {
+      "secondsFor3Hashes": [
+        0.04250166704878211,
+        0.041846917010843754,
+        0.042019040789455175
+      ],
+      "medianMsPerHash": 14.006346929818392
+    }
+  },
+  "kernelSpeedup": 7.082991291103983,
+  "qualification": "One alternative only. Direct encoding is justified ONLY for fresh exactbuiltin JSON-decoder output and known builtin scene/protection identities, not arbitrary public mutable engine states, MappingProxy/custom metadata or NumPy values. A complete hash comparison remains mandatory; no trusted stored-ID substitution. Not actual per-frame/action/episode timing."
+}

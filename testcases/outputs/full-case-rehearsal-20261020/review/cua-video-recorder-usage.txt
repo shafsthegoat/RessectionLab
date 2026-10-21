@@ -1,0 +1,66 @@
+CUA-only actual app video helper; importing starts nothing.
+
+Root CUA REPL (already has the bound app):
+  var videoModule = await import('file:///Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/review/cua_video_recorder.mjs');
+  var actualVideo = await videoModule.startRecorder({app, outputPath:'/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/review/ACTUAL-primary-complete-NEW.mkv',fps:2});
+  var retainedCapturePromise = actualVideo.done;
+  nodeRepl.write(actualVideo.status());
+
+Use a NEW filename. Existing movie or capture-log paths cause refusal. No app
+calls occurred while preparing/testing the helper; root alone binds actualapp.
+
+Probe background lifetime BEFORE playback: after the first REPL call returns,
+wait a few seconds outside the CUA call, then use a separate CUA REPL call:
+  nodeRepl.write(actualVideo.status());
+Capture count must grow across separate calls with no screenshot errors. This
+has NOT been established by a normal Node engineering test. If it does not
+grow, do not claim a full recording; stop and report the failed actual probe.
+
+Once the probe passes, root can use ordinary observed CUA UI methods through:
+  await actualVideo.withUi(async()=>{ /* actual app click/type/etc calls */ });
+All relevant UI operations must use this same mutex. Do not call screenshot
+directly or operate the app outside withUi during recording. Screenshot API
+calls and wrapped UI operations serialize; ffmpeg backpressure does not hold
+the UI lock after a screenshot returns. status() itself does not capture/UI.
+Do not await retainedCapturePromise while recording: it represents the loop,
+not a tool call that should occupy the whole playback. Keep both vars alive.
+
+At the observed final endpoint:
+  nodeRepl.write(await actualVideo.stop());
+stop wakes the loop, waits for any in-flight screenshot/UI lock, takes one
+final ACTUAL screenshot (no synthetic duplicated hold), closes stdin, waits for
+ffmpeg, fsyncs/closes video and JSONL, and returns final counts/errorstatus.
+Call stop even if the loop reports an error/stopping. It is idempotent.
+
+Encoding/format evidence
+- Only app.getScreenshot({emit:false}):Promise<Uint8Array> is called.
+- Existing files named .png are actually JPEG/JFIF; detect actual magic bytes.
+  PNG input uses image2pipe/png; JPEG input uses image2pipe/mjpeg. Screenshot
+  bytes stream directly, without per-frame transcoding or PNG archives.
+- ffmpeg uses input use_wallclock_as_timestamps=1; image timebase1ms via
+  framerate1000; copyts/start_at_zero; output enc_time_base1:1000/fps_modevfr.
+  x264 fps=<requested>/1:force-cfr=0 keeps the H264 codec level ordinary (the
+  tiny test is ConstrainedBaseline level4.0). No output -r, synthetic frames,
+  native renderer or OS capture. Container nominal rate may still say1000;
+  actual variable packetPTS and capturecount are the timing evidence.
+- H264 ultrafast/yuv420p in MKV, flushed packets, <=1s target clusters.
+  Prior clusters are recoverable after an abrupt failure; final footer/cluster
+  may be incomplete. Graceful stop is the expected completion path.
+- First captured frame fixes even outputdimensions. Later window-size changes
+  are scaled/letterboxed to those dimensions, not cropped. Keep window stable.
+- PTS is ffmpeg's actual demux-read clock, not the precise instant pixels were
+  captured. JSONL records capture begin/end UTC+monotonic timestamps, streaming
+  backpressure, UI intervals, counts, errors and the exact encoderarguments.
+  Initial encoderstartup caused about0.12s offset in the tiny test; warm/probe
+  before clicking Play. Large backpressure or screenshotduration can shift PTS
+  relative to capturetime; inspect receipts rather than asserting exact2fps.
+- Root should ffprobe completed output: codec h264, monotonic VFR packetPTS,
+  framecount consistent with encodedInputFrames, duration comparable to capture
+  interval. ffmpeg error exit/nonzero errorcounts invalidate completion claims.
+
+Engineering test only
+ENGINEERINGHELPERTEST_recorder.mjs uses a fake target returning one REUSED saved
+CUA screenshot, explicitly labels output/receipts ENGINEERINGHELPERTEST, and
+tests mutex serialization plus actual ffmpeg/ffprobe H264 variablePTS. Those
+movies are NEVER an actual app capture or handoff video. No active app, GUI,
+OS screen capture, patient physics/replay or new dataset is used by that test.

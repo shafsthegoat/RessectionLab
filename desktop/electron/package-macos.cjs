@@ -7,6 +7,7 @@ const { spawnSync } = require('node:child_process');
 const { packager } = require('@electron/packager');
 const { publishBundle } = require('./publish.cjs');
 const { assertLockedElectronVersion } = require('./electron-version.cjs');
+const { localElectronArchive, verifyLocalElectronArchive } = require('./local-electron-archive.cjs');
 const { captureRendererNotices, capturePythonNotices, captureElectronNotices } = require('./dependency-notices.cjs');
 
 async function hashes(root, relative = '') {
@@ -57,6 +58,13 @@ async function main() {
       if (actual !== expected) throw new Error('Desktop source changed during snapshot capture; retry');
       await fs.chmod(path.join(input, relative), 0o444);
     }
+    const electronVersion = assertLockedElectronVersion(require('electron/package.json').version, await fs.readFile(path.join(input, 'pnpm-lock.yaml'), 'utf8'));
+    const electronChecksums = require('electron/checksums.json');
+    const electronArchiveSha256 = electronChecksums[`electron-v${electronVersion}-darwin-arm64.zip`];
+    if (!/^[a-f0-9]{64}$/.test(electronArchiveSha256 || '')) throw new Error('Installed Electron package lacks the arm64 archive checksum');
+    // Explicit local mode fails closed before renderer compilation or packaging.
+    // No fallback to the downloader is permitted when this build option is set.
+    const localArchive = await localElectronArchive(process.env.RESECTIONLAB_ELECTRON_ZIP_DIR, electronVersion, electronChecksums);
     const iconInput = path.join(input, 'RessectionLab.icns');
     const iconSource = path.join(repo, 'packaging/RessectionLab.icns');
     await fs.copyFile(iconSource, iconInput);
@@ -72,10 +80,6 @@ async function main() {
       if (actual !== expected) throw new Error('Captured desktop input changed during build');
     }
     const sourcePackage = JSON.parse(await fs.readFile(path.join(input, 'package.json'), 'utf8'));
-    const electronVersion = assertLockedElectronVersion(require('electron/package.json').version, await fs.readFile(path.join(input, 'pnpm-lock.yaml'), 'utf8'));
-    const electronChecksums = require('electron/checksums.json');
-    const electronArchiveSha256 = electronChecksums[`electron-v${electronVersion}-darwin-arm64.zip`];
-    if (!/^[a-f0-9]{64}$/.test(electronArchiveSha256 || '')) throw new Error('Installed Electron package lacks the arm64 archive checksum');
     const stage = path.join(input, 'runtime');
     await fs.mkdir(stage);
     for (const item of ['dist', 'electron']) await fs.cp(path.join(input, item), path.join(stage, item), { recursive: true });
@@ -101,13 +105,17 @@ async function main() {
     await fs.writeFile(path.join(noticeInput, 'README.txt'), 'Third-party dependency notices\n\nUpstream texts are copied without alteration. Consult inventory.json for exact component versions, source hashes and unresolved source gaps. Renderer packages form a conservative runtime dependency closure. Numerical entries identify the actual frozen modules and collected payload. These files do not select a license for RessectionLab or establish clinical or distribution approval.\n\nElectron and Chromium: electron/\nRenderer library notices: renderer/ and renderer-inventory.json\nFrozen Python and native wheel notices: numerical-engine/\n');
     const noticeHashes = await hashes(noticeInput);
     const manifest = { sourceHashes, engineHashes, noticeHashes, noticeSourceCompleteness: noticeIndex.source_completeness, appIconSha256: iconSha256, electronVersion, electronArchiveSha256, sourceDigest: crypto.createHash('sha256').update(JSON.stringify(sourceHashes)).digest('hex'),
+      electronArchiveSource: localArchive ? { mode: 'explicit_local', fileName: localArchive.fileName, bytes: localArchive.bytes, sha256: localArchive.sha256 } : { mode: 'checksum_managed_download_cache' },
       revision: run('git', ['rev-parse', 'HEAD'], repo).trim(), gitStatus: run('git', ['status', '--porcelain'], repo).split('\n').filter(Boolean), createdUtc: new Date().toISOString() };
     await fs.writeFile(path.join(stage, 'BUILD_INPUT_MANIFEST.json'), JSON.stringify(manifest));
+    await verifyLocalElectronArchive(localArchive);
     const paths = await packager({ dir: stage, name: 'RessectionLab', platform: 'darwin', arch: 'arm64', out: path.join(input, 'package-output'), overwrite: true, asar: true,
       electronVersion, download: { checksums: electronChecksums }, appBundleId: 'org.ressectionlab.electron', appCategoryType: 'public.app-category.medical',
+      ...(localArchive ? { electronZipDir: localArchive.directory } : {}),
       icon: iconInput, prune: false,
       extendInfo: { NSHumanReadableCopyright: 'RessectionLab research software. Research use only.' },
     });
+    await verifyLocalElectronArchive(localArchive);
     let appPath = path.join(paths[0], 'RessectionLab.app');
     // Compare against the notices delivered by the checksum-verified Electron
     // archive used for this package, not merely an installed version label.

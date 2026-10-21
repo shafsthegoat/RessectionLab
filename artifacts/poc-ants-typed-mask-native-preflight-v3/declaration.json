@@ -1,0 +1,308 @@
+{
+  "schema": "resectionlab-exact-typed-mask-kernel-native-preflight-v3",
+  "released_native_generated_preflight": true,
+  "created_utc": "2026-10-16T08:01:58.905528+00:00",
+  "runner_sha256": "db90c0a4f40a0c6be20438b8d1766c35a16d7ed7636852018b6babb6a852a107",
+  "pins": {
+    "scripts/poc_ixi265_atropos_typed_mask.py": "211d715a05b2dd269358b7bc5585488a053859ba65c04b9f31f60b69e41ec954",
+    "scripts/poc_ants_mask_dtype_diagnostic.py": "1feb74ffca22a14d226bc9b52b0b5049a607225e95bb8dee6d11df5151aa003c"
+  },
+  "runtime": {
+    "packages": [
+      {
+        "name": "antspyx",
+        "version": "0.6.3",
+        "metadata_sha256": "1785cd9da7d963996fc814931e95a678dda1e4ad91d67873a78cebbff0db26ea"
+      },
+      {
+        "name": "numpy",
+        "version": "2.2.6",
+        "metadata_sha256": "91d66d0d60ad467c679555c0e12ac739bb395940dc22bc5a39d45780aba129ad"
+      },
+      {
+        "name": "scipy",
+        "version": "1.15.3",
+        "metadata_sha256": "98a671c6721432d60306593cdb7903477473d3b712544c666482ed113864f676"
+      },
+      {
+        "name": "pandas",
+        "version": "2.3.3",
+        "metadata_sha256": "40ee953dc7ca155840b639a1881ff84578075187fce0ac20eeda55a7fa0d9a90"
+      },
+      {
+        "name": "pyyaml",
+        "version": "6.0.3",
+        "metadata_sha256": "03c3b415ed38d09faedc49360e930769b40c58f68585e6de00e2e4916a858d34"
+      },
+      {
+        "name": "statsmodels",
+        "version": "0.14.6",
+        "metadata_sha256": "cbf436009e40693a0e2811aa5c55808a37baa2dbb6871e6dbf47e55c2bca1336"
+      },
+      {
+        "name": "webcolors",
+        "version": "24.11.1",
+        "metadata_sha256": "821dc0f89860bda2137ea1ee3b059e2abaefb9891d30f60027be3ec1390a0788"
+      },
+      {
+        "name": "matplotlib",
+        "version": "3.10.8",
+        "metadata_sha256": "271a91ad64b587781e3ccc76add7e042acb74e1ee94081decf4dc382be91fa06"
+      },
+      {
+        "name": "pillow",
+        "version": "12.0.0",
+        "metadata_sha256": "ad620452bfa53cbfa294d7da7b66dab5a086a54ede0ce178bd74e380ebc434c8"
+      },
+      {
+        "name": "requests",
+        "version": "2.32.5",
+        "metadata_sha256": "65b5a08da81f4915513e760965ff14b7518f65b7bb3efe0dab364bbcc4d40cb0"
+      },
+      {
+        "name": "scikit-learn",
+        "version": "1.7.2",
+        "metadata_sha256": "a301770d816e5ef5e2a262886115f1e6002637324f3bfe73f92378897dea8c63"
+      },
+      {
+        "name": "nibabel",
+        "version": "5.3.2",
+        "metadata_sha256": "1212d35344c5c57f6ff6c41f411b65c409ac4d7c25ff609a8ff4492b7cda9af0"
+      },
+      {
+        "name": "psutil",
+        "version": "7.1.3",
+        "metadata_sha256": "3578dc4ee5f43e542d29839741b9e3d8760c3c0e5d8c388ec2b0b980bd8c66a1"
+      },
+      {
+        "name": "packaging",
+        "version": "25.0",
+        "metadata_sha256": "5b611a609c38fefc3d616bf45d20aec98fb7d53f245daca9e2c30fc85c7ac282"
+      },
+      {
+        "name": "python-dateutil",
+        "version": "2.9.0.post0",
+        "metadata_sha256": "a9d436da322be808332f98d88325998e87cb693a678a9969feb4cfad729a6e93"
+      },
+      {
+        "name": "pytz",
+        "version": "2025.2",
+        "metadata_sha256": "e620e4e1f9f1c8019619388d4da496eb02119a13f35aaad55f022694a3c81f6c"
+      },
+      {
+        "name": "tzdata",
+        "version": "2025.2",
+        "metadata_sha256": "c2cc876ee200b84d1b8bee22290bc673ae4cf8e8be1a85cd2909a2715215794b"
+      },
+      {
+        "name": "patsy",
+        "version": "1.0.2",
+        "metadata_sha256": "c095d948f15b9bd16f13d0a52749da67031aad53bd0565295c5302f193e4cbaf"
+      },
+      {
+        "name": "contourpy",
+        "version": "1.3.3",
+        "metadata_sha256": "c43cef86baef09cff9c77975e578fa8cca0c9454df40dc176938b499a63de54a"
+      },
+      {
+        "name": "cycler",
+        "version": "0.12.1",
+        "metadata_sha256": "23289e19b76f1e01394227696e6af2b6cd1ce79e89731209bf9195148b18ed36"
+      },
+      {
+        "name": "fonttools",
+        "version": "4.61.1",
+        "metadata_sha256": "b05d21d549792a841a9b870d8dc0ce5c9d43d99d67621ff1379b18be8a7c3940"
+      },
+      {
+        "name": "kiwisolver",
+        "version": "1.4.9",
+        "metadata_sha256": "cad34a37b5cb66cfa1b9676f33721037ae2d850b9b0c71377478a1d6bf0c7d40"
+      },
+      {
+        "name": "pyparsing",
+        "version": "3.2.5",
+        "metadata_sha256": "cd543f26f0f59ac7b446f57cc91e8def7a3eb735fdd5e91c4e402b8725696eba"
+      },
+      {
+        "name": "charset-normalizer",
+        "version": "3.4.4",
+        "metadata_sha256": "8d5b94141b62f1d6afd7d60bbd68acb138a155d176a33518e0a28cc3b8dd9014"
+      },
+      {
+        "name": "idna",
+        "version": "3.11",
+        "metadata_sha256": "7c2c12c30f52ba237c4c81e59454804944025b9e6102cf1dcca9ebf5168411b0"
+      },
+      {
+        "name": "urllib3",
+        "version": "2.6.2",
+        "metadata_sha256": "532da8b2c7b39b017e837451b0d9c946061a2ec4a9e04d4161e487166a731a53"
+      },
+      {
+        "name": "certifi",
+        "version": "2025.11.12",
+        "metadata_sha256": "fc9a6b1aeff595649d1e5aee44129ca2b5e7adfbc10e1bd7ffa291afc1d06cb7"
+      },
+      {
+        "name": "joblib",
+        "version": "1.5.2",
+        "metadata_sha256": "cf385b71bfce1aa630dedb3b3749e841826a5cb8ee15c5e75e06dadfacc44a3d"
+      },
+      {
+        "name": "threadpoolctl",
+        "version": "3.6.0",
+        "metadata_sha256": "a45df8d07ea1883d772183a501d7d526076aa70dfcfddb276a2cbdc04def5341"
+      },
+      {
+        "name": "six",
+        "version": "1.17.0",
+        "metadata_sha256": "562042078c2752549f6d8a7c86dbc5dd708088a7be6d80672ec7b07100b72468"
+      },
+      {
+        "name": "typing-extensions",
+        "version": "4.15.0",
+        "metadata_sha256": "c138378fe8f18934ac99de060535c53ec6c13aeed65e94c32641da7ee3192a72"
+      }
+    ],
+    "runtime_plan_sha256": "629c045ba0a0c57c8d3c345249b111659e88aca2987cd3e438dac9463b35c4a8",
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "prefix": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/.tools/poc-antspyx-0.6.3-py312-v1/runtime",
+    "verified_official_API_sources": [
+      {
+        "path": "ants/segmentation/atropos.py",
+        "sha256": "bc0f65e59d04ef2fb25171338d467a2155ab17abf643d0d7040671d36eeea4ad"
+      },
+      {
+        "path": "ants/ops/bias_correction.py",
+        "sha256": "bb435f036db5e3a4211c982658a1565ac3e2d51870a3bfe7fb99acc3778556e6"
+      },
+      {
+        "path": "ants/core/ants_image_io.py",
+        "sha256": "dc4f25ae3eb1c8426eb10912d47850da6456454f9ab29f6efb205f2d7ed29e15"
+      }
+    ],
+    "installed_native_binary_hashes": [
+      {
+        "path": "ants/.dylibs/libpng16.16.dylib",
+        "sha256": "8064d5b03346634041aa98bae6becf6d1dc59e7259cf36057bc0b544d30adf6e"
+      },
+      {
+        "path": "ants/lib.cpython-312-darwin.so",
+        "sha256": "93f4e1418216de4f2f7b44be9f2926354a7c4bb098593904b95bb8db94f68021"
+      }
+    ]
+  },
+  "generated_input": {
+    "generator": "fixed_concentric_spheres_20_15_9_voxel_radii_center23.5",
+    "formula": "class_intensity[0,40,85,140]*exp(0.12*x+0.08*y*y+0.04*sin(z)); xyz=(index-23.5)/24",
+    "sampling_seed": null,
+    "random_sampling": false,
+    "values": {
+      "shape": [
+        48,
+        48,
+        48
+      ],
+      "dtype": "float32",
+      "C_order_bytes_sha256": "0f2501b5e86fbddd6b06f561233854cedefc6a5edb0c3874340154952595cc1f"
+    },
+    "binary_mask": {
+      "shape": [
+        48,
+        48,
+        48
+      ],
+      "dtype": "bool",
+      "C_order_bytes_sha256": "73776148163e66f83e4884723af9a82edc785a6fbab2c970fd0137dad193f82f"
+    },
+    "generated_class_truth": {
+      "shape": [
+        48,
+        48,
+        48
+      ],
+      "dtype": "uint8",
+      "C_order_bytes_sha256": "8380cc70855ac0ac465d8427dcac0f9bef86b5f1d1306493a8763d02a59c5085"
+    },
+    "affine_ras_mm": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "identity_physical_frame": "RAS; LPS conversion changes metadata signs only",
+    "mask_voxels": 33552,
+    "class_counts": [
+      19224,
+      11216,
+      3112
+    ],
+    "masked_intensity_range": [
+      36.021522521972656,
+      146.73292541503906
+    ]
+  },
+  "resources": {
+    "threads": 2,
+    "rss_limit_bytes": 1073741824,
+    "available_memory_floor_bytes": 1073741824,
+    "seconds_per_arm": 120.0,
+    "output_temporary_limit_bytes": 16777216,
+    "disk_floor_bytes": 53687091200,
+    "sample_interval_seconds": 0.1,
+    "attempts_per_arm": 1,
+    "RSS_scope": "supervising_Python_plus_worker_and_recursive_descendants"
+  },
+  "parameters": {
+    "N4": {
+      "shrink_factor": 4,
+      "convergence": {
+        "iters": [
+          30,
+          20,
+          10
+        ],
+        "tol": 1e-07
+      },
+      "spline_param": 150,
+      "rescale_intensities": false,
+      "return_bias_field": false,
+      "verbose": true
+    },
+    "Atropos": {
+      "i": "KMeans[3]",
+      "m": "[0.1,1x1x1]",
+      "c": "[10,0]",
+      "priorweight": 0.0,
+      "r": 0,
+      "v": 1
+    },
+    "grid": "full_native_grid_no_resampling_no_crop",
+    "priors": null,
+    "intensity_clipping_or_normalization": null,
+    "Atropos_random_seed_option": "r=0 (fixed upstream seed)"
+  },
+  "attempts": 1,
+  "patient_fitting_released": false
+}

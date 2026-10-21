@@ -1,0 +1,27 @@
+{
+  "arm": "float32",
+  "started_utc": "2026-10-16T07:55:06.821931+00:00",
+  "supervisor_pid": 21537,
+  "resources": {
+    "threads": 2,
+    "rss_limit_bytes": 1073741824,
+    "available_memory_floor_bytes": 1073741824,
+    "seconds_per_arm": 120.0,
+    "output_temporary_limit_bytes": 16777216,
+    "disk_floor_bytes": 53687091200,
+    "sample_interval_seconds": 0.1,
+    "attempts_per_arm": 1,
+    "RSS_scope": "supervising_Python_plus_worker_and_recursive_descendants"
+  },
+  "attempts": 1,
+  "worker_pid": 21547,
+  "status": "generated_arm_completed",
+  "elapsed_seconds": 7.712963999947533,
+  "finished_utc": "2026-10-16T07:55:14.534753+00:00",
+  "peak_supervisor_and_process_family_rss_bytes_sampled": 389218304,
+  "minimum_available_memory_bytes_sampled": 7467433984,
+  "minimum_free_disk_bytes_sampled": 343417094144,
+  "combined_output_and_temporary_bytes": 3216026,
+  "exit_code": 0,
+  "sampling_limitation": "Between-sample peaks are not a hard memory reservation"
+}

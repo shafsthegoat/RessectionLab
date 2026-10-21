@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "scope": "Exact broad drill action and public four-action prefix; no timestep, geometry tolerance, guard or physics-law change",
+  "profiledBaselineSeconds": 27.53264241712168,
+  "profiledOptimizedSeconds": 7.973399959038943,
+  "profiledSpeedup": 3.453061750139556,
+  "resultExactEquality": true,
+  "snapshotEquality": {
+    "status": "passed",
+    "exactFirstActionSnapshotEquality": true,
+    "exactFourActionSnapshotEquality": true,
+    "stateId": "sha256:b120d67a65e3fd807d4c5b6b5b2b8026a250b9c1545a6ab4d5e805868855f9e9",
+    "actions": 4
+  },
+  "changes": [
+    "Exact zero-delta point-to-box distance avoids seven duplicate intervals with the same arithmetic",
+    "Sparse ownership queries use integer array masks/search instead of looping over every queried cell"
+  ],
+  "cloneRollbackFinding": "Deepcopy consumed0.232s of27.533s baseline; clone/checkpoint logic left unchanged",
+  "proofSources": [
+    "baseline.prof",
+    "optimized.prof",
+    "baseline-snapshot.json",
+    "optimized-snapshot.json",
+    "exact-prefix-equality.json"
+  ],
+  "limits": [
+    "Machine-local timings with cProfile overhead; not GUI latency or isolated benchmark",
+    "The full exact broad prefix still ends at its original unsupported-material contact; optimization does not create additional access"
+  ]
+}

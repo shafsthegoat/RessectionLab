@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import {displaySeriesLabel} from './workspace-imaging-data';
 import type {AnnotationKind,DisplayModality,DisplaySeriesView,ImportDisplaySeriesRequest} from './workspace-imaging-types';
 export function ImagingWorkspacePanel(props:{caseHash:string;series:DisplaySeriesView[];selectedId:string|null;busy:boolean;importAvailable:boolean;onSelect:(id:string|null)=>void;onImport:(request:ImportDisplaySeriesRequest)=>void}) {
   const [modality,setModality]=useState<DisplayModality>('T2');
@@ -8,7 +9,7 @@ export function ImagingWorkspacePanel(props:{caseHash:string;series:DisplaySerie
     <h2>Imaging workspace <span>{1+props.series.length}</span></h2>
     <label>Inspect scan<select aria-label="Inspect scan" value={props.selectedId??''} onChange={e=>props.onSelect(e.target.value||null)} disabled={props.busy}>
       <option value="">Reference source image</option>
-      {props.series.map(s=><option key={s.descriptor.seriesId} value={s.descriptor.seriesId}>{s.descriptor.modality} · {s.descriptor.registration.overlayPermitted?'source registered':'separate image grid'}</option>)}
+      {props.series.map(s=><option key={s.descriptor.seriesId} value={s.descriptor.seriesId}>{displaySeriesLabel(s.descriptor)}</option>)}
     </select></label>
     {selected && <p className="muted-note">{selected.descriptor.registration.overlayPermitted?'Source dataset registration is recorded. This view inspects the selected image directly.':selected.descriptor.registration.reason}</p>}
     <label>Additional image modality<select aria-label="Additional image modality" value={modality} onChange={e=>setModality(e.target.value as DisplayModality)}>

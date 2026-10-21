@@ -1,0 +1,42 @@
+{"status": "succeeded", "record": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-models/SynthRAD2023-1BB033/totalsegmentator-skull/cd74e07c2b611f9943d7/inference.json", "elapsed_seconds": 9.000078083015978}
+{"status": "succeeded", "record": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-models/SynthRAD2023-1BC077/totalsegmentator-skull/94d62cb06df44f08b15b/inference.json", "elapsed_seconds": 7.958724875003099}
+{
+  "release_sha256": "7a541611e509fd7368abac9b153eaec477011ea2717a984129656d6fb0c7c252",
+  "source_result_sha256": "4d2e85f0e2ba808f922f4d1f6f364e52e5f51d589e83746eb81793106b19e2ff",
+  "subjects": [
+    {
+      "subject_id": "1BB033",
+      "status": "model_saved_bundle_unreviewed",
+      "peak_process_family_rss_bytes_sampled": 3432792064,
+      "minimum_system_available_bytes_sampled": 3267624960,
+      "guard_failure": null,
+      "inference_json": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-models/SynthRAD2023-1BB033/totalsegmentator-skull/cd74e07c2b611f9943d7/inference.json",
+      "inference_sha256": "fe916ff4a0c1bd4f7daae11253c429faffd88e2d6162ecb8b2bdb9047bb9acbc",
+      "bundle": {
+        "bundle": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-synthrad-bc-source-v1/1BB033/SynthRAD2023-1BB033.ressectionlab",
+        "sha256": "6da3934b794ad13945ea8d1443a70c46625a75c9b8a7cf2a800d2830c906dd82",
+        "source_reopened_identical": true,
+        "fusion_permitted": false
+      }
+    },
+    {
+      "subject_id": "1BC077",
+      "status": "model_saved_bundle_unreviewed",
+      "peak_process_family_rss_bytes_sampled": 4043767808,
+      "minimum_system_available_bytes_sampled": 2965798912,
+      "guard_failure": null,
+      "inference_json": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-models/SynthRAD2023-1BC077/totalsegmentator-skull/94d62cb06df44f08b15b/inference.json",
+      "inference_sha256": "d4869860fd252cd9f4f9cabdc5d6d90febc6072915040bc5f89696b4c85fc470",
+      "bundle": {
+        "bundle": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-synthrad-bc-source-v1/1BC077/SynthRAD2023-1BC077.ressectionlab",
+        "sha256": "171101168d1244d509fc64249cd9039a74aa9a35f35535dddc753307e80f905d",
+        "source_reopened_identical": true,
+        "fusion_permitted": false
+      }
+    }
+  ],
+  "training_admitted": false,
+  "registration_runs": 0,
+  "elapsed_seconds": 29.504685499938205,
+  "memory_caveat": "Sampled process RSS and Metal driver/tensor allocations overlap; do not sum; transient peaks may be missed"
+}

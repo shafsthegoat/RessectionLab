@@ -1,32 +1,20 @@
-import { maskSurface } from "./surface";
-import { surfaceNormals } from "./surfaceNormals";
-import { smoothSurface } from "./surfaceSmoothing";
+import {prepareSurface} from './prepareSurface';
 import type { Affine, Shape3 } from "./coordinates";
 
 self.onmessage = (
-  event: MessageEvent<{ name: string; mask: Uint8Array; shape: Shape3; displaySmoothing?: boolean; affine?: Affine }>,
+  event: MessageEvent<{ name: string; mask: Uint8Array; shape: Shape3; kind?:string; displaySmoothing?: boolean; affine?: Affine;requestGeneration?:number }>,
 ) => {
-  const { name, mask, shape, displaySmoothing, affine } = event.data;
+  const { name, mask, shape, kind, displaySmoothing, affine,requestGeneration } = event.data;
   try {
-    const positions = maskSurface(mask, shape);
-    const normals = surfaceNormals(positions);
-    if (displaySmoothing) {
-      if (!affine) throw new Error("Display smoothing requires the source affine.");
-      const smoothPositions = smoothSurface(positions, affine);
-      const smoothNormals = surfaceNormals(smoothPositions);
-      self.postMessage(
-        { name, positions, normals, smoothPositions, smoothNormals },
-        { transfer: [positions.buffer, normals.buffer, smoothPositions.buffer, smoothNormals.buffer] },
-      );
-      return;
-    }
-    self.postMessage(
-      { name, positions, normals },
-      { transfer: [positions.buffer, normals.buffer] },
-    );
+    if(!affine)throw Error('Surface preparation requires the source affine.');
+    const result=prepareSurface(mask,shape,affine,kind,displaySmoothing);
+    const transfer=[result.positions.buffer,result.indices.buffer,result.normals.buffer];
+    if(result.smoothPositions)transfer.push(result.smoothPositions.buffer,result.smoothNormals!.buffer);
+    self.postMessage({name,requestGeneration,...result},{transfer});
   } catch (error) {
     self.postMessage({
       name,
+      requestGeneration,
       error: error instanceof Error ? error.message : String(error),
     });
   }

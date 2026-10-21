@@ -1,0 +1,43 @@
+{
+  "output_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265-tissue-display-v1",
+  "bundle_filename": "IXI265-Guys-0845-tissue-estimates.ressectionlab",
+  "bundle_schema": "integrated-workspace-session-v1",
+  "new_display_source_label": "T1 \u00b7 estimated tissues",
+  "new_display_annotation_kind": "estimated",
+  "new_display_modality": "T1",
+  "new_display_mask_names": [
+    "atropos_csf_like_estimate",
+    "atropos_gray_matter_like_estimate",
+    "atropos_white_matter_like_estimate",
+    "unknown_missing_intensity"
+  ],
+  "new_display_mask_labels": [
+    "CSF-like estimate",
+    "Gray matter-like estimate",
+    "White matter-like estimate",
+    "Unknown \u00b7 8 voxels"
+  ],
+  "primary_case_hash_unchanged": "sha256:72f6ae73183d8d5d52f30eafd90a533b0cf81a38e0070d7fa70ca954461c505c",
+  "primary_planning_hash_unchanged": "sha256:01f037f27b7c46d20a12cbb9a6ccd66a33fe826675a8654aa8d64ce2ec4da0cf",
+  "new_display_source_id": "computed from immutable acquired T1 plus fixed masks/provenance by existing DisplaySource.identity; recorded after save/reopen",
+  "preserved_reference_source_ids": [
+    "sha256:96364833177048440090bb6b3ba051fb44ae5b6cb6f934cd91873da0736ecb57",
+    "sha256:2a76a27e8512747f1a10514f87a4529d27f2fed5fed61f7dcb2c4a771346ad85"
+  ],
+  "expected_original_files_count": 37,
+  "expected_total_attachment_expanded_bytes": 334233600,
+  "new_files": [
+    "declaration.json",
+    "worker.log",
+    "package.json",
+    "attempt.json",
+    "IXI265-Guys-0845-tissue-estimates.ressectionlab"
+  ],
+  "new_marker": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265-tissue-display-v1-attempt.json",
+  "posterior_arrays_displayed_as_anatomical_fractions": false,
+  "raw_posterior_files_archived_exactly": true,
+  "native_raw_header_tolerance_recorded_from_independent_QA": true,
+  "no_source_frame_fusion": true,
+  "no_catalog_change": true,
+  "no_acceptance_or_admission": true
+}

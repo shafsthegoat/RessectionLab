@@ -1,0 +1,20 @@
+{
+  "schema": "resectionlab.live-interval-profile.v1",
+  "utc": "2026-10-20T17:50:44.474484+00:00",
+  "checkedOutCommit": "3e0bd07c7a5ad7b84a9cf921c20f1c2564cd2c69",
+  "startPosition": 1436,
+  "endPosition": 1438,
+  "startStateId": "sha256:3e28a174d357d98b71468f49bcf147d35c1147964c1f99483c4bb08ef8d671f3",
+  "endStateId": "sha256:0b44e6391db7b75f0737540a9fe4fc2cb49e15314bd366cfa2d2317a5eb04cc7",
+  "startStage": "cusa_setup",
+  "endStage": "core",
+  "status": "running",
+  "pstats": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/profile-live-slice-from-1436.pstats",
+  "instrumentedWallSeconds": 259.4158002077602,
+  "patientSourceUnchanged": true,
+  "profileActionLimit": 2,
+  "savedBoundaryEqualsLive": true,
+  "engineAndDirectorCodeUnchanged": true,
+  "actionsPreserveExactPriorPrefix": true,
+  "scope": "At most two new actual public actions, not a replay or variant. Only profiling and save grouping change; existing engine/director code remains loaded. Profiling overhead is included; this is not a speed benchmark."
+}

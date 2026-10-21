@@ -1,0 +1,38 @@
+{
+  "scope": "Exact immutable cleared-membership kernel only; no physics replay or episode throughput claim. Inputs sampled from current saved native cleared identities plus other grid indices.",
+  "actions": 460,
+  "stateId": "sha256:eff37d04decd976a27691792bdca2111f4fa440f5380757e57d99507270d6815",
+  "clearedIds": 17842,
+  "rows": [
+    {
+      "queryCells": 1,
+      "originalSeconds": 0.0016304800007492304,
+      "setLookupSeconds": 1.0516634210944175e-06,
+      "kernelSpeedRatio": 1550.381964462038
+    },
+    {
+      "queryCells": 16,
+      "originalSeconds": 0.00164203624939546,
+      "setLookupSeconds": 2.4795811623334883e-06,
+      "kernelSpeedRatio": 662.2232312211025
+    },
+    {
+      "queryCells": 64,
+      "originalSeconds": 0.0016527329152449966,
+      "setLookupSeconds": 7.101250812411308e-06,
+      "kernelSpeedRatio": 232.738282156773
+    },
+    {
+      "queryCells": 256,
+      "originalSeconds": 0.0016613922943361104,
+      "setLookupSeconds": 2.570291282609105e-05,
+      "kernelSpeedRatio": 64.63828849194203
+    },
+    {
+      "queryCells": 1024,
+      "originalSeconds": 0.0016929318755865097,
+      "setLookupSeconds": 0.00010031521087512374,
+      "kernelSpeedRatio": 16.876123379673068
+    }
+  ]
+}

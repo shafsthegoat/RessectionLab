@@ -1,0 +1,782 @@
+{
+  "schema": "poc-synthrad-bc-final-artifact-v1",
+  "subjects": [
+    "1BB033",
+    "1BC077"
+  ],
+  "source_admission": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/manifests/poc-synthrad-bc-source-admission-v1.json",
+    "sha256": "75dc377966ab15da03ebb454a79059414876676cf39cd790019798924f828dd8",
+    "bytes": 11160
+  },
+  "source_result": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-synthrad-bc-source-v1/source-result.json",
+    "sha256": "4d2e85f0e2ba808f922f4d1f6f364e52e5f51d589e83746eb81793106b19e2ff",
+    "bytes": 17037
+  },
+  "archive_verification": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-synthrad-bc-source-v1/archive-verified.json",
+    "sha256": "ebde012a4bde5bf411b7f4a7ab0496e9347f213cf8395df1773f12e01faa315f",
+    "bytes": 231
+  },
+  "model_declaration": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-synthrad-bc-source-v1/model-execution-declaration.json",
+    "sha256": "7a541611e509fd7368abac9b153eaec477011ea2717a984129656d6fb0c7c252",
+    "bytes": 3984
+  },
+  "model_campaign": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-synthrad-bc-source-v1/model-campaign.json",
+    "sha256": "409da7da53fe817abd7bdb8f43a75ea3c55a941754d148cca3402e0e8da5f3a1",
+    "bytes": 2335
+  },
+  "final_runner": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/scripts/poc_synthrad_extension.py",
+    "sha256": "bb873b545c740300c89584bb3ae6e8f20e7418062c25d2539dfcef21eebbe20a",
+    "bytes": 31463
+  },
+  "source_stage_runner_sha256": "47b808ec463bcedcf73d0bea3c8f3d095fad38ddd9d8f9bd6b41aebd1ff799e2",
+  "runner_revision_note": "Source stage completed before later model/persistence adapter guards were added; exact final model runner was frozen separately before model execution.",
+  "tests": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/tests/test_poc_synthrad_extension.py",
+    "sha256": "89ab30309f5900b1f97328d269b0ef4f6f1a88b399d1c20d8f08ba88a086a1ed",
+    "bytes": 11056
+  },
+  "test_result": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/artifacts/poc-synthrad-bc-preparation-v1/software-controls.txt",
+    "sha256": "a015a63f4cf5259eaa3bb7e60983effd6ef64f648fc5bab9c9ae6ba0c1191660",
+    "bytes": 99
+  },
+  "test_result_text": ".............                                                            [100%]\n13 passed in 0.23s\n",
+  "source_runtime": {
+    "elapsed_seconds": 7.1011396672111005,
+    "peak_rss_bytes_sampled": 77594624,
+    "output_bytes": 36106993
+  },
+  "model_runtime": {
+    "release_sha256": "7a541611e509fd7368abac9b153eaec477011ea2717a984129656d6fb0c7c252",
+    "source_result_sha256": "4d2e85f0e2ba808f922f4d1f6f364e52e5f51d589e83746eb81793106b19e2ff",
+    "subjects": [
+      {
+        "subject_id": "1BB033",
+        "status": "model_saved_bundle_unreviewed",
+        "peak_process_family_rss_bytes_sampled": 3432792064,
+        "minimum_system_available_bytes_sampled": 3267624960,
+        "guard_failure": null,
+        "inference_json": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-models/SynthRAD2023-1BB033/totalsegmentator-skull/cd74e07c2b611f9943d7/inference.json",
+        "inference_sha256": "fe916ff4a0c1bd4f7daae11253c429faffd88e2d6162ecb8b2bdb9047bb9acbc",
+        "bundle": {
+          "bundle": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-synthrad-bc-source-v1/1BB033/SynthRAD2023-1BB033.ressectionlab",
+          "sha256": "6da3934b794ad13945ea8d1443a70c46625a75c9b8a7cf2a800d2830c906dd82",
+          "source_reopened_identical": true,
+          "fusion_permitted": false
+        }
+      },
+      {
+        "subject_id": "1BC077",
+        "status": "model_saved_bundle_unreviewed",
+        "peak_process_family_rss_bytes_sampled": 4043767808,
+        "minimum_system_available_bytes_sampled": 2965798912,
+        "guard_failure": null,
+        "inference_json": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-models/SynthRAD2023-1BC077/totalsegmentator-skull/94d62cb06df44f08b15b/inference.json",
+        "inference_sha256": "d4869860fd252cd9f4f9cabdc5d6d90febc6072915040bc5f89696b4c85fc470",
+        "bundle": {
+          "bundle": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-synthrad-bc-source-v1/1BC077/SynthRAD2023-1BC077.ressectionlab",
+          "sha256": "171101168d1244d509fc64249cd9039a74aa9a35f35535dddc753307e80f905d",
+          "source_reopened_identical": true,
+          "fusion_permitted": false
+        }
+      }
+    ],
+    "training_admitted": false,
+    "registration_runs": 0,
+    "elapsed_seconds": 29.504685499938205,
+    "memory_caveat": "Sampled process RSS and Metal driver/tensor allocations overlap; do not sum; transient peaks may be missed"
+  },
+  "cohort_unchanged_sha256": "3bb4dd48e2e674bd921653d938ec7c7695c77afb8776c517800bbefb6a32ff30",
+  "training_admitted": false,
+  "new_patient_groups": 2,
+  "existing_1BA336_modified": false,
+  "ten_person_catalog_modified": false,
+  "model_runs": 2,
+  "registration_runs": 0,
+  "data_or_model_downloads": 0,
+  "rights": {
+    "data": "CC-BY-NC-4.0",
+    "data_url": "https://zenodo.org/records/7260705",
+    "model": "Apache-2.0 total task",
+    "model_url": "https://raw.githubusercontent.com/wasserth/TotalSegmentator/v2.12.0/README.md"
+  },
+  "limitations": [
+    "Released acquired CT/T1 MRI after provider registration, defacing and cropping; no generated synthetic CT.",
+    "Coded CT/MR grids match but anatomical correspondence, source scanner transform chain, calvarium coverage and privacy review remain pending.",
+    "Both CTs have source effective range -1024..3000 and scaling1/0; no independent HU calibration or saturation inference.",
+    "TotalSegmentator fast3mm estimates brain/skull; no tumor, vessel, ventricle or functional truth; no held-out accuracy claim.",
+    "Process RSS was sampled; Metal driver/tensor values were sampled after inference and do not measure transient GPU peak. Their allocations overlap RSS; do not add them.",
+    "Primary CT estimated layers and auxiliary acquired MRI remain distinct; fusion is false."
+  ],
+  "pairs": [
+    {
+      "subject_id": "1BB033",
+      "patient_group": "SynthRAD2023:1BB033",
+      "role": "TRAIN",
+      "training_admitted": false,
+      "source_report": {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-synthrad-bc-source-v1/1BB033/source.json",
+        "sha256": "67205fe13a190fbc68c0b4963fd96871e3dcc0ed9e7f018ef94cc7dd3fb9c32a",
+        "bytes": 7038
+      },
+      "source_images": {
+        "ct": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-synthrad-bc-source-v1/1BB033/ct.nii.gz",
+          "sha256": "4999e29411f5c76d986eb188f59a8148f8dbad7ef8bd30abef2e155a1681cafd",
+          "bytes": 11357517
+        },
+        "mr": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-synthrad-bc-source-v1/1BB033/mr.nii.gz",
+          "sha256": "68fe4d165a8b3063bfce58f7b75bf7b22ce52243a7dd3c0704b2a29984b7a228",
+          "bytes": 7878632
+        }
+      },
+      "coded_grids_equal": true,
+      "grids": {
+        "ct": {
+          "affine_ras_mm": [
+            [
+              -1.0,
+              0.0,
+              0.0,
+              102.51171875
+            ],
+            [
+              0.0,
+              -1.0,
+              0.0,
+              360.51171875
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              -120.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "spacing_mm": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "shape": [
+            212,
+            246,
+            181
+          ],
+          "orientation": [
+            "L",
+            "P",
+            "S"
+          ],
+          "qform_code": 1,
+          "sform_code": 0,
+          "qform_status": "active",
+          "qform_sform_corner_residual_mm": 0.0,
+          "source_unit_code": 2,
+          "unit_scale_to_mm": 1.0,
+          "world_corner_bounds_mm": [
+            [
+              -108.48828125,
+              115.51171875,
+              -120.0
+            ],
+            [
+              102.51171875,
+              360.51171875,
+              60.0
+            ]
+          ],
+          "field_of_view_mm": [
+            212.0,
+            246.0,
+            181.0
+          ],
+          "voxel_volume_mm3": 1.0,
+          "handedness": "right",
+          "obliquity_degrees": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "claim": "source coded geometry only; no scanner or anatomical registration admission"
+        },
+        "mr": {
+          "affine_ras_mm": [
+            [
+              -1.0,
+              0.0,
+              0.0,
+              102.51171875
+            ],
+            [
+              0.0,
+              -1.0,
+              0.0,
+              360.51171875
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              -120.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "spacing_mm": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "shape": [
+            212,
+            246,
+            181
+          ],
+          "orientation": [
+            "L",
+            "P",
+            "S"
+          ],
+          "qform_code": 1,
+          "sform_code": 0,
+          "qform_status": "active",
+          "qform_sform_corner_residual_mm": 0.0,
+          "source_unit_code": 2,
+          "unit_scale_to_mm": 1.0,
+          "world_corner_bounds_mm": [
+            [
+              -108.48828125,
+              115.51171875,
+              -120.0
+            ],
+            [
+              102.51171875,
+              360.51171875,
+              60.0
+            ]
+          ],
+          "field_of_view_mm": [
+            212.0,
+            246.0,
+            181.0
+          ],
+          "voxel_volume_mm3": 1.0,
+          "handedness": "right",
+          "obliquity_degrees": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "claim": "source coded geometry only; no scanner or anatomical registration admission"
+        }
+      },
+      "inference": {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-models/SynthRAD2023-1BB033/totalsegmentator-skull/cd74e07c2b611f9943d7/inference.json",
+        "sha256": "fe916ff4a0c1bd4f7daae11253c429faffd88e2d6162ecb8b2bdb9047bb9acbc",
+        "bytes": 5412
+      },
+      "model": {
+        "name": "TotalSegmentator",
+        "version": "2.12.0 / Dataset297 v2.0.0-weights",
+        "license": "Apache-2.0",
+        "license_url": "https://github.com/wasserth/TotalSegmentator#subtasks",
+        "modality": [
+          "CT"
+        ],
+        "requirements": "Acquired CT in Hounsfield units; fast model at 3 mm",
+        "weights_glob": "data/models/poc-totalsegmentator/weights/**/checkpoint_final.pth",
+        "parameters": {
+          "task": "total",
+          "fast": true,
+          "tta": false,
+          "skull_label": 91,
+          "brain_label": 90
+        }
+      },
+      "model_identity": {
+        "image_sha256": "4999e29411f5c76d986eb188f59a8148f8dbad7ef8bd30abef2e155a1681cafd",
+        "weights": [
+          "1e38e40356adc2706a662e365405a97f862d62a7da65f6bf81d025aee1b979ac"
+        ],
+        "model_id": "totalsegmentator-skull",
+        "parameters": {
+          "task": "total",
+          "fast": true,
+          "tta": false,
+          "skull_label": 91,
+          "brain_label": 90
+        },
+        "device": "mps",
+        "runner_sha256": "7446332d8e948624c055f3c19ad5d64c12018095d8e4b330535d62c47908c28b"
+      },
+      "weights": [
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/models/poc-totalsegmentator/weights/Dataset297_TotalSegmentator_total_3mm_1559subj/nnUNetTrainer_4000epochs_NoMirroring__nnUNetPlans__3d_fullres/fold_0/checkpoint_final.pth",
+          "sha256": "1e38e40356adc2706a662e365405a97f862d62a7da65f6bf81d025aee1b979ac",
+          "bytes": 164939235
+        }
+      ],
+      "masks": [
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-models/SynthRAD2023-1BB033/totalsegmentator-skull/cd74e07c2b611f9943d7/brain_mask.nii.gz",
+          "sha256": "7800cf900931f51d4970df07cc75398fec7a98316ecb7ff9400d6a650a7a5578",
+          "name": "brain_mask.nii.gz",
+          "foreground_voxels": 1281637,
+          "shape": [
+            212,
+            246,
+            181
+          ],
+          "affine_ras_mm": [
+            [
+              -1.0,
+              0.0,
+              0.0,
+              102.51171875
+            ],
+            [
+              0.0,
+              -1.0,
+              0.0,
+              360.51171875
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              -120.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "provenance": "model_inference_unreviewed"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-models/SynthRAD2023-1BB033/totalsegmentator-skull/cd74e07c2b611f9943d7/skull_mask.nii.gz",
+          "sha256": "5676513664ee1edeef4f7cd770db3226b811df3c8207dd61e6015711ac537e12",
+          "name": "skull_mask.nii.gz",
+          "foreground_voxels": 677099,
+          "shape": [
+            212,
+            246,
+            181
+          ],
+          "affine_ras_mm": [
+            [
+              -1.0,
+              0.0,
+              0.0,
+              102.51171875
+            ],
+            [
+              0.0,
+              -1.0,
+              0.0,
+              360.51171875
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              -120.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "provenance": "model_inference_unreviewed"
+        }
+      ],
+      "bundle": {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-synthrad-bc-source-v1/1BB033/SynthRAD2023-1BB033.ressectionlab",
+        "sha256": "6da3934b794ad13945ea8d1443a70c46625a75c9b8a7cf2a800d2830c906dd82",
+        "bytes": 38261823
+      },
+      "case_hash": "sha256:34914516b31c5a88dbdbeac4a7893fb69759e556a2cae4e67e2153e836ad66e0",
+      "planning_hash": "sha256:63f9737e3f1bd1c3e27ee425fd7600522e80d987866bd1053df0fc322ba5e71e",
+      "workspace_session_hash": "sha256:bb0ad51b1bdd6d493cb2a4535c04b4f1a91be15cd028991b22ea4cc536b494b6",
+      "archived_acquired_originals_verified": [
+        {
+          "name": "ct.nii.gz",
+          "sha256": "4999e29411f5c76d986eb188f59a8148f8dbad7ef8bd30abef2e155a1681cafd",
+          "bytes": 11357517
+        },
+        {
+          "name": "mr.nii.gz",
+          "sha256": "68fe4d165a8b3063bfce58f7b75bf7b22ce52243a7dd3c0704b2a29984b7a228",
+          "bytes": 7878632
+        }
+      ],
+      "original_files": 5,
+      "display_series": [
+        {
+          "annotationKind": "none",
+          "modality": "T1",
+          "scope": "display-only-native-grid",
+          "seriesId": "sha256:3765316760de1e4679eba7993fc25e19d65e2c6a2005fecdcae57c24b4c6b970",
+          "sourceCaseHash": "sha256:c6c7370ca9b3d267a66b157965d0ffd13f475dccc44e77c304aa2de468b9f3fb",
+          "sourceFrameHash": "sha256:fa807dc223095ef3447efdd6e0cbe938cf573755a4461a38df6113a551f6a837"
+        }
+      ],
+      "fusion_permitted": false,
+      "clinical_or_anatomical_admission": false
+    },
+    {
+      "subject_id": "1BC077",
+      "patient_group": "SynthRAD2023:1BC077",
+      "role": "TRAIN",
+      "training_admitted": false,
+      "source_report": {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-synthrad-bc-source-v1/1BC077/source.json",
+        "sha256": "af73a172ac43e80092f83cb98812e4ac62c307eda854d73fb43db57dbaeab91e",
+        "bytes": 7020
+      },
+      "source_images": {
+        "ct": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-synthrad-bc-source-v1/1BC077/ct.nii.gz",
+          "sha256": "5a33487b11e9762c84f6b1ce8fb3e9f2c008e1ede78c57cd2a053c3cb14dead7",
+          "bytes": 8854360
+        },
+        "mr": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-synthrad-bc-source-v1/1BC077/mr.nii.gz",
+          "sha256": "f41eb00d101bab4b27665a6870794d6e4eb169d70bea0f9cfc28c02625dd72c0",
+          "bytes": 8000741
+        }
+      },
+      "coded_grids_equal": true,
+      "grids": {
+        "ct": {
+          "affine_ras_mm": [
+            [
+              -1.0,
+              0.0,
+              0.0,
+              111.0
+            ],
+            [
+              0.0,
+              -1.0,
+              0.0,
+              78.0999984741211
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              75.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "spacing_mm": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "shape": [
+            229,
+            277,
+            182
+          ],
+          "orientation": [
+            "L",
+            "P",
+            "S"
+          ],
+          "qform_code": 1,
+          "sform_code": 0,
+          "qform_status": "active",
+          "qform_sform_corner_residual_mm": 0.0,
+          "source_unit_code": 2,
+          "unit_scale_to_mm": 1.0,
+          "world_corner_bounds_mm": [
+            [
+              -117.0,
+              -197.9000015258789,
+              75.0
+            ],
+            [
+              111.0,
+              78.0999984741211,
+              256.0
+            ]
+          ],
+          "field_of_view_mm": [
+            229.0,
+            277.0,
+            182.0
+          ],
+          "voxel_volume_mm3": 1.0,
+          "handedness": "right",
+          "obliquity_degrees": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "claim": "source coded geometry only; no scanner or anatomical registration admission"
+        },
+        "mr": {
+          "affine_ras_mm": [
+            [
+              -1.0,
+              0.0,
+              0.0,
+              111.0
+            ],
+            [
+              0.0,
+              -1.0,
+              0.0,
+              78.0999984741211
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              75.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "spacing_mm": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "shape": [
+            229,
+            277,
+            182
+          ],
+          "orientation": [
+            "L",
+            "P",
+            "S"
+          ],
+          "qform_code": 1,
+          "sform_code": 0,
+          "qform_status": "active",
+          "qform_sform_corner_residual_mm": 0.0,
+          "source_unit_code": 2,
+          "unit_scale_to_mm": 1.0,
+          "world_corner_bounds_mm": [
+            [
+              -117.0,
+              -197.9000015258789,
+              75.0
+            ],
+            [
+              111.0,
+              78.0999984741211,
+              256.0
+            ]
+          ],
+          "field_of_view_mm": [
+            229.0,
+            277.0,
+            182.0
+          ],
+          "voxel_volume_mm3": 1.0,
+          "handedness": "right",
+          "obliquity_degrees": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "claim": "source coded geometry only; no scanner or anatomical registration admission"
+        }
+      },
+      "inference": {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-models/SynthRAD2023-1BC077/totalsegmentator-skull/94d62cb06df44f08b15b/inference.json",
+        "sha256": "d4869860fd252cd9f4f9cabdc5d6d90febc6072915040bc5f89696b4c85fc470",
+        "bytes": 5397
+      },
+      "model": {
+        "name": "TotalSegmentator",
+        "version": "2.12.0 / Dataset297 v2.0.0-weights",
+        "license": "Apache-2.0",
+        "license_url": "https://github.com/wasserth/TotalSegmentator#subtasks",
+        "modality": [
+          "CT"
+        ],
+        "requirements": "Acquired CT in Hounsfield units; fast model at 3 mm",
+        "weights_glob": "data/models/poc-totalsegmentator/weights/**/checkpoint_final.pth",
+        "parameters": {
+          "task": "total",
+          "fast": true,
+          "tta": false,
+          "skull_label": 91,
+          "brain_label": 90
+        }
+      },
+      "model_identity": {
+        "image_sha256": "5a33487b11e9762c84f6b1ce8fb3e9f2c008e1ede78c57cd2a053c3cb14dead7",
+        "weights": [
+          "1e38e40356adc2706a662e365405a97f862d62a7da65f6bf81d025aee1b979ac"
+        ],
+        "model_id": "totalsegmentator-skull",
+        "parameters": {
+          "task": "total",
+          "fast": true,
+          "tta": false,
+          "skull_label": 91,
+          "brain_label": 90
+        },
+        "device": "mps",
+        "runner_sha256": "7446332d8e948624c055f3c19ad5d64c12018095d8e4b330535d62c47908c28b"
+      },
+      "weights": [
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/models/poc-totalsegmentator/weights/Dataset297_TotalSegmentator_total_3mm_1559subj/nnUNetTrainer_4000epochs_NoMirroring__nnUNetPlans__3d_fullres/fold_0/checkpoint_final.pth",
+          "sha256": "1e38e40356adc2706a662e365405a97f862d62a7da65f6bf81d025aee1b979ac",
+          "bytes": 164939235
+        }
+      ],
+      "masks": [
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-models/SynthRAD2023-1BC077/totalsegmentator-skull/94d62cb06df44f08b15b/brain_mask.nii.gz",
+          "sha256": "dba1683c3b5eb600f4d83f9d3a7ebf8c70c9796eb10cfc94367070a0eed69028",
+          "name": "brain_mask.nii.gz",
+          "foreground_voxels": 1246316,
+          "shape": [
+            229,
+            277,
+            182
+          ],
+          "affine_ras_mm": [
+            [
+              -1.0,
+              0.0,
+              0.0,
+              111.0
+            ],
+            [
+              0.0,
+              -1.0,
+              0.0,
+              78.0999984741211
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              75.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "provenance": "model_inference_unreviewed"
+        },
+        {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-models/SynthRAD2023-1BC077/totalsegmentator-skull/94d62cb06df44f08b15b/skull_mask.nii.gz",
+          "sha256": "bd75f0feab5ca398a746e0e7a88a598945e975d1fbf872aa950c55a7d7450aae",
+          "name": "skull_mask.nii.gz",
+          "foreground_voxels": 737268,
+          "shape": [
+            229,
+            277,
+            182
+          ],
+          "affine_ras_mm": [
+            [
+              -1.0,
+              0.0,
+              0.0,
+              111.0
+            ],
+            [
+              0.0,
+              -1.0,
+              0.0,
+              78.0999984741211
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              75.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "provenance": "model_inference_unreviewed"
+        }
+      ],
+      "bundle": {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-synthrad-bc-source-v1/1BC077/SynthRAD2023-1BC077.ressectionlab",
+        "sha256": "171101168d1244d509fc64249cd9039a74aa9a35f35535dddc753307e80f905d",
+        "bytes": 33535523
+      },
+      "case_hash": "sha256:128463ef5705f8556e16128816458fc98587d728963ad704ec997d549210098a",
+      "planning_hash": "sha256:f6f7435937ea888f1af23e212e6b66764ebcc5f594b25f2613260a438a90e7c1",
+      "workspace_session_hash": "sha256:9492f482f0fbbe6b36661c4f5e9614a2e6b460507a9fd51fec8589791ed41902",
+      "archived_acquired_originals_verified": [
+        {
+          "name": "ct.nii.gz",
+          "sha256": "5a33487b11e9762c84f6b1ce8fb3e9f2c008e1ede78c57cd2a053c3cb14dead7",
+          "bytes": 8854360
+        },
+        {
+          "name": "mr.nii.gz",
+          "sha256": "f41eb00d101bab4b27665a6870794d6e4eb169d70bea0f9cfc28c02625dd72c0",
+          "bytes": 8000741
+        }
+      ],
+      "original_files": 5,
+      "display_series": [
+        {
+          "annotationKind": "none",
+          "modality": "T1",
+          "scope": "display-only-native-grid",
+          "seriesId": "sha256:2508a110e0226daff3463491a3ae44e5d79ac8b2c833d703f0eee1c1bc5c6cdd",
+          "sourceCaseHash": "sha256:7cd425640c949c5c3387704cde60bb667328b4b3f0a033c05c7774d104d5be5f",
+          "sourceFrameHash": "sha256:887c9958676d07ae744548f38b43c0c2b9efc75e8b14e3997a298cc1d109c96e"
+        }
+      ],
+      "fusion_permitted": false,
+      "clinical_or_anatomical_admission": false
+    }
+  ],
+  "measured_output_bytes_before_final_receipt": 149452038
+}

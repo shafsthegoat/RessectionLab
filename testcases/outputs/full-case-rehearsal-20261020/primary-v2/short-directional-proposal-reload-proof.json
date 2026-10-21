@@ -1,0 +1,62 @@
+{
+  "utc": "2026-10-20T19:47:09.656193+00:00",
+  "codeCommit": "7cbecb11a11a925bdb25065b414546532cb61da8",
+  "priorProposalCommit": "520e3cda06f870de839ac063c4eda803190a5bf2",
+  "loadedOnly": [
+    "full_case_directional"
+  ],
+  "startPosition": 1692,
+  "startStateId": "sha256:face68709d09adf2f1eb841a00c692269fd8c9c0f86a8e054ff533acd7ed62f7",
+  "sourceUnchanged": true,
+  "engineSnapshotHistoryDirectorUnchanged": true,
+  "engineMethodCodesUnchanged": [
+    "step",
+    "preview",
+    "_execute",
+    "_substep",
+    "_physical_substep",
+    "cells",
+    "occupancy"
+  ],
+  "thermalFunctionCodesUnchanged": [
+    "validate",
+    "profile",
+    "initialize",
+    "_nonnegative",
+    "_dose_integral",
+    "_thermal",
+    "cool",
+    "begin_step",
+    "end_step",
+    "apply",
+    "contact_limited_pose",
+    "descriptor",
+    "metrics"
+  ],
+  "directorCodeUnchanged": true,
+  "physicalActionsDuringReload": 0,
+  "checkpoint": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-short-directional-proposals-1692.ressectionlab",
+  "checkpointSha256": "855bc29afafad25c693b406a0ecc9178a6d3bf620ac44cc814a1295c973e121e",
+  "qualification": "Short geometric proposals still require public preview/step; outside fallback retained. No prior patient interval repeated.",
+  "firstAdvance": {
+    "utc": "2026-10-20T19:52:32.167166+00:00",
+    "endPosition": 1704,
+    "newActionCount": 12,
+    "endStateId": "sha256:1eeea5538d82ee54e294053ab8afe8ecce1cd7b49a0d570abd812c86b3d8c303",
+    "statuses": {
+      "accepted": 11,
+      "partial": 1
+    },
+    "targetRemovedMm3": 34411.0,
+    "newTargetRemovedMm3": 123.0,
+    "newTravelMm": 293.2074214946115,
+    "newSimulationSeconds": 21.942265976529598,
+    "observedWallSeconds": 322.15640716673806,
+    "activeWounds": 0,
+    "woundCount": 0,
+    "directorStatus": "running",
+    "savedSnapshotEqualsLive": true,
+    "continuousRecordedStateChain": true,
+    "sourceUnchanged": true
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "resect-case3-image-registration-v1-root-release",
+  "decision": "release_one_fit",
+  "case_id": "RESECT:Case3",
+  "preflight_sha256": "ef9e0cd6029e869a6364de6c946f0284bc0a7ca1f700695a8bb75b52e60fd7ba",
+  "runner_sha256": "e17d755eeadb6a3d1fd365b7a3b4dc31f9e27c4f93afdb6045d8f6e27ef9612f",
+  "output_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-resect-case3-image-registration-v1",
+  "landmark_access_permitted": false,
+  "created_utc": "2026-10-16T09:33:46.093879+00:00",
+  "prepared_commit": "fa44c9e529b17ca298f5bf0ea88d6ee6b33a5ba6",
+  "independent_preflight": {
+    "path": "artifacts/resect-case3-registration-preflight-independent-v1/independent-qa.json",
+    "sha256": "280aff3692c0673a164c113bb16a908183a5d7c04350a8a2d0c087dabb8665c5"
+  },
+  "prospective_protocol": {
+    "path": "artifacts/resect-case3-image-registration-preparation-v1/prospective-protocol.json",
+    "sha256": "b1b27118ae79b6d6ab576c97298749ba5f126d8fac985788c147e42961e14bd7"
+  },
+  "available_memory_bytes_before_release": 7638482944,
+  "free_storage_bytes_before_release": 344156835840,
+  "limits": {
+    "optimizer_seconds": 180,
+    "worker_seconds": 240,
+    "sampled_family_rss_stop_bytes": 4294967296,
+    "threads": 2,
+    "automatic_retry": false
+  },
+  "evaluation_released": false,
+  "acquisition_or_model_fitting": false,
+  "clinical_or_anatomical_acceptance": false,
+  "scope": "One predeclared image-only rigid candidate; no landmarks, alternate parameters, policy learning or replacement case."
+}

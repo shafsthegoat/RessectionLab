@@ -21,6 +21,14 @@ export function maskSurface(mask: Uint8Array, shape: Shape3): Float32Array {
       });
     }
   if (high[0] < 0) return new Float32Array();
+  return maskSurfaceRegion(mask,shape,low.map(n=>n-1) as Point3,high as Point3).positions;
+}
+
+/** Inclusive cell-origin core. Values use the whole source grid, including
+ * neighboring corners; a cell belongs to exactly one core, never both sides. */
+export function maskSurfaceRegion(mask:Uint8Array,shape:Shape3,low:Point3,high:Point3){
+  if(mask.length!==shape[0]*shape[1]*shape[2]||low.some((n,a)=>!Number.isInteger(n)||n< -1||n>high[a])||
+    high.some((n,a)=>!Number.isInteger(n)||n>=shape[a]))throw Error('Invalid source surface cell region');
   const offsets: Point3[] = [
     [0, 0, 0],
     [1, 0, 0],
@@ -40,6 +48,7 @@ export function maskSurface(mask: Uint8Array, shape: Shape3): Float32Array {
     [0, 5, 1, 7],
   ];
   const output: number[] = [];
+  const rowOffsets:number[]=[];
   const value = (p: Point3) =>
     p.some((v, a) => v < 0 || v >= shape[a])
       ? 0
@@ -60,9 +69,10 @@ export function maskSurface(mask: Uint8Array, shape: Shape3): Float32Array {
       output.push(...a, ...c, ...b);
     else output.push(...a, ...b, ...c);
   };
-  for (let x = low[0] - 1; x <= high[0]; x++)
-    for (let y = low[1] - 1; y <= high[1]; y++)
-      for (let z = low[2] - 1; z <= high[2]; z++) {
+  for (let x = low[0]; x <= high[0]; x++)
+    for (let y = low[1]; y <= high[1]; y++){
+      rowOffsets.push(output.length);
+      for (let z = low[2]; z <= high[2]; z++) {
         const points = offsets.map(
             (o) => [x + o[0], y + o[1], z + o[2]] as Point3,
           ),
@@ -105,5 +115,7 @@ export function maskSurface(mask: Uint8Array, shape: Shape3): Float32Array {
           }
         }
       }
-  return new Float32Array(output);
+    }
+  rowOffsets.push(output.length);
+  return {positions:new Float32Array(output),rowOffsets:Uint32Array.from(rowOffsets)};
 }

@@ -1,0 +1,1280 @@
+{
+  "schema": "resectionlab.surgical-pilot.v1",
+  "status": "prepared_awaiting_desktop_and_guard_gate",
+  "settings": {
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "updates": 4,
+    "episodes_per_update": 2,
+    "decisions": 6,
+    "learning_rate": 0.001,
+    "hidden": 32,
+    "entropy_weight": 0.01,
+    "gamma": 0.95,
+    "return_scale": 100.0,
+    "max_grad_norm": 1.0,
+    "max_wall_seconds": 900.0,
+    "max_transition_calls": 1000,
+    "max_action_wall_seconds": 10.0,
+    "max_rss_bytes": 6442450944,
+    "policy_healthy_budget_mm3": 5.0,
+    "setup_healthy_budget_mm3": 100.0,
+    "local_spacing_mm": 1.0,
+    "step_mm": 2.0,
+    "action_seconds": 0.2
+  },
+  "sources": {
+    "sub06": {
+      "case": "outputs/surgical-patient-v2/patient.ressectionlab",
+      "protection": "outputs/surgical-patient-v2/rl-protection.json",
+      "identity": "ZENODO-17486320-meningioma-sub-06-surgical-research",
+      "role": "already exposed development; acquired MRI with unreviewed model estimates"
+    },
+    "ucsf0004": {
+      "case": "outputs/poc-cases/UCSF-PDGM-0004-standard-v2.ressectionlab",
+      "protection": "outputs/standard-environments/UCSF-PDGM-0004/rl-protection.json",
+      "identity": "UCSF-PDGM-0004-surgical-research",
+      "role": "development in manifests/cohort_registry.json; source annotated enhancing target"
+    }
+  },
+  "source_hashes": {
+    "scripts/train_surgical_pilot.py": "b9a31c2f8abf263628d11ae936239426e6387032c713cff0aebd44f707f4ce44",
+    "src/resectionlab/surgical_adapters.py": "2b995809d6fbdea976268f091b86ab31086e87c0b389b91255278a59797a4604",
+    "src/resectionlab/surgical_bridge.py": "39eb2a1c3510c893648c5001a8a2e7d0eecff3a8025c8009920bff3324b16ef1",
+    "src/resectionlab/surgical_deformation_v2.py": "eaef99762a37c1b2ec6db610cf2ad17cdbae6120ee6f250facf55fefd0b72074",
+    "src/resectionlab/surgical_drilling_v2.py": "d246e0d02b532b9b64aee79c21151fb16660f55ecca0b626111a13cbbd006af8",
+    "src/resectionlab/surgical_effects.py": "9bd6f16909508f10fdc0df0a50e4c998658ad6d10cf375efdcf309ae5ba9c9d8",
+    "src/resectionlab/surgical_engine.py": "54416ab156d3cc871a45fa8f2798735f28fb243701b58395335137f7066632cd",
+    "src/resectionlab/surgical_environment.py": "0d267ceb0c4e6b427481c1633659d551453f27938043d0d6867fe7238604b9f2",
+    "src/resectionlab/surgical_motion.py": "094da28de41cb3e2af4073fb559d6fe7d994bb2265d8f0ca5930ef93fe205536",
+    "src/resectionlab/surgical_occupancy.py": "486b112615bf33ab857dbe729d947cfbdaa463fa9544b5b3ff96e3b7d5a80fbd",
+    "src/resectionlab/surgical_patient.py": "4cbf791b37828009fb6a21f43c4f142818ff685afd4f76be053dd2792351b382",
+    "src/resectionlab/surgical_physics.py": "383de1e8b42fd549623314e6c31a5710c88269cc496a43ec3d53c96bab462310",
+    "src/resectionlab/surgical_physics_v2.py": "f57ab872a6d58a0d2a70a685cbc7720df27f1953adc1ed97a042b34571283e5e",
+    "src/resectionlab/surgical_rl_env.py": "01ed51dfa6a4bb9a889904a6aa377dc0a4b86c2a0bbef8477a3482b0226d2251",
+    "src/resectionlab/surgical_rl_protection.py": "06bf489002c4a30a183a454775db39fbb595a0e6695c1396fb5aded6a9d5e4c8",
+    "src/resectionlab/surgical_rl_rewards.py": "c18f5af90e525241b4f973658f7e89332184d7f740aa54f8ba8321738bc7267c",
+    "src/resectionlab/surgical_scene.py": "85cb4e3d4f2c07a2430fb2b722402ea4aa3a2f2aa8aec478edfc971af374a906",
+    "src/resectionlab/surgical_telemetry.py": "8718352f1b29a84c37221375e81cae1d34f746c39dee2248c2927a654bc340cf",
+    "src/resectionlab/surgical_tools.py": "472ba5c501f337ef7bb857343ed0efef7c7bf25048783a5622adf454473aa75d",
+    "src/resectionlab/surgical_vessels_v2.py": "23924ca171dc1ebe6bae8c60ca1d977387c27cfd7ccc55b819ba526037f3624e",
+    "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/imaging.py": "d9b76a1300bf48cbc4429f3a99686ce24cff011303c448dc72406f14bfe97d8c",
+    "manifests/cohort_registry.json": "44e3efc609524b723a5640c93455363b0f6fe03903f2594c112cf57ea8ba6cc5",
+    "outputs/surgical-patient-v2/drill-verification.json": "ef56d560899def96aea9dfc126e062e72b51d067338f8066b8df18ad3de5682c",
+    "outputs/surgical-patient-sub06/verification.json": "56e11ef79f10bb62bfb416b2e174b27136a9de4d4ca12b91700cceb213edd704",
+    "outputs/surgical-patient-v2/patient.ressectionlab": "17b440a46de4dc4c42f75ac562ee71749856e3c7be1d6854325fe8a07554906f",
+    "outputs/surgical-patient-v2/rl-protection.json": "f571e98ad6a0a17cbb7eb8469cd5f03b14dbd538130c679a054be138b9cd7801",
+    "outputs/surgical-patient-v2/rl-protection.npz": "c186c5fb35aa4f660e2cc2398b73139aa18d9ede8e5f57a6093159703911015e",
+    "outputs/poc-cases/UCSF-PDGM-0004-standard-v2.ressectionlab": "6638da3da187599b1094c58d69a84434e881d7ff07a0ca22798be6a8b6115ea3",
+    "outputs/standard-environments/UCSF-PDGM-0004/rl-protection.json": "4b6d56681d807e4a89e2a7e3ce9a412d561307eea2de3416a4dbfb5cb176c00f",
+    "outputs/standard-environments/UCSF-PDGM-0004/rl-protection.npz": "4c437220f2d32b7f85087f857b488c6de792d3e500dfe0a94641309eb01a28c3"
+  },
+  "cases": {
+    "sub06": {
+      "scene_id": "sha256:e292ba41b650b221c90fb582bae49cd069597b119f9635e3f881b951e1138c56",
+      "config": {
+        "max_steps": 80,
+        "max_seconds": 120.0,
+        "max_action_seconds": 5.0,
+        "success_fraction": 0.95,
+        "max_healthy_removed_mm3": 100.0,
+        "max_vessel_damage_mm2": 0.5,
+        "max_bleeding_mm3": 10.0,
+        "max_invalid_actions": 16,
+        "require_critical_coverage": true,
+        "critical_max_displacement_mm": 0.0,
+        "near_margin_mm": 2.0,
+        "local_spacing_mm": 1.0
+      },
+      "source_label_sha256": "sha256:9930330418c439d7d042054d7419c05d3158e2422f62ce69b034044a563ecd76",
+      "prefix_snapshot": "sub06-prefix.json",
+      "prefix_sha256": "4f316295e4275d93e6ad2df005daf31b1b63073cc2b3e64a5f10aa667c26199e",
+      "prefix_actions": [
+        {
+          "action": {
+            "slot": "left",
+            "operation": "place",
+            "duration": 0.2,
+            "parameters": {
+              "radiusMm": 3,
+              "forceN": 5.0,
+              "rpm": 60000.0,
+              "duty": 1.0
+            },
+            "pose": {
+              "position": [
+                -26.464996337890625,
+                18.441162109375,
+                -369.25
+              ],
+              "quaternion": [
+                0.0,
+                1.0,
+                -0.0,
+                -0.0
+              ]
+            }
+          },
+          "status": "accepted",
+          "reason": null,
+          "reward": -0.0012000000000000001,
+          "metrics": {
+            "tumor_removed_mm3": 0.0,
+            "healthy_removed_mm3": 0.0,
+            "bone_removed_mm3": 0.0,
+            "healthy_cut_mm2": 0.0,
+            "deformation_injury_mm3": 0.0,
+            "healthy_thermal_exposure": 0.0,
+            "vessel_damage_mm2": 0.0,
+            "bleeding_generated_mm3": 0.0,
+            "protected_damage_mm3": 0.0,
+            "near_contact_exposure_mm3_seconds": 0.0,
+            "elapsed_seconds": 0.2
+          },
+          "wall_seconds": 0.020876167342066765
+        },
+        {
+          "action": {
+            "slot": "left",
+            "operation": "apply",
+            "duration": 5.0,
+            "pose": {
+              "position": [
+                -26.464996337890625,
+                18.441162109375,
+                -425.25
+              ],
+              "quaternion": [
+                0.0,
+                1.0,
+                -0.0,
+                -0.0
+              ]
+            }
+          },
+          "status": "partial",
+          "reason": "BONE_CUTTING_IN_PROGRESS",
+          "reward": -0.007700000000000003,
+          "metrics": {
+            "tumor_removed_mm3": 0.0,
+            "healthy_removed_mm3": 0.0,
+            "bone_removed_mm3": 34.0,
+            "healthy_cut_mm2": 0.0,
+            "deformation_injury_mm3": 0.0,
+            "healthy_thermal_exposure": 0.0,
+            "vessel_damage_mm2": 0.0,
+            "bleeding_generated_mm3": 0.0,
+            "protected_damage_mm3": 0.0,
+            "near_contact_exposure_mm3_seconds": 0.0,
+            "elapsed_seconds": 5.200000000000003
+          },
+          "wall_seconds": 1.7097240001894534
+        },
+        {
+          "action": {
+            "slot": "left",
+            "operation": "apply",
+            "duration": 5.0,
+            "pose": {
+              "position": [
+                -26.464996337890625,
+                18.441162109375,
+                -425.25
+              ],
+              "quaternion": [
+                0.0,
+                1.0,
+                -0.0,
+                -0.0
+              ]
+            }
+          },
+          "status": "partial",
+          "reason": "BONE_CUTTING_IN_PROGRESS",
+          "reward": -0.009999999999999998,
+          "metrics": {
+            "tumor_removed_mm3": 0.0,
+            "healthy_removed_mm3": 0.0,
+            "bone_removed_mm3": 114.0,
+            "healthy_cut_mm2": 0.0,
+            "deformation_injury_mm3": 0.0,
+            "healthy_thermal_exposure": 0.0,
+            "vessel_damage_mm2": 0.0,
+            "bleeding_generated_mm3": 0.0,
+            "protected_damage_mm3": 0.0,
+            "near_contact_exposure_mm3_seconds": 0.0,
+            "elapsed_seconds": 10.200000000000001
+          },
+          "wall_seconds": 1.4344082912430167
+        },
+        {
+          "action": {
+            "slot": "left",
+            "operation": "apply",
+            "duration": 5.0,
+            "pose": {
+              "position": [
+                -26.464996337890625,
+                18.441162109375,
+                -425.25
+              ],
+              "quaternion": [
+                0.0,
+                1.0,
+                -0.0,
+                -0.0
+              ]
+            }
+          },
+          "status": "partial",
+          "reason": "BONE_CUTTING_IN_PROGRESS",
+          "reward": -0.010149999999999958,
+          "metrics": {
+            "tumor_removed_mm3": 0.0,
+            "healthy_removed_mm3": 0.0,
+            "bone_removed_mm3": 197.0,
+            "healthy_cut_mm2": 0.0,
+            "deformation_injury_mm3": 0.0,
+            "healthy_thermal_exposure": 0.0,
+            "vessel_damage_mm2": 0.0,
+            "bleeding_generated_mm3": 0.0,
+            "protected_damage_mm3": 0.0,
+            "near_contact_exposure_mm3_seconds": 0.0,
+            "elapsed_seconds": 15.199999999999958
+          },
+          "wall_seconds": 1.3716517919674516
+        },
+        {
+          "action": {
+            "slot": "left",
+            "operation": "apply",
+            "duration": 5.0,
+            "pose": {
+              "position": [
+                -26.464996337890625,
+                18.441162109375,
+                -425.25
+              ],
+              "quaternion": [
+                0.0,
+                1.0,
+                -0.0,
+                -0.0
+              ]
+            }
+          },
+          "status": "partial",
+          "reason": "BONE_CUTTING_IN_PROGRESS",
+          "reward": -0.009500000000000055,
+          "metrics": {
+            "tumor_removed_mm3": 0.0,
+            "healthy_removed_mm3": 0.0,
+            "bone_removed_mm3": 267.0,
+            "healthy_cut_mm2": 0.0,
+            "deformation_injury_mm3": 0.0,
+            "healthy_thermal_exposure": 0.0,
+            "vessel_damage_mm2": 0.0,
+            "bleeding_generated_mm3": 0.0,
+            "protected_damage_mm3": 0.0,
+            "near_contact_exposure_mm3_seconds": 0.0,
+            "elapsed_seconds": 20.200000000000014
+          },
+          "wall_seconds": 1.312528167385608
+        },
+        {
+          "action": {
+            "slot": "left",
+            "operation": "apply",
+            "duration": 5.0,
+            "pose": {
+              "position": [
+                -26.464996337890625,
+                18.441162109375,
+                -425.25
+              ],
+              "quaternion": [
+                0.0,
+                1.0,
+                -0.0,
+                -0.0
+              ]
+            }
+          },
+          "status": "partial",
+          "reason": "BONE_CUTTING_IN_PROGRESS",
+          "reward": -0.009650000000000072,
+          "metrics": {
+            "tumor_removed_mm3": 0.0,
+            "healthy_removed_mm3": 0.0,
+            "bone_removed_mm3": 340.0,
+            "healthy_cut_mm2": 0.0,
+            "deformation_injury_mm3": 0.0,
+            "healthy_thermal_exposure": 0.0,
+            "vessel_damage_mm2": 0.0,
+            "bleeding_generated_mm3": 0.0,
+            "protected_damage_mm3": 0.0,
+            "near_contact_exposure_mm3_seconds": 0.0,
+            "elapsed_seconds": 25.200000000000085
+          },
+          "wall_seconds": 1.7334722499363124
+        },
+        {
+          "action": {
+            "slot": "left",
+            "operation": "apply",
+            "duration": 5.0,
+            "pose": {
+              "position": [
+                -26.464996337890625,
+                18.441162109375,
+                -425.25
+              ],
+              "quaternion": [
+                0.0,
+                1.0,
+                -0.0,
+                -0.0
+              ]
+            }
+          },
+          "status": "partial",
+          "reason": "BONE_CUTTING_IN_PROGRESS",
+          "reward": -0.009750000000000071,
+          "metrics": {
+            "tumor_removed_mm3": 0.0,
+            "healthy_removed_mm3": 0.0,
+            "bone_removed_mm3": 415.0,
+            "healthy_cut_mm2": 0.0,
+            "deformation_injury_mm3": 0.0,
+            "healthy_thermal_exposure": 0.0,
+            "vessel_damage_mm2": 0.0,
+            "bleeding_generated_mm3": 0.0,
+            "protected_damage_mm3": 0.0,
+            "near_contact_exposure_mm3_seconds": 0.0,
+            "elapsed_seconds": 30.200000000000156
+          },
+          "wall_seconds": 1.3862895420752466
+        },
+        {
+          "action": {
+            "slot": "left",
+            "operation": "apply",
+            "duration": 5.0,
+            "pose": {
+              "position": [
+                -26.464996337890625,
+                18.441162109375,
+                -425.25
+              ],
+              "quaternion": [
+                0.0,
+                1.0,
+                -0.0,
+                -0.0
+              ]
+            }
+          },
+          "status": "partial",
+          "reason": "BONE_CUTTING_IN_PROGRESS",
+          "reward": -0.009500000000000067,
+          "metrics": {
+            "tumor_removed_mm3": 0.0,
+            "healthy_removed_mm3": 0.0,
+            "bone_removed_mm3": 485.0,
+            "healthy_cut_mm2": 0.0,
+            "deformation_injury_mm3": 0.0,
+            "healthy_thermal_exposure": 0.0,
+            "vessel_damage_mm2": 0.0,
+            "bleeding_generated_mm3": 0.0,
+            "protected_damage_mm3": 0.0,
+            "near_contact_exposure_mm3_seconds": 0.0,
+            "elapsed_seconds": 35.20000000000022
+          },
+          "wall_seconds": 2.0438442076556385
+        },
+        {
+          "action": {
+            "slot": "left",
+            "operation": "apply",
+            "duration": 5.0,
+            "pose": {
+              "position": [
+                -26.464996337890625,
+                18.441162109375,
+                -425.25
+              ],
+              "quaternion": [
+                0.0,
+                1.0,
+                -0.0,
+                -0.0
+              ]
+            }
+          },
+          "status": "partial",
+          "reason": "BONE_CUTTING_IN_PROGRESS",
+          "reward": -0.009700000000000071,
+          "metrics": {
+            "tumor_removed_mm3": 0.0,
+            "healthy_removed_mm3": 0.0,
+            "bone_removed_mm3": 559.0,
+            "healthy_cut_mm2": 0.0,
+            "deformation_injury_mm3": 0.0,
+            "healthy_thermal_exposure": 0.0,
+            "vessel_damage_mm2": 0.0,
+            "bleeding_generated_mm3": 0.0,
+            "protected_damage_mm3": 0.0,
+            "near_contact_exposure_mm3_seconds": 0.0,
+            "elapsed_seconds": 40.200000000000294
+          },
+          "wall_seconds": 1.9792646672576666
+        },
+        {
+          "action": {
+            "slot": "left",
+            "operation": "apply",
+            "duration": 5.0,
+            "pose": {
+              "position": [
+                -26.464996337890625,
+                18.441162109375,
+                -425.25
+              ],
+              "quaternion": [
+                0.0,
+                1.0,
+                -0.0,
+                -0.0
+              ]
+            }
+          },
+          "status": "partial",
+          "reason": "BONE_CUTTING_IN_PROGRESS",
+          "reward": -0.009650000000000072,
+          "metrics": {
+            "tumor_removed_mm3": 0.0,
+            "healthy_removed_mm3": 0.0,
+            "bone_removed_mm3": 632.0,
+            "healthy_cut_mm2": 0.0,
+            "deformation_injury_mm3": 0.0,
+            "healthy_thermal_exposure": 0.0,
+            "vessel_damage_mm2": 0.0,
+            "bleeding_generated_mm3": 0.0,
+            "protected_damage_mm3": 0.0,
+            "near_contact_exposure_mm3_seconds": 0.0,
+            "elapsed_seconds": 45.200000000000365
+          },
+          "wall_seconds": 1.5936685418710113
+        },
+        {
+          "action": {
+            "slot": "left",
+            "operation": "apply",
+            "duration": 5.0,
+            "pose": {
+              "position": [
+                -26.464996337890625,
+                18.441162109375,
+                -425.25
+              ],
+              "quaternion": [
+                0.0,
+                1.0,
+                -0.0,
+                -0.0
+              ]
+            }
+          },
+          "status": "partial",
+          "reason": "BONE_CUTTING_IN_PROGRESS",
+          "reward": -0.009700000000000071,
+          "metrics": {
+            "tumor_removed_mm3": 0.0,
+            "healthy_removed_mm3": 0.0,
+            "bone_removed_mm3": 706.0,
+            "healthy_cut_mm2": 0.0,
+            "deformation_injury_mm3": 0.0,
+            "healthy_thermal_exposure": 0.0,
+            "vessel_damage_mm2": 0.0,
+            "bleeding_generated_mm3": 0.0,
+            "protected_damage_mm3": 0.0,
+            "near_contact_exposure_mm3_seconds": 0.0,
+            "elapsed_seconds": 50.200000000000436
+          },
+          "wall_seconds": 1.4264554590918124
+        },
+        {
+          "action": {
+            "slot": "left",
+            "operation": "apply",
+            "duration": 5.0,
+            "pose": {
+              "position": [
+                -26.464996337890625,
+                18.441162109375,
+                -425.25
+              ],
+              "quaternion": [
+                0.0,
+                1.0,
+                -0.0,
+                -0.0
+              ]
+            }
+          },
+          "status": "partial",
+          "reason": "UNSUPPORTED_MATERIAL",
+          "reward": -0.0015000000000000044,
+          "metrics": {
+            "tumor_removed_mm3": 0.0,
+            "healthy_removed_mm3": 0.0,
+            "bone_removed_mm3": 710.0,
+            "healthy_cut_mm2": 0.0,
+            "deformation_injury_mm3": 0.0,
+            "healthy_thermal_exposure": 0.0,
+            "vessel_damage_mm2": 0.0,
+            "bleeding_generated_mm3": 0.0,
+            "protected_damage_mm3": 0.0,
+            "near_contact_exposure_mm3_seconds": 0.0,
+            "elapsed_seconds": 50.50000000000044
+          },
+          "wall_seconds": 0.7998547088354826
+        },
+        {
+          "action": {
+            "slot": "left",
+            "operation": "withdraw",
+            "duration": 0.2
+          },
+          "status": "accepted",
+          "reason": null,
+          "reward": -0.0012000000000002445,
+          "metrics": {
+            "tumor_removed_mm3": 0.0,
+            "healthy_removed_mm3": 0.0,
+            "bone_removed_mm3": 710.0,
+            "healthy_cut_mm2": 0.0,
+            "deformation_injury_mm3": 0.0,
+            "healthy_thermal_exposure": 0.0,
+            "vessel_damage_mm2": 0.0,
+            "bleeding_generated_mm3": 0.0,
+            "protected_damage_mm3": 0.0,
+            "near_contact_exposure_mm3_seconds": 0.0,
+            "elapsed_seconds": 50.700000000000685
+          },
+          "wall_seconds": 1.7185606663115323
+        },
+        {
+          "action": {
+            "slot": "left",
+            "operation": "exchange",
+            "duration": 0.2,
+            "instrument": "cusa"
+          },
+          "status": "accepted",
+          "reason": null,
+          "reward": -0.001200000000000003,
+          "metrics": {
+            "tumor_removed_mm3": 0.0,
+            "healthy_removed_mm3": 0.0,
+            "bone_removed_mm3": 710.0,
+            "healthy_cut_mm2": 0.0,
+            "deformation_injury_mm3": 0.0,
+            "healthy_thermal_exposure": 0.0,
+            "vessel_damage_mm2": 0.0,
+            "bleeding_generated_mm3": 0.0,
+            "protected_damage_mm3": 0.0,
+            "near_contact_exposure_mm3_seconds": 0.0,
+            "elapsed_seconds": 50.90000000000069
+          },
+          "wall_seconds": 0.5199316660873592
+        },
+        {
+          "action": {
+            "slot": "left",
+            "operation": "place",
+            "duration": 0.2,
+            "parameters": {
+              "radiusMm": 1
+            },
+            "pose": {
+              "position": [
+                -26.464996337890625,
+                18.441162109375,
+                -369.25
+              ],
+              "quaternion": [
+                0.0,
+                1.0,
+                -0.0,
+                -0.0
+              ]
+            }
+          },
+          "status": "accepted",
+          "reason": null,
+          "reward": -0.001200000000000003,
+          "metrics": {
+            "tumor_removed_mm3": 0.0,
+            "healthy_removed_mm3": 0.0,
+            "bone_removed_mm3": 710.0,
+            "healthy_cut_mm2": 0.0,
+            "deformation_injury_mm3": 0.0,
+            "healthy_thermal_exposure": 0.0,
+            "vessel_damage_mm2": 0.0,
+            "bleeding_generated_mm3": 0.0,
+            "protected_damage_mm3": 0.0,
+            "near_contact_exposure_mm3_seconds": 0.0,
+            "elapsed_seconds": 51.10000000000069
+          },
+          "wall_seconds": 0.5257750418968499
+        },
+        {
+          "action": {
+            "slot": "left",
+            "operation": "apply",
+            "duration": 1,
+            "pose": {
+              "position": [
+                -26.464996337890625,
+                18.441162109375,
+                -425.25
+              ],
+              "quaternion": [
+                0.0,
+                1.0,
+                -0.0,
+                -0.0
+              ]
+            }
+          },
+          "status": "accepted",
+          "reason": null,
+          "reward": 0.025000000000000227,
+          "metrics": {
+            "tumor_removed_mm3": 27.0,
+            "healthy_removed_mm3": 0.0,
+            "bone_removed_mm3": 710.0,
+            "healthy_cut_mm2": 0.0,
+            "deformation_injury_mm3": 0.0,
+            "healthy_thermal_exposure": 0.0,
+            "vessel_damage_mm2": 0.0,
+            "bleeding_generated_mm3": 0.0,
+            "protected_damage_mm3": 0.0,
+            "near_contact_exposure_mm3_seconds": 0.0,
+            "elapsed_seconds": 52.10000000000046
+          },
+          "wall_seconds": 1.7409490826539695
+        }
+      ],
+      "exterior_pose": {
+        "position": [
+          -26.464996337890625,
+          18.441162109375,
+          -369.25
+        ],
+        "quaternion": [
+          0.0,
+          1.0,
+          -0.0,
+          -0.0
+        ]
+      },
+      "second_instrument_supported": false,
+      "second_instrument_probe": [
+        {
+          "action": {
+            "slot": "left",
+            "operation": "withdraw",
+            "duration": 0.2,
+            "pose": {
+              "position": [
+                -26.464996337890625,
+                18.441162109375,
+                -369.25
+              ],
+              "quaternion": [
+                0.0,
+                1.0,
+                -0.0,
+                -0.0
+              ]
+            }
+          },
+          "status": "accepted",
+          "reason": null,
+          "reward": -0.0012000000000004576,
+          "wall_seconds": 1.66772879101336,
+          "debris_removed_mm3": 0.0
+        },
+        {
+          "action": {
+            "slot": "left",
+            "operation": "exchange",
+            "instrument": "frazier_suction",
+            "duration": 0.1
+          },
+          "status": "accepted",
+          "reason": null,
+          "reward": -0.0011000000000000014,
+          "wall_seconds": 0.5473819999024272,
+          "debris_removed_mm3": 0.0
+        },
+        {
+          "action": {
+            "slot": "left",
+            "operation": "move",
+            "duration": 0.2,
+            "pose": {
+              "position": [
+                -26.464996337890625,
+                18.441162109375,
+                -427.25
+              ],
+              "quaternion": [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ]
+            },
+            "parameters": {
+              "radiusMm": 1.0
+            }
+          },
+          "status": "accepted",
+          "reason": null,
+          "reward": -0.0012000000000004576,
+          "wall_seconds": 1.6196548747830093,
+          "debris_removed_mm3": 0.0
+        },
+        {
+          "action": {
+            "slot": "left",
+            "operation": "apply",
+            "duration": 0.2
+          },
+          "status": "accepted",
+          "reason": null,
+          "reward": -0.001200000000000003,
+          "wall_seconds": 0.5866349581629038,
+          "debris_removed_mm3": 0.0
+        }
+      ],
+      "prefix_metrics": {
+        "tumor_removed_mm3": 27.0,
+        "healthy_removed_mm3": 0.0,
+        "bone_removed_mm3": 710.0,
+        "healthy_cut_mm2": 0.0,
+        "deformation_injury_mm3": 0.0,
+        "healthy_thermal_exposure": 0.0,
+        "vessel_damage_mm2": 0.0,
+        "bleeding_generated_mm3": 0.0,
+        "protected_damage_mm3": 0.0,
+        "near_contact_exposure_mm3_seconds": 0.0,
+        "elapsed_seconds": 52.10000000000046
+      },
+      "observation_sha256": "109357ac009b9b16bd52e73b624f80d57615a539ee74d549bfcf0519cf4d7f55",
+      "local_forward_probe": {
+        "metrics": {
+          "tumor_removed_mm3": 45.0,
+          "healthy_removed_mm3": 0.0,
+          "bone_removed_mm3": 710.0,
+          "healthy_cut_mm2": 0.0,
+          "deformation_injury_mm3": 0.0,
+          "healthy_thermal_exposure": 0.0,
+          "vessel_damage_mm2": 0.0,
+          "bleeding_generated_mm3": 0.0,
+          "protected_damage_mm3": 0.0,
+          "near_contact_exposure_mm3_seconds": 0.0,
+          "elapsed_seconds": 52.30000000000045
+        },
+        "wall_seconds": 0.6299180001951754,
+        "status": "accepted"
+      },
+      "cached_fork_vs_full_replay": {
+        "state_id": "sha256:7df9c5ddc51e915066be6330ce99bb5355569ff67de1ff700e2ea871d951e445",
+        "reward_ledger_equal": true,
+        "measurements_equal": true
+      },
+      "critical_coverage": {
+        "status": "declared-masks-only",
+        "missingRequired": [],
+        "clearanceMm": 2.0,
+        "anatomicalCompleteness": "unknown",
+        "clinicalValidation": "none",
+        "unknownStructures": [
+          "motor/language cortex",
+          "corticospinal tract",
+          "optic pathways",
+          "cranial nerves"
+        ],
+        "structures": [
+          {
+            "id": "brainstem",
+            "name": "brain-stem",
+            "sourceCells": 34040,
+            "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-16; label=16; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:6c13edb715334e0da86d38fb9d50fb016ad6c525b4c85235cc96b558a79f443f; sampling=affine-cell circumsphere overlap",
+            "reviewStatus": "unreviewed; tumor-distorted regions require review"
+          },
+          {
+            "id": "left_thalamus",
+            "name": "left thalamus",
+            "sourceCells": 11463,
+            "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-10; label=10; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:8142a1740d958e15e6da581ba760259943a398ed93e11fde686db92ad3001504; sampling=affine-cell circumsphere overlap",
+            "reviewStatus": "unreviewed; tumor-distorted regions require review"
+          },
+          {
+            "id": "right_thalamus",
+            "name": "right thalamus",
+            "sourceCells": 11015,
+            "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-49; label=49; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:2bc584f4f0b7cd26964a2ac7fb0d4954bdbe4b9e4af87ba26ee91827b3114288; sampling=affine-cell circumsphere overlap",
+            "reviewStatus": "unreviewed; tumor-distorted regions require review"
+          },
+          {
+            "id": "left_caudate",
+            "name": "left caudate",
+            "sourceCells": 8186,
+            "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-11; label=11; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:ef69e8990aa0ac3e55356b1d81f28e5f2dbe6f3a4e1cbc61a47b8ab41fc752d9; sampling=affine-cell circumsphere overlap",
+            "reviewStatus": "unreviewed; tumor-distorted regions require review"
+          },
+          {
+            "id": "right_caudate",
+            "name": "right caudate",
+            "sourceCells": 8133,
+            "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-50; label=50; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:2d2b2062b5cae137800bb1e983236ae65b90b87e99709a45a894ec4e8877e6c1; sampling=affine-cell circumsphere overlap",
+            "reviewStatus": "unreviewed; tumor-distorted regions require review"
+          },
+          {
+            "id": "left_putamen",
+            "name": "left putamen",
+            "sourceCells": 9826,
+            "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-12; label=12; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:4e4a09ece21e199770a520c563107c4194b92c32f0efa646f6f0dd7bed4a7dbc; sampling=affine-cell circumsphere overlap",
+            "reviewStatus": "unreviewed; tumor-distorted regions require review"
+          },
+          {
+            "id": "right_putamen",
+            "name": "right putamen",
+            "sourceCells": 9683,
+            "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-51; label=51; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:7f82ffa268e72aad25c3dd2d34c5e58bd719fe3c27b1f8e7ed20ef0dfa6cbf69; sampling=affine-cell circumsphere overlap",
+            "reviewStatus": "unreviewed; tumor-distorted regions require review"
+          },
+          {
+            "id": "left_pallidum",
+            "name": "left pallidum",
+            "sourceCells": 3024,
+            "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-13; label=13; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:657ecada8e8d66397ed76e05ff65b5ddd4bb53761ad4392e956d8d5cc1218714; sampling=affine-cell circumsphere overlap",
+            "reviewStatus": "unreviewed; tumor-distorted regions require review"
+          },
+          {
+            "id": "right_pallidum",
+            "name": "right pallidum",
+            "sourceCells": 3195,
+            "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-52; label=52; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:6786d301532c766db3367d570894767817857d4cd861408b9eee86275bd072a3; sampling=affine-cell circumsphere overlap",
+            "reviewStatus": "unreviewed; tumor-distorted regions require review"
+          },
+          {
+            "id": "left_hippocampus",
+            "name": "left hippocampus",
+            "sourceCells": 8789,
+            "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-17; label=17; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:b3409109b55b76be00df69e722a12a30895e36c8d5a4eb7b50c661b9c9e3bdf8; sampling=affine-cell circumsphere overlap",
+            "reviewStatus": "unreviewed; tumor-distorted regions require review"
+          },
+          {
+            "id": "right_hippocampus",
+            "name": "right hippocampus",
+            "sourceCells": 9507,
+            "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-53; label=53; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:eac6e45c6be78e82808100c71d70e9a80b4de13885df238c64028f4d7bb26535; sampling=affine-cell circumsphere overlap",
+            "reviewStatus": "unreviewed; tumor-distorted regions require review"
+          }
+        ]
+      }
+    },
+    "ucsf0004": {
+      "scene_id": "sha256:e32dca89c598eeb2ee4d5b3808ef00e9ed9bee35624d7ce2bcaf6b86edcfb225",
+      "config": {
+        "max_steps": 80,
+        "max_seconds": 120.0,
+        "max_action_seconds": 5.0,
+        "success_fraction": 0.95,
+        "max_healthy_removed_mm3": 100.0,
+        "max_vessel_damage_mm2": 0.5,
+        "max_bleeding_mm3": 10.0,
+        "max_invalid_actions": 16,
+        "require_critical_coverage": true,
+        "critical_max_displacement_mm": 0.0,
+        "near_margin_mm": 2.0,
+        "local_spacing_mm": 1.0
+      },
+      "source_label_sha256": "sha256:61055eb9d6a173c7d14c095bf1f892d98a75d624f80e7c7290d43a22d8548757",
+      "prefix_snapshot": "ucsf0004-prefix.json",
+      "prefix_sha256": "7c27f349b459e7daf64bb6e0700b9aa99e1704935481cb0872c2da61a9bd9a7c",
+      "prefix_actions": [
+        {
+          "action": {
+            "slot": "left",
+            "operation": "exchange",
+            "instrument": "cusa",
+            "duration": 0.1
+          },
+          "status": "accepted",
+          "reason": null,
+          "reward": -0.0011,
+          "metrics": {
+            "tumor_removed_mm3": 0.0,
+            "healthy_removed_mm3": 0.0,
+            "bone_removed_mm3": 0.0,
+            "healthy_cut_mm2": 0.0,
+            "deformation_injury_mm3": 0.0,
+            "healthy_thermal_exposure": 0.0,
+            "vessel_damage_mm2": 0.0,
+            "bleeding_generated_mm3": 0.0,
+            "protected_damage_mm3": 0.0,
+            "near_contact_exposure_mm3_seconds": 0.0,
+            "elapsed_seconds": 0.1
+          },
+          "wall_seconds": 0.014276540838181973
+        },
+        {
+          "action": {
+            "slot": "left",
+            "operation": "place",
+            "duration": 0.1,
+            "parameters": {
+              "radiusMm": 0.6
+            },
+            "pose": {
+              "position": [
+                -177.0,
+                76.0,
+                159.0
+              ],
+              "quaternion": [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "status": "accepted",
+          "reason": null,
+          "reward": -0.0011,
+          "metrics": {
+            "tumor_removed_mm3": 0.0,
+            "healthy_removed_mm3": 0.0,
+            "bone_removed_mm3": 0.0,
+            "healthy_cut_mm2": 0.0,
+            "deformation_injury_mm3": 0.0,
+            "healthy_thermal_exposure": 0.0,
+            "vessel_damage_mm2": 0.0,
+            "bleeding_generated_mm3": 0.0,
+            "protected_damage_mm3": 0.0,
+            "near_contact_exposure_mm3_seconds": 0.0,
+            "elapsed_seconds": 0.2
+          },
+          "wall_seconds": 0.014429375063627958
+        },
+        {
+          "action": {
+            "slot": "left",
+            "operation": "apply",
+            "duration": 1.0,
+            "pose": {
+              "position": [
+                -177.0,
+                76.0,
+                104.0
+              ],
+              "quaternion": [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "status": "accepted",
+          "reason": null,
+          "reward": -0.026000000000000006,
+          "metrics": {
+            "tumor_removed_mm3": 8.0,
+            "healthy_removed_mm3": 16.0,
+            "bone_removed_mm3": 0.0,
+            "healthy_cut_mm2": 0.0,
+            "deformation_injury_mm3": 0.0,
+            "healthy_thermal_exposure": 0.0,
+            "vessel_damage_mm2": 0.0,
+            "bleeding_generated_mm3": 0.0,
+            "protected_damage_mm3": 0.0,
+            "near_contact_exposure_mm3_seconds": 0.0,
+            "elapsed_seconds": 1.200000000000004
+          },
+          "wall_seconds": 0.4332494158297777
+        }
+      ],
+      "exterior_pose": {
+        "position": [
+          -177.0,
+          76.0,
+          159.0
+        ],
+        "quaternion": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ]
+      },
+      "second_instrument_supported": false,
+      "second_instrument_probe": [
+        {
+          "action": {
+            "slot": "left",
+            "operation": "withdraw",
+            "duration": 0.2,
+            "pose": {
+              "position": [
+                -177.0,
+                76.0,
+                159.0
+              ],
+              "quaternion": [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "status": "accepted",
+          "reason": null,
+          "reward": -0.0012000000000000133,
+          "wall_seconds": 0.4886779156513512,
+          "debris_removed_mm3": 0.0
+        },
+        {
+          "action": {
+            "slot": "left",
+            "operation": "exchange",
+            "instrument": "frazier_suction",
+            "duration": 0.1
+          },
+          "status": "accepted",
+          "reason": null,
+          "reward": -0.0011,
+          "wall_seconds": 0.014541791751980782,
+          "debris_removed_mm3": 0.0
+        },
+        {
+          "action": {
+            "slot": "left",
+            "operation": "move",
+            "duration": 0.2,
+            "pose": {
+              "position": [
+                -177.0,
+                76.0,
+                102.0
+              ],
+              "quaternion": [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ]
+            },
+            "parameters": {
+              "radiusMm": 0.6
+            }
+          },
+          "status": "accepted",
+          "reason": null,
+          "reward": -0.0012000000000000133,
+          "wall_seconds": 0.45527387503534555,
+          "debris_removed_mm3": 0.0
+        },
+        {
+          "action": {
+            "slot": "left",
+            "operation": "apply",
+            "duration": 0.2
+          },
+          "status": "accepted",
+          "reason": null,
+          "reward": -0.0012,
+          "wall_seconds": 0.023857417050749063,
+          "debris_removed_mm3": 0.0
+        }
+      ],
+      "prefix_metrics": {
+        "tumor_removed_mm3": 8.0,
+        "healthy_removed_mm3": 16.0,
+        "bone_removed_mm3": 0.0,
+        "healthy_cut_mm2": 0.0,
+        "deformation_injury_mm3": 0.0,
+        "healthy_thermal_exposure": 0.0,
+        "vessel_damage_mm2": 0.0,
+        "bleeding_generated_mm3": 0.0,
+        "protected_damage_mm3": 0.0,
+        "near_contact_exposure_mm3_seconds": 0.0,
+        "elapsed_seconds": 1.200000000000004
+      },
+      "observation_sha256": "0d8ea4e4b90226f6f863c46956947f63a74ea6cc65fdf988dc3a42de31c97959",
+      "local_forward_probe": {
+        "metrics": {
+          "tumor_removed_mm3": 14.0,
+          "healthy_removed_mm3": 20.0,
+          "bone_removed_mm3": 0.0,
+          "healthy_cut_mm2": 0.0,
+          "deformation_injury_mm3": 0.0,
+          "healthy_thermal_exposure": 0.0,
+          "vessel_damage_mm2": 0.0,
+          "bleeding_generated_mm3": 0.0,
+          "protected_damage_mm3": 0.0,
+          "near_contact_exposure_mm3_seconds": 0.0,
+          "elapsed_seconds": 1.4000000000000046
+        },
+        "wall_seconds": 0.0340104172937572,
+        "status": "accepted"
+      },
+      "cached_fork_vs_full_replay": {
+        "state_id": "sha256:d109a87527a68dd1f73011f12e0c38f6d76d5868a3930c5a033e3ab3c4ae455a",
+        "reward_ledger_equal": true,
+        "measurements_equal": true
+      },
+      "critical_coverage": {
+        "status": "declared-masks-only",
+        "missingRequired": [],
+        "clearanceMm": 2.0,
+        "anatomicalCompleteness": "unknown",
+        "clinicalValidation": "none",
+        "unknownStructures": [
+          "motor/language cortex",
+          "corticospinal tract",
+          "optic pathways",
+          "cranial nerves"
+        ],
+        "structures": [
+          {
+            "id": "brainstem",
+            "name": "brain-stem",
+            "sourceCells": 33295,
+            "provenance": "collection=557b567cecdc3b109cd86873cc74c30c957b35876532a63f882eb8cca62c5844; layer=synthseg-2304c599db-16; label=16; sourceArraySha256=e5a33a906111c1b75a484eea9f67a5d3aacde338ada8f4db2b55c800837d1112; evidence=sha256:1e7828cbff34c928fa31c8cc0c0271096a278923c8c9e594e072b238325ddd44; sampling=affine-cell circumsphere overlap",
+            "reviewStatus": "unreviewed; tumor-distorted regions require review"
+          },
+          {
+            "id": "left_thalamus",
+            "name": "left thalamus",
+            "sourceCells": 11775,
+            "provenance": "collection=557b567cecdc3b109cd86873cc74c30c957b35876532a63f882eb8cca62c5844; layer=synthseg-2304c599db-10; label=10; sourceArraySha256=e5a33a906111c1b75a484eea9f67a5d3aacde338ada8f4db2b55c800837d1112; evidence=sha256:3b6b5f442f471e7e13b924925210c4de296934b084bf3aaf2b31f417ea96a397; sampling=affine-cell circumsphere overlap",
+            "reviewStatus": "unreviewed; tumor-distorted regions require review"
+          },
+          {
+            "id": "right_thalamus",
+            "name": "right thalamus",
+            "sourceCells": 11150,
+            "provenance": "collection=557b567cecdc3b109cd86873cc74c30c957b35876532a63f882eb8cca62c5844; layer=synthseg-2304c599db-49; label=49; sourceArraySha256=e5a33a906111c1b75a484eea9f67a5d3aacde338ada8f4db2b55c800837d1112; evidence=sha256:121cb5220cccf021b2406b5594342a26521fc8a11fabd694b7ab0337fc14a16a; sampling=affine-cell circumsphere overlap",
+            "reviewStatus": "unreviewed; tumor-distorted regions require review"
+          },
+          {
+            "id": "left_caudate",
+            "name": "left caudate",
+            "sourceCells": 6387,
+            "provenance": "collection=557b567cecdc3b109cd86873cc74c30c957b35876532a63f882eb8cca62c5844; layer=synthseg-2304c599db-11; label=11; sourceArraySha256=e5a33a906111c1b75a484eea9f67a5d3aacde338ada8f4db2b55c800837d1112; evidence=sha256:fda454e15beb115187e32e0437adcf2237d7e5a6dd693284551e8b58012c42cd; sampling=affine-cell circumsphere overlap",
+            "reviewStatus": "unreviewed; tumor-distorted regions require review"
+          },
+          {
+            "id": "right_caudate",
+            "name": "right caudate",
+            "sourceCells": 6610,
+            "provenance": "collection=557b567cecdc3b109cd86873cc74c30c957b35876532a63f882eb8cca62c5844; layer=synthseg-2304c599db-50; label=50; sourceArraySha256=e5a33a906111c1b75a484eea9f67a5d3aacde338ada8f4db2b55c800837d1112; evidence=sha256:12749b89ac9a6803e7194e81f310da4f4b921dda3ecc66dfaa28c1b3967b2a3b; sampling=affine-cell circumsphere overlap",
+            "reviewStatus": "unreviewed; tumor-distorted regions require review"
+          },
+          {
+            "id": "left_putamen",
+            "name": "left putamen",
+            "sourceCells": 8603,
+            "provenance": "collection=557b567cecdc3b109cd86873cc74c30c957b35876532a63f882eb8cca62c5844; layer=synthseg-2304c599db-12; label=12; sourceArraySha256=e5a33a906111c1b75a484eea9f67a5d3aacde338ada8f4db2b55c800837d1112; evidence=sha256:8098e313a996e36afd36a6fb1a0cd96538453192b67e80df08b91c927bdccb82; sampling=affine-cell circumsphere overlap",
+            "reviewStatus": "unreviewed; tumor-distorted regions require review"
+          },
+          {
+            "id": "right_putamen",
+            "name": "right putamen",
+            "sourceCells": 8665,
+            "provenance": "collection=557b567cecdc3b109cd86873cc74c30c957b35876532a63f882eb8cca62c5844; layer=synthseg-2304c599db-51; label=51; sourceArraySha256=e5a33a906111c1b75a484eea9f67a5d3aacde338ada8f4db2b55c800837d1112; evidence=sha256:1d153bede9b3c9b762639db176660229df41e557b2a9e173ae3af03bb96bd466; sampling=affine-cell circumsphere overlap",
+            "reviewStatus": "unreviewed; tumor-distorted regions require review"
+          },
+          {
+            "id": "left_pallidum",
+            "name": "left pallidum",
+            "sourceCells": 2822,
+            "provenance": "collection=557b567cecdc3b109cd86873cc74c30c957b35876532a63f882eb8cca62c5844; layer=synthseg-2304c599db-13; label=13; sourceArraySha256=e5a33a906111c1b75a484eea9f67a5d3aacde338ada8f4db2b55c800837d1112; evidence=sha256:a06c302b9b338186e370ed3b15853c3de4ab861efef43ea08d1edebcf4e5966c; sampling=affine-cell circumsphere overlap",
+            "reviewStatus": "unreviewed; tumor-distorted regions require review"
+          },
+          {
+            "id": "right_pallidum",
+            "name": "right pallidum",
+            "sourceCells": 2923,
+            "provenance": "collection=557b567cecdc3b109cd86873cc74c30c957b35876532a63f882eb8cca62c5844; layer=synthseg-2304c599db-52; label=52; sourceArraySha256=e5a33a906111c1b75a484eea9f67a5d3aacde338ada8f4db2b55c800837d1112; evidence=sha256:8b3223901de221e070c9cc8d9314f7563bd42beafb4687654486fd3dade568c7; sampling=affine-cell circumsphere overlap",
+            "reviewStatus": "unreviewed; tumor-distorted regions require review"
+          },
+          {
+            "id": "left_hippocampus",
+            "name": "left hippocampus",
+            "sourceCells": 8413,
+            "provenance": "collection=557b567cecdc3b109cd86873cc74c30c957b35876532a63f882eb8cca62c5844; layer=synthseg-2304c599db-17; label=17; sourceArraySha256=e5a33a906111c1b75a484eea9f67a5d3aacde338ada8f4db2b55c800837d1112; evidence=sha256:98d4eb6b27b7c54e48e293ecccd2d0b009d9da42872b3270870517658b01f0f0; sampling=affine-cell circumsphere overlap",
+            "reviewStatus": "unreviewed; tumor-distorted regions require review"
+          },
+          {
+            "id": "right_hippocampus",
+            "name": "right hippocampus",
+            "sourceCells": 8831,
+            "provenance": "collection=557b567cecdc3b109cd86873cc74c30c957b35876532a63f882eb8cca62c5844; layer=synthseg-2304c599db-53; label=53; sourceArraySha256=e5a33a906111c1b75a484eea9f67a5d3aacde338ada8f4db2b55c800837d1112; evidence=sha256:d6a47ef36a3709af619615a7105a7efc406808b66be8206eafa0afde59520995; sampling=affine-cell circumsphere overlap",
+            "reviewStatus": "unreviewed; tumor-distorted regions require review"
+          }
+        ]
+      }
+    }
+  },
+  "limitations": [
+    "Simulated experience on acquired development anatomy; no recorded operations or clinical validation.",
+    "Both anatomies are used in optimization and assessment; neither is held out.",
+    "Setup uses target and anatomical maps to choose a reachable local task; identical prefixes for all methods.",
+    "Source voxel arrays, source roles and affine geometry are preserved; no tissue is pre-removed.",
+    "Observation-only local geometric greedy is an adaptation of the existing observed-greedy strategy, not the native search implementation.",
+    "The learned decisions are CUSA-only. A matched fixed Frazier suction tail is checked separately; it is not learned instrument selection.",
+    "No hyperparameter sweep, best-seed selection, final-patient access, or supported treatment claim."
+  ],
+  "optimizer_updates": 0,
+  "runtime": {
+    "python": "3.12.12 (main, Oct  9 2025, 11:07:00) [Clang 17.0.0 (clang-1700.6.3.2)]",
+    "numpy": "2.5.3",
+    "torch": "2.14.1",
+    "device": "cpu"
+  },
+  "estimated_run_bound_seconds": 900.0,
+  "cost": {
+    "transition_calls": 50,
+    "transition_wall_seconds_by_phase": {
+      "exposure": 21.779209583532065,
+      "preflight_probe": 0.6639284174889326,
+      "replay": 20.61934979027137,
+      "second_instrument_probe": 5.403751623351127
+    },
+    "wall_seconds": 51.81707645766437,
+    "max_action_wall_seconds": 2.0438442076556385,
+    "process_peak_rss_bytes": 595509248
+  },
+  "cumulative_preparation_cost": {
+    "attempts": 4,
+    "transition_calls": 200,
+    "wall_seconds": 222.75031187431887
+  },
+  "preparation_sha256": "195327d1222cbd9ac8f8e032f5335d77524cda8522dc739756a5b8d9c17fc823"
+}

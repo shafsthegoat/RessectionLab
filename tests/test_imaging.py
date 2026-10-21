@@ -169,6 +169,27 @@ def test_correction_preserves_originals_and_invalidates_plan():
         plan.assert_current(revised)
 
 
+def test_compact_large_episode_metadata_roundtrips_with_unchanged_open_budget(tmp_path):
+    case = create_synthetic_case((24, 24, 24))
+    artifacts = {'surgical_toolbox': {'branches': {'main': {'cells': list(range(1_000_000))}}}}
+    assert len(json.dumps(artifacts, indent=2).encode()) > 16 * 1024**2
+    path = save_case(case, tmp_path / 'large-episode.rslcase', artifacts=artifacts)
+    with ZipFile(path) as archive:
+        assert archive.getinfo('manifest.json').file_size < 16 * 1024**2
+    assert load_case(path).semantic_hash == case.semantic_hash
+    assert read_case_artifacts(path) == artifacts
+
+
+def test_oversized_save_preserves_existing_destination(tmp_path):
+    case = create_synthetic_case((24, 24, 24))
+    path = save_case(case, tmp_path / 'preserved.rslcase')
+    original = path.read_bytes()
+    with pytest.raises(ImagingError, match='MANIFEST_TOO_LARGE'):
+        save_case(case, path, artifacts={'oversized': 'x' * (16 * 1024**2)})
+    assert path.read_bytes() == original
+    assert load_case(path).semantic_hash == case.semantic_hash
+
+
 def test_portable_bundle_roundtrip_originals_context_and_artifacts(tmp_path):
     source = SourceRef("biopsy", "synthetic://biopsy", provenance="simulated")
     context = PatientContext(datetime(2026, 1, 1, tzinfo=timezone.utc), (

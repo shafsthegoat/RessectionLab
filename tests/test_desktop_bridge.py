@@ -121,6 +121,29 @@ def test_timeout_emits_one_terminal_error(bridge, monkeypatch):
     assert selected[-1]["error"]["code"] == "TIMEOUT"
 
 
+def test_long_replay_admission_is_cancellable_without_extending_action_budgets(bridge, monkeypatch):
+    runtime, events = bridge
+    entered = threading.Event()
+    def slow(operation, args, request_state, progress):
+        entered.set()
+        request_state.cancelled.wait(2)
+        request_state.check()
+    monkeypatch.setattr(runtime.session, "execute", slow)
+    runtime.submit({"id": "cold-replay", "op": "surgicalRehearsal", "args": {"command": "inspect"}, "timeoutMs": 3600000})
+    assert entered.wait(1)
+    runtime.submit({"id": "cancel-replay", "op": "cancel", "args": {"requestId": "cold-replay"}})
+    assert runtime.wait_idle(1)
+    assert [event['event'] for event in events if event['id'] == 'cold-replay'] == ['started', 'cancelled']
+    for identity, operation, args, timeout in [
+        ('long-step', 'surgicalRehearsal', {'command': 'step'}, 300001),
+        ('long-slice', 'surgicalRehearsal', {'command': 'fullCase'}, 300001),
+        ('long-load', 'loadCase', {}, 300001),
+        ('unbounded-replay', 'surgicalRehearsal', {'command': 'seekFrame'}, 3600001),
+    ]:
+        result = request(bridge, identity, operation, args, timeoutMs=timeout)
+        assert result['event'] == 'error' and result['error']['code'] == 'INVALID_ARGUMENT'
+
+
 def test_cached_cases_bounded_and_evicted_hash_fails(bridge):
     first = synthetic(bridge)
     request(bridge, "second", "createSyntheticCase", {"shape": [25, 24, 24]})

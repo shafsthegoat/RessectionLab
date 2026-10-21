@@ -1,0 +1,622 @@
+{
+  "additional_candidates": [
+    {
+      "accepted_constraints": false,
+      "acquisition_record": "outputs/poc-synthrad-bc-source-v1/1BB033/source.json",
+      "bundle": "outputs/poc-synthrad-bc-source-v1/1BB033/SynthRAD2023-1BB033.ressectionlab",
+      "bundle_sha256": "6da3934b794ad13945ea8d1443a70c46625a75c9b8a7cf2a800d2830c906dd82",
+      "case_id": "SynthRAD2023-1BB033",
+      "coverage": "Defaced and cropped source acquisition; calvarium/skull-base/vertex coverage unreviewed",
+      "existing_materialized": true,
+      "fusion_permitted": false,
+      "overlap_caveat": "Within-release identity is frozen; cross-release and model-training overlap unresolved. Not a healthy-host or independent external-validation claim.",
+      "participant": {
+        "cohort_path": "manifests/synthrad-component-cohort-v1.json",
+        "cohort_sha256": "3bb4dd48e2e674bd921653d938ec7c7695c77afb8776c517800bbefb6a32ff30",
+        "kind": "frozen_source_cohort_and_bound_acquisition_record",
+        "value": "SynthRAD2023:1BB033"
+      },
+      "patient_group": "SynthRAD2023:1BB033",
+      "producer_reported_layers": [
+        "brain",
+        "skull"
+      ],
+      "producer_reported_missing_anatomy": [
+        "tumor",
+        "vessels",
+        "ventricles",
+        "functional_evidence"
+      ],
+      "producer_reported_original_count": 5,
+      "recorded_models": [
+        {
+          "anatomical_acceptance": false,
+          "cache_key": "cd74e07c2b611f9943d7",
+          "license": "Apache-2.0",
+          "manifest_path": "outputs/poc-models/SynthRAD2023-1BB033/totalsegmentator-skull/cd74e07c2b611f9943d7/inference.json",
+          "manifest_sha256": "fe916ff4a0c1bd4f7daae11253c429faffd88e2d6162ecb8b2bdb9047bb9acbc",
+          "name": "TotalSegmentator",
+          "outputs": [
+            {
+              "name": "brain_mask.nii.gz",
+              "path": "outputs/poc-models/SynthRAD2023-1BB033/totalsegmentator-skull/cd74e07c2b611f9943d7/brain_mask.nii.gz",
+              "provenance": "model_inference_unreviewed",
+              "sha256": "7800cf900931f51d4970df07cc75398fec7a98316ecb7ff9400d6a650a7a5578"
+            },
+            {
+              "name": "skull_mask.nii.gz",
+              "path": "outputs/poc-models/SynthRAD2023-1BB033/totalsegmentator-skull/cd74e07c2b611f9943d7/skull_mask.nii.gz",
+              "provenance": "model_inference_unreviewed",
+              "sha256": "5676513664ee1edeef4f7cd770db3226b811df3c8207dd61e6015711ac537e12"
+            }
+          ],
+          "parameters": {
+            "brain_label": 90,
+            "fast": true,
+            "skull_label": 91,
+            "task": "total",
+            "tta": false
+          },
+          "version": "2.12.0 / Dataset297 v2.0.0-weights",
+          "weights": [
+            {
+              "bytes": 164939235,
+              "sha256": "1e38e40356adc2706a662e365405a97f862d62a7da65f6bf81d025aee1b979ac"
+            }
+          ]
+        }
+      ],
+      "registration_acceptance": false,
+      "rights": {
+        "license": "CC-BY-NC-4.0",
+        "source": "https://zenodo.org/records/7260705",
+        "use": "noncommercial research; attribution required"
+      },
+      "role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "source_files": [
+        {
+          "license": "CC-BY-NC-4.0",
+          "lineage": "publisher-preprocessed acquired radiotherapy CT/MR; scanner-native fidelity not established",
+          "path": "outputs/poc-synthrad-bc-source-v1/1BB033/ct.nii.gz",
+          "role": "imaging",
+          "sha256": "4999e29411f5c76d986eb188f59a8148f8dbad7ef8bd30abef2e155a1681cafd"
+        },
+        {
+          "license": "CC-BY-NC-4.0",
+          "lineage": "publisher-preprocessed acquired radiotherapy CT/MR; scanner-native fidelity not established",
+          "path": "outputs/poc-synthrad-bc-source-v1/1BB033/mr.nii.gz",
+          "role": "imaging",
+          "sha256": "68fe4d165a8b3063bfce58f7b75bf7b22ce52243a7dd3c0704b2a29984b7a228"
+        }
+      ],
+      "training_admitted": false
+    },
+    {
+      "accepted_constraints": false,
+      "acquisition_record": "outputs/poc-synthrad-bc-source-v1/1BC077/source.json",
+      "bundle": "outputs/poc-synthrad-bc-source-v1/1BC077/SynthRAD2023-1BC077.ressectionlab",
+      "bundle_sha256": "171101168d1244d509fc64249cd9039a74aa9a35f35535dddc753307e80f905d",
+      "case_id": "SynthRAD2023-1BC077",
+      "coverage": "Defaced and cropped source acquisition; calvarium/skull-base/vertex coverage unreviewed",
+      "existing_materialized": true,
+      "fusion_permitted": false,
+      "overlap_caveat": "Within-release identity is frozen; cross-release and model-training overlap unresolved. Not a healthy-host or independent external-validation claim.",
+      "participant": {
+        "cohort_path": "manifests/synthrad-component-cohort-v1.json",
+        "cohort_sha256": "3bb4dd48e2e674bd921653d938ec7c7695c77afb8776c517800bbefb6a32ff30",
+        "kind": "frozen_source_cohort_and_bound_acquisition_record",
+        "value": "SynthRAD2023:1BC077"
+      },
+      "patient_group": "SynthRAD2023:1BC077",
+      "producer_reported_layers": [
+        "brain",
+        "skull"
+      ],
+      "producer_reported_missing_anatomy": [
+        "tumor",
+        "vessels",
+        "ventricles",
+        "functional_evidence"
+      ],
+      "producer_reported_original_count": 5,
+      "recorded_models": [
+        {
+          "anatomical_acceptance": false,
+          "cache_key": "94d62cb06df44f08b15b",
+          "license": "Apache-2.0",
+          "manifest_path": "outputs/poc-models/SynthRAD2023-1BC077/totalsegmentator-skull/94d62cb06df44f08b15b/inference.json",
+          "manifest_sha256": "d4869860fd252cd9f4f9cabdc5d6d90febc6072915040bc5f89696b4c85fc470",
+          "name": "TotalSegmentator",
+          "outputs": [
+            {
+              "name": "brain_mask.nii.gz",
+              "path": "outputs/poc-models/SynthRAD2023-1BC077/totalsegmentator-skull/94d62cb06df44f08b15b/brain_mask.nii.gz",
+              "provenance": "model_inference_unreviewed",
+              "sha256": "dba1683c3b5eb600f4d83f9d3a7ebf8c70c9796eb10cfc94367070a0eed69028"
+            },
+            {
+              "name": "skull_mask.nii.gz",
+              "path": "outputs/poc-models/SynthRAD2023-1BC077/totalsegmentator-skull/94d62cb06df44f08b15b/skull_mask.nii.gz",
+              "provenance": "model_inference_unreviewed",
+              "sha256": "bd75f0feab5ca398a746e0e7a88a598945e975d1fbf872aa950c55a7d7450aae"
+            }
+          ],
+          "parameters": {
+            "brain_label": 90,
+            "fast": true,
+            "skull_label": 91,
+            "task": "total",
+            "tta": false
+          },
+          "version": "2.12.0 / Dataset297 v2.0.0-weights",
+          "weights": [
+            {
+              "bytes": 164939235,
+              "sha256": "1e38e40356adc2706a662e365405a97f862d62a7da65f6bf81d025aee1b979ac"
+            }
+          ]
+        }
+      ],
+      "registration_acceptance": false,
+      "rights": {
+        "license": "CC-BY-NC-4.0",
+        "source": "https://zenodo.org/records/7260705",
+        "use": "noncommercial research; attribution required"
+      },
+      "role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "source_files": [
+        {
+          "license": "CC-BY-NC-4.0",
+          "lineage": "publisher-preprocessed acquired radiotherapy CT/MR; scanner-native fidelity not established",
+          "path": "outputs/poc-synthrad-bc-source-v1/1BC077/ct.nii.gz",
+          "role": "imaging",
+          "sha256": "5a33487b11e9762c84f6b1ce8fb3e9f2c008e1ede78c57cd2a053c3cb14dead7"
+        },
+        {
+          "license": "CC-BY-NC-4.0",
+          "lineage": "publisher-preprocessed acquired radiotherapy CT/MR; scanner-native fidelity not established",
+          "path": "outputs/poc-synthrad-bc-source-v1/1BC077/mr.nii.gz",
+          "role": "imaging",
+          "sha256": "f41eb00d101bab4b27665a6870794d6e4eb169d70bea0f9cfc28c02625dd72c0"
+        }
+      ],
+      "training_admitted": false
+    }
+  ],
+  "base_candidates": [
+    {
+      "acquisition_record": "manifests/btc_pat05_acquisition.json",
+      "bundle": "outputs/cases/BTC-sub-PAT05-structural-evidence.ressectionlab",
+      "bundle_sha256": "c1af712957dc4902343995bd828eb0c3662438f8445c5cb7401e6dd50f7a4e12",
+      "case_id": "BTC-ds001226-sub-PAT05-preop",
+      "existing_materialized": true,
+      "participant": {
+        "delimiter": "\t",
+        "key": "participant_id",
+        "path": "data/diffusion_source/ds001226-v5.0.1/participants.tsv",
+        "sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d",
+        "value": "sub-PAT05"
+      },
+      "patient_group": "BTC:sub-PAT05",
+      "rights": {
+        "license": "CC0",
+        "source": "https://openneuro.org/datasets/ds001226/versions/5.0.1",
+        "use": "research"
+      },
+      "role": "TRAIN",
+      "source_files": [
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT05/ses-preop/anat/sub-PAT05_ses-preop_T1w.nii.gz",
+          "role": "imaging",
+          "sha256": "016779173394c3a3e07fc53f927d37c3c1cb5df04bcbdc398fcfbdc23b40085e"
+        },
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/derivatives/tumor_masks/sub-PAT05/anat/sub-PAT05_space_T1_label-tumor.nii",
+          "role": "annotation",
+          "sha256": "497505a1354f075955290f4395217112715ab73242fa10fd2a0f519ca51b8bdc"
+        }
+      ]
+    },
+    {
+      "acquisition_record": "manifests/btc_pat16_acquisition.json",
+      "bundle": "outputs/cases/BTC-sub-PAT16-structural-evidence.ressectionlab",
+      "bundle_sha256": "b906e1c061450526e4ed4737f17f880f1ab7fdf35d667d1d6f8d7eb55b3c416b",
+      "case_id": "BTC-ds001226-sub-PAT16-preop",
+      "existing_materialized": true,
+      "participant": {
+        "delimiter": "\t",
+        "key": "participant_id",
+        "path": "data/diffusion_source/ds001226-v5.0.1/participants.tsv",
+        "sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d",
+        "value": "sub-PAT16"
+      },
+      "patient_group": "BTC:sub-PAT16",
+      "rights": {
+        "license": "CC0",
+        "source": "https://openneuro.org/datasets/ds001226/versions/5.0.1",
+        "use": "research"
+      },
+      "role": "TRAIN",
+      "source_files": [
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT16/ses-preop/anat/sub-PAT16_ses-preop_T1w.nii.gz",
+          "role": "imaging",
+          "sha256": "709b3ea19596ff6a0cb963ebeaeede247b0ddd6c605f12aa350df2cb04500c3e"
+        },
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/derivatives/tumor_masks/sub-PAT16/anat/sub-PAT16_space_T1_label-tumor.nii",
+          "role": "annotation",
+          "sha256": "89b610ce3cfa6acf3d23e59d42e3b04a593d7360b996ced10e0aaf060428b0c8"
+        }
+      ]
+    },
+    {
+      "acquisition_record": "manifests/btc_pat20_acquisition.json",
+      "bundle": "outputs/cases/BTC-sub-PAT20-structural-evidence.ressectionlab",
+      "bundle_sha256": "edd4d0d149cf27e81dbc67c2742fd14dff5bfa6fa1c63ad111fecb4b48eca66b",
+      "case_id": "BTC-ds001226-sub-PAT20-preop",
+      "existing_materialized": true,
+      "participant": {
+        "delimiter": "\t",
+        "key": "participant_id",
+        "path": "data/diffusion_source/ds001226-v5.0.1/participants.tsv",
+        "sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d",
+        "value": "sub-PAT20"
+      },
+      "patient_group": "BTC:sub-PAT20",
+      "rights": {
+        "license": "CC0",
+        "source": "https://openneuro.org/datasets/ds001226/versions/5.0.1",
+        "use": "research"
+      },
+      "role": "TRAIN",
+      "source_files": [
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.nii.gz",
+          "role": "imaging",
+          "sha256": "f5234d82f87369ce22d05bd27b5788dd73d4ab782c9a89731ac7f6e39568126a"
+        },
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/derivatives/tumor_masks/sub-PAT20/anat/sub-PAT20_space_T1_label-tumor.nii",
+          "role": "annotation",
+          "sha256": "cabae814fc653f845c1e0fa72441a4ab6fcca63e8fbe252e73e7a976e068dd36"
+        }
+      ]
+    },
+    {
+      "acquisition_record": "data/diffusion_source/ds001226-v5.0.1/btc_sub-PAT22_verified_manifest.json",
+      "bundle": "outputs/cases/BTC-sub-PAT22-structural-evidence.ressectionlab",
+      "bundle_sha256": "a12ac7c2325b2c87137c112fae9c4b7ebe33e40e40cdd9bcff192d891a4b562e",
+      "case_id": "BTC-ds001226-sub-PAT22-preop",
+      "existing_materialized": true,
+      "participant": {
+        "delimiter": "\t",
+        "key": "participant_id",
+        "path": "data/diffusion_source/ds001226-v5.0.1/participants.tsv",
+        "sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d",
+        "value": "sub-PAT22"
+      },
+      "patient_group": "BTC:sub-PAT22",
+      "rights": {
+        "license": "CC0",
+        "source": "https://openneuro.org/datasets/ds001226/versions/5.0.1",
+        "use": "research"
+      },
+      "role": "TRAIN",
+      "source_files": [
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT22/ses-preop/anat/sub-PAT22_ses-preop_T1w.nii.gz",
+          "role": "imaging",
+          "sha256": "6ac1bc950dc2b48709367550b1c740684457fce875e3e402d870d3356282334e"
+        },
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/derivatives/tumor_masks/sub-PAT22/anat/sub-PAT22_space_T1_label-tumor.nii",
+          "role": "annotation",
+          "sha256": "b1e59048f5651e4d7e268ac14e2e3a7ea9d7e78dac5cd09f5eddc7b66a09f752"
+        }
+      ]
+    },
+    {
+      "acquisition_record": "data/diffusion_source/ds001226-v5.0.1/btc_sub-PAT25_verified_manifest.json",
+      "bundle": "outputs/cases/BTC-sub-PAT25-structural-evidence.ressectionlab",
+      "bundle_sha256": "d635a72cc24066c2b16dc7b6d6805baae04d1750c50ca351b2410a70d913428a",
+      "case_id": "BTC-ds001226-sub-PAT25-preop",
+      "existing_materialized": true,
+      "participant": {
+        "delimiter": "\t",
+        "key": "participant_id",
+        "path": "data/diffusion_source/ds001226-v5.0.1/participants.tsv",
+        "sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d",
+        "value": "sub-PAT25"
+      },
+      "patient_group": "BTC:sub-PAT25",
+      "rights": {
+        "license": "CC0",
+        "source": "https://openneuro.org/datasets/ds001226/versions/5.0.1",
+        "use": "research"
+      },
+      "role": "TRAIN",
+      "source_files": [
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT25/ses-preop/anat/sub-PAT25_ses-preop_T1w.nii.gz",
+          "role": "imaging",
+          "sha256": "40f786e7fbdfdb036d6409ffe771ec9309d0c424fca88e44e8a42c43c8900562"
+        },
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/derivatives/tumor_masks/sub-PAT25/anat/sub-PAT25_space_T1_label-tumor.nii",
+          "role": "annotation",
+          "sha256": "b064c64c1a24333ae9e6f61afaa57ea49e179dff66bc2e2e3cba124262cb0aae"
+        }
+      ]
+    },
+    {
+      "acquisition_record": "manifests/btc_acquisition.json",
+      "bundle": "outputs/cases/BTC-sub-PAT28-structural-evidence.ressectionlab",
+      "bundle_sha256": "f7fc9491cf74634de5b2be36dd5968c7e161a7b7fc22698a7045d7453c95a747",
+      "case_id": "BTC-ds001226-sub-PAT28-preop",
+      "existing_materialized": true,
+      "participant": {
+        "delimiter": "\t",
+        "key": "participant_id",
+        "path": "data/diffusion_source/ds001226-v5.0.1/participants.tsv",
+        "sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d",
+        "value": "sub-PAT28"
+      },
+      "patient_group": "BTC:sub-PAT28",
+      "rights": {
+        "license": "CC0",
+        "source": "https://openneuro.org/datasets/ds001226/versions/5.0.1",
+        "use": "research"
+      },
+      "role": "TRAIN",
+      "source_files": [
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/derivatives/tumor_masks/sub-PAT28/anat/sub-PAT28_space_T1_label-tumor.nii",
+          "role": "annotation",
+          "sha256": "ff989398438cf6d628471acf1c5449e132c089bba07da3f2142757c21c3e8d71"
+        },
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT28/ses-preop/anat/sub-PAT28_ses-preop_T1w.nii.gz",
+          "role": "imaging",
+          "sha256": "70c5c1e4e28143318d2820788343e239efdc205344204f8f50497b81281b32c6"
+        }
+      ]
+    },
+    {
+      "accepted_constraints": false,
+      "acquisition_record": "outputs/poc-ixi265/source-receipt.json",
+      "bundle": "outputs/poc-ixi265/vesselfm-base-v1/IXI265-vesselfm-estimates.ressectionlab",
+      "bundle_sha256": "55a38ae5792c889d3f8a8e28c635c92f78ca80d42690028b7eb028d638980e0e",
+      "case_id": "IXI265-Guys-0845",
+      "coverage": "Partial acquired MRA field of view; incomplete source vessel reference and estimated masks. Unlabelled anatomy is unknown.",
+      "existing_materialized": true,
+      "fusion_permitted": false,
+      "overlap_caveat": "IXI occurs in vesselFM D_real/CSD; exact subject overlap unknown. No independent held-out accuracy claim.",
+      "participant": {
+        "cohort_path": "manifests/experiments/ixi-component-person-cohort-v1.json",
+        "cohort_sha256": "b27f28c21089e61f6c4899f172f608cd0f81391588777443939196b1700cb127",
+        "kind": "frozen_source_cohort_and_bound_acquisition_record",
+        "value": "IXI:265"
+      },
+      "patient_group": "IXI:265",
+      "registration_acceptance": false,
+      "rights": {
+        "license": "CC-BY-SA-3.0",
+        "model_restrictions": "vesselFM Open RAIL++-M Attachment A: research and noncommercial use only; separate from source image rights",
+        "reference_license": "CC-BY-4.0",
+        "reference_source": "https://zenodo.org/records/17393202",
+        "source": "https://brain-development.org/ixi-dataset/",
+        "use": "research; attribution/share-alike for acquired images"
+      },
+      "role": "TRAIN",
+      "source_files": [
+        {
+          "license": "CC-BY-SA-3.0",
+          "lineage": "acquired_native_image",
+          "path": "outputs/poc-ixi265/originals/IXI265-T1.nii.gz",
+          "role": "imaging",
+          "sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950"
+        },
+        {
+          "license": "CC-BY-SA-3.0",
+          "lineage": "acquired_native_image",
+          "path": "outputs/poc-ixi265/originals/IXI265-MRA.nii.gz",
+          "role": "imaging",
+          "sha256": "a87b381b882242b7d61a1930a8332d44200fdb3c56c68fc09c24a057eea86dc4"
+        },
+        {
+          "license": "CC-BY-4.0",
+          "lineage": "published_model_assisted_manually_refined_reference",
+          "path": "outputs/poc-ixi265/originals/IXI265-derived_vessel_label.nii.gz",
+          "role": "annotation",
+          "sha256": "9da13c332156c71a5200dbf88368bb87478914fe73034a42ca4eabf1dd5cdbfe"
+        },
+        {
+          "license": "CC-BY-4.0",
+          "lineage": "published_reference_resampled_by_unaccepted_estimated_registration",
+          "path": "outputs/poc-ixi265/registration/source_vessels_on_T1_candidate.nii.gz",
+          "role": "annotation",
+          "sha256": "b1aac5b57af64b71c4694876302a8f4cc84f96b9f35ecc60a2266dc204ba1c71"
+        }
+      ],
+      "training_admitted": false
+    },
+    {
+      "acquisition_record": "manifests/poc-lausanne-sub-000.json",
+      "bundle": "outputs/poc-cases/Lausanne-sub-000-ses-20110101.ressectionlab",
+      "bundle_sha256": "257fa5b5558e672fb78dddbfe55d9574d87cd1f0776e6cc8c5d9d086d2ada18c",
+      "case_id": "Lausanne-sub-000-ses-20110101",
+      "existing_materialized": true,
+      "participant": {
+        "kind": "source_cohort_and_bound_acquisition_record",
+        "value": "Lausanne:sub-000"
+      },
+      "patient_group": "Lausanne:sub-000",
+      "rights": {
+        "license": "CC0-1.0",
+        "source": "https://openneuro.org/datasets/ds003949/versions/1.0.1",
+        "use": "research"
+      },
+      "role": "TRAIN",
+      "source_files": [
+        {
+          "path": "data/anatomy/ds003949-v1.0.1/sub-000/ses-20110101/anat/sub-000_ses-20110101_angio.nii.gz",
+          "role": "imaging",
+          "sha256": "8e1e772825aafbdf898e0c06e9482640098d9722514b59566957bc3ff22cc2b2"
+        }
+      ]
+    },
+    {
+      "acquisition_record": "manifests/poc-synthrad-1ba336.json",
+      "bundle": "outputs/poc-cases/SynthRAD2023-1BA336.ressectionlab",
+      "bundle_sha256": "98e2566e458c762ed75c07bd370a8a06797a1a79c74ce8cdc15ff09bf1e66f81",
+      "case_id": "SynthRAD2023-1BA336",
+      "existing_materialized": true,
+      "participant": {
+        "kind": "source_cohort_and_bound_acquisition_record",
+        "value": "SynthRAD2023:1BA336"
+      },
+      "patient_group": "SynthRAD2023:1BA336",
+      "rights": {
+        "license": "CC-BY-NC-4.0",
+        "source": "https://zenodo.org/records/7260705",
+        "use": "noncommercial research"
+      },
+      "role": "TRAIN",
+      "source_files": [
+        {
+          "path": "data/qc/synthrad-task1-first-pair-v1/restricted/ct.nii.gz",
+          "role": "imaging",
+          "sha256": "eb5d19088033e58f43a539399192eb154d35510aea5d1659a2657e48608da040"
+        }
+      ]
+    },
+    {
+      "acquisition_record": "manifests/data_acquisition_ucsf.json",
+      "bundle": "outputs/poc-cases/UCSF-PDGM-0004.ressectionlab",
+      "bundle_sha256": "73cd0792c025e846395bafffe5ec793ef9e1823ceec8e4b0aeb8317783041571",
+      "case_id": "UCSF-PDGM-0004",
+      "existing_materialized": true,
+      "known_aliases": [
+        "BraTS2021:BraTS2021_00097"
+      ],
+      "overlap_caveat": "Known BraTS training overlap; not independent segmentation evaluation; mirror/official byte equivalence unverified",
+      "participant": {
+        "delimiter": ",",
+        "key": "ID",
+        "path": "data/provenance/ucsf-pdgm/UCSF-PDGM-metadata_v5.csv",
+        "sha256": "afc1c23a0eb0597b56e603741e72f2308b4860281187cd3808e05b7a0116fd78",
+        "value": "UCSF-PDGM-004"
+      },
+      "patient_group": "UCSF-PDGM:004",
+      "rights": {
+        "license": "CC-BY-4.0",
+        "source": "https://www.cancerimagingarchive.net/collection/ucsf-pdgm/",
+        "use": "research; attribution required"
+      },
+      "role": "DEVELOPMENT",
+      "source_files": [
+        {
+          "path": "data/public_mirrors/MedOtter-UCSF-PDGM/e9372219cf1cd2fdd52260cd45f7514b4aa7638e/UCSF-PDGM-0004/UCSF-PDGM-0004_FLAIR.nii.gz",
+          "role": "imaging",
+          "sha256": "4f85b3a6e253a42f9c04df95f2059d256dd9ac46f68de99553915b7c82e3384b"
+        },
+        {
+          "path": "data/public_mirrors/MedOtter-UCSF-PDGM/e9372219cf1cd2fdd52260cd45f7514b4aa7638e/UCSF-PDGM-0004/UCSF-PDGM-0004_T1.nii.gz",
+          "role": "imaging",
+          "sha256": "519c83d1cac08d15b299707403e94e90b4a9fe6369cf77acf01b754b276147e5"
+        },
+        {
+          "path": "data/public_mirrors/MedOtter-UCSF-PDGM/e9372219cf1cd2fdd52260cd45f7514b4aa7638e/UCSF-PDGM-0004/UCSF-PDGM-0004_T1c.nii.gz",
+          "role": "imaging",
+          "sha256": "398e7a6ec44e795aaf717fbf0fee6b3a11a671c5bc944c13a308ccaf02419176"
+        },
+        {
+          "path": "data/public_mirrors/MedOtter-UCSF-PDGM/e9372219cf1cd2fdd52260cd45f7514b4aa7638e/UCSF-PDGM-0004/UCSF-PDGM-0004_T2.nii.gz",
+          "role": "imaging",
+          "sha256": "6662aa3b30670944d73486ba6300b5b9d3a5916e0ba74b225816c0806c5a7824"
+        },
+        {
+          "path": "data/public_mirrors/MedOtter-UCSF-PDGM/e9372219cf1cd2fdd52260cd45f7514b4aa7638e/UCSF-PDGM-0004/UCSF-PDGM-0004_tumor_segmentation.nii.gz",
+          "role": "annotation",
+          "sha256": "54e51eb6ae60d8985ed5379a4267438017e2682255418833fac1b704813b483e"
+        }
+      ]
+    }
+  ],
+  "metadata_evidence": [
+    {
+      "bytes": 11160,
+      "path": "manifests/poc-synthrad-bc-source-admission-v1.json",
+      "sha256": "75dc377966ab15da03ebb454a79059414876676cf39cd790019798924f828dd8"
+    },
+    {
+      "bytes": 108926,
+      "path": "manifests/synthrad-component-cohort-v1.json",
+      "sha256": "3bb4dd48e2e674bd921653d938ec7c7695c77afb8776c517800bbefb6a32ff30"
+    },
+    {
+      "bytes": 17037,
+      "path": "outputs/poc-synthrad-bc-source-v1/source-result.json",
+      "sha256": "4d2e85f0e2ba808f922f4d1f6f364e52e5f51d589e83746eb81793106b19e2ff"
+    },
+    {
+      "bytes": 20068,
+      "path": "artifacts/poc-synthrad-bc-integration-v1/independent-qa.json",
+      "sha256": "90eadfb9fd95d4c64778a7356791c49da8735bee8b21562ebe70f3f84d617346"
+    },
+    {
+      "bytes": 13751,
+      "path": "artifacts/poc-synthrad-bc-integration-v1/gui-save-independent-qa.json",
+      "sha256": "1d8b36e84916d8dc88c20212eb927b7a63c40ea62d9089c447d06f0170b53847"
+    },
+    {
+      "bytes": 7038,
+      "path": "outputs/poc-synthrad-bc-source-v1/1BB033/source.json",
+      "sha256": "67205fe13a190fbc68c0b4963fd96871e3dcc0ed9e7f018ef94cc7dd3fb9c32a"
+    },
+    {
+      "bytes": 891,
+      "path": "outputs/poc-synthrad-bc-source-v1/1BB033/model-stage-result.json",
+      "sha256": "433b27ca4559edfdf0a480e2142aef12f80c9ffdb0dd5d96fc60372cd5dbfb47"
+    },
+    {
+      "bytes": 5412,
+      "path": "outputs/poc-models/SynthRAD2023-1BB033/totalsegmentator-skull/cd74e07c2b611f9943d7/inference.json",
+      "sha256": "fe916ff4a0c1bd4f7daae11253c429faffd88e2d6162ecb8b2bdb9047bb9acbc"
+    },
+    {
+      "bytes": 7020,
+      "path": "outputs/poc-synthrad-bc-source-v1/1BC077/source.json",
+      "sha256": "af73a172ac43e80092f83cb98812e4ac62c307eda854d73fb43db57dbaeab91e"
+    },
+    {
+      "bytes": 891,
+      "path": "outputs/poc-synthrad-bc-source-v1/1BC077/model-stage-result.json",
+      "sha256": "b724cd75ab6515797e03a2b82ef936b44eca9568d63631f2ca5bbaa2715c6039"
+    },
+    {
+      "bytes": 5397,
+      "path": "outputs/poc-models/SynthRAD2023-1BC077/totalsegmentator-skull/94d62cb06df44f08b15b/inference.json",
+      "sha256": "d4869860fd252cd9f4f9cabdc5d6d90febc6072915040bc5f89696b4c85fc470"
+    }
+  ],
+  "new_acquisition_released": false,
+  "new_model_execution_released": false,
+  "parent_plan_hash": "sha256:a1a2623d05270881d4291a1037d303578cb27a4f63d52cce28b5f5db251d8755",
+  "parent_release_id": "existing-nine-plus-ixi265-v1",
+  "parent_release_path": "manifests/patient-corpus-releases/existing-nine-plus-ixi265-v1.json",
+  "parent_release_sha256": "2c426f82e160be5b11bb19d9d5c4d2ac804ae9d85011cf46a4dc83904adbea84",
+  "planned_output_directory": "outputs/patient-corpus-twelve-v1",
+  "qualification_released": false,
+  "release_id": "existing-ten-plus-synthrad-bc-v1",
+  "release_status": "prospective_not_released",
+  "requirement_before_execution": "Root must explicitly release qualification after isolated fitting; activate exact candidate/metadata pins before source access. No caller-controlled arbitrary admission.",
+  "schema": "patient-corpus-prospective-release-v1",
+  "source_bundle_hashes": "Copied from named completed producer/independent audit receipts; not freshly rehashed during this preparation.",
+  "source_image_decoding_released": false,
+  "training_admission_established": false,
+  "virtual_descendants_admitted": false
+}

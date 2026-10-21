@@ -1,0 +1,161 @@
+{
+  "schema": "poc-first-local-package-smallest-path-plan-v1",
+  "basis_preflight_sha256": "43cf846504b47910e50ee2840abb2435041739df9fe3eab4e124d7c840e66338",
+  "status": "prepared_not_released_or_built",
+  "product_scope": "Local Apple Silicon research app opening source-bound .ressectionlab bundles, showing saved source/estimated layers and provenance, current post-exposure rehearsal/compare/save/reopen, and explicitly selected qualified local catalogue. No bundled patient corpus, pretrained model weights or model inference requirement.",
+  "concrete_blockers": [
+    {
+      "id": "stale_engine",
+      "finding": "Current checkout has no frozen engine; old Oct4 engine lacks rehearsal/workspace/POC modules. Copying it would omit the current product.",
+      "resolution": "Fresh freeze from this checkout after source commit using existing builder."
+    },
+    {
+      "id": "packaged_catalogue_root",
+      "finding": "main.cjs derives repo from __dirname and feeds it to CaseLibrary. Inside app.asar this is not the real data root, and no persisted case-library folder selector currently exists.",
+      "resolution": "ROOT assigned the minimal host-owned native folder chooser. Persist bounded canonical root under userData; use unchanged PatientCatalog pin/role validation. No selected folder means native Open and recents remain usable."
+    },
+    {
+      "id": "build_and_runtime_identity",
+      "finding": "Development GUI evidence does not validate newly frozen modules or emitted app.",
+      "resolution": "Bind emitted manifests, test exact bundled executable and native packaged GUI before marking verified."
+    }
+  ],
+  "routine_actions": [
+    "After ongoing scorer and host UI QA commit, freeze exact source/lock hashes and ensure exclusive build slot.",
+    "Use existing installed numerical/node dependencies read-only; no dependency installation.",
+    "Create new build/temp/cache directories only in editable checkout. Keep original checkout outputs and app untouched.",
+    "Build one sidecar, then run bounded current POC frozen protocol checks; package that exact engine and notices with captured renderer/main.",
+    "Run exact packaged-engine and real packaged-GUI checks, save copies outside canonical source and sealed packages."
+  ],
+  "host_path_contract": {
+    "existing_open": "Native file dialog or --case grants one absolute local .ressectionlab path. loadCase/saveCase bind source identities and portable originals internally.",
+    "selected_library_folder": "Only native showOpenDialog(properties=[openDirectory]) supplies root; renderer requests selection but cannot submit arbitrary root. Canonicalize and validate existing pinned catalogue before atomic persistence. Revalidate metadata at listing and bundle bytes at opening. Preserve protected roles and no training acceptance.",
+    "no_folder": "Use empty prepared list plus native Open/recents; do not derive a data root from app.asar or guess checkout paths.",
+    "source_aliases": "Unchanged PatientCatalog accepts root-relative candidate paths; its named RessectionLab-poc-first sibling-original alias is restricted and retained. No broad new alias/symlink bypass.",
+    "model_cards": "WorkbenchPanels reads saved anatomy_layers model/provenance fields in selected bundle. No external cache lookup, model loading or weights path access is needed to display these cards.",
+    "backend": "Packaged main uses bundled executable, cwd=userData, private transfer directory and research-runs directory. No PYTHONPATH/live .venv needed at runtime. No new observed-source-root/model/reconstruction root is required or proposed.",
+    "excluded_scope": "Existing source-dependent observed-landmark, training/checkpoint and reconstruction/model functions are not newly enabled by catalogue selection. Legacy native geometry reconstruction imports VTK, which current Electron freeze excludes; this is outside the saved .ressectionlab POC verification scope."
+  },
+  "build_sequence": [
+    {
+      "stage": "sidecar",
+      "program": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/.venv/bin/python",
+      "args": [
+        "-B",
+        "scripts/build_electron_sidecar.py"
+      ],
+      "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first",
+      "environment": {
+        "PYTHONPATH": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/src",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "PYINSTALLER_CONFIG_DIR": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/build/poc-first-local-package-v1/pyinstaller-cache",
+        "TMPDIR": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/build/poc-first-local-package-v1/tmp",
+        "OMP_NUM_THREADS": "2",
+        "OPENBLAS_NUM_THREADS": "2",
+        "MKL_NUM_THREADS": "2",
+        "VECLIB_MAXIMUM_THREADS": "2",
+        "NUMEXPR_NUM_THREADS": "2"
+      },
+      "source_guarantee": "Builder itself captures Python/package source immutably and overrides child PYTHONPATH/--paths to captured snapshot/src. Shared editable install pointing at original checkout must not select source. Verify raw embedded source manifest and archived modules before acceptance.",
+      "output": "desktop/sidecar/ressectionlab-engine",
+      "report": "build/electron-sidecar/build-report.json",
+      "stop_limits": {
+        "family_plus_supervisor_rss_bytes": 3221225472,
+        "wall_seconds": 600
+      }
+    },
+    {
+      "stage": "electron",
+      "program": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "args": [
+        "electron/package-macos.cjs"
+      ],
+      "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/desktop",
+      "environment": {
+        "PATH": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+        "TMPDIR": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/build/poc-first-local-package-v1/tmp",
+        "OMP_NUM_THREADS": "2",
+        "OPENBLAS_NUM_THREADS": "2",
+        "MKL_NUM_THREADS": "2",
+        "VECLIB_MAXIMUM_THREADS": "2",
+        "NUMEXPR_NUM_THREADS": "2"
+      },
+      "source_guarantee": "Existing builder captures main/preload/renderer, runs typecheck and Vite on capture, copies exact new engine/notices, hashes inputs and verifies internal links and local ad-hoc signature. No separate build in live renderer needed.",
+      "output": "desktop/release/RessectionLab-darwin-arm64/RessectionLab.app",
+      "report": "desktop/release/build-report.json",
+      "stop_limits": {
+        "family_plus_supervisor_rss_bytes": 3221225472,
+        "wall_seconds": 300
+      }
+    }
+  ],
+  "shared_resource_limits": {
+    "exclusive_heavy_process": true,
+    "available_memory_floor_bytes": 1073741824,
+    "cumulative_new_build_and_temporary_bytes_limit": 8589934592,
+    "free_disk_reserve_bytes": 53687091200,
+    "sample_interval_seconds": 0.2,
+    "attempts_per_stage": 1,
+    "no_automatic_retry": true,
+    "on_limit": "Record original error/resource observation, terminate process group, preserve failed log/manifest. Do not claim build success or reuse a prior success report.",
+    "measurement_scope": "Supervising process plus recursive builder descendants; byte counts include snapshots/staging/temp/cache. Between-sample peaks are not hard reservations."
+  },
+  "estimated_resources": {
+    "basis": "Old local frozen engine627,176,091B; app958,979,707B; sidecar work156,805,130B; measured historical build times83.14s/11.91s. Current module/dependency graph expanded; memory never measured for this new build.",
+    "expected_engine_bytes_range": [
+      629145600,
+      1048576000
+    ],
+    "expected_app_bytes_range": [
+      943718400,
+      1468006400
+    ],
+    "expected_new_disk_growth_bytes_range": [
+      3221225472,
+      5368709120
+    ],
+    "memory_claim": "No measured current peak available. Proposed3GiB caps are prospective stop limits, not a guarantee of success."
+  },
+  "offline_build": {
+    "existing_verified_archive": "/Users/sayemkamal/Library/Caches/electron/773aa4e04f5abf2d0c5fef6d69bfaa8ef10f8e9615d6ee8300fd1f572dfbc32b/electron-v44.5.1-darwin-arm64.zip",
+    "sha256": "1d75703019bb16461ae65f3081d7e6f5c0b11e901d0ccb5c343bcf7bcdd6435c",
+    "bytes": 130259261,
+    "current_builder": "Cache normally used, but @electron/get has network fallback on missing/mismatched cache. Current script does not guarantee zero downloads.",
+    "minimal_fail_closed_adjustment": "If zero-download execution is required, add existing packager electronZipDir option pointing to this already verified archive directory and check exact archive hash before/after (packager local-ZIP path bypasses its download checksum validation), or inject a rejecting download function while retaining checksum validation. Do not install/update packages."
+  },
+  "data_exclusion": {
+    "sidecar_capture": "Only src/resectionlab/**/*.py, entry/notices/build script, pyproject and root lockfiles; raw package source copy comes from that snapshot. PyInstaller includes reachable library binaries/runtime metadata, not repository data or .tools.",
+    "electron_capture": "Allowlist src,electron,index.html,vite.config.ts,tsconfig.json,package.json,pnpm-lock.yaml; emitted runtime only dist,electron,minimalpackage.json, new numerical engine and ThirdPartyNotices. Vite copyPublicDir=false.",
+    "explicit_not_copied": [
+      "data/",
+      "outputs/",
+      "patient .ressectionlab bundles",
+      "model checkpoints/weights",
+      "ANTs/SynthSeg/TotalSegmentator external runtimes",
+      ".venv/",
+      ".tools/",
+      "desktop/public/preview/"
+    ],
+    "verification": "Inspect emitted asar/engine member inventory for unexpected patient/model payload extensions and external symlinks. Runtime package binaries may embed algorithm data; do not equate all third-party runtime data with pretrained patient-model weights."
+  },
+  "verification_required": [
+    "Capture final commit plus dirty-state/source hashes, all lock entries and installed versions; changed UI/preflight source must be frozen anew.",
+    "Check exact engine BUILD_INPUT_MANIFEST, required current modules, Python bytecode/source and dependency notices; reject stale source digest.",
+    "From clean environment and neutral cwd run bundled executable with PYTHONPATH/PYTHONHOME/VIRTUAL_ENV/DYLD variables cleared, no checkout fallback; ping then load explicit existing source bundle.",
+    "Adapt current POC Sidecar audit to executable mode; existing first_release_sidecar.mjs currently expects source-python launcher and is not an unchanged frozen check. Exercise four rehearsal operations, live aspiration and field management, stale-state/privileged-input rejection, two alternatives from same snapshot, STOP, save, close process and fresh-process reopen.",
+    "Run saved IXI265 tissue bundle and CT source/display view payload checks with exact source/originals/affines/masks retained, estimated labels and8UNKNOWN, no fusion/admission changes. No inference or fitting.",
+    "Validate explicitly selected catalogue canonical root, exact12 source-qualified entries, protected metadata failures before payload, persist/restart, stale path clear/error, Open fallback and independent per-bundle model cards.",
+    "Check local ad-hoc deep strict signature, arm64, all symlinks internal, otool native dependencies restricted to bundle-relative or macOS libraries, and exact emitted hashes before/after launch.",
+    "Launch actual .app in clean environment from neutral folder; native Open saved bundle, orbit/slice/cutaway/tissue layer selection, rehearse/compare/playback/source return, Save As separate copy, quit and reopen. Verify source originals, source identities and UI preferences after fresh process.",
+    "Capture resource use and emitted sizes, no extra patient data/checkpoints; preserve unchanged canonical sources and original checkout/runtime. Mark build verified only with current exact executable+renderer identity."
+  ],
+  "not_required_or_authorized": [
+    "No training benchmark/gradient updates: historical verify-training and verify-cancellation recipes exceed current POC scope.",
+    "No pretrained inference, acquisition, rebuild of patient bundles or redistribution of cache directories.",
+    "No Developer ID credentials, notarization, account changes, publishing or clinical-readiness claim."
+  ],
+  "distribution_limits": [
+    "Local ad-hoc signing only; not notarized.",
+    "Existing notice inventory has unresolved react-remove-scroll-bar root notice text and CPython static-vendor source/version closure; preserve truthful inventory. This preflight does not select a project license or establish redistribution rights."
+  ]
+}

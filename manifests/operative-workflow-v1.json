@@ -1,0 +1,1048 @@
+{
+  "schema": "resectionlab.operative-workflow-requirements.v1",
+  "created_on": "2026-10-16",
+  "status": "research_specification_not_execution_receipt",
+  "intended_use": "Adult supratentorial glioma simulation requirements for specialist research review.",
+  "specification_basis": "Engineering proposals inferred from primary sources; no clinical protocol, dosing, device threshold, or patient-specific outcome model.",
+  "companion_document": "docs/operative-workflow-model.md",
+  "corpus_plan": "docs/patient-corpus-plan.md",
+  "reference_attachment_status": "Mentioned operative attachment unavailable; not inspected.",
+  "phase_scope": "Full-operation roadmap with bounded post-exposure Gate 2 implemented separately.",
+  "evidence_classes": [
+    "acquired_observation",
+    "source_annotation",
+    "derived_estimate",
+    "assumed_initial_condition",
+    "generated_uncalibrated",
+    "unknown"
+  ],
+  "gate2": {
+    "entry": "Assumed post-exposure surface and access, source-bound to one person's anatomy.",
+    "phases": [
+      "p07",
+      "p09",
+      "p10",
+      "p12"
+    ],
+    "tools": [
+      "aspirator",
+      "abstract_field_manager"
+    ],
+    "implementation_observation": "Integrated source-bound-rehearsal.v2 uses field_manager and clear_field: persistent contact history and a dimensionless generated-debris proxy, with no tissue removal, blood/fluid mass, thermal injury or vessel-sealing claim. The earlier coagulator label was corrected after this source review.",
+    "immediate_label_requirement": "Use field manager unless bleeding-source control, mobile field contents and coagulation contact are separately represented.",
+    "distinct_effects": [
+      "irreversible_supported_tissue_removal",
+      "nonremoving_generated_field_burden_change"
+    ],
+    "common_state": [
+      "tool_identity_and_poses",
+      "shared_action_clock",
+      "activation",
+      "shaft_tip_geometry",
+      "exchange_state",
+      "persistent_cavity",
+      "contact_history",
+      "pending_events",
+      "field_burden",
+      "evidence_status"
+    ],
+    "required_demonstration": [
+      "actual_Electron_operation",
+      "save_reopen",
+      "two_executable_branches_from_identical_snapshot",
+      "play_pause_scrub",
+      "visible_missing_evidence",
+      "STOP_reason"
+    ],
+    "software_checks": [
+      "source_identity_and_frames",
+      "full_shaft_and_tool_tool_swept_collision",
+      "persistent_removal",
+      "accounting_where_supported",
+      "deterministic_branch_replay",
+      "absence_of_privileged_deployed_inputs"
+    ],
+    "not_claimed": [
+      "full_operation",
+      "measured_bleeding",
+      "vessel_sealing",
+      "thermal_injury",
+      "calibrated_deformation",
+      "observed_functional_boundary",
+      "clinical_safety",
+      "neurological_deficit_probability"
+    ],
+    "future_phases_must_not_delay_gate": true
+  },
+  "clocks": {
+    "episode_time": "Simulated action durations; never inferred from edited video length.",
+    "acquisition_time": "Time of actual imaging, tracking or clinical observation.",
+    "media_time": "Editorial source-video timestamp; not a surgical duration.",
+    "source_video": {
+      "source_id": "S3",
+      "review": "published_transcript_only",
+      "media_landmarks": [
+        [
+          "02:58",
+          "positioning"
+        ],
+        [
+          "03:12",
+          "skin_exposure"
+        ],
+        [
+          "03:26",
+          "bone_opening"
+        ],
+        [
+          "03:37",
+          "dural_opening"
+        ],
+        [
+          "03:48",
+          "exoscope"
+        ],
+        [
+          "04:51",
+          "specimen"
+        ],
+        [
+          "05:00",
+          "fluorescence"
+        ],
+        [
+          "06:07",
+          "hemostasis"
+        ],
+        [
+          "06:16",
+          "dural_closure"
+        ],
+        [
+          "06:19",
+          "bone_replacement"
+        ],
+        [
+          "06:23",
+          "soft_tissue_closure"
+        ]
+      ]
+    }
+  },
+  "event_required_fields": [
+    "event_id",
+    "phase_id",
+    "state_before",
+    "state_after",
+    "actor_ids",
+    "tool_ids",
+    "start_time",
+    "end_time",
+    "pose_trajectory_ref",
+    "activation",
+    "precondition_results",
+    "observation_refs",
+    "evidence_status",
+    "effect_ledger",
+    "reason"
+  ],
+  "observation_contract": [
+    "Information actions may change the estimate without changing anatomy.",
+    "Missing vessels or functions are unknown, not absent.",
+    "A segmentation or tract estimate is not a demonstrated functional boundary.",
+    "Updated image registration requires review; acquisition alone does not validate a transform.",
+    "Policy inputs exclude unavailable simulator truth."
+  ],
+  "branches": [
+    {
+      "id": "awake_or_asleep",
+      "source_ids": [
+        "S8",
+        "S9"
+      ],
+      "selection": "Specialist-selected scenario based on task feasibility and clinical context; no automated eligibility rule.",
+      "effects": [
+        "task_availability",
+        "participation_quality",
+        "team_state",
+        "interruption_or_conversion_record"
+      ],
+      "gate2": "unknown_without_acquired_or_labeled_generated_evidence"
+    },
+    {
+      "id": "initial_or_repeat_operation",
+      "source_ids": [
+        "S5"
+      ],
+      "selection": "Actual operative history.",
+      "effects": [
+        "scar_and_adhesion_status",
+        "exposure_geometry",
+        "closure_requirements"
+      ],
+      "gate2": "metadata_and_unknowns"
+    },
+    {
+      "id": "vascular_evidence",
+      "source_ids": [
+        "S4"
+      ],
+      "selection": "Acquired same-person coverage or explicitly generated research encounter.",
+      "effects": [
+        "known_anatomical_conflicts",
+        "source_event_availability",
+        "unknown_small_vessels"
+      ],
+      "gate2": "no_patient_bleeding_claim_from_missing_data"
+    },
+    {
+      "id": "continue_reassess_or_stop",
+      "source_ids": [
+        "S1",
+        "S8",
+        "S13"
+      ],
+      "selection": "Available observations and scenario objectives.",
+      "effects": [
+        "new_observation",
+        "changed_action_sequence",
+        "residual",
+        "reason_for_stopping"
+      ],
+      "gate2": "executable_identical_snapshot_alternatives"
+    }
+  ],
+  "environment_future_requirements": [
+    "head_body_table_frames",
+    "surgeon_and_assistant_workspace",
+    "anesthesia_access",
+    "scrub_exchange",
+    "navigation_line_of_sight",
+    "microscope_exoscope_occupancy",
+    "ultrasound_occupancy",
+    "display_availability",
+    "mapping_team_communication",
+    "patient_participation",
+    "equipment_failure_and_interruption"
+  ],
+  "mechanism_separations": [
+    "tissue_removal_vs_fluid_evacuation",
+    "bleeding_source_vs_pooled_contents",
+    "coagulation_contact_vs_thermal_injury",
+    "vessel_patency_vs_visible_bleeding",
+    "blood_loss_vs_ischemia",
+    "mapping_response_vs_permanent_deficit",
+    "registration_error_vs_nonrigid_shift",
+    "simulator_truth_vs_available_observation"
+  ],
+  "dataset_cautions": [
+    "Edited case videos supply phase examples, not complete action-effect trajectories.",
+    "ReMIND and RESECT support imaging/registration observation tests, not per-tool causal mechanics ground truth.",
+    "Source video patient identity must never be attached to a different imaging case.",
+    "No dataset was downloaded for this specification."
+  ],
+  "validation_status": {
+    "software_acceptance": "Not assessed by this manifest.",
+    "specialist_review": "Not performed.",
+    "physical_calibration": "Not established.",
+    "patient_outcome_validation": "Not established."
+  },
+  "phases": [
+    {
+      "id": "p01",
+      "name": "Intent and preparation",
+      "source_ids": [
+        "S1",
+        "S2",
+        "S8"
+      ],
+      "gate2_scope": "initialization",
+      "observable_state": [
+        "source_images",
+        "baseline_function",
+        "prior_surgery",
+        "target_definition"
+      ],
+      "actions": [
+        "review",
+        "select_intent",
+        "record_uncertainty"
+      ],
+      "tool_preconditions": [
+        "same_person_identity",
+        "source_frame_QC",
+        "specialist_selected_scenario"
+      ],
+      "timeline": {
+        "kind": "variable_duration_event_interval",
+        "next": [
+          "p02"
+        ],
+        "repeatable": false
+      },
+      "dataset_requirements": [
+        "preoperative_imaging",
+        "baseline_assessment",
+        "operative_history"
+      ],
+      "unknowns": [
+        "actual_functional_boundary",
+        "individual_benefit"
+      ],
+      "validation_needed": [
+        "specialist_review_of_goals",
+        "anatomical_QC"
+      ]
+    },
+    {
+      "id": "p02",
+      "name": "Position and room setup",
+      "source_ids": [
+        "S3",
+        "S8"
+      ],
+      "gate2_scope": "assumed_context",
+      "observable_state": [
+        "head_body_table_pose",
+        "fixation",
+        "team_access",
+        "equipment_availability",
+        "anesthetic_participation_state"
+      ],
+      "actions": [
+        "position",
+        "configure_workspace"
+      ],
+      "tool_preconditions": [
+        "room_and_patient_frames",
+        "tracking_reference_status"
+      ],
+      "timeline": {
+        "kind": "variable_duration_event_interval",
+        "next": [
+          "p03"
+        ],
+        "repeatable": false
+      },
+      "dataset_requirements": [
+        "position_records",
+        "room_layout",
+        "camera_and_tracking_calibration"
+      ],
+      "unknowns": [
+        "patient_specific_position_tolerance",
+        "unrecorded_team_actions"
+      ],
+      "validation_needed": [
+        "workspace_collision_validation",
+        "specialist_room_review"
+      ]
+    },
+    {
+      "id": "p03",
+      "name": "Image guidance and registration",
+      "source_ids": [
+        "S6",
+        "S7"
+      ],
+      "gate2_scope": "partial_case_frame_support",
+      "observable_state": [
+        "navigation_image_time",
+        "tracked_pointer",
+        "registration_status",
+        "tracking_visibility"
+      ],
+      "actions": [
+        "register",
+        "check_landmarks",
+        "inspect_slices"
+      ],
+      "tool_preconditions": [
+        "calibrated_pointer",
+        "valid_tracking",
+        "reviewed_transform"
+      ],
+      "timeline": {
+        "kind": "variable_duration_event_interval",
+        "next": [
+          "p04"
+        ],
+        "repeatable": false
+      },
+      "dataset_requirements": [
+        "source_images",
+        "independent_landmarks",
+        "tracking_logs"
+      ],
+      "unknowns": [
+        "current_nonrigid_displacement",
+        "unobserved_tracking_error"
+      ],
+      "validation_needed": [
+        "independent_registration_error_measurement"
+      ]
+    },
+    {
+      "id": "p04",
+      "name": "Scalp and muscle exposure",
+      "source_ids": [
+        "S3",
+        "S5"
+      ],
+      "gate2_scope": "future",
+      "observable_state": [
+        "soft_tissue_layers",
+        "reflected_flaps",
+        "bone_access",
+        "superficial_field"
+      ],
+      "actions": [
+        "expose",
+        "retract",
+        "manage_superficial_field"
+      ],
+      "tool_preconditions": [
+        "layer_evidence_or_explicit_synthetic_layers",
+        "tool_layer_compatibility"
+      ],
+      "timeline": {
+        "kind": "variable_duration_event_interval",
+        "next": [
+          "p05"
+        ],
+        "repeatable": false
+      },
+      "dataset_requirements": [
+        "head_surface_and_soft_tissue_data",
+        "continuous_exposure_video"
+      ],
+      "unknowns": [
+        "skin_perfusion",
+        "scar_adhesions"
+      ],
+      "validation_needed": [
+        "specialist_phase_review",
+        "contact_and_deformation_measurements"
+      ]
+    },
+    {
+      "id": "p05",
+      "name": "Craniotomy",
+      "source_ids": [
+        "S3",
+        "S5"
+      ],
+      "gate2_scope": "future",
+      "observable_state": [
+        "bone_opening",
+        "bone_flap",
+        "bone_edges",
+        "dura_coverage"
+      ],
+      "actions": [
+        "plan_opening",
+        "create_opening",
+        "retain_bone_flap"
+      ],
+      "tool_preconditions": [
+        "acquired_skull_evidence",
+        "thickness_uncertainty",
+        "swept_shaft_check"
+      ],
+      "timeline": {
+        "kind": "variable_duration_event_interval",
+        "next": [
+          "p06"
+        ],
+        "repeatable": false
+      },
+      "dataset_requirements": [
+        "CT_skull",
+        "sinus_and_dural_context",
+        "drill_trajectories"
+      ],
+      "unknowns": [
+        "unobserved_bone_defects",
+        "dural_attachment"
+      ],
+      "validation_needed": [
+        "opening_geometry_QC",
+        "independent_collision_checks"
+      ]
+    },
+    {
+      "id": "p06",
+      "name": "Dural opening and surface exposure",
+      "source_ids": [
+        "S3",
+        "S5"
+      ],
+      "gate2_scope": "assumed_initial_state",
+      "observable_state": [
+        "dural_flap",
+        "exposed_surface",
+        "visible_vessels",
+        "CSF_and_field_state"
+      ],
+      "actions": [
+        "open_or_reflect",
+        "observe_surface"
+      ],
+      "tool_preconditions": [
+        "dural_adhesion_status_or_assumption",
+        "underlying_structure_visibility"
+      ],
+      "timeline": {
+        "kind": "variable_duration_event_interval",
+        "next": [
+          "p07"
+        ],
+        "repeatable": false
+      },
+      "dataset_requirements": [
+        "dural_and_surface_observations",
+        "prior_operation_record"
+      ],
+      "unknowns": [
+        "unobserved_veins",
+        "adhesions",
+        "fluid_changes"
+      ],
+      "validation_needed": [
+        "specialist_exposure_review",
+        "source_vs_assumed_mask_QC"
+      ]
+    },
+    {
+      "id": "p07",
+      "name": "Optical orientation",
+      "source_ids": [
+        "S3",
+        "S7"
+      ],
+      "gate2_scope": "abstract_inspection_now",
+      "observable_state": [
+        "camera_pose",
+        "field_of_view",
+        "illumination",
+        "occlusion",
+        "view_quality"
+      ],
+      "actions": [
+        "inspect",
+        "adjust_view",
+        "focus"
+      ],
+      "tool_preconditions": [
+        "view_model_declared",
+        "observation_scope_known"
+      ],
+      "timeline": {
+        "kind": "variable_duration_event_interval",
+        "next": [
+          "p08",
+          "p09",
+          "p10",
+          "p12"
+        ],
+        "repeatable": true
+      },
+      "dataset_requirements": [
+        "calibrated_video",
+        "camera_state",
+        "occlusion_annotations"
+      ],
+      "unknowns": [
+        "tissue_visual_appearance",
+        "deep_occluded_anatomy"
+      ],
+      "validation_needed": [
+        "visible_surface_reference_test",
+        "specialist_visibility_review"
+      ]
+    },
+    {
+      "id": "p08",
+      "name": "Functional mapping and monitoring",
+      "source_ids": [
+        "S8",
+        "S9"
+      ],
+      "gate2_scope": "future_or_unknown",
+      "observable_state": [
+        "task_baseline",
+        "participation",
+        "probe_contact",
+        "signal_quality",
+        "response"
+      ],
+      "actions": [
+        "acquire_response",
+        "repeat_task",
+        "interpret",
+        "pause"
+      ],
+      "tool_preconditions": [
+        "appropriate_protocol",
+        "reliable_baseline",
+        "team_readiness",
+        "awake_task_when_required"
+      ],
+      "timeline": {
+        "kind": "variable_duration_event_interval",
+        "next": [
+          "p09",
+          "p12"
+        ],
+        "repeatable": true
+      },
+      "dataset_requirements": [
+        "stimulation_location_time",
+        "task_response",
+        "monitoring_signals"
+      ],
+      "unknowns": [
+        "unobserved_function",
+        "response_cause",
+        "lasting_deficit"
+      ],
+      "validation_needed": [
+        "specialist_mapping_annotation",
+        "measurement_validation"
+      ]
+    },
+    {
+      "id": "p09",
+      "name": "Entry sampling and progressive resection",
+      "source_ids": [
+        "S4",
+        "S10"
+      ],
+      "gate2_scope": "bounded_aspirator_now",
+      "observable_state": [
+        "accessible_target_estimate",
+        "persistent_cavity",
+        "tool_poses",
+        "specimen_ledger"
+      ],
+      "actions": [
+        "select_region",
+        "sample",
+        "dissect",
+        "aspirate"
+      ],
+      "tool_preconditions": [
+        "active_working_tip",
+        "supported_contact",
+        "reachable_exposed_surface",
+        "compatible_tool",
+        "swept_collision_check"
+      ],
+      "timeline": {
+        "kind": "variable_duration_event_interval",
+        "next": [
+          "p07",
+          "p08",
+          "p10",
+          "p11",
+          "p12"
+        ],
+        "repeatable": true
+      },
+      "dataset_requirements": [
+        "registered_anatomy",
+        "tool_activation_poses",
+        "observed_removal",
+        "specimen_provenance"
+      ],
+      "unknowns": [
+        "histological_margin",
+        "material_response",
+        "unobserved_vessels"
+      ],
+      "validation_needed": [
+        "persistent_removal_accounting",
+        "independent_contact_and_removal_measurements"
+      ]
+    },
+    {
+      "id": "p10",
+      "name": "Field management and hemostatic response",
+      "source_ids": [
+        "S4",
+        "S5"
+      ],
+      "gate2_scope": "abstract_field_manager_now",
+      "observable_state": [
+        "mobile_field_contents",
+        "visibility_burden",
+        "bleeding_source_if_modeled",
+        "patency_if_modeled",
+        "contact_history"
+      ],
+      "actions": [
+        "clear_field",
+        "observe_recurrence",
+        "control_source_if_supported"
+      ],
+      "tool_preconditions": [
+        "source_state_for_hemostasis_claim",
+        "fluid_inventory_for_volume_claim",
+        "no_tissue_erasure_by_field_clearing"
+      ],
+      "timeline": {
+        "kind": "variable_duration_event_interval",
+        "next": [
+          "p07",
+          "p09",
+          "p11",
+          "p12"
+        ],
+        "repeatable": true
+      },
+      "dataset_requirements": [
+        "fluid_input_output",
+        "source_event_labels",
+        "device_activation",
+        "vascular_observations"
+      ],
+      "unknowns": [
+        "true_blood_loss",
+        "vessel_sealing",
+        "thermal_injury",
+        "perfusion"
+      ],
+      "validation_needed": [
+        "mass_accounting",
+        "source_vs_pool_separation",
+        "independent_physical_calibration"
+      ]
+    },
+    {
+      "id": "p11",
+      "name": "Shift and anatomical update",
+      "source_ids": [
+        "S6",
+        "S11",
+        "S12"
+      ],
+      "gate2_scope": "future_or_explicitly_unmodeled",
+      "observable_state": [
+        "observed_displacement",
+        "navigation_disagreement",
+        "new_images",
+        "transform_quality"
+      ],
+      "actions": [
+        "acquire_update",
+        "review_registration",
+        "revise_estimate"
+      ],
+      "tool_preconditions": [
+        "acquired_or_labeled_generated_data",
+        "acquisition_time",
+        "preserve_previous_estimate"
+      ],
+      "timeline": {
+        "kind": "variable_duration_event_interval",
+        "next": [
+          "p07",
+          "p08",
+          "p09",
+          "p12"
+        ],
+        "repeatable": true
+      },
+      "dataset_requirements": [
+        "paired_intraoperative_images",
+        "landmarks",
+        "acquisition_calibration"
+      ],
+      "unknowns": [
+        "per_tool_causal_deformation",
+        "unobserved_tissue_mechanics"
+      ],
+      "validation_needed": [
+        "held_out_registration_validation",
+        "independent_deformation_measurements"
+      ]
+    },
+    {
+      "id": "p12",
+      "name": "Reassessment and stopping",
+      "source_ids": [
+        "S1",
+        "S8",
+        "S13"
+      ],
+      "gate2_scope": "bounded_decisions_now",
+      "observable_state": [
+        "residual_evidence",
+        "functional_observations",
+        "access_conflicts",
+        "view_quality",
+        "missing_evidence"
+      ],
+      "actions": [
+        "inspect",
+        "reassess",
+        "continue",
+        "change_approach",
+        "pause",
+        "STOP",
+        "escalate"
+      ],
+      "tool_preconditions": [
+        "decision_uses_available_observations",
+        "explicit_reason"
+      ],
+      "timeline": {
+        "kind": "variable_duration_event_interval",
+        "next": [
+          "p07",
+          "p08",
+          "p09",
+          "p10",
+          "p11",
+          "p13"
+        ],
+        "repeatable": true
+      },
+      "dataset_requirements": [
+        "decision_annotations",
+        "time_matched_images",
+        "functional_records"
+      ],
+      "unknowns": [
+        "microscopic_residual",
+        "patient_outcome",
+        "unknown_function"
+      ],
+      "validation_needed": [
+        "identical_snapshot_branching",
+        "no_privileged_policy_inputs",
+        "specialist_decision_review"
+      ]
+    },
+    {
+      "id": "p13",
+      "name": "Final field review and closure",
+      "source_ids": [
+        "S3",
+        "S5"
+      ],
+      "gate2_scope": "future",
+      "observable_state": [
+        "final_field_observation",
+        "retained_material",
+        "dural_bone_soft_tissue_closure"
+      ],
+      "actions": [
+        "inspect_final_field",
+        "inventory",
+        "close_layers"
+      ],
+      "tool_preconditions": [
+        "resection_endpoint_recorded",
+        "field_review",
+        "object_inventory"
+      ],
+      "timeline": {
+        "kind": "variable_duration_event_interval",
+        "next": [
+          "p14"
+        ],
+        "repeatable": false
+      },
+      "dataset_requirements": [
+        "closure_video",
+        "operative_record",
+        "retained_material_record"
+      ],
+      "unknowns": [
+        "watertightness",
+        "late_bleeding",
+        "wound_healing"
+      ],
+      "validation_needed": [
+        "specialist_closure_review",
+        "independent_leak_and_material_checks"
+      ]
+    },
+    {
+      "id": "p14",
+      "name": "Recovery and outcome observations",
+      "source_ids": [
+        "S1",
+        "S5",
+        "S9"
+      ],
+      "gate2_scope": "future_external_validation",
+      "observable_state": [
+        "exam",
+        "postoperative_imaging",
+        "pathology",
+        "follow_up"
+      ],
+      "actions": [
+        "record_observation",
+        "compare_baseline"
+      ],
+      "tool_preconditions": [
+        "acquisition_time",
+        "same_person_linkage",
+        "future_data_excluded_from_prior_policy"
+      ],
+      "timeline": {
+        "kind": "variable_duration_event_interval",
+        "next": [],
+        "repeatable": false
+      },
+      "dataset_requirements": [
+        "postoperative_MRI",
+        "neurological_follow_up",
+        "pathology"
+      ],
+      "unknowns": [
+        "causal_attribution",
+        "unmeasured_deficits"
+      ],
+      "validation_needed": [
+        "independent_endpoint_review",
+        "held_out_patient_validation"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "title": "EANS–EANO guidelines on the extent of resection in gliomas",
+      "publication_date": "2026-01-01",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40973061/",
+      "doi": "10.1093/neuonc/noaf217",
+      "source_type": "professional_guideline",
+      "access": "abstract_read",
+      "checked_on": "2026-10-16"
+    },
+    {
+      "id": "S2",
+      "title": "EANO guidelines on the diagnosis and treatment of diffuse gliomas of adulthood",
+      "publication_date": "2021-03",
+      "url": "https://www.nature.com/articles/s41571-020-00447-z",
+      "doi": "10.1038/s41571-020-00447-z",
+      "source_type": "professional_guideline",
+      "access": "indexed_surgical_guidance_read_direct_open_failed",
+      "checked_on": "2026-10-16"
+    },
+    {
+      "id": "S3",
+      "title": "Contemporary intraoperative visualization for GBM with use of exoscope, 5-ALA fluorescence-guided surgery and tractography",
+      "publication_date": "2022-01-01",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9555356/",
+      "doi": "10.3171/2021.10.FOCVID21174",
+      "source_type": "original_operative_video_article",
+      "access": "full_transcript_read_video_not_frame_reviewed",
+      "checked_on": "2026-10-16"
+    },
+    {
+      "id": "S4",
+      "title": "The sub-pial resection technique for intrinsic tumor surgery",
+      "publication_date": "2011-12-13",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3267372/",
+      "doi": "10.4103/2152-7806.90714",
+      "source_type": "original_technique_and_cases",
+      "access": "indexed_methods_and_discussion_read_direct_open_challenged",
+      "checked_on": "2026-10-16"
+    },
+    {
+      "id": "S5",
+      "title": "Reducing complication rates for repeat craniotomies in glioma patients",
+      "publication_date": "2021-12-30",
+      "url": "https://link.springer.com/article/10.1007/s00701-021-05067-9",
+      "doi": "10.1007/s00701-021-05067-9",
+      "source_type": "original_retrospective_clinical_series",
+      "access": "publisher_article_and_indexed_operative_sections_read",
+      "checked_on": "2026-10-16"
+    },
+    {
+      "id": "S6",
+      "title": "Serial intraoperative magnetic resonance imaging of brain shift",
+      "publication_date": "2001-04",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/11322439/",
+      "doi": "10.1097/00006123-200104000-00019",
+      "source_type": "original_clinical_imaging_study",
+      "access": "abstract_read",
+      "checked_on": "2026-10-16"
+    },
+    {
+      "id": "S7",
+      "title": "Mapping Resection Progress by Tool-Tip Tracking during Brain Tumor Surgery for Real-Time Estimation of Residual Tumor",
+      "publication_date": "2023-01-29",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9913508/",
+      "doi": "10.3390/cancers15030825",
+      "source_type": "original_clinical_tracking_study",
+      "access": "indexed_primary_study_text_read_direct_open_challenged",
+      "checked_on": "2026-10-16"
+    },
+    {
+      "id": "S8",
+      "title": "Guidelines for Awake Surgery",
+      "publication_date": "2024-01-15",
+      "url": "https://www.awake-surgery.jp/wp-content/uploads/2024/01/Guidelines-for-Awake-Surgery.pdf",
+      "doi": "10.2176/jns-nmc.2023-0111",
+      "source_type": "professional_society_guideline",
+      "access": "official_pdf_read",
+      "checked_on": "2026-10-16"
+    },
+    {
+      "id": "S9",
+      "title": "Functional outcome after language mapping for glioma resection",
+      "publication_date": "2008-01-03",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/18172171/",
+      "doi": "10.1056/NEJMoa067819",
+      "source_type": "original_clinical_mapping_series",
+      "access": "abstract_read",
+      "checked_on": "2026-10-16"
+    },
+    {
+      "id": "S10",
+      "title": "A framework for standardised tissue sampling and processing during resection of diffuse intracranial glioma",
+      "publication_date": "2023-11",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10849105/",
+      "doi": "10.1016/S1470-2045(23)00453-9",
+      "source_type": "professional_consensus_recommendations",
+      "access": "indexed_recommendations_read",
+      "checked_on": "2026-10-16"
+    },
+    {
+      "id": "S11",
+      "title": "REtroSpective Evaluation of Cerebral Tumors (RESECT)",
+      "publication_date": "2017-04-09",
+      "url": "https://aapm.onlinelibrary.wiley.com/doi/10.1002/mp.12268",
+      "doi": "10.1002/mp.12268",
+      "source_type": "original_dataset_article",
+      "access": "publisher_abstract_read",
+      "checked_on": "2026-10-16"
+    },
+    {
+      "id": "S12",
+      "title": "ReMIND: The Brain Resection Multimodal Imaging Database",
+      "publication_date": "2024-05-14",
+      "url": "https://www.nature.com/articles/s41597-024-03295-z",
+      "doi": "10.1038/s41597-024-03295-z",
+      "source_type": "original_dataset_article",
+      "access": "indexed_publisher_description_read",
+      "checked_on": "2026-10-16"
+    },
+    {
+      "id": "S13",
+      "title": "Intraoperative B-Mode Ultrasound Guided Surgery and the Extent of Glioblastoma Resection: A Randomized Controlled Trial",
+      "publication_date": "2021-05-19",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/34094939/",
+      "doi": "10.3389/fonc.2021.649797",
+      "source_type": "original_randomized_clinical_trial",
+      "access": "abstract_read",
+      "checked_on": "2026-10-16"
+    }
+  ]
+}

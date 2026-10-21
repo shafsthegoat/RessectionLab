@@ -1,10 +1,121 @@
 # RessectionLab
 
+The [full case rehearsal collaborator handoff](artifacts/full-case-rehearsal-20261020/README.md)
+includes the saved meningioma source and substantial primary resection, same-case
+vascular rescue, checkpoints, action histories, audit evidence and portable macOS
+setup/launch/check commands on `codex/poc-first-rehearsal`. It removed 81.34% of
+the owned target before a budget-limited stop. Playback is very slow; full final
+GUI playthrough and frame-audit limitations are explicitly retained. These
+selected data files are a tracked exception to the usual local `testcases/` rule.
+
+The [Research Planning desktop integration](docs/research-planning.md) now
+compares observation-only greedy and a frozen learned continuation in the
+existing source-bound instrument workbench, with checked native replay and
+save/reopen. The UCSF development result remains negative: greedy hits a shaft
+collision and the learner stops; neither adds target removal. This does not
+close the admitted TRAIN glioma or hybrid/search benchmark gates.
+
+The [bounded two-instrument task](docs/coordinated-burring.md) now learns to
+schedule shallow bone burring and debris aspiration in the unchanged simulator.
+All three Q-learning seeds match the successful script; either instrument alone
+fails. This is fixed-motion scheduling on one development anatomy, with native
+replay and strict safeguards preserved, not clinical or transfer validation.
+
+The healthy IXI multimodal workflow preserves acquired T1, MRA and diffusion
+sources, measured rigid registration estimates and diagnostic tensor scalars.
+Use `./scripts/launch_ixi_multimodal.sh anatomy` or `simulator` for the prepared
+local study. The canonical simulator retains partial vessel exclusion and native
+source views; tumor-removal RL refuses this case because it has no tumor target.
+Preparation and verification are in `scripts/prepare_ixi_multimodal.py` and
+`scripts/verify_ixi_multimodal.py`; local source inventories and QC stay in the
+Git-ignored `testcases/` directory. No tract or functional protection is inferred
+from uncorrected diffusion.
+
+The [anatomy visual/RL integration check](artifacts/anatomy-integration-v3/RESULT.txt)
+adds topology-preserving vessel-margin previews, clearer source-derived rendering,
+and a fixed-policy Electron comparison with exact shared-engine state matches.
+Launch the prepared local examples with `./scripts/launch_anatomy_fidelity.sh mri`,
+`cta`, or `rehearsal`. No inference or training runs when opening these examples.
+
+The [October 18 integrated instrument rehearsal](docs/integrated-rehearsal.md)
+adds source-pinned CT/MRI drilling followed by a retained retractor hold and
+CUSA removal, second-case MRI interoperability, shared persisted protection,
+measured action costs and inspectable bimanual telemetry. We referenced
+[Yilmaz et al. (2022)](https://doi.org/10.1038/s41746-022-00596-8) for the
+behavior-measurement framework. The [bounded learning pilot](docs/surgical-pilot.md)
+keeps its actual optimizer updates, baselines, costs and limitations separate
+from anatomical or clinical validation.
+
+Current work follows the [October 16 first-release gate ledger](docs/poc-first-gate-ledger.md)
+and [patient corpus construction plan](docs/patient-corpus-plan.md): actual
+anatomical reconstruction, then one stateful two-tool rehearsal in Electron,
+then diverse real patients and explicitly labeled virtual gliomas. The merged
+native workbench from PR #12 is the integration base.
+
+The [local Apple Silicon app](artifacts/poc-first-local-package-build-v1/RESULT.md)
+now runs the current workbench with its bundled numerical engine. Actual app
+checks cover the remembered case-library folder, two-tool rehearsal, branches,
+play/pause/scrub, tissue cutaways, separate CT/MRI views and native save/restart.
+The packaged-engine audit preserves every tested source array and original file.
+This is a local research preview; anatomical accuracy, physiological calibration,
+and public-distribution licensing/notarization remain open.
+
+The [first executable patient-source rehearsal](artifacts/poc-first-rehearsal-v1/RESULT.md)
+now passes the actual Electron and independent save/replay checks. **Rehearse**
+provides two persistent tools, a shared action timeline, play/pause/scrub and two
+continuations from the same state. Source anatomy remains unchanged. Current
+physics and initial exposure are explicit research assumptions; diverse-case
+qualification and anatomical/physiological validation remain in progress.
+
+The [first nine-person corpus qualification](artifacts/patient-corpus-first-tranche-v1/RESULT.md)
+now provides resumable source checks and JSON/SQLite search. A bounded, pinned FK
+adapter passes independent numerical and source-admission checks; generated
+geometry remains distinct from observed tumors and physiological validation.
+The [IXI265 integration demonstration](artifacts/ixi265-virtual-pilot-v1/RESULT.md)
+also opens fresh brain/vessel estimates and an explicitly generated lesion overlay
+in Electron, with native branch save/reopen. Tissue-conditioned growth and
+anatomical review remain open.
+
+The [ten-person catalog release](artifacts/patient-corpus-ten-person-v1/RESULT.md)
+now adds IXI through a separate frozen release and exposes all ten source cases
+in **Cases**, searchable by name, dataset and available anatomy. Catalog opens
+verify exact bundle checksums. Actual Electron checks cover BTC discovery/open
+and separate IXI vessel-model inspection; source checking does not accept anatomy
+as truth or count generated variants as new people.
+
+Two further [acquired SynthRAD CT/MRI cases](artifacts/poc-synthrad-bc-integration-v1/RESULT.md)
+now open with fresh brain/skull estimates and pass native save/fresh-process
+reopen checks. Their original scans and separate MRI views are preserved. They
+remain unreviewed source/model candidates outside the frozen ten-person catalog.
+
+The [separate twelve-source release](artifacts/patient-corpus-twelve-recovery-v1/RESULT.md)
+now adds those two cases to **Cases**, preserving the frozen nine/ten releases.
+Actual Electron checks show 12 source identities, three skull cases and native
+CT/MRI switching. Independent checks preserve earlier receipts and source bytes.
+Reviewed tumor-location diversity and anatomical accuracy remain open.
+
+The [IXI tissue-estimate workspace](artifacts/poc-ixi265-tissue-display-package-v1/RESULT.md)
+now shows separate tissue estimates and explicit UNKNOWN voxels in actual
+Electron. Layer controls, cutaway, original-image switching and native save/fresh
+reopen work; the acquired image and earlier references remain unchanged.
+
+The [six BTC source reports](artifacts/btc-six-source-location-evidence-v1/RESULT.md)
+now add location and side to **Cases** search. Actual Electron checks find the
+expected left-frontal/parietal cases and open the matching acquired scan.
+Labels say “Dataset / paper report · review pending”; reviewed anatomy remains
+UNKNOWN and unrelated saved versions receive no inferred location.
+
+The [fixed RESECT ultrasound comparison](artifacts/poc-resect-case3-image-registration-v1/RESULT.md)
+now measures real paired-image alignment: on all 17 landmarks of one TRAIN
+person, the image-only rigid fit increases RMS error from 2.029 to 2.087 mm.
+The negative result, unchanged baseline and initial file-format refusal remain
+preserved. Improved image similarity does not establish anatomical accuracy.
+
 A local macOS anatomy workbench for acquired patient imaging, saved segmentations,
 and linked 3D/source-image inspection.
 
-The **October 14 POC A reset** makes Cases / Data / 3D Workspace the current
-delivery priority. Three separate public cases demonstrate glioma MRI, head CT,
+The **October 14 POC A reset** established Cases / Data / 3D Workspace as the
+anatomy foundation. Three separate public cases demonstrate glioma MRI, head CT,
 and TOF-MRA with actual locally inferred masks. Original downloaded files,
 physical coordinates, registration declarations, and viewing settings are saved
 together. Opening a case or changing layers does not run inference.

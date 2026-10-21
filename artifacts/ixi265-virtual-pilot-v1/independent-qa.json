@@ -1,0 +1,270 @@
+{
+  "schema": "independent-ixi265-virtual-pilot-audit-v1",
+  "status": "pass",
+  "created_utc": "2026-10-16T06:28:05.881396+00:00",
+  "scope": "Only exact admitted host and generated descendant; independent artifact/accounting verification, not clinical acceptance",
+  "input_stamps": {
+    "outputs/poc-ixi265/IXI265-Guys-0845.ressectionlab": {
+      "sha256": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1",
+      "bytes": 57052870,
+      "mtime_ns": 1792131126176165021
+    },
+    "outputs/poc-ixi265/virtual-FK-pilot-001/IXI265-Guys-0845-virtual-FK-pilot-001.ressectionlab": {
+      "sha256": "aeb2d7574bcd091009da60252763ac401a11478b66d8c3a7e71d35ef56ba2b51",
+      "bytes": 57065603,
+      "mtime_ns": 1792131873121365965
+    },
+    "outputs/poc-ixi265/virtual-FK-pilot-001/manifest.json": {
+      "sha256": "b085649f30287a62cfbb898a1e141b619af149b627485437ace8469ec3c2495c",
+      "bytes": 15289,
+      "mtime_ns": 1792131865398559333
+    },
+    "outputs/poc-ixi265/virtual-FK-pilot-001/bundle-receipt.json": {
+      "sha256": "7e442e31a8efb350fdd7140e33be896ff77bbf58b47042480864ccba0eb49303",
+      "bytes": 3083,
+      "mtime_ns": 1792131873544729544
+    },
+    "outputs/poc-ixi265/virtual-FK-pilot-001/virtual-glioma.npz": {
+      "sha256": "77c3d9018d8e09df60feb75396b4d243df36ad5e67d9054e4f37537fd77861c1",
+      "bytes": 346873,
+      "mtime_ns": 1792131865397948504
+    },
+    "artifacts/patient-corpus-first-tranche-v1/independent-qa.json": {
+      "sha256": "5f112d987639408911b379bd72792cab2504f68599981ef833445e31bcf7e0bd",
+      "bytes": 18706,
+      "mtime_ns": 1792131871120640478
+    }
+  },
+  "source_preservation": {
+    "primary_arrays": {
+      "mri": {
+        "shape": [
+          256,
+          256,
+          150
+        ],
+        "dtype": "<f4",
+        "array_hash": "sha256:f47aad533f660e6bd74c8156811c6550e8bdf3487a3c911f0b80a72ce9ce8cc1"
+      },
+      "affine": {
+        "shape": [
+          4,
+          4
+        ],
+        "dtype": "<f8",
+        "array_hash": "sha256:a46904c6587d2738292abd668045fed4ba31d8384613e6bfd356a15f51af90dc"
+      },
+      "brain_mask": {
+        "shape": [
+          256,
+          256,
+          150
+        ],
+        "dtype": "|b1",
+        "array_hash": "sha256:143360451b16afd3db7c8023a96c53064ad68ad3cfa4486bf95c5bb7ea28ceac"
+      }
+    },
+    "source_compartments_exact_and_empty": true,
+    "originals": [
+      {
+        "name": "IXI265-T1.nii.gz",
+        "role": "imaging",
+        "sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+        "bytes": 6980629
+      },
+      {
+        "name": "IXI265-MRA.nii.gz",
+        "role": "imaging",
+        "sha256": "a87b381b882242b7d61a1930a8332d44200fdb3c56c68fc09c24a057eea86dc4",
+        "bytes": 14307469
+      },
+      {
+        "name": "IXI265-derived_vessel_label.nii.gz",
+        "role": "annotation",
+        "sha256": "9da13c332156c71a5200dbf88368bb87478914fe73034a42ca4eabf1dd5cdbfe",
+        "bytes": 109932
+      },
+      {
+        "name": "brain_mask.nii.gz",
+        "role": "model-result",
+        "sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+        "bytes": 129560
+      },
+      {
+        "name": "inference.json",
+        "role": "metadata",
+        "sha256": "0045ef08168b9347f62ebca8ced2d08a65b325146c9a0a77bfc18b555d20cd91",
+        "bytes": 5703
+      },
+      {
+        "name": "source-receipt.json",
+        "role": "metadata",
+        "sha256": "2f4f6507f56e6592f851ddc9c4520d217f9e85fd649c45025f4d0e079559eac6",
+        "bytes": 8194
+      },
+      {
+        "name": "registration.json",
+        "role": "metadata",
+        "sha256": "30d79cf98d10386fad2af8eafaaf6a754661f0b98a1a8d3cb7ab23f8b6073b1b",
+        "bytes": 11376
+      },
+      {
+        "name": "source_vessels_on_T1_candidate.nii.gz",
+        "role": "annotation",
+        "sha256": "b1aac5b57af64b71c4694876302a8f4cc84f96b9f35ecc60a2266dc204ba1c71",
+        "bytes": 65160
+      },
+      {
+        "name": "MRA_to_T1_points.tfm",
+        "role": "metadata",
+        "sha256": "404c1b6325bf67eb4dcba2c55625af2329b6f16f8a661d11340f213a4a5eae83",
+        "bytes": 484
+      },
+      {
+        "name": "T1_to_MRA_sampling.tfm",
+        "role": "metadata",
+        "sha256": "5ac523e6fae83057fd55c75cffac7c3ef89561ce5a3208f0a56ff2d1f742ef0b",
+        "bytes": 347
+      },
+      {
+        "name": "MRA_coverage_on_T1_before.nii.gz",
+        "role": "model-result",
+        "sha256": "3c8c4c50ce25c8439f608f42679e3fabd76f0d15df9ca446296dedca2e900b18",
+        "bytes": 89419
+      },
+      {
+        "name": "MRA_coverage_on_T1_candidate.nii.gz",
+        "role": "model-result",
+        "sha256": "e0a18a9d7c18e0be5510b12a89aafd22b4297519577d7e08d5e6a7bb64b8352b",
+        "bytes": 92891
+      },
+      {
+        "name": "MRA_native_sampling_coverage.nii.gz",
+        "role": "model-result",
+        "sha256": "a92bf82175e1208ebef037bf3117fc40f779c4cf5669f70422be7b0015bc863b",
+        "bytes": 169180
+      },
+      {
+        "name": "source-rights-and-head-proofs.json",
+        "role": "metadata",
+        "sha256": "1354808cdee53bbb8681196a22ece34514e1f4a763de58c6b534692a67c4fdee",
+        "bytes": 2541
+      },
+      {
+        "name": "ixi-page.html",
+        "role": "metadata",
+        "sha256": "f80f30853eeeeec6caf90ae4410c712fe447161808c238dea8111396020efe8c",
+        "bytes": 29248
+      },
+      {
+        "name": "zenodo-record.json",
+        "role": "metadata",
+        "sha256": "273b9fcf4b6219d4a77986ef53ccfd7a8b5b0a706aa1477cff414958d8948798",
+        "bytes": 6901
+      }
+    ],
+    "all_16_original_bytes_exact": true,
+    "display_references": [
+      {
+        "modality": "MRA",
+        "scope": "display-only-native-grid",
+        "case_hash": "sha256:e7a463c522abce66428e4771cd2e384be1143fa46bd51aaad8449eb962e3a7d2",
+        "frame_hash": "sha256:caadf2bd319e41e9b4dc77211e60646cc85c73f1ed5c58755905a0c440b437b7",
+        "all_nested_member_bytes_exact": true,
+        "container_bytes_exact": false,
+        "container_note": "ZIP container bytes and series IDs may change on save; every nested member, array and metadata byte remains exact."
+      },
+      {
+        "modality": "T1",
+        "scope": "display-only-native-grid",
+        "case_hash": "sha256:a4c67f16c1f7e41853fefb64346eb61f9acc395b41e5642619f9a9359056f931",
+        "frame_hash": "sha256:2513ca69c435d3fab93f67f69be820d3c69f454489b36d4e68a50dcebe6026db",
+        "all_nested_member_bytes_exact": true,
+        "container_bytes_exact": false,
+        "container_note": "ZIP container bytes and series IDs may change on save; every nested member, array and metadata byte remains exact."
+      }
+    ],
+    "source_metadata_and_references_preserved": true,
+    "inherited_role": "TRAIN",
+    "training_admitted": false,
+    "generated_layer_is_not_observed_anatomy": true,
+    "registration_remains_unreviewed_and_overlay_not_permitted": true
+  },
+  "numerical_and_physical_transfer": {
+    "grid_shape": [
+      55,
+      62,
+      56
+    ],
+    "grid_affine_ras_mm": [
+      [
+        3.0,
+        0.0,
+        0.0,
+        -78.0
+      ],
+      [
+        0.0,
+        3.0,
+        0.0,
+        -99.0
+      ],
+      [
+        0.0,
+        0.0,
+        3.0,
+        -69.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "independent_domain_mapping_exact": true,
+    "independent_physical_seed_exact": true,
+    "independent_uniform_pairwise_flux_replay": true,
+    "steps": 60,
+    "dt_days": 1.0,
+    "final_time_days": 60.0,
+    "maximum_final_concentration_error": 5.551115123125783e-17,
+    "maximum_history_integral_error_mm3": 1.1368683772161603e-13,
+    "independent_maximum_reaction_balance_residual_mm3": 4.796163466380676e-14,
+    "thresholds": [
+      {
+        "threshold": 0.1,
+        "coarse_cells": 33,
+        "coarse_volume_mm3": 891.0
+      },
+      {
+        "threshold": 0.5,
+        "coarse_cells": 0,
+        "coarse_volume_mm3": 0.0
+      }
+    ],
+    "independent_native_transfer_exact": true,
+    "native_target_cells": 841,
+    "native_display_volume_mm3": 886.9917108051667,
+    "outside_brain_display_cells_excluded": 0,
+    "coarse_and_native_volumes_are_distinct_declared_grids": true,
+    "uniform_mode_has_no_GM_WM_or_CSF_barrier_claim": true
+  },
+  "source_frame_hash": "sha256:2513ca69c435d3fab93f67f69be820d3c69f454489b36d4e68a50dcebe6026db",
+  "simulation_id": "sha256:22dbd6072fcc78aa5df89805501f1d40fba19c9514fe7c1644c5a523471d50ad",
+  "fresh_workspace_load_hashes_valid": true,
+  "source_health_evidence_bound_to_exact_archived_page": true,
+  "source_and_output_files_unchanged": true,
+  "frozen_stage3_audit_unchanged": true,
+  "new_model_inference_or_training": false,
+  "production_solver_executed_by_audit": false,
+  "auditor_sha256": "f17803a80c12605a05475c1be3cfd164fe4f67a4975a617ee3a3f1dcce515fc1",
+  "auditor_process_peak_rss_bytes": 788119552,
+  "limitations": [
+    "Uniform parameter fiction: no classified WM/GM or CSF barriers.",
+    "No vascular avoidance, mass effect, functional risk, edema/enhancement or synthetic MRI appearance.",
+    "Native threshold overlay volume differs from coarse-grid scalar-threshold volume by declared sampling.",
+    "Software and source preservation verified; no anatomical or biological validation implied.",
+    "Actual GUI inspection and a later GUI-reviewed save are separate evidence."
+  ]
+}

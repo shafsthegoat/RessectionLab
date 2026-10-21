@@ -1,0 +1,14 @@
+{
+  "generated_metadata_only": true,
+  "impact": "Previously selected qualification disappears silently during current process; fresh restore blocks. Catalog IDs and bundle hash validation are not bypassed.",
+  "observed": {
+    "info_error_present": false,
+    "list_status": "returned",
+    "row_count": 0
+  },
+  "patient_payloads_opened": false,
+  "requested_resolution": "Retain explicit selection directory identity and require pinned catalog presence on live list/resolve, while preserving native Open.",
+  "schema": "local-package-independent-live-library-finding-v1",
+  "source_sha256": "05cd1d8c534efdbf5e50e82da8c4ba5acae21074af4bbf2427afd03064dc9046",
+  "witness": "Select exact copied pinned twelve-person metadata in a new temporary directory, then delete release/catalog/sidecar metadata before list()."
+}

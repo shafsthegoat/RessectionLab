@@ -1,0 +1,442 @@
+{
+  "scope": "Saved command geometry only; exact rational represented-float collinearity; no physics admission/timing or oldaction equivalence.",
+  "nativeSha256": "c09921b16e902cc455bde619ed063284ff55e7b2e509bf3f6d433b5788474bf1",
+  "actions": 2040,
+  "stateId": "sha256:18e2cbb324b4626a0595e1c8ff62204986b312881eb8ec71117311e1d38c3689",
+  "examinedLastActions": 96,
+  "paths": 53,
+  "totalOriginalPoses": 9366,
+  "totalRetainedPosesExactMonotone": 3318,
+  "constantQuaternionPaths": 40,
+  "rows": [
+    {
+      "actionIndex1Based": 1945,
+      "operation": "apply",
+      "originalPoses": 136,
+      "retainedPosesExactMonotone": 136,
+      "constantQuaternion": false,
+      "duration": 0.2720000000000001
+    },
+    {
+      "actionIndex1Based": 1946,
+      "operation": "apply",
+      "originalPoses": 18,
+      "retainedPosesExactMonotone": 16,
+      "constantQuaternion": true,
+      "duration": 0.1
+    },
+    {
+      "actionIndex1Based": 1948,
+      "operation": "withdraw",
+      "originalPoses": 254,
+      "retainedPosesExactMonotone": 186,
+      "constantQuaternion": true,
+      "duration": 4.213715482106247
+    },
+    {
+      "actionIndex1Based": 1952,
+      "operation": "withdraw",
+      "originalPoses": 130,
+      "retainedPosesExactMonotone": 2,
+      "constantQuaternion": true,
+      "duration": 2.15
+    },
+    {
+      "actionIndex1Based": 1955,
+      "operation": "apply",
+      "originalPoses": 217,
+      "retainedPosesExactMonotone": 58,
+      "constantQuaternion": true,
+      "duration": 3.8293398113205654
+    },
+    {
+      "actionIndex1Based": 1956,
+      "operation": "apply",
+      "originalPoses": 217,
+      "retainedPosesExactMonotone": 51,
+      "constantQuaternion": true,
+      "duration": 7.334523183362791
+    },
+    {
+      "actionIndex1Based": 1957,
+      "operation": "apply",
+      "originalPoses": 240,
+      "retainedPosesExactMonotone": 35,
+      "constantQuaternion": true,
+      "duration": 1.2
+    },
+    {
+      "actionIndex1Based": 1958,
+      "operation": "apply",
+      "originalPoses": 27,
+      "retainedPosesExactMonotone": 5,
+      "constantQuaternion": true,
+      "duration": 0.1349999999999966
+    },
+    {
+      "actionIndex1Based": 1959,
+      "operation": "apply",
+      "originalPoses": 213,
+      "retainedPosesExactMonotone": 18,
+      "constantQuaternion": true,
+      "duration": 6.545446597275339
+    },
+    {
+      "actionIndex1Based": 1960,
+      "operation": "apply",
+      "originalPoses": 213,
+      "retainedPosesExactMonotone": 53,
+      "constantQuaternion": true,
+      "duration": 7.549728285602521
+    },
+    {
+      "actionIndex1Based": 1961,
+      "operation": "withdraw",
+      "originalPoses": 229,
+      "retainedPosesExactMonotone": 2,
+      "constantQuaternion": true,
+      "duration": 3.8047947518579606
+    },
+    {
+      "actionIndex1Based": 1966,
+      "operation": "withdraw",
+      "originalPoses": 163,
+      "retainedPosesExactMonotone": 2,
+      "constantQuaternion": true,
+      "duration": 2.6975245121014155
+    },
+    {
+      "actionIndex1Based": 1969,
+      "operation": "apply",
+      "originalPoses": 181,
+      "retainedPosesExactMonotone": 39,
+      "constantQuaternion": true,
+      "duration": 3.2235083983755883
+    },
+    {
+      "actionIndex1Based": 1970,
+      "operation": "apply",
+      "originalPoses": 150,
+      "retainedPosesExactMonotone": 3,
+      "constantQuaternion": true,
+      "duration": 6.333547451343501
+    },
+    {
+      "actionIndex1Based": 1971,
+      "operation": "apply",
+      "originalPoses": 40,
+      "retainedPosesExactMonotone": 2,
+      "constantQuaternion": true,
+      "duration": 0.2
+    },
+    {
+      "actionIndex1Based": 1972,
+      "operation": "apply",
+      "originalPoses": 23,
+      "retainedPosesExactMonotone": 23,
+      "constantQuaternion": false,
+      "duration": 0.1
+    },
+    {
+      "actionIndex1Based": 1973,
+      "operation": "apply",
+      "originalPoses": 39,
+      "retainedPosesExactMonotone": 35,
+      "constantQuaternion": true,
+      "duration": 0.19499999999999798
+    },
+    {
+      "actionIndex1Based": 1975,
+      "operation": "move",
+      "originalPoses": 512,
+      "retainedPosesExactMonotone": 134,
+      "constantQuaternion": false,
+      "duration": 1.1355801116831614
+    },
+    {
+      "actionIndex1Based": 1976,
+      "operation": "withdraw",
+      "originalPoses": 139,
+      "retainedPosesExactMonotone": 2,
+      "constantQuaternion": true,
+      "duration": 2.3115251141552506
+    },
+    {
+      "actionIndex1Based": 1980,
+      "operation": "withdraw",
+      "originalPoses": 163,
+      "retainedPosesExactMonotone": 2,
+      "constantQuaternion": true,
+      "duration": 2.7
+    },
+    {
+      "actionIndex1Based": 1983,
+      "operation": "apply",
+      "originalPoses": 110,
+      "retainedPosesExactMonotone": 15,
+      "constantQuaternion": true,
+      "duration": 3.058743686707645
+    },
+    {
+      "actionIndex1Based": 1984,
+      "operation": "apply",
+      "originalPoses": 240,
+      "retainedPosesExactMonotone": 51,
+      "constantQuaternion": true,
+      "duration": 14.550765564684673
+    },
+    {
+      "actionIndex1Based": 1985,
+      "operation": "apply",
+      "originalPoses": 63,
+      "retainedPosesExactMonotone": 10,
+      "constantQuaternion": true,
+      "duration": 5.684589503715921
+    },
+    {
+      "actionIndex1Based": 1986,
+      "operation": "withdraw",
+      "originalPoses": 169,
+      "retainedPosesExactMonotone": 2,
+      "constantQuaternion": true,
+      "duration": 2.8047947518579606
+    },
+    {
+      "actionIndex1Based": 1992,
+      "operation": "withdraw",
+      "originalPoses": 162,
+      "retainedPosesExactMonotone": 2,
+      "constantQuaternion": true,
+      "duration": 2.667635608543603
+    },
+    {
+      "actionIndex1Based": 1995,
+      "operation": "apply",
+      "originalPoses": 231,
+      "retainedPosesExactMonotone": 57,
+      "constantQuaternion": true,
+      "duration": 3.8674892929702667
+    },
+    {
+      "actionIndex1Based": 1996,
+      "operation": "apply",
+      "originalPoses": 240,
+      "retainedPosesExactMonotone": 59,
+      "constantQuaternion": true,
+      "duration": 1.2
+    },
+    {
+      "actionIndex1Based": 1997,
+      "operation": "apply",
+      "originalPoses": 148,
+      "retainedPosesExactMonotone": 148,
+      "constantQuaternion": false,
+      "duration": 0.29600000000000004
+    },
+    {
+      "actionIndex1Based": 1998,
+      "operation": "apply",
+      "originalPoses": 21,
+      "retainedPosesExactMonotone": 21,
+      "constantQuaternion": true,
+      "duration": 0.10500000000000262
+    },
+    {
+      "actionIndex1Based": 2000,
+      "operation": "move",
+      "originalPoses": 512,
+      "retainedPosesExactMonotone": 472,
+      "constantQuaternion": false,
+      "duration": 0.948965180692071
+    },
+    {
+      "actionIndex1Based": 2001,
+      "operation": "withdraw",
+      "originalPoses": 197,
+      "retainedPosesExactMonotone": 2,
+      "constantQuaternion": true,
+      "duration": 3.2748876448989224
+    },
+    {
+      "actionIndex1Based": 2005,
+      "operation": "withdraw",
+      "originalPoses": 164,
+      "retainedPosesExactMonotone": 2,
+      "constantQuaternion": true,
+      "duration": 2.6770980053740687
+    },
+    {
+      "actionIndex1Based": 2008,
+      "operation": "apply",
+      "originalPoses": 217,
+      "retainedPosesExactMonotone": 50,
+      "constantQuaternion": true,
+      "duration": 3.997126668396119
+    },
+    {
+      "actionIndex1Based": 2009,
+      "operation": "apply",
+      "originalPoses": 240,
+      "retainedPosesExactMonotone": 64,
+      "constantQuaternion": true,
+      "duration": 1.2
+    },
+    {
+      "actionIndex1Based": 2010,
+      "operation": "apply",
+      "originalPoses": 132,
+      "retainedPosesExactMonotone": 132,
+      "constantQuaternion": false,
+      "duration": 0.26400000000000007
+    },
+    {
+      "actionIndex1Based": 2011,
+      "operation": "apply",
+      "originalPoses": 40,
+      "retainedPosesExactMonotone": 40,
+      "constantQuaternion": false,
+      "duration": 0.1
+    },
+    {
+      "actionIndex1Based": 2012,
+      "operation": "apply",
+      "originalPoses": 1,
+      "retainedPosesExactMonotone": 1,
+      "constantQuaternion": true,
+      "duration": 0.1
+    },
+    {
+      "actionIndex1Based": 2014,
+      "operation": "move",
+      "originalPoses": 512,
+      "retainedPosesExactMonotone": 390,
+      "constantQuaternion": false,
+      "duration": 1.0364647837890166
+    },
+    {
+      "actionIndex1Based": 2015,
+      "operation": "withdraw",
+      "originalPoses": 210,
+      "retainedPosesExactMonotone": 2,
+      "constantQuaternion": true,
+      "duration": 3.485098446542389
+    },
+    {
+      "actionIndex1Based": 2019,
+      "operation": "withdraw",
+      "originalPoses": 164,
+      "retainedPosesExactMonotone": 2,
+      "constantQuaternion": true,
+      "duration": 2.692084380151681
+    },
+    {
+      "actionIndex1Based": 2022,
+      "operation": "apply",
+      "originalPoses": 231,
+      "retainedPosesExactMonotone": 59,
+      "constantQuaternion": true,
+      "duration": 4.180765149593871
+    },
+    {
+      "actionIndex1Based": 2023,
+      "operation": "apply",
+      "originalPoses": 217,
+      "retainedPosesExactMonotone": 73,
+      "constantQuaternion": true,
+      "duration": 8.066619774807517
+    },
+    {
+      "actionIndex1Based": 2024,
+      "operation": "apply",
+      "originalPoses": 80,
+      "retainedPosesExactMonotone": 36,
+      "constantQuaternion": true,
+      "duration": 0.4
+    },
+    {
+      "actionIndex1Based": 2025,
+      "operation": "apply",
+      "originalPoses": 40,
+      "retainedPosesExactMonotone": 40,
+      "constantQuaternion": false,
+      "duration": 0.1
+    },
+    {
+      "actionIndex1Based": 2026,
+      "operation": "apply",
+      "originalPoses": 80,
+      "retainedPosesExactMonotone": 80,
+      "constantQuaternion": false,
+      "duration": 0.15999999999999975
+    },
+    {
+      "actionIndex1Based": 2027,
+      "operation": "apply",
+      "originalPoses": 54,
+      "retainedPosesExactMonotone": 54,
+      "constantQuaternion": false,
+      "duration": 0.10799999999999961
+    },
+    {
+      "actionIndex1Based": 2028,
+      "operation": "apply",
+      "originalPoses": 41,
+      "retainedPosesExactMonotone": 41,
+      "constantQuaternion": false,
+      "duration": 0.1
+    },
+    {
+      "actionIndex1Based": 2030,
+      "operation": "move",
+      "originalPoses": 512,
+      "retainedPosesExactMonotone": 435,
+      "constantQuaternion": false,
+      "duration": 0.8447636622178392
+    },
+    {
+      "actionIndex1Based": 2031,
+      "operation": "withdraw",
+      "originalPoses": 228,
+      "retainedPosesExactMonotone": 2,
+      "constantQuaternion": true,
+      "duration": 3.786236667851324
+    },
+    {
+      "actionIndex1Based": 2035,
+      "operation": "withdraw",
+      "originalPoses": 163,
+      "retainedPosesExactMonotone": 2,
+      "constantQuaternion": true,
+      "duration": 2.6975245121017166
+    },
+    {
+      "actionIndex1Based": 2038,
+      "operation": "apply",
+      "originalPoses": 217,
+      "retainedPosesExactMonotone": 47,
+      "constantQuaternion": true,
+      "duration": 4.1187366678513255
+    },
+    {
+      "actionIndex1Based": 2039,
+      "operation": "apply",
+      "originalPoses": 213,
+      "retainedPosesExactMonotone": 57,
+      "constantQuaternion": true,
+      "duration": 8.086477280304512
+    },
+    {
+      "actionIndex1Based": 2040,
+      "operation": "apply",
+      "originalPoses": 213,
+      "retainedPosesExactMonotone": 66,
+      "constantQuaternion": true,
+      "duration": 7.788921543862097
+    }
+  ],
+  "qualifications": [
+    "Retains first/last point, every reversal/zero-length leg and changing quaternion; no initial priorstate required because first point is retained.",
+    "Pose reduction is not substep reduction: engine independently samples coarse segments by space+angle+duration.",
+    "All path-bearing operations counted, not exclusively core proposals; actionhistory lacks director provenance per individual candidate."
+  ]
+}

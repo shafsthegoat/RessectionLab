@@ -1,0 +1,50 @@
+{
+  "utc": "2026-10-20T22:08:07.962284+00:00",
+  "codeCommit": "7cbecb11a11a925bdb25065b414546532cb61da8",
+  "startPosition": 1918,
+  "startStateId": "sha256:8af822a4638d906bce9995aee8f445e27f4278d492b80e7a2df15b6b8f230f54",
+  "sourceUnchanged": true,
+  "savedBoundaryEqualsLive": true,
+  "metadataOnlyConfiguration": true,
+  "patientHistoryAndCodeUnchangedDuringConfiguration": true,
+  "passHash": "sha256:24b100f8c29b22e98a2c4dae1283dfbc8ba8d822f9fcc6bdf219a9330e8f1e29",
+  "archiveHash": "sha256:8f32afabfc98cef09b0af6bd368e9e8080bbede57d48f85347c7d8f99e09e0af",
+  "superiorAccessCount": 99,
+  "restoredCursor": 22,
+  "finishedPrefixUnchanged": true,
+  "freshStableRankingOnlyRemainingTail": true,
+  "leftTrialActionsAndPassMetadataRetained": true,
+  "targetAtDeferMm3": 34262.0,
+  "checkedHistoricalBoundaryPositions": {
+    "requestBoundary": 1608,
+    "deferBoundary": 1631,
+    "stoppedBoundary": 1644
+  },
+  "targetAtResumeMm3": 34695.0,
+  "originalPassBaselineMm3": 0.0,
+  "restoredPassBaselineMm3": 433.0,
+  "baselineCorrectionAppliedOnce": true,
+  "checkpoint": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-superior-resume-1918.ressectionlab",
+  "checkpointSha256": "3cbb4c69e1c2481038d58952b452974728bf5f681f3bf39b964f101eb004ab17",
+  "scope": "Existing reviewed resume API only; no reload, patient replay, source/guard change, or inferred tool arrival.",
+  "firstAdvance": {
+    "called": true,
+    "endPosition": 1930,
+    "newActionCount": 12,
+    "endStateId": "sha256:28e2323114d30168d5c6dc404d09c56def84c85125b1a72cfea514d5fef00410",
+    "statuses": {
+      "accepted": 10,
+      "partial": 2
+    },
+    "directorStatus": "running",
+    "stage": "core",
+    "stopReason": null,
+    "activeWounds": 0,
+    "woundCount": 0,
+    "targetRemovedMm3": 34739.0,
+    "savedSnapshotEqualsLive": true,
+    "continuousRecordedStateChain": true,
+    "sourceUnchanged": true,
+    "qualification": "One new ordinary public slice, or an explicit zero-action stop; no earlier interval repeated."
+  }
+}

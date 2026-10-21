@@ -1,0 +1,78 @@
+{
+  "schema": "patient-anatomy-view-v1",
+  "patientId": "TOPBRAIN-2025-TopCoW-CTA-001",
+  "snapshotId": "692290a77e071d89f4262b1ed56eacf7f1152bbb0c344abe823a1794b5f8b2a2",
+  "seriesId": "cta",
+  "states": {
+    "cta": {
+      "cursor": [
+        2.1902674570889573,
+        36.4742206032847,
+        -131.02036940883585
+      ],
+      "settings": {
+        "layout": "3d-focus",
+        "showPlane": false,
+        "sliceOverlay": "contour",
+        "layerOpacity": {
+          "brain": 0.06,
+          "tumor": 1,
+          "vessels": 1,
+          "bone": 1,
+          "scalp-envelope": 0.02,
+          "__fragment_review": 1,
+          "venous-vessels": 0.65
+        },
+        "volumeRendering": {
+          "enabled": true,
+          "preset": "auto",
+          "density": 0.14,
+          "shadows": true
+        },
+        "presentation": "vascular",
+        "sliceFraming": {
+          "fit": "image",
+          "zoom": 1.25
+        },
+        "contextStyle": "shell",
+        "smoothSurfaces": true,
+        "skullMode": "cutaway",
+        "layerColor": {
+          "vessels": "#ad4730",
+          "venous-vessels": "#6188a8",
+          "bone": "#ece2ca"
+        },
+        "clipping": {
+          "axis": "z",
+          "value": -91.4980102539063,
+          "enabled": true,
+          "flipped": true
+        },
+        "camera": {
+          "position": [
+            -26.152491331100464,
+            -12.775058236497273,
+            238.60495277793177
+          ],
+          "target": [
+            -26.152491331100464,
+            -12.77469778060913,
+            -121.85093542933464
+          ],
+          "up": [
+            0,
+            1,
+            0
+          ]
+        }
+      },
+      "visible": {
+        "vessels": true,
+        "venous-vessels": true,
+        "bone": true
+      }
+    }
+  },
+  "vesselScope": "all",
+  "vesselDisplayVersion": 2
+}

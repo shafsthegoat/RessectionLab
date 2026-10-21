@@ -1,0 +1,93 @@
+{
+  "schema": "resectionlab-ixi265-atropos-official-provenance-v1",
+  "package": "antspyx",
+  "version": "0.6.3",
+  "license": "Apache-2.0",
+  "ANTsPy_commit": "6341c47f07ec063c848afd69e6c5060d77617c41",
+  "ANTsPy_tag": "v0.6.3",
+  "ANTs_commit_declared_by_pinned_build_script": "b53aad349e6767de8e1d99a392f05a82b1bf2373",
+  "source_read_scope": "Official documentation/source/license inspected as text only; no source tree, wheel, model, or image downloaded",
+  "documents": [
+    {
+      "kind": "documentation",
+      "url": "https://antspyx.readthedocs.io/en/latest/segmentation.html",
+      "content_digest": null,
+      "inspection": "Read through browser search tool; direct HTTP 403. Exact executable API source separately pinned below."
+    },
+    {
+      "kind": "documentation",
+      "url": "https://antspyx.readthedocs.io/en/latest/_modules/ants/segmentation/atropos.html",
+      "content_digest": null,
+      "inspection": "Read through browser search tool; direct HTTP 403. Exact executable API source separately pinned below."
+    },
+    {
+      "kind": "documentation",
+      "url": "https://antspyx.readthedocs.io/en/latest/_modules/ants/ops/bias_correction.html",
+      "content_digest": null,
+      "inspection": "Read through browser search tool; direct HTTP 403. Exact executable API source separately pinned below."
+    },
+    {
+      "kind": "pinned_source",
+      "url": "https://raw.githubusercontent.com/ANTsX/ANTsPy/6341c47f07ec063c848afd69e6c5060d77617c41/ants/segmentation/atropos.py",
+      "sha256": "bc0f65e59d04ef2fb25171338d467a2155ab17abf643d0d7040671d36eeea4ad",
+      "bytes": 5429,
+      "installed_package_path": "ants/segmentation/atropos.py"
+    },
+    {
+      "kind": "pinned_source",
+      "url": "https://raw.githubusercontent.com/ANTsX/ANTsPy/6341c47f07ec063c848afd69e6c5060d77617c41/ants/ops/bias_correction.py",
+      "sha256": "bb435f036db5e3a4211c982658a1565ac3e2d51870a3bfe7fb99acc3778556e6",
+      "bytes": 10104,
+      "installed_package_path": "ants/ops/bias_correction.py"
+    },
+    {
+      "kind": "pinned_source",
+      "url": "https://raw.githubusercontent.com/ANTsX/ANTsPy/6341c47f07ec063c848afd69e6c5060d77617c41/ants/core/ants_image_io.py",
+      "sha256": "dc4f25ae3eb1c8426eb10912d47850da6456454f9ab29f6efb205f2d7ed29e15",
+      "bytes": 16636,
+      "installed_package_path": "ants/core/ants_image_io.py"
+    },
+    {
+      "kind": "pinned_source",
+      "url": "https://raw.githubusercontent.com/ANTsX/ANTsPy/6341c47f07ec063c848afd69e6c5060d77617c41/scripts/configure_ANTs.sh",
+      "sha256": "835b51ebd3d6aa445d865d18204165146ac0e3009fd00b4fd0089747ff118786",
+      "bytes": 1514,
+      "installed_package_path": null
+    },
+    {
+      "kind": "pinned_source",
+      "url": "https://raw.githubusercontent.com/ANTsX/ANTsPy/6341c47f07ec063c848afd69e6c5060d77617c41/pyproject.toml",
+      "sha256": "e6b32fe347a18ae93e0226ac0f914e3099d84921c8ee0fecdfc9247f28384f28",
+      "bytes": 1250,
+      "installed_package_path": null
+    },
+    {
+      "kind": "pinned_source",
+      "url": "https://raw.githubusercontent.com/ANTsX/ANTsPy/6341c47f07ec063c848afd69e6c5060d77617c41/LICENSE",
+      "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+      "bytes": 11357,
+      "installed_package_path": null
+    },
+    {
+      "kind": "pinned_ANTs_source",
+      "url": "https://raw.githubusercontent.com/ANTsX/ANTs/b53aad349e6767de8e1d99a392f05a82b1bf2373/Examples/Atropos.cxx",
+      "sha256": "7e0800b931e986616c022e9c815aca4e5feb228b3765017d115b9ff45c3523fe",
+      "bytes": 73335,
+      "installed_package_path": null
+    }
+  ],
+  "Atropos_contract": {
+    "class_order": "first_image_intensity_ascending_when_no_priors",
+    "outputs": [
+      "segmentation",
+      "probabilityimages"
+    ],
+    "posterior_PVE_claim": false,
+    "use_random_seed": "r=0 invokes upstream fixed seed 19650218; two-thread bitwise repeatability unclaimed"
+  },
+  "N4_contract": {
+    "explicit_mask": true,
+    "rescale_intensities": false,
+    "native_grid_output": true
+  }
+}

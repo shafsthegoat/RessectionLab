@@ -1,0 +1,216 @@
+{
+  "worker_pid": 21709,
+  "stages": [
+    {
+      "name": "N4_start",
+      "details": {
+        "mask_boundary": {
+          "native_pixeltype": "float",
+          "numpy_dtype": "float32",
+          "binary_values_exact": true,
+          "support_voxels": 33552,
+          "support_unchanged": true,
+          "frame": {
+            "candidate_affine_ras_mm": [
+              [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "source_affine_ras_mm": [
+              [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "affine_max_abs_difference": 0.0,
+            "eight_cell_corner_errors_mm": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "output_saved_with_original_affine": true,
+            "array_permutation_or_resampling": false
+          }
+        },
+        "parameters": {
+          "shrink_factor": 4,
+          "convergence": {
+            "iters": [
+              30,
+              20,
+              10
+            ],
+            "tol": 1e-07
+          },
+          "spline_param": 150,
+          "rescale_intensities": false,
+          "return_bias_field": false,
+          "verbose": true
+        }
+      }
+    },
+    {
+      "name": "N4_complete",
+      "details": {
+        "frame": {
+          "candidate_affine_ras_mm": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "source_affine_ras_mm": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "affine_max_abs_difference": 0.0,
+          "eight_cell_corner_errors_mm": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "output_saved_with_original_affine": true,
+          "array_permutation_or_resampling": false
+        }
+      }
+    },
+    {
+      "name": "Atropos_start",
+      "details": {
+        "parameters": {
+          "i": "KMeans[3]",
+          "m": "[0.1,1x1x1]",
+          "c": "[10,0]",
+          "priorweight": 0.0,
+          "r": 0,
+          "v": 1
+        }
+      }
+    },
+    {
+      "name": "Atropos_complete",
+      "details": {
+        "classes": {
+          "classes": [
+            {
+              "class": 1,
+              "voxels": 19224,
+              "corrected_intensity_mean": 49.1870231628418,
+              "declared_assumption": "csf_like_intensity_estimated",
+              "anatomical_acceptance": false
+            },
+            {
+              "class": 2,
+              "voxels": 11216,
+              "corrected_intensity_mean": 103.89188385009766,
+              "declared_assumption": "gray_matter_like_intensity_estimated",
+              "anatomical_acceptance": false
+            },
+            {
+              "class": 3,
+              "voxels": 3112,
+              "corrected_intensity_mean": 170.3937225341797,
+              "declared_assumption": "white_matter_like_intensity_estimated",
+              "anatomical_acceptance": false
+            }
+          ],
+          "posterior_sum_max_abs_error": 3.036691431645977e-08,
+          "probabilities_modified": false
+        }
+      }
+    }
+  ]
+}

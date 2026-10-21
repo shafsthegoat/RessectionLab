@@ -1,0 +1,41 @@
+{
+  "schema": "resectionlab.final-budget-limited-artifact-freeze.v1",
+  "frozenUtc": "2026-10-21T00:56:33.884732+00:00",
+  "commit": "4087a8fa48f68712cb6acf8883a9ea38d4dbda50",
+  "implementationFingerprint": "c9f569bb96ade6b23dcedf29223484757151b084be6ebc1c205cc975a5e74fe0",
+  "native": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab",
+  "nativeSha256": "095659e54f381355e8f5655b6c5907990b2ac4767dc9ce58297e3bc4d6f3268d",
+  "original": "/Users/shaf/coding_projects/RessectionLab/testcases/cases/meningioma-sub-06-standard-v2.ressectionlab",
+  "originalSha256": "ff5a49b8706a8ccda08d8c3e82dad3e079f85dea98cb6bd40783d2262eec9838",
+  "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+  "branches": {
+    "exposure-prefix": {
+      "actions": 42,
+      "stateId": "sha256:6817a85eae927401b66d32eff4627d66c73a37da9fb19b481085c12496c38bd4"
+    },
+    "full-primary": {
+      "actions": 2148,
+      "stateId": "sha256:c97de5651109a57695fc3dd1bd49e504f57e6c0e8b45052d915232df6ba86021"
+    },
+    "full-vascular": {
+      "actions": 73,
+      "stateId": "sha256:af496ffbde3ca2ab71477c9226fe9f846f08171efd308362431414584cd3c87e"
+    },
+    "tapered-frontier-prefix": {
+      "actions": 19,
+      "stateId": "sha256:310c464e860a85ac68721995698e86e655b650d4e626e86e00426501e1083085"
+    }
+  },
+  "commonPrefix": {
+    "branch": "exposure-prefix",
+    "actions": 42,
+    "stateId": "sha256:6817a85eae927401b66d32eff4627d66c73a37da9fb19b481085c12496c38bd4",
+    "exactActionPrefixAndProtectionMatch": true
+  },
+  "primaryEndpointKind": "budget-limited-engineering-rehearsal-with-residual",
+  "ownedInitialTargetMm3": 43573,
+  "fullSourceTumorAnnotationMm3": 45115,
+  "smoothSurfaces": false,
+  "canonicalVerificationPending": true,
+  "actualFinalGuiPlaybackPersistenceAndVideoPending": true
+}

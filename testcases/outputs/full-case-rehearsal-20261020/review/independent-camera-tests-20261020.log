@@ -1,0 +1,170 @@
+TAP version 13
+# (node:76196) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: fusion uses source LPS affine and supplied rotation/translation exactly once
+ok 1 - fusion uses source LPS affine and supplied rotation/translation exactly once
+  ---
+  duration_ms: 419.499625
+  type: 'test'
+  ...
+# Subtest: matching dimensions never authorize unreviewed, wrong-patient or singular fusion
+ok 2 - matching dimensions never authorize unreviewed, wrong-patient or singular fusion
+  ---
+  duration_ms: 0.207042
+  type: 'test'
+  ...
+# Subtest: camera rejects collapsed or collinear views and cutaway stays in physical bounds
+ok 3 - camera rejects collapsed or collinear views and cutaway stays in physical bounds
+  ---
+  duration_ms: 0.201334
+  type: 'test'
+  ...
+# Subtest: real renderer updates source material and all image uniforms without touching source data
+ok 4 - real renderer updates source material and all image uniforms without touching source data
+  ---
+  duration_ms: 1.397667
+  type: 'test'
+  ...
+# Subtest: real renderer drops old fusion before refusing a stale replacement
+ok 5 - real renderer drops old fusion before refusing a stale replacement
+  ---
+  duration_ms: 0.677
+  type: 'test'
+  ...
+# Subtest: opaque anatomy occludes its own rear triangles and transparency restores without changing masks
+ok 6 - opaque anatomy occludes its own rear triangles and transparency restores without changing masks
+  ---
+  duration_ms: 0.24725
+  type: 'test'
+  ...
+# Subtest: smoothing toggles cached display geometry; cursor picking always uses the exact source surface
+ok 7 - smoothing toggles cached display geometry; cursor picking always uses the exact source surface
+  ---
+  duration_ms: 0.84125
+  type: 'test'
+  ...
+# Subtest: saved camera restoration preserves orbit, target and up and cancels pending fit
+ok 8 - saved camera restoration preserves orbit, target and up and cancels pending fit
+  ---
+  duration_ms: 0.590583
+  type: 'test'
+  ...
+# Subtest: volume framebuffer restores viewport/clear state, bounds workload and retains the immutable source array
+ok 9 - volume framebuffer restores viewport/clear state, bounds workload and retains the immutable source array
+  ---
+  duration_ms: 4.518666
+  type: 'test'
+  ...
+# Subtest: camera-only settings and cloned toolbar choices do not reapply layer materials
+ok 10 - camera-only settings and cloned toolbar choices do not reapply layer materials
+  ---
+  duration_ms: 0.433167
+  type: 'test'
+  ...
+# Subtest: slice contour changes reach every image material and preserve source data and 3D appearance
+ok 11 - slice contour changes reach every image material and preserve source data and 3D appearance
+  ---
+  duration_ms: 0.481041
+  type: 'test'
+  ...
+# Subtest: unchanged cursor/layers/routes avoid redraw, and in-place visibility changes reach all views
+ok 12 - unchanged cursor/layers/routes avoid redraw, and in-place visibility changes reach all views
+  ---
+  duration_ms: 0.331208
+  type: 'test'
+  ...
+# Subtest: persisted camera echoes skip control updates after projection bounds settle
+ok 13 - persisted camera echoes skip control updates after projection bounds settle
+  ---
+  duration_ms: 0.219583
+  type: 'test'
+  ...
+# Subtest: interaction never resizes the shared drawing buffer
+ok 14 - interaction never resizes the shared drawing buffer
+  ---
+  duration_ms: 0.702417
+  type: 'test'
+  ...
+# Subtest: volume shader receives only visible indices, including layers beyond bit 31 and zero/opaque isolation
+ok 15 - volume shader receives only visible indices, including layers beyond bit 31 and zero/opaque isolation
+  ---
+  duration_ms: 1.145625
+  type: 'test'
+  ...
+# Subtest: incremental layer install retains source texture, existing surfaces and camera, and rejects a stale source
+ok 16 - incremental layer install retains source texture, existing surfaces and camera, and rejects a stale source
+  ---
+  duration_ms: 0.709416
+  type: 'test'
+  ...
+# Subtest: shared scalar texture is not disposed by the volume pass
+ok 17 - shared scalar texture is not disposed by the volume pass
+  ---
+  duration_ms: 0.37625
+  type: 'test'
+  ...
+# Subtest: GPU backpressure coalesces input and submits the latest pending frame only after completion
+ok 18 - GPU backpressure coalesces input and submits the latest pending frame only after completion
+  ---
+  duration_ms: 0.341167
+  type: 'test'
+  ...
+# (node:76197) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: saved full episode envelope includes every shaft and tip cap before the first pose
+ok 19 - saved full episode envelope includes every shaft and tip cap before the first pose
+  ---
+  duration_ms: 515.085833
+  type: 'test'
+  ...
+# Subtest: first replay installation fits full episode at narrow and wide pane aspect ratios
+ok 20 - first replay installation fits full episode at narrow and wide pane aspect ratios
+  ---
+  duration_ms: 3.495458
+  type: 'test'
+  ...
+# Subtest: tool switches and frame scrubbing preserve a user orbit; explicit Fit uses the whole episode
+ok 21 - tool switches and frame scrubbing preserve a user orbit; explicit Fit uses the whole episode
+  ---
+  duration_ms: 12.9155
+  type: 'test'
+  ...
+# Subtest: new episode refits once while anatomy mode and replay hide/show do not reset orbit
+ok 22 - new episode refits once while anatomy mode and replay hide/show do not reset orbit
+  ---
+  duration_ms: 1.016209
+  type: 'test'
+  ...
+# Subtest: rotated fractional capsules use both cap radii and reject mixed episode identities
+ok 23 - rotated fractional capsules use both cap radii and reject mixed episode identities
+  ---
+  duration_ms: 0.448583
+  type: 'test'
+  ...
+# Subtest: actual restore-before-update ordering preserves wide camera through implicit Rehearse modes and route refreshes
+ok 24 - actual restore-before-update ordering preserves wide camera through implicit Rehearse modes and route refreshes
+  ---
+  duration_ms: 410.969708
+  type: 'test'
+  ...
+# Subtest: explicit Fit still executes in an unchanged mode and persists its result; later route updates retain it
+ok 25 - explicit Fit still executes in an unchanged mode and persists its result; later route updates retain it
+  ---
+  duration_ms: 1.70375
+  type: 'test'
+  ...
+# Subtest: explicit Instruments Fit encloses complete actual inserted and withdrawn surgical bodies at narrow and wide aspects
+ok 26 - explicit Instruments Fit encloses complete actual inserted and withdrawn surgical bodies at narrow and wide aspects
+  ---
+  duration_ms: 7.443541
+  type: 'test'
+  ...
+1..26
+# tests 26
+# suites 0
+# pass 26
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 933.203625

@@ -1,0 +1,134 @@
+{
+  "schema": "resectionlab.rehearsal-display-merge.v1",
+  "status": "passed",
+  "native": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/final/rehearsal-raw.ressectionlab",
+  "nativeSha256": "c3a9ce09d5d0a239af7fc992cd42d1b1e943d6c2d57ba82badc402bc8de02818",
+  "reference": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/gui/display-reference-after-fullplay-19c770e1.ressectionlab",
+  "referenceSha256": "72f8eb8ef537213686c1d020b6c10d95cf401ca5ad3d4c75e8370b31ea59ab8f",
+  "output": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab",
+  "outputSha256": "095659e54f381355e8f5655b6c5907990b2ac4767dc9ce58297e3bc4d6f3268d",
+  "sourceCaseHash": "sha256:6ca9c1dee58b3635d92d576ad5b355d0a6d500892f30f07968a671b1b67a51ea",
+  "initialSlotsReference": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/gui/display-reference-field.ressectionlab",
+  "initialSlotsReferenceSha256": "3aad5d226bdab2299b60966a9b9d2829bbd56e6e1a260460d3a838a7b544c362",
+  "initialSlotsReferenceBytesPreserved": true,
+  "initialSlotsReferenceBranch": "main",
+  "initialSnapshotStateId": "sha256:b20988bd32d1d21cc3cb040fab208fafc635e99a4663741e97954747cdee8e03",
+  "surgicalToolboxCanonicalJsonSha256": "c4ce16bf97d2e31100ddafdb995404af40378462f01cba37dbfc55563aebc868",
+  "surgicalToolboxEncodedArtifactUnchanged": true,
+  "allOtherArtifactsUnchanged": true,
+  "decodedCaseManifestUnchanged": true,
+  "nonMetadataZipMemberBytesUnchanged": {
+    "arrays.npz": {
+      "bytes": 20292869,
+      "sha256": "684c10ee6afb1936e41ff3d4f2ad107129c8462ea642ff8dc67a5df5e9c81019"
+    }
+  },
+  "displayFieldsMerged": [
+    "primary.cursor",
+    "primary.visibleLayers",
+    "primary.viewer.layerColor",
+    "primary.viewer.layerOpacity",
+    "primary.viewer.smoothSurfaces",
+    "primary.viewer.camera",
+    "artifacts.workspace.cursor",
+    "artifacts.workspace.visibleLayers",
+    "artifacts.workspace.overlayOpacity"
+  ],
+  "otherViewerSettingsPreserved": true,
+  "wideCameraFit": {
+    "sourceGridBoundsRasMm": [
+      [
+        -109.96499633789062,
+        -124.058837890625,
+        -554.75
+      ],
+      [
+        110.03500366210938,
+        95.941162109375,
+        -373.75
+      ]
+    ],
+    "completePaddedBoundsRasMm": [
+      [
+        -222.97766690635842,
+        -222.07150845909274,
+        -636.7626705684678
+      ],
+      [
+        218.04767423057712,
+        136.95383267784274,
+        -212.73732943153226
+      ]
+    ],
+    "fovDegrees": 34.0,
+    "minimumPaneAspectWidthOverHeight": 0.8,
+    "distanceMargin": 1.08,
+    "distanceMm": 1368.8417555238714,
+    "largestOrientationIndependentBodyRadiusMm": 45.512670568467755,
+    "implicitWithdrawBoundsExpanded": 19,
+    "branches": {
+      "exposure-prefix": {
+        "actions": 42,
+        "requestedPosesForBoundsOnly": 38
+      },
+      "full-primary": {
+        "actions": 2148,
+        "requestedPosesForBoundsOnly": 179126
+      },
+      "full-vascular": {
+        "actions": 73,
+        "requestedPosesForBoundsOnly": 182
+      },
+      "tapered-frontier-prefix": {
+        "actions": 19,
+        "requestedPosesForBoundsOnly": 24
+      }
+    },
+    "allBoxCornersInsideBothFovAxes": true,
+    "initialSlots": {
+      "left": {
+        "active": false,
+        "grip": [],
+        "inserted": false,
+        "instrument": "cranial_drill",
+        "parameters": {},
+        "position": [
+          -5.964996337890625,
+          -14.058837890625,
+          -559.25
+        ],
+        "quaternion": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "right": {
+        "active": false,
+        "grip": [],
+        "inserted": false,
+        "instrument": "cusa",
+        "parameters": {},
+        "position": [
+          6.035003662109375,
+          -14.058837890625,
+          -559.25
+        ],
+        "quaternion": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    "requestedPosesMeaning": "Conservative camera bounds only; not actual-motion observations.",
+    "rendererSha256": "5c1f4e891b093bf925fdf113e95d61259677cc41baa8e7ba66c667dbca8dc237",
+    "toolGeometrySha256": "a29189290d75c209d828a80b3d270c36cd63e4bb688d1e624a9eb28a7b1103eb",
+    "catalogSourceSha256": "472ba5c501f337ef7bb857343ed0efef7c7bf25048783a5622adf454473aa75d"
+  },
+  "physicsCalls": 0,
+  "guiVerified": false,
+  "helperSha256": "58c944ecc9d11e0d1d0944171821b33096121347a67cc3229b9b2431fec3723a"
+}

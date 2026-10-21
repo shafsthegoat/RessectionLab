@@ -17,6 +17,11 @@
 .poc-case-card:hover:not(:disabled) {border-color:#429dca;background:#162b3c}
 .poc-case-card strong {font-size:13px;font-weight:550;line-height:1.45}
 .poc-case-card span {font-size:10px;color:var(--muted)}
+.poc-case-card .poc-source-location {color:#b6c9d8;border-top:1px solid #24394c;padding-top:8px;line-height:1.5}
+.poc-source-location small {display:block;color:var(--muted);font-size:9px;margin-top:3px}
+.poc-library-folder {display:flex;flex-direction:column;gap:8px;padding:12px;border:1px solid var(--line);border-radius:6px}
+.poc-library-folder span,.poc-library-folder small {font-size:10px;color:var(--muted);line-height:1.5}
+.poc-library-folder p {margin:0;font-size:11px;overflow-wrap:anywhere;line-height:1.5}
 .poc-scan-selector {display:block;line-height:2;margin-bottom:22px;color:#a9bdd0}
 .poc-data-panel label {display:block;margin:10px 0;color:#a9bdd0;line-height:1.8}
 .poc-data-panel details {border-top:1px solid var(--line);padding:12px 0;line-height:1.6}

@@ -1,0 +1,107 @@
+{
+  "schema": "patient-corpus-twelve-native-ui-v1",
+  "observer": "parent agent via native Electron CUA",
+  "source_checked_rows_observed": 12,
+  "library_rows_observed_including_saved_versions": 24,
+  "saved_versions_counted_as_people": false,
+  "skull_search_source_rows": 3,
+  "new_catalog_case_opened": "SynthRAD2023:1BC077",
+  "catalog_opened_native_case_estimates_ml": {
+    "brain": 1246.3,
+    "skull": 737.3
+  },
+  "separate_T1_MRI_observed_without_CT_masks": true,
+  "fresh_reviewed_CT_view_restore_observed": {
+    "brain_opacity": 0.2,
+    "skull_opacity": 0.44,
+    "structures_only": true,
+    "both_surfaces_finished": true
+  },
+  "canonical_catalog_CT_default_views_observed": {
+    "brain_opacity": 0.18,
+    "skull_opacity": 0.65
+  },
+  "source_arrays_or_originals_modified": false,
+  "new_native_saves": 0,
+  "app_quit_exit_code": 0,
+  "anatomy_or_fusion_accepted": false,
+  "captures": [
+    {
+      "path": "outputs/poc-first-qa/twelve-catalog-ui/01-fresh-ct-ready.ax.txt",
+      "sha256": "aef543f948e1e5c31861342ef6e3385634b98bb19441eb7cc5cab49a04059373",
+      "bytes": 6027
+    },
+    {
+      "path": "outputs/poc-first-qa/twelve-catalog-ui/01-fresh-ct-ready.png",
+      "sha256": "cc0adeb0f48424dd43576d1328530efb2e025455cecd02dd4382d75bc4b19264",
+      "bytes": 586431
+    },
+    {
+      "path": "outputs/poc-first-qa/twelve-catalog-ui/02-skull-three.ax.txt",
+      "sha256": "7ec873ddf0fa1fdd33251334d1bb7031022ed3e1e49634c8cba7a9ef81361bda",
+      "bytes": 5502
+    },
+    {
+      "path": "outputs/poc-first-qa/twelve-catalog-ui/02-skull-three.png",
+      "sha256": "5c35bafb4c8a291f066cccb8068fb89f66c790baebbac2f1cfd2b785079447e9",
+      "bytes": 594676
+    },
+    {
+      "path": "outputs/poc-first-qa/twelve-catalog-ui/03-catalog-ct-open.ax.txt",
+      "sha256": "072a0dfa503cffce6af6da075dc191e7314b66cab5ac50d45e67b55bcba971fc",
+      "bytes": 6028
+    },
+    {
+      "path": "outputs/poc-first-qa/twelve-catalog-ui/03-catalog-ct-open.png",
+      "sha256": "90b1e8119e3363663064ceefcfda7784bcc5f8ebf80e4d80b8055dba6dc92837",
+      "bytes": 490004
+    },
+    {
+      "path": "outputs/poc-first-qa/twelve-catalog-ui/04-catalog-mri-separate.ax.txt",
+      "sha256": "751d2f7056ae6fc5ea7c050bb08ea1c533acefd3ec8bbe8123debef7dcb59c0c",
+      "bytes": 4800
+    },
+    {
+      "path": "outputs/poc-first-qa/twelve-catalog-ui/04-catalog-mri-separate.png",
+      "sha256": "29ff2257653c4172f2126b8e7193ceaa6baa1760f3f454fa28ef2659b1c91269",
+      "bytes": 447037
+    },
+    {
+      "path": "outputs/poc-first-qa/twelve-catalog-ui/05-library-twelve-source-rows.ax.txt",
+      "sha256": "2e04c90dc57461edb0352490bc507d0863cf3bc719a3a266fa794a77c85c1a6e",
+      "bytes": 10467
+    },
+    {
+      "path": "outputs/poc-first-qa/twelve-catalog-ui/05-library-twelve-source-rows.png",
+      "sha256": "a902bbc375ba0ce90d8399f62d7b8203d721d6efdc71968eefe88f7984868191",
+      "bytes": 466900
+    }
+  ],
+  "runtime": [
+    {
+      "path": "desktop/electron/patient-catalog.cjs",
+      "sha256": "4dfc076af9ce4b57a0011486f69f3ba54f41a0a7609a3731c82af713c7d79666",
+      "bytes": 17280
+    },
+    {
+      "path": "desktop/electron/patient-catalog.test.cjs",
+      "sha256": "8c134a2ec9f020f207cbda2c54b9565d9602a8d585cae141be013d19544c5698",
+      "bytes": 21647
+    },
+    {
+      "path": "desktop/electron/fixtures/patient-catalog-existing-twelve-execution-v1.json.gz",
+      "sha256": "516db64997549031b1a8714f7ce65e2b3c9675fff3c3b681443f6cef27bd4f97",
+      "bytes": 24824
+    }
+  ],
+  "host_suite": {
+    "passed": 138,
+    "failed": 0,
+    "log": {
+      "path": "outputs/poc-first-qa/twelve-catalog-host-final.log",
+      "sha256": "ab91c3fcb292d0a265aa2a43fbfe5c7335699758d511f539466fe98f50f6b2f8",
+      "bytes": 12542
+    }
+  },
+  "renderer_source_unchanged_no_rebuild_required": true
+}

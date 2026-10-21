@@ -1,0 +1,26 @@
+{
+  "audit2040NativeSha256": "c09921b16e902cc455bde619ed063284ff55e7b2e509bf3f6d433b5788474bf1",
+  "currentMetadataNativeSha256": "2ec33af3eb44f6c6b56f63b1b83df0cb909b0e29072a2cef3291c7e7c4a58fca",
+  "metadataActions": 2052,
+  "groups": {
+    "core": {
+      "paths": 28,
+      "originalPoses": 3379,
+      "retainedPoses": 1350,
+      "changedPaths": 17
+    },
+    "prepare/access": {
+      "paths": 11,
+      "originalPoses": 3474,
+      "retainedPoses": 1629,
+      "changedPaths": 11
+    },
+    "removal": {
+      "paths": 14,
+      "originalPoses": 2513,
+      "retainedPoses": 339,
+      "changedPaths": 14
+    }
+  },
+  "qualification": "Attribution from current saved director phase ranges for audited indices1945..2040; each action operation/duration/pathlength still matches audit. No physics or engine execution."
+}

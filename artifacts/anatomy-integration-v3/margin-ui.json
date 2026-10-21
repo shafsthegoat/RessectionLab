@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "initial MRI segmentation captures",
+      "passed": true
+    },
+    {
+      "name": "actual UI margin preview commit save and reopen",
+      "passed": true,
+      "evidence": {
+        "preview": "Preview \u00b7 131,348 changed voxelsUndoRedoShow originalRejectAccept correction",
+        "snapshotId": "1acc9117ef034211367af788ad566dc5d240df276b491bc6872a9088cfad5691",
+        "maskSha256": "798562ed5d768627c3f56d84b84910036c8c3fca48b720ac78b897d4d01a5811",
+        "reviewStatus": "edited; anatomical review pending",
+        "expectedMaskMatches": true
+      }
+    }
+  ],
+  "sourceUnchanged": true,
+  "sourceArrayCount": 22,
+  "errors": []
+}

@@ -1,5 +1,260 @@
 # Project status
 
+**Bounded PAT22 TRAIN source recovery, October 19:**
+The [recovery packager](docs/btc-recovery-workspace.md) now reuses the original
+pinned BTC source receipt, exact acquired T1 and fractional tumor annotation.
+An actual cached SynthStrip run supplies a separately labeled unreviewed brain
+estimate. Independent source/native-save checks and actual Electron open/save/
+reopen pass; the full target lies inside the single-component estimate. The
+149 relevant source/workspace tests pass, including nine new output-boundary
+and array-substitution controls. Older structural-evidence suites retain 23
+unchanged lineage-policy failures, reproduced with the pre-change code.
+All local datasets, screenshots and detailed testing records remain under
+ignored `testcases/`; measured recovery growth is below the approved 250 MiB
+exception. No RL fitting occurred. PAT22 remains prospective TRAIN, its old
+scan-only target boundary stays closed, and surgical planning remains refused
+pending a separate observed-domain/post-exposure contract. The historical PPO
+checkpoint is still unavailable; recovering source data does not recreate it.
+
+**Source-bound desktop planning comparison, October 19:**
+The [integrated Research Planning workflow](docs/research-planning.md) now
+forks the actual current instrument state into observation-only greedy and
+pinned seed-17 learned alternatives. Both replay from original source anatomy;
+the source branch stays unchanged and edits fork from checked plan branches.
+Source/guard/checkpoint identity checks, exact decisions and endpoint receipts,
+aligned 3D/MPR replay, and native GUI save/reopen operate in the existing app.
+The first UCSF comparison remains negative: greedy `x+` is rejected with
+SHAFT_COLLISION; the learner chooses STOP. Both add zero target removal, retaining
+the checked setup's 8 mm³ target/16 mm³ healthy removal. Native-only high-water
+exposure measurements are null/unassessed. No optimizer updates or new patient
+acquisition occurred. The admitted TRAIN source files and historical PPO
+checkpoint are absent on this Mac; the full TRAIN/SELECT learning/search goal
+is still open. A separately tested [EDEN intake adapter](docs/eden2020-integration.md)
+requires permission evidence and never grants planning/training admission.
+
+**Integrated instrument rehearsal and bounded RL attempt, October 18:**
+The [reproducible two-case rehearsal](docs/integrated-rehearsal.md) uses the
+existing Electron workbench and shared engine. On acquired sub-06 anatomy,
+drilling persists through exchanges, and a retained one-cell retractor hold
+survives another hand's CUSA removal. Actual desktop preview/commit and native
+save reproduce the independently checked target-57 state. UCSF0004 opens through
+the same API and visibly rejects a new drill approach with bone unavailable.
+Shared protection persists into subsequent desktop actions, branches and reset.
+The earlier empty-hold candidate remains failed and preserved. Paper-inspired
+bimanual telemetry explicitly references Yilmaz et al. (2022); modeled effects
+and unknown measured force/clinical injury remain distinct.
+
+The [one bounded learning result](artifacts/surgical-pilot-v1/RESULT.md) records
+12 parameter-changing updates, three seeds and six exact final replays. The
+learned assessments remove zero additional target, so no checkpoint is promoted.
+The sub-06 script remains stronger; UCSF's scripted arm exceeds its local healthy
+budget and is retained as a failure. Both Frazier probes have zero useful effect,
+so learned two-instrument control remains unproved. Total recorded runner cost
+is 550 transitions/413.638 seconds, including four preparation attempts. Both
+anatomies participate in training and assessment; generalization, calibrated
+physics, neurological risk and clinical utility remain unvalidated.
+
+**Current packaged Mac research preview, October 16:**
+The [local Apple Silicon build](artifacts/poc-first-local-package-build-v1/RESULT.md)
+now operates with the current bundled engine, without the development Python
+launch path. Actual GUI checks cover library selection/cancel/rejection/restart,
+both rehearsal tools and branches, play/pause/scrub, tissue opacity/cutaway and
+separate CT/MRI views. A confirmed full process shutdown restores the library and
+saved MRI selection. The packaged-engine test passes source-array, original-file,
+UNKNOWN-partition and fresh-engine replay checks. Its first JSON-order-only test
+failure and the earlier missing-lock-pin build failure remain preserved. The
+catalog still has 12 source identities; saved copies add no people. This closes
+local packaging/persistence engineering, not anatomy/physics accuracy or public
+distribution. Independent native-save evidence is linked from the build result.
+
+**First executable patient-source rehearsal, October 16:**
+The [actual Electron demonstration and independent audit](artifacts/poc-first-rehearsal-v1/RESULT.md)
+close the narrow software Gates 1–2. Three separate genuine source cases retain
+four real pretrained inference records. Two persistent tools execute a shared
+post-exposure episode; same-state branches, play/pause/scrub, source overlays
+and native save/fresh-process reopen work. All 32 embedded originals and named
+source arrays are preserved. Physics, initial exposure and missing vascular/
+functional evidence remain explicit assumptions or unknowns. Stage 3 now starts
+with resumable qualification of existing eligible bundles and one healthy-source
+MRI/MRA host; population accuracy and publication readiness remain open.
+
+**First source-qualified corpus and numerical growth adapter, October 16:**
+The [nine-person qualification result](artifacts/patient-corpus-first-tranche-v1/RESULT.md)
+adds a resumable searchable catalog and preserves exact source/hash/role records.
+All nine cached receipts are reused on resume. Independent diffusion, physical
+mapping, protected-metadata and cache-invalidation controls pass after retained
+findings were fixed. This adds zero newly acquired people and accepts no anatomy
+as truth. The bounded FK adapter keeps tissue-conditioned growth separate from
+an explicitly homogeneous geometry control. New IXI host and generated-overlay
+integration remain separate from the frozen catalog; anatomical diversity and
+physiological validation are still open.
+
+**IXI same-person source/virtual-overlay integration, October 16:**
+The [new IXI265 demonstration](artifacts/ixi265-virtual-pilot-v1/RESULT.md)
+retains real T1/MRA and fresh SynthStrip/vesselFM estimates, with unreviewed
+alignment and explicit partial coverage. A uniform FK lesion overlay preserves
+the acquired MRI and executes the same two-tool runtime; branches, native saves
+and fresh-process reopen work. Three SynthSeg memory failures remain recorded;
+GM/WM, ventricles, individual host review and tissue-conditioned growth remain
+open. This is one generated lesion on one real host, adding zero patients. The
+original nine-person catalog remains immutable; the separate ten-person release
+below now includes the acquired IXI source candidate.
+
+**Ten-person source catalog in Electron, October 16:**
+The [separate frozen release and app check](artifacts/patient-corpus-ten-person-v1/RESULT.md)
+qualify ten existing named source identities, with no new acquisition or virtual
+people counted. Cases now searches their own names, datasets and listed anatomy;
+catalog opens verify the frozen file checksum. Actual GUI checks find all six BTC
+cases, open BTC05's acquired T1/threshold-derived source annotation, and open IXI's
+native vessel estimate separately from source labels. Independent metadata/reader
+review passes; the 40 historical nine-person files remain unchanged. Seven people
+have brain/tumor presence, one brain/skull and one brain/vessels across separate
+grids. No fused anatomy or anatomical truth is independently accepted. Two further
+frozen TRAIN CT/MR pairs now have the separate integration result below and do
+not change this catalog.
+
+**Two additional acquired CT/MRI cases, October 16:**
+The [fixed SynthRAD B/C integration](artifacts/poc-synthrad-bc-integration-v1/RESULT.md)
+preserves four original scans, runs the unchanged brain/skull model twice and
+passes independent source/mask/native-save checks. Actual fresh-process Electron
+checks restore both cases and their viewing settings, with MRI separate from CT
+estimates. These are two new source/model candidates outside the ten-person
+catalog; anatomy, health status, registration and training remain unaccepted.
+Optional catalog absence now permits ordinary native browsing in clean checkouts;
+present invalid catalog metadata still fails closed. The next tissue candidate
+must retain failed model attempts and distinguish unknown cells from tissue.
+
+**IXI quality checks and tissue-protocol review, October 16:**
+The [independent quality result](artifacts/ixi265-quality-independent-v1/RESULT.md)
+reproduces the fixed vessel set comparison without treating unlabelled reference
+cells as negatives. Incomplete annotation and unresolved checkpoint overlap
+prevent an independent accuracy claim. The first N4/Atropos attempt stopped
+before fitting because of eight zero-intensity cells inside the unchanged brain
+mask; that failure remains recorded. A separately frozen positive-domain
+protocol preserves those cells as UNKNOWN. Its independent prospective review
+passes45 generated/metadata checks. The later
+[one actual v2 attempt](artifacts/poc-ixi265-atropos-positive-domain-run-v2/RESULT.md)
+passes the support guard but crashes at native N4 entry before any tissue result;
+no resource limit fires. Independent failure checking verifies unchanged sources
+and zero successful/accepted results across both N4/Atropos protocols. A
+generated-only mask-type diagnostic is separate. Class probabilities are not
+physical tissue fractions; no host or growth acceptance follows.
+
+**N4 adapter defect isolated on generated data, October 16:**
+The [fixed two-arm diagnostic](artifacts/poc-ants-mask-dtype-generated-v1/RESULT.md)
+shows incorrect native mask interpretation with our unsigned-byte adapter,
+despite successful process exit. A value-identical float32 mask satisfies the
+pinned native contract and completes N4/Atropos on the generated phantom.
+Independent output/source checking passes. A separate typed-mask kernel is
+prepared with explicit boundary checks; its exact native preflight and any
+patient run require separate evidence. The prior patient crash remains failed;
+this experiment does not prove its precise cause or patient tissue accuracy.
+
+**Separate twelve-source qualification, October 16:**
+The [fixed twelve-source recovery](artifacts/patient-corpus-twelve-recovery-v1/RESULT.md)
+qualifies the frozen ten plus the two completed CT/MRI candidates. An initial
+RSS-limited execution remains failed; separate fresh workers complete only its
+two pending cases under the unchanged cap. Final verification reuses all 12
+receipts, with 89 prior files and the initial ten receipts unchanged. Independent
+metadata checking passes. Counts are 66 originals/six portable identities,
+seven brain/tumor, three brain/skull and one brain/vessel presence across grids;
+accepted anatomy/fusion/training stay zero. Source-region diversity and the
+registered vascular target remain open. The actual Electron Cases browser now
+shows all 12 source identities; skull search finds three cases and qualified
+1BC077 opens with MRI separate from CT estimates. Fresh-process review restores
+both completed CT surfaces and prior display settings. All 138 Electron host
+tests pass. The 24 saved versions shown in the library are not 24 people.
+
+**IXI tissue fitting completes, October 16:**
+The [separate typed-mask v3 attempt](artifacts/poc-ixi265-atropos-typed-mask-run-v3/RESULT.md)
+completes N4/Atropos in 19.126 s at 1.53 GiB sampled supervisor/family RSS.
+Independent saved-output checks reproduce all ten outputs, native frames, raw
+posterior arrays and the exact 1,451,501 known/eight UNKNOWN partition. Acquired
+source bytes, original brain mask and all prior failures remain unchanged. This
+is one completed numerical candidate across three real protocol attempts, with
+zero anatomical/host/growth acceptance. Class names remain intensity assumptions,
+and posteriors are not physical tissue fractions. Separate display packaging
+and actual app inspection/save/reopen are the next integration.
+
+**IXI tissue estimates in Electron, October 16:**
+The [separate display integration](artifacts/poc-ixi265-tissue-display-package-v1/RESULT.md)
+preserves acquired T1, primary/planning identities, original brain, 16 archived
+files and two references; it adds a four-layer estimate display and 21 derived/
+provenance files. Independent package and native-save checks pass. Actual native layer/opacity,
+cutaway and original-image switching work; a fresh process restores the reviewed
+save with all surfaces finished. Unknown cells remain explicit; source and model
+layers stay separate. This adds zero patients or anatomy/host/growth acceptance.
+
+**Source-reported tumor sites in Cases, October 16:**
+The [additive BTC evidence and native check](artifacts/btc-six-source-location-evidence-v1/RESULT.md)
+bind six existing TRAIN cases to their dataset rows and primary-paper table.
+Cases searches reported location/side with explicit review-pending labels:
+left frontal finds two, parietal two and right four; an unrelated IXI/frontal
+search finds none. Opening the parietal result loads BTC20's acquired T1 and
+threshold-derived annotation. Canonical catalog IDs and UNKNOWN anatomy fields
+are unchanged. Independent source/table/reader checking passes. This adds zero
+people, inference or anatomical acceptance;
+source reports do not establish mask localization or functional boundaries.
+
+**Exact tissue review required for strict growth inputs, October 16:**
+The [new admission guard](artifacts/virtual-glioma-tissue-review-guard-v1/RESULT.md)
+binds real GM/WM inputs to their exact masks, source/frame, method and UNKNOWN
+coverage. Resampling cannot fill an UNKNOWN cell; categorical interpolation
+weights do not become physical tissue fractions. All 63 focused/regression and
+96 independent checks pass, with existing uniform/generated qualification
+identities preserved. No IXI acceptance or new real-host solve follows. A
+separate IBSR20 comparison prospectus remains blocked at access/terms and
+decoder/adapter preparation; no acquisition or model run occurred.
+
+**Observed ultrasound alignment test prepared, October 16:**
+The [fixed RESECT Case3 protocol](artifacts/resect-case3-image-registration-preparation-v1/RESULT.md)
+qualifies two existing TRAIN ultrasound sources by byte identity and headers.
+One image-only rigid candidate will be compared with identity using the full
+landmark set only after the transform is frozen. Thirty generated tests and
+independent runner/process checks pass, including memory stops and cleanup.
+No acquired arrays, landmark coordinates or actual fit were used in preparation;
+source frame checks do not yet establish anatomical alignment.
+
+**One image-only ultrasound fit frozen, October 16:**
+The [single Case3 fit](artifacts/poc-resect-case3-image-registration-v1/RESULT.md)
+completed in 1.301515 seconds with 1,590,722,560 sampled family RSS bytes;
+neither declared resource stop fired. Matched image NMI rose from 1.069655 to
+1.078429. This is image similarity, not measured landmark accuracy. Independent
+saved-fit checking passes 24 controls; the separate scorer passes 52 generated
+controls. All full-tag coordinates remain unopened at this committed stage.
+Identity, rigid transform, source bytes and scoring rules are fixed before
+the separately released all-point comparison. There is one fit and no retry,
+new patient or anatomical acceptance.
+
+The first scoring invocation subsequently refused the source's optional empty
+MINC labels before computing accuracy. The preserved refusal and
+[v2 format correction](artifacts/resect-case3-registration-evaluation-preparation-v2/diagnosis.json)
+retain all 17 rows, with 64 generated checks and unchanged transforms/statistics.
+Prior tag exposure is explicit; corrected scoring remains separately pending.
+
+**Measured ultrasound result, October 16:**
+The [completed all-point Case3 comparison](artifacts/poc-resect-case3-image-registration-v1/RESULT.md)
+retains all 17 full-tag pairs. Identity RMS is 2.028542 mm; the frozen image-only
+rigid fit is 2.087485 mm, a **+0.058944 mm** primary difference. Image similarity
+improved while sparse landmark alignment worsened. There are no excluded,
+duplicate or out-of-bounds rows. The baseline and negative candidate are both
+preserved; no refit, case substitution or anatomical promotion follows. This is
+one TRAIN person, not population or clinical validation. Case3 landmarks are
+now consumed development evidence, with protected roles unchanged.
+Independent parsing/arithmetic verifies all saved points, predictions, inclusion,
+duplicates and scalars, with source/output pins unchanged. Thirty prospective
+and 18 wrapper controls pass; the negative result is preserved.
+
+**Active steering, October 16 — POC-first surgical rehearsal and patient corpus:**
+The [current gate ledger](docs/poc-first-gate-ledger.md) and
+[patient construction plan](docs/patient-corpus-plan.md) supersede the historical
+learning-first priorities below. Latest `main` includes merged PR #12. Deliver
+one source-bound, two-tool episode in Electron before expanding real cases and
+virtual gliomas; preserve search, patient splits, and the prior negative results.
+The full goal also requires diverse real/virtual cases and an independently
+validated, publishable research product. The anatomy workbench alone does not
+complete that goal.
+
 **Training comparison completed, October 12 — retain search:** [the final checkpoint, learning curves and comparison](artifacts/train045-local-goal-recovery-result-v2/RESULT.md) show that recovered reverse PPO reaches 1,024 decisions and 415 actual Adam updates but still immediately STOPs: local return0, goal not completed. Uniform1024 does the same; retained search succeeds in five actions with return9.811680. Fresh replay, full-tool geometry, separate local reward reconstruction, evaluation isolation and terminal source/lifecycle checks pass. The new checkpoint stays local, SHA `f9dbf0b664fc67ce890e3ddc33f003145f996b2e45a497eb76470535a88aa8b6`. No policy is promoted.
 
 **What the extra experience established:** the recovered branch adds512 decisions and62 updates, with two easier-start successes but none in183 completed full-start episodes;136 of those immediately STOP. All eight rollouts log constant behavior-value estimates despite varying returns. That is a specific next diagnostic, not an established cause: examine allowed input variation, scaling and critic activations before another training sweep. The episode/RNG restart and both earlier failed attempts remain explicit and paid. One reused TRAIN045 and one seed do not establish generalization or clinical benefit; final evaluation remains closed.

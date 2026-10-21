@@ -1,0 +1,2599 @@
+{
+  "schema": "poc-first-sidecar-dependency-recovery-preparation-v1",
+  "created_utc": "2026-10-16T10:15:52.195859+00:00",
+  "status": "complete_actual_frozen_closure_lock_corrected_no_rebuild",
+  "scope": "Read actual failed-build TOCs, installed RECORD/METADATA and notices; one exact lock addition only. No engine or scientific imports, install, dependency update, exclusion/notice guard changes, model/data reads, download or rebuild.",
+  "defects_before": {
+    "missing_pins": [
+      {
+        "name": "psutil",
+        "installed_version": "7.2.2"
+      }
+    ],
+    "version_mismatches": [],
+    "unowned_site_packages": [],
+    "other_unclassified": [],
+    "ambiguous_owners": {},
+    "missing_declared_notices": []
+  },
+  "after": {
+    "included_distribution_count": 30,
+    "included_source_file_count": 5981,
+    "missing_pins": [],
+    "version_mismatches": [],
+    "unowned_site_packages": [],
+    "other_unclassified": [],
+    "ambiguous_owners": {},
+    "missing_declared_notices": [],
+    "distributions_without_any_notice": [],
+    "non_distribution_source_counts": {
+      "stdlib_or_runtime": 281,
+      "captured_project": 165,
+      "generated_build": 7,
+      "unowned_third_party": 0,
+      "other": 0
+    }
+  },
+  "lock_change": {
+    "old_lock": {
+      "path": "artifacts/poc-first-local-package-build-v1/dependency-recovery-preparation/original-requirements-lock.txt",
+      "bytes": 998,
+      "sha256": "836f3d9ada81d5a710e6690f9657ff73e5fa0f12f051d9aa4834e12332d55e5a"
+    },
+    "new_lock": {
+      "path": "requirements-lock.txt",
+      "bytes": 1012,
+      "sha256": "a553f2aaa1948083ea80965d998cdb78cefc49b70e5675567f413bfa9adfb6ed"
+    },
+    "added_line": "psutil==7.2.2",
+    "existing_optional_requirement": "pyproject.toml anatomy extra psutil>=6,<8",
+    "installed_version_unchanged": true
+  },
+  "actual_included_distributions": [
+    {
+      "name": "filelock",
+      "version": "4.0.10",
+      "locked_version": "4.0.10",
+      "included_file_count": 23,
+      "declared_license_expression": "MIT",
+      "declared_license_short": "",
+      "metadata_and_notice_files": [
+        {
+          "record_path": "filelock-4.0.10.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/filelock-4.0.10.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "filelock-4.0.10.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/filelock-4.0.10.dist-info/METADATA",
+          "bytes": 2028,
+          "sha256": "2c579e8e54b946d6186305e5f49bd5d6522b073b1e9da9c0f9f3d12927d58648"
+        },
+        {
+          "record_path": "filelock-4.0.10.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/filelock-4.0.10.dist-info/RECORD",
+          "bytes": 3488,
+          "sha256": "435e2cd56e9727a3586ef16be14cfa89a8a18fa4290ab4854f1f6d9d69232541"
+        },
+        {
+          "record_path": "filelock-4.0.10.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/filelock-4.0.10.dist-info/WHEEL",
+          "bytes": 87,
+          "sha256": "5b77e4a649bbfb07fdbc123967eeecd1e5a478cfaca6eefc23c35e6fdf037848"
+        },
+        {
+          "record_path": "filelock-4.0.10.dist-info/licenses/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/filelock-4.0.10.dist-info/licenses/LICENSE",
+          "bytes": 1088,
+          "sha256": "608c89d5060ae9921adccf3236695bc654a9946e12323ef6c021dfa04e294d48"
+        }
+      ]
+    },
+    {
+      "name": "fsspec",
+      "version": "2026.9.0",
+      "locked_version": "2026.9.0",
+      "included_file_count": 50,
+      "declared_license_expression": "BSD-3-Clause",
+      "declared_license_short": "",
+      "metadata_and_notice_files": [
+        {
+          "record_path": "fsspec-2026.9.0.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/fsspec-2026.9.0.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "fsspec-2026.9.0.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/fsspec-2026.9.0.dist-info/METADATA",
+          "bytes": 10609,
+          "sha256": "68f5a262767510638e9b1933b1493f2baadc9616fe1e696f62aedd59c8c0a37c"
+        },
+        {
+          "record_path": "fsspec-2026.9.0.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/fsspec-2026.9.0.dist-info/RECORD",
+          "bytes": 8457,
+          "sha256": "ad06cc55ee7a2f52c7799fbd41788af9edbc1eba223e1df398998d44874924db"
+        },
+        {
+          "record_path": "fsspec-2026.9.0.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/fsspec-2026.9.0.dist-info/WHEEL",
+          "bytes": 87,
+          "sha256": "4c769fa1bee87cdf8db2e30decc838a99c8769023b2a40fe4257106ad6215cfa"
+        },
+        {
+          "record_path": "fsspec-2026.9.0.dist-info/licenses/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/fsspec-2026.9.0.dist-info/licenses/LICENSE",
+          "bytes": 1513,
+          "sha256": "2dc35496ce53a7307915c008a844aad53e772b49b34cdd00445067691407ec94"
+        }
+      ]
+    },
+    {
+      "name": "h5py",
+      "version": "3.16.0",
+      "locked_version": "3.16.0",
+      "included_file_count": 46,
+      "declared_license_expression": "BSD-3-Clause",
+      "declared_license_short": "",
+      "metadata_and_notice_files": [
+        {
+          "record_path": "h5py-3.16.0.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/h5py-3.16.0.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "h5py-3.16.0.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/h5py-3.16.0.dist-info/METADATA",
+          "bytes": 3007,
+          "sha256": "e461fcf7eb9fee6242205f9225cc178455a0212d1c0cb8f997f7eebf8cd9695e"
+        },
+        {
+          "record_path": "h5py-3.16.0.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/h5py-3.16.0.dist-info/RECORD",
+          "bytes": 12353,
+          "sha256": "00220fa36b979236a209ab6a1a1001847217e143c581b9d92ecb2907673e1260"
+        },
+        {
+          "record_path": "h5py-3.16.0.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/h5py-3.16.0.dist-info/WHEEL",
+          "bytes": 136,
+          "sha256": "42add528a4cf98107b74707ece35534ead705bfa4c4dc4f374e97696858702e5"
+        },
+        {
+          "record_path": "h5py-3.16.0.dist-info/licenses/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/h5py-3.16.0.dist-info/licenses/LICENSE",
+          "bytes": 1520,
+          "sha256": "e574b296655cfb0ca5180ec6eee3c95d122b0906736d3ca7e3ce19e0f297f0c9"
+        },
+        {
+          "record_path": "h5py-3.16.0.dist-info/licenses/licenses/hdf5.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/h5py-3.16.0.dist-info/licenses/licenses/hdf5.txt",
+          "bytes": 3766,
+          "sha256": "2b82fef8ed8a020ba656ce2db2505ed858939cb7c3b6f7df084bd83032d77bc7"
+        },
+        {
+          "record_path": "h5py-3.16.0.dist-info/licenses/licenses/license.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/h5py-3.16.0.dist-info/licenses/licenses/license.txt",
+          "bytes": 1739,
+          "sha256": "facf43e03193cf4cf8d8bcdd67ce04fc61ef6948dd06672a4e5da579e64a3948"
+        },
+        {
+          "record_path": "h5py-3.16.0.dist-info/licenses/licenses/pytables.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/h5py-3.16.0.dist-info/licenses/licenses/pytables.txt",
+          "bytes": 1640,
+          "sha256": "9a2d5d6e815638c6a3c1130f66be7ccff09e84c0e821e573f2add69d44622414"
+        },
+        {
+          "record_path": "h5py-3.16.0.dist-info/licenses/licenses/python.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/h5py-3.16.0.dist-info/licenses/licenses/python.txt",
+          "bytes": 2503,
+          "sha256": "8484e705c99c7f5dbf157723b4e3cd1daff9cfe41c740b572555878f05858984"
+        },
+        {
+          "record_path": "h5py-3.16.0.dist-info/licenses/licenses/stdint.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/h5py-3.16.0.dist-info/licenses/licenses/stdint.txt",
+          "bytes": 1394,
+          "sha256": "1d4c0ba65d4daa23ef8d6c0571ebe96b30abaebda29c26d66ce13540d4f12b28"
+        },
+        {
+          "record_path": "h5py-3.16.0.dist-info/licenses/lzf/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/h5py-3.16.0.dist-info/licenses/lzf/LICENSE.txt",
+          "bytes": 1556,
+          "sha256": "a8f8c54abc00d1acd157401557b3ec6f500ac76a5efd17a0eaa644e2d32e6beb"
+        }
+      ]
+    },
+    {
+      "name": "iniconfig",
+      "version": "2.3.0",
+      "locked_version": "2.3.0",
+      "included_file_count": 3,
+      "declared_license_expression": "MIT",
+      "declared_license_short": "",
+      "metadata_and_notice_files": [
+        {
+          "record_path": "iniconfig-2.3.0.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/iniconfig-2.3.0.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "iniconfig-2.3.0.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/iniconfig-2.3.0.dist-info/METADATA",
+          "bytes": 2526,
+          "sha256": "40d773f84e4e112f495bbf4f1be9cbd2d456c0aeb6ef5311f75d1bf322f2165b"
+        },
+        {
+          "record_path": "iniconfig-2.3.0.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/iniconfig-2.3.0.dist-info/RECORD",
+          "bytes": 1087,
+          "sha256": "35ac7262caa2981ee781f2072c5052a0f729d4a59929e1dcf444b1e4fa3a6036"
+        },
+        {
+          "record_path": "iniconfig-2.3.0.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/iniconfig-2.3.0.dist-info/WHEEL",
+          "bytes": 91,
+          "sha256": "ff309ddcdd65ebd02bc724dbf2bcc4a0ff53a5b61792a44548d383e4ebb19d3b"
+        },
+        {
+          "record_path": "iniconfig-2.3.0.dist-info/licenses/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/iniconfig-2.3.0.dist-info/licenses/LICENSE",
+          "bytes": 1098,
+          "sha256": "3409fa91f7ace557894632676656e32264fe5ef7581535725dc9a23774551bd4"
+        }
+      ]
+    },
+    {
+      "name": "Jinja2",
+      "version": "3.1.6",
+      "locked_version": "3.1.6",
+      "included_file_count": 23,
+      "declared_license_expression": null,
+      "declared_license_short": "",
+      "metadata_and_notice_files": [
+        {
+          "record_path": "jinja2-3.1.6.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/jinja2-3.1.6.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "jinja2-3.1.6.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/jinja2-3.1.6.dist-info/METADATA",
+          "bytes": 2871,
+          "sha256": "68c5548fb67c4132a13898d9b31ec50c6bea2abdd915d921f214355c3a6499c8"
+        },
+        {
+          "record_path": "jinja2-3.1.6.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/jinja2-3.1.6.dist-info/RECORD",
+          "bytes": 3619,
+          "sha256": "1bb3b46d00f55f63d24c3a34a7f955ef6692d4691217a53b15261769607f9f7c"
+        },
+        {
+          "record_path": "jinja2-3.1.6.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/jinja2-3.1.6.dist-info/WHEEL",
+          "bytes": 82,
+          "sha256": "ff6a3334508b59cf776cae1628708ef9e0d410d0e5a3e76073d714deaa2460ee"
+        },
+        {
+          "record_path": "jinja2-3.1.6.dist-info/licenses/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/jinja2-3.1.6.dist-info/licenses/LICENSE.txt",
+          "bytes": 1475,
+          "sha256": "3b49dcee4105eb37bac10faf1be260408fe85d252b8e9df2e0979fc1e094437b"
+        }
+      ]
+    },
+    {
+      "name": "lazy-loader",
+      "version": "0.6",
+      "locked_version": "0.6",
+      "included_file_count": 1,
+      "declared_license_expression": "BSD-3-Clause",
+      "declared_license_short": "",
+      "metadata_and_notice_files": [
+        {
+          "record_path": "lazy_loader-0.6.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/lazy_loader-0.6.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "lazy_loader-0.6.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/lazy_loader-0.6.dist-info/METADATA",
+          "bytes": 5970,
+          "sha256": "9cd369edae6bf499af0c1acee15d0389361036907742690ac504f9b3b84d56b3"
+        },
+        {
+          "record_path": "lazy_loader-0.6.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/lazy_loader-0.6.dist-info/RECORD",
+          "bytes": 637,
+          "sha256": "f80f485b7aa4af81ba9c502482afde3c51708c20017867f81a89fcde0adc9697"
+        },
+        {
+          "record_path": "lazy_loader-0.6.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/lazy_loader-0.6.dist-info/WHEEL",
+          "bytes": 91,
+          "sha256": "61532836a2b3111b7ec23519c09df7c41180c27165fb872a6d8913b566b88ad1"
+        },
+        {
+          "record_path": "lazy_loader-0.6.dist-info/licenses/LICENSE.md",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/lazy_loader-0.6.dist-info/licenses/LICENSE.md",
+          "bytes": 1539,
+          "sha256": "797b6937a4f976836efbbbb3ae333d7866ddc3eb3cb152972b2be348d3529372"
+        }
+      ]
+    },
+    {
+      "name": "markdown-it-py",
+      "version": "4.2.0",
+      "locked_version": "4.2.0",
+      "included_file_count": 62,
+      "declared_license_expression": null,
+      "declared_license_short": "",
+      "metadata_and_notice_files": [
+        {
+          "record_path": "markdown_it_py-4.2.0.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/markdown_it_py-4.2.0.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "markdown_it_py-4.2.0.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/markdown_it_py-4.2.0.dist-info/METADATA",
+          "bytes": 7410,
+          "sha256": "72c36ff516755443b1ecb61e17b2567a990230b49a504b0eb0c42d5f82448a9c"
+        },
+        {
+          "record_path": "markdown_it_py-4.2.0.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/markdown_it_py-4.2.0.dist-info/RECORD",
+          "bytes": 10847,
+          "sha256": "71e22855bfc7cd655ba75017f4cf9b93c8ec1577fadbc3cb1c3791a690657dc2"
+        },
+        {
+          "record_path": "markdown_it_py-4.2.0.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/markdown_it_py-4.2.0.dist-info/WHEEL",
+          "bytes": 82,
+          "sha256": "1b68144734c4b66791f27add5d425f3620775585718a03d0f9b110ba3a4d88db"
+        },
+        {
+          "record_path": "markdown_it_py-4.2.0.dist-info/licenses/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/markdown_it_py-4.2.0.dist-info/licenses/LICENSE",
+          "bytes": 1078,
+          "sha256": "4a2260d6e2cd0f5a151a1e86dbfe7d3ed552b1e2beabf9941c1ba5c49cbce484"
+        },
+        {
+          "record_path": "markdown_it_py-4.2.0.dist-info/licenses/LICENSE.markdown-it",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/markdown_it_py-4.2.0.dist-info/licenses/LICENSE.markdown-it",
+          "bytes": 1073,
+          "sha256": "792c48c5a849a15fdf9e37e8bcf9e6d1dd13b32b46c642a748a0a46a9919d473"
+        }
+      ]
+    },
+    {
+      "name": "MarkupSafe",
+      "version": "3.0.4",
+      "locked_version": "3.0.4",
+      "included_file_count": 9,
+      "declared_license_expression": "BSD-3-Clause",
+      "declared_license_short": "",
+      "metadata_and_notice_files": [
+        {
+          "record_path": "markupsafe-3.0.4.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/markupsafe-3.0.4.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "markupsafe-3.0.4.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/markupsafe-3.0.4.dist-info/METADATA",
+          "bytes": 2690,
+          "sha256": "66767d76388ece15d49d50dafb655891ef5d868715e7128e7f7d737a70b353c4"
+        },
+        {
+          "record_path": "markupsafe-3.0.4.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/markupsafe-3.0.4.dist-info/RECORD",
+          "bytes": 1106,
+          "sha256": "f5e0fefce6a0acf0aea17ca87522c2e697835ae9a1a2bfb40c3e6c2b78550d8f"
+        },
+        {
+          "record_path": "markupsafe-3.0.4.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/markupsafe-3.0.4.dist-info/WHEEL",
+          "bytes": 136,
+          "sha256": "7156dcce88ca058d4e5118bde8900f7f0cacc719d55b67b78cb6de2362e7dbdb"
+        },
+        {
+          "record_path": "markupsafe-3.0.4.dist-info/licenses/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/markupsafe-3.0.4.dist-info/licenses/LICENSE.txt",
+          "bytes": 1475,
+          "sha256": "489a8e1108509ed98a37bb983e11e0f7e1d31f0bd8f99a79c8448e7ff37d07ea"
+        }
+      ]
+    },
+    {
+      "name": "matplotlib",
+      "version": "3.11.2",
+      "locked_version": "3.11.2",
+      "included_file_count": 6,
+      "declared_license_expression": null,
+      "declared_license_short": null,
+      "metadata_and_notice_files": [
+        {
+          "record_path": "matplotlib-3.11.2.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/matplotlib-3.11.2.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "matplotlib-3.11.2.dist-info/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/matplotlib-3.11.2.dist-info/LICENSE",
+          "bytes": 63442,
+          "sha256": "822e8e528147569a41975592aee19c11992ab667ba50451cd929031d5fc74491"
+        },
+        {
+          "record_path": "matplotlib-3.11.2.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/matplotlib-3.11.2.dist-info/METADATA",
+          "bytes": 80264,
+          "sha256": "e5f532226d1025af2dd15ff951df27391f66d46403b8244ea61e6b8eb3e4d806"
+        },
+        {
+          "record_path": "matplotlib-3.11.2.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/matplotlib-3.11.2.dist-info/RECORD",
+          "bytes": 74349,
+          "sha256": "f7841e8a357b95afb5c91052dbe426cf358375b19d0cfed81ba7d5f7b611e49f"
+        },
+        {
+          "record_path": "matplotlib-3.11.2.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/matplotlib-3.11.2.dist-info/WHEEL",
+          "bytes": 122,
+          "sha256": "1a77459ac1909217ac24c074f71779c72d4915ac0a2650d9b7a00c320a89f8fc"
+        },
+        {
+          "record_path": "matplotlib/mpl-data/fonts/ttf/LICENSE_DEJAVU",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/matplotlib/mpl-data/fonts/ttf/LICENSE_DEJAVU",
+          "bytes": 4816,
+          "sha256": "d75938dec098f06f0ac3c00853065d94f020be1c3c62ef1dc2975ba15b4d9b0e"
+        },
+        {
+          "record_path": "matplotlib/mpl-data/fonts/ttf/LICENSE_STIX",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/matplotlib/mpl-data/fonts/ttf/LICENSE_STIX",
+          "bytes": 5476,
+          "sha256": "bab3d31dfef07f483624f2f65f2711e76065b8e7273278b1c071ede1041c9959"
+        }
+      ]
+    },
+    {
+      "name": "mdurl",
+      "version": "0.1.2",
+      "locked_version": "0.1.2",
+      "included_file_count": 6,
+      "declared_license_expression": null,
+      "declared_license_short": "",
+      "metadata_and_notice_files": [
+        {
+          "record_path": "mdurl-0.1.2.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/mdurl-0.1.2.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "mdurl-0.1.2.dist-info/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/mdurl-0.1.2.dist-info/LICENSE",
+          "bytes": 2338,
+          "sha256": "7c605df6e28667a9603118e98274f64a49ce3eed0d26fccce9534a345e0ef955"
+        },
+        {
+          "record_path": "mdurl-0.1.2.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/mdurl-0.1.2.dist-info/METADATA",
+          "bytes": 1638,
+          "sha256": "b53b29d48f499367053fda3c81e7ce27d2558380ebbf83e66023b02eb7ddd25d"
+        },
+        {
+          "record_path": "mdurl-0.1.2.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/mdurl-0.1.2.dist-info/RECORD",
+          "bytes": 1152,
+          "sha256": "a3797f66c73175d124fc5a6bee5088b8da9437dc3a71d54d407cf8812bac0de1"
+        },
+        {
+          "record_path": "mdurl-0.1.2.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/mdurl-0.1.2.dist-info/WHEEL",
+          "bytes": 81,
+          "sha256": "e137ca201ff1bbed386dcda22b3ebfcc5b7e80414410353fdf51c686acce084f"
+        }
+      ]
+    },
+    {
+      "name": "mpmath",
+      "version": "1.3.0",
+      "locked_version": "1.3.0",
+      "included_file_count": 53,
+      "declared_license_expression": null,
+      "declared_license_short": "BSD",
+      "metadata_and_notice_files": [
+        {
+          "record_path": "mpmath-1.3.0.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/mpmath-1.3.0.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "mpmath-1.3.0.dist-info/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/mpmath-1.3.0.dist-info/LICENSE",
+          "bytes": 1537,
+          "sha256": "c26cae81da4508e5e249985777a33821f183223ebb74d7f8cfbf90fe7eef2fb7"
+        },
+        {
+          "record_path": "mpmath-1.3.0.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/mpmath-1.3.0.dist-info/METADATA",
+          "bytes": 8630,
+          "sha256": "44b66ea444b9c0d19ae94815d356bf047ae6b680c19268b5c265687cd6a81406"
+        },
+        {
+          "record_path": "mpmath-1.3.0.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/mpmath-1.3.0.dist-info/RECORD",
+          "bytes": 12686,
+          "sha256": "89869bb99d259b6078aa20ebadb44d921aa20595ffa58ab929e3082d7f3f5529"
+        },
+        {
+          "record_path": "mpmath-1.3.0.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/mpmath-1.3.0.dist-info/WHEEL",
+          "bytes": 92,
+          "sha256": "db07a93359e4e034b8785a58ad6d534ea3dca0635f1e184efe2e66e1c3a299ba"
+        }
+      ]
+    },
+    {
+      "name": "networkx",
+      "version": "3.7",
+      "locked_version": "3.7",
+      "included_file_count": 286,
+      "declared_license_expression": "BSD-3-Clause",
+      "declared_license_short": "",
+      "metadata_and_notice_files": [
+        {
+          "record_path": "networkx-3.7.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/networkx-3.7.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "networkx-3.7.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/networkx-3.7.dist-info/METADATA",
+          "bytes": 6719,
+          "sha256": "ffcf42a343af6ffc54ff9cc4c09cf9638cd73b131370f395abd11b630186c90c"
+        },
+        {
+          "record_path": "networkx-3.7.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/networkx-3.7.dist-info/RECORD",
+          "bytes": 103014,
+          "sha256": "4bb484fd2163c6b74594a75cd0cf0092354e64218ca63b6ac4cab3a51399a22a"
+        },
+        {
+          "record_path": "networkx-3.7.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/networkx-3.7.dist-info/WHEEL",
+          "bytes": 91,
+          "sha256": "61532836a2b3111b7ec23519c09df7c41180c27165fb872a6d8913b566b88ad1"
+        },
+        {
+          "record_path": "networkx-3.7.dist-info/licenses/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/networkx-3.7.dist-info/licenses/LICENSE.txt",
+          "bytes": 1763,
+          "sha256": "6025f323ea29dc2f0ee0abd9523bf910186f55b0e148e6ebf646c55566278e2e"
+        }
+      ]
+    },
+    {
+      "name": "nibabel",
+      "version": "5.4.2",
+      "locked_version": "5.4.2",
+      "included_file_count": 68,
+      "declared_license_expression": "MIT",
+      "declared_license_short": "",
+      "metadata_and_notice_files": [
+        {
+          "record_path": "nibabel-5.4.2.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/nibabel-5.4.2.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "nibabel-5.4.2.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/nibabel-5.4.2.dist-info/METADATA",
+          "bytes": 8894,
+          "sha256": "e8bcd6866685654162151dec044e29c80f9d2ea4ded26eca83f0ef03a9dc4387"
+        },
+        {
+          "record_path": "nibabel-5.4.2.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/nibabel-5.4.2.dist-info/RECORD",
+          "bytes": 45789,
+          "sha256": "1d7e716a6f011d98dc0f2ad82b4b369128660c49d877ef11fbc57c5bdf50ca2b"
+        },
+        {
+          "record_path": "nibabel-5.4.2.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/nibabel-5.4.2.dist-info/WHEEL",
+          "bytes": 87,
+          "sha256": "41c708c5adba6e097513ab8ccb9f1d7865a2fb469e22491a9e01dcc64da459fc"
+        },
+        {
+          "record_path": "nibabel-5.4.2.dist-info/licenses/COPYING",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/nibabel-5.4.2.dist-info/licenses/COPYING",
+          "bytes": 9830,
+          "sha256": "5ab0638392203d737b4d6c70e3920a61888efdee7de84a8374f3626522306dc7"
+        }
+      ]
+    },
+    {
+      "name": "numpy",
+      "version": "2.5.3",
+      "locked_version": "2.5.3",
+      "included_file_count": 176,
+      "declared_license_expression": "BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0",
+      "declared_license_short": "",
+      "metadata_and_notice_files": [
+        {
+          "record_path": "numpy-2.5.3.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy-2.5.3.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "numpy-2.5.3.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy-2.5.3.dist-info/METADATA",
+          "bytes": 6635,
+          "sha256": "451a9b8028000588e66b0b415587b6aef0bbc51a96d8e8a0cba0dc23acf64f99"
+        },
+        {
+          "record_path": "numpy-2.5.3.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy-2.5.3.dist-info/RECORD",
+          "bytes": 111087,
+          "sha256": "1e2882666cfc77bbe9cf49cac36d0bb936ca1707176bc89d2bf2a6d439e16e36"
+        },
+        {
+          "record_path": "numpy-2.5.3.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy-2.5.3.dist-info/WHEEL",
+          "bytes": 122,
+          "sha256": "26726246f91715a154e07973ca8a82029674ee3cba86914a77f2e47c1a566739"
+        },
+        {
+          "record_path": "numpy-2.5.3.dist-info/licenses/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy-2.5.3.dist-info/licenses/LICENSE.txt",
+          "bytes": 46826,
+          "sha256": "649a589ab31076e79e9ce62ba24eae9959598124176640dbc95f87bd10f34fcf"
+        },
+        {
+          "record_path": "numpy-2.5.3.dist-info/licenses/numpy/_core/include/numpy/libdivide/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy-2.5.3.dist-info/licenses/numpy/_core/include/numpy/libdivide/LICENSE.txt",
+          "bytes": 1018,
+          "sha256": "fbc539f47d0cf83bc61378080fb873d5c14630126cacbfe754035c3926daa5ec"
+        },
+        {
+          "record_path": "numpy-2.5.3.dist-info/licenses/numpy/_core/src/common/pythoncapi-compat/COPYING",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy-2.5.3.dist-info/licenses/numpy/_core/src/common/pythoncapi-compat/COPYING",
+          "bytes": 690,
+          "sha256": "3f2c1ffa76383a55ae0aac01c9737cd70050dff63e1f026694fbe9d662573c98"
+        },
+        {
+          "record_path": "numpy-2.5.3.dist-info/licenses/numpy/_core/src/highway/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy-2.5.3.dist-info/licenses/numpy/_core/src/highway/LICENSE",
+          "bytes": 20785,
+          "sha256": "e340270d4f64384569a91d546acb5b094d69ce47f0c015db77abb74dc6f815af"
+        },
+        {
+          "record_path": "numpy-2.5.3.dist-info/licenses/numpy/_core/src/multiarray/dragon4_LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy-2.5.3.dist-info/licenses/numpy/_core/src/multiarray/dragon4_LICENSE.txt",
+          "bytes": 1414,
+          "sha256": "f7b14309e5f54e5022b26448eefd419988ada2aec01d3c1162d84a0ea8f21f2c"
+        },
+        {
+          "record_path": "numpy-2.5.3.dist-info/licenses/numpy/_core/src/npysort/x86-simd-sort/LICENSE.md",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy-2.5.3.dist-info/licenses/numpy/_core/src/npysort/x86-simd-sort/LICENSE.md",
+          "bytes": 1514,
+          "sha256": "211e7d737d6179a08f791ebb0a99897ce7cd2457410c542876d125576edfe910"
+        },
+        {
+          "record_path": "numpy-2.5.3.dist-info/licenses/numpy/_core/src/umath/svml/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy-2.5.3.dist-info/licenses/numpy/_core/src/umath/svml/LICENSE",
+          "bytes": 1543,
+          "sha256": "c17011467b4fe6e20fbfbeda4df09e58c2bca5480a063e55735a4000a379aad9"
+        },
+        {
+          "record_path": "numpy-2.5.3.dist-info/licenses/numpy/fft/pocketfft/LICENSE.md",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy-2.5.3.dist-info/licenses/numpy/fft/pocketfft/LICENSE.md",
+          "bytes": 1498,
+          "sha256": "a85ca13fdf90160b64a0698215868c13b74d835ad0a4e2ba44713b8c5058a056"
+        },
+        {
+          "record_path": "numpy-2.5.3.dist-info/licenses/numpy/linalg/lapack_lite/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy-2.5.3.dist-info/licenses/numpy/linalg/lapack_lite/LICENSE.txt",
+          "bytes": 2266,
+          "sha256": "a14cc25e10d40a3aa705b7de2fb764a6535d8ee9b2db4e1724900585457dfd55"
+        },
+        {
+          "record_path": "numpy-2.5.3.dist-info/licenses/numpy/ma/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy-2.5.3.dist-info/licenses/numpy/ma/LICENSE",
+          "bytes": 1593,
+          "sha256": "05f3b88351988ecfad10abe92c0c50e5875c6452d5009a0084cc291551ffcca6"
+        },
+        {
+          "record_path": "numpy-2.5.3.dist-info/licenses/numpy/random/LICENSE.md",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy-2.5.3.dist-info/licenses/numpy/random/LICENSE.md",
+          "bytes": 3511,
+          "sha256": "103166b62b80443afb9eb3488e052ea06be0cff566b908f199e561fde49af19f"
+        },
+        {
+          "record_path": "numpy-2.5.3.dist-info/licenses/numpy/random/src/distributions/LICENSE.md",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy-2.5.3.dist-info/licenses/numpy/random/src/distributions/LICENSE.md",
+          "bytes": 2745,
+          "sha256": "469778be8f33d54e1bcaab28c281cc472916d2d273f835e55bc487d30503face"
+        },
+        {
+          "record_path": "numpy-2.5.3.dist-info/licenses/numpy/random/src/mt19937/LICENSE.md",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy-2.5.3.dist-info/licenses/numpy/random/src/mt19937/LICENSE.md",
+          "bytes": 2926,
+          "sha256": "0e111337b25494a773106695f0e799f642b8567aaacca4f116a74a8177179156"
+        },
+        {
+          "record_path": "numpy-2.5.3.dist-info/licenses/numpy/random/src/pcg64/LICENSE.md",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy-2.5.3.dist-info/licenses/numpy/random/src/pcg64/LICENSE.md",
+          "bytes": 1154,
+          "sha256": "e7d4f4fb20358f314210a892ae17351e04993813646f697ec387385ca2a36918"
+        },
+        {
+          "record_path": "numpy-2.5.3.dist-info/licenses/numpy/random/src/philox/LICENSE.md",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy-2.5.3.dist-info/licenses/numpy/random/src/philox/LICENSE.md",
+          "bytes": 1509,
+          "sha256": "6f5828a57223d4cc7f8ea505a2623e7b978b242752c1515e355f46ba2cec1800"
+        },
+        {
+          "record_path": "numpy-2.5.3.dist-info/licenses/numpy/random/src/sfc64/LICENSE.md",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy-2.5.3.dist-info/licenses/numpy/random/src/sfc64/LICENSE.md",
+          "bytes": 1226,
+          "sha256": "9d4098846018319cd68e228ee6220361787f73bccbf00237a85e4fc9621b998f"
+        },
+        {
+          "record_path": "numpy-2.5.3.dist-info/licenses/numpy/random/src/splitmix64/LICENSE.md",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy-2.5.3.dist-info/licenses/numpy/random/src/splitmix64/LICENSE.md",
+          "bytes": 332,
+          "sha256": "268b0ca06759d31ea3ca68dd35f20e877916e927b1c2a835e4592a3c4354b1f9"
+        },
+        {
+          "record_path": "numpy/_core/include/numpy/random/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/_core/include/numpy/random/LICENSE.txt",
+          "bytes": 1018,
+          "sha256": "fbc539f47d0cf83bc61378080fb873d5c14630126cacbfe754035c3926daa5ec"
+        },
+        {
+          "record_path": "numpy/ma/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/ma/LICENSE",
+          "bytes": 1593,
+          "sha256": "05f3b88351988ecfad10abe92c0c50e5875c6452d5009a0084cc291551ffcca6"
+        },
+        {
+          "record_path": "numpy/random/LICENSE.md",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/random/LICENSE.md",
+          "bytes": 3511,
+          "sha256": "103166b62b80443afb9eb3488e052ea06be0cff566b908f199e561fde49af19f"
+        }
+      ]
+    },
+    {
+      "name": "packaging",
+      "version": "26.3",
+      "locked_version": "26.3",
+      "included_file_count": 16,
+      "declared_license_expression": "Apache-2.0 OR BSD-2-Clause",
+      "declared_license_short": "",
+      "metadata_and_notice_files": [
+        {
+          "record_path": "packaging-26.3.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/packaging-26.3.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "packaging-26.3.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/packaging-26.3.dist-info/METADATA",
+          "bytes": 3544,
+          "sha256": "70fdb89fc4d4a9a043bf7372b8972bcc883fddff34ab55e9cf80d73875384763"
+        },
+        {
+          "record_path": "packaging-26.3.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/packaging-26.3.dist-info/RECORD",
+          "bytes": 3581,
+          "sha256": "a2cd431afc6ca596c9bf35faf2b902709cad9c48a55d264a71c71e70c6cb2e7a"
+        },
+        {
+          "record_path": "packaging-26.3.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/packaging-26.3.dist-info/WHEEL",
+          "bytes": 82,
+          "sha256": "1b68144734c4b66791f27add5d425f3620775585718a03d0f9b110ba3a4d88db"
+        },
+        {
+          "record_path": "packaging-26.3.dist-info/licenses/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/packaging-26.3.dist-info/licenses/LICENSE",
+          "bytes": 197,
+          "sha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48"
+        },
+        {
+          "record_path": "packaging-26.3.dist-info/licenses/LICENSE.APACHE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/packaging-26.3.dist-info/licenses/LICENSE.APACHE",
+          "bytes": 10174,
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+        },
+        {
+          "record_path": "packaging-26.3.dist-info/licenses/LICENSE.BSD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/packaging-26.3.dist-info/licenses/LICENSE.BSD",
+          "bytes": 1344,
+          "sha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5"
+        }
+      ]
+    },
+    {
+      "name": "pillow",
+      "version": "12.3.0",
+      "locked_version": "12.3.0",
+      "included_file_count": 106,
+      "declared_license_expression": "MIT-CMU",
+      "declared_license_short": "",
+      "metadata_and_notice_files": [
+        {
+          "record_path": "pillow-12.3.0.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/pillow-12.3.0.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "pillow-12.3.0.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/pillow-12.3.0.dist-info/METADATA",
+          "bytes": 9093,
+          "sha256": "8fc07146cab33ef7582361dab6eac596d340b03ec648f18217da7894f73838c8"
+        },
+        {
+          "record_path": "pillow-12.3.0.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/pillow-12.3.0.dist-info/RECORD",
+          "bytes": 15892,
+          "sha256": "4b0ea073323d3ab1f3e956339c85581ed4ecf1fea2f8821a58193dc0f63a6bb3"
+        },
+        {
+          "record_path": "pillow-12.3.0.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/pillow-12.3.0.dist-info/WHEEL",
+          "bytes": 136,
+          "sha256": "70c6dd511e0cb89c0a4e4fdc7254cd728f8e5bab03ad06f067a32548cb65ac8e"
+        },
+        {
+          "record_path": "pillow-12.3.0.dist-info/licenses/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/pillow-12.3.0.dist-info/licenses/LICENSE",
+          "bytes": 70307,
+          "sha256": "dda12a98c1979cf3d94df1cff45d27a4cb3f04a60c76f76902ac54cac03ec0ce"
+        }
+      ]
+    },
+    {
+      "name": "pluggy",
+      "version": "1.6.0",
+      "locked_version": "1.6.0",
+      "included_file_count": 8,
+      "declared_license_expression": null,
+      "declared_license_short": "MIT",
+      "metadata_and_notice_files": [
+        {
+          "record_path": "pluggy-1.6.0.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/pluggy-1.6.0.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "pluggy-1.6.0.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/pluggy-1.6.0.dist-info/METADATA",
+          "bytes": 4811,
+          "sha256": "7438c35ee25a095eb7416f84b461c2d74425c5e734ad54c3912453c65244e01c"
+        },
+        {
+          "record_path": "pluggy-1.6.0.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/pluggy-1.6.0.dist-info/RECORD",
+          "bytes": 1530,
+          "sha256": "6bb7a9d0ece8e716b9b2d61c5656639449d6408e413e5ba2526119bfc4f629f6"
+        },
+        {
+          "record_path": "pluggy-1.6.0.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/pluggy-1.6.0.dist-info/WHEEL",
+          "bytes": 91,
+          "sha256": "370dfa0e3ba1ff9543ba42b41fbf10cce5fefc5404a3a577ee6de7926f7a82d5"
+        },
+        {
+          "record_path": "pluggy-1.6.0.dist-info/licenses/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/pluggy-1.6.0.dist-info/licenses/LICENSE",
+          "bytes": 1110,
+          "sha256": "d6b65e6c213a5d0b577911d34d6e5949b9f59d76c238c5071a2f3fc16cfb2606"
+        }
+      ]
+    },
+    {
+      "name": "psutil",
+      "version": "7.2.2",
+      "locked_version": "7.2.2",
+      "included_file_count": 6,
+      "declared_license_expression": null,
+      "declared_license_short": "BSD-3-Clause",
+      "metadata_and_notice_files": [
+        {
+          "record_path": "psutil-7.2.2.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/psutil-7.2.2.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "psutil-7.2.2.dist-info/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/psutil-7.2.2.dist-info/LICENSE",
+          "bytes": 1548,
+          "sha256": "b89c063b3786e28e0c0a38f1931db61fed35e69dd2a2966fbecffee0f46c8d10"
+        },
+        {
+          "record_path": "psutil-7.2.2.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/psutil-7.2.2.dist-info/METADATA",
+          "bytes": 22187,
+          "sha256": "525f8ba78523cf7bc3759d62a105e7c57fd679ea702402b9449fb0746aa0217f"
+        },
+        {
+          "record_path": "psutil-7.2.2.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/psutil-7.2.2.dist-info/RECORD",
+          "bytes": 1877,
+          "sha256": "bbf09706e72b06979d838dde373278f8903fc3e4b7b08c226ecbc2d7bf3dd442"
+        },
+        {
+          "record_path": "psutil-7.2.2.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/psutil-7.2.2.dist-info/WHEEL",
+          "bytes": 107,
+          "sha256": "51e27ab3fc49cf96c9613fae02157c7539c5fb5cff359293443ce280e85e4bf0"
+        }
+      ]
+    },
+    {
+      "name": "Pygments",
+      "version": "2.21.0",
+      "locked_version": "2.21.0",
+      "included_file_count": 340,
+      "declared_license_expression": "BSD-2-Clause",
+      "declared_license_short": "",
+      "metadata_and_notice_files": [
+        {
+          "record_path": "pygments-2.21.0.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/pygments-2.21.0.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "pygments-2.21.0.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/pygments-2.21.0.dist-info/METADATA",
+          "bytes": 2527,
+          "sha256": "1dde075570136774c706bf0009183a793fe0ee262e4a5590cc6eff8453eedd43"
+        },
+        {
+          "record_path": "pygments-2.21.0.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/pygments-2.21.0.dist-info/RECORD",
+          "bytes": 48122,
+          "sha256": "23f8880a000ad376270bcaa11afe87d5cf18f250b4a2b944d7266da2f494be1c"
+        },
+        {
+          "record_path": "pygments-2.21.0.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/pygments-2.21.0.dist-info/WHEEL",
+          "bytes": 87,
+          "sha256": "ccec20e2307acd7da453dd7437e70c6b08e2bc3ead3bc3445af135da37b56d59"
+        },
+        {
+          "record_path": "pygments-2.21.0.dist-info/licenses/AUTHORS",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/pygments-2.21.0.dist-info/licenses/AUTHORS",
+          "bytes": 11048,
+          "sha256": "71a83872ad82f57be692cf827e048e2cd51d45169cfa1ea3f28706d97a872c0f"
+        },
+        {
+          "record_path": "pygments-2.21.0.dist-info/licenses/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/pygments-2.21.0.dist-info/licenses/LICENSE",
+          "bytes": 1331,
+          "sha256": "a9d66f1d526df02e29dce73436d34e56e8632f46c275bbdffc70569e882f9f17"
+        }
+      ]
+    },
+    {
+      "name": "pyinstaller",
+      "version": "6.22.3",
+      "locked_version": "6.22.3",
+      "included_file_count": 6,
+      "declared_license_expression": null,
+      "declared_license_short": "GPLv2-or-later with a special exception which allows to use PyInstaller to build and distribute non-free programs (including commercial ones)",
+      "metadata_and_notice_files": [
+        {
+          "record_path": "pyinstaller-6.22.3.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/pyinstaller-6.22.3.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "pyinstaller-6.22.3.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/pyinstaller-6.22.3.dist-info/METADATA",
+          "bytes": 8517,
+          "sha256": "2991d3dcd53fe9966b8c16586322a7f9bbc564dd4752c190bd4fe8d6747f7046"
+        },
+        {
+          "record_path": "pyinstaller-6.22.3.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/pyinstaller-6.22.3.dist-info/RECORD",
+          "bytes": 101554,
+          "sha256": "7c2325c1d1af3474c94811cec2257f6179b3cb486d86627fd73ba496109f9010"
+        },
+        {
+          "record_path": "pyinstaller-6.22.3.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/pyinstaller-6.22.3.dist-info/WHEEL",
+          "bytes": 107,
+          "sha256": "c165347b728cbdb659ccd9fe17bef1f716adf5ccca27a3594d95d4b64369233d"
+        },
+        {
+          "record_path": "pyinstaller-6.22.3.dist-info/licenses/COPYING.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/pyinstaller-6.22.3.dist-info/licenses/COPYING.txt",
+          "bytes": 32604,
+          "sha256": "0598064c7d2718e38d7914a7d08343b2fa008e3bea9ebba2aa7a6ffa5900dd64"
+        }
+      ]
+    },
+    {
+      "name": "pytest",
+      "version": "9.1.1",
+      "locked_version": "9.1.1",
+      "included_file_count": 57,
+      "declared_license_expression": "MIT",
+      "declared_license_short": "",
+      "metadata_and_notice_files": [
+        {
+          "record_path": "pytest-9.1.1.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/pytest-9.1.1.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "pytest-9.1.1.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/pytest-9.1.1.dist-info/METADATA",
+          "bytes": 7586,
+          "sha256": "c5d032518012789cabc870d46589aca3aeda36cf9fa4399ee88bda3d10438451"
+        },
+        {
+          "record_path": "pytest-9.1.1.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/pytest-9.1.1.dist-info/RECORD",
+          "bytes": 11638,
+          "sha256": "d17b77f9a1f7d92833d839c0a0f493611181b1d546a2283cd21133a5c728429f"
+        },
+        {
+          "record_path": "pytest-9.1.1.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/pytest-9.1.1.dist-info/WHEEL",
+          "bytes": 91,
+          "sha256": "69e6228a0d35958183cc1812f07c565ce837b95eb51bd8a33acba9fa4f68d6c9"
+        },
+        {
+          "record_path": "pytest-9.1.1.dist-info/licenses/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/pytest-9.1.1.dist-info/licenses/LICENSE",
+          "bytes": 1091,
+          "sha256": "ca836a5f9ecca3b2f350230faa20a48fb8b145653b5568d784862df864706b9b"
+        }
+      ]
+    },
+    {
+      "name": "rich",
+      "version": "15.0.0",
+      "locked_version": "15.0.0",
+      "included_file_count": 91,
+      "declared_license_expression": null,
+      "declared_license_short": "MIT",
+      "metadata_and_notice_files": [
+        {
+          "record_path": "rich-15.0.0.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/rich-15.0.0.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "rich-15.0.0.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/rich-15.0.0.dist-info/METADATA",
+          "bytes": 18445,
+          "sha256": "fad34fc603fac4481bf81f8dd629492fc302c0ec31909c86644751512afb2e3b"
+        },
+        {
+          "record_path": "rich-15.0.0.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/rich-15.0.0.dist-info/RECORD",
+          "bytes": 13122,
+          "sha256": "ee3acd23cbe4ef74867591cee90c13a5f90a59535d839b1cd66d1dd3e6ee50e2"
+        },
+        {
+          "record_path": "rich-15.0.0.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/rich-15.0.0.dist-info/WHEEL",
+          "bytes": 88,
+          "sha256": "909091253fe0d1a75f009cd3c761943264bcd2b4c92151d109f1b40d080bab7a"
+        },
+        {
+          "record_path": "rich-15.0.0.dist-info/licenses/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/rich-15.0.0.dist-info/licenses/LICENSE",
+          "bytes": 1056,
+          "sha256": "deed7c17a4318158190a3ea239cc879a5a50271cebb98ae7025f48fbe58dca15"
+        }
+      ]
+    },
+    {
+      "name": "scikit-image",
+      "version": "0.26.0",
+      "locked_version": "0.26.0",
+      "included_file_count": 195,
+      "declared_license_expression": null,
+      "declared_license_short": null,
+      "metadata_and_notice_files": [
+        {
+          "record_path": "scikit_image-0.26.0.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/scikit_image-0.26.0.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "scikit_image-0.26.0.dist-info/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/scikit_image-0.26.0.dist-info/LICENSE.txt",
+          "bytes": 6435,
+          "sha256": "611d3207504dcb4a808df209d2e7c9b4f2e89fe690f84735c0d548160966b527"
+        },
+        {
+          "record_path": "scikit_image-0.26.0.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/scikit_image-0.26.0.dist-info/METADATA",
+          "bytes": 15171,
+          "sha256": "cf5dcb3e5b9a815b4327c02225afcd85edd56b90fbbddde5be944352a5986571"
+        },
+        {
+          "record_path": "scikit_image-0.26.0.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/scikit_image-0.26.0.dist-info/RECORD",
+          "bytes": 39604,
+          "sha256": "3d7edb40cd873d56ce463f5faafe91fc0b47c59732b1a66da8b1880a48295a6f"
+        },
+        {
+          "record_path": "scikit_image-0.26.0.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/scikit_image-0.26.0.dist-info/WHEEL",
+          "bytes": 122,
+          "sha256": "1a77459ac1909217ac24c074f71779c72d4915ac0a2650d9b7a00c320a89f8fc"
+        }
+      ]
+    },
+    {
+      "name": "scipy",
+      "version": "1.18.1",
+      "locked_version": "1.18.1",
+      "included_file_count": 623,
+      "declared_license_expression": null,
+      "declared_license_short": null,
+      "metadata_and_notice_files": [
+        {
+          "record_path": "scipy-1.18.1.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/scipy-1.18.1.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "scipy-1.18.1.dist-info/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/scipy-1.18.1.dist-info/LICENSE.txt",
+          "bytes": 46848,
+          "sha256": "09a1b9e19573045b0784a181cc4bef677039d4f2111631c747bf72b7f19017d4"
+        },
+        {
+          "record_path": "scipy-1.18.1.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/scipy-1.18.1.dist-info/METADATA",
+          "bytes": 62356,
+          "sha256": "1adfbde8be136cbf348b889c51028e7e1824cdb90d29a26d8e81501948864fae"
+        },
+        {
+          "record_path": "scipy-1.18.1.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/scipy-1.18.1.dist-info/RECORD",
+          "bytes": 199848,
+          "sha256": "c638a1ce10e23254f783dd5cfc8009094769bfcab7856d64f177c98819bbb96a"
+        },
+        {
+          "record_path": "scipy-1.18.1.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/scipy-1.18.1.dist-info/WHEEL",
+          "bytes": 122,
+          "sha256": "26726246f91715a154e07973ca8a82029674ee3cba86914a77f2e47c1a566739"
+        },
+        {
+          "record_path": "scipy/_lib/_uarray/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/scipy/_lib/_uarray/LICENSE",
+          "bytes": 1514,
+          "sha256": "c80c39b5fce06ba4897e14e0b0a88b54458334d951eb1361402ffad2cfb863b4"
+        },
+        {
+          "record_path": "scipy/fft/_duccfft/LICENSE.md",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/scipy/fft/_duccfft/LICENSE.md",
+          "bytes": 1498,
+          "sha256": "c254b2b5fd30ae3c89d36ba061730563b9760fca04f1b746a1b2c3157da2c789"
+        },
+        {
+          "record_path": "scipy/integrate/LICENSE_DOP",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/scipy/integrate/LICENSE_DOP",
+          "bytes": 3572,
+          "sha256": "ed9bf58c6d74d3fad9d92d1d67d9bff8141d8ab60de784516b0711364fd43357"
+        },
+        {
+          "record_path": "scipy/spatial/qhull_src/COPYING_QHULL.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/scipy/spatial/qhull_src/COPYING_QHULL.txt",
+          "bytes": 1720,
+          "sha256": "106d55c931fd6a84822e5345d900273d059f1c27310d02567ccb313c5d18c55d"
+        }
+      ]
+    },
+    {
+      "name": "setuptools",
+      "version": "84.0.0",
+      "locked_version": "84.0.0",
+      "included_file_count": 129,
+      "declared_license_expression": "MIT",
+      "declared_license_short": "",
+      "metadata_and_notice_files": [
+        {
+          "record_path": "setuptools-84.0.0.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools-84.0.0.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "setuptools-84.0.0.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools-84.0.0.dist-info/METADATA",
+          "bytes": 6581,
+          "sha256": "3ef2975718dd31cabdd5829455e9b868ca14dbf79ed8fed2de0af4e87347006e"
+        },
+        {
+          "record_path": "setuptools-84.0.0.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools-84.0.0.dist-info/RECORD",
+          "bytes": 48687,
+          "sha256": "b236c7a32c86e59de7a293a435085617f920e6b5fffa4edbb7ac69c0bdcf9ca5"
+        },
+        {
+          "record_path": "setuptools-84.0.0.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools-84.0.0.dist-info/WHEEL",
+          "bytes": 91,
+          "sha256": "61532836a2b3111b7ec23519c09df7c41180c27165fb872a6d8913b566b88ad1"
+        },
+        {
+          "record_path": "setuptools-84.0.0.dist-info/licenses/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools-84.0.0.dist-info/licenses/LICENSE",
+          "bytes": 1023,
+          "sha256": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741"
+        },
+        {
+          "record_path": "setuptools/_vendor/autocommand-2.2.2.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/autocommand-2.2.2.dist-info/INSTALLER",
+          "bytes": 2,
+          "sha256": "e6184ce10e266134fdcfa401e8f1a95005bcd4f18d16b62b757323e2833fe9a9"
+        },
+        {
+          "record_path": "setuptools/_vendor/autocommand-2.2.2.dist-info/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/autocommand-2.2.2.dist-info/LICENSE",
+          "bytes": 7634,
+          "sha256": "ade78d04982d69972d444a8e14a94f87a2334dd3855cc80348ea8e240aa0df2d"
+        },
+        {
+          "record_path": "setuptools/_vendor/autocommand-2.2.2.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/autocommand-2.2.2.dist-info/METADATA",
+          "bytes": 15006,
+          "sha256": "3800d9b91dceea2065a6ed6279383362e97ac38b8e56b9343f404ee531860099"
+        },
+        {
+          "record_path": "setuptools/_vendor/autocommand-2.2.2.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/autocommand-2.2.2.dist-info/RECORD",
+          "bytes": 1072,
+          "sha256": "2bee6072cbcec6390c57107c8dfcb0422918a98ecdb5a2cc362187f13d42e96f"
+        },
+        {
+          "record_path": "setuptools/_vendor/autocommand-2.2.2.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/autocommand-2.2.2.dist-info/WHEEL",
+          "bytes": 92,
+          "sha256": "db07a93359e4e034b8785a58ad6d534ea3dca0635f1e184efe2e66e1c3a299ba"
+        },
+        {
+          "record_path": "setuptools/_vendor/backports.tarfile-1.2.0.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/backports.tarfile-1.2.0.dist-info/INSTALLER",
+          "bytes": 2,
+          "sha256": "e6184ce10e266134fdcfa401e8f1a95005bcd4f18d16b62b757323e2833fe9a9"
+        },
+        {
+          "record_path": "setuptools/_vendor/backports.tarfile-1.2.0.dist-info/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/backports.tarfile-1.2.0.dist-info/LICENSE",
+          "bytes": 1023,
+          "sha256": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741"
+        },
+        {
+          "record_path": "setuptools/_vendor/backports.tarfile-1.2.0.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/backports.tarfile-1.2.0.dist-info/METADATA",
+          "bytes": 2020,
+          "sha256": "8215c54ead77d9dc5a108a25c6bdc72b5999aa6f62c9499a440359412afa5a51"
+        },
+        {
+          "record_path": "setuptools/_vendor/backports.tarfile-1.2.0.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/backports.tarfile-1.2.0.dist-info/RECORD",
+          "bytes": 1056,
+          "sha256": "0f69db719b54220d6a4adff8bfb04ac98affea3dc8b54054a1a787a17567f4d1"
+        },
+        {
+          "record_path": "setuptools/_vendor/backports.tarfile-1.2.0.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/backports.tarfile-1.2.0.dist-info/WHEEL",
+          "bytes": 92,
+          "sha256": "189eedfe4581172c1b6a02b97a8f48a14c0b5baa3239e4ca990fbd8871553714"
+        },
+        {
+          "record_path": "setuptools/_vendor/importlib_metadata-8.7.1.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/importlib_metadata-8.7.1.dist-info/INSTALLER",
+          "bytes": 2,
+          "sha256": "e6184ce10e266134fdcfa401e8f1a95005bcd4f18d16b62b757323e2833fe9a9"
+        },
+        {
+          "record_path": "setuptools/_vendor/importlib_metadata-8.7.1.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/importlib_metadata-8.7.1.dist-info/METADATA",
+          "bytes": 4670,
+          "sha256": "a3e38b9ee4326289d4864704f30e299ee769e2309ce9f4a75f0de1a50ad0a356"
+        },
+        {
+          "record_path": "setuptools/_vendor/importlib_metadata-8.7.1.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/importlib_metadata-8.7.1.dist-info/RECORD",
+          "bytes": 1868,
+          "sha256": "52a6b8ee0de15cf7fd99625f43b97cd2e3942ac86f16054ea90de48e66f29355"
+        },
+        {
+          "record_path": "setuptools/_vendor/importlib_metadata-8.7.1.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/importlib_metadata-8.7.1.dist-info/WHEEL",
+          "bytes": 91,
+          "sha256": "ff309ddcdd65ebd02bc724dbf2bcc4a0ff53a5b61792a44548d383e4ebb19d3b"
+        },
+        {
+          "record_path": "setuptools/_vendor/importlib_metadata-8.7.1.dist-info/licenses/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/importlib_metadata-8.7.1.dist-info/licenses/LICENSE",
+          "bytes": 10278,
+          "sha256": "458502e12d97bbf64438606a20044aa85eb05fb0a8a807bb35dbec253fd1fc04"
+        },
+        {
+          "record_path": "setuptools/_vendor/jaraco.text-4.0.0.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/jaraco.text-4.0.0.dist-info/INSTALLER",
+          "bytes": 2,
+          "sha256": "e6184ce10e266134fdcfa401e8f1a95005bcd4f18d16b62b757323e2833fe9a9"
+        },
+        {
+          "record_path": "setuptools/_vendor/jaraco.text-4.0.0.dist-info/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/jaraco.text-4.0.0.dist-info/LICENSE",
+          "bytes": 1023,
+          "sha256": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741"
+        },
+        {
+          "record_path": "setuptools/_vendor/jaraco.text-4.0.0.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/jaraco.text-4.0.0.dist-info/METADATA",
+          "bytes": 3731,
+          "sha256": "5c2fd09012c954f139b10624978d5335a654c34014cd06f6f466ca683dbc9c56"
+        },
+        {
+          "record_path": "setuptools/_vendor/jaraco.text-4.0.0.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/jaraco.text-4.0.0.dist-info/RECORD",
+          "bytes": 1157,
+          "sha256": "63b936c308d0fcbe1390e824567cc007536c32a849adb02278e95f1d4c736c31"
+        },
+        {
+          "record_path": "setuptools/_vendor/jaraco.text-4.0.0.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/jaraco.text-4.0.0.dist-info/WHEEL",
+          "bytes": 91,
+          "sha256": "5b287efe76740c9628947367d7f84c6b894ceee0de743fd1195c1b9938f222d9"
+        },
+        {
+          "record_path": "setuptools/_vendor/jaraco_context-6.1.0.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/jaraco_context-6.1.0.dist-info/INSTALLER",
+          "bytes": 2,
+          "sha256": "e6184ce10e266134fdcfa401e8f1a95005bcd4f18d16b62b757323e2833fe9a9"
+        },
+        {
+          "record_path": "setuptools/_vendor/jaraco_context-6.1.0.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/jaraco_context-6.1.0.dist-info/METADATA",
+          "bytes": 4270,
+          "sha256": "0435ebfc52055c5a9974ed20c171b6454383eaf9dbb1508814ba7ad97c59d712"
+        },
+        {
+          "record_path": "setuptools/_vendor/jaraco_context-6.1.0.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/jaraco_context-6.1.0.dist-info/RECORD",
+          "bytes": 777,
+          "sha256": "4599d876ceb42b7eef03aa39e235c4ebeab6aea2409dbe634496852393d1f837"
+        },
+        {
+          "record_path": "setuptools/_vendor/jaraco_context-6.1.0.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/jaraco_context-6.1.0.dist-info/WHEEL",
+          "bytes": 91,
+          "sha256": "ff309ddcdd65ebd02bc724dbf2bcc4a0ff53a5b61792a44548d383e4ebb19d3b"
+        },
+        {
+          "record_path": "setuptools/_vendor/jaraco_context-6.1.0.dist-info/licenses/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/jaraco_context-6.1.0.dist-info/licenses/LICENSE",
+          "bytes": 1076,
+          "sha256": "9755a18519666e5f0f4cae3daad3d7012bcae48a600b31237d75e9fe134e6683"
+        },
+        {
+          "record_path": "setuptools/_vendor/jaraco_functools-4.4.0.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/jaraco_functools-4.4.0.dist-info/INSTALLER",
+          "bytes": 2,
+          "sha256": "e6184ce10e266134fdcfa401e8f1a95005bcd4f18d16b62b757323e2833fe9a9"
+        },
+        {
+          "record_path": "setuptools/_vendor/jaraco_functools-4.4.0.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/jaraco_functools-4.4.0.dist-info/METADATA",
+          "bytes": 2960,
+          "sha256": "2e79da8dc3469924abe3ac8b22a3feb5692a79bf9f47bbc86b6535d618641849"
+        },
+        {
+          "record_path": "setuptools/_vendor/jaraco_functools-4.4.0.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/jaraco_functools-4.4.0.dist-info/RECORD",
+          "bytes": 882,
+          "sha256": "baafd2d6d94c1bde453e4c805ac05511dc53986e0a63b02f674ef0f788bec146"
+        },
+        {
+          "record_path": "setuptools/_vendor/jaraco_functools-4.4.0.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/jaraco_functools-4.4.0.dist-info/WHEEL",
+          "bytes": 91,
+          "sha256": "ff309ddcdd65ebd02bc724dbf2bcc4a0ff53a5b61792a44548d383e4ebb19d3b"
+        },
+        {
+          "record_path": "setuptools/_vendor/jaraco_functools-4.4.0.dist-info/licenses/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/jaraco_functools-4.4.0.dist-info/licenses/LICENSE",
+          "bytes": 1076,
+          "sha256": "5a57cb4db85e2a2dd88c290628908add57e3451449e0a9a71fdfb38776fd759d"
+        },
+        {
+          "record_path": "setuptools/_vendor/more_itertools-10.8.0.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/more_itertools-10.8.0.dist-info/INSTALLER",
+          "bytes": 2,
+          "sha256": "e6184ce10e266134fdcfa401e8f1a95005bcd4f18d16b62b757323e2833fe9a9"
+        },
+        {
+          "record_path": "setuptools/_vendor/more_itertools-10.8.0.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/more_itertools-10.8.0.dist-info/METADATA",
+          "bytes": 39413,
+          "sha256": "6ab3515145abe58b067f087c867631cf4cf5d653fed81b9642ee12086c3904b8"
+        },
+        {
+          "record_path": "setuptools/_vendor/more_itertools-10.8.0.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/more_itertools-10.8.0.dist-info/RECORD",
+          "bytes": 1095,
+          "sha256": "9ed1b134c0aa83722f36e99f3918aa9610ce3a0a514d793bbb74a368d441a01d"
+        },
+        {
+          "record_path": "setuptools/_vendor/more_itertools-10.8.0.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/more_itertools-10.8.0.dist-info/WHEEL",
+          "bytes": 82,
+          "sha256": "1b68144734c4b66791f27add5d425f3620775585718a03d0f9b110ba3a4d88db"
+        },
+        {
+          "record_path": "setuptools/_vendor/more_itertools-10.8.0.dist-info/licenses/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/more_itertools-10.8.0.dist-info/licenses/LICENSE",
+          "bytes": 1053,
+          "sha256": "09f1c8c9e941af3e584d59641ea9b87d83c0cb0fd007eb5ef391a7e2643c1a46"
+        },
+        {
+          "record_path": "setuptools/_vendor/packaging-26.0.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/packaging-26.0.dist-info/INSTALLER",
+          "bytes": 2,
+          "sha256": "e6184ce10e266134fdcfa401e8f1a95005bcd4f18d16b62b757323e2833fe9a9"
+        },
+        {
+          "record_path": "setuptools/_vendor/packaging-26.0.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/packaging-26.0.dist-info/METADATA",
+          "bytes": 3309,
+          "sha256": "3362bb7d6a26da2962ba8daaa4785cd0bacac21aba908a1195cc8f59580a265a"
+        },
+        {
+          "record_path": "setuptools/_vendor/packaging-26.0.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/packaging-26.0.dist-info/RECORD",
+          "bytes": 2113,
+          "sha256": "f50503333aae9517807d2fb4d81fc27cb60aa644666f50176812626d6224ce5d"
+        },
+        {
+          "record_path": "setuptools/_vendor/packaging-26.0.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/packaging-26.0.dist-info/WHEEL",
+          "bytes": 82,
+          "sha256": "1b68144734c4b66791f27add5d425f3620775585718a03d0f9b110ba3a4d88db"
+        },
+        {
+          "record_path": "setuptools/_vendor/packaging-26.0.dist-info/licenses/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/packaging-26.0.dist-info/licenses/LICENSE",
+          "bytes": 197,
+          "sha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48"
+        },
+        {
+          "record_path": "setuptools/_vendor/packaging-26.0.dist-info/licenses/LICENSE.APACHE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/packaging-26.0.dist-info/licenses/LICENSE.APACHE",
+          "bytes": 10174,
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+        },
+        {
+          "record_path": "setuptools/_vendor/packaging-26.0.dist-info/licenses/LICENSE.BSD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/packaging-26.0.dist-info/licenses/LICENSE.BSD",
+          "bytes": 1344,
+          "sha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5"
+        },
+        {
+          "record_path": "setuptools/_vendor/platformdirs-4.4.0.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/platformdirs-4.4.0.dist-info/INSTALLER",
+          "bytes": 2,
+          "sha256": "e6184ce10e266134fdcfa401e8f1a95005bcd4f18d16b62b757323e2833fe9a9"
+        },
+        {
+          "record_path": "setuptools/_vendor/platformdirs-4.4.0.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/platformdirs-4.4.0.dist-info/METADATA",
+          "bytes": 12831,
+          "sha256": "bbc5216d5f4c77bfbc57227264d52e66bccde71ccf79e75e1a6046d029d30223"
+        },
+        {
+          "record_path": "setuptools/_vendor/platformdirs-4.4.0.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/platformdirs-4.4.0.dist-info/RECORD",
+          "bytes": 1218,
+          "sha256": "3d0d2f1cc018593c4d8baa2395baf0b1c1c645bbd8c18cd064f49cb4e4c95ea0"
+        },
+        {
+          "record_path": "setuptools/_vendor/platformdirs-4.4.0.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/platformdirs-4.4.0.dist-info/WHEEL",
+          "bytes": 87,
+          "sha256": "aad0b0a12256807936d52d4a6f88a1773236ae527564a688bab4e3fe780e8724"
+        },
+        {
+          "record_path": "setuptools/_vendor/platformdirs-4.4.0.dist-info/licenses/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/platformdirs-4.4.0.dist-info/licenses/LICENSE",
+          "bytes": 1089,
+          "sha256": "29e0fd62e929850e86eb28c3fdccf0cefdf4fa94879011cffb3d0d4bed6d4db6"
+        },
+        {
+          "record_path": "setuptools/_vendor/tomli-2.4.0.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/tomli-2.4.0.dist-info/INSTALLER",
+          "bytes": 2,
+          "sha256": "e6184ce10e266134fdcfa401e8f1a95005bcd4f18d16b62b757323e2833fe9a9"
+        },
+        {
+          "record_path": "setuptools/_vendor/tomli-2.4.0.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/tomli-2.4.0.dist-info/METADATA",
+          "bytes": 10567,
+          "sha256": "f5ac0a1f8fba908b4646cd655309e91aad969b6787616ac571ca462a3832ffce"
+        },
+        {
+          "record_path": "setuptools/_vendor/tomli-2.4.0.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/tomli-2.4.0.dist-info/RECORD",
+          "bytes": 822,
+          "sha256": "225430ce95640e8d4fcdb93cdae2fc38d685aec016d0e293d5fb99a695886fed"
+        },
+        {
+          "record_path": "setuptools/_vendor/tomli-2.4.0.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/tomli-2.4.0.dist-info/WHEEL",
+          "bytes": 82,
+          "sha256": "1b68144734c4b66791f27add5d425f3620775585718a03d0f9b110ba3a4d88db"
+        },
+        {
+          "record_path": "setuptools/_vendor/tomli-2.4.0.dist-info/licenses/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/tomli-2.4.0.dist-info/licenses/LICENSE",
+          "bytes": 1072,
+          "sha256": "b80816b0d530b8accb4c2211783790984a6e3b61922c2b5ee92f3372ab2742fe"
+        },
+        {
+          "record_path": "setuptools/_vendor/wheel-0.46.3.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/wheel-0.46.3.dist-info/INSTALLER",
+          "bytes": 2,
+          "sha256": "e6184ce10e266134fdcfa401e8f1a95005bcd4f18d16b62b757323e2833fe9a9"
+        },
+        {
+          "record_path": "setuptools/_vendor/wheel-0.46.3.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/wheel-0.46.3.dist-info/METADATA",
+          "bytes": 2410,
+          "sha256": "22910aa97ca89cbcc20a019e27fe31360b7929a4bd66ca0d310f99a44f6ccd35"
+        },
+        {
+          "record_path": "setuptools/_vendor/wheel-0.46.3.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/wheel-0.46.3.dist-info/RECORD",
+          "bytes": 1734,
+          "sha256": "b0297c3ada17b8727e15ddd6d1e38c8a90a997f779fcf978996f6fec62ecb702"
+        },
+        {
+          "record_path": "setuptools/_vendor/wheel-0.46.3.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/wheel-0.46.3.dist-info/WHEEL",
+          "bytes": 82,
+          "sha256": "1b68144734c4b66791f27add5d425f3620775585718a03d0f9b110ba3a4d88db"
+        },
+        {
+          "record_path": "setuptools/_vendor/wheel-0.46.3.dist-info/licenses/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/wheel-0.46.3.dist-info/licenses/LICENSE.txt",
+          "bytes": 1107,
+          "sha256": "30c23618679108f3e8ea1d2a658c7ca417bdfc891c98ef1a89fa4ff0c9828654"
+        },
+        {
+          "record_path": "setuptools/_vendor/zipp-3.23.0.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/zipp-3.23.0.dist-info/INSTALLER",
+          "bytes": 2,
+          "sha256": "e6184ce10e266134fdcfa401e8f1a95005bcd4f18d16b62b757323e2833fe9a9"
+        },
+        {
+          "record_path": "setuptools/_vendor/zipp-3.23.0.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/zipp-3.23.0.dist-info/METADATA",
+          "bytes": 3563,
+          "sha256": "bdd67d4d16cf0bf3b893e7d18cd3d2d774adb82f37ed985bc7770c607226b35b"
+        },
+        {
+          "record_path": "setuptools/_vendor/zipp-3.23.0.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/zipp-3.23.0.dist-info/RECORD",
+          "bytes": 1078,
+          "sha256": "3bfab660a24704f84228e4bb1ce1f0e3fa9ff80e5c806352a626b2f460ead836"
+        },
+        {
+          "record_path": "setuptools/_vendor/zipp-3.23.0.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/zipp-3.23.0.dist-info/WHEEL",
+          "bytes": 91,
+          "sha256": "ff309ddcdd65ebd02bc724dbf2bcc4a0ff53a5b61792a44548d383e4ebb19d3b"
+        },
+        {
+          "record_path": "setuptools/_vendor/zipp-3.23.0.dist-info/licenses/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/_vendor/zipp-3.23.0.dist-info/licenses/LICENSE",
+          "bytes": 1076,
+          "sha256": "5a57cb4db85e2a2dd88c290628908add57e3451449e0a9a71fdfb38776fd759d"
+        },
+        {
+          "record_path": "setuptools/config/NOTICE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/config/NOTICE",
+          "bytes": 493,
+          "sha256": "2dddf08818297a3b89d43d95ff659d8da85741108c9136dfa3a4d856c0623bd8"
+        },
+        {
+          "record_path": "setuptools/config/_validate_pyproject/NOTICE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/setuptools/config/_validate_pyproject/NOTICE",
+          "bytes": 18737,
+          "sha256": "09c9bcea95ca086f8bc5bed174e40bc835b297d40fb5f86bbbb570fe0a5581a7"
+        }
+      ]
+    },
+    {
+      "name": "simpleitk",
+      "version": "2.5.6",
+      "locked_version": "2.5.6",
+      "included_file_count": 5,
+      "declared_license_expression": null,
+      "declared_license_short": "Apache",
+      "metadata_and_notice_files": [
+        {
+          "record_path": "simpleitk-2.5.6.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/simpleitk-2.5.6.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "simpleitk-2.5.6.dist-info/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/simpleitk-2.5.6.dist-info/LICENSE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+        },
+        {
+          "record_path": "simpleitk-2.5.6.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/simpleitk-2.5.6.dist-info/METADATA",
+          "bytes": 7184,
+          "sha256": "1af9c3dda01889a7e21c131c07dc504ab844d3fc2eaf4836bd3af34781c333cc"
+        },
+        {
+          "record_path": "simpleitk-2.5.6.dist-info/NOTICE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/simpleitk-2.5.6.dist-info/NOTICE",
+          "bytes": 174,
+          "sha256": "091f12cdc33b9528a75bdc583040c4a0efe24f42cfe1672475055809a3f763aa"
+        },
+        {
+          "record_path": "simpleitk-2.5.6.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/simpleitk-2.5.6.dist-info/RECORD",
+          "bytes": 1351,
+          "sha256": "2fc9da7cb9fa61ae387872831d1566a7845b9f34c246cf28110900eeede7d207"
+        },
+        {
+          "record_path": "simpleitk-2.5.6.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/simpleitk-2.5.6.dist-info/WHEEL",
+          "bytes": 109,
+          "sha256": "18b5261f6b928fe6ad6f3f4f2de86bffead88386ca54d7e25cd4bb95455d2396"
+        }
+      ]
+    },
+    {
+      "name": "sympy",
+      "version": "1.14.0",
+      "locked_version": "1.14.0",
+      "included_file_count": 573,
+      "declared_license_expression": null,
+      "declared_license_short": "BSD",
+      "metadata_and_notice_files": [
+        {
+          "record_path": "sympy-1.14.0.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/sympy-1.14.0.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "sympy-1.14.0.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/sympy-1.14.0.dist-info/METADATA",
+          "bytes": 12816,
+          "sha256": "b756c2fbfd5be05ac5bdb0ebca61f55618f30f633ed92d88a5687429313a7595"
+        },
+        {
+          "record_path": "sympy-1.14.0.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/sympy-1.14.0.dist-info/RECORD",
+          "bytes": 245586,
+          "sha256": "2ebfffc05e4acfe7506438de3c03cc7f0a59dea7ad9c2fcc44f4951b38719100"
+        },
+        {
+          "record_path": "sympy-1.14.0.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/sympy-1.14.0.dist-info/WHEEL",
+          "bytes": 91,
+          "sha256": "4a63b1614ee9ccd281a804af409ec38d7dd719417dda5ac684c6f747afe28aa2"
+        },
+        {
+          "record_path": "sympy-1.14.0.dist-info/licenses/AUTHORS",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/sympy-1.14.0.dist-info/licenses/AUTHORS",
+          "bytes": 55779,
+          "sha256": "82b1038521b0696c63c90b31ed4a0a2c9c4c16871c648b157b07ca44b6f18f8d"
+        },
+        {
+          "record_path": "sympy-1.14.0.dist-info/licenses/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/sympy-1.14.0.dist-info/licenses/LICENSE",
+          "bytes": 7885,
+          "sha256": "07a5e9819f727b4986ad2829c7a29a6320d42575f720eb24d71b7fef573a0286"
+        },
+        {
+          "record_path": "sympy/parsing/latex/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/sympy/parsing/latex/LICENSE.txt",
+          "bytes": 1075,
+          "sha256": "007bc30a58fa40a996e772047120de4eaf31f5110e4f9c3b5f93fcdfbe2eaca1"
+        }
+      ]
+    },
+    {
+      "name": "torch",
+      "version": "2.14.1",
+      "locked_version": "2.14.1",
+      "included_file_count": 2544,
+      "declared_license_expression": "Apache-2.0 AND Apache-2.0 WITH LLVM-exception AND BSD-2-Clause AND BSD-3-Clause AND BSL-1.0 AND MIT",
+      "declared_license_short": "",
+      "metadata_and_notice_files": [
+        {
+          "record_path": "torch-2.14.1.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/METADATA",
+          "bytes": 38300,
+          "sha256": "b9d1eec08600fef67d552cd550f34e2a08f536925aee84f358dd09db4789e9e9"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/RECORD",
+          "bytes": 1551149,
+          "sha256": "9b439121d052dc53837720036f1dd198f1d87c5927f32e01dcfb5edf91cfa319"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/WHEEL",
+          "bytes": 113,
+          "sha256": "5a7b3cc00f1ee3fe51f2afea4d373004c634c4414d5adec130245f68f3b5523c"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/LICENSE",
+          "bytes": 3464,
+          "sha256": "bd018feef8825e88181c84eb7e3aa4eafb8f08a20d9fd6ef948569610c4a3e43"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/FP16/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/FP16/LICENSE",
+          "bytes": 1157,
+          "sha256": "17e4f539024be2749ee729d1e2f01d24cef12ece8c9bf18e91a4349be29c80bf"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/FXdiv/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/FXdiv/LICENSE",
+          "bytes": 1117,
+          "sha256": "7cac00006125b1486a27e4801ed66357236e984c540bd323945ab7b66b078ec3"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/NNPACK/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/NNPACK/LICENSE",
+          "bytes": 1352,
+          "sha256": "ab09e33621f513ebdd1ef685b324f39c1f6bee9221d15600bafd958322df1231"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/NVTX/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/NVTX/LICENSE.txt",
+          "bytes": 12483,
+          "sha256": "abdfd8a6738b27cd1504e091f77b682dbae928339f040b8a6f59a548245991a0"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/NVTX/docs/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/NVTX/docs/LICENSE.txt",
+          "bytes": 12483,
+          "sha256": "abdfd8a6738b27cd1504e091f77b682dbae928339f040b8a6f59a548245991a0"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/NVTX/python/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/NVTX/python/LICENSE.txt",
+          "bytes": 12483,
+          "sha256": "abdfd8a6738b27cd1504e091f77b682dbae928339f040b8a6f59a548245991a0"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/NVTX/rust/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/NVTX/rust/LICENSE",
+          "bytes": 12449,
+          "sha256": "e165ed77854f47fb208850d23d935a9f0ab8bb4527381466beeb16025e2f6e9e"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/VulkanMemoryAllocator/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/VulkanMemoryAllocator/LICENSE.txt",
+          "bytes": 1099,
+          "sha256": "8d70e4cf2a9941f6454da71cd60e38484dd3e34810c824760d550e982af6d97a"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/XNNPACK/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/XNNPACK/LICENSE",
+          "bytes": 1560,
+          "sha256": "63f519e15726f4c4f830bd958f694c84fecb4e0a4cacc527d2696bb71ef95ada"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/aiter/3rdparty/composable_kernel/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/aiter/3rdparty/composable_kernel/LICENSE",
+          "bytes": 1726,
+          "sha256": "20f3b83dfda01bd18d285e0edbb9d044be6dde04cdf76a1ec18d9fc7127936bf"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/aiter/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/aiter/LICENSE",
+          "bytes": 1100,
+          "sha256": "0baca809927cad448401b252ce3bae12687c2987597ad7088cf3423f872d5bcd"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/benchmark/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/benchmark/LICENSE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/composable_kernel/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/composable_kernel/LICENSE",
+          "bytes": 1726,
+          "sha256": "20f3b83dfda01bd18d285e0edbb9d044be6dde04cdf76a1ec18d9fc7127936bf"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/cpp-httplib/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/cpp-httplib/LICENSE",
+          "bytes": 1075,
+          "sha256": "4b45cbe16d7b71b89ae6127e26e0d90a029198ca5e958ad8e3d0b8bbed364d8b"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/cpuinfo/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/cpuinfo/LICENSE",
+          "bytes": 1424,
+          "sha256": "8e7e60636c3aa0cb03571a1a841ce5697f9551ff92b3c426c2561613d15ade70"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/cpuinfo/deps/clog/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/cpuinfo/deps/clog/LICENSE",
+          "bytes": 1384,
+          "sha256": "68a14c3e79add023eecd83d611e73f05b8bf1d16852efeb7eb4033a96736da9e"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/cudnn_frontend/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/cudnn_frontend/LICENSE.txt",
+          "bytes": 1148,
+          "sha256": "3fc4b473a2c08768a8066bf7e4a58a1185060f3ad674f2ca9e2011bca4adf2ce"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/cutlass/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/cutlass/LICENSE.txt",
+          "bytes": 1861,
+          "sha256": "ad1513ca983da737a6843364ad19e8424a56d860736c2da773b8c5be527e1475"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/cutlass/python/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/cutlass/python/LICENSE.txt",
+          "bytes": 1547,
+          "sha256": "00bf1806f664ac1afe4221f5f04b384fb6f1ca6eb33efcb6dccf599eb06d08b9"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/fbgemm/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/fbgemm/LICENSE",
+          "bytes": 1535,
+          "sha256": "12c2370ec32e78115dcd71ba22cdcb1297320fdc4ade81f798136d42357c58b8"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/fbgemm/external/composable_kernel/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/fbgemm/external/composable_kernel/LICENSE",
+          "bytes": 1726,
+          "sha256": "20f3b83dfda01bd18d285e0edbb9d044be6dde04cdf76a1ec18d9fc7127936bf"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/fbgemm/external/cpuinfo/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/fbgemm/external/cpuinfo/LICENSE",
+          "bytes": 1424,
+          "sha256": "8e7e60636c3aa0cb03571a1a841ce5697f9551ff92b3c426c2561613d15ade70"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/fbgemm/external/cpuinfo/deps/clog/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/fbgemm/external/cpuinfo/deps/clog/LICENSE",
+          "bytes": 1384,
+          "sha256": "68a14c3e79add023eecd83d611e73f05b8bf1d16852efeb7eb4033a96736da9e"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/fbgemm/external/cutlass/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/fbgemm/external/cutlass/LICENSE.txt",
+          "bytes": 1854,
+          "sha256": "80a7a18b73d41f64dd9ca881af35938f8de88b18c728703251f4c94d1299884d"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/fbgemm/external/cutlass/python/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/fbgemm/external/cutlass/python/LICENSE.txt",
+          "bytes": 1547,
+          "sha256": "42fec630f410aa308f70a51a89fadcd19586fa620f9831a32bee528a9a10000e"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/fbgemm/external/googletest/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/fbgemm/external/googletest/LICENSE",
+          "bytes": 1475,
+          "sha256": "9702de7e4117a8e2b20dafab11ffda58c198aede066406496bef670d40a22138"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/fbgemm/external/hipify_torch/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/fbgemm/external/hipify_torch/LICENSE.txt",
+          "bytes": 1112,
+          "sha256": "ecf819d55b17c2f091b3ba0934d044368aa0680d8a81374860306aa2b91aa1eb"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/fbgemm/fbgemm_gpu/experimental/hstu/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/fbgemm/fbgemm_gpu/experimental/hstu/LICENSE",
+          "bytes": 1558,
+          "sha256": "8c9ccb96c065e706135b6cbad279b721da6156e51f3a5f27c6b3329af9416d73"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/fbgemm/fbgemm_gpu/src/quantize_ops/mx/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/fbgemm/fbgemm_gpu/src/quantize_ops/mx/LICENSE",
+          "bytes": 1141,
+          "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/fbgemm/fbgemm_gpu/test/quantize/mx/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/fbgemm/fbgemm_gpu/test/quantize/mx/LICENSE",
+          "bytes": 1141,
+          "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/flash-attention/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/flash-attention/LICENSE",
+          "bytes": 1558,
+          "sha256": "8c9ccb96c065e706135b6cbad279b721da6156e51f3a5f27c6b3329af9416d73"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/flash-attention/csrc/composable_kernel/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/flash-attention/csrc/composable_kernel/LICENSE",
+          "bytes": 1726,
+          "sha256": "20f3b83dfda01bd18d285e0edbb9d044be6dde04cdf76a1ec18d9fc7127936bf"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/flash-attention/csrc/cutlass/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/flash-attention/csrc/cutlass/LICENSE.txt",
+          "bytes": 1854,
+          "sha256": "80a7a18b73d41f64dd9ca881af35938f8de88b18c728703251f4c94d1299884d"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/flash-attention/csrc/cutlass/python/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/flash-attention/csrc/cutlass/python/LICENSE.txt",
+          "bytes": 1547,
+          "sha256": "42fec630f410aa308f70a51a89fadcd19586fa620f9831a32bee528a9a10000e"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/flash-attention/flash_attn/cute/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/flash-attention/flash_attn/cute/LICENSE",
+          "bytes": 1558,
+          "sha256": "8c9ccb96c065e706135b6cbad279b721da6156e51f3a5f27c6b3329af9416d73"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/flash-attention/third_party/aiter/3rdparty/composable_kernel/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/flash-attention/third_party/aiter/3rdparty/composable_kernel/LICENSE",
+          "bytes": 1726,
+          "sha256": "20f3b83dfda01bd18d285e0edbb9d044be6dde04cdf76a1ec18d9fc7127936bf"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/flash-attention/third_party/aiter/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/flash-attention/third_party/aiter/LICENSE",
+          "bytes": 1100,
+          "sha256": "0baca809927cad448401b252ce3bae12687c2987597ad7088cf3423f872d5bcd"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/flatbuffers/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/flatbuffers/LICENSE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/flatbuffers/dart/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/flatbuffers/dart/LICENSE",
+          "bytes": 11341,
+          "sha256": "edd9b3459bee4c79b549a5ef66d06d12bd144ddb8d08e0b448fb421267f43dd5"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/flatbuffers/swift/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/flatbuffers/swift/LICENSE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/fmt/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/fmt/LICENSE",
+          "bytes": 1094,
+          "sha256": "a65fcc5a1095fc33cc37e4fff69366e49d7e92f613558a2b95ed1b70e33758b4"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/gemmlowp/gemmlowp/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/gemmlowp/gemmlowp/LICENSE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/gloo/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/gloo/LICENSE",
+          "bytes": 1525,
+          "sha256": "2afbc572cf7f60888159bc2ca48ba58f8adec06682ae5de820d61449d1eeea81"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/googletest/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/googletest/LICENSE",
+          "bytes": 1475,
+          "sha256": "9702de7e4117a8e2b20dafab11ffda58c198aede066406496bef670d40a22138"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/ideep/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/ideep/LICENSE",
+          "bytes": 1062,
+          "sha256": "a26add03107a53a605a89711b9b7dbd4f5dd668ae193a912e01a879366a23b0e"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/ideep/mkl-dnn/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/ideep/mkl-dnn/LICENSE",
+          "bytes": 11607,
+          "sha256": "e9fc874fc09801b9acf3411ba72394098473704d832d713404b6c4861a086318"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/ideep/mkl-dnn/third_party/gtest/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/ideep/mkl-dnn/third_party/gtest/LICENSE",
+          "bytes": 1475,
+          "sha256": "9702de7e4117a8e2b20dafab11ffda58c198aede066406496bef670d40a22138"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/ideep/mkl-dnn/third_party/opencl/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/ideep/mkl-dnn/third_party/opencl/LICENSE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/kineto/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/kineto/LICENSE",
+          "bytes": 1609,
+          "sha256": "6f3d59b9103e72e5c977eecf61b261c2e1546a9be2995847e3ee2d31021fd39b"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/kineto/libkineto/third_party/dynolog_headers/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/kineto/libkineto/third_party/dynolog_headers/LICENSE",
+          "bytes": 1086,
+          "sha256": "52412d7bc7ce4157ea628bbaacb8829e0a9cb3c58f57f99176126bc8cf2bfc85"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/kineto/libkineto/third_party/fmt/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/kineto/libkineto/third_party/fmt/LICENSE",
+          "bytes": 1431,
+          "sha256": "07580f2a3b35709ce703d523f447b242f6dfec7582a8c0df102c7fa2849375f8"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/kineto/libkineto/third_party/googletest/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/kineto/libkineto/third_party/googletest/LICENSE",
+          "bytes": 1475,
+          "sha256": "9702de7e4117a8e2b20dafab11ffda58c198aede066406496bef670d40a22138"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/llvm-openmp/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/llvm-openmp/LICENSE.txt",
+          "bytes": 17003,
+          "sha256": "68395143f21a9aa29b8232168c71892af5ec4f1ae2529571cd250a71c9e37a03"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/mimalloc/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/mimalloc/LICENSE",
+          "bytes": 1096,
+          "sha256": "82ade5d7d9b029044b5fbbc326207fc47c2d44ee4dd71e8a559c36d728217de9"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/miniz-3.0.2/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/miniz-3.0.2/LICENSE",
+          "bytes": 1184,
+          "sha256": "0115478d567121238cf6cc1c0c361926cf07a49d9e4c9e66da97fac6a01646b3"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/mslk/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/mslk/LICENSE",
+          "bytes": 1533,
+          "sha256": "44519cbe722d7bf092cd7e0fa26558b9e3905b88fca4c0c278e2733a9f6b4cf9"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/mslk/external/composable_kernel/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/mslk/external/composable_kernel/LICENSE",
+          "bytes": 1726,
+          "sha256": "20f3b83dfda01bd18d285e0edbb9d044be6dde04cdf76a1ec18d9fc7127936bf"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/mslk/external/cutlass/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/mslk/external/cutlass/LICENSE.txt",
+          "bytes": 1854,
+          "sha256": "80a7a18b73d41f64dd9ca881af35938f8de88b18c728703251f4c94d1299884d"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/mslk/external/cutlass/python/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/mslk/external/cutlass/python/LICENSE.txt",
+          "bytes": 1547,
+          "sha256": "42fec630f410aa308f70a51a89fadcd19586fa620f9831a32bee528a9a10000e"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/mslk/external/googletest/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/mslk/external/googletest/LICENSE",
+          "bytes": 1475,
+          "sha256": "9702de7e4117a8e2b20dafab11ffda58c198aede066406496bef670d40a22138"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/mslk/external/hipify_torch/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/mslk/external/hipify_torch/LICENSE.txt",
+          "bytes": 1112,
+          "sha256": "ecf819d55b17c2f091b3ba0934d044368aa0680d8a81374860306aa2b91aa1eb"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/mslk/mslk/attention/flash_attn/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/mslk/mslk/attention/flash_attn/LICENSE",
+          "bytes": 1558,
+          "sha256": "8c9ccb96c065e706135b6cbad279b721da6156e51f3a5f27c6b3329af9416d73"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/nccl/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/nccl/LICENSE.txt",
+          "bytes": 13261,
+          "sha256": "c1f53beabe4dbf05bd87c00f7ca6084c0cb541c3f7bf8edab7913f266018b7be"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/nccl/bindings/nccl4py/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/nccl/bindings/nccl4py/LICENSE.txt",
+          "bytes": 11357,
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/nccl/contrib/nccl_checkpoint/python/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/nccl/contrib/nccl_checkpoint/python/LICENSE.txt",
+          "bytes": 11365,
+          "sha256": "89374f8cc48236dccfcd0cea43974f7ee4f4bf77c8649da71c7c4cfef515f0d7"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/nccl/contrib/nccl_ep/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/nccl/contrib/nccl_ep/LICENSE.txt",
+          "bytes": 11365,
+          "sha256": "89374f8cc48236dccfcd0cea43974f7ee4f4bf77c8649da71c7c4cfef515f0d7"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/nccl/contrib/nccl_ubx/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/nccl/contrib/nccl_ubx/LICENSE.txt",
+          "bytes": 11365,
+          "sha256": "89374f8cc48236dccfcd0cea43974f7ee4f4bf77c8649da71c7c4cfef515f0d7"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/onnx/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/onnx/LICENSE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/onnx/third_party/pybind11/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/onnx/third_party/pybind11/LICENSE",
+          "bytes": 1684,
+          "sha256": "83965b843b98f670d3a85bd041ed4b372c8ec50d7b4a5995a83ac697ba675dcb"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/perfetto/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/perfetto/LICENSE",
+          "bytes": 14990,
+          "sha256": "9a682a56cffc9524dfa9b0b1c0dca9cb81a19e96d5bd0793aaf02c08a95ee7ca"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/protobuf/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/protobuf/LICENSE",
+          "bytes": 1732,
+          "sha256": "6e5e117324afd944dcf67f36cf329843bc1a92229a8cd9bb573d7a83130fea7d"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/protobuf/third_party/benchmark/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/protobuf/third_party/benchmark/LICENSE",
+          "bytes": 11358,
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/protobuf/third_party/googletest/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/protobuf/third_party/googletest/LICENSE",
+          "bytes": 1475,
+          "sha256": "9702de7e4117a8e2b20dafab11ffda58c198aede066406496bef670d40a22138"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/protobuf/third_party/googletest/googlemock/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/protobuf/third_party/googletest/googlemock/LICENSE",
+          "bytes": 1475,
+          "sha256": "9702de7e4117a8e2b20dafab11ffda58c198aede066406496bef670d40a22138"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/protobuf/third_party/googletest/googlemock/scripts/generator/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/protobuf/third_party/googletest/googlemock/scripts/generator/LICENSE",
+          "bytes": 11386,
+          "sha256": "5e0df8c845c742e76f2f64d2d9ce1b7e74a2422fddbc577ae6a56319083de0bf"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/protobuf/third_party/googletest/googletest/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/protobuf/third_party/googletest/googletest/LICENSE",
+          "bytes": 1475,
+          "sha256": "9702de7e4117a8e2b20dafab11ffda58c198aede066406496bef670d40a22138"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/protobuf/third_party/utf8_range/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/protobuf/third_party/utf8_range/LICENSE",
+          "bytes": 1065,
+          "sha256": "5a629d2b868081d8af08bbce5d038116f3a0e2e0d4ce9adf4d53f14e76b6b2e0"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/psimd/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/psimd/LICENSE",
+          "bytes": 1162,
+          "sha256": "984ce1e0b8ee89d234e28b960381f240e03a07a8031f35012f9c3256f56964e2"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/pthreadpool/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/pthreadpool/LICENSE",
+          "bytes": 1378,
+          "sha256": "57814a606b4d0fb087d9a534919084b6c11b58a4174cb5a4aef200187780dc3a"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/pybind11/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/pybind11/LICENSE",
+          "bytes": 1684,
+          "sha256": "83965b843b98f670d3a85bd041ed4b372c8ec50d7b4a5995a83ac697ba675dcb"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/python-peachpy/LICENSE.rst",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/python-peachpy/LICENSE.rst",
+          "bytes": 1443,
+          "sha256": "e6d6fdbfc09c9cc1bfc55946ca9690dd9276deeaed2b72ac7fc5c79bde80ff32"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/sleef/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/sleef/LICENSE.txt",
+          "bytes": 1338,
+          "sha256": "c9bff75738922193e67fa726fa225535870d2aa1059f91452c411736284ad566"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/tensorpipe/LICENSE.txt",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/tensorpipe/LICENSE.txt",
+          "bytes": 1535,
+          "sha256": "f4dcef0d1f0520b414d5bfaeed8df02f188e4ec05c0a17bf1c18f25f6cc66245"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/tensorpipe/third_party/googletest/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/tensorpipe/third_party/googletest/LICENSE",
+          "bytes": 1475,
+          "sha256": "9702de7e4117a8e2b20dafab11ffda58c198aede066406496bef670d40a22138"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/tensorpipe/third_party/googletest/googlemock/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/tensorpipe/third_party/googletest/googlemock/LICENSE",
+          "bytes": 1475,
+          "sha256": "9702de7e4117a8e2b20dafab11ffda58c198aede066406496bef670d40a22138"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/tensorpipe/third_party/googletest/googlemock/scripts/generator/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/tensorpipe/third_party/googletest/googlemock/scripts/generator/LICENSE",
+          "bytes": 11386,
+          "sha256": "5e0df8c845c742e76f2f64d2d9ce1b7e74a2422fddbc577ae6a56319083de0bf"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/tensorpipe/third_party/googletest/googletest/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/tensorpipe/third_party/googletest/googletest/LICENSE",
+          "bytes": 1475,
+          "sha256": "9702de7e4117a8e2b20dafab11ffda58c198aede066406496bef670d40a22138"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/tensorpipe/third_party/libnop/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/tensorpipe/third_party/libnop/LICENSE",
+          "bytes": 577,
+          "sha256": "876e8f7432440974ee5543a2aa1344370ef1f2f7949ad98a1f3899cf722d5631"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/tensorpipe/third_party/libuv/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/tensorpipe/third_party/libuv/LICENSE",
+          "bytes": 1079,
+          "sha256": "16de0c32b265cb7d46a6d3bd614f259dd4d693a5e26b3407b04aae8d73041f0c"
+        },
+        {
+          "record_path": "torch-2.14.1.dist-info/licenses/third_party/tensorpipe/third_party/pybind11/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch-2.14.1.dist-info/licenses/third_party/tensorpipe/third_party/pybind11/LICENSE",
+          "bytes": 1676,
+          "sha256": "9a37ea54aa3cf12c7f3292799f20822ffd4b9b7142b36a7a9997b28c39264dc9"
+        },
+        {
+          "record_path": "torch/_vendor/packaging/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch/_vendor/packaging/LICENSE",
+          "bytes": 197,
+          "sha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48"
+        },
+        {
+          "record_path": "torch/_vendor/packaging/LICENSE.APACHE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch/_vendor/packaging/LICENSE.APACHE",
+          "bytes": 10174,
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+        },
+        {
+          "record_path": "torch/_vendor/packaging/LICENSE.BSD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch/_vendor/packaging/LICENSE.BSD",
+          "bytes": 1344,
+          "sha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5"
+        },
+        {
+          "record_path": "torch/_vendor/quack/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/torch/_vendor/quack/LICENSE",
+          "bytes": 11357,
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+        }
+      ]
+    },
+    {
+      "name": "tqdm",
+      "version": "4.70.1",
+      "locked_version": "4.70.1",
+      "included_file_count": 16,
+      "declared_license_expression": null,
+      "declared_license_short": "MPL-2.0 AND MIT",
+      "metadata_and_notice_files": [
+        {
+          "record_path": "tqdm-4.70.1.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/tqdm-4.70.1.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "tqdm-4.70.1.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/tqdm-4.70.1.dist-info/METADATA",
+          "bytes": 57366,
+          "sha256": "a5da70b966afea3a759716041bad7187f2ece02c22348cf9e7c0a512bbf15f57"
+        },
+        {
+          "record_path": "tqdm-4.70.1.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/tqdm-4.70.1.dist-info/RECORD",
+          "bytes": 4543,
+          "sha256": "1e36a85d35bcd448a242b64070913880b971dfae5d75759283e6d479d2f81c72"
+        },
+        {
+          "record_path": "tqdm-4.70.1.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/tqdm-4.70.1.dist-info/WHEEL",
+          "bytes": 91,
+          "sha256": "61532836a2b3111b7ec23519c09df7c41180c27165fb872a6d8913b566b88ad1"
+        },
+        {
+          "record_path": "tqdm-4.70.1.dist-info/licenses/LICENCE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/tqdm-4.70.1.dist-info/licenses/LICENCE",
+          "bytes": 1985,
+          "sha256": "fcff87c3a47ce8028a8512aa182d4fcf0ad1c90544ee75cf9b343684cac194de"
+        }
+      ]
+    },
+    {
+      "name": "typing_extensions",
+      "version": "4.16.0",
+      "locked_version": "4.16.0",
+      "included_file_count": 1,
+      "declared_license_expression": "PSF-2.0",
+      "declared_license_short": "",
+      "metadata_and_notice_files": [
+        {
+          "record_path": "typing_extensions-4.16.0.dist-info/INSTALLER",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/typing_extensions-4.16.0.dist-info/INSTALLER",
+          "bytes": 4,
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "record_path": "typing_extensions-4.16.0.dist-info/METADATA",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/typing_extensions-4.16.0.dist-info/METADATA",
+          "bytes": 3310,
+          "sha256": "b05084ca1d50879865178d9fff9fabeab61bdfb1f361bfbde95421ffc8f9be46"
+        },
+        {
+          "record_path": "typing_extensions-4.16.0.dist-info/RECORD",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/typing_extensions-4.16.0.dist-info/RECORD",
+          "bytes": 580,
+          "sha256": "78f74ed46a377d6e1debed78b3e994ff9cfe02a529d393d7c8ab80989bd25079"
+        },
+        {
+          "record_path": "typing_extensions-4.16.0.dist-info/WHEEL",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/typing_extensions-4.16.0.dist-info/WHEEL",
+          "bytes": 82,
+          "sha256": "1b68144734c4b66791f27add5d425f3620775585718a03d0f9b110ba3a4d88db"
+        },
+        {
+          "record_path": "typing_extensions-4.16.0.dist-info/licenses/LICENSE",
+          "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/typing_extensions-4.16.0.dist-info/licenses/LICENSE",
+          "bytes": 13936,
+          "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf"
+        }
+      ]
+    }
+  ],
+  "full_local_evidence": {
+    "closure-before.json.gz": {
+      "path": "outputs/poc-first-local-package-build-v1/dependency-recovery-preparation/closure-before.json.gz",
+      "bytes": 129203,
+      "sha256": "f6ddae820581a54a4355aba7c51533b230fef17b5c435a18e40bdc25604426e2"
+    },
+    "closure-after.json.gz": {
+      "path": "outputs/poc-first-local-package-build-v1/dependency-recovery-preparation/closure-after.json.gz",
+      "bytes": 129120,
+      "sha256": "f8d50112aa7932bc8e1c5112040b70f74cd67d857a2133363f2c4daf61b6bf00"
+    },
+    "all-included-source-entries.json.gz": {
+      "path": "outputs/poc-first-local-package-build-v1/dependency-recovery-preparation/all-included-source-entries.json.gz",
+      "bytes": 78173,
+      "sha256": "449bc57c59190ae0cdb156d28d4368746d068c91489238cb67c360cfd27267ee"
+    }
+  },
+  "failed_build_evidence": {
+    "engine_sha256": "bd8e656abce7e9b9e07aade58f3104cd7d2874634acef39b12fdb61201db306b",
+    "source_manifest_sha256": "a26df2658f086b56e8548b0c3708c720346a2700347f82c6304dae1c68a0bed8",
+    "embedded_manifest_sha256": "a26df2658f086b56e8548b0c3708c720346a2700347f82c6304dae1c68a0bed8",
+    "table_sha256": {
+      "PYZ-00.toc": "c5c1b92fb392312bbb5a661ead81b74dd7441337dc543ab6d52e3a3d47009ca7",
+      "COLLECT-00.toc": "d204cd122a489b5eeb447c4b33a94804f77969d82c1904b6a3c6d05ab9ef97d3",
+      "EXE-00.toc": "f76abdfa9efcfad48bfc8185c5f82ea541e819dd077ce1e8d06387681c63f788"
+    },
+    "failed_supervision": {
+      "path": "artifacts/poc-first-local-package-build-v1/sidecar-supervision.json",
+      "bytes": 1337,
+      "sha256": "5c03bcfffb832de6a907a6e3f94044c815cdd0cd345bb66ed14c08c9f9dd42ac"
+    },
+    "worker_log": {
+      "path": "outputs/poc-first-local-package-build-v1/sidecar/worker.log",
+      "bytes": 2873,
+      "sha256": "568fe1ba3b2bdad15022a9b2932e97a2b1aa26d47ad0bbf44044ebd01cda9ae7"
+    },
+    "build_report": {
+      "path": "build/electron-sidecar/build-report.json",
+      "bytes": 1088,
+      "sha256": "21db7987ac64d61f780422054b295fefccb479061fbbd7136b24000a3d06c928"
+    },
+    "no_failed_payload_changed_during_audit": true
+  },
+  "source_and_controls": {
+    "audit_dependency_closure.py": {
+      "path": "artifacts/poc-first-local-package-build-v1/dependency-recovery-preparation/audit_dependency_closure.py",
+      "bytes": 8319,
+      "sha256": "c9bb7cd3e4762a5e259e79b4d729947817c10dd88744e8db78d5b40efcdab0bf"
+    },
+    "test_dependency_inventory.py": {
+      "path": "artifacts/poc-first-local-package-build-v1/dependency-recovery-preparation/test_dependency_inventory.py",
+      "bytes": 3030,
+      "sha256": "94df0bd5aaa561c02c28c07eb892fdb49c53a9322dfb57f28c91987afd7ad233"
+    },
+    "controls.txt": {
+      "path": "artifacts/poc-first-local-package-build-v1/dependency-recovery-preparation/controls.txt",
+      "bytes": 104,
+      "sha256": "dcd2147edfda2291b456dfb6d9f3021f0fed07760d5a1c8869fc5446f30e28fe"
+    }
+  },
+  "generated_controls_passed": 6,
+  "psutil_installed_primary_metadata": {
+    "version": "7.2.2",
+    "declared_license_expression": null,
+    "homepage": "https://github.com/giampaolo/psutil",
+    "included_members": [
+      {
+        "record_path": "psutil/__init__.py",
+        "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/psutil/__init__.py",
+        "frozen_entries": [
+          {
+            "table": "PYZ-00.toc",
+            "entry": "psutil",
+            "kind": "PYMODULE"
+          }
+        ]
+      },
+      {
+        "record_path": "psutil/_common.py",
+        "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/psutil/_common.py",
+        "frozen_entries": [
+          {
+            "table": "PYZ-00.toc",
+            "entry": "psutil._common",
+            "kind": "PYMODULE"
+          }
+        ]
+      },
+      {
+        "record_path": "psutil/_ntuples.py",
+        "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/psutil/_ntuples.py",
+        "frozen_entries": [
+          {
+            "table": "PYZ-00.toc",
+            "entry": "psutil._ntuples",
+            "kind": "PYMODULE"
+          }
+        ]
+      },
+      {
+        "record_path": "psutil/_psosx.py",
+        "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/psutil/_psosx.py",
+        "frozen_entries": [
+          {
+            "table": "PYZ-00.toc",
+            "entry": "psutil._psosx",
+            "kind": "PYMODULE"
+          }
+        ]
+      },
+      {
+        "record_path": "psutil/_psposix.py",
+        "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/psutil/_psposix.py",
+        "frozen_entries": [
+          {
+            "table": "PYZ-00.toc",
+            "entry": "psutil._psposix",
+            "kind": "PYMODULE"
+          }
+        ]
+      },
+      {
+        "record_path": "psutil/_psutil_osx.abi3.so",
+        "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/psutil/_psutil_osx.abi3.so",
+        "frozen_entries": [
+          {
+            "table": "COLLECT-00.toc",
+            "entry": "psutil/_psutil_osx.abi3.so",
+            "kind": "EXTENSION"
+          }
+        ]
+      }
+    ],
+    "copied_exact_metadata_and_license": [
+      {
+        "path": "artifacts/poc-first-local-package-build-v1/dependency-recovery-preparation/psutil-INSTALLER",
+        "bytes": 4,
+        "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+      },
+      {
+        "path": "artifacts/poc-first-local-package-build-v1/dependency-recovery-preparation/psutil-LICENSE",
+        "bytes": 1548,
+        "sha256": "b89c063b3786e28e0c0a38f1931db61fed35e69dd2a2966fbecffee0f46c8d10"
+      },
+      {
+        "path": "artifacts/poc-first-local-package-build-v1/dependency-recovery-preparation/psutil-METADATA",
+        "bytes": 22187,
+        "sha256": "525f8ba78523cf7bc3759d62a105e7c57fd679ea702402b9449fb0746aa0217f"
+      },
+      {
+        "path": "artifacts/poc-first-local-package-build-v1/dependency-recovery-preparation/psutil-RECORD",
+        "bytes": 1877,
+        "sha256": "bbf09706e72b06979d838dde373278f8903fc3e4b7b08c226ecbc2d7bf3dd442"
+      },
+      {
+        "path": "artifacts/poc-first-local-package-build-v1/dependency-recovery-preparation/psutil-WHEEL",
+        "bytes": 107,
+        "sha256": "51e27ab3fc49cf96c9613fae02157c7539c5fb5cff359293443ce280e85e4bf0"
+      }
+    ],
+    "provenance_limit": "Installed primary distribution metadata/RECORD/license binds the currently installed files and stated upstream project; no new external wheel origin or signature verification was performed."
+  },
+  "preserve_before_recovery": [
+    "build/electron-sidecar (entire tree: source snapshot, work TOCs/PYZ/pkg, partial notice-inputs, spec, log and failed report)",
+    "desktop/sidecar/ressectionlab-engine (entire failed compiled payload)",
+    "outputs/poc-first-local-package-build-v1/sidecar/worker.log and supervision/first-attempt receipts remain immutable"
+  ],
+  "recovery": "ROOT must preserve the whole failed engine/work tree, commit corrected lock/source identity, and explicitly release one numbered recovery through the existing supervisor. Builder must capture a fresh source snapshot with the corrected lock; old failed snapshot remains unchanged. No automatic retry.",
+  "notice_limit": "Original CPython static-vendor and Electron renderer notice-source gaps remain recorded. This lock correction establishes closure version consistency, not distribution/clinical readiness."
+}

@@ -1,0 +1,205 @@
+{
+  "schema": "poc-first-local-package-gui-v1",
+  "recorded_utc": "2026-10-16T10:40:59.378161+00:00",
+  "app_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app",
+  "source_commit": "78edfe44b7c91daed1877be9d4c0d3830d36a8fd",
+  "interaction": "Actual native app through cua_repl; screenshots and complete accessibility states retained under outputs.",
+  "checks": {
+    "native_case_library_chooser": true,
+    "cancel_preserves_selection": true,
+    "empty_folder_rejected_preserving_selection": true,
+    "reported_parietal_search_matches": 2,
+    "catalog_source_ids": 12,
+    "ucsf_both_live_tools": true,
+    "field_management_preserves_removed_tissue": true,
+    "same_state_strategy_comparison": true,
+    "strategy_target_removed_mm3": [
+      34,
+      118
+    ],
+    "strategy_non_target_removed_mm3": [
+      9,
+      9
+    ],
+    "play_pause_and_keyboard_scrub": true,
+    "native_saved_copy": true,
+    "reopened_deeper_branch_frame": 21,
+    "reopened_selected_tool": "field_manager",
+    "ixi_visible_layers": 4,
+    "ixi_displayed_unknown_cell_count": 8,
+    "ixi_gray_estimate_opacity_before_after": [
+      0.48,
+      0.47
+    ],
+    "ixi_cutaway_and_original_source_switch": true,
+    "native_open_portable_bundle": true,
+    "acquired_ct_inferred_skull_display": true,
+    "native_mri_separate_with_no_ct_overlays": true,
+    "saved_mri_selection_restored": true,
+    "library_restored_after_full_app_family_shutdown": true
+  },
+  "process_and_library": {
+    "schema": "poc-first-packaged-gui-process-and-library-v1",
+    "all_prior_processes_exited": true,
+    "all_process_ids_changed": true,
+    "app_binary_path_exact": true,
+    "bundled_engine_path_exact": true,
+    "catalog_source_ids": 12,
+    "library_selection_bytes_unchanged": true,
+    "settings_mode": "0o600",
+    "settings_sha256": "43d96ee62d53d6be06eb1ef572d8e72eceb55b4f52872e32ad07c2070669fa84",
+    "source_commit": "78edfe44b7c91daed1877be9d4c0d3830d36a8fd"
+  },
+  "private_evidence": {
+    "outputs/poc-first-local-package-gui-v1/01-library.ax.txt": {
+      "bytes": 12059,
+      "sha256": "0e9b14c7789ba98f655ddc32b0000c6ca3ec6a593d04ba5f3de5248d53dfe94f"
+    },
+    "outputs/poc-first-local-package-gui-v1/01-library.png": {
+      "bytes": 497632,
+      "sha256": "43204fc716efe139b699d03608ae5565fedeb15c9bc366f44d045facc1cf988e"
+    },
+    "outputs/poc-first-local-package-gui-v1/02-parietal.ax.txt": {
+      "bytes": 5982,
+      "sha256": "75a82b204dec05aea432a0548f6fefe5bd6fa4e98bae077ca5680ef063c7a7ed"
+    },
+    "outputs/poc-first-local-package-gui-v1/02-parietal.png": {
+      "bytes": 512067,
+      "sha256": "568bdd405ee26b55a181dd952d633f1d5e55b385a3e6fcb81c6a3abb6c3b2408"
+    },
+    "outputs/poc-first-local-package-gui-v1/03-empty-folder-rejected.png": {
+      "bytes": 517377,
+      "sha256": "982c708ab3cd14aa7961b60f6da43e74d83b5cfa80f303422d2649bafa0fd4f5"
+    },
+    "outputs/poc-first-local-package-gui-v1/04-first-strategy-final.ax.txt": {
+      "bytes": 7425,
+      "sha256": "eca41b4ec5851dcfd3347cef11dee2c9dadb3b2da56887e4c0e932d1009dd91e"
+    },
+    "outputs/poc-first-local-package-gui-v1/04-first-strategy-final.png": {
+      "bytes": 531869,
+      "sha256": "ddeceab503c741691fcc39562d9f5fbcc8b358e3da57ab7b959dafd7b71c85d6"
+    },
+    "outputs/poc-first-local-package-gui-v1/05-second-strategy-final.ax.txt": {
+      "bytes": 7423,
+      "sha256": "bdb309fb31cca00ec9a6209431f49ac22758b6b7468c5583542d25c8c6abb723"
+    },
+    "outputs/poc-first-local-package-gui-v1/05-second-strategy-final.png": {
+      "bytes": 531462,
+      "sha256": "5adb959f4ccb07edf9cd82fe3488f6ff5d33db0c01aa84dd8e8daa9477aa2492"
+    },
+    "outputs/poc-first-local-package-gui-v1/06-native-save.ax.txt": {
+      "bytes": 7595,
+      "sha256": "a97bbd9e8bbabedb342ca24bef1f02a68bac525666733d5207894e28752ccf3c"
+    },
+    "outputs/poc-first-local-package-gui-v1/06-native-save.png": {
+      "bytes": 530360,
+      "sha256": "61bdf793a50a5a27a4ced3ede81a4d7c8989fbee4a91d4b45c9c6300bc873151"
+    },
+    "outputs/poc-first-local-package-gui-v1/07-fresh-rehearsal-reopen.ax.txt": {
+      "bytes": 7362,
+      "sha256": "a94110dc8e5684d60a8904bd9810397ed1447dbced46203b4fb2946020011cd6"
+    },
+    "outputs/poc-first-local-package-gui-v1/07-fresh-rehearsal-reopen.png": {
+      "bytes": 537770,
+      "sha256": "b2f21f1af4079621b7ca240b4c1afd977f1f7a8aa42e2bb8d5a0978f891e19b2"
+    },
+    "outputs/poc-first-local-package-gui-v1/08-tissue-cutaway.ax.txt": {
+      "bytes": 8453,
+      "sha256": "d3c12beb46e21ba63778f8444fb45d3ced0235ef746bf117f682ff18b5c3e11b"
+    },
+    "outputs/poc-first-local-package-gui-v1/08-tissue-cutaway.png": {
+      "bytes": 494428,
+      "sha256": "aca3ac7f152d1fb9af778f07417cb0e00152f1025e4d0fe192e60988786ed0cc"
+    },
+    "outputs/poc-first-local-package-gui-v1/09-original-ixi-mri.ax.txt": {
+      "bytes": 5505,
+      "sha256": "29a1cb4ef31cdd6ccc84ef745786ca640bb35f68acd138a8a5dab68f1da4b1db"
+    },
+    "outputs/poc-first-local-package-gui-v1/09-original-ixi-mri.png": {
+      "bytes": 475605,
+      "sha256": "5bbf8f587bd7c30903c274c6e26a849d6a1fd9f5e71176c8557e60bdbb445ec5"
+    },
+    "outputs/poc-first-local-package-gui-v1/10-ct-skull.ax.txt": {
+      "bytes": 6200,
+      "sha256": "c17da4b205d24193f1d97992389cba7799b77235a32527775e5c5255de97c4a1"
+    },
+    "outputs/poc-first-local-package-gui-v1/10-ct-skull.png": {
+      "bytes": 490425,
+      "sha256": "d42dfba68f288a31aa3f37e3c1da330aaa91510de2315ce423b15209a110c400"
+    },
+    "outputs/poc-first-local-package-gui-v1/11-separate-mri.ax.txt": {
+      "bytes": 4891,
+      "sha256": "886eb7fcd8945feead5968eadc771addbbbbbf90e16aaa428205ba6fee9b9902"
+    },
+    "outputs/poc-first-local-package-gui-v1/11-separate-mri.png": {
+      "bytes": 446700,
+      "sha256": "3354cf8caa39f451d89e4385f8f815e81b33fad400d98cc0fdf90fe079c472f4"
+    },
+    "outputs/poc-first-local-package-gui-v1/12-mri-view-saved.ax.txt": {
+      "bytes": 5074,
+      "sha256": "463672e594cef0eb966228fb1a2a046f972769e68c76489068f9a5e3b750f0b9"
+    },
+    "outputs/poc-first-local-package-gui-v1/12-mri-view-saved.png": {
+      "bytes": 444244,
+      "sha256": "63e95caf204b34cdc1c5c4b337b5764ae066e4d0d0f9281f3fb494475a43ed1c"
+    },
+    "outputs/poc-first-local-package-gui-v1/13-fresh-mri-reopen.ax.txt": {
+      "bytes": 5062,
+      "sha256": "d0ec8063938b8cb90e0dac583ae7eeb40213b5e00d5a52eb3f12b9c926acfedb"
+    },
+    "outputs/poc-first-local-package-gui-v1/13-fresh-mri-reopen.png": {
+      "bytes": 441634,
+      "sha256": "7eee6aa5a56a58e156c7c4cceacb4c261fbbaa0f2d6aec75e28ea033d81237c9"
+    },
+    "outputs/poc-first-local-package-gui-v1/14-fresh-library.ax.txt": {
+      "bytes": 11576,
+      "sha256": "5bd13596f6ca524b7dc05c328b28befc7148010204fc5e2c6052abed5e05397d"
+    },
+    "outputs/poc-first-local-package-gui-v1/14-fresh-library.png": {
+      "bytes": 475092,
+      "sha256": "c96eca40a393f75836f241337a4b45a59e0dc4857b81933fa0aec0386dfd186c"
+    },
+    "outputs/poc-first-local-package-gui-v1/15-final-rehearsal.ax.txt": {
+      "bytes": 7351,
+      "sha256": "1cea6a8b143f2cfae76fcd9dbad569301ad3c77b0c2d5a56967778b8d24b592b"
+    },
+    "outputs/poc-first-local-package-gui-v1/15-final-rehearsal.png": {
+      "bytes": 537186,
+      "sha256": "9e90971b63d72fb6e8802a8d3473a7b611afd37a9b3c9a113f83e568d8f964d2"
+    },
+    "outputs/poc-first-local-package-gui-v1/closed-before-final-restart.json": {
+      "bytes": 94,
+      "sha256": "1c2d280eb9d11341d7a51328827970abb8b096a795dda36f594ebf740790bca0"
+    },
+    "outputs/poc-first-local-package-gui-v1/process-and-library-summary.json": {
+      "bytes": 460,
+      "sha256": "1b8ca0c23af91ba39533aafa63618cdb71ee1731eadaad30269b18d32247ec20"
+    },
+    "outputs/poc-first-local-package-gui-v1/processes-after-final-restart.json": {
+      "bytes": 1989,
+      "sha256": "05656d95e0c81d42b60201da4c55d06c0efe006b4b1fa6d8fe0134d6db43a278"
+    },
+    "outputs/poc-first-local-package-gui-v1/processes-before-final-restart-at-save.json": {
+      "bytes": 1843,
+      "sha256": "ffc3dd4c9cdc65e02b7be531da0e5bc3ffec9af058b04904b24d647876bf8a24"
+    }
+  },
+  "screenshots": 15,
+  "saved_copies": {
+    "outputs/poc-first-local-package-gui-v1/saved/SynthRAD-packaged-MR-selected.ressectionlab": {
+      "bytes": 33535837,
+      "sha256": "9a992b202cdcea35efd266e000ba7a2921d6f4416848ce6f683aed4ba3080557"
+    },
+    "outputs/poc-first-local-package-gui-v1/saved/UCSF-packaged-rehearsal-reviewed.ressectionlab": {
+      "bytes": 31531423,
+      "sha256": "0294cd855debabcf6183a437b2b2f6222b873534206c6ba374da3ec7f46fc950"
+    }
+  },
+  "qualifications": [
+    "GUI observations establish software behavior, not anatomical or physiological accuracy.",
+    "Strategy measurements are generated outcomes of the fixed simplified research episode.",
+    "The library displays source identities and saved versions; versions are not new patients.",
+    "Source MRI, CT and estimates remain in their original separate frames; no fusion is accepted.",
+    "Empty-folder rejection currently includes an Electron error prefix in its message; the valid selection remains intact."
+  ]
+}

@@ -1,0 +1,4490 @@
+{
+  "status": "cleanup-requested-no-physical-actions-yet",
+  "utc": "2026-10-21T00:40:44.772729+00:00",
+  "reviewedCommit": "4087a8fa48f68712cb6acf8883a9ea38d4dbda50",
+  "priorDirectorCommit": "28962e66647760043d123d3e3326e0a29b7b6a08",
+  "position": 2126,
+  "stateId": "sha256:85471c3dfb72b0af1a8f2e9d0ae1e41ba7ab82f620b3147c66876c67a1426979",
+  "loadedOnly": [
+    "request_budget_limited_endpoint",
+    "resume_director",
+    "run_slice"
+  ],
+  "physicalActionsDuringBinding": 0,
+  "engineAndLiveHashCodeUnchanged": true,
+  "sourceAndEntireActionHistoryUnchanged": true,
+  "checkpoint": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-budget-endpoint-2126.ressectionlab",
+  "pausedPass": {
+    "kind": "budget-limited-engineering-rehearsal",
+    "requestedBoundary": {
+      "position": 2126,
+      "stateId": "sha256:85471c3dfb72b0af1a8f2e9d0ae1e41ba7ab82f620b3147c66876c67a1426979",
+      "actionPrefixHash": "sha256:d03a1e0e202170810eecfbc9c23d94a72d198d56766a7923128bac243a2f4f89"
+    },
+    "pausedStage": "access_setup",
+    "pausedAccessPass": {
+      "accesses": [
+        {
+          "boneBoundsMm": [
+            -420.25,
+            -406.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -10.464996337890625,
+              30.441162109375,
+              -421.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 173,
+          "id": "superior-120-154",
+          "outsidePose": {
+            "position": [
+              -10.464996337890625,
+              30.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            120,
+            154,
+            133
+          ],
+          "windowClearanceMm": 11.180339887498949
+        },
+        {
+          "boneBoundsMm": [
+            -410.25,
+            -398.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -9.464996337890625,
+              1.441162109375,
+              -411.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 454,
+          "id": "superior-119-125",
+          "outsidePose": {
+            "position": [
+              -9.464996337890625,
+              1.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            119,
+            125,
+            143
+          ],
+          "windowClearanceMm": 5.0
+        },
+        {
+          "boneBoundsMm": [
+            -413.25,
+            -399.25
+          ],
+          "drillRadiusMm": 2.7426406871192848,
+          "entryPose": {
+            "position": [
+              -12.464996337890625,
+              3.441162109375,
+              -414.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 307,
+          "id": "superior-122-127",
+          "outsidePose": {
+            "position": [
+              -12.464996337890625,
+              3.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            122,
+            127,
+            140
+          ],
+          "windowClearanceMm": 4.242640687119285
+        },
+        {
+          "boneBoundsMm": [
+            -411.25,
+            -398.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -7.464996337890625,
+              4.441162109375,
+              -412.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 433,
+          "id": "superior-117-128",
+          "outsidePose": {
+            "position": [
+              -7.464996337890625,
+              4.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            117,
+            128,
+            142
+          ],
+          "windowClearanceMm": 5.385164807134504
+        },
+        {
+          "boneBoundsMm": [
+            -416.25,
+            -404.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -25.464996337890625,
+              -5.558837890625,
+              -417.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 358,
+          "id": "superior-135-118",
+          "outsidePose": {
+            "position": [
+              -25.464996337890625,
+              -5.558837890625,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            135,
+            118,
+            137
+          ],
+          "windowClearanceMm": 5.0,
+          "remainingGeometricCapacityCells": 358,
+          "capacityStateId": "sha256:ae24800dee1c55c161beaf8b6e1dec2dd3d57f101302cf4978c15d4cbaef70fa"
+        },
+        {
+          "boneBoundsMm": [
+            -421.25,
+            -405.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -26.464996337890625,
+              10.441162109375,
+              -422.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 328,
+          "id": "superior-136-134",
+          "outsidePose": {
+            "position": [
+              -26.464996337890625,
+              10.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            136,
+            134,
+            132
+          ],
+          "windowClearanceMm": 7.810249675906654,
+          "remainingGeometricCapacityCells": 328,
+          "capacityStateId": "sha256:9a7014ce2cb445fefc0c2741d0f7ce4d2d60dd16612816851c8bdf581a73fdbb"
+        },
+        {
+          "boneBoundsMm": [
+            -423.25,
+            -407.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -23.464996337890625,
+              21.441162109375,
+              -424.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 292,
+          "id": "superior-133-145",
+          "outsidePose": {
+            "position": [
+              -23.464996337890625,
+              21.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            133,
+            145,
+            130
+          ],
+          "windowClearanceMm": 6.708203932499369,
+          "remainingGeometricCapacityCells": 292,
+          "capacityStateId": "sha256:665e27241e671a57e3f672b9b6d858ec68ca29af6e76007ecc1ebe6a7ea41af5"
+        },
+        {
+          "boneBoundsMm": [
+            -416.25,
+            -402.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -7.464996337890625,
+              22.441162109375,
+              -417.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 286,
+          "id": "superior-117-146",
+          "outsidePose": {
+            "position": [
+              -7.464996337890625,
+              22.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            117,
+            146,
+            137
+          ],
+          "windowClearanceMm": 5.830951894845301,
+          "remainingGeometricCapacityCells": 286,
+          "capacityStateId": "sha256:dba88c61767b10284ea867f3eb0a2f92768f1ecce64d38b8d26a0e16a771721c"
+        },
+        {
+          "boneBoundsMm": [
+            -412.25,
+            -399.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -13.464996337890625,
+              -11.558837890625,
+              -413.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 288,
+          "id": "superior-123-112",
+          "outsidePose": {
+            "position": [
+              -13.464996337890625,
+              -11.558837890625,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            123,
+            112,
+            141
+          ],
+          "windowClearanceMm": 6.4031242374328485,
+          "remainingGeometricCapacityCells": 272,
+          "capacityStateId": "sha256:389eec5cc608ba46f68f84c6b1ecb26a18290f2e5f779c1368ea8eab8cd7ee65"
+        },
+        {
+          "boneBoundsMm": [
+            -423.25,
+            -410.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -35.464996337890625,
+              9.441162109375,
+              -424.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 225,
+          "id": "superior-145-133",
+          "outsidePose": {
+            "position": [
+              -35.464996337890625,
+              9.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            145,
+            133,
+            130
+          ],
+          "windowClearanceMm": 7.0710678118654755,
+          "remainingGeometricCapacityCells": 217,
+          "capacityStateId": "sha256:056f725b5faa37ac972b51e13d971131eb0a82e6597e05d4a8e907eb2664c83a"
+        },
+        {
+          "boneBoundsMm": [
+            -422.25,
+            -407.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -16.464996337890625,
+              29.441162109375,
+              -423.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 159,
+          "id": "superior-126-153",
+          "outsidePose": {
+            "position": [
+              -16.464996337890625,
+              29.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            126,
+            153,
+            131
+          ],
+          "windowClearanceMm": 10.44030650891055,
+          "remainingGeometricCapacityCells": 159,
+          "capacityStateId": "sha256:88e41e859fa3f6c8358d6c3022d09daad293e2da8e5424f3f013cb72cee09a26"
+        },
+        {
+          "boneBoundsMm": [
+            -420.25,
+            -407.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -8.464996337890625,
+              33.441162109375,
+              -421.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 134,
+          "id": "superior-118-157",
+          "outsidePose": {
+            "position": [
+              -8.464996337890625,
+              33.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            118,
+            157,
+            133
+          ],
+          "windowClearanceMm": 8.0,
+          "remainingGeometricCapacityCells": 127,
+          "capacityStateId": "sha256:4f26fbcbd40e452db5e62df9f549b54e34c1b9a4bdf592b4d8fa025a3f9b2197"
+        },
+        {
+          "boneBoundsMm": [
+            -416.25,
+            -403.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "entryPose": {
+            "position": [
+              -23.464996337890625,
+              -16.558837890625,
+              -417.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 125,
+          "id": "superior-133-107",
+          "outsidePose": {
+            "position": [
+              -23.464996337890625,
+              -16.558837890625,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            133,
+            107,
+            137
+          ],
+          "windowClearanceMm": 4.123105625617661,
+          "remainingGeometricCapacityCells": 125,
+          "capacityStateId": "sha256:81446cc88de07953a0cd4f10bebd24d7361b04dd89dbe2f64b7a21471ac7f0c4"
+        },
+        {
+          "boneBoundsMm": [
+            -421.25,
+            -409.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "entryPose": {
+            "position": [
+              -34.464996337890625,
+              0.441162109375,
+              -422.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 155,
+          "id": "superior-144-124",
+          "outsidePose": {
+            "position": [
+              -34.464996337890625,
+              0.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            144,
+            124,
+            132
+          ],
+          "windowClearanceMm": 4.123105625617661,
+          "remainingGeometricCapacityCells": 123,
+          "capacityStateId": "sha256:22f9dd776fc48eadea35285ad6626446f1f91f9f3d92a29e170bd410a5727198"
+        },
+        {
+          "boneBoundsMm": [
+            -425.25,
+            -410.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -31.464996337890625,
+              19.441162109375,
+              -426.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 219,
+          "id": "superior-141-143",
+          "outsidePose": {
+            "position": [
+              -31.464996337890625,
+              19.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            141,
+            143,
+            128
+          ],
+          "windowClearanceMm": 7.0,
+          "remainingGeometricCapacityCells": 121,
+          "capacityStateId": "sha256:52806d7d30410567da971e2c530386ccad9800fe6aa5c25d222d119eb0ad1598"
+        },
+        {
+          "boneBoundsMm": [
+            -409.25,
+            -398.25
+          ],
+          "drillRadiusMm": 2.5,
+          "entryPose": {
+            "position": [
+              -7.464996337890625,
+              -4.558837890625,
+              -410.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 178,
+          "id": "superior-117-119",
+          "outsidePose": {
+            "position": [
+              -7.464996337890625,
+              -4.558837890625,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            117,
+            119,
+            144
+          ],
+          "windowClearanceMm": 4.0,
+          "remainingGeometricCapacityCells": 113,
+          "capacityStateId": "sha256:9da8e130b900ca1c07b0e105c7f4e2fa2e3ba08ebf0e0999fff274b05e815555"
+        },
+        {
+          "boneBoundsMm": [
+            -410.25,
+            -399.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "entryPose": {
+            "position": [
+              -0.464996337890625,
+              14.441162109375,
+              -411.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 238,
+          "id": "superior-110-138",
+          "outsidePose": {
+            "position": [
+              -0.464996337890625,
+              14.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            110,
+            138,
+            143
+          ],
+          "windowClearanceMm": 4.123105625617661,
+          "remainingGeometricCapacityCells": 112,
+          "capacityStateId": "sha256:6efaee8358c56a3ecce23f4454c7d69c38d65f7f0127de85ca93f96dcf602e8c"
+        },
+        {
+          "boneBoundsMm": [
+            -419.25,
+            -403.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -22.464996337890625,
+              8.441162109375,
+              -420.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 386,
+          "id": "superior-132-132",
+          "outsidePose": {
+            "position": [
+              -22.464996337890625,
+              8.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            132,
+            132,
+            134
+          ],
+          "windowClearanceMm": 7.280109889280518,
+          "remainingGeometricCapacityCells": 109,
+          "capacityStateId": "sha256:b1ca9208af24647a45ffabe6199702f6211017ea6a1686ee3751357d88a5b732"
+        },
+        {
+          "boneBoundsMm": [
+            -413.25,
+            -400.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              1.535003662109375,
+              21.441162109375,
+              -414.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 272,
+          "id": "superior-108-145",
+          "outsidePose": {
+            "position": [
+              1.535003662109375,
+              21.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            108,
+            145,
+            140
+          ],
+          "windowClearanceMm": 5.0,
+          "remainingGeometricCapacityCells": 95,
+          "capacityStateId": "sha256:15ac467f58db1394ff7a2c7289e008dddedc6195916da06796c366275f8b04ca"
+        },
+        {
+          "boneBoundsMm": [
+            -420.25,
+            -407.25
+          ],
+          "drillRadiusMm": 2.7426406871192848,
+          "entryPose": {
+            "position": [
+              -30.464996337890625,
+              -11.558837890625,
+              -421.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 114,
+          "id": "superior-140-112",
+          "outsidePose": {
+            "position": [
+              -30.464996337890625,
+              -11.558837890625,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            140,
+            112,
+            133
+          ],
+          "windowClearanceMm": 4.242640687119285,
+          "remainingGeometricCapacityCells": 95,
+          "capacityStateId": "sha256:d36ed8664af74a92434bd18de6ee8bd0c53232aec1988138f8f66bcb1bda394f"
+        },
+        {
+          "boneBoundsMm": [
+            -425.25,
+            -410.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -25.464996337890625,
+              28.441162109375,
+              -426.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 136,
+          "id": "superior-135-152",
+          "outsidePose": {
+            "position": [
+              -25.464996337890625,
+              28.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            135,
+            152,
+            128
+          ],
+          "windowClearanceMm": 7.615773105863909,
+          "remainingGeometricCapacityCells": 91,
+          "capacityStateId": "sha256:14e4a07f6e6cd824935232c6f7a0173f320896826cc343ff54bbd8143a71b70d"
+        },
+        {
+          "boneBoundsMm": [
+            -416.25,
+            -403.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -3.464996337890625,
+              28.441162109375,
+              -417.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 214,
+          "id": "superior-113-152",
+          "outsidePose": {
+            "position": [
+              -3.464996337890625,
+              28.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            113,
+            152,
+            137
+          ],
+          "windowClearanceMm": 7.615773105863909,
+          "remainingGeometricCapacityCells": 86,
+          "capacityStateId": "sha256:a815314bfa0f2b829e445d9f55c97f53bf76fddc75754f315b4960f9546732d2"
+        },
+        {
+          "boneBoundsMm": [
+            -412.25,
+            -400.25
+          ],
+          "drillRadiusMm": 2.7426406871192848,
+          "entryPose": {
+            "position": [
+              -15.464996337890625,
+              -7.558837890625,
+              -413.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 252,
+          "id": "superior-125-116",
+          "outsidePose": {
+            "position": [
+              -15.464996337890625,
+              -7.558837890625,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            125,
+            116,
+            141
+          ],
+          "windowClearanceMm": 4.242640687119285,
+          "remainingGeometricCapacityCells": 83,
+          "capacityStateId": "sha256:8af822a4638d906bce9995aee8f445e27f4278d492b80e7a2df15b6b8f230f54"
+        },
+        {
+          "boneBoundsMm": [
+            -424.25,
+            -409.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -16.464996337890625,
+              34.441162109375,
+              -425.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 92,
+          "id": "superior-126-158",
+          "outsidePose": {
+            "position": [
+              -16.464996337890625,
+              34.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            126,
+            158,
+            129
+          ],
+          "windowClearanceMm": 6.324555320336759,
+          "remainingGeometricCapacityCells": 79,
+          "capacityStateId": "sha256:c2349d2f07e51d282cae0e10a91edaada9205ae95ec2fa6dfebe112532eb1b7f"
+        },
+        {
+          "boneBoundsMm": [
+            -422.25,
+            -406.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -26.464996337890625,
+              14.441162109375,
+              -423.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 312,
+          "id": "superior-136-138",
+          "outsidePose": {
+            "position": [
+              -26.464996337890625,
+              14.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            136,
+            138,
+            131
+          ],
+          "windowClearanceMm": 6.082762530298219,
+          "remainingGeometricCapacityCells": 67,
+          "capacityStateId": "sha256:3321329a2e201ffc2c0834546d5923b0f4776b375af98bca415d36f0ec823a6d"
+        },
+        {
+          "boneBoundsMm": [
+            -425.25,
+            -411.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -21.464996337890625,
+              34.441162109375,
+              -426.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 64,
+          "id": "superior-131-158",
+          "outsidePose": {
+            "position": [
+              -21.464996337890625,
+              34.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            131,
+            158,
+            128
+          ],
+          "windowClearanceMm": 5.0,
+          "remainingGeometricCapacityCells": 64,
+          "capacityStateId": "sha256:e71f18cafcc9873cb7aff9363391e20b44cd37414f6c6b35addaec57076214f3"
+        },
+        {
+          "boneBoundsMm": [
+            -414.25,
+            -399.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "entryPose": {
+            "position": [
+              -7.464996337890625,
+              14.441162109375,
+              -415.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 241,
+          "id": "superior-117-138",
+          "outsidePose": {
+            "position": [
+              -7.464996337890625,
+              14.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            117,
+            138,
+            139
+          ],
+          "windowClearanceMm": 4.123105625617661,
+          "remainingGeometricCapacityCells": 60,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -417.25,
+            -404.25
+          ],
+          "drillRadiusMm": 2.5,
+          "entryPose": {
+            "position": [
+              -25.464996337890625,
+              -12.558837890625,
+              -418.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 162,
+          "id": "superior-135-111",
+          "outsidePose": {
+            "position": [
+              -25.464996337890625,
+              -12.558837890625,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            135,
+            111,
+            136
+          ],
+          "windowClearanceMm": 4.0,
+          "remainingGeometricCapacityCells": 57,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -413.25,
+            -401.25
+          ],
+          "drillRadiusMm": 2.7426406871192848,
+          "entryPose": {
+            "position": [
+              -18.464996337890625,
+              -9.558837890625,
+              -414.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 234,
+          "id": "superior-128-114",
+          "outsidePose": {
+            "position": [
+              -18.464996337890625,
+              -9.558837890625,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            128,
+            114,
+            140
+          ],
+          "windowClearanceMm": 4.242640687119285,
+          "remainingGeometricCapacityCells": 54,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -414.25,
+            -401.25
+          ],
+          "drillRadiusMm": 2.9721359549995796,
+          "entryPose": {
+            "position": [
+              -19.464996337890625,
+              2.441162109375,
+              -415.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 285,
+          "id": "superior-129-126",
+          "outsidePose": {
+            "position": [
+              -19.464996337890625,
+              2.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            129,
+            126,
+            139
+          ],
+          "windowClearanceMm": 4.47213595499958,
+          "remainingGeometricCapacityCells": 54,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -415.25,
+            -403.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -22.464996337890625,
+              0.441162109375,
+              -416.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 387,
+          "id": "superior-132-124",
+          "outsidePose": {
+            "position": [
+              -22.464996337890625,
+              0.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            132,
+            124,
+            138
+          ],
+          "windowClearanceMm": 6.082762530298219,
+          "remainingGeometricCapacityCells": 50,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -423.25,
+            -409.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -33.464996337890625,
+              12.441162109375,
+              -424.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 253,
+          "id": "superior-143-136",
+          "outsidePose": {
+            "position": [
+              -33.464996337890625,
+              12.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            143,
+            136,
+            130
+          ],
+          "windowClearanceMm": 7.211102550927978,
+          "remainingGeometricCapacityCells": 49,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -410.25,
+            -398.25
+          ],
+          "drillRadiusMm": 2.9721359549995796,
+          "entryPose": {
+            "position": [
+              -7.464996337890625,
+              -8.558837890625,
+              -411.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 211,
+          "id": "superior-117-115",
+          "outsidePose": {
+            "position": [
+              -7.464996337890625,
+              -8.558837890625,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            117,
+            115,
+            143
+          ],
+          "windowClearanceMm": 4.47213595499958,
+          "remainingGeometricCapacityCells": 47,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -420.25,
+            -408.25
+          ],
+          "drillRadiusMm": 2.9721359549995796,
+          "entryPose": {
+            "position": [
+              -32.464996337890625,
+              -8.558837890625,
+              -421.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 134,
+          "id": "superior-142-115",
+          "outsidePose": {
+            "position": [
+              -32.464996337890625,
+              -8.558837890625,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            142,
+            115,
+            133
+          ],
+          "windowClearanceMm": 4.47213595499958,
+          "remainingGeometricCapacityCells": 47,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -424.25,
+            -410.25
+          ],
+          "drillRadiusMm": 2.5,
+          "entryPose": {
+            "position": [
+              -14.464996337890625,
+              37.441162109375,
+              -425.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 47,
+          "id": "superior-124-161",
+          "outsidePose": {
+            "position": [
+              -14.464996337890625,
+              37.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            124,
+            161,
+            129
+          ],
+          "windowClearanceMm": 4.0,
+          "remainingGeometricCapacityCells": 47,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -420.25,
+            -408.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "entryPose": {
+            "position": [
+              -33.464996337890625,
+              -3.558837890625,
+              -421.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 186,
+          "id": "superior-143-120",
+          "outsidePose": {
+            "position": [
+              -33.464996337890625,
+              -3.558837890625,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            143,
+            120,
+            133
+          ],
+          "windowClearanceMm": 4.123105625617661,
+          "remainingGeometricCapacityCells": 46,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -425.25,
+            -410.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -28.464996337890625,
+              26.441162109375,
+              -426.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 152,
+          "id": "superior-138-150",
+          "outsidePose": {
+            "position": [
+              -28.464996337890625,
+              26.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            138,
+            150,
+            128
+          ],
+          "windowClearanceMm": 7.0710678118654755,
+          "remainingGeometricCapacityCells": 45,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -417.25,
+            -405.25
+          ],
+          "drillRadiusMm": 2.5,
+          "entryPose": {
+            "position": [
+              0.535003662109375,
+              31.441162109375,
+              -418.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 63,
+          "id": "superior-109-155",
+          "outsidePose": {
+            "position": [
+              0.535003662109375,
+              31.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            109,
+            155,
+            136
+          ],
+          "windowClearanceMm": 4.0,
+          "remainingGeometricCapacityCells": 44,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -417.25,
+            -403.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -22.464996337890625,
+              4.441162109375,
+              -418.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 387,
+          "id": "superior-132-128",
+          "outsidePose": {
+            "position": [
+              -22.464996337890625,
+              4.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            132,
+            128,
+            136
+          ],
+          "windowClearanceMm": 6.324555320336759,
+          "remainingGeometricCapacityCells": 44,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -422.25,
+            -405.25
+          ],
+          "drillRadiusMm": 2.5,
+          "entryPose": {
+            "position": [
+              -20.464996337890625,
+              19.441162109375,
+              -423.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 225,
+          "id": "superior-130-143",
+          "outsidePose": {
+            "position": [
+              -20.464996337890625,
+              19.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            130,
+            143,
+            131
+          ],
+          "windowClearanceMm": 4.0,
+          "remainingGeometricCapacityCells": 42,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -415.25,
+            -403.25
+          ],
+          "drillRadiusMm": 2.5,
+          "entryPose": {
+            "position": [
+              0.535003662109375,
+              27.441162109375,
+              -416.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 103,
+          "id": "superior-109-151",
+          "outsidePose": {
+            "position": [
+              0.535003662109375,
+              27.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            109,
+            151,
+            138
+          ],
+          "windowClearanceMm": 4.0,
+          "remainingGeometricCapacityCells": 42,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -417.25,
+            -400.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "entryPose": {
+            "position": [
+              -8.464996337890625,
+              18.441162109375,
+              -418.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 208,
+          "id": "superior-118-142",
+          "outsidePose": {
+            "position": [
+              -8.464996337890625,
+              18.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            118,
+            142,
+            136
+          ],
+          "windowClearanceMm": 4.123105625617661,
+          "remainingGeometricCapacityCells": 42,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -423.25,
+            -408.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -27.464996337890625,
+              19.441162109375,
+              -424.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 265,
+          "id": "superior-137-143",
+          "outsidePose": {
+            "position": [
+              -27.464996337890625,
+              19.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            137,
+            143,
+            130
+          ],
+          "windowClearanceMm": 8.06225774829855,
+          "remainingGeometricCapacityCells": 41,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -424.25,
+            -408.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -26.464996337890625,
+              23.441162109375,
+              -425.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 239,
+          "id": "superior-136-147",
+          "outsidePose": {
+            "position": [
+              -26.464996337890625,
+              23.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            136,
+            147,
+            129
+          ],
+          "windowClearanceMm": 10.0,
+          "remainingGeometricCapacityCells": 39,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -425.25,
+            -412.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "entryPose": {
+            "position": [
+              -37.464996337890625,
+              12.441162109375,
+              -426.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 107,
+          "id": "superior-147-136",
+          "outsidePose": {
+            "position": [
+              -37.464996337890625,
+              12.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            147,
+            136,
+            128
+          ],
+          "windowClearanceMm": 4.123105625617661,
+          "remainingGeometricCapacityCells": 39,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -421.25,
+            -406.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "entryPose": {
+            "position": [
+              -29.464996337890625,
+              6.441162109375,
+              -422.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 216,
+          "id": "superior-139-130",
+          "outsidePose": {
+            "position": [
+              -29.464996337890625,
+              6.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            139,
+            130,
+            132
+          ],
+          "windowClearanceMm": 4.123105625617661,
+          "remainingGeometricCapacityCells": 39,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -414.25,
+            -402.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -20.464996337890625,
+              -6.558837890625,
+              -415.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 358,
+          "id": "superior-130-117",
+          "outsidePose": {
+            "position": [
+              -20.464996337890625,
+              -6.558837890625,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            130,
+            117,
+            139
+          ],
+          "windowClearanceMm": 6.082762530298219,
+          "remainingGeometricCapacityCells": 38,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -422.25,
+            -409.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -33.464996337890625,
+              6.441162109375,
+              -423.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 246,
+          "id": "superior-143-130",
+          "outsidePose": {
+            "position": [
+              -33.464996337890625,
+              6.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            143,
+            130,
+            131
+          ],
+          "windowClearanceMm": 5.830951894845301,
+          "remainingGeometricCapacityCells": 38,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -421.25,
+            -408.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -31.464996337890625,
+              9.441162109375,
+              -422.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 289,
+          "id": "superior-141-133",
+          "outsidePose": {
+            "position": [
+              -31.464996337890625,
+              9.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            141,
+            133,
+            132
+          ],
+          "windowClearanceMm": 7.615773105863909,
+          "remainingGeometricCapacityCells": 38,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -423.25,
+            -407.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -18.464996337890625,
+              26.441162109375,
+              -424.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 211,
+          "id": "superior-128-150",
+          "outsidePose": {
+            "position": [
+              -18.464996337890625,
+              26.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            128,
+            150,
+            130
+          ],
+          "windowClearanceMm": 8.602325267042627,
+          "remainingGeometricCapacityCells": 37,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -424.25,
+            -412.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -37.464996337890625,
+              6.441162109375,
+              -425.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 115,
+          "id": "superior-147-130",
+          "outsidePose": {
+            "position": [
+              -37.464996337890625,
+              6.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            147,
+            130,
+            129
+          ],
+          "windowClearanceMm": 5.385164807134504,
+          "remainingGeometricCapacityCells": 37,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -415.25,
+            -399.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -10.464996337890625,
+              10.441162109375,
+              -416.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 381,
+          "id": "superior-120-134",
+          "outsidePose": {
+            "position": [
+              -10.464996337890625,
+              10.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            120,
+            134,
+            138
+          ],
+          "windowClearanceMm": 5.0990195135927845,
+          "remainingGeometricCapacityCells": 37,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -427.25,
+            -413.25
+          ],
+          "drillRadiusMm": 2.5,
+          "entryPose": {
+            "position": [
+              -32.464996337890625,
+              26.441162109375,
+              -428.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 43,
+          "id": "superior-142-150",
+          "outsidePose": {
+            "position": [
+              -32.464996337890625,
+              26.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            142,
+            150,
+            126
+          ],
+          "windowClearanceMm": 4.0,
+          "remainingGeometricCapacityCells": 35,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -414.25,
+            -400.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "entryPose": {
+            "position": [
+              -16.464996337890625,
+              4.441162109375,
+              -415.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 293,
+          "id": "superior-126-128",
+          "outsidePose": {
+            "position": [
+              -16.464996337890625,
+              4.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            126,
+            128,
+            139
+          ],
+          "windowClearanceMm": 4.123105625617661,
+          "remainingGeometricCapacityCells": 35,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -416.25,
+            -400.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -14.464996337890625,
+              7.441162109375,
+              -417.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 389,
+          "id": "superior-124-131",
+          "outsidePose": {
+            "position": [
+              -14.464996337890625,
+              7.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            124,
+            131,
+            137
+          ],
+          "windowClearanceMm": 6.082762530298219,
+          "remainingGeometricCapacityCells": 34,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -419.25,
+            -404.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -25.464996337890625,
+              6.441162109375,
+              -420.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 362,
+          "id": "superior-135-130",
+          "outsidePose": {
+            "position": [
+              -25.464996337890625,
+              6.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            135,
+            130,
+            134
+          ],
+          "windowClearanceMm": 5.0,
+          "remainingGeometricCapacityCells": 33,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -424.25,
+            -408.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -21.464996337890625,
+              28.441162109375,
+              -425.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 160,
+          "id": "superior-131-152",
+          "outsidePose": {
+            "position": [
+              -21.464996337890625,
+              28.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            131,
+            152,
+            129
+          ],
+          "windowClearanceMm": 9.848857801796104,
+          "remainingGeometricCapacityCells": 32,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -417.25,
+            -404.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -27.464996337890625,
+              -9.558837890625,
+              -418.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 275,
+          "id": "superior-137-114",
+          "outsidePose": {
+            "position": [
+              -27.464996337890625,
+              -9.558837890625,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            137,
+            114,
+            136
+          ],
+          "windowClearanceMm": 6.708203932499369,
+          "remainingGeometricCapacityCells": 32,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -427.25,
+            -412.25
+          ],
+          "drillRadiusMm": 2.9721359549995796,
+          "entryPose": {
+            "position": [
+              -28.464996337890625,
+              30.441162109375,
+              -428.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 34,
+          "id": "superior-138-154",
+          "outsidePose": {
+            "position": [
+              -28.464996337890625,
+              30.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            138,
+            154,
+            126
+          ],
+          "windowClearanceMm": 4.47213595499958,
+          "remainingGeometricCapacityCells": 31,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -418.25,
+            -402.25
+          ],
+          "drillRadiusMm": 2.7426406871192848,
+          "entryPose": {
+            "position": [
+              -19.464996337890625,
+              10.441162109375,
+              -419.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 276,
+          "id": "superior-129-134",
+          "outsidePose": {
+            "position": [
+              -19.464996337890625,
+              10.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            129,
+            134,
+            135
+          ],
+          "windowClearanceMm": 4.242640687119285,
+          "remainingGeometricCapacityCells": 30,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -423.25,
+            -407.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -29.464996337890625,
+              12.441162109375,
+              -424.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 280,
+          "id": "superior-139-136",
+          "outsidePose": {
+            "position": [
+              -29.464996337890625,
+              12.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            139,
+            136,
+            130
+          ],
+          "windowClearanceMm": 9.486832980505138,
+          "remainingGeometricCapacityCells": 29,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -414.25,
+            -401.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "entryPose": {
+            "position": [
+              -19.464996337890625,
+              -1.558837890625,
+              -415.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 277,
+          "id": "superior-129-122",
+          "outsidePose": {
+            "position": [
+              -19.464996337890625,
+              -1.558837890625,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            129,
+            122,
+            139
+          ],
+          "windowClearanceMm": 4.123105625617661,
+          "remainingGeometricCapacityCells": 29,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -427.25,
+            -413.25
+          ],
+          "drillRadiusMm": 2.5,
+          "entryPose": {
+            "position": [
+              -34.464996337890625,
+              21.441162109375,
+              -428.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 88,
+          "id": "superior-144-145",
+          "outsidePose": {
+            "position": [
+              -34.464996337890625,
+              21.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            144,
+            145,
+            126
+          ],
+          "windowClearanceMm": 4.0,
+          "remainingGeometricCapacityCells": 29,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -409.25,
+            -398.25
+          ],
+          "drillRadiusMm": 2.5,
+          "entryPose": {
+            "position": [
+              -6.464996337890625,
+              -0.558837890625,
+              -410.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 302,
+          "id": "superior-116-123",
+          "outsidePose": {
+            "position": [
+              -6.464996337890625,
+              -0.558837890625,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            116,
+            123,
+            144
+          ],
+          "windowClearanceMm": 4.0,
+          "remainingGeometricCapacityCells": 29,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -414.25,
+            -401.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "entryPose": {
+            "position": [
+              -3.464996337890625,
+              21.441162109375,
+              -415.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 210,
+          "id": "superior-113-145",
+          "outsidePose": {
+            "position": [
+              -3.464996337890625,
+              21.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            113,
+            145,
+            139
+          ],
+          "windowClearanceMm": 4.123105625617661,
+          "remainingGeometricCapacityCells": 29,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -424.25,
+            -409.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -31.464996337890625,
+              15.441162109375,
+              -425.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 252,
+          "id": "superior-141-139",
+          "outsidePose": {
+            "position": [
+              -31.464996337890625,
+              15.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            141,
+            139,
+            129
+          ],
+          "windowClearanceMm": 7.615773105863909,
+          "remainingGeometricCapacityCells": 28,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -421.25,
+            -405.25
+          ],
+          "drillRadiusMm": 2.7426406871192848,
+          "entryPose": {
+            "position": [
+              -17.464996337890625,
+              21.441162109375,
+              -422.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 202,
+          "id": "superior-127-145",
+          "outsidePose": {
+            "position": [
+              -17.464996337890625,
+              21.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            127,
+            145,
+            132
+          ],
+          "windowClearanceMm": 4.242640687119285,
+          "remainingGeometricCapacityCells": 28,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -417.25,
+            -406.25
+          ],
+          "drillRadiusMm": 2.7426406871192848,
+          "entryPose": {
+            "position": [
+              -3.464996337890625,
+              32.441162109375,
+              -418.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 89,
+          "id": "superior-113-156",
+          "outsidePose": {
+            "position": [
+              -3.464996337890625,
+              32.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            113,
+            156,
+            136
+          ],
+          "windowClearanceMm": 4.242640687119285,
+          "remainingGeometricCapacityCells": 28,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -418.25,
+            -406.25
+          ],
+          "drillRadiusMm": 2.5,
+          "entryPose": {
+            "position": [
+              -29.464996337890625,
+              -6.558837890625,
+              -419.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 225,
+          "id": "superior-139-117",
+          "outsidePose": {
+            "position": [
+              -29.464996337890625,
+              -6.558837890625,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            139,
+            117,
+            135
+          ],
+          "windowClearanceMm": 4.0,
+          "remainingGeometricCapacityCells": 28,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -411.25,
+            -399.25
+          ],
+          "drillRadiusMm": 2.5,
+          "entryPose": {
+            "position": [
+              -11.464996337890625,
+              -8.558837890625,
+              -412.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 231,
+          "id": "superior-121-115",
+          "outsidePose": {
+            "position": [
+              -11.464996337890625,
+              -8.558837890625,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            121,
+            115,
+            142
+          ],
+          "windowClearanceMm": 4.0,
+          "remainingGeometricCapacityCells": 27,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -414.25,
+            -402.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -1.464996337890625,
+              24.441162109375,
+              -415.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 262,
+          "id": "superior-111-148",
+          "outsidePose": {
+            "position": [
+              -1.464996337890625,
+              24.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            111,
+            148,
+            139
+          ],
+          "windowClearanceMm": 6.708203932499369,
+          "remainingGeometricCapacityCells": 27,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -421.25,
+            -409.25
+          ],
+          "drillRadiusMm": 2.5,
+          "entryPose": {
+            "position": [
+              -8.464996337890625,
+              37.441162109375,
+              -422.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 51,
+          "id": "superior-118-161",
+          "outsidePose": {
+            "position": [
+              -8.464996337890625,
+              37.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            118,
+            161,
+            132
+          ],
+          "windowClearanceMm": 4.0,
+          "remainingGeometricCapacityCells": 27,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -412.25,
+            -400.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "entryPose": {
+            "position": [
+              -17.464996337890625,
+              -4.558837890625,
+              -413.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 271,
+          "id": "superior-127-119",
+          "outsidePose": {
+            "position": [
+              -17.464996337890625,
+              -4.558837890625,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            127,
+            119,
+            141
+          ],
+          "windowClearanceMm": 4.123105625617661,
+          "remainingGeometricCapacityCells": 26,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -425.25,
+            -410.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -30.464996337890625,
+              23.441162109375,
+              -426.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 161,
+          "id": "superior-140-147",
+          "outsidePose": {
+            "position": [
+              -30.464996337890625,
+              23.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            140,
+            147,
+            128
+          ],
+          "windowClearanceMm": 6.708203932499369,
+          "remainingGeometricCapacityCells": 26,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -423.25,
+            -406.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -20.464996337890625,
+              23.441162109375,
+              -424.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 272,
+          "id": "superior-130-147",
+          "outsidePose": {
+            "position": [
+              -20.464996337890625,
+              23.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            130,
+            147,
+            130
+          ],
+          "windowClearanceMm": 7.810249675906654,
+          "remainingGeometricCapacityCells": 26,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -417.25,
+            -401.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -19.464996337890625,
+              6.441162109375,
+              -418.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 398,
+          "id": "superior-129-130",
+          "outsidePose": {
+            "position": [
+              -19.464996337890625,
+              6.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            129,
+            130,
+            136
+          ],
+          "windowClearanceMm": 7.211102550927978,
+          "remainingGeometricCapacityCells": 26,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -424.25,
+            -408.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -23.464996337890625,
+              25.441162109375,
+              -425.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 216,
+          "id": "superior-133-149",
+          "outsidePose": {
+            "position": [
+              -23.464996337890625,
+              25.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            133,
+            149,
+            129
+          ],
+          "windowClearanceMm": 10.44030650891055,
+          "remainingGeometricCapacityCells": 25,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -426.25,
+            -411.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "entryPose": {
+            "position": [
+              -34.464996337890625,
+              17.441162109375,
+              -427.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 140,
+          "id": "superior-144-141",
+          "outsidePose": {
+            "position": [
+              -34.464996337890625,
+              17.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            144,
+            141,
+            127
+          ],
+          "windowClearanceMm": 4.123105625617661,
+          "remainingGeometricCapacityCells": 25,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -410.25,
+            -399.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "entryPose": {
+            "position": [
+              -9.464996337890625,
+              -11.558837890625,
+              -411.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 212,
+          "id": "superior-119-112",
+          "outsidePose": {
+            "position": [
+              -9.464996337890625,
+              -11.558837890625,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            119,
+            112,
+            143
+          ],
+          "windowClearanceMm": 4.123105625617661,
+          "remainingGeometricCapacityCells": 24,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -422.25,
+            -405.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -15.464996337890625,
+              24.441162109375,
+              -423.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 228,
+          "id": "superior-125-148",
+          "outsidePose": {
+            "position": [
+              -15.464996337890625,
+              24.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            125,
+            148,
+            131
+          ],
+          "windowClearanceMm": 5.385164807134504,
+          "remainingGeometricCapacityCells": 23,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -423.25,
+            -411.25
+          ],
+          "drillRadiusMm": 2.9721359549995796,
+          "entryPose": {
+            "position": [
+              -37.464996337890625,
+              2.441162109375,
+              -424.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 51,
+          "id": "superior-147-126",
+          "outsidePose": {
+            "position": [
+              -37.464996337890625,
+              2.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            147,
+            126,
+            130
+          ],
+          "windowClearanceMm": 4.47213595499958,
+          "remainingGeometricCapacityCells": 22,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -420.25,
+            -408.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -5.464996337890625,
+              35.441162109375,
+              -421.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 99,
+          "id": "superior-115-159",
+          "outsidePose": {
+            "position": [
+              -5.464996337890625,
+              35.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            115,
+            159,
+            133
+          ],
+          "windowClearanceMm": 5.0,
+          "remainingGeometricCapacityCells": 22,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -416.25,
+            -404.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "entryPose": {
+            "position": [
+              -25.464996337890625,
+              -1.558837890625,
+              -417.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 255,
+          "id": "superior-135-122",
+          "outsidePose": {
+            "position": [
+              -25.464996337890625,
+              -1.558837890625,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            135,
+            122,
+            137
+          ],
+          "windowClearanceMm": 4.123105625617661,
+          "remainingGeometricCapacityCells": 22,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -415.25,
+            -403.25
+          ],
+          "drillRadiusMm": 2.9721359549995796,
+          "entryPose": {
+            "position": [
+              -23.464996337890625,
+              -8.558837890625,
+              -416.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 226,
+          "id": "superior-133-115",
+          "outsidePose": {
+            "position": [
+              -23.464996337890625,
+              -8.558837890625,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            133,
+            115,
+            138
+          ],
+          "windowClearanceMm": 4.47213595499958,
+          "remainingGeometricCapacityCells": 21,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -415.25,
+            -402.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -22.464996337890625,
+              -3.558837890625,
+              -416.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 381,
+          "id": "superior-132-120",
+          "outsidePose": {
+            "position": [
+              -22.464996337890625,
+              -3.558837890625,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            132,
+            120,
+            138
+          ],
+          "windowClearanceMm": 7.0710678118654755,
+          "remainingGeometricCapacityCells": 19,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -418.25,
+            -403.25
+          ],
+          "drillRadiusMm": 2.9721359549995796,
+          "entryPose": {
+            "position": [
+              -11.464996337890625,
+              23.441162109375,
+              -419.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 176,
+          "id": "superior-121-147",
+          "outsidePose": {
+            "position": [
+              -11.464996337890625,
+              23.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            121,
+            147,
+            135
+          ],
+          "windowClearanceMm": 4.47213595499958,
+          "remainingGeometricCapacityCells": 18,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -412.25,
+            -399.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "entryPose": {
+            "position": [
+              -0.464996337890625,
+              18.441162109375,
+              -413.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 224,
+          "id": "superior-110-142",
+          "outsidePose": {
+            "position": [
+              -0.464996337890625,
+              18.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            110,
+            142,
+            141
+          ],
+          "windowClearanceMm": 4.123105625617661,
+          "remainingGeometricCapacityCells": 18,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -421.25,
+            -405.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -13.464996337890625,
+              27.441162109375,
+              -422.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 204,
+          "id": "superior-123-151",
+          "outsidePose": {
+            "position": [
+              -13.464996337890625,
+              27.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            123,
+            151,
+            132
+          ],
+          "windowClearanceMm": 8.0,
+          "remainingGeometricCapacityCells": 17,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -422.25,
+            -407.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -13.464996337890625,
+              32.441162109375,
+              -423.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 130,
+          "id": "superior-123-156",
+          "outsidePose": {
+            "position": [
+              -13.464996337890625,
+              32.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            123,
+            156,
+            131
+          ],
+          "windowClearanceMm": 9.055385138137417,
+          "remainingGeometricCapacityCells": 15,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -414.25,
+            -399.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -10.464996337890625,
+              6.441162109375,
+              -415.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 417,
+          "id": "superior-120-130",
+          "outsidePose": {
+            "position": [
+              -10.464996337890625,
+              6.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            120,
+            130,
+            139
+          ],
+          "windowClearanceMm": 7.615773105863909,
+          "remainingGeometricCapacityCells": 15,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -413.25,
+            -398.25
+          ],
+          "drillRadiusMm": 2.6231056256176606,
+          "entryPose": {
+            "position": [
+              -7.464996337890625,
+              8.441162109375,
+              -414.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 273,
+          "id": "superior-117-132",
+          "outsidePose": {
+            "position": [
+              -7.464996337890625,
+              8.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            117,
+            132,
+            140
+          ],
+          "windowClearanceMm": 4.123105625617661,
+          "remainingGeometricCapacityCells": 15,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -424.25,
+            -409.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -19.464996337890625,
+              31.441162109375,
+              -425.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 107,
+          "id": "superior-129-155",
+          "outsidePose": {
+            "position": [
+              -19.464996337890625,
+              31.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            129,
+            155,
+            129
+          ],
+          "windowClearanceMm": 8.48528137423857,
+          "remainingGeometricCapacityCells": 14,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -423.25,
+            -406.25
+          ],
+          "drillRadiusMm": 2.9721359549995796,
+          "entryPose": {
+            "position": [
+              -24.464996337890625,
+              17.441162109375,
+              -424.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 189,
+          "id": "superior-134-141",
+          "outsidePose": {
+            "position": [
+              -24.464996337890625,
+              17.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            134,
+            141,
+            130
+          ],
+          "windowClearanceMm": 4.47213595499958,
+          "remainingGeometricCapacityCells": 14,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -422.25,
+            -409.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -11.464996337890625,
+              35.441162109375,
+              -423.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 101,
+          "id": "superior-121-159",
+          "outsidePose": {
+            "position": [
+              -11.464996337890625,
+              35.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            121,
+            159,
+            131
+          ],
+          "windowClearanceMm": 6.708203932499369,
+          "remainingGeometricCapacityCells": 14,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -418.25,
+            -404.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -9.464996337890625,
+              26.441162109375,
+              -419.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 233,
+          "id": "superior-119-150",
+          "outsidePose": {
+            "position": [
+              -9.464996337890625,
+              26.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            119,
+            150,
+            135
+          ],
+          "windowClearanceMm": 8.06225774829855,
+          "remainingGeometricCapacityCells": 14,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -421.25,
+            -404.25
+          ],
+          "drillRadiusMm": 2.7426406871192848,
+          "entryPose": {
+            "position": [
+              -23.464996337890625,
+              12.441162109375,
+              -422.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 253,
+          "id": "superior-133-136",
+          "outsidePose": {
+            "position": [
+              -23.464996337890625,
+              12.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            133,
+            136,
+            132
+          ],
+          "windowClearanceMm": 4.242640687119285,
+          "remainingGeometricCapacityCells": 11,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -416.25,
+            -403.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -5.464996337890625,
+              25.441162109375,
+              -417.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 263,
+          "id": "superior-115-149",
+          "outsidePose": {
+            "position": [
+              -5.464996337890625,
+              25.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            115,
+            149,
+            137
+          ],
+          "windowClearanceMm": 8.06225774829855,
+          "remainingGeometricCapacityCells": 11,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -418.25,
+            -405.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -6.464996337890625,
+              30.441162109375,
+              -419.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 178,
+          "id": "superior-116-154",
+          "outsidePose": {
+            "position": [
+              -6.464996337890625,
+              30.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            116,
+            154,
+            135
+          ],
+          "windowClearanceMm": 7.810249675906654,
+          "remainingGeometricCapacityCells": 8,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        },
+        {
+          "boneBoundsMm": [
+            -425.25,
+            -410.25
+          ],
+          "drillRadiusMm": 3.0,
+          "entryPose": {
+            "position": [
+              -23.464996337890625,
+              31.441162109375,
+              -426.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "evidence": "supplied labels only; attachments and complete functional anatomy UNKNOWN",
+          "geometricTargetCapacityCells": 81,
+          "id": "superior-133-155",
+          "outsidePose": {
+            "position": [
+              -23.464996337890625,
+              31.441162109375,
+              -366.25
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "strategy": "dense-tapered-superior",
+          "targetEntryIndex": [
+            133,
+            155,
+            128
+          ],
+          "windowClearanceMm": 6.324555320336759,
+          "remainingGeometricCapacityCells": 6,
+          "capacityStateId": "sha256:e546d8a21663064bd9351a3ec9e084866699dcc6ff7dd4956bffad2b457cff89"
+        }
+      ],
+      "accessIndex": 26,
+      "accessAxis": 2,
+      "passIndex": 0,
+      "passStartTargetMm3": 433.0,
+      "drillAttempts": 2,
+      "cycleStartTargetMm3": 35444.0,
+      "cycleBoneRemovedCells": 1,
+      "coreSearchExhausted": false,
+      "coreAttempts": 0,
+      "corePositioning": 0
+    },
+    "qualification": "Unfinished routes and residual target are retained. This work budget does not establish maximal removal or residual unresectability."
+  },
+  "resectionSchedulingPermitted": false,
+  "pauseFlagRetained": true
+}

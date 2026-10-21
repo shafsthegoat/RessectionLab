@@ -117,6 +117,17 @@ test("annotation centering is unavailable for absent, empty or stale-case annota
   const absent = await hydrateCase(input, api());
   assert.equal(annotationCenter(input, absent), null);
 });
+test("generated target centering is not diluted by a much larger brain extraction",async()=>{
+  for(const frame of ['RAS+','LPS+']){
+    const input=fixture();input.frame=frame;
+    input.metadata.anatomy_layers={brain:{kind:'brain',provenance:'estimated'},enhancing_target:{kind:'tumor',provenance:'simulated'}};
+    input.compartments.unshift({name:'brain',volumeMm3:192,array:descriptor('uint8','brain')});
+    const data=await hydrateCase(input,api({brain:new Uint8Array(8).fill(1)}));
+    const before=data.compartments.map(layer=>layer.mask.slice());
+    assert.deepEqual(annotationCenter(input,data),frame==='LPS+'?[-12,2,11]:[12,-2,11]);
+    assert.deepEqual(data.compartments.map(layer=>layer.mask),before);
+  }
+});
 test("MRI and mask encodings are rejected before transfer", async () => {
   const mutations = [
     (p) => (p.mri.dtype = "float64"),
@@ -211,4 +222,13 @@ test("semantic colors do not depend on compartment order", () => {
   assert.equal(anatomyColor("enhancing_target"), "#e5a269");
   assert.equal(anatomyColor("nonenhancing_or_necrotic_core"), "#b894d9");
   assert.equal(anatomyColor("FLAIR_abnormality"), "#55bace");
+});
+
+test('segmentation-only import retains zero source intensities with a usable display window',async()=>{
+ const input=fixture();input.metadata={generated_signal:true};input.intensityRange=[0,0];
+ const image=new Uint8Array(new Float32Array(8).buffer);
+ const data=await hydrateCase(input,api({mri:image}));
+ assert.deepEqual([...data.mri],Array(8).fill(0));assert.deepEqual(data.intensityRange,[-.5,.5]);
+ assert.deepEqual(input.intensityRange,[0,0]);
+ input.metadata={};assert.throws(()=>validateCaseDescriptor(input),/intensity range/);
 });

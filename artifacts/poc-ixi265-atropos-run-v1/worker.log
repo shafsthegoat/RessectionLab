@@ -1,0 +1,12 @@
+Matplotlib is building the font cache; this may take a moment.
+/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/scripts/poc_ixi265_atropos.py:276: DeprecationWarning: __array__ implementation doesn't accept a copy keyword, so passing copy=False failed. __array__ must implement 'dtype' and 'copy' keyword arguments. To learn more, see the migration guide https://numpy.org/devdocs/numpy_2_0_migration_guide.html#adapting-to-changes-in-the-copy-keyword
+  values = np.array(image.dataobj, dtype=np.float32)
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/scripts/poc_ixi265_atropos.py", line 381, in <module>
+    worker(args.worker)
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/scripts/poc_ixi265_atropos.py", line 280, in worker
+    corrected, labels, posteriors, audit = fit_arrays(values, mask, image.affine, ants)
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/scripts/poc_ixi265_atropos.py", line 178, in fit_arrays
+    raise ValueError("Bounded finite 3D source with positive masked T1 intensities required")
+ValueError: Bounded finite 3D source with positive masked T1 intensities required

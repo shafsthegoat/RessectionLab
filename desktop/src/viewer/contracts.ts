@@ -20,6 +20,10 @@ export interface ViewerVolume {
   tractography?: Array<{id:string;label:string;points:Float32Array;offsets:Uint32Array}>;
   compartments: Array<{
     name: string;
+    kind?: string;
+    sourceIdentity?: string;
+    qa?: AnatomyQuality;
+    surfaceDiagnostics?: import('./surfacePolicy').SurfaceDiagnostics;
     mask: Uint8Array;
     labelSet?: string;
     labelValue?: number;
@@ -29,6 +33,13 @@ export interface ViewerVolume {
     /** Cached indexed display geometry. Masks remain the quantitative source. */
     surface?: {positions: Float32Array; source: Float32Array; normals: Float32Array; sourceNormals: Float32Array; indices: Uint32Array};
   }>;
+}
+
+export interface AnatomyQuality {
+  sourceIdentity:string; voxelCount:number; componentCount:number;
+  largestComponentFraction:number|null; boundaryTouchingVoxels:number;
+  probabilityMismatchVoxels:number|null; reviewStatus:string;
+  issues:string[]; accuracy:'unmeasured';
 }
 
 export interface ViewerRoute {
@@ -48,6 +59,7 @@ export interface ViewerRoute {
 }
 
 export interface ViewerWorkspaceProps {
+  surgicalInteraction?: import("../surgical-types").SurgicalInteraction;
   onSliceStroke?: (point: Point3 | null, phase: 'start' | 'move' | 'end') => void;
   workspaceSettings?: import('./workspaceSettings').ViewerWorkspaceSettings;
   onWorkspaceSettingsChange?: (settings: import('./workspaceSettings').ViewerWorkspaceSettings) => void;
@@ -61,6 +73,7 @@ export interface ViewerWorkspaceProps {
   publicGoal?: import('./publicGoal').ViewerPublicGoal | null;
   /** Analytic software-fixture intensities; never an acquired MRI. */
   generatedSignal?: boolean;
+  segmentationOnly?: boolean;
   caseData: ViewerVolume | null;
   visibleLayers: Record<string, boolean>;
   overlayOpacity: number;
@@ -68,7 +81,11 @@ export interface ViewerWorkspaceProps {
   onCursorChange: (point: Point3) => void;
   routes: ViewerRoute[];
   cameraMode: "anatomy" | "instruments";
+  /** Explicit framing command; mode changes alone preserve a restored camera. */
+  cameraFitRequest?:number;
   replay?: ViewerReplay | null;
+  /** Separate source-bound patient research state; never legacy replay acceptance. */
+  rehearsalState?: ViewerRehearsalState | null;
   /** Checked generated passive motion; separate from removal replay. */
   passiveReplay?: ViewerPassiveReplay | null;
   structuralProposal?: ViewerStructuralProposal | null;
@@ -158,4 +175,27 @@ export interface ViewerPassiveReplay {
   /** Primary geometry checker covers pair clearance; independent checker covers tissue only. */
   primaryPairClearanceChecked: true;
   independentTissueMotionChecked: true;
+}
+
+/** Patient-source research episode. Its scope never asserts clinical validation or
+ * acceptance by the generated-fixture legacy replay checker. */
+export interface ViewerRehearsalState {
+  scope: 'source-bound-post-exposure-research';
+  caseHash: string;
+  episodeId: string;
+  stateId: string;
+  frameIndex: number;
+  stepCount: number;
+  shape: Shape3;
+  affine: Affine;
+  frame: 'RAS+';
+  elapsedSeconds: number;
+  kind: string;
+  tools: import('../rehearsal-types').RehearsalTool[];
+  removedMask: Uint8Array;
+  assumedExposureMask: Uint8Array;
+  fieldContactMask: Uint8Array;
+  contactMask: Uint8Array;
+  metrics: import('../rehearsal-types').RehearsalMetrics;
+  recordedEpisodeBounds: import('./recordedTool').RecordedEpisodeBounds;
 }

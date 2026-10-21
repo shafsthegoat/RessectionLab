@@ -1,25 +1,50 @@
+import {useState} from 'react';
 import {studyLabel} from './native-study-state';
-import type {CasePayload,ResectionApi} from './types';
+import type {CasePayload,ResectionApi,CaseLibraryFolder} from './types';
 import {ImagingWorkspacePanel} from './ImagingWorkspacePanel';
 import type {DisplaySeriesView,ImportDisplaySeriesRequest} from './workspace-imaging-types';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
-export type LibraryCase={id:string;title:string;recent:boolean;bytes:number;native?:boolean;portable?:boolean;timepoint?:string;scanCount?:number};
+export type LibraryCase={id:string;title:string;recent:boolean;bytes:number;native?:boolean;portable?:boolean;timepoint?:string;scanCount?:number;qualifiedCatalog?:boolean;source?:string;anatomy?:string[];missingAnatomy?:string[];sourceLocation?:{label:string;status:'source-reported-unreviewed'}};
 export type AnatomyRecord={label?:string;provenance?:string;kind?:string;coverage?:string;review_status?:string;runtime_seconds?:number;
   source_sha256?:string;cache_key?:string;model?:{name?:string;version?:string;license?:string;requirements?:string;weights_path?:string;weights_sha256?:string;device?:string;peak_memory_bytes?:number}};
 export function anatomyDescription(record:AnatomyRecord|undefined,fallback:string):string {
   if(!record)return fallback;
+  if(record.provenance==='simulated'||record.provenance==='generated')return `Generated research geometry · Unvalidated${record.coverage?'. '+record.coverage:''}`;
   if(record.provenance==='estimated')return `${record.model?.name??'Model'} estimate · ${record.review_status??'Unreviewed'}${record.coverage?'. '+record.coverage:''}`;
-  return `Source-provided annotation${record.coverage?'. '+record.coverage:''}`;
+  if(record.provenance==='source-provided'||record.provenance==='observed')return `Source-provided annotation${record.coverage?'. '+record.coverage:''}`;
+  return `${fallback}${record.coverage?'. '+record.coverage:''}`;
 }
-export function CaseLibraryPanel({cases,onOpen,onBrowse,busy}:{cases:LibraryCase[];onOpen:(id:string)=>void;onBrowse:()=>void;busy:boolean}) {
+/** Search only this row's own displayed identity, present anatomy and source report. Catalog
+ * receipts contain evidence about other people and must not enter search text. */
+export function filterLibraryCases(cases:LibraryCase[],query:string):LibraryCase[] {
+  const normalize=(value:string)=>value.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+  const terms=normalize(query.trim()).split(/\s+/).filter(Boolean);
+  if(!terms.length)return cases;
+  return cases.filter(row=>{const location=row.qualifiedCatalog&&row.sourceLocation?.status==='source-reported-unreviewed'?row.sourceLocation.label:'';
+    const text=normalize([row.title,row.source??'',...(row.anatomy??[]),location].join(' '));return terms.every(term=>text.includes(term));});
+}
+export function CaseLibraryPanel({cases,onOpen,onBrowse,busy,libraryFolder,onChooseLibrary,libraryError}:{cases:LibraryCase[];onOpen:(id:string)=>void;onBrowse:()=>void;busy:boolean;libraryFolder?:CaseLibraryFolder|null;onChooseLibrary?:()=>void;libraryError?:string|null}) {
+  const [query,setQuery]=useState('');
+  const shown=filterLibraryCases(cases,query),hasCatalog=cases.some(row=>row.qualifiedCatalog);
   return <section className="poc-case-library" aria-label="Saved cases">
-    <span className="eyebrow">CASES ON THIS MAC</span><h2>Pick up where you left off</h2>
-    <p className="muted-note">Original images, saved masks and your view travel together in one case.</p>
+    <span className="eyebrow">CASES ON THIS MAC</span><h2>Find a case</h2>
+    <p className="muted-note">Open a saved study or explore source-checked research cases.</p>
     <button className="outline-button" onClick={onBrowse} disabled={busy}>Open a saved case…</button>
-    {cases.map(row=><button className="poc-case-card" key={row.id} onClick={()=>onOpen(row.id)} disabled={busy}>
-      <strong>{row.title}</strong><span>{row.recent?'Recently opened':'Prepared public case'} · {row.native?`${studyLabel(row.timepoint??'preoperative')} · ${row.scanCount??0} scans`:row.portable?'Portable patient study':`${(row.bytes/1048576).toFixed(0)} MB`}</span>
+    {onChooseLibrary&&<div className="poc-library-folder">
+      <span>Case library folder</span><p>{libraryFolder?.folder??'No library folder selected'}</p>
+      <button className="outline-button" onClick={onChooseLibrary} disabled={busy}>Choose case library…</button>
+      {!libraryFolder?.folder&&<small>Choose the folder containing your source-checked case catalog.</small>}
+    </div>}
+    {(libraryError||libraryFolder?.error)&&<p className="poc-caution" role="alert">{libraryError||libraryFolder?.error}</p>}
+    <label>Search cases<input type="search" aria-label="Search cases by name, source, anatomy or reported site" placeholder="Name, source, anatomy or reported site" value={query} maxLength={100} onChange={event=>setQuery(event.target.value)} style={{width:'100%',marginTop:7}}/></label>
+    <p className="muted-note" role="status">{shown.length} {shown.length===1?'case':'cases'}{query.trim()?` matching “${query.trim()}”`:''}</p>
+    {shown.map(row=><button className="poc-case-card" key={row.id} onClick={()=>onOpen(row.id)} disabled={busy}>
+      <strong>{row.title}</strong><span>{row.recent?'Recently opened':row.qualifiedCatalog?`${row.source} catalog`:'Prepared public case'} · {row.native?`${studyLabel(row.timepoint??'preoperative')} · ${row.scanCount??0} scans`:row.portable?'Portable patient study':`${(row.bytes/1048576).toFixed(0)} MB`}</span>
+      {row.qualifiedCatalog&&<><span>{row.anatomy?.length?row.anatomy.map(name=>name[0].toUpperCase()+name.slice(1)).join(' + '):'Anatomy coverage unknown'}</span><span>Source checked · anatomy unreviewed</span></>}
+      {row.qualifiedCatalog&&row.sourceLocation?.status==='source-reported-unreviewed'&&<span className="poc-source-location">Reported site: {row.sourceLocation.label}<small>Dataset / paper report · review pending</small></span>}
     </button>)}
-    {!cases.length&&<p className="muted-note">Open or import imaging to start a case.</p>}
+    {!shown.length&&<p className="muted-note">{cases.length?'No matching cases. Try a different name, source, anatomy or reported site.':'Open or import imaging to start a case.'}</p>}
+    {hasCatalog&&<p className="muted-note">Catalog entries are existing source cases. Anatomical accuracy and independence across datasets remain unverified.</p>}
   </section>;
 }
 export function WorkbenchDataPanel(props:{source:CasePayload;displayed:CasePayload;series:DisplaySeriesView[];selectedId:string|null;busy:boolean;

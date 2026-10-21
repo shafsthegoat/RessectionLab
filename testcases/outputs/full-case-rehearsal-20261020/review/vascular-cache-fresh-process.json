@@ -1,0 +1,56 @@
+{
+  "schema": "resectionlab.independent-cache-fresh-process.v1",
+  "status": "passed",
+  "canonicalReplayRepeated": false,
+  "native": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/vascular-v2/vascular.ressectionlab",
+  "cacheOnly": true,
+  "guiVerified": false,
+  "boundaries": [
+    {
+      "position": 73,
+      "stateId": "sha256:af496ffbde3ca2ab71477c9226fe9f846f08171efd308362431414584cd3c87e"
+    },
+    {
+      "position": 0,
+      "stateId": "sha256:bf1f102c626fc55cd3c93ffd6fb661473ed16d18f865ac61507a0960def18314"
+    },
+    {
+      "position": 48,
+      "stateId": "sha256:b101eaaeeb3738786d912cd8136bdd7c1d69a6c71a4c9fade7610e93d751821f"
+    },
+    {
+      "position": 51,
+      "stateId": "sha256:927d72ad12a5636538851487751fbdcbdf4fbcce60f80240af9e93dffd2ab775"
+    },
+    {
+      "position": 56,
+      "stateId": "sha256:7817bd9600d0d5c8a30baa4e1fb6ce13c594ae3854885528b364cc996593dc86"
+    },
+    {
+      "position": 42,
+      "stateId": "sha256:6817a85eae927401b66d32eff4627d66c73a37da9fb19b481085c12496c38bd4"
+    },
+    {
+      "position": 58,
+      "stateId": "sha256:e1b4b18551b833ea0cccb90e3af462663964b9964aec1944a875d6de2e00c213"
+    },
+    {
+      "position": 69,
+      "stateId": "sha256:047e5144acccc5d3ebba8f59ba169c7a3ff16a255dce9da081af5012e3e3c30f"
+    },
+    {
+      "position": 73,
+      "stateId": "sha256:af496ffbde3ca2ab71477c9226fe9f846f08171efd308362431414584cd3c87e"
+    }
+  ],
+  "cache": {
+    "diskBytes": 8668029,
+    "maxDiskBytes": 536870912,
+    "ownedMemoryCacheBytes": 0,
+    "maxMemoryCacheBytes": 134217728,
+    "maxTransientJsonBytes": 134217728,
+    "hits": 9,
+    "misses": 0,
+    "publications": 0
+  }
+}

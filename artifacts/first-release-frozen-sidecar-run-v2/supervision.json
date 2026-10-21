@@ -1,0 +1,28 @@
+{
+  "carried_new_bytes": 457424758,
+  "cumulative_new_bytes": 1343816993,
+  "elapsed_seconds": 18.321793333860114,
+  "environment_values_logged": false,
+  "exit_code": 0,
+  "growth_ledger_sha256": "3f0a8fe5f2e51d6fb27062dbe9301fda446566569485301473e466717b2929d9",
+  "limits": {
+    "available_bytes": 1073741824,
+    "free_disk_bytes": 53687091200,
+    "interval_seconds": 0.2,
+    "new_bytes": 4294967296,
+    "rss_bytes": 4294967296,
+    "wall_seconds": 300
+  },
+  "maximum_sample_gap_seconds": 0.21179158403538167,
+  "minimum_available_memory_bytes": 5404098560,
+  "minimum_free_disk_bytes": 338594381824,
+  "os_hard_caps": false,
+  "peak_family_plus_supervisor_rss_bytes": 3816112128,
+  "root_release_sha256": "176550ef8e725497e2da4f52779fc0e84161c10a3b1bf3a6f676c8dc6dc6b7d4",
+  "sampled_stop_enforcement": true,
+  "samples": 88,
+  "schema": "first-release-frozen-sidecar-supervision-v2",
+  "status": "completed_unverified",
+  "watchdog_sha256": "9f152233ed14ea0d99635b696d10eaeec329780a3a84974ccf620a90ae8acf55",
+  "worker_reaped": true
+}

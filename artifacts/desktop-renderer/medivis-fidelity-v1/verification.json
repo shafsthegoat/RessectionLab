@@ -1,0 +1,196 @@
+{
+  "passed": true,
+  "reports": {
+    "sub06UiMotion": "report.json",
+    "sub06FinalDefaultsPersistence": "recheck-final/report.json",
+    "independentMraFull": "mra/report.json",
+    "mraSuperiorMinimum": "mra-superior/report.json",
+    "attemptHistory": "attempts.json"
+  },
+  "sourceIntegrity": {
+    "sub06": {
+      "manifestAndAllSourceArraysUnchanged": true,
+      "arrayCount": 25
+    },
+    "ixi265Mra": {
+      "manifestAndAllSourceArraysUnchanged": true,
+      "arrayCount": 2
+    }
+  },
+  "intactDefaultPerformance": [
+    {
+      "presentation": "Segmentation",
+      "source": "t1ce",
+      "sourceScope": "all",
+      "clipping": "disabled by presentation reset",
+      "dragStarted": 48463.118167,
+      "dragEnded": 50533.51675,
+      "dragMilliseconds": 2070.398583000002,
+      "idleMilliseconds": 1001.4308749999982,
+      "deliveredFrames": 63,
+      "totalSubscriptionFrames": 68,
+      "totalElapsedMs": 3073.0221660000025,
+      "medianFps": 26.18146615058456,
+      "p95FrameMs": 44.37958300000173,
+      "captureOverhead": false,
+      "cpuEnvironment": "run after desktop/Python suites completed",
+      "refinement": {
+        "durationField": "milliseconds",
+        "completedCount": 1,
+        "p50Ms": 559.5999999046326,
+        "p95Ms": 559.5999999046326,
+        "maxMs": 559.5999999046326
+      }
+    },
+    {
+      "presentation": "Vascular",
+      "source": "t1ce",
+      "sourceScope": "all",
+      "clipping": "disabled by presentation reset",
+      "dragStarted": 54971.711333,
+      "dragEnded": 57076.7485,
+      "dragMilliseconds": 2105.0371670000022,
+      "idleMilliseconds": 1000.349374999998,
+      "deliveredFrames": 63,
+      "totalSubscriptionFrames": 68,
+      "totalElapsedMs": 3105.6878750000033,
+      "medianFps": 25.36952295782976,
+      "p95FrameMs": 45.19066700000258,
+      "captureOverhead": false,
+      "cpuEnvironment": "run after desktop/Python suites completed",
+      "refinement": {
+        "durationField": "milliseconds",
+        "completedCount": 1,
+        "p50Ms": 499.59999990463257,
+        "p95Ms": 499.59999990463257,
+        "maxMs": 499.59999990463257
+      }
+    },
+    {
+      "presentation": "Vascular",
+      "source": "mra",
+      "sourceScope": "all",
+      "clipping": "disabled by presentation reset",
+      "dragStarted": 29130.29775,
+      "dragEnded": 31212.235584,
+      "dragMilliseconds": 2081.9378339999967,
+      "idleMilliseconds": 1001.3689160000031,
+      "deliveredFrames": 63,
+      "totalSubscriptionFrames": 66,
+      "totalElapsedMs": 3086.121708999999,
+      "medianFps": 31.17417563711425,
+      "p95FrameMs": 44.04095800000141,
+      "captureOverhead": false,
+      "cpuEnvironment": "run after desktop/Python suites completed",
+      "refinement": {
+        "durationField": "milliseconds",
+        "completedCount": 1,
+        "p50Ms": 362.7000002861023,
+        "p95Ms": 362.7000002861023,
+        "maxMs": 362.7000002861023
+      }
+    }
+  ],
+  "measurementLimits": [
+    "Separate patient studies, no fusion or new registration acceptance.",
+    "Each default benchmark uses one actual ~2.1-second orbit and one completed post-drag refinement; reported p50/p95 refinement values have N=1.",
+    "Median/p95 presented frame intervals use only exact drag start/end; separate 1-second idle is excluded.",
+    "Initial sub06 full-run frame measurement was clipped after cutaway and is superseded for default presentation claims.",
+    "Working set and ps RSS are point-in-time process metrics; summed individual process peak working sets do not establish a simultaneous whole-app peak."
+  ],
+  "motion": {
+    "sub06Frames": 39,
+    "mraFrames": 39,
+    "rawFrames": "ignored outputs/medivis-fidelity-v1/{sub06,mra}/{orbit,cutaway}",
+    "timestamps": [
+      "motion/frames.json",
+      "mra/motion/frames.json"
+    ]
+  },
+  "minimumWindow": {
+    "requested": [
+      1050,
+      720
+    ],
+    "actual": [
+      1050,
+      720
+    ],
+    "content": [
+      1050,
+      688
+    ]
+  },
+  "hardware": {
+    "model": "Mac14,9",
+    "chip": "Apple M2 Pro",
+    "memoryBytes": 17179869184,
+    "macOS": "26.5.2",
+    "window": [
+      1440,
+      960
+    ]
+  },
+  "processMemorySnapshots": {
+    "sub06": {
+      "electronWorkingSetKiB": 1264176,
+      "pythonRssKiB": 22032,
+      "combinedGiB": 1.22662353515625,
+      "simultaneousPeakMeasured": false
+    },
+    "ixi265Mra": {
+      "electronWorkingSetKiB": 838224,
+      "pythonRssKiB": 560512,
+      "combinedGiB": 1.3339385986328125,
+      "simultaneousPeakMeasured": false
+    }
+  },
+  "tests": {
+    "desktop": {
+      "main": 164,
+      "renderer": 391,
+      "viewer": 143,
+      "total": 698,
+      "passed": true
+    },
+    "pythonFocusedOriginalSuite": 68,
+    "pythonSaveWorkflowSuiteAfterRepair": 17,
+    "productionBuildPassed": true
+  },
+  "movies": {
+    "sub06-rotation-cutaway.mp4": {
+      "sha256": "9fb48b51bdc1e8e4de563721561a9ad696af11e84f3fb68ec4f8ca77a0bd34ec",
+      "bytes": 649550,
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 928
+        }
+      ],
+      "format": {
+        "duration": "6.880000"
+      },
+      "method": "Actual Electron content captures; original within-segment timestamps retained with variable-rate H.264; orbit and cutaway segments concatenated. Capture cadence is not the separately measured interactive FPS."
+    },
+    "ixi265-mra-rotation-cutaway.mp4": {
+      "sha256": "7ec0057a563cfcaab455c01936612c7538fbc233559bdd812a19e119332148ef",
+      "bytes": 438538,
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 1440,
+          "height": 928
+        }
+      ],
+      "format": {
+        "duration": "6.680000"
+      },
+      "method": "Actual Electron content captures; original within-segment timestamps retained with variable-rate H.264; orbit and cutaway segments concatenated. Capture cadence is not the separately measured interactive FPS."
+    }
+  }
+}

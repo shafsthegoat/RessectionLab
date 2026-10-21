@@ -1,0 +1,1151 @@
+{
+  "schema": "resectionlab-ixi265-atropos-typed-mask-patient-runner-v3",
+  "status": "fitted_candidate_unaccepted",
+  "patient_group": "IXI:265",
+  "role": "TRAIN",
+  "training_admitted": false,
+  "source_hashes": {
+    "T1": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+    "brain_mask": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+    "host_bundle": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1"
+  },
+  "package": {
+    "name": "antspyx",
+    "version": "0.6.3",
+    "wheel_sha256": "e378329089f622c72eacc47e4e2c18503d0f3fbf2cc39ccb9df65880c0a7846f"
+  },
+  "parameters": {
+    "N4": {
+      "shrink_factor": 4,
+      "convergence": {
+        "iters": [
+          30,
+          20,
+          10
+        ],
+        "tol": 1e-07
+      },
+      "spline_param": 150,
+      "rescale_intensities": false,
+      "return_bias_field": false,
+      "verbose": true
+    },
+    "Atropos": {
+      "i": "KMeans[3]",
+      "m": "[0.1,1x1x1]",
+      "c": "[10,0]",
+      "priorweight": 0.0,
+      "r": 0,
+      "v": 1
+    },
+    "grid": "full_native_grid_no_resampling_no_crop",
+    "priors": null,
+    "intensity_clipping_or_normalization": null,
+    "Atropos_random_seed_option": "r=0 (fixed upstream seed)"
+  },
+  "resources": {
+    "threads": 2,
+    "rss_limit_bytes": 3221225472,
+    "minimum_available_bytes": 1073741824,
+    "timeout_seconds": 600.0,
+    "output_limit_bytes": 536870912,
+    "free_disk_floor_bytes": 53687091200,
+    "sample_interval_seconds": 0.2,
+    "max_voxels": 12000000,
+    "attempts": 1
+  },
+  "frame_tolerance_mm": 0.0001,
+  "hard_class_assumptions": {
+    "1": "csf_like_intensity_estimated",
+    "2": "gray_matter_like_intensity_estimated",
+    "3": "white_matter_like_intensity_estimated"
+  },
+  "posterior_semantics": "unmodified_fitted_class_membership_probabilities",
+  "anatomy_accepted": false,
+  "host_accepted": false,
+  "growth_use_accepted": false,
+  "limitations": [
+    "within_image_finite_mixture_fitting_not_pretrained_inference",
+    "ordered_T1_intensity_to_CSF_GM_WM_is_an_unreviewed_assumption",
+    "posterior_probabilities_are_not_physical_partial_volume_fractions",
+    "CSF_like_class_does_not_identify_ventricles",
+    "no_anatomical_acceptance_host_upgrade_or_automatic_growth_use",
+    "two_thread_floating_point_execution_not_claimed_bitwise_reproducible",
+    "eight_missing_intensity_cells_are_unknown_not_tissue_predictions",
+    "positive_intensity_domain_is_a_declared_fitting_support_not_a_corrected_brain_segmentation"
+  ],
+  "protocol": "v2_positive_domain_with_native_N4_float_mask_contract",
+  "fitting_domain": "unchanged_original_brain_mask AND unchanged_acquired_T1 > 0",
+  "expected_unknown_indices_native": [
+    [
+      60,
+      125,
+      75
+    ],
+    [
+      67,
+      135,
+      49
+    ],
+    [
+      69,
+      131,
+      40
+    ],
+    [
+      89,
+      120,
+      83
+    ],
+    [
+      107,
+      123,
+      65
+    ],
+    [
+      127,
+      219,
+      68
+    ],
+    [
+      128,
+      115,
+      125
+    ],
+    [
+      185,
+      127,
+      119
+    ]
+  ],
+  "expected_original_shape": [
+    256,
+    256,
+    150
+  ],
+  "expected_original_brain_voxels": 1451509,
+  "expected_fit_domain_voxels": 1451501,
+  "excluded_cell_semantics": "UNKNOWN_ABSTAINED_missing_intensity_not_CSF_not_anatomy_correction",
+  "brain_mask_replaced": false,
+  "intensity_offset_or_clipping": false,
+  "source_crop": false,
+  "domain_maps_retained_separately": [
+    "fit_domain_native",
+    "excluded_unknown_native"
+  ],
+  "v1_source_sha256": "4a5c5b4b2f85153212ac27e6356d5f1dca5c8b42d77257fb55a2fee53253624b",
+  "single_attempt_marker": "ixi265-n4-atropos-typed-mask-v3-attempt.json",
+  "v2_source_sha256": "0652eca1ba81304e053f24c9a9fc2f8c89174bfe7447accfd21105263592d81d",
+  "N4_mask_numpy_dtype": "float32",
+  "N4_mask_native_pixeltype": "float",
+  "mask_value_support_or_frame_change": false,
+  "N4_or_Atropos_parameter_change": false,
+  "generated_diagnostic_outcome_sha256": "f7a0844d9569ddd8add755c167d316a0c8a7fd840aef76a9ce35ed8674a53102",
+  "generated_diagnostic_observations_sha256": "173a3c355b28fa38a9c89a0707f2a8ecb7716e2294dbe2e4ffa189f5fcc52332",
+  "new_kernel_native_preflight_required_before_any_patient_release": true,
+  "patient_fitting_released": true,
+  "diagnostic_limit": "generated float success supports API repair; does not prove prior crash cause or anatomical accuracy",
+  "native_kernel_preflight_passed": true,
+  "native_kernel_preflight_outcome_sha256": "b9b8841d81d1ac9f10303aecdbfa838bba59fe4764065cd7898f44026b129c78",
+  "kernel_sha256": "211d715a05b2dd269358b7bc5585488a053859ba65c04b9f31f60b69e41ec954",
+  "runner_sha256": "b8d65e0522130df1a4e012811527ab17116a46436805c0152c0a3956a921e9ec",
+  "runtime": {
+    "packages": [
+      {
+        "name": "antspyx",
+        "version": "0.6.3",
+        "metadata_sha256": "1785cd9da7d963996fc814931e95a678dda1e4ad91d67873a78cebbff0db26ea"
+      },
+      {
+        "name": "numpy",
+        "version": "2.2.6",
+        "metadata_sha256": "91d66d0d60ad467c679555c0e12ac739bb395940dc22bc5a39d45780aba129ad"
+      },
+      {
+        "name": "scipy",
+        "version": "1.15.3",
+        "metadata_sha256": "98a671c6721432d60306593cdb7903477473d3b712544c666482ed113864f676"
+      },
+      {
+        "name": "pandas",
+        "version": "2.3.3",
+        "metadata_sha256": "40ee953dc7ca155840b639a1881ff84578075187fce0ac20eeda55a7fa0d9a90"
+      },
+      {
+        "name": "pyyaml",
+        "version": "6.0.3",
+        "metadata_sha256": "03c3b415ed38d09faedc49360e930769b40c58f68585e6de00e2e4916a858d34"
+      },
+      {
+        "name": "statsmodels",
+        "version": "0.14.6",
+        "metadata_sha256": "cbf436009e40693a0e2811aa5c55808a37baa2dbb6871e6dbf47e55c2bca1336"
+      },
+      {
+        "name": "webcolors",
+        "version": "24.11.1",
+        "metadata_sha256": "821dc0f89860bda2137ea1ee3b059e2abaefb9891d30f60027be3ec1390a0788"
+      },
+      {
+        "name": "matplotlib",
+        "version": "3.10.8",
+        "metadata_sha256": "271a91ad64b587781e3ccc76add7e042acb74e1ee94081decf4dc382be91fa06"
+      },
+      {
+        "name": "pillow",
+        "version": "12.0.0",
+        "metadata_sha256": "ad620452bfa53cbfa294d7da7b66dab5a086a54ede0ce178bd74e380ebc434c8"
+      },
+      {
+        "name": "requests",
+        "version": "2.32.5",
+        "metadata_sha256": "65b5a08da81f4915513e760965ff14b7518f65b7bb3efe0dab364bbcc4d40cb0"
+      },
+      {
+        "name": "scikit-learn",
+        "version": "1.7.2",
+        "metadata_sha256": "a301770d816e5ef5e2a262886115f1e6002637324f3bfe73f92378897dea8c63"
+      },
+      {
+        "name": "nibabel",
+        "version": "5.3.2",
+        "metadata_sha256": "1212d35344c5c57f6ff6c41f411b65c409ac4d7c25ff609a8ff4492b7cda9af0"
+      },
+      {
+        "name": "psutil",
+        "version": "7.1.3",
+        "metadata_sha256": "3578dc4ee5f43e542d29839741b9e3d8760c3c0e5d8c388ec2b0b980bd8c66a1"
+      },
+      {
+        "name": "packaging",
+        "version": "25.0",
+        "metadata_sha256": "5b611a609c38fefc3d616bf45d20aec98fb7d53f245daca9e2c30fc85c7ac282"
+      },
+      {
+        "name": "python-dateutil",
+        "version": "2.9.0.post0",
+        "metadata_sha256": "a9d436da322be808332f98d88325998e87cb693a678a9969feb4cfad729a6e93"
+      },
+      {
+        "name": "pytz",
+        "version": "2025.2",
+        "metadata_sha256": "e620e4e1f9f1c8019619388d4da496eb02119a13f35aaad55f022694a3c81f6c"
+      },
+      {
+        "name": "tzdata",
+        "version": "2025.2",
+        "metadata_sha256": "c2cc876ee200b84d1b8bee22290bc673ae4cf8e8be1a85cd2909a2715215794b"
+      },
+      {
+        "name": "patsy",
+        "version": "1.0.2",
+        "metadata_sha256": "c095d948f15b9bd16f13d0a52749da67031aad53bd0565295c5302f193e4cbaf"
+      },
+      {
+        "name": "contourpy",
+        "version": "1.3.3",
+        "metadata_sha256": "c43cef86baef09cff9c77975e578fa8cca0c9454df40dc176938b499a63de54a"
+      },
+      {
+        "name": "cycler",
+        "version": "0.12.1",
+        "metadata_sha256": "23289e19b76f1e01394227696e6af2b6cd1ce79e89731209bf9195148b18ed36"
+      },
+      {
+        "name": "fonttools",
+        "version": "4.61.1",
+        "metadata_sha256": "b05d21d549792a841a9b870d8dc0ce5c9d43d99d67621ff1379b18be8a7c3940"
+      },
+      {
+        "name": "kiwisolver",
+        "version": "1.4.9",
+        "metadata_sha256": "cad34a37b5cb66cfa1b9676f33721037ae2d850b9b0c71377478a1d6bf0c7d40"
+      },
+      {
+        "name": "pyparsing",
+        "version": "3.2.5",
+        "metadata_sha256": "cd543f26f0f59ac7b446f57cc91e8def7a3eb735fdd5e91c4e402b8725696eba"
+      },
+      {
+        "name": "charset-normalizer",
+        "version": "3.4.4",
+        "metadata_sha256": "8d5b94141b62f1d6afd7d60bbd68acb138a155d176a33518e0a28cc3b8dd9014"
+      },
+      {
+        "name": "idna",
+        "version": "3.11",
+        "metadata_sha256": "7c2c12c30f52ba237c4c81e59454804944025b9e6102cf1dcca9ebf5168411b0"
+      },
+      {
+        "name": "urllib3",
+        "version": "2.6.2",
+        "metadata_sha256": "532da8b2c7b39b017e837451b0d9c946061a2ec4a9e04d4161e487166a731a53"
+      },
+      {
+        "name": "certifi",
+        "version": "2025.11.12",
+        "metadata_sha256": "fc9a6b1aeff595649d1e5aee44129ca2b5e7adfbc10e1bd7ffa291afc1d06cb7"
+      },
+      {
+        "name": "joblib",
+        "version": "1.5.2",
+        "metadata_sha256": "cf385b71bfce1aa630dedb3b3749e841826a5cb8ee15c5e75e06dadfacc44a3d"
+      },
+      {
+        "name": "threadpoolctl",
+        "version": "3.6.0",
+        "metadata_sha256": "a45df8d07ea1883d772183a501d7d526076aa70dfcfddb276a2cbdc04def5341"
+      },
+      {
+        "name": "six",
+        "version": "1.17.0",
+        "metadata_sha256": "562042078c2752549f6d8a7c86dbc5dd708088a7be6d80672ec7b07100b72468"
+      },
+      {
+        "name": "typing-extensions",
+        "version": "4.15.0",
+        "metadata_sha256": "c138378fe8f18934ac99de060535c53ec6c13aeed65e94c32641da7ee3192a72"
+      }
+    ],
+    "runtime_plan_sha256": "629c045ba0a0c57c8d3c345249b111659e88aca2987cd3e438dac9463b35c4a8",
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "prefix": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/.tools/poc-antspyx-0.6.3-py312-v1/runtime",
+    "verified_official_API_sources": [
+      {
+        "path": "ants/segmentation/atropos.py",
+        "sha256": "bc0f65e59d04ef2fb25171338d467a2155ab17abf643d0d7040671d36eeea4ad"
+      },
+      {
+        "path": "ants/ops/bias_correction.py",
+        "sha256": "bb435f036db5e3a4211c982658a1565ac3e2d51870a3bfe7fb99acc3778556e6"
+      },
+      {
+        "path": "ants/core/ants_image_io.py",
+        "sha256": "dc4f25ae3eb1c8426eb10912d47850da6456454f9ab29f6efb205f2d7ed29e15"
+      }
+    ],
+    "installed_native_binary_hashes": [
+      {
+        "path": "ants/.dylibs/libpng16.16.dylib",
+        "sha256": "8064d5b03346634041aa98bae6becf6d1dc59e7259cf36057bc0b544d30adf6e"
+      },
+      {
+        "path": "ants/lib.cpython-312-darwin.so",
+        "sha256": "93f4e1418216de4f2f7b44be9f2926354a7c4bb098593904b95bb8db94f68021"
+      }
+    ]
+  },
+  "outputs": [
+    {
+      "name": "n4_corrected_estimated",
+      "sha256": "a0208d470624f706ed278852239f296d8a2509b5d94de0fc64d90bf765730138",
+      "bytes": 13094415,
+      "semantics": "bias_corrected_intensity_not_acquired_MRI",
+      "native_shape": [
+        256,
+        256,
+        150
+      ]
+    },
+    {
+      "name": "class_labels_raw",
+      "sha256": "7cd021de6201e7fea0ee586cde0a27b3d1106dd4645f9d0a833f98d0923f6791",
+      "bytes": 343423,
+      "semantics": "unmodified_fitted_class_ids_on_positive_intensity_domain",
+      "native_shape": [
+        256,
+        256,
+        150
+      ]
+    },
+    {
+      "name": "fit_domain_native",
+      "sha256": "8f6f7bc22d69cdc92c4ae1201a64ad5dc45afbf5fed44102e7bd0951bbf2ab5e",
+      "bytes": 129142,
+      "semantics": "declared_fitting_support_not_replacement_brain",
+      "native_shape": [
+        256,
+        256,
+        150
+      ]
+    },
+    {
+      "name": "excluded_unknown_native",
+      "sha256": "b9b744588e970abd988155f1997290d568f7732c0c66ed6d1a3bd82ef89cb4e8",
+      "bytes": 43135,
+      "semantics": "UNKNOWN_ABSTAINED_missing_intensity_not_CSF",
+      "native_shape": [
+        256,
+        256,
+        150
+      ]
+    },
+    {
+      "name": "class_1_posterior",
+      "sha256": "377f691004eb87dbb8cc65f45c6fbb5fbe44311915cad462d6ea4da4b0f0669c",
+      "bytes": 5425300,
+      "semantics": "unmodified_membership_probability_not_PVE",
+      "native_shape": [
+        256,
+        256,
+        150
+      ]
+    },
+    {
+      "name": "class_2_posterior",
+      "sha256": "2700b62ad949e9cc3dbef55943d7eb9efba99762c5309e2374b6599015fda25f",
+      "bytes": 5682413,
+      "semantics": "unmodified_membership_probability_not_PVE",
+      "native_shape": [
+        256,
+        256,
+        150
+      ]
+    },
+    {
+      "name": "class_3_posterior",
+      "sha256": "f375119f53fbf0e6137173b32d10713851c194e92cecb369e9741f1fa30f9b7e",
+      "bytes": 5550733,
+      "semantics": "unmodified_membership_probability_not_PVE",
+      "native_shape": [
+        256,
+        256,
+        150
+      ]
+    },
+    {
+      "name": "csf_like_intensity_estimated",
+      "sha256": "a474f70c9cebc74ebb04d59df84c502d31a2816ccafea39428a286f20025a930",
+      "bytes": 222094,
+      "semantics": "hard_class_under_declared_T1_intensity_assumption",
+      "native_shape": [
+        256,
+        256,
+        150
+      ]
+    },
+    {
+      "name": "gray_matter_like_intensity_estimated",
+      "sha256": "567d806a0e5dacaa2542d1f6c415f6c1bccb01d73049ab22b72493e0eab4be05",
+      "bytes": 301337,
+      "semantics": "hard_class_under_declared_T1_intensity_assumption",
+      "native_shape": [
+        256,
+        256,
+        150
+      ]
+    },
+    {
+      "name": "white_matter_like_intensity_estimated",
+      "sha256": "a9d1c122ea39a93fbb3de007415b4312b15ee90eb7c37889c0fc4d129f5c7729",
+      "bytes": 215767,
+      "semantics": "hard_class_under_declared_T1_intensity_assumption",
+      "native_shape": [
+        256,
+        256,
+        150
+      ]
+    }
+  ],
+  "support": {
+    "original_brain_voxels": 1451509,
+    "fit_domain_voxels": 1451501,
+    "excluded_unknown_voxels": 8,
+    "unknown_indices_native": [
+      [
+        60,
+        125,
+        75
+      ],
+      [
+        67,
+        135,
+        49
+      ],
+      [
+        69,
+        131,
+        40
+      ],
+      [
+        89,
+        120,
+        83
+      ],
+      [
+        107,
+        123,
+        65
+      ],
+      [
+        127,
+        219,
+        68
+      ],
+      [
+        128,
+        115,
+        125
+      ],
+      [
+        185,
+        127,
+        119
+      ]
+    ],
+    "excluded_semantics": "UNKNOWN_ABSTAINED",
+    "source_arrays_modified": false,
+    "domain_is_anatomical_correction": false
+  },
+  "numerical_audit": {
+    "frames": {
+      "input": {
+        "candidate_affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912157,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912155,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "affine_max_abs_difference": 1.3877787807814457e-17,
+        "eight_cell_corner_errors_mm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "output_saved_with_original_affine": true,
+        "array_permutation_or_resampling": false
+      },
+      "mask": {
+        "candidate_affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912157,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912155,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "affine_max_abs_difference": 1.3877787807814457e-17,
+        "eight_cell_corner_errors_mm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "output_saved_with_original_affine": true,
+        "array_permutation_or_resampling": false
+      },
+      "N4": {
+        "candidate_affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912157,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912155,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "affine_max_abs_difference": 1.3877787807814457e-17,
+        "eight_cell_corner_errors_mm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "output_saved_with_original_affine": true,
+        "array_permutation_or_resampling": false
+      },
+      "classes": {
+        "candidate_affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912157,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912155,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "affine_max_abs_difference": 1.3877787807814457e-17,
+        "eight_cell_corner_errors_mm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "output_saved_with_original_affine": true,
+        "array_permutation_or_resampling": false
+      },
+      "posterior_1": {
+        "candidate_affine_ras_mm": [
+          [
+            -0.046656829993057605,
+            0.06588857598793152,
+            1.1955414390858834,
+            -90.70220947265625
+          ],
+          [
+            -0.936338159158255,
+            -0.002922833887342569,
+            -0.059605210148493175,
+            122.19873046875
+          ],
+          [
+            0.00036077752681023666,
+            0.9351772038476716,
+            -0.0844190161122087,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912155,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "affine_max_abs_difference": 5.7249945895065935e-08,
+        "eight_cell_corner_errors_mm": [
+          3.386044591075289e-08,
+          8.78336766543268e-06,
+          1.986502568974974e-06,
+          1.0753989630601422e-05,
+          6.943174619882037e-06,
+          1.0222543451575228e-05,
+          7.115904126934017e-06,
+          1.1894726226022832e-05
+        ],
+        "output_saved_with_original_affine": true,
+        "array_permutation_or_resampling": false
+      },
+      "posterior_2": {
+        "candidate_affine_ras_mm": [
+          [
+            -0.046656829993057605,
+            0.06588857598793152,
+            1.1955414390858834,
+            -90.70220947265625
+          ],
+          [
+            -0.936338159158255,
+            -0.002922833887342569,
+            -0.059605210148493175,
+            122.19873046875
+          ],
+          [
+            0.00036077752681023666,
+            0.9351772038476716,
+            -0.0844190161122087,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912155,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "affine_max_abs_difference": 5.7249945895065935e-08,
+        "eight_cell_corner_errors_mm": [
+          3.386044591075289e-08,
+          8.78336766543268e-06,
+          1.986502568974974e-06,
+          1.0753989630601422e-05,
+          6.943174619882037e-06,
+          1.0222543451575228e-05,
+          7.115904126934017e-06,
+          1.1894726226022832e-05
+        ],
+        "output_saved_with_original_affine": true,
+        "array_permutation_or_resampling": false
+      },
+      "posterior_3": {
+        "candidate_affine_ras_mm": [
+          [
+            -0.046656829993057605,
+            0.06588857598793152,
+            1.1955414390858834,
+            -90.70220947265625
+          ],
+          [
+            -0.936338159158255,
+            -0.002922833887342569,
+            -0.059605210148493175,
+            122.19873046875
+          ],
+          [
+            0.00036077752681023666,
+            0.9351772038476716,
+            -0.0844190161122087,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912155,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "affine_max_abs_difference": 5.7249945895065935e-08,
+        "eight_cell_corner_errors_mm": [
+          3.386044591075289e-08,
+          8.78336766543268e-06,
+          1.986502568974974e-06,
+          1.0753989630601422e-05,
+          6.943174619882037e-06,
+          1.0222543451575228e-05,
+          7.115904126934017e-06,
+          1.1894726226022832e-05
+        ],
+        "output_saved_with_original_affine": true,
+        "array_permutation_or_resampling": false
+      }
+    },
+    "classes": {
+      "classes": [
+        {
+          "class": 1,
+          "voxels": 263320,
+          "corrected_intensity_mean": 222.40606689453125,
+          "declared_assumption": "csf_like_intensity_estimated",
+          "anatomical_acceptance": false
+        },
+        {
+          "class": 2,
+          "voxels": 607861,
+          "corrected_intensity_mean": 428.67388916015625,
+          "declared_assumption": "gray_matter_like_intensity_estimated",
+          "anatomical_acceptance": false
+        },
+        {
+          "class": 3,
+          "voxels": 580320,
+          "corrected_intensity_mean": 557.5263671875,
+          "declared_assumption": "white_matter_like_intensity_estimated",
+          "anatomical_acceptance": false
+        }
+      ],
+      "posterior_sum_max_abs_error": 1.4156103134155273e-07,
+      "probabilities_modified": false
+    },
+    "N4_mask_boundary": {
+      "native_pixeltype": "float",
+      "numpy_dtype": "float32",
+      "binary_values_exact": true,
+      "support_voxels": 1451501,
+      "support_unchanged": true,
+      "frame": {
+        "candidate_affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912157,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912155,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "affine_max_abs_difference": 1.3877787807814457e-17,
+        "eight_cell_corner_errors_mm": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "output_saved_with_original_affine": true,
+        "array_permutation_or_resampling": false
+      }
+    },
+    "mask_representation_only_change": true,
+    "parameters_changed": false
+  },
+  "source_mask_frame_check": {
+    "candidate_affine_ras_mm": [
+      [
+        -0.04665682837367058,
+        0.06588856875896454,
+        1.1955413818359375,
+        -90.70220947265625
+      ],
+      [
+        -0.9363381862640381,
+        -0.0029228338971734047,
+        -0.059605203568935394,
+        122.19873046875
+      ],
+      [
+        0.00036077748518437147,
+        0.935177206993103,
+        -0.08441900461912157,
+        -112.01844787597656
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "source_affine_ras_mm": [
+      [
+        -0.04665682837367058,
+        0.06588856875896454,
+        1.1955413818359375,
+        -90.70220947265625
+      ],
+      [
+        -0.9363381862640381,
+        -0.0029228338971734047,
+        -0.059605203568935394,
+        122.19873046875
+      ],
+      [
+        0.00036077748518437147,
+        0.935177206993103,
+        -0.08441900461912155,
+        -112.01844787597656
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "affine_max_abs_difference": 1.3877787807814457e-17,
+    "eight_cell_corner_errors_mm": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "output_saved_with_original_affine": true,
+    "array_permutation_or_resampling": false
+  },
+  "source_bytes_unchanged": true,
+  "lineage": {
+    "artifacts/poc-ants-typed-mask-native-preflight-v3/outcome.json": "b9b8841d81d1ac9f10303aecdbfa838bba59fe4764065cd7898f44026b129c78",
+    "artifacts/ants-mask-dtype-independent-v1/independent-qa.json": "9c4b3bc648b9920ba7de4c5fd0c921b08382796e2ead3467caffc4213ee0c128",
+    "artifacts/ixi265-typed-mask-independent-v3/kernel-preflight-qa.json": "08fc33228534fd2adb392a9093b57790695560ab9a881ee96cebddf0a23636b5",
+    "artifacts/poc-ants-mask-dtype-generated-v1/outcome.json": "f7a0844d9569ddd8add755c167d316a0c8a7fd840aef76a9ce35ed8674a53102",
+    "artifacts/poc-ixi265-atropos-positive-domain-run-v2/outcome.json": "dce67f0acde21aa11fa99bdaa270108c8b53b5a091514182870e69e01fa78e21"
+  }
+}

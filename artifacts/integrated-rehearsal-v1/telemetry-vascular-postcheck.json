@@ -1,0 +1,21 @@
+{
+  "schema": "resectionlab.vascular-telemetry-postcheck.v1",
+  "verificationScriptSha256": "c853cfe8c6973b04e5de7ba2190753b47a128d648ad8c0527fecb823eb243c6b",
+  "episodeId": "sub06-vascular-field-from-target58-empty-hold-precursor",
+  "finalStateId": "sha256:1ba8675b9fa1b063854b0d1ebc9893e54c33638d8f303d42741660891323f1b5",
+  "allInputAndExportHashesMatch": true,
+  "attemptHistoryMatchesFullSuppliedActions": true,
+  "precursorAttemptHistory": {
+    "path": "/Users/shaf/coding_projects/RessectionLab/outputs/integrated-rehearsal-v1/sub06-target58-precursor-attempted-actions.json",
+    "sha256": "7d53d4190d16b05259f56ecbc77856e6b0345d3ee16dc875c6ecfdc6f83fe61e",
+    "attemptCount": 28,
+    "exactChronologicalPrefixPreserved": true,
+    "continuationAttemptCount": 22
+  },
+  "reportingRowsAgreeWithCsv": true,
+  "reportingRowsReferencePriorObservedStates": true,
+  "measuredForcesAllUnavailable": true,
+  "htmlEmbeddedJsonEqualsExport": true,
+  "javascriptSyntax": "Passed node --check; no JavaScript execution or visual rendering.",
+  "visualInspection": "Not retried after earlier file-URL browser policy block."
+}

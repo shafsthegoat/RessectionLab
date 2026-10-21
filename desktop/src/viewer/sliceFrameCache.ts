@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {renderTargetBytes} from './renderResourceEstimate.ts';
 
 /** Explicit offscreen storage; never relies on a preserved default framebuffer.
  * The copy shader deliberately does no second color/tone conversion. */
@@ -15,6 +16,7 @@ export class SliceFrameCache {
   });
   private readonly geometry = new THREE.PlaneGeometry(2,2);
   constructor() { this.scene.add(new THREE.Mesh(this.geometry,this.material)); }
+  get estimatedTargetBytes(){return renderTargetBytes(this.target);}
   render(renderer:THREE.WebGLRenderer, scene:THREE.Scene, camera:THREE.Camera,
     width:number, height:number, revision:number, restore:()=>void): boolean {
     const ratio=renderer.getPixelRatio(),w=Math.max(1,Math.round(width*ratio)),h=Math.max(1,Math.round(height*ratio));

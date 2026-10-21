@@ -1,0 +1,51 @@
+{
+  "schema": "first-release-frozen-sidecar-preparation-correction-v3",
+  "reason": "Actual audit v1 refused fresh-engine episode because raw JSON key order changed during saved JSON sorting, although the independent comparison found all data identical.",
+  "independent_diagnosis_relay": {
+    "source": "ROOT relayed independent QA after read-only inspection of actual failed-run saved JSON; this agent did not recompute actual patient payloads.",
+    "classification": "Auditor-only JSON object-key serialization sensitivity",
+    "action_objects_with_only_key_order_changes": 6,
+    "recursive_nodes_compared": 52426,
+    "numeric_values_compared": 38896,
+    "value_type_array_order_or_signed_zero_changes": 0,
+    "original_raw_episode_sha256": "8bbdd7f0bc9d67485adb2013f69146c0b151e1b399f3bc107a160198d3f7b90c",
+    "fresh_raw_episode_sha256": "4e644bb998e66cfe7d6e4b4567baddb6c2cf14bed3db403dfcfc5fb7e186bf49",
+    "both_canonical_episode_sha256": "5fa3130fab9c828f763cf090a2172c1759701faa007c2dee59c42410f65d363c",
+    "reconstructed_fresh_response_sha256": "452641d0f3757b3a09991118d64405d2cd1e84f935ea8acc92d155d16a39c1af",
+    "reconstructed_fresh_response_matches_final_journal": true
+  },
+  "changes": [
+    "Separate recursive object-key canonical fingerprint for only episode/comparison persistence. Arrays retain exact order.",
+    "Explicit deep structural equality additionally rejects every value/type/array-order change, including signed zero.",
+    "Raw jsonSha remains unchanged for all other fingerprints.",
+    "Eight generated persistence controls added. No request-plan, model, package, source-array, input or build-pin changes."
+  ],
+  "prior_files": {
+    "artifacts/first-release-frozen-sidecar-preparation-v2/frozen-auditor.mjs": "e177a8f1499609b30db84627f758b0553282a4e251ab8c0b0c3163f389c70109",
+    "artifacts/first-release-frozen-sidecar-preparation-v2/frozen-controls.mjs": "29061ee08e94cf3b34033548a8851684ac674ab088e8257b095fa68c5fc3204d",
+    "artifacts/first-release-frozen-sidecar-preparation-v2/preparation.json": "40c53acf6b203614a374c423fdf5b3d0594fdc3125bd64e20a9199cfd7d85547",
+    "artifacts/first-release-frozen-sidecar-preparation-v2/root-release-template.json": "5262467d5b6519125afeae49a11892c621a2932b1ca18f55ab2c9012ac13fba8",
+    "artifacts/first-release-frozen-sidecar-preparation-v2/generated-controls.json": "e941b089ae687b3a48c9445d41d2560a4c24ff05fc2086949eea712832759c12",
+    "artifacts/first-release-frozen-sidecar-preparation-v2/correction.json": "1576de551ad30cbe344d124e94ef3e52dceeb693c24f5fbf9411abbc4d4d31a6"
+  },
+  "current_files": {
+    "tests/first_release_frozen_sidecar.mjs": "2b6f01639d1c6b5ef351fe8586e158447801ab3ec004f27d08154a92e733a56d",
+    "tests/test_first_release_frozen_sidecar.mjs": "2a374fcc9ab09d655db4ac97228a75d6fc0b615697bcf3bc7e812680e9657ee1",
+    "artifacts/first-release-frozen-sidecar-preparation-v3/preparation.json": "4b4ddbed3032db02385598983e1fb2b053b5b953ffad69942bdf56392f38fa0c",
+    "artifacts/first-release-frozen-sidecar-preparation-v3/root-release-template.json": "38aa646117da019b933c5546a4450b17ec3060b663b71715db7617fde3902831",
+    "artifacts/first-release-frozen-sidecar-preparation-v3/generated-controls.json": "a46ccd1e31c2b78b3a44ceee4747b132fd721070ed12c109d06d953853549c8f"
+  },
+  "preserved_actual_failure_directory": "outputs/first-release-frozen-sidecar-run-v1",
+  "actual_failure_directory_modified": false,
+  "metadata_sanitization": {
+    "actual_patient_4x4_matrices": 0,
+    "actual_landmark_coordinates": 0,
+    "unknown_cell_indices_embedded": 0,
+    "unknown_cells_bound_by_digest": true,
+    "preparation_numeric_arrays_are_image_dimensions_only": true
+  },
+  "actual_patient_payload_reads_by_this_preparation_operation": 0,
+  "actual_frozen_engine_executions_by_this_preparation_operation": 0,
+  "root_actual_prior_frozen_audit_exists": true,
+  "actual_acceptance_status": "awaiting separately released rerun; no new acceptance claim"
+}

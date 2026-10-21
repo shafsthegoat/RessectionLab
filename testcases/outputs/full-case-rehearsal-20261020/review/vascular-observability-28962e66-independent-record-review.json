@@ -1,0 +1,356 @@
+{
+  "utc": "2026-10-20T23:41:52.054826+00:00",
+  "result": "pass: saved vascular observability records",
+  "native": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/gui/vascular-observability-28962e66.ressectionlab",
+  "nativeSha256": "f0ef34d5092d61406c6bb5a8cb2f9969136341005c96ec617510e3b7d1b32d1b",
+  "originalSha256": "ff5a49b8706a8ccda08d8c3e82dad3e079f85dea98cb6bd40783d2262eec9838",
+  "canonicalReceiptSha256": "b20a189c9c369407f50006b2dbfad5767e0056805c26eeeb03dac36586dbba29",
+  "traceSha256": "d78558f5d60e1bb9162197859c59674875afb4454632d5a8c44b1ca457ab0730",
+  "displayProvenanceSha256": "deadaf1cd76fabfec6f322973f0be4e971941380f9442e90df9d11ea511fb052",
+  "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+  "stateId": "sha256:af496ffbde3ca2ab71477c9226fe9f846f08171efd308362431414584cd3c87e",
+  "surgicalArtifactEncodedAndDecodedUnchanged": true,
+  "sourceArraysLabelsAcquisitionRefsAndOriginalsUnchanged": true,
+  "displayOnlyRequestedBoundsNotActualMotion": true,
+  "matchingStrictProtectionMasks": 11,
+  "clearanceMm": 2.0,
+  "criticalDisplacementMm": 0.0,
+  "savedSharedPrefixActions": 42,
+  "recordedActions": 73,
+  "recordedStatuses": {
+    "accepted": 63,
+    "partial": 10
+  },
+  "recordedStateIdChainAndRemovalUnionMatchEndpoint": true,
+  "ownedMaterialRemovalCells": {
+    "soft_tissue": 0,
+    "tumor": 312,
+    "bone": 3453,
+    "vessel": 0
+  },
+  "rawAnnotationRemovalMembershipCells": {
+    "bone": 3453,
+    "brain": 393,
+    "tumor": 330,
+    "vessels": 0
+  },
+  "fluid": {
+    "addedMm3": 10.400156722143281,
+    "presentMm3": 4.3242073550546,
+    "trappedOutletMm3": 0.0,
+    "removedMm3": 5.966244725738389,
+    "escapedMm3": 0.10970464135021094,
+    "residualMm3": 8.171241461241152e-14,
+    "vascular": {
+      "initialMm3": 100.0,
+      "refilledMm3": 0.9802678016897775,
+      "remainingMm3": 96.58011107954658,
+      "generatedMm3": 4.400156722143208,
+      "emittedMm3": 4.400156722143208,
+      "residualMm3": -1.3988810110276972e-14
+    }
+  },
+  "maximumRecordedFluidResidualMm3": 8.440470544712753e-14,
+  "oneWoundFiveSeveredNonpatentClottedFacesActualDoseEachAtLeast2": true,
+  "causalVascularChainRecomputedFromRecordedBoundaryStates": {
+    "required": true,
+    "completeChain": true,
+    "injury": [
+      {
+        "position": 48,
+        "instrument": "micro_scissors",
+        "sourceFaceIds": [
+          "3026883:3026884",
+          "3027064:3027065",
+          "3066884:3066885",
+          "3067065:3067066",
+          "3106885:3106886"
+        ]
+      }
+    ],
+    "passivePersistentBleeding": [
+      {
+        "position": 50,
+        "generatedDeltaMm3": 0.9703555234124224,
+        "presentDeltaMm3": 0.9703555234124224
+      },
+      {
+        "position": 51,
+        "generatedDeltaMm3": 2.2273876290720978,
+        "presentDeltaMm3": 2.2273876290720978
+      }
+    ],
+    "actualBipolarDose": [
+      {
+        "position": 55,
+        "actualFaceCoagulationDoseIncrease": 0.10699588477366258
+      },
+      {
+        "position": 56,
+        "actualFaceCoagulationDoseIncrease": 9.893004115226338
+      }
+    ],
+    "sealedIdlePositions": [
+      58,
+      72,
+      73
+    ],
+    "irrigationPositions": [
+      62,
+      63
+    ],
+    "suctionWithoutVesselRepair": [
+      {
+        "position": 68,
+        "removedDeltaMm3": 1.9662447257383855
+      },
+      {
+        "position": 69,
+        "removedDeltaMm3": 4.0000000000000036
+      }
+    ]
+  },
+  "guiReviewPositions": [
+    {
+      "position": 42,
+      "simulationSeconds": 168.50880604760937,
+      "operation": "apply",
+      "instrument": "cusa",
+      "activeWounds": 0,
+      "damagedFaces": 0,
+      "actualFaceDoseTotal": 0,
+      "minimumFaceClot": null,
+      "generatedBloodMm3": 0.0,
+      "spatialFluidMm3": 0.0,
+      "actualFluidRemovedThisActionMm3": 0.0
+    },
+    {
+      "position": 45,
+      "simulationSeconds": 171.16856129695532,
+      "operation": "withdraw",
+      "instrument": "cusa",
+      "activeWounds": 0,
+      "damagedFaces": 0,
+      "actualFaceDoseTotal": 0,
+      "minimumFaceClot": null,
+      "generatedBloodMm3": 0.0,
+      "spatialFluidMm3": 0.0,
+      "actualFluidRemovedThisActionMm3": 0.0
+    },
+    {
+      "position": 47,
+      "simulationSeconds": 171.5685612969553,
+      "operation": "place",
+      "instrument": "micro_scissors",
+      "activeWounds": 0,
+      "damagedFaces": 0,
+      "actualFaceDoseTotal": 0,
+      "minimumFaceClot": null,
+      "generatedBloodMm3": 0.0,
+      "spatialFluidMm3": 0.0,
+      "actualFluidRemovedThisActionMm3": 0.0
+    },
+    {
+      "position": 48,
+      "simulationSeconds": 172.5685612969584,
+      "operation": "apply",
+      "instrument": "micro_scissors",
+      "activeWounds": 1,
+      "damagedFaces": 5,
+      "actualFaceDoseTotal": 0.0,
+      "minimumFaceClot": 8.230113982432563e-05,
+      "generatedBloodMm3": 0.006583027895203486,
+      "spatialFluidMm3": 0.006583027895203486,
+      "actualFluidRemovedThisActionMm3": 0.0
+    },
+    {
+      "position": 49,
+      "simulationSeconds": 172.76856129695838,
+      "operation": "deactivate",
+      "instrument": "micro_scissors",
+      "activeWounds": 1,
+      "damagedFaces": 5,
+      "actualFaceDoseTotal": 0.0,
+      "minimumFaceClot": 0.0040739832488055905,
+      "generatedBloodMm3": 0.10630073162056419,
+      "spatialFluidMm3": 0.10630073162056419,
+      "actualFluidRemovedThisActionMm3": 0.0
+    },
+    {
+      "position": 50,
+      "simulationSeconds": 174.76856129695827,
+      "operation": "inspect",
+      "instrument": "micro_scissors",
+      "activeWounds": 1,
+      "damagedFaces": 5,
+      "actualFaceDoseTotal": 0.0,
+      "minimumFaceClot": 0.04312480092841242,
+      "generatedBloodMm3": 1.0766562550329866,
+      "spatialFluidMm3": 1.0766562550329866,
+      "actualFluidRemovedThisActionMm3": 0.0
+    },
+    {
+      "position": 51,
+      "simulationSeconds": 179.76856129695798,
+      "operation": "inspect",
+      "instrument": "micro_scissors",
+      "activeWounds": 1,
+      "damagedFaces": 5,
+      "actualFaceDoseTotal": 0.0,
+      "minimumFaceClot": 0.1341835154894192,
+      "generatedBloodMm3": 3.3040438841050843,
+      "spatialFluidMm3": 3.3040438841050843,
+      "actualFluidRemovedThisActionMm3": 0.0
+    },
+    {
+      "position": 54,
+      "simulationSeconds": 180.36856129695607,
+      "operation": "place",
+      "instrument": "bipolar_forceps",
+      "activeWounds": 1,
+      "damagedFaces": 5,
+      "actualFaceDoseTotal": 0.0,
+      "minimumFaceClot": 0.14451122312553366,
+      "generatedBloodMm3": 3.553672531104155,
+      "spatialFluidMm3": 3.553672531104155,
+      "actualFluidRemovedThisActionMm3": 0.0
+    },
+    {
+      "position": 55,
+      "simulationSeconds": 181.36856129695917,
+      "operation": "apply",
+      "instrument": "bipolar_forceps",
+      "activeWounds": 1,
+      "damagedFaces": 5,
+      "actualFaceDoseTotal": 0.10699588477366258,
+      "minimumFaceClot": 0.16145103587882892,
+      "generatedBloodMm3": 3.9618450385366515,
+      "spatialFluidMm3": 3.9618450385366515,
+      "actualFluidRemovedThisActionMm3": 0.0
+    },
+    {
+      "position": 56,
+      "simulationSeconds": 184.368561296959,
+      "operation": "apply",
+      "instrument": "bipolar_forceps",
+      "activeWounds": 0,
+      "damagedFaces": 5,
+      "actualFaceDoseTotal": 10.0,
+      "minimumFaceClot": 1.0,
+      "generatedBloodMm3": 4.400156722143208,
+      "spatialFluidMm3": 4.400156722143208,
+      "actualFluidRemovedThisActionMm3": 0.0
+    },
+    {
+      "position": 58,
+      "simulationSeconds": 189.5685612969587,
+      "operation": "inspect",
+      "instrument": "bipolar_forceps",
+      "activeWounds": 0,
+      "damagedFaces": 5,
+      "actualFaceDoseTotal": 10.0,
+      "minimumFaceClot": 1.0,
+      "generatedBloodMm3": 4.400156722143208,
+      "spatialFluidMm3": 4.400156722143208,
+      "actualFluidRemovedThisActionMm3": 0.0
+    },
+    {
+      "position": 62,
+      "simulationSeconds": 191.16856129695947,
+      "operation": "apply",
+      "instrument": "irrigation",
+      "activeWounds": 0,
+      "damagedFaces": 5,
+      "actualFaceDoseTotal": 10.0,
+      "minimumFaceClot": 1.0,
+      "generatedBloodMm3": 4.400156722143208,
+      "spatialFluidMm3": 6.290452080792997,
+      "actualFluidRemovedThisActionMm3": 0.0
+    },
+    {
+      "position": 63,
+      "simulationSeconds": 193.16856129695935,
+      "operation": "apply",
+      "instrument": "irrigation",
+      "activeWounds": 0,
+      "damagedFaces": 5,
+      "actualFaceDoseTotal": 10.0,
+      "minimumFaceClot": 1.0,
+      "generatedBloodMm3": 4.400156722143208,
+      "spatialFluidMm3": 10.290452080792997,
+      "actualFluidRemovedThisActionMm3": 0.0
+    },
+    {
+      "position": 67,
+      "simulationSeconds": 193.96856129695743,
+      "operation": "place",
+      "instrument": "frazier_suction",
+      "activeWounds": 0,
+      "damagedFaces": 5,
+      "actualFaceDoseTotal": 10.0,
+      "minimumFaceClot": 1.0,
+      "generatedBloodMm3": 4.400156722143208,
+      "spatialFluidMm3": 10.290452080792997,
+      "actualFluidRemovedThisActionMm3": 0.0
+    },
+    {
+      "position": 68,
+      "simulationSeconds": 194.9685612969601,
+      "operation": "apply",
+      "instrument": "frazier_suction",
+      "activeWounds": 0,
+      "damagedFaces": 5,
+      "actualFaceDoseTotal": 10.0,
+      "minimumFaceClot": 1.0,
+      "generatedBloodMm3": 4.400156722143208,
+      "spatialFluidMm3": 8.3242073550546,
+      "actualFluidRemovedThisActionMm3": 1.9662447257383855
+    },
+    {
+      "position": 69,
+      "simulationSeconds": 196.96856129696,
+      "operation": "apply",
+      "instrument": "frazier_suction",
+      "activeWounds": 0,
+      "damagedFaces": 5,
+      "actualFaceDoseTotal": 10.0,
+      "minimumFaceClot": 1.0,
+      "generatedBloodMm3": 4.400156722143208,
+      "spatialFluidMm3": 4.3242073550546,
+      "actualFluidRemovedThisActionMm3": 4.0000000000000036
+    },
+    {
+      "position": 72,
+      "simulationSeconds": 202.3685612969578,
+      "operation": "inspect",
+      "instrument": "frazier_suction",
+      "activeWounds": 0,
+      "damagedFaces": 5,
+      "actualFaceDoseTotal": 10.0,
+      "minimumFaceClot": 1.0,
+      "generatedBloodMm3": 4.400156722143208,
+      "spatialFluidMm3": 4.3242073550546,
+      "actualFluidRemovedThisActionMm3": 0.0
+    },
+    {
+      "position": 73,
+      "simulationSeconds": 202.5685612969578,
+      "operation": "inspect",
+      "instrument": "cusa",
+      "activeWounds": 0,
+      "damagedFaces": 5,
+      "actualFaceDoseTotal": 10.0,
+      "minimumFaceClot": 1.0,
+      "generatedBloodMm3": 4.400156722143208,
+      "spatialFluidMm3": 4.3242073550546,
+      "actualFluidRemovedThisActionMm3": 0.0
+    }
+  ],
+  "limits": [
+    "Read-only source/native/trace review. No patient engine construction, restore, preview, step, physics replay, live-session access or GUI control.",
+    "Root supplied the current forced-canonical receipt/trace. Their recorded causality and chain were recomputed, but intermediate full physical states were not independently replayed in this review.",
+    "Source memberships are overlapping unreviewed estimates; zero owned soft removal is not clinical normal-tissue safety proof. Vascular branch retains43261/43573 owned target cells and is not the primary-resection endpoint.",
+    "Display provenance proves artifact/source preservation and conservative camera computation, not actual complete playback visibility. Telemetry/frame coverage and actual secondary-display GUI evidence are separate gates.",
+    "This review concerns the completed vascular observability branch only, not final primary or combined-native acceptance."
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "utc": "2026-10-20T23:53:13.324950+00:00",
+  "scope": "Bounded read-only cached-frame backend diagnosis; no engine construction/replay, frame requests, live-console/GUI control or source edits.",
+  "conclusion": "Renderer-dominant GUI stall is supported by process CPU evidence. Cached backend has repeated work, but current data do not establish it as the main GUI cause. Globally profiled headless verifier timings are not unprofiled GUI backend timings.",
+  "hotPath": {
+    "wholeSnapshotOrFullHistoryThawOrDigestPerFrame": false,
+    "reuse": "surgical_bridge private immutable artifact identity and _frame_admission reference checks retain admission/shown timeline.",
+    "admissionCheckCallsPerFrame": 2,
+    "admissionCheckWork": "seek and _seek_admitted each check scene metadata identity plus light source/code/default/constant/binary-stat seal; full numerical-binary implementation fingerprint and complete canonical admission are not repeated.",
+    "otherRepeatedWork": [
+      "Store.load authenticates, decompresses and parses complete per-action descriptor on each frame.",
+      "Store.state reads, SHA-verifies and decompresses each full frame field; unchanged field blobs are decoded again.",
+      "_persistent_result recomputes frame state_id over the complete decoded effect state.",
+      "Bridge additionally hashes current editable engine state to enforce expectedStateId, constructs view and JSON-budget-encodes full frame response."
+    ],
+    "safetyQualification": "These checks authenticate/cache-bound state; any future optimization must retain source/code/snapshot/history, tamper detection, bounded memory and editable-state isolation. Duplicate admission.check could be consolidated without adding authority, but is not evidenced as this GUI bottleneck."
+  },
+  "runtimeObservation": {
+    "verifierPid": 73312,
+    "verifierElapsedAtPs": "05:54",
+    "verifierCpuTimeAtPs": "5:36.01",
+    "verifierCurrentCpuPercentAtPs": 88.2,
+    "guiBridgePid": 73366,
+    "guiBridgeCpuTimeAtPs": "18.80s",
+    "guiBridgeCurrentCpuPercentAtPs": 5.7,
+    "rendererPid": 73371,
+    "rendererCpuTimeAtPs": "3:45.19",
+    "rendererCurrentCpuPercentAtPs": 196.5,
+    "qualification": "One ps snapshot only; not an episode-wide CPU or latency attribution."
+  },
+  "boundedStackSample": {
+    "path": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/review/vascular-every-frame-73312-sample-20261020.txt",
+    "pid": 73312,
+    "durationSeconds": 3,
+    "observation": "Native sampled stacks contain nested tuple/generator evaluation, profile trampolines and garbage collection. Native sample does not resolve Python function names, so no precise percentage attribution to semantic_digest or another Python function is claimed.",
+    "profilingCaveat": "verify_every_cached_frame.py enables sys.setprofile for every Python call and separately rechecks observed.state_id after seek. Its timing includes instrumentation and duplicate verifier assertions absent from ordinary GUI playback."
+  },
+  "limits": "No new physics, headless seek, GUI action, cache mutation or production edit. Renderer investigation belongs to case_geometry/root. Full cache coverage and actual playback acceptance are still pending."
+}

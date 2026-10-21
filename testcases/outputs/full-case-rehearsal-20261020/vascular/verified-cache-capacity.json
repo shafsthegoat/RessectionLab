@@ -1,0 +1,44 @@
+{
+  "source": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/primary.ressectionlab",
+  "actions": 55,
+  "stateId": "sha256:76c6891e30dda86bfb5478aaa296f4d4ee7cd02ca4d1b7c277f1c3dce6c0e201",
+  "compressedEndpointStateBytes": 258101,
+  "flat1001StateProjectionBytes": 258359101,
+  "flat1001StateProjectionMiB": 246.3904390335083,
+  "diskBudgetMiB": 512,
+  "projectionMeaning": "Flat endpoint size multiplied by1001 states; excludes manifest/history/key. This is capacity illustration, not a prediction of future state growth.",
+  "largestFields": [
+    [
+      "flapComponents",
+      188704
+    ],
+    [
+      "drillingV2",
+      46375
+    ],
+    [
+      "removed",
+      10303
+    ],
+    [
+      "debris",
+      9823
+    ],
+    [
+      "slots",
+      229
+    ],
+    [
+      "vesselsV2",
+      154
+    ],
+    [
+      "deformationModel",
+      78
+    ],
+    [
+      "materialExposure",
+      71
+    ]
+  ]
+}

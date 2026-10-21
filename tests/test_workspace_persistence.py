@@ -9,7 +9,7 @@ import numpy as np
 import nibabel as nib
 import pytest
 from resectionlab.desktop_bridge import BridgeRuntime
-from resectionlab.imaging import load_case,load_nifti_case,save_case
+from resectionlab.imaging import MAX_MANIFEST_BYTES,load_case,load_nifti_case,save_case
 from resectionlab.core import semantic_digest
 from resectionlab.workspace_bundle import canonical_episode,load_workspace,validate_episode,session_digest,save_workspace,view_state
 
@@ -47,6 +47,25 @@ def test_volume_rendering_preferences_roundtrip_without_changing_source(tmp_path
     for invalid in [None,[],{'density':float('nan')},{'density':-1},{'density':3},{'enabled':1},{'preset':'invented-vessels'},{'other':1}]:
         state['states']['primary']['viewer']={'volumeRendering':invalid}
         with pytest.raises(ValueError,match='volume rendering'):view_state(case,[],state)
+
+def test_workspace_manifest_hash_overhead_refuses_before_replacing_destination(tmp_path):
+    case=load_nifti_case(image(tmp_path/'source.nii.gz'),case_id='manifest-boundary-test')
+    state=view_state(case,[]);path=tmp_path/'preserved.ressectionlab'
+    save_workspace(case,path,sources=[],imaging=state,episode=None,selection=None,artifacts={})
+    original=path.read_bytes()
+    primary=save_case(case,tmp_path/'primary.ressectionlab',artifacts={'padding':''})
+    with ZipFile(primary) as archive:base_bytes=len(archive.read('manifest.json'))
+    artifacts={'padding':'x'*(MAX_MANIFEST_BYTES-40-base_bytes)}
+    save_case(case,primary,artifacts=artifacts)
+    with ZipFile(primary) as archive:
+        raw=archive.read('manifest.json');manifest=json.loads(raw)
+    assert len(raw)==MAX_MANIFEST_BYTES-40
+    manifest['workspace_sha256']='0'*64
+    assert len(json.dumps(manifest,sort_keys=True,separators=(',',':')).encode())==len(raw)+86
+    with pytest.raises(ValueError,match='Primary manifest exceeds limit'):
+        save_workspace(case,path,sources=[],imaging=state,episode=None,selection=None,artifacts=artifacts)
+    assert path.read_bytes()==original
+    assert load_workspace(path)[0].semantic_hash==case.semantic_hash
 
 @pytest.fixture
 def saved(tmp_path):

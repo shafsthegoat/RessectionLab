@@ -1,0 +1,90 @@
+{
+  "runner_sha256": "1feb74ffca22a14d226bc9b52b0b5049a607225e95bb8dee6d11df5151aa003c",
+  "source_basis_sha256": "5e14e9cfed6b8670041b365206bd78991c8944fdce7f2704e53a1771ec525891",
+  "controls_sha256": "ea2495b9f6e26c771f7775099eb3cc4847392682d8dca11b9f261846c7d8fe83",
+  "runtime_audit_sha256": "8dc074db35e17be3b10f05e68e19ff61cdd44a6d1e0e744bbfc25e1da9073e79",
+  "generated_input": {
+    "generator": "fixed_concentric_spheres_20_15_9_voxel_radii_center23.5",
+    "formula": "class_intensity[0,40,85,140]*exp(0.12*x+0.08*y*y+0.04*sin(z)); xyz=(index-23.5)/24",
+    "sampling_seed": null,
+    "random_sampling": false,
+    "values": {
+      "shape": [
+        48,
+        48,
+        48
+      ],
+      "dtype": "float32",
+      "C_order_bytes_sha256": "0f2501b5e86fbddd6b06f561233854cedefc6a5edb0c3874340154952595cc1f"
+    },
+    "binary_mask": {
+      "shape": [
+        48,
+        48,
+        48
+      ],
+      "dtype": "bool",
+      "C_order_bytes_sha256": "73776148163e66f83e4884723af9a82edc785a6fbab2c970fd0137dad193f82f"
+    },
+    "generated_class_truth": {
+      "shape": [
+        48,
+        48,
+        48
+      ],
+      "dtype": "uint8",
+      "C_order_bytes_sha256": "8380cc70855ac0ac465d8427dcac0f9bef86b5f1d1306493a8763d02a59c5085"
+    },
+    "affine_ras_mm": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "identity_physical_frame": "RAS; LPS conversion changes metadata signs only",
+    "mask_voxels": 33552,
+    "class_counts": [
+      19224,
+      11216,
+      3112
+    ],
+    "masked_intensity_range": [
+      36.021522521972656,
+      146.73292541503906
+    ]
+  },
+  "resources": {
+    "threads": 2,
+    "rss_limit_bytes": 1073741824,
+    "available_memory_floor_bytes": 1073741824,
+    "seconds_per_arm": 120.0,
+    "output_temporary_limit_bytes": 16777216,
+    "disk_floor_bytes": 53687091200,
+    "sample_interval_seconds": 0.1,
+    "attempts_per_arm": 1,
+    "RSS_scope": "supervising_Python_plus_worker_and_recursive_descendants"
+  },
+  "release": "parent authorized two generated-only arms; no patient reads or fitting",
+  "patient_v3_authorized": false,
+  "preparation_note": "Initial metadata comparison rejected lexical checkout alias; resolved paths agree and all other audit fields are identical. No native probe started at that point."
+}

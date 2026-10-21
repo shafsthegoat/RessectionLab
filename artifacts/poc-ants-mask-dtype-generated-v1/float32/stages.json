@@ -1,0 +1,230 @@
+{
+  "worker_pid": 21547,
+  "generated_input": {
+    "generator": "fixed_concentric_spheres_20_15_9_voxel_radii_center23.5",
+    "formula": "class_intensity[0,40,85,140]*exp(0.12*x+0.08*y*y+0.04*sin(z)); xyz=(index-23.5)/24",
+    "sampling_seed": null,
+    "random_sampling": false,
+    "values": {
+      "shape": [
+        48,
+        48,
+        48
+      ],
+      "dtype": "float32",
+      "C_order_bytes_sha256": "0f2501b5e86fbddd6b06f561233854cedefc6a5edb0c3874340154952595cc1f"
+    },
+    "binary_mask": {
+      "shape": [
+        48,
+        48,
+        48
+      ],
+      "dtype": "bool",
+      "C_order_bytes_sha256": "73776148163e66f83e4884723af9a82edc785a6fbab2c970fd0137dad193f82f"
+    },
+    "generated_class_truth": {
+      "shape": [
+        48,
+        48,
+        48
+      ],
+      "dtype": "uint8",
+      "C_order_bytes_sha256": "8380cc70855ac0ac465d8427dcac0f9bef86b5f1d1306493a8763d02a59c5085"
+    },
+    "affine_ras_mm": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "identity_physical_frame": "RAS; LPS conversion changes metadata signs only",
+    "mask_voxels": 33552,
+    "class_counts": [
+      19224,
+      11216,
+      3112
+    ],
+    "masked_intensity_range": [
+      36.021522521972656,
+      146.73292541503906
+    ]
+  },
+  "mask_boundary": {
+    "native_pixeltype": "float",
+    "numpy_dtype": "float32",
+    "binary_values": [
+      0.0,
+      1.0
+    ],
+    "values_exact": true,
+    "support_exact": true,
+    "frame": {
+      "candidate_affine_ras_mm": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_affine_ras_mm": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "affine_max_abs_difference": 0.0,
+      "eight_cell_corner_errors_mm": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "output_saved_with_original_affine": true,
+      "array_permutation_or_resampling": false
+    },
+    "representation": {
+      "shape": [
+        48,
+        48,
+        48
+      ],
+      "dtype": "float32",
+      "C_order_bytes_sha256": "3abe92bfedbe5cef1b82cc50935a6cd2b72278c728fecf4adf8a2c97ab4a55ab"
+    }
+  },
+  "N4_started": true,
+  "N4_completed": true,
+  "Atropos_started": true,
+  "Atropos_completed": true,
+  "N4_frame": {
+    "candidate_affine_ras_mm": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "source_affine_ras_mm": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "affine_max_abs_difference": 0.0,
+    "eight_cell_corner_errors_mm": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "output_saved_with_original_affine": true,
+    "array_permutation_or_resampling": false
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "schema": "resectionlab.telemetry-container-reconciliation.v1",
+  "episodeId": "ucsf0004-integrated-two-tool",
+  "previousContainerSha256": "2175575df198e7480e13b2c29b469446dc64a52a3fec649421a360cbde46b485",
+  "currentContainerSha256": "c2158fee1d1c07d13ecaca28ef419a24b489400453ebb0d3bbbc3f5d826f5a6a",
+  "cause": "Lead regenerated the native ZIP during the full two-case verifier after the sub06 retained-hold correction. Archive storage bytes changed; current saved source arrays, RAS affine, scene identity, bound contract and exact persisted checkpoint independently match the previously audited episode.",
+  "sourceCaseHash": "sha256:c7c21269b6769f5cb8c723ea32f445c04fd22c88a98c99ce9f904e9dca8357cc",
+  "sceneId": "sha256:e32dca89c598eeb2ee4d5b3808ef00e9ed9bee35624d7ce2bcaf6b86edcfb225",
+  "stateId": "sha256:b0511eef98b5eb74d26790148fdd8fa4c27e70fb6ba1f5856a00d6d04a5246d7",
+  "sourceMriAndAllCompartmentArraysUnchanged": true,
+  "frameAndAffineUnchanged": true,
+  "nativeSnapshotEqualsPreviouslyAuditedSidecar": true,
+  "checkpointStateIdentityVerified": true,
+  "originalEmbeddedFilesChecked": 0,
+  "sourceOriginalFileSha256": "6638da3da187599b1094c58d69a84434e881d7ff07a0ca22798be6a8b6115ea3",
+  "auditScope": "No new transition replay; exact persisted snapshot/action/scene identity and native source arrays checked against prior verified episode."
+}

@@ -31,7 +31,7 @@ export function rasPoint(point: Vec3, frame: string): Vec3 {
     : [...point];
 }
 
-/** Source annotation navigation uses the same physical center as initial case loading. */
+/** Prefer visible tumor annotations to broad support anatomy when navigating. */
 export function annotationCenter(
   payload: CasePayload | null,
   caseData: ViewerCase | null,
@@ -44,9 +44,10 @@ export function annotationCenter(
     !caseData.compartments.some((layer) => layer.volumeMm3 > 0)
   )
     return null;
-  return payload.targetCentroidMm
-    ? rasPoint(payload.targetCentroidMm, payload.frame)
-    : initialCursor(caseData);
+  if(payload.targetCentroidMm)return rasPoint(payload.targetCentroidMm,payload.frame);
+  const anatomy=payload.metadata.anatomy_layers as Record<string,{kind?:string}>|undefined;
+  const targets=caseData.compartments.filter(layer=>anatomy?.[layer.name]?.kind==='tumor'&&layer.volumeMm3>0);
+  return initialCursor(targets.length?{...caseData,compartments:targets}:caseData);
 }
 
 /** Validate the physical/data contract before fetching or allocating any renderer arrays. */
@@ -172,7 +173,8 @@ export function validateCaseDescriptor(payload: CasePayload): {
     payload.intensityRange &&
     (payload.intensityRange.length !== 2 ||
       payload.intensityRange.some((v) => !Number.isFinite(v)) ||
-      payload.intensityRange[0] >= payload.intensityRange[1])
+      payload.intensityRange[0] > payload.intensityRange[1] ||
+      (payload.intensityRange[0] === payload.intensityRange[1] && payload.metadata.generated_signal !== true))
   )
     throw new Error("Invalid MRI intensity range.");
   if (
@@ -222,7 +224,8 @@ export async function hydrateCase(
     affine,
     shape: [...payload.shape],
     spacingMm: [...payload.spacingMm],
-    intensityRange: payload.intensityRange,
+    intensityRange: payload.intensityRange?.[0] === payload.intensityRange?.[1] && payload.intensityRange
+      ? [payload.intensityRange[0] - .5, payload.intensityRange[1] + .5] : payload.intensityRange,
     mri,
     compartments: layers.map((layer, index) => {
       const mask = maskBytes[index];
@@ -242,6 +245,9 @@ export async function hydrateCase(
         throw new Error(`${layer.name} volume disagrees with its source grid.`);
       return {
         name: layer.name,
+        kind: (payload.metadata.anatomy_layers as Record<string,{kind?:string}>|undefined)?.[layer.name]?.kind,
+        sourceIdentity: `${payload.caseHash}:${layer.name}:${layer.array.sha256}`,
+        qa: layer.qa,
         volumeMm3: layer.volumeMm3 ?? selected * voxelVolumeMm3,
         mask,
         color: String((payload.metadata.anatomy_layers as Record<string,{color?:string}>|undefined)?.[layer.name]?.color ?? anatomyColor(layer.name)),

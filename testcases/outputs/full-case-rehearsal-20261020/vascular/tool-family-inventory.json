@@ -1,0 +1,149 @@
+{
+  "schema": "resectionlab.tool-family-checks.v1",
+  "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+  "fixture": "tests/test_surgical_tools.py::test_engine_step_instrument_admissibility",
+  "status": "passed",
+  "toolCount": 15,
+  "tools": [
+    {
+      "tool": "cranial_drill",
+      "effect": "remove",
+      "fixtureStatus": "passed",
+      "fixtureTest": "test_engine_step_instrument_admissibility[cranial_drill-bone-removed]",
+      "fixtureWallSeconds": 0.16,
+      "patientStatus": "model supported; actual patient action still requires checked geometry",
+      "patientProof": "patient action receipts cover drill, CUSA, scissors, bipolar, irrigation, suction in combined prefix/rescue; other tools retain fixture-only proof"
+    },
+    {
+      "tool": "cusa",
+      "effect": "remove",
+      "fixtureStatus": "passed",
+      "fixtureTest": "test_engine_step_instrument_admissibility[cusa-tumor-removed]",
+      "fixtureWallSeconds": 0.031,
+      "patientStatus": "model supported; actual patient action still requires checked geometry",
+      "patientProof": "patient action receipts cover drill, CUSA, scissors, bipolar, irrigation, suction in combined prefix/rescue; other tools retain fixture-only proof"
+    },
+    {
+      "tool": "brain_retractor",
+      "effect": "retract",
+      "fixtureStatus": "passed",
+      "fixtureTest": "test_engine_step_instrument_admissibility[brain_retractor-soft_tissue-holds]",
+      "fixtureWallSeconds": 0.038,
+      "patientStatus": "model supported; patient-specific access requires checked geometry",
+      "patientProof": "patient action receipts cover drill, CUSA, scissors, bipolar, irrigation, suction in combined prefix/rescue; other tools retain fixture-only proof"
+    },
+    {
+      "tool": "scalpel",
+      "effect": "incise",
+      "fixtureStatus": "passed",
+      "fixtureTest": "test_engine_step_instrument_admissibility[scalpel-soft_tissue-cutEdges]",
+      "fixtureWallSeconds": 0.035,
+      "patientStatus": "model supported; actual patient action still requires checked geometry",
+      "patientProof": "patient action receipts cover drill, CUSA, scissors, bipolar, irrigation, suction in combined prefix/rescue; other tools retain fixture-only proof"
+    },
+    {
+      "tool": "periosteal_elevator",
+      "effect": "elevate",
+      "fixtureStatus": "passed",
+      "fixtureTest": "test_engine_step_instrument_admissibility[periosteal_elevator-bone-separatedAttachments]",
+      "fixtureWallSeconds": 0.035,
+      "patientStatus": "missing-attachment-evidence: no declared periosteal bonds",
+      "patientProof": "patient action receipts cover drill, CUSA, scissors, bipolar, irrigation, suction in combined prefix/rescue; other tools retain fixture-only proof"
+    },
+    {
+      "tool": "craniotome",
+      "effect": "kerf",
+      "fixtureStatus": "passed",
+      "fixtureTest": "test_engine_step_instrument_admissibility[craniotome-bone-removed]",
+      "fixtureWallSeconds": 0.07,
+      "patientStatus": "component separability unknown: no declared bone anchors",
+      "patientProof": "patient action receipts cover drill, CUSA, scissors, bipolar, irrigation, suction in combined prefix/rescue; other tools retain fixture-only proof"
+    },
+    {
+      "tool": "dural_scissors",
+      "effect": "sheet_cut",
+      "fixtureStatus": "passed",
+      "fixtureTest": "test_engine_step_instrument_admissibility[dural_scissors-membrane-cutEdges]",
+      "fixtureWallSeconds": 0.033,
+      "patientStatus": "missing-anatomy: no membrane supplied",
+      "patientProof": "patient action receipts cover drill, CUSA, scissors, bipolar, irrigation, suction in combined prefix/rescue; other tools retain fixture-only proof"
+    },
+    {
+      "tool": "dissector",
+      "effect": "dissect",
+      "fixtureStatus": "passed",
+      "fixtureTest": "test_engine_step_instrument_admissibility[dissector-soft_tissue-separatedAttachments]",
+      "fixtureWallSeconds": 0.028,
+      "patientStatus": "missing-attachment-evidence: no declared soft bonds",
+      "patientProof": "patient action receipts cover drill, CUSA, scissors, bipolar, irrigation, suction in combined prefix/rescue; other tools retain fixture-only proof"
+    },
+    {
+      "tool": "frazier_suction",
+      "effect": "suction",
+      "fixtureStatus": "passed",
+      "fixtureTest": "test_engine_step_instrument_admissibility[frazier_suction-soft_tissue-fluidRemovedMm3]",
+      "fixtureWallSeconds": 0.033,
+      "patientStatus": "model supported; actual patient action still requires checked geometry",
+      "patientProof": "patient action receipts cover drill, CUSA, scissors, bipolar, irrigation, suction in combined prefix/rescue; other tools retain fixture-only proof"
+    },
+    {
+      "tool": "bipolar_forceps",
+      "effect": "coagulate",
+      "fixtureStatus": "passed",
+      "fixtureTest": "test_engine_step_instrument_admissibility[bipolar_forceps-vessel-thermal]",
+      "fixtureWallSeconds": 0.03,
+      "patientStatus": "model supported; actual patient action still requires checked geometry",
+      "patientProof": "patient action receipts cover drill, CUSA, scissors, bipolar, irrigation, suction in combined prefix/rescue; other tools retain fixture-only proof"
+    },
+    {
+      "tool": "micro_scissors",
+      "effect": "transect",
+      "fixtureStatus": "passed",
+      "fixtureTest": "test_engine_step_instrument_admissibility[micro_scissors-vessel-transectedEdges]",
+      "fixtureWallSeconds": 0.033,
+      "patientStatus": "model supported; actual patient action still requires checked geometry",
+      "patientProof": "patient action receipts cover drill, CUSA, scissors, bipolar, irrigation, suction in combined prefix/rescue; other tools retain fixture-only proof"
+    },
+    {
+      "tool": "tumor_forceps",
+      "effect": "grasp",
+      "fixtureStatus": "passed",
+      "fixtureTest": "test_engine_step_instrument_admissibility[tumor_forceps-tumor-holds]",
+      "fixtureWallSeconds": 0.032,
+      "patientStatus": "model supported; extraction requires proven free fragment",
+      "patientProof": "patient action receipts cover drill, CUSA, scissors, bipolar, irrigation, suction in combined prefix/rescue; other tools retain fixture-only proof"
+    },
+    {
+      "tool": "irrigation",
+      "effect": "irrigate",
+      "fixtureStatus": "passed",
+      "fixtureTest": "test_engine_step_instrument_admissibility[irrigation-soft_tissue-fluidAddedMm3]",
+      "fixtureWallSeconds": 0.036,
+      "patientStatus": "model supported; actual patient action still requires checked geometry",
+      "patientProof": "patient action receipts cover drill, CUSA, scissors, bipolar, irrigation, suction in combined prefix/rescue; other tools retain fixture-only proof"
+    },
+    {
+      "tool": "cortical_probe",
+      "effect": "probe",
+      "fixtureStatus": "passed",
+      "fixtureTest": "test_engine_step_instrument_admissibility[cortical_probe-soft_tissue-observations]",
+      "fixtureWallSeconds": 0.028,
+      "patientStatus": "mapping remains unknown: no supplied functionalEvidence",
+      "patientProof": "patient action receipts cover drill, CUSA, scissors, bipolar, irrigation, suction in combined prefix/rescue; other tools retain fixture-only proof"
+    },
+    {
+      "tool": "subcortical_probe",
+      "effect": "probe",
+      "fixtureStatus": "passed",
+      "fixtureTest": "test_engine_step_instrument_admissibility[subcortical_probe-soft_tissue-observations]",
+      "fixtureWallSeconds": 0.029,
+      "patientStatus": "mapping remains unknown: no supplied functionalEvidence",
+      "patientProof": "patient action receipts cover drill, CUSA, scissors, bipolar, irrigation, suction in combined prefix/rescue; other tools retain fixture-only proof"
+    }
+  ],
+  "limits": [
+    "Synthetic engineering fixture is explicitly separate from patient anatomy.",
+    "Fixture suction test declares an initial local fluid volume directly; patient rescue uses generated bleeding and public irrigation instead.",
+    "No membrane, attachment, functional response or bone-anchor evidence was fabricated for the patient."
+  ]
+}

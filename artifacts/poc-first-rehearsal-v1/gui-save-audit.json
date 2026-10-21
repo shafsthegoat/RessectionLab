@@ -1,0 +1,1228 @@
+{
+  "schema": "poc-first-electron-save-independent-audit-v1",
+  "scope": "Read-only independent audit of files saved through the actual Electron session; GUI interaction observed by parent, not this auditor",
+  "cases": [
+    {
+      "case": "UCSF-PDGM-0004",
+      "status": "pass",
+      "audit_utc": "2026-10-16T05:48:45.708162+00:00",
+      "canonical_bundle": "outputs/poc-cases/UCSF-PDGM-0004.ressectionlab",
+      "reviewed_bundle": "outputs/poc-rehearsal/UCSF-PDGM-0004-reviewed.ressectionlab",
+      "canonical_stamp": {
+        "sha256": "73cd0792c025e846395bafffe5ec793ef9e1823ceec8e4b0aeb8317783041571",
+        "bytes": 31495606,
+        "mtime_ns": 1791954411912581565
+      },
+      "reviewed_stamp": {
+        "sha256": "338f40270b934096b82cadcb4bd2b55f46992b4b828d930f408deba344c668db",
+        "bytes": 31531845,
+        "mtime_ns": 1792129330166280395
+      },
+      "case_hash": "sha256:b860284211ca984b3862a1ef22856989c182b53476792d388eb1ecf5466a95e2",
+      "session_hash": "sha256:74e5a80e328bed8591cb9b4b375aeb6df769506054900ab1200d31249b5d9a7a",
+      "source_geometry": {
+        "shape": [
+          240,
+          240,
+          155
+        ],
+        "affine_ras_mm": [
+          [
+            -1.0,
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          [
+            -0.0,
+            -1.0,
+            -0.0,
+            239.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "frame": "RAS+"
+      },
+      "source_arrays_exact": true,
+      "source_provenance_and_layer_metadata_exact": true,
+      "arrays": {
+        "mri": {
+          "dtype": "<f4",
+          "shape": [
+            240,
+            240,
+            155
+          ],
+          "raw_c_order_sha256": "31eb5e80a4bddf4062cadd1b40fafe76821412769b759c70cb8bc16816f4d162"
+        },
+        "brain_mask": {
+          "foreground_voxels": 1475621,
+          "raw_c_order_sha256": "0fc483294b836c8ba26859fd5cefd0627417a1d0a8961f43183bf0014017bfbd"
+        },
+        "compartments": {
+          "FLAIR_abnormality": {
+            "foreground_voxels": 18654,
+            "raw_c_order_sha256": "763f10ae7416e193305bc20c9a82a1c68bac7412639299e14b58f20fd0681c3e"
+          },
+          "enhancing_target": {
+            "foreground_voxels": 15672,
+            "raw_c_order_sha256": "5082807c92644df349436d94f29b129242bd45995065cf5e341ea7b8fe37c0ae"
+          },
+          "monai_enhancing_tumor": {
+            "foreground_voxels": 14023,
+            "raw_c_order_sha256": "90386438e34377e8eefa10d53732bdc3e9e57704cc003b906fcb34c5f69c207a"
+          },
+          "monai_tumor_core": {
+            "foreground_voxels": 22561,
+            "raw_c_order_sha256": "32c69eb94b8fb1433ff3d09d1607ad553cab596ad43cb0b33fb5ec6ba792212b"
+          },
+          "monai_whole_tumor": {
+            "foreground_voxels": 37595,
+            "raw_c_order_sha256": "772741999890f3caf517a92d125e6dd9829d569a6beb987a77e062930e4a8262"
+          },
+          "nonenhancing_or_necrotic_core": {
+            "foreground_voxels": 7593,
+            "raw_c_order_sha256": "b2be253d65b0cee3b7ec85d4a0fd960a85bfa7c0ce460308bb8fbaf3f3a5615f"
+          }
+        },
+        "source_compartments": {
+          "FLAIR_abnormality": {
+            "foreground_voxels": 18654,
+            "raw_c_order_sha256": "763f10ae7416e193305bc20c9a82a1c68bac7412639299e14b58f20fd0681c3e"
+          },
+          "enhancing_target": {
+            "foreground_voxels": 15672,
+            "raw_c_order_sha256": "5082807c92644df349436d94f29b129242bd45995065cf5e341ea7b8fe37c0ae"
+          },
+          "monai_enhancing_tumor": {
+            "foreground_voxels": 14023,
+            "raw_c_order_sha256": "90386438e34377e8eefa10d53732bdc3e9e57704cc003b906fcb34c5f69c207a"
+          },
+          "monai_tumor_core": {
+            "foreground_voxels": 22561,
+            "raw_c_order_sha256": "32c69eb94b8fb1433ff3d09d1607ad553cab596ad43cb0b33fb5ec6ba792212b"
+          },
+          "monai_whole_tumor": {
+            "foreground_voxels": 37595,
+            "raw_c_order_sha256": "772741999890f3caf517a92d125e6dd9829d569a6beb987a77e062930e4a8262"
+          },
+          "nonenhancing_or_necrotic_core": {
+            "foreground_voxels": 7593,
+            "raw_c_order_sha256": "b2be253d65b0cee3b7ec85d4a0fd960a85bfa7c0ce460308bb8fbaf3f3a5615f"
+          }
+        }
+      },
+      "auxiliary_sources": [
+        {
+          "case": "UCSF-PDGM-0004",
+          "case_hash": "sha256:ef8d28898c4decd983957f9a33fa50eaeb1de051b1cbcdb6753a88b7e96d89f9",
+          "source_arrays_exact": true,
+          "arrays": {
+            "mri": {
+              "dtype": "<f4",
+              "shape": [
+                240,
+                240,
+                155
+              ],
+              "raw_c_order_sha256": "7303a91b77e02a1852298413353e5f39734c0dca621a29e88bdf041179236157"
+            },
+            "compartments": {
+              "FLAIR_abnormality": {
+                "foreground_voxels": 18654,
+                "raw_c_order_sha256": "763f10ae7416e193305bc20c9a82a1c68bac7412639299e14b58f20fd0681c3e"
+              },
+              "enhancing_target": {
+                "foreground_voxels": 15672,
+                "raw_c_order_sha256": "5082807c92644df349436d94f29b129242bd45995065cf5e341ea7b8fe37c0ae"
+              },
+              "nonenhancing_or_necrotic_core": {
+                "foreground_voxels": 7593,
+                "raw_c_order_sha256": "b2be253d65b0cee3b7ec85d4a0fd960a85bfa7c0ce460308bb8fbaf3f3a5615f"
+              }
+            },
+            "source_compartments": {
+              "FLAIR_abnormality": {
+                "foreground_voxels": 18654,
+                "raw_c_order_sha256": "763f10ae7416e193305bc20c9a82a1c68bac7412639299e14b58f20fd0681c3e"
+              },
+              "enhancing_target": {
+                "foreground_voxels": 15672,
+                "raw_c_order_sha256": "5082807c92644df349436d94f29b129242bd45995065cf5e341ea7b8fe37c0ae"
+              },
+              "nonenhancing_or_necrotic_core": {
+                "foreground_voxels": 7593,
+                "raw_c_order_sha256": "b2be253d65b0cee3b7ec85d4a0fd960a85bfa7c0ce460308bb8fbaf3f3a5615f"
+              }
+            }
+          }
+        },
+        {
+          "case": "UCSF-PDGM-0004",
+          "case_hash": "sha256:c777ce5217a6ae70516eb03c92372f77bf7996392397d9932bc4cda2fabf9559",
+          "source_arrays_exact": true,
+          "arrays": {
+            "mri": {
+              "dtype": "<f4",
+              "shape": [
+                240,
+                240,
+                155
+              ],
+              "raw_c_order_sha256": "480a44a19c27d24c66aa78198c54985dd3cd3e15dcf994efc9142c18a19a273f"
+            },
+            "compartments": {
+              "FLAIR_abnormality": {
+                "foreground_voxels": 18654,
+                "raw_c_order_sha256": "763f10ae7416e193305bc20c9a82a1c68bac7412639299e14b58f20fd0681c3e"
+              },
+              "enhancing_target": {
+                "foreground_voxels": 15672,
+                "raw_c_order_sha256": "5082807c92644df349436d94f29b129242bd45995065cf5e341ea7b8fe37c0ae"
+              },
+              "nonenhancing_or_necrotic_core": {
+                "foreground_voxels": 7593,
+                "raw_c_order_sha256": "b2be253d65b0cee3b7ec85d4a0fd960a85bfa7c0ce460308bb8fbaf3f3a5615f"
+              }
+            },
+            "source_compartments": {
+              "FLAIR_abnormality": {
+                "foreground_voxels": 18654,
+                "raw_c_order_sha256": "763f10ae7416e193305bc20c9a82a1c68bac7412639299e14b58f20fd0681c3e"
+              },
+              "enhancing_target": {
+                "foreground_voxels": 15672,
+                "raw_c_order_sha256": "5082807c92644df349436d94f29b129242bd45995065cf5e341ea7b8fe37c0ae"
+              },
+              "nonenhancing_or_necrotic_core": {
+                "foreground_voxels": 7593,
+                "raw_c_order_sha256": "b2be253d65b0cee3b7ec85d4a0fd960a85bfa7c0ce460308bb8fbaf3f3a5615f"
+              }
+            }
+          }
+        },
+        {
+          "case": "UCSF-PDGM-0004",
+          "case_hash": "sha256:b7aed64b39684cc2f1e334afa0832e4da245418b10437fabd5108b89e0a43433",
+          "source_arrays_exact": true,
+          "arrays": {
+            "mri": {
+              "dtype": "<f4",
+              "shape": [
+                240,
+                240,
+                155
+              ],
+              "raw_c_order_sha256": "c19eb2e678a07cd869d2d3acacfbcf2993df1d920f533a2e039e097f2a5d02c5"
+            },
+            "compartments": {
+              "FLAIR_abnormality": {
+                "foreground_voxels": 18654,
+                "raw_c_order_sha256": "763f10ae7416e193305bc20c9a82a1c68bac7412639299e14b58f20fd0681c3e"
+              },
+              "enhancing_target": {
+                "foreground_voxels": 15672,
+                "raw_c_order_sha256": "5082807c92644df349436d94f29b129242bd45995065cf5e341ea7b8fe37c0ae"
+              },
+              "nonenhancing_or_necrotic_core": {
+                "foreground_voxels": 7593,
+                "raw_c_order_sha256": "b2be253d65b0cee3b7ec85d4a0fd960a85bfa7c0ce460308bb8fbaf3f3a5615f"
+              }
+            },
+            "source_compartments": {
+              "FLAIR_abnormality": {
+                "foreground_voxels": 18654,
+                "raw_c_order_sha256": "763f10ae7416e193305bc20c9a82a1c68bac7412639299e14b58f20fd0681c3e"
+              },
+              "enhancing_target": {
+                "foreground_voxels": 15672,
+                "raw_c_order_sha256": "5082807c92644df349436d94f29b129242bd45995065cf5e341ea7b8fe37c0ae"
+              },
+              "nonenhancing_or_necrotic_core": {
+                "foreground_voxels": 7593,
+                "raw_c_order_sha256": "b2be253d65b0cee3b7ec85d4a0fd960a85bfa7c0ce460308bb8fbaf3f3a5615f"
+              }
+            }
+          }
+        }
+      ],
+      "archived_originals": {
+        "count": 18,
+        "bytes": 12454950,
+        "files": [
+          {
+            "name": "data_acquisition_ucsf.json",
+            "role": "metadata",
+            "sha256": "b05552355f2099058e9d25bc93faf9f2981fe1c00ffb4f24443edfabeda4c6f6",
+            "bytes": 10598
+          },
+          {
+            "name": "UCSF-PDGM-0004_FLAIR.nii.gz",
+            "role": "imaging",
+            "sha256": "4f85b3a6e253a42f9c04df95f2059d256dd9ac46f68de99553915b7c82e3384b",
+            "bytes": 2947932
+          },
+          {
+            "name": "UCSF-PDGM-0004_T1.nii.gz",
+            "role": "imaging",
+            "sha256": "519c83d1cac08d15b299707403e94e90b4a9fe6369cf77acf01b754b276147e5",
+            "bytes": 2811372
+          },
+          {
+            "name": "UCSF-PDGM-0004_T1c.nii.gz",
+            "role": "imaging",
+            "sha256": "398e7a6ec44e795aaf717fbf0fee6b3a11a671c5bc944c13a308ccaf02419176",
+            "bytes": 2834824
+          },
+          {
+            "name": "UCSF-PDGM-0004_T2.nii.gz",
+            "role": "imaging",
+            "sha256": "6662aa3b30670944d73486ba6300b5b9d3a5916e0ba74b225816c0806c5a7824",
+            "bytes": 2912543
+          },
+          {
+            "name": "UCSF-PDGM-0004_tumor_segmentation.nii.gz",
+            "role": "annotation",
+            "sha256": "54e51eb6ae60d8985ed5379a4267438017e2682255418833fac1b704813b483e",
+            "bytes": 53055
+          },
+          {
+            "name": "UCSF-PDGM-metadata_glossary.csv",
+            "role": "metadata",
+            "sha256": "f1404bcd730572d05bdf7ead2e62e32843944d0e27a05cd0ef2dcca8ce69378d",
+            "bytes": 1964
+          },
+          {
+            "name": "UCSF-PDGM-metadata_v5.csv",
+            "role": "metadata",
+            "sha256": "afc1c23a0eb0597b56e603741e72f2308b4860281187cd3808e05b7a0116fd78",
+            "bytes": 58149
+          },
+          {
+            "name": "mirror_README.md",
+            "role": "metadata",
+            "sha256": "a64ef118f23d42e2eff88eddf90fb6c6215195c61359edf19b97126d79795707",
+            "bytes": 6167
+          },
+          {
+            "name": "mirror_case_listing.json",
+            "role": "metadata",
+            "sha256": "e66deea0c0782628158693340299d121c552aade32dd925af368fd504addb780",
+            "bytes": 1701
+          },
+          {
+            "name": "mirror_repository_metadata.json",
+            "role": "metadata",
+            "sha256": "4991e4f7d7ca5ce880edf46a4009ee3db3f9fd11dcd7a2c5ee8da28af3de408b",
+            "bytes": 151195
+          },
+          {
+            "name": "official_collection_2026-10-04.html",
+            "role": "metadata",
+            "sha256": "418408a5734ad96db3df297e6dd7a4eb1c64290b65fe5344df72ac0e6bf24c99",
+            "bytes": 342016
+          },
+          {
+            "name": "brain_mask.nii.gz",
+            "role": "model-result",
+            "sha256": "6a041ac4f6666fa77e8595cc70594eb5aefb5e868951569d77e953e7a4dfbd14",
+            "bytes": 159231
+          },
+          {
+            "name": "inference.json",
+            "role": "metadata",
+            "sha256": "96729a66f72e1ca5cf4d1eb2bff2cb561009cc30b96ba90892539c9ca55b5d8b",
+            "bytes": 4415
+          },
+          {
+            "name": "inference.json",
+            "role": "metadata",
+            "sha256": "759a24d44b9d2818f7b5ab536498e7fd3bac30ab37bc61ec5b3b0a40a184d499",
+            "bytes": 16423
+          },
+          {
+            "name": "monai_whole_tumor_mask.nii.gz",
+            "role": "model-result",
+            "sha256": "94d29527496b419e7a7a322e32b870fc295fa22b5cd622a8222f064e2e7bc38c",
+            "bytes": 49419
+          },
+          {
+            "name": "monai_tumor_core_mask.nii.gz",
+            "role": "model-result",
+            "sha256": "b0f1ae9a5b9800c9e32387472ef1d113fdf88858491d9fbab48b63977b33606c",
+            "bytes": 46790
+          },
+          {
+            "name": "monai_enhancing_tumor_mask.nii.gz",
+            "role": "model-result",
+            "sha256": "127339b45908e458f88ad41838d1076c50ac00783b228ecf6ea428997dfe028c",
+            "bytes": 47156
+          }
+        ],
+        "all_original_bytes_exact": true,
+        "primary_npz_bytes_exact": false,
+        "primary_npy_payload_multiset_exact": true,
+        "primary_npz_source_sha256": "7339ba176af54c8077641b786def277d75665e6607ed6fc1b78919212a960177",
+        "primary_npz_sha256": "651684e55ae60a6d4cdec081fd5b7301f46b292bc2f798311cb57e7882b49980",
+        "packaging_note": "Numbered compartment entries reordered; all named arrays and embedded NPY payload bytes remain exact."
+      },
+      "imaging_state": {
+        "selectedSeriesId": null,
+        "states": {
+          "primary": {
+            "cursor": [
+              -161.98918944436576,
+              84.85781050842658,
+              104.66657225133362
+            ],
+            "viewer": {
+              "clipping": {
+                "axis": "z",
+                "enabled": false,
+                "flipped": true,
+                "value": 0.1
+              },
+              "layerColor": {
+                "FLAIR_abnormality": "#ffbf69",
+                "brain": "#65bfff",
+                "enhancing_target": "#ff557e",
+                "monai_enhancing_tumor": "#ff7999",
+                "monai_tumor_core": "#b59aff",
+                "monai_whole_tumor": "#ffd866",
+                "nonenhancing_or_necrotic_core": "#d49aff"
+              },
+              "layerOpacity": {
+                "FLAIR_abnormality": 0.72,
+                "brain": 0.16,
+                "enhancing_target": 0.72,
+                "monai_enhancing_tumor": 0.72,
+                "monai_tumor_core": 0.72,
+                "monai_whole_tumor": 0.72,
+                "nonenhancing_or_necrotic_core": 0.72
+              }
+            },
+            "visibleLayers": {
+              "FLAIR_abnormality": true,
+              "brain": true,
+              "enhancing_target": true,
+              "monai_enhancing_tumor": false,
+              "monai_tumor_core": false,
+              "monai_whole_tumor": false,
+              "nonenhancing_or_necrotic_core": true
+            }
+          },
+          "sha256:93abbde6de00313a15bc76e9a2f59cb2c9ced84cd191c3e2b55d195ae5524f8e": {
+            "cursor": [
+              -161.98918944436576,
+              84.85781050842658,
+              104.66657225133362
+            ],
+            "viewer": {
+              "layerColor": {
+                "FLAIR_abnormality": "#ffbf69",
+                "enhancing_target": "#ff557e",
+                "nonenhancing_or_necrotic_core": "#d49aff"
+              },
+              "layerOpacity": {
+                "FLAIR_abnormality": 0.72,
+                "enhancing_target": 0.72,
+                "nonenhancing_or_necrotic_core": 0.72
+              }
+            },
+            "visibleLayers": {
+              "FLAIR_abnormality": true,
+              "enhancing_target": true,
+              "nonenhancing_or_necrotic_core": true
+            }
+          },
+          "sha256:d8f1623b38e1b7e330a25405a286a7bc1f1181cbc934d72a0567658cbb5c252a": {
+            "cursor": [
+              -161.98918944436576,
+              84.85781050842658,
+              104.66657225133362
+            ],
+            "viewer": {
+              "layerColor": {
+                "FLAIR_abnormality": "#ffbf69",
+                "enhancing_target": "#ff557e",
+                "nonenhancing_or_necrotic_core": "#d49aff"
+              },
+              "layerOpacity": {
+                "FLAIR_abnormality": 0.72,
+                "enhancing_target": 0.72,
+                "nonenhancing_or_necrotic_core": 0.72
+              }
+            },
+            "visibleLayers": {
+              "FLAIR_abnormality": true,
+              "enhancing_target": true,
+              "nonenhancing_or_necrotic_core": true
+            }
+          },
+          "sha256:e0f96c01d9f547f9fd50217bcba1a49a37d1693912fd160edb7595990812f7aa": {
+            "cursor": [
+              -161.98918944436576,
+              84.85781050842658,
+              104.66657225133362
+            ],
+            "viewer": {
+              "layerColor": {
+                "FLAIR_abnormality": "#ffbf69",
+                "enhancing_target": "#ff557e",
+                "nonenhancing_or_necrotic_core": "#d49aff"
+              },
+              "layerOpacity": {
+                "FLAIR_abnormality": 0.72,
+                "enhancing_target": 0.72,
+                "nonenhancing_or_necrotic_core": 0.72
+              }
+            },
+            "visibleLayers": {
+              "FLAIR_abnormality": true,
+              "enhancing_target": true,
+              "nonenhancing_or_necrotic_core": true
+            }
+          }
+        }
+      },
+      "workspace_preferences": {
+        "case_hash": "sha256:b860284211ca984b3862a1ef22856989c182b53476792d388eb1ecf5466a95e2",
+        "category": "pareto",
+        "cursor": [
+          -161.98918944436576,
+          84.85781050842658,
+          104.66657225133362
+        ],
+        "overlayOpacity": 0.32,
+        "rehearsalView": {
+          "branchId": "short_pass_field_management",
+          "episodeInitialStateId": "sha256:f3784c9c3a42990c0dbf2b6ff1ba98eb78a43c14ea6f20b7b424d8e9e35187e2",
+          "frameIndex": 19,
+          "selectedTool": "field_manager",
+          "visible": true
+        },
+        "routeA": "",
+        "routeB": "",
+        "visibleLayers": {
+          "FLAIR_abnormality": true,
+          "brain": true,
+          "enhancing_target": true,
+          "monai_enhancing_tumor": false,
+          "monai_tumor_core": false,
+          "monai_whole_tumor": false,
+          "nonenhancing_or_necrotic_core": true
+        }
+      },
+      "rehearsal": {
+        "schema": "resectionlab.source-bound-rehearsal.v2",
+        "live_record_hash": "sha256:ae9fbbe2c746d9515472615f534c9782bb2284ec4c877f613f5d3cda75d5f8e1",
+        "initial_state_id": "sha256:f3784c9c3a42990c0dbf2b6ff1ba98eb78a43c14ea6f20b7b424d8e9e35187e2",
+        "live_state_id": "sha256:8451c0030550d7a8557c86cf1b70236813fdffa129b9528de0559e1415d70975",
+        "comparison_snapshot_id": "sha256:8451c0030550d7a8557c86cf1b70236813fdffa129b9528de0559e1415d70975",
+        "planning_input_hash": "sha256:c5c53c7c4d7efddfad405075e3caaf275c11ebdd24222161f7f3c6cf749935bd",
+        "source_frame_hash": "sha256:8f3dba204e861a0c5b714729a78da92768137c122d04b45ffde4f69728b1f8f7",
+        "source_target_hash": "sha256:c2fa868aae146629db511ac0331f6635fe8413c47ff2eb4d5a43ac57a5164e1a",
+        "target_layer_names": [
+          "monai_tumor_core"
+        ],
+        "live_actions": [
+          {
+            "durationSeconds": 1,
+            "kind": "aspirate",
+            "tipRasMm": [
+              -171,
+              90,
+              85.7
+            ],
+            "toolId": "aspirator"
+          },
+          {
+            "durationSeconds": 1,
+            "kind": "aspirate",
+            "tipRasMm": [
+              -171,
+              90,
+              86.7
+            ],
+            "toolId": "aspirator"
+          },
+          {
+            "durationSeconds": 1,
+            "kind": "clear_field",
+            "tipRasMm": [
+              -177,
+              90,
+              85.2
+            ],
+            "toolId": "field_manager"
+          }
+        ],
+        "live_replay": {
+          "frames": 7,
+          "independent_capsule_cell_removal_exact": true,
+          "persistent_unique_removal": true,
+          "source_tissue_and_target_accounting_exact": true,
+          "contact_field_management_and_burden_accounting_exact": true,
+          "full_tool_parallel_clearance": true,
+          "independent_full_shaft_and_tip_retained_tissue_clearance": true,
+          "metrics": {
+            "targetRemovedMm3": 13.0,
+            "nonTargetRemovedMm3": 9.0,
+            "removedMm3": 22.0,
+            "residualTargetMm3": 22540.0,
+            "sourceTargetMm3": 22561.0,
+            "targetOutsideSupportMm3": 0.0,
+            "assumedExposureTargetMm3": 8.0,
+            "assumedExposureTissueMm3": 12628.0,
+            "remainingTissueMm3": 1462971.0,
+            "sourceTissueMm3": 1475621.0,
+            "contactCellSeconds": 15.5,
+            "fieldManagementCellSeconds": 4.5,
+            "fieldBurden": 0.0,
+            "elapsedSeconds": 3.0,
+            "vascularEvents": null,
+            "motorRisk": null,
+            "languageRisk": null,
+            "anatomicalConflicts": 0,
+            "stopReason": null,
+            "terminated": false
+          }
+        },
+        "branches": [
+          {
+            "id": "short_pass_field_management",
+            "label": "Short pass + field management",
+            "record_hash": "sha256:04b00c71d2e3cb5c370432898b72eda81f6efb8ff55afa3f5ac0a8ec055aa4b1",
+            "initial_state_id": "sha256:f3784c9c3a42990c0dbf2b6ff1ba98eb78a43c14ea6f20b7b424d8e9e35187e2",
+            "final_state_id": "sha256:37fec09880e89f240e82f0ca1623c930742edae768d009499292f022e13fd419",
+            "action_count": 8,
+            "actions": [
+              {
+                "durationSeconds": 1,
+                "kind": "aspirate",
+                "tipRasMm": [
+                  -171,
+                  90,
+                  85.7
+                ],
+                "toolId": "aspirator"
+              },
+              {
+                "durationSeconds": 1,
+                "kind": "aspirate",
+                "tipRasMm": [
+                  -171,
+                  90,
+                  86.7
+                ],
+                "toolId": "aspirator"
+              },
+              {
+                "durationSeconds": 1,
+                "kind": "clear_field",
+                "tipRasMm": [
+                  -177,
+                  90,
+                  85.2
+                ],
+                "toolId": "field_manager"
+              },
+              {
+                "durationSeconds": 1.0,
+                "kind": "inspect"
+              },
+              {
+                "durationSeconds": 2.0,
+                "kind": "aspirate",
+                "tipRasMm": [
+                  -171.0,
+                  90.0,
+                  88.7
+                ],
+                "toolId": "aspirator"
+              },
+              {
+                "durationSeconds": 2.0,
+                "kind": "clear_field",
+                "tipRasMm": [
+                  -177.0,
+                  90.0,
+                  85.7
+                ],
+                "toolId": "field_manager"
+              },
+              {
+                "durationSeconds": 1.0,
+                "kind": "reassess"
+              },
+              {
+                "durationSeconds": 0.0,
+                "kind": "STOP",
+                "reason": "bounded_short_pass_then_field_management; vessels_and_function_unknown"
+              }
+            ],
+            "exact_saved_action_prefix": true,
+            "exact_replayed_frame_prefix": true,
+            "replayed_serialization_exact": true,
+            "independent_frame_audit": {
+              "frames": 20,
+              "independent_capsule_cell_removal_exact": true,
+              "persistent_unique_removal": true,
+              "source_tissue_and_target_accounting_exact": true,
+              "contact_field_management_and_burden_accounting_exact": true,
+              "full_tool_parallel_clearance": true,
+              "independent_full_shaft_and_tip_retained_tissue_clearance": true,
+              "metrics": {
+                "targetRemovedMm3": 55.0,
+                "nonTargetRemovedMm3": 9.0,
+                "removedMm3": 64.0,
+                "residualTargetMm3": 22498.0,
+                "sourceTargetMm3": 22561.0,
+                "targetOutsideSupportMm3": 0.0,
+                "assumedExposureTargetMm3": 8.0,
+                "assumedExposureTissueMm3": 12628.0,
+                "remainingTissueMm3": 1462929.0,
+                "sourceTissueMm3": 1475621.0,
+                "contactCellSeconds": 66.5,
+                "fieldManagementCellSeconds": 34.5,
+                "fieldBurden": 0.0,
+                "elapsedSeconds": 9.0,
+                "vascularEvents": null,
+                "motorRisk": null,
+                "languageRisk": null,
+                "anatomicalConflicts": 0,
+                "stopReason": "bounded_short_pass_then_field_management; vessels_and_function_unknown",
+                "terminated": true
+              }
+            }
+          },
+          {
+            "id": "deeper_pass_reassess",
+            "label": "Deeper pass + reassess",
+            "record_hash": "sha256:f1a7e76d2ecea3d004d629631a9ec0848e80ea1a5809f89f14b21f2fa85a42cd",
+            "initial_state_id": "sha256:f3784c9c3a42990c0dbf2b6ff1ba98eb78a43c14ea6f20b7b424d8e9e35187e2",
+            "final_state_id": "sha256:555ee1b0ca8f92803b7f92a48514e8197778ae2109cf5ee3e4ea810040506ac6",
+            "action_count": 7,
+            "actions": [
+              {
+                "durationSeconds": 1,
+                "kind": "aspirate",
+                "tipRasMm": [
+                  -171,
+                  90,
+                  85.7
+                ],
+                "toolId": "aspirator"
+              },
+              {
+                "durationSeconds": 1,
+                "kind": "aspirate",
+                "tipRasMm": [
+                  -171,
+                  90,
+                  86.7
+                ],
+                "toolId": "aspirator"
+              },
+              {
+                "durationSeconds": 1,
+                "kind": "clear_field",
+                "tipRasMm": [
+                  -177,
+                  90,
+                  85.2
+                ],
+                "toolId": "field_manager"
+              },
+              {
+                "durationSeconds": 1.0,
+                "kind": "inspect"
+              },
+              {
+                "durationSeconds": 4.0,
+                "kind": "aspirate",
+                "tipRasMm": [
+                  -171.0,
+                  90.0,
+                  92.7
+                ],
+                "toolId": "aspirator"
+              },
+              {
+                "durationSeconds": 1.0,
+                "kind": "reassess"
+              },
+              {
+                "durationSeconds": 0.0,
+                "kind": "STOP",
+                "reason": "bounded_deeper_pass_limit; vessels_and_function_unknown"
+              }
+            ],
+            "exact_saved_action_prefix": true,
+            "exact_replayed_frame_prefix": true,
+            "replayed_serialization_exact": true,
+            "independent_frame_audit": {
+              "frames": 24,
+              "independent_capsule_cell_removal_exact": true,
+              "persistent_unique_removal": true,
+              "source_tissue_and_target_accounting_exact": true,
+              "contact_field_management_and_burden_accounting_exact": true,
+              "full_tool_parallel_clearance": true,
+              "independent_full_shaft_and_tip_retained_tissue_clearance": true,
+              "metrics": {
+                "targetRemovedMm3": 139.0,
+                "nonTargetRemovedMm3": 9.0,
+                "removedMm3": 148.0,
+                "residualTargetMm3": 22414.0,
+                "sourceTargetMm3": 22561.0,
+                "targetOutsideSupportMm3": 0.0,
+                "assumedExposureTargetMm3": 8.0,
+                "assumedExposureTissueMm3": 12628.0,
+                "remainingTissueMm3": 1462845.0,
+                "sourceTissueMm3": 1475621.0,
+                "contactCellSeconds": 57.5,
+                "fieldManagementCellSeconds": 4.5,
+                "fieldBurden": 0.252,
+                "elapsedSeconds": 9.0,
+                "vascularEvents": null,
+                "motorRisk": null,
+                "languageRisk": null,
+                "anatomicalConflicts": 0,
+                "stopReason": "bounded_deeper_pass_limit; vessels_and_function_unknown",
+                "terminated": true
+              }
+            }
+          }
+        ],
+        "saved_view": {
+          "branchId": "short_pass_field_management",
+          "episodeInitialStateId": "sha256:f3784c9c3a42990c0dbf2b6ff1ba98eb78a43c14ea6f20b7b424d8e9e35187e2",
+          "frameIndex": 19,
+          "selectedTool": "field_manager",
+          "visible": true
+        },
+        "selected_frame": {
+          "index": 19,
+          "last_index": 19,
+          "elapsed_seconds": 9.0,
+          "state_id": "sha256:37fec09880e89f240e82f0ca1623c930742edae768d009499292f022e13fd419",
+          "kind": "STOP",
+          "metrics": {
+            "targetRemovedMm3": 55.0,
+            "nonTargetRemovedMm3": 9.0,
+            "removedMm3": 64.0,
+            "residualTargetMm3": 22498.0,
+            "sourceTargetMm3": 22561.0,
+            "targetOutsideSupportMm3": 0.0,
+            "assumedExposureTargetMm3": 8.0,
+            "assumedExposureTissueMm3": 12628.0,
+            "remainingTissueMm3": 1462929.0,
+            "sourceTissueMm3": 1475621.0,
+            "contactCellSeconds": 66.5,
+            "fieldManagementCellSeconds": 34.5,
+            "fieldBurden": 0.0,
+            "elapsedSeconds": 9.0,
+            "vascularEvents": null,
+            "motorRisk": null,
+            "languageRisk": null,
+            "anatomicalConflicts": 0,
+            "stopReason": "bounded_short_pass_then_field_management; vessels_and_function_unknown",
+            "terminated": true
+          }
+        },
+        "source_arrays_modified": false,
+        "clinical_validation": false,
+        "limitations": [
+          "Assumed post-exposure cavity is generated and separately accounted.",
+          "Field management is a dimensionless debris proxy, not coagulation or hemostasis.",
+          "Vessels, motor/language function and vascular outcomes remain unknown on this real MRI case.",
+          "The independent checks establish software/replay consistency, not surgical realism or clinical accuracy."
+        ]
+      },
+      "source_and_reviewed_files_unchanged_during_audit": true
+    },
+    {
+      "case": "SynthRAD2023-1BA336",
+      "status": "pass",
+      "audit_utc": "2026-10-16T05:45:37.234172+00:00",
+      "canonical_bundle": "outputs/poc-cases/SynthRAD2023-1BA336.ressectionlab",
+      "reviewed_bundle": "outputs/poc-rehearsal/SynthRAD2023-1BA336-reviewed.ressectionlab",
+      "canonical_stamp": {
+        "sha256": "98e2566e458c762ed75c07bd370a8a06797a1a79c74ce8cdc15ff09bf1e66f81",
+        "bytes": 12913402,
+        "mtime_ns": 1791954403619651415
+      },
+      "reviewed_stamp": {
+        "sha256": "f4063d269521d6fcad4be46b5364ef6fc56fb8878e68e0fae11acd1cd67cce2c",
+        "bytes": 12913714,
+        "mtime_ns": 1792129446698566184
+      },
+      "case_hash": "sha256:9d3fc9852c2587e2b0442780caebb452138a71947743bc1810693e73a26e1471",
+      "session_hash": "sha256:2196a502e08114e9acbda25e7df73a0cf158d7a7c25ad43528741a1b732d226b",
+      "source_geometry": {
+        "shape": [
+          213,
+          230,
+          165
+        ],
+        "affine_ras_mm": [
+          [
+            -1.0,
+            0.0,
+            0.0,
+            107.0
+          ],
+          [
+            0.0,
+            -1.0,
+            0.0,
+            71.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            -106.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "frame": "RAS+"
+      },
+      "source_arrays_exact": true,
+      "source_provenance_and_layer_metadata_exact": true,
+      "arrays": {
+        "mri": {
+          "dtype": "<f4",
+          "shape": [
+            213,
+            230,
+            165
+          ],
+          "raw_c_order_sha256": "c3d5c9f84d649bbb7d86bfddb54353e4c9198eee8d15f6b519b356065973df85"
+        },
+        "compartments": {
+          "brain": {
+            "foreground_voxels": 1264716,
+            "raw_c_order_sha256": "a5053ad9073bac211a47c92cec651618ecef6037fb8c4dfd51b11e21900e0150"
+          },
+          "skull": {
+            "foreground_voxels": 689192,
+            "raw_c_order_sha256": "26327ca4015bcb8514751cd2f556f7ba2bfb3c2e2ea7377e9cd52570f59e82b9"
+          }
+        },
+        "source_compartments": {
+          "brain": {
+            "foreground_voxels": 1264716,
+            "raw_c_order_sha256": "a5053ad9073bac211a47c92cec651618ecef6037fb8c4dfd51b11e21900e0150"
+          },
+          "skull": {
+            "foreground_voxels": 689192,
+            "raw_c_order_sha256": "26327ca4015bcb8514751cd2f556f7ba2bfb3c2e2ea7377e9cd52570f59e82b9"
+          }
+        }
+      },
+      "auxiliary_sources": [],
+      "archived_originals": {
+        "count": 7,
+        "bytes": 6633772,
+        "files": [
+          {
+            "name": "ct.nii.gz",
+            "role": "imaging",
+            "sha256": "eb5d19088033e58f43a539399192eb154d35510aea5d1659a2657e48608da040",
+            "bytes": 6298605
+          },
+          {
+            "name": "inference.json",
+            "role": "metadata",
+            "sha256": "4e51d65bc3d3a08b9478339725076a23f889fc9fc71ee5b2e3164fbde1e19aea",
+            "bytes": 5300
+          },
+          {
+            "name": "brain_mask.nii.gz",
+            "role": "model-result",
+            "sha256": "be4f96bcc39cc30eb1bf551d2a6e9138de94172c5e40bb84e0c69ab1b255607d",
+            "bytes": 137777
+          },
+          {
+            "name": "skull_mask.nii.gz",
+            "role": "model-result",
+            "sha256": "2c05978add8e4c774039c07bdb9fc7b60fc85d3385d9cfede6ff7a245f3ee1c3",
+            "bytes": 179310
+          },
+          {
+            "name": "poc-synthrad-1ba336.json",
+            "role": "metadata",
+            "sha256": "eadfcf36120caa59e9f5a32d653d28568a1a651c17276a593349a8b9e92e6386",
+            "bytes": 1238
+          },
+          {
+            "name": "synthrad-task1-original-archive-v1.json",
+            "role": "metadata",
+            "sha256": "f8b854a961ef0c799c96643445501c145630329fe61714e1dc89a263a3544c5b",
+            "bytes": 10904
+          },
+          {
+            "name": "ct-extraction.json",
+            "role": "metadata",
+            "sha256": "2152ab32a43eec2150293803d6c615866244ff5dc7ed3430fc405391eceab265",
+            "bytes": 638
+          }
+        ],
+        "all_original_bytes_exact": true,
+        "primary_npz_bytes_exact": true,
+        "primary_npz_sha256": "f28d58c3577f74558fb0151035d6fa751fd8fab135d09f835f80aaf4385d63d9"
+      },
+      "imaging_state": {
+        "selectedSeriesId": null,
+        "states": {
+          "primary": {
+            "cursor": [
+              1,
+              -43.5,
+              -24
+            ],
+            "viewer": {
+              "clipping": {
+                "axis": "z",
+                "enabled": true,
+                "flipped": false,
+                "value": -24
+              },
+              "layerColor": {
+                "brain": "#65bfff",
+                "skull": "#d8e7f8"
+              },
+              "layerOpacity": {
+                "brain": 0.18,
+                "skull": 0.49
+              },
+              "showPlane": true
+            },
+            "visibleLayers": {
+              "brain": true,
+              "skull": true
+            }
+          }
+        }
+      },
+      "workspace_preferences": {
+        "case_hash": "sha256:9d3fc9852c2587e2b0442780caebb452138a71947743bc1810693e73a26e1471",
+        "category": "pareto",
+        "cursor": [
+          1,
+          -43.5,
+          -24
+        ],
+        "overlayOpacity": 0.32,
+        "routeA": "",
+        "routeB": "",
+        "visibleLayers": {
+          "brain": true,
+          "skull": true
+        }
+      },
+      "rehearsal": null,
+      "source_and_reviewed_files_unchanged_during_audit": true
+    },
+    {
+      "case": "Lausanne-sub-000-ses-20110101",
+      "status": "pass",
+      "audit_utc": "2026-10-16T05:45:37.790663+00:00",
+      "canonical_bundle": "outputs/poc-cases/Lausanne-sub-000-ses-20110101.ressectionlab",
+      "reviewed_bundle": "outputs/poc-rehearsal/Lausanne-sub-000-ses-20110101-reviewed.ressectionlab",
+      "canonical_stamp": {
+        "sha256": "257fa5b5558e672fb78dddbfe55d9574d87cd1f0776e6cc8c5d9d086d2ada18c",
+        "bytes": 56596981,
+        "mtime_ns": 1791954541349027938
+      },
+      "reviewed_stamp": {
+        "sha256": "7d075bad0e1da219039e42e0023ee4988d6fa4b0ec2573d13d588c58371747b8",
+        "bytes": 56597229,
+        "mtime_ns": 1792129531340502925
+      },
+      "case_hash": "sha256:76b73985956a1242f25c5c3973f5ff1e389dc979c2ff59d3cc439e476a2212e6",
+      "session_hash": "sha256:b2c1036fcc416fff00250a4665758dba24e0ebc077cb48d1bbf70ec0f9f8cb22",
+      "source_geometry": {
+        "shape": [
+          350,
+          448,
+          160
+        ],
+        "affine_ras_mm": [
+          [
+            0.46875,
+            0.0,
+            0.0,
+            -81.5625
+          ],
+          [
+            0.0,
+            0.46875,
+            0.0,
+            -104.53125
+          ],
+          [
+            0.0,
+            0.0,
+            0.699999988079071,
+            -56.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "frame": "RAS+"
+      },
+      "source_arrays_exact": true,
+      "source_provenance_and_layer_metadata_exact": true,
+      "arrays": {
+        "mri": {
+          "dtype": "<f4",
+          "shape": [
+            350,
+            448,
+            160
+          ],
+          "raw_c_order_sha256": "8c48f466297720e399ff9037dcc0a9acddb531b40b6b93322097fed145b7350e"
+        },
+        "compartments": {
+          "vessels": {
+            "foreground_voxels": 235460,
+            "raw_c_order_sha256": "17a827c3724f25732f1c66a98e2d771aad28e701718e14c491f852f224070a97"
+          }
+        },
+        "source_compartments": {
+          "vessels": {
+            "foreground_voxels": 235460,
+            "raw_c_order_sha256": "17a827c3724f25732f1c66a98e2d771aad28e701718e14c491f852f224070a97"
+          }
+        }
+      },
+      "auxiliary_sources": [],
+      "archived_originals": {
+        "count": 7,
+        "bytes": 30305179,
+        "files": [
+          {
+            "name": "sub-000_ses-20110101_angio.nii.gz",
+            "role": "imaging",
+            "sha256": "8e1e772825aafbdf898e0c06e9482640098d9722514b59566957bc3ff22cc2b2",
+            "bytes": 28408253
+          },
+          {
+            "name": "inference.json",
+            "role": "metadata",
+            "sha256": "e41a884aba67a17cf968f28dfb07ec9ed4d9f6d0a0f664c83f6b78e6bb8fd233",
+            "bytes": 4628
+          },
+          {
+            "name": "vessels_mask.nii.gz",
+            "role": "model-result",
+            "sha256": "215b37494a7e0af40b7d4c22c772ebe3517722f0612810fbe85022a53dd5bd7e",
+            "bytes": 301944
+          },
+          {
+            "name": "poc-lausanne-sub-000.json",
+            "role": "metadata",
+            "sha256": "aedef72dbd7fa4fc13f52bab7671f90abe0238b9767f65890635016289e95765",
+            "bytes": 1583
+          },
+          {
+            "name": "dataset_description.json",
+            "role": "metadata",
+            "sha256": "39baee3ef549835c0ae13c83eed3235a6597d7ea24b1f94bf361fc1f32fffc35",
+            "bytes": 1103
+          },
+          {
+            "name": "sub-000_ses-20110101_angio.json",
+            "role": "metadata",
+            "sha256": "63983f59dc5c1495394c4625a49a29089de0bac96e62295e340ef3339af144d5",
+            "bytes": 1569
+          },
+          {
+            "name": "lausanne-train-originals-v1.json",
+            "role": "metadata",
+            "sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+            "bytes": 1586099
+          }
+        ],
+        "all_original_bytes_exact": true,
+        "primary_npz_bytes_exact": true,
+        "primary_npz_sha256": "b8d84ff61f34bef9f1ac188dccc16ef06a88fafd415d66e23eb569339b7ca8b8"
+      },
+      "imaging_state": {
+        "selectedSeriesId": null,
+        "states": {
+          "primary": {
+            "cursor": [
+              0.234375,
+              0.234375,
+              -0.35000094771385193
+            ],
+            "viewer": {
+              "layerColor": {
+                "vessels": "#ff597c"
+              },
+              "layerOpacity": {
+                "vessels": 0.65
+              }
+            },
+            "visibleLayers": {
+              "vessels": true
+            }
+          }
+        }
+      },
+      "workspace_preferences": {
+        "case_hash": "sha256:76b73985956a1242f25c5c3973f5ff1e389dc979c2ff59d3cc439e476a2212e6",
+        "category": "pareto",
+        "cursor": [
+          0.234375,
+          0.234375,
+          -0.35000094771385193
+        ],
+        "overlayOpacity": 0.32,
+        "routeA": "",
+        "routeB": "",
+        "visibleLayers": {
+          "vessels": true
+        }
+      },
+      "rehearsal": null,
+      "source_and_reviewed_files_unchanged_during_audit": true
+    }
+  ],
+  "limitations": [
+    "No new inference or model-weight hash sweep performed.",
+    "No patient arrays or absolute local paths are included in this report."
+  ],
+  "updated_utc": "2026-10-16T05:48:47.229923+00:00",
+  "audit_source_sha256": {
+    "tests/first_release_gui_save.py": "3d53c3d973366dd9c4d70aa0acbdc3412685e3188a86173323a5dd6433d270bc",
+    "tests/first_release_qa.py": "e933b2bef6c2e617129c4ef1757596c54dfb1b0ba43267f1094b073402d6c1b8",
+    "src/resectionlab/rehearsal_episode.py": "898a9d117c61bb88bc4505ec4a1f05a83e740688a9bf1942174bab01d2525c82",
+    "src/resectionlab/workspace_bundle.py": "9a1bf1d0f749bb67857d65803aeeaf8f07927ebce8a03fb4364c59e8b151bf1e"
+  },
+  "available_copies_passed": true,
+  "all_three_reviewed_copies_passed": true
+}

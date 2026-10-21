@@ -1,0 +1,17 @@
+{
+  "elapsed_seconds": 1.3015150830615312,
+  "exit_code": 0,
+  "memory_control": "sampled_stop_enforcement",
+  "minimum_available_memory_bytes_sampled": 6302629888,
+  "os_hard_memory_limit": false,
+  "peak_family_rss_bytes_sampled": 1590722560,
+  "peak_worker_rss_bytes_sampled": 1590722560,
+  "pid": 24203,
+  "process_group_cleanup_attempted": true,
+  "sampled_family_rss_stop_bytes": 4294967296,
+  "samples": 7,
+  "sampling_interval_seconds": 0.2,
+  "schema": "resect-case3-image-registration-v1-supervision",
+  "status": "completed",
+  "worker_reaped": true
+}

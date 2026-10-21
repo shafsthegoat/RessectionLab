@@ -1,0 +1,33 @@
+{
+  "actual_builds": 0,
+  "checks": {
+    "host": {
+      "failed": 0,
+      "log_path": "outputs/poc-first-local-package-host-tests.log",
+      "log_sha256": "d3e3462efcf38fe00914165cbf662505d589d056f29df8c73bed17f56b5467ad",
+      "passed": 163
+    },
+    "renderer": {
+      "failed": 0,
+      "log_path": "outputs/poc-first-local-package-renderer-tests.log",
+      "log_sha256": "8f560d6862a2dff0c7f6811520790fc11545a7de6bc96b1037753ea882f8733c",
+      "passed": 369
+    }
+  },
+  "patient_arrays_read": false,
+  "schema": "poc-first-library-package-focused-full-regression-v1",
+  "scope": "All current Electron host tests and all current renderer tests; not full Python suite or actual packaged-app verification",
+  "tested_source_sha256": {
+    "desktop/electron/case-library-selection.cjs": "8c6fc4fcb76fc1eeef64eaa48adfcc36d684cbb8ef3370b87077d32ff80d6f8f",
+    "desktop/electron/local-electron-archive.cjs": "81db9314a8f7758f435c2c146949c2478acf35fcfa1cdd4b9577d64c88ed3372",
+    "desktop/electron/main.cjs": "3b822e58837346e1d6215f3780a9e295112f0ca4267d9d32b8449c16dea00548",
+    "desktop/electron/package-macos.cjs": "75e96ba3bba9a7b3cd48b5e630e6e1529a0780a5ff8951949f3ecaa51e3f7a20",
+    "desktop/electron/patient-catalog.cjs": "2383adf1fc42b82d16dec8b193bda2ba5afc3fa45eb2e1f456ecb836aa913556",
+    "desktop/electron/preload.cjs": "b3f043d1af9c921603f606bde4134d7ea5a5d121876a3d07b1efccb3be7dc620",
+    "desktop/src/App.tsx": "1a4fbebf153a233405287d0935c99a8361e291e8a0104613e861b6fef1d252fb",
+    "desktop/src/WorkbenchPanels.tsx": "8030bcd077c3dbdf93dab60dcf5ca4a9fcedcfb89a0607ad91fd60794ffab535",
+    "desktop/src/types.ts": "ae83fb1ba399ab2a51cc39e4ff456730f4733009f0d4c3877ab002ac40f61f08",
+    "desktop/src/workbench.css": "7ccec2b20025ffcd21924507ef1ce0be7389fd298879c32f7c544a056b30d34e"
+  },
+  "verified_utc": "2026-10-16T10:07:16.480689+00:00"
+}

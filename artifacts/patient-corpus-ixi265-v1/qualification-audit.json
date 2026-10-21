@@ -1,0 +1,460 @@
+{
+  "all_layers_remain_unaccepted": true,
+  "catalog": {
+    "catalog_hash": "sha256:554c172ee7061c1ec803a4ea56c8025b5e6969f777bfecfe44987ec8aa2479a3",
+    "path": "outputs/patient-corpus-ixi265-v1/catalog.json",
+    "schema": "patient-corpus-qualification-v1.catalog",
+    "search_index": "outputs/patient-corpus-ixi265-v1/catalog.sqlite",
+    "sha256": "2a7ba1c26f101261e3a5fecf84ae998b637a70c5a7f66d43d224153c738ee673"
+  },
+  "full_run": {
+    "catalog_hash": "sha256:554c172ee7061c1ec803a4ea56c8025b5e6969f777bfecfe44987ec8aa2479a3",
+    "counts": {
+      "accepted_fused_anatomy_combinations": {
+        "brain_plus_skull": 0,
+        "brain_plus_tumor": 0,
+        "brain_plus_vessels": 0,
+        "brain_tumor_skull_vessels": 0
+      },
+      "anatomical_presence_combinations": {
+        "brain_plus_skull": 1,
+        "brain_plus_tumor": 7,
+        "brain_plus_vessels": 1,
+        "brain_tumor_skull_vessels": 0
+      },
+      "anatomical_truth_accepted_people": 0,
+      "existing_materialized_people": 10,
+      "newly_acquired_people": 0,
+      "newly_cataloged_existing_people": 1,
+      "pending": 0,
+      "people_with_portable_source_originals": 4,
+      "qualified_existing_people": 10,
+      "rejected": 0,
+      "same_person_presence_across_saved_grids": {
+        "brain_plus_skull": 1,
+        "brain_plus_tumor": 7,
+        "brain_plus_vessels": 1,
+        "brain_tumor_skull_vessels": 0
+      },
+      "verified_embedded_original_files": 56,
+      "virtual_descendants_counted_as_people": 0
+    },
+    "created_utc": "2026-10-16T06:49:32.235704+00:00",
+    "new_qualification_receipts": 10,
+    "rejections": [],
+    "reused_qualification_receipts": 0,
+    "schema": "patient-corpus-qualification-v1.run"
+  },
+  "ixi": {
+    "anatomy_present": [
+      "brain",
+      "vessels"
+    ],
+    "anatomy_present_on_primary": [
+      "brain"
+    ],
+    "bundle": "outputs/poc-ixi265/vesselfm-base-v1/IXI265-vesselfm-estimates.ressectionlab",
+    "bundle_sha256": "55a38ae5792c889d3f8a8e28c635c92f78ca80d42690028b7eb028d638980e0e",
+    "case_id": "IXI265-Guys-0845",
+    "coverage": "Partial acquired MRA field of view; incomplete source vessel reference and estimated masks. Unlabelled anatomy is unknown.",
+    "missing_anatomy": [
+      "skull",
+      "tumor",
+      "ventricles"
+    ],
+    "originals": {
+      "embedded_bytes": 22651386,
+      "embedded_count": 24,
+      "embedded_hashes_verified": true,
+      "external_source_hashes_verified": 4,
+      "files": [
+        {
+          "bytes": 6980629,
+          "name": "IXI265-T1.nii.gz",
+          "role": "imaging",
+          "sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950"
+        },
+        {
+          "bytes": 14307469,
+          "name": "IXI265-MRA.nii.gz",
+          "role": "imaging",
+          "sha256": "a87b381b882242b7d61a1930a8332d44200fdb3c56c68fc09c24a057eea86dc4"
+        },
+        {
+          "bytes": 109932,
+          "name": "IXI265-derived_vessel_label.nii.gz",
+          "role": "annotation",
+          "sha256": "9da13c332156c71a5200dbf88368bb87478914fe73034a42ca4eabf1dd5cdbfe"
+        },
+        {
+          "bytes": 129560,
+          "name": "brain_mask.nii.gz",
+          "role": "model-result",
+          "sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192"
+        },
+        {
+          "bytes": 5703,
+          "name": "inference.json",
+          "role": "metadata",
+          "sha256": "0045ef08168b9347f62ebca8ced2d08a65b325146c9a0a77bfc18b555d20cd91"
+        },
+        {
+          "bytes": 8194,
+          "name": "source-receipt.json",
+          "role": "metadata",
+          "sha256": "2f4f6507f56e6592f851ddc9c4520d217f9e85fd649c45025f4d0e079559eac6"
+        },
+        {
+          "bytes": 11376,
+          "name": "registration.json",
+          "role": "metadata",
+          "sha256": "30d79cf98d10386fad2af8eafaaf6a754661f0b98a1a8d3cb7ab23f8b6073b1b"
+        },
+        {
+          "bytes": 65160,
+          "name": "source_vessels_on_T1_candidate.nii.gz",
+          "role": "annotation",
+          "sha256": "b1aac5b57af64b71c4694876302a8f4cc84f96b9f35ecc60a2266dc204ba1c71"
+        },
+        {
+          "bytes": 484,
+          "name": "MRA_to_T1_points.tfm",
+          "role": "metadata",
+          "sha256": "404c1b6325bf67eb4dcba2c55625af2329b6f16f8a661d11340f213a4a5eae83"
+        },
+        {
+          "bytes": 347,
+          "name": "T1_to_MRA_sampling.tfm",
+          "role": "metadata",
+          "sha256": "5ac523e6fae83057fd55c75cffac7c3ef89561ce5a3208f0a56ff2d1f742ef0b"
+        },
+        {
+          "bytes": 89419,
+          "name": "MRA_coverage_on_T1_before.nii.gz",
+          "role": "model-result",
+          "sha256": "3c8c4c50ce25c8439f608f42679e3fabd76f0d15df9ca446296dedca2e900b18"
+        },
+        {
+          "bytes": 92891,
+          "name": "MRA_coverage_on_T1_candidate.nii.gz",
+          "role": "model-result",
+          "sha256": "e0a18a9d7c18e0be5510b12a89aafd22b4297519577d7e08d5e6a7bb64b8352b"
+        },
+        {
+          "bytes": 169180,
+          "name": "MRA_native_sampling_coverage.nii.gz",
+          "role": "model-result",
+          "sha256": "a92bf82175e1208ebef037bf3117fc40f779c4cf5669f70422be7b0015bc863b"
+        },
+        {
+          "bytes": 2541,
+          "name": "source-rights-and-head-proofs.json",
+          "role": "metadata",
+          "sha256": "1354808cdee53bbb8681196a22ece34514e1f4a763de58c6b534692a67c4fdee"
+        },
+        {
+          "bytes": 29248,
+          "name": "ixi-page.html",
+          "role": "metadata",
+          "sha256": "f80f30853eeeeec6caf90ae4410c712fe447161808c238dea8111396020efe8c"
+        },
+        {
+          "bytes": 6901,
+          "name": "zenodo-record.json",
+          "role": "metadata",
+          "sha256": "273b9fcf4b6219d4a77986ef53ccfd7a8b5b0a706aa1477cff414958d8948798"
+        },
+        {
+          "bytes": 285799,
+          "name": "vessels_mask.nii.gz",
+          "role": "model-result",
+          "sha256": "d3eedb5a89e598cddd5eb017054f7fb0ce91c678278411c285cc00c2b8d277bc"
+        },
+        {
+          "bytes": 169180,
+          "name": "native_sampling_coverage.nii.gz",
+          "role": "model-result",
+          "sha256": "a92bf82175e1208ebef037bf3117fc40f779c4cf5669f70422be7b0015bc863b"
+        },
+        {
+          "bytes": 92891,
+          "name": "T1_sampling_coverage.nii.gz",
+          "role": "model-result",
+          "sha256": "e0a18a9d7c18e0be5510b12a89aafd22b4297519577d7e08d5e6a7bb64b8352b"
+        },
+        {
+          "bytes": 77419,
+          "name": "vessels_mask_on_T1_estimated.nii.gz",
+          "role": "model-result",
+          "sha256": "eb53afbaa5ea26f7aa0e8f138133f59eda65a44f58ea43ea9e24c37fc4e4c6bc"
+        },
+        {
+          "bytes": 6031,
+          "name": "inference.json",
+          "role": "metadata",
+          "sha256": "a1b7a4198b33b2f429f058b658ecc4a70c33c31f7e25d7ad17e4d2b002eedfdf"
+        },
+        {
+          "bytes": 3524,
+          "name": "registered.json",
+          "role": "metadata",
+          "sha256": "de0430fd5600a22c26437b1928a56237f2e76423cbd9d21bc3f8afb18595680e"
+        },
+        {
+          "bytes": 6257,
+          "name": "prepared.json",
+          "role": "metadata",
+          "sha256": "17c319ac433bb40349e5197d1aa0fbd696835e8f9fe4c3a5cb993fdf8422b1e6"
+        },
+        {
+          "bytes": 1251,
+          "name": "visual-qc.json",
+          "role": "metadata",
+          "sha256": "b697a8bbe989f936b73d3eeec43b881636ef578b0875c1ab721d9b2589a6f24b"
+        }
+      ],
+      "portable_originals_complete": true
+    },
+    "overlap_caveat": "IXI occurs in vesselFM D_real/CSD; exact subject overlap unknown. No independent held-out accuracy claim.",
+    "patient_group": "IXI:265",
+    "receipt_hash": "sha256:accc015887cc126d387b92bfeebc716532228b92f22798566f2a1d7491005bb5",
+    "registrations": [
+      {
+        "anatomical_registration_accepted": false,
+        "independently_validated_registration": false,
+        "overlayPermitted": false,
+        "reason": "No accepted source-to-reference registration has been supplied.",
+        "reference_frame_hash": "sha256:2513ca69c435d3fab93f67f69be820d3c69f454489b36d4e68a50dcebe6026db",
+        "registrationHash": null,
+        "same_person": false,
+        "same_person_source_identity_verified": true,
+        "saved_registration_candidate_status": "software_valid_candidate_anatomical_review_pending",
+        "series_id": "sha256:96364833177048440090bb6b3ba051fb44ae5b6cb6f934cd91873da0736ecb57",
+        "sourceToReferenceRasMm": null,
+        "source_frame_hash": "sha256:caadf2bd319e41e9b4dc77211e60646cc85c73f1ed5c58755905a0c440b437b7",
+        "source_modality": "MRA",
+        "status": "unreviewed"
+      },
+      {
+        "anatomical_registration_accepted": false,
+        "independently_validated_registration": false,
+        "overlayPermitted": false,
+        "reason": "No accepted source-to-reference registration has been supplied.",
+        "reference_frame_hash": "sha256:2513ca69c435d3fab93f67f69be820d3c69f454489b36d4e68a50dcebe6026db",
+        "registrationHash": null,
+        "same_person": false,
+        "same_person_source_identity_verified": true,
+        "saved_registration_candidate_status": "software_valid_candidate_anatomical_review_pending",
+        "series_id": "sha256:2a76a27e8512747f1a10514f87a4529d27f2fed5fed61f7dcb2c4a771346ad85",
+        "sourceToReferenceRasMm": null,
+        "source_frame_hash": "sha256:2513ca69c435d3fab93f67f69be820d3c69f454489b36d4e68a50dcebe6026db",
+        "source_modality": "T1",
+        "status": "unreviewed"
+      },
+      {
+        "anatomical_registration_accepted": false,
+        "independently_validated_registration": false,
+        "overlayPermitted": false,
+        "reason": "No accepted source-to-reference registration has been supplied.",
+        "reference_frame_hash": "sha256:2513ca69c435d3fab93f67f69be820d3c69f454489b36d4e68a50dcebe6026db",
+        "registrationHash": null,
+        "same_person": false,
+        "same_person_source_identity_verified": true,
+        "saved_registration_candidate_status": "software_valid_candidate_anatomical_review_pending",
+        "series_id": "sha256:70edf7b44df7e9650bca154aa76267b66cd1e52a1b0dc794f3ba7d9ad80cdbf8",
+        "sourceToReferenceRasMm": null,
+        "source_frame_hash": "sha256:caadf2bd319e41e9b4dc77211e60646cc85c73f1ed5c58755905a0c440b437b7",
+        "source_modality": "MRA",
+        "status": "unreviewed"
+      }
+    ],
+    "role": "TRAIN",
+    "tumor_location": {
+      "anatomical_region": "UNKNOWN",
+      "centroid_ras_mm": null,
+      "hemisphere": "UNKNOWN",
+      "lobe": "UNKNOWN"
+    }
+  },
+  "ixi_layers": [
+    {
+      "accepted_anatomical_truth": false,
+      "coverage": "Brain extraction envelope; not skull, vessels or parcellation",
+      "kind": "brain",
+      "name": "brain",
+      "provenance": "estimated"
+    },
+    {
+      "accepted_anatomical_truth": false,
+      "annotation_license": "CC-BY-4.0",
+      "annotation_sha256": "9da13c332156c71a5200dbf88368bb87478914fe73034a42ca4eabf1dd5cdbfe",
+      "coverage": "Partial MRA FOV; incomplete reference; unlabelled anatomy unknown",
+      "kind": "vessels",
+      "name": "source_vessels",
+      "policy_use": "excluded",
+      "provenance": "source-provided",
+      "registration_status": "estimated_unreviewed",
+      "scope": "display-only-native-grid"
+    },
+    {
+      "accepted_anatomical_truth": false,
+      "annotation_license": "CC-BY-4.0",
+      "annotation_sha256": "b1aac5b57af64b71c4694876302a8f4cc84f96b9f35ecc60a2266dc204ba1c71",
+      "coverage": "Partial MRA FOV; incomplete reference; unlabelled anatomy unknown",
+      "kind": "vessels",
+      "name": "source_vessels",
+      "policy_use": "excluded",
+      "provenance": "source-provided",
+      "registration_status": "estimated_unreviewed",
+      "scope": "display-only-native-grid"
+    },
+    {
+      "accepted_anatomical_truth": false,
+      "annotation_license": "vesselFM Open RAIL++-M; Attachment A: research purposes and non-commercial use only",
+      "annotation_sha256": "d3eedb5a89e598cddd5eb017054f7fb0ce91c678278411c285cc00c2b8d277bc",
+      "coverage": "Partial acquired MRA FOV; vascular completeness unknown; prediction borders retained",
+      "kind": "vessels",
+      "name": "estimated_vessels",
+      "policy_use": "excluded",
+      "provenance": "estimated",
+      "registration_status": "native_MRA_not_registered_for_fusion",
+      "scope": "display-only-native-grid"
+    }
+  ],
+  "limitations": [
+    "IXI source reference and model estimate have partial MRA coverage. Unlabelled voxels are not vessel-free evidence.",
+    "IXI registration remains unaccepted; the source-to-T1 reference is a derived resampling, not a new independent source.",
+    "vesselFM may overlap IXI training data; individual subject overlap is unknown, and no held-out accuracy is asserted.",
+    "Same-person brain/vessel mask presence is one; accepted fused brain/vessel combinations are zero.",
+    "No generated descendant or generated/simulated anatomy can enter this acquired-person release.",
+    "No inference, registration optimization, download, GUI audit or training was performed by qualification."
+  ],
+  "new_acquisitions": 0,
+  "new_model_runs": 0,
+  "query_checks": {
+    "IXI": [
+      "IXI:265"
+    ],
+    "SELECT": [],
+    "tumor": [
+      "BTC:sub-PAT05",
+      "BTC:sub-PAT16",
+      "BTC:sub-PAT20",
+      "BTC:sub-PAT22",
+      "BTC:sub-PAT25",
+      "BTC:sub-PAT28",
+      "UCSF-PDGM:004"
+    ],
+    "vessels": [
+      "IXI:265",
+      "Lausanne:sub-000"
+    ]
+  },
+  "release": {
+    "path": "manifests/patient-corpus-releases/existing-nine-plus-ixi265-v1.json",
+    "plan_hash": "sha256:a1a2623d05270881d4291a1037d303578cb27a4f63d52cce28b5f5db251d8755",
+    "schema": "patient-corpus-frozen-release-v1",
+    "sha256": "2c426f82e160be5b11bb19d9d5c4d2ac804ae9d85011cf46a4dc83904adbea84"
+  },
+  "resource_or_role_blocker": null,
+  "schema": "patient-corpus-ixi265-qualification-audit-v1",
+  "software_controls": {
+    "command": "PYTHONPATH=src .venv/bin/python -m pytest tests/test_patient_corpus.py tests/test_patient_corpus_inventory.py -q",
+    "failed": 0,
+    "inventory_tests": 10,
+    "passed": 78,
+    "qualification_tests": 68
+  },
+  "source_bundle_sha256": "55a38ae5792c889d3f8a8e28c635c92f78ca80d42690028b7eb028d638980e0e",
+  "source_bundles_modified": false,
+  "unchanged_resume": {
+    "catalog_hash": "sha256:554c172ee7061c1ec803a4ea56c8025b5e6969f777bfecfe44987ec8aa2479a3",
+    "counts": {
+      "accepted_fused_anatomy_combinations": {
+        "brain_plus_skull": 0,
+        "brain_plus_tumor": 0,
+        "brain_plus_vessels": 0,
+        "brain_tumor_skull_vessels": 0
+      },
+      "anatomical_presence_combinations": {
+        "brain_plus_skull": 1,
+        "brain_plus_tumor": 7,
+        "brain_plus_vessels": 1,
+        "brain_tumor_skull_vessels": 0
+      },
+      "anatomical_truth_accepted_people": 0,
+      "existing_materialized_people": 10,
+      "newly_acquired_people": 0,
+      "newly_cataloged_existing_people": 1,
+      "pending": 0,
+      "people_with_portable_source_originals": 4,
+      "qualified_existing_people": 10,
+      "rejected": 0,
+      "same_person_presence_across_saved_grids": {
+        "brain_plus_skull": 1,
+        "brain_plus_tumor": 7,
+        "brain_plus_vessels": 1,
+        "brain_tumor_skull_vessels": 0
+      },
+      "verified_embedded_original_files": 56,
+      "virtual_descendants_counted_as_people": 0
+    },
+    "created_utc": "2026-10-16T06:49:52.623116+00:00",
+    "new_qualification_receipts": 0,
+    "rejections": [],
+    "reused_qualification_receipts": 10,
+    "schema": "patient-corpus-qualification-v1.run"
+  },
+  "v1_default_plan_equal": true,
+  "v1_preserved_files": {
+    "artifacts/patient-corpus-v1/qualification-audit.json": "2eccef2788ae3e6903b740f62e99ab078c8c2e6c49e13846e01abf3563f9ce13",
+    "outputs/patient-corpus-v1/.run.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "outputs/patient-corpus-v1/catalog.json": "514efd80551294c140e69baa860790d63c8c4415a1859dc7d3cc1a0fd6823ffc",
+    "outputs/patient-corpus-v1/catalog.sqlite": "d71cb43812b3e9575bd8dac496cafb039a2f4a7ac73f252570c12fe4b796bbae",
+    "outputs/patient-corpus-v1/catalogs/4feb92834ed629dce930576cb785e077767dafea076c157306a91961aff036c3.json": "ebe5e5bf03b3e33e179c409fb27136bec40f0282e034d9ffcc9c8371bfc88822",
+    "outputs/patient-corpus-v1/catalogs/99dc01242c863624f22e8ab9b310c6c6a4ee5010f68b095534e722cc25dc7c77.json": "2c54e48a75fc5e5341af20141b85fa59bc42a0b4e91b0ed5eeabe477f47b96ef",
+    "outputs/patient-corpus-v1/catalogs/cbdc9f654547ec771cf0d269b685b86e66427bfbc3946b90759cbc55f758a093.json": "514efd80551294c140e69baa860790d63c8c4415a1859dc7d3cc1a0fd6823ffc",
+    "outputs/patient-corpus-v1/plan.json": "39c11fbc54af89746e0b100df95ecb21f34b7d2b391e96140606c902f0db9063",
+    "outputs/patient-corpus-v1/receipts/0b462f7f2b9ae2ab04a9c5c5faefa4d843b6f68dba17fa4f43287ed3a534f9bd.json": "df24f099e2172564a8e0684123ccfa03557e685862aea676aa8431f5063dbd50",
+    "outputs/patient-corpus-v1/receipts/11f98b51785d9b32918ebd6393d755c343c70a766ddcc815e5d6af4d9ff00679.json": "7802921092f1f86898caa2fd0d6d9aa3a837edab99abed9acc1ffbc361fa017a",
+    "outputs/patient-corpus-v1/receipts/13d68082610fa00aa37226ff754728a49b0da624f2cd7ce53f6f6aa6041528df.json": "ae759d7013287126af1d6d60e4609acd5613fba1e7af43f09fc91da6b207d89a",
+    "outputs/patient-corpus-v1/receipts/1a851ed0f16e6eaa8720b986fc340353ff966e2db47ac6ce0052b18a1159b245.json": "12fad5b0243505fe0a30e47106c7c5aa6255b89578056e931ca07f460dba80f7",
+    "outputs/patient-corpus-v1/receipts/1f877ee477d20a17038729504a6d69f2ad73d3b13f832d4ddbd44951a381cd30.json": "29e7bc54b6b4bd42168e518b89359e631c1f46b477a57ac808ccc8ed03f8f2e6",
+    "outputs/patient-corpus-v1/receipts/1fab0d6d9aeb372a27e11537ae6c2163b81943b9f6733340af8cbc938bd6cfe3.json": "ae2a53c7e51055fa9a5b033d2b085c14ed0e7e0543731c07a7fe2de6d86b2dc3",
+    "outputs/patient-corpus-v1/receipts/27d69c99c171a035c593a0fa15aefef5cd3b4080cd9108bf0ddcd753a29c8d8f.json": "cd6d7106b9bc9c220663cfa0a30e74afd7f89ff3028e4dd701164337a112c7ed",
+    "outputs/patient-corpus-v1/receipts/2afd7bb8c6b43b3419e56b517dad75f35da13bf7cb2781197abf22dcd31dca18.json": "8b89cba74d287160cb5ec81fb5af5af26ab1a2b48bdaea7026cf49209f90a9dd",
+    "outputs/patient-corpus-v1/receipts/3847c5afdfc34cedcfa51b433c0022e4aaca4857b9f3719eef2d23e26d6707a3.json": "0c89a916c3da52035aee79c9cdfde9ff125eef39af2b97c7d75721b19fba23cd",
+    "outputs/patient-corpus-v1/receipts/40b04d3e7b2d0329294ce5cc7f6fa6de2586b5ac5c169dcae2023021cc895606.json": "6074db2e11c7b9880ac8f818fa99347d985cc3976a54bbc74c83f7280c041f02",
+    "outputs/patient-corpus-v1/receipts/459dc41b000e3305f90bf07cf582ab39c9fd5e5a03bc7f9f2ba9347e7cec592f.json": "b791cb6470f1eb054b754ebfc7e7d56ff0b9889b6004859d541a61c02d4654a3",
+    "outputs/patient-corpus-v1/receipts/52464cf27aca2c1e77243c25fa198418cb0b385a24d9aae9c78f493f0dc52a73.json": "03b74b81749f304a3e38aa51e14b36c9ca2cb705942dd936c99c85ca04470046",
+    "outputs/patient-corpus-v1/receipts/53b70009c535e795911ef5972927d3953444a100da63efc50c6d7cfbbc13ebc2.json": "1c18c1a2a079930ad48a49f447fe05203d9b0647612104d60bdb98f307342dc4",
+    "outputs/patient-corpus-v1/receipts/65855e9cbab3a4d9ff42ff269fef7f9fc5ce95327b0fec82acf73ef3be1b5c03.json": "21e1992433330b60bcbad6929693858ac3b080087d1a4173206d65c72d4cd371",
+    "outputs/patient-corpus-v1/receipts/7f2d970d0f1358c45116bff0269639ba07b97e844875d639ed15864e85f1e619.json": "9b5da25d555fc7a5ffe09c1e925840ba1dafbf2c9e693618d5863f576c5bfb79",
+    "outputs/patient-corpus-v1/receipts/90ca49ff664a2f41f8107f3d104245a1c79f6119b2ac288ab731cd7b99a12e39.json": "fea03ffecf6af47135f270791e50cd5ff53830c15588344b13981b3f26923d1d",
+    "outputs/patient-corpus-v1/receipts/a3b05e8ab667f1ef8ac5fdc9781d63fb6341dc10a931b0deeb88f74c1619f07b.json": "34d2c8063f085b91f4df70c81757232fae9e1cc95d16bde61e4ef1f8912f8f44",
+    "outputs/patient-corpus-v1/receipts/a74d5e6f5066f09a88d555fba9d53ddd22ec9821c9970c641b52e04c6e635abf.json": "d2db807caafca2918a7751e19068755d99bb49caf10038fb0adbce5697205821",
+    "outputs/patient-corpus-v1/receipts/a80e96b0e8a82f5b6d73cc4c84da581103610291d63e2d0049ff99911d7cb228.json": "2b6cb50fec7ebcde64867fddb4cd174e796cc83b69b3ea89d5804621a78593f7",
+    "outputs/patient-corpus-v1/receipts/a9fd289ec7c32ecceaa90d045be19ad98ed51e81884cf0f328d6a8212077353a.json": "201be28f491b51d24fb8488bdac6e43d7214f1ad0da150b2d68ea99bed1aa39d",
+    "outputs/patient-corpus-v1/receipts/ac6df30cc3aee4102a3a1a8bab3568b84c32088692ad258c0dbe48a8bee2f880.json": "978515fe148765d6101f9c4bc48c9090f5582cee55a5b114ca23504cd0c3afa8",
+    "outputs/patient-corpus-v1/receipts/af35dd67bd65591f2eab356951ad488a8e30b647514e1896aaf56fd52115d2fb.json": "dd793257c23ac0b6139c49ea9540f7ff46bc06525bcb1446b74b8d795086aafb",
+    "outputs/patient-corpus-v1/receipts/af6dd9d92ddbeb3af96ef66cb19458387539f38fcff206e94cc4caf82a498f9e.json": "47545ce3ec82fce40851d915ae6a38231f5eecd25087981933c9fd8490b7b221",
+    "outputs/patient-corpus-v1/receipts/ba24f573d734f6c85192f4f0ce94d0f7f3801139e1fd4a9801fc7d5a05c01b9d.json": "e786ed1db37ae2fa01ab6ad73742bd397f052775274ea3a7a9045f3e6d78c045",
+    "outputs/patient-corpus-v1/receipts/c06ee31cc9a412341178943ec88c08e9590eeb7c76088bf38717becf926115df.json": "24bfcb3c2a19ac3b91ede4352826c05e023cf993edc4958ff453cf38c7036496",
+    "outputs/patient-corpus-v1/receipts/ee82617232dc1de678826cc384cb010693a165be27de2b8299be8e9328c1bb4b.json": "8a4403dde3bac0379931aa1b44b9486cd841188c1f44916f239f34dc3201fdce",
+    "outputs/patient-corpus-v1/receipts/fc811b1e47eaad6d16845ae35e5268e8516cfca6c0553f58beaee66876649da2.json": "3e801e08e471f59cabf0b3232ca54139f291c784c279b55b49998d3f0334ae1d",
+    "outputs/patient-corpus-v1/runs/95c9872e-440f-4736-93c0-1c7e61b68d2c.json": "4206211bb77272c923ec5ce0481a071a46a9f7fc3ec6fecc91cdeb34312622cf",
+    "outputs/patient-corpus-v1/runs/ce4e9f0e-97f2-4fc2-a44a-5034b3cd7c40.json": "9fb66f1a79ac38138d11a46365b1db850667a8636cd13120d9f6321bcd2d87c5",
+    "outputs/patient-corpus-v1/runs/e0e0a817-9305-41d8-a774-142aefa81153.json": "80db0e3469dbe12e8eb2c47ac8af797cfa28895c4d1b9882f9e0ad2f1f05894d",
+    "outputs/patient-corpus-v1/runs/f3885c75-0130-47ae-bc52-b1cd042339e7.json": "fd052ec5e101518c7152e451981af7561ad1c095332e41a86414c21b3aac53a3",
+    "outputs/patient-corpus-v1/runs/f74a0f3a-e2e9-499b-9086-37e04441f1d4.json": "20fc16b91a7f75a58c02b4ac771cd0e6fff6fcd8aac6fc5e4595ed4287936a96"
+  },
+  "validation_code_sha256": {
+    "core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "imaging.py": "45df035c47f9c509fef91ebc02f1c3bef40266c052dbd1de6d133815a5af6afa",
+    "patient_corpus.py": "522d37498f49986fe24d72000ac0a907550cd1fa03fdcb78e92708006bf2f894",
+    "structural_evidence.py": "37b7a71c51855750d15ee2570197a75c2484e6e653550f547f9a696ce06c9019",
+    "workspace_bundle.py": "9a1bf1d0f749bb67857d65803aeeaf8f07927ebce8a03fb4364c59e8b151bf1e",
+    "workspace_imaging.py": "6da2ace8b5489f61f4b7c804f30818d0273792e040c4cb14bcddbd931cff381d"
+  },
+  "virtual_people_counted": 0
+}

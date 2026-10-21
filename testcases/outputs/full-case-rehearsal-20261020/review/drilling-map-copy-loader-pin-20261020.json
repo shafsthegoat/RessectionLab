@@ -1,0 +1,12 @@
+{
+  "utc": "2026-10-20T22:54:34.544072+00:00",
+  "codeCommit": "252afcebfc66e5e0a075ee698bea3d4b92d08890",
+  "reviewedUnpinnedLoaderSha256": "d002af38b3a0d5807ef620622c11d656658b488854e5120ef3824f7d82dfcaa7",
+  "pinnedLoaderSha256": "765fecc445138fb4c394487416314568007b94383ab838ff98084eb9deb8e588",
+  "onlyChange": "Expected reviewed commit literal replaced; syntax compiled without execution.",
+  "rootReviewedLoaderFixes": [
+    "Mutable ownership excludes immutable tuple IDs; tuple graph equality retained",
+    "After first2 full proof use ordinary guarded12 continuation"
+  ],
+  "executedByThisPinningScript": false
+}

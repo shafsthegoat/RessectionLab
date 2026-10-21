@@ -1,0 +1,414 @@
+TAP version 13
+# (node:74223) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: fusion uses source LPS affine and supplied rotation/translation exactly once
+ok 1 - fusion uses source LPS affine and supplied rotation/translation exactly once
+  ---
+  duration_ms: 1003.554958
+  type: 'test'
+  ...
+# Subtest: matching dimensions never authorize unreviewed, wrong-patient or singular fusion
+ok 2 - matching dimensions never authorize unreviewed, wrong-patient or singular fusion
+  ---
+  duration_ms: 0.239834
+  type: 'test'
+  ...
+# Subtest: camera rejects collapsed or collinear views and cutaway stays in physical bounds
+ok 3 - camera rejects collapsed or collinear views and cutaway stays in physical bounds
+  ---
+  duration_ms: 0.269167
+  type: 'test'
+  ...
+# Subtest: real renderer updates source material and all image uniforms without touching source data
+ok 4 - real renderer updates source material and all image uniforms without touching source data
+  ---
+  duration_ms: 2.18725
+  type: 'test'
+  ...
+# Subtest: real renderer drops old fusion before refusing a stale replacement
+ok 5 - real renderer drops old fusion before refusing a stale replacement
+  ---
+  duration_ms: 1.01625
+  type: 'test'
+  ...
+# Subtest: opaque anatomy occludes its own rear triangles and transparency restores without changing masks
+ok 6 - opaque anatomy occludes its own rear triangles and transparency restores without changing masks
+  ---
+  duration_ms: 0.680209
+  type: 'test'
+  ...
+# Subtest: smoothing toggles cached display geometry; cursor picking always uses the exact source surface
+ok 7 - smoothing toggles cached display geometry; cursor picking always uses the exact source surface
+  ---
+  duration_ms: 0.724792
+  type: 'test'
+  ...
+# Subtest: saved camera restoration preserves orbit, target and up and cancels pending fit
+ok 8 - saved camera restoration preserves orbit, target and up and cancels pending fit
+  ---
+  duration_ms: 0.518291
+  type: 'test'
+  ...
+# Subtest: volume framebuffer restores viewport/clear state, bounds workload and retains the immutable source array
+ok 9 - volume framebuffer restores viewport/clear state, bounds workload and retains the immutable source array
+  ---
+  duration_ms: 4.946541
+  type: 'test'
+  ...
+# Subtest: camera-only settings and cloned toolbar choices do not reapply layer materials
+ok 10 - camera-only settings and cloned toolbar choices do not reapply layer materials
+  ---
+  duration_ms: 0.461333
+  type: 'test'
+  ...
+# Subtest: slice contour changes reach every image material and preserve source data and 3D appearance
+ok 11 - slice contour changes reach every image material and preserve source data and 3D appearance
+  ---
+  duration_ms: 0.50975
+  type: 'test'
+  ...
+# Subtest: unchanged cursor/layers/routes avoid redraw, and in-place visibility changes reach all views
+ok 12 - unchanged cursor/layers/routes avoid redraw, and in-place visibility changes reach all views
+  ---
+  duration_ms: 0.942208
+  type: 'test'
+  ...
+# Subtest: persisted camera echoes skip control updates after projection bounds settle
+ok 13 - persisted camera echoes skip control updates after projection bounds settle
+  ---
+  duration_ms: 0.849208
+  type: 'test'
+  ...
+# Subtest: interaction never resizes the shared drawing buffer
+ok 14 - interaction never resizes the shared drawing buffer
+  ---
+  duration_ms: 2.390375
+  type: 'test'
+  ...
+# Subtest: volume shader receives only visible indices, including layers beyond bit 31 and zero/opaque isolation
+ok 15 - volume shader receives only visible indices, including layers beyond bit 31 and zero/opaque isolation
+  ---
+  duration_ms: 2.309
+  type: 'test'
+  ...
+# Subtest: incremental layer install retains source texture, existing surfaces and camera, and rejects a stale source
+ok 16 - incremental layer install retains source texture, existing surfaces and camera, and rejects a stale source
+  ---
+  duration_ms: 0.816542
+  type: 'test'
+  ...
+# Subtest: shared scalar texture is not disposed by the volume pass
+ok 17 - shared scalar texture is not disposed by the volume pass
+  ---
+  duration_ms: 0.399292
+  type: 'test'
+  ...
+# Subtest: GPU backpressure coalesces input and submits the latest pending frame only after completion
+ok 18 - GPU backpressure coalesces input and submits the latest pending frame only after completion
+  ---
+  duration_ms: 0.356084
+  type: 'test'
+  ...
+# (node:74224) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: chunk cores stitch the exact full reference triangle order across boundaries, new surfaces and deletion
+ok 19 - chunk cores stitch the exact full reference triangle order across boundaries, new surfaces and deletion
+  ---
+  duration_ms: 87.746291
+  type: 'test'
+  ...
+# Subtest: source chunks preserve exact global indexing, full fairing and physical normals under anisotropic sheared mirrored affine
+ok 20 - source chunks preserve exact global indexing, full fairing and physical normals under anisotropic sheared mirrored affine
+  ---
+  duration_ms: 254.730542
+  type: 'test'
+  ...
+# Subtest: source/geometry identity mismatch requires full admission; bounded caches and separate engines never borrow masks
+ok 21 - source/geometry identity mismatch requires full admission; bounded caches and separate engines never borrow masks
+  ---
+  duration_ms: 157.182792
+  type: 'test'
+  ...
+# Subtest: lazy zero-effect admission matches all reference buffers and starts resident chunks only on a real cut
+ok 22 - lazy zero-effect admission matches all reference buffers and starts resident chunks only on a real cut
+  ---
+  duration_ms: 305.552375
+  type: 'test'
+  ...
+# Subtest: half-grid numeric indexing is byte-identical to generic exact keys, with arbitrary geometry fallback
+ok 23 - half-grid numeric indexing is byte-identical to generic exact keys, with arbitrary geometry fallback
+  ---
+  duration_ms: 4.076875
+  type: 'test'
+  ...
+# Subtest: raw preparation retains exact source buffers and omits conditioning, including initial mapping
+ok 24 - raw preparation retains exact source buffers and omits conditioning, including initial mapping
+  ---
+  duration_ms: 113.09125
+  type: 'test'
+  ...
+# Subtest: resident cell identity survives raw/full preference changes and later incremental cuts
+ok 25 - resident cell identity survives raw/full preference changes and later incremental cuts
+  ---
+  duration_ms: 85.679
+  type: 'test'
+  ...
+# Subtest: invalid diagnostic request clears existing inspection modes before refusal
+ok 26 - invalid diagnostic request clears existing inspection modes before refusal
+  ---
+  duration_ms: 1211.53925
+  type: 'test'
+  ...
+# Subtest: hiding diagnostic alone leaves other modes intact
+ok 27 - hiding diagnostic alone leaves other modes intact
+  ---
+  duration_ms: 1.211125
+  type: 'test'
+  ...
+# (node:74226) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: dedicated source rehearsal renders two full capsules on source plane and all MRI planes without legacy acceptance
+ok 28 - dedicated source rehearsal renders two full capsules on source plane and all MRI planes without legacy acceptance
+  ---
+  duration_ms: 948.86225
+  type: 'test'
+  ...
+# Subtest: bad source or frame replacement clears existing tools and effects
+ok 29 - bad source or frame replacement clears existing tools and effects
+  ---
+  duration_ms: 33.806917
+  type: 'test'
+  ...
+# Subtest: residual and pending surfaces honor current layer appearance and all cutaways without clipping full instruments
+ok 30 - residual and pending surfaces honor current layer appearance and all cutaways without clipping full instruments
+  ---
+  duration_ms: 5.3635
+  type: 'test'
+  ...
+# Subtest: residual smoothing toggles cached bounded worker buffers before and after arrival and disposes both on replacement
+ok 31 - residual smoothing toggles cached bounded worker buffers before and after arrival and disposes both on replacement
+  ---
+  duration_ms: 1.043042
+  type: 'test'
+  ...
+# Subtest: completed rehearsal seeks reuse the idle worker with one transferable derived-mask request in flight
+ok 32 - completed rehearsal seeks reuse the idle worker with one transferable derived-mask request in flight
+  ---
+  duration_ms: 1.933833
+  type: 'test'
+  ...
+# Subtest: real transferable semantics never detach a legacy effect texture sharing its removal-overlay mask
+ok 33 - real transferable semantics never detach a legacy effect texture sharing its removal-overlay mask
+  ---
+  duration_ms: 0.461292
+  type: 'test'
+  ...
+# Subtest: one bounded worker copies only the active job, transfers disposable inputs, and preserves indices
+ok 34 - one bounded worker copies only the active job, transfers disposable inputs, and preserves indices
+  ---
+  duration_ms: 430.609958
+  type: 'test'
+  ...
+# Subtest: all source triangle IDs and physical hits match ordinary picking under affine transforms and deeper clipping
+ok 35 - all source triangle IDs and physical hits match ordinary picking under affine transforms and deeper clipping
+  ---
+  duration_ms: 2.93025
+  type: 'test'
+  ...
+# Subtest: fallback handles pending trees, smoothed display geometry, version changes and nonindexed source data
+ok 36 - fallback handles pending trees, smoothed display geometry, version changes and nonindexed source data
+  ---
+  duration_ms: 1.876542
+  type: 'test'
+  ...
+# Subtest: sheared source affine uses exact world near/far limits and restores the caller raycaster
+ok 37 - sheared source affine uses exact world near/far limits and restores the caller raycaster
+  ---
+  duration_ms: 0.469708
+  type: 'test'
+  ...
+# Subtest: overlapping grouped materials keep ordinary hit identity and downstream opacity selection
+ok 38 - overlapping grouped materials keep ordinary hit identity and downstream opacity selection
+  ---
+  duration_ms: 1.099333
+  type: 'test'
+  ...
+# Subtest: retired and stale responses never attach trees, and failures release the queue with ordinary fallback
+ok 39 - retired and stale responses never attach trees, and failures release the queue with ordinary fallback
+  ---
+  duration_ms: 0.513458
+  type: 'test'
+  ...
+# Subtest: root/input/count caps bound retained memory and keep ordinary fallback available
+ok 40 - root/input/count caps bound retained memory and keep ordinary fallback available
+  ---
+  duration_ms: 0.47375
+  type: 'test'
+  ...
+# Subtest: LRU-evicted source trees re-admit on picking or reinstall without duplicate in-flight jobs
+ok 41 - LRU-evicted source trees re-admit on picking or reinstall without duplicate in-flight jobs
+  ---
+  duration_ms: 0.976458
+  type: 'test'
+  ...
+# Subtest: worker failures and over-budget results stay fallback while an evicted source respects the queue cap
+ok 42 - worker failures and over-budget results stay fallback while an evicted source respects the queue cap
+  ---
+  duration_ms: 24.585
+  type: 'test'
+  ...
+# Subtest: every received active-job completion publishes settled worker/queue telemetry, including stale and capped results
+ok 43 - every received active-job completion publishes settled worker/queue telemetry, including stale and capped results
+  ---
+  duration_ms: 1.051084
+  type: 'test'
+  ...
+# (node:74228) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: tumor profile removes acquisition steps more strongly while retaining source and indexed topology
+ok 44 - tumor profile removes acquisition steps more strongly while retaining source and indexed topology
+  ---
+  duration_ms: 1121.051958
+  type: 'test'
+  ...
+# Subtest: complex context uses an explicit source fallback while tissue profiles remain eligible for smoothing
+ok 45 - complex context uses an explicit source fallback while tissue profiles remain eligible for smoothing
+  ---
+  duration_ms: 0.351625
+  type: 'test'
+  ...
+# Subtest: thin and nearby vessels retain every source triangle and physical radius cap across grids
+ok 46 - thin and nearby vessels retain every source triangle and physical radius cap across grids
+  ---
+  duration_ms: 194.439625
+  type: 'test'
+  ...
+# Subtest: SAT detects crossing/coplanar triangles, excludes disjoint triangles and preserves existing source contacts
+ok 47 - SAT detects crossing/coplanar triangles, excludes disjoint triangles and preserves existing source contacts
+  ---
+  duration_ms: 0.181958
+  type: 'test'
+  ...
+# Subtest: source cache is tissue/grid specific and polynomial preserves DC exactly
+ok 48 - source cache is tissue/grid specific and polynomial preserves DC exactly
+  ---
+  duration_ms: 0.53725
+  type: 'test'
+  ...
+# Subtest: pose-only rehearsal edits retain all accepted geometry and only transform the resident ghost
+ok 49 - pose-only rehearsal edits retain all accepted geometry and only transform the resident ghost
+  ---
+  duration_ms: 1144.433125
+  type: 'test'
+  ...
+# Subtest: activation updates material and recorded transform; parameter and tool exchange rebuild only affected instrument
+ok 50 - activation updates material and recorded transform; parameter and tool exchange rebuild only affected instrument
+  ---
+  duration_ms: 3.056
+  type: 'test'
+  ...
+# Subtest: observed effective activation colors both tools without mutating latched state and hides the editable ghost
+ok 51 - observed effective activation colors both tools without mutating latched state and hides the editable ghost
+  ---
+  duration_ms: 1.343
+  type: 'test'
+  ...
+# Subtest: draw path grows a reusable bounded-capacity buffer, hides on cancel and releases recorded state on exit
+ok 52 - draw path grows a reusable bounded-capacity buffer, hides on cancel and releases recorded state on exit
+  ---
+  duration_ms: 1.434833
+  type: 'test'
+  ...
+# Subtest: repeated accepted effect changes dispose point buffers and materials as well as meshes and lines
+ok 53 - repeated accepted effect changes dispose point buffers and materials as well as meshes and lines
+  ---
+  duration_ms: 10.064583
+  type: 'test'
+  ...
+# Subtest: source-surface picking restores smoothed geometry and accepts the first hit inside every active clip plane
+ok 54 - source-surface picking restores smoothed geometry and accepts the first hit inside every active clip plane
+  ---
+  duration_ms: 0.569666
+  type: 'test'
+  ...
+# Subtest: graphics retry uses the cached recovery extension after the lost context stops exposing extensions
+ok 55 - graphics retry uses the cached recovery extension after the lost context stops exposing extensions
+  ---
+  duration_ms: 0.119042
+  type: 'test'
+  ...
+# Subtest: source-plane picking follows its axis clip while extra box/oblique clips apply to mesh hits
+ok 56 - source-plane picking follows its axis clip while extra box/oblique clips apply to mesh hits
+  ---
+  duration_ms: 0.466292
+  type: 'test'
+  ...
+# Subtest: picking skips source-plane pixels discarded by the MRI shader and hidden zero-opacity surfaces
+ok 57 - picking skips source-plane pixels discarded by the MRI shader and hidden zero-opacity surfaces
+  ---
+  duration_ms: 0.720791
+  type: 'test'
+  ...
+# Subtest: modeled tissue stages labels/surfaces/tools atomically, reuses unchanged MRI/layers, and backward seek reuses resident geometry
+ok 58 - modeled tissue stages labels/surfaces/tools atomically, reuses unchanged MRI/layers, and backward seek reuses resident geometry
+  ---
+  duration_ms: 124.880708
+  type: 'test'
+  ...
+# Subtest: initial zero-effect mapping releases native GPU pairs, retains later undo pairs, and restores source from its CPU cache
+ok 59 - initial zero-effect mapping releases native GPU pairs, retains later undo pairs, and restores source from its CPU cache
+  ---
+  duration_ms: 106.576333
+  type: 'test'
+  ...
+# Subtest: obsolete modeled worker results and failures cannot publish a mixed state; retry keeps original source bytes attached
+ok 60 - obsolete modeled worker results and failures cannot publish a mixed state; retry keeps original source bytes attached
+  ---
+  duration_ms: 39.427916
+  type: 'test'
+  ...
+# Subtest: idle model worker failure drops its lost cache and admits a fresh worker for the next tissue change
+ok 61 - idle model worker failure drops its lost cache and admits a fresh worker for the next tissue change
+  ---
+  duration_ms: 24.683542
+  type: 'test'
+  ...
+# Subtest: modeled failure still reports a visible generic error for callers without a display callback
+ok 62 - modeled failure still reports a visible generic error for callers without a display callback
+  ---
+  duration_ms: 12.410334
+  type: 'test'
+  ...
+# Subtest: only the latest tool state publishes after submission and newer tissue preparation retains published effects
+ok 63 - only the latest tool state publishes after submission and newer tissue preparation retains published effects
+  ---
+  duration_ms: 23.379583
+  type: 'test'
+  ...
+# Subtest: mapping reorder rebinds hidden-layer visibility and exact label codes at the same commit
+ok 64 - mapping reorder rebinds hidden-layer visibility and exact label codes at the same commit
+  ---
+  duration_ms: 12.746375
+  type: 'test'
+  ...
+# Subtest: OFF admits exact raw source geometry; ON lazily conditions that same tissue without changing cells or effects
+ok 65 - OFF admits exact raw source geometry; ON lazily conditions that same tissue without changing cells or effects
+  ---
+  duration_ms: 37.982375
+  type: 'test'
+  ...
+# Subtest: mid-flight preference changes cancel the old quality and cannot publish stale target buffers
+ok 66 - mid-flight preference changes cancel the old quality and cannot publish stale target buffers
+  ---
+  duration_ms: 44.927583
+  type: 'test'
+  ...
+1..66
+# tests 66
+# suites 0
+# pass 66
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2158.785

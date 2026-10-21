@@ -3,7 +3,7 @@ import type {Point3} from './viewer/coordinates';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
 import type {ArrayDescriptor,ResectionApi,CasePayload} from './types';
 export type Layer={id:string;label:string;kind:string;role:string;color:string;review_status:string;source_series:string;probability?:unknown;provenance:unknown;coverage:string};
-export type Document={patient_id:string;study_timepoint?:string;snapshot_id:string;reference_series:string;revision:number;layers:Layer[];missing:string[];series:Array<{id:string;label?:string;modality:string;grid_spacing_mm:number[];timepoint:string}>;transforms:Record<string,{status:string}>};
+export type Document={patient_id:string;study_timepoint?:string;snapshot_id:string;reference_series:string;revision:number;layers:Layer[];missing:string[];series:Array<{id:string;label?:string;modality:string;grid_spacing_mm:number[];timepoint:string}>;transforms:Record<string,{status:string;parent_series?:string|null}>};
 export type Binding={collectionId:string;document:Document;viewState?:NativeViewState|null};
 export type Draft={layerId:string;undo:number;redo:number;changedVoxels:number}|null;
 export type Args=Record<string,unknown>;
@@ -29,7 +29,7 @@ export interface NativeAnatomyApi {
   anatomySample(args:Args):Promise<unknown>;
 }
 export type Surface=NonNullable<ViewerVolume['compartments'][number]['surface']>;
-export type ViewPayload=Omit<ViewerVolume,'mri'|'compartments'|'tractography'|'labelSets'>&{labelSets?:Array<{id:string;data:ArrayDescriptor}>;tractography?:Array<{id:string;label:string;points:ArrayDescriptor;offsets:ArrayDescriptor}>;mri:ArrayDescriptor;modality:string;registrationStatus:string;alignmentPreviews?:string[];unavailableLayers:string[];compartments:Array<{name:string;color:string;volumeMm3:number;displayFilter?:VesselDisplayFilter;mask?:ArrayDescriptor;labelSet?:string;labelValue?:number;surface?:Record<keyof Surface,ArrayDescriptor>}>};
+export type ViewPayload=Omit<ViewerVolume,'mri'|'compartments'|'tractography'|'labelSets'>&{labelSets?:Array<{id:string;data:ArrayDescriptor}>;tractography?:Array<{id:string;label:string;points:ArrayDescriptor;offsets:ArrayDescriptor}>;mri:ArrayDescriptor;modality:string;registrationStatus:string;alignmentPreviews?:string[];unavailableLayers:string[];compartments:Array<{kind?:string;sourceIdentity?:string;qa?:import('./viewer/contracts').AnatomyQuality;surfaceDiagnostics?:import('./viewer/surfacePolicy').SurfaceDiagnostics;name:string;color:string;volumeMm3:number;displayFilter?:VesselDisplayFilter;mask?:ArrayDescriptor;labelSet?:string;labelValue?:number;surface?:{empty:true}|Record<keyof Surface,ArrayDescriptor>}>};
 export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cachedImage?:Float32Array,cached?:Pick<ViewerVolume,'labelSets'|'tractography'>):Promise<ViewerVolume>{
   async function bytes(d:ArrayDescriptor){
     if(!d || d.byteLength>512*1024**2 || d.byteOrder!=='little' || d.order!=='C')throw Error('Unsupported anatomy transfer');
@@ -42,7 +42,10 @@ export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cached
   for(const layer of payload.compartments){
     const mask=layer.mask?new Uint8Array(await bytes(layer.mask)):new Uint8Array(0);if(!layer.labelSet&&mask.length!==mri.length)throw Error('Overlay grid mismatch');
     let surface:Surface|undefined;
-    if(layer.surface){
+    if(layer.surface&&'empty' in layer.surface){
+      if(layer.surface.empty!==true||Object.keys(layer.surface).length!==1)throw Error('Invalid empty anatomy surface');
+      surface={positions:new Float32Array(),source:new Float32Array(),normals:new Float32Array(),sourceNormals:new Float32Array(),indices:new Uint32Array()};
+    }else if(layer.surface){
       const s=layer.surface;surface={positions:new Float32Array(await bytes(s.positions)),source:new Float32Array(await bytes(s.source)),
         normals:new Float32Array(await bytes(s.normals)),sourceNormals:new Float32Array(await bytes(s.sourceNormals)),indices:new Uint32Array(await bytes(s.indices))};
       if(surface.positions.length%3 || surface.indices.length%3 || surface.source.length!==surface.positions.length || surface.normals.length!==surface.positions.length || surface.sourceNormals.length!==surface.positions.length || surface.indices.some(i=>i>=surface!.positions.length/3))throw Error('Invalid indexed anatomy mesh');

@@ -1,0 +1,30 @@
+{
+  "schema": "ixi265-tissue-display-output-inventory-v1",
+  "files": [
+    {
+      "path": "outputs/poc-ixi265-tissue-display-v1/IXI265-Guys-0845-tissue-estimates.ressectionlab",
+      "bytes": 113750604,
+      "sha256": "bfa03b853dcb8e6893982e75a6c113e8ba3de1ce88225bb631f8a758ded1350f"
+    },
+    {
+      "path": "outputs/poc-ixi265-tissue-display-v1/attempt.json",
+      "bytes": 993,
+      "sha256": "3b98e2f4b18569a41ad256b8ff5c0d861d48e29ed9d659de03663bb3828e6e97"
+    },
+    {
+      "path": "outputs/poc-ixi265-tissue-display-v1/declaration.json",
+      "bytes": 14253,
+      "sha256": "c8866b30789c71fb8af5b32cdb22efa7c1602fd5fe2f2fa62828ae80232d4256"
+    },
+    {
+      "path": "outputs/poc-ixi265-tissue-display-v1/package.json",
+      "bytes": 21890,
+      "sha256": "927348d7e3f2d0e5bb92d52f9511dfa19366ac63958ce75a9b4e0109c2394cf0"
+    },
+    {
+      "path": "outputs/poc-ixi265-tissue-display-v1/worker.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

@@ -1,0 +1,1004 @@
+{
+  "readOnly": true,
+  "noPhysicsOrEngineConstruction": true,
+  "position": 410,
+  "stateId": "sha256:48b3a6221048ec1081947cb9bcdc1bb8566e204f49573e613adb9729d214421d",
+  "sourceSceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+  "accessIndex": 3,
+  "currentAccessId": "superior-117-128",
+  "coreAttempts": 0,
+  "cycleStartTargetMm3": 11520.0,
+  "remainingOwnedTargetCells": 32018,
+  "remainingSuperiorEligibleOwnedTargetCells": 29957,
+  "coverage": {
+    "allConfiguredCapacityDisks": {
+      "distinctRetainedEligibleTargetCells": 16615,
+      "eligibleColumnsCovered": 1043
+    },
+    "unvisitedCapacityDisks": {
+      "distinctRetainedEligibleTargetCells": 16503,
+      "eligibleColumnsCovered": 1030
+    },
+    "unvisitedHelperSearchDisks": {
+      "distinctRetainedEligibleTargetCells": 28692,
+      "eligibleColumnsCovered": 1998
+    }
+  },
+  "remainingAccessCount": 95,
+  "remainingPositiveCapacityAccessCount": 95,
+  "topRemaining": [
+    {
+      "id": "superior-135-118",
+      "entryPose": {
+        "position": [
+          -25.464996337890625,
+          -5.558837890625,
+          -417.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "drillRadiusMm": 3.0,
+      "remainingGeometricCapacityCells": 358
+    },
+    {
+      "id": "superior-130-117",
+      "entryPose": {
+        "position": [
+          -20.464996337890625,
+          -6.558837890625,
+          -415.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "drillRadiusMm": 3.0,
+      "remainingGeometricCapacityCells": 347
+    },
+    {
+      "id": "superior-135-130",
+      "entryPose": {
+        "position": [
+          -25.464996337890625,
+          6.441162109375,
+          -420.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "drillRadiusMm": 3.0,
+      "remainingGeometricCapacityCells": 339
+    },
+    {
+      "id": "superior-136-134",
+      "entryPose": {
+        "position": [
+          -26.464996337890625,
+          10.441162109375,
+          -422.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "drillRadiusMm": 3.0,
+      "remainingGeometricCapacityCells": 328
+    },
+    {
+      "id": "superior-132-120",
+      "entryPose": {
+        "position": [
+          -22.464996337890625,
+          -3.558837890625,
+          -416.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "drillRadiusMm": 3.0,
+      "remainingGeometricCapacityCells": 326
+    },
+    {
+      "id": "superior-136-138",
+      "entryPose": {
+        "position": [
+          -26.464996337890625,
+          14.441162109375,
+          -423.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "drillRadiusMm": 3.0,
+      "remainingGeometricCapacityCells": 312
+    },
+    {
+      "id": "superior-133-145",
+      "entryPose": {
+        "position": [
+          -23.464996337890625,
+          21.441162109375,
+          -424.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "drillRadiusMm": 3.0,
+      "remainingGeometricCapacityCells": 292
+    },
+    {
+      "id": "superior-141-133",
+      "entryPose": {
+        "position": [
+          -31.464996337890625,
+          9.441162109375,
+          -422.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "drillRadiusMm": 3.0,
+      "remainingGeometricCapacityCells": 289
+    }
+  ],
+  "recentRecordedActions": [
+    {
+      "position": 391,
+      "operation": "move",
+      "instrument": null,
+      "workingRadiusMm": null,
+      "pathPoses": 512,
+      "recordedInteriorTipTravelMm": 16.339128382423638,
+      "visitsOutsidePlane": false,
+      "firstRAS": [
+        -5.3361751884308655,
+        1.5896623483978938,
+        -425.5621590058337
+      ],
+      "lastRAS": [
+        -5.714996337890625,
+        1.691162109375,
+        -441.45
+      ]
+    },
+    {
+      "position": 392,
+      "operation": "withdraw",
+      "instrument": null,
+      "workingRadiusMm": null,
+      "pathPoses": 226,
+      "recordedInteriorTipTravelMm": 74.86699999999996,
+      "visitsOutsidePlane": true,
+      "firstRAS": [
+        -5.714996337890625,
+        1.691162109375,
+        -441.11699999999996
+      ],
+      "lastRAS": [
+        -5.714996337890625,
+        1.691162109375,
+        -366.25
+      ]
+    },
+    {
+      "position": 393,
+      "operation": "exchange",
+      "instrument": "cranial_drill",
+      "workingRadiusMm": null,
+      "pathPoses": 0,
+      "recordedInteriorTipTravelMm": 0.0,
+      "visitsOutsidePlane": false,
+      "firstRAS": null,
+      "lastRAS": null
+    },
+    {
+      "position": 394,
+      "operation": "place",
+      "instrument": null,
+      "workingRadiusMm": 3.0,
+      "pathPoses": 0,
+      "recordedInteriorTipTravelMm": 0.0,
+      "visitsOutsidePlane": false,
+      "firstRAS": [
+        -7.464996337890625,
+        4.441162109375,
+        -366.25
+      ],
+      "lastRAS": [
+        -7.464996337890625,
+        4.441162109375,
+        -366.25
+      ]
+    },
+    {
+      "position": 395,
+      "operation": "apply",
+      "instrument": null,
+      "workingRadiusMm": null,
+      "pathPoses": 0,
+      "recordedInteriorTipTravelMm": 0.0,
+      "visitsOutsidePlane": false,
+      "firstRAS": [
+        -7.464996337890625,
+        4.441162109375,
+        -412.25
+      ],
+      "lastRAS": [
+        -7.464996337890625,
+        4.441162109375,
+        -412.25
+      ]
+    },
+    {
+      "position": 396,
+      "operation": "withdraw",
+      "instrument": null,
+      "workingRadiusMm": null,
+      "pathPoses": 131,
+      "recordedInteriorTipTravelMm": 43.00033333333329,
+      "visitsOutsidePlane": true,
+      "firstRAS": [
+        -7.464996337890625,
+        4.441162109375,
+        -409.2503333333333
+      ],
+      "lastRAS": [
+        -7.464996337890625,
+        4.441162109375,
+        -366.25
+      ]
+    },
+    {
+      "position": 397,
+      "operation": "exchange",
+      "instrument": "cusa",
+      "workingRadiusMm": null,
+      "pathPoses": 0,
+      "recordedInteriorTipTravelMm": 0.0,
+      "visitsOutsidePlane": false,
+      "firstRAS": null,
+      "lastRAS": null
+    },
+    {
+      "position": 398,
+      "operation": "place",
+      "instrument": null,
+      "workingRadiusMm": 1.3,
+      "pathPoses": 0,
+      "recordedInteriorTipTravelMm": 0.0,
+      "visitsOutsidePlane": false,
+      "firstRAS": [
+        -7.464996337890625,
+        4.441162109375,
+        -366.25
+      ],
+      "lastRAS": [
+        -7.464996337890625,
+        4.441162109375,
+        -366.25
+      ]
+    },
+    {
+      "position": 399,
+      "operation": "apply",
+      "instrument": null,
+      "workingRadiusMm": 0.45,
+      "pathPoses": 170,
+      "recordedInteriorTipTravelMm": 53.10960120260135,
+      "visitsOutsidePlane": true,
+      "firstRAS": [
+        -7.464996337890625,
+        4.441162109375,
+        -366.25
+      ],
+      "lastRAS": [
+        -4.714996337890625,
+        2.691162109375,
+        -416.1
+      ]
+    },
+    {
+      "position": 400,
+      "operation": "apply",
+      "instrument": null,
+      "workingRadiusMm": 1.5,
+      "pathPoses": 40,
+      "recordedInteriorTipTravelMm": 1.9499999999999886,
+      "visitsOutsidePlane": false,
+      "firstRAS": [
+        -4.714996337890625,
+        2.691162109375,
+        -416.05
+      ],
+      "lastRAS": [
+        -4.714996337890625,
+        2.691162109375,
+        -414.1
+      ]
+    },
+    {
+      "position": 401,
+      "operation": "apply",
+      "instrument": null,
+      "workingRadiusMm": 0.45,
+      "pathPoses": 213,
+      "recordedInteriorTipTravelMm": 82.00101987511253,
+      "visitsOutsidePlane": true,
+      "firstRAS": [
+        -4.714996337890625,
+        2.691162109375,
+        -366.25
+      ],
+      "lastRAS": [
+        -7.214996337890625,
+        5.691162109375,
+        -444.3458950371592
+      ]
+    },
+    {
+      "position": 402,
+      "operation": "apply",
+      "instrument": null,
+      "workingRadiusMm": 0.45,
+      "pathPoses": 213,
+      "recordedInteriorTipTravelMm": 78.39950975679642,
+      "visitsOutsidePlane": true,
+      "firstRAS": [
+        -7.214996337890625,
+        5.691162109375,
+        -366.25
+      ],
+      "lastRAS": [
+        -4.714996337890625,
+        5.191162109375,
+        -442.1
+      ]
+    },
+    {
+      "position": 403,
+      "operation": "apply",
+      "instrument": null,
+      "workingRadiusMm": 0.45,
+      "pathPoses": 213,
+      "recordedInteriorTipTravelMm": 82.73594998179946,
+      "visitsOutsidePlane": true,
+      "firstRAS": [
+        -4.714996337890625,
+        5.191162109375,
+        -366.25
+      ],
+      "lastRAS": [
+        -8.214996337890625,
+        4.191162109375,
+        -445.3458950371592
+      ]
+    },
+    {
+      "position": 404,
+      "operation": "apply",
+      "instrument": null,
+      "workingRadiusMm": 0.45,
+      "pathPoses": 213,
+      "recordedInteriorTipTravelMm": 81.22295302177461,
+      "visitsOutsidePlane": true,
+      "firstRAS": [
+        -8.214996337890625,
+        4.191162109375,
+        -366.25
+      ],
+      "lastRAS": [
+        -8.464996337890625,
+        2.8411621093750057,
+        -446.1
+      ]
+    },
+    {
+      "position": 405,
+      "operation": "withdraw",
+      "instrument": null,
+      "workingRadiusMm": null,
+      "pathPoses": 250,
+      "recordedInteriorTipTravelMm": 79.80000000000001,
+      "visitsOutsidePlane": true,
+      "firstRAS": [
+        -8.464996337890625,
+        2.8411621093750057,
+        -446.05
+      ],
+      "lastRAS": [
+        -8.464996337890625,
+        2.8411621093750057,
+        -366.25
+      ]
+    },
+    {
+      "position": 406,
+      "operation": "exchange",
+      "instrument": "cranial_drill",
+      "workingRadiusMm": null,
+      "pathPoses": 0,
+      "recordedInteriorTipTravelMm": 0.0,
+      "visitsOutsidePlane": false,
+      "firstRAS": null,
+      "lastRAS": null
+    },
+    {
+      "position": 407,
+      "operation": "place",
+      "instrument": null,
+      "workingRadiusMm": 3.0,
+      "pathPoses": 0,
+      "recordedInteriorTipTravelMm": 0.0,
+      "visitsOutsidePlane": false,
+      "firstRAS": [
+        -7.464996337890625,
+        4.441162109375,
+        -366.25
+      ],
+      "lastRAS": [
+        -7.464996337890625,
+        4.441162109375,
+        -366.25
+      ]
+    },
+    {
+      "position": 408,
+      "operation": "apply",
+      "instrument": null,
+      "workingRadiusMm": null,
+      "pathPoses": 0,
+      "recordedInteriorTipTravelMm": 0.0,
+      "visitsOutsidePlane": false,
+      "firstRAS": [
+        -7.464996337890625,
+        4.441162109375,
+        -412.25
+      ],
+      "lastRAS": [
+        -7.464996337890625,
+        4.441162109375,
+        -412.25
+      ]
+    },
+    {
+      "position": 409,
+      "operation": "withdraw",
+      "instrument": null,
+      "workingRadiusMm": null,
+      "pathPoses": 132,
+      "recordedInteriorTipTravelMm": 43.617490242036354,
+      "visitsOutsidePlane": true,
+      "firstRAS": [
+        -7.464996337890625,
+        4.441162109375,
+        -409.86749024203635
+      ],
+      "lastRAS": [
+        -7.464996337890625,
+        4.441162109375,
+        -366.25
+      ]
+    },
+    {
+      "position": 410,
+      "operation": "exchange",
+      "instrument": "cusa",
+      "workingRadiusMm": null,
+      "pathPoses": 0,
+      "recordedInteriorTipTravelMm": 0.0,
+      "visitsOutsidePlane": false,
+      "firstRAS": null,
+      "lastRAS": null
+    }
+  ],
+  "recoveryTrace": [
+    {
+      "position": 318,
+      "stage": "access_setup",
+      "phase": "access-superior-117-128",
+      "targetRemovedMm3": 9045.0,
+      "boneRemovedMm3": 3883.0,
+      "targetSincePreviousSlice": null,
+      "secondsSincePreviousSlice": null,
+      "cumulativeRecoveryWallSeconds": 62.65569766703993
+    },
+    {
+      "position": 320,
+      "stage": "access_setup",
+      "phase": "access-superior-117-128",
+      "targetRemovedMm3": 9045.0,
+      "boneRemovedMm3": 3883.0,
+      "targetSincePreviousSlice": 0.0,
+      "secondsSincePreviousSlice": 66.68484295811504,
+      "cumulativeRecoveryWallSeconds": 129.34054062515497
+    },
+    {
+      "position": 322,
+      "stage": "cusa_setup",
+      "phase": "removal-superior-117-128",
+      "targetRemovedMm3": 9045.0,
+      "boneRemovedMm3": 3900.0,
+      "targetSincePreviousSlice": 0.0,
+      "secondsSincePreviousSlice": 22.542474624700844,
+      "cumulativeRecoveryWallSeconds": 151.88301524985582
+    },
+    {
+      "position": 324,
+      "stage": "cusa_setup",
+      "phase": "removal-superior-117-128",
+      "targetRemovedMm3": 9045.0,
+      "boneRemovedMm3": 3900.0,
+      "targetSincePreviousSlice": 0.0,
+      "secondsSincePreviousSlice": 7.254842999856919,
+      "cumulativeRecoveryWallSeconds": 159.13785824971274
+    },
+    {
+      "position": 326,
+      "stage": "core",
+      "phase": "core-3",
+      "targetRemovedMm3": 9074.0,
+      "boneRemovedMm3": 3900.0,
+      "targetSincePreviousSlice": 29.0,
+      "secondsSincePreviousSlice": 44.663925709202886,
+      "cumulativeRecoveryWallSeconds": 203.80178395891562
+    },
+    {
+      "position": 328,
+      "stage": "core",
+      "phase": "core-3",
+      "targetRemovedMm3": 9411.0,
+      "boneRemovedMm3": 3900.0,
+      "targetSincePreviousSlice": 337.0,
+      "secondsSincePreviousSlice": 30.685659124981612,
+      "cumulativeRecoveryWallSeconds": 234.48744308389723
+    },
+    {
+      "position": 330,
+      "stage": "core",
+      "phase": "core-3",
+      "targetRemovedMm3": 9668.0,
+      "boneRemovedMm3": 3900.0,
+      "targetSincePreviousSlice": 257.0,
+      "secondsSincePreviousSlice": 27.93844141624868,
+      "cumulativeRecoveryWallSeconds": 262.4258845001459
+    },
+    {
+      "position": 332,
+      "stage": "core",
+      "phase": "core-3",
+      "targetRemovedMm3": 9986.0,
+      "boneRemovedMm3": 3900.0,
+      "targetSincePreviousSlice": 318.0,
+      "secondsSincePreviousSlice": 24.164934541564435,
+      "cumulativeRecoveryWallSeconds": 286.59081904171035
+    },
+    {
+      "position": 334,
+      "stage": "core",
+      "phase": "core-3",
+      "targetRemovedMm3": 10085.0,
+      "boneRemovedMm3": 3900.0,
+      "targetSincePreviousSlice": 99.0,
+      "secondsSincePreviousSlice": 14.241223208140582,
+      "cumulativeRecoveryWallSeconds": 300.83204224985093
+    },
+    {
+      "position": 336,
+      "stage": "core",
+      "phase": "core-3",
+      "targetRemovedMm3": 10139.0,
+      "boneRemovedMm3": 3900.0,
+      "targetSincePreviousSlice": 54.0,
+      "secondsSincePreviousSlice": 30.085254959296435,
+      "cumulativeRecoveryWallSeconds": 330.91729720914736
+    },
+    {
+      "position": 338,
+      "stage": "core",
+      "phase": "core-3",
+      "targetRemovedMm3": 10209.0,
+      "boneRemovedMm3": 3900.0,
+      "targetSincePreviousSlice": 70.0,
+      "secondsSincePreviousSlice": 26.75354849966243,
+      "cumulativeRecoveryWallSeconds": 357.6708457088098
+    },
+    {
+      "position": 340,
+      "stage": "core",
+      "phase": "core-3",
+      "targetRemovedMm3": 10372.0,
+      "boneRemovedMm3": 3900.0,
+      "targetSincePreviousSlice": 163.0,
+      "secondsSincePreviousSlice": 31.34383925003931,
+      "cumulativeRecoveryWallSeconds": 389.0146849588491
+    },
+    {
+      "position": 342,
+      "stage": "core",
+      "phase": "core-3",
+      "targetRemovedMm3": 10508.0,
+      "boneRemovedMm3": 3900.0,
+      "targetSincePreviousSlice": 136.0,
+      "secondsSincePreviousSlice": 17.868212374858558,
+      "cumulativeRecoveryWallSeconds": 406.88289733370766
+    },
+    {
+      "position": 344,
+      "stage": "core",
+      "phase": "core-3",
+      "targetRemovedMm3": 10738.0,
+      "boneRemovedMm3": 3900.0,
+      "targetSincePreviousSlice": 230.0,
+      "secondsSincePreviousSlice": 34.22809433331713,
+      "cumulativeRecoveryWallSeconds": 441.1109916670248
+    },
+    {
+      "position": 346,
+      "stage": "core",
+      "phase": "core-3",
+      "targetRemovedMm3": 10929.0,
+      "boneRemovedMm3": 3900.0,
+      "targetSincePreviousSlice": 191.0,
+      "secondsSincePreviousSlice": 28.834784917067736,
+      "cumulativeRecoveryWallSeconds": 469.9457765840925
+    },
+    {
+      "position": 348,
+      "stage": "core",
+      "phase": "core-3",
+      "targetRemovedMm3": 11002.0,
+      "boneRemovedMm3": 3900.0,
+      "targetSincePreviousSlice": 73.0,
+      "secondsSincePreviousSlice": 26.90141687495634,
+      "cumulativeRecoveryWallSeconds": 496.84719345904887
+    },
+    {
+      "position": 350,
+      "stage": "access_setup",
+      "phase": "access-superior-117-128",
+      "targetRemovedMm3": 11024.0,
+      "boneRemovedMm3": 3900.0,
+      "targetSincePreviousSlice": 22.0,
+      "secondsSincePreviousSlice": 18.330857290886343,
+      "cumulativeRecoveryWallSeconds": 515.1780507499352
+    },
+    {
+      "position": 352,
+      "stage": "access_setup",
+      "phase": "access-superior-117-128",
+      "targetRemovedMm3": 11024.0,
+      "boneRemovedMm3": 3900.0,
+      "targetSincePreviousSlice": 0.0,
+      "secondsSincePreviousSlice": 73.37740866700187,
+      "cumulativeRecoveryWallSeconds": 588.5554594169371
+    },
+    {
+      "position": 354,
+      "stage": "access_setup",
+      "phase": "access-superior-117-128",
+      "targetRemovedMm3": 11024.0,
+      "boneRemovedMm3": 3900.0,
+      "targetSincePreviousSlice": 0.0,
+      "secondsSincePreviousSlice": 25.126239750068635,
+      "cumulativeRecoveryWallSeconds": 613.6816991670057
+    },
+    {
+      "position": 356,
+      "stage": "cusa_setup",
+      "phase": "access-superior-117-128",
+      "targetRemovedMm3": 11024.0,
+      "boneRemovedMm3": 3901.0,
+      "targetSincePreviousSlice": 0.0,
+      "secondsSincePreviousSlice": 16.307031457778066,
+      "cumulativeRecoveryWallSeconds": 629.9887306247838
+    },
+    {
+      "position": 358,
+      "stage": "cusa_setup",
+      "phase": "removal-superior-117-128",
+      "targetRemovedMm3": 11024.0,
+      "boneRemovedMm3": 3901.0,
+      "targetSincePreviousSlice": 0.0,
+      "secondsSincePreviousSlice": 15.441733249928802,
+      "cumulativeRecoveryWallSeconds": 645.4304638747126
+    },
+    {
+      "position": 360,
+      "stage": "core",
+      "phase": "removal-superior-117-128",
+      "targetRemovedMm3": 11033.0,
+      "boneRemovedMm3": 3901.0,
+      "targetSincePreviousSlice": 9.0,
+      "secondsSincePreviousSlice": 34.99990504235029,
+      "cumulativeRecoveryWallSeconds": 680.4303689170629
+    },
+    {
+      "position": 362,
+      "stage": "core",
+      "phase": "core-3",
+      "targetRemovedMm3": 11057.0,
+      "boneRemovedMm3": 3901.0,
+      "targetSincePreviousSlice": 24.0,
+      "secondsSincePreviousSlice": 41.445741625037044,
+      "cumulativeRecoveryWallSeconds": 721.8761105420999
+    },
+    {
+      "position": 364,
+      "stage": "core",
+      "phase": "core-3",
+      "targetRemovedMm3": 11073.0,
+      "boneRemovedMm3": 3901.0,
+      "targetSincePreviousSlice": 16.0,
+      "secondsSincePreviousSlice": 50.00774083286524,
+      "cumulativeRecoveryWallSeconds": 771.8838513749652
+    },
+    {
+      "position": 366,
+      "stage": "core",
+      "phase": "core-3",
+      "targetRemovedMm3": 11135.0,
+      "boneRemovedMm3": 3901.0,
+      "targetSincePreviousSlice": 62.0,
+      "secondsSincePreviousSlice": 39.08925483375788,
+      "cumulativeRecoveryWallSeconds": 810.973106208723
+    },
+    {
+      "position": 368,
+      "stage": "core",
+      "phase": "core-3",
+      "targetRemovedMm3": 11215.0,
+      "boneRemovedMm3": 3901.0,
+      "targetSincePreviousSlice": 80.0,
+      "secondsSincePreviousSlice": 21.08011587522924,
+      "cumulativeRecoveryWallSeconds": 832.0532220839523
+    },
+    {
+      "position": 370,
+      "stage": "core",
+      "phase": "core-3",
+      "targetRemovedMm3": 11314.0,
+      "boneRemovedMm3": 3901.0,
+      "targetSincePreviousSlice": 99.0,
+      "secondsSincePreviousSlice": 26.884050082881004,
+      "cumulativeRecoveryWallSeconds": 858.9372721668333
+    },
+    {
+      "position": 372,
+      "stage": "access_setup",
+      "phase": "access-superior-117-128",
+      "targetRemovedMm3": 11452.0,
+      "boneRemovedMm3": 3901.0,
+      "targetSincePreviousSlice": 138.0,
+      "secondsSincePreviousSlice": 17.102289041969925,
+      "cumulativeRecoveryWallSeconds": 876.0395612088032
+    },
+    {
+      "position": 374,
+      "stage": "access_setup",
+      "phase": "access-superior-117-128",
+      "targetRemovedMm3": 11452.0,
+      "boneRemovedMm3": 3901.0,
+      "targetSincePreviousSlice": 0.0,
+      "secondsSincePreviousSlice": 56.15785591630265,
+      "cumulativeRecoveryWallSeconds": 932.1974171251059
+    },
+    {
+      "position": 376,
+      "stage": "access_setup",
+      "phase": "access-superior-117-128",
+      "targetRemovedMm3": 11452.0,
+      "boneRemovedMm3": 3901.0,
+      "targetSincePreviousSlice": 0.0,
+      "secondsSincePreviousSlice": 8.079573083668947,
+      "cumulativeRecoveryWallSeconds": 940.2769902087748
+    },
+    {
+      "position": 378,
+      "stage": "cusa_setup",
+      "phase": "removal-superior-117-128",
+      "targetRemovedMm3": 11452.0,
+      "boneRemovedMm3": 3901.0,
+      "targetSincePreviousSlice": 0.0,
+      "secondsSincePreviousSlice": 23.73424733337015,
+      "cumulativeRecoveryWallSeconds": 964.011237542145
+    },
+    {
+      "position": 380,
+      "stage": "cusa_setup",
+      "phase": "removal-superior-117-128",
+      "targetRemovedMm3": 11452.0,
+      "boneRemovedMm3": 3901.0,
+      "targetSincePreviousSlice": 0.0,
+      "secondsSincePreviousSlice": 8.086072999984026,
+      "cumulativeRecoveryWallSeconds": 972.097310542129
+    },
+    {
+      "position": 382,
+      "stage": "core",
+      "phase": "core-3",
+      "targetRemovedMm3": 11459.0,
+      "boneRemovedMm3": 3901.0,
+      "targetSincePreviousSlice": 7.0,
+      "secondsSincePreviousSlice": 48.12458595773205,
+      "cumulativeRecoveryWallSeconds": 1020.221896499861
+    },
+    {
+      "position": 384,
+      "stage": "core",
+      "phase": "core-3",
+      "targetRemovedMm3": 11466.0,
+      "boneRemovedMm3": 3901.0,
+      "targetSincePreviousSlice": 7.0,
+      "secondsSincePreviousSlice": 24.243413167074323,
+      "cumulativeRecoveryWallSeconds": 1044.4653096669354
+    },
+    {
+      "position": 386,
+      "stage": "core",
+      "phase": "core-3",
+      "targetRemovedMm3": 11513.0,
+      "boneRemovedMm3": 3901.0,
+      "targetSincePreviousSlice": 47.0,
+      "secondsSincePreviousSlice": 16.334933042060584,
+      "cumulativeRecoveryWallSeconds": 1060.800242708996
+    },
+    {
+      "position": 388,
+      "stage": "core",
+      "phase": "core-3",
+      "targetRemovedMm3": 11518.0,
+      "boneRemovedMm3": 3901.0,
+      "targetSincePreviousSlice": 5.0,
+      "secondsSincePreviousSlice": 9.626199541147798,
+      "cumulativeRecoveryWallSeconds": 1070.4264422501437
+    },
+    {
+      "position": 390,
+      "stage": "access_setup",
+      "phase": "access-superior-117-128",
+      "targetRemovedMm3": 11520.0,
+      "boneRemovedMm3": 3901.0,
+      "targetSincePreviousSlice": 2.0,
+      "secondsSincePreviousSlice": 9.214384208898991,
+      "cumulativeRecoveryWallSeconds": 1079.6408264590427
+    },
+    {
+      "position": 392,
+      "stage": "access_setup",
+      "phase": "access-superior-117-128",
+      "targetRemovedMm3": 11520.0,
+      "boneRemovedMm3": 3901.0,
+      "targetSincePreviousSlice": 0.0,
+      "secondsSincePreviousSlice": 52.348648332990706,
+      "cumulativeRecoveryWallSeconds": 1131.9894747920334
+    },
+    {
+      "position": 394,
+      "stage": "access_setup",
+      "phase": "access-superior-117-128",
+      "targetRemovedMm3": 11520.0,
+      "boneRemovedMm3": 3901.0,
+      "targetSincePreviousSlice": 0.0,
+      "secondsSincePreviousSlice": 8.14252212503925,
+      "cumulativeRecoveryWallSeconds": 1140.1319969170727
+    },
+    {
+      "position": 396,
+      "stage": "cusa_setup",
+      "phase": "removal-superior-117-128",
+      "targetRemovedMm3": 11520.0,
+      "boneRemovedMm3": 3901.0,
+      "targetSincePreviousSlice": 0.0,
+      "secondsSincePreviousSlice": 23.665705249644816,
+      "cumulativeRecoveryWallSeconds": 1163.7977021667175
+    },
+    {
+      "position": 398,
+      "stage": "cusa_setup",
+      "phase": "removal-superior-117-128",
+      "targetRemovedMm3": 11520.0,
+      "boneRemovedMm3": 3901.0,
+      "targetSincePreviousSlice": 0.0,
+      "secondsSincePreviousSlice": 8.16178704239428,
+      "cumulativeRecoveryWallSeconds": 1171.9594892091118
+    },
+    {
+      "position": 400,
+      "stage": "core",
+      "phase": "core-3",
+      "targetRemovedMm3": 11544.0,
+      "boneRemovedMm3": 3901.0,
+      "targetSincePreviousSlice": 24.0,
+      "secondsSincePreviousSlice": 37.2603872907348,
+      "cumulativeRecoveryWallSeconds": 1209.2198764998466
+    },
+    {
+      "position": 402,
+      "stage": "core",
+      "phase": "core-3",
+      "targetRemovedMm3": 11553.0,
+      "boneRemovedMm3": 3901.0,
+      "targetSincePreviousSlice": 9.0,
+      "secondsSincePreviousSlice": 88.05597620923072,
+      "cumulativeRecoveryWallSeconds": 1297.2758527090773
+    },
+    {
+      "position": 404,
+      "stage": "core",
+      "phase": "core-3",
+      "targetRemovedMm3": 11555.0,
+      "boneRemovedMm3": 3901.0,
+      "targetSincePreviousSlice": 2.0,
+      "secondsSincePreviousSlice": 89.37955474993214,
+      "cumulativeRecoveryWallSeconds": 1386.6554074590094
+    },
+    {
+      "position": 406,
+      "stage": "access_setup",
+      "phase": "access-superior-117-128",
+      "targetRemovedMm3": 11555.0,
+      "boneRemovedMm3": 3901.0,
+      "targetSincePreviousSlice": 0.0,
+      "secondsSincePreviousSlice": 25.743133540730923,
+      "cumulativeRecoveryWallSeconds": 1412.3985409997404
+    },
+    {
+      "position": 408,
+      "stage": "cusa_setup",
+      "phase": "access-superior-117-128",
+      "targetRemovedMm3": 11555.0,
+      "boneRemovedMm3": 3911.0,
+      "targetSincePreviousSlice": 0.0,
+      "secondsSincePreviousSlice": 17.689283959101886,
+      "cumulativeRecoveryWallSeconds": 1430.0878249588422
+    },
+    {
+      "position": 410,
+      "stage": "cusa_setup",
+      "phase": "removal-superior-117-128",
+      "targetRemovedMm3": 11555.0,
+      "boneRemovedMm3": 3911.0,
+      "targetSincePreviousSlice": 0.0,
+      "secondsSincePreviousSlice": 15.97277491632849,
+      "cumulativeRecoveryWallSeconds": 1446.0605998751707
+    }
+  ],
+  "methodLimits": [
+    "Retained source-owned identities; current deformation does not reassign source ownership.",
+    "Capacity and helper-search disks are geometric upper bounds, not physical admission/removal predictions.",
+    "Recorded path travel excludes prior current pose to first explicit waypoint.",
+    "Adjacent log differences are wall intervals including proposal/preview/commit/save work; no isolated benchmark.",
+    "Source arrays and checkpoint records loaded read-only; live process can advance after this boundary."
+  ]
+}

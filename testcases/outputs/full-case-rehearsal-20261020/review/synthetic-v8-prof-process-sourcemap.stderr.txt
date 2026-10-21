@@ -1,0 +1,13 @@
+node:internal/deps/v8/tools/tickprocessor:697
+      const content = d8.file.read(sourceMapURL);
+                      ^
+
+ReferenceError: d8 is not defined
+    at WebInspector.SourceMap.load (node:internal/deps/v8/tools/tickprocessor:697:23)
+    at TickProcessor.loadSourceMap (node:internal/deps/v8/tools/tickprocessor:701:35)
+    at new TickProcessor (node:internal/deps/v8/tools/tickprocessor:640:27)
+    at TickProcessor.fromParams (node:internal/deps/v8/tools/tickprocessor:519:12)
+    at node:internal/deps/v8/tools/tickprocessor-driver:32:37
+    at node:internal/main/prof_process:32:21
+
+Node.js v24.19.0

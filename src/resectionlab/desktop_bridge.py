@@ -11,6 +11,7 @@ from .data_policy import DataPolicyError, LEGACY_OPERATION_EXCLUSIONS, historica
 
 import argparse
 from collections import OrderedDict
+from collections.abc import Mapping
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass, field, replace
 import hashlib
@@ -36,6 +37,7 @@ from .geometry import AccessWindow, GENERIC_TOOLS
 from .native_resection import NATIVE_GENERIC_TOOLS
 from .imaging import create_synthetic_case, inspect_nifti, load_case, load_nifti_case, read_case_artifacts, save_case
 from .planning import SearchConfig, generate_candidate_routes
+from .rehearsal_bridge import OPERATIONS as REHEARSAL_OPERATIONS
 
 PROTOCOL_VERSION = 1
 MAX_REQUEST_BYTES = 1024 * 1024
@@ -48,6 +50,8 @@ MAX_AXIS_INSPECTION_VOXELS = 16_000_000
 MAX_AXIS_INSPECTION_METADATA_BYTES = 256 * 1024
 MAX_AXIS_INSPECTION_RESULT_BYTES = 2 * 1024 * 1024
 OPERATIONS = frozenset({'anatomySavePackage','anatomySaveView','anatomyComponents','anatomyGraph','anatomyCreate','anatomyReconstruct','anatomyPlan','anatomyRemoval','anatomySection','anatomyOpen','anatomyView','anatomyEdit','anatomySample','anatomyRegister','anatomyImport','anatomyExport',"ping", "executeDevelopmentEpisode", "executePersistentPassiveEpisode", "executePublicSurfaceContactEpisode", "publicContactFamilyAvailability", "executePublicContactFamilyEpisode", "inspectDevelopmentEpisodeComparison", "evaluateDevelopmentEpisodeVascular", "loadCase", "importNifti", "importDisplaySeries", "importDiagnosticLayer", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "inspectObservedLandmarkUpdate", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
+from .surgical_bridge import OPERATIONS as SURGICAL_OPERATIONS
+OPERATIONS = OPERATIONS | REHEARSAL_OPERATIONS | SURGICAL_OPERATIONS
 MAX_RUN_JSON_BYTES = 32 * 1024 * 1024
 TRANSFER_SUPERVISOR_SHA256 = "5491f528bada7a0ca569f0254c0659144b40bce95b4a6daa9552ae17c0bf43bd"
 RESEARCH_TOOLS = GENERIC_TOOLS + NATIVE_GENERIC_TOOLS
@@ -444,13 +448,14 @@ class BridgeSession:
                 brain_support.update(usableForResearchSimulation=True, reviewStatus=support["review_status"], provenance=support)
             except ValueError as error:
                 brain_support.update(reviewStatus="supplied_unverified", reason=str(error))
+        from .anatomy_qa import mask_quality
         descriptor = {
             "caseId": case.case_id, "caseHash": case.semantic_hash, "planningHash": case.planning_hash,
             "revision": case.revision, "frame": case.frame, "physicalUnits": "mm",
             "affine": case.affine.tolist(), "shape": list(case.mri.shape), "spacingMm": list(case.spacing_mm),
             "mri": self.transfers.array(case.mri, "float32"),
             "intensityRange": [float(case.mri.min()), float(case.mri.max())],
-            "compartments": [{"name": name, "volumeMm3": float(np.count_nonzero(mask) * case.voxel_volume_mm3),
+            "compartments": [{"name": name, "qa": mask_quality(mask, case.semantic_hash+":"+name), "volumeMm3": float(np.count_nonzero(mask) * case.voxel_volume_mm3),
                               "array": self.transfers.array(mask, "uint8"),
                               "sourceArray": self.transfers.array(case.source_compartments.get(name, mask), "uint8")}
                              for name, mask in case.compartments.items()],
@@ -512,7 +517,25 @@ class BridgeSession:
 
     @staticmethod
     def _display_artifacts(entry: _CaseEntry) -> dict:
-        result = thaw_json(entry.artifacts)
+        toolbox = entry.artifacts.get('surgical_toolbox')
+        if isinstance(toolbox, Mapping) and toolbox.get('fullCase'):
+            # The renderer only needs navigation metadata before admission.
+            # Keep full actions/checkpoints privately for verified replay and
+            # native round-trip, rather than copying them through JSONL twice.
+            result = {key: thaw_json(value) for key,value in entry.artifacts.items()
+                      if key not in ('surgical_toolbox', 'surgical_prior_scenes')}
+            result['surgical_toolbox'] = {
+                'schema': 'resectionlab.surgical-toolbox-display.v1',
+                'requiresReplayVerification': True,
+                'branchId': toolbox.get('branchId'), 'position': toolbox.get('position'),
+                'branches': {key: {} for key in toolbox.get('branches', {})}
+                            if isinstance(toolbox.get('branches'), Mapping) else {},
+                'fullCase': {key: {field: value.get(field) for field in ('schema', 'scenario', 'status')}
+                             for key,value in toolbox['fullCase'].items() if isinstance(value, Mapping)}
+                            if isinstance(toolbox['fullCase'], Mapping) else {},
+            }
+        else:
+            result = thaw_json(entry.artifacts)
         workspace = result.get("workspace", {})
         if workspace and workspace.get("case_hash") != entry.case.semantic_hash:
             result.pop("workspace", None)
@@ -980,6 +1003,12 @@ class BridgeSession:
             from .anatomy_bridge import dispatch
             return dispatch(self, operation, args, request, progress)
         request.check()
+        if operation in SURGICAL_OPERATIONS:
+            from .surgical_bridge import dispatch
+            return dispatch(self, operation, args, request, progress)
+        if operation in REHEARSAL_OPERATIONS:
+            from .rehearsal_bridge import dispatch
+            return dispatch(self, operation, args, request, progress)
         if operation in {'generateRoutes','generateNativeRoutes','inspectRefinement','inspectAxisPlanning',
                          'trainPatient','nativeTraining','evaluateCandidate','replayTraining','exportCandidate'}:
             entry = self.cases.get(args.get('caseHash'))
@@ -1517,10 +1546,13 @@ class BridgeSession:
             workspace = args.get("workspace", {})
             if not isinstance(workspace, dict) or len(json.dumps(workspace, allow_nan=False).encode()) > MAX_WORKSPACE_BYTES:
                 raise BridgeError("INVALID_ARGUMENT", "Workspace must be a bounded JSON object")
-            if set(workspace)&{'routes','training_report','selection_replay','episode','episodeCanonicalJson','workspaceSession','displaySeries','evidenceInventory'}:
+            if set(workspace)&{'routes','training_report','selection_replay','episode','episodeCanonicalJson','workspaceSession','displaySeries','evidenceInventory','patient_rehearsal'}:
                 raise BridgeError("INVALID_ARGUMENT", "Evaluator/source records cannot be supplied by the renderer")
             from .workspace_bundle import save_workspace,view_state,replay_state
             workspace=dict(workspace)
+            if 'rehearsalView' in workspace:
+                from .rehearsal_bridge import checked_saved_view
+                workspace['rehearsalView'] = checked_saved_view(self, entry, workspace['rehearsalView'])
             imaging=view_state(entry.case,list(entry.display_sources.values()),workspace.pop('imaging',entry.imaging_state))
             selection=replay_state(entry.episode,workspace.pop('episodeReplay',entry.episode_selection))
             artifacts = thaw_json(entry.artifacts)
@@ -1702,8 +1734,11 @@ class BridgeRuntime:
             if not isinstance(args, dict):
                 raise BridgeError("INVALID_ARGUMENT", "args must be an object")
             timeout = message.get("timeoutMs", 120000)
-            if type(timeout) is not int or not 100 <= timeout <= 300000:
-                raise BridgeError("INVALID_ARGUMENT", "timeoutMs must be an integer between 100 and 300000")
+            replay_admission = (operation == 'surgicalRehearsal' and args.get('command') in
+                                {'inspect', 'seek', 'seekFrame', 'selectBranch', 'undo', 'redo', 'selectScene'})
+            maximum_timeout = 3600000 if replay_admission else 300000
+            if type(timeout) is not int or not 100 <= timeout <= maximum_timeout:
+                raise BridgeError("INVALID_ARGUMENT", f"timeoutMs must be an integer between 100 and {maximum_timeout}")
             if len(json.dumps(message, allow_nan=False).encode()) > MAX_REQUEST_BYTES:
                 raise BridgeError("REQUEST_SIZE_LIMIT", "Request exceeds 1 MiB")
             copied_args = thaw_json(freeze_json(args))
@@ -1713,8 +1748,8 @@ class BridgeRuntime:
                 if request_id in self._seen:
                     self.emit({"id": None, "rejectedRequestId": request_id, "event": "error", "error": {"code": "DUPLICATE_REQUEST_ID", "message": "Request IDs cannot be reused"}})
                     return
-                if len(self._seen) >= 10000:
-                    raise BridgeError("SESSION_LIMIT", "Restart the local bridge after 10000 requests")
+                if len(self._seen) >= 100000:
+                    raise BridgeError("SESSION_LIMIT", "Restart the local bridge after 100000 requests")
                 self._seen.add(request_id)
                 if operation == "ping":
                     _keys(args, set())

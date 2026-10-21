@@ -9,13 +9,21 @@ export function checkedViewerSettings(source:CasePayload,input:unknown):ViewerWo
   if(!input || typeof input!=='object' || Array.isArray(input))return fail();
   const value=input as ViewerWorkspaceSettings;
   const labels=[...source.compartments.map(layer=>layer.name),...(displayBrainMask(source)?['brain']:[])];
-  if(Object.keys(value).some(key=>!['skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip'].includes(key)))return fail();
+  if(Object.keys(value).some(key=>!['smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','presentation','sliceFraming','contextStyle'].includes(key)))return fail();
+  if(value.contextStyle!==undefined&&!['shell','uniform'].includes(value.contextStyle))return fail();
+  if(value.sliceFraming!==undefined){
+    const framing=value.sliceFraming;
+    if(!framing||typeof framing!=='object'||Array.isArray(framing)||Object.keys(framing).some(k=>!['fit','zoom'].includes(k))||!['image','anatomy'].includes(framing.fit)||typeof framing.zoom!=='number'||!Number.isFinite(framing.zoom)||framing.zoom<.5||framing.zoom>4)return fail();
+  }
+  if(value.sliceOverlay!==undefined&&!['contour','fill'].includes(value.sliceOverlay))return fail();
+  if(value.presentation!==undefined&&!['segmentation','vascular'].includes(value.presentation))return fail();
+  if(value.smoothSurfaces!==undefined&&typeof value.smoothSurfaces!=='boolean')return fail();
   if(value.skullMode!==undefined&&!['exterior','transparent','cutaway'].includes(value.skullMode))return fail();
   if(value.volumeRendering!==undefined){
     const volume=value.volumeRendering as Record<string,unknown>;
     if(!volume||typeof volume!=='object'||Array.isArray(volume)||Object.keys(volume).some(k=>!['enabled','preset','density','window','points','shadows','isolateLabels'].includes(k))||
       ('enabled'in volume&&typeof volume.enabled!=='boolean')||
-      ('preset'in volume&&!['auto','ct-bone','ct-tissue','mri'].includes(volume.preset as string))||
+      ('preset'in volume&&!['auto','ct-bone','ct-tissue','ct-angiography','mri'].includes(volume.preset as string))||
       ('density'in volume&&(typeof volume.density!=='number'||!Number.isFinite(volume.density)||volume.density<0||volume.density>2)))return fail();
   }
   const volume=value.volumeRendering;

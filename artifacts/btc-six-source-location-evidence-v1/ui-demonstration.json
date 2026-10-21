@@ -1,0 +1,196 @@
+{
+  "schema": "btc-six-reported-sites-native-ui-v1",
+  "observer": "ROOT via native Electron CUA",
+  "status": "pass",
+  "catalog": {
+    "path": "outputs/patient-corpus-twelve-execution-v1/catalog.json",
+    "sha256": "5f8b833079e0b4673d2b8d01a36fab474574164755ac731a0972fa8071bcd088",
+    "bytes": 270397
+  },
+  "evidence": {
+    "path": "artifacts/btc-six-source-location-evidence-v1/evidence.json",
+    "sha256": "f5d9db8e86f7ecc8343b5c302715f93d65727246dfd94a735d5db94d56c64362",
+    "bytes": 11412
+  },
+  "qualified_source_rows": 12,
+  "saved_versions_in_library": 24,
+  "saved_versions_counted_as_people": false,
+  "rows_with_reported_site": 6,
+  "reported_site_is_reviewed_anatomy": false,
+  "queries": [
+    {
+      "query": "parietal",
+      "matches": [
+        "BTC:sub-PAT20",
+        "BTC:sub-PAT22"
+      ]
+    },
+    {
+      "query": "left frontal",
+      "matches": [
+        "BTC:sub-PAT05",
+        "BTC:sub-PAT28"
+      ]
+    },
+    {
+      "query": "right",
+      "matches": [
+        "BTC:sub-PAT16",
+        "BTC:sub-PAT20",
+        "BTC:sub-PAT22",
+        "BTC:sub-PAT25"
+      ]
+    },
+    {
+      "query": "IXI frontal",
+      "matches": []
+    }
+  ],
+  "native_open_from_query": {
+    "query": "right parietal",
+    "patient_group": "BTC:sub-PAT20",
+    "source": "T1w reference",
+    "target": "fractional source target threshold scenario",
+    "displayed_target_ml": 12.5,
+    "linked_slices": true,
+    "source_preserved_status": true
+  },
+  "new_native_saves": 0,
+  "new_model_or_solver_runs": 0,
+  "new_people": 0,
+  "anatomy_host_growth_or_training_acceptance": false,
+  "app_quit_exit_code": 0,
+  "captures": [
+    {
+      "path": "outputs/poc-first-qa/btc-reported-sites-ui/01-six-reported-sites.ax.txt",
+      "sha256": "0c28e78b2716eff69233994fb3c85dcd37ca2b05b6a57c181f7d357c2be81079",
+      "bytes": 11688
+    },
+    {
+      "path": "outputs/poc-first-qa/btc-reported-sites-ui/01-six-reported-sites.png",
+      "sha256": "7e3b4fb0cfb77b498ac97d90e87720dd1ca97299fc77813281816d44cff940e3",
+      "bytes": 422839
+    },
+    {
+      "path": "outputs/poc-first-qa/btc-reported-sites-ui/02-parietal-two.ax.txt",
+      "sha256": "6952d7a293989959e0b48b68e9df96dd66245da231c2376eee6ff43ee61cbead",
+      "bytes": 5630
+    },
+    {
+      "path": "outputs/poc-first-qa/btc-reported-sites-ui/02-parietal-two.png",
+      "sha256": "7391b46bd687bc579acd266ed83da3e6b4160ae6333d4fc276a076c18f6387d9",
+      "bytes": 586684
+    },
+    {
+      "path": "outputs/poc-first-qa/btc-reported-sites-ui/03-left-frontal-two.ax.txt",
+      "sha256": "3b4a17d3e2a69a2ea0b54bd2e700c4d21b7df854024308dbb6b3fb8624eea848",
+      "bytes": 5642
+    },
+    {
+      "path": "outputs/poc-first-qa/btc-reported-sites-ui/03-left-frontal-two.png",
+      "sha256": "37beb8089132322ea621e0ebee7733514b653b480bac8b6484740396b96f08ed",
+      "bytes": 587000
+    },
+    {
+      "path": "outputs/poc-first-qa/btc-reported-sites-ui/04-right-four.ax.txt",
+      "sha256": "a71827ecd0fd2f82bbe2f1838e4d76021c7c49144bc61005ac5323f6e2144a96",
+      "bytes": 6647
+    },
+    {
+      "path": "outputs/poc-first-qa/btc-reported-sites-ui/04-right-four.png",
+      "sha256": "510315ed49f7f10f3e65c9305f727294f93484d70f115e607e0bfa4db475b82b",
+      "bytes": 586952
+    },
+    {
+      "path": "outputs/poc-first-qa/btc-reported-sites-ui/05-unrelated-zero.ax.txt",
+      "sha256": "94ac831951102b989e4260c255a76b0e5ecd2d4d2c51940f2e1e425f02209656",
+      "bytes": 4717
+    },
+    {
+      "path": "outputs/poc-first-qa/btc-reported-sites-ui/05-unrelated-zero.png",
+      "sha256": "2a1e34ebcd3779c8e98ef012c932b0fbb885fc18c3bfeb68050ae27505eca0f8",
+      "bytes": 553607
+    },
+    {
+      "path": "outputs/poc-first-qa/btc-reported-sites-ui/06-btc20-native-open.ax.txt",
+      "sha256": "cf192d39cfe7790f3cb5e96e154d0f687c22871d9f78555c9151e0f63d099db0",
+      "bytes": 5489
+    },
+    {
+      "path": "outputs/poc-first-qa/btc-reported-sites-ui/06-btc20-native-open.png",
+      "sha256": "77985c5ade44f35c6017d9a764ec29671eb49ecaa58dfca680640bcc3746369f",
+      "bytes": 476361
+    }
+  ],
+  "runtime": [
+    {
+      "path": "desktop/electron/patient-catalog.cjs",
+      "sha256": "2383adf1fc42b82d16dec8b193bda2ba5afc3fa45eb2e1f456ecb836aa913556",
+      "bytes": 23004
+    },
+    {
+      "path": "desktop/electron/patient-catalog.test.cjs",
+      "sha256": "677633e8fe3ff73e093385a865b205145cefd514d72f365b5e69520e31484bc5",
+      "bytes": 28566
+    },
+    {
+      "path": "desktop/electron/case-library.cjs",
+      "sha256": "35d9582eee330bb3b6f860c0bc0c830e6ccca6b9295d8504fc646b87d4d14cf0",
+      "bytes": 4858
+    },
+    {
+      "path": "desktop/src/WorkbenchPanels.tsx",
+      "sha256": "e209704c12b9ba31e792f47883f85eb54a7f201d536bdf5ab7fb5d6bc37147a5",
+      "bytes": 9873
+    },
+    {
+      "path": "desktop/src/workbench.css",
+      "sha256": "50d76e51c60aeb8d014a2084a112b39bdea0e4145dbab53d445fad85a6b6cd7f",
+      "bytes": 2862
+    },
+    {
+      "path": "desktop/tests/case-library-panel.test.mjs",
+      "sha256": "db436b43d662b79438a38fe3e16ee2c029e23edb9d29f4b7ee0b23b09ab381db",
+      "bytes": 5270
+    },
+    {
+      "path": "desktop/dist/assets/index-Di49lHMQ.js",
+      "sha256": "1a66d5f531219ef7a909f487772bba518191d1657cab84d2110e328270e5cb29",
+      "bytes": 1255528
+    },
+    {
+      "path": "desktop/dist/assets/index-oJskfShb.css",
+      "sha256": "f4fe711130b80e58932ef01126b3d20ba72e4c047bc7d3b25128f6e25b86f5e7",
+      "bytes": 66331
+    }
+  ],
+  "validation": {
+    "focused_host_tests": 21,
+    "focused_renderer_tests": 5,
+    "typescript": "pass",
+    "production_build": "pass",
+    "logs": [
+      {
+        "path": "outputs/poc-first-qa/btc-reported-sites-ui/host.log",
+        "sha256": "53a6838086efae8e264a2e8a0ff1faf8ed2be1b3bf6c9a7f5b95e0a41ac9f892",
+        "bytes": 2611
+      },
+      {
+        "path": "outputs/poc-first-qa/btc-reported-sites-ui/renderer.log",
+        "sha256": "eca5d4d1c6e6778a3f18fff97054f37f2f80ee9166909bc92defa950eff7a48d",
+        "bytes": 712
+      },
+      {
+        "path": "outputs/poc-first-qa/btc-reported-sites-ui/build.log",
+        "sha256": "2a7cabedd4b804442472663b4d634310342d02699d3c49307e8acdc73739a355",
+        "bytes": 906
+      }
+    ],
+    "build_warning": "Existing renderer chunk larger than500kB; build succeeded."
+  },
+  "limits": [
+    "Patient-level source reports do not establish native-mask localization or functional boundaries.",
+    "Initial all-row capture includes ordinary tissue surface warm-up; subsequent query/open captures are ready.",
+    "No new source-array independent audit is claimed for this metadata feature; catalog opens retain exact bundle checks."
+  ]
+}

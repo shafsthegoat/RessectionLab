@@ -1,0 +1,95 @@
+{
+  "started_utc": "2026-10-16T08:01:58.909302+00:00",
+  "supervisor_pid": 21707,
+  "resources": {
+    "threads": 2,
+    "rss_limit_bytes": 1073741824,
+    "available_memory_floor_bytes": 1073741824,
+    "seconds_per_arm": 120.0,
+    "output_temporary_limit_bytes": 16777216,
+    "disk_floor_bytes": 53687091200,
+    "sample_interval_seconds": 0.1,
+    "attempts_per_arm": 1,
+    "RSS_scope": "supervising_Python_plus_worker_and_recursive_descendants"
+  },
+  "worker_pid": 21709,
+  "status": "exact_v3_kernel_native_preflight_passed",
+  "exit_code": 0,
+  "elapsed_seconds": 7.843961624894291,
+  "peak_supervisor_and_process_family_rss_bytes_sampled": 387874816,
+  "minimum_available_memory_bytes_sampled": 7403929600,
+  "minimum_free_disk_bytes_sampled": 343398563840,
+  "output_and_temporary_bytes": 2311232,
+  "finished_utc": "2026-10-16T08:02:06.753354+00:00",
+  "declaration_sha256": "a4fd0d950f3c8b30d0388ed6489733aa22ffc97ddc20fc73f5957dffc32a446a",
+  "runtime_unchanged": true,
+  "patient_inputs_read": false,
+  "sampling_limitation": "Between-sample peaks are not a hard memory reservation",
+  "manifest": [
+    {
+      "path": "classes_raw.npy",
+      "sha256": "96fe26947bc2e81afce42c18c987c3a329903ac45f1c9df8c905b43ee0460de3",
+      "bytes": 110720
+    },
+    {
+      "path": "corrected_raw.npy",
+      "sha256": "cde4b6da3870bf8baaca92190010ff8dd0aca196daa8a46521167561422e409e",
+      "bytes": 442496
+    },
+    {
+      "path": "declaration.json",
+      "sha256": "a4fd0d950f3c8b30d0388ed6489733aa22ffc97ddc20fc73f5957dffc32a446a",
+      "bytes": 9466
+    },
+    {
+      "path": "posterior_1_raw.npy",
+      "sha256": "74d18d9b021183541333b0d269e870dfe1320af696a5de10bff09bae4002be91",
+      "bytes": 442496
+    },
+    {
+      "path": "posterior_2_raw.npy",
+      "sha256": "a43a6fc7062dedd580901bba27be7381e03525d06bdd2199df43286fbe057adf",
+      "bytes": 442496
+    },
+    {
+      "path": "posterior_3_raw.npy",
+      "sha256": "468dfaa2285f3bbccb268fc295db28f405b85a035c62ca0dab3b606620d2f0c5",
+      "bytes": 442496
+    },
+    {
+      "path": "result.json",
+      "sha256": "2a985702fab8f13d27896e07ff7cbb1c4b7e0d77832fb0206a773ed63375d95a",
+      "bytes": 20065
+    },
+    {
+      "path": "stages.json",
+      "sha256": "2730f7d05faf0913a17afaf5b7eea81b616c355ec5b122ae57de4024285d6c14",
+      "bytes": 4788
+    },
+    {
+      "path": "temporary/antsrh2rqe4giprob01.nii.gz",
+      "sha256": "9a5122e774a199a209e47a63158b217334f75d8eed3b8e88068e19fb2c36bc0d",
+      "bytes": 57515
+    },
+    {
+      "path": "temporary/antsrh2rqe4giprob02.nii.gz",
+      "sha256": "184090c4db12f78196868a527a16864ef7a7e29f28557a55a242347e9c9812b2",
+      "bytes": 87262
+    },
+    {
+      "path": "temporary/antsrh2rqe4giprob03.nii.gz",
+      "sha256": "c0db6b11da5dba0a9196093fc17c3b11dfcf07ec4b1132bb22135354563cf9fb",
+      "bytes": 114050
+    },
+    {
+      "path": "temporary/matplotlib/fontlist-v390.json",
+      "sha256": "ed96260e0cb6cfbeed5822d6ee8af118e343a8bba054ad080af1bb7adef5b65f",
+      "bytes": 125096
+    },
+    {
+      "path": "worker.log",
+      "sha256": "9652d41a2197a244676ccfc7ee3e8eb92169664062c126a92f8a91407cbfdd97",
+      "bytes": 12286
+    }
+  ]
+}

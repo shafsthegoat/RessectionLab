@@ -1,0 +1,16 @@
+{
+  "schema": "first-release-frozen-sidecar-generated-controls-v1",
+  "status": "pass",
+  "tests": 37,
+  "passed": 37,
+  "failed": 0,
+  "patient_payload_reads": 0,
+  "actual_frozen_engine_executions": 0,
+  "model_or_native_solver_executions": 0,
+  "generated_fixture_executions": 1,
+  "auditor_sha256": "5d89d21ccfb2eda165b7c1ee85e3f38595f17f75e5e5b8c97d9a0b76673616f4",
+  "controls_sha256": "ee63d853ad717c48bedd8300eebc5416ab3e66180bd1f204541b16d4a2a8ac32",
+  "preparation_sha256": "0e9d200aaba910187e35b4095b5aa11549dfedfbd71aec32da51b990b854f927",
+  "log_sha256": "c3471c58feb492f58d91a262ff34ff0fd9e421f4b6ae3f657971414f1994f03f",
+  "scope": "Generated metadata gates, binary assets, renderer contracts, tissue partition, clean launch environment and four rehearsal replies through real host Sidecar to tiny generated Node fixture only. Not frozen package or patient acceptance."
+}

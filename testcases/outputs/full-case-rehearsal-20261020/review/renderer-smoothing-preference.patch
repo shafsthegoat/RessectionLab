@@ -1,0 +1,370 @@
+diff --git a/desktop/src/viewer/VolumeRenderer.ts b/desktop/src/viewer/VolumeRenderer.ts
+index 575ea4dd..90a0af85 100644
+--- a/desktop/src/viewer/VolumeRenderer.ts
++++ b/desktop/src/viewer/VolumeRenderer.ts
+@@ -79,11 +79,11 @@ import {
+ } from "./routeAppearance";
+ 
+ type Panes = { anatomy: HTMLElement } & Record<SlicePlane, HTMLElement>;
+-type SurfacePair={mesh:THREE.Mesh;source:THREE.BufferGeometry;smooth:THREE.BufferGeometry};
++type SurfacePair={mesh:THREE.Mesh;source:THREE.BufferGeometry;smooth:THREE.BufferGeometry;smoothingPrepared?:boolean};
+ type ModelStage={generation:number;next:ViewerVolume;interaction:SurgicalInteraction|null;
+   prepared:Map<string,SurfacePair|null>;jobs:Array<{layer:ViewerVolume['compartments'][number];indices?:Uint32Array;values?:Uint8Array}>;
+   pack:boolean;packed?:{data:Uint8Array;codes:Array<[number,number]>};patch?:{indices:Uint32Array;values:Uint8Array};
+-  waiting?:ViewerVolume['compartments'][number]|'pack';ready?:boolean;changedLayers:number;changedIndices:number;initialMapping:boolean};
++  waiting?:ViewerVolume['compartments'][number]|'pack';ready?:boolean;changedLayers:number;changedIndices:number;initialMapping:boolean;smoothing:boolean};
+ const SLICE_PLANES: SlicePlane[] = ["axial", "coronal", "sagittal"];
+ const RETIRED_SURFACE_BUDGET_BYTES=256*1024*1024;
+ 
+@@ -205,7 +205,7 @@ export class VolumeRenderer {
+   private priorTexture: THREE.Data3DTexture;
+   private priorCoverageTexture: THREE.Data3DTexture;
+   private readonly surfaces = new Map<string, THREE.Mesh>();
+-  private readonly surfaceGeometry = new Map<string, { source: THREE.BufferGeometry; smooth: THREE.BufferGeometry }>();
++  private readonly surfaceGeometry = new Map<string, { source: THREE.BufferGeometry; smooth: THREE.BufferGeometry; smoothingPrepared?:boolean }>();
+   private surfaceSmoothing = true;
+   private scanFramingPoints:Float32Array=new Float32Array();
+   private readonly mriTexture: THREE.Data3DTexture;
+@@ -627,7 +627,7 @@ export class VolumeRenderer {
+     this.requestRender();
+   }
+ 
+-  private makeSurface(layer:ViewerVolume['compartments'][number],buffers:{positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;indices?:Uint32Array}):SurfacePair|null {
++  private makeSurface(layer:ViewerVolume['compartments'][number],buffers:{positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;indices?:Uint32Array;smoothingPrepared?:boolean}):SurfacePair|null {
+     const {positions,normals}=buffers;
+     const onError=this.onError;
+     const geometry = new THREE.BufferGeometry();
+@@ -637,20 +637,23 @@ export class VolumeRenderer {
+     );
+     geometry.setAttribute("normal", new THREE.BufferAttribute(normals, 3));
+     const { smoothPositions, smoothNormals } = buffers;
+-    if (!smoothPositions || !smoothNormals || smoothPositions.length !== positions.length || smoothNormals.length !== positions.length) {
++    const smoothingPrepared=buffers.smoothingPrepared!==false;
++    if (smoothingPrepared&&(!smoothPositions || !smoothNormals || smoothPositions.length !== positions.length || smoothNormals.length !== positions.length)) {
+       geometry.dispose();
+       onError("Display surface buffers do not match the source triangles.");
+       return null;
+     }
+-    const smooth = new THREE.BufferGeometry();
++    // Raw display uses the exact source geometry, without fairing or derived
++    // lighting normals, and does not allocate a duplicate GPU geometry.
++    const smooth = smoothingPrepared?new THREE.BufferGeometry():geometry;
+     if (buffers.indices) {
+       geometry.setIndex(new THREE.BufferAttribute(buffers.indices, 1));
+       smooth.setIndex(new THREE.BufferAttribute(buffers.indices, 1));
+     }
+-    smooth.setAttribute("position", new THREE.BufferAttribute(smoothPositions, 3));
++    if(smoothingPrepared)smooth.setAttribute("position", new THREE.BufferAttribute(smoothPositions!, 3));
+     const vessel=surfaceKind(layer.kind)==='vessel';
+     const fairNormals=vessel||['brain','bone','skull','head-envelope'].includes(layer.kind??'');
+-    smooth.setAttribute("normal", new THREE.BufferAttribute(fairNormals&&buffers.indices ? displaySurfaceNormals(smoothNormals,buffers.indices,this.affine) : smoothNormals, 3));
++    if(smoothingPrepared)smooth.setAttribute("normal", new THREE.BufferAttribute(fairNormals&&buffers.indices ? displaySurfaceNormals(smoothNormals!,buffers.indices,this.affine) : smoothNormals!, 3));
+     const appearance = layerAppearance(layer.name,layer.color,this.workspaceSettings,layer.kind);
+     const mesh = new THREE.Mesh(
+       this.surfaceSmoothing ? smooth : geometry,
+@@ -671,11 +674,11 @@ export class VolumeRenderer {
+     mesh.visible = this.visible[layer.name] !== false;
+     mesh.userData.compartment = layer.name;
+     this.picking?.install(mesh,geometry);
+-    return {mesh,source:geometry,smooth};
++    return {mesh,source:geometry,smooth,smoothingPrepared};
+   }
+   private installSurface(layer:ViewerVolume['compartments'][number],buffers:PreparedSurface|{positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;indices?:Uint32Array}) {
+     const pair=this.makeSurface(layer,buffers);if(!pair)return;
+-    this.surfaceGeometry.set(layer.name,{source:pair.source,smooth:pair.smooth});this.surfaces.set(layer.name,pair.mesh);this.anatomy.add(pair.mesh);
++    this.surfaceGeometry.set(layer.name,{source:pair.source,smooth:pair.smooth,smoothingPrepared:pair.smoothingPrepared});this.surfaces.set(layer.name,pair.mesh);this.anatomy.add(pair.mesh);
+   }
+ 
+   /** Append only, within an unchanged native source generation. */
+@@ -751,8 +754,9 @@ export class VolumeRenderer {
+       const a=modeledAnatomy(this.volume),b=modeledAnatomy(next),owner=a?.source??this.volume,nextOwner=b?.source??next;
+       if(owner!==nextOwner||next.mri!==this.volume.mri||next.caseHash!==this.volume.caseHash||
+         JSON.stringify([next.shape,next.affine,next.frame])!==JSON.stringify([this.volume.shape,this.volume.affine,this.volume.frame]))throw Error('Modeled display source changed without a new renderer');
+-      if(this.modelStage?.next===next){this.modelStage.interaction=interaction;return true;}
+-      if(next===this.volume&&!this.modelStage){
++      const smoothing=this.surfaceSmoothing!==false;
++      if(this.modelStage?.next===next&&this.modelStage.smoothing===smoothing){this.modelStage.interaction=interaction;return true;}
++      if(next===this.volume&&!this.modelStage&&!(smoothing&&[...this.surfaceGeometry.values()].some(pair=>pair.smoothingPrepared===false))){
+         if(this.sourceFailed&&interaction?.view)throw Error('source surfaces are unavailable');
+         if(this.sourceRemaining>0&&interaction?.view){this.initialSurgicalInteraction=interaction;return true;}
+         this.setSurgical(interaction);this.queueSurgicalPublication(interaction);return true;
+@@ -768,19 +772,20 @@ export class VolumeRenderer {
+         next.compartments.length===this.volume.compartments.length&&next.compartments.every((l,i)=>l.name===this.volume.compartments[i].name&&l.kind===this.volume.compartments[i].kind);
+       const candidates=sameLayout?[...new Set([...a!.modifiedIndices,...b!.modifiedIndices])].sort((x,y)=>x-y):null;
+       const stage:ModelStage={generation:++this.modelGeneration,next,interaction,prepared:new Map(),jobs:[],pack:!sameLayout,changedLayers:0,changedIndices:0,
+-        initialMapping:!a&&!!b&&!b.modifiedIndices.length};
++        initialMapping:!a&&!!b&&!b.modifiedIndices.length,smoothing};
+       this.modelStage=stage;
+       for(const layer of next.compartments){
+         const old=this.volume.compartments.find(l=>l.name===layer.name);
++        const needsSmoothing=smoothing&&this.surfaceGeometry.get(layer.name)?.smoothingPrepared===false;
+         let indices:Uint32Array|undefined,values:Uint8Array|undefined;
+         if(old&&old.kind===layer.kind&&this.preparedSourceLayers.has(layer.name)){
+-          if(old.mask===layer.mask&&!old.labelSet&&!layer.labelSet)continue;
+-          if(candidates){const changed=candidates.filter(i=>old.mask[i]!==layer.mask[i]);if(!changed.length)continue;indices=Uint32Array.from(changed);values=Uint8Array.from(changed,i=>layer.mask[i]);stage.changedIndices+=changed.length;}
++          if(old.mask===layer.mask&&!old.labelSet&&!layer.labelSet&&!needsSmoothing)continue;
++          if(candidates){const changed=candidates.filter(i=>old.mask[i]!==layer.mask[i]);if(!changed.length&&!needsSmoothing)continue;indices=Uint32Array.from(changed);values=Uint8Array.from(changed,i=>layer.mask[i]);stage.changedIndices+=changed.length;}
+         }
+         stage.changedLayers++;
+-        const retired=this.retiredSurfaces.findIndex(e=>e.layer.name===layer.name&&e.layer.kind===layer.kind&&e.layer.mask===layer.mask);
++        const retired=this.retiredSurfaces.findIndex(e=>e.layer.name===layer.name&&e.layer.kind===layer.kind&&e.layer.mask===layer.mask&&(!smoothing||e.pair.smoothingPrepared!==false));
+         if(retired>=0){stage.prepared.set(layer.name,this.retiredSurfaces.splice(retired,1)[0].pair);continue;}
+-        const cached=!layer.labelSet?cachedSurface(layer.mask,this.affine,layer.kind,next.shape):undefined,s=layer.surface;
++        const cached=!layer.labelSet?cachedSurface(layer.mask,this.affine,layer.kind,next.shape,smoothing):undefined,s=layer.surface;
+         const buffers=cached??(s?{positions:s.source,normals:s.sourceNormals,smoothPositions:s.positions,smoothNormals:s.normals,indices:s.indices}:undefined);
+         if(buffers){const pair=buffers.positions.length?this.makeSurface(layer,buffers):null;if(buffers.positions.length&&!pair)throw Error('Invalid prepared modeled surface');stage.prepared.set(layer.name,pair);}
+         else stage.jobs.push({layer,indices,values});
+@@ -827,7 +832,9 @@ export class VolumeRenderer {
+         const packed=event.data.packed;if(!packed||packed.data.length!==stage.next.mri.length*4){this.failModelStage('invalid modeled label buffers');return;}stage.packed=packed;
+       }else{
+         const layer=stage.waiting;if(!layer||layer==='pack'||layer.name!==event.data.layerId){this.failModelStage('unexpected modeled surface');return;}
+-        const buffers=event.data;if(!buffers.positions||!buffers.normals||!buffers.smoothPositions||!buffers.smoothNormals||buffers.positions.length!==buffers.normals.length||buffers.smoothPositions.length!==buffers.positions.length||buffers.smoothNormals.length!==buffers.positions.length){this.failModelStage('inconsistent modeled surface buffers');return;}
++        const buffers=event.data;if(!buffers.positions||!buffers.normals||buffers.positions.length!==buffers.normals.length||
++          (buffers.smoothingPrepared!==false)!==stage.smoothing||
++          (stage.smoothing&&(!buffers.smoothPositions||!buffers.smoothNormals||buffers.smoothPositions.length!==buffers.positions.length||buffers.smoothNormals.length!==buffers.positions.length))){this.failModelStage('inconsistent modeled surface buffers');return;}
+         retainSurface(layer.mask,this.affine,layer.kind,buffers,stage.next.shape);
+         const pair=buffers.positions.length?this.makeSurface(layer,buffers):null;if(buffers.positions.length&&!pair){this.failModelStage('invalid modeled surface');return;}
+         stage.prepared.set(layer.name,pair);this.modelWorkerStates=new Map((event.data.resident??[]).map(e=>[e.layerId,e.identity]));
+@@ -838,7 +845,7 @@ export class VolumeRenderer {
+     };
+     if(job){
+       stage.waiting=job.layer;const oldLayer=this.volume.compartments.find(l=>l.name===job.layer.name),previousIdentity=oldLayer?this.modelIdentity(oldLayer.mask):'',identity=this.modelIdentity(job.layer.mask),incremental=job.indices&&this.modelWorkerStates.get(job.layer.name)===previousIdentity;
+-      const request:IncrementalSurfaceRequest={jobId:stage.generation,layerId:job.layer.name,previousIdentity,identity,shape:stage.next.shape,affine:this.affine,kind:job.layer.kind,retainChunks:!stage.initialMapping};
++      const request:IncrementalSurfaceRequest={jobId:stage.generation,layerId:job.layer.name,previousIdentity,identity,shape:stage.next.shape,affine:this.affine,kind:job.layer.kind,retainChunks:!stage.initialMapping,smooth:stage.smoothing};
+       if(incremental){request.indices=job.indices;request.values=job.values;this.displayWork.workerInputTransferBytes+=job.indices!.byteLength+job.values!.byteLength;worker.postMessage(request,[job.indices!.buffer,job.values!.buffer]);}
+       else {request.mask=materializeLayerMask(stage.next,job.layer);this.displayWork.workerInputCloneBytes+=request.mask.byteLength;worker.postMessage(request);}
+     }else{
+@@ -853,7 +860,7 @@ export class VolumeRenderer {
+     // Native pre-mapping pairs do not match modeled baseline/undo masks. Keep
+     // their CPU surface cache for source restoration, but release GPU/BVH here.
+     for(const [name,pair]of stage.prepared){const old=oldVolume.compartments.find(l=>l.name===name);if(old)this.retireSurface(old,!stage.initialMapping);
+-      this.preparedSourceLayers.add(name);if(pair){pair.mesh.geometry=this.surfaceSmoothing?pair.smooth:pair.source;pair.mesh.visible=this.visible[name]!==false;this.surfaceGeometry.set(name,{source:pair.source,smooth:pair.smooth});this.surfaces.set(name,pair.mesh);this.anatomy.add(pair.mesh);}}
++      this.preparedSourceLayers.add(name);if(pair){pair.mesh.geometry=this.surfaceSmoothing?pair.smooth:pair.source;pair.mesh.visible=this.visible[name]!==false;this.surfaceGeometry.set(name,{source:pair.source,smooth:pair.smooth,smoothingPrepared:pair.smoothingPrepared});this.surfaces.set(name,pair.mesh);this.anatomy.add(pair.mesh);}}
+     this.volume=stage.next;
+     if(stage.packed){this.labelTexture.image.data=stage.packed.data;this.labelCodes=stage.packed.codes;}
+     if(stage.patch){const data=this.labelTexture.image.data as Uint8Array;stage.patch.indices.forEach((index,i)=>data.set(stage.patch!.values.subarray(i*4,i*4+4),index*4));}
+@@ -1026,6 +1033,7 @@ export class VolumeRenderer {
+ 
+   /** Reversible mesh-only display; masks, slice textures and metrics are untouched. */
+   setSurfaceSmoothing(enabled: boolean): void {
++    const changed=this.surfaceSmoothing!==enabled;
+     this.surfaceSmoothing = enabled;
+     this.surfaces.forEach((mesh, name) => {
+       const pair = this.surfaceGeometry.get(name);
+@@ -1036,6 +1044,16 @@ export class VolumeRenderer {
+         const pair = mesh.userData.replayGeometry as {source:THREE.BufferGeometry;smooth:THREE.BufferGeometry}|undefined;
+         if (mesh instanceof THREE.Mesh && pair) mesh.geometry = enabled ? pair.smooth : pair.source;
+       });
++    if(changed){
++      // A preference change cannot reuse an in-flight result of the other
++      // quality. Re-admit its exact target through the ordinary cancellation
++      // path; otherwise condition only the currently installed raw tissue.
++      const pending=this.modelStage;
++      this.failedModelState=null;
++      if(pending)this.installSurgicalState(pending.next,pending.interaction);
++      else if(enabled&&[...this.surfaceGeometry.values()].some(pair=>pair.smoothingPrepared===false))
++        this.installSurgicalState(this.volume,this.surgicalInteraction??null);
++    }
+     this.requestRender();
+   }
+ 
+diff --git a/desktop/src/viewer/chunkedSurface.test.mjs b/desktop/src/viewer/chunkedSurface.test.mjs
+index 1ffb1dbf..8477472f 100644
+--- a/desktop/src/viewer/chunkedSurface.test.mjs
++++ b/desktop/src/viewer/chunkedSurface.test.mjs
+@@ -50,3 +50,26 @@ test('half-grid numeric indexing is byte-identical to generic exact keys, with a
+   assert.deepEqual(indexSurface(arbitrary,shape),indexSurface(arbitrary));
+   assert.deepEqual(indexSurface(soup,[2**40,2**40,2**40]),indexSurface(soup),'unsafe numeric spans retain exact generic indexing');
+ });
++test('raw preparation retains exact source buffers and omits conditioning, including initial mapping',()=>{
++  const mask=source(),before=mask.slice(),reference=prepareSurface(mask,shape,affine,'vessel',true);
++  for(const retainChunks of [true,false]){
++    const result=new IncrementalSurfaceEngine().prepare({jobId:1,layerId:'vessel',previousIdentity:'',identity:'raw',shape,affine,kind:'vessel',mask:mask.slice(),smooth:false,retainChunks});
++    for(const key of ['positions','indices','normals'])assert.deepEqual(result[key],reference[key],key);
++    assert.equal(result.smoothingPrepared,false);assert.equal(result.work.smoothingPrepared,false);
++    assert.equal(result.smoothPositions,undefined);assert.equal(result.smoothNormals,undefined);assert.equal(result.diagnostics,undefined);
++  }
++  assert.deepEqual(mask,before);
++});
++test('resident cell identity survives raw/full preference changes and later incremental cuts',()=>{
++  const mask=source(),engine=new IncrementalSurfaceEngine(),base={layerId:'vessel',shape,affine,kind:'vessel'};
++  engine.prepare({...base,jobId:1,previousIdentity:'',identity:'a',mask:mask.slice(),smooth:false});
++  let result=engine.prepare({...base,jobId:2,previousIdentity:'a',identity:'a',indices:new Uint32Array(),values:new Uint8Array(),smooth:true});
++  const full=prepareSurface(mask,shape,affine,'vessel',true);
++  for(const key of ['positions','indices','normals','smoothPositions','smoothNormals'])assert.deepEqual(result[key],full[key],key);
++  assert.equal(result.work.incremental,true);assert.equal(result.work.remeshedChunks,0);
++  const index=at(3,3,3);mask[index]=0;
++  result=engine.prepare({...base,jobId:3,previousIdentity:'a',identity:'b',indices:Uint32Array.of(index),values:Uint8Array.of(0),smooth:false});
++  const cut=prepareSurface(mask,shape,affine,'vessel',true);
++  for(const key of ['positions','indices','normals'])assert.deepEqual(result[key],cut[key],key);
++  assert.equal(result.work.incremental,true);assert.equal(result.smoothPositions,undefined);
++});
+diff --git a/desktop/src/viewer/incrementalSurface.ts b/desktop/src/viewer/incrementalSurface.ts
+index 1af429a4..10e5372c 100644
+--- a/desktop/src/viewer/incrementalSurface.ts
++++ b/desktop/src/viewer/incrementalSurface.ts
+@@ -2,7 +2,7 @@ import {ChunkedMaskSurface} from './chunkedSurface.ts';
+ import {prepareSurfaceSoup} from './prepareSurface.ts';
+ import {maskSurface} from './surface.ts';
+ import type {Affine,Shape3} from './coordinates';
+-export interface IncrementalSurfaceRequest {jobId:number;layerId:string;previousIdentity:string;identity:string;shape:Shape3;affine:Affine;kind?:string;mask?:Uint8Array;indices?:Uint32Array;values?:Uint8Array;retainChunks?:boolean}
++export interface IncrementalSurfaceRequest {jobId:number;layerId:string;previousIdentity:string;identity:string;shape:Shape3;affine:Affine;kind?:string;mask?:Uint8Array;indices?:Uint32Array;values?:Uint8Array;retainChunks?:boolean;smooth?:boolean}
+ /** One worker owns these cloned source cells. Cache budget covers masks and
+  * chunk soups; returned indexed/fair buffers are transferred, never retained. */
+ export class IncrementalSurfaceEngine {
+@@ -17,13 +17,13 @@ export class IncrementalSurfaceEngine {
+     if(request.retainChunks===false){
+       if(!request.mask||request.mask.some(n=>n>1))throw Error('Missing immutable source-mask admission for surface preparation');
+       const soup=maskSurface(request.mask,request.shape),extractionMs=performance.now()-started,fairStarted=performance.now();
+-      const result=prepareSurfaceSoup(soup,request.mask,request.shape,request.affine,request.kind,true);
++      const result=prepareSurfaceSoup(soup,request.mask,request.shape,request.affine,request.kind,request.smooth!==false);
+       this.cache.delete(request.layerId);
+       return {...result,jobId:request.jobId,layerId:request.layerId,identity:request.identity,
+         resident:[...this.cache].map(([layerId,state])=>({layerId,identity:state.identity})),
+         work:{incremental:false,fullReference:true,remeshedChunks:0,totalChunks:request.shape.reduce((n,s)=>n*Math.ceil((s+1)/32),1),
+           retainedBytes:[...this.cache.values()].reduce((sum,c)=>sum+c.surface.retainedBytes,0),extractionMs,
+-          globalFairingMs:performance.now()-fairStarted,preparationMs:performance.now()-started}};
++          smoothingPrepared:result.smoothingPrepared!==false,globalFairingMs:performance.now()-fairStarted,preparationMs:performance.now()-started}};
+     }
+     const incremental=!!old&&old.identity===request.previousIdentity&&old.signature===signature&&!request.mask;
+     let surface:ChunkedMaskSurface;
+@@ -35,7 +35,7 @@ export class IncrementalSurfaceEngine {
+       surface=new ChunkedMaskSurface(request.mask,request.shape);
+     }
+     const extractionMs=performance.now()-started,soup=surface.positions(),fairStarted=performance.now();
+-    const result=prepareSurfaceSoup(soup,surface.mask,request.shape,request.affine,request.kind,true);
++    const result=prepareSurfaceSoup(soup,surface.mask,request.shape,request.affine,request.kind,request.smooth!==false);
+     this.cache.delete(request.layerId);
+     if(surface.retainedBytes<=this.maxBytes)this.cache.set(request.layerId,{identity:request.identity,signature,surface});
+     let retainedBytes=[...this.cache.values()].reduce((sum,c)=>sum+c.surface.retainedBytes,0);
+@@ -43,6 +43,6 @@ export class IncrementalSurfaceEngine {
+     return {...result,jobId:request.jobId,layerId:request.layerId,identity:request.identity,
+       resident:[...this.cache].map(([layerId,state])=>({layerId,identity:state.identity})),
+       work:{incremental,remeshedChunks:surface.lastRemeshedChunks,totalChunks:surface.totalChunks,retainedBytes,extractionMs,
+-        globalFairingMs:performance.now()-fairStarted,preparationMs:performance.now()-started}};
++        smoothingPrepared:result.smoothingPrepared!==false,globalFairingMs:performance.now()-fairStarted,preparationMs:performance.now()-started}};
+   }
+ }
+diff --git a/desktop/src/viewer/prepareSurface.ts b/desktop/src/viewer/prepareSurface.ts
+index d40f0469..2076f33b 100644
+--- a/desktop/src/viewer/prepareSurface.ts
++++ b/desktop/src/viewer/prepareSurface.ts
+@@ -4,7 +4,7 @@ import {indexedSurfaceNormals} from './surfaceNormals.ts';
+ import {surfaceKind} from './surfacePolicy.ts';
+ import type {Affine,Shape3} from './coordinates';
+ import type {SurfaceDiagnostics} from './surfacePolicy';
+-export interface PreparedSurface {positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;indices:Uint32Array;diagnostics?:SurfaceDiagnostics}
++export interface PreparedSurface {positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;indices:Uint32Array;diagnostics?:SurfaceDiagnostics;smoothingPrepared?:boolean}
+ export function prepareSurface(mask:Uint8Array,shape:Shape3,affine:Affine,kind?:string,smooth=true):PreparedSurface {
+   const started=performance.now(),result=prepareSurfaceSoup(maskSurface(mask,shape),mask,shape,affine,kind,smooth);
+   if(result.diagnostics)result.diagnostics.preparationMs=performance.now()-started;return result;
+@@ -12,9 +12,9 @@ export function prepareSurface(mask:Uint8Array,shape:Shape3,affine:Affine,kind?:
+ export function prepareSurfaceSoup(soup:Float32Array,mask:Uint8Array,shape:Shape3,affine:Affine,kind?:string,smooth=true):PreparedSurface {
+   const started=performance.now(),indexed=indexSurface(soup,shape),positions=indexed.positions,indices=indexed.indices;
+   const normals=indexedSurfaceNormals(positions,indices,affine);
+-  if(!smooth)return {positions,indices,normals};
++  if(!smooth)return {positions,indices,normals,smoothingPrepared:false};
+   const limits=surfaceKind(kind)==='vessel'?vesselLimits(positions,affine,mask,shape):undefined;
+   const display=fairIndexedSurface(positions,indices,affine,kind,limits);
+   display.diagnostics.preparationMs=performance.now()-started;
+-  return {positions,indices,normals,smoothPositions:display.positions,smoothNormals:indexedSurfaceNormals(display.positions,indices,affine),diagnostics:display.diagnostics};
++  return {positions,indices,normals,smoothPositions:display.positions,smoothNormals:indexedSurfaceNormals(display.positions,indices,affine),diagnostics:display.diagnostics,smoothingPrepared:true};
+ }
+diff --git a/desktop/src/viewer/surfaceCache.ts b/desktop/src/viewer/surfaceCache.ts
+index 0a1e42f7..ce3ebd8b 100644
+--- a/desktop/src/viewer/surfaceCache.ts
++++ b/desktop/src/viewer/surfaceCache.ts
+@@ -4,8 +4,10 @@ import {SURFACE_POLICY,surfaceKind} from './surfacePolicy.ts';
+ // Weak source-mask keys do not keep patient volumes alive after replacement.
+ // Source and modeled masks are immutable; their owners replace them on edits.
+ const cache=new WeakMap<Uint8Array,Map<string,PreparedSurface>>();
+-const signature=(affine:Affine,kind?:string,shape?:number[])=>JSON.stringify([SURFACE_POLICY.version,affine,surfaceKind(kind),shape]);
+-export function cachedSurface(mask:Uint8Array,affine:Affine,kind?:string,shape?:number[]){return cache.get(mask)?.get(signature(affine,kind,shape));}
++const signature=(affine:Affine,kind:string|undefined,shape:number[]|undefined,smooth:boolean)=>JSON.stringify([SURFACE_POLICY.version,affine,surfaceKind(kind),shape,smooth]);
++export function cachedSurface(mask:Uint8Array,affine:Affine,kind?:string,shape?:number[],smooth=true){
++  const entries=cache.get(mask);return entries?.get(signature(affine,kind,shape,smooth))??(!smooth?entries?.get(signature(affine,kind,shape,true)):undefined);
++}
+ export function retainSurface(mask:Uint8Array,affine:Affine,kind:string|undefined,surface:PreparedSurface,shape?:number[]){
+-  const entries=cache.get(mask)??new Map<string,PreparedSurface>();entries.set(signature(affine,kind,shape),surface);cache.set(mask,entries);
++  const entries=cache.get(mask)??new Map<string,PreparedSurface>();entries.set(signature(affine,kind,shape,surface.smoothingPrepared!==false),surface);cache.set(mask,entries);
+ }
+diff --git a/desktop/src/viewer/surgicalRenderer.test.mjs b/desktop/src/viewer/surgicalRenderer.test.mjs
+index c54c861c..f33923ec 100644
+--- a/desktop/src/viewer/surgicalRenderer.test.mjs
++++ b/desktop/src/viewer/surgicalRenderer.test.mjs
+@@ -6,19 +6,26 @@ import path from 'node:path';
+ import {fileURLToPath} from 'node:url';
+ import {createServer} from 'vite';
+ import * as THREE from 'three';
+-let server,cache,VolumeRenderer,registerModeledAnatomy,prepareSurface,packAnatomyLabels,IncrementalSurfaceEngine,LabelTextureUpdates,retainSurface;
++let server,cache,VolumeRenderer,registerModeledAnatomy,prepareSurface,packAnatomyLabels,IncrementalSurfaceEngine,LabelTextureUpdates,retainSurface,cachedSurface;
+ before(async()=>{
+   cache=await fs.mkdtemp(path.join(os.tmpdir(),'surgical-renderer-'));
+-  server=await createServer({root:fileURLToPath(new URL('../../',import.meta.url)),cacheDir:cache,logLevel:'error',optimizeDeps:{noDiscovery:true,include:[]},server:{middlewareMode:true,hmr:false,ws:false},appType:'custom'});
++  server=await createServer({root:fileURLToPath(new URL('../../',import.meta.url)),cacheDir:cache,logLevel:'error',optimizeDeps:{noDiscovery:true,include:[]},server:{middlewareMode:true,hmr:false,ws:false},appType:'custom',plugins:[{
++    name:'test-conditioning-calls',enforce:'pre',transform(code,id){
++      if(!id.endsWith('/surfaceSmoothing.ts'))return;
++      const signature='export function fairIndexedSurface(points:Float32Array,indices:Uint32Array,affine:Affine,kind?:string,limits?:Float64Array){';
++      assert(code.includes(signature),'conditioning call instrumentation must match the actual implementation');
++      return code.replace(signature,signature+'\nglobalThis.__resectionLabConditioningCalls=(globalThis.__resectionLabConditioningCalls??0)+1;');
++    }
++  }]});
+   VolumeRenderer=(await server.ssrLoadModule('/src/viewer/VolumeRenderer.ts')).VolumeRenderer;
+   ({registerModeledAnatomy}=await server.ssrLoadModule('/src/viewer/modeledAnatomy.ts'));
+   ({prepareSurface}=await server.ssrLoadModule('/src/viewer/prepareSurface.ts'));
+   ({packAnatomyLabels}=await server.ssrLoadModule('/src/viewer/labelPacking.ts'));
+   ({IncrementalSurfaceEngine}=await server.ssrLoadModule('/src/viewer/incrementalSurface.ts'));
+   ({LabelTextureUpdates}=await server.ssrLoadModule('/src/viewer/labelTextureUpdates.ts'));
+-  ({retainSurface}=await server.ssrLoadModule('/src/viewer/surfaceCache.ts'));
++  ({retainSurface,cachedSurface}=await server.ssrLoadModule('/src/viewer/surfaceCache.ts'));
+ });
+-after(async()=>{await server?.close();if(cache)await fs.rm(cache,{recursive:true,force:true});});
++after(async()=>{await server?.close();delete globalThis.__resectionLabConditioningCalls;if(cache)await fs.rm(cache,{recursive:true,force:true});});
+ const tool=id=>({id,radiusMm:2,shaftRadiusMm:.5,workingLengthMm:40});
+ const slot=id=>({instrument:id,active:false,parameters:{jawOpeningMm:3},position:[1,2,3],quaternion:[0,0,0,1]});
+ function interaction(){return {view:{stateId:'accepted',scene:{shape:[3,3,3],resolutionMm:[1,1,1],affine:[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]},
+@@ -229,3 +236,44 @@ test('mapping reorder rebinds hidden-layer visibility and exact label codes at t
+     assert.equal(uniforms.uVisibleBits.value,2);assert.deepEqual([...uniforms.uLayerEnabled.value.slice(0,2)],[0,1]);assert.deepEqual(r.labelTexture.image.data,packAnatomyLabels(next).data);
+   }finally{mock.restore();}
+ });
++test('OFF admits exact raw source geometry; ON lazily conditions that same tissue without changing cells or effects',()=>{
++  const mock=modelWorkerMock();try{
++    const {r,source,derive}=modeledFixture(),next=derive([22]),before=source.compartments[0].mask.slice(),ready=[];
++    const view={stateId:'raw',slots:{left:{active:true},right:{active:false}},fluid:{23:1},debris:{22:2}},request={view,readOnly:true,effectiveActivation:{left:true,right:false},onDisplayReady:v=>ready.push(v)};
++    const conditionedBefore=globalThis.__resectionLabConditioningCalls;
++    r.setSurfaceSmoothing(false);r.installSurgicalState(next,request);const worker=r.modelWorker;
++    assert.equal(worker.messages[0].smooth,false);while(worker.queue.length)worker.flush();submitPreparedState(r);
++    assert.equal(globalThis.__resectionLabConditioningCalls,conditionedBefore,'OFF never invokes the actual fairing/diagnostic implementation');
++    const raw=r.surfaceGeometry.get('brain'),reference=prepareSurface(next.compartments[0].mask,next.shape,next.affine,'brain',true),labels=r.labelTexture.image.data.slice();
++    assert.equal(raw.smoothingPrepared,false);assert.equal(raw.source,raw.smooth);assert.equal(r.surfaces.get('brain').geometry,raw.source);
++    assert.deepEqual(raw.source.attributes.position.array,reference.positions);assert.deepEqual(raw.source.attributes.normal.array,reference.normals);assert.deepEqual(raw.source.index.array,reference.indices);
++    assert.equal(cachedSurface(next.compartments[0].mask,r.affine,'brain',next.shape),undefined,'raw buffers never satisfy conditioned cache requests');
++    assert.equal(cachedSurface(next.compartments[0].mask,r.affine,'brain',next.shape,false).smoothingPrepared,false);
++    assert.deepEqual(ready,[view]);assert.equal(r.installedInteraction,request);
++    r.setSurfaceSmoothing(true);assert.equal(r.volume,next);assert.equal(r.modelStage.next,next);assert.equal(worker.messages.at(-1).smooth,true);
++    assert.equal(worker.messages.at(-1).mask,undefined,'preference does not discard the resident source-cell cache');assert.equal(worker.messages.at(-1).indices.length,0);
++    assert.equal(r.surfaces.get('brain').geometry,raw.source,'current raw tissue stays visible while its smoothing prepares');
++    const conditionedOn=globalThis.__resectionLabConditioningCalls;
++    while(worker.queue.length)worker.flush();submitPreparedState(r);
++    assert.equal(globalThis.__resectionLabConditioningCalls,conditionedOn+1,'ON conditions only the raw displayed layer');
++    const smooth=r.surfaceGeometry.get('brain');assert.equal(smooth.smoothingPrepared,true);assert.notEqual(smooth.smooth,smooth.source);
++    assert.deepEqual(smooth.source.attributes.position.array,reference.positions);assert.deepEqual(smooth.smooth.attributes.position.array,reference.smoothPositions);
++    assert.deepEqual(r.labelTexture.image.data,labels);assert.equal(r.installedInteraction,request);assert.equal(r.volume,next);assert.deepEqual(source.compartments[0].mask,before);
++    r.setSurfaceSmoothing(false);const delta=derive([22,23]);r.installSurgicalState(delta,{view:{...view,stateId:'delta'}});
++    assert.equal(worker.messages.at(-1).smooth,false);assert.equal(worker.messages.at(-1).mask,undefined);assert.deepEqual([...worker.messages.at(-1).indices],[23]);
++    while(worker.queue.length)worker.flush();submitPreparedState(r);assert.equal(r.volume,delta);assert.equal(r.surfaceGeometry.get('brain').smoothingPrepared,false);
++  }finally{mock.restore();}
++});
++test('mid-flight preference changes cancel the old quality and cannot publish stale target buffers',()=>{
++  const mock=modelWorkerMock();try{
++    const {r,source,derive}=modeledFixture(),a=derive([22]),b=derive([22,23]),ready=[];
++    const viewA={stateId:'a'},viewB={stateId:'b'},request=view=>({view,onDisplayReady:v=>ready.push(v)});
++    r.installSurgicalState(a,request(viewA));const staleSmooth=r.modelWorker;r.setSurfaceSmoothing(false);
++    const rawWorker=r.modelWorker;assert.notEqual(rawWorker,staleSmooth);assert.equal(staleSmooth.terminated,true);assert.equal(rawWorker.messages[0].smooth,false);
++    staleSmooth.flush();assert.equal(r.volume,source);assert.deepEqual(ready,[]);
++    r.setSurfaceSmoothing(true);const staleRaw=rawWorker,active=r.modelWorker;assert.equal(staleRaw.terminated,true);assert.equal(active.messages[0].smooth,true);
++    staleRaw.flush();assert.equal(r.volume,source);assert.deepEqual(ready,[]);
++    r.installSurgicalState(b,request(viewB));const latest=r.modelWorker;assert.equal(active.terminated,true);active.flush();assert.deepEqual(ready,[]);
++    while(latest.queue.length)latest.flush();submitPreparedState(r);assert.equal(r.volume,b);assert.deepEqual(ready,[viewB]);assert.equal(r.surfaceGeometry.get('brain').smoothingPrepared,true);
++  }finally{mock.restore();}
++});

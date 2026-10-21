@@ -1,0 +1,65 @@
+{
+  "schema": "resectionlab-ixi265-atropos-asset-setup-v1",
+  "status": "succeeded_assets_only",
+  "created_utc": "2026-10-16T07:15:54.603022+00:00",
+  "frozen_files": [
+    {
+      "path": "scripts/poc_ixi265_atropos.py",
+      "sha256": "f048276404f2c7c1300d32e6e880a622d65931d90e0247111f8212cc19d49f00",
+      "bytes": 20972
+    },
+    {
+      "path": "tests/test_poc_ixi265_atropos.py",
+      "sha256": "bc26602c81c0afdff0a1454381c01035a82e291881ed918dbb111168f004c2ad",
+      "bytes": 10045
+    },
+    {
+      "path": "artifacts/poc-ixi265-atropos-preparation-v1/runtime-plan.json",
+      "sha256": "629c045ba0a0c57c8d3c345249b111659e88aca2987cd3e438dac9463b35c4a8",
+      "bytes": 269918
+    },
+    {
+      "path": "artifacts/poc-ixi265-atropos-preparation-v1/requirements.lock",
+      "sha256": "32a1ba8867797ec76fe3082d9e17137cc802927a5e9319fb42e5927970d62258",
+      "bytes": 2974
+    },
+    {
+      "path": "artifacts/poc-ixi265-atropos-preparation-v1/official-provenance.json",
+      "sha256": "547732fee3b617f15e085d254dd4c43b2fbbc6a448537500fac1c0f58f6d696b",
+      "bytes": 4047
+    },
+    {
+      "path": "artifacts/poc-ixi265-atropos-preparation-v1/preparation.json",
+      "sha256": "a49e2dd8978bf4f0d93db52574108a9d2be99b4c3eeff5eec740ce074a931683"
+    },
+    {
+      "path": "scripts/setup_ixi265_atropos.py",
+      "sha256": "d21825ea5f0bc9c99a80c165ca3099bddcd2f951deaf33614acf9c5a335d30c5"
+    }
+  ],
+  "limits": {
+    "download_bytes": 201326592,
+    "runtime_bytes": 1610612736,
+    "all_asset_bytes": 2147483648,
+    "rss_bytes": 805306368,
+    "available_memory_bytes": 1073741824,
+    "seconds": 300.0,
+    "free_disk_bytes": 53687091200,
+    "sampling_seconds": 0.2
+  },
+  "source_image_or_mask_decoded": false,
+  "ANTs_fitting_run": false,
+  "fit_attempt_marker_created": false,
+  "downloaded_bytes": 95770415,
+  "runtime_bytes": 498739631,
+  "retained_wheel_bytes": 95770415,
+  "package_dependency_check_passed": true,
+  "retained_wheel_hashes_verified_after_install": true,
+  "ANTs_imported": false,
+  "fitting_run": false,
+  "elapsed_seconds": 54.4833561249543,
+  "peak_process_family_rss_bytes_sampled": 197099520,
+  "total_asset_bytes": 594532439,
+  "exit_code": 0,
+  "memory_caveat": "Supervisor plus worker-process-family RSS sampled at 0.2 seconds; allocator/between-sample peaks may differ"
+}

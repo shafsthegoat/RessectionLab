@@ -1,0 +1,49 @@
+{
+  "anatomical_truth_accepted": false,
+  "app_catalog_release_unchanged": "existing-nine-plus-ixi265-v1",
+  "bounds": {
+    "automatic_retries": 0,
+    "maximum_metadata_output_bytes": 536870912,
+    "minimum_available_bytes": 1073741824,
+    "minimum_free_disk_bytes": 53687091200,
+    "monitor_interval_seconds": 0.1,
+    "numerical_threads": 2,
+    "process_family_plus_supervisor_rss_bytes": 1610612736,
+    "sequential_people": true,
+    "wall_seconds": 600,
+    "worker_count": 1
+  },
+  "candidate_identity_rule": "Exactly the frozen prospective twelve declarations, without edits, additions or descendants.",
+  "launch_receipt_path": "outputs/patient-corpus-twelve-execution-v1/launch-admission.json",
+  "model_execution_allowed": false,
+  "new_acquisition_allowed": false,
+  "output_directory": "outputs/patient-corpus-twelve-execution-v1",
+  "parent_ten_plan_hash": "sha256:a1a2623d05270881d4291a1037d303578cb27a4f63d52cce28b5f5db251d8755",
+  "prospective_release": {
+    "path": "manifests/patient-corpus-releases/existing-ten-plus-synthrad-bc-v1.json",
+    "plan_hash": "sha256:0e27cffd8bd556c12460678d33b65b85e2a5f5819a2e09b03b23450b111c1093",
+    "sha256": "d1eb5d7642ac01c46ad8d7a2464627408358d438ca0c302bcaa8c71e759bbbd1"
+  },
+  "release_id": "existing-twelve-execution-v1",
+  "root_support_release": {
+    "active_support_authorized": true,
+    "actual_launch_authorized": false,
+    "authority": "root task instruction, 2026-10-16",
+    "authorization": "Prepare active qualification support for the reviewed exact twelve sources. Actual source decoding remains pending a later explicit root launch release."
+  },
+  "schema": "patient-corpus-execution-admission-v1",
+  "solver_execution_allowed": false,
+  "source_audits": [
+    {
+      "bytes": 20068,
+      "path": "artifacts/poc-synthrad-bc-integration-v1/independent-qa.json",
+      "sha256": "90eadfb9fd95d4c64778a7356791c49da8735bee8b21562ebe70f3f84d617346"
+    },
+    {
+      "bytes": 13751,
+      "path": "artifacts/poc-synthrad-bc-integration-v1/gui-save-independent-qa.json",
+      "sha256": "1d8b36e84916d8dc88c20212eb927b7a63c40ea62d9089c447d06f0170b53847"
+    }
+  ],
+  "training_admission_established": false
+}

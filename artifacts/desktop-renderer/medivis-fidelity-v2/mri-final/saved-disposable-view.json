@@ -1,0 +1,177 @@
+{
+  "schema": "patient-anatomy-view-v1",
+  "patientId": "ZENODO-17486320-meningioma-sub-06",
+  "snapshotId": "c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5",
+  "seriesId": "t1ce",
+  "states": {
+    "t1ce": {
+      "cursor": [
+        0.285003662109375,
+        -14.308837890625,
+        -464.5
+      ],
+      "settings": {
+        "layout": "3d-focus",
+        "showPlane": false,
+        "layerOpacity": {
+          "brain": 0.12,
+          "tumor": 0.96,
+          "vessels": 0.22,
+          "bone": 0.035,
+          "scalp-envelope": 0.035,
+          "__fragment_review": 1
+        },
+        "volumeRendering": {
+          "enabled": true,
+          "preset": "auto",
+          "density": 0.025,
+          "shadows": true
+        },
+        "presentation": "segmentation",
+        "sliceOverlay": "contour",
+        "contextStyle": "shell",
+        "skullMode": "cutaway",
+        "clipping": {
+          "axis": "x",
+          "value": 44.0850036621094,
+          "enabled": true,
+          "flipped": false
+        },
+        "layerColor": {
+          "vessels": "#ad4730",
+          "brain": "#b64bb9",
+          "tumor": "#42bbdf",
+          "bone": "#ece2ca"
+        },
+        "camera": {
+          "position": [
+            -393.11069514233225,
+            89.45808356022262,
+            -296.63958289857396
+          ],
+          "target": [
+            15.120688502864894,
+            4.570783013948399,
+            -475.01976990699774
+          ],
+          "up": [
+            0,
+            0,
+            1
+          ]
+        },
+        "sliceFraming": {
+          "fit": "image",
+          "zoom": 1.25
+        },
+        "smoothSurfaces": true
+      },
+      "visible": {
+        "vessels": true,
+        "brain": true,
+        "tumor": true,
+        "bone": true,
+        "synthseg-2": false,
+        "synthseg-3": false,
+        "synthseg-4": false,
+        "synthseg-5": false,
+        "synthseg-7": false,
+        "synthseg-8": false,
+        "synthseg-10": false,
+        "synthseg-11": false,
+        "synthseg-12": false,
+        "synthseg-13": false,
+        "synthseg-14": false,
+        "synthseg-15": false,
+        "synthseg-16": false,
+        "synthseg-17": false,
+        "synthseg-18": false,
+        "synthseg-26": false,
+        "synthseg-28": false,
+        "synthseg-41": false,
+        "synthseg-42": false,
+        "synthseg-43": false,
+        "synthseg-44": false,
+        "synthseg-46": false,
+        "synthseg-47": false,
+        "synthseg-49": false,
+        "synthseg-50": false,
+        "synthseg-51": false,
+        "synthseg-52": false,
+        "synthseg-53": false,
+        "synthseg-54": false,
+        "synthseg-58": false,
+        "synthseg-60": false,
+        "vascular-review": false,
+        "vascular-tumor-overlap": false,
+        "scalp-envelope": false
+      }
+    },
+    "ct-brain": {
+      "cursor": [
+        -0.2820980905308943,
+        -14.682651473988486,
+        -464.87096146212104
+      ],
+      "settings": {
+        "layout": "3d-focus",
+        "showPlane": false,
+        "layerOpacity": {
+          "brain": 0.06,
+          "tumor": 1,
+          "vessels": 1,
+          "bone": 1,
+          "scalp-envelope": 0.02,
+          "__fragment_review": 1
+        },
+        "volumeRendering": {
+          "enabled": false,
+          "density": 0.18
+        },
+        "skullMode": "exterior"
+      },
+      "visible": {
+        "vessels": true,
+        "brain": true,
+        "tumor": true,
+        "bone": true,
+        "synthseg-2": false,
+        "synthseg-3": false,
+        "synthseg-4": false,
+        "synthseg-5": false,
+        "synthseg-7": false,
+        "synthseg-8": false,
+        "synthseg-10": false,
+        "synthseg-11": false,
+        "synthseg-12": false,
+        "synthseg-13": false,
+        "synthseg-14": false,
+        "synthseg-15": false,
+        "synthseg-16": false,
+        "synthseg-17": false,
+        "synthseg-18": false,
+        "synthseg-26": false,
+        "synthseg-28": false,
+        "synthseg-41": false,
+        "synthseg-42": false,
+        "synthseg-43": false,
+        "synthseg-44": false,
+        "synthseg-46": false,
+        "synthseg-47": false,
+        "synthseg-49": false,
+        "synthseg-50": false,
+        "synthseg-51": false,
+        "synthseg-52": false,
+        "synthseg-53": false,
+        "synthseg-54": false,
+        "synthseg-58": false,
+        "synthseg-60": false,
+        "vascular-review": false,
+        "vascular-tumor-overlap": false,
+        "scalp-envelope": false
+      }
+    }
+  },
+  "vesselScope": "all",
+  "vesselDisplayVersion": 2
+}

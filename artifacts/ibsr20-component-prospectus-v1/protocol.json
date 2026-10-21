@@ -1,0 +1,289 @@
+{
+  "schema": "ibsr20-prospective-component-diagnostic-v1",
+  "status": "metadata_protocol_frozen_execution_blocked",
+  "created_utc": "2026-10-16",
+  "purpose": "One-record noncommercial reference agreement diagnostic for frozen N4/Atropos v3 semantics, conditional on separately produced image-only brain support. No cohort role assignment.",
+  "nominated_record": {
+    "dataset": "IBSR 20 Normals",
+    "participant_id": "2",
+    "scan_id": "4",
+    "record_id": "2_4",
+    "sex": "F",
+    "age_years": 34,
+    "health": "publisher-described normal; no independent pathology review",
+    "selection": "fixed before image/label access; no quality or performance selection"
+  },
+  "release": {
+    "dataset_release_id": 2308,
+    "dataset_url": "https://www.nitrc.org/frs/shownotes.php?release_id=2308",
+    "readme_release_id": 3124,
+    "readme_release_url": "https://www.nitrc.org/frs/shownotes.php?release_id=3124",
+    "readme_file_id": 8151,
+    "readme_url": "https://www.nitrc.org/frs/download.php/8151/20Normals.README.txt",
+    "readme_sha256": "464b08abf07331a8882a31ad2e5cefcf1badccb74ae61b9a08292194089fbf10",
+    "image_archive_url": "https://www.nitrc.org/frs/download.php/5680/20Normals_T1_8bit.tgz",
+    "label_archive_url": "https://www.nitrc.org/frs/download.php/5682/20Normals_T1_seg.tgz",
+    "image_archive_name": "20Normals_T1_8bit.tgz",
+    "label_archive_name": "20Normals_T1_seg.tgz",
+    "published_display_sizes": {
+      "image": "45 MB",
+      "labels": "1 MB"
+    },
+    "archive_exact_bytes": null,
+    "archive_byte_bounds": null,
+    "archive_sha256": null,
+    "size_rule": "Publisher display rounding is not a byte bound; HEAD gave no Content-Length. No acquisition byte budget authorized."
+  },
+  "geometry": {
+    "source_description": "positionally normalized 3D T1, coronal; not original scanner-native frame",
+    "image_dtype": "uint8 source-scaled",
+    "image_columns": 256,
+    "image_rows": 256,
+    "image_slices_documented": 65,
+    "image_slice_number_range_1based": [
+      1,
+      65
+    ],
+    "spacing_mm_columns_rows_slices": [
+      1.171751,
+      1.171751,
+      3.125
+    ],
+    "header_format": "four ASCII numbers: cols rows number_of_slices byteswap; byteswap=0",
+    "label_offset_1based": 6,
+    "correspondence": "image slice k maps to label slice k-6; label j maps to image j+6. Thus label1 maps to image7; zero-based image z=j_zero+6.",
+    "label_slice_count": null,
+    "expected_label_slice_count_bounds": [
+      1,
+      59
+    ],
+    "bounds_origin": "Derived from documented image slices1..65 and offset6, not observed payload size.",
+    "alignment_changes_allowed": false,
+    "source_index_preservation": true,
+    "world_axis_directions_and_origin_verified": false,
+    "raw_byte_order_to_array_axis_binding_verified": false,
+    "uncertainties": [
+      "Archive member paths, headers, actual image/label dimensions, exact payload lengths and image-label correspondence not decoded.",
+      "Per-scan spacing table differs from generic 3.0mm positional-normalization narrative; use per-scan values only after header consistency check.",
+      "README does not supply enough world-axis directions/origin to fabricate scanner RAS geometry for the support producer.",
+      "Do not transfer contradictory 111_2 example (offset3) into 2_4; selected table offset6 is the frozen rule."
+    ]
+  },
+  "reference": {
+    "codes": {
+      "0": "other/ignored",
+      "128": "CSF",
+      "192": "GM",
+      "254": "WM"
+    },
+    "annotation_method": "trained investigators; semiautomated intensity contours plus histograms; no pure independent-voxel-manual-gold claim",
+    "other_rule": "Ignore, not certified background, CSF, tumor-negative, or complete extracranial truth.",
+    "unannotated_slices": "Exclude from scoring; retain in the image and full-image fitting support. Never zero-pad as negative labels."
+  },
+  "fit_support": {
+    "symbol": "B",
+    "source": "Proposed exact already-pinned SynthStrip main image-only algorithm used for IXI265; no IBSR labels, brain-only archive, atlas, manual label correction or post-score support tuning.",
+    "producer_code_sha256": "d39cbcba9c5303ba74eaf0bb53d9105762f8a01a7de7bae2740958242f8f6cf8",
+    "producer_weights_sha256": "37417f802196186441aae3e7f385d94f8a98c64a88acaeaa2723af995c653e33",
+    "producer_parameters": {
+      "border_mm": 1,
+      "threads": 2
+    },
+    "producer_device": "mps",
+    "producer_adapter": "existing 6GiB MPS adapter, two threads; runtime and source-bound IBSR runner not yet prepared or released",
+    "producer_expected_frame": "same indices/shape as full source image; restored affine consistent within1e-5; world orientation first requires verified decoding",
+    "producer_training_overlap_with_IBSR": "UNKNOWN; no independent extraction-generalization claim",
+    "D": "B AND I>0",
+    "U": "B AND I==0, UNKNOWN/abstained; freeze exact count and indices from image-only preparation before any label decode",
+    "zero_count": "not assumed to equal IXI265 eight; no copied IXI265 coordinates",
+    "rejection": "Reject nonfinite or negative I, nonbinary/empty B, empty D or frame mismatch; no intensity shift, clipping, manual repair or fallback.",
+    "oracle_support_allowed": false,
+    "oracle_alternative": "Requires a new explicitly named oracle-support protocol; this version cannot silently switch. Any oracle-support study must disallow extraction accuracy."
+  },
+  "frozen_fitter": {
+    "package": {
+      "name": "antspyx",
+      "version": "0.6.3",
+      "wheel_sha256": "e378329089f622c72eacc47e4e2c18503d0f3fbf2cc39ccb9df65880c0a7846f"
+    },
+    "parameters": {
+      "N4": {
+        "shrink_factor": 4,
+        "convergence": {
+          "iters": [
+            30,
+            20,
+            10
+          ],
+          "tol": 1e-07
+        },
+        "spline_param": 150,
+        "rescale_intensities": false,
+        "return_bias_field": false,
+        "verbose": true
+      },
+      "Atropos": {
+        "i": "KMeans[3]",
+        "m": "[0.1,1x1x1]",
+        "c": "[10,0]",
+        "priorweight": 0.0,
+        "r": 0,
+        "v": 1
+      },
+      "grid": "full_native_grid_no_resampling_no_crop",
+      "priors": null,
+      "intensity_clipping_or_normalization": null,
+      "Atropos_random_seed_option": "r=0 (fixed upstream seed)"
+    },
+    "kernel_path": "scripts/poc_ixi265_atropos_typed_mask.py",
+    "mask_numpy_dtype": "float32",
+    "mask_native_pixeltype": "float",
+    "native_grid": "full publisher grid, no crop/resampling or cross-person registration",
+    "class_matching": {
+      "1": "CSF-like / reference128",
+      "2": "GM-like / reference192",
+      "3": "WM-like / reference254"
+    },
+    "order_rule": "Class means of N4-corrected intensities over all D must satisfy mu1<mu2<mu3 before labels are opened. Empty class, tie or reversal aborts; no reordering, Hungarian mapping, label-guided permutation or retry.",
+    "posterior_rule": "Unmodified membership probabilities, not physical PVE; finite [0,1], zero outside D, per-voxel sum error<=2e-5 inside D; no normalization/clip.",
+    "resource_semantics": {
+      "threads": 2,
+      "attempts": 1,
+      "rss_bytes": 3221225472,
+      "timeout_seconds": 600,
+      "output_bytes": 536870912,
+      "maximum_voxels": 12000000,
+      "native_frame_tolerance_mm": 0.0001
+    },
+    "fitter_source_binding": "Existing runner is IXI265-only and expects exactly eight frozen UNKNOWN cells. Do not invoke it on IBSR. A separately reviewed source-bound adapter must preserve this kernel and parameters while pinning IBSR I/B/D/U and source frame before label access.",
+    "bitwise_reproducibility_claimed": false
+  },
+  "blind_order": [
+    "0. Resolve documented noncommercial scope, authorized existing access/extra terms and bounded acquisition plan; none released here.",
+    "1. Freeze decoder, verified frame, exact pinned image-only support producer/runtime, source-bound v3 adapter and scorer on generated controls; keep labels inaccessible.",
+    "2. After a separately authorized bounded image-archive transfer, materialize only 2_4 from the full-image archive and keep other records unopened. Keep label archive/payload inaccessible until predictions are sealed. Decode image only, check metadata/shape/frame, run the fixed image-only support producer, seal I/B/D/U hashes and UNKNOWN indices. Do not acquire/open brain-only data.",
+    "3. One fixed v3 fit. Seal source hashes, support, corrected image, raw classes/posteriors, parameter/runtime hashes and prediction-only numerical checks. No tissue-label access in the fit worker.",
+    "4. Only after the sealed prediction record, separately authorized label access may materialize/decode 2_4 labels. Scorer applies offset6 and fixed code mapping; no image/label registration search. Geometry or label-code mismatch yields INVALID and no refit.",
+    "5. Score once; retain all failed/invalid outcomes and report all predeclared metrics, support omissions and abstentions. No threshold tuning, retry, best-case selection or promotion."
+  ],
+  "scoring": {
+    "primary_domain": "E = represented annotation slices AND R in {128,192,254}; do not intersect E with D for primary metrics.",
+    "prediction_on_E": "raw class1..3 on D; ABSTAIN for E outside D (including both missed B support and U).",
+    "confusion": "3 reference rows CSF/GM/WM;4 prediction columns CSF/GM/WM/ABSTAIN. Count all E voxels.",
+    "per_class": [
+      "TP: R=c and P=c. FP: R!=c and P=c within E. FN: R=c and P!=c within E, including ABSTAIN.",
+      "Dice=2TP/(2TP+FP+FN); recall=TP/(TP+FN); precision=TP/(TP+FP). Zero denominator -> NA, never1.",
+      "Predicted and reference volumes within E in mm3 using1.171751*1.171751*3.125; signed volume difference and relative error=(Vpred-Vref)/Vref, NA ifVref0."
+    ],
+    "macro_dice": "Arithmetic mean of3 per-class Dice only if all3 defined; otherwise NA plus absent-class counts. No acceptance threshold.",
+    "support_reporting": [
+      "Full-image |B|,|D|,|U| and exact U indices sealed before labels.",
+      "|E| and per-class reference counts; |E outside B|, |E intersect U|, |E intersect D|, with per-class coverage |R=c intersect D|/|R=c|.",
+      "Number of annotation slices, ignored zero voxels, unannotated image slices, predictions within ignored voxels and unannotated slices; excluded counts must accompany metrics."
+    ],
+    "secondary_domain": "E intersect D; same metrics, explicitly conditional-on-estimated-support and never substituted for primary metrics.",
+    "boundary_metrics": "Not included: partial coverage, uncertain zero-domain semantics and anisotropic slices confound whole-brain surface claims.",
+    "posterior_metrics": "Not included: annotations hard and posterior not physical PVE.",
+    "extraction_accuracy": "Not measured; reference0/coverage not established complete brain-negative truth.",
+    "scoring_implementation": "Not yet written or tested; must be independently checked on generated controls against formulas before label access."
+  },
+  "rights": {
+    "current_project_url": "https://www.nitrc.org/projects/ibsr/",
+    "published_scope": "Free For Non-Commercial Use Only",
+    "precedence_url": "https://www.nitrc.org/forum/message.php?msg_id=23479",
+    "precedence": "Andrew Worth22Jan2018 states current NITRC license prevails over older MGH README; no broader commercial or redistribution permission inferred.",
+    "historical_notice": "1997 README restricts segmentation research and requires acknowledgment, participation and permission for anatomical/morphological studies, image publication and commercial product use. Preserved verbatim locally; do not overwrite historical qualification.",
+    "IBSR18_conversion_public_domain_claim_not_inherited": true,
+    "current_project_noncommercial_scope_established": false,
+    "extra_terms_after_login": "UNKNOWN; login not followed; none accepted"
+  },
+  "overlap": {
+    "local_receipt_or_role_found": false,
+    "searched": [
+      "manifests",
+      "docs/cohort-registry.md",
+      "src/resectionlab/cohort.py",
+      "data/acquisition",
+      "data/provenance"
+    ],
+    "IBSR18_20_crosswalk": "UNKNOWN; cannot count18+20 as38 independent people",
+    "other_cohort_crosswalk": "UNKNOWN, including NFBS/LPBA40/Lausanne and support-model training ancestry",
+    "within_image_fit": "Atropos uses no pretrained tissue weights; its annotation independence is not a proof of cohort or model independence"
+  },
+  "release_decision": {
+    "metadata_design_reviewable": true,
+    "execution_ready": false,
+    "acquisition_released": false,
+    "model_execution_released": false,
+    "source_accepted": false,
+    "role_created": false,
+    "anatomy_accepted": false,
+    "host_accepted": false,
+    "training_admitted": false,
+    "blockers": [
+      "Both required archive HEAD requests redirect to login; public unauthenticated payload access unavailable on inspected routes. Existing authorized access and any extra terms unknown.",
+      "Current project noncommercial eligibility not established; exact archive lengths/hashes and bounded acquisition plan unavailable.",
+      "Selected raw-image axis/frame decoding and label geometry not verified; no fabricated RAS affine.",
+      "No IBSR-specific source-bound support/fitter/scorer preparation exists. Existing IXI265 runner cannot be repurposed as-is."
+    ],
+    "why_not_IXI_anatomy_validation": "Different person, scanner/contrast, resolution, preparation and label method. Agreement on one IBSR record tests implementation/reference agreement only; supplies no IXI265 voxel truth or tumor/vessel/skull/functional/host validation."
+  },
+  "local_evidence_pins": [
+    {
+      "path": "scripts/poc_ixi265_atropos.py",
+      "sha256": "4a5c5b4b2f85153212ac27e6356d5f1dca5c8b42d77257fb55a2fee53253624b"
+    },
+    {
+      "path": "scripts/poc_ixi265_atropos_positive_domain.py",
+      "sha256": "0652eca1ba81304e053f24c9a9fc2f8c89174bfe7447accfd21105263592d81d"
+    },
+    {
+      "path": "scripts/poc_ixi265_atropos_typed_mask.py",
+      "sha256": "211d715a05b2dd269358b7bc5585488a053859ba65c04b9f31f60b69e41ec954"
+    },
+    {
+      "path": "scripts/poc_ixi265_atropos_typed_mask_run.py",
+      "sha256": "b8d65e0522130df1a4e012811527ab17116a46436805c0152c0a3956a921e9ec"
+    },
+    {
+      "path": "outputs/poc-ixi265-atropos-typed-mask-v3/candidate.json",
+      "sha256": "55188c2f9916d226beed701bbf9c85e29aa60533ea34e0bdf0518fd63e52fa9f"
+    },
+    {
+      "path": "artifacts/ixi265-typed-mask-independent-v3/result-qa.json",
+      "sha256": "0b2918d3d6d1c17e772cad4649689f67ff9546083eced8bfe7d5796db0ed6509"
+    },
+    {
+      "path": "scripts/poc_ixi265_registration.py",
+      "sha256": "ea1b4f43b20b74d9a34d1458b39870011bf35f0495cb411f2eecce32963eb02b"
+    },
+    {
+      "path": "src/resectionlab/brain_extraction.py",
+      "sha256": "ef7d3b8d2d4161e9d544298b7986b6438ca41fd1b058cfebe16833eaa2900900"
+    },
+    {
+      "path": "docs/synthstrip-model-manifest.json",
+      "sha256": "fda80ef26d8a96e849d3f28b78f903afcdcd278e8b35fa225add9c8b5f8dd869"
+    },
+    {
+      "path": "outputs/poc-ixi265/synthstrip/synthstrip_mps_existing_6g.py",
+      "sha256": "d39cbcba9c5303ba74eaf0bb53d9105762f8a01a7de7bae2740958242f8f6cf8"
+    },
+    {
+      "path": "outputs/poc-ixi265/synthstrip/inference.json",
+      "sha256": "0045ef08168b9347f62ebca8ced2d08a65b325146c9a0a77bfc18b555d20cd91"
+    },
+    {
+      "path": "artifacts/ibsr-source-qualification-v1/qualification.json",
+      "sha256": "43f6fd5f4bcfa2bb3549f96cc27e3102bee8263c682ef9c41da48e2113fb1d9a"
+    }
+  ],
+  "actions": {
+    "new_files_only_in_this_directory": true,
+    "scientific_payload_GETs": 0,
+    "scientific_payload_decodes": 0,
+    "source_or_model_runs": 0,
+    "accounts_logins_or_agreements": 0,
+    "role_or_shared_docs_changes": 0
+  }
+}

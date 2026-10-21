@@ -1,0 +1,24 @@
+✔ Electron runtime matches the resolved importer version, not its semver specifier (0.805416ms)
+✔ missing Electron or its resolved version fails without using packages, snapshots or specifier (0.138917ms)
+✔ duplicate or ambiguous importer resolutions are rejected (0.44ms)
+✔ unsupported YAML aliases, merges, inline maps and schemas fail closed (0.1245ms)
+✔ local paths, semver ranges, peer suffixes and malformed installed versions are rejected (0.126375ms)
+✔ absent option preserves default download/cache behavior without file access (0.388375ms)
+✔ exact named arm64 bytes bind to the upstream checksum and survive postcheck (3.708709ms)
+✔ present empty, relative and malformed directories do not become default mode (0.219583ms)
+✔ missing directory or exact standard filename fails without creating it (1.018417ms)
+✔ exact version and its arm64 checksum are mandatory (0.71325ms)
+✔ incorrect bytes and empty archives fail before use (1.044333ms)
+✔ regular file and bounded size are checked before hashing (0.872416ms)
+✔ archive symlink is rejected even with exact expected target bytes (0.673208ms)
+✔ directory and ancestor symlinks are rejected (1.267375ms)
+✔ postcheck rejects changed bytes and does not repair the archive (1.219667ms)
+✔ postcheck rejects replaced identical bytes and missing or redirected archive (1.253709ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 43.973292

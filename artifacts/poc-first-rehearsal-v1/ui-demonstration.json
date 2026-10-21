@@ -1,0 +1,75 @@
+{
+  "schema": "resectionlab-native-ui-demonstration-v1",
+  "observed_utc_date": "2026-10-16",
+  "interaction": "Native macOS Electron UI through cua_repl; actual screenshots, no mock renderer",
+  "source_cases": [
+    "UCSF-PDGM-0004",
+    "SynthRAD2023-1BA336",
+    "Lausanne-sub-000-ses-20110101"
+  ],
+  "episode_schema": "resectionlab.source-bound-rehearsal.v2",
+  "steps": [
+    "Open genuine source MRI and inspect saved inferred layers",
+    "Prepare post-exposure research state",
+    "Select aspirator; aspirate inward 1mm twice",
+    "Select field manager; clear field",
+    "Execute two continuations from the exact current nonempty state",
+    "View deeper branch; play then pause; use slider keyboard End to scrub to STOP",
+    "View short branch; scrub to STOP",
+    "Native Save to a separate bundle; quit Electron and verify exit0",
+    "Fresh process reopens selected short branch frame19/19, field_manager, paused",
+    "Move linked MRI slices to tool depth; orbit and zoom",
+    "Open real acquired CT skull case, opacity and cutaway; native Save/reopen separate copy",
+    "Open acquired TOF-MRA vesselFM case, provenance/license details; native Save/reopen separate copy",
+    "Inspect corrected rehearsal layer opacity, smoothing and cutaway; full tools stay visible"
+  ],
+  "reopened_view": {
+    "branchId": "short_pass_field_management",
+    "frameIndex": 19,
+    "selectedTool": "field_manager",
+    "playing": false
+  },
+  "screenshots": [
+    {
+      "path": "outputs/poc-first-qa/ui/01-prepared.png",
+      "sha256": "d9b3978a07c05a8d270dc90275f81fdd4662b6c4b11f2842a85b080bc3f89f50",
+      "bytes": 554475
+    },
+    {
+      "path": "outputs/poc-first-qa/ui/02-branch-comparison.png",
+      "sha256": "4f2bcc5894fc746edfeab281a12b7264e42b5ce4c746ae54d6d60b176bf60232",
+      "bytes": 549109
+    },
+    {
+      "path": "outputs/poc-first-qa/ui/03-native-reopen.png",
+      "sha256": "1ffb05ce2ec46337d26ea462b8552e397f7401b2d6de8c88deae5f2f0d94cba4",
+      "bytes": 578239
+    },
+    {
+      "path": "outputs/poc-first-qa/ui/04-ct-skull-source.png",
+      "sha256": "2065115694f87ecce5a8bfbb84048277ccc2d00c9664fd9ee737d8e47e2262f7",
+      "bytes": 474598
+    },
+    {
+      "path": "outputs/poc-first-qa/ui/05-mra-vesselfm-source.png",
+      "sha256": "3251ac93dda14e0e7a3ecf4a4c1a5b535aa1726cd431d9b77258ea621a099293",
+      "bytes": 619343
+    },
+    {
+      "path": "outputs/poc-first-qa/ui/06-repaired-cutaway-and-contact.png",
+      "sha256": "8e689dfabd2cb09189f903849b8c929e896c678f306c091a5820e8621d09c7e8",
+      "bytes": 570084
+    }
+  ],
+  "first_failures_preserved": [
+    "Missing host Sidecar rehearsal operations whitelist",
+    "Residual opacity fixed at0.66 and absent derived-mesh cutaway",
+    "Audit incorrectly requiring entire NPZ archive byte identity despite exact named arrays"
+  ],
+  "limits": [
+    "Simplified uncalibrated physics",
+    "Initial exposure assumed",
+    "Patient-specific vascular and functional endpoints unknown",
+    "No external accuracy or complete operation claimed"
+  ]
+}

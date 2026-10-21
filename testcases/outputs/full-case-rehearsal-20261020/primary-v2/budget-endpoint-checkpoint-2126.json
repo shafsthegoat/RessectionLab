@@ -1,0 +1,16 @@
+{
+  "status": "checkpointed-before-transition",
+  "utc": "2026-10-21T00:36:34.648198+00:00",
+  "native": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/primary.ressectionlab",
+  "checkpoint": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-budget-endpoint-2126.ressectionlab",
+  "checkpointSha256": "fce43e61bae4557ac9e0c3bdf7e26f4c343dba5369e21c11fbab9040b06b8a6b",
+  "actions": 2126,
+  "stateId": "sha256:85471c3dfb72b0af1a8f2e9d0ae1e41ba7ab82f620b3147c66876c67a1426979",
+  "ownedTargetRemovedMm3": 35444.0,
+  "ownedTargetResidualMm3": 8129.0,
+  "directorStage": "access_setup",
+  "accessIndex": 26,
+  "accessCount": 99,
+  "liveConsolePromptConfirmed": true,
+  "liveEnginePreserved": true
+}

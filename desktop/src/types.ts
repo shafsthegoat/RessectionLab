@@ -151,6 +151,7 @@ export interface CasePayload {
     volumeMm3: number;
     array: ArrayDescriptor;
     sourceArray?: ArrayDescriptor;
+    qa?: import('./viewer/contracts').AnatomyQuality;
   }[];
   unknowns: string[];
   metadata: Record<string, unknown>;
@@ -181,6 +182,9 @@ export interface ViewerCase {
     name: string;
     volumeMm3: number;
     mask: Uint8Array;
+    kind?:string;
+    sourceIdentity?:string;
+    qa?:import('./viewer/contracts').AnatomyQuality;
     color: string;
     mesh?: {
       positions: Float32Array;
@@ -455,8 +459,23 @@ export interface ObservedLandmarkResult {
   prediction: { method: "proper_rigid"; fieldSha256: string; positionRasMm: number[]; scope: string } | null;
 }
 
+export type CaseLibraryFolder = {folder:string|null;error?:string};
+
 export interface ResectionApi extends TrainingApi {
+  importSurgicalScene?(args:{frame:string;units:string;material:string;resolution:number;topology:string;thicknessMm?:number}):Promise<CasePayload|null>;
+  compareSurgicalAnatomy?(args:{beforeCaseHash:string;afterCaseHash:string;changedLayers?:string[];prefix?:Record<string,unknown>[];decisions?:number}):Promise<import('./surgical-types').AnatomyComparisonResult>;
+  surgicalRehearsal?: import("./surgical-types").SurgicalApi["surgicalRehearsal"];
+  workspaceInstalled?(args:{caseHash:string;caseId:string}):Promise<boolean>;
+  prepareSurgicalEnvironment?(args:import('./EnvironmentPreparationPanel').EnvironmentPreparation):Promise<CasePayload|null>;
+  createSurgicalFixture?: import("./surgical-types").SurgicalApi["createSurgicalFixture"];
+  createRehearsal?: import("./rehearsal-types").RehearsalApi["createRehearsal"];
+  inspectRehearsal?: import("./rehearsal-types").RehearsalApi["inspectRehearsal"];
+  stepRehearsal?: import("./rehearsal-types").RehearsalApi["stepRehearsal"];
+  compareRehearsal?: import("./rehearsal-types").RehearsalApi["compareRehearsal"];
+
   listCases?(): Promise<{id:string;title:string;recent:boolean;bytes:number}[]>;
+  caseLibraryInfo?(): Promise<CaseLibraryFolder>;
+  chooseCaseLibrary?(): Promise<CaseLibraryFolder|null>;
   openListedCase?(id:string): Promise<CasePayload>;
   publicContactFamilyAvailability?: (request: Record<string, never>) => Promise<import('./contact-family-types').ContactFamilyAvailability>;
   executePublicContactFamilyEpisode?: (request: import('./contact-family-types').ContactFamilyRequest) => Promise<import('./contact-family-types').ContactFamilyResult>;

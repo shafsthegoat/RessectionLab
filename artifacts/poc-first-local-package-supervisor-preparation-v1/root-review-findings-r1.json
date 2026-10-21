@@ -1,0 +1,16 @@
+{
+  "schema": "poc-first-local-package-supervisor-root-review-v1",
+  "reviewed_runner_sha256": "41ce325c22ff922e18de48fcfd93f83dd0f1e5385737a73411f6dcf1971fdf10",
+  "snapshot": "initial-supervisor-41ce325c.py",
+  "findings": [
+    {
+      "reported": "Missing import re may prevent clean refusal receipt",
+      "verification": "Not reproduced: exact SHA41ce325c snapshot contains import re at line17; add generated run_stage invalid-source refusal control to verify finalizer behavior."
+    },
+    {
+      "reported": "ROOT release issuer field is not enforced",
+      "verification": "Confirmed; require issuer ROOT and add issuer rejection controls."
+    }
+  ],
+  "builds_run": 0
+}

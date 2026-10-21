@@ -1,0 +1,113 @@
+{
+  "schema": "ibsr20-component-public-metadata-v1",
+  "scope": "metadata GET and two archive HEAD requests only; no archive GET",
+  "filelist": {
+    "url": "https://www.nitrc.org/frs/?group_id=48",
+    "method": "GET",
+    "status": 200,
+    "response_bytes": 96407,
+    "response_sha256": "9c88d6302c48b0b28f3f330414d84a1ae3cb32973d63a951a3dbf4011e5658a8",
+    "content_type": "text/html; charset=UTF-8",
+    "observed_utc": "2026-10-16T09:06:23.771953+00:00"
+  },
+  "readme": {
+    "url": "https://www.nitrc.org/frs/download.php/8151/20Normals.README.txt",
+    "method": "GET",
+    "status": 200,
+    "response_bytes": 8906,
+    "response_sha256": "464b08abf07331a8882a31ad2e5cefcf1badccb74ae61b9a08292194089fbf10",
+    "content_type": "application/force-download",
+    "observed_utc": "2026-10-16T09:06:23.913160+00:00"
+  },
+  "archive_routes": [
+    {
+      "name": "20Normals.README.txt",
+      "url": "https://www.nitrc.org/frs/download.php/8151/20Normals.README.txt"
+    },
+    {
+      "name": "20Normals_T1_8bit.tgz",
+      "url": "https://www.nitrc.org/frs/download.php/5680/20Normals_T1_8bit.tgz"
+    },
+    {
+      "name": "20Normals_T1_analyze.zip",
+      "url": "https://www.nitrc.org/frs/download.php/5683/20Normals_T1_analyze.zip"
+    },
+    {
+      "name": "20Normals_T1_brain.tgz",
+      "url": "https://www.nitrc.org/frs/download.php/5681/20Normals_T1_brain.tgz"
+    },
+    {
+      "name": "20Normals_T1_p1.tgz",
+      "url": "https://www.nitrc.org/frs/download.php/5678/20Normals_T1_p1.tgz"
+    },
+    {
+      "name": "20Normals_T1_p2.tgz",
+      "url": "https://www.nitrc.org/frs/download.php/5679/20Normals_T1_p2.tgz"
+    },
+    {
+      "name": "20Normals_T1_seg.tgz",
+      "url": "https://www.nitrc.org/frs/download.php/5682/20Normals_T1_seg.tgz"
+    },
+    {
+      "name": "20Normals_T1.tgz",
+      "url": "https://www.nitrc.org/frs/download.php/5677/20Normals_T1.tgz"
+    }
+  ],
+  "release_links": [
+    {
+      "href": "shownotes.php?release_id=3124",
+      "text": "Updated README"
+    },
+    {
+      "href": "shownotes.php?release_id=2308",
+      "text": "20 Normals"
+    }
+  ],
+  "archive_HEAD": [
+    {
+      "name": "20Normals_T1_8bit.tgz",
+      "url": "https://www.nitrc.org/frs/download.php/5680/20Normals_T1_8bit.tgz",
+      "method": "HEAD",
+      "observed_utc": "2026-10-16T09:06:24.043189+00:00",
+      "status": 302,
+      "headers": {
+        "Content-Type": "text/html; charset=UTF-8",
+        "Content-Length": null,
+        "Location": "/account/login.php?return_to=%2Ffrs%2Fdownload.php%2F5680%2F20Normals_T1_8bit.tgz&feedback=The+tool%2Fresource+administrator+has+requested+that+you+log+in+to+download+this+file.",
+        "Content-Disposition": null,
+        "Last-Modified": null,
+        "ETag": null,
+        "Accept-Ranges": null
+      },
+      "body_read": false,
+      "redirect_followed": false,
+      "authentication_sent": false,
+      "cookies_sent": false
+    },
+    {
+      "name": "20Normals_T1_seg.tgz",
+      "url": "https://www.nitrc.org/frs/download.php/5682/20Normals_T1_seg.tgz",
+      "method": "HEAD",
+      "observed_utc": "2026-10-16T09:06:24.171418+00:00",
+      "status": 302,
+      "headers": {
+        "Content-Type": "text/html; charset=UTF-8",
+        "Content-Length": null,
+        "Location": "/account/login.php?return_to=%2Ffrs%2Fdownload.php%2F5682%2F20Normals_T1_seg.tgz&feedback=The+tool%2Fresource+administrator+has+requested+that+you+log+in+to+download+this+file.",
+        "Content-Disposition": null,
+        "Last-Modified": null,
+        "ETag": null,
+        "Accept-Ranges": null
+      },
+      "body_read": false,
+      "redirect_followed": false,
+      "authentication_sent": false,
+      "cookies_sent": false
+    }
+  ],
+  "scientific_payload_GETs": 0,
+  "scientific_payload_decodes": 0,
+  "login_or_terms_acceptance": false,
+  "archive_byte_hashes": null,
+  "archive_byte_bounds": null
+}

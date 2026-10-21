@@ -1,0 +1,266 @@
+{
+  "worker_pid": 22285,
+  "support": {
+    "original_brain_voxels": 1451509,
+    "fit_domain_voxels": 1451501,
+    "excluded_unknown_voxels": 8,
+    "unknown_indices_native": [
+      [
+        60,
+        125,
+        75
+      ],
+      [
+        67,
+        135,
+        49
+      ],
+      [
+        69,
+        131,
+        40
+      ],
+      [
+        89,
+        120,
+        83
+      ],
+      [
+        107,
+        123,
+        65
+      ],
+      [
+        127,
+        219,
+        68
+      ],
+      [
+        128,
+        115,
+        125
+      ],
+      [
+        185,
+        127,
+        119
+      ]
+    ],
+    "excluded_semantics": "UNKNOWN_ABSTAINED",
+    "source_arrays_modified": false,
+    "domain_is_anatomical_correction": false
+  },
+  "stages": [
+    {
+      "name": "N4_start",
+      "details": {
+        "mask_boundary": {
+          "native_pixeltype": "float",
+          "numpy_dtype": "float32",
+          "binary_values_exact": true,
+          "support_voxels": 1451501,
+          "support_unchanged": true,
+          "frame": {
+            "candidate_affine_ras_mm": [
+              [
+                -0.04665682837367058,
+                0.06588856875896454,
+                1.1955413818359375,
+                -90.70220947265625
+              ],
+              [
+                -0.9363381862640381,
+                -0.0029228338971734047,
+                -0.059605203568935394,
+                122.19873046875
+              ],
+              [
+                0.00036077748518437147,
+                0.935177206993103,
+                -0.08441900461912157,
+                -112.01844787597656
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "source_affine_ras_mm": [
+              [
+                -0.04665682837367058,
+                0.06588856875896454,
+                1.1955413818359375,
+                -90.70220947265625
+              ],
+              [
+                -0.9363381862640381,
+                -0.0029228338971734047,
+                -0.059605203568935394,
+                122.19873046875
+              ],
+              [
+                0.00036077748518437147,
+                0.935177206993103,
+                -0.08441900461912155,
+                -112.01844787597656
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "affine_max_abs_difference": 1.3877787807814457e-17,
+            "eight_cell_corner_errors_mm": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "output_saved_with_original_affine": true,
+            "array_permutation_or_resampling": false
+          }
+        },
+        "parameters": {
+          "shrink_factor": 4,
+          "convergence": {
+            "iters": [
+              30,
+              20,
+              10
+            ],
+            "tol": 1e-07
+          },
+          "spline_param": 150,
+          "rescale_intensities": false,
+          "return_bias_field": false,
+          "verbose": true
+        }
+      }
+    },
+    {
+      "name": "N4_complete",
+      "details": {
+        "frame": {
+          "candidate_affine_ras_mm": [
+            [
+              -0.04665682837367058,
+              0.06588856875896454,
+              1.1955413818359375,
+              -90.70220947265625
+            ],
+            [
+              -0.9363381862640381,
+              -0.0029228338971734047,
+              -0.059605203568935394,
+              122.19873046875
+            ],
+            [
+              0.00036077748518437147,
+              0.935177206993103,
+              -0.08441900461912157,
+              -112.01844787597656
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "source_affine_ras_mm": [
+            [
+              -0.04665682837367058,
+              0.06588856875896454,
+              1.1955413818359375,
+              -90.70220947265625
+            ],
+            [
+              -0.9363381862640381,
+              -0.0029228338971734047,
+              -0.059605203568935394,
+              122.19873046875
+            ],
+            [
+              0.00036077748518437147,
+              0.935177206993103,
+              -0.08441900461912155,
+              -112.01844787597656
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "affine_max_abs_difference": 1.3877787807814457e-17,
+          "eight_cell_corner_errors_mm": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "output_saved_with_original_affine": true,
+          "array_permutation_or_resampling": false
+        }
+      }
+    },
+    {
+      "name": "Atropos_start",
+      "details": {
+        "parameters": {
+          "i": "KMeans[3]",
+          "m": "[0.1,1x1x1]",
+          "c": "[10,0]",
+          "priorweight": 0.0,
+          "r": 0,
+          "v": 1
+        }
+      }
+    },
+    {
+      "name": "Atropos_complete",
+      "details": {
+        "classes": {
+          "classes": [
+            {
+              "class": 1,
+              "voxels": 263320,
+              "corrected_intensity_mean": 222.40606689453125,
+              "declared_assumption": "csf_like_intensity_estimated",
+              "anatomical_acceptance": false
+            },
+            {
+              "class": 2,
+              "voxels": 607861,
+              "corrected_intensity_mean": 428.67388916015625,
+              "declared_assumption": "gray_matter_like_intensity_estimated",
+              "anatomical_acceptance": false
+            },
+            {
+              "class": 3,
+              "voxels": 580320,
+              "corrected_intensity_mean": 557.5263671875,
+              "declared_assumption": "white_matter_like_intensity_estimated",
+              "anatomical_acceptance": false
+            }
+          ],
+          "posterior_sum_max_abs_error": 1.4156103134155273e-07,
+          "probabilities_modified": false
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "version": "source-score-simple-margin-v1",
+  "threshold": 0.35,
+  "radius_mm": 0.8,
+  "candidate_voxels": 148084,
+  "added_voxels": 142952,
+  "withheld_voxels": 5132,
+  "removed_voxels": 0,
+  "before": {
+    "voxels": 673582,
+    "components_26": 1167,
+    "largest_component_voxels": 514882,
+    "singleton_components": 174
+  },
+  "after": {
+    "voxels": 816534,
+    "components_26": 1167,
+    "largest_component_voxels": 587330,
+    "singleton_components": 4
+  },
+  "meaning": "source-score-supported estimate; no gap bridging; scores uncalibrated; anatomical review pending",
+  "display_smoothing": false,
+  "clinical_validation": false,
+  "source_series": "t1ce",
+  "layer_id": "vessels",
+  "source_image_sha256": "1fe942294ad7e60247c78ae45619a1e4234e42a5293206d213e12e56d45b3dce",
+  "input_data_sha256": "f646dfb5567a336ba21d9630da39785f82314905a2e439162b14efeff1a97545",
+  "margin_support_data": {
+    "path": "arrays/238ab598f755b162067f03ccc1d20fb0605ea275027ed196fc024227ac4bf215-uint8-439x439x361.npy",
+    "sha256": "f646dfb5567a336ba21d9630da39785f82314905a2e439162b14efeff1a97545",
+    "shape": [
+      439,
+      439,
+      361
+    ],
+    "dtype": "uint8"
+  },
+  "probability_sha256": "f6445920548aec09cd642c7ca98fc419b66efd0b31ffa7ddafb9d7c5b54b07b7",
+  "input_revision": 0,
+  "snapshot_id": "c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5",
+  "parameters_id": "5c799fa24d882a34372f0a6a925e95fb5969cf41eb220f6e867f1ff244fdc10a",
+  "elapsed_seconds": 6.012547290883958,
+  "rejected": true,
+  "revised_snapshot_id": "66570cc1dd5e3566c04ea7df645d613ed2e212e50b993ab7b714f1a3e07b2a9a",
+  "reason": "Foreground component ownership preserved, but N26 background check allowed Euler change 802 to 841; superseded by N18/face-background criterion."
+}

@@ -1,0 +1,9 @@
+{
+  "schema": "poc-first-local-package-supervisor-root-review-resolution-v2",
+  "initial_sha256": "41ce325c22ff922e18de48fcfd93f83dd0f1e5385737a73411f6dcf1971fdf10",
+  "import_observation": "ROOT confirmed its imports read was during editing and incorrectly associated with later41ce snapshot. Exact41ce contains import re; no missing-import defect or build/patient failure is attributed to that snapshot.",
+  "changes": "Only explicit ROOT issuer validation added; generated stage binding-refusal/issuer controls added. Original10 controls remain passing.",
+  "current_runner_sha256": "923d8cc873643942d142c692d78eac21493cbe0e42c53ba72265bab9aa8c5788",
+  "generated_tests_passed": 13,
+  "builds_run": 0
+}

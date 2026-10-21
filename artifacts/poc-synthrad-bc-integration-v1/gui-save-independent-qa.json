@@ -1,0 +1,405 @@
+{
+  "schema": "independent-synthrad-bc-gui-save-audit-v1",
+  "status": "pass",
+  "created_utc": "2026-10-16T07:33:58.404467+00:00",
+  "cases": [
+    {
+      "status": "pass",
+      "subject_id": "1BB033",
+      "inputs": {
+        "outputs/poc-synthrad-bc-source-v1/1BB033/SynthRAD2023-1BB033.ressectionlab": {
+          "sha256": "6da3934b794ad13945ea8d1443a70c46625a75c9b8a7cf2a800d2830c906dd82",
+          "bytes": 38261823,
+          "mtime_ns": 1792134083975741135
+        },
+        "outputs/poc-first-qa/synthrad-bc-ui/saved/SynthRAD2023-1BB033-reviewed.ressectionlab": {
+          "sha256": "1c4224bc625fbba2c612d74a7914a3e002f2a28ceaaa0a241a42bb9e897f5368",
+          "bytes": 38262173,
+          "mtime_ns": 1792135594434998877
+        }
+      },
+      "case_hash": "sha256:34914516b31c5a88dbdbeac4a7893fb69759e556a2cae4e67e2153e836ad66e0",
+      "source_CT_arrays_and_metadata": {
+        "mri": {
+          "dtype": "<f4",
+          "shape": [
+            212,
+            246,
+            181
+          ],
+          "raw_c_order_sha256": "6692c31bcd3fbdf75cd60695f6fc73ad51fc27888c1442e3f649f7bc91988d82"
+        },
+        "compartments": {
+          "brain": {
+            "foreground_voxels": 1281637,
+            "raw_c_order_sha256": "50e280ae2eac9f04a4b4cf5041818009c3958fa78ca3012e343ed251d89dc737"
+          },
+          "skull": {
+            "foreground_voxels": 677099,
+            "raw_c_order_sha256": "5981b421dec024241e312a5eb0fe6b821caa10ebaa6f151ca1ebb61169a9e5d3"
+          }
+        },
+        "source_compartments": {
+          "brain": {
+            "foreground_voxels": 1281637,
+            "raw_c_order_sha256": "50e280ae2eac9f04a4b4cf5041818009c3958fa78ca3012e343ed251d89dc737"
+          },
+          "skull": {
+            "foreground_voxels": 677099,
+            "raw_c_order_sha256": "5981b421dec024241e312a5eb0fe6b821caa10ebaa6f151ca1ebb61169a9e5d3"
+          }
+        }
+      },
+      "native_MR_arrays_and_metadata": {
+        "mri": {
+          "dtype": "<f4",
+          "shape": [
+            212,
+            246,
+            181
+          ],
+          "raw_c_order_sha256": "b8c277139f8f40a4dc412b7a9cf2037667a91e86d1921263fd04df1b47044a4e"
+        },
+        "compartments": {},
+        "source_compartments": {}
+      },
+      "source_references_model_provenance_and_role_metadata_exact": true,
+      "originals": {
+        "count": 5,
+        "bytes": 19571842,
+        "files": [
+          {
+            "name": "ct.nii.gz",
+            "role": "imaging",
+            "sha256": "4999e29411f5c76d986eb188f59a8148f8dbad7ef8bd30abef2e155a1681cafd",
+            "bytes": 11357517
+          },
+          {
+            "name": "inference.json",
+            "role": "metadata",
+            "sha256": "fe916ff4a0c1bd4f7daae11253c429faffd88e2d6162ecb8b2bdb9047bb9acbc",
+            "bytes": 5412
+          },
+          {
+            "name": "brain_mask.nii.gz",
+            "role": "model-result",
+            "sha256": "7800cf900931f51d4970df07cc75398fec7a98316ecb7ff9400d6a650a7a5578",
+            "bytes": 145578
+          },
+          {
+            "name": "skull_mask.nii.gz",
+            "role": "model-result",
+            "sha256": "5676513664ee1edeef4f7cd770db3226b811df3c8207dd61e6015711ac537e12",
+            "bytes": 184703
+          },
+          {
+            "name": "mr.nii.gz",
+            "role": "imaging",
+            "sha256": "68fe4d165a8b3063bfce58f7b75bf7b22ce52243a7dd3c0704b2a29984b7a228",
+            "bytes": 7878632
+          }
+        ],
+        "all_original_bytes_exact": true,
+        "primary_npz_bytes_exact": true,
+        "primary_npy_payload_multiset_exact": true,
+        "primary_npz_source_sha256": "7985867006c357dbf0b1a5255129e261239201bd3ad3486c6ef1d2b85ce80ee6",
+        "primary_npz_sha256": "7985867006c357dbf0b1a5255129e261239201bd3ad3486c6ef1d2b85ce80ee6",
+        "packaging_note": null
+      },
+      "archive_checks": {
+        "all_native_MR_nested_member_bytes_exact": true,
+        "episode_replay_unchanged": true
+      },
+      "registration_metadata_exact": true,
+      "fusion_permitted": false,
+      "selected_modality": "T1",
+      "recorded_view_expectations_verified": {
+        "CT": {
+          "layer_opacity": {
+            "brain": 0.18,
+            "skull": 0.32
+          },
+          "visible_layers": {
+            "brain": true,
+            "skull": true
+          },
+          "volume_rendering_enabled": false
+        },
+        "T1": {
+          "no_layers": true
+        }
+      },
+      "saved_imaging_state": {
+        "selectedSeriesId": "sha256:3765316760de1e4679eba7993fc25e19d65e2c6a2005fecdcae57c24b4c6b970",
+        "states": {
+          "primary": {
+            "cursor": [
+              -2.98828125,
+              238.01171875,
+              -30
+            ],
+            "viewer": {
+              "layerColor": {
+                "brain": "#65bfff",
+                "skull": "#d8e7f8"
+              },
+              "layerOpacity": {
+                "brain": 0.18,
+                "skull": 0.32
+              },
+              "volumeRendering": {
+                "enabled": false
+              }
+            },
+            "visibleLayers": {
+              "brain": true,
+              "skull": true
+            }
+          },
+          "sha256:3765316760de1e4679eba7993fc25e19d65e2c6a2005fecdcae57c24b4c6b970": {
+            "cursor": [
+              -2.98828125,
+              238.01171875,
+              -30
+            ],
+            "visibleLayers": {}
+          }
+        }
+      },
+      "saved_workspace_preferences": {
+        "case_hash": "sha256:34914516b31c5a88dbdbeac4a7893fb69759e556a2cae4e67e2153e836ad66e0",
+        "category": "pareto",
+        "cursor": [
+          -2.98828125,
+          238.01171875,
+          -30
+        ],
+        "overlayOpacity": 0.32,
+        "routeA": "",
+        "routeB": "",
+        "visibleLayers": {
+          "brain": true,
+          "skull": true
+        }
+      },
+      "source_and_reviewed_files_unchanged": true,
+      "training_admitted": false,
+      "clinical_validation": false,
+      "GUI_observation": "Parent performed native GUI actions; this independent audit verifies the saved artifacts only"
+    },
+    {
+      "status": "pass",
+      "subject_id": "1BC077",
+      "inputs": {
+        "outputs/poc-synthrad-bc-source-v1/1BC077/SynthRAD2023-1BC077.ressectionlab": {
+          "sha256": "171101168d1244d509fc64249cd9039a74aa9a35f35535dddc753307e80f905d",
+          "bytes": 33535523,
+          "mtime_ns": 1792134097581497322
+        },
+        "outputs/poc-first-qa/synthrad-bc-ui/saved/SynthRAD2023-1BC077-reviewed.ressectionlab": {
+          "sha256": "1d879da5da68f2711e148e9809dedb9d9db5c44d36c4ee3fba681f1d8fea19aa",
+          "bytes": 33535803,
+          "mtime_ns": 1792135832942249284
+        }
+      },
+      "case_hash": "sha256:128463ef5705f8556e16128816458fc98587d728963ad704ec997d549210098a",
+      "source_CT_arrays_and_metadata": {
+        "mri": {
+          "dtype": "<f4",
+          "shape": [
+            229,
+            277,
+            182
+          ],
+          "raw_c_order_sha256": "e3850799837635f3aaf9fbf1f2bfc322c4c68c1885d539484b21549e58b6824c"
+        },
+        "compartments": {
+          "brain": {
+            "foreground_voxels": 1246316,
+            "raw_c_order_sha256": "ec1939267e9046f5389807ae0bc98752b97d05912e3e5ebb2b28b5f623e68e8a"
+          },
+          "skull": {
+            "foreground_voxels": 737268,
+            "raw_c_order_sha256": "077641492fa9e6a48e148f65e9fa6a4e69b3c602a1c2cce422b3347f4c70e791"
+          }
+        },
+        "source_compartments": {
+          "brain": {
+            "foreground_voxels": 1246316,
+            "raw_c_order_sha256": "ec1939267e9046f5389807ae0bc98752b97d05912e3e5ebb2b28b5f623e68e8a"
+          },
+          "skull": {
+            "foreground_voxels": 737268,
+            "raw_c_order_sha256": "077641492fa9e6a48e148f65e9fa6a4e69b3c602a1c2cce422b3347f4c70e791"
+          }
+        }
+      },
+      "native_MR_arrays_and_metadata": {
+        "mri": {
+          "dtype": "<f4",
+          "shape": [
+            229,
+            277,
+            182
+          ],
+          "raw_c_order_sha256": "e2c1fd37322d3cebdc0edbca2ae61aa386ae1c04f4df23edc037919f5a494ed1"
+        },
+        "compartments": {},
+        "source_compartments": {}
+      },
+      "source_references_model_provenance_and_role_metadata_exact": true,
+      "originals": {
+        "count": 5,
+        "bytes": 17222663,
+        "files": [
+          {
+            "name": "ct.nii.gz",
+            "role": "imaging",
+            "sha256": "5a33487b11e9762c84f6b1ce8fb3e9f2c008e1ede78c57cd2a053c3cb14dead7",
+            "bytes": 8854360
+          },
+          {
+            "name": "inference.json",
+            "role": "metadata",
+            "sha256": "d4869860fd252cd9f4f9cabdc5d6d90febc6072915040bc5f89696b4c85fc470",
+            "bytes": 5397
+          },
+          {
+            "name": "brain_mask.nii.gz",
+            "role": "model-result",
+            "sha256": "dba1683c3b5eb600f4d83f9d3a7ebf8c70c9796eb10cfc94367070a0eed69028",
+            "bytes": 159748
+          },
+          {
+            "name": "skull_mask.nii.gz",
+            "role": "model-result",
+            "sha256": "bd75f0feab5ca398a746e0e7a88a598945e975d1fbf872aa950c55a7d7450aae",
+            "bytes": 202417
+          },
+          {
+            "name": "mr.nii.gz",
+            "role": "imaging",
+            "sha256": "f41eb00d101bab4b27665a6870794d6e4eb169d70bea0f9cfc28c02625dd72c0",
+            "bytes": 8000741
+          }
+        ],
+        "all_original_bytes_exact": true,
+        "primary_npz_bytes_exact": true,
+        "primary_npy_payload_multiset_exact": true,
+        "primary_npz_source_sha256": "1b676b9e2e222a5faa666cd541e2b620ef7d78e5edbf78b6eb8c4874ffc37849",
+        "primary_npz_sha256": "1b676b9e2e222a5faa666cd541e2b620ef7d78e5edbf78b6eb8c4874ffc37849",
+        "packaging_note": null
+      },
+      "archive_checks": {
+        "all_native_MR_nested_member_bytes_exact": true,
+        "episode_replay_unchanged": true
+      },
+      "registration_metadata_exact": true,
+      "fusion_permitted": false,
+      "selected_modality": "CT",
+      "recorded_view_expectations_verified": {
+        "CT": {
+          "layer_opacity": {
+            "brain": 0.2,
+            "skull": 0.44
+          },
+          "visible_layers": {
+            "brain": true,
+            "skull": true
+          },
+          "volume_rendering_enabled": false
+        },
+        "T1": {
+          "no_layers": true
+        }
+      },
+      "saved_imaging_state": {
+        "selectedSeriesId": null,
+        "states": {
+          "primary": {
+            "cursor": [
+              -3,
+              -59.900001525878906,
+              165.5
+            ],
+            "viewer": {
+              "layerColor": {
+                "brain": "#65bfff",
+                "skull": "#d8e7f8"
+              },
+              "layerOpacity": {
+                "brain": 0.2,
+                "skull": 0.44
+              },
+              "volumeRendering": {
+                "enabled": false
+              }
+            },
+            "visibleLayers": {
+              "brain": true,
+              "skull": true
+            }
+          },
+          "sha256:2508a110e0226daff3463491a3ae44e5d79ac8b2c833d703f0eee1c1bc5c6cdd": {
+            "cursor": [
+              -3,
+              -59.900001525878906,
+              165.5
+            ],
+            "visibleLayers": {}
+          }
+        }
+      },
+      "saved_workspace_preferences": {
+        "case_hash": "sha256:128463ef5705f8556e16128816458fc98587d728963ad704ec997d549210098a",
+        "category": "pareto",
+        "cursor": [
+          -3,
+          -59.900001525878906,
+          165.5
+        ],
+        "overlayOpacity": 0.32,
+        "routeA": "",
+        "routeB": "",
+        "visibleLayers": {
+          "brain": true,
+          "skull": true
+        }
+      },
+      "source_and_reviewed_files_unchanged": true,
+      "training_admitted": false,
+      "clinical_validation": false,
+      "GUI_observation": "Parent performed native GUI actions; this independent audit verifies the saved artifacts only"
+    }
+  ],
+  "frozen_audits_unchanged": {
+    "artifacts/poc-synthrad-bc-integration-v1/independent-qa.json": {
+      "sha256": "90eadfb9fd95d4c64778a7356791c49da8735bee8b21562ebe70f3f84d617346",
+      "bytes": 20068,
+      "mtime_ns": 1792134419846300650
+    },
+    "artifacts/poc-synthrad-bc-preparation-v1/receipt.json": {
+      "sha256": "50ba6725e4c118f8f13f7acfcc27359be55028f13e948cccb5bb30b9333ebc35",
+      "bytes": 27027,
+      "mtime_ns": 1792134221261962830
+    },
+    "artifacts/patient-corpus-ten-person-v1/independent-qa.json": {
+      "sha256": "2d28dcde7d6e7ff3a432ae6fe81e3cab7fa082e6ab5f05b5ecfbcd90c685951d",
+      "bytes": 19405,
+      "mtime_ns": 1792133803414957857
+    }
+  },
+  "auditor_sha256": "777896172798d3a67080c261db5a0d836862c50325f1b48e65c828aa870f7b94",
+  "pins_sha256": "f2cffbcc29df2a7205d98503d8e872cb3262da4ea25e575806d69e75fdd43711",
+  "model_imports_or_inference": false,
+  "source_output_directory_bytes_unchanged": 148745103,
+  "source_and_model_output_bytes_unchanged": 149452038,
+  "own_process_peak_rss_bytes": 884244480,
+  "auditor_adjustments": [
+    "The frozen149452038-byte denominator includes the source directory plus two model-output directories; the source directory alone is148745103 bytes. Initial GUI audit assertion omitted the two model directories; corrected before any bundle decoding."
+  ],
+  "limitations": [
+    "Preservation and persistence checks do not establish model accuracy or anatomical completeness.",
+    "Native GUI interaction and fresh-process visual checks were observed separately by the parent."
+  ]
+}

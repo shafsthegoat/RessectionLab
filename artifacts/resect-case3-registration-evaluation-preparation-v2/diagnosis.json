@@ -1,0 +1,37 @@
+{
+  "case_id": "RESECT:Case3",
+  "coordinate_values_printed_or_committed": false,
+  "development_status": "Actual full tag exposed for subsequent development; no held-out or independent accuracy claim.",
+  "exposure_timing": "after frozen image-only fit and initial ROOT evaluation release; syntax diagnosis explicitly authorized by ROOT",
+  "frozen_source_commit": "21e7b1b3fd07588597f382219d76a1f54eb88dcb",
+  "frozen_v1_records_preserved_byte_exact": true,
+  "image_arrays_read": false,
+  "initial_attempt": {
+    "accuracy_computed": false,
+    "coordinate_output_published": false,
+    "exact_full_tag_bytes_read": true,
+    "metadata_gate_passed": true,
+    "parser_error_code": "EXACTLY_SIX_FINITE_NUMBERS_PER_ROW_REQUIRED",
+    "source_bytes": 1190,
+    "source_sha256_matched": true
+  },
+  "initial_evaluator_sha256": "ac821134851d4b310ae6e5f7b12187e36b90266a8105ffce0737c4876af5cab0",
+  "initial_preparation_sha256": "ac278b45fe7dc3db95c789bf6ede84d23df23ffa60fe0c024ac77ea5a24a2e6b",
+  "initial_refusal_sha256": "49f7d947e44487c7e7a274628541a7b5a3611d389d731d4be3d9b14dbf28bd16",
+  "initial_root_release_sha256": "d7456f28c99c378b0032210a2d73ad430814f66b46d77037ef46248fbf66aa76",
+  "permitted_correction": "Accept one optional trailing empty quoted label after exactly six finite fields. Preserve all rows and every scoring/transform rule; reject other labels or extra fields.",
+  "prior_actual_tag_exposure": true,
+  "refitting_or_parameter_selection": false,
+  "role": "TRAIN",
+  "schema": "resect-case3-registration-format-diagnosis-v2",
+  "short_tag_read": false,
+  "status": "format_only_empty_minc_label_incompatibility",
+  "syntax_diagnosis": {
+    "all_numeric_fields_finite": true,
+    "final_row_label_adjacent_to_terminator": true,
+    "numeric_fields_per_row": 6,
+    "point_rows": 17,
+    "single_final_terminator": true,
+    "trailing_field": "empty quoted MINC label"
+  }
+}

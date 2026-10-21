@@ -1,0 +1,37 @@
+{
+  "schema": "ixi265-tissue-display-root-release-v1",
+  "created_utc": "2026-10-16T08:42:54.080593+00:00",
+  "authority": "ROOT explicit single-package release",
+  "one_attempt": true,
+  "pins": {
+    "script": {
+      "path": "scripts/prepare_ixi265_tissue_display.py",
+      "sha256": "0e6b716c23ac7674779a48f8aa0145db77770dae38c5a08d9cc0d006b0525e3c"
+    },
+    "preparation": {
+      "path": "artifacts/ixi265-tissue-display-preparation-v1/preparation.json",
+      "sha256": "820d552f82e07fe2ab2d0dcac9df0c4c464c7075b3b4b756f795a171a51a0ead"
+    },
+    "prospective_false_spec": {
+      "path": "artifacts/ixi265-tissue-display-preparation-v1/prospective-package-spec.json",
+      "sha256": "8abe80bac04e42d1b9742d4ce5ce24df36f37eac026ec33fe793ecba720397e9"
+    },
+    "independent_result_QA": {
+      "path": "artifacts/ixi265-typed-mask-independent-v3/result-qa.json",
+      "sha256": "0b2918d3d6d1c17e772cad4649689f67ff9546083eced8bfe7d5796db0ed6509"
+    }
+  },
+  "resources": {
+    "threads": 2,
+    "family_plus_supervisor_rss_bytes": 2147483648,
+    "seconds": 300,
+    "available_memory_floor_bytes": 1073741824,
+    "output_temporary_limit_bytes": 536870912,
+    "free_disk_floor_bytes": 53687091200
+  },
+  "no_retry_or_overwrite": true,
+  "anatomy_accepted": false,
+  "host_accepted": false,
+  "growth_use_accepted": false,
+  "payload_independent_audit_requires_separate_release": true
+}

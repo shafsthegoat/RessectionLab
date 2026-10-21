@@ -1,0 +1,530 @@
+{
+  "schema": "independent-stage3-software-qa-v1",
+  "created_utc": "2026-10-16T06:23:28.957800+00:00",
+  "status": "pass",
+  "source_sha256": {
+    "src/resectionlab/virtual_glioma.py": "ac6bf026b204edb3ea4f853aa6749c0385eb7f16b48d0ef2b1e8d5c469802555",
+    "src/resectionlab/patient_corpus.py": "0a3c6ab474cd7ecc1ae3711e02d8f96f329dc07ac6b7417e96ff6a675c614e69",
+    "src/resectionlab/rehearsal_episode.py": "4c5b0b8b7d941069b54266904383f1a3113d96830847bf9cd3ba02f28807e6fe",
+    "scripts/qualify_patient_corpus.py": "a2425d9b865a4485ac925b2c2a93535a56758ad5f243c3deb36e689123c0a7ae",
+    "tests/first_corpus_qa.py": "1c2aacc0c1b89250c307410358366251209cb4643b247cd1d460b2e9feff5832"
+  },
+  "checks": {
+    "numerical": {
+      "status": "pass",
+      "generated_control_only": true,
+      "source_shape": [
+        11,
+        10,
+        9
+      ],
+      "simulation_shape": [
+        6,
+        5,
+        4
+      ],
+      "oblique_reflected_anisotropic_coarse_mapping_exact": true,
+      "manual_trilinear_fractions_and_nearest_brain": true,
+      "identical_oblique_source_grid_preserves_every_boundary_voxel": true,
+      "physical_gaussian_max_error": 1.942890293094024e-16,
+      "dense_independent_face_operator_max_error": 1.942890293094024e-16,
+      "steps": 14,
+      "physical_time_days": 1.7,
+      "source_preserved": true,
+      "foreign_fractions_rejected": true,
+      "hidden_annotation_and_hazard_metadata_invariance": true,
+      "source_wm_gm_are_generated_controls": true,
+      "simulation_id": "sha256:0b73d88702abe9eb3813c09a925a526fd7e738a80055f21cb302f5bb7d67f9bb"
+    },
+    "analytic_diffusion": {
+      "status": "pass",
+      "analytic_problem": "Neumann no-flux cosine diffusion on a 16mm domain",
+      "cells": [
+        8,
+        16,
+        32
+      ],
+      "max_errors": [
+        5.285402068655465e-05,
+        1.3391796920003696e-05,
+        3.359090771704043e-06
+      ],
+      "refinement_ratios": [
+        3.946745982057504,
+        3.986732669689105
+      ],
+      "conserved_integral_and_discrete_maximum_principle": true,
+      "upstream_commit": "162c2cbbab5882fff7c3c05d9fedd87453298a0f",
+      "upstream_source_urls": [
+        "https://raw.githubusercontent.com/m1balcerak/TumorGrowthToolkit/162c2cbbab5882fff7c3c05d9fedd87453298a0f/TumorGrowthToolkit/FK/FK.py",
+        "https://raw.githubusercontent.com/m1balcerak/TumorGrowthToolkit/162c2cbbab5882fff7c3c05d9fedd87453298a0f/TumorGrowthToolkit/base_solver.py",
+        "https://raw.githubusercontent.com/m1balcerak/TumorGrowthToolkit/162c2cbbab5882fff7c3c05d9fedd87453298a0f/LICENSE"
+      ],
+      "upstream_files": {
+        "TumorGrowthToolkit/FK/FK.py": {
+          "sha256": "cf66c619a42876351ca90f75ef92fe1fb8bf611cdda0f10404b3ab28cced8f88",
+          "bytes": 11731
+        },
+        "TumorGrowthToolkit/base_solver.py": {
+          "sha256": "4d8df08041a8170dcb5db0d0a8e4ee1d9e016a6287875adfcecbc1ba2a80e84a",
+          "bytes": 189
+        },
+        "LICENSE": {
+          "sha256": "fe6b4ce9724b2e8ce5e281875448293931a6164c66f49f774d54b55599d8684d",
+          "bytes": 1072
+        }
+      },
+      "license": "MIT",
+      "upstream_solve_not_executed": true
+    },
+    "metadata_guards": {
+      "status": "pass",
+      "cases": [
+        {
+          "component": "corpus",
+          "declaration": {
+            "roles": {
+              "SELECT": true
+            }
+          },
+          "rejected_before_payload": true
+        },
+        {
+          "component": "virtual_glioma",
+          "declaration": {
+            "roles": {
+              "SELECT": true
+            }
+          },
+          "rejected_before_payload": true
+        },
+        {
+          "component": "corpus",
+          "declaration": {
+            "split": {
+              "SELECT": true
+            }
+          },
+          "rejected_before_payload": true
+        },
+        {
+          "component": "virtual_glioma",
+          "declaration": {
+            "split": {
+              "SELECT": true
+            }
+          },
+          "rejected_before_payload": true
+        },
+        {
+          "component": "corpus",
+          "declaration": {
+            "split": {
+              "name": "SELECT"
+            }
+          },
+          "rejected_before_payload": true
+        },
+        {
+          "component": "virtual_glioma",
+          "declaration": {
+            "split": {
+              "name": "SELECT"
+            }
+          },
+          "rejected_before_payload": true
+        },
+        {
+          "component": "corpus",
+          "declaration": {
+            "roles": {
+              "SELECT": "true"
+            }
+          },
+          "rejected_before_payload": true
+        },
+        {
+          "component": "virtual_glioma",
+          "declaration": {
+            "roles": {
+              "SELECT": "true"
+            }
+          },
+          "rejected_before_payload": true
+        },
+        {
+          "component": "corpus",
+          "declaration": {
+            "roles": {
+              "SELECT": 1
+            }
+          },
+          "rejected_before_payload": true
+        },
+        {
+          "component": "virtual_glioma",
+          "declaration": {
+            "roles": {
+              "SELECT": 1
+            }
+          },
+          "rejected_before_payload": true
+        },
+        {
+          "component": "corpus",
+          "declaration": {
+            "source_collection": {
+              "name": "UPENN-GBM"
+            }
+          },
+          "rejected_before_payload": true
+        },
+        {
+          "component": "virtual_glioma",
+          "declaration": {
+            "source_collection": {
+              "name": "UPENN-GBM"
+            }
+          },
+          "rejected_before_payload": true
+        },
+        {
+          "component": "corpus",
+          "declaration": {
+            "parent": {
+              "source_collection": {
+                "name": "UPENN-GBM"
+              }
+            }
+          },
+          "rejected_before_payload": true
+        },
+        {
+          "component": "virtual_glioma",
+          "declaration": {
+            "parent": {
+              "source_collection": {
+                "name": "UPENN-GBM"
+              }
+            }
+          },
+          "rejected_before_payload": true
+        },
+        {
+          "component": "corpus",
+          "declaration": {
+            "source_collection": {
+              "name": "UTSW"
+            }
+          },
+          "rejected_before_payload": true
+        },
+        {
+          "component": "virtual_glioma",
+          "declaration": {
+            "source_collection": {
+              "name": "UTSW"
+            }
+          },
+          "rejected_before_payload": true
+        },
+        {
+          "component": "corpus",
+          "declaration": {
+            "parent": {
+              "usageRole": "MEASUREMENT_EVAL"
+            }
+          },
+          "rejected_before_payload": true
+        },
+        {
+          "component": "virtual_glioma",
+          "declaration": {
+            "parent": {
+              "usageRole": "MEASUREMENT_EVAL"
+            }
+          },
+          "rejected_before_payload": true
+        }
+      ],
+      "failures": [],
+      "false_protected_flag_true_train_control_accepted": true
+    },
+    "generated_resume": {
+      "status": "pass",
+      "generated_software_fixture_only": true,
+      "resume_same_catalog_hash_without_numeric_decode": true,
+      "source_byte_change_refuses_cached_receipt_before_decode": true,
+      "rejection_stays_in_denominator": true,
+      "protected_role_change_rejected": true,
+      "temporary_generated_files_removed": true
+    },
+    "real_catalog": {
+      "status": "pass",
+      "catalog_hash": "sha256:cbdc9f654547ec771cf0d269b685b86e66427bfbc3946b90759cbc55f758a093",
+      "plan_hash": "sha256:2945f141cd2e91dd661e4502e06544ca636adeac98f57c354bf56ea3486bad7f",
+      "counts": {
+        "anatomical_presence_combinations": {
+          "brain_plus_skull": 1,
+          "brain_plus_tumor": 7,
+          "brain_plus_vessels": 0,
+          "brain_tumor_skull_vessels": 0
+        },
+        "anatomical_truth_accepted_people": 0,
+        "existing_materialized_people": 9,
+        "newly_acquired_people": 0,
+        "pending": 0,
+        "qualified_existing_people": 9,
+        "rejected": 0
+      },
+      "receipt_seals_and_source_hash_lineage_verified": true,
+      "latest_catalog_has_nine_receipt_resume_record": true,
+      "entries": [
+        {
+          "patient_group": "BTC:sub-PAT05",
+          "role": "TRAIN",
+          "receipt_hash": "sha256:03ee4e70340e3afdec979a4cb08e718c790b1efc339db4ef6731c51b1c387a73",
+          "bundle_sha256": "c1af712957dc4902343995bd828eb0c3662438f8445c5cb7401e6dd50f7a4e12",
+          "anatomy_present": [
+            "brain",
+            "tumor"
+          ],
+          "missing_anatomy": [
+            "skull",
+            "ventricles",
+            "vessels"
+          ],
+          "lobe": "UNKNOWN",
+          "hemisphere": "UNKNOWN",
+          "registration_statuses": []
+        },
+        {
+          "patient_group": "BTC:sub-PAT16",
+          "role": "TRAIN",
+          "receipt_hash": "sha256:26a8c99c95579f7335a6f45fbf4607e958141d5d9c7e4dfa21d8922e7bb64ca8",
+          "bundle_sha256": "b906e1c061450526e4ed4737f17f880f1ab7fdf35d667d1d6f8d7eb55b3c416b",
+          "anatomy_present": [
+            "brain",
+            "tumor"
+          ],
+          "missing_anatomy": [
+            "skull",
+            "ventricles",
+            "vessels"
+          ],
+          "lobe": "UNKNOWN",
+          "hemisphere": "UNKNOWN",
+          "registration_statuses": []
+        },
+        {
+          "patient_group": "BTC:sub-PAT20",
+          "role": "TRAIN",
+          "receipt_hash": "sha256:f723cffaa8fa3c2ec7de86daf476118d7204b9285080df411e2e30b37185f0ce",
+          "bundle_sha256": "edd4d0d149cf27e81dbc67c2742fd14dff5bfa6fa1c63ad111fecb4b48eca66b",
+          "anatomy_present": [
+            "brain",
+            "tumor"
+          ],
+          "missing_anatomy": [
+            "skull",
+            "ventricles",
+            "vessels"
+          ],
+          "lobe": "UNKNOWN",
+          "hemisphere": "UNKNOWN",
+          "registration_statuses": []
+        },
+        {
+          "patient_group": "BTC:sub-PAT22",
+          "role": "TRAIN",
+          "receipt_hash": "sha256:29ea449bc86b38794caf9cea8833f4dbd0dc7f7165f3dadf2d7701e08bc3624d",
+          "bundle_sha256": "a12ac7c2325b2c87137c112fae9c4b7ebe33e40e40cdd9bcff192d891a4b562e",
+          "anatomy_present": [
+            "brain",
+            "tumor"
+          ],
+          "missing_anatomy": [
+            "skull",
+            "ventricles",
+            "vessels"
+          ],
+          "lobe": "UNKNOWN",
+          "hemisphere": "UNKNOWN",
+          "registration_statuses": []
+        },
+        {
+          "patient_group": "BTC:sub-PAT25",
+          "role": "TRAIN",
+          "receipt_hash": "sha256:2dfb4154354d2f92c89be1abc476eb8268049923c20e7761cc245343daae7d39",
+          "bundle_sha256": "d635a72cc24066c2b16dc7b6d6805baae04d1750c50ca351b2410a70d913428a",
+          "anatomy_present": [
+            "brain",
+            "tumor"
+          ],
+          "missing_anatomy": [
+            "skull",
+            "ventricles",
+            "vessels"
+          ],
+          "lobe": "UNKNOWN",
+          "hemisphere": "UNKNOWN",
+          "registration_statuses": []
+        },
+        {
+          "patient_group": "BTC:sub-PAT28",
+          "role": "TRAIN",
+          "receipt_hash": "sha256:c865a6b2b122b3853f7f3b510800127bb9ebe6b2221f96943feddab9e92f8f1a",
+          "bundle_sha256": "f7fc9491cf74634de5b2be36dd5968c7e161a7b7fc22698a7045d7453c95a747",
+          "anatomy_present": [
+            "brain",
+            "tumor"
+          ],
+          "missing_anatomy": [
+            "skull",
+            "ventricles",
+            "vessels"
+          ],
+          "lobe": "UNKNOWN",
+          "hemisphere": "UNKNOWN",
+          "registration_statuses": []
+        },
+        {
+          "patient_group": "Lausanne:sub-000",
+          "role": "TRAIN",
+          "receipt_hash": "sha256:9a06dc81ea4738d6736b7cecfd09c10aeb0bad1d1fa1f79270a4b39f1c66af2b",
+          "bundle_sha256": "257fa5b5558e672fb78dddbfe55d9574d87cd1f0776e6cc8c5d9d086d2ada18c",
+          "anatomy_present": [
+            "vessels"
+          ],
+          "missing_anatomy": [
+            "brain",
+            "skull",
+            "tumor",
+            "ventricles"
+          ],
+          "lobe": "UNKNOWN",
+          "hemisphere": "UNKNOWN",
+          "registration_statuses": []
+        },
+        {
+          "patient_group": "SynthRAD2023:1BA336",
+          "role": "TRAIN",
+          "receipt_hash": "sha256:483b28f8eab662d7ef96b4c96710f104b76c5b932c63102cc2f7bd2126738ed7",
+          "bundle_sha256": "98e2566e458c762ed75c07bd370a8a06797a1a79c74ce8cdc15ff09bf1e66f81",
+          "anatomy_present": [
+            "brain",
+            "skull"
+          ],
+          "missing_anatomy": [
+            "tumor",
+            "ventricles",
+            "vessels"
+          ],
+          "lobe": "UNKNOWN",
+          "hemisphere": "UNKNOWN",
+          "registration_statuses": []
+        },
+        {
+          "patient_group": "UCSF-PDGM:004",
+          "role": "DEVELOPMENT",
+          "receipt_hash": "sha256:96742afa06b8ad7a81c72bb96c528df12aeb018992a927536a95b254db551228",
+          "bundle_sha256": "73cd0792c025e846395bafffe5ec793ef9e1823ceec8e4b0aeb8317783041571",
+          "anatomy_present": [
+            "brain",
+            "tumor"
+          ],
+          "missing_anatomy": [
+            "skull",
+            "ventricles",
+            "vessels"
+          ],
+          "lobe": "UNKNOWN",
+          "hemisphere": "UNKNOWN",
+          "registration_statuses": [
+            "source-provided",
+            "source-provided",
+            "source-provided"
+          ]
+        }
+      ],
+      "scope": "Metadata-only receipt consistency; previously recorded imaging equality not independently decoded here",
+      "real_patient_arrays_opened_by_this_audit": 0,
+      "protected_payloads_opened_by_this_audit": 0
+    }
+  },
+  "retained_findings": [
+    {
+      "id": "CORPUS_STRUCTURED_PROTECTED_ROLE_BYPASS",
+      "initial_status": "reproduced_metadata_only",
+      "examples": [
+        "roles={SELECT:true}",
+        "split={SELECT:true}",
+        "source_collection.name=UPENN-GBM"
+      ],
+      "initial_effect": "Accepted under an allowlisted TRAIN identity; no protected payload was opened by audit"
+    },
+    {
+      "id": "VALID_OBLIQUE_TISSUE_MAPPING_REJECTED",
+      "initial_status": "reproduced_generated_control",
+      "initial_effect": "Linear interpolation of valid binary tissue masks produced1.0000000000000002; exact per-layer bound rejected the host",
+      "required_fix": "Separate documented floating-point interpolation tolerance from material invalid fractions and solver result clipping"
+    },
+    {
+      "id": "VIRTUAL_HOST_STRUCTURED_ROLE_AND_NESTED_COLLECTION_BYPASS",
+      "initial_status": "reproduced_metadata_only",
+      "examples": [
+        "roles={SELECT:'true'}",
+        "roles={SELECT:1}",
+        "parent.source_collection.name=UPENN-GBM",
+        "source_collection.name=UTSW"
+      ],
+      "initial_effect": "Shared development admission helper accepted these declarations; only generated numerical controls were used"
+    },
+    {
+      "id": "IDENTICAL_OBLIQUE_GRID_BOUNDARY_LOSS",
+      "initial_status": "reproduced_generated_control",
+      "initial_effect": "Floating roundoff in inv(A)@A made constant-zero interpolation drop63 brain,54 WM and27 GM control voxels on an identical source/target grid",
+      "required_fix": "Preserve exact same-grid identity and document numerical handling of physical mapping"
+    }
+  ],
+  "limitations": [
+    "Generated numerical controls do not establish biological validity or patient-specific growth accuracy.",
+    "No real-host growth pilot, training, inference or new patient acquisition performed by this auditor.",
+    "Catalog source-image equality is a retained engineering receipt claim; this review opens only metadata."
+  ],
+  "resolved_findings": {
+    "CORPUS_STRUCTURED_PROTECTED_ROLE_BYPASS": "Structured protected keys and nested collection identity rejected before payload; independently verified.",
+    "VALID_OBLIQUE_TISSUE_MAPPING_REJECTED": "Only eight float64 epsilon interpolation excursions permitted and recorded; no clipping or renormalization; independent physical operator agrees within1.95e-16.",
+    "VIRTUAL_HOST_STRUCTURED_ROLE_AND_NESTED_COLLECTION_BYPASS": "Shared guard rejects protected key activation except explicit False/None and nested UPENN/UTSW identity;18 independent paired controls pass.",
+    "IDENTICAL_OBLIQUE_GRID_BOUNDARY_LOSS": "Exact affine and shape identity copies arrays and records identity mapping; every source boundary voxel preserved in independent control."
+  },
+  "proposed_ixi_pilot_review": {
+    "status": "pass_code_review_and_generated_controls_only",
+    "review_utc": "2026-10-16T06:24:31.120158+00:00",
+    "source_sha256": {
+      "scripts/poc_ixi265_virtual_glioma.py": "e445b11bcc660c55ee24b30dd3777974ac605d9e223bd3310316ec029c3100c8",
+      "tests/test_poc_ixi265_virtual_glioma.py": "06f8075f202c02bee4efb4e748f99d2f9cd5cd23aa548e553d0274b65255523a"
+    },
+    "generated_test_result": "4 passed in0.20s",
+    "generated_test_scope": [
+      "oblique/reflected physical bounding grid",
+      "independent native-mask coordinate transfer and explicit brain intersection",
+      "deterministic interior seed without anatomical labels",
+      "wrong host rejected before bundle decoding"
+    ],
+    "material_issues_found": [],
+    "reviewed_contract": [
+      "Exact host hash admission before decoding",
+      "Exact archived publisher health-page hash required; cohort statement is not individual pathology review",
+      "TRAIN inherited with training_admitted=false",
+      "Uniform diffusion explicitly lacks GM/WM classification and CSF barriers",
+      "No actual hemisphere/lobe label inferred from normalized parameter location",
+      "PDE result and native display transfer recorded separately",
+      "Source images, brain envelope, original files and source annotations preserved by save/reopen checks",
+      "One virtual lesion adds zero people and does not enter the frozen nine-person catalog"
+    ],
+    "real_host_payload_opened_by_this_audit": false,
+    "actual_pilot_executed_by_this_audit": false,
+    "remaining_qualification": "Actual host source checks, resource runtime, generated overlay and persistence still require a separate pilot result; this preflight is not anatomical or clinical acceptance."
+  }
+}

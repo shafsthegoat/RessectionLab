@@ -1,0 +1,40 @@
+exit_code: 0
+✔ packaged default needs no app.asar catalog; native selection persists canonical root and twelve source-bound rows across fresh instances (39.6065ms)
+✔ development defaults retain the existing checkout without creating a selection record (4.026166ms)
+✔ cancelled, empty, malformed and unqualified selections preserve the previous library and exact persisted record (19.65925ms)
+✔ saved catalog tampering fails closed on restart and at open, but native selections remain independently remembered (19.122625ms)
+✔ settings tamper, missing roots and redirected saved folders do not silently fall back to default browsing (9.879125ms)
+✔ preload folder chooser transmits no renderer-supplied path or configuration (0.885916ms)
+✔ live selected catalog metadata loss blocks listing and opaque opens visibly while native remember remains independent (11.925625ms)
+✔ live same-path directory replacement is blocked even when copied catalog bytes and IDs are identical (12.170542ms)
+✔ selected twelve cannot silently downgrade to ten, while unselected development fallback is unchanged (15.756292ms)
+✔ optional reported-site evidence can disappear without breaking selected admission or its saved IDs (21.200792ms)
+✔ case library retains only successful local selections and resolves opaque listed IDs (6.645666ms)
+✔ native collections retain distinct source identities and exclude invalid or unavailable files (7.128334ms)
+✔ sealed metadata lists exactly ten own-source cases without any bundle existing or being read (12.273375ms)
+✔ an absent optional catalog preserves native, prepared and recent browsing without catalog authority (16.785ms)
+✔ optional absence never suppresses an existing changed release or a catalog without its release (4.774833ms)
+✔ dangling catalog or release paths remain errors rather than optional absence (3.800208ms)
+✔ metadata policy refuses protected roles, changed source binding, virtual lineage and escaped paths before payload IO (5.451916ms)
+✔ corrupt, oversized, redirected or newly changed catalog/release metadata fails closed (5.966042ms)
+✔ released symlink aliases inherit the catalog guard and cannot bypass it as recents or prepared paths (7.551458ms)
+✔ a catalog-shaped filename redirected outside its exact released root is refused before bundle reads (4.479417ms)
+✔ bundle opening checks all expected bytes and refuses same-size corruption without payload decoding (1.611459ms)
+✔ twelve is preferred over ten without duplicate rows or bundle reads, and IDs bind the chosen release (12.715042ms)
+✔ genuinely absent twelve catalog falls back to ten, then legacy browsing when both catalogs are absent (17.517333ms)
+✔ present twelve metadata is checked even if another part is absent, and an existing catalog requires complete lineage (12.000291ms)
+✔ redirected and dangling twelve metadata never silently falls back to ten (6.89925ms)
+✔ twelve metadata refuses protected roles, changed base-ten membership, source substitutions and altered new bundle identities (12.342791ms)
+✔ new SynthRAD aliases remain one catalog row and retain exact bundle and current-release checks before opening (13.999667ms)
+✔ six source sites decorate only exact twelve-catalog members without changing IDs, canonical anatomy or reading bundles (8.970791ms)
+✔ missing optional source evidence and missing twelve catalog preserve unlabelled ten and legacy browsing (11.241667ms)
+✔ source-location metadata refuses mismatched catalog, source, paper, member, role, review state and reported fields (7.911083ms)
+✔ present changed, oversized or redirected source evidence fails closed before any selected bundle open (10.751333ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 211.800375

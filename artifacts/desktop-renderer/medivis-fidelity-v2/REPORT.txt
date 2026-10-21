@@ -1,0 +1,90 @@
+Medivis-inspired visual fidelity v2
+
+The existing Electron viewer now has substantially less tissue haze, larger
+linked source images, a subtle magenta brain rim, and a separate real CTA case
+with published arterial and venous labels. Actual GPU captures and independent
+cross-review show a closer visual hierarchy and cutaway composition; they do
+not establish Medivis parity or anatomical accuracy. Only GPT-6.1 Sol high
+subagents were used. Work stayed in the existing primary checkout.
+
+Visible changes
+- Explicit edge-shell context and physical-gradient MRI extinction reduce the
+  gray interior veil. Uniform transparency remains selectable; old saves retain
+  it unless a new presentation is selected. Float LUTs retain low extinction.
+- MRI slices use more of each tile, with physical-scale content/full-image fit,
+  visible zoom controls, and synchronized pointer/overlay sampling. Full source
+  extent remains accessible. Default zoom is 100%; 125% can crop pane edges.
+- CTA context uses its declared packed source membership and configured ivory
+  color. High contrast alone no longer forces a voxel to opaque bone when a
+  context label exists. Rust/blue artery/vein identities come from publisher
+  labels. Opaque context, axial cutaway, orbit and linked CTA slices work.
+
+Sources and limits
+1. Existing ZENODO-17486320 meningioma sub-06 T1CE, supplied 0.5 mm grid.
+   Experimental T1CE vessel estimates, tumor, brain and estimated CT alignment
+   retain their provenance warnings. All 1,167 source vessel components remain;
+   peripheral/inferior false-positive candidates are visible. No gaps joined,
+   source pieces deleted, or artery/vein identities invented for this MRI.
+   Native source: /Users/shaf/Downloads/RessectionLab-Native-Anatomy-sub-06/patient-anatomy.json
+2. TopBrain Challenge Organizers, TopBrain Challenge Data Release, Batch1
+   July 30 2025, fixed case topcow_ct_001, https://zenodo.org/records/16623496.
+   Cite https://topbrain2025.grand-challenge.org and Yang et al., TopCoW,
+   https://arxiv.org/abs/2312.17670. One bounded acquisition transferred 30.29 MB.
+   Published braincase crop: 284 x 327 x 243, 0.507813 x 0.507813 x 0.625 mm.
+   Same-grid exact source label unions contain 44,951 arterial and 34,226 venous
+   voxels. Left ICA/MCA annotation classes and other branches are missing; no
+   cause or missing anatomy is inferred. Threshold-derived high-attenuation
+   context is explicitly an estimate, not a reviewed skull segmentation. Its
+   2.18M-triangle source fallback and small vessel surfaces remain terraced.
+   No new inference, registration, cross-patient fusion or quantitative source
+   edit. Original NIfTI, label bytes and affine are retained. Native source:
+   /Users/shaf/coding_projects/RessectionLab/outputs/poc-angio-fidelity-v2/native-cta/patient-anatomy.json
+   License: attribution and noncommercial use; commercial use requires prior
+   USZ permission. Exact license, source notice, hashes and original producer
+   scripts are in source-qc/. Raw patient arrays remain local, outside Git.
+
+Acceptance and performance
+- Production build passes; 707 desktop tests pass (164 main, 392 renderer,
+  151 viewer). Python native/portable save workflows: 43 tests pass.
+- Full MRI GPU run: 15 checks; final MRI showcase: 7; final CTA GPU run: 15.
+  No renderer errors. Source manifest and all 25 MRI / 7 CTA arrays unchanged.
+  Checks include presets, reversible structures/volume, opacity, fragment
+  inspection, linked cursor, fit/zoom scale, clipping and native save/reopen.
+- Final MRI Segmentation: median 25.62 presented FPS, p95 interval 43.20 ms,
+  post-drag refinement 574.5 ms. CTA Vascular: 29.79 FPS, p95 47.77 ms,
+  refinement 639.4 ms. Each default refinement measurement has N=1.
+- End-of-run Electron working-set plus Python RSS snapshots sum to about
+  1.04 GiB MRI / 0.98 GiB CTA. These process metric sums are neither unique
+  physical memory nor simultaneous peaks. See original report.json receipts.
+- Physical pointer/scale agreement in MRI is within 0.015 mm at 100% and
+  0.009 mm at 125%, subject to rounded UI coordinates and source sampling.
+
+Evidence
+mri-before-after.png compares the same sub-06 left view with the previous
+sprint. mri-medivis-reference.png and cta-medivis-reference.png preserve full
+frames, label source differences, and compare against the user's video frames.
+Rotation/cutaway MP4s use actual Electron frames. Frame timestamps are retained
+within each segment; UI transition gaps are omitted and final frames held.
+Recording overhead is included in motion receipts, separate from the no-capture
+FPS benchmark. Comparison videos use independent capture timelines, with no
+synthetic motion interpolation. Source references are different patients.
+The MRI before/after rotation uses Vascular on both sides; the final standalone
+sub06-v2-rotation-cutaway.mp4 uses Segmentation. The CTA movie beside the user's
+Medivis recording is local at outputs/medivis-fidelity-v2/cta-medivis-comparison.mp4;
+the new app-only CTA recording is included here. Original supplied videos remain
+in Downloads. No original reference video was added to the repository.
+independent-review.json records visible improvements and remaining limitations.
+
+Run from /Users/shaf/coding_projects/RessectionLab/desktop:
+pnpm build
+pnpm exec electron . --anatomy /Users/shaf/coding_projects/RessectionLab/outputs/poc-angio-fidelity-v2/native-cta/patient-anatomy.json
+For full acceptance, use electron/verify-visual-fidelity.cjs with FIDELITY_CTA=1.
+FIDELITY_SHOWCASE_ONLY=1 captures a focused presentation; FIDELITY_MOTION_ONLY=1
+records motion after separately completed acceptance. FIDELITY_FLUID_MOTION=1
+records delivered viewport frames. Mutating checks operate on disposable clones.
+To recover a fresh CTA package, copy source-qc/producers/ into the original
+outputs/poc-angio-fidelity-v2 location, run recover_selected.py then package_native.py
+with the repository Python environment. The packager refuses an existing native
+collection. Hashes of original recovered source bytes are the recovery identity;
+generated manifest timestamps may differ. correct_semantic_kinds.py is retained
+as the historical metadata-only migration receipt, not needed for a fresh package.

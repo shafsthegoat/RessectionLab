@@ -1,0 +1,22 @@
+{
+  "status": "passed: static orchestration review",
+  "orchestratorSha256": "b04861babeba620e6a564be50ad4f9d6ebd10ea4b53eda47b354879f9336069a",
+  "scope": "Read-only AST/source review; never executed orchestrator or patient physics",
+  "serialStages": [
+    "primary-canonical",
+    "vascular-canonical",
+    "primary-telemetry",
+    "vascular-telemetry",
+    "primary-every-frame",
+    "vascular-every-frame"
+  ],
+  "argumentsAndReceiptKeysMatchCurrentScripts": true,
+  "freezeChecks": "SHA of final native, implementation fingerprint, exact HEAD and clean tracked status before and after each stage",
+  "retryPolicy": "Existing progress refuses rerun; exclusive logs/output/trace refusal; any subprocess/result/freeze failure halts without retry",
+  "optimizedPython": "Explicit refusal before implementation import, freeze read or admission",
+  "guiVideoClaim": "Final success explicitly leaves GUI video/persistence gate separate",
+  "limits": [
+    "Operational completion and physical correctness depend on six actual stage receipts, not this static review.",
+    "Ignored review script hashes are not in production implementation fingerprint; do not modify helpers during run."
+  ]
+}

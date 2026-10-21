@@ -1,0 +1,62 @@
+{
+  "schema": "virtual-glioma-tissue-review-guard-v1",
+  "source_and_test_pins": {
+    "src/resectionlab/virtual_glioma.py": {
+      "sha256": "c726a61516a68809f45ace18cf51f7bf547d40816be81cb0cb47aa7e3ef2a03d",
+      "bytes": 44101
+    },
+    "tests/test_virtual_glioma_tissue_review.py": {
+      "sha256": "3a213e1bfc547b868bbdd338ed2eca09c359332c313de6ac325a0ab98a4b2289",
+      "bytes": 13320
+    },
+    "tests/test_virtual_glioma.py": {
+      "sha256": "2151f751129551557479febf8431823a1864b7ccea2eeff45d75702753a715e1",
+      "bytes": 23346,
+      "unchanged_from_git_HEAD": true
+    },
+    "tests/test_poc_ixi265_virtual_glioma.py": {
+      "sha256": "06f8075f202c02bee4efb4e748f99d2f9cd5cd23aa548e553d0274b65255523a",
+      "bytes": 3474,
+      "unchanged_from_git_HEAD": true
+    },
+    "tests/first_corpus_qa.py": {
+      "sha256": "1c2aacc0c1b89250c307410358366251209cb4643b247cd1d460b2e9feff5832",
+      "bytes": 24427,
+      "unchanged_from_git_HEAD": true
+    },
+    "artifacts/virtual-glioma-tissue-review-guard-v1/before.py.txt": {
+      "sha256": "ac6bf026b204edb3ea4f853aa6749c0385eb7f16b48d0ef2b1e8d5c469802555",
+      "bytes": 35755
+    },
+    "artifacts/virtual-glioma-tissue-review-guard-v1/before-generated-qualifications.json": {
+      "sha256": "2b96f8876935fcbc1366c1a1b084c94fdaa079fe84d971e8514dc1151c3b85f7",
+      "bytes": 14475
+    }
+  },
+  "validation": {
+    "command": "OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 MKL_NUM_THREADS=2 PYTHONPATH=src .tools/poc-model-runtime/venv/bin/python -m pytest -q tests/test_virtual_glioma_tissue_review.py tests/test_virtual_glioma.py tests/test_poc_ixi265_virtual_glioma.py",
+    "passed": 63,
+    "elapsed_seconds": 0.39,
+    "warnings": {
+      "count": 3,
+      "location": "scripts/poc_ixi265_virtual_glioma.py:82 (existing seed-placement test)",
+      "messages": [
+        "divide by zero encountered in matmul",
+        "overflow encountered in matmul",
+        "invalid value encountered in matmul"
+      ]
+    },
+    "git_diff_check_passed": true
+  },
+  "scope": {
+    "patient_payload_reads": 0,
+    "models_run": 0,
+    "real_host_solver_runs": 0,
+    "existing_test_edits": false,
+    "IXI_review_or_promotion_created": false,
+    "uniform_qualification_and_reconstruction": "identical pre-change golden hashes for generated and acquired-contract tiny fixtures",
+    "generated_strict_qualification": "identical pre-change golden hash for genuine simulated fixture"
+  },
+  "compatibility": "Legacy real strict qualification without an exact pair-bound review cannot be renewed. Existing artifacts are not rewritten. Generated fixtures retain the prior exemption only when all source/layer/status conditions agree.",
+  "real_strict_mapping": "Nearest-center known/UNKNOWN coverage constrains the final domain independently of linear tissue weights; mapped mask hashes retained. Interpolation weights are not physical PVE."
+}

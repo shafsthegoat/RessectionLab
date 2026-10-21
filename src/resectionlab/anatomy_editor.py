@@ -13,10 +13,17 @@ class AnatomyDraft:
         self.redo = []
         self.operations = []
 
-    def apply(self, collection, operation, **kwargs):
+    def apply(self, collection, operation, *, cancelled=lambda: False, **kwargs):
         if collection.identity() != self.snapshot_id:
             raise ValueError("Draft belongs to a stale anatomy snapshot")
-        after = collection.edit(self.layer_id, operation, mask=self.mask, **kwargs)
+        receipt = None
+        if operation == "refine-vessels":
+            from .anatomy_vessels import refine_layer
+            after, receipt = refine_layer(collection, collection.layer(self.layer_id),
+                self.mask, threshold=kwargs.get("threshold", .35),
+                radius_mm=kwargs.get("radius_mm", .8), cancelled=cancelled)
+        else:
+            after = collection.edit(self.layer_id, operation, mask=self.mask, **kwargs)
         indices = np.flatnonzero(after.ravel() != self.mask.ravel()).astype(np.uint32)
         if indices.nbytes > 256 * 1024**2:
             raise ValueError("Edit exceeds undo memory budget")
@@ -28,6 +35,7 @@ class AnatomyDraft:
         self.operations.append(
             {
                 "operation": operation,
+                **({"anatomy_estimate": receipt} if receipt else {}),
                 **{
                     k: (np.asarray(v).tolist() if k == "points" else v)
                     for k, v in kwargs.items()

@@ -1,0 +1,73 @@
+{
+  "schema": "resectionlab-ixi265-n4-atropos-real-run-outcome-v1",
+  "created_utc": "2026-10-16T07:24:05.416926+00:00",
+  "status": "failed_before_N4_or_Atropos",
+  "attempts_declared": 1,
+  "attempts_started": 1,
+  "successful_fits": 0,
+  "accepted_tissue_results": 0,
+  "automatic_retries": 0,
+  "worker_exit_code": 1,
+  "elapsed_seconds": 46.054974750149995,
+  "peak_supervisor_plus_worker_family_rss_bytes_sampled": 541605888,
+  "minimum_available_memory_bytes_sampled": 7138312192,
+  "output_and_temporary_bytes_at_supervisor_exit": 130995,
+  "failure": "Input array-validity guard rejected before N4/Atropos invocation",
+  "exact_guard_message": "Bounded finite 3D source with positive masked T1 intensities required",
+  "which_guard_clause_failed": "Not disambiguated by frozen runner; no post-failure image decode or tuning performed",
+  "failure_was_resource_limit": false,
+  "sources_after_attempt": [
+    {
+      "role": "T1",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/originals/IXI265-T1.nii.gz",
+      "sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+      "bytes": 6980629,
+      "post_attempt_sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+      "unchanged": true
+    },
+    {
+      "role": "brain_mask",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/synthstrip/brain_mask.nii.gz",
+      "sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+      "bytes": 129560,
+      "post_attempt_sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+      "unchanged": true
+    },
+    {
+      "role": "host_bundle",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/IXI265-Guys-0845.ressectionlab",
+      "sha256": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1",
+      "bytes": 57052870,
+      "post_attempt_sha256": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1",
+      "unchanged": true
+    }
+  ],
+  "all_original_source_bytes_unchanged": true,
+  "candidate_file_exists": false,
+  "anatomical_acceptance": false,
+  "host_or_catalog_promotion": false,
+  "growth_run": false,
+  "retained_evidence": [
+    {
+      "path": "artifacts/poc-ixi265-atropos-run-v1/declaration.json",
+      "sha256": "0a7358f2a6623953af832946af2c2b6dd94c948b32bf531cd2b688c3d2f83788",
+      "bytes": 7626
+    },
+    {
+      "path": "artifacts/poc-ixi265-atropos-run-v1/released-run-spec.json",
+      "sha256": "dd0067e0e43f71b54479e69b38abe387015a89c732b1aae0f064f7e27eda6467",
+      "bytes": 1238
+    },
+    {
+      "path": "artifacts/poc-ixi265-atropos-run-v1/attempt.json",
+      "sha256": "d94e31d123ecced47179b025c778ebcb7c3f59f00f68b3ca2ed73ed487344ffc",
+      "bytes": 3446
+    },
+    {
+      "path": "artifacts/poc-ixi265-atropos-run-v1/worker.log",
+      "sha256": "62837f3e6d0e1a877bff49f6a5a6be94e9dc57b0f047d2876663aede57fc332d",
+      "bytes": 1469
+    }
+  ],
+  "remaining_uncertainty": "Installed ANTs imported, but no actual N4/Atropos fitting, resource feasibility or anatomical class quality was demonstrated."
+}

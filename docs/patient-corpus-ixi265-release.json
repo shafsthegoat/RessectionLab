@@ -1,0 +1,47 @@
+{
+  "catalog": {
+    "catalog_hash": "sha256:554c172ee7061c1ec803a4ea56c8025b5e6969f777bfecfe44987ec8aa2479a3",
+    "path": "outputs/patient-corpus-ixi265-v1/catalog.json",
+    "schema": "patient-corpus-qualification-v1.catalog",
+    "search_index": "outputs/patient-corpus-ixi265-v1/catalog.sqlite",
+    "sha256": "2a7ba1c26f101261e3a5fecf84ae998b637a70c5a7f66d43d224153c738ee673"
+  },
+  "commands": {
+    "metadata_only_plan": "PYTHONPATH=src .venv/bin/python scripts/qualify_patient_corpus.py --release existing-nine-plus-ixi265-v1 --plan-only",
+    "qualify_or_resume": "PYTHONPATH=src .venv/bin/python scripts/qualify_patient_corpus.py --release existing-nine-plus-ixi265-v1",
+    "search_anatomy": "PYTHONPATH=src .venv/bin/python scripts/qualify_patient_corpus.py --release existing-nine-plus-ixi265-v1 --anatomy vessels",
+    "search_patient": "PYTHONPATH=src .venv/bin/python scripts/qualify_patient_corpus.py --release existing-nine-plus-ixi265-v1 --query IXI"
+  },
+  "default_behavior": "Omitting --release retains the nine-person default. V1 saved plan/catalog/audit files are preserved unchanged.",
+  "entry_fields": {
+    "anatomy_present": "Observed saved mask presence across same-person native grids, including unreviewed estimates and display references.",
+    "anatomy_present_on_primary": "Masks on the primary image grid only.",
+    "bundle": "Repository-relative source bundle path; resolve only after role/release validation.",
+    "bundle_sha256": "Exact frozen bytes; verify before opening.",
+    "input_binding": "Exact candidate, metadata/source hashes and validator hashes that bind the receipt.",
+    "missing_anatomy": "No corresponding nonempty saved mask; does not establish biological absence.",
+    "patient_group": "Canonical source-person namespace; IXI:265 appears exactly once.",
+    "registrations": "Source and reference frame hashes, saved status and overlay gate. IXI has three false overlay gates.",
+    "role": "Frozen TRAIN or DEVELOPMENT; TRAIN does not establish training admission.",
+    "status": "qualified_with_limitations, rejected, or pending; only successful entries represent engineering qualification.",
+    "tumor_location": "lobe, hemisphere and anatomical_region remain UNKNOWN unless separately accepted evidence exists."
+  },
+  "limitations": [
+    "IXI source reference and model estimate have partial MRA coverage. Unlabelled voxels are not vessel-free evidence.",
+    "IXI registration remains unaccepted; the source-to-T1 reference is a derived resampling, not a new independent source.",
+    "vesselFM may overlap IXI training data; individual subject overlap is unknown, and no held-out accuracy is asserted.",
+    "Same-person brain/vessel mask presence is one; accepted fused brain/vessel combinations are zero.",
+    "No generated descendant or generated/simulated anatomy can enter this acquired-person release.",
+    "No inference, registration optimization, download, GUI audit or training was performed by qualification."
+  ],
+  "purpose": "Searchable engineering qualification of the original nine people plus the already materialized IXI265 host. No new acquisition or virtual person is added.",
+  "release": {
+    "path": "manifests/patient-corpus-releases/existing-nine-plus-ixi265-v1.json",
+    "plan_hash": "sha256:a1a2623d05270881d4291a1037d303578cb27a4f63d52cce28b5f5db251d8755",
+    "schema": "patient-corpus-frozen-release-v1",
+    "sha256": "2c426f82e160be5b11bb19d9d5c4d2ac804ae9d85011cf46a4dc83904adbea84"
+  },
+  "release_id": "existing-nine-plus-ixi265-v1",
+  "rights": "IXI acquired images CC-BY-SA-3.0; public model-assisted/manually refined reference CC-BY-4.0; vesselFM checkpoint research/noncommercial terms remain separate.",
+  "schema": "patient-corpus-release-guide-v1"
+}

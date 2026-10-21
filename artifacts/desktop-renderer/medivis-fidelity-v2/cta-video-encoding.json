@@ -1,0 +1,30 @@
+{
+  "source": "cta-motion/motion/frames.json",
+  "timing": "Original frame timestamps within each segment; UI transition gaps omitted; no synthetic interpolation. Duplicate holds at 30fps.",
+  "segments": [
+    {
+      "kind": "orbit",
+      "frames": 245,
+      "sourceElapsedSeconds": 10.814247083999998,
+      "lastFrameHoldSeconds": 0.6
+    },
+    {
+      "kind": "cutaway",
+      "frames": 15,
+      "sourceElapsedSeconds": 3.7779940829999976,
+      "lastFrameHoldSeconds": 0.6
+    },
+    {
+      "kind": "cta-axial-cutaway-orbit",
+      "frames": 107,
+      "sourceElapsedSeconds": 8.340959541000004,
+      "lastFrameHoldSeconds": 0.6
+    },
+    {
+      "kind": "cta-axial-cutaway",
+      "frames": 15,
+      "sourceElapsedSeconds": 3.9671672920000054,
+      "lastFrameHoldSeconds": 0.6
+    }
+  ]
+}

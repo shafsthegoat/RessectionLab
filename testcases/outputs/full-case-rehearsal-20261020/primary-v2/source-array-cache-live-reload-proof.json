@@ -1,0 +1,33 @@
+{
+  "utc": "2026-10-20T14:20:04.843229+00:00",
+  "loadedOnly": [
+    "case_array_payload",
+    "imaging"
+  ],
+  "codeCommit": "9b1ce926",
+  "actions": 828,
+  "stateIdBefore": "sha256:4288d0815a91d3ba258eb223653bd367c9fd7c2aef6f4193fde540915596d058",
+  "stateIdAfter": "sha256:4288d0815a91d3ba258eb223653bd367c9fd7c2aef6f4193fde540915596d058",
+  "nativeBoundaryEqualsLiveSnapshot": true,
+  "flushedUnpersistedCompletedActionsBeforeReload": 2,
+  "engineMethodCodeIdentitiesUnchanged": [
+    "step",
+    "preview",
+    "_execute",
+    "_substep",
+    "_physical_substep",
+    "cells",
+    "occupancy"
+  ],
+  "activeDirectorCodeIdentityUnchanged": true,
+  "saveOnlyWallSecondsColdWarm": [
+    3.570741708856076,
+    2.7454674169421196
+  ],
+  "npzPayloadSha256Unchanged": "684c10ee6afb1936e41ff3d4f2ad107129c8462ea642ff8dc67a5df5e9c81019",
+  "allArtifactsSourceAndOriginalFilesUnchanged": true,
+  "noPhysicsReplay": true,
+  "checkpoint": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-source-array-cache-828.ressectionlab",
+  "checkpointSha256": "b7dbc601d8556349a93fc8e1eee3c71d273532ddd9fefbf525ea8c44155dfa69",
+  "qualification": "Save-only module reload and two unchanged-state native roundtrips; no whole-action speed claim or final canonical/GUI acceptance."
+}

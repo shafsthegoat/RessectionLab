@@ -595,6 +595,18 @@ The master plan cites the stable IDs below. “Use in project” is a proposed a
 
 **Important limit / verification:** Its epilepsy/resection imaging context is not a validated tool-contact mechanics model. Do not confuse synthetic image augmentation with surgical physics.
 
+## S07 | Continuous monitoring of surgical bimanual expertise
+
+**Source:** Yilmaz R et al. (2022). *Continuous monitoring of surgical bimanual expertise using deep neural networks in virtual reality simulation.* npj Digital Medicine 5, 54.
+
+**Reference:** https://doi.org/10.1038/s41746-022-00596-8
+**Code:** https://github.com/recaiyilmaz/icems
+**Sample data:** https://doi.org/10.6084/m9.figshare.15132507.v1
+
+**Use in project:** Explicit inspiration for the original descriptive bimanual telemetry exporter: 0.2-second reporting, tool-tip separation, motion, removal, and modeled fluid/wound traces. See [implementation and provenance](docs/surgical-bimanual-telemetry.md).
+
+**Important limit / verification:** Full text, released MATLAB-style code, and the sample CSV format/metadata inspected October 18, 2026. Article/sample data are CC BY 4.0; repository has no declared license, so no code was copied. No LSTM, expertise score, coaching threshold, or clinical injury inference is transferred. Simulator force inputs and wound outputs remain explicitly assumed/model-derived.
+
 ## I01 | NICO integrated access and resection system
 
 **Source:** NICO Corporation (2026). Manufacturer documentation.

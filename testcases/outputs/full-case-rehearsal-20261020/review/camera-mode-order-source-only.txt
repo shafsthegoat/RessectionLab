@@ -1,0 +1,37 @@
+Source-only camera ordering finding, HEAD19c770e1; no GUI or engine actions.
+
+The exact GUI native vascular-observability-28962e66.ressectionlab stores
+primary.viewer.camera with distance1217.213894127036mm, matching the display
+provenance wideCameraFit value. This is a requested saved camera, not evidence
+of the current displayed camera.
+
+Concrete overwrite path:
+1. App.tsx796–797: opening a full case requests Rehearse and cameraMode
+   'instruments'. App.tsx1483: clicking Rehearse also explicitly sets that mode.
+2. ViewerWorkspace.tsx263 registers restoreCamera(settings.camera) BEFORE
+   its renderer.update(...,cameraMode) effect at285–305.
+3. VolumeRenderer.ts927–931: a changed mode unconditionally calls fitCamera,
+   without consulting cameraRestored, after the restore effect has run when
+   both effects run in one commit. On an already-ready renderer, changing only
+   mode runs update without rerunning restoreCamera (mode is not its dependency).
+4. fitCamera('instruments') at1740–1748 includes legacy recordedTools,
+   inspectionTools or tools, but not surgicalGroup/surgicalSlots. Standard
+   rehearsal full bodies therefore are not part of this fit, even though both
+   surgical slot meshes exist and withdrawn tools are not hidden.
+
+Qualification: initial renderer setReady causes another effect run that can
+restore the saved camera later; a later changed caseData also reruns restoration.
+Consequently the path proves a possible/likely overwrite, not the actual current
+camera. Ordinary modeled commit has no fit call. Rewind and SmoothOFF do not
+directly call fitCamera. updateRoutes at1681 is a secondary unconditional fit
+when routes change while mode is instruments.
+
+Strongest bounded repair proposal (not implemented): preserve a valid restored
+camera on the implicit standard-Rehearse mode transition, distinguish that
+transition from an explicit user fit request, and have any explicit Instruments
+fit union complete actual visible surgicalSlots mesh bounds (both withdrawn
+and inserted tools) rather than only legacy tools. Exclude the edit ghost and
+effect markers. Avoid auto-refitting every observed microstep, which would move
+the camera during playback. Root's eventual actual Save As can distinguish a
+persisted requested camera from current displayed state; current screenshot
+alone and requested bounds do not prove the active camera transform.

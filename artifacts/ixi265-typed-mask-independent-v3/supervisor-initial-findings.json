@@ -1,0 +1,34 @@
+{
+  "schema": "ixi265-typed-supervisor-initial-independent-findings-v3",
+  "status": "two_prefit_defects_independently_reproduced",
+  "created_utc": "2026-10-16T08:11:24.261965+00:00",
+  "frozen_initial_source_sha256": "dd7d71631c6724f519dd0af76f4f8338e260de9056f0c3f6c5fddae585085d85",
+  "source_snapshot": "artifacts/poc-ixi265-atropos-typed-mask-runner-guard-followup-v3/initial-runner.py.txt",
+  "findings": [
+    {
+      "trigger": "Worker exits after poll reports running but before killpg; killpg raises ProcessLookupError.",
+      "exception_escaped": true,
+      "record_after_exception": {
+        "status": "running"
+      },
+      "effect": "Original failure was not assigned; subsequent source/runtime/history postchecks and final receipt are skipped."
+    },
+    {
+      "trigger": "Post-run verified runtime receipt differs from initial receipt while historical markers and lineage compare equal.",
+      "record_after_postcheck": {
+        "status": "fitted_candidate_unaccepted",
+        "historical_markers_unchanged": {
+          "oldmarker": true
+        },
+        "runtime_unchanged": false,
+        "lineage_unchanged": true
+      },
+      "effect": "False runtime continuity flag does not force failed status."
+    }
+  ],
+  "patient_or_native_calls": false,
+  "method": "Execute exact AST-extracted frozen supervisor blocks with generated process/metadata doubles.",
+  "original_preparation_sha256": "0e0a5b9069aca2fb0e4677c50a05593fdb5e40f79a62bd9a48dd0e6313d11797",
+  "auditor_sha256": "ad22fd8cb5a26df62100fee2a3724907c7e3a1714ce82985e92d43db785ecb19",
+  "supersession": "Requires separate guard followup and independent final review before any patient release; this finding record remains immutable."
+}

@@ -1,0 +1,58 @@
+{
+  "utc": "2026-10-20T23:30:43.428870+00:00",
+  "result": "approved: no actionable correctness issue found",
+  "baseCommit": "252afcebfc66e5e0a075ee698bea3d4b92d08890",
+  "reviewedFileSha256": {
+    "src/resectionlab/full_case_path_variants.py": "ea88d35d7c246b66d783e93ef8cdf953ff260cb17edfd8190dd5891cb0434d67",
+    "src/resectionlab/full_case_rehearsal.py": "3ab1aa8a22d8af3889c15929b62cfc25879840e4a1bcc5168abefe3f6d7ec5c3",
+    "tests/test_full_case_path_variants.py": "40e47c89cce4920f2e168a45c1c3c9ae483475c4555ed586e0a05dc8f5aea23f"
+  },
+  "scope": "New pure path variant helper plus run_slice core/frontier preview loops only; no engine or existing native actions changed.",
+  "findings": [
+    "At most2 variants: a detached coarse proposal then the untouched original fine action. Exact same-quaternion monotone axis-aligned interiors only; endpoints, turns, reversals, duplicates and implicit current-to-first segment preserved.",
+    "Each coarse variant needs its own fully accepted public preview and target progress. Coarse rejection/partial/no effect falls through fine before hand/access rerouting. Fine partial and zero-effect core positioning behavior retained.",
+    "Core preview deltas explicitly require every removed source identity to be owned target tumor. Existing public guard/collision/preview-versus-commit checks remain authoritative.",
+    "Coalescing changes microstep sampling and dt partition; no physical or bitwise equivalence to fine actions is claimed, and prior saved actions remain unchanged."
+  ],
+  "independentTests": {
+    "passed": 78,
+    "reportedWallSeconds": 54.89,
+    "files": [
+      "tests/test_full_case_path_variants.py",
+      "tests/test_full_case_rehearsal.py",
+      "tests/test_full_case_directional.py",
+      "tests/test_full_case_deferred_pass.py"
+    ],
+    "log": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/review/independent-cusa-path-variants-tests-20261020.log",
+    "junit": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/review/independent-cusa-path-variants-tests-20261020.xml",
+    "diffCheckPassed": true
+  },
+  "independentV2ClockConservationProbe": {
+    "receipt": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/review/cusa-variants-independent-v2-clock-probe.json",
+    "script": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/review/probe_cusa_variants_v2_clock.py",
+    "actualDrillGeneratedDebrisMm3": 9.0,
+    "coarseAndFinePathPoses": [
+      2,
+      151
+    ],
+    "eachOwnPreviewExactlyMatchesCommit": true,
+    "eachNewOwnedTargetCells": 1,
+    "eachNewNonTargetCells": 0,
+    "eachElapsedAndVesselClockSeconds": 2.0,
+    "eachOtherHandActiveFrazierAspiratedMm3": 2.0,
+    "thermalCoolingEnergyAndAnalyticTemperatureVerified": true,
+    "qualification": "Tiny V2 engineering source, actual drill heat/debris and active other hand. Conservation within floating-point tolerances; state IDs differ, no parity or throughput ratio claim."
+  },
+  "loader": {
+    "path": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/load_reviewed_cusa_path_variants.py",
+    "sha256": "39f0bbe9acc3d53582517d1fd35141692a9246dfda3dceaa0a7d5e52f8ce3e37",
+    "syntaxAndStaticOnlyBindingAllowlistChecked": true,
+    "productionAssignmentAllowlist": [
+      "rehearsal.run_slice"
+    ],
+    "blockingPin": "REVIEWED_COMMIT_TO_PIN",
+    "executed": false,
+    "retryCaveat": "Refuses any prior proof/checkpoint or helper module already imported in live console. Interrupted setup requires manual inspection. First NEW2 action proof is complete; subsequent guarded12 loop uses ordinary advance without recurring full audits."
+  },
+  "limits": "No patient files loaded, no patient engine/restore/preview/step/replay, no live process/flag/GUI access, and no production edits/commit/push by reviewer. Root owns final reviewed commit pin and execution. Final patient canonical/observed/GUI acceptance deferred until source-frozen final native."
+}

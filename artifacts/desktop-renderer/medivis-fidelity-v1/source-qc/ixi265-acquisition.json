@@ -1,0 +1,59 @@
+{
+  "schema": "ixi265-minimal-official-range-recovery-v1",
+  "source_page": "https://brain-development.org/ixi-dataset/",
+  "source_license": "CC-BY-SA-3.0",
+  "acknowledgment": "IXI Dataset, Information eXtraction from Images, brain-development.org",
+  "new_acquisition": true,
+  "full_archives_downloaded": false,
+  "members": [
+    {
+      "modality": "MRA",
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/poc-ixi265-mra-fidelity-v1/originals/IXI265-MRA.nii.gz",
+      "url": "https://biomedic.doc.ic.ac.uk/brain-development/downloads/IXI/IXI-MRA.tar",
+      "range": "bytes=3578892288-3593200268",
+      "bytes": 14307469,
+      "sha256": "a87b381b882242b7d61a1930a8332d44200fdb3c56c68fc09c24a057eea86dc4",
+      "historical_selected_hash_match": true,
+      "etag_opaque": "\"2e1c4e800-504d8ae7e6cfa\"",
+      "content_range": "bytes 3578892288-3593200268/12377712640",
+      "tar_header_name": "IXI265-Guys-0845-MRA.nii.gz",
+      "verification": "Exact tar header checksum, member name and size, plus historical selected member SHA256. Whole archive not downloaded or rehashed."
+    },
+    {
+      "modality": "T1",
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/poc-ixi265-mra-fidelity-v1/originals/IXI265-T1.nii.gz",
+      "url": "https://biomedic.doc.ic.ac.uk/brain-development/downloads/IXI/IXI-T1.tar",
+      "range": "bytes=1867056128-1874037268",
+      "bytes": 6980629,
+      "sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+      "historical_selected_hash_match": true,
+      "etag_opaque": "\"120890000-504d8cd6ce25a\"",
+      "content_range": "bytes 1867056128-1874037268/4840816640",
+      "tar_header_name": "IXI265-Guys-0845-T1.nii.gz",
+      "verification": "Exact tar header checksum, member name and size, plus historical selected member SHA256. Whole archive not downloaded or rehashed."
+    },
+    {
+      "modality": "derived_vessel_label",
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/poc-ixi265-mra-fidelity-v1/originals/IXI265-derived_vessel_label.nii.gz",
+      "url": "https://zenodo.org/api/records/17393202/files/vessel_dataset.zip/content",
+      "bytes": 109932,
+      "sha256": "9da13c332156c71a5200dbf88368bb87478914fe73034a42ca4eabf1dd5cdbfe",
+      "historical_selected_hash_match": true,
+      "archive_bytes_received": 6580597,
+      "archive_md5": "md5:96be3dd9d1413e8890f89721829a79f7",
+      "license": "CC-BY-4.0",
+      "source": "https://zenodo.org/records/17393202",
+      "lineage": "published model-assisted manually refined incomplete vessel reference, not acquired image",
+      "zip_member": "vessel_dataset/IXI265.nii.gz"
+    }
+  ],
+  "limits": {
+    "max_total_payload_bytes": 100000000,
+    "max_file_bytes": 33554432
+  },
+  "downloaded_payload_bytes": 27869719,
+  "status": "verified_selected_members",
+  "source_label_license": "CC-BY-4.0",
+  "new_model_inference": false,
+  "anatomical_registration_accepted": false
+}

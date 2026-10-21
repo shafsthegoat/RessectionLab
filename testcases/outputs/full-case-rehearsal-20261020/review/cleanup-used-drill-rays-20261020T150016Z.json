@@ -1,0 +1,1586 @@
+{
+  "schema": "resectionlab.readonly-used-drill-ray-cleanup-feasibility.v1",
+  "createdUtc": "2026-10-20T15:00:16.033032+00:00",
+  "native": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/primary.ressectionlab",
+  "nativeSha256AtRead": "7159eeb5c2151a70dec15b98e2b59e0160976edd755de7da1f277db5534c4610",
+  "branch": "full-primary",
+  "actionsAtRead": 944,
+  "stateIdAtRead": "sha256:37aa1f80f6588df0b772b2d13582abc801d8dea1de0d7a22d360dafc28df4d39",
+  "source": "/Users/shaf/coding_projects/RessectionLab/testcases/cases/meningioma-sub-06-standard-v2.ressectionlab",
+  "sourceSha256": "ff5a49b8706a8ccda08d8c3e82dad3e079f85dea98cb6bd40783d2262eec9838",
+  "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+  "sourceLabelsDigest": "sha256:9930330418c439d7d042054d7419c05d3158e2422f62ce69b034044a563ecd76",
+  "sourceAffineDigest": "sha256:c0908ea0bbfa9cfc535aede83c964b8db13bf334a0a7a00f656884323035de9c",
+  "noPatientEngineConstructedOrReplayed": true,
+  "sourceUnchangedAfterRead": true,
+  "savedLedger": {
+    "generatedBoneDebrisMm3": 7835.0,
+    "presentDebrisMm3": 7657.897435897436,
+    "aspiratedDebrisMm3": 177.1025641025651,
+    "escapedDebrisMm3": 0.0,
+    "fluidPresentMm3": 0
+  },
+  "existingThreeOldRayStations": [
+    {
+      "slot": "right",
+      "instrument": "frazier_suction",
+      "pose": {
+        "position": [
+          -9.464996337890625,
+          30.441162109375,
+          -418.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "outsidePose": {
+        "position": [
+          -9.464996337890625,
+          30.441162109375,
+          -366.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "parameters": {
+        "depthMm": 2.0,
+        "flowMm3PerSecond": 20.0,
+        "forceN": 0.0,
+        "radiusMm": 3.0
+      },
+      "fieldFluidMm3": 0.0,
+      "fieldDebrisMm3": 15.0,
+      "fieldMassMm3": 15.0,
+      "outwardOffsetMm": 0.0,
+      "sourceSceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "checkedPhysicalRayRadiusMm": 0.67,
+      "requiresPublicPreview": true,
+      "assumptions": [
+        "Existing outward ray only; no new opening or trajectory admission.",
+        "Field spheres overlap; freshly remeasure before each stationary dwell.",
+        "Generic research suction field and flow; no clinical force or hemostasis claim."
+      ]
+    },
+    {
+      "slot": "right",
+      "instrument": "frazier_suction",
+      "pose": {
+        "position": [
+          -9.464996337890625,
+          30.441162109375,
+          -415.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "outsidePose": {
+        "position": [
+          -9.464996337890625,
+          30.441162109375,
+          -366.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "parameters": {
+        "depthMm": 2.0,
+        "flowMm3PerSecond": 20.0,
+        "forceN": 0.0,
+        "radiusMm": 3.0
+      },
+      "fieldFluidMm3": 0.0,
+      "fieldDebrisMm3": 134.76923076923077,
+      "fieldMassMm3": 134.76923076923077,
+      "outwardOffsetMm": 3.0,
+      "sourceSceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "checkedPhysicalRayRadiusMm": 0.67,
+      "requiresPublicPreview": true,
+      "assumptions": [
+        "Existing outward ray only; no new opening or trajectory admission.",
+        "Field spheres overlap; freshly remeasure before each stationary dwell.",
+        "Generic research suction field and flow; no clinical force or hemostasis claim."
+      ]
+    },
+    {
+      "slot": "right",
+      "instrument": "frazier_suction",
+      "pose": {
+        "position": [
+          -9.464996337890625,
+          30.441162109375,
+          -411.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "outsidePose": {
+        "position": [
+          -9.464996337890625,
+          30.441162109375,
+          -366.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "parameters": {
+        "depthMm": 2.0,
+        "flowMm3PerSecond": 20.0,
+        "forceN": 0.0,
+        "radiusMm": 3.0
+      },
+      "fieldFluidMm3": 0.0,
+      "fieldDebrisMm3": 250.76923076923077,
+      "fieldMassMm3": 250.76923076923077,
+      "outwardOffsetMm": 7.0,
+      "sourceSceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "checkedPhysicalRayRadiusMm": 0.67,
+      "requiresPublicPreview": true,
+      "assumptions": [
+        "Existing outward ray only; no new opening or trajectory admission.",
+        "Field spheres overlap; freshly remeasure before each stationary dwell.",
+        "Generic research suction field and flow; no clinical force or hemostasis claim."
+      ]
+    }
+  ],
+  "oldThreeFieldsUniqueDebrisMm3": 321.53846153846155,
+  "recordedDrillRayCount": 13,
+  "positiveClearSampledStationCount": 250,
+  "allSampledClearRayFieldsUniqueDebrisMm3": 6569.897435897436,
+  "allSampledClearRayFieldsAdditionalToOldThreeMm3": 6266.897435897436,
+  "rankedFieldsUniqueDebrisIncludingOldThreeMm3": 3332.5384615384614,
+  "rankedFieldsAdditionalUniqueDebrisMm3": 3011.0,
+  "rankedStations": [
+    {
+      "rayId": "recorded-drill-ray-3",
+      "pose": {
+        "position": [
+          -9.464996337890625,
+          1.441162109375,
+          -402.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "outsidePose": {
+        "position": [
+          -9.464996337890625,
+          1.441162109375,
+          -366.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "parameters": {
+        "radiusMm": 3.0,
+        "depthMm": 2.0,
+        "flowMm3PerSecond": 20.0,
+        "forceN": 0.0
+      },
+      "sourceSceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "fieldDebrisMm3": 251.0,
+      "fieldFluidMm3": 0.0,
+      "depthFromRecordedOutsideMm": 36.0,
+      "checkedPhysicalRayRadiusMm": 0.67,
+      "physicalRayBlockedOwnedSourceCells": 0,
+      "currentLeftConflictAtStation": false,
+      "exteriorRelocationClearStaticMaterial": true,
+      "exteriorRelocationCurrentLeftConflict": false,
+      "drillPlacementActions1Based": [
+        29
+      ],
+      "drillApplyActions1Based": [
+        30,
+        31
+      ],
+      "rank": 1,
+      "newDebrisBeyondOldAndEarlierRankedFieldsMm3": 251.0,
+      "maxSingleDwellSeconds": 10.0,
+      "maxSingleDwellFlowBudgetMm3": 200.0,
+      "requiresPublicPreview": true
+    },
+    {
+      "rayId": "recorded-drill-ray-6",
+      "pose": {
+        "position": [
+          -25.464996337890625,
+          -5.558837890625,
+          -407.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "outsidePose": {
+        "position": [
+          -25.464996337890625,
+          -5.558837890625,
+          -366.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "parameters": {
+        "radiusMm": 3.0,
+        "depthMm": 2.0,
+        "flowMm3PerSecond": 20.0,
+        "forceN": 0.0
+      },
+      "sourceSceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "fieldDebrisMm3": 251.0,
+      "fieldFluidMm3": 0.0,
+      "depthFromRecordedOutsideMm": 41.0,
+      "checkedPhysicalRayRadiusMm": 0.67,
+      "physicalRayBlockedOwnedSourceCells": 0,
+      "currentLeftConflictAtStation": false,
+      "exteriorRelocationClearStaticMaterial": true,
+      "exteriorRelocationCurrentLeftConflict": false,
+      "drillPlacementActions1Based": [
+        448,
+        465,
+        500,
+        524
+      ],
+      "drillApplyActions1Based": [
+        449,
+        450,
+        451,
+        466,
+        501,
+        525
+      ],
+      "rank": 2,
+      "newDebrisBeyondOldAndEarlierRankedFieldsMm3": 251.0,
+      "maxSingleDwellSeconds": 10.0,
+      "maxSingleDwellFlowBudgetMm3": 200.0,
+      "requiresPublicPreview": true
+    },
+    {
+      "rayId": "recorded-drill-ray-7",
+      "pose": {
+        "position": [
+          -26.464996337890625,
+          10.441162109375,
+          -409.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "outsidePose": {
+        "position": [
+          -26.464996337890625,
+          10.441162109375,
+          -366.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "parameters": {
+        "radiusMm": 3.0,
+        "depthMm": 2.0,
+        "flowMm3PerSecond": 20.0,
+        "forceN": 0.0
+      },
+      "sourceSceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "fieldDebrisMm3": 251.0,
+      "fieldFluidMm3": 0.0,
+      "depthFromRecordedOutsideMm": 43.0,
+      "checkedPhysicalRayRadiusMm": 0.67,
+      "physicalRayBlockedOwnedSourceCells": 0,
+      "currentLeftConflictAtStation": false,
+      "exteriorRelocationClearStaticMaterial": true,
+      "exteriorRelocationCurrentLeftConflict": false,
+      "drillPlacementActions1Based": [
+        532,
+        544,
+        571
+      ],
+      "drillApplyActions1Based": [
+        533,
+        534,
+        535,
+        545,
+        546,
+        572
+      ],
+      "rank": 3,
+      "newDebrisBeyondOldAndEarlierRankedFieldsMm3": 251.0,
+      "maxSingleDwellSeconds": 10.0,
+      "maxSingleDwellFlowBudgetMm3": 200.0,
+      "requiresPublicPreview": true
+    },
+    {
+      "rayId": "recorded-drill-ray-7",
+      "pose": {
+        "position": [
+          -26.464996337890625,
+          10.441162109375,
+          -416.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "outsidePose": {
+        "position": [
+          -26.464996337890625,
+          10.441162109375,
+          -366.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "parameters": {
+        "radiusMm": 3.0,
+        "depthMm": 2.0,
+        "flowMm3PerSecond": 20.0,
+        "forceN": 0.0
+      },
+      "sourceSceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "fieldDebrisMm3": 251.0,
+      "fieldFluidMm3": 0.0,
+      "depthFromRecordedOutsideMm": 50.0,
+      "checkedPhysicalRayRadiusMm": 0.67,
+      "physicalRayBlockedOwnedSourceCells": 0,
+      "currentLeftConflictAtStation": false,
+      "exteriorRelocationClearStaticMaterial": true,
+      "exteriorRelocationCurrentLeftConflict": false,
+      "drillPlacementActions1Based": [
+        532,
+        544,
+        571
+      ],
+      "drillApplyActions1Based": [
+        533,
+        534,
+        535,
+        545,
+        546,
+        572
+      ],
+      "rank": 4,
+      "newDebrisBeyondOldAndEarlierRankedFieldsMm3": 251.0,
+      "maxSingleDwellSeconds": 10.0,
+      "maxSingleDwellFlowBudgetMm3": 200.0,
+      "requiresPublicPreview": true
+    },
+    {
+      "rayId": "recorded-drill-ray-8",
+      "pose": {
+        "position": [
+          -23.464996337890625,
+          21.441162109375,
+          -411.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "outsidePose": {
+        "position": [
+          -23.464996337890625,
+          21.441162109375,
+          -366.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "parameters": {
+        "radiusMm": 3.0,
+        "depthMm": 2.0,
+        "flowMm3PerSecond": 20.0,
+        "forceN": 0.0
+      },
+      "sourceSceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "fieldDebrisMm3": 251.0,
+      "fieldFluidMm3": 0.0,
+      "depthFromRecordedOutsideMm": 45.0,
+      "checkedPhysicalRayRadiusMm": 0.67,
+      "physicalRayBlockedOwnedSourceCells": 0,
+      "currentLeftConflictAtStation": false,
+      "exteriorRelocationClearStaticMaterial": true,
+      "exteriorRelocationCurrentLeftConflict": false,
+      "drillPlacementActions1Based": [
+        588,
+        612
+      ],
+      "drillApplyActions1Based": [
+        589,
+        590,
+        591,
+        613
+      ],
+      "rank": 5,
+      "newDebrisBeyondOldAndEarlierRankedFieldsMm3": 251.0,
+      "maxSingleDwellSeconds": 10.0,
+      "maxSingleDwellFlowBudgetMm3": 200.0,
+      "requiresPublicPreview": true
+    },
+    {
+      "rayId": "recorded-drill-ray-8",
+      "pose": {
+        "position": [
+          -23.464996337890625,
+          21.441162109375,
+          -418.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "outsidePose": {
+        "position": [
+          -23.464996337890625,
+          21.441162109375,
+          -366.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "parameters": {
+        "radiusMm": 3.0,
+        "depthMm": 2.0,
+        "flowMm3PerSecond": 20.0,
+        "forceN": 0.0
+      },
+      "sourceSceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "fieldDebrisMm3": 251.0,
+      "fieldFluidMm3": 0.0,
+      "depthFromRecordedOutsideMm": 52.0,
+      "checkedPhysicalRayRadiusMm": 0.67,
+      "physicalRayBlockedOwnedSourceCells": 0,
+      "currentLeftConflictAtStation": false,
+      "exteriorRelocationClearStaticMaterial": true,
+      "exteriorRelocationCurrentLeftConflict": false,
+      "drillPlacementActions1Based": [
+        588,
+        612
+      ],
+      "drillApplyActions1Based": [
+        589,
+        590,
+        591,
+        613
+      ],
+      "rank": 6,
+      "newDebrisBeyondOldAndEarlierRankedFieldsMm3": 251.0,
+      "maxSingleDwellSeconds": 10.0,
+      "maxSingleDwellFlowBudgetMm3": 200.0,
+      "requiresPublicPreview": true
+    },
+    {
+      "rayId": "recorded-drill-ray-9",
+      "pose": {
+        "position": [
+          -7.464996337890625,
+          22.441162109375,
+          -406.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "outsidePose": {
+        "position": [
+          -7.464996337890625,
+          22.441162109375,
+          -366.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "parameters": {
+        "radiusMm": 3.0,
+        "depthMm": 2.0,
+        "flowMm3PerSecond": 20.0,
+        "forceN": 0.0
+      },
+      "sourceSceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "fieldDebrisMm3": 251.0,
+      "fieldFluidMm3": 0.0,
+      "depthFromRecordedOutsideMm": 40.0,
+      "checkedPhysicalRayRadiusMm": 0.67,
+      "physicalRayBlockedOwnedSourceCells": 0,
+      "currentLeftConflictAtStation": false,
+      "exteriorRelocationClearStaticMaterial": true,
+      "exteriorRelocationCurrentLeftConflict": false,
+      "drillPlacementActions1Based": [
+        633,
+        662,
+        678
+      ],
+      "drillApplyActions1Based": [
+        634,
+        635,
+        663,
+        679
+      ],
+      "rank": 7,
+      "newDebrisBeyondOldAndEarlierRankedFieldsMm3": 251.0,
+      "maxSingleDwellSeconds": 10.0,
+      "maxSingleDwellFlowBudgetMm3": 200.0,
+      "requiresPublicPreview": true
+    },
+    {
+      "rayId": "recorded-drill-ray-9",
+      "pose": {
+        "position": [
+          -7.464996337890625,
+          22.441162109375,
+          -413.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "outsidePose": {
+        "position": [
+          -7.464996337890625,
+          22.441162109375,
+          -366.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "parameters": {
+        "radiusMm": 3.0,
+        "depthMm": 2.0,
+        "flowMm3PerSecond": 20.0,
+        "forceN": 0.0
+      },
+      "sourceSceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "fieldDebrisMm3": 251.0,
+      "fieldFluidMm3": 0.0,
+      "depthFromRecordedOutsideMm": 47.0,
+      "checkedPhysicalRayRadiusMm": 0.67,
+      "physicalRayBlockedOwnedSourceCells": 0,
+      "currentLeftConflictAtStation": false,
+      "exteriorRelocationClearStaticMaterial": true,
+      "exteriorRelocationCurrentLeftConflict": false,
+      "drillPlacementActions1Based": [
+        633,
+        662,
+        678
+      ],
+      "drillApplyActions1Based": [
+        634,
+        635,
+        663,
+        679
+      ],
+      "rank": 8,
+      "newDebrisBeyondOldAndEarlierRankedFieldsMm3": 251.0,
+      "maxSingleDwellSeconds": 10.0,
+      "maxSingleDwellFlowBudgetMm3": 200.0,
+      "requiresPublicPreview": true
+    },
+    {
+      "rayId": "recorded-drill-ray-10",
+      "pose": {
+        "position": [
+          -13.464996337890625,
+          -11.558837890625,
+          -403.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "outsidePose": {
+        "position": [
+          -13.464996337890625,
+          -11.558837890625,
+          -366.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "parameters": {
+        "radiusMm": 3.0,
+        "depthMm": 2.0,
+        "flowMm3PerSecond": 20.0,
+        "forceN": 0.0
+      },
+      "sourceSceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "fieldDebrisMm3": 251.0,
+      "fieldFluidMm3": 0.0,
+      "depthFromRecordedOutsideMm": 37.0,
+      "checkedPhysicalRayRadiusMm": 0.67,
+      "physicalRayBlockedOwnedSourceCells": 0,
+      "currentLeftConflictAtStation": false,
+      "exteriorRelocationClearStaticMaterial": true,
+      "exteriorRelocationCurrentLeftConflict": false,
+      "drillPlacementActions1Based": [
+        693,
+        710,
+        735,
+        753
+      ],
+      "drillApplyActions1Based": [
+        694,
+        695,
+        711,
+        736,
+        754
+      ],
+      "rank": 9,
+      "newDebrisBeyondOldAndEarlierRankedFieldsMm3": 251.0,
+      "maxSingleDwellSeconds": 10.0,
+      "maxSingleDwellFlowBudgetMm3": 200.0,
+      "requiresPublicPreview": true
+    },
+    {
+      "rayId": "recorded-drill-ray-11",
+      "pose": {
+        "position": [
+          -35.464996337890625,
+          9.441162109375,
+          -415.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "outsidePose": {
+        "position": [
+          -35.464996337890625,
+          9.441162109375,
+          -366.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "parameters": {
+        "radiusMm": 3.0,
+        "depthMm": 2.0,
+        "flowMm3PerSecond": 20.0,
+        "forceN": 0.0
+      },
+      "sourceSceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "fieldDebrisMm3": 251.0,
+      "fieldFluidMm3": 0.0,
+      "depthFromRecordedOutsideMm": 49.0,
+      "checkedPhysicalRayRadiusMm": 0.67,
+      "physicalRayBlockedOwnedSourceCells": 0,
+      "currentLeftConflictAtStation": false,
+      "exteriorRelocationClearStaticMaterial": true,
+      "exteriorRelocationCurrentLeftConflict": false,
+      "drillPlacementActions1Based": [
+        767,
+        778,
+        810,
+        824
+      ],
+      "drillApplyActions1Based": [
+        768,
+        769,
+        770,
+        779,
+        780,
+        811,
+        825
+      ],
+      "rank": 10,
+      "newDebrisBeyondOldAndEarlierRankedFieldsMm3": 251.0,
+      "maxSingleDwellSeconds": 10.0,
+      "maxSingleDwellFlowBudgetMm3": 200.0,
+      "requiresPublicPreview": true
+    },
+    {
+      "rayId": "recorded-drill-ray-12",
+      "pose": {
+        "position": [
+          -16.464996337890625,
+          29.441162109375,
+          -411.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "outsidePose": {
+        "position": [
+          -16.464996337890625,
+          29.441162109375,
+          -366.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "parameters": {
+        "radiusMm": 3.0,
+        "depthMm": 2.0,
+        "flowMm3PerSecond": 20.0,
+        "forceN": 0.0
+      },
+      "sourceSceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "fieldDebrisMm3": 251.0,
+      "fieldFluidMm3": 0.0,
+      "depthFromRecordedOutsideMm": 45.0,
+      "checkedPhysicalRayRadiusMm": 0.67,
+      "physicalRayBlockedOwnedSourceCells": 0,
+      "currentLeftConflictAtStation": false,
+      "exteriorRelocationClearStaticMaterial": true,
+      "exteriorRelocationCurrentLeftConflict": false,
+      "drillPlacementActions1Based": [
+        842,
+        859,
+        876
+      ],
+      "drillApplyActions1Based": [
+        843,
+        844,
+        860,
+        880
+      ],
+      "rank": 11,
+      "newDebrisBeyondOldAndEarlierRankedFieldsMm3": 251.0,
+      "maxSingleDwellSeconds": 10.0,
+      "maxSingleDwellFlowBudgetMm3": 200.0,
+      "requiresPublicPreview": true
+    },
+    {
+      "rayId": "recorded-drill-ray-12",
+      "pose": {
+        "position": [
+          -16.464996337890625,
+          29.441162109375,
+          -418.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "outsidePose": {
+        "position": [
+          -16.464996337890625,
+          29.441162109375,
+          -366.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "parameters": {
+        "radiusMm": 3.0,
+        "depthMm": 2.0,
+        "flowMm3PerSecond": 20.0,
+        "forceN": 0.0
+      },
+      "sourceSceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+      "fieldDebrisMm3": 250.0,
+      "fieldFluidMm3": 0.0,
+      "depthFromRecordedOutsideMm": 52.0,
+      "checkedPhysicalRayRadiusMm": 0.67,
+      "physicalRayBlockedOwnedSourceCells": 0,
+      "currentLeftConflictAtStation": false,
+      "exteriorRelocationClearStaticMaterial": true,
+      "exteriorRelocationCurrentLeftConflict": false,
+      "drillPlacementActions1Based": [
+        842,
+        859,
+        876
+      ],
+      "drillApplyActions1Based": [
+        843,
+        844,
+        860,
+        880
+      ],
+      "rank": 12,
+      "newDebrisBeyondOldAndEarlierRankedFieldsMm3": 250.0,
+      "maxSingleDwellSeconds": 10.0,
+      "maxSingleDwellFlowBudgetMm3": 200.0,
+      "requiresPublicPreview": true
+    }
+  ],
+  "recordedDrillRays": [
+    {
+      "outsidePose": {
+        "position": [
+          -10.464996337890625,
+          30.441162109375,
+          -369.25
+        ],
+        "quaternion": [
+          1.0,
+          0,
+          0,
+          0
+        ]
+      },
+      "maximumRecordedRequestedDepthMm": 52.0,
+      "drillPlacementActions1Based": [
+        1
+      ],
+      "drillApplyActions1Based": [
+        2,
+        3,
+        4
+      ],
+      "id": "recorded-drill-ray-1",
+      "exteriorRelocation": {
+        "clearStaticMaterial": true,
+        "currentLeftConflict": false,
+        "fromOutsidePose": {
+          "position": [
+            -9.464996337890625,
+            30.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "subintervals": 10,
+        "qualification": "Exterior translation only, after separately admitted old-ray withdrawal; live guards/other-hand transitions unverified."
+      },
+      "positiveClearStationCount": 19
+    },
+    {
+      "outsidePose": {
+        "position": [
+          -10.464996337890625,
+          30.441162109375,
+          -366.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "maximumRecordedRequestedDepthMm": 55.0,
+      "drillPlacementActions1Based": [
+        11,
+        23
+      ],
+      "drillApplyActions1Based": [
+        12,
+        24
+      ],
+      "id": "recorded-drill-ray-2",
+      "exteriorRelocation": {
+        "clearStaticMaterial": true,
+        "currentLeftConflict": false,
+        "fromOutsidePose": {
+          "position": [
+            -9.464996337890625,
+            30.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "subintervals": 3,
+        "qualification": "Exterior translation only, after separately admitted old-ray withdrawal; live guards/other-hand transitions unverified."
+      },
+      "positiveClearStationCount": 19
+    },
+    {
+      "outsidePose": {
+        "position": [
+          -9.464996337890625,
+          1.441162109375,
+          -366.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "maximumRecordedRequestedDepthMm": 45.0,
+      "drillPlacementActions1Based": [
+        29
+      ],
+      "drillApplyActions1Based": [
+        30,
+        31
+      ],
+      "id": "recorded-drill-ray-3",
+      "exteriorRelocation": {
+        "clearStaticMaterial": true,
+        "currentLeftConflict": false,
+        "fromOutsidePose": {
+          "position": [
+            -9.464996337890625,
+            30.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "subintervals": 87,
+        "qualification": "Exterior translation only, after separately admitted old-ray withdrawal; live guards/other-hand transitions unverified."
+      },
+      "positiveClearStationCount": 17
+    },
+    {
+      "outsidePose": {
+        "position": [
+          -12.464996337890625,
+          3.441162109375,
+          -366.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "maximumRecordedRequestedDepthMm": 48.0,
+      "drillPlacementActions1Based": [
+        36,
+        46,
+        61,
+        77,
+        92,
+        104,
+        122,
+        138,
+        154,
+        182,
+        196,
+        212,
+        220,
+        237,
+        253
+      ],
+      "drillApplyActions1Based": [
+        37,
+        38,
+        47,
+        62,
+        78,
+        93,
+        105,
+        123,
+        139,
+        155,
+        183,
+        197,
+        213,
+        221,
+        222,
+        238,
+        254
+      ],
+      "id": "recorded-drill-ray-4",
+      "exteriorRelocation": {
+        "clearStaticMaterial": true,
+        "currentLeftConflict": false,
+        "fromOutsidePose": {
+          "position": [
+            -9.464996337890625,
+            30.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "subintervals": 82,
+        "qualification": "Exterior translation only, after separately admitted old-ray withdrawal; live guards/other-hand transitions unverified."
+      },
+      "positiveClearStationCount": 20
+    },
+    {
+      "outsidePose": {
+        "position": [
+          -7.464996337890625,
+          4.441162109375,
+          -366.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "maximumRecordedRequestedDepthMm": 46.0,
+      "drillPlacementActions1Based": [
+        259,
+        276,
+        290,
+        303,
+        320,
+        355,
+        376,
+        394,
+        407,
+        420,
+        431,
+        441
+      ],
+      "drillApplyActions1Based": [
+        260,
+        261,
+        277,
+        291,
+        304,
+        321,
+        356,
+        377,
+        395,
+        408,
+        421,
+        432,
+        442,
+        443
+      ],
+      "id": "recorded-drill-ray-5",
+      "exteriorRelocation": {
+        "clearStaticMaterial": true,
+        "currentLeftConflict": false,
+        "fromOutsidePose": {
+          "position": [
+            -9.464996337890625,
+            30.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "subintervals": 79,
+        "qualification": "Exterior translation only, after separately admitted old-ray withdrawal; live guards/other-hand transitions unverified."
+      },
+      "positiveClearStationCount": 18
+    },
+    {
+      "outsidePose": {
+        "position": [
+          -25.464996337890625,
+          -5.558837890625,
+          -366.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "maximumRecordedRequestedDepthMm": 51.0,
+      "drillPlacementActions1Based": [
+        448,
+        465,
+        500,
+        524
+      ],
+      "drillApplyActions1Based": [
+        449,
+        450,
+        451,
+        466,
+        501,
+        525
+      ],
+      "id": "recorded-drill-ray-6",
+      "exteriorRelocation": {
+        "clearStaticMaterial": true,
+        "currentLeftConflict": false,
+        "fromOutsidePose": {
+          "position": [
+            -9.464996337890625,
+            30.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "subintervals": 119,
+        "qualification": "Exterior translation only, after separately admitted old-ray withdrawal; live guards/other-hand transitions unverified."
+      },
+      "positiveClearStationCount": 18
+    },
+    {
+      "outsidePose": {
+        "position": [
+          -26.464996337890625,
+          10.441162109375,
+          -366.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "maximumRecordedRequestedDepthMm": 56.0,
+      "drillPlacementActions1Based": [
+        532,
+        544,
+        571
+      ],
+      "drillApplyActions1Based": [
+        533,
+        534,
+        535,
+        545,
+        546,
+        572
+      ],
+      "id": "recorded-drill-ray-7",
+      "exteriorRelocation": {
+        "clearStaticMaterial": true,
+        "currentLeftConflict": false,
+        "fromOutsidePose": {
+          "position": [
+            -9.464996337890625,
+            30.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "subintervals": 79,
+        "qualification": "Exterior translation only, after separately admitted old-ray withdrawal; live guards/other-hand transitions unverified."
+      },
+      "positiveClearStationCount": 21
+    },
+    {
+      "outsidePose": {
+        "position": [
+          -23.464996337890625,
+          21.441162109375,
+          -366.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "maximumRecordedRequestedDepthMm": 58.0,
+      "drillPlacementActions1Based": [
+        588,
+        612
+      ],
+      "drillApplyActions1Based": [
+        589,
+        590,
+        591,
+        613
+      ],
+      "id": "recorded-drill-ray-8",
+      "exteriorRelocation": {
+        "clearStaticMaterial": true,
+        "currentLeftConflict": false,
+        "fromOutsidePose": {
+          "position": [
+            -9.464996337890625,
+            30.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "subintervals": 50,
+        "qualification": "Exterior translation only, after separately admitted old-ray withdrawal; live guards/other-hand transitions unverified."
+      },
+      "positiveClearStationCount": 23
+    },
+    {
+      "outsidePose": {
+        "position": [
+          -7.464996337890625,
+          22.441162109375,
+          -366.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "maximumRecordedRequestedDepthMm": 51.0,
+      "drillPlacementActions1Based": [
+        633,
+        662,
+        678
+      ],
+      "drillApplyActions1Based": [
+        634,
+        635,
+        663,
+        679
+      ],
+      "id": "recorded-drill-ray-9",
+      "exteriorRelocation": {
+        "clearStaticMaterial": true,
+        "currentLeftConflict": false,
+        "fromOutsidePose": {
+          "position": [
+            -9.464996337890625,
+            30.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "subintervals": 25,
+        "qualification": "Exterior translation only, after separately admitted old-ray withdrawal; live guards/other-hand transitions unverified."
+      },
+      "positiveClearStationCount": 19
+    },
+    {
+      "outsidePose": {
+        "position": [
+          -13.464996337890625,
+          -11.558837890625,
+          -366.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "maximumRecordedRequestedDepthMm": 47.0,
+      "drillPlacementActions1Based": [
+        693,
+        710,
+        735,
+        753
+      ],
+      "drillApplyActions1Based": [
+        694,
+        695,
+        711,
+        736,
+        754
+      ],
+      "id": "recorded-drill-ray-10",
+      "exteriorRelocation": {
+        "clearStaticMaterial": true,
+        "currentLeftConflict": false,
+        "fromOutsidePose": {
+          "position": [
+            -9.464996337890625,
+            30.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "subintervals": 127,
+        "qualification": "Exterior translation only, after separately admitted old-ray withdrawal; live guards/other-hand transitions unverified."
+      },
+      "positiveClearStationCount": 17
+    },
+    {
+      "outsidePose": {
+        "position": [
+          -35.464996337890625,
+          9.441162109375,
+          -366.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "maximumRecordedRequestedDepthMm": 58.0,
+      "drillPlacementActions1Based": [
+        767,
+        778,
+        810,
+        824
+      ],
+      "drillApplyActions1Based": [
+        768,
+        769,
+        770,
+        779,
+        780,
+        811,
+        825
+      ],
+      "id": "recorded-drill-ray-11",
+      "exteriorRelocation": {
+        "clearStaticMaterial": true,
+        "currentLeftConflict": false,
+        "fromOutsidePose": {
+          "position": [
+            -9.464996337890625,
+            30.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "subintervals": 101,
+        "qualification": "Exterior translation only, after separately admitted old-ray withdrawal; live guards/other-hand transitions unverified."
+      },
+      "positiveClearStationCount": 19
+    },
+    {
+      "outsidePose": {
+        "position": [
+          -16.464996337890625,
+          29.441162109375,
+          -366.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "maximumRecordedRequestedDepthMm": 57.0,
+      "drillPlacementActions1Based": [
+        842,
+        859,
+        876
+      ],
+      "drillApplyActions1Based": [
+        843,
+        844,
+        860,
+        880
+      ],
+      "id": "recorded-drill-ray-12",
+      "exteriorRelocation": {
+        "clearStaticMaterial": true,
+        "currentLeftConflict": false,
+        "fromOutsidePose": {
+          "position": [
+            -9.464996337890625,
+            30.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "subintervals": 22,
+        "qualification": "Exterior translation only, after separately admitted old-ray withdrawal; live guards/other-hand transitions unverified."
+      },
+      "positiveClearStationCount": 21
+    },
+    {
+      "outsidePose": {
+        "position": [
+          -8.464996337890625,
+          33.441162109375,
+          -366.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "maximumRecordedRequestedDepthMm": 55.0,
+      "drillPlacementActions1Based": [
+        899,
+        911,
+        924,
+        936
+      ],
+      "drillApplyActions1Based": [
+        900,
+        912,
+        925,
+        937
+      ],
+      "id": "recorded-drill-ray-13",
+      "exteriorRelocation": {
+        "clearStaticMaterial": true,
+        "currentLeftConflict": false,
+        "fromOutsidePose": {
+          "position": [
+            -9.464996337890625,
+            30.441162109375,
+            -366.25
+          ],
+          "quaternion": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "subintervals": 10,
+        "qualification": "Exterior translation only, after separately admitted old-ray withdrawal; live guards/other-hand transitions unverified."
+      },
+      "positiveClearStationCount": 19
+    }
+  ],
+  "qualifications": [
+    "Read-only saved checkpoint evidence, not independently replayed admission or a future endpoint.",
+    "1 mm spaced centers on actual recorded drill command rays only; positive fields independently filtered against current source-minus-removed occupancy.",
+    "Requested drill endpoint is not assumed attained; present free 0.67 mm capsule to recorded outside plus proximal 40 mm is the geometry evidence.",
+    "Generic 3 mm research suction sphere, 20 mm3/s shared fluid-first flow; at most 200 mm3 flow per 10 s dwell, actual effects may differ.",
+    "Field memberships overlap; unique totals use source-grid spatial-cell unions and cannot be added as removal claims.",
+    "No protected clearance, withdrawal, exchange, approach, bilateral safety or effect admission; each requires ordinary public preview/step with live guards.",
+    "Exterior relocation means sampled conservative swept whole-tool geometry at <=1/3 mm intervals from the old outside anchor; requires prior safe withdrawal and managed left hand.",
+    "No new opening, patient source change, clinical force, complete debris clearance or hemostasis claim."
+  ]
+}

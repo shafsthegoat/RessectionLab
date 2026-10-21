@@ -1,0 +1,250 @@
+{
+  "readOnly": true,
+  "noEngineOrPhysics": true,
+  "position": 902,
+  "stateId": "sha256:b5596eb5df2339bbb345307c114cb8246ba00b4f9d97b98caa7e245c8a4d4e49",
+  "sourceSceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+  "originalOwnedTargetCells": 43573,
+  "remainingOwnedTargetCells": 14506,
+  "removedOwnedTargetCells": 29067,
+  "connectedRegions6Face": 92,
+  "regionsAtMost8Cells": 89,
+  "largestRegions": [
+    {
+      "component": 1,
+      "ownedTargetCells": 14294,
+      "nativeBoundsMin": [
+        102,
+        103,
+        104
+      ],
+      "nativeBoundsMax": [
+        152,
+        165,
+        144
+      ],
+      "superiorPointColumnCells": 12641,
+      "leftPointColumnCells": 9767,
+      "anteriorPointColumnCells": 8487
+    },
+    {
+      "component": 4,
+      "ownedTargetCells": 27,
+      "nativeBoundsMin": [
+        108,
+        125,
+        122
+      ],
+      "nativeBoundsMax": [
+        109,
+        129,
+        130
+      ],
+      "superiorPointColumnCells": 3,
+      "leftPointColumnCells": 5,
+      "anteriorPointColumnCells": 0
+    },
+    {
+      "component": 32,
+      "ownedTargetCells": 23,
+      "nativeBoundsMin": [
+        113,
+        149,
+        118
+      ],
+      "nativeBoundsMax": [
+        122,
+        152,
+        120
+      ],
+      "superiorPointColumnCells": 23,
+      "leftPointColumnCells": 0,
+      "anteriorPointColumnCells": 0
+    },
+    {
+      "component": 61,
+      "ownedTargetCells": 7,
+      "nativeBoundsMin": [
+        120,
+        130,
+        108
+      ],
+      "nativeBoundsMax": [
+        124,
+        131,
+        108
+      ],
+      "superiorPointColumnCells": 7,
+      "leftPointColumnCells": 0,
+      "anteriorPointColumnCells": 0
+    },
+    {
+      "component": 14,
+      "ownedTargetCells": 7,
+      "nativeBoundsMin": [
+        111,
+        126,
+        116
+      ],
+      "nativeBoundsMax": [
+        111,
+        131,
+        117
+      ],
+      "superiorPointColumnCells": 6,
+      "leftPointColumnCells": 0,
+      "anteriorPointColumnCells": 0
+    },
+    {
+      "component": 12,
+      "ownedTargetCells": 7,
+      "nativeBoundsMin": [
+        110,
+        125,
+        118
+      ],
+      "nativeBoundsMax": [
+        110,
+        128,
+        120
+      ],
+      "superiorPointColumnCells": 3,
+      "leftPointColumnCells": 0,
+      "anteriorPointColumnCells": 0
+    },
+    {
+      "component": 19,
+      "ownedTargetCells": 7,
+      "nativeBoundsMin": [
+        112,
+        129,
+        115
+      ],
+      "nativeBoundsMax": [
+        113,
+        132,
+        116
+      ],
+      "superiorPointColumnCells": 7,
+      "leftPointColumnCells": 0,
+      "anteriorPointColumnCells": 0
+    },
+    {
+      "component": 42,
+      "ownedTargetCells": 6,
+      "nativeBoundsMin": [
+        116,
+        108,
+        131
+      ],
+      "nativeBoundsMax": [
+        116,
+        108,
+        136
+      ],
+      "superiorPointColumnCells": 0,
+      "leftPointColumnCells": 4,
+      "anteriorPointColumnCells": 6
+    },
+    {
+      "component": 86,
+      "ownedTargetCells": 6,
+      "nativeBoundsMin": [
+        143,
+        130,
+        112
+      ],
+      "nativeBoundsMax": [
+        144,
+        131,
+        114
+      ],
+      "superiorPointColumnCells": 6,
+      "leftPointColumnCells": 0,
+      "anteriorPointColumnCells": 0
+    },
+    {
+      "component": 18,
+      "ownedTargetCells": 5,
+      "nativeBoundsMin": [
+        112,
+        125,
+        114
+      ],
+      "nativeBoundsMax": [
+        112,
+        128,
+        115
+      ],
+      "superiorPointColumnCells": 2,
+      "leftPointColumnCells": 0,
+      "anteriorPointColumnCells": 0
+    }
+  ],
+  "axes": [
+    {
+      "direction": "superior",
+      "nativeAxis": 2,
+      "outwardIndexSign": 1,
+      "retainedPointColumnTargetCells": 12794,
+      "retainedWindowColumns": 2024,
+      "maxLateralWindowClearanceMm": 6.708203932499369,
+      "retainedCapacityWith3MmLateralInset": 5095
+    },
+    {
+      "direction": "left",
+      "nativeAxis": 0,
+      "outwardIndexSign": 1,
+      "retainedPointColumnTargetCells": 9786,
+      "retainedWindowColumns": 906,
+      "maxLateralWindowClearanceMm": 7.615773105863909,
+      "retainedCapacityWith3MmLateralInset": 4290
+    },
+    {
+      "direction": "anterior",
+      "nativeAxis": 1,
+      "outwardIndexSign": 1,
+      "retainedPointColumnTargetCells": 8498,
+      "retainedWindowColumns": 534,
+      "maxLateralWindowClearanceMm": 5.656854249492381,
+      "retainedCapacityWith3MmLateralInset": 2596
+    }
+  ],
+  "alternativeUnionOutsideSuperiorCells": 1222,
+  "anyThreeAxisPointColumnUnionCells": 14016,
+  "currentAccessIndex": 11,
+  "passIndex": 0,
+  "currentStage": "cusa_setup",
+  "currentAccessId": "superior-118-157",
+  "configuredSuperiorTailIncludingCurrent": {
+    "accesses": 88,
+    "positiveCapacityAccesses": 88,
+    "distinctResidualCapacityDiskCells": 5511,
+    "distinctResidualHelperSearchDiskCells": 11739,
+    "bestRetainedRoutes": [
+      {
+        "id": "superior-118-157",
+        "retainedCapacityDiskCells": 127
+      },
+      {
+        "id": "superior-133-107",
+        "retainedCapacityDiskCells": 125
+      },
+      {
+        "id": "superior-144-124",
+        "retainedCapacityDiskCells": 123
+      },
+      {
+        "id": "superior-141-143",
+        "retainedCapacityDiskCells": 121
+      },
+      {
+        "id": "superior-135-111",
+        "retainedCapacityDiskCells": 118
+      }
+    ]
+  },
+  "holds": false,
+  "deformationNodes": 0,
+  "limits": "Six-face grid connectivity and retained source-identity column/window upper bounds. No physical shaft/working-envelope, guard, legal bone-opening, or execution admission is asserted. Live engine may advance after this saved boundary."
+}

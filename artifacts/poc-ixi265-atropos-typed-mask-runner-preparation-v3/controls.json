@@ -1,0 +1,21 @@
+{
+  "result": "83 passed in 0.30s",
+  "new_runner_controls": 11,
+  "prior_controls": 72,
+  "native_fitting_in_controls": false,
+  "patient_files_read": false,
+  "test_path": "tests/test_poc_ixi265_atropos_typed_mask_run.py",
+  "test_sha256": "2c60c8c2a28bfb82d6c5b22a6b8d7c658d5fc66ecbb96f2ce8072a84731eae3e",
+  "coverage": [
+    "release-before-access",
+    "all-path validation before any source hash",
+    "foreign/leaf-symlink/ancestor-symlink/extra source refusal",
+    "metadata refusal before paths",
+    "source continuity collects all exact admitted sources",
+    "original native failure retained when source postcheck also fails",
+    "missing-source continuity failure reporting",
+    "exact native preflight and both independent QA bindings",
+    "tampered lineage refusal",
+    "unchanged source/support/parameters/budgets and unique marker"
+  ]
+}

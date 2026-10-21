@@ -1,0 +1,46 @@
+Anatomy visualization and shared RL integration
+
+Actual Electron before/after screenshots and orbit/cutaway movies are beside
+this file. CTA signal is neutral ivory; source artery/vein labels retain their
+own colors. Topology-local, physically transformed normal fairing and vessel
+depth shading affect display only. Tumor is opaque muted cyan; brain context
+is restrained. Original images, mesh vertices and collision masks are separate.
+
+Optional Edit segmentation > Recover supported vessel margins uses retained
+same-scan model scores, a fixed original-mask physical shell, and digital
+simple-point admission. Preview, undo/redo, author, commit and pending review
+use the existing revision workflow. All original positives remain; no gaps are
+joined. The sub-06 estimate grows 673,582 -> 804,930 source cells at score .35,
+radius .8 mm. Components remain 1,167; Euler remains 802. Measured graphs are
+revision-keyed. The first failed topology candidate and its negative result
+remain under local outputs/anatomy-integration-v3/failed-topology; compact
+rejection/measurement receipts are retained here.
+
+The desktop comparison fixes acquired images, registrations, task mapping,
+complete scene assumptions, reward, observation limits, policy and setup.
+Only vessels change: +25,110 cells on the standard 1 mm simulation grid.
+Existing overlap ownership reduces the target 43,573 -> 43,423 mm3; raw tumor,
+brain and bone masks are unchanged. The goal vector and one metric change.
+Local observations, vessel encounters, static source-estimate tip clearance,
+candidate feasibility, reward and selected x+ action remain unchanged. That
+action remains partial (UNSUPPORTED_MATERIAL). The policy receives published
+observations only, without evaluator previews or hidden source masks.
+
+Desktop prefix, policy preview/commit and RL states match exactly. Native
+save/reopen and a fresh Python process reproduce the same final state. Missing
+critical anatomy remains unknown under the same explicit relaxed research
+configuration. This verifies software integration, not surgical safety.
+
+711 desktop tests, 211 distinct relevant Python tests and production build pass.
+Full MRI/CTA checks preserve source arrays and cover linked slices, visibility,
+opacity, clipping, motion and native save/reopen. See tests.json and the small
+source-fixity, topology, comparison and Electron receipts.
+
+Available scans still limit accuracy: sub-06 has no acquired angiography and
+retains false-positive candidates/fragmentation; CTA labels are partial and
+source skull/sinus silhouettes remain stepped. No training or download ran.
+
+From the repository: ./scripts/launch_anatomy_fidelity.sh [mri|cta|rehearsal]
+Reproduce IPC comparison after preparing/opening both source-bound exports:
+desktop/electron/verify-anatomy-integration.cjs --case <baseline patient archive>
+The local comparison-recipe.json pins the unchanged existing pilot setup.

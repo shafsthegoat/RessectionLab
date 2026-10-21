@@ -1,0 +1,207 @@
+{
+  "schema": "resectionlab-ixi265-positive-domain-v2-outcome",
+  "created_utc": "2026-10-16T07:47:17.980916+00:00",
+  "status": "failed_native_SIGSEGV_after_entering_N4",
+  "attempts_started": 1,
+  "N4_entered": true,
+  "N4_completions": 0,
+  "Atropos_entered": false,
+  "Atropos_completions": 0,
+  "accepted_tissue_results": 0,
+  "automatic_retries": 0,
+  "worker_exit_code": -11,
+  "elapsed_seconds": 7.677682624896988,
+  "peak_supervisor_plus_worker_family_rss_bytes_sampled": 493420544,
+  "minimum_available_memory_bytes_sampled": 7271006208,
+  "output_and_temporary_bytes_at_supervisor_exit": 140355,
+  "no_supervisor_resource_limit_fired": true,
+  "exact_N4_call": {
+    "function": "ants.n4_bias_field_correction",
+    "image": "unchanged acquired T1 float32 native grid via ANTs from_numpy",
+    "mask": "original_brain AND T1>0; eight declared unknown cells excluded; ANTs from_numpy uint8 mask",
+    "parameters": {
+      "shrink_factor": 4,
+      "convergence": {
+        "iters": [
+          30,
+          20,
+          10
+        ],
+        "tol": 1e-07
+      },
+      "spline_param": 150,
+      "rescale_intensities": false,
+      "return_bias_field": false,
+      "verbose": true
+    },
+    "frames": "Source RAS converted to LPS metadata; no index permutation/resampling/crop. Native frame guards passed before N4."
+  },
+  "runtime_binary_hashes": [
+    {
+      "path": "ants/.dylibs/libpng16.16.dylib",
+      "sha256": "8064d5b03346634041aa98bae6becf6d1dc59e7259cf36057bc0b544d30adf6e"
+    },
+    {
+      "path": "ants/lib.cpython-312-darwin.so",
+      "sha256": "93f4e1418216de4f2f7b44be9f2926354a7c4bb098593904b95bb8db94f68021"
+    }
+  ],
+  "native_crash_report": {
+    "path": "/Users/sayemkamal/Library/Logs/DiagnosticReports/python3.12-2026-10-16-034247.ips",
+    "sha256": "f35429445d3dbf177cc849c604d9fad0e54403c1f8563fc1aa9d3f348ec7d8e4",
+    "worker_pid": 21276,
+    "supervisor_pid": 21273,
+    "launch": "2026-10-16 03:42:36.2171 -0400",
+    "capture": "2026-10-16 03:42:43.8319 -0400",
+    "exception": {
+      "codes": "0x0000000000000001, 0x000000049e980000",
+      "rawCodes": [
+        1,
+        19840630784
+      ],
+      "type": "EXC_BAD_ACCESS",
+      "signal": "SIGSEGV",
+      "subtype": "KERN_INVALID_ADDRESS at 0x000000049e980000"
+    },
+    "termination": {
+      "flags": 0,
+      "code": 11,
+      "namespace": "SIGNAL",
+      "indicator": "Segmentation fault: 11",
+      "byProc": "exc handler",
+      "byPid": 21276
+    },
+    "faulting_thread": 1,
+    "faulting_frames": [
+      {
+        "symbol": "_platform_memmove",
+        "symbolLocation": 52,
+        "imageOffset": 13204,
+        "image": "libsystem_platform.dylib",
+        "image_uuid": "4c6bd0fe-25f2-38d8-be5c-24dac1dedcfb"
+      },
+      {
+        "symbol": null,
+        "symbolLocation": null,
+        "imageOffset": 6979676,
+        "image": "lib.cpython-312-darwin.so",
+        "image_uuid": "e52ccef8-46ab-3b61-9cea-c3218f5a31a8"
+      },
+      {
+        "symbol": null,
+        "symbolLocation": null,
+        "imageOffset": 654468,
+        "image": "lib.cpython-312-darwin.so",
+        "image_uuid": "e52ccef8-46ab-3b61-9cea-c3218f5a31a8"
+      },
+      {
+        "symbol": null,
+        "symbolLocation": null,
+        "imageOffset": 19162200,
+        "image": "lib.cpython-312-darwin.so",
+        "image_uuid": "e52ccef8-46ab-3b61-9cea-c3218f5a31a8"
+      },
+      {
+        "symbol": null,
+        "symbolLocation": null,
+        "imageOffset": 19159564,
+        "image": "lib.cpython-312-darwin.so",
+        "image_uuid": "e52ccef8-46ab-3b61-9cea-c3218f5a31a8"
+      },
+      {
+        "symbol": null,
+        "symbolLocation": null,
+        "imageOffset": 19165076,
+        "image": "lib.cpython-312-darwin.so",
+        "image_uuid": "e52ccef8-46ab-3b61-9cea-c3218f5a31a8"
+      },
+      {
+        "symbol": null,
+        "symbolLocation": null,
+        "imageOffset": 19167500,
+        "image": "lib.cpython-312-darwin.so",
+        "image_uuid": "e52ccef8-46ab-3b61-9cea-c3218f5a31a8"
+      },
+      {
+        "symbol": "_pthread_start",
+        "symbolLocation": 136,
+        "imageOffset": 27736,
+        "image": "libsystem_pthread.dylib",
+        "image_uuid": "12342372-0084-37a5-9ea6-2e4dc940c685"
+      },
+      {
+        "symbol": "thread_start",
+        "symbolLocation": 8,
+        "imageOffset": 7196,
+        "image": "libsystem_pthread.dylib",
+        "image_uuid": "12342372-0084-37a5-9ea6-2e4dc940c685"
+      }
+    ],
+    "matching_basis": "Exact launch/capture interval and exact installed ANTs Mach-O UUID in faulting frames; PIDs recovered from report",
+    "ANTs_binary_uuid": "e52ccef8-46ab-3b61-9cea-c3218f5a31a8",
+    "ANTs_binary_sha256": "93f4e1418216de4f2f7b44be9f2926354a7c4bb098593904b95bb8db94f68021",
+    "limitation": "Mostly unsymbolicated native frames do not establish the root cause."
+  },
+  "source_continuity": [
+    {
+      "role": "T1",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/originals/IXI265-T1.nii.gz",
+      "sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+      "bytes": 6980629,
+      "after_sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+      "unchanged": true
+    },
+    {
+      "role": "brain_mask",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/synthstrip/brain_mask.nii.gz",
+      "sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+      "bytes": 129560,
+      "after_sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+      "unchanged": true
+    },
+    {
+      "role": "host_bundle",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/IXI265-Guys-0845.ressectionlab",
+      "sha256": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1",
+      "bytes": 57052870,
+      "after_sha256": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1",
+      "unchanged": true
+    }
+  ],
+  "all_three_sources_unchanged": true,
+  "v1_marker_unchanged": true,
+  "v1_marker_sha256_after": "000c813b68f7d96d78b22de068db50e4890cc45d5e07877a3be57256d82ae870",
+  "v1_runner_sha256_after": "4a5c5b4b2f85153212ac27e6356d5f1dca5c8b42d77257fb55a2fee53253624b",
+  "v1_outcome_sha256_after": "55f4dd46f7cc692d4a66799cefca21bfa37430d3f5cf2ebe3eda675b6e4c989e",
+  "candidate_file_exists": false,
+  "output_manifest": [
+    {
+      "path": "attempt.json",
+      "sha256": "36204a082ecedc2fb2ad3744496d3328d58e50b5bfad1d196f7bf53cc0062ae9",
+      "bytes": 4225
+    },
+    {
+      "path": "declaration.json",
+      "sha256": "e0348db341dfcea09749366052dbb9668c1b513f0ce018c8a640c8a670891f64",
+      "bytes": 9933
+    },
+    {
+      "path": "temporary/matplotlib/fontlist-v390.json",
+      "sha256": "3a9eba4960d14443a8b940acb15a0d8fbfa935a8b578983c8ffad69feabc6f6e",
+      "bytes": 125096
+    },
+    {
+      "path": "worker-input.json",
+      "sha256": "ab7fb676db5d61013d39e531b76e26b90b0b072fa4ae4e98b335e894c9f8c5c5",
+      "bytes": 1255
+    },
+    {
+      "path": "worker.log",
+      "sha256": "11833c96b512d60113636f2ba033d3528db5cf380c5ae8b544d8b48e8eb74930",
+      "bytes": 102
+    }
+  ],
+  "anatomy_host_growth_acceptance": false,
+  "no_source_or_catalog_promotion": true,
+  "failure_cause_interpretation": "Native memory-access failure observed; exact runtime/adapter cause is not established by crash report alone."
+}

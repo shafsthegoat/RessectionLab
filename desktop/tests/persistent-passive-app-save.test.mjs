@@ -10,10 +10,10 @@ const end = source.indexOf('  useEffect(() => {', start);
 assert(start >= 0 && end > start);
 const saveSource = stripTypeScriptTypes(source.slice(start, end));
 
-async function savedReplay(episodeWorkflow, staleComparison = false) {
+async function savedReplay(episodeWorkflow, staleComparison = false, surgical) {
   let request;
   const context = {
-    api: { saveCase: async value => { request = value; return { saved: true }; } },
+    api: { saveCase: async value => { surgical?.assertBeforeSave?.();request = value; return { saved: true }; } },
     payload: { caseHash: 'case' },
     act: fn => fn(),
     requirePersistableContact: () => {},
@@ -32,6 +32,8 @@ async function savedReplay(episodeWorkflow, staleComparison = false) {
     imaging: { selected: null, snapshot: () => ({}) },
     routeA: '', routeB: '', category: '', visibleLayers: [], overlayOpacity: 0.5,
     primaryViewer: {},
+    rehearsal: {pause:()=>{},viewPreferences:null},
+    surgical: surgical??{pauseFullCase:()=>{},pausePlayback:()=>{},view:null},
     cursor: [0, 0, 0], setMessage: () => {},
   };
   vm.runInNewContext(`${saveSource}\nglobalThis.saveAction=save;`, context);
@@ -60,4 +62,10 @@ test('a contact workflow does not save a stale passive or aspiration replay', as
 test('an inactive temporary aspiration comparison cannot block saving the active passive replay', async () => {
   assert.equal((await savedReplay('passive', true)).episodeId, 'passive');
   await assert.rejects(savedReplay('aspiration', true), /temporary aspiration comparison/);
+});
+test('actual Save pauses computation and microstep playback and waits for a canonical inspect barrier',async()=>{
+  const events=[];
+  const surgical={view:{stateId:'read-only-frame'},pauseFullCase:()=>events.push('pause compute'),pausePlayback:()=>events.push('pause replay'),run:async command=>{assert.equal(command,'inspect');await Promise.resolve();events.push('canonical state');return true;},assertBeforeSave:()=>assert.deepEqual(events,['pause compute','pause replay','canonical state'])};
+  await savedReplay('aspiration',false,surgical);
+  await assert.rejects(savedReplay('aspiration',false,{...surgical,run:async()=>false,assertBeforeSave:()=>assert.fail('No save after a failed source-state barrier')}),/could not be synchronized/);
 });

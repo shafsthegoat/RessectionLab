@@ -1,0 +1,23 @@
+{
+  "decision": "release_one_stage",
+  "environment_sha256": "b1dc7c8fbe6e29a14b24e6dafcbf78192d5e9402d8f00a81d9c2a3a9427873a2",
+  "issued_at_utc": "2026-10-16T10:09:40.178950+00:00",
+  "issuer": "ROOT",
+  "plan_sha256": "a7a3e918e519882e115714d0624eb4ed8e9f6952598cca505029dcbe0940a7a5",
+  "preflight_qa": {
+    "host_tests": 163,
+    "independent_archive_controls": 17,
+    "independent_library_controls": 17,
+    "renderer_tests": 369,
+    "supervisor_generated_controls": 13
+  },
+  "program_sha256": "39bf33dd80ffd5e8c087cbd52164cbe0d8485f73b44687d0d466b0f49e197129",
+  "receipt_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/artifacts/poc-first-local-package-build-v1/sidecar-supervision.json",
+  "runner_sha256": "923d8cc873643942d142c692d78eac21493cbe0e42c53ba72265bab9aa8c5788",
+  "schema": "poc-first-local-package-supervisor-v1-root-release",
+  "scope": "One current-source local research engine build, no inference, training, acquisition or retry. Actual frozen-runtime and GUI verification remain separate.",
+  "session_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-first-local-package-build-v1",
+  "source_commit": "f38716257ccb23b287966d8899c8bb90c34cb551",
+  "source_manifest_sha256": "6385c4d8c81a6be48c38ed2df457868d786a5733b68ae116b4f2b8e6a020025c",
+  "stage": "sidecar"
+}

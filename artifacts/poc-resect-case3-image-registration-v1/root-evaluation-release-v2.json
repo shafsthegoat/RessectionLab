@@ -1,0 +1,50 @@
+{
+  "accounting": "One image-only fit; first scoring CLI syntax-refused before computing accuracy. This release permits the corrected all-point scoring invocation.",
+  "candidate_sha256": "17a9599de644b9d7d4cd3fd9b356630adb3e38180496b9501f914520056949ef",
+  "case_id": "RESECT:Case3",
+  "cohort": {
+    "path": "manifests/resect-component-cohort-v1.json",
+    "sha256": "4fc51f01e42253d395660d850cda2296a3e7f23e5a5ade80bbd5a3ed411b6a77"
+  },
+  "corrected_scoring_preparation_commit": "1810a334234e44dc20b3d05428368f9bde971213",
+  "decision": "release_separate_evaluation",
+  "evaluator_sha256": "7d987eb0bd31375d924e444e1838e4255327cef7036ea2e4ed7e9d78b9e3406e",
+  "fit_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-resect-case3-image-registration-v1",
+  "fit_release_sha256": "bc196c57fb4701c161f50bcb4b3edae03b5988b864308a0c217e9c83ac8962e0",
+  "fit_result_sha256": "ea8e57322989e6b5f580c67181201deead9235a4829315781bc7aad0f598b12b",
+  "frozen_transform_sha256": "e6648339d69841985f8fa644ae5d69168422ce12ca5dadc4659b275a8b9cd8af",
+  "full_tag_role": "evaluation_only_all_points",
+  "future_use": "Full-tag coordinates exposed after fit freeze; consumed development evidence, no held-out generalization claim.",
+  "independent_fit_audit_sha256": "3277460d1529126ea04828e8785ffd0ebfebdc1ae6209b77e7d4cd92eed1a955",
+  "independent_prospective_qa_sha256": "6c9afea9647399b743174203fa10814615acf6ccbeb32708317d058ec5d0a265",
+  "initial_refusal_sha256": "49f7d947e44487c7e7a274628541a7b5a3611d389d731d4be3d9b14dbf28bd16",
+  "issued_at_utc": "2026-10-16T09:51:21.192973+00:00",
+  "issuer": "ROOT",
+  "landmark_access_permitted": true,
+  "output_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-resect-case3-image-registration-evaluation-v1",
+  "preflight_sha256": "ef9e0cd6029e869a6364de6c946f0284bc0a7ca1f700695a8bb75b52e60fd7ba",
+  "preparation_sha256": "0b9668d8b6a1adf319b55a6ed8aded986039bc6eed8876a4c1fabf9f50f5518b",
+  "prior_actual_tag_exposure": {
+    "accuracy_computed": false,
+    "actual_full_tag_read": true,
+    "coordinate_values_printed_or_committed": false,
+    "development_status": "Actual tag exposed for subsequent development; no held-out or independent accuracy claim",
+    "diagnosis": "ROOT-authorized post-fit syntax inspection; optional empty MINC labels confirmed",
+    "diagnosis_path": "artifacts/resect-case3-registration-evaluation-preparation-v2/diagnosis.json",
+    "diagnosis_sha256": "a9edc80d8129abf2fca13ac2d6b2f79d667ee5dcd7aaf1ff544c136425c772f3",
+    "initial_attempt": "metadata gate passed; exact full tag read; syntax refused before accuracy computation",
+    "initial_refusal_sha256": "49f7d947e44487c7e7a274628541a7b5a3611d389d731d4be3d9b14dbf28bd16"
+  },
+  "refitting_or_parameter_selection_permitted": false,
+  "role": "TRAIN",
+  "runner_sha256": "e17d755eeadb6a3d1fd365b7a3b4dc31f9e27c4f93afdb6045d8f6e27ef9612f",
+  "schema": "resect-case3-image-registration-v1-evaluation-release",
+  "scope": "One fixed all-point Case3 TRAIN comparison of unchanged frozen rigid fit versus identity, after format-only empty-label compatibility. All 17 rows retained. No refitting, parameter selection or clinical acceptance.",
+  "supervision_sha256": "e675d52669dfef2442e31d019e98c8d14eb705a470692510f0bc37a1cf2c9fe9",
+  "tag": {
+    "bytes": 1190,
+    "path": "data/anatomy/resect-v1/Case3/Landmarks/Case3-beforeUS-duringUS-full.tag",
+    "sha256": "585769a006d8e5a995f987d91cef75ca45288cf6132aa3842cd44ca19927fc08"
+  },
+  "tests_sha256": "eda3b282c158ceaecb1320fed0722e0e4ea8bdabad416826ca665192538d5007"
+}

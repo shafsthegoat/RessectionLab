@@ -1,0 +1,197 @@
+[
+  {
+    "indexAxis": 0,
+    "boundarySign": 1,
+    "worldDirectionOut": [
+      -1.0,
+      0.0,
+      0.0
+    ],
+    "candidateColumnsWithoutSoftTissueOrVesselAbove": 907,
+    "regions": [
+      {
+        "columnCount": 907,
+        "maxLateralColumnClearanceMm": 7.615773105863909,
+        "index": [
+          127,
+          150,
+          131
+        ],
+        "targetEntryRAS": [
+          -17.464996337890625,
+          26.441162109375,
+          -423.25
+        ],
+        "aboveTargetCounts": {
+          "0": 65,
+          "1": 0,
+          "2": 0,
+          "3": 27,
+          "4": 0
+        },
+        "boneRangeFromTargetEntryMm": [
+          1,
+          27
+        ]
+      }
+    ]
+  },
+  {
+    "indexAxis": 0,
+    "boundarySign": -1,
+    "worldDirectionOut": [
+      1.0,
+      -0.0,
+      -0.0
+    ],
+    "candidateColumnsWithoutSoftTissueOrVesselAbove": 0,
+    "regions": []
+  },
+  {
+    "indexAxis": 1,
+    "boundarySign": 1,
+    "worldDirectionOut": [
+      0.0,
+      1.0,
+      0.0
+    ],
+    "candidateColumnsWithoutSoftTissueOrVesselAbove": 536,
+    "regions": [
+      {
+        "columnCount": 535,
+        "maxLateralColumnClearanceMm": 5.656854249492381,
+        "index": [
+          138,
+          142,
+          130
+        ],
+        "targetEntryRAS": [
+          -28.464996337890625,
+          18.441162109375,
+          -424.25
+        ],
+        "aboveTargetCounts": {
+          "0": 45,
+          "1": 0,
+          "2": 0,
+          "3": 32,
+          "4": 0
+        },
+        "boneRangeFromTargetEntryMm": [
+          1,
+          32
+        ]
+      },
+      {
+        "columnCount": 1,
+        "maxLateralColumnClearanceMm": 1.0,
+        "index": [
+          103,
+          141,
+          142
+        ],
+        "targetEntryRAS": [
+          6.535003662109375,
+          17.441162109375,
+          -412.25
+        ],
+        "aboveTargetCounts": {
+          "0": 50,
+          "1": 0,
+          "2": 0,
+          "3": 28,
+          "4": 0
+        },
+        "boneRangeFromTargetEntryMm": [
+          1,
+          28
+        ]
+      }
+    ]
+  },
+  {
+    "indexAxis": 1,
+    "boundarySign": -1,
+    "worldDirectionOut": [
+      -0.0,
+      -1.0,
+      -0.0
+    ],
+    "candidateColumnsWithoutSoftTissueOrVesselAbove": 1,
+    "regions": [
+      {
+        "columnCount": 1,
+        "maxLateralColumnClearanceMm": 1.0,
+        "index": [
+          148,
+          123,
+          130
+        ],
+        "targetEntryRAS": [
+          -38.464996337890625,
+          -0.558837890625,
+          -424.25
+        ],
+        "aboveTargetCounts": {
+          "0": 63,
+          "1": 0,
+          "2": 0,
+          "3": 60,
+          "4": 0
+        },
+        "boneRangeFromTargetEntryMm": [
+          1,
+          60
+        ]
+      }
+    ]
+  },
+  {
+    "indexAxis": 2,
+    "boundarySign": 1,
+    "worldDirectionOut": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "candidateColumnsWithoutSoftTissueOrVesselAbove": 2204,
+    "regions": [
+      {
+        "columnCount": 2204,
+        "maxLateralColumnClearanceMm": 11.180339887498949,
+        "index": [
+          120,
+          154,
+          133
+        ],
+        "targetEntryRAS": [
+          -10.464996337890625,
+          30.441162109375,
+          -421.25
+        ],
+        "aboveTargetCounts": {
+          "0": 32,
+          "1": 0,
+          "2": 0,
+          "3": 15,
+          "4": 0
+        },
+        "boneRangeFromTargetEntryMm": [
+          1,
+          15
+        ]
+      }
+    ]
+  },
+  {
+    "indexAxis": 2,
+    "boundarySign": -1,
+    "worldDirectionOut": [
+      -0.0,
+      -0.0,
+      -1.0
+    ],
+    "candidateColumnsWithoutSoftTissueOrVesselAbove": 0,
+    "regions": []
+  }
+]

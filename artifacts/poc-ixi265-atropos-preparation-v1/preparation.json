@@ -1,0 +1,126 @@
+{
+  "schema": "resectionlab-ixi265-atropos-preparation-v1",
+  "status": "source_and_metadata_preparation_frozen_before_asset_setup",
+  "candidate_plan": {
+    "schema": "resectionlab-ixi265-atropos-candidate-v1",
+    "status": "prepared_not_run",
+    "patient_group": "IXI:265",
+    "role": "TRAIN",
+    "training_admitted": false,
+    "source_hashes": {
+      "T1": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+      "brain_mask": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+      "host_bundle": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1"
+    },
+    "package": {
+      "name": "antspyx",
+      "version": "0.6.3",
+      "wheel_sha256": "e378329089f622c72eacc47e4e2c18503d0f3fbf2cc39ccb9df65880c0a7846f"
+    },
+    "parameters": {
+      "N4": {
+        "shrink_factor": 4,
+        "convergence": {
+          "iters": [
+            30,
+            20,
+            10
+          ],
+          "tol": 1e-07
+        },
+        "spline_param": 150,
+        "rescale_intensities": false,
+        "return_bias_field": false,
+        "verbose": true
+      },
+      "Atropos": {
+        "i": "KMeans[3]",
+        "m": "[0.1,1x1x1]",
+        "c": "[10,0]",
+        "priorweight": 0.0,
+        "r": 0,
+        "v": 1
+      },
+      "grid": "full_native_grid_no_resampling_no_crop",
+      "priors": null,
+      "intensity_clipping_or_normalization": null,
+      "Atropos_random_seed_option": "r=0 (fixed upstream seed)"
+    },
+    "resources": {
+      "threads": 2,
+      "rss_limit_bytes": 3221225472,
+      "minimum_available_bytes": 1073741824,
+      "timeout_seconds": 600.0,
+      "output_limit_bytes": 536870912,
+      "free_disk_floor_bytes": 53687091200,
+      "sample_interval_seconds": 0.2,
+      "max_voxels": 12000000,
+      "attempts": 1
+    },
+    "frame_tolerance_mm": 0.0001,
+    "hard_class_assumptions": {
+      "1": "csf_like_intensity_estimated",
+      "2": "gray_matter_like_intensity_estimated",
+      "3": "white_matter_like_intensity_estimated"
+    },
+    "posterior_semantics": "unmodified_fitted_class_membership_probabilities",
+    "anatomy_accepted": false,
+    "host_accepted": false,
+    "growth_use_accepted": false,
+    "limitations": [
+      "within_image_finite_mixture_fitting_not_pretrained_inference",
+      "ordered_T1_intensity_to_CSF_GM_WM_is_an_unreviewed_assumption",
+      "posterior_probabilities_are_not_physical_partial_volume_fractions",
+      "CSF_like_class_does_not_identify_ventricles",
+      "no_anatomical_acceptance_host_upgrade_or_automatic_growth_use",
+      "two_thread_floating_point_execution_not_claimed_bitwise_reproducible"
+    ]
+  },
+  "files": [
+    {
+      "path": "scripts/poc_ixi265_atropos.py",
+      "sha256": "f048276404f2c7c1300d32e6e880a622d65931d90e0247111f8212cc19d49f00",
+      "bytes": 20972
+    },
+    {
+      "path": "tests/test_poc_ixi265_atropos.py",
+      "sha256": "bc26602c81c0afdff0a1454381c01035a82e291881ed918dbb111168f004c2ad",
+      "bytes": 10045
+    },
+    {
+      "path": "artifacts/poc-ixi265-atropos-preparation-v1/runtime-plan.json",
+      "sha256": "629c045ba0a0c57c8d3c345249b111659e88aca2987cd3e438dac9463b35c4a8",
+      "bytes": 269918
+    },
+    {
+      "path": "artifacts/poc-ixi265-atropos-preparation-v1/requirements.lock",
+      "sha256": "32a1ba8867797ec76fe3082d9e17137cc802927a5e9319fb42e5927970d62258",
+      "bytes": 2974
+    },
+    {
+      "path": "artifacts/poc-ixi265-atropos-preparation-v1/official-provenance.json",
+      "sha256": "547732fee3b617f15e085d254dd4c43b2fbbc6a448537500fac1c0f58f6d696b",
+      "bytes": 4047
+    }
+  ],
+  "validation": {
+    "generated_controls_passed": 22,
+    "real_ANTs_fitting_run": false,
+    "real_source_image_or_mask_decoded": false,
+    "ANTs_package_imported": false,
+    "tests": "tests/test_poc_ixi265_atropos.py",
+    "covered": [
+      "oblique_reflected_RAS_LPS_eight_corner_independent_oracle",
+      "small_direction_roundoff_recorded_large_corner_error_refused",
+      "source_arrays_unchanged",
+      "posterior_or_class_errors_refused_without_clipping_renormalization_or_relabeling",
+      "exact_identity_and_protected_role_refusal_before_payload",
+      "unreleased_fit_refusal",
+      "five_resource_boundaries",
+      "real_generated_process_terminated_and_failure_preserved_without_retry",
+      "pinned_wheel_dependency_closure_and_native_platform_tags"
+    ]
+  },
+  "feasibility": "Native compatible wheel and complete dependency closure available; numerical fitting and anatomical quality remain untested. No pretrained network or accepted host/tissue claim.",
+  "next_release_required": "Asset setup approved separately by root; actual source decode/fitting requires another root release."
+}

@@ -1,0 +1,221 @@
+{
+  "readOnly": true,
+  "noPhysics": true,
+  "sourceStateId": "sha256:0845143f34ebdb28dd393262dbe151f28ef9239bc2da52c759a94efe48663f7a",
+  "position": 316,
+  "targetRemovedMm3": 9045,
+  "accessIndex": 3,
+  "stage": "access_setup",
+  "pathSummary": {
+    "fan": {
+      "actions": 25,
+      "poses": 2894,
+      "microstepsInteriorEstimate": 2894,
+      "coarse03PoseEstimate": 228,
+      "coarse03MicrostepsInteriorEstimate": 605,
+      "medianPoses": 88.0
+    },
+    "straight": {
+      "actions": 59,
+      "poses": 5742,
+      "microstepsInteriorEstimate": 6392,
+      "coarse03PoseEstimate": 1031,
+      "coarse03MicrostepsInteriorEstimate": 1818,
+      "medianPoses": 40.0
+    },
+    "static": {
+      "actions": 1,
+      "poses": 1,
+      "microstepsInteriorEstimate": 1,
+      "coarse03PoseEstimate": 1,
+      "coarse03MicrostepsInteriorEstimate": 1,
+      "medianPoses": 1.0
+    }
+  },
+  "topResidualRemainingAccesses": [
+    {
+      "index": 18,
+      "id": "superior-132-120",
+      "entryRAS": [
+        -22.464996337890625,
+        -3.558837890625,
+        -416.25
+      ],
+      "initialDiskTarget": 381,
+      "retainedEligibleDiskTarget": 381,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 29,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 22,
+      "id": "superior-135-130",
+      "entryRAS": [
+        -25.464996337890625,
+        6.441162109375,
+        -420.25
+      ],
+      "initialDiskTarget": 362,
+      "retainedEligibleDiskTarget": 362,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 27,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 23,
+      "id": "superior-135-118",
+      "entryRAS": [
+        -25.464996337890625,
+        -5.558837890625,
+        -417.25
+      ],
+      "initialDiskTarget": 358,
+      "retainedEligibleDiskTarget": 358,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 28,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 24,
+      "id": "superior-130-117",
+      "entryRAS": [
+        -20.464996337890625,
+        -6.558837890625,
+        -415.25
+      ],
+      "initialDiskTarget": 358,
+      "retainedEligibleDiskTarget": 358,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 28,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 16,
+      "id": "superior-132-132",
+      "entryRAS": [
+        -22.464996337890625,
+        8.441162109375,
+        -420.25
+      ],
+      "initialDiskTarget": 386,
+      "retainedEligibleDiskTarget": 344,
+      "retainedFraction": 0.8911917098445595,
+      "retainedCenterColumnTarget": 30,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 30,
+      "id": "superior-136-134",
+      "entryRAS": [
+        -26.464996337890625,
+        10.441162109375,
+        -422.25
+      ],
+      "initialDiskTarget": 328,
+      "retainedEligibleDiskTarget": 328,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 25,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 15,
+      "id": "superior-132-124",
+      "entryRAS": [
+        -22.464996337890625,
+        0.441162109375,
+        -416.25
+      ],
+      "initialDiskTarget": 387,
+      "retainedEligibleDiskTarget": 313,
+      "retainedFraction": 0.8087855297157622,
+      "retainedCenterColumnTarget": 23,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 36,
+      "id": "superior-136-138",
+      "entryRAS": [
+        -26.464996337890625,
+        14.441162109375,
+        -423.25
+      ],
+      "initialDiskTarget": 312,
+      "retainedEligibleDiskTarget": 312,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 21,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 40,
+      "id": "superior-133-145",
+      "entryRAS": [
+        -23.464996337890625,
+        21.441162109375,
+        -424.25
+      ],
+      "initialDiskTarget": 292,
+      "retainedEligibleDiskTarget": 292,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 23,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 42,
+      "id": "superior-141-133",
+      "entryRAS": [
+        -31.464996337890625,
+        9.441162109375,
+        -422.25
+      ],
+      "initialDiskTarget": 289,
+      "retainedEligibleDiskTarget": 289,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 23,
+      "drillRadiusMm": 3.0
+    }
+  ],
+  "recentCoreSliceWallSeconds": [
+    1991.8929435410537,
+    2025.4391115829349,
+    2048.6363944578916,
+    2356.4706995831802,
+    2385.1638440000825,
+    2406.3076651659794,
+    2587.992692708038,
+    39.02563741710037,
+    185.5054741250351,
+    345.9512193342671,
+    388.33480708440766,
+    413.1449582502246
+  ],
+  "recentCoreSlicePositions": [
+    244,
+    246,
+    248,
+    266,
+    268,
+    270,
+    282,
+    284,
+    296,
+    310,
+    312,
+    314
+  ],
+  "recentCoreSliceTargetMm3": [
+    7842.0,
+    7848.0,
+    7948.0,
+    8006.0,
+    8206.0,
+    8318.0,
+    8409.0,
+    8699.0,
+    8837.0,
+    8984.0,
+    9022.0,
+    9045.0
+  ],
+  "methodLimit": "Resampled paths are hypothetical counts only, not collision-admitted or state-equivalent actions. Counts exclude unknown original current-to-first fractions and stopped-action truncation. Residual disk rank is optimistic configured-column capacity, not predicted physical removal."
+}
+originalNext [{'index': 3, 'id': 'superior-117-128', 'entryRAS': [-7.464996337890625, 4.441162109375, -412.25], 'initialDiskTarget': 433, 'retainedEligibleDiskTarget': 33, 'retainedFraction': 0.07621247113163972, 'retainedCenterColumnTarget': 1, 'drillRadiusMm': 3.0}, {'index': 4, 'id': 'superior-116-123', 'entryRAS': [-6.464996337890625, -0.558837890625, -410.25], 'initialDiskTarget': 302, 'retainedEligibleDiskTarget': 68, 'retainedFraction': 0.2251655629139073, 'retainedCenterColumnTarget': 11, 'drillRadiusMm': 2.5}, {'index': 5, 'id': 'superior-126-128', 'entryRAS': [-16.464996337890625, 4.441162109375, -415.25], 'initialDiskTarget': 293, 'retainedEligibleDiskTarget': 38, 'retainedFraction': 0.1296928327645051, 'retainedCenterColumnTarget': 6, 'drillRadiusMm': 2.6231056256176606}, {'index': 6, 'id': 'superior-120-130', 'entryRAS': [-10.464996337890625, 6.441162109375, -415.25], 'initialDiskTarget': 417, 'retainedEligibleDiskTarget': 35, 'retainedFraction': 0.08393285371702638, 'retainedCenterColumnTarget': 4, 'drillRadiusMm': 3.0}, {'index': 7, 'id': 'superior-129-126', 'entryRAS': [-19.464996337890625, 2.441162109375, -415.25], 'initialDiskTarget': 285, 'retainedEligibleDiskTarget': 83, 'retainedFraction': 0.2912280701754386, 'retainedCenterColumnTarget': 9, 'drillRadiusMm': 2.9721359549995796}, {'index': 8, 'id': 'superior-129-122', 'entryRAS': [-19.464996337890625, -1.558837890625, -415.25], 'initialDiskTarget': 277, 'retainedEligibleDiskTarget': 126, 'retainedFraction': 0.4548736462093863, 'retainedCenterColumnTarget': 17, 'drillRadiusMm': 2.6231056256176606}, {'index': 9, 'id': 'superior-129-134', 'entryRAS': [-19.464996337890625, 10.441162109375, -419.25], 'initialDiskTarget': 276, 'retainedEligibleDiskTarget': 175, 'retainedFraction': 0.6340579710144928, 'retainedCenterColumnTarget': 19, 'drillRadiusMm': 2.7426406871192848}, {'index': 10, 'id': 'superior-129-130', 'entryRAS': [-19.464996337890625, 6.441162109375, -418.25], 'initialDiskTarget': 398, 'retainedEligibleDiskTarget': 98, 'retainedFraction': 0.24623115577889448, 'retainedCenterColumnTarget': 7, 'drillRadiusMm': 3.0}]

@@ -1,0 +1,3551 @@
+{
+  "startedAt": 1792368798339,
+  "originalSource": "/Users/shaf/Downloads/RessectionLab-Native-Anatomy-sub-06/patient-anatomy.json",
+  "disposableStudy": true,
+  "errors": [],
+  "checks": [
+    {
+      "name": "initial T1CE and segmentation captures",
+      "passed": true
+    },
+    {
+      "name": "presented orbit FPS without capture",
+      "passed": true,
+      "evidence": {
+        "dragStarted": 42991.285,
+        "dragEnded": 45113.540125,
+        "dragMilliseconds": 2122.255124999996,
+        "idleMilliseconds": 1001.3889590000035,
+        "deliveredFrames": 64,
+        "totalSubscriptionFrames": 69,
+        "totalElapsedMs": 3125.888957999996,
+        "medianFps": 25.710162906017906,
+        "p95FrameMs": 42.34937499999796,
+        "captureOverhead": false,
+        "cpuEnvironment": "run after desktop/Python suites completed"
+      }
+    },
+    {
+      "name": "native save and reopen preserves presentation cursor scope and layer choices",
+      "passed": false,
+      "error": "Error: Saved cursor changed\n    at assert (/Users/shaf/coding_projects/RessectionLab/desktop/electron/verify-visual-fidelity.cjs:83:58)\n    at /Users/shaf/coding_projects/RessectionLab/desktop/electron/verify-visual-fidelity.cjs:125:905\n    at async step (/Users/shaf/coding_projects/RessectionLab/desktop/electron/verify-visual-fidelity.cjs:84:170)\n    at async runFullVerification (/Users/shaf/coding_projects/RessectionLab/desktop/electron/verify-visual-fidelity.cjs:125:3)\n    at async WebContents.<anonymous> (/Users/shaf/coding_projects/RessectionLab/desktop/electron/verify-visual-fidelity.cjs:70:45)"
+    }
+  ],
+  "views": [
+    {
+      "name": "mri-before-presentation",
+      "path": "/Users/shaf/coding_projects/RessectionLab/artifacts/desktop-renderer/medivis-fidelity-v1/final/recheck/mri-before-presentation.png",
+      "at": 1792368832349
+    },
+    {
+      "name": "mri-before-left",
+      "path": "/Users/shaf/coding_projects/RessectionLab/artifacts/desktop-renderer/medivis-fidelity-v1/final/recheck/mri-before-left.png",
+      "at": 1792368833642
+    },
+    {
+      "name": "segmentation",
+      "path": "/Users/shaf/coding_projects/RessectionLab/artifacts/desktop-renderer/medivis-fidelity-v1/final/recheck/segmentation.png",
+      "at": 1792368835419
+    },
+    {
+      "name": "segmentation-left",
+      "path": "/Users/shaf/coding_projects/RessectionLab/artifacts/desktop-renderer/medivis-fidelity-v1/final/recheck/segmentation-left.png",
+      "at": 1792368836690
+    }
+  ],
+  "surface": [
+    {
+      "name": "vessels",
+      "diagnostics": {
+        "policy": "physical-windowed-sinc-v2",
+        "kind": "vessel",
+        "maxDisplacementMm": 0.12488601934308668,
+        "restoredComponents": 0,
+        "backedOffVertices": 3326,
+        "fallbackReason": "",
+        "intersectionCheck": "passed"
+      },
+      "qa": {
+        "sourceIdentity": "94c349ec80795cce207aedd37e4cfa68a7a2e686a1efb62918f36ac08c507795",
+        "voxelCount": 673582,
+        "componentCount": 1167,
+        "largestComponentFraction": 0.7643939416433337,
+        "boundaryTouchingVoxels": 47,
+        "probabilityMismatchVoxels": 0,
+        "reviewStatus": "unreviewed",
+        "issues": [
+          "1,167 disconnected source components; inspect before correcting.",
+          "47 foreground cells touch the acquisition boundary; coverage may be truncated."
+        ],
+        "accuracy": "unmeasured"
+      },
+      "empty": false,
+      "observedAt": 16821.400000095367
+    },
+    {
+      "name": "brain",
+      "diagnostics": {
+        "policy": "physical-windowed-sinc-v2",
+        "kind": "context",
+        "maxDisplacementMm": 0.24976071731022995,
+        "restoredComponents": 0,
+        "backedOffVertices": 6,
+        "fallbackReason": "",
+        "intersectionCheck": "passed"
+      },
+      "qa": {
+        "sourceIdentity": "417db4afd2b865a9d72caedc77add85d737cdf72323c66a1e07f49cd5d4e80f8",
+        "voxelCount": 13341986,
+        "componentCount": 1,
+        "largestComponentFraction": 1,
+        "boundaryTouchingVoxels": 0,
+        "probabilityMismatchVoxels": null,
+        "reviewStatus": "unreviewed",
+        "issues": [],
+        "accuracy": "unmeasured"
+      },
+      "empty": false,
+      "observedAt": 16821.699999809265
+    },
+    {
+      "name": "tumor",
+      "diagnostics": {
+        "policy": "physical-windowed-sinc-v2",
+        "kind": "tumor",
+        "maxDisplacementMm": 0.749259022352804,
+        "restoredComponents": 0,
+        "backedOffVertices": 354,
+        "fallbackReason": "",
+        "intersectionCheck": "passed"
+      },
+      "qa": {
+        "sourceIdentity": "3a440f0881b4054934346e8687bfe19a49f291611e82d611ee4bd33a1c62c9f7",
+        "voxelCount": 360280,
+        "componentCount": 3,
+        "largestComponentFraction": 0.999994448762074,
+        "boundaryTouchingVoxels": 0,
+        "probabilityMismatchVoxels": 0,
+        "reviewStatus": "unreviewed",
+        "issues": [
+          "3 disconnected source components; inspect before correcting."
+        ],
+        "accuracy": "unmeasured"
+      },
+      "empty": false,
+      "observedAt": 16821.699999809265
+    },
+    {
+      "name": "bone",
+      "diagnostics": {
+        "policy": "physical-windowed-sinc-v2",
+        "kind": "context",
+        "maxDisplacementMm": 0.24976111909449683,
+        "restoredComponents": 0,
+        "backedOffVertices": 175904,
+        "fallbackReason": "",
+        "intersectionCheck": "passed"
+      },
+      "qa": {
+        "sourceIdentity": "5243d0e3ba9b802fb16761d26502043f51fc9ac4f5e205ed36cd69c4698e6d54",
+        "voxelCount": 4935337,
+        "componentCount": 10895,
+        "largestComponentFraction": 0.978817454613535,
+        "boundaryTouchingVoxels": 0,
+        "probabilityMismatchVoxels": 0,
+        "reviewStatus": "unreviewed",
+        "issues": [
+          "10,895 disconnected source components; inspect before correcting.",
+          "Source alignment requires review."
+        ],
+        "accuracy": "unmeasured"
+      },
+      "empty": false,
+      "observedAt": 16821.800000190735
+    },
+    {
+      "name": "vessels",
+      "diagnostics": {
+        "policy": "physical-windowed-sinc-v2",
+        "kind": "vessel",
+        "maxDisplacementMm": 0.12488601934308668,
+        "restoredComponents": 0,
+        "backedOffVertices": 3326,
+        "fallbackReason": "",
+        "intersectionCheck": "passed"
+      },
+      "qa": {
+        "sourceIdentity": "94c349ec80795cce207aedd37e4cfa68a7a2e686a1efb62918f36ac08c507795",
+        "voxelCount": 673582,
+        "componentCount": 1167,
+        "largestComponentFraction": 0.7643939416433337,
+        "boundaryTouchingVoxels": 47,
+        "probabilityMismatchVoxels": 0,
+        "reviewStatus": "unreviewed",
+        "issues": [
+          "1,167 disconnected source components; inspect before correcting.",
+          "47 foreground cells touch the acquisition boundary; coverage may be truncated."
+        ],
+        "accuracy": "unmeasured"
+      },
+      "empty": false,
+      "observedAt": 29768.900000095367
+    },
+    {
+      "name": "brain",
+      "diagnostics": {
+        "policy": "physical-windowed-sinc-v2",
+        "kind": "context",
+        "maxDisplacementMm": 0.24976071731022995,
+        "restoredComponents": 0,
+        "backedOffVertices": 6,
+        "fallbackReason": "",
+        "intersectionCheck": "passed"
+      },
+      "qa": {
+        "sourceIdentity": "417db4afd2b865a9d72caedc77add85d737cdf72323c66a1e07f49cd5d4e80f8",
+        "voxelCount": 13341986,
+        "componentCount": 1,
+        "largestComponentFraction": 1,
+        "boundaryTouchingVoxels": 0,
+        "probabilityMismatchVoxels": null,
+        "reviewStatus": "unreviewed",
+        "issues": [],
+        "accuracy": "unmeasured"
+      },
+      "empty": false,
+      "observedAt": 29769.099999904633
+    },
+    {
+      "name": "tumor",
+      "diagnostics": {
+        "policy": "physical-windowed-sinc-v2",
+        "kind": "tumor",
+        "maxDisplacementMm": 0.749259022352804,
+        "restoredComponents": 0,
+        "backedOffVertices": 354,
+        "fallbackReason": "",
+        "intersectionCheck": "passed"
+      },
+      "qa": {
+        "sourceIdentity": "3a440f0881b4054934346e8687bfe19a49f291611e82d611ee4bd33a1c62c9f7",
+        "voxelCount": 360280,
+        "componentCount": 3,
+        "largestComponentFraction": 0.999994448762074,
+        "boundaryTouchingVoxels": 0,
+        "probabilityMismatchVoxels": 0,
+        "reviewStatus": "unreviewed",
+        "issues": [
+          "3 disconnected source components; inspect before correcting."
+        ],
+        "accuracy": "unmeasured"
+      },
+      "empty": false,
+      "observedAt": 29769.199999809265
+    },
+    {
+      "name": "bone",
+      "diagnostics": {
+        "policy": "physical-windowed-sinc-v2",
+        "kind": "context",
+        "maxDisplacementMm": 0.24976111909449683,
+        "restoredComponents": 0,
+        "backedOffVertices": 175904,
+        "fallbackReason": "",
+        "intersectionCheck": "passed"
+      },
+      "qa": {
+        "sourceIdentity": "5243d0e3ba9b802fb16761d26502043f51fc9ac4f5e205ed36cd69c4698e6d54",
+        "voxelCount": 4935337,
+        "componentCount": 10895,
+        "largestComponentFraction": 0.978817454613535,
+        "boundaryTouchingVoxels": 0,
+        "probabilityMismatchVoxels": 0,
+        "reviewStatus": "unreviewed",
+        "issues": [
+          "10,895 disconnected source components; inspect before correcting.",
+          "Source alignment requires review."
+        ],
+        "accuracy": "unmeasured"
+      },
+      "empty": false,
+      "observedAt": 29769.199999809265
+    }
+  ],
+  "frames": [
+    {
+      "serial": 1,
+      "at": 17001.400000095367,
+      "cpuMs": 474.40000009536743,
+      "interactive": false,
+      "volume": false,
+      "sliceDraws": 3,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 14
+      },
+      "drawCalls": 1,
+      "observedAt": 17475.900000095367
+    },
+    {
+      "serial": 2,
+      "at": 17512.400000095367,
+      "cpuMs": 0.9000000953674316,
+      "interactive": false,
+      "volume": false,
+      "sliceDraws": 3,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 11,
+        "textures": 14
+      },
+      "drawCalls": 1,
+      "observedAt": 17513.300000190735
+    },
+    {
+      "serial": 1,
+      "at": 29949.199999809265,
+      "cpuMs": 672.8000001907349,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 3,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 14,
+        "textures": 30
+      },
+      "drawCalls": 1,
+      "observedAt": 30622.099999904633
+    },
+    {
+      "serial": 2,
+      "at": 30689.099999904633,
+      "cpuMs": 1.3000001907348633,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 3,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 14,
+        "textures": 30
+      },
+      "drawCalls": 1,
+      "observedAt": 30690.400000095367
+    },
+    {
+      "serial": 3,
+      "at": 30736.699999809265,
+      "cpuMs": 0.40000009536743164,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 14,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 30737.099999904633
+    },
+    {
+      "serial": 4,
+      "at": 30776.5,
+      "cpuMs": 0.3000001907348633,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 14,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 30776.800000190735
+    },
+    {
+      "serial": 5,
+      "at": 30827.599999904633,
+      "cpuMs": 0.3000001907348633,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 14,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 30827.900000095367
+    },
+    {
+      "serial": 6,
+      "at": 31311.5,
+      "cpuMs": 0.6999998092651367,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 3,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 14,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 31312.199999809265
+    },
+    {
+      "serial": 7,
+      "at": 31368,
+      "cpuMs": 0.3000001907348633,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 14,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 31368.300000190735
+    },
+    {
+      "serial": 8,
+      "at": 31407.199999809265,
+      "cpuMs": 0.3000001907348633,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 14,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 31407.5
+    },
+    {
+      "serial": 9,
+      "at": 31457.099999904633,
+      "cpuMs": 0.3000001907348633,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 14,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 31457.5
+    },
+    {
+      "serial": 10,
+      "at": 32480,
+      "cpuMs": 0.8000001907348633,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 3,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 14,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 32480.800000190735
+    },
+    {
+      "serial": 11,
+      "at": 32547.800000190735,
+      "cpuMs": 0.2999997138977051,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 14,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 32548.099999904633
+    },
+    {
+      "serial": 12,
+      "at": 32597.699999809265,
+      "cpuMs": 0.3000001907348633,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 14,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 32598
+    },
+    {
+      "serial": 13,
+      "at": 32647.800000190735,
+      "cpuMs": 0.39999961853027344,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 14,
+        "textures": 31
+      },
+      "drawCalls": 1,
+      "observedAt": 32648.199999809265
+    },
+    {
+      "serial": 14,
+      "at": 33487.5,
+      "cpuMs": 2.3000001907348633,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 3,
+      "longEdge": 360,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 33489.800000190735
+    },
+    {
+      "serial": 15,
+      "at": 33647.40000009537,
+      "cpuMs": 1.5,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 33648.90000009537
+    },
+    {
+      "serial": 16,
+      "at": 33799.09999990463,
+      "cpuMs": 1.200000286102295,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 33800.40000009537
+    },
+    {
+      "serial": 17,
+      "at": 33918.300000190735,
+      "cpuMs": 1.0999999046325684,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 33919.40000009537
+    },
+    {
+      "serial": 18,
+      "at": 34038.90000009537,
+      "cpuMs": 0.5999999046325684,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 34039.5
+    },
+    {
+      "serial": 19,
+      "at": 34391.40000009537,
+      "cpuMs": 0.5999999046325684,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 3,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 34392
+    },
+    {
+      "serial": 20,
+      "at": 34508.699999809265,
+      "cpuMs": 0.3000001907348633,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 34509
+    },
+    {
+      "serial": 21,
+      "at": 34608.90000009537,
+      "cpuMs": 0.7999997138977051,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 34609.699999809265
+    },
+    {
+      "serial": 22,
+      "at": 34719.5,
+      "cpuMs": 1.3000001907348633,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 34720.800000190735
+    },
+    {
+      "serial": 23,
+      "at": 35549.800000190735,
+      "cpuMs": 0.8999996185302734,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 3,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 35550.699999809265
+    },
+    {
+      "serial": 24,
+      "at": 35689.40000009537,
+      "cpuMs": 0.40000009536743164,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 35689.800000190735
+    },
+    {
+      "serial": 25,
+      "at": 35809.5,
+      "cpuMs": 0.3000001907348633,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 35809.800000190735
+    },
+    {
+      "serial": 26,
+      "at": 35942.90000009537,
+      "cpuMs": 0.19999980926513672,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 35943.09999990463
+    },
+    {
+      "serial": 27,
+      "at": 36711.90000009537,
+      "cpuMs": 1.1999998092651367,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 360,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 36713.09999990463
+    },
+    {
+      "serial": 28,
+      "at": 36740.09999990463,
+      "cpuMs": 0.40000009536743164,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 360,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 36740.5
+    },
+    {
+      "serial": 29,
+      "at": 36760.300000190735,
+      "cpuMs": 0.5,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 360,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 36760.800000190735
+    },
+    {
+      "serial": 30,
+      "at": 36779.90000009537,
+      "cpuMs": 0.7999997138977051,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 36780.699999809265
+    },
+    {
+      "serial": 31,
+      "at": 36800.09999990463,
+      "cpuMs": 0.5,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 36800.59999990463
+    },
+    {
+      "serial": 32,
+      "at": 36820,
+      "cpuMs": 0.5,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 36820.5
+    },
+    {
+      "serial": 33,
+      "at": 36840,
+      "cpuMs": 0.5,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 36840.5
+    },
+    {
+      "serial": 34,
+      "at": 36860.199999809265,
+      "cpuMs": 0.40000009536743164,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 36860.59999990463
+    },
+    {
+      "serial": 35,
+      "at": 36880.09999990463,
+      "cpuMs": 0.5,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 36880.59999990463
+    },
+    {
+      "serial": 36,
+      "at": 36900.09999990463,
+      "cpuMs": 0.40000009536743164,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 36900.5
+    },
+    {
+      "serial": 37,
+      "at": 36920,
+      "cpuMs": 0.8000001907348633,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 36920.90000009537
+    },
+    {
+      "serial": 38,
+      "at": 36940.300000190735,
+      "cpuMs": 0.6999998092651367,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 36941
+    },
+    {
+      "serial": 39,
+      "at": 36961.09999990463,
+      "cpuMs": 0.8000001907348633,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 36961.90000009537
+    },
+    {
+      "serial": 40,
+      "at": 36980.40000009537,
+      "cpuMs": 0.5999999046325684,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 36981
+    },
+    {
+      "serial": 41,
+      "at": 37000.5,
+      "cpuMs": 0.5999999046325684,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37001.09999990463
+    },
+    {
+      "serial": 42,
+      "at": 37020.09999990463,
+      "cpuMs": 0.5,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37020.59999990463
+    },
+    {
+      "serial": 43,
+      "at": 37040.5,
+      "cpuMs": 0.5999999046325684,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37041.09999990463
+    },
+    {
+      "serial": 44,
+      "at": 37060.199999809265,
+      "cpuMs": 0.40000009536743164,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37060.59999990463
+    },
+    {
+      "serial": 45,
+      "at": 37080.199999809265,
+      "cpuMs": 0.3000001907348633,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37080.5
+    },
+    {
+      "serial": 46,
+      "at": 37100.5,
+      "cpuMs": 0.5999999046325684,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37101.09999990463
+    },
+    {
+      "serial": 47,
+      "at": 37120.5,
+      "cpuMs": 0.5,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37121
+    },
+    {
+      "serial": 48,
+      "at": 37140.09999990463,
+      "cpuMs": 0.40000009536743164,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37140.5
+    },
+    {
+      "serial": 49,
+      "at": 37160.199999809265,
+      "cpuMs": 0.20000028610229492,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37160.40000009537
+    },
+    {
+      "serial": 50,
+      "at": 37180.40000009537,
+      "cpuMs": 0.5999999046325684,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37181
+    },
+    {
+      "serial": 51,
+      "at": 37201.300000190735,
+      "cpuMs": 0.5999999046325684,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37201.90000009537
+    },
+    {
+      "serial": 52,
+      "at": 37220.5,
+      "cpuMs": 0.5,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37221
+    },
+    {
+      "serial": 53,
+      "at": 37240.40000009537,
+      "cpuMs": 0.40000009536743164,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37240.800000190735
+    },
+    {
+      "serial": 54,
+      "at": 37260.300000190735,
+      "cpuMs": 0.5,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37260.800000190735
+    },
+    {
+      "serial": 55,
+      "at": 37280.40000009537,
+      "cpuMs": 0.6999998092651367,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37281.199999809265
+    },
+    {
+      "serial": 56,
+      "at": 37300.699999809265,
+      "cpuMs": 0.5,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37301.199999809265
+    },
+    {
+      "serial": 57,
+      "at": 37320.59999990463,
+      "cpuMs": 0.3000001907348633,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37320.90000009537
+    },
+    {
+      "serial": 58,
+      "at": 37340.699999809265,
+      "cpuMs": 0.7000002861022949,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37341.40000009537
+    },
+    {
+      "serial": 59,
+      "at": 37360.40000009537,
+      "cpuMs": 0.40000009536743164,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37360.800000190735
+    },
+    {
+      "serial": 60,
+      "at": 37380.699999809265,
+      "cpuMs": 0.40000009536743164,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37381.09999990463
+    },
+    {
+      "serial": 61,
+      "at": 37400.300000190735,
+      "cpuMs": 0.5,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37400.800000190735
+    },
+    {
+      "serial": 62,
+      "at": 37420.300000190735,
+      "cpuMs": 0.5,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37420.800000190735
+    },
+    {
+      "serial": 63,
+      "at": 37440.40000009537,
+      "cpuMs": 0.40000009536743164,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37440.800000190735
+    },
+    {
+      "serial": 64,
+      "at": 37460.59999990463,
+      "cpuMs": 0.40000009536743164,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37461
+    },
+    {
+      "serial": 65,
+      "at": 37480.699999809265,
+      "cpuMs": 0.7000002861022949,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37481.40000009537
+    },
+    {
+      "serial": 66,
+      "at": 37500.59999990463,
+      "cpuMs": 0.40000009536743164,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37501
+    },
+    {
+      "serial": 67,
+      "at": 37520.59999990463,
+      "cpuMs": 0.3000001907348633,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37520.90000009537
+    },
+    {
+      "serial": 68,
+      "at": 37540.40000009537,
+      "cpuMs": 0.5,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37540.90000009537
+    },
+    {
+      "serial": 69,
+      "at": 37560.40000009537,
+      "cpuMs": 0.2999997138977051,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37560.699999809265
+    },
+    {
+      "serial": 70,
+      "at": 37580.699999809265,
+      "cpuMs": 0.6000003814697266,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37581.300000190735
+    },
+    {
+      "serial": 71,
+      "at": 37600.59999990463,
+      "cpuMs": 0.5999999046325684,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37601.199999809265
+    },
+    {
+      "serial": 72,
+      "at": 37620.59999990463,
+      "cpuMs": 0.3000001907348633,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37620.90000009537
+    },
+    {
+      "serial": 73,
+      "at": 37640.90000009537,
+      "cpuMs": 0.6999998092651367,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37641.59999990463
+    },
+    {
+      "serial": 74,
+      "at": 37660.5,
+      "cpuMs": 0.40000009536743164,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37660.90000009537
+    },
+    {
+      "serial": 75,
+      "at": 37680.59999990463,
+      "cpuMs": 0.7000002861022949,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37681.300000190735
+    },
+    {
+      "serial": 76,
+      "at": 37701.5,
+      "cpuMs": 0.5999999046325684,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37702.09999990463
+    },
+    {
+      "serial": 77,
+      "at": 37720.5,
+      "cpuMs": 0.5,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37721
+    },
+    {
+      "serial": 78,
+      "at": 37740.5,
+      "cpuMs": 0.3000001907348633,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37740.800000190735
+    },
+    {
+      "serial": 79,
+      "at": 37760.5,
+      "cpuMs": 0.40000009536743164,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37760.90000009537
+    },
+    {
+      "serial": 80,
+      "at": 37781,
+      "cpuMs": 0.40000009536743164,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37781.5
+    },
+    {
+      "serial": 81,
+      "at": 37800.59999990463,
+      "cpuMs": 0.3000001907348633,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37800.90000009537
+    },
+    {
+      "serial": 82,
+      "at": 37820.699999809265,
+      "cpuMs": 0.3000001907348633,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37821.09999990463
+    },
+    {
+      "serial": 83,
+      "at": 37841,
+      "cpuMs": 0.3000001907348633,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37841.300000190735
+    },
+    {
+      "serial": 84,
+      "at": 37860.59999990463,
+      "cpuMs": 0.5,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37861.09999990463
+    },
+    {
+      "serial": 85,
+      "at": 37880.699999809265,
+      "cpuMs": 0.5,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37881.199999809265
+    },
+    {
+      "serial": 86,
+      "at": 37900.699999809265,
+      "cpuMs": 0.3000001907348633,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37901
+    },
+    {
+      "serial": 87,
+      "at": 37920.90000009537,
+      "cpuMs": 0.6999998092651367,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37921.59999990463
+    },
+    {
+      "serial": 88,
+      "at": 37941.09999990463,
+      "cpuMs": 0.7000002861022949,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37941.800000190735
+    },
+    {
+      "serial": 89,
+      "at": 37960.90000009537,
+      "cpuMs": 0.5,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37961.40000009537
+    },
+    {
+      "serial": 90,
+      "at": 37980.699999809265,
+      "cpuMs": 0.6000003814697266,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 37981.300000190735
+    },
+    {
+      "serial": 91,
+      "at": 38001.59999990463,
+      "cpuMs": 0.5999999046325684,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38002.199999809265
+    },
+    {
+      "serial": 92,
+      "at": 38020.699999809265,
+      "cpuMs": 0.6000003814697266,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38021.300000190735
+    },
+    {
+      "serial": 93,
+      "at": 38040.59999990463,
+      "cpuMs": 0.5,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38041.09999990463
+    },
+    {
+      "serial": 94,
+      "at": 38061.40000009537,
+      "cpuMs": 0.7999997138977051,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38062.199999809265
+    },
+    {
+      "serial": 95,
+      "at": 38081.59999990463,
+      "cpuMs": 0.40000009536743164,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38082
+    },
+    {
+      "serial": 96,
+      "at": 38100.800000190735,
+      "cpuMs": 0.6999998092651367,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38101.5
+    },
+    {
+      "serial": 97,
+      "at": 38120.800000190735,
+      "cpuMs": 0.7999997138977051,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38121.59999990463
+    },
+    {
+      "serial": 98,
+      "at": 38141.300000190735,
+      "cpuMs": 0.2999997138977051,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38141.59999990463
+    },
+    {
+      "serial": 99,
+      "at": 38161.300000190735,
+      "cpuMs": 0.2999997138977051,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38161.59999990463
+    },
+    {
+      "serial": 100,
+      "at": 38181.199999809265,
+      "cpuMs": 0.5,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38181.699999809265
+    },
+    {
+      "serial": 101,
+      "at": 38201.800000190735,
+      "cpuMs": 0.39999961853027344,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38202.199999809265
+    },
+    {
+      "serial": 102,
+      "at": 38220.90000009537,
+      "cpuMs": 0.5,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38221.5
+    },
+    {
+      "serial": 103,
+      "at": 38240.800000190735,
+      "cpuMs": 0.5,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38241.300000190735
+    },
+    {
+      "serial": 104,
+      "at": 38261.09999990463,
+      "cpuMs": 0.3000001907348633,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38261.40000009537
+    },
+    {
+      "serial": 105,
+      "at": 38281,
+      "cpuMs": 0.3000001907348633,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38281.300000190735
+    },
+    {
+      "serial": 106,
+      "at": 38302,
+      "cpuMs": 0.40000009536743164,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38302.40000009537
+    },
+    {
+      "serial": 107,
+      "at": 38320.800000190735,
+      "cpuMs": 0.39999961853027344,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38321.199999809265
+    },
+    {
+      "serial": 108,
+      "at": 38340.699999809265,
+      "cpuMs": 0.3000001907348633,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38341
+    },
+    {
+      "serial": 109,
+      "at": 38360.90000009537,
+      "cpuMs": 0.19999980926513672,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38361.199999809265
+    },
+    {
+      "serial": 110,
+      "at": 38381,
+      "cpuMs": 0.3000001907348633,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38381.300000190735
+    },
+    {
+      "serial": 111,
+      "at": 38400.90000009537,
+      "cpuMs": 0.19999980926513672,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38401.09999990463
+    },
+    {
+      "serial": 112,
+      "at": 38421,
+      "cpuMs": 0.19999980926513672,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38421.199999809265
+    },
+    {
+      "serial": 113,
+      "at": 38440.90000009537,
+      "cpuMs": 0.40000009536743164,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38441.300000190735
+    },
+    {
+      "serial": 114,
+      "at": 38461.199999809265,
+      "cpuMs": 0.40000009536743164,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38461.59999990463
+    },
+    {
+      "serial": 115,
+      "at": 38480.90000009537,
+      "cpuMs": 0.5,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38481.5
+    },
+    {
+      "serial": 116,
+      "at": 38502,
+      "cpuMs": 0.3000001907348633,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38502.300000190735
+    },
+    {
+      "serial": 117,
+      "at": 38521.300000190735,
+      "cpuMs": 0.5,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38521.800000190735
+    },
+    {
+      "serial": 118,
+      "at": 38541.09999990463,
+      "cpuMs": 0.3000001907348633,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38541.40000009537
+    },
+    {
+      "serial": 119,
+      "at": 38561.199999809265,
+      "cpuMs": 0.6000003814697266,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38561.800000190735
+    },
+    {
+      "serial": 120,
+      "at": 38581.300000190735,
+      "cpuMs": 0.39999961853027344,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38581.699999809265
+    },
+    {
+      "serial": 121,
+      "at": 38601,
+      "cpuMs": 0.40000009536743164,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38601.40000009537
+    },
+    {
+      "serial": 122,
+      "at": 38621.199999809265,
+      "cpuMs": 0.40000009536743164,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38621.59999990463
+    },
+    {
+      "serial": 123,
+      "at": 38642.09999990463,
+      "cpuMs": 0.7000002861022949,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38642.800000190735
+    },
+    {
+      "serial": 124,
+      "at": 38661.40000009537,
+      "cpuMs": 0.5,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38661.90000009537
+    },
+    {
+      "serial": 125,
+      "at": 38681.59999990463,
+      "cpuMs": 0.5999999046325684,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38682.199999809265
+    },
+    {
+      "serial": 126,
+      "at": 38701.09999990463,
+      "cpuMs": 0.5,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38701.699999809265
+    },
+    {
+      "serial": 127,
+      "at": 38721.199999809265,
+      "cpuMs": 0.7000002861022949,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38721.90000009537
+    },
+    {
+      "serial": 128,
+      "at": 38741.09999990463,
+      "cpuMs": 0.5,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38741.59999990463
+    },
+    {
+      "serial": 129,
+      "at": 38761,
+      "cpuMs": 0.3000001907348633,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38761.300000190735
+    },
+    {
+      "serial": 130,
+      "at": 38781.199999809265,
+      "cpuMs": 0.5,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38781.699999809265
+    },
+    {
+      "serial": 131,
+      "at": 38801.300000190735,
+      "cpuMs": 0.2999997138977051,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38801.59999990463
+    },
+    {
+      "serial": 132,
+      "at": 38821.40000009537,
+      "cpuMs": 0.6999998092651367,
+      "interactive": true,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 240,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38822.09999990463
+    },
+    {
+      "serial": 133,
+      "at": 38967.199999809265,
+      "cpuMs": 1.9000000953674316,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 38969.09999990463
+    },
+    {
+      "serial": 134,
+      "at": 39131.5,
+      "cpuMs": 1,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 39132.5
+    },
+    {
+      "serial": 135,
+      "at": 39251.59999990463,
+      "cpuMs": 0.5999999046325684,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 39252.300000190735
+    },
+    {
+      "serial": 136,
+      "at": 39381.59999990463,
+      "cpuMs": 0.3000001907348633,
+      "interactive": false,
+      "volume": true,
+      "sliceDraws": 0,
+      "longEdge": 1300,
+      "resources": {
+        "geometries": 14,
+        "textures": 34
+      },
+      "drawCalls": 1,
+      "observedAt": 39381.90000009537
+    }
+  ],
+  "gpu": [
+    {
+      "serial": 1,
+      "completed": true,
+      "milliseconds": 510.90000009536743,
+      "observedAt": 17512.300000190735
+    },
+    {
+      "serial": 2,
+      "completed": true,
+      "milliseconds": 48.09999990463257,
+      "observedAt": 17560.5
+    },
+    {
+      "serial": 1,
+      "completed": true,
+      "milliseconds": 739.8000001907349,
+      "observedAt": 30689
+    },
+    {
+      "serial": 2,
+      "completed": true,
+      "milliseconds": 47.5,
+      "observedAt": 30736.599999904633
+    },
+    {
+      "serial": 3,
+      "completed": true,
+      "milliseconds": 39.700000286102295,
+      "observedAt": 30776.400000095367
+    },
+    {
+      "serial": 4,
+      "completed": true,
+      "milliseconds": 51,
+      "observedAt": 30827.5
+    },
+    {
+      "serial": 5,
+      "completed": true,
+      "milliseconds": 39.200000286102295,
+      "observedAt": 30866.800000190735
+    },
+    {
+      "serial": 6,
+      "completed": true,
+      "milliseconds": 56.5,
+      "observedAt": 31368
+    },
+    {
+      "serial": 7,
+      "completed": true,
+      "milliseconds": 39.09999990463257,
+      "observedAt": 31407.099999904633
+    },
+    {
+      "serial": 8,
+      "completed": true,
+      "milliseconds": 49.90000009536743,
+      "observedAt": 31457.099999904633
+    },
+    {
+      "serial": 9,
+      "completed": true,
+      "milliseconds": 40.30000019073486,
+      "observedAt": 31497.400000095367
+    },
+    {
+      "serial": 10,
+      "completed": true,
+      "milliseconds": 67.69999980926514,
+      "observedAt": 32547.800000190735
+    },
+    {
+      "serial": 11,
+      "completed": true,
+      "milliseconds": 49.89999961853027,
+      "observedAt": 32597.699999809265
+    },
+    {
+      "serial": 12,
+      "completed": true,
+      "milliseconds": 50,
+      "observedAt": 32647.800000190735
+    },
+    {
+      "serial": 13,
+      "completed": true,
+      "milliseconds": 50.89999961853027,
+      "observedAt": 32698.699999809265
+    },
+    {
+      "serial": 14,
+      "completed": true,
+      "milliseconds": 29.800000190734863,
+      "observedAt": 33517.5
+    },
+    {
+      "serial": 15,
+      "completed": true,
+      "milliseconds": 151.2999997138977,
+      "observedAt": 33798.800000190735
+    },
+    {
+      "serial": 16,
+      "completed": true,
+      "milliseconds": 119.09999990463257,
+      "observedAt": 33918.199999809265
+    },
+    {
+      "serial": 17,
+      "completed": true,
+      "milliseconds": 120.5,
+      "observedAt": 34038.800000190735
+    },
+    {
+      "serial": 18,
+      "completed": true,
+      "milliseconds": 130.19999980926514,
+      "observedAt": 34169.199999809265
+    },
+    {
+      "serial": 19,
+      "completed": true,
+      "milliseconds": 117.19999980926514,
+      "observedAt": 34508.699999809265
+    },
+    {
+      "serial": 20,
+      "completed": true,
+      "milliseconds": 100,
+      "observedAt": 34608.800000190735
+    },
+    {
+      "serial": 21,
+      "completed": true,
+      "milliseconds": 110.40000009536743,
+      "observedAt": 34719.40000009537
+    },
+    {
+      "serial": 22,
+      "completed": true,
+      "milliseconds": 109.40000009536743,
+      "observedAt": 34829
+    },
+    {
+      "serial": 23,
+      "completed": true,
+      "milliseconds": 139.5,
+      "observedAt": 35689.300000190735
+    },
+    {
+      "serial": 24,
+      "completed": true,
+      "milliseconds": 120.09999990463257,
+      "observedAt": 35809.5
+    },
+    {
+      "serial": 25,
+      "completed": true,
+      "milliseconds": 133.30000019073486,
+      "observedAt": 35942.90000009537
+    },
+    {
+      "serial": 26,
+      "completed": true,
+      "milliseconds": 120.19999980926514,
+      "observedAt": 36063.09999990463
+    },
+    {
+      "serial": 27,
+      "completed": true,
+      "milliseconds": 28.09999990463257,
+      "observedAt": 36740.09999990463
+    },
+    {
+      "serial": 28,
+      "completed": true,
+      "milliseconds": 20.09999990463257,
+      "observedAt": 36760.199999809265
+    },
+    {
+      "serial": 29,
+      "completed": true,
+      "milliseconds": 19.59999990463257,
+      "observedAt": 36779.90000009537
+    },
+    {
+      "serial": 30,
+      "completed": true,
+      "milliseconds": 20.09999990463257,
+      "observedAt": 36800
+    },
+    {
+      "serial": 31,
+      "completed": true,
+      "milliseconds": 19.800000190734863,
+      "observedAt": 36820
+    },
+    {
+      "serial": 32,
+      "completed": true,
+      "milliseconds": 20,
+      "observedAt": 36840
+    },
+    {
+      "serial": 33,
+      "completed": true,
+      "milliseconds": 20.199999809265137,
+      "observedAt": 36860.199999809265
+    },
+    {
+      "serial": 34,
+      "completed": true,
+      "milliseconds": 19.90000009536743,
+      "observedAt": 36880.09999990463
+    },
+    {
+      "serial": 35,
+      "completed": true,
+      "milliseconds": 19.90000009536743,
+      "observedAt": 36900.09999990463
+    },
+    {
+      "serial": 36,
+      "completed": true,
+      "milliseconds": 19.90000009536743,
+      "observedAt": 36920
+    },
+    {
+      "serial": 37,
+      "completed": true,
+      "milliseconds": 20.300000190734863,
+      "observedAt": 36940.300000190735
+    },
+    {
+      "serial": 38,
+      "completed": true,
+      "milliseconds": 20.799999713897705,
+      "observedAt": 36961.09999990463
+    },
+    {
+      "serial": 39,
+      "completed": true,
+      "milliseconds": 19.300000190734863,
+      "observedAt": 36980.40000009537
+    },
+    {
+      "serial": 40,
+      "completed": true,
+      "milliseconds": 20.09999990463257,
+      "observedAt": 37000.5
+    },
+    {
+      "serial": 41,
+      "completed": true,
+      "milliseconds": 19.59999990463257,
+      "observedAt": 37020.09999990463
+    },
+    {
+      "serial": 42,
+      "completed": true,
+      "milliseconds": 20.300000190734863,
+      "observedAt": 37040.40000009537
+    },
+    {
+      "serial": 43,
+      "completed": true,
+      "milliseconds": 19.59999990463257,
+      "observedAt": 37060.199999809265
+    },
+    {
+      "serial": 44,
+      "completed": true,
+      "milliseconds": 20,
+      "observedAt": 37080.199999809265
+    },
+    {
+      "serial": 45,
+      "completed": true,
+      "milliseconds": 20.300000190734863,
+      "observedAt": 37100.5
+    },
+    {
+      "serial": 46,
+      "completed": true,
+      "milliseconds": 19.90000009536743,
+      "observedAt": 37120.5
+    },
+    {
+      "serial": 47,
+      "completed": true,
+      "milliseconds": 19.59999990463257,
+      "observedAt": 37140.09999990463
+    },
+    {
+      "serial": 48,
+      "completed": true,
+      "milliseconds": 20,
+      "observedAt": 37160.199999809265
+    },
+    {
+      "serial": 49,
+      "completed": true,
+      "milliseconds": 20.200000286102295,
+      "observedAt": 37180.40000009537
+    },
+    {
+      "serial": 50,
+      "completed": true,
+      "milliseconds": 20.90000009536743,
+      "observedAt": 37201.300000190735
+    },
+    {
+      "serial": 51,
+      "completed": true,
+      "milliseconds": 19.09999990463257,
+      "observedAt": 37220.40000009537
+    },
+    {
+      "serial": 52,
+      "completed": true,
+      "milliseconds": 19.800000190734863,
+      "observedAt": 37240.300000190735
+    },
+    {
+      "serial": 53,
+      "completed": true,
+      "milliseconds": 19.90000009536743,
+      "observedAt": 37260.300000190735
+    },
+    {
+      "serial": 54,
+      "completed": true,
+      "milliseconds": 20,
+      "observedAt": 37280.300000190735
+    },
+    {
+      "serial": 55,
+      "completed": true,
+      "milliseconds": 20.199999809265137,
+      "observedAt": 37300.699999809265
+    },
+    {
+      "serial": 56,
+      "completed": true,
+      "milliseconds": 19.800000190734863,
+      "observedAt": 37320.5
+    },
+    {
+      "serial": 57,
+      "completed": true,
+      "milliseconds": 20.09999990463257,
+      "observedAt": 37340.699999809265
+    },
+    {
+      "serial": 58,
+      "completed": true,
+      "milliseconds": 19.700000286102295,
+      "observedAt": 37360.40000009537
+    },
+    {
+      "serial": 59,
+      "completed": true,
+      "milliseconds": 20.299999713897705,
+      "observedAt": 37380.699999809265
+    },
+    {
+      "serial": 60,
+      "completed": true,
+      "milliseconds": 19.600000381469727,
+      "observedAt": 37400.300000190735
+    },
+    {
+      "serial": 61,
+      "completed": true,
+      "milliseconds": 20,
+      "observedAt": 37420.300000190735
+    },
+    {
+      "serial": 62,
+      "completed": true,
+      "milliseconds": 19.899999618530273,
+      "observedAt": 37440.300000190735
+    },
+    {
+      "serial": 63,
+      "completed": true,
+      "milliseconds": 20.199999809265137,
+      "observedAt": 37460.59999990463
+    },
+    {
+      "serial": 64,
+      "completed": true,
+      "milliseconds": 20.09999990463257,
+      "observedAt": 37480.699999809265
+    },
+    {
+      "serial": 65,
+      "completed": true,
+      "milliseconds": 19.800000190734863,
+      "observedAt": 37500.59999990463
+    },
+    {
+      "serial": 66,
+      "completed": true,
+      "milliseconds": 20,
+      "observedAt": 37520.59999990463
+    },
+    {
+      "serial": 67,
+      "completed": true,
+      "milliseconds": 19.700000286102295,
+      "observedAt": 37540.300000190735
+    },
+    {
+      "serial": 68,
+      "completed": true,
+      "milliseconds": 19.90000009536743,
+      "observedAt": 37560.300000190735
+    },
+    {
+      "serial": 69,
+      "completed": true,
+      "milliseconds": 20.299999713897705,
+      "observedAt": 37580.699999809265
+    },
+    {
+      "serial": 70,
+      "completed": true,
+      "milliseconds": 19.90000009536743,
+      "observedAt": 37600.59999990463
+    },
+    {
+      "serial": 71,
+      "completed": true,
+      "milliseconds": 20,
+      "observedAt": 37620.59999990463
+    },
+    {
+      "serial": 72,
+      "completed": true,
+      "milliseconds": 20.300000190734863,
+      "observedAt": 37640.90000009537
+    },
+    {
+      "serial": 73,
+      "completed": true,
+      "milliseconds": 19.59999990463257,
+      "observedAt": 37660.5
+    },
+    {
+      "serial": 74,
+      "completed": true,
+      "milliseconds": 20,
+      "observedAt": 37680.5
+    },
+    {
+      "serial": 75,
+      "completed": true,
+      "milliseconds": 20.800000190734863,
+      "observedAt": 37701.40000009537
+    },
+    {
+      "serial": 76,
+      "completed": true,
+      "milliseconds": 19,
+      "observedAt": 37720.5
+    },
+    {
+      "serial": 77,
+      "completed": true,
+      "milliseconds": 20,
+      "observedAt": 37740.5
+    },
+    {
+      "serial": 78,
+      "completed": true,
+      "milliseconds": 20,
+      "observedAt": 37760.5
+    },
+    {
+      "serial": 79,
+      "completed": true,
+      "milliseconds": 20.300000190734863,
+      "observedAt": 37780.90000009537
+    },
+    {
+      "serial": 80,
+      "completed": true,
+      "milliseconds": 19.59999990463257,
+      "observedAt": 37800.59999990463
+    },
+    {
+      "serial": 81,
+      "completed": true,
+      "milliseconds": 20.09999990463257,
+      "observedAt": 37820.699999809265
+    },
+    {
+      "serial": 82,
+      "completed": true,
+      "milliseconds": 20.300000190734863,
+      "observedAt": 37841
+    },
+    {
+      "serial": 83,
+      "completed": true,
+      "milliseconds": 19.59999990463257,
+      "observedAt": 37860.59999990463
+    },
+    {
+      "serial": 84,
+      "completed": true,
+      "milliseconds": 20.09999990463257,
+      "observedAt": 37880.699999809265
+    },
+    {
+      "serial": 85,
+      "completed": true,
+      "milliseconds": 19.90000009536743,
+      "observedAt": 37900.699999809265
+    },
+    {
+      "serial": 86,
+      "completed": true,
+      "milliseconds": 20.100000381469727,
+      "observedAt": 37920.90000009537
+    },
+    {
+      "serial": 87,
+      "completed": true,
+      "milliseconds": 20.199999809265137,
+      "observedAt": 37941.09999990463
+    },
+    {
+      "serial": 88,
+      "completed": true,
+      "milliseconds": 19.700000286102295,
+      "observedAt": 37960.800000190735
+    },
+    {
+      "serial": 89,
+      "completed": true,
+      "milliseconds": 19.799999713897705,
+      "observedAt": 37980.699999809265
+    },
+    {
+      "serial": 90,
+      "completed": true,
+      "milliseconds": 20.90000009536743,
+      "observedAt": 38001.59999990463
+    },
+    {
+      "serial": 91,
+      "completed": true,
+      "milliseconds": 19.09999990463257,
+      "observedAt": 38020.699999809265
+    },
+    {
+      "serial": 92,
+      "completed": true,
+      "milliseconds": 19.90000009536743,
+      "observedAt": 38040.59999990463
+    },
+    {
+      "serial": 93,
+      "completed": true,
+      "milliseconds": 20.800000190734863,
+      "observedAt": 38061.40000009537
+    },
+    {
+      "serial": 94,
+      "completed": true,
+      "milliseconds": 20.199999809265137,
+      "observedAt": 38081.59999990463
+    },
+    {
+      "serial": 95,
+      "completed": true,
+      "milliseconds": 19.200000286102295,
+      "observedAt": 38100.800000190735
+    },
+    {
+      "serial": 96,
+      "completed": true,
+      "milliseconds": 20,
+      "observedAt": 38120.800000190735
+    },
+    {
+      "serial": 97,
+      "completed": true,
+      "milliseconds": 20.5,
+      "observedAt": 38141.300000190735
+    },
+    {
+      "serial": 98,
+      "completed": true,
+      "milliseconds": 20,
+      "observedAt": 38161.300000190735
+    },
+    {
+      "serial": 99,
+      "completed": true,
+      "milliseconds": 19.899999618530273,
+      "observedAt": 38181.199999809265
+    },
+    {
+      "serial": 100,
+      "completed": true,
+      "milliseconds": 20.5,
+      "observedAt": 38201.699999809265
+    },
+    {
+      "serial": 101,
+      "completed": true,
+      "milliseconds": 19,
+      "observedAt": 38220.90000009537
+    },
+    {
+      "serial": 102,
+      "completed": true,
+      "milliseconds": 19.90000009536743,
+      "observedAt": 38240.800000190735
+    },
+    {
+      "serial": 103,
+      "completed": true,
+      "milliseconds": 20.199999809265137,
+      "observedAt": 38261
+    },
+    {
+      "serial": 104,
+      "completed": true,
+      "milliseconds": 19.90000009536743,
+      "observedAt": 38281
+    },
+    {
+      "serial": 105,
+      "completed": true,
+      "milliseconds": 21,
+      "observedAt": 38302
+    },
+    {
+      "serial": 106,
+      "completed": true,
+      "milliseconds": 18.699999809265137,
+      "observedAt": 38320.800000190735
+    },
+    {
+      "serial": 107,
+      "completed": true,
+      "milliseconds": 19.899999618530273,
+      "observedAt": 38340.699999809265
+    },
+    {
+      "serial": 108,
+      "completed": true,
+      "milliseconds": 20.200000286102295,
+      "observedAt": 38360.90000009537
+    },
+    {
+      "serial": 109,
+      "completed": true,
+      "milliseconds": 20.09999990463257,
+      "observedAt": 38381
+    },
+    {
+      "serial": 110,
+      "completed": true,
+      "milliseconds": 19.90000009536743,
+      "observedAt": 38400.90000009537
+    },
+    {
+      "serial": 111,
+      "completed": true,
+      "milliseconds": 20.09999990463257,
+      "observedAt": 38421
+    },
+    {
+      "serial": 112,
+      "completed": true,
+      "milliseconds": 19.90000009536743,
+      "observedAt": 38440.90000009537
+    },
+    {
+      "serial": 113,
+      "completed": true,
+      "milliseconds": 20.299999713897705,
+      "observedAt": 38461.199999809265
+    },
+    {
+      "serial": 114,
+      "completed": true,
+      "milliseconds": 19.700000286102295,
+      "observedAt": 38480.90000009537
+    },
+    {
+      "serial": 115,
+      "completed": true,
+      "milliseconds": 21.09999990463257,
+      "observedAt": 38502
+    },
+    {
+      "serial": 116,
+      "completed": true,
+      "milliseconds": 19.300000190734863,
+      "observedAt": 38521.300000190735
+    },
+    {
+      "serial": 117,
+      "completed": true,
+      "milliseconds": 19.799999713897705,
+      "observedAt": 38541.09999990463
+    },
+    {
+      "serial": 118,
+      "completed": true,
+      "milliseconds": 20.09999990463257,
+      "observedAt": 38561.199999809265
+    },
+    {
+      "serial": 119,
+      "completed": true,
+      "milliseconds": 20,
+      "observedAt": 38581.199999809265
+    },
+    {
+      "serial": 120,
+      "completed": true,
+      "milliseconds": 19.699999809265137,
+      "observedAt": 38601
+    },
+    {
+      "serial": 121,
+      "completed": true,
+      "milliseconds": 20.199999809265137,
+      "observedAt": 38621.199999809265
+    },
+    {
+      "serial": 122,
+      "completed": true,
+      "milliseconds": 20.90000009536743,
+      "observedAt": 38642.09999990463
+    },
+    {
+      "serial": 123,
+      "completed": true,
+      "milliseconds": 19.300000190734863,
+      "observedAt": 38661.40000009537
+    },
+    {
+      "serial": 124,
+      "completed": true,
+      "milliseconds": 20.199999809265137,
+      "observedAt": 38681.59999990463
+    },
+    {
+      "serial": 125,
+      "completed": true,
+      "milliseconds": 19.40000009536743,
+      "observedAt": 38701
+    },
+    {
+      "serial": 126,
+      "completed": true,
+      "milliseconds": 20,
+      "observedAt": 38721.199999809265
+    },
+    {
+      "serial": 127,
+      "completed": true,
+      "milliseconds": 19.800000190734863,
+      "observedAt": 38741
+    },
+    {
+      "serial": 128,
+      "completed": true,
+      "milliseconds": 19.90000009536743,
+      "observedAt": 38761
+    },
+    {
+      "serial": 129,
+      "completed": true,
+      "milliseconds": 20.199999809265137,
+      "observedAt": 38781.199999809265
+    },
+    {
+      "serial": 130,
+      "completed": true,
+      "milliseconds": 20.100000381469727,
+      "observedAt": 38801.300000190735
+    },
+    {
+      "serial": 131,
+      "completed": true,
+      "milliseconds": 20.09999990463257,
+      "observedAt": 38821.40000009537
+    },
+    {
+      "serial": 132,
+      "completed": true,
+      "milliseconds": 19.799999713897705,
+      "observedAt": 38841.199999809265
+    },
+    {
+      "serial": 133,
+      "completed": true,
+      "milliseconds": 164,
+      "observedAt": 39131.300000190735
+    },
+    {
+      "serial": 134,
+      "completed": true,
+      "milliseconds": 120,
+      "observedAt": 39251.59999990463
+    },
+    {
+      "serial": 135,
+      "completed": true,
+      "milliseconds": 129.90000009536743,
+      "observedAt": 39381.5
+    },
+    {
+      "serial": 136,
+      "completed": true,
+      "milliseconds": 129.7000002861023,
+      "observedAt": 39511.40000009537
+    }
+  ],
+  "refinement": [
+    {
+      "completed": true,
+      "milliseconds": 682.2000002861023,
+      "volume": true,
+      "observedAt": 34169.300000190735
+    },
+    {
+      "completed": true,
+      "milliseconds": 696.7000002861023,
+      "volume": true,
+      "observedAt": 39511.40000009537
+    }
+  ],
+  "motion": [],
+  "scans": [
+    {
+      "value": "t1ce",
+      "label": "T1CE"
+    },
+    {
+      "value": "ct-bone",
+      "label": "CT BONE"
+    },
+    {
+      "value": "ct-brain",
+      "label": "CT BRAIN"
+    }
+  ],
+  "initialPresentation": {
+    "source": "t1ce",
+    "scope": "all",
+    "layers": [
+      {
+        "label": "Show vessels",
+        "checked": true
+      },
+      {
+        "label": "Show brain",
+        "checked": true
+      },
+      {
+        "label": "Show tumor",
+        "checked": true
+      },
+      {
+        "label": "Show bone",
+        "checked": true
+      },
+      {
+        "label": "Show left cerebral white matter",
+        "checked": false
+      },
+      {
+        "label": "Show left cerebral cortex",
+        "checked": false
+      },
+      {
+        "label": "Show left lateral ventricle",
+        "checked": false
+      },
+      {
+        "label": "Show left inferior lateral ventricle",
+        "checked": false
+      },
+      {
+        "label": "Show left cerebellum white matter",
+        "checked": false
+      },
+      {
+        "label": "Show left cerebellum cortex",
+        "checked": false
+      },
+      {
+        "label": "Show left thalamus",
+        "checked": false
+      },
+      {
+        "label": "Show left caudate",
+        "checked": false
+      },
+      {
+        "label": "Show left putamen",
+        "checked": false
+      },
+      {
+        "label": "Show left pallidum",
+        "checked": false
+      },
+      {
+        "label": "Show 3rd ventricle",
+        "checked": false
+      },
+      {
+        "label": "Show 4th ventricle",
+        "checked": false
+      },
+      {
+        "label": "Show brain-stem",
+        "checked": false
+      },
+      {
+        "label": "Show left hippocampus",
+        "checked": false
+      },
+      {
+        "label": "Show left amygdala",
+        "checked": false
+      },
+      {
+        "label": "Show left accumbens area",
+        "checked": false
+      },
+      {
+        "label": "Show left ventral DC",
+        "checked": false
+      },
+      {
+        "label": "Show right cerebral white matter",
+        "checked": false
+      },
+      {
+        "label": "Show right cerebral cortex",
+        "checked": false
+      },
+      {
+        "label": "Show right lateral ventricle",
+        "checked": false
+      },
+      {
+        "label": "Show right inferior lateral ventricle",
+        "checked": false
+      },
+      {
+        "label": "Show right cerebellum white matter",
+        "checked": false
+      },
+      {
+        "label": "Show right cerebellum cortex",
+        "checked": false
+      },
+      {
+        "label": "Show right thalamus",
+        "checked": false
+      },
+      {
+        "label": "Show right caudate",
+        "checked": false
+      },
+      {
+        "label": "Show right putamen",
+        "checked": false
+      },
+      {
+        "label": "Show right pallidum",
+        "checked": false
+      },
+      {
+        "label": "Show right hippocampus",
+        "checked": false
+      },
+      {
+        "label": "Show right amygdala",
+        "checked": false
+      },
+      {
+        "label": "Show right accumbens area",
+        "checked": false
+      },
+      {
+        "label": "Show right ventral DC",
+        "checked": false
+      },
+      {
+        "label": "Show Vessels outside brain proposal",
+        "checked": false
+      },
+      {
+        "label": "Show Vessel / tumor overlap",
+        "checked": false
+      },
+      {
+        "label": "Show Head / scalp envelope proposal",
+        "checked": false
+      }
+    ],
+    "provenance": "T1CE + estimated structures · no acquired angiography",
+    "body": "RessectionLab\nPatient anatomy workspace\nOpen\n⌘O\nAdd data\nSave\nCases\n3D\nRehearse\nPATIENT WORKSPACE\nScans\nAnatomy\nPre-op study\n3 scans\nmeningioma-sub-06\nDisplayed scan\nT1CE\nCT BONE\nCT BRAIN\nSegmentation\nVascular\n\nT1CE + estimated structures · no acquired angiography\n\nDisplay & fragment scope\nFull source\nStructures\n4\nVessels\nBrain\nTumor\nBone\nBrain regions\n31\nReview layers\n3\nCoverage & unavailable anatomy\nWorkspace\nZENODO-17486320-meningioma-sub-06\nT1CE\nEstimated scan alignment\nParent: Higher image similarity rejected because bone conflict increased\nLayout\nAppearance\nClip\nFit\nStructures\nVolume\n3D + slices\n3D\nVolume + structures\nRAS · mm\nT1CE · source volume + labels\nR\nA\nS\nPatient axes\nDrag to rotate · Scroll to zoom · Right-drag to pan\nDouble-click to link cursor\nAxial\n-464.5 mm\n⤢\nL\nR\nA\nP\n20 mm\nSOURCE T1CE\nCoronal\n-14.3 mm\n⤢\nL\nR\nS\nI\n20 mm\nSOURCE T1CE\nSagittal\n0.3 mm\n⤢\nP\nA\nS\nI\n20 mm\nSOURCE T1CE\nLinked views\nRAS\n0.3 / -14.3 / -464.5 mm\nContrast\nNeurological convention\nLinked physical coordinates · RAS+ mm\nLocal imaging · cached anatomy\nAlignment preview · review in Scans\nRAS 0.3 / -14.3 / -464.5 mm"
+  },
+  "orbitWithoutScreenshots": {
+    "dragStarted": 42991.285,
+    "dragEnded": 45113.540125,
+    "dragMilliseconds": 2122.255124999996,
+    "idleMilliseconds": 1001.3889590000035,
+    "deliveredFrames": 64,
+    "totalSubscriptionFrames": 69,
+    "totalElapsedMs": 3125.888957999996,
+    "medianFps": 25.710162906017906,
+    "p95FrameMs": 42.34937499999796,
+    "captureOverhead": false,
+    "cpuEnvironment": "run after desktop/Python suites completed"
+  },
+  "refinementSummary": {
+    "durationField": "milliseconds",
+    "count": 2,
+    "completed": 2,
+    "p50Ms": 696.7000002861023,
+    "maxMs": 696.7000002861023
+  },
+  "gpuSummary": {
+    "count": 138,
+    "completed": 138,
+    "maxMs": 739.8000001907349
+  },
+  "resourceSummary": {
+    "first": {
+      "geometries": 11,
+      "textures": 14
+    },
+    "last": {
+      "geometries": 14,
+      "textures": 34
+    },
+    "maxGeometries": 14,
+    "maxTextures": 34
+  },
+  "memory": [
+    {
+      "cpu": {
+        "cumulativeCPUUsage": 6.157835,
+        "percentCPUUsage": 0,
+        "idleWakeupsPerSecond": 0
+      },
+      "pid": 47708,
+      "type": "Browser",
+      "creationTime": 1792368793718.713,
+      "memory": {
+        "workingSetSize": 113824,
+        "peakWorkingSetSize": 943408
+      },
+      "sandboxed": false
+    },
+    {
+      "cpu": {
+        "cumulativeCPUUsage": 4.359638,
+        "percentCPUUsage": 0,
+        "idleWakeupsPerSecond": 0
+      },
+      "pid": 48497,
+      "type": "GPU",
+      "creationTime": 1792368799775.203,
+      "serviceName": "GPU",
+      "memory": {
+        "workingSetSize": 316480,
+        "peakWorkingSetSize": 756880
+      },
+      "sandboxed": true
+    },
+    {
+      "cpu": {
+        "cumulativeCPUUsage": 0.098873,
+        "percentCPUUsage": 0,
+        "idleWakeupsPerSecond": 0
+      },
+      "pid": 48498,
+      "type": "Utility",
+      "creationTime": 1792368799790.156,
+      "serviceName": "network.mojom.NetworkService",
+      "name": "Network Service",
+      "memory": {
+        "workingSetSize": 25760,
+        "peakWorkingSetSize": 47792
+      },
+      "sandboxed": true
+    },
+    {
+      "cpu": {
+        "cumulativeCPUUsage": 4.951432,
+        "percentCPUUsage": 0,
+        "idleWakeupsPerSecond": 0
+      },
+      "pid": 48501,
+      "type": "Tab",
+      "creationTime": 1792368799977.141,
+      "memory": {
+        "workingSetSize": 381952,
+        "peakWorkingSetSize": 1248416
+      },
+      "sandboxed": true
+    }
+  ],
+  "memoryReceipt": {
+    "at": 1792368840859,
+    "units": "KiB as reported by Electron/ps",
+    "electron": [
+      {
+        "cpu": {
+          "cumulativeCPUUsage": 6.158584,
+          "percentCPUUsage": 11.612403100775193,
+          "idleWakeupsPerSecond": 0
+        },
+        "pid": 47708,
+        "type": "Browser",
+        "creationTime": 1792368793718.713,
+        "memory": {
+          "workingSetSize": 113856,
+          "peakWorkingSetSize": 943408
+        },
+        "sandboxed": false
+      },
+      {
+        "cpu": {
+          "cumulativeCPUUsage": 4.359638,
+          "percentCPUUsage": 0,
+          "idleWakeupsPerSecond": 0
+        },
+        "pid": 48497,
+        "type": "GPU",
+        "creationTime": 1792368799775.203,
+        "serviceName": "GPU",
+        "memory": {
+          "workingSetSize": 316480,
+          "peakWorkingSetSize": 756880
+        },
+        "sandboxed": true
+      },
+      {
+        "cpu": {
+          "cumulativeCPUUsage": 0.098873,
+          "percentCPUUsage": 0,
+          "idleWakeupsPerSecond": 0
+        },
+        "pid": 48498,
+        "type": "Utility",
+        "creationTime": 1792368799790.156,
+        "serviceName": "network.mojom.NetworkService",
+        "name": "Network Service",
+        "memory": {
+          "workingSetSize": 25760,
+          "peakWorkingSetSize": 47792
+        },
+        "sandboxed": true
+      },
+      {
+        "cpu": {
+          "cumulativeCPUUsage": 4.951432,
+          "percentCPUUsage": 0,
+          "idleWakeupsPerSecond": 0
+        },
+        "pid": 48501,
+        "type": "Tab",
+        "creationTime": 1792368799977.141,
+        "memory": {
+          "workingSetSize": 381952,
+          "peakWorkingSetSize": 1248416
+        },
+        "sandboxed": true
+      }
+    ],
+    "totalElectronWorkingSetKB": 838048,
+    "totalElectronPeakWorkingSetKB": 2996496,
+    "pythonSidecars": [
+      {
+        "pid": 48499,
+        "ppid": 47708,
+        "rssKB": 218944,
+        "command": "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python"
+      }
+    ],
+    "totalPythonRssKB": 218944
+  },
+  "passed": false,
+  "sourceArrayCount": 25,
+  "sourceUnchanged": true,
+  "finishedAt": 1792368842395
+}

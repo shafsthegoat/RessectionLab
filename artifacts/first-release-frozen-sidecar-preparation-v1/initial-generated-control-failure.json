@@ -1,0 +1,12 @@
+{
+  "schema": "first-release-frozen-sidecar-generated-control-failure-v1",
+  "initial_tests": 37,
+  "initial_passed": 36,
+  "initial_failed": 1,
+  "classification": "test-fixture path spelling",
+  "cause": "macOS child reports canonical /private/var path while temporary-directory API returned /var alias. Generated cwd assertion compared string spellings.",
+  "repair": "Compare generated child cwd to fs.realpath(cwd). No change to product or actual audit launch isolation.",
+  "patient_payload_reads": 0,
+  "actual_frozen_engine_executions": 0,
+  "retained_final_control_record": "generated-controls.json"
+}

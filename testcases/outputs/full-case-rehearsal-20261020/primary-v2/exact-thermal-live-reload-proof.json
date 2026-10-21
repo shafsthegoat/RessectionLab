@@ -1,0 +1,61 @@
+{
+  "utc": "2026-10-20T15:44:44.424807+00:00",
+  "codeCommit": "3e0bd07c7a5ad7b84a9cf921c20f1c2564cd2c69",
+  "loadedOnly": [
+    "surgical_drilling_v2",
+    "ignored headless advance function definition"
+  ],
+  "actions": 1076,
+  "stateIdBefore": "sha256:1c773e2e4aa8cb0a5eb68f2bee32bf9b651b43adfbe27f239ecb1265e6d9ed89",
+  "stateIdAfter": "sha256:1c773e2e4aa8cb0a5eb68f2bee32bf9b651b43adfbe27f239ecb1265e6d9ed89",
+  "savedBoundaryEqualsLiveSnapshot": true,
+  "directorMetadataAndCodeUnchanged": true,
+  "engineMethodCodeIdentitiesUnchanged": [
+    "step",
+    "preview",
+    "_execute",
+    "_substep",
+    "_physical_substep",
+    "cells",
+    "occupancy"
+  ],
+  "sourceUnchanged": true,
+  "exactDetachedCurrentStateKernelProbes": [
+    {
+      "dt": 0.0,
+      "powerCells": 0,
+      "exactStateJsonSha256": "2000cf56fd587885dc8dea9358192171a3dcce7cade6e4ec9dfe63acf3b24e57"
+    },
+    {
+      "dt": 0.1,
+      "powerCells": 0,
+      "exactStateJsonSha256": "f5e2c38109f5f2e18c5c1730fca0b515530255e2228098ddc086ecf8e10e388c"
+    },
+    {
+      "dt": 0.02,
+      "powerCells": 3,
+      "exactStateJsonSha256": "afa6a5f92ba69cb62fa67c20fe3f29189d4c34c32009dd24f0d145e3a309b18d"
+    }
+  ],
+  "patientActionsDuringReload": 0,
+  "flushedCompletedUnsavedActions": 0,
+  "checkpoint": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-exact-thermal-1076.ressectionlab",
+  "checkpointSha256": "f0f143fc211f3f48aa6ab3a47482021b90c052615bb6043573b4c76e507b2fed",
+  "scope": "Numerically equivalent thermal-module reload only; full patient replay and GUI acceptance remain pending.",
+  "firstActualPostReloadBatch": {
+    "verifiedUtc": "2026-10-20T15:50:42.974326+00:00",
+    "startPosition": 1076,
+    "endPosition": 1088,
+    "endStateId": "sha256:773ed52375e0d78f4f12333eaeef21842adcb0750b046ca0b4258f13c4557810",
+    "statuses": {
+      "accepted": 12
+    },
+    "continuousRecordedStateChain": true,
+    "savedSnapshotEqualsLive": true,
+    "targetRemovedMm3": 30257.0,
+    "ownedHealthyRemovedMm3": 0.0,
+    "ownedUnknownRemovedMm3": 0.0,
+    "gracefulSavedBoundaryPausePassed": true,
+    "qualification": "Actual public action interval and saved equality, not a second legacy patient replay or a whole-episode speed claim."
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "schema": "ixi265-tissue-gui-initial-metadata-guard-v1",
+  "status": "frozen_auditor_stopped_on_native_save_UI_artifact_addition",
+  "created_utc": "2026-10-16T08:54:49.130991+00:00",
+  "auditor_path": "tests/first_ixi_tissue_bundle_qa.py",
+  "auditor_sha256": "17bbbe128a116ae29388979e067e61ba2dd7260108331b05e7670a01e582c7b3",
+  "initial_release_pins_sha256": "d17a8425dd9f4d5279a62e7a06af5dc5cdb7a0618476cc04ecddbc2e32b23f94",
+  "package_sha256": "bfa03b853dcb8e6893982e75a6c113e8ba3de1ce88225bb631f8a758ded1350f",
+  "saved_bundle_sha256": "1cfb479807c92bb76537df0e188c161df5e6488aabeb19021c8ba72d0485c024",
+  "failure_type": "AssertionError",
+  "guard_location": "preservation: primary manifest equality excluding workspace_sha256",
+  "guard_stage": "before primary arrays or original/reference member comparison",
+  "patient_or_saved_array_decodes_performed": false,
+  "native_model_execution": false,
+  "other_primary_manifest_fields_equal": true,
+  "manifest_delta": {
+    "artifacts": {
+      "before": {},
+      "after": {
+        "workspace": {
+          "case_hash": "sha256:72f6ae73183d8d5d52f30eafd90a533b0cf81a38e0070d7fa70ca954461c505c",
+          "category": "pareto",
+          "cursor": [
+            0.8176703732460737,
+            -1.997637267690152,
+            0.9734293008805253
+          ],
+          "overlayOpacity": 0.32,
+          "routeA": "",
+          "routeB": "",
+          "visibleLayers": {
+            "brain": true
+          }
+        }
+      }
+    }
+  },
+  "next_step": "Separate source review and release of exact bounded UI-artifact adapter; original auditor and prior audit remain immutable."
+}

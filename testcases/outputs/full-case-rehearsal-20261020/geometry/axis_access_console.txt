@@ -1,0 +1,637 @@
+{
+  "schema": "resectionlab.axis-access-geometry-comparison.v1",
+  "readOnlyGeometry": true,
+  "physicsExecution": false,
+  "sourcePath": "/Users/shaf/coding_projects/RessectionLab/testcases/cases/meningioma-sub-06-standard-v2.ressectionlab",
+  "sourceSha256": "ff5a49b8706a8ccda08d8c3e82dad3e079f85dea98cb6bd40783d2262eec9838",
+  "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+  "residualCheckpoint": "testcases/outputs/full-case-rehearsal-20261020/primary-v2/primary.ressectionlab",
+  "residualStateId": "sha256:3fd6b0c4118d276014220a8e994b9b65f866a33c10010953a2713b29d0772db8",
+  "residualActionCount": 100,
+  "sourceOwnedTargetDenominatorMm3": 43573,
+  "residualOwnedTargetMm3": 42305,
+  "removedOwnedTargetMm3": 1268,
+  "noCurrentHolds": true,
+  "currentBrainActiveNodes": 0,
+  "interpretation": "Point-ray and binary lateral-window upper bounds only. Bone/free allowed; every normal brain, vessel and other nontarget material blocks. Physical tool/shaft, guards, bone opening, spatially differing target caps still require exact engine previews. No anatomy beyond supplied categorical masks inferred.",
+  "allAxisUnionInitialCapacityMm3": 42222,
+  "allAxisUnionInitialOutsideSuperiorMm3": 1862,
+  "allAxisUnionResidualCapacityMm3": 40959,
+  "allAxisUnionResidualOutsideSuperiorMm3": 1862
+}
+{
+  "name": "left-lateral (-X outward)",
+  "axis": 0,
+  "boundarySign": 1,
+  "outwardRASDirection": [
+    -1.0,
+    0.0,
+    0.0
+  ],
+  "initial": {
+    "candidateColumnCount": 907,
+    "pointRayOwnedTargetCapacityMm3": 20692,
+    "maxWindowLateralClearanceMm": 7.615773105863909,
+    "bestWindowIndex": [
+      127,
+      150,
+      131
+    ],
+    "bestWindowTargetEntryRAS": [
+      -17.464996337890625,
+      26.441162109375,
+      -423.25
+    ],
+    "bestRayTargetCells": 24,
+    "bestRayOverlyingBone": {
+      "countCells": 27,
+      "outwardDistanceFromFirstTargetMm": [
+        1,
+        27
+      ]
+    },
+    "insetCapacity": [
+      {
+        "lateralInsetMm": 1,
+        "columnCount": 734,
+        "pointRayTargetCapacityMm3": 17732
+      },
+      {
+        "lateralInsetMm": 2,
+        "columnCount": 559,
+        "pointRayTargetCapacityMm3": 14068
+      },
+      {
+        "lateralInsetMm": 3,
+        "columnCount": 363,
+        "pointRayTargetCapacityMm3": 9566
+      },
+      {
+        "lateralInsetMm": 4,
+        "columnCount": 215,
+        "pointRayTargetCapacityMm3": 5706
+      },
+      {
+        "lateralInsetMm": 5,
+        "columnCount": 84,
+        "pointRayTargetCapacityMm3": 2122
+      }
+    ],
+    "capacityOutsideSuperiorPotentialMm3": 1555
+  },
+  "currentResidual": {
+    "candidateColumnCount": 907,
+    "pointRayOwnedTargetCapacityMm3": 20108,
+    "maxWindowLateralClearanceMm": 7.615773105863909,
+    "bestWindowIndex": [
+      127,
+      150,
+      131
+    ],
+    "bestWindowTargetEntryRAS": [
+      -17.464996337890625,
+      26.441162109375,
+      -423.25
+    ],
+    "bestRayTargetCells": 20,
+    "bestRayOverlyingBone": {
+      "countCells": 27,
+      "outwardDistanceFromFirstTargetMm": [
+        1,
+        27
+      ]
+    },
+    "insetCapacity": [
+      {
+        "lateralInsetMm": 1,
+        "columnCount": 734,
+        "pointRayTargetCapacityMm3": 17214
+      },
+      {
+        "lateralInsetMm": 2,
+        "columnCount": 559,
+        "pointRayTargetCapacityMm3": 13644
+      },
+      {
+        "lateralInsetMm": 3,
+        "columnCount": 363,
+        "pointRayTargetCapacityMm3": 9280
+      },
+      {
+        "lateralInsetMm": 4,
+        "columnCount": 215,
+        "pointRayTargetCapacityMm3": 5524
+      },
+      {
+        "lateralInsetMm": 5,
+        "columnCount": 84,
+        "pointRayTargetCapacityMm3": 2018
+      }
+    ],
+    "capacityOutsideSuperiorPotentialMm3": 1555
+  }
+}
+{
+  "name": "right-lateral (+X outward)",
+  "axis": 0,
+  "boundarySign": -1,
+  "outwardRASDirection": [
+    1.0,
+    -0.0,
+    -0.0
+  ],
+  "initial": {
+    "candidateColumnCount": 0,
+    "pointRayOwnedTargetCapacityMm3": 0,
+    "maxWindowLateralClearanceMm": 0.0,
+    "bestWindowIndex": null,
+    "bestWindowTargetEntryRAS": null,
+    "bestRayTargetCells": 0,
+    "bestRayOverlyingBone": null,
+    "insetCapacity": [
+      {
+        "lateralInsetMm": 1,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      },
+      {
+        "lateralInsetMm": 2,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      },
+      {
+        "lateralInsetMm": 3,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      },
+      {
+        "lateralInsetMm": 4,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      },
+      {
+        "lateralInsetMm": 5,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      }
+    ],
+    "capacityOutsideSuperiorPotentialMm3": 0
+  },
+  "currentResidual": {
+    "candidateColumnCount": 0,
+    "pointRayOwnedTargetCapacityMm3": 0,
+    "maxWindowLateralClearanceMm": 0.0,
+    "bestWindowIndex": null,
+    "bestWindowTargetEntryRAS": null,
+    "bestRayTargetCells": 0,
+    "bestRayOverlyingBone": null,
+    "insetCapacity": [
+      {
+        "lateralInsetMm": 1,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      },
+      {
+        "lateralInsetMm": 2,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      },
+      {
+        "lateralInsetMm": 3,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      },
+      {
+        "lateralInsetMm": 4,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      },
+      {
+        "lateralInsetMm": 5,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      }
+    ],
+    "capacityOutsideSuperiorPotentialMm3": 0
+  }
+}
+{
+  "name": "anterior (+Y outward)",
+  "axis": 1,
+  "boundarySign": 1,
+  "outwardRASDirection": [
+    0.0,
+    1.0,
+    0.0
+  ],
+  "initial": {
+    "candidateColumnCount": 536,
+    "pointRayOwnedTargetCapacityMm3": 16887,
+    "maxWindowLateralClearanceMm": 5.656854249492381,
+    "bestWindowIndex": [
+      138,
+      142,
+      130
+    ],
+    "bestWindowTargetEntryRAS": [
+      -28.464996337890625,
+      18.441162109375,
+      -424.25
+    ],
+    "bestRayTargetCells": 34,
+    "bestRayOverlyingBone": {
+      "countCells": 32,
+      "outwardDistanceFromFirstTargetMm": [
+        1,
+        32
+      ]
+    },
+    "insetCapacity": [
+      {
+        "lateralInsetMm": 1,
+        "columnCount": 413,
+        "pointRayTargetCapacityMm3": 13641
+      },
+      {
+        "lateralInsetMm": 2,
+        "columnCount": 285,
+        "pointRayTargetCapacityMm3": 9637
+      },
+      {
+        "lateralInsetMm": 3,
+        "columnCount": 152,
+        "pointRayTargetCapacityMm3": 5233
+      },
+      {
+        "lateralInsetMm": 4,
+        "columnCount": 66,
+        "pointRayTargetCapacityMm3": 2264
+      },
+      {
+        "lateralInsetMm": 5,
+        "columnCount": 15,
+        "pointRayTargetCapacityMm3": 535
+      }
+    ],
+    "capacityOutsideSuperiorPotentialMm3": 1147
+  },
+  "currentResidual": {
+    "candidateColumnCount": 536,
+    "pointRayOwnedTargetCapacityMm3": 16465,
+    "maxWindowLateralClearanceMm": 5.656854249492381,
+    "bestWindowIndex": [
+      138,
+      142,
+      130
+    ],
+    "bestWindowTargetEntryRAS": [
+      -28.464996337890625,
+      18.441162109375,
+      -424.25
+    ],
+    "bestRayTargetCells": 34,
+    "bestRayOverlyingBone": {
+      "countCells": 32,
+      "outwardDistanceFromFirstTargetMm": [
+        1,
+        32
+      ]
+    },
+    "insetCapacity": [
+      {
+        "lateralInsetMm": 1,
+        "columnCount": 413,
+        "pointRayTargetCapacityMm3": 13304
+      },
+      {
+        "lateralInsetMm": 2,
+        "columnCount": 285,
+        "pointRayTargetCapacityMm3": 9424
+      },
+      {
+        "lateralInsetMm": 3,
+        "columnCount": 152,
+        "pointRayTargetCapacityMm3": 5149
+      },
+      {
+        "lateralInsetMm": 4,
+        "columnCount": 66,
+        "pointRayTargetCapacityMm3": 2238
+      },
+      {
+        "lateralInsetMm": 5,
+        "columnCount": 15,
+        "pointRayTargetCapacityMm3": 532
+      }
+    ],
+    "capacityOutsideSuperiorPotentialMm3": 1147
+  }
+}
+{
+  "name": "posterior (-Y outward)",
+  "axis": 1,
+  "boundarySign": -1,
+  "outwardRASDirection": [
+    -0.0,
+    -1.0,
+    -0.0
+  ],
+  "initial": {
+    "candidateColumnCount": 1,
+    "pointRayOwnedTargetCapacityMm3": 3,
+    "maxWindowLateralClearanceMm": 1.0,
+    "bestWindowIndex": [
+      148,
+      123,
+      130
+    ],
+    "bestWindowTargetEntryRAS": [
+      -38.464996337890625,
+      -0.558837890625,
+      -424.25
+    ],
+    "bestRayTargetCells": 3,
+    "bestRayOverlyingBone": {
+      "countCells": 60,
+      "outwardDistanceFromFirstTargetMm": [
+        1,
+        60
+      ]
+    },
+    "insetCapacity": [
+      {
+        "lateralInsetMm": 1,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      },
+      {
+        "lateralInsetMm": 2,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      },
+      {
+        "lateralInsetMm": 3,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      },
+      {
+        "lateralInsetMm": 4,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      },
+      {
+        "lateralInsetMm": 5,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      }
+    ],
+    "capacityOutsideSuperiorPotentialMm3": 0
+  },
+  "currentResidual": {
+    "candidateColumnCount": 1,
+    "pointRayOwnedTargetCapacityMm3": 3,
+    "maxWindowLateralClearanceMm": 1.0,
+    "bestWindowIndex": [
+      148,
+      123,
+      130
+    ],
+    "bestWindowTargetEntryRAS": [
+      -38.464996337890625,
+      -0.558837890625,
+      -424.25
+    ],
+    "bestRayTargetCells": 3,
+    "bestRayOverlyingBone": {
+      "countCells": 60,
+      "outwardDistanceFromFirstTargetMm": [
+        1,
+        60
+      ]
+    },
+    "insetCapacity": [
+      {
+        "lateralInsetMm": 1,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      },
+      {
+        "lateralInsetMm": 2,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      },
+      {
+        "lateralInsetMm": 3,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      },
+      {
+        "lateralInsetMm": 4,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      },
+      {
+        "lateralInsetMm": 5,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      }
+    ],
+    "capacityOutsideSuperiorPotentialMm3": 0
+  }
+}
+{
+  "name": "superior (+Z outward)",
+  "axis": 2,
+  "boundarySign": 1,
+  "outwardRASDirection": [
+    0.0,
+    0.0,
+    1.0
+  ],
+  "initial": {
+    "candidateColumnCount": 2204,
+    "pointRayOwnedTargetCapacityMm3": 40360,
+    "maxWindowLateralClearanceMm": 11.180339887498949,
+    "bestWindowIndex": [
+      120,
+      154,
+      133
+    ],
+    "bestWindowTargetEntryRAS": [
+      -10.464996337890625,
+      30.441162109375,
+      -421.25
+    ],
+    "bestRayTargetCells": 13,
+    "bestRayOverlyingBone": {
+      "countCells": 15,
+      "outwardDistanceFromFirstTargetMm": [
+        1,
+        15
+      ]
+    },
+    "insetCapacity": [
+      {
+        "lateralInsetMm": 1,
+        "columnCount": 1947,
+        "pointRayTargetCapacityMm3": 37168
+      },
+      {
+        "lateralInsetMm": 2,
+        "columnCount": 1681,
+        "pointRayTargetCapacityMm3": 32810
+      },
+      {
+        "lateralInsetMm": 3,
+        "columnCount": 1352,
+        "pointRayTargetCapacityMm3": 26688
+      },
+      {
+        "lateralInsetMm": 4,
+        "columnCount": 1068,
+        "pointRayTargetCapacityMm3": 21099
+      },
+      {
+        "lateralInsetMm": 5,
+        "columnCount": 737,
+        "pointRayTargetCapacityMm3": 14284
+      }
+    ],
+    "capacityOutsideSuperiorPotentialMm3": 0
+  },
+  "currentResidual": {
+    "candidateColumnCount": 2177,
+    "pointRayOwnedTargetCapacityMm3": 39097,
+    "maxWindowLateralClearanceMm": 10.816653826391969,
+    "bestWindowIndex": [
+      132,
+      150,
+      129
+    ],
+    "bestWindowTargetEntryRAS": [
+      -22.464996337890625,
+      26.441162109375,
+      -425.25
+    ],
+    "bestRayTargetCells": 15,
+    "bestRayOverlyingBone": {
+      "countCells": 17,
+      "outwardDistanceFromFirstTargetMm": [
+        1,
+        17
+      ]
+    },
+    "insetCapacity": [
+      {
+        "lateralInsetMm": 1,
+        "columnCount": 1886,
+        "pointRayTargetCapacityMm3": 35386
+      },
+      {
+        "lateralInsetMm": 2,
+        "columnCount": 1588,
+        "pointRayTargetCapacityMm3": 30416
+      },
+      {
+        "lateralInsetMm": 3,
+        "columnCount": 1216,
+        "pointRayTargetCapacityMm3": 23411
+      },
+      {
+        "lateralInsetMm": 4,
+        "columnCount": 902,
+        "pointRayTargetCapacityMm3": 17440
+      },
+      {
+        "lateralInsetMm": 5,
+        "columnCount": 546,
+        "pointRayTargetCapacityMm3": 10574
+      }
+    ],
+    "capacityOutsideSuperiorPotentialMm3": 0
+  }
+}
+{
+  "name": "inferior (-Z outward)",
+  "axis": 2,
+  "boundarySign": -1,
+  "outwardRASDirection": [
+    -0.0,
+    -0.0,
+    -1.0
+  ],
+  "initial": {
+    "candidateColumnCount": 0,
+    "pointRayOwnedTargetCapacityMm3": 0,
+    "maxWindowLateralClearanceMm": 0.0,
+    "bestWindowIndex": null,
+    "bestWindowTargetEntryRAS": null,
+    "bestRayTargetCells": 0,
+    "bestRayOverlyingBone": null,
+    "insetCapacity": [
+      {
+        "lateralInsetMm": 1,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      },
+      {
+        "lateralInsetMm": 2,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      },
+      {
+        "lateralInsetMm": 3,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      },
+      {
+        "lateralInsetMm": 4,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      },
+      {
+        "lateralInsetMm": 5,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      }
+    ],
+    "capacityOutsideSuperiorPotentialMm3": 0
+  },
+  "currentResidual": {
+    "candidateColumnCount": 0,
+    "pointRayOwnedTargetCapacityMm3": 0,
+    "maxWindowLateralClearanceMm": 0.0,
+    "bestWindowIndex": null,
+    "bestWindowTargetEntryRAS": null,
+    "bestRayTargetCells": 0,
+    "bestRayOverlyingBone": null,
+    "insetCapacity": [
+      {
+        "lateralInsetMm": 1,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      },
+      {
+        "lateralInsetMm": 2,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      },
+      {
+        "lateralInsetMm": 3,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      },
+      {
+        "lateralInsetMm": 4,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      },
+      {
+        "lateralInsetMm": 5,
+        "columnCount": 0,
+        "pointRayTargetCapacityMm3": 0
+      }
+    ],
+    "capacityOutsideSuperiorPotentialMm3": 0
+  }
+}

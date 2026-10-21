@@ -1,0 +1,359 @@
+{
+  "schema": "resectionlab.surgical-render-timing.v1",
+  "measurement": "CPU modeled-volume and effect-geometry preparation only",
+  "excludes": [
+    "GPU rendering",
+    "browser paint",
+    "React scheduling",
+    "IPC",
+    "Python transitions",
+    "file parsing/decompression",
+    "source-array hashing",
+    "geometry disposal"
+  ],
+  "repeats": 5,
+  "clock": "node:perf_hooks performance.now milliseconds",
+  "runtime": "v22.17.1",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "fixture": {
+    "path": "/Users/shaf/coding_projects/RessectionLab/outputs/integrated-rehearsal-v1/render-fixture.json",
+    "sha256": "f109da2df93674e399011ce1743801cb0ab293130a817c01ba471955156ecdbc"
+  },
+  "sourceFiles": {
+    "desktop/src/use-surgical.ts": "e7e25e45cac81dc25542380d191feed02a7825a845e1111bcb4c9e909fc78578",
+    "desktop/src/viewer/surgicalGeometry.ts": "e07b86160b308c4b1ea9f53e5c60d9fa526621e45010733f0974a168e3be7d92"
+  },
+  "cases": [
+    {
+      "id": "generated-coupon",
+      "shape": [
+        24,
+        24,
+        24
+      ],
+      "sourceArrayHashes": [
+        "35295da1d5eca0b6db3168c0a64a2d61ed3ae8ca283dd4aa6116aa04703dcb60",
+        "7e51c4e37384aa12648b3f169ebb74369e0d4d3f56492d500c248d3e444c7c05"
+      ],
+      "sourceFile": null,
+      "intactStateId": "sha256:67e7862f3514d7b135449a43e0e4f3cd0d7b89276dce7080a3fd66ee65c50d74",
+      "updatedStateId": "sha256:48ecce6a4e28650d20e3d634c21881ff764f692c37364190e698f9e7c40f4c1f",
+      "removedCells": 3,
+      "movedCells": 0,
+      "actionOutcomes": [
+        {
+          "status": "accepted",
+          "reason": null,
+          "stateId": "sha256:474e4b0ad58ed938fd6154e5bc97c944daab4a0cebef24bf5ddb785430ecf024"
+        },
+        {
+          "status": "accepted",
+          "reason": null,
+          "stateId": "sha256:48ecce6a4e28650d20e3d634c21881ff764f692c37364190e698f9e7c40f4c1f"
+        }
+      ],
+      "sourceArraysUnchanged": true,
+      "viewsUnchanged": true,
+      "phases": [
+        {
+          "phase": "fresh-source-intact",
+          "modeledVolume": {
+            "samplesMs": [
+              1.9551249999999527,
+              0.8817910000000211,
+              0.8432500000000118,
+              0.8220830000000205,
+              0.30875000000003183
+            ],
+            "medianMs": 0.8432500000000118,
+            "p95Ms": 1.9551249999999527,
+            "count": 5,
+            "p95Method": "nearest-rank; with five repeats p95 is the maximum"
+          },
+          "surgicalEffectGroup": {
+            "samplesMs": [
+              0.6508750000000418,
+              0.15095899999994344,
+              0.024917000000016287,
+              0.07845900000000938,
+              0.2077499999999759
+            ],
+            "medianMs": 0.15095899999994344,
+            "p95Ms": 0.6508750000000418,
+            "count": 5,
+            "p95Method": "nearest-rank; with five repeats p95 is the maximum"
+          },
+          "combined": {
+            "samplesMs": [
+              2.6059999999999945,
+              1.0327499999999645,
+              0.8681670000000281,
+              0.9005420000000299,
+              0.5165000000000077
+            ],
+            "medianMs": 0.9005420000000299,
+            "p95Ms": 2.6059999999999945,
+            "count": 5,
+            "p95Method": "nearest-rank; with five repeats p95 is the maximum"
+          },
+          "effectObjectCount": 0
+        },
+        {
+          "phase": "source-state-update",
+          "modeledVolume": {
+            "samplesMs": [
+              0.6420420000000036,
+              0.3930000000000291,
+              0.3796660000000429,
+              0.4057080000000042,
+              0.38879200000002356
+            ],
+            "medianMs": 0.3930000000000291,
+            "p95Ms": 0.6420420000000036,
+            "count": 5,
+            "p95Method": "nearest-rank; with five repeats p95 is the maximum"
+          },
+          "surgicalEffectGroup": {
+            "samplesMs": [
+              0.03141700000003311,
+              0.01791600000001381,
+              0.009583999999961179,
+              0.013459000000011656,
+              0.00858299999998735
+            ],
+            "medianMs": 0.013459000000011656,
+            "p95Ms": 0.03141700000003311,
+            "count": 5,
+            "p95Method": "nearest-rank; with five repeats p95 is the maximum"
+          },
+          "combined": {
+            "samplesMs": [
+              0.6734590000000367,
+              0.4109160000000429,
+              0.3892500000000041,
+              0.41916700000001583,
+              0.3973750000000109
+            ],
+            "medianMs": 0.4109160000000429,
+            "p95Ms": 0.6734590000000367,
+            "count": 5,
+            "p95Method": "nearest-rank; with five repeats p95 is the maximum"
+          },
+          "effectObjectCount": 0
+        },
+        {
+          "phase": "same-state-cache",
+          "modeledVolume": {
+            "samplesMs": [
+              0.0038749999999936335,
+              0.003750000000025011,
+              0.0037090000000148393,
+              0.003708000000017364,
+              0.003708000000017364
+            ],
+            "medianMs": 0.0037090000000148393,
+            "p95Ms": 0.0038749999999936335,
+            "count": 5,
+            "p95Method": "nearest-rank; with five repeats p95 is the maximum"
+          },
+          "surgicalEffectGroup": {
+            "samplesMs": [
+              0.006790999999964242,
+              0.005915999999956512,
+              0.005540999999993801,
+              0.0056669999999598986,
+              0.005375000000015007
+            ],
+            "medianMs": 0.0056669999999598986,
+            "p95Ms": 0.006790999999964242,
+            "count": 5,
+            "p95Method": "nearest-rank; with five repeats p95 is the maximum"
+          },
+          "combined": {
+            "samplesMs": [
+              0.010665999999957876,
+              0.009665999999981523,
+              0.00925000000000864,
+              0.009374999999977263,
+              0.00908300000003237
+            ],
+            "medianMs": 0.009374999999977263,
+            "p95Ms": 0.010665999999957876,
+            "count": 5,
+            "p95Method": "nearest-rank; with five repeats p95 is the maximum"
+          },
+          "effectObjectCount": 0
+        }
+      ]
+    },
+    {
+      "id": "acquired-sub06",
+      "shape": [
+        220,
+        220,
+        181
+      ],
+      "sourceArrayHashes": [
+        "19b55c524fa582024d01b9b4bff180d16378db4bc2355dad843148937ac5e57b",
+        "781b3472f27499c24b235eda12fa9c4f75c0b1abc8264742898836343a4dac90",
+        "180c78246f4e0b5dea258a232dc2736cbccb69a28c5c2ca9bc1c0eaca6ad45ea",
+        "3eca462239519c8847b2b247fb8a6f3d975f8fe8a606cc0104f9f09faaeec6c7",
+        "5fa5eaea99c068f40ef8479f3bb206d48b5504a24fe317096d642f7ec9fa14c6"
+      ],
+      "sourceFile": {
+        "path": "/Users/shaf/coding_projects/RessectionLab/testcases/history/surgical-patient-v2/patient.ressectionlab",
+        "sha256": "17b440a46de4dc4c42f75ac562ee71749856e3c7be1d6854325fe8a07554906f"
+      },
+      "intactStateId": "sha256:ed7fd85bac1629f36b16562e7281182b462ec6b23a4a106097ae301af522b380",
+      "updatedStateId": "sha256:c6532e5b5fc62d6c1e294808c49dfca1177dc3f7a665ea5c62d13514c6d4d2bc",
+      "removedCells": 34,
+      "movedCells": 0,
+      "actionOutcomes": [
+        {
+          "status": "accepted",
+          "reason": null,
+          "stateId": "sha256:f24ae0aa268c504871e9cfea146fab8691cb31706b5f4562d24a9d6e26e01f94"
+        },
+        {
+          "status": "partial",
+          "reason": "BONE_CUTTING_IN_PROGRESS",
+          "stateId": "sha256:c6532e5b5fc62d6c1e294808c49dfca1177dc3f7a665ea5c62d13514c6d4d2bc"
+        }
+      ],
+      "sourceArraysUnchanged": true,
+      "viewsUnchanged": true,
+      "phases": [
+        {
+          "phase": "fresh-source-intact",
+          "modeledVolume": {
+            "samplesMs": [
+              215.85408300000006,
+              248.95841700000005,
+              146.9312500000001,
+              141.56654200000003,
+              204.5234170000001
+            ],
+            "medianMs": 204.5234170000001,
+            "p95Ms": 248.95841700000005,
+            "count": 5,
+            "p95Method": "nearest-rank; with five repeats p95 is the maximum"
+          },
+          "surgicalEffectGroup": {
+            "samplesMs": [
+              0.07070899999996527,
+              0.07195799999999508,
+              0.05612499999983811,
+              0.05674999999996544,
+              0.05791699999986122
+            ],
+            "medianMs": 0.05791699999986122,
+            "p95Ms": 0.07195799999999508,
+            "count": 5,
+            "p95Method": "nearest-rank; with five repeats p95 is the maximum"
+          },
+          "combined": {
+            "samplesMs": [
+              215.92479200000002,
+              249.03037500000005,
+              146.98737499999993,
+              141.623292,
+              204.58133399999997
+            ],
+            "medianMs": 204.58133399999997,
+            "p95Ms": 249.03037500000005,
+            "count": 5,
+            "p95Method": "nearest-rank; with five repeats p95 is the maximum"
+          },
+          "effectObjectCount": 0
+        },
+        {
+          "phase": "source-state-update",
+          "modeledVolume": {
+            "samplesMs": [
+              213.3182079999999,
+              245.05925000000002,
+              169.20387500000015,
+              171.54595900000004,
+              169.96666700000014
+            ],
+            "medianMs": 171.54595900000004,
+            "p95Ms": 245.05925000000002,
+            "count": 5,
+            "p95Method": "nearest-rank; with five repeats p95 is the maximum"
+          },
+          "surgicalEffectGroup": {
+            "samplesMs": [
+              1.0261669999999867,
+              2.9075410000000375,
+              0.8347920000001068,
+              0.8637499999999818,
+              0.9832919999998921
+            ],
+            "medianMs": 0.9832919999998921,
+            "p95Ms": 2.9075410000000375,
+            "count": 5,
+            "p95Method": "nearest-rank; with five repeats p95 is the maximum"
+          },
+          "combined": {
+            "samplesMs": [
+              214.3443749999999,
+              247.96679100000006,
+              170.03866700000026,
+              172.40970900000002,
+              170.94995900000004
+            ],
+            "medianMs": 172.40970900000002,
+            "p95Ms": 247.96679100000006,
+            "count": 5,
+            "p95Method": "nearest-rank; with five repeats p95 is the maximum"
+          },
+          "effectObjectCount": 2
+        },
+        {
+          "phase": "same-state-cache",
+          "modeledVolume": {
+            "samplesMs": [
+              0.020332999999936874,
+              0.024582999999893218,
+              0.01866599999993923,
+              0.02237500000046566,
+              0.021292000000357802
+            ],
+            "medianMs": 0.021292000000357802,
+            "p95Ms": 0.024582999999893218,
+            "count": 5,
+            "p95Method": "nearest-rank; with five repeats p95 is the maximum"
+          },
+          "surgicalEffectGroup": {
+            "samplesMs": [
+              0.7194580000000315,
+              1.2037920000002487,
+              0.7135840000000826,
+              0.7466249999997672,
+              0.7347499999996217
+            ],
+            "medianMs": 0.7347499999996217,
+            "p95Ms": 1.2037920000002487,
+            "count": 5,
+            "p95Method": "nearest-rank; with five repeats p95 is the maximum"
+          },
+          "combined": {
+            "samplesMs": [
+              0.7397909999999683,
+              1.2283750000001419,
+              0.7322500000000218,
+              0.7690000000002328,
+              0.7560419999999795
+            ],
+            "medianMs": 0.7560419999999795,
+            "p95Ms": 1.2283750000001419,
+            "count": 5,
+            "p95Method": "nearest-rank; with five repeats p95 is the maximum"
+          },
+          "effectObjectCount": 2
+        }
+      ]
+    }
+  ]
+}

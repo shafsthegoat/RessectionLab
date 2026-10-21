@@ -1,0 +1,90 @@
+{
+  "schema": "resectionlab-ixi265-atropos-candidate-v1",
+  "status": "failed",
+  "patient_group": "IXI:265",
+  "role": "TRAIN",
+  "training_admitted": false,
+  "source_hashes": {
+    "T1": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+    "brain_mask": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+    "host_bundle": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1"
+  },
+  "package": {
+    "name": "antspyx",
+    "version": "0.6.3",
+    "wheel_sha256": "e378329089f622c72eacc47e4e2c18503d0f3fbf2cc39ccb9df65880c0a7846f"
+  },
+  "parameters": {
+    "N4": {
+      "shrink_factor": 4,
+      "convergence": {
+        "iters": [
+          30,
+          20,
+          10
+        ],
+        "tol": 1e-07
+      },
+      "spline_param": 150,
+      "rescale_intensities": false,
+      "return_bias_field": false,
+      "verbose": true
+    },
+    "Atropos": {
+      "i": "KMeans[3]",
+      "m": "[0.1,1x1x1]",
+      "c": "[10,0]",
+      "priorweight": 0.0,
+      "r": 0,
+      "v": 1
+    },
+    "grid": "full_native_grid_no_resampling_no_crop",
+    "priors": null,
+    "intensity_clipping_or_normalization": null,
+    "Atropos_random_seed_option": "r=0 (fixed upstream seed)"
+  },
+  "resources": {
+    "threads": 2,
+    "rss_limit_bytes": 3221225472,
+    "minimum_available_bytes": 1073741824,
+    "timeout_seconds": 600.0,
+    "output_limit_bytes": 536870912,
+    "free_disk_floor_bytes": 53687091200,
+    "sample_interval_seconds": 0.2,
+    "max_voxels": 12000000,
+    "attempts": 1
+  },
+  "frame_tolerance_mm": 0.0001,
+  "hard_class_assumptions": {
+    "1": "csf_like_intensity_estimated",
+    "2": "gray_matter_like_intensity_estimated",
+    "3": "white_matter_like_intensity_estimated"
+  },
+  "posterior_semantics": "unmodified_fitted_class_membership_probabilities",
+  "anatomy_accepted": false,
+  "host_accepted": false,
+  "growth_use_accepted": false,
+  "limitations": [
+    "within_image_finite_mixture_fitting_not_pretrained_inference",
+    "ordered_T1_intensity_to_CSF_GM_WM_is_an_unreviewed_assumption",
+    "posterior_probabilities_are_not_physical_partial_volume_fractions",
+    "CSF_like_class_does_not_identify_ventricles",
+    "no_anatomical_acceptance_host_upgrade_or_automatic_growth_use",
+    "two_thread_floating_point_execution_not_claimed_bitwise_reproducible"
+  ],
+  "runner_sha256": "4a5c5b4b2f85153212ac27e6356d5f1dca5c8b42d77257fb55a2fee53253624b",
+  "started_utc": "2026-10-16T07:22:08.923575+00:00",
+  "memory_scope": "supervising_Python_plus_worker_and_recursive_descendants",
+  "memory_caveat": "Sampled combined RSS; between-sample peaks are not a hard memory reservation",
+  "sources": {
+    "T1": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/originals/IXI265-T1.nii.gz",
+    "brain_mask": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/synthstrip/brain_mask.nii.gz",
+    "host_bundle": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/IXI265-Guys-0845.ressectionlab"
+  },
+  "failure": "worker_failed_see_retained_log",
+  "elapsed_seconds": 46.054974750149995,
+  "peak_process_family_rss_bytes_sampled": 541605888,
+  "minimum_available_memory_bytes_sampled": 7138312192,
+  "output_and_temporary_bytes": 130995,
+  "exit_code": 1
+}

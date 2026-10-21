@@ -1,0 +1,134 @@
+{
+  "schema": "poc-ixi265-fixed-native-vessel-agreement-v1",
+  "case": "IXI265-Guys-0845",
+  "patient_group": "IXI:265",
+  "role": "TRAIN",
+  "training_admitted": false,
+  "metadata_pins": {
+    "outputs/poc-ixi265/source-receipt.json": "2f4f6507f56e6592f851ddc9c4520d217f9e85fd649c45025f4d0e079559eac6",
+    "outputs/poc-ixi265/vesselfm-base-v1/inference.json": "a1b7a4198b33b2f429f058b658ecc4a70c33c31f7e25d7ad17e4d2b002eedfdf",
+    "outputs/poc-ixi265/vesselfm-base-v1/registered.json": "de0430fd5600a22c26437b1928a56237f2e76423cbd9d21bc3f8afb18595680e",
+    "artifacts/ixi-t1-mra-vessel-byte-intake-v1/source-contract.json": "159a4bba5fd9b8b5db0a4195b089f42850da4f3dae86bf101efc1a72de4ab387",
+    "manifests/experiments/ixi-component-person-cohort-v1.json": "b27f28c21089e61f6c4899f172f608cd0f81391588777443939196b1700cb127"
+  },
+  "inputs": {
+    "MRA": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/originals/IXI265-MRA.nii.gz",
+      "sha256": "a87b381b882242b7d61a1930a8332d44200fdb3c56c68fc09c24a057eea86dc4"
+    },
+    "reference": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/originals/IXI265-derived_vessel_label.nii.gz",
+      "sha256": "9da13c332156c71a5200dbf88368bb87478914fe73034a42ca4eabf1dd5cdbfe"
+    },
+    "prediction": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/vesselfm-base-v1/vessels_mask.nii.gz",
+      "sha256": "d3eedb5a89e598cddd5eb017054f7fb0ce91c678278411c285cc00c2b8d277bc"
+    },
+    "score": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/vesselfm-base-v1/vessels_probability.nii.gz",
+      "sha256": "1745f34949bec22c4c2418e0f7e115c8e3acf0cd974e6ba4b18f7e81e80ecc75"
+    },
+    "coverage": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/vesselfm-base-v1/native_sampling_coverage.nii.gz",
+      "sha256": "a92bf82175e1208ebef037bf3117fc40f779c4cf5669f70422be7b0015bc863b"
+    }
+  },
+  "input_fixity": "Expected hashes from frozen receipts; real payload hashes verified only during released execution",
+  "script_sha256": "6065b78d86e1bfc8293ae6c32a27a0963e8d8ec2b5d939294579efc37b6dc668",
+  "tests_sha256": "2c8e8754743dfb28b04ba8f074bcabff8250290290dc9d032a319bffe7aeed68",
+  "shape": [
+    512,
+    512,
+    100
+  ],
+  "affine_ras_mm": [
+    [
+      -0.4675968885421753,
+      0.022762440145015717,
+      0.04044419899582863,
+      113.11631774902344
+    ],
+    [
+      0.021471189334988594,
+      0.46756595373153687,
+      -0.043432630598545074,
+      -131.24533081054688
+    ],
+    [
+      0.024873699992895126,
+      0.024300718680024147,
+      0.7977957725524902,
+      -36.80162048339844
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "metadata_reference_corner_error_mm": 1.6485861738542026e-06,
+  "comparison_admission": "Qualified descriptive comparison of two binary vessel-positive sets; target completeness/subtype equivalence not established",
+  "annotation_lineage": "Primary paper: SynthStrip brain mask, Frangi initialization, manual refinement by3 annotators with neurovascular-surgeon review. Synthetic permission removes historical exclusion; it does not remove lineage or review limitations.",
+  "annotation_scope": "Circle of Willis and major connected vessels emphasized; smaller vessels included where visible; no proof of complete cerebral vasculature or negative-safe background.",
+  "annotation_review_ambiguity": "Paper says each image reviewed by three neurovascular surgeons but also says each surgeon reviewed approximately33 images. Treat surgeon review as reported; do not claim three independent surgeon reviews per volume.",
+  "training_lineage": {
+    "sources": [
+      "D_real",
+      "D_drand",
+      "D_flow"
+    ],
+    "IXI_collection_present_in_D_real_CSD": true,
+    "IXI265_subject_overlap": "unknown",
+    "held_out_accuracy_claim": false,
+    "evidence_url": "https://raw.githubusercontent.com/bwittmann/vesselFM/main/vesselfm/d_real/README.md",
+    "paper_url": "https://arxiv.org/html/2411.17386v1",
+    "checkpoint_card_url": "https://huggingface.co/bwittmann/vesselFM/blob/dd70bbdd2b9de06b1316b4d1105bda9766c24fd7/README.md"
+  },
+  "model": {
+    "name": "vesselFM",
+    "version": "base / dd70bbdd2b9de06b1316b4d1105bda9766c24fd7",
+    "variant": "base",
+    "revision": "dd70bbdd2b9de06b1316b4d1105bda9766c24fd7",
+    "weights_sha256": "6da4fbd06dd9c3b597e5d50cc628deb3026919ff126d01afbd13ac8fe22ee10c",
+    "weights_bytes": 125713671,
+    "license": "vesselFM Open RAIL++-M; Attachment A: research purposes and non-commercial use only",
+    "license_url": "https://huggingface.co/bwittmann/vesselFM/blob/dd70bbdd2b9de06b1316b4d1105bda9766c24fd7/LICENSE",
+    "upstream_code_license": "GPL-3.0",
+    "actual_execution": "Existing local MONAI DynUNet POC worker; CPU accumulation; MPS tiles"
+  },
+  "source_reference_used_in_inference": false,
+  "source_rights": {
+    "MRA": "CC-BY-SA-3.0",
+    "derived_reference": "CC-BY-4.0",
+    "reference_url": "https://zenodo.org/records/17393202"
+  },
+  "fixed_parameters": {
+    "threshold": 0.5,
+    "postprocessing": false,
+    "connected_components": 26,
+    "boundary_connectivity": 6,
+    "domain": "Frozen native MRA sampling coverage: one border voxel excluded; no T1/brain clipping"
+  },
+  "metrics": {
+    "dice": "2*intersection/(prediction+reference) within fixed domain",
+    "jaccard": "intersection/union within fixed domain",
+    "positive_reference_coverage": "intersection/reference positive voxels within domain; not all-vessel sensitivity",
+    "prediction_outside_reference": "UNLABELLED; never counted as false positive",
+    "empty_denominator": "null, never fabricated perfect agreement"
+  },
+  "independent_accuracy_claim": false,
+  "clinical_accuracy_claim": false,
+  "held_out_claim": false,
+  "anatomical_registration_used": false,
+  "model_runs": 0,
+  "threshold_candidates": 1,
+  "bounds": {
+    "wall_seconds": 120,
+    "family_rss_bytes": 1073741824,
+    "minimum_available_bytes": 1073741824,
+    "output_bytes": 16777216,
+    "free_disk_reserve_bytes": 53687091200,
+    "threads": 2
+  }
+}

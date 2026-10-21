@@ -1,0 +1,123 @@
+{
+  "reviewedAt": "2026-10-19T00:16:57.383804+00:00",
+  "reviewType": "independent read-only source and actual screenshot review",
+  "status": "MRI and separate native MRA visual reviews complete",
+  "artifacts": [
+    {
+      "path": "final/mri-before-presentation.png",
+      "sha256": "695d71e95bccad1a7f9fbc728f809badf47601a1f42176bedca87f024dff9b2c"
+    },
+    {
+      "path": "final/segmentation.png",
+      "sha256": "1e7f850709d059b76778da5d995ecd71da5edb3c3f0fa95123dda11469abd60e"
+    },
+    {
+      "path": "final/segmentation-left.png",
+      "sha256": "6e6aea26b00df71b56f5d4f62f694ed4c6387bea0e6fe095223d3679982a4d06"
+    },
+    {
+      "path": "reference/segmentation-15s.png",
+      "sha256": "255f9c7540457e313b401eb4e03b61b9714ea14b77ee6f6b9be472a50c443371"
+    },
+    {
+      "path": "final/mra/mra-vascular.png",
+      "sha256": "74c188aef94d7030cb680a27cfc7d2f31dc0e568eb979bd065932eccd378f1d5"
+    },
+    {
+      "path": "final/mra/mra-vascular-left.png",
+      "sha256": "101f22a429afec48b479e418dabc45caf3f1399371ca84ee3eb834f4895d054a"
+    },
+    {
+      "path": "final/mra/report.json",
+      "sha256": "cea118d144f63fc18eac8c8e475852188aa24dc6a5050c9bc55644ffceeb0aec"
+    },
+    {
+      "path": "source-qc/ixi265-recovery-and-native-qc.json",
+      "sha256": "5e714892d63d9ac38415cb716e3bb99499b4739f2eb0c065831ca5411580c57e"
+    }
+  ],
+  "observedImprovements": [
+    "Segmentation presentation replaces the opaque pale head with a translucent gray source context; the cyan tumor becomes distinguishable in the same superior-oblique camera.",
+    "The lateral camera exposes the tumor shape more clearly and fills more of the main pane, making the comparison to the reference profile more useful.",
+    "Thin cyan tumor contours on linked grayscale slices retain more source texture than the previous filled overlays.",
+    "Compact presentation buttons and collapsed display settings leave the primary structure controls visible and preserve the surgical navigation entry."
+  ],
+  "sourceFaithfulness": [
+    "T1CE remains explicitly identified; the screen says estimated structures and no acquired angiography. The estimated-alignment banner remains visible.",
+    "All four primary source structure checkboxes remain checked, including vessels and bone. Disconnected source estimates remain visible rather than silently deleted for resemblance.",
+    "Reviewed presentation code changes display settings, colors, and opacity without changing acquired arrays, segmentation masks, source identities, or registration acceptance.",
+    "MRI/MRA cannot activate CT transfer thresholds. The reference CTA appearance is not evidence of CT acquisition, vascular completeness, or accepted fusion in this study."
+  ],
+  "remainingVisibleLimits": [
+    "This is closer in layout, translucency, and tumor contrast, but does not visually match the reference: the complete checked vessel estimate remains a dense rust network and contains conspicuous inferior/peripheral fragments.",
+    "The reference uses a vivid magenta brain boundary and a cleaner dark tissue interior. The application currently shows a neutral translucent brain/head with residual gray haze and a mottled cyan tumor surface.",
+    "MPR source heads occupy approximately 55\u201365 percent of each tile height, visibly less than in the reference. Expanding a slice is available; untested image stretching or cropping is not warranted.",
+    "The reference patient, acquisition field of view, selected structures, and lesion differ, so shape resemblance cannot be used as an anatomy correctness test."
+  ],
+  "actionableFindings": [],
+  "resolvedCodeReviewFindings": [
+    "New presentation/sliceOverlay settings initially failed persistence validation; both validators now accept supported enums and reject malformed choices. Root is adding native save/package/open and legacy round-trip regressions.",
+    "The volume heading is now gated by volumeDisplayed for modeled, passive, and rehearsal modes. The final rebuilt screenshot of those modes is outside this MRI screenshot review."
+  ],
+  "nextReview": null,
+  "accuracyLimit": "Appearance, interaction evidence, and source-preservation review only. Anatomical and clinical accuracy, vessel completeness, and clinical suitability are not established.",
+  "mraReview": {
+    "source": "IXI265-Guys-0845 acquired MRA, separate native collection",
+    "sourceQC": {
+      "shape": [
+        512,
+        512,
+        100
+      ],
+      "spacingMm": [
+        0.4687500006369269,
+        0.46875001301184277,
+        0.800000138334831
+      ],
+      "approximateSlabMm": 80,
+      "publishedDerivedLabelComponents26": 199,
+      "labelAffineMaxAbsDifference": 1.862645149230957e-09,
+      "labelIsAcquired": false,
+      "newModelInference": false,
+      "newRegistration": false,
+      "manifestMatchesQC": true
+    },
+    "observedImprovements": [
+      "Rust vessel-reference branches remain distinct against a faint neutral acquired MR context in both oblique and lateral views; source texture remains visible beneath the structure layer.",
+      "The interface retains the reference-like hierarchy of a large interactive 3D view with stacked linked MPR tiles, black background, and compact source/presentation controls.",
+      "The screen explicitly labels MRA, bright signal with no CT bone, Full source scope, and Published Derived Vessel Reference \u00b7 Incomplete."
+    ],
+    "faithfulness": [
+      "The abrupt inferior/superior limits in lateral and orthogonal views are consistent with the acquired 100-slice, approximately 80 mm MRA slab. They are a source-coverage limitation, not evidence of complete head/neck anatomy.",
+      "The rust geometry is a published derived, incomplete vessel reference with 199 disconnected components. Neutral bright voxels in the MRA are acquired signal; the display does not establish artery/vein classification or vascular completeness.",
+      "No CT skull, CT bone, tumor, or accepted T1 fusion is present in this MRA collection. The same-person T1 is a separate source and has not been added as accepted fusion.",
+      "The inspected report passes all 12 checks with no renderer errors. The original manifest plus two source arrays have identical before/after hash inventories, and the current manifest matches the source-QC receipt."
+    ],
+    "remainingVisibleLimits": [
+      "This is an MR vascular slab, not the full CT head/neck and bone presentation shown in the CTA reference. That source difference correctly remains visible.",
+      "The lateral slab occupies a relatively small central region of the 3D pane, with large empty margins; this is usable through zoom but is less immediately immersive than the CTA reference.",
+      "Incomplete branch geometry and hard acquisition boundaries remain visible; they should not be extended, filled, smoothed into continuity, or silently removed to improve resemblance."
+    ],
+    "verification": {
+      "allChecksPassed": true,
+      "checkCount": 12,
+      "rendererErrors": [],
+      "sourceArrayCount": 2,
+      "identicalBeforeAfterHashInventories": true
+    },
+    "performance": {
+      "medianDeliveredFps": 31.17417563711425,
+      "p95FrameMs": 44.04095800000141,
+      "dragDurationMs": 2081.9378339999967,
+      "deliveredFrames": 63,
+      "captureOverhead": false,
+      "completedRefinementMedianMs": 372.40000009536743,
+      "completedRefinementMaxMs": 402.2000002861023,
+      "completedRefinementCount": 23,
+      "electronWorkingSetKiB": 838224,
+      "pythonRSSKiB": 560512,
+      "judgment": "Measured MRA navigation is usable for interactive inspection at approximately 31 median delivered FPS, with occasional slower frames and refinement completing within about 0.40 s in this run. This is not evidence of sustained 60 FPS, equivalent performance on other machines, or measured parity with Medivis. The combined reported current process memory is approximately 1.33 GiB; memory remains material for larger or denser studies."
+    },
+    "actionableFindings": []
+  }
+}

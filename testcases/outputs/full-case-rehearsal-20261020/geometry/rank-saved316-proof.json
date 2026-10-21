@@ -1,0 +1,365 @@
+{
+  "readOnly": true,
+  "noEngineConstructionReplayOrPreview": true,
+  "savedPath": "testcases/outputs/full-case-rehearsal-20261020/primary-v2/primary.ressectionlab",
+  "savedSha256": "3c9aa655eb41839f7e1c7954d8df1d1248e832597946cefad967348abd1ccaee",
+  "stateId": "sha256:0845143f34ebdb28dd393262dbe151f28ef9239bc2da52c759a94efe48663f7a",
+  "position": 316,
+  "startIndex": 4,
+  "preservedPrefix": true,
+  "inputRecordsUnchanged": true,
+  "routeGeometryUnchanged": true,
+  "savedFileUnchanged": true,
+  "sourceSceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+  "sourceLabelsSha256": "d3e3e992e228f42011fdc18d86d167e137b641d320cb592f55076f15fb14a5e0",
+  "sourceLabelsUnchanged": true,
+  "topRemainingAccesses": [
+    {
+      "id": "superior-132-120",
+      "entryPose": {
+        "position": [
+          -22.464996337890625,
+          -3.558837890625,
+          -416.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "drillRadiusMm": 3.0,
+      "remainingGeometricCapacityCells": 381,
+      "capacityStateId": "sha256:0845143f34ebdb28dd393262dbe151f28ef9239bc2da52c759a94efe48663f7a"
+    },
+    {
+      "id": "superior-135-130",
+      "entryPose": {
+        "position": [
+          -25.464996337890625,
+          6.441162109375,
+          -420.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "drillRadiusMm": 3.0,
+      "remainingGeometricCapacityCells": 362,
+      "capacityStateId": "sha256:0845143f34ebdb28dd393262dbe151f28ef9239bc2da52c759a94efe48663f7a"
+    },
+    {
+      "id": "superior-135-118",
+      "entryPose": {
+        "position": [
+          -25.464996337890625,
+          -5.558837890625,
+          -417.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "drillRadiusMm": 3.0,
+      "remainingGeometricCapacityCells": 358,
+      "capacityStateId": "sha256:0845143f34ebdb28dd393262dbe151f28ef9239bc2da52c759a94efe48663f7a"
+    },
+    {
+      "id": "superior-130-117",
+      "entryPose": {
+        "position": [
+          -20.464996337890625,
+          -6.558837890625,
+          -415.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "drillRadiusMm": 3.0,
+      "remainingGeometricCapacityCells": 358,
+      "capacityStateId": "sha256:0845143f34ebdb28dd393262dbe151f28ef9239bc2da52c759a94efe48663f7a"
+    },
+    {
+      "id": "superior-132-132",
+      "entryPose": {
+        "position": [
+          -22.464996337890625,
+          8.441162109375,
+          -420.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "drillRadiusMm": 3.0,
+      "remainingGeometricCapacityCells": 344,
+      "capacityStateId": "sha256:0845143f34ebdb28dd393262dbe151f28ef9239bc2da52c759a94efe48663f7a"
+    },
+    {
+      "id": "superior-136-134",
+      "entryPose": {
+        "position": [
+          -26.464996337890625,
+          10.441162109375,
+          -422.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "drillRadiusMm": 3.0,
+      "remainingGeometricCapacityCells": 328,
+      "capacityStateId": "sha256:0845143f34ebdb28dd393262dbe151f28ef9239bc2da52c759a94efe48663f7a"
+    },
+    {
+      "id": "superior-132-124",
+      "entryPose": {
+        "position": [
+          -22.464996337890625,
+          0.441162109375,
+          -416.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "drillRadiusMm": 3.0,
+      "remainingGeometricCapacityCells": 313,
+      "capacityStateId": "sha256:0845143f34ebdb28dd393262dbe151f28ef9239bc2da52c759a94efe48663f7a"
+    },
+    {
+      "id": "superior-136-138",
+      "entryPose": {
+        "position": [
+          -26.464996337890625,
+          14.441162109375,
+          -423.25
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "drillRadiusMm": 3.0,
+      "remainingGeometricCapacityCells": 312,
+      "capacityStateId": "sha256:0845143f34ebdb28dd393262dbe151f28ef9239bc2da52c759a94efe48663f7a"
+    }
+  ],
+  "originalTailOrder": [
+    "superior-116-123",
+    "superior-126-128",
+    "superior-120-130",
+    "superior-129-126",
+    "superior-129-122",
+    "superior-129-134",
+    "superior-129-130",
+    "superior-127-119",
+    "superior-117-132",
+    "superior-124-131",
+    "superior-132-128",
+    "superior-132-124",
+    "superior-132-132",
+    "superior-120-134",
+    "superior-132-120",
+    "superior-135-122",
+    "superior-125-116",
+    "superior-133-136",
+    "superior-135-130",
+    "superior-135-118",
+    "superior-130-117",
+    "superior-117-138",
+    "superior-110-138",
+    "superior-128-114",
+    "superior-121-115",
+    "superior-133-115",
+    "superior-136-134",
+    "superior-130-143",
+    "superior-139-117",
+    "superior-110-142",
+    "superior-117-115",
+    "superior-139-130",
+    "superior-136-138",
+    "superior-119-112",
+    "superior-113-145",
+    "superior-118-142",
+    "superior-133-145",
+    "superior-127-145",
+    "superior-141-133",
+    "superior-123-112",
+    "superior-117-146",
+    "superior-134-141",
+    "superior-139-136",
+    "superior-137-114",
+    "superior-117-119",
+    "superior-108-145",
+    "superior-130-147",
+    "superior-143-120",
+    "superior-137-143",
+    "superior-115-149",
+    "superior-111-148",
+    "superior-143-136",
+    "superior-121-147",
+    "superior-141-139",
+    "superior-143-130",
+    "superior-136-147",
+    "superior-119-150",
+    "superior-135-111",
+    "superior-125-148",
+    "superior-145-133",
+    "superior-144-124",
+    "superior-141-143",
+    "superior-113-152",
+    "superior-133-149",
+    "superior-128-150",
+    "superior-123-151",
+    "superior-144-141",
+    "superior-142-115",
+    "superior-116-154",
+    "superior-133-107",
+    "superior-126-153",
+    "superior-140-147",
+    "superior-140-112",
+    "superior-131-152",
+    "superior-138-150",
+    "superior-147-136",
+    "superior-109-151",
+    "superior-135-152",
+    "superior-118-157",
+    "superior-123-156",
+    "superior-113-156",
+    "superior-144-145",
+    "superior-147-130",
+    "superior-129-155",
+    "superior-121-159",
+    "superior-115-159",
+    "superior-109-155",
+    "superior-126-158",
+    "superior-133-155",
+    "superior-147-126",
+    "superior-118-161",
+    "superior-124-161",
+    "superior-142-150",
+    "superior-131-158",
+    "superior-138-154"
+  ],
+  "rankedTailOrder": [
+    "superior-132-120",
+    "superior-135-130",
+    "superior-135-118",
+    "superior-130-117",
+    "superior-132-132",
+    "superior-136-134",
+    "superior-132-124",
+    "superior-136-138",
+    "superior-133-145",
+    "superior-141-133",
+    "superior-123-112",
+    "superior-132-128",
+    "superior-117-146",
+    "superior-139-136",
+    "superior-137-114",
+    "superior-108-145",
+    "superior-130-147",
+    "superior-137-143",
+    "superior-111-148",
+    "superior-135-122",
+    "superior-133-136",
+    "superior-143-136",
+    "superior-141-139",
+    "superior-143-130",
+    "superior-136-147",
+    "superior-110-138",
+    "superior-125-116",
+    "superior-128-114",
+    "superior-125-148",
+    "superior-133-115",
+    "superior-130-143",
+    "superior-139-117",
+    "superior-145-133",
+    "superior-110-142",
+    "superior-141-143",
+    "superior-139-130",
+    "superior-133-149",
+    "superior-119-112",
+    "superior-115-149",
+    "superior-128-150",
+    "superior-113-145",
+    "superior-118-142",
+    "superior-123-151",
+    "superior-127-145",
+    "superior-117-138",
+    "superior-113-152",
+    "superior-117-115",
+    "superior-121-115",
+    "superior-134-141",
+    "superior-143-120",
+    "superior-127-119",
+    "superior-121-147",
+    "superior-129-134",
+    "superior-119-150",
+    "superior-135-111",
+    "superior-140-147",
+    "superior-131-152",
+    "superior-126-153",
+    "superior-144-124",
+    "superior-138-150",
+    "superior-116-154",
+    "superior-144-141",
+    "superior-135-152",
+    "superior-142-115",
+    "superior-118-157",
+    "superior-123-156",
+    "superior-129-122",
+    "superior-133-107",
+    "superior-117-119",
+    "superior-147-130",
+    "superior-140-112",
+    "superior-147-136",
+    "superior-129-155",
+    "superior-109-151",
+    "superior-121-159",
+    "superior-115-159",
+    "superior-129-130",
+    "superior-126-158",
+    "superior-113-156",
+    "superior-144-145",
+    "superior-129-126",
+    "superior-133-155",
+    "superior-120-134",
+    "superior-116-123",
+    "superior-131-158",
+    "superior-109-155",
+    "superior-117-132",
+    "superior-147-126",
+    "superior-118-161",
+    "superior-124-161",
+    "superior-142-150",
+    "superior-126-128",
+    "superior-120-130",
+    "superior-124-131",
+    "superior-138-154"
+  ],
+  "limits": "Optimistic retained original target column capacity only; no claim of collision admission or actual physical removal. Public preview and guards remain authoritative."
+}

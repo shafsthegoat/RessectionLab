@@ -1,0 +1,55 @@
+{
+  "schema": "poc-first-case-library-selection-continuity-v1",
+  "status": "corrected_focused_host_checks_passed",
+  "initial_receipt": {
+    "path": "artifacts/poc-first-case-library-selection-v1/verification.json",
+    "sha256": "a8d014090abe541c49733ba3fa09e27d57bcbdb83c32efe16d5e00ab79b36210"
+  },
+  "initial_helper_snapshot": {
+    "path": "artifacts/poc-first-local-package-independent-v1/initial-case-library-selection.cjs.txt",
+    "sha256": "05cd1d8c534efdbf5e50e82da8c4ba5acae21074af4bbf2427afd03064dc9046"
+  },
+  "initial_finding": {
+    "path": "artifacts/poc-first-local-package-independent-v1/initial-library-finding.json",
+    "sha256": "36e6263fe15633e7608c3329b7da0630e523720ba78287010aabeea63d796f2d"
+  },
+  "source_hashes": {
+    "desktop/electron/case-library-selection.cjs": "8c6fc4fcb76fc1eeef64eaa48adfcc36d684cbb8ef3370b87077d32ff80d6f8f",
+    "desktop/electron/case-library-selection.test.cjs": "a2df49ba51050cb88b67c306e09927754ff98136342882a1120e75eae5fd4da1"
+  },
+  "catalog_reader": {
+    "path": "desktop/electron/patient-catalog.cjs",
+    "sha256": "2383adf1fc42b82d16dec8b193bda2ba5afc3fa45eb2e1f456ecb836aa913556",
+    "unchanged": true
+  },
+  "checks": {
+    "host_passed": 31,
+    "host_failed": 0,
+    "diff_check": "passed",
+    "build": "not rerun; ROOT explicitly deferred builds"
+  },
+  "log": {
+    "path": "artifacts/poc-first-case-library-selection-v1/continuity-host-tests.log",
+    "sha256": "7bf2e15f536ca87bc6a59a75d8957ce8e793512a951df862fd88e10836902cef"
+  },
+  "changes": [
+    "Persist sorted catalog IDs with canonical directory device/inode at successful selection.",
+    "Restore and explicit-selected listing/open require exact directory identity and catalog IDs; IDs bind release, catalog, group and bundle.",
+    "Live metadata loss, same-path directory replacement and twelve-to-ten downgrade visibly block until successful native reselection.",
+    "Optional source-location evidence can disappear without changing catalog IDs; source labels then disappear.",
+    "Unselected development default and independent native Open/remember remain unchanged."
+  ],
+  "compatibility": "Pre-correction selection settings without catalogIds require native folder reselection; no silent migration.",
+  "pending": [
+    "Independent corrected-helper audit",
+    "Root native GUI verification",
+    "Root fresh package build"
+  ],
+  "scope": {
+    "patient_payload_reads": 0,
+    "gui_actions": 0,
+    "model_runs": 0,
+    "package_builds": 0,
+    "commits": 0
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "schema": "ibsr20-metadata-prospectus-consistency-check-v1",
+  "checked_utc": "2026-10-16T09:11:29.178954+00:00",
+  "status": "pass_metadata_only_execution_still_blocked",
+  "checks": {
+    "public_readme_hash": true,
+    "readme_length": true,
+    "two_HEADs_no_body_or_redirect": true,
+    "unknown_archive_byte_bounds": true,
+    "record_offset_spacing_codes": true,
+    "local_pins_unchanged": true,
+    "fit_parameters_exactly_match_frozen_v3": true,
+    "no_oracle_support": true,
+    "no_execution_or_admission": true,
+    "no_payload_GETs_or_decodes": true
+  },
+  "scope": "JSON/text consistency and local frozen code/receipt hashes only; no scorer implemented, model import, imaging read or source run",
+  "files": [
+    {
+      "path": "20Normals.README.txt",
+      "bytes": 8906,
+      "sha256": "464b08abf07331a8882a31ad2e5cefcf1badccb74ae61b9a08292194089fbf10"
+    },
+    {
+      "path": "PROTOCOL.md",
+      "bytes": 7614,
+      "sha256": "7ef751677cfc7411bdccdce537f3c4f044b9db1010938827e1191008979b9292"
+    },
+    {
+      "path": "protocol.json",
+      "bytes": 15847,
+      "sha256": "c5250c805dffabfd75412093e0f2fdb4d783314c884ab0b33a04a1796e0298fe"
+    },
+    {
+      "path": "source-metadata.json",
+      "bytes": 3886,
+      "sha256": "e3839a933677c08db2af8ff15b12ce4ec45d171a2b952b0dcfcf385b1fbd4105"
+    }
+  ]
+}

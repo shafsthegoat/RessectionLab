@@ -1,0 +1,17 @@
+{
+  "native_fitting_executed": false,
+  "patient_inputs_read": false,
+  "new_typed_kernel_tests": 8,
+  "generated_diagnostic_controls": 12,
+  "prior_frozen_controls": 52,
+  "result": "72 passed in 0.26s",
+  "command": "PYTHONPATH=src .venv/bin/python -m pytest -q tests/test_poc_ixi265_atropos_typed_mask.py tests/test_poc_ants_mask_dtype_diagnostic.py tests/test_poc_ixi265_atropos_positive_domain.py tests/test_poc_ixi265_atropos.py tests/test_setup_ixi265_atropos.py",
+  "coverage": [
+    "typed N4 mask boundary fails before native calls on type/dtype/value/frame errors",
+    "exact eight-cell unknown partition preserved",
+    "acquired arrays and affine unchanged",
+    "raw posterior validation without clipping or renormalization",
+    "source/support/parameter/resource/semantic continuity",
+    "new marker and explicit unreleased patient status"
+  ]
+}

@@ -1,0 +1,68 @@
+         47252654 function calls (44607560 primitive calls) in 27.533 seconds
+
+   Ordered by: cumulative time
+   List reduced from 347 to 60 due to restriction <60>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000   27.533   27.533 surgical_engine.py:233(step)
+        1    0.005    0.005   27.055   27.055 surgical_engine.py:268(_execute)
+      300    0.007    0.000   26.771    0.089 surgical_engine.py:405(_substep)
+      300    0.014    0.000   26.372    0.088 surgical_engine.py:435(_physical_substep)
+     5945    0.012    0.000   25.836    0.004 surgical_engine.py:164(touched)
+      300    0.019    0.000   22.941    0.076 surgical_drilling_v2.py:178(contact_limited_pose)
+     5045    0.010    0.000   22.919    0.005 surgical_drilling_v2.py:187(bone_at)
+     5945    0.013    0.000   14.493    0.002 surgical_engine.py:161(cells)
+     5945    0.177    0.000   14.480    0.002 surgical_geometry_cache.py:46(query)
+     5499    0.570    0.000   14.218    0.003 geometry.py:357(capsule_voxel_indices)
+     5467    9.047    0.002   12.023    0.002 geometry.py:319(_segment_cell_distances)
+     5945    2.159    0.000    9.878    0.002 surgical_occupancy.py:27(material_ids)
+     5945    4.906    0.001    7.712    0.001 surgical_occupancy.py:16(__getitem__)
+ 15793734    1.857    0.000    2.787    0.000 _index_tricks_impl.py:622(__next__)
+    86320    2.250    0.000    2.250    0.000 {method 'reduce' of 'numpy.ufunc' objects}
+    21870    0.027    0.000    2.075    0.000 fromnumeric.py:66(_wrapreduction)
+    16401    0.018    0.000    1.910    0.000 fromnumeric.py:2342(sum)
+     6547    0.024    0.000    1.786    0.000 core.py:87(semantic_digest)
+     6545    0.012    0.000    1.546    0.000 surgical_engine.py:115(occupancy)
+ 15799201    0.930    0.000    0.930    0.000 {built-in method builtins.next}
+1150345/6547    0.344    0.000    0.835    0.000 core.py:78(thaw_json)
+1150345/6547    0.389    0.000    0.785    0.000 core.py:55(freeze_json)
+    10267    0.447    0.000    0.764    0.000 geometry.py:285(point_segment_distances)
+  4905975    0.433    0.000    0.710    0.000 {built-in method builtins.isinstance}
+     5467    0.004    0.000    0.627    0.000 {method 'sum' of 'numpy.ndarray' objects}
+     5467    0.002    0.000    0.622    0.000 _methods.py:47(_sum)
+1114465/1004738    0.163    0.000    0.619    0.000 core.py:74(<genexpr>)
+    35013    0.016    0.000    0.440    0.000 fromnumeric.py:48(_wrapfunc)
+    17791    0.018    0.000    0.404    0.000 fromnumeric.py:2245(clip)
+     5467    0.379    0.000    0.379    0.000 geometry.py:275(voxel_to_world)
+     5467    0.006    0.000    0.373    0.000 fromnumeric.py:941(sort)
+    12991    0.007    0.000    0.364    0.000 {method 'clip' of 'numpy.ndarray' objects}
+    17791    0.364    0.000    0.364    0.000 _methods.py:96(_clip)
+      300    0.001    0.000    0.362    0.001 surgical_engine.py:393(_guard_sweep)
+      600    0.005    0.000    0.359    0.001 surgical_rl_protection.py:159(sweep_hits)
+      900    0.012    0.000    0.345    0.000 surgical_motion.py:28(swept_envelopes)
+     6067    0.344    0.000    0.344    0.000 {method 'sort' of 'numpy.ndarray' objects}
+  1219618    0.127    0.000    0.277    0.000 <frozen abc>:117(__instancecheck__)
+    19963    0.087    0.000    0.277    0.000 _linalg.py:2598(norm)
+        2    0.000    0.000    0.253    0.126 surgical_engine.py:85(state_id)
+241440/307    0.118    0.000    0.232    0.001 copy.py:118(deepcopy)
+ 6939/307    0.033    0.000    0.231    0.001 copy.py:217(_deepcopy_dict)
+        1    0.000    0.000    0.223    0.223 surgical_effects.py:328(finalize_action)
+        1    0.077    0.077    0.223    0.223 surgical_effects.py:69(_bone_components)
+     5467    0.031    0.000    0.197    0.000 _function_base_impl.py:5062(meshgrid)
+    11256    0.006    0.000    0.193    0.000 {method 'min' of 'numpy.ndarray' objects}
+     5468    0.004    0.000    0.190    0.000 fromnumeric.py:3187(min)
+    11256    0.003    0.000    0.187    0.000 _methods.py:43(_amin)
+    11408    0.035    0.000    0.176    0.000 _rotation.py:408(__init__)
+     1200    0.023    0.000    0.150    0.000 _rotation.py:2799(__call__)
+  1219618    0.133    0.000    0.150    0.000 {built-in method _abc._abc_instancecheck}
+    12608    0.012    0.000    0.134    0.000 _rotation.py:40(_promote)
+     1200    0.087    0.000    0.133    0.000 surgical_rl_protection.py:138(capsule_hits)
+     6547    0.014    0.000    0.120    0.000 __init__.py:183(dumps)
+     5467    0.016    0.000    0.119    0.000 _stride_tricks_impl.py:588(broadcast_arrays)
+    12608    0.029    0.000    0.117    0.000 _array_api.py:548(xp_promote)
+     6002    0.009    0.000    0.105    0.000 _rotation.py:2150(__getitem__)
+    17748    0.009    0.000    0.103    0.000 {built-in method builtins.any}
+     6547    0.009    0.000    0.103    0.000 encoder.py:183(encode)
+    10966    0.091    0.000    0.097    0.000 shape_base.py:378(stack)
+
+

@@ -1,0 +1,67 @@
+{
+  "schema": "resectionlab-typed-mask-kernel-preparation-v3",
+  "stage": "source_only_kernel_and_controls_ready_for_independent_review",
+  "frozen_files": [
+    {
+      "path": "scripts/poc_ixi265_atropos_typed_mask.py",
+      "sha256": "211d715a05b2dd269358b7bc5585488a053859ba65c04b9f31f60b69e41ec954"
+    },
+    {
+      "path": "tests/test_poc_ixi265_atropos_typed_mask.py",
+      "sha256": "28787c7109a3aaafafdce26fb978a6cce1df10c1a454626216081027b67b5797"
+    },
+    {
+      "path": "scripts/poc_ixi265_atropos_positive_domain.py",
+      "sha256": "0652eca1ba81304e053f24c9a9fc2f8c89174bfe7447accfd21105263592d81d"
+    },
+    {
+      "path": "scripts/poc_ixi265_atropos.py",
+      "sha256": "4a5c5b4b2f85153212ac27e6356d5f1dca5c8b42d77257fb55a2fee53253624b"
+    },
+    {
+      "path": "scripts/poc_ants_mask_dtype_diagnostic.py",
+      "sha256": "1feb74ffca22a14d226bc9b52b0b5049a607225e95bb8dee6d11df5151aa003c"
+    },
+    {
+      "path": "artifacts/poc-ants-mask-dtype-generated-v1/preparation.json",
+      "sha256": "4f5005fbeb4907c755067e89aed7fad4202390d82ffef9f58da3d56461550a22"
+    },
+    {
+      "path": "artifacts/poc-ants-mask-dtype-generated-v1/source-basis.json",
+      "sha256": "5e14e9cfed6b8670041b365206bd78991c8944fdce7f2704e53a1771ec525891"
+    },
+    {
+      "path": "artifacts/poc-ants-mask-dtype-generated-v1/declaration.json",
+      "sha256": "81742cfbdf5f1fe8828ca5e670f2b17fc6d54cccf08943ab37cc296b2e8556d8"
+    },
+    {
+      "path": "artifacts/poc-ants-mask-dtype-generated-v1/outcome.json",
+      "sha256": "f7a0844d9569ddd8add755c167d316a0c8a7fd840aef76a9ce35ed8674a53102"
+    },
+    {
+      "path": "artifacts/poc-ants-mask-dtype-generated-v1/observations.json",
+      "sha256": "173a3c355b28fa38a9c89a0707f2a8ecb7716e2294dbe2e4ffa189f5fcc52332"
+    },
+    {
+      "path": "artifacts/poc-ixi265-atropos-positive-domain-run-v2/outcome.json",
+      "sha256": "dce67f0acde21aa11fa99bdaa270108c8b53b5a091514182870e69e01fa78e21"
+    },
+    {
+      "path": "artifacts/poc-ixi265-atropos-preparation-v1/installed-runtime-audit.json",
+      "sha256": "8dc074db35e17be3b10f05e68e19ff61cdd44a6d1e0e744bbfc25e1da9073e79"
+    }
+  ],
+  "method_sha256": "40c5b5e836cd5dcc7f2243372a552375dc1684e6323251903309eae5581fc5ae",
+  "controls_sha256": "f89f86ca9a3142d09ebc56665a740969929ddd1dfd0a2755f3898895f5b8281f",
+  "native_kernel_preflight_status": "not_yet_run_requires_separate_generated_preflight_release",
+  "patient_fit_release": false,
+  "patient_runner_prepared": false,
+  "prepared_interface": "fit_arrays(values, domain, affine, ants, stage_callback=None)",
+  "remaining_before_any_patient_attempt": [
+    "independent source review",
+    "separately declared generated native preflight of this exact new kernel",
+    "new source-bound v3 supervisor and one-attempt output declaration",
+    "explicit parent release"
+  ],
+  "no_runtime_or_patient_files_changed": true
+}

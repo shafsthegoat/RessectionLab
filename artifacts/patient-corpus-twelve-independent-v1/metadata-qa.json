@@ -1,0 +1,145 @@
+{
+  "schema": "independent-twelve-catalog-metadata-qa-v1",
+  "status": "pass",
+  "auditor_sha256": "1a560d990e7a058c95012cc3ea6db4b3781432ad35493cc0afebb54313f9775f",
+  "pinned_metadata": {
+    "outputs/patient-corpus-twelve-execution-v1/catalog.json": "5f8b833079e0b4673d2b8d01a36fab474574164755ac731a0972fa8071bcd088",
+    "outputs/patient-corpus-ixi265-v1/catalog.json": "2a7ba1c26f101261e3a5fecf84ae998b637a70c5a7f66d43d224153c738ee673",
+    "manifests/patient-corpus-releases/existing-ten-plus-synthrad-bc-v1.json": "d1eb5d7642ac01c46ad8d7a2464627408358d438ca0c302bcaa8c71e759bbbd1",
+    "artifacts/patient-corpus-twelve-execution-v1/outcome.json": "045ec9bbe30674515e4b8084406acd1883fa3880fb9b91eb242b0938c2dfa792",
+    "artifacts/patient-corpus-twelve-recovery-v1/outcome.json": "7fb86e0f9a7e6d77ae03f67f050cd409fbcebed5c18eb7810a9248337705c365",
+    "artifacts/patient-corpus-twelve-execution-preparation-v1/receipt.json": "591109a4bb4517e7b191843e0df17c12144eec023a20c014f18dca1177d22d86"
+  },
+  "source_identities": [
+    "BTC:sub-PAT05",
+    "BTC:sub-PAT16",
+    "BTC:sub-PAT20",
+    "BTC:sub-PAT22",
+    "BTC:sub-PAT25",
+    "BTC:sub-PAT28",
+    "IXI:265",
+    "Lausanne:sub-000",
+    "SynthRAD2023:1BA336",
+    "SynthRAD2023:1BB033",
+    "SynthRAD2023:1BC077",
+    "UCSF-PDGM:004"
+  ],
+  "counts": {
+    "accepted_fused_anatomy_combinations": {
+      "brain_plus_skull": 0,
+      "brain_plus_tumor": 0,
+      "brain_plus_vessels": 0,
+      "brain_tumor_skull_vessels": 0
+    },
+    "anatomical_presence_combinations": {
+      "brain_plus_skull": 3,
+      "brain_plus_tumor": 7,
+      "brain_plus_vessels": 1,
+      "brain_tumor_skull_vessels": 0
+    },
+    "anatomical_truth_accepted_people": 0,
+    "existing_materialized_people": 12,
+    "newly_acquired_people": 0,
+    "newly_cataloged_existing_people": 2,
+    "pending": 0,
+    "people_with_portable_source_originals": 6,
+    "qualified_existing_people": 12,
+    "rejected": 0,
+    "same_person_presence_across_saved_grids": {
+      "brain_plus_skull": 3,
+      "brain_plus_tumor": 7,
+      "brain_plus_vessels": 1,
+      "brain_tumor_skull_vessels": 0
+    },
+    "verified_embedded_original_files": 66,
+    "virtual_descendants_counted_as_people": 0
+  },
+  "verified_receipts": [
+    {
+      "patient_group": "BTC:sub-PAT05",
+      "path": "outputs/patient-corpus-twelve-execution-v1/receipts/7e1123371632eaf6e8523e46e93bf3e48e77c39daa68f34b882a4c49c0981b4d.json",
+      "sha256": "8f12d29a9fdbd9cd81d6f9a22ae0121d1cf4f0ba0c6395387bb81daece4c23c2"
+    },
+    {
+      "patient_group": "BTC:sub-PAT16",
+      "path": "outputs/patient-corpus-twelve-execution-v1/receipts/9741bf17d4af50c90fc2669eb0b1028d8812b77f2bff69b8219660f742db06a6.json",
+      "sha256": "470ccf4c2c5a7f20bd83384c0a8da568dc6cf46c7bfb8e6030e7e5407344f766"
+    },
+    {
+      "patient_group": "BTC:sub-PAT20",
+      "path": "outputs/patient-corpus-twelve-execution-v1/receipts/9ce397c950dac299b34d7aab403228791efbed92e0155b5d80fa5f28f73d8f25.json",
+      "sha256": "a539d44b2282e3a81274d397f977072ef66ad66f52604ba730e467f322979f18"
+    },
+    {
+      "patient_group": "BTC:sub-PAT22",
+      "path": "outputs/patient-corpus-twelve-execution-v1/receipts/64c1d2bcd87af294e3aba5f29dee28365b5e70bc4f8166d9615a7fb0dde5129e.json",
+      "sha256": "d0d1fb7309851eb7c1681f8409c5e39127739b69e70fd94543ade3360901faed"
+    },
+    {
+      "patient_group": "BTC:sub-PAT25",
+      "path": "outputs/patient-corpus-twelve-execution-v1/receipts/f7fa502e13a10a2e6150ae9082d9e237a07553c0b2949f36af1cd6622f0509ae.json",
+      "sha256": "6f9a4a8e7b1e26d79d32e7d41ba2e0b6e0038f6bf9df33dcdd362180281660bc"
+    },
+    {
+      "patient_group": "BTC:sub-PAT28",
+      "path": "outputs/patient-corpus-twelve-execution-v1/receipts/949af97126429808234dbd2121a2e9eb102de827627df0f440dc73595c123f93.json",
+      "sha256": "64e21e595aeb030546f43375fd718ca886c8b7ab22d0f53d3ac2b960184913a1"
+    },
+    {
+      "patient_group": "IXI:265",
+      "path": "outputs/patient-corpus-twelve-execution-v1/receipts/3f2ebd02514cb3e1c381b0d799113c12b33fae3932bca3cba8ae0435d53d3c00.json",
+      "sha256": "74d25b0e7652244750c233c7e578cd5f481db57d281c65d0f40ed0c3e73069ab"
+    },
+    {
+      "patient_group": "Lausanne:sub-000",
+      "path": "outputs/patient-corpus-twelve-execution-v1/receipts/e62155f5f250ae8b214d6de780cfeccef067dc1526665433657468b603ead84b.json",
+      "sha256": "f12c1bac026576a46a06077a9b799fe97db54e8a7bdfc3cf690a0d505030bf11"
+    },
+    {
+      "patient_group": "SynthRAD2023:1BA336",
+      "path": "outputs/patient-corpus-twelve-execution-v1/receipts/646881caa5792f23648d77dc2bfa27605cf9727eb34946805bf6b9bac6d21167.json",
+      "sha256": "0943987ec15d99946704f1a5bd2892b902630d538ad9a368ff7e7777473a3adb"
+    },
+    {
+      "patient_group": "SynthRAD2023:1BB033",
+      "path": "outputs/patient-corpus-twelve-execution-v1/receipts/b475d26bbd57bf419ddedf70511e00fedf31e532793890122e217d711161a0c3.json",
+      "sha256": "261280ea52b9fded4bf0f5417bd0dde18d4df121a97c8dbd24707af306dd298f"
+    },
+    {
+      "patient_group": "SynthRAD2023:1BC077",
+      "path": "outputs/patient-corpus-twelve-execution-v1/receipts/a5c6cb7098e2a3d570698fd12a2b45cc9a035445027e62493482e3fc6ff508dd.json",
+      "sha256": "3c2a68bf23aed88e459f881be30bd033dfc731939fff2fd8bc60c3c6902a9204"
+    },
+    {
+      "patient_group": "UCSF-PDGM:004",
+      "path": "outputs/patient-corpus-twelve-execution-v1/receipts/141e03e64e60cfa7f917c3259589bff7295a0e384a1338da093b0caa14a76aab.json",
+      "sha256": "eead3d6ba9cc90a4ffe6442b898b2cf9cfbbcfe74b60a7acd82b58e1fd9e2223"
+    }
+  ],
+  "previous_source_metadata_unchanged_people": 10,
+  "preserved_old_files": 89,
+  "original_completed_receipts_preserved": 10,
+  "original_resource_failure_retained": true,
+  "recovery_new_receipts": [
+    1,
+    1,
+    0
+  ],
+  "recovery_reused_receipts": [
+    10,
+    11,
+    12
+  ],
+  "sqlite_integrity": "ok",
+  "source_arrays_or_bundles_opened": false,
+  "models_or_solvers_executed": false,
+  "scope": "Metadata/source-lineage consistency; no new anatomical or numerical-array validation",
+  "audit_harness_corrections": [
+    "Initial metadata suffix allowlist omitted the preserved empty .run.lock file; allowed .lock before rerun. No product change or source payload access."
+  ],
+  "limitations": [
+    "Namespaced source identities do not establish cross-cohort biological independence.",
+    "Presence across saved grids does not establish accepted fusion; UCSF source-declared overlays are preserved.",
+    "Cold qualification failed its RSS cap; recovery completed the two pending cases using prior valid caches."
+  ]
+}

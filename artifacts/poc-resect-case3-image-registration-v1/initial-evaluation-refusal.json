@@ -1,0 +1,15 @@
+{
+  "actual_landmark_read_phase": "not_yet_localized",
+  "cli_exit_code": 1,
+  "cli_output": {
+    "error_type": "ValueError",
+    "status": "refused"
+  },
+  "evaluation_output_directory_created": false,
+  "evaluator_sha256": "ac821134851d4b310ae6e5f7b12187e36b90266a8105ffce0737c4876af5cab0",
+  "metadata_only_gate_status": "pass",
+  "metrics_published": false,
+  "release_sha256": "d7456f28c99c378b0032210a2d73ad430814f66b46d77037ef46248fbf66aa76",
+  "schema": "resect-case3-registration-evaluation-v1-refusal",
+  "timestamp_utc": "2026-10-16T09:43:30.874614+00:00"
+}

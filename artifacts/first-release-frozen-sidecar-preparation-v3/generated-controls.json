@@ -1,0 +1,16 @@
+{
+  "schema": "first-release-frozen-sidecar-generated-controls-v1",
+  "status": "pass",
+  "tests": 45,
+  "passed": 45,
+  "failed": 0,
+  "patient_payload_reads_in_this_preparation_operation": 0,
+  "actual_frozen_engine_executions_in_this_preparation_operation": 0,
+  "model_or_native_solver_executions": 0,
+  "generated_fixture_executions": 1,
+  "auditor_sha256": "2b6f01639d1c6b5ef351fe8586e158447801ab3ec004f27d08154a92e733a56d",
+  "controls_sha256": "2a374fcc9ab09d655db4ac97228a75d6fc0b615697bcf3bc7e812680e9657ee1",
+  "preparation_sha256": "4b4ddbed3032db02385598983e1fb2b053b5b953ffad69942bdf56392f38fa0c",
+  "log_sha256": "6e08b2964a6f2aaadcf6d90b0d0480b16aaa1ef1cffbab4a8988ec1a6df61288",
+  "scope": "Prior 37 generated controls plus eight persistence controls: object-key reordering accepted; scalar/type/array-order/missing/extra/signed-zero/null-vs-missing mutations refused. Actual ROOT run v1 exists and failed the prior auditor comparison; no actual rerun performed here."
+}

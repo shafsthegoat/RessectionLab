@@ -1,0 +1,77 @@
+{
+  "utc": "2026-10-20T14:37:49.731432+00:00",
+  "actionsBefore": 876,
+  "actionsAfter": 880,
+  "codeCommit": "1ae5f004",
+  "sourceSceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+  "sourceUnchanged": true,
+  "coordinationEvent": {
+    "position": 876,
+    "reason": "DECLARED_ASSISTANT_CLEARANCE",
+    "minimumLateralSeparationMm": 10.0,
+    "observedLateralDistancesMm": [
+      7.0710678118654755,
+      7.0710678118654755
+    ],
+    "resumeStage": "access_setup",
+    "sourceSceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856"
+  },
+  "retirementActions": [
+    {
+      "position": 877,
+      "operation": "deactivate",
+      "status": "accepted",
+      "reason": null,
+      "completedFraction": 1.0,
+      "stateBefore": "sha256:f2897ef369a8c39ab8b778ff84f4325a6c24920c0e1f2fa8652437ee77a59e1d",
+      "stateAfter": "sha256:9fb0b94626f118864cd570d71997f8a20eb18c0982defb9c1650152c1de22266",
+      "removedSourceCells": 0
+    },
+    {
+      "position": 878,
+      "operation": "withdraw",
+      "status": "accepted",
+      "reason": null,
+      "completedFraction": 1.0,
+      "stateBefore": "sha256:9fb0b94626f118864cd570d71997f8a20eb18c0982defb9c1650152c1de22266",
+      "stateAfter": "sha256:bd44858755b1e4a177e22f4e8143c64375efa085cf795cf9ad40be3cd75d4503",
+      "removedSourceCells": 0
+    },
+    {
+      "position": 879,
+      "operation": "withdraw",
+      "status": "accepted",
+      "reason": null,
+      "completedFraction": 1.0,
+      "stateBefore": "sha256:bd44858755b1e4a177e22f4e8143c64375efa085cf795cf9ad40be3cd75d4503",
+      "stateAfter": "sha256:47b98b3c2e67594c03d11ac7da439fd47463cfaa77a8b2f6fbb6041f2b2f10ba",
+      "removedSourceCells": 0
+    }
+  ],
+  "rightStateAfter": {
+    "instrument": "frazier_suction",
+    "position": [
+      -9.464996337890625,
+      30.441162109375,
+      -266.25
+    ],
+    "quaternion": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "active": false,
+    "inserted": false,
+    "grip": [],
+    "parameters": {
+      "depthMm": 2.0,
+      "flowMm3PerSecond": 20.0,
+      "forceN": 0.0,
+      "radiusMm": 0.5
+    }
+  },
+  "resumedStage": "cusa_setup",
+  "targetRemovedMm3": 29024.0,
+  "scope": "Three actual preview/step-matched public right-hand actions; no source tissue removed. Final canonical/GUI verification remains pending."
+}

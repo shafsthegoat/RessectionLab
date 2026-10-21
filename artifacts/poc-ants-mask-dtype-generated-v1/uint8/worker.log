@@ -1,0 +1,208 @@
+Matplotlib is building the font cache; this may take a moment.
+
+Running N4 for 3-dimensional images.
+
+Original intensity range:  [0, 91.9219]
+
+***********************************************************
+Warning:  Your input image contains nonpositive values
+which could cause failure or problematic results.  A
+possible workaround would be to:
+   1. rescale your image to positive values e.g., [10,100].
+   2. run N4 on your rescaled image.
+   3. (optional) rescale the N4 output to the original
+      intensity range.
+***********************************************************
+
+Specified spline distance: 150mm
+  original image size:  [48, 48, 48]
+  padded image size:  [151, 151, 151]
+  number of control points:  [4, 4, 4]
+
+Current level = 1
+  Iteration 1 (of 30).   Current convergence value = 0.000140055 (threshold = 1e-07)
+  Iteration 2 (of 30).   Current convergence value = 0.000135448 (threshold = 1e-07)
+  Iteration 3 (of 30).   Current convergence value = 0.000131061 (threshold = 1e-07)
+  Iteration 4 (of 30).   Current convergence value = 0.000126889 (threshold = 1e-07)
+  Iteration 5 (of 30).   Current convergence value = 0.00012314 (threshold = 1e-07)
+  Iteration 6 (of 30).   Current convergence value = 0.0001192 (threshold = 1e-07)
+  Iteration 7 (of 30).   Current convergence value = 0.000115427 (threshold = 1e-07)
+  Iteration 8 (of 30).   Current convergence value = 0.000111667 (threshold = 1e-07)
+  Iteration 9 (of 30).   Current convergence value = 0.000108141 (threshold = 1e-07)
+  Iteration 10 (of 30).   Current convergence value = 0.000104916 (threshold = 1e-07)
+  Iteration 11 (of 30).   Current convergence value = 0.0001014 (threshold = 1e-07)
+  Iteration 12 (of 30).   Current convergence value = 9.80195e-05 (threshold = 1e-07)
+  Iteration 13 (of 30).   Current convergence value = 9.4686e-05 (threshold = 1e-07)
+  Iteration 14 (of 30).   Current convergence value = 9.14383e-05 (threshold = 1e-07)
+  Iteration 15 (of 30).   Current convergence value = 8.83295e-05 (threshold = 1e-07)
+  Iteration 16 (of 30).   Current convergence value = 8.57475e-05 (threshold = 1e-07)
+  Iteration 17 (of 30).   Current convergence value = 8.31404e-05 (threshold = 1e-07)
+  Iteration 18 (of 30).   Current convergence value = 8.02516e-05 (threshold = 1e-07)
+  Iteration 19 (of 30).   Current convergence value = 7.73218e-05 (threshold = 1e-07)
+  Iteration 20 (of 30).   Current convergence value = 7.48782e-05 (threshold = 1e-07)
+  Iteration 21 (of 30).   Current convergence value = 7.28807e-05 (threshold = 1e-07)
+  Iteration 22 (of 30).   Current convergence value = 7.05192e-05 (threshold = 1e-07)
+  Iteration 23 (of 30).   Current convergence value = 6.80014e-05 (threshold = 1e-07)
+  Iteration 24 (of 30).   Current convergence value = 6.57728e-05 (threshold = 1e-07)
+  Iteration 25 (of 30).   Current convergence value = 6.38836e-05 (threshold = 1e-07)
+  Iteration 26 (of 30).   Current convergence value = 6.18704e-05 (threshold = 1e-07)
+  Iteration 27 (of 30).   Current convergence value = 5.97657e-05 (threshold = 1e-07)
+  Iteration 28 (of 30).   Current convergence value = 5.73927e-05 (threshold = 1e-07)
+  Iteration 29 (of 30).   Current convergence value = 5.51542e-05 (threshold = 1e-07)
+  Iteration 30 (of 30).   Current convergence value = 5.34734e-05 (threshold = 1e-07)
+Current level = 2
+  Iteration 1 (of 20).   Current convergence value = 0.000154218 (threshold = 1e-07)
+  Iteration 2 (of 20).   Current convergence value = 0.00014789 (threshold = 1e-07)
+  Iteration 3 (of 20).   Current convergence value = 0.000142778 (threshold = 1e-07)
+  Iteration 4 (of 20).   Current convergence value = 0.000137624 (threshold = 1e-07)
+  Iteration 5 (of 20).   Current convergence value = 0.000133893 (threshold = 1e-07)
+  Iteration 6 (of 20).   Current convergence value = 0.000130337 (threshold = 1e-07)
+  Iteration 7 (of 20).   Current convergence value = 0.000127259 (threshold = 1e-07)
+  Iteration 8 (of 20).   Current convergence value = 0.000124709 (threshold = 1e-07)
+  Iteration 9 (of 20).   Current convergence value = 0.000122709 (threshold = 1e-07)
+  Iteration 10 (of 20).   Current convergence value = 0.000120458 (threshold = 1e-07)
+  Iteration 11 (of 20).   Current convergence value = 0.000118553 (threshold = 1e-07)
+  Iteration 12 (of 20).   Current convergence value = 0.000116925 (threshold = 1e-07)
+  Iteration 13 (of 20).   Current convergence value = 0.00011526 (threshold = 1e-07)
+  Iteration 14 (of 20).   Current convergence value = 0.000112414 (threshold = 1e-07)
+  Iteration 15 (of 20).   Current convergence value = 0.000109553 (threshold = 1e-07)
+  Iteration 16 (of 20).   Current convergence value = 0.000106904 (threshold = 1e-07)
+  Iteration 17 (of 20).   Current convergence value = 0.000104486 (threshold = 1e-07)
+  Iteration 18 (of 20).   Current convergence value = 0.000102081 (threshold = 1e-07)
+  Iteration 19 (of 20).   Current convergence value = 9.97537e-05 (threshold = 1e-07)
+  Iteration 20 (of 20).   Current convergence value = 9.75771e-05 (threshold = 1e-07)
+Current level = 3
+  Iteration 1 (of 10).   Current convergence value = 0.000385907 (threshold = 1e-07)
+  Iteration 2 (of 10).   Current convergence value = 0.000356852 (threshold = 1e-07)
+  Iteration 3 (of 10).   Current convergence value = 0.000333819 (threshold = 1e-07)
+  Iteration 4 (of 10).   Current convergence value = 0.00031396 (threshold = 1e-07)
+  Iteration 5 (of 10).   Current convergence value = 0.000296086 (threshold = 1e-07)
+  Iteration 6 (of 10).   Current convergence value = 0.000273906 (threshold = 1e-07)
+  Iteration 7 (of 10).   Current convergence value = 0.000264783 (threshold = 1e-07)
+  Iteration 8 (of 10).   Current convergence value = 0.000250564 (threshold = 1e-07)
+  Iteration 9 (of 10).   Current convergence value = 0.000237205 (threshold = 1e-07)
+  Iteration 10 (of 10).   Current convergence value = 0.000224761 (threshold = 1e-07)
+   N4BiasFieldCorrectionImageFilter (0xad70ac000)
+     RTTI typeinfo:   itk::N4BiasFieldCorrectionImageFilter<itk::Image<float, 3u>, itk::Image<float, 3u>, itk::Image<float, 3u>>
+     Reference Count: 1
+     Modified Time: 470
+     Debug: Off
+     Object Name: 
+     Observers: 
+       IterationEvent(Command)
+     Inputs: 
+       ConfidenceImage: (0)
+       MaskImage: (0xad953a400)
+       Primary: (0xad9539e00) *
+     Indexed Inputs: 
+       0: Primary (0xad9539e00)
+       1: MaskImage (0xad953a400)
+       2: ConfidenceImage (0)
+     Required Input Names: Primary
+     NumberOfRequiredInputs: 1
+     Outputs: 
+       Primary: (0xad9538f00)
+     Indexed Outputs: 
+       0: Primary (0xad9538f00)
+     NumberOfRequiredOutputs: 1
+     Number Of Work Units: 8
+     ReleaseDataFlag: Off
+     ReleaseDataBeforeUpdateFlag: Off
+     AbortGenerateData: Off
+     Progress: 0
+     Multithreader: 
+       RTTI typeinfo:   itk::PoolMultiThreader
+       Reference Count: 1
+       Modified Time: 232
+       Debug: Off
+       Object Name: 
+       Observers: 
+         none
+       Number of Work Units: 8
+       Number of Threads: 2
+       Global Maximum Number Of Threads: 128
+       Global Default Number Of Threads: 2
+       Global Default Threader Type: itk::MultiThreaderBaseEnums::Threader::Pool
+       SingleMethod: 0
+       SingleData: 0
+     DynamicMultiThreading: On
+     CoordinateTolerance: 1e-06
+     DirectionTolerance: 1e-06
+     Use Mask Label: 0
+     Mask label: 1
+     Number of histogram bins: 200
+     Wiener filter noise: 0.01
+     Bias field FWHM: 0.15
+     Maximum number of iterations: [30, 20, 10]
+     Convergence threshold: 1e-07
+     Spline order: 3
+     Number of fitting levels: [3, 3, 3]
+     Number of control points: [4, 4, 4]
+     CurrentConvergenceMeasurement: 0.000224761
+     CurrentLevel: 3
+     ElapsedIterations: 11
+     LogBiasFieldControlPointLattice: 
+       Image (0xad8ef9b00)
+         RTTI typeinfo:   itk::Image<itk::Vector<float, 1u>, 3u>
+         Reference Count: 1
+         Modified Time: 46275
+         Debug: Off
+         Object Name: 
+         Observers: 
+           none
+         Source: (none)
+         Source output name: (none)
+         Release Data: Off
+         Data Released: False
+         Global Release Data: Off
+         PipelineMTime: 0
+         UpdateMTime: 0
+         RealTimeStamp: 0 seconds 
+         LargestPossibleRegion: 
+           Dimension: 3
+           Index: [0, 0, 0]
+           Size: [7, 7, 7]
+         BufferedRegion: 
+           Dimension: 3
+           Index: [0, 0, 0]
+           Size: [7, 7, 7]
+         RequestedRegion: 
+           Dimension: 3
+           Index: [0, 0, 0]
+           Size: [7, 7, 7]
+         Spacing: [36, 36, 36]
+         Origin: [36, 36, -36]
+         Direction: 
+-1 0 0
+0 -1 0
+0 0 1
+
+         IndexToPointMatrix: 
+-36 0 0
+0 -36 0
+0 0 36
+
+         PointToIndexMatrix: 
+-0.0277778 0 0
+0 -0.0277778 0
+0 0 0.0277778
+
+         Inverse Direction: 
+-1 0 0
+0 -1 0
+0 0 1
+
+         PixelContainer: 
+           ImportImageContainer (0xada28bf00)
+             RTTI typeinfo:   itk::ImportImageContainer<unsigned long, itk::Vector<float, 1u>>
+             Reference Count: 1
+             Modified Time: 46276
+             Debug: Off
+             Object Name: 
+             Observers: 
+               none
+             Pointer: 0xad6837000
+             Container manages memory: true
+             Size: 343
+             Capacity: 343
+Elapsed time: 0.0852299

@@ -20,6 +20,14 @@ test('hydration reuses admitted image and shared label grid without asset reads'
   assert.equal(hydrated.mri,base.mri);assert.equal(hydrated.labelSets[0],base.labelSets[0]);
 });
 
+test('explicit empty surfaces hydrate without inventing triangles or transferring zero-length assets',async()=>{
+  const base=source(),mask=new Uint8Array(8),descriptor={byteLength:8,byteOrder:'little',order:'C',assetId:'mask'};
+  const payload={...base,mri:{},labelSets:[],compartments:[{name:'empty',kind:'tumor',mask:descriptor,surface:{empty:true},color:'#ff00ff'}]};
+  const loaded=await hydrateAnatomy(payload,{readAsset:async()=>mask},base.mri);
+  assert.equal(loaded.compartments[0].surface.indices.length,0);assert.equal(loaded.compartments[0].surface.source.length,0);
+  await assert.rejects(hydrateAnatomy({...payload,compartments:[{...payload.compartments[0],surface:{empty:true,positions:{}}}]},{readAsset:async()=>mask},base.mri),/Invalid empty/);
+});
+
 test('worker preparation copies source cells without detaching them and honors cancellation',async()=>{
   const source=new Uint16Array([0,128,65535]),copy=await copyPackingArray(source);
   assert.deepEqual(copy,source);assert.notEqual(copy.buffer,source.buffer);

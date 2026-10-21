@@ -1,0 +1,776 @@
+{
+  "status": "passed",
+  "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+  "exposures": [
+    {
+      "forceN": 1,
+      "duration": 0.25,
+      "maxInjury": 0,
+      "metrics": {
+        "enabled": true,
+        "woundCount": 0,
+        "damagedFaceCount": 0,
+        "woundAreaMm2": 0,
+        "activeWounds": 0,
+        "pressurePa": 1000.0,
+        "vascularRemainingMm3": 100.0,
+        "refilledMm3": 0.0,
+        "generatedMm3": 0.0,
+        "emittedMm3": 0,
+        "blockedOutletReservoirMm3": 0,
+        "conservationResidualMm3": 0.0,
+        "globalPerfusion": "unknown"
+      }
+    },
+    {
+      "forceN": 20,
+      "duration": 0.25,
+      "maxInjury": 0,
+      "metrics": {
+        "enabled": true,
+        "woundCount": 0,
+        "damagedFaceCount": 0,
+        "woundAreaMm2": 0,
+        "activeWounds": 0,
+        "pressurePa": 1000.0,
+        "vascularRemainingMm3": 100.0,
+        "refilledMm3": 0.0,
+        "generatedMm3": 0.0,
+        "emittedMm3": 0,
+        "blockedOutletReservoirMm3": 0,
+        "conservationResidualMm3": 0.0,
+        "globalPerfusion": "unknown"
+      }
+    },
+    {
+      "forceN": 20,
+      "duration": 1.5,
+      "maxInjury": 0.03676470588235303,
+      "metrics": {
+        "enabled": true,
+        "woundCount": 1,
+        "damagedFaceCount": 57,
+        "woundAreaMm2": 57.0,
+        "activeWounds": 1,
+        "pressurePa": 999.9923072087385,
+        "vascularRemainingMm3": 99.99923072087385,
+        "refilledMm3": 3.848359449292619e-07,
+        "generatedMm3": 0.0007696639620888845,
+        "emittedMm3": 0.0007696639620888845,
+        "blockedOutletReservoirMm3": 0.0,
+        "conservationResidualMm3": 0.0,
+        "globalPerfusion": "unknown"
+      }
+    },
+    {
+      "forceN": 20,
+      "duration": 1,
+      "maxInjury": 0.6250000000000002,
+      "metrics": {
+        "enabled": true,
+        "woundCount": 1,
+        "damagedFaceCount": 57,
+        "woundAreaMm2": 57.0,
+        "activeWounds": 1,
+        "pressurePa": 991.1768704212486,
+        "vascularRemainingMm3": 99.11768704212486,
+        "refilledMm3": 0.002483323145491295,
+        "generatedMm3": 0.8847962810206269,
+        "emittedMm3": 0.8847962810206269,
+        "blockedOutletReservoirMm3": 0.0,
+        "conservationResidualMm3": 1.4210854715202004e-14,
+        "globalPerfusion": "unknown"
+      }
+    },
+    {
+      "forceN": 20,
+      "duration": 1,
+      "maxInjury": 1.0,
+      "metrics": {
+        "enabled": true,
+        "woundCount": 1,
+        "damagedFaceCount": 57,
+        "woundAreaMm2": 57.0,
+        "activeWounds": 1,
+        "pressurePa": 947.6240540281652,
+        "vascularRemainingMm3": 94.76240540281653,
+        "refilledMm3": 0.030504296711946346,
+        "generatedMm3": 5.268098893895413,
+        "emittedMm3": 5.268098893895413,
+        "blockedOutletReservoirMm3": 0.0,
+        "conservationResidualMm3": 1.4210854715202004e-14,
+        "globalPerfusion": "unknown"
+      }
+    }
+  ],
+  "actions": [
+    {
+      "action": {
+        "slot": "left",
+        "operation": "exchange",
+        "duration": 0.2,
+        "instrument": "micro_scissors"
+      },
+      "status": "accepted",
+      "reason": null,
+      "stateId": "sha256:7e28c6d0aefbe1e97a1c8e7cca2bc5015e16d43be6377ce4ccbb5a37bffd4c0a",
+      "events": [
+        {
+          "kind": "exchange",
+          "instrument": "Micro scissors",
+          "slot": "left"
+        }
+      ],
+      "metrics": {
+        "severedVesselConnections": 0,
+        "activeVesselWounds": 0,
+        "modeledVesselFluidGeneratedMm3": 0,
+        "modeledVesselReservoirMm3": 0,
+        "globalPerfusion": "unknown",
+        "drillInputEnergyJ": 0.0,
+        "drillCuttingWorkJ": 0.0,
+        "drillUnusedEnergyJ": 0.0,
+        "drillHeatGeneratedJ": 0.0,
+        "drillCoolingLossJ": 0.0,
+        "drillPendingWorkJ": 0,
+        "drillRemovedVolumeMm3": 0.0,
+        "drillMaxTemperatureC": 37.0,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 0,
+          "damagedFaceCount": 0,
+          "woundAreaMm2": 0,
+          "activeWounds": 0,
+          "pressurePa": 1000.0,
+          "vascularRemainingMm3": 100.0,
+          "refilledMm3": 0.0,
+          "generatedMm3": 0.0,
+          "emittedMm3": 0,
+          "blockedOutletReservoirMm3": 0,
+          "conservationResidualMm3": 0.0,
+          "globalPerfusion": "unknown"
+        },
+        "brainActiveNodes": 0,
+        "brainMaxDisplacementMm": 0.0,
+        "brainElasticEnergyNmm": 0.0,
+        "brainMaxNeighborDisplacementRatio": 0.0,
+        "removedByLabelMm3": {},
+        "targetRemovedMm3": 0,
+        "nonTargetRemovedMm3": 0.0,
+        "elapsedSeconds": 0.2,
+        "travelMm": 0.0,
+        "contactCellSeconds": 0,
+        "debrisMm3": 0,
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "debrisRemovedMm3": 0.0,
+        "debrisEscapedMm3": 0.0,
+        "fluidPresentMm3": 0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposure": 0,
+        "vesselEncounters": 0,
+        "exposureByMaterialCellSeconds": {},
+        "unknownStimulationSites": 0,
+        "collisions": 0,
+        "unknownMaterialCells": 0
+      },
+      "previewEqualsCommit": true,
+      "wallSeconds": 0.014994041062891483
+    },
+    {
+      "action": {
+        "slot": "left",
+        "operation": "place",
+        "duration": 0.2,
+        "parameters": {
+          "radiusMm": 1.5,
+          "jawOpeningMm": 2,
+          "depthMm": 2.0,
+          "forceN": 0
+        },
+        "pose": {
+          "position": [
+            114.53500366210938,
+            -118.558837890625,
+            -533.25
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            -0.5,
+            -0.5
+          ]
+        }
+      },
+      "status": "accepted",
+      "reason": null,
+      "stateId": "sha256:2b49aaf4ee6ecf928ac86c3531c49b63c796ae512fcf885be60cc58b7de2a980",
+      "events": [
+        {
+          "kind": "place",
+          "instrument": "Micro scissors",
+          "slot": "left"
+        }
+      ],
+      "metrics": {
+        "severedVesselConnections": 0,
+        "activeVesselWounds": 0,
+        "modeledVesselFluidGeneratedMm3": 0,
+        "modeledVesselReservoirMm3": 0,
+        "globalPerfusion": "unknown",
+        "drillInputEnergyJ": 0.0,
+        "drillCuttingWorkJ": 0.0,
+        "drillUnusedEnergyJ": 0.0,
+        "drillHeatGeneratedJ": 0.0,
+        "drillCoolingLossJ": 0.0,
+        "drillPendingWorkJ": 0,
+        "drillRemovedVolumeMm3": 0.0,
+        "drillMaxTemperatureC": 37.0,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 0,
+          "damagedFaceCount": 0,
+          "woundAreaMm2": 0,
+          "activeWounds": 0,
+          "pressurePa": 1000.0,
+          "vascularRemainingMm3": 100.0,
+          "refilledMm3": 0.0,
+          "generatedMm3": 0.0,
+          "emittedMm3": 0,
+          "blockedOutletReservoirMm3": 0,
+          "conservationResidualMm3": 0.0,
+          "globalPerfusion": "unknown"
+        },
+        "brainActiveNodes": 0,
+        "brainMaxDisplacementMm": 0.0,
+        "brainElasticEnergyNmm": 0.0,
+        "brainMaxNeighborDisplacementRatio": 0.0,
+        "removedByLabelMm3": {},
+        "targetRemovedMm3": 0,
+        "nonTargetRemovedMm3": 0.0,
+        "elapsedSeconds": 0.4,
+        "travelMm": 0.0,
+        "contactCellSeconds": 0,
+        "debrisMm3": 0,
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "debrisRemovedMm3": 0.0,
+        "debrisEscapedMm3": 0.0,
+        "fluidPresentMm3": 0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposure": 0,
+        "vesselEncounters": 0,
+        "exposureByMaterialCellSeconds": {},
+        "unknownStimulationSites": 0,
+        "collisions": 0,
+        "unknownMaterialCells": 0
+      },
+      "previewEqualsCommit": true,
+      "wallSeconds": 0.013953291811048985
+    },
+    {
+      "action": {
+        "slot": "left",
+        "operation": "apply",
+        "duration": 1.0,
+        "pose": {
+          "position": [
+            33.535003662109375,
+            -118.558837890625,
+            -533.25
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            -0.5,
+            -0.5
+          ]
+        }
+      },
+      "status": "accepted",
+      "reason": null,
+      "stateId": "sha256:3f5f6fe2c59489552f5b5d44632286e6487f35068d90ffba69addde4b235fc30",
+      "events": [
+        {
+          "kind": "apply",
+          "instrument": "Micro scissors",
+          "slot": "left"
+        },
+        {
+          "kind": "no_material_effect",
+          "reason": "No compatible structure intersected by the working tip"
+        }
+      ],
+      "metrics": {
+        "severedVesselConnections": 0,
+        "activeVesselWounds": 0,
+        "modeledVesselFluidGeneratedMm3": 0,
+        "modeledVesselReservoirMm3": 0,
+        "globalPerfusion": "unknown",
+        "drillInputEnergyJ": 0.0,
+        "drillCuttingWorkJ": 0.0,
+        "drillUnusedEnergyJ": 0.0,
+        "drillHeatGeneratedJ": 0.0,
+        "drillCoolingLossJ": 0.0,
+        "drillPendingWorkJ": 0,
+        "drillRemovedVolumeMm3": 0.0,
+        "drillMaxTemperatureC": 37.0,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 0,
+          "damagedFaceCount": 0,
+          "woundAreaMm2": 0,
+          "activeWounds": 0,
+          "pressurePa": 1000.0,
+          "vascularRemainingMm3": 100.0,
+          "refilledMm3": 0.0,
+          "generatedMm3": 0.0,
+          "emittedMm3": 0,
+          "blockedOutletReservoirMm3": 0,
+          "conservationResidualMm3": 0.0,
+          "globalPerfusion": "unknown"
+        },
+        "brainActiveNodes": 0,
+        "brainMaxDisplacementMm": 0.0,
+        "brainElasticEnergyNmm": 0.0,
+        "brainMaxNeighborDisplacementRatio": 0.0,
+        "removedByLabelMm3": {},
+        "targetRemovedMm3": 0,
+        "nonTargetRemovedMm3": 0.0,
+        "elapsedSeconds": 1.4000000000000064,
+        "travelMm": 81.00000000000003,
+        "contactCellSeconds": 0,
+        "debrisMm3": 0,
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "debrisRemovedMm3": 0.0,
+        "debrisEscapedMm3": 0.0,
+        "fluidPresentMm3": 0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposure": 0,
+        "vesselEncounters": 17,
+        "exposureByMaterialCellSeconds": {
+          "vessel": 0.2757201646090536
+        },
+        "unknownStimulationSites": 0,
+        "collisions": 0,
+        "unknownMaterialCells": 0
+      },
+      "previewEqualsCommit": true,
+      "wallSeconds": 0.9978010831400752
+    },
+    {
+      "action": {
+        "slot": "left",
+        "operation": "apply",
+        "duration": 0.25,
+        "parameters": {
+          "forceN": 1,
+          "jawOpeningMm": 2
+        }
+      },
+      "status": "accepted",
+      "reason": null,
+      "stateId": "sha256:31c873efde9aeb51c1014fb5ee2e59afedb6833326904cd6a7b7ea8af7613d4a",
+      "events": [
+        {
+          "kind": "apply",
+          "instrument": "Micro scissors",
+          "slot": "left"
+        },
+        {
+          "kind": "no_material_effect",
+          "reason": "No compatible structure intersected by the working tip"
+        }
+      ],
+      "metrics": {
+        "severedVesselConnections": 0,
+        "activeVesselWounds": 0,
+        "modeledVesselFluidGeneratedMm3": 0,
+        "modeledVesselReservoirMm3": 0,
+        "globalPerfusion": "unknown",
+        "drillInputEnergyJ": 0.0,
+        "drillCuttingWorkJ": 0.0,
+        "drillUnusedEnergyJ": 0.0,
+        "drillHeatGeneratedJ": 0.0,
+        "drillCoolingLossJ": 0.0,
+        "drillPendingWorkJ": 0,
+        "drillRemovedVolumeMm3": 0.0,
+        "drillMaxTemperatureC": 37.0,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 0,
+          "damagedFaceCount": 0,
+          "woundAreaMm2": 0,
+          "activeWounds": 0,
+          "pressurePa": 1000.0,
+          "vascularRemainingMm3": 100.0,
+          "refilledMm3": 0.0,
+          "generatedMm3": 0.0,
+          "emittedMm3": 0,
+          "blockedOutletReservoirMm3": 0,
+          "conservationResidualMm3": 0.0,
+          "globalPerfusion": "unknown"
+        },
+        "brainActiveNodes": 0,
+        "brainMaxDisplacementMm": 0.0,
+        "brainElasticEnergyNmm": 0.0,
+        "brainMaxNeighborDisplacementRatio": 0.0,
+        "removedByLabelMm3": {},
+        "targetRemovedMm3": 0,
+        "nonTargetRemovedMm3": 0.0,
+        "elapsedSeconds": 1.6500000000000061,
+        "travelMm": 81.00000000000003,
+        "contactCellSeconds": 0,
+        "debrisMm3": 0,
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "debrisRemovedMm3": 0.0,
+        "debrisEscapedMm3": 0.0,
+        "fluidPresentMm3": 0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposure": 0,
+        "vesselEncounters": 17,
+        "exposureByMaterialCellSeconds": {
+          "vessel": 4.525720164609054
+        },
+        "unknownStimulationSites": 0,
+        "collisions": 0,
+        "unknownMaterialCells": 0
+      },
+      "previewEqualsCommit": true,
+      "wallSeconds": 0.02011433383449912
+    },
+    {
+      "action": {
+        "slot": "left",
+        "operation": "apply",
+        "duration": 0.25,
+        "parameters": {
+          "forceN": 20,
+          "jawOpeningMm": 2
+        }
+      },
+      "status": "accepted",
+      "reason": null,
+      "stateId": "sha256:8cfcd9eb4e313a83a1333715103dbf760ec5f6cbf541637e0b1299a26c54bbd3",
+      "events": [
+        {
+          "kind": "apply",
+          "instrument": "Micro scissors",
+          "slot": "left"
+        },
+        {
+          "kind": "no_material_effect",
+          "reason": "No compatible structure intersected by the working tip"
+        }
+      ],
+      "metrics": {
+        "severedVesselConnections": 0,
+        "activeVesselWounds": 0,
+        "modeledVesselFluidGeneratedMm3": 0,
+        "modeledVesselReservoirMm3": 0,
+        "globalPerfusion": "unknown",
+        "drillInputEnergyJ": 0.0,
+        "drillCuttingWorkJ": 0.0,
+        "drillUnusedEnergyJ": 0.0,
+        "drillHeatGeneratedJ": 0.0,
+        "drillCoolingLossJ": 0.0,
+        "drillPendingWorkJ": 0,
+        "drillRemovedVolumeMm3": 0.0,
+        "drillMaxTemperatureC": 37.0,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 0,
+          "damagedFaceCount": 0,
+          "woundAreaMm2": 0,
+          "activeWounds": 0,
+          "pressurePa": 1000.0,
+          "vascularRemainingMm3": 100.0,
+          "refilledMm3": 0.0,
+          "generatedMm3": 0.0,
+          "emittedMm3": 0,
+          "blockedOutletReservoirMm3": 0,
+          "conservationResidualMm3": 0.0,
+          "globalPerfusion": "unknown"
+        },
+        "brainActiveNodes": 0,
+        "brainMaxDisplacementMm": 0.0,
+        "brainElasticEnergyNmm": 0.0,
+        "brainMaxNeighborDisplacementRatio": 0.0,
+        "removedByLabelMm3": {},
+        "targetRemovedMm3": 0,
+        "nonTargetRemovedMm3": 0.0,
+        "elapsedSeconds": 1.900000000000006,
+        "travelMm": 81.00000000000003,
+        "contactCellSeconds": 0,
+        "debrisMm3": 0,
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "debrisRemovedMm3": 0.0,
+        "debrisEscapedMm3": 0.0,
+        "fluidPresentMm3": 0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposure": 0,
+        "vesselEncounters": 17,
+        "exposureByMaterialCellSeconds": {
+          "vessel": 8.775720164609048
+        },
+        "unknownStimulationSites": 0,
+        "collisions": 0,
+        "unknownMaterialCells": 0
+      },
+      "previewEqualsCommit": true,
+      "wallSeconds": 0.018096874933689833
+    },
+    {
+      "action": {
+        "slot": "left",
+        "operation": "apply",
+        "duration": 1.5,
+        "parameters": {
+          "forceN": 20,
+          "jawOpeningMm": 2
+        }
+      },
+      "status": "accepted",
+      "reason": null,
+      "stateId": "sha256:6cd5b48d8597ef422014c40a94b0e8c64c188e905fe26cb7a78ec21a5370ce43",
+      "events": [
+        {
+          "kind": "apply",
+          "instrument": "Micro scissors",
+          "slot": "left"
+        },
+        {
+          "kind": "no_material_effect",
+          "reason": "No compatible structure intersected by the working tip"
+        }
+      ],
+      "metrics": {
+        "severedVesselConnections": 0,
+        "activeVesselWounds": 1,
+        "modeledVesselFluidGeneratedMm3": 0.0007696639620888845,
+        "modeledVesselReservoirMm3": 0.0,
+        "globalPerfusion": "unknown",
+        "drillInputEnergyJ": 0.0,
+        "drillCuttingWorkJ": 0.0,
+        "drillUnusedEnergyJ": 0.0,
+        "drillHeatGeneratedJ": 0.0,
+        "drillCoolingLossJ": 0.0,
+        "drillPendingWorkJ": 0,
+        "drillRemovedVolumeMm3": 0.0,
+        "drillMaxTemperatureC": 37.0,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 57,
+          "woundAreaMm2": 57.0,
+          "activeWounds": 1,
+          "pressurePa": 999.9923072087385,
+          "vascularRemainingMm3": 99.99923072087385,
+          "refilledMm3": 3.848359449292619e-07,
+          "generatedMm3": 0.0007696639620888845,
+          "emittedMm3": 0.0007696639620888845,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": 0.0,
+          "globalPerfusion": "unknown"
+        },
+        "brainActiveNodes": 0,
+        "brainMaxDisplacementMm": 0.0,
+        "brainElasticEnergyNmm": 0.0,
+        "brainMaxNeighborDisplacementRatio": 0.0,
+        "removedByLabelMm3": {},
+        "targetRemovedMm3": 0,
+        "nonTargetRemovedMm3": 0.0,
+        "elapsedSeconds": 3.400000000000007,
+        "travelMm": 81.00000000000006,
+        "contactCellSeconds": 0,
+        "debrisMm3": 0,
+        "fluidAddedMm3": 0.0007696639620888845,
+        "fluidRemovedMm3": 0.0,
+        "debrisRemovedMm3": 0.0,
+        "debrisEscapedMm3": 0.0,
+        "fluidPresentMm3": 0.0007696639620888845,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposure": 0,
+        "vesselEncounters": 17,
+        "exposureByMaterialCellSeconds": {
+          "vessel": 34.27572016460928
+        },
+        "unknownStimulationSites": 0,
+        "collisions": 0,
+        "unknownMaterialCells": 0
+      },
+      "previewEqualsCommit": true,
+      "wallSeconds": 0.08787150029093027
+    },
+    {
+      "action": {
+        "slot": "left",
+        "operation": "apply",
+        "duration": 1,
+        "parameters": {
+          "forceN": 20,
+          "jawOpeningMm": 2
+        }
+      },
+      "status": "accepted",
+      "reason": null,
+      "stateId": "sha256:fe5b4235faaefc948198d82b17df88e71cb7d9a12d30222d3d7c830c64f530dd",
+      "events": [
+        {
+          "kind": "apply",
+          "instrument": "Micro scissors",
+          "slot": "left"
+        },
+        {
+          "kind": "no_material_effect",
+          "reason": "No compatible structure intersected by the working tip"
+        }
+      ],
+      "metrics": {
+        "severedVesselConnections": 0,
+        "activeVesselWounds": 1,
+        "modeledVesselFluidGeneratedMm3": 0.8847962810206269,
+        "modeledVesselReservoirMm3": 0.0,
+        "globalPerfusion": "unknown",
+        "drillInputEnergyJ": 0.0,
+        "drillCuttingWorkJ": 0.0,
+        "drillUnusedEnergyJ": 0.0,
+        "drillHeatGeneratedJ": 0.0,
+        "drillCoolingLossJ": 0.0,
+        "drillPendingWorkJ": 0,
+        "drillRemovedVolumeMm3": 0.0,
+        "drillMaxTemperatureC": 37.0,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 57,
+          "woundAreaMm2": 57.0,
+          "activeWounds": 1,
+          "pressurePa": 991.1768704212486,
+          "vascularRemainingMm3": 99.11768704212486,
+          "refilledMm3": 0.002483323145491295,
+          "generatedMm3": 0.8847962810206269,
+          "emittedMm3": 0.8847962810206269,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": 1.4210854715202004e-14,
+          "globalPerfusion": "unknown"
+        },
+        "brainActiveNodes": 0,
+        "brainMaxDisplacementMm": 0.0,
+        "brainElasticEnergyNmm": 0.0,
+        "brainMaxNeighborDisplacementRatio": 0.0,
+        "removedByLabelMm3": {},
+        "targetRemovedMm3": 0,
+        "nonTargetRemovedMm3": 0.0,
+        "elapsedSeconds": 4.400000000000006,
+        "travelMm": 81.00000000000009,
+        "contactCellSeconds": 0,
+        "debrisMm3": 0,
+        "fluidAddedMm3": 0.8847962810206269,
+        "fluidRemovedMm3": 0.0,
+        "debrisRemovedMm3": 0.0,
+        "debrisEscapedMm3": 0.0,
+        "fluidPresentMm3": 0.8847962810206269,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposure": 0,
+        "vesselEncounters": 17,
+        "exposureByMaterialCellSeconds": {
+          "vessel": 51.275720164609524
+        },
+        "unknownStimulationSites": 0,
+        "collisions": 0,
+        "unknownMaterialCells": 0
+      },
+      "previewEqualsCommit": true,
+      "wallSeconds": 0.2028201250359416
+    },
+    {
+      "action": {
+        "slot": "left",
+        "operation": "apply",
+        "duration": 1,
+        "parameters": {
+          "forceN": 20,
+          "jawOpeningMm": 2
+        }
+      },
+      "status": "accepted",
+      "reason": null,
+      "stateId": "sha256:af757db2204b272dfe2e9ee6ce3897a3d6b7a7b1d0166f9780f41d8b5b385746",
+      "events": [
+        {
+          "kind": "apply",
+          "instrument": "Micro scissors",
+          "slot": "left"
+        },
+        {
+          "kind": "no_material_effect",
+          "reason": "No compatible structure intersected by the working tip"
+        }
+      ],
+      "metrics": {
+        "severedVesselConnections": 57,
+        "activeVesselWounds": 1,
+        "modeledVesselFluidGeneratedMm3": 5.268098893895413,
+        "modeledVesselReservoirMm3": 0.0,
+        "globalPerfusion": "unknown",
+        "drillInputEnergyJ": 0.0,
+        "drillCuttingWorkJ": 0.0,
+        "drillUnusedEnergyJ": 0.0,
+        "drillHeatGeneratedJ": 0.0,
+        "drillCoolingLossJ": 0.0,
+        "drillPendingWorkJ": 0,
+        "drillRemovedVolumeMm3": 0.0,
+        "drillMaxTemperatureC": 37.0,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 57,
+          "woundAreaMm2": 57.0,
+          "activeWounds": 1,
+          "pressurePa": 947.6240540281652,
+          "vascularRemainingMm3": 94.76240540281653,
+          "refilledMm3": 0.030504296711946346,
+          "generatedMm3": 5.268098893895413,
+          "emittedMm3": 5.268098893895413,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": 1.4210854715202004e-14,
+          "globalPerfusion": "unknown"
+        },
+        "brainActiveNodes": 0,
+        "brainMaxDisplacementMm": 0.0,
+        "brainElasticEnergyNmm": 0.0,
+        "brainMaxNeighborDisplacementRatio": 0.0,
+        "removedByLabelMm3": {},
+        "targetRemovedMm3": 0,
+        "nonTargetRemovedMm3": 0.0,
+        "elapsedSeconds": 5.400000000000002,
+        "travelMm": 81.00000000000011,
+        "contactCellSeconds": 0,
+        "debrisMm3": 0,
+        "fluidAddedMm3": 5.268098893895413,
+        "fluidRemovedMm3": 0.0,
+        "debrisRemovedMm3": 0.0,
+        "debrisEscapedMm3": 0.0,
+        "fluidPresentMm3": 5.268098893895413,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposure": 0,
+        "vesselEncounters": 17,
+        "exposureByMaterialCellSeconds": {
+          "vessel": 68.27572016460947
+        },
+        "unknownStimulationSites": 0,
+        "collisions": 0,
+        "unknownMaterialCells": 0
+      },
+      "previewEqualsCommit": true,
+      "wallSeconds": 0.16540325013920665
+    }
+  ],
+  "sourceUnchanged": true,
+  "transectedEdges": 0,
+  "fluidResidualMm3": 0.0
+}

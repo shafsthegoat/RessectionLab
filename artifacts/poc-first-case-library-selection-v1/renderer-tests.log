@@ -1,0 +1,16 @@
+exit_code: 0
+✔ search matches each case name, own source and present anatomy, never unrelated receipt evidence or missing layers (104.524667ms)
+✔ Cases displays source-check and unreviewed-anatomy wording while retaining native browse and recent affordances (3.310625ms)
+✔ open controls remain disabled while busy and an empty library retains browse guidance (0.523083ms)
+✔ source-reported region and side search only their own reviewed-pending catalog rows (0.125417ms)
+✔ reported sites have explicit source/review context and are not guessed for matching names or accepted anatomy (0.961791ms)
+✔ packaged Cases offers a native library chooser without a renderer path input and retains native Open (0.236583ms)
+✔ selected folder and recoverable catalog errors are visible while case actions obey the busy state (0.538458ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 444.037125

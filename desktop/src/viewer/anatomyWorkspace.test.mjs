@@ -43,7 +43,7 @@ before(async()=>{
 after(async()=>{await server?.close();if(cache)await fs.rm(cache,{recursive:true,force:true,maxRetries:3,retryDelay:50});});
 function renderer(){
   const r=Object.create(VolumeRenderer.prototype),mesh=new THREE.Mesh(new THREE.BoxGeometry(),new THREE.MeshStandardMaterial());
-  const uniforms={uColors:{value:[new THREE.Color()]},uLayerOpacities:{value:new Float32Array(8)},uClipEnabled:{value:0},uClipPlane:{value:new THREE.Vector4()},uFusionOpacity:{value:.5},uFusionActive:{value:0},uFusion:{value:null},uFusionShape:{value:new THREE.Vector3()},uWorldToFusion:{value:new THREE.Matrix4()},uFusionWindow:{value:new THREE.Vector2()}};
+  const uniforms={uColors:{value:[new THREE.Color()]},uSliceContours:{value:0},uLayerOpacities:{value:new Float32Array(8)},uClipEnabled:{value:0},uClipPlane:{value:new THREE.Vector4()},uFusionOpacity:{value:.5},uFusionActive:{value:0},uFusion:{value:null},uFusionShape:{value:new THREE.Vector3()},uWorldToFusion:{value:new THREE.Matrix4()},uFusionWindow:{value:new THREE.Vector2()}};
   Object.assign(r,{beginInteraction(){},endInteraction(){},scanVolume:{configure(){},labels(){}},volume:{...source,compartments:[{name:'brain',color:'#778899',mask:new Uint8Array(60)}]},bounds:[[-20,-30,-40],[80,90,100]],surfaces:new Map([['brain',mesh]]),materials:()=>[{uniforms}],requestRender(){},fusionTexture:{dispose(){}},renderer:{getContext:()=>({MAX_3D_TEXTURE_SIZE:1,getParameter:()=>2048})}});
   return {r,mesh,uniforms};
 }
@@ -104,16 +104,15 @@ test('volume framebuffer restores viewport/clear state, bounds workload and reta
   r.render(scene,camera,2000,1000,false,()=>restored++);
   assert.equal(r.texture.image.data,source.mri);assert.deepEqual(source.mri,original);
   assert.equal(renders[0].target.width,1300);assert.equal(renders[0].target.height,650);
-  assert.equal(renders[2].target,null);assert.equal(restored,1);assert.equal(alpha,1);
+  assert.equal(renders.at(-1).target,null);assert.equal(restored,1);assert.equal(alpha,1);
   assert.equal(color.getHexString(),'05080d');
   const finalScene=r.sceneTarget,finalVolume=r.volumeTarget;
-  r.render(scene,camera,2000,1000,true,()=>restored++);
-  assert.equal(renders[3].target.width,360);assert.equal(renders[3].target.height,180);
+  let start=renders.length;r.render(scene,camera,2000,1000,true,()=>restored++);
+  assert.equal(renders[start].target.width,360);assert.equal(renders[start].target.height,180);
   const dragScene=r.interactionTargets.scene,dragVolume=r.interactionTargets.volume;
   let resized=0;for(const target of [finalScene,finalVolume,dragScene,dragVolume])target.addEventListener('dispose',()=>resized++);
-  r.render(scene,camera,2000,1000,false,()=>restored++);
-  r.render(scene,camera,2000,1000,true,()=>restored++);
-  assert.equal(renders[6].target,finalScene);assert.equal(renders[9].target,dragScene);
+  start=renders.length;r.render(scene,camera,2000,1000,false,()=>restored++);assert.equal(renders[start].target,finalScene);
+  start=renders.length;r.render(scene,camera,2000,1000,true,()=>restored++);assert.equal(renders[start].target,dragScene);
   assert.equal(r.material.uniforms.uScene.value,dragScene.texture);
   assert.equal(r.material.uniforms.uDepth.value,dragScene.depthTexture);
   assert.equal(r.blitMaterial.map,dragVolume.texture);
@@ -134,6 +133,21 @@ test('camera-only settings and cloned toolbar choices do not reapply layer mater
   assert.equal(configured,1);assert.equal(labels,1);assert.equal(rendered,1);assert.equal(mesh.material.clippingPlanes,planes);
   settings.layerOpacity.brain=.8;settings.clipping.value=20;r.setWorkspaceSettings(settings);
   assert.equal(configured,2);assert.equal(mesh.material.opacity,.8);assert.equal(uniforms.uClipPlane.value.w,-20);
+});
+
+test('slice contour changes reach every image material and preserve source data and 3D appearance',()=>{
+  const {r,mesh,uniforms}=renderer(),second={uniforms:THREE.UniformsUtils.clone(uniforms)};
+  r.materials=()=>[{uniforms},second];let rendered=0;r.requestRender=()=>rendered++;
+  const scalar=r.volume.mri.slice(),mask=r.volume.compartments[0].mask.slice();
+  r.setWorkspaceSettings({});const opacity=mesh.material.opacity,layerOpacity=uniforms.uLayerOpacities.value[0];
+  assert.equal(uniforms.uSliceContours.value,0,'existing saved views retain filled overlays');
+  r.setWorkspaceSettings({sliceOverlay:'contour'});
+  assert.equal(uniforms.uSliceContours.value,1);assert.equal(second.uniforms.uSliceContours.value,1);
+  assert.equal(mesh.material.opacity,opacity);assert.equal(uniforms.uLayerOpacities.value[0],layerOpacity);
+  assert.equal(rendered,2,'changing only the overlay must invalidate the image');
+  r.setWorkspaceSettings({sliceOverlay:'fill'});
+  assert.equal(uniforms.uSliceContours.value,0);assert.equal(second.uniforms.uSliceContours.value,0);
+  assert.deepEqual(r.volume.mri,scalar);assert.deepEqual(r.volume.compartments[0].mask,mask);
 });
 
 test('unchanged cursor/layers/routes avoid redraw, and in-place visibility changes reach all views',()=>{
@@ -169,10 +183,10 @@ test('interaction never resizes the shared drawing buffer',()=>{
   try {
     const {r}=renderer();let pixelRatio=2;const changes=[];
     const empty={getBoundingClientRect:()=>({left:0,top:0,width:0,height:0})};
-    Object.assign(r,{disposed:false,width:100,height:100,interacting:false,refinementStarted:0,budget:{longEdge:360},
+    Object.assign(r,{disposed:false,width:100,height:100,renderSerial:0,interacting:false,refinementStarted:0,budget:{longEdge:360},estimateAllocation:()=>({}),retiredSurfaces:[],
       container:{getBoundingClientRect:()=>({left:0,top:0,width:100,height:100})},
       panes:{anatomy:empty,axial:empty,coronal:empty,sagittal:empty},canvas:{dispatchEvent(){}},scanVolume:{active:false},
-      renderer:{info:{memory:{},render:{calls:0}},getContext:()=>({fenceSync:()=>null}),getPixelRatio:()=>pixelRatio,setPixelRatio(value){pixelRatio=value;changes.push(value)},setScissorTest(){},clear(){}}});
+      renderer:{info:{reset(){},memory:{},render:{calls:0}},getContext:()=>({fenceSync:()=>null}),getPixelRatio:()=>pixelRatio,setPixelRatio(value){pixelRatio=value;changes.push(value)},setScissorTest(){},clear(){}}});
     r.render();r.render();assert.deepEqual(changes,[]);
     r.interacting=true;r.render();r.render();assert.deepEqual(changes,[]);
     r.interacting=false;r.render();r.render();assert.deepEqual(changes,[]);
@@ -220,17 +234,17 @@ test('shared scalar texture is not disposed by the volume pass',()=>{
 
 test('GPU backpressure coalesces input and submits the latest pending frame only after completion',()=>{
   const previousWindow=globalThis.window,previousRaf=globalThis.requestAnimationFrame;
-  const callbacks=new Map();let id=0,ready=false,deleted=0;
+  const callbacks=new Map();let id=0,ready=false,deleted=0,resets=0;
   globalThis.window={devicePixelRatio:1};globalThis.requestAnimationFrame=callback=>{callbacks.set(++id,callback);return id};
   try{
     const {r}=renderer(),empty={getBoundingClientRect:()=>({left:0,top:0,width:0,height:0})};
     const gl={SYNC_GPU_COMMANDS_COMPLETE:1,TIMEOUT_EXPIRED:2,WAIT_FAILED:3,fenceSync:()=>({}),flush(){},clientWaitSync:()=>ready?4:2,deleteSync(){deleted++}};
-    Object.assign(r,{requestRender:VolumeRenderer.prototype.requestRender,disposed:false,frame:0,renderSerial:0,width:100,height:100,sliceRevision:0,interacting:false,refinementStarted:0,budget:{longEdge:360},gpuSync:null,
+    Object.assign(r,{requestRender:VolumeRenderer.prototype.requestRender,disposed:false,frame:0,renderSerial:0,width:100,height:100,sliceRevision:0,interacting:false,refinementStarted:0,budget:{longEdge:360},gpuSync:null,estimateAllocation:()=>({}),retiredSurfaces:[],
       container:{getBoundingClientRect:()=>({left:0,top:0,width:100,height:100})},panes:{anatomy:empty,axial:empty,coronal:empty,sagittal:empty},canvas:{dispatchEvent(){}},scanVolume:{active:false},controls:{update(){}},
-      renderer:{info:{memory:{},render:{calls:0}},getContext:()=>gl,getPixelRatio:()=>1,setScissorTest(){},clear(){}}});
+      renderer:{info:{reset(){resets++},memory:{},render:{calls:0}},getContext:()=>gl,getPixelRatio:()=>1,setScissorTest(){},clear(){}}});
     r.render();for(let i=0;i<100;i++)r.requestRender(false);assert.equal(r.renderSerial,1);assert.equal(callbacks.size,1);
     const tick=()=>{const [key,callback]=callbacks.entries().next().value;callbacks.delete(key);callback()};
     tick();assert.equal(r.renderSerial,1);ready=true;tick();assert.equal(r.renderSerial,2);assert.equal(deleted,1);
-    tick();assert.equal(r.gpuSync,null);assert.equal(callbacks.size,0);
+    tick();assert.equal(r.gpuSync,null);assert.equal(callbacks.size,0);assert.equal(resets,2,'statistics reset once per complete frame');
   }finally{globalThis.window=previousWindow;globalThis.requestAnimationFrame=previousRaf;}
 });

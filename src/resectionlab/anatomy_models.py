@@ -93,7 +93,8 @@ def run_bounded(
 
 
 def reconstruct(
-    collection, series_id, model, *, cancelled=lambda: False, synthseg_version=2
+    collection, series_id, model, *, cancelled=lambda: False, synthseg_version=2,
+    synthseg_crop=None,
 ):
     c = collection
     row = c.series(series_id)
@@ -143,6 +144,8 @@ def reconstruct(
     }:
         raise ValueError("Unsupported SynthSeg input")
     if model == "synthseg":
+        if synthseg_crop is not None and (type(synthseg_crop) is not int or not 128 <= synthseg_crop <= 256 or synthseg_crop % 32):
+            raise ValueError('SynthSeg crop must be an explicit 128–256 multiple of 32')
         home = Path(
             os.environ.get("RESECTIONLAB_SYNTHSEG_HOME", ROOT / ".tools/SynthSeg")
         ).resolve()
@@ -194,6 +197,9 @@ def reconstruct(
         "adapter_sha256": file_hash(__file__),
         "weights": {p.name: file_hash(p) for p in weights},
     }
+    if model == 'synthseg' and synthseg_crop is not None:
+        identity['inference_crop_voxels'] = synthseg_crop
+        identity['coverage_limitation'] = 'Center-cropped 1 mm inference field; structures outside this field are unknown, not negative.'
     directory = c.root / "reconstructions" / digest(identity)
     receipt = directory / "receipt.json"
     output = directory / "labels.nii.gz"
@@ -223,6 +229,8 @@ def reconstruct(
                 command += ["--robust", "--parc", "--qc", str(directory / "qc.csv")]
             if row["modality"] == "CT":
                 command += ["--ct"]
+            if synthseg_crop is not None:
+                command += ['--crop', str(synthseg_crop)]
         else:
             command += [
                 "--t1",

@@ -17,7 +17,7 @@ import os
 from pathlib import Path
 import tempfile
 from typing import Any
-from zipfile import ZIP_DEFLATED, ZipFile
+from zipfile import ZIP_DEFLATED, ZIP_STORED, ZipFile
 
 import nibabel as nib
 import numpy as np
@@ -27,6 +27,7 @@ from .core import CaseData, PatientContext, SourceRef, array_digest
 
 
 BUNDLE_SCHEMA = "resectionlab.case/1"
+MAX_MANIFEST_BYTES = 16 * 1024 * 1024
 _UNIT_TO_MM = {"mm": 1.0, "meter": 1000.0, "micron": 0.001}
 
 
@@ -389,6 +390,11 @@ def save_case(case: CaseData, path: str | Path, *, artifacts: Mapping[str, Any] 
     """Atomically save a self-contained ZIP with JSON and non-pickled numeric arrays."""
     destination = Path(path).expanduser().resolve()
     destination.parent.mkdir(parents=True, exist_ok=True)
+    from .surgical_archive_codec import encode_artifacts
+    try:
+        stored_artifacts = encode_artifacts(_jsonable(artifacts or {}))
+    except (ValueError, TypeError) as error:
+        raise ImagingError('INVALID_SURGICAL_ARCHIVE', str(error)) from error
     arrays: dict[str, np.ndarray] = {"mri": case.mri, "affine": case.affine}
     index: dict[str, dict[str, str]] = {"compartments": {}, "source_compartments": {}}
     for group in index:
@@ -423,15 +429,14 @@ def save_case(case: CaseData, path: str | Path, *, artifacts: Mapping[str, Any] 
             functional_keys[name] = None if value is None else "functional_" + name
             if value is not None:
                 arrays[functional_keys[name]] = value
-    buffer = BytesIO()
-    np.savez_compressed(buffer, **arrays)
-    payload = buffer.getvalue()
+    from .case_array_payload import encode_array_payload
+    payload = encode_array_payload(arrays)
     manifest = {
         "schema": BUNDLE_SCHEMA, "case_id": case.case_id, "revision": case.revision,
         "case_semantic_hash": case.semantic_hash, "frame": case.frame,
         "source_refs": _jsonable(case.source_refs), "context": None if case.context is None else case.context.to_dict(),
         "metadata": _jsonable(case.metadata), "unknowns": list(case.unknowns), "array_index": index,
-        "array_sha256": sha256(payload).hexdigest(), "artifacts": _jsonable(artifacts or {}),
+        "array_sha256": sha256(payload).hexdigest(), "artifacts": stored_artifacts,
     }
     if structural_records:
         manifest["structural_evidence"] = structural_records
@@ -441,14 +446,20 @@ def save_case(case: CaseData, path: str | Path, *, artifacts: Mapping[str, Any] 
         manifest["prior_proposals"] = prior_records
     if functional is not None:
         manifest["functional_evidence"] = {"array_keys": functional_keys, "manifest": functional.to_manifest()}
-    encoded_manifest = json.dumps(manifest, indent=2, sort_keys=True, allow_nan=False).encode("utf-8")
+    # Persist growing episode branches within the same limit enforced on open.
+    # Whitespace can otherwise turn valid bounded data into an unreadable save.
+    encoded_manifest = json.dumps(manifest, separators=(",", ":"), sort_keys=True, allow_nan=False).encode("utf-8")
+    if len(encoded_manifest) > MAX_MANIFEST_BYTES:
+        raise ImagingError("MANIFEST_TOO_LARGE", "Episode metadata exceeds the 16 MiB save/open budget; preserve this file and shorten the saved history.")
     temporary: Path | None = None
     try:
         with tempfile.NamedTemporaryFile(dir=destination.parent, prefix=f".{destination.name}.", delete=False) as handle:
             temporary = Path(handle.name)
         with ZipFile(temporary, "w", compression=ZIP_DEFLATED) as archive:
             archive.writestr("manifest.json", encoded_manifest)
-            archive.writestr("arrays.npz", payload)
+            # The NPZ members are already compressed. A second deflate pass
+            # delays repeated rehearsal saves without changing source content.
+            archive.writestr("arrays.npz", payload, compress_type=ZIP_STORED)
         os.replace(temporary, destination)
     finally:
         if temporary is not None:
@@ -465,7 +476,7 @@ def _read_bundle(path: str | Path) -> tuple[dict[str, Any], bytes]:
                     raise ImagingError("INVALID_BUNDLE_MEMBERS", "Bundle must contain the case pair or a bounded workspace extension.")
                 from .workspace_bundle import extension_layout
                 extension_layout(archive)
-            if archive.getinfo("manifest.json").file_size > 16 * 1024 * 1024:
+            if archive.getinfo("manifest.json").file_size > MAX_MANIFEST_BYTES:
                 raise ImagingError("BUNDLE_SIZE_LIMIT", "Manifest exceeds the 16 MiB local import limit.")
             if archive.getinfo("arrays.npz").file_size > 2 * 1024 ** 3:
                 raise ImagingError("BUNDLE_SIZE_LIMIT", "Array payload exceeds the 2 GiB local import limit.")
@@ -539,7 +550,11 @@ def load_case(path: str | Path) -> CaseData:
 
 def read_case_artifacts(path: str | Path) -> dict[str, Any]:
     """Read saved plan/settings JSON; callers must verify each plan's case hash."""
-    return _read_bundle(path)[0]["artifacts"]
+    from .surgical_archive_codec import decode_artifacts
+    try:
+        return decode_artifacts(_read_bundle(path)[0]["artifacts"])
+    except (ValueError, TypeError) as error:
+        raise ImagingError('INVALID_SURGICAL_ARCHIVE', str(error)) from error
 
 
 @historical_only("SYNTHETIC_MODEL_INELIGIBLE")

@@ -1,0 +1,8 @@
+v8-version,13,6,233,8,0
+v8-platform,darwin,arm64
+profiler,begin,1000
+code-creation,JS,10,1,0x1000,256,tiny file:///tiny.js:1:1,0x2000,~
+script-source,1,file:///tiny.js,function tiny() { return 1; }
+tick,0x1000,1000,0,0,0
+tick,0x1000,2000,0,0,0
+profiler,end

@@ -1,0 +1,554 @@
+{
+  "status": "complete",
+  "learned_successes": 3,
+  "learned_seeds": 3,
+  "random_successes": 8,
+  "random_episodes": 30,
+  "updates": [
+    92,
+    93,
+    93
+  ],
+  "checkpoints": {
+    "17": "28191bfb2eb52b6b4be6e5aaef62257d5349ac0f747fbbcabd456f41c60795e2",
+    "29": "0cc1506fca72a7892254cf51a1c38f3f159c6367c0af59edd14370ff6c7e770a",
+    "43": "6a1d6431e07e882dc007b5b9c120d484c41061e9e9095ef0290b9e5d372dd8df"
+  },
+  "source_arrays_unchanged": true,
+  "costs": {
+    "engine_calls": 40,
+    "cache_hits": 4,
+    "engine_seconds": 15.465504337102175,
+    "max_action_seconds": 1.3846599580720067,
+    "wall_seconds": 54.429055999964476,
+    "auxiliary_fresh_process_and_telemetry_replay_calls": 60,
+    "total_public_transition_calls": 100,
+    "max_action_seconds_scope": "in-process counted engine calls; excludes child and telemetry calls",
+    "peak_process_rss_bytes": 524566528,
+    "scope": "resumed export only; previous_fit_cost is separate; interrupted export cost unavailable"
+  },
+  "previous_fit_cost": {
+    "engine_calls": 69,
+    "cache_hits": 335,
+    "engine_seconds": 19.730610083788633,
+    "max_action_seconds": 1.2181681669317186,
+    "wall_seconds": 27.997579332906753
+  },
+  "limitations": [
+    "one fixed development anatomy, no patient generalization",
+    "learned discrete scheduling, scripted spatial motion",
+    "exact deterministic prefix cache reused for sampled Q updates; cache hits are not new simulator calls",
+    "fixed task evaluation repeats do not constitute independent patient trials",
+    "shallow pocket, no through-skull opening or clinical validation"
+  ],
+  "finalization_only_no_extra_updates": true,
+  "methods": [
+    {
+      "method": "Q_learning",
+      "seed": 17,
+      "success": true,
+      "return_": 1.2916,
+      "actions": [
+        "BURR",
+        "CLEAR"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 34.0
+    },
+    {
+      "method": "untrained",
+      "seed": 17,
+      "success": false,
+      "return_": -0.0504,
+      "actions": [
+        "STOP"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 0.0
+    },
+    {
+      "method": "Q_learning",
+      "seed": 29,
+      "success": true,
+      "return_": 1.2916,
+      "actions": [
+        "BURR",
+        "CLEAR"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 34.0
+    },
+    {
+      "method": "untrained",
+      "seed": 29,
+      "success": false,
+      "return_": -0.0504,
+      "actions": [
+        "STOP"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 0.0
+    },
+    {
+      "method": "Q_learning",
+      "seed": 43,
+      "success": true,
+      "return_": 1.2916,
+      "actions": [
+        "BURR",
+        "CLEAR"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 34.0
+    },
+    {
+      "method": "untrained",
+      "seed": 43,
+      "success": false,
+      "return_": -0.0504,
+      "actions": [
+        "STOP"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 0.0
+    },
+    {
+      "method": "random",
+      "seed": 100,
+      "success": false,
+      "return_": -0.1558,
+      "actions": [
+        "CLEAR",
+        "CLEAR",
+        "STOP"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 0.0
+    },
+    {
+      "method": "random",
+      "seed": 101,
+      "success": false,
+      "return_": -0.0504,
+      "actions": [
+        "STOP"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 0.0
+    },
+    {
+      "method": "random",
+      "seed": 102,
+      "success": false,
+      "return_": 0.094,
+      "actions": [
+        "BURR",
+        "STOP"
+      ],
+      "debris_mm3": 34.0,
+      "aspirated_mm3": 0.0
+    },
+    {
+      "method": "random",
+      "seed": 103,
+      "success": false,
+      "return_": 0.094,
+      "actions": [
+        "BURR",
+        "STOP"
+      ],
+      "debris_mm3": 34.0,
+      "aspirated_mm3": 0.0
+    },
+    {
+      "method": "random",
+      "seed": 104,
+      "success": true,
+      "return_": 1.186,
+      "actions": [
+        "CLEAR",
+        "CLEAR",
+        "BURR",
+        "CLEAR"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 34.0
+    },
+    {
+      "method": "random",
+      "seed": 105,
+      "success": false,
+      "return_": -0.0504,
+      "actions": [
+        "STOP"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 0.0
+    },
+    {
+      "method": "random",
+      "seed": 106,
+      "success": true,
+      "return_": 1.2916,
+      "actions": [
+        "BURR",
+        "CLEAR"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 34.0
+    },
+    {
+      "method": "random",
+      "seed": 107,
+      "success": false,
+      "return_": -0.0504,
+      "actions": [
+        "STOP"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 0.0
+    },
+    {
+      "method": "random",
+      "seed": 108,
+      "success": false,
+      "return_": -0.0504,
+      "actions": [
+        "STOP"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 0.0
+    },
+    {
+      "method": "random",
+      "seed": 109,
+      "success": false,
+      "return_": -0.9112000000000001,
+      "actions": [
+        "BURR",
+        "BURR"
+      ],
+      "debris_mm3": 64.0,
+      "aspirated_mm3": 0.0
+    },
+    {
+      "method": "random",
+      "seed": 110,
+      "success": true,
+      "return_": 1.2916,
+      "actions": [
+        "BURR",
+        "CLEAR"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 34.0
+    },
+    {
+      "method": "random",
+      "seed": 111,
+      "success": false,
+      "return_": 0.094,
+      "actions": [
+        "BURR",
+        "STOP"
+      ],
+      "debris_mm3": 34.0,
+      "aspirated_mm3": 0.0
+    },
+    {
+      "method": "random",
+      "seed": 112,
+      "success": false,
+      "return_": -0.0504,
+      "actions": [
+        "STOP"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 0.0
+    },
+    {
+      "method": "random",
+      "seed": 113,
+      "success": false,
+      "return_": -0.0504,
+      "actions": [
+        "STOP"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 0.0
+    },
+    {
+      "method": "random",
+      "seed": 114,
+      "success": false,
+      "return_": -0.0504,
+      "actions": [
+        "STOP"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 0.0
+    },
+    {
+      "method": "random",
+      "seed": 115,
+      "success": true,
+      "return_": 1.2916,
+      "actions": [
+        "BURR",
+        "CLEAR"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 34.0
+    },
+    {
+      "method": "random",
+      "seed": 116,
+      "success": false,
+      "return_": -0.0504,
+      "actions": [
+        "STOP"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 0.0
+    },
+    {
+      "method": "random",
+      "seed": 117,
+      "success": false,
+      "return_": -0.0504,
+      "actions": [
+        "STOP"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 0.0
+    },
+    {
+      "method": "random",
+      "seed": 118,
+      "success": true,
+      "return_": 1.2916,
+      "actions": [
+        "BURR",
+        "CLEAR"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 34.0
+    },
+    {
+      "method": "random",
+      "seed": 119,
+      "success": true,
+      "return_": 1.2916,
+      "actions": [
+        "BURR",
+        "CLEAR"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 34.0
+    },
+    {
+      "method": "random",
+      "seed": 120,
+      "success": false,
+      "return_": -0.0504,
+      "actions": [
+        "STOP"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 0.0
+    },
+    {
+      "method": "random",
+      "seed": 121,
+      "success": false,
+      "return_": -0.0504,
+      "actions": [
+        "STOP"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 0.0
+    },
+    {
+      "method": "random",
+      "seed": 122,
+      "success": false,
+      "return_": -0.1558,
+      "actions": [
+        "CLEAR",
+        "CLEAR",
+        "STOP"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 0.0
+    },
+    {
+      "method": "random",
+      "seed": 123,
+      "success": false,
+      "return_": -0.0504,
+      "actions": [
+        "STOP"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 0.0
+    },
+    {
+      "method": "random",
+      "seed": 124,
+      "success": false,
+      "return_": -0.21099999999999988,
+      "actions": [
+        "CLEAR",
+        "CLEAR",
+        "CLEAR",
+        "CLEAR"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 0.0
+    },
+    {
+      "method": "random",
+      "seed": 125,
+      "success": true,
+      "return_": 1.2916,
+      "actions": [
+        "BURR",
+        "CLEAR"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 34.0
+    },
+    {
+      "method": "random",
+      "seed": 126,
+      "success": false,
+      "return_": -0.0504,
+      "actions": [
+        "STOP"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 0.0
+    },
+    {
+      "method": "random",
+      "seed": 127,
+      "success": false,
+      "return_": 0.094,
+      "actions": [
+        "BURR",
+        "STOP"
+      ],
+      "debris_mm3": 34.0,
+      "aspirated_mm3": 0.0
+    },
+    {
+      "method": "random",
+      "seed": 128,
+      "success": true,
+      "return_": 1.2388,
+      "actions": [
+        "CLEAR",
+        "BURR",
+        "CLEAR"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 34.0
+    },
+    {
+      "method": "random",
+      "seed": 129,
+      "success": false,
+      "return_": -0.9112000000000001,
+      "actions": [
+        "BURR",
+        "BURR"
+      ],
+      "debris_mm3": 64.0,
+      "aspirated_mm3": 0.0
+    }
+  ],
+  "ablations": {
+    "scripted": {
+      "success": true,
+      "reason": "success",
+      "return_": 1.2916,
+      "actions": [
+        "BURR",
+        "CLEAR"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 34.0
+    },
+    "drill_only": {
+      "success": false,
+      "reason": "guard_or_budget_failure",
+      "return_": -0.9112000000000001,
+      "actions": [
+        "BURR",
+        "BURR"
+      ],
+      "debris_mm3": 64.0,
+      "aspirated_mm3": 0.0
+    },
+    "suction_only": {
+      "success": false,
+      "reason": "horizon",
+      "return_": -0.21099999999999988,
+      "actions": [
+        "CLEAR",
+        "CLEAR",
+        "CLEAR",
+        "CLEAR"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 0.0
+    },
+    "reversed_once": {
+      "success": false,
+      "reason": "policy_stop",
+      "return_": 0.0412,
+      "actions": [
+        "CLEAR",
+        "BURR",
+        "STOP"
+      ],
+      "debris_mm3": 34.0,
+      "aspirated_mm3": 0.0
+    },
+    "stop": {
+      "success": false,
+      "reason": "policy_stop",
+      "return_": -0.0504,
+      "actions": [
+        "STOP"
+      ],
+      "debris_mm3": 0,
+      "aspirated_mm3": 0.0
+    }
+  },
+  "desktop_verification": {
+    "status": "verified in actual Electron via CUA",
+    "actions": 10,
+    "scrub_states": [
+      5,
+      10
+    ],
+    "bone_removed_mm3": [
+      34,
+      34
+    ],
+    "debris_present_mm3": [
+      34,
+      0
+    ],
+    "strict_exclusion_masks": 11,
+    "clearance_mm": 2,
+    "original_source_slices_visible": true,
+    "anatomy_surfaces_completed": true,
+    "hands_final": {
+      "left": "Cranial drill withdrawn inactive",
+      "right": "Frazier suction inserted inactive"
+    },
+    "limitations": "No manual tool edits or new fitting performed in desktop; scrub replay only."
+  }
+}

@@ -1,0 +1,206 @@
+{
+  "schema": "local-package-independent-offline-archive-qa-v1",
+  "status": "pass",
+  "checks_passed": 17,
+  "checks": [
+    "only absent option preserves default mode",
+    "exact checksum binds immutable file identity",
+    "version, architecture and malformed/upstream checksum mismatches reject",
+    "directory and ancestor symlinks fail even with exact archive bytes",
+    "file mutation during streaming fails identity recheck",
+    "whole package integration valid",
+    "whole package integration default",
+    "whole package integration empty",
+    "whole package integration missing",
+    "whole package integration bad-checksum",
+    "whole package integration symlink",
+    "whole package integration changed-before-packager",
+    "whole package integration changed-during-packager",
+    "whole package integration replaced-during-packager",
+    "whole package integration removed-during-packager",
+    "whole package integration packager-refusal",
+    "installed packager explicit local branch does not call downloader fallback"
+  ],
+  "pins": {
+    "desktop/electron/package-macos.cjs": "75e96ba3bba9a7b3cd48b5e630e6e1529a0780a5ff8951949f3ecaa51e3f7a20",
+    "desktop/electron/local-electron-archive.cjs": "81db9314a8f7758f435c2c146949c2478acf35fcfa1cdd4b9577d64c88ed3372",
+    "desktop/electron/local-electron-archive.test.cjs": "261da496fd47f34a65fe337668b662b8214cf07c55728db82417daf61ec6c1ee",
+    "desktop/electron/electron-version.cjs": "a84547d8d5ba53343c60c460a1a9d191c269f80584ba3233826962e9c6b940ea",
+    "tests/first_local_package_archive_qa.cjs": "665447730267b13dee3b42c5581c4d872fcd2c525b5d0f60212c754cd0839fa1"
+  },
+  "installed_packager_source_sha256": "a78c083a46a12db12884a13b19a2ee0916e90759339aa03c476a4467d8d54f89",
+  "generated_integration": [
+    {
+      "mode": "valid",
+      "status": "mocked-success",
+      "events": {
+        "compiles": 2,
+        "packager": 1,
+        "signs": 2,
+        "publishes": 1,
+        "localOptions": [
+          "/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/rsl-independent-archive-CBcTy2/valid/archive"
+        ],
+        "downloads": 0,
+        "prechecks": 1,
+        "postchecks": 2
+      }
+    },
+    {
+      "mode": "default",
+      "status": "mocked-success",
+      "events": {
+        "compiles": 2,
+        "packager": 1,
+        "signs": 2,
+        "publishes": 1,
+        "localOptions": [
+          null
+        ],
+        "downloads": 0,
+        "prechecks": 1,
+        "postchecks": 2
+      }
+    },
+    {
+      "mode": "empty",
+      "status": "refused",
+      "events": {
+        "compiles": 0,
+        "packager": 0,
+        "signs": 0,
+        "publishes": 0,
+        "localOptions": [],
+        "downloads": 0,
+        "prechecks": 1,
+        "postchecks": 0
+      }
+    },
+    {
+      "mode": "missing",
+      "status": "refused",
+      "events": {
+        "compiles": 0,
+        "packager": 0,
+        "signs": 0,
+        "publishes": 0,
+        "localOptions": [],
+        "downloads": 0,
+        "prechecks": 1,
+        "postchecks": 0
+      }
+    },
+    {
+      "mode": "bad-checksum",
+      "status": "refused",
+      "events": {
+        "compiles": 0,
+        "packager": 0,
+        "signs": 0,
+        "publishes": 0,
+        "localOptions": [],
+        "downloads": 0,
+        "prechecks": 1,
+        "postchecks": 0
+      }
+    },
+    {
+      "mode": "symlink",
+      "status": "refused",
+      "events": {
+        "compiles": 0,
+        "packager": 0,
+        "signs": 0,
+        "publishes": 0,
+        "localOptions": [],
+        "downloads": 0,
+        "prechecks": 1,
+        "postchecks": 0
+      }
+    },
+    {
+      "mode": "changed-before-packager",
+      "status": "refused",
+      "events": {
+        "compiles": 2,
+        "packager": 0,
+        "signs": 0,
+        "publishes": 0,
+        "localOptions": [],
+        "downloads": 0,
+        "prechecks": 1,
+        "postchecks": 1
+      }
+    },
+    {
+      "mode": "changed-during-packager",
+      "status": "refused",
+      "events": {
+        "compiles": 2,
+        "packager": 1,
+        "signs": 0,
+        "publishes": 0,
+        "localOptions": [
+          "/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/rsl-independent-archive-CBcTy2/changed-during-packager/archive"
+        ],
+        "downloads": 0,
+        "prechecks": 1,
+        "postchecks": 2
+      }
+    },
+    {
+      "mode": "replaced-during-packager",
+      "status": "refused",
+      "events": {
+        "compiles": 2,
+        "packager": 1,
+        "signs": 0,
+        "publishes": 0,
+        "localOptions": [
+          "/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/rsl-independent-archive-CBcTy2/replaced-during-packager/archive"
+        ],
+        "downloads": 0,
+        "prechecks": 1,
+        "postchecks": 2
+      }
+    },
+    {
+      "mode": "removed-during-packager",
+      "status": "refused",
+      "events": {
+        "compiles": 2,
+        "packager": 1,
+        "signs": 0,
+        "publishes": 0,
+        "localOptions": [
+          "/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/rsl-independent-archive-CBcTy2/removed-during-packager/archive"
+        ],
+        "downloads": 0,
+        "prechecks": 1,
+        "postchecks": 2
+      }
+    },
+    {
+      "mode": "packager-refusal",
+      "status": "refused",
+      "events": {
+        "compiles": 2,
+        "packager": 1,
+        "signs": 0,
+        "publishes": 0,
+        "localOptions": [
+          "/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/rsl-independent-archive-CBcTy2/packager-refusal/archive"
+        ],
+        "downloads": 0,
+        "prechecks": 1,
+        "postchecks": 1
+      }
+    }
+  ],
+  "real_archive_read": false,
+  "downloads": false,
+  "compiler_or_signer_or_engine_executed": false,
+  "package_build_run": false,
+  "patient_payloads_read": false,
+  "limitation": "Mocked package integration verifies ordering, options, refusal and publication boundaries; ROOT must separately build and inspect the exact real app."
+}

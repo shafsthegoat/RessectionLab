@@ -1,0 +1,28 @@
+{
+  "schema": "virtual-tissue-review-initial-coverage-finding-v1",
+  "status": "reproduced",
+  "first_identified_by": "ROOT source review",
+  "source_sha256": "d8ad944f31dbb26fd1bd4dda749aad7bc02701e3c17d030ea0436f9b8820ce46",
+  "constructed_shape": [
+    7,
+    6,
+    5
+  ],
+  "target_point": [
+    2,
+    3,
+    4
+  ],
+  "target_to_source_point": [
+    2.25,
+    3,
+    4
+  ],
+  "nearest_source_unknown": true,
+  "interpolated_wm": 0.0,
+  "interpolated_gm": 0.25,
+  "actual_domain_included": true,
+  "expected_domain_included": false,
+  "patient_payloads_read": false,
+  "models_or_solver_run": false
+}

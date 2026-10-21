@@ -1,0 +1,20 @@
+{
+  "schema": "resectionlab.occupancy-key-only-timing.v1",
+  "scope": "Key construction only on a copied synthetic list of11471 built-in integer IDs; empty holds/deformation. No patient engine, actions, laws or variant replay executed.",
+  "ids": 11471,
+  "iterationsPerSample": 200,
+  "legacySeconds": [
+    0.8561627077870071,
+    0.8580445828847587,
+    0.8541624997742474
+  ],
+  "integerTupleSeconds": [
+    0.07829704228788614,
+    0.07803075015544891,
+    0.07808979228138924
+  ],
+  "legacyMedianMsPerKey": 4.2808135389350355,
+  "tupleMedianMsPerKey": 0.3904489614069462,
+  "medianKeySpeedup": 10.9638236032426,
+  "limits": "Not an end-to-end action speedup; occupancy construction, geometry, rollback, thermal work and scheduling are not measured."
+}

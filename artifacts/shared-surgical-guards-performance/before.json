@@ -1,0 +1,736 @@
+{
+  "schema": "resectionlab.surgical-action-benchmark.v1",
+  "repeats": 5,
+  "python": "3.12.12",
+  "platform": "macOS-26.5.2-arm64-arm-64bit",
+  "definitions": {
+    "reset": "Gym reset including observations",
+    "step": "clone fixed base then engine step",
+    "preview": "engine preview including view",
+    "guardSweep": "full measured action swept geometry only; excludes indirect postchecks",
+    "clone": "clone fixed base with setup history"
+  },
+  "cases": {
+    "small": {
+      "source": {},
+      "sceneId": "sha256:ff468e0c5d66c357def691702157ed0a734ff8b68e1df5e03ac9ddda7cb7b17a",
+      "labelHash": "sha256:e1540eef635f2770a0b2e86903a54fa463554153fd074582e2e938666db68acb",
+      "shape": [
+        24,
+        24,
+        24
+      ],
+      "protectedCells": 1,
+      "protectionId": "sha256:756ee5cc00c070e57826a8d08941a8693dca1ad76326de093334bc37fba24589",
+      "seed": 17,
+      "setupActions": [
+        {
+          "slot": "left",
+          "operation": "exchange",
+          "instrument": "cusa",
+          "duration": 0.1
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "parameters": {
+            "radiusMm": 0.5
+          },
+          "pose": {
+            "position": [
+              9.0,
+              9.0,
+              -5.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        }
+      ],
+      "measuredAction": {
+        "slot": "left",
+        "operation": "apply",
+        "duration": 0.2,
+        "pose": {
+          "position": [
+            9.0,
+            9.0,
+            9.0
+          ],
+          "quaternion": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "preStateId": "sha256:b0f78ffb222805c08b092d148b8ff0ef3c4ac403e7d28afbeee6cd06d8532822",
+      "outcome": {
+        "status": "accepted",
+        "reasonCode": null,
+        "stateId": "sha256:836630d31c7fd55fa28960ad291cefd5f709bb87c43a6bbf8d5922bf5799c03a"
+      },
+      "timings": {
+        "reset": {
+          "medianMs": 2.499000169336796,
+          "p95Ms": 6.191824842244387,
+          "samplesMs": [
+            6.7349998280406,
+            2.499000169336796,
+            2.45012529194355,
+            4.019124899059534,
+            2.318417187780142
+          ]
+        },
+        "clone": {
+          "medianMs": 0.07695797830820084,
+          "p95Ms": 0.08946629241108894,
+          "samplesMs": [
+            0.09220791980624199,
+            0.07849978283047676,
+            0.07695797830820084,
+            0.07604062557220459,
+            0.07599964737892151
+          ]
+        },
+        "step": {
+          "medianMs": 79.34487517923117,
+          "p95Ms": 83.22224989533424,
+          "samplesMs": [
+            83.51745828986168,
+            82.0414163172245,
+            78.6257921718061,
+            79.34487517923117,
+            75.87079191580415
+          ]
+        },
+        "preview": {
+          "medianMs": 85.8318330720067,
+          "p95Ms": 92.24003357812762,
+          "samplesMs": [
+            88.30766705796123,
+            79.68149986118078,
+            78.52262491360307,
+            93.22312520816922,
+            85.8318330720067
+          ]
+        },
+        "guardSweep": {
+          "medianMs": 0.31625013798475266,
+          "p95Ms": 0.33236704766750336,
+          "samplesMs": [
+            0.31625013798475266,
+            0.28237467631697655,
+            0.27395784854888916,
+            0.3266669809818268,
+            0.3337920643389225
+          ]
+        }
+      },
+      "profile": [
+        {
+          "file": "benchmark_surgical_actions.py",
+          "line": 64,
+          "function": "step",
+          "calls": 1,
+          "selfSeconds": 5.918000000000001e-06,
+          "cumulativeSeconds": 0.1521645
+        },
+        {
+          "file": "surgical_engine.py",
+          "line": 175,
+          "function": "step",
+          "calls": 1,
+          "selfSeconds": 4.4544000000000006e-05,
+          "cumulativeSeconds": 0.151524708
+        },
+        {
+          "file": "surgical_engine.py",
+          "line": 199,
+          "function": "_execute",
+          "calls": 1,
+          "selfSeconds": 0.000468115,
+          "cumulativeSeconds": 0.14972225
+        },
+        {
+          "file": "surgical_rl_env.py",
+          "line": 90,
+          "function": "_substep",
+          "calls": 42,
+          "selfSeconds": 0.001045877,
+          "cumulativeSeconds": 0.135257497
+        },
+        {
+          "file": "surgical_motion.py",
+          "line": 28,
+          "function": "swept_envelopes",
+          "calls": 210,
+          "selfSeconds": 0.00200627,
+          "cumulativeSeconds": 0.06800112400000001
+        },
+        {
+          "file": "surgical_engine.py",
+          "line": 308,
+          "function": "_substep",
+          "calls": 42,
+          "selfSeconds": 0.0011933940000000002,
+          "cumulativeSeconds": 0.066808378
+        },
+        {
+          "file": "surgical_rl_protection.py",
+          "line": 111,
+          "function": "sweep_hits",
+          "calls": 84,
+          "selfSeconds": 0.0004994880000000001,
+          "cumulativeSeconds": 0.034756498000000004
+        },
+        {
+          "file": "_rotation.py",
+          "line": 408,
+          "function": "__init__",
+          "calls": 2528,
+          "selfSeconds": 0.005596849,
+          "cumulativeSeconds": 0.033728134
+        },
+        {
+          "file": "surgical_engine.py",
+          "line": 116,
+          "function": "touched",
+          "calls": 126,
+          "selfSeconds": 0.000186138,
+          "cumulativeSeconds": 0.030610258
+        },
+        {
+          "file": "_rotation.py",
+          "line": 40,
+          "function": "_promote",
+          "calls": 2780,
+          "selfSeconds": 0.0022568410000000003,
+          "cumulativeSeconds": 0.026871770000000003
+        },
+        {
+          "file": "_rotation.py",
+          "line": 2799,
+          "function": "__call__",
+          "calls": 252,
+          "selfSeconds": 0.003483336,
+          "cumulativeSeconds": 0.026240952
+        },
+        {
+          "file": "surgical_engine.py",
+          "line": 111,
+          "function": "cells",
+          "calls": 126,
+          "selfSeconds": 0.000630274,
+          "cumulativeSeconds": 0.02396475
+        },
+        {
+          "file": "_array_api.py",
+          "line": 548,
+          "function": "xp_promote",
+          "calls": 2780,
+          "selfSeconds": 0.00577319,
+          "cumulativeSeconds": 0.023763037
+        },
+        {
+          "file": "geometry.py",
+          "line": 357,
+          "function": "capsule_voxel_indices",
+          "calls": 126,
+          "selfSeconds": 0.0033827210000000004,
+          "cumulativeSeconds": 0.023272505000000002
+        },
+        {
+          "file": "_rotation.py",
+          "line": 2150,
+          "function": "__getitem__",
+          "calls": 1346,
+          "selfSeconds": 0.00158623,
+          "cumulativeSeconds": 0.020869901
+        },
+        {
+          "file": "_rotation.py",
+          "line": 2757,
+          "function": "__init__",
+          "calls": 211,
+          "selfSeconds": 0.001520206,
+          "cumulativeSeconds": 0.015129069
+        },
+        {
+          "file": "surgical_motion.py",
+          "line": 11,
+          "function": "envelopes",
+          "calls": 252,
+          "selfSeconds": 0.000755387,
+          "cumulativeSeconds": 0.015072573
+        },
+        {
+          "file": "geometry.py",
+          "line": 285,
+          "function": "point_segment_distances",
+          "calls": 762,
+          "selfSeconds": 0.004303007,
+          "cumulativeSeconds": 0.012077075000000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.any>",
+          "calls": 404,
+          "selfSeconds": 0.00022550600000000002,
+          "cumulativeSeconds": 0.011919485
+        },
+        {
+          "file": "_rotation.py",
+          "line": 1715,
+          "function": "__mul__",
+          "calls": 674,
+          "selfSeconds": 0.0020414160000000003,
+          "cumulativeSeconds": 0.011818954000000001
+        },
+        {
+          "file": "surgical_motion.py",
+          "line": 38,
+          "function": "pair_conflict",
+          "calls": 42,
+          "selfSeconds": 2.4540000000000002e-05,
+          "cumulativeSeconds": 0.011637458000000002
+        },
+        {
+          "file": "surgical_motion.py",
+          "line": 39,
+          "function": "<genexpr>",
+          "calls": 210,
+          "selfSeconds": 0.00014383200000000001,
+          "cumulativeSeconds": 0.011571747
+        },
+        {
+          "file": "geometry.py",
+          "line": 294,
+          "function": "segment_segment_distance",
+          "calls": 168,
+          "selfSeconds": 0.0011942720000000001,
+          "cumulativeSeconds": 0.011427915
+        },
+        {
+          "file": "surgical_rl_protection.py",
+          "line": 90,
+          "function": "capsule_hits",
+          "calls": 336,
+          "selfSeconds": 0.006394819,
+          "cumulativeSeconds": 0.011089136000000001
+        },
+        {
+          "file": "surgical_motion.py",
+          "line": 15,
+          "function": "capsule",
+          "calls": 504,
+          "selfSeconds": 0.0007569990000000001,
+          "cumulativeSeconds": 0.010304422
+        }
+      ],
+      "rlConfig": {
+        "max_steps": 128,
+        "max_seconds": 600.0,
+        "max_action_seconds": 5.0,
+        "success_fraction": 0.95,
+        "max_healthy_removed_mm3": 1000000000.0,
+        "max_vessel_damage_mm2": 1000000000.0,
+        "max_bleeding_mm3": 1000000000.0,
+        "max_invalid_actions": 16,
+        "require_critical_coverage": true,
+        "critical_max_displacement_mm": 0.0,
+        "near_margin_mm": 2.0,
+        "local_spacing_mm": 2.0
+      },
+      "rewardConfig": {
+        "tumor_removal_weight": 1.0,
+        "healthy_removal_weight": 2.0,
+        "bone_removal_weight": 0.05,
+        "healthy_thermal_weight": 0.1,
+        "healthy_cut_weight": 1.0,
+        "deformation_weight": 1.0,
+        "vessel_damage_weight": 4.0,
+        "bleeding_weight": 1.0,
+        "protected_damage_weight": 5.0,
+        "near_contact_weight": 1.0,
+        "action_cost": 0.001,
+        "time_cost": 0.001,
+        "invalid_action_cost": 0.1,
+        "protected_blocked_weight": 1.0,
+        "volume_scale_mm3": 1000.0,
+        "area_scale_mm2": 100.0,
+        "thermal_exposure_scale": 100.0,
+        "near_contact_scale_mm3_seconds": 1000.0,
+        "time_scale_seconds": 1.0
+      }
+    },
+    "sub-06": {
+      "source": {
+        "casePath": "/Users/shaf/coding_projects/RessectionLab/testcases/history/surgical-patient-v2/patient.ressectionlab",
+        "caseSha256": "17b440a46de4dc4c42f75ac562ee71749856e3c7be1d6854325fe8a07554906f",
+        "protectionManifestSha256": "f571e98ad6a0a17cbb7eb8469cd5f03b14dbd538130c679a054be138b9cd7801"
+      },
+      "sceneId": "sha256:e292ba41b650b221c90fb582bae49cd069597b119f9635e3f881b951e1138c56",
+      "labelHash": "sha256:9930330418c439d7d042054d7419c05d3158e2422f62ce69b034044a563ecd76",
+      "shape": [
+        220,
+        220,
+        181
+      ],
+      "protectedCells": 111661,
+      "protectionId": "sha256:d8d813bf029e76d5564647c9f6f3c6c6def9b4205aa2bc4d1b2710cdda5d5e97",
+      "seed": 17,
+      "setupActions": [
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.2,
+          "parameters": {
+            "radiusMm": 3,
+            "forceN": 5.0,
+            "rpm": 60000.0,
+            "duty": 1.0
+          },
+          "pose": {
+            "position": [
+              -26.464996337890625,
+              18.441162109375,
+              -369.25
+            ],
+            "quaternion": [
+              0.0,
+              1.0,
+              -0.0,
+              -0.0
+            ]
+          }
+        }
+      ],
+      "measuredAction": {
+        "slot": "left",
+        "operation": "apply",
+        "duration": 5.0,
+        "pose": {
+          "position": [
+            -26.464996337890625,
+            18.441162109375,
+            -425.25
+          ],
+          "quaternion": [
+            0.0,
+            1.0,
+            -0.0,
+            -0.0
+          ]
+        }
+      },
+      "preStateId": "sha256:f24ae0aa268c504871e9cfea146fab8691cb31706b5f4562d24a9d6e26e01f94",
+      "outcome": {
+        "status": "partial",
+        "reasonCode": "BONE_CUTTING_IN_PROGRESS",
+        "stateId": "sha256:c6532e5b5fc62d6c1e294808c49dfca1177dc3f7a665ea5c62d13514c6d4d2bc"
+      },
+      "timings": {
+        "reset": {
+          "medianMs": 59.537042398005724,
+          "p95Ms": 63.509716372936964,
+          "samplesMs": [
+            63.865999691188335,
+            62.08458309993148,
+            59.537042398005724,
+            56.94429203867912,
+            58.636417146772146
+          ]
+        },
+        "clone": {
+          "medianMs": 0.06962474435567856,
+          "p95Ms": 0.09263306856155396,
+          "samplesMs": [
+            0.0977078452706337,
+            0.07233396172523499,
+            0.06962474435567856,
+            0.06895884871482849,
+            0.06870878860354424
+          ]
+        },
+        "step": {
+          "medianMs": 1605.0457078963518,
+          "p95Ms": 2191.7800831608474,
+          "samplesMs": [
+            1605.0457078963518,
+            1594.9630830436945,
+            2055.034916382283,
+            1580.0835411064327,
+            2225.9663748554885
+          ]
+        },
+        "preview": {
+          "medianMs": 1885.3607918135822,
+          "p95Ms": 2063.9558671042323,
+          "samplesMs": [
+            2071.943167131394,
+            2032.006666995585,
+            1764.1479996964335,
+            1885.3607918135822,
+            1747.6782500743866
+          ]
+        },
+        "guardSweep": {
+          "medianMs": 0.4802909679710865,
+          "p95Ms": 0.6468087434768677,
+          "samplesMs": [
+            0.6809588521718979,
+            0.5102083086967468,
+            0.4802909679710865,
+            0.3948332741856575,
+            0.3661252558231354
+          ]
+        }
+      },
+      "profile": [
+        {
+          "file": "benchmark_surgical_actions.py",
+          "line": 64,
+          "function": "step",
+          "calls": 1,
+          "selfSeconds": 6.375000000000001e-06,
+          "cumulativeSeconds": 3.2023020420000003
+        },
+        {
+          "file": "surgical_engine.py",
+          "line": 175,
+          "function": "step",
+          "calls": 1,
+          "selfSeconds": 6.837600000000001e-05,
+          "cumulativeSeconds": 2.922044708
+        },
+        {
+          "file": "surgical_engine.py",
+          "line": 199,
+          "function": "_execute",
+          "calls": 1,
+          "selfSeconds": 0.002060891,
+          "cumulativeSeconds": 1.5927244170000001
+        },
+        {
+          "file": "surgical_rl_env.py",
+          "line": 90,
+          "function": "_substep",
+          "calls": 168,
+          "selfSeconds": 0.004677959000000001,
+          "cumulativeSeconds": 1.5211493820000002
+        },
+        {
+          "file": "core.py",
+          "line": 87,
+          "function": "semantic_digest",
+          "calls": 1761,
+          "selfSeconds": 0.014161746000000001,
+          "cumulativeSeconds": 1.474788089
+        },
+        {
+          "file": "surgical_engine.py",
+          "line": 55,
+          "function": "state_id",
+          "calls": 5,
+          "selfSeconds": 1.8959000000000003e-05,
+          "cumulativeSeconds": 1.396502458
+        },
+        {
+          "file": "surgical_engine.py",
+          "line": 308,
+          "function": "_substep",
+          "calls": 168,
+          "selfSeconds": 0.006621522,
+          "cumulativeSeconds": 1.1291227130000001
+        },
+        {
+          "file": "surgical_engine.py",
+          "line": 116,
+          "function": "touched",
+          "calls": 1420,
+          "selfSeconds": 0.002371958,
+          "cumulativeSeconds": 0.9397282870000001
+        },
+        {
+          "file": "core.py",
+          "line": 55,
+          "function": "freeze_json",
+          "calls": 550368,
+          "selfSeconds": 0.385446008,
+          "cumulativeSeconds": 0.7709637650000001
+        },
+        {
+          "file": "core.py",
+          "line": 74,
+          "function": "<genexpr>",
+          "calls": 485069,
+          "selfSeconds": 0.115559248,
+          "cumulativeSeconds": 0.7431355430000001
+        },
+        {
+          "file": "surgical_engine.py",
+          "line": 111,
+          "function": "cells",
+          "calls": 1420,
+          "selfSeconds": 0.011297637000000001,
+          "cumulativeSeconds": 0.646496819
+        },
+        {
+          "file": "geometry.py",
+          "line": 357,
+          "function": "capsule_voxel_indices",
+          "calls": 1420,
+          "selfSeconds": 0.058667951,
+          "cumulativeSeconds": 0.6344483240000001
+        },
+        {
+          "file": "surgical_drilling_v2.py",
+          "line": 178,
+          "function": "contact_limited_pose",
+          "calls": 168,
+          "selfSeconds": 0.002721995,
+          "cumulativeSeconds": 0.6237283690000001
+        },
+        {
+          "file": "surgical_drilling_v2.py",
+          "line": 187,
+          "function": "bone_at",
+          "calls": 916,
+          "selfSeconds": 0.0014166130000000002,
+          "cumulativeSeconds": 0.6200747000000001
+        },
+        {
+          "file": "core.py",
+          "line": 78,
+          "function": "thaw_json",
+          "calls": 550368,
+          "selfSeconds": 0.238821993,
+          "cumulativeSeconds": 0.619174285
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.isinstance>",
+          "calls": 2798734,
+          "selfSeconds": 0.304514534,
+          "cumulativeSeconds": 0.590783513
+        },
+        {
+          "file": "geometry.py",
+          "line": 319,
+          "function": "_segment_cell_distances",
+          "calls": 1388,
+          "selfSeconds": 0.280362734,
+          "cumulativeSeconds": 0.40026036200000004
+        },
+        {
+          "file": "surgical_motion.py",
+          "line": 28,
+          "function": "swept_envelopes",
+          "calls": 840,
+          "selfSeconds": 0.009590603000000001,
+          "cumulativeSeconds": 0.305654684
+        },
+        {
+          "file": "<frozen abc>",
+          "line": 117,
+          "function": "__instancecheck__",
+          "calls": 707272,
+          "selfSeconds": 0.16962122300000002,
+          "cumulativeSeconds": 0.28626897900000003
+        },
+        {
+          "file": "surgical_occupancy.py",
+          "line": 27,
+          "function": "material_ids",
+          "calls": 1420,
+          "selfSeconds": 0.048114269,
+          "cumulativeSeconds": 0.224177586
+        },
+        {
+          "file": "surgical_effects.py",
+          "line": 328,
+          "function": "finalize_action",
+          "calls": 1,
+          "selfSeconds": 8.625000000000001e-06,
+          "cumulativeSeconds": 0.21194258300000002
+        },
+        {
+          "file": "surgical_effects.py",
+          "line": 69,
+          "function": "_bone_components",
+          "calls": 1,
+          "selfSeconds": 0.070892985,
+          "cumulativeSeconds": 0.21193366700000002
+        },
+        {
+          "file": "surgical_rl_protection.py",
+          "line": 111,
+          "function": "sweep_hits",
+          "calls": 336,
+          "selfSeconds": 0.0025857270000000003,
+          "cumulativeSeconds": 0.19889399800000002
+        },
+        {
+          "file": "surgical_occupancy.py",
+          "line": 16,
+          "function": "__getitem__",
+          "calls": 1420,
+          "selfSeconds": 0.110401835,
+          "cumulativeSeconds": 0.175200814
+        },
+        {
+          "file": "_rotation.py",
+          "line": 408,
+          "function": "__init__",
+          "calls": 10088,
+          "selfSeconds": 0.025501163,
+          "cumulativeSeconds": 0.149889491
+        }
+      ],
+      "rlConfig": {
+        "max_steps": 128,
+        "max_seconds": 600.0,
+        "max_action_seconds": 5.0,
+        "success_fraction": 0.95,
+        "max_healthy_removed_mm3": 1000000000.0,
+        "max_vessel_damage_mm2": 1000000000.0,
+        "max_bleeding_mm3": 1000000000.0,
+        "max_invalid_actions": 16,
+        "require_critical_coverage": true,
+        "critical_max_displacement_mm": 0.0,
+        "near_margin_mm": 2.0,
+        "local_spacing_mm": 2.0
+      },
+      "rewardConfig": {
+        "tumor_removal_weight": 1.0,
+        "healthy_removal_weight": 2.0,
+        "bone_removal_weight": 0.05,
+        "healthy_thermal_weight": 0.1,
+        "healthy_cut_weight": 1.0,
+        "deformation_weight": 1.0,
+        "vessel_damage_weight": 4.0,
+        "bleeding_weight": 1.0,
+        "protected_damage_weight": 5.0,
+        "near_contact_weight": 1.0,
+        "action_cost": 0.001,
+        "time_cost": 0.001,
+        "invalid_action_cost": 0.1,
+        "protected_blocked_weight": 1.0,
+        "volume_scale_mm3": 1000.0,
+        "area_scale_mm2": 100.0,
+        "thermal_exposure_scale": 100.0,
+        "near_contact_scale_mm3_seconds": 1000.0,
+        "time_scale_seconds": 1.0
+      }
+    }
+  }
+}

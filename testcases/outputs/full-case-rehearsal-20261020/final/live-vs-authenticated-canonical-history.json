@@ -1,0 +1,42 @@
+{
+  "schema": "resectionlab.original-live-vs-authenticated-canonical-history.v1",
+  "status": "passed",
+  "utc": "2026-10-21T05:14:21.164257+00:00",
+  "nativeSha256": "095659e54f381355e8f5655b6c5907990b2ac4767dc9ce58297e3bc4d6f3268d",
+  "implementationFingerprint": "c9f569bb96ade6b23dcedf29223484757151b084be6ebc1c205cc975a5e74fe0",
+  "originalLiveHistorySha256": "e601eba917d6cc84ddf1e6d97659cb3db8d2b1456e2ffe374de3a1ec15ebdc80",
+  "canonicalReceiptSha256": "7ddca4f9606b21f597c740d7c5469a1a513ed8cc300b90f3ba19cfd89d1e6d63",
+  "scriptSha256": "bafdf438f53930ccbf35262f24f6ded55bbe01e57f7b9b5bc9af42efa80972cc",
+  "authenticatedManifestSha256": "4dd2317b579f6d2bf6786be26e9a6083967cc313f42fea36607075edc2cbe04e",
+  "snapshotHash": "sha256:a1442781761c1934c16ccc8d4e4d8064578786a2b33aec1ab3939db1f240f892",
+  "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+  "actionsCompared": 2148,
+  "allOutcomeFieldsCompared": true,
+  "exactEqualOutcomeFieldCounts": {
+    "action": 2148,
+    "completedFraction": 2148,
+    "contactPosition": 2148,
+    "deltas": 2148,
+    "elapsedSeconds": 2148,
+    "events": 2148,
+    "reason": 2148,
+    "reasonCode": 2148,
+    "stateAfter": 2148,
+    "stateBefore": 2148,
+    "status": 2148
+  },
+  "nonNullContactPositionsCompared": 202,
+  "eventsCompared": 120162,
+  "omittedOutcomeFields": [],
+  "mismatchCount": 0,
+  "mismatches": [],
+  "semantics": "Full recursive JSON type/value comparison; float IEEE754 bits including signed zero; list/event ordering preserved; object key order ignored.",
+  "authentication": "Existing private key0600/same owner, bounded NOFOLLOW reads, HMAC-SHA256 over complete compressed manifest; sealed source/snapshot/implementation/state-chain identity checks. No key, MAC or key digest disclosed.",
+  "engineCalls": 0,
+  "cacheWritesOrTouches": 0,
+  "limitations": [
+    "Comparison authenticates published canonical history and compares original preserved outcomes; it performs no physics replay and no direct stateblob decoding.",
+    "Local cache HMAC establishes existing local cache provenance; private key compromise is outside this evidence claim.",
+    "This supplements the separate original-live vs canonical JSONL comparison; GUI/video acceptance remains separate."
+  ]
+}

@@ -1,0 +1,197 @@
+{
+  "schema": "resectionlab.surgical-rl-verification-receipt.v1",
+  "verifiedAtUtc": "2026-10-18T08:02:49.475016+00:00",
+  "status": "passed",
+  "sourceCase": "/Users/shaf/coding_projects/RessectionLab/outputs/surgical-patient-v2/patient.ressectionlab",
+  "sourceFileSha256": "17b440a46de4dc4c42f75ac562ee71749856e3c7be1d6854325fe8a07554906f",
+  "sceneId": "sha256:e292ba41b650b221c90fb582bae49cd069597b119f9635e3f881b951e1138c56",
+  "sourceUnchanged": true,
+  "arraysUnchanged": true,
+  "reportPath": "outputs/surgical-rl-patient/verification.json",
+  "reportSha256": "021d47b47a93b016e4a38ffaec921caaa2cac7ed15e262ba154be4b085b0c83b",
+  "protectionManifestSha256": "f571e98ad6a0a17cbb7eb8469cd5f03b14dbd538130c679a054be138b9cd7801",
+  "tests": {
+    "backend": 278,
+    "desktop": 681,
+    "desktopBuild": "passed",
+    "commands": [
+      ".venv/bin/python -m pytest tests/test_surgical_*.py tests/test_rehearsal_episode.py tests/test_imaging.py tests/test_workspace_imaging.py -q",
+      "cd desktop && pnpm test",
+      "cd desktop && pnpm build",
+      "PYTHONPATH=src .venv/bin/python scripts/verify_surgical_rl_patient.py"
+    ]
+  },
+  "elapsedWallSeconds": 122.15497975004837,
+  "processPeakRssBytes": 533987328,
+  "episodes": {
+    "drill": {
+      "resetWallSeconds": 0.05666720774024725,
+      "medianActionWallSeconds": 0.7954940830823034,
+      "maxActionWallSeconds": 1.5722953332588077,
+      "metrics": {
+        "tumor_removed_mm3": 0.0,
+        "healthy_removed_mm3": 0.0,
+        "bone_removed_mm3": 34.0,
+        "healthy_cut_mm2": 0.0,
+        "deformation_injury_mm3": 0.0,
+        "healthy_thermal_exposure": 0.0,
+        "vessel_damage_mm2": 0.0,
+        "bleeding_generated_mm3": 0.0,
+        "protected_damage_mm3": 0.0,
+        "near_contact_exposure_mm3_seconds": 0.0,
+        "elapsed_seconds": 5.200000000000003
+      },
+      "finalRewardTerms": {
+        "tumor_removal": 0.0,
+        "healthy_removal": -0.0,
+        "bone_removal": -0.0017000000000000001,
+        "healthy_thermal": -0.0,
+        "healthy_cut": -0.0,
+        "deformation": -0.0,
+        "vessel_damage": -0.0,
+        "bleeding": -0.0,
+        "protected_damage": -0.0,
+        "near_contact": -0.0,
+        "time": -0.005000000000000003,
+        "action": -0.001,
+        "invalid_action": 0.0,
+        "protected_blocked": 0.0
+      },
+      "jsonReplayVerified": true,
+      "freshProcessReplayVerified": false,
+      "engineTransitionsIdentical": true,
+      "protectedApproachBlocked": false
+    },
+    "vessel": {
+      "resetWallSeconds": 0.05577154224738479,
+      "medianActionWallSeconds": 0.06839466607198119,
+      "maxActionWallSeconds": 0.869307667016983,
+      "metrics": {
+        "tumor_removed_mm3": 0.0,
+        "healthy_removed_mm3": 0.0,
+        "bone_removed_mm3": 0.0,
+        "healthy_cut_mm2": 5.0,
+        "deformation_injury_mm3": 0.0,
+        "healthy_thermal_exposure": 111.68312757201652,
+        "vessel_damage_mm2": 5.0,
+        "bleeding_generated_mm3": 1.722581711058396,
+        "protected_damage_mm3": 0.0,
+        "near_contact_exposure_mm3_seconds": 0.0,
+        "elapsed_seconds": 9.999999999999932
+      },
+      "finalRewardTerms": {
+        "tumor_removal": 0.0,
+        "healthy_removal": -0.0,
+        "bone_removal": -0.0,
+        "healthy_thermal": -0.0,
+        "healthy_cut": -0.0,
+        "deformation": -0.0,
+        "vessel_damage": -0.0,
+        "bleeding": -0.0,
+        "protected_damage": -0.0,
+        "near_contact": -0.0,
+        "time": -0.001999999999999993,
+        "action": -0.001,
+        "invalid_action": 0.0,
+        "protected_blocked": 0.0
+      },
+      "jsonReplayVerified": true,
+      "freshProcessReplayVerified": false,
+      "engineTransitionsIdentical": true,
+      "protectedApproachBlocked": false
+    },
+    "brain": {
+      "resetWallSeconds": 0.054347459226846695,
+      "medianActionWallSeconds": 0.019925457891076803,
+      "maxActionWallSeconds": 0.05690049985423684,
+      "metrics": {
+        "tumor_removed_mm3": 0.0,
+        "healthy_removed_mm3": 0.0,
+        "bone_removed_mm3": 0.0,
+        "healthy_cut_mm2": 0.0,
+        "deformation_injury_mm3": 0.0,
+        "healthy_thermal_exposure": 0.0,
+        "vessel_damage_mm2": 0.0,
+        "bleeding_generated_mm3": 0.0,
+        "protected_damage_mm3": 0.0,
+        "near_contact_exposure_mm3_seconds": 1.7533333333333334,
+        "elapsed_seconds": 0.5133333333333332
+      },
+      "finalRewardTerms": {
+        "tumor_removal": 0.0,
+        "healthy_removal": -0.0,
+        "bone_removal": -0.0,
+        "healthy_thermal": -0.0,
+        "healthy_cut": -0.0,
+        "deformation": -0.0,
+        "vessel_damage": -0.0,
+        "bleeding": -0.0,
+        "protected_damage": -0.0,
+        "near_contact": -0.0017533333333333333,
+        "time": -0.00011333333333333318,
+        "action": -0.001,
+        "invalid_action": 0.0,
+        "protected_blocked": -1.0
+      },
+      "jsonReplayVerified": true,
+      "freshProcessReplayVerified": true,
+      "engineTransitionsIdentical": false,
+      "protectedApproachBlocked": true
+    },
+    "cusa": {
+      "resetWallSeconds": 0.05790062481537461,
+      "medianActionWallSeconds": 1.5724439998157322,
+      "maxActionWallSeconds": 2.449654582887888,
+      "metrics": {
+        "tumor_removed_mm3": 27.0,
+        "healthy_removed_mm3": 0.0,
+        "bone_removed_mm3": 710.0,
+        "healthy_cut_mm2": 0.0,
+        "deformation_injury_mm3": 0.0,
+        "healthy_thermal_exposure": 0.0,
+        "vessel_damage_mm2": 0.0,
+        "bleeding_generated_mm3": 0.0,
+        "protected_damage_mm3": 0.0,
+        "near_contact_exposure_mm3_seconds": 0.0,
+        "elapsed_seconds": 52.10000000000046
+      },
+      "finalRewardTerms": {
+        "tumor_removal": 0.027,
+        "healthy_removal": -0.0,
+        "bone_removal": -0.0,
+        "healthy_thermal": -0.0,
+        "healthy_cut": -0.0,
+        "deformation": -0.0,
+        "vessel_damage": -0.0,
+        "bleeding": -0.0,
+        "protected_damage": -0.0,
+        "near_contact": -0.0,
+        "time": -0.0009999999999997726,
+        "action": -0.001,
+        "invalid_action": 0.0,
+        "protected_blocked": 0.0
+      },
+      "jsonReplayVerified": true,
+      "freshProcessReplayVerified": false,
+      "engineTransitionsIdentical": true,
+      "protectedApproachBlocked": false
+    }
+  },
+  "defaultVesselDamageBoundary": {
+    "status": "passed",
+    "terminationReason": "damage_budget:vessel_damage_mm2",
+    "reward": -0.25200658302789525,
+    "preRemovedCells": 0
+  },
+  "limitations": [
+    "Software contract verification, not clinical validation",
+    "Damaging test episodes use deliberately relaxed budgets",
+    "Cached segmentation estimates are unreviewed unless their source states otherwise",
+    "Policy observations are partial; no policy was trained"
+  ],
+  "sourceCodeSha256": {
+    "src/resectionlab/surgical_rl_env.py": "ac46cb3874a346a07b23e916d31587ef5cce98699042a63e4b11de1fce8e17f0",
+    "src/resectionlab/surgical_rl_protection.py": "8eab69c6e0d76050a0348c5f1c271fc760e06a7b178edbe476be0d085444eadb",
+    "src/resectionlab/surgical_rl_rewards.py": "c18f5af90e525241b4f973658f7e89332184d7f740aa54f8ba8321738bc7267c"
+  }
+}

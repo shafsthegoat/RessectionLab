@@ -1,0 +1,43 @@
+[
+  {
+    "attempt": "initial-full-ui-motion",
+    "report": "report.json",
+    "passed": false,
+    "failedCheck": "native save and reopen preserves presentation cursor scope and layer choices",
+    "cause": "Verifier exact-text Open selector did not account for its keyboard-shortcut child; actual Save wrote valid preferences. Corrected span-based selector in next run.",
+    "sourceUnchanged": true,
+    "rendererErrors": [],
+    "allOtherChecksPassed": true
+  },
+  {
+    "attempt": "focused-save-recheck-1",
+    "report": "recheck/report.json",
+    "passed": false,
+    "failedCheck": "native save and reopen preserves presentation cursor scope and layer choices",
+    "cause": "Verifier readiness predicate accepted old canvas before async Open transition; cursor assertion ran during Preparing native vessels spinner. Added explicit loading transition gate before rebuilt ready check.",
+    "sourceUnchanged": true,
+    "rendererErrors": []
+  },
+  {
+    "attempt": "focused-defaults-save-final",
+    "report": "recheck-final/report.json",
+    "passed": true,
+    "sourceUnchanged": true,
+    "resolves": [
+      "exact Open selector",
+      "async loading readiness"
+    ]
+  },
+  {
+    "attempt": "independent-mra-full",
+    "report": "mra/report.json",
+    "passed": true,
+    "sourceUnchanged": true
+  },
+  {
+    "attempt": "mra-superior-minimum-only",
+    "report": "mra-superior/report.json",
+    "passed": true,
+    "sourceUnchanged": true
+  }
+]

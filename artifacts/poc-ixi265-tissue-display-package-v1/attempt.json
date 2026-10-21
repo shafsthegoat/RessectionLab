@@ -1,0 +1,28 @@
+{
+  "status": "display_only_candidate_packaged_unaccepted",
+  "supervisor_pid": 22755,
+  "resources": {
+    "threads": 2,
+    "rss_limit_bytes": 2147483648,
+    "seconds": 300.0,
+    "available_memory_floor_bytes": 1073741824,
+    "output_temporary_limit_bytes": 536870912,
+    "disk_floor_bytes": 53687091200,
+    "sample_interval_seconds": 0.2,
+    "attempts": 1,
+    "memory_scope": "supervising_Python_plus_worker_and_recursive_descendants"
+  },
+  "worker_pid": 22758,
+  "source_and_result_inputs_unchanged": true,
+  "elapsed_seconds": 11.73202387499623,
+  "exit_code": 0,
+  "peak_supervisor_and_worker_rss_bytes_sampled": 1523679232,
+  "minimum_available_memory_bytes_sampled": 6189219840,
+  "minimum_free_disk_bytes_sampled": 343208382464,
+  "output_bytes": 113786747,
+  "sampling_limitation": "Between-sample peaks are not a hard reservation",
+  "anatomy_accepted": false,
+  "host_accepted": false,
+  "growth_use_accepted": false,
+  "finished_utc": "2026-10-16T08:43:05.922834+00:00"
+}

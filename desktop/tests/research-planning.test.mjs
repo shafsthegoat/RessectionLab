@@ -1,0 +1,18 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {planReplayPosition,planDecisionReason} from '../src/research-planning-data.ts';
+
+test('aligns decision replay while rejected commands do not advance native history',()=>{
+  const plan={prefixActions:12,stopReason:'exact_execution_rejected',decisions:[{actionId:'z-',status:'accepted'},{actionId:'z-',status:'rejected',reason:'SHAFT_COLLISION'}]};
+  assert.equal(planReplayPosition(plan,0),12);assert.equal(planReplayPosition(plan,1),13);
+  assert.equal(planReplayPosition(plan,2),13);assert.equal(planReplayPosition(plan,6),13);
+  assert.match(planDecisionReason(plan,6),/Execution refused: SHAFT_COLLISION/);
+  assert.throws(()=>planReplayPosition(plan,-1));assert.throws(()=>planReplayPosition(plan,1.5));
+});
+test('STOP stays distinct from task completion and truncated limits',()=>{
+  const stopped={prefixActions:3,stopReason:'policy_stop',decisions:[{actionId:'STOP',status:'accepted'}]};
+  assert.match(planDecisionReason(stopped,0),/Shared/);assert.match(planDecisionReason(stopped,1),/Residual target remains unassessed/);
+  assert.equal(planReplayPosition(stopped,6),4);
+  const capped={...stopped,stopReason:'decision_limit',decisions:[{actionId:'apply_here',status:'accepted'}]};
+  assert.match(planDecisionReason(capped,6),/decision limit/);
+});

@@ -1,0 +1,18 @@
+{
+  "utc": "2026-10-20T23:31:18.991461+00:00",
+  "commit": "28962e66647760043d123d3e3326e0a29b7b6a08",
+  "failedPinnedSha256": "39f0bbe9acc3d53582517d1fd35141692a9246dfda3dceaa0a7d5e52f8ce3e37",
+  "correctedPinnedSha256": "4b8db951363f29efe463e393ff60c019612636c5dd06bde14f9557e538b12b4f",
+  "onlyChange": "accept compiler cellvars as well as varnames for locally imported captured helper",
+  "independentReviewerApproved": true,
+  "actualFailedAttempt": {
+    "position": 2064,
+    "stateId": "sha256:f992eafa42e1dd14692e053ad6d8a1e48ccb1e6d3fdda626e2edb6e255c617c8",
+    "helperImported": false,
+    "proofExists": false,
+    "checkpointExists": false,
+    "pauseFlagPresent": true,
+    "consolePromptConfirmed": true
+  },
+  "failedVersionPreserved": "testcases/outputs/full-case-rehearsal-20261020/review/cusa-path-variants-loader-first-validation-failure.py"
+}

@@ -1,0 +1,35 @@
+{
+  "desktop": {
+    "main": 164,
+    "renderer": 392,
+    "viewer": 155,
+    "total": 711,
+    "failed": 0
+  },
+  "python": {
+    "combined_run_passed": 210,
+    "new_assumption_control_passed": 1,
+    "final_comparator_suite_passed": 5,
+    "distinct_passed": 211
+  },
+  "productionBuild": "passed",
+  "localLogs": {
+    "desktop-tests.log": {
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/anatomy-integration-v3/desktop-tests.log",
+      "sha256": "390e0f233a078e8b207e818ca687a8fd6d6c53b566e9856ac8ad28558cfa9c65"
+    },
+    "python-tests.log": {
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/anatomy-integration-v3/python-tests.log",
+      "sha256": "e8516727746aee04fc25c5d8dafdaa3e5be9e70e1f245ce4389d617ecb969d0e"
+    },
+    "comparison-final-tests.log": {
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/anatomy-integration-v3/comparison-final-tests.log",
+      "sha256": "88d3e4508bb91705f65f4361c8dbbce4cf33100867a1250dced9ecb4f3825924"
+    },
+    "build-final.log": {
+      "path": "/Users/shaf/coding_projects/RessectionLab/outputs/anatomy-integration-v3/build-final.log",
+      "sha256": "5d74636d25958669e6051438cb5a9083aa48ea9300296d19ee353086ffc10771"
+    }
+  },
+  "actualMarginUI": "preview, commit, mask identity, native save and reopen passed"
+}

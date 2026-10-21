@@ -1,0 +1,143 @@
+{
+  "sourceSha256": "ff5a49b8706a8ccda08d8c3e82dad3e079f85dea98cb6bd40783d2262eec9838",
+  "sourceOnlyNoReplay": true,
+  "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+  "ownedTarget": {
+    "originalOwnedCells": 43573,
+    "removedOwnedCells": 0,
+    "retainedOwnedCells": 43573,
+    "originalOwnedMm3": 43573.0,
+    "removedOwnedMm3": 0.0,
+    "retainedOwnedMm3": 43573.0,
+    "residualConnectedRegions": [
+      {
+        "id": 1,
+        "cells": 43572,
+        "volumeMm3": 43572.0,
+        "sourceIndexBoundsInclusive": [
+          [
+            102,
+            103,
+            104
+          ],
+          [
+            152,
+            165,
+            144
+          ]
+        ]
+      },
+      {
+        "id": 2,
+        "cells": 1,
+        "volumeMm3": 1.0,
+        "sourceIndexBoundsInclusive": [
+          [
+            139,
+            141,
+            110
+          ],
+          [
+            139,
+            141,
+            110
+          ]
+        ]
+      }
+    ],
+    "connectivity": 6,
+    "coordinates": "original source-grid ownership, independent of display displacement"
+  },
+  "rawAnnotations": {
+    "verifiedSameSourceGridAndRasAffine": true,
+    "uniqueRemovedOwnedSourceCells": 0,
+    "rawTargetAnnotationUnionCells": 45115,
+    "groups": {
+      "compartments": {
+        "bone": {
+          "originalAnnotationCells": 753872,
+          "removedSourceCellsWithinAnnotation": 0,
+          "retainedSourceCellsWithinAnnotation": 753872,
+          "originalAnnotationMm3": 753872.0,
+          "removedSourceMembershipMm3": 0.0,
+          "declaredTargetName": false,
+          "overlapWithRawTargetAnnotationCells": 1184,
+          "removedSourceCellsWithinRawTargetOverlap": 0
+        },
+        "brain": {
+          "originalAnnotationCells": 1667660,
+          "removedSourceCellsWithinAnnotation": 0,
+          "retainedSourceCellsWithinAnnotation": 1667660,
+          "originalAnnotationMm3": 1667660.0,
+          "removedSourceMembershipMm3": 0.0,
+          "declaredTargetName": false,
+          "overlapWithRawTargetAnnotationCells": 44496,
+          "removedSourceCellsWithinRawTargetOverlap": 0
+        },
+        "tumor": {
+          "originalAnnotationCells": 45115,
+          "removedSourceCellsWithinAnnotation": 0,
+          "retainedSourceCellsWithinAnnotation": 45115,
+          "originalAnnotationMm3": 45115.0,
+          "removedSourceMembershipMm3": 0.0,
+          "declaredTargetName": true,
+          "overlapWithRawTargetAnnotationCells": 45115,
+          "removedSourceCellsWithinRawTargetOverlap": 0
+        },
+        "vessels": {
+          "originalAnnotationCells": 141681,
+          "removedSourceCellsWithinAnnotation": 0,
+          "retainedSourceCellsWithinAnnotation": 141681,
+          "originalAnnotationMm3": 141681.0,
+          "removedSourceMembershipMm3": 0.0,
+          "declaredTargetName": false,
+          "overlapWithRawTargetAnnotationCells": 364,
+          "removedSourceCellsWithinRawTargetOverlap": 0
+        }
+      },
+      "source_compartments": {
+        "bone": {
+          "originalAnnotationCells": 753872,
+          "removedSourceCellsWithinAnnotation": 0,
+          "retainedSourceCellsWithinAnnotation": 753872,
+          "originalAnnotationMm3": 753872.0,
+          "removedSourceMembershipMm3": 0.0,
+          "declaredTargetName": false,
+          "overlapWithRawTargetAnnotationCells": 1184,
+          "removedSourceCellsWithinRawTargetOverlap": 0
+        },
+        "brain": {
+          "originalAnnotationCells": 1667660,
+          "removedSourceCellsWithinAnnotation": 0,
+          "retainedSourceCellsWithinAnnotation": 1667660,
+          "originalAnnotationMm3": 1667660.0,
+          "removedSourceMembershipMm3": 0.0,
+          "declaredTargetName": false,
+          "overlapWithRawTargetAnnotationCells": 44496,
+          "removedSourceCellsWithinRawTargetOverlap": 0
+        },
+        "tumor": {
+          "originalAnnotationCells": 45115,
+          "removedSourceCellsWithinAnnotation": 0,
+          "retainedSourceCellsWithinAnnotation": 45115,
+          "originalAnnotationMm3": 45115.0,
+          "removedSourceMembershipMm3": 0.0,
+          "declaredTargetName": true,
+          "overlapWithRawTargetAnnotationCells": 45115,
+          "removedSourceCellsWithinRawTargetOverlap": 0
+        },
+        "vessels": {
+          "originalAnnotationCells": 141681,
+          "removedSourceCellsWithinAnnotation": 0,
+          "retainedSourceCellsWithinAnnotation": 141681,
+          "originalAnnotationMm3": 141681.0,
+          "removedSourceMembershipMm3": 0.0,
+          "declaredTargetName": false,
+          "overlapWithRawTargetAnnotationCells": 364,
+          "removedSourceCellsWithinRawTargetOverlap": 0
+        }
+      }
+    },
+    "meaning": "Nonexclusive memberships of removed source cells in original supplied masks. Counts may overlap and must not be summed as removed volume. Raw brain/target overlap is unreviewed annotation overlap, not clinical healthy-tissue truth. These counts do not change the OWNED target denominator."
+  }
+}

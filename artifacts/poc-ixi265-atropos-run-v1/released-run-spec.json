@@ -1,0 +1,18 @@
+{
+  "released_single_attempt": true,
+  "paths": {
+    "T1": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/originals/IXI265-T1.nii.gz",
+    "brain_mask": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/synthstrip/brain_mask.nii.gz",
+    "host_bundle": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/IXI265-Guys-0845.ressectionlab"
+  },
+  "metadata": {
+    "patient_group": "IXI:265",
+    "role": "TRAIN",
+    "training_admitted": false,
+    "T1_sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+    "brain_mask_sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+    "host_sha256": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1"
+  },
+  "runtime": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.tools/poc-antspyx-0.6.3-py312-v1/runtime",
+  "output": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265-atropos-v1"
+}

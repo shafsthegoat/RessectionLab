@@ -1,0 +1,24 @@
+{
+  "codeCommit": "1ae5f0044c3973fe7bdde27951f37531cc5225e3",
+  "rootRelatedSuites": {
+    "passed": 56,
+    "wallSeconds": 33.74
+  },
+  "independentDirectorReview": {
+    "agent": "acceptance_review",
+    "passed": 44,
+    "wallSeconds": 27.47,
+    "finding": "No actionable issue."
+  },
+  "observedPatientIssue": "The still-inserted Frazier lay7.071mm laterally from the next actual access; the existing declared10mm coordination rule was not scheduled proactively.",
+  "proposalReloadProof": "primary-v2/assistant-clearance-reload-proof.json",
+  "actualExecutionProof": "primary-v2/assistant-retirement-execution-proof.json",
+  "actualRetirementPositions": [
+    877,
+    878,
+    879
+  ],
+  "allRetirementActionsAccepted": true,
+  "retirementRemovedSourceCells": 0,
+  "scope": "Current actual public-action execution plus independent engineering/static review. Final canonical and GUI acceptance remain pending."
+}

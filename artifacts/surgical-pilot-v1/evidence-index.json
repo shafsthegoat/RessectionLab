@@ -1,0 +1,128 @@
+{
+  "schema": "resectionlab.surgical-pilot-evidence.v1",
+  "preparation_sha256": "195327d1222cbd9ac8f8e032f5335d77524cda8522dc739756a5b8d9c17fc823",
+  "source_hashes": {
+    "scripts/train_surgical_pilot.py": "b9a31c2f8abf263628d11ae936239426e6387032c713cff0aebd44f707f4ce44",
+    "src/resectionlab/surgical_adapters.py": "2b995809d6fbdea976268f091b86ab31086e87c0b389b91255278a59797a4604",
+    "src/resectionlab/surgical_bridge.py": "39eb2a1c3510c893648c5001a8a2e7d0eecff3a8025c8009920bff3324b16ef1",
+    "src/resectionlab/surgical_deformation_v2.py": "eaef99762a37c1b2ec6db610cf2ad17cdbae6120ee6f250facf55fefd0b72074",
+    "src/resectionlab/surgical_drilling_v2.py": "d246e0d02b532b9b64aee79c21151fb16660f55ecca0b626111a13cbbd006af8",
+    "src/resectionlab/surgical_effects.py": "9bd6f16909508f10fdc0df0a50e4c998658ad6d10cf375efdcf309ae5ba9c9d8",
+    "src/resectionlab/surgical_engine.py": "54416ab156d3cc871a45fa8f2798735f28fb243701b58395335137f7066632cd",
+    "src/resectionlab/surgical_environment.py": "0d267ceb0c4e6b427481c1633659d551453f27938043d0d6867fe7238604b9f2",
+    "src/resectionlab/surgical_motion.py": "094da28de41cb3e2af4073fb559d6fe7d994bb2265d8f0ca5930ef93fe205536",
+    "src/resectionlab/surgical_occupancy.py": "486b112615bf33ab857dbe729d947cfbdaa463fa9544b5b3ff96e3b7d5a80fbd",
+    "src/resectionlab/surgical_patient.py": "4cbf791b37828009fb6a21f43c4f142818ff685afd4f76be053dd2792351b382",
+    "src/resectionlab/surgical_physics.py": "383de1e8b42fd549623314e6c31a5710c88269cc496a43ec3d53c96bab462310",
+    "src/resectionlab/surgical_physics_v2.py": "f57ab872a6d58a0d2a70a685cbc7720df27f1953adc1ed97a042b34571283e5e",
+    "src/resectionlab/surgical_rl_env.py": "01ed51dfa6a4bb9a889904a6aa377dc0a4b86c2a0bbef8477a3482b0226d2251",
+    "src/resectionlab/surgical_rl_protection.py": "06bf489002c4a30a183a454775db39fbb595a0e6695c1396fb5aded6a9d5e4c8",
+    "src/resectionlab/surgical_rl_rewards.py": "c18f5af90e525241b4f973658f7e89332184d7f740aa54f8ba8321738bc7267c",
+    "src/resectionlab/surgical_scene.py": "85cb4e3d4f2c07a2430fb2b722402ea4aa3a2f2aa8aec478edfc971af374a906",
+    "src/resectionlab/surgical_telemetry.py": "8718352f1b29a84c37221375e81cae1d34f746c39dee2248c2927a654bc340cf",
+    "src/resectionlab/surgical_tools.py": "472ba5c501f337ef7bb857343ed0efef7c7bf25048783a5622adf454473aa75d",
+    "src/resectionlab/surgical_vessels_v2.py": "23924ca171dc1ebe6bae8c60ca1d977387c27cfd7ccc55b819ba526037f3624e",
+    "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/imaging.py": "d9b76a1300bf48cbc4429f3a99686ce24cff011303c448dc72406f14bfe97d8c",
+    "manifests/cohort_registry.json": "44e3efc609524b723a5640c93455363b0f6fe03903f2594c112cf57ea8ba6cc5",
+    "outputs/surgical-patient-v2/drill-verification.json": "ef56d560899def96aea9dfc126e062e72b51d067338f8066b8df18ad3de5682c",
+    "outputs/surgical-patient-sub06/verification.json": "56e11ef79f10bb62bfb416b2e174b27136a9de4d4ca12b91700cceb213edd704",
+    "outputs/surgical-patient-v2/patient.ressectionlab": "17b440a46de4dc4c42f75ac562ee71749856e3c7be1d6854325fe8a07554906f",
+    "outputs/surgical-patient-v2/rl-protection.json": "f571e98ad6a0a17cbb7eb8469cd5f03b14dbd538130c679a054be138b9cd7801",
+    "outputs/surgical-patient-v2/rl-protection.npz": "c186c5fb35aa4f660e2cc2398b73139aa18d9ede8e5f57a6093159703911015e",
+    "outputs/poc-cases/UCSF-PDGM-0004-standard-v2.ressectionlab": "6638da3da187599b1094c58d69a84434e881d7ff07a0ca22798be6a8b6115ea3",
+    "outputs/standard-environments/UCSF-PDGM-0004/rl-protection.json": "4b6d56681d807e4a89e2a7e3ce9a412d561307eea2de3416a4dbfb5cb176c00f",
+    "outputs/standard-environments/UCSF-PDGM-0004/rl-protection.npz": "4c437220f2d32b7f85087f857b488c6de792d3e500dfe0a94641309eb01a28c3"
+  },
+  "artifacts": {
+    "RESULT.md": {
+      "sha256": "394690f3985b94df029d64bc9df59e9c59fbdf8ffd8ce684556b0b63225065ae",
+      "bytes": 7717
+    },
+    "all-seed-assessment.csv": {
+      "sha256": "8451106fefe80a8fcce26f98307b70b8dc15b02d6227b2ad82c5444935e876f2",
+      "bytes": 6085
+    },
+    "analyze_result.py": {
+      "sha256": "4546e7b17757ea936f52e2be93edae51677cd2a3f9fe65842e74d6c1d5ba0189",
+      "bytes": 11266
+    },
+    "case-method-comparison.csv": {
+      "sha256": "7fd061a8875782e1cc8ee30e5822a473376fddbbeca9992d96cc9c5a356f7d88",
+      "bytes": 1930
+    },
+    "launch-gate.json": {
+      "sha256": "db6f79eeb3135d95f07812e9c1d80eea5d7a5a1c8b641fa482e2e246085ee7a8",
+      "bytes": 1258
+    },
+    "policy-seed-17.pt": {
+      "sha256": "554c3c743dd8ede2b3aa9f630ca25e7977abf864d38402b7b50fa5959455ebba",
+      "bytes": 6243
+    },
+    "policy-seed-29.pt": {
+      "sha256": "83afb4b65dacbf491b1b46d2c2db9d212e036bfa681e47348a49d2654d30995f",
+      "bytes": 6243
+    },
+    "policy-seed-43.pt": {
+      "sha256": "0b0932aa1ba26b7dedf9cdc76c7e2ad43351174abaf64439da19dfe940c0314c",
+      "bytes": 6243
+    },
+    "preparation-history.json": {
+      "sha256": "8afade22fa327ded99fcb738565512196b0cdd28c2b4eff25ce9bd3a406f4679",
+      "bytes": 16783
+    },
+    "preparation.json": {
+      "sha256": "60e30cd9610cb731f631aa356c9485371204fab198c46ee42418f8cd610b32e7",
+      "bytes": 49483
+    },
+    "result.json": {
+      "sha256": "2ad3abd59927198453632bf79208dc8adae2f4d3e085114134970fa16aa6f531",
+      "bytes": 478734
+    },
+    "sub06-prefix.json": {
+      "sha256": "4f316295e4275d93e6ad2df005daf31b1b63073cc2b3e64a5f10aa667c26199e",
+      "bytes": 20586
+    },
+    "sub06-seed-17-final-replay.json": {
+      "sha256": "54c2844cf6aeca3b66596c5ce6cf182a84815143ecf043ead74a6f72ccf522d3",
+      "bytes": 21378
+    },
+    "sub06-seed-29-final-replay.json": {
+      "sha256": "27c17fae8d32c0ff4de381ca1b741b397c478cd094e59ee4cfe13d3ab2f5dc28",
+      "bytes": 26832
+    },
+    "sub06-seed-43-final-replay.json": {
+      "sha256": "54c2844cf6aeca3b66596c5ce6cf182a84815143ecf043ead74a6f72ccf522d3",
+      "bytes": 21378
+    },
+    "summary.json": {
+      "sha256": "cb4b138e63cbf024726245e7c4e487d55822fac7213e309dce670efc3d01992e",
+      "bytes": 102646
+    },
+    "ucsf0004-prefix.json": {
+      "sha256": "7c27f349b459e7daf64bb6e0700b9aa99e1704935481cb0872c2da61a9bd9a7c",
+      "bytes": 6775
+    },
+    "ucsf0004-seed-17-final-replay.json": {
+      "sha256": "74a2bd4c65b07fd69c5ded655593d35ec6fd51ba4397f94098f4459f5e3e8369",
+      "bytes": 7568
+    },
+    "ucsf0004-seed-29-final-replay.json": {
+      "sha256": "86903a586e0e8d8ee86ff996545d5d7e7a915663ef91f8718b217e428e23d8c9",
+      "bytes": 12861
+    },
+    "ucsf0004-seed-43-final-replay.json": {
+      "sha256": "1fcd6221fafce39eed7b5de82ffac4fb29faf6401a11c3b4d68dc0aa28bfc230",
+      "bytes": 12724
+    },
+    "update-curve.csv": {
+      "sha256": "beb0a4af2d0221ae6abddd72bdcda7a40625cfe53373d4e6dbd23ce440f650c3",
+      "bytes": 2943
+    },
+    "verification.json": {
+      "sha256": "627664946c8b0109bd263bb005ebe7edebdf79d9ab9d3ee1326dae98bbfc3253",
+      "bytes": 4917
+    }
+  }
+}

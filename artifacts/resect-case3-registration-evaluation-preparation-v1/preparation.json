@@ -1,0 +1,109 @@
+{
+  "acquired_image_arrays_read": false,
+  "acquired_landmark_coordinates_read": false,
+  "actual_evaluation_run": false,
+  "case_id": "RESECT:Case3",
+  "cohort": {
+    "path": "manifests/resect-component-cohort-v1.json",
+    "sha256": "4fc51f01e42253d395660d850cda2296a3e7f23e5a5ade80bbd5a3ed411b6a77"
+  },
+  "evaluator_sha256": "ac821134851d4b310ae6e5f7b12187e36b90266a8105ffce0737c4876af5cab0",
+  "fit_configuration": {
+    "coarse_spacing_mm": 1.5,
+    "gradient_magnitude_tolerance": 1e-05,
+    "initial_pose": "physical_identity",
+    "iterations_per_level": 80,
+    "learning_rate": 1.0,
+    "metric": "Mattes_MI32",
+    "minimum_metric_support_voxels": 1000,
+    "minimum_step": 0.002,
+    "optimizer_seconds": 180.0,
+    "relaxation_factor": 0.5,
+    "sampling_fraction": 0.2,
+    "sampling_seed": 41,
+    "shrink_levels": [
+      4,
+      2,
+      1
+    ],
+    "smoothing_sigmas_mm": [
+      2.0,
+      1.0,
+      0.0
+    ],
+    "support_erosion_coarse_voxels": 2,
+    "threads": 2
+  },
+  "fit_limits": {
+    "hard_rss_limit_enforced": false,
+    "maximum_compressed_pair_bytes": 33554432,
+    "maximum_expanded_bytes_each": 134217728,
+    "maximum_record_bytes": 1048576,
+    "maximum_source_voxels_each": 32000000,
+    "memory_planning_envelope_bytes": 4294967296,
+    "memory_sampling_interval_seconds": 0.2,
+    "preflight_seconds": 30.0,
+    "sampled_family_rss_stop_bytes": 4294967296,
+    "worker_wall_seconds": 240.0,
+    "workers": 1
+  },
+  "header_geometry_sha256": {
+    "before": "ff548aee1f80c425d8520f5e30b5caf81f02502a62ca298532f0aea656927469",
+    "during": "ca0fdb72851e20ebc905ca9837be344b3f6eb7554b6c9347ca944788e19a8193"
+  },
+  "images": {
+    "before": {
+      "bytes": 9822564,
+      "path": "data/anatomy/resect-v1/Case3/US/Case3-US-before.nii.gz",
+      "sha256": "9fbb4d63cb26d324c7c8281a2b2b932a55a5f3abf4a8fd571a0e0518ac996192"
+    },
+    "during": {
+      "bytes": 9156131,
+      "path": "data/annotations/resect-seg-v1/originals/Case3-US-during.nii.gz",
+      "sha256": "431ae1e23bd2984801c0b0d2720c9f4c240a404bab5fe37f5d8afdac521ddb20"
+    }
+  },
+  "preflight_sha256": "ef9e0cd6029e869a6364de6c946f0284bc0a7ca1f700695a8bb75b52e60fd7ba",
+  "release_requirement": "Separate ROOT-authored release binding this preparation, evaluator and complete successful fit metadata chain before any tag open",
+  "role": "TRAIN",
+  "runner_sha256": "e17d755eeadb6a3d1fd365b7a3b4dc31f9e27c4f93afdb6045d8f6e27ef9612f",
+  "schema": "resect-case3-registration-evaluation-v1-preparation",
+  "scoring_runtime": {
+    "numpy": "2.5.3",
+    "python": "3.12.14"
+  },
+  "specification": {
+    "clinical_acceptance": false,
+    "coordinate_convention": "MINC and NIfTI world coordinates identical; active sform RAS mm; no LPS conversion of tag points",
+    "duplicate_policy": "retain every row at equal weight; flag exact repeated pair/before/during indices; never deduplicate",
+    "exclusions": false,
+    "identity_baseline": "before point unchanged in the shared RAS-mm frame",
+    "inclusion": "inverse active sform; closed native voxel-cell bounds [-0.5, shape-0.5]",
+    "inclusion_policy": "report before, during, identity-predicted during and rigid-predicted during inclusion; retain every finite row",
+    "inclusion_tolerance_voxels": 1e-07,
+    "malformed_or_nonfinite_policy": "reject the complete evaluation; do not drop individual rows",
+    "parameter_selection": false,
+    "point_order": "first three before/reference world mm; last three during world mm; original 1-based row indices",
+    "population_confidence_intervals": false,
+    "primary_endpoint": "delta_RMS_mm = RMS(rigid TRE) - RMS(identity TRE); negative is lower error",
+    "refitting": false,
+    "short_tag_policy": "never read or split; overlaps the full tag",
+    "statistics": [
+      "all-point RMS",
+      "all-point median",
+      "all-point maximum",
+      "per-row rigid-minus-identity TRE"
+    ],
+    "tag_format": "ASCII MNI Tag Point File; Volumes=2; exactly six numbers per point row",
+    "transform_direction": "before_RAS_mm_to_during_RAS_mm",
+    "tre": "Euclidean norm(predicted during point minus observed during point), millimetres",
+    "unit_of_observation": "one TRAIN person; points are paired observations within that person"
+  },
+  "status": "prepared_actual_evaluation_withheld",
+  "tag": {
+    "bytes": 1190,
+    "path": "data/anatomy/resect-v1/Case3/Landmarks/Case3-beforeUS-duringUS-full.tag",
+    "sha256": "585769a006d8e5a995f987d91cef75ca45288cf6132aa3842cd44ca19927fc08"
+  },
+  "tests_sha256": "fcf5676e7b19eb4202034b034e53ffd83f369afecdf6675e7a20730d7d1c2465"
+}

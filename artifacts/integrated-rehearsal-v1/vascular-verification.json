@@ -1,0 +1,6119 @@
+{
+  "schema": "resectionlab.integrated-vascular-verification.v1",
+  "status": "passed",
+  "blocker": null,
+  "source": "/Users/shaf/coding_projects/RessectionLab/outputs/integrated-rehearsal-v1/sub06-target58-precursor.ressectionlab",
+  "sourceSha256": "a05ed08f8c27f126e43091237981fb9705d03f9914d65eb9d1787de6a5025de3",
+  "sourceUnchanged": true,
+  "sourceOriginalPathAtExecution": "/Users/shaf/coding_projects/RessectionLab/outputs/integrated-rehearsal-v1/sub06.ressectionlab",
+  "sourceCaseHash": "sha256:3f3622ae39d4e12f8cbebef5c7cfd0e46e6e01461bae90828301d61da62a057e",
+  "labelArrayHash": "sha256:9930330418c439d7d042054d7419c05d3158e2422f62ce69b034044a563ecd76",
+  "intensityArrayHash": "sha256:7005b3fc2ae9c51bbbac3a2384210628e6f9541b7cbf797159d64ffbeee0f4f3",
+  "sourceArraysUnchanged": true,
+  "originalMainSnapshotHash": "sha256:223584e0c68622c0d325614b257d87221d25960813575511eb29699e128e6a09",
+  "mainPreserved": true,
+  "anatomyRemovalPreserved": true,
+  "precursorStateId": "sha256:bc71ea13f52d6ecad621fc3c8190b9881a315876db2d8c35c83e1c8fd59fc126",
+  "precursorHeldSourceCells": {
+    "left": 0
+  },
+  "bimanualHoldEvidence": "This earlier target-58 precursor had an empty hold; this branch does not prove retained bimanual holding.",
+  "recipePath": "/Users/shaf/coding_projects/RessectionLab/outputs/surgical-patient-v2/vessel-snapshot.json",
+  "recipeSha256": "6cb7cb2cba18ba6294280700a4009d2b403e54db2b6804129655510284ee8b0f",
+  "recipeActionLimit": 11,
+  "fieldCandidateLimit": 6,
+  "fieldCandidatesAttempted": 6,
+  "before": {
+    "targetRemovedMm3": 58.0,
+    "removedCells": 768,
+    "fluidPresentMm3": 0,
+    "fluidAddedMm3": 0.0,
+    "fluidRemovedMm3": 0.0,
+    "fluidEscapedMm3": 0.0,
+    "thermalExposureProxy": 0,
+    "woundCount": 0,
+    "damagedFaces": 0,
+    "nonPatentFaces": 0,
+    "coagulationDose": 0,
+    "vesselGeneratedMm3": 0.0,
+    "vesselPhysicsV2": {
+      "enabled": true,
+      "woundCount": 0,
+      "damagedFaceCount": 0,
+      "woundAreaMm2": 0,
+      "activeWounds": 0,
+      "pressurePa": 1000.0,
+      "vascularRemainingMm3": 100.0,
+      "refilledMm3": 0.0,
+      "generatedMm3": 0.0,
+      "emittedMm3": 0,
+      "blockedOutletReservoirMm3": 0,
+      "conservationResidualMm3": 0.0,
+      "globalPerfusion": "unknown"
+    }
+  },
+  "after": {
+    "targetRemovedMm3": 58.0,
+    "removedCells": 768,
+    "fluidPresentMm3": 21.1242911127678,
+    "fluidAddedMm3": 21.72258171105836,
+    "fluidRemovedMm3": 0.5982905982905984,
+    "fluidEscapedMm3": 0.0,
+    "thermalExposureProxy": 111.68312757201652,
+    "woundCount": 1,
+    "damagedFaces": 5,
+    "nonPatentFaces": 5,
+    "coagulationDose": 10.0,
+    "vesselGeneratedMm3": 1.722581711058396,
+    "vesselPhysicsV2": {
+      "enabled": true,
+      "woundCount": 1,
+      "damagedFaceCount": 5,
+      "woundAreaMm2": 5.0,
+      "activeWounds": 0,
+      "pressurePa": 984.381141230254,
+      "vascularRemainingMm3": 98.4381141230254,
+      "refilledMm3": 0.16069583408377988,
+      "generatedMm3": 1.722581711058396,
+      "emittedMm3": 1.722581711058396,
+      "blockedOutletReservoirMm3": 0.0,
+      "conservationResidualMm3": -1.4210854715202004e-14,
+      "globalPerfusion": "unknown"
+    }
+  },
+  "actions": [
+    {
+      "phase": "release-and-withdraw",
+      "action": {
+        "duration": 0.1,
+        "operation": "release",
+        "slot": "left"
+      },
+      "status": "accepted",
+      "reason": null,
+      "reasonCode": null,
+      "events": [
+        {
+          "kind": "release",
+          "instrument": "Brain retractor",
+          "slot": "left"
+        }
+      ],
+      "stateId": "sha256:45b2911f703835d065f826fa527e8acaaf44f15edc630e3a767edba6b98829ee",
+      "wallSeconds": 0.5779877500608563,
+      "timingContext": "deterministic-verification-replay",
+      "before": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 0,
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 0,
+        "woundCount": 0,
+        "damagedFaces": 0,
+        "nonPatentFaces": 0,
+        "coagulationDose": 0,
+        "vesselGeneratedMm3": 0.0,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 0,
+          "damagedFaceCount": 0,
+          "woundAreaMm2": 0,
+          "activeWounds": 0,
+          "pressurePa": 1000.0,
+          "vascularRemainingMm3": 100.0,
+          "refilledMm3": 0.0,
+          "generatedMm3": 0.0,
+          "emittedMm3": 0,
+          "blockedOutletReservoirMm3": 0,
+          "conservationResidualMm3": 0.0,
+          "globalPerfusion": "unknown"
+        }
+      },
+      "after": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 0,
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 0,
+        "woundCount": 0,
+        "damagedFaces": 0,
+        "nonPatentFaces": 0,
+        "coagulationDose": 0,
+        "vesselGeneratedMm3": 0.0,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 0,
+          "damagedFaceCount": 0,
+          "woundAreaMm2": 0,
+          "activeWounds": 0,
+          "pressurePa": 1000.0,
+          "vascularRemainingMm3": 100.0,
+          "refilledMm3": 0.0,
+          "generatedMm3": 0.0,
+          "emittedMm3": 0,
+          "blockedOutletReservoirMm3": 0,
+          "conservationResidualMm3": 0.0,
+          "globalPerfusion": "unknown"
+        }
+      }
+    },
+    {
+      "phase": "release-and-withdraw",
+      "action": {
+        "duration": 0.1,
+        "operation": "release",
+        "slot": "right"
+      },
+      "status": "accepted",
+      "reason": null,
+      "reasonCode": null,
+      "events": [
+        {
+          "kind": "release",
+          "instrument": "CUSA / ultrasonic aspirator",
+          "slot": "right"
+        }
+      ],
+      "stateId": "sha256:09e2e255569fccdd635dd0f934ee686d31a15bd7c954de71cc36fce6f7384a58",
+      "wallSeconds": 0.5191028751432896,
+      "timingContext": "deterministic-verification-replay",
+      "before": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 0,
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 0,
+        "woundCount": 0,
+        "damagedFaces": 0,
+        "nonPatentFaces": 0,
+        "coagulationDose": 0,
+        "vesselGeneratedMm3": 0.0,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 0,
+          "damagedFaceCount": 0,
+          "woundAreaMm2": 0,
+          "activeWounds": 0,
+          "pressurePa": 1000.0,
+          "vascularRemainingMm3": 100.0,
+          "refilledMm3": 0.0,
+          "generatedMm3": 0.0,
+          "emittedMm3": 0,
+          "blockedOutletReservoirMm3": 0,
+          "conservationResidualMm3": 0.0,
+          "globalPerfusion": "unknown"
+        }
+      },
+      "after": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 0,
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 0,
+        "woundCount": 0,
+        "damagedFaces": 0,
+        "nonPatentFaces": 0,
+        "coagulationDose": 0,
+        "vesselGeneratedMm3": 0.0,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 0,
+          "damagedFaceCount": 0,
+          "woundAreaMm2": 0,
+          "activeWounds": 0,
+          "pressurePa": 1000.0,
+          "vascularRemainingMm3": 100.0,
+          "refilledMm3": 0.0,
+          "generatedMm3": 0.0,
+          "emittedMm3": 0,
+          "blockedOutletReservoirMm3": 0,
+          "conservationResidualMm3": 0.0,
+          "globalPerfusion": "unknown"
+        }
+      }
+    },
+    {
+      "phase": "release-and-withdraw",
+      "action": {
+        "duration": 0.2,
+        "operation": "withdraw",
+        "slot": "right"
+      },
+      "status": "accepted",
+      "reason": null,
+      "reasonCode": null,
+      "events": [
+        {
+          "kind": "withdraw",
+          "instrument": "CUSA / ultrasonic aspirator",
+          "slot": "right"
+        }
+      ],
+      "stateId": "sha256:ed5602a42572b8de3fce8b2fd436720d8900ac16d99f3155b04902e056c749ab",
+      "wallSeconds": 2.8273222078569233,
+      "timingContext": "deterministic-verification-replay",
+      "before": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 0,
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 0,
+        "woundCount": 0,
+        "damagedFaces": 0,
+        "nonPatentFaces": 0,
+        "coagulationDose": 0,
+        "vesselGeneratedMm3": 0.0,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 0,
+          "damagedFaceCount": 0,
+          "woundAreaMm2": 0,
+          "activeWounds": 0,
+          "pressurePa": 1000.0,
+          "vascularRemainingMm3": 100.0,
+          "refilledMm3": 0.0,
+          "generatedMm3": 0.0,
+          "emittedMm3": 0,
+          "blockedOutletReservoirMm3": 0,
+          "conservationResidualMm3": 0.0,
+          "globalPerfusion": "unknown"
+        }
+      },
+      "after": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 0,
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 0,
+        "woundCount": 0,
+        "damagedFaces": 0,
+        "nonPatentFaces": 0,
+        "coagulationDose": 0,
+        "vesselGeneratedMm3": 0.0,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 0,
+          "damagedFaceCount": 0,
+          "woundAreaMm2": 0,
+          "activeWounds": 0,
+          "pressurePa": 1000.0,
+          "vascularRemainingMm3": 100.0,
+          "refilledMm3": 0.0,
+          "generatedMm3": 0.0,
+          "emittedMm3": 0,
+          "blockedOutletReservoirMm3": 0,
+          "conservationResidualMm3": 0.0,
+          "globalPerfusion": "unknown"
+        }
+      }
+    },
+    {
+      "phase": "release-and-withdraw",
+      "action": {
+        "duration": 0.2,
+        "operation": "withdraw",
+        "slot": "left"
+      },
+      "status": "accepted",
+      "reason": null,
+      "reasonCode": null,
+      "events": [
+        {
+          "kind": "withdraw",
+          "instrument": "Brain retractor",
+          "slot": "left"
+        }
+      ],
+      "stateId": "sha256:3e76e9c2701c4c3bfdfe8d184af184504160dc1d781acefe23c02767a6c661d0",
+      "wallSeconds": 2.7462904579006135,
+      "timingContext": "deterministic-verification-replay",
+      "before": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 0,
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 0,
+        "woundCount": 0,
+        "damagedFaces": 0,
+        "nonPatentFaces": 0,
+        "coagulationDose": 0,
+        "vesselGeneratedMm3": 0.0,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 0,
+          "damagedFaceCount": 0,
+          "woundAreaMm2": 0,
+          "activeWounds": 0,
+          "pressurePa": 1000.0,
+          "vascularRemainingMm3": 100.0,
+          "refilledMm3": 0.0,
+          "generatedMm3": 0.0,
+          "emittedMm3": 0,
+          "blockedOutletReservoirMm3": 0,
+          "conservationResidualMm3": 0.0,
+          "globalPerfusion": "unknown"
+        }
+      },
+      "after": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 0,
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 0,
+        "woundCount": 0,
+        "damagedFaces": 0,
+        "nonPatentFaces": 0,
+        "coagulationDose": 0,
+        "vesselGeneratedMm3": 0.0,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 0,
+          "damagedFaceCount": 0,
+          "woundAreaMm2": 0,
+          "activeWounds": 0,
+          "pressurePa": 1000.0,
+          "vascularRemainingMm3": 100.0,
+          "refilledMm3": 0.0,
+          "generatedMm3": 0.0,
+          "emittedMm3": 0,
+          "blockedOutletReservoirMm3": 0,
+          "conservationResidualMm3": 0.0,
+          "globalPerfusion": "unknown"
+        }
+      }
+    },
+    {
+      "phase": "existing-vascular-recipe",
+      "action": {
+        "duration": 0.2,
+        "instrument": "micro_scissors",
+        "operation": "exchange",
+        "slot": "left"
+      },
+      "status": "accepted",
+      "reason": null,
+      "reasonCode": null,
+      "events": [
+        {
+          "kind": "exchange",
+          "instrument": "Micro scissors",
+          "slot": "left"
+        }
+      ],
+      "stateId": "sha256:88fc8669a11e1e66b10ac0854162e00aa71629cc2b6ccd27d126faa92bf15d1f",
+      "wallSeconds": 0.5233963751234114,
+      "timingContext": "deterministic-verification-replay",
+      "before": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 0,
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 0,
+        "woundCount": 0,
+        "damagedFaces": 0,
+        "nonPatentFaces": 0,
+        "coagulationDose": 0,
+        "vesselGeneratedMm3": 0.0,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 0,
+          "damagedFaceCount": 0,
+          "woundAreaMm2": 0,
+          "activeWounds": 0,
+          "pressurePa": 1000.0,
+          "vascularRemainingMm3": 100.0,
+          "refilledMm3": 0.0,
+          "generatedMm3": 0.0,
+          "emittedMm3": 0,
+          "blockedOutletReservoirMm3": 0,
+          "conservationResidualMm3": 0.0,
+          "globalPerfusion": "unknown"
+        }
+      },
+      "after": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 0,
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 0,
+        "woundCount": 0,
+        "damagedFaces": 0,
+        "nonPatentFaces": 0,
+        "coagulationDose": 0,
+        "vesselGeneratedMm3": 0.0,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 0,
+          "damagedFaceCount": 0,
+          "woundAreaMm2": 0,
+          "activeWounds": 0,
+          "pressurePa": 1000.0,
+          "vascularRemainingMm3": 100.0,
+          "refilledMm3": 0.0,
+          "generatedMm3": 0.0,
+          "emittedMm3": 0,
+          "blockedOutletReservoirMm3": 0,
+          "conservationResidualMm3": 0.0,
+          "globalPerfusion": "unknown"
+        }
+      }
+    },
+    {
+      "phase": "existing-vascular-recipe",
+      "action": {
+        "duration": 0.2,
+        "operation": "place",
+        "parameters": {
+          "depthMm": 2.0,
+          "jawOpeningMm": 0.0,
+          "radiusMm": 1.5
+        },
+        "pose": {
+          "position": [
+            114.53500366210938,
+            -118.558837890625,
+            -533.25
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            -0.5,
+            -0.5
+          ]
+        },
+        "slot": "left"
+      },
+      "status": "accepted",
+      "reason": null,
+      "reasonCode": null,
+      "events": [
+        {
+          "kind": "place",
+          "instrument": "Micro scissors",
+          "slot": "left"
+        }
+      ],
+      "stateId": "sha256:f3c4455bd85f48869b0c62c917c1e7f4ddf338740a6a2fa4aa6f4c4f840aa5e3",
+      "wallSeconds": 0.5220410418696702,
+      "timingContext": "deterministic-verification-replay",
+      "before": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 0,
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 0,
+        "woundCount": 0,
+        "damagedFaces": 0,
+        "nonPatentFaces": 0,
+        "coagulationDose": 0,
+        "vesselGeneratedMm3": 0.0,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 0,
+          "damagedFaceCount": 0,
+          "woundAreaMm2": 0,
+          "activeWounds": 0,
+          "pressurePa": 1000.0,
+          "vascularRemainingMm3": 100.0,
+          "refilledMm3": 0.0,
+          "generatedMm3": 0.0,
+          "emittedMm3": 0,
+          "blockedOutletReservoirMm3": 0,
+          "conservationResidualMm3": 0.0,
+          "globalPerfusion": "unknown"
+        }
+      },
+      "after": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 0,
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 0,
+        "woundCount": 0,
+        "damagedFaces": 0,
+        "nonPatentFaces": 0,
+        "coagulationDose": 0,
+        "vesselGeneratedMm3": 0.0,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 0,
+          "damagedFaceCount": 0,
+          "woundAreaMm2": 0,
+          "activeWounds": 0,
+          "pressurePa": 1000.0,
+          "vascularRemainingMm3": 100.0,
+          "refilledMm3": 0.0,
+          "generatedMm3": 0.0,
+          "emittedMm3": 0,
+          "blockedOutletReservoirMm3": 0,
+          "conservationResidualMm3": 0.0,
+          "globalPerfusion": "unknown"
+        }
+      }
+    },
+    {
+      "phase": "existing-vascular-recipe",
+      "action": {
+        "duration": 1.0,
+        "operation": "apply",
+        "pose": {
+          "position": [
+            33.535003662109375,
+            -118.558837890625,
+            -533.25
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            -0.5,
+            -0.5
+          ]
+        },
+        "slot": "left"
+      },
+      "status": "accepted",
+      "reason": null,
+      "reasonCode": null,
+      "events": [
+        {
+          "kind": "apply",
+          "instrument": "Micro scissors",
+          "slot": "left"
+        },
+        {
+          "kind": "strand_transection",
+          "edges": 1,
+          "meshEdges": 0,
+          "piecesRetained": true
+        },
+        {
+          "kind": "strand_transection",
+          "edges": 1,
+          "meshEdges": 0,
+          "piecesRetained": true
+        },
+        {
+          "kind": "strand_transection",
+          "edges": 1,
+          "meshEdges": 0,
+          "piecesRetained": true
+        },
+        {
+          "kind": "strand_transection",
+          "edges": 1,
+          "meshEdges": 0,
+          "piecesRetained": true
+        },
+        {
+          "kind": "strand_transection",
+          "edges": 1,
+          "meshEdges": 0,
+          "piecesRetained": true
+        }
+      ],
+      "stateId": "sha256:81d1a2430d497b8ddf7d7266c2af94b5db3eec405f6614a38b7792b005c0bda8",
+      "wallSeconds": 4.395018666982651,
+      "timingContext": "deterministic-verification-replay",
+      "before": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 0,
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 0,
+        "woundCount": 0,
+        "damagedFaces": 0,
+        "nonPatentFaces": 0,
+        "coagulationDose": 0,
+        "vesselGeneratedMm3": 0.0,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 0,
+          "damagedFaceCount": 0,
+          "woundAreaMm2": 0,
+          "activeWounds": 0,
+          "pressurePa": 1000.0,
+          "vascularRemainingMm3": 100.0,
+          "refilledMm3": 0.0,
+          "generatedMm3": 0.0,
+          "emittedMm3": 0,
+          "blockedOutletReservoirMm3": 0,
+          "conservationResidualMm3": 0.0,
+          "globalPerfusion": "unknown"
+        }
+      },
+      "after": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 0.006583027895203486,
+        "fluidAddedMm3": 0.006583027895203486,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 0,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 0.0,
+        "vesselGeneratedMm3": 0.006583027895203486,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 1,
+          "pressurePa": 999.9341753084186,
+          "vascularRemainingMm3": 99.99341753084187,
+          "refilledMm3": 5.587370793197499e-07,
+          "generatedMm3": 0.006583027895203486,
+          "emittedMm3": 0.006583027895203486,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": 1.4210854715202004e-14,
+          "globalPerfusion": "unknown"
+        }
+      }
+    },
+    {
+      "phase": "existing-vascular-recipe",
+      "action": {
+        "duration": 1.0,
+        "operation": "apply",
+        "slot": "left"
+      },
+      "status": "accepted",
+      "reason": null,
+      "reasonCode": null,
+      "events": [
+        {
+          "kind": "apply",
+          "instrument": "Micro scissors",
+          "slot": "left"
+        },
+        {
+          "kind": "no_material_effect",
+          "reason": "No compatible structure intersected by the working tip"
+        }
+      ],
+      "stateId": "sha256:969121b4a195c123a90960f670e615e83deb976f8cc22da9e10d4373b23dcf5d",
+      "wallSeconds": 1.572701500263065,
+      "timingContext": "deterministic-verification-replay",
+      "before": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 0.006583027895203486,
+        "fluidAddedMm3": 0.006583027895203486,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 0,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 0.0,
+        "vesselGeneratedMm3": 0.006583027895203486,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 1,
+          "pressurePa": 999.9341753084186,
+          "vascularRemainingMm3": 99.99341753084187,
+          "refilledMm3": 5.587370793197499e-07,
+          "generatedMm3": 0.006583027895203486,
+          "emittedMm3": 0.006583027895203486,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": 1.4210854715202004e-14,
+          "globalPerfusion": "unknown"
+        }
+      },
+      "after": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 0.500234938932465,
+        "fluidAddedMm3": 0.500234938932465,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 0,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 0.0,
+        "vesselGeneratedMm3": 0.500234938932465,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 1,
+          "pressurePa": 995.0230137071283,
+          "vascularRemainingMm3": 99.50230137071283,
+          "refilledMm3": 0.0025363096452810725,
+          "generatedMm3": 0.500234938932465,
+          "emittedMm3": 0.500234938932465,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": -1.4210854715202004e-14,
+          "globalPerfusion": "unknown"
+        }
+      }
+    },
+    {
+      "phase": "existing-vascular-recipe",
+      "action": {
+        "duration": 0.2,
+        "operation": "withdraw",
+        "slot": "left"
+      },
+      "status": "accepted",
+      "reason": null,
+      "reasonCode": null,
+      "events": [
+        {
+          "kind": "withdraw",
+          "instrument": "Micro scissors",
+          "slot": "left"
+        }
+      ],
+      "stateId": "sha256:8d0481a5a1e1b5414ec8d3d563b8620fd59517631e82afbb89fc75b3dc0b99cd",
+      "wallSeconds": 3.275498458184302,
+      "timingContext": "deterministic-verification-replay",
+      "before": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 0.500234938932465,
+        "fluidAddedMm3": 0.500234938932465,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 0,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 0.0,
+        "vesselGeneratedMm3": 0.500234938932465,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 1,
+          "pressurePa": 995.0230137071283,
+          "vascularRemainingMm3": 99.50230137071283,
+          "refilledMm3": 0.0025363096452810725,
+          "generatedMm3": 0.500234938932465,
+          "emittedMm3": 0.500234938932465,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": -1.4210854715202004e-14,
+          "globalPerfusion": "unknown"
+        }
+      },
+      "after": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 0.5974994752967291,
+        "fluidAddedMm3": 0.5974994752967291,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 0,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 0.0,
+        "vesselGeneratedMm3": 0.5974994752967291,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 1,
+          "pressurePa": 994.0612851703745,
+          "vascularRemainingMm3": 99.40612851703744,
+          "refilledMm3": 0.003627992334137044,
+          "generatedMm3": 0.5974994752967291,
+          "emittedMm3": 0.5974994752967291,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": -4.263256414560601e-14,
+          "globalPerfusion": "unknown"
+        }
+      }
+    },
+    {
+      "phase": "existing-vascular-recipe",
+      "action": {
+        "duration": 0.2,
+        "instrument": "bipolar_forceps",
+        "operation": "exchange",
+        "slot": "left"
+      },
+      "status": "accepted",
+      "reason": null,
+      "reasonCode": null,
+      "events": [
+        {
+          "kind": "exchange",
+          "instrument": "Bipolar forceps",
+          "slot": "left"
+        }
+      ],
+      "stateId": "sha256:7143639315f65eebb6f1dacfd1a9db0fb844e47c11beda4e353f05e6949744bf",
+      "wallSeconds": 0.7488705418072641,
+      "timingContext": "deterministic-verification-replay",
+      "before": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 0.5974994752967291,
+        "fluidAddedMm3": 0.5974994752967291,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 0,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 0.0,
+        "vesselGeneratedMm3": 0.5974994752967291,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 1,
+          "pressurePa": 994.0612851703745,
+          "vascularRemainingMm3": 99.40612851703744,
+          "refilledMm3": 0.003627992334137044,
+          "generatedMm3": 0.5974994752967291,
+          "emittedMm3": 0.5974994752967291,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": -4.263256414560601e-14,
+          "globalPerfusion": "unknown"
+        }
+      },
+      "after": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 0.6942823787066317,
+        "fluidAddedMm3": 0.6942823787066317,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 0,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 0.0,
+        "vesselGeneratedMm3": 0.6942823787066317,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 1,
+          "pressurePa": 993.1062896798918,
+          "vascularRemainingMm3": 99.31062896798917,
+          "refilledMm3": 0.004911346695774368,
+          "generatedMm3": 0.6942823787066317,
+          "emittedMm3": 0.6942823787066317,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": -2.842170943040401e-14,
+          "globalPerfusion": "unknown"
+        }
+      }
+    },
+    {
+      "phase": "existing-vascular-recipe",
+      "action": {
+        "duration": 0.2,
+        "operation": "place",
+        "parameters": {
+          "jawOpeningMm": 0.0,
+          "power": 1.0,
+          "radiusMm": 2.0
+        },
+        "pose": {
+          "position": [
+            114.53500366210938,
+            -118.558837890625,
+            -533.25
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            -0.5,
+            -0.5
+          ]
+        },
+        "slot": "left"
+      },
+      "status": "accepted",
+      "reason": null,
+      "reasonCode": null,
+      "events": [
+        {
+          "kind": "place",
+          "instrument": "Bipolar forceps",
+          "slot": "left"
+        }
+      ],
+      "stateId": "sha256:709a0ded9c801099b7c2ea84a1c3d082618664634570175a4e5ea1bd43d39d84",
+      "wallSeconds": 0.5401904173195362,
+      "timingContext": "deterministic-verification-replay",
+      "before": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 0.6942823787066317,
+        "fluidAddedMm3": 0.6942823787066317,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 0,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 0.0,
+        "vesselGeneratedMm3": 0.6942823787066317,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 1,
+          "pressurePa": 993.1062896798918,
+          "vascularRemainingMm3": 99.31062896798917,
+          "refilledMm3": 0.004911346695774368,
+          "generatedMm3": 0.6942823787066317,
+          "emittedMm3": 0.6942823787066317,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": -2.842170943040401e-14,
+          "globalPerfusion": "unknown"
+        }
+      },
+      "after": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 0.7905865956214768,
+        "fluidAddedMm3": 0.7905865956214768,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 0,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 0.0,
+        "vesselGeneratedMm3": 0.7905865956214768,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 1,
+          "pressurePa": 992.1579843481102,
+          "vascularRemainingMm3": 99.21579843481102,
+          "refilledMm3": 0.006385030432469948,
+          "generatedMm3": 0.7905865956214768,
+          "emittedMm3": 0.7905865956214768,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": -2.842170943040401e-14,
+          "globalPerfusion": "unknown"
+        }
+      }
+    },
+    {
+      "phase": "existing-vascular-recipe",
+      "action": {
+        "duration": 1.0,
+        "operation": "apply",
+        "pose": {
+          "position": [
+            33.535003662109375,
+            -118.558837890625,
+            -533.25
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            -0.5,
+            -0.5
+          ]
+        },
+        "slot": "left"
+      },
+      "status": "accepted",
+      "reason": null,
+      "reasonCode": null,
+      "events": [
+        {
+          "kind": "apply",
+          "instrument": "Bipolar forceps",
+          "slot": "left"
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.00411522633744856,
+          "controlledBleedingSources": []
+        }
+      ],
+      "stateId": "sha256:b8c91be530ed7d70bda43da9154005991677e0b0374aa873c8a62560ca536295",
+      "wallSeconds": 4.294147541746497,
+      "timingContext": "deterministic-verification-replay",
+      "before": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 0.7905865956214768,
+        "fluidAddedMm3": 0.7905865956214768,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 0,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 0.0,
+        "vesselGeneratedMm3": 0.7905865956214768,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 1,
+          "pressurePa": 992.1579843481102,
+          "vascularRemainingMm3": 99.21579843481102,
+          "refilledMm3": 0.006385030432469948,
+          "generatedMm3": 0.7905865956214768,
+          "emittedMm3": 0.7905865956214768,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": -2.842170943040401e-14,
+          "globalPerfusion": "unknown"
+        }
+      },
+      "after": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 1.265028941303342,
+        "fluidAddedMm3": 1.265028941303342,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 0.683127572016461,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 0.10699588477366258,
+        "vesselGeneratedMm3": 1.265028941303342,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 1,
+          "pressurePa": 987.5153306216412,
+          "vascularRemainingMm3": 98.75153306216411,
+          "refilledMm3": 0.016562003467464243,
+          "generatedMm3": 1.265028941303342,
+          "emittedMm3": 1.265028941303342,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": 1.4210854715202004e-14,
+          "globalPerfusion": "unknown"
+        }
+      }
+    },
+    {
+      "phase": "existing-vascular-recipe",
+      "action": {
+        "duration": 3.0,
+        "operation": "apply",
+        "slot": "left"
+      },
+      "status": "accepted",
+      "reason": null,
+      "reasonCode": null,
+      "events": [
+        {
+          "kind": "apply",
+          "instrument": "Bipolar forceps",
+          "slot": "left"
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        },
+        {
+          "kind": "local_energy",
+          "exposure": 0.1,
+          "controlledBleedingSources": []
+        }
+      ],
+      "stateId": "sha256:bd419cfc87de4800a4869b0fb98879d885ccf79647756deca3a639ff3b6c89af",
+      "wallSeconds": 1.35447341715917,
+      "timingContext": "deterministic-verification-replay",
+      "before": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 1.265028941303342,
+        "fluidAddedMm3": 1.265028941303342,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 0.683127572016461,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 0.10699588477366258,
+        "vesselGeneratedMm3": 1.265028941303342,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 1,
+          "pressurePa": 987.5153306216412,
+          "vascularRemainingMm3": 98.75153306216411,
+          "refilledMm3": 0.016562003467464243,
+          "generatedMm3": 1.265028941303342,
+          "emittedMm3": 1.265028941303342,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": 1.4210854715202004e-14,
+          "globalPerfusion": "unknown"
+        }
+      },
+      "after": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 1.722581711058396,
+        "fluidAddedMm3": 1.722581711058396,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 111.68312757201652,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 10.0,
+        "vesselGeneratedMm3": 1.722581711058396,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 0,
+          "pressurePa": 983.4153249429529,
+          "vascularRemainingMm3": 98.3415324942953,
+          "refilledMm3": 0.06411420535367321,
+          "generatedMm3": 1.722581711058396,
+          "emittedMm3": 1.722581711058396,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": -1.4210854715202004e-14,
+          "globalPerfusion": "unknown"
+        }
+      }
+    },
+    {
+      "phase": "existing-vascular-recipe",
+      "action": {
+        "duration": 1.0,
+        "operation": "deactivate",
+        "slot": "left"
+      },
+      "status": "accepted",
+      "reason": null,
+      "reasonCode": null,
+      "events": [
+        {
+          "kind": "deactivate",
+          "instrument": "Bipolar forceps",
+          "slot": "left"
+        }
+      ],
+      "stateId": "sha256:a64996cf258188a241061dd866b3fc0ff2ee01f71a297144ad8d1394d36aec08",
+      "wallSeconds": 0.8006095420569181,
+      "timingContext": "deterministic-verification-replay",
+      "before": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 1.722581711058396,
+        "fluidAddedMm3": 1.722581711058396,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 111.68312757201652,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 10.0,
+        "vesselGeneratedMm3": 1.722581711058396,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 0,
+          "pressurePa": 983.4153249429529,
+          "vascularRemainingMm3": 98.3415324942953,
+          "refilledMm3": 0.06411420535367321,
+          "generatedMm3": 1.722581711058396,
+          "emittedMm3": 1.722581711058396,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": -1.4210854715202004e-14,
+          "globalPerfusion": "unknown"
+        }
+      },
+      "after": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 1.722581711058396,
+        "fluidAddedMm3": 1.722581711058396,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 111.68312757201652,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 10.0,
+        "vesselGeneratedMm3": 1.722581711058396,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 0,
+          "pressurePa": 983.5803452169864,
+          "vascularRemainingMm3": 98.35803452169864,
+          "refilledMm3": 0.08061623275702126,
+          "generatedMm3": 1.722581711058396,
+          "emittedMm3": 1.722581711058396,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": -1.4210854715202004e-14,
+          "globalPerfusion": "unknown"
+        }
+      }
+    },
+    {
+      "phase": "existing-vascular-recipe",
+      "action": {
+        "duration": 2.0,
+        "operation": "inspect",
+        "slot": "left"
+      },
+      "status": "accepted",
+      "reason": null,
+      "reasonCode": null,
+      "events": [
+        {
+          "kind": "inspect",
+          "instrument": "Bipolar forceps",
+          "slot": "left"
+        }
+      ],
+      "stateId": "sha256:8e77fc28c937387660f10ecf6eb339eb62d2516f5026d287ee5ee28b7093dba8",
+      "wallSeconds": 1.1257847500965,
+      "timingContext": "deterministic-verification-replay",
+      "before": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 1.722581711058396,
+        "fluidAddedMm3": 1.722581711058396,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 111.68312757201652,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 10.0,
+        "vesselGeneratedMm3": 1.722581711058396,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 0,
+          "pressurePa": 983.5803452169864,
+          "vascularRemainingMm3": 98.35803452169864,
+          "refilledMm3": 0.08061623275702126,
+          "generatedMm3": 1.722581711058396,
+          "emittedMm3": 1.722581711058396,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": -1.4210854715202004e-14,
+          "globalPerfusion": "unknown"
+        }
+      },
+      "after": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 1.722581711058396,
+        "fluidAddedMm3": 1.722581711058396,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 111.68312757201652,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 10.0,
+        "vesselGeneratedMm3": 1.722581711058396,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 0,
+          "pressurePa": 983.9054761655349,
+          "vascularRemainingMm3": 98.39054761655349,
+          "refilledMm3": 0.11312932761187036,
+          "generatedMm3": 1.722581711058396,
+          "emittedMm3": 1.722581711058396,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": -1.4210854715202004e-14,
+          "globalPerfusion": "unknown"
+        }
+      }
+    },
+    {
+      "phase": "bipolar-withdrawal",
+      "action": {
+        "duration": 0.5,
+        "operation": "withdraw",
+        "pose": {
+          "position": [
+            174.53500366210938,
+            -118.558837890625,
+            -533.25
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            -0.5,
+            -0.5
+          ]
+        },
+        "slot": "left"
+      },
+      "status": "accepted",
+      "reason": null,
+      "reasonCode": null,
+      "events": [
+        {
+          "kind": "withdraw",
+          "instrument": "Bipolar forceps",
+          "slot": "left"
+        }
+      ],
+      "stateId": "sha256:b46271e910c5feb628038e1b4234c1624e5c27172b26ba1e845b086a62c58a0d",
+      "wallSeconds": 7.309380957856774,
+      "timingContext": "deterministic-verification-replay",
+      "before": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 1.722581711058396,
+        "fluidAddedMm3": 1.722581711058396,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 111.68312757201652,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 10.0,
+        "vesselGeneratedMm3": 1.722581711058396,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 0,
+          "pressurePa": 983.9054761655349,
+          "vascularRemainingMm3": 98.39054761655349,
+          "refilledMm3": 0.11312932761187036,
+          "generatedMm3": 1.722581711058396,
+          "emittedMm3": 1.722581711058396,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": -1.4210854715202004e-14,
+          "globalPerfusion": "unknown"
+        }
+      },
+      "after": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 1.722581711058396,
+        "fluidAddedMm3": 1.722581711058396,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 111.68312757201652,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 10.0,
+        "vesselGeneratedMm3": 1.722581711058396,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 0,
+          "pressurePa": 983.9857479380429,
+          "vascularRemainingMm3": 98.39857479380429,
+          "refilledMm3": 0.12115650486266596,
+          "generatedMm3": 1.722581711058396,
+          "emittedMm3": 1.722581711058396,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": -1.4210854715202004e-14,
+          "globalPerfusion": "unknown"
+        }
+      }
+    },
+    {
+      "phase": "field",
+      "action": {
+        "duration": 0.1,
+        "instrument": "frazier_suction",
+        "operation": "exchange",
+        "slot": "right"
+      },
+      "status": "accepted",
+      "reason": null,
+      "reasonCode": null,
+      "events": [
+        {
+          "kind": "exchange",
+          "instrument": "Frazier suction",
+          "slot": "right"
+        }
+      ],
+      "stateId": "sha256:30bcc068bab11aeda0a26d8d2986411eb76136fde6116dc64c51c7a1d2d6d987",
+      "wallSeconds": 0.5798019166104496,
+      "timingContext": "deterministic-verification-replay",
+      "before": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 1.722581711058396,
+        "fluidAddedMm3": 1.722581711058396,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 111.68312757201652,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 10.0,
+        "vesselGeneratedMm3": 1.722581711058396,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 0,
+          "pressurePa": 983.9857479380429,
+          "vascularRemainingMm3": 98.39857479380429,
+          "refilledMm3": 0.12115650486266596,
+          "generatedMm3": 1.722581711058396,
+          "emittedMm3": 1.722581711058396,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": -1.4210854715202004e-14,
+          "globalPerfusion": "unknown"
+        }
+      },
+      "after": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 1.722581711058396,
+        "fluidAddedMm3": 1.722581711058396,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 111.68312757201652,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 10.0,
+        "vesselGeneratedMm3": 1.722581711058396,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 0,
+          "pressurePa": 984.0017541856472,
+          "vascularRemainingMm3": 98.40017541856471,
+          "refilledMm3": 0.12275712962309407,
+          "generatedMm3": 1.722581711058396,
+          "emittedMm3": 1.722581711058396,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": -1.4210854715202004e-14,
+          "globalPerfusion": "unknown"
+        }
+      }
+    },
+    {
+      "phase": "field",
+      "action": {
+        "duration": 0.1,
+        "operation": "place",
+        "parameters": {
+          "flowMm3PerSecond": 20.0,
+          "radiusMm": 3.0
+        },
+        "pose": {
+          "position": [
+            114.53500366210938,
+            -118.558837890625,
+            -533.25
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            -0.5,
+            -0.5
+          ]
+        },
+        "slot": "right"
+      },
+      "status": "accepted",
+      "reason": null,
+      "reasonCode": null,
+      "events": [
+        {
+          "kind": "place",
+          "instrument": "Frazier suction",
+          "slot": "right"
+        }
+      ],
+      "stateId": "sha256:da8e4fe31664fab88a84de8bb71ccb2683f0a43d679a7f035672723785fcddab",
+      "wallSeconds": 0.5104100839234889,
+      "timingContext": "deterministic-verification-replay",
+      "before": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 1.722581711058396,
+        "fluidAddedMm3": 1.722581711058396,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 111.68312757201652,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 10.0,
+        "vesselGeneratedMm3": 1.722581711058396,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 0,
+          "pressurePa": 984.0017541856472,
+          "vascularRemainingMm3": 98.40017541856471,
+          "refilledMm3": 0.12275712962309407,
+          "generatedMm3": 1.722581711058396,
+          "emittedMm3": 1.722581711058396,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": -1.4210854715202004e-14,
+          "globalPerfusion": "unknown"
+        }
+      },
+      "after": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 1.722581711058396,
+        "fluidAddedMm3": 1.722581711058396,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 111.68312757201652,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 10.0,
+        "vesselGeneratedMm3": 1.722581711058396,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 0,
+          "pressurePa": 984.0177444350043,
+          "vascularRemainingMm3": 98.40177444350043,
+          "refilledMm3": 0.12435615455880858,
+          "generatedMm3": 1.722581711058396,
+          "emittedMm3": 1.722581711058396,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": -1.4210854715202004e-14,
+          "globalPerfusion": "unknown"
+        }
+      }
+    },
+    {
+      "phase": "field",
+      "action": {
+        "duration": 1.0,
+        "operation": "apply",
+        "pose": {
+          "position": [
+            36.535003662109375,
+            -118.558837890625,
+            -533.25
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            -0.5,
+            -0.5
+          ]
+        },
+        "slot": "right"
+      },
+      "status": "accepted",
+      "reason": null,
+      "reasonCode": null,
+      "events": [
+        {
+          "kind": "apply",
+          "instrument": "Frazier suction",
+          "slot": "right"
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.0,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.08547008547008547,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.08547008547008547,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.08547008547008547,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.08547008547008547,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.08547008547008547,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.08547008547008547,
+          "debris": 0.0
+        },
+        {
+          "kind": "aspiration",
+          "fluid": 0.08547008547008547,
+          "debris": 0.0
+        }
+      ],
+      "stateId": "sha256:709c2bd02c227f0a9c01104700522e5d4670ba82e1d6382787ec8332367c2abd",
+      "wallSeconds": 5.471661624964327,
+      "timingContext": "deterministic-verification-replay",
+      "before": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 1.722581711058396,
+        "fluidAddedMm3": 1.722581711058396,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 111.68312757201652,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 10.0,
+        "vesselGeneratedMm3": 1.722581711058396,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 0,
+          "pressurePa": 984.0177444350043,
+          "vascularRemainingMm3": 98.40177444350043,
+          "refilledMm3": 0.12435615455880858,
+          "generatedMm3": 1.722581711058396,
+          "emittedMm3": 1.722581711058396,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": -1.4210854715202004e-14,
+          "globalPerfusion": "unknown"
+        }
+      },
+      "after": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 1.1242911127677977,
+        "fluidAddedMm3": 1.722581711058396,
+        "fluidRemovedMm3": 0.5982905982905984,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 111.68312757201652,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 10.0,
+        "vesselGeneratedMm3": 1.722581711058396,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 0,
+          "pressurePa": 984.1767705349398,
+          "vascularRemainingMm3": 98.41767705349399,
+          "refilledMm3": 0.14025876455236877,
+          "generatedMm3": 1.722581711058396,
+          "emittedMm3": 1.722581711058396,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": -1.4210854715202004e-14,
+          "globalPerfusion": "unknown"
+        }
+      }
+    },
+    {
+      "phase": "field",
+      "action": {
+        "duration": 0.2,
+        "operation": "withdraw",
+        "slot": "right"
+      },
+      "status": "accepted",
+      "reason": null,
+      "reasonCode": null,
+      "events": [
+        {
+          "kind": "withdraw",
+          "instrument": "Frazier suction",
+          "slot": "right"
+        }
+      ],
+      "stateId": "sha256:c8f7972999a19737b5519d13d471bdb76fddfaf6ecb9cfca1c0689d8194f278f",
+      "wallSeconds": 3.26552708260715,
+      "timingContext": "deterministic-verification-replay",
+      "before": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 1.1242911127677977,
+        "fluidAddedMm3": 1.722581711058396,
+        "fluidRemovedMm3": 0.5982905982905984,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 111.68312757201652,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 10.0,
+        "vesselGeneratedMm3": 1.722581711058396,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 0,
+          "pressurePa": 984.1767705349398,
+          "vascularRemainingMm3": 98.41767705349399,
+          "refilledMm3": 0.14025876455236877,
+          "generatedMm3": 1.722581711058396,
+          "emittedMm3": 1.722581711058396,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": -1.4210854715202004e-14,
+          "globalPerfusion": "unknown"
+        }
+      },
+      "after": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 1.1242911127677977,
+        "fluidAddedMm3": 1.722581711058396,
+        "fluidRemovedMm3": 0.5982905982905984,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 111.68312757201652,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 10.0,
+        "vesselGeneratedMm3": 1.722581711058396,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 0,
+          "pressurePa": 984.2083853684977,
+          "vascularRemainingMm3": 98.42083853684977,
+          "refilledMm3": 0.14342024790815125,
+          "generatedMm3": 1.722581711058396,
+          "emittedMm3": 1.722581711058396,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": -1.4210854715202004e-14,
+          "globalPerfusion": "unknown"
+        }
+      }
+    },
+    {
+      "phase": "field",
+      "action": {
+        "duration": 0.1,
+        "instrument": "irrigation",
+        "operation": "exchange",
+        "slot": "right"
+      },
+      "status": "accepted",
+      "reason": null,
+      "reasonCode": null,
+      "events": [
+        {
+          "kind": "exchange",
+          "instrument": "Irrigation",
+          "slot": "right"
+        }
+      ],
+      "stateId": "sha256:4c72004aa83e8bfefd63224e3ca2b6dbfa2ac847af446909dfdeba1cbf8acf2e",
+      "wallSeconds": 0.8418849161826074,
+      "timingContext": "deterministic-verification-replay",
+      "before": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 1.1242911127677977,
+        "fluidAddedMm3": 1.722581711058396,
+        "fluidRemovedMm3": 0.5982905982905984,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 111.68312757201652,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 10.0,
+        "vesselGeneratedMm3": 1.722581711058396,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 0,
+          "pressurePa": 984.2083853684977,
+          "vascularRemainingMm3": 98.42083853684977,
+          "refilledMm3": 0.14342024790815125,
+          "generatedMm3": 1.722581711058396,
+          "emittedMm3": 1.722581711058396,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": -1.4210854715202004e-14,
+          "globalPerfusion": "unknown"
+        }
+      },
+      "after": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 1.1242911127677977,
+        "fluidAddedMm3": 1.722581711058396,
+        "fluidRemovedMm3": 0.5982905982905984,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 111.68312757201652,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 10.0,
+        "vesselGeneratedMm3": 1.722581711058396,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 0,
+          "pressurePa": 984.2241690899532,
+          "vascularRemainingMm3": 98.42241690899532,
+          "refilledMm3": 0.14499862005369615,
+          "generatedMm3": 1.722581711058396,
+          "emittedMm3": 1.722581711058396,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": -1.4210854715202004e-14,
+          "globalPerfusion": "unknown"
+        }
+      }
+    },
+    {
+      "phase": "field",
+      "action": {
+        "duration": 1.0,
+        "operation": "apply",
+        "parameters": {
+          "flowMm3PerSecond": 20.0,
+          "radiusMm": 3.0
+        },
+        "pose": {
+          "position": [
+            36.535003662109375,
+            -118.558837890625,
+            -533.25
+          ],
+          "quaternion": [
+            0.5,
+            0.5,
+            -0.5,
+            -0.5
+          ]
+        },
+        "slot": "right"
+      },
+      "status": "accepted",
+      "reason": null,
+      "reasonCode": null,
+      "events": [
+        {
+          "kind": "apply",
+          "instrument": "Irrigation",
+          "slot": "right"
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            84.20167032877603,
+            -118.55883789062499,
+            -533.2499999999999
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            83.86833699544272,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            83.53500366210938,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            83.20167032877605,
+            -118.55883789062501,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            82.86833699544272,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            82.53500366210938,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            82.20167032877605,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            81.86833699544272,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            81.53500366210938,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            81.20167032877603,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            80.8683369954427,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            80.53500366210938,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            80.20167032877603,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            79.8683369954427,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            79.53500366210938,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            79.20167032877603,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            78.86833699544272,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            78.53500366210938,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            78.20167032877603,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            77.86833699544272,
+            -118.55883789062501,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            77.53500366210938,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            77.20167032877603,
+            -118.55883789062499,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            76.86833699544272,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            76.53500366210938,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            76.20167032877605,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            75.86833699544272,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            75.53500366210939,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            75.20167032877603,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            74.8683369954427,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            74.53500366210938,
+            -118.55883789062501,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            74.20167032877603,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            73.8683369954427,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            73.53500366210938,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            73.20167032877603,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            72.8683369954427,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            72.53500366210938,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            72.20167032877603,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            71.8683369954427,
+            -118.55883789062499,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            71.53500366210938,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            71.20167032877605,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            70.8683369954427,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            70.53500366210938,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            70.20167032877605,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            69.8683369954427,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            69.53500366210938,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            69.20167032877605,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            68.8683369954427,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            68.53500366210938,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            68.20167032877605,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            67.86833699544272,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            67.53500366210936,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            67.20167032877605,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            66.86833699544272,
+            -118.55883789062501,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            66.53500366210938,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            66.20167032877603,
+            -118.55883789062499,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            65.86833699544272,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            65.53500366210938,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            65.20167032877603,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            64.8683369954427,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            64.53500366210938,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            64.20167032877603,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            63.868336995442704,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            63.53500366210939,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            63.20167032877603,
+            -118.55883789062499,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            62.868336995442704,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            62.535003662109375,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            62.201670328776046,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            61.868336995442704,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            61.535003662109375,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            61.201670328776046,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            60.868336995442704,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            60.535003662109375,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            60.201670328776046,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            59.868336995442704,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            59.535003662109375,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            59.20167032877604,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            58.868336995442704,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            58.535003662109375,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            58.201670328776046,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            57.868336995442704,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            57.535003662109375,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            57.20167032877604,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            56.868336995442704,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            56.535003662109375,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            56.201670328776046,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            55.868336995442704,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            55.535003662109375,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            55.201670328776046,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            54.868336995442704,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            54.535003662109375,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            54.201670328776046,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            53.86833699544271,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            53.535003662109375,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            53.20167032877604,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            52.868336995442704,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            52.535003662109375,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            52.201670328776046,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            51.86833699544271,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            51.535003662109375,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            51.201670328776046,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            50.86833699544271,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            50.535003662109375,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            50.201670328776046,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            49.868336995442704,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            49.535003662109375,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            49.20167032877604,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            48.868336995442704,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            48.535003662109375,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            48.201670328776046,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            47.86833699544271,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            47.535003662109375,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            47.20167032877604,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            46.86833699544271,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            46.535003662109375,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            46.20167032877604,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            45.868336995442704,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            45.535003662109375,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            45.201670328776046,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            44.86833699544271,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            44.535003662109375,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            44.201670328776046,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            43.868336995442704,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            43.535003662109375,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            43.20167032877604,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            42.868336995442704,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            42.535003662109375,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            42.20167032877604,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            41.868336995442704,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            41.535003662109375,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            41.20167032877604,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            40.86833699544271,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            40.535003662109375,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            40.20167032877604,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            39.86833699544271,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            39.535003662109375,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            39.201670328776046,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            38.868336995442704,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            38.53500366210937,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            38.201670328776046,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            37.868336995442704,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            37.53500366210938,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            37.201670328776046,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            36.868336995442704,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            36.535003662109375,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            36.201670328776046,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            35.86833699544271,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            35.535003662109375,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            35.20167032877604,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            34.86833699544271,
+            -118.558837890625,
+            -533.25
+          ]
+        },
+        {
+          "kind": "irrigation",
+          "volumeMm3": 0.13333333333333333,
+          "outlet": [
+            34.535003662109375,
+            -118.558837890625,
+            -533.25
+          ]
+        }
+      ],
+      "stateId": "sha256:1ba8675b9fa1b063854b0d1ebc9893e54c33638d8f303d42741660891323f1b5",
+      "wallSeconds": 3.6235592919401824,
+      "timingContext": "deterministic-verification-replay",
+      "before": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 1.1242911127677977,
+        "fluidAddedMm3": 1.722581711058396,
+        "fluidRemovedMm3": 0.5982905982905984,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 111.68312757201652,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 10.0,
+        "vesselGeneratedMm3": 1.722581711058396,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 0,
+          "pressurePa": 984.2241690899532,
+          "vascularRemainingMm3": 98.42241690899532,
+          "refilledMm3": 0.14499862005369615,
+          "generatedMm3": 1.722581711058396,
+          "emittedMm3": 1.722581711058396,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": -1.4210854715202004e-14,
+          "globalPerfusion": "unknown"
+        }
+      },
+      "after": {
+        "targetRemovedMm3": 58.0,
+        "removedCells": 768,
+        "fluidPresentMm3": 21.1242911127678,
+        "fluidAddedMm3": 21.72258171105836,
+        "fluidRemovedMm3": 0.5982905982905984,
+        "fluidEscapedMm3": 0.0,
+        "thermalExposureProxy": 111.68312757201652,
+        "woundCount": 1,
+        "damagedFaces": 5,
+        "nonPatentFaces": 5,
+        "coagulationDose": 10.0,
+        "vesselGeneratedMm3": 1.722581711058396,
+        "vesselPhysicsV2": {
+          "enabled": true,
+          "woundCount": 1,
+          "damagedFaceCount": 5,
+          "woundAreaMm2": 5.0,
+          "activeWounds": 0,
+          "pressurePa": 984.381141230254,
+          "vascularRemainingMm3": 98.4381141230254,
+          "refilledMm3": 0.16069583408377988,
+          "generatedMm3": 1.722581711058396,
+          "emittedMm3": 1.722581711058396,
+          "blockedOutletReservoirMm3": 0.0,
+          "conservationResidualMm3": -1.4210854715202004e-14,
+          "globalPerfusion": "unknown"
+        }
+      }
+    }
+  ],
+  "protection": {
+    "status": "declared-masks-only",
+    "missingRequired": [],
+    "clearanceMm": 2.0,
+    "anatomicalCompleteness": "unknown",
+    "clinicalValidation": "none",
+    "unknownStructures": [
+      "motor/language cortex",
+      "corticospinal tract",
+      "optic pathways",
+      "cranial nerves"
+    ],
+    "structures": [
+      {
+        "id": "brainstem",
+        "name": "brain-stem",
+        "sourceCells": 34040,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-16; label=16; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:6c13edb715334e0da86d38fb9d50fb016ad6c525b4c85235cc96b558a79f443f; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "left_thalamus",
+        "name": "left thalamus",
+        "sourceCells": 11463,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-10; label=10; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:8142a1740d958e15e6da581ba760259943a398ed93e11fde686db92ad3001504; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "right_thalamus",
+        "name": "right thalamus",
+        "sourceCells": 11015,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-49; label=49; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:2bc584f4f0b7cd26964a2ac7fb0d4954bdbe4b9e4af87ba26ee91827b3114288; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "left_caudate",
+        "name": "left caudate",
+        "sourceCells": 8186,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-11; label=11; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:ef69e8990aa0ac3e55356b1d81f28e5f2dbe6f3a4e1cbc61a47b8ab41fc752d9; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "right_caudate",
+        "name": "right caudate",
+        "sourceCells": 8133,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-50; label=50; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:2d2b2062b5cae137800bb1e983236ae65b90b87e99709a45a894ec4e8877e6c1; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "left_putamen",
+        "name": "left putamen",
+        "sourceCells": 9826,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-12; label=12; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:4e4a09ece21e199770a520c563107c4194b92c32f0efa646f6f0dd7bed4a7dbc; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "right_putamen",
+        "name": "right putamen",
+        "sourceCells": 9683,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-51; label=51; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:7f82ffa268e72aad25c3dd2d34c5e58bd719fe3c27b1f8e7ed20ef0dfa6cbf69; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "left_pallidum",
+        "name": "left pallidum",
+        "sourceCells": 3024,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-13; label=13; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:657ecada8e8d66397ed76e05ff65b5ddd4bb53761ad4392e956d8d5cc1218714; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "right_pallidum",
+        "name": "right pallidum",
+        "sourceCells": 3195,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-52; label=52; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:6786d301532c766db3367d570894767817857d4cd861408b9eee86275bd072a3; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "left_hippocampus",
+        "name": "left hippocampus",
+        "sourceCells": 8789,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-17; label=17; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:b3409109b55b76be00df69e722a12a30895e36c8d5a4eb7b50c661b9c9e3bdf8; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      },
+      {
+        "id": "right_hippocampus",
+        "name": "right hippocampus",
+        "sourceCells": 9507,
+        "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-53; label=53; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:eac6e45c6be78e82808100c71d70e9a80b4de13885df238c64028f4d7bb26535; sampling=affine-cell circumsphere overlap",
+        "reviewStatus": "unreviewed; tumor-distorted regions require review"
+      }
+    ],
+    "configured": true,
+    "mode": "strict-research",
+    "contractId": "sha256:c90de8fa14c77f2d2623b4e2e0070cefde8ea29e28189ba18d41865287bd6025",
+    "criticalMaxDisplacementMm": 0.0
+  },
+  "savedCase": "/Users/shaf/coding_projects/RessectionLab/outputs/integrated-rehearsal-v1/sub06-vascular.ressectionlab",
+  "savedCaseSha256": "ce6f307f3038d7d0aa4f1486c9fc35b75870866770b9387aabfd3a86e8af7355",
+  "freshProcess": {
+    "stateId": "sha256:1ba8675b9fa1b063854b0d1ebc9893e54c33638d8f303d42741660891323f1b5",
+    "sourceCaseHash": "sha256:3f3622ae39d4e12f8cbebef5c7cfd0e46e6e01461bae90828301d61da62a057e",
+    "labelArrayHash": "sha256:9930330418c439d7d042054d7419c05d3158e2422f62ce69b034044a563ecd76",
+    "intensityArrayHash": "sha256:7005b3fc2ae9c51bbbac3a2384210628e6f9541b7cbf797159d64ffbeee0f4f3",
+    "protection": {
+      "status": "declared-masks-only",
+      "missingRequired": [],
+      "clearanceMm": 2.0,
+      "anatomicalCompleteness": "unknown",
+      "clinicalValidation": "none",
+      "unknownStructures": [
+        "motor/language cortex",
+        "corticospinal tract",
+        "optic pathways",
+        "cranial nerves"
+      ],
+      "structures": [
+        {
+          "id": "brainstem",
+          "name": "brain-stem",
+          "sourceCells": 34040,
+          "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-16; label=16; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:6c13edb715334e0da86d38fb9d50fb016ad6c525b4c85235cc96b558a79f443f; sampling=affine-cell circumsphere overlap",
+          "reviewStatus": "unreviewed; tumor-distorted regions require review"
+        },
+        {
+          "id": "left_thalamus",
+          "name": "left thalamus",
+          "sourceCells": 11463,
+          "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-10; label=10; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:8142a1740d958e15e6da581ba760259943a398ed93e11fde686db92ad3001504; sampling=affine-cell circumsphere overlap",
+          "reviewStatus": "unreviewed; tumor-distorted regions require review"
+        },
+        {
+          "id": "right_thalamus",
+          "name": "right thalamus",
+          "sourceCells": 11015,
+          "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-49; label=49; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:2bc584f4f0b7cd26964a2ac7fb0d4954bdbe4b9e4af87ba26ee91827b3114288; sampling=affine-cell circumsphere overlap",
+          "reviewStatus": "unreviewed; tumor-distorted regions require review"
+        },
+        {
+          "id": "left_caudate",
+          "name": "left caudate",
+          "sourceCells": 8186,
+          "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-11; label=11; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:ef69e8990aa0ac3e55356b1d81f28e5f2dbe6f3a4e1cbc61a47b8ab41fc752d9; sampling=affine-cell circumsphere overlap",
+          "reviewStatus": "unreviewed; tumor-distorted regions require review"
+        },
+        {
+          "id": "right_caudate",
+          "name": "right caudate",
+          "sourceCells": 8133,
+          "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-50; label=50; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:2d2b2062b5cae137800bb1e983236ae65b90b87e99709a45a894ec4e8877e6c1; sampling=affine-cell circumsphere overlap",
+          "reviewStatus": "unreviewed; tumor-distorted regions require review"
+        },
+        {
+          "id": "left_putamen",
+          "name": "left putamen",
+          "sourceCells": 9826,
+          "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-12; label=12; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:4e4a09ece21e199770a520c563107c4194b92c32f0efa646f6f0dd7bed4a7dbc; sampling=affine-cell circumsphere overlap",
+          "reviewStatus": "unreviewed; tumor-distorted regions require review"
+        },
+        {
+          "id": "right_putamen",
+          "name": "right putamen",
+          "sourceCells": 9683,
+          "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-51; label=51; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:7f82ffa268e72aad25c3dd2d34c5e58bd719fe3c27b1f8e7ed20ef0dfa6cbf69; sampling=affine-cell circumsphere overlap",
+          "reviewStatus": "unreviewed; tumor-distorted regions require review"
+        },
+        {
+          "id": "left_pallidum",
+          "name": "left pallidum",
+          "sourceCells": 3024,
+          "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-13; label=13; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:657ecada8e8d66397ed76e05ff65b5ddd4bb53761ad4392e956d8d5cc1218714; sampling=affine-cell circumsphere overlap",
+          "reviewStatus": "unreviewed; tumor-distorted regions require review"
+        },
+        {
+          "id": "right_pallidum",
+          "name": "right pallidum",
+          "sourceCells": 3195,
+          "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-52; label=52; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:6786d301532c766db3367d570894767817857d4cd861408b9eee86275bd072a3; sampling=affine-cell circumsphere overlap",
+          "reviewStatus": "unreviewed; tumor-distorted regions require review"
+        },
+        {
+          "id": "left_hippocampus",
+          "name": "left hippocampus",
+          "sourceCells": 8789,
+          "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-17; label=17; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:b3409109b55b76be00df69e722a12a30895e36c8d5a4eb7b50c661b9c9e3bdf8; sampling=affine-cell circumsphere overlap",
+          "reviewStatus": "unreviewed; tumor-distorted regions require review"
+        },
+        {
+          "id": "right_hippocampus",
+          "name": "right hippocampus",
+          "sourceCells": 9507,
+          "provenance": "collection=c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5; layer=synthseg-53; label=53; sourceArraySha256=ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942; evidence=sha256:eac6e45c6be78e82808100c71d70e9a80b4de13885df238c64028f4d7bb26535; sampling=affine-cell circumsphere overlap",
+          "reviewStatus": "unreviewed; tumor-distorted regions require review"
+        }
+      ],
+      "configured": true,
+      "mode": "strict-research",
+      "contractId": "sha256:c90de8fa14c77f2d2623b4e2e0070cefde8ea29e28189ba18d41865287bd6025",
+      "criticalMaxDisplacementMm": 0.0
+    },
+    "metrics": {
+      "targetRemovedMm3": 58.0,
+      "removedCells": 768,
+      "fluidPresentMm3": 21.1242911127678,
+      "fluidAddedMm3": 21.72258171105836,
+      "fluidRemovedMm3": 0.5982905982905984,
+      "fluidEscapedMm3": 0.0,
+      "thermalExposureProxy": 111.68312757201652,
+      "woundCount": 1,
+      "damagedFaces": 5,
+      "nonPatentFaces": 5,
+      "coagulationDose": 10.0,
+      "vesselGeneratedMm3": 1.722581711058396,
+      "vesselPhysicsV2": {
+        "enabled": true,
+        "woundCount": 1,
+        "damagedFaceCount": 5,
+        "woundAreaMm2": 5.0,
+        "activeWounds": 0,
+        "pressurePa": 984.381141230254,
+        "vascularRemainingMm3": 98.4381141230254,
+        "refilledMm3": 0.16069583408377988,
+        "generatedMm3": 1.722581711058396,
+        "emittedMm3": 1.722581711058396,
+        "blockedOutletReservoirMm3": 0.0,
+        "conservationResidualMm3": -1.4210854715202004e-14,
+        "globalPerfusion": "unknown"
+      }
+    },
+    "verifiedBranchPrefixes": {
+      "main": "sha256:bc71ea13f52d6ecad621fc3c8190b9881a315876db2d8c35c83e1c8fd59fc126",
+      "vascular-wound": "sha256:969121b4a195c123a90960f670e615e83deb976f8cc22da9e10d4373b23dcf5d",
+      "vascular-coagulated": "sha256:8e77fc28c937387660f10ecf6eb339eb62d2516f5026d287ee5ee28b7093dba8",
+      "vascular-field": "sha256:1ba8675b9fa1b063854b0d1ebc9893e54c33638d8f303d42741660891323f1b5"
+    },
+    "mainSnapshotHash": "sha256:223584e0c68622c0d325614b257d87221d25960813575511eb29699e128e6a09",
+    "originalFiles": 0,
+    "auxiliaryScans": 0
+  },
+  "woundDemonstrated": true,
+  "bipolarExposureDemonstrated": true,
+  "suctionRemovedMm3": 0.5982905982905984,
+  "irrigationAddedMm3": 20.0,
+  "patencyMeaning": "Coagulation and fluid removal do not restore cut vessel patency.",
+  "archiveRepair": "Compacted manifest JSON whitespace to meet unchanged 16 MiB native import budget; all JSON values and array members preserved.",
+  "instrumentationRecovery": "Original trial completed all 22 actions and saved its snapshot. Per-action metrics/times here come from one deterministic fresh-process verification replay, not another candidate search.",
+  "limitations": [
+    "One scripted development branch on the earlier target-58 precursor, not the corrected target-57 bimanual main.",
+    "Bleeding is generated only by supported modeled wound physics; no patient bleed was injected.",
+    "Guarded anatomy is limited to supplied unreviewed masks. No clinical validation."
+  ]
+}

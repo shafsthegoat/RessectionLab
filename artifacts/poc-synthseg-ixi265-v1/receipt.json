@@ -1,0 +1,160 @@
+{
+  "schema": "resectionlab-synthseg-ixi265-bounded-trials-v1",
+  "status": "failed_memory_guard_no_tissue_estimates_accepted",
+  "patient_group": "IXI:265",
+  "role": "TRAIN",
+  "training_admitted": false,
+  "model": "Official SynthSeg1.0",
+  "source_repository": "https://github.com/BBillot/SynthSeg",
+  "source_revision": "2a2aa3bbfccb83f8253a51ca8b329b9938a2646d",
+  "source_license": "Apache-2.0",
+  "source_receipt_sha256": "3b0c2c5d98bea892d5d5d28496f28dad3f0bd49d0030012ccb6c92556b1a6272",
+  "source_inventory_files": 66,
+  "source_inventory_bytes": 53966133,
+  "weights": {
+    "path": "models/synthseg_1.0.h5",
+    "bytes": 53079056,
+    "git_blob_sha1": "a28f57090fab43709a9024fc747e5c3725326454",
+    "sha256": "7d2e32d298fe38dc51ea38e6a8e8fc5c665d56b63cddb409e8b199535f8b5298",
+    "url": "https://raw.githubusercontent.com/BBillot/SynthSeg/2a2aa3bbfccb83f8253a51ca8b329b9938a2646d/models/synthseg_1.0.h5"
+  },
+  "runtime_requirements": {
+    "path": "manifests/synthseg-pilot-runtime-requirements.txt",
+    "sha256": "a2d3b963d5e550396a79dbd52dfd91b071defe99de0807748b7993c1585989f6",
+    "isolation": "Separate Python3.9 CPU environment; app dependencies unchanged",
+    "compatibility": "TensorFlow-macos2.13.1/Keras2.13.1 instead of historical upstream TF2.2; compatibility trial, no output-equivalence claim"
+  },
+  "final_runner": {
+    "path": "scripts/poc_synthseg_inference.py",
+    "sha256": "4d688c979a42290e19264f5915d25d91703fc08fad951512ceada08428711ba0",
+    "note": "Post-trial packaging defers the optional psutil import until inference; measured trials retain their original runner hashes."
+  },
+  "source_preparer": {
+    "path": "scripts/prepare_synthseg_pilot.py",
+    "sha256": "db742b785e12f06b44e493553de50beb5498c84ae6294476d45fa600b673b326"
+  },
+  "trials": [
+    {
+      "status": "failed",
+      "failure": "memory limit",
+      "elapsed_seconds": 10.546715541975573,
+      "peak_process_family_rss_bytes_sampled": 4303503360,
+      "memory_limit_bytes": 4294967296,
+      "minimum_available_memory_bytes": null,
+      "input_unchanged": true,
+      "runner_sha256": null,
+      "roi": null,
+      "parameters": {
+        "upstream_mode": "--v1 --cpu --threads2",
+        "crop": null,
+        "fast": false,
+        "parcellation": false,
+        "automated_qc": false
+      },
+      "local_receipt": "outputs/poc-ixi265/synthseg-1.0-attempt1/inference.json",
+      "receipt_sha256": "bf67475e4854b51ff977e5d8a9cd199588cef0b3560a3eee134922d8d6f33495",
+      "worker_log_sha256": "c60af973f63c52f770f4df40b2337bd35352742c4b44215716d32073dd3a9a38",
+      "accepted_tissue_output_count": 0,
+      "historical_runner_note": "Initial full-FOV trial predates runner-hash instrumentation; no matching final-source claim."
+    },
+    {
+      "status": "failed",
+      "failure": "memory limit",
+      "elapsed_seconds": 16.507924540899694,
+      "peak_process_family_rss_bytes_sampled": 4596514816,
+      "memory_limit_bytes": 4294967296,
+      "minimum_available_memory_bytes": 805306368,
+      "input_unchanged": true,
+      "runner_sha256": "d819a147c747baf255760c4fe75d5da04e1ddbb0a6cb5623ee279f70cc205cec",
+      "roi": {
+        "bounds_native_exclusive": [
+          [
+            38,
+            230
+          ],
+          [
+            58,
+            227
+          ],
+          [
+            14,
+            137
+          ]
+        ],
+        "margin_mm": 5.0,
+        "estimated_brain_cells_preserved": 1451509,
+        "prediction_coverage_cells": 3991104,
+        "source_cells": 9830400,
+        "limit": "Brain extraction is an estimate; preserving its cells does not prove complete anatomical coverage. Cropped inference may differ from full-FOV predictions.",
+        "brain_record_sha256": "d7d423604d62968816ab32a8737d4d7f42f27614b0a2acd714f09cb3e9ebaddf",
+        "brain_mask_sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192"
+      },
+      "parameters": {
+        "upstream_mode": "--v1 --cpu --threads2",
+        "crop": null,
+        "fast": false,
+        "parcellation": false,
+        "automated_qc": false
+      },
+      "local_receipt": "outputs/poc-ixi265/synthseg-1.0-brain-roi-attempt2/inference.json",
+      "receipt_sha256": "4a3b7c0b78c45c4d04d4e09ce395806ea9dd1e912ce05a416df77f01830c34ac",
+      "worker_log_sha256": "c60af973f63c52f770f4df40b2337bd35352742c4b44215716d32073dd3a9a38",
+      "accepted_tissue_output_count": 0,
+      "receipt_finalization_note": "Brain receipt consumed with SHA d7d423604d62968816ab32a8737d4d7f42f27614b0a2acd714f09cb3e9ebaddf was subsequently finalized to0045ef08168b9347f62ebca8ced2d08a65b325146c9a0a77bfc18b555d20cd91; exact source/mask hashes unchanged. This failed trial produced no tissue maps. Trial3 snapshots consumed receipt bytes."
+    },
+    {
+      "status": "failed",
+      "failure": "memory limit",
+      "elapsed_seconds": 12.60669104102999,
+      "peak_process_family_rss_bytes_sampled": 4353654784,
+      "memory_limit_bytes": 4294967296,
+      "minimum_available_memory_bytes": 805306368,
+      "input_unchanged": true,
+      "runner_sha256": "a05d6a47b2040a1349b7d581994e4f6da7c5600f9ef3c122c7dc963849a25ff6",
+      "roi": {
+        "bounds_native_exclusive": [
+          [
+            38,
+            230
+          ],
+          [
+            58,
+            227
+          ],
+          [
+            14,
+            137
+          ]
+        ],
+        "margin_mm": 5.0,
+        "estimated_brain_cells_preserved": 1451509,
+        "prediction_coverage_cells": 3991104,
+        "source_cells": 9830400,
+        "limit": "Brain extraction is an estimate; preserving its cells does not prove complete anatomical coverage. Cropped inference may differ from full-FOV predictions.",
+        "brain_record_sha256": "0045ef08168b9347f62ebca8ced2d08a65b325146c9a0a77bfc18b555d20cd91",
+        "brain_mask_sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192"
+      },
+      "parameters": {
+        "upstream_mode": "--v1 --cpu --threads2 --fast",
+        "crop": null,
+        "fast": true,
+        "parcellation": false,
+        "automated_qc": false,
+        "fast_mode_difference": "Official flag disables flip averaging and topology postprocessing; output equivalence/accuracy benefit is not asserted"
+      },
+      "local_receipt": "outputs/poc-ixi265/synthseg-1.0-brain-roi-fast-attempt3/inference.json",
+      "receipt_sha256": "350bf98609495c30b0f5ad3c125dda388b047b89992759c506cff454383e249a",
+      "worker_log_sha256": "0584af707200a2e54c51a01ee0d093733aae7aefaa6cdd3724ff723e60a9b20b",
+      "accepted_tissue_output_count": 0
+    }
+  ],
+  "limits": [
+    "No accepted tissue, ventricle or parcellation result",
+    "Sampled worker-family RSS guard; transient overshoot is retained",
+    "ROI preserves estimated brain cells, not proof of anatomical completeness",
+    "Official fast mode differs from full method; no equivalence claim",
+    "No increased memory cap or repeated unmodified campaign",
+    "Uniform diffusion geometry pilot must disclose missing GM/WM/CSF barriers"
+  ],
+  "followup": "Defer tissue inference until a resource-qualified method is independently checked; preserve failed denominators."
+}

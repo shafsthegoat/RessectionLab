@@ -1,0 +1,66 @@
+{
+  "utc": "2026-10-20T18:49:21.537773+00:00",
+  "scope": "Actual fresh-process original0-action GUI check only; completed episode playback remains pending",
+  "originalSha256": "ff5a49b8706a8ccda08d8c3e82dad3e079f85dea98cb6bd40783d2262eec9838",
+  "originalUnchanged": true,
+  "launchCase": "/Users/shaf/coding_projects/RessectionLab/testcases/cases/meningioma-sub-06-standard-v2.ressectionlab",
+  "launchFlags": [
+    "--secondary-display"
+  ],
+  "displayInventoryAtEvidence": {
+    "SPDisplaysDataType": [
+      {
+        "_name": "Apple M2 Pro",
+        "spdisplays_mtlgpufamilysupport": "spdisplays_metal4",
+        "spdisplays_ndrvs": [
+          {
+            "_name": "MSI MP275Q",
+            "_spdisplays_display-product-id": "40c3",
+            "_spdisplays_display-serial-number": "ffffffff",
+            "_spdisplays_display-vendor-id": "3669",
+            "_spdisplays_display-week": "23",
+            "_spdisplays_display-year": "2024",
+            "_spdisplays_displayID": "3",
+            "_spdisplays_pixels": "2560 x 1440",
+            "_spdisplays_resolution": "2560 x 1440 @ 100.00Hz",
+            "spdisplays_main": "spdisplays_yes",
+            "spdisplays_mirror": "spdisplays_off",
+            "spdisplays_online": "spdisplays_yes",
+            "spdisplays_pixelresolution": "spdisplays_qhd",
+            "spdisplays_resolution": "2560 x 1440 @ 100.00Hz",
+            "spdisplays_rotation": "spdisplays_supported"
+          },
+          {
+            "_name": "Color LCD",
+            "_spdisplays_display-product-id": "a04f",
+            "_spdisplays_display-serial-number": "fd626d62",
+            "_spdisplays_display-vendor-id": "610",
+            "_spdisplays_display-week": "0",
+            "_spdisplays_display-year": "0",
+            "_spdisplays_displayID": "1",
+            "_spdisplays_pixels": "3024 x 1964",
+            "_spdisplays_resolution": "1512 x 982 @ 120.00Hz",
+            "spdisplays_ambient_brightness": "spdisplays_yes",
+            "spdisplays_connection_type": "spdisplays_internal",
+            "spdisplays_display_type": "spdisplays_built-in-liquid-retina-xdr",
+            "spdisplays_mirror": "spdisplays_off",
+            "spdisplays_online": "spdisplays_yes",
+            "spdisplays_pixelresolution": "spdisplays_3024x1964Retina"
+          }
+        ],
+        "spdisplays_vendor": "sppci_vendor_Apple",
+        "sppci_bus": "spdisplays_builtin",
+        "sppci_cores": "16",
+        "sppci_device_type": "spdisplays_gpu",
+        "sppci_model": "Apple M2 Pro"
+      }
+    ]
+  },
+  "screenshot": "original-fresh-open-20261020T1849.png",
+  "accessibility": "original-fresh-open-20261020T1849.ax.txt",
+  "observedActions": 0,
+  "observedOwnedTargetRemainingMm3": 43573,
+  "observedTargetRemovedMm3": 0,
+  "observedActiveWounds": 0,
+  "bothHandsWithdrawnInactive": true
+}

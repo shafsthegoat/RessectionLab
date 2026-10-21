@@ -15,6 +15,7 @@ build/
 dist/
 data/
 outputs/
+/testcases/
 *.nii
 *.nii.gz
 *.dcm
@@ -79,3 +80,6 @@ outputs/
 # Public acquisition summaries retain payload hashes and original receipt hashes.
 /artifacts/febio-runtime-build-v1/acquire-01/acquisition.json
 /artifacts/febio-runtime-build-v1/acquire-01/worker-progress.json
+
+# Full OS crash report stays local; version the task-specific trace summary.
+/artifacts/poc-ixi265-atropos-positive-domain-run-v2/native-crash.ips

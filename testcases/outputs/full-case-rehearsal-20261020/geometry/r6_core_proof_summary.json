@@ -1,0 +1,51 @@
+{
+  "schema": "resectionlab.focused-core-public-preview-proof.v1",
+  "publicRestoreVerified": true,
+  "sourceSceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+  "sourceCaseHash": "sha256:6ca9c1dee58b3635d92d576ad5b355d0a6d500892f30f07968a671b1b67a51ea",
+  "originalCaseSha256": "ff5a49b8706a8ccda08d8c3e82dad3e079f85dea98cb6bd40783d2262eec9838",
+  "sourceActualTargetMm3": 516,
+  "positioningActualAccepted": true,
+  "positioningPreviewEqualsCommitStateId": true,
+  "positioningStrategy": "axial-retreat-12.0",
+  "positioningEndpoint": [
+    -8.464996337890625,
+    1.191162109375,
+    -432.3747333570265
+  ],
+  "positioningTargetDeltaMm3": 0.0,
+  "coreAction": {
+    "slot": "left",
+    "operation": "apply",
+    "path": [
+      {
+        "position": [
+          -8.464996337890625,
+          1.191162109375,
+          -432.3747333570265
+        ],
+        "quaternion": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    ],
+    "parameters": {
+      "radiusMm": 6.0
+    },
+    "duration": 0.1
+  },
+  "corePublicPreviewAccepted": true,
+  "corePreviewTargetDeltaMm3": 1228.0,
+  "corePreviewTargetTotalMm3": 1744.0,
+  "brainRemovedMm3": 0,
+  "vesselsRemovedMm3": 0,
+  "boneDeltaMm3": 0.0,
+  "corePreviewWallSeconds": 0.49800129095092416,
+  "previewDidNotCommit": true,
+  "ownedTargetDenominatorMm3": 43573,
+  "assumptions": "Explicit 6 mm generic research CUSA aperture permitted by existing API; full target-only working/shaft geometry and matching guards. No calibrated energy/aspiration model; no source or collision-law changes.",
+  "fullProof": "r6_core_public_preview.json"
+}

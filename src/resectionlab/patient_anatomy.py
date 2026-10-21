@@ -450,6 +450,10 @@ class PatientImagingCollection:
             if "probability" not in row or not 0 < threshold < 1:
                 raise ValueError("A retained probability field is required")
             data = self.array(row["probability"]) >= threshold
+        elif operation == "refine-vessels":
+            from .anatomy_vessels import refine_layer
+            data, _ = refine_layer(self, row, data, threshold=threshold,
+                                   radius_mm=radius_mm)
         elif operation in {"component", "seed"}:
             if len(points) != 1:
                 raise ValueError("One source-linked seed required")
@@ -480,6 +484,7 @@ class PatientImagingCollection:
         if tuple(mask.shape) != tuple(row["data"]["shape"]):
             raise ValueError("Correction grid changed")
         row.setdefault("original_data", deepcopy(row["data"]))
+        row.setdefault("original_label_value", row["label_value"])
         row["data"] = self.put_array(np.asarray(mask, dtype=np.uint8))
         row["label_value"] = 1
         row["revision"] += 1

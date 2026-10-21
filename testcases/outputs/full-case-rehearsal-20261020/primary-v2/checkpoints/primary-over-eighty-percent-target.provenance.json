@@ -1,0 +1,33 @@
+{
+  "utc": "2026-10-20T22:25:07.604566+00:00",
+  "checkpoint": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-over-eighty-percent-target.ressectionlab",
+  "checkpointSha256": "0b26a74f6772473cd237bbdd4be80042f0d0762755ccf281a305883ad9199936",
+  "originalSha256": "ff5a49b8706a8ccda08d8c3e82dad3e079f85dea98cb6bd40783d2262eec9838",
+  "caseSemanticHash": "sha256:6ca9c1dee58b3635d92d576ad5b355d0a6d500892f30f07968a671b1b67a51ea",
+  "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+  "labelArrayHash": "sha256:9930330418c439d7d042054d7419c05d3158e2422f62ce69b034044a563ecd76",
+  "branchId": "full-primary",
+  "actions": 1954,
+  "stateId": "sha256:5f795ad0e74900511bf71b1106b2f29c6cbc7a1dc08b744ab74644942f3b2a0b",
+  "originalOwnedTargetMm3": 43573.0,
+  "removedOwnedTargetMm3": 34905.0,
+  "removedOwnedTargetPercent": 80.10694696256856,
+  "remainingOwnedTargetMm3": 8668.0,
+  "remainingSixConnectedRegions": 157,
+  "removedByOwnedMaterialMm3": {
+    "soft_tissue": 0.0,
+    "tumor": 34905.0,
+    "bone": 15238.0,
+    "vessel": 0.0
+  },
+  "removedRawAnnotationMembershipCells": {
+    "bone": 15238,
+    "brain": 35766,
+    "tumor": 35227,
+    "vessels": 0
+  },
+  "directorStage": "cusa_setup",
+  "method": "Hardlink of atomically saved native archive; counts independently recomputed from original source ownership and recorded removed IDs. No engine construction or replay.",
+  "qualification": "Raw annotation memberships overlap. Zero owned soft_tissue removal does not establish zero raw brain-mask membership or clinical healthy-brain injury.",
+  "scope": "Execution milestone only; cleanup, final canonical acceptance and full Electron playback remain pending."
+}

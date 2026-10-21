@@ -1,0 +1,40 @@
+{
+  "utc": "2026-10-20T23:31:36.469696+00:00",
+  "status": "first-new-interval-verified",
+  "codeCommit": "28962e66647760043d123d3e3326e0a29b7b6a08",
+  "priorDirectorCommit": "252afcebfc66e5e0a075ee698bea3d4b92d08890",
+  "startPosition": 2064,
+  "startStateId": "sha256:f992eafa42e1dd14692e053ad6d8a1e48ccb1e6d3fdda626e2edb6e255c617c8",
+  "loadedOnly": [
+    "full_case_rehearsal.run_slice",
+    "resectionlab.full_case_path_variants"
+  ],
+  "checkpoint": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/checkpoints/primary-before-cusa-path-variants-2064.ressectionlab",
+  "checkpointSha256": "4df651151471d03d0c7e7d18c727fc69298dd448170d9ff32a0df930ad06bbf2",
+  "engineFunctionsAndClassesIncludingCheckpointUnchanged": true,
+  "thermalCodeUnchanged": true,
+  "allOtherDirectorFunctionsUnchanged": true,
+  "patientSnapshotHistoryDirectorUnchangedDuringBinding": true,
+  "physicalActionsDuringBinding": 0,
+  "scope": "New proposal variants only; every future physical transition still uses public preview/step. No old action, physics, source or protection changes.",
+  "stateIdAfterBinding": "sha256:f992eafa42e1dd14692e053ad6d8a1e48ccb1e6d3fdda626e2edb6e255c617c8",
+  "sourceUnchanged": true,
+  "firstNewOrdinaryPublicInterval": {
+    "startPosition": 2064,
+    "endPosition": 2066,
+    "newActionCount": 2,
+    "endStateId": "sha256:f4262e8059fc06fbbdbbfee913b6baa317c528470470ef10afa5a7d369acef3d",
+    "statuses": {
+      "accepted": 2
+    },
+    "savedNativeEqualsLive": true,
+    "continuousRecordedStateChain": true,
+    "fullPriorActionHistoryPreserved": true,
+    "sourceAndEngineCodeUnchanged": true,
+    "targetRemovedMm3": 35310.0,
+    "activeWounds": 0,
+    "woundCount": 0,
+    "directorStatus": "running",
+    "stage": "core"
+  }
+}

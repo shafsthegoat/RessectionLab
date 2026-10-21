@@ -1,0 +1,562 @@
+{
+  "schema": "medivis-fidelity-source-qc-v1",
+  "scope": "Known local source manifests and caches only; no acquisition, model inference, registration or anatomy edits",
+  "current_patient_manifest": "/Users/shaf/Downloads/RessectionLab-Native-Anatomy-sub-06/patient-anatomy.json",
+  "manifest_sha256": "ea6b541714012d10d20eab6788ffc14b0dcdd81757d393510b06261312dc782c",
+  "snapshot_id": "c1fd16d70b0434f02506d3c0a8164715d1290add22660cee069dc10bad8305e5",
+  "patient_id": "ZENODO-17486320-meningioma-sub-06",
+  "source_series": [
+    {
+      "id": "t1ce",
+      "modality": "T1CE",
+      "shape": [
+        439,
+        439,
+        361
+      ],
+      "grid_spacing_mm": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "acquisition_resolution": "not inferred from supplied grid",
+      "path": "/Users/shaf/Downloads/RessectionLab-Native-Anatomy-sub-06/originals/1fe942294ad7e60247c78ae45619a1e4234e42a5293206d213e12e56d45b3dce/CE-T1W.nii.gz",
+      "original_sha256": "1fe942294ad7e60247c78ae45619a1e4234e42a5293206d213e12e56d45b3dce",
+      "transform": {
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "status": "reference",
+        "method": null,
+        "direction": null,
+        "source_sha256": null,
+        "reference_sha256": null,
+        "uncertainty_mm": null,
+        "landmarks": null
+      },
+      "alignment_quality": null
+    },
+    {
+      "id": "ct-bone",
+      "modality": "CT",
+      "shape": [
+        439,
+        439,
+        361
+      ],
+      "grid_spacing_mm": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "acquisition_resolution": "not inferred from supplied grid",
+      "path": "/Users/shaf/Downloads/RessectionLab-Native-Anatomy-sub-06/originals/6b6ad3ba12363b747e0048978cedb0e28ea52ec636b3022d9ada5ec3cd6b2b39/CT-BONE.nii.gz",
+      "original_sha256": "6b6ad3ba12363b747e0048978cedb0e28ea52ec636b3022d9ada5ec3cd6b2b39",
+      "transform": {
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            -0.017870680582040777
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.22387753045572545
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            -0.22421960321173628
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "status": "unreviewed",
+        "method": "rigid-quality-v2.4",
+        "direction": "source-RAS-mm-to-reference-RAS-mm",
+        "source_sha256": "6b6ad3ba12363b747e0048978cedb0e28ea52ec636b3022d9ada5ec3cd6b2b39",
+        "reference_sha256": "1fe942294ad7e60247c78ae45619a1e4234e42a5293206d213e12e56d45b3dce",
+        "uncertainty_mm": null,
+        "landmarks": []
+      },
+      "alignment_quality": "warning"
+    },
+    {
+      "id": "ct-brain",
+      "modality": "CT",
+      "shape": [
+        439,
+        439,
+        361
+      ],
+      "grid_spacing_mm": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "acquisition_resolution": "not inferred from supplied grid",
+      "path": "/Users/shaf/Downloads/RessectionLab-Native-Anatomy-sub-06/originals/94e25bf147daf17c794f775a3562cf0b5184e7e15bab6796b028a97f1c02932a/CT-BRAIN.nii.gz",
+      "original_sha256": "94e25bf147daf17c794f775a3562cf0b5184e7e15bab6796b028a97f1c02932a",
+      "transform": {
+        "matrix": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "status": "unreviewed",
+        "method": "rigid-quality-v2.4",
+        "direction": "source-RAS-mm-to-reference-RAS-mm",
+        "source_sha256": "94e25bf147daf17c794f775a3562cf0b5184e7e15bab6796b028a97f1c02932a",
+        "reference_sha256": "1fe942294ad7e60247c78ae45619a1e4234e42a5293206d213e12e56d45b3dce",
+        "uncertainty_mm": null,
+        "landmarks": []
+      },
+      "alignment_quality": "warning"
+    }
+  ],
+  "fixity_checks": [
+    {
+      "owner": "t1ce",
+      "role": "original",
+      "path": "/Users/shaf/Downloads/RessectionLab-Native-Anatomy-sub-06/originals/1fe942294ad7e60247c78ae45619a1e4234e42a5293206d213e12e56d45b3dce/CE-T1W.nii.gz",
+      "expected_sha256": "1fe942294ad7e60247c78ae45619a1e4234e42a5293206d213e12e56d45b3dce",
+      "actual_sha256": "1fe942294ad7e60247c78ae45619a1e4234e42a5293206d213e12e56d45b3dce",
+      "passed": true
+    },
+    {
+      "owner": "t1ce",
+      "role": "data",
+      "path": "/Users/shaf/Downloads/RessectionLab-Native-Anatomy-sub-06/arrays/a331f189842aa5dd66f710c28de76116f91b8a9b192ae6574f2e60ad047c3eb0-float32-439x439x361.npy",
+      "expected_sha256": "8679a527d2888d67e9e5bbba1f422d9893d0d4d9ee649557a7f38ea4245bfafb",
+      "actual_sha256": "8679a527d2888d67e9e5bbba1f422d9893d0d4d9ee649557a7f38ea4245bfafb",
+      "passed": true
+    },
+    {
+      "owner": "ct-bone",
+      "role": "original",
+      "path": "/Users/shaf/Downloads/RessectionLab-Native-Anatomy-sub-06/originals/6b6ad3ba12363b747e0048978cedb0e28ea52ec636b3022d9ada5ec3cd6b2b39/CT-BONE.nii.gz",
+      "expected_sha256": "6b6ad3ba12363b747e0048978cedb0e28ea52ec636b3022d9ada5ec3cd6b2b39",
+      "actual_sha256": "6b6ad3ba12363b747e0048978cedb0e28ea52ec636b3022d9ada5ec3cd6b2b39",
+      "passed": true
+    },
+    {
+      "owner": "ct-bone",
+      "role": "data",
+      "path": "/Users/shaf/Downloads/RessectionLab-Native-Anatomy-sub-06/arrays/1fd84e6c27f96851461322b72d9eaebb8eeca9720a1f33598a70109cb7c7dade-float32-439x439x361.npy",
+      "expected_sha256": "14ac85864c61c471a34406d9deca3a60fbf6641eeb2007545da88bef687ee30f",
+      "actual_sha256": "14ac85864c61c471a34406d9deca3a60fbf6641eeb2007545da88bef687ee30f",
+      "passed": true
+    },
+    {
+      "owner": "ct-brain",
+      "role": "original",
+      "path": "/Users/shaf/Downloads/RessectionLab-Native-Anatomy-sub-06/originals/94e25bf147daf17c794f775a3562cf0b5184e7e15bab6796b028a97f1c02932a/CT-BRAIN.nii.gz",
+      "expected_sha256": "94e25bf147daf17c794f775a3562cf0b5184e7e15bab6796b028a97f1c02932a",
+      "actual_sha256": "94e25bf147daf17c794f775a3562cf0b5184e7e15bab6796b028a97f1c02932a",
+      "passed": true
+    },
+    {
+      "owner": "ct-brain",
+      "role": "data",
+      "path": "/Users/shaf/Downloads/RessectionLab-Native-Anatomy-sub-06/arrays/d0269f29d0b9d42704551746fa1c2aea7d1afdf929c019bf234b15328db6b7d7-float32-439x439x361.npy",
+      "expected_sha256": "51251f62ef31579dd4cbfd39e789aa5aa6d8466d0414af4657b2baf6e77e50c0",
+      "actual_sha256": "51251f62ef31579dd4cbfd39e789aa5aa6d8466d0414af4657b2baf6e77e50c0",
+      "passed": true
+    },
+    {
+      "owner": "vessels",
+      "role": "data",
+      "path": "/Users/shaf/Downloads/RessectionLab-Native-Anatomy-sub-06/arrays/238ab598f755b162067f03ccc1d20fb0605ea275027ed196fc024227ac4bf215-uint8-439x439x361.npy",
+      "expected_sha256": "f646dfb5567a336ba21d9630da39785f82314905a2e439162b14efeff1a97545",
+      "actual_sha256": "f646dfb5567a336ba21d9630da39785f82314905a2e439162b14efeff1a97545",
+      "passed": true
+    },
+    {
+      "owner": "vessels",
+      "role": "probability",
+      "path": "/Users/shaf/Downloads/RessectionLab-Native-Anatomy-sub-06/arrays/b546a464d85c22e3bdff22f6da749c7232c7fcdff86bd95d11ec5b2a7db8878a-float32-439x439x361.npy",
+      "expected_sha256": "f6445920548aec09cd642c7ca98fc419b66efd0b31ffa7ddafb9d7c5b54b07b7",
+      "actual_sha256": "f6445920548aec09cd642c7ca98fc419b66efd0b31ffa7ddafb9d7c5b54b07b7",
+      "passed": true
+    },
+    {
+      "owner": "brain",
+      "role": "data",
+      "path": "/Users/shaf/Downloads/RessectionLab-Native-Anatomy-sub-06/arrays/3b148883e929a4e728e4e843870000d8fda72e84d816401bb7c42d3f7b56a911-uint8-439x439x361.npy",
+      "expected_sha256": "76c900226e4c20b1a5991af46e9c58c25fcfc0f45fceba61fd1b58eab37dd7eb",
+      "actual_sha256": "76c900226e4c20b1a5991af46e9c58c25fcfc0f45fceba61fd1b58eab37dd7eb",
+      "passed": true
+    },
+    {
+      "owner": "tumor",
+      "role": "data",
+      "path": "/Users/shaf/Downloads/RessectionLab-Native-Anatomy-sub-06/arrays/e79822b119e0c8e63c02767f07e553f3332d271a9fecef39e8e77839953c7357-uint8-439x439x361.npy",
+      "expected_sha256": "e7500a9f9393d30921a079d1c1c48c45cdd7f94b85ac60af4e54f8d0cb4f6db0",
+      "actual_sha256": "e7500a9f9393d30921a079d1c1c48c45cdd7f94b85ac60af4e54f8d0cb4f6db0",
+      "passed": true
+    },
+    {
+      "owner": "tumor",
+      "role": "probability",
+      "path": "/Users/shaf/Downloads/RessectionLab-Native-Anatomy-sub-06/arrays/7f9360d5b24465d5ec0acacc0b81ddf5ccd578ec4ab89dca80aeb81f5456d05f-float32-439x439x361.npy",
+      "expected_sha256": "475b07db732c06651f09b077d572e4f29d11921470b34f3c63e9d84dae079f91",
+      "actual_sha256": "475b07db732c06651f09b077d572e4f29d11921470b34f3c63e9d84dae079f91",
+      "passed": true
+    },
+    {
+      "owner": "bone",
+      "role": "data",
+      "path": "/Users/shaf/Downloads/RessectionLab-Native-Anatomy-sub-06/arrays/c0462e41d5b72d479087a13ea045c3019e3e71ea57e294ea845b4462fc34c00d-uint8-439x439x361.npy",
+      "expected_sha256": "4ded527620be8f52c3d225b1b97bf0b4b9256e947645abd9e98a3ee7cf8bbab8",
+      "actual_sha256": "4ded527620be8f52c3d225b1b97bf0b4b9256e947645abd9e98a3ee7cf8bbab8",
+      "passed": true
+    },
+    {
+      "owner": "bone",
+      "role": "probability",
+      "path": "/Users/shaf/Downloads/RessectionLab-Native-Anatomy-sub-06/arrays/828c96d0a8c2eb46f31e81517f5fc1fa6b469a058144d070e942996bfab7ae0a-float32-439x439x361.npy",
+      "expected_sha256": "e18930a357b07ee4ab0b7b071e4c533d67f18230d163af761ad4cfd1cbc26111",
+      "actual_sha256": "e18930a357b07ee4ab0b7b071e4c533d67f18230d163af761ad4cfd1cbc26111",
+      "passed": true
+    },
+    {
+      "owner": "synthseg-2",
+      "role": "data",
+      "path": "/Users/shaf/Downloads/RessectionLab-Native-Anatomy-sub-06/arrays/dec926fb8f0e9548ba21ec5482d17deb473f4490f1f6aa07c461ca8c478e89eb-uint16-220x220x181.npy",
+      "expected_sha256": "ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942",
+      "actual_sha256": "ce879b59d848bf23dfabc5d834f4d305a9c24611870187b61d259ce2c32b5942",
+      "passed": true
+    },
+    {
+      "owner": "vascular-review",
+      "role": "data",
+      "path": "/Users/shaf/Downloads/RessectionLab-Native-Anatomy-sub-06/arrays/c23bead4054bc30637617c8821785bd8057f0b3ead9e9bddbbee5a5401654ff1-uint8-439x439x361.npy",
+      "expected_sha256": "431587f57d905875ad5dc15773bd2bdedd493bdc2fddef8766f6c6a15bdacd2c",
+      "actual_sha256": "431587f57d905875ad5dc15773bd2bdedd493bdc2fddef8766f6c6a15bdacd2c",
+      "passed": true
+    },
+    {
+      "owner": "scalp-envelope",
+      "role": "data",
+      "path": "/Users/shaf/Downloads/RessectionLab-Native-Anatomy-sub-06/arrays/f6cd1bd2aa8ab74db27e3e0ecf8ab583b3e0edfc8bd714a0692149538636d023-uint8-439x439x361.npy",
+      "expected_sha256": "9cdca50a90c7357ad21d9f033a6e818d534cf8b3deccf44a88f48019ac6fc10b",
+      "actual_sha256": "9cdca50a90c7357ad21d9f033a6e818d534cf8b3deccf44a88f48019ac6fc10b",
+      "passed": true
+    }
+  ],
+  "all_fixity_passed": true,
+  "vessel_native_voxels": 673582,
+  "vessel_threshold": 0.5,
+  "probability_mask_mismatch_voxels": 0,
+  "manifest_unchanged": true,
+  "frozen_catalog_path_present": false,
+  "frozen_catalog_source_availability": [
+    {
+      "person": "BTC:sub-PAT05",
+      "bundle": "outputs/cases/BTC-sub-PAT05-structural-evidence.ressectionlab",
+      "bundle_present": false,
+      "sources": [
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT05/ses-preop/anat/sub-PAT05_ses-preop_T1w.nii.gz",
+          "present": false
+        },
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/derivatives/tumor_masks/sub-PAT05/anat/sub-PAT05_space_T1_label-tumor.nii",
+          "present": false
+        }
+      ]
+    },
+    {
+      "person": "BTC:sub-PAT16",
+      "bundle": "outputs/cases/BTC-sub-PAT16-structural-evidence.ressectionlab",
+      "bundle_present": false,
+      "sources": [
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT16/ses-preop/anat/sub-PAT16_ses-preop_T1w.nii.gz",
+          "present": false
+        },
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/derivatives/tumor_masks/sub-PAT16/anat/sub-PAT16_space_T1_label-tumor.nii",
+          "present": false
+        }
+      ]
+    },
+    {
+      "person": "BTC:sub-PAT20",
+      "bundle": "outputs/cases/BTC-sub-PAT20-structural-evidence.ressectionlab",
+      "bundle_present": false,
+      "sources": [
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.nii.gz",
+          "present": false
+        },
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/derivatives/tumor_masks/sub-PAT20/anat/sub-PAT20_space_T1_label-tumor.nii",
+          "present": false
+        }
+      ]
+    },
+    {
+      "person": "BTC:sub-PAT22",
+      "bundle": "outputs/cases/BTC-sub-PAT22-structural-evidence.ressectionlab",
+      "bundle_present": false,
+      "sources": [
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT22/ses-preop/anat/sub-PAT22_ses-preop_T1w.nii.gz",
+          "present": false
+        },
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/derivatives/tumor_masks/sub-PAT22/anat/sub-PAT22_space_T1_label-tumor.nii",
+          "present": false
+        }
+      ]
+    },
+    {
+      "person": "BTC:sub-PAT25",
+      "bundle": "outputs/cases/BTC-sub-PAT25-structural-evidence.ressectionlab",
+      "bundle_present": false,
+      "sources": [
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT25/ses-preop/anat/sub-PAT25_ses-preop_T1w.nii.gz",
+          "present": false
+        },
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/derivatives/tumor_masks/sub-PAT25/anat/sub-PAT25_space_T1_label-tumor.nii",
+          "present": false
+        }
+      ]
+    },
+    {
+      "person": "BTC:sub-PAT28",
+      "bundle": "outputs/cases/BTC-sub-PAT28-structural-evidence.ressectionlab",
+      "bundle_present": false,
+      "sources": [
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/derivatives/tumor_masks/sub-PAT28/anat/sub-PAT28_space_T1_label-tumor.nii",
+          "present": false
+        },
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT28/ses-preop/anat/sub-PAT28_ses-preop_T1w.nii.gz",
+          "present": false
+        }
+      ]
+    },
+    {
+      "person": "Lausanne:sub-000",
+      "bundle": "outputs/poc-cases/Lausanne-sub-000-ses-20110101.ressectionlab",
+      "bundle_present": false,
+      "sources": [
+        {
+          "path": "data/anatomy/ds003949-v1.0.1/sub-000/ses-20110101/anat/sub-000_ses-20110101_angio.nii.gz",
+          "present": false
+        }
+      ]
+    },
+    {
+      "person": "SynthRAD2023:1BA336",
+      "bundle": "outputs/poc-cases/SynthRAD2023-1BA336.ressectionlab",
+      "bundle_present": false,
+      "sources": [
+        {
+          "path": "data/qc/synthrad-task1-first-pair-v1/restricted/ct.nii.gz",
+          "present": false
+        }
+      ]
+    },
+    {
+      "person": "UCSF-PDGM:004",
+      "bundle": "outputs/poc-cases/UCSF-PDGM-0004.ressectionlab",
+      "bundle_present": false,
+      "sources": [
+        {
+          "path": "data/public_mirrors/MedOtter-UCSF-PDGM/e9372219cf1cd2fdd52260cd45f7514b4aa7638e/UCSF-PDGM-0004/UCSF-PDGM-0004_FLAIR.nii.gz",
+          "present": true
+        },
+        {
+          "path": "data/public_mirrors/MedOtter-UCSF-PDGM/e9372219cf1cd2fdd52260cd45f7514b4aa7638e/UCSF-PDGM-0004/UCSF-PDGM-0004_T1.nii.gz",
+          "present": true
+        },
+        {
+          "path": "data/public_mirrors/MedOtter-UCSF-PDGM/e9372219cf1cd2fdd52260cd45f7514b4aa7638e/UCSF-PDGM-0004/UCSF-PDGM-0004_T1c.nii.gz",
+          "present": true
+        },
+        {
+          "path": "data/public_mirrors/MedOtter-UCSF-PDGM/e9372219cf1cd2fdd52260cd45f7514b4aa7638e/UCSF-PDGM-0004/UCSF-PDGM-0004_T2.nii.gz",
+          "present": true
+        },
+        {
+          "path": "data/public_mirrors/MedOtter-UCSF-PDGM/e9372219cf1cd2fdd52260cd45f7514b4aa7638e/UCSF-PDGM-0004/UCSF-PDGM-0004_tumor_segmentation.nii.gz",
+          "present": true
+        }
+      ]
+    },
+    {
+      "person": "IXI:265",
+      "bundle": "outputs/poc-ixi265/vesselfm-base-v1/IXI265-vesselfm-estimates.ressectionlab",
+      "bundle_present": false,
+      "sources": [
+        {
+          "path": "outputs/poc-ixi265/originals/IXI265-T1.nii.gz",
+          "present": false
+        },
+        {
+          "path": "outputs/poc-ixi265/originals/IXI265-MRA.nii.gz",
+          "present": false
+        },
+        {
+          "path": "outputs/poc-ixi265/originals/IXI265-derived_vessel_label.nii.gz",
+          "present": false
+        },
+        {
+          "path": "outputs/poc-ixi265/registration/source_vessels_on_T1_candidate.nii.gz",
+          "present": false
+        }
+      ]
+    }
+  ],
+  "source_rights_from_retained_manifest": "CC-BY-NC-4.0",
+  "coverage_notes": {
+    "privacy_redacted": true,
+    "source": "user-reported",
+    "policy": "Removed anatomy is not reconstructed"
+  },
+  "missing": [
+    "angiographic validation",
+    "diffusion tractography",
+    "patient functional maps",
+    "cranial nerves",
+    "reviewed cortical and deep-structure parcellation",
+    "reviewed CT-to-MRI registration"
+  ],
+  "limitations": [
+    "Supplied 0.5 mm grid does not establish acquisition resolution.",
+    "CT-BONE and CT-BRAIN are CT reconstructions; no cached CTA established.",
+    "Sub06 vesselFM input is T1CE experimental; no angiographic validation or independent reference labels.",
+    "Current snapshot and intensity/mask hashes verified; old audit QA counts remain historical unless explicitly recomputed.",
+    "Historical IXI source paths in the primary checkout are absent; original frozen catalog paths remain absent; official selected IXI265 files were newly recovered in separate ignored output with hash verification."
+  ],
+  "vessel_components_26": 1167,
+  "vessel_largest_component_voxels": 514882,
+  "vessel_largest_component_fraction": 0.7643939416433337,
+  "mode_recommendations": [
+    {
+      "mode": "CT bone volume",
+      "best_current_source": "Native sub06 ct-bone series",
+      "preserve": [
+        "native acquired CT scalar values",
+        "original HU window semantics",
+        "privacy-redacted coverage"
+      ],
+      "limits": [
+        "CT-BONE is not CTA",
+        "0.5 mm supplied grid does not establish acquisition resolution",
+        "CT-to-MRI transforms unreviewed"
+      ]
+    },
+    {
+      "mode": "MRI brain volume / semitransparent brain",
+      "best_current_source": "Native sub06 t1ce series plus SynthStrip brain estimate",
+      "limits": [
+        "surface is extracted estimate; not separately observed cortex",
+        "MRI transfer-function opacity is display styling",
+        "do not restore privacy-redacted anatomy"
+      ]
+    },
+    {
+      "mode": "tumor context",
+      "best_current_source": "Native sub06 estimated meningioma for same-person CT context; UCSF0004 annotated structural mirror for source-label tumor example",
+      "limits": [
+        "Do not merge people",
+        "sub06 Raidionics proposal is unreviewed",
+        "UCSF public mirror official TCIA byte equivalence unresolved"
+      ]
+    },
+    {
+      "mode": "vessel surface",
+      "best_current_source": "Newly recovered native IXI265 MRA plus published derived vessel reference for honest angiography; native sub06 experimental vesselFM mask for same-person tumor/CT context only",
+      "limits": [
+        "T1CE-experimental uncalibrated model scores",
+        "fragmentation and incomplete coverage remain visible",
+        "no diameter/perfusion/artery-vein claims",
+        "IXI source reference also fragmented/incomplete; 199 source components. No T1/MRA fusion registration accepted."
+      ]
+    },
+    {
+      "mode": "CTA angiography / MIP",
+      "best_current_source": "Native IXI265 MRA for angiographic volume/MIP; genuine CTA remains unavailable",
+      "limits": [
+        "No genuine cached same-person CTA established",
+        "CT bone/brain cannot be relabelled CTA",
+        "IXI source would be MRA rather than CTA if recovered"
+      ]
+    }
+  ],
+  "focused_source_integrity_tests": [
+    "Hash current source originals/data/probability and patient manifest before/after every display preset and screenshot run.",
+    "Verify source mask and threshold>=0.5 retained probability agree, then compare full-source transferred display mask to physical-frame nearest-neighbor resample.",
+    "Assert source component count/topology and source mesh connectivity unchanged across styling; bounded smoothing can move display vertices but cannot bridge components.",
+    "Assert renderer data-source modality is CT/MRI/MRA/CTA from acquisition manifest; never infer CTA from bright CT pixels or vessel estimates.",
+    "Audit source RAS-mm-to-reference-RAS-mm direction and unreviewed transform warning; test CT-BONE/CT-BRAIN and MRI independently.",
+    "Ensure acquisition-boundary/redacted regions remain unknown and strict skull filtering reports hidden/unknown counts; no gap filling or tumor subtraction.",
+    "Capture loaded snapshot/source digest and active series with screenshot evidence; metadata-only fixtures are not source-byte evidence."
+  ],
+  "newly_recovered_angiographic_source": {
+    "manifest": "/Users/shaf/coding_projects/RessectionLab/outputs/poc-ixi265-mra-fidelity-v1/native-mra/patient-anatomy.json",
+    "receipt": "/Users/shaf/coding_projects/RessectionLab/outputs/poc-ixi265-mra-fidelity-v1/acquisition.json",
+    "source_kind": "official acquired MRA, selected archive ranges verified against historical hashes",
+    "source_reference": "separately licensed published derived incomplete vessel mask",
+    "not_original_frozen_catalog_update": true
+  }
+}

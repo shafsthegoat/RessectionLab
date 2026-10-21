@@ -1,0 +1,282 @@
+{
+  "beforeCaseHash": "sha256:588a41ad7d2a3b620bba1bfae7322c26d33f223e7ca3b0a1061c3feea6f88981",
+  "afterCaseHash": "sha256:b6eb34f2cbdc36d86df8346ffb07b87db6d54909def52c13581331dab7252c4d",
+  "changedLayers": [
+    "vessels"
+  ],
+  "prefix": [
+    {
+      "slot": "left",
+      "operation": "place",
+      "duration": 0.2,
+      "parameters": {
+        "radiusMm": 3,
+        "forceN": 5.0,
+        "rpm": 60000.0,
+        "duty": 1.0
+      },
+      "pose": {
+        "position": [
+          -26.464996337890625,
+          18.441162109375,
+          -369.25
+        ],
+        "quaternion": [
+          0.0,
+          1.0,
+          -0.0,
+          -0.0
+        ]
+      }
+    },
+    {
+      "slot": "left",
+      "operation": "apply",
+      "duration": 5.0,
+      "pose": {
+        "position": [
+          -26.464996337890625,
+          18.441162109375,
+          -425.25
+        ],
+        "quaternion": [
+          0.0,
+          1.0,
+          -0.0,
+          -0.0
+        ]
+      }
+    },
+    {
+      "slot": "left",
+      "operation": "apply",
+      "duration": 5.0,
+      "pose": {
+        "position": [
+          -26.464996337890625,
+          18.441162109375,
+          -425.25
+        ],
+        "quaternion": [
+          0.0,
+          1.0,
+          -0.0,
+          -0.0
+        ]
+      }
+    },
+    {
+      "slot": "left",
+      "operation": "apply",
+      "duration": 5.0,
+      "pose": {
+        "position": [
+          -26.464996337890625,
+          18.441162109375,
+          -425.25
+        ],
+        "quaternion": [
+          0.0,
+          1.0,
+          -0.0,
+          -0.0
+        ]
+      }
+    },
+    {
+      "slot": "left",
+      "operation": "apply",
+      "duration": 5.0,
+      "pose": {
+        "position": [
+          -26.464996337890625,
+          18.441162109375,
+          -425.25
+        ],
+        "quaternion": [
+          0.0,
+          1.0,
+          -0.0,
+          -0.0
+        ]
+      }
+    },
+    {
+      "slot": "left",
+      "operation": "apply",
+      "duration": 5.0,
+      "pose": {
+        "position": [
+          -26.464996337890625,
+          18.441162109375,
+          -425.25
+        ],
+        "quaternion": [
+          0.0,
+          1.0,
+          -0.0,
+          -0.0
+        ]
+      }
+    },
+    {
+      "slot": "left",
+      "operation": "apply",
+      "duration": 5.0,
+      "pose": {
+        "position": [
+          -26.464996337890625,
+          18.441162109375,
+          -425.25
+        ],
+        "quaternion": [
+          0.0,
+          1.0,
+          -0.0,
+          -0.0
+        ]
+      }
+    },
+    {
+      "slot": "left",
+      "operation": "apply",
+      "duration": 5.0,
+      "pose": {
+        "position": [
+          -26.464996337890625,
+          18.441162109375,
+          -425.25
+        ],
+        "quaternion": [
+          0.0,
+          1.0,
+          -0.0,
+          -0.0
+        ]
+      }
+    },
+    {
+      "slot": "left",
+      "operation": "apply",
+      "duration": 5.0,
+      "pose": {
+        "position": [
+          -26.464996337890625,
+          18.441162109375,
+          -425.25
+        ],
+        "quaternion": [
+          0.0,
+          1.0,
+          -0.0,
+          -0.0
+        ]
+      }
+    },
+    {
+      "slot": "left",
+      "operation": "apply",
+      "duration": 5.0,
+      "pose": {
+        "position": [
+          -26.464996337890625,
+          18.441162109375,
+          -425.25
+        ],
+        "quaternion": [
+          0.0,
+          1.0,
+          -0.0,
+          -0.0
+        ]
+      }
+    },
+    {
+      "slot": "left",
+      "operation": "apply",
+      "duration": 5.0,
+      "pose": {
+        "position": [
+          -26.464996337890625,
+          18.441162109375,
+          -425.25
+        ],
+        "quaternion": [
+          0.0,
+          1.0,
+          -0.0,
+          -0.0
+        ]
+      }
+    },
+    {
+      "slot": "left",
+      "operation": "apply",
+      "duration": 5.0,
+      "pose": {
+        "position": [
+          -26.464996337890625,
+          18.441162109375,
+          -425.25
+        ],
+        "quaternion": [
+          0.0,
+          1.0,
+          -0.0,
+          -0.0
+        ]
+      }
+    },
+    {
+      "slot": "left",
+      "operation": "withdraw",
+      "duration": 0.2
+    },
+    {
+      "slot": "left",
+      "operation": "exchange",
+      "duration": 0.2,
+      "instrument": "cusa"
+    },
+    {
+      "slot": "left",
+      "operation": "place",
+      "duration": 0.2,
+      "parameters": {
+        "radiusMm": 1
+      },
+      "pose": {
+        "position": [
+          -26.464996337890625,
+          18.441162109375,
+          -369.25
+        ],
+        "quaternion": [
+          0.0,
+          1.0,
+          -0.0,
+          -0.0
+        ]
+      }
+    },
+    {
+      "slot": "left",
+      "operation": "apply",
+      "duration": 1,
+      "pose": {
+        "position": [
+          -26.464996337890625,
+          18.441162109375,
+          -425.25
+        ],
+        "quaternion": [
+          0.0,
+          1.0,
+          -0.0,
+          -0.0
+        ]
+      }
+    }
+  ],
+  "decisions": 1
+}

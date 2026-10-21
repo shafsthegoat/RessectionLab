@@ -160,7 +160,8 @@ def worker(request):
 
 
 def _run(image: Path, case: str, model_id: str, modality: str, device: str="mps", timeout: int=1800,
-        *, experimental_t1ce=False, blend="constant", threshold=.5, cancelled=lambda: False):
+        *, experimental_t1ce=False, blend="constant", threshold=.5, cancelled=lambda: False,
+        output_root: Path | None = None):
     image = image.resolve()
     model = copy.deepcopy(MODEL_CONFIG[model_id])
     if model_id == "vesselfm-base":
@@ -184,7 +185,10 @@ def _run(image: Path, case: str, model_id: str, modality: str, device: str="mps"
     key = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()[:20]
     if not case or Path(case).name != case or case in {".", ".."}:
         raise ValueError("Case must be a single safe directory name")
-    output = ROOT / "outputs/poc-models" / case / model_id / key
+    cache_root = ROOT / "outputs/poc-models" if output_root is None else Path(output_root).resolve()
+    if output_root is not None and not cache_root.is_relative_to((ROOT / 'testcases').resolve()):
+        raise ValueError('Explicit app-testing inference output must remain under testcases/')
+    output = cache_root / case / model_id / key
     # Cancelled/failed stages are retained. Resume starts a fresh attempt and
     # searches successful attempts first; it never overwrites historical logs.
     for attempt in [output,*sorted(output.parent.glob(key+"-retry-*"))]:
@@ -290,13 +294,14 @@ def main():
     parser.add_argument("--experimental-t1ce", action="store_true")
     parser.add_argument("--blend", choices=["constant","gaussian"], default="gaussian")
     parser.add_argument("--threshold", type=float, default=.5)
+    parser.add_argument("--output-root", type=Path, help="Explicit app-testing cache directory under testcases/")
     args = parser.parse_args()
     if args.worker:
         worker(json.loads(args.worker.read_text()))
     else:
         if not all([args.image, args.case, args.model, args.modality]):
             parser.error("--image, --case, --model, --modality are required")
-        run(args.image, args.case, args.model, args.modality, args.device, args.timeout, experimental_t1ce=args.experimental_t1ce, blend=args.blend, threshold=args.threshold)
+        run(args.image, args.case, args.model, args.modality, args.device, args.timeout, experimental_t1ce=args.experimental_t1ce, blend=args.blend, threshold=args.threshold, output_root=args.output_root)
 
 
 if __name__ == "__main__":

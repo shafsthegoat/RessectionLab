@@ -1,0 +1,49 @@
+{
+  "schema": "ixi265-tissue-gui-auditor-final-guard-followup-v1",
+  "status": "prepared_payload_continuation_unreleased",
+  "created_utc": "2026-10-16T08:56:48.046268+00:00",
+  "adapter_path": "tests/first_ixi_tissue_gui_qa.py",
+  "adapter_sha256": "333146bb4b990d613239b16b8b1756255c2d947d7a66e732c5056c400beeaa7a",
+  "retained_frozen_source_and_reports": {
+    "tests/first_ixi_tissue_bundle_qa.py": "17bbbe128a116ae29388979e067e61ba2dd7260108331b05e7670a01e582c7b3",
+    "artifacts/ixi265-tissue-display-independent-v1/independent-qa.json": "817b26109d53a89930caa5c8e80572f92b218e9d9b5dab4f15fd6b0622d14155",
+    "artifacts/ixi265-tissue-display-independent-v1/gui-save-initial-metadata-guard.json": "d05c8ea391932eb087eae042cb92bf9d0537a46e095add5e05bd889e0d6f7523",
+    "artifacts/ixi265-tissue-display-independent-v1/gui-save-guard-followup-preparation.json": "4770a348e862c85643457cbe0458ff45997a35c717efbb18e66b7737630cd61e",
+    "artifacts/ixi265-tissue-display-independent-v1/gui-save-initial-wrapper.py.txt": "37911b79fbae8a9e0a239a9e76fb8ebc2196ae5cf02e626f29133948a02007c6"
+  },
+  "permitted_exact_UI_artifact": {
+    "case_hash": "sha256:72f6ae73183d8d5d52f30eafd90a533b0cf81a38e0070d7fa70ca954461c505c",
+    "category": "pareto",
+    "cursor": [
+      0.8176703732460737,
+      -1.997637267690152,
+      0.9734293008805253
+    ],
+    "overlayOpacity": 0.32,
+    "routeA": "",
+    "routeB": "",
+    "visibleLayers": {
+      "brain": true
+    }
+  },
+  "all_other_primary_manifest_fields_preserved": true,
+  "all_archive_array_original_provenance_checks_retained": true,
+  "clipping_axial_enabled_and_flipped_false": true,
+  "generated_controls": {
+    "exact_expected_delta_accepted": true,
+    "ten_other_artifact_changes_refused": 10,
+    "four_source_manifest_mutations_refused": 4,
+    "exact_axial_cutaway_accepted": true,
+    "flipped_cutaway_refused": true
+  },
+  "generated_bundle_controls": {
+    "tiny_generated_positive_cases_passed": 2,
+    "mask_partition_corruptions_refused": 4,
+    "original_primary_or_reference_byte_corruptions_refused": 3,
+    "patient_bundle_reads": false,
+    "native_or_model_imports": false,
+    "actual_package_or_GUI_save_audit_released": false
+  },
+  "patient_or_saved_arrays_decoded": false,
+  "new_native_calls": false
+}

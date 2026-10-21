@@ -16,6 +16,7 @@ from .patient_anatomy import (
 from .anatomy_editor import AnatomyDraft
 from .anatomy_workspace import read_view, save_view, component_review
 from .anatomy_geometry import mesh, normals
+from .anatomy_qa import layer_quality
 from .anatomy_display import display_affine, brain_vessel_display
 
 
@@ -192,6 +193,7 @@ def dispatch(session, operation, args, request, progress):
                 row["data"] = c.put_array((c.mask(row) & ~cut).astype(np.uint8))
                 row["label_value"] = 1
                 row["edits"] = [{"removal_preview": True}]
+            quality = layer_quality(c, row)
             source_volume = float(c.mask(row).sum() * abs(np.linalg.det(affine(row["affine"])[:3, :3])))
             display_filter = None
             # Correction review always shows the complete editable source.
@@ -214,6 +216,16 @@ def dispatch(session, operation, args, request, progress):
             mask = None if shared else resample(c.mask(row).astype(np.uint8), source, shape, displayed, order=0)
             record = {
                 "name": name,
+                "kind": row["kind"],
+                "sourceIdentity": quality["sourceIdentity"],
+                "qa": quality,
+                "surfaceDiagnostics": {"policy": str(geometry.get("policy_version", "legacy")),
+                    "kind": "tumor" if row["kind"] == "tumor" else "vessel" if row["kind"] in {"vessels", "artery", "vein", "sinus"} else "context",
+                    "maxDisplacementMm": float(geometry["max_displacement_mm"]),
+                    "restoredComponents": int(geometry.get("restored_components", 0)),
+                    "backedOffVertices": int(geometry.get("backed_off_vertices", 0)),
+                    "fallbackReason": str(geometry.get("fallback_reason", "")),
+                    "intersectionCheck": "source-restored" if bool(geometry.get("smoothing_rejected", False)) or str(geometry.get("fallback_reason", "")) else "passed"},
                 "label": row["label"],
                 "color": row["color"],
                 "alignmentPreviews": row_previews,
@@ -226,7 +238,7 @@ def dispatch(session, operation, args, request, progress):
                 p = world(transform, geometry["positions"]).astype(np.float32)
                 raw = world(transform, geometry["source"]).astype(np.float32)
                 faces = geometry["indices"]
-                record["surface"] = {
+                record["surface"] = {"empty": True} if not p.size else {
                     "positions": transfer(p, "float32"),
                     "source": transfer(raw, "float32"),
                     "normals": transfer(normals(p, faces), "float32"),
@@ -359,6 +371,7 @@ def dispatch(session, operation, args, request, progress):
                 draft.apply(
                     c,
                     action,
+                    cancelled=request.cancelled.is_set,
                     points=args.get("points", []),
                     radius_mm=float(args.get("radiusMm", 2)),
                     threshold=float(args.get("threshold", 0.5)),

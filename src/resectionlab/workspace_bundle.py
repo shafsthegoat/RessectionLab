@@ -188,15 +188,27 @@ def _center(case):
 
 def _viewer_state(case,viewer,cases):
     """Bound display preferences without treating them as image registration."""
-    if not isinstance(viewer,dict) or set(viewer)-{'skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip'}:
+    if not isinstance(viewer,dict) or set(viewer)-{'smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','presentation','sliceFraming','contextStyle'}:
         raise ValueError('Unknown viewer settings')
+    if 'contextStyle' in viewer and viewer['contextStyle'] not in ('shell','uniform'):
+        raise ValueError('Invalid source context style')
+    if 'sliceFraming' in viewer:
+        framing=viewer['sliceFraming']
+        if (not isinstance(framing,dict) or set(framing)!={'fit','zoom'} or framing['fit'] not in ('image','anatomy') or
+                type(framing['zoom']) not in (int,float) or not math.isfinite(framing['zoom']) or not .5<=framing['zoom']<=4):
+            raise ValueError('Invalid slice framing')
+    if 'sliceOverlay' in viewer and viewer['sliceOverlay'] not in ('contour','fill'):
+        raise ValueError('Invalid slice annotation style')
+    if 'presentation' in viewer and viewer['presentation'] not in ('segmentation','vascular'):
+        raise ValueError('Invalid anatomy presentation')
     if 'skullMode' in viewer and viewer['skullMode'] not in {'exterior','transparent','cutaway'}:
         raise ValueError('Invalid skull display mode')
+    if 'smoothSurfaces' in viewer and type(viewer['smoothSurfaces']) is not bool:raise ValueError('Invalid surface display flag')
     volume=viewer.get('volumeRendering')
     if 'volumeRendering' in viewer:
         if (not isinstance(volume,dict) or set(volume)-{'enabled','preset','density','window','points','shadows','isolateLabels'} or
                 ('enabled' in volume and type(volume['enabled']) is not bool) or
-                ('preset' in volume and volume['preset'] not in {'auto','ct-bone','ct-tissue','mri'}) or
+                ('preset' in volume and volume['preset'] not in {'auto','ct-bone','ct-tissue','ct-angiography','mri'}) or
                 ('density' in volume and (type(volume['density']) not in (int,float) or
                     not math.isfinite(volume['density']) or not 0<=volume['density']<=2))):
             raise ValueError('Invalid scan volume rendering settings')
@@ -383,7 +395,7 @@ def replay_state(envelope,supplied=None):
 
 
 def save_workspace(primary,path,*,sources,imaging,episode,selection,artifacts,originals=()):
-    from .imaging import save_case
+    from .imaging import MAX_MANIFEST_BYTES, save_case
     sources=list(sources)
     originals=list(originals)
     if (len(originals)>128 or any(not isinstance(item,OriginalFile) for item in originals) or
@@ -409,8 +421,10 @@ def save_workspace(primary,path,*,sources,imaging,episode,selection,artifacts,or
         if len(raw)>MAX_JSON:raise ValueError('Workspace metadata exceeds limit')
         with ZipFile(base) as plain:
             manifest=_json(plain.read('manifest.json'));manifest['workspace_sha256']=sha256(raw).hexdigest()
+            encoded_manifest=encoded(manifest)
+            if len(encoded_manifest)>MAX_MANIFEST_BYTES:raise ValueError('Primary manifest exceeds limit')
             with ZipFile(tmp/'complete','w',compression=ZIP_STORED) as out:
-                out.writestr('manifest.json',encoded(manifest));out.writestr('arrays.npz',plain.read('arrays.npz'))
+                out.writestr('manifest.json',encoded_manifest);out.writestr('arrays.npz',plain.read('arrays.npz'))
                 out.writestr('workspace.json',raw)
                 for name,data in auxiliary:out.writestr(name,data)
                 for index,item in enumerate(originals):out.writestr(item.manifest(index)['member'],item.data)

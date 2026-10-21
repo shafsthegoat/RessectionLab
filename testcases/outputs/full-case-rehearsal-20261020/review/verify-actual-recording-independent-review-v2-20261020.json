@@ -1,0 +1,24 @@
+{
+  "status": "approved: source-level review only",
+  "helperSha256": "bab7d0bfbaf94ea6999489bd0e38e27421726790050a7339c8e21a8630eec048",
+  "previousReview": "verify-actual-recording-independent-review-20261020.json",
+  "resolvedFindings": [
+    "All AX totals match expected segment endpoint2148/73",
+    "At least one strictly interior action anchor required",
+    "Selected capture numbers strictly increase; UTC anchor times also strictly increase"
+  ],
+  "independentRerun": "All14 author metadata/refusal selfchecks passed; independently reproduced original combined counterexample now refuses",
+  "originalCounterexampleRefusal": "AX action total differs from requested segment endpoint",
+  "sourcePreservation": "Movie/log read-only before+after size/mtime/SHA; native/AX/screenshot read-only and hashed in supplied observations. No GUI/engine/capture API exists in verifier.",
+  "exclusiveOutputs": "Receipt openx; remux private temp under outputdir; ffmpeg-n/streamcopy; count+PTS checks and faststart structure; exclusive atomic hardlink publication.",
+  "limits": [
+    "No actual app, recording verification, remux or new video performed by reviewer.",
+    "Supplied metadata/AX anchors and root continuous-playback attestation are required; checks cannot by themselves prove every intermediate native state appeared.",
+    "ffprobe checks packet structure/timestamps; no full pixel decode."
+  ],
+  "guiCalls": 0,
+  "physicsCalls": 0,
+  "actualVideoVerified": false,
+  "newVideoCreated": false,
+  "helperEdits": false
+}

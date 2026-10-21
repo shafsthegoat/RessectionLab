@@ -1,0 +1,25 @@
+{
+  "schema": "poc-first-local-package-supervisor-generated-controls-v1",
+  "status": "passed",
+  "passed": 10,
+  "elapsed_pytest_seconds": 0.6,
+  "command": ".venv/bin/python -m pytest -q tests/test_poc_first_local_package_build.py",
+  "runner_sha256": "41ce325c22ff922e18de48fcfd93f83dd0f1e5385737a73411f6dcf1971fdf10",
+  "tests_sha256": "b0b1f2ef41895299f74a0cbb4d967801c25f335b5f57f29c60afd0f8a9614a1f",
+  "plan_sha256": "a7a3e918e519882e115714d0624eb4ed8e9f6952598cca505029dcbe0940a7a5",
+  "builds_run": 0,
+  "installs_or_downloads": 0,
+  "biomedical_arrays_or_models_read": false,
+  "controls": [
+    "generated success scalar observations",
+    "actual sampled RSS stop",
+    "timeout plus child cleanup without killing unrelated created process",
+    "PermissionError cleanup/reap with original failure preserved",
+    "observer failure cleanup",
+    "external symlink nontraversal and disjoint-root checks",
+    "persisted initial baseline with deletion-resistant cumulative growth",
+    "new-byte stop without deleted-file credit",
+    "disk-reserve prelaunch refusal",
+    "clean environment excludes inherited secrets"
+  ]
+}

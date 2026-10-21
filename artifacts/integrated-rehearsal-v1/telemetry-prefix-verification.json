@@ -1,0 +1,39 @@
+{
+  "episodeId": "sub06-scripted-drill-prefix",
+  "summary": {
+    "timeSeconds": 5.200000000000003,
+    "tipSeparationMm": 161.1514383660234,
+    "targetRemovedMm3": 0.0,
+    "nonTargetRemovedMm3": 34.0,
+    "woundCount": 0,
+    "activeWoundCount": 0,
+    "modeledWoundEmittedMm3": 0,
+    "fluidPresentMm3": 0,
+    "fluidAddedMm3": 0.0,
+    "fluidRemovedMm3": 0.0,
+    "fluidEscapedMm3": 0.0,
+    "debrisMm3": 34.0,
+    "contactCellSeconds": 0,
+    "exposureByMaterialCellSeconds": {
+      "bone": 6.250000000000015
+    },
+    "vesselEncounterCells": 0,
+    "invalidActionsCumulative": 0,
+    "toolExchangesCumulative": 0,
+    "contactStopsCumulative": 0,
+    "pathLengthMm": {
+      "left": 35.54196010748342,
+      "right": 0.0
+    },
+    "attemptCount": 2,
+    "microstepCount": 170
+  },
+  "expectedStateVerified": true,
+  "finalStateId": "sha256:c6532e5b5fc62d6c1e294808c49dfca1177dc3f7a665ea5c62d13514c6d4d2bc",
+  "files": {
+    "json": "/Users/shaf/coding_projects/RessectionLab/outputs/integrated-rehearsal-v1/telemetry-drill-prefix/telemetry.json",
+    "csv": "/Users/shaf/coding_projects/RessectionLab/outputs/integrated-rehearsal-v1/telemetry-drill-prefix/telemetry.csv",
+    "html": "/Users/shaf/coding_projects/RessectionLab/outputs/integrated-rehearsal-v1/telemetry-drill-prefix/telemetry.html"
+  },
+  "scope": "Two actual drill actions on acquired sub06 source anatomy; integrated multi-tool episode is recorded separately."
+}

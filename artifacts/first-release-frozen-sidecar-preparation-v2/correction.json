@@ -1,0 +1,40 @@
+{
+  "schema": "first-release-frozen-sidecar-preparation-correction-v2",
+  "reason": "ROOT source review required preserving actual inherited HOME instead of assigning a temporary directory.",
+  "changes": [
+    "Preserve the caller HOME value when present; omit when absent.",
+    "Keep neutral cwd, TMPDIR, transfer and run paths; rename local scratch variable to scratchTmp.",
+    "Generated controls verify real child HOME equals parent HOME and TMPDIR remains task-owned.",
+    "Versioned preparation path and updated hashes; actual request plan, scientific assertions, inputs and build source pins unchanged."
+  ],
+  "prior_files": {
+    "artifacts/first-release-frozen-sidecar-preparation-v1/frozen-auditor.mjs": "5d89d21ccfb2eda165b7c1ee85e3f38595f17f75e5e5b8c97d9a0b76673616f4",
+    "artifacts/first-release-frozen-sidecar-preparation-v1/frozen-controls.mjs": "ee63d853ad717c48bedd8300eebc5416ab3e66180bd1f204541b16d4a2a8ac32",
+    "artifacts/first-release-frozen-sidecar-preparation-v1/preparation.json": "0e9d200aaba910187e35b4095b5aa11549dfedfbd71aec32da51b990b854f927",
+    "artifacts/first-release-frozen-sidecar-preparation-v1/root-release-template.json": "b54fc33950b2e4be9bdc21f1fc26a847e0a970aae990082f8b02c6168ec4fd82",
+    "artifacts/first-release-frozen-sidecar-preparation-v1/generated-controls.json": "caacb40827b1aab07808351007e1e34c73157b61ca2ce10b66657e49b079b52c",
+    "artifacts/first-release-frozen-sidecar-preparation-v1/initial-generated-control-failure.json": "8d218f7998d4fca95b523627eb9a76cd1ff0df7bfa81c5fe5b326cbf81d45bd8"
+  },
+  "current_files": {
+    "tests/first_release_frozen_sidecar.mjs": "e177a8f1499609b30db84627f758b0553282a4e251ab8c0b0c3163f389c70109",
+    "tests/test_first_release_frozen_sidecar.mjs": "29061ee08e94cf3b34033548a8851684ac674ab088e8257b095fa68c5fc3204d",
+    "artifacts/first-release-frozen-sidecar-preparation-v2/preparation.json": "40c53acf6b203614a374c423fdf5b3d0594fdc3125bd64e20a9199cfd7d85547",
+    "artifacts/first-release-frozen-sidecar-preparation-v2/root-release-template.json": "5262467d5b6519125afeae49a11892c621a2932b1ca18f55ab2c9012ac13fba8"
+  },
+  "metadata_sanitization": {
+    "actual_patient_4x4_matrices": 0,
+    "actual_landmark_coordinates": 0,
+    "unknown_cell_indices_embedded": 0,
+    "unknown_cells_bound_by_digest": true,
+    "numeric_array_paths_are_image_dimensions_only": [
+      ".inputs.ucsf.arrays.mri.shape",
+      ".inputs.ucsf.auxiliary[0].arrays.mri.shape",
+      ".inputs.ucsf.auxiliary[1].arrays.mri.shape",
+      ".inputs.ucsf.auxiliary[2].arrays.mri.shape",
+      ".inputs.synthrad.arrays.mri.shape",
+      ".inputs.synthrad.auxiliaryArrays.mri.shape"
+    ]
+  },
+  "patient_payload_reads": 0,
+  "actual_frozen_engine_executions": 0
+}

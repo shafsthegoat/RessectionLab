@@ -1,0 +1,29 @@
+{
+  "utc": "2026-10-21T00:33:32.135678+00:00",
+  "status": "approved: no actionable issue found",
+  "reviewedFileSha256": {
+    "desktop/src/App.tsx": "351fce52f51f8d2086922c1d96d3fdde5badfe42b45f2c155f5af4dc62db31cd",
+    "desktop/src/viewer/ViewerWorkspace.tsx": "54699ad3ed6a14b5eec5f4a3fcc503c0db065445364764fbd27e9a933f0609c1",
+    "desktop/src/viewer/VolumeRenderer.ts": "5c1f4e891b093bf925fdf113e95d61259677cc41baa8e7ba66c667dbca8dc237",
+    "desktop/src/viewer/contracts.ts": "33688c714c30deecc9982fa530d5b44bb250e326b4a58de50bbe7f7f2b46bf97",
+    "desktop/src/viewer/surgicalCamera.test.mjs": "1974d0a9d46752d22483b3b21c34aac85ca8b50764db605af120fc95a33b55ab"
+  },
+  "scope": "Saved camera preservation through implicit Rehearse mode/route refresh, explicit repeated-mode Fit and complete actual surgical-body framing.",
+  "independentValidation": {
+    "tests": 26,
+    "passed": 26,
+    "reportedWallMilliseconds": 933.203625,
+    "command": "TMPDIR=ignored-review/independent-camera-tmp node --experimental-strip-types --test desktop/src/viewer/surgicalCamera.test.mjs desktop/src/viewer/episodeCamera.test.mjs desktop/src/viewer/anatomyWorkspace.test.mjs",
+    "log": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/review/independent-camera-tests-20261020.log",
+    "typescriptNoEmitPassed": true,
+    "typescriptLog": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/review/independent-camera-tsc-20261020.log",
+    "diffCheckPassed": true
+  },
+  "findings": [
+    "Constructor initial fit is followed by restoreCamera. Subsequent implicit mode/route refresh now respects cameraRestored; asynchronous initial anatomy fits were already gated.",
+    "Existing Focus anatomy/Fit instruments buttons increment an explicit request, so a same-mode click still fits and publishes persisted camera settings.",
+    "Explicit instrument fit includes complete visible actual surgicalSlots body geometry, including withdrawn tools. Edit ghosts and effect markers are excluded. Narrow and wide aspect projections are tested.",
+    "Normal surgicalInteraction rendering does not invoke the separate legacy setReplay/setPassive auto-fit branches. No automatic per-frame fit added."
+  ],
+  "limits": "Static source plus focused rendering geometry fixtures and typecheck only. No GUI/build/reopen/video review, engine actions, production edits or physical/source changes. Root must confirm actual saved1217mm camera persists on fresh open/Rehearse; final playback/video acceptance pending."
+}

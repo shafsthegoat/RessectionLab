@@ -1,0 +1,273 @@
+{
+  "anatomical_review_accepted": false,
+  "automatic_seed_placement_allowed": false,
+  "canonical_catalog_modified": false,
+  "catalog": {
+    "catalog_hash": "sha256:6354e2e955aa4f4a5e0b892d5e3e8b069d9f8cb046196787b08273e7a94b4083",
+    "path": "outputs/patient-corpus-twelve-execution-v1/catalog.json",
+    "sha256": "5f8b833079e0b4673d2b8d01a36fab474574164755ac731a0972fa8071bcd088"
+  },
+  "display_notice": "Dataset / paper report; anatomical review pending. Patient-level reported site does not establish native-mask localization.",
+  "entries": [
+    {
+      "acquisition_record": "manifests/btc_pat05_acquisition.json",
+      "anatomical_lobe": "UNKNOWN",
+      "anatomical_review_accepted": false,
+      "automatic_seed_placement_allowed": false,
+      "bundle": "outputs/cases/BTC-sub-PAT05-structural-evidence.ressectionlab",
+      "bundle_sha256": "c1af712957dc4902343995bd828eb0c3662438f8445c5cb7401e6dd50f7a4e12",
+      "case_id": "BTC-ds001226-sub-PAT05-preop",
+      "hemisphere": "UNKNOWN",
+      "paper_row_evidence": {
+        "Subject ID": "PAT05",
+        "Tumor lateralization": "Left",
+        "Tumor location": "Frontal"
+      },
+      "participant_id": "sub-PAT05",
+      "patient_group": "BTC:sub-PAT05",
+      "role": "TRAIN",
+      "row_evidence": {
+        "participant_id": "sub-PAT05",
+        "tumor location": "Frontal"
+      },
+      "row_number": 16,
+      "source_files": [
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT05/ses-preop/anat/sub-PAT05_ses-preop_T1w.nii.gz",
+          "role": "imaging",
+          "sha256": "016779173394c3a3e07fc53f927d37c3c1cb5df04bcbdc398fcfbdc23b40085e"
+        },
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/derivatives/tumor_masks/sub-PAT05/anat/sub-PAT05_space_T1_label-tumor.nii",
+          "role": "annotation",
+          "sha256": "497505a1354f075955290f4395217112715ab73242fa10fd2a0f519ca51b8bdc"
+        }
+      ],
+      "source_reported_lateralization": "Left",
+      "source_reported_location": "Frontal",
+      "status": "source_reported_unreviewed"
+    },
+    {
+      "acquisition_record": "manifests/btc_pat16_acquisition.json",
+      "anatomical_lobe": "UNKNOWN",
+      "anatomical_review_accepted": false,
+      "automatic_seed_placement_allowed": false,
+      "bundle": "outputs/cases/BTC-sub-PAT16-structural-evidence.ressectionlab",
+      "bundle_sha256": "b906e1c061450526e4ed4737f17f880f1ab7fdf35d667d1d6f8d7eb55b3c416b",
+      "case_id": "BTC-ds001226-sub-PAT16-preop",
+      "hemisphere": "UNKNOWN",
+      "paper_row_evidence": {
+        "Subject ID": "PAT16",
+        "Tumor lateralization": "Right",
+        "Tumor location": "Fronto-temporal"
+      },
+      "participant_id": "sub-PAT16",
+      "patient_group": "BTC:sub-PAT16",
+      "role": "TRAIN",
+      "row_evidence": {
+        "participant_id": "sub-PAT16",
+        "tumor location": "Fronto-temporal"
+      },
+      "row_number": 25,
+      "source_files": [
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT16/ses-preop/anat/sub-PAT16_ses-preop_T1w.nii.gz",
+          "role": "imaging",
+          "sha256": "709b3ea19596ff6a0cb963ebeaeede247b0ddd6c605f12aa350df2cb04500c3e"
+        },
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/derivatives/tumor_masks/sub-PAT16/anat/sub-PAT16_space_T1_label-tumor.nii",
+          "role": "annotation",
+          "sha256": "89b610ce3cfa6acf3d23e59d42e3b04a593d7360b996ced10e0aaf060428b0c8"
+        }
+      ],
+      "source_reported_lateralization": "Right",
+      "source_reported_location": "Fronto-temporal",
+      "status": "source_reported_unreviewed"
+    },
+    {
+      "acquisition_record": "manifests/btc_pat20_acquisition.json",
+      "anatomical_lobe": "UNKNOWN",
+      "anatomical_review_accepted": false,
+      "automatic_seed_placement_allowed": false,
+      "bundle": "outputs/cases/BTC-sub-PAT20-structural-evidence.ressectionlab",
+      "bundle_sha256": "edd4d0d149cf27e81dbc67c2742fd14dff5bfa6fa1c63ad111fecb4b48eca66b",
+      "case_id": "BTC-ds001226-sub-PAT20-preop",
+      "hemisphere": "UNKNOWN",
+      "paper_row_evidence": {
+        "Subject ID": "PAT20",
+        "Tumor lateralization": "Right",
+        "Tumor location": "Parietal"
+      },
+      "participant_id": "sub-PAT20",
+      "patient_group": "BTC:sub-PAT20",
+      "role": "TRAIN",
+      "row_evidence": {
+        "participant_id": "sub-PAT20",
+        "tumor location": "Parietal"
+      },
+      "row_number": 28,
+      "source_files": [
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.nii.gz",
+          "role": "imaging",
+          "sha256": "f5234d82f87369ce22d05bd27b5788dd73d4ab782c9a89731ac7f6e39568126a"
+        },
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/derivatives/tumor_masks/sub-PAT20/anat/sub-PAT20_space_T1_label-tumor.nii",
+          "role": "annotation",
+          "sha256": "cabae814fc653f845c1e0fa72441a4ab6fcca63e8fbe252e73e7a976e068dd36"
+        }
+      ],
+      "source_reported_lateralization": "Right",
+      "source_reported_location": "Parietal",
+      "status": "source_reported_unreviewed"
+    },
+    {
+      "acquisition_record": "data/diffusion_source/ds001226-v5.0.1/btc_sub-PAT22_verified_manifest.json",
+      "anatomical_lobe": "UNKNOWN",
+      "anatomical_review_accepted": false,
+      "automatic_seed_placement_allowed": false,
+      "bundle": "outputs/cases/BTC-sub-PAT22-structural-evidence.ressectionlab",
+      "bundle_sha256": "a12ac7c2325b2c87137c112fae9c4b7ebe33e40e40cdd9bcff192d891a4b562e",
+      "case_id": "BTC-ds001226-sub-PAT22-preop",
+      "hemisphere": "UNKNOWN",
+      "paper_row_evidence": {
+        "Subject ID": "PAT22",
+        "Tumor lateralization": "Right",
+        "Tumor location": "Parietal"
+      },
+      "participant_id": "sub-PAT22",
+      "patient_group": "BTC:sub-PAT22",
+      "role": "TRAIN",
+      "row_evidence": {
+        "participant_id": "sub-PAT22",
+        "tumor location": "Parietal"
+      },
+      "row_number": 29,
+      "source_files": [
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT22/ses-preop/anat/sub-PAT22_ses-preop_T1w.nii.gz",
+          "role": "imaging",
+          "sha256": "6ac1bc950dc2b48709367550b1c740684457fce875e3e402d870d3356282334e"
+        },
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/derivatives/tumor_masks/sub-PAT22/anat/sub-PAT22_space_T1_label-tumor.nii",
+          "role": "annotation",
+          "sha256": "b1e59048f5651e4d7e268ac14e2e3a7ea9d7e78dac5cd09f5eddc7b66a09f752"
+        }
+      ],
+      "source_reported_lateralization": "Right",
+      "source_reported_location": "Parietal",
+      "status": "source_reported_unreviewed"
+    },
+    {
+      "acquisition_record": "data/diffusion_source/ds001226-v5.0.1/btc_sub-PAT25_verified_manifest.json",
+      "anatomical_lobe": "UNKNOWN",
+      "anatomical_review_accepted": false,
+      "automatic_seed_placement_allowed": false,
+      "bundle": "outputs/cases/BTC-sub-PAT25-structural-evidence.ressectionlab",
+      "bundle_sha256": "d635a72cc24066c2b16dc7b6d6805baae04d1750c50ca351b2410a70d913428a",
+      "case_id": "BTC-ds001226-sub-PAT25-preop",
+      "hemisphere": "UNKNOWN",
+      "paper_row_evidence": {
+        "Subject ID": "PAT25",
+        "Tumor lateralization": "Right",
+        "Tumor location": "Temporal"
+      },
+      "participant_id": "sub-PAT25",
+      "patient_group": "BTC:sub-PAT25",
+      "role": "TRAIN",
+      "row_evidence": {
+        "participant_id": "sub-PAT25",
+        "tumor location": "Temporal"
+      },
+      "row_number": 32,
+      "source_files": [
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT25/ses-preop/anat/sub-PAT25_ses-preop_T1w.nii.gz",
+          "role": "imaging",
+          "sha256": "40f786e7fbdfdb036d6409ffe771ec9309d0c424fca88e44e8a42c43c8900562"
+        },
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/derivatives/tumor_masks/sub-PAT25/anat/sub-PAT25_space_T1_label-tumor.nii",
+          "role": "annotation",
+          "sha256": "b064c64c1a24333ae9e6f61afaa57ea49e179dff66bc2e2e3cba124262cb0aae"
+        }
+      ],
+      "source_reported_lateralization": "Right",
+      "source_reported_location": "Temporal",
+      "status": "source_reported_unreviewed"
+    },
+    {
+      "acquisition_record": "manifests/btc_acquisition.json",
+      "anatomical_lobe": "UNKNOWN",
+      "anatomical_review_accepted": false,
+      "automatic_seed_placement_allowed": false,
+      "bundle": "outputs/cases/BTC-sub-PAT28-structural-evidence.ressectionlab",
+      "bundle_sha256": "f7fc9491cf74634de5b2be36dd5968c7e161a7b7fc22698a7045d7453c95a747",
+      "case_id": "BTC-ds001226-sub-PAT28-preop",
+      "hemisphere": "UNKNOWN",
+      "paper_row_evidence": {
+        "Subject ID": "PAT28",
+        "Tumor lateralization": "Left",
+        "Tumor location": "Frontal"
+      },
+      "participant_id": "sub-PAT28",
+      "patient_group": "BTC:sub-PAT28",
+      "role": "TRAIN",
+      "row_evidence": {
+        "participant_id": "sub-PAT28",
+        "tumor location": "Frontal"
+      },
+      "row_number": 35,
+      "source_files": [
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/derivatives/tumor_masks/sub-PAT28/anat/sub-PAT28_space_T1_label-tumor.nii",
+          "role": "annotation",
+          "sha256": "ff989398438cf6d628471acf1c5449e132c089bba07da3f2142757c21c3e8d71"
+        },
+        {
+          "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT28/ses-preop/anat/sub-PAT28_ses-preop_T1w.nii.gz",
+          "role": "imaging",
+          "sha256": "70c5c1e4e28143318d2820788343e239efdc205344204f8f50497b81281b32c6"
+        }
+      ],
+      "source_reported_lateralization": "Left",
+      "source_reported_location": "Frontal",
+      "status": "source_reported_unreviewed"
+    }
+  ],
+  "native_mask_localization_established": false,
+  "paper_source": {
+    "doi": "10.1523/ENEURO.0083-18.2018",
+    "identity_mapping": "Paper PATnn maps to BTC_preop sub-PATnn; the pinned dataset README names this exact paper and the six TSV locations match.",
+    "metadata_uri": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6001263/fullTextXML",
+    "pmcid": "PMC6001263",
+    "publication_uri": "https://www.eneuro.org/content/5/3/ENEURO.0083-18.2018/tab-figures-data",
+    "representation": "Europe PMC archival full-text JATS XML of the primary article; hash is not of publisher HTML",
+    "selected_fields": [
+      "Subject ID",
+      "Tumor location",
+      "Tumor lateralization"
+    ],
+    "sha256": "38e4890b6dc7d7b3bb84e2abfda005f050e7d93cf3c8a9586f74ce0c1a16589d",
+    "table_id": "T1",
+    "table_label": "Table 1. Patient characteristics"
+  },
+  "schema": "btc-six-source-location-evidence-v1",
+  "source": {
+    "accession": "ds001226",
+    "commit": "359d372c5e972a161966312128adb365870df949",
+    "dataset": "BTC_preop",
+    "field": "tumor location",
+    "identity_field": "participant_id",
+    "license": "CC0",
+    "path": "data/diffusion_source/ds001226-v5.0.1/participants.tsv",
+    "sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d",
+    "uri": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/participants.tsv",
+    "version": "5.0.1"
+  },
+  "status": "source_reported_unreviewed",
+  "training_admission_established": false
+}

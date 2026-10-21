@@ -1,0 +1,38 @@
+{
+  "schema": "poc-first-local-package-recovery-generated-controls-v1",
+  "status": "passed",
+  "passed": 28,
+  "original_controls_retained": 13,
+  "elapsed_pytest_seconds": 0.61,
+  "command": ".venv/bin/python -m pytest -q tests/test_poc_first_local_package_build.py",
+  "runner_sha256": "9f152233ed14ea0d99635b696d10eaeec329780a3a84974ccf620a90ae8acf55",
+  "tests_sha256": "aa44ded4db3c49caae0bcb44db4a17a83cd7156fbfaba0aecf7539c7a780003f",
+  "source_before_recovery_sha256": "923d8cc873643942d142c692d78eac21493cbe0e42c53ba72265bab9aa8c5788",
+  "actual_metadata_check": {
+    "status": "passed",
+    "predecessor": {
+      "receipt_sha256": "5c03bcfffb832de6a907a6e3f94044c815cdd0cd345bb66ed14c08c9f9dd42ac",
+      "growth_ledger_sha256": "8ade65f73cd9c411256272f4037abc34a052a579142022c0fa1e3a6f413f73d3",
+      "baseline_sha256": "34e8f9cdafdfac30f30b5621c1d51cfb569d71d7764cac0e74f2b5b62f5923c3"
+    },
+    "worker_failed_exit": 1,
+    "worker_reaped": true,
+    "ledger_entries": 3318,
+    "carried_new_bytes": 1671846180
+  },
+  "added_controls": [
+    "exact three predecessor pins",
+    "same original session and baseline",
+    "failed exit1/reaped one-attempt predecessor only",
+    "successful-stage recovery refused",
+    "baseline mutation refused",
+    "carry high-water and conservatively charge new archive paths",
+    "arbitrary subdirectory refused",
+    "existing recovery output refused",
+    "old targets absent and preserved archive required",
+    "electron explicit selected successful receipt plus current source"
+  ],
+  "new_builds_run": 0,
+  "failed_build_outputs_moved_or_copied": false,
+  "biomedical_payloads_read": false
+}

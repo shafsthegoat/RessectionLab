@@ -1,0 +1,309 @@
+{
+  "schema": "ixi265-display-only-tissue-package-v1",
+  "patient_group": "IXI:265",
+  "role": "TRAIN",
+  "display_label": "T1 \u00b7 estimated tissues",
+  "layer_names": [
+    "atropos_csf_like_estimate",
+    "atropos_gray_matter_like_estimate",
+    "atropos_white_matter_like_estimate",
+    "unknown_missing_intensity"
+  ],
+  "layer_labels": [
+    "CSF-like estimate",
+    "Gray matter-like estimate",
+    "White matter-like estimate",
+    "Unknown \u00b7 8 voxels"
+  ],
+  "source_host_sha256": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1",
+  "acquired_primary_T1_sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+  "fit_outcome_sha256": "a9c241064f0ebc67e460c2f500f6b389e23bdb09fbda3667ab41d02b544c1bcf",
+  "numerical_result_QA_sha256": "0b2918d3d6d1c17e772cad4649689f67ff9546083eced8bfe7d5796db0ed6509",
+  "resources": {
+    "threads": 2,
+    "rss_limit_bytes": 2147483648,
+    "seconds": 300.0,
+    "available_memory_floor_bytes": 1073741824,
+    "output_temporary_limit_bytes": 536870912,
+    "disk_floor_bytes": 53687091200,
+    "sample_interval_seconds": 0.2,
+    "attempts": 1,
+    "memory_scope": "supervising_Python_plus_worker_and_recursive_descendants"
+  },
+  "output": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265-tissue-display-v1/IXI265-Guys-0845-tissue-estimates.ressectionlab",
+  "preserved_original_count": 16,
+  "preserved_reference_display_count": 2,
+  "new_display_count": 1,
+  "estimated_total_attachment_expanded_bytes": 334233600,
+  "source_primary_unchanged": true,
+  "raw_posteriors": "archived_unmodified_class_membership_probabilities_not_physical_PVE",
+  "unknown": "eight_missing_intensity_cells_remain_unclassified_not_CSF",
+  "frame_policy": "native_indices_preserved; original_T1_affine_retained; any_tolerated_header_roundoff_explicitly_recorded",
+  "cross_source_fusion_permitted": false,
+  "anatomy_accepted": false,
+  "host_accepted": false,
+  "growth_use_accepted": false,
+  "training_admitted": false,
+  "fitting_or_registration_run": false,
+  "catalog_modified": false,
+  "packaging_released": false,
+  "released_single_package": true,
+  "script_sha256": "0e6b716c23ac7674779a48f8aa0145db77770dae38c5a08d9cc0d006b0525e3c",
+  "preparation_sha256": "820d552f82e07fe2ab2d0dcac9df0c4c464c7075b3b4b756f795a171a51a0ead",
+  "created_utc": "2026-10-16T08:42:54.189970+00:00",
+  "expected_inputs": {
+    "schema": "ixi265-tissue-display-inputs-v1",
+    "files": [
+      {
+        "path": "outputs/poc-ixi265/IXI265-Guys-0845.ressectionlab",
+        "sha256": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1"
+      },
+      {
+        "path": "outputs/poc-ixi265/originals/IXI265-T1.nii.gz",
+        "sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950"
+      },
+      {
+        "path": "outputs/poc-ixi265/synthstrip/brain_mask.nii.gz",
+        "sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192"
+      },
+      {
+        "path": "outputs/poc-ixi265-atropos-typed-mask-v3/n4_corrected_estimated.nii.gz",
+        "sha256": "a0208d470624f706ed278852239f296d8a2509b5d94de0fc64d90bf765730138"
+      },
+      {
+        "path": "outputs/poc-ixi265-atropos-typed-mask-v3/class_labels_raw.nii.gz",
+        "sha256": "7cd021de6201e7fea0ee586cde0a27b3d1106dd4645f9d0a833f98d0923f6791"
+      },
+      {
+        "path": "outputs/poc-ixi265-atropos-typed-mask-v3/fit_domain_native.nii.gz",
+        "sha256": "8f6f7bc22d69cdc92c4ae1201a64ad5dc45afbf5fed44102e7bd0951bbf2ab5e"
+      },
+      {
+        "path": "outputs/poc-ixi265-atropos-typed-mask-v3/excluded_unknown_native.nii.gz",
+        "sha256": "b9b744588e970abd988155f1997290d568f7732c0c66ed6d1a3bd82ef89cb4e8"
+      },
+      {
+        "path": "outputs/poc-ixi265-atropos-typed-mask-v3/class_1_posterior.nii.gz",
+        "sha256": "377f691004eb87dbb8cc65f45c6fbb5fbe44311915cad462d6ea4da4b0f0669c"
+      },
+      {
+        "path": "outputs/poc-ixi265-atropos-typed-mask-v3/class_2_posterior.nii.gz",
+        "sha256": "2700b62ad949e9cc3dbef55943d7eb9efba99762c5309e2374b6599015fda25f"
+      },
+      {
+        "path": "outputs/poc-ixi265-atropos-typed-mask-v3/class_3_posterior.nii.gz",
+        "sha256": "f375119f53fbf0e6137173b32d10713851c194e92cecb369e9741f1fa30f9b7e"
+      },
+      {
+        "path": "outputs/poc-ixi265-atropos-typed-mask-v3/csf_like_intensity_estimated.nii.gz",
+        "sha256": "a474f70c9cebc74ebb04d59df84c502d31a2816ccafea39428a286f20025a930"
+      },
+      {
+        "path": "outputs/poc-ixi265-atropos-typed-mask-v3/gray_matter_like_intensity_estimated.nii.gz",
+        "sha256": "567d806a0e5dacaa2542d1f6c415f6c1bccb01d73049ab22b72493e0eab4be05"
+      },
+      {
+        "path": "outputs/poc-ixi265-atropos-typed-mask-v3/white_matter_like_intensity_estimated.nii.gz",
+        "sha256": "a9d1c122ea39a93fbb3de007415b4312b15ee90eb7c37889c0fc4d129f5c7729"
+      },
+      {
+        "path": "outputs/poc-ixi265-atropos-typed-mask-v3/temporary/antsrbz4ch0ltprob01.nii.gz",
+        "sha256": "8adace1c376f1ba926c5e28f2daf789cd4de33f9ad2c6788603c379ea2fb22ae"
+      },
+      {
+        "path": "outputs/poc-ixi265-atropos-typed-mask-v3/temporary/antsrbz4ch0ltprob02.nii.gz",
+        "sha256": "8c87204528e9b99f8bb64247e0eb4335106ca487b30b428c4fce4aec081e2b7c"
+      },
+      {
+        "path": "outputs/poc-ixi265-atropos-typed-mask-v3/temporary/antsrbz4ch0ltprob03.nii.gz",
+        "sha256": "e386015a7897cb455bb9b8e0c22b28f8abe0ae440e10eada69fd6fa93be07f58"
+      },
+      {
+        "path": "outputs/poc-ixi265-atropos-typed-mask-v3/candidate.json",
+        "sha256": "55188c2f9916d226beed701bbf9c85e29aa60533ea34e0bdf0518fd63e52fa9f"
+      },
+      {
+        "path": "artifacts/poc-ixi265-atropos-typed-mask-run-v3/outcome.json",
+        "sha256": "a9c241064f0ebc67e460c2f500f6b389e23bdb09fbda3667ab41d02b544c1bcf"
+      },
+      {
+        "path": "artifacts/ixi265-typed-mask-independent-v3/result-qa.json",
+        "sha256": "0b2918d3d6d1c17e772cad4649689f67ff9546083eced8bfe7d5796db0ed6509"
+      },
+      {
+        "path": "artifacts/poc-ixi265-atropos-typed-mask-run-v3/root-release-declaration.json",
+        "sha256": "85910005da495df7d2265b6d9cce3bb1a4b8d9bcaadaf1bc54bb1aed30003d71"
+      },
+      {
+        "path": "artifacts/ixi265-typed-mask-independent-v3/supervisor-qa.json",
+        "sha256": "1013cc0cde560fdce0e3c16338edd100421623cba2629c8bf3eaeeee8a8ed0c4"
+      },
+      {
+        "path": "artifacts/poc-ants-typed-mask-native-preflight-v3/outcome.json",
+        "sha256": "b9b8841d81d1ac9f10303aecdbfa838bba59fe4764065cd7898f44026b129c78"
+      },
+      {
+        "path": "artifacts/poc-ixi265-atropos-typed-mask-runner-guard-followup-v3/preparation.json",
+        "sha256": "8a8335d6ab2f0b671c96eb80e6ae421e17cdaced294a5132dfeaf0c59ccfb6a1"
+      },
+      {
+        "path": "artifacts/ixi265-tissue-display-preparation-v1/prospective-method.json",
+        "sha256": "e786909c715cb5ded4b8ac3a1ae36851a67980610904ed37dcb92cd5d703d84f"
+      }
+    ],
+    "append_originals": [
+      {
+        "path": "outputs/poc-ixi265-atropos-typed-mask-v3/n4_corrected_estimated.nii.gz",
+        "sha256": "a0208d470624f706ed278852239f296d8a2509b5d94de0fc64d90bf765730138",
+        "bytes": 13094415,
+        "role": "model-result",
+        "semantics": "bias_corrected_intensity_not_acquired_MRI"
+      },
+      {
+        "path": "outputs/poc-ixi265-atropos-typed-mask-v3/class_labels_raw.nii.gz",
+        "sha256": "7cd021de6201e7fea0ee586cde0a27b3d1106dd4645f9d0a833f98d0923f6791",
+        "bytes": 343423,
+        "role": "model-result",
+        "semantics": "unmodified_fitted_class_ids_on_positive_intensity_domain"
+      },
+      {
+        "path": "outputs/poc-ixi265-atropos-typed-mask-v3/fit_domain_native.nii.gz",
+        "sha256": "8f6f7bc22d69cdc92c4ae1201a64ad5dc45afbf5fed44102e7bd0951bbf2ab5e",
+        "bytes": 129142,
+        "role": "model-result",
+        "semantics": "declared_fitting_support_not_replacement_brain"
+      },
+      {
+        "path": "outputs/poc-ixi265-atropos-typed-mask-v3/excluded_unknown_native.nii.gz",
+        "sha256": "b9b744588e970abd988155f1997290d568f7732c0c66ed6d1a3bd82ef89cb4e8",
+        "bytes": 43135,
+        "role": "model-result",
+        "semantics": "UNKNOWN_ABSTAINED_missing_intensity_not_CSF"
+      },
+      {
+        "path": "outputs/poc-ixi265-atropos-typed-mask-v3/class_1_posterior.nii.gz",
+        "sha256": "377f691004eb87dbb8cc65f45c6fbb5fbe44311915cad462d6ea4da4b0f0669c",
+        "bytes": 5425300,
+        "role": "model-result",
+        "semantics": "unmodified_membership_probability_not_PVE"
+      },
+      {
+        "path": "outputs/poc-ixi265-atropos-typed-mask-v3/class_2_posterior.nii.gz",
+        "sha256": "2700b62ad949e9cc3dbef55943d7eb9efba99762c5309e2374b6599015fda25f",
+        "bytes": 5682413,
+        "role": "model-result",
+        "semantics": "unmodified_membership_probability_not_PVE"
+      },
+      {
+        "path": "outputs/poc-ixi265-atropos-typed-mask-v3/class_3_posterior.nii.gz",
+        "sha256": "f375119f53fbf0e6137173b32d10713851c194e92cecb369e9741f1fa30f9b7e",
+        "bytes": 5550733,
+        "role": "model-result",
+        "semantics": "unmodified_membership_probability_not_PVE"
+      },
+      {
+        "path": "outputs/poc-ixi265-atropos-typed-mask-v3/csf_like_intensity_estimated.nii.gz",
+        "sha256": "a474f70c9cebc74ebb04d59df84c502d31a2816ccafea39428a286f20025a930",
+        "bytes": 222094,
+        "role": "model-result",
+        "semantics": "hard_class_under_declared_T1_intensity_assumption"
+      },
+      {
+        "path": "outputs/poc-ixi265-atropos-typed-mask-v3/gray_matter_like_intensity_estimated.nii.gz",
+        "sha256": "567d806a0e5dacaa2542d1f6c415f6c1bccb01d73049ab22b72493e0eab4be05",
+        "bytes": 301337,
+        "role": "model-result",
+        "semantics": "hard_class_under_declared_T1_intensity_assumption"
+      },
+      {
+        "path": "outputs/poc-ixi265-atropos-typed-mask-v3/white_matter_like_intensity_estimated.nii.gz",
+        "sha256": "a9d1c122ea39a93fbb3de007415b4312b15ee90eb7c37889c0fc4d129f5c7729",
+        "bytes": 215767,
+        "role": "model-result",
+        "semantics": "hard_class_under_declared_T1_intensity_assumption"
+      },
+      {
+        "path": "outputs/poc-ixi265-atropos-typed-mask-v3/temporary/antsrbz4ch0ltprob01.nii.gz",
+        "sha256": "8adace1c376f1ba926c5e28f2daf789cd4de33f9ad2c6788603c379ea2fb22ae",
+        "bytes": 5211867,
+        "role": "model-result",
+        "semantics": "exact_native_raw_membership_output; retained_header_roundoff_recorded; not physical_PVE"
+      },
+      {
+        "path": "outputs/poc-ixi265-atropos-typed-mask-v3/temporary/antsrbz4ch0ltprob02.nii.gz",
+        "sha256": "8c87204528e9b99f8bb64247e0eb4335106ca487b30b428c4fce4aec081e2b7c",
+        "bytes": 5462561,
+        "role": "model-result",
+        "semantics": "exact_native_raw_membership_output; retained_header_roundoff_recorded; not physical_PVE"
+      },
+      {
+        "path": "outputs/poc-ixi265-atropos-typed-mask-v3/temporary/antsrbz4ch0ltprob03.nii.gz",
+        "sha256": "e386015a7897cb455bb9b8e0c22b28f8abe0ae440e10eada69fd6fa93be07f58",
+        "bytes": 5369599,
+        "role": "model-result",
+        "semantics": "exact_native_raw_membership_output; retained_header_roundoff_recorded; not physical_PVE"
+      },
+      {
+        "path": "outputs/poc-ixi265-atropos-typed-mask-v3/candidate.json",
+        "sha256": "55188c2f9916d226beed701bbf9c85e29aa60533ea34e0bdf0518fd63e52fa9f",
+        "bytes": 31203,
+        "role": "metadata",
+        "semantics": "fixed_fitting_and_display_provenance_no_anatomical_acceptance"
+      },
+      {
+        "path": "artifacts/poc-ixi265-atropos-typed-mask-run-v3/outcome.json",
+        "sha256": "a9c241064f0ebc67e460c2f500f6b389e23bdb09fbda3667ab41d02b544c1bcf",
+        "bytes": 19030,
+        "role": "metadata",
+        "semantics": "fixed_fitting_and_display_provenance_no_anatomical_acceptance"
+      },
+      {
+        "path": "artifacts/ixi265-typed-mask-independent-v3/result-qa.json",
+        "sha256": "0b2918d3d6d1c17e772cad4649689f67ff9546083eced8bfe7d5796db0ed6509",
+        "bytes": 28049,
+        "role": "metadata",
+        "semantics": "fixed_fitting_and_display_provenance_no_anatomical_acceptance"
+      },
+      {
+        "path": "artifacts/poc-ixi265-atropos-typed-mask-run-v3/root-release-declaration.json",
+        "sha256": "85910005da495df7d2265b6d9cce3bb1a4b8d9bcaadaf1bc54bb1aed30003d71",
+        "bytes": 9059,
+        "role": "metadata",
+        "semantics": "fixed_fitting_and_display_provenance_no_anatomical_acceptance"
+      },
+      {
+        "path": "artifacts/ixi265-typed-mask-independent-v3/supervisor-qa.json",
+        "sha256": "1013cc0cde560fdce0e3c16338edd100421623cba2629c8bf3eaeeee8a8ed0c4",
+        "bytes": 10749,
+        "role": "metadata",
+        "semantics": "fixed_fitting_and_display_provenance_no_anatomical_acceptance"
+      },
+      {
+        "path": "artifacts/poc-ants-typed-mask-native-preflight-v3/outcome.json",
+        "sha256": "b9b8841d81d1ac9f10303aecdbfa838bba59fe4764065cd7898f44026b129c78",
+        "bytes": 3178,
+        "role": "metadata",
+        "semantics": "fixed_fitting_and_display_provenance_no_anatomical_acceptance"
+      },
+      {
+        "path": "artifacts/poc-ixi265-atropos-typed-mask-runner-guard-followup-v3/preparation.json",
+        "sha256": "8a8335d6ab2f0b671c96eb80e6ae421e17cdaced294a5132dfeaf0c59ccfb6a1",
+        "bytes": 12027,
+        "role": "metadata",
+        "semantics": "fixed_fitting_and_display_provenance_no_anatomical_acceptance"
+      },
+      {
+        "path": "artifacts/ixi265-tissue-display-preparation-v1/prospective-method.json",
+        "sha256": "e786909c715cb5ded4b8ac3a1ae36851a67980610904ed37dcb92cd5d703d84f",
+        "bytes": 2171,
+        "role": "metadata",
+        "semantics": "fixed_fitting_and_display_provenance_no_anatomical_acceptance"
+      }
+    ],
+    "preserve_existing_originals_count": 16,
+    "expected_total_originals": 37,
+    "append_originals_bytes": 47167252,
+    "prior_originals_bytes": 22009034,
+    "payload_hashes_from_sealed_receipts_not_decoded_during_preparation": true
+  }
+}

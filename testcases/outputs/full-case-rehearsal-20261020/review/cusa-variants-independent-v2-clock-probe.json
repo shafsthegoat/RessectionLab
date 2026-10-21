@@ -1,0 +1,44 @@
+{
+  "utc": "2026-10-20T23:29:57.703700+00:00",
+  "result": "pass",
+  "fixture": {
+    "kind": "independent-cusa-variants-V2-shared-clock-fixture"
+  },
+  "sourceLabelsSha256": "sha256:bdaff742a95184956422378353e17e4174920f9be92f095185700a68d64f33d6",
+  "baselineUnchanged": true,
+  "actualBoneGeneratedDebrisMm3": 9.0,
+  "initialTemperatureCells": 9,
+  "rows": [
+    {
+      "variant": "coarse",
+      "pathPoses": 2,
+      "status": "accepted",
+      "ownPreviewMatchesCommit": true,
+      "simulationSeconds": 1.9999999999999973,
+      "vesselClockSeconds": 1.9999999999999973,
+      "actualOtherHandDebrisAspiratedMm3": 1.9999999999999993,
+      "generatedDebrisConservedMm3": 9.0,
+      "passiveCoolingLossJ": 0.2654102793632805,
+      "thermalCoolingEnergyAndAnalyticTemperatureCheck": true,
+      "removedTargetCells": 1.0,
+      "nonTargetRemovedThisAction": 0,
+      "stateId": "sha256:c70d6edde09e7a49ce46ce15ce5aee85b6bc5c9ebe14ebe84cd12446caf33e4a"
+    },
+    {
+      "variant": "fine",
+      "pathPoses": 151,
+      "status": "accepted",
+      "ownPreviewMatchesCommit": true,
+      "simulationSeconds": 1.999999999999968,
+      "vesselClockSeconds": 1.999999999999968,
+      "actualOtherHandDebrisAspiratedMm3": 2.000000000000004,
+      "generatedDebrisConservedMm3": 9.000000000000007,
+      "passiveCoolingLossJ": 0.26541027936327516,
+      "thermalCoolingEnergyAndAnalyticTemperatureCheck": true,
+      "removedTargetCells": 1.0,
+      "nonTargetRemovedThisAction": 0,
+      "stateId": "sha256:8de08929b5aa7a3a00d39c5fa37ac599b4f1913288b0704af2512e31e860bfde"
+    }
+  ],
+  "limits": "Tiny explicit engineering fixture, public actions and clone only; no patient files/scene/engine/replay/live/GUI. Coarse and fine have independently checked outcomes; no bitwise equivalence or action/episode speed claim."
+}

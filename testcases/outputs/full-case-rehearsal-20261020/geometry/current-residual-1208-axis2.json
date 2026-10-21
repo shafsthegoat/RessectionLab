@@ -1,0 +1,353 @@
+{
+  "readOnly": true,
+  "noEngineOrPhysics": true,
+  "position": 1208,
+  "stateId": "sha256:31c93e9795c4c673d987d5711305bb4e1bfebad3f8f940471ac07d947f7c6101",
+  "sourceSceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+  "voxelVolumeMm3": 1.0,
+  "originalOwnedTargetCells": 43573,
+  "originalOwnedTargetMm3": 43573.0,
+  "remainingOwnedTargetCells": 12429,
+  "remainingOwnedTargetMm3": 12429.0,
+  "removedOwnedTargetCells": 31144,
+  "removedOwnedTargetMm3": 31144.0,
+  "connectedRegions6Face": 112,
+  "regionsAtMost8Cells": 107,
+  "largestRegions": [
+    {
+      "component": 1,
+      "ownedTargetCells": 12157,
+      "ownedTargetMm3": 12157.0,
+      "nativeBoundsMin": [
+        102,
+        103,
+        104
+      ],
+      "nativeBoundsMax": [
+        152,
+        165,
+        144
+      ],
+      "superiorPointColumnCells": 10548,
+      "leftPointColumnCells": 8553,
+      "anteriorPointColumnCells": 7235
+    },
+    {
+      "component": 4,
+      "ownedTargetCells": 27,
+      "ownedTargetMm3": 27.0,
+      "nativeBoundsMin": [
+        108,
+        125,
+        122
+      ],
+      "nativeBoundsMax": [
+        109,
+        129,
+        130
+      ],
+      "superiorPointColumnCells": 3,
+      "leftPointColumnCells": 5,
+      "anteriorPointColumnCells": 0
+    },
+    {
+      "component": 33,
+      "ownedTargetCells": 23,
+      "ownedTargetMm3": 23.0,
+      "nativeBoundsMin": [
+        113,
+        149,
+        118
+      ],
+      "nativeBoundsMax": [
+        122,
+        152,
+        120
+      ],
+      "superiorPointColumnCells": 23,
+      "leftPointColumnCells": 0,
+      "anteriorPointColumnCells": 0
+    },
+    {
+      "component": 92,
+      "ownedTargetCells": 18,
+      "ownedTargetMm3": 18.0,
+      "nativeBoundsMin": [
+        142,
+        144,
+        112
+      ],
+      "nativeBoundsMax": [
+        144,
+        147,
+        117
+      ],
+      "superiorPointColumnCells": 15,
+      "leftPointColumnCells": 0,
+      "anteriorPointColumnCells": 0
+    },
+    {
+      "component": 93,
+      "ownedTargetCells": 11,
+      "ownedTargetMm3": 11.0,
+      "nativeBoundsMin": [
+        143,
+        126,
+        116
+      ],
+      "nativeBoundsMax": [
+        144,
+        128,
+        121
+      ],
+      "superiorPointColumnCells": 11,
+      "leftPointColumnCells": 0,
+      "anteriorPointColumnCells": 0
+    },
+    {
+      "component": 12,
+      "ownedTargetCells": 7,
+      "ownedTargetMm3": 7.0,
+      "nativeBoundsMin": [
+        110,
+        125,
+        118
+      ],
+      "nativeBoundsMax": [
+        110,
+        128,
+        120
+      ],
+      "superiorPointColumnCells": 3,
+      "leftPointColumnCells": 0,
+      "anteriorPointColumnCells": 0
+    },
+    {
+      "component": 14,
+      "ownedTargetCells": 7,
+      "ownedTargetMm3": 7.0,
+      "nativeBoundsMin": [
+        111,
+        126,
+        116
+      ],
+      "nativeBoundsMax": [
+        111,
+        131,
+        117
+      ],
+      "superiorPointColumnCells": 6,
+      "leftPointColumnCells": 0,
+      "anteriorPointColumnCells": 0
+    },
+    {
+      "component": 19,
+      "ownedTargetCells": 7,
+      "ownedTargetMm3": 7.0,
+      "nativeBoundsMin": [
+        112,
+        129,
+        115
+      ],
+      "nativeBoundsMax": [
+        113,
+        132,
+        116
+      ],
+      "superiorPointColumnCells": 7,
+      "leftPointColumnCells": 0,
+      "anteriorPointColumnCells": 0
+    },
+    {
+      "component": 66,
+      "ownedTargetCells": 7,
+      "ownedTargetMm3": 7.0,
+      "nativeBoundsMin": [
+        120,
+        130,
+        108
+      ],
+      "nativeBoundsMax": [
+        124,
+        131,
+        108
+      ],
+      "superiorPointColumnCells": 7,
+      "leftPointColumnCells": 0,
+      "anteriorPointColumnCells": 0
+    },
+    {
+      "component": 46,
+      "ownedTargetCells": 6,
+      "ownedTargetMm3": 6.0,
+      "nativeBoundsMin": [
+        116,
+        108,
+        131
+      ],
+      "nativeBoundsMax": [
+        116,
+        108,
+        136
+      ],
+      "superiorPointColumnCells": 0,
+      "leftPointColumnCells": 4,
+      "anteriorPointColumnCells": 6
+    }
+  ],
+  "axes": [
+    {
+      "direction": "superior",
+      "nativeAxis": 2,
+      "outwardIndexSign": 1,
+      "outwardRAS": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "retainedPointColumnTargetCells": 10749,
+      "retainedPointColumnTargetMm3": 10749.0,
+      "retainedWindowColumns": 1936,
+      "maxLateralWindowClearanceMm": 6.708203932499369,
+      "retainedCapacityWith3MmLateralInset": 3244
+    },
+    {
+      "direction": "left",
+      "nativeAxis": 0,
+      "outwardIndexSign": 1,
+      "outwardRAS": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "retainedPointColumnTargetCells": 8580,
+      "retainedPointColumnTargetMm3": 8580.0,
+      "retainedWindowColumns": 903,
+      "maxLateralWindowClearanceMm": 7.615773105863909,
+      "retainedCapacityWith3MmLateralInset": 3640
+    },
+    {
+      "direction": "anterior",
+      "nativeAxis": 1,
+      "outwardIndexSign": 1,
+      "outwardRAS": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "retainedPointColumnTargetCells": 7250,
+      "retainedPointColumnTargetMm3": 7250.0,
+      "retainedWindowColumns": 533,
+      "maxLateralWindowClearanceMm": 5.656854249492381,
+      "retainedCapacityWith3MmLateralInset": 2040
+    }
+  ],
+  "alternativeUnionOutsideSuperiorCells": 1195,
+  "anyThreeAxisPointColumnUnionCells": 11944,
+  "currentAccessIndex": 15,
+  "configuredAccessCount": 99,
+  "currentAccessListExhausted": false,
+  "passIndex": 0,
+  "passStartTargetMm3": null,
+  "targetAddedDuringCurrentPassMm3": null,
+  "currentStage": "core",
+  "directorStatus": "running",
+  "currentAccessId": "superior-117-119",
+  "configuredTailIncludingCurrent": {
+    "nativeAxis": 2,
+    "accesses": 84,
+    "positiveCapacityAccesses": 84,
+    "distinctResidualCapacityDiskCells": 4267,
+    "distinctResidualCapacityDiskMm3": 4267.0,
+    "distinctResidualHelperSearchDiskCells": 9593,
+    "distinctResidualHelperSearchDiskMm3": 9593.0,
+    "bestRetainedRoutes": [
+      {
+        "id": "superior-110-138",
+        "nativeAxis": 2,
+        "retainedCapacityDiskCells": 112,
+        "retainedCapacityDiskMm3": 112.0
+      },
+      {
+        "id": "superior-132-132",
+        "nativeAxis": 2,
+        "retainedCapacityDiskCells": 109,
+        "retainedCapacityDiskMm3": 109.0
+      },
+      {
+        "id": "superior-129-134",
+        "nativeAxis": 2,
+        "retainedCapacityDiskCells": 102,
+        "retainedCapacityDiskMm3": 102.0
+      },
+      {
+        "id": "superior-108-145",
+        "nativeAxis": 2,
+        "retainedCapacityDiskCells": 101,
+        "retainedCapacityDiskMm3": 101.0
+      },
+      {
+        "id": "superior-132-128",
+        "nativeAxis": 2,
+        "retainedCapacityDiskCells": 99,
+        "retainedCapacityDiskMm3": 99.0
+      }
+    ]
+  },
+  "configuredSuperiorTailIncludingCurrent": {
+    "nativeAxis": 2,
+    "accesses": 84,
+    "positiveCapacityAccesses": 84,
+    "distinctResidualCapacityDiskCells": 4267,
+    "distinctResidualCapacityDiskMm3": 4267.0,
+    "distinctResidualHelperSearchDiskCells": 9593,
+    "distinctResidualHelperSearchDiskMm3": 9593.0,
+    "bestRetainedRoutes": [
+      {
+        "id": "superior-110-138",
+        "nativeAxis": 2,
+        "retainedCapacityDiskCells": 112,
+        "retainedCapacityDiskMm3": 112.0
+      },
+      {
+        "id": "superior-132-132",
+        "nativeAxis": 2,
+        "retainedCapacityDiskCells": 109,
+        "retainedCapacityDiskMm3": 109.0
+      },
+      {
+        "id": "superior-129-134",
+        "nativeAxis": 2,
+        "retainedCapacityDiskCells": 102,
+        "retainedCapacityDiskMm3": 102.0
+      },
+      {
+        "id": "superior-108-145",
+        "nativeAxis": 2,
+        "retainedCapacityDiskCells": 101,
+        "retainedCapacityDiskMm3": 101.0
+      },
+      {
+        "id": "superior-132-128",
+        "nativeAxis": 2,
+        "retainedCapacityDiskCells": 99,
+        "retainedCapacityDiskMm3": 99.0
+      }
+    ]
+  },
+  "holds": false,
+  "deformationNodes": 0,
+  "limits": "Six-face grid connectivity and retained original source-identity column/window upper bounds only. No tool/shaft collision, guard, legal drilling, stateful physics, or action replay is verified. Source-native +index rays are called superior/left/anterior for this acquired signed-diagonal frame. Live engine may advance after this saved boundary.",
+  "nativePath": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/primary.ressectionlab",
+  "identityVerification": {
+    "stableAtomicNativeRead": true,
+    "readAttempts": 1,
+    "nativeSha256": "fce53a514ff9a3bb312fe5b99659fa9de17566237093388163b633aea94fba2d",
+    "sourceLabelsDigest": "sha256:9930330418c439d7d042054d7419c05d3158e2422f62ce69b034044a563ecd76",
+    "checkpointContentIdentityVerified": true,
+    "protectionContractId": "sha256:bd086e3832d76c44e09ccec7e5cc64a77a27f2b2affcd76d5c51ea3fc06cebfa",
+    "sourceBinding": "sha256:c2865797721e8decb8b41736d3544e50b95fdd3c6007dc0062cb2fdf1eb79e0e",
+    "branchId": "full-primary",
+    "actionReplayVerifiedByThisInspector": false
+  }
+}

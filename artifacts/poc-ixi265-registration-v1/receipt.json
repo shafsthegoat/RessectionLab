@@ -1,0 +1,886 @@
+{
+  "schema": "poc-ixi265-registration-artifact-v1",
+  "case_id": "IXI265-Guys-0845",
+  "patient_group": "IXI:265",
+  "status": "canonical_candidate_saved_not_anatomically_accepted",
+  "script": {
+    "path": "scripts/poc_ixi265_registration.py",
+    "final_sha256": "ea1b4f43b20b74d9a34d1458b39870011bf35f0495cb411f2eecce32963eb02b",
+    "snapshot_note": "Final reproducible implementation; early failed attempts predate binary-validation/device-budget corrections and are preserved by logs."
+  },
+  "tests": {
+    "path": "tests/test_poc_ixi265_registration.py",
+    "sha256": "25466182338d3109c82e85dcc196a6d55899a01c0d9b84a49c6d1d8b3fbb2f4d",
+    "result": ".......                                                                  [100%]\n7 passed in 0.30s"
+  },
+  "versions": {
+    "numpy": "2.0.1",
+    "nibabel": "5.4.2",
+    "SimpleITK": "2.5.6",
+    "torch": "2.14.1",
+    "surfa": "0.6.3",
+    "scipy": "1.15.3",
+    "matplotlib": "3.11.2",
+    "psutil": "7.2.2"
+  },
+  "source_intake": {
+    "schema": "ixi265-source-intake-v1",
+    "case_id": "IXI265-Guys-0845",
+    "sources": {
+      "T1": {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/originals/IXI265-T1.nii.gz",
+        "original_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/ixi265-paired-header-qc-v1/selected/acquired/IXI265-T1.nii.gz",
+        "sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+        "bytes": 6980629,
+        "expanded_bytes": 19661152,
+        "gzip_crc_and_full_length_verified": true,
+        "all_voxels_finite": true,
+        "shape": [
+          256,
+          256,
+          150
+        ],
+        "affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912155,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "qform": [
+          [
+            -0.04665683705034007,
+            0.06588860148888928,
+            1.195541436684528,
+            -90.70220947265625
+          ],
+          [
+            -0.9363382184830493,
+            -0.002922830186959935,
+            -0.05960521301253242,
+            122.19873046875
+          ],
+          [
+            0.00036078310315008216,
+            0.9351772020625484,
+            -0.08441904809798166,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "sform": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912155,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "axis_codes": [
+          "P",
+          "S",
+          "R"
+        ],
+        "range": [
+          0.0,
+          988.0
+        ]
+      },
+      "MRA": {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/originals/IXI265-MRA.nii.gz",
+        "original_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/ixi265-paired-header-qc-v1/selected/acquired/IXI265-MRA.nii.gz",
+        "sha256": "a87b381b882242b7d61a1930a8332d44200fdb3c56c68fc09c24a057eea86dc4",
+        "bytes": 14307469,
+        "expanded_bytes": 52429152,
+        "gzip_crc_and_full_length_verified": true,
+        "all_voxels_finite": true,
+        "shape": [
+          512,
+          512,
+          100
+        ],
+        "affine_ras_mm": [
+          [
+            -0.4675968885421753,
+            0.022762440145015717,
+            0.04044419899582863,
+            113.11631774902344
+          ],
+          [
+            0.021471189334988594,
+            0.46756595373153687,
+            -0.043432630598545074,
+            -131.24533081054688
+          ],
+          [
+            0.024873699992895126,
+            0.024300718680024147,
+            0.7977957725524902,
+            -36.80162048339844
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "qform": [
+          [
+            -0.4675968658915527,
+            0.022762450512280544,
+            0.0404449228126845,
+            113.11631774902344
+          ],
+          [
+            0.021471178297718427,
+            0.46756594066599144,
+            -0.04343264959961386,
+            -131.24533081054688
+          ],
+          [
+            0.024874123319319312,
+            0.02430070936829939,
+            0.7977957275993646,
+            -36.80162048339844
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "sform": [
+          [
+            -0.4675968885421753,
+            0.022762440145015717,
+            0.04044419899582863,
+            113.11631774902344
+          ],
+          [
+            0.021471189334988594,
+            0.46756595373153687,
+            -0.043432630598545074,
+            -131.24533081054688
+          ],
+          [
+            0.024873699992895126,
+            0.024300718680024147,
+            0.7977957725524902,
+            -36.80162048339844
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "axis_codes": [
+          "L",
+          "A",
+          "S"
+        ],
+        "range": [
+          0.0,
+          646.0
+        ]
+      },
+      "reference": {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/originals/IXI265-derived_vessel_label.nii.gz",
+        "original_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/ixi265-paired-header-qc-v1/selected/derived_reference/IXI265-derived_vessel_label.nii.gz",
+        "sha256": "9da13c332156c71a5200dbf88368bb87478914fe73034a42ca4eabf1dd5cdbfe",
+        "bytes": 109932,
+        "expanded_bytes": 52429152,
+        "gzip_crc_and_full_length_verified": true,
+        "all_voxels_finite": true,
+        "shape": [
+          512,
+          512,
+          100
+        ],
+        "affine_ras_mm": [
+          [
+            -0.4675968885421753,
+            0.022762438282370567,
+            0.04044419899582863,
+            113.11631774902344
+          ],
+          [
+            0.021471187472343445,
+            0.46756595373153687,
+            -0.043432630598545074,
+            -131.24533081054688
+          ],
+          [
+            0.024873699992895126,
+            0.024300716817378998,
+            0.7977957725524902,
+            -36.80162048339844
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "qform": [
+          [
+            -0.46759686579879745,
+            0.02276244881219782,
+            0.04044492872311273,
+            113.11631774902344
+          ],
+          [
+            0.02147117650872276,
+            0.46756594084121833,
+            -0.04343264668115854,
+            -131.24533081054688
+          ],
+          [
+            0.024874126607233385,
+            0.024300707589253144,
+            0.7977957274586138,
+            -36.80162048339844
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "sform": [
+          [
+            -0.4675968885421753,
+            0.022762438282370567,
+            0.04044419899582863,
+            113.11631774902344
+          ],
+          [
+            0.021471187472343445,
+            0.46756595373153687,
+            -0.043432630598545074,
+            -131.24533081054688
+          ],
+          [
+            0.024873699992895126,
+            0.024300716817378998,
+            0.7977957725524902,
+            -36.80162048339844
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "axis_codes": [
+          "L",
+          "A",
+          "S"
+        ],
+        "range": [
+          0.0,
+          1.0
+        ]
+      }
+    },
+    "cohort_sha256": "b27f28c21089e61f6c4899f172f608cd0f81391588777443939196b1700cb127",
+    "frozen_role": "TRAIN",
+    "training_admitted": false,
+    "eligibility": "publisher-described healthy participants; individual pathology review not performed",
+    "source_url": "https://brain-development.org/ixi-dataset/",
+    "raw_license": "CC-BY-SA-3.0",
+    "annotation_url": "https://zenodo.org/records/17393202",
+    "annotation_license": "CC-BY-4.0",
+    "annotation_lineage": "Source model-assisted (SynthStrip/Frangi) and manually refined vessel reference; not fresh inference",
+    "acquisition_datetime": null,
+    "same_acquisition_time_verified": false,
+    "annotation_completeness": "unknown; unlabelled voxels are not certified vessel-free",
+    "policy_use": "source reference display only; excluded from primary compartments/evidence"
+  },
+  "bundle": {
+    "case_id": "IXI265-Guys-0845",
+    "bundle": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/IXI265-Guys-0845.ressectionlab",
+    "sha256": "c735daaf6d60f5f0d1567760a2accc18d4bd4838a096d8e0b5f490ee88abaff1",
+    "case_hash": "sha256:72f6ae73183d8d5d52f30eafd90a533b0cf81a38e0070d7fa70ca954461c505c",
+    "session_hash": "sha256:005ee884647a02835d9b326ed2c4f32853c4bf13ba639a35c69147da5f63e14e",
+    "reopened_identical": true,
+    "original_files": 16,
+    "primary_target_compartments": [],
+    "primary_estimated_layers": [
+      "brain"
+    ],
+    "source_reference_policy_excluded_by_display_attachment": true,
+    "display_series": [
+      {
+        "seriesId": "sha256:96364833177048440090bb6b3ba051fb44ae5b6cb6f934cd91873da0736ecb57",
+        "sourceCaseHash": "sha256:e7a463c522abce66428e4771cd2e384be1143fa46bd51aaad8449eb962e3a7d2",
+        "sourceFrameHash": "sha256:caadf2bd319e41e9b4dc77211e60646cc85c73f1ed5c58755905a0c440b437b7",
+        "modality": "MRA",
+        "annotationKind": "source-provided",
+        "scope": "display-only-native-grid"
+      },
+      {
+        "seriesId": "sha256:2a76a27e8512747f1a10514f87a4529d27f2fed5fed61f7dcb2c4a771346ad85",
+        "sourceCaseHash": "sha256:a4c67f16c1f7e41853fefb64346eb61f9acc395b41e5642619f9a9359056f931",
+        "sourceFrameHash": "sha256:2513ca69c435d3fab93f67f69be820d3c69f454489b36d4e68a50dcebe6026db",
+        "modality": "T1",
+        "annotationKind": "source-provided",
+        "scope": "display-only-native-grid"
+      }
+    ],
+    "fusion_permitted": [
+      false,
+      false
+    ],
+    "registration_status": "estimated_unreviewed",
+    "anatomical_registration_accepted": false
+  },
+  "registration": {
+    "method": "SimpleITK Euler3D rigid, identity physical pose, Mattes MI32",
+    "simpleitk_version": "2.5.6",
+    "fixed": "T1",
+    "moving": "MRA",
+    "T1_RAS_mm_to_MRA_RAS_mm": [
+      [
+        0.9999989148019892,
+        0.0003560977554480371,
+        0.0014295416162068975,
+        -0.2162576760544108
+      ],
+      [
+        -0.00036557054576874526,
+        0.9999779434139471,
+        0.006631669758748626,
+        -0.32463560493825666
+      ],
+      [
+        -0.0014271485626833336,
+        -0.006632185160382553,
+        0.9999769884187227,
+        -1.9210486775933926
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "MRA_RAS_mm_to_T1_RAS_mm": [
+      [
+        0.9999989148019892,
+        -0.00036557054576875166,
+        -0.0014271485626832603,
+        0.2133971422976657
+      ],
+      [
+        0.00035609775544803013,
+        0.999977943413947,
+        -0.006632185160382632,
+        0.31196470292623424
+      ],
+      [
+        0.001429541616206971,
+        0.006631669758748548,
+        0.9999769884187228,
+        1.9234664966972368
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "sampling_direction": "T1 output physical point -> MRA input physical point",
+    "configuration": {
+      "threads": 2,
+      "seed": 41,
+      "sampling_fraction": 0.2,
+      "iterations_per_level": 80,
+      "coarse_spacing_mm": 1.5,
+      "shrink_levels": [
+        4,
+        2,
+        1
+      ],
+      "timeout_seconds": 180.0
+    },
+    "elapsed_registration_seconds": 0.31633158307522535,
+    "optimizer_stop_reason": "RegularStepGradientDescentOptimizerv4: Step too small after 15 iterations. Current step (0.00195312) is less than minimum step (0.002).",
+    "normalization_windows": {
+      "T1": [
+        40.0,
+        448.0
+      ],
+      "MRA": [
+        1.0,
+        66.0
+      ]
+    },
+    "matched_objective": {
+      "metric": "fixed-bin histogram NMI32, same paired voxels",
+      "before": 1.0326692442540233,
+      "after": 1.0523871238989007,
+      "voxels": 291399,
+      "overlap_retained_fraction": 1.0
+    },
+    "center_displacement_mm": 1.8708033892395604,
+    "rotation_degrees": 0.3892468927997449,
+    "flags": [],
+    "registration_reviewed": false,
+    "anatomical_registration_accepted": false,
+    "classification": "software_valid_candidate_anatomical_review_pending",
+    "metric_improvement_is_anatomical_acceptance": false,
+    "software_grid_qc": {
+      "maximum_point_roundtrip_error_mm": 2.4613922385709617e-14,
+      "rotation_determinant": 1.0,
+      "label_outside_saved_coverage_voxels": 0,
+      "brain_fraction_with_MRA_sampling_before": 0.7789279983796173,
+      "brain_fraction_with_MRA_sampling_after": 0.7840282078857245,
+      "registered_reference_outside_brain_voxels": 128,
+      "registered_reference_total_voxels": 12731,
+      "reference_near_brain_boundary_voxels": 2529,
+      "coverage_meaning": "Conservative acquired MRA FOV; excludes one native border voxel. Does not establish annotation completeness."
+    },
+    "source_hashes": {
+      "T1": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+      "MRA": "a87b381b882242b7d61a1930a8332d44200fdb3c56c68fc09c24a057eea86dc4",
+      "reference": "9da13c332156c71a5200dbf88368bb87478914fe73034a42ca4eabf1dd5cdbfe"
+    },
+    "brain_mask_sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+    "outputs": [
+      {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_on_T1_before.nii.gz",
+        "sha256": "f4c541ed0a7c6bc016acce135f51a4318ad28f9efc4380c2d02736b7b9ee0885"
+      },
+      {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_on_T1_candidate.nii.gz",
+        "sha256": "39b81e12539fcfc50051bf2bba95b3b2a1f99d50b3e258c5048a60474830f1c2"
+      },
+      {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_native_sampling_coverage.nii.gz",
+        "sha256": "a92bf82175e1208ebef037bf3117fc40f779c4cf5669f70422be7b0015bc863b"
+      },
+      {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_coverage_on_T1_before.nii.gz",
+        "sha256": "3c8c4c50ce25c8439f608f42679e3fabd76f0d15df9ca446296dedca2e900b18"
+      },
+      {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/MRA_coverage_on_T1_candidate.nii.gz",
+        "sha256": "e0a18a9d7c18e0be5510b12a89aafd22b4297519577d7e08d5e6a7bb64b8352b"
+      },
+      {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration/source_vessels_on_T1_candidate.nii.gz",
+        "sha256": "b1aac5b57af64b71c4694876302a8f4cc84f96b9f35ecc60a2266dc204ba1c71"
+      }
+    ],
+    "local_visual_qc": {
+      "status": "candidate_display_inspected_not_anatomically_accepted",
+      "viewer": "view_image",
+      "image": "registration-qc.png",
+      "planes": [
+        "axial",
+        "coronal",
+        "sagittal"
+      ],
+      "observations": [
+        "No gross orientation reversal or displacement in inspected slices",
+        "Central ventricular/callosal and head contours broadly correspond in overlap",
+        "MRA excludes superior and inferior anatomy; no full-brain vascular claim",
+        "Brain contour is an unreviewed model estimate; no cortical access permission"
+      ],
+      "independent_anatomical_landmark_validation": false
+    },
+    "runtime_observation": {
+      "stage": "registration",
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/.tools/poc-model-runtime/venv/bin/python",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/scripts/poc_ixi265_registration.py",
+        "--output",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265",
+        "--stage",
+        "registration"
+      ],
+      "elapsed_seconds": 3.76239295816049,
+      "exit_code": 0,
+      "peak_total_family_plus_supervisor_rss_bytes_sampled": 2219458560,
+      "rss_limit_bytes": 4294967296,
+      "minimum_system_available_memory_bytes_sampled": 9036185600,
+      "failure": null,
+      "sampling_interval_seconds": 0.2,
+      "memory_is_sampled_not_exact_peak": true,
+      "log": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration-attempt1.log"
+    }
+  },
+  "brain_extraction": {
+    "model": {
+      "name": "SynthStrip",
+      "version": "1 / cf4bccf24875a47245b4df9fc9372d0f1c3d784f",
+      "license": "Weights MIT (official offered choice); runner FreeSurfer Software License 1.0",
+      "license_url": "https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/",
+      "modality": [
+        "T1",
+        "T1c",
+        "T2",
+        "FLAIR",
+        "MRI"
+      ],
+      "requirements": "One structural image; brain extraction, not skull bone",
+      "weights_glob": "data/models/synthstrip-v1/synthstrip.1.pt",
+      "parameters": {
+        "border_mm": 1,
+        "threads": 2
+      }
+    },
+    "input": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/originals/IXI265-T1.nii.gz",
+      "sha256": "317faf612b8e8a4e319fe3ec67404561b928ea9090fc23d1da20ce0900257950",
+      "modality": "T1",
+      "shape": [
+        256,
+        256,
+        150
+      ],
+      "affine_ras_mm": [
+        [
+          -0.04665682837367058,
+          0.06588856875896454,
+          1.1955413818359375,
+          -90.70220947265625
+        ],
+        [
+          -0.9363381862640381,
+          -0.0029228338971734047,
+          -0.059605203568935394,
+          122.19873046875
+        ],
+        [
+          0.00036077748518437147,
+          0.935177206993103,
+          -0.08441900461912155,
+          -112.01844787597656
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    "weights": [
+      {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/models/synthstrip-v1/synthstrip.1.pt",
+        "sha256": "37417f802196186441aae3e7f385d94f8a98c64a88acaeaa2723af995c653e33",
+        "bytes": 30851709
+      }
+    ],
+    "outputs": [
+      {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/synthstrip/brain_mask.nii.gz",
+        "sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192",
+        "name": "brain_mask.nii.gz",
+        "foreground_voxels": 1451509,
+        "shape": [
+          256,
+          256,
+          150
+        ],
+        "affine_ras_mm": [
+          [
+            -0.04665682837367058,
+            0.06588856875896454,
+            1.1955413818359375,
+            -90.70220947265625
+          ],
+          [
+            -0.9363381862640381,
+            -0.0029228338971734047,
+            -0.059605203568935394,
+            122.19873046875
+          ],
+          [
+            0.00036077748518437147,
+            0.935177206993103,
+            -0.08441900461912155,
+            -112.01844787597656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      }
+    ],
+    "elapsed_seconds": 3.5157337090931833,
+    "mps_allocator_samples": {
+      "tensor_bytes_max_sampled": 4117935104,
+      "driver_bytes_max_sampled": 5948243968
+    },
+    "memory_caveat": "RSS and Metal tensor/driver allocator samples are different overlapping measurements; do not sum them. Sampled observations are not exact peaks."
+  },
+  "stage_history": [
+    {
+      "stage": "preflight",
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/.tools/poc-model-runtime/venv/bin/python",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/scripts/poc_ixi265_registration.py",
+        "--output",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265",
+        "--stage",
+        "preflight"
+      ],
+      "elapsed_seconds": 0.6490844581276178,
+      "exit_code": -11,
+      "peak_total_family_plus_supervisor_rss_bytes_sampled": 557088768,
+      "failure": null,
+      "sampling_interval_seconds": 0.2,
+      "memory_is_sampled_not_exact_peak": true
+    },
+    {
+      "stage": "extraction",
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/.tools/poc-model-runtime/venv/bin/python",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/scripts/poc_ixi265_registration.py",
+        "--output",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265",
+        "--stage",
+        "extraction"
+      ],
+      "elapsed_seconds": 2.978536957874894,
+      "exit_code": 1,
+      "peak_total_family_plus_supervisor_rss_bytes_sampled": 911540224,
+      "rss_limit_bytes": 4294967296,
+      "failure": null,
+      "sampling_interval_seconds": 0.2,
+      "memory_is_sampled_not_exact_peak": true,
+      "log": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/extraction-attempt1.log"
+    },
+    {
+      "stage": "extraction",
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/.tools/poc-model-runtime/venv/bin/python",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/scripts/poc_ixi265_registration.py",
+        "--output",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265",
+        "--stage",
+        "extraction"
+      ],
+      "elapsed_seconds": 2.3705724580213428,
+      "exit_code": 1,
+      "peak_total_family_plus_supervisor_rss_bytes_sampled": 806633472,
+      "rss_limit_bytes": 4294967296,
+      "failure": null,
+      "sampling_interval_seconds": 0.2,
+      "memory_is_sampled_not_exact_peak": true,
+      "log": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/extraction-attempt2.log"
+    },
+    {
+      "stage": "extraction",
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/.tools/poc-model-runtime/venv/bin/python",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/scripts/poc_ixi265_registration.py",
+        "--output",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265",
+        "--stage",
+        "extraction"
+      ],
+      "elapsed_seconds": 69.19114174996503,
+      "exit_code": -15,
+      "peak_total_family_plus_supervisor_rss_bytes_sampled": 7207714816,
+      "rss_limit_bytes": 5368709120,
+      "minimum_system_available_memory_bytes_sampled": 1222590464,
+      "failure": "RSS_budget_exceeded",
+      "sampling_interval_seconds": 0.2,
+      "memory_is_sampled_not_exact_peak": true,
+      "log": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/extraction-attempt3.log"
+    },
+    {
+      "stage": "extraction",
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/.tools/poc-model-runtime/venv/bin/python",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/scripts/poc_ixi265_registration.py",
+        "--output",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265",
+        "--stage",
+        "extraction"
+      ],
+      "elapsed_seconds": 3.9928922499530017,
+      "exit_code": 0,
+      "peak_total_family_plus_supervisor_rss_bytes_sampled": 912228352,
+      "rss_limit_bytes": 4294967296,
+      "minimum_system_available_memory_bytes_sampled": 2633646080,
+      "failure": null,
+      "sampling_interval_seconds": 0.2,
+      "memory_is_sampled_not_exact_peak": true,
+      "log": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/extraction-attempt4.log"
+    },
+    {
+      "stage": "package",
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/.tools/poc-model-runtime/venv/bin/python",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/scripts/poc_ixi265_registration.py",
+        "--output",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265",
+        "--stage",
+        "package"
+      ],
+      "elapsed_seconds": 9.385388874914497,
+      "exit_code": 0,
+      "peak_total_family_plus_supervisor_rss_bytes_sampled": 1272004608,
+      "rss_limit_bytes": 4294967296,
+      "minimum_system_available_memory_bytes_sampled": 7300055040,
+      "failure": null,
+      "sampling_interval_seconds": 0.2,
+      "memory_is_sampled_not_exact_peak": true,
+      "log": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/package-attempt1.log"
+    },
+    {
+      "stage": "preflight",
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/.tools/poc-model-runtime/venv/bin/python",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/scripts/poc_ixi265_registration.py",
+        "--output",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265",
+        "--stage",
+        "preflight"
+      ],
+      "elapsed_seconds": 0.6366207918617874,
+      "exit_code": -11,
+      "peak_total_family_plus_supervisor_rss_bytes_sampled": 508215296,
+      "failure": null,
+      "sampling_interval_seconds": 0.2,
+      "memory_is_sampled_not_exact_peak": true,
+      "log": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/preflight-attempt1.log"
+    },
+    {
+      "stage": "preflight",
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/.tools/poc-model-runtime/venv/bin/python",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/scripts/poc_ixi265_registration.py",
+        "--output",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265",
+        "--stage",
+        "preflight"
+      ],
+      "elapsed_seconds": 0.43037241604179144,
+      "exit_code": 0,
+      "peak_total_family_plus_supervisor_rss_bytes_sampled": 302120960,
+      "rss_limit_bytes": 644245094,
+      "failure": null,
+      "sampling_interval_seconds": 0.2,
+      "memory_is_sampled_not_exact_peak": true,
+      "log": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/preflight-attempt2.log"
+    },
+    {
+      "stage": "registration",
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/.tools/poc-model-runtime/venv/bin/python",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/scripts/poc_ixi265_registration.py",
+        "--output",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265",
+        "--stage",
+        "registration"
+      ],
+      "elapsed_seconds": 3.76239295816049,
+      "exit_code": 0,
+      "peak_total_family_plus_supervisor_rss_bytes_sampled": 2219458560,
+      "rss_limit_bytes": 4294967296,
+      "minimum_system_available_memory_bytes_sampled": 9036185600,
+      "failure": null,
+      "sampling_interval_seconds": 0.2,
+      "memory_is_sampled_not_exact_peak": true,
+      "log": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/outputs/poc-ixi265/registration-attempt1.log"
+    }
+  ],
+  "artifacts": {
+    "source_receipt": {
+      "path": "outputs/poc-ixi265/source-receipt.json",
+      "sha256": "2f4f6507f56e6592f851ddc9c4520d217f9e85fd649c45025f4d0e079559eac6"
+    },
+    "inference": {
+      "path": "outputs/poc-ixi265/synthstrip/inference.json",
+      "sha256": "0045ef08168b9347f62ebca8ced2d08a65b325146c9a0a77bfc18b555d20cd91"
+    },
+    "brain_mask": {
+      "path": "outputs/poc-ixi265/synthstrip/brain_mask.nii.gz",
+      "sha256": "98710d7d1fa578dd510bf40b953e6d34926d8ff0c766cba16c005ffb6dbff192"
+    },
+    "registration": {
+      "path": "outputs/poc-ixi265/registration/registration.json",
+      "sha256": "30d79cf98d10386fad2af8eafaaf6a754661f0b98a1a8d3cb7ab23f8b6073b1b"
+    },
+    "qc_image": {
+      "path": "outputs/poc-ixi265/registration/registration-qc.png",
+      "sha256": "517969f6f48b9e7fa87991e15eba2a373e7f1b2568130803399bef8619287200"
+    },
+    "bundle_receipt": {
+      "path": "outputs/poc-ixi265/bundle-receipt.json",
+      "sha256": "8460f2d2d9c39ba6b867d4c8e1c8949946626a8245f0fe3f901e9753ddc5215e"
+    },
+    "software_controls": {
+      "path": "outputs/poc-ixi265/software-controls.txt",
+      "sha256": "42317fada6dcccf66125f116d742efc2b7f7fa15372a60582b23352bdc60c64e"
+    }
+  },
+  "limitations": [
+    "Publisher-described healthy participants, no individual pathology exclusion certification",
+    "Registration is a software-valid display candidate; independent anatomical landmark acceptance pending",
+    "Public source vessel label is model-assisted/manual reference, not fresh vessel inference; excluded from primary policy inputs",
+    "Partial MRA geometric coverage does not establish vascular annotation completeness",
+    "No tissue/ventricle extraction or PDE growth run in this work package",
+    "Earlier SIGSEGV in NumPy unique on large binary array corrected by direct zero/one checks",
+    "MPS3GiB, MPS4GiB and CPU5GiB RSS attempts failed; approved existing6GiB MPS adapter succeeded"
+  ]
+}

@@ -1,0 +1,667 @@
+{
+  "audit_date": "2026-10-16",
+  "counts": {
+    "BTC": {
+      "inspected_real_bundle_patient_groups": 6,
+      "materialized_source_patient_groups": 8,
+      "patients": [
+        "BTC:sub-PAT05",
+        "BTC:sub-PAT16",
+        "BTC:sub-PAT20",
+        "BTC:sub-PAT22",
+        "BTC:sub-PAT25",
+        "BTC:sub-PAT26",
+        "BTC:sub-PAT27",
+        "BTC:sub-PAT28"
+      ],
+      "roles": {
+        "SELECT": 2,
+        "TRAIN": 6
+      }
+    },
+    "Lausanne": {
+      "inspected_real_bundle_patient_groups": 1,
+      "materialized_source_patient_groups": 199,
+      "patients": [
+        "Lausanne:sub-000",
+        "Lausanne:sub-001",
+        "Lausanne:sub-002",
+        "Lausanne:sub-005",
+        "Lausanne:sub-006",
+        "Lausanne:sub-007",
+        "Lausanne:sub-015",
+        "Lausanne:sub-021",
+        "Lausanne:sub-022",
+        "Lausanne:sub-030",
+        "Lausanne:sub-034",
+        "Lausanne:sub-035",
+        "Lausanne:sub-036",
+        "Lausanne:sub-045",
+        "Lausanne:sub-047",
+        "Lausanne:sub-051",
+        "Lausanne:sub-052",
+        "Lausanne:sub-062",
+        "Lausanne:sub-065",
+        "Lausanne:sub-066",
+        "Lausanne:sub-069",
+        "Lausanne:sub-073",
+        "Lausanne:sub-074",
+        "Lausanne:sub-075",
+        "Lausanne:sub-077",
+        "Lausanne:sub-078",
+        "Lausanne:sub-091",
+        "Lausanne:sub-099",
+        "Lausanne:sub-100",
+        "Lausanne:sub-103",
+        "Lausanne:sub-104",
+        "Lausanne:sub-105",
+        "Lausanne:sub-107",
+        "Lausanne:sub-109",
+        "Lausanne:sub-112",
+        "Lausanne:sub-116",
+        "Lausanne:sub-119",
+        "Lausanne:sub-120",
+        "Lausanne:sub-121",
+        "Lausanne:sub-126",
+        "Lausanne:sub-128",
+        "Lausanne:sub-129",
+        "Lausanne:sub-130",
+        "Lausanne:sub-134",
+        "Lausanne:sub-140",
+        "Lausanne:sub-141",
+        "Lausanne:sub-144",
+        "Lausanne:sub-147",
+        "Lausanne:sub-148",
+        "Lausanne:sub-149",
+        "Lausanne:sub-153",
+        "Lausanne:sub-159",
+        "Lausanne:sub-160",
+        "Lausanne:sub-163",
+        "Lausanne:sub-164",
+        "Lausanne:sub-167",
+        "Lausanne:sub-170",
+        "Lausanne:sub-171",
+        "Lausanne:sub-172",
+        "Lausanne:sub-178",
+        "Lausanne:sub-186",
+        "Lausanne:sub-187",
+        "Lausanne:sub-188",
+        "Lausanne:sub-189",
+        "Lausanne:sub-191",
+        "Lausanne:sub-192",
+        "Lausanne:sub-194",
+        "Lausanne:sub-197",
+        "Lausanne:sub-198",
+        "Lausanne:sub-203",
+        "Lausanne:sub-207",
+        "Lausanne:sub-208",
+        "Lausanne:sub-209",
+        "Lausanne:sub-211",
+        "Lausanne:sub-214",
+        "Lausanne:sub-216",
+        "Lausanne:sub-217",
+        "Lausanne:sub-220",
+        "Lausanne:sub-222",
+        "Lausanne:sub-225",
+        "Lausanne:sub-228",
+        "Lausanne:sub-231",
+        "Lausanne:sub-234",
+        "Lausanne:sub-235",
+        "Lausanne:sub-239",
+        "Lausanne:sub-240",
+        "Lausanne:sub-242",
+        "Lausanne:sub-243",
+        "Lausanne:sub-250",
+        "Lausanne:sub-251",
+        "Lausanne:sub-253",
+        "Lausanne:sub-254",
+        "Lausanne:sub-255",
+        "Lausanne:sub-262",
+        "Lausanne:sub-263",
+        "Lausanne:sub-264",
+        "Lausanne:sub-265",
+        "Lausanne:sub-268",
+        "Lausanne:sub-270",
+        "Lausanne:sub-271",
+        "Lausanne:sub-275",
+        "Lausanne:sub-276",
+        "Lausanne:sub-279",
+        "Lausanne:sub-280",
+        "Lausanne:sub-283",
+        "Lausanne:sub-284",
+        "Lausanne:sub-286",
+        "Lausanne:sub-287",
+        "Lausanne:sub-288",
+        "Lausanne:sub-289",
+        "Lausanne:sub-291",
+        "Lausanne:sub-294",
+        "Lausanne:sub-295",
+        "Lausanne:sub-297",
+        "Lausanne:sub-299",
+        "Lausanne:sub-306",
+        "Lausanne:sub-308",
+        "Lausanne:sub-311",
+        "Lausanne:sub-315",
+        "Lausanne:sub-316",
+        "Lausanne:sub-317",
+        "Lausanne:sub-318",
+        "Lausanne:sub-324",
+        "Lausanne:sub-325",
+        "Lausanne:sub-327",
+        "Lausanne:sub-329",
+        "Lausanne:sub-331",
+        "Lausanne:sub-332",
+        "Lausanne:sub-333",
+        "Lausanne:sub-334",
+        "Lausanne:sub-335",
+        "Lausanne:sub-336",
+        "Lausanne:sub-337",
+        "Lausanne:sub-339",
+        "Lausanne:sub-340",
+        "Lausanne:sub-341",
+        "Lausanne:sub-343",
+        "Lausanne:sub-344",
+        "Lausanne:sub-347",
+        "Lausanne:sub-349",
+        "Lausanne:sub-350",
+        "Lausanne:sub-351",
+        "Lausanne:sub-352",
+        "Lausanne:sub-353",
+        "Lausanne:sub-354",
+        "Lausanne:sub-401",
+        "Lausanne:sub-404",
+        "Lausanne:sub-405",
+        "Lausanne:sub-407",
+        "Lausanne:sub-409",
+        "Lausanne:sub-410",
+        "Lausanne:sub-411",
+        "Lausanne:sub-412",
+        "Lausanne:sub-413",
+        "Lausanne:sub-415",
+        "Lausanne:sub-416",
+        "Lausanne:sub-418",
+        "Lausanne:sub-419",
+        "Lausanne:sub-420",
+        "Lausanne:sub-423",
+        "Lausanne:sub-424",
+        "Lausanne:sub-425",
+        "Lausanne:sub-427",
+        "Lausanne:sub-428",
+        "Lausanne:sub-429",
+        "Lausanne:sub-430",
+        "Lausanne:sub-431",
+        "Lausanne:sub-432",
+        "Lausanne:sub-433",
+        "Lausanne:sub-435",
+        "Lausanne:sub-436",
+        "Lausanne:sub-437",
+        "Lausanne:sub-450",
+        "Lausanne:sub-451",
+        "Lausanne:sub-452",
+        "Lausanne:sub-453",
+        "Lausanne:sub-454",
+        "Lausanne:sub-458",
+        "Lausanne:sub-460",
+        "Lausanne:sub-461",
+        "Lausanne:sub-464",
+        "Lausanne:sub-466",
+        "Lausanne:sub-467",
+        "Lausanne:sub-470",
+        "Lausanne:sub-472",
+        "Lausanne:sub-473",
+        "Lausanne:sub-474",
+        "Lausanne:sub-475",
+        "Lausanne:sub-476",
+        "Lausanne:sub-478",
+        "Lausanne:sub-480",
+        "Lausanne:sub-481",
+        "Lausanne:sub-482",
+        "Lausanne:sub-484",
+        "Lausanne:sub-485",
+        "Lausanne:sub-486",
+        "Lausanne:sub-489",
+        "Lausanne:sub-491",
+        "Lausanne:sub-492"
+      ],
+      "roles": {
+        "TRAIN": 199
+      }
+    },
+    "ReMIND": {
+      "inspected_real_bundle_patient_groups": 0,
+      "materialized_source_patient_groups": 82,
+      "patients": [
+        "ReMIND:001",
+        "ReMIND:002",
+        "ReMIND:003",
+        "ReMIND:004",
+        "ReMIND:005",
+        "ReMIND:006",
+        "ReMIND:007",
+        "ReMIND:008",
+        "ReMIND:010",
+        "ReMIND:011",
+        "ReMIND:012",
+        "ReMIND:013",
+        "ReMIND:015",
+        "ReMIND:016",
+        "ReMIND:017",
+        "ReMIND:018",
+        "ReMIND:019",
+        "ReMIND:020",
+        "ReMIND:022",
+        "ReMIND:024",
+        "ReMIND:025",
+        "ReMIND:026",
+        "ReMIND:027",
+        "ReMIND:028",
+        "ReMIND:030",
+        "ReMIND:032",
+        "ReMIND:034",
+        "ReMIND:035",
+        "ReMIND:037",
+        "ReMIND:039",
+        "ReMIND:040",
+        "ReMIND:041",
+        "ReMIND:042",
+        "ReMIND:043",
+        "ReMIND:044",
+        "ReMIND:045",
+        "ReMIND:046",
+        "ReMIND:047",
+        "ReMIND:049",
+        "ReMIND:050",
+        "ReMIND:052",
+        "ReMIND:053",
+        "ReMIND:055",
+        "ReMIND:056",
+        "ReMIND:058",
+        "ReMIND:060",
+        "ReMIND:063",
+        "ReMIND:064",
+        "ReMIND:065",
+        "ReMIND:066",
+        "ReMIND:068",
+        "ReMIND:069",
+        "ReMIND:070",
+        "ReMIND:072",
+        "ReMIND:073",
+        "ReMIND:074",
+        "ReMIND:075",
+        "ReMIND:076",
+        "ReMIND:077",
+        "ReMIND:079",
+        "ReMIND:081",
+        "ReMIND:082",
+        "ReMIND:083",
+        "ReMIND:084",
+        "ReMIND:085",
+        "ReMIND:086",
+        "ReMIND:087",
+        "ReMIND:088",
+        "ReMIND:090",
+        "ReMIND:091",
+        "ReMIND:095",
+        "ReMIND:096",
+        "ReMIND:097",
+        "ReMIND:098",
+        "ReMIND:100",
+        "ReMIND:104",
+        "ReMIND:107",
+        "ReMIND:110",
+        "ReMIND:111",
+        "ReMIND:112",
+        "ReMIND:113",
+        "ReMIND:114"
+      ],
+      "roles": {
+        "DEVELOPMENT": 1,
+        "SELECT": 2,
+        "TRAIN": 79
+      }
+    },
+    "SynthRAD2023": {
+      "inspected_real_bundle_patient_groups": 1,
+      "materialized_source_patient_groups": 1,
+      "patients": [
+        "SynthRAD2023:1BA336"
+      ],
+      "roles": {
+        "TRAIN": 1
+      }
+    },
+    "UCSF-PDGM": {
+      "inspected_real_bundle_patient_groups": 1,
+      "materialized_source_patient_groups": 1,
+      "patients": [
+        "UCSF-PDGM:004"
+      ],
+      "roles": {
+        "DEVELOPMENT": 1
+      }
+    }
+  },
+  "external_source_metadata_checks": {
+    "HCP_S1200": {
+      "local_patient_payloads_acquired_by_audit": 0,
+      "publisher_participants": 1206,
+      "publisher_people_with_structural_mri": 1113,
+      "scope": "healthy priors; family/retest grouping required",
+      "source": "https://www.humanconnectome.org/study/hcp-young-adult/document/1200-subjects-data-release",
+      "terms": "account and acceptance required; no new terms accepted"
+    },
+    "TopCoW": {
+      "core_terms": "Open use with source attribution; commercial use requires data-owner permission",
+      "local_patient_payloads_acquired_by_audit": 0,
+      "private_test_patient_pairs": 70,
+      "scope": "Circle of Willis arterial labels; external subset rights and origin overlap separate",
+      "source": "https://zenodo.org/api/records/15692630",
+      "training_patient_pairs": 125,
+      "validation_patient_pairs_without_public_labels": 5
+    },
+    "ds007345": {
+      "baseline_people": 37,
+      "commit": "c83e1d3ca8883d3695b6528441d255cc12b39e96",
+      "followup_repeat_visit_ids": 23,
+      "license": "CC0",
+      "listed_baseline_modality_people": {
+        "anat": 37,
+        "dwi": 35,
+        "rest_fmri": 34
+      },
+      "listed_followup_modality_people": {
+        "anat": 23,
+        "dwi": 22,
+        "rest_fmri": 22
+      },
+      "local_patient_payloads_acquired_by_audit": 0,
+      "metadata_tree_bytes": 1137846,
+      "metadata_tree_sha256": "4c6dcc2071cc13ed6ec8db50768ec0c564c5dfca96cb763debe19e16a4b9ed4c",
+      "metadata_tree_truncated": false,
+      "release": "1.0.2",
+      "scope": "meningioma component candidate; not glioma",
+      "source": "https://github.com/OpenNeuroDatasets/ds007345/tree/c83e1d3ca8883d3695b6528441d255cc12b39e96"
+    }
+  },
+  "full_inventory_report_sha256": "ec8d24d67df17e92db1ff9ca8be562a3319b32d847bdd9a0a94daa196a544fba",
+  "identity_limitation": "Unique within source-family namespaces; cross-cohort independence unresolved. UCSF004 aliases BraTS2021_00097; Lausanne/TopCoW derivatives add no people.",
+  "inspected_real_bundle_patient_groups": 9,
+  "materialized_source_patient_groups": 291,
+  "measured_tumor_geometry": [
+    {
+      "anatomical_region": "UNKNOWN",
+      "arrays_sha256_verified": "06b27180bc288a1ebbd079c0f00b2bb78b6d17ef0ae25398736174d15613d8c0",
+      "basis": "Measured source-label union in saved bundle frame; includes declared threshold/FLAIR semantics; no lobe or functional localization",
+      "bundle_path": "../RessectionLab/outputs/cases/BTC-sub-PAT05.ressectionlab",
+      "centroid_ras_mm": [
+        -29.17965949208582,
+        25.740023113820566,
+        8.792238707734526
+      ],
+      "hemisphere": "UNKNOWN",
+      "label_names": [
+        "fractional_source_target_threshold_scenario"
+      ],
+      "manifest_sha256_measured": "71a29eccc7dc563c5144977d25460283507c2e42f2bb14a4c735d88d7d53c567",
+      "patient_group": "BTC:sub-PAT05",
+      "positive_voxels": 11437,
+      "source_label_union_volume_ml": 11.437039733588717
+    },
+    {
+      "anatomical_region": "UNKNOWN",
+      "arrays_sha256_verified": "cee13b331acfbe45801aafc4ea29bc8460938d498accd855f2616398a8897d19",
+      "basis": "Measured source-label union in saved bundle frame; includes declared threshold/FLAIR semantics; no lobe or functional localization",
+      "bundle_path": "../RessectionLab/outputs/cases/BTC-sub-PAT16.ressectionlab",
+      "centroid_ras_mm": [
+        30.7157612440228,
+        36.210333892825226,
+        -13.186410152250488
+      ],
+      "hemisphere": "UNKNOWN",
+      "label_names": [
+        "fractional_source_target_threshold_scenario"
+      ],
+      "manifest_sha256_measured": "a30b5c4b79beac97dbd3daef162a3f7e00f6204290a6a7a781cbfdeb78de803a",
+      "patient_group": "BTC:sub-PAT16",
+      "positive_voxels": 45400,
+      "source_label_union_volume_ml": 45.400096950283185
+    },
+    {
+      "anatomical_region": "UNKNOWN",
+      "arrays_sha256_verified": "c0eb86fb339f7e6fc98a0d22af128372efe1a33fefe94c1687cdcce744d40ab9",
+      "basis": "Measured source-label union in saved bundle frame; includes declared threshold/FLAIR semantics; no lobe or functional localization",
+      "bundle_path": "../RessectionLab/outputs/cases/BTC-sub-PAT20.ressectionlab",
+      "centroid_ras_mm": [
+        48.65205409984358,
+        -27.42154976111447,
+        28.296140982940017
+      ],
+      "hemisphere": "UNKNOWN",
+      "label_names": [
+        "fractional_source_target_threshold_scenario"
+      ],
+      "manifest_sha256_measured": "04d1e7a77a377f13e736ed8ff05cbe4d4d24f1d11cbe859f0a1b78d73eb4c670",
+      "patient_group": "BTC:sub-PAT20",
+      "positive_voxels": 12451,
+      "source_label_union_volume_ml": 12.450992056367859
+    },
+    {
+      "anatomical_region": "UNKNOWN",
+      "arrays_sha256_verified": "79338df68948291996763ea4a7de6c4cc742876a0e3d0bcefd8609e8e572d45a",
+      "basis": "Measured source-label union in saved bundle frame; includes declared threshold/FLAIR semantics; no lobe or functional localization",
+      "bundle_path": "../RessectionLab/outputs/cases/BTC-sub-PAT22.ressectionlab",
+      "centroid_ras_mm": [
+        15.603256110244644,
+        -7.561036450120815,
+        82.61125870280841
+      ],
+      "hemisphere": "UNKNOWN",
+      "label_names": [
+        "fractional_source_target_threshold_scenario"
+      ],
+      "manifest_sha256_measured": "96c4f6dab077bf52a9806b820548cb0da2fd7c7d43cf3b0397917774137c999b",
+      "patient_group": "BTC:sub-PAT22",
+      "positive_voxels": 13915,
+      "source_label_union_volume_ml": 13.914958718707862
+    },
+    {
+      "anatomical_region": "UNKNOWN",
+      "arrays_sha256_verified": "a2ccb99a5a3c139acdad0bb80b405550b8b070c96e454def988c6b04cbb8ebe9",
+      "basis": "Measured source-label union in saved bundle frame; includes declared threshold/FLAIR semantics; no lobe or functional localization",
+      "bundle_path": "../RessectionLab/outputs/cases/BTC-sub-PAT25.ressectionlab",
+      "centroid_ras_mm": [
+        27.931541889096337,
+        32.16937659304961,
+        -17.57322998042757
+      ],
+      "hemisphere": "UNKNOWN",
+      "label_names": [
+        "fractional_source_target_threshold_scenario"
+      ],
+      "manifest_sha256_measured": "45e01898c551d09cf1e4cb077234901b0e4d542e3d8ed33fef60ebecf5e3da91",
+      "patient_group": "BTC:sub-PAT25",
+      "positive_voxels": 16526,
+      "source_label_union_volume_ml": 16.526089731668915
+    },
+    {
+      "anatomical_region": "UNKNOWN",
+      "arrays_sha256_verified": "e06c7baa5d897f3ae3bbe3dfa14b1fa8ee648ec225b0bad5b69f9769864d8247",
+      "basis": "Measured source-label union in saved bundle frame; includes declared threshold/FLAIR semantics; no lobe or functional localization",
+      "bundle_path": "../RessectionLab/outputs/cases/BTC-sub-PAT28.ressectionlab",
+      "centroid_ras_mm": [
+        -6.683767669174301,
+        8.65543502177213,
+        51.420643117116526
+      ],
+      "hemisphere": "UNKNOWN",
+      "label_names": [
+        "fractional_source_target_threshold_scenario"
+      ],
+      "manifest_sha256_measured": "3f2fcb647386bd5f103e17911c0b2203fbd7aad9489ec308f13e9d1e1c62380d",
+      "patient_group": "BTC:sub-PAT28",
+      "positive_voxels": 10269,
+      "source_label_union_volume_ml": 10.268979472767835
+    },
+    {
+      "anatomical_region": "UNKNOWN",
+      "arrays_sha256_verified": "7339ba176af54c8077641b786def277d75665e6607ed6fc1b78919212a960177",
+      "basis": "Measured source-label union in saved bundle frame; includes declared threshold/FLAIR semantics; no lobe or functional localization",
+      "bundle_path": "../RessectionLab/outputs/poc-cases/UCSF-PDGM-0004.ressectionlab",
+      "centroid_ras_mm": [
+        -161.89188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "hemisphere": "UNKNOWN",
+      "label_names": [
+        "FLAIR_abnormality",
+        "enhancing_target",
+        "nonenhancing_or_necrotic_core"
+      ],
+      "manifest_sha256_measured": "bffdff8652994ff3864922574f7e109fd3ea0615f02dfaa51d3b0e85dedf29b1",
+      "patient_group": "UCSF-PDGM:004",
+      "positive_voxels": 41919,
+      "source_label_union_volume_ml": 41.919
+    }
+  ],
+  "metadata_evidence": [
+    {
+      "bytes": 62650,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/manifests/lausanne-component-cohort-v1.json",
+      "sha256_measured": "891a53680edfce604eed9a1791bc790efa615db8ce54da0c92de834a6b87d49a"
+    },
+    {
+      "bytes": 108926,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/manifests/synthrad-component-cohort-v1.json",
+      "sha256_measured": "3bb4dd48e2e674bd921653d938ec7c7695c77afb8776c517800bbefb6a32ff30"
+    },
+    {
+      "bytes": 70925,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/manifests/experiments/remind-component-cohort-v1.json",
+      "sha256_measured": "326b4ebb4a6e439e47fb166d8fcfeec5ff65798294820d5aac0ed240b21fdd05"
+    },
+    {
+      "bytes": 34626,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/manifests/experiments/btc-spatial-development-cohort-v1.json",
+      "sha256_measured": "962d964e1d71427f3625cdbebc0f7e4759e5d2345d8f95cb211ed45810ed2985"
+    },
+    {
+      "bytes": 10598,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/manifests/data_acquisition_ucsf.json",
+      "sha256_measured": "b05552355f2099058e9d25bc93faf9f2981fe1c00ffb4f24443edfabeda4c6f6"
+    },
+    {
+      "bytes": 5306,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/manifests/btc_pat05_acquisition.json",
+      "sha256_measured": "09df59d9ac8b1c8d8d555f0e165148c79c0a2d1a404180451d0b9e90b814badf"
+    },
+    {
+      "bytes": 4744,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/manifests/btc_pat16_acquisition.json",
+      "sha256_measured": "86f251909381a22f339b05bb01fdb0297e7929515cc5486cc53a9dce516e251f"
+    },
+    {
+      "bytes": 4744,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/manifests/btc_pat20_acquisition.json",
+      "sha256_measured": "d6bf19700a3e3e1108b98a5b0eb5c794d68576e2770c42d9967f450e14bb1118"
+    },
+    {
+      "bytes": 9718,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/manifests/btc_acquisition.json",
+      "sha256_measured": "f88d3a01a06e4e21c29de6ba49aff4a54bd230c9fdba4787170b10e19bdd18c4"
+    },
+    {
+      "bytes": 6255,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/data/diffusion_source/ds001226-v5.0.1/btc_sub-PAT22_verified_manifest.json",
+      "sha256_measured": "e1f6fa5c82558bdbaa245223315fac6437b09bcc0938bfe61a3081845a9c72bb"
+    },
+    {
+      "bytes": 6255,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/data/diffusion_source/ds001226-v5.0.1/btc_sub-PAT25_verified_manifest.json",
+      "sha256_measured": "1473ee1d337bce1d09bb0ee0bb9bf21e9d84231db83c753b1e5a5b9fcf238920"
+    },
+    {
+      "bytes": 6268,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/data/diffusion_source/ds001226-v5.0.1/btc_sub-PAT26_verified_manifest.json",
+      "sha256_measured": "e33f8c6fc60997b93afd2920f4590c316a3bb2a5499d5529dd4eaede7102fc01"
+    },
+    {
+      "bytes": 6268,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/data/diffusion_source/ds001226-v5.0.1/btc_sub-PAT27_verified_manifest.json",
+      "sha256_measured": "c95aaee50921dda1f8a5cb4ec5ea3349d9986e111c7e9be53d0dab208a9a8959"
+    },
+    {
+      "bytes": 1586099,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/manifests/lausanne-train-originals-v1.json",
+      "sha256_measured": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66"
+    },
+    {
+      "bytes": 466329,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/manifests/lausanne-train-annotations-v1.json",
+      "sha256_measured": "f779066f5cb784f623446f12565eb1405994ac9e3b41c1fef8210546598de624"
+    },
+    {
+      "bytes": 27792379,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/data/acquisition/remind-train-originals-v1/completion.json",
+      "sha256_measured": "32e319a3aafb571019ee16da1072c834015f9fdcdb97563fca4c19418f64a61d"
+    },
+    {
+      "bytes": 113667,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/data/acquisition/remind-train-seg-v1/completion.json",
+      "sha256_measured": "2b3a5605be4d9f8376e92dc5cdae318077153f8352a8a699d78c8a906a9abd4f"
+    },
+    {
+      "bytes": 323279,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/data/acquisition/remind-select-public-v1/completion.json",
+      "sha256_measured": "9a016fb886582eeb044aede9e953a19bacf41a1a6e7deaa3635fc954c4de56d0"
+    },
+    {
+      "bytes": 35688,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/data/remind_source/converted-native/ReMIND-001/native-conversion.json",
+      "sha256_measured": "0c047a4691b63d0e31441fafa27d656184a1efd03e050518f0577a45ae38b7a6"
+    },
+    {
+      "bytes": 638,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/data/qc/synthrad-task1-first-pair-v1/ct-extraction.json",
+      "sha256_measured": "2152ab32a43eec2150293803d6c615866244ff5dc7ed3430fc405391eceab265"
+    },
+    {
+      "bytes": 640,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-poc-first/data/qc/synthrad-task1-first-pair-v1/mr-extraction.json",
+      "sha256_measured": "419ea36c82895316642723c6d23f6e80754efa7efad91840a0e4ee072a7dead4"
+    }
+  ],
+  "prepared_layer_presence_not_anatomical_acceptance": {
+    "brain_plus_skull": 1,
+    "brain_plus_tumor": 7,
+    "brain_plus_vessels": 0,
+    "brain_tumor_skull_vessels_same_person": 0
+  },
+  "protected_collections": {
+    "UPENN-GBM": "external final reserved; no patient imaging enumerated",
+    "UTSW-Glioma": "future structural validation; no patient imaging enumerated"
+  },
+  "role_counts_declared": {
+    "DEVELOPMENT": 2,
+    "MEASUREMENT_EVAL": 86,
+    "SELECT": 89,
+    "TRAIN": 410,
+    "UNOPENED_TRANSFER": 2
+  },
+  "schema": "resectionlab.patient-corpus-inventory.v1",
+  "scope": "Five named source families; no whole-disk or protected imaging scan",
+  "script_sha256": "8a2986d16334844b3578f23a371bddee841ff5cbb9b8f8282a806082e2352498",
+  "source_file_rows": 61147,
+  "source_fixity": "Recorded hashes not rehashed; current source size/presence checked only for TRAIN/DEVELOPMENT; protected receipts only.",
+  "tests": "10 passed; tests/test_patient_corpus_inventory.py",
+  "virtual_bundle_representations_in_inspected_roots": 0,
+  "virtual_patient_count": 0,
+  "warnings": [
+    "Unmapped bundle not opened (may be duplicate workspace): electron-native-v2-workspace.ressectionlab",
+    "Unmapped bundle not opened (may be duplicate workspace): electron-packaged-roundtrip.ressectionlab",
+    "Unmapped bundle not opened (may be duplicate workspace): POC-A-final-review-reopened.ressectionlab",
+    "Unmapped bundle not opened (may be duplicate workspace): POC-A-final-review.ressectionlab",
+    "Unmapped bundle not opened (may be duplicate workspace): POC-A-reviewed-reopened.ressectionlab",
+    "Unmapped bundle not opened (may be duplicate workspace): POC-A-reviewed-session.ressectionlab"
+  ]
+}

@@ -1,0 +1,395 @@
+{
+  "schema": "resectionlab.measured-final-handoff-data.v1",
+  "createdUtc": "2026-10-21T01:23:44.832845+00:00",
+  "scope": "Read-only saved source/action/outcome/endpoint records and existing evidence; no Engine construction, restore, preview, step, replay, GUI, video or production edits.",
+  "frozenArtifact": {
+    "path": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab",
+    "sha256": "095659e54f381355e8f5655b6c5907990b2ac4767dc9ce58297e3bc4d6f3268d"
+  },
+  "freezeReceipt": {
+    "path": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/final/artifact-freeze.json",
+    "sha256": "b98ac7c09dedf53891bc0625d3483993b1737e2dac6601ce9b69ffec1c229b0d"
+  },
+  "source": {
+    "path": "/Users/shaf/coding_projects/RessectionLab/testcases/cases/meningioma-sub-06-standard-v2.ressectionlab",
+    "sha256": "ff5a49b8706a8ccda08d8c3e82dad3e079f85dea98cb6bd40783d2262eec9838"
+  },
+  "sceneId": "sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856",
+  "originalSourcePreserved": {
+    "fileHashMatchesOriginal": true,
+    "sourceArrayHashes": {
+      "mri": "sha256:7005b3fc2ae9c51bbbac3a2384210628e6f9541b7cbf797159d64ffbeee0f4f3",
+      "affine": "sha256:c0908ea0bbfa9cfc535aede83c964b8db13bf334a0a7a00f656884323035de9c",
+      "compartments": {
+        "bone": "sha256:12b2dbff17c451677eb1e7735ba3a1b659173e2ee19f77c40ea9be7f4e92cc4f",
+        "brain": "sha256:857a30f00f7292d1b1b452a31d5ef1f3f6efcdad5264b5dd7842c0e7b34c6128",
+        "tumor": "sha256:d23e372c7c3ccc5dd9d547860bc7511450f85624bcdcee658dd001ba9250c6d9",
+        "vessels": "sha256:1ccf2e855caec31c2ba3f57176fca88965d32b54f827dc210a72de40237807f2"
+      },
+      "source_compartments": {
+        "bone": "sha256:12b2dbff17c451677eb1e7735ba3a1b659173e2ee19f77c40ea9be7f4e92cc4f",
+        "brain": "sha256:857a30f00f7292d1b1b452a31d5ef1f3f6efcdad5264b5dd7842c0e7b34c6128",
+        "tumor": "sha256:d23e372c7c3ccc5dd9d547860bc7511450f85624bcdcee658dd001ba9250c6d9",
+        "vessels": "sha256:1ccf2e855caec31c2ba3f57176fca88965d32b54f827dc210a72de40237807f2"
+      }
+    },
+    "embeddedSourceAndReferencesPreserved": true,
+    "sourceRecordReview": {
+      "path": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/final/independent-source-record-review.json",
+      "sha256": "460f90217c35424405c29fe55ddbb7f0ccd8a8f25fa66c33c2b7277202020f69"
+    }
+  },
+  "denominatorAndHealthyQualification": "Overlapping raw annotation memberships are not clinical healthy-tissue truth and do not change the owned-target denominator. Owned-target denominator43573mm3, full raw tumor annotation45115cells; source voxels are1mm3. Raw brain annotation is a compartment, not a separate brain_mask in this file.",
+  "commonPrefix": {
+    "branch": "exposure-prefix",
+    "actions": 42,
+    "stateId": "sha256:6817a85eae927401b66d32eff4627d66c73a37da9fb19b481085c12496c38bd4",
+    "exactActionPrefixAndProtectionMatch": true
+  },
+  "branches": {
+    "primary": {
+      "branch": "full-primary",
+      "savedActionCount": 2148,
+      "endpointStateId": "sha256:c97de5651109a57695fc3dd1bd49e504f57e6c0e8b45052d915232df6ba86021",
+      "simulatedElapsedSeconds": 4500.852066570679,
+      "sourceRecordedStatus": "stopped",
+      "sourceRecordedStopReason": "Budget-limited engineering rehearsal with residual target. Further resection was stopped by the work budget; unfinished and untested routes are retained. This is not maximal feasible removal or evidence that residual target is unresectable. Missing dura, attachment and functional evidence remains UNKNOWN.",
+      "ownedTarget": {
+        "initialMm3": 43573.0,
+        "removedMm3": 35444.0,
+        "retainedMm3": 8129.0,
+        "removedPercent": 81.34395152961696
+      },
+      "rawSourceAnnotationDenominatorsCells": {
+        "bone": 753872,
+        "brain": 1667660,
+        "tumor": 45115,
+        "vessels": 141681
+      },
+      "removedSourceCellRawMemberships": {
+        "bone": 16552,
+        "brain": 36402,
+        "tumor": 35810,
+        "vessels": 0
+      },
+      "ownedNonTargetRemoval": {
+        "softTissueMm3": 0.0,
+        "vesselMm3": 0.0,
+        "unknownMm3": 0.0,
+        "boneMm3": 16552.0,
+        "qualifier": "Owned material precedence under the supplied segmentation. Zero owned non-target soft-tissue removal does NOT establish zero clinical healthy-brain injury, zero raw brain membership, or safe clinical outcome."
+      },
+      "boneAndDebris": {
+        "debrisPresentMm3": 15280.029770573388,
+        "debrisRemovedMm3": 1271.9702294266142,
+        "debrisEscapedMm3": 0.0,
+        "boneDebrisConservationResidualMm3": -2.5011104298755527e-12,
+        "generatedBoneDebrisMm3": 16552.0
+      },
+      "fluid": {
+        "fluidAddedMm3": 0.0,
+        "fluidRemovedMm3": 0.0,
+        "fluidEscapedMm3": 0.0,
+        "fluidPresentIncludingOutletsMm3": 0,
+        "fluidConservationResidualMm3": 0.0,
+        "modeledVascularBloodGeneratedMm3": 0.0,
+        "irrigationAddedMm3": 0.0
+      },
+      "wounds": {
+        "count": 0,
+        "damagedFaces": 0,
+        "faceAreaMm2": 0,
+        "patentDamagedFaces": 0,
+        "coagulationDoseByFace": {},
+        "clotByFace": {},
+        "activeSources": 0,
+        "generatedMm3": 0.0,
+        "vascularConservationResidualMm3": 0.0
+      },
+      "bothHandsOutInactiveReleased": true,
+      "wallTimeEvidence": {
+        "path": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/primary-v2/execution-receipt.json",
+        "sha256": "f1384fab980b002cd187bc1a31be6070f7ed4871cf0f50c9b6928642db26844e",
+        "recordedWallSeconds": 43529.315293958876,
+        "executionMode": "live canonical recovery session; wall includes console idle time",
+        "basis": "Original live recovery-session elapsed wall includes console idle time; not compute time or a replay benchmark."
+      },
+      "evidenceBasis": "Saved endpoint/source-record review and exactly matching endpoint execution receipt; final frozen-implementation canonical/observed verification remains separate.",
+      "existingMatchedObservedReplay": null,
+      "finalBoundedCleanup": {
+        "status": "bounded-pass-finished",
+        "stations": 3,
+        "actionPositions1Based": [
+          2128,
+          2129,
+          2130,
+          2131,
+          2132,
+          2133,
+          2134,
+          2135,
+          2136,
+          2137,
+          2138,
+          2139,
+          2140,
+          2141,
+          2142,
+          2143,
+          2144,
+          2145
+        ],
+        "debrisAspiratedDuringRecordedCleanupMm3": 643.9702294266125,
+        "qualification": "Bounded aspiration on recorded drill rays; checked exterior relocation between rays. Residual field material is retained.",
+        "residualDebrisRetainedMm3": 15280.029770573388
+      },
+      "savedLiveOutcomeSanityCheck": {
+        "path": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/final/live-primary-history.jsonl",
+        "sha256": "e601eba917d6cc84ddf1e6d97659cb3db8d2b1456e2ffe374de3a1ec15ebdc80",
+        "receipt": {
+          "path": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/final/live-primary-history.receipt.json",
+          "sha256": "32162cadb7db9b8c352e06c1770310568035d01a62ca0d0ef3fce5ebe55f54ac"
+        },
+        "allActionsExactlyMatchSavedRequests": true,
+        "stateIdChainAndEndpointMatch": true,
+        "statuses": {
+          "accepted": 1946,
+          "partial": 202
+        },
+        "partialReasons": {
+          "BONE_CUTTING_IN_PROGRESS": 50,
+          "UNSUPPORTED_MATERIAL": 150,
+          "SHAFT_COLLISION": 2
+        },
+        "qualification": "Preserved original live outcomes only; no independent canonical comparison or replay performed by this summary. Canonical comparison belongs to acceptance reviewer."
+      },
+      "blockersAndUntriedRoutes": {
+        "endpointCause": "User/work-budget stop with retained opportunities; not exhaustive geometric failure or maximal resection.",
+        "actualCommittedPartialReasons": {
+          "BONE_CUTTING_IN_PROGRESS": 50,
+          "UNSUPPORTED_MATERIAL": 150,
+          "SHAFT_COLLISION": 2
+        },
+        "savedDirectorEngineReasonCounters": {
+          "SHAFT_COLLISION": 17,
+          "UNSUPPORTED_MATERIAL": 150
+        },
+        "uncommittedProposalReasonCounters": {
+          "NO_TARGET_PROGRESS": 27,
+          "UNSUPPORTED_MATERIAL": 37
+        },
+        "counterQualification": "Director counters and proposal records include attempted/rejected proposals and are not extra saved physical actions.",
+        "superiorCursor": 26,
+        "superiorOpportunityListLength": 99,
+        "pausedStage": "access_setup",
+        "qualifier": "Remaining listed/untried routes and incomplete later passes were not established unreachable. No new reachability search performed."
+      }
+    },
+    "vascular": {
+      "branch": "full-vascular",
+      "savedActionCount": 73,
+      "endpointStateId": "sha256:af496ffbde3ca2ab71477c9226fe9f846f08171efd308362431414584cd3c87e",
+      "simulatedElapsedSeconds": 202.5685612969578,
+      "sourceRecordedStatus": "complete",
+      "sourceRecordedStopReason": "Modeled vessel injury and source control completed; severed faces remain nonpatent. This alternative retains the common-prefix target residual; it does not claim target clearance.",
+      "ownedTarget": {
+        "initialMm3": 43573.0,
+        "removedMm3": 312.0,
+        "retainedMm3": 43261.0,
+        "removedPercent": 0.7160397493860877
+      },
+      "rawSourceAnnotationDenominatorsCells": {
+        "bone": 753872,
+        "brain": 1667660,
+        "tumor": 45115,
+        "vessels": 141681
+      },
+      "removedSourceCellRawMemberships": {
+        "bone": 3453,
+        "brain": 393,
+        "tumor": 330,
+        "vessels": 0
+      },
+      "ownedNonTargetRemoval": {
+        "softTissueMm3": 0.0,
+        "vesselMm3": 0.0,
+        "unknownMm3": 0.0,
+        "boneMm3": 3453.0,
+        "qualifier": "Owned material precedence under the supplied segmentation. Zero owned non-target soft-tissue removal does NOT establish zero clinical healthy-brain injury, zero raw brain membership, or safe clinical outcome."
+      },
+      "boneAndDebris": {
+        "debrisPresentMm3": 3453.0,
+        "debrisRemovedMm3": 0.0,
+        "debrisEscapedMm3": 0.0,
+        "boneDebrisConservationResidualMm3": 0.0,
+        "generatedBoneDebrisMm3": 3453.0
+      },
+      "fluid": {
+        "fluidAddedMm3": 10.400156722143281,
+        "fluidRemovedMm3": 5.966244725738389,
+        "fluidEscapedMm3": 0.10970464135021094,
+        "fluidPresentIncludingOutletsMm3": 4.3242073550546,
+        "fluidConservationResidualMm3": 8.08242361927114e-14,
+        "modeledVascularBloodGeneratedMm3": 4.400156722143208,
+        "irrigationAddedMm3": 6.0,
+        "irrigationTotalResidualMm3": 7.283063041541027e-14
+      },
+      "wounds": {
+        "count": 1,
+        "damagedFaces": 5,
+        "faceAreaMm2": 5.0,
+        "patentDamagedFaces": 0,
+        "coagulationDoseByFace": {
+          "3026883:3026884": 2.0,
+          "3027064:3027065": 2.0,
+          "3066884:3066885": 2.0,
+          "3067065:3067066": 2.0,
+          "3106885:3106886": 2.0
+        },
+        "clotByFace": {
+          "3026883:3026884": 1.0,
+          "3027064:3027065": 1.0,
+          "3066884:3066885": 1.0,
+          "3067065:3067066": 1.0,
+          "3106885:3106886": 1.0
+        },
+        "activeSources": 0,
+        "generatedMm3": 4.400156722143208,
+        "vascularConservationResidualMm3": -1.4210854715202004e-14
+      },
+      "bothHandsOutInactiveReleased": true,
+      "wallTimeEvidence": {
+        "path": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/vascular-v2/execution-receipt.json",
+        "sha256": "981106d7bdb0fb24e95b20fd1f102be295bab182337772c67b131b01d6ba9fd1",
+        "recordedWallSeconds": 165.44936412526295,
+        "executionMode": null,
+        "basis": "Existing vascular execution-receipt timer begins after source load/prefix restoration, before initial persist and31 new actions; includes persistence. It is not total preparation or cold replay time."
+      },
+      "evidenceBasis": "Saved endpoint/source-record review and exactly matching endpoint execution receipt; final frozen-implementation canonical/observed verification remains separate.",
+      "existingMatchedObservedReplay": {
+        "receipt": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/vascular-v2/telemetry/export-receipt.json",
+        "receiptSha256": "d1086c2f8c41ce46ab585de272332f62e6e2fd2c7947b91204b0244d1de7678b",
+        "json": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/vascular-v2/telemetry/telemetry.json",
+        "jsonSha256": "9396a328114f38a53575a9b6ce8ea13ff493c5e494115a183d3236d51d217bd8",
+        "scope": "Existing observed public replay matches selected source/scene/actions/endpoint; no replay performed by refresh.",
+        "archiveBinding": "explicit-receipt-identical-branch-content-in-different-native",
+        "receiptNativeSha256": "7348f05c91c2ac3cd6689807e7c00da99d21d23dac2be8722fca74eddafd6fcb",
+        "episodeId": "full-vascular",
+        "statuses": {
+          "accepted": 63,
+          "partial": 10
+        },
+        "partialActions": [
+          {
+            "actionPosition1Based": 2,
+            "reason": "BONE_CUTTING_IN_PROGRESS"
+          },
+          {
+            "actionPosition1Based": 3,
+            "reason": "BONE_CUTTING_IN_PROGRESS"
+          },
+          {
+            "actionPosition1Based": 4,
+            "reason": "UNSUPPORTED_MATERIAL"
+          },
+          {
+            "actionPosition1Based": 12,
+            "reason": "UNSUPPORTED_MATERIAL"
+          },
+          {
+            "actionPosition1Based": 16,
+            "reason": "UNSUPPORTED_MATERIAL"
+          },
+          {
+            "actionPosition1Based": 24,
+            "reason": "UNSUPPORTED_MATERIAL"
+          },
+          {
+            "actionPosition1Based": 30,
+            "reason": "BONE_CUTTING_IN_PROGRESS"
+          },
+          {
+            "actionPosition1Based": 31,
+            "reason": "UNSUPPORTED_MATERIAL"
+          },
+          {
+            "actionPosition1Based": 37,
+            "reason": "BONE_CUTTING_IN_PROGRESS"
+          },
+          {
+            "actionPosition1Based": 38,
+            "reason": "UNSUPPORTED_MATERIAL"
+          }
+        ],
+        "unattributedOrAmbiguousEventKinds": {}
+      },
+      "branchPurpose": "Peripheral supplied vessel complication and deliberate bipolar sealing/field-fluid handling; retains common-prefix target residual, not a tumor-clearance alternative."
+    }
+  },
+  "toolFamilyInventory": {
+    "path": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/final/tool-family-inventory-source-records.json",
+    "sha256": "a3f6547e5ef34ca0dcb3317819f05174a160a2e3656b4dfbb1d33be065423825"
+  },
+  "toolEvidenceSummary": {
+    "actualPatientActionFamilies": [
+      "cranial_drill",
+      "cusa",
+      "frazier_suction",
+      "bipolar_forceps",
+      "micro_scissors",
+      "irrigation"
+    ],
+    "matchedExistingObservedEffectFamilies": [
+      "cranial_drill",
+      "cusa",
+      "frazier_suction",
+      "bipolar_forceps",
+      "micro_scissors",
+      "irrigation"
+    ],
+    "syntheticFixtureOnlyFamilies": [
+      "brain_retractor",
+      "scalpel",
+      "periosteal_elevator",
+      "craniotome",
+      "dural_scissors",
+      "dissector",
+      "tumor_forceps",
+      "cortical_probe",
+      "subcortical_probe"
+    ],
+    "qualification": "Existing targeted synthetic tool receipts are retained with explicit fixture provenance in the inventory; they do not establish patient anatomy or clinical force/outcome calibration."
+  },
+  "missingAndUncalibratedEvidence": {
+    "suppliedOwnedMaterials": [
+      "bone",
+      "soft_tissue",
+      "tumor",
+      "vessel"
+    ],
+    "membraneSupplied": false,
+    "declaredAttachments": 0,
+    "declaredBoneAnchors": 0,
+    "declaredFunctionalEvidence": 0,
+    "scalpDuraAttachmentAndFunctionalCompleteness": "UNKNOWN; absent evidence was not fabricated",
+    "vascularMeaning": "Supplied unreviewed vessel masks and recorded modeled wound faces do not establish a complete anatomical network, perfusion, or calibrated patient physiology."
+  },
+  "assumptions": [
+    "Unreviewed supplied masks and owned-material precedence; overlapping annotations are not independent clinical truth.",
+    "Generic declared tool/material, flow, coagulation, thermal and wound laws are uncalibrated research assumptions.",
+    "Complete vascular topology, perfusion, scalp/dura attachments, bone anchors and functional localization are not established.",
+    "Residual connected regions/mass and conservative geometric blockers do not prove clinical resectability or unresectability."
+  ],
+  "pendingAcceptance": {
+    "finalCanonicalAndTelemetry": {
+      "statusAtRead": "running",
+      "progressReceipt": {
+        "path": "/Users/shaf/coding_projects/RessectionLab/testcases/outputs/full-case-rehearsal-20261020/final/verification-progress.json",
+        "sha256": "d161a27ba96d1baeb1cefd743e6e8b7529f5c55a7950ebe83ff1be9504b2f75b"
+      },
+      "qualification": "Active pipeline owned by root; no final success inferred from source records or prior branch receipts."
+    },
+    "finalObservedFrameCoverage": "pending; do not infer from older vascular receipts",
+    "finalGuiPersistencePlaybackAndVideo": "pending/separate; this summary makes no GUI, video or verification pass claim."
+  }
+}

@@ -1,0 +1,2625 @@
+{
+  "readOnly": true,
+  "noPhysics": true,
+  "sourceStateId": "sha256:0845143f34ebdb28dd393262dbe151f28ef9239bc2da52c759a94efe48663f7a",
+  "position": 316,
+  "targetRemovedMm3": 9045,
+  "accessIndex": 3,
+  "stage": "access_setup",
+  "pathSummary": {
+    "fan": {
+      "actions": 25,
+      "poses": 2894,
+      "microstepsInteriorEstimate": 2894,
+      "coarse03PoseEstimate": 228,
+      "coarse03MicrostepsInteriorEstimate": 605,
+      "medianPoses": 88.0
+    },
+    "straight": {
+      "actions": 59,
+      "poses": 5742,
+      "microstepsInteriorEstimate": 6392,
+      "coarse03PoseEstimate": 1031,
+      "coarse03MicrostepsInteriorEstimate": 1818,
+      "medianPoses": 40.0
+    },
+    "static": {
+      "actions": 1,
+      "poses": 1,
+      "microstepsInteriorEstimate": 1,
+      "coarse03PoseEstimate": 1,
+      "coarse03MicrostepsInteriorEstimate": 1,
+      "medianPoses": 1.0
+    }
+  },
+  "pathRecords": [
+    {
+      "position": 71,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 365,
+      "tipTravelMm": 18.200000000000003,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 365,
+      "coarse03PoseEstimate": 62,
+      "coarse03MicrostepsInteriorEstimate": 62
+    },
+    {
+      "position": 72,
+      "phase": "core-2",
+      "kind": "fan",
+      "poses": 152,
+      "tipTravelMm": 3.0200000000000005,
+      "angleRad": 0.13718387572893623,
+      "microstepsInteriorEstimate": 152,
+      "coarse03PoseEstimate": 12,
+      "coarse03MicrostepsInteriorEstimate": 32
+    },
+    {
+      "position": 83,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 365,
+      "tipTravelMm": 18.2,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 365,
+      "coarse03PoseEstimate": 62,
+      "coarse03MicrostepsInteriorEstimate": 62
+    },
+    {
+      "position": 84,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 40,
+      "tipTravelMm": 1.9499999999999886,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 40,
+      "coarse03PoseEstimate": 8,
+      "coarse03MicrostepsInteriorEstimate": 8
+    },
+    {
+      "position": 85,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 213,
+      "tipTravelMm": 83.31221445044905,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 430,
+      "coarse03PoseEstimate": 38,
+      "coarse03MicrostepsInteriorEstimate": 290
+    },
+    {
+      "position": 86,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 80,
+      "tipTravelMm": 3.9499999999999886,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 80,
+      "coarse03PoseEstimate": 15,
+      "coarse03MicrostepsInteriorEstimate": 15
+    },
+    {
+      "position": 87,
+      "phase": "core-2",
+      "kind": "fan",
+      "poses": 148,
+      "tipTravelMm": 2.9400000000000013,
+      "angleRad": 0.0981693386118906,
+      "microstepsInteriorEstimate": 148,
+      "coarse03PoseEstimate": 11,
+      "coarse03MicrostepsInteriorEstimate": 30
+    },
+    {
+      "position": 98,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 80,
+      "tipTravelMm": 3.9500000000000455,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 80,
+      "coarse03PoseEstimate": 15,
+      "coarse03MicrostepsInteriorEstimate": 15
+    },
+    {
+      "position": 99,
+      "phase": "core-2",
+      "kind": "fan",
+      "poses": 52,
+      "tipTravelMm": 1.02,
+      "angleRad": 0.036127692888166314,
+      "microstepsInteriorEstimate": 52,
+      "coarse03PoseEstimate": 5,
+      "coarse03MicrostepsInteriorEstimate": 11
+    },
+    {
+      "position": 110,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 240,
+      "tipTravelMm": 11.950000000000045,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 240,
+      "coarse03PoseEstimate": 41,
+      "coarse03MicrostepsInteriorEstimate": 41
+    },
+    {
+      "position": 111,
+      "phase": "core-2",
+      "kind": "static",
+      "poses": 1,
+      "tipTravelMm": 0,
+      "angleRad": 0,
+      "microstepsInteriorEstimate": 1,
+      "coarse03PoseEstimate": 1,
+      "coarse03MicrostepsInteriorEstimate": 1
+    },
+    {
+      "position": 112,
+      "phase": "core-2",
+      "kind": "fan",
+      "poses": 159,
+      "tipTravelMm": 3.16,
+      "angleRad": 0.14458641964707297,
+      "microstepsInteriorEstimate": 159,
+      "coarse03PoseEstimate": 12,
+      "coarse03MicrostepsInteriorEstimate": 33
+    },
+    {
+      "position": 113,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 41,
+      "tipTravelMm": 1.9512195121951847,
+      "angleRad": 5.423336689990509e-18,
+      "microstepsInteriorEstimate": 41,
+      "coarse03PoseEstimate": 7,
+      "coarse03MicrostepsInteriorEstimate": 12
+    },
+    {
+      "position": 114,
+      "phase": "core-2",
+      "kind": "fan",
+      "poses": 205,
+      "tipTravelMm": 4.080000000000004,
+      "angleRad": 0.16944160803189498,
+      "microstepsInteriorEstimate": 205,
+      "coarse03PoseEstimate": 15,
+      "coarse03MicrostepsInteriorEstimate": 42
+    },
+    {
+      "position": 115,
+      "phase": "core-2",
+      "kind": "fan",
+      "poses": 88,
+      "tipTravelMm": 1.7400000000000004,
+      "angleRad": 0.0715651981462279,
+      "microstepsInteriorEstimate": 88,
+      "coarse03PoseEstimate": 7,
+      "coarse03MicrostepsInteriorEstimate": 18
+    },
+    {
+      "position": 128,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 160,
+      "tipTravelMm": 7.949999999999989,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 160,
+      "coarse03PoseEstimate": 28,
+      "coarse03MicrostepsInteriorEstimate": 28
+    },
+    {
+      "position": 129,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 33,
+      "tipTravelMm": 1.599999999999966,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 33,
+      "coarse03PoseEstimate": 7,
+      "coarse03MicrostepsInteriorEstimate": 7
+    },
+    {
+      "position": 130,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 40,
+      "tipTravelMm": 1.9499999999999886,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 40,
+      "coarse03PoseEstimate": 8,
+      "coarse03MicrostepsInteriorEstimate": 8
+    },
+    {
+      "position": 131,
+      "phase": "core-2",
+      "kind": "fan",
+      "poses": 84,
+      "tipTravelMm": 1.6600000000000001,
+      "angleRad": 0.07096831170687477,
+      "microstepsInteriorEstimate": 84,
+      "coarse03PoseEstimate": 7,
+      "coarse03MicrostepsInteriorEstimate": 18
+    },
+    {
+      "position": 132,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 40,
+      "tipTravelMm": 1.950000000000014,
+      "angleRad": 6.119452445819623e-18,
+      "microstepsInteriorEstimate": 40,
+      "coarse03PoseEstimate": 8,
+      "coarse03MicrostepsInteriorEstimate": 8
+    },
+    {
+      "position": 133,
+      "phase": "core-2",
+      "kind": "fan",
+      "poses": 35,
+      "tipTravelMm": 0.6799999999999997,
+      "angleRad": 0.0267537745929982,
+      "microstepsInteriorEstimate": 35,
+      "coarse03PoseEstimate": 4,
+      "coarse03MicrostepsInteriorEstimate": 8
+    },
+    {
+      "position": 144,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 160,
+      "tipTravelMm": 7.9500000000000455,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 160,
+      "coarse03PoseEstimate": 28,
+      "coarse03MicrostepsInteriorEstimate": 28
+    },
+    {
+      "position": 145,
+      "phase": "core-2",
+      "kind": "fan",
+      "poses": 30,
+      "tipTravelMm": 0.5800000000000001,
+      "angleRad": 0.02256385329554929,
+      "microstepsInteriorEstimate": 30,
+      "coarse03PoseEstimate": 3,
+      "coarse03MicrostepsInteriorEstimate": 7
+    },
+    {
+      "position": 146,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 40,
+      "tipTravelMm": 1.9500000000000237,
+      "angleRad": 6.603382146458327e-19,
+      "microstepsInteriorEstimate": 40,
+      "coarse03PoseEstimate": 8,
+      "coarse03MicrostepsInteriorEstimate": 8
+    },
+    {
+      "position": 147,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 40,
+      "tipTravelMm": 1.9499999999999669,
+      "angleRad": 6.603382146458327e-19,
+      "microstepsInteriorEstimate": 40,
+      "coarse03PoseEstimate": 8,
+      "coarse03MicrostepsInteriorEstimate": 8
+    },
+    {
+      "position": 148,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 40,
+      "tipTravelMm": 1.9500000000000237,
+      "angleRad": 6.603382146458327e-19,
+      "microstepsInteriorEstimate": 40,
+      "coarse03PoseEstimate": 8,
+      "coarse03MicrostepsInteriorEstimate": 8
+    },
+    {
+      "position": 149,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 40,
+      "tipTravelMm": 1.9499999999999669,
+      "angleRad": 6.603382146458327e-19,
+      "microstepsInteriorEstimate": 40,
+      "coarse03PoseEstimate": 8,
+      "coarse03MicrostepsInteriorEstimate": 8
+    },
+    {
+      "position": 160,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 240,
+      "tipTravelMm": 11.949999999999989,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 240,
+      "coarse03PoseEstimate": 41,
+      "coarse03MicrostepsInteriorEstimate": 41
+    },
+    {
+      "position": 161,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 40,
+      "tipTravelMm": 1.9499999999999886,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 40,
+      "coarse03PoseEstimate": 8,
+      "coarse03MicrostepsInteriorEstimate": 8
+    },
+    {
+      "position": 162,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 40,
+      "tipTravelMm": 1.9499999999999886,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 40,
+      "coarse03PoseEstimate": 8,
+      "coarse03MicrostepsInteriorEstimate": 8
+    },
+    {
+      "position": 163,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 40,
+      "tipTravelMm": 1.9499999999999886,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 40,
+      "coarse03PoseEstimate": 8,
+      "coarse03MicrostepsInteriorEstimate": 8
+    },
+    {
+      "position": 164,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 40,
+      "tipTravelMm": 1.9499999999999886,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 40,
+      "coarse03PoseEstimate": 8,
+      "coarse03MicrostepsInteriorEstimate": 8
+    },
+    {
+      "position": 165,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 40,
+      "tipTravelMm": 1.9499999999999886,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 40,
+      "coarse03PoseEstimate": 8,
+      "coarse03MicrostepsInteriorEstimate": 8
+    },
+    {
+      "position": 166,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 213,
+      "tipTravelMm": 83.2437101076527,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 430,
+      "coarse03PoseEstimate": 38,
+      "coarse03MicrostepsInteriorEstimate": 290
+    },
+    {
+      "position": 167,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 240,
+      "tipTravelMm": 11.949999999999989,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 240,
+      "coarse03PoseEstimate": 41,
+      "coarse03MicrostepsInteriorEstimate": 41
+    },
+    {
+      "position": 168,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 40,
+      "tipTravelMm": 1.9499999999999886,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 40,
+      "coarse03PoseEstimate": 8,
+      "coarse03MicrostepsInteriorEstimate": 8
+    },
+    {
+      "position": 169,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 40,
+      "tipTravelMm": 1.9499999999999886,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 40,
+      "coarse03PoseEstimate": 8,
+      "coarse03MicrostepsInteriorEstimate": 8
+    },
+    {
+      "position": 170,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 40,
+      "tipTravelMm": 1.9499999999999886,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 40,
+      "coarse03PoseEstimate": 8,
+      "coarse03MicrostepsInteriorEstimate": 8
+    },
+    {
+      "position": 171,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 31,
+      "tipTravelMm": 1.5,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 31,
+      "coarse03PoseEstimate": 6,
+      "coarse03MicrostepsInteriorEstimate": 6
+    },
+    {
+      "position": 172,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 213,
+      "tipTravelMm": 83.09589503715921,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 429,
+      "coarse03PoseEstimate": 38,
+      "coarse03MicrostepsInteriorEstimate": 289
+    },
+    {
+      "position": 173,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 240,
+      "tipTravelMm": 11.949999999999989,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 240,
+      "coarse03PoseEstimate": 41,
+      "coarse03MicrostepsInteriorEstimate": 41
+    },
+    {
+      "position": 174,
+      "phase": "core-2",
+      "kind": "fan",
+      "poses": 79,
+      "tipTravelMm": 1.5600000000000005,
+      "angleRad": 0.06743804939303023,
+      "microstepsInteriorEstimate": 79,
+      "coarse03PoseEstimate": 7,
+      "coarse03MicrostepsInteriorEstimate": 17
+    },
+    {
+      "position": 175,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 40,
+      "tipTravelMm": 1.9499999999999855,
+      "angleRad": 1.0201095602540929e-18,
+      "microstepsInteriorEstimate": 40,
+      "coarse03PoseEstimate": 8,
+      "coarse03MicrostepsInteriorEstimate": 8
+    },
+    {
+      "position": 176,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 40,
+      "tipTravelMm": 1.949999999999986,
+      "angleRad": 1.0201095602540929e-18,
+      "microstepsInteriorEstimate": 40,
+      "coarse03PoseEstimate": 8,
+      "coarse03MicrostepsInteriorEstimate": 8
+    },
+    {
+      "position": 177,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 38,
+      "tipTravelMm": 1.8499999999999925,
+      "angleRad": 1.0201095602540929e-18,
+      "microstepsInteriorEstimate": 38,
+      "coarse03PoseEstimate": 8,
+      "coarse03MicrostepsInteriorEstimate": 8
+    },
+    {
+      "position": 188,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 240,
+      "tipTravelMm": 11.950000000000045,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 240,
+      "coarse03PoseEstimate": 41,
+      "coarse03MicrostepsInteriorEstimate": 41
+    },
+    {
+      "position": 189,
+      "phase": "core-2",
+      "kind": "fan",
+      "poses": 62,
+      "tipTravelMm": 1.2199999999999995,
+      "angleRad": 0.055774433838734865,
+      "microstepsInteriorEstimate": 62,
+      "coarse03PoseEstimate": 6,
+      "coarse03MicrostepsInteriorEstimate": 14
+    },
+    {
+      "position": 190,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 41,
+      "tipTravelMm": 1.9512195121951401,
+      "angleRad": 2.33516753500444e-19,
+      "microstepsInteriorEstimate": 41,
+      "coarse03PoseEstimate": 7,
+      "coarse03MicrostepsInteriorEstimate": 12
+    },
+    {
+      "position": 191,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 30,
+      "tipTravelMm": 1.4146341463414398,
+      "angleRad": 2.33516753500444e-19,
+      "microstepsInteriorEstimate": 30,
+      "coarse03PoseEstimate": 6,
+      "coarse03MicrostepsInteriorEstimate": 10
+    },
+    {
+      "position": 202,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 240,
+      "tipTravelMm": 11.949999999999989,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 240,
+      "coarse03PoseEstimate": 41,
+      "coarse03MicrostepsInteriorEstimate": 41
+    },
+    {
+      "position": 203,
+      "phase": "core-2",
+      "kind": "fan",
+      "poses": 64,
+      "tipTravelMm": 1.2600000000000011,
+      "angleRad": 0.0667394197901265,
+      "microstepsInteriorEstimate": 64,
+      "coarse03PoseEstimate": 6,
+      "coarse03MicrostepsInteriorEstimate": 14
+    },
+    {
+      "position": 204,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 40,
+      "tipTravelMm": 1.950000000000007,
+      "angleRad": 3.810602423095296e-18,
+      "microstepsInteriorEstimate": 40,
+      "coarse03PoseEstimate": 8,
+      "coarse03MicrostepsInteriorEstimate": 8
+    },
+    {
+      "position": 205,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 40,
+      "tipTravelMm": 1.9499999999999504,
+      "angleRad": 3.810602423095296e-18,
+      "microstepsInteriorEstimate": 40,
+      "coarse03PoseEstimate": 8,
+      "coarse03MicrostepsInteriorEstimate": 8
+    },
+    {
+      "position": 206,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 40,
+      "tipTravelMm": 1.950000000000007,
+      "angleRad": 3.810602423095296e-18,
+      "microstepsInteriorEstimate": 40,
+      "coarse03PoseEstimate": 8,
+      "coarse03MicrostepsInteriorEstimate": 8
+    },
+    {
+      "position": 207,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 40,
+      "tipTravelMm": 1.950000000000007,
+      "angleRad": 3.810602423095296e-18,
+      "microstepsInteriorEstimate": 40,
+      "coarse03PoseEstimate": 8,
+      "coarse03MicrostepsInteriorEstimate": 8
+    },
+    {
+      "position": 227,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 160,
+      "tipTravelMm": 7.949999999999989,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 160,
+      "coarse03PoseEstimate": 28,
+      "coarse03MicrostepsInteriorEstimate": 28
+    },
+    {
+      "position": 228,
+      "phase": "core-2",
+      "kind": "fan",
+      "poses": 166,
+      "tipTravelMm": 3.3000000000000007,
+      "angleRad": 0.14434479799144412,
+      "microstepsInteriorEstimate": 166,
+      "coarse03PoseEstimate": 12,
+      "coarse03MicrostepsInteriorEstimate": 34
+    },
+    {
+      "position": 229,
+      "phase": "core-2",
+      "kind": "fan",
+      "poses": 41,
+      "tipTravelMm": 0.8000000000000007,
+      "angleRad": 0.03494418906123063,
+      "microstepsInteriorEstimate": 41,
+      "coarse03PoseEstimate": 4,
+      "coarse03MicrostepsInteriorEstimate": 9
+    },
+    {
+      "position": 230,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 41,
+      "tipTravelMm": 1.9512195121951545,
+      "angleRad": 9.746702194447521e-18,
+      "microstepsInteriorEstimate": 41,
+      "coarse03PoseEstimate": 7,
+      "coarse03MicrostepsInteriorEstimate": 12
+    },
+    {
+      "position": 231,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 41,
+      "tipTravelMm": 1.9512195121950984,
+      "angleRad": 9.746702194447521e-18,
+      "microstepsInteriorEstimate": 41,
+      "coarse03PoseEstimate": 7,
+      "coarse03MicrostepsInteriorEstimate": 12
+    },
+    {
+      "position": 232,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 41,
+      "tipTravelMm": 1.9512195121951543,
+      "angleRad": 9.746702194447521e-18,
+      "microstepsInteriorEstimate": 41,
+      "coarse03PoseEstimate": 7,
+      "coarse03MicrostepsInteriorEstimate": 12
+    },
+    {
+      "position": 243,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 40,
+      "tipTravelMm": 1.9499999999999886,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 40,
+      "coarse03PoseEstimate": 8,
+      "coarse03MicrostepsInteriorEstimate": 8
+    },
+    {
+      "position": 244,
+      "phase": "core-2",
+      "kind": "fan",
+      "poses": 97,
+      "tipTravelMm": 1.919999999999999,
+      "angleRad": 0.0642303330657612,
+      "microstepsInteriorEstimate": 97,
+      "coarse03PoseEstimate": 8,
+      "coarse03MicrostepsInteriorEstimate": 20
+    },
+    {
+      "position": 245,
+      "phase": "core-2",
+      "kind": "fan",
+      "poses": 64,
+      "tipTravelMm": 1.259999999999999,
+      "angleRad": 0.04212835345677309,
+      "microstepsInteriorEstimate": 64,
+      "coarse03PoseEstimate": 6,
+      "coarse03MicrostepsInteriorEstimate": 14
+    },
+    {
+      "position": 246,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 160,
+      "tipTravelMm": 7.949999999999974,
+      "angleRad": 3.6917425958808323e-19,
+      "microstepsInteriorEstimate": 160,
+      "coarse03PoseEstimate": 28,
+      "coarse03MicrostepsInteriorEstimate": 28
+    },
+    {
+      "position": 247,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 40,
+      "tipTravelMm": 1.9499999999999795,
+      "angleRad": 3.6917425958808323e-19,
+      "microstepsInteriorEstimate": 40,
+      "coarse03PoseEstimate": 8,
+      "coarse03MicrostepsInteriorEstimate": 8
+    },
+    {
+      "position": 248,
+      "phase": "core-2",
+      "kind": "straight",
+      "poses": 16,
+      "tipTravelMm": 0.7142857142857906,
+      "angleRad": 3.6917425958808323e-19,
+      "microstepsInteriorEstimate": 16,
+      "coarse03PoseEstimate": 4,
+      "coarse03MicrostepsInteriorEstimate": 6
+    },
+    {
+      "position": 266,
+      "phase": "core-3",
+      "kind": "straight",
+      "poses": 240,
+      "tipTravelMm": 11.949999999999989,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 240,
+      "coarse03PoseEstimate": 41,
+      "coarse03MicrostepsInteriorEstimate": 41
+    },
+    {
+      "position": 267,
+      "phase": "core-3",
+      "kind": "fan",
+      "poses": 77,
+      "tipTravelMm": 1.5200000000000014,
+      "angleRad": 0.07362977306492965,
+      "microstepsInteriorEstimate": 77,
+      "coarse03PoseEstimate": 7,
+      "coarse03MicrostepsInteriorEstimate": 17
+    },
+    {
+      "position": 268,
+      "phase": "core-3",
+      "kind": "straight",
+      "poses": 40,
+      "tipTravelMm": 1.9499999999999573,
+      "angleRad": 3.2258382502769006e-18,
+      "microstepsInteriorEstimate": 40,
+      "coarse03PoseEstimate": 8,
+      "coarse03MicrostepsInteriorEstimate": 8
+    },
+    {
+      "position": 269,
+      "phase": "core-3",
+      "kind": "straight",
+      "poses": 33,
+      "tipTravelMm": 1.5999999999999721,
+      "angleRad": 3.2258382502769006e-18,
+      "microstepsInteriorEstimate": 33,
+      "coarse03PoseEstimate": 7,
+      "coarse03MicrostepsInteriorEstimate": 7
+    },
+    {
+      "position": 270,
+      "phase": "core-3",
+      "kind": "fan",
+      "poses": 50,
+      "tipTravelMm": 0.9800000000000004,
+      "angleRad": 0.05753721973136508,
+      "microstepsInteriorEstimate": 50,
+      "coarse03PoseEstimate": 5,
+      "coarse03MicrostepsInteriorEstimate": 14
+    },
+    {
+      "position": 271,
+      "phase": "core-3",
+      "kind": "straight",
+      "poses": 21,
+      "tipTravelMm": 0.9999999999999932,
+      "angleRad": 4.757213447371376e-18,
+      "microstepsInteriorEstimate": 21,
+      "coarse03PoseEstimate": 5,
+      "coarse03MicrostepsInteriorEstimate": 5
+    },
+    {
+      "position": 282,
+      "phase": "core-3",
+      "kind": "straight",
+      "poses": 240,
+      "tipTravelMm": 11.949999999999989,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 240,
+      "coarse03PoseEstimate": 41,
+      "coarse03MicrostepsInteriorEstimate": 41
+    },
+    {
+      "position": 283,
+      "phase": "core-3",
+      "kind": "fan",
+      "poses": 225,
+      "tipTravelMm": 4.48,
+      "angleRad": 0.22460482754158448,
+      "microstepsInteriorEstimate": 225,
+      "coarse03PoseEstimate": 16,
+      "coarse03MicrostepsInteriorEstimate": 46
+    },
+    {
+      "position": 284,
+      "phase": "core-3",
+      "kind": "fan",
+      "poses": 171,
+      "tipTravelMm": 3.3999999999999995,
+      "angleRad": 0.16741900779102648,
+      "microstepsInteriorEstimate": 171,
+      "coarse03PoseEstimate": 13,
+      "coarse03MicrostepsInteriorEstimate": 35
+    },
+    {
+      "position": 285,
+      "phase": "core-3",
+      "kind": "straight",
+      "poses": 29,
+      "tipTravelMm": 1.399999999999994,
+      "angleRad": 1.3306204139594725e-17,
+      "microstepsInteriorEstimate": 29,
+      "coarse03PoseEstimate": 6,
+      "coarse03MicrostepsInteriorEstimate": 6
+    },
+    {
+      "position": 296,
+      "phase": "core-3",
+      "kind": "straight",
+      "poses": 160,
+      "tipTravelMm": 7.949999999999989,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 160,
+      "coarse03PoseEstimate": 28,
+      "coarse03MicrostepsInteriorEstimate": 28
+    },
+    {
+      "position": 297,
+      "phase": "core-3",
+      "kind": "fan",
+      "poses": 164,
+      "tipTravelMm": 3.2600000000000007,
+      "angleRad": 0.1417119284859748,
+      "microstepsInteriorEstimate": 164,
+      "coarse03PoseEstimate": 12,
+      "coarse03MicrostepsInteriorEstimate": 34
+    },
+    {
+      "position": 309,
+      "phase": "core-3",
+      "kind": "straight",
+      "poses": 80,
+      "tipTravelMm": 3.9499999999999886,
+      "angleRad": 0.0,
+      "microstepsInteriorEstimate": 80,
+      "coarse03PoseEstimate": 15,
+      "coarse03MicrostepsInteriorEstimate": 15
+    },
+    {
+      "position": 310,
+      "phase": "core-3",
+      "kind": "fan",
+      "poses": 86,
+      "tipTravelMm": 1.7000000000000002,
+      "angleRad": 0.05956401977687837,
+      "microstepsInteriorEstimate": 86,
+      "coarse03PoseEstimate": 7,
+      "coarse03MicrostepsInteriorEstimate": 18
+    },
+    {
+      "position": 311,
+      "phase": "core-3",
+      "kind": "fan",
+      "poses": 300,
+      "tipTravelMm": 5.979999999999999,
+      "angleRad": 0.20628360143302266,
+      "microstepsInteriorEstimate": 300,
+      "coarse03PoseEstimate": 21,
+      "coarse03MicrostepsInteriorEstimate": 60
+    },
+    {
+      "position": 312,
+      "phase": "core-3",
+      "kind": "fan",
+      "poses": 119,
+      "tipTravelMm": 2.359999999999999,
+      "angleRad": 0.08065342419689044,
+      "microstepsInteriorEstimate": 119,
+      "coarse03PoseEstimate": 9,
+      "coarse03MicrostepsInteriorEstimate": 24
+    },
+    {
+      "position": 313,
+      "phase": "core-3",
+      "kind": "fan",
+      "poses": 176,
+      "tipTravelMm": 3.5000000000000107,
+      "angleRad": 0.11890997907453586,
+      "microstepsInteriorEstimate": 176,
+      "coarse03PoseEstimate": 13,
+      "coarse03MicrostepsInteriorEstimate": 36
+    },
+    {
+      "position": 314,
+      "phase": "core-3",
+      "kind": "straight",
+      "poses": 17,
+      "tipTravelMm": 0.7619047619047732,
+      "angleRad": 1.4276359719503933e-17,
+      "microstepsInteriorEstimate": 17,
+      "coarse03PoseEstimate": 4,
+      "coarse03MicrostepsInteriorEstimate": 5
+    }
+  ],
+  "configuredAccessesInOriginalOrder": [
+    {
+      "index": 0,
+      "id": "superior-120-154",
+      "entryRAS": [
+        -10.464996337890625,
+        30.441162109375,
+        -421.25
+      ],
+      "initialDiskTarget": 173,
+      "retainedEligibleDiskTarget": 90,
+      "retainedFraction": 0.5202312138728323,
+      "retainedCenterColumnTarget": 0,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 1,
+      "id": "superior-119-125",
+      "entryRAS": [
+        -9.464996337890625,
+        1.441162109375,
+        -411.25
+      ],
+      "initialDiskTarget": 454,
+      "retainedEligibleDiskTarget": 24,
+      "retainedFraction": 0.05286343612334802,
+      "retainedCenterColumnTarget": 0,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 2,
+      "id": "superior-122-127",
+      "entryRAS": [
+        -12.464996337890625,
+        3.441162109375,
+        -414.25
+      ],
+      "initialDiskTarget": 307,
+      "retainedEligibleDiskTarget": 0,
+      "retainedFraction": 0.0,
+      "retainedCenterColumnTarget": 0,
+      "drillRadiusMm": 2.7426406871192848
+    },
+    {
+      "index": 3,
+      "id": "superior-117-128",
+      "entryRAS": [
+        -7.464996337890625,
+        4.441162109375,
+        -412.25
+      ],
+      "initialDiskTarget": 433,
+      "retainedEligibleDiskTarget": 33,
+      "retainedFraction": 0.07621247113163972,
+      "retainedCenterColumnTarget": 1,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 4,
+      "id": "superior-116-123",
+      "entryRAS": [
+        -6.464996337890625,
+        -0.558837890625,
+        -410.25
+      ],
+      "initialDiskTarget": 302,
+      "retainedEligibleDiskTarget": 68,
+      "retainedFraction": 0.2251655629139073,
+      "retainedCenterColumnTarget": 11,
+      "drillRadiusMm": 2.5
+    },
+    {
+      "index": 5,
+      "id": "superior-126-128",
+      "entryRAS": [
+        -16.464996337890625,
+        4.441162109375,
+        -415.25
+      ],
+      "initialDiskTarget": 293,
+      "retainedEligibleDiskTarget": 38,
+      "retainedFraction": 0.1296928327645051,
+      "retainedCenterColumnTarget": 6,
+      "drillRadiusMm": 2.6231056256176606
+    },
+    {
+      "index": 6,
+      "id": "superior-120-130",
+      "entryRAS": [
+        -10.464996337890625,
+        6.441162109375,
+        -415.25
+      ],
+      "initialDiskTarget": 417,
+      "retainedEligibleDiskTarget": 35,
+      "retainedFraction": 0.08393285371702638,
+      "retainedCenterColumnTarget": 4,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 7,
+      "id": "superior-129-126",
+      "entryRAS": [
+        -19.464996337890625,
+        2.441162109375,
+        -415.25
+      ],
+      "initialDiskTarget": 285,
+      "retainedEligibleDiskTarget": 83,
+      "retainedFraction": 0.2912280701754386,
+      "retainedCenterColumnTarget": 9,
+      "drillRadiusMm": 2.9721359549995796
+    },
+    {
+      "index": 8,
+      "id": "superior-129-122",
+      "entryRAS": [
+        -19.464996337890625,
+        -1.558837890625,
+        -415.25
+      ],
+      "initialDiskTarget": 277,
+      "retainedEligibleDiskTarget": 126,
+      "retainedFraction": 0.4548736462093863,
+      "retainedCenterColumnTarget": 17,
+      "drillRadiusMm": 2.6231056256176606
+    },
+    {
+      "index": 9,
+      "id": "superior-129-134",
+      "entryRAS": [
+        -19.464996337890625,
+        10.441162109375,
+        -419.25
+      ],
+      "initialDiskTarget": 276,
+      "retainedEligibleDiskTarget": 175,
+      "retainedFraction": 0.6340579710144928,
+      "retainedCenterColumnTarget": 19,
+      "drillRadiusMm": 2.7426406871192848
+    },
+    {
+      "index": 10,
+      "id": "superior-129-130",
+      "entryRAS": [
+        -19.464996337890625,
+        6.441162109375,
+        -418.25
+      ],
+      "initialDiskTarget": 398,
+      "retainedEligibleDiskTarget": 98,
+      "retainedFraction": 0.24623115577889448,
+      "retainedCenterColumnTarget": 7,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 11,
+      "id": "superior-127-119",
+      "entryRAS": [
+        -17.464996337890625,
+        -4.558837890625,
+        -413.25
+      ],
+      "initialDiskTarget": 271,
+      "retainedEligibleDiskTarget": 184,
+      "retainedFraction": 0.6789667896678967,
+      "retainedCenterColumnTarget": 25,
+      "drillRadiusMm": 2.6231056256176606
+    },
+    {
+      "index": 12,
+      "id": "superior-117-132",
+      "entryRAS": [
+        -7.464996337890625,
+        8.441162109375,
+        -414.25
+      ],
+      "initialDiskTarget": 273,
+      "retainedEligibleDiskTarget": 60,
+      "retainedFraction": 0.21978021978021978,
+      "retainedCenterColumnTarget": 6,
+      "drillRadiusMm": 2.6231056256176606
+    },
+    {
+      "index": 13,
+      "id": "superior-124-131",
+      "entryRAS": [
+        -14.464996337890625,
+        7.441162109375,
+        -417.25
+      ],
+      "initialDiskTarget": 389,
+      "retainedEligibleDiskTarget": 35,
+      "retainedFraction": 0.08997429305912596,
+      "retainedCenterColumnTarget": 3,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 14,
+      "id": "superior-132-128",
+      "entryRAS": [
+        -22.464996337890625,
+        4.441162109375,
+        -418.25
+      ],
+      "initialDiskTarget": 387,
+      "retainedEligibleDiskTarget": 287,
+      "retainedFraction": 0.7416020671834626,
+      "retainedCenterColumnTarget": 22,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 15,
+      "id": "superior-132-124",
+      "entryRAS": [
+        -22.464996337890625,
+        0.441162109375,
+        -416.25
+      ],
+      "initialDiskTarget": 387,
+      "retainedEligibleDiskTarget": 313,
+      "retainedFraction": 0.8087855297157622,
+      "retainedCenterColumnTarget": 23,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 16,
+      "id": "superior-132-132",
+      "entryRAS": [
+        -22.464996337890625,
+        8.441162109375,
+        -420.25
+      ],
+      "initialDiskTarget": 386,
+      "retainedEligibleDiskTarget": 344,
+      "retainedFraction": 0.8911917098445595,
+      "retainedCenterColumnTarget": 30,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 17,
+      "id": "superior-120-134",
+      "entryRAS": [
+        -10.464996337890625,
+        10.441162109375,
+        -416.25
+      ],
+      "initialDiskTarget": 381,
+      "retainedEligibleDiskTarget": 73,
+      "retainedFraction": 0.19160104986876642,
+      "retainedCenterColumnTarget": 5,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 18,
+      "id": "superior-132-120",
+      "entryRAS": [
+        -22.464996337890625,
+        -3.558837890625,
+        -416.25
+      ],
+      "initialDiskTarget": 381,
+      "retainedEligibleDiskTarget": 381,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 29,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 19,
+      "id": "superior-135-122",
+      "entryRAS": [
+        -25.464996337890625,
+        -1.558837890625,
+        -417.25
+      ],
+      "initialDiskTarget": 255,
+      "retainedEligibleDiskTarget": 255,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 29,
+      "drillRadiusMm": 2.6231056256176606
+    },
+    {
+      "index": 20,
+      "id": "superior-125-116",
+      "entryRAS": [
+        -15.464996337890625,
+        -7.558837890625,
+        -413.25
+      ],
+      "initialDiskTarget": 252,
+      "retainedEligibleDiskTarget": 234,
+      "retainedFraction": 0.9285714285714286,
+      "retainedCenterColumnTarget": 30,
+      "drillRadiusMm": 2.7426406871192848
+    },
+    {
+      "index": 21,
+      "id": "superior-133-136",
+      "entryRAS": [
+        -23.464996337890625,
+        12.441162109375,
+        -422.25
+      ],
+      "initialDiskTarget": 253,
+      "retainedEligibleDiskTarget": 253,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 28,
+      "drillRadiusMm": 2.7426406871192848
+    },
+    {
+      "index": 22,
+      "id": "superior-135-130",
+      "entryRAS": [
+        -25.464996337890625,
+        6.441162109375,
+        -420.25
+      ],
+      "initialDiskTarget": 362,
+      "retainedEligibleDiskTarget": 362,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 27,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 23,
+      "id": "superior-135-118",
+      "entryRAS": [
+        -25.464996337890625,
+        -5.558837890625,
+        -417.25
+      ],
+      "initialDiskTarget": 358,
+      "retainedEligibleDiskTarget": 358,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 28,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 24,
+      "id": "superior-130-117",
+      "entryRAS": [
+        -20.464996337890625,
+        -6.558837890625,
+        -415.25
+      ],
+      "initialDiskTarget": 358,
+      "retainedEligibleDiskTarget": 358,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 28,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 25,
+      "id": "superior-117-138",
+      "entryRAS": [
+        -7.464996337890625,
+        14.441162109375,
+        -415.25
+      ],
+      "initialDiskTarget": 241,
+      "retainedEligibleDiskTarget": 198,
+      "retainedFraction": 0.8215767634854771,
+      "retainedCenterColumnTarget": 23,
+      "drillRadiusMm": 2.6231056256176606
+    },
+    {
+      "index": 26,
+      "id": "superior-110-138",
+      "entryRAS": [
+        -0.464996337890625,
+        14.441162109375,
+        -411.25
+      ],
+      "initialDiskTarget": 238,
+      "retainedEligibleDiskTarget": 238,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 27,
+      "drillRadiusMm": 2.6231056256176606
+    },
+    {
+      "index": 27,
+      "id": "superior-128-114",
+      "entryRAS": [
+        -18.464996337890625,
+        -9.558837890625,
+        -414.25
+      ],
+      "initialDiskTarget": 234,
+      "retainedEligibleDiskTarget": 234,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 29,
+      "drillRadiusMm": 2.7426406871192848
+    },
+    {
+      "index": 28,
+      "id": "superior-121-115",
+      "entryRAS": [
+        -11.464996337890625,
+        -8.558837890625,
+        -412.25
+      ],
+      "initialDiskTarget": 231,
+      "retainedEligibleDiskTarget": 190,
+      "retainedFraction": 0.8225108225108225,
+      "retainedCenterColumnTarget": 20,
+      "drillRadiusMm": 2.5
+    },
+    {
+      "index": 29,
+      "id": "superior-133-115",
+      "entryRAS": [
+        -23.464996337890625,
+        -8.558837890625,
+        -416.25
+      ],
+      "initialDiskTarget": 226,
+      "retainedEligibleDiskTarget": 226,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 25,
+      "drillRadiusMm": 2.9721359549995796
+    },
+    {
+      "index": 30,
+      "id": "superior-136-134",
+      "entryRAS": [
+        -26.464996337890625,
+        10.441162109375,
+        -422.25
+      ],
+      "initialDiskTarget": 328,
+      "retainedEligibleDiskTarget": 328,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 25,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 31,
+      "id": "superior-130-143",
+      "entryRAS": [
+        -20.464996337890625,
+        19.441162109375,
+        -423.25
+      ],
+      "initialDiskTarget": 225,
+      "retainedEligibleDiskTarget": 225,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 25,
+      "drillRadiusMm": 2.5
+    },
+    {
+      "index": 32,
+      "id": "superior-139-117",
+      "entryRAS": [
+        -29.464996337890625,
+        -6.558837890625,
+        -419.25
+      ],
+      "initialDiskTarget": 225,
+      "retainedEligibleDiskTarget": 225,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 25,
+      "drillRadiusMm": 2.5
+    },
+    {
+      "index": 33,
+      "id": "superior-110-142",
+      "entryRAS": [
+        -0.464996337890625,
+        18.441162109375,
+        -413.25
+      ],
+      "initialDiskTarget": 224,
+      "retainedEligibleDiskTarget": 224,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 25,
+      "drillRadiusMm": 2.6231056256176606
+    },
+    {
+      "index": 34,
+      "id": "superior-117-115",
+      "entryRAS": [
+        -7.464996337890625,
+        -8.558837890625,
+        -411.25
+      ],
+      "initialDiskTarget": 211,
+      "retainedEligibleDiskTarget": 192,
+      "retainedFraction": 0.909952606635071,
+      "retainedCenterColumnTarget": 25,
+      "drillRadiusMm": 2.9721359549995796
+    },
+    {
+      "index": 35,
+      "id": "superior-139-130",
+      "entryRAS": [
+        -29.464996337890625,
+        6.441162109375,
+        -422.25
+      ],
+      "initialDiskTarget": 216,
+      "retainedEligibleDiskTarget": 216,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 24,
+      "drillRadiusMm": 2.6231056256176606
+    },
+    {
+      "index": 36,
+      "id": "superior-136-138",
+      "entryRAS": [
+        -26.464996337890625,
+        14.441162109375,
+        -423.25
+      ],
+      "initialDiskTarget": 312,
+      "retainedEligibleDiskTarget": 312,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 21,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 37,
+      "id": "superior-119-112",
+      "entryRAS": [
+        -9.464996337890625,
+        -11.558837890625,
+        -411.25
+      ],
+      "initialDiskTarget": 212,
+      "retainedEligibleDiskTarget": 212,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 25,
+      "drillRadiusMm": 2.6231056256176606
+    },
+    {
+      "index": 38,
+      "id": "superior-113-145",
+      "entryRAS": [
+        -3.464996337890625,
+        21.441162109375,
+        -415.25
+      ],
+      "initialDiskTarget": 210,
+      "retainedEligibleDiskTarget": 210,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 23,
+      "drillRadiusMm": 2.6231056256176606
+    },
+    {
+      "index": 39,
+      "id": "superior-118-142",
+      "entryRAS": [
+        -8.464996337890625,
+        18.441162109375,
+        -418.25
+      ],
+      "initialDiskTarget": 208,
+      "retainedEligibleDiskTarget": 208,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 22,
+      "drillRadiusMm": 2.6231056256176606
+    },
+    {
+      "index": 40,
+      "id": "superior-133-145",
+      "entryRAS": [
+        -23.464996337890625,
+        21.441162109375,
+        -424.25
+      ],
+      "initialDiskTarget": 292,
+      "retainedEligibleDiskTarget": 292,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 23,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 41,
+      "id": "superior-127-145",
+      "entryRAS": [
+        -17.464996337890625,
+        21.441162109375,
+        -422.25
+      ],
+      "initialDiskTarget": 202,
+      "retainedEligibleDiskTarget": 202,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 23,
+      "drillRadiusMm": 2.7426406871192848
+    },
+    {
+      "index": 42,
+      "id": "superior-141-133",
+      "entryRAS": [
+        -31.464996337890625,
+        9.441162109375,
+        -422.25
+      ],
+      "initialDiskTarget": 289,
+      "retainedEligibleDiskTarget": 289,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 23,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 43,
+      "id": "superior-123-112",
+      "entryRAS": [
+        -13.464996337890625,
+        -11.558837890625,
+        -413.25
+      ],
+      "initialDiskTarget": 288,
+      "retainedEligibleDiskTarget": 288,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 22,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 44,
+      "id": "superior-117-146",
+      "entryRAS": [
+        -7.464996337890625,
+        22.441162109375,
+        -417.25
+      ],
+      "initialDiskTarget": 286,
+      "retainedEligibleDiskTarget": 286,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 22,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 45,
+      "id": "superior-134-141",
+      "entryRAS": [
+        -24.464996337890625,
+        17.441162109375,
+        -424.25
+      ],
+      "initialDiskTarget": 189,
+      "retainedEligibleDiskTarget": 189,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 21,
+      "drillRadiusMm": 2.9721359549995796
+    },
+    {
+      "index": 46,
+      "id": "superior-139-136",
+      "entryRAS": [
+        -29.464996337890625,
+        12.441162109375,
+        -424.25
+      ],
+      "initialDiskTarget": 280,
+      "retainedEligibleDiskTarget": 280,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 21,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 47,
+      "id": "superior-137-114",
+      "entryRAS": [
+        -27.464996337890625,
+        -9.558837890625,
+        -418.25
+      ],
+      "initialDiskTarget": 275,
+      "retainedEligibleDiskTarget": 275,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 22,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 48,
+      "id": "superior-117-119",
+      "entryRAS": [
+        -7.464996337890625,
+        -4.558837890625,
+        -410.25
+      ],
+      "initialDiskTarget": 178,
+      "retainedEligibleDiskTarget": 115,
+      "retainedFraction": 0.6460674157303371,
+      "retainedCenterColumnTarget": 10,
+      "drillRadiusMm": 2.5
+    },
+    {
+      "index": 49,
+      "id": "superior-108-145",
+      "entryRAS": [
+        1.535003662109375,
+        21.441162109375,
+        -414.25
+      ],
+      "initialDiskTarget": 272,
+      "retainedEligibleDiskTarget": 272,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 21,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 50,
+      "id": "superior-130-147",
+      "entryRAS": [
+        -20.464996337890625,
+        23.441162109375,
+        -424.25
+      ],
+      "initialDiskTarget": 272,
+      "retainedEligibleDiskTarget": 272,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 20,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 51,
+      "id": "superior-143-120",
+      "entryRAS": [
+        -33.464996337890625,
+        -3.558837890625,
+        -421.25
+      ],
+      "initialDiskTarget": 186,
+      "retainedEligibleDiskTarget": 186,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 21,
+      "drillRadiusMm": 2.6231056256176606
+    },
+    {
+      "index": 52,
+      "id": "superior-137-143",
+      "entryRAS": [
+        -27.464996337890625,
+        19.441162109375,
+        -424.25
+      ],
+      "initialDiskTarget": 265,
+      "retainedEligibleDiskTarget": 265,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 22,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 53,
+      "id": "superior-115-149",
+      "entryRAS": [
+        -5.464996337890625,
+        25.441162109375,
+        -417.25
+      ],
+      "initialDiskTarget": 263,
+      "retainedEligibleDiskTarget": 211,
+      "retainedFraction": 0.8022813688212928,
+      "retainedCenterColumnTarget": 21,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 54,
+      "id": "superior-111-148",
+      "entryRAS": [
+        -1.464996337890625,
+        24.441162109375,
+        -415.25
+      ],
+      "initialDiskTarget": 262,
+      "retainedEligibleDiskTarget": 262,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 21,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 55,
+      "id": "superior-143-136",
+      "entryRAS": [
+        -33.464996337890625,
+        12.441162109375,
+        -424.25
+      ],
+      "initialDiskTarget": 253,
+      "retainedEligibleDiskTarget": 253,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 20,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 56,
+      "id": "superior-121-147",
+      "entryRAS": [
+        -11.464996337890625,
+        23.441162109375,
+        -419.25
+      ],
+      "initialDiskTarget": 176,
+      "retainedEligibleDiskTarget": 176,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 20,
+      "drillRadiusMm": 2.9721359549995796
+    },
+    {
+      "index": 57,
+      "id": "superior-141-139",
+      "entryRAS": [
+        -31.464996337890625,
+        15.441162109375,
+        -425.25
+      ],
+      "initialDiskTarget": 252,
+      "retainedEligibleDiskTarget": 252,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 20,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 58,
+      "id": "superior-143-130",
+      "entryRAS": [
+        -33.464996337890625,
+        6.441162109375,
+        -423.25
+      ],
+      "initialDiskTarget": 246,
+      "retainedEligibleDiskTarget": 246,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 19,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 59,
+      "id": "superior-136-147",
+      "entryRAS": [
+        -26.464996337890625,
+        23.441162109375,
+        -425.25
+      ],
+      "initialDiskTarget": 239,
+      "retainedEligibleDiskTarget": 239,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 20,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 60,
+      "id": "superior-119-150",
+      "entryRAS": [
+        -9.464996337890625,
+        26.441162109375,
+        -419.25
+      ],
+      "initialDiskTarget": 233,
+      "retainedEligibleDiskTarget": 170,
+      "retainedFraction": 0.7296137339055794,
+      "retainedCenterColumnTarget": 18,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 61,
+      "id": "superior-135-111",
+      "entryRAS": [
+        -25.464996337890625,
+        -12.558837890625,
+        -418.25
+      ],
+      "initialDiskTarget": 162,
+      "retainedEligibleDiskTarget": 162,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 17,
+      "drillRadiusMm": 2.5
+    },
+    {
+      "index": 62,
+      "id": "superior-125-148",
+      "entryRAS": [
+        -15.464996337890625,
+        24.441162109375,
+        -423.25
+      ],
+      "initialDiskTarget": 228,
+      "retainedEligibleDiskTarget": 228,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 17,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 63,
+      "id": "superior-145-133",
+      "entryRAS": [
+        -35.464996337890625,
+        9.441162109375,
+        -424.25
+      ],
+      "initialDiskTarget": 225,
+      "retainedEligibleDiskTarget": 225,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 18,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 64,
+      "id": "superior-144-124",
+      "entryRAS": [
+        -34.464996337890625,
+        0.441162109375,
+        -422.25
+      ],
+      "initialDiskTarget": 155,
+      "retainedEligibleDiskTarget": 155,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 18,
+      "drillRadiusMm": 2.6231056256176606
+    },
+    {
+      "index": 65,
+      "id": "superior-141-143",
+      "entryRAS": [
+        -31.464996337890625,
+        19.441162109375,
+        -426.25
+      ],
+      "initialDiskTarget": 219,
+      "retainedEligibleDiskTarget": 219,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 16,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 66,
+      "id": "superior-113-152",
+      "entryRAS": [
+        -3.464996337890625,
+        28.441162109375,
+        -417.25
+      ],
+      "initialDiskTarget": 214,
+      "retainedEligibleDiskTarget": 197,
+      "retainedFraction": 0.9205607476635514,
+      "retainedCenterColumnTarget": 17,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 67,
+      "id": "superior-133-149",
+      "entryRAS": [
+        -23.464996337890625,
+        25.441162109375,
+        -425.25
+      ],
+      "initialDiskTarget": 216,
+      "retainedEligibleDiskTarget": 216,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 16,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 68,
+      "id": "superior-128-150",
+      "entryRAS": [
+        -18.464996337890625,
+        26.441162109375,
+        -424.25
+      ],
+      "initialDiskTarget": 211,
+      "retainedEligibleDiskTarget": 211,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 16,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 69,
+      "id": "superior-123-151",
+      "entryRAS": [
+        -13.464996337890625,
+        27.441162109375,
+        -422.25
+      ],
+      "initialDiskTarget": 204,
+      "retainedEligibleDiskTarget": 204,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 16,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 70,
+      "id": "superior-144-141",
+      "entryRAS": [
+        -34.464996337890625,
+        17.441162109375,
+        -427.25
+      ],
+      "initialDiskTarget": 140,
+      "retainedEligibleDiskTarget": 140,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 15,
+      "drillRadiusMm": 2.6231056256176606
+    },
+    {
+      "index": 71,
+      "id": "superior-142-115",
+      "entryRAS": [
+        -32.464996337890625,
+        -8.558837890625,
+        -421.25
+      ],
+      "initialDiskTarget": 134,
+      "retainedEligibleDiskTarget": 134,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 21,
+      "drillRadiusMm": 2.9721359549995796
+    },
+    {
+      "index": 72,
+      "id": "superior-116-154",
+      "entryRAS": [
+        -6.464996337890625,
+        30.441162109375,
+        -419.25
+      ],
+      "initialDiskTarget": 178,
+      "retainedEligibleDiskTarget": 148,
+      "retainedFraction": 0.8314606741573034,
+      "retainedCenterColumnTarget": 14,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 73,
+      "id": "superior-133-107",
+      "entryRAS": [
+        -23.464996337890625,
+        -16.558837890625,
+        -417.25
+      ],
+      "initialDiskTarget": 125,
+      "retainedEligibleDiskTarget": 125,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 15,
+      "drillRadiusMm": 2.6231056256176606
+    },
+    {
+      "index": 74,
+      "id": "superior-126-153",
+      "entryRAS": [
+        -16.464996337890625,
+        29.441162109375,
+        -423.25
+      ],
+      "initialDiskTarget": 159,
+      "retainedEligibleDiskTarget": 159,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 13,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 75,
+      "id": "superior-140-147",
+      "entryRAS": [
+        -30.464996337890625,
+        23.441162109375,
+        -426.25
+      ],
+      "initialDiskTarget": 161,
+      "retainedEligibleDiskTarget": 161,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 11,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 76,
+      "id": "superior-140-112",
+      "entryRAS": [
+        -30.464996337890625,
+        -11.558837890625,
+        -421.25
+      ],
+      "initialDiskTarget": 114,
+      "retainedEligibleDiskTarget": 114,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 14,
+      "drillRadiusMm": 2.7426406871192848
+    },
+    {
+      "index": 77,
+      "id": "superior-131-152",
+      "entryRAS": [
+        -21.464996337890625,
+        28.441162109375,
+        -425.25
+      ],
+      "initialDiskTarget": 160,
+      "retainedEligibleDiskTarget": 160,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 11,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 78,
+      "id": "superior-138-150",
+      "entryRAS": [
+        -28.464996337890625,
+        26.441162109375,
+        -426.25
+      ],
+      "initialDiskTarget": 152,
+      "retainedEligibleDiskTarget": 152,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 12,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 79,
+      "id": "superior-147-136",
+      "entryRAS": [
+        -37.464996337890625,
+        12.441162109375,
+        -426.25
+      ],
+      "initialDiskTarget": 107,
+      "retainedEligibleDiskTarget": 107,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 13,
+      "drillRadiusMm": 2.6231056256176606
+    },
+    {
+      "index": 80,
+      "id": "superior-109-151",
+      "entryRAS": [
+        0.535003662109375,
+        27.441162109375,
+        -416.25
+      ],
+      "initialDiskTarget": 103,
+      "retainedEligibleDiskTarget": 103,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 11,
+      "drillRadiusMm": 2.5
+    },
+    {
+      "index": 81,
+      "id": "superior-135-152",
+      "entryRAS": [
+        -25.464996337890625,
+        28.441162109375,
+        -426.25
+      ],
+      "initialDiskTarget": 136,
+      "retainedEligibleDiskTarget": 136,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 11,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 82,
+      "id": "superior-118-157",
+      "entryRAS": [
+        -8.464996337890625,
+        33.441162109375,
+        -421.25
+      ],
+      "initialDiskTarget": 134,
+      "retainedEligibleDiskTarget": 134,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 10,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 83,
+      "id": "superior-123-156",
+      "entryRAS": [
+        -13.464996337890625,
+        32.441162109375,
+        -423.25
+      ],
+      "initialDiskTarget": 130,
+      "retainedEligibleDiskTarget": 130,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 10,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 84,
+      "id": "superior-113-156",
+      "entryRAS": [
+        -3.464996337890625,
+        32.441162109375,
+        -418.25
+      ],
+      "initialDiskTarget": 89,
+      "retainedEligibleDiskTarget": 89,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 10,
+      "drillRadiusMm": 2.7426406871192848
+    },
+    {
+      "index": 85,
+      "id": "superior-144-145",
+      "entryRAS": [
+        -34.464996337890625,
+        21.441162109375,
+        -428.25
+      ],
+      "initialDiskTarget": 88,
+      "retainedEligibleDiskTarget": 88,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 11,
+      "drillRadiusMm": 2.5
+    },
+    {
+      "index": 86,
+      "id": "superior-147-130",
+      "entryRAS": [
+        -37.464996337890625,
+        6.441162109375,
+        -425.25
+      ],
+      "initialDiskTarget": 115,
+      "retainedEligibleDiskTarget": 115,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 8,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 87,
+      "id": "superior-129-155",
+      "entryRAS": [
+        -19.464996337890625,
+        31.441162109375,
+        -425.25
+      ],
+      "initialDiskTarget": 107,
+      "retainedEligibleDiskTarget": 107,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 7,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 88,
+      "id": "superior-121-159",
+      "entryRAS": [
+        -11.464996337890625,
+        35.441162109375,
+        -423.25
+      ],
+      "initialDiskTarget": 101,
+      "retainedEligibleDiskTarget": 101,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 8,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 89,
+      "id": "superior-115-159",
+      "entryRAS": [
+        -5.464996337890625,
+        35.441162109375,
+        -421.25
+      ],
+      "initialDiskTarget": 99,
+      "retainedEligibleDiskTarget": 99,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 7,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 90,
+      "id": "superior-109-155",
+      "entryRAS": [
+        0.535003662109375,
+        31.441162109375,
+        -418.25
+      ],
+      "initialDiskTarget": 63,
+      "retainedEligibleDiskTarget": 63,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 7,
+      "drillRadiusMm": 2.5
+    },
+    {
+      "index": 91,
+      "id": "superior-126-158",
+      "entryRAS": [
+        -16.464996337890625,
+        34.441162109375,
+        -425.25
+      ],
+      "initialDiskTarget": 92,
+      "retainedEligibleDiskTarget": 92,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 7,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 92,
+      "id": "superior-133-155",
+      "entryRAS": [
+        -23.464996337890625,
+        31.441162109375,
+        -426.25
+      ],
+      "initialDiskTarget": 81,
+      "retainedEligibleDiskTarget": 81,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 6,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 93,
+      "id": "superior-147-126",
+      "entryRAS": [
+        -37.464996337890625,
+        2.441162109375,
+        -424.25
+      ],
+      "initialDiskTarget": 51,
+      "retainedEligibleDiskTarget": 51,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 6,
+      "drillRadiusMm": 2.9721359549995796
+    },
+    {
+      "index": 94,
+      "id": "superior-118-161",
+      "entryRAS": [
+        -8.464996337890625,
+        37.441162109375,
+        -422.25
+      ],
+      "initialDiskTarget": 51,
+      "retainedEligibleDiskTarget": 51,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 6,
+      "drillRadiusMm": 2.5
+    },
+    {
+      "index": 95,
+      "id": "superior-124-161",
+      "entryRAS": [
+        -14.464996337890625,
+        37.441162109375,
+        -425.25
+      ],
+      "initialDiskTarget": 47,
+      "retainedEligibleDiskTarget": 47,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 5,
+      "drillRadiusMm": 2.5
+    },
+    {
+      "index": 96,
+      "id": "superior-142-150",
+      "entryRAS": [
+        -32.464996337890625,
+        26.441162109375,
+        -428.25
+      ],
+      "initialDiskTarget": 43,
+      "retainedEligibleDiskTarget": 43,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 4,
+      "drillRadiusMm": 2.5
+    },
+    {
+      "index": 97,
+      "id": "superior-131-158",
+      "entryRAS": [
+        -21.464996337890625,
+        34.441162109375,
+        -426.25
+      ],
+      "initialDiskTarget": 64,
+      "retainedEligibleDiskTarget": 64,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 5,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 98,
+      "id": "superior-138-154",
+      "entryRAS": [
+        -28.464996337890625,
+        30.441162109375,
+        -428.25
+      ],
+      "initialDiskTarget": 34,
+      "retainedEligibleDiskTarget": 34,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 3,
+      "drillRadiusMm": 2.9721359549995796
+    }
+  ],
+  "topResidualRemainingAccesses": [
+    {
+      "index": 18,
+      "id": "superior-132-120",
+      "entryRAS": [
+        -22.464996337890625,
+        -3.558837890625,
+        -416.25
+      ],
+      "initialDiskTarget": 381,
+      "retainedEligibleDiskTarget": 381,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 29,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 22,
+      "id": "superior-135-130",
+      "entryRAS": [
+        -25.464996337890625,
+        6.441162109375,
+        -420.25
+      ],
+      "initialDiskTarget": 362,
+      "retainedEligibleDiskTarget": 362,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 27,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 23,
+      "id": "superior-135-118",
+      "entryRAS": [
+        -25.464996337890625,
+        -5.558837890625,
+        -417.25
+      ],
+      "initialDiskTarget": 358,
+      "retainedEligibleDiskTarget": 358,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 28,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 24,
+      "id": "superior-130-117",
+      "entryRAS": [
+        -20.464996337890625,
+        -6.558837890625,
+        -415.25
+      ],
+      "initialDiskTarget": 358,
+      "retainedEligibleDiskTarget": 358,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 28,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 16,
+      "id": "superior-132-132",
+      "entryRAS": [
+        -22.464996337890625,
+        8.441162109375,
+        -420.25
+      ],
+      "initialDiskTarget": 386,
+      "retainedEligibleDiskTarget": 344,
+      "retainedFraction": 0.8911917098445595,
+      "retainedCenterColumnTarget": 30,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 30,
+      "id": "superior-136-134",
+      "entryRAS": [
+        -26.464996337890625,
+        10.441162109375,
+        -422.25
+      ],
+      "initialDiskTarget": 328,
+      "retainedEligibleDiskTarget": 328,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 25,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 15,
+      "id": "superior-132-124",
+      "entryRAS": [
+        -22.464996337890625,
+        0.441162109375,
+        -416.25
+      ],
+      "initialDiskTarget": 387,
+      "retainedEligibleDiskTarget": 313,
+      "retainedFraction": 0.8087855297157622,
+      "retainedCenterColumnTarget": 23,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 36,
+      "id": "superior-136-138",
+      "entryRAS": [
+        -26.464996337890625,
+        14.441162109375,
+        -423.25
+      ],
+      "initialDiskTarget": 312,
+      "retainedEligibleDiskTarget": 312,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 21,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 40,
+      "id": "superior-133-145",
+      "entryRAS": [
+        -23.464996337890625,
+        21.441162109375,
+        -424.25
+      ],
+      "initialDiskTarget": 292,
+      "retainedEligibleDiskTarget": 292,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 23,
+      "drillRadiusMm": 3.0
+    },
+    {
+      "index": 42,
+      "id": "superior-141-133",
+      "entryRAS": [
+        -31.464996337890625,
+        9.441162109375,
+        -422.25
+      ],
+      "initialDiskTarget": 289,
+      "retainedEligibleDiskTarget": 289,
+      "retainedFraction": 1.0,
+      "retainedCenterColumnTarget": 23,
+      "drillRadiusMm": 3.0
+    }
+  ],
+  "recentCoreSlicePositions": [
+    244,
+    246,
+    248,
+    266,
+    268,
+    270,
+    282,
+    284,
+    296,
+    310,
+    312,
+    314
+  ],
+  "recentCoreSliceTargetMm3": [
+    7842.0,
+    7848.0,
+    7948.0,
+    8006.0,
+    8206.0,
+    8318.0,
+    8409.0,
+    8699.0,
+    8837.0,
+    8984.0,
+    9022.0,
+    9045.0
+  ],
+  "methodLimit": "Resampled paths are hypothetical counts only, not collision-admitted or state-equivalent actions. Counts exclude unknown original current-to-first fractions and stopped-action truncation. Residual disk rank is optimistic configured-column capacity, not predicted physical removal.",
+  "productionSourceSha256": {
+    "src/resectionlab/full_case_debulking.py": "b68511a9d41f510eb8bf18955058057e569cc9cbdb7f2cb1d39c5d4a998e780f",
+    "src/resectionlab/surgical_motion.py": "094da28de41cb3e2af4073fb559d6fe7d994bb2265d8f0ca5930ef93fe205536",
+    "src/resectionlab/geometry.py": "60d54d3cd70706fe70e73210b9377eac9deef1b79b8e34eb0921aafccf0c1d66"
+  },
+  "recentCoreSliceCumulativeRunWallSeconds": [
+    1991.8929435410537,
+    2025.4391115829349,
+    2048.6363944578916,
+    2356.4706995831802,
+    2385.1638440000825,
+    2406.3076651659794,
+    2587.992692708038,
+    39.02563741710037,
+    185.5054741250351,
+    345.9512193342671,
+    388.33480708440766,
+    413.1449582502246
+  ],
+  "recentCoreSliceIntervals": [
+    {
+      "position": 232,
+      "secondsSincePreviousSlice": 22.137724000029266,
+      "actionsSincePreviousSlice": 2,
+      "targetAddedMm3": 101.0
+    },
+    {
+      "position": 244,
+      "secondsSincePreviousSlice": 25.496613999828696,
+      "actionsSincePreviousSlice": 2,
+      "targetAddedMm3": 11.0
+    },
+    {
+      "position": 246,
+      "secondsSincePreviousSlice": 33.546168041881174,
+      "actionsSincePreviousSlice": 2,
+      "targetAddedMm3": 6.0
+    },
+    {
+      "position": 248,
+      "secondsSincePreviousSlice": 23.197282874956727,
+      "actionsSincePreviousSlice": 2,
+      "targetAddedMm3": 100.0
+    },
+    {
+      "position": 266,
+      "secondsSincePreviousSlice": 77.22038875008002,
+      "actionsSincePreviousSlice": 2,
+      "targetAddedMm3": 58.0
+    },
+    {
+      "position": 268,
+      "secondsSincePreviousSlice": 28.693144416902214,
+      "actionsSincePreviousSlice": 2,
+      "targetAddedMm3": 200.0
+    },
+    {
+      "position": 270,
+      "secondsSincePreviousSlice": 21.143821165896952,
+      "actionsSincePreviousSlice": 2,
+      "targetAddedMm3": 112.0
+    },
+    {
+      "position": 282,
+      "secondsSincePreviousSlice": 77.50310537498444,
+      "actionsSincePreviousSlice": 2,
+      "targetAddedMm3": 45.0
+    },
+    {
+      "position": 296,
+      "secondsSincePreviousSlice": 41.22951537463814,
+      "actionsSincePreviousSlice": 2,
+      "targetAddedMm3": 68.0
+    },
+    {
+      "position": 310,
+      "secondsSincePreviousSlice": 25.004435874987394,
+      "actionsSincePreviousSlice": 2,
+      "targetAddedMm3": 15.0
+    },
+    {
+      "position": 312,
+      "secondsSincePreviousSlice": 42.38358775014058,
+      "actionsSincePreviousSlice": 2,
+      "targetAddedMm3": 38.0
+    },
+    {
+      "position": 314,
+      "secondsSincePreviousSlice": 24.810151165816933,
+      "actionsSincePreviousSlice": 2,
+      "targetAddedMm3": 23.0
+    }
+  ],
+  "wallTimingLimit": "execution.jsonl wallSeconds is cumulative within each run and resets after restart. Intervals are adjacent same-run log differences and include helper/preview/commit/transition overhead; not isolated microstep benchmarks."
+}

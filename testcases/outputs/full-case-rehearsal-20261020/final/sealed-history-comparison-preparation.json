@@ -1,0 +1,10 @@
+{
+  "status": "prepared-only",
+  "scriptSha256": "bafdf438f53930ccbf35262f24f6ded55bbe01e57f7b9b5bc9af42efa80972cc",
+  "canonicalReceiptPresent": false,
+  "authenticationPlan": "Bounded existing key+HMAC manifest read; exact source/snapshot/current implementation/2149state ancestry binding; no cache.restore/_key or Engine call.",
+  "requiredGate": "Successful forced primary canonical receipt and publication, matching final frozen artifact",
+  "cacheKeyOrManifestRead": false,
+  "engineCalls": 0,
+  "finalComparisonPassed": false
+}
