@@ -691,7 +691,8 @@ export default function App() {
   const surgicalApi = useMemo(()=>api?.surgicalRehearsal ? {
     surgicalRehearsal:(input:import('./surgical-types').SurgicalRequest)=>api.surgicalRehearsal!({...input,...(native.binding?{source:{collectionId:native.binding.collectionId,snapshotId:native.binding.document.snapshot_id,seriesId:native.series}}:{})}),
   }:null,[api,native.binding?.collectionId,native.binding?.document.snapshot_id,native.series]);
-  const surgical = useSurgical(displayedCase, surgicalApi, workbenchTab === "rehearsal" && rehearsalModel==='standard' && !native.binding);
+  const surgical = useSurgical(displayedCase, surgicalApi, workbenchTab === "rehearsal" && rehearsalModel==='standard' && !native.binding,
+    !!(payload?.artifacts?.surgical_toolbox as {archivePreviewAvailable?:boolean}|undefined)?.archivePreviewAvailable);
   const presentedScene=useRef<string|null>(null);
   useEffect(()=>{
     if(surgical.view&&presentedScene.current!==surgical.view.scene.sceneId){

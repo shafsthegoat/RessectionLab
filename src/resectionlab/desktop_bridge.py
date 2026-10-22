@@ -527,6 +527,7 @@ class BridgeSession:
             result['surgical_toolbox'] = {
                 'schema': 'resectionlab.surgical-toolbox-display.v1',
                 'requiresReplayVerification': True,
+                'archivePreviewAvailable': True,
                 'branchId': toolbox.get('branchId'), 'position': toolbox.get('position'),
                 'branches': {key: {} for key in toolbox.get('branches', {})}
                             if isinstance(toolbox.get('branches'), Mapping) else {},

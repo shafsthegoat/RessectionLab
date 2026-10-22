@@ -59,11 +59,14 @@ def _frame_admission(session, frames, engine, snapshot, history, replay_cache,
     if item is None or item[0] is not snapshot or item[1] is not history or item[2] is not engine.scene:
         token = frames.admit(engine, snapshot, replay_cache, verified_history=history, check=check)
         shown = display_timeline(thaw_json(token.history))
-        item = (snapshot, history, engine.scene, token, shown)
+        serial = getattr(session, 'surgical_frame_serial', 0) + 1
+        session.surgical_frame_serial = serial
+        stream_token = token.snapshot_hash + '/' + token.history_hash + '/' + str(serial)
+        item = (snapshot, history, engine.scene, token, shown, stream_token)
         admissions.pop(key, None)
         admissions[key] = item
         session.surgical_frame_admissions = dict(list(admissions.items())[-4:])
-    return item[3], item[4]
+    return item[3], item[4], item[5]
 
 
 def dispatch(session, operation, args, request, progress):
@@ -132,7 +135,7 @@ def dispatch(session, operation, args, request, progress):
             metadata={'is_synthetic': True, 'generated': True, 'anatomy_layers': {r['name']: {'kind': r['material'], 'color': r['color'],
                        'provenance': 'generated engineering fixture'} for r in s.regions}, 'surgical_properties': s.properties})
         return session._install_case(case, {}, request)
-    _keys(args, {'caseHash', 'command', 'expectedStateId', 'action', 'mapping', 'position', 'branchId', 'source', 'sceneIndex', 'acknowledgeResearchUnknowns', 'opponent', 'scenario', 'maxActions', 'frameIndex'})
+    _keys(args, {'caseHash', 'command', 'expectedStateId', 'action', 'mapping', 'position', 'branchId', 'source', 'sceneIndex', 'acknowledgeResearchUnknowns', 'opponent', 'scenario', 'maxActions', 'frameIndex', 'timelineToken', 'viewFieldTokens'})
     _require_json_budget(args, 256 * 1024, 'SURGICAL_REQUEST_LIMIT', 'Instrument request exceeds budget')
     entry = None
     source = args.get('source')
@@ -174,7 +177,7 @@ def dispatch(session, operation, args, request, progress):
         # Replacement archives and all editable commands retain full admission.
         artifacts = entry.artifacts if hot_frame else thaw_json(entry.artifacts)
     command = args.get('command', 'inspect')
-    if command not in {'create', 'inspect', 'preview', 'step', 'undo', 'redo', 'seek', 'branch', 'selectBranch', 'reset', 'selectScene', 'plan', 'fullCase', 'seekFrame'}:
+    if command not in {'create', 'inspect', 'inspectArchive', 'preview', 'step', 'undo', 'redo', 'seek', 'branch', 'selectBranch', 'reset', 'selectScene', 'plan', 'fullCase', 'seekFrame'}:
         raise ValueError('Unsupported surgical command')
     raw = artifacts.get(ARTIFACT)
     from .surgical_environment import standardize, default_target_names, SCHEMA as ENVIRONMENT_SCHEMA
@@ -182,6 +185,19 @@ def dispatch(session, operation, args, request, progress):
     scene_builder = lambda mapping=None: standardize(original_builder(mapping), default_target_names(entry.case) if entry is not None and mapping is None else None,
         raw.get('physicsProfile') if raw and command != 'create' else None) if (
         command == 'create' or raw and raw.get('environmentSchema') == ENVIRONMENT_SCHEMA) else original_builder(mapping)
+    if command == 'inspectArchive':
+        if raw is None:
+            return None
+        if raw.get('fullCase'):
+            from .surgical_archive_view import inspect_archive_checkpoint
+            result = inspect_archive_checkpoint(scene_builder(raw['mapping']), raw,
+                branch_id=args.get('branchId'), check=request.check)
+            result.update(caseHash=identity, changed=False)
+            _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Imported checkpoint exceeds the display budget')
+            # Display data never enters surgical_sessions, artifacts, or either
+            # replay cache. Ordinary inspect still requires canonical replay.
+            return result
+        command = 'inspect'
     if command == 'selectScene':
         index = args.get('sceneIndex')
         prior = artifacts.get('surgical_prior_scenes', [])
@@ -193,6 +209,14 @@ def dispatch(session, operation, args, request, progress):
         raw = selected
         artifacts[ARTIFACT] = raw
         scene_builder = lambda mapping=None: standardize(original_builder(mapping), physics_profile=raw.get('physicsProfile')) if raw.get('environmentSchema') == ENVIRONMENT_SCHEMA else original_builder(mapping)
+    verify_branch = command == 'inspect' and args.get('branchId') is not None
+    if verify_branch:
+        if raw is None or args['branchId'] not in raw['branches']:
+            raise ValueError('Unknown verification branch')
+        raw = copy.deepcopy(raw)
+        raw['branchId'] = args['branchId']
+        raw['position'] = len(raw['branches'][raw['branchId']]['actions'])
+        artifacts[ARTIFACT] = raw
     cache = getattr(session, 'surgical_sessions', {})
     replay_cache = getattr(session, 'surgical_replay_cache', None)
     if replay_cache is None:
@@ -208,9 +232,9 @@ def dispatch(session, operation, args, request, progress):
     # fresh replay. Native JSON remains externally writable and is always hashed.
     saved_hash = semantic_digest(raw) if destination else None
     admitted_bundle = (entry is not None and cached and len(cached) > 3
-                       and cached[3] is entry.artifacts and command != 'selectScene')
+                       and cached[3] is entry.artifacts and command != 'selectScene' and not verify_branch)
     admitted_native = (destination is not None and cached and cached[0] == saved_hash
-                       and command != 'selectScene')
+                       and command != 'selectScene' and not verify_branch)
     if command == 'create' and raw is not None and args.get('mapping') == raw.get('mapping') and raw.get('environmentSchema') == ENVIRONMENT_SCHEMA:
         command = 'inspect'  # An unchanged mapping must not erase a timeline.
     if command == 'create' or raw is None and command != 'inspect':
@@ -254,7 +278,7 @@ def dispatch(session, operation, args, request, progress):
             frames = session.surgical_frame_cache = SurgicalFrameCache()
         branch_id = args.get('branchId', record['branchId'])
         if branch_id not in record['branches']: raise ValueError('Unknown playback branch')
-        token, shown_timeline = _frame_admission(session, frames, engine,
+        token, shown_timeline, timeline_token = _frame_admission(session, frames, engine,
             record['branches'][branch_id], record.get('timeline', {}).get(branch_id), replay_cache,
             identity, branch_id, request.check)
         displayed, _, playback = frames.seek(engine, token.snapshot, args.get('position'),
@@ -263,11 +287,42 @@ def dispatch(session, operation, args, request, progress):
         playback['branchId'] = branch_id
         # The frame cache just verified this complete state identity. Reuse it
         # for display instead of hashing the large effect state a second time.
-        shown_view = displayed.view(_state_id=playback['frameStateId'], include_history=False)
-        shown_view['history'] = shown_timeline[:len(displayed.actions)]
+        compact = args.get('timelineToken') == timeline_token
+        known_fields = args.get('viewFieldTokens', {})
+        if not isinstance(known_fields, dict) or set(known_fields) - {'flapComponents'} or any(
+                not isinstance(value, str) or len(value) != 64 or any(c not in '0123456789abcdef' for c in value)
+                for value in known_fields.values()):
+            raise ValueError('Invalid recorded view field acknowledgement')
+        field_tokens = playback.get('fieldTokens')
+        if field_tokens is None:
+            # Older observed-frame adapters can expose the same authenticated
+            # descriptor without changing the frozen numerical implementation.
+            item = frames.store.load(token, args.get('position'))
+            frame = item['frames'][args['frameIndex']] if item is not None else {}
+            field_tokens = {name: blob['sha256'] for name, blob in
+                frame.get('fields', {}).get('fields', {}).items() if name == 'flapComponents'} if (
+                frame.get('stateId') == playback['frameStateId']) else {}
+        omitted = [name for name, digest in field_tokens.items()
+                   if compact and known_fields.get(name) == digest and name in displayed.state]
+        # Current engines avoid detaching an acknowledged heavy value at all.
+        # Older replay adapters still produce a full view and discard it below.
+        view_options = {'_omit_fields': omitted} if getattr(displayed, '_view_omit_fields', None) else {}
+        shown_view = displayed.view(_state_id=playback['frameStateId'], include_history=False, **view_options)
+        if not compact:
+            shown_view['history'] = shown_timeline[:len(displayed.actions)]
+        else:
+            # Resident source/catalog/guard descriptors share this immutable
+            # admission generation. Effects and numerical ledgers stay fresh.
+            for name in ('scene', 'catalog', 'protection'):
+                shown_view.pop(name, None)
+            for name in omitted:
+                shown_view.pop(name, None)
         result = {'caseHash': identity, 'view': shown_view, 'outcome': None, 'changed': False,
-            'timeline': shown_timeline, 'playback': playback, 'branchId': branch_id, 'position': record['position'],
-            'fullCase': copy.deepcopy(record.get('fullCase', {}).get(branch_id)),
+            **({} if compact else {'timeline': shown_timeline}),
+            'timelineToken': timeline_token, 'timelineOmitted': compact,
+            'viewFieldTokens': field_tokens, 'viewFieldsOmitted': omitted,
+            'playback': playback, 'branchId': branch_id, 'position': record['position'],
+            **({} if compact else {'fullCase': copy.deepcopy(record.get('fullCase', {}).get(branch_id))}),
             'branches': [{'id': k, 'steps': len(v['actions']), 'parent': record.get('parents', {}).get(k)} for k,v in record['branches'].items()]}
         _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Playback frame exceeds the display budget')
         return result

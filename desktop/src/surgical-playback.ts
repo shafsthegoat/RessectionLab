@@ -9,6 +9,20 @@ export function surgicalPlaybackDelay(timeline:readonly {elapsedSeconds?:number}
   return {milliseconds:600/rate,recorded:false};
 }
 
+/** A requested interval includes time already spent fetching/preparing its
+ * exact predecessor. Falling behind removes idle delay, never observations. */
+export class SurgicalPlaybackClock {
+  private anchor:{observedSeconds:number;wallTime:number;speed:number}|null=null;
+  reset(){this.anchor=null;}
+  delay(observedSeconds:number,intervalMs:number,speed:number,now:number):number {
+    const rate=Number.isFinite(speed)&&speed>0?speed:1;
+    if(!Number.isFinite(observedSeconds)||!Number.isFinite(now)){this.reset();return intervalMs;}
+    if(!this.anchor||this.anchor.speed!==rate||observedSeconds<this.anchor.observedSeconds)
+      this.anchor={observedSeconds,wallTime:now,speed:rate};
+    return Math.max(0,this.anchor.wallTime+(observedSeconds-this.anchor.observedSeconds)*1000/rate+intervalMs-now);
+  }
+}
+
 export const surgicalCursorCommand=(command:string)=>['seek','seekFrame','selectBranch','inspect'].includes(command);
 export const updatesEditableSurgicalCursor=(command:string)=>command!=='preview'&&command!=='seekFrame';
 export function checkedSurgicalPlayback(response:SurgicalResponse,request:{branchId?:unknown;position?:unknown;frameIndex?:unknown}) {

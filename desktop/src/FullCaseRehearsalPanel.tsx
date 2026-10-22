@@ -6,7 +6,7 @@ const amount=(value:number|null|undefined,digits=2)=>typeof value==='number'&&Nu
 
 export function FullCaseRehearsalPanel({c,pause,onFrameField,fieldDisplayControls}:{c:SurgicalController;pause:()=>void;onFrameField?:()=>void;fieldDisplayControls?:ReactNode}) {
   const v=c.view,r=c.result;if(!v)return null;
-  const summary=fullCaseStateSummary(v),record=r?.fullCase,readOnly=!!r?.playback,
+  const summary=fullCaseStateSummary(v),record=r?.fullCase,readOnly=!!r?.playback||!!r?.verification?.readOnly,
     position=surgicalPlaybackPosition(r?.playback,r?.position??0),
     phase=recordedFullCasePhase(record,position);
   const run=(scenario:'primary'|'vascular')=>{pause();c.cancel();c.startFullCase(scenario);};
@@ -20,7 +20,7 @@ export function FullCaseRehearsalPanel({c,pause,onFrameField,fieldDisplayControl
       {onFrameField&&<button onClick={onFrameField}>Frame operative field</button>}
     </div>
     {fieldDisplayControls}
-    {readOnly&&<p className="surgical-note">Read-only observed microstep. Return to a recorded action boundary to resume computation.</p>}
+    {readOnly&&<p className="surgical-note">{r?.verification?.readOnly?'Imported endpoint requires replay verification before computation.':'Read-only observed microstep. Return to a recorded action boundary to resume computation.'}</p>}
     {c.computingFullCase&&<p role="status">Computing {c.computingFullCase==='primary'?'primary rehearsal':'vascular injury / rescue'} · two actions per slice. Each next slice waits for the accepted display.</p>}
     {!c.computingFullCase&&c.simulationPending&&<p className="surgical-note">Current bounded request continues; no further slices will start automatically.</p>}
     {record&&<>

@@ -161,6 +161,10 @@ def _microstep_checkpoint(state):
 
 
 class SurgicalEngine:
+    # Display adapters may reuse only fields with an authenticated resident
+    # value. This advertises optional copy omission to older replay adapters;
+    # ordinary/public views retain the complete detached payload.
+    _view_omit_fields = frozenset({'flapComponents'})
     def __init__(self, scene, *, protection=None, guard_config=None):
         self.scene = scene
         from .surgical_rl_protection import GuardConfig, ProtectionSet, missing_critical, protection_contract
@@ -747,7 +751,10 @@ class SurgicalEngine:
                 'metrics': self.metrics(), 'observations': copy.deepcopy(self.state['observations']),
                 'unknowns': ['unmapped anatomy', 'uncalibrated mechanics', 'clinical outcomes unknown']}
 
-    def view(self, *, _state_id=None, include_history=True):
+    def view(self, *, _state_id=None, include_history=True, _omit_fields=()):
+        omitted = frozenset(_omit_fields)
+        if omitted - self._view_omit_fields:
+            raise ValueError('Unsupported display field omission')
         identity = self.state_id if _state_id is None else _state_id
         moved = []
         removed = set(self.state['removed'])
@@ -765,9 +772,9 @@ class SurgicalEngine:
                 'holds': copy.deepcopy(self.state['holds']),
                 'contact': list(map(int, self.state['contact'])), 'thermal': copy.deepcopy(self.state['thermal']),
                 'fluid': copy.deepcopy(self.state['fluid']), 'history': copy.deepcopy(self.history) if include_history else [],
-                **{name: copy.deepcopy(self.state.get(name)) for name in ('cutEdges', 'separatedAttachments',
+                **{name: _copy_engine_data(self.state.get(name)) for name in ('cutEdges', 'separatedAttachments',
                     'transectedEdges', 'flapComponents', 'debris', 'sources', 'meshCutEdges', 'meshSeams',
-                    'vesselConnections', 'vesselWounds', 'deformation', 'deformationModel', 'drillingV2', 'vesselsV2')},
+                    'vesselConnections', 'vesselWounds', 'deformation', 'deformationModel', 'drillingV2', 'vesselsV2') if name not in omitted},
                 **({'cusaV3': copy.deepcopy(self.state['cusaV3'])} if 'cusaV3' in self.state else {})}
 
     def snapshot(self):

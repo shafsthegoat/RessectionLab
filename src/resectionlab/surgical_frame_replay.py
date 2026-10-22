@@ -166,6 +166,8 @@ class SurgicalFrameCache:
             'actionDurationSeconds': frames[-1]['observedTimeSeconds'] - start,
             'isActionBoundary': index in (0, len(frames)-1),
             'frameStateId': frame['stateId'],
+            'fieldTokens': {name: blob['sha256'] for name, blob in
+                frame.get('fields', {}).get('fields', {}).items() if name == 'flapComponents'},
             'effectiveActivation': dict(frame['effectiveActivation'])}
 
     def _seek_admitted(self, current, admission, position, index, replay_cache, check, display_only):

@@ -78,3 +78,24 @@ def test_public_receipts_cannot_edit_append_only_committed_ancestry():
     receipt['events'].append({'kind': 'caller annotation'})
     receipt['deltas']['removedCells'].append(1)
     assert engine.history[0] == expected
+
+
+def test_view_effect_fields_stay_exact_and_detached():
+    scene = SurgicalScene(np.zeros((2, 2, 2), np.uint16), np.eye(4), [], {}, {})
+    engine = SurgicalEngine(scene)
+    # The large flap-component field is display data and remains a detached
+    # public value even when its engine-owned JSON copy uses the faster path.
+    engine.state['flapComponents'] = [{'id': 'component', 'cells': [0, 1, 2],
+                                       'offset': [0., -0., 0.]}]
+    expected = copy.deepcopy(engine.state['flapComponents'])
+    actual = engine.view()
+    assert actual['flapComponents'] == expected
+    actual['flapComponents'][0]['cells'].append(7)
+    actual['flapComponents'][0]['offset'][0] = 2.
+    assert engine.state['flapComponents'] == expected
+    complete = engine.view()
+    compact = engine.view(_omit_fields=['flapComponents'])
+    assert compact == {name: value for name, value in complete.items() if name != 'flapComponents'}
+    assert engine.state['flapComponents'] == expected
+    with pytest.raises(ValueError, match='Unsupported display field omission'):
+        engine.view(_omit_fields=['removed'])

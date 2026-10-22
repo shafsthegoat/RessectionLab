@@ -30,6 +30,36 @@ def fixture(points=((9, 9, 9),), *, rate=2., enabled=True, material='tumor', spa
     return engine, cells
 
 
+def test_public_motion_stops_at_tissue_and_persists_pending_contact_before_clearance():
+    engine, cells = fixture()
+    original = engine.scene.labels.copy()
+    for action in [
+        {'slot': 'left', 'operation': 'exchange', 'instrument': 'cusa', 'duration': .1},
+        {'slot': 'left', 'operation': 'place', 'duration': .1,
+         'pose': {'position': [9., 9., 3.], 'quaternion': [0., 0., 0., 1.]}},
+    ]:
+        assert engine.step(action)['status'] == 'accepted'
+    stroke = {'slot': 'left', 'operation': 'apply', 'duration': .05,
+              'pose': {'position': [9., 9., 11.], 'quaternion': [0., 0., 0., 1.]}}
+    first = engine.step(stroke)
+    assert first['status'] == 'partial' and first['reasonCode'] == 'TISSUE_ASPIRATION_IN_PROGRESS'
+    assert engine.state['slots']['left']['position'][2] < 8.
+    assert not engine.state['removed'] and engine.state['cusaV3']['progressExact']
+    assert first['metrics']['collisions'] == 0
+    resumed = SurgicalEngine.restore(engine.scene, json.loads(json.dumps(engine.snapshot())))
+    for _ in range(8):
+        stroke['duration'] = .1
+        assert engine.step(stroke) == resumed.step(stroke)
+        if cells[0] in engine.state['removed']:
+            break
+    assert engine.state['removed'] == cells
+    assert engine.state['cusaV3']['aspiratedSolidMm3'] == 1.
+    assert engine.state['slots']['left']['position'][2] == 11.
+    assert not engine.state['cusaV3']['progressExact']
+    np.testing.assert_array_equal(engine.scene.labels, original)
+    assert engine.snapshot() == resumed.snapshot()
+
+
 def contact(engine, cells, seconds, **values):
     position = values.pop('position', [9., 9., 9.])
     active = values.pop('active', True)
