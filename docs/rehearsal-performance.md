@@ -738,6 +738,38 @@ validation, conversion and writes: 8.024 to 12.280 ms median. The 2.613-second,
 128,286,720-byte-RSS experiment executed no engine constructors or steps and
 changed no production source. That candidate was rejected.
 
+A separate ignored C structural-admission prototype then admitted complete
+strict built-in JSON trees under a conservative 16 MiB ASCII bound, followed by
+stock `json.dumps` and the existing compression format. Three balanced pairs
+per unchanged audited state measured **54.614 to 14.594 ms** early and **61.974
+to 17.749 ms** late, saving 40.020/44.224 ms. Complete raw compact JSON, decoded
+floating bits/key order and compressed bytes matched. The single 5.421-second
+run peaked at 235,552,768 bytes RSS, compiled once and performed 12 actual-state
+encodes plus 36 separate generated-fixture encodes, with no owner/engine
+construction or physics. Both declared component gates (10 ms and 20% lower
+median latency) passed. This is a material candidate, not a production change:
+mutation between admission and encoding, atomic callback behavior and transient
+memory need their own proof. The existing idle kernel/build and all production
+sources stayed unchanged. Evidence is `native-json-admission-prototype/`.
+
+Production design found a concrete atomicity blocker: the pinned CPython 3.12
+integer-to-decimal path can [check Python signals](https://github.com/python/cpython/blob/v3.12.12/Objects/longobject.c)
+during the stock whole-tree
+encoder. A signal handler could mutate the admitted tree before encoding ends.
+The prototype remains valid for its unchanged private inputs, but that design
+cannot yet be used as a general bounded production fast path. Signal checks
+have not been disabled or bypassed.
+
+A separate exact-source row-enumeration prototype replaced a repeated global
+mesh-row sort with bounded raster enumeration. Complete output-buffer hashes
+matched across 19 paired states and a forced fallback. Warm assembly improved
+79.405 to 74.202 ms (5.204 ms, 6.55%), below its declared 10 ms and 15% gate.
+It was stopped without a production change or retry. The single job took
+11.239 seconds with 740,425,728-byte sampled Node RSS, 3,056-byte transient
+scratch and unchanged 111,711,761-byte retained worker storage. These are CPU
+component measurements, not a GUI speedup. Evidence is
+`row-enumeration-prototype/{report,analysis}.json`.
+
 The actual endpoint screenshot shows the read-only 73/73 label and enlarged
 target/context. Both tools are withdrawn. The optional operative-field camera
 stayed pinned to the early accepted tool, leaving its axial slice outside image
@@ -772,6 +804,9 @@ were rehashed after the run and matched. No planning/cache authority was granted
 | Same-action CPU-submission ratio, excluding inter-action gaps | **1.272×** |
 | Guarded Python sidecar wall, including source opening/setup | 430.989 s |
 | Separate independent audit | 69.725 s |
+| 73 cold bridge executions, cumulative / p95 | 239.140 s / 8.518 s |
+| 1,076 warm bridge executions, cumulative / p95 | 100.412 s / 124.305 ms |
+| Warm CPU-submission interval, median / p95 | 125.8 / 219.9 ms |
 | Peak whole Python resident memory | 789,381,120 bytes |
 | Peak retained checkpoints / observations / receipts | 16,757,408 / 67,038,087 / 137,061 bytes |
 
