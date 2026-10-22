@@ -41,9 +41,14 @@ function checkedVascularAuthority(command,result){
 function hardBudgetStop(writeReceipt,kill,exit){
   try{writeReceipt();}finally{try{kill();}finally{exit(1);}}
 }
-module.exports={COUNTS,END_STATE,BRANCH,expectedSequence,submittedVascularPlayback,exactSequence,checkedVascularAuthority,hardBudgetStop};
+function isVascularBenchmarkEntry(runtime,filename,nodeMain=false){
+  const entry=runtime.argv?.[1];
+  if(typeof entry!=='string'||path.resolve(entry)!==path.resolve(filename))return false;
+  return runtime.versions?.electron?runtime.type==='browser':nodeMain===true;
+}
+module.exports={COUNTS,END_STATE,BRANCH,expectedSequence,submittedVascularPlayback,exactSequence,checkedVascularAuthority,hardBudgetStop,isVascularBenchmarkEntry};
 
-if(require.main===module)run();
+if(isVascularBenchmarkEntry(process,__filename,require.main===module))run();
 function run(){
   const {app,ipcMain,screen}=require('electron'),childProcess=require('node:child_process');
   if(['PLAYBACK_PYTHON_SOURCE','PLAYBACK_BRIDGE_SOURCE','PLAYBACK_IMPORT_ONLY','PLAYBACK_ORBIT','PLAYBACK_FIELD_SIZES','PLAYBACK_PREFIX','PLAYBACK_CLOSE_TOOL'].some(name=>process.env[name]))throw Error('Full vascular gate requires current production source and its own dedicated controls; no substitutions/observer modes');

@@ -1,6 +1,6 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict');
-const {COUNTS,expectedSequence,submittedVascularPlayback,exactSequence,checkedVascularAuthority,hardBudgetStop}=require('./benchmark-surgical-vascular.cjs');
+const {COUNTS,expectedSequence,submittedVascularPlayback,exactSequence,checkedVascularAuthority,hardBudgetStop,isVascularBenchmarkEntry}=require('./benchmark-surgical-vascular.cjs');
 const options={mainToRendererOffset:100,startedRenderer:1000};
 const response=(position,frameIndex,stateId='shared')=>({command:'seekPrefixFrame',branchId:'full-vascular',position,frameIndex,stateId,started:1100+frameIndex,ms:10});
 const frame=(position,frameIndex,at=1200,stateId='shared')=>({at,serial:frameIndex+1,surgicalStateId:stateId,surgicalFrame:{branchId:'full-vascular',position,frameIndex}});
@@ -46,4 +46,19 @@ test('prefix frames require separate read-only authority and no editable directo
 
 test('hard wall watchdog kills and exits even if receipt or kill fails',()=>{
   for(const failing of ['write','kill']){const calls=[];assert.throws(()=>hardBudgetStop(()=>{calls.push('write');if(failing==='write')throw Error('generated disk failure');},()=>{calls.push('kill');if(failing==='kill')throw Error('generated kill failure');},code=>calls.push('exit'+code)));assert.deepEqual(calls,['write','kill','exit1']);}
+});
+
+test('Electron browser argv entry starts despite require.main being false',()=>{
+  const path=require('node:path'),filename=path.resolve(__dirname,'benchmark-surgical-vascular.cjs');
+  assert.equal(isVascularBenchmarkEntry({versions:{electron:'44.5.1'},type:'browser',argv:['Electron',filename]},filename,false),true);
+  assert.equal(isVascularBenchmarkEntry({versions:{electron:'44.5.1'},type:'browser',argv:['Electron',path.relative(process.cwd(),filename)]},filename,false),true);
+});
+test('mere imports, foreign browser entry and Electron renderers never start the harness',()=>{
+  const filename='/workspace/benchmark-surgical-vascular.cjs';
+  assert.equal(isVascularBenchmarkEntry({versions:{node:'26'},argv:['node','/workspace/tests.cjs']},filename,false),false);
+  assert.equal(isVascularBenchmarkEntry({versions:{node:'26'},argv:['node',filename]},filename,false),false);
+  assert.equal(isVascularBenchmarkEntry({versions:{electron:'44'},type:'browser',argv:['Electron','/workspace/main.cjs']},filename,false),false);
+  assert.equal(isVascularBenchmarkEntry({versions:{electron:'44'},type:'renderer',argv:['Electron',filename]},filename,true),false);
+  assert.equal(isVascularBenchmarkEntry({versions:{electron:'44'},type:'browser',argv:['Electron']},filename,true),false);
+  assert.equal(isVascularBenchmarkEntry({versions:{node:'26'},argv:['node',filename]},filename,true),true);
 });
