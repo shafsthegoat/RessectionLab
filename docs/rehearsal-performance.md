@@ -1168,6 +1168,7 @@ does not change primary playback timers or permit additional physics actions.
 For the separate full vascular qualification, use a fresh ignored directory:
 
 ```sh
+RESSECTIONLAB_PLAYBACK_RECEIPT_OBSERVER=1 \
 VASCULAR_FRAME_FIELD=1 \
 PLAYBACK_OUTPUT="$PWD/testcases/outputs/rl-readiness-20261022/rehearsal-vascular-check" \
 desktop/node_modules/.bin/electron desktop/electron/benchmark-surgical-vascular.cjs \
@@ -1178,8 +1179,11 @@ This permits exactly 73 original saved steps, once and in order; warm frame
 reads must execute none. It has a 600-second GUI watchdog and 3 GiB Python RSS
 ceiling, followed by a separate 180-second no-step audit. Do not run other CPU
 benchmarks or broad tests concurrently. It refuses frozen-code substitution,
-unexpected commands, resumed steps, altered sources and additional timing
-observers. `VASCULAR_FRAME_FIELD=1` performs one ordinary display-only operative
+unexpected commands, resumed steps, altered sources and other timing
+observers. The explicit receipt observer records a renderer callback before each
+frame result resolves to the app; matching requires its timestamp to precede
+the first CPU submission on that same renderer clock. Observer cost is included.
+`VASCULAR_FRAME_FIELD=1` performs one ordinary display-only operative
 field framing after an inserted tool is accepted; the camera then stays pinned.
 
 Local evidence remains under the ignored directory
@@ -1565,3 +1569,43 @@ was excluded. External wall was 187.937 seconds and sampled process-tree RSS
 1,483,866,112 bytes, below 240 seconds and 3 GiB. Evidence is
 `native-integer-python-full-v1.{json,log}`. Fresh full vascular application
 qualification with the new implementation/native identity remains pending.
+
+### V10 clock-association failure and observer repair
+
+The fresh v10 application run on `ee62a5b9` reached the exact saved endpoint and
+independently audited all 73 complete canonical rows and 1,149 observed states.
+It published 73 prepared packages, with no loads, misses, forbidden steps or
+authority promotion. All 552 bound files remained unchanged during the run.
+Nevertheless, **the original GUI qualification remains failed/inconclusive**:
+two submission gates rejected 101 receipt associations.
+
+Independent metadata analysis found all 1,149 raw renderer, completed-IPC and
+audited tuples in the same order, without missing entries or duplicates. The
+matcher estimated main-minus-renderer clock offset from a main sample taken
+before an asynchronous renderer sample. That lower bound produced conservative
+false negatives of 0.006–14.168 ms; a later bound differed by 18.975 ms. No
+tolerance or retrospective pass was applied. The three rate fields derived
+from those incomplete associations remain `null` and unavailable.
+
+The recorded main-process wall was 296.874 seconds for 202.569 simulated seconds
+(0.682×), which still misses the fresh 1× target. The Python session/audit took
+318.742/76.080 seconds with 713,375,744/568,410,112-byte peak RSS, within their
+600/180-second and 3 GiB caps. Endpoint pixels retain all three source MRI panes,
+but dense translucent context and glyphs still leave operative readability open.
+Raw evidence, independent clock diagnosis and the explicit failed summary remain
+under `desktop-full-vascular-integer-native-v10/`.
+
+The repaired harness uses an explicit benchmark-only preload callback. The
+callback records `performance.now()` in the renderer before the invoke result
+resolves onward to the app. Unique completed-IPC, renderer-receipt and CPU tuples
+must agree, and receipt time must be no later than first CPU submission. Missing,
+duplicate, backward or late proofs fail. Normal preload invocation retains its
+original promise when the startup flag is absent. This uses the callback bridge
+described in the [Electron contextBridge documentation](https://www.electronjs.org/docs/latest/api/context-bridge).
+
+All **230 Electron main tests** passed in 1.166 seconds; external wall was
+2.015 seconds with 695,156,736-byte sampled process-tree RSS, below 90 seconds
+and 1.5 GiB. Independent static review cleared observer ordering, identity,
+lifecycle and fallback behavior. Receipt:
+`native-integer-main-receipt-v1.{json,log}`. One fresh v11 qualification with
+the corrected observer remains pending; v10 is preserved unchanged.

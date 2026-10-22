@@ -130,7 +130,11 @@ receipts. Analysis SHA-256 values are
 No policy or optimizer ran in this pair. The two earlier fixture updates remain
 disclosed in [rl-readiness.md](rl-readiness.md).
 
-To reuse this Mac's already qualified prepared data with its exact native modes:
+The following command is historical for the exact v7/v8 implementation. Later
+Python/native changes invalidate that cache and its old idle build; it is not a
+current-checkout launch command. New builds/preparation must use fresh directories.
+
+To reproduce that earlier Mac configuration on its matching source version:
 
 ```sh
 RESSECTIONLAB_IDLE_THERMAL_BUILD="$PWD/testcases/outputs/rl-readiness-20261022/idle-native-production-build/build-receipt.json" \

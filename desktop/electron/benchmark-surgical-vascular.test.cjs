@@ -1,35 +1,60 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict');
 const {COUNTS,expectedSequence,submittedVascularPlayback,exactSequence,checkedVascularAuthority,hardBudgetStop,isVascularBenchmarkEntry,vascularPreparedOnly,vascularStartButton,vascularPreparationChecks}=require('./benchmark-surgical-vascular.cjs');
-const options={mainToRendererOffset:100,startedRenderer:1000};
+const options={startedRenderer:1000};
 const response=(position,frameIndex,stateId='shared')=>({command:'seekPrefixFrame',branchId:'full-vascular',position,frameIndex,stateId,started:1100+frameIndex,ms:10});
 const frame=(position,frameIndex,at=1200,stateId='shared')=>({at,serial:frameIndex+1,surgicalStateId:stateId,surgicalFrame:{branchId:'full-vascular',position,frameIndex}});
+const received=(requests)=>requests.map((row,index)=>({command:row.command,branchId:row.branchId,position:row.position,frameIndex:row.frameIndex,stateId:row.stateId,notificationSerial:index+1,receivedAt:1030+index}));
+const submitted=(requests,frames,extra={})=>submittedVascularPlayback(requests,frames,{...options,rendererReceipts:received(requests),...extra});
 test('predeclared full vascular sequence includes all starts/microsteps/finalizations',()=>{
   const rows=expectedSequence();assert.equal(COUNTS.length,73);assert.equal(rows.length,1149);
   assert.deepEqual(rows[0],{branchId:'full-vascular',position:0,frameIndex:0});assert.deepEqual(rows.at(-1),{branchId:'full-vascular',position:72,frameIndex:2});
 });
 test('all-action matcher preserves identical hashes on different observed ordinals and boundaries',()=>{
   const r=[response(0,1),response(0,2),response(1,0)];const f=[frame(0,1),frame(0,2),frame(0,2,1201),frame(1,0,1202)];
-  const shown=submittedVascularPlayback(r,f,options);assert.deepEqual(shown.map(x=>[x.position,x.frameIndex]),[[0,1],[0,2],[1,0]]);assert.equal(shown.length,3);
+  const shown=submitted(r,f);assert.deepEqual(shown.map(x=>[x.position,x.frameIndex]),[[0,1],[0,2],[1,0]]);assert.equal(shown.length,3);
 });
 test('unmatched physical state/cpu draw before completed receipt remains an explicit failure',()=>{
-  const rows=submittedVascularPlayback([response(0,0)],[frame(0,0,1001),frame(0,0,1200)],options);
+  const rows=submitted([response(0,0)],[frame(0,0,1001),frame(0,0,1200)]);
   assert.equal(rows[0].unmatched,true);assert.equal(exactSequence(rows,[{branchId:'full-vascular',position:0,frameIndex:0}]),false);
 });
 test('ordered returns/refinement and serial refetch do not mask backwards CPU admissions',()=>{
   const r=[response(0,0),response(0,1),{...response(0,1),started:1110}];const f=[frame(0,0),frame(0,1,1201),frame(0,0,1202)];
-  const rows=submittedVascularPlayback(r,f,options);assert.deepEqual(rows.map(x=>x.frameIndex),[0,1,0]);assert.equal(exactSequence(rows,[{branchId:'full-vascular',position:0,frameIndex:0},{branchId:'full-vascular',position:0,frameIndex:1}]),false);
+  const rows=submitted(r,f);assert.deepEqual(rows.map(x=>x.frameIndex),[0,1,0]);assert.equal(exactSequence(rows,[{branchId:'full-vascular',position:0,frameIndex:0},{branchId:'full-vascular',position:0,frameIndex:1}]),false);
 });
 test('full exact sequence also requires the independently audited fresh state identities',()=>{
   const expected=expectedSequence().map((r,i)=>({...r,stateId:'state'+i}));const requests=expected.map(r=>({...r,command:'seekPrefixFrame',started:1100,ms:10}));
   const frames=expected.map((r,i)=>({at:1200+i,serial:i,surgicalStateId:r.stateId,surgicalFrame:r}));
-  const rows=submittedVascularPlayback(requests,frames,options);assert.equal(exactSequence(rows,expected),true);
+  const rows=submitted(requests,frames);assert.equal(exactSequence(rows,expected),true);
   assert.equal(exactSequence(rows.map((r,i)=>i===1100?{...r,stateId:'altered'}:r),expected),false);
 });
 test('lookahead does not count, wrong authority does not match, and foreign branch draws fail',()=>{
-  assert.deepEqual(submittedVascularPlayback([response(0,0),response(0,1)],[frame(0,0,999)],options),[]);
-  const rows=submittedVascularPlayback([{...response(0,0),command:'seekFrame'}],[frame(0,0)],options);assert.equal(rows[0].unmatched,true);
-  const foreign=frame(0,0);foreign.surgicalFrame.branchId='other';assert.equal(submittedVascularPlayback([response(0,0)],[foreign],options)[0].unmatched,true);
+  assert.deepEqual(submitted([response(0,0),response(0,1)],[frame(0,0,999)]),[]);
+  const rows=submitted([{...response(0,0),command:'seekFrame'}],[frame(0,0)]);assert.equal(rows[0].unmatched,true);
+  const foreign=frame(0,0);foreign.surgicalFrame.branchId='other';assert.equal(submitted([response(0,0)],[foreign])[0].unmatched,true);
+});
+
+test('receipt causality uses renderer timestamps despite unrelated main clock origins',()=>{
+  const requests=[{...response(0,0),started:900000,ms:5000}];
+  const rows=submitted(requests,[frame(0,0)]);
+  assert.equal(rows[0].unmatched,undefined);assert.equal(rows[0].rendererReceivedAt,1030);
+  assert.equal(rows[0].receiptNotificationSerial,1);
+});
+test('missing, late, wrong-state and ambiguous renderer receipt proofs fail',()=>{
+  const requests=[response(0,0)],frames=[frame(0,0)];
+  for(const rendererReceipts of [[],[{...received(requests)[0],receivedAt:1200.001}],
+    [{...received(requests)[0],stateId:'other'}],received([...requests,...requests])]){
+    assert.equal(submitted(requests,frames,{rendererReceipts})[0].unmatched,true);
+  }
+  assert.equal(submitted([...requests,...requests],frames)[0].unmatched,true);
+  assert.equal(submitted(requests,frames,{rendererReceipts:[{...received(requests)[0],receivedAt:1200}]})[0].unmatched,undefined);
+});
+test('renderer notification sequence cannot move backwards or reuse a serial',()=>{
+  const requests=[response(0,0),response(0,1)],frames=[frame(0,0),frame(0,1,1201)];
+  for(const patch of [{notificationSerial:1},{receivedAt:1029},{notificationSerial:0}]){
+    const proof=received(requests);proof[1]={...proof[1],...patch};
+    assert(submitted(requests,frames,{rendererReceipts:proof}).every(row=>row.unmatched));
+  }
 });
 
 test('realistic imported endpoint can retain original read-only director metadata',()=>{

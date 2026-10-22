@@ -10,19 +10,32 @@ const NATIVE_SHA='095659e54f381355e8f5655b6c5907990b2ac4767dc9ce58297e3bc4d6f326
 const hash=file=>crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
 const tuple=row=>JSON.stringify([row.branchId,row.position,row.frameIndex,row.stateId]);
 function expectedSequence(){return COUNTS.flatMap((count,position)=>Array.from({length:count},(_,frameIndex)=>({branchId:BRANCH,position,frameIndex})));}
-function submittedVascularPlayback(requests,frames,{mainToRendererOffset,startedRenderer}){
+function submittedVascularPlayback(requests,frames,{rendererReceipts=[],startedRenderer}){
   const delivered=new Map();
   for(const row of requests){
     if(row.command!=='seekPrefixFrame'||row.error||row.branchId!==BRANCH||!Number.isInteger(row.position)||!Number.isInteger(row.frameIndex)||typeof row.stateId!=='string'||!Number.isFinite(row.started)||!Number.isFinite(row.ms))continue;
     const key=tuple(row);if(!delivered.has(key))delivered.set(key,[]);delivered.get(key).push(row);
+  }
+  // The callback runs in the renderer before the invoke promise resolves to
+  // the app. Its clock is the same one used by anatomy-frame. Main-process
+  // timing remains separate; an asynchronous clock-offset estimate cannot
+  // establish completion order for fast submissions.
+  const receipts=new Map();let previousSerial=0,previousAt=-Infinity,valid=true;
+  for(const row of rendererReceipts){
+    if(row.command!=='seekPrefixFrame'||row.branchId!==BRANCH||!Number.isInteger(row.position)||!Number.isInteger(row.frameIndex)||typeof row.stateId!=='string'||!Number.isFinite(row.receivedAt)||!Number.isInteger(row.notificationSerial)||row.notificationSerial<=previousSerial||row.receivedAt<previousAt){valid=false;break;}
+    previousSerial=row.notificationSerial;previousAt=row.receivedAt;
+    if(row.receivedAt<startedRenderer)continue;
+    const key=tuple(row);if(!receipts.has(key))receipts.set(key,[]);receipts.get(key).push(row);
   }
   const result=[];
   for(const frame of frames){
     if(!Number.isFinite(frame.at)||frame.at<startedRenderer||!frame.surgicalFrame)continue;
     const identity={...frame.surgicalFrame,stateId:frame.surgicalStateId};
     const prior=result.at(-1);if(prior&&tuple(prior)===tuple(identity))continue;
-    const row=delivered.get(tuple(identity))?.find(row=>row.started+row.ms-mainToRendererOffset<=frame.at);
-    result.push(row?{...row,firstSubmittedAt:frame.at,submissionSerial:frame.serial}:{...identity,firstSubmittedAt:frame.at,submissionSerial:frame.serial,unmatched:true});
+    const candidates=delivered.get(tuple(identity)),received=receipts.get(tuple(identity));
+    const receipt=valid&&received?.length===1&&received[0].receivedAt<=frame.at?received[0]:null;
+    const row=receipt&&candidates?.length===1?candidates[0]:null;
+    result.push(row?{...row,rendererReceivedAt:receipt.receivedAt,receiptNotificationSerial:receipt.notificationSerial,firstSubmittedAt:frame.at,submissionSerial:frame.serial}:{...identity,firstSubmittedAt:frame.at,submissionSerial:frame.serial,unmatched:true});
   }
   return result;
 }
@@ -64,6 +77,7 @@ module.exports={COUNTS,END_STATE,BRANCH,expectedSequence,submittedVascularPlayba
 if(isVascularBenchmarkEntry(process,__filename,require.main===module))run();
 function run(){
   const {app,ipcMain,screen}=require('electron'),childProcess=require('node:child_process');
+  if(process.env.RESSECTIONLAB_PLAYBACK_RECEIPT_OBSERVER!=='1')throw Error('Full vascular qualification requires explicit RESSECTIONLAB_PLAYBACK_RECEIPT_OBSERVER=1');
   const preparedOnly=vascularPreparedOnly(process.env.VASCULAR_PREPARED_ONLY);
   const configuredCache=process.env.RESSECTIONLAB_PREPARED_PREFIX_CACHE_DIRECTORY;
   const cacheDirectory=configuredCache?path.resolve(configuredCache):null;
@@ -174,14 +188,16 @@ function run(){
         if(lastResponse.branchId!==BRANCH){await set('select[aria-label="Surgical branch"]',BRANCH);await idle();}
         if(lastResponse.verification?.status!=='unverified-import'||lastResponse.branches.find(b=>b.id===BRANCH)?.steps!==73)throw Error('Must start from original unverified vascular endpoint');
         await set('select[aria-label="Replay speed"]','4');
-        await js(`(()=>{window.vascularFrames=[];window.vascularWork=[];window.vascularFailure=null;window.vascularField=null;window.vascularSubmitted=[];const expected=${JSON.stringify(expectedSequence())};
+        await js(`(()=>{window.vascularFrames=[];window.vascularWork=[];window.vascularFailure=null;window.vascularField=null;window.vascularSubmitted=[];window.vascularReceipts=[];const expected=${JSON.stringify(expectedSequence())};
+          if(typeof window.resectionApi.onSurgicalReceipt!=='function')throw Error('Explicit renderer receipt observer unavailable');
+          window.vascularReceiptCleanup=window.resectionApi.onSurgicalReceipt(row=>{const receivedAt=performance.now();if(window.vascularReceipts.length>=20000){window.vascularFailure='Renderer receipt evidence limit exceeded';throw Error(window.vascularFailure);}window.vascularReceipts.push({...row,receivedAt});});
           const readOnly=()=>{const prefix=document.querySelector('[aria-label="Reconstructed prefix"]');if(!prefix)return;const buttons=[...document.querySelectorAll('button')].filter(b=>['Apply','Preview','Branch','Undo','Redo','Reset'].includes(b.textContent.trim()));if(!buttons.length||buttons.some(b=>!b.disabled&&!b.closest('fieldset')?.disabled)){window.vascularFailure='Editable controls enabled during prefix';}};
           new MutationObserver(readOnly).observe(document.querySelector('.surgical-panel'),{subtree:true,childList:true,attributes:true});
           document.addEventListener('anatomy-frame',e=>{const f=e.detail;if(window.vascularFrames.length>=20000){window.vascularFailure='CPU frame evidence limit exceeded';return;}const identity=f.surgicalFrame;if(identity){const row={...identity,stateId:f.surgicalStateId,at:f.at,serial:f.serial},prior=window.vascularSubmitted.at(-1);if(!prior||JSON.stringify([prior.branchId,prior.position,prior.frameIndex,prior.stateId])!==JSON.stringify([row.branchId,row.position,row.frameIndex,row.stateId])){const target=expected[window.vascularSubmitted.length];if(!target||row.branchId!==target.branchId||row.position!==target.position||row.frameIndex!==target.frameIndex)window.vascularFailure='CPU observation tuple order differs';if(window.vascularSubmitted.length<1150)window.vascularSubmitted.push(row);}}window.vascularFrames.push({at:f.at,serial:f.serial,surgicalStateId:f.surgicalStateId,surgicalFrame:f.surgicalFrame,cpuMs:f.cpuMs,interactive:f.interactive,surfaceQuality:f.surfaceQuality,estimatedAllocation:f.estimatedAllocation,resources:f.resources});readOnly();});
           document.addEventListener('anatomy-work',e=>{if(window.vascularWork.length>=20000){window.vascularFailure='Worker evidence limit exceeded';return;}window.vascularWork.push({...e.detail,at:performance.now()});});})();`);
         report.playStarted=performance.now();report.playStartedRenderer=await js('performance.now()');const index=report.ipc.length;report.playbackStartIpcIndex=index;
         await click(vascularStartButton(preparedOnly));
-        const options={mainToRendererOffset:report.playStarted-report.playStartedRenderer,startedRenderer:report.playStartedRenderer};
+        const options={startedRenderer:report.playStartedRenderer};
         let count=0,lastProgressAt=-Infinity;
         while(performance.now()-report.playStarted<600000){
           await pause(100);
@@ -196,8 +212,11 @@ function run(){
           if(count===1149&&!evidence.playing&&!evidence.pending)break;
         }
         report.playEnded=performance.now();report.playEndedRenderer=await js('performance.now()');
-        Object.assign(report,await js(`({frames:window.vascularFrames,work:window.vascularWork,uiFailure:window.vascularFailure,displayedStateId:document.querySelector('.surgical-panel')?.dataset.stateId,visible:document.visibilityState,slicePositions:[...document.querySelectorAll('.rl-viewer-slice-position')].map(e=>e.textContent)})`));
-        report.submittedPlayback=submittedVascularPlayback(report.ipc.slice(index),report.frames,options);
+        Object.assign(report,await js(`({frames:window.vascularFrames,rendererReceipts:window.vascularReceipts,work:window.vascularWork,uiFailure:window.vascularFailure,displayedStateId:document.querySelector('.surgical-panel')?.dataset.stateId,visible:document.visibilityState,slicePositions:[...document.querySelectorAll('.rl-viewer-slice-position')].map(e=>e.textContent)})`));
+        report.rendererReceiptObserver={enabled:true,scope:'Explicit benchmark observer; renderer callback timestamps before invoke result resolves to app. Same renderer clock as anatomy-frame; observer cost INCLUDED.',notifications:report.rendererReceipts.length};
+        report.submittedPlayback=submittedVascularPlayback(report.ipc.slice(index),report.frames,{...options,rendererReceipts:report.rendererReceipts});
+        report.checks.exactRendererReceipts=report.rendererReceipts.length===1149;
+        await js('window.vascularReceiptCleanup()');
         report.playbackIpc=report.ipc.slice(index);report.ipcAtSnapshot=report.ipc.length;
         const last=report.submittedPlayback.at(-1);report.final=last;
         report.checks.exactTupleSequence=exactSequence(report.submittedPlayback);
@@ -224,8 +243,8 @@ function run(){
           [preparedOnly?'preparedActionLoadHandlerSeconds':'coldActionHandlerSeconds']:report.playbackIpc.filter(row=>row.command==='seekPrefixFrame'&&row.frameIndex===0).map(row=>({position:row.position,seconds:row.ms/1000})),
           meaning:(preparedOnly?'Full run includes prepared-action disk loads, validation and spool overhead; no fresh transitions. Submitted interval includes later action loads.':'Full run includes each cold action reconstruction and spool overhead. Submitted interval still contains later cold preparations;')+' Warm same-action IPC requests have frameIndex>=1. CPU timestamps are not compositor presentation.'};
       }catch(error){report.failure=error.stack;try{
-        Object.assign(report,await js(`({frames:window.vascularFrames??[],work:window.vascularWork??[],uiFailure:window.vascularFailure,displayedStateId:document.querySelector('.surgical-panel')?.dataset.stateId})`));
-        if(Number.isFinite(report.playStarted)&&Number.isFinite(report.playStartedRenderer)){report.playbackIpc=report.ipc.slice(report.playbackStartIpcIndex);report.submittedPlayback=submittedVascularPlayback(report.playbackIpc,report.frames,{mainToRendererOffset:report.playStarted-report.playStartedRenderer,startedRenderer:report.playStartedRenderer});report.final=report.submittedPlayback.at(-1);report.partialEvidence=true;}
+        Object.assign(report,await js(`({frames:window.vascularFrames??[],rendererReceipts:window.vascularReceipts??[],work:window.vascularWork??[],uiFailure:window.vascularFailure,displayedStateId:document.querySelector('.surgical-panel')?.dataset.stateId})`));
+        if(Number.isFinite(report.playStarted)&&Number.isFinite(report.playStartedRenderer)){report.playbackIpc=report.ipc.slice(report.playbackStartIpcIndex);report.submittedPlayback=submittedVascularPlayback(report.playbackIpc,report.frames,{rendererReceipts:report.rendererReceipts,startedRenderer:report.playStartedRenderer});report.final=report.submittedPlayback.at(-1);report.partialEvidence=true;}
         fs.writeFileSync(path.join(output,'failure.png'),(await window.webContents.capturePage()).toPNG());
       }catch(evidenceError){report.partialEvidenceError=String(evidenceError);}}
       await finish();
