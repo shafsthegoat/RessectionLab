@@ -833,3 +833,32 @@ class SurgicalEngine:
             else: result.step(action, check=check)
         if check is not None: check()
         return result
+
+
+# Definition-time originals for the drill's local pure-query fast path. Looking
+# up both sides on SurgicalEngine later would incorrectly admit a class patch.
+from . import geometry as _drill_contact_geometry
+from . import surgical_geometry_cache as _drill_contact_cache
+from .surgical_occupancy import MaterialOccupancy as _DrillContactOccupancy
+
+_DRILL_CONTACT_QUERY_ORIGINALS = (
+    SurgicalEngine, SurgicalEngine.__getattribute__,
+    tuple((name, method, method.__code__, method.__defaults__, method.__kwdefaults__)
+          for name in ('touched', 'cells', 'occupancy')
+          for method in (getattr(SurgicalEngine, name),)),
+    tuple((cls, cls.__getattribute__, tuple((name, vars(cls)[name]) for name in names)) for cls, names in (
+        (_drill_contact_cache.SurgicalCellCoverCache, ('query', '_frame_identity', '_candidate_grid')),
+        (GeometryScene, ('world_to_voxel', 'voxel_to_world', 'shape')),
+        (_DrillContactOccupancy, ('material_ids', '__getitem__')))),
+    tuple((namespace, name, function, function.__code__, function.__defaults__,
+           None if function.__kwdefaults__ is None else tuple(function.__kwdefaults__.items()))
+          for namespace, names in (
+              (globals(), ('capsule_voxel_indices',)),
+              (vars(_drill_contact_geometry), ('capsule_voxel_indices', '_vector', '_immutable',
+                  'point_segment_distances', '_segment_cell_distances', '_capsule_candidate_grid')),
+              (vars(_drill_contact_cache), ('immutable_array',)),
+              (vars(_drill_contact_cache.SurgicalCellCoverCache), ('query', '_frame_identity', '_candidate_grid')),
+              (vars(GeometryScene), ('world_to_voxel', 'voxel_to_world')),
+              ({'shape': GeometryScene.shape.fget}, ('shape',)),
+              (vars(_DrillContactOccupancy), ('material_ids', '__getitem__')))
+          for name in names for function in (namespace[name],)))

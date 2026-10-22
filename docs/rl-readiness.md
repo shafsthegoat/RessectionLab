@@ -304,6 +304,13 @@ laws, observations, rewards or RL authority. The two earlier fixture updates
 disclosed above remain part of this task's history; this guarded run performed
 no pilot training.
 
+The subsequent stock-engine drill query qualification passed **816 tests, with
+7 pilot tests skipped, in 118.18 seconds**. It includes stateful query-override
+fallbacks as well as the surgical/full-case and independent geometry selection;
+the same two Gymnasium advisories remain. No pilot opt-in was enabled. The
+optimization is limited to a single unchanged stock-engine contact search;
+read-only prefix engine subclasses retain the original query path.
+
 ## Generated native workspace companion
 
 The separate evaluation-only exporter creates an openable, explicitly labeled

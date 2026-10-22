@@ -490,6 +490,30 @@ Evidence: `backend-baseline.json`, `backend-digest-optimized.json`,
 `vascular-canonical-after.json`, `vascular-exact-trace-comparison.json`, and
 `primary-canonical-after-incomplete.json` in the ignored evidence directory.
 
+A later stock-engine drill contact search reuses one validated occupancy owner
+within that pure search. Every new search validates again after its first
+geometric query; effects and microsteps never share this lease. Definition-time
+method/kernel/helper identities, code and defaults admit only the finite stock
+Python query path. Instance/class/body replacements, custom cache/grid/owners
+and engine subclasses retain dynamic `touched` dispatch. The first geometric
+query still precedes occupancy validation. An independent review caught a
+replaceable-kernel gap in the first draft; the corrected guard and stateful
+override regressions passed before the patient comparison.
+
+Three balanced original action-2 pairs measured **4.251→3.985 seconds median**
+(6.26% less fresh step time). Two separate profiling trials reduced occupancy
+calls from 8,770 to 1,800; all 8,170 geometry/material queries and 7,270 bone
+queries remained unchanged. All eight complete outcomes, histories, snapshots
+and metrics matched the preserved canonical transition exactly, including
+endpoint `sha256:3c60100d51b55b4f1a16534e24c338d7fee685f12253eca972a76dca01585788`.
+The batch took 55.50 seconds with a 120-second cap. Each trial used a fresh
+stock engine/cache from the same authenticated prior-implementation boundary-2
+benchmark seed; this granted no current cache authority. Loading (0.859–0.918 s)
+and construction/seed restoration (0.049–0.051 s) were reported separately.
+This modest single-action gain does not qualify 10× matched full-workload
+throughput. Read-only prefix subclasses use the original path, so this result
+does not establish another GUI cold-preparation gain. No policy or optimizer ran.
+
 ## Gates that remain open
 
 * **Sustained full-operation playback at 1× remains unqualified.** The short
@@ -519,11 +543,12 @@ The latest October 22 validation passed 880 desktop tests: 182 main-process,
 474 renderer and 224 viewer tests. Build passed with the existing bundle-size
 advisory.
 
-The latest Python regression run passed **791 tests, with seven pilot tests
-skipped**, in 122.93 seconds, with two existing Gymnasium advisories. It includes
+The latest Python regression run passed **816 tests, with seven pilot tests
+skipped**, in 118.18 seconds, with two existing Gymnasium advisories. It includes
 surgical/full-case tests, independent geometry checks and the read-only prefix
 contracts, bounded encoder equivalence and exact retained-frame accounting.
-The pilot opt-in was not enabled.
+It also checks stock drill query reuse and dynamic fallback for replaced query
+dependencies. The pilot opt-in was not enabled.
 
 For a bounded current-production imported-endpoint check:
 
@@ -594,6 +619,11 @@ Local evidence remains under the ignored directory
 * `current-prefix-geometry-optimized/report.json`: final optimized-source
   functional prefix check, with concurrent-regression timing caveat.
 * `candidate-final-no-learning-tests.log`: final numerical regression receipt.
+* `pure-contact-original-action-comparison/report.json`: bounded eight-step
+  matched fresh original-action comparison with complete payload equality.
+* `pure-contact-generated-v2/{report.json,qualification.log}` and
+  `pure-contact-final-no-learning-tests.log`: focused dynamic-fallback and full
+  guarded numerical qualification, with 816 passed and seven pilots skipped.
 * `desktop-heavy-field-diagnostic/report.json`: later authenticated field-reuse
   functional/byte diagnostic.
 * `desktop-import-current/report.json` and branch PNGs: current-production

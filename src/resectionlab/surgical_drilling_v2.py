@@ -11,6 +11,7 @@ cool=False for each drill, and end_step).
 from __future__ import annotations
 import copy
 import math
+from types import MethodType
 import numpy as np
 
 MODEL = 'work-limited-drill-v2'
@@ -181,6 +182,48 @@ def apply(engine, cells, dt, params, *, cool=True):
     return events, new, contact
 
 
+def _stock_contact_owner(owner, anchor):
+    cls, getattribute, methods = anchor
+    if type(owner) is not cls or cls.__getattribute__ is not getattribute:
+        return False
+    instance = object.__getattribute__(owner, '__dict__')
+    return not any(name in instance or vars(cls).get(name) is not original for name, original in methods)
+
+
+def _stock_contact_queries(engine):
+    """Admit only definition-time stock methods on an ordinary stock engine.
+
+    Subclasses and public instance/class replacements keep dynamic touched
+    dispatch, including custom queries that change occupancy between samples.
+    The lazy import avoids making the mechanics modules depend on import order.
+    """
+    from .surgical_engine import _DRILL_CONTACT_QUERY_ORIGINALS
+    cls, getattribute, methods, owners, dependencies = _DRILL_CONTACT_QUERY_ORIGINALS
+    if type(engine) is not cls or cls.__getattribute__ is not getattribute:
+        return False
+    instance = object.__getattribute__(engine, '__dict__')
+    for name, original, code, defaults, kwdefaults in methods:
+        # Do not invoke a replacement descriptor merely to test admission.
+        if name in instance or cls.__dict__.get(name) is not original:
+            return False
+        method = getattr(engine, name)
+        if (type(method) is not MethodType or method.__self__ is not engine or
+                method.__func__ is not original or original.__code__ is not code or
+                original.__defaults__ is not defaults or original.__kwdefaults__ is not kwdefaults):
+            return False
+    # The ordinary cover cache permits replacement kernels/helpers. Such
+    # callbacks can change material state, even with stock engine methods.
+    for namespace, name, original, code, defaults, kwdefaults in dependencies:
+        if (namespace.get(name) is not original or original.__code__ is not code or
+                original.__defaults__ is not defaults or
+                (None if original.__kwdefaults__ is None else tuple(original.__kwdefaults__.items())) != kwdefaults):
+            return False
+    if (not _stock_contact_owner(engine._cell_cover_cache, owners[0]) or
+            not _stock_contact_owner(engine.grid, owners[1])):
+        return False
+    return True
+
+
 def contact_limited_pose(engine, previous, requested, radius):
     """Return reachable position and first-contact cells; do not mutate state.
 
@@ -188,11 +231,26 @@ def contact_limited_pose(engine, previous, requested, radius):
     contact blocks forward travel until cleared; withdrawal is left to the
     integrator's withdrawal validation. Bisection localizes first contact, and
     stepping at <= min spacing/4 prevents skipping a voxel on a long path.
+    Only stock queries reuse one validated occupancy during this pure search;
+    every new contact search revalidates it after its first geometric query.
     """
     previous = np.asarray(previous, dtype=float); requested = np.asarray(requested, dtype=float)
+    stock_queries = _stock_contact_queries(engine)
+    owner = None
     def bone_at(point):
+        nonlocal owner, stock_queries
         labels = engine.scene.labels.ravel()
-        return sorted(i for i in engine.touched(point, point, radius)
+        if stock_queries:
+            # Keep touched's geometry-before-occupancy order, including errors.
+            cells = engine.cells(point, point, radius)
+            if owner is None:
+                owner = engine.occupancy()
+                from .surgical_engine import _DRILL_CONTACT_QUERY_ORIGINALS
+                stock_queries = _stock_contact_owner(owner, _DRILL_CONTACT_QUERY_ORIGINALS[3][2])
+            touched = owner.material_ids(cells)
+        else:
+            touched = engine.touched(point, point, radius)
+        return sorted(i for i in touched
                       if labels[i] and engine.by_label[int(labels[i])]['material'] == 'bone')
     initial = bone_at(previous)
     if initial: return previous.copy(), initial
