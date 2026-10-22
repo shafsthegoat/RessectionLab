@@ -505,6 +505,55 @@ def test_light_implementation_exception_permanently_invalidates_prefix_receipts(
         replay.seek_frame(0, 0)
 
 
+def test_codec_identity_drift_permanently_invalidates_warm_prefix(monkeypatch):
+    engine, _ = episode()
+    replay = SurgicalPrefixReplay(engine.scene, engine.snapshot())
+    replay.seek(1)
+    original = prefix._native_json.strict_live_identity
+    def changed(*, full=False):
+        raise ValueError('Native JSON build changed')
+    monkeypatch.setattr(prefix._native_json, 'strict_live_identity', changed)
+    with pytest.raises(prefix.PrefixInvalidated, match='implementation changed'):
+        replay.seek_frame(0, 0)
+    monkeypatch.setattr(prefix._native_json, 'strict_live_identity', original)
+    with pytest.raises(prefix.PrefixInvalidated, match='implementation changed'):
+        replay.seek(1)
+
+
+def test_codec_seal_checks_full_identity_before_action_publication(monkeypatch):
+    calls = []
+    original = prefix._native_json.strict_live_identity
+    def checked(*, full=False):
+        calls.append(full)
+        return original(full=full)
+    monkeypatch.setattr(prefix._native_json, 'strict_live_identity', checked)
+    assert prefix._prefix_seal(full=True) == prefix._prefix_seal()
+    calls.clear()
+    engine, _ = episode()
+    replay = SurgicalPrefixReplay(engine.scene, engine.snapshot())
+    assert calls.count(True) >= 1
+    calls.clear()
+    replay.seek(1)
+    assert True in calls
+    calls.clear()
+    replay.seek_frame(0, 0)
+    assert calls and not any(calls)
+
+
+def test_prefix_seal_rejects_imported_alias_with_forged_globals(monkeypatch):
+    from types import FunctionType
+    engine, _ = episode()
+    replay = SurgicalPrefixReplay(engine.scene, engine.snapshot())
+    replay.seek(1)
+    original = prefix.freeze_json
+    forged = FunctionType(original.__code__, dict(original.__globals__),
+                          original.__name__, original.__defaults__, original.__closure__)
+    forged.__module__ = original.__module__
+    monkeypatch.setattr(prefix, 'freeze_json', forged)
+    with pytest.raises(prefix.PrefixInvalidated, match='implementation changed'):
+        replay.seek_frame(0, 0)
+
+
 def test_prefix_frame_acknowledgements_hydrate_exact_full_view_and_hash_only_once(monkeypatch):
     engine = bone_episode()
     counts = {'identities': 0, 'omitted': []}

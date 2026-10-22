@@ -373,6 +373,18 @@ planning/RL resume authority, compositor timing or a training result. The full
 primary GUI replay and engineering gates remain open; see
 [rehearsal-performance.md](rehearsal-performance.md) for commands and limits.
 
+The subsequent optional prefix JSON snapshot qualification passed **929 tests
+in 161.32 seconds**, with the same two Gymnasium advisories. The pilot module
+was excluded entirely. Exact bytes, strict bounds, callback/fallback behavior,
+native identity drift and prefix integration were covered. External wall time
+was 161.721 seconds (<240), sampled process-tree RSS 1,606,320,128 bytes (<3 GiB),
+and all 259 bound source/test files stayed unchanged. This capture optimization
+grants no learning, planning or canonical authority. No learning path was selected
+in this qualification; the earlier two fixture updates remain disclosed above.
+The prior v4 GUI result does not qualify this later codec. Explicit build/launch
+commands and platform/scratch limits are in
+[rehearsal-performance.md](rehearsal-performance.md).
+
 ## Generated native workspace companion
 
 The separate evaluation-only exporter creates an openable, explicitly labeled

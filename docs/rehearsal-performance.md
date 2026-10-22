@@ -643,6 +643,67 @@ qualify this later implementation. The separately repeated qualification below
 binds the later source and selected native build. Full-primary playback and the
 remaining engineering gates stay open.
 
+## Optional native prefix JSON snapshots
+
+A separate optional C writer preserves the exact compact JSON bytes used by
+prefix frame, checkpoint and receipt capture. It admits only exact built-in
+trees within depth 64, one million expanded nodes and a 16 MiB ASCII ceiling.
+Unsupported inputs retain the legacy encoder. Generic encoding callbacks also
+retain their previous behavior; the native snapshot is selected explicitly only
+for capture-owned trees. State-ID rehashing is unchanged.
+
+The writer takes its complete immutable snapshot before returning to Python
+chunking, compression or growth callbacks. It uses captured stock C string and
+finite-float formatting helpers and its own signed-int64 decimal conversion.
+This avoids the integer signal checks that blocked the earlier whole-tree stock
+encoder prototype. The writer checks pending signals before final admission,
+then completes source reads without an interpreter callback. The critical write
+neither disables signals nor calls Python. Conservative recursion
+headroom and strict runtime/helper identity checks bound this private-ABI path.
+
+The revised ignored writer prototype used the same two independently audited
+v3 states: **55.884→11.090 ms** early and **63.086→14.003 ms** late, with exact
+raw JSON, float bits, order and compressed bytes. Its twelve actual-state
+pipelines, 36 small generated pipelines and pending-signal fixture finished in
+5.686 seconds with 238,452,736-byte sampled process-tree RSS (<30 s/1 GiB).
+The signal fixture kept 200,000 pre-handler floats intact during a 51.282 ms
+write; the handler mutated the source only after the snapshot. This is component
+evidence, not a fresh-engine or application throughput measurement.
+
+The production build is restricted to **CPython 3.12.12/macOS arm64**. Selection
+is fixed at import through `RESSECTIONLAB_PREFIX_JSON_BUILD`; unset means Python
+mode. Invalid configuration or subsequent source/build/binary/runtime drift
+fails closed. The prefix seal binds the adapter, recipe and selected identity.
+Full checks bind runtime image bytes at owner admission and action publication;
+warm reads check loaded helpers and file identity metadata. No planning, RL or
+canonical authority is granted. The 48 MiB logical native scratch allowance plus
+bounded C stack/metadata is separate from input graphs, compression, retained
+storage and process RSS. Allocation-error cleanup was source-reviewed, without
+allocator fault injection.
+
+The single explicit build took **0.441 seconds** (0.301 s compiler) and produced
+a 70,464-byte binary. The final guarded qualification passed **929 tests in
+161.32 seconds**, with two existing Gymnasium advisories. The pilot module was
+excluded entirely. The parent selected the native JSON codec; generated child
+checks covered both optional builds and Python fallbacks. External wall time was
+161.721 seconds (<240), sampled process-tree RSS 1,606,320,128 bytes (<3 GiB), and
+all 259 bound source/test files stayed unchanged. An earlier focused run passed
+139 checks but hit one test-fixture `E2BIG` before launching a child, caused by
+an oversized pytest parameter ID; concise IDs fixed the fixture. Its failure is
+preserved. These checks selected no learning path; the earlier two fixture
+updates remain disclosed above.
+
+Build into a fresh ignored directory, then select its receipt explicitly:
+
+```sh
+PYTHONPATH=src .venv/bin/python -m resectionlab.build_surgical_prefix_json_native --output-dir testcases/outputs/prefix-json-local
+RESSECTIONLAB_PREFIX_JSON_BUILD="$PWD/testcases/outputs/prefix-json-local/build-receipt.json" ./scripts/open_shared_rehearsal.sh --allow-primary-display
+```
+
+The idle-cooling build variable is independent; set both to select both kernels.
+Other runtimes and packaged sidecars need separate qualification. The v4 GUI
+receipt below predates this codec and does not establish its application gain.
+
 ## Complete vascular GUI replay
 
 The production application at `cc868257` completed the original **73-action vascular

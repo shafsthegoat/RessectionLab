@@ -19,9 +19,11 @@ import math
 from pathlib import Path
 import secrets
 import sys
-from types import MappingProxyType
+from types import MappingProxyType, ModuleType
 import zlib
 
+from . import build_surgical_prefix_json_native as _json_native_recipe
+from . import surgical_prefix_json_native as _native_json
 from .core import freeze_json, semantic_digest, thaw_json
 from .surgical_engine import MAX_STEPS, SCHEMA, SurgicalEngine
 
@@ -54,25 +56,45 @@ def _light_seal():
     return light_implementation_seal()
 
 
-def _prefix_seal():
-    """Bind this module's loaded code/defaults, absent from legacy _MODULES."""
+def _prefix_seal(*, full=False):
+    """Bind prefix-only code and selected codec without numerical admission.
+
+    Large standard-library image bytes are checked on admission/publication;
+    light reads retain their identities and check image metadata/raw helpers.
+    The returned digest is identical for both successful validation levels.
+    """
     from .surgical_verified_cache import _code_signature
-    functions = []
-    for name, value in sorted(globals().items()):
-        if inspect.isfunction(value) and value.__module__ == __name__:
-            functions.append((name, value))
-        elif inspect.isclass(value) and value.__module__ == __name__:
-            for key, method in sorted(vars(value).items()):
-                if isinstance(method, (classmethod, staticmethod)):
-                    method = method.__func__
-                elif isinstance(method, property):
-                    method = method.fget
-                if inspect.isfunction(method):
-                    functions.append((name + '.' + key, method))
-    digest = hashlib.sha256(Path(__file__).read_bytes())
-    for name, function in functions:
-        digest.update(json.dumps([name, _code_signature(function.__code__),
-            repr(function.__defaults__), repr(function.__kwdefaults__)], separators=(',', ':')).encode())
+    if any(type(module) is not ModuleType for module in (_native_json, _json_native_recipe)):
+        raise ValueError('Prefix codec module differs')
+    identity = _native_json.strict_live_identity(full=full)
+    modules = [(__name__, __file__, globals()),
+               *[(module.__name__, module.__file__, vars(module))
+                 for module in (_native_json, _json_native_recipe)]]
+    digest = hashlib.sha256(b'resectionlab.prefix.codec-seal.v2\0')
+    for module_name, filename, namespace in modules:
+        digest.update(module_name.encode() + b'\0')
+        digest.update(hashlib.sha256(Path(filename).read_bytes()).digest())
+        functions = []
+        for name, value in sorted(namespace.items()):
+            # Include imported function aliases: replacing an alias must not
+            # disappear from the inventory solely because __module__ differs.
+            if inspect.isfunction(value):
+                functions.append((name, value))
+            elif inspect.isclass(value) and value.__module__ == module_name:
+                for key, method in sorted(vars(value).items()):
+                    if isinstance(method, (classmethod, staticmethod)):
+                        method = method.__func__
+                    elif isinstance(method, property):
+                        method = method.fget
+                    if inspect.isfunction(method):
+                        functions.append((name + '.' + key, method))
+        for name, function in functions:
+            source_module = sys.modules.get(function.__module__)
+            if source_module is None or function.__globals__ is not vars(source_module):
+                raise ValueError('Prefix codec function globals differ')
+            digest.update(json.dumps([name, function.__module__, _code_signature(function.__code__),
+                repr(function.__defaults__), repr(function.__kwdefaults__)], separators=(',', ':')).encode())
+    digest.update(json.dumps(identity, sort_keys=True, separators=(',', ':'), allow_nan=False).encode())
     return digest.hexdigest()
 
 
@@ -182,7 +204,7 @@ def _c_json_bound(value, remaining=16384, active=None):
     return size if size <= remaining else None
 
 
-def _json_chunks(value, raw_limit):
+def _json_chunks(value, raw_limit, *, _owned_snapshot=False):
     """Compact JSON with bounded C batches for exact native JSON subtrees.
 
     Container traversal follows JSONEncoder's insertion order, basic key
@@ -190,7 +212,17 @@ def _json_chunks(value, raw_limit):
     are batched speculatively. A batch has at most 512 entries and a conservative
     full encoded-byte bound of 16 KiB, including escaping and delimiters.
     Other scalars retain the standard encoder's conversion/error behavior.
+    Only explicitly owned internal inputs may use the optional atomic native
+    snapshot; the generic helper retains its streaming callback behavior.
     """
+    if _owned_snapshot:
+        snapshot = _native_json.try_encode(value, raw_limit)
+        if snapshot is not None:
+            # The native call has already completed its immutable snapshot.
+            # Growth/cancellation callbacks cannot interleave with source reads.
+            for offset in range(0, len(snapshot), 16384):
+                yield snapshot[offset:offset + 16384]
+            return
     encoder = json.JSONEncoder(separators=(',', ':'), allow_nan=False)
     active = set()
 
@@ -294,8 +326,8 @@ def _json_chunks(value, raw_limit):
     yield from walk(value)
 
 
-def _encode(value, *, compressed_limit, raw_limit, on_growth=None):
-    """Bound compressed growth while streaming; never buffer a whole action."""
+def _encode(value, *, compressed_limit, raw_limit, on_growth=None, _owned_snapshot=False):
+    """Bound compressed growth; optional owned snapshots have a separate cap."""
     compressor = zlib.compressobj(1)
     output = bytearray()
     pending = bytearray()
@@ -306,7 +338,7 @@ def _encode(value, *, compressed_limit, raw_limit, on_growth=None):
         if on_growth is not None:
             on_growth(len(output) + len(chunk))
         output.extend(chunk)
-    for text in _json_chunks(value, raw_limit):
+    for text in _json_chunks(value, raw_limit, _owned_snapshot=_owned_snapshot):
         raw = text.encode()
         raw_bytes += len(raw)
         if raw_bytes > raw_limit:
@@ -352,7 +384,8 @@ class _FrameStage:
         blob = _encode(engine.state, compressed_limit=max(0, self.owner._max_frame_bytes - base
                        - self.owner._stream_metadata_bytes),
                        raw_limit=self.owner._max_json_bytes,
-                       on_growth=lambda size: self.owner._frame_room(base + size))
+                       on_growth=lambda size: self.owner._frame_room(base + size),
+                       _owned_snapshot=True)
         row['state'] = blob
         if 'flapComponents' in engine.state:
             # The complete state's streaming encode has already enforced the
@@ -442,7 +475,7 @@ class SurgicalPrefixReplay:
         if self._implementation is None:
             raise ValueError('Prefix replay implementation fingerprint unavailable')
         self._implementation_light = _light_seal()
-        self._prefix_implementation = _prefix_seal()
+        self._prefix_implementation = _prefix_seal(full=True)
         self._max_new_actions = max_new_actions
         self._max_checkpoint_bytes = max_checkpoint_bytes
         self._max_frame_bytes = max_frame_bytes
@@ -517,10 +550,11 @@ class SurgicalPrefixReplay:
             raise PrefixInvalidated(self._invalidated) from None
         try:
             light = _light_seal()
-        except ValueError as error:
+            prefix = _prefix_seal(full=full)
+        except (ValueError, OSError, AttributeError, TypeError) as error:
             self._invalidated = 'Prefix replay implementation changed; create a new owner'
             raise PrefixInvalidated(self._invalidated) from error
-        if (light != self._implementation_light or _prefix_seal() != self._prefix_implementation):
+        if (light != self._implementation_light or prefix != self._prefix_implementation):
             self._invalidated = 'Prefix replay implementation changed; create a new owner'
             raise PrefixInvalidated(self._invalidated)
         if full:
@@ -532,7 +566,7 @@ class SurgicalPrefixReplay:
     def _checkpoint(self, position, engine):
         return {'position': position, 'stateId': engine.state_id,
                 'state': _encode(engine.state, compressed_limit=self._max_checkpoint_bytes,
-                                 raw_limit=self._max_json_bytes)}
+                                 raw_limit=self._max_json_bytes, _owned_snapshot=True)}
 
     def _put_checkpoint(self, position, engine, item=None):
         self._checkpoints = self._propose_checkpoint(position, engine, item)
@@ -626,7 +660,8 @@ class SurgicalPrefixReplay:
         return hashlib.sha256(context + b'\0' + raw).digest()
 
     def _pack_receipt(self, value, *, index=None, display=False):
-        blob = _encode(value, compressed_limit=self._max_history_bytes, raw_limit=self._max_json_bytes)
+        blob = _encode(value, compressed_limit=self._max_history_bytes, raw_limit=self._max_json_bytes,
+                       _owned_snapshot=True)
         decoder = zlib.decompressobj()
         raw = decoder.decompress(blob, self._max_json_bytes + 1)
         if len(raw) > self._max_json_bytes or not decoder.eof or decoder.unused_data or decoder.unconsumed_tail:
@@ -721,6 +756,9 @@ class SurgicalPrefixReplay:
                 'historyReceiptsCompressed': True, 'displayRowsCompressed': self._display_row_projection is not None,
                 'maxMaterializedHistoryGraphBytes': self._max_json_bytes,
                 'materializedHistoryLimitMeaning': 'Per-graph limit; decoded, frozen and thawed output graphs may coexist; whole-process RSS is separate',
+                'maxNativeSnapshotAsciiBytes': 16 * 1024**2,
+                'nativeSnapshotScratchAllowanceBytes': 48 * 1024**2,
+                'nativeSnapshotMemoryMeaning': 'Optional per-call logical scratch, plus bounded C stack/metadata; input/state, compression, retained graphs and whole-process RSS are separate',
                 'immutableInputBytes': self._input_bytes,
                 'ownedImmutableInputBytes': 0 if self._borrowed_input else self._input_bytes,
                 'sharedImmutableInputBytes': self._input_bytes if self._borrowed_input else 0,

@@ -22,6 +22,33 @@ def encoded(value, **options):
                    raw_limit=options.pop('raw_limit', LIMIT), **options)
 
 
+def test_generic_encoder_keeps_native_snapshot_opt_in_and_growth_callback_contract(monkeypatch):
+    def forbidden(*_args):
+        raise AssertionError('Generic streaming unexpectedly selected an owned snapshot')
+    monkeypatch.setattr(prefix._native_json, 'try_encode', forbidden)
+    growth = []
+    value = {'values': list(range(4000))}
+    assert zlib.decompress(encoded(value, on_growth=growth.append)) == reference(value)
+    assert growth and growth == sorted(growth)
+
+
+def test_owned_snapshot_finishes_before_yield_and_preserves_chunk_and_raw_caps(monkeypatch):
+    def snapshot(value, _raw_limit):
+        return json.dumps(value, separators=(',', ':'), allow_nan=False)
+    monkeypatch.setattr(prefix._native_json, 'try_encode', snapshot)
+    value = {'values': list(range(8000)), 'tail': 'original'}
+    expected = reference(value)
+    stream = prefix._json_chunks(value, LIMIT, _owned_snapshot=True)
+    first = next(stream)
+    value['values'].clear()
+    value['tail'] = 'changed after snapshot'
+    fragments = [first, *stream]
+    assert max(map(len, fragments)) <= 16384
+    assert ''.join(fragments).encode() == expected
+    with pytest.raises(PrefixBudgetExceeded, match='Decoded JSON'):
+        encoded({'tooLarge': 'x' * 64}, raw_limit=16, _owned_snapshot=True)
+
+
 @pytest.mark.parametrize('value', [
     {}, [], (), None, True, False, 0, -0.0, 5.e-324, -1.7976931348623157e308,
     {'z': [0, -1, 2**63, 2**64, -2**65, True, None, -0.0], 'a': 'after z'},
