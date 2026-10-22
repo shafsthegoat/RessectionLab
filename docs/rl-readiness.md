@@ -262,11 +262,21 @@ They require an explicit `--run-rl-pilot-tests` option, which must not be used f
 this task. Ordinary broad pytest selections now retain readiness-only behavior.
 Regression coverage does not replace full patient replay or qualify calibration.
 
-With the opt-in guard active, the final default surgical/full-case Python
+With the opt-in guard active, the earlier default surgical/full-case Python
 qualification passed **586 tests, skipped 7 pilot tests, in 107.04 seconds** with
 the same two existing Gymnasium advisories. This guarded run performed no pilot
 updates; the two earlier fixture updates disclosed above remain part of this
 task's history.
+
+After the exact contact-grid, cleared-cell lookup and surface-normal changes at
+`7218b080`, the broader surgical/full-case and independent geometry selection
+passed **715 tests, skipped 7 pilot tests, in 108.62 seconds**. The same two
+Gymnasium advisories remain. A fresh dedicated readiness run repeated all three
+fixed fixture seeds and the preserved patient load/reset-only check in
+**9.761 seconds**, with zero patient actions, policy executions or optimizer
+updates. Its receipt is `cli-geometry-optimized-three-seeds/report.json` below
+the same ignored output root. It does not qualify patient replay, an online
+candidate-selection policy, or the remaining performance gates.
 
 ## Generated native workspace companion
 
@@ -313,3 +323,9 @@ with zero present fluid/debris, active bleeding or pending controls. The receipt
 records zero policy executions, optimizer updates and patient actions, scoped
 only to this exporter. This proves generated native binding and public replay;
 GUI display, patient qualification and clinical calibration remain open.
+
+A fresh exporter run after those exact geometry/lookup changes passed in
+**3.171 seconds** with the same physical/native-binding checks and zero patient
+actions, policy executions or optimizer updates. Its receipt and generated
+workspace are under `generated-companion-geometry-optimized/`; earlier receipts
+remain preserved.
