@@ -11,7 +11,7 @@ environment and Gymnasium dependency:
 ```sh
 .venv/bin/python scripts/check_surgical_rl_readiness.py \
   --output testcases/outputs/rl-readiness-20261022/readiness-local \
-  --max-wall-seconds 30
+  --max-wall-seconds 30 --skill-options
 ```
 
 The default seeds are 17, 29 and 43. At most three distinct seeds are accepted.
@@ -21,6 +21,16 @@ ignored `testcases/outputs/`; existing receipts are never overwritten. The
 evaluation deadline is capped at 60 seconds and uses POSIX `setitimer` on
 macOS/Linux, in addition to checks inside skill primitives. Interpreter/import
 startup and the final small report write are outside the evaluation timer.
+
+`--skill-options` builds the complete declared nominal skill menu from a fresh
+published observation before **every** prescribed decision. The script supplies
+the selected ID in advance; no actor, ranking or search runs. It reports
+observation, option preparation, execution and whole-decision times separately.
+The full script and resumed tail use the same 15 declarations and stable IDs.
+Episode wall time also includes executor setup, bookkeeping and in-memory
+snapshot capture; reset and independent replay/resume costs remain separate.
+Omitting this flag retains the historical nine-choice raw-action benchmark,
+which is prepared separately and is not a complete surgical skill interface.
 
 An optional prepared patient benchmark adds source-preserving load, reset and
 observation timing. It executes **zero patient physics actions** and no patient
@@ -110,7 +120,7 @@ script; they are not patient workspaces. Audits and explicit snapshot writes
 happen outside the skill action loop. A deadline or other evaluation failure returns
 nonzero and writes an incomplete/failed report with unmeasured gates still open.
 
-## Current measured receipt
+## Earlier causal CUSA receipt
 
 Earlier October 22 receipts, including `cli-final-three-seeds-patient`, used
 enlarged 3 mm CUSA/bipolar/suction radii. They remain preserved as historical
@@ -141,7 +151,7 @@ observations, not portable performance promises.
 | Optional sub-06 observation, median of 10 reads | 1.367 ms |
 | Optional sub-06 physics actions / skill decisions | 0 / 0 |
 
-`execute_requests` wall time includes each `SkillExecutor.execute` call's fresh
+For this earlier receipt, `execute_requests` wall time includes each `SkillExecutor.execute` call's fresh
 published observation, `propose_skill`, and actual primitive execution. The
 clock starts after executor construction and includes the in-memory prefix
 snapshot capture; reset/construction and independent replay timings are separate.
@@ -215,6 +225,26 @@ ends the executor. It cannot seal wounds or clear remaining fluid by assertion.
 Cancellation preserves earlier committed primitives while rolling back the
 currently interrupted primitive.
 
+`surgical_skill_options.build_skill_options` exposes these parameterized skills
+as an ordered, caller-declared option set. It accepts only the nine published v2
+observation arrays, explicit JSON requests, an explicit `SkillTask` and a maximum
+primitive duration. It copies the observation and returns detached JSON with
+observation/request-set identities. Requests contain unique IDs and explicit
+routes/parameters; the adapter does not invent endpoints, inspect engine state,
+rank options, execute actions or produce a feasibility mask. Valid declarations
+that fail a nominal skill check remain visible as rejected rows with a reason.
+Every proposal retains `unknown_until_public_execution` feasibility.
+
+The declaration must include plain release/withdraw controls for both explicit
+slots and a route/parameter/instrument-free STOP. STOP can emit zero to six
+control primitives and cannot assert field cleanup or success. Limits are 32
+options, 64 KiB of compact ASCII-escaped request JSON, six primitives per option,
+192 total primitives and 256 KiB of response JSON. Unknown fields, malformed
+declarations and missing controls fail before proposals. These limits do not
+derive physical action duration from normalized remaining episode budgets.
+The old nine-option policy/checkpoint interface is unchanged and remains
+unpromoted; this adapter introduces no learner.
+
 Task presets provide explicit horizons: access 128 attempts/300 seconds,
 resection 4,096/7,200, and field management 256/300. Callers may supply smaller
 explicit fixture budgets, as this CLI does. `prevention` refuses observed entry
@@ -236,7 +266,7 @@ Targeted evaluation-only regression command, using another fresh local output:
   tests/test_surgical_rl_contract.py tests/test_surgical_rl_guards.py \
   tests/test_surgical_rl_rewards.py tests/test_surgical_rl_protection.py \
   tests/test_surgical_skills.py tests/test_surgical_anatomy_comparison.py \
-  tests/test_surgical_cusa_v3.py \
+  tests/test_surgical_cusa_v3.py tests/test_surgical_skill_options.py \
   --basetemp=testcases/outputs/rl-readiness-20261022/pytest-local -q
 ```
 
@@ -436,9 +466,73 @@ canonical rows and 1,149 ordered observations. Fresh preparation took 286.184
 seconds (0.708×); the filesystem-warm prepared-only reopen took **178.119 seconds
 (1.137×)** with **zero physics attempts**, 73 cache loads, no publications or
 misses, and unchanged cache/source/native bytes. This improves repeat rehearsal,
-while the task-complete candidate interface and fresh candidate-inclusive
-throughput remain readiness blockers. No policy or optimizer ran in the pair;
+while fresh candidate-inclusive throughput needs its own measurement. The later
+declared-skill check below addresses the menu and short generated timing.
+No policy or optimizer ran in the pair;
 the earlier two fixture updates remain disclosed above.
+
+## Declared skill options and empty thermal intervals
+
+The optional native build previously checked its live identity on every thermal
+interval, including intervals with no temperatures or powers. A single no-learning
+profile of the existing script recorded 944 such checks and 432 ms cumulative
+guard cost within 2.308 seconds of profiled execution. These timings include
+profiler overhead, overlap other costs, and are not throughput measurements.
+The profile's copied launcher incorrectly labeled engine actions as zero;
+`readiness-script-hotpath-profile-v1/metadata-correction.json` explicitly corrects
+that label to 15 generated primitives and zero patient actions. Original receipts
+remain preserved.
+
+The Python thermal path now returns after its existing scalar calculations when
+the state has exact string keys and both its temperature map and powers are exact
+empty dictionaries. The legacy loop performs no work in this case. It reads no
+dose/cooling values and changes no numerical state. Custom mappings/keys and
+nonempty inputs retain their original paths. Every actual native call and explicit
+identity read still checks drift. **An empty no-op no longer invokes the native
+selection or detects its later drift itself**; the first actual use still rejects
+drift before mutation. Invalid configured builds still fail at import.
+
+The complete three-seed `--skill-options` receipt is
+`testcases/outputs/rl-readiness-20261022/skill-options-cli-v2/evaluation/report.json`.
+All 12 fresh decisions per seed construct all 15 declarations before executing
+the fixed script ID. Each six-decision resumed tail keeps those same 15 options
+and original IDs. Every public skill receipt, final native/RL snapshot and
+conservation result matches `cli-idle-native-three-seeds` exactly.
+
+| Seed | Complete script | Requests per episode second | Whole-decision p95 |
+| --- | ---: | ---: | ---: |
+| 17 | 0.955 s | 12.57 | 142 ms |
+| 29 | 1.006 s | 11.93 | 152 ms |
+| 43 | 1.102 s | 10.89 | 165 ms |
+
+Per-decision candidate preparation medians were 1.20–1.29 ms; reset took
+1.66–2.61 ms and observation-read medians were 1.12–1.15 ms. The full evaluation,
+including separate replay/resume/control checks, took 9.181 seconds, and the
+external job took 9.825 seconds with 90,570,752 bytes peak sampled process-tree
+RSS, under 30 seconds/1 GiB. Monitored totals were 11 resets, 143 public engine
+step entries (including validation/cancellation), 56 skill executions and 84
+candidate calls. No policy, actor, optimizer or patient action ran. The first
+attempt stopped at reset nine because its diagnostic cap omitted restore resets;
+that failed receipt is preserved, and only the cap was corrected for v2.
+
+These are 12-request scripts on one generated geometry with three seed values.
+They measure genuine fresh execution with option preparation, but do not establish
+sustained patient or actor throughput, uniform sub-100-ms decisions, or a matched
+10× improvement. Earlier native script times were 1.358–1.428 seconds without
+per-decision option construction; host conditions and timer scope differ, so this
+is not an isolated speedup attribution. The broader 10 Hz and full-patient gates
+remain open. New Python source conservatively invalidates earlier prepared-prefix
+packages; the v7/v8 GUI timing remains qualified for its recorded `df779989`
+implementation rather than this later source.
+
+Final surgical/full-case/geometry regressions passed **1,081 tests in 181.42
+seconds**, with two existing Gymnasium advisories. The entire pilot module was
+excluded. The external job completed in 181.853 seconds with 1,085,046,784 bytes
+peak sampled process-tree RSS, under 240 seconds/3 GiB. Explicit generated native
+fixtures covered the unchanged native guards; no policy or optimizer was selected.
+Evidence is `skill-readiness-python-full-v1.{json,log}` under the same ignored
+output root. The earlier focused run passed 226 tests before the control-coverage
+repair; the final complete run includes that repair and its new regression.
 
 ## Generated native workspace companion
 

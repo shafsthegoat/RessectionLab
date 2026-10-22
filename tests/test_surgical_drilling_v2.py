@@ -389,6 +389,60 @@ def _legacy_thermal(e, dt, powers):
         state['coolingLossJ'] += max(0., power * dt - capacity * (new - old))
 
 
+def test_empty_thermal_is_a_python_noop_without_dose_or_cooling_reads(monkeypatch):
+    def unused_native(*args):
+        raise AssertionError('Empty thermal loop must not invoke a kernel')
+    monkeypatch.setattr(drill._idle_native, 'try_idle', unused_native)
+    for ledger in ({'temperatureC': {}},
+                   {'temperatureC': {}, 'thermalDoseCSeconds': {'2': -0.},
+                    'coolingLossJ': -0.}):
+        actual = engine()
+        actual.state['drillingV2'] = ledger
+        expected = copy.deepcopy(actual)
+        temperature_object = ledger['temperatureC']
+        _legacy_thermal(expected, .1, {})
+        drill._thermal(actual, .1, {})
+        assert json.dumps(actual.state) == json.dumps(expected.state)
+        assert ledger['temperatureC'] is temperature_object
+
+
+def test_empty_thermal_keeps_scalar_errors_and_nonempty_custom_paths(monkeypatch):
+    calls = []
+    class NativeReached(Exception):
+        pass
+    def native(*args):
+        calls.append(args)
+        raise NativeReached
+    monkeypatch.setattr(drill._idle_native, 'try_idle', native)
+    actual = engine()
+    actual.state['drillingV2'] = {'temperatureC': {}}
+    actual.scene.properties['tissuePhysicsV2']['bone']['coolingTimeSeconds'] = 0.
+    with pytest.raises(ZeroDivisionError):
+        drill._thermal(actual, .1, {})
+    assert calls == []
+    class Mapping(dict):
+        pass
+    for temperatures, powers in (({'0': 38.}, {}), ({}, {'0': .1}),
+                                  (Mapping(), {}), ({}, Mapping())):
+        actual = engine()
+        actual.state['drillingV2'] = {'temperatureC': temperatures}
+        with pytest.raises(NativeReached):
+            drill._thermal(actual, .1, powers)
+    lookups = []
+    class CustomKey:
+        def __hash__(self):
+            return hash('temperatureC')
+        def __eq__(self, other):
+            lookups.append(other)
+            return other == 'temperatureC'
+    actual = engine()
+    actual.state['drillingV2'] = {CustomKey(): {}}
+    with pytest.raises(NativeReached):
+        drill._thermal(actual, .1, {})
+    assert lookups == []  # Extra lookups cannot run before the original hook.
+    assert len(calls) == 5
+
+
 @pytest.mark.parametrize('dt', [0., math.ulp(0.), 1.e-20, .001, .1, 30.])
 def test_thermal_shortcut_preserves_exact_state_and_float_boundary_arithmetic(dt):
     for ambient, threshold, tau in [(37., 43., 8.), (-37., -31., 8.),

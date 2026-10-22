@@ -24,6 +24,7 @@ from resectionlab.surgical_observed_policy import candidates
 from resectionlab.surgical_physics_v2 import default_profile
 from resectionlab.surgical_rl_env import SurgicalRLEnv
 from resectionlab.surgical_scene import SurgicalScene
+from resectionlab.surgical_skill_options import build_skill_options
 from resectionlab.surgical_skills import SkillExecutor, SkillTask
 
 SCHEMA = 'resectionlab.surgical-readiness-check.v1'
@@ -57,6 +58,7 @@ class Budget:
 
 def summarize(samples):
     return {'repeats': len(samples), 'median_seconds': float(np.median(samples)),
+            'p95_seconds': float(np.quantile(samples, .95)),
             'min_seconds': min(samples), 'max_seconds': max(samples)}
 
 
@@ -127,18 +129,58 @@ def script_requests():
     ]
 
 
-def execute_requests(env, task, requests, budget, *, capture_prefix=False):
+def declared_skill_requests(requests):
+    """Declare this script's routes and both hands' controls before execution."""
+    options = [{'id': f'request-{index:02d}', 'skill': name,
+                'slot': 'left', **values} for index, (name, values) in enumerate(requests)]
+    for skill in ('release', 'withdraw'):
+        for slot in ('left', 'right'):
+            if not any(row['skill'] == skill and row.get('slot') == slot for row in options):
+                options.append({'id': f'control-{skill}-{slot}', 'skill': skill, 'slot': slot})
+    if not any(row['skill'] == 'stop' for row in options):
+        options.append({'id': 'control-stop', 'skill': 'stop'})
+    return options
+
+
+def execute_requests(env, task, requests, budget, *, capture_prefix=False, skill_options=False,
+                     declared_options=None, request_offset=0):
+    start = time.perf_counter()
     executor = SkillExecutor(env, task)
+    option_requests = (declared_options if declared_options is not None else declared_skill_requests(requests)) if skill_options else None
+    require(type(request_offset) is int and request_offset >= 0, 'Request offset must be a nonnegative integer')
+    setup_seconds = time.perf_counter() - start
     rows = []
+    decision_times = []
     resection_progression = []
     prefix = None
     prefix_native = None
     resume_request_index = None
     prefix_pending = None
-    start = time.perf_counter()
     for index, (name, values) in enumerate(requests):
+        decision_started = time.perf_counter()
+        if skill_options:
+            # Each decision starts with a new observation and constructs ALL
+            # declared options. Selection is this fixed script's ID lookup;
+            # there is no actor, ranking, feasibility oracle or hidden search.
+            observation, observation_seconds = budget.timed(env._observe)
+            options, candidate_seconds = budget.timed(lambda: build_skill_options(
+                observation, option_requests, task=task,
+                max_action_seconds=env.config.max_action_seconds))
+            selected = next(row for row in options['options'] if row['id'] == f'request-{index + request_offset:02d}')
+            require(selected['status'] == 'nominal_proposal',
+                    'Prescribed request was nominally refused: ' + str(selected['reason']))
         receipt, seconds = budget.timed(lambda: executor.execute(
             name, check=budget.check, max_wall_seconds=budget.remaining(), **values))
+        if skill_options:
+            require(selected['plan']['actions'] == receipt['plan']['actions']
+                    and selected['plan']['observationId'] == receipt['plan']['observationId'],
+                    'Fresh declared proposal differs from public executor plan')
+            decision_times.append({'request_id': selected['id'],
+                'request_set_id': options['requestSetId'], 'observation_id': options['observationId'],
+                'candidate_count': len(options['options']),
+                'nominal_count': sum(row['status'] == 'nominal_proposal' for row in options['options']),
+                'observation_seconds': observation_seconds, 'candidate_seconds': candidate_seconds,
+                'execution_seconds': seconds, 'whole_decision_seconds': time.perf_counter() - decision_started})
         work_partial = (name == 'resect' and receipt['status'] == 'partial'
                         and receipt['transitions'][-1]['reasonCode'] == 'TISSUE_ASPIRATION_IN_PROGRESS')
         require(receipt['status'] in ('completed', 'episode_finished') or work_partial,
@@ -156,13 +198,29 @@ def execute_requests(env, task, requests, budget, *, capture_prefix=False):
     elapsed = time.perf_counter() - start
     statuses = status_counts(transition['status'] for row in rows
                              for transition in row['receipt']['transitions'])
-    return {'wall_seconds': elapsed, 'skill_decisions': len(rows), 'skills': rows,
+    result = {'wall_seconds': elapsed, 'executor_and_declarations_setup_seconds': setup_seconds,
+            'skill_decisions': len(rows), 'skills': rows,
             'resection_stroke_progression_mm3': resection_progression,
             'work_progress_partial_primitives': sum(transition['reasonCode'] == 'TISSUE_ASPIRATION_IN_PROGRESS'
                 for row in rows for transition in row['receipt']['transitions']),
             'resume_request_index': resume_request_index, 'prefix_pending_capacity_mm3': prefix_pending,
             'primitive_status_counts': statuses,
-            'primitive_attempts': sum(statuses.values())}, prefix, prefix_native
+            'primitive_attempts': sum(statuses.values())}
+    if skill_options:
+        result['skill_options'] = {
+            'schema': 'resectionlab.surgical-skill-options.v1',
+            'candidate_calls': len(decision_times), 'policy_executions': 0, 'actor_inference': 0,
+            'selection': 'predeclared script request ID; no scoring or ranking',
+            'decisions': decision_times,
+            'observation': summarize([row['observation_seconds'] for row in decision_times]),
+            'candidate_preparation': summarize([row['candidate_seconds'] for row in decision_times]),
+            'execution': summarize([row['execution_seconds'] for row in decision_times]),
+            'whole_decision': summarize([row['whole_decision_seconds'] for row in decision_times]),
+            'decisions_per_episode_second': len(rows) / elapsed,
+            'scope': 'Short generated prescribed script; all fresh observations/options/public execution included. '
+                     'Episode time also includes executor/declaration setup, bookkeeping and optional prefix snapshot capture. '
+                     'Not sustained patient or actor throughput; p95 uses a small sample.'}
+    return result, prefix, prefix_native
 
 
 def conservation(env, source_hash):
@@ -190,7 +248,7 @@ def conservation(env, source_hash):
             'unique_removed_source_cells': len(state['removed'])}
 
 
-def run_seed(seed, output, budget):
+def run_seed(seed, output, budget, *, skill_options=False):
     (env, task), construction_seconds = budget.timed(make_surrogate)
     source_hash = array_digest(env.scene.labels)
     (observation, _), reset_seconds = budget.timed(lambda: env.reset(seed=seed))
@@ -199,16 +257,22 @@ def run_seed(seed, output, budget):
     require(first == {key: array_digest(value) for key, value in observation.items()}, 'Seeded reset differs')
     require(env.observation_space.contains(observation), 'Reset observation outside declared space')
     observation_times = repeat(budget, env._observe)
-    candidate_times = repeat(budget, lambda: candidates(observation))
-    features, options = candidates(observation)
-    require(len(options) == len(features) == 9, 'Candidate observation interface differs')
+    declarations = declared_skill_requests(script_requests()) if skill_options else None
+    if skill_options:
+        candidate_times = repeat(budget, lambda: build_skill_options(
+            observation, declarations, task=task, max_action_seconds=env.config.max_action_seconds))
+    else:
+        candidate_times = repeat(budget, lambda: candidates(observation))
+        features, options = candidates(observation)
+        require(len(options) == len(features) == 9, 'Candidate observation interface differs')
     require(not env.attempts, 'Read-only candidate preparation executed an action')
     try:
         SkillExecutor(env, SkillTask('resection', 'prevention'))
         raise AssertionError('Preinjured source accepted as prevention')
     except ValueError as error:
         require('preinjured_rescue' in str(error), 'Prevention failed for an unrelated reason')
-    episode, prefix, prefix_native = execute_requests(env, task, script_requests(), budget, capture_prefix=True)
+    episode, prefix, prefix_native = execute_requests(env, task, script_requests(), budget,
+        capture_prefix=True, skill_options=skill_options, declared_options=declarations)
     require(len(episode['resection_stroke_progression_mm3']) == 3
             and 0 < episode['resection_stroke_progression_mm3'][0] < 27.
             and episode['resection_stroke_progression_mm3'][-1] == 27.,
@@ -233,7 +297,9 @@ def run_seed(seed, output, budget):
     resumed, resumed_task = make_surrogate()
     _, restore_seconds = budget.timed(lambda: resumed.restore(prefix))
     require(resumed.engine.state['cusaV3'] == prefix_native['checkpoint']['state']['cusaV3'], 'RL JSON prefix pending work differs')
-    resumed_episode, _, _ = execute_requests(resumed, resumed_task, script_requests()[episode['resume_request_index']:], budget)
+    resumed_episode, _, _ = execute_requests(resumed, resumed_task,
+        script_requests()[episode['resume_request_index']:], budget, skill_options=skill_options,
+        declared_options=declarations, request_offset=episode['resume_request_index'])
     final = json.loads(json.dumps(env.snapshot(), allow_nan=False))
     require(resumed.snapshot() == final, 'RL JSON prefix resume differs from uninterrupted episode')
     write_json(output / f'seed-{seed}-native-snapshot.json', native_record)
@@ -248,6 +314,7 @@ def run_seed(seed, output, budget):
             'same_seed_reset_seconds': repeat_reset_seconds, 'seeded_reset_equal': True,
             'rescue_declaration_enforced': True,
             'observation': observation_times, 'candidate_preparation_only': candidate_times,
+            'candidate_interface': 'declared nominal skills' if skill_options else 'legacy nine raw left-slot choices',
             'candidate_policy_decisions': 0, 'episode': episode,
             'reset_plus_script_seconds': reset_seconds + episode['wall_seconds'],
             'native_replay_seconds': native_seconds, 'native_replayed_primitives': len(native.actions),
@@ -356,6 +423,8 @@ def main():
     parser.add_argument('--output', type=Path, required=True, help='New directory below this checkout testcases/outputs/')
     parser.add_argument('--max-wall-seconds', type=float, default=30., help='Whole-check deadline in (0, 60] seconds')
     parser.add_argument('--seeds', nargs='+', type=int, default=[17, 29, 43], help='One to three deterministic smoke seeds')
+    parser.add_argument('--skill-options', action='store_true',
+                        help='Build all declared nominal skill options before each prescribed decision; no policy')
     parser.add_argument('--patient', type=Path, help='Optional existing .ressectionlab; reset/observe only')
     parser.add_argument('--protection', type=Path, help='Optional matching protection JSON for --patient')
     args = parser.parse_args()
@@ -379,10 +448,11 @@ def main():
     output.mkdir(parents=True)
     report = {'schema': SCHEMA, 'no_training': True, 'optimizer_updates': 0,
               'policy_executions': 0, 'seeds': args.seeds, 'max_wall_seconds': args.max_wall_seconds,
+              'candidate_interface': 'declared nominal skills' if args.skill_options else 'legacy nine raw left-slot choices',
               'generated_runs': [], 'gates': {
                   name: {'status': 'open', 'reason': reason} for name, reason in {
                       'patient_skill_throughput': 'No patient skills executed by this check.',
-                      'end_to_end_10hz': 'Inspect or observation latency does not establish skill/episode throughput.',
+                      'end_to_end_10hz': 'Short generated script timing does not establish sustained patient/actor throughput.',
                       'full_patient_task_feasibility': 'Generated coupon success does not establish full-patient feasibility.',
                       'held_out_generalization': 'Seeds repeat one generated geometry, not independent patients.',
                       'anatomical_calibration': 'No reviewed anatomy or physics calibration supplied by this check.',
@@ -402,7 +472,7 @@ def main():
     try:
         signal.setitimer(signal.ITIMER_REAL, args.max_wall_seconds)
         for seed in args.seeds:
-            report['generated_runs'].append(run_seed(seed, output, budget))
+            report['generated_runs'].append(run_seed(seed, output, budget, skill_options=args.skill_options))
         report['control_probes'], seconds = budget.timed(lambda: run_control_probes(budget))
         report['control_probes']['total_seconds'] = seconds
         report['tip_probes'], seconds = budget.timed(lambda: run_tip_probes(budget))

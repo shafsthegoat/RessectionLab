@@ -1293,3 +1293,43 @@ eviction by tests. The tests now isolate cache directories. One missing legacy
 action cache was regenerated through its original public engine action from an
 authenticated canonical boundary; no full patient replay was used for the GUI
 measurements above.
+
+## Fresh declared-skill execution after replay persistence
+
+One generated 12-skill profile identified 944 optional native cooling identity
+checks even though the script never drills and its temperature/power maps stay
+empty. The checks consumed 432 ms cumulative within 2.308 seconds of profiled
+execution. This includes profiler overhead; overlapping costs are not additive.
+The Python path now recognizes only an exact empty thermal loop after preserving
+its scalar calculations. It reads no dose/cooling fields and performs no kernel
+call. Actual native calls and explicit identity reads retain all live guards.
+Consequently later native drift is detected on actual use rather than on an
+empty no-op; invalid configured builds still fail at import.
+
+A separate bounded three-seed readiness run constructs all 15 declared nominal
+skill options from each fresh observation before every prescribed decision.
+The same menu and IDs persist through the six-skill snapshot-resumed tail.
+Whole 12-request episodes took **0.955–1.102 seconds (10.89–12.57 requests/s)**,
+including setup, observations, all options, primitive execution and snapshot
+bookkeeping. Whole-decision p95 was **142–165 ms**. All final native/RL snapshots,
+complete public skill receipts, cleanup and conservation match the preserved
+native baseline exactly. This is a short generated task, with no actor or policy,
+and establishes neither sustained patient 10 Hz nor a matched 10× improvement.
+See [the readiness contract and per-seed measurements](rl-readiness.md).
+
+Evidence is `readiness-script-hotpath-profile-v1/` and `skill-options-cli-v2/`
+under the existing ignored output root. The former preserves an explicit
+correction of its copied launcher's zero-action label to 15 generated primitives.
+The first CLI attempt preserves a reset-cap failure: restore performs extra
+resets, so its diagnostic cap was corrected from eight to eleven without source
+changes. The completed job took 9.825 seconds externally with 90.6 MB sampled
+tree RSS, under 30 seconds/1 GiB; it recorded zero policy/optimizer/patient work.
+Earlier two fixture optimizer updates remain disclosed at the top of this file.
+
+The new Python implementation invalidates previous prepared-prefix packages by
+their existing full-source fingerprint. The v7/v8 GUI pair remains evidence for
+its recorded `df779989` source; it is not a GUI qualification of this later code.
+Final surgical/full-case/geometry regressions passed 1,081 tests in 181.42 seconds,
+with the pilot module entirely excluded and two existing Gymnasium advisories.
+External wall was 181.853 seconds and peak sampled tree RSS 1,085,046,784 bytes,
+within 240 seconds/3 GiB. No desktop source changed in this milestone.

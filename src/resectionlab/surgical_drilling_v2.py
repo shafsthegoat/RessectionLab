@@ -84,6 +84,16 @@ def _thermal(engine, dt, powers):
     one_minus_decay = -math.expm1(-dt / tau)
     threshold = p['doseThresholdC'] - ambient
     can_shortcut = dt >= 0. and tau > 0. and threshold >= 0.
+    # An empty legacy loop neither reads dose/cooling fields nor uses the
+    # optional native implementation. Keep scalar setup/errors above intact.
+    # Exact dictionaries/string keys avoid extra custom lookup/iteration hooks.
+    # Native drift is still checked on every actual kernel call and explicit
+    # identity read; this true no-op does not invoke that implementation.
+    if (type(state) is dict and all(type(key) is str for key in state)
+            and type(powers) is dict and not powers):
+        temperatures = state.get('temperatureC')
+        if type(temperatures) is dict and not temperatures:
+            return
     if _idle_native.try_idle(state, powers, dt, capacity, tau, ambient, threshold, decay, one_minus_decay):
         return
     for key in sorted(set(state['temperatureC']) | set(powers), key=int):

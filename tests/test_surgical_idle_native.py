@@ -192,6 +192,32 @@ assert refs==[sys.getrefcount(value) for value in objects]
 ''', receipt=native_build)
 
 
+def test_empty_thermal_does_not_use_native_and_first_real_use_rejects_drift(native_build):
+    _child(_NATIVE_SETUP + '''
+import os
+from types import SimpleNamespace
+from resectionlab import surgical_drilling_v2 as drill
+scene=SimpleNamespace(properties={'tissuePhysicsV2':{'bone':copy.deepcopy(drill.DEFAULT_PROFILE)}},voxel_mm3=1.)
+thermal=state({}, {}, -0.)
+engine=SimpleNamespace(scene=scene,state={'drillingV2':thermal})
+before=bits(thermal)
+os.environ.pop('RESSECTIONLAB_IDLE_THERMAL_BUILD')
+drill._thermal(engine,.1,{})  # No optional implementation is used.
+assert bits(thermal)==before
+for call in (a.strict_live_identity,lambda:a.try_idle(thermal,{},*scalars())):
+    try:call()
+    except ValueError as exc:assert 'ENVIRONMENT_CHANGED' in str(exc)
+    else:raise AssertionError('Explicit native access accepted selection drift')
+thermal['temperatureC']['1']=38.
+thermal['thermalDoseCSeconds']['1']=0.
+before=bits(thermal)
+try:drill._thermal(engine,.1,{})
+except ValueError as exc:assert 'ENVIRONMENT_CHANGED' in str(exc)
+else:raise AssertionError('Nonempty thermal update accepted native drift')
+assert bits(thermal)==before
+''', receipt=native_build)
+
+
 @pytest.mark.parametrize('replacement', ['callable','module','metadata','environment','recipe','deleted-recipe'])
 def test_selected_native_replacements_raise_instead_of_fallback(native_build, replacement):
     _child(_NATIVE_SETUP + f'''
