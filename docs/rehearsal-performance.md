@@ -1408,3 +1408,49 @@ is `stable-index-export-component-v1/` and
 ignored output root. Independent source and component-evidence review found no
 material defect. A new actual-app full vascular measurement is still required;
 the previous v7/v8 results describe earlier source and builds.
+
+### Full vascular application qualification on `45c88ec8`
+
+One new actual Electron run started with an absent prepared cache and executed
+all 73 saved vascular actions once. All **1,149 ordered observation tuples**,
+including 113 adjacent repeated state IDs, match the available v3–v8 trajectories.
+The separate no-step audit matched all 73 complete historical canonical action
+records and the saved endpoint. All 16 harness gates passed. Post-run checks and
+independent review found all 550 bound source, build, script, runtime, native and
+original files unchanged. No planning authority, policy or optimizer was used.
+
+| Observed application measure | Earlier fresh v7 | Fresh v9 |
+| --- | ---: | ---: |
+| Play through automatic stop, including reconstruction | 286.184 s | 291.779 s |
+| Simulated time / full wall time | 0.708× | 0.694× |
+| Warm same-action submitted intervals | 135.569 s | 119.558 s |
+| Simulated time / warm intervals | 1.494× | 1.694× |
+| Worker preparation, 464 jobs | 51.480 s | 29.349 s |
+| Warm CPU-submission gap p95 | 198.7 ms | 159.9 ms |
+
+All 448 bone jobs actually used stable IDs, with 28.880 seconds preparation,
+11.986 seconds assembly including 5.150 seconds normal work, and at most
+122,924,273 retained worker bytes. These nested costs must not be added together.
+Meanwhile action-start bridge work increased from 138.648 to 158.745 seconds,
+and warm bridge median increased from 70.81 to 77.82 ms. Total playback was
+**1.95% slower**, despite the worker and warm-interval improvements. These are
+separate single-host runs with different source, built assets and explicit
+framing. They do not isolate a causal full-application speedup. The full-run 1×
+and 50 ms displayed-frame/compositor targets remain open.
+
+The actual endpoint screenshot now contains source MRI data in all three panes:
+axial −428.7 mm, coronal 8.0 mm and sagittal −15.9 mm. Feedback correctly says
+“Framed supplied annotation.” This confirms the source-contained framing repair.
+The 3D view still has dense translucent context, purple annotation and static
+yellow glyphs; a single endpoint does not qualify the complete visible sequence,
+flowing effects or microscope readability. Full-primary playback remains open.
+
+The guarded Python session took 311.988 seconds with 697,679,872-byte peak RSS;
+the subsequent audit took 77.197 seconds with 560,807,936-byte peak RSS, within
+600/180 seconds and their 3 GiB caps. It published 73 private prepared packages
+with zero loads/misses; this run made no prepared-only throughput claim.
+Evidence is `desktop-full-vascular-stable-export-v9/`, its pre/post bindings and
+`analysis-v2.json`. The first metadata analysis accidentally filtered `Bone`
+instead of the recorded lowercase `bone`; its incorrect zero name-count, source
+and explicit correction remain preserved. Both analyses bind identical raw
+evidence, and the corrected count is 448. No extra replay was performed.
