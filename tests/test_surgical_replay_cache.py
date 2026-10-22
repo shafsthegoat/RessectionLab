@@ -163,6 +163,8 @@ def test_branch_archives_share_one_pure_runtime_but_never_effect_state():
     assert second._cell_cover_cache is first._cell_cover_cache
     assert second.state is not first.state
     assert cache.statistics['sharedGeometryGrids'] == 1
+    first.cells([4., 4., 4.], [4., 4., 4.], .1)
+    assert cache.statistics['sharedCandidateGridPayloadBytes'] == first._cell_cover_cache.stats()['candidatePayloadBytes'] > 0
 
 
 def test_bridge_warm_cursor_uses_detached_state_and_verified_view_hash_without_redundant_clone(tmp_path, monkeypatch):

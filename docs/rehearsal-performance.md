@@ -31,6 +31,12 @@ receipts retain their stated zero-update scope.
   The 128 MiB worker budget includes masks, index rows and the vertex registry;
   exhaustion discards the optimization and rebuilds the complete exact surface.
   Unsupported Float32 half-grid ranges also retain the original path.
+* Raw bone surfaces retain exact normals for stable source vertices. Changed
+  chunks invalidate both old and new incident vertices; their sums are replayed
+  in complete raster face order. Unaffected normals retain their original bits.
+  Normal arrays and dirty flags share the existing 128 MiB retained-cache cap.
+  If they do not fit, preparation uses the complete exact normal calculation.
+  Disposable scratch and transferable output buffers are additional.
 * Newly prepared read-only surfaces defer visual-picking BVH construction until
   an actual pick. The first pick uses the exact ordinary raycast while requesting
   acceleration. Source and editable surfaces retain eager admission. Disposing
@@ -84,18 +90,27 @@ separately. Resident worker storage fell from 108,607,180 to 84,448,748 bytes.
 Initial admission increased from 2.51 to 2.89 seconds. This CPU comparison does
 not establish an application playback rate.
 
+A further comparison on the same source reused unaffected raw bone normals.
+Canonical positions, indices and normals matched byte for byte on every
+delete/undo state. Assembly plus physical normals fell from **157.09 to 92.44 ms
+median** (1.70×). Normal-cache residency increased retained storage from
+84,448,748 to 111,711,724 bytes, within the same 134,217,728-byte cap. The first
+normal-cache fill cost 248.18 ms versus 172.65 ms for a complete calculation;
+the benefit applies to subsequent local edits. Conditioned surface smoothing
+uses its existing calculation.
+
 Actual Electron playback measured action 2, observed frames 0–11, on
 `full-primary`. All measured frame state IDs matched the baseline. The global
 Python monitoring guard recorded zero public physics-step attempts in the
 successful GUI runs. Each run checked pause, the submitted/displayed state,
 complete timeline expansion and unchanged native source bytes.
 
-| Actual Electron workload | Baseline | Renderer changes | Metadata/pacing | Rolling index | Indexed chunks/fields | FIFO prefetch |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Play to paused frame 11, including first-frame admission | 46.14 s | 38.12 s | 30.13 s | 27.90 s | 20.85 s | 18.72 s |
-| Warm replay IPC median | 962 ms | 799 ms | 357 ms | 434 ms | 185 ms | 202 ms |
-| Median of last 11 surface preparations | 1,075 ms | 597 ms | 548 ms | 417 ms | 165 ms | 160 ms |
-| Warm submitted-state throughput | 0.077× | 0.106× | 0.173× | 0.188× | 0.398× | 0.687× |
+| Actual Electron workload | Baseline | Renderer changes | Metadata/pacing | Rolling index | Indexed chunks/fields | FIFO prefetch | Cached bone normals |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Play to paused frame 11, including first-frame admission | 46.14 s | 38.12 s | 30.13 s | 27.90 s | 20.85 s | 18.72 s | 18.61 s |
+| Warm replay IPC median | 962 ms | 799 ms | 357 ms | 434 ms | 185 ms | 202 ms | 207 ms |
+| Median of last 11 surface preparations | 1,075 ms | 597 ms | 548 ms | 417 ms | 165 ms | 160 ms | 127 ms |
+| Warm submitted-state throughput | 0.077× | 0.106× | 0.173× | 0.188× | 0.398× | 0.687× | 0.720× |
 
 Warm throughput is simulated elapsed time divided by wall time between the
 first CPU submissions of frames 1 and 11. CPU submission is not compositor
@@ -128,6 +143,14 @@ The first prefetch GUI attempt failed on an IPC whitelist rejection of an
 accidentally forwarded scheduler field; that failure is preserved separately.
 The normalized cursor contract and actual-hook regression fixed it before the
 successful replacement pass.
+
+The later cached-normal GUI pass used the same twelve tuples and all baseline
+state IDs, with zero physics calls and all eight harness checks passing. Warm
+frames 1→11 took 2.780 wall seconds (0.720×). The last mesh job took 105.4 ms
+and retained 122,806,540 bytes across layers, including normals. Warm replay IPC
+still dominated. The nearest-rank p95 of ten warm **CPU-submission state gaps**
+was 587.5 ms; this is neither compositor delivery nor a 50 ms frame-interval
+qualification. There was one cancelled unadmitted read at sidecar shutdown.
 
 A four-frame field-size diagnostic passed with the authenticated
 flap-component protocol. The first complete response was 4,720,182 bytes;
@@ -212,6 +235,24 @@ queries as an engineering target; profiled inclusive times are not uninstrumente
 throughput. The failed first diagnostic compared unlike receipt/history shapes;
 its failure remains preserved, followed by the corrected exact-history check.
 
+Two subsequent exact optimizations reuse immutable candidate-grid slabs and a
+sorted representation of each occupancy object's immutable cleared-cell set.
+The spatial cache retains at most 8 MiB of candidate grid/world-center payload
+plus its existing 8 MiB of final covers; it caches no occupancy or feasibility.
+Every query still computes its own distances and current material membership.
+The cleared-set representation has a separate 8 MiB cap per occupancy object;
+small queries and unusual or publicly replaced sets retain their prior lookup.
+
+Three matched fresh original action-2 trials measured **5.899 → 4.511 seconds
+median** (1.31×). Complete result, history, snapshot and metrics were identical,
+including the canonical endpoint hash. Candidate-grid reuse alone measured
+5.173 seconds. This single early drilling action does not qualify the requested
+10× matched full workload or sustained candidate-policy throughput. Independent
+geometry and ownership probes found no mismatches. A subsequent current-source
+prefix check again matched all twelve original observed IDs with zero read-time
+steps; its wall times overlap the broad regression run and are not a matched
+performance comparison.
+
 Evidence: `backend-baseline.json`, `backend-digest-optimized.json`,
 `vascular-canonical-after.json`, `vascular-exact-trace-comparison.json`, and
 `primary-canonical-after-incomplete.json` in the ignored evidence directory.
@@ -219,7 +260,7 @@ Evidence: `backend-baseline.json`, `backend-digest-optimized.json`,
 ## Gates that remain open
 
 * **At least 1× observed-state playback is not achieved.** The final measured
-  warm state throughput was 0.687×, even with 4× selected. Exact source surface
+  warm state throughput was 0.720×, even with 4× selected. Exact source surface
   preparation and replay reconstruction remain material costs.
 * **A 50 ms p95 delivered-frame interval is not established.** A separate
   trusted camera-orbit control delivered 42 Electron frames with a 50.99 ms
@@ -239,8 +280,12 @@ pnpm --dir desktop test
 pnpm --dir desktop build
 ```
 
-The latest October 22 run passed 844 desktop tests: 179 main-process, 450 renderer and
-215 viewer tests. Build passed with the existing bundle-size advisory.
+The latest October 22 run passed 848 desktop tests: 179 main-process, 450 renderer and
+219 viewer tests. Build passed with the existing bundle-size advisory.
+
+The final numerical regression run passed **715 tests, with seven pilot tests
+skipped** and two existing Gymnasium advisories. It includes surgical/full-case
+tests and independent geometry checks. The pilot opt-in was not enabled.
 
 For a bounded current-production imported-endpoint check:
 
@@ -273,10 +318,20 @@ Local evidence remains under the ignored directory
   split-layer playback pass; `settled.png` is its observed final app state.
 * `desktop-prefetch-qualified/report.json`: later FIFO-prefetch pass, with exact
   submitted tuples distinct from fetched/cancelled lookahead.
+* `desktop-incremental-normals-qualified/report.json`: latest cached-bone-normal
+  GUI pass; `settled.png` shows its accepted final app state.
+* `incremental-normals-benchmark.json`, `incremental-normals-full-tests.log`,
+  `incremental-normals-build.log`: exact-source CPU and final desktop checks.
 * `prefetch-qualified-full-tests.log`, `prefetch-owner-build.log`: final prefetch
   regression/build receipts, including tuple/IPC and source-owner guards.
 * `current-prefix-profile/report.json`: bounded current-source transport probe;
   `current-drilling-profile-v2/report.json`: genuine-action profile.
+* `candidate-grid-comparison.json`, `candidate-occupancy-comparison.json`:
+  matched fresh drilling comparisons with exact complete transition payloads.
+* `candidate-occupancy-review.json`: independent old/new ownership comparisons.
+* `current-prefix-geometry-optimized/report.json`: final optimized-source
+  functional prefix check, with concurrent-regression timing caveat.
+* `candidate-final-no-learning-tests.log`: final numerical regression receipt.
 * `desktop-heavy-field-diagnostic/report.json`: later authenticated field-reuse
   functional/byte diagnostic.
 * `desktop-import-current/report.json` and branch PNGs: current-production

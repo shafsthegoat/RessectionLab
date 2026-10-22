@@ -44,15 +44,15 @@ export class IncrementalSurfaceEngine {
       }
     }
     const extractionMs=performance.now()-started,assemblyStarted=performance.now();
-    const indexed=surface.indexedChunks?surface.indexed():undefined,soup=indexed?undefined:surface.positions(),assemblyMs=performance.now()-assemblyStarted,fairStarted=performance.now();
-    const result=indexed?prepareIndexedSurface(indexed.positions,indexed.indices,surface.mask,request.shape,request.affine,request.kind,request.smooth!==false):prepareSurfaceSoup(soup!,surface.mask,request.shape,request.affine,request.kind,request.smooth!==false);
+    const indexed=surface.indexedChunks?surface.indexed(request.smooth===false&&request.kind==='bone'?request.affine:undefined):undefined,soup=indexed?undefined:surface.positions(),assemblyMs=performance.now()-assemblyStarted,fairStarted=performance.now();
+    const result=indexed?prepareIndexedSurface(indexed.positions,indexed.indices,surface.mask,request.shape,request.affine,request.kind,request.smooth!==false,indexed.normals):prepareSurfaceSoup(soup!,surface.mask,request.shape,request.affine,request.kind,request.smooth!==false);
     this.cache.delete(request.layerId);
     if(surface.retainedBytes<=this.maxBytes)this.cache.set(request.layerId,{identity:request.identity,signature,surface});
     let retainedBytes=[...this.cache.values()].reduce((sum,c)=>sum+c.surface.retainedBytes,0);
     while(retainedBytes>this.maxBytes&&this.cache.size){const key=this.cache.keys().next().value!;retainedBytes-=this.cache.get(key)!.surface.retainedBytes;this.cache.delete(key);}
     return {...result,jobId:request.jobId,layerId:request.layerId,identity:request.identity,
       resident:[...this.cache].map(([layerId,state])=>({layerId,identity:state.identity})),
-      work:{incremental,indexedChunks:surface.indexedChunks,indexedCorners:surface.lastIndexedCorners,remeshedChunks:surface.lastRemeshedChunks,totalChunks:surface.totalChunks,retainedBytes,extractionMs,assemblyMs,
+      work:{incremental,...surface.normalWork,indexedChunks:surface.indexedChunks,indexedCorners:surface.lastIndexedCorners,remeshedChunks:surface.lastRemeshedChunks,totalChunks:surface.totalChunks,retainedBytes,extractionMs,assemblyMs,
         smoothingPrepared:result.smoothingPrepared!==false,globalFairingMs:performance.now()-fairStarted,preparationMs:performance.now()-started}};
   }
 }

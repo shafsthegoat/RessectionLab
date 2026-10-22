@@ -371,8 +371,15 @@ def _segment_cell_distances(scene: GeometryScene, indices: NDArray, start: NDArr
     return np.sqrt(np.min(np.sum(excess**2, axis=2), axis=1))
 
 
+def _capsule_candidate_grid(scene: GeometryScene, lo, hi):
+    """One reference slab, in its original meshgrid and transform order."""
+    ranges = tuple(np.arange(lo[axis], hi[axis] + 1) for axis in range(3))
+    grid = np.stack(np.meshgrid(*ranges, indexing="ij"), axis=-1).reshape(-1, 3)
+    return grid, scene.voxel_to_world(grid)
+
+
 def capsule_voxel_indices(scene: GeometryScene, start_mm: ArrayLike, end_mm: ArrayLike,
-                          radius_mm: float) -> NDArray[np.int64]:
+                          radius_mm: float, *, _candidate_grid=None) -> NDArray[np.int64]:
     """Cell supercover for a capsule; exact for orthogonal, conservative for shear.
 
     Bounding-box slabs limit temporary arrays even for long oblique instruments.
@@ -390,11 +397,12 @@ def capsule_voxel_indices(scene: GeometryScene, start_mm: ArrayLike, end_mm: Arr
         return _immutable(np.empty((0, 3), dtype=np.int64))
     slab_size = max(1, 131072 // int((hi[1] - lo[1] + 1) * (hi[2] - lo[2] + 1)))
     found = []
+    candidates_for = _capsule_candidate_grid if _candidate_grid is None else _candidate_grid
     for x in range(int(lo[0]), int(hi[0]) + 1, slab_size):
-        ranges = (np.arange(x, min(x + slab_size, hi[0] + 1)), np.arange(lo[1], hi[1] + 1),
-                  np.arange(lo[2], hi[2] + 1))
-        grid = np.stack(np.meshgrid(*ranges, indexing="ij"), axis=-1).reshape(-1, 3)
-        distances = point_segment_distances(scene.voxel_to_world(grid), start, end)
+        slab_lo = (x, lo[1], lo[2])
+        slab_hi = (min(x + slab_size - 1, hi[0]), hi[1], hi[2])
+        grid, world = candidates_for(scene, slab_lo, slab_hi)
+        distances = point_segment_distances(world, start, end)
         candidates = grid[distances <= radius + _EPS]
         exact_distances = _segment_cell_distances(scene, candidates, start, end)
         found.append(candidates[exact_distances <= radius_mm + _EPS])

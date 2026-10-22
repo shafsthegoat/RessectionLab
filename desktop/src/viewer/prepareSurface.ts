@@ -15,9 +15,10 @@ export function prepareSurfaceSoup(soup:Float32Array,mask:Uint8Array,shape:Shape
 }
 /** Already canonical indexed source buffers; conditioning is identical to the
  * full extractor, including shared seam normals and physical vessel limits. */
-export function prepareIndexedSurface(positions:Float32Array,indices:Uint32Array,mask:Uint8Array,shape:Shape3,affine:Affine,kind?:string,smooth=true):PreparedSurface {
+export function prepareIndexedSurface(positions:Float32Array,indices:Uint32Array,mask:Uint8Array,shape:Shape3,affine:Affine,kind?:string,smooth=true,preparedNormals?:Float32Array):PreparedSurface {
   const started=performance.now();
-  const normals=indexedSurfaceNormals(positions,indices,affine);
+  if(preparedNormals&&preparedNormals.length!==positions.length)throw Error('Cached source normals differ from canonical vertices');
+  const normals=preparedNormals??indexedSurfaceNormals(positions,indices,affine);
   if(!smooth)return {positions,indices,normals,smoothingPrepared:false};
   const limits=surfaceKind(kind)==='vessel'?vesselLimits(positions,affine,mask,shape):undefined;
   const display=fairIndexedSurface(positions,indices,affine,kind,limits);

@@ -25,6 +25,8 @@ export class SourceVertexIndex {
     [this.spanX,this.spanY,this.spanZ]=spans;
   }
   get vertexCount(){return this.count;}
+  /** Worker-internal immutable coordinates; never transfer this resident buffer. */
+  get points(){return this.coordinates;}
   get retainedBytes(){return this.keys.byteLength+this.values.byteLength+this.coordinates.byteLength;}
   private growTable(){
     const capacity=this.keys.length?this.keys.length*2:1024;

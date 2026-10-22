@@ -66,6 +66,7 @@ class SurgicalReplayCache:
         # a retained patient grid or a pure-cover LRU behind the 16 MiB budget.
         grid_bytes = arrays_bytes(grids.values())
         cover_bytes = sum(cover.stats()['payloadBytes'] for cover in covers.values())
+        candidate_bytes = sum(cover.stats()['candidatePayloadBytes'] for cover in covers.values())
         protection_bytes = arrays_bytes(protections.values())
         return {'archives': len(self._archives),
                 'checkpoints': sum(len(a['checkpoints']) for a in self._archives.values()),
@@ -73,7 +74,8 @@ class SurgicalReplayCache:
                 'maxBytes': self.max_bytes, 'maxCheckpoints': self.max_checkpoints,
                 'sharedSourceArrayBytes': arrays_bytes(sources.values()),
                 'sharedGeometryGrids': len(grids), 'sharedGeometryGridBytes': grid_bytes,
-                'sharedPureCoverPayloadBytes': cover_bytes, 'sharedProtectionArrayBytes': protection_bytes,
+                'sharedPureCoverPayloadBytes': cover_bytes, 'sharedCandidateGridPayloadBytes': candidate_bytes,
+                'sharedProtectionArrayBytes': protection_bytes,
                 'memoryMeaning': 'ownedBytes caps private state/actions/history Python objects; shared source/grid/cover/protection arrays reported separately; excludes scipy tree native allocation'}
 
     def _trim(self, keep):
