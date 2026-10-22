@@ -144,6 +144,17 @@ declare historical outcomes verified.
 
 ## Headless diagnostics and canonical audit
 
+The latest ten warm display intervals totaled 5,019.4 ms. Aligned trace clocks
+attribute mean per-interval time to 257.9 ms IPC, 174.7 ms worker preparation,
+49.5 ms render CPU and 19.9 ms combined remaining gaps. The 185 ms IPC median
+hides two handler tails of 634 and 457 ms. The trace does not isolate GPU fence
+completion or split the small remaining preparation gap into hydration, cloning
+and modeled-volume work. Playback's requested wait was already clamped to zero.
+A bounded single-receipt prefetch could overlap transport with preparation, but
+must use FIFO display admission rather than the existing coalescing seek queue,
+which can discard superseded requests. That change is not implemented or
+qualified here; IPC alone still averages longer than the 200 ms source interval.
+
 Controlled backend measurements started from authenticated frozen legacy
 endpoint states and executed real fresh `inspect` transitions. At the primary
 endpoint with 2,148 prior actions, the median fell from **2,677.35 to 244.33 ms**
