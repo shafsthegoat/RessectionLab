@@ -5,7 +5,7 @@ import type {SourceBvhInput,SourceBvhResult} from './sourcePickingBvhBuild';
 type Geometry=THREE.BufferGeometry;
 type Signature={position:THREE.BufferAttribute;array:Float32Array;version:number;index:THREE.BufferAttribute|null;indexArray:Uint16Array|Uint32Array|null;indexVersion:number;layout:string};
 type Entry={id:number;geometry:Geometry;signature:Signature;tree:MeshBVH|null;bytes:number;status:'queued'|'building'|'ready'|'evicted'|'fallback';dispose:()=>void};
-type Binding={source:Geometry;original:THREE.Mesh['raycast'];bound:THREE.Mesh['raycast']};
+type Binding={source:Geometry;original:THREE.Mesh['raycast'];bound:THREE.Mesh['raycast'];deferred:boolean;dispose?:()=>void};
 interface Options {
   maxRetainedBytes?:number;maxPending?:number;maxInputBytes?:number;maxGeometries?:number;
   onEvent?:(detail:Record<string,unknown>)=>void;
@@ -74,10 +74,13 @@ export class SourcePickingBvh {
     geometry.addEventListener('dispose',entry.dispose);this.entries.set(geometry,entry);this.queue.push(entry);this.counters.buildsRequested++;
     this.pump();return false;
   }
-  install(mesh:THREE.Mesh,sourceGeometry:Geometry):void {
+  /** Transient read-only frames bind exact ordinary picking immediately. Their
+   * acceleration is demanded only by a real pick, avoiding a full tree/copy
+   * for a surface that the next observed microstep will replace. */
+  install(mesh:THREE.Mesh,sourceGeometry:Geometry,eager=true):void {
     if(this.disposed)return;
     const previous=this.bindings.get(mesh);
-    if(previous?.source===sourceGeometry){this.prepare(sourceGeometry);return;}
+    if(previous?.source===sourceGeometry){if(eager){previous.deferred=false;this.prepare(sourceGeometry);}return;}
     if(previous)this.forget(mesh);
     const owner=this,original=mesh.raycast;
     const bound:THREE.Mesh['raycast']=function(this:THREE.Mesh,raycaster,hits){
@@ -95,11 +98,15 @@ export class SourcePickingBvh {
       }else{
         // This call keeps the ordinary comparator. Repeated picks while the
         // replacement is queued/building cannot enqueue a duplicate job.
-        if(this.geometry===sourceGeometry&&entry?.status==='evicted')owner.prepare(sourceGeometry);
+        if(this.geometry===sourceGeometry&&(binding.deferred||entry?.status==='evicted')){binding.deferred=false;owner.prepare(sourceGeometry);}
         owner.counters.ordinaryRaycasts++;ordinaryRaycast.call(this,raycaster,hits);
       }
     };
-    mesh.raycast=bound;this.bindings.set(mesh,{source:sourceGeometry,original,bound});this.prepare(sourceGeometry);
+    const binding:Binding={source:sourceGeometry,original,bound,deferred:!eager};
+    // Deferred geometries have no Entry/Entry.dispose listener until a pick.
+    // Still release their mesh binding when a never-picked frame is retired.
+    if(!eager){binding.dispose=()=>this.forget(mesh);sourceGeometry.addEventListener('dispose',binding.dispose);}
+    mesh.raycast=bound;this.bindings.set(mesh,binding);if(eager)this.prepare(sourceGeometry);
   }
   private pump():void {
     if(this.disposed||this.active)return;
@@ -155,7 +162,7 @@ export class SourcePickingBvh {
     this.queue=this.queue.filter(item=>item!==entry);
   }
   forget(target:THREE.Mesh|Geometry):void {
-    if(target instanceof THREE.Mesh){const binding=this.bindings.get(target);if(binding){if(target.raycast===binding.bound)target.raycast=binding.original;this.bindings.delete(target);}return;}
+    if(target instanceof THREE.Mesh){const binding=this.bindings.get(target);if(binding){if(target.raycast===binding.bound)target.raycast=binding.original;if(binding.dispose)binding.source.removeEventListener('dispose',binding.dispose);this.bindings.delete(target);}return;}
     for(const [mesh,binding] of this.bindings)if(binding.source===target)this.forget(mesh);
     const entry=this.entries.get(target);if(entry)this.drop(entry);
   }

@@ -80,13 +80,22 @@ export function surfaceNormals(positions: Float32Array): Float32Array {
 export function indexedSurfaceNormals(points:Float32Array,indices:Uint32Array,affine:number[][]):Float32Array {
   const sums=new Float64Array(points.length),linear=affine.slice(0,3).map(r=>r.slice(0,3));
   const determinant=linear[0][0]*(linear[1][1]*linear[2][2]-linear[1][2]*linear[2][1])-linear[0][1]*(linear[1][0]*linear[2][2]-linear[1][2]*linear[2][0])+linear[0][2]*(linear[1][0]*linear[2][1]-linear[1][1]*linear[2][0]);
-  for(let f=0;f<indices.length;f+=3){const ids=[indices[f]*3,indices[f+1]*3,indices[f+2]*3];
-    const delta=(id:number)=>linear.map(r=>r.reduce((s,v,k)=>s+v*(points[id+k]-points[ids[0]+k]),0));
-    const a=delta(ids[1]),b=delta(ids[2]),normal=[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
-    for(const id of ids)for(let axis=0;axis<3;axis++)sums[id+axis]+=normal[axis]*Math.sign(determinant);
+  const [[xx,xy,xz],[yx,yy,yz],[zx,zy,zz]]=linear,sign=Math.sign(determinant);
+  // Keep the retained reduction's addition order, without allocating per-face
+  // arrays/closures for the millions of source triangles in a patient surface.
+  for(let f=0;f<indices.length;f+=3){const i=indices[f]*3,j=indices[f+1]*3,k=indices[f+2]*3;
+    const jx=points[j]-points[i],jy=points[j+1]-points[i+1],jz=points[j+2]-points[i+2],
+      kx=points[k]-points[i],ky=points[k+1]-points[i+1],kz=points[k+2]-points[i+2];
+    const ax=((0+xx*jx)+xy*jy)+xz*jz,ay=((0+yx*jx)+yy*jy)+yz*jz,az=((0+zx*jx)+zy*jy)+zz*jz,
+      bx=((0+xx*kx)+xy*ky)+xz*kz,by=((0+yx*kx)+yy*ky)+yz*kz,bz=((0+zx*kx)+zy*ky)+zz*kz;
+    const nx=(ay*bz-az*by)*sign,ny=(az*bx-ax*bz)*sign,nz=(ax*by-ay*bx)*sign;
+    sums[i]+=nx;sums[i+1]+=ny;sums[i+2]+=nz;
+    sums[j]+=nx;sums[j+1]+=ny;sums[j+2]+=nz;
+    sums[k]+=nx;sums[k+1]+=ny;sums[k+2]+=nz;
   }
   const output=new Float32Array(points.length);
-  for(let i=0;i<points.length;i+=3){const covector=[0,1,2].map(a=>linear.reduce((s,r,k)=>s+r[a]*sums[i+k],0)),length=Math.hypot(...covector);
-    for(let a=0;a<3;a++)output[i+a]=length?covector[a]/length:0;}
+  for(let i=0;i<points.length;i+=3){const x=sums[i],y=sums[i+1],z=sums[i+2],
+      nx=((0+xx*x)+yx*y)+zx*z,ny=((0+xy*x)+yy*y)+zy*z,nz=((0+xz*x)+yz*y)+zz*z,length=Math.hypot(nx,ny,nz);
+    output[i]=length?nx/length:0;output[i+1]=length?ny/length:0;output[i+2]=length?nz/length:0;}
   return output;
 }

@@ -166,6 +166,18 @@ test('modeled tissue stages labels/surfaces/tools atomically, reuses unchanged M
     const requests=worker.messages.length;r.installSurgicalState(a,interactionA);submitPreparedState(r);assert.equal(r.volume,a);assert.equal(r.surfaces.get('brain'),brainA);assert.equal(worker.messages.length,requests);assert.deepEqual(source.compartments[0].mask,sourceCopy);
   }finally{mock.restore();}
 });
+test('new read-only tissue surfaces defer picking acceleration while editable boundaries keep eager admission',()=>{
+  const mock=modelWorkerMock();try{
+    const {r,derive}=modeledFixture(),calls=[];r.picking={install(...args){calls.push(args);}};
+    r.installSurgicalState(derive([22]),{view:{stateId:'editable'}});
+    while(r.modelWorker.queue.length)r.modelWorker.flush();submitPreparedState(r);
+    assert(calls.length>0);assert(calls.every(([, ,eager])=>eager===true));
+    calls.length=0;r.installSurgicalState(derive([22,23]),{view:{stateId:'observed'},readOnly:true});
+    while(r.modelWorker.queue.length)r.modelWorker.flush();submitPreparedState(r);
+    assert.equal(calls.length,1);assert.equal(calls[0][2],false);
+    assert.equal(r.volume.compartments[0].mask[23],0,'picking policy cannot change accepted tissue');
+  }finally{mock.restore();}
+});
 test('initial zero-effect mapping releases native GPU pairs, retains later undo pairs, and restores source from its CPU cache',()=>{
   const mock=modelWorkerMock();try{
     const {r,source,derive}=modeledFixture(),baseline=derive([]),cut=derive([22]),delta=derive([22,23]);

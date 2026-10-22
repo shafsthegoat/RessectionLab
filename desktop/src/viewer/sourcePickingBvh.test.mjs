@@ -31,6 +31,21 @@ function mesh(geometry=new THREE.BoxGeometry(2,2,2)){return new THREE.Mesh(geome
 function hits(m,ray,reference=false){const out=[];(reference?THREE.Mesh.prototype.raycast:m.raycast).call(m,ray,out);return out.sort((a,b)=>a.distance-b.distance||a.faceIndex-b.faceIndex);}
 function equalHits(a,b){assert.equal(a.length,b.length);for(let i=0;i<a.length;i++){assert.equal(a[i].faceIndex,b[i].faceIndex);assert.equal(a[i].face.materialIndex,b[i].face.materialIndex);assert(a[i].point.distanceTo(b[i].point)<1e-9);assert(Math.abs(a[i].distance-b[i].distance)<1e-9);}}
 
+test('transient playback surfaces defer acceleration until demanded, preserve first-hit results and release unpicked bindings',()=>{
+  const {owner,workers}=fixture(),a=mesh(),neverPicked=mesh();a.updateMatrixWorld(true);
+  const ray=new THREE.Raycaster(new THREE.Vector3(.1,.2,8),new THREE.Vector3(0,0,-1));
+  owner.install(a,a.geometry,false);owner.install(neverPicked,neverPicked.geometry,false);
+  assert.equal(workers.length,0);assert.equal(owner.stats().copyBytes,0);assert.equal(owner.stats().buildsRequested,0);
+  neverPicked.geometry.dispose();assert.equal(neverPicked.raycast,THREE.Mesh.prototype.raycast);
+  equalHits(hits(a,ray),hits(a,ray,true));assert.equal(workers.length,1);assert.equal(owner.stats().buildsRequested,1);
+  for(let i=0;i<4;i++)equalHits(hits(a,ray),hits(a,ray,true));
+  assert.equal(owner.stats().buildsRequested,1);workers[0].complete();equalHits(hits(a,ray),hits(a,ray,true));
+  assert.equal(owner.stats().acceleratedRaycasts,1);
+  const boundary=mesh();owner.install(boundary,boundary.geometry,false);assert.equal(owner.stats().buildsRequested,1);
+  owner.install(boundary,boundary.geometry);assert.equal(owner.stats().buildsRequested,2,'editable boundary may eagerly admit the same source geometry');
+  owner.dispose();assert.equal(a.raycast,THREE.Mesh.prototype.raycast);assert.equal(boundary.raycast,THREE.Mesh.prototype.raycast);
+});
+
 test('one bounded worker copies only the active job, transfers disposable inputs, and preserves indices',()=>{
   const {owner,workers}=fixture(),a=mesh(),b=mesh(),positions=a.geometry.attributes.position.array,index=a.geometry.index.array;
   const initialPositions=positions.slice(),initialIndex=index.slice();owner.install(a,a.geometry);owner.install(b,b.geometry);
