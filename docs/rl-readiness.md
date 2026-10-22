@@ -420,6 +420,26 @@ separate read-only application capability. It cannot seed RL reset/resume or
 planning, and cache hits do not qualify fresh decision throughput. Fresh
 preparation, prepared playback and their validations are reported separately.
 
+The current candidate interface is another concrete readiness gap.
+`surgical_observed_policy.candidates` exposes nine legacy left-slot raw options:
+seven apply motions, inspect and a raw deactivate labeled STOP. It cannot
+express the already successful bipolar → CUSA → suction skill sequence, tool
+exchanges, withdrawal or complete cleanup. It remains a separate pilot interface
+and is not promoted by the v2 environment or prepared replay. A task-complete
+nominal skill-option interface must use only published observations and declared
+request parameters; it must retain the shared collision/protection decisions.
+Candidate-inclusive fresh skill throughput is still unmeasured. Neither the
+whole readiness CLI timer nor cached playback establishes the 10 Hz gate.
+
+The prepare/reopen application pair at `df779989` passed all 73 historical
+canonical rows and 1,149 ordered observations. Fresh preparation took 286.184
+seconds (0.708×); the filesystem-warm prepared-only reopen took **178.119 seconds
+(1.137×)** with **zero physics attempts**, 73 cache loads, no publications or
+misses, and unchanged cache/source/native bytes. This improves repeat rehearsal,
+while the task-complete candidate interface and fresh candidate-inclusive
+throughput remain readiness blockers. No policy or optimizer ran in the pair;
+the earlier two fixture updates remain disclosed above.
+
 ## Generated native workspace companion
 
 The separate evaluation-only exporter creates an openable, explicitly labeled

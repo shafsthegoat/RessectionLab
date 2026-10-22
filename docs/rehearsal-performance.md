@@ -1072,9 +1072,13 @@ with sibling prelaunch/post-run binding receipts. The analysis SHA-256 is
 
 ## Gates that remain open
 
-* **Sustained full-operation playback at 1× remains unqualified.** The complete
-  latest vascular replay reached 0.636× including cold reconstruction and 1.373×
-  for same-action CPU intervals; prior runs reached 0.521×/1.178×, 0.493×/1.272× and
+* **Fresh cold-inclusive playback still misses 1×.** The latest vascular
+  preparation at `df779989` reached 0.708×, with 1.494× for same-action CPU
+  intervals. Its separate zero-step prepared-only reopen reached 1.137× over
+  all 1,149 observations, with 73 cache loads and unchanged cache bytes. This is
+  filesystem-warm repeat playback, not fresh simulation or training throughput;
+  see [prepared-prefix-replay.md](prepared-prefix-replay.md). Prior fresh runs
+  reached 0.636×/1.373×, 0.521×/1.178×, 0.493×/1.272× and
   0.512×/1.317×. The short
   current-production prefix sample reached 1.058× warm, even with 4× selected,
   while cold preparation of one 30-second action took 20.22 seconds. The

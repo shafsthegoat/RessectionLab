@@ -71,8 +71,75 @@ renderer attempts. Logs and external receipts are the ignored
 `prepared-prefix-{focused,python-full,monitor,main,renderer,viewer,build}-*`
 files under `testcases/outputs/rl-readiness-20261022/`.
 
-Actual-app prepare/reopen measurements remain pending. The reopen preflight
-hashes the prepared files, so its later timing will describe a filesystem-warm
-reopen rather than cold-disk latency. No learning path was selected in these
-qualifications; the two earlier fixture updates remain disclosed in
-[rl-readiness.md](rl-readiness.md).
+## Actual application qualification
+
+One fresh preparation and one prepared-only reopen used the same source at
+`df779989`, renderer, harness and two explicit native builds. Both passed all
+16 checks and separate zero-step audits. All 73 full historical canonical rows,
+the saved endpoint and 1,149 ordered observation tuples matched exactly;
+113 adjacent repeated state IDs remained distinct observations. Fresh v3–v6
+trajectories also matched. Historical all-microframe IDs remain unavailable.
+
+| Full vascular measurement | Fresh preparation v7 | Prepared-only reopen v8 |
+| --- | ---: | ---: |
+| Play through automatic stop | 286.184 s / 0.7078× | **178.119 s / 1.1373×** |
+| Same-action CPU-submission intervals | 135.569 s / 1.4942× | 134.444 s / 1.5067× |
+| Public physics steps / cached actions loaded | 73 / 0 | **0 / 73** |
+| New cache publications / misses | 73 / 0 | 0 / 0 |
+| 73 action-start bridge requests, sum / p95 | 138.648 s / 4.604 s | 31.635 s / 0.507 s |
+| Warm bridge p95 / warm IPC p95 | 86.614 / 95.493 ms | 82.909 / 91.335 ms |
+| Warm CPU-submission gap p95 | 198.7 ms | 199.6 ms |
+| Separate zero-step audit | 67.545 s | 67.917 s |
+| Peak Python resident memory | 748,601,344 bytes | 805,355,520 bytes |
+
+Prepared replay used **37.76% less play-command wall time** in this pair. Its
+preflight hashes all prepared files, making this a **filesystem-warm app reopen**,
+not cold-disk timing. Startup through automatic stop was 196.972 seconds in v8;
+the separate audit is excluded from playback timing. Source, native builds,
+cache hashing/decoding, IPC, native-return counters, spool writes and mesh work
+are accounted for within their declared scopes. Individual component timings
+overlap. Host conditions and slightly different accepted-tool framing limit
+causal attribution. Cache hits do not establish fresh transition throughput.
+
+The cache held 234,497,551 bytes in 221 files. Every file path, byte and key hash
+stayed unchanged through v8; the completed v7 report/guard/audit/tuple/canonical
+evidence stayed bound too. V8 had zero permitted, forbidden or public step
+attempts. Actual native admissions were 147 insertion and 1,227 canonical, with
+zero fallbacks; each warm read performed one complete canonical hash and no
+snapshot capture. Fresh v7 observed 1,369/2,741 admissions, also without fallback.
+
+Both runs stayed within 600-second GUI / 180-second audit / 3 GiB Python limits.
+V8 retained 16,766,703 checkpoint / 67,097,583 frame / 137,109 history /
+10,235,381 immutable-input bytes, within the existing 16/64/4/128 MiB ceilings.
+Its 215,884,624-byte audit spool and 869,682-byte manifest stayed within
+1 GiB/16 MiB; 0.312 seconds of spool overhead is included in playback time.
+Whole Electron/GPU memory is separate from these counters.
+
+Actual endpoint pixels show **Prepared observations · read only**, 73/73,
+withdrawn tools and disabled close-tool view. Dense translucent context, static
+yellow glyphs and a blank axial plane persist. This endpoint check does not
+qualify full-sequence operative readability, flowing effects or compositor
+cadence. The 50 ms delivered-frame target remains open. Full-primary playback,
+fresh 1× and candidate-inclusive 10 Hz also remain open.
+
+Evidence is under the ignored `desktop-full-vascular-prepared-prepare-v7/` and
+`desktop-full-vascular-prepared-only-v8/` output directories, with sibling binding
+receipts. Analysis SHA-256 values are
+`d701c0719a89b49db626cff67ce07c75315fb4312eada7077a2ee1c904293476` and
+`e4420621361a51145e50e44bb0c3ac3058c6bfda3e8a798ba9056ed9772fc8eb`.
+No policy or optimizer ran in this pair. The two earlier fixture updates remain
+disclosed in [rl-readiness.md](rl-readiness.md).
+
+To reuse this Mac's already qualified prepared data with its exact native modes:
+
+```sh
+RESSECTIONLAB_IDLE_THERMAL_BUILD="$PWD/testcases/outputs/rl-readiness-20261022/idle-native-production-build/build-receipt.json" \
+RESSECTIONLAB_PREFIX_JSON_BUILD="$PWD/testcases/outputs/rl-readiness-20261022/prefix-json-canonical-native-production-build/build-receipt.json" \
+RESSECTIONLAB_PREPARED_PREFIX_CACHE_DIRECTORY="$PWD/testcases/outputs/rl-readiness-20261022/prepared-vascular-v7-cache" \
+desktop/node_modules/.bin/electron desktop \
+  --case "$PWD/testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab"
+```
+
+Choose **full-vascular**, then **Replay prepared observations · read only**.
+These local cache/native artifacts are disposable, platform-specific and not
+committed to Git. Changed source or build identities require fresh preparation.
