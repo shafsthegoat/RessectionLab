@@ -1465,3 +1465,50 @@ renderer tests and the type check/build passed; the new regression includes the
 actual source affine and approach pose. Its first test attempt omitted a rerender
 after changing fixture props; only that setup was corrected and its failed
 receipt is preserved. A targeted actual-app control check is pending.
+
+That targeted check subsequently passed all 16 gates on `d35cd2df`. It reopened
+only the first two audited v9 packages, with **zero public physics steps**, no
+misses, publication or fallback, and unchanged source/runtime/original/cache
+bytes. At action 1/frame 2, the accepted drill tip remained outside the MRI while
+all three linked slice positions stayed −428.7 / 8.0 / −15.9 mm through close-up
+and restore. Actual screenshots show the drill, coverage explanation, visible
+MRI panes and restored anatomy view. Exact camera coordinates are inferred from
+the bound framing implementation and accepted tip; live camera telemetry was
+not recorded. The Python session took 23.238 seconds with 713,687,040-byte peak
+RSS, below 90 seconds/3 GiB. Independent byte and pixel review cleared the check.
+Evidence is `close-view-source-gui-v1/`; no full replay, FPS or compositor claim
+comes from this short control test.
+
+## Native removed-list predicate experiment
+
+The current map-based predicate still scans the entire exact built-in removed
+list at every occupancy and rollback query. An ignored prototype uses a bounded
+native exact-list/exact-integer scan, holding the GIL without coercion, mutation,
+result caching or tuple fusion. Unsupported values retain the legacy predicate.
+On the existing 50,162-cell late-action ledger, six balanced warm component pairs
+reduced predicate plus unchanged tuple copy from 0.858 to 0.445 ms, including
+the complete live identity check (0.312 ms alone). Seventeen edge cases, six
+in-place mutations and five lifecycle refusals passed. The build and measurement
+took 0.648/2.224 seconds externally, with 79.0/460.6 MB sampled tree RSS.
+
+A separate **two-pair AB/BA comparison** executed exactly four original CUSA
+action-1955 steps from the same explicitly historical boundary-1954 seed. Only
+two frozen predicate expressions differed. Median fresh-step time fell from
+**11.605 to 10.728 seconds (1.082×, 7.56% lower latency)**; both pairs improved.
+Each candidate made 2,484 actual native predicate admissions with zero fallback,
+including 0.961/1.079 seconds of live guard work in the step clock. Whole-child
+median wall fell only from 25.690 to 25.009 seconds (1.027×); setup, export and
+validation remain material. All four complete outcome/history/snapshot/metrics
+payloads match the preserved native diagnostic bytes, and each full canonical
+row, conservation result and physical endpoint matches the original publication.
+The standalone original full payload is unavailable and is not claimed.
+
+External batch wall was 108.623 seconds and peak sampled process-tree RSS
+1,156,530,176 bytes, within 180 seconds/2 GiB; each child stayed below 60 seconds
+and 1.5 GiB. No GUI, policy, optimizer, cache publication or canonical/current-prefix
+admission occurred. This historical diagnostic ancestry grants no replay or
+learning authority. Two samples per variant establish neither sustained
+throughput nor the full-workload 10× gate. Independent source, byte and evidence
+review supports careful integration. Evidence is
+`native-removed-predicate-prototype/` and
+`native-removed-one-action-comparison-v1/`; production integration remains pending.
