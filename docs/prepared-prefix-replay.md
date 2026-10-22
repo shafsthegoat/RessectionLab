@@ -147,3 +147,29 @@ desktop/node_modules/.bin/electron desktop \
 Choose **full-vascular**, then **Replay prepared observations · read only**.
 These local cache/native artifacts are disposable, platform-specific and not
 committed to Git. Changed source or build identities require fresh preparation.
+
+## Later native implementation qualification
+
+Fresh v11 on `3d4d73d7` subsequently published 73 packages and passed all 17 GUI
+and audit gates, with 1,149 exact ordered observations and explicit same-clock
+receipt-before-submission proof. It used the newer integer-capable idle build.
+Its cache is `prepared-vascular-v11-cache`; full fresh playback was 0.707× and
+warm same-action intervals 1.738×. This was fresh preparation, not a separate
+prepared-only throughput measurement. V10's earlier clock-association failure
+remains preserved and is not retroactively promoted.
+
+On this Mac with the matching Python/native source, open the qualified v11
+packages using the ordinary application (receipt instrumentation is off):
+
+```sh
+RESSECTIONLAB_IDLE_THERMAL_BUILD="$PWD/testcases/outputs/rl-readiness-20261022/idle-integer-native-production-build/build-receipt.json" \
+RESSECTIONLAB_PREFIX_JSON_BUILD="$PWD/testcases/outputs/rl-readiness-20261022/prefix-json-canonical-native-production-build/build-receipt.json" \
+RESSECTIONLAB_PREPARED_PREFIX_CACHE_DIRECTORY="$PWD/testcases/outputs/rl-readiness-20261022/prepared-vascular-v11-cache" \
+desktop/node_modules/.bin/electron desktop \
+  --case "$PWD/testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab"
+```
+
+Choose **full-vascular**, then **Replay prepared observations · read only**.
+These source-bound observations grant no editable, planning or RL authority.
+Further Python/native changes invalidate them. Full-primary playback, flowing
+effects, operative readability and delivered-frame timing remain open.

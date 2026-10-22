@@ -1567,8 +1567,8 @@ passed **1,152 tests, skipped the same two inapplicable alias rows, in 187.51
 seconds**, with two existing Gymnasium space advisories. The whole pilot module
 was excluded. External wall was 187.937 seconds and sampled process-tree RSS
 1,483,866,112 bytes, below 240 seconds and 3 GiB. Evidence is
-`native-integer-python-full-v1.{json,log}`. Fresh full vascular application
-qualification with the new implementation/native identity remains pending.
+`native-integer-python-full-v1.{json,log}`. Subsequent full vascular application
+checks with the new implementation/native identity follow below.
 
 ### V10 clock-association failure and observer repair
 
@@ -1607,5 +1607,44 @@ All **230 Electron main tests** passed in 1.166 seconds; external wall was
 2.015 seconds with 695,156,736-byte sampled process-tree RSS, below 90 seconds
 and 1.5 GiB. Independent static review cleared observer ordering, identity,
 lifecycle and fallback behavior. Receipt:
-`native-integer-main-receipt-v1.{json,log}`. One fresh v11 qualification with
-the corrected observer remains pending; v10 is preserved unchanged.
+`native-integer-main-receipt-v1.{json,log}`. The subsequent fresh v11 qualification
+with the corrected observer follows; v10 is preserved unchanged.
+
+### Fresh vascular qualification with same-clock receipt proof
+
+One fresh-cache v11 run on `3d4d73d7` passed **all 17 gates**, including the new
+receipt proof. It reconstructed exactly 73 original saved actions, published 73
+private packages and loaded none. All **1,149 unique IPC/receipt/renderer tuples**
+matched the separate audited observations in order, including 113 adjacent
+repeated state IDs. Every receipt strictly preceded its first raw CPU submission
+on the same renderer clock: minimum 3.3 ms, median 23.8 ms and p95 120 ms. The
+full 73 canonical records and saved endpoint match; audit and warm reads made
+zero public steps. No planning or learning authority was granted.
+
+| V11 application measurement | Recorded result |
+| --- | ---: |
+| Fresh play through automatic stop | 286.515 s |
+| Simulated time / full wall time | 0.707× |
+| Warm same-action submitted intervals | 116.581 s / 1.738× |
+| Warm CPU-submission gap p95 | 152.2 ms |
+| Action-start bridge execution, cumulative | 156.986 s |
+| Warm bridge execution, median / p95 | 77.40 / 96.70 ms |
+| Worker preparation, 464 jobs | 28.623 s |
+
+All 448 bone jobs used the bounded stable-ID export; peak retained worker
+storage remained 122,924,273 bytes. These nested/overlapping component costs
+must not be added. The full wall time was 1.8% lower than the separate v9 run,
+but source/native/harness and observer differences prevent a causal speedup
+claim. Fresh 1×, delivered-frame 50 ms, full-primary playback, matched headless
+10× and sustained patient/actor 10 Hz remain open.
+
+The Python session/audit took 306.030/76.533 seconds with
+790,609,920/567,836,672-byte peak RSS, within 600/180 seconds and 3 GiB. All **553
+bound files** stayed unchanged. The spool retained 215,884,624 bytes and 1,036
+unique compressed blobs; the fresh cache held 234,497,551 bytes in 73 packages.
+Independent byte, ordered-tuple, same-clock, resource and actual-pixel review
+found no material defect. The actual endpoint keeps all three MRI panes visible
+at −428.7 / 8.0 / −15.9 mm, with read-only 73/73 feedback. Dense translucent 3D
+context and static glyphs still leave full-sequence readability and flowing
+effects unqualified. Evidence is `desktop-full-vascular-renderer-receipts-v11/`,
+its sibling pre/post bindings and `analysis.json`; no RL ran in these checks.

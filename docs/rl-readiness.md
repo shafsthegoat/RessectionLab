@@ -621,4 +621,10 @@ rows, in 187.51 seconds**, with two existing Gymnasium advisories. It excluded t
 whole pilot module. External wall/RSS were 187.937 seconds/1,483,866,112 bytes,
 below 240 seconds/3 GiB; source bindings remained unchanged. The receipt is
 `native-integer-python-full-v1.{json,log}` under the same ignored output root.
-Fresh GUI qualification for the changed implementation remains pending.
+The subsequent fresh vascular GUI qualification on `3d4d73d7` passed 17 gates,
+73 original actions and 1,149 exact observed tuples, including same-renderer-clock
+receipt-before-submission proof. Its full/warm rates were 0.707×/1.738×; these
+are application measurements, not RL or sustained patient-decision throughput.
+The earlier v10 clock-association qualification remains failed/inconclusive.
+See [rehearsal-performance.md](rehearsal-performance.md) for evidence and open
+performance, mechanics, full-primary, display and patient-readiness gates.
