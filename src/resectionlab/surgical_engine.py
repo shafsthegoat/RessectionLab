@@ -7,6 +7,8 @@ This deliberately coarse deformation model is not FEM or measured mechanics.
 from __future__ import annotations
 
 import copy
+import builtins as _removed_builtins
+import _operator as _removed_operator
 import hashlib
 import json
 import math
@@ -21,6 +23,76 @@ from .surgical_tools import TOOLS, catalog
 
 SCHEMA = 'resectionlab.surgical-toolbox.v1'
 MAX_STEPS = 8192
+
+# Admission inspects bindings without invoking mutable caller type/all/map
+# dispatch. The original inline predicates below still own every fallback.
+_removed_stock_type = ().__class__.__class__
+_removed_stock_list, _removed_stock_len = [].__class__, [].__class__.__len__
+_removed_stock_dict = {}.__class__
+_removed_c_function_type = [].append.__class__
+_removed_stock_is, _removed_stock_repeat = _strict_int_is, _strict_int_repeat
+_removed_stock_bindings = (('type', _removed_builtins.type), ('int', _removed_builtins.int),
+                          ('all', _removed_builtins.all), ('map', _removed_builtins.map),
+                          ('list', _removed_builtins.list), ('__import__', _removed_builtins.__import__))
+
+
+def _removed_known_c_function(value, name, owner, module_name):
+    return (_removed_stock_type(value) is _removed_c_function_type and
+            value.__self__ is owner and value.__name__ == name and
+            _removed_stock_type(value.__module__) is ''.__class__ and value.__module__ == module_name)
+
+
+# Recognize captures before trusting later identity equality. In particular,
+# Python replacements already installed at import must retain legacy dispatch.
+# repeat is a genuine heap type: its own C __new__ binds it without rejecting
+# heap types generally or invoking a captured constructor/descriptor.
+_removed_repeat_new = (_removed_stock_repeat.__dict__.get('__new__')
+                       if _removed_stock_type(_removed_stock_repeat) is _removed_stock_type else None)
+_removed_captures_genuine = (
+    _removed_stock_bindings[0][1] is _removed_stock_type and
+    _removed_stock_bindings[1][1] is (0).__class__ and
+    _removed_stock_bindings[4][1] is _removed_stock_list and
+    _removed_known_c_function(_removed_stock_bindings[2][1], 'all', _removed_builtins, 'builtins') and
+    _removed_known_c_function(_removed_stock_bindings[5][1], '__import__', _removed_builtins, 'builtins') and
+    _removed_known_c_function(_removed_stock_is, 'is_', _removed_operator, '_operator') and
+    _removed_stock_type(_removed_stock_bindings[3][1]) is _removed_stock_type and
+    not (_removed_stock_bindings[3][1].__flags__ & 512) and
+    _removed_stock_bindings[3][1].__name__ == 'map' and
+    _removed_stock_type(_removed_stock_bindings[3][1].__module__) is ''.__class__ and
+    _removed_stock_bindings[3][1].__module__ == 'builtins' and
+    _removed_stock_type(_removed_stock_repeat) is _removed_stock_type and
+    _removed_stock_repeat.__name__ == 'repeat' and
+    _removed_stock_type(_removed_stock_repeat.__module__) is ''.__class__ and
+    _removed_stock_repeat.__module__ == 'itertools' and
+    _removed_stock_type(_removed_repeat_new) is _removed_c_function_type and
+    _removed_repeat_new.__self__ is _removed_stock_repeat and _removed_repeat_new.__name__ == '__new__')
+
+
+def _try_removed_native(value):
+    if not _removed_captures_genuine:
+        return None
+    # Keep the fixed live-identity check off smaller ledgers; explicit adapter
+    # calls still validate the selection for every input size.
+    if _removed_stock_type(value) is not _removed_stock_list or _removed_stock_len(value) < 32768:
+        return None
+    if (_removed_stock_type(_removed_caller_globals) is not _removed_stock_dict or
+            _removed_stock_type(_removed_caller_builtins) is not _removed_stock_dict):
+        return None
+    for name, original in _removed_stock_bindings:
+        if (_removed_caller_globals.get(name, original) is not original or
+                _removed_caller_builtins.get(name) is not original):
+            return None
+    if (_removed_caller_globals.get('_strict_int_is') is not _removed_stock_is or
+            _removed_caller_globals.get('_strict_int_repeat') is not _removed_stock_repeat):
+        return None
+    from .surgical_idle_native import try_exact_int_list
+    return try_exact_int_list(value)
+
+
+# Function lookup uses the execution namespace's builtin mapping, which may be
+# a copy rather than builtins.__dict__. Keep the actual caller mapping bound.
+_removed_caller_globals = _try_removed_native.__globals__
+_removed_caller_builtins = _try_removed_native.__builtins__
 
 
 def _owned_digest(value):
@@ -144,7 +216,8 @@ def _microstep_checkpoint(state):
         if id(value) in memo:
             continue
         if name == 'removed':
-            flat = type(value) is list and all(map(_strict_int_is, map(type, value), _strict_int_repeat(int)))
+            flat = type(value) is list and (_try_removed_native(value) is True or
+                all(map(_strict_int_is, map(type, value), _strict_int_repeat(int))))
         else:
             flat = type(value) is dict and all(type(key) is str and type(amount) in (int, float)
                                                for key, amount in value.items())
@@ -257,7 +330,8 @@ class SurgicalEngine:
         # at every occupancy lookup; snapshot the contents to detect in-place
         # edits. Other representations retain the complete legacy JSON key.
         if isinstance(removed_ids, list) and (
-                all(map(_strict_int_is, map(type, removed_ids), _strict_int_repeat(int)))
+                (_try_removed_native(removed_ids) is True or
+                 all(map(_strict_int_is, map(type, removed_ids), _strict_int_repeat(int))))
                 if type(removed_ids) is list else all(type(cell) is int for cell in removed_ids)):
             key = (tuple(removed_ids), semantic_digest(changes))
         else:

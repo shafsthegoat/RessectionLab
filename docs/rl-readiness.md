@@ -585,3 +585,40 @@ A fresh exporter run after those exact geometry/lookup changes passed in
 actions, policy executions or optimizer updates. Its receipt and generated
 workspace are under `generated-companion-geometry-optimized/`; earlier receipts
 remain preserved.
+
+## Integer-predicate integration readiness check
+
+After integrating the bounded exact-integer predicate into the existing optional
+native kernel, the same three generated prescribed scripts passed with all
+15 skill options prepared before each fresh and resumed decision. The new engine
+guard skips the optional predicate below 32,768 removed cells; monitoring
+confirmed **zero predicate API entries** on these small generated ledgers.
+
+| Seed | Complete scripted episode | Requests per episode second | Whole-decision p95 |
+| --- | ---: | ---: | ---: |
+| 17 | 1.050 s | 11.43 | 179.2 ms |
+| 29 | 0.946 s | 12.69 | 143.8 ms |
+| 43 | 0.952 s | 12.61 | 141.0 ms |
+
+These short generated runs count fresh observation, complete option preparation,
+execution and episode bookkeeping; they are not sustained patient/actor
+throughput or a 100 ms decision guarantee. Candidate medians were 1.14–1.23 ms.
+All 12 saved prefix/final native and RL JSON files matched the previous
+`skill-options-cli-v2` bytes. Complete fresh/tail skill receipts, option IDs,
+conservation and endpoints also matched. The evaluation took 8.561 seconds;
+external wall was 9.254 seconds with 93,224,960-byte sampled process-tree RSS,
+below 30 seconds and 1 GiB.
+
+Monitoring recorded 11 resets, 15 engine constructions, 143 public engine
+entries, 56 skill executions and 84 option calls across scripted execution,
+resume/replay and controls. It recorded zero patient actions, forbidden routes,
+policy executions or optimizer updates. Evidence and saved-JSON comparison are
+under `testcases/outputs/rl-readiness-20261022/native-integer-readiness-v1/`.
+The earlier two unintended fixture updates remain disclosed above; this new
+evaluation performed no learning. The complete surgical/full-case/shared-guard/
+geometry selection then passed **1,152 tests, skipped two inapplicable alias
+rows, in 187.51 seconds**, with two existing Gymnasium advisories. It excluded the
+whole pilot module. External wall/RSS were 187.937 seconds/1,483,866,112 bytes,
+below 240 seconds/3 GiB; source bindings remained unchanged. The receipt is
+`native-integer-python-full-v1.{json,log}` under the same ignored output root.
+Fresh GUI qualification for the changed implementation remains pending.

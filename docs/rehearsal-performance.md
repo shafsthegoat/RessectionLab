@@ -1511,4 +1511,57 @@ learning authority. Two samples per variant establish neither sustained
 throughput nor the full-workload 10× gate. Independent source, byte and evidence
 review supports careful integration. Evidence is
 `native-removed-predicate-prototype/` and
-`native-removed-one-action-comparison-v1/`; production integration remains pending.
+`native-removed-one-action-comparison-v1/`; subsequent production checks follow.
+
+### Production admission and late-action frame capture
+
+The existing optional idle-native kernel now exposes the exact integer-list
+predicate. Engine admission starts at **32,768 removed cells**: a separate
+balanced threshold probe found that live-guard overhead outweighed the saving
+for 1,024, 4,096 and 16,384 cells. Smaller ledgers never enter the optional
+predicate API. The native walk has a 1,048,576-item ceiling and returns `None`
+for unsupported values, preserving the original Python predicate. Tuple-based
+occupancy invalidation, rollback copies, alias ownership and physics are unchanged.
+
+Admission checks both the actual caller builtin mapping and module globals.
+Independent review found that identity comparisons alone could trust a
+replacement installed before import; literal type anchors and recognized C
+function/type provenance now reject those captures without invoking them.
+Focused tests cover pre/post-import result and exception dispatch, in-place
+mutation, unusual containers/integers, and native entrypoint/cap drift. The new
+entry and cap are included in the existing live build checks and full/light
+implementation seals. This changes the selected native binary and invalidates
+older prepared packages; it introduces no automatic build or cache exception.
+
+The final focused selection passed **232 tests, skipped two inapplicable
+builtin-alias parameter rows, in 52.74 seconds**. The external guard recorded
+53.140 seconds and 200,097,792-byte sampled process-tree RSS, below 90 seconds
+and 1.5 GiB. Independent static review cleared the corrected admission.
+
+One production-engine action-1955 diagnostic then included the actual
+`_PrefixEngine`/`_FrameStage` five-Hz capture and production retention methods.
+It executed exactly one original action from the explicitly historical
+boundary-1954 seed. All **21 complete captured states** independently rehashed
+to their recorded IDs, with **10,734,255 retained bytes** including the owning
+map, plus 73 bytes of stream metadata, within the unchanged 64 MiB frame limit.
+Every state also passed the unchanged 64 MiB decoded-JSON limit. No replay owner,
+cache publication or planning/learning authority was created.
+
+The action and capture took **11.712 seconds**; the complete outcome, full
+history, native snapshot and metrics payload matched the preserved diagnostic
+bytes, and the full canonical row, conservation and endpoint matched the
+original publication. All 2,484 predicate calls admitted native work, with zero
+fallback; all 414 idle calls also admitted native work. The external run took
+30.263 seconds with 1,045,053,440-byte sampled tree RSS, below 60 seconds and
+1.5 GiB. This is one late-action capacity check, not a full-primary replay or a
+matched timing comparison with the earlier no-capture trials. Evidence is
+`native-integer-production-late-v1/` and
+`native-integer-{integer-focused-v2,late-production-v1}.{json,log}`.
+
+The complete surgical/full-case/shared-guard/geometry Python selection then
+passed **1,152 tests, skipped the same two inapplicable alias rows, in 187.51
+seconds**, with two existing Gymnasium space advisories. The whole pilot module
+was excluded. External wall was 187.937 seconds and sampled process-tree RSS
+1,483,866,112 bytes, below 240 seconds and 3 GiB. Evidence is
+`native-integer-python-full-v1.{json,log}`. Fresh full vascular application
+qualification with the new implementation/native identity remains pending.

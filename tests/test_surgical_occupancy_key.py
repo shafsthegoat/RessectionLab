@@ -58,6 +58,34 @@ def test_integer_key_snapshots_append_reorder_and_in_place_replacement():
     assert actual._occupancy_cache[0][0] == tuple(actual.state['removed'])
 
 
+def test_large_native_removed_admission_keeps_complete_ordered_snapshot_and_invalidation(monkeypatch):
+    from resectionlab import surgical_idle_native as adapter
+    calls = []
+    def predicate(value):
+        calls.append(value)
+        assert type(value) is list and all(type(item) is int for item in value)
+        return True
+    monkeypatch.setattr(adapter, 'try_exact_int_list', predicate)
+    scene = source()
+    actual, reference = SurgicalEngine(scene), LegacyKeyEngine(scene)
+    cells = [int(np.ravel_multi_index(ijk, scene.shape))
+             for ijk in [(8, 8, 8), (9, 9, 9), (10, 10, 10)]]
+    actual.state['removed'] = [cells[0], cells[1]] * 16384
+    reference.state['removed'] = actual.state['removed'].copy()
+    previous = None
+    for mutate in (lambda ids: None, lambda ids: ids.reverse(),
+                   lambda ids: ids.__setitem__(513, cells[2]), lambda ids: ids.append(cells[0])):
+        mutate(actual.state['removed']); mutate(reference.state['removed'])
+        owner = actual.occupancy()
+        assert owner is not previous
+        snapshot = actual._occupancy_cache[0][0]
+        assert type(snapshot) is tuple and snapshot == tuple(actual.state['removed'])
+        assert actual.occupancy() is owner
+        assert_ownership(actual, reference)
+        previous = owner
+    assert calls and any(value is actual.state['removed'] for value in calls)
+
+
 def test_numpy_integer_and_nonlist_representations_use_the_frozen_legacy_key():
     engine = SurgicalEngine(source())
     cells = [int(np.ravel_multi_index(ijk, engine.scene.shape)) for ijk in [(8, 8, 8), (9, 9, 9)]]

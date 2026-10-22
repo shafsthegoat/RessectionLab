@@ -38,10 +38,13 @@ def test_unconfigured_fallback_is_stable_detached_and_rejects_environment_change
         identity['mode'] = 'mutated'
         assert a.strict_live_identity()['mode'] == 'python'
         assert a.try_idle(None) is False
+        assert a.try_exact_int_list([]) is None
+        assert a.try_exact_int_list([0] * 1024) is None
         os.environ['RESSECTIONLAB_IDLE_THERMAL_BUILD'] = 'new-build'
-        try: a.try_idle(None)
-        except ValueError as exc: assert 'ENVIRONMENT_CHANGED' in str(exc)
-        else: raise AssertionError('selection changed silently')
+        for call in (lambda: a.try_idle(None), lambda: a.try_exact_int_list([])):
+            try: call()
+            except ValueError as exc: assert 'ENVIRONMENT_CHANGED' in str(exc)
+            else: raise AssertionError('selection changed silently')
     ''')
 
 
@@ -159,6 +162,85 @@ assert bits(s)==before
 ''', receipt=native_build)
 
 
+def test_native_exact_integer_predicate_matches_frozen_legacy_without_hooks_or_cached_results(native_build):
+    _child(_NATIVE_SETUP + '''
+from itertools import repeat
+from operator import is_
+def legacy(value):
+    return type(value) is list and all(map(is_,map(type,value),repeat(int)))
+class Integer(int): pass
+class Removed(list):
+    def __iter__(self): raise AssertionError('custom iteration must remain with caller')
+class Untouchable:
+    def __int__(self): raise AssertionError('no coercion')
+    def __eq__(self,other): raise AssertionError('no comparison')
+    def __hash__(self): raise AssertionError('no hashing')
+cap=a._SELECTION[0].MAX_EXACT_INT_LIST_ITEMS
+assert cap==1048576
+identity=a.strict_live_identity()
+assert identity['exactIntListMaxItems']==cap
+assert identity['exactIntListPredicate']=='try_exact_int_list:True-or-None'
+for value in ([],[0,-1,2**2000,-2**2000,0],[7]*1024,[True],[False],
+              [Integer(1)],[Untouchable()],Removed([1]),(1,),None):
+    assert a.try_exact_int_list(value) is (True if legacy(value) else None)
+    before=sys.getrefcount(value)
+    a.try_exact_int_list(value)
+    assert sys.getrefcount(value)==before
+value=[3]*1024
+assert a.try_exact_int_list(value) is True
+value[513]=True
+assert a.try_exact_int_list(value) is None
+value[513]=-2**2000
+assert a.try_exact_int_list(value) is True
+value.reverse();value.append(3);del value[0]
+assert a.try_exact_int_list(value) is True
+value=[0]*cap
+assert a.try_exact_int_list(value) is True
+value.append(0)
+assert legacy(value) is True and a.try_exact_int_list(value) is None
+''', receipt=native_build)
+
+
+@pytest.mark.parametrize('problem', ['entry','other-entry','missing-entry','cap','missing-cap'])
+def test_predicate_entry_and_cap_checked_at_initial_load(native_build, problem):
+    _child(f'''
+import importlib.util
+original=importlib.util.module_from_spec
+def altered(spec):
+    module=original(spec)
+    if spec.name=='resectionlab._surgical_idle_native_kernel':
+        case={problem!r}
+        if case=='entry':module.try_exact_int_list=lambda value:True
+        if case=='other-entry':module.try_exact_int_list=module.try_idle
+        if case=='missing-entry':del module.try_exact_int_list
+        if case=='cap':module.MAX_EXACT_INT_LIST_ITEMS=1024
+        if case=='missing-cap':del module.MAX_EXACT_INT_LIST_ITEMS
+    return module
+importlib.util.module_from_spec=altered
+try:from resectionlab import surgical_idle_native
+except ValueError:pass
+else:raise AssertionError('incompatible predicate entry/cap admitted')
+''', receipt=native_build)
+
+
+@pytest.mark.parametrize('problem', ['entry','cap'])
+def test_predicate_drift_rejected_by_full_and_light_implementation_identity(native_build, problem):
+    _child(_NATIVE_SETUP + f'''
+from resectionlab.surgical_verified_cache import implementation_fingerprint
+from resectionlab.surgical_observed_cache import light_implementation_seal,ImplementationChanged
+# The new helper captures no defaults containing globals/builtin dictionaries.
+assert implementation_fingerprint() is not None
+before=light_implementation_seal()
+assert light_implementation_seal()==before
+if {problem!r}=='entry':a._SELECTION[0].try_exact_int_list=lambda value:True
+else:a._SELECTION[0].MAX_EXACT_INT_LIST_ITEMS=1024
+assert implementation_fingerprint() is None
+try:light_implementation_seal()
+except ImplementationChanged:pass
+else:raise AssertionError('light seal accepted predicate drift')
+''', receipt=native_build)
+
+
 @pytest.mark.parametrize('case', ['threshold','aliases','subclass','overflow','powers','key','integer','scalar'])
 def test_native_declines_before_mutation(native_build, case):
     _child(_NATIVE_SETUP + f'''
@@ -218,7 +300,8 @@ assert bits(thermal)==before
 ''', receipt=native_build)
 
 
-@pytest.mark.parametrize('replacement', ['callable','module','metadata','environment','recipe','deleted-recipe'])
+@pytest.mark.parametrize('replacement', ['callable','module','metadata','environment','recipe','deleted-recipe',
+                                       'predicate','deleted-predicate','predicate-cap','deleted-predicate-cap'])
 def test_selected_native_replacements_raise_instead_of_fallback(native_build, replacement):
     _child(_NATIVE_SETUP + f'''
 import os
@@ -229,7 +312,12 @@ if case=='metadata':a._SELECTION[0].BUILD_IDENTITY='changed'
 if case=='environment':os.environ.pop('RESSECTIONLAB_IDLE_THERMAL_BUILD')
 if case=='recipe':a._recipe.compile_command=lambda *args:[]
 if case=='deleted-recipe':del a._recipe.compile_command
-for fn in (a.strict_live_identity,lambda:a.try_idle(state(),{{}},*scalars())):
+if case=='predicate':a._SELECTION[0].try_exact_int_list=lambda value:True
+if case=='deleted-predicate':del a._SELECTION[0].try_exact_int_list
+if case=='predicate-cap':a._SELECTION[0].MAX_EXACT_INT_LIST_ITEMS=1024
+if case=='deleted-predicate-cap':del a._SELECTION[0].MAX_EXACT_INT_LIST_ITEMS
+for fn in (a.strict_live_identity,lambda:a.try_idle(state(),{{}},*scalars()),
+           lambda:a.try_exact_int_list([])):
     try:fn()
     except ValueError:pass
     else:raise AssertionError('selected implementation silently drifted')
@@ -340,13 +428,14 @@ if hasattr(api,'PyDict_AddWatcher'):
 ''', receipt=native_build)
 
 
-@pytest.mark.parametrize('problem',['flags','runtime','headers','binary-size','oversized-receipt'])
+@pytest.mark.parametrize('problem',['flags','runtime','headers','binary-size','oversized-receipt','old-source'])
 def test_invalid_explicit_build_rejected_before_native_loading(native_build, problem):
     document=json.loads(native_build.read_text())
     if problem=='flags':document['metadata']['compileFlags'].append('-ffast-math')
     if problem=='runtime':document['metadata']['runtime']['version']='different interpreter'
     if problem=='headers':document['metadata']['headers']['treeSha256']='0'*64
     if problem=='binary-size':document['binaryBytes']+=1
+    if problem=='old-source':document['metadata']['sourceSha256']='0'*64
     if problem=='oversized-receipt':native_build.write_text(' '* (1024*1024+1))
     else:native_build.write_text(json.dumps(document))
     _child('''

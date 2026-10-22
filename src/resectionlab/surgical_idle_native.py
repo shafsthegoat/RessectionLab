@@ -20,6 +20,7 @@ from types import BuiltinFunctionType, ModuleType
 from . import build_surgical_idle_native as _recipe
 
 _ENVIRONMENT = 'RESSECTIONLAB_IDLE_THERMAL_BUILD'
+_EXACT_INT_LIST_CAP = 1048576
 _SELECTED_ENVIRONMENT = os.environ.get(_ENVIRONMENT)
 _RECIPE_FUNCTIONS = tuple((function, function.__code__, function.__defaults__)
     for function in (_recipe.file_digest, _recipe.canonical, _recipe.runtime_identity,
@@ -84,6 +85,11 @@ def _load_selection():
         _need(module.BUILD_IDENTITY == embedded, 'LOADED_BUILD_METADATA')
         callable_ = module.try_idle
         _need(type(callable_) is BuiltinFunctionType and callable_.__self__ is module, 'LOADED_ENTRY_POINT')
+        predicate = module.try_exact_int_list
+        cap = module.MAX_EXACT_INT_LIST_ITEMS
+        _need(type(predicate) is BuiltinFunctionType and predicate.__self__ is module and
+              predicate.__name__ == 'try_exact_int_list', 'LOADED_PREDICATE_ENTRY_POINT')
+        _need(type(cap) is int and cap == _EXACT_INT_LIST_CAP, 'LOADED_PREDICATE_CAP')
         sys.modules[_recipe.KERNEL_NAME] = module
         files = {source: metadata['sourceSha256'], recipe: metadata['recipeSha256'],
                  receipt_path: hashlib.sha256(receipt_bytes).hexdigest(), binary: binary_digest}
@@ -96,9 +102,10 @@ def _load_selection():
                     'embeddedMetadataSha256': receipt['embeddedMetadataSha256'],
                     'compilerSha256': metadata['compiler']['sha256'],
                     'headerTreeSha256': metadata['headers']['treeSha256'],
-                    'runtime': runtime, 'privateAbi': metadata['privateAbi']}
+                    'runtime': runtime, 'privateAbi': metadata['privateAbi'],
+                    'exactIntListPredicate': 'try_exact_int_list:True-or-None', 'exactIntListMaxItems': cap}
         selected = (module, callable_, module.BUILD_IDENTITY, str(binary), files,
-                    _recipe.canonical(runtime), sizes)
+                    _recipe.canonical(runtime), sizes, predicate, cap)
         return selected, _recipe.canonical(identity)
     except (OSError, KeyError, TypeError, AttributeError, ImportError, json.JSONDecodeError) as exc:
         raise ValueError('IDLE_NATIVE_IDENTITY:INVALID_CONFIGURED_BUILD') from exc
@@ -119,11 +126,13 @@ def _check_live():
         raise ValueError('IDLE_NATIVE_IDENTITY:RECIPE_FUNCTION_UNAVAILABLE') from exc
     if _SELECTION is None:
         return
-    module, callable_, embedded, binary, files, runtime, sizes = _SELECTION
+    module, callable_, embedded, binary, files, runtime, sizes, predicate, cap = _SELECTION
     _need(sys.modules.get(_recipe.KERNEL_NAME) is module, 'MODULE_REPLACED')
     try:
         _need(type(module) is ModuleType, 'MODULE_TYPE')
         _need(module.try_idle is callable_ and module.BUILD_IDENTITY is embedded, 'ENTRY_POINT_REPLACED')
+        _need(module.try_exact_int_list is predicate, 'PREDICATE_ENTRY_POINT_REPLACED')
+        _need(module.MAX_EXACT_INT_LIST_ITEMS is cap, 'PREDICATE_CAP_REPLACED')
         _need(module.__file__ == binary and module.__spec__.origin == binary, 'MODULE_ORIGIN')
         _need(_recipe.canonical(_recipe.runtime_identity()) == runtime, 'RUNTIME_CHANGED')
         for path, expected in files.items():
@@ -145,3 +154,15 @@ def try_idle(*args):
     if _SELECTION is None:
         return False
     return _SELECTION[1](*args)
+
+
+def try_exact_int_list(value):
+    """True for admitted exact list/ints; None retains the caller's predicate.
+
+    Explicit calls always check the fixed selection, including small inputs.
+    Engine callers skip small-ledger native access before reaching this API.
+    """
+    _check_live()
+    if _SELECTION is None:
+        return None
+    return _SELECTION[7](value)

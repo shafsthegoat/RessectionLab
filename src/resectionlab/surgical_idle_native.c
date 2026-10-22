@@ -249,8 +249,24 @@ cleanup:
     return answer;
 }
 
+#define MAX_EXACT_INT_LIST_ITEMS 1048576
+/* Pure admission only. Every accepted call scans the whole exact list while
+   holding the GIL; no allocation, coercion, callback, mutation or cached result.
+   None preserves the caller's original predicate for unsupported values. */
+static PyObject *try_exact_int_list(PyObject *module, PyObject *value) {
+    (void)module;
+    if (!PyList_CheckExact(value)) Py_RETURN_NONE;
+    const Py_ssize_t count = PyList_GET_SIZE(value);
+    if (count > MAX_EXACT_INT_LIST_ITEMS) Py_RETURN_NONE;
+    for (Py_ssize_t index = 0; index < count; ++index) {
+        if (Py_TYPE(PyList_GET_ITEM(value, index)) != &PyLong_Type) Py_RETURN_NONE;
+    }
+    Py_RETURN_TRUE;
+}
+
 static PyMethodDef methods[] = {
     {"try_idle", try_idle, METH_VARARGS, "Try bounded exact idle cooling; False leaves inputs untouched."},
+    {"try_exact_int_list", try_exact_int_list, METH_O, "Try a bounded exact list/int predicate; None requests legacy fallback."},
     {NULL, NULL, 0, NULL}
 };
 static int traverse(PyObject *module, visitproc visit, void *arg) {
@@ -278,6 +294,7 @@ PyMODINIT_FUNC PyInit__surgical_idle_native_kernel(void) {
     if (!keys->temperatures || !keys->doses || !keys->cooling ||
         PyModule_AddIntConstant(module, "MAX_ROWS", MAX_ROWS) < 0 ||
         PyModule_AddIntConstant(module, "MAX_SCRATCH_BYTES", MAX_SCRATCH_BYTES) < 0 ||
+        PyModule_AddIntConstant(module, "MAX_EXACT_INT_LIST_ITEMS", MAX_EXACT_INT_LIST_ITEMS) < 0 ||
         PyModule_AddStringConstant(module, "BUILD_IDENTITY", IDLE_THERMAL_BUILD_IDENTITY) < 0) {
         Py_DECREF(module); return NULL;
     }

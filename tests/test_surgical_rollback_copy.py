@@ -64,6 +64,31 @@ def test_existing_component_memo_precedence_and_cross_field_aliases():
     assert saved['removed'] is saved['debris'] and saved['removed'] is not shared
 
 
+def test_large_removed_native_admission_preserves_legacy_copy_aliases_and_rechecks_mutation(monkeypatch):
+    from resectionlab import surgical_idle_native as adapter
+    from itertools import repeat
+    from operator import is_
+    calls = []
+    def predicate(value):
+        calls.append(value)
+        return True if all(map(is_, map(type, value), repeat(int))) else None
+    monkeypatch.setattr(adapter, 'try_exact_int_list', predicate)
+    removed = [0, -2**300, 0, 2**300] * 8192
+    state = {'removed': removed, 'aliases': [removed], 'debris': {}}
+    for item in (1, True, IntWithData(1), -2**300):
+        removed[16385] = item
+        actual, reference = _microstep_checkpoint(state), legacy_checkpoint(state)
+        assert encoded(actual) == encoded(reference)
+        assert type(actual['removed'][16385]) is type(reference['removed'][16385])
+        assert actual['removed'] is actual['aliases'][0] and actual['removed'] is not removed
+        if isinstance(item, IntWithData):
+            assert actual['removed'][16385].data == [1]
+            assert actual['removed'][16385].data is not item.data
+        actual['removed'].append(19)
+        assert len(removed) == 32768
+    assert len(calls) == 4 and all(value is removed for value in calls)
+
+
 class IntWithData(int):
     def __new__(cls, value):
         instance = super().__new__(cls, value); instance.data = [1]
