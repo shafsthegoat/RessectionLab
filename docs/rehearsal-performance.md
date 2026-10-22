@@ -51,6 +51,8 @@ receipts retain their stated zero-update scope.
   the in-flight read, while pause discards unadmitted data. Source generations,
   failures and pause/restart leases invalidate stale receipts. Automatic replay
   never enters the coalescing manual-seek queue.
+  Full reconstructed-prefix read-only receipts may use the same single slot and
+  byte ceiling; their source/branch/authority is checked before buffering.
 * A source/branch-bound metadata token avoids sending the complete timeline,
   full-case metadata and stable scene context on every replay frame. The client
   restores resident context before display admission. Unknown or stale tokens
@@ -181,9 +183,79 @@ Both endpoint state IDs matched their saved checkpoints. The UI visibly labeled
 them **Imported endpoint · unverified · read only**. Replay, Apply, Preview,
 Branch, Undo and Redo were disabled. The check used only `inspectArchive`,
 framed the operative field, saved screenshots and recorded zero physics calls.
-This is source/checkpoint self-consistency inspection; verification is still
-required before planning, replay or editing. It does not create RL state or
-declare historical outcomes verified.
+This is source/checkpoint self-consistency inspection. Full verification is
+still required before planning or editing. The separate read-only prefix mode
+below can reconstruct saved actions without admitting the complete archive.
+Neither inspection nor prefix reconstruction creates RL state.
+
+## Current-production read-only prefix replay
+
+The imported endpoint now offers **Replay from start · read only**. It starts
+from the original source and protection contract, executes saved public actions
+as requested, and captures their actual substeps. Imported checkpoint state
+never seeds this reconstruction. The banner reports the reconstructed prefix
+and original action count; the remainder stays unverified. Editing, planning,
+branching and RL export remain unavailable in this mode. Explicit full-archive
+verification is still a separate operation.
+
+Each request computes at most four new actions. Far seeks stop at the actual
+reached boundary and report the budget stop. Actions execute once per owner;
+frame reads and retained boundary reads execute no physics. Evicted data becomes
+unavailable rather than silently recomputing old actions. Rewinding to zero
+creates a new bounded owner. Cancellation or a failed action preserves earlier
+committed prefix states and reports the failed index.
+
+The desktop owner retains at most 64 MiB of compressed observations, 16 MiB of
+compressed checkpoints and 4 MiB of computed receipts. The original immutable
+snapshot is borrowed from the existing loaded bundle, with a separate 128 MiB
+input limit. Source anatomy, pure geometry/protection runtime, decoded views
+and other transient allocations are additional. Source object, action log,
+protection and implementation identities bind the owner; no verified/observed
+disk cache or editable surgical session is populated. Even a complete matching
+endpoint would retain read-only authority.
+
+The first production GUI qualification used the complete unchanged original
+archive and current Python code, without frozen numerical substitution. It
+reconstructed exactly three original actions and CPU-submitted frames 0–11 of
+action 2, with every state ID matching the preserved baseline. Warm reads made
+zero physics calls. All fourteen harness checks passed, including read-only
+authority, original 2,148-action count, no canonical admission and unchanged
+source/Python bytes. Only the three reconstructed timeline entries were shown.
+
+Prefix initialization took 7.00 seconds, advancing to boundary 2 took 3.70
+seconds, and preparing action 2 with its observations took 41.77 seconds. Warm
+frames 1→11 covered two simulated seconds in 7.361 wall seconds (**0.272×**),
+with a 787.7 ms p95 CPU-submission gap. This run exposed eleven prefetched full
+responses being discarded and refetched: 24 completed frame responses for
+twelve submissions, including one unadmitted lookahead completed at shutdown.
+This measurement is a separate production workload from the frozen-numerics
+0.720× experiment above.
+
+A matched GUI run then retained those full read-only prefix responses within
+the existing single-slot 8 MiB prefetch limit. Duplicate fetches fell **11→0**;
+twelve submitted frames required thirteen completed responses, including one
+unadmitted shutdown lookahead. Warm throughput improved **0.272→0.524×**
+(1.93×), with warm elapsed time falling from 7.361 to 3.814 seconds. All fourteen
+checks passed again, with the same original archive, Python source manifest,
+harness, exact twelve state IDs and three preparation steps. Warm reads again
+made zero physics calls. The warm CPU-submission gap p95 fell to 413.4 ms;
+worker preparation median was 115.4 ms and demanded IPC median 301.2 ms.
+Cold action-2 preparation remained 42.17 seconds. This fix closes duplicate
+fetches, not the 1× or compositor targets.
+
+The owner retained 33,481,180 bytes of frames, 432,316 bytes of checkpoints and
+268,522 bytes of receipts. It shared 111,442,521 bytes of existing immutable
+input; peak resident memory for the complete Python process was 854,032,384
+bytes. These are one-run observations, not a whole-application memory bound.
+The matched prefetch run retained the same private bytes and recorded a
+792,887,296-byte whole-Python peak RSS.
+The earlier 16 MiB-window attempt failed honestly during action 2 and retained
+its earlier committed prefix. The bridge's explicit 64 MiB window is within
+the replay class's unchanged hard ceiling.
+
+This qualifies a bounded current-production replay path, not the full primary
+or vascular operation, a microscope demonstration, compositor timing, or the
+remaining playback targets.
 
 ## Headless diagnostics and canonical audit
 
@@ -260,8 +332,10 @@ Evidence: `backend-baseline.json`, `backend-digest-optimized.json`,
 ## Gates that remain open
 
 * **At least 1× observed-state playback is not achieved.** The final measured
-  warm state throughput was 0.720×, even with 4× selected. Exact source surface
-  preparation and replay reconstruction remain material costs.
+  frozen-numerics transport experiment reached 0.720×; the separate current
+  production read-only prefix path reached 0.524×, even with 4× selected.
+  Exact source surface preparation and replay reconstruction remain material
+  costs.
 * **A 50 ms p95 delivered-frame interval is not established.** A separate
   trusted camera-orbit control delivered 42 Electron frames with a 50.99 ms
   nearest-rank p95 interval. This control includes frame-subscription observer
@@ -280,12 +354,14 @@ pnpm --dir desktop test
 pnpm --dir desktop build
 ```
 
-The latest October 22 run passed 848 desktop tests: 179 main-process, 450 renderer and
-219 viewer tests. Build passed with the existing bundle-size advisory.
+The latest October 22 validation passed 864 desktop tests: 181 main-process,
+464 renderer and 219 viewer tests. Build passed with the existing bundle-size
+advisory.
 
-The final numerical regression run passed **715 tests, with seven pilot tests
-skipped** and two existing Gymnasium advisories. It includes surgical/full-case
-tests and independent geometry checks. The pilot opt-in was not enabled.
+The latest Python regression run passed **733 tests, with seven pilot tests
+skipped**, in 115.10 seconds, with two existing Gymnasium advisories. It includes
+surgical/full-case tests, independent geometry checks and the read-only prefix
+contracts. The pilot opt-in was not enabled.
 
 For a bounded current-production imported-endpoint check:
 
@@ -299,12 +375,31 @@ desktop/node_modules/.bin/electron desktop/electron/benchmark-surgical-playback.
 ```
 
 The harness requires CPython 3.12 and the published no-step monitoring helper.
-It refuses public physics steps before execution. Default playback mode needs
+Import-only and default playback refuse public physics steps before execution.
+Default playback mode needs
 genuinely authenticated observed frames already available for the chosen
 numerical implementation; an unavailable frame fails the check. Do not treat a
 cache miss as permission to run a full patient replay. `PLAYBACK_FIELD_SIZES=1`
 adds per-field JSON size diagnostics, and `PLAYBACK_ORBIT=1` adds the separate
 delivery observer control. Their overhead must be identified in reports.
+
+For the separate bounded current-production prefix qualification, choose a
+fresh output directory and allow time for the three cold action preparations:
+
+```sh
+PLAYBACK_PREFIX=1 PLAYBACK_MAX_MS=90000 \
+PLAYBACK_OUTPUT="$PWD/testcases/outputs/rehearsal-prefix-check" \
+desktop/node_modules/.bin/electron desktop/electron/benchmark-surgical-playback.cjs \
+  --case "$PWD/testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab"
+```
+
+This mode permits exactly the original actions 0 and 1 while seeking boundary 2,
+then action 2 while preparing its first observed frame. It refuses unexpected
+or additional step attempts before execution. Subsequent frame reads must be
+step-free. It rejects frozen Python/bridge substitution and additional timing
+observers. The benchmark pauses at CPU-submitted frame 11 and checks private
+retention and absence of canonical admission. It does not run the complete
+saved operation or any learning.
 
 Local evidence remains under the ignored directory
 `testcases/outputs/rl-readiness-20261022/`:
@@ -336,6 +431,17 @@ Local evidence remains under the ignored directory
   functional/byte diagnostic.
 * `desktop-import-current/report.json` and branch PNGs: current-production
   import-only observation.
+* `desktop-current-prefix-qualified/{report,analysis}.json`: current-production
+  read-only prefix GUI pass, including completed shutdown lookahead accounting.
+* `desktop-current-prefix-prefetch-qualified/{report,analysis}.json`: matched
+  full-prefix prefetch improvement, with no duplicate fetches and exact state IDs.
+* `prefix-full-receipt-{renderer,main}-tests.log`, `prefix-viewer-tests.log` and
+  `prefix-full-receipt-build.log`: final desktop regression/build checks.
+* `current-primary-prefix-replay/report.json`: retained failed 16 MiB-window
+  diagnostic; `current-primary-prefix-replay-64m/report.json`: bounded successful
+  backend diagnostic of the explicit bridge window.
+* `prefix-full-no-learning-tests.log`: 733 passing Python tests and seven
+  skipped pilot tests, including prefix ownership and bridge regressions.
 * `source-normals-benchmark.json`, `source-index-final-benchmark.json`,
   `source-chunk-assembly-benchmark.json`: exact-source CPU comparisons.
 * `indexed-chunks-full-tests.log`, `indexed-chunks-build.log`: final indexed

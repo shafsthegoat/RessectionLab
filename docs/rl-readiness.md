@@ -262,6 +262,13 @@ They require an explicit `--run-rl-pilot-tests` option, which must not be used f
 this task. Ordinary broad pytest selections now retain readiness-only behavior.
 Regression coverage does not replace full patient replay or qualify calibration.
 
+Imported patient archives also have a separate read-only prefix replay mode.
+It reconstructs requested saved actions from source without promoting imported
+checkpoint state, creating an editable engine session, or granting RL resume/
+export authority. A prefix matching the old frames is playback evidence only.
+The production GUI's three-action qualification and bounded retention contract
+are documented in [rehearsal-performance.md](rehearsal-performance.md).
+
 With the opt-in guard active, the earlier default surgical/full-case Python
 qualification passed **586 tests, skipped 7 pilot tests, in 107.04 seconds** with
 the same two existing Gymnasium advisories. This guarded run performed no pilot
@@ -277,6 +284,11 @@ fixed fixture seeds and the preserved patient load/reset-only check in
 updates. Its receipt is `cli-geometry-optimized-three-seeds/report.json` below
 the same ignored output root. It does not qualify patient replay, an online
 candidate-selection policy, or the remaining performance gates.
+
+After adding isolated read-only prefix replay, the same broader selection
+passed **733 tests, with 7 pilot tests skipped, in 115.10 seconds**. It adds
+source/implementation binding, cancellation, retention and bridge-authority
+regressions. The pilot opt-in remained disabled.
 
 ## Generated native workspace companion
 

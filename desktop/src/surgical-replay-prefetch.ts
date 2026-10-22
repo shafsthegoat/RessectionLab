@@ -4,9 +4,9 @@ export const MAX_REPLAY_PREFETCH_BYTES=8*1024*1024;
 type Receipt={kind:'receipt';response:SurgicalResponse;bytes:number}|{kind:'serial'}|{kind:'stale'}|{kind:'error';error:unknown};
 const key=(s:SurgicalReplaySelection)=>JSON.stringify([s.branchId,s.position,s.frameIndex]);
 const cursor=(s:SurgicalReplaySelection):SurgicalReplaySelection=>({branchId:s.branchId,position:s.position,frameIndex:s.frameIndex});
-/** One compact wire receipt, never a modeled volume. Transport is serialized
+/** One compact or read-only prefix wire receipt, never a modeled volume. Transport is serialized
  * independently of the manual seek queue, whose coalescing must not apply to
- * automatic replay. A discarded full/oversized receipt is fetched again only
+ * automatic replay. A discarded canonical full/oversized receipt is fetched again only
  * when demanded; its observation is still admitted in exact order. */
 export class SurgicalReplayPrefetch {
   private epoch=0;
@@ -37,7 +37,8 @@ export class SurgicalReplayPrefetch {
         const response=await this.fetch(selection);
         if(!this.enabled||epoch!==this.epoch)return {kind:'stale'};
         if(limited){
-          if(!response.timelineOmitted||Object.hasOwn(response.view,'scene')||Object.hasOwn(response.view,'catalog')||Object.hasOwn(response,'fullCase'))return {kind:'serial'};
+          const prefix=response.verification?.status==='reconstructed-prefix'&&response.verification.readOnly===true;
+          if(!prefix&&(!response.timelineOmitted||Object.hasOwn(response.view,'scene')||Object.hasOwn(response.view,'catalog')||Object.hasOwn(response,'fullCase')))return {kind:'serial'};
           const bytes=new TextEncoder().encode(JSON.stringify(response)).byteLength;
           if(bytes>this.maxBytes)return {kind:'serial'};
           return {kind:'receipt',response,bytes};

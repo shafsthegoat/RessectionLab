@@ -15,7 +15,7 @@ function hookHarness() {
     useMemo(fn,deps){const i=index++;if(!slots[i]||!same(slots[i].deps,deps))slots[i]={value:fn(),deps};return slots[i].value;},
     useEffect(fn,deps){const i=index++;if(!slots[i]||!same(slots[i].deps,deps)){const old=slots[i];slots[i]={deps,cleanup:old?.cleanup};effects.push(()=>{old?.cleanup?.();slots[i].cleanup=fn();});}},
   };
-  return {flushEffects(){for(const effect of effects.splice(0))effect();},render(source,api,{passive=true}={}){let result;do{dirty=false;index=0;internals.H=dispatcher;try{result=useSurgical(source,api,true);}finally{internals.H=previous;}if(passive)for(const effect of effects.splice(0))effect();}while(dirty);return result;},close(){for(const item of slots)item?.cleanup?.();internals.H=previous;}};
+  return {flushEffects(){for(const effect of effects.splice(0))effect();},render(source,api,{passive=true,initialArchivePreview=false}={}){let result;do{dirty=false;index=0;internals.H=dispatcher;try{result=useSurgical(source,api,true,initialArchivePreview);}finally{internals.H=previous;}if(passive)for(const effect of effects.splice(0))effect();}while(dirty);return result;},close(){for(const item of slots)item?.cleanup?.();internals.H=previous;}};
 }
 test('reopening the same patient invalidates in-flight rehearsal state and inspects the new workspace',async()=>{
   const harness=hookHarness(),calls=[];let resolveOld;
@@ -60,7 +60,7 @@ test('hook acknowledges authenticated fields only after full receipt and hydrate
   }finally{harness.close();}
 });
 
-function replayFixture(intercept=()=>undefined){
+function replayFixture(intercept=()=>undefined,options={}){
   const affine=[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]],regions=[{id:1,name:'brain',material:'soft_tissue',color:'#ccc',target:false}];
   const source={caseHash:'case',shape:[2,2,2],affine,frame:'RAS+',mri:new Float32Array(8),compartments:[{name:'brain',kind:'soft_tissue',color:'#ccc',mask:new Uint8Array(8).fill(1)}]};
   const view={stateId:'editable',scene:{shape:source.shape,affine,regions},catalog:[],slots:{left:{position:[0,0,0],quaternion:[0,0,0,1],parameters:{}}},metrics:{elapsedSeconds:0},removed:[],moved:[],history:[],flapComponents:[]};
@@ -72,7 +72,7 @@ function replayFixture(intercept=()=>undefined){
     return {...base,branchId,timelineToken:'generation',...(full?{timeline}: {timelineOmitted:true}),playback,view:full?{...view,...wireView}:wireView};
   };
   const calls=[],api={async surgicalRehearsal(request){calls.push(request);if(request.command==='seekFrame')assert.deepEqual(Object.keys(request).filter(key=>!['caseHash','command','expectedStateId','branchId','position','frameIndex','timelineToken','viewFieldTokens'].includes(key)),[],'seekFrame must respect the production IPC whitelist');const intercepted=intercept(request,calls);if(intercepted!==undefined)return intercepted;return request.command==='seekFrame'?frame(request):{...base,branchId:request.branchId??'main',view:{...view,stateId:request.command==='inspect'?'editable':`editable:${request.command}`}};}};
-  const harness=hookHarness(),render=(s=source)=>harness.render(s,api),flush=()=>new Promise(resolve=>setImmediate(resolve));
+  const harness=hookHarness(),render=(s=source)=>harness.render(s,api,options),flush=()=>new Promise(resolve=>setImmediate(resolve));
   const admit=()=>{const c=render();c.interaction.onDisplayReady(c.interaction.view);return render();};
   return {source,api,calls,frame,harness,render,flush,admit,async open(){render();await flush();return admit();}};
 }
@@ -222,6 +222,105 @@ test('queued lookahead keeps its playback owner across a source render before pa
       c.stopPlayback();assert.equal(c.startPlayback(),false,'an old accepted receipt cannot start a new-source lane before inspection');
       f.harness.flushEffects();await f.flush();
       assert.equal(f.calls.at(-1).command,'inspect');assert.equal(f.calls.at(-1).caseHash,caseHash);assert.equal(f.calls.at(-1).expectedStateId,undefined);
+    }finally{f.harness.close();}
+  }
+});
+
+function prefixFixture(intercept=()=>undefined){
+  let through=0;
+  const f=replayFixture(q=>{
+    const overridden=intercept(q);if(overridden!==undefined)return overridden;
+    if(q.command==='inspectArchive'){
+      const r=f.frame({...selection(0),branchId:q.branchId??'main'});return {...r,playback:null,timelineToken:undefined,position:10,verification:{readOnly:true,status:'unverified-import',causalReplayVerified:false,limitations:[]},view:{...r.view,stateId:'saved:endpoint'}};
+    }
+    if(q.command==='seekPrefix'||q.command==='seekPrefixFrame'){
+      assert.deepEqual(Object.keys(q).filter(key=>!['caseHash','command','branchId','position','frameIndex'].includes(key)),[],'prefix requests cannot carry canonical identity or compact acknowledgments');
+      let r,position,budgetStopped=false;
+      if(q.command==='seekPrefix'){
+        const actual=Math.min(q.position,through+4);through=Math.max(through,actual);position=actual;budgetStopped=actual<q.position;
+        r=f.frame({...selection(0),branchId:q.branchId??'main'});r={...r,playback:null,view:{...r.view,stateId:`prefix:${actual}`,removed:Array.from({length:Math.min(actual,8)},(_,i)=>i)}};
+      }else {r=f.frame(q);through=Math.max(through,q.position+1);position=q.position+Number(q.frameIndex===2);}
+      return {...r,timelineToken:undefined,position,requestedPosition:q.command==='seekPrefix'?q.position:q.position+1,budgetStopped,
+        branches:r.branches.map(b=>({...b,steps:10})),timeline:Array.from({length:through},()=>({action:{operation:'inspect'},status:'accepted',reason:null,events:[]})),
+        verification:{readOnly:true,status:'reconstructed-prefix',verifiedThrough:through,totalActions:10,archiveEndpointVerified:false,originSnapshotHash:'origin',actionLogHash:'actions',protectionContractHash:'protection',implementation:'current',prefixImplementation:'prefix-v1'}};
+    }
+  },{initialArchivePreview:true});return f;
+}
+test('unverified endpoints enter prefix0 explicitly; prefix requests cannot enter editable or canonical cursor domains',async()=>{
+  const f=prefixFixture();try{
+    let c=await f.open();assert.equal(c.result.verification.status,'unverified-import');assert.equal(c.startPlayback(),false);
+    for(const command of ['seek','seekFrame','seekPrefixFrame','step','plan','branch','fullCase']){
+      const before=f.calls.length;assert.equal(await c.run(command,{...selection(1)}),false,command);assert.equal(f.calls.length,before);
+    }
+    assert.equal(await c.run('seekPrefix',{position:1,branchId:'main'}),false,'initial reconstruction must start at0');
+    await c.run('seekPrefix',{position:0,branchId:'main',expectedStateId:'must-not-cross'});c=f.admit();assert.equal(c.view.stateId,'prefix:0');assert.equal(c.interaction.readOnly,true);
+    for(const command of ['seek','seekFrame','selectBranch','step','preview','plan','branch','fullCase','reset','create']){
+      const before=f.calls.length;assert.equal(await c.run(command,{...selection(0)}),false,command);assert.equal(f.calls.length,before);
+    }
+    c.startFullCase('primary');c=f.render();assert.equal(c.computingFullCase,null,'prefix cannot start computation through the direct controller');
+    await c.run('inspect');c=f.admit();assert.equal(f.calls.at(-1).expectedStateId,undefined,'prefix/import views never replace the editable cursor');
+    assert.equal(c.result.verification,undefined);const before=f.calls.length;assert.equal(await c.run('seekPrefix',{position:0}),false);assert.equal(f.calls.length,before,'canonical session cannot jump into prefix authority');
+  }finally{f.harness.close();}
+});
+test('prefix automatic FIFO admits each full receipt once with no future volume before CPU acknowledgment',async()=>{
+  const f=prefixFixture();try{
+    let c=await f.open();await c.run('seekPrefix',{position:0,branchId:'main'});c=f.admit();assert(c.startPlayback());
+    const admitted=[];
+    for(let i=0;i<3;i++){
+      assert(await c.runPlayback(selection(i)));await f.flush();c=f.render();assert.equal(c.view.stateId,i===0?'prefix:0':`main:0:${i-1}`);
+      const activeVolume=c.volume;await f.flush();c=f.render();assert.equal(c.volume,activeVolume,'a retained full prefix lookahead cannot prepare future anatomy');
+      if(i<2)assert.equal(await c.runPlayback(selection(i+1)),false,'the current anatomy must be acknowledged before its successor is demanded');
+      c=f.admit();admitted.push(c.result.playback.frameIndex);assert.equal(c.result.verification.status,'reconstructed-prefix');assert.equal(c.interaction.readOnly,true);
+    }
+    assert.deepEqual(admitted,[0,1,2]);const frames=f.calls.filter(q=>q.command==='seekPrefixFrame');
+    assert.deepEqual(frames.filter(q=>q.position===0).map(q=>q.frameIndex),[0,1,2],'each full prefix observation is fetched exactly once');assert(frames.every(q=>!Object.hasOwn(q,'expectedStateId')&&!Object.hasOwn(q,'timelineToken')));
+    c.stopPlayback();await c.run('inspectArchive',{branchId:'other'});c=f.admit();assert.equal(c.result.branchId,'other');assert.equal(c.startPlayback(),false,'branch switch returns to imported authority');
+  }finally{f.harness.close();}
+});
+test('budget-stopped prefix seek displays actual reached progress and preserves original archive size',async()=>{
+  const f=prefixFixture();try{
+    let c=await f.open();await c.run('seekPrefix',{position:0});c=f.admit();await c.run('seekPrefix',{position:9});c=f.admit();
+    assert.equal(c.result.position,4);assert.equal(c.result.requestedPosition,9);assert.equal(c.result.budgetStopped,true);assert.equal(c.result.verification.verifiedThrough,4);assert.equal(c.result.verification.totalActions,10);assert.equal(c.result.branches[0].steps,10);assert.equal(c.result.timeline.length,4);
+    await c.run('seekPrefix',{position:9});c=f.admit();assert.equal(c.result.position,8);assert.equal(c.result.verification.verifiedThrough,8);
+  }finally{f.harness.close();}
+});
+test('prefix owner source changes and authority substitution fail closed before future display',async()=>{
+  const pending=deferred();let blocked=false;
+  const f=prefixFixture(q=>q.command==='seekPrefixFrame'&&q.frameIndex===1&&blocked?pending.promise:undefined);
+  try{
+    let c=await f.open();await c.run('seekPrefix',{position:0});c=f.admit();assert(c.startPlayback());blocked=true;await c.runPlayback(selection(0));await f.flush();c=f.admit();
+    const reopened={...f.source};c=f.harness.render(reopened,f.api,{initialArchivePreview:true});assert.equal(c.view,null);
+    pending.resolve({...f.frame(selection(1)),verification:undefined});await f.flush();c=f.harness.render(reopened,f.api,{initialArchivePreview:true});
+    if(c.interaction.view)c.interaction.onDisplayReady(c.interaction.view);c=f.harness.render(reopened,f.api,{initialArchivePreview:true});assert.equal(c.result.verification.status,'unverified-import');assert.equal(c.error,null);assert.equal(f.calls.at(-1).command,'inspectArchive');assert.equal(f.calls.at(-1).expectedStateId,undefined);
+  }finally{f.harness.close();}
+});
+test('a prefix frame response cannot substitute canonical authority or pollute editable state',async()=>{
+  const pending=deferred();let block=false;const f=prefixFixture(q=>q.command==='seekPrefixFrame'&&q.frameIndex===1&&block?pending.promise:undefined);
+  try{
+    let c=await f.open();await c.run('seekPrefix',{position:0});c=f.admit();assert(c.startPlayback());block=true;await c.runPlayback(selection(0));await f.flush();c=f.admit();
+    pending.resolve(f.frame(selection(1)));await f.flush();assert.equal(await c.runPlayback(selection(1)),false);c=f.render();assert.equal(c.view.stateId,'main:0:0');assert.match(c.error,/prefix authority/);
+    await c.run('inspect');c=f.admit();assert.equal(f.calls.at(-1).expectedStateId,undefined);assert.equal(c.result.verification,undefined);
+  }finally{f.harness.close();}
+});
+test('manual prefix commands cannot borrow stale authority after a source render before passive effects',async()=>{
+  for(const caseHash of ['case','replacement-source']){
+    const f=prefixFixture();try{
+      let c=await f.open();await c.run('seekPrefix',{position:0});c=f.admit();assert.equal(c.result.verification.status,'reconstructed-prefix');
+      const replacement={...f.source,caseHash};c=f.harness.render(replacement,f.api,{initialArchivePreview:true,passive:false});assert.equal(c.view,null);
+      const before=f.calls.length;
+      for(const [command,extra] of [['seekPrefix',{position:4}],['seekPrefixFrame',selection(0)]]){
+        assert.equal(await c.run(command,extra),false,command);assert.equal(f.calls.length,before,'no old-prefix cursor or editable identity may dispatch to the replacement source');
+      }
+      // Inspection remains legal before the replacement source has a bound view.
+      assert.equal(await c.run('inspectArchive',{branchId:'main'}),true);assert.equal(f.calls.at(-1).command,'inspectArchive');assert.equal(f.calls.at(-1).caseHash,caseHash);
+      c=f.harness.render(replacement,f.api,{initialArchivePreview:true,passive:false});
+      assert.equal(c.result.verification.status,'reconstructed-prefix','old accepted prefix remains until the replacement receipt is displayed');assert.equal(c.view,null,'an unadmitted replacement receipt cannot expose stale same-hash anatomy');
+      const received=f.calls.length;
+      for(const [command,extra] of [['seekPrefix',{position:4}],['seekPrefixFrame',selection(0)]]){
+        assert.equal(await c.run(command,extra),false,command);assert.equal(f.calls.length,received,'an unadmitted replacement receipt cannot bind old prefix authority');
+      }
+      assert.equal(await c.run('inspect'),true);assert.equal(f.calls.at(-1).command,'inspect');assert.equal(f.calls.at(-1).caseHash,caseHash);
+      f.harness.flushEffects();await f.flush();assert.equal(f.calls.at(-1).command,'inspectArchive');assert.equal(f.calls.at(-1).expectedStateId,undefined);
     }finally{f.harness.close();}
   }
 });

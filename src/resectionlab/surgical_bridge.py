@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import tempfile
+from types import MappingProxyType
 import numpy as np
 from .core import CaseData, SourceRef, freeze_json, thaw_json, semantic_digest
 from .surgical_scene import from_case, engineering_scene
@@ -14,27 +15,32 @@ from .surgical_replay_cache import SurgicalReplayCache
 OPERATIONS = frozenset({'surgicalRehearsal', 'createSurgicalFixture', 'importSurgicalScene', 'prepareSurgicalEnvironment', 'compareSurgicalAnatomy'})
 ARTIFACT = 'surgical_toolbox'
 RESULT_BYTES = 32 * 1024**2 - 4096  # Reserve the bounded JSONL envelope.
+PREFIX_COMMANDS = frozenset({'seekPrefix', 'seekPrefixFrame'})
 
 
 def display_timeline(history):
     """Bound redundant UI event samples; canonical replay history stays exact."""
+    def detach(value):
+        # Private frozen prefix receipts are already recursively immutable.
+        return thaw_json(value) if isinstance(value, (MappingProxyType, tuple)) else copy.deepcopy(value)
     result = []
     numeric = {'drill_work': ('inputEnergyJ', 'cuttingWorkJ', 'removedVolumeMm3'),
                'removal': ('cells', 'volumeMm3'), 'aspiration': ('fluid', 'debris'),
                'irrigation': ('volumeMm3',)}
     for entry in history:
-        row = {k: copy.deepcopy(v) for k,v in entry.items() if k != 'events'}
-        path = row.get('action', {}).pop('path', None)
+        row = {k: ({name: detach(value) for name, value in v.items() if name != 'path'}
+                   if k == 'action' else detach(v)) for k,v in entry.items() if k != 'events'}
+        path = entry.get('action', {}).get('path')
         if path is not None:
             # Playback obtains actual poses from the canonical action archive.
             # The UI timeline needs operation/outcome, not every dense waypoint.
             row['recordedPathPoseCount'] = len(path)
-            if path: row['recordedPathEndpoints'] = [path[0], path[-1]]
+            if path: row['recordedPathEndpoints'] = [detach(path[0]), detach(path[-1])]
         events, groups = [], {}
         for event in entry.get('events', []):
             kind = event.get('kind')
             if kind not in numeric:
-                events.append(copy.deepcopy(event)); continue
+                events.append(detach(event)); continue
             if kind not in groups:
                 summary = {'kind': kind, 'summarySamples': 0}
                 groups[kind] = summary; events.append(summary)
@@ -175,9 +181,9 @@ def dispatch(session, operation, args, request, progress):
         # already admitted. It returns before persistence. Borrow this object
         # rather than thawing every saved branch/path/checkpoint on each frame.
         # Replacement archives and all editable commands retain full admission.
-        artifacts = entry.artifacts if hot_frame else thaw_json(entry.artifacts)
+        artifacts = entry.artifacts if hot_frame or args.get('command') in PREFIX_COMMANDS else thaw_json(entry.artifacts)
     command = args.get('command', 'inspect')
-    if command not in {'create', 'inspect', 'inspectArchive', 'preview', 'step', 'undo', 'redo', 'seek', 'branch', 'selectBranch', 'reset', 'selectScene', 'plan', 'fullCase', 'seekFrame'}:
+    if command not in {'create', 'inspect', 'inspectArchive', 'preview', 'step', 'undo', 'redo', 'seek', 'branch', 'selectBranch', 'reset', 'selectScene', 'plan', 'fullCase', 'seekFrame', *PREFIX_COMMANDS}:
         raise ValueError('Unsupported surgical command')
     raw = artifacts.get(ARTIFACT)
     from .surgical_environment import standardize, default_target_names, SCHEMA as ENVIRONMENT_SCHEMA
@@ -185,6 +191,59 @@ def dispatch(session, operation, args, request, progress):
     scene_builder = lambda mapping=None: standardize(original_builder(mapping), default_target_names(entry.case) if entry is not None and mapping is None else None,
         raw.get('physicsProfile') if raw and command != 'create' else None) if (
         command == 'create' or raw and raw.get('environmentSchema') == ENVIRONMENT_SCHEMA) else original_builder(mapping)
+    if command in PREFIX_COMMANDS:
+        # This independent read-only owner never populates the editable session,
+        # canonical admission, or either authenticated whole-archive cache.
+        _keys(args, {'caseHash', 'command', 'branchId', 'position', 'frameIndex'})
+        if entry is None or raw is None:
+            raise ValueError('Read-only prefix replay requires a saved workspace branch')
+        selected = args.get('branchId', raw.get('branchId'))
+        if not isinstance(selected, str) or selected not in raw.get('branches', {}):
+            raise ValueError('Unknown prefix replay branch')
+        if command == 'seekPrefix' and 'frameIndex' in args:
+            raise ValueError('Boundary prefix requests do not select observed frames')
+        owned = getattr(session, 'surgical_prefix_session', None)
+        if command == 'seekPrefix' and args.get('position') == 0:
+            # An explicit rewind starts a new bounded reconstruction, including
+            # after an old boundary/frame was evicted. It grants no authority.
+            owned = None
+        if not owned or owned[0] is not entry or owned[1] is not entry.artifacts or owned[2] != selected:
+            from .surgical_prefix_replay import SurgicalPrefixReplay
+            # This branch belongs to the bundle's privately frozen artifact.
+            # Future reads retain that exact origin, independently of edits or
+            # canonical session state.
+            frozen_snapshot = raw['branches'][selected]
+            # Only the small mapping/profile need ordinary JSON. Keep the
+            # original private frozen action log/checkpoint shared and bounded.
+            raw_profile, raw_mapping = thaw_json(raw.get('physicsProfile')), thaw_json(raw['mapping'])
+            prefix_scene = original_builder(raw_mapping)
+            if raw.get('environmentSchema') == ENVIRONMENT_SCHEMA:
+                prefix_scene = standardize(prefix_scene, physics_profile=raw_profile)
+            owner = SurgicalPrefixReplay._borrow_frozen_snapshot(prefix_scene, frozen_snapshot,
+                max_input_bytes=128 * 1024**2, max_frame_bytes=64 * 1024**2)
+            request.check()
+            owned = (entry, entry.artifacts, selected, owner)
+            session.surgical_prefix_session = owned
+        owner = owned[3]
+        progress(.1, 'Reconstructing saved actions in a separate read-only prefix')
+        result = (owner.seek(args.get('position'), check=request.check, _timeline_projection=display_timeline) if command == 'seekPrefix'
+                  else owner.seek_frame(args.get('position'), args.get('frameIndex'), check=request.check,
+                                        _timeline_projection=display_timeline))
+        if 'playback' in result:
+            result['playback']['branchId'] = selected
+        result.update(caseHash=identity, branchId=selected, changed=False, outcome=None,
+            fullCase=None, branches=[{'id': name, 'steps': len(snapshot['actions'])}
+                                     for name, snapshot in raw['branches'].items()])
+        _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Read-only prefix exceeds the display budget')
+        request.check()
+        return result
+    prefix_owner = getattr(session, 'surgical_prefix_session', None)
+    prior_canonical = getattr(session, 'surgical_sessions', {}).get(identity)
+    if (entry is not None and prefix_owner and prefix_owner[0] is entry
+            and prefix_owner[1] is entry.artifacts and command not in {'inspect', 'inspectArchive'}
+            and not (prior_canonical and len(prior_canonical) > 3 and prior_canonical[3] is entry.artifacts)):
+        raise BridgeError('SURGICAL_PREFIX_READ_ONLY',
+            'Reconstructed prefixes are read only. Explicitly verify the full archive before planning or editing.')
     if command == 'inspectArchive':
         if raw is None:
             return None

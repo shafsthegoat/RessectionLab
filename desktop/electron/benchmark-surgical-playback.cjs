@@ -1,6 +1,6 @@
 'use strict';
 // Bounded, read-only playback measurement of the actual Electron application.
-// The Python monitoring guard aborts any public physics step before it executes.
+// Default guard forbids steps; explicit prefix mode permits three ordered preparations.
 const {app,ipcMain,screen}=require('electron');
 const fs=require('node:fs');
 const path=require('node:path');
@@ -13,12 +13,16 @@ if(!output.startsWith(path.join(root,'testcases')+path.sep))throw Error('Keep be
 fs.mkdirSync(output,{recursive:true});
 const source=path.resolve(process.env.PLAYBACK_PYTHON_SOURCE||path.join(root,'src'));
 const bridgeSource=process.env.PLAYBACK_BRIDGE_SOURCE?path.resolve(process.env.PLAYBACK_BRIDGE_SOURCE):null;
+const prefixMode=process.env.PLAYBACK_PREFIX==='1';
+if(prefixMode&&(source!==path.join(root,'src')||bridgeSource||process.env.PLAYBACK_IMPORT_ONLY||process.env.PLAYBACK_ORBIT||process.env.PLAYBACK_FIELD_SIZES))throw Error('Prefix qualification requires current production source and no bridge substitution, import-only or observers');
 const sourcePath=process.argv[process.argv.indexOf('--case')+1];
 if(!process.argv.includes('--case')||!sourcePath)throw Error('Supply an existing saved --case');
 const monitor=path.join(root,'testcases/outputs/full-case-rehearsal-20261020/review');
 const runner=path.join(output,'guarded-bridge.py');
 const bridgeSetup=bridgeSource?`import importlib.util\nimport resectionlab.surgical_bridge as original_bridge\nspec=importlib.util.spec_from_file_location('resectionlab._measured_transport_bridge', ${JSON.stringify(bridgeSource)})\nmeasured_bridge=importlib.util.module_from_spec(spec)\nspec.loader.exec_module(measured_bridge)\noriginal_bridge.dispatch=measured_bridge.dispatch\n`:'';
-fs.writeFileSync(runner,`import json, sys, importlib.util\nfrom pathlib import Path\nsys.path.insert(0, ${JSON.stringify(monitor)})\nfrom readonly_step_monitor import ReadOnlyStepMonitor\nfrom resectionlab.surgical_engine import SurgicalEngine\nfrom resectionlab import surgical_frame_replay, surgical_telemetry\nif importlib.util.find_spec('resectionlab.surgical_archive_view') is not None:\n    from resectionlab import surgical_archive_view\nfrom resectionlab.desktop_bridge import main\n${bridgeSetup}guard=ReadOnlyStepMonitor(SurgicalEngine)\ntry:\n    with guard:\n        main()\nfinally:\n    Path(${JSON.stringify(path.join(output,'physics-guard.json'))}).write_text(json.dumps({'publicStepAttempts': dict(guard.attempts), 'nonStepMonitoringCallbacks': guard.other_callbacks}))\n`);
+const prefixSetup=prefixMode?`sys.path.insert(0, ${JSON.stringify(__dirname)})\nfrom prefix_playback_monitor import PrefixPlaybackMonitor\nfrom resectionlab import surgical_prefix_replay\nfrom resectionlab.desktop_bridge import BridgeSession\nguard=PrefixPlaybackMonitor(SurgicalEngine)\nguard.install(BridgeSession)\n`:'guard=ReadOnlyStepMonitor(SurgicalEngine)\n';
+const receipt=prefixMode?'guard.receipt()':"{'publicStepAttempts': dict(guard.attempts), 'nonStepMonitoringCallbacks': guard.other_callbacks}";
+fs.writeFileSync(runner,`import json, sys, importlib.util\nfrom pathlib import Path\nsys.path.insert(0, ${JSON.stringify(monitor)})\nfrom readonly_step_monitor import ReadOnlyStepMonitor\nfrom resectionlab.surgical_engine import SurgicalEngine\nfrom resectionlab import surgical_frame_replay, surgical_telemetry\nif importlib.util.find_spec('resectionlab.surgical_archive_view') is not None:\n    from resectionlab import surgical_archive_view\nfrom resectionlab.desktop_bridge import main\n${bridgeSetup}${prefixSetup}try:\n    with guard:\n        main()\nfinally:\n    Path(${JSON.stringify(path.join(output,'physics-guard.json'))}).write_text(json.dumps(${receipt}))\n`);
 const originalSpawn=childProcess.spawn;
 childProcess.spawn=(command,args,options)=>args?.[1]==='-m'&&args?.[2]==='resectionlab.desktop_bridge'
   ?originalSpawn(command,['-u',runner,...args.slice(3)],options):originalSpawn(command,args,options);
@@ -32,10 +36,12 @@ const report={schema:'resectionlab.bounded-playback-performance.v1',recordedAt:n
 if(process.env.PLAYBACK_IMPORT_ONLY)report.importOnly=true;
 if(process.env.PLAYBACK_FIELD_SIZES)report.fieldSizeDiagnostics={enabled:true,measurement:'Extra per-field JSON serialization runs after handler timing and before IPC delivery. This pass is diagnostic and is excluded from primary timing comparisons.'};
 if(bridgeSource)report.transportExperiment={source:bridgeSource,sha256:hash(bridgeSource),scope:'Current transport bridge dispatch over authenticated frozen numerical implementation; does not establish current numerical cache admission. No physics classes/functions/source/cache identities are replaced.'};
+function sourceFiles(directory){const files={};for(const entry of fs.readdirSync(directory,{withFileTypes:true})){const file=path.join(directory,entry.name);if(entry.isDirectory()&&entry.name!=='__pycache__')Object.assign(files,sourceFiles(file));else if(entry.isFile()&&entry.name.endsWith('.py'))files[path.relative(source,file)]=hash(file);}return files;}
+if(prefixMode){report.measurement='Actual Electron controls, current production IPC/Python. CPU anatomy submission is not screen presentation. Three ordered physical prefix preparations permitted; no warm physics or training.';report.prefix={scope:'Original complete saved archive, current production code, bounded reconstruction of its first three actions only. Whole archive remains unverified; no editable admission. Three physical preparations permitted, warm observations must be step-free.',originalActions:null};report.pythonSourceFiles=sourceFiles(source);report.pythonSourceSha256=crypto.createHash('sha256').update(JSON.stringify(report.pythonSourceFiles)).digest('hex');report.guardSha256=hash(path.join(__dirname,'prefix_playback_monitor.py'));}
 let lastResponse,windowRef;
 const persist=()=>fs.writeFileSync(path.join(output,'report.json'),JSON.stringify(report,null,2));
 const originalHandle=ipcMain.handle.bind(ipcMain);
-ipcMain.handle=(channel,handler)=>originalHandle(channel,async(...args)=>{const started=performance.now();try{const result=await handler(...args);const entry={channel,command:args[1]?.command,started,ms:performance.now()-started};if(channel==='research:surgicalRehearsal'){lastResponse=result;Object.assign(entry,{branchId:result?.playback?.branchId,position:result?.playback?.position,frameIndex:result?.playback?.frameIndex,simulatedSeconds:result?.playback?.observedTimeSeconds,stateId:result?.view?.stateId,responseBytes:Buffer.byteLength(JSON.stringify(result))});
+ipcMain.handle=(channel,handler)=>originalHandle(channel,async(...args)=>{const started=performance.now();try{const result=await handler(...args);const entry={channel,command:args[1]?.command,started,ms:performance.now()-started};if(channel==='research:surgicalRehearsal'){lastResponse=result;Object.assign(entry,{requestedPosition:args[1]?.position,requestedFrameIndex:args[1]?.frameIndex,branchId:result?.playback?.branchId??result?.branchId,position:result?.playback?.position??result?.position,frameIndex:result?.playback?.frameIndex,simulatedSeconds:result?.playback?.observedTimeSeconds,stateId:result?.view?.stateId,responseBytes:Buffer.byteLength(JSON.stringify(result))});
       if(process.env.PLAYBACK_FIELD_SIZES){const sizes=value=>Object.fromEntries(Object.entries(value??{}).map(([key,item])=>[key,Buffer.byteLength(JSON.stringify(item)??'null')]));entry.responseKeyBytes=sizes(result);entry.viewKeyBytes=sizes(result?.view);entry.viewFieldsOmitted=result?.viewFieldsOmitted;entry.viewFieldTokens=result?.viewFieldTokens;}
     }report.ipc.push(entry);persist();return result;}catch(error){report.ipc.push({channel,command:args[1]?.command,started,ms:performance.now()-started,error:String(error)});throw error;}});
 const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
@@ -74,12 +80,21 @@ app.on('browser-window-created',(_,window)=>{
       const branch=process.env.PLAYBACK_BRANCH||'full-primary';
       if(lastResponse.branchId!==branch){await set('select[aria-label="Surgical branch"]',branch);await idle();}
       const position=Number(process.env.PLAYBACK_POSITION||2);
-      await set('input[aria-label="Surgical timeline"]',position,'input');await idle();
+      if(prefixMode){
+        if(position!==2||Number(process.env.PLAYBACK_FRAMES||12)!==12)throw Error('Prefix qualification fixes action2 and twelve observations');
+        report.prefix.originalActions=lastResponse.branches.find(b=>b.id===branch).steps;
+        if(lastResponse.verification?.status!=='unverified-import')throw Error('Prefix must start from unverified imported endpoint');
+        await js(`(()=>{window.prefixStartPause={triggered:false};const pause=()=>{const stop=window.prefixStartPause;if(stop.triggered)return;const button=[...document.querySelectorAll('button')].find(b=>b.textContent.trim()==='Pause replay');if(button&&!button.disabled){stop.triggered=true;stop.stateId=document.querySelector('.surgical-panel')?.dataset.stateId;button.click();observer.disconnect();}};const observer=new MutationObserver(pause);observer.observe(document.querySelector('.surgical-panel'),{subtree:true,childList:true,attributes:true,characterData:true});document.addEventListener('anatomy-frame',pause);})();`);
+        await click('Replay from start · read only');await wait(`!!document.querySelector('[aria-label="Reconstructed prefix"]')&&window.prefixStartPause.triggered`);await idle();
+        report.prefix.initialPause=await js('window.prefixStartPause');
+        if(!report.prefix.initialPause.triggered||lastResponse.verification?.status!=='reconstructed-prefix'||lastResponse.position!==0)throw Error('Initial prefix0 must pause before any automatic frame request');
+      }
+      await set('input[aria-label="Surgical timeline"]',position,'input');if(prefixMode)await wait(`document.querySelector('.surgical-panel')?.dataset.recordedPosition==='2'`);await idle();
       await set('select[aria-label="Replay speed"]',4);
       const maxFrames=Number(process.env.PLAYBACK_FRAMES||12),maxMs=Number(process.env.PLAYBACK_MAX_MS||45000);
       await js(`(()=>{window.playbackStop={branchId:${JSON.stringify(branch)},position:${position},frameIndex:${maxFrames-1},triggered:false};document.addEventListener('anatomy-frame',e=>{const target=window.playbackStop,frame=e.detail.surgicalFrame;if(!target.triggered&&frame?.branchId===target.branchId&&frame.position===target.position&&frame.frameIndex===target.frameIndex){target.triggered=true;target.cpuSubmittedAt=performance.now();const button=[...document.querySelectorAll('button')].find(b=>b.textContent.trim()==='Pause replay');if(!button||button.disabled)throw Error('Target frame reached without enabled pause control');button.click();}});})()`);
       const index=report.ipc.length;report.playStarted=performance.now();report.playStartedRenderer=await js('performance.now()');await click('Play replay');
-      const submissionOptions={position,mainToRendererOffset:report.playStarted-report.playStartedRenderer,startedRenderer:report.playStartedRenderer};
+      const submissionOptions={position,command:prefixMode?'seekPrefixFrame':'seekFrame',mainToRendererOffset:report.playStarted-report.playStartedRenderer,startedRenderer:report.playStartedRenderer};
       while(performance.now()-report.playStarted<maxMs){await pause(40);const frames=await js('window.playbackFrames.map(f=>({at:f.at,serial:f.serial,surgicalStateId:f.surgicalStateId,surgicalFrame:f.surgicalFrame}))');if(submittedPlayback(report.ipc.slice(index),frames,submissionOptions).length>=maxFrames)break;if(report.ipc.slice(index).some(row=>row.error))throw Error('Playback request failed');}
       if(await js(`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Pause replay')`))await click('Pause replay');
       await idle();report.playEnded=performance.now();report.playEndedRenderer=await js('performance.now()');report.automaticPause=await js('window.playbackStop');
@@ -88,7 +103,7 @@ app.on('browser-window-created',(_,window)=>{
       report.submittedPlayback=submittedPlayback(report.playbackIpc,report.frames,submissionOptions);
       const submitted=report.submittedPlayback.at(-1);
       report.final={branch,position:submitted?.position,frameIndex:submitted?.frameIndex,simulatedSeconds:submitted?.simulatedSeconds,stateId:submitted?.stateId};
-      report.fetchedLookahead=report.playbackIpc.filter(row=>row.command==='seekFrame'&&!report.submittedPlayback.some(shown=>shown.branchId===row.branchId&&shown.position===row.position&&shown.frameIndex===row.frameIndex&&shown.stateId===row.stateId));
+      report.fetchedLookahead=report.playbackIpc.filter(row=>row.command===(prefixMode?'seekPrefixFrame':'seekFrame')&&!report.submittedPlayback.some(shown=>shown.branchId===row.branchId&&shown.position===row.position&&shown.frameIndex===row.frameIndex&&shown.stateId===row.stateId));
       report.checks.displayMatches=report.displayedStateId===report.final.stateId;
       report.checks.submissionMatches=report.frames.at(-1)?.surgicalStateId===report.final.stateId;
       report.checks.exactFrames=report.submittedPlayback.every((row,i)=>row.position===position&&row.frameIndex===i);
@@ -97,8 +112,18 @@ app.on('browser-window-created',(_,window)=>{
       report.checks.framesObserved=report.submittedPlayback.length>=maxFrames;
       report.hiddenTimeline=await js(`(()=>{const details=[...document.querySelectorAll('details')].find(d=>d.querySelector(':scope > summary')?.textContent==='Action timeline');return {open:details.open,buttons:details.querySelectorAll('button').length};})()`);
       await js(`(()=>{const details=[...document.querySelectorAll('details')].find(d=>d.querySelector(':scope > summary')?.textContent==='Action timeline');details.open=true;})()`);
-      await wait(`[...document.querySelectorAll('details')].find(d=>d.querySelector(':scope > summary')?.textContent==='Action timeline')?.querySelectorAll('button').length===${lastResponse.branches.find(b=>b.id===branch).steps}`);
+      await wait(`[...document.querySelectorAll('details')].find(d=>d.querySelector(':scope > summary')?.textContent==='Action timeline')?.querySelectorAll('button').length===${prefixMode?lastResponse.timeline.length:lastResponse.branches.find(b=>b.id===branch).steps}`);
       report.checks.expandedTimelineComplete=true;
+      if(prefixMode){
+        const v=lastResponse.verification;
+        const ui=await js(`({label:document.querySelector('[aria-label="Reconstructed prefix"]')?.textContent,blocked:[...document.querySelectorAll('button')].filter(b=>['Apply','Preview','Branch','Undo','Redo','Reset'].includes(b.textContent.trim())).every(b=>b.disabled||b.closest('fieldset')?.disabled),timelineButtons:[...document.querySelectorAll('details')].find(d=>d.querySelector(':scope > summary')?.textContent==='Action timeline')?.querySelectorAll('button').length})`);
+        report.prefix.final={verification:v,timelineLength:lastResponse.timeline.length,originalActions:lastResponse.branches.find(b=>b.id===branch).steps,fullCase:lastResponse.fullCase,ui};
+        report.checks.prefixReadOnly=v?.status==='reconstructed-prefix'&&v.readOnly===true&&v.verifiedThrough===3&&v.totalActions===report.prefix.originalActions&&v.archiveEndpointVerified===false&&lastResponse.fullCase===null&&ui.label?.includes('read only')&&ui.blocked&&ui.timelineButtons===3;
+        const baseline=JSON.parse(fs.readFileSync(path.join(root,'testcases/outputs/rl-readiness-20261022/desktop-baseline/playback-authenticated/report.json')));
+        const expected=new Map(baseline.playbackIpc.filter(row=>row.command==='seekFrame').map(row=>[row.frameIndex,row.stateId]));
+        report.checks.baselineStateIds=report.submittedPlayback.length===12&&report.submittedPlayback.every(row=>row.stateId===expected.get(row.frameIndex));
+        report.checks.noCanonicalCommands=report.ipc.filter(row=>row.channel==='research:surgicalRehearsal').every(row=>['inspectArchive','seekPrefix','seekPrefixFrame'].includes(row.command));
+      }
       await js(`(()=>{const details=[...document.querySelectorAll('details')].find(d=>d.querySelector(':scope > summary')?.textContent==='Action timeline');details.open=false;})()`);
       await pause(40);
       if(process.env.PLAYBACK_ORBIT){
@@ -120,7 +145,7 @@ app.on('browser-window-created',(_,window)=>{
       fs.writeFileSync(path.join(output,'settled.png'),(await window.webContents.capturePage()).toPNG());
       report.passed=report.errors.length===0&&Object.values(report.checks).every(Boolean);
     }catch(error){report.passed=false;report.failure=error.stack;try{fs.writeFileSync(path.join(output,'failure.png'),(await window.webContents.capturePage()).toPNG());}catch{}}
-    finally{await backend?.stop();report.physicsGuard=fs.existsSync(path.join(output,'physics-guard.json'))?JSON.parse(fs.readFileSync(path.join(output,'physics-guard.json'))):null;report.checks.zeroPhysics=!!report.physicsGuard&&!Object.keys(report.physicsGuard.publicStepAttempts).length;report.passed=report.passed&&report.checks.zeroPhysics;persist();console.log(JSON.stringify({output,passed:report.passed,failure:report.failure,final:report.final}));app.exit(report.passed?0:1);}
+    finally{await backend?.stop();report.physicsGuard=fs.existsSync(path.join(output,'physics-guard.json'))?JSON.parse(fs.readFileSync(path.join(output,'physics-guard.json'))):null;if(prefixMode){const g=report.physicsGuard,owned=g?.ownership,stats=owned?.prefixStatistics;report.checks.boundedPreparation=!!g&&g.permittedSteps?.length===3&&!g.forbiddenSteps?.length&&!Object.keys(g.publicStepAttempts).length;report.checks.noCanonicalAdmission=owned?.beforeClose===true&&['canonicalSessionCreated','replayCacheCreated','frameCacheCreated','frameAdmissionsCreated'].every(key=>owned[key]===false);report.checks.privateRetentionBounded=!!stats&&stats.verifiedThrough===3&&stats.totalActions===report.prefix.originalActions&&stats.checkpointBytes<=stats.maxCheckpointBytes&&stats.frameBytes<=stats.maxFrameBytes&&stats.historyBytes<=stats.maxHistoryBytes;report.checks.pythonSourcePreserved=JSON.stringify(sourceFiles(source))===JSON.stringify(report.pythonSourceFiles);report.passed=report.passed&&Object.values(report.checks).every(Boolean);}else {report.checks.zeroPhysics=!!report.physicsGuard&&!Object.keys(report.physicsGuard.publicStepAttempts).length;report.passed=report.passed&&report.checks.zeroPhysics;}persist();console.log(JSON.stringify({output,passed:report.passed,failure:report.failure,final:report.final}));app.exit(report.passed?0:1);}
   });
 });
 setTimeout(async()=>{report.failure='Overall bounded benchmark timeout';report.passed=false;persist();await backend?.stop();if(windowRef&&!windowRef.isDestroyed())try{fs.writeFileSync(path.join(output,'timeout.png'),(await windowRef.webContents.capturePage()).toPNG());}catch{}app.exit(1);},240000).unref();

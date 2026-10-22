@@ -41,3 +41,11 @@ test('same-ordinal identity changes cannot disappear behind refinement deduplica
     [{...frame(0,1050),surgicalStateId:'A'},{...frame(0,1060),surgicalStateId:'B'},{...frame(0,1070),surgicalStateId:'A'}],options);
   assert.deepEqual(rows.map(row=>row.stateId),['A','B','A']);
 });
+
+ test('prefix observations require the explicit prefix command and retain exact tuples',()=>{
+  const rows=[response(0),response(0,{command:'seekPrefixFrame'}),response(1,{command:'seekPrefixFrame',stateId:'state0'})];
+  const frames=[frame(0),{...frame(1),surgicalStateId:'state0'}];
+  const shown=submittedPlayback(rows,frames,{...options,command:'seekPrefixFrame'});
+  assert.deepEqual(shown.map(row=>[row.command,row.frameIndex]),[['seekPrefixFrame',0],['seekPrefixFrame',1]]);
+  assert.deepEqual(submittedPlayback(rows,frames,options).map(row=>row.frameIndex),[0]);
+});

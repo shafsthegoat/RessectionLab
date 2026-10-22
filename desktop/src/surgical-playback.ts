@@ -23,8 +23,8 @@ export class SurgicalPlaybackClock {
   }
 }
 
-export const surgicalCursorCommand=(command:string)=>['seek','seekFrame','selectBranch','inspect'].includes(command);
-export const updatesEditableSurgicalCursor=(command:string)=>command!=='preview'&&command!=='seekFrame';
+export const surgicalCursorCommand=(command:string)=>['seek','seekFrame','seekPrefix','seekPrefixFrame','inspectArchive','selectBranch','inspect'].includes(command);
+export const updatesEditableSurgicalCursor=(command:string)=>!['preview','seekFrame','seekPrefix','seekPrefixFrame','inspectArchive'].includes(command);
 export function checkedSurgicalPlayback(response:SurgicalResponse,request:{branchId?:unknown;position?:unknown;frameIndex?:unknown}) {
   const p=response.playback;
   const need=(condition:unknown)=>{if(!condition)throw new Error('Recorded microstep response differs from the requested source-bound frame.');};

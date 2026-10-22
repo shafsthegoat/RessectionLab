@@ -1,0 +1,515 @@
+"""Isolated read-only reconstruction of demanded imported action prefixes.
+
+This owner is not a surgical session, canonical archive admission, or disk
+cache. Imported checkpoint state never seeds reconstruction. Only saved public
+actions execute, once; evicted boundaries/frames are unavailable rather than
+silently executing their actions again. Disposable compressed checkpoints and
+observations have separate retained-byte budgets. Source anatomy, the bounded
+immutable input, and transient engine/view allocations are reported separately.
+"""
+from __future__ import annotations
+
+from collections import OrderedDict
+from collections.abc import Mapping
+import copy
+import hashlib
+import inspect
+import json
+import math
+from pathlib import Path
+import sys
+from types import MappingProxyType
+import zlib
+
+from .core import freeze_json, semantic_digest, thaw_json
+from .surgical_engine import MAX_STEPS, SCHEMA, SurgicalEngine
+
+_FROZEN_INPUT_AUTHORITY = object()
+
+
+class PrefixBudgetExceeded(RuntimeError):
+    """The next prefix action cannot fit this owner's explicit limits."""
+
+
+class PrefixInvalidated(ValueError):
+    """The exact source or loaded implementation no longer matches admission."""
+
+
+class _Interrupted(RuntimeError):
+    def __init__(self, cause):
+        self.cause = cause
+        super().__init__(str(cause))
+
+
+def _fingerprint():
+    # Lazy import: fingerprinting imports engine dependencies, including replay
+    # helpers. Do not create a module-import cycle or instantiate a cache.
+    from .surgical_verified_cache import implementation_fingerprint
+    return implementation_fingerprint()
+
+
+def _light_seal():
+    from .surgical_observed_cache import light_implementation_seal
+    return light_implementation_seal()
+
+
+def _prefix_seal():
+    """Bind this module's loaded code/defaults, absent from legacy _MODULES."""
+    from .surgical_verified_cache import _code_signature
+    functions = []
+    for name, value in sorted(globals().items()):
+        if inspect.isfunction(value) and value.__module__ == __name__:
+            functions.append((name, value))
+        elif inspect.isclass(value) and value.__module__ == __name__:
+            for key, method in sorted(vars(value).items()):
+                if isinstance(method, (classmethod, staticmethod)):
+                    method = method.__func__
+                elif isinstance(method, property):
+                    method = method.fget
+                if inspect.isfunction(method):
+                    functions.append((name + '.' + key, method))
+    digest = hashlib.sha256(Path(__file__).read_bytes())
+    for name, function in functions:
+        digest.update(json.dumps([name, _code_signature(function.__code__),
+            repr(function.__defaults__), repr(function.__kwdefaults__)], separators=(',', ':')).encode())
+    return digest.hexdigest()
+
+
+def _owned_bytes(value, seen=None):
+    seen = set() if seen is None else seen
+    if id(value) in seen:
+        return 0
+    seen.add(id(value))
+    size = sys.getsizeof(value)
+    if isinstance(value, Mapping):
+        # MappingProxyType owns a private frozen dictionary as well as its shell.
+        size += sys.getsizeof(dict(value)) if not isinstance(value, dict) else 0
+        size += sum(_owned_bytes(k, seen) + _owned_bytes(v, seen) for k, v in value.items())
+    elif isinstance(value, (list, tuple)):
+        size += sum(_owned_bytes(item, seen) for item in value)
+    return size
+
+
+def _require_frozen(value):
+    if isinstance(value, MappingProxyType):
+        if any(type(key) is not str for key in value):
+            raise ValueError('Borrowed frozen snapshot requires JSON string keys')
+        for item in value.values():
+            _require_frozen(item)
+    elif type(value) is tuple:
+        for item in value:
+            _require_frozen(item)
+    elif value is None or type(value) in (str, bool, int):
+        return
+    elif type(value) is float and math.isfinite(value):
+        return
+    else:
+        raise ValueError('Borrowed input must be exact private recursively frozen JSON')
+
+
+def _encode(value, *, compressed_limit, raw_limit, on_growth=None):
+    """Bound compressed growth while streaming; never buffer a whole action."""
+    compressor = zlib.compressobj(1)
+    output = bytearray()
+    pending = bytearray()
+    raw_bytes = 0
+    def append(chunk):
+        if len(output) + len(chunk) > compressed_limit:
+            raise PrefixBudgetExceeded('Compressed state budget exceeded')
+        if on_growth is not None:
+            on_growth(len(output) + len(chunk))
+        output.extend(chunk)
+    for text in json.JSONEncoder(separators=(',', ':'), allow_nan=False).iterencode(value):
+        raw = text.encode()
+        raw_bytes += len(raw)
+        if raw_bytes > raw_limit:
+            raise PrefixBudgetExceeded('Decoded JSON budget exceeded')
+        for offset in range(0, len(raw), 16384):
+            part = raw[offset:offset + 16384]
+            if len(pending) + len(part) > 16384:
+                append(compressor.compress(pending))
+                pending.clear()
+            pending.extend(part)
+    if pending:
+        append(compressor.compress(pending))
+    append(compressor.flush())
+    return bytes(output)
+
+
+def _decode(blob, limit):
+    decoder = zlib.decompressobj()
+    raw = decoder.decompress(blob, limit + 1)
+    if len(raw) > limit or not decoder.eof or decoder.unused_data:
+        raise ValueError('Prefix compressed state exceeds decode budget or is incomplete')
+    return json.loads(raw)
+
+
+class _FrameStage:
+    def __init__(self, owner):
+        self.owner = owner
+        self.frames = []
+        self.next_time = None
+        self.activation = None
+
+    def capture(self, engine, kind, activation):
+        # Encoding itself stops at the action's remaining cap. Old committed
+        # frames may be evicted, but never held alongside an unbounded action.
+        row = {'observedTimeSeconds': float(engine.state['elapsedSeconds']),
+               'kind': kind, 'effectiveActivation': activation,
+               'stateId': engine.state_id, 'state': b''}
+        # Include metadata before encoding and reserve owning-map overhead.
+        # Growth callbacks evict old actions before appending compressed bytes.
+        base = _owned_bytes(self.frames + [row]) + 512
+        blob = _encode(engine.state, compressed_limit=max(0, self.owner._max_frame_bytes - base),
+                       raw_limit=self.owner._max_json_bytes,
+                       on_growth=lambda size: self.owner._frame_room(base + size))
+        row['state'] = blob
+        prospective = self.frames + [row]
+        self.owner._frame_room(_owned_bytes(prospective))
+        self.frames.append(row)
+
+    def begin(self, engine):
+        self.next_time = float(engine.state['elapsedSeconds']) + .2
+        self.capture(engine, 'action_start', {key: bool(slot['active']) for key, slot in engine.state['slots'].items()})
+
+    def observe(self, engine, key, active):
+        self.activation = {hand: bool(active if hand == key else slot['active'])
+                           for hand, slot in engine.state['slots'].items()}
+        if engine.state['elapsedSeconds'] + 1e-10 >= self.next_time:
+            self.capture(engine, 'microstep', self.activation)
+            while self.next_time <= engine.state['elapsedSeconds'] + 1e-10:
+                self.next_time += .2
+
+    def end(self, engine):
+        self.capture(engine, 'action_boundary', self.activation or
+                     {key: bool(slot['active']) for key, slot in engine.state['slots'].items()})
+
+
+class _PrefixEngine(SurgicalEngine):
+    def _substep(self, key, op, p, q, active, dt):
+        events = super()._substep(key, op, p, q, active, dt)
+        self._stage.observe(self, key, active)
+        return events
+
+
+class SurgicalPrefixReplay:
+    """Bounded read-only JSON views of one immutable imported action log.
+
+    Defaults: four new actions per request; 16 MiB compressed checkpoints,
+    16 MiB compressed frames, 4 MiB computed receipts, 64 MiB immutable input
+    and per-state decoded JSON. Overrides have hard ceilings. No frame lookup
+    or old-boundary lookup reexecutes an already computed action; eviction is an
+    explicit unavailable result. A new owner is required to reconstruct it.
+    """
+    def __init__(self, scene, snapshot, *, max_new_actions=4,
+                 max_checkpoint_bytes=16 * 1024**2, max_frame_bytes=16 * 1024**2,
+                 max_history_bytes=4 * 1024**2, max_input_bytes=64 * 1024**2,
+                 max_json_bytes=64 * 1024**2, _frozen_input_authority=None):
+        if (_frozen_input_authority is not None
+                and _frozen_input_authority is not _FROZEN_INPUT_AUTHORITY):
+            raise ValueError('Private frozen-input authority differs')
+        limits = [(max_new_actions, 32), (max_checkpoint_bytes, 64 * 1024**2),
+                  (max_frame_bytes, 64 * 1024**2), (max_history_bytes, 16 * 1024**2),
+                  (max_input_bytes, 128 * 1024**2), (max_json_bytes, 128 * 1024**2)]
+        if any(type(value) is not int or not 1 <= value <= ceiling for value, ceiling in limits):
+            raise ValueError('Prefix replay limits must be positive integers within hard ceilings')
+        if (max_frame_bytes < _owned_bytes(OrderedDict()) or max_history_bytes < _owned_bytes([])):
+            raise PrefixBudgetExceeded('Empty frame/history owner exceeds retention budget')
+        scene.require_cache_source()
+        if _owned_bytes(snapshot) > max_input_bytes:
+            raise PrefixBudgetExceeded('Immutable input budget exceeded')
+        self._borrowed_input = _frozen_input_authority is _FROZEN_INPUT_AUTHORITY
+        if self._borrowed_input:
+            _require_frozen(snapshot)
+        record = snapshot if self._borrowed_input else freeze_json(snapshot)
+        self._input_bytes = _owned_bytes(record)
+        if self._input_bytes > max_input_bytes:
+            raise PrefixBudgetExceeded('Immutable input budget exceeded')
+        if (not isinstance(record, Mapping) or record.get('schema') != SCHEMA or record.get('sceneId') != scene.identity
+                or not isinstance(record.get('actions'), tuple)
+                or len(record['actions']) > MAX_STEPS
+                or any(not isinstance(action, Mapping) for action in record['actions'])
+                or not isinstance(record.get('stateId'), str)):
+            raise ValueError('Imported source, schema or action log differs')
+        self._scene = self.__source_object = scene
+        self._snapshot = record
+        self._origin_hash = semantic_digest(record)
+        self._action_hash = semantic_digest(record['actions'])
+        self._protection_hash = semantic_digest(record.get('protectionContract'))
+        self._implementation = _fingerprint()
+        if self._implementation is None:
+            raise ValueError('Prefix replay implementation fingerprint unavailable')
+        self._implementation_light = _light_seal()
+        self._prefix_implementation = _prefix_seal()
+        self._max_new_actions = max_new_actions
+        self._max_checkpoint_bytes = max_checkpoint_bytes
+        self._max_frame_bytes = max_frame_bytes
+        self._max_history_bytes = max_history_bytes
+        self._max_json_bytes = max_json_bytes
+        self._history = []
+        self._checkpoints = OrderedDict()
+        self._frames = OrderedDict()
+        self._failure = None
+        self._blocked = False
+        self._endpoint_verified = False
+        self._endpoint_error = None
+        self._invalidated = None
+        engine = self._fresh()
+        self._initial_id = engine.state_id
+        self._put_checkpoint(0, engine)
+        self._validate_endpoint(engine)
+        # Share only the private empty shell's pure geometry/protection runtime.
+        # State/ancestry are reconstructed into a new shell for every read.
+        self._template = copy.copy(engine)
+        self._template.state = {}
+        self._template.actions = []
+        self._template.history = []
+        self._template._occupancy_cache = None
+        self._check()
+
+    @classmethod
+    def _borrow_frozen_snapshot(cls, scene, snapshot, **limits):
+        """Bridge-private capability: borrow its exact privately frozen branch.
+
+        The caller must own a core.freeze_json result with no exposed mutable
+        backing dictionaries; an arbitrary user-supplied MappingProxyType is
+        not such an admission. This avoids another full imported archive copy.
+        It grants only this isolated read-only API, never session/edit/cache
+        authority. The normal constructor still defensively freezes all input.
+        Input limits remain explicit and unchanged, including the 128 MiB cap.
+        """
+        return cls(scene, snapshot, _frozen_input_authority=_FROZEN_INPUT_AUTHORITY, **limits)
+
+    def _fresh(self):
+        options = {}
+        if 'protectionContract' in self._snapshot:
+            from .surgical_rl_protection import restore_protection_contract
+            protection, config = restore_protection_contract(self._scene, thaw_json(self._snapshot['protectionContract']))
+            options = {'protection': protection, 'guard_config': config}
+        return _PrefixEngine(self._scene, **options)
+
+    def _check(self, check=None, *, full=False):
+        if check is not None:
+            check()
+        if self._invalidated is not None:
+            raise PrefixInvalidated(self._invalidated)
+        if self._scene is not self.__source_object:
+            self._invalidated = 'Prefix replay source object changed'
+            raise PrefixInvalidated(self._invalidated)
+        try:
+            self._scene.require_cache_source()
+        except ValueError as error:
+            self._invalidated = str(error)
+            raise PrefixInvalidated(self._invalidated) from None
+        if (_light_seal() != self._implementation_light
+                or _prefix_seal() != self._prefix_implementation):
+            self._invalidated = 'Prefix replay implementation changed; create a new owner'
+            raise PrefixInvalidated(self._invalidated)
+        if full:
+            current = _fingerprint()
+            if current is None or current != self._implementation:
+                self._invalidated = 'Prefix replay implementation changed; create a new owner'
+                raise PrefixInvalidated(self._invalidated)
+
+    def _checkpoint(self, position, engine):
+        return {'position': position, 'stateId': engine.state_id,
+                'state': _encode(engine.state, compressed_limit=self._max_checkpoint_bytes,
+                                 raw_limit=self._max_json_bytes)}
+
+    def _put_checkpoint(self, position, engine, item=None):
+        item = self._checkpoint(position, engine) if item is None else item
+        if _owned_bytes({position: item}) > self._max_checkpoint_bytes:
+            raise PrefixBudgetExceeded('Checkpoint retention budget exceeded')
+        proposed = OrderedDict(self._checkpoints)
+        proposed[position] = item
+        while _owned_bytes(proposed) > self._max_checkpoint_bytes:
+            if len(proposed) == 1:
+                raise PrefixBudgetExceeded('Checkpoint retention budget exceeded')
+            proposed.popitem(last=False)
+            # Rebuild after eviction so dictionary capacity left over from the
+            # larger map cannot consume a tight one-checkpoint allowance.
+            proposed = OrderedDict(proposed)
+        self._checkpoints = proposed
+
+    def _engine_at(self, position):
+        item = self._checkpoints.get(position)
+        if item is None:
+            raise ValueError('Prefix boundary evicted; create a new read-only owner')
+        engine = copy.copy(self._template)
+        engine.state = _decode(item['state'], self._max_json_bytes)
+        engine._occupancy_cache = None
+        # Private execution is append-only, as in the shared engine's own
+        # transactional ancestry. Frozen earlier actions/receipts cannot be
+        # mutated and need not be copied into every frame-view shell.
+        engine.actions = list(self._snapshot['actions'][:position])
+        engine.history = self._history[:position]
+        if engine.state_id != item['stateId']:
+            raise ValueError('Private reconstructed checkpoint identity differs')
+        return engine
+
+    def _frame_room(self, stage_bytes):
+        while self._frames and _owned_bytes(self._frames) + stage_bytes > self._max_frame_bytes:
+            self._frames.popitem(last=False)
+            self._frames = OrderedDict(self._frames)
+        if _owned_bytes(self._frames) + stage_bytes > self._max_frame_bytes:
+            raise PrefixBudgetExceeded('Observed frame retention budget exceeded during capture')
+
+    def _validate_endpoint(self, engine):
+        if len(engine.actions) != len(self._snapshot['actions']):
+            return
+        checkpoint = self._snapshot.get('checkpoint')
+        exact = engine.state_id == self._snapshot['stateId']
+        if checkpoint is not None:
+            exact = exact and isinstance(checkpoint, Mapping) and (checkpoint.get('position') == len(engine.actions)
+                    and checkpoint.get('stateId') == engine.state_id
+                    and semantic_digest(checkpoint.get('state')) == semantic_digest(engine.state))
+        self._endpoint_verified = bool(exact)
+        self._endpoint_error = None if exact else 'Imported endpoint/checkpoint differs from reconstructed actions'
+
+    def _history_bytes(self, rows):
+        # Canonical full actions remain in each receipt. Their exact immutable
+        # objects are already charged to the bounded input, not newly retained
+        # receipt ownership. Other receipt fields remain fully owned and capped.
+        return _owned_bytes(rows, {id(action) for action in self._snapshot['actions']})
+
+    @property
+    def statistics(self):
+        return {'verifiedThrough': len(self._history), 'totalActions': len(self._snapshot['actions']),
+                'checkpointBytes': _owned_bytes(self._checkpoints), 'maxCheckpointBytes': self._max_checkpoint_bytes,
+                'frameBytes': _owned_bytes(self._frames), 'maxFrameBytes': self._max_frame_bytes,
+                'historyBytes': self._history_bytes(self._history), 'maxHistoryBytes': self._max_history_bytes,
+                'historyActionsSharedWithBoundedInput': True,
+                'immutableInputBytes': self._input_bytes,
+                'ownedImmutableInputBytes': 0 if self._borrowed_input else self._input_bytes,
+                'sharedImmutableInputBytes': self._input_bytes if self._borrowed_input else 0,
+                'immutableInputBorrowed': self._borrowed_input,
+                'checkpointPositions': list(self._checkpoints), 'frameActions': list(self._frames),
+                'memoryMeaning': 'Checkpoint/frame/receipt ownership; immutable input reported separately; source anatomy, one private pure geometry/protection runtime and transient engine/view allocations excluded'}
+
+    def _result(self, engine, position, requested, *, budget_stopped=False, timeline_projection=None):
+        verification = {'status': 'reconstructed-prefix', 'readOnly': True,
+            'verifiedThrough': len(self._history), 'totalActions': len(self._snapshot['actions']),
+            'originSnapshotHash': self._origin_hash, 'actionLogHash': self._action_hash,
+            'protectionContractHash': self._protection_hash, 'implementation': self._implementation,
+            'prefixImplementation': self._prefix_implementation,
+            'archiveEndpointVerified': self._endpoint_verified,
+            'endpointValidationError': self._endpoint_error,
+            'failure': thaw_json(freeze_json(self._failure))}
+        timeline = tuple(self._history)
+        if timeline_projection is not None:
+            # Private display-only callback sees immutable complete receipts;
+            # its result is detached JSON. It never receives an engine/state.
+            timeline = freeze_json(timeline_projection(timeline))
+        return {'view': engine.view(include_history=False),
+                'timeline': thaw_json(timeline), 'position': position,
+                'requestedPosition': requested, 'budgetStopped': budget_stopped,
+                'readOnly': True, 'verification': verification}
+
+    def _ensure_prefix(self, position, check):
+        self._check(check)
+        if type(position) is not int or not 0 <= position <= len(self._snapshot['actions']):
+            raise ValueError('Invalid prefix boundary')
+        target = min(position, len(self._history) + self._max_new_actions)
+        def action_check():
+            if check is not None:
+                try:
+                    check()
+                except BaseException as error:
+                    raise _Interrupted(error) from None
+        while len(self._history) < target and not self._blocked:
+            index = len(self._history)
+            engine = self._engine_at(index)
+            stage = _FrameStage(self)
+            try:
+                self._check(action_check)
+                before = engine.state_id
+                stage.begin(engine)
+                engine._stage = stage
+                action = thaw_json(self._snapshot['actions'][index])
+                outcome = engine.step(action, check=action_check)
+                if outcome['status'] not in ('accepted', 'partial'):
+                    raise ValueError('Saved action rejected: ' + str(outcome.get('reason')))
+                if (len(engine.actions) != index + 1 or engine.actions[-1] != action
+                        or engine.history[-1]['stateBefore'] != before
+                        or engine.history[-1]['stateAfter'] != engine.state_id
+                        or outcome['stateId'] != engine.state_id):
+                    raise ValueError('Reconstructed public action ancestry differs')
+                stage.end(engine)
+                if stage.frames[0]['stateId'] != before or stage.frames[-1]['stateId'] != engine.state_id:
+                    raise ValueError('Observed start/final identity differs from public action')
+                receipt = dict(engine.history[-1])
+                if receipt.pop('action') != action:
+                    raise ValueError('Reconstructed receipt action differs from imported action')
+                row = MappingProxyType({'action': self._snapshot['actions'][index],
+                                        **freeze_json(receipt)})
+                if self._history_bytes(self._history + [row]) > self._max_history_bytes:
+                    raise PrefixBudgetExceeded('Computed history retention budget exceeded')
+                checkpoint = self._checkpoint(index + 1, engine)
+                if _owned_bytes(OrderedDict([(index + 1, checkpoint)])) > self._max_checkpoint_bytes:
+                    raise PrefixBudgetExceeded('Checkpoint retention budget exceeded')
+                # Account the eventual owning mapping as well as staged frames.
+                self._frame_room(_owned_bytes(OrderedDict([(index, stage.frames)])))
+                self._check(action_check, full=True)
+                self._put_checkpoint(index + 1, engine, checkpoint)
+                self._history.append(row)
+                self._frames[index] = stage.frames
+                self._failure = None
+                self._validate_endpoint(engine)
+            except BaseException as error:
+                cause = error.cause if isinstance(error, _Interrupted) else error
+                self._failure = {'actionIndex': index, 'type': type(cause).__name__, 'reason': str(cause)}
+                if isinstance(error, _Interrupted):
+                    raise cause from None
+                if isinstance(error, PrefixInvalidated):
+                    raise
+                if isinstance(error, (PrefixBudgetExceeded, ValueError)):
+                    self._blocked = True
+                    break
+                raise
+        actual = min(position, len(self._history))
+        self._check(check)
+        return actual
+
+    def seek(self, position, *, check=None, _timeline_projection=None):
+        actual = self._ensure_prefix(position, check)
+        result = self._result(self._engine_at(actual), actual, position,
+                              budget_stopped=actual < position, timeline_projection=_timeline_projection)
+        self._check(check)
+        return result
+
+    def seek_frame(self, action_index, frame_index, *, check=None, _timeline_projection=None):
+        if type(action_index) is not int or not 0 <= action_index < len(self._snapshot['actions']):
+            raise ValueError('Invalid observed action index')
+        if type(frame_index) is not int or frame_index < 0:
+            raise ValueError('Invalid observed frame index')
+        self._check(check)
+        if action_index >= len(self._history):
+            self._ensure_prefix(action_index + 1, check)
+        item = self._frames.get(action_index)
+        if item is None or frame_index >= len(item):
+            raise ValueError('Observed frame unavailable: action not reconstructed or frames evicted')
+        frame = item[frame_index]
+        engine = copy.copy(self._template)
+        engine.state = _decode(frame['state'], self._max_json_bytes)
+        engine._occupancy_cache = None
+        final = frame_index == len(item) - 1
+        position = action_index + int(final)
+        engine.actions = list(self._snapshot['actions'][:position])
+        engine.history = self._history[:position]
+        if engine.state_id != frame['stateId']:
+            raise ValueError('Private observed frame identity differs')
+        result = self._result(engine, position, action_index + 1, timeline_projection=_timeline_projection)
+        result['playback'] = {'readOnly': True, 'position': action_index, 'actionIndex': action_index,
+            'frameIndex': frame_index, 'frameCount': len(item),
+            'frames': [{key: (dict(value) if key == 'effectiveActivation' else value)
+                        for key, value in row.items() if key != 'state'} | {'frameIndex': index}
+                       for index, row in enumerate(item)],
+            'observedTimeSeconds': frame['observedTimeSeconds'],
+            'actionElapsedSeconds': frame['observedTimeSeconds'] - item[0]['observedTimeSeconds'],
+            'actionDurationSeconds': item[-1]['observedTimeSeconds'] - item[0]['observedTimeSeconds'],
+            'isActionBoundary': frame_index in (0, len(item) - 1),
+            'effectiveActivation': dict(frame['effectiveActivation']), 'frameStateId': frame['stateId']}
+        self._check(check)
+        # The view and timeline are already detached. Only each descriptor's
+        # nested activation map required a fresh copy above.
+        return result

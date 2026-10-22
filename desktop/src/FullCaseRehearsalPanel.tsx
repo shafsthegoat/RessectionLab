@@ -20,7 +20,7 @@ export function FullCaseRehearsalPanel({c,pause,onFrameField,fieldDisplayControl
       {onFrameField&&<button onClick={onFrameField}>Frame operative field</button>}
     </div>
     {fieldDisplayControls}
-    {readOnly&&<p className="surgical-note">{r?.verification?.readOnly?'Imported endpoint requires replay verification before computation.':'Read-only observed microstep. Return to a recorded action boundary to resume computation.'}</p>}
+    {readOnly&&<p className="surgical-note">{r?.verification?.status==='reconstructed-prefix'?'Read-only reconstructed prefix. Verify the full archive before computation.':r?.verification?.readOnly?'Imported endpoint requires replay verification before computation.':'Read-only observed microstep. Return to a recorded action boundary to resume computation.'}</p>}
     {c.computingFullCase&&<p role="status">Computing {c.computingFullCase==='primary'?'primary rehearsal':'vascular injury / rescue'} · two actions per slice. Each next slice waits for the accepted display.</p>}
     {!c.computingFullCase&&c.simulationPending&&<p className="surgical-note">Current bounded request continues; no further slices will start automatically.</p>}
     {record&&<>

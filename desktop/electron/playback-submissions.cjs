@@ -5,8 +5,8 @@
  * Refinement draws collapse only when consecutive; returning to an older state
  * remains visible in the sequence and fails the benchmark's exact-order check.
  */
-function submittedPlayback(requests,frames,{position,mainToRendererOffset,startedRenderer}){
-  const delivered=requests.filter(row=>row.command==='seekFrame'&&!row.error&&row.position===position&&
+function submittedPlayback(requests,frames,{position,mainToRendererOffset,startedRenderer,command='seekFrame'}){
+  const delivered=requests.filter(row=>row.command===command&&!row.error&&row.position===position&&
     Number.isInteger(row.frameIndex)&&typeof row.stateId==='string'&&Number.isFinite(row.started)&&Number.isFinite(row.ms));
   const result=[];
   for(const frame of frames){

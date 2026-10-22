@@ -1693,6 +1693,7 @@ class BridgeSession:
 
     def close(self) -> None:
         self.cases.clear()
+        self.__dict__.pop('surgical_prefix_session', None)
         self.observed_replay = None
         self.transfers.close()
 
