@@ -43,6 +43,7 @@ def test_unconfigured_selection_detached_fixed_and_no_implicit_build(tmp_path):
         identity['mode'] = 'changed'
         assert a.strict_live_identity()['mode'] == 'python'
         assert a.try_encode({{'x':1}}, 1024) is None
+        assert a.try_encode_canonical({{'x':1}}, 1024) is None
         Path({str(tmp_path / 'new-build.json')!r}).write_text('{{}}')
         assert a.strict_live_identity()['mode'] == 'python'
         os.environ['RESSECTIONLAB_PREFIX_JSON_BUILD'] = 'appeared'
@@ -187,7 +188,9 @@ if case=='depth':
 if case=='nodes':v=[None]*1000001
 if case=='budget':v=['x'*1000];limit=100
 before_refs=sys.getrefcount(v);before_len=len(v) if hasattr(v,'__len__') else None
-for _ in range(3):assert a.try_encode(v,limit) is None
+for _ in range(3):
+    assert a.try_encode(v,limit) is None
+    assert a.try_encode_canonical(v,limit) is None
 assert not calls and sys.getrefcount(v)==before_refs
 assert (len(v) if hasattr(v,'__len__') else None)==before_len
 ''', receipt=native_build)
@@ -203,6 +206,8 @@ class I(int):
 for limit in (Limit(),I(100),True,1.,'100',None):
     assert a.try_encode({'x':1},limit) is None
     assert a._SELECTION.encode({'x':1},limit) is None
+    assert a.try_encode_canonical({'x':1},limit) is None
+    assert a._SELECTION.encode_canonical({'x':1},limit) is None
 ''', receipt=native_build)
 
 
@@ -217,13 +222,15 @@ assert a.try_encode({'x':1},1024)=='{"x":1}'
 ''', receipt=native_build)
 
 
-@pytest.mark.parametrize('replacement', ['module','callable','metadata','environment','ascii'])
+@pytest.mark.parametrize('replacement', ['module','callable','canonical-callable','canonical-deleted','metadata','environment','ascii'])
 def test_selected_native_live_drift_raises(native_build, replacement):
     _child(_SETUP + f'''
 import os
 case={replacement!r}
 if case=='module':sys.modules[a._recipe.KERNEL_NAME]=None
 if case=='callable':a._SELECTION.module.try_encode=lambda *args:None
+if case=='canonical-callable':a._SELECTION.module.try_encode_canonical=lambda *args:None
+if case=='canonical-deleted':del a._SELECTION.module.try_encode_canonical
 if case=='metadata':a._SELECTION.module.BUILD_IDENTITY='changed'
 if case=='environment':os.environ['RESSECTIONLAB_PREFIX_JSON_BUILD']='changed'
 if case=='ascii':a._SELECTION.json_module.encode_basestring_ascii=lambda v:'"x"'
@@ -293,4 +300,62 @@ for v in (math.nan,math.inf,cycle,object()):
         except Exception as exc:errors.append((type(exc),str(exc)))
         else:raise AssertionError('legacy error disappeared')
     assert errors[0]==errors[1]
+''', receipt=native_build)
+
+
+def test_native_canonical_unicode_heap_shapes_ieee_aliases_and_unchanged_insertion(native_build):
+    _child(_SETUP + '''
+import hashlib
+keys=['z','a','aa','a\\x00','a\\u0301','á','é','e\\u0301','😀','\\ue000','\\ud800','\\udfff','']
+shared={'z':[-0.,0.,5.e-324,sys.float_info.max],'a':[-2**63,2**63-1,True,None]}
+values=[{key:shared for key in keys}, {'z':{'b':2,'a':1},'a':(shared,shared)}]
+for size in (*range(18),31,32,33,63,64,65,127,128,129):
+    values.append({str(i):{'z':i,'a':shared} for i in reversed(range(size))})
+for value in values:
+    expected=json.dumps(value,sort_keys=True,ensure_ascii=True,allow_nan=False,separators=(',',':'))
+    insertion=stock(value)
+    before=bits(value);refs=sys.getrefcount(shared)
+    canonical=a.try_encode_canonical(value,16*1024*1024)
+    assert type(canonical) is str and canonical.isascii() and canonical==expected
+    assert bits(json.loads(canonical))==bits(json.loads(expected))
+    assert hashlib.sha256(canonical.encode('ascii')).digest()==hashlib.sha256(expected.encode('ascii')).digest()
+    assert a.try_encode(value,16*1024*1024)==insertion
+    assert bits(value)==before and sys.getrefcount(shared)==refs
+    assert a.try_encode_canonical(value,10**100)==expected
+identity=a.strict_live_identity(full=True)
+assert identity==a.strict_live_identity()
+assert identity['schema']=='surgical-prefix-json-native.v2'
+assert identity['snapshot']['logicalScratchBytes']==48*1024*1024
+assert identity['snapshot']['canonicalLogicalScratchBytes']==64*1024*1024
+assert identity['snapshot']['canonicalPairArenaBytes']==16*1024*1024
+''', receipt=native_build)
+
+
+def test_canonical_limits_near_recursion_and_decline_fallback_exact(native_build):
+    _child(_SETUP + '''
+def fallback(value):
+    native=a.try_encode_canonical(value,16*1024*1024)
+    return json.dumps(value,sort_keys=True,ensure_ascii=True,allow_nan=False,separators=(',',':')) if native is None else native
+class Custom(list):
+    def __iter__(self):yield {'z':7,'a':2}
+value=Custom([1])
+assert a.try_encode_canonical(value,1024) is None
+assert fallback(value)=='[{"a":2,"z":7}]'
+cycle=[];cycle.append(cycle)
+for value in (math.nan,math.inf,cycle,object()):
+    errors=[]
+    for operation in (lambda v:json.dumps(v,sort_keys=True,allow_nan=False,separators=(',',':')),fallback):
+        try:operation(value)
+        except Exception as exc:errors.append((type(exc),str(exc)))
+        else:raise AssertionError('legacy error disappeared')
+    assert errors[0]==errors[1]
+assert a.try_encode_canonical({},2)=='{}'
+for cap in (-1,0,1):assert a.try_encode_canonical({},cap) is None
+assert a.try_encode_canonical({'a':'x'*1000},100) is None
+sys.setrecursionlimit(400)
+def nested(n):
+    if n:return nested(n-1)
+    return a.try_encode_canonical({'z':1,'a':2},1024)
+assert nested(200) is None
+assert a.try_encode_canonical({'z':1,'a':2},1024)=='{"a":2,"z":1}'
 ''', receipt=native_build)

@@ -14,9 +14,12 @@
 #define RAW_CAP (16u * 1024u * 1024u)
 #define DEPTH_CAP 64
 #define NODE_CAP 1000000
+#define PAIR_ARENA_CAP (16u * 1024u * 1024u)
+typedef struct {PyObject *key, *value;} Pair;
 
 typedef struct {
-    size_t bytes, limit, nodes;
+    size_t bytes, limit, nodes, pairs, pair_limit;
+    int canonical;
     PyObject *active[DEPTH_CAP];
 } Bound;
 
@@ -27,7 +30,11 @@ typedef struct {
     int busy;
 } ModuleState;
 
-typedef struct {char *data; size_t used, capacity;} Writer;
+typedef struct {
+    char *data; size_t used, capacity;
+    Pair *arena; size_t arena_used, arena_count;
+    int canonical;
+} Writer;
 
 static int add(Bound *bound, size_t amount) {
     if (amount > bound->limit - bound->bytes) return 0;
@@ -63,6 +70,10 @@ static int walk(PyObject *value, Bound *bound, size_t depth) {
     Py_ssize_t count = dictionary ? PyDict_GET_SIZE(value) : list ? PyList_GET_SIZE(value) : PyTuple_GET_SIZE(value);
     if (!add(bound, 2u) || (count && !add(bound, (size_t)count - 1u))) return 0;
     if (dictionary) {
+        if (bound->canonical) {
+            if ((size_t)count > bound->pair_limit - bound->pairs) return 0;
+            bound->pairs += (size_t)count;
+        }
         Py_ssize_t position = 0;
         PyObject *key, *child;
         while (PyDict_Next(value, &position, &key, &child)) {
@@ -105,6 +116,34 @@ static int append_unicode(Writer *out, PyObject *text) {
     return answer;
 }
 
+/* Exact builtin Unicode order: lexicographic codepoints, including lone
+   surrogates and non-BMP codepoints. No rich comparisons/Python API callbacks. */
+static int key_compare(PyObject *left, PyObject *right) {
+    Py_ssize_t ln=PyUnicode_GET_LENGTH(left), rn=PyUnicode_GET_LENGTH(right);
+    Py_ssize_t count=ln<rn?ln:rn;
+    int lk=PyUnicode_KIND(left), rk=PyUnicode_KIND(right);
+    void *ld=PyUnicode_DATA(left), *rd=PyUnicode_DATA(right);
+    for (Py_ssize_t i=0;i<count;++i) {
+        Py_UCS4 l=PyUnicode_READ(lk,ld,i), r=PyUnicode_READ(rk,rd,i);
+        if (l<r)return -1;
+        if (l>r)return 1;
+    }
+    return ln<rn?-1:ln>rn?1:0;
+}
+static void pair_swap(Pair *left,Pair *right) {Pair value=*left;*left=*right;*right=value;}
+static void sift(Pair *rows,size_t count,size_t root) {
+    while (root<count/2) {
+        size_t child=2*root+1;
+        if (child+1<count && key_compare(rows[child].key,rows[child+1].key)<0)++child;
+        if (key_compare(rows[root].key,rows[child].key)>=0)return;
+        pair_swap(&rows[root],&rows[child]);root=child;
+    }
+}
+static void sort_pairs(Pair *rows,size_t count) {
+    for (size_t start=count/2;start>0;)sift(rows,count,--start);
+    for (size_t end=count;end>1;) {--end;pair_swap(&rows[0],&rows[end]);sift(rows,end,0);}
+}
+
 static int emit(ModuleState *state, Writer *out, PyObject *value) {
     if (value == Py_None) return append(out, "null", 4);
     if (value == Py_True) return append(out, "true", 4);
@@ -121,6 +160,24 @@ static int emit(ModuleState *state, Writer *out, PyObject *value) {
         do {digits[--position] = (char)('0' + magnitude % 10u); magnitude /= 10u;} while (magnitude);
         if (integer < 0) digits[--position] = '-';
         return append(out, digits + position, sizeof(digits) - position);
+    }
+    if (out->canonical && PyDict_CheckExact(value)) {
+        size_t count=(size_t)PyDict_GET_SIZE(value), mark=out->arena_used;
+        if (count>out->arena_count-mark) {
+            PyErr_SetString(PyExc_ValueError,"Validated pair arena unexpectedly exceeded");return -1;
+        }
+        Pair *rows=count?out->arena+mark:NULL;
+        out->arena_used+=count;
+        Py_ssize_t position=0;PyObject *key,*child;size_t index=0;
+        while (PyDict_Next(value,&position,&key,&child))rows[index++]=(Pair){key,child};
+        sort_pairs(rows,count);
+        if (append(out,"{",1))return -1;
+        for (size_t i=0;i<count;++i) {
+            if ((i && append(out,",",1)) || append_unicode(out,state->ascii_pointer(NULL,rows[i].key)) ||
+                append(out,":",1) || emit(state,out,rows[i].value))return -1;
+        }
+        out->arena_used=mark;
+        return append(out,"}",1);
     }
     if (PyDict_CheckExact(value)) {
         if (append(out, "{", 1)) return -1;
@@ -166,7 +223,7 @@ static int live_helpers(ModuleState *state) {
     return 0;
 }
 
-static PyObject *try_encode(PyObject *module, PyObject *args) {
+static PyObject *encode_snapshot(PyObject *module, PyObject *args, int canonical) {
     PyObject *value, *limit_object;
     if (!PyArg_ParseTuple(args, "OO:try_encode", &value, &limit_object)) return NULL;
     if (!PyLong_CheckExact(limit_object)) Py_RETURN_NONE;
@@ -180,30 +237,43 @@ static PyObject *try_encode(PyObject *module, PyObject *args) {
     ModuleState *state = PyModule_GetState(module);
     if (live_helpers(state) < 0) return NULL;
     if (state->busy) {PyErr_SetString(PyExc_RuntimeError, "Reentrant writer"); return NULL;}
-    Bound first = {.bytes=0, .limit=(size_t)limit, .nodes=0};
+    Bound first = {.bytes=0, .limit=(size_t)limit, .nodes=0, .pairs=0,
+                   .pair_limit=PAIR_ARENA_CAP/sizeof(Pair), .canonical=canonical};
     int admitted = walk(value, &first, 0);
     if (admitted < 0) return NULL;
     if (!admitted) Py_RETURN_NONE;
     PyObject *result = PyUnicode_New((Py_ssize_t)first.bytes, 127);
     if (!result) return NULL;
+    Pair *arena=first.pairs?PyMem_Malloc(first.pairs*sizeof(Pair)):NULL;
+    if (first.pairs && !arena) {Py_DECREF(result);return PyErr_NoMemory();}
     /* Every potential Python callback boundary precedes final validation. */
-    if (PyErr_CheckSignals() < 0 || live_helpers(state) < 0) {Py_DECREF(result); return NULL;}
-    if (PyThreadState_Get()->py_recursion_remaining < 256) {Py_DECREF(result); Py_RETURN_NONE;}
-    Bound final = {.bytes=0, .limit=first.bytes, .nodes=0};
+    if (PyErr_CheckSignals() < 0 || live_helpers(state) < 0) {PyMem_Free(arena);Py_DECREF(result); return NULL;}
+    if (PyThreadState_Get()->py_recursion_remaining < 256) {PyMem_Free(arena);Py_DECREF(result); Py_RETURN_NONE;}
+    Bound final = {.bytes=0, .limit=first.bytes, .nodes=0, .pairs=0,
+                   .pair_limit=first.pairs, .canonical=canonical};
     state->busy = 1;
     admitted = walk(value, &final, 0);
     if (admitted <= 0) {
-        state->busy = 0; Py_DECREF(result);
+        state->busy = 0; PyMem_Free(arena);Py_DECREF(result);
         if (admitted < 0) return NULL;
         Py_RETURN_NONE;
     }
-    Writer out = {.data=(char *)PyUnicode_1BYTE_DATA(result), .used=0, .capacity=first.bytes};
-    if (emit(state, &out, value) < 0) {state->busy=0; Py_DECREF(result); return NULL;}
+    Writer out = {.data=(char *)PyUnicode_1BYTE_DATA(result), .used=0, .capacity=first.bytes,
+                  .arena=arena,.arena_used=0,.arena_count=first.pairs,.canonical=canonical};
+    if (emit(state, &out, value) < 0) {state->busy=0;PyMem_Free(arena);Py_DECREF(result);return NULL;}
+    PyMem_Free(arena);
     /* No input is read beyond this point. The only owner of result is this C
        frame; exact ASCII resizing cannot invoke a user formatter/finalizer. */
     if (PyUnicode_Resize(&result, (Py_ssize_t)out.used) < 0) {state->busy=0; Py_XDECREF(result); return NULL;}
     state->busy = 0;
     return result;
+}
+
+static PyObject *try_encode(PyObject *module, PyObject *args) {
+    return encode_snapshot(module,args,0);
+}
+static PyObject *try_encode_canonical(PyObject *module, PyObject *args) {
+    return encode_snapshot(module,args,1);
 }
 
 static PyObject *identity(PyObject *module, PyObject *unused) {
@@ -223,6 +293,7 @@ static PyObject *identity(PyObject *module, PyObject *unused) {
 
 static PyMethodDef methods[] = {
     {"try_encode", try_encode, METH_VARARGS, "Atomic bounded ASCII snapshot, or None for unsupported inputs."},
+    {"try_encode_canonical", try_encode_canonical, METH_VARARGS, "Atomic bounded sorted canonical ASCII snapshot, or None."},
     {"raw_identity", identity, METH_NOARGS, "Actual loaded raw helper image identities."},
     {NULL,NULL,0,NULL}
 };

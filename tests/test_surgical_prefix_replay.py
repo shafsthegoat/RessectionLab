@@ -3,6 +3,7 @@ import copy
 from collections import OrderedDict
 import json
 import zlib
+from types import ModuleType, SimpleNamespace
 
 import numpy as np
 import pytest
@@ -15,6 +16,166 @@ from resectionlab.surgical_prefix_replay import PrefixBudgetExceeded, SurgicalPr
 from resectionlab.surgical_rl_protection import GuardConfig, ProtectionAnnotation, ProtectionSet
 from resectionlab.surgical_scene import SurgicalScene
 import resectionlab.surgical_prefix_replay as prefix
+
+
+def hash_shell():
+    """Unadmitted hash input only; no scene/engine constructor or action."""
+    engine = object.__new__(prefix._PrefixEngine)
+    engine.scene = SimpleNamespace(identity='sha256:' + '1' * 64)
+    engine._protection_contract = {'contentHash': 'sha256:' + '2' * 64}
+    engine.state = {'z': [-0.0, 1.25], 'é': {'b': 2, 'a': [True, None]}}
+    return engine
+
+
+def test_private_native_hash_recomputes_complete_scene_state_and_protection(monkeypatch):
+    engine = hash_shell()
+    calls = []
+    def encode(value, limit):
+        calls.append(copy.deepcopy(value))
+        assert limit == 16 * 1024**2
+        return json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False)
+    monkeypatch.setattr(prefix._native_json, 'try_encode_canonical', encode)
+    assert prefix._stock_prefix_hash_path(engine)
+    original = engine.state_id
+    assert prefix._prefix_state_id(engine) == original
+    assert calls[0] == {'scene': engine.scene.identity, 'state': engine.state,
+                        'protectionContract': engine._protection_contract['contentHash']}
+    engine.state['é']['a'].append(17)
+    assert prefix._prefix_state_id(engine) == engine.state_id != original
+    assert len(calls) == 2
+
+
+def test_private_native_hash_decline_retains_legacy_and_errors_propagate(monkeypatch):
+    engine = hash_shell()
+    calls = []
+    monkeypatch.setattr(prefix._native_json, 'try_encode_canonical',
+                        lambda value, limit: calls.append(limit))
+    assert prefix._prefix_state_id(engine) == engine.state_id
+    assert calls == [16 * 1024**2]
+    def unavailable(*_):
+        raise ValueError('configured native identity unavailable')
+    monkeypatch.setattr(prefix._native_json, 'try_encode_canonical', unavailable)
+    with pytest.raises(ValueError, match='configured native identity unavailable'):
+        prefix._prefix_state_id(engine)
+
+
+@pytest.mark.parametrize('override', ['own-property', 'base-property', 'lookup', 'digest-binding',
+    'digest-code', 'property-code', 'json-function', 'encoder-method', 'json-keywords', 'builtin-shadow'])
+def test_private_native_hash_retains_overridden_property_semantics(monkeypatch, override):
+    engine = hash_shell()
+    def forbidden(*_):
+        raise AssertionError('custom hash semantics entered native writer')
+    monkeypatch.setattr(prefix._native_json, 'try_encode_canonical', forbidden)
+    if override == 'own-property':
+        monkeypatch.setattr(prefix._PrefixEngine, 'state_id', property(lambda self: 'custom own property'))
+    elif override == 'base-property':
+        monkeypatch.setattr(SurgicalEngine, 'state_id', property(lambda self: 'custom base property'))
+    elif override == 'lookup':
+        def lookup(self, name):
+            return 'custom attribute lookup' if name == 'state_id' else object.__getattribute__(self, name)
+        monkeypatch.setattr(prefix._PrefixEngine, '__getattribute__', lookup)
+    elif override == 'digest-binding':
+        monkeypatch.setattr(prefix._engine_module, '_owned_digest', lambda value: 'custom digest binding')
+    elif override == 'digest-code':
+        def changed(value):
+            return 'custom digest code'
+        monkeypatch.setattr(prefix._engine_module._owned_digest, '__code__', changed.__code__)
+    elif override == 'property-code':
+        def changed(self):
+            return 'custom property code'
+        monkeypatch.setattr(prefix._hash_property.fget, '__code__', changed.__code__)
+    elif override == 'json-function':
+        monkeypatch.setattr(json, 'dumps', lambda *args, **kwargs: '{"custom":true}')
+    elif override == 'encoder-method':
+        monkeypatch.setattr(json.JSONEncoder, 'iterencode',
+                            lambda self, value, _one_shot=False: iter(['{"custom":true}']))
+    elif override == 'json-keywords':
+        monkeypatch.setitem(json.dumps.__kwdefaults__, 'ensure_ascii', False)
+    else:
+        monkeypatch.setattr(prefix._engine_module, 'dict', object, raising=False)
+    expected = engine.state_id
+    assert not prefix._stock_prefix_hash_path(engine)
+    assert prefix._prefix_state_id(engine) == expected
+    assert prefix._prefix_state_id(SimpleNamespace(state_id='external engine')) == 'external engine'
+
+
+def test_private_native_hash_declines_encoder_staticmethod_binding_change(monkeypatch):
+    engine = hash_shell()
+    def forbidden(*_):
+        raise AssertionError('custom descriptor binding entered native writer')
+    monkeypatch.setattr(prefix._native_json, 'try_encode_canonical', forbidden)
+    monkeypatch.setattr(json.JSONEncoder, 'iterencode', staticmethod(json.JSONEncoder.iterencode))
+    assert not prefix._stock_prefix_hash_path(engine)
+    with pytest.raises(TypeError) as legacy:
+        _ = engine.state_id
+    with pytest.raises(TypeError) as actual:
+        prefix._prefix_state_id(engine)
+    assert str(actual.value) == str(legacy.value)
+
+
+def test_private_native_hash_declines_static_getattribute_binding(monkeypatch):
+    engine = hash_shell()
+    def forbidden(*_):
+        raise AssertionError('custom attribute binding entered native writer')
+    monkeypatch.setattr(prefix._native_json, 'try_encode_canonical', forbidden)
+    monkeypatch.setattr(prefix._PrefixEngine, '__getattribute__', staticmethod(object.__getattribute__))
+    assert not prefix._stock_prefix_hash_path(engine)
+    with pytest.raises(TypeError) as legacy:
+        _ = engine.state_id
+    with pytest.raises(TypeError) as actual:
+        prefix._prefix_state_id(engine)
+    assert str(actual.value) == str(legacy.value)
+
+
+@pytest.mark.parametrize('raises', [False, True])
+def test_private_native_hash_preserves_encoder_default_descriptor_effects(monkeypatch, raises):
+    engine = hash_shell()
+    calls = []
+    def changed_default(self):
+        calls.append('default lookup')
+        if raises:
+            raise RuntimeError('custom default lookup failure')
+        engine.state['fromDefaultLookup'] = len(calls)
+        return lambda value: None
+    def forbidden(*_):
+        raise AssertionError('custom default descriptor entered native writer')
+    monkeypatch.setattr(prefix._native_json, 'try_encode_canonical', forbidden)
+    monkeypatch.setattr(json.JSONEncoder, 'default', property(changed_default))
+    assert not prefix._stock_prefix_hash_path(engine)
+    assert calls == []
+    if raises:
+        with pytest.raises(RuntimeError, match='custom default lookup failure'):
+            prefix._prefix_state_id(engine)
+        assert calls == ['default lookup']
+    else:
+        expected = engine.state_id
+        calls.clear()
+        engine.state.pop('fromDefaultLookup')
+        assert prefix._prefix_state_id(engine) == expected
+        assert calls == ['default lookup']
+
+
+@pytest.mark.parametrize('module', [json, prefix.hashlib, prefix._hash_encoder_module],
+                         ids=['json', 'hashlib', 'json-encoder'])
+def test_private_native_hash_declines_custom_module_lookup_without_guard_side_effects(monkeypatch, module):
+    engine = hash_shell()
+    calls = []
+    class CustomModule(ModuleType):
+        def __getattribute__(self, name):
+            if name in ('dumps', 'JSONEncoder', 'sha256', 'c_make_encoder'):
+                calls.append(name)
+            return ModuleType.__getattribute__(self, name)
+    def forbidden(*_):
+        raise AssertionError('custom module dispatch entered native writer')
+    monkeypatch.setattr(prefix._native_json, 'try_encode_canonical', forbidden)
+    monkeypatch.setattr(module, '__class__', CustomModule)
+    assert not prefix._stock_prefix_hash_path(engine)
+    assert calls == []
+    expected = engine.state_id
+    legacy_calls = list(calls)
+    calls.clear()
+    assert prefix._prefix_state_id(engine) == expected
+    assert calls == legacy_calls
 
 
 def episode():

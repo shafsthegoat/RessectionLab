@@ -31,13 +31,15 @@ _BINDINGS = tuple((module, name, getattr(module, name), getattr(module, name).__
                   for module, names in ((_recipe, _RECIPE_NAMES), (_utilities, _UTILITY_NAMES)) for name in names)
 _CONSTANTS = (_recipe.SCHEMA, _recipe.KERNEL_NAME, _recipe.FLAGS, _recipe.MAX_SOURCE_BYTES,
               _recipe.MAX_RECEIPT_BYTES, _recipe.MAX_BINARY_BYTES, _recipe.MAX_IMAGE_BYTES,
-              _recipe.MAX_RAW_BYTES, _recipe.LOGICAL_SCRATCH_BYTES)
+              _recipe.MAX_RAW_BYTES, _recipe.LOGICAL_SCRATCH_BYTES,
+              _recipe.CANONICAL_LOGICAL_SCRATCH_BYTES, _recipe.MAX_PAIR_ARENA_BYTES)
 
 
 @dataclass(frozen=True, repr=False)
 class _Native:
     module: object
     encode: object
+    encode_canonical: object
     raw_identity: object
     embedded: str
     binary: str
@@ -65,7 +67,8 @@ def _check_bindings():
     try:
         current = (_recipe.SCHEMA, _recipe.KERNEL_NAME, _recipe.FLAGS, _recipe.MAX_SOURCE_BYTES,
                    _recipe.MAX_RECEIPT_BYTES, _recipe.MAX_BINARY_BYTES, _recipe.MAX_IMAGE_BYTES,
-                   _recipe.MAX_RAW_BYTES, _recipe.LOGICAL_SCRATCH_BYTES)
+                   _recipe.MAX_RAW_BYTES, _recipe.LOGICAL_SCRATCH_BYTES,
+                   _recipe.CANONICAL_LOGICAL_SCRATCH_BYTES, _recipe.MAX_PAIR_ARENA_BYTES)
         _need(current == _CONSTANTS, 'RECIPE_CONSTANTS')
         for module, name, function, code, defaults, kwdefaults in _BINDINGS:
             _need(getattr(module, name) is function and function.__code__ is code
@@ -132,9 +135,11 @@ def _select():
         _need(_utilities.file_digest(binary) == receipt['binarySha256'], 'BINARY_DURING_LOAD')
         _check_images(images, full=True)
         _need(module.BUILD_IDENTITY == embedded, 'LOADED_BUILD_METADATA')
-        encode, raw_identity = module.try_encode, module.raw_identity
+        encode, encode_canonical, raw_identity = module.try_encode, module.try_encode_canonical, module.raw_identity
         _need(all(type(function) is BuiltinFunctionType and function.__self__ is module
-                  for function in (encode, raw_identity)), 'LOADED_ENTRY_POINTS')
+                  and function.__name__ == name for name, function in
+                  (('try_encode', encode), ('try_encode_canonical', encode_canonical),
+                   ('raw_identity', raw_identity))), 'LOADED_ENTRY_POINTS')
         helpers = raw_identity()
         expected_json = Path(metadata['scalarImages']['json']['path'])
         expected_python = Path(metadata['scalarImages']['python']['path'])
@@ -154,7 +159,7 @@ def _select():
         files = tuple((path, metadata[field], path.stat().st_size) for path, field in paths)
         files += ((receipt_path, hashlib.sha256(raw).hexdigest(), len(raw)),
                   (binary, receipt['binarySha256'], receipt['binaryBytes']))
-        selected = _Native(module, encode, raw_identity, module.BUILD_IDENTITY, str(binary),
+        selected = _Native(module, encode, encode_canonical, raw_identity, module.BUILD_IDENTITY, str(binary),
                            files, images, _utilities.canonical(helpers), _utilities.canonical(runtime),
                            _json, _json.encode_basestring_ascii)
         identity = {'schema': _recipe.SCHEMA, 'mode': 'native', 'sourceSha256': metadata['sourceSha256'],
@@ -181,7 +186,9 @@ def _check_live(*, full=False):
     try:
         _need(sys.modules.get(_recipe.KERNEL_NAME) is selected.module and type(selected.module) is ModuleType,
               'MODULE_REPLACED')
-        _need(selected.module.try_encode is selected.encode and selected.module.raw_identity is selected.raw_identity
+        _need(selected.module.try_encode is selected.encode
+              and selected.module.try_encode_canonical is selected.encode_canonical
+              and selected.module.raw_identity is selected.raw_identity
               and selected.module.BUILD_IDENTITY is selected.embedded, 'ENTRY_POINT_REPLACED')
         _need(selected.module.__file__ == selected.binary and selected.module.__spec__.origin == selected.binary,
               'MODULE_ORIGIN')
@@ -210,3 +217,15 @@ def try_encode(value, raw_limit):
     if _SELECTION is None or type(raw_limit) is not int:
         return None
     return _SELECTION.encode(value, min(raw_limit, _recipe.MAX_RAW_BYTES))
+
+
+def try_encode_canonical(value, raw_limit):
+    """Immutable sorted canonical ASCII snapshot, or None for legacy hashing.
+
+    Canonical mode uses a separately bounded pair arena (16MiB) and a
+    conservative64MiB native scratch allowance. The insertion path remains48MiB.
+    """
+    _check_live()
+    if _SELECTION is None or type(raw_limit) is not int:
+        return None
+    return _SELECTION.encode_canonical(value, min(raw_limit, _recipe.MAX_RAW_BYTES))

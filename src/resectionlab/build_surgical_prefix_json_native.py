@@ -19,7 +19,7 @@ from types import BuiltinFunctionType, ModuleType
 
 from . import build_surgical_idle_native as _utilities
 
-SCHEMA = 'surgical-prefix-json-native.v1'
+SCHEMA = 'surgical-prefix-json-native.v2'
 KERNEL_NAME = 'resectionlab._surgical_prefix_json_kernel'
 FLAGS = _utilities.FLAGS
 MAX_SOURCE_BYTES = 1024 * 1024
@@ -28,6 +28,8 @@ MAX_BINARY_BYTES = 4 * 1024 * 1024
 MAX_IMAGE_BYTES = 64 * 1024 * 1024
 MAX_RAW_BYTES = 16 * 1024 * 1024
 LOGICAL_SCRATCH_BYTES = 48 * 1024 * 1024
+CANONICAL_LOGICAL_SCRATCH_BYTES = 64 * 1024 * 1024
+MAX_PAIR_ARENA_BYTES = 16 * 1024 * 1024
 
 
 def qualified_runtime(runtime):
@@ -109,6 +111,9 @@ def build(output_dir, *, max_wall_seconds=20.):
                     'scalarImages': scalar_images(),
                     'snapshot': {'asciiCap': MAX_RAW_BYTES, 'depthCap': 64, 'nodeCap': 1000000,
                                  'logicalScratchBytes': LOGICAL_SCRATCH_BYTES,
+                                 'canonicalLogicalScratchBytes': CANONICAL_LOGICAL_SCRATCH_BYTES,
+                                 'canonicalPairArenaBytes': MAX_PAIR_ARENA_BYTES,
+                                 'dictionaryModes': ['insertion', 'unicode-codepoint-heapsort'],
                                  'integer': 'signed-int64-unsigned-decimal',
                                  'strings': 'stock-raw-METH_O-ASCII', 'floats': 'stock-raw-float-tp_repr'},
                     'privateAbi': 'CPython3.12.12-PyThreadState.py_recursion_remaining>=256'}

@@ -185,7 +185,9 @@ class NativeJsonCounterTests(unittest.TestCase):
     def adapter(self):
         def try_encode(value, raw_limit):
             return value
-        return SimpleNamespace(try_encode=try_encode)
+        def try_encode_canonical(value, raw_limit):
+            return value
+        return SimpleNamespace(try_encode=try_encode,try_encode_canonical=try_encode_canonical)
 
     def test_exact_return_counts_are_attributed_without_saving_payloads_or_calling_encoder(self):
         adapter=self.adapter();counter=NativeJsonAdmissionCounter(adapter)
@@ -334,6 +336,7 @@ class NativeJsonCounterTests(unittest.TestCase):
         class Session:
             def execute(self, operation, args, request, progress):
                 adapter.try_encode('native encoded',30);adapter.try_encode(None,30)
+                adapter.try_encode_canonical('canonical',30)
                 return {'caseHash':'generated'}
             def close(self):pass
         with tempfile.TemporaryDirectory(dir=ROOT/'testcases/outputs/rl-readiness-20261022') as directory:
@@ -344,7 +347,124 @@ class NativeJsonCounterTests(unittest.TestCase):
                 self.assertEqual(guard.commands[0]['nativeJson']['admittedStrings'],1)
                 self.assertEqual(guard.commands[0]['nativeJson']['fallbackNone'],1)
                 self.assertEqual(guard.receipt()['nativeJson']['total']['normalReturns'],2)
+                self.assertEqual(guard.commands[0]['nativeCanonicalJson']['admittedStrings'],1)
+                self.assertEqual(guard.receipt()['nativeCanonicalJson']['total']['returnedCharacters'],9)
             finally:guard.spool.close()
+
+    def test_explicit_entrypoints_have_independent_local_counts_and_binding(self):
+        adapter=self.adapter()
+        insertion=NativeJsonAdmissionCounter(adapter)
+        canonical=NativeJsonAdmissionCounter(adapter,'try_encode_canonical')
+        with insertion,canonical:
+            adapter.try_encode('insert',10)
+            adapter.try_encode_canonical('sorted',10);adapter.try_encode_canonical(None,10)
+            self.assertNotEqual(insertion.tool,canonical.tool)
+            insertion.check();canonical.check()
+        self.assertEqual(insertion.total['normalReturns'],1)
+        self.assertEqual(canonical.total['normalReturns'],2)
+        self.assertEqual(canonical.total['fallbackNone'],1)
+        self.assertEqual(canonical.receipt()['entrypoint'],'try_encode_canonical')
+        with self.assertRaisesRegex(ValueError,'Unsupported'):
+            NativeJsonAdmissionCounter(adapter,'other')
+
+    def test_warm_command_canonical_hash_is_not_counted_as_insertion_encoding(self):
+        adapter=self.adapter()
+        class Session:
+            def execute(self,operation,args,request,progress):
+                if args.get('cold'):adapter.try_encode('insertion',30)
+                adapter.try_encode_canonical('canonical hash input',30)
+                return {'caseHash':'generated'}
+            def close(self):pass
+        with tempfile.TemporaryDirectory(dir=ROOT/'testcases/outputs/rl-readiness-20261022') as directory:
+            guard=VascularPlaybackMonitor(FakeEngine,directory,reference=[{'action':{}}]*73,rss=lambda:0,_json_adapter=adapter)
+            guard.install(Session)
+            try:
+                with guard:
+                    session=Session()
+                    session.execute('ping',{'cold':True},None,None)
+                    session.execute('ping',{'cold':False},None,None)
+                cold,warm=guard.commands
+                self.assertEqual(cold['nativeJson']['admittedStrings'],1)
+                self.assertEqual(warm['nativeJson']['normalReturns'],0)
+                self.assertEqual(warm['nativeCanonicalJson']['admittedStrings'],1)
+                self.assertEqual(guard.receipt()['nativeCanonicalJson']['total']['admittedStrings'],2)
+            finally:guard.spool.close()
+
+    def test_either_entrypoint_drift_is_recorded_and_all_guard_slots_are_released(self):
+        for name in ('try_encode','try_encode_canonical'):
+            with self.subTest(entrypoint=name),tempfile.TemporaryDirectory(dir=ROOT/'testcases/outputs/rl-readiness-20261022') as directory:
+                adapter=self.adapter()
+                guard=VascularPlaybackMonitor(FakeEngine,directory,reference=[{'action':{}}]*73,rss=lambda:0,_json_adapter=adapter)
+                try:
+                    with self.assertRaisesRegex(ValueError,'function/code changed'):
+                        with guard:
+                            tools=[guard.tool,guard.json_counter.tool,guard.canonical_json_counter.tool]
+                            setattr(adapter,name,lambda *_:None)
+                            guard.resources()
+                    self.assertEqual(guard.failure['entrypoint'],name)
+                    for tool in tools:self.assertIsNone(sys.monitoring.get_tool(tool))
+                    other=guard.canonical_json_counter if name=='try_encode' else guard.json_counter
+                    self.assertIsNone(other.failure)
+                finally:guard.spool.close()
+
+    def test_second_counter_slot_exhaustion_releases_first_and_global_guard(self):
+        acquired=[]
+        try:
+            for tool in range(6):
+                if sys.monitoring.get_tool(tool) is None:
+                    sys.monitoring.use_tool_id(tool,'generated-occupied-'+str(tool));acquired.append(tool)
+            # Leave exactly two slots: global guard and insertion counter.
+            for tool in acquired[-2:]:sys.monitoring.free_tool_id(tool)
+            held=acquired[:-2]
+            with tempfile.TemporaryDirectory(dir=ROOT/'testcases/outputs/rl-readiness-20261022') as directory:
+                guard=VascularPlaybackMonitor(FakeEngine,directory,reference=[{'action':{}}]*73,rss=lambda:0,_json_adapter=self.adapter())
+                try:
+                    with self.assertRaisesRegex(ValueError,'No native JSON monitoring tool'):guard.__enter__()
+                    self.assertEqual(guard.failure['entrypoint'],'try_encode_canonical')
+                    self.assertIsNone(guard.tool);self.assertIsNone(guard.json_counter.tool);self.assertIsNone(guard.canonical_json_counter.tool)
+                    for tool in acquired[-2:]:self.assertIsNone(sys.monitoring.get_tool(tool))
+                    for tool in held:self.assertEqual(sys.monitoring.get_tool(tool),'generated-occupied-'+str(tool))
+                finally:guard.spool.close()
+        finally:
+            for tool in acquired:
+                if sys.monitoring.get_tool(tool)=='generated-occupied-'+str(tool):sys.monitoring.free_tool_id(tool)
+
+    def test_both_counters_coexist_with_unchanged_global_step_rejection(self):
+        from vascular_playback_monitor import ReadOnlyStepMonitor
+        class GeneratedEngine:
+            def step(self,action):raise AssertionError('forbidden body entered')
+        adapter=self.adapter();insertion=NativeJsonAdmissionCounter(adapter);canonical=NativeJsonAdmissionCounter(adapter,'try_encode_canonical')
+        guard=ReadOnlyStepMonitor(GeneratedEngine)
+        with self.assertRaises(ForbiddenPhysicsStep):
+            with guard,insertion,canonical:
+                self.assertEqual(len({guard.tool,insertion.tool,canonical.tool}),3)
+                self.assertEqual(sys.monitoring.get_events(guard.tool),guard.flags)
+                adapter.try_encode('insert',10);adapter.try_encode_canonical('sorted',10)
+                guard.check();insertion.check();canonical.check()
+                GeneratedEngine().step({})
+        self.assertEqual(insertion.total['admittedStrings'],1);self.assertEqual(canonical.total['admittedStrings'],1)
+        self.assertIsNone(guard.tool);self.assertIsNone(insertion.tool);self.assertIsNone(canonical.tool)
+
+    def test_cleanup_failure_does_not_leak_other_slots_or_mask_body_error(self):
+        for body_error in (False,True):
+            with self.subTest(bodyError=body_error),tempfile.TemporaryDirectory(dir=ROOT/'testcases/outputs/rl-readiness-20261022') as directory:
+                guard=VascularPlaybackMonitor(FakeEngine,directory,reference=[{'action':{}}]*73,rss=lambda:0,_json_adapter=self.adapter())
+                original=RuntimeError('original body failure')
+                try:
+                    with self.assertRaisesRegex(RuntimeError,'original body failure' if body_error else 'generated cleanup failure') as caught:
+                        with guard:
+                            tools=[guard.tool,guard.json_counter.tool,guard.canonical_json_counter.tool]
+                            close=guard.canonical_json_counter.close
+                            def failing_close():
+                                close()
+                                raise RuntimeError('generated cleanup failure')
+                            guard.canonical_json_counter.close=failing_close
+                            if body_error:raise original
+                    if body_error:self.assertIs(caught.exception,original)
+                    self.assertEqual(guard.failure['entrypoint'],'try_encode_canonical')
+                    self.assertTrue(guard.failure['cleanup'])
+                    for tool in tools:self.assertIsNone(sys.monitoring.get_tool(tool))
+                finally:guard.spool.close()
 
 
 if __name__=='__main__':unittest.main()

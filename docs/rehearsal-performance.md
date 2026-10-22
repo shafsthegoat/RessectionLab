@@ -968,6 +968,56 @@ Source, inputs, runtime, both builds and exact state identities stayed unchanged
 Evidence is `warm-read-decomposition-probe/`. It identifies a digest target for
 another bounded prototype; it qualifies no further production optimization.
 
+### Exact canonical snapshot hashing
+
+A separate ignored prototype replaced the complete strict state-digest pipeline
+with a bounded sorted ASCII snapshot followed by SHA-256 over every byte. Three
+balanced pairs per audited state measured **30.185→7.971 ms** early and
+**35.204→11.625 ms** late, saving 22.213/23.579 ms (73.59%/66.98%). Complete sorted
+JSON bytes, decoded float bits/key order and the original complete state IDs
+matched. The run used twelve actual pipelines, 64 fixture pipelines, 36 direct
+admission calls and one pending-signal encode: 75 native entries total. All 19
+eligible fixtures were required to admit. During a 19.655 ms sorted write, a
+1 ms pending signal mutated the input only after the immutable snapshot existed.
+
+The single compile/run took 5.013 seconds with 331,563,008-byte sampled
+process-tree RSS (<30 s/1 GiB). No owner/engine constructor, action, policy or
+optimizer ran. These component gains do not establish application throughput.
+Evidence is `native-canonical-json-prototype/`.
+
+The subsequent implementation adds a separate `try_encode_canonical` entrypoint
+to the optional prefix kernel; insertion-order capture remains separate. A
+private prefix helper recomputes the full scene/state/protection digest from
+decoded state. It retains the original property for custom engine types,
+property or attribute-lookup overrides, altered digest/JSON dependencies and
+unsupported native inputs. Static descriptor/module guards preserve fallback
+side effects. The public engine property and numerical laws remain unchanged;
+implementation-bound caches can still invalidate conservatively.
+
+Canonical ordering uses exact Unicode codepoints and an iterative heapsort of
+borrowed key/value pairs. A preallocated arena is at most 16 MiB; the canonical
+logical scratch allowance is 64 MiB plus bounded C stack/scalar metadata.
+Insertion capture retains its 48 MiB allowance and allocates no pair arena.
+Both paths retain depth 64, one million expanded nodes, 16 MiB ASCII, strict
+runtime/helper identity and immutable completion before Python callbacks.
+Allocation cleanup is source-reviewed, without allocator fault injection.
+The revised build schema is `surgical-prefix-json-native.v2`; old build receipts
+must not be substituted for its fresh explicit build. Production regression and
+the subsequent GUI result have separate receipts.
+
+The single revised build took **0.636 seconds** (0.448 s compiler), produced a
+71,072-byte binary and emitted no warnings. The guarded regression selection
+passed **952 tests in 182.99 seconds**, with two existing Gymnasium advisories.
+The pilot module was excluded entirely. Parent mode selected native canonical
+JSON; generated subprocess checks covered both explicit native builds and
+fallbacks. External wall was 183.462 seconds (<240), sampled process-tree RSS
+1,212,989,440 bytes (<3 GiB), and all 259 bound source/test files stayed unchanged.
+No learning path was selected. A separate dual-counter qualification passed
+34 generated tests in 1.034 seconds (1.423 s external, 89,358,336-byte tree RSS),
+retaining the original physics-step guard and distinguishing canonical hashing
+from insertion-order capture. GUI performance for this later implementation is
+still a separate gate; the v5 result does not qualify it.
+
 ## Gates that remain open
 
 * **Sustained full-operation playback at 1× remains unqualified.** The complete

@@ -131,8 +131,10 @@ class FrameSpool:
 
 class NativeJsonAdmissionCounter:
     """Local normal-return observations; no payloads or extra encoder calls."""
-    def __init__(self, adapter):
-        self.adapter, self.function = adapter, adapter.try_encode
+    def __init__(self, adapter, entrypoint='try_encode'):
+        require(entrypoint in ('try_encode', 'try_encode_canonical'), 'Unsupported native JSON counter entrypoint')
+        self.entrypoint = entrypoint
+        self.adapter, self.function = adapter, getattr(adapter, entrypoint)
         self.code = self.function.__code__
         self.monitor = sys.monitoring
         self.events, self.return_event = self.monitor.events, self.monitor.events.PY_RETURN
@@ -146,6 +148,7 @@ class NativeJsonAdmissionCounter:
         self.current = None
         self.total, self.outside = self.empty(), self.empty()
         self.failure = None
+        self.cleanup_failure = None
 
     @staticmethod
     def empty():
@@ -153,7 +156,7 @@ class NativeJsonAdmissionCounter:
                 'returnedCharacters':0,'maxReturnedCharacters':0}
 
     def _failed(self, error):
-        self.failure = {'type':type(error).__name__,'message':str(error)}
+        self.failure = {'type':type(error).__name__,'message':str(error),'entrypoint':self.entrypoint}
 
     def _returned(self, code, offset, value):
         try:
@@ -191,7 +194,8 @@ class NativeJsonAdmissionCounter:
             return self
         except BaseException as error:
             self._failed(error)
-            self.close()
+            try:self.close()
+            except BaseException:pass  # close records its error; preserve setup failure.
             raise
 
     def check(self):
@@ -203,7 +207,7 @@ class NativeJsonAdmissionCounter:
                     'Native JSON monitoring API changed')
             require(self.monitor.events is self.events and self.events.PY_RETURN==self.return_event,
                     'Native JSON monitoring event constants changed')
-            require(self.adapter.try_encode is self.function and self.function.__code__ is self.code,
+            require(getattr(self.adapter,self.entrypoint,None) is self.function and self.function.__code__ is self.code,
                     'Native JSON adapter function/code changed')
             require(self.callback.__func__.__code__ is self.callback_code, 'Native JSON counter callback code changed')
             require(self.api['get_tool'](self.tool)==self.name and self.api['get_events'](self.tool)==0
@@ -228,12 +232,17 @@ class NativeJsonAdmissionCounter:
 
     def close(self):
         tool, self.tool = self.tool, None
-        if tool is not None and self.api['get_tool'](tool)==self.name:
-            try:
-                self.api['set_local_events'](tool,self.code,0)
-                self.api['set_events'](tool,0)
-                self.api['register_callback'](tool,self.return_event,None)
-            finally:self.api['free_tool_id'](tool)
+        try:
+            if tool is not None and self.api['get_tool'](tool)==self.name:
+                try:
+                    self.api['set_local_events'](tool,self.code,0)
+                    self.api['set_events'](tool,0)
+                    self.api['register_callback'](tool,self.return_event,None)
+                finally:self.api['free_tool_id'](tool)
+        except BaseException as error:
+            self.cleanup_failure = {'type':type(error).__name__,'message':str(error),'entrypoint':self.entrypoint}
+            if self.failure is None:self._failed(error)
+            raise
 
     def __exit__(self, kind, value, traceback):
         try:
@@ -241,11 +250,15 @@ class NativeJsonAdmissionCounter:
             except BaseException:
                 # check records sticky failure; preserve the original body diagnostic.
                 if kind is None:raise
-        finally:self.close()
+        finally:
+            try:self.close()
+            except BaseException:
+                if kind is None:raise
 
     def receipt(self):
         return {'started':self.started,'active':self.tool is not None,'total':dict(self.total),
-            'outsideCommand':dict(self.outside),'failure':self.failure,
+            'outsideCommand':dict(self.outside),'failure':self.failure,'cleanupFailure':self.cleanup_failure,
+            'entrypoint':self.entrypoint,
             'adapterModule':getattr(self.adapter,'__name__','generated-fixture'),
             'functionModule':self.function.__module__,'functionQualname':self.function.__qualname__,
             'codeFilename':self.code.co_filename,'codeFirstLine':self.code.co_firstlineno,
@@ -276,15 +289,34 @@ class VascularPlaybackMonitor(ReadOnlyStepMonitor):
         self._stop = threading.Event()
         self._watcher = None
         self.json_counter = None
+        self.canonical_json_counter = None
         self._json_adapter = _json_adapter
 
     def _check_json_counter(self):
-        if self.json_counter is not None:
-            try:self.json_counter.check()
+        failures = []
+        first = None
+        for _, counter in self._json_counters():
+            try:counter.check()
             except BaseException as error:
+                if first is None:first = error
+                failures.append({'type':type(error).__name__,'message':str(error),'entrypoint':counter.entrypoint})
+        if first is not None:
+            self.failure = {**failures[0], 'nativeJsonCounter':True,'counterFailures':failures,'context':self.context}
+            raise first
+
+    def _json_counters(self):
+        return [(name,counter) for name,counter in (('nativeJson',self.json_counter),
+                ('nativeCanonicalJson',self.canonical_json_counter)) if counter is not None]
+
+    def _close_json_counters(self):
+        first = None
+        for _,counter in reversed(self._json_counters()):
+            try:counter.close()
+            except BaseException as error:
+                if first is None:first = error
                 self.failure = {'type':type(error).__name__,'message':str(error),
-                                'nativeJsonCounter':True,'context':self.context}
-                raise
+                                'nativeJsonCounter':True,'entrypoint':counter.entrypoint,'cleanup':True}
+        return first
 
     def resources(self):
         self._check_json_counter()
@@ -403,11 +435,10 @@ class VascularPlaybackMonitor(ReadOnlyStepMonitor):
             previous = guard.context
             guard.context = {'operation': operation, **{key: args.get(key) for key in ('command','caseHash','branchId','position','frameIndex')}}
             before, began = len(guard.calls), time.perf_counter()
-            previous_json, json_started = None, False
+            json_contexts = []
             try:
-                if guard.json_counter is not None:
-                    previous_json = guard.json_counter.begin_command()
-                    json_started = True
+                for name,counter in guard._json_counters():
+                    json_contexts.append((name,counter,counter.begin_command()))
                 result = original_execute(session, operation, args, request, progress)
                 if operation == 'loadCase':
                     guard.case_hash = result['caseHash']
@@ -427,9 +458,9 @@ class VascularPlaybackMonitor(ReadOnlyStepMonitor):
                 guard.failure = {'type':type(error).__name__,'message':str(error),'context':guard.context}
                 raise
             finally:
-                counted = guard.json_counter.end_command(previous_json) if json_started else None
+                counted = {name:counter.end_command(previous) for name,counter,previous in json_contexts}
                 guard.commands.append({**guard.context, 'steps':len(guard.calls)-before, 'seconds':time.perf_counter()-began,
-                                       **({'nativeJson':counted} if counted is not None else {})})
+                                       **counted})
                 guard.context = previous
         def close(session):
             guard.capture(session)
@@ -437,18 +468,28 @@ class VascularPlaybackMonitor(ReadOnlyStepMonitor):
         session_class.execute, session_class.close = execute, close
 
     def __enter__(self):
+        entrypoint = 'try_encode'
         try:
             adapter = self._json_adapter
             if adapter is None:
                 from resectionlab import surgical_prefix_json_native
                 adapter = surgical_prefix_json_native
             self.json_counter = NativeJsonAdmissionCounter(adapter)
+            entrypoint = 'try_encode_canonical'
+            self.canonical_json_counter = NativeJsonAdmissionCounter(adapter,entrypoint)
+            require(self.json_counter.code is not self.canonical_json_counter.code,
+                    'Native JSON counter entrypoints must have distinct code')
             super().__enter__()
-            self.json_counter.__enter__()
+            for _,counter in self._json_counters():
+                entrypoint = counter.entrypoint
+                counter.__enter__()
         except BaseException as error:
-            self.failure = {'type':type(error).__name__,'message':str(error),'nativeJsonCounter':True}
-            if self.json_counter is not None:self.json_counter.close()
-            if self.tool is not None:super().__exit__(*sys.exc_info())
+            original = sys.exc_info()
+            self.failure = {'type':type(error).__name__,'message':str(error),'nativeJsonCounter':True,'entrypoint':entrypoint}
+            self._close_json_counters()
+            if self.tool is not None:
+                try:super().__exit__(*original)
+                except BaseException:pass
             raise
         def watch():
             while not self._stop.wait(.25):
@@ -465,8 +506,10 @@ class VascularPlaybackMonitor(ReadOnlyStepMonitor):
         try:self._watcher.start()
         except BaseException:
             self.failure = {'type':'NativeJsonCounterWatchdogSetupFailure','nativeJsonCounter':True}
-            try:self.json_counter.close()
-            finally:super().__exit__(*sys.exc_info())
+            original = sys.exc_info()
+            self._close_json_counters()
+            try:super().__exit__(*original)
+            except BaseException:pass
             raise
         return self
 
@@ -474,15 +517,17 @@ class VascularPlaybackMonitor(ReadOnlyStepMonitor):
         self._stop.set()
         if self._watcher:
             self._watcher.join(1)
-        try:
-            try:self._check_json_counter()
-            except BaseException:
-                # The failed counter is still recorded, but must not mask the body.
-                if args[0] is None:raise
-        finally:
-            try:
-                if self.json_counter is not None:self.json_counter.close()
-            finally:super().__exit__(*args)
+        first = None
+        try:self._check_json_counter()
+        except BaseException as error:first = error
+        cleanup_error = self._close_json_counters()
+        if first is None:first = cleanup_error
+        try:super().__exit__(*args)
+        except BaseException as error:
+            if first is None:first = error
+        # All three tools were cleaned up. An active body exception wins, but
+        # any check/cleanup failure without a body exception still refuses pass.
+        if args[0] is None and first is not None:raise first
 
     def finish(self):
         self.spool.close()
@@ -497,6 +542,7 @@ class VascularPlaybackMonitor(ReadOnlyStepMonitor):
             'wallSeconds':self.clock()-self.began,'maxWallSeconds':MAX_SECONDS,
             'spool':self.spool.statistics,'reference':{'path':str(REFERENCE),'sha256':file_sha(REFERENCE)},
             'nativeJson':self.json_counter.receipt() if self.json_counter is not None else None,
+            'nativeCanonicalJson':self.canonical_json_counter.receipt() if self.canonical_json_counter is not None else None,
             'residentMeaning':'Whole Python peak RSS; macOS bytes / Linux KiB converted to bytes. Source geometry/runtime/transient allocations included.'}
 
 

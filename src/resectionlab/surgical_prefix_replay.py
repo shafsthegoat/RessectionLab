@@ -19,13 +19,99 @@ import math
 from pathlib import Path
 import secrets
 import sys
-from types import MappingProxyType, ModuleType
+from types import FunctionType, MappingProxyType, ModuleType
 import zlib
 
+from . import surgical_engine as _engine_module
 from . import build_surgical_prefix_json_native as _json_native_recipe
 from . import surgical_prefix_json_native as _native_json
 from .core import freeze_json, semantic_digest, thaw_json
 from .surgical_engine import MAX_STEPS, SCHEMA, SurgicalEngine
+
+
+def _hash_function_anchor(function):
+    keywords = function.__kwdefaults__
+    return (function, function.__code__, function.__defaults__, keywords,
+            None if keywords is None else tuple(keywords.items()), function.__globals__)
+
+
+def _hash_function_unchanged(function, anchor):
+    expected, code, defaults, keywords, items, namespace = anchor
+    if (type(function) is not FunctionType or function is not expected
+            or function.__code__ is not code or function.__defaults__ is not defaults
+            or function.__kwdefaults__ is not keywords or function.__globals__ is not namespace):
+        return False
+    if keywords is None:
+        return True
+    return (type(keywords) is dict and len(keywords) == len(items)
+            and all(type(key) is str and key == original_key and value is original_value
+                    for (key, value), (original_key, original_value) in zip(keywords.items(), items)))
+
+
+_hash_property = SurgicalEngine.state_id
+_hash_property_function = _hash_function_anchor(_hash_property.fget)
+_hash_digest_function = _hash_function_anchor(_engine_module._owned_digest)
+_hash_digest_lookups = tuple((name, _hash_digest_function[0].__globals__.get(
+    name, _hash_digest_function[0].__builtins__[name]))
+    for name in ('type', 'str', 'int', 'float', 'bool', 'id', 'set', 'list', 'dict', 'tuple', 'any'))
+_hash_json_module, _hash_sha_module = json, hashlib
+_hash_json_dumps = _hash_function_anchor(json.dumps)
+_hash_json_encoder = json.JSONEncoder
+_hash_encoder_functions = tuple((name, _hash_function_anchor(getattr(_hash_json_encoder, name)))
+                               for name in ('__init__', 'encode', 'iterencode', 'default'))
+_hash_encoder_slots = tuple((name, inspect.getattr_static(_hash_json_encoder, name))
+                           for name in ('__getattribute__', '__setattr__', '__new__'))
+_hash_encoder_module = sys.modules[_hash_json_encoder.__module__]
+_hash_encoder_scalars = tuple((name, getattr(_hash_encoder_module, name))
+                             for name in ('c_make_encoder', 'encode_basestring_ascii'))
+_hash_sha_function = hashlib.sha256
+
+
+def _stock_prefix_hash_path(engine):
+    """Decline overridden lookup/digest semantics before using native JSON."""
+    try:
+        return (type(engine) is _PrefixEngine and type(_PrefixEngine) is type
+                and type(_engine_module) is ModuleType
+                and type(json) is ModuleType and type(hashlib) is ModuleType
+                and type(_hash_json_module) is ModuleType and type(_hash_sha_module) is ModuleType
+                and type(_hash_encoder_module) is ModuleType
+                and _engine_module is sys.modules.get('resectionlab.surgical_engine')
+                and vars(_engine_module) is _hash_property_function[-1]
+                and 'state_id' not in vars(_PrefixEngine)
+                and inspect.getattr_static(_PrefixEngine, '__getattribute__') is object.__getattribute__
+                and inspect.getattr_static(_PrefixEngine, 'state_id') is _hash_property
+                and inspect.getattr_static(SurgicalEngine, 'state_id') is _hash_property
+                and type(_hash_property) is property
+                and _hash_function_unchanged(_hash_property.fget, _hash_property_function)
+                and _hash_function_unchanged(vars(_engine_module).get('_owned_digest'), _hash_digest_function)
+                and all(_engine_module.__dict__.get(name, _hash_digest_function[0].__builtins__.get(name))
+                        is expected for name, expected in _hash_digest_lookups)
+                and vars(_engine_module).get('json') is _hash_json_module and json is _hash_json_module
+                and vars(_engine_module).get('hashlib') is _hash_sha_module and hashlib is _hash_sha_module
+                and _hash_function_unchanged(vars(json).get('dumps'), _hash_json_dumps)
+                and vars(json).get('JSONEncoder') is _hash_json_encoder
+                and all(inspect.getattr_static(_hash_json_encoder, name) is expected
+                        for name, expected in _hash_encoder_slots)
+                and all(_hash_function_unchanged(inspect.getattr_static(_hash_json_encoder, name), anchor)
+                        for name, anchor in _hash_encoder_functions)
+                and all(vars(_hash_encoder_module).get(name) is function
+                        for name, function in _hash_encoder_scalars)
+                and vars(hashlib).get('sha256') is _hash_sha_function)
+    except (AttributeError, KeyError, TypeError):
+        return False
+
+
+def _prefix_state_id(engine):
+    """Rehash complete private state; custom engines retain their own property."""
+    if not _stock_prefix_hash_path(engine):
+        return engine.state_id
+    payload = {'scene': engine.scene.identity, 'state': engine.state,
+               **({'protectionContract': engine._protection_contract['contentHash']}
+                  if engine._protection_contract else {})}
+    snapshot = _native_json.try_encode_canonical(payload, 16 * 1024**2)
+    if snapshot is None:
+        return engine.state_id
+    return 'sha256:' + hashlib.sha256(snapshot.encode('ascii')).hexdigest()
 
 _FROZEN_INPUT_AUTHORITY = object()
 
@@ -375,7 +461,7 @@ class _FrameStage:
         # frames may be evicted, but never held alongside an unbounded action.
         row = {'observedTimeSeconds': float(engine.state['elapsedSeconds']),
                'kind': kind, 'effectiveActivation': activation,
-               'stateId': engine.state_id, 'state': b'',
+               'stateId': _prefix_state_id(engine), 'state': b'',
                'fieldTokens': MappingProxyType({'flapComponents': '0' * 64})
                    if 'flapComponents' in engine.state else MappingProxyType({})}
         # Include metadata before encoding and reserve owning-map overhead.
@@ -502,7 +588,7 @@ class SurgicalPrefixReplay:
         self._endpoint_error = None
         self._invalidated = None
         engine = self._fresh()
-        self._initial_id = engine.state_id
+        self._initial_id = _prefix_state_id(engine)
         self._put_checkpoint(0, engine)
         self._validate_endpoint(engine)
         # Share only the private empty shell's pure geometry/protection runtime.
@@ -564,7 +650,7 @@ class SurgicalPrefixReplay:
                 raise PrefixInvalidated(self._invalidated)
 
     def _checkpoint(self, position, engine):
-        return {'position': position, 'stateId': engine.state_id,
+        return {'position': position, 'stateId': _prefix_state_id(engine),
                 'state': _encode(engine.state, compressed_limit=self._max_checkpoint_bytes,
                                  raw_limit=self._max_json_bytes, _owned_snapshot=True)}
 
@@ -597,7 +683,7 @@ class SurgicalPrefixReplay:
         # metrics. Complete receipts remain in the bounded compressed store.
         engine.actions = list(self._snapshot['actions'][:position])
         engine.history = self._history[:position]
-        if engine.state_id != item['stateId']:
+        if _prefix_state_id(engine) != item['stateId']:
             raise ValueError('Private reconstructed checkpoint identity differs')
         engine._prefix_verified_state_id = item['stateId']
         return engine
@@ -639,10 +725,10 @@ class SurgicalPrefixReplay:
         if len(engine.actions) != len(self._snapshot['actions']):
             return self._endpoint_verified, self._endpoint_error
         checkpoint = self._snapshot.get('checkpoint')
-        exact = engine.state_id == self._snapshot['stateId']
+        exact = _prefix_state_id(engine) == self._snapshot['stateId']
         if checkpoint is not None:
             exact = exact and isinstance(checkpoint, Mapping) and (checkpoint.get('position') == len(engine.actions)
-                    and checkpoint.get('stateId') == engine.state_id
+                    and checkpoint.get('stateId') == _prefix_state_id(engine)
                     and semantic_digest(checkpoint.get('state')) == semantic_digest(engine.state))
         return bool(exact), None if exact else 'Imported endpoint/checkpoint differs from reconstructed actions'
 
@@ -758,6 +844,8 @@ class SurgicalPrefixReplay:
                 'materializedHistoryLimitMeaning': 'Per-graph limit; decoded, frozen and thawed output graphs may coexist; whole-process RSS is separate',
                 'maxNativeSnapshotAsciiBytes': 16 * 1024**2,
                 'nativeSnapshotScratchAllowanceBytes': 48 * 1024**2,
+                'nativeCanonicalSnapshotScratchAllowanceBytes': 64 * 1024**2,
+                'nativeCanonicalPairArenaMaxBytes': 16 * 1024**2,
                 'nativeSnapshotMemoryMeaning': 'Optional per-call logical scratch, plus bounded C stack/metadata; input/state, compression, retained graphs and whole-process RSS are separate',
                 'immutableInputBytes': self._input_bytes,
                 'ownedImmutableInputBytes': 0 if self._borrowed_input else self._input_bytes,
@@ -812,7 +900,7 @@ class SurgicalPrefixReplay:
             stage = _FrameStage(self)
             try:
                 self._check(action_check)
-                before = engine.state_id
+                before = _prefix_state_id(engine)
                 stage.begin(engine)
                 engine._stage = stage
                 action = thaw_json(self._snapshot['actions'][index])
@@ -821,11 +909,11 @@ class SurgicalPrefixReplay:
                     raise ValueError('Saved action rejected: ' + str(outcome.get('reason')))
                 if (len(engine.actions) != index + 1 or engine.actions[-1] != action
                         or engine.history[-1]['stateBefore'] != before
-                        or engine.history[-1]['stateAfter'] != engine.state_id
-                        or outcome['stateId'] != engine.state_id):
+                        or engine.history[-1]['stateAfter'] != _prefix_state_id(engine)
+                        or outcome['stateId'] != _prefix_state_id(engine)):
                     raise ValueError('Reconstructed public action ancestry differs')
                 stage.end(engine)
-                if stage.frames[0]['stateId'] != before or stage.frames[-1]['stateId'] != engine.state_id:
+                if stage.frames[0]['stateId'] != before or stage.frames[-1]['stateId'] != _prefix_state_id(engine):
                     raise ValueError('Observed start/final identity differs from public action')
                 store, history_bytes = self._propose_receipt(engine.history[-1], action,
                                                            self._snapshot['actions'][index])
@@ -913,7 +1001,7 @@ class SurgicalPrefixReplay:
         position = action_index + int(final)
         engine.actions = list(self._snapshot['actions'][:position])
         engine.history = self._history[:position]
-        if engine.state_id != frame['stateId']:
+        if _prefix_state_id(engine) != frame['stateId']:
             raise ValueError('Private observed frame identity differs')
         engine._prefix_verified_state_id = frame['stateId']
         timeline_token = self._timeline_token()

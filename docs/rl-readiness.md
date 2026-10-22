@@ -391,6 +391,18 @@ planning or RL authority. Explicit build/launch commands, platform/scratch
 limits and comparison caveats are in
 [rehearsal-performance.md](rehearsal-performance.md).
 
+The next optional canonical-hash extension passed **952 tests in 182.99
+seconds**, with two existing Gymnasium advisories and the pilot module excluded
+entirely. Full decoded-state hashing remains mandatory in the read-only prefix
+path; custom properties/lookups/digest dependencies retain their original
+fallback. The public engine state-ID property and numerical laws are unchanged.
+External wall was 183.462 seconds (<240), sampled process-tree RSS
+1,212,989,440 bytes (<3 GiB), and all 259 bound source/test files stayed unchanged.
+Its single explicit schema-v2 build took 0.636 seconds. This qualification
+selected no learning path and grants no planning/RL authority; the earlier two
+fixture updates remain disclosed above. A new full GUI receipt is required for
+its application performance.
+
 ## Generated native workspace companion
 
 The separate evaluation-only exporter creates an openable, explicitly labeled
