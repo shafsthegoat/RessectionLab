@@ -431,12 +431,14 @@ def dispatch(session, operation, args, request, progress):
     if command == 'create' and raw is not None:
         artifacts.setdefault('surgical_prior_scenes', []).append(raw)
         result['previousScenes'] = [{'index': i, 'label': f"Environment {i + 1}", 'branches': len(s.get('branches', {}))} for i, s in enumerate(artifacts['surgical_prior_scenes'])]
-    persisted_record = copy.deepcopy(record)
-    if persisted_record.get('fullCase'):
+    if record.get('fullCase'):
         # The timeline is derived from the action log by verified replay. Long
         # episodes must not serialize its redundant metrics/events in every
-        # native save; keep the complete live timeline in the session/result.
-        persisted_record.pop('timeline', None)
+        # native save. Exclude it BEFORE detaching: copying thousands of unused
+        # outcomes only to discard them repeats the original ancestry cost.
+        persisted_record = copy.deepcopy({name: value for name, value in record.items() if name != 'timeline'})
+    else:
+        persisted_record = copy.deepcopy(record)
     artifacts[ARTIFACT] = persisted_record
     if destination:
         artifacts['sourceIdentity'] = identity

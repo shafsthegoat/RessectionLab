@@ -51,7 +51,8 @@ def test_comparison_uses_observation_only_policy_and_shared_geometry(tmp_path, m
     original = module.candidates
     seen = []
     def boundary(observation):
-        assert set(observation) == {'local', 'slots', 'tool_parameters', 'metrics', 'goal', 'coverage'}
+        assert set(observation) == {'local', 'slots', 'tool_parameters', 'metrics', 'goal', 'coverage',
+                                    'cleanup', 'budgets', 'local_spacing_mm'}
         seen.append(observation['local'].copy())
         return original(observation)
     monkeypatch.setattr(module, 'candidates', boundary)

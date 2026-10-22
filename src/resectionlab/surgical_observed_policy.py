@@ -1,7 +1,7 @@
 """Existing pilot observation-only local greedy policy, without a learning runtime.
 
-Extracted unchanged from train_surgical_pilot.py so desktop verification and the
-pilot evaluate identical options. No scene, preview, reward or info is accepted.
+No scene, preview, reward or info is accepted. V2 observations declare their
+sampling spacing; legacy observations retain the original 1 mm convention.
 """
 import numpy as np
 
@@ -19,7 +19,11 @@ def candidates(obs):
     accepted. Samples are an imperfect nominal estimate, not a feasibility oracle.
     """
     local = np.asarray(obs['local'][0], dtype=float)
-    points = np.stack(np.meshgrid(*([np.arange(-4, 5) * LOCAL_SPACING_MM] * 3),
+    spacing_value = np.asarray(obs.get('local_spacing_mm', [LOCAL_SPACING_MM]), dtype=float)
+    if spacing_value.shape != (1,) or not np.isfinite(spacing_value).all() or spacing_value[0] <= 0:
+        raise ValueError('Observation local_spacing_mm must declare one positive finite millimeter value')
+    spacing = float(spacing_value[0])
+    points = np.stack(np.meshgrid(*([np.arange(-4, 5) * spacing] * 3),
                                  indexing='ij'), axis=-1).reshape(-1, 3)
     channels = local.reshape(8, -1)
     radius = float(obs['tool_parameters'][0, 0])
@@ -28,7 +32,7 @@ def candidates(obs):
     for i, delta in enumerate(OFFSETS):
         fraction = np.clip(points @ delta / (delta @ delta), 0, 1) if delta @ delta else np.zeros(len(points))
         distance = np.linalg.norm(points - fraction[:, None] * delta, axis=1)
-        selected = distance <= radius + .5 * LOCAL_SPACING_MM
+        selected = distance <= radius + .5 * spacing
         mean = channels[:, selected].mean(axis=1) if selected.any() else np.zeros(8)
         healthy = ((channels[0, selected] > 0) & (channels[1, selected] == 0)).mean() if selected.any() else 0.
         rows.append([*mean, *common, np.linalg.norm(delta) / STEP_MM, float(i == 7), healthy, float(i == 8)])
