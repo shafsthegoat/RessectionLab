@@ -1015,14 +1015,66 @@ fallbacks. External wall was 183.462 seconds (<240), sampled process-tree RSS
 No learning path was selected. A separate dual-counter qualification passed
 34 generated tests in 1.034 seconds (1.423 s external, 89,358,336-byte tree RSS),
 retaining the original physics-step guard and distinguishing canonical hashing
-from insertion-order capture. GUI performance for this later implementation is
-still a separate gate; the v5 result does not qualify it.
+from insertion-order capture.
+
+### Full vascular qualification with canonical hashing
+
+The separate v6 application run at `3febf0da` passed all 15 checks. It prepared
+the 73 original saved actions once, submitted all 1,149 observation tuples in
+order, and retained the 113 adjacent repeated state IDs. Its independent
+zero-step audit matched every complete historical canonical record and the
+saved endpoint. All fresh tuples also matched v3, v4 and v5 exactly. Historical
+all-microframe IDs remain unavailable. All bound source, renderer, build,
+binary, helper-image and original archive bytes stayed unchanged.
+
+The two independent local counters observed **1,369 insertion-order native
+admissions and 2,741 canonical native admissions**, with zero fallbacks or
+outside-command returns. Each of the 1,076 warm reads performed exactly one
+complete canonical native hash and zero insertion-order captures. Both monitors
+closed without failure. Counts describe encoder calls, not frames; their cost
+is included. No canonical/session/cache, planning or RL authority was granted.
+
+| Canonical native JSON full vascular measurement | Result |
+| --- | ---: |
+| Play command through automatic stop, including cold reconstruction | 318.613 s / **0.6358×** |
+| Same-action CPU-submission intervals | 147.550 s / **1.3729×** |
+| Guarded Python sidecar / separate zero-step audit | 337.836 / 69.405 s |
+| 73 cold bridge executions, cumulative / p95 | 157.918 s / 5.247 s |
+| 1,076 warm bridge executions, cumulative / median / p95 | 79.786 s / 74.592 / 108.108 ms |
+| Warm IPC, median / p95 | 81.566 / 117.492 ms |
+| Warm CPU-submission gaps, median / p95 | 109.0 / 224.6 ms |
+| 464 surface preparations, cumulative / median / p95 | 56.266 s / 122.7 / 156.3 ms |
+| Peak whole Python resident memory | 707,166,208 bytes |
+
+Cold-inclusive wall time was **17.99% lower** than v5; warm intervals were
+14.19% shorter. The renderer and JS harness stayed unchanged, while the codec,
+seals and counter guard changed. Separate uncontrolled host runs and slightly
+different initial framing prevent isolated causal attribution. This remains
+CPU-submission timing, not compositor delivery. Full cold-inclusive playback
+still misses 1×, and the delivered-frame target remains unqualified.
+
+The unchanged checkpoint/frame/history/input quotas passed with peaks of
+16,757,408 / 67,038,087 / 137,061 / 10,235,381 bytes. The 215,884,624-byte spool,
+845,738-byte manifest and 1,036 distinct compressed blobs stayed within their
+separate caps; 0.234 seconds of spool copy/hash/write is included. GUI/audit wall
+and Python RSS limits passed. These counters exclude whole Electron/GPU memory.
+
+Actual endpoint pixels show 73/73 read only, withdrawn tools, disabled close-tool
+view, a purple target/static yellow glyphs, dense translucent context and a blank
+axial plane at −370.3 mm. Coronal and sagittal slices are visible. This endpoint
+does not qualify full-sequence operative readability, flowing effects or
+compositor cadence. No policy or optimizer ran in this replay/audit; the two
+earlier fixture updates remain separately disclosed.
+
+Evidence is `desktop-full-vascular-native-json-canonical-v6/{report,analysis,physics-guard,spool-audit}.json`,
+with sibling prelaunch/post-run binding receipts. The analysis SHA-256 is
+`28cd4092a360d817d3484fa2e329c8ac0f3fd6f78b2947997ecbfb7a29253178`.
 
 ## Gates that remain open
 
 * **Sustained full-operation playback at 1× remains unqualified.** The complete
-  latest vascular replay reached 0.521× including cold reconstruction and 1.178×
-  for same-action CPU intervals; prior runs reached 0.493×/1.272× and
+  latest vascular replay reached 0.636× including cold reconstruction and 1.373×
+  for same-action CPU intervals; prior runs reached 0.521×/1.178×, 0.493×/1.272× and
   0.512×/1.317×. The short
   current-production prefix sample reached 1.058× warm, even with 4× selected,
   while cold preparation of one 30-second action took 20.22 seconds. The

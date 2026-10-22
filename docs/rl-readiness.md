@@ -401,7 +401,19 @@ External wall was 183.462 seconds (<240), sampled process-tree RSS
 Its single explicit schema-v2 build took 0.636 seconds. This qualification
 selected no learning path and grants no planning/RL authority; the earlier two
 fixture updates remain disclosed above. A new full GUI receipt is required for
-its application performance.
+each subsequent implementation.
+
+The separate v6 GUI receipt at `3febf0da` passed all 15 checks, all 73 full
+historical canonical records and 1,149 ordered fresh observations. The zero-step
+audit matched the saved endpoint; fresh trajectories also matched v3/v4/v5.
+Cold-inclusive playback measured **0.6358×** (318.613 seconds), 17.99% less wall
+time than v5; same-action CPU intervals reached **1.3729×**. Both actual native
+paths admitted with zero fallbacks: 1,369 insertion calls and 2,741 canonical
+calls, including one full canonical hash per warm read. Source/build/runtime
+bindings and originals stayed unchanged. No policy or optimizer ran in this
+replay/audit. These uncontrolled host-run observations grant no planning/RL
+authority; full-primary playback, cold-inclusive 1×, delivered-frame timing,
+operative readability and genuine candidate-inclusive throughput remain open.
 
 ## Generated native workspace companion
 
