@@ -38,6 +38,13 @@ receipts retain their stated zero-update scope.
 * Playback uses a wall-clock deadline that includes time already spent fetching
   and preparing preceding observations. Late playback removes idle delay;
   every recorded observation is still requested and displayed in order.
+* Automatic replay has a separate FIFO lane with one prefetched compact wire
+  receipt, limited to 8 MiB serialized UTF-8 data. JavaScript object overhead is
+  additional. Transport overlaps the active frame's preparation; future geometry
+  is not prepared until that frame is submitted. Manual commands wait behind
+  the in-flight read, while pause discards unadmitted data. Source generations,
+  failures and pause/restart leases invalidate stale receipts. Automatic replay
+  never enters the coalescing manual-seek queue.
 * A source/branch-bound metadata token avoids sending the complete timeline,
   full-case metadata and stable scene context on every replay frame. The client
   restores resident context before display admission. Unknown or stale tokens
@@ -83,12 +90,12 @@ Python monitoring guard recorded zero public physics-step attempts in the
 successful GUI runs. Each run checked pause, the submitted/displayed state,
 complete timeline expansion and unchanged native source bytes.
 
-| Actual Electron workload | Baseline | Renderer changes | Metadata/pacing | Rolling index | Indexed chunks/fields |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Play to paused frame 11, including first-frame admission | 46.14 s | 38.12 s | 30.13 s | 27.90 s | 20.85 s |
-| Warm replay IPC median | 962 ms | 799 ms | 357 ms | 434 ms | 185 ms |
-| Median of last 11 surface preparations | 1,075 ms | 597 ms | 548 ms | 417 ms | 165 ms |
-| Warm submitted-state throughput | 0.077× | 0.106× | 0.173× | 0.188× | 0.398× |
+| Actual Electron workload | Baseline | Renderer changes | Metadata/pacing | Rolling index | Indexed chunks/fields | FIFO prefetch |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Play to paused frame 11, including first-frame admission | 46.14 s | 38.12 s | 30.13 s | 27.90 s | 20.85 s | 18.72 s |
+| Warm replay IPC median | 962 ms | 799 ms | 357 ms | 434 ms | 185 ms | 202 ms |
+| Median of last 11 surface preparations | 1,075 ms | 597 ms | 548 ms | 417 ms | 165 ms | 160 ms |
+| Warm submitted-state throughput | 0.077× | 0.106× | 0.173× | 0.188× | 0.398× | 0.687× |
 
 Warm throughput is simulated elapsed time divided by wall time between the
 first CPU submissions of frames 1 and 11. CPU submission is not compositor
@@ -108,6 +115,19 @@ actions, preserved the saved source and recorded zero public physics attempts.
 Its final mesh job spent 58.9 ms in canonical assembly and 69.8 ms in physical
 normals, with 95.54 MB retained across worker layers. The first observed-frame
 handler still took 15.04 seconds. No additional full-case playback was run.
+
+The later prefetch pass CPU-submitted all twelve exact
+`(branchId, position, frameIndex, stateId)` identities in order. Explicit tuples
+distinguish observations that legitimately share a state hash. The harness
+counts submitted frames rather than returned lookahead and clicks the ordinary
+pause control synchronously at target frame 11. Warm frames 1→11 covered two
+simulated seconds in 2.911 wall seconds (0.687×). There were twelve successful
+frame responses plus one later cancelled, unadmitted request during sidecar
+shutdown. No patient step was attempted; the saved source stayed unchanged.
+The first prefetch GUI attempt failed on an IPC whitelist rejection of an
+accidentally forwarded scheduler field; that failure is preserved separately.
+The normalized cursor contract and actual-hook regression fixed it before the
+successful replacement pass.
 
 A four-frame field-size diagnostic passed with the authenticated
 flap-component protocol. The first complete response was 4,720,182 bytes;
@@ -150,10 +170,9 @@ attribute mean per-interval time to 257.9 ms IPC, 174.7 ms worker preparation,
 hides two handler tails of 634 and 457 ms. The trace does not isolate GPU fence
 completion or split the small remaining preparation gap into hydration, cloning
 and modeled-volume work. Playback's requested wait was already clamped to zero.
-A bounded single-receipt prefetch could overlap transport with preparation, but
-must use FIFO display admission rather than the existing coalescing seek queue,
-which can discard superseded requests. That change is not implemented or
-qualified here; IPC alone still averages longer than the 200 ms source interval.
+The implemented bounded prefetch overlaps this serial chain while preserving
+FIFO display admission. The older numerical implementation's IPC alone still
+averages longer than the 200 ms source interval; overlap cannot remove that cost.
 
 Controlled backend measurements started from authenticated frozen legacy
 endpoint states and executed real fresh `inspect` transitions. At the primary
@@ -174,6 +193,25 @@ verified and no complete cache admission was published. These frozen audit
 receipts predate the later current optional-CUSA/RL/display changes. They cannot
 qualify the final current implementation's complete patient replay.
 
+A separate **current-source** prefix probe canonically replayed only the
+original first three legacy actions in memory, then prepared action 2 in
+isolated observed caches. It executed six preparation step calls (three
+canonical, two boundary replay, one observed action). Twelve timed display reads
+ran under the published no-step monitor, matched all original frame IDs, and
+took **98.7 ms median / 99.2 ms mean / 102.8 ms p95**. Total evaluation was
+33.02 seconds, including 10.22 seconds canonical preparation and 18.02 seconds
+observed-action preparation. It wrote no duplicate patient workspace or source
+file. Its shortened archive is not a full-case admission or GUI qualification.
+
+One further genuine original drilling action from an authenticated current
+boundary took **6.17 seconds** without a profiler. A separate cProfile execution
+produced the exact canonical receipt and endpoint too. In that instrumented
+sample, the action called `touched` 8,170 times, including 7,270 bone predicates
+inside contact localization, with 7,555 capsule-cover misses. This identifies repeated contact
+queries as an engineering target; profiled inclusive times are not uninstrumented
+throughput. The failed first diagnostic compared unlike receipt/history shapes;
+its failure remains preserved, followed by the corrected exact-history check.
+
 Evidence: `backend-baseline.json`, `backend-digest-optimized.json`,
 `vascular-canonical-after.json`, `vascular-exact-trace-comparison.json`, and
 `primary-canonical-after-incomplete.json` in the ignored evidence directory.
@@ -181,7 +219,7 @@ Evidence: `backend-baseline.json`, `backend-digest-optimized.json`,
 ## Gates that remain open
 
 * **At least 1× observed-state playback is not achieved.** The final measured
-  warm state throughput was 0.398×, even with 4× selected. Exact source surface
+  warm state throughput was 0.687×, even with 4× selected. Exact source surface
   preparation and replay reconstruction remain material costs.
 * **A 50 ms p95 delivered-frame interval is not established.** A separate
   trusted camera-orbit control delivered 42 Electron frames with a 50.99 ms
@@ -201,7 +239,7 @@ pnpm --dir desktop test
 pnpm --dir desktop build
 ```
 
-The final October 22 run passed 818 desktop tests: 171 main-process, 432 renderer and
+The latest October 22 run passed 844 desktop tests: 179 main-process, 450 renderer and
 215 viewer tests. Build passed with the existing bundle-size advisory.
 
 For a bounded current-production imported-endpoint check:
@@ -233,6 +271,12 @@ Local evidence remains under the ignored directory
 * `desktop-final-playback/report.json`: earlier rolling-index split-layer pass.
 * `desktop-indexed-chunks-final/report.json`: final indexed-chunk/field-reuse
   split-layer playback pass; `settled.png` is its observed final app state.
+* `desktop-prefetch-qualified/report.json`: later FIFO-prefetch pass, with exact
+  submitted tuples distinct from fetched/cancelled lookahead.
+* `prefetch-qualified-full-tests.log`, `prefetch-owner-build.log`: final prefetch
+  regression/build receipts, including tuple/IPC and source-owner guards.
+* `current-prefix-profile/report.json`: bounded current-source transport probe;
+  `current-drilling-profile-v2/report.json`: genuine-action profile.
 * `desktop-heavy-field-diagnostic/report.json`: later authenticated field-reuse
   functional/byte diagnostic.
 * `desktop-import-current/report.json` and branch PNGs: current-production
@@ -244,7 +288,7 @@ Local evidence remains under the ignored directory
 * `desktop-protocol-full-tests.log`, `desktop-protocol-build.log`: final desktop
   validation, including field-token hydration.
 
-Two failed diagnostic passes are retained separately. Their monitoring guards
+Two earlier failed diagnostic passes are retained separately. Their monitoring guards
 prevented physics after a cache-path error and after disposable observed cache
 eviction by tests. The tests now isolate cache directories. One missing legacy
 action cache was regenerated through its original public engine action from an

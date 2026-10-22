@@ -6,6 +6,7 @@ const fs=require('node:fs');
 const path=require('node:path');
 const crypto=require('node:crypto');
 const childProcess=require('node:child_process');
+const {submittedPlayback}=require('./playback-submissions.cjs');
 const root=path.resolve(__dirname,'../..');
 const output=path.resolve(process.env.PLAYBACK_OUTPUT||path.join(root,'testcases/outputs/rl-readiness-20261022/playback'));
 if(!output.startsWith(path.join(root,'testcases')+path.sep))throw Error('Keep benchmark evidence under testcases/');
@@ -27,14 +28,14 @@ sidecar.Sidecar=class extends OriginalSidecar{constructor(config){super({...conf
 const userData=path.join(output,'user-data');fs.mkdirSync(userData,{recursive:true});app.setPath('userData',userData);
 const hash=file=>crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
 const report={schema:'resectionlab.bounded-playback-performance.v1',recordedAt:new Date().toISOString(),source:{path:sourcePath,sha256:hash(sourcePath)},pythonSource:source,
-  versions:process.versions,ipc:[],diagnostics:[],errors:[],checks:{},measurement:'Actual Electron controls, authorized IPC and Python sidecar. anatomy-frame measures CPU submission, not screen presentation. No patient physics steps permitted. No training.',distSha256:hash(path.join(root,'desktop/dist/index.html'))};
+  versions:process.versions,ipc:[],diagnostics:[],errors:[],checks:{},measurement:'Actual Electron controls, authorized IPC and Python sidecar. anatomy-frame measures CPU submission, not screen presentation. Prefetched IPC is recorded separately from submitted states. No patient physics steps permitted. No training.',distSha256:hash(path.join(root,'desktop/dist/index.html')),harnessSha256:hash(__filename)};
 if(process.env.PLAYBACK_IMPORT_ONLY)report.importOnly=true;
 if(process.env.PLAYBACK_FIELD_SIZES)report.fieldSizeDiagnostics={enabled:true,measurement:'Extra per-field JSON serialization runs after handler timing and before IPC delivery. This pass is diagnostic and is excluded from primary timing comparisons.'};
 if(bridgeSource)report.transportExperiment={source:bridgeSource,sha256:hash(bridgeSource),scope:'Current transport bridge dispatch over authenticated frozen numerical implementation; does not establish current numerical cache admission. No physics classes/functions/source/cache identities are replaced.'};
 let lastResponse,windowRef;
 const persist=()=>fs.writeFileSync(path.join(output,'report.json'),JSON.stringify(report,null,2));
 const originalHandle=ipcMain.handle.bind(ipcMain);
-ipcMain.handle=(channel,handler)=>originalHandle(channel,async(...args)=>{const started=performance.now();try{const result=await handler(...args);const entry={channel,command:args[1]?.command,started,ms:performance.now()-started};if(channel==='research:surgicalRehearsal'){lastResponse=result;Object.assign(entry,{position:result?.playback?.position,frameIndex:result?.playback?.frameIndex,simulatedSeconds:result?.playback?.observedTimeSeconds,stateId:result?.view?.stateId,responseBytes:Buffer.byteLength(JSON.stringify(result))});
+ipcMain.handle=(channel,handler)=>originalHandle(channel,async(...args)=>{const started=performance.now();try{const result=await handler(...args);const entry={channel,command:args[1]?.command,started,ms:performance.now()-started};if(channel==='research:surgicalRehearsal'){lastResponse=result;Object.assign(entry,{branchId:result?.playback?.branchId,position:result?.playback?.position,frameIndex:result?.playback?.frameIndex,simulatedSeconds:result?.playback?.observedTimeSeconds,stateId:result?.view?.stateId,responseBytes:Buffer.byteLength(JSON.stringify(result))});
       if(process.env.PLAYBACK_FIELD_SIZES){const sizes=value=>Object.fromEntries(Object.entries(value??{}).map(([key,item])=>[key,Buffer.byteLength(JSON.stringify(item)??'null')]));entry.responseKeyBytes=sizes(result);entry.viewKeyBytes=sizes(result?.view);entry.viewFieldsOmitted=result?.viewFieldsOmitted;entry.viewFieldTokens=result?.viewFieldTokens;}
     }report.ipc.push(entry);persist();return result;}catch(error){report.ipc.push({channel,command:args[1]?.command,started,ms:performance.now()-started,error:String(error)});throw error;}});
 const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
@@ -75,18 +76,25 @@ app.on('browser-window-created',(_,window)=>{
       const position=Number(process.env.PLAYBACK_POSITION||2);
       await set('input[aria-label="Surgical timeline"]',position,'input');await idle();
       await set('select[aria-label="Replay speed"]',4);
-      const index=report.ipc.length;report.playStarted=performance.now();report.playStartedRenderer=await js('performance.now()');await click('Play replay');
       const maxFrames=Number(process.env.PLAYBACK_FRAMES||12),maxMs=Number(process.env.PLAYBACK_MAX_MS||45000);
-      while(performance.now()-report.playStarted<maxMs){await pause(40);const frames=report.ipc.slice(index).filter(row=>row.command==='seekFrame');if(frames.length>=maxFrames)break;if(report.ipc.slice(index).some(row=>row.error))throw Error('Playback request failed');}
-      await click('Pause replay');await idle();report.playEnded=performance.now();report.playEndedRenderer=await js('performance.now()');
-      report.playbackIpc=report.ipc.slice(index);report.final={branch:lastResponse.playback?.branchId,position:lastResponse.playback?.position,frameIndex:lastResponse.playback?.frameIndex,simulatedSeconds:lastResponse.playback?.observedTimeSeconds,stateId:lastResponse.view.stateId};
+      await js(`(()=>{window.playbackStop={branchId:${JSON.stringify(branch)},position:${position},frameIndex:${maxFrames-1},triggered:false};document.addEventListener('anatomy-frame',e=>{const target=window.playbackStop,frame=e.detail.surgicalFrame;if(!target.triggered&&frame?.branchId===target.branchId&&frame.position===target.position&&frame.frameIndex===target.frameIndex){target.triggered=true;target.cpuSubmittedAt=performance.now();const button=[...document.querySelectorAll('button')].find(b=>b.textContent.trim()==='Pause replay');if(!button||button.disabled)throw Error('Target frame reached without enabled pause control');button.click();}});})()`);
+      const index=report.ipc.length;report.playStarted=performance.now();report.playStartedRenderer=await js('performance.now()');await click('Play replay');
+      const submissionOptions={position,mainToRendererOffset:report.playStarted-report.playStartedRenderer,startedRenderer:report.playStartedRenderer};
+      while(performance.now()-report.playStarted<maxMs){await pause(40);const frames=await js('window.playbackFrames.map(f=>({at:f.at,serial:f.serial,surgicalStateId:f.surgicalStateId,surgicalFrame:f.surgicalFrame}))');if(submittedPlayback(report.ipc.slice(index),frames,submissionOptions).length>=maxFrames)break;if(report.ipc.slice(index).some(row=>row.error))throw Error('Playback request failed');}
+      if(await js(`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Pause replay')`))await click('Pause replay');
+      await idle();report.playEnded=performance.now();report.playEndedRenderer=await js('performance.now()');report.automaticPause=await js('window.playbackStop');
+      report.playbackIpc=report.ipc.slice(index);
       Object.assign(report,await js(`({frames:window.playbackFrames,work:window.playbackWork,longTasks:window.playbackLong,visible:document.visibilityState,displayedStateId:document.querySelector('.surgical-panel').dataset.stateId})`));
+      report.submittedPlayback=submittedPlayback(report.playbackIpc,report.frames,submissionOptions);
+      const submitted=report.submittedPlayback.at(-1);
+      report.final={branch,position:submitted?.position,frameIndex:submitted?.frameIndex,simulatedSeconds:submitted?.simulatedSeconds,stateId:submitted?.stateId};
+      report.fetchedLookahead=report.playbackIpc.filter(row=>row.command==='seekFrame'&&!report.submittedPlayback.some(shown=>shown.branchId===row.branchId&&shown.position===row.position&&shown.frameIndex===row.frameIndex&&shown.stateId===row.stateId));
       report.checks.displayMatches=report.displayedStateId===report.final.stateId;
       report.checks.submissionMatches=report.frames.at(-1)?.surgicalStateId===report.final.stateId;
-      report.checks.exactFrames=report.playbackIpc.filter(row=>row.command==='seekFrame').every((row,i,frames)=>row.position===position&&row.frameIndex===i);
+      report.checks.exactFrames=report.submittedPlayback.every((row,i)=>row.position===position&&row.frameIndex===i);
       report.checks.paused=await js(`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Play replay')`);
       report.checks.sourcePreserved=hash(sourcePath)===report.source.sha256;
-      report.checks.framesObserved=report.playbackIpc.filter(row=>row.command==='seekFrame').length>=maxFrames;
+      report.checks.framesObserved=report.submittedPlayback.length>=maxFrames;
       report.hiddenTimeline=await js(`(()=>{const details=[...document.querySelectorAll('details')].find(d=>d.querySelector(':scope > summary')?.textContent==='Action timeline');return {open:details.open,buttons:details.querySelectorAll('button').length};})()`);
       await js(`(()=>{const details=[...document.querySelectorAll('details')].find(d=>d.querySelector(':scope > summary')?.textContent==='Action timeline');details.open=true;})()`);
       await wait(`[...document.querySelectorAll('details')].find(d=>d.querySelector(':scope > summary')?.textContent==='Action timeline')?.querySelectorAll('button').length===${lastResponse.branches.find(b=>b.id===branch).steps}`);

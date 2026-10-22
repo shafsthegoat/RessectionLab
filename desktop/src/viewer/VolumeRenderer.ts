@@ -1975,7 +1975,8 @@ export class VolumeRenderer {
       estimatedAllocation:this.estimateAllocation(),displayWork:{...this.displayWork},workers:{source:this.sourceWorkerActive?1:0,replay:this.replayWorker?1:0,modeled:this.modelWorker?1:0,picking:this.picking?.stats().workerLive??0},surfaceQuality,
       surfaceCache:{budgetBytes:RETIRED_SURFACE_BUDGET_BYTES,retiredBytes:this.retiredSurfaces.reduce((sum,entry)=>sum+entry.bytes,0),retiredEntries:this.retiredSurfaces.length},
       labelUploads:this.labelTextureUpdates?.work??null,
-      sourceCaseHash:this.volume.caseHash,surgicalStateId:(this.surgicalInteraction?.preview??this.surgicalInteraction?.view)?.stateId??null,picking:this.picking?.stats()??null}}));
+      sourceCaseHash:this.volume.caseHash,surgicalStateId:(this.surgicalInteraction?.preview??this.surgicalInteraction?.view)?.stateId??null,
+      surgicalFrame:this.surgicalInteraction?.recordedFrame??null,picking:this.picking?.stats()??null}}));
     this.finishSurgicalFrame();
     const gl=this.renderer.getContext() as WebGL2RenderingContext;
     const sync=gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE,0);

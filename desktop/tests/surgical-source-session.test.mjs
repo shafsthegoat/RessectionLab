@@ -15,7 +15,7 @@ function hookHarness() {
     useMemo(fn,deps){const i=index++;if(!slots[i]||!same(slots[i].deps,deps))slots[i]={value:fn(),deps};return slots[i].value;},
     useEffect(fn,deps){const i=index++;if(!slots[i]||!same(slots[i].deps,deps)){const old=slots[i];slots[i]={deps,cleanup:old?.cleanup};effects.push(()=>{old?.cleanup?.();slots[i].cleanup=fn();});}},
   };
-  return {render(source,api){let result;do{dirty=false;index=0;internals.H=dispatcher;try{result=useSurgical(source,api,true);}finally{internals.H=previous;}for(const effect of effects.splice(0))effect();}while(dirty);return result;},close(){for(const item of slots)item?.cleanup?.();internals.H=previous;}};
+  return {flushEffects(){for(const effect of effects.splice(0))effect();},render(source,api,{passive=true}={}){let result;do{dirty=false;index=0;internals.H=dispatcher;try{result=useSurgical(source,api,true);}finally{internals.H=previous;}if(passive)for(const effect of effects.splice(0))effect();}while(dirty);return result;},close(){for(const item of slots)item?.cleanup?.();internals.H=previous;}};
 }
 test('reopening the same patient invalidates in-flight rehearsal state and inspects the new workspace',async()=>{
   const harness=hookHarness(),calls=[];let resolveOld;
@@ -58,4 +58,170 @@ test('hook acknowledges authenticated fields only after full receipt and hydrate
     assert.equal(c.view.stateId,'frame1');assert.equal(c.view.flapComponents,field);assert.equal(c.volume.compartments[0].mask[0],0);
     assert.equal(c.error,null);assert.equal(Object.hasOwn(wire.view,'scene'),false);assert.equal(Object.hasOwn(wire.view,'flapComponents'),false);
   }finally{harness.close();}
+});
+
+function replayFixture(intercept=()=>undefined){
+  const affine=[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]],regions=[{id:1,name:'brain',material:'soft_tissue',color:'#ccc',target:false}];
+  const source={caseHash:'case',shape:[2,2,2],affine,frame:'RAS+',mri:new Float32Array(8),compartments:[{name:'brain',kind:'soft_tissue',color:'#ccc',mask:new Uint8Array(8).fill(1)}]};
+  const view={stateId:'editable',scene:{shape:source.shape,affine,regions},catalog:[],slots:{left:{position:[0,0,0],quaternion:[0,0,0,1],parameters:{}}},metrics:{elapsedSeconds:0},removed:[],moved:[],history:[],flapComponents:[]};
+  const timeline=[{action:{operation:'inspect'}},{action:{operation:'inspect'}}],base={caseHash:'case',branchId:'main',position:0,branches:[{id:'main',steps:2},{id:'other',steps:2}],view,outcome:null};
+  const frame=request=>{
+    const {position,frameIndex,branchId}=request,time=position*.4+frameIndex*.2;
+    const playback={readOnly:true,branchId,position,actionIndex:position,frameIndex,frameCount:3,observedTimeSeconds:time,actionElapsedSeconds:frameIndex*.2,actionDurationSeconds:.4,isActionBoundary:frameIndex===0||frameIndex===2,frames:[0,1,2].map(i=>({frameIndex:i,observedTimeSeconds:position*.4+i*.2,kind:i===2?'action_boundary':'microstep'}))};
+    const full=!request.timelineToken,wireView={stateId:`${branchId}:${position}:${frameIndex}`,slots:view.slots,metrics:{elapsedSeconds:time},removed:Array.from({length:position*2+frameIndex},(_,i)=>i),moved:[],history:[]};
+    return {...base,branchId,timelineToken:'generation',...(full?{timeline}: {timelineOmitted:true}),playback,view:full?{...view,...wireView}:wireView};
+  };
+  const calls=[],api={async surgicalRehearsal(request){calls.push(request);if(request.command==='seekFrame')assert.deepEqual(Object.keys(request).filter(key=>!['caseHash','command','expectedStateId','branchId','position','frameIndex','timelineToken','viewFieldTokens'].includes(key)),[],'seekFrame must respect the production IPC whitelist');const intercepted=intercept(request,calls);if(intercepted!==undefined)return intercepted;return request.command==='seekFrame'?frame(request):{...base,branchId:request.branchId??'main',view:{...view,stateId:request.command==='inspect'?'editable':`editable:${request.command}`}};}};
+  const harness=hookHarness(),render=(s=source)=>harness.render(s,api),flush=()=>new Promise(resolve=>setImmediate(resolve));
+  const admit=()=>{const c=render();c.interaction.onDisplayReady(c.interaction.view);return render();};
+  return {source,api,calls,frame,harness,render,flush,admit,async open(){render();await flush();return admit();}};
+}
+const selection=(frameIndex,position=0,branchId='main')=>({branchId,position,frameIndex});
+const deferred=()=>{let resolve,reject;const promise=new Promise((a,b)=>{resolve=a;reject=b;});return {promise,resolve,reject};};
+
+test('automatic replay fetches ahead but admits every exact frame FIFO, with no extra volume until display acknowledgment',async()=>{
+  const f=replayFixture();try{
+    let c=await f.open();assert(c.startPlayback());
+    await c.runPlayback(selection(0));await f.flush();c=f.render();
+    assert.deepEqual(f.calls.filter(q=>q.command==='seekFrame').map(q=>q.frameIndex),[0,1]);
+    assert.equal(c.view.stateId,'editable');assert.equal(c.interaction.view.stateId,'main:0:0');assert(c.displayPending);
+    const activeVolume=c.volume;await f.flush();c=f.render();assert.equal(c.volume,activeVolume,'a prefetched receipt cannot create a modeled volume');
+    assert.equal(await c.runPlayback(selection(1)),false,'successor cannot supersede active anatomy');
+    const admitted=[];
+    for(const [frameIndex,position] of [[0,0],[1,0],[2,0],[0,1]]){
+      c=f.admit();admitted.push(c.view.stateId);
+      if(position===1)break;
+      const next=frameIndex===2?selection(0,1):selection(frameIndex+1);
+      await c.runPlayback(next);await f.flush();c=f.render();
+    }
+    assert.deepEqual(admitted,['main:0:0','main:0:1','main:0:2','main:1:0']);
+    assert(f.calls.filter(q=>q.command==='seekFrame').every(q=>q.expectedStateId==='editable'));
+    assert.equal(c.error,null);
+  }finally{f.harness.close();}
+});
+test('pause discards only lookahead and preserves active display; resume refetches the exact next frame',async()=>{
+  const pending=deferred();let delayed=true;
+  const f=replayFixture(q=>q.command==='seekFrame'&&q.frameIndex===1&&delayed?pending.promise:undefined);
+  try{
+    let c=await f.open();assert(c.startPlayback());await c.runPlayback(selection(0));await f.flush();c=f.render();
+    const active=c.interaction.view,volume=c.volume;c.stopPlayback();pending.resolve(f.frame({...selection(1),timelineToken:'generation'}));await f.flush();
+    c=f.render();assert.equal(c.interaction.view,active);assert.equal(c.volume,volume);c=f.admit();assert.equal(c.view.stateId,'main:0:0');assert.equal(c.pending,false);
+    delayed=false;assert(c.startPlayback());await c.runPlayback(selection(1));c=f.admit();assert.equal(c.view.stateId,'main:0:1');
+    assert.deepEqual(f.calls.filter(q=>q.command==='seekFrame').slice(0,3).map(q=>q.frameIndex),[0,1,1]);
+    c.stopPlayback();const before=f.calls.length;assert.equal(await c.run('step',{action:{operation:'apply'}}),false);assert.equal(f.calls.length,before,'read-only replay cannot authorize editing');
+    await c.run('seek',{position:0});c=f.admit();await c.run('step',{action:{operation:'apply'}});
+    assert.equal(f.calls.at(-1).expectedStateId,'editable:seek','only the canonical seek can replace editable identity');
+  }finally{f.harness.close();}
+});
+test('manual branch commands wait for lookahead transport, invalidate it and preserve ordinary queue barriers',async()=>{
+  const pending=deferred(),f=replayFixture(q=>q.command==='seekFrame'&&q.frameIndex===1?pending.promise:undefined);
+  try{
+    let c=await f.open();assert(c.startPlayback());await c.runPlayback(selection(0));await f.flush();c=f.admit();
+    const barrier=c.run('selectBranch',{branchId:'other'});await f.flush();assert.equal(f.calls.at(-1).command,'seekFrame');
+    pending.resolve(f.frame({...selection(1),timelineToken:'generation'}));await barrier;c=f.admit();
+    assert.equal(c.result.branchId,'other');assert.equal(c.view.stateId,'editable:selectBranch');
+    assert.equal(f.calls.at(-1).expectedStateId,'editable');assert.equal(c.startPlayback(),true);
+    assert.equal(await c.runPlayback(selection(1)),false,'old branch/ordinal cannot enter a restarted lane');
+    assert.equal(c.view.stateId,'editable:selectBranch');
+  }finally{f.harness.close();}
+});
+test('source generations and late prefetch failures cannot publish an obsolete view or suppress an active frame',async()=>{
+  const pending=deferred(),f=replayFixture(q=>q.command==='seekFrame'&&q.frameIndex===1?pending.promise:undefined);
+  try{
+    let c=await f.open();assert(c.startPlayback());await c.runPlayback(selection(0));await f.flush();c=f.render();
+    const active=c.interaction.view;c.interaction.onDisplayReady(active);c=f.render();assert.equal(c.view.stateId,'main:0:0');
+    const reopened={...f.source};c=f.render(reopened);assert.equal(c.view,null);pending.reject(Error('obsolete prefetch failed'));await f.flush();
+    c=f.render(reopened);if(c.interaction.view)c.interaction.onDisplayReady(c.interaction.view);c=f.render(reopened);
+    assert.equal(c.view.stateId,'editable');assert.equal(c.error,null);assert.equal(f.calls.at(-1).expectedStateId,undefined);
+  }finally{f.harness.close();}
+});
+test('demanded prefetch errors retain accepted anatomy and allow manual recovery without editable cursor pollution',async()=>{
+  const pending=deferred(),f=replayFixture(q=>q.command==='seekFrame'&&q.frameIndex===1?pending.promise:undefined);
+  try{
+    let c=await f.open();assert(c.startPlayback());await c.runPlayback(selection(0));await f.flush();c=f.render();
+    pending.reject(Error('recorded frame unavailable'));await f.flush();c=f.render();assert.equal(c.error,null,'future transport failure cannot reject the active display');
+    c=f.admit();const accepted=c.volume;assert.equal(await c.runPlayback(selection(1)),false);c=f.render();
+    assert.equal(c.view.stateId,'main:0:0');assert.equal(c.volume,accepted);assert.match(c.error,/recorded frame unavailable/);assert.equal(c.pending,false);
+    await c.run('seek',{position:0});c=f.admit();assert.equal(c.view.stateId,'editable:seek');assert.equal(c.error,null);assert.equal(f.calls.at(-1).expectedStateId,'editable');
+  }finally{f.harness.close();}
+});
+test('renderer rejection stops lookahead and retains the last accepted anatomy',async()=>{
+  const f=replayFixture();try{
+    let c=await f.open();assert(c.startPlayback());await c.runPlayback(selection(0));await f.flush();c=f.render();
+    c.interaction.onDisplayError(c.interaction.view,'mesh failed');c=f.render();assert.equal(c.view.stateId,'editable');assert.match(c.error,/mesh failed/);
+    assert.equal(await c.runPlayback(selection(1)),false);assert.equal(await c.run('step',{action:{operation:'apply'}}),false);
+    assert.equal(f.calls.filter(q=>q.command==='step').length,0);
+  }finally{f.harness.close();}
+});
+test('pause during the demanded transport releases pending state and never installs an unadmitted receipt',async()=>{
+  const pending=deferred(),f=replayFixture(q=>q.command==='seekFrame'&&q.frameIndex===0?pending.promise:undefined);
+  try{
+    let c=await f.open();const accepted=c.volume;assert(c.startPlayback());const demanded=c.runPlayback(selection(0));await f.flush();c=f.render();assert(c.pending);
+    c.stopPlayback();pending.resolve(f.frame(selection(0)));assert.equal(await demanded,false);c=f.render();
+    assert.equal(c.view.stateId,'editable');assert.equal(c.interaction.view.stateId,'editable');assert.equal(c.volume,accepted);assert.equal(c.pending,false);assert.equal(c.error,null);
+    assert.equal(f.calls.filter(q=>q.command==='seekFrame').length,1,'pause cannot schedule a successor');
+  }finally{f.harness.close();}
+});
+test('pause or restart between transport resolution and hook admission invalidates the receipt lease',async()=>{
+  for(const restart of [false,true]){
+    const pending=deferred(),f=replayFixture(q=>q.command==='seekFrame'&&q.frameIndex===0?pending.promise:undefined);
+    try{
+      let c=await f.open();assert(c.startPlayback());const demanded=c.runPlayback(selection(0));await f.flush();
+      pending.resolve(f.frame(selection(0)));for(let i=0;i<5;i++)await Promise.resolve();
+      c=f.render();assert.equal(c.interaction.view.stateId,'editable');c.stopPlayback();if(restart)assert(c.startPlayback());
+      assert.equal(await demanded,false);c=f.render();assert.equal(c.interaction.view.stateId,'editable');assert.equal(c.view.stateId,'editable');assert.equal(c.error,null);
+      assert.equal(f.calls.filter(q=>q.command==='seekFrame').length,1);
+    }finally{f.harness.close();}
+  }
+});
+test('manual barrier at settled transport prevents replay admission and preserves manual pending state',async()=>{
+  const pending=deferred(),manual=deferred(),f=replayFixture(q=>q.command==='seekFrame'?pending.promise:q.command==='seek'?manual.promise:undefined);
+  try{
+    let c=await f.open();assert(c.startPlayback());const demanded=c.runPlayback(selection(0));await f.flush();
+    pending.resolve(f.frame(selection(0)));for(let i=0;i<5;i++)await Promise.resolve();c=f.render();assert.equal(c.interaction.view.stateId,'editable');
+    const barrier=c.run('seek',{position:0});assert.equal(await demanded,false);await f.flush();c=f.render();
+    assert.equal(c.interaction.view.stateId,'editable');assert.equal(c.pending,true);assert.equal(c.simulationPending,true);assert.equal(c.pendingCommand,'seek');
+    manual.resolve({...f.frame(selection(0)),playback:undefined,view:{...c.view,stateId:'manual'}});await barrier;c=f.admit();assert.equal(c.view.stateId,'manual');assert.equal(c.pending,false);
+  }finally{f.harness.close();}
+});
+test('equal state IDs at microstep and finalization remain separate ordered recorded admissions',async()=>{
+  const f=replayFixture(q=>{
+    if(q.command!=='seekFrame')return;
+    const r=f.frame(q),times=[0,.2,.4,.4],frameIndex=q.frameIndex;
+    r.playback={...r.playback,frameCount:4,observedTimeSeconds:q.position*.4+times[frameIndex],actionElapsedSeconds:times[frameIndex],isActionBoundary:frameIndex===0||frameIndex===3,frames:times.map((t,i)=>({frameIndex:i,observedTimeSeconds:q.position*.4+t,kind:i===3?'action_boundary':'microstep'}))};
+    r.view.metrics.elapsedSeconds=r.playback.observedTimeSeconds;
+    if(frameIndex===3){r.view.stateId=`${q.branchId}:${q.position}:2`;r.view.removed=[0,1];}
+    return r;
+  });
+  try{
+    let c=await f.open();assert(c.startPlayback());const admitted=[];let previous;
+    for(let i=0;i<4;i++){
+      await c.runPlayback(selection(i));await f.flush();c=f.render();
+      assert.deepEqual(c.interaction.recordedFrame,selection(i));
+      if(i===3)assert.equal(c.volume,previous,'identical geometry may reuse the mesh while retaining observation identity');
+      previous=c.volume;c=f.admit();admitted.push({stateId:c.view.stateId,frameIndex:c.result.playback.frameIndex});
+    }
+    assert.deepEqual(admitted,[{stateId:'main:0:0',frameIndex:0},{stateId:'main:0:1',frameIndex:1},{stateId:'main:0:2',frameIndex:2},{stateId:'main:0:2',frameIndex:3}]);
+    assert.deepEqual(f.calls.filter(q=>q.command==='seekFrame').slice(0,4).map(q=>[q.position,q.frameIndex]),[[0,0],[0,1],[0,2],[0,3]]);
+  }finally{f.harness.close();}
+});
+test('queued lookahead keeps its playback owner across a source render before passive invalidation',async()=>{
+  for(const caseHash of ['case','reopened-case']){
+    const f=replayFixture();try{
+      let c=await f.open();assert(c.startPlayback());const demanded=c.runPlayback(selection(0));
+      let queued=false;
+      for(let tick=0;tick<20;tick++){
+        await Promise.resolve();c=f.render();
+        if(c.interaction.view?.stateId==='main:0:0'&&f.calls.filter(q=>q.command==='seekFrame').length===1){queued=true;break;}
+      }
+      assert(queued,'the hook has installed frame0 with its successor queued but not dispatched');
+      const count=f.calls.length,reopened={...f.source,caseHash};
+      c=f.harness.render(reopened,f.api,{passive:false});assert.equal(c.view,null);
+      await f.flush();assert.equal(await demanded,true);
+      assert.equal(f.calls.length,count,'queued old-source lookahead cannot dispatch against the new source before effects run');
+      c.stopPlayback();assert.equal(c.startPlayback(),false,'an old accepted receipt cannot start a new-source lane before inspection');
+      f.harness.flushEffects();await f.flush();
+      assert.equal(f.calls.at(-1).command,'inspect');assert.equal(f.calls.at(-1).caseHash,caseHash);assert.equal(f.calls.at(-1).expectedStateId,undefined);
+    }finally{f.harness.close();}
+  }
 });
