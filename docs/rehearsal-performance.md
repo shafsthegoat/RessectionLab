@@ -514,6 +514,30 @@ This modest single-action gain does not qualify 10× matched full-workload
 throughput. Read-only prefix subclasses use the original path, so this result
 does not establish another GUI cold-preparation gain. No policy or optimizer ran.
 
+One later diagnostic used a preserved boundary-1,954 primary checkpoint for
+exactly its next original CUSA action. The checkpoint omitted prior receipts,
+so all 1,954 were reconstructed from the complete canonical publication with
+the stock receipt fields; this projection matched all 42 shared-prefix receipts
+from the fresh vascular run and three preserved native receipts. This is an
+explicit historical diagnostic seed, with no current cache or planning authority.
+The one public step accepted 19 removed cells and exactly matched its complete
+canonical record and physical endpoint. The first missing-receipt attempt
+stopped before any step and remains preserved.
+
+The corrected diagnostic took 43.720 seconds including setup under its
+60-second/1.5 GiB bounds. Its **34.364-second profiled step is not normal
+transition throughput**. With 414 microsteps, cumulative occupancy cost was
+13.058 seconds; the strict integer-type generator visited 103,809,893 ledger
+entries and accounted for 7.583 seconds of self time. Thermal updates took
+6.786 seconds and rollback checkpoint validation/copying 6.478 seconds. Of the
+latter, 6.325 seconds was flat-type validation; actual deepcopy plus native
+list/dict copying totaled 0.146 seconds. Thermal cost was mainly repeated cooling
+of the retained bone-cell ledger, rather than dose integration. Geometry took only
+0.238 seconds. Thus the early drilling profile does not describe late CUSA
+costs; large retained ledgers require separate measurement. Source, protection,
+action and start/end identities remained unchanged, with zero policy executions
+or optimizer updates.
+
 ## Complete vascular GUI replay
 
 The current production application completed the original **73-action vascular
@@ -566,6 +590,19 @@ ms), while 464 mesh preparations totaled 52.418 seconds and can overlap backend
 work. These totals must not be added as independent wall intervals. The 448 bone
 jobs had median/p95 117.6/139.8 ms. Late vascular actions needed no new surface
 meshes, leaving backend/IPC/handoff costs visible without remeshing.
+
+A separate no-step capture diagnostic reused two independently audited states
+(early drill action 2/frame 76 and final inspect action 72/frame 0). Ten captures
+and 14 compressed-state encodes reproduced the retained blobs byte for byte;
+source/build identities and the no-step guard remained intact. Total diagnostic
+time was 2.285 seconds with 131,923,968-byte peak RSS. Capture medians were
+97.19/109.01 ms, including 56.64/64.26 ms encoding and 30.31/34.46 ms state hashing.
+Separate component passes measured JSON formatting plus UTF-8 at 51.22/58.11 ms
+versus 4.84/5.93 ms compression. These passes repeat unchanged states; they are
+not fresh transitions or independent partitions of a GUI interval. Local
+monitoring overhead is included, and the small empty-owner stage does not
+qualify a 152-frame eviction tail. No production function changed or replay
+speedup resulted. Finer bound-validation/walk/C-encoder timing was not collected.
 
 The actual endpoint screenshot shows the read-only 73/73 label and enlarged
 target/context. Both tools are withdrawn. The optional operative-field camera
@@ -714,6 +751,12 @@ Local evidence remains under the ignored directory
 * `pure-contact-generated-v2/{report.json,qualification.log}` and
   `pure-contact-final-no-learning-tests.log`: focused dynamic-fallback and full
   guarded numerical qualification, with 816 passed and seven pilots skipped.
+* `late-cusa-1954-current-profile-v2/`: one exact late original CUSA step,
+  historical diagnostic ancestry binding, complete canonical comparison and
+  cProfile costs; the first zero-step missing-receipt failure is preserved in
+  `late-cusa-1954-current-profile/`.
+* `capture-cost-profile/{report,analysis}.json`: two audited states reused for
+  bounded, byte-exact no-step capture component diagnostics.
 * `desktop-heavy-field-diagnostic/report.json`: later authenticated field-reuse
   functional/byte diagnostic.
 * `desktop-import-current/report.json` and branch PNGs: current-production
