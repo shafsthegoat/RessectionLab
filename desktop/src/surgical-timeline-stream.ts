@@ -36,7 +36,8 @@ export class SurgicalTimelineStream {
       const p=response.playback;
       if(!p)throw new Error('A compact recorded timeline requires a read-only playback frame.');
       const count=p.position+Number(p.frameIndex===p.frameCount-1);
-      display={...response,timeline:r.timeline,fullCase:r.fullCase,view:{...response.view,...r.context,history:r.timeline.slice(0,count)}};
+      const prefix=response.verification?.status==='reconstructed-prefix'&&response.verification.readOnly===true;
+      display={...response,timeline:r.timeline,fullCase:r.fullCase,view:{...response.view,...r.context,history:prefix?(response.view.history??[]):r.timeline.slice(0,count)}};
       next={...r,fields:{}};
     }else {
       if(!Array.isArray(response.timeline))throw new Error('Recorded timeline is unavailable.');

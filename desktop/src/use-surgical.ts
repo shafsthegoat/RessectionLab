@@ -4,7 +4,7 @@ import type {Point3} from './viewer/coordinates';
 import {SurgicalRequestQueue} from './surgical-request-queue.ts';
 import {SurgicalDisplayAdmission} from './surgical-display-admission.ts';
 import {FullCaseComputation} from './full-case-computation.ts';
-import {checkedPrefixResponse,frameCommand,prefixCommand,reconstructedPrefix,replayAuthorityKey,surgicalAuthorityIssue} from './surgical-authority.ts';
+import {checkedPrefixResponse,checkedPrefixWireResponse,frameCommand,prefixCommand,reconstructedPrefix,replayAuthorityKey,surgicalAuthorityIssue} from './surgical-authority.ts';
 import {SurgicalTimelineStream} from './surgical-timeline-stream.ts';
 import {SurgicalReplayPrefetch} from './surgical-replay-prefetch.ts';
 import type {SurgicalReplaySelection} from './surgical-replay-prefetch';
@@ -51,12 +51,12 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
     if(!owner||owner.source!==c.source||owner.generation!==generation.current||!c.enabled||!c.api?.surgicalRehearsal)throw Error('Recorded replay source is unavailable');
     if(!c.result||c.result.branchId!==owner.branchId||selection.branchId!==owner.branchId||replayAuthorityKey(c.result)!==owner.authority)throw Error('Recorded replay authority changed');
     const token=owner.generation,source=owner.source;
-    const timelineToken=owner.prefix?undefined:timelineStream.current.token(source.caseHash,selection.branchId);
+    const timelineToken=timelineStream.current.token(source.caseHash,selection.branchId);
     const next=await c.api.surgicalRehearsal({caseHash:source.caseHash,command:owner.prefix?'seekPrefixFrame':'seekFrame',...selection,
-      ...(!owner.prefix?{expectedStateId:backendResult.current?.view.stateId,timelineToken,viewFieldTokens:timelineStream.current.fieldTokens(source.caseHash,selection.branchId,timelineToken)}:{})});
+      ...(owner.prefix?{prefixToken:timelineToken,prefixFieldTokens:timelineStream.current.fieldTokens(source.caseHash,selection.branchId,timelineToken)}:{expectedStateId:backendResult.current?.view.stateId,timelineToken,viewFieldTokens:timelineStream.current.fieldTokens(source.caseHash,selection.branchId,timelineToken)})});
     if(token!==generation.current||!current.current.enabled||current.current.source!==source||replayOwner.current!==owner)throw Error('Recorded replay source changed');
     if(!next||next.caseHash!==source.caseHash||next.branchId!==selection.branchId)throw Error('Recorded replay response differs from its source');
-    if(owner.prefix)checkedPrefixResponse(next);
+    if(owner.prefix)checkedPrefixWireResponse(next);
     if(replayAuthorityKey(next)!==owner.authority)throw Error('Recorded replay response changed authority');
     checkedSurgicalPlayback(next,selection);return next;
   });
@@ -73,12 +73,12 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
     if(c.displayFailed&&['step','preview','plan','fullCase'].includes(command)){setError('The accepted anatomy could not be displayed. Seek to a recorded state or reopen the case before applying another instrument action.');return false;}
     const token=generation.current;busy.current=true;setPending(true);setPendingCommand(command);setError(null);
     try{
-      const branchId=String(extra.branchId??c.result?.branchId??''),timelineToken=command==='seekFrame'?timelineStream.current.token(c.source.caseHash,branchId):undefined;
-      const requestExtra=prefixCommand(command)?{branchId,position:extra.position,...(command==='seekPrefixFrame'?{frameIndex:extra.frameIndex}:{})}:extra;
+      const branchId=String(extra.branchId??c.result?.branchId??''),timelineToken=frameCommand(command)?timelineStream.current.token(c.source.caseHash,branchId):undefined;
+      const requestExtra=prefixCommand(command)?{branchId,position:extra.position,...(command==='seekPrefixFrame'?{frameIndex:extra.frameIndex,prefixToken:timelineToken,prefixFieldTokens:timelineStream.current.fieldTokens(c.source.caseHash,branchId,timelineToken)}:{})}:extra;
       let next=await c.api.surgicalRehearsal({caseHash:c.source.caseHash,command,...(!prefixCommand(command)?{expectedStateId:backendResult.current?.view.stateId}:{}),...requestExtra,
         ...(command==='seekFrame'?{timelineToken,viewFieldTokens:timelineStream.current.fieldTokens(c.source.caseHash,branchId,timelineToken)}:{})});
       if(token!==generation.current||!current.current.enabled||current.current.source!==c.source)return false;
-      if(next){if(prefixCommand(command)){checkedPrefixResponse(next);if(next.caseHash!==c.source.caseHash||next.branchId!==branchId||(reconstructedPrefix(c.result)&&replayAuthorityKey(next)!==replayAuthorityKey(c.result!)))throw Error('Reconstructed prefix response changed source or authority');}next=timelineStream.current.hydrate(next);}
+      if(next){if(prefixCommand(command)){(command==='seekPrefixFrame'?checkedPrefixWireResponse:checkedPrefixResponse)(next);if(next.caseHash!==c.source.caseHash||next.branchId!==branchId||(reconstructedPrefix(c.result)&&replayAuthorityKey(next)!==replayAuthorityKey(c.result!)))throw Error('Reconstructed prefix response changed source or authority');}next=timelineStream.current.hydrate(next);if(prefixCommand(command))checkedPrefixResponse(next);}
       // A superseded seek still moved the backend cursor. Preserve its state
       // identity for the next ordered request while withholding obsolete UI.
       if(frameCommand(command)&&next){checkedSurgicalPlayback(next,{...extra,branchId});setMode('navigate');setPath([]);}
@@ -122,7 +122,7 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
     try{
       const receipt=await lane.take(selection);
       if(!receipt||!lane.isCurrent(lease)||token!==generation.current||current.current.source!==c.source||!current.current.enabled)return false;
-      const next=timelineStream.current.hydrate(receipt);checkedSurgicalPlayback(next,selection);
+      const next=timelineStream.current.hydrate(receipt);if(reconstructedPrefix(c.result))checkedPrefixResponse(next);checkedSurgicalPlayback(next,selection);
       // Only a demanded receipt enters React/model preparation. The prefetched
       // successor remains raw wire data until this exact view is acknowledged.
       setDisplayFailed(false);setMode('navigate');setPath([]);setDesiredPreview(null);setDesiredPreviewOutcome(null);

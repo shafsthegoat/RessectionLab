@@ -112,12 +112,14 @@ app.on('browser-window-created',(_,window)=>{
       report.checks.framesObserved=report.submittedPlayback.length>=maxFrames;
       report.hiddenTimeline=await js(`(()=>{const details=[...document.querySelectorAll('details')].find(d=>d.querySelector(':scope > summary')?.textContent==='Action timeline');return {open:details.open,buttons:details.querySelectorAll('button').length};})()`);
       await js(`(()=>{const details=[...document.querySelectorAll('details')].find(d=>d.querySelector(':scope > summary')?.textContent==='Action timeline');details.open=true;})()`);
-      await wait(`[...document.querySelectorAll('details')].find(d=>d.querySelector(':scope > summary')?.textContent==='Action timeline')?.querySelectorAll('button').length===${prefixMode?lastResponse.timeline.length:lastResponse.branches.find(b=>b.id===branch).steps}`);
+      await wait(`[...document.querySelectorAll('details')].find(d=>d.querySelector(':scope > summary')?.textContent==='Action timeline')?.querySelectorAll('button').length===${prefixMode?lastResponse.verification.verifiedThrough:lastResponse.branches.find(b=>b.id===branch).steps}`);
       report.checks.expandedTimelineComplete=true;
       if(prefixMode){
         const v=lastResponse.verification;
         const ui=await js(`({label:document.querySelector('[aria-label="Reconstructed prefix"]')?.textContent,blocked:[...document.querySelectorAll('button')].filter(b=>['Apply','Preview','Branch','Undo','Redo','Reset'].includes(b.textContent.trim())).every(b=>b.disabled||b.closest('fieldset')?.disabled),timelineButtons:[...document.querySelectorAll('details')].find(d=>d.querySelector(':scope > summary')?.textContent==='Action timeline')?.querySelectorAll('button').length})`);
-        report.prefix.final={verification:v,timelineLength:lastResponse.timeline.length,originalActions:lastResponse.branches.find(b=>b.id===branch).steps,fullCase:lastResponse.fullCase,ui};
+        // Compact wire responses omit the resident timeline. Count its actual
+        // hydrated UI entries against complete prefix progress instead.
+        report.prefix.final={verification:v,timelineLength:ui.timelineButtons,wireTimelineOmitted:lastResponse.timelineOmitted===true,originalActions:lastResponse.branches.find(b=>b.id===branch).steps,fullCase:lastResponse.fullCase,ui};
         report.checks.prefixReadOnly=v?.status==='reconstructed-prefix'&&v.readOnly===true&&v.verifiedThrough===3&&v.totalActions===report.prefix.originalActions&&v.archiveEndpointVerified===false&&lastResponse.fullCase===null&&ui.label?.includes('read only')&&ui.blocked&&ui.timelineButtons===3;
         const baseline=JSON.parse(fs.readFileSync(path.join(root,'testcases/outputs/rl-readiness-20261022/desktop-baseline/playback-authenticated/report.json')));
         const expected=new Map(baseline.playbackIpc.filter(row=>row.command==='seekFrame').map(row=>[row.frameIndex,row.stateId]));

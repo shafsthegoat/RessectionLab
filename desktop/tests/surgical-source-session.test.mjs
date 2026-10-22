@@ -226,25 +226,35 @@ test('queued lookahead keeps its playback owner across a source render before pa
   }
 });
 
-function prefixFixture(intercept=()=>undefined){
-  let through=0;
+function prefixFixture(intercept=()=>undefined,{stream=false,transform=response=>response}={}){
+  let through=0;const prefixResponses=[];
   const f=replayFixture(q=>{
     const overridden=intercept(q);if(overridden!==undefined)return overridden;
     if(q.command==='inspectArchive'){
       const r=f.frame({...selection(0),branchId:q.branchId??'main'});return {...r,playback:null,timelineToken:undefined,position:10,verification:{readOnly:true,status:'unverified-import',causalReplayVerified:false,limitations:[]},view:{...r.view,stateId:'saved:endpoint'}};
     }
     if(q.command==='seekPrefix'||q.command==='seekPrefixFrame'){
-      assert.deepEqual(Object.keys(q).filter(key=>!['caseHash','command','branchId','position','frameIndex'].includes(key)),[],'prefix requests cannot carry canonical identity or compact acknowledgments');
+      assert.deepEqual(Object.keys(q).filter(key=>!['caseHash','command','branchId','position',...(q.command==='seekPrefixFrame'?['frameIndex','prefixToken','prefixFieldTokens']:[])].includes(key)),[],'prefix requests cannot carry canonical identity or compact acknowledgments');
       let r,position,budgetStopped=false;
       if(q.command==='seekPrefix'){
         const actual=Math.min(q.position,through+4);through=Math.max(through,actual);position=actual;budgetStopped=actual<q.position;
         r=f.frame({...selection(0),branchId:q.branchId??'main'});r={...r,playback:null,view:{...r.view,stateId:`prefix:${actual}`,removed:Array.from({length:Math.min(actual,8)},(_,i)=>i)}};
       }else {r=f.frame(q);through=Math.max(through,q.position+1);position=q.position+Number(q.frameIndex===2);}
-      return {...r,timelineToken:undefined,position,requestedPosition:q.command==='seekPrefix'?q.position:q.position+1,budgetStopped,
+      let result={...r,timelineToken:undefined,position,requestedPosition:q.command==='seekPrefix'?q.position:q.position+1,budgetStopped,
         branches:r.branches.map(b=>({...b,steps:10})),timeline:Array.from({length:through},()=>({action:{operation:'inspect'},status:'accepted',reason:null,events:[]})),
         verification:{readOnly:true,status:'reconstructed-prefix',verifiedThrough:through,totalActions:10,archiveEndpointVerified:false,originSnapshotHash:'origin',actionLogHash:'actions',protectionContractHash:'protection',implementation:'current',prefixImplementation:'prefix-v1'}};
+      if(stream&&q.command==='seekPrefixFrame'){
+        const token=`prefix-replay.v1/owner-main/${through}`,hash=(q.frameIndex===2?'b':'a').repeat(64);
+        result={...result,timelineToken:token,fullCase:null,viewFieldTokens:{flapComponents:hash},view:{...result.view,history:[],flapComponents:[{cells:[q.frameIndex===2?2:1],separable:q.frameIndex===2}]}};
+        if(q.prefixToken===token){
+          result={...result,timelineOmitted:true,view:{...result.view}};delete result.timeline;delete result.fullCase;
+          for(const field of ['scene','catalog','protection'])delete result.view[field];
+          if(q.prefixFieldTokens?.flapComponents===hash){delete result.view.flapComponents;result.viewFieldsOmitted=['flapComponents'];}
+        }
+      }
+      result=transform(result,q);prefixResponses.push({request:q,response:result});return result;
     }
-  },{initialArchivePreview:true});return f;
+  },{initialArchivePreview:true});f.prefixResponses=prefixResponses;return f;
 }
 test('unverified endpoints enter prefix0 explicitly; prefix requests cannot enter editable or canonical cursor domains',async()=>{
   const f=prefixFixture();try{
@@ -283,6 +293,52 @@ test('budget-stopped prefix seek displays actual reached progress and preserves 
     assert.equal(c.result.position,4);assert.equal(c.result.requestedPosition,9);assert.equal(c.result.budgetStopped,true);assert.equal(c.result.verification.verifiedThrough,4);assert.equal(c.result.verification.totalActions,10);assert.equal(c.result.branches[0].steps,10);assert.equal(c.result.timeline.length,4);
     await c.run('seekPrefix',{position:9});c=f.admit();assert.equal(c.result.position,8);assert.equal(c.result.verification.verifiedThrough,8);
   }finally{f.harness.close();}
+});
+test('prefix frame streams hydrate exact full-to-compact FIFO, changed fields and growing history generations only on demand',async()=>{
+  const f=prefixFixture(undefined,{stream:true});try{
+    let c=await f.open();await c.run('seekPrefix',{position:0});c=f.admit();assert(c.startPlayback());
+    await c.runPlayback(selection(0));await f.flush();c=f.render();const active=c.volume;
+    const first=f.prefixResponses.find(row=>row.request.command==='seekPrefixFrame'&&row.request.frameIndex===0).response;
+    const second=f.prefixResponses.find(row=>row.request.frameIndex===1).response;
+    assert.equal(second.timelineOmitted,true);assert.equal(Object.hasOwn(second,'timeline'),false);assert.equal(Object.hasOwn(second.view,'scene'),false);assert.equal(Object.hasOwn(second.view,'flapComponents'),false);
+    assert.equal(c.volume,active);assert.equal(c.view.stateId,'prefix:0');c=f.admit();
+    assert(await c.runPlayback(selection(1)));await f.flush();c=f.admit();
+    assert.equal(c.view.scene,first.view.scene);assert.equal(c.view.flapComponents,first.view.flapComponents);assert.deepEqual(c.view.history,[]);assert.equal(c.result.timeline.length,1);
+    assert(await c.runPlayback(selection(2)));await f.flush();c=f.admit();
+    assert.deepEqual(c.view.flapComponents,[{cells:[2],separable:true}]);assert.deepEqual(c.view.history,[]);
+    const final=f.prefixResponses.find(row=>row.request.position===0&&row.request.frameIndex===2).response;
+    assert.equal(final.timelineOmitted,true);assert.equal(final.viewFieldsOmitted,undefined,'changed field travels in full despite stable timeline token');
+    assert(await c.runPlayback(selection(0,1)));await f.flush();c=f.admit();assert.equal(c.result.timeline.length,2);assert.equal(c.result.verification.verifiedThrough,2);assert.deepEqual(c.view.history,[]);
+    const next=f.prefixResponses.find(row=>row.request.position===1&&row.request.frameIndex===0).response;
+    assert.notEqual(next.timelineToken,first.timelineToken);assert.equal(next.timelineOmitted,undefined);assert(Array.isArray(next.timeline));assert(Object.hasOwn(next.view,'scene'));
+    const frames=f.calls.filter(q=>q.command==='seekPrefixFrame');assert.deepEqual(frames.map(q=>[q.position,q.frameIndex]),[[0,0],[0,1],[0,2],[1,0],[1,1]]);
+    assert(frames.every(q=>!Object.hasOwn(q,'expectedStateId')&&!Object.hasOwn(q,'timelineToken')&&!Object.hasOwn(q,'viewFieldTokens')));
+    assert.equal(frames[1].prefixToken,first.timelineToken);assert.deepEqual(frames[1].prefixFieldTokens,{flapComponents:'a'.repeat(64)});
+    c.stopPlayback();assert.equal(await c.run('seekPrefixFrame',selection(1,1)),true);c=f.admit();
+    assert.equal(f.calls.at(-1).prefixToken,next.timelineToken);assert.equal(f.prefixResponses.at(-1).response.timelineOmitted,true);assert.deepEqual(c.view.history,[]);assert.equal(c.result.timeline.length,2);
+    await c.run('seekPrefix',{position:1,prefixToken:'supplied-token',prefixFieldTokens:{flapComponents:'f'.repeat(64)}});c=f.admit();
+    assert.deepEqual(Object.keys(f.calls.at(-1)),['caseHash','command','branchId','position'],'prefix boundary never sends stream tokens');
+    await c.run('seekPrefixFrame',selection(1));c=f.admit();assert.equal(f.calls.at(-1).prefixToken,undefined,'boundary invalidates prior stream acknowledgment');assert.equal(c.result.timeline.length,2);
+  }finally{f.harness.close();}
+});
+test('compact prefix provenance or source substitution fails before future anatomy is admitted',async()=>{
+  for(const substitute of [r=>({...r,caseHash:'other'}),r=>({...r,verification:{...r.verification,originSnapshotHash:'other'}}),r=>({...r,timelineToken:undefined}),r=>({...r,verification:undefined})]){
+    const f=prefixFixture(undefined,{stream:true,transform:(r,q)=>q.command==='seekPrefixFrame'&&q.frameIndex===1?substitute(r):r});try{
+      let c=await f.open();await c.run('seekPrefix',{position:0});c=f.admit();assert(c.startPlayback());await c.runPlayback(selection(0));await f.flush();c=f.admit();
+      assert.equal(await c.runPlayback(selection(1)),false);c=f.render();assert.equal(c.view.stateId,'main:0:0');assert.equal(c.interaction.view,c.view);assert(c.error);
+    }finally{f.harness.close();}
+  }
+});
+test('compact prefix hydration rejects missing generations, stale fields and incomplete reconstructed timeline before display',async()=>{
+  for(const substitute of [r=>({...r,timelineToken:'prefix-replay.v1/missing'}),r=>({...r,viewFieldTokens:{flapComponents:'f'.repeat(64)}}),r=>({...r,verification:{...r.verification,verifiedThrough:2}})]){
+    let corrupt=true;
+    const f=prefixFixture(undefined,{stream:true,transform:(r,q)=>corrupt&&q.command==='seekPrefixFrame'&&q.frameIndex===1?substitute(r):r});try{
+      let c=await f.open();await c.run('seekPrefix',{position:0});c=f.admit();assert(c.startPlayback());await c.runPlayback(selection(0));await f.flush();c=f.admit();
+      assert.equal(await c.runPlayback(selection(1)),false);c=f.render();assert.equal(c.view.stateId,'main:0:0');assert(c.error);
+      corrupt=false;assert.equal(await c.run('seekPrefixFrame',selection(1)),true);c=f.admit();
+      assert.equal(f.calls.at(-1).prefixToken,undefined,'failed hydration clears resident acknowledgments for a complete refresh');assert.equal(f.calls.at(-1).prefixFieldTokens,undefined);assert.equal(c.view.stateId,'main:0:1');assert.deepEqual(c.view.history,[]);
+    }finally{f.harness.close();}
+  }
 });
 test('prefix owner source changes and authority substitution fail closed before future display',async()=>{
   const pending=deferred();let blocked=false;

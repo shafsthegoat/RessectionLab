@@ -47,6 +47,32 @@ def episode():
     return engine, boundaries
 
 
+def bone_episode():
+    """Public declared rigid-cell drill law with a retained remote component."""
+    labels = np.zeros((20, 20, 20), np.uint16)
+    labels[9, 9, 9] = 1
+    labels[1:3, 15:17, 15:17] = 1
+    scene = SurgicalScene(labels, np.eye(4),
+        [{'id': 1, 'name': 'Generated bone coupon', 'material': 'bone'}],
+        {'kind': 'generated display-stream test; no patient anatomy'},
+        {'tissuePhysics': {'schema': 'resectionlab.tissue-physics.v1',
+            'provenance': {'kind': 'assumed-research', 'description': 'Generated display-stream coupon'},
+            'bone': {'model': 'rigid-cell-removal-v1'}}})
+    engine = SurgicalEngine(scene)
+    for action in [
+        {'slot': 'left', 'operation': 'place', 'duration': .1,
+         'pose': {'position': [9., 9., 3.], 'quaternion': [0., 0., 0., 1.]},
+         'parameters': {'radiusMm': 1.}},
+        {'slot': 'left', 'operation': 'apply', 'duration': .6,
+         'pose': {'position': [9., 9., 11.], 'quaternion': [0., 0., 0., 1.]}},
+        {'slot': 'right', 'operation': 'inspect', 'duration': .3},
+    ]:
+        assert engine.step(action)['status'] == 'accepted'
+    assert len(engine.state['removed']) == 1
+    assert engine.state['flapComponents']
+    return engine
+
+
 def test_prefix_and_causal_frames_match_public_execution_once_and_detach(monkeypatch):
     engine, boundaries = episode()
     saved = engine.snapshot()
@@ -317,3 +343,132 @@ def test_private_timeline_projection_sees_immutable_full_receipts_before_json_co
     frame = replay.seek_frame(2, 0, _timeline_projection=display)
     assert frame['timeline'] == result['timeline']
     assert replay.seek(3)['timeline'] == engine.history[:3]
+
+
+def test_prefix_frame_acknowledgements_hydrate_exact_full_view_and_hash_only_once(monkeypatch):
+    engine = bone_episode()
+    counts = {'identities': 0, 'omitted': []}
+    identity_getter = SurgicalEngine.state_id.fget
+    view = prefix._PrefixEngine.view
+    def counted_identity(self):
+        counts['identities'] += 1
+        return identity_getter(self)
+    def checked_view(self, *args, **kwargs):
+        assert kwargs.get('_state_id') is not None
+        counts['omitted'].append(kwargs.get('_omit_fields'))
+        return view(self, *args, **kwargs)
+    monkeypatch.setattr(prefix._PrefixEngine, 'state_id', property(counted_identity))
+    monkeypatch.setattr(prefix._PrefixEngine, 'view', checked_view)
+    replay = SurgicalPrefixReplay(engine.scene, engine.snapshot())
+    replay.seek(2)
+    last_frame = replay.seek_frame(1, 0)['playback']['frameCount'] - 1
+    before = counts['identities']
+    full = replay.seek_frame(1, last_frame)
+    assert counts['identities'] == before + 1
+    assert full['view']['flapComponents']
+    assert full['timelineToken'].startswith('prefix-replay.v1/')
+    assert len(full['timelineToken']) <= 1024
+    assert not full['timelineOmitted'] and full['viewFieldsOmitted'] == []
+    digest = semantic_digest(full['view']['flapComponents'])[7:]
+    assert full['viewFieldTokens'] == {'flapComponents': digest}
+    def no_projection(_):
+        raise AssertionError('A compact hit copied/projected the resident timeline')
+    before = counts['identities']
+    compact = replay.seek_frame(1, last_frame, prefix_token=full['timelineToken'],
+        prefix_field_tokens=full['viewFieldTokens'], _timeline_projection=no_projection)
+    assert counts['identities'] == before + 1
+    assert counts['omitted'][-1] == ['flapComponents']
+    assert compact['timelineOmitted'] and 'timeline' not in compact
+    assert compact['viewFieldsOmitted'] == ['flapComponents']
+    for name in ('scene', 'catalog', 'protection', 'flapComponents'):
+        assert name not in compact['view']
+    # The prefix-specific client preserves history=[] instead of synthesizing
+    # canonical playback history. Everything else hydrates by exact token.
+    hydrated = copy.deepcopy(compact)
+    hydrated['timeline'] = full['timeline']
+    for name in ('scene', 'catalog', 'protection', 'flapComponents'):
+        hydrated['view'][name] = full['view'][name]
+    assert hydrated['view'] == full['view']
+    for name in ('verification', 'playback', 'position', 'requestedPosition', 'readOnly', 'budgetStopped'):
+        assert compact[name] == full[name]
+    before = counts['identities']
+    replay.seek(2)
+    assert counts['identities'] == before + 1
+    assert not compact['verification']['archiveEndpointVerified']
+
+
+def test_prefix_stream_generation_rotates_on_new_actions_and_different_owners():
+    engine = bone_episode()
+    replay = SurgicalPrefixReplay(engine.scene, engine.snapshot())
+    last_frame = replay.seek_frame(1, 0)['playback']['frameCount'] - 1
+    full = replay.seek_frame(1, last_frame)
+    token, fields = full['timelineToken'], full['viewFieldTokens']
+    for stale in (None, 'canonical-timeline-token', 'prefix-replay.v1/' + '0' * 64):
+        response = replay.seek_frame(1, last_frame, prefix_token=stale, prefix_field_tokens=fields)
+        assert not response['timelineOmitted'] and response['timeline'] == full['timeline']
+        assert response['view'] == full['view'] and response['viewFieldsOmitted'] == []
+    # A correct prefix generation can suppress context/timeline, while a stale
+    # field digest still requires sending the actual complete field.
+    wrong_field = replay.seek_frame(1, last_frame, prefix_token=token,
+        prefix_field_tokens={'flapComponents': '0' * 64})
+    assert wrong_field['timelineOmitted'] and wrong_field['viewFieldsOmitted'] == []
+    assert wrong_field['view']['flapComponents'] == full['view']['flapComponents']
+    changed = replay.seek_frame(1, 0, prefix_token=token, prefix_field_tokens=fields)
+    assert changed['timelineOmitted'] and changed['viewFieldsOmitted'] == []
+    assert changed['viewFieldTokens'] != fields and changed['view']['flapComponents'] == []
+    replay.seek(3)
+    advanced = replay.seek_frame(1, last_frame, prefix_token=token, prefix_field_tokens=fields)
+    assert advanced['timelineToken'] != token and not advanced['timelineOmitted']
+    assert advanced['verification']['verifiedThrough'] == 3 and len(advanced['timeline']) == 3
+    assert advanced['view']['flapComponents'] == full['view']['flapComponents']
+    other = SurgicalPrefixReplay(engine.scene, engine.snapshot())
+    response = other.seek_frame(1, last_frame, prefix_token=token, prefix_field_tokens=fields)
+    assert response['timelineToken'] != token and not response['timelineOmitted']
+    assert response['verification']['originSnapshotHash'] == full['verification']['originSnapshotHash']
+    # Tokens never bypass source invalidation or grant endpoint authority.
+    engine.scene.source['edited'] = True
+    with pytest.raises(ValueError, match='Source scene changed'):
+        replay.seek_frame(1, last_frame, prefix_token=advanced['timelineToken'], prefix_field_tokens=fields)
+
+
+@pytest.mark.parametrize('values', [
+    {'prefix_token': ''}, {'prefix_token': 42}, {'prefix_token': 'x' * 1025},
+    {'prefix_field_tokens': []}, {'prefix_field_tokens': {'removed': 'a' * 64}},
+    {'prefix_field_tokens': {'flapComponents': 'A' * 64}},
+    {'prefix_field_tokens': {'flapComponents': 'a' * 63}},
+    {'prefix_field_tokens': {'flapComponents': 'sha256:' + 'a' * 64}},
+    {'prefix_field_tokens': {'flapComponents': None}},
+])
+def test_malformed_prefix_display_acknowledgements_fail_before_reconstruction(values):
+    engine, _ = episode()
+    replay = SurgicalPrefixReplay(engine.scene, engine.snapshot())
+    with pytest.raises(ValueError, match='Invalid prefix'):
+        replay.seek_frame(0, 0, **values)
+    assert replay.statistics['verifiedThrough'] == 0
+    assert replay.statistics['frameActions'] == []
+
+
+def test_stream_metadata_is_immutable_detached_and_charged_to_frame_cap():
+    engine = bone_episode()
+    replay = SurgicalPrefixReplay(engine.scene, engine.snapshot())
+    full = replay.seek_frame(1, 0)
+    frame = replay._frames[1][0]
+    with pytest.raises(TypeError):
+        frame['fieldTokens']['flapComponents'] = '0' * 64
+    assert all('fieldTokens' not in row for row in full['playback']['frames'])
+    assert replay.statistics['frameBytes'] == (prefix._owned_bytes(replay._frames)
+                                               + replay.statistics['streamMetadataBytes'])
+    full['viewFieldTokens']['flapComponents'] = '0' * 64
+    full['playback']['frames'][0]['effectiveActivation']['left'] = 'caller edit'
+    fresh = replay.seek_frame(1, 0)
+    assert fresh['viewFieldTokens'] == dict(frame['fieldTokens'])
+    assert fresh['playback']['frames'][0]['effectiveActivation']['left'] is False
+    # The bound includes token maps and the nonce, even on a tiny action window.
+    window = max(prefix._owned_bytes(OrderedDict([(index, frames)]))
+                 for index, frames in replay._frames.items())
+    cap = window + replay.statistics['streamMetadataBytes'] + 1024
+    limited = SurgicalPrefixReplay(engine.scene, engine.snapshot(), max_frame_bytes=cap)
+    limited.seek(2)
+    assert limited.statistics['verifiedThrough'] == 2
+    assert limited.statistics['frameBytes'] <= cap
+    assert 0 not in limited.statistics['frameActions']

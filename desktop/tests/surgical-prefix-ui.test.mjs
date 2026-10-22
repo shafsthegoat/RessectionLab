@@ -5,7 +5,7 @@ import {createServer} from 'vite';
 import {mkdtemp,rm,mkdir} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
-import {checkedPrefixResponse,replayAuthorityKey,surgicalAuthorityIssue,surgicalReplayRoutes} from '../src/surgical-authority.ts';
+import {checkedPrefixResponse,checkedPrefixWireResponse,replayAuthorityKey,surgicalAuthorityIssue,surgicalReplayRoutes} from '../src/surgical-authority.ts';
 let server,cache,SurgicalPanel;
 before(async()=>{
   const output=fileURLToPath(new URL('../../testcases/outputs/rl-readiness-20261022/',import.meta.url));await mkdir(output,{recursive:true});cache=await mkdtemp(path.join(output,'prefix-ui-vite-'));
@@ -55,4 +55,10 @@ test('malformed prefix progress and authority drift cannot become canonical or a
   const drift=structuredClone(r);drift.verification.protectionContractHash='other';assert.notEqual(replayAuthorityKey(drift),replayAuthorityKey(r));
   for(const command of ['step','plan','branch','fullCase','seek','seekFrame','selectBranch'])assert(surgicalAuthorityIssue(r,command,{position:0}));
   assert.deepEqual(surgicalReplayRoutes(r),{prefix:true,imported:true,canReplay:true,boundary:'seekPrefix',frame:'seekPrefixFrame',branch:'inspectArchive'});
+});
+test('compact prefix wire authority requires explicit omission and a real generation, while display validation requires restored receipts',()=>{
+  const full=controller().result,wire={...full,timelineToken:'prefix-replay.v1/owner/4',timelineOmitted:true};delete wire.timeline;
+  assert.equal(checkedPrefixWireResponse(wire).verifiedThrough,4);assert.throws(()=>checkedPrefixResponse(wire),/prefix authority/);
+  assert.equal(checkedPrefixResponse({...wire,timeline:full.timeline}).verifiedThrough,4);
+  for(const change of [{timelineOmitted:undefined},{timelineOmitted:1},{timelineToken:undefined},{timelineToken:''},{timelineToken:42},{timeline:full.timeline}])assert.throws(()=>checkedPrefixWireResponse({...wire,...change}),/prefix authority/);
 });

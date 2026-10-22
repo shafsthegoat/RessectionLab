@@ -17,6 +17,7 @@ import inspect
 import json
 import math
 from pathlib import Path
+import secrets
 import sys
 from types import MappingProxyType
 import zlib
@@ -156,14 +157,24 @@ class _FrameStage:
         # frames may be evicted, but never held alongside an unbounded action.
         row = {'observedTimeSeconds': float(engine.state['elapsedSeconds']),
                'kind': kind, 'effectiveActivation': activation,
-               'stateId': engine.state_id, 'state': b''}
+               'stateId': engine.state_id, 'state': b'',
+               'fieldTokens': MappingProxyType({'flapComponents': '0' * 64})
+                   if 'flapComponents' in engine.state else MappingProxyType({})}
         # Include metadata before encoding and reserve owning-map overhead.
         # Growth callbacks evict old actions before appending compressed bytes.
         base = _owned_bytes(self.frames + [row]) + 512
-        blob = _encode(engine.state, compressed_limit=max(0, self.owner._max_frame_bytes - base),
+        blob = _encode(engine.state, compressed_limit=max(0, self.owner._max_frame_bytes - base
+                       - _owned_bytes(self.owner._stream_nonce)),
                        raw_limit=self.owner._max_json_bytes,
                        on_growth=lambda size: self.owner._frame_room(base + size))
         row['state'] = blob
+        if 'flapComponents' in engine.state:
+            # The complete state's streaming encode has already enforced the
+            # decoded JSON ceiling, which also bounds this field's temporary
+            # canonical encoding. Tokens describe actual observed full values.
+            value = json.dumps(engine.state['flapComponents'], sort_keys=True,
+                               separators=(',', ':'), allow_nan=False).encode()
+            row['fieldTokens'] = MappingProxyType({'flapComponents': hashlib.sha256(value).hexdigest()})
         prospective = self.frames + [row]
         self.owner._frame_room(_owned_bytes(prospective))
         self.frames.append(row)
@@ -213,7 +224,9 @@ class SurgicalPrefixReplay:
                   (max_input_bytes, 128 * 1024**2), (max_json_bytes, 128 * 1024**2)]
         if any(type(value) is not int or not 1 <= value <= ceiling for value, ceiling in limits):
             raise ValueError('Prefix replay limits must be positive integers within hard ceilings')
-        if (max_frame_bytes < _owned_bytes(OrderedDict()) or max_history_bytes < _owned_bytes([])):
+        self._stream_nonce = secrets.token_hex(16)
+        if (max_frame_bytes < _owned_bytes(OrderedDict()) + _owned_bytes(self._stream_nonce)
+                or max_history_bytes < _owned_bytes([])):
             raise PrefixBudgetExceeded('Empty frame/history owner exceeds retention budget')
         scene.require_cache_source()
         if _owned_bytes(snapshot) > max_input_bytes:
@@ -345,13 +358,17 @@ class SurgicalPrefixReplay:
         engine.history = self._history[:position]
         if engine.state_id != item['stateId']:
             raise ValueError('Private reconstructed checkpoint identity differs')
+        engine._prefix_verified_state_id = item['stateId']
         return engine
 
+    def _frame_bytes(self):
+        return _owned_bytes(self._frames) + _owned_bytes(self._stream_nonce)
+
     def _frame_room(self, stage_bytes):
-        while self._frames and _owned_bytes(self._frames) + stage_bytes > self._max_frame_bytes:
+        while self._frames and self._frame_bytes() + stage_bytes > self._max_frame_bytes:
             self._frames.popitem(last=False)
             self._frames = OrderedDict(self._frames)
-        if _owned_bytes(self._frames) + stage_bytes > self._max_frame_bytes:
+        if self._frame_bytes() + stage_bytes > self._max_frame_bytes:
             raise PrefixBudgetExceeded('Observed frame retention budget exceeded during capture')
 
     def _validate_endpoint(self, engine):
@@ -376,7 +393,8 @@ class SurgicalPrefixReplay:
     def statistics(self):
         return {'verifiedThrough': len(self._history), 'totalActions': len(self._snapshot['actions']),
                 'checkpointBytes': _owned_bytes(self._checkpoints), 'maxCheckpointBytes': self._max_checkpoint_bytes,
-                'frameBytes': _owned_bytes(self._frames), 'maxFrameBytes': self._max_frame_bytes,
+                'frameBytes': self._frame_bytes(), 'maxFrameBytes': self._max_frame_bytes,
+                'streamMetadataBytes': _owned_bytes(self._stream_nonce),
                 'historyBytes': self._history_bytes(self._history), 'maxHistoryBytes': self._max_history_bytes,
                 'historyActionsSharedWithBoundedInput': True,
                 'immutableInputBytes': self._input_bytes,
@@ -386,7 +404,8 @@ class SurgicalPrefixReplay:
                 'checkpointPositions': list(self._checkpoints), 'frameActions': list(self._frames),
                 'memoryMeaning': 'Checkpoint/frame/receipt ownership; immutable input reported separately; source anatomy, one private pure geometry/protection runtime and transient engine/view allocations excluded'}
 
-    def _result(self, engine, position, requested, *, budget_stopped=False, timeline_projection=None):
+    def _result(self, engine, position, requested, *, budget_stopped=False, timeline_projection=None,
+                compact=False, omit_fields=()):
         verification = {'status': 'reconstructed-prefix', 'readOnly': True,
             'verifiedThrough': len(self._history), 'totalActions': len(self._snapshot['actions']),
             'originSnapshotHash': self._origin_hash, 'actionLogHash': self._action_hash,
@@ -395,13 +414,17 @@ class SurgicalPrefixReplay:
             'archiveEndpointVerified': self._endpoint_verified,
             'endpointValidationError': self._endpoint_error,
             'failure': thaw_json(freeze_json(self._failure))}
-        timeline = tuple(self._history)
-        if timeline_projection is not None:
+        timeline = () if compact else tuple(self._history)
+        if not compact and timeline_projection is not None:
             # Private display-only callback sees immutable complete receipts;
             # its result is detached JSON. It never receives an engine/state.
             timeline = freeze_json(timeline_projection(timeline))
-        return {'view': engine.view(include_history=False),
-                'timeline': thaw_json(timeline), 'position': position,
+        view = engine.view(_state_id=engine._prefix_verified_state_id,
+                           include_history=False, _omit_fields=omit_fields)
+        if compact:
+            for name in ('scene', 'catalog', 'protection'):
+                view.pop(name, None)
+        return {'view': view, **({} if compact else {'timeline': thaw_json(timeline)}), 'position': position,
                 'requestedPosition': requested, 'budgetStopped': budget_stopped,
                 'readOnly': True, 'verification': verification}
 
@@ -477,7 +500,32 @@ class SurgicalPrefixReplay:
         self._check(check)
         return result
 
-    def seek_frame(self, action_index, frame_index, *, check=None, _timeline_projection=None):
+    def _timeline_token(self):
+        # This prefix-only domain can never acknowledge canonical replay data.
+        # One owner nonce binds even equal archives in independent sessions.
+        return 'prefix-replay.v1/' + semantic_digest({
+            'nonce': self._stream_nonce, 'scene': self._scene.identity,
+            'origin': self._origin_hash, 'actions': self._action_hash,
+            'protection': self._protection_hash, 'implementation': self._implementation,
+            'prefixImplementation': self._prefix_implementation,
+            'verifiedThrough': len(self._history)})[7:]
+
+    def seek_frame(self, action_index, frame_index, *, check=None, _timeline_projection=None,
+                   prefix_token=None, prefix_field_tokens=None):
+        """Return a full frame unless exact prefix-domain acknowledgements match.
+
+        Tokens suppress redundant display fields only. They never change saved
+        actions, reconstruction limits, verification, progress or authority.
+        Missing/stale tokens receive full data; malformed acknowledgements fail.
+        """
+        if prefix_token is not None and (not isinstance(prefix_token, str) or not 1 <= len(prefix_token) <= 1024):
+            raise ValueError('Invalid prefix timeline acknowledgement')
+        known_fields = {} if prefix_field_tokens is None else prefix_field_tokens
+        if (not isinstance(known_fields, dict) or set(known_fields) - {'flapComponents'}
+                or any(not isinstance(value, str) or len(value) != 64
+                       or any(char not in '0123456789abcdef' for char in value)
+                       for value in known_fields.values())):
+            raise ValueError('Invalid prefix view field acknowledgement')
         if type(action_index) is not int or not 0 <= action_index < len(self._snapshot['actions']):
             raise ValueError('Invalid observed action index')
         if type(frame_index) is not int or frame_index < 0:
@@ -498,11 +546,20 @@ class SurgicalPrefixReplay:
         engine.history = self._history[:position]
         if engine.state_id != frame['stateId']:
             raise ValueError('Private observed frame identity differs')
-        result = self._result(engine, position, action_index + 1, timeline_projection=_timeline_projection)
+        engine._prefix_verified_state_id = frame['stateId']
+        timeline_token = self._timeline_token()
+        compact = prefix_token == timeline_token
+        field_tokens = dict(frame['fieldTokens'])
+        omitted = [name for name, digest in field_tokens.items()
+                   if compact and known_fields.get(name) == digest]
+        result = self._result(engine, position, action_index + 1, timeline_projection=_timeline_projection,
+                              compact=compact, omit_fields=omitted)
+        result.update(timelineToken=timeline_token, timelineOmitted=compact,
+                      viewFieldTokens=field_tokens, viewFieldsOmitted=omitted)
         result['playback'] = {'readOnly': True, 'position': action_index, 'actionIndex': action_index,
             'frameIndex': frame_index, 'frameCount': len(item),
             'frames': [{key: (dict(value) if key == 'effectiveActivation' else value)
-                        for key, value in row.items() if key != 'state'} | {'frameIndex': index}
+                        for key, value in row.items() if key not in ('state', 'fieldTokens')} | {'frameIndex': index}
                        for index, row in enumerate(item)],
             'observedTimeSeconds': frame['observedTimeSeconds'],
             'actionElapsedSeconds': frame['observedTimeSeconds'] - item[0]['observedTimeSeconds'],

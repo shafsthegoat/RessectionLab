@@ -290,6 +290,12 @@ passed **733 tests, with 7 pilot tests skipped, in 115.10 seconds**. It adds
 source/implementation binding, cancellation, retention and bridge-authority
 regressions. The pilot opt-in remained disabled.
 
+The later prefix display-stream change passed **759 tests, with 7 pilot tests
+skipped, in 118.48 seconds**, with the same two Gymnasium advisories. New
+checks cover generation/field acknowledgments, exact restored views, one hash
+per restored state and strict separation from canonical command arguments.
+It adds no RL authority or training; imported prefix frames remain read only.
+
 ## Generated native workspace companion
 
 The separate evaluation-only exporter creates an openable, explicitly labeled

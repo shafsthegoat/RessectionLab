@@ -214,6 +214,20 @@ protection and implementation identities bind the owner; no verified/observed
 disk cache or editable surgical session is populated. Even a complete matching
 endpoint would retain read-only authority.
 
+Prefix frames have their own display acknowledgment names, `prefixToken` and
+`prefixFieldTokens`. Canonical commands and boundary requests reject these
+arguments. A private owner nonce binds the generation to the original source,
+action log, protection and implementation; the generation changes when the
+computed prefix grows. Only an exact generation permits omission of resident
+timeline, scene, catalog and protection descriptors. An exact observed
+`flapComponents` content hash additionally permits omission before view copying.
+Missing, stale or changed acknowledgments receive complete data. Authority and
+progress always travel in full. The client checks the raw receipt before
+buffering, then restores resident data and rechecks the complete computed
+timeline only when that frame is demanded. These tokens grant no engine or RL
+authority. Restored private frame/checkpoint state is still hashed and compared
+before its checked identity is reused for display, avoiding a second hash.
+
 The first production GUI qualification used the complete unchanged original
 archive and current Python code, without frozen numerical substitution. It
 reconstructed exactly three original actions and CPU-submitted frames 0–11 of
@@ -242,6 +256,48 @@ made zero physics calls. The warm CPU-submission gap p95 fell to 413.4 ms;
 worker preparation median was 115.4 ms and demanded IPC median 301.2 ms.
 Cold action-2 preparation remained 42.17 seconds. This fix closes duplicate
 fetches, not the 1× or compositor targets.
+
+A subsequent current-source bridge comparison measured the prefix display
+stream itself. It reconstructed the same three original actions once, then
+made 48 step-free reads: full and compact sequences in both orders, covering
+all twelve original frames twice per mode. Restoring compact data reproduced
+the complete full response's view, computed timeline, verification, playback,
+branch, position and archive metadata exactly. Median handler time fell from
+**191.6 to 67.9 ms** (2.82×); median wire size fell from **1,305,570 to 77,113
+bytes**. Source files and loaded archive bytes stayed unchanged, with no
+canonical admission or learning. This is an IPC diagnostic, not GUI throughput.
+It took 70.38 seconds overall, including 49.80 seconds of cold observation
+preparation. Field digest creation adds preparation work; warm reuse must not
+be presented as eliminating that cold cost.
+
+The subsequent actual Electron prefix-stream pass CPU-submitted all twelve
+original frame identities and passed all fourteen checks. Warm frames 1→11
+covered two simulated seconds in **1.892 wall seconds (1.057×)**, up from
+0.524× on the previous full-response production path. The wider submitted
+frame 0→11 window covered 2.2 simulated seconds in 2.1432 wall seconds (1.027×).
+Both windows exclude cold action preparation. Median warm IPC fell to **78.5
+ms**, with a 101.4 ms p95, and median wire size fell 94.1% to 76,339 bytes.
+Worker preparation median remained 116.4 ms. CPU-submission gaps had a 172.2 ms
+median and **258.9 ms p95**, not a compositor/delivery measurement. There were
+thirteen completed responses for twelve submissions, with no duplicate fetches
+and one unadmitted lookahead.
+
+Cold action-2 preparation took **50.22 seconds**, compared with 42.17 seconds
+in the previous individual GUI pass. Prefix initialization took 7.11 seconds
+and seeking boundary 2 took 3.82 seconds. These cold costs remain an explicit
+blocker for sustained operation. The archive stayed read only at 3/2,148
+actions, with exactly three preparation steps and zero warm steps. Retained
+frames, including stream metadata, totaled 33,609,379 bytes within 64 MiB;
+checkpoints and receipts retained their earlier sizes. The whole Python process
+peaked at 756,056,064 resident bytes in this run.
+
+The changed Python display transport has a new source manifest, preserved
+throughout the run. The harness also changed its post-playback check to count
+actual hydrated UI timeline entries against complete prefix progress, because
+compact wire responses omit the timeline. Timers, submitted-frame matching,
+pause and the strict three-step monitor were unchanged. The short warm-rate
+result does not qualify full-operation playback, cold preparation, microscope
+readability or the 50 ms compositor target.
 
 The owner retained 33,481,180 bytes of frames, 432,316 bytes of checkpoints and
 268,522 bytes of receipts. It shared 111,442,521 bytes of existing immutable
@@ -331,11 +387,11 @@ Evidence: `backend-baseline.json`, `backend-digest-optimized.json`,
 
 ## Gates that remain open
 
-* **At least 1× observed-state playback is not achieved.** The final measured
-  frozen-numerics transport experiment reached 0.720×; the separate current
-  production read-only prefix path reached 0.524×, even with 4× selected.
-  Exact source surface preparation and replay reconstruction remain material
-  costs.
+* **Sustained full-operation playback at 1× remains unqualified.** The short
+  current-production prefix sample reached 1.057× warm, even with 4× selected,
+  but cold preparation of one 30-second action still took 50.22 seconds. The
+  separate frozen-numerics transport experiment reached 0.720×. Exact source
+  surface preparation and replay reconstruction remain material costs.
 * **A 50 ms p95 delivered-frame interval is not established.** A separate
   trusted camera-orbit control delivered 42 Electron frames with a 50.99 ms
   nearest-rank p95 interval. This control includes frame-subscription observer
@@ -354,12 +410,12 @@ pnpm --dir desktop test
 pnpm --dir desktop build
 ```
 
-The latest October 22 validation passed 864 desktop tests: 181 main-process,
-464 renderer and 219 viewer tests. Build passed with the existing bundle-size
+The latest October 22 validation passed 870 desktop tests: 182 main-process,
+469 renderer and 219 viewer tests. Build passed with the existing bundle-size
 advisory.
 
-The latest Python regression run passed **733 tests, with seven pilot tests
-skipped**, in 115.10 seconds, with two existing Gymnasium advisories. It includes
+The latest Python regression run passed **759 tests, with seven pilot tests
+skipped**, in 118.48 seconds, with two existing Gymnasium advisories. It includes
 surgical/full-case tests, independent geometry checks and the read-only prefix
 contracts. The pilot opt-in was not enabled.
 
@@ -435,6 +491,13 @@ Local evidence remains under the ignored directory
   read-only prefix GUI pass, including completed shutdown lookahead accounting.
 * `desktop-current-prefix-prefetch-qualified/{report,analysis}.json`: matched
   full-prefix prefetch improvement, with no duplicate fetches and exact state IDs.
+* `current-prefix-stream-comparison/report.json`: balanced full/compact bridge
+  comparison with exact restored payloads and twelve original frame IDs.
+* `desktop-current-prefix-stream-qualified/{report,analysis}.json`: current
+  production stream GUI pass, including scoped warm rate, wire sizes and cold
+  preparation; `settled.png` is the accepted final app view.
+* `prefix-stream-full-no-learning-tests.log`, `prefix-stream-{main,renderer,viewer}-tests.log`
+  and `prefix-stream-build.log`: latest prefix stream regression/build checks.
 * `prefix-full-receipt-{renderer,main}-tests.log`, `prefix-viewer-tests.log` and
   `prefix-full-receipt-build.log`: final desktop regression/build checks.
 * `current-primary-prefix-replay/report.json`: retained failed 16 MiB-window

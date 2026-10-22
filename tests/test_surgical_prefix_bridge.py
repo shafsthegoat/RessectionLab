@@ -126,12 +126,91 @@ def test_prefix_requires_explicit_canonical_inspection_before_legacy_computation
 
 
 @pytest.mark.parametrize('extra', [dict(action={'operation': 'inspect'}), dict(mapping=[]),
-    dict(expectedStateId='client-state'), dict(timelineToken='old-canonical-generation')])
+    dict(expectedStateId='client-state'), dict(timelineToken='old-canonical-generation'),
+    dict(prefixToken='old-prefix-generation'), dict(prefixFieldTokens={})])
 def test_prefix_requests_reject_authority_and_unimplemented_stream_fields(tmp_path, extra):
     session, _, call, _ = episode(tmp_path)
     try:
         with pytest.raises(BridgeError, match='Unsupported argument'):
             call('seekPrefix', position=0, **extra)
         assert not hasattr(session, 'surgical_prefix_session')
+    finally:
+        session.close()
+
+
+def test_prefix_stream_omits_only_acknowledged_current_generation_display_data(tmp_path):
+    session, key, call, _ = episode(tmp_path)
+    original = session.cases[key].artifacts
+    try:
+        with step_entries() as steps:
+            first = call('seekPrefixFrame', position=0, frameIndex=0)
+            token, fields = first['timelineToken'], first['viewFieldTokens']
+            assert token.startswith('prefix-replay.v1/')
+            assert set(fields) == {'flapComponents'}
+            compact = call('seekPrefixFrame', position=0, frameIndex=0,
+                           prefixToken=token, prefixFieldTokens=fields)
+            assert steps == [0]
+        assert compact['timelineOmitted'] is True and 'timeline' not in compact
+        assert compact['viewFieldsOmitted'] == ['flapComponents']
+        assert not {'scene', 'catalog', 'protection', 'flapComponents'}.intersection(compact['view'])
+        assert compact['view']['stateId'] == first['view']['stateId']
+        restored = {**compact['view'], **{name: first['view'][name] for name in
+                    ('scene', 'catalog', 'protection', 'flapComponents')}}
+        assert restored == first['view']
+        assert compact['verification'] == first['verification']
+        assert compact['fullCase'] is None and compact['verification']['readOnly'] is True
+
+        unbound = call('seekPrefixFrame', position=0, frameIndex=0, prefixFieldTokens=fields)
+        assert unbound['timelineOmitted'] is False and unbound['viewFieldsOmitted'] == []
+        assert unbound['view'] == first['view']
+        changed_field = call('seekPrefixFrame', position=0, frameIndex=0,
+                             prefixToken=token, prefixFieldTokens={'flapComponents': '0' * 64})
+        assert changed_field['timelineOmitted'] is True and changed_field['viewFieldsOmitted'] == []
+        assert changed_field['view']['flapComponents'] == first['view']['flapComponents']
+
+        # A stale generation never suppresses the field or the complete context.
+        stale = call('seekPrefixFrame', position=0, frameIndex=0,
+                     prefixToken='prefix-replay.v1/stale', prefixFieldTokens=fields)
+        assert stale['timelineOmitted'] is False and stale['viewFieldsOmitted'] == []
+        assert stale['view'] == first['view'] and stale['timeline'] == first['timeline']
+        changed = call('seekPrefixFrame', position=1, frameIndex=0,
+                       prefixToken=token, prefixFieldTokens=fields)
+        assert changed['timelineToken'] != token and changed['timelineOmitted'] is False
+        assert len(changed['timeline']) == changed['verification']['verifiedThrough'] == 2
+        assert changed['viewFieldsOmitted'] == []
+        call('seekPrefix', position=0)
+        restarted = call('seekPrefixFrame', position=0, frameIndex=0,
+                         prefixToken=token, prefixFieldTokens=fields)
+        assert restarted['timelineToken'] != token and restarted['timelineOmitted'] is False
+        assert restarted['view'] == first['view']
+        assert session.cases[key].artifacts is original
+        for attribute in ('surgical_sessions', 'surgical_replay_cache', 'surgical_frame_cache'):
+            assert not hasattr(session, attribute)
+    finally:
+        session.close()
+
+
+@pytest.mark.parametrize('extra', [dict(prefixToken=7), dict(prefixToken=''),
+    dict(prefixToken='x' * 1025), dict(prefixFieldTokens=[]),
+    dict(prefixFieldTokens={'fluid': '0' * 64}),
+    dict(prefixFieldTokens={'flapComponents': 'A' * 64})])
+def test_invalid_prefix_stream_acknowledgements_are_rejected_before_owner_creation(tmp_path, extra):
+    session, _, call, _ = episode(tmp_path)
+    try:
+        with pytest.raises(ValueError, match='Invalid read-only prefix'):
+            call('seekPrefixFrame', position=0, frameIndex=0, **extra)
+        assert not hasattr(session, 'surgical_prefix_session')
+    finally:
+        session.close()
+
+
+@pytest.mark.parametrize('command', ['inspect', 'inspectArchive', 'seek', 'seekFrame', 'step'])
+def test_prefix_display_acknowledgements_cannot_cross_into_canonical_commands(tmp_path, command):
+    session, _, call, _ = episode(tmp_path)
+    try:
+        with pytest.raises(BridgeError, match='Unsupported argument'):
+            call(command, prefixToken='prefix-replay.v1/forged', prefixFieldTokens={})
+        assert not hasattr(session, 'surgical_prefix_session')
+        assert not hasattr(session, 'surgical_sessions')
     finally:
         session.close()

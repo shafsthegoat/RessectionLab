@@ -13,6 +13,13 @@ test('compact read-only frames recover the exact resident timeline and finalized
   assert.deepEqual(display.view.history,first.timeline);assert.deepEqual(wire.view.history,[]);
   assert.deepEqual(stream.hydrate({...wire,playback:{...wire.playback,frameIndex:0}}).view.history,first.timeline.slice(0,1));
 });
+test('compact reconstructed prefixes preserve full-view empty history while hydrating computed receipts separately',()=>{
+  const stream=new SurgicalTimelineStream(),verification={status:'reconstructed-prefix',readOnly:true,verifiedThrough:2},first={...full(),verification,fullCase:null};stream.hydrate(first);
+  const history=[],wire={...compact(),verification,view:{history}},display=stream.hydrate(wire);
+  assert.equal(display.timeline,first.timeline);assert.equal(display.view.history,history);assert.deepEqual(display.view.history,[]);
+  assert.equal(display.fullCase,null);assert.equal(display.view.scene,first.view.scene);
+  assert.deepEqual(stream.hydrate({...wire,view:{}}).view.history,[],'omitted prefix view history remains explicitly empty');
+});
 test('changed source, branch, archive generation, missing resident data and editable responses fail closed',()=>{
   const stream=new SurgicalTimelineStream();assert.throws(()=>stream.hydrate(compact()),/timeline changed/);
   stream.hydrate(full());

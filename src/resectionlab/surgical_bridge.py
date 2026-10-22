@@ -141,7 +141,10 @@ def dispatch(session, operation, args, request, progress):
             metadata={'is_synthetic': True, 'generated': True, 'anatomy_layers': {r['name']: {'kind': r['material'], 'color': r['color'],
                        'provenance': 'generated engineering fixture'} for r in s.regions}, 'surgical_properties': s.properties})
         return session._install_case(case, {}, request)
-    _keys(args, {'caseHash', 'command', 'expectedStateId', 'action', 'mapping', 'position', 'branchId', 'source', 'sceneIndex', 'acknowledgeResearchUnknowns', 'opponent', 'scenario', 'maxActions', 'frameIndex', 'timelineToken', 'viewFieldTokens'})
+    argument_keys = {'caseHash', 'command', 'expectedStateId', 'action', 'mapping', 'position', 'branchId', 'source', 'sceneIndex', 'acknowledgeResearchUnknowns', 'opponent', 'scenario', 'maxActions', 'frameIndex', 'timelineToken', 'viewFieldTokens'}
+    if args.get('command') == 'seekPrefixFrame':
+        argument_keys.update({'prefixToken', 'prefixFieldTokens'})
+    _keys(args, argument_keys)
     _require_json_budget(args, 256 * 1024, 'SURGICAL_REQUEST_LIMIT', 'Instrument request exceeds budget')
     entry = None
     source = args.get('source')
@@ -194,7 +197,19 @@ def dispatch(session, operation, args, request, progress):
     if command in PREFIX_COMMANDS:
         # This independent read-only owner never populates the editable session,
         # canonical admission, or either authenticated whole-archive cache.
-        _keys(args, {'caseHash', 'command', 'branchId', 'position', 'frameIndex'})
+        prefix_keys = {'caseHash', 'command', 'branchId', 'position', 'frameIndex'}
+        if command == 'seekPrefixFrame':
+            prefix_keys.update({'prefixToken', 'prefixFieldTokens'})
+        _keys(args, prefix_keys)
+        if 'prefixToken' in args and (not isinstance(args['prefixToken'], str)
+                or not 1 <= len(args['prefixToken']) <= 1024):
+            raise ValueError('Invalid read-only prefix display generation')
+        prefix_fields = args.get('prefixFieldTokens', {})
+        if (not isinstance(prefix_fields, dict) or set(prefix_fields) - {'flapComponents'}
+                or any(not isinstance(value, str) or len(value) != 64
+                       or any(c not in '0123456789abcdef' for c in value)
+                       for value in prefix_fields.values())):
+            raise ValueError('Invalid read-only prefix field acknowledgement')
         if entry is None or raw is None:
             raise ValueError('Read-only prefix replay requires a saved workspace branch')
         selected = args.get('branchId', raw.get('branchId'))
@@ -228,6 +243,7 @@ def dispatch(session, operation, args, request, progress):
         progress(.1, 'Reconstructing saved actions in a separate read-only prefix')
         result = (owner.seek(args.get('position'), check=request.check, _timeline_projection=display_timeline) if command == 'seekPrefix'
                   else owner.seek_frame(args.get('position'), args.get('frameIndex'), check=request.check,
+                                        prefix_token=args.get('prefixToken'), prefix_field_tokens=prefix_fields,
                                         _timeline_projection=display_timeline))
         if 'playback' in result:
             result['playback']['branchId'] = selected
