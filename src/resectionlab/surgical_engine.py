@@ -11,6 +11,8 @@ import hashlib
 import json
 import math
 import itertools
+from itertools import repeat as _strict_int_repeat
+from operator import is_ as _strict_int_is
 import numpy as np
 from scipy.spatial.transform import Rotation, Slerp
 from .core import semantic_digest
@@ -142,7 +144,7 @@ def _microstep_checkpoint(state):
         if id(value) in memo:
             continue
         if name == 'removed':
-            flat = type(value) is list and all(type(cell) is int for cell in value)
+            flat = type(value) is list and all(map(_strict_int_is, map(type, value), _strict_int_repeat(int)))
         else:
             flat = type(value) is dict and all(type(key) is str and type(amount) in (int, float)
                                                for key, amount in value.items())
@@ -254,7 +256,9 @@ class SurgicalEngine:
         # tuples and canonical JSON. Avoid freezing/encoding thousands of IDs
         # at every occupancy lookup; snapshot the contents to detect in-place
         # edits. Other representations retain the complete legacy JSON key.
-        if isinstance(removed_ids, list) and all(type(cell) is int for cell in removed_ids):
+        if isinstance(removed_ids, list) and (
+                all(map(_strict_int_is, map(type, removed_ids), _strict_int_repeat(int)))
+                if type(removed_ids) is list else all(type(cell) is int for cell in removed_ids)):
             key = (tuple(removed_ids), semantic_digest(changes))
         else:
             key = semantic_digest({'removed': removed_ids, **changes})

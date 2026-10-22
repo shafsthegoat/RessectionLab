@@ -311,7 +311,23 @@ the same two Gymnasium advisories remain. No pilot opt-in was enabled. The
 optimization is limited to a single unchanged stock-engine contact search;
 read-only prefix engine subclasses retain the original query path.
 
-The current desktop subsequently completed all 73 original vascular rescue
+The subsequent exact-list integer-validation qualification passed **832 tests,
+with seven pilot tests skipped, in 119.96 seconds**. The same two Gymnasium
+advisories remain. It checks strict type identity, in-place cache invalidation,
+subclass/error fallbacks, independent rollback ownership and bound C helpers.
+The explicit pilot opt-in remained disabled; this qualification performed no
+pilot training.
+
+With that patch, the dedicated three-seed readiness command repeated the same
+generated coupon and optional intact sub-06 load/reset-only check in **8.911
+seconds**. Its receipt is
+`testcases/outputs/rl-readiness-20261022/cli-integer-guard-three-seeds/report.json`.
+All measured checks passed with open gates, with zero policy executions,
+optimizer updates or patient actions. The three seeds remain one geometry;
+this is evaluation-only scripted solvability/resume evidence, not an adaptive
+policy, a patient task qualification or a matched throughput comparison.
+
+Separately, the desktop at `cc868257` completed all 73 original vascular rescue
 actions and CPU-submitted all 1,149 fresh observations in order. A separate
 zero-step audit matched every full historical canonical record and the final
 endpoint, with no canonical/session/cache promotion. Full playback including

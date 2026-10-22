@@ -78,6 +78,97 @@ def test_numpy_integer_and_nonlist_representations_use_the_frozen_legacy_key():
         engine.occupancy()
 
 
+@pytest.mark.parametrize('value', [True, False, 1., np.int64(1)])
+def test_strict_integer_admission_never_treats_equivalent_nonint_as_builtin_int(value):
+    actual = SurgicalEngine(source())
+    actual.state['removed'] = [0, value, 2]
+    actual.occupancy()
+    assert actual._occupancy_cache[0] == legacy_key(actual.state)
+    assert type(actual._occupancy_cache[0]) is str
+    actual.state['removed'][1] = 1
+    actual.occupancy()
+    assert actual._occupancy_cache[0][0] == (0, 1, 2)
+    actual.state['removed'][1] = value
+    actual.occupancy()
+    assert type(actual._occupancy_cache[0]) is str
+
+
+def test_integer_subclass_reaches_legacy_fallback_without_predicate_hash_or_equality(monkeypatch):
+    from resectionlab import surgical_engine as module
+    calls = []
+    class Meta(type):
+        def __eq__(cls, other):
+            calls.append('equality')
+            raise AssertionError('Class equality is not strict integer identity')
+        def __hash__(cls):
+            calls.append('hash')
+            raise AssertionError('Class hashing is not strict integer identity')
+    class Integer(int, metaclass=Meta): pass
+    actual = SurgicalEngine(source())
+    actual.state['removed'] = [0, Integer(1), 2]
+    original_digest = module.semantic_digest
+    def digest(value):
+        if isinstance(value, dict) and 'removed' in value:
+            raise RuntimeError('legacy fallback reached')
+        return original_digest(value)
+    # The unchanged semantic-digest fallback may itself inspect custom classes;
+    # stop at that boundary to isolate the strict predicate's no-hook behavior.
+    monkeypatch.setattr(module, 'semantic_digest', digest)
+    with pytest.raises(RuntimeError, match='legacy fallback reached'):
+        actual.occupancy()
+    assert calls == []
+
+
+@pytest.mark.parametrize('values,fail_at,expected_events,expected_error', [
+    ([False, 1], 1, ['iter', 0], 'fallback'),
+    ([0, False, 2], 2, ['iter', 0, 1], 'fallback'),
+    ([0, 1, 2], 1, ['iter', 0, 1], 'custom iteration failure'),
+])
+def test_removed_list_subclass_retains_generator_short_circuit_and_error_order(
+        monkeypatch, values, fail_at, expected_events, expected_error):
+    from resectionlab import surgical_engine as module
+    events = []
+    class Removed(list):
+        def __iter__(self):
+            events.append('iter')
+            for index in range(len(self)):
+                events.append(index)
+                if index == fail_at:
+                    raise RuntimeError('custom iteration failure')
+                yield self[index]
+    actual = SurgicalEngine(source())
+    actual.state['removed'] = Removed(values)
+    original_digest = module.semantic_digest
+    def digest(value):
+        if isinstance(value, dict) and 'removed' in value:
+            raise RuntimeError('fallback')
+        return original_digest(value)
+    monkeypatch.setattr(module, 'semantic_digest', digest)
+    with pytest.raises(RuntimeError, match=expected_error):
+        actual.occupancy()
+    assert events == expected_events
+
+
+def test_public_standard_library_replacements_cannot_change_bound_integer_predicate(monkeypatch):
+    import itertools
+    import operator
+    from resectionlab import surgical_engine as module
+    actual = SurgicalEngine(source())
+    first = actual.occupancy()
+    original_is, original_repeat = operator.is_, itertools.repeat
+    def forbidden(*args, **kwargs):
+        raise AssertionError('Public module attribute must not replace bound C predicate')
+    with monkeypatch.context() as patch:
+        patch.setattr(operator, 'is_', forbidden)
+        patch.setattr(itertools, 'repeat', forbidden)
+        actual.state['removed'].append(1)
+        changed = actual.occupancy()
+        saved = module._microstep_checkpoint({'removed': [1, 2], 'debris': {}})
+    assert module._strict_int_is is original_is and module._strict_int_repeat is original_repeat
+    assert changed is not first and actual._occupancy_cache[0][0] == (1,)
+    assert saved == {'removed': [1, 2], 'debris': {}}
+
+
 def test_hold_and_deformation_mutations_retain_canonical_invalidation():
     labels = np.zeros((10, 10, 10), np.uint16)
     labels[3, 3, 3] = labels[6, 3, 3] = 2

@@ -119,6 +119,64 @@ def test_fresh_guards_detect_public_in_place_changes():
     assert first == {'removed': [1], 'debris': {'1': 1.}}
 
 
+@pytest.mark.parametrize('value,expected_flat', [(1, True), (True, False), (1., False),
+                                              (IntWithData(1), False), (np.int64(1), False)])
+def test_removed_admission_is_strict_and_rechecks_mutation_before_copy(monkeypatch, value, expected_flat):
+    removed = [0, 1, 2]
+    state = {'removed': removed}
+    observed = []
+    def inspect_copy(actual, memo):
+        assert actual is state
+        cached = memo.get(id(removed))
+        observed.append(cached)
+        return cached
+    monkeypatch.setattr(module.copy, 'deepcopy', inspect_copy)
+    assert _microstep_checkpoint(state) == [0, 1, 2]
+    removed[1] = value
+    result = _microstep_checkpoint(state)
+    assert (result is not None) is expected_flat
+    if expected_flat:
+        assert result == removed and result is not removed
+    removed[1] = 3
+    assert _microstep_checkpoint(state) == [0, 3, 2]
+    assert len(observed) == 3
+
+
+def test_removed_int_subclass_admission_does_not_hash_or_compare_its_metaclass(monkeypatch):
+    class Meta(type):
+        def __eq__(cls, other): raise AssertionError('Unexpected metaclass equality')
+        def __hash__(cls): raise AssertionError('Unexpected metaclass hashing')
+    class Integer(int, metaclass=Meta): pass
+    removed = [0, Integer(1), 2]
+    def inspect_copy(state, memo):
+        assert id(removed) not in memo
+        return 'ordinary-deepcopy-fallback'
+    monkeypatch.setattr(module.copy, 'deepcopy', inspect_copy)
+    assert _microstep_checkpoint({'removed': removed}) == 'ordinary-deepcopy-fallback'
+
+
+def test_removed_list_subclass_keeps_original_deepcopy_iteration_and_errors():
+    def run(function, fail_at):
+        events = []
+        class Removed(list):
+            def __iter__(self):
+                events.append('iter')
+                for index in range(len(self)):
+                    events.append(index)
+                    if index == fail_at:
+                        raise RuntimeError('custom deepcopy iteration failure')
+                    yield self[index]
+        removed = Removed([0, 1, 2])
+        try:
+            result = function({'removed': removed})
+            return result['removed'], events, None
+        except RuntimeError as exc:
+            return None, events, str(exc)
+    for fail_at in (None, 1):
+        actual, reference = run(_microstep_checkpoint, fail_at), run(legacy_checkpoint, fail_at)
+        assert actual == reference
+
+
 def graph_signature(value):
     """Compare exact types, order, float bits and mutable alias topology."""
     seen = {}; result = []

@@ -538,9 +538,32 @@ costs; large retained ledgers require separate measurement. Source, protection,
 action and start/end identities remained unchanged, with zero policy executions
 or optimizer updates.
 
+The subsequent optimization moves only strict integer-list validation into
+import-bound C iterators. It preserves `type(cell) is int`, order and
+short-circuiting; no validation or fresh tuple-key snapshot is skipped. Exact
+built-in removed lists use it in occupancy and rollback checkpoint admission.
+Occupancy list subclasses keep the original generator; checkpoint subclasses
+keep ordinary deepcopy. All flat-map guards, collision/protection checks and
+physical laws remain unchanged. The 50,000-ID pure-predicate fixture measured
+1.5364→0.7605 ms median, with strict-type, mutation, error and callback checks;
+this isolated predicate result is separate from the physical comparison.
+
+Three alternating fresh before/after pairs of the same late CUSA action measured
+**15.4605→13.3691 seconds median** (13.53% less step time; 1.1564×). Every complete
+outcome/history/snapshot/metrics payload was byte-identical across all six
+independent engines. Each also matched the original full canonical row and
+physical endpoint. An original standalone full action-1,955 payload was
+unavailable; the original comparison does not claim unavailable metrics JSON.
+Setup and export timings are recorded separately per trial. The entire batch
+took 176.729 seconds within 180; every child stayed below 60 seconds and peak
+RSS was 1,124,581,376 bytes, below 1.5 GiB. The 211-file frozen/current manifests
+differ only in `surgical_engine.py` and remained unchanged during timing.
+This is one late action, not a 10× full-workload or online-decision qualification.
+No policy, optimizer, cache publication or editable admission ran.
+
 ## Complete vascular GUI replay
 
-The current production application completed the original **73-action vascular
+The production application at `cc868257` completed the original **73-action vascular
 branch**, from source through its final saved endpoint, with its existing tool
 and effect layers active.
 All **1,149 fresh observed tuples** were CPU-submitted in order, including 113
@@ -559,6 +582,8 @@ Historical microframe hashes were unavailable: their original count/order and
 all 73 canonical boundaries are checked, while fresh microframe identities are
 independently checked against the actual CPU submissions. These are CPU
 submissions, not compositor presentation measurements.
+The receipt binds the complete Python/build manifest. Later source changes
+require fresh cache admission; this result does not authorize their cached replay.
 
 | Full vascular measurement | Result |
 | --- | ---: |
@@ -653,12 +678,13 @@ The latest October 22 validation passed 880 desktop tests: 182 main-process,
 474 renderer and 224 viewer tests. Build passed with the existing bundle-size
 advisory.
 
-The latest Python regression run passed **816 tests, with seven pilot tests
-skipped**, in 118.18 seconds, with two existing Gymnasium advisories. It includes
+The latest Python regression run passed **832 tests, with seven pilot tests
+skipped**, in 119.96 seconds, with two existing Gymnasium advisories. It includes
 surgical/full-case tests, independent geometry checks and the read-only prefix
 contracts, bounded encoder equivalence and exact retained-frame accounting.
 It also checks stock drill query reuse and dynamic fallback for replaced query
-dependencies. The pilot opt-in was not enabled.
+dependencies, plus exact-list C-iterator validation and preserved subclass/error
+paths. The pilot opt-in was not enabled.
 
 For a bounded current-production imported-endpoint check:
 
@@ -755,6 +781,13 @@ Local evidence remains under the ignored directory
   historical diagnostic ancestry binding, complete canonical comparison and
   cProfile costs; the first zero-step missing-receipt failure is preserved in
   `late-cusa-1954-current-profile/`.
+* `removed-integer-guard-experiment/report.json`,
+  `integer-guard-generated-v2/{report.json,qualification.log}`,
+  `integer-guard-final-no-learning-tests.log`, and
+  `integer-guard-late-cusa-comparison/report.json`: isolated predicate,
+  focused/full guarded regressions and six exact fresh late-action comparisons.
+  The first focused-test expectation failure is preserved separately; the
+  production patch did not change between focused runs.
 * `capture-cost-profile/{report,analysis}.json`: two audited states reused for
   bounded, byte-exact no-step capture component diagnostics.
 * `desktop-heavy-field-diagnostic/report.json`: later authenticated field-reuse
