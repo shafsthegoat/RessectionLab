@@ -311,6 +311,16 @@ the same two Gymnasium advisories remain. No pilot opt-in was enabled. The
 optimization is limited to a single unchanged stock-engine contact search;
 read-only prefix engine subclasses retain the original query path.
 
+The current desktop subsequently completed all 73 original vascular rescue
+actions and CPU-submitted all 1,149 fresh observations in order. A separate
+zero-step audit matched every full historical canonical record and the final
+endpoint, with no canonical/session/cache promotion. Full playback including
+cold reconstruction measured 0.512×; same-action CPU intervals measured 1.317×.
+This is legacy saved-replay evidence, not patient CUSA v3 qualification, editable
+planning/RL resume authority, compositor timing or a training result. The full
+primary GUI replay and engineering gates remain open; see
+[rehearsal-performance.md](rehearsal-performance.md) for commands and limits.
+
 ## Generated native workspace companion
 
 The separate evaluation-only exporter creates an openable, explicitly labeled

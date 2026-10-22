@@ -514,9 +514,81 @@ This modest single-action gain does not qualify 10× matched full-workload
 throughput. Read-only prefix subclasses use the original path, so this result
 does not establish another GUI cold-preparation gain. No policy or optimizer ran.
 
+## Complete vascular GUI replay
+
+The current production application completed the original **73-action vascular
+branch**, from source through its final saved endpoint, with its existing tool
+and effect layers active.
+All **1,149 fresh observed tuples** were CPU-submitted in order, including 113
+legitimate repeated state hashes at distinct action/frame positions. No fetched
+observation was duplicated, omitted or left unadmitted. The application stopped
+automatically at action 72/frame 2; the complete reconstructed timeline contained
+73 entries. This qualifies the full vascular saved-replay path, not the primary
+2,148-action operation or an editable planning session.
+
+A separate post-GUI, zero-step process decoded and independently hashed every
+fresh state, checked adjacent ancestry, timestamps, effective activation and
+heavy-field tokens, and reproduced every complete historical canonical action
+record, including fluid/wound/debris accounting. The endpoint matched
+`sha256:af496ffbde3ca2ab71477c9226fe9f846f08171efd308362431414584cd3c87e`.
+Historical microframe hashes were unavailable: their original count/order and
+all 73 canonical boundaries are checked, while fresh microframe identities are
+independently checked against the actual CPU submissions. These are CPU
+submissions, not compositor presentation measurements.
+
+| Full vascular measurement | Result |
+| --- | ---: |
+| Saved simulated duration | 202.569 s |
+| Replay command through final CPU submission, including cold reconstruction | 395.930 s / **0.512×** |
+| Same-action CPU intervals, excluding gaps between actions | 153.827 s / **1.317×** |
+| Entire guarded GUI process, including opening/setup | 413.564 s |
+| Separate post-GUI independent audit | 69.123 s |
+| 73 cold bridge executions, cumulative / p95 | 230.108 s / 8.210 s |
+| 1,076 warm bridge executions, cumulative / p95 | 99.211 s / 116.065 ms |
+| Warm CPU-submission interval, median / p95 | 136.3 / 205.5 ms |
+| Peak whole Python resident memory during GUI | 805,994,496 bytes |
+| Peak retained checkpoints / observations / receipts | 16,757,408 / 67,038,087 / 926,278 bytes |
+
+The retained limits remained 16 MiB for checkpoints, 64 MiB for observations and
+4 MiB for receipts. The 10,235,381-byte immutable source record was borrowed from
+its private owner within the separate 128 MiB input ceiling. The independent
+audit spool held 215,884,624 compressed bytes and an 845,738-byte manifest, below
+their 1 GiB/16 MiB caps. Copy/hash/write time was 0.195 seconds and remained
+included in GUI timing. Source anatomy, JavaScript/GPU allocations and transient
+allocations are additional to the retained graph counts; the whole-process
+Python limit was 3 GiB. No canonical engine session, disk replay cache or frame
+admission was created, even after the endpoint matched.
+
+The cold path is the largest measured remaining cost. Its bridge timing includes
+physical reconstruction, observed-state capture and view preparation; this run
+does not separate those internals. Warm IPC totaled 106.334 seconds (p95 125.805
+ms), while 464 mesh preparations totaled 52.418 seconds and can overlap backend
+work. These totals must not be added as independent wall intervals. The 448 bone
+jobs had median/p95 117.6/139.8 ms. Late vascular actions needed no new surface
+meshes, leaving backend/IPC/handoff costs visible without remeshing.
+
+The actual endpoint screenshot shows the read-only 73/73 label and enlarged
+target/context. Both tools are withdrawn. The optional operative-field camera
+stayed pinned to the early accepted tool, leaving its axial slice outside image
+support. This is a demonstrated view limitation; full-sequence microscope
+readability and an actual-app demonstration remain open.
+The existing equivalent-volume fluid/debris glyphs do not qualify the requested
+droplet, pooling, irrigation-stream and aspiration visualization.
+
+Evidence is under `desktop-full-vascular-current-v3/`. Two failed attempts remain
+preserved: an inert Electron entry-point launch with zero actions, then a
+one-action/three-observation run stopped before action two by immutable-record
+serialization and lazy subclass-inventory checks. The corrected harness keeps
+strict ancestry and inventory guards. A separate no-step audit of that partial
+spool verified its first row/states and correctly refused full-run acceptance.
+The harness fixes passed 15 generated Python and 11 Node checks and independent
+review before the successful retry; no training command or policy ran.
+
 ## Gates that remain open
 
-* **Sustained full-operation playback at 1× remains unqualified.** The short
+* **Sustained full-operation playback at 1× remains unqualified.** The complete
+  vascular replay reached 0.512× including cold reconstruction and 1.317× for
+  same-action CPU intervals. The short
   current-production prefix sample reached 1.058× warm, even with 4× selected,
   while cold preparation of one 30-second action took 20.22 seconds. The
   separate frozen-numerics transport experiment reached 0.720×. Exact source
@@ -525,8 +597,9 @@ does not establish another GUI cold-preparation gain. No policy or optimizer ran
   trusted camera-orbit control delivered 42 Electron frames with a 50.99 ms
   nearest-rank p95 interval. This control includes frame-subscription observer
   overhead and is separate from primary playback timing.
-* Full final primary/vascular GUI playthroughs were not run. Twelve sequential
-  early drilling frames do not qualify all actions or tool families.
+* The full final primary GUI playthrough remains unrun. The complete vascular
+  saved replay passed; this does not qualify all tool families, modern CUSA
+  laws, full-sequence operative readability or primary-case performance.
 * New numerical code requires its own canonical verification and observed-frame
   preparation. Old private caches cannot establish new numerical identity.
 
@@ -593,6 +666,23 @@ close/refocus/restore display check. It waits for settled CPU submission and
 completed GPU fences, then writes before/close/restored screenshots. This flag
 does not change primary playback timers or permit additional physics actions.
 
+For the separate full vascular qualification, use a fresh ignored directory:
+
+```sh
+VASCULAR_FRAME_FIELD=1 \
+PLAYBACK_OUTPUT="$PWD/testcases/outputs/rehearsal-vascular-check" \
+desktop/node_modules/.bin/electron desktop/electron/benchmark-surgical-vascular.cjs \
+  --case "$PWD/testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab"
+```
+
+This permits exactly 73 original saved steps, once and in order; warm frame
+reads must execute none. It has a 600-second GUI watchdog and 3 GiB Python RSS
+ceiling, followed by a separate 180-second no-step audit. Do not run other CPU
+benchmarks or broad tests concurrently. It refuses frozen-code substitution,
+unexpected commands, resumed steps, altered sources and additional timing
+observers. `VASCULAR_FRAME_FIELD=1` performs one ordinary display-only operative
+field framing after an inserted tool is accepted; the camera then stays pinned.
+
 Local evidence remains under the ignored directory
 `testcases/outputs/rl-readiness-20261022/`:
 
@@ -649,6 +739,13 @@ Local evidence remains under the ignored directory
 * `desktop-current-prefix-capture-close-settled/{report,analysis}.json` and
   `before-close-tool.png`, `close-tool.png`, `restored-close-tool.png`: corrected
   actual-app close-view qualification after settled GPU completion.
+* `desktop-full-vascular-current-v3/{report,analysis,physics-guard,spool-audit}.json`,
+  `audited-canonical.actions.jsonl`, `audited-observations.json` and `settled.png`:
+  complete current-production vascular replay and independent post-GUI audit.
+* `desktop-full-vascular-current/launch-failure.json`,
+  `desktop-full-vascular-current-v2/{report,analysis}.json`, and
+  `desktop-full-vascular-current-v2-first-row-audit/`: preserved failed launches
+  and the separately qualified partial no-step diagnostic.
 * `capture-accounting-final-no-learning-tests.log`, `close-tool-{main,renderer,viewer}-tests.log`
   and `close-tool-build.log`: latest guarded regressions and desktop build.
 * `normal-face-scan-benchmark-v2.json`, `normal-face-scan-analysis.json`:
