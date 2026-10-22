@@ -261,3 +261,55 @@ Pilot policy/optimizer tests are now marked `rl_pilot` and skipped by default.
 They require an explicit `--run-rl-pilot-tests` option, which must not be used for
 this task. Ordinary broad pytest selections now retain readiness-only behavior.
 Regression coverage does not replace full patient replay or qualify calibration.
+
+With the opt-in guard active, the final default surgical/full-case Python
+qualification passed **586 tests, skipped 7 pilot tests, in 107.04 seconds** with
+the same two existing Gymnasium advisories. This guarded run performed no pilot
+updates; the two earlier fixture updates disclosed above remain part of this
+task's history.
+
+## Generated native workspace companion
+
+The separate evaluation-only exporter creates an openable, explicitly labeled
+generated `.ressectionlab` workspace. It uses the same unchanged 27 mm³ coupon,
+assumed CUSA v3 profile, catalog tips and fixed 12-request script. It first builds
+`CaseData` and adapts it with `from_case`, then executes the case-bound scene; it
+does not transplant a standalone snapshot onto a different source identity.
+Physical state, action/status sequence and reward/conservation measurements must
+match a separate in-memory execution of the original coupon. Scene and state
+identities deliberately differ because the portable workspace has its own
+source binding.
+
+Use a fresh ignored output directory:
+
+```sh
+.venv/bin/python scripts/export_surgical_readiness_demo.py \
+  --output testcases/outputs/rl-readiness-20261022/scripted-desktop-companion-local \
+  --max-wall-seconds 30
+```
+
+The exporter saves complete actions, protection contract, checkpoint and timeline
+through the ordinary case artifact format, then uses a fresh `BridgeSession` and
+an isolated verified-cache directory to load and canonically inspect the saved
+branch. Public seek must reproduce the first partial CUSA boundary, including
+nonzero exact pending work, and return to the exact final state. It checks the
+workspace bytes remain unchanged. It neither launches the GUI nor changes the
+default readiness command or its earlier receipts.
+
+Measured receipt:
+`testcases/outputs/rl-readiness-20261022/scripted-desktop-companion-isolated/report.json`.
+The command passed in **3.276 seconds**, including the original script (0.940 s),
+case-bound script (0.922 s), save (0.003 s), fresh public canonical inspect
+(0.959 s), pending-boundary seek (0.353 s), and final seek (0.075 s).
+The saved file is
+`scripted-desktop-companion-isolated/GENERATED-readiness-cusa-v3-demo.ressectionlab`
+relative to the same output root. Its case hash is
+`sha256:cc94a2321a1fb006b51fb340dfda32a74cfc3c5872552fa66e640c7097c40316`
+and case-bound endpoint is
+`sha256:7ee8527cc7e3b56c5948a3e6271aafa9fecb802472e3604245d93b7876620fb3`.
+The 15 primitives remain **13 accepted, 2 work partials, 0 rejected**; the partial
+boundary is action 8 with **0.8 mm³ pending capacity**. Final removal is 27 mm³,
+with zero present fluid/debris, active bleeding or pending controls. The receipt
+records zero policy executions, optimizer updates and patient actions, scoped
+only to this exporter. This proves generated native binding and public replay;
+GUI display, patient qualification and clinical calibration remain open.
