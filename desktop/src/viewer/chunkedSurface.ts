@@ -33,12 +33,12 @@ export class ChunkedMaskSurface {
   }
   get indexedChunks(){return !!this.vertices;}
   get retainedBytes(){return this.mask.byteLength+this.chunkBytes+(this.vertices?.retainedBytes??0)+(this.sourceNormals?.retainedBytes??0);}
-  get normalWork(){return {cachedNormals:this.cachedNormalsUsed,normalPreparationMs:this.normalPreparationMs,dirtyNormalVertices:this.cachedNormalsUsed?this.sourceNormals?.lastDirtyVertices??0:0,recomputedNormalFaces:this.cachedNormalsUsed?this.sourceNormals?.lastRecomputedFaces??0:0};}
+  get normalWork(){return {cachedNormals:this.cachedNormalsUsed,normalPreparationMs:this.normalPreparationMs,dirtyNormalVertices:this.cachedNormalsUsed?this.sourceNormals?.lastDirtyVertices??0:0,recomputedNormalFaces:this.cachedNormalsUsed?this.sourceNormals?.lastRecomputedFaces??0:0,scannedNormalFaces:this.cachedNormalsUsed?this.sourceNormals?.lastScannedFaces??0:0,normalFullScan:this.cachedNormalsUsed?this.sourceNormals?.lastFullScan??true:true,normalSelectionBytes:this.sourceNormals?.selectionBytes??0};}
   get totalChunks(){return this.shape.reduce((n,s)=>n*Math.ceil((s+1)/this.chunkSize),1);}
   private extract(coordinate:Point3){
     const low=coordinate.map(n=>n*this.chunkSize-1) as Point3,high=coordinate.map((n,a)=>Math.min(this.shape[a]-1,(n+1)*this.chunkSize-2)) as Point3;
     const key=coordinate.join(','),result=maskSurfaceRegion(this.mask,this.shape,low,high);this.lastRemeshedChunks++;
-    const old=this.chunks.get(key);if(old&&this.sourceNormals)this.sourceNormals.mark(old.data as Uint32Array);if(old)this.chunkBytes-=old.data.byteLength+old.rowOffsets.byteLength;
+    const old=this.chunks.get(key);if(old&&this.sourceNormals)this.sourceNormals.mark(old.data as Uint32Array,coordinate);if(old)this.chunkBytes-=old.data.byteLength+old.rowOffsets.byteLength;
     if(!result.positions.length){this.chunks.delete(key);return;}
     let data:Float32Array|Uint32Array=result.positions;
     if(this.vertices){
@@ -49,7 +49,7 @@ export class ChunkedMaskSurface {
       if(this.retainedBytes>this.indexBudget!)throw new SurfaceIndexBudgetExceeded('Indexed source chunk budget exceeded');
       data=new Uint32Array(result.positions.length/3);this.lastIndexedCorners+=data.length;
       for(let i=0;i<data.length;i++)data[i]=this.vertices.intern(result.positions[3*i],result.positions[3*i+1],result.positions[3*i+2]);
-      this.sourceNormals?.mark(data);
+      this.sourceNormals?.mark(data,coordinate);
       for(let i=0;i<result.rowOffsets.length;i++)result.rowOffsets[i]/=3;
     }else this.chunkBytes+=data.byteLength+result.rowOffsets.byteLength;
     this.chunks.set(key,{low,high,data,rowOffsets:result.rowOffsets});
@@ -88,7 +88,7 @@ export class ChunkedMaskSurface {
     if(affine){
       const normalStarted=performance.now();
       try{
-        this.sourceNormals??=new IncrementalSourceNormals(bytes=>{if(this.mask.byteLength+this.chunkBytes+this.vertices!.retainedBytes+bytes>this.indexBudget!)throw new SurfaceIndexBudgetExceeded('Source normal cache budget exceeded');});
+        this.sourceNormals??=new IncrementalSourceNormals(bytes=>{if(this.mask.byteLength+this.chunkBytes+this.vertices!.retainedBytes+bytes>this.indexBudget!)throw new SurfaceIndexBudgetExceeded('Source normal cache budget exceeded');},{shape:this.shape,chunkSize:this.chunkSize});
         this.sourceNormals.prepare(this.vertices.points,this.vertices.vertexCount,rows,affine);normals=this.sourceNormals.emit(remap,count);this.cachedNormalsUsed=true;
       }catch(error){if(!(error instanceof SurfaceIndexBudgetExceeded))throw error;this.sourceNormals=undefined;}
       this.normalPreparationMs=performance.now()-normalStarted;

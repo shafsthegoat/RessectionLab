@@ -101,6 +101,23 @@ normal-cache fill cost 248.18 ms versus 172.65 ms for a complete calculation;
 the benefit applies to subsequent local edits. Conditioned surface smoothing
 uses its existing calculation.
 
+A later normal pass avoids scanning faces outside replaced chunks and their
+immediate source-grid neighbors. Old and new chunk vertices mark the union;
+remaining contributions retain complete raster row/triangle order. Initial
+admission, affine changes, lost ownership bookkeeping and uncertain inputs use
+the complete scan. The selection bitset adds 37 retained buffer bytes within
+the same 128 MiB budget; it does not alter output indexing or picking.
+
+After five complete delete/undo warmup cycles per implementation, eight balanced
+paired source states measured extraction plus assembly/normals at
+**100.77→92.83 ms median** (7.9% less CPU time). Normal preparation fell
+29.63→20.45 ms, with scanned faces reduced from 2,754,216 to 349,396 and identical
+incident-face sums. Positions, indices and normals matched byte for byte for
+all 19 first-fill/warmup/measured pairs. First fills still use the full scan;
+retained buffers measured 111,711,761 bytes. The initial shorter-warmup receipt
+is preserved separately with its JIT qualification. This CPU result does not
+establish compositor cadence or the full application playback rate.
+
 Actual Electron playback measured action 2, observed frames 0–11, on
 `full-primary`. All measured frame state IDs matched the baseline. The global
 Python monitoring guard recorded zero public physics-step attempts in the
@@ -498,8 +515,8 @@ pnpm --dir desktop test
 pnpm --dir desktop build
 ```
 
-The latest October 22 validation passed 875 desktop tests: 182 main-process,
-474 renderer and 219 viewer tests. Build passed with the existing bundle-size
+The latest October 22 validation passed 880 desktop tests: 182 main-process,
+474 renderer and 224 viewer tests. Build passed with the existing bundle-size
 advisory.
 
 The latest Python regression run passed **791 tests, with seven pilot tests
@@ -604,6 +621,11 @@ Local evidence remains under the ignored directory
   actual-app close-view qualification after settled GPU completion.
 * `capture-accounting-final-no-learning-tests.log`, `close-tool-{main,renderer,viewer}-tests.log`
   and `close-tool-build.log`: latest guarded regressions and desktop build.
+* `normal-face-scan-benchmark-v2.json`, `normal-face-scan-analysis.json`:
+  balanced warmed source CPU comparison, exact complete geometry and scoped
+  extraction/assembly/normal timings; first JIT diagnostic retained separately.
+* `normal-halo-desktop-full-tests.log`, `normal-halo-build.log`: all 880 desktop
+  regressions and the production build after the normal scan change.
 * `prefix-stream-full-no-learning-tests.log`, `prefix-stream-{main,renderer,viewer}-tests.log`
   and `prefix-stream-build.log`: latest prefix stream regression/build checks.
 * `prefix-full-receipt-{renderer,main}-tests.log`, `prefix-viewer-tests.log` and
