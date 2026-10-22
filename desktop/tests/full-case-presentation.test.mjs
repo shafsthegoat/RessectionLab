@@ -51,6 +51,27 @@ test('explicit operative framing chooses inserted active tip then target, change
   assert.equal(operativeFieldFrame(v,null,{}),null);
 });
 const closeView=()=>({stateId:'accepted-state',scene:{regions:[{name:'brain',material:'soft_tissue'},{name:'skull',material:'bone'},{name:'target',material:'tumor',target:true},{name:'artery',material:'vessel'},{name:'unknown',material:'unknown'}]},catalog:[{id:'drill',name:'Research drill',radiusMm:2}],slots:{left:{instrument:'drill',inserted:true,active:true,position:[1,2,3],quaternion:[0,0,0,1],parameters:{}},right:{instrument:'drill',inserted:true,active:false,position:[4,5,6],quaternion:[0,Math.SQRT1_2,0,Math.SQRT1_2],parameters:{}}}});
+test('operative framing excludes recorded approach tips outside the source scan and retains their exact poses',()=>{
+  const source={shape:[220,220,181],affine:[[-1,0,0,109.53500366210938],[0,1,0,-123.558837890625],[0,0,1,-554.25],[0,0,0,1]],frame:'RAS+'};
+  const v=closeView();v.slots.left.position=[-10.464996337890625,30.441162109375,-369.9433333333333];v.slots.right.inserted=false;
+  const target=[-15.889134651090231,8.01669131252251,-428.68486645239943],before=structuredClone({source,v,target});
+  const field=operativeFieldFrame(v,target,{},source);
+  assert.equal(field.anchor,'target');assert.deepEqual(field.center,target);assert(validCameraState(field.settings.camera));
+  assert.deepEqual({source,v,target},before);
+  v.slots.right.inserted=true;v.slots.right.position=[0,0,-430];
+  const inside=operativeFieldFrame(v,target,{},source);assert.equal(inside.anchor,'instrument');assert.deepEqual(inside.center,[0,0,-430]);
+  v.slots.right.inserted=false;assert.equal(operativeFieldFrame(v,null,{},source),null);
+  assert.equal(operativeFieldFrame(v,[0,0,-370],{},source),null);assert.equal(operativeFieldFrame(v,target,{},null),null);
+});
+test('operative source containment uses inverse RAS affine for oblique and LPS grids',()=>{
+  const v=closeView();v.slots.right.inserted=false;
+  const oblique={shape:[11,11,11],affine:[[1,1,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]],frame:'RAS+'};
+  v.slots.left.position=[1,9,5]; // Inside the world AABB, outside acquired voxel support.
+  assert.deepEqual(operativeFieldFrame(v,[10,5,5],{},oblique).center,[10,5,5]);
+  const lps={shape:[11,11,11],affine:[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]],frame:'LPS+'};
+  v.slots.left.position=[-2,-3,4];assert.deepEqual(operativeFieldFrame(v,null,{},lps).center,[-2,-3,4]);
+  assert.equal(operativeFieldFrame(v,null,{}, {...lps,affine:lps.affine.map(()=>[0,0,0,0])}),null);
+});
 test('close framing uses exact accepted effective-active tip, bounded microscope field and valid mm camera without mutating source or settings',()=>{
   const view=closeView(),settings={layerOpacity:{brain:.6,custom:.7},layerColor:{brain:'#123456'},clipBox:{enabled:true,min:[0,0,0],max:[20,20,20]},smoothSurfaces:false},before=structuredClone({view,settings});
   const field=closeToolFrame(view,'left',{left:false,right:true},settings);

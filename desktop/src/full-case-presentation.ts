@@ -1,13 +1,26 @@
 import type {FullCaseRehearsal,SurgicalView} from './surgical-types';
 import type {Point3} from './viewer/coordinates';
+import {inverseAffine,rasAffine,transformPoint} from './viewer/coordinates.ts';
+import type {ViewerVolume} from './viewer/contracts';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
 
 /** An explicit display command, detached from the source and recorded engine. */
-export function operativeFieldFrame(view:SurgicalView,targetCenter:Point3|null,settings:ViewerWorkspaceSettings) {
+export function operativeFieldFrame(view:SurgicalView,targetCenter:Point3|null,settings:ViewerWorkspaceSettings,source?:Pick<ViewerVolume,'shape'|'affine'|'frame'>|null) {
   const valid=(point:unknown):point is Point3=>Array.isArray(point)&&point.length===3&&point.every(Number.isFinite);
-  const inserted=Object.values(view.slots).filter(slot=>slot.inserted&&valid(slot.position));
+  let inSource=(point:unknown):point is Point3=>valid(point);
+  if(source===null)return null;
+  if(source){
+    try{
+      if(source.shape.length!==3||!source.shape.every(n=>Number.isInteger(n)&&n>0))return null;
+      const inverse=inverseAffine(rasAffine(source.affine,source.frame));
+      // Test the acquired voxel grid, not its larger world-axis bounding box.
+      // A recorded approach tip can legitimately remain outside the scan.
+      inSource=(point:unknown):point is Point3=>valid(point)&&transformPoint(inverse,point).every((v,i)=>Number.isFinite(v)&&v>=0&&v<=source.shape[i]-1);
+    }catch{return null;}
+  }
+  const inserted=Object.values(view.slots).filter(slot=>slot.inserted&&inSource(slot.position));
   const tip=inserted.find(slot=>slot.active)??inserted[0];
-  const center=tip?.position??targetCenter;if(!valid(center))return null;
+  const center=tip?.position??targetCenter;if(!inSource(center))return null;
   const target=[...center] as Point3;
   let direction:Point3=[35,-45,40],up:Point3=[0,0,1];
   const quaternion=tip?.quaternion;
@@ -19,7 +32,7 @@ export function operativeFieldFrame(view:SurgicalView,targetCenter:Point3|null,s
     up=[2*(x*y-w*z),1-2*(x*x+z*z),2*(y*z+w*x)];
   }
   const scale=115/Math.hypot(...direction),position=direction.map((n,i)=>target[i]+n*scale) as Point3;
-  return {center:target,settings:{...settings,layout:'3d-focus' as const,camera:{target,position,up}}};
+  return {center:target,anchor:tip?'instrument' as const:'target' as const,settings:{...settings,layout:'3d-focus' as const,camera:{target,position,up}}};
 }
 
 /** Accepted instruments only: an observed activation overrides the stored slot flag. */

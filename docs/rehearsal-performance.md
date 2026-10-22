@@ -1333,3 +1333,43 @@ Final surgical/full-case/geometry regressions passed 1,081 tests in 181.42 secon
 with the pilot module entirely excluded and two existing Gymnasium advisories.
 External wall was 181.853 seconds and peak sampled tree RSS 1,085,046,784 bytes,
 within 240 seconds/3 GiB. No desktop source changed in this milestone.
+
+## Operative framing within source imaging
+
+The blank axial pane in v8 was pinned by its explicit framing command during
+approach, at vascular action 1/frame 2, state `3ab9aea7…`. The recorded drill tip
+was at Z = −369.9433 mm; the original acquired MRI ends at −374.25 mm. Its
+220 × 220 × 181 grid and affine therefore put this valid recorded approach tip
+**4.3067 mm outside the scan**. This is not a missing image slice or a modified
+tool pose. Existing audited compressed bytes and original array headers confirm
+the diagnosis; both original archives were rehashed unchanged.
+
+“Frame operative field” now considers inserted tools inside the acquired voxel
+grid, then the existing annotation/context center when it belongs to the same
+primary source. It uses the inverse RAS affine, including LPS and oblique grids,
+rather than an enclosing world-axis box. It does not clamp a recorded pose,
+invent an anatomical point or follow automatically. The App updates the active
+image cursor; a selected alternate source cannot inherit the primary annotation.
+Feedback says annotation rather than claiming a tumor target where only broad
+support anatomy exists.
+
+All 481 renderer tests passed in 6.364 seconds; external wall was 6.558 seconds
+and sampled tree RSS 805,830,656 bytes, below 90 seconds/1.5 GiB. Type checking
+and production build passed in 1.781 seconds externally, with the existing bundle
+size advisory. Evidence is `operative-field-source-containment-v1.json` and
+`renderer-normals-{renderer,build}-final-framing-v1.{json,log}`. Updated actual-app
+pixels and the complete visible-interaction sequence remain unverified.
+
+### Rejected narrower normal invalidation
+
+A separate renderer candidate compared changed triangle ranges within replaced
+chunks. It preserved complete canonical position/index/normal buffers and reduced
+dirty vertices from 5,754 to 14 in the source-bone delete/undo fixture. Its complete
+update-plus-assembly median nevertheless worsened from **103.452 to 108.846 ms**
+in six balanced warm pairs against frozen `0b7d38d9`; comparison work outweighed
+the saved reduction. The candidate and its dependent test were removed from
+production, with exact source and receipts preserved under
+`changed-triangle-normals-v1/`. The job stayed within 60 seconds/1 GiB and made
+zero simulator, GUI, policy or optimizer calls. A smaller dirty count alone is
+not a performance improvement. Complete index/vertex export remains the next
+demonstrated mesh bottleneck.
