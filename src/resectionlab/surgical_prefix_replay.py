@@ -108,6 +108,192 @@ def _require_frozen(value):
         raise ValueError('Borrowed input must be exact private recursively frozen JSON')
 
 
+def _json_string_chunks(value):
+    """Default ASCII escaping, with at most 1,024 source codepoints at once.
+
+    One non-BMP codepoint may need twelve ASCII bytes (two surrogate escapes).
+    Built-in string operations preserve the encoder's treatment of subclasses
+    without invoking their overridden slicing/length/string methods.
+    """
+    length = str.__len__(value)
+    if length <= 1024:
+        yield json.encoder.encode_basestring_ascii(value)
+        return
+    yield '"'
+    for start in range(0, length, 1024):
+        part = str.__getitem__(value, slice(start, start + 1024))
+        yield json.encoder.encode_basestring_ascii(part)[1:-1]
+    yield '"'
+
+
+def _c_json_bound(value, remaining=16384, active=None):
+    """Conservative encoded-byte admission for small exact native JSON trees.
+
+    Refuse custom objects, nonfinite floats, large integers/strings and more
+    than 512 entries before C serialization. A non-BMP codepoint needs up to
+    twelve ASCII bytes. The returned bound includes every delimiter.
+    """
+    kind = type(value)
+    if kind is str:
+        length = len(value)
+        size = 12 * length + 2 if length <= 1024 else remaining + 1
+    elif kind is int:
+        size = 21 if value.bit_length() <= 64 else remaining + 1
+    elif kind is float:
+        size = 25 if math.isfinite(value) else remaining + 1
+    elif value is None:
+        size = 4
+    elif kind is bool:
+        size = 5
+    elif kind in (dict, list, tuple):
+        if len(value) > 512:
+            return None
+        size = 2 + max(0, len(value) - 1)
+        if size > remaining:
+            return None
+        active = set() if active is None else active
+        marker = id(value)
+        if marker in active:
+            return None
+        active.add(marker)
+        try:
+            if kind is dict:
+                for key, item in value.items():
+                    if type(key) is not str:
+                        return None
+                    key_size = _c_json_bound(key, remaining - size - 1, active)
+                    if key_size is None:
+                        return None
+                    size += key_size + 1
+                    item_size = _c_json_bound(item, remaining - size, active)
+                    if item_size is None:
+                        return None
+                    size += item_size
+            else:
+                for item in value:
+                    item_size = _c_json_bound(item, remaining - size, active)
+                    if item_size is None:
+                        return None
+                    size += item_size
+        finally:
+            active.remove(marker)
+    else:
+        return None
+    return size if size <= remaining else None
+
+
+def _json_chunks(value, raw_limit):
+    """Compact JSON with bounded C batches for exact native JSON subtrees.
+
+    Container traversal follows JSONEncoder's insertion order, basic key
+    coercions, circular checks and subclass iteration. Only exact lists/tuples
+    are batched speculatively. A batch has at most 512 entries and a conservative
+    full encoded-byte bound of 16 KiB, including escaping and delimiters.
+    Other scalars retain the standard encoder's conversion/error behavior.
+    """
+    encoder = json.JSONEncoder(separators=(',', ':'), allow_nan=False)
+    active = set()
+
+    def scalar(item):
+        if isinstance(item, int) and int.bit_length(item) * 3 // 10 > raw_limit:
+            # A conservative decimal-length lower bound avoids converting a
+            # giant integer before discovering it cannot fit the raw budget.
+            raise PrefixBudgetExceeded('Decoded JSON budget exceeded')
+        yield from encoder.iterencode(item)
+
+    def walk(item):
+        if _c_json_bound(item) is not None:
+            yield json.dumps(item, separators=(',', ':'), allow_nan=False)
+        elif isinstance(item, str):
+            yield from _json_string_chunks(item)
+        elif isinstance(item, (list, tuple, dict)):
+            dictionary = isinstance(item, dict)
+            if not item:
+                yield '{}' if dictionary else '[]'
+                return
+            marker = id(item)
+            if marker in active:
+                raise ValueError('Circular reference detected')
+            active.add(marker)
+            try:
+                yield '{' if dictionary else '['
+                first = True
+                if dictionary:
+                    batch = {}
+                    batch_size = 2
+                    for key, child in item.items():
+                        key_size = _c_json_bound(key) if type(item) is dict and type(key) is str else None
+                        child_size = _c_json_bound(child) if key_size is not None else None
+                        entry_size = (key_size + 1 + child_size) if child_size is not None else None
+                        if batch and (entry_size is None or len(batch) == 512
+                                      or batch_size + 1 + entry_size > 16384):
+                            if not first:
+                                yield ','
+                            first = False
+                            yield json.dumps(batch, separators=(',', ':'), allow_nan=False)[1:-1]
+                            batch = {}
+                            batch_size = 2
+                        if entry_size is not None and entry_size + 2 <= 16384:
+                            batch_size += entry_size + int(bool(batch))
+                            batch[key] = child
+                            continue
+                        if not isinstance(key, str):
+                            if key is None or isinstance(key, (int, float)):
+                                key = ''.join(scalar(key))
+                            else:
+                                raise TypeError('keys must be str, int, float, bool or None, '
+                                                f'not {key.__class__.__name__}')
+                        if not first:
+                            yield ','
+                        first = False
+                        yield from _json_string_chunks(key)
+                        yield ':'
+                        yield from walk(child)
+                    if batch:
+                        if not first:
+                            yield ','
+                        yield json.dumps(batch, separators=(',', ':'), allow_nan=False)[1:-1]
+                elif type(item) in (list, tuple):
+                    batch = []
+                    batch_size = 2
+                    for child in item:
+                        child_size = _c_json_bound(child)
+                        if batch and (child_size is None or len(batch) == 512
+                                      or batch_size + 1 + child_size > 16384):
+                            if not first:
+                                yield ','
+                            first = False
+                            yield json.dumps(batch, separators=(',', ':'), allow_nan=False)[1:-1]
+                            batch = []
+                            batch_size = 2
+                        if child_size is not None and child_size + 2 <= 16384:
+                            batch_size += child_size + int(bool(batch))
+                            batch.append(child)
+                            continue
+                        if not first:
+                            yield ','
+                        first = False
+                        yield from walk(child)
+                    if batch:
+                        if not first:
+                            yield ','
+                        yield json.dumps(batch, separators=(',', ':'), allow_nan=False)[1:-1]
+                else:
+                    # Respect list/tuple subclass iterators instead of slicing
+                    # or speculatively encoding custom container contents.
+                    for child in item:
+                        if not first:
+                            yield ','
+                        first = False
+                        yield from walk(child)
+                yield '}' if dictionary else ']'
+            finally:
+                active.remove(marker)
+        else:
+            yield from scalar(item)
+    yield from walk(value)
+
+
 def _encode(value, *, compressed_limit, raw_limit, on_growth=None):
     """Bound compressed growth while streaming; never buffer a whole action."""
     compressor = zlib.compressobj(1)
@@ -120,7 +306,7 @@ def _encode(value, *, compressed_limit, raw_limit, on_growth=None):
         if on_growth is not None:
             on_growth(len(output) + len(chunk))
         output.extend(chunk)
-    for text in json.JSONEncoder(separators=(',', ':'), allow_nan=False).iterencode(value):
+    for text in _json_chunks(value, raw_limit):
         raw = text.encode()
         raw_bytes += len(raw)
         if raw_bytes > raw_limit:
@@ -164,7 +350,7 @@ class _FrameStage:
         # Growth callbacks evict old actions before appending compressed bytes.
         base = _owned_bytes(self.frames + [row]) + 512
         blob = _encode(engine.state, compressed_limit=max(0, self.owner._max_frame_bytes - base
-                       - _owned_bytes(self.owner._stream_nonce)),
+                       - self.owner._stream_metadata_bytes),
                        raw_limit=self.owner._max_json_bytes,
                        on_growth=lambda size: self.owner._frame_room(base + size))
         row['state'] = blob
@@ -262,6 +448,8 @@ class SurgicalPrefixReplay:
         self._history = []
         self._checkpoints = OrderedDict()
         self._frames = OrderedDict()
+        self._retained_frame_bytes = _owned_bytes(self._frames)
+        self._stream_metadata_bytes = _owned_bytes(self._stream_nonce)
         self._failure = None
         self._blocked = False
         self._endpoint_verified = False
@@ -362,14 +550,32 @@ class SurgicalPrefixReplay:
         return engine
 
     def _frame_bytes(self):
-        return _owned_bytes(self._frames) + _owned_bytes(self._stream_nonce)
+        # Committed frame graphs are private and never mutated after publish.
+        # Recount exactly at mapping mutations, not on every compressed chunk.
+        return self._retained_frame_bytes + self._stream_metadata_bytes
 
     def _frame_room(self, stage_bytes):
         while self._frames and self._frame_bytes() + stage_bytes > self._max_frame_bytes:
             self._frames.popitem(last=False)
             self._frames = OrderedDict(self._frames)
+            self._retained_frame_bytes = _owned_bytes(self._frames)
         if self._frame_bytes() + stage_bytes > self._max_frame_bytes:
             raise PrefixBudgetExceeded('Observed frame retention budget exceeded during capture')
+
+    def _publish_frames(self, index, frames):
+        # Exact whole-map accounting includes shared keys and OrderedDict table
+        # growth. An additive per-action estimate would miss those changes.
+        proposed = OrderedDict(self._frames)
+        proposed[index] = frames
+        retained = _owned_bytes(proposed)
+        while retained + self._stream_metadata_bytes > self._max_frame_bytes:
+            if len(proposed) == 1:
+                raise PrefixBudgetExceeded('Observed frame publication exceeds retention budget')
+            proposed.popitem(last=False)
+            proposed = OrderedDict(proposed)
+            retained = _owned_bytes(proposed)
+        self._frames = proposed
+        self._retained_frame_bytes = retained
 
     def _validate_endpoint(self, engine):
         if len(engine.actions) != len(self._snapshot['actions']):
@@ -394,7 +600,7 @@ class SurgicalPrefixReplay:
         return {'verifiedThrough': len(self._history), 'totalActions': len(self._snapshot['actions']),
                 'checkpointBytes': _owned_bytes(self._checkpoints), 'maxCheckpointBytes': self._max_checkpoint_bytes,
                 'frameBytes': self._frame_bytes(), 'maxFrameBytes': self._max_frame_bytes,
-                'streamMetadataBytes': _owned_bytes(self._stream_nonce),
+                'streamMetadataBytes': self._stream_metadata_bytes,
                 'historyBytes': self._history_bytes(self._history), 'maxHistoryBytes': self._max_history_bytes,
                 'historyActionsSharedWithBoundedInput': True,
                 'immutableInputBytes': self._input_bytes,
@@ -475,7 +681,7 @@ class SurgicalPrefixReplay:
                 self._check(action_check, full=True)
                 self._put_checkpoint(index + 1, engine, checkpoint)
                 self._history.append(row)
-                self._frames[index] = stage.frames
+                self._publish_frames(index, stage.frames)
                 self._failure = None
                 self._validate_endpoint(engine)
             except BaseException as error:

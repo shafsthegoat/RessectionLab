@@ -296,6 +296,14 @@ checks cover generation/field acknowledgments, exact restored views, one hash
 per restored state and strict separation from canonical command arguments.
 It adds no RL authority or training; imported prefix frames remain read only.
 
+The subsequent bounded capture encoder and exact retained-frame accounting
+qualification passed **791 tests, with 7 pilot tests skipped, in 122.93 seconds**,
+with the same two Gymnasium advisories. The pilot opt-in remained disabled.
+These changes improve read-only archive preparation without changing numerical
+laws, observations, rewards or RL authority. The two earlier fixture updates
+disclosed above remain part of this task's history; this guarded run performed
+no pilot training.
+
 ## Generated native workspace companion
 
 The separate evaluation-only exporter creates an openable, explicitly labeled

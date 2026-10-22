@@ -472,3 +472,98 @@ def test_stream_metadata_is_immutable_detached_and_charged_to_frame_cap():
     assert limited.statistics['verifiedThrough'] == 2
     assert limited.statistics['frameBytes'] <= cap
     assert 0 not in limited.statistics['frameActions']
+
+
+def assert_frame_accounting(replay):
+    exact = prefix._owned_bytes(replay._frames)
+    assert replay._retained_frame_bytes == exact
+    assert replay._stream_metadata_bytes == prefix._owned_bytes(replay._stream_nonce)
+    assert replay._frame_bytes() == exact + replay._stream_metadata_bytes
+    assert replay.statistics['frameBytes'] == replay._frame_bytes()
+    assert replay._frame_bytes() <= replay.statistics['maxFrameBytes']
+
+
+def test_committed_frame_counter_is_exact_and_unchanged_room_reads_do_not_rescan(monkeypatch):
+    engine = bone_episode()
+    replay = SurgicalPrefixReplay(engine.scene, engine.snapshot())
+    assert_frame_accounting(replay)
+    for index in (1, 2):
+        replay.seek(index)
+        assert_frame_accounting(replay)
+    before = replay.statistics['frameBytes']
+    scans = []
+    original = prefix._owned_bytes
+    def observed(value, seen=None):
+        if value is replay._frames:
+            scans.append(value)
+        return original(value, seen)
+    # No guarded engine read occurs under this instrumentation: only quota
+    # callbacks and statistics over already committed immutable frame graphs.
+    monkeypatch.setattr(prefix, '_owned_bytes', observed)
+    for _ in range(100):
+        replay._frame_room(1024)
+        assert replay.statistics['frameBytes'] == before
+    assert scans == []
+
+
+def test_exact_counter_survives_eviction_cancellation_retry_and_failed_capture():
+    engine = bone_episode()
+    reference = SurgicalPrefixReplay(engine.scene, engine.snapshot())
+    reference.seek(2)
+    window = max(prefix._owned_bytes(OrderedDict([(index, frames)]))
+                 for index, frames in reference._frames.items())
+    cap = window + reference.statistics['streamMetadataBytes'] + 1024
+    replay = SurgicalPrefixReplay(engine.scene, engine.snapshot(), max_frame_bytes=cap)
+    replay.seek(2)
+    assert_frame_accounting(replay)
+    assert replay.statistics['frameActions'] == [1]
+    def cancel_after_eviction():
+        if not replay.statistics['frameActions']:
+            raise RuntimeError('cancel after private committed-frame eviction')
+    with pytest.raises(RuntimeError, match='cancel after private'):
+        replay.seek(3, check=cancel_after_eviction)
+    assert replay.statistics['verifiedThrough'] == 2
+    assert replay.statistics['frameActions'] == []
+    assert_frame_accounting(replay)
+    result = replay.seek(3)
+    assert result['verification']['archiveEndpointVerified']
+    assert_frame_accounting(replay)
+    saved = engine.snapshot()
+    saved['actions'][2] = {'slot': 'right', 'operation': 'inspect', 'duration': 10.}
+    failed = SurgicalPrefixReplay(engine.scene, saved, max_frame_bytes=cap)
+    result = failed.seek(3)
+    assert result['position'] == 2
+    assert result['verification']['failure']['type'] == 'PrefixBudgetExceeded'
+    assert 2 not in failed.statistics['frameActions']
+    assert_frame_accounting(failed)
+
+
+def test_exact_publication_counter_includes_map_growth_aliases_and_atomic_overflow():
+    # Generated private quota data only: no engine/action execution or readable
+    # frame authority is involved in testing mapping-capacity accounting.
+    owner = object.__new__(SurgicalPrefixReplay)
+    owner._frames = OrderedDict()
+    owner._retained_frame_bytes = prefix._owned_bytes(owner._frames)
+    owner._stream_nonce = 'private counter test nonce'
+    owner._stream_metadata_bytes = prefix._owned_bytes(owner._stream_nonce)
+    owner._max_frame_bytes = 4096
+    shared = {'flapComponents': 'a' * 64}
+    evicted = False
+    for index in range(30):
+        frame = {'state': bytes([index]) * 150, 'fieldTokens': shared,
+                 'effectiveActivation': {'left': True, 'right': False}}
+        owner._publish_frames(index, [frame])
+        assert owner._retained_frame_bytes == prefix._owned_bytes(owner._frames)
+        assert owner._frame_bytes() <= owner._max_frame_bytes
+        evicted |= next(iter(owner._frames)) > 0
+    assert evicted
+    original = owner._frames
+    before = owner._frame_bytes()
+    with pytest.raises(PrefixBudgetExceeded, match='publication'):
+        owner._publish_frames(30, [{'state': b'x' * owner._max_frame_bytes}])
+    assert owner._frames is original and owner._frame_bytes() == before
+    with pytest.raises(PrefixBudgetExceeded, match='during capture'):
+        owner._frame_room(owner._max_frame_bytes)
+    assert owner._frames == {}
+    assert owner._retained_frame_bytes == prefix._owned_bytes(owner._frames)
+    assert owner._frame_bytes() <= owner._max_frame_bytes
