@@ -702,7 +702,8 @@ RESSECTIONLAB_PREFIX_JSON_BUILD="$PWD/testcases/outputs/prefix-json-local/build-
 
 The idle-cooling build variable is independent; set both to select both kernels.
 Other runtimes and packaged sidecars need separate qualification. The v4 GUI
-receipt below predates this codec and does not establish its application gain.
+receipt below predates this codec; the separate v5 receipt qualifies its selected
+saved-replay implementation and measures its application result.
 
 ## Complete vascular GUI replay
 
@@ -891,11 +892,88 @@ native/prelaunch binding in the sibling
 `desktop-full-vascular-native-history-v4-binding.json`. This receipt qualifies
 that read-only saved replay implementation, not subsequent source versions.
 
+### Full vascular qualification with native JSON snapshots
+
+The next full run selected both explicit native builds and passed all 15 harness
+checks. It executed the 73 original actions once, CPU-submitted all 1,149 audited
+tuples in order, and preserved all 113 adjacent repeated state IDs. The separate
+zero-step audit matched every complete historical canonical record and the saved
+endpoint. Available fresh trajectories also matched both v3 and v4 exactly;
+original historical all-microframe IDs remain unavailable. All source, renderer,
+C/build/binary/helper-image bindings and the original archive stayed unchanged.
+No canonical, planning or RL authority was granted.
+
+A separate local `PY_RETURN` observer recorded **1,369 actual native JSON
+admissions, zero fallbacks and zero outside-command returns**. Warm reads encoded
+zero snapshots. These counts are encoder calls, not frames, and the observer
+retains only numeric counters. Its cost is included. The original global
+physics-step guard remains separate. Focused qualification passed **28 tests in
+1.023 seconds** (1.359 s external wall, 87,244,800-byte process-tree RSS). The first
+run's four failures exposed exit cleanup masking the original drift diagnostic;
+both context-manager exits now preserve that error while retaining sticky
+failure and unconditional cleanup. Original failure evidence is preserved.
+
+| Native JSON full vascular measurement | Result |
+| --- | ---: |
+| Play command through automatic stop, including cold reconstruction | 388.511 s / **0.5214×** |
+| Same-action CPU-submission intervals | 171.944 s / **1.1781×** |
+| Guarded Python sidecar / separate zero-step audit | 409.236 / 78.190 s |
+| 73 cold bridge executions, cumulative / p95 | 202.633 s / 6.729 s |
+| 1,076 warm bridge executions, cumulative / median / p95 | 113.541 s / 108.405 / 151.681 ms |
+| Warm CPU-submission gaps, median / p95 | 145.35 / 238.4 ms |
+| Peak whole Python resident memory | 751,730,688 bytes |
+
+Play-command wall time was **5.43% lower** than v4, while same-action intervals
+were **7.98% longer**. The renderer and JS benchmark were unchanged, but codec,
+seal and monitoring changes plus separate host runs prevent isolating causality.
+Cold reconstruction improved in this observation; warm reads did not. Neither
+1× cold-inclusive playback nor the delivered-frame target passed. Component
+measurements must not be substituted for the full-run result.
+
+Retained checkpoint/frame/history/input peaks remained 16,757,408 / 67,038,087 /
+137,061 / 10,235,381 bytes, within the unchanged 16/64/4/128 MiB limits. The
+215,884,624-byte spool and 845,738-byte manifest stayed within 1 GiB/16 MiB;
+0.201 seconds of spool copy/hash/write is included. Python and audit memory and
+the separate 600/180-second limits passed. These counters are separate from
+whole Electron/GPU memory.
+
+Actual endpoint pixels show 73/73 read only, disabled close-tool view, a large
+purple target with static yellow glyphs and dense translucent context. The
+pinned axial plane at −369.9 mm is outside image support and blank. This endpoint
+does not establish full-sequence readability, flowing effects or compositor
+cadence. Full-primary playback remains open. No policy or optimizer ran in this
+replay/audit; the earlier two fixture updates remain separately disclosed.
+
+Evidence is `desktop-full-vascular-native-json-v5/{report,analysis,physics-guard,spool-audit}.json`,
+with sibling prelaunch/post-run binding receipts. The codec milestone is
+`66fe1b18`, and the reviewed qualification monitor is `2e379cc3`.
+
+A subsequent no-step probe reused the same two audited v3 states under both
+current native build selections. Exactly 12 decode/full-digest rounds preserved
+every expected state ID; no owner, engine or geometry constructor ran.
+
+| Separate warm-read component median | Early state | Late state |
+| --- | ---: | ---: |
+| Bounded zlib/JSON decode | 9.726 ms | 11.423 ms |
+| Complete production state digest | 30.069 ms | 34.863 ms |
+| Separate exact admission probe | 17.958 ms | 18.707 ms |
+| Separate sorted JSON/UTF-8/SHA probe | 11.778 ms | 15.420 ms |
+
+The two implementation-check seal pairs together measured 18.871 ms median.
+These separate probes are not additive timing partitions or complete warm-bridge
+attribution; view/metrics, bridge JSON-budget checks and IPC remain unmeasured.
+The single probe took 3.790 seconds with 175,947,776-byte sampled process-tree
+RSS (<30 s/1 GiB), and 53,869,398-byte logical payload scratch (<64 MiB).
+Source, inputs, runtime, both builds and exact state identities stayed unchanged.
+Evidence is `warm-read-decomposition-probe/`. It identifies a digest target for
+another bounded prototype; it qualifies no further production optimization.
+
 ## Gates that remain open
 
 * **Sustained full-operation playback at 1× remains unqualified.** The complete
-  later vascular replay reached 0.493× including cold reconstruction and 1.272×
-  for same-action CPU intervals; the earlier run reached 0.512×/1.317×. The short
+  latest vascular replay reached 0.521× including cold reconstruction and 1.178×
+  for same-action CPU intervals; prior runs reached 0.493×/1.272× and
+  0.512×/1.317×. The short
   current-production prefix sample reached 1.058× warm, even with 4× selected,
   while cold preparation of one 30-second action took 20.22 seconds. The
   separate frozen-numerics transport experiment reached 0.720×. Exact source

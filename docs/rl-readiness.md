@@ -381,8 +381,14 @@ was 161.721 seconds (<240), sampled process-tree RSS 1,606,320,128 bytes (<3 GiB
 and all 259 bound source/test files stayed unchanged. This capture optimization
 grants no learning, planning or canonical authority. No learning path was selected
 in this qualification; the earlier two fixture updates remain disclosed above.
-The prior v4 GUI result does not qualify this later codec. Explicit build/launch
-commands and platform/scratch limits are in
+The separate v5 GUI run then qualified all 73 saved vascular actions and 1,149
+exact ordered observations, with every complete historical canonical record and
+endpoint matching in its zero-step audit. It observed 1,369 native JSON
+admissions with zero fallbacks. Full playback measured **0.5214×** (388.511 s),
+5.43% less wall time than v4; same-action intervals slowed to **1.1781×**.
+The 1× full-playback gate remains open. This saved read-only replay grants no
+planning or RL authority. Explicit build/launch commands, platform/scratch
+limits and comparison caveats are in
 [rehearsal-performance.md](rehearsal-performance.md).
 
 ## Generated native workspace companion
