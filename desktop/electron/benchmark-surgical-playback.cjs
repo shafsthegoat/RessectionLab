@@ -14,6 +14,8 @@ fs.mkdirSync(output,{recursive:true});
 const source=path.resolve(process.env.PLAYBACK_PYTHON_SOURCE||path.join(root,'src'));
 const bridgeSource=process.env.PLAYBACK_BRIDGE_SOURCE?path.resolve(process.env.PLAYBACK_BRIDGE_SOURCE):null;
 const prefixMode=process.env.PLAYBACK_PREFIX==='1';
+const closeToolMode=process.env.PLAYBACK_CLOSE_TOOL==='1';
+if(closeToolMode&&!prefixMode)throw Error('Close-tool check requires the bounded current-production prefix lane');
 if(prefixMode&&(source!==path.join(root,'src')||bridgeSource||process.env.PLAYBACK_IMPORT_ONLY||process.env.PLAYBACK_ORBIT||process.env.PLAYBACK_FIELD_SIZES))throw Error('Prefix qualification requires current production source and no bridge substitution, import-only or observers');
 const sourcePath=process.argv[process.argv.indexOf('--case')+1];
 if(!process.argv.includes('--case')||!sourcePath)throw Error('Supply an existing saved --case');
@@ -143,7 +145,42 @@ app.on('browser-window-created',(_,window)=>{
         report.camera.frames=await js(`window.playbackFrames.filter(f=>f.at>=${report.camera.startedRenderer}&&f.at<=${report.camera.endedRenderer})`);
         window.webContents.debugger.detach();
       }
+      if(closeToolMode){
+        // Display-only checks run after all playback timers/submissions settle.
+        // Appearance changes retain adaptive interaction for 150 ms. A quiet
+        // worker/100 ms delay cannot establish settled display restoration.
+        await js(`window.closeToolGpus=[];document.addEventListener('anatomy-gpu',e=>window.closeToolGpus.push(e.detail));`);
+        const ui=()=>js(`(()=>{const section=document.querySelector('[aria-label="Close instrument view"]'),frame=window.playbackFrames.at(-1);return {stateId:document.querySelector('.surgical-panel')?.dataset.stateId,pinnedStateId:section?.dataset.pinnedStateId,pinnedSlot:section?.dataset.pinnedSlot,fieldMm:Number(section?.dataset.fieldMm),frame:frame?{serial:frame.serial,interactive:frame.interactive,surfaceQuality:frame.surfaceQuality,stateId:frame.surgicalStateId}:null,ranges:[...document.querySelectorAll('input[type="range"]')].map((e,i)=>({name:e.getAttribute('aria-label')||e.id||String(i),value:e.value})),slices:[...document.querySelectorAll('.rl-viewer-slice-image')].map(e=>e.getAttribute('aria-label'))};})()`);
+        const settled=async(serial)=>{
+          await idle();
+          await wait(`window.playbackFrames.some(f=>f.serial>${serial}&&!f.interactive&&f.surfaceQuality?.adaptive===false&&f.surgicalStateId===${JSON.stringify(report.final.stateId)}&&window.closeToolGpus.some(g=>g.serial===f.serial&&g.completed===true))`);
+        };
+        await wait(`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Close tool view'&&!b.disabled)`);
+        await wait(`window.playbackFrames.at(-1)?.interactive===false&&window.playbackFrames.at(-1)?.surfaceQuality?.adaptive===false`);
+        report.closeTool={scope:'Post-playback optional display controls; no new replay request or physics permitted',started:performance.now(),before:await ui()};
+        fs.writeFileSync(path.join(output,'before-close-tool.png'),(await window.webContents.capturePage()).toPNG());
+        await click('Close tool view');await wait(`!!document.querySelector('[aria-label="Close instrument view"]')?.dataset.pinnedStateId`);await settled(report.closeTool.before.frame.serial);
+        report.closeTool.close=await ui();
+        fs.writeFileSync(path.join(output,'close-tool.png'),(await window.webContents.capturePage()).toPNG());
+        // Refocusing an unchanged accepted tip may be a no-op for geometry and
+        // appearance; its already completed settled frame remains applicable.
+        await click('Refocus accepted tool');await idle();report.closeTool.refocused=await ui();
+        await click('Restore previous view');await wait(`!document.querySelector('[aria-label="Close instrument view"]')?.dataset.pinnedStateId`);await settled(report.closeTool.refocused.frame.serial);
+        report.closeTool.restored=await ui();
+        report.closeTool.gpuCompletions=await js('window.closeToolGpus');
+        report.closeTool.ended=performance.now();
+        report.closeTool.newReplayCommands=report.ipc.filter(row=>row.channel==='research:surgicalRehearsal'&&row.started>=report.closeTool.started);
+        fs.writeFileSync(path.join(output,'restored-close-tool.png'),(await window.webContents.capturePage()).toPNG());
+        const q=report.closeTool;
+        report.checks.closeToolIdentity=[q.before,q.close,q.refocused,q.restored].every(item=>item.stateId===report.final.stateId)&&q.close.pinnedStateId===report.final.stateId&&q.refocused.pinnedStateId===report.final.stateId&&!q.restored.pinnedStateId;
+        report.checks.closeToolFraming=!!q.close.pinnedSlot&&q.close.fieldMm>=18&&q.close.fieldMm<=42&&q.refocused.fieldMm===q.close.fieldMm;
+        report.checks.closeToolRestore=JSON.stringify(q.before.ranges)===JSON.stringify(q.restored.ranges)&&JSON.stringify(q.before.slices)===JSON.stringify(q.restored.slices);
+        report.checks.closeToolNoReplay=q.newReplayCommands.length===0;
+        report.checks.closeToolSettled=[q.before,q.close,q.refocused,q.restored].every(item=>item.frame?.interactive===false&&item.frame.surfaceQuality?.adaptive===false&&item.frame.stateId===report.final.stateId);
+        report.checks.closeToolCompleted=q.close.frame?.serial!==q.restored.frame?.serial&&[q.close,q.restored].every(item=>q.gpuCompletions.some(g=>g.serial===item.frame?.serial&&g.completed===true));
       }
+      }
+      report.checks.sourcePreserved=hash(sourcePath)===report.source.sha256;
       fs.writeFileSync(path.join(output,'settled.png'),(await window.webContents.capturePage()).toPNG());
       report.passed=report.errors.length===0&&Object.values(report.checks).every(Boolean);
     }catch(error){report.passed=false;report.failure=error.stack;try{fs.writeFileSync(path.join(output,'failure.png'),(await window.webContents.capturePage()).toPNG());}catch{}}

@@ -188,6 +188,43 @@ still required before planning or editing. The separate read-only prefix mode
 below can reconstruct saved actions without admitting the complete archive.
 Neither inspection nor prefix reconstruction creates RL state.
 
+## Optional close instrument view
+
+With an accepted inserted instrument, choose **Close tool view** in Rehearse.
+The camera pins to that exact accepted tip in RAS millimeters, using recorded
+effective activation to select the working hand. Its vertical field spans
+18–42 mm according to the declared working radius. **Refocus accepted tool**
+frames the latest accepted tip; ordinary orbit remains available. The camera
+does not follow future frames automatically.
+
+The optional context-transparency control adjusts display alpha by declared
+material. It changes no ownership, masks, state, collisions or rewards. Source
+slices stay linked to the tip. **Restore previous view** restores the saved
+camera, appearance and cursor; an absent camera uses the explicit anatomy-fit
+fallback. Switching source object, branch, scene or authority invalidates the
+old restore snapshot. Whole-head navigation and the original default playback
+camera remain available.
+
+Actual-app qualification used the preserved primary archive at action 2,
+observed frame 11. The accepted legacy cranial drill was recognizable at a
+42 mm field, with its shaft/fluted end and nearby voxel bone/target visible.
+Linked source slices moved to the accepted tip and restored afterwards. Twenty
+harness checks passed, including exact state identity, absence of replay
+commands during the display controls, and completed settled GPU frames after
+close and restore. Before/close/restored PNGs were inspected independently.
+The settled before/restore PNG files are byte-identical.
+This is an optional close-up check on early drilling; it does not qualify a
+complete microscope workflow, all tools, or the complication/recovery sequence.
+
+The first check's 100 ms screenshot delay was shorter than the renderer's
+150 ms adaptive interaction period. Its eighteen functional checks passed,
+but the coarse restore image did not establish settled appearance. That
+receipt remains preserved. The corrected check waits for a noninteractive,
+nonadaptive CPU frame and its matching completed GPU fence after each
+appearance change, with those listeners added only after primary playback
+timing. This is settled GPU completion and captured-pixel evidence, not a
+compositor timing measurement.
+
 ## Current-production read-only prefix replay
 
 The imported endpoint now offers **Replay from start · read only**. It starts
@@ -299,6 +336,57 @@ pause and the strict three-step monitor were unchanged. The short warm-rate
 result does not qualify full-operation playback, cold preparation, microscope
 readability or the 50 ms compositor target.
 
+Cold capture profiling subsequently isolated Python JSON iteration as a material
+cost. A bounded native-fragment encoder preserves insertion order, escaping,
+numeric spelling and raw/compressed caps without allocating a complete large
+JSON string first. Fragments have a conservative 16 KiB bound and at most 512
+entries; large strings use bounded pieces. Unsupported/custom and circular
+values retain the standard encoder path. Nine balanced pairs on a saved
+checkpoint measured **122.1→54.8 ms** (2.23×), with identical compressed bytes,
+JSON bytes and decoded values. The first scalar-only candidate regressed and
+remains preserved as a failed performance experiment.
+
+A frozen `1d032b46` versus current-source three-action probe then matched all
+**152** observed action-2 frame records, its canonical prefix endpoint and all
+outcome statuses exactly. Cold preparation fell **49.43→40.70 seconds**
+(1.21×); total evaluation fell 69.95→61.11 seconds. Both runs prepared only
+three saved actions and performed zero physics during reads. These receipts
+preserve the smaller end-to-end gain separately from pure serialization speed.
+
+Compression callbacks also repeatedly traversed the retained frame graph to
+check its memory cap. The owner now retains an exact graph count, refreshed on
+publication and every eviction/rebuild. Proposed publication is still measured
+as a complete map, including table capacity and shared references; staged data
+uses its existing independent admission. A representative generated 152-frame
+ownership graph reduced encoding with these callbacks **201.9→54.2 ms** (3.72×),
+with identical compressed/JSON bytes and exact fresh ownership checks. This
+microbenchmark used copies of one preserved checkpoint, with zero engine
+actions; it is separate from actual capture timing.
+
+The final combined encoder/accounting probe reduced the same action-2 cold
+preparation **49.43→19.88 seconds** (2.49× over the frozen source, 2.05× over
+the encoder-only version). All 152 observed frame records, the canonical prefix
+endpoint and outcome statuses remained exact across all three versions.
+Overall evaluation, including 48 balanced full/compact reads, fell
+69.95→40.34 seconds. Each source version was measured once end to end; these
+are not repeated timing trials. The original archive stayed unchanged, only
+three saved preparation actions executed, and display reads performed zero
+physics steps. Whole-operation and matched headless targets remain separate.
+
+The final current-production Electron check independently measured the same
+action's cold handler **50.22→20.22 seconds** (2.48×). Warm frames 1→11 covered
+two simulated seconds in 1.891 wall seconds (**1.058×**), essentially unchanged
+from the stream-only pass. All twelve original frame identities were submitted
+in order; one prefetched frame 12 remained unadmitted. Warm IPC median/p95 was
+81.1/112.9 ms, worker preparation median 115.3 ms, and warm CPU-submission gap
+p95 252.9 ms. These exclude cold preparation and are not compositor intervals.
+The strict guard allowed three original preparation actions and zero read-time
+steps; the twenty checks included the separate post-timing close-view QA.
+Whole-Python peak RSS was 788,660,224 bytes; private frame/checkpoint/history
+retention remained 33,609,379/432,316/268,522 bytes, with 111,442,521 bytes of
+immutable input shared separately. Source archive and loaded Python files
+remained unchanged. No numerical, cache-admission or RL authority was relaxed.
+
 The owner retained 33,481,180 bytes of frames, 432,316 bytes of checkpoints and
 268,522 bytes of receipts. It shared 111,442,521 bytes of existing immutable
 input; peak resident memory for the complete Python process was 854,032,384
@@ -388,8 +476,8 @@ Evidence: `backend-baseline.json`, `backend-digest-optimized.json`,
 ## Gates that remain open
 
 * **Sustained full-operation playback at 1× remains unqualified.** The short
-  current-production prefix sample reached 1.057× warm, even with 4× selected,
-  but cold preparation of one 30-second action still took 50.22 seconds. The
+  current-production prefix sample reached 1.058× warm, even with 4× selected,
+  while cold preparation of one 30-second action took 20.22 seconds. The
   separate frozen-numerics transport experiment reached 0.720×. Exact source
   surface preparation and replay reconstruction remain material costs.
 * **A 50 ms p95 delivered-frame interval is not established.** A separate
@@ -410,14 +498,15 @@ pnpm --dir desktop test
 pnpm --dir desktop build
 ```
 
-The latest October 22 validation passed 870 desktop tests: 182 main-process,
-469 renderer and 219 viewer tests. Build passed with the existing bundle-size
+The latest October 22 validation passed 875 desktop tests: 182 main-process,
+474 renderer and 219 viewer tests. Build passed with the existing bundle-size
 advisory.
 
-The latest Python regression run passed **759 tests, with seven pilot tests
-skipped**, in 118.48 seconds, with two existing Gymnasium advisories. It includes
+The latest Python regression run passed **791 tests, with seven pilot tests
+skipped**, in 122.93 seconds, with two existing Gymnasium advisories. It includes
 surgical/full-case tests, independent geometry checks and the read-only prefix
-contracts. The pilot opt-in was not enabled.
+contracts, bounded encoder equivalence and exact retained-frame accounting.
+The pilot opt-in was not enabled.
 
 For a bounded current-production imported-endpoint check:
 
@@ -456,6 +545,11 @@ step-free. It rejects frozen Python/bridge substitution and additional timing
 observers. The benchmark pauses at CPU-submitted frame 11 and checks private
 retention and absence of canonical admission. It does not run the complete
 saved operation or any learning.
+
+Add `PLAYBACK_CLOSE_TOOL=1` to that prefix command for the separate post-timing
+close/refocus/restore display check. It waits for settled CPU submission and
+completed GPU fences, then writes before/close/restored screenshots. This flag
+does not change primary playback timers or permit additional physics actions.
 
 Local evidence remains under the ignored directory
 `testcases/outputs/rl-readiness-20261022/`:
@@ -496,6 +590,20 @@ Local evidence remains under the ignored directory
 * `desktop-current-prefix-stream-qualified/{report,analysis}.json`: current
   production stream GUI pass, including scoped warm rate, wire sizes and cold
   preparation; `settled.png` is the accepted final app view.
+* `prefix-encoder-benchmark-v2/report.json`: bounded native JSON fragments with
+  exact compressed bytes; the earlier scalar-only regression remains separate.
+* `prefix-frame-accounting-benchmark/report.json`: generated private ownership
+  microbenchmark, exact retained counts and unchanged encoding/quota caps.
+* `current-prefix-capture-{baseline,optimized,accounting}/report.json` and
+  `prefix-capture-accounting-comparison.json`: frozen, encoder-only and final
+  three-action capture measurements with all 152 frame records compared.
+* `desktop-current-prefix-capture-close-qualified/{report,analysis}.json`:
+  functional pass with the initial unsettled screenshot limitation retained.
+* `desktop-current-prefix-capture-close-settled/{report,analysis}.json` and
+  `before-close-tool.png`, `close-tool.png`, `restored-close-tool.png`: corrected
+  actual-app close-view qualification after settled GPU completion.
+* `capture-accounting-final-no-learning-tests.log`, `close-tool-{main,renderer,viewer}-tests.log`
+  and `close-tool-build.log`: latest guarded regressions and desktop build.
 * `prefix-stream-full-no-learning-tests.log`, `prefix-stream-{main,renderer,viewer}-tests.log`
   and `prefix-stream-build.log`: latest prefix stream regression/build checks.
 * `prefix-full-receipt-{renderer,main}-tests.log`, `prefix-viewer-tests.log` and

@@ -22,6 +22,43 @@ export function operativeFieldFrame(view:SurgicalView,targetCenter:Point3|null,s
   return {center:target,settings:{...settings,layout:'3d-focus' as const,camera:{target,position,up}}};
 }
 
+/** Accepted instruments only: an observed activation overrides the stored slot flag. */
+export function acceptedCloseTool(view:SurgicalView|null,selectedSlot:string,effectiveActivation?:Record<string,boolean>){
+  const inserted=Object.entries(view?.slots??{}).filter(([,slot])=>slot.inserted&&Array.isArray(slot.position)&&slot.position.length===3&&slot.position.every(Number.isFinite));
+  const chosen=inserted.find(([name,slot])=>(effectiveActivation?.[name]??slot.active)===true)??inserted.find(([name])=>name===selectedSlot)??inserted[0];
+  return chosen?{name:chosen[0],slot:chosen[1]}:null;
+}
+
+/** Display alpha by declared material; no anatomy is hidden, removed or relabeled. */
+export function closeToolPresentation(view:SurgicalView,settings:ViewerWorkspaceSettings):ViewerWorkspaceSettings {
+  const alpha:Record<string,number>={soft_tissue:.045,bone:.55,membrane:.14,tumor:.9,vessel:1,unknown:.08};
+  return {...settings,layerOpacity:{...settings.layerOpacity,...Object.fromEntries(view.scene.regions.map(region=>[region.name,region.material==='vessel'?1:region.target?.9:alpha[region.material]??.14]))}};
+}
+
+/** Explicit, pinned microscope-scale view of an exact accepted tip in RAS mm. */
+export function closeToolFrame(view:SurgicalView,selectedSlot:string,effectiveActivation:Record<string,boolean>|undefined,settings:ViewerWorkspaceSettings,translucent=true){
+  const chosen=acceptedCloseTool(view,selectedSlot,effectiveActivation);if(!chosen)return null;
+  const tool=view.catalog.find(item=>item.id===chosen.slot.instrument),radius=chosen.slot.parameters?.radiusMm??tool?.radiusMm??2;
+  const fieldMm=Math.max(18,Math.min(42,Number.isFinite(radius)&&radius>0?radius*12:24));
+  const center=[...chosen.slot.position] as Point3;
+  let direction:Point3=[.45,0,-1],up:Point3=[0,1,0];
+  const quaternion=chosen.slot.quaternion;
+  if(quaternion?.length===4&&quaternion.every(Number.isFinite)&&Math.hypot(...quaternion)>1e-8){
+    const length=Math.hypot(...quaternion),[x,y,z,w]=quaternion.map(value=>value/length);
+    const axis:Point3=[2*(x*z+w*y),2*(y*z-w*x),1-2*(x*x+y*y)],right:Point3=[1-2*(y*y+z*z),2*(x*y+w*z),2*(x*z-w*y)];
+    // A slight oblique view exposes the working end instead of looking straight
+    // down its shaft. Orbit remains free; later states never move this camera.
+    direction=axis.map((value,i)=>-value+.45*right[i]) as Point3;
+    up=[2*(x*y-w*z),1-2*(x*x+z*z),2*(y*z+w*x)];
+  }
+  // Match the existing renderer's34degree vertical field of view.
+  const distance=fieldMm/(2*Math.tan(17*Math.PI/180)),scale=distance/Math.hypot(...direction);
+  const camera={target:center,position:direction.map((value,i)=>center[i]+value*scale) as Point3,up};
+  const appearance=translucent?closeToolPresentation(view,settings):settings;
+  return {center,name:chosen.name,instrument:tool?.name??chosen.slot.instrument,fieldMm,stateId:view.stateId,
+    settings:{...appearance,layout:'3d-focus' as const,showPlane:false,volumeRendering:{...settings.volumeRendering,enabled:false},camera}};
+}
+
 /** Read quantities from the selected recorded state, including during replay. */
 export function fullCaseStateSummary(view:SurgicalView) {
   const finite=(value:unknown):number|null=>typeof value==='number'&&Number.isFinite(value)?value:null;
