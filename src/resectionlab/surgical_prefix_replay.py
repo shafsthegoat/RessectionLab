@@ -401,7 +401,8 @@ class SurgicalPrefixReplay:
     def __init__(self, scene, snapshot, *, max_new_actions=4,
                  max_checkpoint_bytes=16 * 1024**2, max_frame_bytes=16 * 1024**2,
                  max_history_bytes=4 * 1024**2, max_input_bytes=64 * 1024**2,
-                 max_json_bytes=64 * 1024**2, _frozen_input_authority=None):
+                 max_json_bytes=64 * 1024**2, _frozen_input_authority=None,
+                 _display_row_projection=None):
         if (_frozen_input_authority is not None
                 and _frozen_input_authority is not _FROZEN_INPUT_AUTHORITY):
             raise ValueError('Private frozen-input authority differs')
@@ -445,7 +446,17 @@ class SurgicalPrefixReplay:
         self._max_frame_bytes = max_frame_bytes
         self._max_history_bytes = max_history_bytes
         self._max_json_bytes = max_json_bytes
+        # Only this private execution shell sees metric-only ancestry. Complete
+        # canonical receipts remain losslessly available through _receipt().
         self._history = []
+        self._receipts = []
+        self._display_receipts = []
+        self._metric_rows = {}
+        self._display_row_projection = _display_row_projection
+        self._history_store = (self._history, self._receipts, self._display_receipts, self._metric_rows)
+        self._retained_history_bytes = self._history_store_bytes(self._history_store)
+        if self._retained_history_bytes > max_history_bytes:
+            raise PrefixBudgetExceeded('Empty history retention budget exceeded')
         self._checkpoints = OrderedDict()
         self._frames = OrderedDict()
         self._retained_frame_bytes = _owned_bytes(self._frames)
@@ -502,8 +513,12 @@ class SurgicalPrefixReplay:
         except ValueError as error:
             self._invalidated = str(error)
             raise PrefixInvalidated(self._invalidated) from None
-        if (_light_seal() != self._implementation_light
-                or _prefix_seal() != self._prefix_implementation):
+        try:
+            light = _light_seal()
+        except ValueError as error:
+            self._invalidated = 'Prefix replay implementation changed; create a new owner'
+            raise PrefixInvalidated(self._invalidated) from error
+        if (light != self._implementation_light or _prefix_seal() != self._prefix_implementation):
             self._invalidated = 'Prefix replay implementation changed; create a new owner'
             raise PrefixInvalidated(self._invalidated)
         if full:
@@ -589,11 +604,95 @@ class SurgicalPrefixReplay:
         self._endpoint_verified = bool(exact)
         self._endpoint_error = None if exact else 'Imported endpoint/checkpoint differs from reconstructed actions'
 
-    def _history_bytes(self, rows):
-        # Canonical full actions remain in each receipt. Their exact immutable
-        # objects are already charged to the bounded input, not newly retained
-        # receipt ownership. Other receipt fields remain fully owned and capped.
-        return _owned_bytes(rows, {id(action) for action in self._snapshot['actions']})
+    @staticmethod
+    def _history_store_bytes(store):
+        # Include all indexes, metric interning metadata and the retained-byte
+        # counter itself. The store is replaced transactionally, never grown
+        # behind this exact count. No complete action is stored here.
+        size = _owned_bytes(store)
+        return size + sys.getsizeof(size)
+
+    def _pack_receipt(self, value):
+        blob = _encode(value, compressed_limit=self._max_history_bytes, raw_limit=self._max_json_bytes)
+        decoder = zlib.decompressobj()
+        raw = decoder.decompress(blob, self._max_json_bytes + 1)
+        if len(raw) > self._max_json_bytes or not decoder.eof or decoder.unused_data or decoder.unconsumed_tail:
+            raise PrefixBudgetExceeded('Decoded receipt JSON budget exceeded')
+        return (blob, len(raw), hashlib.sha256(raw).digest())
+
+    def _unpack_receipt(self, entry):
+        if (type(entry) is not tuple or len(entry) != 3 or type(entry[0]) is not bytes
+                or len(entry[0]) > self._max_history_bytes or type(entry[1]) is not int
+                or not 0 <= entry[1] <= self._max_json_bytes
+                or type(entry[2]) is not bytes or len(entry[2]) != 32):
+            raise ValueError('Invalid compressed prefix receipt descriptor')
+        decoder = zlib.decompressobj()
+        try:
+            raw = decoder.decompress(entry[0], entry[1] + 1)
+        except zlib.error as error:
+            raise ValueError('Corrupt compressed prefix receipt') from error
+        if (len(raw) != entry[1] or not decoder.eof or decoder.unused_data or decoder.unconsumed_tail
+                or hashlib.sha256(raw).digest() != entry[2]):
+            raise ValueError('Compressed prefix receipt identity differs')
+        value = json.loads(raw)
+        if type(value) is not dict:
+            raise ValueError('Compressed prefix receipt must be a mapping')
+        return value
+
+    def _receipt(self, index):
+        """One complete immutable receipt; full actions borrow bounded input."""
+        self._check()
+        if type(index) is not int or not 0 <= index < len(self._receipts):
+            raise ValueError('Invalid computed prefix receipt index')
+        return self._complete_receipt(index, self._unpack_receipt(self._receipts[index]))
+
+    def _complete_receipt(self, index, body):
+        if ('action' in body or body.get('status') != self._history[index]['status']
+                or body.get('reason') != self._history[index]['reason']):
+            raise ValueError('Computed prefix receipt ancestry differs')
+        return MappingProxyType({'action': self._snapshot['actions'][index], **freeze_json(body)})
+
+    def _materialize_history(self, *, display=False):
+        self._check()
+        entries = self._display_receipts if display else self._receipts
+        if sum(entry[1] for entry in entries) > self._max_json_bytes:
+            raise PrefixBudgetExceeded('Transient complete history JSON budget exceeded')
+        rows, seen = [], set()
+        retained = sys.getsizeof(rows)
+        for index, entry in enumerate(entries):
+            body = self._unpack_receipt(entry)
+            row = freeze_json(body) if display else self._complete_receipt(index, body)
+            before = sys.getsizeof(rows)
+            rows.append(row)
+            retained += _owned_bytes(row, seen) + sys.getsizeof(rows) - before
+            # The temporary list and the eventual immutable tuple coexist.
+            if retained + sys.getsizeof(()) + len(rows) * 8 > self._max_json_bytes:
+                raise PrefixBudgetExceeded('Transient complete history ownership budget exceeded')
+        return tuple(rows)
+
+    def _propose_receipt(self, receipt, action, borrowed_action):
+        body = dict(receipt)
+        if body.pop('action') != action:
+            raise ValueError('Reconstructed receipt action differs from imported action')
+        entry = self._pack_receipt(body)
+        metric_key = (body['status'], body.get('reason'))
+        metrics = dict(self._metric_rows)
+        metric = metrics.get(metric_key)
+        if metric is None:
+            metric = freeze_json({'status': metric_key[0], 'reason': metric_key[1]})
+            metrics[metric_key] = metric
+        displayed = self._display_receipts[:]
+        if self._display_row_projection is not None:
+            complete = MappingProxyType({'action': borrowed_action, **freeze_json(body)})
+            projected = thaw_json(freeze_json(self._display_row_projection(complete)))
+            if type(projected) is not dict:
+                raise ValueError('Prefix display row projection must return a mapping')
+            displayed.append(self._pack_receipt(projected))
+        store = (self._history + [metric], self._receipts + [entry], displayed, metrics)
+        size = self._history_store_bytes(store)
+        if size > self._max_history_bytes:
+            raise PrefixBudgetExceeded('Computed history retention budget exceeded')
+        return store, size
 
     @property
     def statistics(self):
@@ -601,8 +700,10 @@ class SurgicalPrefixReplay:
                 'checkpointBytes': _owned_bytes(self._checkpoints), 'maxCheckpointBytes': self._max_checkpoint_bytes,
                 'frameBytes': self._frame_bytes(), 'maxFrameBytes': self._max_frame_bytes,
                 'streamMetadataBytes': self._stream_metadata_bytes,
-                'historyBytes': self._history_bytes(self._history), 'maxHistoryBytes': self._max_history_bytes,
+                'historyBytes': self._retained_history_bytes, 'maxHistoryBytes': self._max_history_bytes,
                 'historyActionsSharedWithBoundedInput': True,
+                'historyReceiptsCompressed': True, 'displayRowsCompressed': self._display_row_projection is not None,
+                'maxMaterializedHistoryBytes': self._max_json_bytes,
                 'immutableInputBytes': self._input_bytes,
                 'ownedImmutableInputBytes': 0 if self._borrowed_input else self._input_bytes,
                 'sharedImmutableInputBytes': self._input_bytes if self._borrowed_input else 0,
@@ -620,11 +721,16 @@ class SurgicalPrefixReplay:
             'archiveEndpointVerified': self._endpoint_verified,
             'endpointValidationError': self._endpoint_error,
             'failure': thaw_json(freeze_json(self._failure))}
-        timeline = () if compact else tuple(self._history)
+        timeline = ()
         if not compact and timeline_projection is not None:
             # Private display-only callback sees immutable complete receipts;
             # its result is detached JSON. It never receives an engine/state.
-            timeline = freeze_json(timeline_projection(timeline))
+            projected = timeline_projection(self._materialize_history())
+            if _owned_bytes(projected) > self._max_json_bytes:
+                raise PrefixBudgetExceeded('Projected history ownership budget exceeded')
+            timeline = freeze_json(projected)
+        elif not compact:
+            timeline = self._materialize_history(display=self._display_row_projection is not None)
         view = engine.view(_state_id=engine._prefix_verified_state_id,
                            include_history=False, _omit_fields=omit_fields)
         if compact:
@@ -666,13 +772,8 @@ class SurgicalPrefixReplay:
                 stage.end(engine)
                 if stage.frames[0]['stateId'] != before or stage.frames[-1]['stateId'] != engine.state_id:
                     raise ValueError('Observed start/final identity differs from public action')
-                receipt = dict(engine.history[-1])
-                if receipt.pop('action') != action:
-                    raise ValueError('Reconstructed receipt action differs from imported action')
-                row = MappingProxyType({'action': self._snapshot['actions'][index],
-                                        **freeze_json(receipt)})
-                if self._history_bytes(self._history + [row]) > self._max_history_bytes:
-                    raise PrefixBudgetExceeded('Computed history retention budget exceeded')
+                store, history_bytes = self._propose_receipt(engine.history[-1], action,
+                                                           self._snapshot['actions'][index])
                 checkpoint = self._checkpoint(index + 1, engine)
                 if _owned_bytes(OrderedDict([(index + 1, checkpoint)])) > self._max_checkpoint_bytes:
                     raise PrefixBudgetExceeded('Checkpoint retention budget exceeded')
@@ -680,8 +781,10 @@ class SurgicalPrefixReplay:
                 self._frame_room(_owned_bytes(OrderedDict([(index, stage.frames)])))
                 self._check(action_check, full=True)
                 self._put_checkpoint(index + 1, engine, checkpoint)
-                self._history.append(row)
                 self._publish_frames(index, stage.frames)
+                self._history_store = store
+                self._history, self._receipts, self._display_receipts, self._metric_rows = store
+                self._retained_history_bytes = history_bytes
                 self._failure = None
                 self._validate_endpoint(engine)
             except BaseException as error:

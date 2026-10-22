@@ -246,7 +246,7 @@ class VascularPlaybackMonitor(ReadOnlyStepMonitor):
         if len(owner._history) > self.spool.actions:
             index = self.spool.actions
             from resectionlab.core import thaw_json
-            row, expected = thaw_json(owner._history[index]), self.reference[index]
+            row, expected = thaw_json(owner._receipt(index)), self.reference[index]
             for key in ('action','stateBefore','stateAfter','status','reason','reasonCode','completedFraction','elapsedSeconds','events'):
                 require(canonical_json(row.get(key)) == canonical_json(expected.get(key)), f'Unprojected public receipt differs: action {index}, {key}')
             require(row['deltas']['removedCells'] == expected['removedCells'], 'Unprojected removal delta differs')

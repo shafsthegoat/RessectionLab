@@ -34,7 +34,7 @@ resectionlab-legacy-qt = "resectionlab.app:main"
 where = ["src"]
 
 [tool.setuptools.package-data]
-resectionlab = ["surface_policy.json"]
+resectionlab = ["surface_policy.json", "surgical_idle_native.c"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

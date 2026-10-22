@@ -627,7 +627,34 @@ versus 4.84/5.93 ms compression. These passes repeat unchanged states; they are
 not fresh transitions or independent partitions of a GUI interval. Local
 monitoring overhead is included, and the small empty-owner stage does not
 qualify a 152-frame eviction tail. No production function changed or replay
-speedup resulted. Finer bound-validation/walk/C-encoder timing was not collected.
+speedup resulted. That first probe did not split bound validation, traversal and
+native encoding.
+
+A subsequent component diagnostic reused the exact 211-file source version of
+those audited states. Its first attempt correctly refused the later engine
+identity before encoding; both receipts are preserved. The corrected no-step
+probe found 146,850/164,960 scalar admission calls per sampled state. Its local
+profiler heavily inflated elapsed time, so instrumented fractions are not
+ordinary encoder throughput. Repeated failed container-admission scans accounted
+for only 0.185/1.430 instrumented ms and failed the declared materiality gate;
+that candidate was stopped.
+
+An ignored scalar-admission prototype then measured three balanced unprofiled
+pairs per state. Median encoding fell from 56.652 to 53.368 ms early and from
+63.994 to 60.908 ms late. All compressed and raw bytes matched, with identical
+fragment counts and maxima; direct fragment-list equivalence was checked on
+generated cases. Nineteen generated cases covered Unicode, signed zero,
+nonfinite/large numbers, subclasses, cycles and small budgets. The probe took
+2.271 seconds, peaked at 121,995,264 bytes RSS and executed zero steps. One early
+pair regressed. The roughly 3 ms component gain remains unpromoted, with no
+full-capture, current-engine admission or replay speedup claimed.
+
+A separate pure idle-cooling NumPy prototype reused the bound 15,238-cell late
+ledger. All 30 paired calls preserved complete floating-point bits, key order
+and dictionary identities, including fallback fixtures. It was slower after
+validation, conversion and writes: 8.024 to 12.280 ms median. The 2.613-second,
+128,286,720-byte-RSS experiment executed no engine constructors or steps and
+changed no production source. That candidate was rejected.
 
 The actual endpoint screenshot shows the read-only 73/73 label and enlarged
 target/context. Both tools are withdrawn. The optional operative-field camera
@@ -790,6 +817,12 @@ Local evidence remains under the ignored directory
   production patch did not change between focused runs.
 * `capture-cost-profile/{report,analysis}.json`: two audited states reused for
   bounded, byte-exact no-step capture component diagnostics.
+* `capture-json-finer-profile/` and `capture-json-finer-profile-v2/`: preserved
+  source-identity refusal and corrected frozen-source component profiling.
+* `capture-json-scalar-prototype/{report,analysis}.json`: ignored exact-byte
+  scalar-admission prototype with small, noisy component savings; not promoted.
+* `idle-thermal-prototype-experiment/report.json`: exact but slower pure NumPy
+  cooling prototype; not promoted.
 * `desktop-heavy-field-diagnostic/report.json`: later authenticated field-reuse
   functional/byte diagnostic.
 * `desktop-import-current/report.json` and branch PNGs: current-production

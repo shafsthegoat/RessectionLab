@@ -76,7 +76,13 @@ def light_implementation_seal():
     publication. This seal still detects ordinary edits/monkeypatches between
     frames; no archive, history or numerical binary is re-encoded per frame.
     """
-    digest = hashlib.sha256()
+    try:
+        from .surgical_idle_native import strict_live_identity
+        native_identity = strict_live_identity()
+    except (ValueError, OSError, ImportError, AttributeError) as error:
+        raise ImplementationChanged('Optional idle thermal implementation changed or is unavailable') from error
+    digest = hashlib.sha256(json.dumps(native_identity, sort_keys=True,
+        separators=(',', ':'), allow_nan=False).encode())
     root = Path(__file__).resolve().parent
     for path in sorted(root.glob('*.py')):
         digest.update(path.name.encode()); digest.update(path.read_bytes())

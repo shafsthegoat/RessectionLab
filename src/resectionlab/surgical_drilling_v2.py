@@ -13,6 +13,7 @@ import copy
 import math
 from types import MethodType
 import numpy as np
+from . import surgical_idle_native as _idle_native
 
 MODEL = 'work-limited-drill-v2'
 DEFAULT_PROFILE = {
@@ -83,6 +84,8 @@ def _thermal(engine, dt, powers):
     one_minus_decay = -math.expm1(-dt / tau)
     threshold = p['doseThresholdC'] - ambient
     can_shortcut = dt >= 0. and tau > 0. and threshold >= 0.
+    if _idle_native.try_idle(state, powers, dt, capacity, tau, ambient, threshold, decay, one_minus_decay):
+        return
     for key in sorted(set(state['temperatureC']) | set(powers), key=int):
         old = state['temperatureC'].get(key, ambient) - ambient
         power = powers.get(key, 0.)

@@ -53,6 +53,11 @@ def display_timeline(history):
     return result
 
 
+def display_receipt(entry):
+    """Row-local prefix display projection; canonical receipt stays complete."""
+    return display_timeline((entry,))[0]
+
+
 def _frame_admission(session, frames, engine, snapshot, history, replay_cache,
                      identity, branch_id, check):
     """Private immutable playback input for one admitted branch generation."""
@@ -235,16 +240,16 @@ def dispatch(session, operation, args, request, progress):
             if raw.get('environmentSchema') == ENVIRONMENT_SCHEMA:
                 prefix_scene = standardize(prefix_scene, physics_profile=raw_profile)
             owner = SurgicalPrefixReplay._borrow_frozen_snapshot(prefix_scene, frozen_snapshot,
-                max_input_bytes=128 * 1024**2, max_frame_bytes=64 * 1024**2)
+                max_input_bytes=128 * 1024**2, max_frame_bytes=64 * 1024**2,
+                _display_row_projection=display_receipt)
             request.check()
             owned = (entry, entry.artifacts, selected, owner)
             session.surgical_prefix_session = owned
         owner = owned[3]
         progress(.1, 'Reconstructing saved actions in a separate read-only prefix')
-        result = (owner.seek(args.get('position'), check=request.check, _timeline_projection=display_timeline) if command == 'seekPrefix'
+        result = (owner.seek(args.get('position'), check=request.check) if command == 'seekPrefix'
                   else owner.seek_frame(args.get('position'), args.get('frameIndex'), check=request.check,
-                                        prefix_token=args.get('prefixToken'), prefix_field_tokens=prefix_fields,
-                                        _timeline_projection=display_timeline))
+                                        prefix_token=args.get('prefixToken'), prefix_field_tokens=prefix_fields))
         if 'playback' in result:
             result['playback']['branchId'] = selected
         result.update(caseHash=identity, branchId=selected, changed=False, outcome=None,
