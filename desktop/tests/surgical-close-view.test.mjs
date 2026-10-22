@@ -16,7 +16,7 @@ function* walk(node){if(Array.isArray(node)){for(const item of node)yield*walk(i
 const text=node=>Array.isArray(node)?node.map(text).join(''):node?.props?text(node.props.children):typeof node==='string'||typeof node==='number'?String(node):'';
 const button=(tree,label)=>[...walk(tree)].find(node=>node.type==='button'&&text(node)===label);
 function fixture(){
-  const source={caseHash:'case'},settings={camera:{position:[300,-400,500],target:[0,0,0],up:[0,0,1]},layerOpacity:{brain:.3,bone:.2},smoothSurfaces:false};
+  const source={caseHash:'case',shape:[21,21,21],affine:[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]],frame:'RAS+'},settings={camera:{position:[300,-400,500],target:[0,0,0],up:[0,0,1]},layerOpacity:{brain:.3,bone:.2},smoothSurfaces:false};
   const view={stateId:'accepted0',scene:{sceneId:'scene',regions:[{name:'brain',material:'soft_tissue'},{name:'bone',material:'bone'}]},catalog:[{id:'drill',name:'Research drill',radiusMm:2}],slots:{left:{instrument:'drill',inserted:true,active:true,position:[1,2,3],quaternion:[0,0,0,1],parameters:{}},right:{instrument:'drill',inserted:true,active:false,position:[4,5,6],quaternion:[0,0,0,1],parameters:{}}}};
   const result={branchId:'main',view,playback:{effectiveActivation:{left:false,right:true}},verification:{status:'reconstructed-prefix',readOnly:true,originSnapshotHash:'origin',actionLogHash:'actions',implementation:'current'}};
   const calls=[],props={source,settings,cursor:[9,8,7],c:{view,result,slot:'left',pending:false,preview:null,pose:{position:[999,999,999]},interaction:{view:{...view,stateId:'unaccepted-future'}},run:()=>assert.fail('display controls cannot dispatch replay or physics')},onSettings(value){calls.push(['settings',value]);props.settings=value;},onCursor(value){calls.push(['cursor',value]);props.cursor=value;},onFitAnatomy(){calls.push(['fit']);}};
@@ -37,6 +37,20 @@ test('restore snapshots invalidate synchronously across same-hash source, branch
   for(const change of [f=>{f.props.source={...f.source};},f=>{f.props.c.result={...f.result,branchId:'other'};},f=>{f.props.c.view={...f.view,scene:{...f.view.scene,sceneId:'new-scene'}};},f=>{f.props.c.result={...f.result,verification:{...f.result.verification,originSnapshotHash:'new-origin'}};}]){
     const f=fixture();button(f.render(),'Close tool view').props.onClick();f.render();const before=f.calls.length;change(f);const tree=f.render({passive:false});assert.equal(button(tree,'Restore previous view'),undefined);assert(button(tree,'Close tool view'));assert.equal(f.calls.length,before,'ownership invalidation never reapplies old settings/cursor');f.render();
   }
+});
+test('accepted approach tip outside MRI still frames exact 3D pose while retaining linked slices and restore ownership',()=>{
+  const f=fixture(),tip=[-10.464996337890625,30.441162109375,-369.9433333333333],cursor=[-15.889134651090231,8.01669131252251,-428.68486645239943];
+  Object.assign(f.source,{shape:[220,220,181],affine:[[-1,0,0,109.53500366210938],[0,1,0,-123.558837890625],[0,0,1,-554.25],[0,0,0,1]]});
+  f.view.slots.right.position=tip;f.props.cursor=cursor;const before=structuredClone(f.view);
+  button(f.render(),'Close tool view').props.onClick();let tree=f.render();
+  assert.equal(f.props.cursor,cursor);assert(!f.calls.some(call=>call[0]==='cursor'));
+  assert.deepEqual(f.props.settings.camera.target,tip);assert(text(tree).includes('Linked slices keep their previous position'));
+  assert.deepEqual(f.view,before);
+  f.props.c.view={...f.view,stateId:'accepted-inside',slots:{...f.view.slots,right:{...f.view.slots.right,position:[0,0,-430]}}};
+  tree=f.render();
+  button(tree,'Refocus accepted tool').props.onClick();tree=f.render();assert.deepEqual(f.props.cursor,[0,0,-430]);
+  assert(!text(tree).includes('Linked slices keep their previous position'));
+  button(tree,'Restore previous view').props.onClick();assert.deepEqual(f.props.cursor,cursor);assert.deepEqual(f.props.settings,f.settings);
 });
 test('withdrawn/invalid accepted tools and pending/preview views block close framing; a missing prior camera resets whole anatomy explicitly',()=>{
   for(const change of [f=>{for(const slot of Object.values(f.view.slots))slot.inserted=false;},f=>{for(const slot of Object.values(f.view.slots))slot.position=[NaN,0,0];},f=>{f.props.c.pending=true;},f=>{f.props.c.preview={stateId:'preview'};}]){

@@ -1454,3 +1454,14 @@ Evidence is `desktop-full-vascular-stable-export-v9/`, its pre/post bindings and
 instead of the recorded lowercase `bone`; its incorrect zero name-count, source
 and explicit correction remain preserved. Both analyses bind identical raw
 evidence, and the corrected count is 448. No extra replay was performed.
+
+The same recorded approach tip also exposed a related “Close tool view” issue:
+that control previously moved the linked cursor beyond the acquired image. It
+now frames the exact accepted 3D tip while retaining the previous slice position
+when no source slice exists there, with a visible explanation. Refocusing an
+inside-grid tip and restoring the previous view retain their existing behavior.
+Both framing commands share the same inverse-RAS containment check. All 482
+renderer tests and the type check/build passed; the new regression includes the
+actual source affine and approach pose. Its first test attempt omitted a rerender
+after changing fixture props; only that setup was corrected and its failed
+receipt is preserved. A targeted actual-app control check is pending.

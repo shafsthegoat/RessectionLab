@@ -4,12 +4,12 @@ import type {ViewerVolume} from './viewer/contracts';
 import type {Point3} from './viewer/coordinates';
 import {validCameraState} from './viewer/workspaceSettings';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
-import {acceptedCloseTool,closeToolFrame,closeToolPresentation} from './full-case-presentation';
+import {acceptedCloseTool,closeToolFrame,closeToolPresentation,sourceContainsPoint} from './full-case-presentation';
 import {replayAuthorityKey} from './surgical-authority';
 
 interface Props {c:SurgicalController;source:ViewerVolume|null;settings:ViewerWorkspaceSettings;cursor:Point3|null;onSettings:(settings:ViewerWorkspaceSettings)=>void;onCursor:(point:Point3|null)=>void;onFitAnatomy:()=>void}
 type Snapshot={source:ViewerVolume;branch:string;scene:string;authority:string;settings:ViewerWorkspaceSettings;cursor:Point3|null};
-type Pin={name:string;instrument:string;fieldMm:number;stateId:string};
+type Pin={name:string;instrument:string;fieldMm:number;stateId:string;slicesAtTip:boolean};
 
 /** Optional display command. No pose editing, replay dispatch or automatic follow. */
 export function SurgicalCloseViewControls({c,source,settings,cursor,onSettings,onCursor,onFitAnatomy}:Props){
@@ -22,7 +22,10 @@ export function SurgicalCloseViewControls({c,source,settings,cursor,onSettings,o
     if(disabled||!view||!source)return;
     const field=closeToolFrame(view,c.slot,effective,settings,translucent);if(!field)return;
     if(!owns)setSnapshot({source,branch,scene,authority,settings:structuredClone(settings),cursor:cursor?[...cursor]:null});
-    setPin({name:field.name,instrument:field.instrument,fieldMm:field.fieldMm,stateId:field.stateId});onCursor(field.center);onSettings(field.settings);
+    const slicesAtTip=sourceContainsPoint(source,field.center);
+    setPin({name:field.name,instrument:field.instrument,fieldMm:field.fieldMm,stateId:field.stateId,slicesAtTip});
+    if(slicesAtTip)onCursor(field.center);
+    onSettings(field.settings);
   }
   function restore(){
     if(!owns||!snapshot)return;
@@ -34,6 +37,7 @@ export function SurgicalCloseViewControls({c,source,settings,cursor,onSettings,o
     {owns&&pin&&<>
       <button onClick={restore}>Restore previous view</button>
       <p className="surgical-note">Pinned to {pin.name} hand · {pin.instrument} · {pin.fieldMm} mm field. Orbit freely; refocus to use the latest accepted tip.</p>
+      {!pin.slicesAtTip&&<p className="surgical-note">No source image slice is available at this tip. Linked slices keep their previous position.</p>}
       <label><input type="checkbox" checked={translucent} onChange={event=>{
         const enabled=event.target.checked;setTranslucent(enabled);if(!view||!snapshot)return;
         const base={...settings,layerOpacity:snapshot.settings.layerOpacity};onSettings(enabled?closeToolPresentation(view,base):base);

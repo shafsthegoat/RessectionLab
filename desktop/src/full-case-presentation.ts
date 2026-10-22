@@ -4,20 +4,21 @@ import {inverseAffine,rasAffine,transformPoint} from './viewer/coordinates.ts';
 import type {ViewerVolume} from './viewer/contracts';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
 
+const validPoint=(point:unknown):point is Point3=>Array.isArray(point)&&point.length===3&&point.every(Number.isFinite);
+/** Acquired voxel support in RAS, including oblique and LPS source grids. */
+export function sourceContainsPoint(source:Pick<ViewerVolume,'shape'|'affine'|'frame'>|null,point:unknown):point is Point3 {
+  if(!source||!validPoint(point))return false;
+  try{
+    if(source.shape.length!==3||!source.shape.every(n=>Number.isInteger(n)&&n>0))return false;
+    const inverse=inverseAffine(rasAffine(source.affine,source.frame));
+    return transformPoint(inverse,point).every((v,i)=>Number.isFinite(v)&&v>=0&&v<=source.shape[i]-1);
+  }catch{return false;}
+}
+
 /** An explicit display command, detached from the source and recorded engine. */
 export function operativeFieldFrame(view:SurgicalView,targetCenter:Point3|null,settings:ViewerWorkspaceSettings,source?:Pick<ViewerVolume,'shape'|'affine'|'frame'>|null) {
-  const valid=(point:unknown):point is Point3=>Array.isArray(point)&&point.length===3&&point.every(Number.isFinite);
-  let inSource=(point:unknown):point is Point3=>valid(point);
   if(source===null)return null;
-  if(source){
-    try{
-      if(source.shape.length!==3||!source.shape.every(n=>Number.isInteger(n)&&n>0))return null;
-      const inverse=inverseAffine(rasAffine(source.affine,source.frame));
-      // Test the acquired voxel grid, not its larger world-axis bounding box.
-      // A recorded approach tip can legitimately remain outside the scan.
-      inSource=(point:unknown):point is Point3=>valid(point)&&transformPoint(inverse,point).every((v,i)=>Number.isFinite(v)&&v>=0&&v<=source.shape[i]-1);
-    }catch{return null;}
-  }
+  const inSource=(point:unknown):point is Point3=>source===undefined?validPoint(point):sourceContainsPoint(source,point);
   const inserted=Object.values(view.slots).filter(slot=>slot.inserted&&inSource(slot.position));
   const tip=inserted.find(slot=>slot.active)??inserted[0];
   const center=tip?.position??targetCenter;if(!inSource(center))return null;
