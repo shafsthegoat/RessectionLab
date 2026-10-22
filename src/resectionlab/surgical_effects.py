@@ -15,6 +15,8 @@ def initialize_effect_state(engine):
     initialize_physics(engine)
     from .surgical_physics_v2 import initialize
     initialize(engine)
+    from .surgical_cusa_v3 import initialize as initialize_cusa
+    initialize_cusa(engine)
     for name in ('cutEdges', 'separatedAttachments', 'transectedEdges', 'flapComponents', 'meshCutEdges', 'meshSeams'):
         engine.state.setdefault(name, [])
     engine.state.setdefault('debris', {})
@@ -327,6 +329,9 @@ def validate_hold_motion(engine, key):
 
 def finalize_action(engine):
     """Recompute bone connectivity once after an action that changed its kerf."""
+    if 'cusaV3' in engine.state:
+        from .surgical_cusa_v3 import reconcile_removed
+        reconcile_removed(engine)
     if engine.state.pop('boneTopologyDirty', False): _bone_components(engine)
 
 

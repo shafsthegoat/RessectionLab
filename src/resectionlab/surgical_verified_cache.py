@@ -41,7 +41,7 @@ _MODULES = ('core', 'geometry', 'surgical_scene', 'surgical_engine', 'surgical_t
             'surgical_motion', 'surgical_effects', 'surgical_physics', 'surgical_physics_v2',
             'surgical_drilling_v2', 'surgical_vessels_v2', 'surgical_deformation_v2',
             'surgical_occupancy', 'surgical_rl_protection', 'surgical_geometry_cache',
-            'surgical_verified_cache')
+            'surgical_verified_cache', 'surgical_cusa_v3')
 
 
 def _code_signature(code):

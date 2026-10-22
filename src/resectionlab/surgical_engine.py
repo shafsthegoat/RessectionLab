@@ -7,6 +7,8 @@ This deliberately coarse deformation model is not FEM or measured mechanics.
 from __future__ import annotations
 
 import copy
+import hashlib
+import json
 import math
 import itertools
 import numpy as np
@@ -17,6 +19,79 @@ from .surgical_tools import TOOLS, catalog
 
 SCHEMA = 'resectionlab.surgical-toolbox.v1'
 MAX_STEPS = 8192
+
+
+def _owned_digest(value):
+    """Canonical hash of synchronously owned engine JSON, without detaching it.
+
+    Transitions and cursor reads are serialized by the engine owner. Validate
+    exact built-in containers/leaves before encoding so custom objects retain
+    semantic_digest's validation/conversion path. No mutable copy escapes.
+    """
+    pending, seen = [value], set()
+    atomic = (str, int, float, bool, type(None))
+    while pending:
+        current = pending.pop()
+        if id(current) in seen:
+            continue
+        seen.add(id(current))
+        kind = type(current)
+        if kind is dict:
+            if any(type(key) is not str for key in current):
+                return semantic_digest(value)
+            children = current.values()
+        elif kind is list or kind is tuple:
+            children = current
+        else:
+            return semantic_digest(value)
+        for item in children:
+            child_kind = type(item)
+            if child_kind is dict or child_kind is list or child_kind is tuple:
+                pending.append(item)
+            elif child_kind not in atomic:
+                return semantic_digest(value)
+    try:
+        payload = json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False)
+    except (TypeError, ValueError):
+        return semantic_digest(value)
+    return 'sha256:' + hashlib.sha256(payload.encode('utf-8')).hexdigest()
+
+
+def _copy_engine_data(value, memo=None):
+    """Detach engine JSON graphs without visiting every scalar via deepcopy.
+
+    Long histories contain large flat cell/pose/event arrays. Built-in scalar
+    leaves are immutable; copying their containing list/dict in C preserves
+    their exact values and order. The shared memo retains aliases and cycles.
+    Subclasses and other values keep ordinary deepcopy behavior.
+    """
+    memo = {} if memo is None else memo
+    atomic = (str, int, float, bool, type(None))
+    kind = type(value)
+    if kind in atomic:
+        return value
+    if id(value) in memo:
+        return memo[id(value)]
+    if kind is list:
+        if all(type(item) in atomic for item in value):
+            result = value.copy()
+            memo[id(value)] = result
+            return result
+        result = []
+        memo[id(value)] = result
+        result.extend(_copy_engine_data(item, memo) for item in value)
+        return result
+    if kind is dict and all(type(key) in atomic for key in value):
+        if all(type(item) in atomic for item in value.values()):
+            result = value.copy()
+            memo[id(value)] = result
+            return result
+        result = {}
+        memo[id(value)] = result
+        for key, item in value.items():
+            result[key] = _copy_engine_data(item, memo)
+        return result
+    return copy.deepcopy(value, memo)
 
 
 class _OperationCheckFailed(Exception):
@@ -124,7 +199,7 @@ class SurgicalEngine:
 
     @property
     def state_id(self):
-        return semantic_digest({'scene': self.scene.identity, 'state': self.state,
+        return _owned_digest({'scene': self.scene.identity, 'state': self.state,
             **({'protectionContract': self._protection_contract['contentHash']} if self._protection_contract else {})})
 
     def fresh(self):
@@ -147,9 +222,25 @@ class SurgicalEngine:
 
     def clone(self):
         other = copy.copy(self)
-        other.state = copy.deepcopy(self.state)
-        other.actions = copy.deepcopy(self.actions)
-        other.history = copy.deepcopy(self.history)
+        other.state = _copy_engine_data(self.state)
+        other.actions = _copy_engine_data(self.actions)
+        other.history = _copy_engine_data(self.history)
+        return other
+
+    def _transition_clone(self):
+        """Transactional state copy with append-only committed ancestry.
+
+        Engine transitions never edit an earlier action or receipt. Sharing
+        those entries while copying the two append targets avoids quadratic
+        copying as a rehearsal grows. Public clone/view/snapshot still detach
+        ancestry; callers should use those APIs when retaining editable copies.
+        Invoke the subclass clone hook on an empty-ancestry shell so observers
+        and reward ledgers preserve their transactional behavior too.
+        """
+        shell = copy.copy(self)
+        shell.actions, shell.history = [], []
+        other = shell.clone()
+        other.actions, other.history = self.actions[:], self.history[:]
         return other
 
     def occupancy(self):
@@ -221,7 +312,7 @@ class SurgicalEngine:
 
     def preview(self, action, *, check=None, include_view=True, include_history=True):
         if check is not None: check()
-        candidate = self.clone()
+        candidate = self._transition_clone()
         result = candidate.step(action) if check is None else candidate.step(action, check=check)
         view = candidate.view(_state_id=result['stateId'], include_history=include_history) if include_view else None
         if check is not None: check()
@@ -285,7 +376,7 @@ class SurgicalEngine:
         after = before
         before_time = self.state['elapsedSeconds']
         before_removed = set(self.state['removed'])
-        candidate = self.clone()
+        candidate = self._transition_clone()
         try:
             duration, points = candidate._validate(action)
             result = candidate._execute(copy.deepcopy(action), duration, points, check=check)
@@ -309,7 +400,7 @@ class SurgicalEngine:
                                 'geometryRevision': after}
             candidate.actions.append(copy.deepcopy(action))
             candidate.history.append({'action': copy.deepcopy(action), 'stateBefore': before,
-                                      'stateAfter': after, **result})
+                                      'stateAfter': after, **_copy_engine_data(result)})
             if check is not None: check()
             self.__dict__.update(candidate.__dict__)
         return {**result, 'stateId': after, 'metrics': self.metrics()}
@@ -326,6 +417,12 @@ class SurgicalEngine:
         slot['parameters'].update(action.get('parameters', {}))
         tool = TOOLS[slot['instrument']]
         params = self.parameters(slot)
+        cusa_v3 = slot['instrument'] == 'cusa' and 'cusaV3' in self.scene.properties
+        if cusa_v3:
+            from .surgical_cusa_v3 import validate_parameters
+            validate_parameters(params)
+        progress_reason = ('BONE_CUTTING_IN_PROGRESS' if slot['instrument'] == 'cranial_drill' and self.scene.properties.get('tissuePhysicsV2')
+            else 'TISSUE_ASPIRATION_IN_PROGRESS' if cusa_v3 else None)
         if op == 'hold' and tool['effect'] != 'retract' or op in ('grasp', 'extract') and tool['effect'] != 'grasp':
             raise ValueError('UNSUPPORTED_OPERATION_FOR_TOOL')
         if op in ('exchange', 'release', 'deactivate', 'activate', 'inspect', 'extract') and points:
@@ -390,14 +487,14 @@ class SurgicalEngine:
             segment_length = float(np.linalg.norm(np.subtract(end['position'], start['position'])))
             # A stalled waypoint cannot be skipped in favor of a later leg:
             # that would change a drawn trajectory into an unintended shortcut.
-            if len(segments) > 1 and active and slot['instrument'] == 'cranial_drill' and self.scene.properties.get('tissuePhysicsV2'):
+            if len(segments) > 1 and active and progress_reason:
                 remaining = float(np.linalg.norm(np.subtract(self.state['slots'][key]['position'], end['position'])))
                 if remaining > 1e-5:
                     length = sum(float(np.linalg.norm(np.subtract(b['position'], a['position']))) for a, b, _ in segments)
                     path_fraction = (completed_length + max(0., segment_length - remaining)) / max(length, 1e-15)
-                    reason = 'BONE_CUTTING_IN_PROGRESS'
+                    reason = progress_reason
                     contact_position = self.state['slots'][key]['position'][:]
-                    events.append({'kind': 'drill_contact_dwell', 'position': contact_position, 'remainingPathMm': length * (1. - path_fraction)})
+                    events.append({'kind': 'cusa_contact_dwell' if cusa_v3 else 'drill_contact_dwell', 'position': contact_position, 'remainingPathMm': length * (1. - path_fraction)})
                     break
             completed_length += segment_length
         if reason:
@@ -410,14 +507,14 @@ class SurgicalEngine:
             events.append({'kind': 'no_material_effect', 'reason': 'No compatible structure intersected by the working tip'})
         events.insert(0, {'kind': op, 'instrument': tool['name'], 'slot': key})
         fraction = done / total if path_fraction is None else path_fraction
-        if not reason and points and tool['name'] == 'Cranial drill' and self.scene.properties.get('tissuePhysicsV2'):
+        if not reason and points and active and progress_reason:
             remaining = float(np.linalg.norm(np.subtract(self.state['slots'][key]['position'], points[-1]['position'])))
             if remaining > 1e-5:
                 length = sum(float(np.linalg.norm(np.subtract(b['position'], a['position']))) for a, b, _ in segments)
                 fraction = max(0., 1. - remaining / max(length, remaining))
-                reason = 'BONE_CUTTING_IN_PROGRESS'
+                reason = progress_reason
                 contact_position = self.state['slots'][key]['position'][:]
-                events.append({'kind': 'drill_contact_dwell', 'position': contact_position, 'remainingPathMm': remaining})
+                events.append({'kind': 'cusa_contact_dwell' if cusa_v3 else 'drill_contact_dwell', 'position': contact_position, 'remainingPathMm': remaining})
         return {'status': 'partial' if reason else 'accepted', 'reason': reason, 'completedFraction': fraction, 'contactPosition': contact_position, 'events': events}
 
     def _positions(self):
@@ -486,6 +583,10 @@ class SurgicalEngine:
             drill.begin_step(self)
             if active and slot['instrument'] == 'cranial_drill':
                 p, _ = drill.contact_limited_pose(self, previous, p, params['radiusMm'])
+        cusa_v3 = slot['instrument'] == 'cusa' and 'cusaV3' in self.scene.properties
+        if cusa_v3 and active:
+            from .surgical_cusa_v3 import contact_limited_pose
+            p, _ = contact_limited_pose(self, previous, p, params['radiusMm'])
         tip_cells = self.touched(previous, p, params['radiusMm'])
         end_pose = {'position': p, 'quaternion': q}
         swept = swept_envelopes(tool, params, slot, end_pose)
@@ -496,6 +597,8 @@ class SurgicalEngine:
             else: working_cells.update(self.touched(a, b, radius))
         held = set(self.state['holds'].get(key, {}).get('cells', []))
         if set(shaft_cells) - held: raise ValueError('SHAFT_COLLISION')
+        if cusa_v3 and active and working_cells - held - set(self.touched(p, p, params['radiusMm'])):
+            raise ValueError('RETAINED_TISSUE_COLLISION: CUSA body requires a cleared corridor')
         for other_key, other in self.state['slots'].items():
             if other_key == key: continue
             other_tool = TOOLS[other['instrument']]
@@ -575,6 +678,10 @@ class SurgicalEngine:
     def _effect(self, key, op, cells, p, q, dt):
         slot = self.state['slots'][key]; tool = TOOLS[slot['instrument']]
         if tool['effect'] == 'remove':
+            if slot['instrument'] == 'cusa' and 'cusaV3' in self.scene.properties:
+                from .surgical_cusa_v3 import apply
+                contacts = self.touched(p, p, self.parameters(slot)['radiusMm'])
+                return apply(self, contacts, dt, self.parameters(slot), position=p)
             if slot['instrument'] == 'cranial_drill' and self.scene.properties.get('tissuePhysicsV2'):
                 from .surgical_drilling_v2 import apply
                 events, _, _ = apply(self, cells, dt, self.parameters(slot), cool=False)
@@ -610,7 +717,8 @@ class SurgicalEngine:
             name = self.by_label[int(self.scene.labels.ravel()[i])]['name']
             by_label[name] = by_label.get(name, 0.) + self.scene.voxel_mm3
         target = sum(self.scene.voxel_mm3 for i in self.state['removed'] if self.by_label[int(self.scene.labels.ravel()[i])].get('target'))
-        return {**physics_metrics(self), **v2_metrics(self), 'removedByLabelMm3': by_label, 'targetRemovedMm3': target,
+        from .surgical_cusa_v3 import metrics as cusa_metrics
+        return {**physics_metrics(self), **v2_metrics(self), **(cusa_metrics(self) if 'cusaV3' in self.state else {}), 'removedByLabelMm3': by_label, 'targetRemovedMm3': target,
                 'nonTargetRemovedMm3': len(self.state['removed']) * self.scene.voxel_mm3 - target,
                 'elapsedSeconds': self.state['elapsedSeconds'], 'travelMm': self.state['travelMm'],
                 'contactCellSeconds': sum(self.state['contact'].values()), 'debrisMm3': self.state['debrisMm3'],
@@ -622,16 +730,20 @@ class SurgicalEngine:
                 'vesselEncounters': len(self.state['vesselEncounters']),
                 'exposureByMaterialCellSeconds': copy.deepcopy(self.state['materialExposure']),
                 'unknownStimulationSites': sum(o.get('result') == 'unknown' for o in self.state['observations']),
-                'collisions': sum(h['status'] == 'partial' and (not self.scene.properties.get('tissuePhysicsV2') or h.get('reason') != 'BONE_CUTTING_IN_PROGRESS') for h in self.history),
+                'collisions': sum(h['status'] == 'partial' and h.get('reason') != 'TISSUE_ASPIRATION_IN_PROGRESS' and (not self.scene.properties.get('tissuePhysicsV2') or h.get('reason') != 'BONE_CUTTING_IN_PROGRESS') for h in self.history),
                 'unknownMaterialCells': int(sum(np.count_nonzero(self.scene.labels == r['id']) for r in self.scene.regions if r['material'] == 'unknown'))}
 
     def observe(self, *, _state_id=None):
         from .surgical_physics import physics_descriptor
         if self.scene.properties.get('tissuePhysicsV2'):
             from .surgical_physics_v2 import descriptor as physics_descriptor
+        physics = physics_descriptor(self)
+        if 'cusaV3' in self.state:
+            from .surgical_cusa_v3 import descriptor
+            physics['cusaV3'] = descriptor(self)
         return {'schema': SCHEMA, 'stateId': self.state_id if _state_id is None else _state_id, 'slots': copy.deepcopy(self.state['slots']),
                 'protection': self.guard_report(),
-                'physics': physics_descriptor(self),
+                'physics': physics,
                 'metrics': self.metrics(), 'observations': copy.deepcopy(self.state['observations']),
                 'unknowns': ['unmapped anatomy', 'uncalibrated mechanics', 'clinical outcomes unknown']}
 
@@ -655,7 +767,8 @@ class SurgicalEngine:
                 'fluid': copy.deepcopy(self.state['fluid']), 'history': copy.deepcopy(self.history) if include_history else [],
                 **{name: copy.deepcopy(self.state.get(name)) for name in ('cutEdges', 'separatedAttachments',
                     'transectedEdges', 'flapComponents', 'debris', 'sources', 'meshCutEdges', 'meshSeams',
-                    'vesselConnections', 'vesselWounds', 'deformation', 'deformationModel', 'drillingV2', 'vesselsV2')}}
+                    'vesselConnections', 'vesselWounds', 'deformation', 'deformationModel', 'drillingV2', 'vesselsV2')},
+                **({'cusaV3': copy.deepcopy(self.state['cusaV3'])} if 'cusaV3' in self.state else {})}
 
     def snapshot(self):
         return {'schema': SCHEMA, 'sceneId': self.scene.identity, 'actions': copy.deepcopy(self.actions), 'stateId': self.state_id,
