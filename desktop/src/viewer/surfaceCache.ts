@@ -9,5 +9,7 @@ export function cachedSurface(mask:Uint8Array,affine:Affine,kind?:string,shape?:
   const entries=cache.get(mask);return entries?.get(signature(affine,kind,shape,smooth))??(!smooth?entries?.get(signature(affine,kind,shape,true)):undefined);
 }
 export function retainSurface(mask:Uint8Array,affine:Affine,kind:string|undefined,surface:PreparedSurface,shape?:number[]){
+  // Keep raw representation and active bounds with the immutable snapshot;
+  // historical source IDs cannot be interpreted as compact active vertices.
   const entries=cache.get(mask)??new Map<string,PreparedSurface>();entries.set(signature(affine,kind,shape,surface.smoothingPrepared!==false),surface);cache.set(mask,entries);
 }

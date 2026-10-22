@@ -38,21 +38,22 @@ export class IncrementalSurfaceEngine {
       }
     }else {
       if(!request.mask||request.mask.some(n=>n>1))throw Error('Missing immutable source-mask admission for surface preparation');
-      try{surface=new ChunkedMaskSurface(request.mask,request.shape,32,this.maxBytes);}catch(error){
+      try{surface=new ChunkedMaskSurface(request.mask,request.shape,32,this.maxBytes,request.kind==='bone');}catch(error){
         if(!(error instanceof SurfaceIndexBudgetExceeded))throw error;
         surface=new ChunkedMaskSurface(request.mask,request.shape);
       }
     }
     const extractionMs=performance.now()-started,assemblyStarted=performance.now();
-    const indexed=surface.indexedChunks?surface.indexed(request.smooth===false&&request.kind==='bone'?request.affine:undefined):undefined,soup=indexed?undefined:surface.positions(),assemblyMs=performance.now()-assemblyStarted,fairStarted=performance.now();
-    const result=indexed?prepareIndexedSurface(indexed.positions,indexed.indices,surface.mask,request.shape,request.affine,request.kind,request.smooth!==false,indexed.normals):prepareSurfaceSoup(soup!,surface.mask,request.shape,request.affine,request.kind,request.smooth!==false);
+    const stable=incremental&&request.smooth===false&&request.kind==='bone'?surface.stableIndexed(request.affine):undefined;
+    const indexed=stable??(surface.indexedChunks?surface.indexed(request.smooth===false&&request.kind==='bone'?request.affine:undefined):undefined),soup=indexed?undefined:surface.positions(),assemblyMs=performance.now()-assemblyStarted,fairStarted=performance.now();
+    const result=stable?{...stable,smoothingPrepared:false}:indexed?prepareIndexedSurface(indexed.positions,indexed.indices,surface.mask,request.shape,request.affine,request.kind,request.smooth!==false,indexed.normals):prepareSurfaceSoup(soup!,surface.mask,request.shape,request.affine,request.kind,request.smooth!==false);
     this.cache.delete(request.layerId);
     if(surface.retainedBytes<=this.maxBytes)this.cache.set(request.layerId,{identity:request.identity,signature,surface});
     let retainedBytes=[...this.cache.values()].reduce((sum,c)=>sum+c.surface.retainedBytes,0);
     while(retainedBytes>this.maxBytes&&this.cache.size){const key=this.cache.keys().next().value!;retainedBytes-=this.cache.get(key)!.surface.retainedBytes;this.cache.delete(key);}
     return {...result,jobId:request.jobId,layerId:request.layerId,identity:request.identity,
       resident:[...this.cache].map(([layerId,state])=>({layerId,identity:state.identity})),
-      work:{incremental,...surface.normalWork,indexedChunks:surface.indexedChunks,indexedCorners:surface.lastIndexedCorners,remeshedChunks:surface.lastRemeshedChunks,totalChunks:surface.totalChunks,retainedBytes,extractionMs,assemblyMs,
+      work:{incremental,stableSourceIds:!!stable,...surface.normalWork,indexedChunks:surface.indexedChunks,indexedCorners:surface.lastIndexedCorners,remeshedChunks:surface.lastRemeshedChunks,totalChunks:surface.totalChunks,retainedBytes,extractionMs,assemblyMs,
         smoothingPrepared:result.smoothingPrepared!==false,globalFairingMs:performance.now()-fairStarted,preparationMs:performance.now()-started}};
   }
 }

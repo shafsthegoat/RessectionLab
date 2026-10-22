@@ -56,6 +56,15 @@ test('one bounded worker copies only the active job, transfers disposable inputs
   assert.equal(a.geometry.index.array,index);assert.deepEqual(index,initialIndex);assert.deepEqual(positions,initialPositions);
   owner.dispose();assert.equal(a.raycast,THREE.Mesh.prototype.raycast);assert.equal(a.geometry.boundsTree,undefined);
 });
+test('stable source IDs and unused historical positions preserve ordinary and accelerated triangle hits',()=>{
+  const {owner,workers}=fixture(),reference=mesh(),source=reference.geometry,positions=source.attributes.position.array,normals=source.attributes.normal.array;
+  const stable=new THREE.BufferGeometry(),p=new Float32Array(positions.length+3),n=new Float32Array(normals.length+3);p.set([1e6,-1e6,1e6]);p.set(positions,3);n.set(normals,3);
+  stable.setAttribute('position',new THREE.BufferAttribute(p,3));stable.setAttribute('normal',new THREE.BufferAttribute(n,3));stable.setIndex(new THREE.BufferAttribute(Uint32Array.from(source.index.array,id=>id+1),1));
+  source.computeBoundingBox();source.computeBoundingSphere();stable.boundingBox=source.boundingBox.clone();stable.boundingSphere=stable.boundingBox.getBoundingSphere(new THREE.Sphere());stable.userData.sourceIndexing='stable-source-ids';
+  const actual=mesh(stable);actual.updateMatrixWorld(true);reference.updateMatrixWorld(true);const ray=new THREE.Raycaster(new THREE.Vector3(.1,.2,8),new THREE.Vector3(0,0,-1));
+  equalHits(hits(actual,ray,true),hits(reference,ray,true));owner.install(actual,stable);workers[0].complete();equalHits(hits(actual,ray),hits(reference,ray,true));
+  assert.equal(stable.attributes.position.array,p);assert.equal(stable.index.array[0],source.index.array[0]+1);owner.dispose();actual.geometry.dispose();reference.geometry.dispose();
+});
 
 test('all source triangle IDs and physical hits match ordinary picking under affine transforms and deeper clipping',()=>{
   const {owner,workers}=fixture(),a=mesh(),b=mesh();b.position.z=-4;

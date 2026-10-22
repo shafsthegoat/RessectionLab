@@ -32,3 +32,19 @@ test('surface fit retains 8% total margin for oblique source anatomy at narrow a
 test('empty source geometry preserves the caller’s existing image-bounds fallback',()=>{
   assert.equal(surfaceCameraDistance(new THREE.Group(),new THREE.Vector3(),new THREE.Vector3(0,-1,0),new THREE.Vector3(1,0,0),new THREE.Vector3(0,0,1),Math.PI/6,1),null);
 });
+test('stable source IDs fit active indexed corners without historical extreme vertices',()=>{
+  const active=Float32Array.of(-20,-30,0,20,-30,0,20,30,10,-20,30,10),compact=new THREE.BufferGeometry();compact.setAttribute('position',new THREE.BufferAttribute(active,3));compact.setIndex([0,1,2,0,2,3]);
+  const historical=new Float32Array(active.length+3);historical.set([1e6,-1e6,1e6]);historical.set(active,3);
+  const stable=new THREE.BufferGeometry();stable.setAttribute('position',new THREE.BufferAttribute(historical,3));stable.setIndex([1,2,3,1,3,4]);stable.userData.sourceIndexing='stable-source-ids';
+  const a=new THREE.Group(),b=new THREE.Group(),ma=new THREE.Mesh(compact),mb=new THREE.Mesh(stable);a.add(ma);b.add(mb);
+  const transform=[[-1,.3,0,10],[.2,2,.1,-20],[0,.1,1,30],[0,0,0,1]];placeInSourceFrame(ma,transform);placeInSourceFrame(mb,transform);
+  const centre=physicalBounds(a).getCenter(new THREE.Vector3()),direction=new THREE.Vector3(.8,-1.6,.7).normalize(),right=new THREE.Vector3().crossVectors(new THREE.Vector3(0,0,1),direction).normalize(),up=new THREE.Vector3().crossVectors(direction,right).normalize();
+  const positions=stable.attributes.position,calls={getX:[],getY:[],getZ:[]};
+  for(const key of Object.keys(calls)){const original=positions[key].bind(positions);positions[key]=i=>{calls[key].push(i);return original(i);};}
+  for(const aspect of [.4,1,2]){
+    for(const key of Object.keys(calls))calls[key].length=0;
+    assert.equal(surfaceCameraDistance(b,centre,direction,right,up,.6,aspect),surfaceCameraDistance(a,centre,direction,right,up,.6,aspect));
+    for(const key of Object.keys(calls))assert.deepEqual(calls[key],[1,2,3,4],'each unique active vertex transforms once; the historical slot is never read');
+  }
+  assert.deepEqual(stable.attributes.position.array,historical);assert.deepEqual([...stable.index.array],[1,2,3,1,3,4]);
+});

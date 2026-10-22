@@ -7,6 +7,10 @@ import {IncrementalSourceNormals} from './incrementalSurfaceNormals.ts';
 import {indexedSurfaceNormals} from './surfaceNormals.ts';
 const affines=[[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]],[[-1,.23,0,10],[.11,2,.17,-20],[0,.03,1.37,30],[0,0,0,1]],[[1,.2,0,0],[0,2,0,0],[0,0,0,0],[0,0,0,1]]];
 const equal=(actual,expected,keys=['positions','indices','normals'])=>{for(const key of keys)assert.deepEqual(new Uint8Array(actual[key].buffer),new Uint8Array(expected[key].buffer),key);};
+const equalCorners=(actual,expected)=>{
+  const bytes=surface=>{const out=new Float32Array(surface.indices.length*6);let offset=0;for(const id of surface.indices)for(const key of ['positions','normals'])for(let axis=0;axis<3;axis++)out[offset++]=surface[key][id*3+axis];return new Uint8Array(out.buffer);};
+  assert.equal(actual.indices.length,expected.indices.length);assert.deepEqual(bytes(actual),bytes(expected));
+};
 const shape=[35,12,10],at=(x,y,z)=>(x*shape[1]+y)*shape[2]+z;
 const source=()=>Uint8Array.from({length:35*12*10},(_,i)=>{const x=Math.floor(i/120),y=Math.floor(i/10)%12,z=i%10;return Number(x>0&&x<34&&y>0&&y<11&&z>0&&z<9);});
 test('dirty source normals remain byte-identical through removed faces, cut walls, seams, undo and affine changes',()=>{
@@ -43,7 +47,12 @@ test('raw bone worker normals cache survives preference changes and preserves co
   mask[at(31,4,4)]=0;
   result=engine.prepare({...base,jobId:2,previousIdentity:'a',identity:'b',indices:Uint32Array.of(at(31,4,4)),values:Uint8Array.of(0),smooth:true});
   equal(result,prepareSurface(mask,shape,affine,'bone',true),['positions','indices','normals','smoothPositions','smoothNormals']);assert.equal(result.work.cachedNormals,false);
-  result=engine.prepare({...base,jobId:3,previousIdentity:'b',identity:'b',indices:new Uint32Array(),values:new Uint8Array(),smooth:false});equal(result,prepareSurface(mask,shape,affine,'bone',false));assert(result.work.cachedNormals);
+  result=engine.prepare({...base,jobId:3,previousIdentity:'b',identity:'b',indices:new Uint32Array(),values:new Uint8Array(),smooth:false});equalCorners(result,prepareSurface(mask,shape,affine,'bone',false));assert.equal(result.representation,'stable-source-ids');assert(result.work.cachedNormals);
+});
+test('stable normal snapshots copy the complete registry prefix without detaching the retained cache',()=>{
+  const points=Float32Array.of(0,0,0,1,0,0,0,1,0),indices=Uint32Array.of(0,1,2),cache=new IncrementalSourceNormals(()=>{}),affine=affines[1];
+  cache.prepare(points,3,[{data:indices}],affine);const first=cache.emitStable(3),expected=indexedSurfaceNormals(points,indices,affine);assert.deepEqual(first,expected);
+  structuredClone(first,{transfer:[first.buffer]});assert.equal(first.byteLength,0);assert.deepEqual(cache.emitStable(3),expected);
 });
 test('normal face scanning stays within changed chunks and halo while retaining exact global bytes',()=>{
   const shape=[21,19,17],at=(x,y,z)=>(x*shape[1]+y)*shape[2]+z,mask=Uint8Array.from({length:shape.reduce((a,b)=>a*b,1)},(_,i)=>{const x=Math.floor(i/(19*17)),y=Math.floor(i/17)%19,z=i%17;return Number(x>0&&x<20&&y>0&&y<18&&z>0&&z<16);}),surface=new ChunkedMaskSurface(mask,shape,4,8*1024**2),affine=affines[1];

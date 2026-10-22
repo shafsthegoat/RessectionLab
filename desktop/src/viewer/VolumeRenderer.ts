@@ -627,7 +627,7 @@ export class VolumeRenderer {
     this.requestRender();
   }
 
-  private makeSurface(layer:ViewerVolume['compartments'][number],buffers:{positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;indices?:Uint32Array;smoothingPrepared?:boolean},eagerPicking=true):SurfacePair|null {
+  private makeSurface(layer:ViewerVolume['compartments'][number],buffers:{positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;indices?:Uint32Array;smoothingPrepared?:boolean;representation?:PreparedSurface['representation'];activeBounds?:Bounds3},eagerPicking=true):SurfacePair|null {
     const {positions,normals}=buffers;
     const onError=this.onError;
     const geometry = new THREE.BufferGeometry();
@@ -649,6 +649,17 @@ export class VolumeRenderer {
     if (buffers.indices) {
       geometry.setIndex(new THREE.BufferAttribute(buffers.indices, 1));
       smooth.setIndex(new THREE.BufferAttribute(buffers.indices, 1));
+    }
+    if(buffers.representation==='stable-source-ids'){
+      const bounds=buffers.activeBounds;
+      if(smoothingPrepared||!buffers.indices?.length||!bounds||bounds.some(row=>row.length!==3||row.some(value=>!Number.isFinite(value)))||bounds[0].some((value,axis)=>value>bounds[1][axis])){
+        geometry.dispose();if(smooth!==geometry)smooth.dispose();onError('Stable source display requires raw indexed triangles and active bounds.');return null;
+      }
+      // Historical registry slots must not affect framing, raycast rejection,
+      // frustum culling or the centre used for transparent-object sorting.
+      geometry.boundingBox=new THREE.Box3(new THREE.Vector3(...bounds[0]),new THREE.Vector3(...bounds[1]));
+      geometry.boundingSphere=geometry.boundingBox.getBoundingSphere(new THREE.Sphere());
+      geometry.userData.sourceIndexing='stable-source-ids';
     }
     if(smoothingPrepared)smooth.setAttribute("position", new THREE.BufferAttribute(smoothPositions!, 3));
     const vessel=surfaceKind(layer.kind)==='vessel';

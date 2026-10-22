@@ -99,4 +99,6 @@ export class IncrementalSourceNormals {
     }
     return output;
   }
+  /** Fresh transferable snapshot in the immutable source registry's ID space. */
+  emitStable(vertexHighWater:number){return this.normals.slice(0,vertexHighWater*3);}
 }

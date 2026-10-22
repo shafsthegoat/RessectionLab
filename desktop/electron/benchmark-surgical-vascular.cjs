@@ -191,12 +191,12 @@ function run(){
           count=evidence.count;
           if(performance.now()-lastProgressAt>=1000){lastProgressAt=performance.now();report.progress={at:lastProgressAt,submittedCount:count,last:evidence.last,pending:evidence.pending,playing:evidence.playing,ipcCount:report.ipc.length};fs.writeFileSync(path.join(output,'progress.json'),JSON.stringify(report.progress));}
           if(report.frameOperativeField&&!report.displayChange&&evidence.inserted&&count){
-            report.displayChange=await js(`(()=>{if(![...document.querySelectorAll('.surgical-slots small')].some(e=>e.textContent.startsWith('Inserted')))return null;const b=[...document.querySelectorAll('button')].find(b=>b.textContent.trim()==='Frame operative field');if(!b||b.disabled)throw Error('Missing field framing control');const change={at:performance.now(),acceptedTuple:window.vascularSubmitted.at(-1),stateId:document.querySelector('.surgical-panel')?.dataset.stateId,meaning:'One explicit accepted-tool framing; pinned thereafter, no follow/interpolation'};b.click();return change;})()`);
+            report.displayChange=await js(`(()=>{if(![...document.querySelectorAll('.surgical-slots small')].some(e=>e.textContent.startsWith('Inserted')))return null;const b=[...document.querySelectorAll('button')].find(b=>b.textContent.trim()==='Frame operative field');if(!b||b.disabled)throw Error('Missing field framing control');const change={at:performance.now(),acceptedTuple:window.vascularSubmitted.at(-1),stateId:document.querySelector('.surgical-panel')?.dataset.stateId,meaning:'One explicit operative-field framing at a source-contained instrument or same-source annotation; pinned thereafter, no automatic follow/interpolation'};b.click();return change;})()`);
           }
           if(count===1149&&!evidence.playing&&!evidence.pending)break;
         }
         report.playEnded=performance.now();report.playEndedRenderer=await js('performance.now()');
-        Object.assign(report,await js(`({frames:window.vascularFrames,work:window.vascularWork,uiFailure:window.vascularFailure,displayedStateId:document.querySelector('.surgical-panel')?.dataset.stateId,visible:document.visibilityState})`));
+        Object.assign(report,await js(`({frames:window.vascularFrames,work:window.vascularWork,uiFailure:window.vascularFailure,displayedStateId:document.querySelector('.surgical-panel')?.dataset.stateId,visible:document.visibilityState,slicePositions:[...document.querySelectorAll('.rl-viewer-slice-position')].map(e=>e.textContent)})`));
         report.submittedPlayback=submittedVascularPlayback(report.ipc.slice(index),report.frames,options);
         report.playbackIpc=report.ipc.slice(index);report.ipcAtSnapshot=report.ipc.length;
         const last=report.submittedPlayback.at(-1);report.final=last;

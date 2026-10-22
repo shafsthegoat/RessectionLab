@@ -2,9 +2,9 @@ import {maskSurface} from './surface.ts';
 import {indexSurface,fairIndexedSurface,vesselLimits} from './surfaceSmoothing.ts';
 import {indexedSurfaceNormals} from './surfaceNormals.ts';
 import {surfaceKind} from './surfacePolicy.ts';
-import type {Affine,Shape3} from './coordinates';
+import type {Affine,Bounds3,Shape3} from './coordinates';
 import type {SurfaceDiagnostics} from './surfacePolicy';
-export interface PreparedSurface {positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;indices:Uint32Array;diagnostics?:SurfaceDiagnostics;smoothingPrepared?:boolean}
+export interface PreparedSurface {positions:Float32Array;normals:Float32Array;smoothPositions?:Float32Array;smoothNormals?:Float32Array;indices:Uint32Array;diagnostics?:SurfaceDiagnostics;smoothingPrepared?:boolean;representation?:'stable-source-ids';activeBounds?:Bounds3}
 export function prepareSurface(mask:Uint8Array,shape:Shape3,affine:Affine,kind?:string,smooth=true):PreparedSurface {
   const started=performance.now(),result=prepareSurfaceSoup(maskSurface(mask,shape),mask,shape,affine,kind,smooth);
   if(result.diagnostics)result.diagnostics.preparationMs=performance.now()-started;return result;

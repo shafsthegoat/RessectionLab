@@ -1373,3 +1373,38 @@ production, with exact source and receipts preserved under
 zero simulator, GUI, policy or optimizer calls. A smaller dirty count alone is
 not a performance improvement. Complete index/vertex export remains the next
 demonstrated mesh bottleneck.
+
+## Stable source IDs for raw bone updates
+
+Incremental, unsmoothed bone snapshots can now retain their worker-owned source
+vertex IDs. Current triangles keep the exact raster order and reference the same
+position and normal bits, while export copies contiguous rows instead of
+compacting and remapping every corner. The initial normal admission, smoothed
+meshes and non-admitted caches retain the canonical path. Complete transferable
+snapshots are capped at 64 MiB; the existing picking-input and 128 MiB resident
+budgets still apply. Historical vertex slots are never recycled. If their
+high-water storage reaches the cap, export falls back to canonical compaction.
+
+Each chunk retains its actual active bounds, charged to the resident budget and
+discarded first under pressure. Active bounds govern culling, transparent-object
+sorting and picking rejection. Explicit camera fitting visits only referenced
+vertices, once each, so old slots cannot expand the view. Full GPU uploads remain.
+
+Six balanced source-bone delete/undo pairs against frozen `9355bd15` reduced
+median update plus export from **103.135 to 43.709 ms (2.360×)**. Export medians
+were 88.701 versus 29.032 ms; every pair improved. Complete indexed corner
+position/normal bits, triangle order and active bounds matched. These checks ran
+outside the timed scope. Initial construction was slightly slower, 3.264 versus
+3.366 seconds. Peak output was 66,282,144 bytes and retained cache storage
+111,755,537 bytes. External wall was 11.882 seconds and sampled tree RSS
+635,797,504 bytes, below 60 seconds/1 GiB. This component result does not establish
+application FPS, compositor timing, fresh replay speed or the matched 10× gate.
+
+Final desktop checks passed **909 tests**: 481 renderer, 232 viewer and 196 main
+process tests. Type checking and production build passed with the existing bundle
+size advisory. All jobs were serialized and within their external limits. Evidence
+is `stable-index-export-component-v1/` and
+`stable-index-export-{renderer,viewer,main,build}-final-v1.{json,log}` under the
+ignored output root. Independent source and component-evidence review found no
+material defect. A new actual-app full vascular measurement is still required;
+the previous v7/v8 results describe earlier source and builds.

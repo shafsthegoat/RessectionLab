@@ -276,6 +276,17 @@ test('OFF admits exact raw source geometry; ON lazily conditions that same tissu
     while(worker.queue.length)worker.flush();submitPreparedState(r);assert.equal(r.volume,delta);assert.equal(r.surfaceGeometry.get('brain').smoothingPrepared,false);
   }finally{mock.restore();}
 });
+test('raw stable source geometry installs active framing and sorting bounds before picking binds',()=>{
+  const {r}=modeledFixture();r.surfaceSmoothing=false;let bound=false;
+  const buffers={positions:Float32Array.of(1e6,-1e6,1e6,-1,-1,0,1,-1,0,0,1,0),normals:Float32Array.of(0,0,0,0,0,1,0,0,1,0,0,1),indices:Uint32Array.of(1,2,3),smoothingPrepared:false,representation:'stable-source-ids',activeBounds:[[-1,-1,0],[1,1,0]]};
+  r.picking={install(mesh,geometry,eager){assert.equal(eager,false);assert.deepEqual(geometry.boundingBox.min.toArray(),[-1,-1,0]);assert.deepEqual(geometry.boundingBox.max.toArray(),[1,1,0]);assert.deepEqual(geometry.boundingSphere.center.toArray(),[0,0,0]);assert(geometry.boundingSphere.radius>=Math.sqrt(2));assert.equal(geometry.userData.sourceIndexing,'stable-source-ids');bound=true;}};
+  const pair=r.makeSurface({name:'bone',kind:'bone',color:'#aabbcc',mask:new Uint8Array()},buffers,false);assert(pair);assert(bound);assert.equal(pair.source,pair.smooth);assert.equal(pair.mesh.geometry,pair.source);
+  const reference=new THREE.BufferGeometry();reference.setAttribute('position',new THREE.BufferAttribute(buffers.positions.slice(3),3));reference.computeBoundingBox();reference.computeBoundingSphere();
+  assert.deepEqual(pair.source.boundingBox,reference.boundingBox);assert.deepEqual(pair.source.boundingSphere.center,reference.boundingSphere.center,'transparent sort centre matches compact active geometry');
+  r.anatomy.clear();r.anatomy.add(pair.mesh);pair.mesh.updateWorldMatrix(true,false);
+  const expected=reference.boundingBox.clone().applyMatrix4(pair.mesh.matrixWorld);assert.deepEqual(new THREE.Box3().setFromObject(r.anatomy),expected,'complete-bounds camera framing excludes stale slots');
+  pair.source.dispose();pair.mesh.material.dispose();reference.dispose();
+});
 test('mid-flight preference changes cancel the old quality and cannot publish stale target buffers',()=>{
   const mock=modelWorkerMock();try{
     const {r,source,derive}=modeledFixture(),a=derive([22]),b=derive([22,23]),ready=[];

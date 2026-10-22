@@ -1,14 +1,17 @@
 import {maskSurfaceRegion} from './surface.ts';
 import {SourceVertexIndex,SurfaceIndexBudgetExceeded} from './sourceVertexIndex.ts';
-import type {Affine,Point3,Shape3} from './coordinates';
+import type {Affine,Bounds3,Point3,Shape3} from './coordinates';
 import {IncrementalSourceNormals} from './incrementalSurfaceNormals.ts';
-interface Chunk {low:Point3;high:Point3;data:Float32Array|Uint32Array;rowOffsets:Uint32Array}
+interface Chunk {low:Point3;high:Point3;data:Float32Array|Uint32Array;rowOffsets:Uint32Array;activeBounds?:Bounds3}
+const ACTIVE_BOUNDS_BYTES=256,MAX_STABLE_SNAPSHOT_BYTES=64*1024**2,MAX_PICKING_INPUT_BYTES=64*1024**2;
 /** Worker-owned source chunks. Row stitching preserves complete reference
  * x/y/z face order. Optional stable IDs avoid rehashing unchanged corners. */
 export class ChunkedMaskSurface {
   private readonly chunks=new Map<string,Chunk>();
   private readonly vertices?:SourceVertexIndex;
   private chunkBytes=0;
+  private boundsBytes=0;
+  private stableBoundsAvailable:boolean;
   private sourceNormals?:IncrementalSourceNormals;
   private normalPreparationMs=0;
   private cachedNormalsUsed=false;
@@ -18,11 +21,11 @@ export class ChunkedMaskSurface {
   readonly mask:Uint8Array;
   lastRemeshedChunks=0;
   lastIndexedCorners=0;
-  constructor(mask:Uint8Array,shape:Shape3,chunkSize=32,indexBudget?:number){
+  constructor(mask:Uint8Array,shape:Shape3,chunkSize=32,indexBudget?:number,retainActiveBounds=false){
     if(mask.length!==shape.reduce((a,b)=>a*b,1)||!Number.isInteger(chunkSize)||chunkSize<2)throw Error('Invalid chunked surface source');
-    this.mask=mask;this.shape=shape;this.chunkSize=chunkSize;this.indexBudget=indexBudget;
+    this.mask=mask;this.shape=shape;this.chunkSize=chunkSize;this.indexBudget=indexBudget;this.stableBoundsAvailable=retainActiveBounds;
     if(indexBudget!==undefined){
-      const admit=(bytes:number)=>{if(mask.byteLength+this.chunkBytes+bytes+(this.sourceNormals?.retainedBytes??0)>indexBudget)this.sourceNormals=undefined;if(mask.byteLength+this.chunkBytes+bytes>indexBudget)throw new SurfaceIndexBudgetExceeded('Indexed source chunk budget exceeded');};
+      const admit=(bytes:number)=>{if(mask.byteLength+this.chunkBytes+this.boundsBytes+bytes+(this.sourceNormals?.retainedBytes??0)>indexBudget)this.discardActiveBounds();if(mask.byteLength+this.chunkBytes+bytes+(this.sourceNormals?.retainedBytes??0)>indexBudget)this.sourceNormals=undefined;if(mask.byteLength+this.chunkBytes+bytes>indexBudget)throw new SurfaceIndexBudgetExceeded('Indexed source chunk budget exceeded');};
       admit(0);this.vertices=new SourceVertexIndex(shape,admit);
     }
     const low=[...shape],high=[-1,-1,-1],yz=shape[1]*shape[2];
@@ -32,27 +35,40 @@ export class ChunkedMaskSurface {
     for(let x=min[0];x<=max[0];x++)for(let y=min[1];y<=max[1];y++)for(let z=min[2];z<=max[2];z++)this.extract([x,y,z]);
   }
   get indexedChunks(){return !!this.vertices;}
-  get retainedBytes(){return this.mask.byteLength+this.chunkBytes+(this.vertices?.retainedBytes??0)+(this.sourceNormals?.retainedBytes??0);}
+  get retainedBytes(){return this.mask.byteLength+this.chunkBytes+this.boundsBytes+(this.vertices?.retainedBytes??0)+(this.sourceNormals?.retainedBytes??0);}
   get normalWork(){return {cachedNormals:this.cachedNormalsUsed,normalPreparationMs:this.normalPreparationMs,dirtyNormalVertices:this.cachedNormalsUsed?this.sourceNormals?.lastDirtyVertices??0:0,recomputedNormalFaces:this.cachedNormalsUsed?this.sourceNormals?.lastRecomputedFaces??0:0,scannedNormalFaces:this.cachedNormalsUsed?this.sourceNormals?.lastScannedFaces??0:0,normalFullScan:this.cachedNormalsUsed?this.sourceNormals?.lastFullScan??true:true,normalSelectionBytes:this.sourceNormals?.selectionBytes??0};}
   get totalChunks(){return this.shape.reduce((n,s)=>n*Math.ceil((s+1)/this.chunkSize),1);}
+  private discardActiveBounds(){
+    this.stableBoundsAvailable=false;this.boundsBytes=0;
+    for(const chunk of this.chunks.values())delete chunk.activeBounds;
+  }
   private extract(coordinate:Point3){
     const low=coordinate.map(n=>n*this.chunkSize-1) as Point3,high=coordinate.map((n,a)=>Math.min(this.shape[a]-1,(n+1)*this.chunkSize-2)) as Point3;
     const key=coordinate.join(','),result=maskSurfaceRegion(this.mask,this.shape,low,high);this.lastRemeshedChunks++;
-    const old=this.chunks.get(key);if(old&&this.sourceNormals)this.sourceNormals.mark(old.data as Uint32Array,coordinate);if(old)this.chunkBytes-=old.data.byteLength+old.rowOffsets.byteLength;
+    const old=this.chunks.get(key);if(old&&this.sourceNormals)this.sourceNormals.mark(old.data as Uint32Array,coordinate);if(old){this.chunkBytes-=old.data.byteLength+old.rowOffsets.byteLength;if(old.activeBounds)this.boundsBytes-=ACTIVE_BOUNDS_BYTES;}
     if(!result.positions.length){this.chunks.delete(key);return;}
-    let data:Float32Array|Uint32Array=result.positions;
+    let data:Float32Array|Uint32Array=result.positions,activeBounds:Bounds3|undefined;
     if(this.vertices){
       this.chunkBytes+=result.positions.length/3*4+result.rowOffsets.byteLength;
       // Reserve the new row storage before the registry grows. A failed
       // admission discards this entire optimization, never a partial mesh.
+      if(this.retainedBytes>this.indexBudget!)this.discardActiveBounds();
       if(this.retainedBytes>this.indexBudget!)this.sourceNormals=undefined;
       if(this.retainedBytes>this.indexBudget!)throw new SurfaceIndexBudgetExceeded('Indexed source chunk budget exceeded');
       data=new Uint32Array(result.positions.length/3);this.lastIndexedCorners+=data.length;
-      for(let i=0;i<data.length;i++)data[i]=this.vertices.intern(result.positions[3*i],result.positions[3*i+1],result.positions[3*i+2]);
+      const bounds=this.stableBoundsAvailable?[[Infinity,Infinity,Infinity],[-Infinity,-Infinity,-Infinity]] as Bounds3:undefined;
+      for(let i=0;i<data.length;i++){
+        const x=result.positions[3*i],y=result.positions[3*i+1],z=result.positions[3*i+2];data[i]=this.vertices.intern(x,y,z);
+        if(bounds){bounds[0][0]=Math.min(bounds[0][0],x);bounds[0][1]=Math.min(bounds[0][1],y);bounds[0][2]=Math.min(bounds[0][2],z);bounds[1][0]=Math.max(bounds[1][0],x);bounds[1][1]=Math.max(bounds[1][1],y);bounds[1][2]=Math.max(bounds[1][2],z);}
+      }
+      if(bounds&&this.stableBoundsAvailable){
+        if(this.retainedBytes+ACTIVE_BOUNDS_BYTES<=this.indexBudget!){activeBounds=bounds;this.boundsBytes+=ACTIVE_BOUNDS_BYTES;}
+        else this.discardActiveBounds();
+      }
       this.sourceNormals?.mark(data,coordinate);
       for(let i=0;i<result.rowOffsets.length;i++)result.rowOffsets[i]/=3;
     }else this.chunkBytes+=data.byteLength+result.rowOffsets.byteLength;
-    this.chunks.set(key,{low,high,data,rowOffsets:result.rowOffsets});
+    this.chunks.set(key,{low,high,data,rowOffsets:result.rowOffsets,...(activeBounds?{activeBounds}:{})});
   }
   update(indices:Iterable<number>){
     const dirty=new Set<string>();this.lastRemeshedChunks=0;this.lastIndexedCorners=0;
@@ -88,12 +104,32 @@ export class ChunkedMaskSurface {
     if(affine){
       const normalStarted=performance.now();
       try{
-        this.sourceNormals??=new IncrementalSourceNormals(bytes=>{if(this.mask.byteLength+this.chunkBytes+this.vertices!.retainedBytes+bytes>this.indexBudget!)throw new SurfaceIndexBudgetExceeded('Source normal cache budget exceeded');},{shape:this.shape,chunkSize:this.chunkSize});
+        this.sourceNormals??=new IncrementalSourceNormals(bytes=>{if(this.mask.byteLength+this.chunkBytes+this.boundsBytes+this.vertices!.retainedBytes+bytes>this.indexBudget!)this.discardActiveBounds();if(this.mask.byteLength+this.chunkBytes+this.vertices!.retainedBytes+bytes>this.indexBudget!)throw new SurfaceIndexBudgetExceeded('Source normal cache budget exceeded');},{shape:this.shape,chunkSize:this.chunkSize});
         this.sourceNormals.prepare(this.vertices.points,this.vertices.vertexCount,rows,affine);normals=this.sourceNormals.emit(remap,count);this.cachedNormalsUsed=true;
       }catch(error){if(!(error instanceof SurfaceIndexBudgetExceeded))throw error;this.sourceNormals=undefined;}
       this.normalPreparationMs=performance.now()-normalStarted;
     }
     return {positions:count===this.vertices.vertexCount?positions:positions.slice(0,count*3),indices,...(normals?{normals}:{})};
+  }
+  /** Optional raw display representation. IDs include historical vertices, but
+   * only current raster triangles draw. Never transfer resident cache buffers. */
+  stableIndexed(affine:Affine,maxSnapshotBytes=MAX_STABLE_SNAPSHOT_BYTES){
+    if(!this.vertices||!this.sourceNormals||!this.stableBoundsAvailable)return undefined;
+    const {rows,length}=this.rows(),count=this.vertices.vertexCount,positionBytes=length?count*3*4:0,indexBytes=length*4;
+    if(!Number.isSafeInteger(maxSnapshotBytes)||maxSnapshotBytes<0||positionBytes*2+indexBytes>Math.min(maxSnapshotBytes,MAX_STABLE_SNAPSHOT_BYTES)||positionBytes+indexBytes>MAX_PICKING_INPUT_BYTES)return undefined;
+    const activeBounds:Bounds3=[[Infinity,Infinity,Infinity],[-Infinity,-Infinity,-Infinity]];
+    for(const chunk of this.chunks.values()){
+      if(!chunk.activeBounds)return undefined;
+      for(let axis=0;axis<3;axis++){activeBounds[0][axis]=Math.min(activeBounds[0][axis],chunk.activeBounds[0][axis]);activeBounds[1][axis]=Math.max(activeBounds[1][axis],chunk.activeBounds[1][axis]);}
+    }
+    const started=performance.now();this.cachedNormalsUsed=false;
+    let normals:Float32Array;
+    try{this.sourceNormals.prepare(this.vertices.points,count,rows,affine);if(!this.stableBoundsAvailable)return undefined;normals=length?this.sourceNormals.emitStable(count):new Float32Array();this.cachedNormalsUsed=true;}
+    catch(error){if(!(error instanceof SurfaceIndexBudgetExceeded))throw error;this.sourceNormals=undefined;return undefined;}
+    finally{this.normalPreparationMs=performance.now()-started;}
+    const indices=new Uint32Array(length);let offset=0;
+    for(const row of rows){indices.set(row.data,offset);offset+=row.data.length;}
+    return {positions:length?this.vertices.points.slice(0,count*3):new Float32Array(),indices,normals,representation:'stable-source-ids' as const,...(length?{activeBounds}:{})};
   }
   positions():Float32Array {
     if(this.vertices){const {positions,indices}=this.indexed(),soup=new Float32Array(indices.length*3);for(let i=0;i<indices.length;i++)for(let a=0;a<3;a++)soup[3*i+a]=positions[3*indices[i]+a];return soup;}

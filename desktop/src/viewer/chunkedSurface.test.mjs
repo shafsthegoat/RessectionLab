@@ -7,6 +7,12 @@ import {IncrementalSurfaceEngine} from './incrementalSurface.ts';
 import {indexSurface,indexSurfaceLookupStatistics} from './surfaceSmoothing.ts';
 const shape=[9,8,7],affine=[[1,.2,0,10],[0,2,.1,20],[0,0,-1.5,30],[0,0,0,1]],at=(x,y,z)=>(x*shape[1]+y)*shape[2]+z;
 const source=()=>Uint8Array.from({length:shape.reduce((a,b)=>a*b,1)},(_,i)=>{const x=Math.floor(i/(shape[1]*shape[2])),y=Math.floor(i/shape[2])%shape[1],z=i%shape[2];return Number((x>1&&x<7&&y>0&&y<6&&z>1&&z<6)||(x===8&&y===7&&z===6));});
+const cornerBytes=surface=>{
+  const corners=new Float32Array(surface.indices.length*6);let offset=0;
+  for(const id of surface.indices)for(const key of ['positions','normals'])for(let axis=0;axis<3;axis++)corners[offset++]=surface[key][id*3+axis];
+  return new Uint8Array(corners.buffer);
+};
+const equalCorners=(actual,expected)=>{assert.equal(actual.indices.length,expected.indices.length);assert.deepEqual(cornerBytes(actual),cornerBytes(expected));};
 test('bounded lattice indexing preserves first appearance and exact arbitrary-order fallback',()=>{
   const soup=new Float32Array(100000*9);
   for(let i=0;i<soup.length;i+=3){const v=Math.floor(i/3)%70000;soup[i]=(v%90)/2;soup[i+1]=(Math.floor(v/90)%90)/2;soup[i+2]=Math.floor(v/8100)/2;}
@@ -134,4 +140,45 @@ test('indexed budget exhaustion discards partial rows and returns the complete e
   assert.equal(result.work.indexedChunks,false);assert(result.work.retainedBytes<=budget);assert.deepEqual(result.resident,[]);
   mask.fill(0);mask[0]=1;
   result=engine.prepare({...base,jobId:3,previousIdentity:'b',identity:'c',mask:mask.slice()});assert.equal(result.work.indexedChunks,true);assert.deepEqual(result.resident,[{layerId:'brain',identity:'c'}]);
+});
+test('stable raw snapshots preserve every corner byte and active bounds across seams, undo, empty states and transferred outputs',()=>{
+  const mask=source(),surface=new ChunkedMaskSurface(mask,shape,4,2**20,true),original=mask.slice();
+  assert.equal(surface.stableIndexed(affine),undefined,'normal admission remains the complete canonical path');surface.indexed(affine);
+  const check=(transform=affine)=>{
+    const actual=surface.stableIndexed(transform),expected=prepareSurface(mask,shape,transform,'bone',false);assert(actual);assert.equal(actual.representation,'stable-source-ids');equalCorners(actual,expected);
+    if(expected.indices.length){
+      const bounds=[[Infinity,Infinity,Infinity],[-Infinity,-Infinity,-Infinity]];
+      for(let i=0;i<expected.positions.length;i++){const axis=i%3;bounds[0][axis]=Math.min(bounds[0][axis],expected.positions[i]);bounds[1][axis]=Math.max(bounds[1][axis],expected.positions[i]);}
+      assert.deepEqual(actual.activeBounds,bounds);
+    }else{assert.equal(actual.positions.length,0);assert.equal(actual.normals.length,0);assert.equal(actual.indices.length,0);assert.equal(actual.activeBounds,undefined);}
+    assert(surface.retainedBytes<=2**20);structuredClone(actual,{transfer:[actual.positions.buffer,actual.indices.buffer,actual.normals.buffer]});return actual;
+  };
+  check();
+  for(const ids of [[at(3,3,3),at(4,4,4)],[at(0,0,0),at(8,7,6)]]){for(const id of ids)mask[id]=1-mask[id];surface.update(ids);}
+  check();
+  const restored=[];for(let i=0;i<mask.length;i++)if(mask[i]!==original[i]){mask[i]=original[i];restored.push(i);}surface.update(restored);check();
+  const all=[];for(let i=0;i<mask.length;i++)if(mask[i]){mask[i]=0;all.push(i);}surface.update(all);check();
+  mask[at(4,4,4)]=1;surface.update([at(4,4,4)]);check();
+  assert(surface.stableIndexed(affine).positions.length>prepareSurface(mask,shape,affine,'bone',false).positions.length,'historical IDs require the high-water prefix rather than an active-count slice');
+  assert.equal(surface.stableIndexed(affine,1),undefined,'complete output cap rejects before allocating a snapshot');
+  const canonical=surface.indexed(affine),reference=prepareSurface(mask,shape,affine,'bone',false);for(const key of ['positions','indices','normals'])assert.deepEqual(canonical[key],reference[key]);check();
+  check([[1,.3,0,0],[0,2,.2,0],[0,0,0,0],[0,0,0,1]]);check(affine);
+  const rebuilt=new ChunkedMaskSurface(mask.slice(),shape,4,2**20,true);assert.equal(rebuilt.stableIndexed(affine),undefined);rebuilt.indexed(affine);equalCorners(rebuilt.stableIndexed(affine),reference);
+});
+test('active bounds are optional and yield their budget to exact canonical indexing and normals',()=>{
+  const mask=source(),plain=new ChunkedMaskSurface(mask.slice(),shape,4,2**20);plain.indexed(affine);
+  const budget=plain.retainedBytes+100,bounded=new ChunkedMaskSurface(mask.slice(),shape,4,budget,true),actual=bounded.indexed(affine),expected=prepareSurface(mask,shape,affine,'bone',false);
+  for(const key of ['positions','indices','normals'])assert.deepEqual(actual[key],expected[key]);
+  assert(bounded.retainedBytes<=budget);assert.equal(bounded.stableIndexed(affine),undefined,'metadata cannot displace the authoritative source cache');
+});
+test('only incremental raw bone jobs export stable IDs; initial admission and smoothing keep canonical buffers',()=>{
+  const mask=source(),engine=new IncrementalSurfaceEngine(),base={layerId:'bone',shape,affine,kind:'bone'};
+  let actual=engine.prepare({...base,jobId:1,previousIdentity:'',identity:'a',mask:mask.slice(),smooth:false});assert.equal(actual.representation,undefined);
+  mask[at(3,3,3)]=0;actual=engine.prepare({...base,jobId:2,previousIdentity:'a',identity:'b',indices:Uint32Array.of(at(3,3,3)),values:Uint8Array.of(0),smooth:false});
+  assert.equal(actual.representation,'stable-source-ids');equalCorners(actual,prepareSurface(mask,shape,affine,'bone',false));
+  actual=engine.prepare({...base,jobId:3,previousIdentity:'b',identity:'b',indices:new Uint32Array(),values:new Uint8Array(),smooth:true});
+  assert.equal(actual.representation,undefined);const reference=prepareSurface(mask,shape,affine,'bone',true);for(const key of ['positions','indices','normals','smoothPositions','smoothNormals'])assert.deepEqual(actual[key],reference[key]);
+  actual=engine.prepare({...base,jobId:4,previousIdentity:'b',identity:'b',indices:new Uint32Array(),values:new Uint8Array(),smooth:false});assert.equal(actual.representation,'stable-source-ids');equalCorners(actual,reference);
+  const other=new IncrementalSurfaceEngine(),otherBase={...base,layerId:'brain',kind:'brain'};other.prepare({...otherBase,jobId:1,previousIdentity:'',identity:'a',mask:mask.slice(),smooth:false});
+  assert.equal(other.prepare({...otherBase,jobId:2,previousIdentity:'a',identity:'a',indices:new Uint32Array(),values:new Uint8Array(),smooth:false}).representation,undefined);
 });
