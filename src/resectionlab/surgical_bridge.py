@@ -149,6 +149,8 @@ def dispatch(session, operation, args, request, progress):
     argument_keys = {'caseHash', 'command', 'expectedStateId', 'action', 'mapping', 'position', 'branchId', 'source', 'sceneIndex', 'acknowledgeResearchUnknowns', 'opponent', 'scenario', 'maxActions', 'frameIndex', 'timelineToken', 'viewFieldTokens'}
     if args.get('command') == 'seekPrefixFrame':
         argument_keys.update({'prefixToken', 'prefixFieldTokens'})
+    if args.get('command') == 'seekPrefix' and type(args.get('position')) is int and args['position'] == 0:
+        argument_keys.add('cacheOnly')
     _keys(args, argument_keys)
     _require_json_budget(args, 256 * 1024, 'SURGICAL_REQUEST_LIMIT', 'Instrument request exceeds budget')
     entry = None
@@ -203,9 +205,13 @@ def dispatch(session, operation, args, request, progress):
         # This independent read-only owner never populates the editable session,
         # canonical admission, or either authenticated whole-archive cache.
         prefix_keys = {'caseHash', 'command', 'branchId', 'position', 'frameIndex'}
+        if command == 'seekPrefix' and type(args.get('position')) is int and args['position'] == 0:
+            prefix_keys.add('cacheOnly')
         if command == 'seekPrefixFrame':
             prefix_keys.update({'prefixToken', 'prefixFieldTokens'})
         _keys(args, prefix_keys)
+        if 'cacheOnly' in args and type(args['cacheOnly']) is not bool:
+            raise ValueError('Prepared-only replay requires a boolean cacheOnly flag')
         if 'prefixToken' in args and (not isinstance(args['prefixToken'], str)
                 or not 1 <= len(args['prefixToken']) <= 1024):
             raise ValueError('Invalid read-only prefix display generation')
@@ -223,12 +229,18 @@ def dispatch(session, operation, args, request, progress):
         if command == 'seekPrefix' and 'frameIndex' in args:
             raise ValueError('Boundary prefix requests do not select observed frames')
         owned = getattr(session, 'surgical_prefix_session', None)
-        if command == 'seekPrefix' and args.get('position') == 0:
+        restarting = command == 'seekPrefix' and type(args.get('position')) is int and args['position'] == 0
+        if restarting:
             # An explicit rewind starts a new bounded reconstruction, including
             # after an old boundary/frame was evicted. It grants no authority.
             owned = None
-        if not owned or owned[0] is not entry or owned[1] is not entry.artifacts or owned[2] != selected:
+        matches_owner = bool(owned and owned[0] is entry and owned[1] is entry.artifacts and owned[2] == selected)
+        if not restarting and not matches_owner:
+            raise BridgeError('SURGICAL_PREFIX_OWNER_REQUIRED',
+                'Read-only replay source, branch or session changed; explicitly restart from the beginning before continuing.')
+        if not matches_owner:
             from .surgical_prefix_replay import SurgicalPrefixReplay
+            from .surgical_prefix_cache import PreparedPrefixStore
             # This branch belongs to the bundle's privately frozen artifact.
             # Future reads retain that exact origin, independently of edits or
             # canonical session state.
@@ -241,12 +253,15 @@ def dispatch(session, operation, args, request, progress):
                 prefix_scene = standardize(prefix_scene, physics_profile=raw_profile)
             owner = SurgicalPrefixReplay._borrow_frozen_snapshot(prefix_scene, frozen_snapshot,
                 max_input_bytes=128 * 1024**2, max_frame_bytes=64 * 1024**2,
-                _display_row_projection=display_receipt)
+                _display_row_projection=display_receipt, _prepared_store=PreparedPrefixStore(),
+                _cache_only=args.get('cacheOnly', False))
             request.check()
             owned = (entry, entry.artifacts, selected, owner)
             session.surgical_prefix_session = owned
         owner = owned[3]
-        progress(.1, 'Reconstructing saved actions in a separate read-only prefix')
+        progress(.1, 'Loading prepared observations in a separate read-only prefix' if
+                 owner._cache_only else
+                 'Reconstructing saved actions in a separate read-only prefix')
         result = (owner.seek(args.get('position'), check=request.check) if command == 'seekPrefix'
                   else owner.seek_frame(args.get('position'), args.get('frameIndex'), check=request.check,
                                         prefix_token=args.get('prefixToken'), prefix_field_tokens=prefix_fields))

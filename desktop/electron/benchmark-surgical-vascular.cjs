@@ -29,12 +29,25 @@ function submittedVascularPlayback(requests,frames,{mainToRendererOffset,started
 function exactSequence(rows,expected=expectedSequence()){
   return rows.length===expected.length&&rows.every((row,i)=>!row.unmatched&&row.branchId===expected[i].branchId&&row.position===expected[i].position&&row.frameIndex===expected[i].frameIndex&&(!expected[i].stateId||row.stateId===expected[i].stateId));
 }
-function checkedVascularAuthority(command,result){
+function vascularPreparedOnly(value){
+  if(value===undefined)return false;
+  if(value==='1')return true;
+  throw Error('VASCULAR_PREPARED_ONLY must be unset or exactly1');
+}
+function vascularStartButton(preparedOnly){return preparedOnly?'Replay prepared observations · read only':'Replay from start · read only';}
+function vascularPreparationChecks(guard,preparedOnly){
+  const cache=guard?.ownership?.prefixStatistics?.preparedCache;
+  const clean=!!guard&&!guard.failure&&Array.isArray(guard.permittedSteps)&&Array.isArray(guard.forbiddenSteps)&&!guard.forbiddenSteps.length&&!!guard.publicStepAttempts&&!Object.keys(guard.publicStepAttempts).length;
+  return {stepAuthority:clean&&guard.qualificationMode===(preparedOnly?'prepared-only':'fresh')&&guard.permittedSteps.length===(preparedOnly?0:73),
+    preparedCache:!!cache&&cache.mode===(preparedOnly?'only':'prepare')&&cache.loadedActions===(preparedOnly?73:0)&&cache.publishedActions===(preparedOnly?0:73)&&cache.misses===0&&cache.lastSkip===null};
+}
+function checkedVascularAuthority(command,result,preparedOnly){
   if(result?.verification?.readOnly!==true||result.changed!==false)throw Error('Response granted unexpected authority');
   if(command==='inspectArchive'){
     if(result.verification.status!=='unverified-import'||result.verification.canonical!==false||result.verification.physicsActionsExecuted!==0)throw Error('Imported endpoint lost unverified read-only authority');
   }else if(['seekPrefix','seekPrefixFrame'].includes(command)){
     if(result.verification.status!=='reconstructed-prefix'||result.readOnly!==true||result.fullCase!==null||result.branchId!==BRANCH||result.verification.totalActions!==73)throw Error('Prefix response granted unexpected authority');
+    if(preparedOnly!==undefined&&result.verification.preparedCache?.mode!==(preparedOnly?'only':'prepare'))throw Error('Prefix response changed prepared-only mode');
   }else throw Error('Unexpected surgical response command');
   return result;
 }
@@ -46,11 +59,15 @@ function isVascularBenchmarkEntry(runtime,filename,nodeMain=false){
   if(typeof entry!=='string'||path.resolve(entry)!==path.resolve(filename))return false;
   return runtime.versions?.electron?runtime.type==='browser':nodeMain===true;
 }
-module.exports={COUNTS,END_STATE,BRANCH,expectedSequence,submittedVascularPlayback,exactSequence,checkedVascularAuthority,hardBudgetStop,isVascularBenchmarkEntry};
+module.exports={COUNTS,END_STATE,BRANCH,expectedSequence,submittedVascularPlayback,exactSequence,checkedVascularAuthority,hardBudgetStop,isVascularBenchmarkEntry,vascularPreparedOnly,vascularStartButton,vascularPreparationChecks};
 
 if(isVascularBenchmarkEntry(process,__filename,require.main===module))run();
 function run(){
   const {app,ipcMain,screen}=require('electron'),childProcess=require('node:child_process');
+  const preparedOnly=vascularPreparedOnly(process.env.VASCULAR_PREPARED_ONLY);
+  const configuredCache=process.env.RESSECTIONLAB_PREPARED_PREFIX_CACHE_DIRECTORY;
+  const cacheDirectory=configuredCache?path.resolve(configuredCache):null;
+  if((preparedOnly&&!cacheDirectory)||(configuredCache!==undefined&&(!cacheDirectory||!path.isAbsolute(configuredCache)||!cacheDirectory.startsWith(path.join(ROOT,'testcases/outputs/rl-readiness-20261022')+path.sep))))throw Error('Qualification requires an absolute isolated prepared-cache directory under ignored outputs');
   if(['PLAYBACK_PYTHON_SOURCE','PLAYBACK_BRIDGE_SOURCE','PLAYBACK_IMPORT_ONLY','PLAYBACK_ORBIT','PLAYBACK_FIELD_SIZES','PLAYBACK_PREFIX','PLAYBACK_CLOSE_TOOL'].some(name=>process.env[name]))throw Error('Full vascular gate requires current production source and its own dedicated controls; no substitutions/observer modes');
   const output=path.resolve(process.env.PLAYBACK_OUTPUT||path.join(ROOT,'testcases/outputs/rl-readiness-20261022/desktop-vascular-qualified'));
   if(!output.startsWith(path.join(ROOT,'testcases/outputs/rl-readiness-20261022')+path.sep)||fs.existsSync(output))throw Error('Supply a fresh ignored PLAYBACK_OUTPUT under rl-readiness-20261022');
@@ -66,13 +83,14 @@ function run(){
   const codeFiles=()=>{const result={};for(const directory of [source,path.join(ROOT,'desktop/dist')]){const visit=dir=>{for(const entry of fs.readdirSync(dir,{withFileTypes:true}).sort((a,b)=>a.name.localeCompare(b.name))){if(entry.name==='__pycache__')continue;const file=path.join(dir,entry.name);if(entry.isDirectory())visit(file);else if(directory.endsWith('dist')||entry.name.endsWith('.py'))result[path.relative(ROOT,file)]=hash(file);}};visit(directory);}return result;};
   const frozenFiles=codeFiles();
   const report={schema:'resectionlab.full-vascular-prefix-gui.v1',recordedAt:new Date().toISOString(),
-    scope:'Original73 saved vascular actions via current-production read-only prefix. No editable admission/cache promotion, no RL. Every fresh observed tuple must be CPU-submitted in order. CPU submission is NOT compositor presentation; historical all-frame hashes are unavailable.',
+    scope:(preparedOnly?'Previously prepared original73 saved vascular actions via current-production read-only prefix; no fresh transitions.':'Original73 saved vascular actions freshly reconstructed via current-production read-only prefix; private prepared-cache publication tracked separately.')+' No editable/canonical admission, no RL. Every recorded tuple must be CPU-submitted in order. CPU submission is NOT compositor presentation; historical all-frame hashes are unavailable.',
+    qualificationMode:preparedOnly?'prepared-only':'fresh',preparedCacheDirectory:cacheDirectory,
     limits:{wallMs:600000,wholePythonRssBytes:3*1024**3,binarySpoolBytes:1024**3,manifestBytes:16*1024**2,postGuiAuditWallMs:180000},
     originalFiles,codeFiles:frozenFiles,harnessSha256:hash(__filename),guardSha256:hash(monitor),versions:process.versions,
     ipc:[],errors:[],diagnostics:[],checks:{},passed:false,frameOperativeField:process.env.VASCULAR_FRAME_FIELD==='1'};
   const persist=()=>fs.writeFileSync(path.join(output,'report.json'),JSON.stringify(report,null,2));
   const runner=path.join(output,'guarded-bridge.py');
-  fs.writeFileSync(runner,`import sys\nsys.path.insert(0, ${JSON.stringify(__dirname)})\nfrom vascular_playback_monitor import VascularPlaybackMonitor,initialize_guard_inventory\nfrom resectionlab.surgical_engine import SurgicalEngine\nfrom resectionlab import surgical_prefix_replay,surgical_frame_replay,surgical_telemetry\nfrom resectionlab.desktop_bridge import BridgeSession,main\ninitialize_guard_inventory()\nguard=VascularPlaybackMonitor(SurgicalEngine, ${JSON.stringify(output)})\nguard.install(BridgeSession)\ntry:\n    with guard:\n        main()\nfinally:\n    guard.finish()\n`);
+  fs.writeFileSync(runner,`import sys\nsys.path.insert(0, ${JSON.stringify(__dirname)})\nfrom vascular_playback_monitor import VascularPlaybackMonitor,initialize_guard_inventory\nfrom resectionlab.surgical_engine import SurgicalEngine\nfrom resectionlab import surgical_prefix_replay,surgical_frame_replay,surgical_telemetry\nfrom resectionlab.desktop_bridge import BridgeSession,main\ninitialize_guard_inventory()\nguard=VascularPlaybackMonitor(SurgicalEngine, ${JSON.stringify(output)}, prepared_only=${preparedOnly?'True':'False'})\nguard.install(BridgeSession)\ntry:\n    with guard:\n        main()\nfinally:\n    guard.finish()\n`);
   const originalSpawn=childProcess.spawn;
   childProcess.spawn=(command,args,options)=>args?.[1]==='-m'&&args?.[2]==='resectionlab.desktop_bridge'?originalSpawn(command,['-u',runner,...args.slice(3)],options):originalSpawn(command,args,options);
   const sidecar=require('./sidecar.cjs'),OriginalSidecar=sidecar.Sidecar;let backend;
@@ -82,7 +100,7 @@ function run(){
   const originalHandle=ipcMain.handle.bind(ipcMain);
   ipcMain.handle=(channel,handler)=>originalHandle(channel,async(...args)=>{
     const began=performance.now(),request=args[1];
-    const entry={channel,command:request?.command,started:began,requestedPosition:request?.position,requestedFrameIndex:request?.frameIndex};
+    const entry={channel,command:request?.command,started:began,requestedPosition:request?.position,requestedFrameIndex:request?.frameIndex,requestedCacheOnly:request?.cacheOnly};
     try{
       const result=await handler(...args);entry.ms=performance.now()-began;
       if(channel==='research:surgicalRehearsal'){
@@ -90,8 +108,8 @@ function run(){
         Object.assign(entry,{branchId:result.playback?.branchId??result.branchId,position:result.playback?.position??result.position,frameIndex:result.playback?.frameIndex,
           stateId:result.view?.stateId,simulatedSeconds:result.playback?.observedTimeSeconds,frameCount:result.playback?.frameCount,
           verifiedThrough:result.verification?.verifiedThrough,readOnly:result.verification?.readOnly===true,verificationStatus:result.verification?.status,
-          archiveEndpointVerified:result.verification?.archiveEndpointVerified,timelineOmitted:result.timelineOmitted===true,responseBytes:Buffer.byteLength(JSON.stringify(result))});
-        checkedVascularAuthority(request.command,result);
+          archiveEndpointVerified:result.verification?.archiveEndpointVerified,preparedCache:result.verification?.preparedCache,timelineOmitted:result.timelineOmitted===true,responseBytes:Buffer.byteLength(JSON.stringify(result))});
+        checkedVascularAuthority(request.command,result,preparedOnly);
       }
       report.ipc.push(entry);return result;
     }catch(error){entry.ms=performance.now()-began;entry.error=String(error);report.ipc.push(entry);throw error;}
@@ -106,7 +124,9 @@ function run(){
     report.fetchSummary={completed:report.allCompletedPlaybackIpc.length,duplicates:[...counts.values()].reduce((sum,n)=>sum+Math.max(0,n-1),0),lateAfterSnapshot:report.ipc.slice(report.ipcAtSnapshot??report.ipc.length).filter(row=>row.command==='seekPrefixFrame').length,unadmitted:report.allCompletedPlaybackIpc.filter(row=>!(report.submittedPlayback??[]).some(shown=>tuple(shown)===tuple(row))).length};
     if(fs.existsSync(path.join(output,'physics-guard.json')))report.physicsGuard=JSON.parse(fs.readFileSync(path.join(output,'physics-guard.json')));
     const g=report.physicsGuard,stats=g?.ownership?.prefixStatistics;
-    report.checks.exact73Preparations=!!g&&g.permittedSteps.length===73&&!g.forbiddenSteps.length&&!Object.keys(g.publicStepAttempts).length&&!g.failure;
+    const preparation=vascularPreparationChecks(g,preparedOnly);
+    report.checks[preparedOnly?'zeroStepPreparedPlayback':'exact73Preparations']=preparation.stepAuthority;
+    report.checks[preparedOnly?'exact73PreparedLoads':'exact73PreparedPublications']=preparation.preparedCache;
     report.checks.guardWallAndRss=!!g&&g.wallSeconds<600&&g.processPeakResidentBytes<=3*1024**3;
     report.checks.noCanonicalAdmission=!!g?.ownership&&['canonicalSessionCreated','replayCacheCreated','frameCacheCreated','frameAdmissionsCreated'].every(key=>g.ownership[key]===false);
     report.checks.retainedCaps=!!stats&&stats.verifiedThrough===73&&stats.totalActions===73&&stats.frameBytes<=stats.maxFrameBytes&&stats.checkpointBytes<=stats.maxCheckpointBytes&&stats.historyBytes<=stats.maxHistoryBytes;
@@ -114,7 +134,7 @@ function run(){
     persist();
     // Heavy independent decode/hash/conservation audit starts AFTER the GUI run
     // and sidecar shutdown. It cannot influence measured playback throughput.
-    if(report.checks.exact73Preparations&&report.checks.sourcePreserved){
+    if(preparation.stepAuthority&&preparation.preparedCache&&report.checks.sourcePreserved){
       const auditStarted=performance.now();
       report.postGuiAudit=await new Promise(resolve=>{
         const child=originalSpawn(report.pythonExecutable,[monitor,'audit','--output',output],{cwd:ROOT,env:{...process.env,PYTHONPATH:source},stdio:['ignore','pipe','pipe']});
@@ -127,7 +147,7 @@ function run(){
       if(fs.existsSync(path.join(output,'spool-audit.json')))report.spoolAudit=JSON.parse(fs.readFileSync(path.join(output,'spool-audit.json')));
       if(report.spoolAudit?.passed&&fs.existsSync(path.join(output,'audited-observations.json'))){
         const expected=JSON.parse(fs.readFileSync(path.join(output,'audited-observations.json')));
-        report.checks.everyFreshObservationSubmitted=exactSequence(report.submittedPlayback??[],expected);
+        report.checks[preparedOnly?'everyPreparedObservationSubmitted':'everyFreshObservationSubmitted']=exactSequence(report.submittedPlayback??[],expected);
       }
     }
     report.checks.fullIndependentAudit=report.postGuiAudit?.passed===true&&report.spoolAudit?.passed===true&&report.spoolAudit.allFullCanonicalRecordsExact===true;
@@ -160,7 +180,7 @@ function run(){
           document.addEventListener('anatomy-frame',e=>{const f=e.detail;if(window.vascularFrames.length>=20000){window.vascularFailure='CPU frame evidence limit exceeded';return;}const identity=f.surgicalFrame;if(identity){const row={...identity,stateId:f.surgicalStateId,at:f.at,serial:f.serial},prior=window.vascularSubmitted.at(-1);if(!prior||JSON.stringify([prior.branchId,prior.position,prior.frameIndex,prior.stateId])!==JSON.stringify([row.branchId,row.position,row.frameIndex,row.stateId])){const target=expected[window.vascularSubmitted.length];if(!target||row.branchId!==target.branchId||row.position!==target.position||row.frameIndex!==target.frameIndex)window.vascularFailure='CPU observation tuple order differs';if(window.vascularSubmitted.length<1150)window.vascularSubmitted.push(row);}}window.vascularFrames.push({at:f.at,serial:f.serial,surgicalStateId:f.surgicalStateId,surgicalFrame:f.surgicalFrame,cpuMs:f.cpuMs,interactive:f.interactive,surfaceQuality:f.surfaceQuality,estimatedAllocation:f.estimatedAllocation,resources:f.resources});readOnly();});
           document.addEventListener('anatomy-work',e=>{if(window.vascularWork.length>=20000){window.vascularFailure='Worker evidence limit exceeded';return;}window.vascularWork.push({...e.detail,at:performance.now()});});})();`);
         report.playStarted=performance.now();report.playStartedRenderer=await js('performance.now()');const index=report.ipc.length;report.playbackStartIpcIndex=index;
-        await click('Replay from start · read only');
+        await click(vascularStartButton(preparedOnly));
         const options={mainToRendererOffset:report.playStarted-report.playStartedRenderer,startedRenderer:report.playStartedRenderer};
         let count=0,lastProgressAt=-Infinity;
         while(performance.now()-report.playStarted<600000){
@@ -201,8 +221,8 @@ function run(){
           cpuSubmittedIntervalSeconds:(lastWarm?.firstSubmittedAt-first?.firstSubmittedAt)/1000,
           cpuSubmittedIntervalRatio:(lastWarm?.simulatedSeconds-first?.simulatedSeconds)/((lastWarm?.firstSubmittedAt-first?.firstSubmittedAt)/1000),
           warmSameActionSubmittedSimulatedSeconds:warmSums.sim,warmSameActionSubmittedWallSeconds:warmSums.wall,warmSameActionSubmittedRatio:warmSums.sim/warmSums.wall,
-          coldActionHandlerSeconds:report.playbackIpc.filter(row=>row.command==='seekPrefixFrame'&&row.frameIndex===0).map(row=>({position:row.position,seconds:row.ms/1000})),
-          meaning:'Full run includes each cold action reconstruction and spool overhead. Submitted interval still contains later cold preparations; warm IPC requests have frameIndex>=1. CPU timestamps are not compositor presentation.'};
+          [preparedOnly?'preparedActionLoadHandlerSeconds':'coldActionHandlerSeconds']:report.playbackIpc.filter(row=>row.command==='seekPrefixFrame'&&row.frameIndex===0).map(row=>({position:row.position,seconds:row.ms/1000})),
+          meaning:(preparedOnly?'Full run includes prepared-action disk loads, validation and spool overhead; no fresh transitions. Submitted interval includes later action loads.':'Full run includes each cold action reconstruction and spool overhead. Submitted interval still contains later cold preparations;')+' Warm same-action IPC requests have frameIndex>=1. CPU timestamps are not compositor presentation.'};
       }catch(error){report.failure=error.stack;try{
         Object.assign(report,await js(`({frames:window.vascularFrames??[],work:window.vascularWork??[],uiFailure:window.vascularFailure,displayedStateId:document.querySelector('.surgical-panel')?.dataset.stateId})`));
         if(Number.isFinite(report.playStarted)&&Number.isFinite(report.playStartedRenderer)){report.playbackIpc=report.ipc.slice(report.playbackStartIpcIndex);report.submittedPlayback=submittedVascularPlayback(report.playbackIpc,report.frames,{mainToRendererOffset:report.playStarted-report.playStartedRenderer,startedRenderer:report.playStartedRenderer});report.final=report.submittedPlayback.at(-1);report.partialEvidence=true;}

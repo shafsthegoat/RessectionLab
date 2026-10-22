@@ -265,10 +265,29 @@ class NativeJsonAdmissionCounter:
             'meaning':'Normal returns from the actual loaded adapter: exact str means native admission, None means fallback. Counts are encode calls, not observed frames; no payload retained or extra encoder call. Exceptional exits are not normal-return counts. Observer cost is INCLUDED.'}
 
 
+def checked_prepared_progress(stats, history_length, prepared_only):
+    cache = stats.get('preparedCache')
+    require(type(cache) is dict and cache.get('mode') == ('only' if prepared_only else 'prepare'),
+            'Prepared cache mode drifted')
+    for name in ('loadedActions', 'publishedActions', 'misses'):
+        require(type(cache.get(name)) is int and cache[name] >= 0, 'Prepared cache counter differs')
+    require(cache['misses'] == 0 and cache.get('lastSkip') is None, 'Prepared cache skipped or missed an action')
+    if prepared_only:
+        require(cache['loadedActions'] == history_length and cache['publishedActions'] == 0,
+                'Prepared-only qualification must load each action once and never publish')
+    else:
+        require(cache['loadedActions'] == 0 and cache['publishedActions'] <= history_length,
+                'Fresh qualification consumed prepared observations or published extra actions')
+    return cache
+
+
 class VascularPlaybackMonitor(ReadOnlyStepMonitor):
     def __init__(self, engine_base, output, *, reference=None, clock=time.monotonic, rss=peak_rss,
-                 _json_adapter=None):
+                 prepared_only=False, _json_adapter=None):
+        require(type(prepared_only) is bool, 'Prepared-only qualification mode must be a boolean')
         super().__init__(engine_base)
+        self.prepared_only = prepared_only
+        self.cache_directory = os.environ.get('RESSECTIONLAB_PREPARED_PREFIX_CACHE_DIRECTORY')
         self.output = Path(output)
         self.output.mkdir(parents=True, exist_ok=True)
         self.reference = reference if reference is not None else [json.loads(line) for line in REFERENCE.read_text().splitlines()]
@@ -342,6 +361,8 @@ class VascularPlaybackMonitor(ReadOnlyStepMonitor):
         elif command == 'seekPrefix':
             require(not self.prefix_started and args.get('branchId') == BRANCH and args.get('position') == 0,
                     'Only one explicit vascular prefix-zero start is permitted')
+            require(args.get('cacheOnly') is True if self.prepared_only else 'cacheOnly' not in args,
+                    'Qualification start changed prepared-only mode')
             self.prefix_started = True
         else:
             require(command == 'seekPrefixFrame' and self.prefix_started and args.get('branchId') == BRANCH,
@@ -349,12 +370,21 @@ class VascularPlaybackMonitor(ReadOnlyStepMonitor):
             position, index = args.get('position'), args.get('frameIndex')
             require(type(position) is int and 0 <= position < 73 and type(index) is int and 0 <= index < FRAME_COUNTS[position],
                     'Unexpected vascular observation cursor')
-            require(position <= len(self.calls), 'Observed playback skipped an uncomputed action')
+            require('cacheOnly' not in args, 'Prepared-only mode can be selected only at prefix-zero start')
+            if self.prepared_only:
+                require(position <= self.spool.actions, 'Prepared playback skipped an unloaded action')
+                require(position != self.spool.actions or index == 0, 'Prepared action must first load at frame zero')
+            else:
+                require(position <= len(self.calls), 'Observed playback skipped an uncomputed action')
 
     def admit_step(self, obj, action, resumed=False):
         self.resources()
         row = dict(self.context or {})
         row.update(priorActions=len(obj.actions), event='resume' if resumed else 'entry')
+        if self.prepared_only:
+            self.forbidden.append(row)
+            self.attempts['preparedOnlyPublicStep'] += 1
+            raise ForbiddenPhysicsStep('Prepared-only qualification refused a public physics step before execution')
         i = len(self.calls)
         expected = (i, 0, i)
         actual = (row.get('position'), row.get('frameIndex'), row['priorActions'])
@@ -398,6 +428,13 @@ class VascularPlaybackMonitor(ReadOnlyStepMonitor):
         require(owned[2] == BRANCH and (self.owner is None or self.owner is owner), 'Prefix owner/branch changed')
         self.owner = owner
         stats = self.ownership['prefixStatistics']
+        checked_prepared_progress(stats, len(owner._history), self.prepared_only)
+        store = owner._prepared_store
+        require(store is not None, 'Prepared observation store unavailable')
+        if self.cache_directory:
+            require(str(store.directory) == os.path.abspath(self.cache_directory), 'Prepared cache directory changed')
+        if self.prepared_only:
+            require(bool(self.cache_directory), 'Prepared-only qualification requires an explicit isolated cache directory')
         for key, maximum in (('checkpointBytes',16*1024**2),('frameBytes',64*1024**2),('historyBytes',4*1024**2),('immutableInputBytes',128*1024**2)):
             require(stats[key] <= maximum, 'Private prefix retention exceeds ' + key)
             self.retention_peaks[key] = max(self.retention_peaks.get(key, 0), stats[key])
@@ -407,6 +444,9 @@ class VascularPlaybackMonitor(ReadOnlyStepMonitor):
                 'protectionContractHash': contract['contentHash'] if contract else None,
                 'verification': {'originSnapshotHash':owner._origin_hash,'actionLogHash':owner._action_hash,'implementation':owner._implementation,'prefixImplementation':owner._prefix_implementation},
                 'expectedEndpointStateId': owner._snapshot['stateId'],
+                'observationOrigin': 'prepared-cache' if self.prepared_only else 'fresh-public-actions',
+                'preparedCacheDirectory': str(store.directory),
+                'preparedCacheNamespace': str(store._namespace),
                 'sourceArchiveSha256':NATIVE_SHA,'canonicalReferenceSha256':file_sha(REFERENCE)}
             self.spool.owner_metadata = self.owner_metadata
         require(len(owner._history) in (self.spool.actions, self.spool.actions + 1), 'Prefix advanced more than one action')
@@ -535,6 +575,8 @@ class VascularPlaybackMonitor(ReadOnlyStepMonitor):
 
     def receipt(self):
         return {'schema':'resectionlab.vascular-prefix-qualification-guard.v1',
+            'qualificationMode':'prepared-only' if self.prepared_only else 'fresh',
+            'configuredCacheDirectory':self.cache_directory,
             'permittedSteps':self.calls,'forbiddenSteps':self.forbidden,'publicStepAttempts':dict(self.attempts),
             'nonStepMonitoringCallbacks':self.other_callbacks,'commands':self.commands,'failure':self.failure,
             'ownership':self.ownership,'ownerMetadata':self.owner_metadata,'retentionPeaks':self.retention_peaks,
@@ -575,6 +617,10 @@ def audit_spool(output, audit_output=None):
     audit_output.mkdir(parents=True,exist_ok=True)
     guard = json.loads((output/'physics-guard.json').read_text())
     metadata = guard['ownerMetadata']
+    prepared_only = guard.get('qualificationMode', 'fresh') == 'prepared-only'
+    require(guard.get('qualificationMode', 'fresh') in ('fresh','prepared-only'), 'Unexpected qualification mode')
+    require(metadata.get('observationOrigin', 'fresh-public-actions') ==
+            ('prepared-cache' if prepared_only else 'fresh-public-actions'), 'Spool observation origin differs')
     require(guard['reference']['sha256'] == file_sha(REFERENCE), 'Canonical reference changed')
     require(metadata['sourceArchiveSha256']==NATIVE_SHA and metadata['canonicalReferenceSha256']==file_sha(REFERENCE) and metadata['expectedEndpointStateId']==END_STATE,'Spool owner/source/reference binding differs')
     require(file_sha(NATIVE) == NATIVE_SHA, 'Original native changed')
@@ -654,7 +700,10 @@ def audit_spool(output, audit_output=None):
     (audit_output/'audited-canonical.actions.jsonl').write_text(''.join(json.dumps(row,allow_nan=False)+'\n' for row in results))
     atomic_json(audit_output/'audited-observations.json',tuples)
     report={'passed':True,'actions':len(results),'observations':len(tuples),'allFullCanonicalRecordsExact':True,
-        'historicalAllFrameIdComparison':False,'observationMeaning':'Fresh committed public observations independently decoded/hashed and checked for ancestry, timestamps, activation and full canonical endpoints. Historical per-frame hashes unavailable.',
+        'historicalAllFrameIdComparison':False,'qualificationMode':'prepared-only' if prepared_only else 'fresh',
+        'observationMeaning':('Previously prepared observations independently decoded/hashed; no fresh transitions. ' if prepared_only else
+            'Fresh committed public observations independently decoded/hashed. ') +
+            'Checked ancestry, timestamps, activation and full canonical endpoints. Historical per-frame hashes unavailable.',
         'publicStepAttempts':dict(no_step.attempts),'binarySha256':file_sha(output/'observed-states.bin'),
         'manifestSha256':file_sha(output/'observed-actions.jsonl'),'referenceSha256':file_sha(REFERENCE),
         'sourceSha256':file_sha(NATIVE),'processPeakResidentBytes':peak_rss()}

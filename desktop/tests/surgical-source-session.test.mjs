@@ -227,24 +227,25 @@ test('queued lookahead keeps its playback owner across a source render before pa
 });
 
 function prefixFixture(intercept=()=>undefined,{stream=false,transform=response=>response}={}){
-  let through=0;const prefixResponses=[];
+  let through=0,preparedMode='prepare',ownerGeneration=0;const prefixResponses=[];
   const f=replayFixture(q=>{
     const overridden=intercept(q);if(overridden!==undefined)return overridden;
     if(q.command==='inspectArchive'){
       const r=f.frame({...selection(0),branchId:q.branchId??'main'});return {...r,playback:null,timelineToken:undefined,position:10,verification:{readOnly:true,status:'unverified-import',causalReplayVerified:false,limitations:[]},view:{...r.view,stateId:'saved:endpoint'}};
     }
     if(q.command==='seekPrefix'||q.command==='seekPrefixFrame'){
-      assert.deepEqual(Object.keys(q).filter(key=>!['caseHash','command','branchId','position',...(q.command==='seekPrefixFrame'?['frameIndex','prefixToken','prefixFieldTokens']:[])].includes(key)),[],'prefix requests cannot carry canonical identity or compact acknowledgments');
+      assert.deepEqual(Object.keys(q).filter(key=>!['caseHash','command','branchId','position',...(q.command==='seekPrefixFrame'?['frameIndex','prefixToken','prefixFieldTokens']:q.position===0?['cacheOnly']:[])].includes(key)),[],'prefix requests cannot carry canonical identity or unsupported flags');
       let r,position,budgetStopped=false;
       if(q.command==='seekPrefix'){
+        if(q.position===0){through=0;ownerGeneration++;preparedMode=q.cacheOnly===true?'only':'prepare';}
         const actual=Math.min(q.position,through+4);through=Math.max(through,actual);position=actual;budgetStopped=actual<q.position;
         r=f.frame({...selection(0),branchId:q.branchId??'main'});r={...r,playback:null,view:{...r.view,stateId:`prefix:${actual}`,removed:Array.from({length:Math.min(actual,8)},(_,i)=>i)}};
       }else {r=f.frame(q);through=Math.max(through,q.position+1);position=q.position+Number(q.frameIndex===2);}
       let result={...r,timelineToken:undefined,position,requestedPosition:q.command==='seekPrefix'?q.position:q.position+1,budgetStopped,
         branches:r.branches.map(b=>({...b,steps:10})),timeline:Array.from({length:through},()=>({action:{operation:'inspect'},status:'accepted',reason:null,events:[]})),
-        verification:{readOnly:true,status:'reconstructed-prefix',verifiedThrough:through,totalActions:10,archiveEndpointVerified:false,originSnapshotHash:'origin',actionLogHash:'actions',protectionContractHash:'protection',implementation:'current',prefixImplementation:'prefix-v1'}};
+        verification:{readOnly:true,status:'reconstructed-prefix',verifiedThrough:through,totalActions:10,archiveEndpointVerified:false,originSnapshotHash:'origin',actionLogHash:'actions',protectionContractHash:'protection',implementation:'current',prefixImplementation:'prefix-v1',preparedCache:{mode:preparedMode,loadedActions:preparedMode==='only'?through:0,publishedActions:preparedMode==='prepare'?through:0,misses:0,lastSkip:null}}};
       if(stream&&q.command==='seekPrefixFrame'){
-        const token=`prefix-replay.v1/owner-main/${through}`,hash=(q.frameIndex===2?'b':'a').repeat(64);
+        const token=`prefix-replay.v1/owner-main/${ownerGeneration}/${preparedMode}/${through}`,hash=(q.frameIndex===2?'b':'a').repeat(64);
         result={...result,timelineToken:token,fullCase:null,viewFieldTokens:{flapComponents:hash},view:{...result.view,history:[],flapComponents:[{cells:[q.frameIndex===2?2:1],separable:q.frameIndex===2}]}};
         if(q.prefixToken===token){
           result={...result,timelineOmitted:true,view:{...result.view}};delete result.timeline;delete result.fullCase;
@@ -285,6 +286,45 @@ test('prefix automatic FIFO admits each full receipt once with no future volume 
     assert.deepEqual(admitted,[0,1,2]);const frames=f.calls.filter(q=>q.command==='seekPrefixFrame');
     assert.deepEqual(frames.filter(q=>q.position===0).map(q=>q.frameIndex),[0,1,2],'each full prefix observation is fetched exactly once');assert(frames.every(q=>!Object.hasOwn(q,'expectedStateId')&&!Object.hasOwn(q,'timelineToken')));
     c.stopPlayback();await c.run('inspectArchive',{branchId:'other'});c=f.admit();assert.equal(c.result.branchId,'other');assert.equal(c.startPlayback(),false,'branch switch returns to imported authority');
+  }finally{f.harness.close();}
+});
+test('prepared-only start preserves its sole flag, automatic frames keep fixed authority, and explicit fresh restart clears stream residents',async()=>{
+  const f=prefixFixture(undefined,{stream:true});try{
+    let c=await f.open();assert(await c.run('seekPrefix',{position:0,branchId:'main',cacheOnly:true}));c=f.admit();
+    assert.equal(f.calls.at(-1).cacheOnly,true);assert.equal(c.result.verification.preparedCache.mode,'only');
+    assert(c.startPlayback());
+    for(const i of [0,1]){assert(await c.runPlayback(selection(i)));await f.flush();c=f.admit();assert.equal(c.result.playback.frameIndex,i);assert.equal(c.result.verification.preparedCache.mode,'only');}
+    const frames=f.calls.filter(q=>q.command==='seekPrefixFrame');assert(frames.length>=2);assert(frames.every(q=>!Object.hasOwn(q,'cacheOnly')));
+    assert(await c.run('seekPrefix',{position:0}));c=f.admit();assert.equal(c.result.verification.preparedCache.mode,'prepare');
+    assert.equal(Object.hasOwn(f.calls.at(-1),'cacheOnly'),false);
+    assert(await c.run('seekPrefixFrame',selection(0)));c=f.admit();assert.equal(f.calls.at(-1).prefixToken,undefined);assert.equal(f.calls.at(-1).prefixFieldTokens,undefined);
+    assert.equal(c.result.verification.preparedCache.mode,'prepare');assert.equal(c.error,null);
+  }finally{f.harness.close();}
+});
+test('prepared-only flag misuse is refused before dispatch and an unrequested mode substitution cannot be displayed',async()=>{
+  const f=prefixFixture(undefined,{transform:(r,q)=>q.command==='seekPrefixFrame'?{...r,verification:{...r.verification,preparedCache:{...r.verification.preparedCache,mode:'only'}}}:r});try{
+    let c=await f.open();
+    for(const [command,extra] of [['seekPrefix',{position:1,cacheOnly:true}],['seekPrefix',{position:0,cacheOnly:1}],['seekPrefixFrame',{...selection(0),cacheOnly:false}],['inspect',{cacheOnly:true}]]){
+      const before=f.calls.length;assert.equal(await c.run(command,extra),false);assert.equal(f.calls.length,before);
+    }
+    assert(await c.run('seekPrefix',{position:0}));c=f.admit();assert.equal(c.result.verification.preparedCache.mode,'prepare');
+    assert(c.startPlayback());assert.equal(await c.runPlayback(selection(0)),false);c=f.render();assert.equal(c.view.stateId,'prefix:0');assert.match(c.error,/authority/);
+  }finally{f.harness.close();}
+});
+test('missing prepared observations remain visible errors without an automatic reconstruction fallback',async()=>{
+  const f=prefixFixture(q=>q.command==='seekPrefixFrame'?Promise.reject(Error('Prepared observations unavailable')):undefined);try{
+    let c=await f.open();assert(await c.run('seekPrefix',{position:0,cacheOnly:true}));c=f.admit();assert(c.startPlayback());
+    assert.equal(await c.runPlayback(selection(0)),false);c=f.render();assert.match(c.error,/Prepared observations unavailable/);
+    assert.equal(c.view.stateId,'prefix:0');assert.equal(c.result.verification.preparedCache.mode,'only');
+    assert.equal(f.calls.filter(q=>q.command==='seekPrefix').length,1);assert.equal(f.calls.filter(q=>q.command==='seekPrefixFrame').length,1);
+    assert.equal(f.calls.filter(q=>q.command==='step'||q.command==='inspect').length,0);
+  }finally{f.harness.close();}
+});
+test('a prepared-only start cannot silently accept a backend reconstruction response',async()=>{
+  const f=prefixFixture(undefined,{transform:(r,q)=>q.command==='seekPrefix'?{...r,verification:{...r.verification,preparedCache:{...r.verification.preparedCache,mode:'prepare'}}}:r});try{
+    let c=await f.open();assert.equal(await c.run('seekPrefix',{position:0,cacheOnly:true}),false);c=f.render();
+    assert.equal(c.view.stateId,'saved:endpoint');assert.match(c.error,/prepared-only mode/);assert.equal(c.startPlayback(),false);
+    assert.equal(f.calls.filter(q=>q.command==='seekPrefixFrame').length,0);
   }finally{f.harness.close();}
 });
 test('budget-stopped prefix seek displays actual reached progress and preserves original archive size',async()=>{

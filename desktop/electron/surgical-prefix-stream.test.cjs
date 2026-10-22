@@ -10,5 +10,7 @@ test('actual main IPC whitelist forwards prefix frame acknowledgments and still 
   const invoke=args=>handlers.get('research:surgicalRehearsal')({sender:window.webContents,senderFrame:frame},args);
   const args={caseHash:'case',command:'seekPrefixFrame',branchId:'main',position:2,frameIndex:1,prefixToken:'prefix-replay.v1/owner/3',prefixFieldTokens:{flapComponents:'a'.repeat(64)}};
   assert.deepEqual(await invoke(args),{changed:false});assert.deepEqual(calls,[['surgicalRehearsal',args,120000]]);
-  await assert.rejects(invoke({...args,prefixPrivateState:{}}),/Unsupported operation argument/);assert.equal(calls.length,1);
+  const start={caseHash:'case',command:'seekPrefix',branchId:'main',position:0,cacheOnly:true};
+  assert.deepEqual(await invoke(start),{changed:false});assert.deepEqual(calls[1],['surgicalRehearsal',start,120000]);
+  await assert.rejects(invoke({...args,prefixPrivateState:{}}),/Unsupported operation argument/);assert.equal(calls.length,2);
 });

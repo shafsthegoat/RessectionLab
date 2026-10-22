@@ -11,7 +11,7 @@ from types import MappingProxyType, SimpleNamespace
 
 from vascular_playback_monitor import (BRANCH, FrameSpool, VascularPlaybackMonitor,
     NativeJsonAdmissionCounter, ForbiddenPhysicsStep, MAX_RSS, ROOT, canonical_json,
-    observed_activation, checked_field_tokens, initialize_guard_inventory)
+    observed_activation, checked_field_tokens, initialize_guard_inventory, checked_prepared_progress)
 
 
 FAKE_SCENE=object()
@@ -159,6 +159,75 @@ raise RuntimeError('failed receipt disabled watchdog')
     def test_frozen_action_json_identity_preserves_type_distinctions(self):
         self.assertEqual(canonical_json(MappingProxyType({'path':((1.,2.,3.),)})),canonical_json({'path':[[1.,2.,3.]]}))
         self.assertNotEqual(canonical_json({'x':False}),canonical_json({'x':0}))
+
+
+class PreparedOnlyMonitorTests(unittest.TestCase):
+    def setUp(self):
+        self.temp=tempfile.TemporaryDirectory(dir=ROOT/'testcases/outputs/rl-readiness-20261022')
+        def try_encode(value,limit):return value
+        def try_encode_canonical(value,limit):return value
+        self.adapter=SimpleNamespace(try_encode=try_encode,try_encode_canonical=try_encode_canonical)
+        self.guard=VascularPlaybackMonitor(FakeEngine,self.temp.name,reference=[{'action':{}}]*73,
+            rss=lambda:0,prepared_only=True,_json_adapter=self.adapter)
+        self.guard.case_hash='generated';self.guard.prefix_started=True
+    def tearDown(self):
+        self.guard.spool.close();self.temp.cleanup()
+    def args(self,position=0,frame_index=0):
+        return {'caseHash':'generated','command':'seekPrefixFrame','branchId':BRANCH,'position':position,'frameIndex':frame_index}
+    def test_prepared_only_hard_denies_first_step_before_body_and_cleans_all_three_tools(self):
+        engine=FakeEngine()
+        with self.assertRaisesRegex(ForbiddenPhysicsStep,'Prepared-only'):
+            with self.guard:
+                tools=[self.guard.tool,self.guard.json_counter.tool,self.guard.canonical_json_counter.tool]
+                self.adapter.try_encode('insert',20);self.adapter.try_encode_canonical('canonical',20)
+                self.guard.context={'operation':'surgicalRehearsal',**self.args()}
+                engine.step({})
+        self.assertEqual(engine.executed,0);self.assertEqual(self.guard.calls,[])
+        self.assertEqual(len(self.guard.forbidden),1);self.assertEqual(self.guard.attempts['preparedOnlyPublicStep'],1)
+        for tool in tools:self.assertIsNone(sys.monitoring.get_tool(tool))
+        receipt=self.guard.receipt();self.assertEqual(receipt['qualificationMode'],'prepared-only')
+        self.assertEqual(receipt['nativeJson']['total']['admittedStrings'],1)
+        self.assertEqual(receipt['nativeCanonicalJson']['total']['admittedStrings'],1)
+    def test_prepared_only_resume_is_always_forbidden(self):
+        with self.assertRaises(ForbiddenPhysicsStep):self.guard.admit_step(FakeEngine(),{},resumed=True)
+        self.assertEqual(self.guard.forbidden[0]['event'],'resume');self.assertEqual(self.guard.calls,[])
+    def test_prepared_start_requires_true_flag_and_frames_cannot_change_mode(self):
+        start={'caseHash':'generated','command':'seekPrefix','branchId':BRANCH,'position':0}
+        for value in (None,False,1,'true'):
+            self.guard.prefix_started=False
+            with self.subTest(value=value),self.assertRaises(ValueError):
+                self.guard.admit_command('surgicalRehearsal',{**start,**({} if value is None else {'cacheOnly':value})})
+            self.assertFalse(self.guard.prefix_started)
+        self.guard.admit_command('surgicalRehearsal',{**start,'cacheOnly':True})
+        for value in (True,False):
+            with self.assertRaises(ValueError):self.guard.admit_command('surgicalRehearsal',{**self.args(),'cacheOnly':value})
+    def test_loaded_action_cursor_advances_only_contiguously_at_frame_zero_without_calls(self):
+        self.guard.admit_command('surgicalRehearsal',self.args())
+        for position,index in ((0,1),(1,0)):
+            with self.assertRaises(ValueError):self.guard.admit_command('surgicalRehearsal',self.args(position,index))
+        self.guard.spool.actions=1  # Scripted committed package, no engine/state.
+        self.guard.admit_command('surgicalRehearsal',self.args(0,1))
+        self.guard.admit_command('surgicalRehearsal',self.args(1,0))
+        for position,index in ((1,1),(2,0)):
+            with self.assertRaises(ValueError):self.guard.admit_command('surgicalRehearsal',self.args(position,index))
+        self.assertEqual(self.guard.calls,[])
+    def test_prepared_progress_rejects_authority_counts_misses_and_publications(self):
+        cache={'mode':'only','loadedActions':1,'publishedActions':0,'misses':0,'lastSkip':None}
+        self.assertEqual(checked_prepared_progress({'preparedCache':cache},1,True),cache)
+        for patch in ({'mode':'prepare'},{'loadedActions':0},{'loadedActions':True},{'publishedActions':1},{'misses':1},{'lastSkip':'unavailable'}):
+            with self.subTest(patch=patch),self.assertRaises(ValueError):checked_prepared_progress({'preparedCache':{**cache,**patch}},1,True)
+        fresh={**cache,'mode':'prepare','loadedActions':0,'publishedActions':1}
+        checked_prepared_progress({'preparedCache':fresh},1,False)
+        with self.assertRaises(ValueError):checked_prepared_progress({'preparedCache':{**fresh,'loadedActions':1}},1,False)
+    def test_default_fresh_start_still_rejects_prepared_mode_flag(self):
+        self.guard.prepared_only=False;self.guard.prefix_started=False
+        with self.assertRaises(ValueError):self.guard.admit_command('surgicalRehearsal',{'caseHash':'generated','command':'seekPrefix','branchId':BRANCH,'position':0,'cacheOnly':True})
+        self.assertFalse(self.guard.prefix_started)
+        self.guard.admit_command('surgicalRehearsal',{'caseHash':'generated','command':'seekPrefix','branchId':BRANCH,'position':0})
+    def test_nonboolean_monitor_mode_is_rejected_before_output_creation(self):
+        path=Path(self.temp.name)/'bad-mode'
+        with self.assertRaises(ValueError):VascularPlaybackMonitor(FakeEngine,path,prepared_only=1)
+        self.assertFalse(path.exists())
 
 
 class SpoolTests(unittest.TestCase):

@@ -1,7 +1,8 @@
 """Isolated read-only reconstruction of demanded imported action prefixes.
 
-This owner is not a surgical session, canonical archive admission, or disk
-cache. Imported checkpoint state never seeds reconstruction. Only saved public
+This owner is not a surgical session or canonical archive admission. An optional
+separate prepared-only store can restore its own authenticated observations,
+never imported checkpoints or benchmark spools. Only saved public
 actions execute, once; evicted boundaries/frames are unavailable rather than
 silently executing their actions again. Disposable compressed checkpoints and
 observations have separate retained-byte budgets. Source anatomy, the bounded
@@ -25,6 +26,7 @@ import zlib
 from . import surgical_engine as _engine_module
 from . import build_surgical_prefix_json_native as _json_native_recipe
 from . import surgical_prefix_json_native as _native_json
+from . import surgical_prefix_cache as _prepared_cache
 from .core import freeze_json, semantic_digest, thaw_json
 from .surgical_engine import MAX_STEPS, SCHEMA, SurgicalEngine
 
@@ -150,16 +152,26 @@ def _prefix_seal(*, full=False):
     The returned digest is identical for both successful validation levels.
     """
     from .surgical_verified_cache import _code_signature
-    if any(type(module) is not ModuleType for module in (_native_json, _json_native_recipe)):
+    if any(type(module) is not ModuleType for module in (_native_json, _json_native_recipe, _prepared_cache)):
         raise ValueError('Prefix codec module differs')
     identity = _native_json.strict_live_identity(full=full)
     modules = [(__name__, __file__, globals()),
                *[(module.__name__, module.__file__, vars(module))
-                 for module in (_native_json, _json_native_recipe)]]
+                 for module in (_native_json, _json_native_recipe, _prepared_cache)]]
     digest = hashlib.sha256(b'resectionlab.prefix.codec-seal.v2\0')
     for module_name, filename, namespace in modules:
         digest.update(module_name.encode() + b'\0')
         digest.update(hashlib.sha256(Path(filename).read_bytes()).digest())
+        if module_name == _prepared_cache.__name__:
+            for name, value in sorted(namespace.items()):
+                if name.isupper() and type(value) in (str, int, float, bool, type(None)):
+                    digest.update(json.dumps([name, value], allow_nan=False).encode())
+                elif name.isupper() and type(value) is bytes:
+                    digest.update(json.dumps([name, 'bytes', value.hex()]).encode())
+                elif (name.isupper() and type(value) in (tuple, frozenset)
+                        and all(type(item) is str for item in value)):
+                    digest.update(json.dumps([name, type(value).__name__,
+                        sorted(value) if type(value) is frozenset else list(value)]).encode())
         functions = []
         for name, value in sorted(namespace.items()):
             # Include imported function aliases: replacing an alias must not
@@ -521,12 +533,16 @@ class SurgicalPrefixReplay:
                  max_checkpoint_bytes=16 * 1024**2, max_frame_bytes=16 * 1024**2,
                  max_history_bytes=4 * 1024**2, max_input_bytes=64 * 1024**2,
                  max_json_bytes=64 * 1024**2, _frozen_input_authority=None,
-                 _display_row_projection=None):
+                 _display_row_projection=None, _prepared_store=None, _cache_only=False):
         if (_frozen_input_authority is not None
                 and _frozen_input_authority is not _FROZEN_INPUT_AUTHORITY):
             raise ValueError('Private frozen-input authority differs')
         if _display_row_projection is not None and not callable(_display_row_projection):
             raise ValueError('Private prefix display row projection must be callable')
+        if (type(_cache_only) is not bool or
+                (_prepared_store is not None and type(_prepared_store) is not _prepared_cache.PreparedPrefixStore)
+                or (_cache_only and _prepared_store is None)):
+            raise ValueError('Prepared prefix requires an exact store and fixed boolean mode')
         limits = [(max_new_actions, 32), (max_checkpoint_bytes, 64 * 1024**2),
                   (max_frame_bytes, 64 * 1024**2), (max_history_bytes, 16 * 1024**2),
                   (max_input_bytes, 128 * 1024**2), (max_json_bytes, 128 * 1024**2)]
@@ -562,6 +578,14 @@ class SurgicalPrefixReplay:
             raise ValueError('Prefix replay implementation fingerprint unavailable')
         self._implementation_light = _light_seal()
         self._prefix_implementation = _prefix_seal(full=True)
+        self._prepared_store = _prepared_store
+        self._cache_only = _cache_only
+        self._prepared_loaded = self._prepared_published = self._prepared_misses = 0
+        self._prepared_last_skip = None
+        self._prepared_binding = {'schema': 'resectionlab.prepared-prefix-binding.v1',
+            'sceneId': scene.identity, 'originSnapshotHash': self._origin_hash,
+            'actionLogHash': self._action_hash, 'protectionContractHash': self._protection_hash,
+            'implementation': self._implementation, 'prefixImplementation': self._prefix_implementation}
         self._max_new_actions = max_new_actions
         self._max_checkpoint_bytes = max_checkpoint_bytes
         self._max_frame_bytes = max_frame_bytes
@@ -674,6 +698,15 @@ class SurgicalPrefixReplay:
 
     def _engine_at(self, position):
         item = self._checkpoints.get(position)
+        if item is None and self._cache_only and position == 0:
+            initial = self._fresh()
+            if _prefix_state_id(initial) != self._initial_id:
+                raise ValueError('Prepared prefix initial state differs')
+            self._put_checkpoint(0, initial)
+            item = self._checkpoints[0]
+        if item is None and self._cache_only and position > 0:
+            self._restore_prepared_action(position - 1, advance=False)
+            item = self._checkpoints.get(position)
         if item is None:
             raise ValueError('Prefix boundary evicted; create a new read-only owner')
         engine = copy.copy(self._template)
@@ -687,6 +720,116 @@ class SurgicalPrefixReplay:
             raise ValueError('Private reconstructed checkpoint identity differs')
         engine._prefix_verified_state_id = item['stateId']
         return engine
+
+    def _prepared_statistics(self):
+        return {'mode': 'only' if self._cache_only else 'prepare' if self._prepared_store is not None else 'disabled',
+                'loadedActions': self._prepared_loaded, 'publishedActions': self._prepared_published,
+                'misses': self._prepared_misses, 'lastSkip': self._prepared_last_skip}
+
+    def _publish_prepared_action(self, index):
+        # This hook runs only after the in-memory transaction has committed.
+        # Disk failure cannot reject or roll back that genuine public action.
+        if self._prepared_store is None or self._cache_only:
+            return
+        frames = self._frames[index]
+        try:
+            published = self._prepared_store.publish_action(self._prepared_binding, index,
+                {'actionHash': semantic_digest(self._snapshot['actions'][index]),
+                 'beforeStateId': frames[0]['stateId'], 'afterStateId': frames[-1]['stateId'],
+                 'receipt': self._receipts[index], 'frames': frames,
+                 'checkpoint': self._checkpoints[index + 1]},
+                _authority=_prepared_cache._PUBLISH_AUTHORITY)
+            if published:
+                self._prepared_published += 1
+            self._prepared_last_skip = self._prepared_store.lastSkip
+        except (OSError, ValueError, TypeError, MemoryError) as error:
+            self._prepared_last_skip = 'Prepared cache publication unavailable: ' + str(error)
+
+    def _restore_prepared_action(self, index, *, advance, check=None):
+        """Load this prefix domain only; no engine step or canonical admission."""
+        self._check(check)
+        if not self._cache_only or self._prepared_store is None:
+            raise ValueError('Prepared-only observations were not selected')
+        if (type(index) is not int or not 0 <= index < len(self._snapshot['actions'])
+                or (advance and index != len(self._history))
+                or (not advance and index >= len(self._history))):
+            raise ValueError('Invalid prepared prefix ancestry position')
+        payload = self._prepared_store.load_action(self._prepared_binding, index)
+        if payload is None:
+            self._prepared_misses += 1
+            self._prepared_last_skip = self._prepared_store.lastSkip
+            raise ValueError('Prepared observations unavailable; reconstruct this branch first. '
+                             + (self._prepared_last_skip or 'Cache miss'))
+        if (payload['actionHash'] != semantic_digest(self._snapshot['actions'][index])
+                or payload['beforeStateId'] != (self._initial_id if index == 0 else
+                    self._unpack_receipt(self._receipts[index - 1], index=index - 1)['stateAfter'])):
+            raise ValueError('Prepared action/source ancestry differs')
+        before, after = payload['beforeStateId'], payload['afterStateId']
+        body = self._unpack_receipt(payload['receipt'], index=index)
+        if ('action' in body or body.get('status') not in ('accepted', 'partial')
+                or body.get('stateBefore') != before or body.get('stateAfter') != after):
+            raise ValueError('Prepared complete receipt ancestry differs')
+        frames = payload['frames']
+        if type(frames) is not list or len(frames) < 2:
+            raise ValueError('Prepared observations have no complete action')
+        previous_time = -math.inf
+        for ordinal, frame in enumerate(frames):
+            if (type(frame) is not dict or set(frame) != {'observedTimeSeconds', 'kind',
+                    'effectiveActivation', 'stateId', 'state', 'fieldTokens'}
+                    or type(frame['observedTimeSeconds']) is not float
+                    or not math.isfinite(frame['observedTimeSeconds'])
+                    or frame['observedTimeSeconds'] < previous_time
+                    or frame['kind'] != ('action_start' if ordinal == 0 else
+                        'action_boundary' if ordinal == len(frames) - 1 else 'microstep')
+                    or type(frame['state']) is not bytes or not frame['state']
+                    or type(frame['stateId']) is not str or len(frame['stateId']) != 71
+                    or not frame['stateId'].startswith('sha256:')
+                    or any(c not in '0123456789abcdef' for c in frame['stateId'][7:])
+                    or type(frame['effectiveActivation']) is not dict
+                    or set(frame['effectiveActivation']) != {'left', 'right'}
+                    or any(type(value) is not bool for value in frame['effectiveActivation'].values())
+                    or type(frame['fieldTokens']) is not dict
+                    or set(frame['fieldTokens']) - {'flapComponents'}
+                    or any(type(value) is not str or len(value) != 64
+                           or any(c not in '0123456789abcdef' for c in value)
+                           for value in frame['fieldTokens'].values())):
+                raise ValueError('Prepared observation descriptor differs')
+            frame['fieldTokens'] = MappingProxyType(frame['fieldTokens'])
+            previous_time = frame['observedTimeSeconds']
+        checkpoint = payload['checkpoint']
+        if (checkpoint['position'] != index + 1 or checkpoint['stateId'] != after
+                or frames[0]['stateId'] != before or frames[-1]['stateId'] != after
+                or checkpoint['state'] != frames[-1]['state']):
+            raise ValueError('Prepared checkpoint/observation endpoint differs')
+        engine = copy.copy(self._template)
+        engine.state = _decode(checkpoint['state'], self._max_json_bytes)
+        engine._occupancy_cache = None
+        if (_prefix_state_id(engine) != after
+                or engine.state['elapsedSeconds'] != frames[-1]['observedTimeSeconds']):
+            raise ValueError('Prepared decoded checkpoint identity differs')
+        if advance:
+            engine.actions = list(self._snapshot['actions'][:index + 1])
+            store, history_bytes = self._propose_receipt(
+                {'action': thaw_json(self._snapshot['actions'][index]), **body},
+                thaw_json(self._snapshot['actions'][index]), self._snapshot['actions'][index])
+            engine.history = store[0]
+            endpoint_verified, endpoint_error = self._propose_endpoint(engine)
+        else:
+            if payload['receipt'] != self._receipts[index]:
+                raise ValueError('Prepared previously loaded receipt differs')
+        # Proposals preserve the existing exact RAM quotas and committed cursor.
+        checkpoints = self._propose_checkpoint(index + 1, engine, checkpoint)
+        proposed_frames, frame_bytes = self._propose_frames(index, frames)
+        self._check(check, full=True)
+        self._checkpoints = checkpoints
+        self._frames, self._retained_frame_bytes = proposed_frames, frame_bytes
+        if advance:
+            self._history_store = store
+            self._history, self._receipts, self._display_receipts, self._metric_rows = store
+            self._retained_history_bytes = history_bytes
+            self._endpoint_verified, self._endpoint_error = endpoint_verified, endpoint_error
+            self._prepared_loaded += 1
+        self._prepared_last_skip = None
 
     def _frame_bytes(self):
         # Committed frame graphs are private and never mutated after publish.
@@ -840,6 +983,7 @@ class SurgicalPrefixReplay:
                 'historyBytes': self._retained_history_bytes, 'maxHistoryBytes': self._max_history_bytes,
                 'historyActionsSharedWithBoundedInput': True,
                 'historyReceiptsCompressed': True, 'displayRowsCompressed': self._display_row_projection is not None,
+                'preparedCache': self._prepared_statistics(),
                 'maxMaterializedHistoryGraphBytes': self._max_json_bytes,
                 'materializedHistoryLimitMeaning': 'Per-graph limit; decoded, frozen and thawed output graphs may coexist; whole-process RSS is separate',
                 'maxNativeSnapshotAsciiBytes': 16 * 1024**2,
@@ -863,6 +1007,7 @@ class SurgicalPrefixReplay:
             'prefixImplementation': self._prefix_implementation,
             'archiveEndpointVerified': self._endpoint_verified,
             'endpointValidationError': self._endpoint_error,
+            'preparedCache': self._prepared_statistics(),
             'failure': thaw_json(freeze_json(self._failure))}
         timeline = ()
         if not compact and timeline_projection is not None:
@@ -896,10 +1041,14 @@ class SurgicalPrefixReplay:
                     raise _Interrupted(error) from None
         while len(self._history) < target and not self._blocked:
             index = len(self._history)
-            engine = self._engine_at(index)
-            stage = _FrameStage(self)
+            engine = None if self._cache_only else self._engine_at(index)
+            stage = None if self._cache_only else _FrameStage(self)
             try:
                 self._check(action_check)
+                if self._cache_only:
+                    self._restore_prepared_action(index, advance=True, check=action_check)
+                    self._failure = None
+                    continue
                 before = _prefix_state_id(engine)
                 stage.begin(engine)
                 engine._stage = stage
@@ -935,6 +1084,7 @@ class SurgicalPrefixReplay:
                 self._retained_history_bytes = history_bytes
                 self._failure = None
                 self._endpoint_verified, self._endpoint_error = endpoint_verified, endpoint_error
+                self._publish_prepared_action(index)
             except BaseException as error:
                 cause = error.cause if isinstance(error, _Interrupted) else error
                 self._failure = {'actionIndex': index, 'type': type(cause).__name__, 'reason': str(cause)}
@@ -991,6 +1141,9 @@ class SurgicalPrefixReplay:
         if action_index >= len(self._history):
             self._ensure_prefix(action_index + 1, check)
         item = self._frames.get(action_index)
+        if item is None and self._cache_only and action_index < len(self._history):
+            self._restore_prepared_action(action_index, advance=False, check=check)
+            item = self._frames.get(action_index)
         if item is None or frame_index >= len(item):
             raise ValueError('Observed frame unavailable: action not reconstructed or frames evicted')
         frame = item[frame_index]

@@ -1092,6 +1092,11 @@ with sibling prelaunch/post-run binding receipts. The analysis SHA-256 is
 
 ## Reproducing the checks
 
+The separate [prepared-observation replay mode](prepared-prefix-replay.md)
+persists committed read-only observations for later launches. Its preparation
+and repeat-play measurements are separate from the fresh v6 result above.
+Cached observations are never new transitions or training throughput.
+
 Build and run desktop regressions:
 
 ```sh
@@ -1099,9 +1104,11 @@ pnpm --dir desktop test
 pnpm --dir desktop build
 ```
 
-The latest October 22 validation passed 880 desktop tests: 182 main-process,
-474 renderer and 224 viewer tests. Build passed with the existing bundle-size
-advisory.
+The earlier October 22 normal-scan validation passed 880 desktop tests. The
+later prepared-observation implementation passed **899**: 196 main-process,
+479 renderer and 224 viewer tests. Build passed with the existing bundle-size
+advisory. The separate prepared-mode qualification and resource limits are in
+[prepared-prefix-replay.md](prepared-prefix-replay.md).
 
 The earlier exact-list Python qualification passed **832 tests, with seven pilot tests
 skipped**, in 119.96 seconds, with two existing Gymnasium advisories. It includes

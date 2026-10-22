@@ -71,14 +71,20 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
     const authorityIssue=surgicalAuthorityIssue(c.result,command,extra);if(authorityIssue){setError(authorityIssue);return false;}
     if(c.result?.playback?.readOnly&&!surgicalCursorCommand(command)){setError('Return to a recorded action boundary before applying or branching instrument actions.');return false;}
     if(c.displayFailed&&['step','preview','plan','fullCase'].includes(command)){setError('The accepted anatomy could not be displayed. Seek to a recorded state or reopen the case before applying another instrument action.');return false;}
+    const prefixRestart=command==='seekPrefix'&&extra.position===0;
     const token=generation.current;busy.current=true;setPending(true);setPendingCommand(command);setError(null);
     try{
+      if(prefixRestart)timelineStream.current.clear();
       const branchId=String(extra.branchId??c.result?.branchId??''),timelineToken=frameCommand(command)?timelineStream.current.token(c.source.caseHash,branchId):undefined;
-      const requestExtra=prefixCommand(command)?{branchId,position:extra.position,...(command==='seekPrefixFrame'?{frameIndex:extra.frameIndex,prefixToken:timelineToken,prefixFieldTokens:timelineStream.current.fieldTokens(c.source.caseHash,branchId,timelineToken)}:{})}:extra;
+      const requestExtra=prefixCommand(command)?{branchId,position:extra.position,...(prefixRestart&&Object.hasOwn(extra,'cacheOnly')?{cacheOnly:extra.cacheOnly as boolean}:{}),...(command==='seekPrefixFrame'?{frameIndex:extra.frameIndex,prefixToken:timelineToken,prefixFieldTokens:timelineStream.current.fieldTokens(c.source.caseHash,branchId,timelineToken)}:{})}:extra;
       let next=await c.api.surgicalRehearsal({caseHash:c.source.caseHash,command,...(!prefixCommand(command)?{expectedStateId:backendResult.current?.view.stateId}:{}),...requestExtra,
         ...(command==='seekFrame'?{timelineToken,viewFieldTokens:timelineStream.current.fieldTokens(c.source.caseHash,branchId,timelineToken)}:{})});
       if(token!==generation.current||!current.current.enabled||current.current.source!==c.source)return false;
-      if(next){if(prefixCommand(command)){(command==='seekPrefixFrame'?checkedPrefixWireResponse:checkedPrefixResponse)(next);if(next.caseHash!==c.source.caseHash||next.branchId!==branchId||(reconstructedPrefix(c.result)&&replayAuthorityKey(next)!==replayAuthorityKey(c.result!)))throw Error('Reconstructed prefix response changed source or authority');}next=timelineStream.current.hydrate(next);if(prefixCommand(command))checkedPrefixResponse(next);}
+      if(next){if(prefixCommand(command)){
+        (command==='seekPrefixFrame'?checkedPrefixWireResponse:checkedPrefixResponse)(next);
+        if(next.caseHash!==c.source.caseHash||next.branchId!==branchId||(reconstructedPrefix(c.result)&&replayAuthorityKey(next,!prefixRestart)!==replayAuthorityKey(c.result!,!prefixRestart)))throw Error('Reconstructed prefix response changed source or authority');
+        if(prefixRestart&&((reconstructedPrefix(next)?.preparedCache?.mode==='only')!==(extra.cacheOnly===true)))throw Error('Reconstructed prefix response changed prepared-only mode');
+      }next=timelineStream.current.hydrate(next);if(prefixCommand(command))checkedPrefixResponse(next);}
       // A superseded seek still moved the backend cursor. Preserve its state
       // identity for the next ordered request while withholding obsolete UI.
       if(frameCommand(command)&&next){checkedSurgicalPlayback(next,{...extra,branchId});setMode('navigate');setPath([]);}

@@ -10,6 +10,7 @@ export function surgicalReplayRoutes(response:SurgicalResponse|null|undefined){
 }
 /** Explicit authority domains: a reconstructed prefix grants inspection only. */
 export function surgicalAuthorityIssue(response:SurgicalResponse|null,command:string,extra:Record<string,unknown>):string|null {
+  if(Object.hasOwn(extra,'cacheOnly')&&(typeof extra.cacheOnly!=='boolean'||command!=='seekPrefix'||extra.position!==0))return 'Prepared-only mode can be selected only when starting read-only replay at the beginning.';
   const prefix=reconstructedPrefix(response),verification=response?.verification;
   if(verification?.readOnly){
     if(command==='inspectArchive'||command==='inspect')return null;
@@ -39,6 +40,12 @@ function checkedPrefix(response:SurgicalResponse,wire:boolean){
   else need(Array.isArray(response.timeline)&&response.timeline.length===p.verifiedThrough);
   need(typeof p.archiveEndpointVerified==='boolean'&&typeof p.originSnapshotHash==='string'&&!!p.originSnapshotHash&&typeof p.actionLogHash==='string'&&!!p.actionLogHash);
   need(typeof p.implementation==='string'||(!!p.implementation&&typeof p.implementation==='object'&&!Array.isArray(p.implementation)));
+  if(p.preparedCache!==undefined){
+    need(!!p.preparedCache&&typeof p.preparedCache==='object'&&!Array.isArray(p.preparedCache));
+    need(['prepare','only','disabled'].includes(p.preparedCache.mode));
+    for(const count of [p.preparedCache.loadedActions,p.preparedCache.publishedActions,p.preparedCache.misses])need(Number.isSafeInteger(count)&&count>=0);
+    need(p.preparedCache.lastSkip===null||typeof p.preparedCache.lastSkip==='string');
+  }
   for(const requested of [p.requestedPosition,response.requestedPosition])need(requested===undefined||(Number.isInteger(requested)&&requested>=0&&requested<=p.totalActions));
   for(const stopped of [p.budgetStopped,response.budgetStopped])need(stopped===undefined||typeof stopped==='boolean');
   need(p.requestedPosition===undefined||response.requestedPosition===undefined||p.requestedPosition===response.requestedPosition);
@@ -48,7 +55,7 @@ function checkedPrefix(response:SurgicalResponse,wire:boolean){
 export function checkedPrefixWireResponse(response:SurgicalResponse){return checkedPrefix(response,true);}
 /** Demand hydration must restore the complete computed prefix before display. */
 export function checkedPrefixResponse(response:SurgicalResponse){return checkedPrefix(response,false);}
-export function replayAuthorityKey(response:SurgicalResponse){
+export function replayAuthorityKey(response:SurgicalResponse,includePreparedMode=true){
   const p=reconstructedPrefix(response);
-  return p?JSON.stringify(['prefix',p.originSnapshotHash,p.actionLogHash,p.implementation,p.protectionContractHash,p.prefixImplementation]):response.verification?.readOnly?'unverified-import':'canonical';
+  return p?JSON.stringify(['prefix',p.originSnapshotHash,p.actionLogHash,p.implementation,p.protectionContractHash,p.prefixImplementation,...(includePreparedMode?[p.preparedCache?.mode??'disabled']:[])]):response.verification?.readOnly?'unverified-import':'canonical';
 }

@@ -415,6 +415,11 @@ replay/audit. These uncontrolled host-run observations grant no planning/RL
 authority; full-primary playback, cold-inclusive 1×, delivered-frame timing,
 operative readability and genuine candidate-inclusive throughput remain open.
 
+The later [prepared-observation replay mode](prepared-prefix-replay.md) is a
+separate read-only application capability. It cannot seed RL reset/resume or
+planning, and cache hits do not qualify fresh decision throughput. Fresh
+preparation, prepared playback and their validations are reported separately.
+
 ## Generated native workspace companion
 
 The separate evaluation-only exporter creates an openable, explicitly labeled

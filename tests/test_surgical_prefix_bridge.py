@@ -10,6 +10,12 @@ from resectionlab.desktop_bridge import BridgeError, BridgeSession, _Request
 from resectionlab.surgical_engine import SurgicalEngine
 
 
+@pytest.fixture(autouse=True)
+def isolated_prepared_prefix_store(tmp_path, monkeypatch):
+    from resectionlab import surgical_prefix_cache
+    monkeypatch.setattr(surgical_prefix_cache, 'DEFAULT_DIRECTORY', tmp_path / 'prepared-prefix')
+
+
 def episode(tmp_path):
     session = BridgeSession(tmp_path / 'transfers')
     case = session.execute('createSurgicalFixture', {}, _Request('fixture'), lambda *_: None)
@@ -91,6 +97,7 @@ def test_prefix_bridge_uses_committed_display_rows_and_complete_receipt_accessor
     from resectionlab.surgical_bridge import display_timeline
     session, key, call, _ = episode(tmp_path)
     try:
+        call('seekPrefix', position=0)
         first = call('seekPrefixFrame', position=0, frameIndex=0)
         owner = session.surgical_prefix_session[3]
         assert owner.statistics['historyReceiptsCompressed']
@@ -117,6 +124,7 @@ def test_far_prefix_seek_is_bounded_and_replacing_origin_restarts_the_owner(tmp_
     session, key, call, _ = episode(tmp_path)
     try:
         branch = session.cases[key].artifacts['surgical_toolbox']['branchId']
+        call('seekPrefix', branchId=branch, position=0)
         first = call('seekPrefix', branchId=branch, position=8)
         assert first['position'] == 4 and first['requestedPosition'] == 8 and first['budgetStopped']
         assert first['verification']['verifiedThrough'] == 4
@@ -168,6 +176,7 @@ def test_prefix_stream_omits_only_acknowledged_current_generation_display_data(t
     session, key, call, _ = episode(tmp_path)
     original = session.cases[key].artifacts
     try:
+        call('seekPrefix', position=0)
         with step_entries() as steps:
             first = call('seekPrefixFrame', position=0, frameIndex=0)
             token, fields = first['timelineToken'], first['viewFieldTokens']
@@ -238,5 +247,148 @@ def test_prefix_display_acknowledgements_cannot_cross_into_canonical_commands(tm
             call(command, prefixToken='prefix-replay.v1/forged', prefixFieldTokens={})
         assert not hasattr(session, 'surgical_prefix_session')
         assert not hasattr(session, 'surgical_sessions')
+    finally:
+        session.close()
+
+
+@pytest.mark.parametrize('value', [None, 0, 1, 'true', [], {}])
+def test_prepared_only_flag_must_be_an_exact_boolean_before_owner_creation(tmp_path, value):
+    session, _, call, _ = episode(tmp_path)
+    try:
+        with step_entries() as steps, pytest.raises(ValueError, match='boolean cacheOnly'):
+            call('seekPrefix', position=0, cacheOnly=value)
+        assert steps == [] and not hasattr(session, 'surgical_prefix_session')
+    finally:
+        session.close()
+
+
+@pytest.mark.parametrize('command,extra', [('seekPrefix', {'position': 1}),
+    ('seekPrefixFrame', {'position': 0, 'frameIndex': 0}), ('inspect', {}),
+    ('inspectArchive', {}), ('seekFrame', {'position': 0, 'frameIndex': 0})])
+@pytest.mark.parametrize('value', [True, False])
+def test_prepared_only_flag_is_rejected_except_at_explicit_prefix_restart(tmp_path, command, extra, value):
+    session, _, call, _ = episode(tmp_path)
+    try:
+        with step_entries() as steps, pytest.raises(BridgeError, match='Unsupported argument'):
+            call(command, **extra, cacheOnly=value)
+        assert steps == [] and not hasattr(session, 'surgical_prefix_session')
+    finally:
+        session.close()
+
+
+def test_prepared_only_reopen_keeps_read_only_authority_and_never_changes_to_fresh_on_frame_requests(tmp_path):
+    session, key, call, _ = episode(tmp_path)
+    original = session.cases[key].artifacts
+    try:
+        call('seekPrefix', position=0)
+        fresh = call('seekPrefixFrame', position=0, frameIndex=0)
+        final_index = fresh['playback']['frameCount'] - 1
+        expected = call('seekPrefixFrame', position=0, frameIndex=final_index)
+        assert fresh['verification']['preparedCache']['mode'] == 'prepare'
+        assert fresh['verification']['preparedCache']['publishedActions'] == 1
+        old = session.surgical_prefix_session[3]
+        with step_entries() as steps:
+            start = call('seekPrefix', position=0, cacheOnly=True)
+            cached = call('seekPrefixFrame', position=0, frameIndex=final_index)
+            repeated = call('seekPrefixFrame', position=0, frameIndex=final_index)
+        assert steps == []
+        assert session.surgical_prefix_session[3] is not old
+        assert start['verification']['preparedCache']['mode'] == 'only'
+        assert cached['verification']['preparedCache']['mode'] == repeated['verification']['preparedCache']['mode'] == 'only'
+        assert cached['verification']['preparedCache']['loadedActions'] == 1
+        assert cached['view'] == expected['view'] and cached['timeline'] == expected['timeline']
+        assert cached['playback'] == expected['playback']
+        assert cached['fullCase'] is None and cached['changed'] is False
+        assert cached['verification']['readOnly'] is True
+        for attribute in ('surgical_sessions', 'surgical_replay_cache', 'surgical_frame_cache'):
+            assert not hasattr(session, attribute)
+        assert session.cases[key].artifacts is original
+        # Explicit fresh restart must perform a fresh transition despite disk data.
+        with step_entries() as steps:
+            fresh_start = call('seekPrefix', position=0, cacheOnly=False)
+            fresh_again = call('seekPrefixFrame', position=0, frameIndex=0)
+        assert steps == [0]
+        assert fresh_start['verification']['preparedCache']['mode'] == 'prepare'
+        assert fresh_again['verification']['preparedCache']['loadedActions'] == 0
+    finally:
+        session.close()
+
+
+def test_prepared_only_miss_reports_actual_boundary_without_hidden_reconstruction(tmp_path):
+    session, key, call, _ = episode(tmp_path)
+    try:
+        progress = []
+        with step_entries() as steps:
+            session.execute('surgicalRehearsal', {'caseHash': key, 'command': 'seekPrefix',
+                            'position': 0, 'cacheOnly': True}, _Request('prepared-start'),
+                            lambda _fraction, message: progress.append(message))
+            missing = call('seekPrefix', position=1)
+        assert steps == []
+        assert any('Loading prepared observations' in message for message in progress)
+        assert missing['position'] == missing['verification']['verifiedThrough'] == 0
+        assert missing['requestedPosition'] == 1 and missing['budgetStopped']
+        assert missing['verification']['failure']
+        assert missing['verification']['preparedCache']['mode'] == 'only'
+        assert missing['verification']['preparedCache']['misses'] >= 1
+        assert missing['fullCase'] is None and not hasattr(session, 'surgical_sessions')
+    finally:
+        session.close()
+
+
+def test_prepared_only_owner_replacement_cannot_silently_create_a_fresh_reconstruction(tmp_path):
+    session, key, call, _ = episode(tmp_path)
+    try:
+        call('seekPrefix', position=0, cacheOnly=True)
+        session.cases[key].artifacts = freeze_json(thaw_json(session.cases[key].artifacts))
+        with step_entries() as steps, pytest.raises(BridgeError) as rejected:
+            call('seekPrefixFrame', position=0, frameIndex=0)
+        assert steps == [] and rejected.value.code == 'SURGICAL_PREFIX_OWNER_REQUIRED'
+        assert session.surgical_prefix_session[3]._cache_only
+        # A deliberate fresh restart remains available on the replacement source.
+        restarted = call('seekPrefix', position=0)
+        assert restarted['verification']['preparedCache']['mode'] == 'prepare'
+    finally:
+        session.close()
+
+
+@pytest.mark.parametrize('command,extra', [('seekPrefixFrame', {'position': 0, 'frameIndex': 0}),
+    ('seekPrefix', {'position': 1})])
+@pytest.mark.parametrize('mode', [True, False])
+def test_missing_prefix_owner_after_sidecar_restart_never_reconstructs_implicitly(tmp_path, command, extra, mode):
+    session, _, call, _ = episode(tmp_path)
+    try:
+        call('seekPrefix', position=0, cacheOnly=mode)
+        del session.surgical_prefix_session
+        with step_entries() as steps, pytest.raises(BridgeError) as rejected:
+            call(command, **extra)
+        assert rejected.value.code == 'SURGICAL_PREFIX_OWNER_REQUIRED'
+        assert steps == [] and not hasattr(session, 'surgical_prefix_session')
+        restarted = call('seekPrefix', position=0, cacheOnly=mode)
+        assert restarted['verification']['preparedCache']['mode'] == ('only' if mode else 'prepare')
+    finally:
+        session.close()
+
+
+@pytest.mark.parametrize('mode', [True, False])
+@pytest.mark.parametrize('replacement', ['entry', 'artifact', 'branch'])
+def test_nonstart_prefix_requests_require_exact_owner_binding_in_every_mode(tmp_path, mode, replacement):
+    session, key, call, _ = episode(tmp_path)
+    try:
+        call('seekPrefix', position=0, cacheOnly=mode)
+        old = session.surgical_prefix_session
+        extra = {'position': 0, 'frameIndex': 0}
+        if replacement == 'entry':
+            session.cases[key] = copy.copy(session.cases[key])
+        elif replacement == 'artifact':
+            session.cases[key].artifacts = freeze_json(thaw_json(session.cases[key].artifacts))
+        else:
+            artifact = thaw_json(session.cases[key].artifacts)
+            artifact['surgical_toolbox']['branches']['other'] = copy.deepcopy(next(iter(artifact['surgical_toolbox']['branches'].values())))
+            session.cases[key].artifacts = freeze_json(artifact)
+            extra['branchId'] = 'other'
+        with step_entries() as steps, pytest.raises(BridgeError) as rejected:
+            call('seekPrefixFrame', **extra)
+        assert rejected.value.code == 'SURGICAL_PREFIX_OWNER_REQUIRED' and steps == []
+        assert session.surgical_prefix_session is old
     finally:
         session.close()

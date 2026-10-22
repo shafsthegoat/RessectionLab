@@ -33,7 +33,15 @@ test('imported endpoint offers explicit read-only start and retains full verific
   assert(text(tree).includes('Imported endpoint · unverified · read only'));assert.equal(find(tree,'button','Play replay').props.disabled,true);
   assert.equal(find(tree,'input','Surgical timeline').props.disabled,true);
   find(tree,'button','Replay from start · read only').props.onClick();await Promise.resolve();assert.deepEqual(c.calls.at(-1),{command:'seekPrefix',position:0,branchId:'main'});
+  find(tree,'button','Replay prepared observations · read only').props.onClick();await Promise.resolve();assert.deepEqual(c.calls.at(-1),{command:'seekPrefix',position:0,branchId:'main',cacheOnly:true});
   find(tree,'button','Verify replay for planning').props.onClick();assert.deepEqual(c.calls.at(-1),{command:'inspect',branchId:'main'});
+});
+test('prepared-only prefix explains misses and offers an explicit fresh restart without enabling edits',async()=>{
+  const c=controller({...prefix(),preparedCache:{mode:'only',loadedActions:4,publishedActions:0,misses:1,lastSkip:'missing action'},failure:{actionIndex:4,reason:'Prepared observations unavailable'}}),tree=render(c);
+  assert(text(tree).includes('Prepared observations · read only'));assert(text(tree).includes('Missing observations stop replay without reconstructing actions.'));
+  assert(text(tree).includes('Start a fresh read-only reconstruction to prepare missing actions.'));
+  assert.equal(find(tree,'button','Branch').props.disabled,true);
+  find(tree,'button','Replay from start · read only').props.onClick();await Promise.resolve();assert.deepEqual(c.calls.at(-1),{command:'seekPrefix',position:0,branchId:'main'});
 });
 test('prefix labels progress and budget stop; boundary, timeline and branch controls remain in their authority domains',()=>{
   const c=controller(),tree=render(c);assert(text(tree).includes('Reconstructed prefix · read only'));assert(text(tree).includes('Reconstructed 4 / 10 recorded actions'));assert(text(tree).includes('boundary 4 while requesting 9'));assert(text(tree).includes('Full archive planning verification is still required'));
@@ -53,6 +61,8 @@ test('malformed prefix progress and authority drift cannot become canonical or a
   const r=controller().result;assert.equal(checkedPrefixResponse(r).verifiedThrough,4);
   for(const mutate of [x=>x.verification.verifiedThrough=11,x=>x.timeline.pop(),x=>x.position=9,x=>x.verification.originSnapshotHash='',x=>x.requestedPosition=11]){const copy=structuredClone(r);mutate(copy);assert.throws(()=>checkedPrefixResponse(copy),/prefix authority/);}
   const drift=structuredClone(r);drift.verification.protectionContractHash='other';assert.notEqual(replayAuthorityKey(drift),replayAuthorityKey(r));
+  const prepared=structuredClone(r);prepared.verification.preparedCache={mode:'only',loadedActions:4,publishedActions:0,misses:0,lastSkip:null};assert.notEqual(replayAuthorityKey(prepared),replayAuthorityKey(r));assert.equal(replayAuthorityKey(prepared,false),replayAuthorityKey(r,false));
+  for(const cache of [null,{mode:'other',loadedActions:0,publishedActions:0,misses:0,lastSkip:null},{mode:'only',loadedActions:-1,publishedActions:0,misses:0,lastSkip:null},{mode:'only',loadedActions:0,publishedActions:0,misses:0,lastSkip:1}])assert.throws(()=>checkedPrefixResponse({...r,verification:{...r.verification,preparedCache:cache}}),/prefix authority/);
   for(const command of ['step','plan','branch','fullCase','seek','seekFrame','selectBranch'])assert(surgicalAuthorityIssue(r,command,{position:0}));
   assert.deepEqual(surgicalReplayRoutes(r),{prefix:true,imported:true,canReplay:true,boundary:'seekPrefix',frame:'seekPrefixFrame',branch:'inspectArchive'});
 });

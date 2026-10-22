@@ -1,6 +1,6 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict');
-const {COUNTS,expectedSequence,submittedVascularPlayback,exactSequence,checkedVascularAuthority,hardBudgetStop,isVascularBenchmarkEntry}=require('./benchmark-surgical-vascular.cjs');
+const {COUNTS,expectedSequence,submittedVascularPlayback,exactSequence,checkedVascularAuthority,hardBudgetStop,isVascularBenchmarkEntry,vascularPreparedOnly,vascularStartButton,vascularPreparationChecks}=require('./benchmark-surgical-vascular.cjs');
 const options={mainToRendererOffset:100,startedRenderer:1000};
 const response=(position,frameIndex,stateId='shared')=>({command:'seekPrefixFrame',branchId:'full-vascular',position,frameIndex,stateId,started:1100+frameIndex,ms:10});
 const frame=(position,frameIndex,at=1200,stateId='shared')=>({at,serial:frameIndex+1,surgicalStateId:stateId,surgicalFrame:{branchId:'full-vascular',position,frameIndex}});
@@ -61,4 +61,30 @@ test('mere imports, foreign browser entry and Electron renderers never start the
   assert.equal(isVascularBenchmarkEntry({versions:{electron:'44'},type:'renderer',argv:['Electron',filename]},filename,true),false);
   assert.equal(isVascularBenchmarkEntry({versions:{electron:'44'},type:'browser',argv:['Electron']},filename,true),false);
   assert.equal(isVascularBenchmarkEntry({versions:{node:'26'},argv:['node',filename]},filename,true),true);
+});
+
+test('prepared-only mode is explicit and selects the actual dedicated UI button',()=>{
+  assert.equal(vascularPreparedOnly(undefined),false);assert.equal(vascularPreparedOnly('1'),true);
+  for(const value of ['', '0','true',true,1,null])assert.throws(()=>vascularPreparedOnly(value));
+  assert.equal(vascularStartButton(false),'Replay from start · read only');
+  assert.equal(vascularStartButton(true),'Replay prepared observations · read only');
+});
+test('prepared and fresh qualification retain opposite step/load/publication requirements',()=>{
+  const make=prepared=>({qualificationMode:prepared?'prepared-only':'fresh',failure:null,permittedSteps:Array(prepared?0:73).fill({}),forbiddenSteps:[],publicStepAttempts:{},ownership:{prefixStatistics:{preparedCache:{mode:prepared?'only':'prepare',loadedActions:prepared?73:0,publishedActions:prepared?0:73,misses:0,lastSkip:null}}}});
+  for(const prepared of [false,true]){
+    const g=make(prepared);assert.deepEqual(vascularPreparationChecks(g,prepared),{stepAuthority:true,preparedCache:true});
+    assert.equal(vascularPreparationChecks(g,!prepared).stepAuthority,false);
+    for(const patch of [{loadedActions:prepared?72:1},{publishedActions:prepared?1:72},{misses:1},{lastSkip:'missing action'},{mode:'disabled'}]){
+      const changed=structuredClone(g);Object.assign(changed.ownership.prefixStatistics.preparedCache,patch);assert.equal(vascularPreparationChecks(changed,prepared).preparedCache,false);
+    }
+    for(const mutate of [x=>x.permittedSteps.push({}),x=>x.forbiddenSteps.push({}),x=>x.publicStepAttempts.unexpected=1,x=>x.failure={message:'failed'}]){
+      const changed=structuredClone(g);mutate(changed);assert.equal(vascularPreparationChecks(changed,prepared).stepAuthority,false);
+    }
+  }
+  assert.deepEqual(vascularPreparationChecks(undefined,true),{stepAuthority:false,preparedCache:false});
+});
+test('wire prefix cache mode must remain fixed while canonical and imported authority remain separate',()=>{
+  const response={branchId:'full-vascular',changed:false,readOnly:true,fullCase:null,verification:{status:'reconstructed-prefix',readOnly:true,totalActions:73,preparedCache:{mode:'only'}}};
+  assert.equal(checkedVascularAuthority('seekPrefixFrame',response,true),response);
+  assert.throws(()=>checkedVascularAuthority('seekPrefixFrame',response,false),/prepared-only mode/);
 });

@@ -937,3 +937,165 @@ def test_exact_publication_counter_includes_map_growth_aliases_and_atomic_overfl
     assert owner._frames == {}
     assert owner._retained_frame_bytes == prefix._owned_bytes(owner._frames)
     assert owner._frame_bytes() <= owner._max_frame_bytes
+
+
+def prepared_episode(tmp_path, monkeypatch, *, projection=None):
+    """One generated public script, then one fresh prefix preparation only."""
+    engine, boundaries = episode()
+    allowed = [True]
+    calls = []
+    step = prefix._PrefixEngine.step
+    def guarded(self, action, **kwargs):
+        assert allowed[0], 'Prepared-only playback attempted physics'
+        calls.append(action)
+        return step(self, action, **kwargs)
+    monkeypatch.setattr(prefix._PrefixEngine, 'step', guarded)
+    store = prefix._prepared_cache.PreparedPrefixStore(tmp_path / 'prepared')
+    producer = SurgicalPrefixReplay(engine.scene, engine.snapshot(), max_new_actions=32,
+        _prepared_store=store, _display_row_projection=projection)
+    result = producer.seek(len(engine.actions))
+    assert result['verification']['archiveEndpointVerified']
+    assert producer.statistics['preparedCache']['publishedActions'] == len(engine.actions)
+    assert len(calls) == len(engine.actions)
+    allowed[0] = False
+    return engine, boundaries, store, producer, calls
+
+
+def test_prepared_only_reopens_exact_frames_receipts_and_activation_without_steps(tmp_path, monkeypatch):
+    engine, boundaries, store, producer, calls = prepared_episode(tmp_path, monkeypatch)
+    reopened_store = prefix._prepared_cache.PreparedPrefixStore(tmp_path / 'prepared')
+    cached = SurgicalPrefixReplay(engine.scene, engine.snapshot(), max_new_actions=32,
+        _prepared_store=reopened_store, _cache_only=True)
+    final = cached.seek(len(engine.actions))
+    assert final['view'] == boundaries[-1]
+    assert final['verification']['archiveEndpointVerified']
+    assert final['verification']['preparedCache'] == {
+        'mode': 'only', 'loadedActions': 5, 'publishedActions': 0, 'misses': 0, 'lastSkip': None}
+    assert len(calls) == 5
+    for index in range(5):
+        assert cached._receipt(index) == producer._receipt(index)
+        for ordinal in range(len(producer._frames[index])):
+            left = producer.seek_frame(index, ordinal)
+            right = cached.seek_frame(index, ordinal)
+            assert left['view'] == right['view']
+            assert left['playback'] == right['playback']
+            assert left['timeline'] == right['timeline']
+            assert left['timelineToken'] != right['timelineToken']
+    assert len(calls) == 5
+    assert cached.statistics['historyBytes'] <= cached.statistics['maxHistoryBytes']
+
+
+def test_prepared_only_miss_is_explicit_and_never_steps(tmp_path, monkeypatch):
+    engine, _ = episode()
+    def forbidden(*args, **kwargs):
+        raise AssertionError('Cache miss must not execute physics')
+    monkeypatch.setattr(prefix._PrefixEngine, 'step', forbidden)
+    store = prefix._prepared_cache.PreparedPrefixStore(tmp_path / 'empty')
+    replay = SurgicalPrefixReplay(engine.scene, engine.snapshot(), _prepared_store=store, _cache_only=True)
+    result = replay.seek(1)
+    assert result['position'] == 0 and result['budgetStopped']
+    assert 'Prepared observations unavailable' in result['verification']['failure']['reason']
+    assert result['verification']['preparedCache']['misses'] == 1
+    with pytest.raises(ValueError, match='unavailable'):
+        replay.seek_frame(0, 0)
+    assert not replay.statistics['frameActions']
+    assert replay.statistics['verifiedThrough'] == 0
+
+
+def test_prepared_old_actions_page_within_original_quotas_and_no_repeated_steps(tmp_path, monkeypatch):
+    engine, boundaries, store, producer, calls = prepared_episode(tmp_path, monkeypatch)
+    frame_limit = max(prefix._owned_bytes(OrderedDict([(index, rows)]))
+                      for index, rows in producer._frames.items()) + producer._stream_metadata_bytes + 1024
+    checkpoint_limit = max(prefix._owned_bytes(OrderedDict([(index, row)]))
+                           for index, row in producer._checkpoints.items()) + 64
+    replay = SurgicalPrefixReplay(engine.scene, engine.snapshot(), max_new_actions=32,
+        max_frame_bytes=frame_limit, max_checkpoint_bytes=checkpoint_limit,
+        _prepared_store=store, _cache_only=True)
+    assert replay.seek(5)['view'] == boundaries[-1]
+    assert 0 not in replay.statistics['frameActions']
+    assert 0 not in replay.statistics['checkpointPositions']
+    count = replay.statistics['preparedCache']['loadedActions']
+    assert replay.seek_frame(0, 0)['view'] == producer.seek_frame(0, 0)['view']
+    assert replay.seek(0)['view'] == boundaries[0]
+    assert replay.seek(5)['view'] == boundaries[-1]
+    assert replay.statistics['preparedCache']['loadedActions'] == count
+    assert len(calls) == 5
+    for key in ('frame', 'checkpoint', 'history'):
+        assert replay.statistics[key + 'Bytes'] <= replay.statistics['max' + key.title() + 'Bytes']
+
+
+def test_prepared_receipts_regenerate_current_display_rows_and_compact_reads(tmp_path, monkeypatch):
+    engine, _, store, producer, calls = prepared_episode(tmp_path, monkeypatch)
+    def display(receipt):
+        return {'status': receipt['status'], 'stateAfter': receipt['stateAfter']}
+    cached = SurgicalPrefixReplay(engine.scene, engine.snapshot(), max_new_actions=32,
+        _prepared_store=store, _cache_only=True, _display_row_projection=display)
+    cached.seek(5)
+    first = cached.seek_frame(0, 0)
+    assert first['timeline'] == [{'status': row['status'], 'stateAfter': row['stateAfter']}
+                                 for row in engine.history]
+    assert cached._receipt(0) == producer._receipt(0)
+    def no_old_history(*args, **kwargs):
+        raise AssertionError('Compact warm read decoded old complete receipts')
+    monkeypatch.setattr(cached, '_materialize_history', no_old_history)
+    monkeypatch.setattr(cached, '_unpack_receipt', no_old_history)
+    compact = cached.seek_frame(0, 1, prefix_token=first['timelineToken'])
+    assert compact['timelineOmitted'] and 'timeline' not in compact
+    assert cached._display_receipts and all(type(row[0]) is bytes for row in cached._display_receipts)
+    assert len(calls) == 5
+
+
+def test_prepared_source_log_changes_miss_and_live_store_code_drift_invalidates(tmp_path, monkeypatch):
+    engine, _, store, producer, calls = prepared_episode(tmp_path, monkeypatch)
+    changed = engine.snapshot()
+    changed['actions'][0]['duration'] += .1
+    different = SurgicalPrefixReplay(engine.scene, changed, _prepared_store=store, _cache_only=True)
+    result = different.seek(1)
+    assert result['position'] == 0 and result['verification']['preparedCache']['misses'] == 1
+    cached = SurgicalPrefixReplay(engine.scene, engine.snapshot(), _prepared_store=store, _cache_only=True)
+    original = prefix._prepared_cache.PreparedPrefixStore.load_action
+    def changed_load(self, *args, **kwargs):
+        return original(self, *args, **kwargs)
+    monkeypatch.setattr(prefix._prepared_cache.PreparedPrefixStore, 'load_action', changed_load)
+    with pytest.raises(ValueError, match='implementation changed'):
+        cached.seek(1)
+    assert len(calls) == 5
+
+
+def test_failed_prepared_publication_keeps_committed_action_and_fresh_mode_never_loads(tmp_path, monkeypatch):
+    engine, boundaries = episode()
+    def forbidden(*args, **kwargs):
+        raise AssertionError('Fresh preparation read a prepared observation')
+    monkeypatch.setattr(prefix._prepared_cache.PreparedPrefixStore, 'load_action', forbidden)
+    store = prefix._prepared_cache.PreparedPrefixStore(tmp_path / 'tiny', max_disk_bytes=32)
+    replay = SurgicalPrefixReplay(engine.scene, engine.snapshot(), _prepared_store=store)
+    result = replay.seek(1)
+    assert result['position'] == 1 and result['view'] == boundaries[1]
+    assert result['verification']['failure'] is None
+    assert result['verification']['preparedCache']['mode'] == 'prepare'
+    assert result['verification']['preparedCache']['publishedActions'] == 0
+    assert result['verification']['preparedCache']['lastSkip']
+    assert replay._receipt(0)['stateAfter'] == boundaries[1]['stateId']
+
+
+@pytest.mark.parametrize('options', [{'_cache_only': True}, {'_cache_only': 1},
+    {'_prepared_store': object()}, {'_cache_only': False, '_prepared_store': object()}])
+def test_prepared_mode_requires_exact_private_store_and_boolean(options):
+    engine, _ = episode()
+    with pytest.raises(ValueError, match='exact store'):
+        SurgicalPrefixReplay(engine.scene, engine.snapshot(), **options)
+
+
+def test_optional_cache_allocation_failure_cannot_reject_a_committed_action(tmp_path, monkeypatch):
+    engine, boundaries = episode()
+    def out_of_memory(*args, **kwargs):
+        raise MemoryError('Injected optional publication allocation failure')
+    monkeypatch.setattr(prefix._prepared_cache.PreparedPrefixStore, 'publish_action', out_of_memory)
+    store = prefix._prepared_cache.PreparedPrefixStore(tmp_path / 'allocation-failure')
+    replay = SurgicalPrefixReplay(engine.scene, engine.snapshot(), _prepared_store=store)
+    first = replay.seek(1)
+    assert first['position'] == 1 and first['view'] == boundaries[1]
+    assert first['verification']['failure'] is None
+    assert 'allocation failure' in first['verification']['preparedCache']['lastSkip']
+    assert replay.seek(1)['view'] == first['view']
+    assert len(replay._history) == 1
