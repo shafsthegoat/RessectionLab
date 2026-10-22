@@ -7,7 +7,7 @@ import zlib
 import numpy as np
 import pytest
 
-from resectionlab.core import freeze_json, semantic_digest
+from resectionlab.core import freeze_json, thaw_json, semantic_digest
 from resectionlab.surgical_cusa_v3 import default_profile
 from resectionlab.surgical_engine import SurgicalEngine
 from resectionlab.surgical_frame_replay import _ObservedFrames
@@ -316,7 +316,7 @@ def test_private_borrowed_input_reuses_exact_frozen_branch_without_widening_auth
     assert replay.statistics['ownedImmutableInputBytes'] == 0
     assert replay.statistics['sharedImmutableInputBytes'] == prefix._owned_bytes(frozen)
     result = replay.seek(3)
-    assert replay._history[0]['action'] is frozen['actions'][0]
+    assert replay._receipt(0)['action'] is frozen['actions'][0]
     assert result['view'] == boundaries[3]
     assert result['readOnly'] and not result['verification']['archiveEndpointVerified']
     assert result['verification']['originSnapshotHash'] == semantic_digest(frozen)
@@ -343,6 +343,166 @@ def test_private_timeline_projection_sees_immutable_full_receipts_before_json_co
     frame = replay.seek_frame(2, 0, _timeline_projection=display)
     assert frame['timeline'] == result['timeline']
     assert replay.seek(3)['timeline'] == engine.history[:3]
+
+
+def test_compressed_complete_receipts_share_actions_and_metric_rows_without_losing_content():
+    engine, boundaries = episode()
+    replay = SurgicalPrefixReplay(engine.scene, engine.snapshot())
+    replay.seek(4)
+    assert replay._history[0] is replay._history[1]
+    assert set(replay._history[0]) == {'status', 'reason'}
+    assert replay.statistics['historyBytes'] == replay._history_store_bytes(replay._history_store)
+    for index, receipt in enumerate(engine.history[:4]):
+        full = replay._receipt(index)
+        assert full['action'] is replay._snapshot['actions'][index]
+        assert thaw_json(full) == receipt
+        assert 'action' not in json.loads(zlib.decompress(replay._receipts[index][0]))
+        with pytest.raises(TypeError):
+            full['status'] = 'invented'
+        assert replay.seek(index + 1)['view']['metrics'] == boundaries[index + 1]['metrics']
+    # The full API still returns complete canonical rows rather than compact
+    # metrics/display rows, and returned JSON cannot mutate compressed storage.
+    result = replay.seek(4)
+    result['timeline'][2]['events'].clear()
+    assert thaw_json(replay._receipt(2)) == engine.history[2]
+
+
+def test_row_local_display_is_compressed_once_and_warm_frames_decode_no_history(monkeypatch):
+    from resectionlab.surgical_bridge import display_receipt, display_timeline
+    engine, _ = episode()
+    calls = []
+    def project(row):
+        calls.append(row['stateAfter'])
+        with pytest.raises(TypeError):
+            row['action']['duration'] = 0
+        return display_receipt(row)
+    replay = SurgicalPrefixReplay(engine.scene, engine.snapshot(), _display_row_projection=project)
+    result = replay.seek(3)
+    assert len(calls) == 3
+    assert result['timeline'] == display_timeline(engine.history[:3])
+    assert len(replay._display_receipts) == 3
+    assert thaw_json(replay._receipt(2)) == engine.history[2]
+    first = replay.seek_frame(2, 0)
+    def forbidden(*_args, **_kwargs):
+        raise AssertionError('Warm compact replay decoded or rebuilt receipt history')
+    monkeypatch.setattr(replay, '_unpack_receipt', forbidden)
+    monkeypatch.setattr(replay, '_materialize_history', forbidden)
+    monkeypatch.setattr(replay, '_receipt', forbidden)
+    warm = replay.seek_frame(2, 0, prefix_token=first['timelineToken'])
+    assert warm['timelineOmitted'] and 'timeline' not in warm
+    restored = {**warm['view'], **{name: first['view'][name] for name in ('scene', 'catalog', 'protection')}}
+    assert restored == first['view'] and len(calls) == 3
+
+
+@pytest.mark.parametrize('change', ['compressed', 'digest', 'length', 'trailing', 'ordinal'])
+def test_compressed_receipt_corruption_is_refused(change):
+    engine, _ = episode()
+    replay = SurgicalPrefixReplay(engine.scene, engine.snapshot())
+    replay.seek(2)
+    blob, length, digest = replay._receipts[0]
+    if change == 'compressed': blob = b'invalid zlib'
+    elif change == 'digest': digest = b'0' * 32
+    elif change == 'length': length -= 1
+    elif change == 'trailing': blob += b'trailing'
+    else: blob, length, digest = replay._receipts[1]
+    replay._receipts[0] = (blob, length, digest)
+    with pytest.raises(ValueError, match='receipt'):
+        replay._receipt(0)
+
+
+def test_receipt_codec_preserves_exact_float_sign_and_bounds_decoded_data():
+    import math
+    engine, _ = episode()
+    replay = SurgicalPrefixReplay(engine.scene, engine.snapshot())
+    value = {'negativeZero': -0.0, 'number': 1, 'flag': True, 'events': [{'values': [0.0, -0.0]}]}
+    entry = replay._pack_receipt(value)
+    restored = replay._unpack_receipt(entry)
+    assert type(restored['number']) is int and type(restored['flag']) is bool
+    assert math.copysign(1, restored['negativeZero']) == -1
+    assert math.copysign(1, restored['events'][0]['values'][1]) == -1
+    forged = (entry[0], replay._max_json_bytes + 1, entry[2])
+    with pytest.raises(ValueError, match='descriptor'):
+        replay._unpack_receipt(forged)
+
+
+def test_projection_cost_is_in_same_history_quota_and_failed_row_never_publishes():
+    engine, _ = episode()
+    def large_projection(row):
+        return {'uncompressed': list(range(400)), 'status': row['status']}
+    full = SurgicalPrefixReplay(engine.scene, engine.snapshot(), _display_row_projection=large_projection)
+    full.seek(1)
+    cap = full.statistics['historyBytes'] + 32
+    replay = SurgicalPrefixReplay(engine.scene, engine.snapshot(), max_history_bytes=cap,
+                                 _display_row_projection=large_projection)
+    stopped = replay.seek(4)
+    assert stopped['position'] == 1 and stopped['budgetStopped']
+    assert len(replay._history) == len(replay._receipts) == len(replay._display_receipts) == 1
+    assert replay.statistics['historyBytes'] <= cap
+    assert 1 not in replay.statistics['frameActions']
+    assert 2 not in replay.statistics['checkpointPositions']
+    before = replay.statistics
+    assert replay.seek(4)['position'] == 1 and replay.statistics == before
+
+
+def test_materialized_history_has_separate_explicit_bound_without_losing_stored_receipts():
+    engine, _ = episode()
+    replay = SurgicalPrefixReplay(engine.scene, engine.snapshot())
+    replay.seek(3)
+    original = replay._receipt(0)
+    replay._max_json_bytes = sum(entry[1] for entry in replay._receipts) - 1
+    with pytest.raises(PrefixBudgetExceeded, match='Transient complete history JSON'):
+        replay._materialize_history()
+    assert replay._receipt(0) == original
+
+
+def test_failed_frame_proposal_does_not_publish_or_evict_committed_checkpoint(monkeypatch):
+    engine, boundaries = episode()
+    replay = SurgicalPrefixReplay(engine.scene, engine.snapshot())
+    replay.seek(1)
+    checkpoints, store = replay._checkpoints, replay._history_store
+    prepared = []
+    propose_checkpoint = replay._propose_checkpoint
+    def one_checkpoint_proposal(position, current, item):
+        # Exercise a proposal that really would evict the current cursor. The
+        # injected failure must leave the entire original map unpublished.
+        budget = replay._max_checkpoint_bytes
+        replay._max_checkpoint_bytes = prefix._owned_bytes(OrderedDict([(position, item)]))
+        try:
+            proposal = propose_checkpoint(position, current, item)
+        finally:
+            replay._max_checkpoint_bytes = budget
+        assert list(proposal) == [2]
+        prepared.append(proposal)
+        return proposal
+    def failed_frames(*_):
+        assert prepared
+        raise MemoryError('Injected frame proposal allocation failure')
+    monkeypatch.setattr(replay, '_propose_checkpoint', one_checkpoint_proposal)
+    monkeypatch.setattr(replay, '_propose_frames', failed_frames)
+    with pytest.raises(MemoryError, match='Injected frame proposal'):
+        replay.seek(2)
+    assert replay._checkpoints is checkpoints and replay._history_store is store
+    assert 1 in replay._checkpoints and 2 not in replay._checkpoints
+    assert len(replay._history) == len(replay._receipts) == 1
+    assert replay.seek(1)['view'] == boundaries[1]
+    assert replay.statistics['maxMaterializedHistoryGraphBytes'] == replay._max_json_bytes
+    assert 'may coexist' in replay.statistics['materializedHistoryLimitMeaning']
+
+
+def test_light_implementation_exception_permanently_invalidates_prefix_receipts(monkeypatch):
+    from resectionlab.surgical_observed_cache import ImplementationChanged
+    engine, _ = episode()
+    replay = SurgicalPrefixReplay(engine.scene, engine.snapshot())
+    replay.seek(1)
+    original = prefix._light_seal
+    def changed():
+        raise ImplementationChanged('Native source changed after load')
+    monkeypatch.setattr(prefix, '_light_seal', changed)
+    with pytest.raises(prefix.PrefixInvalidated, match='implementation changed'):
+        replay._receipt(0)
+    monkeypatch.setattr(prefix, '_light_seal', original)
+    with pytest.raises(prefix.PrefixInvalidated, match='implementation changed'):
+        replay.seek_frame(0, 0)
 
 
 def test_prefix_frame_acknowledgements_hydrate_exact_full_view_and_hash_only_once(monkeypatch):

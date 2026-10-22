@@ -327,11 +327,47 @@ optimizer updates or patient actions. The three seeds remain one geometry;
 this is evaluation-only scripted solvability/resume evidence, not an adaptive
 policy, a patient task qualification or a matched throughput comparison.
 
+The subsequent compressed-history/optional-native qualification passed **882
+tests, with seven pilot tests skipped, in 149.08 seconds**, with the same two
+Gymnasium advisories. The optional native checks used an explicitly supplied
+local build in generated subprocess fixtures; the parent kept Python mode.
+Public engine/RL history remains complete. Only the separate read-only prefix
+shell uses compact metric ancestry, retaining complete canonical receipts in
+bounded compressed storage. Selected native mode has its own strict loaded
+binary/build/runtime identity and cannot reuse Python-mode cache authority.
+
+The evaluation-only readiness command then passed with open gates in **13.739
+seconds**, with that native build configured. The receipt is
+`testcases/outputs/rl-readiness-20261022/cli-idle-native-three-seeds/report.json`.
+Seeds 17/29/43 still repeat the same generated 27 mm³ coupon; the optional
+patient check loads/resets only. Policy executions, optimizer updates and patient
+actions were zero. This does not demonstrate learned behavior, genuine online
+candidate throughput, another patient, or modern CUSA feasibility on sub-06.
+The two earlier fixture updates remain disclosed above.
+
+An independent matched diagnostic of four genuine original late CUSA steps
+preserved complete output bytes and the original canonical endpoint while
+reducing median step latency 11.67% with optional native idle cooling. It uses
+explicit historical checkpoint ancestry and grants no planning, RL resume or
+cache admission. The kernel's larger pure-helper gain is a separate component
+result. Build/launch commands, strict platform limits and complete measurement
+scope are in [rehearsal-performance.md](rehearsal-performance.md).
+
 Separately, the desktop at `cc868257` completed all 73 original vascular rescue
 actions and CPU-submitted all 1,149 fresh observations in order. A separate
 zero-step audit matched every full historical canonical record and the final
 endpoint, with no canonical/session/cache promotion. Full playback including
 cold reconstruction measured 0.512×; same-action CPU intervals measured 1.317×.
+
+The later compressed-history implementation, with optional native cooling
+explicitly selected, also completed all 73 actions and 1,149 observations. All
+complete historical canonical records and the final endpoint matched in the
+separate zero-step audit, without canonical/session/cache promotion. Playback
+measured **0.493× including cold reconstruction**, with **1.272×** for same-action
+CPU intervals. It was slower than the earlier full GUI run, so it establishes
+exact saved-replay compatibility, not a GUI speedup or RL performance gate.
+Full-primary playback, operative readability, flowing effects, compositor
+timing and genuine candidate-inclusive online decision throughput remain open.
 This is legacy saved-replay evidence, not patient CUSA v3 qualification, editable
 planning/RL resume authority, compositor timing or a training result. The full
 primary GUI replay and engineering gates remain open; see

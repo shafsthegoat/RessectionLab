@@ -561,6 +561,88 @@ differ only in `surgical_engine.py` and remained unchanged during timing.
 This is one late action, not a 10× full-workload or online-decision qualification.
 No policy, optimizer, cache publication or editable admission ran.
 
+## Long-operation history and optional idle cooling
+
+A bounded census exposed a separate full-primary storage blocker. Historical
+canonical receipt containers alone, excluding actions and all scalar ownership,
+require at least 30,805,752 bytes and exceed the prefix owner's 4 MiB history cap
+at projected position 174. This is a static layout calculation, not an observed
+current replay stopping position. The first census overcounted shared empty
+tuples; its corrected version excludes every empty-list cost conservatively.
+
+The prefix owner now compresses complete receipt bodies and row-local display
+projections independently. Full actions still borrow the bounded immutable
+input. Checksums bind origin, action log, protection, implementation, ordinal
+and canonical/display domain. Only the private execution shell uses interned
+status/reason rows for the unchanged collision metric; full receipts remain
+available immutably. Public engine history is unchanged. Acknowledged warm
+frames decode no receipt/display history. Existing whole-history callbacks
+still receive complete immutable receipts on explicit demand, under a declared
+per-graph materialization ceiling. Decoded, frozen and thawed graphs may coexist;
+that ceiling is not a combined process-memory bound.
+
+Checkpoint, frame, history and endpoint proposals now finish before publication.
+A generated allocation-failure regression verifies that a failed frame proposal
+cannot evict the previously committed checkpoint. The retained history quota
+remains **4 MiB**, including both compressed stores, indexes, digests, metric
+interning metadata and containers.
+
+The current storage helpers accepted all **2,148 historical projected receipts**
+in a guarded, unadmitted scratch calculation: **3,204,279 bytes**, with **990,025
+bytes (23.60%) headroom**. Complete bodies and display rows round-tripped exactly,
+including float representations. The calculation took 14.663 seconds, peaked at
+69,517,312 bytes RSS, and entered no owner constructor, seek, engine constructor
+or physics step. It does not qualify current-generated full-primary receipts,
+their transient views, or the actual primary playthrough.
+
+An optional native loop implements the unchanged scalar idle-cooling law on
+strictly admitted finite, subthreshold, unpowered cell ledgers. Other inputs use
+the existing Python loop. It preserves key order, dictionary identity, signed
+zero, separate floating operations and sorted sequential energy accumulation.
+Watched dictionaries decline before mutation; all replacement floats are staged
+before commit. The local build is restricted to **CPython 3.12/macOS arm64** and
+binds its C source, recipe, compiler flags, headers, runtime and binary. Selection
+is fixed at import. A missing configuration keeps Python mode; invalid configured
+builds or later source/binary/configuration drift raise an error. Verified and
+observed/prefix identities include the selected implementation. No runtime
+compilation, package installation or new dependency is required.
+
+The ignored pure-helper probe measured 9.194 to 1.753 ms median (5.244×), with
+exact full-state bits and checked fallbacks. That is not the integrated gain.
+Two alternating matched pairs of the actual original late CUSA action measured
+**15.2034 to 13.4290 seconds median** (**11.67% lower latency; 1.132×**), including
+live identity guards and symmetric entry/return counters. Each native trial
+admitted all 414 cooling intervals. All four complete outcome/history/snapshot/
+metrics payloads were byte-identical, and the original full canonical row and
+physical endpoint matched. The diagnostic historical seed grants no admission;
+an original standalone full action payload remains unavailable. Parent wall was
+128.625 seconds (<150), maximum child wall 31.231 seconds (<60), and peak child
+RSS 906,493,952 bytes (<1.5 GiB). Setup/export are separate. Two samples per mode
+do not establish a full-workload or GUI speedup.
+
+The final guarded surgical/full-case/independent-geometry selection passed
+**882 tests, with seven pilot tests skipped, in 149.08 seconds**, including the
+explicit optional-native generated checks. Two existing Gymnasium advisories
+remain. The focused native selection passed 33 tests; the corrected fallback/
+history/cache selection passed 140, with 28 optional-native checks skipped.
+Its earlier compact/full-wire assertion failure is preserved; the fix restored
+acknowledged metadata before comparison. These qualifications ran no learning;
+the two earlier fixture updates remain disclosed in the readiness document.
+
+To build an optional local kernel, choose a fresh output directory:
+
+```sh
+PYTHONPATH=src .venv/bin/python -m resectionlab.build_surgical_idle_native --output-dir testcases/outputs/native-idle-local
+RESSECTIONLAB_IDLE_THERMAL_BUILD="$PWD/testcases/outputs/native-idle-local/build-receipt.json" ./scripts/open_shared_rehearsal.sh --allow-primary-display
+```
+
+This selects the development interpreter's explicit build. Packaged sidecars
+and other runtimes need separate qualification. Leave the variable unset for
+Python mode. Existing caches and the earlier full vascular GUI receipt do not
+qualify this later implementation. The separately repeated qualification below
+binds the later source and selected native build. Full-primary playback and the
+remaining engineering gates stay open.
+
 ## Complete vascular GUI replay
 
 The production application at `cc868257` completed the original **73-action vascular
@@ -590,7 +672,7 @@ require fresh cache admission; this result does not authorize their cached repla
 | Saved simulated duration | 202.569 s |
 | Replay command through final CPU submission, including cold reconstruction | 395.930 s / **0.512×** |
 | Same-action CPU intervals, excluding gaps between actions | 153.827 s / **1.317×** |
-| Entire guarded GUI process, including opening/setup | 413.564 s |
+| Guarded Python sidecar wall, including source opening/setup | 413.564 s |
 | Separate post-GUI independent audit | 69.123 s |
 | 73 cold bridge executions, cumulative / p95 | 230.108 s / 8.210 s |
 | 1,076 warm bridge executions, cumulative / p95 | 99.211 s / 116.065 ms |
@@ -673,11 +755,51 @@ spool verified its first row/states and correctly refused full-run acceptance.
 The harness fixes passed 15 generated Python and 11 Node checks and independent
 review before the successful retry; no training command or policy ran.
 
+### Repeated full vascular qualification with compressed history/native cooling
+
+The later implementation completed the same **73 actions and 1,149 observations**
+with all 15 harness checks passing. Independent review compared the submitted
+tuples to the audited tuples in exact order, retaining all 113 repeated hashes.
+All 73 complete historical canonical records and the final endpoint matched.
+The separate audit executed zero physics steps. All fresh observation IDs also
+match the available prior v3 run; original historical microframe hashes remain
+unavailable. The native source, adapter, recipe, build receipt and binary bindings
+were rehashed after the run and matched. No planning/cache authority was granted.
+
+| Later full vascular measurement | Result |
+| --- | ---: |
+| Replay command through automatic stop, including cold reconstruction | 410.825 s / **0.493×** |
+| Same-action CPU-submission ratio, excluding inter-action gaps | **1.272×** |
+| Guarded Python sidecar wall, including source opening/setup | 430.989 s |
+| Separate independent audit | 69.725 s |
+| Peak whole Python resident memory | 789,381,120 bytes |
+| Peak retained checkpoints / observations / receipts | 16,757,408 / 67,038,087 / 137,061 bytes |
+
+The observed total wall time was **3.76% longer** than the prior 395.930-second
+run. Same-action intervals were also slower. Multiple backend changes and
+different host runs prevent attributing that difference to a single component;
+this is **not a GUI speedup**. Receipt retention fell 85.20% in this workload,
+under the unchanged 4 MiB quota. Other retained quotas and the 3 GiB Python limit
+passed. The independent spool again held 215,884,624 compressed bytes, below
+1 GiB. Copy/hash/write overhead remains included in playback timing.
+
+The endpoint screenshot again shows 73/73 read only and withdrawn tools. Dense
+translucent anatomy and a pinned early-tool axial plane outside image support
+remain visible limitations. Static effect glyphs do not establish flowing fluid
+effects. Full-sequence operative readability, actual compositor timing and the
+full primary replay remain open. This run performed no policy or optimizer work;
+the two earlier fixture updates remain separately disclosed.
+
+Evidence is under `desktop-full-vascular-native-history-v4/`, with the explicit
+native/prelaunch binding in the sibling
+`desktop-full-vascular-native-history-v4-binding.json`. This receipt qualifies
+that read-only saved replay implementation, not subsequent source versions.
+
 ## Gates that remain open
 
 * **Sustained full-operation playback at 1× remains unqualified.** The complete
-  vascular replay reached 0.512× including cold reconstruction and 1.317× for
-  same-action CPU intervals. The short
+  later vascular replay reached 0.493× including cold reconstruction and 1.272×
+  for same-action CPU intervals; the earlier run reached 0.512×/1.317×. The short
   current-production prefix sample reached 1.058× warm, even with 4× selected,
   while cold preparation of one 30-second action took 20.22 seconds. The
   separate frozen-numerics transport experiment reached 0.720×. Exact source
@@ -705,7 +827,7 @@ The latest October 22 validation passed 880 desktop tests: 182 main-process,
 474 renderer and 224 viewer tests. Build passed with the existing bundle-size
 advisory.
 
-The latest Python regression run passed **832 tests, with seven pilot tests
+The earlier exact-list Python qualification passed **832 tests, with seven pilot tests
 skipped**, in 119.96 seconds, with two existing Gymnasium advisories. It includes
 surgical/full-case tests, independent geometry checks and the read-only prefix
 contracts, bounded encoder equivalence and exact retained-frame accounting.
@@ -760,7 +882,7 @@ For the separate full vascular qualification, use a fresh ignored directory:
 
 ```sh
 VASCULAR_FRAME_FIELD=1 \
-PLAYBACK_OUTPUT="$PWD/testcases/outputs/rehearsal-vascular-check" \
+PLAYBACK_OUTPUT="$PWD/testcases/outputs/rl-readiness-20261022/rehearsal-vascular-check" \
 desktop/node_modules/.bin/electron desktop/electron/benchmark-surgical-vascular.cjs \
   --case "$PWD/testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab"
 ```

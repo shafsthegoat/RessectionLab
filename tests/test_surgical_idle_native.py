@@ -192,7 +192,7 @@ assert refs==[sys.getrefcount(value) for value in objects]
 ''', receipt=native_build)
 
 
-@pytest.mark.parametrize('replacement', ['callable','module','metadata','environment','recipe'])
+@pytest.mark.parametrize('replacement', ['callable','module','metadata','environment','recipe','deleted-recipe'])
 def test_selected_native_replacements_raise_instead_of_fallback(native_build, replacement):
     _child(_NATIVE_SETUP + f'''
 import os
@@ -202,6 +202,7 @@ if case=='module':sys.modules[a._recipe.KERNEL_NAME]=object()
 if case=='metadata':a._SELECTION[0].BUILD_IDENTITY='changed'
 if case=='environment':os.environ.pop('RESSECTIONLAB_IDLE_THERMAL_BUILD')
 if case=='recipe':a._recipe.compile_command=lambda *args:[]
+if case=='deleted-recipe':del a._recipe.compile_command
 for fn in (a.strict_live_identity,lambda:a.try_idle(state(),{{}},*scalars())):
     try:fn()
     except ValueError:pass
@@ -251,3 +252,82 @@ def test_drill_hook_falls_back_to_exact_original_loop_and_errors():
         original(expected,.1,{})
         drill._thermal(actual,.1,{})
         assert json.dumps(expected.state,allow_nan=False)==json.dumps(actual.state,allow_nan=False)
+
+
+def test_native_drill_fallback_complete_state_and_exception_parity(native_build):
+    _child(_NATIVE_SETUP + '''
+import ast
+from pathlib import Path
+from types import SimpleNamespace
+from resectionlab import surgical_drilling_v2 as drill
+tree=ast.parse(Path(drill.__file__).read_text())
+function=next(node for node in tree.body if isinstance(node,ast.FunctionDef) and node.name=='_thermal')
+function.body=[node for node in function.body if not (isinstance(node,ast.If)
+    and isinstance(node.test,ast.Call) and isinstance(node.test.func,ast.Attribute)
+    and isinstance(node.test.func.value,ast.Name) and node.test.func.value.id=='_idle_native')]
+namespace=dict(drill.__dict__)
+exec(compile(ast.Module(body=[function],type_ignores=[]),'original-thermal-loop','exec'),namespace)
+original=namespace['_thermal']
+for case in ('threshold','powers','key-error','setup-error','alias'):
+    p=copy.deepcopy(drill.DEFAULT_PROFILE)
+    s=state({'1':43.},{'1':-0.});powers={}
+    if case=='powers':powers={'1':.01}
+    if case=='key-error':s=state({'bad':38.},{'bad':0.})
+    if case=='setup-error':p['coolingTimeSeconds']=0.
+    if case=='alias':s['thermalDoseCSeconds']=s['temperatureC']
+    scene=SimpleNamespace(properties={'tissuePhysicsV2':{'bone':p}},voxel_mm3=1.)
+    left=SimpleNamespace(state={'drillingV2':copy.deepcopy(s)},scene=scene)
+    right=SimpleNamespace(state={'drillingV2':copy.deepcopy(s)},scene=scene)
+    def run(fn,e):
+        try:fn(e,.1,copy.deepcopy(powers))
+        except Exception as exc:return(type(exc),str(exc))
+    assert run(original,left)==run(drill._thermal,right)
+    assert bits(left.state)==bits(right.state)
+''', receipt=native_build)
+
+
+def test_native_watched_dictionaries_decline_without_callbacks(native_build):
+    _child(_NATIVE_SETUP + '''
+import ctypes
+api=ctypes.pythonapi
+if hasattr(api,'PyDict_AddWatcher'):
+    events=[]
+    callbacktype=ctypes.CFUNCTYPE(ctypes.c_int,ctypes.c_int,ctypes.py_object,ctypes.c_void_p,ctypes.c_void_p)
+    @callbacktype
+    def callback(event,mapping,key,value):events.append(event);return 0
+    api.PyDict_AddWatcher.argtypes=[callbacktype];api.PyDict_AddWatcher.restype=ctypes.c_int
+    for name in ('PyDict_Watch','PyDict_Unwatch'):
+        getattr(api,name).argtypes=[ctypes.c_int,ctypes.py_object];getattr(api,name).restype=ctypes.c_int
+    api.PyDict_ClearWatcher.argtypes=[ctypes.c_int];api.PyDict_ClearWatcher.restype=ctypes.c_int
+    watcher=api.PyDict_AddWatcher(callback);assert watcher>=0
+    try:
+        for field in ('state','temperatureC','thermalDoseCSeconds','powers'):
+            s=state();p={};mapping=s if field=='state' else p if field=='powers' else s[field]
+            before=bits(s)
+            assert api.PyDict_Watch(watcher,mapping)==0
+            try:
+                assert a.try_idle(s,p,*scalars()) is False
+                assert bits(s)==before
+            finally:assert api.PyDict_Unwatch(watcher,mapping)==0
+        assert events==[]
+    finally:assert api.PyDict_ClearWatcher(watcher)==0
+''', receipt=native_build)
+
+
+@pytest.mark.parametrize('problem',['flags','runtime','headers','binary-size','oversized-receipt'])
+def test_invalid_explicit_build_rejected_before_native_loading(native_build, problem):
+    document=json.loads(native_build.read_text())
+    if problem=='flags':document['metadata']['compileFlags'].append('-ffast-math')
+    if problem=='runtime':document['metadata']['runtime']['version']='different interpreter'
+    if problem=='headers':document['metadata']['headers']['treeSha256']='0'*64
+    if problem=='binary-size':document['binaryBytes']+=1
+    if problem=='oversized-receipt':native_build.write_text(' '* (1024*1024+1))
+    else:native_build.write_text(json.dumps(document))
+    _child('''
+        import importlib.util
+        def forbidden(*args):raise AssertionError('native loading must not start')
+        importlib.util.module_from_spec=forbidden
+        try:from resectionlab import surgical_idle_native
+        except ValueError:pass
+        else:raise AssertionError('invalid build accepted')
+    ''',receipt=native_build)

@@ -406,6 +406,8 @@ class SurgicalPrefixReplay:
         if (_frozen_input_authority is not None
                 and _frozen_input_authority is not _FROZEN_INPUT_AUTHORITY):
             raise ValueError('Private frozen-input authority differs')
+        if _display_row_projection is not None and not callable(_display_row_projection):
+            raise ValueError('Private prefix display row projection must be callable')
         limits = [(max_new_actions, 32), (max_checkpoint_bytes, 64 * 1024**2),
                   (max_frame_bytes, 64 * 1024**2), (max_history_bytes, 16 * 1024**2),
                   (max_input_bytes, 128 * 1024**2), (max_json_bytes, 128 * 1024**2)]
@@ -533,6 +535,9 @@ class SurgicalPrefixReplay:
                                  raw_limit=self._max_json_bytes)}
 
     def _put_checkpoint(self, position, engine, item=None):
+        self._checkpoints = self._propose_checkpoint(position, engine, item)
+
+    def _propose_checkpoint(self, position, engine, item=None):
         item = self._checkpoint(position, engine) if item is None else item
         if _owned_bytes({position: item}) > self._max_checkpoint_bytes:
             raise PrefixBudgetExceeded('Checkpoint retention budget exceeded')
@@ -545,7 +550,7 @@ class SurgicalPrefixReplay:
             # Rebuild after eviction so dictionary capacity left over from the
             # larger map cannot consume a tight one-checkpoint allowance.
             proposed = OrderedDict(proposed)
-        self._checkpoints = proposed
+        return proposed
 
     def _engine_at(self, position):
         item = self._checkpoints.get(position)
@@ -554,9 +559,8 @@ class SurgicalPrefixReplay:
         engine = copy.copy(self._template)
         engine.state = _decode(item['state'], self._max_json_bytes)
         engine._occupancy_cache = None
-        # Private execution is append-only, as in the shared engine's own
-        # transactional ancestry. Frozen earlier actions/receipts cannot be
-        # mutated and need not be copied into every frame-view shell.
+        # Private execution needs prior status/reason only for exact collision
+        # metrics. Complete receipts remain in the bounded compressed store.
         engine.actions = list(self._snapshot['actions'][:position])
         engine.history = self._history[:position]
         if engine.state_id != item['stateId']:
@@ -578,6 +582,9 @@ class SurgicalPrefixReplay:
             raise PrefixBudgetExceeded('Observed frame retention budget exceeded during capture')
 
     def _publish_frames(self, index, frames):
+        self._frames, self._retained_frame_bytes = self._propose_frames(index, frames)
+
+    def _propose_frames(self, index, frames):
         # Exact whole-map accounting includes shared keys and OrderedDict table
         # growth. An additive per-action estimate would miss those changes.
         proposed = OrderedDict(self._frames)
@@ -589,20 +596,21 @@ class SurgicalPrefixReplay:
             proposed.popitem(last=False)
             proposed = OrderedDict(proposed)
             retained = _owned_bytes(proposed)
-        self._frames = proposed
-        self._retained_frame_bytes = retained
+        return proposed, retained
 
     def _validate_endpoint(self, engine):
+        self._endpoint_verified, self._endpoint_error = self._propose_endpoint(engine)
+
+    def _propose_endpoint(self, engine):
         if len(engine.actions) != len(self._snapshot['actions']):
-            return
+            return self._endpoint_verified, self._endpoint_error
         checkpoint = self._snapshot.get('checkpoint')
         exact = engine.state_id == self._snapshot['stateId']
         if checkpoint is not None:
             exact = exact and isinstance(checkpoint, Mapping) and (checkpoint.get('position') == len(engine.actions)
                     and checkpoint.get('stateId') == engine.state_id
                     and semantic_digest(checkpoint.get('state')) == semantic_digest(engine.state))
-        self._endpoint_verified = bool(exact)
-        self._endpoint_error = None if exact else 'Imported endpoint/checkpoint differs from reconstructed actions'
+        return bool(exact), None if exact else 'Imported endpoint/checkpoint differs from reconstructed actions'
 
     @staticmethod
     def _history_store_bytes(store):
@@ -612,15 +620,20 @@ class SurgicalPrefixReplay:
         size = _owned_bytes(store)
         return size + sys.getsizeof(size)
 
-    def _pack_receipt(self, value):
+    def _receipt_digest(self, raw, index, display):
+        context = json.dumps([self._origin_hash, self._action_hash, self._protection_hash,
+            self._implementation, self._prefix_implementation, index, display], separators=(',', ':')).encode()
+        return hashlib.sha256(context + b'\0' + raw).digest()
+
+    def _pack_receipt(self, value, *, index=None, display=False):
         blob = _encode(value, compressed_limit=self._max_history_bytes, raw_limit=self._max_json_bytes)
         decoder = zlib.decompressobj()
         raw = decoder.decompress(blob, self._max_json_bytes + 1)
         if len(raw) > self._max_json_bytes or not decoder.eof or decoder.unused_data or decoder.unconsumed_tail:
             raise PrefixBudgetExceeded('Decoded receipt JSON budget exceeded')
-        return (blob, len(raw), hashlib.sha256(raw).digest())
+        return (blob, len(raw), self._receipt_digest(raw, index, display))
 
-    def _unpack_receipt(self, entry):
+    def _unpack_receipt(self, entry, *, index=None, display=False):
         if (type(entry) is not tuple or len(entry) != 3 or type(entry[0]) is not bytes
                 or len(entry[0]) > self._max_history_bytes or type(entry[1]) is not int
                 or not 0 <= entry[1] <= self._max_json_bytes
@@ -632,7 +645,7 @@ class SurgicalPrefixReplay:
         except zlib.error as error:
             raise ValueError('Corrupt compressed prefix receipt') from error
         if (len(raw) != entry[1] or not decoder.eof or decoder.unused_data or decoder.unconsumed_tail
-                or hashlib.sha256(raw).digest() != entry[2]):
+                or self._receipt_digest(raw, index, display) != entry[2]):
             raise ValueError('Compressed prefix receipt identity differs')
         value = json.loads(raw)
         if type(value) is not dict:
@@ -644,7 +657,9 @@ class SurgicalPrefixReplay:
         self._check()
         if type(index) is not int or not 0 <= index < len(self._receipts):
             raise ValueError('Invalid computed prefix receipt index')
-        return self._complete_receipt(index, self._unpack_receipt(self._receipts[index]))
+        result = self._complete_receipt(index, self._unpack_receipt(self._receipts[index], index=index))
+        self._check()
+        return result
 
     def _complete_receipt(self, index, body):
         if ('action' in body or body.get('status') != self._history[index]['status']
@@ -660,7 +675,7 @@ class SurgicalPrefixReplay:
         rows, seen = [], set()
         retained = sys.getsizeof(rows)
         for index, entry in enumerate(entries):
-            body = self._unpack_receipt(entry)
+            body = self._unpack_receipt(entry, index=index, display=display)
             row = freeze_json(body) if display else self._complete_receipt(index, body)
             before = sys.getsizeof(rows)
             rows.append(row)
@@ -674,7 +689,8 @@ class SurgicalPrefixReplay:
         body = dict(receipt)
         if body.pop('action') != action:
             raise ValueError('Reconstructed receipt action differs from imported action')
-        entry = self._pack_receipt(body)
+        index = len(self._history)
+        entry = self._pack_receipt(body, index=index)
         metric_key = (body['status'], body.get('reason'))
         metrics = dict(self._metric_rows)
         metric = metrics.get(metric_key)
@@ -687,7 +703,7 @@ class SurgicalPrefixReplay:
             projected = thaw_json(freeze_json(self._display_row_projection(complete)))
             if type(projected) is not dict:
                 raise ValueError('Prefix display row projection must return a mapping')
-            displayed.append(self._pack_receipt(projected))
+            displayed.append(self._pack_receipt(projected, index=index, display=True))
         store = (self._history + [metric], self._receipts + [entry], displayed, metrics)
         size = self._history_store_bytes(store)
         if size > self._max_history_bytes:
@@ -703,7 +719,8 @@ class SurgicalPrefixReplay:
                 'historyBytes': self._retained_history_bytes, 'maxHistoryBytes': self._max_history_bytes,
                 'historyActionsSharedWithBoundedInput': True,
                 'historyReceiptsCompressed': True, 'displayRowsCompressed': self._display_row_projection is not None,
-                'maxMaterializedHistoryBytes': self._max_json_bytes,
+                'maxMaterializedHistoryGraphBytes': self._max_json_bytes,
+                'materializedHistoryLimitMeaning': 'Per-graph limit; decoded, frozen and thawed output graphs may coexist; whole-process RSS is separate',
                 'immutableInputBytes': self._input_bytes,
                 'ownedImmutableInputBytes': 0 if self._borrowed_input else self._input_bytes,
                 'sharedImmutableInputBytes': self._input_bytes if self._borrowed_input else 0,
@@ -779,14 +796,19 @@ class SurgicalPrefixReplay:
                     raise PrefixBudgetExceeded('Checkpoint retention budget exceeded')
                 # Account the eventual owning mapping as well as staged frames.
                 self._frame_room(_owned_bytes(OrderedDict([(index, stage.frames)])))
+                checkpoints = self._propose_checkpoint(index + 1, engine, checkpoint)
+                frames, frame_bytes = self._propose_frames(index, stage.frames)
+                endpoint_verified, endpoint_error = self._propose_endpoint(engine)
                 self._check(action_check, full=True)
-                self._put_checkpoint(index + 1, engine, checkpoint)
-                self._publish_frames(index, stage.frames)
+                # Every allocation/validation above precedes publication. A
+                # failed proposal cannot evict the committed boundary cursor.
+                self._checkpoints = checkpoints
+                self._frames, self._retained_frame_bytes = frames, frame_bytes
                 self._history_store = store
                 self._history, self._receipts, self._display_receipts, self._metric_rows = store
                 self._retained_history_bytes = history_bytes
                 self._failure = None
-                self._validate_endpoint(engine)
+                self._endpoint_verified, self._endpoint_error = endpoint_verified, endpoint_error
             except BaseException as error:
                 cause = error.cause if isinstance(error, _Interrupted) else error
                 self._failure = {'actionIndex': index, 'type': type(cause).__name__, 'reason': str(cause)}

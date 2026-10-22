@@ -87,6 +87,32 @@ def test_prefix_frames_execute_only_saved_demanded_actions_and_keep_authority_se
     assert not hasattr(session, 'surgical_prefix_session')
 
 
+def test_prefix_bridge_uses_committed_display_rows_and_complete_receipt_accessor(tmp_path, monkeypatch):
+    from resectionlab.surgical_bridge import display_timeline
+    session, key, call, _ = episode(tmp_path)
+    try:
+        first = call('seekPrefixFrame', position=0, frameIndex=0)
+        owner = session.surgical_prefix_session[3]
+        assert owner.statistics['historyReceiptsCompressed']
+        assert owner.statistics['displayRowsCompressed']
+        complete = owner._receipt(0)
+        assert first['timeline'] == display_timeline((complete,))
+        assert complete['action'] is owner._snapshot['actions'][0]
+        assert set(owner._history[0]) == {'status', 'reason'}
+        def forbidden(*_args, **_kwargs):
+            raise AssertionError('Acknowledged bridge frame decoded receipt history')
+        monkeypatch.setattr(owner, '_receipt', forbidden)
+        monkeypatch.setattr(owner, '_unpack_receipt', forbidden)
+        monkeypatch.setattr(owner, '_materialize_history', forbidden)
+        warm = call('seekPrefixFrame', position=0, frameIndex=0,
+                    prefixToken=first['timelineToken'], prefixFieldTokens=first['viewFieldTokens'])
+        assert warm['timelineOmitted'] and 'timeline' not in warm
+        assert warm['verification'] == first['verification']
+        assert warm['fullCase'] is None and not warm['changed']
+    finally:
+        session.close()
+
+
 def test_far_prefix_seek_is_bounded_and_replacing_origin_restarts_the_owner(tmp_path):
     session, key, call, _ = episode(tmp_path)
     try:

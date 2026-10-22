@@ -21,6 +21,8 @@ SCHEMA = 'surgical-idle-native.v1'
 FLAGS = ('-bundle', '-undefined', 'dynamic_lookup', '-O2', '-std=c11',
          '-fno-fast-math', '-ffp-contract=off', '-Wall', '-Wextra')
 KERNEL_NAME = 'resectionlab._surgical_idle_native_kernel'
+MAX_SOURCE_BYTES = 1024 * 1024
+MAX_BINARY_BYTES = 4 * 1024 * 1024
 
 
 def file_digest(path):
@@ -86,6 +88,8 @@ def build(output_dir, *, max_wall_seconds=20.):
     output.mkdir(parents=True, exist_ok=False)
     source = Path(__file__).with_name('surgical_idle_native.c').resolve()
     recipe = Path(__file__).resolve()
+    if any(not 0 < path.stat().st_size <= MAX_SOURCE_BYTES for path in (source, recipe)):
+        raise ValueError('IDLE_NATIVE_BUILD_SOURCE_SIZE')
     compiler = shutil.which('clang')
     if compiler is None:
         raise ValueError('LOCAL_CLANG_NOT_FOUND')
@@ -116,6 +120,8 @@ def build(output_dir, *, max_wall_seconds=20.):
         (output / 'stderr.txt').write_text(result.stderr)
         if result.returncode:
             raise RuntimeError('IDLE_NATIVE_COMPILATION_FAILED')
+        if not 0 < binary.stat().st_size <= MAX_BINARY_BYTES:
+            raise ValueError('IDLE_NATIVE_BUILD_BINARY_SIZE')
         if metadata['sourceSha256'] != file_digest(source) or metadata['recipeSha256'] != file_digest(recipe):
             raise ValueError('IDLE_NATIVE_BUILD_INPUT_CHANGED')
         if runtime_identity() != runtime:
