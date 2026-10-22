@@ -250,5 +250,14 @@ After the causal CUSA, field-streaming and cleanup changes, the complete surgica
 and full-case Python regression selection passed **593 tests in 111.77 seconds**
 with two existing Gymnasium space advisories. Its isolated temporary/cache files
 are under `testcases/outputs/rl-readiness-20261022/pytest-final-surgical`; the log is
-`final-surgical-tests.log`. This generated regression coverage does not replace
-full patient replay or qualify model calibration.
+`final-surgical-tests.log`. **That broad selection included an existing pilot
+test that made an in-memory Adam update on generated transitions.** An earlier
+577-test broad run included it too: two fixture optimizer updates occurred in
+total, contrary to this task's no-RL instruction. They produced no patient fit or
+learned checkpoint. The dedicated readiness command's zero-update receipts
+remain accurate within their stated scope.
+
+Pilot policy/optimizer tests are now marked `rl_pilot` and skipped by default.
+They require an explicit `--run-rl-pilot-tests` option, which must not be used for
+this task. Ordinary broad pytest selections now retain readiness-only behavior.
+Regression coverage does not replace full patient replay or qualify calibration.
