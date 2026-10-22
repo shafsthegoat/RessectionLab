@@ -49,8 +49,8 @@ def file_sha(path):
 
 def canonical_json(value):
     # Preserve JSON type distinctions (not Python's bool/int equality).
-    from resectionlab.core import thaw_json
-    return json.dumps(thaw_json(value),sort_keys=True,separators=(',',':'),allow_nan=False)
+    from resectionlab.core import freeze_json, thaw_json
+    return json.dumps(thaw_json(freeze_json(value)),sort_keys=True,separators=(',',':'),allow_nan=False)
 
 
 def peak_rss():
@@ -62,6 +62,14 @@ def atomic_json(path, value):
     temporary = Path(str(path) + '.tmp')
     temporary.write_text(json.dumps(value, indent=2, allow_nan=False) + '\n')
     temporary.replace(path)
+
+
+def initialize_guard_inventory():
+    # Define finite adapters used by this workflow BEFORE freezing inventory.
+    # This matches the prior qualified runner's archive-view preimport. Merely
+    # importing these modules executes no engine action or director/policy.
+    from resectionlab import surgical_prefix_replay, surgical_frame_replay, surgical_telemetry, surgical_archive_view
+    return (surgical_prefix_replay, surgical_frame_replay, surgical_telemetry, surgical_archive_view)
 
 
 class FrameSpool:
@@ -341,7 +349,7 @@ def observed_activation(state, action, tools):
     return {hand:bool(active if hand==key else value['active']) for hand,value in state['slots'].items()}
 
 
-def audit_spool(output):
+def audit_spool(output, audit_output=None):
     """Separate process after GUI shutdown: no physics, cache, or admission."""
     sys.path.insert(0, str(ROOT/'src'))
     from resectionlab.core import semantic_digest
@@ -350,6 +358,8 @@ def audit_spool(output):
     from resectionlab.surgical_tools import TOOLS
     from accept_native import vascular_sample, fluid_audit, drilling_debris_audit, wound_audit
     output = Path(output)
+    audit_output=Path(audit_output) if audit_output is not None else output
+    audit_output.mkdir(parents=True,exist_ok=True)
     guard = json.loads((output/'physics-guard.json').read_text())
     metadata = guard['ownerMetadata']
     require(guard['reference']['sha256'] == file_sha(REFERENCE), 'Canonical reference changed')
@@ -426,24 +436,26 @@ def audit_spool(output):
                 wound_audit(state,scene)
                 require(canonical_json(detail)==canonical_json(expected[index]),f'Complete canonical trace row {index+1} differs')
                 results.append(detail); previous_state=state
+                atomic_json(audit_output/'spool-audit-progress.json',{'actionsProcessed':len(results),'observationsProcessed':len(tuples),'allProcessedFullCanonicalRecordsExact':True,'lastCanonicalStateId':identity,'lastSimulatedSeconds':prior_time,'publicStepAttempts':dict(no_step.attempts),'sourceArchiveSha256':NATIVE_SHA})
         require(len(results)==73 and len(tuples)==1149 and tuples[-1]['stateId']==END_STATE,'Full vascular spool incomplete')
-    (output/'audited-canonical.actions.jsonl').write_text(''.join(json.dumps(row,allow_nan=False)+'\n' for row in results))
-    atomic_json(output/'audited-observations.json',tuples)
+    (audit_output/'audited-canonical.actions.jsonl').write_text(''.join(json.dumps(row,allow_nan=False)+'\n' for row in results))
+    atomic_json(audit_output/'audited-observations.json',tuples)
     report={'passed':True,'actions':len(results),'observations':len(tuples),'allFullCanonicalRecordsExact':True,
         'historicalAllFrameIdComparison':False,'observationMeaning':'Fresh committed public observations independently decoded/hashed and checked for ancestry, timestamps, activation and full canonical endpoints. Historical per-frame hashes unavailable.',
         'publicStepAttempts':dict(no_step.attempts),'binarySha256':file_sha(output/'observed-states.bin'),
         'manifestSha256':file_sha(output/'observed-actions.jsonl'),'referenceSha256':file_sha(REFERENCE),
         'sourceSha256':file_sha(NATIVE),'processPeakResidentBytes':peak_rss()}
-    atomic_json(output/'spool-audit.json',report)
+    atomic_json(audit_output/'spool-audit.json',report)
     return report
 
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('mode',choices=['audit']);parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--audit-output',type=Path,help='Separate diagnostic results directory; input spool remains untouched')
     arguments=parser.parse_args()
     try:
-        audit_spool(arguments.output)
+        audit_spool(arguments.output,arguments.audit_output)
     except BaseException as error:
-        atomic_json(arguments.output/'spool-audit.json',{'passed':False,'error':repr(error),'processPeakResidentBytes':peak_rss()})
+        atomic_json((arguments.audit_output or arguments.output)/'spool-audit.json',{'passed':False,'error':repr(error),'processPeakResidentBytes':peak_rss()})
         raise

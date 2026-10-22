@@ -10,7 +10,7 @@ import zlib
 from types import MappingProxyType, SimpleNamespace
 
 from vascular_playback_monitor import (BRANCH, FrameSpool, VascularPlaybackMonitor,
-    ForbiddenPhysicsStep, MAX_RSS, ROOT, canonical_json, observed_activation, checked_field_tokens)
+    ForbiddenPhysicsStep, MAX_RSS, ROOT, canonical_json, observed_activation, checked_field_tokens, initialize_guard_inventory)
 
 
 FAKE_SCENE=object()
@@ -115,6 +115,28 @@ raise RuntimeError('failed receipt disabled watchdog')
         self.assertEqual(observed_activation(state,{'slot':'left','operation':'apply'},tools),{'left':True,'right':True})
         self.assertEqual(observed_activation(state,{'slot':'left','operation':'inspect'},tools),{'left':False,'right':True})
         self.assertEqual(observed_activation(state,{'slot':'right','operation':'inspect'},tools),{'left':False,'right':True})
+    def test_mixed_mutable_and_frozen_action_ancestry_canonicalizes_recursively(self):
+        mixed=[MappingProxyType({'operation':'apply','path':[MappingProxyType({'position':(1.,2.,3.),'active':False})]}),{'nested':[MappingProxyType({'flag':True,'count':0})]}]
+        plain=[{'operation':'apply','path':[{'position':[1.,2.,3.],'active':False}]},{'nested':[{'flag':True,'count':0}]}]
+        self.assertEqual(canonical_json(mixed),canonical_json(plain))
+        altered=[{'operation':'apply','path':[{'position':[1.,2.,3.],'active':0}]},{'nested':[{'flag':True,'count':0}]}]
+        self.assertNotEqual(canonical_json(mixed),canonical_json(altered))
+    def test_actual_preimport_initialization_keeps_inventory_strict(self):
+        from resectionlab.surgical_engine import SurgicalEngine
+        modules=initialize_guard_inventory()
+        self.assertIn('resectionlab.surgical_archive_view',[module.__name__ for module in modules])
+        guard=VascularPlaybackMonitor(SurgicalEngine,Path(self.temp.name)/'actual-imports',reference=self.reference,rss=lambda:0)
+        try:
+            with guard:
+                initialize_guard_inventory()
+                guard.check()
+            late=VascularPlaybackMonitor(SurgicalEngine,Path(self.temp.name)/'late-class',reference=self.reference,rss=lambda:0)
+            try:
+                with self.assertRaisesRegex(RuntimeError,'inventory changed'):
+                    with late:
+                        class GeneratedLateSubclass(SurgicalEngine):pass
+            finally:late.spool.close()
+        finally:guard.spool.close()
     def test_field_tokens_are_independently_bound_to_decoded_heavy_field(self):
         import hashlib
         state={'flapComponents':[{'cells':[1,2],'offset':[0.,0.,0.]}]}

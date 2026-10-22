@@ -72,7 +72,7 @@ function run(){
     ipc:[],errors:[],diagnostics:[],checks:{},passed:false,frameOperativeField:process.env.VASCULAR_FRAME_FIELD==='1'};
   const persist=()=>fs.writeFileSync(path.join(output,'report.json'),JSON.stringify(report,null,2));
   const runner=path.join(output,'guarded-bridge.py');
-  fs.writeFileSync(runner,`import sys\nsys.path.insert(0, ${JSON.stringify(__dirname)})\nfrom vascular_playback_monitor import VascularPlaybackMonitor\nfrom resectionlab.surgical_engine import SurgicalEngine\nfrom resectionlab import surgical_prefix_replay,surgical_frame_replay,surgical_telemetry\nfrom resectionlab.desktop_bridge import BridgeSession,main\nguard=VascularPlaybackMonitor(SurgicalEngine, ${JSON.stringify(output)})\nguard.install(BridgeSession)\ntry:\n    with guard:\n        main()\nfinally:\n    guard.finish()\n`);
+  fs.writeFileSync(runner,`import sys\nsys.path.insert(0, ${JSON.stringify(__dirname)})\nfrom vascular_playback_monitor import VascularPlaybackMonitor,initialize_guard_inventory\nfrom resectionlab.surgical_engine import SurgicalEngine\nfrom resectionlab import surgical_prefix_replay,surgical_frame_replay,surgical_telemetry\nfrom resectionlab.desktop_bridge import BridgeSession,main\ninitialize_guard_inventory()\nguard=VascularPlaybackMonitor(SurgicalEngine, ${JSON.stringify(output)})\nguard.install(BridgeSession)\ntry:\n    with guard:\n        main()\nfinally:\n    guard.finish()\n`);
   const originalSpawn=childProcess.spawn;
   childProcess.spawn=(command,args,options)=>args?.[1]==='-m'&&args?.[2]==='resectionlab.desktop_bridge'?originalSpawn(command,['-u',runner,...args.slice(3)],options):originalSpawn(command,args,options);
   const sidecar=require('./sidecar.cjs'),OriginalSidecar=sidecar.Sidecar;let backend;
