@@ -129,8 +129,132 @@ class FrameSpool:
                 'seconds': self.seconds, 'meaning': 'Within-run SHA deduplication of committed compressed observations and full public receipts. Copy/hash/write overhead is INCLUDED in GUI IPC/run timing; no cache authority.'}
 
 
+class NativeJsonAdmissionCounter:
+    """Local normal-return observations; no payloads or extra encoder calls."""
+    def __init__(self, adapter):
+        self.adapter, self.function = adapter, adapter.try_encode
+        self.code = self.function.__code__
+        self.monitor = sys.monitoring
+        self.events, self.return_event = self.monitor.events, self.monitor.events.PY_RETURN
+        self.api = {key:getattr(self.monitor,key) for key in ('get_tool','use_tool_id','free_tool_id',
+            'get_events','set_events','get_local_events','set_local_events','register_callback')}
+        self.callback = self._returned
+        self.callback_code = self.callback.__func__.__code__
+        self.name = 'vascular-native-json-returns-' + str(id(self))
+        self.tool = None
+        self.started = False
+        self.current = None
+        self.total, self.outside = self.empty(), self.empty()
+        self.failure = None
+
+    @staticmethod
+    def empty():
+        return {'normalReturns':0,'admittedStrings':0,'fallbackNone':0,
+                'returnedCharacters':0,'maxReturnedCharacters':0}
+
+    def _failed(self, error):
+        self.failure = {'type':type(error).__name__,'message':str(error)}
+
+    def _returned(self, code, offset, value):
+        try:
+            require(code is self.code, 'Native JSON counter code changed')
+            admitted = type(value) is str
+            require(admitted or value is None, 'Unexpected native JSON adapter return type')
+            length = len(value) if admitted else 0
+            for row in (self.total, self.outside if self.current is None else self.current):
+                row['normalReturns'] += 1
+                row['admittedStrings' if admitted else 'fallbackNone'] += 1
+                row['returnedCharacters'] += length
+                row['maxReturnedCharacters'] = max(row['maxReturnedCharacters'], length)
+                require(all(number <= 2**63-1 for number in row.values()), 'Native JSON counter overflow')
+        except BaseException as error:
+            self._failed(error)
+            raise
+
+    def __enter__(self):
+        require(not self.started, 'Native JSON counter cannot be reused')
+        self.started = True
+        try:
+            for tool in (3,2,1,0,5,4):
+                if self.api['get_tool'](tool) is None:
+                    try:self.api['use_tool_id'](tool,self.name)
+                    except ValueError:continue
+                    self.tool = tool
+                    break
+            require(self.tool is not None, 'No native JSON monitoring tool available')
+            require(self.api['get_events'](self.tool)==0 and self.api['get_local_events'](self.tool,self.code)==0,
+                    'Native JSON monitoring slot contains events')
+            require(self.api['register_callback'](self.tool,self.return_event,self.callback) is None,
+                    'Native JSON monitoring slot contains a callback')
+            self.api['set_local_events'](self.tool,self.code,self.return_event)
+            self.check()
+            return self
+        except BaseException as error:
+            self._failed(error)
+            self.close()
+            raise
+
+    def check(self):
+        try:
+            require(self.failure is None, 'Native JSON counter previously failed')
+            require(self.monitor is getattr(sys,'monitoring',None) and self.tool is not None,
+                    'Native JSON monitoring unavailable')
+            require(all(getattr(self.monitor,key) is value for key,value in self.api.items()),
+                    'Native JSON monitoring API changed')
+            require(self.monitor.events is self.events and self.events.PY_RETURN==self.return_event,
+                    'Native JSON monitoring event constants changed')
+            require(self.adapter.try_encode is self.function and self.function.__code__ is self.code,
+                    'Native JSON adapter function/code changed')
+            require(self.callback.__func__.__code__ is self.callback_code, 'Native JSON counter callback code changed')
+            require(self.api['get_tool'](self.tool)==self.name and self.api['get_events'](self.tool)==0
+                    and self.api['get_local_events'](self.tool,self.code)==self.return_event,
+                    'Native JSON monitoring ownership/events changed')
+            require(self.api['register_callback'](self.tool,self.return_event,self.callback) is self.callback,
+                    'Native JSON monitoring callback changed')
+        except BaseException as error:
+            if self.failure is None:self._failed(error)
+            raise
+
+    def begin_command(self):
+        self.check()
+        previous = self.current
+        self.current = self.empty()
+        return previous
+
+    def end_command(self, previous):
+        result = dict(self.current)
+        self.current = previous
+        return result
+
+    def close(self):
+        tool, self.tool = self.tool, None
+        if tool is not None and self.api['get_tool'](tool)==self.name:
+            try:
+                self.api['set_local_events'](tool,self.code,0)
+                self.api['set_events'](tool,0)
+                self.api['register_callback'](tool,self.return_event,None)
+            finally:self.api['free_tool_id'](tool)
+
+    def __exit__(self, kind, value, traceback):
+        try:
+            try:self.check()
+            except BaseException:
+                # check records sticky failure; preserve the original body diagnostic.
+                if kind is None:raise
+        finally:self.close()
+
+    def receipt(self):
+        return {'started':self.started,'active':self.tool is not None,'total':dict(self.total),
+            'outsideCommand':dict(self.outside),'failure':self.failure,
+            'adapterModule':getattr(self.adapter,'__name__','generated-fixture'),
+            'functionModule':self.function.__module__,'functionQualname':self.function.__qualname__,
+            'codeFilename':self.code.co_filename,'codeFirstLine':self.code.co_firstlineno,
+            'meaning':'Normal returns from the actual loaded adapter: exact str means native admission, None means fallback. Counts are encode calls, not observed frames; no payload retained or extra encoder call. Exceptional exits are not normal-return counts. Observer cost is INCLUDED.'}
+
+
 class VascularPlaybackMonitor(ReadOnlyStepMonitor):
-    def __init__(self, engine_base, output, *, reference=None, clock=time.monotonic, rss=peak_rss):
+    def __init__(self, engine_base, output, *, reference=None, clock=time.monotonic, rss=peak_rss,
+                 _json_adapter=None):
         super().__init__(engine_base)
         self.output = Path(output)
         self.output.mkdir(parents=True, exist_ok=True)
@@ -151,8 +275,19 @@ class VascularPlaybackMonitor(ReadOnlyStepMonitor):
         self.failure = None
         self._stop = threading.Event()
         self._watcher = None
+        self.json_counter = None
+        self._json_adapter = _json_adapter
+
+    def _check_json_counter(self):
+        if self.json_counter is not None:
+            try:self.json_counter.check()
+            except BaseException as error:
+                self.failure = {'type':type(error).__name__,'message':str(error),
+                                'nativeJsonCounter':True,'context':self.context}
+                raise
 
     def resources(self):
+        self._check_json_counter()
         require(self.clock() - self.began < MAX_SECONDS, '600 second qualification wall budget exceeded')
         require(self.rss() <= MAX_RSS, '3 GiB whole Python peak RSS budget exceeded')
 
@@ -268,7 +403,11 @@ class VascularPlaybackMonitor(ReadOnlyStepMonitor):
             previous = guard.context
             guard.context = {'operation': operation, **{key: args.get(key) for key in ('command','caseHash','branchId','position','frameIndex')}}
             before, began = len(guard.calls), time.perf_counter()
+            previous_json, json_started = None, False
             try:
+                if guard.json_counter is not None:
+                    previous_json = guard.json_counter.begin_command()
+                    json_started = True
                 result = original_execute(session, operation, args, request, progress)
                 if operation == 'loadCase':
                     guard.case_hash = result['caseHash']
@@ -288,7 +427,9 @@ class VascularPlaybackMonitor(ReadOnlyStepMonitor):
                 guard.failure = {'type':type(error).__name__,'message':str(error),'context':guard.context}
                 raise
             finally:
-                guard.commands.append({**guard.context, 'steps':len(guard.calls)-before, 'seconds':time.perf_counter()-began})
+                counted = guard.json_counter.end_command(previous_json) if json_started else None
+                guard.commands.append({**guard.context, 'steps':len(guard.calls)-before, 'seconds':time.perf_counter()-began,
+                                       **({'nativeJson':counted} if counted is not None else {})})
                 guard.context = previous
         def close(session):
             guard.capture(session)
@@ -296,7 +437,19 @@ class VascularPlaybackMonitor(ReadOnlyStepMonitor):
         session_class.execute, session_class.close = execute, close
 
     def __enter__(self):
-        super().__enter__()
+        try:
+            adapter = self._json_adapter
+            if adapter is None:
+                from resectionlab import surgical_prefix_json_native
+                adapter = surgical_prefix_json_native
+            self.json_counter = NativeJsonAdmissionCounter(adapter)
+            super().__enter__()
+            self.json_counter.__enter__()
+        except BaseException as error:
+            self.failure = {'type':type(error).__name__,'message':str(error),'nativeJsonCounter':True}
+            if self.json_counter is not None:self.json_counter.close()
+            if self.tool is not None:super().__exit__(*sys.exc_info())
+            raise
         def watch():
             while not self._stop.wait(.25):
                 try:
@@ -309,14 +462,27 @@ class VascularPlaybackMonitor(ReadOnlyStepMonitor):
                         # Receipt/hash/disk failures must never disable the RSS stop.
                         os._exit(70)
         self._watcher = threading.Thread(target=watch, daemon=True, name='vascular-qualification-budget')
-        self._watcher.start()
+        try:self._watcher.start()
+        except BaseException:
+            self.failure = {'type':'NativeJsonCounterWatchdogSetupFailure','nativeJsonCounter':True}
+            try:self.json_counter.close()
+            finally:super().__exit__(*sys.exc_info())
+            raise
         return self
 
     def __exit__(self, *args):
         self._stop.set()
         if self._watcher:
             self._watcher.join(1)
-        return super().__exit__(*args)
+        try:
+            try:self._check_json_counter()
+            except BaseException:
+                # The failed counter is still recorded, but must not mask the body.
+                if args[0] is None:raise
+        finally:
+            try:
+                if self.json_counter is not None:self.json_counter.close()
+            finally:super().__exit__(*args)
 
     def finish(self):
         self.spool.close()
@@ -330,6 +496,7 @@ class VascularPlaybackMonitor(ReadOnlyStepMonitor):
             'processPeakResidentBytes':self.rss(),'maxProcessResidentBytes':MAX_RSS,
             'wallSeconds':self.clock()-self.began,'maxWallSeconds':MAX_SECONDS,
             'spool':self.spool.statistics,'reference':{'path':str(REFERENCE),'sha256':file_sha(REFERENCE)},
+            'nativeJson':self.json_counter.receipt() if self.json_counter is not None else None,
             'residentMeaning':'Whole Python peak RSS; macOS bytes / Linux KiB converted to bytes. Source geometry/runtime/transient allocations included.'}
 
 
