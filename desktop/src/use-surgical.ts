@@ -4,7 +4,7 @@ import type {Point3} from './viewer/coordinates';
 import {SurgicalRequestQueue} from './surgical-request-queue.ts';
 import {SurgicalDisplayAdmission} from './surgical-display-admission.ts';
 import {FullCaseComputation} from './full-case-computation.ts';
-import {checkedPrefixResponse,checkedPrefixWireResponse,frameCommand,prefixCommand,reconstructedPrefix,replayAuthorityKey,surgicalAuthorityIssue} from './surgical-authority.ts';
+import {checkedPrefixResponse,checkedPrefixWireResponse,checkedPrefixStartMode,frameCommand,prefixCommand,reconstructedPrefix,replayAuthorityKey,surgicalAuthorityIssue} from './surgical-authority.ts';
 import {SurgicalTimelineStream} from './surgical-timeline-stream.ts';
 import {SurgicalReplayPrefetch} from './surgical-replay-prefetch.ts';
 import type {SurgicalReplaySelection} from './surgical-replay-prefetch';
@@ -84,7 +84,7 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
       if(next){if(prefixCommand(command)){
         (command==='seekPrefixFrame'?checkedPrefixWireResponse:checkedPrefixResponse)(next);
         if(next.caseHash!==c.source.caseHash||next.branchId!==branchId||(reconstructedPrefix(c.result)&&replayAuthorityKey(next,!prefixRestart)!==replayAuthorityKey(c.result!,!prefixRestart)))throw Error('Reconstructed prefix response changed source or authority');
-        if(prefixRestart&&((reconstructedPrefix(next)?.preparedCache?.mode==='only')!==(extra.cacheOnly===true)))throw Error('Reconstructed prefix response changed prepared-only mode');
+        if(prefixRestart)checkedPrefixStartMode(next,extra.cacheOnly===true);
       }next=timelineStream.current.hydrate(next);if(prefixCommand(command))checkedPrefixResponse(next);}
       // A superseded seek still moved the backend cursor. Preserve its state
       // identity for the next ordered request while withholding obsolete UI.

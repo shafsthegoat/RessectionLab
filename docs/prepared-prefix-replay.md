@@ -256,3 +256,13 @@ without writing a new package. The normal owner's accepted-publication count
 and actual disk-write count therefore remain separate and monotonic. A fresh
 patient qualification must start with an absent cache and require 73 actual new
 publications. No cache identity or source-fingerprint exception is introduced.
+
+Fresh pipeline responses carry a source-bound preparation origin created by
+Electron after both roles pass startup checks. The renderer keeps that origin
+fixed through full and compact frames, while retaining the consumer's real
+`only` mode and load counters. This lets **Replay from start** retain its fresh
+meaning. An explicit prepared-only start rejects a fresh origin, and an
+unmarked prepared response cannot substitute for a fresh start. The panel labels
+this path **Reconstructed prefix · read only**; all edit/planning restrictions
+remain. Generated UI/process checks and the production build pass. Patient GUI
+timing and display qualification are still pending.

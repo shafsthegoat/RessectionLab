@@ -5,7 +5,7 @@ import {createServer} from 'vite';
 import {mkdtemp,rm,mkdir} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
-import {checkedPrefixResponse,checkedPrefixWireResponse,replayAuthorityKey,surgicalAuthorityIssue,surgicalReplayRoutes} from '../src/surgical-authority.ts';
+import {checkedPrefixResponse,checkedPrefixWireResponse,checkedPrefixStartMode,replayAuthorityKey,surgicalAuthorityIssue,surgicalReplayRoutes} from '../src/surgical-authority.ts';
 let server,cache,SurgicalPanel;
 before(async()=>{
   const output=fileURLToPath(new URL('../../testcases/outputs/rl-readiness-20261022/',import.meta.url));await mkdir(output,{recursive:true});cache=await mkdtemp(path.join(output,'prefix-ui-vite-'));
@@ -71,4 +71,46 @@ test('compact prefix wire authority requires explicit omission and a real genera
   assert.equal(checkedPrefixWireResponse(wire).verifiedThrough,4);assert.throws(()=>checkedPrefixResponse(wire),/prefix authority/);
   assert.equal(checkedPrefixResponse({...wire,timeline:full.timeline}).verifiedThrough,4);
   for(const change of [{timelineOmitted:undefined},{timelineOmitted:1},{timelineToken:undefined},{timelineToken:''},{timelineToken:42},{timeline:full.timeline}])assert.throws(()=>checkedPrefixWireResponse({...wire,...change}),/prefix authority/);
+});
+
+function freshPipelineResponse(){
+  const c=controller({...prefix(),preparedCache:{mode:'only',loadedActions:4,publishedActions:0,misses:0,lastSkip:null}}),r=c.result;
+  r.readOnly=true;r.budgetStopped=false;r.view.scene.sceneId='sha256:'+'a'.repeat(64);
+  r.prefixOrigin={schema:'resectionlab.prefix-origin.v1',kind:'fresh-reconstruction',activationId:'123e4567-e89b-42d3-a456-426614174000',
+    caseHash:r.caseHash,branchId:r.branchId,sourceArchiveSha256:'b'.repeat(64),sceneId:r.view.scene.sceneId};
+  return c;
+}
+test('fresh main origin preserves real consumer-only counters and explicit prepared-only start distinction',()=>{
+  const r=freshPipelineResponse().result;
+  assert.equal(checkedPrefixStartMode(r,false).preparedCache.mode,'only');
+  assert.throws(()=>checkedPrefixStartMode(r,true),/prepared-only mode/);
+  const unmarked=structuredClone(r);delete unmarked.prefixOrigin;
+  assert.throws(()=>checkedPrefixStartMode(unmarked,false),/prepared-only mode/);
+  assert.equal(checkedPrefixStartMode(unmarked,true).preparedCache.loadedActions,4);
+  assert.notEqual(replayAuthorityKey(r),replayAuthorityKey(unmarked));
+  assert.equal(replayAuthorityKey(r,false),replayAuthorityKey(unmarked,false));
+});
+test('fresh origin validates exact fields and full scene while compact authority pins its prior origin',()=>{
+  const r=freshPipelineResponse().result;
+  for(const mutate of [x=>x.prefixOrigin.extra='unexpected',x=>delete x.prefixOrigin.sceneId,x=>x.prefixOrigin=null,
+    x=>x.prefixOrigin.activationId='other',x=>x.prefixOrigin.sourceArchiveSha256='bad',x=>x.prefixOrigin.caseHash='foreign',
+    x=>x.prefixOrigin.branchId='other',x=>x.prefixOrigin.sceneId='sha256:'+'c'.repeat(64),
+    x=>x.verification.preparedCache.publishedActions=1,x=>x.readOnly=false]){
+    const copy=structuredClone(r);mutate(copy);assert.throws(()=>checkedPrefixResponse(copy),/prefix authority/);
+  }
+  const compact=structuredClone(r);compact.timelineToken='owner';compact.timelineOmitted=true;delete compact.timeline;delete compact.view.scene;
+  assert.equal(checkedPrefixWireResponse(compact).verifiedThrough,4);
+  assert.throws(()=>checkedPrefixResponse({...compact,timeline:r.timeline}),/prefix authority/);
+  assert.equal(checkedPrefixResponse({...compact,timeline:r.timeline,view:{...compact.view,scene:r.view.scene}}).verifiedThrough,4);
+  const changed=structuredClone(compact);changed.prefixOrigin.activationId='123e4567-e89b-42d3-a456-426614174001';
+  assert.notEqual(replayAuthorityKey(changed),replayAuthorityKey(r));
+});
+test('fresh origin labels reconstruction while retaining read-only edits and actual consumer counters',()=>{
+  const c=freshPipelineResponse(),tree=render(c);
+  assert(text(tree).includes('Reconstructed prefix · read only'));assert(text(tree).includes('Reconstructed 4 / 10 recorded actions'));
+  assert(text(tree).includes('Reconstructs the saved actions during playback.'));
+  assert.equal(text(tree).includes('previously prepared observations'),false);
+  assert.equal(text(tree).includes('Prepared observations · read only'),false);
+  assert.equal(find(tree,'button','Branch').props.disabled,true);
+  assert.equal(c.result.verification.preparedCache.mode,'only');
 });

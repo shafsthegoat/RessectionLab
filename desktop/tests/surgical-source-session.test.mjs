@@ -257,6 +257,63 @@ function prefixFixture(intercept=()=>undefined,{stream=false,transform=response=
     }
   },{initialArchivePreview:true});f.prefixResponses=prefixResponses;return f;
 }
+function pipelineFixture(change=r=>r){
+  let activation=0,pipeline=false;
+  return prefixFixture(undefined,{stream:true,transform:(r,q)=>{
+    if(q.command==='seekPrefix'&&q.position===0){activation++;pipeline=q.cacheOnly!==true;}
+    if(!pipeline)return change(r,q);
+    const sceneId='sha256:'+'a'.repeat(64);
+    const result={...r,readOnly:true,budgetStopped:false,prefixOrigin:{schema:'resectionlab.prefix-origin.v1',kind:'fresh-reconstruction',
+      activationId:`123e4567-e89b-42d3-a456-${String(activation).padStart(12,'0')}`,caseHash:r.caseHash,branchId:r.branchId,
+      sourceArchiveSha256:'b'.repeat(64),sceneId},
+      verification:{...r.verification,preparedCache:{mode:'only',loadedActions:r.verification.verifiedThrough,publishedActions:0,misses:0,lastSkip:null}},
+      view:{...r.view,...(r.view.scene?{scene:{...r.view.scene,sceneId}}:{})}};
+    return change(result,q);
+  }});
+}
+test('fresh pipeline origin admits full/compact FIFO and explicit restarts clear acknowledgments and change activation',async()=>{
+  const f=pipelineFixture();try{
+    let c=await f.open();assert(await c.run('seekPrefix',{position:0}));c=f.admit();
+    const origin=c.result.prefixOrigin;assert.equal(c.result.verification.preparedCache.mode,'only');assert(c.startPlayback());
+    for(const i of [0,1]){
+      assert(await c.runPlayback(selection(i)));await f.flush();c=f.admit();
+      assert.deepEqual(c.result.prefixOrigin,origin);assert.equal(c.interaction.readOnly,true);assert.equal(c.error,null);
+    }
+    assert(f.prefixResponses.some(row=>row.response.timelineOmitted===true));
+    assert(await c.run('seekPrefix',{position:0}));c=f.admit();
+    assert.notEqual(c.result.prefixOrigin.activationId,origin.activationId);
+    assert(await c.run('seekPrefixFrame',selection(0)));c=f.admit();
+    assert.equal(f.calls.at(-1).prefixToken,undefined);assert.equal(f.calls.at(-1).prefixFieldTokens,undefined);
+    assert(await c.run('seekPrefix',{position:0,cacheOnly:true}));c=f.admit();
+    assert.equal(c.result.prefixOrigin,undefined);assert.equal(c.result.verification.preparedCache.mode,'only');
+  }finally{f.harness.close();}
+});
+test('fresh pipeline marker loss, valid activation drift and scene drift reject warm frames before display',async()=>{
+  for(const mutation of [r=>{delete r.prefixOrigin;},r=>{r.prefixOrigin.activationId='123e4567-e89b-42d3-a456-426614174999';},
+    r=>{r.prefixOrigin.sceneId='sha256:'+'c'.repeat(64);}]){
+    const f=pipelineFixture((r,q)=>{if(q.command==='seekPrefixFrame'&&q.frameIndex===1)mutation(r);return r;});try{
+      let c=await f.open();assert(await c.run('seekPrefix',{position:0}));c=f.admit();assert(c.startPlayback());
+      assert(await c.runPlayback(selection(0)));await f.flush();c=f.admit();const accepted=c.view.stateId;
+      assert.equal(await c.runPlayback(selection(1)),false);c=f.render();assert.equal(c.view.stateId,accepted);assert.match(c.error,/authority/);
+    }finally{f.harness.close();}
+  }
+});
+test('unmarked consumer-only response cannot substitute for an explicit fresh start',async()=>{
+  const f=pipelineFixture(r=>{delete r.prefixOrigin;return r;});try{
+    let c=await f.open();assert.equal(await c.run('seekPrefix',{position:0}),false);c=f.render();
+    assert.equal(c.view.stateId,'saved:endpoint');assert.match(c.error,/prepared-only mode/);
+    assert.equal(f.calls.filter(q=>q.command==='seekPrefixFrame').length,0);
+  }finally{f.harness.close();}
+});
+test('a fresh-origin marker cannot substitute for an explicit prepared-only start',async()=>{
+  const f=prefixFixture(undefined,{transform:(r,q)=>q.command==='seekPrefix'?{...r,readOnly:true,budgetStopped:false,
+    view:{...r.view,scene:{...r.view.scene,sceneId:'sha256:'+'a'.repeat(64)}},
+    prefixOrigin:{schema:'resectionlab.prefix-origin.v1',kind:'fresh-reconstruction',activationId:'123e4567-e89b-42d3-a456-426614174000',
+      caseHash:r.caseHash,branchId:r.branchId,sourceArchiveSha256:'b'.repeat(64),sceneId:'sha256:'+'a'.repeat(64)}}:r});try{
+    let c=await f.open();assert.equal(await c.run('seekPrefix',{position:0,cacheOnly:true}),false);c=f.render();
+    assert.equal(c.view.stateId,'saved:endpoint');assert.match(c.error,/prepared-only mode/);
+  }finally{f.harness.close();}
+});
 test('unverified endpoints enter prefix0 explicitly; prefix requests cannot enter editable or canonical cursor domains',async()=>{
   const f=prefixFixture();try{
     let c=await f.open();assert.equal(c.result.verification.status,'unverified-import');assert.equal(c.startPlayback(),false);

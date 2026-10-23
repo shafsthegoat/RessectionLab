@@ -1998,3 +1998,54 @@ full patient evidence remains historical to `44beb257`. No policy, optimizer or
 pilot ran in this pipeline work; the earlier two unintended fixture updates stay
 disclosed. Full-primary playback, 1× fresh playback, responsive visual tools and
 effects, sustained decisions, mechanics/planning and RL prerequisites remain open.
+
+### Fresh origin admission and pipeline audit guard
+
+Static renderer inspection found that its explicit prepared-only check rejected
+the fresh pipeline's truthful consumer `only` response. Trusted main now creates
+one source/scene/branch-bound origin with a fresh activation UUID after validated
+startup. Every admitted consumer result/event receives a detached copy; worker
+origin fields cannot replace it. Interruption clears it. The renderer validates
+its exact schema, UUID, archive hash, source, branch and scene, and pins its
+identity before hydrating compact frames. Explicit restarts may change origin;
+warm drift/loss and fresh/prepared-only substitutions still fail. Consumer mode,
+loads, zero publications and read-only/planning restrictions remain unchanged.
+The panel describes reconstruction during playback without exposing worker
+details or future producer progress.
+
+All **734 frontend/viewer checks** pass (12.561 seconds external /
+823,361,536-byte process-tree RSS, below 120 seconds / 1.5 GiB). All **286 Electron
+main checks** pass (7.168 seconds / 242,450,432 bytes, below 120 seconds / 3 GiB).
+The production build passes (2.006 seconds / 626,819,072 bytes) with its existing
+large-bundle advisory. All 584 bound input files stay unchanged during each job;
+the focused 39 frontend / 16 main checks overlap those totals. No native or
+engine-package source changes were needed for this origin repair.
+
+The v4 real CLI probe passes the same two explicit generated activations,
+four scripted producer steps, zero consumer/ordinary steps and ten exact
+observations. Eleven original image IDs survive, origin is detached and stable
+per activation, and the two activation IDs differ. All six process lifetimes
+actually exit with at most two alive. The 329 bound files remain unchanged.
+External wall/RSS are 6.101 seconds / 314,540,032 bytes for Node plus Python;
+the last activation's sampled Python aggregate peak is 245,760,000 bytes.
+This adds protocol integrity evidence, not a patient speed measurement.
+
+`vascular_pipeline_monitor.py` supplies the next full patient qualification's
+separate normal/producer/consumer guards and one post-exit audit coordinator.
+It requires 73 actual fresh producer publications, zero consumer/ordinary steps,
+73 consumer loads, matching source/implementation/native identities and actual
+worker/parent PID bindings. Producer manifests contain complete receipts,
+descriptors and compressed hashes/lengths; only the consumer writes the 1 GiB
+binary spool. Fixed 6+6 MiB action and 4 MiB combined control budgets total
+16 MiB. Parent scheduling/exit/renderer proof precedes one existing prepared-only
+consumer numerical audit, then complete producer/consumer/v15 metadata joins
+inside the same 180-second audit allowance. Generated controls exercise tampering;
+the actual parent collector and GUI run are still required.
+
+Evidence is under `testcases/outputs/rl-readiness-20261022/`:
+`prefix-origin-{frontend-all,node-all,build}-v1.{json,log}`,
+`generated-prefix-pipeline-smoke-v4/`, and
+`prefix-origin-independent-static-review-v1.md`. All current checks use scripted
+workloads and exclude policy/optimizer/pilot execution. Full vascular/primary
+GUI, speed, presentation, visual interactions, mechanics/planning and the broad
+RL readiness goal remain open.

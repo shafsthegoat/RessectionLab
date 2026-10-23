@@ -1,5 +1,6 @@
 'use strict';
 const { EventEmitter } = require('node:events');
+const { randomUUID } = require('node:crypto');
 const fs = require('node:fs/promises');
 const path = require('node:path');
 const { PrefixPipeline } = require('./prefix-pipeline.cjs');
@@ -42,6 +43,7 @@ class PrefixEngine extends EventEmitter {
     this.ordinary = null; this.consumer = null; this.producer = null; this.pipeline = null; this.resources = null;
     this.workers = new Set(); this.listeners = new Map(); this.calls = new Set(); this.stops = new WeakMap();
     this.retained = null; this.source = null; this.terminalEvent = null;
+    this.prefixOrigin = null;
     this.tail = Promise.resolve(); this.transitions = 0; this.shutdownPromise = null; this.stopPromise = null;
     this.lastPipeline = null; this.lastResources = null; this.poisonNotified = false;
     this.counts = { transitions: 0, workerCreations: 0, maxWorkers: 0, maxInflight: 0, failures: 0 };
@@ -150,7 +152,7 @@ class PrefixEngine extends EventEmitter {
   }
 
   _interrupt() {
-    this.epoch++; this.terminalEvent = null;
+    this.epoch++; this.terminalEvent = null; this.prefixOrigin = null;
     for (const worker of this.workers) this._detach(worker);
     for (const call of this.calls) call.cancel(new Error('PREFIX_ENGINE:STALE_SOURCE_EPOCH'));
     if (this.pipeline) void this.pipeline.close().catch(() => {});
@@ -299,7 +301,10 @@ class PrefixEngine extends EventEmitter {
       const result = await this.pipeline.start(timeout); this._live(epoch);
       await this.resources.check(); this._live(epoch);
       this.mode = 'pipeline'; this.failure = null; this.poisonNotified = false;
-      return result;
+      this.prefixOrigin = Object.freeze({schema:'resectionlab.prefix-origin.v1',kind:'fresh-reconstruction',
+        activationId:randomUUID(),caseHash:args.caseHash,branchId:args.branchId,
+        sourceArchiveSha256:source.sha256,sceneId:expectedBinding.sceneId});
+      return this._withOrigin(result, epoch);
     } catch (error) {
       await this._shutdown();
       // Cancellation of a same-source restart must preserve image IDs already
@@ -358,7 +363,8 @@ class PrefixEngine extends EventEmitter {
         && args.caseHash === this.source.caseHash && args.branchId === this.pipeline.branchId) {
         const epoch = this.epoch;
         return this.pipeline.seekFrame(args, timeout).then(result => {
-          this._live(epoch); this._publishTerminal(result, epoch); return result;
+          const publicResult = this._withOrigin(result, epoch);
+          this._publishTerminal(publicResult, epoch); return publicResult;
         });
       }
     }
@@ -382,6 +388,14 @@ class PrefixEngine extends EventEmitter {
       catch (error) { this._poison(error, epoch); throw error; }
       this.emit('event', { ...terminal, result });
     }
+  }
+
+  _withOrigin(result, epoch) {
+    this._live(epoch);
+    need(this.mode === 'pipeline' && this.prefixOrigin, 'ORIGIN_UNAVAILABLE');
+    // This describes preparation provenance, never future state or authority.
+    // Worker-provided origin fields cannot replace the trusted main descriptor.
+    return {...result, prefixOrigin:{...this.prefixOrigin}};
   }
 
   stop() {

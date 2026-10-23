@@ -258,3 +258,21 @@ test('invalid early-rejected lease is observed and rejected without escaping the
   await assert.rejects(h.engine.request('ping', {}), /LEASE_API/);
   await tick(); await h.engine.stop();
 });
+
+test('trusted main origin is stable and detached on accepted consumer invokes/events, then clears on cancellation', async () => {
+  const h = await harness(), {consumer,result} = await activate(h);
+  const origin = structuredClone(result.prefixOrigin);
+  assert.equal(origin.schema,'resectionlab.prefix-origin.v1');assert.equal(origin.kind,'fresh-reconstruction');
+  assert.match(origin.activationId,/^[0-9a-f-]{36}$/);assert.equal(origin.caseHash,'case');
+  assert.equal(origin.branchId,'branch');assert.equal(origin.sourceArchiveSha256,sourceSha);assert.equal(origin.sceneId,digest);
+  result.prefixOrigin.caseHash = 'caller mutation';
+  const pending = h.engine.request('surgicalRehearsal',frameArgs());
+  const response = prefixResult('consumer',0);response.prefixOrigin={kind:'worker-provided'};
+  consumer.finish(2,response);const frame = await pending;
+  assert.deepEqual(frame.prefixOrigin,origin);assert.equal(frame.prefixWorker,undefined);
+  assert.equal(frame.verification.preparedCache.mode,'only');
+  assert.equal(h.events.at(-1).result,frame);
+  assert.deepEqual(h.events.at(-1).result.prefixOrigin,origin);
+  await h.engine.request('cancel',{});assert.equal(h.engine.prefixOrigin,null);
+  await h.engine.stop();
+});

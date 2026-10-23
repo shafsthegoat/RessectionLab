@@ -698,3 +698,14 @@ cache-write accounting and the experimental flag. The new Python source
 normally invalidates v15 packages. No policy execution, optimizer update or
 pilot ran in this pipeline work; the earlier two fixture updates stay disclosed.
 The full readiness goal remains active and incomplete.
+
+The pipeline renderer now distinguishes fresh preparation origin from its
+consumer's real prepared-only reads. Exact source/scene/activation checks retain
+the explicit fresh/prepared distinction and all read-only restrictions. The
+734 frontend/viewer and 286 main-process checks and production build pass;
+the generated real-process v4 probe verifies two scripted activations, stable
+origin metadata, ten exact observations, preserved image IDs and zero consumer
+physics. These totals overlap earlier focused checks. A separate bounded guard
+and single-consumer-audit coordinator prepare the next patient trial, which
+remains pending. No policy, optimizer update or RL pilot ran in this work; it
+does not close the patient, GUI, performance, planning or readiness gates.

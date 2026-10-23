@@ -46,6 +46,20 @@ function checkedPrefix(response:SurgicalResponse,wire:boolean){
     for(const count of [p.preparedCache.loadedActions,p.preparedCache.publishedActions,p.preparedCache.misses])need(Number.isSafeInteger(count)&&count>=0);
     need(p.preparedCache.lastSkip===null||typeof p.preparedCache.lastSkip==='string');
   }
+  if(response.prefixOrigin!==undefined){
+    const origin=response.prefixOrigin,keys=['schema','kind','activationId','caseHash','branchId','sourceArchiveSha256','sceneId'];
+    need(!!origin&&typeof origin==='object'&&!Array.isArray(origin)&&Object.keys(origin).length===keys.length&&keys.every(key=>Object.hasOwn(origin,key)));
+    need(origin.schema==='resectionlab.prefix-origin.v1'&&origin.kind==='fresh-reconstruction'&&
+      typeof origin.activationId==='string'&&/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(origin.activationId)&&
+      typeof origin.sourceArchiveSha256==='string'&&/^[0-9a-f]{64}$/.test(origin.sourceArchiveSha256)&&
+      typeof origin.sceneId==='string'&&/^sha256:[0-9a-f]{64}$/.test(origin.sceneId)&&
+      typeof origin.caseHash==='string'&&origin.caseHash===response.caseHash&&origin.caseHash.length>0&&origin.caseHash.length<=1024&&
+      typeof origin.branchId==='string'&&origin.branchId===response.branchId&&origin.branchId.length>0&&origin.branchId.length<=128);
+    need(response.readOnly===true&&response.outcome===null&&response.fullCase==null&&response.budgetStopped===false&&p.failure==null&&
+      p.preparedCache?.mode==='only'&&p.preparedCache.loadedActions===p.verifiedThrough&&p.preparedCache.publishedActions===0&&
+      p.preparedCache.misses===0&&p.preparedCache.lastSkip===null);
+    if(!wire||Object.hasOwn(response.view,'scene'))need(origin.sceneId===response.view.scene?.sceneId);
+  }
   for(const requested of [p.requestedPosition,response.requestedPosition])need(requested===undefined||(Number.isInteger(requested)&&requested>=0&&requested<=p.totalActions));
   for(const stopped of [p.budgetStopped,response.budgetStopped])need(stopped===undefined||typeof stopped==='boolean');
   need(p.requestedPosition===undefined||response.requestedPosition===undefined||p.requestedPosition===response.requestedPosition);
@@ -55,7 +69,14 @@ function checkedPrefix(response:SurgicalResponse,wire:boolean){
 export function checkedPrefixWireResponse(response:SurgicalResponse){return checkedPrefix(response,true);}
 /** Demand hydration must restore the complete computed prefix before display. */
 export function checkedPrefixResponse(response:SurgicalResponse){return checkedPrefix(response,false);}
+/** The explicit start chooses preparation origin, while cache counters stay real. */
+export function checkedPrefixStartMode(response:SurgicalResponse,cacheOnly:boolean){
+  const p=checkedPrefixResponse(response),only=p.preparedCache?.mode==='only',fresh=!!response.prefixOrigin;
+  if(cacheOnly?(!only||fresh):(only!==fresh))throw Error('Reconstructed prefix response changed prepared-only mode');
+  return p;
+}
 export function replayAuthorityKey(response:SurgicalResponse,includePreparedMode=true){
   const p=reconstructedPrefix(response);
-  return p?JSON.stringify(['prefix',p.originSnapshotHash,p.actionLogHash,p.implementation,p.protectionContractHash,p.prefixImplementation,...(includePreparedMode?[p.preparedCache?.mode??'disabled']:[])]):response.verification?.readOnly?'unverified-import':'canonical';
+  const o=response.prefixOrigin,origin=o?[o.schema,o.kind,o.activationId,o.caseHash,o.branchId,o.sourceArchiveSha256,o.sceneId]:null;
+  return p?JSON.stringify(['prefix',p.originSnapshotHash,p.actionLogHash,p.implementation,p.protectionContractHash,p.prefixImplementation,...(includePreparedMode?[p.preparedCache?.mode??'disabled',origin]:[])]):response.verification?.readOnly?'unverified-import':'canonical';
 }

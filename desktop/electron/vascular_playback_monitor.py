@@ -283,7 +283,7 @@ def checked_prepared_progress(stats, history_length, prepared_only):
 
 class VascularPlaybackMonitor(ReadOnlyStepMonitor):
     def __init__(self, engine_base, output, *, reference=None, clock=time.monotonic, rss=peak_rss,
-                 prepared_only=False, _json_adapter=None):
+                 prepared_only=False, _json_adapter=None, _spool_factory=None):
         require(type(prepared_only) is bool, 'Prepared-only qualification mode must be a boolean')
         super().__init__(engine_base)
         self.prepared_only = prepared_only
@@ -300,7 +300,7 @@ class VascularPlaybackMonitor(ReadOnlyStepMonitor):
         self.case_hash = None
         self.prefix_started = False
         self.owner = None
-        self.spool = FrameSpool(output)
+        self.spool = FrameSpool(output) if _spool_factory is None else _spool_factory(output)
         self.owner_metadata = None
         self.ownership = None
         self.retention_peaks = {}
