@@ -3,6 +3,10 @@
 set -eu
 demo_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 demo_case="$demo_root/testcases/outputs/product-first-20261023/rescue-v2/rescue-strategies.ressectionlab"
+if [ "${1:-}" = '--case' ]; then
+  demo_case="${2:?Provide a saved workspace after --case}"
+  shift 2
+fi
 if [ ! -f "$demo_case" ]; then
   echo 'Prepare the rescue comparison first; see docs/operative-strategies.md.' >&2
   exit 1

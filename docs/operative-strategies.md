@@ -98,3 +98,27 @@ not clinical comparisons. The saved workspace preserves every historical branch,
 source array, image and full-case director record byte-for-byte in decoded form.
 The failed initial 100-second comparison attempt remains in `rescue-v1.log`;
 the successful bounded retry uses the four-minute comparison budget.
+
+## Catalog-sized skills: measured task limitation
+
+The patient archival radii and inherited time/damage budgets do not satisfy the
+raw RL contract. `scripts/probe_patient_rescue_skills.py` therefore makes an
+explicitly privileged native injury setup, then checks catalog-sized nominal
+skills through real public actions; it does not transplant a checkpoint into an
+RL episode or run a learner. Run with `--case` pointing to the comparison above
+and `--output` naming a new directory under `testcases/`.
+
+The bounded probe took 219.382 s, including 162.971 s of prefix admission.
+Observation, proposal and public execution together took 10.851 s for nine prompt
+skills/ten primitives, and 12.775 s for eleven delayed skills/twelve primitives.
+Both suffixes replay exactly and are saved as native branches. The 1 mm bipolar
+tip sealed three of five wounded faces; two faces outside its fixed coverage
+continued emitting. The 1.5 mm suction tip removed little fluid at the recorded
+endpoint. During the final five-second observation, prompt-arm fluid rose from
+2.335 to 3.119 mm³. Both arms still had one active outlet.
+
+This task is not yet solved by the scripted catalog-sized baseline, so no new
+fit was launched. Next work is guarded coverage of the remaining wound faces,
+effective suction, and explicit suffix observation/budget/exposure semantics.
+The evidence, unchanged source hashes and coverage diagnosis are in
+`testcases/outputs/product-first-20261023/catalog-skill-readiness-v1/`.
