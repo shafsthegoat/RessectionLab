@@ -15,4 +15,9 @@
 .rescue-comparison th:first-child {text-align:left;}
 .rescue-comparison button {padding:5px;font-size:11px;}
 .rescue-comparison tr[aria-selected=true] {background:#24443f;}
+.rescue-learning table {table-layout:fixed;}
+.rescue-learning th:first-child {width:42%;}
+.rescue-learning button {width:100%;white-space:normal;}
+.rescue-learning th small {display:block;font-size:10px;font-weight:normal;white-space:normal;}
+.rescue-learning td {font-size:10.5px;overflow-wrap:anywhere;}
 .full-case-rehearsal{display:flex;flex-direction:column;gap:10px;border:1px solid #609d91;border-radius:8px;background:#152e31;padding:12px}.full-case-rehearsal>strong{font-size:15px;color:#b4e6da}.surgical-panel .full-case-phase-jump{flex-direction:column;align-items:stretch}.full-case-phase-jump select{width:100%}

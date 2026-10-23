@@ -133,8 +133,9 @@ continued emitting. The 1.5 mm suction tip removed little fluid at the recorded
 endpoint. During the final five-second observation, prompt-arm fluid rose from
 2.335 to 3.119 mm³. Both arms still had one active outlet.
 
-This task is not yet solved by the scripted catalog-sized baseline, so no new
-fit was launched. Next work is guarded coverage of the remaining wound faces,
-effective suction, and explicit suffix observation/budget/exposure semantics.
+That initial catalog-sized probe was unsolved and launched no fit. The later
+[prepared patient rescue task](prepared-patient-rescue.md) supplies validated
+surface contacts, effective suction and explicit suffix observation/budget/
+exposure semantics before permitting a bounded learning comparison.
 The evidence, unchanged source hashes and coverage diagnosis are in
 `testcases/outputs/product-first-20261023/catalog-skill-readiness-v1/`.

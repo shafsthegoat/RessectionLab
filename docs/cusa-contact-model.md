@@ -122,3 +122,26 @@ no patient action, training, optimizer step or policy selection. They establish
 the surrogate's implementation contract only. Acoustic fields, measured force,
 suction pressure, irrigation coupling, thermal injury, tissue selectivity and
 patient calibration remain unmodeled.
+
+## Explicit patient-derived experiment
+
+`scripts/prepare_patient_cusa_v3.py inspect --output testcases/outputs/new-inspection`
+checks one fixed source line without stepping physics. Its `evaluate` mode uses
+a separate new output directory and constructs a distinct case/scene with this
+explicit profile. MRI, masks, affine, material ownership and source references
+remain identical. Identical protection memberships are rebound to the new scene
+with unchanged exclusion settings. Historical branches stay in the original
+source file; no old checkpoint is restored under new physics.
+
+The bounded experiment publicly executes five archival bone-access actions,
+requiring their exact recorded receipts, then compares short, long and matched
+partitioned CUSA dwells at a fixed surface contact. Historical oversized burrs
+and durations are explicit native setup, not raw-RL admission. Source-preserving
+native save/reopen checks replay all three new branches from intact anatomy.
+This is a contact-law experiment that can remove non-target tissue; it does not
+qualify tumor access, resection planning or a learned policy.
+
+Electron exposes fixed-radius, dimensionless activation/duty controls only when
+the selected scene explicitly enables v3. Its **CUSA contact and aspiration**
+panel separates supplied, pending, aspirated, unused and discarded capacity.
+Pending capacity is work toward voxel clearance, not removed tissue or fluid.
