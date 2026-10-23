@@ -53,6 +53,22 @@ def manifests(root):
     for folder,row in (('consumer',consumer),('old',old)):
         (root/folder).mkdir();(root/folder/'observed-actions.jsonl').write_bytes(p._json(row)+b'\n')
     return record,consumer,old
+def omission_manifests(root, count=200):
+    record,consumer,old=manifests(root)
+    expanded=[]
+    for i in range(count):
+        frame=copy.deepcopy(record['frames'][1]);frame['observedTimeSeconds']=float(i)
+        frame['flowDisplay']={'schema':'resectionlab.recorded-field-transfers.v1','sceneId':D,
+            'actionIndex':0,'frameIndex':i,'beforeStateId':D,'stateId':D,
+            'startSeconds':float(max(0,i-1)),'endSeconds':float(i),
+            'operations':[],'truncated':False}
+        expanded.append(frame)
+    record['frames']=expanded;consumer['frames']=copy.deepcopy(expanded);old['frames']=copy.deepcopy(expanded)
+    for c,o in zip(consumer['frames'],old['frames']):
+        c['blob']['offset']=0;o['blob']['offset']=0;del c['flowDisplay']
+    for folder,row in (('producer',record),('consumer',consumer),('old',old)):
+        (root/folder/'observed-actions.jsonl').write_bytes(p._json(row)+b'\n')
+    return record,consumer,old
 def parent_fixture():
     proof={'schema':'resectionlab.vascular-pipeline-parent-proof.v1','passed':True,
         'qualificationMode':'fresh-pipeline','caseHash':D,'branchId':b.BRANCH,'mainPid':99,
@@ -130,6 +146,32 @@ class Tests(unittest.TestCase):
         ordinary=p._NoActionSpool(self.root/'normal')
         with self.assertRaises(ValueError):ordinary.append(0,frames(),{})
         self.assertFalse((self.root/'normal').exists())
+    def test_only_proven_empty_whole_action_budget_fallback_is_admitted_and_disclosed(self):
+        record,consumer,old=omission_manifests(self.root)
+        result=p.compare_manifests(*(self.root/folder/'observed-actions.jsonl' for folder in ('producer','consumer','old')),_frame_counts=(200,))
+        self.assertFalse(result['allCompleteReceiptsDescriptorsFlowAndCompressedShaLengthsExact'])
+        self.assertFalse(result['rawProducerConsumerFullDescriptorsExact'])
+        self.assertTrue(result['allCompleteReceiptsPhysicalDescriptorsFlowOperationsAndCompressedShaLengthsExact'])
+        self.assertEqual(result['preparedEmptyEnvelopeOmissions']['count'],200)
+        self.assertEqual(result['preparedEmptyEnvelopeOmissions']['intervals'][1]['frameIndex'],1)
+        for change in ('truncated','operation','partial','context','physical','digest','length','retained-extra'):
+            rows=copy.deepcopy((record,consumer,old));q,c,o=rows
+            if change=='truncated':q['frames'][1]['flowDisplay']['truncated']=True
+            elif change=='operation':q['frames'][1]['flowDisplay']['operations']=[{'unexpected':True}]
+            elif change=='partial':c['frames'][1]['flowDisplay']=copy.deepcopy(q['frames'][1]['flowDisplay'])
+            elif change=='context':q['frames'][1]['flowDisplay']['beforeStateId']='sha256:'+'0'*64
+            elif change=='physical':c['frames'][1]['effectiveActivation']['left']=True
+            elif change=='digest':c['frames'][1]['blob']['sha256']='0'*64
+            elif change=='length':c['frames'][1]['blob']['bytes']=99
+            elif change=='retained-extra':c['frames'][1]['newField']=False
+            for folder,row in zip(('producer','consumer','old'),rows):
+                (self.root/folder/'observed-actions.jsonl').write_bytes(p._json(row)+b'\n')
+            with self.subTest(change=change),self.assertRaises(ValueError):
+                p.compare_manifests(*(self.root/folder/'observed-actions.jsonl' for folder in ('producer','consumer','old')),_frame_counts=(200,))
+    def test_empty_envelope_omission_without_budget_exhaustion_is_rejected(self):
+        omission_manifests(self.root,count=3)
+        with self.assertRaisesRegex(ValueError,'without publisher metadata budget exhaustion'):
+            p.compare_manifests(*(self.root/folder/'observed-actions.jsonl' for folder in ('producer','consumer','old')),_frame_counts=(3,))
     def test_base_default_and_fixed_role_factories_keep_exact_caps(self):
         reference=[{'action':{'fixture':i}} for i in range(73)]
         ordinary=b.VascularPlaybackMonitor(Engine,self.root/'old',reference=reference)

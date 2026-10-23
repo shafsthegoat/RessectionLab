@@ -296,11 +296,51 @@ def _owner_pair(current, other, baseline=False):
             'meaning': 'Implementation and disposable cache-owner domains differ after bound source changes; no identity exemption or cache compatibility.'}
 
 
+def _empty_envelope_fallback(producer, consumer, index, scene_id):
+    """Prove the publisher's whole-action optional-envelope budget fallback.
+
+    Only an empty, untruncated envelope may disappear. The complete physical
+    descriptor and bytes still compare exactly below; retained flow blocks also
+    compare exactly. Reproduce the publisher's metadata admission without state
+    bytes, a decoder, an engine, or access to its mutable cache directory.
+    """
+    from resectionlab.surgical_prefix_cache import _json as cache_json, MAX_MANIFEST_BYTES
+    from resectionlab.surgical_flow_display import validate_flow_display
+    omitted = []
+    for ordinal, (left, right) in enumerate(zip(producer, consumer)):
+        if 'flowDisplay' not in left or 'flowDisplay' in right:
+            continue
+        flow = left['flowDisplay']; previous = producer[max(0, ordinal-1)]
+        validate_flow_display(flow, scene_id=scene_id, action_index=index, frame_index=ordinal,
+            before_state_id=previous['stateId'], state_id=left['stateId'],
+            start_seconds=previous['observedTimeSeconds'], end_seconds=left['observedTimeSeconds'])
+        require(flow['operations'] == [] and flow['truncated'] is False,
+                'Prepared omission lost flow operations or an incomplete interval')
+        omitted.append({key: value for key, value in flow.items() if key not in ('schema', 'sceneId', 'operations', 'truncated')})
+    if not omitted:
+        return []
+    require(all('flowDisplay' not in frame for frame in consumer),
+            'Prepared envelope omission must match whole-action fallback')
+    def admit(frames):
+        budget = [MAX_MANIFEST_BYTES, 0]
+        for frame in frames:
+            cache_json({key: value for key, value in frame.items() if key != 'blob'}, _budget=budget)
+    try:
+        admit(producer)
+    except ValueError as error:
+        require(str(error) == 'Prepared metadata exceeds manifest budget',
+                'Prepared envelope omission has no matching metadata byte-budget cause')
+    else:
+        raise ValueError('Prepared envelope omission without publisher metadata budget exhaustion')
+    admit(consumer)
+    return omitted
+
+
 def compare_manifests(producer, consumer, baseline, *, check=lambda: None, _frame_counts=base.FRAME_COUNTS):
     """Metadata only. Never opens, decodes or imports a physical state stream."""
     streams = [_rows(producer, ACTION_MANIFEST_BYTES, check), _rows(consumer, ACTION_MANIFEST_BYTES, check),
                _rows(baseline, base.MAX_MANIFEST, check)]
-    observations = 0; owner_difference = None; owners = None
+    observations = 0; owner_difference = None; owners = None; omissions = []
     for index, count in enumerate(_frame_counts):
         records = [next(stream, None) for stream in streams]
         require(all(type(row) is dict and type(row.get('actionIndex')) is int and row['actionIndex'] == index
@@ -317,6 +357,8 @@ def compare_manifests(producer, consumer, baseline, *, check=lambda: None, _fram
         _same(p['receipt'], c['receipt'], 'Complete producer/consumer public receipt differs')
         _same(p['receipt'], old['receipt'], 'Complete baseline public receipt differs')
         require(all(type(row['frames']) is list and len(row['frames']) == count for row in records), 'Frame count differs')
+        omitted = _empty_envelope_fallback(p['frames'], c['frames'], index, p['owner']['sceneId'])
+        omissions.extend(omitted)
         for frames in zip(*(row['frames'] for row in records)):
             check(); normalized = []
             for frame, producer_row in zip(frames, (True, False, False)):
@@ -329,12 +371,19 @@ def compare_manifests(producer, consumer, baseline, *, check=lambda: None, _fram
                     require(_integer(blob['offset'], 0, base.MAX_SPOOL-1), 'Invalid spool offset')
                 normalized.append({**{key: value for key, value in frame.items() if key != 'blob'},
                                    'blob': {'sha256': blob['sha256'], 'bytes': blob['bytes']}})
-            _same(normalized[0], normalized[1], 'Producer/consumer full descriptor or compressed bytes differ')
+            consumer_expected = normalized[0]
+            if omitted and 'flowDisplay' in consumer_expected and 'flowDisplay' not in normalized[1]:
+                consumer_expected = {key: value for key, value in consumer_expected.items() if key != 'flowDisplay'}
+            _same(consumer_expected, normalized[1], 'Producer/consumer full descriptor or compressed bytes differ')
             _same(normalized[0], normalized[2], 'Baseline full descriptor or compressed bytes differ')
             observations += 1
     require(all(next(stream, None) is None for stream in streams), 'Extra action manifest rows')
     return {'actions': len(_frame_counts), 'observations': observations,
-            'allCompleteReceiptsDescriptorsFlowAndCompressedShaLengthsExact': True,
+            'allCompleteReceiptsDescriptorsFlowAndCompressedShaLengthsExact': not omissions,
+            'allCompleteReceiptsPhysicalDescriptorsFlowOperationsAndCompressedShaLengthsExact': True,
+            'rawProducerConsumerFullDescriptorsExact': not omissions,
+            'preparedEmptyEnvelopeOmissions': {'count': len(omissions), 'intervals': omissions,
+                'meaning': 'Exact empty untruncated interval envelopes omitted by independently reproduced whole-action prepared metadata budget fallback; no physical descriptor, operation, receipt or compressed-byte exemption.'},
             'ownerDomainDifferences': owner_difference, 'producerOwner': owners[0],
             'consumerOwner': owners[1], 'stateDecodes': 0}
 
@@ -483,9 +532,11 @@ def check_parent_proof(proof, guards, report, *, _frame_counts=base.FRAME_COUNTS
             'maxAlive': 2, 'aggregatePeakPythonBytes': resource['peakAggregatePythonTreeRssBytes']}
 
 
-def audit_pipeline(output, *, baseline=BASELINE):
+def audit_pipeline(output, *, baseline=BASELINE, audit_output=None):
     """One consumer numerical audit, then no-decode producer/v15 agreement."""
     output = Path(output); baseline = Path(baseline)
+    audit_output = Path(audit_output) if audit_output is not None else output
+    audit_output.mkdir(parents=True, exist_ok=True)
     began = time.monotonic()
     def check():
         require(time.monotonic()-began < 180 and base.peak_rss() <= base.MAX_RSS, 'Pipeline audit wall/RSS budget exceeded')
@@ -515,12 +566,12 @@ def audit_pipeline(output, *, baseline=BASELINE):
     # Actual fresh producer authority comes from the independent role proof and
     # byte/metadata equality, never by relabelling consumer cache observations.
     require(guards['consumer'].get('qualificationMode') == 'prepared-only', 'Consumer audit mode must stay prepared-only')
-    audit = base.audit_spool(output/'roles'/'consumer', audit_output=output)
+    audit = base.audit_spool(output/'roles'/'consumer', audit_output=audit_output)
     require(audit.get('passed') is True and audit.get('publicStepAttempts') == {}
             and audit.get('allFullCanonicalRecordsExact') is True
             and audit.get('actions') == 73 and audit.get('observations') == 1149, 'Consumer numerical audit incomplete')
     check()
-    audited = _read_json(output/'audited-observations.json', 2*MIB)
+    audited = _read_json(audit_output/'audited-observations.json', 2*MIB)
     require(type(audited) is list and len(audited) == 1149, 'Audited tuple inventory incomplete')
     tuple_keys = ('branchId', 'position', 'frameIndex', 'stateId')
     _same([[row.get(key) for key in tuple_keys] for row in audited],
@@ -542,8 +593,8 @@ def audit_pipeline(output, *, baseline=BASELINE):
               'producerManifestSha256': base.file_sha(output/'roles'/'producer'/'observed-actions.jsonl'),
               'consumerManifestSha256': base.file_sha(output/'roles'/'consumer'/'observed-actions.jsonl'),
               'baselineManifestSha256': BASELINE_MANIFEST_SHA,
-              'meaning': 'Guarded fresh producer -> exact compressed bytes/complete metadata -> one no-step consumer numerical audit. No canonical/cache admission or physical replay.'}
-    check(); base.atomic_json(output/'pipeline-audit.json', result)
+              'meaning': 'Guarded fresh producer -> exact compressed bytes, physical descriptors, receipts and flow operations -> one no-step consumer numerical audit. Any proven empty display-envelope omission is reported explicitly; raw complete-descriptor equality is separate. No canonical/cache admission or physical replay.'}
+    check(); base.atomic_json(audit_output/'pipeline-audit.json', result)
     return result
 
 
@@ -552,9 +603,10 @@ if __name__ == '__main__':
     parser.add_argument('mode', choices=['audit'])
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--baseline', type=Path, default=BASELINE)
+    parser.add_argument('--audit-output', type=Path, help='Separate results directory; preserve original run/audit evidence')
     args = parser.parse_args()
     try:
-        audit_pipeline(args.output, baseline=args.baseline)
+        audit_pipeline(args.output, baseline=args.baseline, audit_output=args.audit_output)
     except BaseException as error:
-        base.atomic_json(args.output/'pipeline-audit.json', {'passed': False, 'error': repr(error), 'peakResidentBytes': base.peak_rss()})
+        base.atomic_json((args.audit_output or args.output)/'pipeline-audit.json', {'passed': False, 'error': repr(error), 'peakResidentBytes': base.peak_rss()})
         raise

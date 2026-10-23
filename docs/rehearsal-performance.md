@@ -2049,3 +2049,29 @@ Evidence is under `testcases/outputs/rl-readiness-20261022/`:
 workloads and exclude policy/optimizer/pilot execution. Full vascular/primary
 GUI, speed, presentation, visual interactions, mechanics/planning and the broad
 RL readiness goal remain open.
+
+### Complete patient producer/consumer run, October 23
+
+The v17 run at `8a2b121e` completed all 73 fresh vascular actions and delivered
+all 1,149 ordered observations to the renderer, with no missing or duplicate
+receipts. Click-to-completion time was **277.770 s for 202.569 simulated s
+(0.7293×)**. Sampled aggregate Python memory peaked at **1.209 GiB**. CPU-submission
+gaps had median/p95 116.3/651.1 ms and maximum 5.492 s; compositor presentation
+was not measured. The real-time fresh target remains unmet.
+
+The original audit failure is preserved. A separate 82.154 s, zero-step re-audit
+verified every physical descriptor, complete public receipt, recorded flow
+operation and compressed state SHA/length. It also proved that the prepared
+publisher's metadata limit omitted **304 empty, untruncated display envelopes**
+in two actions. Raw full-descriptor equality therefore remains false. The audit
+only admits this reproduced whole-action empty-envelope fallback; missing
+operations, truncation, context drift or physical differences still fail.
+
+Producer/consumer/queue counters were 180.619/147.070/87.865 s; these overlap.
+Surface preparation totaled 30.661 s. Preparation and consumer processing remain
+the largest measured paths, but this run does not isolate their internal physics,
+hashing, serialization and disk costs. This bounded experiment closes the actual
+pipeline-run requirement and moves product work forward without a further
+backend optimization sweep. The original reports remain unchanged; supplemental
+results and exact reproduction commands are in
+`testcases/outputs/rl-readiness-20261022/desktop-full-vascular-pipeline-v17-reaudit-empty-envelope-v1/`.
