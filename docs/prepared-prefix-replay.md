@@ -173,13 +173,20 @@ Its full/warm rates were 0.682×/1.668×. This is fresh preparation; a separate
 prepared-only reopen was not timed for v13. The failed partial v12 run/cache
 remain preserved and unqualified.
 
-On this Mac with the matching current Python/native source, open the v13
+The subsequent prefix JSON budget optimization changes full/light Python seals,
+so v13 packages also require their matching historical source. Fresh v14 on
+`8b4964b7` published 73 packages and passed all 18 application/audit gates;
+all observed states, full canonical rows and v13 transfer metadata match.
+Full/warm CPU rates were 0.690×/1.701×. A separate prepared-only diagnostic
+timed 12 identical retained reads, not a full prepared playback or fresh actions.
+
+On this Mac with the matching current Python/native source, open the v14
 packages using the ordinary application (receipt instrumentation is off):
 
 ```sh
 RESSECTIONLAB_IDLE_THERMAL_BUILD="$PWD/testcases/outputs/rl-readiness-20261022/idle-integer-native-production-build/build-receipt.json" \
 RESSECTIONLAB_PREFIX_JSON_BUILD="$PWD/testcases/outputs/rl-readiness-20261022/prefix-json-canonical-native-production-build/build-receipt.json" \
-RESSECTIONLAB_PREPARED_PREFIX_CACHE_DIRECTORY="$PWD/testcases/outputs/rl-readiness-20261022/prepared-vascular-v13-cache" \
+RESSECTIONLAB_PREPARED_PREFIX_CACHE_DIRECTORY="$PWD/testcases/outputs/rl-readiness-20261022/prepared-vascular-v14-cache" \
 desktop/node_modules/.bin/electron desktop \
   --case "$PWD/testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab"
 ```
@@ -188,3 +195,9 @@ Choose **full-vascular**, then **Replay prepared observations · read only**.
 These source-bound observations grant no editable, planning or RL authority.
 Further Python/native changes invalidate them. Full-primary playback, flowing
 effects, operative readability and delivered-frame timing remain open.
+
+While paused at an inserted instrument, **Close tool view** can pin a local
+anatomy cutaway with context transparency. Refocus explicitly follows the latest
+accepted tip; orbit and replay do not move the pinned window. Restore previous
+view recovers the saved context, clipping and linked cursor. This affects display
+only and grants no planning or training authority.

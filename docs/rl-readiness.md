@@ -647,3 +647,21 @@ work ran no policy or optimizer and does not close the remaining patient,
 performance, planning or visual prerequisites for RL. See
 [recorded-field-transfers.md](recorded-field-transfers.md) and the performance
 results for source bindings, controls and limits.
+
+The next display/transport milestone on `8b4964b7` remains preparation only.
+An optional pinned local cutaway improves one static operative close-up;
+727 frontend checks/build and a 17-check prepared-only actual-app probe pass.
+The conservative prefix JSON size proof passed a focused 252-test selection
+and the overlapping final 65 helper/fallback tests, excluding the pilot module.
+Fresh v14 passed 73 actions / 1,149 observations, complete canonical records,
+v13 flow metadata and a separate no-step audit with unchanged bound files.
+Its full/warm CPU rates are 0.690×/1.701×. A matched 12-read prepared diagnostic
+reduced median handler time from 81.935 to 75.726 ms with complete content hashes
+unchanged; it does not measure fresh decisions or compositor delivery.
+
+Python seals invalidate v13 packages; the current prepared launch uses the
+fresh v14 cache described in [prepared replay](prepared-prefix-replay.md).
+Full-primary playback, responsive visual surgery/flow, patient decision
+throughput, remaining mechanics/planning and the other readiness gates stay open.
+No policy execution, optimizer update or RL pilot occurred in this continuation.
+The earlier two unintended fixture updates remain disclosed above.

@@ -82,3 +82,20 @@ a temporary view. It neither hydrates future field values nor advances stream
 acknowledgments. The demanded receipt still undergoes normal hydration and full
 admission before display. The failed v12 run and partial cache remain preserved
 and unqualified; subsequent qualification uses a fresh cache.
+
+The optional **Close tool view** now offers a pinned local anatomy cutaway.
+Static field points, cut lines/faces and transfer glyphs follow that 3D window;
+complete instrument geometry remains outside clipping, and source MRI panes stay
+available. Refocus explicitly chooses a new accepted tip. Turning the window
+off restores previous clipping; full Restore recovers the prior view/cursor.
+One prepared-only actual-app probe made the local instrument and nearby colored
+markers distinguishable with the window on. Faceted anatomy, poor tool visibility
+with it off and the below-fold legend remain limitations. No moving-fluid or
+all-tool visual acceptance follows.
+
+Current v14 fresh replay after the conservative prefix budget optimization
+passed 73 actions / 1,149 observations and a separate no-step numerical audit.
+Every v13 transfer block and full canonical record matches. Older caches are
+historical because package Python source changes invalidate normal seals.
+See [performance results](rehearsal-performance.md) for current measurements,
+source bindings and the remaining visual/performance gates. No RL ran here.

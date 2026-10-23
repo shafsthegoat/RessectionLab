@@ -1724,3 +1724,110 @@ its sibling pre/post bindings, `analysis.json`, pixel reviews, static review and
 decodes or physical steps (0.558 s / 88,293,376-byte RSS). The v12 failure remains
 separate and unchanged. No full visual or RL-readiness claim follows from this
 engineering milestone.
+
+### Pinned local operative cutaway
+
+`f969ee9a` extends **Close tool view** with an optional local anatomy window.
+It pins a bounded world-space box and a view-facing plane to the exact accepted
+tip. Orbiting or receiving another replay state does not move that window;
+**Refocus accepted tool** explicitly chooses the new tip. Turning the window
+off restores the original clipping, and **Restore previous view** restores the
+saved camera, appearance and linked cursor. Complete instrument geometry stays
+outside clipping. Historical field points, cut lines/faces and transfer glyphs
+follow 3D clipping; source MRI images remain available in the linked panes.
+
+The prepared-only `local-cutaway-gui-v2/` probe passed 17 controls/integrity
+checks at vascular action49/frame1, with 50 authenticated package loads, zero
+steps, misses or publications, in 40.701 seconds / 798,982,144-byte Python RSS.
+All source/cache bindings stayed unchanged. Cutaway on/off/on and full restore
+used ordinary DOM controls; on/on and before/restored PNGs are byte-identical.
+Root and independent actual-pixel review found the local metal working end,
+pink vessel estimate and nearby red/blue markers distinguishable with the
+window enabled. The vessel remains visibly faceted; the tool/local cluster is
+poorly visible in the cutaway-off image, and the flow legend stays below the
+fold. This is one static close-view improvement, not an animation or all-tool
+recognizability result. The earlier v1 harness timing failure is preserved:
+repeated slider events preceded React's accepted-state commit; no physics or
+cache mutation occurred. The corrected harness waits for the exact panel state
+and settled timeline before the next request.
+
+All 727 renderer/viewer tests and the production build passed. These frontend
+changes remain unchanged through the following Python-only optimization.
+
+### Conservative prefix JSON budget check and current v14 qualification
+
+Current-source profiling identified the streaming display-size check as a
+substantial retained-read cost. `8b4964b7` adds a conservative ASCII JSON size
+proof for exact builtin graphs, enabled only for prefix results. A successful
+proof establishes that the existing byte limit fits without a second serialized
+string. Uncertain, oversized, cyclic, deep, custom or malformed values retain
+the original streaming encoder and its errors. Custom encoder methods/defaults,
+scalar hooks and constrained recursion also retain that path. No byte, retained
+memory, physics, identity or authority limit is relaxed. Full/light seals hash
+all package Python files: v13 packages are historical after this change, and
+v14 started with a new absent cache under ordinary admission.
+
+The focused prefix/cache/flow/native and budget selection passed 252 tests;
+the final helper/integration selection passed 65, including the additional
+builtin-bool regression. These selections overlap and are not additive. External
+wall/RSS were 53.740 seconds / 193,347,584 bytes and 2.810 seconds /
+187,219,968 bytes, below 120 seconds / 3 GiB. No pilot module was selected.
+The earlier 1,173-test full run belongs to the recorded-transfer milestone;
+it was not repeated for this transport-only change. Independent static review
+identified and checked fixes for mutable encoder defaults, finite-value checking
+and builtin type bindings before qualification.
+
+Fresh v14 passed all 18 application/transport/audit checks: 73 original actions,
+73 fresh prepared publications, zero loads/misses and 1,149 exact ordered
+observations. All full canonical records, endpoint, prior observed trajectories
+and all v13 transfer blocks match. Warm reads and the separate audit made zero
+public steps. All **557 bound files** remained unchanged.
+
+| V14 application measurement | Recorded result |
+| --- | ---: |
+| Fresh play through automatic stop | 293.698 s / 0.690× |
+| Warm same-action CPU-submission intervals | 119.119 s / 1.701× |
+| Warm CPU-submission gap p95 | 158.1 ms |
+| Warm bridge / IPC p95 | 103.953 / 112.185 ms |
+| Whole guarded Python session / separate audit | 314.336 / 76.974 s |
+| Python session / audit peak RSS | 741,851,136 / 569,131,008 bytes |
+
+The full wall time is 1.15% below the separate v13 run; this alone does not
+establish a causal application speedup. The harness matches, while source/dist
+and host timing differ. The same 16/64/4 MiB retained limits, 128 MiB input limit,
+1 GiB spool, 16 MiB manifest and 512 MiB cache caps hold. Cache size remains
+235,158,950 bytes / 73 packages. All 448 bone jobs use bounded stable-ID export.
+
+The matched prepared-only handler diagnostic used action49/frame1, one excluded
+full warmup, 12 acknowledged hot reads and one separate profiled read. Complete
+view/metrics/ordered-manifest/flow hashes match before/after; each run also
+requires complete detached-response equality after only documented transport
+omissions. Across versions, implementation identities and owner tokens differ.
+No steps, publications, cache misses or binding changes occurred.
+
+| Matched diagnostic | Before | After |
+| --- | ---: | ---: |
+| Median hot handler | 81.935 ms | 75.726 ms |
+| Maximum of 12 hot reads | 88.986 ms | 80.592 ms |
+| Median final protocol JSON encoding | 2.969 ms | 2.996 ms |
+| Separate profiled handler | 157.431 ms | 115.345 ms |
+| Budget check, profiled inclusive | 56.409 ms | 13.949 ms |
+
+The unprofiled median is 7.58% lower on this bounded repeated-read workload,
+not a production p95, compositor, fresh-transition or whole-operation guarantee.
+Profiler overhead is excluded from those latency samples; inclusive component
+times overlap. The actual shortcut ran once in the profiled result check.
+Normal identity/source checks remain the largest profiled group (47.983 ms);
+view construction still spends 10.206 ms building the scene descriptor that a
+compact response discards. These are measured remaining costs, not permission
+to weaken identity checks.
+
+Evidence lives under `testcases/outputs/rl-readiness-20261022/`: the v14 run and
+pre/post bindings, `warm-prefix-cost-v1/`, `warm-prefix-cost-v2/`, cutaway probes,
+pixel/static reviews and regression receipts. The v14 metadata analysis used
+0.601 seconds / 101,122,048 bytes with zero state decodes or steps. Actual full-run
+pixels still show dense context obscuring small glyphs; the optional close view
+was not activated during that timing run. Full-primary completion, fresh 1×,
+delivered-frame 50 ms, animation, matched headless 10× and sustained patient
+decisions remain open. No policy or optimizer ran in this continuation; the two
+earlier fixture updates remain disclosed above. RL readiness is not complete.
