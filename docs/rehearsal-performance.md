@@ -1652,3 +1652,75 @@ at −428.7 / 8.0 / −15.9 mm, with read-only 73/73 feedback. Dense translucent
 context and static glyphs still leave full-sequence readability and flowing
 effects unqualified. Evidence is `desktop-full-vascular-renderer-receipts-v11/`,
 its sibling pre/post bindings and `analysis.json`; no RL ran in these checks.
+
+### Recorded field-transfer display and current vascular qualification
+
+`6cee0ff2` adds [bounded historical field-transfer records and static
+glyphs](recorded-field-transfers.md). The first v12 GUI attempt stopped at its
+first observation because compact prefetch had omitted immutable scene context.
+It remains failed and preserved. `282525c3` repairs wire validation using the
+same owner's request-time timeline token and resident scene without hydrating
+future fields or changing stream acknowledgments. No Python or physical-law
+change was needed for that repair.
+
+One fresh v13 run then passed **all 18 transport/authority/audit checks**: 73
+fresh original actions, 73 private cache publications, no loads/misses and 1,149
+unique exact IPC/renderer-receipt/submission/audited tuples. All 73 full historical
+canonical rows and the saved endpoint match. Available v3–v11 observed
+trajectories also match; original historical all-microframe IDs remain
+unavailable. Warm reads and the separate audit made no public steps. All **556
+bound source/build/script/native/runtime/original files** stayed unchanged.
+
+The 1,149 intervals retain 1,456 sampled operations: 473 wound-fluid releases,
+468 mixed-fluid neighbor transfers, 13 mixed-fluid escapes, 244 irrigation
+deposits and 258 mixed-fluid uptake writes. One interval is marked truncated;
+maximum storage was 256 operations / 49,148 encoded bytes. All intervals had
+metadata, including 1,064 empty intervals. No debris operations occurred in
+this patient trace; generated tests cover debris transport and uptake.
+These counts describe sampled writes, not particle mass or separately tracked
+blood species. Complete field and vascular ledgers remain authoritative.
+
+| V13 application measurement | Recorded result |
+| --- | ---: |
+| Fresh play through automatic stop | 297.107 s / 0.682× |
+| Warm same-action CPU-submission intervals | 121.414 s / 1.668× |
+| Warm CPU-submission gap p95 | 158.4 ms |
+| Action-start bridge execution, cumulative / p95 | 162.309 s / 5.490 s |
+| Warm bridge / IPC p95 | 105.858 / 115.597 ms |
+| Whole guarded Python session / separate audit | 317.472 / 76.892 s |
+| Python session / audit peak RSS | 750,649,344 / 568,803,328 bytes |
+
+These are CPU-submission measurements, not compositor delivery. Relative to
+the separate v11 run, full wall time was 3.70% higher; source, harness, display
+work, screenshot overhead and host timing differ, so this is not a controlled
+estimate of recorder cost or a speedup. All 448 bone worker jobs still used
+bounded stable-ID export. State spool bytes remain 215,884,624; metadata uses
+1,670,398 bytes, within the unchanged 1 GiB / 16 MiB limits. The new cache holds
+235,158,950 bytes in 73 packages. Peak checkpoint/frame/history storage remains
+within 16 MiB / 64 MiB / 4 MiB; full input remains within 128 MiB.
+
+The intermediate screenshot has the same observed tuple, state, interval and
+two submitted local glyph instances before/after capture. Root and independent
+review inspected its actual pixels and the endpoint: all three MRI panes are
+visible, but dense purple/pink anatomy and yellow/gray columns obscure the
+individual small transfer glyphs at this framing. The transfer panel is below
+the captured fold. The capture establishes bounded, source-bound display
+integration, not recognizable blood/flow animation or operative readability.
+Those gates, full-primary playback, fresh 1×, delivered-frame 50 ms, matched
+headless 10× and sustained patient decisions remain open.
+
+Generated checks passed 1,173 Python tests with two intentional alias skips and
+two existing Gymnasium advisories, excluding the entire pilot module. Focused
+recording/cache checks passed 166; 722 renderer/viewer and 231 Electron tests
+and the production build passed. Full Python external wall/RSS were
+200.060 seconds / 1,612,644,352 bytes, below 240 seconds / 3 GiB. Independent
+static review checked the rounded-clock, provenance, screenshot-race and compact
+wire repairs. New GUI/audit/analysis checks ran no policy or optimizer. The
+overall task's two earlier fixture updates remain disclosed above.
+
+Evidence is under `testcases/outputs/rl-readiness-20261022/`: the v13 directory,
+its sibling pre/post bindings, `analysis.json`, pixel reviews, static review and
+`recorded-flow-*` regression receipts. Metadata analysis repeated no state
+decodes or physical steps (0.558 s / 88,293,376-byte RSS). The v12 failure remains
+separate and unchanged. No full visual or RL-readiness claim follows from this
+engineering milestone.

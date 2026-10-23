@@ -628,3 +628,22 @@ are application measurements, not RL or sustained patient-decision throughput.
 The earlier v10 clock-association qualification remains failed/inconclusive.
 See [rehearsal-performance.md](rehearsal-performance.md) for evidence and open
 performance, mechanics, full-primary, display and patient-readiness gates.
+
+The subsequent recorded-field-transfer implementation remains display-only.
+The current Python selection passed **1,173 tests with two intentional skips**
+and the existing two Gymnasium advisories, excluding the whole pilot module;
+external wall/RSS were 200.060 seconds / 1,612,644,352 bytes, below 240 seconds /
+3 GiB. Ordinary headless execution creates no recorder. Generated comparisons
+preserve complete physical states, metrics and receipts, including a tiny
+positive-duration action whose floating-point clock does not advance.
+
+Fresh vascular v13 on `282525c3` passed all 18 transport/authority/audit checks,
+73 original actions and 1,149 exact observations; the original full canonical
+rows, endpoint and available prior observed trajectories match. It records
+bounded historical transfer indicators over exact endpoint anatomy. Full/warm
+CPU rates are 0.682×/1.668×; small glyphs remain obscured in the actual patient
+view. The failed compact-wire v12 attempt is preserved and unqualified. This
+work ran no policy or optimizer and does not close the remaining patient,
+performance, planning or visual prerequisites for RL. See
+[recorded-field-transfers.md](recorded-field-transfers.md) and the performance
+results for source bindings, controls and limits.

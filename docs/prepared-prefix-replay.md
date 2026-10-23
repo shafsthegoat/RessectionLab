@@ -165,16 +165,21 @@ warm same-action intervals 1.738×. This was fresh preparation, not a separate
 prepared-only throughput measurement. V10's earlier clock-association failure
 remains preserved and is not retroactively promoted.
 
-The following v11 command is historical and requires its matching `3d4d73d7`
-Python/native source. The new recorded-transfer implementation invalidates its
-packages. Use a fresh current-source reconstruction for new observations.
-On this Mac with that historical source, open the qualified v11
+V11 packages are historical and require their matching `3d4d73d7` source.
+The recorded-transfer implementation invalidates them. Fresh v13 on `282525c3`
+published 73 new packages and passed all 18 transport/authority/audit checks,
+including exact ordered observations and a stable intermediate capture bracket.
+Its full/warm rates were 0.682×/1.668×. This is fresh preparation; a separate
+prepared-only reopen was not timed for v13. The failed partial v12 run/cache
+remain preserved and unqualified.
+
+On this Mac with the matching current Python/native source, open the v13
 packages using the ordinary application (receipt instrumentation is off):
 
 ```sh
 RESSECTIONLAB_IDLE_THERMAL_BUILD="$PWD/testcases/outputs/rl-readiness-20261022/idle-integer-native-production-build/build-receipt.json" \
 RESSECTIONLAB_PREFIX_JSON_BUILD="$PWD/testcases/outputs/rl-readiness-20261022/prefix-json-canonical-native-production-build/build-receipt.json" \
-RESSECTIONLAB_PREPARED_PREFIX_CACHE_DIRECTORY="$PWD/testcases/outputs/rl-readiness-20261022/prepared-vascular-v11-cache" \
+RESSECTIONLAB_PREPARED_PREFIX_CACHE_DIRECTORY="$PWD/testcases/outputs/rl-readiness-20261022/prepared-vascular-v13-cache" \
 desktop/node_modules/.bin/electron desktop \
   --case "$PWD/testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab"
 ```
