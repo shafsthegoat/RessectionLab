@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {fullCaseStateSummary,recordedFullCasePhase,operativeFieldFrame,acceptedCloseTool,closeToolFrame,closeToolPresentation} from '../src/full-case-presentation.ts';
+import {fullCaseStateSummary,recordedFullCasePhase,operativeFieldFrame,acceptedCloseTool,closeToolFrame,closeToolPresentation,closeToolWindowPresentation} from '../src/full-case-presentation.ts';
 import {validCameraState} from '../src/viewer/workspaceSettings.ts';
 const view=()=>({scene:{environment:{target:{initialVolumeMm3:100}},regions:[{name:'declared skull',material:'bone'},{name:'target',material:'tumor'}]},metrics:{targetRemovedMm3:20,removedByLabelMm3:{'declared skull':7,target:20}},fluid:{10:2,12:3},sources:[{kind:'modeled-vessel-wound',bleedingActive:false,reservoirMm3:1},{kind:'modeled-vessel-wound',bleedingActive:true,reservoirMm3:2}],vesselsV2:{wounds:{one:{},two:{}},faces:{a:{patent:false},b:{patent:false},c:{patent:true}}}});
 test('replay accounting uses selected source grid and label ownership, and separates spatial fluid from reservoirs and patency',()=>{
@@ -87,4 +87,42 @@ test('withdrawn or invalid accepted tips cannot invent a close-up target; displa
   v.slots.left.position=[0,0,0];v.slots.left.inserted=false;assert.equal(acceptedCloseTool(v,'left'),null);assert.equal(acceptedCloseTool(null,'left'),null);
   v.scene.regions.push({name:'tumor-looking source name',material:'unknown'},{name:'declared vessel target',material:'vessel',target:true});
   const display=closeToolPresentation(v,{});assert.equal(display.layerOpacity['tumor-looking source name'],.08);assert.equal(display.layerOpacity['declared vessel target'],1);
+});
+test('local cutaway retains the exact arbitrary-orientation tip and behind-tip halfspace within a bounded display box',()=>{
+  for(const quaternion of [[0,0,0,1],[.2,-.3,.4,.5],[1,2,3,4],[0,Math.SQRT1_2,0,Math.SQRT1_2]]){
+    const v=closeView();v.slots.right.quaternion=quaternion;v.slots.right.position=[-10.465,30.441,-369.943];
+    const settings={clipping:{axis:'x',value:80,flipped:true,enabled:true},clipBox:{enabled:true,min:[-100,-90,-80],max:[100,90,80]},obliqueClip:{enabled:true,normal:[0,1,0],offset:-50},layerOpacity:{brain:.4}};
+    const before=structuredClone({v,settings}),field=closeToolFrame(v,'right',{left:false,right:true},settings,false,true),window=field.windowClipping;
+    assert.deepEqual(field.center,v.slots.right.position);assert.deepEqual(field.settings.camera.target,field.center);assert(validCameraState(field.settings.camera));
+    assert.equal(window.clipping.enabled,false);assert.deepEqual(field.settings.clipBox,window.clipBox);assert.deepEqual(field.settings.obliqueClip,window.obliqueClip);
+    assert.equal(field.settings.layerOpacity,settings.layerOpacity);
+    for(let i=0;i<3;i++){
+      assert(Math.abs(window.clipBox.min[i]-(field.center[i]-.75*field.fieldMm))<1e-12);
+      assert(Math.abs(window.clipBox.max[i]-(field.center[i]+.75*field.fieldMm))<1e-12);
+    }
+    const {normal,offset}=window.obliqueClip,signed=point=>point.reduce((sum,value,i)=>sum+value*normal[i],offset);
+    assert(Math.abs(Math.hypot(...normal)-1)<1e-12);
+    const toTip=field.center.map((value,i)=>value-field.settings.camera.position[i]),length=Math.hypot(...toTip);
+    assert(normal.every((value,i)=>Math.abs(value-toTip[i]/length)<1e-12));
+    assert(Math.abs(signed(field.center)-field.fieldMm/12)<1e-10);
+    assert(signed(field.settings.camera.position)<0,'camera-facing context is clipped');
+    assert(signed(field.center.map((value,i)=>value+normal[i]*field.fieldMm/4))>0,'behind-tip context is retained');
+    assert(Math.abs(signed(field.center.map((value,i)=>value-normal[i]*field.fieldMm/12)))<1e-10,'front margin is fixed at focus');
+    assert.deepEqual({v,settings},before);
+  }
+});
+test('pinned window toggles preserve current orbit and restore exact prior clipping values and key absence',()=>{
+  const v=closeView(),original={clipping:{axis:'y',value:12,enabled:true,flipped:true},clipBox:{enabled:false,min:[-1,-2,-3],max:[7,8,9]},obliqueClip:{enabled:true,normal:[0,0,1],offset:17},layerOpacity:{brain:.7}};
+  const field=closeToolFrame(v,'right',{left:false,right:true},original,true,true),pinned=structuredClone(field.windowClipping);
+  const camera={position:[90,80,70],target:[3,4,5],up:[0,0,1]},current={...field.settings,camera,contrast:2};
+  v.slots.right.position=[100,200,300];v.slots.right.quaternion=[.4,.3,.2,.1];
+  const off=closeToolWindowPresentation(current,field.windowClipping,original,false);
+  assert.deepEqual(off.clipping,original.clipping);assert.deepEqual(off.clipBox,original.clipBox);assert.deepEqual(off.obliqueClip,original.obliqueClip);assert.equal(off.camera,camera);assert.equal(off.contrast,2);assert.equal(off.layerOpacity,current.layerOpacity);
+  const on=closeToolWindowPresentation(off,field.windowClipping,original,true);
+  assert.deepEqual(on.clipBox,pinned.clipBox);assert.deepEqual(on.obliqueClip,pinned.obliqueClip);assert.equal(on.clipping.enabled,false);assert.equal(on.camera,camera);assert.deepEqual(field.windowClipping,pinned);
+  on.clipBox.min[0]++;assert.deepEqual(field.windowClipping,pinned,'applied settings cannot mutate the pinned descriptor');
+  const absent=closeToolWindowPresentation(current,field.windowClipping,{},false);
+  for(const key of ['clipping','clipBox','obliqueClip'])assert.equal(Object.hasOwn(absent,key),false);
+  const plain=closeToolFrame(closeView(),'right',{left:false,right:true},original,false);
+  assert.equal(plain.settings.clipping,original.clipping);assert.equal(plain.settings.clipBox,original.clipBox);assert.equal(plain.settings.obliqueClip,original.obliqueClip);
 });

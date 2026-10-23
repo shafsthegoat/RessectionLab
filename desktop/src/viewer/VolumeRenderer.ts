@@ -1003,7 +1003,7 @@ export class VolumeRenderer {
     // even while the worker is preparing the rest of the snapshot.
     for (const group of [this.replayGroup, this.pendingReplayGroup])
       group?.children.forEach(mesh => this.applyReplaySurfaceAppearance(mesh));
-    this.clipSurgicalFlow();
+    this.clipSurgicalFieldEffects();
     this.materials().forEach(shader=>{
       shader.uniforms.uSliceContours.value=settings.sliceOverlay==='contour'?1:0;
       shader.uniforms.uClipEnabled.value=clipping.enabled ? 1 : 0;
@@ -1114,13 +1114,17 @@ export class VolumeRenderer {
   private surgicalPathSource: SurgicalInteraction['path'] | null = null;
   private readonly displayWork = {surgicalUpdates:0,toolBuilds:0,effectBuilds:0,pathBufferBuilds:0,previewStateInstalls:0,modelWorkerBuilds:0,modelRemeshedLayers:0,modelRemeshedChunks:0,modelCommits:0,
     sourceWorkerBuilds:0,replayWorkerBuilds:0,sourceRemeshedLayers:0,replayRemeshedLayers:0,workerInputCloneBytes:0,workerInputTransferBytes:0,workerResultTransferBytes:0};
-  private clipSurgicalFlow(){
+  /** Field evidence follows the 3D cutaway; complete tools, ghosts and paths do not. */
+  private clipSurgicalFieldEffects(){
     const planes=[...(this.extraClipPlanes??[]),...(this.clipPlane?[this.clipPlane]:[])];
-    this.surgicalFlow?.traverse(object=>{if(object instanceof THREE.Mesh){
-      for(const material of Array.isArray(object.material)?object.material:[object.material]){
-        if(material.clippingPlanes?.length!==planes.length)material.needsUpdate=true;material.clippingPlanes=planes;
+    for(const group of [this.surgicalFlow,this.surgicalEffects])group?.traverse(object=>{
+      if(object instanceof THREE.Mesh||object instanceof THREE.Points||object instanceof THREE.Line){
+        for(const material of Array.isArray(object.material)?object.material:[object.material]){
+          if(material.clippingPlanes?.length!==planes.length)material.needsUpdate=true;
+          material.clippingPlanes=planes;
+        }
       }
-    }});
+    });
   }
   setSurgical(interaction: SurgicalInteraction | null): void {
     const incomingView=interaction?.preview??interaction?.view;
@@ -1148,7 +1152,7 @@ export class VolumeRenderer {
     if(preparedFlow!==undefined){
       if(this.surgicalFlow){disposeObject(this.surgicalFlow);this.surgicalGroup.remove(this.surgicalFlow);}
       this.surgicalFlow=preparedFlow;this.surgicalFlowSource=incomingFlow;
-      if(preparedFlow){this.surgicalGroup.add(preparedFlow);this.clipSurgicalFlow();}
+      if(preparedFlow)this.surgicalGroup.add(preparedFlow);
     }
     if(this.surgicalEffectsView!==view||this.surgicalEffectsOutcome!==interaction.outcome||this.surgicalEffectsPreview!==!!interaction.preview){
       if(interaction.preview)this.displayWork.previewStateInstalls++;
@@ -1157,6 +1161,7 @@ export class VolumeRenderer {
       this.surgicalGroup.add(this.surgicalEffects);this.displayWork.effectBuilds++;
       this.surgicalEffectsView=view;this.surgicalEffectsOutcome=interaction.outcome;this.surgicalEffectsPreview=!!interaction.preview;
     }
+    this.clipSurgicalFieldEffects();
     const retained=new Set<string>();
     for(const [name,recordedSlot] of Object.entries(view.slots)){
       const effective=interaction.effectiveActivation?.[name];

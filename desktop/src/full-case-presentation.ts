@@ -49,8 +49,26 @@ export function closeToolPresentation(view:SurgicalView,settings:ViewerWorkspace
   return {...settings,layerOpacity:{...settings.layerOpacity,...Object.fromEntries(view.scene.regions.map(region=>[region.name,region.material==='vessel'?1:region.target?.9:alpha[region.material]??.14]))}};
 }
 
+export type CloseToolWindowClipping={
+  clipping:NonNullable<ViewerWorkspaceSettings['clipping']>;
+  clipBox:NonNullable<ViewerWorkspaceSettings['clipBox']>;
+  obliqueClip:NonNullable<ViewerWorkspaceSettings['obliqueClip']>;
+};
+
+/** Change only display clipping, using the window saved at explicit focus.
+ * Disabling restores original key presence as well as values; neither toggle
+ * changes the camera, linked cursor or the latest recorded instrument pose. */
+export function closeToolWindowPresentation(settings:ViewerWorkspaceSettings,window:CloseToolWindowClipping,original:ViewerWorkspaceSettings,enabled:boolean):ViewerWorkspaceSettings {
+  const next={...settings};
+  for(const key of ['clipping','clipBox','obliqueClip'] as const)delete next[key];
+  if(enabled)return {...next,...structuredClone(window)};
+  for(const key of ['clipping','clipBox','obliqueClip'] as const)
+    if(Object.hasOwn(original,key))Object.assign(next,{[key]:structuredClone(original[key])});
+  return next;
+}
+
 /** Explicit, pinned microscope-scale view of an exact accepted tip in RAS mm. */
-export function closeToolFrame(view:SurgicalView,selectedSlot:string,effectiveActivation:Record<string,boolean>|undefined,settings:ViewerWorkspaceSettings,translucent=true){
+export function closeToolFrame(view:SurgicalView,selectedSlot:string,effectiveActivation:Record<string,boolean>|undefined,settings:ViewerWorkspaceSettings,translucent=true,cutaway=false){
   const chosen=acceptedCloseTool(view,selectedSlot,effectiveActivation);if(!chosen)return null;
   const tool=view.catalog.find(item=>item.id===chosen.slot.instrument),radius=chosen.slot.parameters?.radiusMm??tool?.radiusMm??2;
   const fieldMm=Math.max(18,Math.min(42,Number.isFinite(radius)&&radius>0?radius*12:24));
@@ -68,9 +86,21 @@ export function closeToolFrame(view:SurgicalView,selectedSlot:string,effectiveAc
   // Match the existing renderer's34degree vertical field of view.
   const distance=fieldMm/(2*Math.tan(17*Math.PI/180)),scale=distance/Math.hypot(...direction);
   const camera={target:center,position:direction.map((value,i)=>center[i]+value*scale) as Point3,up};
+  // Keep the exact tip and a bounded native-world neighborhood. Positive plane
+  // distance retains the working end and tissue behind it, while removing
+  // camera-facing context. This plane stays pinned when the camera is orbited.
+  const towardTip=center.map((value,i)=>value-camera.position[i]),normalLength=Math.hypot(...towardTip);
+  const normal=towardTip.map(value=>value/normalLength) as Point3;
+  const halfWidth=.75*fieldMm;
+  const windowClipping:CloseToolWindowClipping={
+    clipping:{axis:'z',value:center[2],enabled:false},
+    clipBox:{enabled:true,min:center.map(value=>value-halfWidth) as Point3,max:center.map(value=>value+halfWidth) as Point3},
+    obliqueClip:{enabled:true,normal,offset:-normal.reduce((sum,value,i)=>sum+value*center[i],0)+fieldMm/12},
+  };
   const appearance=translucent?closeToolPresentation(view,settings):settings;
-  return {center,name:chosen.name,instrument:tool?.name??chosen.slot.instrument,fieldMm,stateId:view.stateId,
-    settings:{...appearance,layout:'3d-focus' as const,showPlane:false,volumeRendering:{...settings.volumeRendering,enabled:false},camera}};
+  const framed={...appearance,layout:'3d-focus' as const,showPlane:false,volumeRendering:{...settings.volumeRendering,enabled:false},camera};
+  return {center,name:chosen.name,instrument:tool?.name??chosen.slot.instrument,fieldMm,stateId:view.stateId,windowClipping,
+    settings:cutaway?closeToolWindowPresentation(framed,windowClipping,settings,true):framed};
 }
 
 /** Read quantities from the selected recorded state, including during replay. */

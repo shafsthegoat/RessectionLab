@@ -118,6 +118,29 @@ test('resident recorded transfers retain buffers on pose edits, clear on preview
   r.setSurgical(input);r.setSurgical({...input,flowDisplay:undefined});assert.equal(r.surgicalFlow,null);
   r.setSurgical(input);r.setSurgical(null);assert.equal(r.surgicalFlow,null);
 });
+test('3D cutaways clip field markers and transfers across replacement while complete instruments and paths stay visible',()=>{
+  const r=renderer(),input=flowInteraction();
+  input.view={...input.view,thermal:{13:30},fluid:{14:1},debris:{15:1},cutEdges:[[13,14]]};
+  input.path=[{position:[1,2,3],quaternion:[0,0,0,1]},{position:[2,3,4],quaternion:[0,0,0,1]}];
+  const before=structuredClone(input.view),axis=new THREE.Plane(new THREE.Vector3(1,0,0),-1),oblique=new THREE.Plane(new THREE.Vector3(0,1,1).normalize(),-2);
+  r.clipPlane=axis;r.extraClipPlanes=[oblique];r.setSurgical(input);
+  const fieldMaterials=()=>{const materials=[];for(const group of [r.surgicalEffects,r.surgicalFlow])group?.traverse(o=>{
+    if(o.isMesh||o.isPoints||o.isLine)materials.push(...(Array.isArray(o.material)?o.material:[o.material]));
+  });return materials;};
+  assert(r.surgicalEffects.children.some(o=>o.isPoints));assert(r.surgicalEffects.children.some(o=>o.isLine));
+  assert(r.surgicalEffects.children.some(o=>o.isMesh),'cut-face evidence exercises mesh clipping');
+  assert(fieldMaterials().length>3);for(const m of fieldMaterials())assert.deepEqual(m.clippingPlanes,[oblique,axis]);
+  const uncut=[];for(const group of [r.surgicalGhost,r.surgicalPath,...[...r.surgicalSlots.values()].map(s=>s.group)])group.traverse(o=>{
+    if(o.material)uncut.push(...(Array.isArray(o.material)?o.material:[o.material]));
+  });
+  assert(uncut.length>0);assert(uncut.every(m=>m.clippingPlanes===null));
+  const oldEffects=r.surgicalEffects;r.setSurgical({...input,view:{...input.view,thermal:{13:31}}});
+  assert.notEqual(r.surgicalEffects,oldEffects);for(const m of fieldMaterials())assert.deepEqual(m.clippingPlanes,[oblique,axis]);
+  const replacement=new THREE.Plane(new THREE.Vector3(0,0,1),-3);r.clipPlane=null;r.extraClipPlanes=[replacement];r.clipSurgicalFieldEffects();
+  for(const m of fieldMaterials())assert.deepEqual(m.clippingPlanes,[replacement]);
+  r.extraClipPlanes=[];r.clipSurgicalFieldEffects();for(const m of fieldMaterials())assert.deepEqual(m.clippingPlanes,[]);
+  assert(uncut.every(m=>m.clippingPlanes===null));assert.deepEqual(input.view,before);r.setSurgical(null);
+});
 test('source-surface picking restores smoothed geometry and accepts the first hit inside every active clip plane',()=>{
   const r=Object.create(VolumeRenderer.prototype),source=new THREE.BufferGeometry(),smooth=new THREE.BufferGeometry(),mesh=new THREE.Mesh(smooth,new THREE.MeshBasicMaterial());
   const residual=new THREE.Mesh(smooth,new THREE.MeshBasicMaterial());residual.userData.replayGeometry={source};

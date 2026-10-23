@@ -4,26 +4,28 @@ import type {ViewerVolume} from './viewer/contracts';
 import type {Point3} from './viewer/coordinates';
 import {validCameraState} from './viewer/workspaceSettings';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
-import {acceptedCloseTool,closeToolFrame,closeToolPresentation,sourceContainsPoint} from './full-case-presentation';
+import {acceptedCloseTool,closeToolFrame,closeToolPresentation,closeToolWindowPresentation,sourceContainsPoint} from './full-case-presentation';
+import type {CloseToolWindowClipping} from './full-case-presentation';
 import {replayAuthorityKey} from './surgical-authority';
 
 interface Props {c:SurgicalController;source:ViewerVolume|null;settings:ViewerWorkspaceSettings;cursor:Point3|null;onSettings:(settings:ViewerWorkspaceSettings)=>void;onCursor:(point:Point3|null)=>void;onFitAnatomy:()=>void}
 type Snapshot={source:ViewerVolume;branch:string;scene:string;authority:string;settings:ViewerWorkspaceSettings;cursor:Point3|null};
-type Pin={name:string;instrument:string;fieldMm:number;stateId:string;slicesAtTip:boolean};
+type Pin={name:string;instrument:string;fieldMm:number;stateId:string;slicesAtTip:boolean;windowClipping:CloseToolWindowClipping};
 
 /** Optional display command. No pose editing, replay dispatch or automatic follow. */
 export function SurgicalCloseViewControls({c,source,settings,cursor,onSettings,onCursor,onFitAnatomy}:Props){
   const [snapshot,setSnapshot]=useState<Snapshot|null>(null),[pin,setPin]=useState<Pin|null>(null),[translucent,setTranslucent]=useState(true);
+  const [cutaway,setCutaway]=useState(true);
   const view=c.view,branch=c.result?.branchId??'',scene=view?.scene.sceneId??'',authority=c.result?replayAuthorityKey(c.result):'';
   const owns=!!snapshot&&snapshot.source===source&&snapshot.branch===branch&&snapshot.scene===scene&&snapshot.authority===authority;
   useEffect(()=>{if(snapshot&&!owns){setSnapshot(null);setPin(null);}},[snapshot,owns]);
   const effective=c.result?.playback?.effectiveActivation,tool=acceptedCloseTool(view,c.slot,effective),disabled=c.pending||!!c.preview||!tool;
   function frame(){
     if(disabled||!view||!source)return;
-    const field=closeToolFrame(view,c.slot,effective,settings,translucent);if(!field)return;
+    const field=closeToolFrame(view,c.slot,effective,settings,translucent,cutaway);if(!field)return;
     if(!owns)setSnapshot({source,branch,scene,authority,settings:structuredClone(settings),cursor:cursor?[...cursor]:null});
     const slicesAtTip=sourceContainsPoint(source,field.center);
-    setPin({name:field.name,instrument:field.instrument,fieldMm:field.fieldMm,stateId:field.stateId,slicesAtTip});
+    setPin({name:field.name,instrument:field.instrument,fieldMm:field.fieldMm,stateId:field.stateId,slicesAtTip,windowClipping:field.windowClipping});
     if(slicesAtTip)onCursor(field.center);
     onSettings(field.settings);
   }
@@ -33,10 +35,15 @@ export function SurgicalCloseViewControls({c,source,settings,cursor,onSettings,o
   }
   return <section aria-label="Close instrument view" data-pinned-state-id={owns?pin?.stateId:undefined} data-pinned-slot={owns?pin?.name:undefined} data-field-mm={owns?pin?.fieldMm:undefined}>
     <button disabled={disabled} onClick={frame}>{owns?'Refocus accepted tool':'Close tool view'}</button>
+    <label><input type="checkbox" checked={cutaway} onChange={event=>{
+      const enabled=event.target.checked;setCutaway(enabled);
+      if(owns&&snapshot&&pin)onSettings(closeToolWindowPresentation(settings,pin.windowClipping,snapshot.settings,enabled));
+    }}/>Local anatomy cutaway · display only</label>
     {!tool&&<p className="surgical-note">An accepted inserted instrument is needed for a close view.</p>}
     {owns&&pin&&<>
       <button onClick={restore}>Restore previous view</button>
       <p className="surgical-note">Pinned to {pin.name} hand · {pin.instrument} · {pin.fieldMm} mm field. Orbit freely; refocus to use the latest accepted tip.</p>
+      <p className="surgical-note">{cutaway?'Local anatomy window is pinned to this tip.':'Original clipping restored.'} Instruments remain complete; MRI source images stay unchanged. Restore previous view returns the saved context and clipping.</p>
       {!pin.slicesAtTip&&<p className="surgical-note">No source image slice is available at this tip. Linked slices keep their previous position.</p>}
       <label><input type="checkbox" checked={translucent} onChange={event=>{
         const enabled=event.target.checked;setTranslucent(enabled);if(!view||!snapshot)return;
