@@ -10,6 +10,7 @@ from __future__ import annotations
 from .data_policy import DataPolicyError, LEGACY_OPERATION_EXCLUSIONS, historical_only
 
 import argparse
+import builtins
 from collections import OrderedDict
 from collections.abc import Mapping
 from concurrent.futures import ThreadPoolExecutor
@@ -26,7 +27,7 @@ import sys
 import tempfile
 import threading
 import time
-from types import ModuleType
+from types import ModuleType, FunctionType, BuiltinFunctionType
 import uuid
 from typing import Any, Callable
 
@@ -79,8 +80,101 @@ def _keys(args: dict, allowed: set[str]) -> None:
         raise BridgeError("INVALID_ARGUMENT", "Unsupported argument(s): " + ", ".join(sorted(extra)))
 
 
-def _require_json_budget(value: Any, limit: int, code: str, message: str) -> None:
+_BUDGET_JSON_MODULE = json
+_BUDGET_ENCODER_MODULE = json.encoder
+_BUDGET_ENCODER = json.JSONEncoder
+_BUDGET_ENCODER_FUNCTIONS = tuple((owner, name, getattr(owner, name, None),
+    getattr(getattr(owner, name, None), '__code__', None),
+    getattr(getattr(owner, name, None), '__defaults__', None),
+    getattr(getattr(owner, name, None), '__kwdefaults__', None))
+    for owner, names in ((_BUDGET_ENCODER, ('__init__', 'default', 'iterencode')),
+                         (_BUDGET_ENCODER_MODULE, ('_make_iterencode',))) for name in names)
+_BUDGET_ASCII_ENCODER = json.encoder.encode_basestring_ascii
+_BUDGET_BUILTINS = tuple((name, getattr(builtins, name)) for name in
+    ('bool', 'dict', 'float', 'int', 'isinstance', 'list', 'str', 'tuple', 'id', 'len',
+     'iter', 'next', 'max', 'set', 'type', 'ValueError', 'RuntimeError', 'OverflowError'))
+_BUDGET_TYPE_ANCHORS = (('bool', True.__class__), ('dict', {}.__class__),
+    ('float', (0.).__class__), ('int', (0).__class__), ('list', [].__class__),
+    ('str', ''.__class__), ('tuple', ().__class__), ('type', True.__class__.__class__))
+_BUDGET_INIT_DEFAULTS = {'skipkeys': False, 'ensure_ascii': True,
+    'check_circular': True, 'allow_nan': True, 'sort_keys': False,
+    'indent': None, 'separators': None, 'default': None}
+
+
+def _stock_budget_encoder() -> bool:
+    """The shortcut proves stock ASCII JSON only; custom encoders still run."""
+    try:
+        encoder = _BUDGET_ENCODER
+        if (json is not _BUDGET_JSON_MODULE or type(json) is not ModuleType
+                or json.encoder is not _BUDGET_ENCODER_MODULE
+                or type(json.encoder) is not ModuleType
+                or json.JSONEncoder is not encoder or json.encoder.JSONEncoder is not encoder
+                or type(encoder) is not type or encoder.__bases__ != (object,)
+                or encoder.__module__ != 'json.encoder' or encoder.__name__ != 'JSONEncoder'
+                or encoder.__new__ is not object.__new__
+                or encoder.__getattribute__ is not object.__getattribute__
+                or encoder.__setattr__ is not object.__setattr__):
+            return False
+        # Leave the original recursive encoder responsible for errors in a
+        # constrained caller stack. This shortcut is for ordinary bridge calls.
+        if sys.getrecursionlimit() < 512:
+            return False
+        frame = sys._getframe()
+        for _ in range(64):
+            if frame is None:
+                break
+            frame = frame.f_back
+        if frame is not None:
+            return False
+        del frame
+        filename = json.encoder.__file__
+        for owner, name, function, code, defaults, kwdefaults in _BUDGET_ENCODER_FUNCTIONS:
+            if (type(function) is not FunctionType or code is None
+                    or code.co_filename != filename or function.__module__ != 'json.encoder'
+                    or getattr(owner, name) is not function or function.__code__ is not code
+                    or function.__defaults__ is not defaults or function.__kwdefaults__ is not kwdefaults):
+                return False
+        defaults = encoder.__init__.__kwdefaults__
+        if (type(defaults) is not dict or len(defaults) != len(_BUDGET_INIT_DEFAULTS)
+                or any(type(key) is not str for key in defaults)
+                or any(key not in defaults or defaults[key] is not value
+                       for key, value in _BUDGET_INIT_DEFAULTS.items())):
+            return False
+        if (encoder.__init__.__defaults__ is not None
+                or encoder.default.__defaults__ is not None or encoder.default.__kwdefaults__ is not None
+                or type(encoder.iterencode.__defaults__) is not tuple
+                or len(encoder.iterencode.__defaults__) != 1
+                or encoder.iterencode.__defaults__[0] is not False or encoder.iterencode.__kwdefaults__ is not None
+                or json.encoder._make_iterencode.__kwdefaults__ is not None):
+            return False
+        expected_make = (ValueError, dict, float, id, int, isinstance, list, str, tuple, int.__repr__)
+        make_defaults = json.encoder._make_iterencode.__defaults__
+        if (type(make_defaults) is not tuple or len(make_defaults) != len(expected_make)
+                or any(actual is not expected for actual, expected in zip(make_defaults, expected_make))
+                or any(getattr(builtins, name) is not expected for name, expected in _BUDGET_TYPE_ANCHORS)):
+            return False
+        # Only the ordinary CPython scalar hook is qualified here. Other
+        # runtimes and pre-import custom hooks retain the streaming path.
+        import _json
+        if (type(_BUDGET_ASCII_ENCODER) is not BuiltinFunctionType
+                or _BUDGET_ASCII_ENCODER.__module__ != '_json'
+                or _BUDGET_ASCII_ENCODER.__name__ != 'encode_basestring_ascii'
+                or _json.encode_basestring_ascii is not _BUDGET_ASCII_ENCODER
+                or json.encoder.encode_basestring_ascii is not _BUDGET_ASCII_ENCODER
+                or type(json.encoder.INFINITY) is not float or json.encoder.INFINITY != 1e309):
+            return False
+        return all(getattr(json.encoder, name, original) is original
+                   and getattr(builtins, name) is original for name, original in _BUDGET_BUILTINS)
+    except (AttributeError, ImportError, TypeError):
+        return False
+
+
+def _require_json_budget(value: Any, limit: int, code: str, message: str, *, _builtin_fast=False) -> None:
     """Bound a new inspection payload without assembling a second full JSON string."""
+    if _builtin_fast and _stock_budget_encoder():
+        from .json_budget import builtin_json_fits
+        if builtin_json_fits(value, limit):
+            return
     size = 0
     for chunk in json.JSONEncoder(separators=(",", ":"), allow_nan=False).iterencode(value):
         size += len(chunk.encode("utf-8"))

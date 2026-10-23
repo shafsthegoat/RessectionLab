@@ -270,7 +270,7 @@ def dispatch(session, operation, args, request, progress):
         result.update(caseHash=identity, branchId=selected, changed=False, outcome=None,
             fullCase=None, branches=[{'id': name, 'steps': len(snapshot['actions'])}
                                      for name, snapshot in raw['branches'].items()])
-        _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Read-only prefix exceeds the display budget')
+        _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Read-only prefix exceeds the display budget', _builtin_fast=True)
         request.check()
         return result
     prefix_owner = getattr(session, 'surgical_prefix_session', None)
