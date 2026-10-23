@@ -127,6 +127,26 @@ test('only current resident frame may repeat; renderer acknowledgment tokens are
   await h.pipeline.close();
 });
 
+test('Electron optional undefined acknowledgements match ordinary JSON absence before the first frame', async () => {
+  const h = harness(); await started(h, 1);
+  const input = args(0, 0, { prefixToken: undefined, prefixFieldTokens: undefined });
+  const first = h.pipeline.seekFrame(input);
+  assert.equal(Object.hasOwn(input, 'prefixToken'), true);
+  assert.equal(Object.hasOwn(h.consumer.calls[1].args, 'prefixToken'), false);
+  assert.equal(Object.hasOwn(h.consumer.calls[1].args, 'prefixFieldTokens'), false);
+  h.consumer.calls[1].resolve(response('consumer', 0, 0, 2, 1));
+  await first; assert.equal(h.pipeline.statistics.deliveredFrames, 1); assert.deepEqual(h.fatal, []);
+  await h.pipeline.close();
+});
+test('explicit null and malformed acknowledgement values remain terminal', async () => {
+  for (const extra of [{prefixToken:null},{prefixToken:''},{prefixToken:1},{prefixFieldTokens:null},
+    {prefixFieldTokens:{unknown:'a'.repeat(64)}},{prefixFieldTokens:{flapComponents:'bad'}}]) {
+    const h = harness(); await started(h, 1);
+    await assert.rejects(h.pipeline.seekFrame(args(0,0,extra)), /INVALID_ACK/);
+    assert.equal(h.consumer.calls.length,1);assert.equal(h.fatal.length,1);await h.pipeline.close();
+  }
+});
+
 for (const [label, mutate] of [
   ['foreign binding', r => { r.prefixWorker.binding.originSnapshotHash = '9'.repeat(64); }],
   ['foreign store', r => { r.prefixWorker.store.directory = '/other'; }],

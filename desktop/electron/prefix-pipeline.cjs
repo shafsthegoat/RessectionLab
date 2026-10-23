@@ -236,6 +236,11 @@ class PrefixPipeline {
       && integer(args.frameIndex, 0, 99999), 'SEQUENTIAL_ONLY');
     need(Object.keys(args).every(key => ['caseHash', 'branchId', 'command', 'position', 'frameIndex',
       'prefixToken', 'prefixFieldTokens'].includes(key)), 'UNSUPPORTED_ARGUMENT');
+    // Electron preserves optional undefined properties from the renderer.
+    // Ordinary Sidecar JSON omits them; match that absence before validating
+    // acknowledgements. Explicit null/malformed values remain invalid.
+    args = { ...args };
+    for (const key of ['prefixToken', 'prefixFieldTokens']) if (args[key] === undefined) delete args[key];
     if (Object.hasOwn(args, 'prefixToken')) need(typeof args.prefixToken === 'string'
       && args.prefixToken.length >= 1 && args.prefixToken.length <= 1024, 'INVALID_ACK');
     if (Object.hasOwn(args, 'prefixFieldTokens')) need(plain(args.prefixFieldTokens)
