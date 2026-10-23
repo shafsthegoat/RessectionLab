@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {checkedSurgicalPlayback} from '../src/surgical-playback.ts';
+import {checkedSurgicalPlayback,checkedSurgicalPlaybackWire} from '../src/surgical-playback.ts';
+import {SurgicalTimelineStream} from '../src/surgical-timeline-stream.ts';
 import {checkedFlowDisplayForView,MAX_FLOW_OPERATIONS} from '../src/surgical-flow-display.ts';
 const hash=letter=>'sha256:'+letter.repeat(64);
 function fixture(){
@@ -15,6 +16,20 @@ test('a demanded historical interval is bound to its endpoint, independent of th
   assert.equal(checkedSurgicalPlayback(response,request).flowDisplay,response.playback.flowDisplay);
   assert.deepEqual(response,before);
   delete response.playback.flowDisplay;assert.equal(checkedSurgicalPlayback(response,request).flowDisplay,undefined,'legacy absence remains available as static endpoint review');
+});
+test('compact prefetch validates flow with acknowledged resident scene without hydrating future data',()=>{
+  const full=fixture();Object.assign(full,{caseHash:'case',branchId:'main',timelineToken:'generation',timeline:[],fullCase:null});
+  const stream=new SurgicalTimelineStream();stream.hydrate(full);
+  const wire=structuredClone(full);delete wire.view.scene;delete wire.timeline;wire.timelineOmitted=true;
+  const before=structuredClone(wire),resident={caseHash:'case',branchId:'main',timelineToken:stream.token('case','main'),scene:full.view.scene};
+  assert.equal(checkedSurgicalPlaybackWire(wire,request,resident),wire.playback);assert.deepEqual(wire,before);
+  assert.equal(stream.token('case','main'),'generation');assert.equal(Object.hasOwn(wire.view,'scene'),false);
+  const demanded=stream.hydrate(wire);assert.equal(checkedSurgicalPlayback(demanded,request),wire.playback);
+  for(const mutate of [r=>r.timelineToken='stale',r=>r.caseHash='foreign',r=>r.branchId='other',r=>r.view.scene=full.view.scene,r=>r.playback.flowDisplay.sceneId=hash('d')]){
+    const bad=structuredClone(wire);mutate(bad);assert.throws(()=>checkedSurgicalPlaybackWire(bad,request,resident));
+  }
+  assert.throws(()=>checkedSurgicalPlaybackWire(wire,request,{...resident,timelineToken:undefined}));
+  assert.throws(()=>checkedSurgicalPlayback(wire,request),'unhydrated default admission cannot bypass source context');
 });
 test('transfer admission rejects substituted sources, frames, times, cells, routes and invented species',()=>{
   for(const change of [

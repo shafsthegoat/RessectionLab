@@ -213,7 +213,8 @@ function run(){
         let count=0,lastProgressAt=-Infinity;
         while(performance.now()-report.playStarted<600000){
           await pause(100);
-          const evidence=await js(`({count:window.vascularSubmitted.length,last:window.vascularSubmitted.at(-1),failure:window.vascularFailure,pending:!!document.querySelector('.rl-viewer-preparing'),playing:[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Pause replay'),inserted:[...document.querySelectorAll('.surgical-slots small')].some(e=>e.textContent.startsWith('Inserted')),stateId:document.querySelector('.surgical-panel')?.dataset.stateId})`);
+          const evidence=await js(`({count:window.vascularSubmitted.length,last:window.vascularSubmitted.at(-1),failure:window.vascularFailure,pending:!!document.querySelector('.rl-viewer-preparing'),playing:[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Pause replay'),inserted:[...document.querySelectorAll('.surgical-slots small')].some(e=>e.textContent.startsWith('Inserted')),stateId:document.querySelector('.surgical-panel')?.dataset.stateId,replayError:document.querySelector('.surgical-panel > .surgical-error[role="alert"]')?.textContent?.trim()??null})`);
+          if(evidence.replayError){report.uiReplayError={text:evidence.replayError,observedAt:performance.now(),last:evidence.last,submittedCount:evidence.count};throw Error('Replay UI error: '+evidence.replayError);}
           if(evidence.failure)throw Error(evidence.failure);
           if(report.ipc.slice(index).some(row=>row.error))throw Error('Playback request failed');
           count=evidence.count;

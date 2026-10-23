@@ -8,7 +8,7 @@ import {checkedPrefixResponse,checkedPrefixWireResponse,frameCommand,prefixComma
 import {SurgicalTimelineStream} from './surgical-timeline-stream.ts';
 import {SurgicalReplayPrefetch} from './surgical-replay-prefetch.ts';
 import type {SurgicalReplaySelection} from './surgical-replay-prefetch';
-import {checkedSurgicalPlayback,nextSurgicalPlaybackFrame,surgicalCursorCommand,updatesEditableSurgicalCursor} from './surgical-playback.ts';
+import {checkedSurgicalPlayback,checkedSurgicalPlaybackWire,nextSurgicalPlaybackFrame,surgicalCursorCommand,updatesEditableSurgicalCursor} from './surgical-playback.ts';
 import {modeledVolume} from './modeled-volume.ts';
 export {modeledVolume} from './modeled-volume.ts';
 import type {SurgicalAction,SurgicalOutcome,SurgicalApi,SurgicalPose,SurgicalRegion,SurgicalResponse,SurgicalView,SurgicalInteraction} from './surgical-types';
@@ -59,7 +59,7 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
     if(!next||next.caseHash!==source.caseHash||next.branchId!==selection.branchId)throw Error('Recorded replay response differs from its source');
     if(owner.prefix)checkedPrefixWireResponse(next);
     if(replayAuthorityKey(next)!==owner.authority)throw Error('Recorded replay response changed authority');
-    checkedSurgicalPlayback(next,selection);return next;
+    checkedSurgicalPlaybackWire(next,selection,{caseHash:source.caseHash,branchId:owner.branchId,timelineToken,scene:c.result.view.scene});return next;
   });
   function stopPlayback(){replayOwner.current=null;replayLane.current!.stop();}
   const desired=useRef({result:desiredResult,preview:desiredPreview,previewOutcome:desiredPreviewOutcome});desired.current={result:desiredResult,preview:desiredPreview,previewOutcome:desiredPreviewOutcome};

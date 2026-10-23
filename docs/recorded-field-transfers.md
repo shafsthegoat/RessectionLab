@@ -66,7 +66,7 @@ patient physiology or clinical calibration.
 Generated validation passed 1,173 Python tests with two intentional native
 alias skips and two existing Gymnasium advisories. The pilot module was
 excluded entirely. The focused recording/cache selection passed 166 tests;
-721 renderer/viewer tests, 231 Electron tests and the production build passed.
+722 renderer/viewer tests, 231 Electron tests and the production build passed.
 Checks include complete ordinary/observed state and receipt equality, a real
 tiny-duration suction/overflow action at an unchanged floating-point clock,
 failed-write rollback, authenticated tamper rejection, cached seek without
@@ -74,3 +74,11 @@ physics, optional metadata budget fallback and renderer resource cleanup.
 Independent static review found and checked repairs for the rounded clock,
 release-color wording and asynchronous screenshot context. Patient application
 validation is recorded separately in the performance results.
+
+The first fresh GUI attempt stopped after one observation because compact
+prefetch omitted scene context. Wire validation now uses the same replay
+owner's immutable scene and request-time acknowledged timeline generation in
+a temporary view. It neither hydrates future field values nor advances stream
+acknowledgments. The demanded receipt still undergoes normal hydration and full
+admission before display. The failed v12 run and partial cache remain preserved
+and unqualified; subsequent qualification uses a fresh cache.

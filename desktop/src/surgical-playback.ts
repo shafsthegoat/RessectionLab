@@ -1,4 +1,4 @@
-import type {SurgicalPlayback,SurgicalResponse} from './surgical-types';
+import type {SurgicalPlayback,SurgicalResponse,SurgicalView} from './surgical-types';
 import {checkedSurgicalFlowDisplay} from './surgical-flow-display.ts';
 /** Elapsed time recorded by the authoritative action result, never inferred
  * from frame index or requested duration (partial actions may stop early). */
@@ -43,6 +43,16 @@ export function checkedSurgicalPlayback(response:SurgicalResponse,request:{branc
   need(!p.effectiveActivation||Object.entries(p.effectiveActivation).every(([slot,active])=>slot in response.view.slots&&typeof active==='boolean'));
   checkedSurgicalFlowDisplay(p.flowDisplay,response.view,p);
   return p;
+}
+
+/** Prefetched wire may omit immutable scene context. Check it against the same
+ * source/branch and acknowledged timeline generation without hydrating future
+ * field values, changing stream acknowledgments or publishing the receipt. */
+export function checkedSurgicalPlaybackWire(response:SurgicalResponse,request:{branchId?:unknown;position?:unknown;frameIndex?:unknown},resident:{caseHash:string;branchId:string;timelineToken?:string;scene:SurgicalView['scene']}){
+  if(!response.timelineOmitted)return checkedSurgicalPlayback(response,request);
+  if(!resident.timelineToken||response.timelineToken!==resident.timelineToken||response.caseHash!==resident.caseHash||response.branchId!==resident.branchId||Object.hasOwn(response.view,'scene'))
+    throw Error('Compact recorded microstep differs from its resident source context.');
+  return checkedSurgicalPlayback({...response,view:{...response.view,scene:resident.scene}},request);
 }
 
 /** Advance only to observed successful states. Never interpolate effects or time. */
