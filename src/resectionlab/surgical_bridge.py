@@ -443,16 +443,26 @@ def dispatch(session, operation, args, request, progress):
         record.setdefault('timeline', {})[record['branchId']] = copy.deepcopy(engine.history)
         outcome = {'status': 'accepted', 'reason': director.get('stopReason') or director.get('currentPhaseId'), 'completedFraction': 1., 'events': []}
     elif command == 'plan':
-        from .surgical_planning import compare_continuations
-        branches, comparison = compare_continuations(engine,
-            acknowledge_unknowns=args.get('acknowledgeResearchUnknowns', False),
-            opponent=args.get('opponent', 'stop'), check=request.check, progress=progress)
-        # Install only after BOTH complete deterministic replay checks pass.
+        if args.get('opponent') == 'vascular-rescue':
+            from .surgical_strategy_planning import compare_rescue
+            branches, comparison = compare_rescue(engine, record,
+                acknowledge_unknowns=args.get('acknowledgeResearchUnknowns', False),
+                check=request.check, progress=progress)
+        else:
+            from .surgical_planning import compare_continuations
+            branches, comparison = compare_continuations(engine,
+                acknowledge_unknowns=args.get('acknowledgeResearchUnknowns', False),
+                opponent=args.get('opponent', 'stop'), check=request.check, progress=progress)
+        # Install only after every complete continuation replay check passes.
         # The original live branch and cursor remain unchanged.
         for candidate, report in branches:
             branch_id = 'plan-' + str(len(record['branches'])) + '-' + report['method']
             report['branchId'] = branch_id
             record['branches'][branch_id] = candidate.snapshot()
+            # These live endpoints and their independent continuation replays
+            # just passed above. Keep them in the existing bounded session
+            # cache so selecting an alternative can immediately show it.
+            replay_cache.seek(candidate, record['branches'][branch_id], len(candidate.actions), check=request.check)
             record.setdefault('timeline', {})[branch_id] = copy.deepcopy(candidate.history)
             record.setdefault('parents', {})[branch_id] = {'branchId': record['branchId'], 'position': record['position']}
         comparison['comparisonSeal'] = semantic_digest(comparison)
@@ -516,6 +526,8 @@ def dispatch(session, operation, args, request, progress):
               'branches': [{'id': k, 'steps': len(v['actions']), 'parent': record.get('parents', {}).get(k)} for k, v in record['branches'].items()]}
     from .surgical_planning import availability
     result['planningAvailability'] = availability(engine)
+    from .surgical_strategy_planning import rescue_availability
+    result['planningAvailability'].update(rescue_availability(engine, record))
     comparison = copy.deepcopy(record.get('planning'))
     if comparison is not None:
         from .surgical_planning import validate_saved_comparison

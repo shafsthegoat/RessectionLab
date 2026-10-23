@@ -52,8 +52,11 @@ def validate_saved_comparison(scene, record, comparison):
             document.get('sourceLabelsHash') != array_digest(scene.labels)):
         raise ValueError('Saved research comparison source or receipt integrity differs')
     alternatives = document.get('alternatives', [])
-    if len(alternatives) != 2 or len({p.get('branchId') for p in alternatives}) != 2:
-        raise ValueError('Saved research comparison requires two distinct branches')
+    expected_count = 3 if document.get('task') == 'vascular-rescue' else 2
+    if len(alternatives) != expected_count or len({p.get('branchId') for p in alternatives}) != expected_count:
+        raise ValueError('Saved research comparison requires distinct task branches')
+    if document.get('task') == 'vascular-rescue' and {p.get('method') for p in alternatives} != {'prompt-coagulation','suction-first','recorded-delay'}:
+        raise ValueError('Saved rescue comparison strategies differ')
     prefixes = []
     for plan in alternatives:
         branch = record['branches'].get(plan.get('branchId'))
@@ -73,7 +76,7 @@ def validate_saved_comparison(scene, record, comparison):
         if (branch.get('protectionContract') or {}).get('contentHash') != document['guardContractId']:
             raise ValueError('Saved research comparison exclusion contract differs')
         prefixes.append(branch['actions'][:count])
-    if prefixes[0] != prefixes[1]:
+    if any(prefix != prefixes[0] for prefix in prefixes[1:]):
         raise ValueError('Saved alternatives do not share the same native source prefix')
 
 

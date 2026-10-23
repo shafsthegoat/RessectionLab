@@ -2,6 +2,23 @@ import * as THREE from 'three';
 import type {SurgicalFlowDisplay,SurgicalView} from '../surgical-types';
 import {checkedFlowDisplayForView,MAX_FLOW_OPERATIONS} from '../surgical-flow-display.ts';
 
+/** A display gain makes small, ledger-backed operations readable at surgical
+ * scale. It is never fed back into a field, quantitative label or source state. */
+export const FLOW_DROPLET_RADIUS_GAIN=3;
+type FlowAnimation={mesh:THREE.InstancedMesh;time:{value:number};duration:number};
+/** Retrospective interval evidence, not a fluid solver. No looping, velocities,
+ * tip routes or extrapolation; zero-duration writes remain static glyphs. */
+export function updateSurgicalFlowAnimation(group:THREE.Group,elapsedSeconds:number|null):boolean {
+  const animation=group.userData.flowAnimation as FlowAnimation|undefined;
+  if(!animation)return false;
+  const active=elapsedSeconds!==null&&Number.isFinite(elapsedSeconds)&&elapsedSeconds>=0&&elapsedSeconds<animation.duration;
+  animation.mesh.visible=active;animation.time.value=active?elapsedSeconds!:-1;
+  for(const child of group.children)if(child!==animation.mesh&&child instanceof THREE.Mesh){
+    const material=child.material as THREE.MeshBasicMaterial;material.opacity=active?.28:.9;
+  }
+  return active;
+}
+
 /** Fixed-size display glyphs, never fluid surfaces, velocities or mass packets.
  * Each operation uses at most three instances; all buffers are bounded by 256.
  * Straight segments exist only for recorded, adjacent native free-cell edges.
@@ -46,6 +63,37 @@ export function surgicalFlowGroup(view:SurgicalView,input:SurgicalFlowDisplay):T
     if(count){object.count=count;object.instanceMatrix.needsUpdate=true;if(object.instanceColor)object.instanceColor.needsUpdate=true;
       object.frustumCulled=false;object.raycast=()=>{};group.add(object);
     }else {object.geometry.dispose();object.material.dispose();object.dispose();}
+  }
+  const located=flow.operations.filter(op=>!(op.kind==='escape'&&op.fromCell===null)&&op.endSeconds>op.startSeconds);
+  if(located.length){
+    const geometry=new THREE.SphereGeometry(1,10,6),times:number[]=[],deltas:number[]=[],radii:number[]=[],kinds:number[]=[];
+    // Depth-independent evidence overlay: tiny source-cell operations stay
+    // readable behind context anatomy. The ordinary cutaway still clips it.
+    const dropletMaterial=new THREE.MeshBasicMaterial({color:'#ffffff',transparent:true,opacity:.92,depthWrite:false,depthTest:false});
+    const droplets=new THREE.InstancedMesh(geometry,dropletMaterial,located.length),time={value:-1};
+    droplets.name='flow:ledger-droplets';droplets.visible=false;droplets.renderOrder=10;droplets.frustumCulled=false;droplets.raycast=()=>{};
+    located.forEach((op,i)=>{
+      const start=point((op.kind==='deposit'?op.toCell:op.fromCell)!),end=op.kind==='transfer'?point(op.toCell!):start;
+      matrix.compose(start,identity,new THREE.Vector3(1,1,1));droplets.setMatrixAt(i,matrix);droplets.setColorAt(i,color(op));
+      times.push(op.startSeconds-flow.startSeconds,op.endSeconds-flow.startSeconds);deltas.push(...end.clone().sub(start).toArray());
+      radii.push(FLOW_DROPLET_RADIUS_GAIN*Math.cbrt(3*op.volumeMm3/(4*Math.PI)));kinds.push(op.kind==='deposit'?1:op.kind==='transfer'?0:2);
+    });
+    geometry.setAttribute('operationTimes',new THREE.InstancedBufferAttribute(new Float32Array(times),2));
+    geometry.setAttribute('operationDelta',new THREE.InstancedBufferAttribute(new Float32Array(deltas),3));
+    geometry.setAttribute('operationRadius',new THREE.InstancedBufferAttribute(new Float32Array(radii),1));
+    geometry.setAttribute('operationKind',new THREE.InstancedBufferAttribute(new Float32Array(kinds),1));
+    dropletMaterial.onBeforeCompile=shader=>{
+      shader.uniforms.recordedFlowTime=time;
+      shader.vertexShader='uniform float recordedFlowTime;\nattribute vec2 operationTimes;\nattribute vec3 operationDelta;\nattribute float operationRadius;\nattribute float operationKind;\n'+shader.vertexShader;
+      shader.vertexShader=shader.vertexShader.replace('#include <begin_vertex>',`float p = clamp((recordedFlowTime-operationTimes.x)/(operationTimes.y-operationTimes.x),0.0,1.0);
+        float alive = step(operationTimes.x,recordedFlowTime)*(1.0-step(operationTimes.y,recordedFlowTime));
+        float fraction = operationKind < 0.5 ? 1.0 : operationKind < 1.5 ? p : 1.0-p;
+        vec3 transformed = position*operationRadius*pow(max(0.0,fraction),1.0/3.0)*alive + operationDelta*p;`);
+    };
+    dropletMaterial.customProgramCacheKey=()=> 'recorded-ledger-droplets-v1';
+    droplets.instanceMatrix.needsUpdate=true;if(droplets.instanceColor)droplets.instanceColor.needsUpdate=true;
+    group.userData.flowAnimation={mesh:droplets,time,duration:flow.endSeconds-flow.startSeconds} satisfies FlowAnimation;
+    group.userData.dropletRadiusGain=FLOW_DROPLET_RADIUS_GAIN;group.add(droplets);
   }
   return group;
 }

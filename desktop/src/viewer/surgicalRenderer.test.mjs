@@ -6,7 +6,7 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createServer} from 'vite';
 import * as THREE from 'three';
-let server,cache,VolumeRenderer,registerModeledAnatomy,prepareSurface,packAnatomyLabels,IncrementalSurfaceEngine,LabelTextureUpdates,retainSurface,cachedSurface,surgicalFlowGroup;
+let server,cache,VolumeRenderer,registerModeledAnatomy,prepareSurface,packAnatomyLabels,IncrementalSurfaceEngine,LabelTextureUpdates,retainSurface,cachedSurface,surgicalFlowGroup,updateSurgicalFlowAnimation,surgicalToolMesh,updateSurgicalToolAnimation;
 before(async()=>{
   cache=await fs.mkdtemp(path.join(os.tmpdir(),'surgical-renderer-'));
   server=await createServer({root:fileURLToPath(new URL('../../',import.meta.url)),cacheDir:cache,logLevel:'error',optimizeDeps:{noDiscovery:true,include:[]},server:{middlewareMode:true,hmr:false,ws:false},appType:'custom',plugins:[{
@@ -18,7 +18,8 @@ before(async()=>{
     }
   }]});
   VolumeRenderer=(await server.ssrLoadModule('/src/viewer/VolumeRenderer.ts')).VolumeRenderer;
-  ({surgicalFlowGroup}=await server.ssrLoadModule('/src/viewer/surgicalFlowGeometry.ts'));
+  ({surgicalFlowGroup,updateSurgicalFlowAnimation}=await server.ssrLoadModule('/src/viewer/surgicalFlowGeometry.ts'));
+  ({surgicalToolMesh,updateSurgicalToolAnimation}=await server.ssrLoadModule('/src/viewer/surgicalGeometry.ts'));
   ({registerModeledAnatomy}=await server.ssrLoadModule('/src/viewer/modeledAnatomy.ts'));
   ({prepareSurface}=await server.ssrLoadModule('/src/viewer/prepareSurface.ts'));
   ({packAnatomyLabels}=await server.ssrLoadModule('/src/viewer/labelPacking.ts'));
@@ -95,7 +96,7 @@ function flowInteraction(){
 }
 test('recorded arrows follow the scene affine and stay local for uptake; visual size does not encode volume',()=>{
   const input=flowInteraction(),before=structuredClone(input.view),group=surgicalFlowGroup(input.view,input.flowDisplay);
-  const [shaft,head,local]=group.children,m=new THREE.Matrix4();assert.equal(group.children.length,3);assert(group.children.every(o=>o.isInstancedMesh));
+  const [shaft,head,local]=group.children,m=new THREE.Matrix4();assert.equal(group.children.length,4);assert(group.children.every(o=>o.isInstancedMesh));
   shaft.getMatrixAt(0,m);const tail=new THREE.Vector3(0,-.5,0).applyMatrix4(m);assert(tail.distanceTo(new THREE.Vector3(8,23,34))<1e-6);
   head.getMatrixAt(0,m);const tip=new THREE.Vector3(0,.5,0).applyMatrix4(m);assert(tip.distanceTo(new THREE.Vector3(8,23,38))<1e-6);
   local.getMatrixAt(0,m);assert.deepEqual(new THREE.Vector3().setFromMatrixPosition(m).toArray(),[8,23,30]);
@@ -107,6 +108,51 @@ test('recorded arrows follow the scene affine and stay local for uptake; visual 
   const escaped=surgicalFlowGroup(input.view,unlocated);assert.equal(escaped.children.length,0,'off-grid escape has no invented location');
   const hits=[];group.children.forEach(o=>o.raycast(null,hits));assert.deepEqual(hits,[]);
   for(const g of [group,second])g.traverse(o=>{if(o.isMesh){o.geometry.dispose();o.material.dispose();o.dispose();}});
+});
+
+test('ledger droplets retain source positions, quantities and bounded lifetimes without per-frame buffer writes',()=>{
+  const input=flowInteraction(),before=structuredClone({view:input.view,flowDisplay:input.flowDisplay}),flow=input.flowDisplay;
+  flow.operations.push({kind:'deposit',field:'fluid',provenance:'wound',fromCell:null,toCell:10,volumeMm3:.08,startSeconds:.1,endSeconds:.2});
+  const group=surgicalFlowGroup(input.view,flow),droplets=group.getObjectByName('flow:ledger-droplets');
+  assert.equal(droplets.count,3);assert.equal(droplets.visible,false);assert.equal(droplets.material.depthTest,false);
+  const matrix=new THREE.Matrix4();droplets.getMatrixAt(2,matrix);assert.deepEqual(new THREE.Vector3().setFromMatrixPosition(matrix).toArray(),[8,20,34]);
+  assert.deepEqual([...droplets.geometry.attributes.operationDelta.array],[0,0,4,0,0,0,0,0,0]);
+  assert.deepEqual([...droplets.geometry.attributes.operationKind.array],[0,2,1]);
+  for(const [i,op] of flow.operations.entries())assert(Math.abs((4*Math.PI/3)*(droplets.geometry.attributes.operationRadius.getX(i)/3)**3-op.volumeMm3)<1e-6);
+  const positions=droplets.instanceMatrix.array.slice(),version=droplets.instanceMatrix.version;
+  const shader={uniforms:{},vertexShader:'#include <begin_vertex>'};droplets.material.onBeforeCompile(shader);
+  assert(shader.vertexShader.includes('operationDelta*p'));assert(shader.vertexShader.includes('1.0-step(operationTimes.y,recordedFlowTime)'));
+  assert.equal(updateSurgicalFlowAnimation(group,.05),true);assert.equal(shader.uniforms.recordedFlowTime.value,.05);assert.equal(droplets.visible,true);
+  assert.equal(updateSurgicalFlowAnimation(group,.2),false);assert.equal(droplets.visible,false);
+  assert.equal(updateSurgicalFlowAnimation(group,null),false);assert.equal(shader.uniforms.recordedFlowTime.value,-1);
+  assert.deepEqual(droplets.instanceMatrix.array,positions);assert.equal(droplets.instanceMatrix.version,version);
+  assert.deepEqual(input.view,before.view);assert.equal(flow.operations[0].volumeMm3,before.flowDisplay.operations[0].volumeMm3);
+});
+test('retrospective animation never replays on pause, resume, pose edits or scrub without playback',()=>{
+  const r=renderer(),input=flowInteraction();input.playbackDisplay={playing:true,speed:.25,startSeconds:0,endSeconds:.2};input.effectiveActivation={left:true,right:true};
+  r.setSurgical(input);const animation=r.surgicalAnimation,group=r.surgicalFlow;
+  assert(animation);assert.equal(r.advanceSurgicalAnimation(animation.startedAt+400),true);
+  assert.equal(group.getObjectByName('flow:ledger-droplets').visible,true);
+  r.setSurgical({...input,pose:{...input.pose,position:[5,6,7]}});assert.equal(r.surgicalAnimation,animation);
+  assert.deepEqual(r.surgicalSlots.get('left').group.position.toArray(),input.view.slots.left.position);
+  r.setSurgical({...input,playbackDisplay:{...input.playbackDisplay,playing:false}});assert.equal(r.advanceSurgicalAnimation(animation.startedAt+500),false);
+  assert.equal(group.getObjectByName('flow:ledger-droplets').visible,false);
+  r.setSurgical(input);assert.equal(r.surgicalAnimation,null,'resuming does not fabricate another occurrence of a prior interval');
+  r.setSurgical({...input,recordedFrame:{...input.recordedFrame,branchId:'other'},playbackDisplay:{...input.playbackDisplay,playing:false}});assert.equal(r.surgicalAnimation,null);
+  r.setSurgical({...input,flowDisplay:undefined,playbackDisplay:undefined});assert.equal(r.surgicalFlow,null);assert.equal(r.advanceSurgicalAnimation(performance.now()),false);
+});
+test('working-part animation respects explicit activation and leaves recorded root poses exact',()=>{
+  for(const id of ['micro_scissors','dural_scissors','bipolar_forceps','tumor_forceps']){
+    const recorded={...slot(id),active:true},group=surgicalToolMesh(tool(id),recorded),jaws=group.children.filter(o=>typeof o.userData.jawBaseX==='number');
+    assert.equal(jaws.length,2);const exact=jaws.map(o=>o.position.x),pose=group.matrix.clone();
+    updateSurgicalToolAnimation(group,.1,.5);assert(jaws.every((o,i)=>Math.abs(o.position.x)<Math.abs(exact[i])));assert(group.matrix.equals(pose));assert.deepEqual(group.position.toArray(),recorded.position);
+    updateSurgicalToolAnimation(group,null,null);assert.deepEqual(jaws.map(o=>o.position.x),exact);
+    group.userData.effectiveActive=false;updateSurgicalToolAnimation(group,.1,.5);assert.deepEqual(jaws.map(o=>o.position.x),exact);
+  }
+  const drill=surgicalToolMesh(tool('cranial_drill'),{...slot('cranial_drill'),active:true,parameters:{rpm:60}}),bit=drill.getObjectByName('instrument:drill-bit');
+  updateSurgicalToolAnimation(drill,.25,.5);assert(Math.abs(bit.rotation.z-Math.PI/2)<1e-9);
+  updateSurgicalToolAnimation(drill,null,null);assert.equal(bit.rotation.z,0);
+  delete drill.userData.recordedRpm;updateSurgicalToolAnimation(drill,.25,.5);assert.equal(bit.rotation.z,0,'missing RPM has no inferred spin');
 });
 test('resident recorded transfers retain buffers on pose edits, clear on preview/toggle and release instance allocations',()=>{
   const r=renderer(),input=flowInteraction();r.setSurgical(input);const group=r.surgicalFlow;let disposed=0,instances=0;

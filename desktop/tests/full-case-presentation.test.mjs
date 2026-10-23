@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {fullCaseStateSummary,recordedFullCasePhase,operativeFieldFrame,acceptedCloseTool,closeToolFrame,closeToolPresentation,closeToolWindowPresentation} from '../src/full-case-presentation.ts';
+import {fullCaseStateSummary,recordedFullCasePhase,operativeFieldFrame,acceptedCloseTool,closeToolFrame,followCloseToolFrame,closeToolPresentation,closeToolWindowPresentation,sourceContainsPoint} from '../src/full-case-presentation.ts';
 import {validCameraState} from '../src/viewer/workspaceSettings.ts';
 const view=()=>({scene:{environment:{target:{initialVolumeMm3:100}},regions:[{name:'declared skull',material:'bone'},{name:'target',material:'tumor'}]},metrics:{targetRemovedMm3:20,removedByLabelMm3:{'declared skull':7,target:20}},fluid:{10:2,12:3},sources:[{kind:'modeled-vessel-wound',bleedingActive:false,reservoirMm3:1},{kind:'modeled-vessel-wound',bleedingActive:true,reservoirMm3:2}],vesselsV2:{wounds:{one:{},two:{}},faces:{a:{patent:false},b:{patent:false},c:{patent:true}}}});
 test('replay accounting uses selected source grid and label ownership, and separates spatial fluid from reservoirs and patency',()=>{
@@ -125,4 +125,32 @@ test('pinned window toggles preserve current orbit and restore exact prior clipp
   for(const key of ['clipping','clipBox','obliqueClip'])assert.equal(Object.hasOwn(absent,key),false);
   const plain=closeToolFrame(closeView(),'right',{left:false,right:true},original,false);
   assert.equal(plain.settings.clipping,original.clipping);assert.equal(plain.settings.clipBox,original.clipBox);assert.equal(plain.settings.obliqueClip,original.obliqueClip);
+});
+
+test('accepted-tool following translates current orbit and local window without changing source poses or settings',()=>{
+  const v=closeView(),original={contrast:1.2,layerOpacity:{brain:.6},clipping:{axis:'x',enabled:true,value:12}};
+  const previous=closeToolFrame(v,'left',{left:true,right:false},original,true,true);
+  const current={...previous.settings,camera:{position:[-12,-28,35],target:[3,4,5],up:[0,0,1]},contrast:2};
+  v.slots.left.position=[51,-18,13];v.slots.left.quaternion=[0,1,0,0];v.stateId='next-accepted';
+  const before=structuredClone({v,current,previous,original}),next=followCloseToolFrame(v,'right',{left:true,right:false},current,previous,original,true),delta=[50,-20,10];
+  assert.deepEqual(next.center,v.slots.left.position);assert.equal(next.stateId,'next-accepted');assert.equal(next.name,'left');
+  assert.deepEqual(next.settings.camera.position,current.camera.position.map((n,i)=>n+delta[i]));
+  assert.deepEqual(next.settings.camera.target,current.camera.target.map((n,i)=>n+delta[i]));assert.deepEqual(next.settings.camera.up,current.camera.up);
+  assert.equal(next.fieldMm,previous.fieldMm);assert.equal(next.settings.layerOpacity,current.layerOpacity);assert.equal(next.settings.contrast,2);
+  assert.deepEqual(next.windowClipping.clipBox.min,previous.windowClipping.clipBox.min.map((n,i)=>n+delta[i]));
+  assert.deepEqual(next.windowClipping.obliqueClip.normal,previous.windowClipping.obliqueClip.normal);
+  assert(Math.abs(next.windowClipping.obliqueClip.offset-(previous.windowClipping.obliqueClip.offset-previous.windowClipping.obliqueClip.normal.reduce((sum,n,i)=>sum+n*delta[i],0)))<1e-10);
+  assert.deepEqual({v,current,previous,original},before);
+  const inactive=followCloseToolFrame(v,'right',{left:false,right:false},current,previous,original,false);
+  assert.equal(inactive.name,'left','inactive frames retain the previous inserted hand instead of bouncing to the selected hand');
+  assert.deepEqual(inactive.settings.clipping,original.clipping);assert.equal(Object.hasOwn(inactive.settings,'clipBox'),false);
+});
+test('follow reframes accepted tool exchanges and leaves unavailable or out-of-scan source locations honest',()=>{
+  const v=closeView(),original={},previous=closeToolFrame(v,'left',{left:true,right:false},original,true,true),current=previous.settings;
+  v.slots.right.position=[200,300,400];v.slots.right.instrument='suction';v.catalog.push({id:'suction',name:'Suction',radiusMm:1});
+  const exchanged=followCloseToolFrame(v,'left',{left:false,right:true},current,previous,original,true);
+  assert.equal(exchanged.name,'right');assert.equal(exchanged.instrumentId,'suction');assert.equal(exchanged.fieldMm,18);assert.deepEqual(exchanged.settings.camera.target,[200,300,400]);assert(validCameraState(exchanged.settings.camera));
+  const source={shape:[10,10,10],affine:[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]],frame:'RAS+'};
+  assert.equal(sourceContainsPoint(source,exchanged.center),false,'caller can retain linked source slices outside acquired support');
+  v.slots.right.inserted=false;v.slots.left.inserted=false;assert.equal(followCloseToolFrame(v,'left',{},current,previous,original,true),null);
 });

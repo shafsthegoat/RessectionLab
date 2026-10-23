@@ -3,6 +3,7 @@ import type {Point3} from './viewer/coordinates';
 import {inverseAffine,rasAffine,transformPoint} from './viewer/coordinates.ts';
 import type {ViewerVolume} from './viewer/contracts';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
+import {validCameraState} from './viewer/workspaceSettings.ts';
 
 const validPoint=(point:unknown):point is Point3=>Array.isArray(point)&&point.length===3&&point.every(Number.isFinite);
 /** Acquired voxel support in RAS, including oblique and LPS source grids. */
@@ -99,8 +100,27 @@ export function closeToolFrame(view:SurgicalView,selectedSlot:string,effectiveAc
   };
   const appearance=translucent?closeToolPresentation(view,settings):settings;
   const framed={...appearance,layout:'3d-focus' as const,showPlane:false,volumeRendering:{...settings.volumeRendering,enabled:false},camera};
-  return {center,name:chosen.name,instrument:tool?.name??chosen.slot.instrument,fieldMm,stateId:view.stateId,windowClipping,
+  return {center,name:chosen.name,instrumentId:chosen.slot.instrument,instrument:tool?.name??chosen.slot.instrument,fieldMm,stateId:view.stateId,windowClipping,
     settings:cutaway?closeToolWindowPresentation(framed,windowClipping,settings,true):framed};
+}
+
+export type CloseToolAnchor=Pick<NonNullable<ReturnType<typeof closeToolFrame>>,'center'|'name'|'instrumentId'|'fieldMm'|'windowClipping'>;
+/** Follow only a supplied accepted snapshot. Same-tool updates translate the
+ * current orbit and pinned clipping together; no trajectory or future state is
+ * consumed. Exchanging tools establishes a fresh microscope view. */
+export function followCloseToolFrame(view:SurgicalView,selectedSlot:string,effectiveActivation:Record<string,boolean>|undefined,settings:ViewerWorkspaceSettings,previous:CloseToolAnchor,original:ViewerWorkspaceSettings,cutaway:boolean){
+  const preferred=view.slots[previous.name]?.inserted?previous.name:selectedSlot;
+  const field=closeToolFrame(view,preferred,effectiveActivation,settings,false,false);if(!field)return null;
+  if(field.name!==previous.name||field.instrumentId!==previous.instrumentId||!validCameraState(settings.camera))
+    return {...field,settings:closeToolWindowPresentation(field.settings,field.windowClipping,original,cutaway)};
+  const delta=field.center.map((value,i)=>value-previous.center[i]);
+  const translate=(point:Point3)=>point.map((value,i)=>value+delta[i]) as Point3;
+  const camera={position:translate(settings.camera.position),target:translate(settings.camera.target),up:[...settings.camera.up] as Point3};
+  const windowClipping=structuredClone(previous.windowClipping);
+  windowClipping.clipping.value+=delta[{x:0,y:1,z:2}[windowClipping.clipping.axis]];
+  windowClipping.clipBox.min=translate(windowClipping.clipBox.min);windowClipping.clipBox.max=translate(windowClipping.clipBox.max);
+  windowClipping.obliqueClip.offset-=windowClipping.obliqueClip.normal.reduce((sum,value,i)=>sum+value*delta[i],0);
+  return {...field,fieldMm:previous.fieldMm,windowClipping,settings:closeToolWindowPresentation({...settings,camera},windowClipping,original,cutaway)};
 }
 
 /** Read quantities from the selected recorded state, including during replay. */

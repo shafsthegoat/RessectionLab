@@ -3,8 +3,12 @@ import type {SurgicalPlanAlternative} from './surgical-types';
 /** Align alternatives by decision count, counting rejected commands separately
  * from the native accepted-action timeline. No new simulation is run by replay. */
 export function planReplayPosition(plan:SurgicalPlanAlternative,decision:number):number {
-  if(!Number.isInteger(decision)||decision<0||decision>6||!Number.isInteger(plan.prefixActions)||plan.prefixActions<0)throw Error('Invalid research replay position');
+  if(!Number.isInteger(decision)||decision<0||decision>Math.max(6,plan.decisions.length)||!Number.isInteger(plan.prefixActions)||plan.prefixActions<0)throw Error('Invalid research replay position');
   return plan.prefixActions+plan.decisions.slice(0,decision).filter(row=>row.status!=='rejected').length;
+}
+
+export function planLabel(plan:SurgicalPlanAlternative):string {
+  return plan.label??(plan.method==='checkpoint'?'Frozen learner · seed 17':plan.method==='greedy'?'Observation-only greedy':'Immediate STOP');
 }
 
 export function planDecisionReason(plan:SurgicalPlanAlternative,decision:number):string {

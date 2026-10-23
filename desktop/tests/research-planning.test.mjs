@@ -16,3 +16,10 @@ test('STOP stays distinct from task completion and truncated limits',()=>{
   const capped={...stopped,stopReason:'decision_limit',decisions:[{actionId:'apply_here',status:'accepted'}]};
   assert.match(planDecisionReason(capped,6),/decision limit/);
 });
+
+test('long executable strategies replay their full accepted command history',()=>{
+  const plan={prefixActions:48,stopReason:'sequence_complete',decisions:Array.from({length:29},(_,index)=>({actionId:'rescue '+index,status:index===20?'rejected':'accepted'}))};
+  assert.equal(planReplayPosition(plan,29),76);
+  assert.equal(planReplayPosition(plan,20),68);
+  assert.throws(()=>planReplayPosition(plan,30));
+});

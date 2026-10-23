@@ -2,8 +2,8 @@ import {TransformControls} from "three/addons/controls/TransformControls.js";
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 import {cachedSurface,retainSurface} from './surfaceCache';
 import type {SurfaceDiagnostics} from './surfacePolicy';
-import {surgicalToolMesh,surgicalEffectGroup,surgicalToolGeometryKey,updateSurgicalToolMesh} from "./surgicalGeometry";
-import {surgicalFlowGroup} from './surgicalFlowGeometry';
+import {surgicalToolMesh,surgicalEffectGroup,surgicalToolGeometryKey,updateSurgicalToolMesh,updateSurgicalToolAnimation} from "./surgicalGeometry";
+import {surgicalFlowGroup,updateSurgicalFlowAnimation} from './surgicalFlowGeometry';
 import type {SurgicalInteraction} from "../surgical-types";
 import {InteractionSession, InteractionBudget} from './interactionBudget';
 import {SliceFrameCache} from './sliceFrameCache';
@@ -1108,6 +1108,8 @@ export class VolumeRenderer {
   private surgicalEffects: THREE.Group | null = null;
   private surgicalFlow: THREE.Group | null = null;
   private surgicalFlowSource: SurgicalInteraction['flowDisplay'];
+  private surgicalAnimation:{key:string;startedAt:number;speed:number;startSeconds:number;endSeconds:number}|null=null;
+  private surgicalAnimationKey:string|null=null;
   private surgicalSlots = new Map<string,{key:string;group:THREE.Group}>();
   private surgicalGhostKey: string | null = null;
   private surgicalPath: THREE.Line | null = null;
@@ -1134,6 +1136,13 @@ export class VolumeRenderer {
     // leave both the previous endpoint and its transfer evidence installed.
     const preparedFlow=incomingFlow!==this.surgicalFlowSource?(incomingFlow?surgicalFlowGroup(incomingView!,incomingFlow):null):undefined;
     this.surgicalInteraction=interaction;
+    const frame=interaction?.recordedFrame,display=interaction?.preview?undefined:interaction?.playbackDisplay;
+    const animationKey=frame?JSON.stringify([frame.branchId,frame.position,frame.frameIndex,incomingView?.stateId]):null;
+    if(animationKey!==this.surgicalAnimationKey){
+      this.surgicalAnimationKey=animationKey;
+      this.surgicalAnimation=animationKey&&display?.playing&&Number.isFinite(display.startSeconds)&&Number.isFinite(display.endSeconds)&&display.endSeconds>display.startSeconds&&Number.isFinite(display.speed)&&display.speed>0?
+        {key:animationKey,startedAt:performance.now(),...display}:null;
+    }else if(!display?.playing||display.speed!==this.surgicalAnimation?.speed)this.surgicalAnimation=null;
     if(!this.surgicalGroup){this.surgicalGroup=new THREE.Group();this.scene.add(this.surgicalGroup);}
     // Pose editing is independent of the accepted tissue/effect state. Keep its
     // geometry resident while the ghost and recorded tools move by transforms.
@@ -1141,6 +1150,7 @@ export class VolumeRenderer {
       disposeObject(this.surgicalGroup);this.surgicalGroup.clear();this.surgicalSlots?.clear();
       this.surgicalEffects=null;this.surgicalEffectsView=null;this.surgicalEffectsOutcome=undefined;
       this.surgicalFlow=null;this.surgicalFlowSource=undefined;
+      this.surgicalAnimation=null;this.surgicalAnimationKey=null;
       this.surgicalPath=null;this.surgicalPathSource=null;
       this.surgicalGizmo?.detach();if(this.surgicalGhost)this.surgicalGhost.visible=false;
       this.controls.enabled=true;this.requestRender();return;
@@ -1173,6 +1183,9 @@ export class VolumeRenderer {
         if(old){disposeObject(old.group);this.surgicalGroup.remove(old.group);}
         const group=surgicalToolMesh(tool,slot);this.surgicalSlots.set(name,{key,group});this.surgicalGroup.add(group);this.displayWork.toolBuilds++;
       }
+      // Latched slot activation alone does not prove that the observed
+      // microstep applied a working part. Animate only explicit evidence.
+      this.surgicalSlots.get(name)!.group.userData.effectiveActive=interaction.effectiveActivation?.[name]===true;
     }
     for(const [name,old] of this.surgicalSlots)if(!retained.has(name)){
       disposeObject(old.group);this.surgicalGroup.remove(old.group);this.surgicalSlots.delete(name);
@@ -1212,6 +1225,22 @@ export class VolumeRenderer {
       }else if(this.surgicalPath)this.surgicalPath.visible=false;
     }
     this.requestRender();
+  }
+
+  private advanceSurgicalAnimation(now:number):boolean {
+    let animation=this.surgicalAnimation;
+    let workingPart=false;
+    for(const {group} of this.surgicalSlots?.values()??[])if(group.userData.effectiveActive&&(
+      group.children.some(child=>typeof child.userData.jawBaseX==='number')||
+      (group.getObjectByName('instrument:drill-bit')&&Number.isFinite(group.userData.recordedRpm)&&group.userData.recordedRpm>0)))workingPart=true;
+    if(!workingPart&&!this.surgicalFlow?.userData.flowAnimation)animation=this.surgicalAnimation=null;
+    const elapsed=animation?(now-animation.startedAt)*animation.speed/1000:null;
+    const duration=animation?animation.endSeconds-animation.startSeconds:0;
+    const active=elapsed!==null&&elapsed>=0&&elapsed<duration;
+    if(this.surgicalFlow)updateSurgicalFlowAnimation(this.surgicalFlow,active?elapsed:null);
+    for(const {group} of this.surgicalSlots?.values()??[])updateSurgicalToolAnimation(group,active?animation!.startSeconds+elapsed!:null,active?elapsed!/duration:null);
+    if(!active)this.surgicalAnimation=null;
+    return active;
   }
 
   setNavigationMode(mode: 'orbit'|'pan'): void {
@@ -1956,6 +1985,7 @@ export class VolumeRenderer {
     this.gpuTimer?.begin(serial);
     this.rendering=true;
     if(this.modelStage?.ready)this.commitModelStage(this.modelStage);
+    const surgicalAnimationActive=this.advanceSurgicalAnimation(performance.now());
     this.labelTextureUpdates?.sync(this.renderer,this.labelTexture);
     // Interaction quality changes only offscreen 3D targets. The shared canvas
     // and linked slices retain their display resolution throughout a gesture.
@@ -2023,9 +2053,12 @@ export class VolumeRenderer {
       sourceCaseHash:this.volume.caseHash,surgicalStateId:(this.surgicalInteraction?.preview??this.surgicalInteraction?.view)?.stateId??null,
       surgicalFrame:this.surgicalInteraction?.recordedFrame??null,
       recordedFlow:this.surgicalFlowSource?{startSeconds:this.surgicalFlowSource.startSeconds,endSeconds:this.surgicalFlowSource.endSeconds,operations:this.surgicalFlowSource.operations.length,truncated:this.surgicalFlowSource.truncated,
-        glyphInstances:this.surgicalFlow?.children.reduce((sum,object)=>sum+(object instanceof THREE.InstancedMesh?object.count:0),0)??0}:null,
+        animated:surgicalAnimationActive,approximation:'Retrospective source-interval overlay; 3x radius display gain',
+        glyphInstances:this.surgicalFlow?.children.reduce((sum,object)=>sum+(object instanceof THREE.InstancedMesh&&object.name!=='flow:ledger-droplets'?object.count:0),0)??0,
+        dropletInstances:(this.surgicalFlow?.getObjectByName('flow:ledger-droplets') as THREE.InstancedMesh|undefined)?.count??0}:null,
       picking:this.picking?.stats()??null}}));
     this.finishSurgicalFrame();
+    if(surgicalAnimationActive)this.needsFrame=true;
     const gl=this.renderer.getContext() as WebGL2RenderingContext;
     const sync=gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE,0);
     if(!sync)return;

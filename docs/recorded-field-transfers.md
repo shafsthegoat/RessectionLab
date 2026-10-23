@@ -4,8 +4,13 @@ Observed replay can show the fluid and debris writes recorded during its previou
 observation interval. In **Rehearse**, open an observed microstep and use
 **Show transfer glyphs**. The panel identifies the interval and keeps anatomy,
 instruments and quantitative field markers at the exact recorded endpoint.
-This first display uses static historical arrows and local diamonds. It does
-not reconstruct a moving fluid surface, intra-cell velocity or tool trajectory.
+Static historical arrows and local diamonds remain available during review.
+During playback, an additional GPU droplet overlay illustrates the preceding
+recorded interval once. Its emission time, source cell, lifetime and volume
+come from each recorded operation. A labeled 3× radius display gain improves
+visibility. Deposits grow locally, uptake shrinks locally, and transfer motion
+uses only a recorded neighboring-cell edge. It supplies no route to a tool tip,
+fluid surface or measured velocity. Pausing and scrubbing stop animation.
 
 Arrows connect actual neighboring native cells that were free when the engine
 transferred fluid or sediment. Diamonds mark local fluid release, suction or
@@ -55,13 +60,16 @@ undisplayed wire data. Transfer glyphs and their endpoint enter the existing
 atomic model-publication path together. Preview, boundary navigation, source
 changes and display toggles remove stale overlays. Glyphs follow the scene's
 actual affine and active clipping planes, cannot be picked, and do not affect
-camera fitting. At most three instanced meshes allocate 256 slots each, with at
-most 512 visible instances. Replacement releases instance buffers, geometry and
+camera fitting. Three static instanced meshes allocate 256 slots each, with at
+most 512 glyphs. One additional droplet mesh uses at most 256 instances; a shader
+uniform advances it without rewriting instance buffers. Replacement releases instance buffers, geometry and
 materials. Allocation telemetry includes instance matrices and colors.
 
-Animated droplets, synchronized flow playback, pooling surfaces and compositor
-delivery remain open. This display performs no learning and establishes no
-patient physiology or clinical calibration.
+Pooling surfaces and compositor delivery remain open. Working tool parts can
+also animate during accepted activation: recorded-RPM drill phase and explicitly
+illustrative jaw close/release, while root poses stay exact. The optional follow
+camera and cutaway consume newly accepted endpoints only. This display performs
+no learning and establishes no patient physiology or clinical calibration.
 
 Generated validation passed 1,173 Python tests with two intentional native
 alias skips and two existing Gymnasium advisories. The pilot module was
