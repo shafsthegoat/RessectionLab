@@ -5,7 +5,7 @@ import {rescueLearningReport,learningEndpointVerified} from './rescue-learning-d
 export function RescueLearningPanel({c,report,pause}:{c:SurgicalController;report:unknown;pause:()=>void}) {
   const data=rescueLearningReport(report,c.result);
   if(!data)return null;
-  const quantity=(value:number)=>value>0&&value<.001?value.toPrecision(3):value.toFixed(3);
+  const quantity=(value:number)=>value>0&&value<.001?value.toExponential(1):value.toFixed(3);
   const names={untrained:'Untrained PPO',scripted:'Scripted',trained:'Trained PPO','search-selected':'Search'};
   return <details className="research-planning rescue-learning"><summary>Patient rescue experiment · PPO and baselines</summary>
     {data.status&&data.status!=='completed'&&<p role="status">The experiment stopped before completion. Only saved assessments are listed; missing comparisons remain unevaluated.</p>}

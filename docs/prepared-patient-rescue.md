@@ -75,3 +75,14 @@ policy inference or clinical outcomes.
 This is a small development task over one authored injury. It exercises order,
 coverage, ongoing bleeding and delayed cleanup, while leaving access and tumor
 resection to future tasks. It does not qualify a surgical policy.
+
+The first two-seed experiment completed both 64-transition PPO fits and a
+matched search allowance. Both deterministic trained checkpoints failed final
+cleanup; scripted rescue succeeded for both seeds, and search succeeded for one.
+Independent assessment replay reproduced the actual actor choices, observations,
+requests, rewards and native endpoints. The failures were repeated incomplete
+coagulation coverage and aspiration while bleeding continued. No checkpoint was
+promoted. Mean complete headless decision time was 4.85 seconds across 323
+completed decisions, dominated by public engine execution. This establishes a
+solvable, inspectable development task and a reproducible negative learning
+result; it does not establish policy competence or interactive training speed.
