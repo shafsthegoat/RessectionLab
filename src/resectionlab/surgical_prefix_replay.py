@@ -20,7 +20,7 @@ import math
 from pathlib import Path
 import secrets
 import sys
-from types import FunctionType, MappingProxyType, ModuleType
+from types import BuiltinFunctionType, FunctionType, MappingProxyType, ModuleType
 import zlib
 
 from . import surgical_engine as _engine_module
@@ -33,12 +33,16 @@ from .surgical_engine import MAX_STEPS, SCHEMA, SurgicalEngine
 
 
 def _hash_function_anchor(function):
+    if type(function) is not FunctionType:
+        return None
     keywords = function.__kwdefaults__
     return (function, function.__code__, function.__defaults__, keywords,
             None if keywords is None else tuple(keywords.items()), function.__globals__)
 
 
 def _hash_function_unchanged(function, anchor):
+    if anchor is None:
+        return False
     expected, code, defaults, keywords, items, namespace = anchor
     if (type(function) is not FunctionType or function is not expected
             or function.__code__ is not code or function.__defaults__ is not defaults
@@ -51,6 +55,30 @@ def _hash_function_unchanged(function, anchor):
                     for (key, value), (original_key, original_value) in zip(keywords.items(), items)))
 
 
+def _hash_stock_json_function(function, module, name, qualname, defaults, keywords):
+    """Decline ordinary replacements already present when anchors are captured."""
+    if (type(function) is not FunctionType or type(module) is not ModuleType
+            or function.__globals__ is not vars(module)
+            or type(function.__module__) is not str or function.__module__ != module.__name__
+            or type(function.__name__) is not str or type(function.__qualname__) is not str
+            or function.__name__ != name or function.__qualname__ != qualname
+            or type(module.__file__) is not str or function.__code__.co_filename != module.__file__
+            or function.__code__.co_name != name):
+        return False
+    actual = function.__defaults__
+    if defaults is None:
+        if actual is not None:
+            return False
+    elif (type(actual) is not tuple or len(actual) != len(defaults)
+          or any(value is not expected for value, expected in zip(actual, defaults))):
+        return False
+    actual = function.__kwdefaults__
+    return (actual is None if keywords is None else
+            type(actual) is dict and len(actual) == len(keywords)
+            and all(type(key) is str and key in keywords and value is keywords[key]
+                    for key, value in actual.items()))
+
+
 _hash_property = SurgicalEngine.state_id
 _hash_property_function = _hash_function_anchor(_hash_property.fget)
 _hash_digest_function = _hash_function_anchor(_engine_module._owned_digest)
@@ -60,7 +88,7 @@ _hash_digest_lookups = tuple((name, _hash_digest_function[0].__globals__.get(
 _hash_json_module, _hash_sha_module = json, hashlib
 _hash_json_dumps = _hash_function_anchor(json.dumps)
 _hash_json_encoder = json.JSONEncoder
-_hash_encoder_functions = tuple((name, _hash_function_anchor(getattr(_hash_json_encoder, name)))
+_hash_encoder_functions = tuple((name, _hash_function_anchor(inspect.getattr_static(_hash_json_encoder, name)))
                                for name in ('__init__', 'encode', 'iterencode', 'default'))
 _hash_encoder_slots = tuple((name, inspect.getattr_static(_hash_json_encoder, name))
                            for name in ('__getattribute__', '__setattr__', '__new__'))
@@ -68,12 +96,40 @@ _hash_encoder_module = sys.modules[_hash_json_encoder.__module__]
 _hash_encoder_scalars = tuple((name, getattr(_hash_encoder_module, name))
                              for name in ('c_make_encoder', 'encode_basestring_ascii'))
 _hash_sha_function = hashlib.sha256
+_hash_scalar_module = sys.modules.get('_json')
+_hash_json_captures_genuine = (
+    _hash_stock_json_function(json.dumps, json, 'dumps', 'dumps', None,
+        {'skipkeys': False, 'ensure_ascii': True, 'check_circular': True, 'allow_nan': True,
+         'cls': None, 'indent': None, 'separators': None, 'default': None, 'sort_keys': False})
+    and type(_hash_json_encoder) is type and _hash_json_encoder.__name__ == 'JSONEncoder'
+    and _hash_json_encoder.__module__ == 'json.encoder'
+    and _hash_encoder_module is sys.modules.get('json.encoder')
+    and vars(_hash_encoder_module).get('JSONEncoder') is _hash_json_encoder
+    and all(function is expected for (_, function), expected in zip(_hash_encoder_slots,
+        (object.__getattribute__, object.__setattr__, object.__new__)))
+    and type(_hash_scalar_module) is ModuleType
+    and _hash_encoder_scalars[0][1] is vars(_hash_scalar_module).get('make_encoder')
+    and type(_hash_encoder_scalars[0][1]) is type
+    and _hash_encoder_scalars[0][1].__module__ == '_json'
+    and _hash_encoder_scalars[0][1].__name__ == 'Encoder'
+    and _hash_encoder_scalars[1][1] is vars(_hash_scalar_module).get('encode_basestring_ascii')
+    and type(_hash_encoder_scalars[1][1]) is BuiltinFunctionType
+    and _hash_encoder_scalars[1][1].__self__ is _hash_scalar_module
+    and _hash_encoder_scalars[1][1].__module__ == '_json'
+    and _hash_encoder_scalars[1][1].__name__ == 'encode_basestring_ascii'
+    and all(_hash_stock_json_function(inspect.getattr_static(_hash_json_encoder, name),
+        _hash_encoder_module, name, 'JSONEncoder.' + name, defaults, keywords)
+        for name, defaults, keywords in (
+            ('__init__', None, {'skipkeys': False, 'ensure_ascii': True, 'check_circular': True,
+                'allow_nan': True, 'sort_keys': False, 'indent': None, 'separators': None, 'default': None}),
+            ('encode', None, None), ('iterencode', (False,), None), ('default', None, None))))
 
 
 def _stock_prefix_hash_path(engine):
     """Decline overridden lookup/digest semantics before using native JSON."""
     try:
-        return (type(engine) is _PrefixEngine and type(_PrefixEngine) is type
+        return (_hash_json_captures_genuine
+                and type(engine) is _PrefixEngine and type(_PrefixEngine) is type
                 and type(_engine_module) is ModuleType
                 and type(json) is ModuleType and type(hashlib) is ModuleType
                 and type(_hash_json_module) is ModuleType and type(_hash_sha_module) is ModuleType
@@ -115,6 +171,17 @@ def _prefix_state_id(engine):
     if snapshot is None:
         return engine.state_id
     return 'sha256:' + hashlib.sha256(snapshot.encode('ascii')).hexdigest()
+
+
+def _prefix_field_token(engine, value, raw_limit):
+    """Fresh complete canonical field hash; custom JSON retains its old path."""
+    snapshot = None
+    if type(raw_limit) is int and _stock_prefix_hash_path(engine):
+        limit = raw_limit if raw_limit < 16 * 1024**2 else 16 * 1024**2
+        snapshot = _native_json.try_encode_canonical(value, limit)
+    if snapshot is None:
+        snapshot = json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False)
+    return hashlib.sha256(snapshot.encode()).hexdigest()
 
 _FROZEN_INPUT_AUTHORITY = object()
 
@@ -510,9 +577,9 @@ class _FrameStage:
             # The complete state's streaming encode has already enforced the
             # decoded JSON ceiling, which also bounds this field's temporary
             # canonical encoding. Tokens describe actual observed full values.
-            value = json.dumps(engine.state['flapComponents'], sort_keys=True,
-                               separators=(',', ':'), allow_nan=False).encode()
-            row['fieldTokens'] = MappingProxyType({'flapComponents': hashlib.sha256(value).hexdigest()})
+            value = engine.state['flapComponents']
+            row['fieldTokens'] = MappingProxyType({'flapComponents':
+                _prefix_field_token(engine, value, self.owner._max_json_bytes)})
         prospective = self.frames + [row]
         self.owner._frame_room(_owned_bytes(prospective))
         self.frames.append(row)

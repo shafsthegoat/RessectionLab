@@ -2,6 +2,11 @@
 import copy
 from collections import OrderedDict
 import json
+import importlib.util
+import os
+from pathlib import Path
+import subprocess
+import sys
 import zlib
 from types import ModuleType, SimpleNamespace
 
@@ -176,6 +181,221 @@ def test_private_native_hash_declines_custom_module_lookup_without_guard_side_ef
     calls.clear()
     assert prefix._prefix_state_id(engine) == expected
     assert calls == legacy_calls
+
+
+def stock_field_token(value):
+    raw = json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False).encode()
+    return prefix.hashlib.sha256(raw).hexdigest()
+
+
+def test_field_token_decline_preserves_complete_json_and_caps_without_memoization(monkeypatch):
+    engine = hash_shell()
+    shared = [-0., 5.e-324, 1.2345678901234567, 1.e20, 1.e-7]
+    value = {'unicode': '\x00é😀\ud800', 'z': shared, 'a': shared,
+             'ints': [-2**63, 2**63 - 1], 'tuple': (None, True, False)}
+    calls = []
+    def decline(actual, limit):
+        assert actual is value
+        calls.append(limit)
+        return None
+    monkeypatch.setattr(prefix._native_json, 'try_encode_canonical', decline)
+    assert prefix._stock_prefix_hash_path(engine)
+    first = prefix._prefix_field_token(engine, value, 64 * 1024**2)
+    assert first == stock_field_token(value)
+    shared.append('actual later value')
+    assert prefix._prefix_field_token(engine, value, 12345) == stock_field_token(value) != first
+    assert calls == [16 * 1024**2, 12345]
+    assert value['a'] is value['z'] is shared
+
+
+def test_field_token_selected_native_matches_stock_and_rehashes_actual_value(monkeypatch):
+    # Uses the already explicitly selected receipt; no fake native identity,
+    # compilation, engine constructor, public action or replay admission.
+    native = prefix._native_json
+    if native.strict_live_identity()['mode'] != 'native':
+        pytest.skip('Explicit selected prefix JSON build was not supplied')
+    engine = hash_shell()
+    shared = [-0., 0., 5.e-324, 1.2345678901234567, 1.e20, 1.e-7,
+              float.fromhex('0x1.fffffffffffffp+1023')]
+    value = [{'cells': [0, 1, 2**63 - 1], 'offset': shared,
+              'unicode': '\x00\n\t"\\é😀\ud800', 'tuple': (None, True, False)}, {'alias': shared}]
+    original = native.try_encode_canonical
+    calls = []
+    def observed(actual, limit):
+        result = original(actual, limit)
+        assert actual is value and type(result) is str
+        assert result.encode() == json.dumps(value, sort_keys=True,
+            separators=(',', ':'), allow_nan=False).encode()
+        calls.append(limit)
+        return result
+    monkeypatch.setattr(native, 'try_encode_canonical', observed)
+    assert prefix._stock_prefix_hash_path(engine)
+    before = prefix._prefix_field_token(engine, value, 64 * 1024**2)
+    assert before == stock_field_token(value)
+    value[0]['cells'].append(7)
+    assert prefix._prefix_field_token(engine, value, 4096) == stock_field_token(value) != before
+    assert calls == [16 * 1024**2, 4096]
+    assert value[0]['offset'] is value[1]['alias'] is shared
+
+
+@pytest.mark.parametrize('raises', [False, True])
+def test_field_token_custom_container_fallback_callbacks_run_once(raises):
+    calls = []
+    class CustomList(list):
+        def __iter__(self):
+            calls.append('iterate')
+            if raises:
+                raise RuntimeError('custom field iteration')
+            return list.__iter__(self)
+    value = CustomList([{'cells': [1], 'offset': [-0., 1., 2.]}])
+    # The actual adapter declines subclasses without invoking their callbacks.
+    if raises:
+        with pytest.raises(RuntimeError, match='custom field iteration'):
+            prefix._prefix_field_token(hash_shell(), value, 1024)
+    else:
+        expected = stock_field_token(list(value))
+        calls.clear()
+        assert prefix._prefix_field_token(hash_shell(), value, 1024) == expected
+    assert calls == ['iterate']
+
+
+def test_field_token_coercible_keys_and_large_integer_keep_legacy_fallback():
+    for value in ({1: 'one', 2: 'two'}, {None: 'null'}, {True: 'true'},
+                  [2**100, -(2**100)], {'tuple': (1, 2)}):
+        assert prefix._prefix_field_token(hash_shell(), value, 1024) == stock_field_token(value)
+
+
+@pytest.mark.parametrize('case', ['nonfinite', 'cycle', 'mixed-keys', 'unsupported'])
+def test_field_token_decline_keeps_stock_json_errors(case):
+    value = [float('nan')]
+    if case == 'cycle':
+        value = []; value.append(value)
+    elif case == 'mixed-keys':
+        value = {'a': 1, 2: 3}
+    elif case == 'unsupported':
+        value = object()
+    with pytest.raises((ValueError, TypeError)) as expected:
+        stock_field_token(value)
+    with pytest.raises(type(expected.value)) as actual:
+        prefix._prefix_field_token(hash_shell(), value, 1024)
+    assert str(actual.value) == str(expected.value)
+
+
+def test_field_token_native_identity_error_is_not_a_json_fallback(monkeypatch):
+    failure = ValueError('PREFIX_JSON_IDENTITY:selected implementation drift')
+    def unavailable(*_):
+        raise failure
+    monkeypatch.setattr(prefix._native_json, 'try_encode_canonical', unavailable)
+    with pytest.raises(ValueError) as actual:
+        prefix._prefix_field_token(hash_shell(), [{'cells': [1]}], 1024)
+    assert actual.value is failure
+
+
+@pytest.mark.parametrize('replacement', ['dumps', 'callable-dumps', 'dumps-keywords', 'encoder',
+    'encoder-keywords', 'encoder-scalar', 'encoder-lookup', 'encoder-setattr',
+    'default-lookup', 'default-lookup-error'])
+def test_field_token_captured_custom_json_uses_legacy_once(monkeypatch, replacement):
+    # Execute a separate module namespace with the ordinary override already
+    # installed. Do not alter anchors/guard results to manufacture admission.
+    value = {'unicode': 'é😀', 'cells': [1]}
+    expected = stock_field_token(value)
+    calls = []
+    if replacement in ('dumps', 'callable-dumps'):
+        def custom(*args, **kwargs):
+            calls.append('dumps')
+            return '{"custom":true}'
+        class CustomDumps:
+            __call__ = staticmethod(custom)
+        monkeypatch.setattr(json, 'dumps', CustomDumps() if replacement == 'callable-dumps' else custom)
+        expected = prefix.hashlib.sha256(b'{"custom":true}').hexdigest()
+    elif replacement == 'dumps-keywords':
+        monkeypatch.setitem(json.dumps.__kwdefaults__, 'ensure_ascii', False)
+        expected = prefix.hashlib.sha256(json.dumps(value, sort_keys=True,
+            separators=(',', ':'), allow_nan=False).encode()).hexdigest()
+    elif replacement == 'encoder':
+        original = json.JSONEncoder.encode
+        def custom(self, value):
+            calls.append('encode')
+            return original(self, value)
+        monkeypatch.setattr(json.JSONEncoder, 'encode', custom)
+    elif replacement == 'encoder-keywords':
+        monkeypatch.setitem(json.JSONEncoder.__init__.__kwdefaults__, 'ensure_ascii', False)
+    elif replacement == 'encoder-scalar':
+        def custom(*args):
+            calls.append('make encoder')
+            return lambda value, level: ['{"custom":true}']
+        monkeypatch.setattr(prefix._hash_encoder_module, 'c_make_encoder', custom)
+        expected = prefix.hashlib.sha256(b'{"custom":true}').hexdigest()
+    elif replacement in ('encoder-lookup', 'encoder-setattr'):
+        name = {'encoder-lookup': '__getattribute__', 'encoder-setattr': '__setattr__'}[replacement]
+        def custom(*args):
+            calls.append(name)
+            raise RuntimeError('custom encoder slot')
+        monkeypatch.setattr(json.JSONEncoder, name, custom)
+    else:
+        def custom(self):
+            calls.append('default lookup')
+            if replacement == 'default-lookup-error':
+                raise RuntimeError('custom field default lookup')
+            return lambda value: None
+        monkeypatch.setattr(json.JSONEncoder, 'default', property(custom))
+    specification = importlib.util.spec_from_file_location('resectionlab._prefix_capture_probe', prefix.__file__)
+    module = importlib.util.module_from_spec(specification)
+    specification.loader.exec_module(module)
+    namespace = vars(module)
+    engine = object.__new__(namespace['_PrefixEngine'])
+    assert not namespace['_hash_json_captures_genuine']
+    assert not namespace['_stock_prefix_hash_path'](engine)
+    assert calls == []
+    def forbidden(*_):
+        raise AssertionError('Captured custom JSON entered native writer')
+    monkeypatch.setattr(prefix._native_json, 'try_encode_canonical', forbidden)
+    if replacement in ('default-lookup-error', 'encoder-lookup', 'encoder-setattr'):
+        with pytest.raises(RuntimeError, match='custom field default lookup|custom encoder slot'):
+            namespace['_prefix_field_token'](engine, value, 1024)
+    else:
+        assert namespace['_prefix_field_token'](engine, value, 1024) == expected
+    assert calls == ({'dumps': ['dumps'], 'callable-dumps': ['dumps'], 'encoder': ['encode'],
+        'encoder-scalar': ['make encoder'],
+        'encoder-lookup': ['__getattribute__'], 'encoder-setattr': ['__setattr__'],
+        'default-lookup': ['default lookup'], 'default-lookup-error': ['default lookup']}.get(replacement, []))
+
+
+def test_field_token_captured_custom_encoder_new_isolated_from_parent():
+    # Assigning/deleting __new__ can leave CPython's tp_new dispatch changed.
+    # Never mutate that slot on the parent test process's JSONEncoder class.
+    source = '''
+import importlib.util
+import json
+from resectionlab import surgical_prefix_replay as prefix
+calls = []
+def custom(*args, **kwargs):
+    calls.append('__new__')
+    raise RuntimeError('custom encoder constructor')
+json.JSONEncoder.__new__ = staticmethod(custom)
+specification = importlib.util.spec_from_file_location('resectionlab._prefix_capture_probe', prefix.__file__)
+module = importlib.util.module_from_spec(specification)
+specification.loader.exec_module(module)
+engine = object.__new__(module._PrefixEngine)
+assert not module._hash_json_captures_genuine
+assert not module._stock_prefix_hash_path(engine)
+assert calls == []
+def forbidden(*args):
+    raise AssertionError('Captured custom constructor entered native writer')
+prefix._native_json.try_encode_canonical = forbidden
+try:
+    module._prefix_field_token(engine, {'cells': [1]}, 1024)
+except RuntimeError as error:
+    assert str(error) == 'custom encoder constructor'
+else:
+    raise AssertionError('Custom constructor error was suppressed')
+assert calls == ['__new__']
+'''
+    environment = dict(os.environ, PYTHONPATH=str(Path(prefix.__file__).resolve().parents[1]))
+    result = subprocess.run([sys.executable, '-c', source], env=environment,
+                            capture_output=True, text=True, timeout=15)
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert json.dumps({'parent': 'unchanged'}, sort_keys=True) == '{"parent": "unchanged"}'
 
 
 def episode():
