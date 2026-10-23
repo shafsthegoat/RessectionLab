@@ -38,7 +38,7 @@ DISK_BUDGET_ENV = 'RESSECTIONLAB_VERIFIED_CACHE_MAX_DISK_BYTES'
 MAX_JSON_BYTES = 128 * 1024**2
 DEFAULT_DIRECTORY = Path(__file__).resolve().parents[2] / 'testcases/outputs/.verified-surgical-cache'
 _MODULES = ('core', 'geometry', 'surgical_scene', 'surgical_engine', 'surgical_tools',
-            'surgical_motion', 'surgical_effects', 'surgical_physics', 'surgical_physics_v2',
+            'surgical_motion', 'surgical_effects', 'surgical_flow_display', 'surgical_physics', 'surgical_physics_v2',
             'surgical_drilling_v2', 'surgical_vessels_v2', 'surgical_deformation_v2',
             'surgical_occupancy', 'surgical_rl_protection', 'surgical_geometry_cache',
             'surgical_verified_cache', 'surgical_cusa_v3', 'surgical_idle_native',

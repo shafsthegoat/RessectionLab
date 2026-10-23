@@ -15,6 +15,10 @@ receipts retain their stated zero-update scope.
 
 ## What changed
 
+* Observed replay records bounded actual fluid/debris transfers outside physical
+  state and displays static historical arrows/local markers over the exact
+  endpoint. [Recorded field transfers](recorded-field-transfers.md) describes
+  provenance, timing, storage fallbacks and the remaining animation work.
 * Closed action timelines and provenance disclosures defer their contents.
   The primary timeline mounts zero hidden action buttons; opening it exposes
   all 2,148 recorded actions.

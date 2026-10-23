@@ -6,7 +6,7 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createServer} from 'vite';
 import * as THREE from 'three';
-let server,cache,VolumeRenderer,registerModeledAnatomy,prepareSurface,packAnatomyLabels,IncrementalSurfaceEngine,LabelTextureUpdates,retainSurface,cachedSurface;
+let server,cache,VolumeRenderer,registerModeledAnatomy,prepareSurface,packAnatomyLabels,IncrementalSurfaceEngine,LabelTextureUpdates,retainSurface,cachedSurface,surgicalFlowGroup;
 before(async()=>{
   cache=await fs.mkdtemp(path.join(os.tmpdir(),'surgical-renderer-'));
   server=await createServer({root:fileURLToPath(new URL('../../',import.meta.url)),cacheDir:cache,logLevel:'error',optimizeDeps:{noDiscovery:true,include:[]},server:{middlewareMode:true,hmr:false,ws:false},appType:'custom',plugins:[{
@@ -18,6 +18,7 @@ before(async()=>{
     }
   }]});
   VolumeRenderer=(await server.ssrLoadModule('/src/viewer/VolumeRenderer.ts')).VolumeRenderer;
+  ({surgicalFlowGroup}=await server.ssrLoadModule('/src/viewer/surgicalFlowGeometry.ts'));
   ({registerModeledAnatomy}=await server.ssrLoadModule('/src/viewer/modeledAnatomy.ts'));
   ({prepareSurface}=await server.ssrLoadModule('/src/viewer/prepareSurface.ts'));
   ({packAnatomyLabels}=await server.ssrLoadModule('/src/viewer/labelPacking.ts'));
@@ -81,6 +82,41 @@ test('repeated accepted effect changes dispose point buffers and materials as we
     assert.equal(created-disposed,current);
   }
   r.setSurgical(null);assert.equal(disposed,created);assert.equal(materialsDisposed,created);
+});
+function flowInteraction(){
+  const input=interaction(),hash=c=>'sha256:'+c.repeat(64);
+  input.view.stateId=hash('a');input.view.scene.sceneId=hash('b');input.view.metrics={elapsedSeconds:.2};
+  input.view.scene.affine=[[-2,0,0,10],[0,3,0,20],[0,0,4,30],[0,0,0,1]];
+  input.recordedFrame={branchId:'main',position:2,frameIndex:1};
+  input.flowDisplay={schema:'resectionlab.recorded-field-transfers.v1',sceneId:hash('b'),actionIndex:2,frameIndex:1,beforeStateId:hash('c'),stateId:hash('a'),startSeconds:0,endSeconds:.2,truncated:false,operations:[
+    {kind:'transfer',field:'fluid',provenance:'mixed',fromCell:13,toCell:14,volumeMm3:.5,startSeconds:0,endSeconds:.1},
+    {kind:'uptake',field:'debris',provenance:'debris',fromCell:12,toCell:null,volumeMm3:.25,startSeconds:.1,endSeconds:.2},
+  ]};return input;
+}
+test('recorded arrows follow the scene affine and stay local for uptake; visual size does not encode volume',()=>{
+  const input=flowInteraction(),before=structuredClone(input.view),group=surgicalFlowGroup(input.view,input.flowDisplay);
+  const [shaft,head,local]=group.children,m=new THREE.Matrix4();assert.equal(group.children.length,3);assert(group.children.every(o=>o.isInstancedMesh));
+  shaft.getMatrixAt(0,m);const tail=new THREE.Vector3(0,-.5,0).applyMatrix4(m);assert(tail.distanceTo(new THREE.Vector3(8,23,34))<1e-6);
+  head.getMatrixAt(0,m);const tip=new THREE.Vector3(0,.5,0).applyMatrix4(m);assert(tip.distanceTo(new THREE.Vector3(8,23,38))<1e-6);
+  local.getMatrixAt(0,m);assert.deepEqual(new THREE.Vector3().setFromMatrixPosition(m).toArray(),[8,23,30]);
+  assert.equal(local.count,1);assert.equal(shaft.count,1);assert.equal(head.count,1);
+  const changed=structuredClone(input.flowDisplay);changed.operations[0].volumeMm3=900;const second=surgicalFlowGroup(input.view,changed);
+  for(let i=0;i<3;i++)assert.deepEqual(second.children[i].instanceMatrix.array,group.children[i].instanceMatrix.array);
+  assert.deepEqual(input.view,before);
+  const unlocated=structuredClone(input.flowDisplay);unlocated.operations=[{...unlocated.operations[0],kind:'escape',fromCell:null,toCell:null}];
+  const escaped=surgicalFlowGroup(input.view,unlocated);assert.equal(escaped.children.length,0,'off-grid escape has no invented location');
+  const hits=[];group.children.forEach(o=>o.raycast(null,hits));assert.deepEqual(hits,[]);
+  for(const g of [group,second])g.traverse(o=>{if(o.isMesh){o.geometry.dispose();o.material.dispose();o.dispose();}});
+});
+test('resident recorded transfers retain buffers on pose edits, clear on preview/toggle and release instance allocations',()=>{
+  const r=renderer(),input=flowInteraction();r.setSurgical(input);const group=r.surgicalFlow;let disposed=0,instances=0;
+  group.traverse(o=>{if(o.isMesh){instances++;o.addEventListener('dispose',()=>disposed++);}});
+  for(let i=0;i<10;i++)r.setSurgical({...input,pose:{...input.pose,position:[i,0,0]}});assert.equal(r.surgicalFlow,group);
+  assert.throws(()=>r.setSurgical({...input,recordedFrame:{...input.recordedFrame,position:3}}),/demanded frame/);
+  assert.equal(r.surgicalInteraction.view,input.view);assert.equal(r.surgicalFlow,group);
+  r.setSurgical({...input,preview:input.view});assert.equal(r.surgicalFlow,null);assert.equal(disposed,instances);
+  r.setSurgical(input);r.setSurgical({...input,flowDisplay:undefined});assert.equal(r.surgicalFlow,null);
+  r.setSurgical(input);r.setSurgical(null);assert.equal(r.surgicalFlow,null);
 });
 test('source-surface picking restores smoothed geometry and accepts the first hit inside every active clip plane',()=>{
   const r=Object.create(VolumeRenderer.prototype),source=new THREE.BufferGeometry(),smooth=new THREE.BufferGeometry(),mesh=new THREE.Mesh(smooth,new THREE.MeshBasicMaterial());

@@ -72,13 +72,24 @@ function isVascularBenchmarkEntry(runtime,filename,nodeMain=false){
   if(typeof entry!=='string'||path.resolve(entry)!==path.resolve(filename))return false;
   return runtime.versions?.electron?runtime.type==='browser':nodeMain===true;
 }
-module.exports={COUNTS,END_STATE,BRANCH,expectedSequence,submittedVascularPlayback,exactSequence,checkedVascularAuthority,hardBudgetStop,isVascularBenchmarkEntry,vascularPreparedOnly,vascularStartButton,vascularPreparationChecks};
+function qualifiedFlowCapture(before,after){
+  if(!before?.frame||!after?.frame||!before.flow||!after.flow)return false;
+  const f=before.frame,flow=before.flow;
+  return f.branchId===BRANCH&&Number.isInteger(f.position)&&f.position>=0&&f.position<COUNTS.length&&Number.isInteger(f.frameIndex)&&f.frameIndex>=0&&f.frameIndex<COUNTS[f.position]&&
+    ['branchId','position','frameIndex'].every(key=>f[key]===after.frame[key])&&/^sha256:[0-9a-f]{64}$/.test(before.stateId)&&before.stateId===after.stateId&&before.panelStateId===before.stateId&&after.panelStateId===after.stateId&&
+    Number.isFinite(before.at)&&Number.isFinite(after.at)&&after.at>=before.at&&Number.isInteger(flow.operations)&&flow.operations>0&&flow.operations<=256&&Number.isInteger(flow.glyphInstances)&&flow.glyphInstances>0&&flow.glyphInstances<=512&&
+    Number.isFinite(flow.startSeconds)&&Number.isFinite(flow.endSeconds)&&flow.startSeconds>=0&&flow.endSeconds>=flow.startSeconds&&typeof flow.truncated==='boolean'&&
+    ['startSeconds','endSeconds','operations','truncated','glyphInstances'].every(key=>flow[key]===after.flow[key]);
+}
+module.exports={COUNTS,END_STATE,BRANCH,expectedSequence,submittedVascularPlayback,exactSequence,checkedVascularAuthority,hardBudgetStop,isVascularBenchmarkEntry,vascularPreparedOnly,vascularStartButton,vascularPreparationChecks,qualifiedFlowCapture};
 
 if(isVascularBenchmarkEntry(process,__filename,require.main===module))run();
 function run(){
   const {app,ipcMain,screen}=require('electron'),childProcess=require('node:child_process');
   if(process.env.RESSECTIONLAB_PLAYBACK_RECEIPT_OBSERVER!=='1')throw Error('Full vascular qualification requires explicit RESSECTIONLAB_PLAYBACK_RECEIPT_OBSERVER=1');
   const preparedOnly=vascularPreparedOnly(process.env.VASCULAR_PREPARED_ONLY);
+  if(process.env.VASCULAR_CAPTURE_FLOW!==undefined&&process.env.VASCULAR_CAPTURE_FLOW!=='1')throw Error('VASCULAR_CAPTURE_FLOW must be absent or 1');
+  const captureFlow=process.env.VASCULAR_CAPTURE_FLOW==='1';
   const configuredCache=process.env.RESSECTIONLAB_PREPARED_PREFIX_CACHE_DIRECTORY;
   const cacheDirectory=configuredCache?path.resolve(configuredCache):null;
   if((preparedOnly&&!cacheDirectory)||(configuredCache!==undefined&&(!cacheDirectory||!path.isAbsolute(configuredCache)||!cacheDirectory.startsWith(path.join(ROOT,'testcases/outputs/rl-readiness-20261022')+path.sep))))throw Error('Qualification requires an absolute isolated prepared-cache directory under ignored outputs');
@@ -101,7 +112,7 @@ function run(){
     qualificationMode:preparedOnly?'prepared-only':'fresh',preparedCacheDirectory:cacheDirectory,
     limits:{wallMs:600000,wholePythonRssBytes:3*1024**3,binarySpoolBytes:1024**3,manifestBytes:16*1024**2,postGuiAuditWallMs:180000},
     originalFiles,codeFiles:frozenFiles,harnessSha256:hash(__filename),guardSha256:hash(monitor),versions:process.versions,
-    ipc:[],errors:[],diagnostics:[],checks:{},passed:false,frameOperativeField:process.env.VASCULAR_FRAME_FIELD==='1'};
+    ipc:[],errors:[],diagnostics:[],checks:{},passed:false,captureRecordedFlow:captureFlow,frameOperativeField:process.env.VASCULAR_FRAME_FIELD==='1'};
   const persist=()=>fs.writeFileSync(path.join(output,'report.json'),JSON.stringify(report,null,2));
   const runner=path.join(output,'guarded-bridge.py');
   fs.writeFileSync(runner,`import sys\nsys.path.insert(0, ${JSON.stringify(__dirname)})\nfrom vascular_playback_monitor import VascularPlaybackMonitor,initialize_guard_inventory\nfrom resectionlab.surgical_engine import SurgicalEngine\nfrom resectionlab import surgical_prefix_replay,surgical_frame_replay,surgical_telemetry\nfrom resectionlab.desktop_bridge import BridgeSession,main\ninitialize_guard_inventory()\nguard=VascularPlaybackMonitor(SurgicalEngine, ${JSON.stringify(output)}, prepared_only=${preparedOnly?'True':'False'})\nguard.install(BridgeSession)\ntry:\n    with guard:\n        main()\nfinally:\n    guard.finish()\n`);
@@ -178,6 +189,7 @@ function run(){
     window.webContents.on('console-message',event=>{if(event.level==='error'&&report.errors.length<100)report.errors.push(event.message);});
     window.webContents.once('did-finish-load',async()=>{
       const js=code=>window.webContents.executeJavaScript(code,true);
+      const flowEvidence=()=>js(`(()=>{const frame=window.vascularFrames.at(-1),panel=document.querySelector('[aria-label="Recorded field transfers"]');return frame?.recordedFlow&&panel?{frame:frame.surgicalFrame,stateId:frame.surgicalStateId,panelStateId:document.querySelector('.surgical-panel')?.dataset.stateId,flow:frame.recordedFlow,text:panel.textContent,at:performance.now()}:null;})()`);
       const wait=async(expr,timeout=120000)=>{const began=performance.now();while(performance.now()-began<timeout){if(await js(expr))return;await pause(40);}throw Error('Timed out: '+expr);};
       const click=label=>js(`(()=>{const b=[...document.querySelectorAll('button')].find(b=>b.textContent.trim()===${JSON.stringify(label)});if(!b||b.disabled)throw Error('Missing enabled '+${JSON.stringify(label)});b.click();})()`);
       const set=(selector,value)=>js(`(()=>{const e=document.querySelector(${JSON.stringify(selector)});if(!e||e.disabled)throw Error('Missing enabled control');Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype,'value').set.call(e,${JSON.stringify(value)});e.dispatchEvent(new Event('change',{bubbles:true}));})()`);
@@ -193,7 +205,7 @@ function run(){
           window.vascularReceiptCleanup=window.resectionApi.onSurgicalReceipt(row=>{const receivedAt=performance.now();if(window.vascularReceipts.length>=20000){window.vascularFailure='Renderer receipt evidence limit exceeded';throw Error(window.vascularFailure);}window.vascularReceipts.push({...row,receivedAt});});
           const readOnly=()=>{const prefix=document.querySelector('[aria-label="Reconstructed prefix"]');if(!prefix)return;const buttons=[...document.querySelectorAll('button')].filter(b=>['Apply','Preview','Branch','Undo','Redo','Reset'].includes(b.textContent.trim()));if(!buttons.length||buttons.some(b=>!b.disabled&&!b.closest('fieldset')?.disabled)){window.vascularFailure='Editable controls enabled during prefix';}};
           new MutationObserver(readOnly).observe(document.querySelector('.surgical-panel'),{subtree:true,childList:true,attributes:true});
-          document.addEventListener('anatomy-frame',e=>{const f=e.detail;if(window.vascularFrames.length>=20000){window.vascularFailure='CPU frame evidence limit exceeded';return;}const identity=f.surgicalFrame;if(identity){const row={...identity,stateId:f.surgicalStateId,at:f.at,serial:f.serial},prior=window.vascularSubmitted.at(-1);if(!prior||JSON.stringify([prior.branchId,prior.position,prior.frameIndex,prior.stateId])!==JSON.stringify([row.branchId,row.position,row.frameIndex,row.stateId])){const target=expected[window.vascularSubmitted.length];if(!target||row.branchId!==target.branchId||row.position!==target.position||row.frameIndex!==target.frameIndex)window.vascularFailure='CPU observation tuple order differs';if(window.vascularSubmitted.length<1150)window.vascularSubmitted.push(row);}}window.vascularFrames.push({at:f.at,serial:f.serial,surgicalStateId:f.surgicalStateId,surgicalFrame:f.surgicalFrame,cpuMs:f.cpuMs,interactive:f.interactive,surfaceQuality:f.surfaceQuality,estimatedAllocation:f.estimatedAllocation,resources:f.resources});readOnly();});
+          document.addEventListener('anatomy-frame',e=>{const f=e.detail;if(window.vascularFrames.length>=20000){window.vascularFailure='CPU frame evidence limit exceeded';return;}const identity=f.surgicalFrame;if(identity){const row={...identity,stateId:f.surgicalStateId,at:f.at,serial:f.serial},prior=window.vascularSubmitted.at(-1);if(!prior||JSON.stringify([prior.branchId,prior.position,prior.frameIndex,prior.stateId])!==JSON.stringify([row.branchId,row.position,row.frameIndex,row.stateId])){const target=expected[window.vascularSubmitted.length];if(!target||row.branchId!==target.branchId||row.position!==target.position||row.frameIndex!==target.frameIndex)window.vascularFailure='CPU observation tuple order differs';if(window.vascularSubmitted.length<1150)window.vascularSubmitted.push(row);}}window.vascularFrames.push({at:f.at,serial:f.serial,surgicalStateId:f.surgicalStateId,surgicalFrame:f.surgicalFrame,cpuMs:f.cpuMs,interactive:f.interactive,surfaceQuality:f.surfaceQuality,estimatedAllocation:f.estimatedAllocation,resources:f.resources,recordedFlow:f.recordedFlow??null});readOnly();});
           document.addEventListener('anatomy-work',e=>{if(window.vascularWork.length>=20000){window.vascularFailure='Worker evidence limit exceeded';return;}window.vascularWork.push({...e.detail,at:performance.now()});});})();`);
         report.playStarted=performance.now();report.playStartedRenderer=await js('performance.now()');const index=report.ipc.length;report.playbackStartIpcIndex=index;
         await click(vascularStartButton(preparedOnly));
@@ -206,6 +218,17 @@ function run(){
           if(report.ipc.slice(index).some(row=>row.error))throw Error('Playback request failed');
           count=evidence.count;
           if(performance.now()-lastProgressAt>=1000){lastProgressAt=performance.now();report.progress={at:lastProgressAt,submittedCount:count,last:evidence.last,pending:evidence.pending,playing:evidence.playing,ipcCount:report.ipc.length};fs.writeFileSync(path.join(output,'progress.json'),JSON.stringify(report.progress));}
+          if(captureFlow&&!report.flowCapture&&(report.flowCaptureAttempts?.length??0)<3&&count&&!evidence.pending){
+            const flow=await flowEvidence();
+            if(flow?.flow.operations>0&&flow.flow.glyphInstances>0){
+              const filename='recorded-flow-attempt-'+((report.flowCaptureAttempts?.length??0)+1)+'.png';
+              fs.writeFileSync(path.join(output,filename),(await window.webContents.capturePage()).toPNG());
+              const attempt={file:filename,before:flow,after:await flowEvidence(),meaning:'Intermediate screenshot; capture overhead INCLUDED in full-run timing. Static historical transfer glyphs; endpoint anatomy, no animated-fluid/compositor claim.'};
+              attempt.qualified=qualifiedFlowCapture(attempt.before,attempt.after);
+              if(attempt.qualified){fs.renameSync(path.join(output,filename),path.join(output,'recorded-flow-interval.png'));attempt.file='recorded-flow-interval.png';report.flowCapture=attempt;}
+              (report.flowCaptureAttempts??=[]).push(attempt);
+            }
+          }
           if(report.frameOperativeField&&!report.displayChange&&evidence.inserted&&count){
             report.displayChange=await js(`(()=>{if(![...document.querySelectorAll('.surgical-slots small')].some(e=>e.textContent.startsWith('Inserted')))return null;const b=[...document.querySelectorAll('button')].find(b=>b.textContent.trim()==='Frame operative field');if(!b||b.disabled)throw Error('Missing field framing control');const change={at:performance.now(),acceptedTuple:window.vascularSubmitted.at(-1),stateId:document.querySelector('.surgical-panel')?.dataset.stateId,meaning:'One explicit operative-field framing at a source-contained instrument or same-source annotation; pinned thereafter, no automatic follow/interpolation'};b.click();return change;})()`);
           }
@@ -216,6 +239,7 @@ function run(){
         report.rendererReceiptObserver={enabled:true,scope:'Explicit benchmark observer; renderer callback timestamps before invoke result resolves to app. Same renderer clock as anatomy-frame; observer cost INCLUDED.',notifications:report.rendererReceipts.length};
         report.submittedPlayback=submittedVascularPlayback(report.ipc.slice(index),report.frames,{...options,rendererReceipts:report.rendererReceipts});
         report.checks.exactRendererReceipts=report.rendererReceipts.length===1149;
+        if(captureFlow)report.checks.recordedFlowCaptured=qualifiedFlowCapture(report.flowCapture?.before,report.flowCapture?.after);
         await js('window.vascularReceiptCleanup()');
         report.playbackIpc=report.ipc.slice(index);report.ipcAtSnapshot=report.ipc.length;
         const last=report.submittedPlayback.at(-1);report.final=last;

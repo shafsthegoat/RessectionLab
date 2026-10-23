@@ -18,6 +18,7 @@ import tempfile
 from types import MappingProxyType
 
 from .surgical_verified_cache import VerifiedSurgicalCache, _read
+from .surgical_flow_display import validate_flow_display, trim_frame_flows
 
 SCHEMA = 'resectionlab.prepared-prefix-action.v1'
 BINDING_SCHEMA = 'resectionlab.prepared-prefix-binding.v1'
@@ -87,7 +88,7 @@ def _json(value, *, _budget=None):
     return copy(value)
 
 
-def _pack(payload, index, max_action_bytes):
+def _pack(payload, index, max_action_bytes, scene_id=None):
     _need(type(payload) is dict and all(type(key) is str for key in payload) and set(payload) == _PAYLOAD_KEYS, 'Invalid prepared payload keys')
     _need(all(_digest(payload[name]) for name in ('actionHash', 'beforeStateId', 'afterStateId')),
           'Invalid prepared action/state identity')
@@ -119,6 +120,19 @@ def _pack(payload, index, max_action_bytes):
                       'state': blob(checkpoint['state'])}
     frames = payload['frames']
     _need(type(frames) is list and 1 <= len(frames) <= MAX_METADATA_NODES, 'Invalid prepared frames')
+    # Validate every optional block before any metadata-budget fallback can
+    # discard samples. Generic disk admission has no grid; the prefix owner
+    # validates native bounds/adjacency against its admitted scene on load.
+    for ordinal, frame in enumerate(frames):
+        _need(type(frame) is dict, 'Invalid prepared frame descriptor')
+        if 'flowDisplay' in frame:
+            flow = frame['flowDisplay']
+            _need(type(flow) is dict, 'Invalid prepared flow display')
+            previous = frames[max(0, ordinal - 1)]
+            validate_flow_display(flow, scene_id=scene_id if scene_id is not None else flow.get('sceneId'),
+                action_index=index, frame_index=ordinal, before_state_id=previous['stateId'],
+                state_id=frame['stateId'], start_seconds=previous['observedTimeSeconds'],
+                end_seconds=frame['observedTimeSeconds'])
     frame_refs = []
     metadata_budget = [MAX_MANIFEST_BYTES, 0]
     for frame in frames:
@@ -323,7 +337,7 @@ class PreparedPrefixStore:
             _need(type(number) is int and 0 <= number < len(manifest['blobs']),
                   'Prepared part reference exceeds bounds')
             return b''
-        _pack(self._unpack(manifest['payload'], placeholder), index, self.max_action_bytes)
+        _pack(self._unpack(manifest['payload'], placeholder), index, self.max_action_bytes, binding['sceneId'])
         return raw, manifest
 
     @staticmethod
@@ -370,14 +384,22 @@ class PreparedPrefixStore:
         try:
             _need(_authority is _PUBLISH_AUTHORITY, 'Prepared publication requires private prefix authority')
             binding = _binding(binding, index)
-            metadata, blobs, chunks, binary_bytes = _pack(payload, index, self.max_action_bytes)
-            binary_hash = hashlib.sha256()
-            for chunk in chunks: binary_hash.update(chunk)
-            manifest = _json({'schema': SCHEMA, 'binding': binding, 'index': index,
-                'payload': metadata, 'blobs': blobs, 'binaryBytes': binary_bytes,
-                'binarySha256': binary_hash.hexdigest()})
-            raw = json.dumps(manifest, sort_keys=True, separators=(',', ':'), allow_nan=False).encode('ascii')
-            _need(len(raw) <= MAX_MANIFEST_BYTES, 'Prepared manifest byte budget exceeded')
+            candidate = payload
+            for mode in (None, False, True):
+                try:
+                    metadata, blobs, chunks, binary_bytes = _pack(candidate, index, self.max_action_bytes, binding['sceneId'])
+                    binary_hash = hashlib.sha256()
+                    for chunk in chunks: binary_hash.update(chunk)
+                    manifest = _json({'schema': SCHEMA, 'binding': binding, 'index': index,
+                        'payload': metadata, 'blobs': blobs, 'binaryBytes': binary_bytes,
+                        'binarySha256': binary_hash.hexdigest()})
+                    raw = json.dumps(manifest, sort_keys=True, separators=(',', ':'), allow_nan=False).encode('ascii')
+                    _need(len(raw) <= MAX_MANIFEST_BYTES, 'Prepared manifest byte budget exceeded')
+                    break
+                except ValueError as error:
+                    if mode is True or 'budget' not in str(error).lower(): raise
+                    candidate = {**payload, 'frames': [dict(frame) for frame in payload['frames']]}
+                    trim_frame_flows(candidate['frames'], omit=mode is False)
             incoming = binary_bytes + len(raw) + 64
             with self._locked() as key:
                 entry = self._entry(binding, index)
@@ -456,7 +478,7 @@ class PreparedPrefixStore:
                 result = self._unpack(manifest['payload'], part)
                 # Validate the same complete public package shape without state
                 # decompression, then return detached descriptor containers.
-                _pack(result, index, self.max_action_bytes)
+                _pack(result, index, self.max_action_bytes, binding['sceneId'])
             self.hits += 1; self.lastSkip = None
             return result
         except Exception as error:

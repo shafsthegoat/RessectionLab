@@ -1,11 +1,19 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict');
-const {COUNTS,expectedSequence,submittedVascularPlayback,exactSequence,checkedVascularAuthority,hardBudgetStop,isVascularBenchmarkEntry,vascularPreparedOnly,vascularStartButton,vascularPreparationChecks}=require('./benchmark-surgical-vascular.cjs');
+const {COUNTS,expectedSequence,submittedVascularPlayback,exactSequence,checkedVascularAuthority,hardBudgetStop,isVascularBenchmarkEntry,vascularPreparedOnly,vascularStartButton,vascularPreparationChecks,qualifiedFlowCapture}=require('./benchmark-surgical-vascular.cjs');
 const options={startedRenderer:1000};
 const response=(position,frameIndex,stateId='shared')=>({command:'seekPrefixFrame',branchId:'full-vascular',position,frameIndex,stateId,started:1100+frameIndex,ms:10});
 const frame=(position,frameIndex,at=1200,stateId='shared')=>({at,serial:frameIndex+1,surgicalStateId:stateId,surgicalFrame:{branchId:'full-vascular',position,frameIndex}});
 const received=(requests)=>requests.map((row,index)=>({command:row.command,branchId:row.branchId,position:row.position,frameIndex:row.frameIndex,stateId:row.stateId,notificationSerial:index+1,receivedAt:1030+index}));
 const submitted=(requests,frames,extra={})=>submittedVascularPlayback(requests,frames,{...options,rendererReceipts:received(requests),...extra});
+test('flow screenshots require a stable nonempty drawn interval across asynchronous capture',()=>{
+  const state='sha256:'+'a'.repeat(64),before={frame:{branchId:'full-vascular',position:49,frameIndex:1},stateId:state,panelStateId:state,at:100,flow:{startSeconds:190,endSeconds:190.2,operations:3,glyphInstances:4,truncated:false}};
+  const after={...structuredClone(before),at:101};assert.equal(qualifiedFlowCapture(before,after),true);
+  for(const change of [r=>r.frame.position++,r=>r.frame.frameIndex++,r=>r.stateId='other',r=>r.panelStateId='other',r=>r.at=99,r=>r.flow.operations=0,r=>r.flow.glyphInstances=0,r=>r.flow.endSeconds++,r=>r.flow=null]){
+    const altered=structuredClone(after);change(altered);assert.equal(qualifiedFlowCapture(before,altered),false);
+  }
+  assert.equal(qualifiedFlowCapture(undefined,after),false);assert.equal(qualifiedFlowCapture(before,null),false);
+});
 test('predeclared full vascular sequence includes all starts/microsteps/finalizations',()=>{
   const rows=expectedSequence();assert.equal(COUNTS.length,73);assert.equal(rows.length,1149);
   assert.deepEqual(rows[0],{branchId:'full-vascular',position:0,frameIndex:0});assert.deepEqual(rows.at(-1),{branchId:'full-vascular',position:72,frameIndex:2});

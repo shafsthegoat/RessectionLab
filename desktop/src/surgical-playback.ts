@@ -1,4 +1,5 @@
 import type {SurgicalPlayback,SurgicalResponse} from './surgical-types';
+import {checkedSurgicalFlowDisplay} from './surgical-flow-display.ts';
 /** Elapsed time recorded by the authoritative action result, never inferred
  * from frame index or requested duration (partial actions may stop early). */
 export function surgicalPlaybackDelay(timeline:readonly {elapsedSeconds?:number}[],position:number,speed=1):{milliseconds:number;recorded:boolean} {
@@ -40,6 +41,7 @@ export function checkedSurgicalPlayback(response:SurgicalResponse,request:{branc
   need(p.frameIndex!==p.frameCount-1||p.isActionBoundary);
   need(Math.abs(Number(response.view.metrics.elapsedSeconds)-p.observedTimeSeconds)<1e-7);
   need(!p.effectiveActivation||Object.entries(p.effectiveActivation).every(([slot,active])=>slot in response.view.slots&&typeof active==='boolean'));
+  checkedSurgicalFlowDisplay(p.flowDisplay,response.view,p);
   return p;
 }
 

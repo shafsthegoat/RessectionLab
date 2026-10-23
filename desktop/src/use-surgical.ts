@@ -28,6 +28,7 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
   const [desiredPreviewOutcome,setDesiredPreviewOutcome]=useState<SurgicalOutcome|null>(null),[displayFailed,setDisplayFailed]=useState(false);
   const [slot,setSlot]=useState('left'),[pose,setRawPose]=useState<SurgicalPose>({position:[0,0,0],quaternion:[0,0,0,1]}),[path,setPath]=useState<SurgicalPose[]>([]);
   const [parameters,setParameters]=useState<Record<string,number>>({});
+  const [showFlowTransfers,setShowFlowTransfers]=useState(true);
   const [mode,setMode]=useState<SurgicalInteraction['mode']>('navigate'),[preview,setPreview]=useState<SurgicalView|null>(null);
   const [previewOutcome,setPreviewOutcome]=useState<SurgicalOutcome|null>(null);
   const [pendingCommand,setPendingCommand]=useState<string|null>(null);
@@ -186,7 +187,7 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
   }
   function action(operation:string,params:Record<string,number>=parameters,duration=1):SurgicalAction{return {slot,operation,parameters:params,duration,...(['apply','move','hold','grasp','place'].includes(operation)?{path:path.length?path:[pose]}:{})};}
   return {result,view,volume,previewVolume,pending,pendingCommand:requestPending?pendingCommand:replayRequestPending?(replayOwner.current?.prefix?'seekPrefixFrame':'seekFrame'):pendingCommand,simulationPending:requestPending||replayRequestPending,displayPending,error,slot,pose,path,mode,preview:displayedPreview,previewOutcome,parameters,setPose,setMode,selectSlot,run,action,
-    playbackVersion,startPlayback,runPlayback,stopPlayback,
+    playbackVersion,startPlayback,runPlayback,stopPlayback,showFlowTransfers,setShowFlowTransfers,
     pausePlayback:()=>{stopPlayback();setPlaybackVersion(n=>n+1);},
     computingFullCase:fullCaseComputation.current.scenario,pauseFullCase,
     startFullCase:(scenario:'primary'|'vascular')=>{if(current.current.enabled&&!busy.current&&!current.current.result?.playback?.readOnly&&!current.current.result?.verification?.readOnly){fullCaseComputation.current.start(scenario);setFullCaseVersion(n=>n+1);}},
@@ -194,6 +195,6 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
     clearPreview,
     create:(mapping?:SurgicalRegion[])=>{const issue=mapping?validateMapping(mapping):null;if(issue){setError(issue);return Promise.resolve(false);}return run('create',mapping?{mapping}:{});},
     cancel:()=>{clearPreview();setPath([]);const t=result?.view.slots[slot];if(t){setRawPose({position:t.position,quaternion:t.quaternion});setParameters({...t.parameters});}},
-    interaction:{view:desiredView,preview:activePreview,recordedFrame:!activePreview&&desiredResult?.playback?{branchId:desiredResult.playback.branchId,position:desiredResult.playback.position,frameIndex:desiredResult.playback.frameIndex}:undefined,outcome:activePreview?desiredPreviewOutcome:desiredResult?.outcome??null,readOnly:!!desiredResult?.playback||!!desiredResult?.verification?.readOnly,effectiveActivation:desiredResult?.playback?.effectiveActivation,pose,path,parameters,selectedSlot:slot,mode:desiredResult?.playback||desiredResult?.verification?.readOnly?'navigate':mode,onPose:setPose,onStroke,onDisplayReady,onDisplayError} as SurgicalInteraction};
+    interaction:{view:desiredView,preview:activePreview,recordedFrame:!activePreview&&desiredResult?.playback?{branchId:desiredResult.playback.branchId,position:desiredResult.playback.position,frameIndex:desiredResult.playback.frameIndex}:undefined,flowDisplay:!activePreview&&showFlowTransfers?desiredResult?.playback?.flowDisplay:undefined,outcome:activePreview?desiredPreviewOutcome:desiredResult?.outcome??null,readOnly:!!desiredResult?.playback||!!desiredResult?.verification?.readOnly,effectiveActivation:desiredResult?.playback?.effectiveActivation,pose,path,parameters,selectedSlot:slot,mode:desiredResult?.playback||desiredResult?.verification?.readOnly?'navigate':mode,onPose:setPose,onStroke,onDisplayReady,onDisplayError} as SurgicalInteraction};
 }
 export type SurgicalController=ReturnType<typeof useSurgical>;

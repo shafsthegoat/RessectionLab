@@ -12,6 +12,13 @@ or selecting another branch requires another explicit start. Cached states
 remain read only; they cannot authorize planning, edits, RL reset/resume or
 training. Full archive verification remains a separate operation.
 
+New observations can also retain bounded, authenticated
+[recorded field transfers](recorded-field-transfers.md). Static arrows describe
+the preceding interval while anatomy stays at its exact endpoint. Display
+sampling does not change physical fields, action receipts or RL observations.
+The recorder changes implementation seals, so caches prepared before this
+change require fresh reconstruction with the current source/native selections.
+
 For an isolated local cache, launch from the primary checkout:
 
 ```sh
@@ -158,7 +165,10 @@ warm same-action intervals 1.738×. This was fresh preparation, not a separate
 prepared-only throughput measurement. V10's earlier clock-association failure
 remains preserved and is not retroactively promoted.
 
-On this Mac with the matching Python/native source, open the qualified v11
+The following v11 command is historical and requires its matching `3d4d73d7`
+Python/native source. The new recorded-transfer implementation invalidates its
+packages. Use a fresh current-source reconstruction for new observations.
+On this Mac with that historical source, open the qualified v11
 packages using the ordinary application (receipt instrumentation is off):
 
 ```sh

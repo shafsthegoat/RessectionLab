@@ -27,6 +27,7 @@ from . import surgical_engine as _engine_module
 from . import build_surgical_prefix_json_native as _json_native_recipe
 from . import surgical_prefix_json_native as _native_json
 from . import surgical_prefix_cache as _prepared_cache
+from . import surgical_flow_display as _flow_display
 from .core import freeze_json, semantic_digest, thaw_json
 from .surgical_engine import MAX_STEPS, SCHEMA, SurgicalEngine
 
@@ -152,17 +153,17 @@ def _prefix_seal(*, full=False):
     The returned digest is identical for both successful validation levels.
     """
     from .surgical_verified_cache import _code_signature
-    if any(type(module) is not ModuleType for module in (_native_json, _json_native_recipe, _prepared_cache)):
+    if any(type(module) is not ModuleType for module in (_native_json, _json_native_recipe, _prepared_cache, _flow_display)):
         raise ValueError('Prefix codec module differs')
     identity = _native_json.strict_live_identity(full=full)
     modules = [(__name__, __file__, globals()),
                *[(module.__name__, module.__file__, vars(module))
-                 for module in (_native_json, _json_native_recipe, _prepared_cache)]]
+                 for module in (_native_json, _json_native_recipe, _prepared_cache, _flow_display)]]
     digest = hashlib.sha256(b'resectionlab.prefix.codec-seal.v2\0')
     for module_name, filename, namespace in modules:
         digest.update(module_name.encode() + b'\0')
         digest.update(hashlib.sha256(Path(filename).read_bytes()).digest())
-        if module_name == _prepared_cache.__name__:
+        if module_name in (_prepared_cache.__name__, _flow_display.__name__):
             for name, value in sorted(namespace.items()):
                 if name.isupper() and type(value) in (str, int, float, bool, type(None)):
                     digest.update(json.dumps([name, value], allow_nan=False).encode())
@@ -467,6 +468,7 @@ class _FrameStage:
         self.frames = []
         self.next_time = None
         self.activation = None
+        self.flow = None
 
     def capture(self, engine, kind, activation):
         # Encoding itself stops at the action's remaining cap. Old committed
@@ -476,15 +478,34 @@ class _FrameStage:
                'stateId': _prefix_state_id(engine), 'state': b'',
                'fieldTokens': MappingProxyType({'flapComponents': '0' * 64})
                    if 'flapComponents' in engine.state else MappingProxyType({})}
+        row['flowDisplay'] = self.flow.capture(row['stateId'], row['observedTimeSeconds'])
+        previous = self.frames[-1] if self.frames else row
+        _flow_display.validate_flow_display(row['flowDisplay'], scene_id=engine.scene.identity,
+            action_index=self.flow.action_index, frame_index=len(self.frames),
+            before_state_id=previous['stateId'], state_id=row['stateId'],
+            start_seconds=previous['observedTimeSeconds'], end_seconds=row['observedTimeSeconds'],
+            shape=engine.scene.shape)
         # Include metadata before encoding and reserve owning-map overhead.
         # Growth callbacks evict old actions before appending compressed bytes.
-        base = _owned_bytes(self.frames + [row]) + 512
-        blob = _encode(engine.state, compressed_limit=max(0, self.owner._max_frame_bytes - base
-                       - self.owner._stream_metadata_bytes),
-                       raw_limit=self.owner._max_json_bytes,
-                       on_growth=lambda size: self.owner._frame_room(base + size),
-                       _owned_snapshot=True)
-        row['state'] = blob
+        # Drop optional samples, then empty envelopes if necessary, before
+        # allowing display metadata to block an otherwise fitting action.
+        # Only serialization retries; physical writes execute exactly once.
+        for mode in (None, False, True):
+            if mode is not None:
+                _flow_display.trim_frame_flows(self.frames + [row], omit=mode)
+            row['state'] = b''
+            base = _owned_bytes(self.frames + [row]) + 512
+            try:
+                blob = _encode(engine.state, compressed_limit=max(0, self.owner._max_frame_bytes - base
+                               - self.owner._stream_metadata_bytes),
+                               raw_limit=self.owner._max_json_bytes,
+                               on_growth=lambda size: self.owner._frame_room(base + size),
+                               _owned_snapshot=True)
+                row['state'] = blob
+                self.owner._frame_room(_owned_bytes(self.frames + [row]))
+                break
+            except PrefixBudgetExceeded:
+                if mode is True: raise
         if 'flapComponents' in engine.state:
             # The complete state's streaming encode has already enforced the
             # decoded JSON ceiling, which also bounds this field's temporary
@@ -497,6 +518,8 @@ class _FrameStage:
         self.frames.append(row)
 
     def begin(self, engine):
+        self.flow = _flow_display.FlowDisplayTrace(engine.scene.identity, len(engine.actions), engine.state['elapsedSeconds'], engine.scene.shape)
+        engine._flow_display_trace = self.flow
         self.next_time = float(engine.state['elapsedSeconds']) + .2
         self.capture(engine, 'action_start', {key: bool(slot['active']) for key, slot in engine.state['slots'].items()})
 
@@ -516,6 +539,7 @@ class _FrameStage:
 class _PrefixEngine(SurgicalEngine):
     def _substep(self, key, op, p, q, active, dt):
         events = super()._substep(key, op, p, q, active, dt)
+        self._stage.flow.commit_substep(self.state['elapsedSeconds'])
         self._stage.observe(self, key, active)
         return events
 
@@ -774,8 +798,9 @@ class SurgicalPrefixReplay:
             raise ValueError('Prepared observations have no complete action')
         previous_time = -math.inf
         for ordinal, frame in enumerate(frames):
-            if (type(frame) is not dict or set(frame) != {'observedTimeSeconds', 'kind',
-                    'effectiveActivation', 'stateId', 'state', 'fieldTokens'}
+            if (type(frame) is not dict or set(frame) not in ({'observedTimeSeconds', 'kind',
+                    'effectiveActivation', 'stateId', 'state', 'fieldTokens'},
+                    {'observedTimeSeconds', 'kind', 'effectiveActivation', 'stateId', 'state', 'fieldTokens', 'flowDisplay'})
                     or type(frame['observedTimeSeconds']) is not float
                     or not math.isfinite(frame['observedTimeSeconds'])
                     or frame['observedTimeSeconds'] < previous_time
@@ -794,6 +819,12 @@ class SurgicalPrefixReplay:
                            or any(c not in '0123456789abcdef' for c in value)
                            for value in frame['fieldTokens'].values())):
                 raise ValueError('Prepared observation descriptor differs')
+            if 'flowDisplay' in frame:
+                previous = frames[max(0, ordinal - 1)]
+                _flow_display.validate_flow_display(frame['flowDisplay'], scene_id=self._scene.identity,
+                    action_index=index, frame_index=ordinal, before_state_id=previous['stateId'],
+                    state_id=frame['stateId'], start_seconds=previous['observedTimeSeconds'],
+                    end_seconds=frame['observedTimeSeconds'], shape=self._scene.shape)
             frame['fieldTokens'] = MappingProxyType(frame['fieldTokens'])
             previous_time = frame['observedTimeSeconds']
         checkpoint = payload['checkpoint']
@@ -819,7 +850,14 @@ class SurgicalPrefixReplay:
                 raise ValueError('Prepared previously loaded receipt differs')
         # Proposals preserve the existing exact RAM quotas and committed cursor.
         checkpoints = self._propose_checkpoint(index + 1, engine, checkpoint)
-        proposed_frames, frame_bytes = self._propose_frames(index, frames)
+        for mode in (None, False, True):
+            if mode is not None:
+                _flow_display.trim_frame_flows(frames, omit=mode)
+            try:
+                proposed_frames, frame_bytes = self._propose_frames(index, frames)
+                break
+            except PrefixBudgetExceeded:
+                if mode is True: raise
         self._check(check, full=True)
         self._checkpoints = checkpoints
         self._frames, self._retained_frame_bytes = proposed_frames, frame_bytes
@@ -1156,6 +1194,12 @@ class SurgicalPrefixReplay:
         engine.history = self._history[:position]
         if _prefix_state_id(engine) != frame['stateId']:
             raise ValueError('Private observed frame identity differs')
+        if 'flowDisplay' in frame:
+            previous = item[max(0, frame_index - 1)]
+            _flow_display.validate_flow_display(frame['flowDisplay'], scene_id=self._scene.identity,
+                action_index=action_index, frame_index=frame_index, before_state_id=previous['stateId'],
+                state_id=frame['stateId'], start_seconds=previous['observedTimeSeconds'],
+                end_seconds=frame['observedTimeSeconds'], shape=self._scene.shape)
         engine._prefix_verified_state_id = frame['stateId']
         timeline_token = self._timeline_token()
         compact = prefix_token == timeline_token
@@ -1169,13 +1213,14 @@ class SurgicalPrefixReplay:
         result['playback'] = {'readOnly': True, 'position': action_index, 'actionIndex': action_index,
             'frameIndex': frame_index, 'frameCount': len(item),
             'frames': [{key: (dict(value) if key == 'effectiveActivation' else value)
-                        for key, value in row.items() if key not in ('state', 'fieldTokens')} | {'frameIndex': index}
+                        for key, value in row.items() if key not in ('state', 'fieldTokens', 'flowDisplay')} | {'frameIndex': index}
                        for index, row in enumerate(item)],
             'observedTimeSeconds': frame['observedTimeSeconds'],
             'actionElapsedSeconds': frame['observedTimeSeconds'] - item[0]['observedTimeSeconds'],
             'actionDurationSeconds': item[-1]['observedTimeSeconds'] - item[0]['observedTimeSeconds'],
             'isActionBoundary': frame_index in (0, len(item) - 1),
-            'effectiveActivation': dict(frame['effectiveActivation']), 'frameStateId': frame['stateId']}
+            'effectiveActivation': dict(frame['effectiveActivation']), 'frameStateId': frame['stateId'],
+            **({'flowDisplay': copy.deepcopy(frame['flowDisplay'])} if 'flowDisplay' in frame else {})}
         self._check(check)
         # The view and timeline are already detached. Only each descriptor's
         # nested activation map required a fresh copy above.
