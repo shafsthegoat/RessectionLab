@@ -27,6 +27,26 @@ export RESSECTIONLAB_VERIFIED_CACHE_MAX_DISK_BYTES=8589934592
 ./scripts/open_operative_demo.sh
 ```
 
+For a watchable replay after a code change, prepare the authenticated observations
+once with the same native-build environment shown above:
+
+```sh
+.venv/bin/python scripts/prepare_operative_playback.py \
+  --case testcases/outputs/product-first-20261023/rescue-v2/rescue-strategies.ressectionlab \
+  --branch strategy-recorded-delay --actions 16:23,47:73 \
+  --report testcases/outputs/product-first-20261023/playback-preparation-v1.json
+```
+
+These zero-based ranges cover a short tissue-removal sequence and the separate
+vessel injury/intervention. The command verifies the complete native archive,
+then prepares only those actions. It preserves the workspace and reports actual
+frame counts and recorded wound deposits. Use a new report path for a new run.
+Preparation is separate from playback speed and is not a fresh-run benchmark.
+When a later action is missing, the player now uses the preceding authenticated
+observed boundary before reconstructing a prefix. This matters on this patient:
+one snapshot occupies about 10.8 MB of Python objects, so two demanded states
+exceed the existing 16 MiB replay-memory allowance. Cache budgets stay unchanged.
+
 The runner canonically verifies the shared 48-action prefix, then executes and
 separately replays three continuations: prompt coagulation, suction before
 coagulation, and the recorded delayed response. The first two use identical

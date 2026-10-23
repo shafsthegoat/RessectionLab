@@ -217,7 +217,16 @@ class SurgicalFrameCache:
             # comparison precedes publication. Cold portable archives retain
             # the existing observed replay fallback when caching is unavailable.
             snapshot = thaw_json(admission.snapshot)
-            baseline, _ = replay_cache.seek(current, snapshot, position, check=check, include_history=True)
+            # A patient state may exceed half the replay RAM budget, evicting
+            # every prior checkpoint while keeping only the archive endpoint.
+            # The previous observed action already owns an authenticated exact
+            # boundary on disk. Restore its detached writable state before
+            # falling back to replaying the prefix from the editable cursor.
+            check()
+            boundary = self.boundary(admission.snapshot, position,
+                verified_history=admission.history, admission=admission)
+            baseline, _ = boundary if boundary is not None else replay_cache.seek(
+                current, snapshot, position, check=check, include_history=True)
             observed = _ObservedFrames(baseline.scene, protection=baseline.protection, guard_config=baseline.guard_config)
             observed.__dict__.update(baseline.clone().__dict__)
             observed._frames = []
