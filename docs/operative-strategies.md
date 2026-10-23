@@ -84,6 +84,22 @@ checking the three continuations took 107.579 s. All 71 proposed commands and
 and measured endpoint vector matched its separate replay. The recorded-delay
 endpoint also matches the original 73-action vascular archive exactly.
 
+Actual Electron recordings are saved as `vascular-continuous.mp4` and
+`cavity-pinned-continuous.mp4` under the local product-first output directory.
+They show the recorded injury/intervention and progressive CUSA cavity changes.
+These sampled screen recordings establish visible behavior, not compositor
+throughput. Long historical CUSA strokes leave the acquired image; pinning the
+camera to the cavity is more useful than following the tip through empty space.
+
+The separately saved `rescue-v2/rescue-explorable-v3.ressectionlab` retains the
+three strategies computed in Electron (112.679 s), plus an editable branch from
+boundary 48 with a real additional inspection. All original native branches and
+source anatomy remain identical. Open that version with:
+
+```sh
+./scripts/open_operative_demo.sh --case "$PWD/testcases/outputs/product-first-20261023/rescue-v2/rescue-explorable-v3.ressectionlab"
+```
+
 | Strategy | Commands | Additional modeled wound fluid | Retained fluid incl. reservoirs | Additional simulated time |
 | --- | ---: | ---: | ---: | ---: |
 | Prompt coagulation | 23 | 1.339 mm³ | 1.270 mm³ | 23 s |
