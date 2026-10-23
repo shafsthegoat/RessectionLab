@@ -47,6 +47,34 @@ function vascularPreparedOnly(value){
   if(value==='1')return true;
   throw Error('VASCULAR_PREPARED_ONLY must be unset or exactly1');
 }
+function vascularPipelineMode(env){
+  const enabled=env.VASCULAR_PIPELINE==='1';
+  if(env.VASCULAR_PIPELINE!==undefined&&!enabled)throw Error('VASCULAR_PIPELINE must be unset or exactly1');
+  if(enabled){
+    if(env.VASCULAR_PREPARED_ONLY!==undefined||env.RESSECTIONLAB_PREFIX_PIPELINE!=='1'||env.RESSECTIONLAB_PREFIX_PIPELINE_MAX_WALL_MS!=='600000')throw Error('Pipeline qualification requires fresh mode and the production 600000ms pipeline');
+  }else if(env.RESSECTIONLAB_PREFIX_PIPELINE==='1')throw Error('Production pipeline requires explicit VASCULAR_PIPELINE=1 qualification');
+  return enabled;
+}
+function checkedVascularPipelineOrigin(result,prior){
+  const origin=result?.prefixOrigin;
+  if(!origin||JSON.stringify(Object.keys(origin).sort())!==JSON.stringify(['activationId','branchId','caseHash','kind','sceneId','schema','sourceArchiveSha256'])
+    ||origin.schema!=='resectionlab.prefix-origin.v1'||origin.kind!=='fresh-reconstruction'
+    ||!/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(origin.activationId)
+    ||origin.sourceArchiveSha256!==NATIVE_SHA||origin.caseHash!==result.caseHash||origin.branchId!==BRANCH
+    ||!/^sha256:[0-9a-f]{64}$/.test(origin.sceneId)
+    ||(result.view?.scene&&result.view.scene.sceneId!==origin.sceneId)
+    ||(prior&&Object.keys(origin).some(key=>origin[key]!==prior[key])))throw Error('Fresh pipeline origin changed or is missing');
+  return structuredClone(origin);
+}
+function vascularGuardedRunner(output,{pipeline=false,preparedOnly=false,directory=__dirname}={}){
+  const imports=pipeline
+    ?'from vascular_playback_monitor import initialize_guard_inventory\nfrom vascular_pipeline_monitor import PipelineVascularMonitor\n'
+    :'from vascular_playback_monitor import VascularPlaybackMonitor,initialize_guard_inventory\n';
+  const guard=pipeline
+    ?`role=sys.argv[sys.argv.index('--prefix-worker-role')+1] if '--prefix-worker-role' in sys.argv else 'normal'\nguard=PipelineVascularMonitor(SurgicalEngine, ${JSON.stringify(output)}, role=role)\n`
+    :`guard=VascularPlaybackMonitor(SurgicalEngine, ${JSON.stringify(output)}, prepared_only=${preparedOnly?'True':'False'})\n`;
+  return `import sys\nsys.path.insert(0, ${JSON.stringify(directory)})\n${imports}from resectionlab.surgical_engine import SurgicalEngine\nfrom resectionlab import surgical_prefix_replay,surgical_frame_replay,surgical_telemetry\nfrom resectionlab.desktop_bridge import BridgeSession,main\ninitialize_guard_inventory()\n${guard}guard.install(BridgeSession)\ntry:\n    with guard:\n        main()\nfinally:\n    guard.finish()\n`;
+}
 function vascularStartButton(preparedOnly){return preparedOnly?'Replay prepared observations · read only':'Replay from start · read only';}
 function vascularPreparationChecks(guard,preparedOnly){
   const cache=guard?.ownership?.prefixStatistics?.preparedCache;
@@ -81,25 +109,27 @@ function qualifiedFlowCapture(before,after){
     Number.isFinite(flow.startSeconds)&&Number.isFinite(flow.endSeconds)&&flow.startSeconds>=0&&flow.endSeconds>=flow.startSeconds&&typeof flow.truncated==='boolean'&&
     ['startSeconds','endSeconds','operations','truncated','glyphInstances'].every(key=>flow[key]===after.flow[key]);
 }
-module.exports={COUNTS,END_STATE,BRANCH,expectedSequence,submittedVascularPlayback,exactSequence,checkedVascularAuthority,hardBudgetStop,isVascularBenchmarkEntry,vascularPreparedOnly,vascularStartButton,vascularPreparationChecks,qualifiedFlowCapture};
+module.exports={COUNTS,END_STATE,BRANCH,expectedSequence,submittedVascularPlayback,exactSequence,checkedVascularAuthority,hardBudgetStop,isVascularBenchmarkEntry,vascularPreparedOnly,vascularPipelineMode,checkedVascularPipelineOrigin,vascularGuardedRunner,vascularStartButton,vascularPreparationChecks,qualifiedFlowCapture};
 
 if(isVascularBenchmarkEntry(process,__filename,require.main===module))run();
 function run(){
   const {app,ipcMain,screen}=require('electron'),childProcess=require('node:child_process');
   if(process.env.RESSECTIONLAB_PLAYBACK_RECEIPT_OBSERVER!=='1')throw Error('Full vascular qualification requires explicit RESSECTIONLAB_PLAYBACK_RECEIPT_OBSERVER=1');
   const preparedOnly=vascularPreparedOnly(process.env.VASCULAR_PREPARED_ONLY);
+  const pipeline=vascularPipelineMode(process.env);
   if(process.env.VASCULAR_CAPTURE_FLOW!==undefined&&process.env.VASCULAR_CAPTURE_FLOW!=='1')throw Error('VASCULAR_CAPTURE_FLOW must be absent or 1');
   const captureFlow=process.env.VASCULAR_CAPTURE_FLOW==='1';
   const configuredCache=process.env.RESSECTIONLAB_PREPARED_PREFIX_CACHE_DIRECTORY;
   const cacheDirectory=configuredCache?path.resolve(configuredCache):null;
-  if((preparedOnly&&!cacheDirectory)||(configuredCache!==undefined&&(!cacheDirectory||!path.isAbsolute(configuredCache)||!cacheDirectory.startsWith(path.join(ROOT,'testcases/outputs/rl-readiness-20261022')+path.sep))))throw Error('Qualification requires an absolute isolated prepared-cache directory under ignored outputs');
+  if(((preparedOnly||pipeline)&&!cacheDirectory)||(configuredCache!==undefined&&(!cacheDirectory||!path.isAbsolute(configuredCache)||!cacheDirectory.startsWith(path.join(ROOT,'testcases/outputs/rl-readiness-20261022')+path.sep))))throw Error('Qualification requires an absolute isolated prepared-cache directory under ignored outputs');
+  if(pipeline&&(fs.lstatSync(cacheDirectory,{throwIfNoEntry:false})||fs.lstatSync(path.dirname(cacheDirectory)).isSymbolicLink()))throw Error('Fresh pipeline qualification requires an absent cache under a real output directory');
   if(['PLAYBACK_PYTHON_SOURCE','PLAYBACK_BRIDGE_SOURCE','PLAYBACK_IMPORT_ONLY','PLAYBACK_ORBIT','PLAYBACK_FIELD_SIZES','PLAYBACK_PREFIX','PLAYBACK_CLOSE_TOOL'].some(name=>process.env[name]))throw Error('Full vascular gate requires current production source and its own dedicated controls; no substitutions/observer modes');
   const output=path.resolve(process.env.PLAYBACK_OUTPUT||path.join(ROOT,'testcases/outputs/rl-readiness-20261022/desktop-vascular-qualified'));
   if(!output.startsWith(path.join(ROOT,'testcases/outputs/rl-readiness-20261022')+path.sep)||fs.existsSync(output))throw Error('Supply a fresh ignored PLAYBACK_OUTPUT under rl-readiness-20261022');
   const caseIndex=process.argv.indexOf('--case'),sourcePath=caseIndex>=0?path.resolve(process.argv[caseIndex+1]||''):NATIVE;
   if(caseIndex<0||sourcePath!==NATIVE||hash(sourcePath)!==NATIVE_SHA)throw Error('Only the exact preserved original archive is permitted');
   fs.mkdirSync(output,{recursive:false});
-  const source=path.join(ROOT,'src'),monitor=path.join(__dirname,'vascular_playback_monitor.py');
+  const source=path.join(ROOT,'src'),monitor=path.join(__dirname,pipeline?'vascular_pipeline_monitor.py':'vascular_playback_monitor.py');
   const reference=path.join(path.dirname(NATIVE),'vascular-canonical.actions.jsonl');
   const historical=path.join(ROOT,'testcases/outputs/full-case-rehearsal-20261020/review/vascular-observability-28962e66-every-frame.json');
   const historicalCounts=JSON.parse(fs.readFileSync(historical)).actionsVerified.map(row=>row.frames);
@@ -108,18 +138,37 @@ function run(){
   const codeFiles=()=>{const result={};for(const directory of [source,path.join(ROOT,'desktop/dist')]){const visit=dir=>{for(const entry of fs.readdirSync(dir,{withFileTypes:true}).sort((a,b)=>a.name.localeCompare(b.name))){if(entry.name==='__pycache__')continue;const file=path.join(dir,entry.name);if(entry.isDirectory())visit(file);else if(directory.endsWith('dist')||entry.name.endsWith('.py'))result[path.relative(ROOT,file)]=hash(file);}};visit(directory);}return result;};
   const frozenFiles=codeFiles();
   const report={schema:'resectionlab.full-vascular-prefix-gui.v1',recordedAt:new Date().toISOString(),
-    scope:(preparedOnly?'Previously prepared original73 saved vascular actions via current-production read-only prefix; no fresh transitions.':'Original73 saved vascular actions freshly reconstructed via current-production read-only prefix; private prepared-cache publication tracked separately.')+' No editable/canonical admission, no RL. Every recorded tuple must be CPU-submitted in order. CPU submission is NOT compositor presentation; historical all-frame hashes are unavailable.',
-    qualificationMode:preparedOnly?'prepared-only':'fresh',preparedCacheDirectory:cacheDirectory,
+    scope:(preparedOnly?'Previously prepared original73 saved vascular actions via current-production read-only prefix; no fresh transitions.':'Original73 saved vascular actions freshly reconstructed via current-production read-only prefix; private prepared-cache publication tracked separately.')+' No editable/canonical admission, no RL. Every recorded tuple must be CPU-submitted in order. CPU submission is NOT compositor presentation; '+(pipeline?'complete producer/consumer/v15 frame descriptors and compressed SHA/lengths are compared after one consumer audit.':'historical all-frame hashes are unavailable.'),
+    qualificationMode:pipeline?'fresh-pipeline':preparedOnly?'prepared-only':'fresh',preparedCacheDirectory:cacheDirectory,
     limits:{wallMs:600000,wholePythonRssBytes:3*1024**3,binarySpoolBytes:1024**3,manifestBytes:16*1024**2,postGuiAuditWallMs:180000},
     originalFiles,codeFiles:frozenFiles,harnessSha256:hash(__filename),guardSha256:hash(monitor),versions:process.versions,
     ipc:[],errors:[],diagnostics:[],checks:{},passed:false,captureRecordedFlow:captureFlow,frameOperativeField:process.env.VASCULAR_FRAME_FIELD==='1'};
-  const persist=()=>fs.writeFileSync(path.join(output,'report.json'),JSON.stringify(report,null,2));
+  let reportCapFailed=false;
+  const persist=()=>{
+    if(reportCapFailed){fs.writeFileSync(path.join(output,'report.json'),JSON.stringify({schema:report.schema,passed:false,failure:'GUI report exceeded32MiB owning-write cap',qualificationMode:report.qualificationMode,checks:report.checks}));return;}
+    const encoded=JSON.stringify(report,null,2);
+    if(Buffer.byteLength(encoded)>32*1024**2){reportCapFailed=true;persist();throw Error('GUI report exceeded32MiB owning-write cap');}
+    fs.writeFileSync(path.join(output,'report.json'),encoded);
+  };
   const runner=path.join(output,'guarded-bridge.py');
-  fs.writeFileSync(runner,`import sys\nsys.path.insert(0, ${JSON.stringify(__dirname)})\nfrom vascular_playback_monitor import VascularPlaybackMonitor,initialize_guard_inventory\nfrom resectionlab.surgical_engine import SurgicalEngine\nfrom resectionlab import surgical_prefix_replay,surgical_frame_replay,surgical_telemetry\nfrom resectionlab.desktop_bridge import BridgeSession,main\ninitialize_guard_inventory()\nguard=VascularPlaybackMonitor(SurgicalEngine, ${JSON.stringify(output)}, prepared_only=${preparedOnly?'True':'False'})\nguard.install(BridgeSession)\ntry:\n    with guard:\n        main()\nfinally:\n    guard.finish()\n`);
+  fs.writeFileSync(runner,vascularGuardedRunner(output,{pipeline,preparedOnly}));
   const originalSpawn=childProcess.spawn;
   childProcess.spawn=(command,args,options)=>args?.[1]==='-m'&&args?.[2]==='resectionlab.desktop_bridge'?originalSpawn(command,['-u',runner,...args.slice(3)],options):originalSpawn(command,args,options);
-  const sidecar=require('./sidecar.cjs'),OriginalSidecar=sidecar.Sidecar;let backend;
-  sidecar.Sidecar=class extends OriginalSidecar{constructor(config){super({...config,sourcePath:source});backend=this;report.pythonExecutable=config.executable||config.python;this.on('diagnostic',message=>{if(report.diagnostics.length<100)report.diagnostics.push(message);});}};
+  const sidecar=require('./sidecar.cjs'),OriginalSidecar=sidecar.Sidecar;let backend,facade,proof;
+  if(pipeline){
+    const {VascularPipelineProof}=require('./vascular-pipeline-proof.cjs');
+    proof=new VascularPipelineProof({archivePath:NATIVE,sourceArchiveSha256:NATIVE_SHA,branchId:BRANCH,frameCounts:COUNTS,cacheDirectory,
+      onFailure:error=>{report.failure??=String(error);try{persist();}finally{void proof.killAll().catch(()=>{}).finally(()=>app.exit(1));}}});
+    const {PrefixEngine}=require('./prefix-engine.cjs'),create=PrefixEngine.create;
+    PrefixEngine.create=async function(options){facade=await create.call(this,options);return facade;};
+    // The independent sampler covers the ordinary bootstrap as well as both
+    // fixed roles. It does not replace the production scheduler/resource guard.
+    void proof.startResources().catch(()=>{});
+  }
+  sidecar.Sidecar=class extends OriginalSidecar{
+    constructor(config){super({...config,sourcePath:source});backend=this;if(pipeline)proof.register(this,config);report.pythonExecutable=config.executable||config.python;this.on('diagnostic',message=>{if(report.diagnostics.length<100)report.diagnostics.push(message);});}
+    requestLease(op,args,timeout){const began=performance.now(),lease=super.requestLease(op,args,timeout);return pipeline?proof.observeLease(this,op,args,lease,began):lease;}
+  };
   app.setPath('userData',path.join(output,'user-data'));
   let lastResponse,windowRef,finishing=false,timer;
   const originalHandle=ipcMain.handle.bind(ipcMain);
@@ -134,7 +183,8 @@ function run(){
           stateId:result.view?.stateId,simulatedSeconds:result.playback?.observedTimeSeconds,frameCount:result.playback?.frameCount,
           verifiedThrough:result.verification?.verifiedThrough,readOnly:result.verification?.readOnly===true,verificationStatus:result.verification?.status,
           archiveEndpointVerified:result.verification?.archiveEndpointVerified,preparedCache:result.verification?.preparedCache,timelineOmitted:result.timelineOmitted===true,responseBytes:Buffer.byteLength(JSON.stringify(result))});
-        checkedVascularAuthority(request.command,result,preparedOnly);
+        checkedVascularAuthority(request.command,result,preparedOnly||pipeline);
+        if(pipeline&&['seekPrefix','seekPrefixFrame'].includes(request.command))report.prefixOrigin=checkedVascularPipelineOrigin(result,report.prefixOrigin);
       }
       report.ipc.push(entry);return result;
     }catch(error){entry.ms=performance.now()-began;entry.error=String(error);report.ipc.push(entry);throw error;}
@@ -142,40 +192,77 @@ function run(){
   const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
   const finish=async()=>{
     if(finishing)return;finishing=true;clearTimeout(timer);
-    await backend?.stop();
+    let shutdownProven=true;
+    try{await (pipeline?facade?.stop():backend?.stop());}
+    catch(error){shutdownProven=false;report.failure??=String(error);if(pipeline)await proof.killAll().catch(()=>{});}
+    if(pipeline)await proof.closeResources();
     report.ipcAtShutdown=report.ipc.length;
     report.allCompletedPlaybackIpc=report.ipc.slice(report.playbackStartIpcIndex??report.ipc.length).filter(row=>row.command==='seekPrefixFrame');
     const counts=new Map();for(const row of report.allCompletedPlaybackIpc)counts.set(tuple(row),(counts.get(tuple(row))??0)+1);
     report.fetchSummary={completed:report.allCompletedPlaybackIpc.length,duplicates:[...counts.values()].reduce((sum,n)=>sum+Math.max(0,n-1),0),lateAfterSnapshot:report.ipc.slice(report.ipcAtSnapshot??report.ipc.length).filter(row=>row.command==='seekPrefixFrame').length,unadmitted:report.allCompletedPlaybackIpc.filter(row=>!(report.submittedPlayback??[]).some(shown=>tuple(shown)===tuple(row))).length};
     if(fs.existsSync(path.join(output,'physics-guard.json')))report.physicsGuard=JSON.parse(fs.readFileSync(path.join(output,'physics-guard.json')));
-    const g=report.physicsGuard,stats=g?.ownership?.prefixStatistics;
-    const preparation=vascularPreparationChecks(g,preparedOnly);
-    report.checks[preparedOnly?'zeroStepPreparedPlayback':'exact73Preparations']=preparation.stepAuthority;
-    report.checks[preparedOnly?'exact73PreparedLoads':'exact73PreparedPublications']=preparation.preparedCache;
-    report.checks.guardWallAndRss=!!g&&g.wallSeconds<600&&g.processPeakResidentBytes<=3*1024**3;
-    report.checks.noCanonicalAdmission=!!g?.ownership&&['canonicalSessionCreated','replayCacheCreated','frameCacheCreated','frameAdmissionsCreated'].every(key=>g.ownership[key]===false);
-    report.checks.retainedCaps=!!stats&&stats.verifiedThrough===73&&stats.totalActions===73&&stats.frameBytes<=stats.maxFrameBytes&&stats.checkpointBytes<=stats.maxCheckpointBytes&&stats.historyBytes<=stats.maxHistoryBytes;
+    let preparation;
+    if(pipeline){
+      report.pipelineRoleGuards={};
+      for(const role of ['normal','producer','consumer']){
+        const file=path.join(output,'roles',role,'physics-guard.json');
+        if(fs.existsSync(file)){
+          const limit={normal:512*1024,producer:1024**2,consumer:2*1024**2}[role],bytes=fs.readFileSync(file);
+          if(bytes.length>limit)throw Error('Role control exceeds its manifest cap');
+          report.pipelineRoleGuards[role]=JSON.parse(bytes);
+        }
+      }
+      const roles=report.pipelineRoleGuards,p=vascularPreparationChecks(roles.producer,false),c=vascularPreparationChecks(roles.consumer,true),n=roles.normal;
+      report.checks.exact73Preparations=p.stepAuthority;
+      report.checks.exact73PreparedPublications=p.preparedCache;
+      report.checks.zeroStepConsumer=c.stepAuthority;
+      report.checks.exact73PreparedLoads=c.preparedCache;
+      report.checks.zeroStepBootstrap=!!n&&!n.failure&&n.permittedSteps?.length===0&&n.forbiddenSteps?.length===0&&Object.keys(n.publicStepAttempts??{missing:true}).length===0;
+      report.checks.guardWallAndRss=Object.keys(roles).length===3&&Object.values(roles).every(g=>g.wallSeconds<600&&g.processPeakResidentBytes>0&&g.processPeakResidentBytes<=3*1024**3);
+      report.checks.noCanonicalAdmission=Object.keys(roles).length===3&&Object.values(roles).every(g=>!!g.ownership&&['canonicalSessionCreated','replayCacheCreated','frameCacheCreated','frameAdmissionsCreated'].every(key=>g.ownership[key]===false));
+      report.checks.retainedCaps=['producer','consumer'].every(role=>{const s=roles[role]?.ownership?.prefixStatistics;return !!s&&s.verifiedThrough===73&&s.totalActions===73&&s.frameBytes<=s.maxFrameBytes&&s.checkpointBytes<=s.maxCheckpointBytes&&s.historyBytes<=s.maxHistoryBytes;});
+      report.pipelineFacadeStatistics=facade?.statistics;
+      try{
+        if(!shutdownProven)throw Error('Actual pipeline shutdown was not proven');
+        const parent=await proof.finalize(report,report.pipelineFacadeStatistics),encoded=JSON.stringify(parent);
+        if(Buffer.byteLength(encoded)>512*1024)throw Error('Parent proof exceeds512KiB');
+        fs.writeFileSync(path.join(output,'pipeline-parent-proof.json'),encoded,{flag:'wx'});
+        report.checks.parentPipelineProof=true;
+      }catch(error){report.checks.parentPipelineProof=false;report.pipelineParentFailure=String(error);}
+      preparation={stepAuthority:p.stepAuthority&&c.stepAuthority&&report.checks.zeroStepBootstrap&&report.checks.parentPipelineProof,
+        preparedCache:p.preparedCache&&c.preparedCache};
+    }else{
+      const g=report.physicsGuard,stats=g?.ownership?.prefixStatistics;
+      preparation=vascularPreparationChecks(g,preparedOnly);
+      report.checks[preparedOnly?'zeroStepPreparedPlayback':'exact73Preparations']=preparation.stepAuthority;
+      report.checks[preparedOnly?'exact73PreparedLoads':'exact73PreparedPublications']=preparation.preparedCache;
+      report.checks.guardWallAndRss=!!g&&g.wallSeconds<600&&g.processPeakResidentBytes<=3*1024**3;
+      report.checks.noCanonicalAdmission=!!g?.ownership&&['canonicalSessionCreated','replayCacheCreated','frameCacheCreated','frameAdmissionsCreated'].every(key=>g.ownership[key]===false);
+      report.checks.retainedCaps=!!stats&&stats.verifiedThrough===73&&stats.totalActions===73&&stats.frameBytes<=stats.maxFrameBytes&&stats.checkpointBytes<=stats.maxCheckpointBytes&&stats.historyBytes<=stats.maxHistoryBytes;
+    }
     report.checks.sourcePreserved=Object.values(originalFiles).every(row=>hash(row.path)===row.sha256)&&JSON.stringify(codeFiles())===JSON.stringify(frozenFiles)&&hash(monitor)===report.guardSha256&&hash(__filename)===report.harnessSha256;
     persist();
     // Heavy independent decode/hash/conservation audit starts AFTER the GUI run
     // and sidecar shutdown. It cannot influence measured playback throughput.
-    if(preparation.stepAuthority&&preparation.preparedCache&&report.checks.sourcePreserved){
+    if(shutdownProven&&!report.failure&&preparation.stepAuthority&&preparation.preparedCache&&report.checks.sourcePreserved){
       const auditStarted=performance.now();
       report.postGuiAudit=await new Promise(resolve=>{
         const child=originalSpawn(report.pythonExecutable,[monitor,'audit','--output',output],{cwd:ROOT,env:{...process.env,PYTHONPATH:source},stdio:['ignore','pipe','pipe']});
-        let text='';const timeout=setTimeout(()=>{child.kill('SIGKILL');resolve({passed:false,error:'Post-GUI audit exceeded180seconds'});},180000);
+        let text='',expired=false;const timeout=setTimeout(()=>{expired=true;child.kill('SIGKILL');},180000);
         child.stdout.on('data',data=>{if(text.length<16000)text+=data;});child.stderr.on('data',data=>{if(text.length<16000)text+=data;});
         child.on('error',error=>{clearTimeout(timeout);resolve({passed:false,error:String(error)});});
-        child.on('exit',(code,signal)=>{clearTimeout(timeout);resolve({passed:code===0,code,signal,log:text});});
+        child.on('exit',(code,signal)=>{clearTimeout(timeout);resolve({passed:!expired&&code===0,code,signal,log:text,...(expired?{error:'Post-GUI audit exceeded180seconds'}:{})});});
       });
       report.postGuiAudit.wallMs=performance.now()-auditStarted;
       if(fs.existsSync(path.join(output,'spool-audit.json')))report.spoolAudit=JSON.parse(fs.readFileSync(path.join(output,'spool-audit.json')));
+      if(pipeline&&fs.existsSync(path.join(output,'pipeline-audit.json')))report.pipelineAudit=JSON.parse(fs.readFileSync(path.join(output,'pipeline-audit.json')));
       if(report.spoolAudit?.passed&&fs.existsSync(path.join(output,'audited-observations.json'))){
         const expected=JSON.parse(fs.readFileSync(path.join(output,'audited-observations.json')));
         report.checks[preparedOnly?'everyPreparedObservationSubmitted':'everyFreshObservationSubmitted']=exactSequence(report.submittedPlayback??[],expected);
       }
     }
     report.checks.fullIndependentAudit=report.postGuiAudit?.passed===true&&report.spoolAudit?.passed===true&&report.spoolAudit.allFullCanonicalRecordsExact===true;
+    if(pipeline)report.checks.pipelineIndependentAudit=report.pipelineAudit?.passed===true;
     report.checks.sourcePreservedAfterAudit=Object.values(originalFiles).every(row=>hash(row.path)===row.sha256)&&JSON.stringify(codeFiles())===JSON.stringify(frozenFiles);
     report.passed=!report.failure&&report.errors.length===0&&Object.values(report.checks).every(Boolean);persist();
     console.log(JSON.stringify({output,passed:report.passed,failure:report.failure,checks:report.checks,final:report.final}));app.exit(report.passed?0:1);
@@ -265,16 +352,16 @@ function run(){
           cpuSubmittedIntervalSeconds:(lastWarm?.firstSubmittedAt-first?.firstSubmittedAt)/1000,
           cpuSubmittedIntervalRatio:(lastWarm?.simulatedSeconds-first?.simulatedSeconds)/((lastWarm?.firstSubmittedAt-first?.firstSubmittedAt)/1000),
           warmSameActionSubmittedSimulatedSeconds:warmSums.sim,warmSameActionSubmittedWallSeconds:warmSums.wall,warmSameActionSubmittedRatio:warmSums.sim/warmSums.wall,
-          [preparedOnly?'preparedActionLoadHandlerSeconds':'coldActionHandlerSeconds']:report.playbackIpc.filter(row=>row.command==='seekPrefixFrame'&&row.frameIndex===0).map(row=>({position:row.position,seconds:row.ms/1000})),
-          meaning:(preparedOnly?'Full run includes prepared-action disk loads, validation and spool overhead; no fresh transitions. Submitted interval includes later action loads.':'Full run includes each cold action reconstruction and spool overhead. Submitted interval still contains later cold preparations;')+' Warm same-action IPC requests have frameIndex>=1. CPU timestamps are not compositor presentation.'};
+          [pipeline?'pipelineFirstFrameHandlerSeconds':preparedOnly?'preparedActionLoadHandlerSeconds':'coldActionHandlerSeconds']:report.playbackIpc.filter(row=>row.command==='seekPrefixFrame'&&row.frameIndex===0).map(row=>({position:row.position,seconds:row.ms/1000})),
+          meaning:(pipeline?'Full run includes bootstrap and fresh action-zero preparation, overlapping later producer reconstruction with consumer observations, validation and spool overhead. First-frame handler includes load/wait, not producer compute alone.':preparedOnly?'Full run includes prepared-action disk loads, validation and spool overhead; no fresh transitions. Submitted interval includes later action loads.':'Full run includes each cold action reconstruction and spool overhead. Submitted interval still contains later cold preparations;')+' Warm same-action IPC requests have frameIndex>=1. CPU timestamps are not compositor presentation.'};
       }catch(error){report.failure=error.stack;try{
         Object.assign(report,await js(`({frames:window.vascularFrames??[],rendererReceipts:window.vascularReceipts??[],work:window.vascularWork??[],uiFailure:window.vascularFailure,displayedStateId:document.querySelector('.surgical-panel')?.dataset.stateId})`));
         if(Number.isFinite(report.playStarted)&&Number.isFinite(report.playStartedRenderer)){report.playbackIpc=report.ipc.slice(report.playbackStartIpcIndex);report.submittedPlayback=submittedVascularPlayback(report.playbackIpc,report.frames,{rendererReceipts:report.rendererReceipts,startedRenderer:report.playStartedRenderer});report.final=report.submittedPlayback.at(-1);report.partialEvidence=true;}
         fs.writeFileSync(path.join(output,'failure.png'),(await window.webContents.capturePage()).toPNG());
       }catch(evidenceError){report.partialEvidenceError=String(evidenceError);}}
-      await finish();
+      try{await finish();}catch(error){report.failure??=String(error);try{persist();}finally{if(pipeline)await proof.killAll().catch(()=>{});else backend?.child.kill('SIGKILL');app.exit(1);}}
     });
   });
-  timer=setTimeout(()=>{report.failure='600 second overall GUI watchdog expired';hardBudgetStop(persist,()=>backend?.child.kill('SIGKILL'),code=>app.exit(code));},600000);timer.unref();
+  timer=setTimeout(()=>{report.failure='600 second overall GUI watchdog expired';if(pipeline){try{persist();}finally{void proof.killAll().catch(()=>{}).finally(()=>app.exit(1));}}else hardBudgetStop(persist,()=>backend?.child.kill('SIGKILL'),code=>app.exit(code));},600000);timer.unref();
   persist();require('./main.cjs');
 }

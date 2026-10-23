@@ -1,6 +1,6 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict');
-const {COUNTS,expectedSequence,submittedVascularPlayback,exactSequence,checkedVascularAuthority,hardBudgetStop,isVascularBenchmarkEntry,vascularPreparedOnly,vascularStartButton,vascularPreparationChecks,qualifiedFlowCapture}=require('./benchmark-surgical-vascular.cjs');
+const {COUNTS,expectedSequence,submittedVascularPlayback,exactSequence,checkedVascularAuthority,hardBudgetStop,isVascularBenchmarkEntry,vascularPreparedOnly,vascularPipelineMode,checkedVascularPipelineOrigin,vascularGuardedRunner,vascularStartButton,vascularPreparationChecks,qualifiedFlowCapture}=require('./benchmark-surgical-vascular.cjs');
 const options={startedRenderer:1000};
 const response=(position,frameIndex,stateId='shared')=>({command:'seekPrefixFrame',branchId:'full-vascular',position,frameIndex,stateId,started:1100+frameIndex,ms:10});
 const frame=(position,frameIndex,at=1200,stateId='shared')=>({at,serial:frameIndex+1,surgicalStateId:stateId,surgicalFrame:{branchId:'full-vascular',position,frameIndex}});
@@ -120,4 +120,28 @@ test('wire prefix cache mode must remain fixed while canonical and imported auth
   const response={branchId:'full-vascular',changed:false,readOnly:true,fullCase:null,verification:{status:'reconstructed-prefix',readOnly:true,totalActions:73,preparedCache:{mode:'only'}}};
   assert.equal(checkedVascularAuthority('seekPrefixFrame',response,true),response);
   assert.throws(()=>checkedVascularAuthority('seekPrefixFrame',response,false),/prepared-only mode/);
+});
+test('fresh pipeline qualification requires the production pipeline and shared wall cap explicitly',()=>{
+  const env={VASCULAR_PIPELINE:'1',RESSECTIONLAB_PREFIX_PIPELINE:'1',RESSECTIONLAB_PREFIX_PIPELINE_MAX_WALL_MS:'600000'};
+  assert.equal(vascularPipelineMode(env),true);assert.equal(vascularPipelineMode({}),false);
+  for(const patch of [{VASCULAR_PIPELINE:'0'},{VASCULAR_PIPELINE:undefined},{VASCULAR_PREPARED_ONLY:'1'},
+    {RESSECTIONLAB_PREFIX_PIPELINE:undefined},{RESSECTIONLAB_PREFIX_PIPELINE_MAX_WALL_MS:'7200000'}])assert.throws(()=>vascularPipelineMode({...env,...patch}));
+});
+test('pipeline GUI responses retain one exact original-bound fresh activation while counters stay consumer-only',()=>{
+  const origin={schema:'resectionlab.prefix-origin.v1',kind:'fresh-reconstruction',activationId:'12345678-1234-4123-8123-123456789abc',
+    caseHash:'sha256:'+'c'.repeat(64),branchId:'full-vascular',sourceArchiveSha256:'095659e54f381355e8f5655b6c5907990b2ac4767dc9ce58297e3bc4d6f3268d',sceneId:'sha256:'+'a'.repeat(64)};
+  const response={caseHash:origin.caseHash,prefixOrigin:origin,view:{scene:{sceneId:origin.sceneId}}};
+  const prior=checkedVascularPipelineOrigin(response);assert.deepEqual(prior,origin);assert.notEqual(prior,origin);
+  assert.deepEqual(checkedVascularPipelineOrigin({...response,view:{}},prior),origin);
+  for(const patch of [{sourceArchiveSha256:'a'.repeat(64)},{branchId:'main'},{caseHash:'other'},{activationId:'bad'},{sceneId:'bad'},{extra:1}])assert.throws(()=>checkedVascularPipelineOrigin({...response,prefixOrigin:{...origin,...patch}},prior));
+  assert.throws(()=>checkedVascularPipelineOrigin({...response,view:{scene:{sceneId:'other'}}},prior));
+  assert.throws(()=>checkedVascularPipelineOrigin({...response,prefixOrigin:{...origin,activationId:'12345678-1234-4123-8123-123456789abd'}},prior));
+});
+test('generated pipeline runner selects guarded roles from the actual trusted CLI and leaves ordinary runners unchanged',()=>{
+  const fresh=vascularGuardedRunner('/generated/output'),prepared=vascularGuardedRunner('/generated/output',{preparedOnly:true}),pipeline=vascularGuardedRunner('/generated/output',{pipeline:true});
+  assert.match(fresh,/guard=VascularPlaybackMonitor\(SurgicalEngine, ".*", prepared_only=False\)/);
+  assert.match(prepared,/prepared_only=True/);assert.doesNotMatch(fresh,/PipelineVascularMonitor/);
+  assert.match(pipeline,/role=sys.argv\[sys.argv.index\('--prefix-worker-role'\)\+1\]/);
+  assert.match(pipeline,/else 'normal'/);assert.match(pipeline,/guard=PipelineVascularMonitor/);
+  for(const code of [fresh,prepared,pipeline])assert.match(code,/initialize_guard_inventory\(\)\n[\s\S]*guard.install\(BridgeSession\)\ntry:\n    with guard:\n        main\(\)\nfinally:\n    guard.finish\(\)\n$/);
 });
