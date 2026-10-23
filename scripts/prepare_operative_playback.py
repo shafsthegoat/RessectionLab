@@ -13,7 +13,8 @@ from pathlib import Path
 import sys
 import time
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'src'))
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'src'))
 from resectionlab.surgical_engine import SurgicalEngine
 from resectionlab.surgical_environment import load_environment
 from resectionlab.surgical_frame_replay import SurgicalFrameCache
@@ -29,7 +30,7 @@ def main():
                         help='Zero-based half-open ranges, e.g. 16:23,47:73')
     parser.add_argument('--report', required=True, type=Path)
     args = parser.parse_args()
-    if 'testcases' not in args.report.resolve().parts or args.report.exists():
+    if not args.report.resolve().is_relative_to(ROOT / 'testcases') or args.report.exists():
         parser.error('Use a new report path under testcases/')
     positions = set()
     for span in args.actions.split(','):
