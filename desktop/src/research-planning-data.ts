@@ -7,6 +7,21 @@ export function planReplayPosition(plan:SurgicalPlanAlternative,decision:number)
   return plan.prefixActions+plan.decisions.slice(0,decision).filter(row=>row.status!=='rejected').length;
 }
 
+/** Recover annotations after reopen or external timeline playback/scrubbing.
+ * Refused commands share a physical boundary; an explicit selection there can
+ * still be retained by the caller rather than inferred from physical state. */
+export function planDecisionAtPosition(plan:SurgicalPlanAlternative,position:number):number {
+  if(!Number.isInteger(position)||position<0)throw Error('Invalid native replay position');
+  if(position<=plan.prefixActions)return 0;
+  let accepted=plan.prefixActions,decision=0;
+  for(const row of plan.decisions){
+    if(row.status!=='rejected')accepted++;
+    if(accepted>position)break;
+    decision++;
+  }
+  return decision;
+}
+
 export function planLabel(plan:SurgicalPlanAlternative):string {
   return plan.label??(plan.method==='checkpoint'?'Frozen learner · seed 17':plan.method==='greedy'?'Observation-only greedy':'Immediate STOP');
 }

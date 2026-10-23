@@ -1,7 +1,8 @@
 import {useEffect,useState} from 'react';
 import type {SurgicalController} from './use-surgical';
 import type {SurgicalPlanAlternative} from './surgical-types';
-import {planDecisionReason,planReplayPosition,planLabel} from './research-planning-data';
+import {planDecisionReason,planReplayPosition,planLabel,planDecisionAtPosition} from './research-planning-data';
+import {surgicalPlaybackPosition} from './surgical-playback';
 
 export function ResearchPlanningPanel({c,pause}:{c:SurgicalController;pause:()=>void}) {
   const [acknowledged,setAcknowledged]=useState(false),[decision,setDecision]=useState(0);
@@ -14,9 +15,16 @@ export function ResearchPlanningPanel({c,pause}:{c:SurgicalController;pause:()=>
   }
   function show(plan:SurgicalPlanAlternative,step=decision) {
     const bounded=Math.min(step,plan.decisions.length);
-    pause();setDecision(bounded);void c.run('selectBranch',{branchId:plan.branchId,position:planReplayPosition(plan,bounded)});
+    pause();void c.run('selectBranch',{branchId:plan.branchId,position:planReplayPosition(plan,bounded)}).then(ok=>{if(ok)setDecision(bounded);});
   }
   const active=comparison?.alternatives.find(p=>p.branchId===c.result?.branchId);
+  const acceptedPosition=surgicalPlaybackPosition(c.result?.playback,c.result?.position??0);
+  const beforeComparison=!!active&&acceptedPosition<active.prefixActions;
+  useEffect(()=>{
+    if(!active||c.pending)return;
+    if(planReplayPosition(active,Math.min(decision,active.decisions.length))!==acceptedPosition)
+      setDecision(planDecisionAtPosition(active,acceptedPosition));
+  },[active,acceptedPosition,c.pending,decision]);
   const rescue=comparison?.task==='vascular-rescue';
   const rescueContext=rescue||readiness?.rescueAvailable;
   const maxDecisions=Math.max(6,...(comparison?.alternatives.map(plan=>plan.decisions.length)??[]));
@@ -33,10 +41,10 @@ export function ResearchPlanningPanel({c,pause}:{c:SurgicalController;pause:()=>
       <p><strong>{comparison.sourceRole}</strong> · {comparison.totalWallSeconds.toFixed(2)} s total · {comparison.optimizerUpdates} optimizer updates</p>
       <p className="surgical-note">All alternatives start at the same recorded state. Selecting one uses the 3D/MPR replay, tool poses and cavity. {rescue?'These scripted rescue sequences compare intervention order and delay after the same modeled vessel injury. They do not compare tumor access corridors.':'The source branch is preserved.'}</p>
       {rescue&&<div className="rescue-comparison"><table aria-label="Vascular rescue outcomes"><caption>Model outputs · mm³ and simulated seconds</caption><thead><tr><th>Strategy</th><th>Wound</th><th>Retained fluid</th><th>Time</th></tr></thead><tbody>{comparison.alternatives.map(plan=><tr key={plan.branchId} aria-selected={c.result?.branchId===plan.branchId}><th><button disabled={c.pending} onClick={()=>show(plan)}>{plan.method==='prompt-coagulation'?'Coagulation first':plan.method==='suction-first'?'Suction first':'Delayed'}</button></th><td>{plan.summary?.additionalWoundFluidMm3?.toFixed(3)}</td><td>{plan.summary?.fluidPresentMm3?.toFixed(3)}</td><td>{plan.incrementalEndpoints.elapsed_seconds.toFixed(0)}</td></tr>)}</tbody></table><p className="surgical-note">Retained fluid includes outlet reservoirs. Select a row to inspect its real trajectory.</p></div>}
-      <label>Aligned command {decision} / {maxDecisions}<input aria-label="Research planning decision" type="range" min="0" max={maxDecisions} value={decision} disabled={c.pending||!active} onChange={e=>active&&show(active,+e.target.value)}/></label>
+      <label>{beforeComparison?`Shared approach · comparison starts at action ${active!.prefixActions}`:`Aligned command ${decision} / ${maxDecisions}`}<input aria-label="Research planning decision" type="range" min="0" max={maxDecisions} value={decision} disabled={c.pending||!active||beforeComparison} onChange={e=>active&&show(active,+e.target.value)}/></label>
       <div className="research-plan-alternatives">{comparison.alternatives.map(plan=><article key={plan.branchId}>
         <button disabled={c.pending||!c.result?.branches.some(b=>b.id===plan.branchId)} aria-pressed={c.result?.branchId===plan.branchId} onClick={()=>show(plan)}>{planLabel(plan)} · replay</button>
-        <p>{planDecisionReason(plan,decision)}</p>
+        <p>{beforeComparison?'Replaying the shared approach before the comparison boundary.':planDecisionReason(plan,decision)}</p>
         <details open={rescue?undefined:true}><summary>Outcome details</summary>
         <dl><div><dt>Additional target</dt><dd>{plan.incrementalEndpoints.tumor_removed_mm3.toFixed(2)} mm³</dd></div>
           <div><dt>Additional non-target tissue</dt><dd>{plan.incrementalEndpoints.healthy_removed_mm3.toFixed(2)} mm³</dd></div>
