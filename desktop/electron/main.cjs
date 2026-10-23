@@ -14,6 +14,7 @@ const { pathToFileURL } = require('node:url');
 const { episodeRequest } = require('./development-episode.cjs');
 const { persistentPassiveRequest } = require('./persistent-passive.cjs');
 const { Sidecar } = require('./sidecar.cjs');
+const { PrefixEngine } = require('./prefix-engine.cjs');
 const { createLogger } = require('./logging.cjs');
 const { assertSender, plainArgs } = require('./security.cjs');
 const { importStructuralEvidence } = require('./structural-import.cjs');
@@ -49,8 +50,6 @@ const casePaths = new Map();
 const cliValue = name => { const index = process.argv.indexOf(name); return index >= 0 ? process.argv[index + 1] : undefined; };
 
 async function startEngine() {
-  const transferDir = await fs.mkdtemp(path.join(os.tmpdir(), 'ressectionlab-'));
-  await fs.chmod(transferDir, 0o700);
   const bundled = path.join(process.resourcesPath, 'research-engine', 'ressectionlab-engine');
   const repo = path.resolve(__dirname, '../..');
   caseLibrary = new CaseLibrarySelection({userData:app.getPath('userData'),defaultRoot:app.isPackaged?null:repo,
@@ -58,14 +57,29 @@ async function startEngine() {
   await caseLibrary.restore();
   const runDir = path.join(app.getPath('userData'), 'research-runs');
   const config = app.isPackaged
-    ? { executable: bundled, cwd: app.getPath('userData'), transferDir, runDir }
-    : { python: path.join(repo, '.venv/bin/python'), cwd: repo, sourcePath: path.join(repo, 'src'), transferDir, runDir };
+    ? { executable: bundled, cwd: app.getPath('userData'), runDir }
+    : { python: path.join(repo, '.venv/bin/python'), cwd: repo, sourcePath: path.join(repo, 'src'), runDir };
   // Existing packaged engines do not accept the new argument. They remain
   // startable and refuse the unsupported observation operation independently.
   if (!app.isPackaged) config.observedSourceRoot = repo;
   await fs.mkdir(app.getPath('userData'), { recursive: true });
   await fs.access(config.executable || config.python);
-  engine = new Sidecar(config);
+  const createWorker = async ({prefixWorker} = {}) => {
+    const transferDir = await fs.mkdtemp(path.join(os.tmpdir(), 'ressectionlab-'));
+    await fs.chmod(transferDir, 0o700);
+    try { return new Sidecar({...config, transferDir, ...(prefixWorker ? {prefixWorker} : {})}); }
+    catch (error) { await fs.rm(transferDir, {recursive:true, force:true}); throw error; }
+  };
+  // Qualification remains explicit while the default single-worker replay is
+  // unchanged. Existing packaged engines do not implement the fixed roles.
+  const pipelineEnabled = !app.isPackaged && process.env.RESSECTIONLAB_PREFIX_PIPELINE === '1';
+  const maxWallMs = process.env.RESSECTIONLAB_PREFIX_PIPELINE_MAX_WALL_MS === undefined
+    ? 7200000 : Number(process.env.RESSECTIONLAB_PREFIX_PIPELINE_MAX_WALL_MS);
+  if (pipelineEnabled && (!Number.isSafeInteger(maxWallMs) || maxWallMs < 100 || maxWallMs > 7200000))
+    throw new Error('Invalid prefix pipeline wall-time budget');
+  engine = pipelineEnabled
+    ? await PrefixEngine.create({createWorker, enabled:true, sourceForHash:hash => casePaths.get(hash), maxWallMs})
+    : await createWorker();
   engine.on('event', payload => { if (window && !window.isDestroyed()) window.webContents.send('research:event', payload); });
   engine.on('diagnostic', message => log(message));
 }

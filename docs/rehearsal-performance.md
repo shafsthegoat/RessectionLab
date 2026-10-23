@@ -1919,8 +1919,8 @@ Evidence is under `testcases/outputs/rl-readiness-20261022/`:
 `fresh-vascular-action2-profile-v1/` and `-v2/`, `field-token-benchmark-v1/`,
 `recorded-flow-python-budget-field-token-v{1,2,3}`, v15 pre/post bindings,
 `desktop-full-vascular-field-token-v15/analysis.json`, pixel reviews and the
-independent v15 review. V14 packages now require their historical Python source;
-the current ordinary launch selects the fresh v15 cache in
+independent v15 review. V14 and v15 packages require their historical Python source;
+the historical v15 launch is recorded in
 [prepared replay](prepared-prefix-replay.md).
 
 Full-primary playback, delivered-frame/input targets, moving tools/field effects,
@@ -1928,3 +1928,73 @@ patient decision throughput, remaining mechanics/planning and RL prerequisites
 remain open. No policy execution, optimizer update or pilot ran in this
 continuation; the two earlier unintended fixture updates remain disclosed in
 [RL readiness](rl-readiness.md).
+
+### Producer/consumer pipeline foundation
+
+The next implementation is opt-in through `RESSECTIONLAB_PREFIX_PIPELINE=1` in
+the development app. Its default remains the ordinary single-worker path. It
+overlaps fresh production of the next saved action with complete decode/hash
+and display reads of resident observations. Publication and first package loads
+are serialized because the unchanged signed store uses a nonblocking lock.
+The consumer has a fixed prepared-only startup role and cannot execute physics,
+switch roles or recover a missing package through reconstruction. Both workers
+derive the complete normal source/binding/native identities independently.
+
+The coordinator bounds two live workers, one action of lookahead and two pending
+display requests. Existing per-worker memory/raw limits and the shared
+512 MiB cache remain. Source image IDs survive worker replacement through one
+hash-checked 512 MiB retained registry; repeated IDs/content share storage.
+Source/branch transitions, cancellation and failures invalidate epochs. Both
+actual exits must complete before replacement. A sampled watchdog covers both
+Python process trees under one 3 GiB RSS cap and a common wall deadline.
+
+The final explicit Python prefix/bridge/cache/native/JSON selection passed
+**376 tests in 70.85 seconds** (71.247 seconds external, 204,324,864-byte sampled
+tree RSS). All **284 Electron main-process tests** passed (7.204 seconds external,
+243,613,696-byte tree RSS). These totals overlap earlier focused runs. The
+selections exclude training/optimizer tests and the entire pilot module. Main
+syntax and diff checks pass; renderer assets and native builds are unchanged.
+
+The first 38-check foundation attempt exposed macOS `/var` versus `/private/var`
+path handling in the retained-asset helper; canonical paths fixed it. Review
+also found and fixed abandoned no-ID lease rejections, stale startup continuations,
+same-source restart image cleanup and existing-package publication accounting.
+The final regressions exercise cancellation/failure at these boundaries, actual
+child exit after ignored shutdown/SIGTERM, counter regressions and signed-package
+reuse following another fresh scripted activation. Failures remain preserved.
+
+The real generated CLI smoke checks source arrays, role flags, signed sharing,
+complete compressed frames/descriptors and endpoint identity through actual
+Sidecars. Its scoped receipts are under
+`testcases/outputs/rl-readiness-20261022/generated-prefix-pipeline-smoke-v{1,2,3}/`.
+The final v3 run passes two explicit same-cache activations: four producer public
+steps, zero consumer/ordinary steps, ten delivered observations (five per
+activation), eleven preserved initial image IDs, exact compressed frames and
+complete frame descriptors, and the saved endpoint. Each producer accepts two
+packages; actual new writes are two on the first activation and zero on the
+second. Six process lifetimes have at most two alive and all actually exit.
+All 328 bound files stay unchanged; external wall/RSS are 6.193 seconds /
+322,682,880 bytes for Node plus Python, below 120 seconds / 3 GiB. The last
+activation's sampled aggregate Python peak is 251,150,336 bytes. These tiny-case
+times are integrity evidence, not throughput measurements.
+
+V2 completes the first activation, then its harness requests archive inspection
+on a generated fixture without full-case metadata. Ordinary inspection attempts
+replay; the probe guard blocks entry before that step executes. The corrected
+v3 harness explicitly cancels and restarts instead. V2 failure, its one blocked
+ordinary step attempt, clean exits and zero consumer steps remain preserved.
+The smoke observer covers public steps and named learning/pilot/training source
+files; its workload is constrained by exact scripted commands. The frame
+comparison does not replace a complete action-receipt audit.
+
+This foundation does not establish patient playback speed, full action-receipt
+audit, renderer/compositor delivery or the original broad readiness gates. The
+next patient trial needs separate producer/consumer evidence, one bounded audit
+spool and a single post-exit numerical audit. Its click-to-completion timer must
+include pipeline startup and preparation of action zero.
+
+The new Python role changes the ordinary implementation fingerprint, so v15's
+full patient evidence remains historical to `44beb257`. No policy, optimizer or
+pilot ran in this pipeline work; the earlier two unintended fixture updates stay
+disclosed. Full-primary playback, 1× fresh playback, responsive visual tools and
+effects, sustained decisions, mechanics/planning and RL prerequisites remain open.

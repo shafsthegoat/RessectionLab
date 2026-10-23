@@ -1796,9 +1796,16 @@ class BridgeRuntime:
     """One numerical worker; cancellation, timeouts and ping never wait on it."""
 
     def __init__(self, transfer_dir: Path, emit: Callable[[dict], None], *, max_cases: int = 2, run_dir: Path | None = None,
-                 observed_source_root: Path | None = None):
+                 observed_source_root: Path | None = None, prefix_worker: dict | None = None):
         self.session = BridgeSession(transfer_dir, max_cases=max_cases, run_dir=run_dir,
                                      observed_source_root=observed_source_root)
+        if prefix_worker is not None:
+            from .surgical_prefix_worker import PrefixWorkerSession
+            try:
+                self.session = PrefixWorkerSession(self.session, **prefix_worker)
+            except BaseException:
+                self.session.close()
+                raise
         self.run_dir = self.session.run_dir
         self.emit = emit
         self._lock = threading.RLock()
@@ -1933,7 +1940,18 @@ def main() -> int:
     parser.add_argument("--transfer-dir", required=True, type=Path)
     parser.add_argument("--run-dir", type=Path, help="Persistent local checkpoint directory supplied by Electron main")
     parser.add_argument("--observed-source-root", type=Path, help="Trusted source root supplied by Electron main; never a renderer argument")
+    parser.add_argument("--prefix-worker-role", choices=("producer", "consumer"), help="Trusted read-only prefix role supplied by Electron main")
+    parser.add_argument("--prefix-worker-source", type=Path)
+    parser.add_argument("--prefix-worker-sha256")
+    parser.add_argument("--prefix-worker-branch")
     args = parser.parse_args()
+    prefix_arguments = (args.prefix_worker_role, args.prefix_worker_source,
+                        args.prefix_worker_sha256, args.prefix_worker_branch)
+    if any(value is not None for value in prefix_arguments) and any(value is None for value in prefix_arguments):
+        parser.error("The trusted prefix worker role requires its complete source, digest and branch binding")
+    prefix_worker = None if args.prefix_worker_role is None else {
+        'role': args.prefix_worker_role, 'source_path': args.prefix_worker_source,
+        'source_sha256': args.prefix_worker_sha256, 'branch_id': args.prefix_worker_branch}
     logging.basicConfig(stream=sys.stderr, level=logging.WARNING)
     protocol_output = sys.stdout
     # Imported numerical libraries may print diagnostics; reserve stdout for
@@ -1945,7 +1963,8 @@ def main() -> int:
         with output_lock:
             protocol_output.write(encoded + "\n")
             protocol_output.flush()
-    runtime = BridgeRuntime(args.transfer_dir, emit, run_dir=args.run_dir, observed_source_root=args.observed_source_root)
+    runtime = BridgeRuntime(args.transfer_dir, emit, run_dir=args.run_dir,
+                            observed_source_root=args.observed_source_root, prefix_worker=prefix_worker)
     try:
         while not runtime._closed:
             line = sys.stdin.buffer.readline(MAX_REQUEST_BYTES + 1)

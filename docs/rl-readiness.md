@@ -659,7 +659,7 @@ Its full/warm CPU rates are 0.690×/1.701×. A matched 12-read prepared diagnost
 reduced median handler time from 81.935 to 75.726 ms with complete content hashes
 unchanged; it does not measure fresh decisions or compositor delivery.
 
-Python seals invalidate v13 packages; the current prepared launch uses the
+Python seals invalidate v13 packages; the historical prepared launch used the
 fresh v14 cache described in [prepared replay](prepared-prefix-replay.md).
 Full-primary playback, responsive visual surgery/flow, patient decision
 throughput, remaining mechanics/planning and the other readiness gates stay open.
@@ -680,7 +680,21 @@ observations, with full canonical/endpoint checks and exact v14 complete
 receipts, descriptors, flow blocks and compressed physical-state hashes/lengths.
 All 557 bound files stayed unchanged. Full/warm CPU rates are 0.705×/1.722×;
 fresh 1×, primary playback, responsive tool/field animation and the remaining
-patient/mechanics/planning/readiness gates remain open. The current prepared
-launch uses the source-matching v15 cache. No policy execution, optimizer update
+patient/mechanics/planning/readiness gates remain open. The historical prepared
+launch used the source-matching v15 cache. No policy execution, optimizer update
 or pilot ran in this continuation; the two earlier unintended fixture updates
 remain disclosed above.
+
+The subsequent opt-in display pipeline adds fixed fresh-producer and
+prepared-only consumer roles. It is engineering preparation: the default app
+keeps one worker, and patient GUI/throughput qualification for the new source is
+pending. The final explicit prefix/cache/bridge/native/JSON selection passes
+376 tests; all 284 Electron main-process checks pass. Whole pilot and training
+test modules are excluded. Generated real-process checks exercise scripted
+saved actions, exact frames/endpoints and source image retention with zero
+consumer physics steps. These are neither RL decisions nor training examples.
+See [prepared replay](prepared-prefix-replay.md) for bounds, failure handling,
+cache-write accounting and the experimental flag. The new Python source
+normally invalidates v15 packages. No policy execution, optimizer update or
+pilot ran in this pipeline work; the earlier two fixture updates stay disclosed.
+The full readiness goal remains active and incomplete.

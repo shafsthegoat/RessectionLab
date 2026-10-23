@@ -187,8 +187,10 @@ and compressed state hashes/lengths match; the independent numerical audit
 still checks every full canonical record. Full/warm CPU rates were
 0.705×/1.722×; this does not close fresh 1× or compositor/visual gates.
 
-On this Mac with the matching current Python/native source, open the v15
-packages using the ordinary application (receipt instrumentation is off):
+The following historical command requires the Python source at `44beb257` and
+its matching native builds. The later worker-role implementation changes the
+ordinary source fingerprint; v15 packages cannot qualify that implementation.
+Receipt instrumentation is off in this historical launch:
 
 ```sh
 RESSECTIONLAB_IDLE_THERMAL_BUILD="$PWD/testcases/outputs/rl-readiness-20261022/idle-integer-native-production-build/build-receipt.json" \
@@ -208,3 +210,49 @@ anatomy cutaway with context transparency. Refocus explicitly follows the latest
 accepted tip; orbit and replay do not move the pinned window. Restore previous
 view recovers the saved context, clipping and linked cursor. This affects display
 only and grants no planning or training authority.
+
+## Opt-in producer/consumer pipeline
+
+The development app can run one fresh saved-action producer alongside one
+prepared-only display consumer. Enable this experimental mode from the primary
+checkout with `RESSECTIONLAB_PREFIX_PIPELINE=1`; keep an isolated cache:
+
+```sh
+RESSECTIONLAB_PREFIX_PIPELINE=1 \
+RESSECTIONLAB_PREPARED_PREFIX_CACHE_DIRECTORY="$PWD/testcases/outputs/pipeline-prefix-local" \
+desktop/node_modules/.bin/electron desktop \
+  --case "$PWD/testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab"
+```
+
+Choose the recorded branch and **Replay from start · read only**. The default
+launch continues to use one worker. Packaged engines do not enable the pipeline.
+This mode currently has generated-case qualification; full patient GUI timing
+and display qualification remain pending.
+
+The producer executes each original action once per explicit fresh start.
+The consumer authenticates the ordinary signed packages and performs zero
+physics steps. Reads of resident frames may overlap the next action's production.
+The first package load waits for publication; the next publication waits for
+that load to finish. Only consumer results reach playback, with its own timeline
+and field acknowledgements. Playback is sequential; an out-of-order frame ends
+this experimental pipeline and requires an explicit new start.
+
+There are at most two live Python workers, one action of lookahead, two pending
+display requests and a 128 MiB action reservation window. Existing per-worker
+retention limits and the shared 512 MiB signed cache apply. One retained source
+asset registry preserves MRI IDs under a separate aggregate 512 MiB cap. A
+sampled watchdog covers both Python process trees with a shared 3 GiB RSS cap
+and two-hour wall limit. `RESSECTIONLAB_PREFIX_PIPELINE_MAX_WALL_MS` can lower
+the trusted startup limit; the accepted range is 100–7,200,000 ms. Electron,
+renderer and GPU allocations are separate from that Python RSS measurement.
+
+Cancellation, source/branch changes and failures invalidate late responses and
+stop both workers. Replacement waits for actual process exit. A failed exit
+blocks replacement. A cancelled same-source restart preserves already accepted
+image IDs; a successful explicit source load retires those IDs.
+
+An existing deterministic package may be accepted again after a fresh action
+without writing a new package. The normal owner's accepted-publication count
+and actual disk-write count therefore remain separate and monotonic. A fresh
+patient qualification must start with an absent cache and require 73 actual new
+publications. No cache identity or source-fingerprint exception is introduced.
