@@ -174,8 +174,27 @@ class SurgicalReplayCache:
         else:
             key, archive = found
             self._archives.move_to_end(key)
+        expected = archive['history'][position - 1]['stateAfter'] if position else (
+            archive['history'][0]['stateBefore'] if archive['history'] else snapshot['stateId'])
         previous = max((p for p in archive['checkpoints'] if p <= position), default=None)
-        if previous is None:
+        # A newly checked alternative can share the live decision state even
+        # when its archive only has an endpoint checkpoint. Match the complete
+        # source, guard, action prefix and physical-state hash AFTER full archive
+        # admission, then detach it like any other demanded checkpoint. No
+        # imported checkpoint or caller-supplied ID grants this shortcut.
+        live_prefix = (position not in archive['checkpoints']
+            and current.scene is archive['template'].scene
+            and current._protection_contract == archive['template']._protection_contract
+            and len(current.actions) == position
+            and current.actions == archive['snapshot']['actions'][:position]
+            and current.state_id == expected)
+        if live_prefix:
+            result = self._shell(archive['template'])
+            result.state = copy.deepcopy(current.state)
+            result.actions = copy.deepcopy(archive['snapshot']['actions'][:position])
+            result.history = copy.deepcopy(archive['history'][:position])
+            start = position
+        elif previous is None:
             result = archive['template'].fresh()
             result.grid = archive['template'].grid
             if hasattr(archive['template'], '_cell_cover_cache'):
@@ -193,8 +212,6 @@ class SurgicalReplayCache:
             if result.step(action, check=check)['status'] == 'rejected':
                 raise ValueError('Saved action no longer replays')
             check()
-        expected = archive['history'][position - 1]['stateAfter'] if position else (
-            archive['history'][0]['stateBefore'] if archive['history'] else snapshot['stateId'])
         if result.state_id != expected:
             raise ValueError('Replay checkpoint ancestry differs')
         check()

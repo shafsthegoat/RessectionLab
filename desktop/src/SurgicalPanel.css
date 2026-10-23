@@ -8,4 +8,11 @@
 .research-plan-alternatives dl>div {display:flex;justify-content:space-between;gap:12px;margin:5px 0;}
 .research-plan-alternatives dd {margin:0;text-align:right;}
 .research-plan-alternatives p {overflow-wrap:anywhere;}
+.rescue-comparison {overflow-x:auto;margin:12px 0;}
+.rescue-comparison table {width:100%;border-collapse:collapse;font-size:11px;font-variant-numeric:tabular-nums;}
+.rescue-comparison caption {text-align:left;color:#9ab0bc;padding:6px 0;}
+.rescue-comparison th,.rescue-comparison td {padding:6px 3px;border-bottom:1px solid #35505b;text-align:right;}
+.rescue-comparison th:first-child {text-align:left;}
+.rescue-comparison button {padding:5px;font-size:11px;}
+.rescue-comparison tr[aria-selected=true] {background:#24443f;}
 .full-case-rehearsal{display:flex;flex-direction:column;gap:10px;border:1px solid #609d91;border-radius:8px;background:#152e31;padding:12px}.full-case-rehearsal>strong{font-size:15px;color:#b4e6da}.surgical-panel .full-case-phase-jump{flex-direction:column;align-items:stretch}.full-case-phase-jump select{width:100%}
