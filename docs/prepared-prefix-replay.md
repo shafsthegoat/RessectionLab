@@ -180,13 +180,20 @@ all observed states, full canonical rows and v13 transfer metadata match.
 Full/warm CPU rates were 0.690×/1.701×. A separate prepared-only diagnostic
 timed 12 identical retained reads, not a full prepared playback or fresh actions.
 
-On this Mac with the matching current Python/native source, open the v14
+The field-token change on `44beb257` invalidates v14 packages normally.
+Fresh v15 passed all 18 gates with 73 publications, zero loads/misses and
+1,149 observations. All v14 complete receipts, descriptors/field tokens/flows
+and compressed state hashes/lengths match; the independent numerical audit
+still checks every full canonical record. Full/warm CPU rates were
+0.705×/1.722×; this does not close fresh 1× or compositor/visual gates.
+
+On this Mac with the matching current Python/native source, open the v15
 packages using the ordinary application (receipt instrumentation is off):
 
 ```sh
 RESSECTIONLAB_IDLE_THERMAL_BUILD="$PWD/testcases/outputs/rl-readiness-20261022/idle-integer-native-production-build/build-receipt.json" \
 RESSECTIONLAB_PREFIX_JSON_BUILD="$PWD/testcases/outputs/rl-readiness-20261022/prefix-json-canonical-native-production-build/build-receipt.json" \
-RESSECTIONLAB_PREPARED_PREFIX_CACHE_DIRECTORY="$PWD/testcases/outputs/rl-readiness-20261022/prepared-vascular-v14-cache" \
+RESSECTIONLAB_PREPARED_PREFIX_CACHE_DIRECTORY="$PWD/testcases/outputs/rl-readiness-20261022/prepared-vascular-v15-cache" \
 desktop/node_modules/.bin/electron desktop \
   --case "$PWD/testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab"
 ```

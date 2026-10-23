@@ -93,9 +93,13 @@ markers distinguishable with the window on. Faceted anatomy, poor tool visibilit
 with it off and the below-fold legend remain limitations. No moving-fluid or
 all-tool visual acceptance follows.
 
-Current v14 fresh replay after the conservative prefix budget optimization
+Current v15 fresh replay after the bounded native field-token optimization
 passed 73 actions / 1,149 observations and a separate no-step numerical audit.
-Every v13 transfer block and full canonical record matches. Older caches are
-historical because package Python source changes invalidate normal seals.
+Every v14 complete descriptor, field token, transfer block, public receipt and
+compressed physical-state hash/length matches, along with the full canonical
+records and earlier audited trajectories. Its full/warm CPU rates are
+0.705×/1.722×; dense anatomy still obscures small transfer indicators in actual
+pixels. Older caches are historical because package Python source changes
+invalidate normal seals. The current prepared launch selects fresh v15 data.
 See [performance results](rehearsal-performance.md) for current measurements,
 source bindings and the remaining visual/performance gates. No RL ran here.

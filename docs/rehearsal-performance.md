@@ -1754,7 +1754,7 @@ and settled timeline before the next request.
 All 727 renderer/viewer tests and the production build passed. These frontend
 changes remain unchanged through the following Python-only optimization.
 
-### Conservative prefix JSON budget check and current v14 qualification
+### Conservative prefix JSON budget check and historical v14 qualification
 
 Current-source profiling identified the streaming display-size check as a
 substantial retained-read cost. `8b4964b7` adds a conservative ASCII JSON size
@@ -1831,3 +1831,100 @@ was not activated during that timing run. Full-primary completion, fresh 1×,
 delivered-frame 50 ms, animation, matched headless 10× and sustained patient
 decisions remain open. No policy or optimizer ran in this continuation; the two
 earlier fixture updates remain disclosed above. RL readiness is not complete.
+
+### Fresh observed field tokens and v15 qualification
+
+`44beb257` reduces repeated display-field serialization during fresh capture.
+Each `flapComponents` token still hashes the complete current value. Proven
+stock JSON dispatch can use the already selected bounded native canonical
+encoder; unsupported values or an unconfigured optional encoder retain the
+previous JSON expression and its callbacks/errors. Native identity errors
+propagate. Capture reads the field once, with no value/token cache, omitted
+validation or changed physical law. The native raw ceiling remains 16 MiB,
+further limited by the existing owner ceiling; native scratch, frame/history,
+publication and source/full/light identity checks remain unchanged. Ordinary
+JSON replacements installed before capture are conservatively declined too.
+
+The root first profiled three fresh original actions on frozen `853a3efb`.
+The corrected v2 diagnostic passed in 25.110 seconds / 868,171,776 bytes of
+aggregate process RSS, below 90 seconds / 3 GiB. It made three public steps,
+three publications and zero prepared loads/misses. All 307 compressed state
+hashes/lengths, complete receipts, descriptors, field tokens, flow blocks and
+ordered audited tuples match v14. Only action2 was profiled, once. The initial
+v1 harness stopped before any step because it confused protection metadata
+locations; its failure and zero-step evidence remain preserved.
+
+The profile includes impossible cross-thread caller edges and overlapping
+watcher waits. Its explicit outer action2 timer is 14.744 seconds, but component
+timings cannot establish an exact CPU breakdown, additive savings or unprofiled
+throughput. See `fresh-action2-profile-static-review-v1.md`; no watcher-time
+subtraction or percentage-derived speed claim is appropriate.
+
+A separate unprofiled paired check decoded one preserved audited frame only as
+JSON, then compared legacy and candidate token serialization. It constructed no
+engine and made zero physics attempts. Twelve alternating rounds of five calls
+per path, plus excluded warmup, used the same **1,064,014-byte** field. Every
+complete token matched; all 61 actual native calls were admitted with zero
+fallbacks. Median cost was **10.061 → 6.937 ms per token**, 31.05% lower / a
+1.4503× factor for this field workload. Stock dispatch, live native checks and
+fresh complete hashing are included. External wall/RSS were 1.815 seconds /
+116,916,224 bytes, below 30 seconds / 1 GiB; all bound bytes stayed unchanged.
+This is a serialization measurement, not fresh decisions, IPC or full-case speed.
+
+The focused budget/prefix/cache/flow/native selection passed **274 tests in
+53.39 seconds**, excluding the whole pilot module. External wall/RSS were
+53.774 seconds / 204,210,176 bytes, below 120 seconds / 3 GiB. The first attempt
+exposed a test that changed CPython JSON constructor dispatch after teardown;
+the constructor probe now runs in a bounded child. The second passed 273 tests
+and failed that child's test callback signature; the final correction passed
+the full selection. Both failures remain preserved; production was unchanged
+between these attempts. No desktop source changed, so the previously qualified
+built assets were byte-bound rather than rebuilt.
+
+Fresh v15 passed all 18 application/transport/audit gates: **73 original public
+actions, 73 publications, zero prepared loads/misses and 1,149 observations**.
+The separate zero-step audit checks all full canonical records and the saved
+endpoint. Metadata comparison also requires every v14 complete public receipt,
+frame descriptor, field token, flow block and compressed physical-state SHA-256
+plus length to match exactly. All earlier available audited trajectories match;
+113 adjacent repeated state IDs remain separate observations. All **557 bound
+files** stayed unchanged, with no canonical, editable, planning or RL promotion.
+
+| V15 application measurement | Recorded result |
+| --- | ---: |
+| Fresh play through automatic stop | 287.457 s / 0.705× |
+| Warm same-action CPU-submission intervals | 117.656 s / 1.722× |
+| Warm CPU-submission gap p95 | 157.2 ms |
+| Warm bridge / IPC p95 | 97.425 / 105.765 ms |
+| Fresh action-start bridge requests, sum / p95 | 156.507 / 5.333 s |
+| Whole guarded Python session / separate audit | 307.662 / 76.947 s |
+| Python session / audit peak RSS | 753,729,536 / 569,147,392 bytes |
+
+Full wall time is 2.12% below the separate v14 run. The harness, desktop source,
+built assets and native builds match; Python source and host timing differ.
+This single comparison does not establish a causal whole-case gain. The fresh
+1× target remains unmet. Retained peaks remain within 16/64/4 MiB plus 128 MiB
+immutable input; the spool is 215,884,624 bytes and the new cache is 235,158,950
+bytes / 73 packages. All 448 bone jobs retain bounded stable-ID export.
+
+Root inspected the actual intermediate and settled images with original detail
+requested: read-only 48/73 and 73/73, with all three MRI panes at -428.7/8.0/-15.9 mm. Dense
+purple/pink faceted anatomy and yellow/gray columns still obscure small recorded
+transfer indicators. The close-window checkbox is selected, but the local
+Close tool window was not activated in this timing run; the legend remains
+below the captured fold. These images do not qualify motion, visibility or
+compositor delivery. The separate static close-view evidence remains scoped.
+
+Evidence is under `testcases/outputs/rl-readiness-20261022/`:
+`fresh-vascular-action2-profile-v1/` and `-v2/`, `field-token-benchmark-v1/`,
+`recorded-flow-python-budget-field-token-v{1,2,3}`, v15 pre/post bindings,
+`desktop-full-vascular-field-token-v15/analysis.json`, pixel reviews and the
+independent v15 review. V14 packages now require their historical Python source;
+the current ordinary launch selects the fresh v15 cache in
+[prepared replay](prepared-prefix-replay.md).
+
+Full-primary playback, delivered-frame/input targets, moving tools/field effects,
+patient decision throughput, remaining mechanics/planning and RL prerequisites
+remain open. No policy execution, optimizer update or pilot ran in this
+continuation; the two earlier unintended fixture updates remain disclosed in
+[RL readiness](rl-readiness.md).

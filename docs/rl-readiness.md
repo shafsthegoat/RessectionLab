@@ -665,3 +665,22 @@ Full-primary playback, responsive visual surgery/flow, patient decision
 throughput, remaining mechanics/planning and the other readiness gates stay open.
 No policy execution, optimizer update or RL pilot occurred in this continuation.
 The earlier two unintended fixture updates remain disclosed above.
+
+The subsequent field-token optimization on `44beb257` remains engineering
+preparation. The focused prefix/cache/flow/native/budget selection passed
+274 tests in 53.39 seconds, excluding the whole pilot module. Two prior test
+attempts exposed constructor-probe isolation/signature issues and remain
+preserved; the final run passed. A stateless paired serialization check on one
+preserved 1.06 MB field reduced median token cost from 10.061 to 6.937 ms,
+with every token exact, 61 actual native admissions and zero physics attempts.
+It does not measure decisions or policy selection.
+
+Fresh vascular v15 passed all 18 gates, 73 original public actions and 1,149
+observations, with full canonical/endpoint checks and exact v14 complete
+receipts, descriptors, flow blocks and compressed physical-state hashes/lengths.
+All 557 bound files stayed unchanged. Full/warm CPU rates are 0.705×/1.722×;
+fresh 1×, primary playback, responsive tool/field animation and the remaining
+patient/mechanics/planning/readiness gates remain open. The current prepared
+launch uses the source-matching v15 cache. No policy execution, optimizer update
+or pilot ran in this continuation; the two earlier unintended fixture updates
+remain disclosed above.
