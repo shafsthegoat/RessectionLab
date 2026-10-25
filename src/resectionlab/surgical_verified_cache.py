@@ -38,10 +38,11 @@ DISK_BUDGET_ENV = 'RESSECTIONLAB_VERIFIED_CACHE_MAX_DISK_BYTES'
 MAX_JSON_BYTES = 128 * 1024**2
 DEFAULT_DIRECTORY = Path(__file__).resolve().parents[2] / 'testcases/outputs/.verified-surgical-cache'
 _MODULES = ('core', 'geometry', 'surgical_scene', 'surgical_engine', 'surgical_tools',
-            'surgical_motion', 'surgical_effects', 'surgical_physics', 'surgical_physics_v2',
+            'surgical_motion', 'surgical_effects', 'surgical_flow_display', 'surgical_physics', 'surgical_physics_v2',
             'surgical_drilling_v2', 'surgical_vessels_v2', 'surgical_deformation_v2',
             'surgical_occupancy', 'surgical_rl_protection', 'surgical_geometry_cache',
-            'surgical_verified_cache')
+            'surgical_verified_cache', 'surgical_cusa_v3', 'surgical_idle_native',
+            'build_surgical_idle_native')
 
 
 def _code_signature(code):
@@ -119,6 +120,12 @@ def _fingerprint():
                  'scipy.ndimage._nd_image', 'scipy.linalg._fblas', 'scipy.linalg._flapack'):
         dependency = importlib.import_module(name)
         add('dependency:' + name, name.encode() + Path(dependency.__file__).read_bytes())
+    # Optional native code has no Python bytecode for the loop above to inspect.
+    # Bind the selected mode and its load-time binary/build identity; the adapter
+    # rejects changed disk bytes rather than calling them the loaded code.
+    from .surgical_idle_native import strict_live_identity
+    add('optional-idle-native', json.dumps(strict_live_identity(), sort_keys=True,
+        separators=(',', ':'), allow_nan=False).encode())
     globals()['_last_components'] = components
     return digest.hexdigest()
 

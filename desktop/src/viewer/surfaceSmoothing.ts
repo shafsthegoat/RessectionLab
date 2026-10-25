@@ -4,10 +4,47 @@ import {SURFACE_POLICY,surfaceKind,sincCoefficients} from './surfacePolicy.ts';
 import type {SurfaceDiagnostics} from './surfacePolicy';
 import {intersectionVertices} from './surfaceSafety.ts';
 
+// Raster source soups revisit at most three adjacent half-cell X planes.
+// Keep that bounded lookup window; arbitrary triangle order falls back to the
+// retained exact Map implementation instead of welding or reordering vertices.
+const MAX_LATTICE_LOOKUP_BYTES=32*1024**2;
+let latticeLookup:Uint32Array|undefined;
+function indexLatticeSurface(positions:Float32Array,span:number[]){
+  const planeSize=span[1]*span[2],count=planeSize*3;
+  if(!latticeLookup||latticeLookup.length<count)latticeLookup=new Uint32Array(count);
+  const lookup=latticeLookup,planes=[-1,-1,-1],indices=new Uint32Array(positions.length/3),fallback=new Map<string,number>();
+  let highest=-Infinity,points=new Float32Array(Math.min(positions.length,49152)),length=0;
+  function append(offset:number){
+    if(length+3>points.length){const next=new Float32Array(Math.min(positions.length,points.length*2));next.set(points);points=next;}
+    const id=length/3;points[length++]=positions[offset];points[length++]=positions[offset+1];points[length++]=positions[offset+2];return id;
+  }
+  for(let i=0;i<positions.length;i+=3){
+    const x=positions[i]*2+1,y=positions[i+1]*2+1,z=positions[i+2]*2+1;
+    const lattice=Number.isInteger(x)&&Number.isInteger(y)&&Number.isInteger(z)&&x>=0&&y>=0&&z>=0&&x<span[0]&&y<span[1]&&z<span[2];
+    let id:number|undefined;
+    if(lattice){
+      if(x<highest-2)return null;
+      if(x>highest)highest=x;
+      const plane=x%3,base=plane*planeSize;
+      if(planes[plane]!==x){lookup.fill(0,base,base+planeSize);planes[plane]=x;}
+      const key=base+y*span[2]+z;
+      const recorded=lookup[key];id=recorded?recorded-1:undefined;
+      if(id===undefined){id=append(i);lookup[key]=id+1;}
+    }else {
+      const key=`${positions[i]},${positions[i+1]},${positions[i+2]}`;
+      id=fallback.get(key);if(id===undefined){id=append(i);fallback.set(key,id);}
+    }
+    indices[i/3]=id;
+  }
+  return {positions:points.slice(0,length),indices};
+}
+export function indexSurfaceLookupStatistics(){return {retainedBytes:latticeLookup?.byteLength??0,maximumBytes:MAX_LATTICE_LOOKUP_BYTES};}
+
 /** Exact-coordinate indexing only; no tolerance welds nearby branches. */
 export function indexSurface(positions:Float32Array,shape?:Shape3){
   if(positions.length%9||!positions.every(Number.isFinite))throw Error('Display smoothing requires finite complete triangles.');
   const span=shape?.map(n=>2*n+1),grid=span&&span.every(n=>Number.isSafeInteger(n)&&n>0)&&Number.isSafeInteger(span[0]*span[1]*span[2]);
+  if(grid&&positions.length>65536&&span[1]*span[2]*3*4<=MAX_LATTICE_LOOKUP_BYTES){const indexed=indexLatticeSurface(positions,span);if(indexed)return indexed;}
   const points:number[]=[],lookup=new Map<string|number,number>(),indices=new Uint32Array(positions.length/3);
   for(let i=0;i<positions.length;i+=3){
     const x=positions[i]*2+1,y=positions[i+1]*2+1,z=positions[i+2]*2+1;

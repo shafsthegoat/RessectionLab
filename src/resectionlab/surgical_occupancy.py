@@ -4,6 +4,10 @@ No patient-sized occupancy array is allocated during transitions. Dense conversi
 is explicitly available for inspection/tests, never required by the engine.
 """
 import numpy as np
+from .core import immutable_array
+
+
+_MAX_SORTED_CLEARED_BYTES = 8 * 1024**2
 
 
 class MaterialOccupancy:
@@ -13,6 +17,7 @@ class MaterialOccupancy:
         self.cleared = frozenset(cleared)
         self._integer_cleared = self.cleared if all(
             type(cell) is int and -(1 << 63) <= cell < (1 << 63) for cell in self.cleared) else None
+        self._sorted_integer_cleared = None
         self.moved = dict(moved)
 
     def __getitem__(self, indices):
@@ -28,6 +33,15 @@ class MaterialOccupancy:
                 # instead of rebuilding/sorting the complete ledger each time.
                 cleared = np.fromiter((cell in self.cleared for cell in ids.flat),
                                       dtype=np.bool_, count=ids.size).reshape(ids.shape)
+            elif self.cleared is self._integer_cleared and len(self.cleared) <= _MAX_SORTED_CLEARED_BYTES // 8:
+                # The owner already holds an immutable exact cleared set. Large
+                # capsule covers need no repeated unique/sort of that ledger.
+                # Search accepts arbitrary query ordering, shape and duplicates.
+                if self._sorted_integer_cleared is None:
+                    self._sorted_integer_cleared = immutable_array(sorted(self.cleared), np.int64)
+                ledger = self._sorted_integer_cleared
+                positions = np.minimum(np.searchsorted(ledger, ids), len(ledger) - 1)
+                cleared = ledger[positions] == ids
             else:
                 cleared = np.isin(ids, np.fromiter(self.cleared, dtype=np.int64))
             values[cleared] = 0

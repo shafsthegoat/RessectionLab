@@ -9,7 +9,8 @@ test('one-hour cold admission budget is restricted to named surgical replay oper
     assert.equal(surgicalTransportLimitMs('surgicalRehearsal',{command}),3600000,command);
   }
   assert.equal(surgicalTimeoutMs('fullCase'),300000);
-  for(const command of ['step','preview','create','plan','branch','reset'])assert.equal(surgicalTimeoutMs(command),120000,command);
+  assert.equal(surgicalTimeoutMs('plan'),300000);
+  for(const command of ['step','preview','create','branch','reset'])assert.equal(surgicalTimeoutMs(command),120000,command);
   for(const operation of ['trainPatient','inspectRehearsal','loadCase','saveCase','cancel'])assert.equal(surgicalTransportLimitMs(operation,{command:'inspect'}),300000);
   for(const command of ['fullCase','step','preview','not-an-operation'])assert.equal(surgicalTransportLimitMs('surgicalRehearsal',{command}),300000);
 });

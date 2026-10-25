@@ -64,6 +64,31 @@ def test_existing_component_memo_precedence_and_cross_field_aliases():
     assert saved['removed'] is saved['debris'] and saved['removed'] is not shared
 
 
+def test_large_removed_native_admission_preserves_legacy_copy_aliases_and_rechecks_mutation(monkeypatch):
+    from resectionlab import surgical_idle_native as adapter
+    from itertools import repeat
+    from operator import is_
+    calls = []
+    def predicate(value):
+        calls.append(value)
+        return True if all(map(is_, map(type, value), repeat(int))) else None
+    monkeypatch.setattr(adapter, 'try_exact_int_list', predicate)
+    removed = [0, -2**300, 0, 2**300] * 8192
+    state = {'removed': removed, 'aliases': [removed], 'debris': {}}
+    for item in (1, True, IntWithData(1), -2**300):
+        removed[16385] = item
+        actual, reference = _microstep_checkpoint(state), legacy_checkpoint(state)
+        assert encoded(actual) == encoded(reference)
+        assert type(actual['removed'][16385]) is type(reference['removed'][16385])
+        assert actual['removed'] is actual['aliases'][0] and actual['removed'] is not removed
+        if isinstance(item, IntWithData):
+            assert actual['removed'][16385].data == [1]
+            assert actual['removed'][16385].data is not item.data
+        actual['removed'].append(19)
+        assert len(removed) == 32768
+    assert len(calls) == 4 and all(value is removed for value in calls)
+
+
 class IntWithData(int):
     def __new__(cls, value):
         instance = super().__new__(cls, value); instance.data = [1]
@@ -117,6 +142,64 @@ def test_fresh_guards_detect_public_in_place_changes():
     assert second['removed'][1].data is not state['removed'][1].data
     assert second['debris']['1'] is not state['debris']['1']
     assert first == {'removed': [1], 'debris': {'1': 1.}}
+
+
+@pytest.mark.parametrize('value,expected_flat', [(1, True), (True, False), (1., False),
+                                              (IntWithData(1), False), (np.int64(1), False)])
+def test_removed_admission_is_strict_and_rechecks_mutation_before_copy(monkeypatch, value, expected_flat):
+    removed = [0, 1, 2]
+    state = {'removed': removed}
+    observed = []
+    def inspect_copy(actual, memo):
+        assert actual is state
+        cached = memo.get(id(removed))
+        observed.append(cached)
+        return cached
+    monkeypatch.setattr(module.copy, 'deepcopy', inspect_copy)
+    assert _microstep_checkpoint(state) == [0, 1, 2]
+    removed[1] = value
+    result = _microstep_checkpoint(state)
+    assert (result is not None) is expected_flat
+    if expected_flat:
+        assert result == removed and result is not removed
+    removed[1] = 3
+    assert _microstep_checkpoint(state) == [0, 3, 2]
+    assert len(observed) == 3
+
+
+def test_removed_int_subclass_admission_does_not_hash_or_compare_its_metaclass(monkeypatch):
+    class Meta(type):
+        def __eq__(cls, other): raise AssertionError('Unexpected metaclass equality')
+        def __hash__(cls): raise AssertionError('Unexpected metaclass hashing')
+    class Integer(int, metaclass=Meta): pass
+    removed = [0, Integer(1), 2]
+    def inspect_copy(state, memo):
+        assert id(removed) not in memo
+        return 'ordinary-deepcopy-fallback'
+    monkeypatch.setattr(module.copy, 'deepcopy', inspect_copy)
+    assert _microstep_checkpoint({'removed': removed}) == 'ordinary-deepcopy-fallback'
+
+
+def test_removed_list_subclass_keeps_original_deepcopy_iteration_and_errors():
+    def run(function, fail_at):
+        events = []
+        class Removed(list):
+            def __iter__(self):
+                events.append('iter')
+                for index in range(len(self)):
+                    events.append(index)
+                    if index == fail_at:
+                        raise RuntimeError('custom deepcopy iteration failure')
+                    yield self[index]
+        removed = Removed([0, 1, 2])
+        try:
+            result = function({'removed': removed})
+            return result['removed'], events, None
+        except RuntimeError as exc:
+            return None, events, str(exc)
+    for fail_at in (None, 1):
+        actual, reference = run(_microstep_checkpoint, fail_at), run(legacy_checkpoint, fail_at)
+        assert actual == reference
 
 
 def graph_signature(value):

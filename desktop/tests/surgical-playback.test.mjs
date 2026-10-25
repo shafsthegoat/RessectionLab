@@ -1,6 +1,16 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {surgicalPlaybackDelay,checkedSurgicalPlayback,nextSurgicalPlaybackFrame,surgicalPlaybackPosition,updatesEditableSurgicalCursor,surgicalCursorCommand} from '../src/surgical-playback.ts';
+import {surgicalPlaybackDelay,checkedSurgicalPlayback,nextSurgicalPlaybackFrame,surgicalPlaybackPosition,updatesEditableSurgicalCursor,surgicalCursorCommand,SurgicalPlaybackClock} from '../src/surgical-playback.ts';
+test('playback deadlines include preparation time and never add an interval to a late frame',()=>{
+  const clock=new SurgicalPlaybackClock();
+  assert.equal(clock.delay(2,0,4,1000),0);
+  assert.equal(clock.delay(2,50,4,1080),0,'80ms fetching/displaying the predecessor already exceeds a 50ms interval');
+  assert.equal(clock.delay(2.2,50,4,1120),0);
+  assert(Math.abs(clock.delay(2.4,50,4,1125)-25)<1e-7,'a fast next frame retains the remaining recorded interval');
+  assert.equal(clock.delay(2.4,100,2,2000),100,'speed changes anchor at the displayed observation');
+  clock.reset();assert.equal(clock.delay(2.4,50,4,3000),50,'pause time is excluded on resume');
+  assert.equal(clock.delay(NaN,50,4,3000),50,'unavailable historical timing retains explicit review cadence');
+});
 test('recorded playback uses authoritative elapsed effects, including partial and zero-time commands',()=>{
   const history=[{elapsedSeconds:.025},{elapsedSeconds:0},{elapsedSeconds:4.5}];
   assert.deepEqual(history.map((_,i)=>surgicalPlaybackDelay(history,i)),[{milliseconds:25,recorded:true},{milliseconds:0,recorded:true},{milliseconds:4500,recorded:true}]);

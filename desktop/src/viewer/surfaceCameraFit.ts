@@ -23,7 +23,13 @@ export function surfaceCameraDistance(
     const positions=object.geometry.getAttribute('position');
     if(!positions)return;
     const m=object.matrixWorld.elements;
-    for(let i=0;i<positions.count;i++){
+    const activeIndices=object.geometry.userData.sourceIndexing==='stable-source-ids'?object.geometry.getIndex():null;
+    // Allocated only for an explicit fit. Stable snapshots cap positions plus
+    // normals plus indices at 64 MiB, so this byte-per-slot scratch is <2.8 MB.
+    const visited=activeIndices?new Uint8Array(positions.count):null;
+    for(let slot=0;slot<(activeIndices?.count??positions.count);slot++){
+      const i=activeIndices?activeIndices.getX(slot):slot;
+      if(visited){if(visited[i])continue;visited[i]=1;}
       const x=positions.getX(i),y=positions.getY(i),z=positions.getZ(i);
       const dx=m[0]*x+m[4]*y+m[8]*z+m[12]-centre.x;
       const dy=m[1]*x+m[5]*y+m[9]*z+m[13]-centre.y;

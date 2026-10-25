@@ -1,13 +1,28 @@
 import type {FullCaseRehearsal,SurgicalView} from './surgical-types';
 import type {Point3} from './viewer/coordinates';
+import {inverseAffine,rasAffine,transformPoint} from './viewer/coordinates.ts';
+import type {ViewerVolume} from './viewer/contracts';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
+import {validCameraState} from './viewer/workspaceSettings.ts';
+
+const validPoint=(point:unknown):point is Point3=>Array.isArray(point)&&point.length===3&&point.every(Number.isFinite);
+/** Acquired voxel support in RAS, including oblique and LPS source grids. */
+export function sourceContainsPoint(source:Pick<ViewerVolume,'shape'|'affine'|'frame'>|null,point:unknown):point is Point3 {
+  if(!source||!validPoint(point))return false;
+  try{
+    if(source.shape.length!==3||!source.shape.every(n=>Number.isInteger(n)&&n>0))return false;
+    const inverse=inverseAffine(rasAffine(source.affine,source.frame));
+    return transformPoint(inverse,point).every((v,i)=>Number.isFinite(v)&&v>=0&&v<=source.shape[i]-1);
+  }catch{return false;}
+}
 
 /** An explicit display command, detached from the source and recorded engine. */
-export function operativeFieldFrame(view:SurgicalView,targetCenter:Point3|null,settings:ViewerWorkspaceSettings) {
-  const valid=(point:unknown):point is Point3=>Array.isArray(point)&&point.length===3&&point.every(Number.isFinite);
-  const inserted=Object.values(view.slots).filter(slot=>slot.inserted&&valid(slot.position));
+export function operativeFieldFrame(view:SurgicalView,targetCenter:Point3|null,settings:ViewerWorkspaceSettings,source?:Pick<ViewerVolume,'shape'|'affine'|'frame'>|null) {
+  if(source===null)return null;
+  const inSource=(point:unknown):point is Point3=>source===undefined?validPoint(point):sourceContainsPoint(source,point);
+  const inserted=Object.values(view.slots).filter(slot=>slot.inserted&&inSource(slot.position));
   const tip=inserted.find(slot=>slot.active)??inserted[0];
-  const center=tip?.position??targetCenter;if(!valid(center))return null;
+  const center=tip?.position??targetCenter;if(!inSource(center))return null;
   const target=[...center] as Point3;
   let direction:Point3=[35,-45,40],up:Point3=[0,0,1];
   const quaternion=tip?.quaternion;
@@ -19,7 +34,93 @@ export function operativeFieldFrame(view:SurgicalView,targetCenter:Point3|null,s
     up=[2*(x*y-w*z),1-2*(x*x+z*z),2*(y*z+w*x)];
   }
   const scale=115/Math.hypot(...direction),position=direction.map((n,i)=>target[i]+n*scale) as Point3;
-  return {center:target,settings:{...settings,layout:'3d-focus' as const,camera:{target,position,up}}};
+  return {center:target,anchor:tip?'instrument' as const:'target' as const,settings:{...settings,layout:'3d-focus' as const,camera:{target,position,up}}};
+}
+
+/** Accepted instruments only: an observed activation overrides the stored slot flag. */
+export function acceptedCloseTool(view:SurgicalView|null,selectedSlot:string,effectiveActivation?:Record<string,boolean>){
+  const inserted=Object.entries(view?.slots??{}).filter(([,slot])=>slot.inserted&&Array.isArray(slot.position)&&slot.position.length===3&&slot.position.every(Number.isFinite));
+  const chosen=inserted.find(([name,slot])=>(effectiveActivation?.[name]??slot.active)===true)??inserted.find(([name])=>name===selectedSlot)??inserted[0];
+  return chosen?{name:chosen[0],slot:chosen[1]}:null;
+}
+
+/** Display alpha by declared material; no anatomy is hidden, removed or relabeled. */
+export function closeToolPresentation(view:SurgicalView,settings:ViewerWorkspaceSettings):ViewerWorkspaceSettings {
+  const alpha:Record<string,number>={soft_tissue:.045,bone:.55,membrane:.14,tumor:.9,vessel:1,unknown:.08};
+  return {...settings,layerOpacity:{...settings.layerOpacity,...Object.fromEntries(view.scene.regions.map(region=>[region.name,region.material==='vessel'?1:region.target?.9:alpha[region.material]??.14]))}};
+}
+
+export type CloseToolWindowClipping={
+  clipping:NonNullable<ViewerWorkspaceSettings['clipping']>;
+  clipBox:NonNullable<ViewerWorkspaceSettings['clipBox']>;
+  obliqueClip:NonNullable<ViewerWorkspaceSettings['obliqueClip']>;
+};
+
+/** Change only display clipping, using the window saved at explicit focus.
+ * Disabling restores original key presence as well as values; neither toggle
+ * changes the camera, linked cursor or the latest recorded instrument pose. */
+export function closeToolWindowPresentation(settings:ViewerWorkspaceSettings,window:CloseToolWindowClipping,original:ViewerWorkspaceSettings,enabled:boolean):ViewerWorkspaceSettings {
+  const next={...settings};
+  for(const key of ['clipping','clipBox','obliqueClip'] as const)delete next[key];
+  if(enabled)return {...next,...structuredClone(window)};
+  for(const key of ['clipping','clipBox','obliqueClip'] as const)
+    if(Object.hasOwn(original,key))Object.assign(next,{[key]:structuredClone(original[key])});
+  return next;
+}
+
+/** Explicit, pinned microscope-scale view of an exact accepted tip in RAS mm. */
+export function closeToolFrame(view:SurgicalView,selectedSlot:string,effectiveActivation:Record<string,boolean>|undefined,settings:ViewerWorkspaceSettings,translucent=true,cutaway=false){
+  const chosen=acceptedCloseTool(view,selectedSlot,effectiveActivation);if(!chosen)return null;
+  const tool=view.catalog.find(item=>item.id===chosen.slot.instrument),radius=chosen.slot.parameters?.radiusMm??tool?.radiusMm??2;
+  const fieldMm=Math.max(18,Math.min(42,Number.isFinite(radius)&&radius>0?radius*12:24));
+  const center=[...chosen.slot.position] as Point3;
+  let direction:Point3=[.45,0,-1],up:Point3=[0,1,0];
+  const quaternion=chosen.slot.quaternion;
+  if(quaternion?.length===4&&quaternion.every(Number.isFinite)&&Math.hypot(...quaternion)>1e-8){
+    const length=Math.hypot(...quaternion),[x,y,z,w]=quaternion.map(value=>value/length);
+    const axis:Point3=[2*(x*z+w*y),2*(y*z-w*x),1-2*(x*x+y*y)],right:Point3=[1-2*(y*y+z*z),2*(x*y+w*z),2*(x*z-w*y)];
+    // A slight oblique view exposes the working end instead of looking straight
+    // down its shaft. Orbit remains free; later states never move this camera.
+    direction=axis.map((value,i)=>-value+.45*right[i]) as Point3;
+    up=[2*(x*y-w*z),1-2*(x*x+z*z),2*(y*z+w*x)];
+  }
+  // Match the existing renderer's34degree vertical field of view.
+  const distance=fieldMm/(2*Math.tan(17*Math.PI/180)),scale=distance/Math.hypot(...direction);
+  const camera={target:center,position:direction.map((value,i)=>center[i]+value*scale) as Point3,up};
+  // Keep the exact tip and a bounded native-world neighborhood. Positive plane
+  // distance retains the working end and tissue behind it, while removing
+  // camera-facing context. This plane stays pinned when the camera is orbited.
+  const towardTip=center.map((value,i)=>value-camera.position[i]),normalLength=Math.hypot(...towardTip);
+  const normal=towardTip.map(value=>value/normalLength) as Point3;
+  const halfWidth=.75*fieldMm;
+  const windowClipping:CloseToolWindowClipping={
+    clipping:{axis:'z',value:center[2],enabled:false},
+    clipBox:{enabled:true,min:center.map(value=>value-halfWidth) as Point3,max:center.map(value=>value+halfWidth) as Point3},
+    obliqueClip:{enabled:true,normal,offset:-normal.reduce((sum,value,i)=>sum+value*center[i],0)+fieldMm/12},
+  };
+  const appearance=translucent?closeToolPresentation(view,settings):settings;
+  const framed={...appearance,layout:'3d-focus' as const,showPlane:false,volumeRendering:{...settings.volumeRendering,enabled:false},camera};
+  return {center,name:chosen.name,instrumentId:chosen.slot.instrument,instrument:tool?.name??chosen.slot.instrument,fieldMm,stateId:view.stateId,windowClipping,
+    settings:cutaway?closeToolWindowPresentation(framed,windowClipping,settings,true):framed};
+}
+
+export type CloseToolAnchor=Pick<NonNullable<ReturnType<typeof closeToolFrame>>,'center'|'name'|'instrumentId'|'fieldMm'|'windowClipping'>;
+/** Follow only a supplied accepted snapshot. Same-tool updates translate the
+ * current orbit and pinned clipping together; no trajectory or future state is
+ * consumed. Exchanging tools establishes a fresh microscope view. */
+export function followCloseToolFrame(view:SurgicalView,selectedSlot:string,effectiveActivation:Record<string,boolean>|undefined,settings:ViewerWorkspaceSettings,previous:CloseToolAnchor,original:ViewerWorkspaceSettings,cutaway:boolean){
+  const preferred=view.slots[previous.name]?.inserted?previous.name:selectedSlot;
+  const field=closeToolFrame(view,preferred,effectiveActivation,settings,false,false);if(!field)return null;
+  if(field.name!==previous.name||field.instrumentId!==previous.instrumentId||!validCameraState(settings.camera))
+    return {...field,settings:closeToolWindowPresentation(field.settings,field.windowClipping,original,cutaway)};
+  const delta=field.center.map((value,i)=>value-previous.center[i]);
+  const translate=(point:Point3)=>point.map((value,i)=>value+delta[i]) as Point3;
+  const camera={position:translate(settings.camera.position),target:translate(settings.camera.target),up:[...settings.camera.up] as Point3};
+  const windowClipping=structuredClone(previous.windowClipping);
+  windowClipping.clipping.value+=delta[{x:0,y:1,z:2}[windowClipping.clipping.axis]];
+  windowClipping.clipBox.min=translate(windowClipping.clipBox.min);windowClipping.clipBox.max=translate(windowClipping.clipBox.max);
+  windowClipping.obliqueClip.offset-=windowClipping.obliqueClip.normal.reduce((sum,value,i)=>sum+value*delta[i],0);
+  return {...field,fieldMm:previous.fieldMm,windowClipping,settings:closeToolWindowPresentation({...settings,camera},windowClipping,original,cutaway)};
 }
 
 /** Read quantities from the selected recorded state, including during replay. */

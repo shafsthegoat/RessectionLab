@@ -22,6 +22,8 @@ from .core import freeze_json, thaw_json, semantic_digest
 from .surgical_verified_cache import (VerifiedSurgicalCache, STATE_SCHEMA, MAX_JSON_BYTES,
     _encode, _encode_sized, _decode, _restore_state, _state_overhead, _read,
     implementation_fingerprint, _MODULES, _code_signature)
+from .surgical_replay_cache import _owned_bytes
+from .surgical_flow_display import validate_flow_display, trim_frame_flows
 
 SCHEMA = 'resectionlab.observed-surgical-frames.v1'
 DEFAULT_DIRECTORY = Path(__file__).resolve().parents[2] / 'testcases/outputs/.observed-surgical-frames'
@@ -76,7 +78,13 @@ def light_implementation_seal():
     publication. This seal still detects ordinary edits/monkeypatches between
     frames; no archive, history or numerical binary is re-encoded per frame.
     """
-    digest = hashlib.sha256()
+    try:
+        from .surgical_idle_native import strict_live_identity
+        native_identity = strict_live_identity()
+    except (ValueError, OSError, ImportError, AttributeError) as error:
+        raise ImplementationChanged('Optional idle thermal implementation changed or is unavailable') from error
+    digest = hashlib.sha256(json.dumps(native_identity, sort_keys=True,
+        separators=(',', ':'), allow_nan=False).encode())
     root = Path(__file__).resolve().parent
     for path in sorted(root.glob('*.py')):
         digest.update(path.name.encode()); digest.update(path.read_bytes())
@@ -235,6 +243,13 @@ class ObservedFrameStore:
             times = [frame['observedTimeSeconds'] for frame in frames]
             if times != sorted(times) or frames[0]['stateId'] != admission.boundary_id(position) or frames[-1]['stateId'] != admission.boundary_id(position + 1):
                 raise ValueError('Observed frame endpoint ancestry differs')
+            for index, frame in enumerate(frames):
+                if 'flowDisplay' in frame:
+                    previous = frames[max(0, index - 1)]
+                    validate_flow_display(frame['flowDisplay'], scene_id=admission.scene.identity,
+                        action_index=position, frame_index=index, before_state_id=previous['stateId'],
+                        state_id=frame['stateId'], start_seconds=previous['observedTimeSeconds'],
+                        end_seconds=frame['observedTimeSeconds'], shape=admission.scene.shape)
             self.hits += 1
             return {'entry': entry, 'frames': frames}
         except (OSError, ValueError, TypeError, KeyError, IndexError, EOFError):
@@ -250,6 +265,19 @@ class ObservedFrameWriter:
         self.store, self.admission, self.position, self.directory = store, admission, position, directory
         self.frames = []; self.closed = False
         self.reserve = reserve; self.written_bytes = 0
+        self.metadata_bytes = 0
+
+    def _fit_metadata(self):
+        if self.metadata_bytes > MAX_ACTION_BYTES:
+            trim_frame_flows(self.frames)
+            self.metadata_bytes = _owned_bytes(self.frames)
+        if self.metadata_bytes > MAX_ACTION_BYTES:
+            # Legacy absence is the static fallback if even empty optional
+            # envelopes cannot fit. Never widen the existing action cap.
+            trim_frame_flows(self.frames, omit=True)
+            self.metadata_bytes = _owned_bytes(self.frames)
+        if self.metadata_bytes > MAX_ACTION_BYTES:
+            raise ValueError('Observed frame descriptors exceed action budget')
 
     def abort(self):
         if not self.closed: shutil.rmtree(self.directory, ignore_errors=True); self.closed = True
@@ -281,9 +309,21 @@ class ObservedFrameWriter:
             except (OSError, ValueError): valid_existing = False
             if not valid_existing: self._write(filename, data)
             fields[name] = {'file': filename, 'sha256': digest, 'uncompressedBytes': size}
-        self.frames.append({'observedTimeSeconds': float(engine.state['elapsedSeconds']), 'kind': kind,
-            'effectiveActivation': dict(activation), 'stateId': engine.state_id,
-            'fields': {'schema': STATE_SCHEMA, 'fields': fields}})
+        state_id = engine.state_id
+        row = {'observedTimeSeconds': float(engine.state['elapsedSeconds']), 'kind': kind,
+            'effectiveActivation': dict(activation), 'stateId': state_id,
+            'fields': {'schema': STATE_SCHEMA, 'fields': fields}}
+        trace = getattr(engine, '_flow_display_trace', None)
+        if trace is not None and trace.active:
+            row['flowDisplay'] = trace.capture(state_id, engine.state['elapsedSeconds'])
+            previous = self.frames[-1] if self.frames else row
+            validate_flow_display(row['flowDisplay'], scene_id=engine.scene.identity,
+                action_index=self.position, frame_index=len(self.frames), before_state_id=previous['stateId'],
+                state_id=state_id, start_seconds=previous['observedTimeSeconds'],
+                end_seconds=row['observedTimeSeconds'], shape=engine.scene.shape)
+        self.frames.append(row)
+        self.metadata_bytes += _owned_bytes(row) + 8
+        self._fit_metadata()
 
     def publish(self, engine, outcome):
         admission = self.admission; position = self.position
@@ -298,7 +338,20 @@ class ObservedFrameWriter:
             'implementation': admission.fingerprint, 'position': position,
             'receiptHash': admission.receipt_hashes[position], 'actionHash': admission.action_hashes[position],
             'frames': self.frames}
-        data = _encode(manifest); key = self.store.owner._key()
+        # Optional flow may not crowd a valid state-only action out of its
+        # reservation/manifest allowance. These retries encode only metadata;
+        # no engine operation, field write or compressed state is repeated.
+        for mode in (None, False, True):
+            if mode is not None: trim_frame_flows(self.frames, omit=mode)
+            try:
+                data = _encode(manifest)
+                if self.written_bytes + len(data) + 64 <= self.reserve:
+                    break
+            except ValueError:
+                if mode is True: raise
+        else:
+            raise ValueError('Observed manifest exceeds action reservation')
+        key = self.store.owner._key()
         self._write(f'action-{position}.json.gz', data)
         self._write(f'action-{position}.mac', hmac.digest(key, data, 'sha256').hex().encode())
         entry = self.store.entry(admission)

@@ -6,7 +6,7 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createServer} from 'vite';
 import * as THREE from 'three';
-let server,cache,VolumeRenderer,registerModeledAnatomy,prepareSurface,packAnatomyLabels,IncrementalSurfaceEngine,LabelTextureUpdates,retainSurface,cachedSurface;
+let server,cache,VolumeRenderer,registerModeledAnatomy,prepareSurface,packAnatomyLabels,IncrementalSurfaceEngine,LabelTextureUpdates,retainSurface,cachedSurface,surgicalFlowGroup,updateSurgicalFlowAnimation,surgicalToolMesh,updateSurgicalToolAnimation;
 before(async()=>{
   cache=await fs.mkdtemp(path.join(os.tmpdir(),'surgical-renderer-'));
   server=await createServer({root:fileURLToPath(new URL('../../',import.meta.url)),cacheDir:cache,logLevel:'error',optimizeDeps:{noDiscovery:true,include:[]},server:{middlewareMode:true,hmr:false,ws:false},appType:'custom',plugins:[{
@@ -18,6 +18,8 @@ before(async()=>{
     }
   }]});
   VolumeRenderer=(await server.ssrLoadModule('/src/viewer/VolumeRenderer.ts')).VolumeRenderer;
+  ({surgicalFlowGroup,updateSurgicalFlowAnimation}=await server.ssrLoadModule('/src/viewer/surgicalFlowGeometry.ts'));
+  ({surgicalToolMesh,updateSurgicalToolAnimation}=await server.ssrLoadModule('/src/viewer/surgicalGeometry.ts'));
   ({registerModeledAnatomy}=await server.ssrLoadModule('/src/viewer/modeledAnatomy.ts'));
   ({prepareSurface}=await server.ssrLoadModule('/src/viewer/prepareSurface.ts'));
   ({packAnatomyLabels}=await server.ssrLoadModule('/src/viewer/labelPacking.ts'));
@@ -81,6 +83,109 @@ test('repeated accepted effect changes dispose point buffers and materials as we
     assert.equal(created-disposed,current);
   }
   r.setSurgical(null);assert.equal(disposed,created);assert.equal(materialsDisposed,created);
+});
+function flowInteraction(){
+  const input=interaction(),hash=c=>'sha256:'+c.repeat(64);
+  input.view.stateId=hash('a');input.view.scene.sceneId=hash('b');input.view.metrics={elapsedSeconds:.2};
+  input.view.scene.affine=[[-2,0,0,10],[0,3,0,20],[0,0,4,30],[0,0,0,1]];
+  input.recordedFrame={branchId:'main',position:2,frameIndex:1};
+  input.flowDisplay={schema:'resectionlab.recorded-field-transfers.v1',sceneId:hash('b'),actionIndex:2,frameIndex:1,beforeStateId:hash('c'),stateId:hash('a'),startSeconds:0,endSeconds:.2,truncated:false,operations:[
+    {kind:'transfer',field:'fluid',provenance:'mixed',fromCell:13,toCell:14,volumeMm3:.5,startSeconds:0,endSeconds:.1},
+    {kind:'uptake',field:'debris',provenance:'debris',fromCell:12,toCell:null,volumeMm3:.25,startSeconds:.1,endSeconds:.2},
+  ]};return input;
+}
+test('recorded arrows follow the scene affine and stay local for uptake; visual size does not encode volume',()=>{
+  const input=flowInteraction(),before=structuredClone(input.view),group=surgicalFlowGroup(input.view,input.flowDisplay);
+  const [shaft,head,local]=group.children,m=new THREE.Matrix4();assert.equal(group.children.length,4);assert(group.children.every(o=>o.isInstancedMesh));
+  shaft.getMatrixAt(0,m);const tail=new THREE.Vector3(0,-.5,0).applyMatrix4(m);assert(tail.distanceTo(new THREE.Vector3(8,23,34))<1e-6);
+  head.getMatrixAt(0,m);const tip=new THREE.Vector3(0,.5,0).applyMatrix4(m);assert(tip.distanceTo(new THREE.Vector3(8,23,38))<1e-6);
+  local.getMatrixAt(0,m);assert.deepEqual(new THREE.Vector3().setFromMatrixPosition(m).toArray(),[8,23,30]);
+  assert.equal(local.count,1);assert.equal(shaft.count,1);assert.equal(head.count,1);
+  const changed=structuredClone(input.flowDisplay);changed.operations[0].volumeMm3=900;const second=surgicalFlowGroup(input.view,changed);
+  for(let i=0;i<3;i++)assert.deepEqual(second.children[i].instanceMatrix.array,group.children[i].instanceMatrix.array);
+  assert.deepEqual(input.view,before);
+  const unlocated=structuredClone(input.flowDisplay);unlocated.operations=[{...unlocated.operations[0],kind:'escape',fromCell:null,toCell:null}];
+  const escaped=surgicalFlowGroup(input.view,unlocated);assert.equal(escaped.children.length,0,'off-grid escape has no invented location');
+  const hits=[];group.children.forEach(o=>o.raycast(null,hits));assert.deepEqual(hits,[]);
+  for(const g of [group,second])g.traverse(o=>{if(o.isMesh){o.geometry.dispose();o.material.dispose();o.dispose();}});
+});
+
+test('ledger droplets retain source positions, quantities and bounded lifetimes without per-frame buffer writes',()=>{
+  const input=flowInteraction(),before=structuredClone({view:input.view,flowDisplay:input.flowDisplay}),flow=input.flowDisplay;
+  flow.operations.push({kind:'deposit',field:'fluid',provenance:'wound',fromCell:null,toCell:10,volumeMm3:.08,startSeconds:.1,endSeconds:.2});
+  const group=surgicalFlowGroup(input.view,flow),droplets=group.getObjectByName('flow:ledger-droplets');
+  assert.equal(droplets.count,3);assert.equal(droplets.visible,false);assert.equal(droplets.material.depthTest,false);
+  const matrix=new THREE.Matrix4();droplets.getMatrixAt(2,matrix);assert.deepEqual(new THREE.Vector3().setFromMatrixPosition(matrix).toArray(),[8,20,34]);
+  assert.deepEqual([...droplets.geometry.attributes.operationDelta.array],[0,0,4,0,0,0,0,0,0]);
+  assert.deepEqual([...droplets.geometry.attributes.operationKind.array],[0,2,1]);
+  for(const [i,op] of flow.operations.entries())assert(Math.abs((4*Math.PI/3)*(droplets.geometry.attributes.operationRadius.getX(i)/3)**3-op.volumeMm3)<1e-6);
+  const positions=droplets.instanceMatrix.array.slice(),version=droplets.instanceMatrix.version;
+  const shader={uniforms:{},vertexShader:'#include <begin_vertex>'};droplets.material.onBeforeCompile(shader);
+  assert(shader.vertexShader.includes('operationDelta*p'));assert(shader.vertexShader.includes('1.0-step(operationTimes.y,recordedFlowTime)'));
+  assert.equal(updateSurgicalFlowAnimation(group,.05),true);assert.equal(shader.uniforms.recordedFlowTime.value,.05);assert.equal(droplets.visible,true);
+  assert.equal(updateSurgicalFlowAnimation(group,.2),false);assert.equal(droplets.visible,false);
+  assert.equal(updateSurgicalFlowAnimation(group,null),false);assert.equal(shader.uniforms.recordedFlowTime.value,-1);
+  assert.deepEqual(droplets.instanceMatrix.array,positions);assert.equal(droplets.instanceMatrix.version,version);
+  assert.deepEqual(input.view,before.view);assert.equal(flow.operations[0].volumeMm3,before.flowDisplay.operations[0].volumeMm3);
+});
+test('retrospective animation never replays on pause, resume, pose edits or scrub without playback',()=>{
+  const r=renderer(),input=flowInteraction();input.playbackDisplay={playing:true,speed:.25,startSeconds:0,endSeconds:.2};input.effectiveActivation={left:true,right:true};
+  r.setSurgical(input);const animation=r.surgicalAnimation,group=r.surgicalFlow;
+  assert(animation);assert.equal(r.advanceSurgicalAnimation(animation.startedAt+400),true);
+  assert.equal(group.getObjectByName('flow:ledger-droplets').visible,true);
+  r.setSurgical({...input,pose:{...input.pose,position:[5,6,7]}});assert.equal(r.surgicalAnimation,animation);
+  assert.deepEqual(r.surgicalSlots.get('left').group.position.toArray(),input.view.slots.left.position);
+  r.setSurgical({...input,playbackDisplay:{...input.playbackDisplay,playing:false}});assert.equal(r.advanceSurgicalAnimation(animation.startedAt+500),false);
+  assert.equal(group.getObjectByName('flow:ledger-droplets').visible,false);
+  r.setSurgical(input);assert.equal(r.surgicalAnimation,null,'resuming does not fabricate another occurrence of a prior interval');
+  r.setSurgical({...input,recordedFrame:{...input.recordedFrame,branchId:'other'},playbackDisplay:{...input.playbackDisplay,playing:false}});assert.equal(r.surgicalAnimation,null);
+  r.setSurgical({...input,flowDisplay:undefined,playbackDisplay:undefined});assert.equal(r.surgicalFlow,null);assert.equal(r.advanceSurgicalAnimation(performance.now()),false);
+});
+test('working-part animation respects explicit activation and leaves recorded root poses exact',()=>{
+  for(const id of ['micro_scissors','dural_scissors','bipolar_forceps','tumor_forceps']){
+    const recorded={...slot(id),active:true},group=surgicalToolMesh(tool(id),recorded),jaws=group.children.filter(o=>typeof o.userData.jawBaseX==='number');
+    assert.equal(jaws.length,2);const exact=jaws.map(o=>o.position.x),pose=group.matrix.clone();
+    updateSurgicalToolAnimation(group,.1,.5);assert(jaws.every((o,i)=>Math.abs(o.position.x)<Math.abs(exact[i])));assert(group.matrix.equals(pose));assert.deepEqual(group.position.toArray(),recorded.position);
+    updateSurgicalToolAnimation(group,null,null);assert.deepEqual(jaws.map(o=>o.position.x),exact);
+    group.userData.effectiveActive=false;updateSurgicalToolAnimation(group,.1,.5);assert.deepEqual(jaws.map(o=>o.position.x),exact);
+  }
+  const drill=surgicalToolMesh(tool('cranial_drill'),{...slot('cranial_drill'),active:true,parameters:{rpm:60}}),bit=drill.getObjectByName('instrument:drill-bit');
+  updateSurgicalToolAnimation(drill,.25,.5);assert(Math.abs(bit.rotation.z-Math.PI/2)<1e-9);
+  updateSurgicalToolAnimation(drill,null,null);assert.equal(bit.rotation.z,0);
+  delete drill.userData.recordedRpm;updateSurgicalToolAnimation(drill,.25,.5);assert.equal(bit.rotation.z,0,'missing RPM has no inferred spin');
+});
+test('resident recorded transfers retain buffers on pose edits, clear on preview/toggle and release instance allocations',()=>{
+  const r=renderer(),input=flowInteraction();r.setSurgical(input);const group=r.surgicalFlow;let disposed=0,instances=0;
+  group.traverse(o=>{if(o.isMesh){instances++;o.addEventListener('dispose',()=>disposed++);}});
+  for(let i=0;i<10;i++)r.setSurgical({...input,pose:{...input.pose,position:[i,0,0]}});assert.equal(r.surgicalFlow,group);
+  assert.throws(()=>r.setSurgical({...input,recordedFrame:{...input.recordedFrame,position:3}}),/demanded frame/);
+  assert.equal(r.surgicalInteraction.view,input.view);assert.equal(r.surgicalFlow,group);
+  r.setSurgical({...input,preview:input.view});assert.equal(r.surgicalFlow,null);assert.equal(disposed,instances);
+  r.setSurgical(input);r.setSurgical({...input,flowDisplay:undefined});assert.equal(r.surgicalFlow,null);
+  r.setSurgical(input);r.setSurgical(null);assert.equal(r.surgicalFlow,null);
+});
+test('3D cutaways clip field markers and transfers across replacement while complete instruments and paths stay visible',()=>{
+  const r=renderer(),input=flowInteraction();
+  input.view={...input.view,thermal:{13:30},fluid:{14:1},debris:{15:1},cutEdges:[[13,14]]};
+  input.path=[{position:[1,2,3],quaternion:[0,0,0,1]},{position:[2,3,4],quaternion:[0,0,0,1]}];
+  const before=structuredClone(input.view),axis=new THREE.Plane(new THREE.Vector3(1,0,0),-1),oblique=new THREE.Plane(new THREE.Vector3(0,1,1).normalize(),-2);
+  r.clipPlane=axis;r.extraClipPlanes=[oblique];r.setSurgical(input);
+  const fieldMaterials=()=>{const materials=[];for(const group of [r.surgicalEffects,r.surgicalFlow])group?.traverse(o=>{
+    if(o.isMesh||o.isPoints||o.isLine)materials.push(...(Array.isArray(o.material)?o.material:[o.material]));
+  });return materials;};
+  assert(r.surgicalEffects.children.some(o=>o.isPoints));assert(r.surgicalEffects.children.some(o=>o.isLine));
+  assert(r.surgicalEffects.children.some(o=>o.isMesh),'cut-face evidence exercises mesh clipping');
+  assert(fieldMaterials().length>3);for(const m of fieldMaterials())assert.deepEqual(m.clippingPlanes,[oblique,axis]);
+  const uncut=[];for(const group of [r.surgicalGhost,r.surgicalPath,...[...r.surgicalSlots.values()].map(s=>s.group)])group.traverse(o=>{
+    if(o.material)uncut.push(...(Array.isArray(o.material)?o.material:[o.material]));
+  });
+  assert(uncut.length>0);assert(uncut.every(m=>m.clippingPlanes===null));
+  const oldEffects=r.surgicalEffects;r.setSurgical({...input,view:{...input.view,thermal:{13:31}}});
+  assert.notEqual(r.surgicalEffects,oldEffects);for(const m of fieldMaterials())assert.deepEqual(m.clippingPlanes,[oblique,axis]);
+  const replacement=new THREE.Plane(new THREE.Vector3(0,0,1),-3);r.clipPlane=null;r.extraClipPlanes=[replacement];r.clipSurgicalFieldEffects();
+  for(const m of fieldMaterials())assert.deepEqual(m.clippingPlanes,[replacement]);
+  r.extraClipPlanes=[];r.clipSurgicalFieldEffects();for(const m of fieldMaterials())assert.deepEqual(m.clippingPlanes,[]);
+  assert(uncut.every(m=>m.clippingPlanes===null));assert.deepEqual(input.view,before);r.setSurgical(null);
 });
 test('source-surface picking restores smoothed geometry and accepts the first hit inside every active clip plane',()=>{
   const r=Object.create(VolumeRenderer.prototype),source=new THREE.BufferGeometry(),smooth=new THREE.BufferGeometry(),mesh=new THREE.Mesh(smooth,new THREE.MeshBasicMaterial());
@@ -164,6 +269,18 @@ test('modeled tissue stages labels/surfaces/tools atomically, reuses unchanged M
     const brainA=r.surfaces.get('brain');r.installSurgicalState(b,{view:{stateId:'b'}});assert.equal(worker.messages.at(-1).mask,undefined);assert.deepEqual([...worker.messages.at(-1).indices],[23]);worker.flush();submitPreparedState(r);
     assert.equal(r.volume,b);assert.equal(r.surfaces.get('vessel'),vessel);assert.equal(r.labelTexture,texture);assert.deepEqual(texture.image.data,packAnatomyLabels(b).data);
     const requests=worker.messages.length;r.installSurgicalState(a,interactionA);submitPreparedState(r);assert.equal(r.volume,a);assert.equal(r.surfaces.get('brain'),brainA);assert.equal(worker.messages.length,requests);assert.deepEqual(source.compartments[0].mask,sourceCopy);
+  }finally{mock.restore();}
+});
+test('new read-only tissue surfaces defer picking acceleration while editable boundaries keep eager admission',()=>{
+  const mock=modelWorkerMock();try{
+    const {r,derive}=modeledFixture(),calls=[];r.picking={install(...args){calls.push(args);}};
+    r.installSurgicalState(derive([22]),{view:{stateId:'editable'}});
+    while(r.modelWorker.queue.length)r.modelWorker.flush();submitPreparedState(r);
+    assert(calls.length>0);assert(calls.every(([, ,eager])=>eager===true));
+    calls.length=0;r.installSurgicalState(derive([22,23]),{view:{stateId:'observed'},readOnly:true});
+    while(r.modelWorker.queue.length)r.modelWorker.flush();submitPreparedState(r);
+    assert.equal(calls.length,1);assert.equal(calls[0][2],false);
+    assert.equal(r.volume.compartments[0].mask[23],0,'picking policy cannot change accepted tissue');
   }finally{mock.restore();}
 });
 test('initial zero-effect mapping releases native GPU pairs, retains later undo pairs, and restores source from its CPU cache',()=>{
@@ -263,6 +380,17 @@ test('OFF admits exact raw source geometry; ON lazily conditions that same tissu
     assert.equal(worker.messages.at(-1).smooth,false);assert.equal(worker.messages.at(-1).mask,undefined);assert.deepEqual([...worker.messages.at(-1).indices],[23]);
     while(worker.queue.length)worker.flush();submitPreparedState(r);assert.equal(r.volume,delta);assert.equal(r.surfaceGeometry.get('brain').smoothingPrepared,false);
   }finally{mock.restore();}
+});
+test('raw stable source geometry installs active framing and sorting bounds before picking binds',()=>{
+  const {r}=modeledFixture();r.surfaceSmoothing=false;let bound=false;
+  const buffers={positions:Float32Array.of(1e6,-1e6,1e6,-1,-1,0,1,-1,0,0,1,0),normals:Float32Array.of(0,0,0,0,0,1,0,0,1,0,0,1),indices:Uint32Array.of(1,2,3),smoothingPrepared:false,representation:'stable-source-ids',activeBounds:[[-1,-1,0],[1,1,0]]};
+  r.picking={install(mesh,geometry,eager){assert.equal(eager,false);assert.deepEqual(geometry.boundingBox.min.toArray(),[-1,-1,0]);assert.deepEqual(geometry.boundingBox.max.toArray(),[1,1,0]);assert.deepEqual(geometry.boundingSphere.center.toArray(),[0,0,0]);assert(geometry.boundingSphere.radius>=Math.sqrt(2));assert.equal(geometry.userData.sourceIndexing,'stable-source-ids');bound=true;}};
+  const pair=r.makeSurface({name:'bone',kind:'bone',color:'#aabbcc',mask:new Uint8Array()},buffers,false);assert(pair);assert(bound);assert.equal(pair.source,pair.smooth);assert.equal(pair.mesh.geometry,pair.source);
+  const reference=new THREE.BufferGeometry();reference.setAttribute('position',new THREE.BufferAttribute(buffers.positions.slice(3),3));reference.computeBoundingBox();reference.computeBoundingSphere();
+  assert.deepEqual(pair.source.boundingBox,reference.boundingBox);assert.deepEqual(pair.source.boundingSphere.center,reference.boundingSphere.center,'transparent sort centre matches compact active geometry');
+  r.anatomy.clear();r.anatomy.add(pair.mesh);pair.mesh.updateWorldMatrix(true,false);
+  const expected=reference.boundingBox.clone().applyMatrix4(pair.mesh.matrixWorld);assert.deepEqual(new THREE.Box3().setFromObject(r.anatomy),expected,'complete-bounds camera framing excludes stale slots');
+  pair.source.dispose();pair.mesh.material.dispose();reference.dispose();
 });
 test('mid-flight preference changes cancel the old quality and cannot publish stale target buffers',()=>{
   const mock=modelWorkerMock();try{

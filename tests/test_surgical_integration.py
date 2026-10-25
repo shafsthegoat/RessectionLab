@@ -200,6 +200,23 @@ def test_bridge_undo_redo_branch_and_bundle_reopen_in_fresh_process(tmp_path, mo
             endpoint = command('seekFrame', second, position=1, frameIndex=observed['playback']['frameCount'] - 1)
         assert endpoint['view']['stateId'] == second['view']['stateId']
         assert session.surgical_frame_admissions[(case_hash, second['branchId'])][3] is admission
+        compact = command('seekFrame', second, position=1, frameIndex=observed['playback']['frameCount'] - 1,
+                          timelineToken=observed['timelineToken'])
+        assert compact['timelineOmitted'] and 'timeline' not in compact and 'fullCase' not in compact
+        assert compact['view']['history'] == []
+        assert not {'scene', 'catalog', 'protection'}.intersection(compact['view'])
+        assert compact['view']['stateId'] == endpoint['view']['stateId']
+        shared_field = command('seekFrame', second, position=1,
+            frameIndex=observed['playback']['frameCount'] - 1,
+            timelineToken=observed['timelineToken'], viewFieldTokens=observed['viewFieldTokens'])
+        assert shared_field['viewFieldsOmitted'] == ['flapComponents']
+        assert 'flapComponents' not in shared_field['view']
+        changed_field = command('seekFrame', second, position=1, frameIndex=0,
+            timelineToken=observed['timelineToken'], viewFieldTokens={'flapComponents': '0' * 64})
+        assert not changed_field['viewFieldsOmitted']
+        assert changed_field['view']['flapComponents'] == observed['view']['flapComponents']
+        complete = command('seekFrame', second, position=1, frameIndex=0, timelineToken='stale-generation')
+        assert not complete['timelineOmitted'] and complete['timeline'] == observed['timeline']
         with pytest.raises(TypeError):
             admission.snapshot['actions'][0]['operation'] = 'inspect'
         assert session.cases[case_hash].artifacts is installed

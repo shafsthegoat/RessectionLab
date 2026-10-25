@@ -71,6 +71,8 @@ class SurgicalScene:
         validate_tissue_physics(self)
         from .surgical_physics_v2 import validate
         validate(self)
+        from .surgical_cusa_v3 import validate as validate_cusa
+        validate_cusa(self)
         def cell(value):
             if type(value) is not int or not 0 <= value < self.labels.size:
                 raise ValueError('Property cell must index this source grid')

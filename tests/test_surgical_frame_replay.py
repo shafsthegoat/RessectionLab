@@ -173,3 +173,72 @@ def test_failed_first_microstep_never_observes_or_lights_an_energized_tip(tmp_pa
         item=frames.store.load(token,position)
         assert all(not frame['effectiveActivation']['left'] for frame in item['frames'])
     assert not list(tmp_path.glob('.pending-*'))
+
+
+def _admitted_incremental_episode(tmp_path):
+    endpoint=episode(duration=.1)
+    saved=endpoint.snapshot()
+    current=SurgicalEngine(endpoint.scene)
+    replay=SurgicalReplayCache(max_bytes=1)
+    frames=SurgicalFrameCache(directory=tmp_path)
+    admission=frames.admit(current,saved,replay,verified_history=endpoint.history)
+    frames.seek(current,admission.snapshot,0,0,replay,
+                verified_history=admission.history,admission=admission)
+    assert replay.statistics['ownedBytes']==0, 'fixture must retain no RAM checkpoint'
+    assert frames.store.load(admission,0) is not None
+    assert frames.store.load(admission,1) is None
+    return endpoint,current,replay,frames,admission
+
+
+def test_admitted_missing_action_reuses_previous_observed_endpoint_without_prefix_replay(tmp_path,monkeypatch):
+    endpoint,current,replay,frames,admission=_admitted_incremental_episode(tmp_path)
+    original=copy.deepcopy(current.snapshot())
+    def unexpected_seek(*_args,**_kwargs):
+        raise AssertionError('The authenticated prior observed endpoint must avoid full-prefix replay')
+    monkeypatch.setattr(replay,'seek',unexpected_seek)
+    initial,timeline,info=frames.seek(current,admission.snapshot,1,0,replay,
+        verified_history=admission.history,admission=admission)
+    reference=SurgicalEngine(endpoint.scene)
+    assert reference.step(endpoint.actions[0])['status']=='accepted'
+    assert initial.snapshot()==reference.snapshot() and initial.history==reference.history
+    expected_outcome=reference.step(endpoint.actions[1])
+    final,final_timeline,_=frames.seek(current,admission.snapshot,1,info['frameCount']-1,replay,
+        verified_history=admission.history,admission=admission)
+    assert final.snapshot()==reference.snapshot() and final.history==reference.history
+    assert timeline==final_timeline==endpoint.history
+    from resectionlab.surgical_observed_cache import receipt_hash
+    assert receipt_hash(expected_outcome)==admission.receipt_hashes[1]
+    assert frames.store.load(admission,1)['frames'][-1]['stateId']==reference.state_id
+    assert current.snapshot()==original, 'the editable cursor must remain untouched'
+    # Returned engines and timelines remain caller-owned, including the new
+    # editable baseline used internally to execute the one missing action.
+    final.state['travelMm']+=1
+    final_timeline[0]['events'].append({'kind':'caller-mutation'})
+    again,canonical,_=frames.seek(current,admission.snapshot,1,info['frameCount']-1,replay,
+        verified_history=admission.history,admission=admission)
+    assert again.snapshot()==reference.snapshot() and canonical==endpoint.history
+
+
+@pytest.mark.parametrize('damage',['missing-manifest','corrupt-endpoint-field'])
+def test_unavailable_previous_observed_boundary_uses_canonical_replay_fallback(tmp_path,monkeypatch,damage):
+    endpoint,current,replay,frames,admission=_admitted_incremental_episode(tmp_path)
+    item=frames.store.load(admission,0)
+    if damage=='missing-manifest':
+        (item['entry']/'action-0.json.gz').unlink()
+    else:
+        descriptor=item['frames'][-1]['fields']['fields']['elapsedSeconds']
+        (item['entry']/descriptor['file']).write_bytes(b'corrupt observed endpoint field')
+    calls=[]; seek=replay.seek
+    def fallback(*args,**kwargs):
+        calls.append(args[2])
+        return seek(*args,**kwargs)
+    monkeypatch.setattr(replay,'seek',fallback)
+    _,timeline,info=frames.seek(current,admission.snapshot,1,0,replay,
+        verified_history=admission.history,admission=admission)
+    assert calls==[1], 'missing or tampered evidence must use canonical replay'
+    final,_,_=frames.seek(current,admission.snapshot,1,info['frameCount']-1,replay,
+        verified_history=admission.history,admission=admission)
+    reference=SurgicalEngine(endpoint.scene)
+    for action in endpoint.actions[:2]: assert reference.step(action)['status']=='accepted'
+    assert final.snapshot()==reference.snapshot() and final.history==reference.history
+    assert timeline==endpoint.history

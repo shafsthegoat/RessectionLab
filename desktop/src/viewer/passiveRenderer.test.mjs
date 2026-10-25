@@ -13,10 +13,10 @@ let server,cache,VolumeRenderer;
 before(async()=>{
   cache=await fs.mkdtemp(path.join(os.tmpdir(),'passive-renderer-'));
   server=await createServer({root:fileURLToPath(new URL('../../',import.meta.url)),cacheDir:cache,
-    logLevel:'error',server:{middlewareMode:true,hmr:false,ws:false},appType:'custom'});
+    logLevel:'error',optimizeDeps:{noDiscovery:true,include:[]},server:{middlewareMode:true,hmr:false,ws:false},appType:'custom'});
   VolumeRenderer=(await server.ssrLoadModule('/src/viewer/VolumeRenderer.ts')).VolumeRenderer;
 });
-after(async()=>{await server?.close();if(cache)await fs.rm(cache,{recursive:true,force:true});});
+after(async()=>{await server?.close();if(cache)await fs.rm(cache,{recursive:true,force:true,maxRetries:3,retryDelay:50});});
 const hash=c=>`sha256:${c.repeat(64)}`;
 const volume={caseHash:hash('a'),frame:'RAS+',shape:[8,8,8],
   affine:[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]};

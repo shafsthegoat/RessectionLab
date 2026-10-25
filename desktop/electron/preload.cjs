@@ -2,6 +2,62 @@
 
 const { contextBridge, ipcRenderer } = require('electron');
 
+// Explicit benchmark startup mode only. Keep the ordinary invoke promise and
+// preload dependencies unchanged when the flag is absent (including VM tests).
+const receiptFlag = typeof process === 'undefined' ? undefined : process?.env?.RESSECTIONLAB_PLAYBACK_RECEIPT_OBSERVER;
+if (receiptFlag !== undefined && receiptFlag !== '1') throw new Error('SURGICAL_RECEIPT_OBSERVER:INVALID_STARTUP_FLAG');
+let surgicalRehearsal = args => ipcRenderer.invoke('research:surgicalRehearsal', args);
+let receiptApi = {};
+if (receiptFlag === '1') {
+  let listener = null, registered = false, notificationSerial = 0, failure = null;
+  const fail = (reason, cause) => {
+    failure ??= new Error('SURGICAL_RECEIPT_OBSERVER:' + reason, { cause });
+    throw failure;
+  };
+  const check = () => { if (failure) throw failure; };
+  receiptApi = { onSurgicalReceipt(callback) {
+    check();
+    if (registered) fail('ALREADY_REGISTERED');
+    if (typeof callback !== 'function') fail('CALLBACK_REQUIRED');
+    registered = true; listener = callback;
+    return () => { listener = null; };
+  } };
+  surgicalRehearsal = args => {
+    if (args?.command !== 'seekPrefixFrame') return ipcRenderer.invoke('research:surgicalRehearsal', args);
+    check();
+    if (!listener) fail('NO_ACTIVE_SUBSCRIPTION');
+    if (notificationSerial >= 20000) fail('NOTIFICATION_CAP');
+    const request = Object.freeze({ branchId: args.branchId, position: args.position,
+      frameIndex: args.frameIndex, ...(typeof args.caseHash === 'string' ? { caseHash: args.caseHash } : {}) });
+    if (typeof request.branchId !== 'string' || !request.branchId ||
+        !Number.isSafeInteger(request.position) || request.position < 0 ||
+        !Number.isSafeInteger(request.frameIndex) || request.frameIndex < 0) fail('INVALID_REQUEST_IDENTITY');
+    return ipcRenderer.invoke('research:surgicalRehearsal', args).then(result => {
+      check();
+      if (!listener) fail('NO_ACTIVE_SUBSCRIPTION');
+      if (notificationSerial >= 20000) fail('NOTIFICATION_CAP');
+      const branchId = result?.playback?.branchId ?? result?.branchId;
+      const position = result?.playback?.position ?? result?.position;
+      const frameIndex = result?.playback?.frameIndex;
+      const stateId = result?.view?.stateId;
+      if (branchId !== request.branchId || position !== request.position || frameIndex !== request.frameIndex ||
+          typeof stateId !== 'string' || !stateId) fail('INVALID_RESULT_IDENTITY');
+      const receipt = Object.freeze({ command: 'seekPrefixFrame', branchId, position, frameIndex,
+        stateId, notificationSerial: ++notificationSerial, request });
+      try {
+        const returned = listener(receipt);
+        if (returned && typeof returned.then === 'function') {
+          // This is a synchronous receipt edge; an async listener cannot supply
+          // that contract. Consume its rejection before failing the mode.
+          Promise.resolve(returned).catch(() => {});
+          fail('ASYNC_CALLBACK');
+        }
+      } catch (error) { fail('CALLBACK_FAILED', error); }
+      return result;
+    });
+  };
+}
+
 contextBridge.exposeInMainWorld('resectionApi', Object.freeze({
   openWorkspace: () => ipcRenderer.invoke('research:openWorkspace'),
   startupWorkspace: () => ipcRenderer.invoke('research:startupWorkspace'),
@@ -25,7 +81,8 @@ contextBridge.exposeInMainWorld('resectionApi', Object.freeze({
   importSurgicalScene: args => ipcRenderer.invoke('research:importSurgicalScene',args),
   createSurgicalFixture: () => ipcRenderer.invoke('research:createSurgicalFixture'),
   compareSurgicalAnatomy: args => ipcRenderer.invoke('research:compareSurgicalAnatomy', args),
-  surgicalRehearsal: args => ipcRenderer.invoke('research:surgicalRehearsal', args),
+  surgicalRehearsal,
+  ...receiptApi,
   createRehearsal: args => ipcRenderer.invoke('research:createRehearsal', args),
   inspectRehearsal: args => ipcRenderer.invoke('research:inspectRehearsal', args),
   stepRehearsal: args => ipcRenderer.invoke('research:stepRehearsal', args),

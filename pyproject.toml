@@ -21,6 +21,7 @@ dependencies = [
 
 [project.optional-dependencies]
 rl = ["gymnasium>=1,<2"]
+rl-training = ["gymnasium>=1,<2", "stable-baselines3==2.9.0"]
 anatomy = ["vtk==9.7.0", "SimpleITK>=2.5,<3", "pydicom>=3,<4", "psutil>=6,<8"]
 dev = ["pytest>=8,<10", "pyinstaller>=6,<7"]
 diffusion = ["dipy>=1.12,<1.13", "SimpleITK>=2.5,<3"]
@@ -34,7 +35,7 @@ resectionlab-legacy-qt = "resectionlab.app:main"
 where = ["src"]
 
 [tool.setuptools.package-data]
-resectionlab = ["surface_policy.json"]
+resectionlab = ["surface_policy.json", "surgical_idle_native.c", "surgical_prefix_json_native.c"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

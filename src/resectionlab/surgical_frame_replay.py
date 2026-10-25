@@ -16,6 +16,7 @@ from .core import semantic_digest
 from .core import thaw_json
 from .surgical_replay_cache import SurgicalReplayCache, _owned_bytes
 from .surgical_observed_cache import (FrameAdmission, ObservedFrameStore, receipt_hash, ImplementationChanged)
+from .surgical_flow_display import FlowDisplayTrace, validate_flow_display, trim_frame_flows
 
 
 class ObservedFrameCollector:
@@ -29,9 +30,12 @@ class ObservedFrameCollector:
         self.cache, self.admission = cache, admission
         self.writer = None; self.position = None; self.matches = False
         self.last_effective_activation = None
+        self.flow = None
 
     def abort(self):
         if self.writer is not None: self.writer.abort()
+        if self.flow is not None: self.flow.close()
+        self.flow = None
         self.writer = None; self.position = None; self.matches = False
         self.last_effective_activation = None
 
@@ -45,6 +49,7 @@ class ObservedFrameCollector:
         try: self.writer.capture(engine, kind, activation)
         except (OSError, ValueError, TypeError):
             self.writer.abort(); self.writer = None
+            if self.flow is not None: self.flow.close()
 
     def begin(self, engine, action):
         self.abort(); self.admission.check(engine)
@@ -59,10 +64,14 @@ class ObservedFrameCollector:
         if self.matches:
             try: self.writer = self.cache.store.begin(self.admission, self.position)
             except (OSError, ValueError): self.writer = None
+            if self.writer is not None:
+                self.flow = FlowDisplayTrace(engine.scene.identity, self.position, engine.state['elapsedSeconds'], engine.scene.shape)
+                engine._flow_display_trace = self.flow
             self._capture(engine, 'action_start', self._activation(engine))
 
     def observe(self, engine, acting_slot, effective_active):
         if self.position is None: return
+        if self.flow is not None: self.flow.commit_substep(engine.state['elapsedSeconds'])
         # Successful public microstep observation, even when shorter than the
         # display cadence. The finalized state retains its own latched switch.
         self.last_effective_activation = self._activation(engine, acting_slot, effective_active)
@@ -96,9 +105,25 @@ class _ObservedFrames(SurgicalEngine):
         return other
 
     def _capture(self, kind, activation):
+        trace = getattr(self, '_flow_display_trace', None)
+        if trace is None or not trace.active:
+            trace = self._flow_display_trace = FlowDisplayTrace(
+                self.scene.identity, len(self.actions), self.state['elapsedSeconds'], self.scene.shape)
+        state_id = self.state_id
         self._frames.append({'observedTimeSeconds': float(self.state['elapsedSeconds']), 'kind': kind,
-            'effectiveActivation': activation,
+            'effectiveActivation': activation, 'stateId': state_id,
+            'flowDisplay': trace.capture(state_id, self.state['elapsedSeconds']),
             'state': zlib.compress(json.dumps(self.state, separators=(',', ':'), allow_nan=False).encode(), 1)})
+        # Optional indicators may not turn a state-only fallback into a budget
+        # failure. Even the empty envelope is optional at zero spare headroom.
+        self._flow_capture_bytes = getattr(self, '_flow_capture_bytes', 0) + _owned_bytes(self._frames[-1])
+        limit = getattr(self, '_frame_max_bytes', 64 * 1024**2)
+        if self._flow_capture_bytes > limit:
+            trim_frame_flows(self._frames)
+            self._flow_capture_bytes = _owned_bytes(self._frames)
+        if self._flow_capture_bytes > limit:
+            trim_frame_flows(self._frames, omit=True)
+            self._flow_capture_bytes = _owned_bytes(self._frames)
 
     def _substep(self, key, op, p, q, active, dt):
         events = super()._substep(key, op, p, q, active, dt)
@@ -108,6 +133,8 @@ class _ObservedFrames(SurgicalEngine):
         if collector is not None:
             collector.observe(self, key, active)
             return events
+        trace = getattr(self, '_flow_display_trace', None)
+        if trace is not None: trace.commit_substep(self.state['elapsedSeconds'])
         if self.state['elapsedSeconds'] + 1e-10 >= self._next_frame_time:
             self._capture('microstep', self._last_effective_activation)
             while self._next_frame_time <= self.state['elapsedSeconds'] + 1e-10:
@@ -157,7 +184,7 @@ class SurgicalFrameCache:
     @staticmethod
     def _playback(item, index):
         frames = item['frames']; frame = frames[index]
-        manifest = [{k:v for k,v in row.items() if k not in ('state', 'fields', 'stateId')} | {'frameIndex':i} for i,row in enumerate(frames)]
+        manifest = [{k:v for k,v in row.items() if k not in ('state', 'fields', 'stateId', 'flowDisplay')} | {'frameIndex':i} for i,row in enumerate(frames)]
         start = frames[0]['observedTimeSeconds']
         return {'readOnly': True, 'position': item['position'], 'actionIndex': item['position'],
             'frameIndex': index, 'frameCount': len(frames), 'frames': manifest,
@@ -166,7 +193,10 @@ class SurgicalFrameCache:
             'actionDurationSeconds': frames[-1]['observedTimeSeconds'] - start,
             'isActionBoundary': index in (0, len(frames)-1),
             'frameStateId': frame['stateId'],
-            'effectiveActivation': dict(frame['effectiveActivation'])}
+            'fieldTokens': {name: blob['sha256'] for name, blob in
+                frame.get('fields', {}).get('fields', {}).items() if name == 'flapComponents'},
+            'effectiveActivation': dict(frame['effectiveActivation']),
+            **({'flowDisplay': copy.deepcopy(frame['flowDisplay'])} if 'flowDisplay' in frame else {})}
 
     def _seek_admitted(self, current, admission, position, index, replay_cache, check, display_only):
         admission.check(current, admission.snapshot, admission.history)
@@ -187,10 +217,20 @@ class SurgicalFrameCache:
             # comparison precedes publication. Cold portable archives retain
             # the existing observed replay fallback when caching is unavailable.
             snapshot = thaw_json(admission.snapshot)
-            baseline, _ = replay_cache.seek(current, snapshot, position, check=check, include_history=True)
+            # A patient state may exceed half the replay RAM budget, evicting
+            # every prior checkpoint while keeping only the archive endpoint.
+            # The previous observed action already owns an authenticated exact
+            # boundary on disk. Restore its detached writable state before
+            # falling back to replaying the prefix from the editable cursor.
+            check()
+            boundary = self.boundary(admission.snapshot, position,
+                verified_history=admission.history, admission=admission)
+            baseline, _ = boundary if boundary is not None else replay_cache.seek(
+                current, snapshot, position, check=check, include_history=True)
             observed = _ObservedFrames(baseline.scene, protection=baseline.protection, guard_config=baseline.guard_config)
             observed.__dict__.update(baseline.clone().__dict__)
             observed._frames = []
+            observed._frame_max_bytes = self.max_bytes
             observed._last_effective_activation = None
             collector = self.collector(admission)
             observed._frame_collector = collector
@@ -306,6 +346,7 @@ class SurgicalFrameCache:
             observed = _ObservedFrames(baseline.scene, protection=baseline.protection, guard_config=baseline.guard_config)
             observed.__dict__.update(baseline.clone().__dict__)
             observed._frames = []
+            observed._frame_max_bytes = self.max_bytes
             observed._last_effective_activation = None
             observed._next_frame_time = baseline.state['elapsedSeconds'] + .2
             observed._capture('action_start', {hand:bool(slot['active']) for hand,slot in baseline.state['slots'].items()})
@@ -321,9 +362,15 @@ class SurgicalFrameCache:
                        'stateAfter': observed.state_id, 'historyHash': semantic_digest(history),
                        'actionHash': semantic_digest(snapshot['actions'][position])}
             item = {'frames': observed._frames, 'shell': SurgicalReplayCache._shell(baseline), 'receipt': receipt}
-            item['bytes'] = _owned_bytes((item['frames'], item['receipt'], item['shell'].state,
-                                         item['shell'].actions, item['shell'].history)) + sum(map(sys.getsizeof,
-                        (key, item, item['shell'], item['shell'].__dict__)))
+            def charge():
+                item['bytes'] = _owned_bytes((item['frames'], item['receipt'], item['shell'].state,
+                    item['shell'].actions, item['shell'].history)) + sum(map(sys.getsizeof,
+                    (key, item, item['shell'], item['shell'].__dict__)))
+            charge()
+            if item['bytes'] > self.max_bytes:
+                trim_frame_flows(item['frames']); charge()
+            if item['bytes'] > self.max_bytes:
+                trim_frame_flows(item['frames'], omit=True); charge()
             self._actions[key] = item
             # Bound compressed state bytes; account for retained endpoints too.
             while len(self._actions) > 1 and self._bytes() > self.max_bytes:
@@ -345,8 +392,14 @@ class SurgicalFrameCache:
         if frame_index >= len(frames): raise ValueError('Playback frame is unavailable')
         frame = frames[frame_index]
         result = self._result(item, snapshot, frame_index, history)
+        if 'flowDisplay' in frame:
+            previous = frames[max(0, frame_index - 1)]
+            validate_flow_display(frame['flowDisplay'], scene_id=result.scene.identity,
+                action_index=position, frame_index=frame_index, before_state_id=previous['stateId'],
+                state_id=result.state_id, start_seconds=previous['observedTimeSeconds'],
+                end_seconds=frame['observedTimeSeconds'], shape=result.scene.shape)
         check()
-        manifest = [{k:v for k,v in value.items() if k != 'state'} | {'frameIndex':i} for i,value in enumerate(frames)]
+        manifest = [{k:v for k,v in value.items() if k not in ('state', 'flowDisplay')} | {'frameIndex':i} for i,value in enumerate(frames)]
         start = frames[0]['observedTimeSeconds']
         return result, copy.deepcopy(history), {'readOnly': True, 'position': position, 'actionIndex': position,
             'frameIndex':frame_index, 'frameCount':len(frames), 'frames':manifest,
@@ -354,4 +407,5 @@ class SurgicalFrameCache:
             'actionElapsedSeconds':frame['observedTimeSeconds']-start,
             'actionDurationSeconds':frames[-1]['observedTimeSeconds']-start,
             'isActionBoundary':frame_index in (0,len(frames)-1), 'effectiveActivation':frame['effectiveActivation'],
-            'frameStateId':result.state_id}
+            'frameStateId':result.state_id,
+            **({'flowDisplay': copy.deepcopy(frame['flowDisplay'])} if 'flowDisplay' in frame else {})}

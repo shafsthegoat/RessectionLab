@@ -8,8 +8,25 @@ export function surgicalToolGeometryKey(tool:SurgicalTool,slot:SurgicalSlot,ghos
 }
 export function updateSurgicalToolMesh(group:THREE.Group,slot:SurgicalSlot,ghost=false):void {
   group.position.set(...slot.position);group.quaternion.set(...slot.quaternion);
+  group.userData.effectiveActive=!ghost&&slot.active;
+  group.userData.recordedRpm=slot.parameters.rpm;
   const accent=group.userData.surgicalAccent as THREE.MeshStandardMaterial|undefined;
   accent?.color.set(ghost?'#95f4ce':slot.active?'#e0b35d':'#41677a');
+}
+/** Illustrative working-part motion only. The instrument's recorded root pose
+ * never changes; paused review restores the commanded jaw geometry. */
+export function updateSurgicalToolAnimation(group:THREE.Group,sourceSeconds:number|null,intervalProgress:number|null):void {
+  const active=group.userData.effectiveActive&&sourceSeconds!==null;
+  const bit=group.getObjectByName('instrument:drill-bit');
+  const rpm=group.userData.recordedRpm as number|undefined;
+  if(bit)bit.rotation.z=active&&typeof rpm==='number'&&Number.isFinite(rpm)&&rpm>0?(sourceSeconds!*rpm/60*2*Math.PI)%(2*Math.PI):0;
+  // One illustrative close/release per observed interval, not a claimed jaw
+  // frequency or additional cutting event. No motion on scrub or pause.
+  const opening=active&&intervalProgress!==null ? .2+.8*Math.abs(Math.cos(Math.PI*intervalProgress)) : 1;
+  for(const child of group.children)if(typeof child.userData.jawBaseX==='number'){
+    child.position.x=child.userData.jawBaseX*opening;
+    if(typeof child.userData.jawBaseAngle==='number')child.rotation.y=child.userData.jawBaseAngle*opening;
+  }
 }
 /** Generic research geometry, tip at local origin and working axis along +Z. */
 export function surgicalToolMesh(tool:SurgicalTool,slot:SurgicalSlot,ghost=false){
@@ -18,7 +35,8 @@ export function surgicalToolMesh(tool:SurgicalTool,slot:SurgicalSlot,ghost=false
   const metal=new THREE.MeshStandardMaterial({color:ghost?'#95f4ce':'#a6c9d1',metalness:.5,roughness:.35,transparent:ghost,opacity:ghost?.35:1,depthWrite:!ghost});
   const accent=metal.clone();accent.color.set(ghost?'#95f4ce':slot.active?'#e0b35d':'#41677a');
   group.userData.surgicalAccent=accent;
-  const add=(geometry:THREE.BufferGeometry,x=0,y=0,z=0,material=metal)=>{const mesh=new THREE.Mesh(geometry,material);mesh.position.set(x,y,z);group.add(mesh);return mesh;};
+  let parent=group;
+  const add=(geometry:THREE.BufferGeometry,x=0,y=0,z=0,material=metal)=>{const mesh=new THREE.Mesh(geometry,material);mesh.position.set(x,y,z);parent.add(mesh);return mesh;};
   const cylinder=(r:number,length:number,x=0,y=0,z=0,material=metal)=>{const mesh=add(new THREE.CylinderGeometry(r,r,length,12),x,y,z,material);mesh.rotation.x=Math.PI/2;return mesh;};
   const box=(w:number,h:number,d:number,x=0,y=0,z=0,material=metal)=>add(new THREE.BoxGeometry(w,h,d),x,y,z,material);
   const sphere=(r:number,x=0,y=0,z=0,material=metal)=>add(new THREE.SphereGeometry(r,16,12),x,y,z,material);
@@ -28,8 +46,12 @@ export function surgicalToolMesh(tool:SurgicalTool,slot:SurgicalSlot,ghost=false
   cylinder(tool.shaftRadiusMm*2.1,9,0,0,-length+1,accent);
   const jaw=Math.max(.1,slot.parameters.jawOpeningMm??2);
   switch(tool.id){
-    case 'cranial_drill':
-      cylinder(radius*.7,4,0,0,-3,accent);sphere(radius);for(let i=0;i<4;i++){const ring=tube(radius*.94,0);ring.rotation.y=i*Math.PI/4;}break;
+    case 'cranial_drill':{
+      cylinder(radius*.7,4,0,0,-3,accent);
+      const bit=new THREE.Group();bit.name='instrument:drill-bit';group.add(bit);parent=bit;
+      sphere(radius);for(let i=0;i<4;i++){const ring=tube(radius*.94,0);ring.rotation.y=i*Math.PI/4;}
+      // Asymmetric flute makes recorded rotational phase visible.
+      box(radius*.18,radius*.35,radius*1.5,radius*.85,0,-radius*.3,accent);parent=group;break;}
     case 'cusa':
       cylinder(radius*.75,7,0,0,-4,accent);tube(radius,-.3);cylinder(radius*.3,3,0,0,-2);break;
     case 'brain_retractor':
@@ -44,7 +66,7 @@ export function surgicalToolMesh(tool:SurgicalTool,slot:SurgicalSlot,ghost=false
     case 'dural_scissors':
     case 'micro_scissors':{
       const bladeLength=tool.id==='dural_scissors'?6:4;
-      for(const sign of [-1,1]){const blade=box(.35,.6,bladeLength,sign*jaw/3,0,-bladeLength/2+1);blade.rotation.y=sign*Math.atan(jaw/bladeLength);}
+      for(const sign of [-1,1]){const blade=box(.35,.6,bladeLength,sign*jaw/3,0,-bladeLength/2+1);blade.rotation.y=sign*Math.atan(jaw/bladeLength);blade.userData.jawBaseX=blade.position.x;blade.userData.jawBaseAngle=blade.rotation.y;}
       sphere(.65,0,0,-4);if(tool.id==='dural_scissors')sphere(.7,-jaw/2,0,.4).scale.set(1,.45,1);break;}
     case 'dissector':
       cylinder(radius*.4,4,0,0,-2).rotation.x=Math.PI/2+.35;sphere(radius*.6,0,.6,.2);break;
@@ -52,9 +74,12 @@ export function surgicalToolMesh(tool:SurgicalTool,slot:SurgicalSlot,ghost=false
       cylinder(radius*.85,6,0,0,-3);tube(radius,0);box(.8,.8,3,0,radius,-5,accent);break;
     case 'bipolar_forceps':
     case 'tumor_forceps':
-      for(const sign of [-1,1]){const arm=box(.45,.65,9,sign*(jaw/2+.2),0,-4);arm.rotation.y=sign*-.08;
-        if(tool.id==='bipolar_forceps')cylinder(.3,2,sign*jaw/2,0,.3,accent);
-        else {box(.8,.8,1.8,sign*jaw/2,0,.2);for(let i=0;i<3;i++)box(.25,1,.2,sign*jaw/2,0,-.5+i*.5,accent);}}
+      for(const sign of [-1,1]){
+        const jawGroup=new THREE.Group();jawGroup.position.x=sign*jaw/2;jawGroup.userData.jawBaseX=jawGroup.position.x;group.add(jawGroup);parent=jawGroup;
+        const arm=box(.45,.65,9,sign*.2,0,-4);arm.rotation.y=sign*-.08;
+        if(tool.id==='bipolar_forceps')cylinder(.3,2,0,0,.3,accent);
+        else {box(.8,.8,1.8,0,0,.2);for(let i=0;i<3;i++)box(.25,1,.2,0,0,-.5+i*.5,accent);}}
+      parent=group;
       break;
     case 'irrigation':
       cylinder(radius*.7,5,0,0,-3);tube(radius*.7,-.4);cylinder(radius*.35,3,0,0,-.5,accent);break;

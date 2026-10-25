@@ -46,3 +46,8 @@ test('source cache is tissue/grid specific and polynomial preserves DC exactly',
   const p=Float32Array.from([0,0,0,1,0,0,0,1,0]),s=fairIndexedSurface(p,Uint32Array.from([0,1,2]),identity,'tumor');assert.deepEqual(s.positions,p);
   assert.deepEqual(indexSurface(p).indices,Uint32Array.from([0,1,2]));
 });
+test('raw stable-ID snapshots retain active bounds and cannot satisfy smoothed cache requests',()=>{
+  const m=new Uint8Array(8),surface={positions:Float32Array.of(100,100,100,0,0,0,1,0,0,0,1,0),normals:new Float32Array(12),indices:Uint32Array.of(1,2,3),smoothingPrepared:false,representation:'stable-source-ids',activeBounds:[[0,0,0],[1,1,0]]};
+  retainSurface(m,identity,'bone',surface,[2,2,2]);const cached=cachedSurface(m,identity,'bone',[2,2,2],false);
+  assert.equal(cached,surface);assert.equal(cached.activeBounds,surface.activeBounds);assert.equal(cached.representation,'stable-source-ids');assert.equal(cachedSurface(m,identity,'bone',[2,2,2],true),undefined);
+});

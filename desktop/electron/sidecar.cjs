@@ -21,7 +21,7 @@ const MAX_RESPONSE_LINE_BYTES=32*1024*1024;
 const OPERATIONS = new Set(['compareSurgicalAnatomy','prepareSurgicalEnvironment','importSurgicalScene','surgicalRehearsal','createSurgicalFixture','createRehearsal','inspectRehearsal','stepRehearsal','compareRehearsal','anatomySavePackage','anatomySaveView','anatomyComponents','anatomyGraph','anatomyCreate','anatomyReconstruct','anatomyPlan','anatomyRemoval','anatomySection','anatomyOpen','anatomyView','anatomyEdit','anatomySample','anatomyRegister','anatomyImport','anatomyExport','ping', 'publicContactFamilyAvailability', 'executePublicContactFamilyEpisode', 'executePublicSurfaceContactEpisode', 'inspectDevelopmentEpisodeComparison', 'executeDevelopmentEpisode', 'executePersistentPassiveEpisode', 'evaluateDevelopmentEpisodeVascular', 'createSyntheticCase', 'loadCase', 'importNifti', 'importDisplaySeries', 'importDiagnosticLayer', 'importStructuralEvidence', 'saveCase', 'generateRoutes', 'generateNativeRoutes', 'inspectRefinement', 'inspectAxisPlanning', 'inspectObservedLandmarkUpdate', 'cancel', 'inspectEvidence', 'trainPatient', 'nativeTraining', 'listRuns', 'replayTraining', 'exportCandidate', 'shutdown']);
 
 class Sidecar extends EventEmitter {
-  constructor({ python, cwd, sourcePath, transferDir, executable, runDir, observedSourceRoot }) {
+  constructor({ python, cwd, sourcePath, transferDir, executable, runDir, observedSourceRoot, prefixWorker, preparedPrefixCacheDirectory }) {
     super();
     this.assets = new AssetRegistry(transferDir);
     this.pending = new Map();
@@ -29,14 +29,27 @@ class Sidecar extends EventEmitter {
     this.processing = Promise.resolve();
     this.transferDir = transferDir;
     this.closed = false;
+    this.stopping = false;
     const env = { ...process.env, PYTHONUNBUFFERED: '1' };
     delete env.PYTHONHOME;
     delete env.QT_PLUGIN_PATH;
     if (sourcePath) env.PYTHONPATH = sourcePath; else delete env.PYTHONPATH;
+    if (preparedPrefixCacheDirectory !== undefined) {
+      if (typeof preparedPrefixCacheDirectory !== 'string' || !path.isAbsolute(preparedPrefixCacheDirectory)) throw new Error('Prepared prefix directory must be absolute');
+      env.RESSECTIONLAB_PREPARED_PREFIX_CACHE_DIRECTORY = preparedPrefixCacheDirectory;
+    }
     const command = executable || python;
     const args = executable ? ['--transfer-dir', transferDir] : ['-u', '-m', 'resectionlab.desktop_bridge', '--transfer-dir', transferDir];
     if (runDir) args.push('--run-dir', runDir);
     if (observedSourceRoot && !executable) args.push('--observed-source-root', observedSourceRoot);
+    if (prefixWorker !== undefined) {
+      if (executable || !prefixWorker || !['producer','consumer'].includes(prefixWorker.role)
+        || typeof prefixWorker.sourcePath !== 'string' || !path.isAbsolute(prefixWorker.sourcePath)
+        || !/^[a-f0-9]{64}$/.test(prefixWorker.sourceSha256)
+        || typeof prefixWorker.branchId !== 'string' || !prefixWorker.branchId.trim() || prefixWorker.branchId.includes('\0') || prefixWorker.branchId.length > 128) throw new Error('Invalid trusted prefix worker configuration');
+      args.push('--prefix-worker-role',prefixWorker.role,'--prefix-worker-source',prefixWorker.sourcePath,
+        '--prefix-worker-sha256',prefixWorker.sourceSha256,'--prefix-worker-branch',prefixWorker.branchId);
+    }
     this.child = spawn(command, args, { cwd, env, stdio: ['pipe', 'pipe', 'pipe'], shell: false });
     this.child.stdin.on('error', error => { if (!this.closed) this.failAll(error); });
     this.child.stdout.setEncoding('utf8');
@@ -46,10 +59,10 @@ class Sidecar extends EventEmitter {
     this.child.on('exit', (code, signal) => this.failAll(new Error(`Local research engine exited (${signal || code}); restart RessectionLab to retry.`)));
   }
 
-  request(op, args = {}, timeoutMs = 120000) {
+  request(op, args = {}, timeoutMs = 120000, lease = null) {
     if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 100 || timeoutMs > surgicalTransportLimitMs(op,args)) return Promise.reject(new Error('Invalid operation time budget'));
     if (!OPERATIONS.has(op)) return Promise.reject(new Error('Unsupported research operation'));
-    if (this.closed) return Promise.reject(new Error('Local research engine is not running'));
+    if (this.closed || this.stopping) return Promise.reject(new Error('Local research engine is not running'));
     if (!args || typeof args !== 'object' || Array.isArray(args)) return Promise.reject(new Error('Operation arguments must be an object'));
     if (op === 'importDiagnosticLayer') {
       try { const {descriptorPath,...identity}=args; const checked=diagnosticRequest(identity);
@@ -81,6 +94,7 @@ class Sidecar extends EventEmitter {
     const id = randomUUID();
     const message = JSON.stringify({ id, op, args, timeoutMs });
     if (Buffer.byteLength(message) > 1024 * 1024) return Promise.reject(new Error('Operation request is too large'));
+    if (lease) lease.id = id;
     return new Promise((resolve, reject) => {
       const timeout = setTimeout(() => {
         this.pending.delete(id);
@@ -97,6 +111,14 @@ class Sidecar extends EventEmitter {
         ...(op === 'inspectObservedLandmarkUpdate' ? { observedArgs: args } : {}) });
       this.child.stdin.write(message + '\n', error => { if (error) this.failAll(error); });
     });
+  }
+
+  requestLease(op, args = {}, timeoutMs = 120000) {
+    const state = {id:null};
+    const promise = this.request(op,args,timeoutMs,state);
+    return {get id(){return state.id;},promise,
+      cancel:()=>state.id && !this.closed && !this.stopping
+        ? this.request('cancel',{requestId:state.id},30000) : Promise.resolve({cancelled:false})};
   }
 
   consume(chunk) {
@@ -152,15 +174,31 @@ class Sidecar extends EventEmitter {
   }
 
   async stop() {
-    if (!this.closed) {
-      this.child.stdin.write(JSON.stringify({ id: randomUUID(), op: 'shutdown', args: {} }) + '\n');
-      this.child.stdin.end();
-      await new Promise(resolve => {
-        const timeout = setTimeout(() => { this.child.kill('SIGTERM'); resolve(); }, 1500);
-        this.child.once('exit', () => { clearTimeout(timeout); resolve(); });
-      });
+    if (this.stopPromise) {
+      await this.stopPromise;
+      return;
     }
-    await fs.rm(this.transferDir, { recursive: true, force: true });
+    this.stopping = true;
+    this.stopPromise = (async()=>{
+      // A timeout/cancel reply can precede numerical worker completion. Do not
+      // start its replacement or delete its files until the process has exited.
+      if (this.child.pid && this.child.exitCode === null && this.child.signalCode === null) {
+        await new Promise((resolve,reject)=>{
+          let term,kill,deadline;
+          const finished=()=>{clearTimeout(term);clearTimeout(kill);clearTimeout(deadline);resolve();};
+          this.child.once('exit',finished);
+          term=setTimeout(()=>this.child.kill('SIGTERM'),1500);
+          kill=setTimeout(()=>this.child.kill('SIGKILL'),3000);
+          deadline=setTimeout(()=>{this.child.removeListener('exit',finished);reject(new Error('Local research engine did not exit; replacement refused'));},5000);
+          if (!this.closed) {
+            this.child.stdin.write(JSON.stringify({id:randomUUID(),op:'shutdown',args:{}})+'\n',()=>{});
+            this.child.stdin.end();
+          }
+        });
+      }
+      await fs.rm(this.transferDir,{recursive:true,force:true});
+    })();
+    return this.stopPromise;
   }
 }
 

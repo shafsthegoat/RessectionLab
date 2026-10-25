@@ -1,4 +1,8 @@
-"""Tiny generated contract fixtures; never fit or open a patient in tests."""
+"""Opt-in generated pilot regressions, including a real in-memory Adam update.
+
+These tests execute policies and one trains on generated transitions. They never
+open a patient or save a learned checkpoint, but are not readiness-only checks.
+"""
 import copy
 import json
 from pathlib import Path
@@ -8,6 +12,7 @@ import pytest
 import torch
 
 pytest.importorskip('gymnasium')
+pytestmark = pytest.mark.rl_pilot
 from resectionlab.surgical_scene import SurgicalScene
 from resectionlab.surgical_rl_env import SurgicalRLEnv, RLConfig
 

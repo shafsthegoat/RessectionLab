@@ -15,6 +15,8 @@ def initialize_effect_state(engine):
     initialize_physics(engine)
     from .surgical_physics_v2 import initialize
     initialize(engine)
+    from .surgical_cusa_v3 import initialize as initialize_cusa
+    initialize_cusa(engine)
     for name in ('cutEdges', 'separatedAttachments', 'transectedEdges', 'flapComponents', 'meshCutEdges', 'meshSeams'):
         engine.state.setdefault(name, [])
     engine.state.setdefault('debris', {})
@@ -186,6 +188,8 @@ def apply_effect(engine, key, op, cells, p, q, dt):
             return [{'kind': 'grasp_created', 'cells': len(fragment)}]
         return []
     if effect in ('suction', 'irrigate'):
+        flow = getattr(engine, '_flow_display_trace', None)
+        if flow is not None and not flow.active: flow = None
         spatial = _spatial(engine, p, params['radiusMm'])
         budget = params['flowMm3PerSecond'] * dt
         if effect == 'suction':
@@ -196,6 +200,8 @@ def apply_effect(engine, key, op, cells, p, q, dt):
                     k = str(i); take = min(budget, state[field].get(k, 0.))
                     if take:
                         state[field][k] -= take; total += take; budget -= take
+                        if flow is not None:
+                            flow.record('uptake', field, 'mixed' if field == 'fluid' else 'debris', i, None, take)
                         if state[field][k] <= 1e-12: del state[field][k]
                 amounts[field] = total
             state['fluidRemovedMm3'] += amounts['fluid']; state['debrisMm3'] = sum(state['debris'].values())
@@ -204,13 +210,16 @@ def apply_effect(engine, key, op, cells, p, q, dt):
         # Directed deposition at the outlet, with explicit out-of-grid escape.
         outlet = p + orientation.apply([0., 0., params['depthMm']])
         index = np.rint(engine.scene.inverse[:3, :3] @ outlet + engine.scene.inverse[:3, 3]).astype(int)
-        if np.any(index < 0) or np.any(index >= engine.scene.shape): state['fluidEscapedMm3'] += budget
+        if np.any(index < 0) or np.any(index >= engine.scene.shape):
+            state['fluidEscapedMm3'] += budget
+            if flow is not None: flow.record('escape', 'fluid', 'mixed', None, None, budget)
         else:
             cell = int(np.ravel_multi_index(index, engine.scene.shape))
             destination = _free_outlet(engine, cell)
             if destination is None: raise ValueError('FLUID_OUTLET_BLOCKED')
             k = str(destination)
             state['fluid'][k] = state['fluid'].get(k, 0.) + budget
+            if flow is not None: flow.record('deposit', 'fluid', 'irrigation', None, destination, budget)
         state['fluidAddedMm3'] += budget
         return [{'kind': 'irrigation', 'volumeMm3': budget, 'outlet': outlet.tolist()}]
     if effect == 'coagulate':
@@ -254,6 +263,8 @@ def tick_fields(engine, dt):
     A source with no adjacent free outlet accumulates a declared reservoir until
     opened. This avoids placing fluid inside solid tissue or losing mass.
     """
+    flow = getattr(engine, '_flow_display_trace', None)
+    if flow is not None and not flow.active: flow = None
     for source in engine.state['sources']:
         if source.get('bleedingActive', True):
             if 'rateMm3PerSecond' not in source or 'cell' not in source: raise ValueError('MISSING_BLEEDING_SOURCE_PROPERTIES')
@@ -266,6 +277,9 @@ def tick_fields(engine, dt):
             amount = source.get('reservoirMm3', 0.)
             if amount:
                 k = str(destination); engine.state['fluid'][k] = engine.state['fluid'].get(k, 0.) + amount
+                if flow is not None:
+                    flow.record('deposit', 'fluid', 'wound' if source.get('kind') == 'modeled-vessel-wound'
+                                else 'declared-source', None, destination, amount)
                 source['reservoirMm3'] = 0.
     # One bounded nearest-neighbor relaxation per microstep. A cell holds one
     # voxel-volume before overflow wets neighboring free cells. Boundary overflow
@@ -277,8 +291,10 @@ def tick_fields(engine, dt):
             amount = engine.state['fluid'].pop(key)
             if destination is None:
                 engine.state['fluidEscapedMm3'] += amount
+                if flow is not None: flow.record('escape', 'fluid', 'mixed', int(key), None, amount)
             else:
                 dk = str(destination); engine.state['fluid'][dk] = engine.state['fluid'].get(dk, 0.) + amount
+                if flow is not None: flow.record('deposit', 'fluid', 'mixed', None, destination, amount)
     for key, amount in sorted(list(engine.state['fluid'].items()), key=lambda item: int(item[0])):
         cell = int(key); excess = max(0., engine.state['fluid'].get(key, 0.) - capacity)
         for neighbor in _neighbors(engine, cell):
@@ -291,15 +307,23 @@ def tick_fields(engine, dt):
                 if sediment:
                     engine.state['debris'][key] -= sediment
                     engine.state['debris'][nk] = engine.state['debris'].get(nk, 0.) + sediment
+                    if flow is not None:
+                        flow.record('transfer' if occupancy[cell] == 0 else 'deposit', 'debris', 'debris',
+                                    cell if occupancy[cell] == 0 else None, neighbor, sediment)
                 engine.state['fluid'][nk] = engine.state['fluid'].get(nk, 0.) + transfer
                 engine.state['fluid'][key] -= transfer; excess -= transfer
+                if flow is not None:
+                    flow.record('transfer' if occupancy[cell] == 0 else 'deposit', 'fluid', 'mixed',
+                                cell if occupancy[cell] == 0 else None, neighbor, transfer)
         index = np.array(np.unravel_index(cell, engine.scene.shape))
         if excess and (np.any(index == 0) or np.any(index == np.array(engine.scene.shape) - 1)):
             sediment = engine.state['debris'].get(key, 0.) * min(1., excess / engine.state['fluid'][key])
             if sediment:
                 engine.state['debris'][key] -= sediment
                 engine.state['debrisEscapedMm3'] = engine.state.get('debrisEscapedMm3', 0.) + sediment
+                if flow is not None: flow.record('escape', 'debris', 'debris', cell, None, sediment)
             engine.state['fluid'][key] -= excess; engine.state['fluidEscapedMm3'] += excess
+            if flow is not None: flow.record('escape', 'fluid', 'mixed', cell, None, excess)
     engine.state['debrisMm3'] = sum(engine.state['debris'].values())
 
 
@@ -327,6 +351,9 @@ def validate_hold_motion(engine, key):
 
 def finalize_action(engine):
     """Recompute bone connectivity once after an action that changed its kerf."""
+    if 'cusaV3' in engine.state:
+        from .surgical_cusa_v3 import reconcile_removed
+        reconcile_removed(engine)
     if engine.state.pop('boneTopologyDirty', False): _bone_components(engine)
 
 

@@ -52,8 +52,10 @@ test('all 15 tools have distinct visible research geometry with exact xyzw pose 
   for(const id of ids){const mesh=surgicalToolMesh({id,radiusMm:2,shaftRadiusMm:.5,workingLengthMm:40},{position:[1,2,3],quaternion:[0,0,1,0],parameters:{jawOpeningMm:3}},true);
     assert.deepEqual(mesh.position.toArray(),[1,2,3]);assert.deepEqual(mesh.quaternion.toArray(),[0,0,1,0]);
     assert.ok(mesh.children.length>=3);
-    assert.ok(mesh.children.every(m=>m.material.transparent&&m.material.opacity<1));
-    signatures.add(JSON.stringify(mesh.children.map(m=>[m.geometry.type,m.geometry.parameters,m.position.toArray(),m.rotation.toArray(),m.scale.toArray()])));
+    const parts=[];mesh.updateMatrixWorld(true);mesh.traverse(part=>{if(part.isMesh)parts.push(part);});
+    assert.ok(parts.length>=3);
+    assert.ok(parts.every(m=>m.material.transparent&&m.material.opacity<1));
+    signatures.add(JSON.stringify(parts.map(m=>[m.geometry.type,m.geometry.parameters,m.matrixWorld.toArray()])));
     mesh.traverse(o=>{o.geometry?.dispose();o.material?.dispose();});
   }
   assert.equal(signatures.size,15);

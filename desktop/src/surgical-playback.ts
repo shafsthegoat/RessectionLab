@@ -1,4 +1,5 @@
-import type {SurgicalPlayback,SurgicalResponse} from './surgical-types';
+import type {SurgicalPlayback,SurgicalResponse,SurgicalView} from './surgical-types';
+import {checkedSurgicalFlowDisplay} from './surgical-flow-display.ts';
 /** Elapsed time recorded by the authoritative action result, never inferred
  * from frame index or requested duration (partial actions may stop early). */
 export function surgicalPlaybackDelay(timeline:readonly {elapsedSeconds?:number}[],position:number,speed=1):{milliseconds:number;recorded:boolean} {
@@ -9,8 +10,22 @@ export function surgicalPlaybackDelay(timeline:readonly {elapsedSeconds?:number}
   return {milliseconds:600/rate,recorded:false};
 }
 
-export const surgicalCursorCommand=(command:string)=>['seek','seekFrame','selectBranch','inspect'].includes(command);
-export const updatesEditableSurgicalCursor=(command:string)=>command!=='preview'&&command!=='seekFrame';
+/** A requested interval includes time already spent fetching/preparing its
+ * exact predecessor. Falling behind removes idle delay, never observations. */
+export class SurgicalPlaybackClock {
+  private anchor:{observedSeconds:number;wallTime:number;speed:number}|null=null;
+  reset(){this.anchor=null;}
+  delay(observedSeconds:number,intervalMs:number,speed:number,now:number):number {
+    const rate=Number.isFinite(speed)&&speed>0?speed:1;
+    if(!Number.isFinite(observedSeconds)||!Number.isFinite(now)){this.reset();return intervalMs;}
+    if(!this.anchor||this.anchor.speed!==rate||observedSeconds<this.anchor.observedSeconds)
+      this.anchor={observedSeconds,wallTime:now,speed:rate};
+    return Math.max(0,this.anchor.wallTime+(observedSeconds-this.anchor.observedSeconds)*1000/rate+intervalMs-now);
+  }
+}
+
+export const surgicalCursorCommand=(command:string)=>['seek','seekFrame','seekPrefix','seekPrefixFrame','inspectArchive','selectBranch','inspect'].includes(command);
+export const updatesEditableSurgicalCursor=(command:string)=>!['preview','seekFrame','seekPrefix','seekPrefixFrame','inspectArchive'].includes(command);
 export function checkedSurgicalPlayback(response:SurgicalResponse,request:{branchId?:unknown;position?:unknown;frameIndex?:unknown}) {
   const p=response.playback;
   const need=(condition:unknown)=>{if(!condition)throw new Error('Recorded microstep response differs from the requested source-bound frame.');};
@@ -26,7 +41,18 @@ export function checkedSurgicalPlayback(response:SurgicalResponse,request:{branc
   need(p.frameIndex!==p.frameCount-1||p.isActionBoundary);
   need(Math.abs(Number(response.view.metrics.elapsedSeconds)-p.observedTimeSeconds)<1e-7);
   need(!p.effectiveActivation||Object.entries(p.effectiveActivation).every(([slot,active])=>slot in response.view.slots&&typeof active==='boolean'));
+  checkedSurgicalFlowDisplay(p.flowDisplay,response.view,p);
   return p;
+}
+
+/** Prefetched wire may omit immutable scene context. Check it against the same
+ * source/branch and acknowledged timeline generation without hydrating future
+ * field values, changing stream acknowledgments or publishing the receipt. */
+export function checkedSurgicalPlaybackWire(response:SurgicalResponse,request:{branchId?:unknown;position?:unknown;frameIndex?:unknown},resident:{caseHash:string;branchId:string;timelineToken?:string;scene:SurgicalView['scene']}){
+  if(!response.timelineOmitted)return checkedSurgicalPlayback(response,request);
+  if(!resident.timelineToken||response.timelineToken!==resident.timelineToken||response.caseHash!==resident.caseHash||response.branchId!==resident.branchId||Object.hasOwn(response.view,'scene'))
+    throw Error('Compact recorded microstep differs from its resident source context.');
+  return checkedSurgicalPlayback({...response,view:{...response.view,scene:resident.scene}},request);
 }
 
 /** Advance only to observed successful states. Never interpolate effects or time. */

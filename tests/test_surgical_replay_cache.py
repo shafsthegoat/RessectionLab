@@ -66,6 +66,39 @@ def test_changed_archive_and_source_require_fresh_admission():
         cache.seek(changed, snapshot, 3)
 
 
+def test_checked_alternative_reuses_exact_live_decision_prefix_without_physics(monkeypatch):
+    base=engine().branch(3);alternative=base.clone()
+    alternative.step({'slot':'left','operation':'inspect','duration':.2})
+    snapshot=alternative.snapshot();cache=SurgicalReplayCache()
+    cache.seek(alternative,snapshot,4)
+    def no_physics(*_args,**_kwargs):pytest.fail('shared checked decision prefix reran physics')
+    monkeypatch.setattr(SurgicalEngine,'step',no_physics)
+    shown=cache.seek(base,snapshot,3)
+    assert shown.state==base.state and shown.history==base.history
+    shown.state['fluidEscapedMm3']=5
+    assert base.state['fluidEscapedMm3']==0
+    assert cache.statistics['ownedBytes']<=cache.max_bytes
+
+
+def test_live_prefix_state_or_action_drift_uses_verified_ancestry_instead(monkeypatch):
+    base=engine().branch(3);alternative=base.clone()
+    alternative.step({'slot':'left','operation':'inspect','duration':.2})
+    snapshot=alternative.snapshot();original=SurgicalEngine.step
+    for kind in ('state','action','guard'):
+        cache=SurgicalReplayCache();cache.seek(alternative,snapshot,4)
+        current=base.clone()
+        if kind=='state':current.state['fluidEscapedMm3']=5
+        elif kind=='action':current.actions[0]['duration']=5
+        else:current._protection_contract={'contentHash':'changed'}
+        calls=[]
+        def counted(self,action,**kwargs):calls.append(action);return original(self,action,**kwargs)
+        monkeypatch.setattr(SurgicalEngine,'step',counted)
+        shown=cache.seek(current,snapshot,3)
+        assert len(calls)==3
+        assert shown.state==base.state and shown.actions==base.actions
+        monkeypatch.setattr(SurgicalEngine,'step',original)
+
+
 def test_on_demand_checkpoints_and_archive_memory_plateau():
     full = engine()
     cache = SurgicalReplayCache(max_checkpoints=3, max_archives=2, max_bytes=200_000)
@@ -163,6 +196,8 @@ def test_branch_archives_share_one_pure_runtime_but_never_effect_state():
     assert second._cell_cover_cache is first._cell_cover_cache
     assert second.state is not first.state
     assert cache.statistics['sharedGeometryGrids'] == 1
+    first.cells([4., 4., 4.], [4., 4., 4.], .1)
+    assert cache.statistics['sharedCandidateGridPayloadBytes'] == first._cell_cover_cache.stats()['candidatePayloadBytes'] > 0
 
 
 def test_bridge_warm_cursor_uses_detached_state_and_verified_view_hash_without_redundant_clone(tmp_path, monkeypatch):

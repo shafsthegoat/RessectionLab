@@ -3,6 +3,7 @@ import {SurgicalPanel} from "./SurgicalPanel";
 import {EnvironmentPreparationPanel} from './EnvironmentPreparationPanel';
 import {rehearsalPresentation,initialRehearsalPresentation} from './rehearsal-presentation';
 import {operativeFieldFrame} from './full-case-presentation';
+import {SurgicalCloseViewControls} from './SurgicalCloseViewControls';
 import {hasSavedFullCaseBranch} from './full-case-workspace';
 import {useRehearsal} from "./use-rehearsal";
 import {RehearsalPanel} from "./RehearsalPanel";
@@ -691,7 +692,8 @@ export default function App() {
   const surgicalApi = useMemo(()=>api?.surgicalRehearsal ? {
     surgicalRehearsal:(input:import('./surgical-types').SurgicalRequest)=>api.surgicalRehearsal!({...input,...(native.binding?{source:{collectionId:native.binding.collectionId,snapshotId:native.binding.document.snapshot_id,seriesId:native.series}}:{})}),
   }:null,[api,native.binding?.collectionId,native.binding?.document.snapshot_id,native.series]);
-  const surgical = useSurgical(displayedCase, surgicalApi, workbenchTab === "rehearsal" && rehearsalModel==='standard' && !native.binding);
+  const surgical = useSurgical(displayedCase, surgicalApi, workbenchTab === "rehearsal" && rehearsalModel==='standard' && !native.binding,
+    !!(payload?.artifacts?.surgical_toolbox as {archivePreviewAvailable?:boolean}|undefined)?.archivePreviewAvailable);
   const presentedScene=useRef<string|null>(null);
   useEffect(()=>{
     if(surgical.view&&presentedScene.current!==surgical.view.scene.sceneId){
@@ -1498,7 +1500,7 @@ export default function App() {
           }}/> : <>
             <label className="rehearsal-model">Rehearsal model<select aria-label="Rehearsal model" value={rehearsalModel} onChange={e=>{rehearsal.pause();surgical.cancel();setRehearsalModel(e.target.value as typeof rehearsalModel)}}><option value="standard">Standard instrument environment</option><option value="legacy">Legacy bounded episode</option></select></label>
             {rehearsalModel==='standard'?<>
-              <SurgicalPanel c={surgical} fieldDisplayControls={<label><input type="checkbox" checked={viewerSettings.smoothSurfaces!==false} onChange={e=>setViewerSettings({...viewerSettings,smoothSurfaces:e.target.checked})}/>Smooth 3D surfaces</label>} onFrameField={()=>{if(surgical.view){const field=operativeFieldFrame(surgical.view,annotationCenterMm,viewerSettings);if(field){setCursor(field.center);setViewerSettings(field.settings);}}}} anatomyControls={!!surgical.view&&<details className="rehearsal-anatomy"><summary>Anatomy visibility and appearance</summary><button onClick={()=>setViewerSettings(rehearsalPresentation(surgical.view!.scene.regions,viewerSettings))}>Reference appearance</button>
+              <SurgicalPanel c={surgical} learningReport={payload?.artifacts?.patient_rescue_learning} microscopeControls={<SurgicalCloseViewControls c={surgical} source={displayedCase} settings={viewerSettings} cursor={displayedCursor} onSettings={setViewerSettings} onCursor={point=>{if(imaging.selected&&point)imaging.setCursor(point);else setCursor(point);}} onFitAnatomy={()=>{setCameraMode('anatomy');setCameraFitRequest(request=>request+1);}}/>} fieldDisplayControls={<label><input type="checkbox" checked={viewerSettings.smoothSurfaces!==false} onChange={e=>setViewerSettings({...viewerSettings,smoothSurfaces:e.target.checked})}/>Smooth 3D surfaces</label>} onFrameField={()=>{if(surgical.view){const field=operativeFieldFrame(surgical.view,imaging.selected?null:annotationCenterMm,viewerSettings,displayedCase);if(field){if(imaging.selected)imaging.setCursor(field.center);else setCursor(field.center);setViewerSettings(field.settings);setMessage(field.anchor==='target'?'Framed supplied annotation.':'Framed accepted instrument in source scan.');}else setMessage('No accepted instrument or supplied annotation lies within this source scan.');}}} anatomyControls={!!surgical.view&&<details className="rehearsal-anatomy"><summary>Anatomy visibility and appearance</summary><button onClick={()=>setViewerSettings(rehearsalPresentation(surgical.view!.scene.regions,viewerSettings))}>Reference appearance</button>
                 <AnatomyPanel layers={surgical.view.scene.regions.map(r=>({name:r.name,kind:r.material,color:r.color,provenance:`${r.material} · ${r.target?'declared target':'context anatomy'}`}))} visibleLayers={displayedLayers} onVisibilityChange={setDisplayedLayers} settings={viewerSettings} onSettingsChange={setViewerSettings}/>
               </details>} onImport={async options=>{if(api?.importSurgicalScene){const imported=await api.importSurgicalScene(options);if(imported&&await installCase(imported,api))setWorkbenchTab('rehearsal')}}} available={!!displayedCase} onFixture={()=>void act(async()=>{if(api?.createSurgicalFixture){const fixture=await api.createSurgicalFixture();if(fixture&&await installCase(fixture,api))setWorkbenchTab('rehearsal')}})}/>
 
