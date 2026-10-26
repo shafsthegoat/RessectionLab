@@ -4,6 +4,7 @@ import pytest
 import torch
 from scipy.spatial.transform import Rotation
 import importlib.util
+import json
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -179,3 +180,86 @@ def test_frozen_actor_rejects_unbound_or_changed_producer_before_weights(tmp_pat
     torch.save(bad,path)
     with pytest.raises(ValueError,match='policy, runner, engine, or runtime'):
         runner.frozen_actor(path,identity)
+
+
+def test_evaluated_abstention_exports_native_without_positive_task_label(tmp_path,monkeypatch):
+    source=Path(__file__).resolve().parents[1]/'scripts/run_patient_cusa_learning.py'
+    spec=importlib.util.spec_from_file_location('patient_cusa_runner',source)
+    runner=importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    input_path=tmp_path/'source.ressectionlab'
+    input_path.write_bytes(b'source')
+    checkpoint_path=tmp_path/'frozen.pt'
+    checkpoint_path.write_bytes(b'checkpoint')
+    output=tmp_path/'output'
+    output.mkdir()
+    binding={'sceneId':'source-scene','stateId':'source-state'}
+    prepared={'binding':binding,'scene':object()}
+    checkpoint={'actorSha256':'actor','stage':'bc','trainingReceipt':{},
+        'sourceBinding':binding,'producerIdentity':{},'fitPhysicsAudit':{}}
+    abstained={'status':'abstained','taskGateMet':False,'cleanupComplete':True,
+        'deltaTargetMm3':10.,'deltaNonTargetMm3':2.,
+        'admittedNonStopActions':1,'stopReason':'policy_stop'}
+    monkeypatch.setattr(runner,'prepare',lambda *args,**kwargs:prepared)
+    monkeypatch.setattr(runner,'producer_identity',lambda:{})
+    monkeypatch.setattr(runner,'physics_audit',lambda scene:{})
+    monkeypatch.setattr(runner,'development_declaration',lambda prepared:{'role':'DEVELOPMENT'})
+    monkeypatch.setattr(runner.torch,'load',lambda *args,**kwargs:checkpoint)
+    monkeypatch.setattr(runner,'frozen_actor',lambda *args,**kwargs:object())
+    monkeypatch.setattr(runner,'actor_choice',lambda actor:object())
+    monkeypatch.setattr(runner,'execute',lambda *args,**kwargs:{'receipt':abstained})
+    monkeypatch.setattr(runner,'verify_episode',lambda *args,**kwargs:{'exactNativeReplay':True})
+    def persist(prepared,variants,output,budget,filename):
+        assert variants[0][1]['receipt']['status']=='abstained'
+        assert filename=='frozen-transfer.ressectionlab'
+        return {'workspacePath':str(output/filename),'branches':[
+            {'status':'abstained','taskGateMet':False}]}
+    monkeypatch.setattr(runner,'persist_derived',persist)
+    receipt=runner.run(input_path,'source-branch',output,
+        frozen_model=checkpoint_path,source_role='DEVELOPMENT')
+    assert receipt['status']=='evaluated'
+    assert receipt['execution']['taskGateMet'] is False
+    assert receipt['derived']['workspacePath'].endswith('frozen-transfer.ressectionlab')
+    assert runner.episode_failure_reasons(abstained)==[
+        'target_progress_below_declared_30_mm3_goal',
+        'fewer_than_two_admitted_non_stop_actions']
+
+
+def test_positive_cusa_outcome_requires_task_and_cleanup_evidence():
+    source=Path(__file__).resolve().parents[1]/'scripts/run_patient_cusa_learning.py'
+    spec=importlib.util.spec_from_file_location('patient_cusa_runner',source)
+    runner=importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    with pytest.raises(ValueError,match='contradicts'):
+        runner.episode_failure_reasons({'status':'success','taskGateMet':False,
+                                        'cleanupComplete':True})
+
+
+def test_development_role_checks_archived_patient_and_revision_against_declaration(tmp_path):
+    source=Path(__file__).resolve().parents[1]/'scripts/run_patient_cusa_learning.py'
+    spec=importlib.util.spec_from_file_location('patient_cusa_runner',source)
+    runner=importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(runner)
+    declaration_dir=tmp_path/'declared-source'
+    declaration_dir.mkdir()
+    path=declaration_dir/'development-declaration.json'
+    path.write_text(json.dumps({'schema':'resectionlab.fresh-source-development-declaration.v1',
+        'role':'DEVELOPMENT','cases':['CASE-05'],'mirror_repository':'example/data',
+        'mirror_revision':'pinned-revision','selection_rule':'chosen before pixels',
+        'created_at':'2026-10-26T00:00:00Z'}))
+    source_manifest={'patient_id':'CASE-05','series':[
+        {'patient_id':'CASE-05','source_mirror_revision':'pinned-revision'}]}
+    adapter={'sourcePatient':'CASE-05','sourceManifest':source_manifest}
+    prepared={'case':SimpleNamespace(metadata={'surgical_adapter':adapter}),
+        'record':{'planning':{'sourceSceneId':'scene','comparisonSeal':'comparison'}},
+        'scene':SimpleNamespace(identity='scene')}
+    proof=runner.development_declaration(prepared,registry_root=tmp_path)
+    assert proof['role']=='DEVELOPMENT' and proof['patientId']=='CASE-05'
+    assert proof['declarationSha256']==runner.sha256(path)
+    adapter['sourcePatient']='RESERVED-06'
+    with pytest.raises(ValueError,match='binding'):
+        runner.development_declaration(prepared,registry_root=tmp_path)
+    adapter['sourcePatient']='CASE-05'
+    source_manifest['series'][0]['source_mirror_revision']='other-revision'
+    with pytest.raises(ValueError,match='conflicting'):
+        runner.development_declaration(prepared,registry_root=tmp_path)

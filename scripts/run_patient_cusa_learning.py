@@ -61,6 +61,42 @@ def physics_audit(scene):
             'sceneId':scene.identity}
 
 
+def development_declaration(prepared, *, registry_root=None):
+    """Bind a saved source patient/revision to its pre-pixel role assignment."""
+    adapter=prepared['case'].metadata.get('surgical_adapter',{})
+    manifest=adapter.get('sourceManifest',{})
+    patient=adapter.get('sourcePatient')
+    series=manifest.get('series',())
+    revisions={row.get('source_mirror_revision') for row in series}
+    if (not isinstance(patient,str) or not patient or
+            manifest.get('patient_id')!=patient or not series or
+            any(row.get('patient_id')!=patient for row in series) or
+            len(revisions)!=1 or None in revisions or
+            prepared['record']['planning'].get('sourceSceneId')!=prepared['scene'].identity):
+        raise ValueError('Saved source lacks a consistent DEVELOPMENT patient/revision binding')
+    root=Path(registry_root) if registry_root is not None else ROOT/'testcases/downloaded-datasets'
+    matches=[]
+    for path in sorted(root.glob('*/development-declaration.json')):
+        declaration=json.loads(path.read_text())
+        if patient not in declaration.get('cases',()):
+            continue
+        if (declaration.get('schema')!='resectionlab.fresh-source-development-declaration.v1'
+                or declaration.get('role')!='DEVELOPMENT'
+                or declaration.get('mirror_revision')!=next(iter(revisions))
+                or not declaration.get('selection_rule') or not declaration.get('created_at')):
+            raise ValueError('Matching saved source has a conflicting DEVELOPMENT declaration')
+        matches.append((path,declaration))
+    if len(matches)!=1:
+        raise ValueError('Saved source has no unique pre-pixel DEVELOPMENT declaration')
+    path,declaration=matches[0]
+    return {'schema':declaration['schema'],'role':'DEVELOPMENT',
+            'patientId':patient,'mirrorRepository':declaration['mirror_repository'],
+            'mirrorRevision':declaration['mirror_revision'],
+            'declarationPath':str(path.resolve()),'declarationSha256':sha256(path),
+            'selectionRule':declaration['selection_rule'],
+            'savedComparisonSeal':prepared['record']['planning']['comparisonSeal']}
+
+
 def frozen_actor(path,expected,*,scene=None):
     checkpoint=torch.load(path,map_location='cpu',weights_only=True)
     proof=checkpoint.get('trainingReceipt')
@@ -149,13 +185,35 @@ def verify_episode(prepared,episode,budget):
             'actions':len(replay.actions)}
 
 
+def episode_failure_reasons(episode):
+    """Keep a missed task gate distinct from failed checked cleanup."""
+    if episode['status']=='success':
+        if not episode['taskGateMet'] or not episode['cleanupComplete']:
+            raise ValueError('Positive CUSA outcome contradicts task or cleanup evidence')
+        return []
+    if episode['status'] not in ('abstained','incomplete'):
+        raise ValueError('Unknown evaluated CUSA episode status')
+    reasons=[]
+    if episode['deltaTargetMm3']<TARGET_GOAL_MM3:
+        reasons.append('target_progress_below_declared_30_mm3_goal')
+    if episode['admittedNonStopActions']<MIN_ADMITTED_ACTIONS:
+        reasons.append('fewer_than_two_admitted_non_stop_actions')
+    if not episode['cleanupComplete']:
+        reasons.append('checked_cleanup_incomplete')
+    if episode['status']=='incomplete':
+        reasons.append('episode_incomplete_'+str(episode['stopReason']))
+    return reasons or ['declared_task_gate_unpassed']
+
+
 def persist_derived(prepared,variants,output,budget,filename):
     case=prepared['case']
     artifacts=copy.deepcopy(prepared['artifacts'])
     record=artifacts['surgical_toolbox']
     entries=[]
     for stage,episode,actor_receipt in variants:
-        identity='learned-cusa-'+stage+'-'+actor_receipt['actorSha256'][:10]
+        outcome=episode['receipt']
+        failures=episode_failure_reasons(outcome)
+        identity='learned-cusa-'+stage+('-unpassed-' if failures else '-')+actor_receipt['actorSha256'][:10]
         if identity in record['branches']:
             raise ValueError('Derived learned branch already exists')
         record['branches'][identity]=episode['engine'].snapshot()
@@ -168,6 +226,7 @@ def persist_derived(prepared,variants,output,budget,filename):
             'sourceStateId':prepared['binding']['stateId'],
             'sourceSceneId':prepared['binding']['sceneId'],
             'sourceArchiveSha256':prepared['binding']['sourceSha256'],
+            'sourceRoleDeclaration':prepared['developmentDeclaration'],
             'modelSha256':actor_receipt['actorSha256'],
             'checkpointFileSha256':actor_receipt['fileSha256'],
             'trainingReceiptSha256':actor_receipt['trainingReceiptSha256'],
@@ -177,12 +236,23 @@ def persist_derived(prepared,variants,output,budget,filename):
             'fitPrefixStateId':actor_receipt['fitPrefixStateId'],
             'observationSchema':'surgical-rl.v2-tool-frame-task-v1',
             'actionIds':ACTION_IDS,
-            'status':episode['receipt']['status'],
-            'deltaTargetMm3':episode['receipt']['deltaTargetMm3'],
-            'deltaNonTargetMm3':episode['receipt']['deltaNonTargetMm3'],
-            'admittedNonStopActions':episode['receipt']['admittedNonStopActions'],
-            'cleanupComplete':episode['receipt']['cleanupComplete'],
-            'actorDecisions':[row['actionId'] for row in episode['receipt']['decisions']],
+            'status':outcome['status'],
+            'taskGateMet':outcome['taskGateMet'],
+            'failureReasons':failures,
+            'promotionStatus':('no-clinical-promotion-development-only' if not failures
+                else 'not-promoted-unpassed-development-episode'),
+            'stopReason':outcome['stopReason'],
+            'deltaTargetMm3':outcome['deltaTargetMm3'],
+            'deltaNonTargetMm3':outcome['deltaNonTargetMm3'],
+            'admittedNonStopActions':outcome['admittedNonStopActions'],
+            'cleanupComplete':outcome['cleanupComplete'],
+            'finalStateId':outcome['finalStateId'],
+            'actorDecisions':[row['actionId'] for row in outcome['decisions']],
+            'recoveryAttempts':[
+                {'actionId':row.get('actionId',row.get('action',{}).get('operation')),
+                 'attempts':row['attempts']}
+                for section in ('decisions','cleanup') for row in outcome[section]
+                if row.get('attempts') and len(row['attempts'])>1],
             'optimizerUpdates':actor_receipt['optimizerUpdates'],
             'limitations':['Unreviewed brain estimate; source enhancing tumor annotation',
                            'Skull, vascular, functional and clinical completeness unknown',
@@ -240,6 +310,8 @@ def run(source,branch,output,*,seed=17,max_wall_seconds=600.,max_calls=200,
     try:
         prepared=prepare(source,branch,budget=budget,seed=seed)
         receipt['prefix']=prepared['binding']
+        prepared['developmentDeclaration']=development_declaration(prepared)
+        receipt['roleDeclaration']=prepared['developmentDeclaration']
         producer=producer_identity()
         fit_physics=physics_audit(prepared['scene'])
         receipt['producerIdentity']=producer
@@ -263,10 +335,9 @@ def run(source,branch,output,*,seed=17,max_wall_seconds=600.,max_calls=200,
             receipt['trials'].append(trial['receipt'])
             receipt['execution']=trial['receipt']
             receipt['exactReplay']=verify_episode(prepared,trial,budget)
-            if trial['receipt']['status']=='success':
-                stage='ppo' if checkpoint['stage']=='bc-initialized-ppo' else 'bc'
-                receipt['derived']=persist_derived(prepared,[(stage,trial,asset)],output,
-                    budget,'frozen-transfer.ressectionlab')
+            stage='ppo' if checkpoint['stage']=='bc-initialized-ppo' else 'bc'
+            receipt['derived']=persist_derived(prepared,[(stage,trial,asset)],output,
+                budget,'frozen-transfer.ressectionlab')
             receipt['status']='evaluated'
             return receipt
         demonstration=execute(prepared,scripted_choice,budget=budget,method='fixed-tool-frame-script')
