@@ -142,5 +142,7 @@ to make a broad suite green.
 
 Missing skull, complete vessels, function and patient-calibrated mechanics remain
 explicitly unavailable. Neurological-deficit and perfusion probabilities are not
-reported. The next implementation gate is a robust checked continuation across
-the second case's geometry, followed by a fully relocated reproduction package.
+reported. A [local reproduction package](integrated-demo-local-package.md) now verifies
+all bundled hashes, native branches and cold PPO execution from a relocated
+source snapshot on the matching host runtime. The next implementation gate is
+a robust checked continuation across the second case's geometry.
