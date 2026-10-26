@@ -52,7 +52,56 @@ def validate_saved_comparison(scene, record, comparison):
             document.get('sourceLabelsHash') != array_digest(scene.labels)):
         raise ValueError('Saved research comparison source or receipt integrity differs')
     alternatives = document.get('alternatives', [])
-    expected_count = 3 if document.get('task') == 'vascular-rescue' else 2
+    task = document.get('task')
+    expected_count = 3 if task == 'vascular-rescue' else 2
+    if task == 'anatomy-access':
+        expected_count = len(alternatives)
+        if (document.get('requiredAlternatives') != 3 or not 0 <= expected_count <= 3
+                or document.get('status') not in ('three_executable_source_approaches',
+                    'three_source_tissue_routes_skull_unsupported', 'insufficient_distinct_routes')):
+            raise ValueError('Saved access comparison has an invalid completion contract')
+        complete = document['status'] in ('three_executable_source_approaches',
+                                           'three_source_tissue_routes_skull_unsupported')
+        if complete != (expected_count == 3):
+            raise ValueError('Saved access comparison completion differs from its branches')
+        methods = {2: 'superior-access', 0: 'axis0-access', 1: 'axis1-access'}
+        skull = any(r['material'] == 'bone' and np.any(scene.labels == r['id'])
+                    for r in scene.regions)
+        source_layers = (scene.source.get('adapter') or {}).get('sourceLayers', {})
+        seen_axes = set()
+        for plan in alternatives:
+            route = plan.get('route', {})
+            axis = route.get('nativeAxis')
+            if (type(axis) is not int or axis not in methods or axis in seen_axes or
+                    plan.get('method') != methods[axis] or
+                    route.get('sourceSceneId') != scene.identity or
+                    plan.get('prefixActions') != 0 or
+                    route.get('accessCompleteness') not in ('source_skull_and_target',
+                        'unsupported_skull_access_source_tissue_only',
+                        'unsupported_skull_access_brain_corridor') or
+                    (route.get('accessCompleteness') == 'unsupported_skull_access_brain_corridor'
+                     and document.get('allowModeledBrainCorridor') is not True)):
+                raise ValueError('Saved access comparison route binding differs')
+            if (skull and route['accessCompleteness'] != 'source_skull_and_target') or (
+                    not skull and route['accessCompleteness'] == 'source_skull_and_target'):
+                raise ValueError('Saved access comparison skull evidence differs')
+            if route['accessCompleteness'] == 'unsupported_skull_access_brain_corridor':
+                named = {r['name']: r for r in scene.regions if r['material'] == 'soft_tissue'
+                         and (r['name'].strip().lower() in ('brain', 'whole brain') or
+                              r['name'].strip().lower().startswith('mapped brain'))}
+                evidence = route.get('sourceBrainLayers')
+                if not evidence or {row.get('regionName') for row in evidence} != set(named):
+                    raise ValueError('Saved access comparison brain layer evidence differs')
+                for row in evidence:
+                    source = source_layers.get(row['regionName'], {})
+                    if (row.get('layerId') != source.get('layerId') or
+                            row.get('reviewStatus') != source.get('reviewStatus', 'not supplied')):
+                        raise ValueError('Saved access comparison brain provenance differs')
+            seen_axes.add(axis)
+        failures = document.get('directionFailures')
+        if (type(failures) is not list or len(failures) != 3-expected_count or
+                {row.get('nativeAxis') for row in failures} != set(methods)-seen_axes):
+            raise ValueError('Saved access comparison missing-direction record differs')
     if len(alternatives) != expected_count or len({p.get('branchId') for p in alternatives}) != expected_count:
         raise ValueError('Saved research comparison requires distinct task branches')
     if document.get('task') == 'vascular-rescue' and {p.get('method') for p in alternatives} != {'prompt-coagulation','suction-first','recorded-delay'}:

@@ -146,7 +146,7 @@ def dispatch(session, operation, args, request, progress):
             metadata={'is_synthetic': True, 'generated': True, 'anatomy_layers': {r['name']: {'kind': r['material'], 'color': r['color'],
                        'provenance': 'generated engineering fixture'} for r in s.regions}, 'surgical_properties': s.properties})
         return session._install_case(case, {}, request)
-    argument_keys = {'caseHash', 'command', 'expectedStateId', 'action', 'mapping', 'position', 'branchId', 'source', 'sceneIndex', 'acknowledgeResearchUnknowns', 'opponent', 'scenario', 'maxActions', 'frameIndex', 'timelineToken', 'viewFieldTokens'}
+    argument_keys = {'caseHash', 'command', 'expectedStateId', 'action', 'mapping', 'position', 'branchId', 'source', 'sceneIndex', 'acknowledgeResearchUnknowns', 'allowModeledBrainCorridor', 'maxHealthyRemovalMm3', 'maxWallSeconds', 'opponent', 'scenario', 'maxActions', 'frameIndex', 'timelineToken', 'viewFieldTokens'}
     if args.get('command') == 'seekPrefixFrame':
         argument_keys.update({'prefixToken', 'prefixFieldTokens'})
     if args.get('command') == 'seekPrefix' and type(args.get('position')) is int and args['position'] == 0:
@@ -443,7 +443,16 @@ def dispatch(session, operation, args, request, progress):
         record.setdefault('timeline', {})[record['branchId']] = copy.deepcopy(engine.history)
         outcome = {'status': 'accepted', 'reason': director.get('stopReason') or director.get('currentPhaseId'), 'completedFraction': 1., 'events': []}
     elif command == 'plan':
-        if args.get('opponent') == 'vascular-rescue':
+        if args.get('opponent') == 'anatomy-access':
+            from .surgical_access_planning import compare_access_approaches
+            branches, comparison = compare_access_approaches(engine,
+                acknowledge_unknowns=args.get('acknowledgeResearchUnknowns', False),
+                allow_modeled_brain_corridor=args.get('allowModeledBrainCorridor', False),
+                max_actions_per_approach=args.get('maxActions', 48),
+                max_healthy_removed_mm3=args.get('maxHealthyRemovalMm3', 200.),
+                max_wall_seconds=args.get('maxWallSeconds', 120.),
+                check=request.check, progress=progress)
+        elif args.get('opponent') == 'vascular-rescue':
             from .surgical_strategy_planning import compare_rescue
             branches, comparison = compare_rescue(engine, record,
                 acknowledge_unknowns=args.get('acknowledgeResearchUnknowns', False),
@@ -528,6 +537,8 @@ def dispatch(session, operation, args, request, progress):
     result['planningAvailability'] = availability(engine)
     from .surgical_strategy_planning import rescue_availability
     result['planningAvailability'].update(rescue_availability(engine, record))
+    from .surgical_access_planning import access_availability
+    result['planningAvailability'].update(access_availability(engine))
     comparison = copy.deepcopy(record.get('planning'))
     if comparison is not None:
         from .surgical_planning import validate_saved_comparison
