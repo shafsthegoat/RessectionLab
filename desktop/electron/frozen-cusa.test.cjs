@@ -14,6 +14,19 @@ test('desktop runner invokes only frozen DEVELOPMENT inference with separate arg
     '--branch','access-a','--source-role','DEVELOPMENT','--frozen-model','/repo/model.pt','--output',output]);
   assert.throws(()=>frozenCusaArgs({branchId:''}),/saved access/);
 });
+test('hierarchical execution uses the selected access method and its cold companion, without fitting',()=>{
+  const args=frozenCusaArgs({repo:'/repo',source:'/repo/source',checkpoint:'/repo/model.pt',branchId:'axis0-access',output,kind:'sector'});
+  assert.deepEqual(args,['/repo/scripts/execute_patient_sector_policy.py','--source','/repo/source','--access-method','axis0-access','--source-role','DEVELOPMENT','--checkpoint','/repo/model.pt','--output',output]);
+  assert.equal(args.includes('--fit'),false);
+});
+test('hierarchical success additionally requires both declared sectors and total exposure cap',()=>{
+  const receipt=valid();receipt.execution={...receipt.execution,status:'success',taskGateMet:true,
+    deltaTargetMm3:84,deltaNonTargetMm3:3,admittedNonStopActions:2,totalNonTargetMm3:138,
+    perSectorRemovedMm3:{near:12,far:19}};
+  assert.equal(validateFrozenResult(receipt,output,'sector').taskGateMet,true);
+  receipt.execution.perSectorRemovedMm3.near=9;
+  assert.throws(()=>validateFrozenResult(receipt,output,'sector'),/sector execution/);
+});
 test('an unpassed task with completed cleanup stays unpassed at desktop admission',()=>{
   const result=validateFrozenResult(valid(),output);
   assert.equal(result.status,'abstained');assert.equal(result.taskGateMet,false);assert.equal(result.cleanupComplete,true);

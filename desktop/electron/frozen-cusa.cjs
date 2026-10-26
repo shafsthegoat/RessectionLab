@@ -7,13 +7,17 @@ const {execFile} = require('node:child_process');
 const {promisify} = require('node:util');
 const execute = promisify(execFile);
 
-function frozenCusaArgs({repo,source,branchId,checkpoint,output}) {
+function frozenCusaArgs({repo,source,branchId,checkpoint,output,kind='cusa'}) {
   if(typeof branchId!=='string'||!branchId||branchId.length>128||branchId.includes('\0'))throw Error('Choose a saved access approach');
+  if(kind==='sector')return[path.join(repo,'scripts/execute_patient_sector_policy.py'),
+    '--source',source,'--access-method',branchId,'--source-role','DEVELOPMENT',
+    '--checkpoint',checkpoint,'--output',output];
+  if(kind!=='cusa')throw Error('Unknown frozen policy kind');
   return [path.join(repo,'scripts/run_patient_cusa_learning.py'),
     '--source',source,'--branch',branchId,'--source-role','DEVELOPMENT',
     '--frozen-model',checkpoint,'--output',output];
 }
-function validateFrozenResult(receipt,output) {
+function validateFrozenResult(receipt,output,kind='cusa') {
   const episode=receipt?.execution,derived=receipt?.derived;
   if(receipt?.status!=='evaluated'||receipt.optimizerUpdates!==0||
       receipt.task?.role!=='DEVELOPMENT'||!receipt.source?.unchanged||
@@ -25,6 +29,10 @@ function validateFrozenResult(receipt,output) {
       !Number.isSafeInteger(episode.admittedNonStopActions)||episode.admittedNonStopActions<0)throw Error('Frozen execution did not produce a verified episode');
   if(episode.status==='success'&&(!episode.cleanupComplete||episode.deltaTargetMm3<30||
       episode.deltaNonTargetMm3>20||episode.admittedNonStopActions<2))throw Error('Frozen execution has an inconsistent task gate');
+  if(kind==='sector'&&episode.status==='success'&&
+      (!Number.isFinite(episode.totalNonTargetMm3)||episode.totalNonTargetMm3>200||
+       !Number.isFinite(episode.perSectorRemovedMm3?.near)||episode.perSectorRemovedMm3.near<10||
+       !Number.isFinite(episode.perSectorRemovedMm3?.far)||episode.perSectorRemovedMm3.far<10))throw Error('Frozen sector execution has an inconsistent task gate');
   if(typeof derived.workspacePath!=='string'||path.extname(derived.workspacePath)!=='.ressectionlab'||
       path.dirname(path.resolve(derived.workspacePath))!==path.resolve(output)||
       !/^[a-f0-9]{64}$/.test(derived.sha256))throw Error('Frozen execution export is outside its experiment folder');
@@ -64,7 +72,7 @@ async function runFrozenCusa(options) {
   const receiptPath=path.join(output,'receipt.json');
   if((await fs.stat(receiptPath)).size>4*1024*1024)throw Error('Frozen execution receipt exceeds its limit');
   const receipt=JSON.parse(await fs.readFile(receiptPath,'utf8'));
-  const result=validateFrozenResult(receipt,output);
+  const result=validateFrozenResult(receipt,output,options.kind);
   if(before!==await fileHash(source)||receipt.source.sha256!==before||
       await fileHash(result.workspacePath)!==result.sha256)throw Error('Frozen execution source or exported bytes changed');
   return {...result,receiptPath};

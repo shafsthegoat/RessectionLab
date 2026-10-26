@@ -465,7 +465,7 @@ export interface ResectionApi extends TrainingApi {
   importSurgicalScene?(args:{frame:string;units:string;material:string;resolution:number;topology:string;thicknessMm?:number}):Promise<CasePayload|null>;
   compareSurgicalAnatomy?(args:{beforeCaseHash:string;afterCaseHash:string;changedLayers?:string[];prefix?:Record<string,unknown>[];decisions?:number}):Promise<import('./surgical-types').AnatomyComparisonResult>;
   surgicalRehearsal?: import("./surgical-types").SurgicalApi["surgicalRehearsal"];
-  executeFrozenCusa?(args:{caseHash:string;branchId:string}):Promise<{case:CasePayload;workspacePath:string;receiptPath:string;admissionId:string;status:string;taskGateMet:boolean;cleanupComplete:boolean;deltaTargetMm3:number;deltaNonTargetMm3:number}|null>;
+  executeFrozenCusa?(args:{caseHash:string;branchId:string;kind?:'cusa'|'sector'}):Promise<{case:CasePayload;workspacePath:string;receiptPath:string;admissionId:string;status:string;taskGateMet:boolean;cleanupComplete:boolean;deltaTargetMm3:number;deltaNonTargetMm3:number}|null>;
   finishFrozenCusa?(args:{admissionId:string;accepted:boolean}):Promise<boolean>;
   cancelFrozenCusa?():Promise<boolean>;
   workspaceInstalled?(args:{caseHash:string;caseId:string}):Promise<boolean>;

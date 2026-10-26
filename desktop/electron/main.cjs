@@ -189,22 +189,24 @@ function bindOperations() {
   });
   handle('compareSurgicalAnatomy', args => engine.request('compareSurgicalAnatomy', plainArgs(args,['beforeCaseHash','afterCaseHash','changedLayers','prefix','decisions']),300000));
   handle('executeFrozenCusa', async args => {
-    args=plainArgs(args,['caseHash','branchId']);
+    args=plainArgs(args,['caseHash','branchId','kind']);
+    const kind=args.kind??'cusa';
+    if(!['cusa','sector'].includes(kind))throw Error('Unknown frozen policy kind');
     if(app.isPackaged)throw Error('Frozen CUSA execution requires the local research checkout and matching Python runtime');
     if(frozenCusaAbort||frozenCusaAdmission)throw Error('A frozen CUSA episode is already running or awaiting display');
     if(args.caseHash!==currentCaseHash||typeof args.branchId!=='string'||!args.branchId||args.branchId.length>128)throw Error('Choose an access approach from the current case');
     frozenCusaAbort=new AbortController();
     try {
-      const checkpoint=await pick('Choose a compatible frozen CUSA checkpoint',['pt']);
+      const checkpoint=await pick(kind==='sector'?'Choose a compatible frozen sector checkpoint':'Choose a compatible frozen CUSA checkpoint',['pt']);
       if(!checkpoint)return null;
       const repo=path.resolve(__dirname,'../..');
-      const folder=path.join(repo,'testcases/outputs/cusa-desktop',new Date().toISOString().replace(/[:.]/g,'-')+'-'+randomUUID().slice(0,8));
+      const folder=path.join(repo,kind==='sector'?'testcases/outputs/sector-desktop':'testcases/outputs/cusa-desktop',new Date().toISOString().replace(/[:.]/g,'-')+'-'+randomUUID().slice(0,8));
       await fs.mkdir(folder,{recursive:true});
       const source=path.join(folder,'input.ressectionlab');
       // Snapshot the current cached workspace, including unsaved approaches.
       // The original file and its navigation/save state remain untouched.
       await engine.request('saveCase',{caseHash:args.caseHash,path:source,overwrite:false},300000);
-      const result=await runFrozenCusa({repo,source,branchId:args.branchId,checkpoint,
+      const result=await runFrozenCusa({repo,source,branchId:args.branchId,checkpoint,kind,
         output:path.join(folder,'execution'),signal:frozenCusaAbort.signal});
       frozenCusaAbort.signal.throwIfAborted();
       const next=await loadFrozenWorkspace(filename=>engine.request('loadCase',{path:filename},300000),

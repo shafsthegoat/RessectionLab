@@ -7,6 +7,8 @@ import './SurgicalPanel.css';
 import {reconstructedPrefix,surgicalReplayRoutes} from './surgical-authority.ts';
 import {nextSurgicalPlaybackFrame,surgicalPlaybackPosition,SurgicalPlaybackClock} from './surgical-playback.ts';
 import {ResearchPlanningPanel} from './ResearchPlanningPanel';
+import {SectorStrategiesPanel} from './SectorStrategiesPanel';
+import {LearnedSectorExecutionPanel} from './LearnedSectorExecutionPanel';
 import {RescueLearningPanel} from './RescueLearningPanel';
 import {LearnedExecutionPanel} from './LearnedExecutionPanel';
 import {PatientCusaLearningPanel} from './PatientCusaLearningPanel';
@@ -102,7 +104,7 @@ function MechanicsV2Details({view,preview}:{view:SurgicalView;preview:boolean}){
   return <details><summary>{preview?'Preview':'Recorded'} V2 mechanics and fluid budget</summary><dl className="surgical-declared-fields">{rows.map(([label,value])=><div key={label}><dt>{label}</dt><dd>{typeof value==='number'&&Number.isFinite(value)?+value.toFixed(5):displayValue(value)}</dd></div>)}</dl><p className="surgical-note">The vascular budget compares initial reserve plus refill against remaining reserve and generated fluid. These modeled quantities do not estimate patient blood loss or predict tissue injury.</p></details>;
 }
 
-export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,onFrameField,fieldDisplayControls,microscopeControls,learningReport,executionReport,cusaLearning,onRunFrozenCusa,frozenCusaPending=false}:{onRunFrozenCusa?:(branchId:string)=>Promise<void>;frozenCusaPending?:boolean;cusaLearning?:unknown;executionReport?:unknown;learningReport?:unknown;anatomyControls?:ReactNode;onFrameField?:()=>void;fieldDisplayControls?:ReactNode;microscopeControls?:ReactNode;c:SurgicalController;onFixture:()=>void;onImport?:(options:SurgicalImportOptions)=>Promise<void>|void;available:boolean}){
+export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,onFrameField,fieldDisplayControls,microscopeControls,learningReport,executionReport,cusaLearning,onRunFrozenCusa,onRunFrozenSector,frozenCusaPending=false}:{onRunFrozenCusa?:(branchId:string)=>Promise<void>;onRunFrozenSector?:(method:string)=>Promise<void>;frozenCusaPending?:boolean;cusaLearning?:unknown;executionReport?:unknown;learningReport?:unknown;anatomyControls?:ReactNode;onFrameField?:()=>void;fieldDisplayControls?:ReactNode;microscopeControls?:ReactNode;c:SurgicalController;onFixture:()=>void;onImport?:(options:SurgicalImportOptions)=>Promise<void>|void;available:boolean}){
   const [importOptions,setImportOptions]=useState<SurgicalImportOptions>({frame:'RAS+',units:'mm',material:'unknown',resolution:1,topology:'solid',thicknessMm:1});
   const [importing,setImporting]=useState(false),[importError,setImportError]=useState<string|null>(null);
   const [search,setSearch]=useState(''),[duration,setDuration]=useState(1),[operation,setOperation]=useState('apply'),[playing,setPlaying]=useState(false),[playbackSpeed,setPlaybackSpeed]=useState(1);
@@ -188,9 +190,11 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
     <FullCaseRehearsalPanel c={c} pause={()=>setPlaying(false)} onFrameField={onFrameField} fieldDisplayControls={fieldDisplayControls}/>
     <RescueLearningPanel c={c} report={learningReport} pause={()=>setPlaying(false)}/>
     <LearnedExecutionPanel c={c} report={executionReport} pause={()=>setPlaying(false)}/>
+    <LearnedSectorExecutionPanel c={c} artifact={cusaLearning} pause={()=>{setPlaying(false);c.pausePlayback();}}/>
     <PatientCusaLearningPanel c={c} artifact={cusaLearning} pause={()=>setPlaying(false)}/>
-    <FrozenCusaExecutionPanel c={c} pending={frozenCusaPending} onRun={onRunFrozenCusa} pause={()=>{setPlaying(false);c.pausePlayback();}}/>
+    <FrozenCusaExecutionPanel c={c} pending={frozenCusaPending} onRun={onRunFrozenCusa} onRunSector={onRunFrozenSector} pause={()=>{setPlaying(false);c.pausePlayback();}}/>
     <fieldset disabled={readOnly} className="surgical-controls"><ResearchPlanningPanel c={c} pause={()=>setPlaying(false)}/></fieldset>
+    <fieldset disabled={readOnly} className="surgical-controls"><SectorStrategiesPanel c={c} pause={()=>{setPlaying(false);c.pausePlayback();}}/></fieldset>
     <RecordedDetails summary="Source provenance and research assumptions">{()=><SceneResearchDetails view={displayed??v} preview={!!c.preview}/>}</RecordedDetails>
     <details><summary>Exchange instrument</summary><input aria-label="Search instruments" placeholder="Search instruments…" value={search} onChange={e=>setSearch(e.target.value)}/>
     <div className="surgical-toolbox">{v.catalog.filter(t=>(t.name+' '+t.category).toLowerCase().includes(search.toLowerCase())).map(t=><button key={t.id} aria-pressed={selected?.instrument===t.id} disabled={c.pending||playing||readOnly||selected?.instrument===t.id} onClick={()=>{if(selected?.instrument!==t.id)stopRun('step',{action:{slot:c.slot,operation:'exchange',instrument:t.id,duration:1}})}}><small>{t.category}</small>{t.name}</button>)}</div>

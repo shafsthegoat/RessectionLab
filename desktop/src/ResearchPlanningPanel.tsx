@@ -3,6 +3,7 @@ import type {SurgicalController} from './use-surgical';
 import type {SurgicalPlanAlternative} from './surgical-types';
 import {planDecisionReason,planReplayPosition,planLabel,planDecisionAtPosition} from './research-planning-data';
 import {surgicalPlaybackPosition} from './surgical-playback';
+import {ModeledOutcomesPanel} from './ModeledOutcomesPanel';
 
 export function ResearchPlanningPanel({c,pause}:{c:SurgicalController;pause:()=>void}) {
   const [acknowledged,setAcknowledged]=useState(false),[brainCorridor,setBrainCorridor]=useState(false),[decision,setDecision]=useState(0);
@@ -70,6 +71,7 @@ export function ResearchPlanningPanel({c,pause}:{c:SurgicalController;pause:()=>
           <div><dt>End reason</dt><dd>{plan.stopReason.replaceAll('_',' ')}{plan.truncated?' · truncated, incomplete plan':''}</dd></div>
           <div><dt>Execution / verification replay</dt><dd>{plan.cost.executionCalls} / {plan.cost.freshReplayCalls} calls · {(plan.cost.planningSeconds+plan.cost.freshReplaySeconds).toFixed(2)} s</dd></div>
         </dl>
+        <ModeledOutcomesPanel outcome={plan.modeledOutcomes}/>
         <details><summary>Plan provenance and checked decisions</summary><p>{plan.verification.scope}</p><p>Exact state and measured endpoint vector: {plan.verification.exactStateMatch&&plan.verification.endpointVectorMatch?'match':'unverified'}.</p><p>Unmeasured endpoints: {plan.unassessedEndpoints.join(', ')||'none in this engineering vector'}.</p><p>Checkpoint: {plan.checkpointSha256??'none'}</p><p>Decision seal: {plan.planSeal}</p><ol>{plan.decisions.map(row=><li key={row.index}>{row.actionId} · {row.status}{!rescue&&` · reward ${row.reward.toFixed(5)}`}{row.reason&&` · ${row.reason}`}</li>)}</ol></details>
         </details>
       </article>)}</div>

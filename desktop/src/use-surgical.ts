@@ -6,6 +6,7 @@ import {SurgicalDisplayAdmission} from './surgical-display-admission.ts';
 import {FullCaseComputation} from './full-case-computation.ts';
 import {checkedPrefixResponse,checkedPrefixWireResponse,checkedPrefixStartMode,frameCommand,prefixCommand,reconstructedPrefix,replayAuthorityKey,surgicalAuthorityIssue} from './surgical-authority.ts';
 import {SurgicalTimelineStream} from './surgical-timeline-stream.ts';
+import {SurgicalComparisonContext} from './surgical-comparison-context.ts';
 import {SurgicalReplayPrefetch} from './surgical-replay-prefetch.ts';
 import type {SurgicalReplaySelection} from './surgical-replay-prefetch';
 import {checkedSurgicalPlayback,checkedSurgicalPlaybackWire,nextSurgicalPlaybackFrame,surgicalCursorCommand,updatesEditableSurgicalCursor} from './surgical-playback.ts';
@@ -35,6 +36,7 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
   const [pendingCommand,setPendingCommand]=useState<string|null>(null);
   const backendResult=useRef<SurgicalResponse|null>(null);
   const timelineStream=useRef(new SurgicalTimelineStream());
+  const comparisonContext=useRef(new SurgicalComparisonContext());
   const responseSource=useRef<ViewerVolume|null>(null);
   const acceptedResponseSource=useRef<ViewerVolume|null>(null);
   const displayAdmission=useRef(new SurgicalDisplayAdmission<SurgicalView>());
@@ -65,7 +67,7 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
   function stopPlayback(){replayOwner.current=null;replayLane.current!.stop();}
   const desired=useRef({result:desiredResult,preview:desiredPreview,previewOutcome:desiredPreviewOutcome});desired.current={result:desiredResult,preview:desiredPreview,previewOutcome:desiredPreviewOutcome};
   const requestQueue=useRef<SurgicalRequestQueue<{command:string;extra:Record<string,unknown>;caseHash:string;source:ViewerVolume;generation:number}>|null>(null);
-  useEffect(()=>{stopPlayback();replayPendingLease.current=null;setReplayPending(false);timelineStream.current.clear();pauseFullCase();generation.current++;requestQueue.current?.invalidate();busy.current=false;backendResult.current=null;acceptedResponseSource.current=null;displayAdmission.current.invalidate();pendingPoseView.current=null;setResult(null);setDesiredResult(null);setDesiredPreview(null);setDesiredPreviewOutcome(null);setDisplayFailed(false);setPreview(null);setPreviewOutcome(null);setPath([]);setMode('navigate');setSlot('left');setPending(false);setError(null);},[source]);
+  useEffect(()=>{stopPlayback();replayPendingLease.current=null;setReplayPending(false);timelineStream.current.clear();comparisonContext.current.clear();pauseFullCase();generation.current++;requestQueue.current?.invalidate();busy.current=false;backendResult.current=null;acceptedResponseSource.current=null;displayAdmission.current.invalidate();pendingPoseView.current=null;setResult(null);setDesiredResult(null);setDesiredPreview(null);setDesiredPreviewOutcome(null);setDisplayFailed(false);setPreview(null);setPreviewOutcome(null);setPath([]);setMode('navigate');setSlot('left');setPending(false);setError(null);},[source]);
   useEffect(()=>()=>{stopPlayback();fullCaseComputation.current.pause();generation.current++;requestQueue.current?.invalidate();},[]);
   async function execute(command:string,extra:Record<string,unknown>,isCurrent:()=>boolean):Promise<boolean>{
     const c=current.current;if(!c.enabled||!c.source||!c.api?.surgicalRehearsal||busy.current)return false;
@@ -86,7 +88,7 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
         (command==='seekPrefixFrame'?checkedPrefixWireResponse:checkedPrefixResponse)(next);
         if(next.caseHash!==c.source.caseHash||next.branchId!==branchId||(reconstructedPrefix(c.result)&&replayAuthorityKey(next,!prefixRestart)!==replayAuthorityKey(c.result!,!prefixRestart)))throw Error('Reconstructed prefix response changed source or authority');
         if(prefixRestart)checkedPrefixStartMode(next,extra.cacheOnly===true);
-      }next=timelineStream.current.hydrate(next);if(prefixCommand(command))checkedPrefixResponse(next);}
+      }next=timelineStream.current.hydrate(next);next=comparisonContext.current.accept(next,c.source,frameCommand(command));if(prefixCommand(command))checkedPrefixResponse(next);}
       // A superseded seek still moved the backend cursor. Preserve its state
       // identity for the next ordered request while withholding obsolete UI.
       if(frameCommand(command)&&next){checkedSurgicalPlayback(next,{...extra,branchId});setMode('navigate');setPath([]);}
@@ -130,7 +132,8 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
     try{
       const receipt=await lane.take(selection);
       if(!receipt||!lane.isCurrent(lease)||token!==generation.current||current.current.source!==c.source||!current.current.enabled)return false;
-      const next=timelineStream.current.hydrate(receipt);if(reconstructedPrefix(c.result))checkedPrefixResponse(next);checkedSurgicalPlayback(next,selection);
+      const hydrated=timelineStream.current.hydrate(receipt);
+      const next=comparisonContext.current.accept(hydrated,c.source,true);if(reconstructedPrefix(c.result))checkedPrefixResponse(next);checkedSurgicalPlayback(next,selection);
       // Only a demanded receipt enters React/model preparation. The prefetched
       // successor remains raw wire data until this exact view is acknowledged.
       setDisplayFailed(false);setMode('navigate');setPath([]);setDesiredPreview(null);setDesiredPreviewOutcome(null);

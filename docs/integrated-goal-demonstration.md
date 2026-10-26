@@ -1,5 +1,12 @@
 # Integrated rehearsal development demonstration
 
+The current [sector-strategy workflow](sector-strategies.md) adds actual
+near/far target order, left/right CUSA arrangements, recorded model consequences
+and three-seed hierarchical BC/PPO execution. The v6 stroke-policy demonstration
+below remains historical source-bound evidence; use its frozen package or a
+new compatible fit for current-checkout stroke inference. Local current results
+and checkpoint paths are recorded in ignored `testcases/`.
+
 The October 26 integration now runs real source import, anatomy inspection,
 three geometry-dependent access simulations, frozen learned CUSA continuation,
 new frozen inference from the desktop, native 3D playback and save/reopen. This is a bounded engineering demonstration,
