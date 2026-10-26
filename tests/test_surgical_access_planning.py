@@ -161,11 +161,11 @@ def test_protected_target_cannot_be_promoted_from_geometric_capacity():
 
 
 def _brain_shell_engine():
-    labels = np.zeros((20, 20, 20), np.uint16)
-    labels[7:13, 7:13, 7:13] = 2
+    labels = np.zeros((30, 30, 30), np.uint16)
+    labels[7:22, 7:22, 7:22] = 2
     for axis in range(3):
         plane = [slice(None)] * 3
-        plane[axis] = 13
+        plane[axis] = 22
         labels[tuple(plane)] = 1
     scene = standardize(SurgicalScene(labels, np.eye(4), [
         {'id': 1, 'name': 'mapped brain', 'material': 'soft_tissue'},
@@ -185,6 +185,8 @@ def test_explicit_brain_corridor_opt_in_executes_harmful_bounded_real_actions():
     assert {plan['route']['nativeAxis'] for _, plan in branches} == {0, 1, 2}
     for candidate, plan in branches:
         assert plan['route']['accessCompleteness'] == 'unsupported_skull_access_brain_corridor'
+        assert all(row['entrySeparationMm'] >= 12. and row['inwardAngleDeg'] >= 30.
+                   for row in plan['route']['noveltyComparisons'])
         assert plan['route']['sourceBrainThicknessMm'] > 0
         assert 0 < plan['summary']['healthyRemovedMm3'] <= 200.
         assert plan['summary']['targetRemovedMm3'] > 0
@@ -198,6 +200,27 @@ def test_explicit_brain_corridor_opt_in_executes_harmful_bounded_real_actions():
         record['branches'][plan['branchId']] = candidate.snapshot()
     report['comparisonSeal'] = semantic_digest(report)
     validate_saved_comparison(engine.scene, record, report)
+
+
+def test_near_duplicate_brain_entries_do_not_fill_three_route_gate():
+    labels = np.zeros((20, 20, 20), np.uint16)
+    labels[7:13, 7:13, 7:13] = 2
+    for axis in range(3):
+        plane = [slice(None)]*3
+        plane[axis] = 13
+        labels[tuple(plane)] = 1
+    scene = standardize(SurgicalScene(labels, np.eye(4), [
+        {'id': 1, 'name': 'mapped brain', 'material': 'soft_tissue'},
+        {'id': 2, 'name': 'source target', 'material': 'tumor', 'target': True}],
+        {'provenance': 'generated near-duplicate route test'}, {}))
+    engine = SurgicalEngine(scene)
+    branches, report = compare_access_approaches(engine, acknowledge_unknowns=True,
+        allow_modeled_brain_corridor=True, max_actions_per_approach=16)
+    assert report['status'] == 'insufficient_distinct_routes'
+    assert len(branches) < 3
+    assert report['limits']['minimumBrainEntrySeparationMm'] == 12.
+    assert report['limits']['minimumBrainCorridorAngleDeg'] == 30.
+    assert any('bounded candidate search' in row['reason'] for row in report['directionFailures'])
 
 
 def test_brain_corridor_cap_and_protection_refuse_without_mutating_source():

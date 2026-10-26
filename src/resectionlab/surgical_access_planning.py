@@ -27,6 +27,8 @@ _DIRECTIONS = ((2, 'superior-access', 'Superior access'),
                (1, 'axis1-access', 'Native axis 1 access'))
 _UNKNOWN = ('near_contact_exposure_mm3_seconds', 'deformation_injury_mm3',
             'clinical_risk', 'complete_protected_structure_encounters')
+MIN_BRAIN_ENTRY_SEPARATION_MM = 12.
+MIN_BRAIN_CORRIDOR_ANGLE_DEG = 30.
 
 
 class AccessNotExecutable(ValueError):
@@ -84,10 +86,27 @@ def _bone_on_source_ray(engine, access, axis):
                for depth in range(index[axis] + 1, labels.shape[axis]))
 
 
-def _brain_corridor_candidate(engine, axis):
+def _brain_route_novelty(entry_world, inward, previous):
+    comparisons = []
+    for route in previous:
+        if route.get('accessCompleteness') != 'unsupported_skull_access_brain_corridor':
+            continue
+        prior_entry = np.asarray(route['surfacePose']['position'], float)
+        prior_inward = np.asarray(route['inwardRasUnit'], float)
+        separation = float(np.linalg.norm(entry_world-prior_entry))
+        angle = float(np.degrees(np.arccos(np.clip(np.dot(inward, prior_inward), -1., 1.))))
+        comparisons.append({'routeId': route['id'], 'entrySeparationMm': separation,
+                            'inwardAngleDeg': angle})
+        if (separation+1e-9 < MIN_BRAIN_ENTRY_SEPARATION_MM or
+                angle+1e-9 < MIN_BRAIN_CORRIDOR_ANGLE_DEG):
+            return None
+    return comparisons
+
+
+def _brain_corridor_candidate(engine, axis, previous=(), diagnostics=None):
     """Choose a mapped-brain ray; source void remains explicitly unsupported."""
     scene = engine.scene
-    oblique = _oblique_brain_corridor_candidate(engine, axis)
+    oblique = _oblique_brain_corridor_candidate(engine, axis, previous, diagnostics)
     if oblique is not None:
         return oblique
     view = np.moveaxis(scene.labels, axis, -1)
@@ -112,10 +131,24 @@ def _brain_corridor_candidate(engine, axis):
         return None
     target_count = np.sum(target, axis=2)
     candidates = np.argwhere(eligible)
-    i, j = min((tuple(map(int, ij)) for ij in candidates),
-               key=lambda ij: (int(brain_count[ij]), -int(target_count[ij]), ij))
-    index = [i, j]
-    index.insert(axis, int(top[i, j]))
+    ordered = sorted((tuple(map(int, ij)) for ij in candidates),
+                     key=lambda ij: (int(brain_count[ij]), -int(target_count[ij]), ij))
+    for i, j in ordered[:2000]:
+        index = [i, j]
+        index.insert(axis, int(top[i, j]))
+        entry = (scene.affine[:3, :3] @ index + scene.affine[:3, 3]).tolist()
+        surface_index = list(index)
+        surface_index[axis] = int(surface[i, j])
+        surface_world = scene.affine[:3, :3] @ surface_index + scene.affine[:3, 3]
+        inward = np.asarray(entry)-surface_world
+        inward = inward/np.linalg.norm(inward)
+        novelty = _brain_route_novelty(surface_world, inward, previous)
+        if novelty is not None:
+            break
+        if diagnostics is not None:
+            diagnostics['noveltyRejected'] = diagnostics.get('noveltyRejected', 0)+1
+    else:
+        return None
     if axis == 2:
         outward_ras = (scene.affine[:3, 2] / scene.spacing[2]).tolist()
         quaternion = [1., 0., 0., 0.]
@@ -123,13 +156,15 @@ def _brain_corridor_candidate(engine, axis):
         _, _, direction, quaternion = _frame(scene, axis)
         outward_ras = direction.tolist()
         quaternion = list(map(float, quaternion))
-    entry = (scene.affine[:3, :3] @ index + scene.affine[:3, 3]).tolist()
     outside_index = list(index)
     outside_index[axis] = scene.shape[axis]-1
     outside = (scene.affine[:3, :3] @ outside_index + scene.affine[:3, 3]
                + np.asarray(outward_ras)*8.).tolist()
     return {'id': f'mapped-brain-corridor-{axis}-{i}-{j}', 'nativeAxis': axis,
         'entryPose': {'position': entry, 'quaternion': quaternion},
+        'surfacePose': {'position': surface_world.tolist(), 'quaternion': quaternion},
+        'inwardRasUnit': inward.tolist(),
+        'noveltyComparisons': novelty,
         'outsidePose': {'position': outside, 'quaternion': quaternion},
         'targetEntryIndex': index, 'sourceBrainSurfaceIndex': int(surface[i, j]),
         'sourceBrainCellsOnRay': int(brain_count[i, j]),
@@ -144,7 +179,7 @@ def _brain_corridor_candidate(engine, axis):
         'evidence': 'explicitly mapped/estimated brain layer and supplied target labels; exterior/skull/dura and complete vascular/functional anatomy UNKNOWN'}
 
 
-def _oblique_brain_corridor_candidate(engine, axis):
+def _oblique_brain_corridor_candidate(engine, axis, previous=(), diagnostics=None):
     """Shortest source-labeled tissue ray from an exterior-facing native face.
 
     The entry face defines the approach direction; the working shaft may be
@@ -199,6 +234,11 @@ def _oblique_brain_corridor_candidate(engine, axis):
         entry_world = scene.affine[:3, :3] @ entry + scene.affine[:3, 3]
         goal_world = scene.affine[:3, :3] @ goal + scene.affine[:3, 3]
         inward = (goal_world-entry_world)/length
+        novelty = _brain_route_novelty(entry_world, inward, previous)
+        if novelty is None:
+            if diagnostics is not None:
+                diagnostics['noveltyRejected'] = diagnostics.get('noveltyRejected', 0)+1
+            continue
         outside = entry_world-inward*8.
         exterior = np.linspace(entry_world-inward*.8, outside, 20)
         exterior_index = np.rint((scene.inverse[:3, :3] @
@@ -222,6 +262,7 @@ def _oblique_brain_corridor_candidate(engine, axis):
             'entryPose': pose, 'outsidePose': outside_pose,
             'surfacePose': {'position': entry_world.tolist(), 'quaternion': quaternion},
             'inwardRasUnit': inward.tolist(), 'pathLengthMm': length,
+            'noveltyComparisons': novelty,
             'targetEntryIndex': goal.astype(int).tolist(),
             'sourceBrainSurfaceIndex': int(entry[axis]),
             'sourceBrainCellsOnRay': int(np.count_nonzero(np.isin(cells, brain_ids))),
@@ -245,14 +286,20 @@ def _routes(engine, *, skull_available, allow_modeled_brain_corridor=False):
                       directional_access_candidates(engine, axis=axis, limit=12, max_radius_mm=3.))
         chosen = next((r for r in candidates if r['geometricTargetCapacityCells'] > 0
                        and (not skull_available or _bone_on_source_ray(engine, r, axis) > 0)), None)
+        diagnostics = {}
         if chosen is None and not skull_available and allow_modeled_brain_corridor:
-            chosen = _brain_corridor_candidate(engine, axis)
+            chosen = _brain_corridor_candidate(engine, axis,
+                previous=[r for _, _, r in routes], diagnostics=diagnostics)
         if chosen is None:
             failures.append({'nativeAxis': axis, 'method': method,
                 'reason': 'No source-skull and target-bearing opening exists' if skull_available else
+                          (f'No checked mapped-brain route met {MIN_BRAIN_ENTRY_SEPARATION_MM:g} mm entry and '
+                           f'{MIN_BRAIN_CORRIDOR_ANGLE_DEG:g} degree corridor separation from prior routes '
+                           'within the bounded candidate search'
+                           if diagnostics.get('noveltyRejected') else
                           ('No executable mapped source-target corridor exists; missing anatomy cannot be treated as free'
                            if allow_modeled_brain_corridor else
-                           'No exposed source-target window exists; missing anatomy cannot be treated as a free route')})
+                           'No exposed source-target window exists; missing anatomy cannot be treated as a free route'))})
             continue
         route = copy.deepcopy(chosen)
         if 'accessCompleteness' not in route:
@@ -594,6 +641,8 @@ def compare_access_approaches(engine, *, acknowledge_unknowns=False,
         'limits': {'maxActionsPerApproach': max_actions_per_approach,
                    'maxWallSeconds': float(max_wall_seconds),
                    'maxAdditionalHealthyRemovedMm3': float(max_healthy_removed_mm3),
+                   'minimumBrainEntrySeparationMm': MIN_BRAIN_ENTRY_SEPARATION_MM,
+                   'minimumBrainCorridorAngleDeg': MIN_BRAIN_CORRIDOR_ANGLE_DEG,
                    'routeCount': 3,
                    'directions': [2, 0, 1]},
         'limitations': ['Each route is an open-loop bounded engineering rehearsal, not a complete operation or clinical recommendation.',
@@ -601,6 +650,7 @@ def compare_access_approaches(engine, *, acknowledge_unknowns=False,
             'When source skull is absent, no drilling is attempted and source-tissue progress does not establish a complete entry or craniotomy.',
             'Opted-in modeled brain corridors can remove mapped non-target brain; their actual healthy removal is reported and capped before each public action.',
             'The three directions require a diagonal source grid and increasing native-index entry; arbitrary oblique routes are unsupported.',
+            'Mapped-brain route novelty is checked by minimum physical brain-surface entry distance and inward shaft angle; other access types do not yet use this filter.',
             'Whole-tool geometry, contact and source exclusions are checked by the shared public engine.',
             'Modeled removal, wound fluid, drilling heat and elapsed time are uncalibrated effects, not clinical risk.',
             'Unlabeled vascular/functional anatomy and neurologic outcome remain unknown; residual target is not proof of unresectability.',
