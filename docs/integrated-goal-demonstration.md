@@ -93,6 +93,29 @@ collision, gained no additional target and remained incomplete; the failed
 cleanup and accepted actions are retained. No derived successful branch was
 manufactured. These are development cases, not held-out transfer validation.
 
+A post-failure development revision, v5, retries shaft refusals at the identical
+selected endpoint with slower, explicitly recorded durations. It never bypasses
+preview/commit checks or the removal cap. Newly fitted v5 BC and PPO still pass
+on 0007. On 0005 both frozen actors now admit one stroke (**10 mm³ target,
+2 mm³ non-target**) and choose STOP. Checked withdrawal completes, but the
+unchanged 30 mm³/two-action task gate remains **unpassed**. This is an observed
+early-stop failure, not successful transfer. All original v4 failures remain.
+
+`scripts/export_patient_cusa_episode.py` cold-replays the v5 negative episodes
+and exports explicitly unpassed native branches. The actual Electron check at
+`testcases/outputs/integrated-goal-20261026/electron-cusa-0005-unpassed-v1/report.json`
+played the PPO branch from action 35 through 38 and saved it. The UI shows the
+failed task gate separately from completed cleanup. Inspect that preserved case:
+
+```sh
+./scripts/launch_poc.sh --case \
+  "$PWD/testcases/outputs/integrated-goal-20261026/fresh-patients/UCSF-PDGM-0005/cusa-unpassed-native-v1/unpassed-learned-continuations.ressectionlab"
+```
+
+Checkpoints require their sealed implementation and runtime. Later policy-source
+revisions require new fitting and versioned receipts; do not relabel an older
+checkpoint as compatible. The portable package below freezes its own v4 source.
+
 The separate prepared meningioma rescue experiment retains the original PPO
 0/2 negative result. The new observation contract preserves named route-local
 fluid information, and BC-initialized PPO succeeds for three fixed training

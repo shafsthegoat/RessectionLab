@@ -56,7 +56,7 @@ export function ResearchPlanningPanel({c,pause}:{c:SurgicalController;pause:()=>
         {plan.route&&<p className="surgical-note">Source direction {plan.route.nativeAxis} · entry {plan.route.entryPose?.position.map(v=>v.toFixed(1)).join(', ')??'unavailable'} RAS mm · source geometry {plan.route.sourceSceneId??comparison.sourceSceneId}</p>}
         <details open={rescue?undefined:true}><summary>Outcome details</summary>
         <dl><div><dt>Additional target</dt><dd>{plan.incrementalEndpoints.tumor_removed_mm3.toFixed(2)} mm³</dd></div>
-          <div><dt>Additional healthy soft tissue</dt><dd>{plan.incrementalEndpoints.healthy_removed_mm3.toFixed(2)} mm³</dd></div>
+          <div><dt>Additional non-target soft tissue (excl. bone)</dt><dd>{plan.incrementalEndpoints.healthy_removed_mm3.toFixed(2)} mm³</dd></div>
           {access&&<div><dt>Source bone removed</dt><dd>{plan.summary?.boneRemovedMm3==null?'Unavailable · skull access unsupported':`${plan.summary.boneRemovedMm3.toFixed(2)} mm³`}</dd></div>}
           <div><dt>Cumulative target removal</dt><dd>{(100*plan.fullTargetFractionRemoved).toFixed(3)}%</dd></div>
           <div><dt>Reachable target removal</dt><dd>Unknown · no certified reachable set</dd></div>

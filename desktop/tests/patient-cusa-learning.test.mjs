@@ -5,10 +5,22 @@ const row={schema:'resectionlab.patient-cusa-learning.v1',method:'ppo',branchId:
 const response={branches:[{id:'policy',steps:13}],view:{scene:{sceneId:'scene'}}};
 test('fresh CUSA display binds branch, source, genuine fitting and the declared success gate',()=>{
   assert.equal(patientCusaExecutions({learnedExecutions:[row]},response).length,1);
-  for(const delta of [{sourceSceneId:'other'},{branchId:'missing'},{optimizerUpdates:0},{checkpointFileSha256:'label'},{cleanupComplete:false},{deltaTargetMm3:5},{admittedNonStopActions:1},{deltaNonTargetMm3:21},{actorDecisions:['prewritten']}])assert.deepEqual(patientCusaExecutions({learnedExecutions:[{...row,...delta}]},response),[]);
+  for(const delta of [{sourceSceneId:'other'},{branchId:'missing'},{optimizerUpdates:0},{checkpointFileSha256:'label'},{cleanupComplete:false},{deltaTargetMm3:5},{admittedNonStopActions:1},{deltaNonTargetMm3:21},{actorDecisions:['prewritten']},{taskGateMet:false}])assert.deepEqual(patientCusaExecutions({learnedExecutions:[{...row,...delta}]},response),[]);
   assert.deepEqual(patientCusaExecutions({learnedExecutions:[row,row]},response),[]);
 });
 test('a retained failed gate stays incomplete and cannot become a success label',()=>{
   const failed={...row,status:'incomplete',cleanupComplete:false,deltaTargetMm3:0,admittedNonStopActions:0};
   assert.equal(patientCusaExecutions({learnedExecutions:[failed]},response)[0].status,'incomplete');
+});
+test('an abstained episode can complete cleanup while retaining both failed task gates',()=>{
+  const abstained={...row,status:'abstained',taskGateMet:false,deltaTargetMm3:10,
+    deltaNonTargetMm3:2,admittedNonStopActions:1,actorDecisions:['inward-2','STOP'],
+    failureReasons:['target_progress_below_declared_30_mm3_goal','fewer_than_two_admitted_non_stop_actions'],
+    stopReason:'policy_stop'};
+  const displayed=patientCusaExecutions({learnedExecutions:[abstained]},response);
+  assert.equal(displayed[0].status,'abstained');
+  assert.equal(displayed[0].cleanupComplete,true);
+  assert.equal(displayed[0].taskGateMet,false);
+  for(const delta of [{taskGateMet:true},{status:'unknown'},{failureReasons:[42]}])
+    assert.deepEqual(patientCusaExecutions({learnedExecutions:[{...abstained,...delta}]},response),[]);
 });

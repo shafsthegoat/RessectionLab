@@ -48,14 +48,17 @@ app.on('browser-window-created',(_event,window)=>{
         await wait(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)===51`);
       }else{
         await wait(`!!document.querySelector('.patient-cusa-learning')`);
-        assert.equal(await js(`document.querySelectorAll('[aria-label="Learned CUSA outcomes"] tbody tr').length`),2);
+        assert(await js(`document.querySelectorAll('[aria-label="Learned CUSA outcomes"] tbody tr').length>=1`));
         report.learning=await js(`document.querySelector('.patient-cusa-learning').innerText`);
+        const target=await js(`(()=>{const b=[...document.querySelectorAll('.patient-cusa-learning button')].find(b=>b.textContent.trim()==='Inspect PPO CUSA execution');if(!b)throw Error('PPO boundary missing');return{branchId:b.dataset.policyBranch,position:Number(b.dataset.policyPosition)}})()`);
         await capture('01-fresh-learned-provenance');await click('Inspect PPO CUSA execution');
-        await wait(`document.querySelector('[aria-label="Surgical branch"]').value.startsWith('learned-cusa-ppo-')&&Number(document.querySelector('[aria-label="Surgical timeline"]').value)===9`);
+        await wait(`document.querySelector('[aria-label="Surgical branch"]').value===${JSON.stringify(target.branchId)}&&Number(document.querySelector('[aria-label="Surgical timeline"]').value)===${target.position}`);
       }
       await ready();const position=await js(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)`);
+      const end=await js(`Number(document.querySelector('[aria-label="Surgical timeline"]').max)`);
+      const goal=Math.min(position+4,end);assert(goal>position,'Selected policy must contain actual native actions');
       await click('Play replay');
-      await wait(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)>=${position+4}`,180);
+      await wait(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)>=${goal}`,180);
       if(await js(`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Pause replay')`))await click('Pause replay');
       await ready();report.playback={startPosition:position,observedPosition:await js(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)`)};
       report.checks.push('Play advances actual recorded instrument/physics frames and pause stops scheduling');await capture('02-authoritative-playback');
