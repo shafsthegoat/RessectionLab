@@ -51,14 +51,15 @@ def test_manifest_refuses_tampered_and_symlinked_members(tmp_path):
         package.verify(bundle)
 
 
-def test_extraction_rejects_parent_traversal(tmp_path):
+def test_extraction_rejects_parent_traversal(tmp_path, monkeypatch):
+    monkeypatch.setattr(package, 'ROOT', tmp_path)
     archive = tmp_path/'unsafe.tar.gz'
     with tarfile.open(archive, 'w:gz') as tar:
         data = b'x'
         info = tarfile.TarInfo('../escape')
         info.size = len(data)
         tar.addfile(info, io.BytesIO(data))
-    output = tmp_path/'extracted'
+    output = tmp_path/'testcases/extracted'
     with pytest.raises(ValueError, match='Unsafe archive member'):
         package.extract(archive, output)
     assert not (output.parent/'escape').exists()
