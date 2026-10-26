@@ -1307,7 +1307,9 @@ export default function App() {
       rehearsal.pause();
       surgical.pauseFullCase();
       surgical.pausePlayback();
-      if(surgical.view&&!await surgical.run('inspect'))throw new Error('The recorded surgical state could not be synchronized before saving.');
+      // Read-only archive/prefix inspection never edits the stored action log.
+      // Saving that archive must not start full editable replay admission.
+      if(surgical.view&&!surgical.result?.verification?.readOnly&&!await surgical.run('inspect'))throw new Error('The recorded surgical state could not be synchronized before saving.');
       const result = await api.saveCase({
         caseHash: payload.caseHash,
         workspace: {

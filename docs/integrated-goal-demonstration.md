@@ -123,7 +123,8 @@ failed task gate separately from completed cleanup. Inspect that preserved case:
 
 Checkpoints require their sealed implementation and runtime. Later policy-source
 revisions require new fitting and versioned receipts; do not relabel an older
-checkpoint as compatible. The portable package below freezes its own v4 source.
+checkpoint as compatible. The local package documentation distinguishes the
+immutable historical v4 snapshot from the current v6 policy/source package.
 
 The v6 runner also binds the archived patient and pinned mirror revision to
 the pre-pixel DEVELOPMENT declaration. A CLI role flag alone cannot admit an
@@ -141,6 +142,13 @@ action, reward and full native-state audits pass for all three. That experiment
 uses one identical authored injury, inherits successful BC and does not show
 added RL benefit or three-patient performance. Matched 64-interaction search
 results and all failures remain separate inspectable receipts.
+
+The prepared-rescue Electron check also plays action 51 through 55 and saves
+the archive (`electron-rescue-policy-v5/report.json`). A read-only prefix save
+preserves its stored action log without starting full editable replay admission.
+It does not promote the inspected cursor to an editable state; full verification
+is still required for planning or new instrument actions. Earlier save-timeout
+receipts remain available.
 
 ## Inspect and play in Electron
 
