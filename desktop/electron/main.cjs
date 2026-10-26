@@ -7,6 +7,8 @@ const {vascularRequest,validateVascularResult}=require('./episode-vascular.cjs')
 const { app, BrowserWindow, dialog, ipcMain, session, Menu, screen } = require('electron');
 const {secondaryWindowOptions,isSecondaryDisplayConnected}=require('./secondary-display.cjs');
 const {surgicalTimeoutMs}=require('./surgical-timeout.cjs');
+const {runFrozenCusa,loadFrozenWorkspace}=require('./frozen-cusa.cjs');
+const {randomUUID}=require('node:crypto');
 const path = require('node:path');
 const fs = require('node:fs/promises');
 const os = require('node:os');
@@ -33,6 +35,8 @@ let startupConsumed = false;
 let caseLibrary;
 let currentCasePath;
 let pendingOpenPath;
+let frozenCusaAbort;
+let frozenCusaAdmission;
 const { RehearsalUnsaved } = require('./rehearsal-unsaved.cjs');
 const rehearsalUnsaved = new RehearsalUnsaved(async()=>{
   const answer = await dialog.showMessageBox(window, {type:'warning', title:'Unsaved rehearsal',
@@ -184,6 +188,47 @@ function bindOperations() {
     const result=await engine.request('importSurgicalScene', {...args,path:filename}, 120000);currentCasePath=null;return result;
   });
   handle('compareSurgicalAnatomy', args => engine.request('compareSurgicalAnatomy', plainArgs(args,['beforeCaseHash','afterCaseHash','changedLayers','prefix','decisions']),300000));
+  handle('executeFrozenCusa', async args => {
+    args=plainArgs(args,['caseHash','branchId']);
+    if(app.isPackaged)throw Error('Frozen CUSA execution requires the local research checkout and matching Python runtime');
+    if(frozenCusaAbort||frozenCusaAdmission)throw Error('A frozen CUSA episode is already running or awaiting display');
+    if(args.caseHash!==currentCaseHash||typeof args.branchId!=='string'||!args.branchId||args.branchId.length>128)throw Error('Choose an access approach from the current case');
+    frozenCusaAbort=new AbortController();
+    try {
+      const checkpoint=await pick('Choose a compatible frozen CUSA checkpoint',['pt']);
+      if(!checkpoint)return null;
+      const repo=path.resolve(__dirname,'../..');
+      const folder=path.join(repo,'testcases/outputs/cusa-desktop',new Date().toISOString().replace(/[:.]/g,'-')+'-'+randomUUID().slice(0,8));
+      await fs.mkdir(folder,{recursive:true});
+      const source=path.join(folder,'input.ressectionlab');
+      // Snapshot the current cached workspace, including unsaved approaches.
+      // The original file and its navigation/save state remain untouched.
+      await engine.request('saveCase',{caseHash:args.caseHash,path:source,overwrite:false},300000);
+      const result=await runFrozenCusa({repo,source,branchId:args.branchId,checkpoint,
+        output:path.join(folder,'execution'),signal:frozenCusaAbort.signal});
+      frozenCusaAbort.signal.throwIfAborted();
+      const next=await loadFrozenWorkspace(filename=>engine.request('loadCase',{path:filename},300000),
+        source,result.workspacePath,frozenCusaAbort.signal);
+      const admissionId=randomUUID();
+      frozenCusaAdmission={admissionId,source,result,caseHash:next.caseHash};
+      return {case:next,...result,admissionId};
+    } catch(error) {
+      if(frozenCusaAbort.signal.aborted)throw Error('Operation cancelled · Frozen policy source and any experiment evidence were preserved');
+      throw error;
+    } finally {frozenCusaAbort=null;}
+  });
+  handle('finishFrozenCusa',async args=>{
+    args=plainArgs(args,['admissionId','accepted']);
+    const pending=frozenCusaAdmission;
+    if(!pending||args.admissionId!==pending.admissionId||typeof args.accepted!=='boolean')throw Error('Frozen episode display admission is unavailable');
+    if(args.accepted){
+      currentCasePath=pending.result.workspacePath;casePaths.set(pending.caseHash,pending.result.workspacePath);
+      // Library bookkeeping cannot invalidate an already displayed native case.
+      try {await caseLibrary.remember(pending.result.workspacePath);}catch(error){log('Could not remember frozen episode: '+error);}
+    }else await engine.request('loadCase',{path:pending.source},300000);
+    frozenCusaAdmission=null;return true;
+  });
+  handle('cancelFrozenCusa',()=>{frozenCusaAbort?.abort();return true;});
   handle('surgicalRehearsal', async args => {args=plainArgs(args, ['caseHash','command','expectedStateId','action','mapping','position','frameIndex','cacheOnly','timelineToken','viewFieldTokens','prefixToken','prefixFieldTokens','branchId','source','sceneIndex','acknowledgeResearchUnknowns','opponent','allowModeledBrainCorridor','scenario','maxActions']);const result=await engine.request('surgicalRehearsal',args,surgicalTimeoutMs(args.command));rehearsalUnsaved.changed(args,result);return result;});
   for (const op of ['createRehearsal','inspectRehearsal','stepRehearsal','compareRehearsal']) {
     handle(op, async args => {const result=await engine.request(op, plainArgs(args, op === 'stepRehearsal'
@@ -329,5 +374,5 @@ if (ownsAppInstance) app.whenReady().then(async () => { log = createLogger(app.g
 });
 app.on('window-all-closed', () => app.quit());
 app.on('before-quit', event => {
-  if (!quitting && engine) { event.preventDefault();void rehearsalUnsaved.allowNavigation().then(allowed=>{if(allowed){quitting = true;engine.stop().finally(() => app.quit());}}); }
+  if (!quitting && engine) { event.preventDefault();void rehearsalUnsaved.allowNavigation().then(allowed=>{if(allowed){quitting = true;frozenCusaAbort?.abort();engine.stop().finally(() => app.quit());}}); }
 });

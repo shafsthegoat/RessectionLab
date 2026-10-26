@@ -27,6 +27,8 @@ export function ResearchPlanningPanel({c,pause}:{c:SurgicalController;pause:()=>
   },[active,acceptedPosition,c.pending,decision]);
   const rescue=comparison?.task==='vascular-rescue';
   const access=comparison?.task==='anatomy-access';
+  const vesselsMapped=!!c.view?.scene.regions.some(region=>region.material==='vessel');
+  const protectionMapped=!!c.view?.protection?.structures.some(structure=>structure.sourceCells>0);
   const rescueContext=rescue||readiness?.rescueAvailable;
   const maxDecisions=Math.max(6,...(comparison?.alternatives.map(plan=>plan.decisions.length)??[]));
   return <details className="research-planning"><summary>Research Planning · compare approaches</summary>
@@ -53,15 +55,15 @@ export function ResearchPlanningPanel({c,pause}:{c:SurgicalController;pause:()=>
       <div className="research-plan-alternatives">{comparison.alternatives.map(plan=><article key={plan.branchId}>
         <button disabled={c.pending||!c.result?.branches.some(b=>b.id===plan.branchId)} aria-pressed={c.result?.branchId===plan.branchId} onClick={()=>show(plan)}>{planLabel(plan)} · replay</button>
         <p>{beforeComparison?'Replaying the shared approach before the comparison boundary.':planDecisionReason(plan,decision)}</p>
-        {plan.route&&<p className="surgical-note">Source direction {plan.route.nativeAxis} · entry {plan.route.entryPose?.position.map(v=>v.toFixed(1)).join(', ')??'unavailable'} RAS mm · source geometry {plan.route.sourceSceneId??comparison.sourceSceneId}</p>}
+        {plan.route&&<p className="surgical-note">Source direction {plan.route.nativeAxis} · brain-surface entry {plan.route.surfacePose?.position.map(v=>v.toFixed(1)).join(', ')??'unavailable'} RAS mm · source geometry {plan.route.sourceSceneId??comparison.sourceSceneId}</p>}
         <details open={rescue?undefined:true}><summary>Outcome details</summary>
         <dl><div><dt>Additional target</dt><dd>{plan.incrementalEndpoints.tumor_removed_mm3.toFixed(2)} mm³</dd></div>
           <div><dt>Additional non-target soft tissue (excl. bone)</dt><dd>{plan.incrementalEndpoints.healthy_removed_mm3.toFixed(2)} mm³</dd></div>
           {access&&<div><dt>Source bone removed</dt><dd>{plan.summary?.boneRemovedMm3==null?'Unavailable · skull access unsupported':`${plan.summary.boneRemovedMm3.toFixed(2)} mm³`}</dd></div>}
           <div><dt>Cumulative target removal</dt><dd>{(100*plan.fullTargetFractionRemoved).toFixed(3)}%</dd></div>
           <div><dt>Reachable target removal</dt><dd>Unknown · no certified reachable set</dd></div>
-          <div><dt>Modeled vessel damage</dt><dd>{plan.incrementalEndpoints.vessel_damage_mm2.toFixed(3)} mm² · coverage incomplete</dd></div>
-          <div><dt>Protected-mask removal</dt><dd>{plan.incrementalEndpoints.protected_damage_mm3.toFixed(3)} mm³ · supplied estimates only</dd></div>
+          <div><dt>Modeled vessel damage</dt><dd>{vesselsMapped?`${plan.incrementalEndpoints.vessel_damage_mm2.toFixed(3)} mm² · coverage incomplete`:'Unavailable · no mapped vessel anatomy'}</dd></div>
+          <div><dt>Protected-mask removal</dt><dd>{protectionMapped?`${plan.incrementalEndpoints.protected_damage_mm3.toFixed(3)} mm³ · supplied estimates only`:'Unavailable · no declared protection masks'}</dd></div>
           <div><dt>Instrument travel / simulated time</dt><dd>{plan.travelMm.toFixed(2)} mm / {plan.incrementalEndpoints.elapsed_seconds.toFixed(2)} s</dd></div>
           {rescue&&<><div><dt>Additional modeled wound fluid</dt><dd>{plan.summary?.additionalWoundFluidMm3?.toFixed(3)} mm³</dd></div><div><dt>Retained fluid incl. reservoirs / active outlets</dt><dd>{plan.summary?.fluidPresentMm3?.toFixed(3)} mm³ / {plan.summary?.activeVesselWounds}</dd></div><div><dt>Residual tumor</dt><dd>{plan.summary?.residualTargetMm3?.toFixed(2)} mm³</dd></div><div><dt>Protected-structure encounters</dt><dd>Unknown · complete anatomy unavailable</dd></div></>}
           <div><dt>Invalid actions / early STOP</dt><dd>{plan.invalidActions} / {plan.earlyStop?'yes':'no'}</dd></div>

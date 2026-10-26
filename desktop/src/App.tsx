@@ -655,6 +655,8 @@ export default function App() {
   const [allowEstimatedSupport, setAllowEstimatedSupport] = useState(false);
   const [operation, setOperation] = useState<Operation | null>(null);
   const [hydrating, setHydrating] = useState(false);
+  const [frozenCusaPending,setFrozenCusaPending]=useState(false);
+  const [frozenCusaRunning,setFrozenCusaRunning]=useState(false);
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState(
     "Local workspace · Open imaging to begin",
@@ -715,7 +717,7 @@ export default function App() {
     : imaging.selected ? "Select the reference scan before preparing a rehearsal."
     : !payload.brainMask || !Object.values((payload.metadata.anatomy_layers??{}) as Record<string,{kind?:string}>).some(layer=>layer.kind==='tumor')
       ? "This episode requires brain support and a named tumor layer. Missing anatomy remains unassessed." : undefined;
-  const busy = surgical.pending || rehearsal.pending || native.busy || !!operation || hydrating || episodePending || imaging.pending || diagnostic.pending;
+  const busy = frozenCusaPending || surgical.pending || rehearsal.pending || native.busy || !!operation || hydrating || episodePending || imaging.pending || diagnostic.pending;
   const readonly = !!api?.readOnly;
   const controlsBlocked = !!native.binding || busy || engineStopped || !display.planningInteractionPermitted;
   const comparisonAvailable = !readonly && !engineStopped && engineOperations.has("inspectDevelopmentEpisodeComparison");
@@ -1133,6 +1135,27 @@ export default function App() {
       else reportError(failure);
     }
   };
+  const executeFrozenCusa=async(branchId:string)=>{
+    if(!api?.executeFrozenCusa||!api.finishFrozenCusa||!payload||busy||readonly)return;
+    const generation=++caseGeneration.current;
+    setFrozenCusaPending(true);
+    setFrozenCusaRunning(true);
+    setMessage('Executing frozen policy in a new source-bound simulation…');
+    await act(async()=>{
+      const result=await api.executeFrozenCusa!({caseHash:payload.caseHash,branchId});
+      setFrozenCusaRunning(false);
+      if(!result){setMessage('Checkpoint selection cancelled · Current case preserved');return;}
+      let installed=false;
+      try {installed=await installCase(result.case,api,generation);}
+      finally {await api.finishFrozenCusa!({admissionId:result.admissionId,accepted:installed});}
+      if(installed){
+        setWorkbenchTab('rehearsal');
+        setMessage(`New frozen policy episode · ${result.taskGateMet?'Task gate passed':`Task gate unpassed (${result.status})`} · ${result.deltaTargetMm3.toFixed(2)} mm³ target / ${result.deltaNonTargetMm3.toFixed(2)} mm³ non-target · ${result.cleanupComplete?'Cleanup complete':'Cleanup incomplete'}`);
+      }
+    });
+    setFrozenCusaRunning(false);
+    setFrozenCusaPending(false);
+  };
   const load = (kind: "openCase" | "importNifti" | "createSyntheticCase") =>
     act(async () => {
       if (!api || fileNavigationBlocked) return;
@@ -1500,9 +1523,9 @@ export default function App() {
           }}/> : <>
             <label className="rehearsal-model">Rehearsal model<select aria-label="Rehearsal model" value={rehearsalModel} onChange={e=>{rehearsal.pause();surgical.cancel();setRehearsalModel(e.target.value as typeof rehearsalModel)}}><option value="standard">Standard instrument environment</option><option value="legacy">Legacy bounded episode</option></select></label>
             {rehearsalModel==='standard'?<>
-              <SurgicalPanel c={surgical} learningReport={payload?.artifacts?.patient_rescue_learning} executionReport={payload?.artifacts?.patient_rescue_ppo_bc??payload?.artifacts?.patient_rescue_bc} cusaLearning={payload?.artifacts?.surgical_toolbox} microscopeControls={<SurgicalCloseViewControls c={surgical} source={displayedCase} settings={viewerSettings} cursor={displayedCursor} onSettings={setViewerSettings} onCursor={point=>{if(imaging.selected&&point)imaging.setCursor(point);else setCursor(point);}} onFitAnatomy={()=>{setCameraMode('anatomy');setCameraFitRequest(request=>request+1);}}/>} fieldDisplayControls={<label><input type="checkbox" checked={viewerSettings.smoothSurfaces!==false} onChange={e=>setViewerSettings({...viewerSettings,smoothSurfaces:e.target.checked})}/>Smooth 3D surfaces</label>} onFrameField={()=>{if(surgical.view){const field=operativeFieldFrame(surgical.view,imaging.selected?null:annotationCenterMm,viewerSettings,displayedCase);if(field){if(imaging.selected)imaging.setCursor(field.center);else setCursor(field.center);setViewerSettings(field.settings);setMessage(field.anchor==='target'?'Framed supplied annotation.':'Framed accepted instrument in source scan.');}else setMessage('No accepted instrument or supplied annotation lies within this source scan.');}}} anatomyControls={!!surgical.view&&<details className="rehearsal-anatomy"><summary>Anatomy visibility and appearance</summary><button onClick={()=>setViewerSettings(rehearsalPresentation(surgical.view!.scene.regions,viewerSettings))}>Reference appearance</button>
+              {frozenCusaRunning&&<button onClick={()=>void api?.cancelFrozenCusa?.()}>Cancel frozen policy execution</button>}<fieldset disabled={frozenCusaPending} style={{border:0,padding:0,margin:0,minWidth:0}}><SurgicalPanel c={surgical} onRunFrozenCusa={api?.executeFrozenCusa?executeFrozenCusa:undefined} frozenCusaPending={frozenCusaPending} learningReport={payload?.artifacts?.patient_rescue_learning} executionReport={payload?.artifacts?.patient_rescue_ppo_bc??payload?.artifacts?.patient_rescue_bc} cusaLearning={payload?.artifacts?.surgical_toolbox} microscopeControls={<SurgicalCloseViewControls c={surgical} source={displayedCase} settings={viewerSettings} cursor={displayedCursor} onSettings={setViewerSettings} onCursor={point=>{if(imaging.selected&&point)imaging.setCursor(point);else setCursor(point);}} onFitAnatomy={()=>{setCameraMode('anatomy');setCameraFitRequest(request=>request+1);}}/>} fieldDisplayControls={<label><input type="checkbox" checked={viewerSettings.smoothSurfaces!==false} onChange={e=>setViewerSettings({...viewerSettings,smoothSurfaces:e.target.checked})}/>Smooth 3D surfaces</label>} onFrameField={()=>{if(surgical.view){const field=operativeFieldFrame(surgical.view,imaging.selected?null:annotationCenterMm,viewerSettings,displayedCase);if(field){if(imaging.selected)imaging.setCursor(field.center);else setCursor(field.center);setViewerSettings(field.settings);setMessage(field.anchor==='target'?'Framed supplied annotation.':'Framed accepted instrument in source scan.');}else setMessage('No accepted instrument or supplied annotation lies within this source scan.');}}} anatomyControls={!!surgical.view&&<details className="rehearsal-anatomy"><summary>Anatomy visibility and appearance</summary><button onClick={()=>setViewerSettings(rehearsalPresentation(surgical.view!.scene.regions,viewerSettings))}>Reference appearance</button>
                 <AnatomyPanel layers={surgical.view.scene.regions.map(r=>({name:r.name,kind:r.material,color:r.color,provenance:`${r.material} · ${r.target?'declared target':'context anatomy'}`}))} visibleLayers={displayedLayers} onVisibilityChange={setDisplayedLayers} settings={viewerSettings} onSettingsChange={setViewerSettings}/>
-              </details>} onImport={async options=>{if(api?.importSurgicalScene){const imported=await api.importSurgicalScene(options);if(imported&&await installCase(imported,api))setWorkbenchTab('rehearsal')}}} available={!!displayedCase} onFixture={()=>void act(async()=>{if(api?.createSurgicalFixture){const fixture=await api.createSurgicalFixture();if(fixture&&await installCase(fixture,api))setWorkbenchTab('rehearsal')}})}/>
+              </details>} onImport={async options=>{if(api?.importSurgicalScene){const imported=await api.importSurgicalScene(options);if(imported&&await installCase(imported,api))setWorkbenchTab('rehearsal')}}} available={!!displayedCase} onFixture={()=>void act(async()=>{if(api?.createSurgicalFixture){const fixture=await api.createSurgicalFixture();if(fixture&&await installCase(fixture,api))setWorkbenchTab('rehearsal')}})}/></fieldset>
 
             </>:<RehearsalPanel controller={rehearsal} unavailableReason={rehearsalUnavailable}/>}
           </>}
