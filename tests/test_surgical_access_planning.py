@@ -90,6 +90,25 @@ def test_missing_skull_uses_cusa_source_tissue_only_and_reports_unknown_access()
             assert action['operation'] != 'apply' or tool != 'cranial_drill'
 
 
+def test_quantitative_outcome_binding_cannot_be_reassigned_to_another_action_history():
+    engine = _engine(skull=False)
+    branches, report = _compare(engine)
+    record = {'branches': {}}
+    for index, (candidate, plan) in enumerate(branches):
+        plan['branchId'] = 'outcome-' + str(index)
+        record['branches'][plan['branchId']] = candidate.snapshot()
+    report['comparisonSeal'] = semantic_digest(report)
+    validate_saved_comparison(engine.scene, record, report)
+    for key, value in (('stateId', 'other'), ('actionCount', 0),
+                       ('actionHistoryHash', 'other'), ('sourceLabelsHash', 'other')):
+        changed = copy.deepcopy(report)
+        changed['alternatives'][0]['modeledOutcomes'][key] = value
+        changed.pop('comparisonSeal')
+        changed['comparisonSeal'] = semantic_digest(changed)
+        with pytest.raises(ValueError, match='modeled outcomes differ'):
+            validate_saved_comparison(engine.scene, record, changed)
+
+
 def test_infeasible_direction_is_reported_without_discarding_executable_baseline():
     engine = _engine(axis0_barrier=True)
     branches, report = _compare(engine)

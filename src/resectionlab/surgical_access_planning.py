@@ -548,6 +548,8 @@ def _execute(base, template, method, label, route, *, max_actions, skull_availab
                    healthyRemovedMm3=endpoint['healthy_removed_mm3'],
                    vesselDamageMm2=endpoint['vessel_damage_mm2'],
                    bleedingGeneratedMm3=endpoint['bleeding_generated_mm3'])
+    from .surgical_modeled_outcomes import summarize_engine_outcomes
+    modeled_outcomes = summarize_engine_outcomes(candidate, baseline=base)
     return candidate, {'method': method, 'label': label, 'route': route,
         'checkpointSha256': None, 'startStateId': base.state_id, 'finalStateId': candidate.state_id,
         'prefixActions': 0, 'decisions': rows,
@@ -567,6 +569,7 @@ def _execute(base, template, method, label, route, *, max_actions, skull_availab
         'planSeal': semantic_digest({'sourceSceneId': base.scene.identity,
                                      'startStateId': base.state_id, 'decisions': rows}),
         'summary': summary, 'residualTarget': _residual(candidate),
+        'modeledOutcomes': modeled_outcomes,
         'accessCompleteness': route['accessCompleteness'],
         'directorStatus': director['status'], 'directorPhases': director['phases'],
         'withdrawalRecovery': copy.deepcopy(director.get('withdrawalRecovery')),

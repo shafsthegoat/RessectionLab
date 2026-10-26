@@ -113,6 +113,9 @@ def validate_saved_comparison(scene, record, comparison):
                 branch.get('stateId') != plan.get('finalStateId') or
                 plan.get('startStateId') != document['startStateId']):
             raise ValueError('Saved research comparison branch identity differs')
+        outcome = plan.get('modeledOutcomes')
+        if outcome is not None:
+            validate_modeled_outcome_binding(scene, branch, outcome, plan['startStateId'])
         count = plan['prefixActions']
         if type(count) is not int or not 0 <= count <= len(branch['actions']):
             raise ValueError('Saved research comparison prefix differs')
@@ -127,6 +130,19 @@ def validate_saved_comparison(scene, record, comparison):
         prefixes.append(branch['actions'][:count])
     if any(prefix != prefixes[0] for prefix in prefixes[1:]):
         raise ValueError('Saved alternatives do not share the same native source prefix')
+
+
+def validate_modeled_outcome_binding(scene, snapshot, outcome, baseline_state_id):
+    """Bind quantitative receipts without replaying the archive in display paths."""
+    if (not isinstance(outcome, dict) or
+            outcome.get('schema') != 'resectionlab.surgical-modeled-outcomes.v1' or
+            outcome.get('sceneId') != scene.identity or
+            outcome.get('sourceLabelsHash') != array_digest(scene.labels) or
+            outcome.get('stateId') != snapshot.get('stateId') or
+            outcome.get('baselineStateId') != baseline_state_id or
+            outcome.get('actionCount') != len(snapshot.get('actions', [])) or
+            outcome.get('actionHistoryHash') != semantic_digest(snapshot.get('actions', []))):
+        raise ValueError('Saved modeled outcomes differ from the native branch or source')
 
 
 def availability(engine):

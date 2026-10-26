@@ -443,7 +443,20 @@ def dispatch(session, operation, args, request, progress):
         record.setdefault('timeline', {})[record['branchId']] = copy.deepcopy(engine.history)
         outcome = {'status': 'accepted', 'reason': director.get('stopReason') or director.get('currentPhaseId'), 'completedFraction': 1., 'events': []}
     elif command == 'plan':
-        if args.get('opponent') == 'anatomy-access':
+        sector_planning = args.get('opponent') == 'anatomy-strategy'
+        if sector_planning:
+            from .surgical_sector_planning import compare_sector_strategies
+            source_access = record.get('planning')
+            if not isinstance(source_access, dict) or source_access.get('task') != 'anatomy-access':
+                raise ValueError('Generate source-bound access approaches before comparing sector strategies')
+            branches, comparison = compare_sector_strategies(engine,
+                source_access, record['branches'],
+                acknowledge_unknowns=args.get('acknowledgeResearchUnknowns', False),
+                max_actions_per_strategy=args.get('maxActions', 48),
+                max_total_non_target_mm3=args.get('maxHealthyRemovalMm3', 200.),
+                max_wall_seconds=args.get('maxWallSeconds', 120.),
+                check=request.check, progress=progress)
+        elif args.get('opponent') == 'anatomy-access':
             from .surgical_access_planning import compare_access_approaches
             branches, comparison = compare_access_approaches(engine,
                 acknowledge_unknowns=args.get('acknowledgeResearchUnknowns', False),
@@ -475,14 +488,26 @@ def dispatch(session, operation, args, request, progress):
             record.setdefault('timeline', {})[branch_id] = copy.deepcopy(candidate.history)
             record.setdefault('parents', {})[branch_id] = {'branchId': record['branchId'], 'position': record['position']}
         comparison['comparisonSeal'] = semantic_digest(comparison)
-        record['planning'] = comparison
+        if record.get('sectorPlanning') is not None:
+            if sector_planning:
+                history = record.setdefault('sectorPlanningHistory', [])
+                if len(history) >= 8:
+                    raise ValueError('Save this workspace and open a new source before adding more sector comparisons')
+                history.append({'comparison': copy.deepcopy(record['sectorPlanning']),
+                    'sourceAccessComparison': copy.deepcopy(record.get('sectorSourceAccessComparison', record['planning']))})
+            elif 'sectorSourceAccessComparison' not in record:
+                record['sectorSourceAccessComparison'] = copy.deepcopy(record['planning'])
+        if sector_planning:
+            record['sectorSourceAccessComparison'] = copy.deepcopy(source_access)
+        record['sectorPlanning' if sector_planning else 'planning'] = comparison
     elif command == 'step':
         action = args['action']
         unchanged_tool = action.get('operation') == 'exchange' and engine.state['slots'].get(action.get('slot'), {}).get('instrument') == action.get('instrument')
         outcome = {'status': 'accepted', 'reason': 'Instrument already selected; state unchanged.', 'completedFraction': 1., 'events': []} if unchanged_tool else engine.step(action, check=request.check)
         if outcome['status'] != 'rejected' and not unchanged_tool:
             full = record['branches'][record['branchId']]
-            planned_ids = {row['branchId'] for row in (record.get('planning') or {}).get('alternatives', [])}
+            planned_ids = {row['branchId'] for key in ('planning', 'sectorPlanning')
+                           for row in (record.get(key) or {}).get('alternatives', [])}
             if record['position'] != len(full['actions']) or record['branchId'] in planned_ids:
                 parent = {'branchId': record['branchId'], 'position': record['position']}
                 record['branchId'] = 'branch-' + str(len(record['branches']))
@@ -544,6 +569,12 @@ def dispatch(session, operation, args, request, progress):
         from .surgical_planning import validate_saved_comparison
         validate_saved_comparison(engine.scene, record, comparison)
     result['planning'] = comparison
+    sectors = copy.deepcopy(record.get('sectorPlanning'))
+    if sectors is not None:
+        from .surgical_sector_planning import validate_saved_sector_comparison
+        sector_record = {**record, 'planning': record.get('sectorSourceAccessComparison', record.get('planning'))}
+        validate_saved_sector_comparison(engine.scene, sector_record, sectors)
+    result['sectorPlanning'] = sectors
     _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Save this sequence before continuing')
     request.begin_commit()
     if command == 'create' and raw is not None:
