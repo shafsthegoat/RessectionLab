@@ -294,7 +294,7 @@ def _execute_brain_corridor(base, route, *, max_actions, healthy_cap, check):
     director = {'status': 'running', 'stage': 'mapped_brain_corridor', 'stopReason': None,
                 'rejections': [], 'attemptedActions': 0,
                 'phases': [{'id': 'mapped-brain-corridor',
-                            'label': 'Modeled CUSA passage through supplied brain tissue; skull access unsupported',
+                            'label': 'Modeled CUSA passage through mapped/estimated brain tissue; skull access unsupported',
                             'startPosition': 0, 'endPosition': 0}]}
 
     def pose(depth):
@@ -402,6 +402,25 @@ def _execute_brain_corridor(base, route, *, max_actions, healthy_cap, check):
                     director['stopReason'] = 'target_progress_cleanup_action_budget'
                     break
                 if not attempt(action):
+                    if (action['operation'] == 'withdraw' and
+                            director['rejections'][-1]['reason'] == 'SHAFT_COLLISION'):
+                        # Same checked line and orientation, with smaller
+                        # microsteps for the conservative swept shaft capsule.
+                        slow = copy.deepcopy(action)
+                        slow['duration'] = min(30., max(action['duration'], distance/2.))
+                        director['withdrawalRecovery'] = {
+                            'fastPreviewRejection': 'SHAFT_COLLISION',
+                            'fastDurationSeconds': action['duration'],
+                            'slowDurationSeconds': slow['duration'],
+                            'samePoseAndQuaternion': True,
+                            'slowStatus': 'not_attempted'}
+                        if slow['duration'] > action['duration'] + 1e-9:
+                            success = attempt(slow)
+                            director['withdrawalRecovery']['slowStatus'] = (
+                                'accepted' if success else 'refused')
+                            if success:
+                                director['stopReason'] = 'bounded_target_progress_slow_checked_withdrawal'
+                                continue
                     director['stopReason'] = 'target_progress_cleanup_refused_'+str(director['rejections'][-1]['reason'])
                     break
             break
@@ -503,6 +522,7 @@ def _execute(base, template, method, label, route, *, max_actions, skull_availab
         'summary': summary, 'residualTarget': _residual(candidate),
         'accessCompleteness': route['accessCompleteness'],
         'directorStatus': director['status'], 'directorPhases': director['phases'],
+        'withdrawalRecovery': copy.deepcopy(director.get('withdrawalRecovery')),
         'cost': {'planningSeconds': planning_seconds,
                  'freshReplaySeconds': time.perf_counter()-replay_started,
                  'executionCalls': len(rows), 'freshReplayCalls': len(rows),

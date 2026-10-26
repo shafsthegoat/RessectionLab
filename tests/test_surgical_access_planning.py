@@ -5,7 +5,8 @@ import numpy as np
 import pytest
 
 from resectionlab.core import array_digest, semantic_digest
-from resectionlab.surgical_access_planning import access_availability, compare_access_approaches
+from resectionlab.surgical_access_planning import (
+    _execute_brain_corridor, access_availability, compare_access_approaches)
 from resectionlab.surgical_engine import SurgicalEngine
 from resectionlab.surgical_environment import standardize
 from resectionlab.surgical_planning import validate_saved_comparison
@@ -239,6 +240,53 @@ def test_arbitrary_soft_tissue_cannot_be_recast_as_brain_corridor():
         allow_modeled_brain_corridor=True, max_actions_per_approach=16)
     assert branches == []
     assert len(report['directionFailures']) == 3
+
+
+def test_checked_slow_withdrawal_recovers_a_tight_oblique_corridor():
+    from scipy.spatial.transform import Rotation
+    labels = np.zeros((40, 40, 40), np.uint16)
+    labels[4:27, 4:27, 4:27] = 1
+    labels[14:17, 17:20, 13:16] = 2
+    scene = standardize(SurgicalScene(labels, np.eye(4), [
+        {'id': 1, 'name': 'brain', 'material': 'soft_tissue'},
+        {'id': 2, 'name': 'tumor', 'material': 'tumor', 'target': True}],
+        {'provenance': 'generated tight-corridor software test'}, {}))
+    engine = SurgicalEngine(scene)
+    surface = np.array([20., 20., 26.])
+    goal = np.array([15., 18., 14.])
+    length = float(np.linalg.norm(goal-surface))
+    inward = (goal-surface)/length
+    quaternion = Rotation.align_vectors([inward], [[0., 0., 1.]])[0].as_quat().tolist()
+    outside = surface-inward*8.
+    route = {'nativeAxis': 2, 'pathType': 'oblique_mapped_brain',
+        'targetEntryIndex': goal.astype(int).tolist(), 'sourceBrainSurfaceIndex': 26,
+        'entryPose': {'position': goal.tolist(), 'quaternion': quaternion},
+        'outsidePose': {'position': outside.tolist(), 'quaternion': quaternion},
+        'surfacePose': {'position': surface.tolist(), 'quaternion': quaternion},
+        'inwardRasUnit': inward.tolist(), 'pathLengthMm': length,
+        'corridorRadiusMm': .6,
+        'accessCompleteness': 'unsupported_skull_access_brain_corridor'}
+    before = engine.snapshot()
+    candidate, director = _execute_brain_corridor(engine, route, max_actions=48,
+        healthy_cap=200., check=lambda: None)
+    recovery = director['withdrawalRecovery']
+    assert recovery['fastPreviewRejection'] == 'SHAFT_COLLISION'
+    assert recovery['slowStatus'] == 'accepted'
+    assert candidate.actions[-1]['operation'] == 'withdraw'
+    assert candidate.actions[-1]['pose'] == route['outsidePose']
+    assert not candidate.state['slots']['left']['inserted']
+    assert engine.snapshot() == before
+    replay = engine.fresh()
+    for action in candidate.actions[:-1]:
+        assert replay.step(action)['status'] == 'accepted'
+    previous = replay.metrics()
+    fast = dict(candidate.actions[-1], duration=recovery['fastDurationSeconds'])
+    assert replay.preview(fast, include_view=False)['reason'] == 'SHAFT_COLLISION'
+    slow = replay.preview(candidate.actions[-1], include_view=False)
+    assert slow['status'] == 'accepted'
+    assert replay.step(candidate.actions[-1])['stateId'] == candidate.state_id == slow['stateId']
+    assert replay.metrics()['nonTargetRemovedMm3'] == previous['nonTargetRemovedMm3']
+    assert replay.metrics()['targetRemovedMm3'] == previous['targetRemovedMm3']
 
 
 def test_desktop_bridge_installs_selectable_source_tissue_routes_without_skull(tmp_path):
