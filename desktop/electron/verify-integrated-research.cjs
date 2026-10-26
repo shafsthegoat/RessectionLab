@@ -85,6 +85,7 @@ app.on('browser-window-created',(_event,window)=>{
         assert(await js(`document.querySelectorAll('[aria-label="Learned CUSA outcomes"] tbody tr').length>=1`));
         report.learning=await js(`document.querySelector('.patient-cusa-learning').innerText`);
         const target=await js(`(()=>{const b=[...document.querySelectorAll('.patient-cusa-learning button')].find(b=>b.textContent.trim()==='Inspect PPO CUSA execution');if(!b)throw Error('PPO boundary missing');return{branchId:b.dataset.policyBranch,position:Number(b.dataset.policyPosition)}})()`);
+        await js(`document.querySelector('.patient-cusa-learning').scrollIntoView({block:'start'})`);
         await capture('01-fresh-learned-provenance');await click('Inspect PPO CUSA execution');
         await wait(`document.querySelector('[aria-label="Surgical branch"]').value===${JSON.stringify(target.branchId)}&&Number(document.querySelector('[aria-label="Surgical timeline"]').value)===${target.position}`);
       }
