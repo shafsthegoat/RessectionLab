@@ -19,6 +19,9 @@ from resectionlab.workspace_bundle import load_workspace
 FRESH_0007 = Path(__file__).resolve().parents[1]/(
     'testcases/outputs/integrated-goal-20261026/fresh-patients/'
     'UCSF-PDGM-0007/access-comparison-v4/access-comparison.ressectionlab')
+FRESH_0005 = Path(__file__).resolve().parents[1]/(
+    'testcases/outputs/integrated-goal-20261026/fresh-patients/'
+    'UCSF-PDGM-0005/access-comparison-v6/access-comparison.ressectionlab')
 
 
 def test_generated_source_target_sectors_are_disjoint_and_affine_bound():
@@ -185,3 +188,36 @@ def test_post_corridor_observation_disallows_retroactive_hand_change():
             prefix_metrics=corridor['corridorBinding']['prefixMetrics'],
             prefix_sector_removed_mm3=corridor['corridorBinding']['prefixSectorRemovedMm3'],
             active_hand='left', boundary='pre_access')
+
+
+@pytest.mark.skipif(not FRESH_0005.is_file(), reason='Ignored fresh-development case is unavailable')
+def test_negative_case_retries_same_endpoint_then_checked_reverse_cleanup():
+    _, artifacts, _ = load_workspace(FRESH_0005)
+    record = artifacts['surgical_toolbox']
+    scene = load_environment(FRESH_0005)
+    intact = SurgicalEngine.restore(scene, record['branches']['main'])
+    original = intact.snapshot()
+    superior = record['planning']['alternatives'][0]
+    corridor, first = execute_strategy_option(intact, superior, 'corridor:left')
+    near, second = execute_strategy_option(corridor, superior, 'near:left',
+        corridor_binding=first['corridorBinding'])
+    assert second['status'] == 'accepted' and second['sectorDeltaMm3']['near'] == 5.
+    finished, stop = execute_strategy_option(near, superior, 'STOP',
+        corridor_binding=first['corridorBinding'])
+    assert stop['status'] == 'accepted' and stop['cleanupComplete']
+    assert any(row['action']['operation'] == 'move' and
+               row['action']['parameters']['radiusMm'] == .6 and
+               row['status'] == 'accepted' for row in stop['attempts'])
+    assert len(finished.actions) <= 48 and intact.snapshot() == original
+
+    axis0 = record['planning']['alternatives'][1]
+    corridor, first = execute_strategy_option(intact, axis0, 'corridor:left')
+    near, second = execute_strategy_option(corridor, axis0, 'near:left',
+        corridor_binding=first['corridorBinding'])
+    trials = second['attempts']
+    assert trials[0]['reason'] == 'SHAFT_COLLISION'
+    assert trials[1]['status'] == 'accepted'
+    assert trials[0]['action']['pose'] == trials[1]['action']['pose']
+    assert trials[0]['action']['duration'] == .2 and trials[1]['action']['duration'] == .6
+    assert (near.metrics()['nonTargetRemovedMm3']-
+            first['corridorBinding']['prefixMetrics']['nonTargetRemovedMm3']) <= 20.
