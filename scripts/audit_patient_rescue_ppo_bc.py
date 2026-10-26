@@ -38,7 +38,9 @@ def export(manifest, recorded, run, output, report):
     record.pop("timeline", None)
     artifacts["patient_rescue_ppo_bc"] = dict(schema="resectionlab.patient-rescue-ppo-bc-audit.v1",
         status="checkpoint_verified_success", method="ppo_initialized_from_behavior_cloning",
-        branchId=branch, seed=report["seed"], samePreparedInjuryOnly=True,
+        branchId=branch, seed=report["seed"],
+        prefixActions=len(record["branches"]["catalog-rescue-task-start"]["actions"]),
+        finalStateId=recorded["native"]["stateId"], samePreparedInjuryOnly=True,
         noGeneralizationClaim=True, noIncrementalRLBenefitClaim=True, promoted=False,
         sourceRun=str(run.resolve()), checkpointSha256=report["checkpoint"]["sha256"],
         initialBCCheckpointSha256=report["bcCheckpointSha256"],
