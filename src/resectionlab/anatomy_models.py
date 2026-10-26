@@ -13,6 +13,8 @@ import time
 import sys
 import shutil
 import uuid
+import configparser
+import hashlib
 import nibabel as nib
 import numpy as np
 import psutil
@@ -94,17 +96,19 @@ def run_bounded(
 
 def reconstruct(
     collection, series_id, model, *, cancelled=lambda: False, synthseg_version=2,
-    synthseg_crop=None,
+    synthseg_crop=None, brain_layer_id=None,
 ):
     c = collection
     row = c.series(series_id)
     source = c.path(row["original"]["path"])
     if file_hash(source) != row["original"]["sha256"]:
         raise ValueError("Original source changed before reconstruction")
-    if model in {"vesselfm", "vesselfm-t1ce-experimental", "synthstrip"}:
+    if model in {"vesselfm", "vesselfm-t1ce-experimental", "synthstrip", "totalsegmentator-skull"}:
         from .poc_models import run
 
         modality = row["modality"]
+        if model == "totalsegmentator-skull" and modality != "CT":
+            raise ValueError("TotalSegmentator skull requires an acquired CT in Hounsfield units")
         if model == "vesselfm-t1ce-experimental" and modality != "T1CE":
             raise ValueError("Experimental T1CE adapter requires T1CE")
         if model == "synthstrip" and modality == "T1CE":
@@ -114,22 +118,28 @@ def reconstruct(
         record = run(
             source,
             "anatomy-" + digest(c.document["patient_id"])[:16],
-            "synthstrip-main" if model == "synthstrip" else "vesselfm-base",
+            "totalsegmentator-skull" if model == "totalsegmentator-skull" else "synthstrip-main" if model == "synthstrip" else "vesselfm-base",
             modality,
             experimental_t1ce=model == "vesselfm-t1ce-experimental",
             blend="gaussian",
             cancelled=cancelled,
         )
+        output = (
+            next((item for item in record["outputs"] if item["name"] == "skull_mask.nii.gz"), None)
+            if model == "totalsegmentator-skull" else record["outputs"][0]
+        )
+        if output is None:
+            raise ValueError("TotalSegmentator produced no skull mask")
         return {
             "model": model,
-            "kind": "brain" if model == "synthstrip" else "vessels",
+            "kind": "skull" if model == "totalsegmentator-skull" else "brain" if model == "synthstrip" else "vessels",
             "inference": record,
-            "path": record["outputs"][0]["path"],
-            "output_sha256": record["outputs"][0]["sha256"],
+            "path": output["path"],
+            "output_sha256": output["sha256"],
             "probability": record.get("probability"),
         }
-    if model in {"meningioma", "glioma"}:
-        return reconstruct_tumor(c, row, model, cancelled=cancelled)
+    if model in {"meningioma", "glioma", "glioma-gbm", "glioma-lgg"}:
+        return reconstruct_tumor(c, row, model, cancelled=cancelled, brain_layer_id=brain_layer_id)
     if model == "fastsurfer" and row["modality"] != "T1":
         raise ValueError(
             "FastSurfer requires an appropriate noncontrast full-head T1; T1CE is not silently substituted"
@@ -363,8 +373,11 @@ def import_proposal(c, series_id, record):
         layer_id=key,
         source_series=series_id,
         kind=kind,
-        role={"brain": "context", "vessels": "critical", "tumor": "target"}[kind],
-        color={"brain": "#91c4b6", "vessels": "#ef5679", "tumor": "#c56df1"}[kind],
+        # A new tumor estimate remains a proposal. The environment-preparation
+        # picker can explicitly select it; generic snapshot planning must not
+        # silently union it with an already supplied target annotation.
+        role={"brain": "context", "vessels": "critical", "tumor": "context", "skull": "context"}[kind],
+        color={"brain": "#91c4b6", "vessels": "#ef5679", "tumor": "#c56df1", "skull": "#d8e7f8"}[kind],
         label=kind.title() + " · " + record["model"],
         probability=probability,
         provenance=record,
@@ -372,20 +385,26 @@ def import_proposal(c, series_id, record):
     return key
 
 
-def reconstruct_tumor(c, row, model, *, cancelled=lambda: False):
+def reconstruct_tumor(c, row, model, *, cancelled=lambda: False, brain_layer_id=None):
     """Publisher-configured single-sequence Raidionics adapter; no missing-input substitution."""
     home = Path(
         os.environ.get(
             "RESECTIONLAB_RAIDIONICS_MODELS", ROOT / "data/models/raidionics"
         )
     )
-    folder = home / {"meningioma": "MRI_Meningioma", "glioma": "MRI_Glioma"}[model]
+    folder = home / {"meningioma": "MRI_Meningioma", "glioma": "MRI_Glioma",
+                     "glioma-gbm": "MRI_GBM", "glioma-lgg": "MRI_LGGlioma"}[model]
     config = folder / "pipeline.json"
     if not config.exists():
-        raise FileNotFoundError(f"Official {model} model assets missing: {folder}")
+        raise FileNotFoundError(f"Official {model} model assets missing: {folder}. Install pinned assets with python -m resectionlab.reconstruction_assets; use the explicit GBM T1CE or LGGlioma FLAIR adapter.")
     pipeline = json.loads(config.read_text())
     steps = list(pipeline.values())
-    inputs = steps[0].get("inputs", {}) if len(steps) == 1 else {}
+    # Published glioma archives describe a brain stage followed by the tumor
+    # stage. The local runner executes the selected tumor model only, with an
+    # explicitly selected, matching brain mask for its declared preprocessing.
+    tumor_steps = [step for step in steps if step.get("model") == folder.name and step.get("target") == ["Tumor"]]
+    selected = tumor_steps[0] if len(tumor_steps) == 1 else steps[0] if len(steps) == 1 else {}
+    inputs = selected.get("inputs", {})
     supported = {"T1-CE": "T1CE", "T1": "T1", "T2": "T2", "FLAIR": "FLAIR"}
     if (
         len(inputs) != 1
@@ -405,6 +424,18 @@ def reconstruct_tumor(c, row, model, *, cancelled=lambda: False):
     ]
     if any(not p.exists() for p in files):
         raise FileNotFoundError("Incomplete tumor model configuration")
+    preprocessing = configparser.ConfigParser()
+    preprocessing.read(folder / "pre_processing.ini")
+    brain = None
+    if preprocessing.get("PreProcessing", "background_cropping", fallback="") in {"brain_mask", "brain_clip"}:
+        if not brain_layer_id:
+            raise ValueError("This glioma model requires a brain mask: reconstruct or import brain on the selected scan, then choose its layer explicitly")
+        brain_row = c.layer(brain_layer_id)
+        if brain_row["kind"] != "brain" or brain_row["source_series"] != row["id"]:
+            raise ValueError("Select a brain layer belonging to the same source scan; cross-scan registration is not substituted")
+        brain = c.mask(brain_row)
+        if brain.shape != tuple(row["data"]["shape"]) or not np.allclose(brain_row["affine"], row["affine"], atol=1e-5) or not brain.any():
+            raise ValueError("Glioma brain mask must be nonempty and match the selected native scan geometry")
     packages = Path(
         os.environ.get(
             "RESECTIONLAB_RAIDIONICS_PACKAGES", ROOT / ".tools/raidionics-packages"
@@ -418,8 +449,15 @@ def reconstruct_tumor(c, row, model, *, cancelled=lambda: False):
         "source": row["original"]["sha256"],
         "files": {p.name: file_hash(p) for p in files},
         "runner_sha256": file_hash(runner),
+        "runtime_source_sha256": digest({str(p.relative_to(packages)): file_hash(p)
+            for p in sorted((packages / 'raidionicsseg').rglob('*.py'))}),
         "adapter_sha256": file_hash(__file__),
     }
+    if brain is not None:
+        identity["brain_mask"] = {"layer_id": brain_layer_id, "data": brain_row["data"],
+                                 "affine": brain_row["affine"], "revision": brain_row.get("revision", 0),
+                                 "selected_mask_sha256": hashlib.sha256(np.ascontiguousarray(brain, dtype=np.uint8)).hexdigest(),
+                                 "provenance": brain_row.get("provenance")}
     directory = c.root / "reconstructions" / digest(identity)
     with reconstruction_lock():
         receipt = directory / "receipt.json"
@@ -436,11 +474,31 @@ def reconstruct_tumor(c, row, model, *, cancelled=lambda: False):
         input_dir.mkdir(parents=True, exist_ok=True)
         source = c.path(row["original"]["path"])
         shutil.copyfile(source, input_dir / "input0.nii.gz")
+        # raidionicsseg 1.5.x discovers weights one directory below model_folder;
+        # official 1.2 archives store them at the root. Preserve publisher assets
+        # and stage a single, hash-checked fold for the installed runner.
+        staged = directory / 'model'
+        (staged / 'fold-0').mkdir(parents=True, exist_ok=True)
+        for name in ('pre_processing.ini', 'model_config.txt', 'pipeline.json'):
+            shutil.copyfile(folder / name, staged / name)
+        staged_weights = staged / 'fold-0/model.onnx'
+        if not staged_weights.exists():
+            staged_weights.symlink_to((folder / 'model.onnx').resolve())
+        if file_hash(staged_weights) != identity['files']['model.onnx']:
+            raise ValueError('Staged model differs from installed weight identity')
         output = directory / "output"
         output.mkdir(exist_ok=True)
         ini = directory / "raidionics.ini"
+        brain_config = ""
+        if brain is not None:
+            brain_path = directory / "brain-mask.nii.gz"
+            brain_image = nib.Nifti1Image(brain.astype(np.uint8), row["affine"])
+            brain_image.header.set_xyzt_units('mm')
+            nib.save(brain_image, brain_path)
+            brain_config = f"[Neuro]\nbrain_segmentation_filename={brain_path}\n"
         ini.write_text(
-            f"[System]\ngpu_id=-1\ninputs_folder={input_dir}\noutput_folder={output}\nmodel_folder={folder}\n[Runtime]\nbatch_size=1\nfolds_ensembling=False\nreconstruction_method=probabilities\nreconstruction_order=resample_first\n"
+            f"[System]\ngpu_id=-1\ninputs_folder={input_dir}\noutput_folder={output}\nmodel_folder={staged}\n[Runtime]\nbatch_size=1\nfolds_ensembling=False\nreconstruction_method=probabilities\nreconstruction_order=resample_first\n"
+            + brain_config
         )
         script = directory / "run.py"
         script.write_text(
@@ -466,7 +524,9 @@ def reconstruct_tumor(c, row, model, *, cancelled=lambda: False):
         ):
             raise ValueError("Invalid tumor probability or native geometry")
         mask_path = output / "tumor_mask.nii.gz"
-        nib.save(nib.Nifti1Image((p >= 0.5).astype(np.uint8), im.affine), mask_path)
+        mask_image = nib.Nifti1Image((p >= 0.5).astype(np.uint8), im.affine)
+        mask_image.header.set_xyzt_units('mm')
+        nib.save(mask_image, mask_path)
         record = {
             **identity,
             **stats,
@@ -481,6 +541,9 @@ def reconstruct_tumor(c, row, model, *, cancelled=lambda: False):
             else "empty tumor prediction; localization failed",
             "review": "unreviewed; probability is not calibrated confidence",
             "inference_geometry_config": (folder / "pre_processing.ini").read_text(),
+            "license": "BSD-2-Clause; retain publisher notice",
+            "model_source": "https://github.com/raidionics/Raidionics-models/releases/tag/1.2.0",
+            "scope": "Selected publisher tumor model with explicit native brain mask where required; unreviewed research estimate, no clinical diagnosis or validation",
         }
         receipt.write_text(json.dumps(record, indent=2) + "\n")
         return record

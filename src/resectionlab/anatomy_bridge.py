@@ -453,6 +453,7 @@ def dispatch(session, operation, args, request, progress):
             args["model"],
             cancelled=request.cancelled.is_set,
             synthseg_version=args.get("synthsegVersion", 2),
+            brain_layer_id=args.get("brainLayerId"),
         )
         c = PatientImagingCollection(c.root, c.document)
         import_proposal(c, args["seriesId"], result)
@@ -504,6 +505,7 @@ def dispatch(session, operation, args, request, progress):
                 source_series=args["seriesId"],
                 kind=args["kind"],
                 label=args.get("label", "Imported anatomy"),
+                role_map=args.get("roleMap"),
             )
         elif args.get("kind") == "dicom":
             from .anatomy_import import import_dicom
@@ -512,10 +514,16 @@ def dispatch(session, operation, args, request, progress):
                 c,
                 args["path"],
                 modality=args.get("modality"),
+                sequence_by_series=args.get("sequenceBySeries"),
                 timepoint=args.get("timepoint", "preoperative"),
             )
         else:
-            imported = c.add_series(
+            if args.get("kind") != "nifti":
+                raise ValueError("Unsupported anatomy import kind")
+            from .anatomy_import import import_nifti_series
+
+            imported = import_nifti_series(
+                c,
                 args["path"],
                 series_id=str(uuid.uuid4()),
                 modality=args["modality"],

@@ -138,7 +138,7 @@ function bindOperations() {
     anatomySaveView: ['viewState','saveArchive'],
     anatomyComponents: ['layerId'],
     anatomyGraph: ['layerId','point'],
-    anatomyReconstruct: ['seriesId','model','synthsegVersion'],
+    anatomyReconstruct: ['seriesId','model','synthsegVersion','brainLayerId'],
     anatomyPlan: ['start','end','radiusMm'], anatomyRemoval: ['point','radiusMm','reset'],
     anatomySection: ['seriesId','center','normal','spacingMm','movingId','checkerboard','layers'],
     anatomyView: ['seriesId','layers','original','highlightLayer','highlightComponents','reviewId','previewAlignment','vesselScope'],
@@ -149,7 +149,7 @@ function bindOperations() {
   for (const [operation, keys] of Object.entries(anatomyKeys))
     handle(operation, args => engine.request(operation, plainArgs(args, ['collectionId','snapshotId',...keys]), operation==='anatomyReconstruct'?1800000:300000));
   handle('anatomyImport', async args => {
-    args=plainArgs(args,['collectionId','snapshotId','kind','modality','timepoint','patientId','seriesId','label']);
+    args=plainArgs(args,['collectionId','snapshotId','kind','modality','timepoint','patientId','seriesId','label','roleMap','sequenceBySeries']);
     const selected=await dialog.showOpenDialog(window,{title:'Import this patient’s imaging',properties:[args.kind==='dicom'?'openDirectory':'openFile']});
     if(selected.canceled)return null;
     return engine.request('anatomyImport',{...args,path:selected.filePaths[0]},300000);
