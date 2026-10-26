@@ -1,5 +1,57 @@
 # Local integrated demo package
 
+## Hierarchical sector-policy package
+
+`scripts/package_hierarchical_integrated_demo.py` freezes the current
+hierarchical source and desktop implementation from commit
+`2ad706c88bdc91c58f805bebdccc34d86dd1580d`. It is a separate local
+archive; the historical v4 and current v6 archives below remain unchanged.
+
+The bundle includes both 0005/0007 v3 sector source workspaces and all twelve
+deterministic strategy variants in each, six seed 17/29/43 BC/PPO checkpoints,
+all twelve train/transfer native policy trials, the complete v4 fitting receipt,
+independent audit and producer snapshot, seed 17 cold positive and negative
+cases, passed Electron execution/playback/save and strategy inspection receipts,
+and labeled failed desktop attempts. It also includes the ten pinned original
+NIfTIs, DEVELOPMENT declaration, source receipts, used SynthStrip and MRI_GBM
+weights, acquisition records and license notices. Seed 17 was declared for the
+demonstration; 0005 remains an incomplete transfer with a failed task gate.
+
+Build and validate under ignored `testcases/`:
+
+```sh
+.venv/bin/python scripts/package_hierarchical_integrated_demo.py build \
+  --commit 2ad706c88bdc91c58f805bebdccc34d86dd1580d \
+  --output testcases/outputs/integrated-goal-20261026/reproduction-package-hierarchical-v1 \
+  --desktop-0007-report testcases/outputs/integrated-goal-20261026/electron-sector-policy-execute-0007-v3/report.json \
+  --desktop-0005-report testcases/outputs/integrated-goal-20261026/electron-sector-policy-execute-0005-v3/report.json
+.venv/bin/python scripts/package_hierarchical_integrated_demo.py extract \
+  --archive testcases/outputs/integrated-goal-20261026/reproduction-package-hierarchical-v1/integrated-hierarchical-local.tar.gz \
+  --output testcases/outputs/integrated-goal-20261026/reproduction-package-hierarchical-relocated-v1
+```
+
+The archive is 252,161,879 bytes with SHA-256
+`48bc91f4a942ec22afc4d0f8f32f9a0a338f61ca6101d0d7880b31c7916f0c42`.
+Its manifest covers 1,068 regular files and 282,336,403 uncompressed content
+bytes. The relocated `VERIFY.md` contains exact commands. Using the matching
+same-host `.venv`, relocated verification loaded all six actor parameter hashes,
+replayed the two source, twelve fitting, two cold companion and four desktop
+input/saved native workspaces, and ran twelve fresh frozen executions with zero
+optimizer updates. Each execution matched its fitting trial's native endpoint
+and left its bundled source unchanged. The durable cold receipt is
+`testcases/outputs/integrated-goal-20261026/reproduction-package-hierarchical-cold-v1/verification.json`:
+all six 0007 executions met the task gate (+84 mm³ target, +3 mm³ non-target),
+while all six 0005 executions remained incomplete (+22/+16 mm³).
+
+The Electron app's input snapshots have different archive bytes from the
+original v3 source workspaces. Both versions are retained. Native validation
+confirms matching scene IDs, access and sector comparison seals, and intact
+branch inventories before execution; the desktop inference receipt binds its
+own input bytes. Historical absolute provenance paths are left untouched.
+The package requires a compatible same-host Python/torch/numpy/scipy runtime;
+it does not provision Python, Node, Electron, or fresh-install imaging model
+runtimes, and does not claim fresh-install inference was tested.
+
 ## Current v6 research package
 
 `scripts/package_current_integrated_demo.py` freezes complete tracked source,
