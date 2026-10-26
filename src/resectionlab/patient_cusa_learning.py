@@ -29,10 +29,12 @@ from .surgical_rl_rewards import RewardConfig, RewardTracker, compute_reward
 from .workspace_bundle import load_workspace
 
 SCHEMA = 'resectionlab.patient-cusa-learning.v1'
+CONTROLLER_REVISION = 'checked-duration-recovery.v1-post-frozen-0005-failure'
 TARGET_GOAL_MM3 = 30.
 NON_TARGET_CAP_MM3 = 20.
 MIN_ADMITTED_ACTIONS = 2
 DECISION_CAP = 6
+APPLY_RETRY_DURATIONS_SECONDS = (.6, 1., 2.)
 ACTION_IDS = ('inward-0.5', 'inward-1', 'inward-1.5', 'inward-2',
               'left-0.5', 'right-0.5', 'apply-here', 'inspect', 'STOP')
 _OBSERVED_OFFSETS = ((0., 0., .5), (0., 0., 1.), (0., 0., 1.5), (0., 0., 2.),
@@ -98,13 +100,13 @@ def _rss_bytes():
 @dataclass
 class Budget:
     max_wall_seconds: float = 600.
-    max_calls: int = 160
+    max_calls: int = 200
     max_rss_bytes: int = 3 * 1024**3
     started: float = 0.
     calls: int = 0
 
     def __post_init__(self):
-        if not 0 < self.max_wall_seconds <= 600 or not 0 < self.max_calls <= 160 or not 0 < self.max_rss_bytes <= 3 * 1024**3:
+        if not 0 < self.max_wall_seconds <= 600 or not 0 < self.max_calls <= 200 or not 0 < self.max_rss_bytes <= 3 * 1024**3:
             raise ValueError('Learning budget exceeds the bounded prototype limits')
         self.started = time.perf_counter()
 
@@ -209,10 +211,46 @@ def _permitted_preview(engine, action, baseline_non_target, budget):
     return preview, None
 
 
+def _retry_durations(engine, action):
+    """Declared longer timing for the same pose after a swept-shaft refusal."""
+    original = float(action.get('duration', 1.))
+    if action['operation'] == 'apply' and 'pose' in action:
+        candidates = APPLY_RETRY_DURATIONS_SECONDS
+    elif action['operation'] == 'withdraw' and 'pose' in action:
+        distance = float(np.linalg.norm(np.subtract(
+            action['pose']['position'], engine.state['slots'][action['slot']]['position'])))
+        candidates = (min(30., max(original, distance / 2.)), 30.)
+    else:
+        candidates = ()
+    return tuple(dict.fromkeys(float(value) for value in candidates
+        if original + 1e-9 < value <= 30.))
+
+
 def _commit(engine, tracker, action, baseline_non_target, budget):
-    preview, refusal = _permitted_preview(engine, action, baseline_non_target, budget)
+    original = copy.deepcopy(action)
+    attempts = []
+    candidate_durations = (float(action.get('duration', 1.)), *_retry_durations(engine, action))
+    for index, duration in enumerate(candidate_durations):
+        if index and (attempts[-1]['refusal'] != 'physical_refusal' or
+                      attempts[-1]['reason'] != 'SHAFT_COLLISION'):
+            break
+        candidate = copy.deepcopy(original)
+        candidate['duration'] = duration
+        started = time.perf_counter()
+        preview, refusal = _permitted_preview(engine, candidate, baseline_non_target, budget)
+        attempts.append({'durationSeconds':duration,
+            'previewElapsedSeconds':time.perf_counter()-started,
+            'publicTransitionIndex':budget.calls,
+            'previewStatus':preview['status'],'reason':preview.get('reason'),
+            'refusal':refusal,'previewStateId':preview['stateId'],
+            'previewTargetRemovedMm3':preview['metrics'].get('targetRemovedMm3'),
+            'previewNonTargetRemovedMm3':preview['metrics']['nonTargetRemovedMm3']})
+        if not refusal:
+            action = candidate
+            break
     if refusal:
-        return None, 0., {'outcome': preview, 'stateId': engine.state_id}, refusal
+        return None, 0., {'outcome': preview, 'stateId': engine.state_id,
+                          'action':candidate,'attempts':attempts}, refusal
     before = tracker.measure(engine, _protection_measurements(engine))
     if budget.calls>=budget.max_calls:
         raise TimeoutError('Patient CUSA transition budget exhausted')
@@ -222,10 +260,14 @@ def _commit(engine, tracker, action, baseline_non_target, budget):
             engine.state_id != preview['stateId'] or
             engine.metrics()['nonTargetRemovedMm3']-baseline_non_target > NON_TARGET_CAP_MM3+1e-9):
         raise ValueError('CUSA preview, commit, or removal cap differed')
+    attempts[-1]['commitStatus'] = outcome['status']
+    attempts[-1]['commitStateId'] = engine.state_id
+    attempts[-1]['commitTransitionIndex'] = budget.calls
     after = tracker.measure(engine, _protection_measurements(engine))
     reward, _ = compute_reward(before, after, outcome, RewardConfig())
     observation, _ = _observer(engine, tracker)
-    return observation, float(reward), {'outcome': outcome, 'stateId': engine.state_id}, None
+    return observation, float(reward), {'outcome': outcome, 'stateId': engine.state_id,
+                                      'action':action,'attempts':attempts}, None
 
 
 def execute(prepared, choose, *, budget, method, max_decisions=DECISION_CAP):
@@ -259,7 +301,9 @@ def execute(prepared, choose, *, budget, method, max_decisions=DECISION_CAP):
         next_obs, reward, info, refusal = _commit(engine, tracker, action, baseline, budget)
         rows.append({'index': index, 'observationHash': before,
                      'featureHash': feature_hash, 'actionId': ACTION_IDS[selected],
-                     'scores': list(map(float, scores)), 'action': action,
+                     'scores': list(map(float, scores)), 'actorAction':action,
+                     'action': info['action'],'attempts':info['attempts'],
+                     'controllerRecoveryApplied':len(info['attempts'])>1,
                      'previewStatus': info['outcome']['status'],
                      'status': 'refused' if refusal else info['outcome']['status'],
                      'reason': refusal or info['outcome'].get('reason'),
@@ -280,7 +324,9 @@ def execute(prepared, choose, *, budget, method, max_decisions=DECISION_CAP):
             before = observation_hash(obs)
             next_obs, reward, info, refusal = _commit(engine, tracker, action, baseline, budget)
             if next_obs is not None: obs = next_obs
-            cleanup.append({'observationHash':before,'action':action,
+            cleanup.append({'observationHash':before,'selectedAction':action,
+                            'action':info['action'],'attempts':info['attempts'],
+                            'controllerRecoveryApplied':len(info['attempts'])>1,
                             'status':'refused' if refusal else info['outcome']['status'],
                             'reason':refusal or info['outcome'].get('reason'),
                             'engineReason':info['outcome'].get('reason'),
@@ -298,6 +344,7 @@ def execute(prepared, choose, *, budget, method, max_decisions=DECISION_CAP):
               else 'abstained' if reason == 'policy_stop' and cleanup_complete else 'incomplete')
     return {'engine': engine, 'training': training,
             'receipt': {'method': method, 'status': status, 'stopReason': reason,
+                        'controllerRevision':CONTROLLER_REVISION,
                         'decisions': rows, 'cleanup': cleanup,
                         'deltaTargetMm3': float(delta_target),
                         'deltaNonTargetMm3': float(delta_non_target),

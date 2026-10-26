@@ -9,7 +9,7 @@ from types import SimpleNamespace
 
 from resectionlab.patient_cusa_learning import (
     ACTION_IDS, Actor, Budget, Critic, _cleanup_boundary, _commit,
-    observed_options, parameter_sha256, ppo_update,
+    _retry_durations, observed_options, parameter_sha256, ppo_update,
 )
 from resectionlab.surgical_rl_env import OBS_METRICS
 
@@ -55,13 +55,64 @@ def test_non_target_cap_refuses_preview_without_a_committed_engine_step():
         state_id = 'same-source-state'
         def preview(self, action, **kwargs):
             assert action['operation'] == 'apply'
-            return {'status': 'accepted', 'metrics': {'nonTargetRemovedMm3': 121.}}
+            return {'status': 'accepted', 'stateId':self.state_id,
+                    'metrics': {'targetRemovedMm3':0.,'nonTargetRemovedMm3': 121.}}
         def step(self, action, **kwargs):
             raise AssertionError('cap crossing must never commit')
     budget = Budget(max_wall_seconds=10, max_calls=4)
     result = _commit(Engine(), None, {'operation':'apply'}, 100., budget)
     assert result[-1] == 'incremental_non_target_cap'
     assert budget.calls == 1
+
+
+def test_checked_collision_recovery_preserves_endpoint_and_every_refusal(monkeypatch):
+    import resectionlab.patient_cusa_learning as learning
+    pose={'position':[1.,2.,3.],'quaternion':[0.,0.,0.,1.]}
+    class Engine:
+        state_id='before'
+        def __init__(self): self.seen=[]
+        def preview(self,action,**kwargs):
+            self.seen.append(('preview',action.copy()))
+            accepted=action['duration']>=1.
+            return {'status':'accepted' if accepted else 'rejected',
+                'reason':None if accepted else 'SHAFT_COLLISION',
+                'stateId':'after' if accepted else 'before',
+                'metrics':{'targetRemovedMm3':10. if accepted else 0.,
+                           'nonTargetRemovedMm3':2. if accepted else 0.}}
+        def step(self,action,**kwargs):
+            self.seen.append(('step',action.copy()))
+            self.state_id='after'
+            return {'status':'accepted','reason':None,'stateId':'after',
+                    'metrics':self.metrics()}
+        def metrics(self):
+            return {'targetRemovedMm3':10.,'nonTargetRemovedMm3':2.}
+    class Tracker:
+        def measure(self,*args): return {}
+    monkeypatch.setattr(learning,'_protection_measurements',lambda engine:{})
+    monkeypatch.setattr(learning,'compute_reward',lambda *args:(0.,{}))
+    monkeypatch.setattr(learning,'_observer',lambda *args:({},{}))
+    engine=Engine()
+    action={'slot':'left','operation':'apply','pose':pose,'duration':.2}
+    observation,reward,info,refusal=_commit(engine,Tracker(),action,0.,Budget(max_calls=5))
+    assert refusal is None and info['stateId']=='after' and reward==0.
+    assert observation=={}
+    assert [a['durationSeconds'] for a in info['attempts']]==[.2,.6,1.]
+    assert [a['reason'] for a in info['attempts']]==['SHAFT_COLLISION','SHAFT_COLLISION',None]
+    assert all(a['previewElapsedSeconds']>=0 for a in info['attempts'])
+    assert [kind for kind,_ in engine.seen]==['preview','preview','preview','step']
+    assert all(seen['pose']==pose for _,seen in engine.seen)
+    assert action['duration']==.2 and info['action']['duration']==1.
+
+
+def test_withdrawal_recovery_uses_same_line_and_bounded_slow_duration():
+    class Engine:
+        state={'slots':{'left':{'position':[0.,0.,0.]}}}
+    action={'slot':'left','operation':'withdraw',
+            'pose':{'position':[60.,0.,0.],'quaternion':[0.,0.,0.,1.]},
+            'duration':2.}
+    assert _retry_durations(Engine(),action)==(30.,)
+    action['pose']['position']=[20.,0.,0.]
+    assert _retry_durations(Engine(),action)==(10.,30.)
 
 
 def test_clipped_policy_update_changes_actor_weights_independently_of_critic():
@@ -92,6 +143,7 @@ def test_frozen_ppo_loader_requires_actual_actor_update_receipts(tmp_path):
     physics={'schema':'resectionlab.tissue-physics.v2','profileHash':'sha256:example',
              'sceneId':'source-scene'}
     invalid={'schema':runner.SCHEMA,'stage':'bc-initialized-ppo',
+        'controllerRevision':runner.CONTROLLER_REVISION,
         'actorSha256':identity,'state_dict':actor.state_dict(),
         'sourceBinding':binding,'producerIdentity':producer,'fitPhysicsAudit':physics,
         'observationSchema':'surgical-rl.v2-tool-frame-task-v1',
@@ -100,6 +152,7 @@ def test_frozen_ppo_loader_requires_actual_actor_update_receipts(tmp_path):
             'minAdmittedNonStopActions':runner.MIN_ADMITTED_ACTIONS,
             'incrementalNonTargetCapMm3':runner.NON_TARGET_CAP_MM3},
         'trainingReceipt':{'actualPublicTransitions':2,'sourceBinding':binding,
+            'controllerRevision':runner.CONTROLLER_REVISION,
             'producerIdentity':producer,'fitPhysicsAudit':physics,
             'sampledEpisodes':[{'status':'success'}],'optimizerUpdates':[]}}
     path=tmp_path/'claimed-ppo.pt'

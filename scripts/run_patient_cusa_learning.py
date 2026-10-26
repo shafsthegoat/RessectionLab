@@ -26,6 +26,7 @@ import resectionlab.patient_cusa_learning as policy
 from resectionlab.core import semantic_digest
 from resectionlab.imaging import save_case
 from resectionlab.patient_cusa_learning import (SCHEMA, Actor, Critic, Budget, ACTION_IDS,
+    CONTROLLER_REVISION, APPLY_RETRY_DURATIONS_SECONDS,
     TARGET_GOAL_MM3, NON_TARGET_CAP_MM3, MIN_ADMITTED_ACTIONS, DECISION_CAP,
     actor_choice, execute, fit_bc, parameter_sha256, ppo_update, prepare,
     scripted_choice, sha256)
@@ -80,6 +81,8 @@ def frozen_actor(path,expected,*,scene=None):
                 current_physics['profileHash']!=fit_physics['profileHash']):
             raise ValueError('Frozen CUSA physics profile differs from the fitted source')
     if (checkpoint['schema']!=SCHEMA or checkpoint['actorSha256']!=expected or
+            checkpoint.get('controllerRevision')!=CONTROLLER_REVISION or
+            proof.get('controllerRevision')!=CONTROLLER_REVISION or
             not isinstance(checkpoint.get('sourceBinding'),dict) or
             not isinstance(proof,dict) or not proof.get('actualPublicTransitions') or
             checkpoint.get('observationSchema')!='surgical-rl.v2-tool-frame-task-v1' or
@@ -115,6 +118,7 @@ def frozen_actor(path,expected,*,scene=None):
 def seal_actor(actor,path,stage,source_binding,training_receipt,producer,fit_physics,scene):
     identity=parameter_sha256(actor)
     torch.save({'schema':SCHEMA,'stage':stage,'actorSha256':identity,
+                'controllerRevision':CONTROLLER_REVISION,
                 'state_dict':actor.state_dict(),
                 'sourceBinding':source_binding,
                 'producerIdentity':producer,'fitPhysicsAudit':fit_physics,
@@ -158,6 +162,7 @@ def persist_derived(prepared,variants,output,budget,filename):
         record.setdefault('parents',{})[identity]={'branchId':prepared['binding']['branchId'],
                                                    'position':prepared['binding']['position']}
         entries.append({'schema':SCHEMA,'method':stage,'branchId':identity,
+            'controllerRevision':CONTROLLER_REVISION,
             'parentBranchId':prepared['binding']['branchId'],
             'parentPosition':prepared['binding']['position'],
             'sourceStateId':prepared['binding']['stateId'],
@@ -208,20 +213,24 @@ def persist_derived(prepared,variants,output,budget,filename):
             'reopenedExact':True}
 
 
-def run(source,branch,output,*,seed=17,max_wall_seconds=600.,max_calls=160,
+def run(source,branch,output,*,seed=17,max_wall_seconds=600.,max_calls=200,
         max_rss_bytes=3*1024**3,profile_only=False,frozen_model=None,source_role):
     if source_role!='DEVELOPMENT':
         raise ValueError('This prototype requires an explicit DEVELOPMENT source role')
     budget=Budget(max_wall_seconds,max_calls,max_rss_bytes)
-    receipt={'schema':SCHEMA,'status':'running',
+    receipt={'schema':SCHEMA,'controllerRevision':CONTROLLER_REVISION,
+        'revisionContext':'Post-frozen-0005-failure DEVELOPMENT controller revision; v4 frozen failures remain the prespecified transfer evidence.',
+        'status':'running',
         'source':{'path':str(Path(source).resolve()),'sha256':sha256(source)},
         'task':{'incrementalTargetGoalMm3':TARGET_GOAL_MM3,
                 'diagnosticTargetGoalMm3':5.,
                 'minAdmittedNonStopActions':MIN_ADMITTED_ACTIONS,
                 'incrementalNonTargetCapMm3':NON_TARGET_CAP_MM3,
                 'decisionCap':DECISION_CAP,'role':source_role,
-                'baseTransitionCap':128,'extraColdExportVerificationCalls':32,
-                'totalPhysicalTransitionCap':160,
+                'baseTransitionCap':160,'extraRecoveryAndVerificationCalls':40,
+                'totalPhysicalTransitionCap':max_calls,
+                'applyShaftCollisionRetryDurationsSeconds':APPLY_RETRY_DURATIONS_SECONDS,
+                'withdrawShaftCollisionRetry':'same endpoint and quaternion at min(30, max(initial, distance/2)) then 30 seconds',
                 'policyInput':'published SurgicalRLEnv local/tool/metric observation plus declared task budget'},
         'trials':[], 'optimizerUpdates':0,
         'limitations':['Same DEVELOPMENT case supplies demonstration, policy fitting and live execution; no held-out performance claim.',
@@ -239,7 +248,8 @@ def run(source,branch,output,*,seed=17,max_wall_seconds=600.,max_calls=160,
             checkpoint=torch.load(frozen_model,map_location='cpu',weights_only=True)
             identity=checkpoint['actorSha256']
             frozen=frozen_actor(frozen_model,identity,scene=prepared['scene'])
-            asset={'stage':checkpoint['stage'],'path':str(Path(frozen_model).resolve()),
+            asset={'stage':checkpoint['stage'],'controllerRevision':CONTROLLER_REVISION,
+                   'path':str(Path(frozen_model).resolve()),
                    'fileSha256':sha256(frozen_model),'actorSha256':identity,
                    'trainingReceiptSha256':semantic_digest(checkpoint['trainingReceipt']),
                    'fitSourceSceneId':checkpoint['sourceBinding']['sceneId'],
@@ -282,6 +292,7 @@ def run(source,branch,output,*,seed=17,max_wall_seconds=600.,max_calls=160,
         bc_training={'actualPublicTransitions':demonstration['receipt']['nativeActions'],
             'sourceBinding':prepared['binding'],'demonstration':demonstration['receipt'],
             'producerIdentity':producer,'fitPhysicsAudit':fit_physics,
+            'controllerRevision':CONTROLLER_REVISION,
             'bcFit':bc_fit,'role':'same-case DEVELOPMENT behavior cloning'}
         bc_asset=seal_actor(actor,output/'bc-policy.pt','bc',prepared['binding'],bc_training,
             producer,fit_physics,prepared['scene'])
@@ -318,6 +329,7 @@ def run(source,branch,output,*,seed=17,max_wall_seconds=600.,max_calls=160,
             if t['method'].startswith('ppo-sampled-')),
             'sourceBinding':prepared['binding'], 'bcCheckpointSha256':bc_asset['fileSha256'],
             'producerIdentity':producer,'fitPhysicsAudit':fit_physics,
+            'controllerRevision':CONTROLLER_REVISION,
             'sampledEpisodes':[t for t in receipt['trials'] if t['method'].startswith('ppo-sampled-')],
             'optimizerUpdates':receipt['ppoUpdates'],
             'role':'same-case DEVELOPMENT BC-initialized PPO; actor hash separately verified'}
