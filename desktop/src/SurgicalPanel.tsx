@@ -8,6 +8,8 @@ import {reconstructedPrefix,surgicalReplayRoutes} from './surgical-authority.ts'
 import {nextSurgicalPlaybackFrame,surgicalPlaybackPosition,SurgicalPlaybackClock} from './surgical-playback.ts';
 import {ResearchPlanningPanel} from './ResearchPlanningPanel';
 import {RescueLearningPanel} from './RescueLearningPanel';
+import {LearnedExecutionPanel} from './LearnedExecutionPanel';
+import {PatientCusaLearningPanel} from './PatientCusaLearningPanel';
 import {cusaContactModel,cusaParameterSpecs} from './cusa-research';
 import {FullCaseRehearsalPanel} from './FullCaseRehearsalPanel';
 import {summarizeSurgicalEvents} from './surgical-types.ts';
@@ -99,7 +101,7 @@ function MechanicsV2Details({view,preview}:{view:SurgicalView;preview:boolean}){
   return <details><summary>{preview?'Preview':'Recorded'} V2 mechanics and fluid budget</summary><dl className="surgical-declared-fields">{rows.map(([label,value])=><div key={label}><dt>{label}</dt><dd>{typeof value==='number'&&Number.isFinite(value)?+value.toFixed(5):displayValue(value)}</dd></div>)}</dl><p className="surgical-note">The vascular budget compares initial reserve plus refill against remaining reserve and generated fluid. These modeled quantities do not estimate patient blood loss or predict tissue injury.</p></details>;
 }
 
-export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,onFrameField,fieldDisplayControls,microscopeControls,learningReport}:{learningReport?:unknown;anatomyControls?:ReactNode;onFrameField?:()=>void;fieldDisplayControls?:ReactNode;microscopeControls?:ReactNode;c:SurgicalController;onFixture:()=>void;onImport?:(options:SurgicalImportOptions)=>Promise<void>|void;available:boolean}){
+export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,onFrameField,fieldDisplayControls,microscopeControls,learningReport,executionReport,cusaLearning}:{cusaLearning?:unknown;executionReport?:unknown;learningReport?:unknown;anatomyControls?:ReactNode;onFrameField?:()=>void;fieldDisplayControls?:ReactNode;microscopeControls?:ReactNode;c:SurgicalController;onFixture:()=>void;onImport?:(options:SurgicalImportOptions)=>Promise<void>|void;available:boolean}){
   const [importOptions,setImportOptions]=useState<SurgicalImportOptions>({frame:'RAS+',units:'mm',material:'unknown',resolution:1,topology:'solid',thicknessMm:1});
   const [importing,setImporting]=useState(false),[importError,setImportError]=useState<string|null>(null);
   const [search,setSearch]=useState(''),[duration,setDuration]=useState(1),[operation,setOperation]=useState('apply'),[playing,setPlaying]=useState(false),[playbackSpeed,setPlaybackSpeed]=useState(1);
@@ -154,8 +156,8 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
       <strong>{v.scene.environment?.standardized?'Standard V2 research environment':'Saved research environment'}</strong>
       <p>{v.scene.resolutionMm.map(n=>+n.toFixed(3)).join(' × ')} mm · {v2?'V2 mechanics':'Historical mechanics profile'} · RAS+ mm</p>
       {cusaModel&&<p>CUSA v3 contact model enabled · finite, uncalibrated aspiration capacity.</p>}
-      <p>{Object.entries(v.scene.environment?.anatomy??{}).map(([role,status])=>`${role}: ${status}`).join(' · ')}</p>
-      <p className="surgical-note">Supplied masks do not establish completeness. Missing anatomy and function remain unknown.</p>
+      <p>{Object.entries(v.scene.environment?.anatomy??{}).map(([role,status])=>`${role}: ${status==='supplied'?'mapped':status}`).join(' · ')}</p>
+      <p className="surgical-note">Mapped masks may be source annotations or unreviewed estimates. See source provenance; missing anatomy and function remain unknown.</p>
       <p className={v.protection?.mode==='strict-research'?'surgical-note':'surgical-warning'} role="status">Protection: {v.protection?.mode??'unconfigured-research'}. {v.protection?.configured?`${v.protection.structures.length} declared exclusion masks; clearance ${v.protection.clearanceMm??0} mm.`:'No critical-structure exclusion contract is bound to this episode.'} Anatomical completeness remains unknown.</p>
       {!!v.protection?.missingRequired.length&&<p className="surgical-warning">Required evidence unavailable: {v.protection.missingRequired.join(', ')}.</p>}
       {!v.scene.environment?.standardized&&<button disabled={c.pending||readOnly} onClick={()=>void c.create(v.scene.regions)}>Create standard V2 environment</button>}
@@ -184,6 +186,8 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
     <p className="surgical-note">{playing?(c.pending?'Buffering an exact recorded microstep…':`Playing observed engine states at ${playbackSpeed}×. Buffering can slow wall-clock playback.`):'Replay reconstructs successful engine microsteps and finalized action boundaries. Anatomy and tool poses stay exact. Active jaw close/release and recorded-RPM drill rotation are illustrative working-part animation during playback; they imply no additional cutting events.'}</p>
     <FullCaseRehearsalPanel c={c} pause={()=>setPlaying(false)} onFrameField={onFrameField} fieldDisplayControls={fieldDisplayControls}/>
     <RescueLearningPanel c={c} report={learningReport} pause={()=>setPlaying(false)}/>
+    <LearnedExecutionPanel c={c} report={executionReport} pause={()=>setPlaying(false)}/>
+    <PatientCusaLearningPanel c={c} artifact={cusaLearning} pause={()=>setPlaying(false)}/>
     <fieldset disabled={readOnly} className="surgical-controls"><ResearchPlanningPanel c={c} pause={()=>setPlaying(false)}/></fieldset>
     <RecordedDetails summary="Source provenance and research assumptions">{()=><SceneResearchDetails view={displayed??v} preview={!!c.preview}/>}</RecordedDetails>
     <details><summary>Exchange instrument</summary><input aria-label="Search instruments" placeholder="Search instruments…" value={search} onChange={e=>setSearch(e.target.value)}/>

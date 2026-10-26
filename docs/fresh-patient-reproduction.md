@@ -135,7 +135,10 @@ weights or unsupported input produces an error, never substitute anatomy.
 
 ## Remaining integration gates
 
-This milestone establishes fresh-case software integration. Three complete
+This milestone establishes fresh-case software integration. The later
+[integrated demonstration](integrated-goal-demonstration.md) adds actual corridor
+comparison and a trained continuation on fresh 0007 while retaining a failed
+frozen assessment on 0005. Three complete
 access approaches, matched multi-seed RL assessment and learned execution on
 the fresh glioma scenes remain separate gates. Skull access, complete vascular
 coverage, functional anatomy, neurological/perfusion probabilities and clinical

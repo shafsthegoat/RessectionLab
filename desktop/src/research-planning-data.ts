@@ -27,7 +27,7 @@ export function planLabel(plan:SurgicalPlanAlternative):string {
 }
 
 export function planDecisionReason(plan:SurgicalPlanAlternative,decision:number):string {
-  if(decision===0)return 'Shared post-exposure starting state';
+  if(decision===0)return plan.route?'Shared source-anatomy starting state':'Shared post-exposure starting state';
   const row=plan.decisions[Math.min(decision,plan.decisions.length)-1];
   if(!row)return plan.stopReason.replaceAll('_',' ');
   if(row.actionId==='STOP')return 'Policy selected STOP; left tool deactivated. Residual target remains unassessed.';
