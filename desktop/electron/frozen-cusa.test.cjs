@@ -1,7 +1,7 @@
 'use strict';
 const test=require('node:test');
 const assert=require('node:assert/strict');
-const {frozenCusaArgs,validateFrozenResult,loadFrozenWorkspace}=require('./frozen-cusa.cjs');
+const {frozenCusaArgs,validateFrozenResult,validateMatchingRuntimeAdmission,loadFrozenWorkspace}=require('./frozen-cusa.cjs');
 const output='/repo/testcases/run/execution';
 const valid=()=>({status:'evaluated',optimizerUpdates:0,task:{role:'DEVELOPMENT'},
   source:{unchanged:true},exactReplay:{exactNativeReplay:true},
@@ -16,8 +16,37 @@ test('desktop runner invokes only frozen DEVELOPMENT inference with separate arg
 });
 test('hierarchical execution uses the selected access method and its cold companion, without fitting',()=>{
   const args=frozenCusaArgs({repo:'/repo',source:'/repo/source',checkpoint:'/repo/model.pt',branchId:'axis0-access',output,kind:'sector'});
-  assert.deepEqual(args,['/repo/scripts/execute_patient_sector_policy.py','--source','/repo/source','--access-method','axis0-access','--source-role','DEVELOPMENT','--checkpoint','/repo/model.pt','--output',output]);
+  assert.deepEqual(args,['/repo/scripts/execute_patient_sector_policy.py','--source','/repo/source','--access-method','axis0-access','--source-role','DEVELOPMENT','--checkpoint','/repo/model.pt','--output',output,'--allow-matching-runtime']);
   assert.equal(args.includes('--fit'),false);
+});
+test('explicit archived runtime admission binds commit, checkpoint, loaded producer and executor',()=>{
+  const producer={runnerSourceSha256:'a'.repeat(64),authoritativeEngineFingerprint:'b'.repeat(64)};
+  const runtime='/repo/testcases/outputs/integrated-goal-20261026/joint-frozen-runtime-v1/runtime/source';
+  const archive='bbaeaa5098c918b566523b4c098db96c742454f593a772fa84e597de1d51b3e2';
+  const manifestSha='ee0dfb0e4cff704d5f42b2669efb3a24db0da615f01cc4ee631b525cb6d12ccb';
+  const commit='01e5a365abb7cf9b158a27d49f1e1bfa83e593a2';
+  const exe='c'.repeat(64),checkpointSha='d'.repeat(64),actorSha='e'.repeat(64);
+  const manifest={schema:'resectionlab.frozen-matching-runtime-files.v1',gitCommit:commit,
+    sourceArchiveSha256:archive,producerIdentity:producer,
+    files:{'scripts/execute_patient_sector_policy.py':exe}};
+  const admission={schema:'resectionlab.frozen-matching-runtime-admission.v1',
+    reason:'current_producer_differs_from_frozen_checkpoint',sourceArchiveSha256:archive,
+    gitCommit:commit,manifestSha256:manifestSha,runtimeSource:runtime,
+    canonicalTestcases:'/repo/testcases',checkpointPath:'/repo/model.pt',
+    checkpointFileSha256:checkpointSha,checkpointActorSha256:actorSha,
+    executorSourceSha256:exe,currentProducerIdentity:{changed:true},matchingProducerIdentity:producer};
+  const receipt={producerIdentity:producer,executorSourceSha256:exe,
+    model:{path:'/repo/model.pt',fileSha256:checkpointSha,actorSha256:actorSha}};
+  const context={repo:'/repo',checkpoint:'/repo/model.pt',checkpointSha};
+  assert.equal(validateMatchingRuntimeAdmission(admission,receipt,manifest,context).gitCommit,commit);
+  for(const [badAdmission,badReceipt,badManifest] of [
+    [{...admission,gitCommit:'other'},receipt,manifest],
+    [{...admission,matchingProducerIdentity:{changed:true}},receipt,manifest],
+    [{...admission,checkpointFileSha256:'wrong'},receipt,manifest],
+    [admission,{...receipt,executorSourceSha256:'wrong'},manifest],
+    [admission,{...receipt,model:{...receipt.model,actorSha256:'wrong'}},manifest],
+    [admission,receipt,{...manifest,files:{'scripts/execute_patient_sector_policy.py':'wrong'}}]])
+    assert.throws(()=>validateMatchingRuntimeAdmission(badAdmission,badReceipt,badManifest,context),/runtime admission/);
 });
 test('hierarchical success additionally requires both declared sectors and total exposure cap',()=>{
   const receipt=valid();receipt.execution={...receipt.execution,status:'success',taskGateMet:true,
