@@ -47,7 +47,8 @@ const rehearsalUnsaved = new RehearsalUnsaved(async()=>{
 let currentCaseHash;
 let currentCaseName = 'research-case';
 const secondaryDisplayOnly=process.argv.includes('--secondary-display');
-if(secondaryDisplayOnly&&process.platform==='darwin')app.setActivationPolicy('accessory');
+const automationHidden=process.argv.includes('--automation-hidden');
+if((secondaryDisplayOnly||automationHidden)&&process.platform==='darwin')app.setActivationPolicy('accessory');
 let secondaryDisplayId;
 let secondaryDisplayUnavailable=false;
 const casePaths = new Map();
@@ -316,7 +317,7 @@ function bindOperations() {
 }
 
 async function createWindow() {
-  const secondary=secondaryDisplayOnly?secondaryWindowOptions(screen.getAllDisplays(),screen.getPrimaryDisplay().id):null;
+  const secondary=secondaryDisplayOnly&&!automationHidden?secondaryWindowOptions(screen.getAllDisplays(),screen.getPrimaryDisplay().id):null;
   secondaryDisplayId=secondary?.displayId;
   const devUrl = !app.isPackaged && process.env.RESSECTIONLAB_DEV_URL;
   if (devUrl && devUrl !== 'http://127.0.0.1:5173/') throw new Error('Development preview must use the configured local address');
@@ -351,7 +352,7 @@ async function createWindow() {
     }
   };
   if(secondaryDisplayOnly){screen.on('display-removed',guardSecondaryDisplay);screen.on('display-metrics-changed',guardSecondaryDisplay);}
-  window.once('ready-to-show', () => {if(secondaryAvailable()&&!secondaryDisplayUnavailable){if(secondaryDisplayOnly)window.showInactive();else window.show();}});
+  window.once('ready-to-show', () => {if(!automationHidden&&secondaryAvailable()&&!secondaryDisplayUnavailable){if(secondaryDisplayOnly)window.showInactive();else window.show();}});
   window.on('close', event=>{
     if(!quitting&&rehearsalUnsaved.dirty){event.preventDefault();void rehearsalUnsaved.allowNavigation().then(allowed=>{if(allowed){rehearsalUnsaved.saved();window?.close();}});}
   });
@@ -363,6 +364,7 @@ const ownsAppInstance = app.requestSingleInstanceLock();
 if (!ownsAppInstance) app.quit();
 app.on('open-file',(event,filename)=>{event.preventDefault();pendingOpenPath=filename;if(window&&!window.isDestroyed())window.webContents.send('research:event',{event:'menuAction',action:'openCase'});});
 app.on('second-instance', (_event,argv) => {
+  if(automationHidden){log('Hidden automation instance remains hidden.');return;}
   if(argv.includes('--secondary-display')&&!secondaryDisplayOnly){log('Refused secondary-display request for an existing unrestricted window. Close the existing app and relaunch with --secondary-display.');return;}
   if(secondaryDisplayOnly&&(secondaryDisplayUnavailable||!isSecondaryDisplayConnected(screen.getAllDisplays(),screen.getPrimaryDisplay().id,secondaryDisplayId))){window?.hide();log('Secondary display unavailable; ignored second-instance request.');return;}
   const index=argv.findIndex(a=>a==='--case'||a==='--anatomy');
@@ -372,7 +374,7 @@ app.on('second-instance', (_event,argv) => {
   if (window && !window.isDestroyed()) { if(secondaryDisplayOnly){window.showInactive();}else{if (window.isMinimized()) window.restore(); window.show(); window.focus();} }
 });
 if (ownsAppInstance) app.whenReady().then(async () => { log = createLogger(app.getPath('logs')); log(`Starting ${app.getVersion()} (${app.isPackaged ? 'packaged' : 'development'})`); await startEngine(); bindOperations(); await createWindow(); }).catch(error => {
-  if(!secondaryDisplayOnly)dialog.showErrorBox('RessectionLab could not start', error.message); log(error.stack); app.quit();
+  if(!secondaryDisplayOnly&&!automationHidden)dialog.showErrorBox('RessectionLab could not start', error.message); log(error.stack); app.quit();
 });
 app.on('window-all-closed', () => app.quit());
 app.on('before-quit', event => {

@@ -101,6 +101,13 @@ receipts. Use matching source snapshots. This action currently requires the
 local checkout and matching runtime. The separate **Run frozen CUSA checkpoint**
 retains the earlier stroke-policy interface and uses its own checkpoint family.
 
+The integrated Electron verification harness runs with `--automation-hidden`.
+It captures rendered pages with `stayHidden: true` and fails if its window was
+ever shown. This keeps automated inference, playback and save checks off the
+user's monitors. For an intentionally visible session, `--secondary-display`
+selects a nonprimary display before creating the window and refuses to open
+when none is connected.
+
 Local dataset inventories, versioned experiment results, failed attempts and
 desktop evidence are under ignored `testcases/`; consult its README. Portable
 bundles carry exact source/weights/checkpoint/trajectory bytes and a `VERIFY.md`
