@@ -12,7 +12,7 @@ from resectionlab.surgical_engine import SurgicalEngine
 from resectionlab.surgical_scene import SurgicalScene
 from resectionlab.surgical_staged_exit import (
     MAX_INTERPOLATED_ROTATION_DEG, MAX_INTERPOLATED_STEP_MM,
-    _pose_path_duration, _reverse_accepted_poses, find_checked_exit)
+    _pose_path_duration, _reverse_accepted_poses, _reverse_native_steps, find_checked_exit)
 from resectionlab.surgical_staged_skills import SkillLimits
 from resectionlab.surgical_transition_meter import TransitionMeter
 
@@ -70,6 +70,41 @@ def test_reverse_path_duration_counts_translation_and_full_shaft_rotation():
         _pose_path_duration(start, [rotated]))
     assert _pose_path_duration(start, [start]) == .2
     assert _pose_path_duration(start, [_pose(100, 0, 0)]) == 30.
+
+
+def test_native_step_reverse_reconstructs_checked_translation_rotation_and_reads_only():
+    source, route = _inserted_cusa(pivot=True)
+    start = source.state['slots']['left']
+    q = (Rotation.from_euler('z', 3., degrees=True)*
+         Rotation.from_quat(start['quaternion'])).as_quat().tolist()
+    path = [_pose(4.5,4.,3.7,start['quaternion']), _pose(4.7,4.1,3.3,q)]
+    assert source.step({'slot':'left','operation':'apply','path':path,'duration':1.3})['status']=='accepted'
+    assert source.step({'slot':'left','operation':'apply','pose':path[-1],'duration':.3})['status']=='accepted'
+    before = source.snapshot()
+    meter = TransitionMeter(300)
+    poses, reason = _reverse_native_steps(meter.wrap(source), 'left', lambda: None)
+    assert reason is None and poses and meter.calls == 0
+    assert source.snapshot() == before
+    assert poses[-1]['position'] == route['outsidePose']['position']
+    # Native check of the reversed integration poses, without restoring or
+    # splicing any intermediate state. Same native collision implementation.
+    branch = meter.wrap(source.clone())
+    assert branch.step({'slot':'left','operation':'deactivate','duration':.2})['status']=='accepted'
+    for index in range(0,len(poses),24):
+        chunk=poses[index:index+24]
+        assert branch.step({'slot':'left','operation':'move','path':chunk,
+                            'duration':.1*len(chunk)})['status']=='accepted'
+    assert np.allclose(branch.state['slots']['left']['position'],route['outsidePose']['position'])
+    assert source.snapshot() == before
+
+
+def test_native_step_reverse_refuses_nonmoving_history_geometry_changes():
+    source, _ = _inserted_cusa()
+    for radius in (2.2,1.5):
+        assert source.step({'slot':'left','operation':'inspect','parameters':{'radiusMm':radius},
+                            'duration':.2})['status']=='accepted'
+    poses, reason = _reverse_native_steps(source,'left',lambda:None)
+    assert not poses and reason=='SOURCE_WORKING_GEOMETRY_CHANGED'
 
 
 def test_direct_exit_uses_native_preview_commit_and_preserves_source_prefix():

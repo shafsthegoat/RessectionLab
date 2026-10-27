@@ -20,6 +20,7 @@ const failures=new Set(['wholeTarget','zones','configurations','wholeNonTarget',
 export interface StagedStage {
   stage:number;tileId:string;configuration:string;stateId:string;nativeActions:number;
   targetIncrementMm3:number;checkedExitStateId:string;checkedExitActions:number;
+  executionMode?:'requested_motion'|'checked_collision_prefix';requestedPoseReached?:boolean;
 }
 export interface StagedBranch {
   branchId:string;sourceMethod:string;sourceAccessPlanSeal:string;hand:string;status:'passed'|'unpassed';
@@ -172,7 +173,7 @@ export function stagedStrategyDisplay(artifact:unknown,response:SurgicalResponse
         typeof raw.resumeVerified!=='boolean'||
         !count(raw.workAttempts)&&!Array.isArray(raw.workAttempts)||
         !count(raw.exitRefusals)&&!Array.isArray(raw.exitRefusals)||
-        !Array.isArray(raw.stages)||raw.stages.length>12||!object(raw.outcome))return null;
+        !Array.isArray(raw.stages)||raw.stages.length>48||!object(raw.outcome))return null;
     const attempts=Array.isArray(raw.workAttempts)?raw.workAttempts.length:raw.workAttempts as number;
     const refusals=Array.isArray(raw.exitRefusals)?raw.exitRefusals.length:raw.exitRefusals as number;
     const matchingSource=declaredSourcePlans?
@@ -268,12 +269,15 @@ export function stagedStrategyDisplay(artifact:unknown,response:SurgicalResponse
     const stages:StagedStage[]=[];
     let prior=-1,position=0;
     for(const value of raw.stages){
-      if(!object(value)||!count(value.stage)||value.stage>=12||value.stage<=prior||
+      if(!object(value)||!count(value.stage)||value.stage>=48||value.stage<=prior||
           !text(value.tileId)||!configuration(value.configuration)||
           !sealed(value.stateId)||!count(value.nativeActions)||value.nativeActions<=position||
           value.nativeActions>raw.nativeActions||!amount(value.targetIncrementMm3)||
           value.targetIncrementMm3===0||!sealed(value.checkedExitStateId)||
           !count(value.checkedExitActions))return null;
+      if(value.executionMode!==undefined&&(
+          !['requested_motion','checked_collision_prefix'].includes(String(value.executionMode))||
+          typeof value.requestedPoseReached!=='boolean'))return null;
       stages.push(value as unknown as StagedStage);
       prior=value.stage;position=value.nativeActions;
     }

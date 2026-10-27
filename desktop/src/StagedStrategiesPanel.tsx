@@ -40,6 +40,7 @@ export function StagedStrategiesPanel({c,artifact,pause,play}:{c:SurgicalControl
     <p className="surgical-warning">Deterministic research comparison on partial anatomy. Skull, complete vessels and functional mapping are unavailable; these modeled effects are not clinical risk estimates.</p>
     {data.cusaModel==='legacy-instantaneous-with-v2-mechanics'&&<p className="surgical-note">This scene uses legacy instantaneous CUSA removal with V2 tissue mechanics. It does not establish contact-capacity CUSA v3 or device fidelity.</p>}
     <p>{passes} / {data.alternatives.length} larger staged task gates passed. The original 48-action two-sector gate passed in {legacyPasses} / {data.alternatives.length} branches; that gate is a separate measure.</p>
+    <p>Earlier sector strategies can change working radius while inserted. Staged work keeps tip radius and depth fixed until a checked external exchange, so their tool-configuration assumptions differ.</p>
     <p>{data.physicalCalls} / {data.maxPhysicalCalls} physical calls for staged planning · {data.wallSeconds.toFixed(1)} wall seconds · zero optimizer updates. Failed work probes and checked exits are included in the planning cost.</p>
     {data.sourceBranchId&&<button disabled={disabled}
       data-staged-branch={data.sourceBranchId} data-staged-position={0}
@@ -60,8 +61,10 @@ export function StagedStrategiesPanel({c,artifact,pause,play}:{c:SurgicalControl
         <button disabled={disabled||row.nativeActions===0} data-staged-play={row.branchId}
           onClick={()=>play(row.branchId)}>Play recorded native actions</button></div>
       <details><summary>Stages and configuration changes</summary>
-        {row.stages.length?<ol>{row.stages.map(stage=><li key={`${stage.stage}:${stage.tileId}`}>
+        {row.stages.length?<ol>{row.stages.map(stage=><li key={`${stage.stage}:${stage.tileId}`}
+          data-staged-execution={stage.executionMode??'requested_motion'}>
           Stage {stage.stage+1} · {stage.configuration} · tile {stage.tileId} · +{mm(stage.targetIncrementMm3)} mm³ target.
+          {stage.executionMode==='checked_collision_prefix'&&<p>A shortened command passed fresh native checks after a shaft refusal. The requested waypoint {stage.requestedPoseReached?'was reached':'remains incomplete'}; subsequent work uses the actual accepted pose.</p>}
           <button disabled={disabled} data-staged-branch={row.branchId}
             data-staged-position={stage.nativeActions}
             onClick={()=>inspect(row.branchId,stage.nativeActions)}>

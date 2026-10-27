@@ -44,6 +44,12 @@ app.on('browser-window-created',(_event,window)=>{
         await wait(`![...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Verify replay for planning')`);
       }
       await ready();report.checks.push(mode==='access'?'Actual native replay admitted the saved source and actions':mode==='learned'?'Imported learned endpoint retains read-only replay authority':'Fresh case retains source-bound comparison and learned branches');
+      if(process.env.INTEGRATED_RESEARCH_SOURCE_BRANCH){
+        const branch=process.env.INTEGRATED_RESEARCH_SOURCE_BRANCH;
+        await js(`(()=>{const select=document.querySelector('[aria-label="Surgical branch"]');if(![...select.options].some(option=>option.value===${JSON.stringify(branch)}))throw Error('Source branch unavailable');select.value=${JSON.stringify(branch)};select.dispatchEvent(new Event('change',{bubbles:true}));})()`);
+        await wait(`document.querySelector('[aria-label="Surgical branch"]').value===${JSON.stringify(branch)}&&Number(document.querySelector('[aria-label="Surgical timeline"]').value)===0`);
+        await ready();report.checks.push('Returned through the actual desktop to the intact source branch');
+      }
       if(mode==='cusa-cancel'){
         await wait(`!!document.querySelector('.frozen-cusa-execution')`);
         await click('Run frozen CUSA checkpoint');
@@ -102,8 +108,9 @@ app.on('browser-window-created',(_event,window)=>{
           report.checks.push('Actual desktop source planning executed native staged alternatives');
         }
         await wait(`!!document.querySelector('[aria-label="Staged whole approach summaries"] > article')`);
-        report.staged=await js(`(()=>{const panel=document.querySelector('.staged-strategies');const rows=[...panel.querySelectorAll('[aria-label="Staged whole approach summaries"] > article')];const count=row=>Number(row.textContent.match(/(\\d+) admitted work stages/)?.[1]??0);const selected=[...rows].sort((a,b)=>count(b)-count(a))[0];const index=rows.indexOf(selected);return{text:panel.innerText,rows:rows.length,index,admittedStages:count(selected),selectedText:selected.innerText,stagePositions:[...selected.querySelectorAll('ol [data-staged-position]')].map(button=>Number(button.dataset.stagedPosition))}})()`);
+        report.staged=await js(`(()=>{const panel=document.querySelector('.staged-strategies');const rows=[...panel.querySelectorAll('[aria-label="Staged whole approach summaries"] > article')];const count=row=>Number(row.textContent.match(/(\\d+) admitted work stages/)?.[1]??0);const selected=${process.env.INTEGRATED_RESEARCH_EXPECT_CLIPPED==='1'}?rows.find(row=>row.querySelector('[data-staged-execution="checked_collision_prefix"]')):[...rows].sort((a,b)=>count(b)-count(a))[0];if(!selected)throw Error('Required staged native branch unavailable');const index=rows.indexOf(selected);const stages=[...selected.querySelectorAll('ol > li')];const firstClip=stages.findIndex(row=>row.dataset.stagedExecution==='checked_collision_prefix');selected.querySelector('details').open=true;const positions=[...selected.querySelectorAll('ol [data-staged-position]')].map(button=>Number(button.dataset.stagedPosition));return{text:panel.innerText,rows:rows.length,index,admittedStages:count(selected),clippedStages:stages.filter(row=>row.dataset.stagedExecution==='checked_collision_prefix').length,selectedText:selected.innerText,stagePositions:${process.env.INTEGRATED_RESEARCH_EXPECT_CLIPPED==='1'}?positions.slice(firstClip):positions}})()`);
         assert.equal(report.staged.rows,3,'Three staged source directions remain inspectable');
+        if(process.env.INTEGRATED_RESEARCH_EXPECT_CLIPPED==='1')assert(report.staged.clippedStages>0&&report.staged.selectedText.includes('shortened command passed fresh native checks'),'Collision shortening is distinct from reaching the original requested waypoint');
         assert(report.staged.text.includes('original 48-action')&&report.staged.text.includes('larger staged task'),'Larger task and old gate are displayed separately');
         await capture('01-staged-native-evidence');
         await js(`document.querySelectorAll('[aria-label="Staged whole approach summaries"] > article')[${report.staged.index}].querySelector('button').click()`);

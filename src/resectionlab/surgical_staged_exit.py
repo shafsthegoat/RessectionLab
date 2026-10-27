@@ -21,6 +21,7 @@ from .surgical_transition_meter import MeteredEngine, TransitionMeter
 SCHEMA = 'resectionlab.checked-staged-exit.v1'
 MAX_PATH_POSES_PER_MOVE = 24
 MAX_REVERSE_POSES = 240
+MAX_NATIVE_REVERSE_POSES = 2048
 MAX_EXIT_ACTIONS = 240
 MAX_ACTIVE_REPEATS_PER_POSE = 8
 MAX_INTERPOLATED_STEP_MM = .5
@@ -159,6 +160,68 @@ def _path_chunks(start, poses):
     return chunks
 
 
+def _reverse_native_steps(engine, hand, check):
+    """Reconstruct legacy CUSA's deterministic accepted integration poses.
+
+    This does not infer poses for contact-limited CUSA v3 or partial actions.
+    Those need recorded accepted samples. Every returned command still runs
+    through the normal native checks; reconstruction never restores a state.
+    """
+    if 'cusaV3' in engine.scene.properties:
+        return [], 'CONTACT_LIMITED_POSE_HISTORY_UNAVAILABLE'
+    history = [row for row in engine.history if row['action'].get('slot') == hand]
+    place = next((index for index in range(len(history)-1, -1, -1)
+                  if history[index]['action']['operation'] == 'place'), None)
+    if place is None:
+        return [], 'SOURCE_PLACE_UNAVAILABLE'
+    current_parameters = engine.parameters(engine.state['slots'][hand])
+    poses = [_pose(history[place]['action']['pose'])]
+    for row in history[place+1:]:
+        check()
+        action = row['action']
+        if action['operation'] == 'exchange':
+            return [], 'SOURCE_EXCHANGE_WITHOUT_PLACE'
+        if action['operation'] == 'withdraw':
+            return [], 'SOURCE_WITHDRAWAL_WITHOUT_PLACE'
+        if action['operation'] not in ('apply', 'move') and ('pose' in action or 'path' in action):
+            return [], 'UNSUPPORTED_MOVING_POSE_HISTORY'
+        if any(key in action.get('parameters', {}) and
+               action['parameters'][key] != current_parameters[key]
+               for key in ('radiusMm', 'depthMm')):
+            return [], 'SOURCE_WORKING_GEOMETRY_CHANGED'
+        if action['operation'] not in ('apply', 'move'):
+            continue
+        if row['status'] != 'accepted':
+            return [], 'PARTIAL_POSE_HISTORY_UNSUPPORTED'
+        points = action.get('path', [action['pose']] if 'pose' in action else [])
+        previous = poses[-1]
+        for endpoint in points:
+            check()
+            endpoint = _pose(endpoint)
+            distance = _distance(previous['position'], endpoint['position'])
+            rotations = Rotation.from_quat([previous['quaternion'], endpoint['quaternion']])
+            angle = float((rotations[1]*rotations[0].inv()).magnitude())
+            if distance < 1e-10 and angle < 1e-10:
+                previous = endpoint
+                continue
+            n = max(1, math.ceil((distance+40.*angle)/min(
+                .4, float(engine.scene.spacing.min())/3.)),
+                math.ceil(float(action.get('duration', 1.))/max(1, len(points))/.1))
+            if len(poses)+n > MAX_NATIVE_REVERSE_POSES:
+                return [], 'NATIVE_REVERSE_POSE_BUDGET'
+            interpolation = Slerp([0., 1.], rotations)
+            a, b = np.asarray(previous['position']), np.asarray(endpoint['position'])
+            for index in range(1, n+1):
+                check()
+                fraction = index/n
+                poses.append({'position': ((1.-fraction)*a+fraction*b).tolist(),
+                    'quaternion': interpolation(fraction).as_quat().tolist()})
+            previous = endpoint
+    if len(poses) < 2 or not _matches_slot_pose(engine, hand, poses[-1]):
+        return [], 'RECONSTRUCTED_NATIVE_ENDPOINT_DIFFERS'
+    return list(reversed(poses[:-1])), None
+
+
 def _probe(source, actions, limits, meter, check, phase):
     before = meter.calls
     candidate, checked = checked_actions(source, actions, limits=limits,
@@ -267,6 +330,34 @@ def find_checked_exit(engine, route, *, hand, limits, meter, check):
             receipt['reason'] = stage['checked']['reason']
             break
     else:
+        native_poses, native_reason = _reverse_native_steps(source, hand, check)
+        receipt['nativeStepReverse'] = {'status': 'available' if native_poses else 'unavailable',
+            'reason': native_reason, 'poseCount': len(native_poses),
+            'maxPoses': MAX_NATIVE_REVERSE_POSES,
+            'scope': 'reconstructed accepted legacy CUSA integration poses; all commands require fresh native checks'}
+        if native_poses:
+            chunks = [native_poses[index:index+MAX_PATH_POSES_PER_MOVE]
+                      for index in range(0, len(native_poses), MAX_PATH_POSES_PER_MOVE)]
+            for active in (False, True):
+                actions = [{'slot': hand, 'operation': 'deactivate', 'duration': .2}]
+                actions.extend({'slot': hand, 'operation': 'apply' if active else 'move',
+                    'path': copy.deepcopy(chunk), 'duration': .1*len(chunk)} for chunk in chunks)
+                actions.extend([
+                    {'slot': hand, 'operation': 'deactivate', 'duration': .2},
+                    {'slot': hand, 'operation': 'withdraw', 'pose': copy.deepcopy(outside),
+                     'duration': _duration(_distance(native_poses[-1]['position'], outside['position']))}])
+                candidate, stage = _probe(source, actions, effective, meter, check,
+                    'staged.exit.native_steps_'+('active' if active else 'inactive'))
+                stage['nativePoseCount'] = len(native_poses)
+                receipt['stages'].append(stage)
+                if accepted(candidate, stage, 'native_steps_active' if active else 'native_steps_inactive'):
+                    return candidate, receipt
+                if stage['checked']['status'] == 'interrupted':
+                    receipt['reason'] = stage['checked']['reason']
+                    receipt['finalStateId'] = source_id
+                    receipt['finalNativeActions'] = source_actions
+                    receipt['publicCallCost'] = meter.calls-first_call
+                    return source.clone(), receipt
         poses, path_reason = _reverse_accepted_poses(source, hand)
         receipt['reversePath'] = {'status': 'available' if poses else 'unavailable',
             'reason': path_reason, 'sampledPoseCount': len(poses),

@@ -107,6 +107,14 @@ def run(source, output, *, explore_fresh_corridors=False):
     finally:
         if result is not None:
             receipt['nativeCalls'] = result['meter'].report()
+            if receipt['status'] != 'saved':
+                # A storage/admission failure must not erase completed native
+                # work. These remain explicitly unsaved research alternatives.
+                receipt['report'] = result['report']
+                receipt['unsavedNativeAlternatives'] = [
+                    {'branchId': row['branchId'], 'nativeSnapshot': candidate.snapshot(),
+                     'nativeHistory': copy.deepcopy(candidate.history)}
+                    for candidate, row in result['branches']]
         receipt['sourceUnchanged'] = digest(source) == receipt['sourceSha256']
         receipt['wallSeconds'] = time.monotonic()-started
         (output/'receipt.json').write_text(json.dumps(receipt, indent=2, allow_nan=False)+'\n')

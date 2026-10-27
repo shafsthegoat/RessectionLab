@@ -6,6 +6,11 @@ existing engine with short source-anchored pivots, axial work, checked historica
 exit recovery, external tool reconfiguration and sealed native checkpoints. It
 admits work only after checking its withdrawal, preserves rejected probes, and
 counts previews, commits, recovery and replay against one bounded budget.
+Native shaft refusals can propose a shorter stroke from the observed accepted
+pose; that command must pass fresh native checks before a dwell at its actual
+endpoint. Legacy CUSA withdrawal can use reconstructed integration-step paths.
+Bulky staged evidence uses the existing bounded lossless archive codec while
+native branches remain readable by the historical frozen-policy runtime.
 `scripts/compare_staged_anatomy_strategies.py` provides the same native exporter.
 The larger task requires substantial whole-target, spatial-zone and configuration
 contributions; its 240-action gate is displayed separately from the original

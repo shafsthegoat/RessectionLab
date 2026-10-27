@@ -76,10 +76,14 @@ class SkillAction:
     def __post_init__(self):
         if not isinstance(self.action, dict):
             raise TypeError('A staged action must be a native action mapping')
+        if 'pose' in self.action and 'path' in self.action:
+            raise ValueError('A staged action cannot specify both pose and path')
         if type(self.require_endpoint) is not bool:
             raise ValueError('Endpoint requirement must be boolean')
         if self.require_endpoint:
-            endpoint = self.action.get('pose') or self.action.get('path', [None])[-1]
+            path = self.action.get('path')
+            endpoint = self.action.get('pose') if 'pose' in self.action else (
+                path[-1] if isinstance(path, list) and path else None)
             if endpoint is None:
                 raise ValueError('Endpoint-checked action requires a native pose or path')
             _finite_pose(endpoint)
@@ -173,6 +177,11 @@ def propose_cusa_maneuvers(engine, route, *, max_options=15,
     proposals = []
 
     def add(direction, count, path, mode):
+        # Match the existing source inventory's external shaft scope. A local
+        # extension must not bury the fixed 40 mm catalog shaft in the source.
+        if any(np.linalg.norm(np.asarray(pose['position'])-anchor) > 38.+1e-9
+               for pose in path):
+            return
         previous = start
         touched = set()
         for pose in path:
@@ -534,6 +543,166 @@ def checked_actions(engine, actions, *, limits: SkillLimits, check=None,
             'directStepCalls': sum(row['kind'] == 'step' for row in
                                    meter.trace[start_calls:meter.calls])}}
     return candidate, receipt
+
+
+def _clip_cusa_motion(engine, action, preview):
+    """Propose a shorter command from the observed successful native pose.
+
+    The failed contactPosition is deliberately ignored. Native completed-step
+    accounting identifies the completed waypoint prefix; the public preview's
+    actual slot supplies its end pose. This only proposes a command: another
+    complete native preview/commit must establish that it is executable.
+    """
+    if (preview.get('status') != 'partial' or preview.get('reason') != 'SHAFT_COLLISION' or
+            action.get('operation') != 'apply' or
+            engine.state['slots'][action['slot']]['instrument'] != 'cusa'):
+        return None
+    view = preview.get('view')
+    if not isinstance(view, dict) or view.get('stateId') != preview.get('stateId'):
+        raise ValueError('Clipped motion requires an observed native preview pose')
+    slot = engine.state['slots'][action['slot']]
+    points = action.get('path', [action['pose']] if 'pose' in action else [])
+    if not points:
+        return None
+    poses = [slot, *points]
+    duration = float(action.get('duration', 1.))
+    counts = []
+    for start, end in zip(poses, poses[1:]):
+        distance = float(np.linalg.norm(np.subtract(end['position'], start['position'])))
+        angle = float((Rotation.from_quat(end['quaternion'])*
+                       Rotation.from_quat(start['quaternion']).inv()).magnitude())
+        counts.append(max(1, math.ceil((distance+40.*angle)/min(
+            .4, float(engine.scene.spacing.min())/3.)),
+            math.ceil(duration/max(1, len(points))/.1)))
+    fraction = preview.get('completedFraction')
+    if type(fraction) not in (int, float) or not 0 < fraction < 1:
+        return None
+    steps_float = fraction*sum(counts)
+    steps = round(steps_float)
+    if not 0 < steps < sum(counts) or abs(steps_float-steps) > 1e-6:
+        return None
+    observed = view['slots'][action['slot']]
+    endpoint = _finite_pose({key: observed[key] for key in ('position', 'quaternion')})
+    traveled = float(np.linalg.norm(np.subtract(endpoint['position'], slot['position'])))
+    turned = float((Rotation.from_quat(endpoint['quaternion'])*
+                    Rotation.from_quat(slot['quaternion']).inv()).magnitude())
+    if traveled < 1e-7 and turned < 1e-7 and not preview.get('deltas', {}).get('removedCells'):
+        return None
+    cumulative = 0
+    completed_segments = 0
+    for n in counts:
+        if cumulative+n > steps:
+            break
+        cumulative += n
+        completed_segments += 1
+    prefix = copy.deepcopy(points[:completed_segments])
+    if not prefix or (np.linalg.norm(np.subtract(prefix[-1]['position'], endpoint['position'])) > 1e-7 or
+            (Rotation.from_quat(prefix[-1]['quaternion'])*
+             Rotation.from_quat(endpoint['quaternion']).inv()).magnitude() > 1e-7):
+        prefix.append(endpoint)
+    elapsed = preview.get('elapsedSeconds')
+    if type(elapsed) not in (int, float) or not 0 < elapsed <= duration+1e-8:
+        return None
+    clipped = copy.deepcopy(action)
+    clipped.pop('pose', None)
+    clipped['path'] = prefix
+    clipped['duration'] = min(duration, float(elapsed))
+    return clipped
+
+
+def checked_cusa_motion(engine, motion, *, limits, meter=None, check=None,
+                        dwell_seconds=.6, phase='staged.motion'):
+    """Checked motion, optional collision-shortening, then dwell at actual pose.
+
+    The original partial collision is never committed. Its successfully reached
+    pose may seed a shorter command which must complete under unchanged native
+    guards. A dwell uses the newly observed accepted pose, so it cannot jump to
+    an unreached requested waypoint. Failed shortening remains a failed probe.
+    """
+    motion = motion if isinstance(motion, SkillAction) else SkillAction(motion)
+    motion = replace(motion, require_endpoint=True)
+    if (motion.action.get('operation') != 'apply' or
+            type(dwell_seconds) not in (int, float) or not 0 < dwell_seconds <= 30.):
+        raise ValueError('Checked CUSA motion requires an apply and bounded dwell')
+    candidate, meter = _metered_candidate(engine, meter, limits)
+    hand = motion.action['slot']
+    if candidate.state['slots'][hand]['instrument'] != 'cusa':
+        raise ValueError('Checked CUSA motion requires the current CUSA instrument')
+    baseline = _ledger(candidate, limits, meter)
+    start_state, start_actions, start_calls = candidate.state_id, len(candidate.actions), meter.calls
+    attempts, parts = [], []
+    clipped_action = None
+    status, reason = 'accepted', None
+    try:
+        if _inserted_geometry_change(candidate, motion.action) or len(candidate.actions) >= limits.max_native_actions:
+            candidate, part = checked_actions(candidate, [motion], limits=limits,
+                meter=meter, check=check, phase=phase+'.motion')
+            parts.append(part)
+            status, reason = part['status'], part['reason']
+        else:
+            if check is not None:
+                check()
+            if limits.prior_public_calls+meter.calls >= limits.max_public_calls:
+                raise TransitionBudgetExceeded('Staged public native-call cap reached')
+            with meter.phase(phase+'.boundary_probe'):
+                preview = candidate.preview(motion.action, check=check,
+                    include_view=True, include_history=False)
+            observed = preview['view']['slots'][hand]
+            attempts.append({'status': 'uncommitted_motion_probe',
+                'action': copy.deepcopy(motion.action), 'previewStatus': preview['status'],
+                'previewReason': preview.get('reason'), 'previewStateId': preview['stateId'],
+                'previewRemovedCellIds': preview.get('deltas', {}).get('removedCells', []),
+                'observedEndPose': {key: copy.deepcopy(observed[key]) for key in ('position', 'quaternion')},
+                'completedFraction': preview.get('completedFraction')})
+            clipped_action = _clip_cusa_motion(candidate, motion.action, preview)
+            if clipped_action is not None:
+                duration = clipped_action['duration']
+                retries = tuple(sorted(set(value for value in (
+                    motion.action.get('duration', 1.), 2., 4.) if duration < value <= 30.)))
+                command = SkillAction(clipped_action, retries, require_endpoint=True)
+            else:
+                command = motion
+            candidate, part = checked_actions(candidate, [command], limits=limits,
+                meter=meter, check=check, phase=phase+'.motion')
+            parts.append(part)
+            status, reason = part['status'], part['reason']
+        if status == 'accepted':
+            actual = candidate.state['slots'][hand]
+            dwell = {'slot': hand, 'operation': 'apply', 'duration': float(dwell_seconds),
+                'pose': {key: copy.deepcopy(actual[key]) for key in ('position', 'quaternion')},
+                'parameters': copy.deepcopy(motion.action.get('parameters', {}))}
+            candidate, part = checked_actions(candidate,
+                [SkillAction(dwell, require_endpoint=True)], limits=limits,
+                meter=meter, check=check, phase=phase+'.dwell')
+            parts.append(part)
+            status, reason = part['status'], part['reason']
+    except _INTERRUPTIONS as error:
+        status, reason = 'interrupted', type(error).__name__+': '+str(error)
+    for part in parts:
+        attempts.extend(part['attempts'])
+    ledger = _ledger(candidate, limits, meter)
+    requested = motion.action.get('pose') or motion.action.get('path', [None])[-1]
+    actual = candidate.state['slots'][hand]
+    observed_end = {key: copy.deepcopy(actual[key]) for key in ('position', 'quaternion')}
+    reached = requested is not None and (
+        np.linalg.norm(np.subtract(actual['position'], requested['position'])) <= 1e-6 and
+        (Rotation.from_quat(actual['quaternion'])*
+         Rotation.from_quat(requested['quaternion']).inv()).magnitude() <= 1e-6)
+    return candidate, {'schema': SCHEMA, 'status': status, 'reason': reason,
+        'phase': phase, 'sourceStateId': start_state, 'finalStateId': candidate.state_id,
+        'sourceNativeActions': start_actions, 'nativeActionsAppended': len(candidate.actions)-start_actions,
+        'executionMode': 'checked_collision_prefix' if clipped_action is not None else 'requested_motion',
+        'requestedPoseReached': bool(reached), 'observedEndPose': observed_end,
+        'requestedEndPose': copy.deepcopy(requested),
+        'clippedProposal': clipped_action, 'attempts': attempts,
+        'retentionRole': 'accepted_native_skill' if status == 'accepted' else 'stopped_native_prefix_not_admitted',
+        'admittedSkillProgressMm3': ledger['targetRemovedMm3']-baseline['targetRemovedMm3'] if status == 'accepted' else 0.,
+        'committedPrefix': {'nativeActions': len(candidate.actions), 'stateId': candidate.state_id,
+                            'actionPrefixSeal': semantic_digest(candidate.actions)},
+        'ledger': ledger, 'transitionTrace': copy.deepcopy(meter.trace[start_calls:meter.calls]),
+        'physicalCallCost': {'publicCalls': meter.calls-start_calls,
+            'previewCalls': sum(x['kind'] == 'preview' for x in meter.trace[start_calls:meter.calls]),
+            'directStepCalls': sum(x['kind'] == 'step' for x in meter.trace[start_calls:meter.calls])}}
 
 
 def make_skill_checkpoint(engine, *, source_seal, task_seal, inventory_seal,

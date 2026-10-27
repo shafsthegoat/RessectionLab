@@ -14,7 +14,7 @@ from resectionlab.surgical_engine import SurgicalEngine
 from resectionlab.surgical_cusa_v3 import default_profile, initialize
 from resectionlab.surgical_scene import SurgicalScene
 from resectionlab.surgical_staged_skills import (
-    SkillAction, SkillLimits, checked_actions, checked_exit_actions,
+    SkillAction, SkillLimits, checked_actions, checked_cusa_motion, checked_exit_actions,
     cusa_work_actions, external_cusa_reconfiguration_actions,
     make_skill_checkpoint, propose_cusa_maneuvers, restore_skill_checkpoint)
 from resectionlab.surgical_transition_meter import TransitionBudgetExceeded, TransitionMeter
@@ -142,6 +142,15 @@ def test_local_pivot_preserves_current_roll_and_option_bound():
     for row in pivots:
         first = Rotation.from_quat(row['path'][0]['quaternion'])
         assert (first*start.inv()).magnitude() == pytest.approx(np.deg2rad(.5))
+
+
+def test_local_work_keeps_the_source_inventory_external_shaft_scope():
+    engine, route = _maneuver_engine()
+    route['surfacePose']['position'][2] = -32.
+    rows = propose_cusa_maneuvers(engine, route)
+    assert all(row['orientationMode'] != 'local-forward' for row in rows)
+    assert all(np.linalg.norm(np.subtract(pose['position'], route['surfacePose']['position'])) <= 38.+1e-9
+               for row in rows for pose in row['path'])
 
 
 def _reseal(checkpoint):
@@ -307,6 +316,11 @@ def test_source_defined_action_builders_keep_pose_radius_and_config_fixed():
     assert work[-1].action['pose']['position'][0] == 1.
     with pytest.raises(ValueError, match='Duration retries'):
         SkillAction(INSPECT, (.1,))
+    with pytest.raises(ValueError, match='both pose and path'):
+        SkillAction({'slot': 'left', 'operation': 'apply', 'pose': outside,
+                     'path': [pose]}, require_endpoint=True)
+    with pytest.raises(ValueError, match='requires a native pose or path'):
+        SkillAction({'slot': 'left', 'operation': 'apply', 'path': []}, require_endpoint=True)
 
 
 @pytest.mark.parametrize('limits, reason', [
@@ -491,3 +505,85 @@ def test_effect_caps_apply_to_existing_prefix_checkpoint_and_cold_restore():
     checkpoint['limits']['baseline_non_target_mm3'] = 0.
     with pytest.raises(ValueError, match='additional non-target cap'):
         restore_skill_checkpoint(scene, _reseal(checkpoint), **SEALS)
+
+
+@pytest.mark.parametrize('rotate', [False, True])
+def test_collision_prefix_is_rechecked_and_dwell_uses_actual_pose_without_shortcuts(rotate):
+    labels = np.zeros((20, 20, 20), np.uint16)
+    labels[8, 6, 8] = 1
+    labels[10, 6, 4] = 2
+    scene = SurgicalScene(labels, np.eye(4), [
+        {'id': 1, 'name': 'target', 'material': 'tumor', 'target': True},
+        {'id': 2, 'name': 'brain', 'material': 'soft_tissue'}],
+        {'kind': 'generated guarded collision-prefix path'}, {})
+    engine = SurgicalEngine(scene)
+    pose = lambda x, y, z: {'position': [float(x), float(y), float(z)],
+                           'quaternion': [0., 0., 0., 1.]}
+    for action in (
+        {'slot': 'left', 'operation': 'exchange', 'instrument': 'cusa', 'duration': .1},
+        {'slot': 'left', 'operation': 'place', 'pose': pose(6,6,2),
+         'parameters': {'radiusMm': .6}, 'duration': .1},
+        {'slot': 'left', 'operation': 'apply', 'pose': pose(6,6,8),
+         'parameters': {'radiusMm': .6}, 'duration': 1.}):
+        assert engine.step(action)['status'] == 'accepted'
+    before = engine.snapshot()
+    requested = {'slot': 'left', 'operation': 'apply',
+        'path': [pose(12,6,8), pose(12,10,8)],
+        'parameters': {'radiusMm': .6}, 'duration': 2.}
+    if rotate:
+        for endpoint in requested['path']:
+            endpoint['quaternion'] = Rotation.from_euler('z', 25., degrees=True).as_quat().tolist()
+    preview = engine.preview(requested)
+    assert preview['status'] == 'partial' and preview['reason'] == 'SHAFT_COLLISION'
+    assert preview['deltas']['removedCells']
+    meter = TransitionMeter(50)
+    branch, receipt = checked_cusa_motion(engine,
+        SkillAction(requested, require_endpoint=True), limits=SkillLimits(20, 50,
+            max_total_non_target_mm3=0.), meter=meter)
+    assert receipt['status'] == 'accepted'
+    assert receipt['executionMode'] == 'checked_collision_prefix'
+    assert not receipt['requestedPoseReached']
+    assert receipt['admittedSkillProgressMm3'] == 1.
+    assert np.allclose(receipt['observedEndPose']['position'], receipt['clippedProposal']['path'][-1]['position'])
+    assert np.allclose(receipt['observedEndPose']['quaternion'], receipt['clippedProposal']['path'][-1]['quaternion'])
+    assert np.allclose(branch.actions[-1]['pose']['position'], receipt['observedEndPose']['position'])
+    assert np.allclose(branch.actions[-1]['pose']['quaternion'], receipt['observedEndPose']['quaternion'])
+    assert len(branch.actions[-2]['path']) == 1
+    assert branch.actions[-2]['path'][-1]['position'][0] < 10.
+    assert branch.actions[-2]['path'][-1]['position'][1] == 6.
+    assert all(x['status'] == 'accepted' for x in branch.history)
+    assert branch.metrics()['nonTargetRemovedMm3'] == 0.
+    assert SurgicalEngine.restore(scene, branch.snapshot()).state == branch.state
+    assert engine.snapshot() == before
+    assert receipt['physicalCallCost']['publicCalls'] == meter.calls
+    from resectionlab.surgical_staged_skills import _clip_cusa_motion
+    corrupted_contact = copy.deepcopy(preview)
+    corrupted_contact['contactPosition'] = [999.,999.,999.]
+    assert _clip_cusa_motion(engine, requested, corrupted_contact)['path'][-1] == {
+        key: preview['view']['slots']['left'][key] for key in ('position', 'quaternion')}
+    denied, failure = checked_cusa_motion(engine,
+        SkillAction(requested, require_endpoint=True), limits=SkillLimits(20, 50,
+            allowed_removed_label_ids=(2,)))
+    assert failure['status'] == 'refused' and failure['reason'] == 'REMOVAL_LABEL_NOT_ALLOWED'
+    assert failure['admittedSkillProgressMm3'] == 0.
+    assert denied.snapshot() == before
+
+
+def test_motion_boundary_probe_and_dwell_share_call_and_action_budgets():
+    engine, pose = _legacy_inserted_cusa()
+    original = engine.snapshot()
+    motion = SkillAction({'slot': 'left', 'operation': 'apply', 'pose': pose(8.),
+        'parameters': {'radiusMm': 1.5}, 'duration': .2}, require_endpoint=True)
+    meter = TransitionMeter(1)
+    stopped, receipt = checked_cusa_motion(engine, motion, limits=SkillLimits(20,1), meter=meter)
+    assert receipt['status'] == 'interrupted'
+    assert meter.calls == 1 and receipt['physicalCallCost']['publicCalls'] == 1
+    assert receipt['admittedSkillProgressMm3'] == 0.
+    assert stopped.snapshot() == original
+    stopped, receipt = checked_cusa_motion(engine, motion,
+        limits=SkillLimits(len(engine.actions)+1,20))
+    assert receipt['status'] == 'interrupted' and receipt['reason'] == 'NATIVE_ACTION_BUDGET'
+    assert len(stopped.actions) == len(engine.actions)+1
+    assert stopped.actions[-1] == motion.action
+    assert receipt['admittedSkillProgressMm3'] == 0.
+    assert engine.snapshot() == original

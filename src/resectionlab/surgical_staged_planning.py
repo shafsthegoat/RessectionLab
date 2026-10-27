@@ -24,7 +24,7 @@ from .surgical_modeled_outcomes import summarize_engine_outcomes
 from .surgical_sector_planning import _prefix_actions, _sector_cells
 from .surgical_staged_skills import (
     SkillAction, SkillLimits, checked_actions, make_skill_checkpoint,
-    restore_skill_checkpoint, propose_cusa_maneuvers)
+    restore_skill_checkpoint, propose_cusa_maneuvers, checked_cusa_motion)
 from .surgical_transition_meter import TransitionMeter, TransitionBudgetExceeded
 
 SCHEMA = 'resectionlab.staged-anatomy-planning.v1'
@@ -33,7 +33,7 @@ MAX_ACTIONS = 240
 MAX_CALLS = 4000
 MAX_SECONDS = 240.
 MAX_TILES = 48
-MAX_STAGES = 12
+MAX_STAGES = 48
 MAX_PROBES_PER_STAGE = 4
 RADII_MM = (.6, 1., 1.2, 2.2, 2.8)
 EXPORT_RESERVE = 3*MAX_ACTIONS
@@ -288,6 +288,9 @@ def build_inventory(scene, record, *, max_routes=3, max_tiles=MAX_TILES,
             'maxNativeWorkProbesPerStage': MAX_PROBES_PER_STAGE,
             'fixedCurrentToolGeometry': True,
             'revisitPolicy': 'A failed proposal may be retried only after a newly admitted native state'},
+        'maximumAdmittedStages': MAX_STAGES,
+        'externalShaftWorkingReachMm': 38.,
+        'motionBoundaryPolicy': 'A partial shaft-collision probe is never committed. Its observed successful pose may propose a shortened path, which requires a new complete native preview/commit; dwell uses the actual accepted pose.',
         'freshSourceGeometry': fresh_geometry,
         'ranking': 'retain sealed native access baselines; checked cleanup, lower observed non-target, then extended source work contact; no new native calls during selection',
         'commonPreparation': 'Existing access/joint generation is common prepared input; its stored native costs remain in source comparisons and are not relabeled as free source inference',
@@ -372,7 +375,7 @@ def _work_actions(engine, tile, radius, hand):
         travel += distance+42.*angle
         previous = pose
     duration = min(30., max(1., travel))
-    parameters = {'radiusMm': radius, 'depthMm': 2., 'forceN': 0.,
+    parameters = {'radiusMm': radius, 'depthMm': float(engine.parameters(start)['depthMm']), 'forceN': 0.,
                   'power': 1., 'duty': 1., 'flowMm3PerSecond': 0.}
     motion = {'path': copy.deepcopy(path)} if 'path' in tile else {'pose': copy.deepcopy(tile['pose'])}
     return [SkillAction({'slot': hand, 'operation': 'apply',
@@ -559,7 +562,7 @@ def compare_staged_strategies(engine, record, *, acknowledge_unknowns=False,
                         before = prepared_work.metrics()
                         work_start = len(prepared_work.actions)
                         with meter.reserve(EXPORT_RESERVE):
-                            work, receipt = checked_actions(prepared_work, _work_actions(prepared_work, tile, radius, hand),
+                            work, receipt = checked_cusa_motion(prepared_work, _work_actions(prepared_work, tile, radius, hand)[0],
                                 limits=work_limits, meter=meter, check=bounded,
                                 phase=f'staged.{route_index}.stage{stage_index}.{tile["id"]}.work')
                         row = {'tileId': tile['id'], 'radiusMm': radius, 'work': receipt,
@@ -602,6 +605,9 @@ def compare_staged_strategies(engine, record, *, acknowledge_unknowns=False,
                         'configuration': config, 'stateId': candidate.state_id,
                         'nativeActions': len(candidate.actions),
                         'targetIncrementMm3': selected['targetIncrementMm3'],
+                        'executionMode': selected['work']['executionMode'],
+                        'requestedPoseReached': selected['work']['requestedPoseReached'],
+                        'observedEndPose': selected['work']['observedEndPose'],
                         'checkedExitStateId': exited.state_id,
                         'checkedExitActions': len(exited.actions)-len(candidate.actions)})
                     if exercise_resume and resume_evidence is None:
@@ -768,16 +774,21 @@ def validate_staged_report(scene, record, report):
                 outcome['cleanupComplete'] != clean):
             raise ValueError('Staged whole effects or cleanup differ from native checkpoint')
         history = record.get('timeline', {}).get(row['branchId'], [])
+        if len(row['stages']) > MAX_STAGES:
+            raise ValueError('Staged sequence exceeds the declared bounded library')
         config_totals = {}
         target_labels = {int(region['id']) for region in scene.regions if region.get('target')}
         previous_end = 0
+        previous_stage = -1
         for stage in row['stages']:
             end = stage['nativeActions']
             start = stage.get('workStartPosition', end-2)
-            if (not previous_end <= start < end <= len(history) or
+            if (not previous_stage < stage['stage'] < MAX_STAGES or
+                    not previous_end <= start < end <= len(history) or
                     history[end-1]['stateAfter'] != stage['stateId']):
                 raise ValueError('Staged work interval differs from native history')
             previous_end = end
+            previous_stage = stage['stage']
             config_radius = float(stage['configuration'].removeprefix('radius-'))
             work_cells = set()
             for position in range(start, end):
@@ -790,6 +801,17 @@ def validate_staged_report(scene, record, report):
                                for cell in work_cells)*scene.voxel_mm3
             if contribution != stage['targetIncrementMm3']:
                 raise ValueError('Staged target contribution differs from native action deltas')
+            if 'executionMode' in stage:
+                observed_pose = stage.get('observedEndPose')
+                dwell_pose = history[end-1]['action'].get('pose')
+                if (stage['executionMode'] not in ('requested_motion', 'checked_collision_prefix') or
+                        type(stage.get('requestedPoseReached')) is not bool or
+                        not isinstance(observed_pose, dict) or not isinstance(dwell_pose, dict) or
+                        dwell_pose != snapshot['actions'][end-1].get('pose') or
+                        np.linalg.norm(np.subtract(observed_pose['position'], dwell_pose['position'])) > 1e-6 or
+                        (Rotation.from_quat(observed_pose['quaternion'])*
+                         Rotation.from_quat(dwell_pose['quaternion']).inv()).magnitude() > 1e-6):
+                    raise ValueError('Staged motion endpoint differs from native stationary dwell')
             name = stage['configuration']
             config_totals[name] = config_totals.get(name, 0.)+contribution
         if config_totals != outcome['configurationTargetRemovedMm3']:
