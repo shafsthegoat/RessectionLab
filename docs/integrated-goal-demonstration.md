@@ -1,5 +1,20 @@
 # Integrated rehearsal development demonstration
 
+The desktop also exposes **Staged source strategies** from an intact, declared
+development access/sector comparison. This deterministic controller extends the
+existing engine with short source-anchored pivots, axial work, checked historical
+exit recovery, external tool reconfiguration and sealed native checkpoints. It
+admits work only after checking its withdrawal, preserves rejected probes, and
+counts previews, commits, recovery and replay against one bounded budget.
+`scripts/compare_staged_anatomy_strategies.py` provides the same native exporter.
+The larger task requires substantial whole-target, spatial-zone and configuration
+contributions; its 240-action gate is displayed separately from the original
+48-action sector task. Checkpoint replay verification does not imply an
+interactive controller-resume feature. Recorded playback remains distinct from
+new planning or frozen inference. This extension has not replaced the stronger
+saved sector baseline or established larger-task success. Local development
+traces and independent replay/hidden-desktop results remain under `testcases/`.
+
 The current [sector-strategy workflow](sector-strategies.md) adds actual
 near/far target order, left/right CUSA arrangements, recorded model consequences
 and three-seed hierarchical BC/PPO execution. The v6 stroke-policy demonstration

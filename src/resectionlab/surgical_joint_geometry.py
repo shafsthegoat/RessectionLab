@@ -31,6 +31,9 @@ _SHAFT_RADIUS_MM = .5
 _MIN_WORKING_TARGET_MM3 = 4.  # Source-only shortlist cutoff, not a task gate.
 _SOURCE_CONTACT_POLICY_MM3 = 200.  # Contact, not calibrated removal.
 _FINALISTS_PER_AXIS = 64
+_STAGED_CONTINUATION_BRAIN_REFERENCE_MM3 = 20.
+_STAGED_WHOLE_TARGET_FLOOR_MM3 = 500.
+_STAGED_WHOLE_TARGET_FRACTION = .1
 
 
 def _points(scene, indices):
@@ -186,22 +189,73 @@ def _fixed_far_first_contact(scene, grid, item, corridor, corridor_centers,
             for name,part in zip(('farTransit','farWorking','nearReturn'),supercovers)}}
 
 
+def _staged_work_tube_contact(scene, grid, item, corridor,
+                              brain_flat, target_flat, target_reference_mm3):
+    """Undeformed extended ray contact beyond the source access capsule.
+
+    This fixed-radius supercover is a bounded shortlist proxy. A dynamically
+    cleared or deformed native scene can touch a different set of cells.
+    """
+    surface = np.asarray(item['surfaceRasMm'], float)
+    inward = np.asarray(item['inwardRasUnit'], float)
+    length = float(item['pathLengthMm'])
+    far_offset = min(24., 38.-length)
+    if far_offset < 1.:
+        raise ValueError('Staged source tube has no exterior-anchored working depth')
+    radius = 1. if length <= 20. else .6
+    start = surface+inward*(length+1.)
+    end = surface+inward*(length+far_offset)
+    ijk = capsule_voxel_indices(grid, start, end, radius)
+    tube = set(map(int, np.ravel_multi_index(ijk.T, scene.shape)))
+    shaft = capsule_voxel_indices(grid, end-inward*_SHAFT_LENGTH_MM,
+                                  end-inward*2., _SHAFT_RADIUS_MM)
+    shaft_labels = scene.labels[tuple(shaft.T)]
+    allowed_ids = {0, *[r['id'] for r in _brain_regions(scene)],
+                   *[r['id'] for r in scene.regions if r.get('target') and
+                      r['material'] == 'tumor']}
+    deep_shaft_allowed = bool(np.isin(shaft_labels, list(allowed_ids)).all())
+    additional = tube-corridor
+    ordered = np.fromiter(additional, dtype=np.int64)
+    brain = float(np.count_nonzero(brain_flat[ordered])*scene.voxel_mm3)
+    target = float(np.count_nonzero(target_flat[ordered])*scene.voxel_mm3)
+    brain_excess = max(0., brain-_STAGED_CONTINUATION_BRAIN_REFERENCE_MM3)
+    # The rank uses missing target contact, not target contact above the
+    # objective. Keep the explicit positive deficit in the sealed report.
+    target_deficit = max(0., target_reference_mm3-target)
+    return {
+        'stagedWorkTubeOffsetFromTargetEntryMm': [1., far_offset],
+        'stagedWorkTubeRadiusMm': radius,
+        'stagedDeepShaftSourceLabelsAllowed': deep_shaft_allowed,
+        'stagedDeepShaftTailDepthMm': length+far_offset-_SHAFT_LENGTH_MM,
+        'stagedWorkTubeSourceCellCount': len(tube),
+        'stagedWorkTubeBeyondCorridorCellCount': len(additional),
+        'stagedWorkTubeAdditionalTargetSupercoverMm3': target,
+        'stagedWorkTubeAdditionalBrainSupercoverMm3': brain,
+        'stagedContinuationBrainExcessMm3': brain_excess,
+        'stagedTargetContactDeficitMm3': target_deficit,
+        'stagedJointSourceDeficitMm3': brain_excess+target_deficit}
+
+
 def select_joint_corridors(scene, *, max_routes=3, max_surface_samples=4096,
                            nearest_targets=8, max_geometry_pairs=32768,
-                           check=lambda: None):
+                           goal='two-sector', check=lambda: None):
     """Return at most one source-only route per native axis and a sealed report.
 
     The bounded scan samples mapped-brain exterior faces, pairing each with
-    nearby source tumor-boundary cells. An exterior-anchored far-tip shaft and
-    the unchanged source near/far sector capacities are required. Source
-    contact cutoffs and action estimates are shortlist heuristics, never
-    modeled non-target removal or surgical safety claims.
+    nearby source tumor-boundary cells. Both goals require an exterior-anchored
+    fixed shaft and the same mapped source labels. ``two-sector`` retains the
+    original fixed near/far capacity cuts; ``staged`` records those capacities
+    without requiring them and ranks extended source work-tube contact first.
+    Source contact cutoffs are shortlist heuristics, never modeled removal or
+    surgical safety claims.
     """
     bounds = (max_routes, max_surface_samples, nearest_targets, max_geometry_pairs)
     if any(type(v) is not int or v < 1 for v in bounds):
         raise ValueError('Joint corridor bounds must be positive integers')
     if max_routes > 3:
         raise ValueError('At most one route per three native axes is supported')
+    if goal not in ('two-sector', 'staged'):
+        raise ValueError('Joint corridor goal must be two-sector or staged')
     if not callable(check):
         raise ValueError('check must be callable')
     check()
@@ -209,6 +263,10 @@ def select_joint_corridors(scene, *, max_routes=3, max_surface_samples=4096,
     targets = [r for r in scene.regions if r.get('target') and r['material']=='tumor']
     brain_ids = [r['id'] for r in regions]
     target_ids = [r['id'] for r in targets]
+    staged_target_reference = (max(_STAGED_WHOLE_TARGET_FLOOR_MM3,
+        _STAGED_WHOLE_TARGET_FRACTION*float(np.count_nonzero(
+            np.isin(scene.labels, target_ids))*scene.voxel_mm3))
+        if goal == 'staged' else None)
     basis = {'sceneId': scene.identity, 'sourceCaseHash': scene.source.get('caseHash'),
              'sourceLabelsHash': array_digest(scene.labels),
              'affineRasMm': scene.affine.tolist(),
@@ -252,8 +310,48 @@ def select_joint_corridors(scene, *, max_routes=3, max_surface_samples=4096,
             'heuristicActionMeaning': 'ceil(path/3) assumes travel to boundary; aspiration may contact sooner',
             'finalistsPerAxis': _FINALISTS_PER_AXIS,
             'noveltyMinEntryMm': 12., 'noveltyMinAngleDeg': 30.}
+    if goal == 'staged':
+        rule.update(selectionGoal='staged',
+            minSourceSectorVolumeMm3=None,
+            minWorkingTargetMm3=None,
+            sourceCuts={'required': ['mapped brain/tumor ray', 'source-void exterior',
+                'exterior-anchored fixed 40 mm/0.5 mm shaft',
+                'full-shaft allowed source labels', 'corridor center brain contact at most 200 mm3',
+                '12 mm entry and 30 degree direction novelty'],
+                'diagnosticOnly': ['near/far 10 mm3 sector capacity',
+                    'two fixed 4 mm3 working spheres',
+                    '48-action two-sector heuristic']},
+            sourceSectorCapacityUse='recorded only; no staged eligibility cutoff',
+            workingFootprintUse='recorded only; no staged eligibility cutoff',
+            workingContactReferenceUse='recorded diagnostic only; no staged rank or task gate',
+            stagedMaxNativeActions=240,
+            stagedSourceTargetContactReferenceMm3=staged_target_reference,
+            stagedSourceTargetContactReferenceDefinition=(
+                'max(500 mm3, 10% of source target volume), matching the larger '
+                'research task whole-target threshold; tube contact is not removal'),
+            stagedContinuationBrainContactReferenceMm3=
+                _STAGED_CONTINUATION_BRAIN_REFERENCE_MM3,
+            stagedHeuristicHeadroomMeaning=('240 minus the old fixed-sequence action '
+                'estimate, retained only as a source planning diagnostic; extended '
+                'work and checked exit consume additional actions'),
+            stagedLocalTargetContactMeaning=('source target centers within 7 mm of the '
+                'target boundary, at nonnegative axial depth and at most 6 mm from the '
+                'access ray; shortlist proxy, not native reachability'),
+            stagedTubeContactMeaning=('undeformed source capsule supercover from '
+                'target entry +1 mm through +min(24 mm, 38 mm minus corridor length) '
+                'at unchanged .6/1 mm corridor radius, minus source access capsule; '
+                'neither predicted native removal nor a reachability proof'),
+            stagedDeepShaftMeaning=('unchanged 40 mm/0.5 mm shaft checked at the '
+                'deepest modeled tube tip, with its proximal tail at least 2 mm '
+                'outside the source brain surface'),
+            jointRankFormula=('among at most 64 exact finalists per axis: extended '
+                'tube brain contact excess over 20 mm3 plus target contact deficit '
+                'relative to the larger task whole-target threshold; then whole '
+                'corridor/shaft brain supercover union, path length, broader tube '
+                'target contact and deterministic source indices'))
     report = {'schema': 'resectionlab.joint-source-corridor-selection.v1',
-              'task': 'source-only-joint-access-sector-shortlist',
+              'task': ('source-only-joint-access-sector-shortlist' if goal == 'two-sector'
+                       else 'source-only-joint-access-staged-shortlist'),
               'sourceBasis': basis,'selectionRule': rule,
               'counts': {'surfacePointsAvailable': {}, 'surfacePointsSampled': {},
                          'pairsExamined':0,'cheapEligible':0,'exactFinalists':0,
@@ -324,9 +422,9 @@ def select_joint_corridors(scene, *, max_routes=3, max_surface_samples=4096,
                 # not a proof that deeper routes are physically impossible.
                 if length+SECTOR_STROKE['far'][0] > _SHAFT_LENGTH_MM+1e-9:
                     reject('FAR_TIP_SHAFT_NOT_EXTERIOR_ANCHORED'); continue
-                goal = boundary_world[int(neighbors[row,col])]
-                inward = (goal-surface_point)/length
-                nearby = tumor_tree.query_ball_point(goal,7.)
+                target_point = boundary_world[int(neighbors[row,col])]
+                inward = (target_point-surface_point)/length
+                nearby = tumor_tree.query_ball_point(target_point,7.)
                 if not nearby:
                     reject('NO_LOCAL_TARGET'); continue
                 points = tumor_world[nearby]
@@ -338,15 +436,21 @@ def select_joint_corridors(scene, *, max_routes=3, max_surface_samples=4096,
                     for name,(lo,hi) in SECTOR_WINDOWS_MM.items()}
                 capacity={name:int(np.count_nonzero(mask))*scene.voxel_mm3
                           for name,mask in sector_members.items()}
-                if any(value < MIN_SECTOR_MM3 for value in capacity.values()):
+                if goal == 'two-sector' and any(value < MIN_SECTOR_MM3
+                                                for value in capacity.values()):
                     reject('SECTOR_CAPACITY'); continue
+                local_reachable = ((depth >= length) & (depth <= length+7.) &
+                                   (radial <= 6.))
+                local_target_contact = float(np.count_nonzero(local_reachable)*
+                                             scene.voxel_mm3)
                 near_center = surface_point+inward*(length+SECTOR_STROKE['near'][0])
                 far_center = surface_point+inward*(length+SECTOR_STROKE['far'][0])
                 near_t,near_b=_working_sphere(scene,near_center,SECTOR_STROKE['near'][1],
                                               brain_ids,target_ids)
                 far_t,far_b=_working_sphere(scene,far_center,SECTOR_STROKE['far'][1],
                                             brain_ids,target_ids)
-                if min(near_t,far_t)*scene.voxel_mm3 < _MIN_WORKING_TARGET_MM3:
+                if goal == 'two-sector' and min(near_t,far_t)*scene.voxel_mm3 < \
+                        _MIN_WORKING_TARGET_MM3:
                     reject('WORKING_TARGET_FOOTPRINT'); continue
                 count = max(2,int(math.ceil(length/.4)))
                 ray = surface_point[None,:]+np.linspace(0.,length,count)[:,None]*inward
@@ -378,7 +482,8 @@ def select_joint_corridors(scene, *, max_routes=3, max_surface_samples=4096,
                       'targetBoundaryIndex':goal_index.astype(int).tolist(),
                       'surfaceFlatId':int(np.ravel_multi_index(entry_index,scene.shape)),
                       'targetFlatId':int(np.ravel_multi_index(goal_index,scene.shape)),
-                      'surfaceRasMm':surface_point.tolist(),'targetRasMm':goal.tolist(),
+                      'surfaceRasMm':surface_point.tolist(),
+                      'targetRasMm':target_point.tolist(),
                       'inwardRasUnit':inward.tolist(),'pathLengthMm':length,
                       'sourceBrainCellsOnRay':brain_count,
                       'sourceTargetCellsOnRay':target_count,
@@ -387,6 +492,7 @@ def select_joint_corridors(scene, *, max_routes=3, max_surface_samples=4096,
                           sector_members['near']].astype(int).tolist(),
                       '_farSectorFlatIds':tumor_flat[np.asarray(nearby,dtype=int)][
                           sector_members['far']].astype(int).tolist(),
+                      'stagedLocalTargetContactMm3':local_target_contact,
                       'nearWorkingTargetMm3':near_t*scene.voxel_mm3,
                       'farWorkingTargetMm3':far_t*scene.voxel_mm3,
                       'nearWorkingBrainMm3':near_b*scene.voxel_mm3,
@@ -397,10 +503,15 @@ def select_joint_corridors(scene, *, max_routes=3, max_surface_samples=4096,
     finalists=[]
     for axis in _AXES:
         # Bounded exact capsule work, chosen without any native outcomes.
-        preliminary[axis].sort(key=lambda r:(r['sourceBrainCellsOnRay'],
-                r['pathLengthMm'],-min(r['nearWorkingTargetMm3'],r['farWorkingTargetMm3']),
-                -min(r['sourceSectorCapacityMm3'].values()),
-                r['surfaceFlatId'],r['targetFlatId']))
+        if goal == 'two-sector':
+            preliminary[axis].sort(key=lambda r:(r['sourceBrainCellsOnRay'],
+                    r['pathLengthMm'],-min(r['nearWorkingTargetMm3'],r['farWorkingTargetMm3']),
+                    -min(r['sourceSectorCapacityMm3'].values()),
+                    r['surfaceFlatId'],r['targetFlatId']))
+        else:
+            preliminary[axis].sort(key=lambda r:(r['sourceBrainCellsOnRay'],
+                    r['pathLengthMm'],-r['stagedLocalTargetContactMm3'],
+                    -r['sourceTargetCellsOnRay'],r['surfaceFlatId'],r['targetFlatId']))
         for item in preliminary[axis][:_FINALISTS_PER_AXIS]:
             check()
             burden,corridor,corridor_centers = _geometry_burden(
@@ -414,27 +525,40 @@ def select_joint_corridors(scene, *, max_routes=3, max_surface_samples=4096,
             # This is a ranking heuristic, not a lower bound on the native
             # action count: aspiration can reach source tumor earlier.
             heuristic = 3+math.ceil((length+1.)/3.)+3+4
-            if heuristic>48:
+            if goal == 'two-sector' and heuristic>48:
                 reject('HEURISTIC_ACTION_POLICY_CUTOFF'); continue
             item.update(burden)
             item.update(_fixed_far_first_contact(scene,grid,item,corridor,
                 corridor_centers,brain_flat,target_flat))
+            if goal == 'staged':
+                item.update(_staged_work_tube_contact(scene,grid,item,corridor,
+                    brain_flat,target_flat,staged_target_reference))
+                if not item['stagedDeepShaftSourceLabelsAllowed']:
+                    reject('UNMAPPED_STAGED_DEEP_SHAFT_CAPSULE'); continue
             item['heuristicActionCost']=heuristic
-            item['heuristicActionHeadroom']=48-heuristic
+            item['heuristicActionHeadroom']=(48 if goal == 'two-sector' else 240)-heuristic
             # Three setup, three sector, and two cleanup actions are the
             # non-corridor minimum. The rank separately reserves four cleanup
             # actions for checked recovery; neither predicts native success.
             item['mathematicalMinimumNonCorridorActions']=8
             item['reservedNonCorridorActions']=10
-            item['rankKey']=[item['farFirstJointSourceDeficitMm3'],
-                             item['farFirstMaxSourceDeficitMm3'],
-                             burden['corridorAndShaftBrainUnionMm3'],
-                             burden['corridorBrainSupercoverMm3'],
-                             length,-min(item['nearWorkingTargetMm3'],
-                                         item['farWorkingTargetMm3']),
-                             -min(item['farFirstSectorSourceContactMm3'].values()),
-                             -item['heuristicActionHeadroom'],
-                             axis,item['surfaceFlatId'],item['targetFlatId']]
+            item['rankKey']=([item['farFirstJointSourceDeficitMm3'],
+                              item['farFirstMaxSourceDeficitMm3'],
+                              burden['corridorAndShaftBrainUnionMm3'],
+                              burden['corridorBrainSupercoverMm3'],
+                              length,-min(item['nearWorkingTargetMm3'],
+                                          item['farWorkingTargetMm3']),
+                              -min(item['farFirstSectorSourceContactMm3'].values()),
+                              -item['heuristicActionHeadroom'],
+                              axis,item['surfaceFlatId'],item['targetFlatId']]
+                             if goal == 'two-sector' else
+                             [item['stagedJointSourceDeficitMm3'],
+                              burden['corridorAndShaftBrainUnionMm3'],length,
+                              -item['stagedWorkTubeAdditionalTargetSupercoverMm3'],
+                              -item['stagedLocalTargetContactMm3'],
+                              -item['sourceTargetCellsOnRay'],
+                              burden['corridorBrainSupercoverMm3'],
+                              axis,item['surfaceFlatId'],item['targetFlatId']])
             finalists.append(item)
     finalists.sort(key=lambda r:tuple(r['rankKey']))
     routes=[]
@@ -452,7 +576,8 @@ def select_joint_corridors(scene, *, max_routes=3, max_surface_samples=4096,
         _, evidence=_sector_cells(scene,route)
         exact_capacity={name:evidence[name]['sourceVolumeMm3']
                         for name in ('near','far')}
-        if any(value<MIN_SECTOR_MM3 for value in exact_capacity.values()):
+        if goal == 'two-sector' and any(value<MIN_SECTOR_MM3
+                                        for value in exact_capacity.values()):
             reject('EXACT_SECTOR_CAPACITY_MISMATCH'); continue
         if any(abs(exact_capacity[name]-item['sourceSectorCapacityMm3'][name])>1e-9
                for name in exact_capacity):
@@ -469,6 +594,21 @@ def select_joint_corridors(scene, *, max_routes=3, max_surface_samples=4096,
             'farWorkingTargetMm3':item['farWorkingTargetMm3'],
             'nearWorkingBrainMm3':item['nearWorkingBrainMm3'],
             'farWorkingBrainMm3':item['farWorkingBrainMm3'],
+            **({'stagedLocalTargetContactMm3':item['stagedLocalTargetContactMm3']}
+               if goal == 'staged' else {}),
+            **({name:item[name] for name in (
+                'stagedWorkTubeOffsetFromTargetEntryMm',
+                'stagedWorkTubeRadiusMm',
+                'stagedDeepShaftSourceLabelsAllowed',
+                'stagedDeepShaftTailDepthMm',
+                'stagedWorkTubeSourceCellCount',
+                'stagedWorkTubeBeyondCorridorCellCount',
+                'stagedWorkTubeAdditionalTargetSupercoverMm3',
+                'stagedWorkTubeAdditionalBrainSupercoverMm3',
+                'stagedContinuationBrainExcessMm3',
+                'stagedTargetContactDeficitMm3',
+                'stagedJointSourceDeficitMm3')}
+               if goal == 'staged' else {}),
             'corridorCenterContactBrainMm3':item['corridorCenterContactBrainMm3'],
             'corridorBrainSupercoverMm3':item['corridorBrainSupercoverMm3'],
             'farShaftBrainSupercoverMm3':item['farShaftBrainSupercoverMm3'],
@@ -503,5 +643,8 @@ def select_joint_corridors(scene, *, max_routes=3, max_surface_samples=4096,
         'Skull, vessel, functional and unannotated anatomy remain unknown unless supplied.',
         'The sample and exact-finalist caps can miss other feasible rays.',
         'A selected route is a candidate, not an executable access plan.']
+    if goal == 'staged':
+        report['limitations'].append(
+            'Small fixed near/far sectors and their working spheres are recorded but do not gate staged selection.')
     report['selectionSeal']=semantic_digest(report)
     return routes,report

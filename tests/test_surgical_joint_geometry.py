@@ -6,7 +6,8 @@ import pytest
 
 from resectionlab.geometry import GeometryScene, capsule_voxel_indices
 from resectionlab.surgical_joint_geometry import (
-    _fixed_far_first_contact, _geometry_burden, _working_sphere,
+    _fixed_far_first_contact, _geometry_burden, _staged_work_tube_contact,
+    _working_sphere,
     select_joint_corridors,
 )
 from resectionlab.surgical_scene import SurgicalScene
@@ -188,3 +189,131 @@ def test_bounds_reject_invalid_requests():
         _select(scene, max_routes=0)
     with pytest.raises(ValueError, match='three native axes'):
         _select(scene, max_routes=4)
+    with pytest.raises(ValueError, match='goal must be'):
+        _select(scene, goal='unbound')
+
+
+def test_staged_goal_retains_physical_source_cuts_without_tiny_sector_gate(monkeypatch):
+    from resectionlab.surgical_engine import SurgicalEngine
+    def forbidden(*_args, **_kwargs):
+        raise AssertionError('Staged source selection called native physics')
+    monkeypatch.setattr(SurgicalEngine, 'step', forbidden)
+    monkeypatch.setattr(SurgicalEngine, 'preview', forbidden)
+    scene = _two_equal_targets(small_target=True)
+    old_routes, _ = _select(scene, goal='two-sector')
+    staged_routes, report = _select(scene, goal='staged')
+    assert old_routes == []
+    assert len(staged_routes) == 3
+    assert {row['nativeAxis'] for row in staged_routes} == {0, 1, 2}
+    assert report['selectionRule']['selectionGoal'] == 'staged'
+    assert report['selectionRule']['minSourceSectorVolumeMm3'] is None
+    assert report['selectionRule']['minWorkingTargetMm3'] is None
+    assert report['selectionRule']['stagedMaxNativeActions'] == 240
+    assert report['counts']['pairsExamined'] <= 2048
+    assert report['rejectionHistogram'].get('SECTOR_CAPACITY', 0) == 0
+    assert report['rejectionHistogram'].get('WORKING_TARGET_FOOTPRINT', 0) == 0
+    assert any(min(row['sourceSectorCapacityMm3'].values()) == 0.
+               for row in report['selected'])
+    for route, selected in zip(staged_routes, report['selected']):
+        assert route['sourceSceneId'] == scene.identity
+        assert route['pathType'] == 'oblique_mapped_brain'
+        assert route['accessCompleteness'] == 'unsupported_skull_access_brain_corridor'
+        assert selected['farShaftTailDepthMm'] <= 1e-9
+        assert selected['corridorCenterContactBrainMm3'] <= 200.
+        assert selected['rankKey'][:3] == [
+            selected['stagedJointSourceDeficitMm3'],
+            selected['corridorAndShaftBrainUnionMm3'],
+            selected['pathLengthMm']]
+        assert selected['stagedJointSourceDeficitMm3'] == (
+            selected['stagedContinuationBrainExcessMm3']+
+            selected['stagedTargetContactDeficitMm3'])
+        assert selected['stagedWorkTubeRadiusMm'] == route['corridorRadiusMm']
+        assert selected['stagedWorkTubeOffsetFromTargetEntryMm'][0] == 1.
+        assert selected['stagedWorkTubeOffsetFromTargetEntryMm'][1] <= 24.
+        _, evidence = _sector_cells(scene, route)
+        assert selected['sourceSectorCapacityMm3'] == {
+            name: evidence[name]['sourceVolumeMm3'] for name in ('near', 'far')}
+        for novelty in selected['noveltyComparisons']:
+            assert novelty['entrySeparationMm'] >= 12.-1e-9
+            assert novelty['inwardAngleDeg'] >= 30.-1e-9
+
+
+def test_staged_rank_uses_extended_work_contact_before_whole_corridor_burden():
+    scene = _equal_working_targets_unequal_brain()
+    old_routes, old = _select(scene, max_routes=1)
+    staged_routes, staged = _select(scene, max_routes=1, goal='staged')
+    assert len(old_routes) == len(staged_routes) == 1
+    assert staged['selected'][0]['corridorAndShaftBrainUnionMm3'] < \
+        old['selected'][0]['corridorAndShaftBrainUnionMm3']
+    assert staged['selected'][0]['rankKey'][0] == \
+        staged['selected'][0]['stagedJointSourceDeficitMm3']
+    assert staged['selected'][0]['rankKey'][1] == \
+        staged['selected'][0]['corridorAndShaftBrainUnionMm3']
+    reference = staged['selectionRule']['stagedSourceTargetContactReferenceMm3']
+    selected = staged['selected'][0]
+    assert selected['stagedTargetContactDeficitMm3'] == max(
+        0., reference-selected['stagedWorkTubeAdditionalTargetSupercoverMm3'])
+    repeated_routes, repeated = _select(scene, max_routes=1, goal='staged')
+    assert repeated_routes == staged_routes and repeated == staged
+    assert repeated['selectionSeal'].startswith('sha256:')
+
+
+def test_staged_tube_counts_union_beyond_access_capsule_at_original_radius():
+    scene = _two_equal_targets()
+    route = _select(scene, max_routes=1, goal='staged')[0][0]
+    grid = GeometryScene(np.zeros(scene.shape, bool), scene.affine)
+    item = {'surfaceRasMm': route['surfacePose']['position'],
+            'inwardRasUnit': route['inwardRasUnit'],
+            'pathLengthMm': route['pathLengthMm']}
+    _, corridor, _ = _geometry_burden(scene, grid, item, [1], [2])
+    brain = (scene.labels == 1).ravel()
+    target = (scene.labels == 2).ravel()
+    measured = _staged_work_tube_contact(scene, grid, item, corridor,
+        brain, target, 500.)
+    inward = np.asarray(route['inwardRasUnit'])
+    entry = np.asarray(route['entryPose']['position'])
+    low, high = measured['stagedWorkTubeOffsetFromTargetEntryMm']
+    ijk = capsule_voxel_indices(grid, entry+inward*low, entry+inward*high,
+                                route['corridorRadiusMm'])
+    full = set(map(int, np.ravel_multi_index(ijk.T, scene.shape)))
+    additional = np.fromiter(full-corridor, dtype=np.int64)
+    assert measured['stagedWorkTubeSourceCellCount'] == len(full)
+    assert measured['stagedDeepShaftSourceLabelsAllowed'] is True
+    assert measured['stagedDeepShaftTailDepthMm'] <= -2.
+    assert measured['stagedWorkTubeBeyondCorridorCellCount'] == len(additional)
+    assert measured['stagedWorkTubeAdditionalTargetSupercoverMm3'] == \
+        np.count_nonzero(target[additional])*scene.voxel_mm3
+    assert measured['stagedWorkTubeAdditionalBrainSupercoverMm3'] == \
+        np.count_nonzero(brain[additional])*scene.voxel_mm3
+    assert measured['stagedWorkTubeAdditionalTargetSupercoverMm3'] > 0.
+
+
+def test_staged_deep_shaft_detects_newly_reached_unmapped_label():
+    scene = _two_equal_targets()
+    route = _select(scene, max_routes=1, goal='staged')[0][0]
+    grid = GeometryScene(np.zeros(scene.shape, bool), scene.affine)
+    surface = np.asarray(route['surfacePose']['position'])
+    inward = np.asarray(route['inwardRasUnit'])
+    length = route['pathLengthMm']
+    far_offset = min(24., 38.-length)
+    old_tip = surface+inward*(length+4.)
+    deep_tip = surface+inward*(length+far_offset)
+    old_shaft = capsule_voxel_indices(grid, old_tip-inward*40.,
+                                      old_tip-inward*2., .5)
+    deep_shaft = capsule_voxel_indices(grid, deep_tip-inward*40.,
+                                       deep_tip-inward*2., .5)
+    old_cells = set(map(tuple, old_shaft))
+    newly_reached = sorted(set(map(tuple, deep_shaft))-old_cells)
+    assert newly_reached
+    labels = scene.labels.copy()
+    labels[newly_reached[0]] = 3
+    regions = [*scene.regions,
+               {'id': 3, 'name': 'unmapped', 'material': 'bone', 'target': False}]
+    altered = SurgicalScene(labels, scene.affine, regions,
+                            {'caseId': 'generated-unmapped-deep-shaft'}, {})
+    item = {'surfaceRasMm': surface.tolist(),
+            'inwardRasUnit': inward.tolist(), 'pathLengthMm': length}
+    _, corridor, _ = _geometry_burden(altered, grid, item, [1], [2])
+    assert _staged_work_tube_contact(altered, grid, item, corridor,
+        (altered.labels == 1).ravel(), (altered.labels == 2).ravel(),
+        500.)['stagedDeepShaftSourceLabelsAllowed'] is False

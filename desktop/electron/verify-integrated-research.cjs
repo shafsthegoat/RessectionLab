@@ -3,7 +3,7 @@
 const {app,dialog}=require('electron');
 const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),assert=require('node:assert/strict'),crypto=require('node:crypto');
 const root=path.resolve(__dirname,'../..'),input=path.resolve(process.env.INTEGRATED_RESEARCH_CASE||''),output=path.resolve(process.env.INTEGRATED_RESEARCH_OUTPUT||''),mode=process.env.INTEGRATED_RESEARCH_MODE;
-if(!['access','learned','cusa','cusa-execute','cusa-cancel','sector','sector-policy','sector-execute','joint','frozen-assessment'].includes(mode))throw Error('Set a supported INTEGRATED_RESEARCH_MODE');
+if(!['access','learned','cusa','cusa-execute','cusa-cancel','sector','sector-policy','sector-execute','joint','staged','frozen-assessment'].includes(mode))throw Error('Set a supported INTEGRATED_RESEARCH_MODE');
 for(const p of [input,output])if(!p.startsWith(path.join(root,'testcases')+path.sep))throw Error('Input/output must be under testcases/');
 if(fs.existsSync(output))throw Error('Preserve previous evidence; use a new output directory');
 fs.mkdirSync(output,{recursive:true});
@@ -32,7 +32,7 @@ app.on('browser-window-created',(_event,window)=>{
   window.webContents.once('did-finish-load',async()=>{
     window.webContents.setBackgroundThrottling(false);window.setSize(1500,1000);
     const js=code=>window.webContents.executeJavaScript(code,true);
-    const wait=async(expression,seconds=240)=>{for(let i=0;i<seconds*4;i++){if(report.errors.length)throw Error('Renderer error: '+report.errors.join('; '));if(await js(expression))return;await delay(250);}throw Error('Timeout: '+expression);};
+    const wait=async(expression,seconds=240)=>{const started=Date.now();let logged=0;while(Date.now()-started<seconds*1000){if(report.errors.length)throw Error('Renderer error: '+report.errors.join('; '));if(await js(expression))return;const error=await js(`document.querySelector('.surgical-error')?.textContent??''`);if(/^Error:|^.*SURGICAL_[A-Z_]+:/.test(error))throw Error('Desktop action failed: '+error);if(await js(`document.body.innerText.includes('Staged strategy evidence could not be bound')`))throw Error('Staged native result could not be bound in the desktop');if(Date.now()-logged>10000){logged=Date.now();fs.writeFileSync(path.join(output,'progress.json'),JSON.stringify({waiting:expression,elapsedSeconds:(Date.now()-started)/1000,body:await js('document.body.innerText')},null,2));}await delay(250);}throw Error('Timeout: '+expression);};
     const click=async label=>{await js(`(()=>{const b=[...document.querySelectorAll('button')].find(b=>b.textContent.trim()===${JSON.stringify(label)}||b.getAttribute('aria-label')===${JSON.stringify(label)}||b.querySelector('span')?.textContent.trim()===${JSON.stringify(label)});if(!b||b.matches(':disabled'))throw Error('Missing enabled button '+${JSON.stringify(label)});b.click();})()`);await delay(150);};
     const ready=()=>wait(`!!document.querySelector('.rl-viewer canvas')&&!document.querySelector('.viewer-loading')&&document.querySelector('.rl-viewer').dataset.surfacesPending==='0'&&!document.querySelector('.surgical-panel').innerText.includes('Computing instrument action')`);
     const capture=async name=>{await delay(300);await ready();await delay(200);fs.writeFileSync(path.join(output,name+'.png'),(await window.webContents.capturePage(undefined,{stayHidden:true,stayAwake:true})).toPNG());report.screenshots.push(name+'.png');};
@@ -92,6 +92,34 @@ app.on('browser-window-created',(_event,window)=>{
         // Start the recorded sector interval after its actual corridor actions.
         await js(`(()=>{const s=document.querySelector('[aria-label="Surgical timeline"]');const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(s,${target.start});s.dispatchEvent(new Event('input',{bubbles:true}));s.dispatchEvent(new Event('change',{bubbles:true}));})()`);
         await wait(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)===${target.start}`);
+      }else if(mode==='staged'){
+        await wait(`!!document.querySelector('.staged-strategies')`);
+        await js(`document.querySelector('.staged-strategies').open=true`);
+        if(process.env.INTEGRATED_RESEARCH_GENERATE==='1'){
+          await js(`document.querySelector('[aria-label="Acknowledge staged source assumptions"]').click()`);
+          await click('Generate staged source strategies');
+          await wait(`!!document.querySelector('[aria-label="Staged whole approach summaries"] > article')`,300);
+          report.checks.push('Actual desktop source planning executed native staged alternatives');
+        }
+        await wait(`!!document.querySelector('[aria-label="Staged whole approach summaries"] > article')`);
+        report.staged=await js(`(()=>{const panel=document.querySelector('.staged-strategies');const rows=[...panel.querySelectorAll('[aria-label="Staged whole approach summaries"] > article')];const count=row=>Number(row.textContent.match(/(\\d+) admitted work stages/)?.[1]??0);const selected=[...rows].sort((a,b)=>count(b)-count(a))[0];const index=rows.indexOf(selected);return{text:panel.innerText,rows:rows.length,index,admittedStages:count(selected),selectedText:selected.innerText,stagePositions:[...selected.querySelectorAll('ol [data-staged-position]')].map(button=>Number(button.dataset.stagedPosition))}})()`);
+        assert.equal(report.staged.rows,3,'Three staged source directions remain inspectable');
+        assert(report.staged.text.includes('original 48-action')&&report.staged.text.includes('larger staged task'),'Larger task and old gate are displayed separately');
+        await capture('01-staged-native-evidence');
+        await js(`document.querySelectorAll('[aria-label="Staged whole approach summaries"] > article')[${report.staged.index}].querySelector('button').click()`);
+        await wait(`document.querySelector('[aria-label="Surgical branch"]').value.startsWith('staged-')&&Number(document.querySelector('[aria-label="Surgical timeline"]').value)===0`);
+        if(report.staged.stagePositions.length){
+          const start=Math.max(0,report.staged.stagePositions[0]-2);
+          await js(`(()=>{const s=document.querySelector('[aria-label="Surgical timeline"]');const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(s,${start});s.dispatchEvent(new Event('input',{bubbles:true}));s.dispatchEvent(new Event('change',{bubbles:true}));})()`);
+          await wait(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)===${start}`);
+          report.staged.playbackGoal=report.staged.stagePositions[1]??report.staged.stagePositions[0];
+          await wait(`[...document.querySelectorAll('button')].some(button=>button.textContent.trim()==='Close tool view'&&!button.matches(':disabled'))`);
+          report.staged.targetBefore=await js(`document.querySelector('[data-surgical-metric="targetRemovedMm3"]').textContent`);
+          await click('Close tool view');
+          await js(`(()=>{const label=[...document.querySelectorAll('[aria-label="Close instrument view"] label')].find(label=>label.textContent.includes('Follow accepted tool'));const box=label?.querySelector('input');if(box&&!box.checked)box.click()})()`);
+          await capture('03-staged-close-start');
+        }
+        report.checks.push('Whole approach effects, retained stages, refusals and resume evidence are inspectable');
       }else if(mode==='frozen-assessment'){
         await wait(`!!document.querySelector('[aria-label="Frozen assessment sector outcomes"] [data-frozen-sector-branch]')`);
         report.learning=await js(`document.querySelector('.learned-sector-execution').innerText`);
@@ -194,13 +222,17 @@ app.on('browser-window-created',(_event,window)=>{
       await ready();
       const position=await js(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)`);
       const end=await js(`Number(document.querySelector('[aria-label="Surgical timeline"]').max)`);
-      const goal=Math.min(position+4,end);
+      const goal=Math.min(mode==='staged'&&report.staged?.playbackGoal?report.staged.playbackGoal:position+4,end);
       if(goal>position){
         await wait(`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Play replay'&&!b.matches(':disabled'))`);
         await click('Play replay');
         await wait(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)>=${goal}`,180);
         if(await js(`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Pause replay')`))await click('Pause replay');
         await ready();report.playback={startPosition:position,observedPosition:await js(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)`)};
+        if(mode==='staged'){
+          report.staged.targetAfter=await js(`document.querySelector('[data-surgical-metric="targetRemovedMm3"]').textContent`);
+          if(report.staged.stagePositions.length)assert(Number(report.staged.targetAfter)>Number(report.staged.targetBefore),'Recorded work playback changes measured native target removal');
+        }
         report.checks.push('Play advances actual recorded instrument/physics frames and pause stops scheduling');await capture('02-authoritative-playback');
       }else{
         assert.equal(mode,'frozen-assessment','Selected policy must contain actual native actions');
@@ -209,11 +241,12 @@ app.on('browser-window-created',(_event,window)=>{
       }
       if(mode==='sector')assert(await js(`document.querySelectorAll('[aria-label="Sector strategy outcomes"] tbody tr').length>0`),'Comparison evidence remains visible during compact playback');
       if(mode==='joint')assert(await js(`!!document.querySelector('.joint-strategies')&&!document.body.innerText.includes('Saved joint strategy evidence could not be bound')`),'Joint evidence remains bound during compact playback');
+      if(mode==='staged')assert(await js(`!!document.querySelector('.staged-strategies')&&!document.body.innerText.includes('Staged strategy evidence could not be bound')`),'Staged evidence remains bound during compact playback');
       await wait(`!![...document.querySelectorAll('header button')].find(b=>b.textContent.trim()==='Save'&&!b.matches(':disabled'))`);
       await click('Save');await wait(`![...document.querySelectorAll('header button')].find(b=>b.textContent.trim()==='Save')?.matches(':disabled')`);
       assert(fs.existsSync(saved));report.checks.push('Native desktop save writes the inspected trajectory');
       assert.equal(hash(input),sourceHash);report.sourcePreserved=true;report.savedCase=saved;report.passed=report.errors.length===0&&!report.windowEverVisible;
-    }catch(error){report.passed=false;report.failure=error.stack;fs.writeFileSync(path.join(output,'failure.png'),(await window.webContents.capturePage(undefined,{stayHidden:true,stayAwake:true})).toPNG());console.error(error.stack);}
+    }catch(error){report.passed=false;report.failure=error.stack;report.failureText=await js('document.body.innerText');fs.writeFileSync(path.join(output,'failure.png'),(await window.webContents.capturePage(undefined,{stayHidden:true,stayAwake:true})).toPNG());console.error(error.stack);}
     report.finishedUtc=new Date().toISOString();fs.writeFileSync(path.join(output,'report.json'),JSON.stringify(report,null,2));console.log(JSON.stringify(report));app.exit(report.passed?0:1);
   });
 });

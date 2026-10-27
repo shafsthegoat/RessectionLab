@@ -442,6 +442,36 @@ def dispatch(session, operation, args, request, progress):
         record['position'] = len(engine.actions)
         record.setdefault('timeline', {})[record['branchId']] = copy.deepcopy(engine.history)
         outcome = {'status': 'accepted', 'reason': director.get('stopReason') or director.get('currentPhaseId'), 'completedFraction': 1., 'events': []}
+    elif command == 'plan' and args.get('opponent') == 'anatomy-staged-strategy':
+        from .surgical_staged_planning import (
+            compare_staged_strategies, install_staged_comparison,
+            require_staged_development)
+        from .surgical_planning import validate_saved_comparison
+        from .surgical_sector_planning import validate_saved_sector_comparison
+        if entry is None:
+            raise ValueError('Save and prepare a declared DEVELOPMENT source before staged execution')
+        role = require_staged_development(entry.case)
+        access, sectors = record.get('planning'), record.get('sectorPlanning')
+        if (not isinstance(access, dict) or not isinstance(sectors, dict) or
+                sectors.get('sourceAccessComparisonSeal') != access.get('comparisonSeal')):
+            raise ValueError('Staged work requires a paired source access/sector comparison')
+        if (record['position'] != 0 or engine.actions or
+                record['branches'][record['branchId']]['actions'] or
+                engine.state_id != access.get('startStateId') or 'stagedPlanning' in record):
+            raise ValueError('Open an original common intact source for staged work')
+        validate_saved_comparison(engine.scene, record, access)
+        validate_saved_sector_comparison(engine.scene, record, sectors)
+        staged = compare_staged_strategies(engine, record,
+            acknowledge_unknowns=args.get('acknowledgeResearchUnknowns', False),
+            check=request.check, progress=progress)
+        if staged['report'].get('interruption'):
+            raise ValueError('Staged comparison interrupted: '+staged['report']['interruption'])
+        install_staged_comparison(record, staged, engine.scene)
+        for candidate, row in staged['branches']:
+            replay_cache.seek(candidate, record['branches'][row['branchId']],
+                              len(candidate.actions), check=request.check)
+        outcome = {'status': 'accepted', 'reason': 'staged_comparison_recorded',
+                   'completedFraction': 1., 'events': []}
     elif command == 'plan' and args.get('opponent') == 'anatomy-joint-strategy':
         from .surgical_joint_planning import (
             compare_joint_strategies, install_joint_comparison, validate_joint_report)
@@ -612,6 +642,11 @@ def dispatch(session, operation, args, request, progress):
         sector_record = {**record, 'planning': record.get('sectorSourceAccessComparison', record.get('planning'))}
         validate_saved_sector_comparison(engine.scene, sector_record, sectors)
     result['sectorPlanning'] = sectors
+    staged_report = record.get('stagedPlanning')
+    if staged_report is not None:
+        from .surgical_staged_planning import validate_staged_report, staged_summary
+        validate_staged_report(engine.scene, record, staged_report)
+        result['stagedPlanning'] = staged_summary(staged_report)
     joint_report = record.get('jointPlanning')
     if joint_report is not None:
         from .surgical_joint_planning import validate_joint_report
