@@ -1,11 +1,34 @@
 import type {SurgicalResponse} from './surgical-types';
-export interface SectorExecution {schema:string;branchId:string;sourceRole:'DEVELOPMENT';evaluationRole:string;executionSourceSceneId:string;executionAccessPlanSeal:string;executionAccessMethod:string;checkpointFileSha256:string;actorSha256:string;trainingReceiptSha256:string;observationSchema:string;optimizerUpdates:number;status:string;taskGateMet:boolean;cleanupComplete:boolean;deltaTargetMm3:number;deltaNonTargetMm3:number;totalNonTargetMm3:number;perSectorRemovedMm3:{near:number;far:number};highLevelDecisions:string[];nativeActions:number;prefixActions:0;finalStateId:string;exactNativeReplay:true;sectorStartPosition:number}
+export interface SectorExecution {schema:string;branchId:string;sourceRole:'DEVELOPMENT';evaluationRole:string;executionSourceSceneId:string;executionAccessPlanSeal:string;executionAccessMethod:string;checkpointFileSha256:string;actorSha256:string;trainingReceiptSha256:string;observationSchema:string;optimizerUpdates:number;status:string;taskGateMet:boolean;cleanupComplete:boolean;deltaTargetMm3:number;deltaNonTargetMm3:number;totalNonTargetMm3:number;perSectorRemovedMm3:{near:number;far:number};highLevelDecisions:string[];nativeActions:number;prefixActions:0;finalStateId:string;exactNativeReplay:true;sectorStartPosition:number;policyDecisions?:unknown}
 const object=(value:unknown):value is Record<string,unknown>=>!!value&&typeof value==='object'&&!Array.isArray(value);
 const hash=(value:unknown)=>typeof value==='string'&&/^[a-f0-9]{64}$/.test(value);
 const sealed=(value:unknown)=>typeof value==='string'&&/^sha256:[a-f0-9]{64}$/.test(value);
 const count=(value:unknown)=>Number.isSafeInteger(value)&&(value as number)>=0;
 const quantity=(value:unknown):value is number=>typeof value==='number'&&Number.isFinite(value)&&value>=0;
 const options=new Set(['corridor:left','corridor:right','near:left','near:right','far:left','far:right','STOP']);
+export interface SectorDecisionEvidence {index:number;optionId:string;forcedCleanup:boolean;observationHash:string|null;status:string;reason:string|null;exitStatus:'passed'|'refused'|null;discardedPreviewCalls:number;discardedCommittedCalls:number}
+/** Saved decision receipts are display evidence, never policy observations. */
+export function learnedSectorDecisionEvidence(row:SectorExecution):SectorDecisionEvidence[]{
+  const decisions=row.policyDecisions;
+  if(!Array.isArray(decisions)||!decisions.length||decisions.length>6)return[];
+  const selected:string[]=[];const evidence:SectorDecisionEvidence[]=[];
+  for(const [index,decision] of decisions.entries()){
+    if(!object(decision)||decision.index!==index||!options.has(String(decision.optionId))||!object(decision.nativeOption))return[];
+    const forced=decision.boundary==='forced_cleanup',option=decision.nativeOption,probe=option.escapePreflight;
+    if(!forced&&!sealed(decision.observationHash)||forced&&decision.optionId!=='STOP'||
+      option.id!==decision.optionId||!['accepted','refused'].includes(String(option.status))||
+      option.reason!==null&&typeof option.reason!=='string')return[];
+    if(probe!==undefined&&(!object(probe)||!['passed','refused'].includes(String(probe.status))||
+      !count(probe.previewCalls)||!count(probe.committedCalls)))return[];
+    if(!forced)selected.push(String(decision.optionId));
+    evidence.push({index,optionId:String(decision.optionId),forcedCleanup:forced,
+      observationHash:forced?null:String(decision.observationHash),status:String(option.status),reason:option.reason as string|null,
+      exitStatus:object(probe)?probe.status as 'passed'|'refused':null,
+      discardedPreviewCalls:object(probe)?probe.previewCalls as number:0,
+      discardedCommittedCalls:object(probe)?probe.committedCalls as number:0});
+  }
+  return selected.length===row.highLevelDecisions.length&&selected.every((id,i)=>id===row.highLevelDecisions[i])?evidence:[];
+}
 export function learnedSectorExecutions(artifact:unknown,response:SurgicalResponse|null):SectorExecution[]{
   if(!object(artifact)||!response||!Array.isArray(artifact.learnedSectorExecutions)||artifact.learnedSectorExecutions.length>12)return[];
   const rows=artifact.learnedSectorExecutions;

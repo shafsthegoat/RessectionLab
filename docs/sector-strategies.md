@@ -49,6 +49,16 @@ actions; it cannot replace an executed prefix or silently switch hands after
 access. Checked duration retries and reverse source-waypoint withdrawal retain
 their refusals and actual costs.
 
+Before admitting a sector option, the controller executes the proposed macro
+and its checked STOP on detached native branches. It admits the macro only if
+the complete option and withdrawal pass the same tissue and action limits.
+A refused check preserves the current accepted prefix. The comparison shows
+these exit checks separately from the recorded trajectory. Discarded probe
+previews and transitions count toward computation costs; they receive no
+removal credit. The actor receives no prospective outcome or feasibility mask.
+Its saved decision evidence retains observation identities, controller refusals
+and forced cleanup separately from policy-selected STOP.
+
 The development runner first measures scripted, bounded search and untrained
 controls. It fits BC from a successful native demonstration, checks frozen BC,
 then performs actual PPO updates and cold/native audits for three fixed seeds.

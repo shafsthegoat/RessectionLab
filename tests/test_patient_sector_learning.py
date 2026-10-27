@@ -12,6 +12,7 @@ from resectionlab.patient_sector_learning import (ACTION_IDS, OptionActor,
     OBSERVATION_SCHEMA, PolicyInput, actor_choice, frozen_actor, input_digest,
     fixed_choice, model_binding, parameter_hash, policy_input, prepare_case,
     rollout, seal_actor)
+from resectionlab.surgical_engine import SurgicalEngine
 
 
 def _observation():
@@ -165,6 +166,61 @@ def test_declared_development_native_options_append_and_replay():
     assert report['terminalAppliedDecisionIndex'] == 3
     assert [row['trainingReward'] for row in report['decisions']] == [
         item[2] for item in result['training']]
+    assert report['cost']['discardedProbePreviewCalls'] > 0
+    assert report['cost']['discardedProbeCommittedCalls'] > 0
+    assert report['cost']['retainedBranchCommittedCalls'] == 14
     other = prepare_case(source, access_method='axis0-access')
     assert other.access_method == 'axis0-access'
     assert other.access['planSeal'] != prepared.access['planSeal']
+
+
+def test_failed_escape_probe_keeps_prefix_and_counts_actual_physics(monkeypatch):
+    source = (Path(__file__).resolve().parents[1]/'testcases/outputs/'
+        'integrated-goal-20261026/fresh-patients/UCSF-PDGM-0005/'
+        'sector-comparison-v3/sector-comparison.ressectionlab')
+    if not source.exists():
+        pytest.skip('Ignored DEVELOPMENT source archive is unavailable')
+    prepared = prepare_case(source)
+    real_preview, real_step = SurgicalEngine.preview, SurgicalEngine.step
+    observed = {'previewCalls': 0, 'externalStepCalls': 0, 'insidePreview': 0}
+
+    def counted_preview(self, *args, **kwargs):
+        observed['previewCalls'] += 1
+        observed['insidePreview'] += 1
+        try:
+            return real_preview(self, *args, **kwargs)
+        finally:
+            observed['insidePreview'] -= 1
+
+    def counted_step(self, *args, **kwargs):
+        if not observed['insidePreview']:
+            observed['externalStepCalls'] += 1
+        return real_step(self, *args, **kwargs)
+
+    monkeypatch.setattr(SurgicalEngine, 'preview', counted_preview)
+    monkeypatch.setattr(SurgicalEngine, 'step', counted_step)
+    result = rollout(prepared, fixed_choice(('corridor:left', 'far:left', 'STOP')),
+                     method='instrumented-refused-escape')
+    report = result['report']
+    decision = report['decisions'][1]
+    option = decision['nativeOption']
+    assert not report['taskGateMet']
+    assert report['status'] == 'incomplete' and not report['stopSelected']
+    assert report['cleanupComplete'] is True
+    assert report['deltaTargetMm3'] == report['deltaNonTargetMm3'] == 0.
+    assert report['perSectorRemovedMm3'] == {'near': 0., 'far': 0.}
+    assert decision['optionId'] == 'far:left'
+    assert option['status'] == 'refused'
+    assert option['attempts'] == [] and option['nativeActionsAppended'] == 0
+    assert option['startStateId'] == option['finalStateId']
+    assert decision['stateId'] == report['decisions'][0]['stateId']
+    assert report['cost']['discardedProbePreviewCalls'] > 0
+    assert report['cost']['discardedProbeCommittedCalls'] > 0
+    assert report['cost']['previewCalls'] == observed['previewCalls']
+    assert report['cost']['committedCalls']+report['cost']['independentReplayCalls'] == \
+        observed['externalStepCalls']
+    assert report['forcedCleanupResourcePenalty'] >= 0.
+    assert report['decisions'][-1]['boundary'] == 'forced_cleanup'
+    assert abs(report['decisions'][1]['trainingReward']-(
+        report['decisions'][1]['reward']+report['terminalReward']-
+        report['forcedCleanupResourcePenalty'])) < 1.e-9

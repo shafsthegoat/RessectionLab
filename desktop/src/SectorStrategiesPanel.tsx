@@ -30,6 +30,11 @@ export function SectorStrategiesPanel({c,pause}:{c:SurgicalController;pause:()=>
         <p>Observed first progress: {plan.continuationOutcome?.observedFirstProgressOrder?.join(' → ')||'None'}.</p>
         <p>Per-sector additional target: {Object.entries(plan.continuationOutcome?.perSectorRemovedMm3??{}).map(([name,value])=>`${name}: ${value.toFixed(2)} mm³`).join(' · ')||'Unavailable'}.</p>
         <p>{plan.decisions.length} recorded decisions · {plan.cost.executionCalls} committed action calls · {plan.cost.previewCalls} previews · {plan.cost.freshReplayCalls} verification calls.</p>
+        {!!plan.escapePreflights?.length&&<details className="sector-exit-checks"><summary>Exit checks before sector actions</summary>
+          <p>Each proposed sector option was checked with withdrawal on a separate native branch before admission. Refused options leave the current accepted state unchanged.</p>
+          <ul>{plan.escapePreflights.map((probe,index)=><li key={`${probe.optionId}-${index}`}>{probe.optionId} at action {probe.atActionPosition}: {probe.status==='passed'?'Checked exit available':'Option refused'}{probe.reason?` · ${probe.reason.replaceAll('_',' ')}`:''}. {probe.previewCalls} discarded probe previews and {probe.committedCalls} discarded probe transitions.</li>)}</ul>
+          <p>{plan.cost.totalPhysicalCalls??plan.cost.previewCalls+plan.cost.executionCalls+plan.cost.freshReplayCalls+(plan.cost.preflightPreviewCalls??0)+(plan.cost.preflightCommittedCalls??0)} total native calls, including discarded probes and verification.</p>
+        </details>}
         <ModeledOutcomesPanel outcome={plan.modeledOutcomes}/>
         <details><summary>Ordered native decisions</summary><ol>{plan.decisions.map(row=><li key={row.index}>{row.actionId??`${row.action.slot}: ${row.action.instrument??row.action.operation}`} · {row.action.duration.toFixed(2)} s · {row.status}{row.reason?` · ${row.reason}`:''}</li>)}</ol></details>
       </details>)}

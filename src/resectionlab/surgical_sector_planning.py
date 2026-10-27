@@ -118,8 +118,8 @@ def _duration_variants(action):
                 yield retry
 
 
-def execute_strategy_option(engine, access_plan, option_id, *, corridor_binding=None,
-                            max_actions=48, check=lambda: None):
+def _execute_strategy_option_core(engine, access_plan, option_id, *, corridor_binding=None,
+                                  max_actions=48, check=lambda: None):
     """Append one checked high-level option to the same observed native history.
 
     `corridor:<hand>` is an intact-source choice. Later `near:<hand>`,
@@ -225,7 +225,9 @@ def execute_strategy_option(engine, access_plan, option_id, *, corridor_binding=
             row = {'index': index, 'atActionPosition': at, 'action': copy.deepcopy(trial),
                    'previewStatus': preview['status'], 'previewStateId': preview['stateId'],
                    'status': preview['status'] if accepted else 'refused',
-                   'reason': reason, 'sectorDeltaMm3': sector_delta}
+                   'reason': reason, 'sectorDeltaMm3': sector_delta,
+                   'previewTargetRemovedMm3': preview['metrics']['targetRemovedMm3'],
+                   'previewNonTargetRemovedMm3': preview['metrics']['nonTargetRemovedMm3']}
             attempts.append(row)
             if not accepted:
                 failure = str(reason or preview['status'])
@@ -357,6 +359,92 @@ def execute_strategy_option(engine, access_plan, option_id, *, corridor_binding=
     return candidate, outcome
 
 
+def _preview_count(attempts):
+    return sum('previewStatus' in row for row in attempts)
+
+
+def _escape_preflight(engine, access_plan, option_id, *, corridor_binding,
+                      max_actions, check):
+    """Test the whole macro and checked STOP on clones of the observed prefix.
+
+    The proposed macro is the returned branch only if its exit succeeds. STOP
+    remains speculative; its actions are never spliced into the macro history.
+    """
+    check()
+    macro, proposed = _execute_strategy_option_core(engine, access_plan, option_id,
+        corridor_binding=corridor_binding, max_actions=max_actions, check=check)
+    check()
+    escaped, cleanup = _execute_strategy_option_core(macro, access_plan, 'STOP',
+        corridor_binding=corridor_binding, max_actions=max_actions, check=check)
+    passed = (proposed['status'] == 'accepted' and cleanup['status'] == 'accepted'
+              and cleanup['cleanupComplete'] is True and
+              len(escaped.actions) <= max_actions)
+    if passed:
+        reason = None
+    elif proposed['status'] != 'accepted':
+        reason = 'MACRO_'+str(proposed['reason'] or 'REFUSED')
+    else:
+        reason = 'CLEANUP_'+str(cleanup['reason'] or 'INCOMPLETE')
+    # Admitted macro transitions belong to the returned option. Every other
+    # clone transition is discarded but remains charged and inspectable.
+    discarded_macro = not passed
+    preflight = {
+        'status': 'passed' if passed else 'refused', 'reason': reason,
+        'atActionPosition': len(engine.actions),
+        'macroFinalStateId': macro.state_id,
+        'cleanupFinalStateId': escaped.state_id,
+        'cleanupComplete': cleanup['cleanupComplete'],
+        'macroReusedAsReturnedBranch': passed,
+        'macroAttempts': copy.deepcopy(proposed['attempts']),
+        'cleanupAttempts': copy.deepcopy(cleanup['attempts']),
+        'previewCalls': _preview_count(cleanup['attempts'])+
+            (_preview_count(proposed['attempts']) if discarded_macro else 0),
+        'committedCalls': cleanup['nativeActionsAppended']+
+            (proposed['nativeActionsAppended'] if discarded_macro else 0),
+        'proposedNativeActions': proposed['nativeActionsAppended'],
+        'checkedCleanupNativeActions': cleanup['nativeActionsAppended'],
+    }
+    return macro, proposed, preflight
+
+
+def execute_strategy_option(engine, access_plan, option_id, *, corridor_binding=None,
+                            max_actions=48, check=lambda: None):
+    """Append one native option only when its checked escape remains possible.
+
+    Near/far options first execute their exact macro on a clone, then run the
+    existing checked STOP controller from that resulting state on another
+    clone. A failed macro or exit leaves the caller's accepted prefix intact.
+    Clone probes use the same public preview/step transitions and action caps.
+    """
+    if isinstance(option_id, str) and option_id.startswith(('near:', 'far:')):
+        candidate, proposed, preflight = _escape_preflight(engine, access_plan,
+            option_id, corridor_binding=corridor_binding, max_actions=max_actions,
+            check=check)
+        if preflight['status'] == 'passed':
+            outcome = proposed
+        else:
+            candidate = engine.clone()
+            outcome = {**proposed,
+                'finalStateId': engine.state_id, 'status': 'refused',
+                'reason': 'ESCAPE_PREFLIGHT_'+preflight['reason'],
+                'attempts': [], 'nativeActionsAppended': 0,
+                'sectorDeltaMm3': {'near': 0., 'far': 0.},
+                'cleanupComplete': not _cleanup_pending(engine),
+                'corridorBinding': corridor_binding}
+        outcome['escapePreflight'] = preflight
+    else:
+        candidate, outcome = _execute_strategy_option_core(engine, access_plan,
+            option_id, corridor_binding=corridor_binding, max_actions=max_actions,
+            check=check)
+    discarded = outcome.get('escapePreflight') or {}
+    outcome['totalPreviewCalls'] = (_preview_count(outcome['attempts'])+
+                                    discarded.get('previewCalls', 0))
+    outcome['totalCommittedCalls'] = (outcome['nativeActionsAppended']+
+                                      discarded.get('committedCalls', 0))
+    outcome['physicalCalls'] = outcome['totalPreviewCalls']+outcome['totalCommittedCalls']
+    return candidate, outcome
+
+
 def _cleanup_pending(engine):
     pending = []
     for name, slot in engine.state['slots'].items():
@@ -481,6 +569,7 @@ def _run_variant(base, access_plan, sectors, sector_evidence, hand, order, *,
     route = access_plan['route']
     prefix_actions = _prefix_actions(access_plan)
     attempts = []
+    escape_preflights = []
     failures = []
     phases = []
     initial_metrics = base.metrics()
@@ -538,17 +627,6 @@ def _run_variant(base, access_plan, sectors, sector_evidence, hand, order, *,
         row['committedActionPosition'] = len(candidate.actions)
         return True, row
 
-    def working_attempt(action, phase):
-        row = None
-        for trial in _duration_variants(action):
-            accepted, row = attempt(trial, phase)
-            if accepted:
-                return True, row
-            if row is None or row['reason'] != 'SHAFT_COLLISION':
-                break
-        failures.append(str(row['reason'] if row is not None else 'ACTION_BUDGET'))
-        return False, row
-
     for original in prefix_actions:
         action = copy.deepcopy(original)
         if action['slot'] != 'left':
@@ -571,36 +649,51 @@ def _run_variant(base, access_plan, sectors, sector_evidence, hand, order, *,
             failures.append('SECTOR_RESIDUAL_BELOW_DECLARED_GATE')
 
     if not failures:
+        corridor_binding = {
+            'sourceSceneId': base.scene.identity,
+            'sourceAccessPlanSeal': access_plan['planSeal'],
+            'hand': hand, 'prefixStateId': prefix_state_id,
+            'prefixActionSeal': semantic_digest(candidate.actions),
+            'prefixMetrics': prefix_metrics,
+            'prefixSectorRemovedMm3': prefix_sector}
         for index, name in enumerate(order):
             start_position = len(candidate.actions)
             phase = 'sector-'+name
             wrong = order[1] if index == 0 else None
             before = {key: len(set(candidate.state['removed']) & cells)*base.scene.voxel_mm3
                       for key, cells in sectors.items()}
-            if name == 'far':
-                transit = {'slot': hand, 'operation': 'apply', 'pose': _pose(route, 4.),
-                           'parameters': {'radiusMm': TRANSIT_RADIUS_MM}, 'duration': .2}
-                accepted, row = working_attempt(transit, phase+'-checked-transit')
-                if not accepted or wrong and row['sectorDeltaMm3'][wrong] > 0:
-                    if accepted and wrong:
-                        failures.append('OPPOSITE_SECTOR_REMOVED_BEFORE_FIRST_ORDERED_SECTOR')
-                    break
-                if wrong and row['sectorDeltaMm3'][wrong] > 0:
-                    break
-                if row['sectorDeltaMm3'][name] > 0 and name not in first_progress:
-                    first_progress.append(name)
-            depth, radius = SECTOR_STROKE[name]
-            stroke = {'slot': hand, 'operation': 'apply', 'pose': _pose(route, depth),
-                      'parameters': {'radiusMm': radius}, 'duration': .2}
-            accepted, row = working_attempt(stroke, phase+'-working-stroke')
-            if not accepted:
+            macro, proposed, preflight = _escape_preflight(candidate, access_plan,
+                name+':'+hand, corridor_binding=corridor_binding,
+                max_actions=max_actions, check=check)
+            escape_preflights.append({'optionId': name+':'+hand,
+                'atActionPosition': start_position, **preflight})
+            if preflight['status'] != 'passed':
+                failures.append('ESCAPE_PREFLIGHT_'+preflight['reason'])
+                attempts.append({'phase': phase+'-preflight',
+                                 'atActionPosition': start_position,
+                                 'status': 'not_attempted',
+                                 'reason': 'ESCAPE_PREFLIGHT_'+preflight['reason']})
                 break
+            candidate = macro
+            for row in proposed['attempts']:
+                action_phase = (phase+'-checked-transit'
+                    if name == 'far' and row['index'] == 0 else
+                    phase+'-working-stroke')
+                actual = {'phase': action_phase, **copy.deepcopy(row)}
+                if 'committedStateId' in row:
+                    actual['committedActionPosition'] = row['atActionPosition']+1
+                attempts.append(actual)
+                if 'committedStateId' in row:
+                    for progressed in ('near', 'far'):
+                        if row['sectorDeltaMm3'][progressed] > 0 and \
+                                progressed not in first_progress:
+                            first_progress.append(progressed)
             accepted_sector_strokes += 1
-            if wrong and row['sectorDeltaMm3'][wrong] > 0:
+            if wrong and any(row['sectorDeltaMm3'][wrong] > 0
+                             for row in proposed['attempts']
+                             if 'committedStateId' in row):
                 failures.append('OPPOSITE_SECTOR_REMOVED_BEFORE_FIRST_ORDERED_SECTOR')
                 break
-            if row['sectorDeltaMm3'][name] > 0 and name not in first_progress:
-                first_progress.append(name)
             after = {key: len(set(candidate.state['removed']) & cells)*base.scene.voxel_mm3
                      for key, cells in sectors.items()}
             phases.append({'sector': name, 'hand': hand, 'startActionPosition': start_position,
@@ -743,7 +836,8 @@ def _run_variant(base, access_plan, sectors, sector_evidence, hand, order, *,
             'leftSourcePrefixPreserved': hand == 'left' and
                 candidate.actions[:len(prefix_actions)] == prefix_actions,
             'sectorChoiceStartStateId': prefix_state_id,
-            'decisions': decisions, 'attempts': attempts, 'sectorPhases': phases,
+            'decisions': decisions, 'attempts': attempts,
+            'escapePreflights': escape_preflights, 'sectorPhases': phases,
             'highLevelStop': stop, 'continuationOutcome': outcome,
             'summary': {key: metrics.get(key) for key in ('targetRemovedMm3',
                 'nonTargetRemovedMm3', 'elapsedSeconds', 'activeVesselWounds',
@@ -751,13 +845,23 @@ def _run_variant(base, access_plan, sectors, sector_evidence, hand, order, *,
             'unassessed': ['skull opening', 'complete vessel coverage',
                            'functional boundaries', 'calibrated clinical harm'],
             'cost': {'planningSeconds': time.perf_counter()-started,
-                     'executionCalls': len(decisions), 'previewCalls': len(attempts),
+                     'executionCalls': len(decisions),
+                     'previewCalls': _preview_count(attempts),
+                     'preflightPreviewCalls': sum(row['previewCalls']
+                                                  for row in escape_preflights),
+                     'preflightCommittedCalls': sum(row['committedCalls']
+                                                    for row in escape_preflights),
                      'freshReplayCalls': len(decisions), 'optimizerUpdates': 0},
             'verification': {'independentIntactSourceReplay': True,
                              'exactNativeEndpoint': True,
                              'scope': 'Modeled tissue only; complete skull access unsupported.'}}
     plan['planSeal'] = _plan_seal(base.scene.identity, base.state_id, strategy,
                                   decisions, sector_evidence)
+    plan['cost']['totalPhysicalCalls'] = (
+        plan['cost']['executionCalls']+plan['cost']['previewCalls']+
+        plan['cost']['preflightPreviewCalls']+
+        plan['cost']['preflightCommittedCalls']+
+        plan['cost']['freshReplayCalls'])
     from .surgical_modeled_outcomes import summarize_engine_outcomes
     plan['modeledOutcomes'] = summarize_engine_outcomes(candidate, baseline=base)
     return candidate, plan
@@ -791,28 +895,49 @@ def compare_sector_strategies(engine, source_comparison, saved_branches, *,
             raise TimeoutError('Aggregate strategy planning wall budget exhausted')
     branches = []
     failures = []
+    source_validation_replay_calls = 0
+    complete_physical_inventory = True
     alternatives = source_comparison['alternatives']
     total = len(alternatives)*4
     completed = 0
     for access in alternatives:
+        validation_error = None
+        sectors = evidence = None
+        try:
+            if access['branchId'] not in saved_branches:
+                raise StrategyUnavailable('Saved source access branch is missing')
+            # One authoritative replay validates the immutable source branch
+            # for all four order/hand variants of this access method.
+            saved = SurgicalEngine.restore(engine.scene, saved_branches[access['branchId']],
+                                           check=bounded_check)
+            source_validation_replay_calls += len(saved.actions)
+            if saved.state_id != access['finalStateId'] or \
+                    [row['action'] for row in access['decisions']] != saved.actions:
+                raise StrategyUnavailable('Saved source access actions differ from comparison')
+            sectors, evidence = _sector_cells(engine.scene, access['route'])
+            if any(row['sourceVolumeMm3'] < MIN_SECTOR_MM3
+                   for row in evidence.values()):
+                raise StrategyUnavailable('PREDECLARED_SOURCE_SECTOR_CAPACITY_BELOW_10_MM3')
+        except (StrategyUnavailable, TimeoutError) as error:
+            validation_error = str(error)
+            if isinstance(error, TimeoutError):
+                complete_physical_inventory = False
         for order in (('near', 'far'), ('far', 'near')):
             for hand in ('left', 'right'):
                 identity = access['method']+'-'+hand+'-'+order[0]+'-first'
+                if validation_error is not None:
+                    failures.append({'option': identity, 'reason': validation_error})
+                    completed += 1
+                    progress(completed/total,
+                             'Compared '+identity+' with checked native geometry')
+                    continue
                 if time.perf_counter()-started > max_wall_seconds:
                     failures.append({'option': identity, 'reason': 'AGGREGATE_WALL_BUDGET'})
+                    completed += 1
+                    progress(completed/total,
+                             'Compared '+identity+' with checked native geometry')
                     continue
                 try:
-                    if access['branchId'] not in saved_branches:
-                        raise StrategyUnavailable('Saved source access branch is missing')
-                    saved = SurgicalEngine.restore(engine.scene, saved_branches[access['branchId']],
-                                                   check=bounded_check)
-                    if saved.state_id != access['finalStateId'] or \
-                            [row['action'] for row in access['decisions']] != saved.actions:
-                        raise StrategyUnavailable('Saved source access actions differ from comparison')
-                    sectors, evidence = _sector_cells(engine.scene, access['route'])
-                    if any(row['sourceVolumeMm3'] < MIN_SECTOR_MM3
-                           for row in evidence.values()):
-                        raise StrategyUnavailable('PREDECLARED_SOURCE_SECTOR_CAPACITY_BELOW_10_MM3')
                     candidate, plan = _run_variant(engine, access, sectors, evidence,
                                                    hand, order, max_actions=max_actions_per_strategy,
                                                    check=bounded_check)
@@ -822,11 +947,15 @@ def compare_sector_strategies(engine, source_comparison, saved_branches, *,
                                          'reason': ';'.join(plan['failureReasons'])})
                 except (StrategyUnavailable, TimeoutError) as error:
                     failures.append({'option': identity, 'reason': str(error)})
+                    if isinstance(error, TimeoutError):
+                        complete_physical_inventory = False
                 completed += 1
                 progress(completed/total,
                          'Compared '+identity+' with checked native geometry')
     if engine.snapshot() != original:
         raise ValueError('Sector comparison modified the intact source')
+    strategy_physical_calls = sum(plan['cost']['totalPhysicalCalls']
+                                  for _, plan in branches)
     report = {'schema': SCHEMA, 'task': TASK,
               'status': 'strategy_options_compared' if branches else 'no_executable_strategy',
               'sourceSceneId': engine.scene.identity,
@@ -848,6 +977,12 @@ def compare_sector_strategies(engine, source_comparison, saved_branches, *,
               'optionCount': total, 'retainedCount': len(branches),
               'passedCount': sum(plan['status'] == 'passed' for _, plan in branches),
               'totalWallSeconds': time.perf_counter()-started,
+              'cost': {'sourceValidationReplayCalls': source_validation_replay_calls,
+                       'strategyPhysicalCalls': strategy_physical_calls,
+                       'aggregateTotalPhysicalCalls':
+                           source_validation_replay_calls+strategy_physical_calls
+                           if complete_physical_inventory else None,
+                       'physicalInventoryComplete': complete_physical_inventory},
               'optionFailures': failures,
               'alternatives': [plan for _, plan in branches]}
     return branches, report

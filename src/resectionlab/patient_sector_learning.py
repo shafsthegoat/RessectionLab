@@ -277,6 +277,37 @@ def _state_observation(current: SurgicalEngine, prepared: PreparedCase, binding)
         active_hand=binding['hand'], max_actions=MAX_NATIVE_ACTIONS)
 
 
+def _option_call_cost(option):
+    """Count retained native work and discarded escape probes separately."""
+    attempts = option['attempts']
+    appended = option['nativeActionsAppended']
+    if not isinstance(attempts, list) or type(appended) is not int or appended < 0:
+        raise ValueError('Malformed high-level option physical-call receipt')
+    admitted_previews = sum('previewStatus' in row for row in attempts)
+    probe = option.get('escapePreflight')
+    if option['id'].startswith(('near:', 'far:')):
+        if not isinstance(probe, dict) or not {
+                'totalPreviewCalls', 'totalCommittedCalls', 'physicalCalls'} <= set(option):
+            raise ValueError('Sector option lacks checked escape and call receipts')
+    discarded_previews = 0 if probe is None else probe.get('previewCalls')
+    discarded_commits = 0 if probe is None else probe.get('committedCalls')
+    if any(type(value) is not int or value < 0 for value in
+           (discarded_previews, discarded_commits)):
+        raise ValueError('Malformed discarded escape physical-call count')
+    previews = admitted_previews+discarded_previews
+    commits = appended+discarded_commits
+    if (option.get('totalPreviewCalls', previews) != previews or
+            option.get('totalCommittedCalls', commits) != commits or
+            option.get('physicalCalls', previews+commits) != previews+commits):
+        raise ValueError('High-level option physical-call totals disagree')
+    if probe is not None and option['status'] == 'refused' and \
+            (attempts or appended or option['startStateId'] != option['finalStateId']):
+        raise ValueError('Refused escape probe changed the accepted native prefix')
+    return {'previewCalls': previews, 'committedCalls': commits,
+            'discardedProbePreviewCalls': discarded_previews,
+            'discardedProbeCommittedCalls': discarded_commits}
+
+
 def rollout(prepared: PreparedCase, choose, *, method, max_wall_seconds=MAX_ROLLOUT_SECONDS):
     """Choose fresh options from current sensors and verify the full native replay."""
     started = time.perf_counter()
@@ -289,6 +320,8 @@ def rollout(prepared: PreparedCase, choose, *, method, max_wall_seconds=MAX_ROLL
     binding = None
     decisions, training = [], []
     preview_calls = commit_calls = 0
+    discarded_preview_calls = discarded_commit_calls = 0
+    forced_cleanup_resource_penalty = 0.
     stop_selected = False
     failure = None
     admitted_sectors = 0
@@ -306,10 +339,13 @@ def rollout(prepared: PreparedCase, choose, *, method, max_wall_seconds=MAX_ROLL
         next_engine, option = execute_strategy_option(current, prepared.access,
             option_id, corridor_binding=binding, max_actions=MAX_NATIVE_ACTIONS,
             check=check)
-        option_previews = sum('previewStatus' in row for row in option['attempts'])
-        option_commits = option['nativeActionsAppended']
+        physical = _option_call_cost(option)
+        option_previews = physical['previewCalls']
+        option_commits = physical['committedCalls']
         preview_calls += option_previews
         commit_calls += option_commits
+        discarded_preview_calls += physical['discardedProbePreviewCalls']
+        discarded_commit_calls += physical['discardedProbeCommittedCalls']
         if next_engine.actions[:len(current.actions)] != current.actions:
             raise ValueError('High-level option rewrote an executed native prefix')
         current = next_engine
@@ -334,7 +370,8 @@ def rollout(prepared: PreparedCase, choose, *, method, max_wall_seconds=MAX_ROLL
         decisions.append({'index': index, 'boundary': inp.boundary,
                           'observationHash': input_digest(inp),
                           'optionId': option_id, 'scores': list(map(float, scores)),
-                          'reward': float(reward), 'nativeOption': option,
+                          'reward': float(reward), 'physicalCallCost': physical,
+                          'nativeOption': option,
                           'stateId': current.state_id})
         training.append((inp, selected, float(reward)))
         if option['status'] != 'accepted':
@@ -347,12 +384,19 @@ def rollout(prepared: PreparedCase, choose, *, method, max_wall_seconds=MAX_ROLL
         previous = current
         current, cleanup = execute_strategy_option(current, prepared.access, 'STOP',
             corridor_binding=binding, max_actions=MAX_NATIVE_ACTIONS, check=check)
-        preview_calls += sum('previewStatus' in row for row in cleanup['attempts'])
-        commit_calls += cleanup['nativeActionsAppended']
+        cleanup_physical = _option_call_cost(cleanup)
+        preview_calls += cleanup_physical['previewCalls']
+        commit_calls += cleanup_physical['committedCalls']
+        discarded_preview_calls += cleanup_physical['discardedProbePreviewCalls']
+        discarded_commit_calls += cleanup_physical['discardedProbeCommittedCalls']
+        forced_cleanup_resource_penalty = .002*(
+            cleanup_physical['previewCalls']+cleanup_physical['committedCalls'])
         if current.actions[:len(previous.actions)] != previous.actions:
             raise ValueError('Forced checked cleanup rewrote the policy trajectory')
         decisions.append({'index': len(decisions), 'boundary': 'forced_cleanup',
                           'optionId': 'STOP', 'nativeOption': cleanup,
+                          'physicalCallCost': cleanup_physical,
+                          'resourcePenalty': forced_cleanup_resource_penalty,
                           'stateId': current.state_id})
     if binding is None:
         delta_target = delta_non_target = 0.
@@ -378,7 +422,8 @@ def rollout(prepared: PreparedCase, choose, *, method, max_wall_seconds=MAX_ROLL
     if training:
         inp, selected, reward = training[-1]
         # A checked two-sector completion must outrank intact abstention.
-        training[-1] = (inp, selected, reward+terminal_reward)
+        training[-1] = (inp, selected,
+                        reward+terminal_reward-forced_cleanup_resource_penalty)
         for decision, (_, _, actual_reward) in zip(decisions, training):
             decision['trainingReward'] = actual_reward
     check()
@@ -400,10 +445,14 @@ def rollout(prepared: PreparedCase, choose, *, method, max_wall_seconds=MAX_ROLL
               'finalStateId': current.state_id, 'nativeActions': len(current.actions),
               'decisions': decisions, 'cost': {'previewCalls': preview_calls,
                   'committedCalls': commit_calls, 'independentReplayCalls': len(current.actions),
+                  'discardedProbePreviewCalls': discarded_preview_calls,
+                  'discardedProbeCommittedCalls': discarded_commit_calls,
+                  'retainedBranchCommittedCalls': commit_calls-discarded_commit_calls,
                   'wallSeconds': time.perf_counter()-started,
                   'peakRssBytes': _rss_bytes()},
               'exactNativeReplay': True,
               'terminalReward': terminal_reward,
+              'forcedCleanupResourcePenalty': forced_cleanup_resource_penalty,
               'terminalAppliedDecisionIndex': len(training)-1 if training else None}
     return {'engine': current, 'report': report, 'training': training}
 

@@ -221,3 +221,106 @@ def test_negative_case_retries_same_endpoint_then_checked_reverse_cleanup():
     assert trials[0]['action']['duration'] == .2 and trials[1]['action']['duration'] == .6
     assert (near.metrics()['nonTargetRemovedMm3']-
             first['corridorBinding']['prefixMetrics']['nonTargetRemovedMm3']) <= 20.
+
+
+@pytest.mark.skipif(not FRESH_0005.is_file(), reason='Ignored fresh-development case is unavailable')
+def test_failed_far_macro_preflight_leaves_0005_corridor_unchanged():
+    _, artifacts, _ = load_workspace(FRESH_0005)
+    record = artifacts['surgical_toolbox']
+    scene = load_environment(FRESH_0005)
+    intact = SurgicalEngine.restore(scene, record['branches']['main'])
+    access = record['planning']['alternatives'][0]
+    corridor, entry = execute_strategy_option(intact, access, 'corridor:left')
+    before = corridor.snapshot()
+    refused, option = execute_strategy_option(corridor, access, 'far:left',
+        corridor_binding=entry['corridorBinding'])
+    assert refused.snapshot() == before == corridor.snapshot()
+    assert option['status'] == 'refused'
+    assert option['reason'].startswith('ESCAPE_PREFLIGHT_MACRO_')
+    assert option['nativeActionsAppended'] == 0 and option['attempts'] == []
+    probe = option['escapePreflight']
+    assert probe['status'] == 'refused' and not probe['macroReusedAsReturnedBranch']
+    assert probe['macroAttempts'] and probe['cleanupAttempts']
+    assert probe['committedCalls'] == probe['proposedNativeActions'] + \
+        probe['checkedCleanupNativeActions']
+    assert option['physicalCalls'] == option['totalPreviewCalls'] + \
+        option['totalCommittedCalls'] == probe['previewCalls'] + probe['committedCalls']
+
+
+@pytest.mark.skipif(not FRESH_0007.is_file(), reason='Ignored fresh-development case is unavailable')
+def test_cleanup_budget_is_probed_before_admitting_sector_macro():
+    _, artifacts, _ = load_workspace(FRESH_0007)
+    record = artifacts['surgical_toolbox']
+    scene = load_environment(FRESH_0007)
+    intact = SurgicalEngine.restore(scene, record['branches']['main'])
+    access = record['planning']['alternatives'][0]
+    corridor, entry = execute_strategy_option(intact, access, 'corridor:left')
+    original = corridor.snapshot()
+    # One remaining slot admits the near stroke but cannot admit checked STOP.
+    refused, option = execute_strategy_option(corridor, access, 'near:left',
+        corridor_binding=entry['corridorBinding'],
+        max_actions=len(corridor.actions)+1)
+    assert refused.snapshot() == original == corridor.snapshot()
+    assert option['reason'] == 'ESCAPE_PREFLIGHT_CLEANUP_ACTION_BUDGET'
+    probe = option['escapePreflight']
+    assert probe['proposedNativeActions'] == 1 and not probe['cleanupComplete']
+    assert probe['macroFinalStateId'] != corridor.state_id
+    assert option['nativeActionsAppended'] == 0
+    # With the ordinary ceiling the exact macro clone is retained; only STOP
+    # transitions are discarded and charged to the preflight counters.
+    admitted, option = execute_strategy_option(corridor, access, 'near:left',
+        corridor_binding=entry['corridorBinding'])
+    assert option['status'] == 'accepted' and option['escapePreflight']['status'] == 'passed'
+    assert option['escapePreflight']['macroReusedAsReturnedBranch']
+    assert admitted.actions[:len(corridor.actions)] == corridor.actions
+    assert option['nativeActionsAppended'] == len(admitted.actions)-len(corridor.actions)
+    assert option['totalCommittedCalls'] == option['nativeActionsAppended'] + \
+        option['escapePreflight']['committedCalls']
+
+
+@pytest.mark.skipif(not FRESH_0005.is_file(), reason='Ignored fresh-development case is unavailable')
+def test_comparison_counts_checked_preflights_and_single_source_replay(monkeypatch):
+    _, artifacts, _ = load_workspace(FRESH_0005)
+    record = artifacts['surgical_toolbox']
+    scene = load_environment(FRESH_0005)
+    intact = SurgicalEngine.restore(scene, record['branches']['main'])
+    source = copy.deepcopy(record['planning'])
+    source['alternatives'] = source['alternatives'][:1]
+    source_replay_actions = len(record['branches'][source['alternatives'][0]['branchId']]['actions'])
+    actual = {'preview': 0, 'step': 0, 'inside_preview': 0}
+    preview = SurgicalEngine.preview
+    step = SurgicalEngine.step
+
+    def traced_preview(self, action, **kwargs):
+        actual['preview'] += 1
+        actual['inside_preview'] += 1
+        try:
+            return preview(self, action, **kwargs)
+        finally:
+            actual['inside_preview'] -= 1
+
+    def traced_step(self, action, **kwargs):
+        if not actual['inside_preview']:
+            actual['step'] += 1
+        return step(self, action, **kwargs)
+
+    monkeypatch.setattr(SurgicalEngine, 'preview', traced_preview)
+    monkeypatch.setattr(SurgicalEngine, 'step', traced_step)
+    branches, report = compare_sector_strategies(intact, source, record['branches'],
+        acknowledge_unknowns=True)
+    assert len(branches) == 4 and report['passedCount'] == 0
+    assert report['cost']['sourceValidationReplayCalls'] == source_replay_actions
+    assert report['cost']['physicalInventoryComplete']
+    assert report['cost']['aggregateTotalPhysicalCalls'] == \
+        actual['preview'] + actual['step']
+    assert report['cost']['strategyPhysicalCalls'] == \
+        sum(plan['cost']['totalPhysicalCalls'] for _, plan in branches)
+    for _, plan in branches:
+        assert plan['continuationOutcome']['cleanupComplete']
+        assert plan['escapePreflights']
+        assert plan['cost']['totalPhysicalCalls'] == sum(plan['cost'][key] for key in (
+            'executionCalls', 'previewCalls', 'preflightPreviewCalls',
+            'preflightCommittedCalls', 'freshReplayCalls'))
+        if plan['strategy']['sectorOrder'][0] == 'far':
+            assert plan['escapePreflights'][0]['status'] == 'refused'
+            assert 'ESCAPE_PREFLIGHT_' in plan['failureReasons'][0]

@@ -157,6 +157,8 @@ def export_native(prepared, trial, model, role, output, *, seed, declaration,
         'perSectorRemovedMm3': actor['perSectorRemovedMm3'],
         'highLevelDecisions': [row['optionId'] for row in actor['decisions']
                                if row['boundary'] != 'forced_cleanup'],
+        'policyDecisions': copy.deepcopy(actor['decisions']),
+        'executionCost': copy.deepcopy(actor['cost']),
         'nativeActions': actor['nativeActions'], 'prefixActions': 0,
         'finalStateId': actor['finalStateId'],
         'exactNativeReplay': actor['exactNativeReplay'],

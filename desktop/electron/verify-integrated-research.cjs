@@ -73,6 +73,11 @@ app.on('browser-window-created',(_event,window)=>{
         }
         await wait(`!!document.querySelector('.learned-sector-execution')`);
         report.learning=await js(`document.querySelector('.learned-sector-execution').innerText`);
+        if(process.env.INTEGRATED_RESEARCH_EXPECT_EXIT_CHECKS==='1'){
+          report.policyDecisionEvidence=await js(`[...document.querySelectorAll('.learned-sector-decision-evidence > li')].map(item=>item.textContent)`);
+          assert(report.policyDecisionEvidence.some(text=>text.includes('exit check')),'Saved actor decisions retain native exit-check evidence');
+          report.checks.push('Policy observation identities, exit-check refusals and discarded probe costs survive native export');
+        }
         const target=await js(`(()=>{const b=document.querySelector('[data-learned-sector-branch]');return{branchId:b.dataset.learnedSectorBranch,start:Number(b.dataset.learnedSectorStart),end:Number(b.dataset.learnedSectorEnd)}})()`);
         assert(target.end>0);await js(`document.querySelector('.learned-sector-execution').scrollIntoView({block:'start'})`);
         await capture('01-learned-sector-evidence');await click('Inspect PPO sector policy');
@@ -90,6 +95,11 @@ app.on('browser-window-created',(_event,window)=>{
         await wait(`document.querySelectorAll('[aria-label="Sector strategy outcomes"] tbody tr').length>0`,180);
         const selection=await js(`(()=>{const buttons=[...document.querySelectorAll('[data-sector-branch]')];const b=buttons.find(b=>b.dataset.sectorGate==='true'&&b.dataset.sectorHand==='right'&&b.dataset.sectorOrder==='far,near')??buttons.find(b=>b.dataset.sectorCleanup==='true'&&b.dataset.sectorOrder==='near,far')??buttons[0];return{branchId:b.dataset.sectorBranch,start:Number(b.dataset.sectorStart),end:Number(b.dataset.sectorEnd),hand:b.dataset.sectorHand,gate:b.dataset.sectorGate}})()`);
         report.sectors={comparison:await js(`document.querySelector('[aria-label="Sector strategy outcomes"]').innerText`),selection};
+        if(process.env.INTEGRATED_RESEARCH_EXPECT_EXIT_CHECKS==='1'){
+          report.sectors.exitChecks=await js(`[...document.querySelectorAll('.sector-exit-checks')].map(item=>item.textContent)`);
+          assert(report.sectors.exitChecks.length>0,'Comparison retains prospective native exit checks');
+          assert(report.sectors.exitChecks.some(text=>text.includes('discarded probe')),'Comparison reports discarded native work');
+        }
         await js(`document.querySelector('.sector-strategies').scrollIntoView({block:'start'})`);
         await capture('01-sector-comparison');
         await js(`document.querySelector('[data-sector-branch='+CSS.escape(${JSON.stringify(selection.branchId)})+']').click()`);
