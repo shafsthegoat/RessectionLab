@@ -28,7 +28,7 @@ import torch
 from resectionlab.core import semantic_digest
 from resectionlab.imaging import save_case
 from resectionlab.patient_sector_learning import (ACTION_IDS, MAX_NATIVE_ACTIONS,
-    OBSERVATION_SCHEMA, SCHEMA, OptionActor, OptionCritic, actor_choice, fit_bc,
+    OBSERVATION_SCHEMA, SCHEMA, DEVELOPMENT_ACCESS_METHOD, OptionActor, OptionCritic, actor_choice, fit_bc,
     fixed_choice, frozen_actor, model_binding, parameter_hash, ppo_update,
     prepare_case, rollout, search_control, seal_actor, sha256)
 from resectionlab.surgical_engine import SurgicalEngine
@@ -41,6 +41,7 @@ PPO_UPDATES = 2
 PPO_EPISODES_PER_UPDATE = 2
 MAX_SUITE_SECONDS = 900.
 MAX_SUITE_PHYSICAL_CALLS = 3600
+MAX_ALLOWED_SUITE_PHYSICAL_CALLS = 6000
 
 
 def write_json(path, value):
@@ -191,20 +192,30 @@ def export_native(prepared, trial, model, role, output, *, seed, declaration,
             'metadata': metadata, 'nativeReplayCalls': len(reopened.actions)}
 
 
-def _suite_check(started, reports, *, source_replays=0, exported_replays=0):
+def _suite_check(started, reports, *, source_replays=0, exported_replays=0,
+                 max_physical_calls=MAX_SUITE_PHYSICAL_CALLS):
     elapsed = time.perf_counter()-started
     calls = (sum(_physical_calls(row) for row in reports)+
              source_replays+exported_replays)
     if elapsed > MAX_SUITE_SECONDS:
         raise TimeoutError('Hierarchical learning suite wall budget exhausted')
-    if calls > MAX_SUITE_PHYSICAL_CALLS:
+    if calls > max_physical_calls:
         raise TimeoutError('Hierarchical learning suite native-call budget exhausted')
     return {'wallSeconds': elapsed, 'physicalCalls': calls,
             'maxWallSeconds': MAX_SUITE_SECONDS,
-            'maxPhysicalCalls': MAX_SUITE_PHYSICAL_CALLS}
+            'maxPhysicalCalls': max_physical_calls}
 
 
-def run(train_source, transfer_source, output, *, fit=False):
+def run(train_source, transfer_source, output, *, fit=False,
+        train_access_method=DEVELOPMENT_ACCESS_METHOD,
+        transfer_access_method=DEVELOPMENT_ACCESS_METHOD,
+        max_suite_physical_calls=MAX_SUITE_PHYSICAL_CALLS):
+    if (type(max_suite_physical_calls) is not int or
+            not 1 <= max_suite_physical_calls <= MAX_ALLOWED_SUITE_PHYSICAL_CALLS):
+        raise ValueError('Suite native-call cap must be an integer in 1..6000')
+    if (not isinstance(train_access_method, str) or not train_access_method or
+            not isinstance(transfer_access_method, str) or not transfer_access_method):
+        raise ValueError('Both selected access methods must be nonempty strings')
     output = Path(output).resolve()
     if output.exists() or 'testcases' not in output.parts:
         raise ValueError('Choose a new ignored testcases/ output directory')
@@ -214,6 +225,9 @@ def run(train_source, transfer_source, output, *, fit=False):
         'mode': 'fit' if fit else 'profile',
         'scope': '0007 DEVELOPMENT same-case fit; prespecified 0005 DEVELOPMENT frozen transfer',
         'sourceRole': 'DEVELOPMENT', 'seeds': SEEDS,
+        'requestedAccessMethods': {'train': train_access_method,
+                                   'transfer': transfer_access_method},
+        'requestedMaxSuitePhysicalCalls': max_suite_physical_calls,
         'ppoProtocol': {'updates': PPO_UPDATES,
                         'sampledEpisodesPerUpdate': PPO_EPISODES_PER_UPDATE,
                         'finalCheckpointOnly': True},
@@ -226,9 +240,11 @@ def run(train_source, transfer_source, output, *, fit=False):
     source_replays = exported_replays = 0
     try:
         prepared = {}
-        for label, source in (('train', train_source), ('transfer', transfer_source)):
+        for label, source, access_method in (
+                ('train', train_source, train_access_method),
+                ('transfer', transfer_source, transfer_access_method)):
             declaration = development_declaration(source)
-            case = prepare_case(source)
+            case = prepare_case(source, access_method=access_method)
             prepared[label] = (case, declaration)
             source_validation = _source_validation_calls(case)
             validation_replays = source_validation['actualReplayCalls']
@@ -261,7 +277,8 @@ def run(train_source, transfer_source, output, *, fit=False):
                     'teacherMethod': (search['teacher']['report']['method']
                                       if search['teacher'] else None)}}
             _suite_check(started, reports, source_replays=source_replays,
-                         exported_replays=exported_replays)
+                         exported_replays=exported_replays,
+                         max_physical_calls=max_suite_physical_calls)
         teacher = searches['train']['teacher']
         if not teacher or not teacher['report']['taskGateMet']:
             raise ValueError('0007 has no successful checked high-level BC demonstration')
@@ -320,7 +337,8 @@ def run(train_source, transfer_source, output, *, fit=False):
                 run_receipt['ppo']['status'] = 'not_started_bc_live_gate_failed'
                 receipt['seedRuns'].append(run_receipt)
                 _suite_check(started, reports, source_replays=source_replays,
-                             exported_replays=exported_replays)
+                             exported_replays=exported_replays,
+                             max_physical_calls=max_suite_physical_calls)
                 continue
             with torch.random.fork_rng(devices=[]):
                 torch.manual_seed(seed)
@@ -338,7 +356,8 @@ def run(train_source, transfer_source, output, *, fit=False):
                     sampled_reports.append(trial['report'])
                     reports.append(trial['report'])
                     _suite_check(started, reports, source_replays=source_replays,
-                                 exported_replays=exported_replays)
+                                 exported_replays=exported_replays,
+                                 max_physical_calls=max_suite_physical_calls)
                 try:
                     updates.append(ppo_update(actor, critic, episodes))
                 except Exception as error:
@@ -378,7 +397,8 @@ def run(train_source, transfer_source, output, *, fit=False):
                                                             'derived': derived}
             receipt['seedRuns'].append(run_receipt)
             _suite_check(started, reports, source_replays=source_replays,
-                         exported_replays=exported_replays)
+                         exported_replays=exported_replays,
+                         max_physical_calls=max_suite_physical_calls)
         receipt['status'] = 'saved'
         return receipt
     except BaseException as error:
@@ -394,23 +414,40 @@ def run(train_source, transfer_source, output, *, fit=False):
             'sourceValidationReplayCalls': source_replays,
             'exportedWorkspaceReplayCalls': exported_replays,
             'maxWallSeconds': MAX_SUITE_SECONDS,
-            'maxPhysicalCalls': MAX_SUITE_PHYSICAL_CALLS,
+            'maxPhysicalCalls': max_suite_physical_calls,
             'reportCount': len(reports)}
         receipt['sourcesUnchanged'] = {label: sha256(row['path']) == row['fileSha256']
             for label, row in receipt['sources'].items()}
         write_json(output/'receipt.json', receipt)
 
 
-def main():
+def build_parser():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--train-source', type=Path, required=True)
     parser.add_argument('--transfer-source', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--source-role', choices=['DEVELOPMENT'], required=True)
-    parser.add_argument('--fit', action='store_true',
+    parser.add_argument('--train-access-method', default=DEVELOPMENT_ACCESS_METHOD,
+        help='Saved anatomy-access method for the 0007 fit source')
+    parser.add_argument('--transfer-access-method', default=DEVELOPMENT_ACCESS_METHOD,
+        help='Saved anatomy-access method for the 0005 frozen transfer source')
+    parser.add_argument('--max-suite-physical-calls', type=int,
+        default=MAX_SUITE_PHYSICAL_CALLS,
+        help='Aggregate native-call cap, default 3600 and hard maximum 6000')
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument('--fit', action='store_true',
         help='Fit fixed-seed BC/PPO only after the source implementation is frozen')
-    args = parser.parse_args()
-    result = run(args.train_source, args.transfer_source, args.output, fit=args.fit)
+    mode.add_argument('--profile', action='store_true',
+        help='Run non-fitting deterministic controls only (the default)')
+    return parser
+
+
+def main():
+    args = build_parser().parse_args()
+    result = run(args.train_source, args.transfer_source, args.output, fit=args.fit,
+        train_access_method=args.train_access_method,
+        transfer_access_method=args.transfer_access_method,
+        max_suite_physical_calls=args.max_suite_physical_calls)
     print(json.dumps({'status': result['status'], 'mode': result['mode'],
         'cost': result['cost'], 'seeds': result['seeds']}))
 
