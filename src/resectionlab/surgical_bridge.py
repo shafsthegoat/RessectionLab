@@ -642,6 +642,11 @@ def dispatch(session, operation, args, request, progress):
         sector_record = {**record, 'planning': record.get('sectorSourceAccessComparison', record.get('planning'))}
         validate_saved_sector_comparison(engine.scene, sector_record, sectors)
     result['sectorPlanning'] = sectors
+    retraction_study = record.get('retractionStudy')
+    if isinstance(retraction_study, dict) and retraction_study.get('schema') == 'resectionlab.retractor-native-study.v1':
+        from .surgical_retraction_study import validate_retraction_study
+        validate_retraction_study(engine.scene, record, retraction_study)
+        result['retractionStudy'] = copy.deepcopy(retraction_study)
     staged_report = record.get('stagedPlanning')
     if staged_report is not None:
         from .surgical_staged_planning import validate_staged_report, staged_summary

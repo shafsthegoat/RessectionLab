@@ -4,7 +4,7 @@ import type {SurgicalResponse} from './surgical-types';
  * It never grants edit/replay authority or crosses a source installation.
  */
 export class SurgicalComparisonContext {
-  private resident:{source:object;caseHash:string;sceneId:string;planning:SurgicalResponse['planning'];sectorPlanning:SurgicalResponse['sectorPlanning'];jointPlanning:SurgicalResponse['jointPlanning'];jointBaselineHistory:SurgicalResponse['jointBaselineHistory'];stagedPlanning:SurgicalResponse['stagedPlanning']}|null=null;
+  private resident:{source:object;caseHash:string;sceneId:string;planning:SurgicalResponse['planning'];sectorPlanning:SurgicalResponse['sectorPlanning'];jointPlanning:SurgicalResponse['jointPlanning'];jointBaselineHistory:SurgicalResponse['jointBaselineHistory'];stagedPlanning:SurgicalResponse['stagedPlanning'];retractionStudy:SurgicalResponse['retractionStudy']}|null=null;
   clear(){this.resident=null;}
   accept(response:SurgicalResponse,source:object,frame:boolean):SurgicalResponse{
     const prior=this.resident;
@@ -12,7 +12,7 @@ export class SurgicalComparisonContext {
       this.resident={source,caseHash:response.caseHash,sceneId:response.view.scene.sceneId,
         planning:response.planning,sectorPlanning:response.sectorPlanning,
         jointPlanning:response.jointPlanning,jointBaselineHistory:response.jointBaselineHistory,
-        stagedPlanning:response.stagedPlanning};
+        stagedPlanning:response.stagedPlanning,retractionStudy:response.retractionStudy};
       return response;
     }
     if(!prior||prior.source!==source||prior.caseHash!==response.caseHash||prior.sceneId!==response.view.scene.sceneId||response.playback?.readOnly!==true){
@@ -23,7 +23,8 @@ export class SurgicalComparisonContext {
       ...(Object.hasOwn(response,'sectorPlanning')?{sectorPlanning:response.sectorPlanning}:{}),
       ...(Object.hasOwn(response,'jointPlanning')?{jointPlanning:response.jointPlanning}:{}),
       ...(Object.hasOwn(response,'jointBaselineHistory')?{jointBaselineHistory:response.jointBaselineHistory}:{}),
-      ...(Object.hasOwn(response,'stagedPlanning')?{stagedPlanning:response.stagedPlanning}:{})};
+      ...(Object.hasOwn(response,'stagedPlanning')?{stagedPlanning:response.stagedPlanning}:{}),
+      ...(Object.hasOwn(response,'retractionStudy')?{retractionStudy:response.retractionStudy}:{})};
     return {...response,
       ...(!Object.hasOwn(response,'planning')?{planning:this.resident.planning}:{}),
       ...(!Object.hasOwn(response,'sectorPlanning')?{sectorPlanning:this.resident.sectorPlanning}:{}),
@@ -32,6 +33,8 @@ export class SurgicalComparisonContext {
       ...(!Object.hasOwn(response,'jointBaselineHistory')&&this.resident.jointBaselineHistory!==undefined?
         {jointBaselineHistory:this.resident.jointBaselineHistory}:{}),
       ...(!Object.hasOwn(response,'stagedPlanning')&&this.resident.stagedPlanning!==undefined?
-        {stagedPlanning:this.resident.stagedPlanning}:{})};
+        {stagedPlanning:this.resident.stagedPlanning}:{}),
+      ...(!Object.hasOwn(response,'retractionStudy')&&this.resident.retractionStudy!==undefined?
+        {retractionStudy:this.resident.retractionStudy}:{})};
   }
 }

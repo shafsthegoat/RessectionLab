@@ -37,6 +37,7 @@ class SkillLimits:
     baseline_non_target_mm3: float | None = None
     allowed_removed_label_ids: tuple[int, ...] | None = None
     prior_public_calls: int = 0
+    forbidden_removed_cell_ids: tuple[int, ...] = ()
 
     def __post_init__(self):
         if (type(self.max_native_actions) is not int or self.max_native_actions < 1 or
@@ -64,6 +65,12 @@ class SkillLimits:
                     len(set(labels)) != len(labels)):
                 raise ValueError('Allowed source removal labels differ')
             object.__setattr__(self, 'allowed_removed_label_ids', tuple(labels))
+        cells = self.forbidden_removed_cell_ids
+        if (not isinstance(cells, (tuple, list)) or
+                any(type(value) is not int or value < 0 for value in cells) or
+                len(set(cells)) != len(cells)):
+            raise ValueError('Forbidden source removal cells differ')
+        object.__setattr__(self, 'forbidden_removed_cell_ids', tuple(cells))
 
 
 @dataclass(frozen=True)
@@ -355,6 +362,11 @@ def _ledger(engine, limits, meter):
         raise ValueError('Native removed-cell ledger contains duplicates')
     if removed and (removed[0] < 0 or removed[-1] >= engine.scene.labels.size):
         raise ValueError('Native removed-cell ledger lies outside source scene')
+    forbidden = set(limits.forbidden_removed_cell_ids)
+    if any(cell >= engine.scene.labels.size for cell in forbidden):
+        raise ValueError('Forbidden source removal cell lies outside scene')
+    if forbidden.intersection(removed):
+        raise ValueError('Existing native prefix removed a forbidden source cell')
     values = engine.metrics()
     target_ids = {int(row['id']) for row in engine.scene.regions if row.get('target')}
     labels = engine.scene.labels.ravel()
@@ -476,6 +488,8 @@ def checked_actions(engine, actions, *, limits: SkillLimits, check=None,
                     if permitted and any(int(candidate.scene.labels.flat[cell]) not in labels
                                          for cell in cells):
                         permitted, reason = False, 'REMOVAL_LABEL_NOT_ALLOWED'
+                    if permitted and set(cells).intersection(limits.forbidden_removed_cell_ids):
+                        permitted, reason = False, 'FORBIDDEN_SOURCE_CELL_REMOVAL'
                     if not permitted:
                         reason = reason or preview.get('reason') or preview['status']
                         entry.update(status='refused', reason=str(reason))

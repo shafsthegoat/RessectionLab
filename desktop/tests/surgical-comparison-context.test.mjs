@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {SurgicalComparisonContext} from '../src/surgical-comparison-context.ts';
-const full=()=>({caseHash:'case',view:{scene:{sceneId:'scene'}},planning:{alternatives:['baseline']},sectorPlanning:{alternatives:['near','far']},jointPlanning:{jointSeal:'sha256:joint'},jointBaselineHistory:[{comparison:'classic'}],stagedPlanning:{comparisonSeal:'sha256:staged'}});
+const full=()=>({caseHash:'case',view:{scene:{sceneId:'scene'}},planning:{alternatives:['baseline']},sectorPlanning:{alternatives:['near','far']},jointPlanning:{jointSeal:'sha256:joint'},jointBaselineHistory:[{comparison:'classic'}],stagedPlanning:{comparisonSeal:'sha256:staged'},retractionStudy:{comparisonSeal:'sha256:bimanual'}});
 const frame=()=>({caseHash:'case',view:{scene:{sceneId:'scene'}},playback:{readOnly:true}});
 test('comparison evidence stays visible during read-only frames without changing frame authority',()=>{
   const cache=new SurgicalComparisonContext(),source={},initial=full();cache.accept(initial,source,false);
@@ -10,6 +10,7 @@ test('comparison evidence stays visible during read-only frames without changing
   assert.equal(display.jointPlanning,initial.jointPlanning);
   assert.equal(display.jointBaselineHistory,initial.jointBaselineHistory);
   assert.equal(display.stagedPlanning,initial.stagedPlanning);
+  assert.equal(display.retractionStudy,initial.retractionStudy);
   assert.equal(display.playback,wire.playback);assert.equal(Object.hasOwn(wire,'planning'),false);
 });
 test('another source installation, scene or editable response cannot inherit comparison receipts',()=>{
@@ -18,6 +19,7 @@ test('another source installation, scene or editable response cannot inherit com
     assert.equal(cache.accept({...frame(),...change},source??owner,true).planning,undefined);
     assert.equal(cache.accept({...frame(),...change},source??owner,true).jointPlanning,undefined);
     assert.equal(cache.accept({...frame(),...change},source??owner,true).stagedPlanning,undefined);
+    assert.equal(cache.accept({...frame(),...change},source??owner,true).retractionStudy,undefined);
   }
 });
 test('ordinary responses replace prior evidence and explicit null is respected',()=>{
@@ -28,6 +30,8 @@ test('ordinary responses replace prior evidence and explicit null is respected',
   assert.equal(cache.accept(frame(),source,true).jointBaselineHistory,null);
   assert.equal(cache.accept({...frame(),stagedPlanning:null},source,true).stagedPlanning,null);
   assert.equal(cache.accept(frame(),source,true).stagedPlanning,null);
+  assert.equal(cache.accept({...frame(),retractionStudy:null},source,true).retractionStudy,null);
+  assert.equal(cache.accept(frame(),source,true).retractionStudy,null);
   cache.accept({...full(),planning:null,sectorPlanning:null,jointPlanning:null,jointBaselineHistory:null,stagedPlanning:null},source,false);
   assert.equal(cache.accept(frame(),source,true).sectorPlanning,null);
   assert.equal(cache.accept(frame(),source,true).jointPlanning,null);

@@ -3,7 +3,7 @@
 const {app,dialog}=require('electron');
 const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),assert=require('node:assert/strict'),crypto=require('node:crypto');
 const root=path.resolve(__dirname,'../..'),input=path.resolve(process.env.INTEGRATED_RESEARCH_CASE||''),output=path.resolve(process.env.INTEGRATED_RESEARCH_OUTPUT||''),mode=process.env.INTEGRATED_RESEARCH_MODE;
-if(!['access','learned','cusa','cusa-execute','cusa-cancel','sector','sector-policy','sector-execute','joint','staged','frozen-assessment'].includes(mode))throw Error('Set a supported INTEGRATED_RESEARCH_MODE');
+if(!['access','learned','cusa','cusa-execute','cusa-cancel','sector','sector-policy','sector-execute','joint','staged','bimanual','frozen-assessment'].includes(mode))throw Error('Set a supported INTEGRATED_RESEARCH_MODE');
 for(const p of [input,output])if(!p.startsWith(path.join(root,'testcases')+path.sep))throw Error('Input/output must be under testcases/');
 if(fs.existsSync(output))throw Error('Preserve previous evidence; use a new output directory');
 fs.mkdirSync(output,{recursive:true});
@@ -127,6 +127,30 @@ app.on('browser-window-created',(_event,window)=>{
           await capture('03-staged-close-start');
         }
         report.checks.push('Whole approach effects, retained stages, refusals and resume evidence are inspectable');
+      }else if(mode==='bimanual'){
+        await wait(`!!document.querySelector('.retraction-study')`);
+        await js(`document.querySelector('.retraction-study').open=true`);
+        report.bimanual=await js(`(()=>{const p=document.querySelector('.retraction-study');const rows=[...p.querySelectorAll('[data-bimanual-branch]')];const row=rows.find(r=>r.querySelector('h4').textContent.includes('held retractor'));const start=row.querySelector('[data-bimanual-phase="Access complete with tissue held"]');const work=row.querySelector('[data-bimanual-phase="CUSA work stage 2"]');return{text:p.innerText,rows:rows.length,branch:row.dataset.bimanualBranch,start:Number(start.dataset.bimanualPosition),goal:Number(work.dataset.bimanualPosition)}})()`);
+        assert(report.bimanual.text.includes('Playback does not run new inference'));
+        assert(report.bimanual.text.includes('no demonstrated removal benefit'));
+        await capture('01-bimanual-measured-comparison');
+        await js(`document.querySelector('[data-bimanual-branch="'+${JSON.stringify(report.bimanual.branch)}+'"] [data-bimanual-phase="Access complete with tissue held"]').click()`);
+        await wait(`document.querySelector('[aria-label="Surgical branch"]').value===${JSON.stringify(report.bimanual.branch)}&&Number(document.querySelector('[aria-label="Surgical timeline"]').value)===${report.bimanual.start}`);
+        await ready();
+        report.bimanual.handsAtWork=await js(`document.querySelector('.surgical-slots').innerText`);
+        assert.equal((report.bimanual.handsAtWork.match(/Inserted/g)||[]).length,2);
+        assert(/Holding [1-9]/.test(report.bimanual.handsAtWork));
+        report.bimanual.targetBefore=await js(`document.querySelector('[data-surgical-metric="targetRemovedMm3"]').textContent`);
+        if(process.env.INTEGRATED_RESEARCH_RETRACTOR_VIEW==='1'){
+          await click('Frame operative field');await capture('03a-bimanual-operative-field');
+          await js(`document.querySelectorAll('.surgical-slots button')[1].click()`);
+          await click('Close tool view');await capture('03b-native-held-retractor');
+          await click('Restore previous view');
+          await js(`document.querySelectorAll('.surgical-slots button')[0].click()`);
+        }
+        await click('Close tool view');
+        await capture('03-bimanual-held-work-start');
+        report.checks.push('Actual desktop shows both inserted tools and nonempty retained source hold before CUSA work');
       }else if(mode==='frozen-assessment'){
         await wait(`!!document.querySelector('[aria-label="Frozen assessment sector outcomes"] [data-frozen-sector-branch]')`);
         report.learning=await js(`document.querySelector('.learned-sector-execution').innerText`);
@@ -229,7 +253,7 @@ app.on('browser-window-created',(_event,window)=>{
       await ready();
       const position=await js(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)`);
       const end=await js(`Number(document.querySelector('[aria-label="Surgical timeline"]').max)`);
-      const goal=Math.min(mode==='staged'&&report.staged?.playbackGoal?report.staged.playbackGoal:position+4,end);
+      const goal=Math.min(mode==='bimanual'?report.bimanual.goal:mode==='staged'&&report.staged?.playbackGoal?report.staged.playbackGoal:position+4,end);
       if(goal>position){
         await wait(`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Play replay'&&!b.matches(':disabled'))`);
         await click('Play replay');
@@ -240,6 +264,11 @@ app.on('browser-window-created',(_event,window)=>{
           report.staged.targetAfter=await js(`document.querySelector('[data-surgical-metric="targetRemovedMm3"]').textContent`);
           if(report.staged.stagePositions.length)assert(Number(report.staged.targetAfter)>Number(report.staged.targetBefore),'Recorded work playback changes measured native target removal');
         }
+        if(mode==='bimanual'){
+          report.bimanual.targetAfter=await js(`document.querySelector('[data-surgical-metric="targetRemovedMm3"]').textContent`);
+          assert(Number(report.bimanual.targetAfter)>Number(report.bimanual.targetBefore));
+          assert(await js(`!!document.querySelector('.retraction-study')`),'Paired-tool evidence survives compact native frames');
+        }
         report.checks.push('Play advances actual recorded instrument/physics frames and pause stops scheduling');await capture('02-authoritative-playback');
       }else{
         assert.equal(mode,'frozen-assessment','Selected policy must contain actual native actions');
@@ -249,9 +278,24 @@ app.on('browser-window-created',(_event,window)=>{
       if(mode==='sector')assert(await js(`document.querySelectorAll('[aria-label="Sector strategy outcomes"] tbody tr').length>0`),'Comparison evidence remains visible during compact playback');
       if(mode==='joint')assert(await js(`!!document.querySelector('.joint-strategies')&&!document.body.innerText.includes('Saved joint strategy evidence could not be bound')`),'Joint evidence remains bound during compact playback');
       if(mode==='staged')assert(await js(`!!document.querySelector('.staged-strategies')&&!document.body.innerText.includes('Staged strategy evidence could not be bound')`),'Staged evidence remains bound during compact playback');
+      if(mode==='bimanual'){
+        await js(`document.querySelector('[data-bimanual-branch="'+${JSON.stringify(report.bimanual.branch)}+'"] [data-bimanual-phase="Final native endpoint"]').click()`);
+        await wait(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)===Number(document.querySelector('[aria-label="Surgical timeline"]').max)`);
+        await ready();report.bimanual.finalHands=await js(`document.querySelector('.surgical-slots').innerText`);
+        assert.equal((report.bimanual.finalHands.match(/Withdrawn/g)||[]).length,2);
+        assert(!report.bimanual.finalHands.includes('Holding'));
+        await capture('04-bimanual-both-withdrawn');
+        report.checks.push('Native endpoint has both tools withdrawn and no held source cells; residual deformation remains reported');
+      }
       await wait(`!![...document.querySelectorAll('header button')].find(b=>b.textContent.trim()==='Save'&&!b.matches(':disabled'))`);
       await click('Save');await wait(`![...document.querySelectorAll('header button')].find(b=>b.textContent.trim()==='Save')?.matches(':disabled')`);
       assert(fs.existsSync(saved));report.checks.push('Native desktop save writes the inspected trajectory');
+      if(mode==='bimanual'){
+        await click('Open');await wait(`!!document.querySelector('.rl-viewer canvas')&&!document.querySelector('.viewer-loading')`);
+        await click('Rehearse');await wait(`!!document.querySelector('.retraction-study')`);
+        assert.equal(await js(`document.querySelectorAll('[aria-label="Bimanual native study outcomes"] > article').length`),report.bimanual.rows);
+        report.checks.push('Actual desktop reopen retains source-bound paired-tool comparison and native branches');
+      }
       assert.equal(hash(input),sourceHash);report.sourcePreserved=true;report.savedCase=saved;report.passed=report.errors.length===0&&!report.windowEverVisible;
     }catch(error){report.passed=false;report.failure=error.stack;report.failureText=await js('document.body.innerText');fs.writeFileSync(path.join(output,'failure.png'),(await window.webContents.capturePage(undefined,{stayHidden:true,stayAwake:true})).toPNG());console.error(error.stack);}
     report.finishedUtc=new Date().toISOString();fs.writeFileSync(path.join(output,'report.json'),JSON.stringify(report,null,2));console.log(JSON.stringify(report));app.exit(report.passed?0:1);
