@@ -442,6 +442,43 @@ def dispatch(session, operation, args, request, progress):
         record['position'] = len(engine.actions)
         record.setdefault('timeline', {})[record['branchId']] = copy.deepcopy(engine.history)
         outcome = {'status': 'accepted', 'reason': director.get('stopReason') or director.get('currentPhaseId'), 'completedFraction': 1., 'events': []}
+    elif command == 'plan' and args.get('opponent') == 'anatomy-joint-strategy':
+        from .surgical_joint_planning import (
+            compare_joint_strategies, install_joint_comparison, validate_joint_report)
+        from .surgical_planning import validate_saved_comparison
+        from .surgical_sector_planning import validate_saved_sector_comparison
+        if 'jointPlanning' in record:
+            raise ValueError('Open an original classic source before generating another joint comparison')
+        access, sectors = record.get('planning'), record.get('sectorPlanning')
+        if (not isinstance(access, dict) or not isinstance(sectors, dict) or
+                access.get('task') != 'anatomy-access' or
+                sectors.get('task') != 'anatomy-strategy' or
+                sectors.get('sourceAccessComparisonSeal') != access.get('comparisonSeal')):
+            raise ValueError('Generate paired classic access and sector comparisons before joint planning')
+        if (record['position'] != 0 or record['branches'][record['branchId']]['actions'] or
+                engine.actions or engine.state_id != access['startStateId']):
+            raise ValueError('Return to the common intact source branch before joint planning')
+        if args.get('allowModeledBrainCorridor') is not True:
+            raise ValueError('Explicit mapped-brain corridor opt-in is required')
+        validate_saved_comparison(engine.scene, record, access)
+        validate_saved_sector_comparison(engine.scene, record, sectors)
+        joint = compare_joint_strategies(engine,
+            acknowledge_unknowns=args.get('acknowledgeResearchUnknowns', False),
+            max_native_actions=args.get('maxActions', 48),
+            check=request.check, progress=progress)
+        created = install_joint_comparison(record, joint,
+            joint['report']['accessComparison'], joint['report']['sectorComparison'])
+        record['jointPlanning'] = copy.deepcopy(joint['report'])
+        validate_joint_report(engine.scene, record, record['jointPlanning'])
+        for branch_id, item in created.items():
+            candidate = item['candidate']
+            # Live endpoint admission is read-only cache priming. It performs
+            # no additional physics for these just-verified native endpoints.
+            replay_cache.seek(candidate, record['branches'][branch_id], len(candidate.actions),
+                              check=request.check)
+            record.setdefault('timeline', {})[branch_id] = copy.deepcopy(candidate.history)
+        outcome = {'status': 'accepted', 'reason': 'joint_comparison_recorded',
+                   'completedFraction': 1., 'events': []}
     elif command == 'plan':
         sector_planning = args.get('opponent') == 'anatomy-strategy'
         if sector_planning:
@@ -575,6 +612,13 @@ def dispatch(session, operation, args, request, progress):
         sector_record = {**record, 'planning': record.get('sectorSourceAccessComparison', record.get('planning'))}
         validate_saved_sector_comparison(engine.scene, sector_record, sectors)
     result['sectorPlanning'] = sectors
+    joint_report = record.get('jointPlanning')
+    if joint_report is not None:
+        from .surgical_joint_planning import validate_joint_report
+        validate_joint_report(engine.scene, record, joint_report)
+        result['jointPlanning'] = copy.deepcopy(joint_report)
+        result['jointBaselineHistory'] = copy.deepcopy(record.get('jointBaselineHistory',
+            record.get('sectorPlanningHistory', [])[-1:]))
     _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Save this sequence before continuing')
     request.begin_commit()
     if command == 'create' and raw is not None:

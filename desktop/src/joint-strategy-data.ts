@@ -4,8 +4,43 @@ const object=(value:unknown):value is Record<string,unknown>=>
   value!==null&&typeof value==='object'&&!Array.isArray(value);
 const text=(value:unknown):value is string=>typeof value==='string'&&value.length>0;
 const count=(value:unknown):value is number=>Number.isSafeInteger(value)&&(value as number)>=0;
+const quantity=(value:unknown):number|null=>
+  typeof value==='number'&&Number.isFinite(value)&&value>=0?value:null;
+const fraction=(value:unknown):number|null=>{
+  const amount=quantity(value);return amount!==null&&amount<=1?amount:null;
+};
+const same=(a:number|null,b:number|null)=>
+  a===null||b===null||Math.abs(a-b)<=1e-6;
 const methodNames=new Set(['superior-access','axis0-access','axis1-access']);
 const rule='one far-first left-CUSA sector strategy per source-selected route';
+
+export function jointGenerationEligibility(artifact:unknown,response:SurgicalResponse|null):{ready:boolean;reason:string}{
+  if(!response||!text(response.caseHash)||!text(response.view?.scene?.sceneId))
+    return {ready:false,reason:'Inspect a native source case first.'};
+  const record=object(artifact)?artifact:null;
+  if((record&&Object.hasOwn(record,'jointPlanning'))||response.jointPlanning)
+    return {ready:false,reason:'A joint comparison is already saved. Open an original classic source to generate another.'};
+  if(response.planningAvailability?.accessAvailable!==true||
+      response.planningAvailability.skullAvailable!==false||
+      response.planningAvailability.modeledBrainLayerAvailable!==true)
+    return {ready:false,reason:'Open an intact mapped-brain source with unknown skull coverage and available native access.'};
+  const access=response.planning,sectors=response.sectorPlanning;
+  if(!access||!sectors||access.task!=='anatomy-access'||sectors.task!=='anatomy-strategy'||
+      typeof access.sourceRole!=='string'||
+      access.sourceRole.startsWith('Joint source-only shortlist')||
+      access.sourceSceneId!==response.view.scene.sceneId||
+      sectors.sourceSceneId!==response.view.scene.sceneId||
+      sectors.sourceAccessComparisonSeal!==access.comparisonSeal||
+      access.startStateId!==sectors.startStateId||
+      !access.alternatives.length||!sectors.alternatives.length)
+    return {ready:false,reason:'Open a native classic access and sector comparison source.'};
+  if(response.verification?.readOnly||response.readOnly||response.playback?.readOnly)
+    return {ready:false,reason:'Return to an editable native action boundary.'};
+  if(response.position!==0||response.view.stateId!==access.startStateId||
+      !response.branches.some(branch=>branch.id===response.branchId&&branch.steps===0))
+    return {ready:false,reason:'Return to the common intact source start.'};
+  return {ready:true,reason:'Ready at the common intact classic source.'};
+}
 
 export interface JointBranchRow {
   branchId:string;
@@ -16,6 +51,19 @@ export interface JointBranchRow {
   status:'passed'|'unpassed'|'executed';
   cleanupComplete?:boolean;
   reason?:string;
+  entryRas:[number,number,number]|null;
+  hand:string|null;
+  order:string|null;
+  wholeTargetMm3:number|null;
+  wholeNonTargetMm3:number|null;
+  residualTargetMm3:number|null;
+  sourceTargetMm3:number|null;
+  sourceFractionRemoved:number|null;
+  additionalTargetMm3:number|null;
+  additionalNonTargetMm3:number|null;
+  simulatedSeconds:number|null;
+  optionPhysicalCalls:number|null;
+  withdrawal:{fastRefusal:string|null;slowStatus:string|null;slowSeconds:number|null}|null;
 }
 export interface JointStrategyDisplay {
   caseHash:string;
@@ -37,10 +85,18 @@ export interface JointStrategyDisplay {
 
 /** A UI admission check for records already verified during native export. */
 export function jointStrategyDisplay(artifact:unknown,response:SurgicalResponse|null):JointStrategyDisplay|null {
-  if(!object(artifact)||!response||!object(artifact.jointPlanning)||
-      !object(artifact.branches)||!text(response.caseHash)||
+  if(!response||!text(response.caseHash)||
       !text(response.view?.scene?.sceneId))return null;
-  const report=artifact.jointPlanning,branches=artifact.branches;
+  const record=object(artifact)?artifact:null;
+  const live=Object.hasOwn(response,'jointPlanning');
+  if(live&&!object(response.jointPlanning))return null;
+  if(!live&&(!record||!object(record.jointPlanning)||!object(record.branches)))return null;
+  const report=(live?response.jointPlanning:record!.jointPlanning) as Record<string,unknown>;
+  const branches=live?null:record!.branches as Record<string,unknown>;
+  const planning=live?response.planning:record!.planning;
+  const sectorPlanning=live?response.sectorPlanning:record!.sectorPlanning;
+  const history=live?response.jointBaselineHistory:record!.sectorPlanningHistory;
+  const sourceAccess=live?response.planning:record!.sectorSourceAccessComparison;
   const sceneId=response.view.scene.sceneId;
   if(report.schema!=='resectionlab.joint-anatomy-strategy.v1'||
       report.status!=='joint_strategies_compared'||report.sourceSceneId!==sceneId||
@@ -59,8 +115,8 @@ export function jointStrategyDisplay(artifact:unknown,response:SurgicalResponse|
       !object(report.cost.byPhase)||
       Object.hasOwn(report.cost.byPhase,'export-reopen-replay')||
       !object(report.accessComparison)||!object(report.sectorComparison)||
-      !object(artifact.planning)||!object(artifact.sectorPlanning)||
-      !Array.isArray(artifact.sectorPlanningHistory)||!artifact.sectorPlanningHistory.length)return null;
+      !object(planning)||!object(sectorPlanning)||
+      !Array.isArray(history)||!history.length)return null;
 
   const selected=new Map<number,string>();
   for(const entry of report.geometry.selected){
@@ -68,7 +124,7 @@ export function jointStrategyDisplay(artifact:unknown,response:SurgicalResponse|
         !text(entry.routeId)||selected.has(entry.nativeAxis))return null;
     selected.set(entry.nativeAxis,entry.routeId);
   }
-  const activeAccess=artifact.planning,activeSectors=artifact.sectorPlanning;
+  const activeAccess=planning,activeSectors=sectorPlanning;
   if(report.accessComparison.comparisonSeal!==activeAccess.comparisonSeal||
       report.sectorComparison.comparisonSeal!==activeSectors.comparisonSeal||
       report.accessComparison.sourceSceneId!==sceneId||
@@ -95,11 +151,10 @@ export function jointStrategyDisplay(artifact:unknown,response:SurgicalResponse|
       activeSectors.status!==
         (Array.isArray(activeSectors.alternatives)&&activeSectors.alternatives.length?
           'strategy_options_compared':'no_executable_strategy')||
-      artifact.sectorSourceAccessComparison===undefined||
-      !object(artifact.sectorSourceAccessComparison)||
-      artifact.sectorSourceAccessComparison.comparisonSeal!==activeAccess.comparisonSeal)return null;
+      !object(sourceAccess)||
+      sourceAccess.comparisonSeal!==activeAccess.comparisonSeal)return null;
 
-  const original=artifact.sectorPlanningHistory.at(-1);
+  const original=history.at(-1);
   if(!object(original)||!object(original.sourceAccessComparison)||
       !object(original.comparison))return null;
   const classicAccess=original.sourceAccessComparison,classicSectors=original.comparison;
@@ -114,24 +169,29 @@ export function jointStrategyDisplay(artifact:unknown,response:SurgicalResponse|
       (activeSectors.alternatives as unknown[]).length>3||
       (classicAccess.alternatives as unknown[]).length>3||
       (classicSectors.alternatives as unknown[]).length>12)return null;
-  const source=branches[artifact.branchId as string];
-  if(!object(source)||source.sceneId!==sceneId||source.stateId!==report.startStateId||
-      !Array.isArray(source.actions)||source.actions.length!==0||
-      !response.branches.some(branch=>branch.id===artifact.branchId&&branch.steps===0))return null;
+  const sourceBranchId=text(record?.branchId)&&
+    response.branches.some(branch=>branch.id===record.branchId&&branch.steps===0)?
+      record.branchId:response.branches.find(branch=>branch.steps===0)?.id;
+  if(!text(sourceBranchId))return null;
+  if(!live){
+    const source=branches![sourceBranchId];
+    if(!object(source)||source.sceneId!==sceneId||source.stateId!==report.startStateId||
+        !Array.isArray(source.actions)||source.actions.length!==0)return null;
+  }
 
   const seen=new Set<string>();
   const branch=(plan:Record<string,unknown>,maximum:number):{branchId:string;end:number}|null=>{
     if(!text(plan.branchId)||seen.has(plan.branchId)||
         !Array.isArray(plan.decisions)||plan.decisions.length>maximum||
         plan.startStateId!==report.startStateId||!text(plan.finalStateId))return null;
-    const saved=branches[plan.branchId];
-    if(!object(saved)||saved.sceneId!==sceneId||
-        saved.stateId!==plan.finalStateId||!Array.isArray(saved.actions)||
-        saved.actions.length!==plan.decisions.length||
-        !response.branches.some(item=>item.id===plan.branchId&&
-          item.steps===(saved.actions as unknown[]).length))return null;
+    const saved=branches?.[plan.branchId];
+    if(!response.branches.some(item=>item.id===plan.branchId&&
+          item.steps===(plan.decisions as unknown[]).length)||
+        (branches&&(!object(saved)||saved.sceneId!==sceneId||
+          saved.stateId!==plan.finalStateId||!Array.isArray(saved.actions)||
+          saved.actions.length!==plan.decisions.length)))return null;
     seen.add(plan.branchId);
-    return {branchId:plan.branchId,end:saved.actions.length};
+    return {branchId:plan.branchId,end:plan.decisions.length};
   };
   const parseAccess=(comparison:Record<string,unknown>,joint:boolean):JointBranchRow[]|null=>{
     const rows:JointBranchRow[]=[];
@@ -146,9 +206,31 @@ export function jointStrategyDisplay(artifact:unknown,response:SurgicalResponse|
       if(!saved||!count(plan.prefixActions)||plan.prefixActions>saved.end||
           (joint&&(plan.prefixActions!==0||!object(plan.cost)||
             plan.cost.optimizerUpdates!==0)))return null;
+      const summary=object(plan.summary)?plan.summary:null;
+      const route=plan.route as Record<string,unknown>;
+      const surface=object(route.surfacePose)?route.surfacePose:null;
+      const entry=Array.isArray(surface?.position)&&surface.position.length===3&&
+        surface.position.every(value=>typeof value==='number'&&Number.isFinite(value))?
+        surface.position as [number,number,number]:null;
+      const cost=object(plan.cost)?plan.cost:null;
+      const preview=quantity(cost?.previewCalls),execution=quantity(cost?.executionCalls),
+        replay=quantity(cost?.freshReplayCalls);
+      const recovery=object(plan.withdrawalRecovery)?plan.withdrawalRecovery:null;
       rows.push({...saved,method:plan.method as string,
         label:text(plan.label)?plan.label:plan.method as string,
-        start:plan.prefixActions,status:'executed'});
+        start:plan.prefixActions,status:'executed',entryRas:entry,hand:null,order:null,
+        wholeTargetMm3:quantity(summary?.targetRemovedMm3),
+        wholeNonTargetMm3:quantity(summary?.nonTargetRemovedMm3),
+        residualTargetMm3:quantity(summary?.residualTargetMm3),
+        sourceTargetMm3:null,sourceFractionRemoved:fraction(plan.fullTargetFractionRemoved),
+        additionalTargetMm3:null,additionalNonTargetMm3:null,
+        simulatedSeconds:quantity(summary?.elapsedSeconds),
+        optionPhysicalCalls:preview!==null&&execution!==null&&replay!==null?
+          preview+execution+replay:null,
+        withdrawal:recovery?{
+          fastRefusal:text(recovery.fastPreviewRejection)?recovery.fastPreviewRejection:null,
+          slowStatus:text(recovery.slowStatus)?recovery.slowStatus:null,
+          slowSeconds:quantity(recovery.slowDurationSeconds)}:null});
     }
     if(new Set(rows.map(row=>row.method)).size!==rows.length)return null;
     if(joint&&comparison.status!==
@@ -180,11 +262,40 @@ export function jointStrategyDisplay(artifact:unknown,response:SurgicalResponse|
       if(!saved||!count(plan.sourceAccessPrefixActions)||
           plan.sourceAccessPrefixActions>saved.end||
           (joint&&(!object(plan.cost)||plan.cost.optimizerUpdates!==0)))return null;
+      const summary=object(plan.summary)?plan.summary:null;
+      const modeled=object(plan.modeledOutcomes)?plan.modeledOutcomes:null;
+      const target=object(modeled?.target)?modeled.target:null;
+      const other=object(modeled?.nonTargetRemovedMm3)?modeled.nonTargetRemovedMm3:null;
+      const outcome=plan.continuationOutcome as Record<string,unknown>;
+      const wholeTarget=quantity(target?.removedMm3)??quantity(summary?.targetRemovedMm3);
+      const wholeOther=quantity(other?.value)??quantity(summary?.nonTargetRemovedMm3);
+      const residual=quantity(target?.residualMm3),sourceVolume=quantity(target?.sourceVolumeMm3);
+      const sourceFraction=fraction(target?.fractionRemoved);
+      if(!same(quantity(target?.removedMm3),quantity(summary?.targetRemovedMm3))||
+          !same(quantity(other?.value),quantity(summary?.nonTargetRemovedMm3))||
+          !same(wholeOther,quantity(outcome.totalNonTargetMm3))||
+          (wholeTarget!==null&&residual!==null&&sourceVolume!==null&&
+            !same(wholeTarget+residual,sourceVolume))||
+          (wholeTarget!==null&&sourceVolume!==null&&sourceVolume>0&&
+            sourceFraction!==null&&!same(wholeTarget/sourceVolume,sourceFraction)))return null;
+      const cost=object(plan.cost)?plan.cost:null;
       rows.push({...saved,method:strategy.sourceAccessMethod as string,
         label:text(plan.label)?plan.label:String(plan.method),
         start:plan.sourceAccessPrefixActions,
         status:plan.status as 'passed'|'unpassed',
-        cleanupComplete:plan.continuationOutcome.cleanupComplete as boolean});
+        cleanupComplete:outcome.cleanupComplete as boolean,
+        entryRas:sourceRow.entryRas,
+        hand:text(strategy.hand)?strategy.hand:null,
+        order:Array.isArray(strategy.sectorOrder)&&
+          strategy.sectorOrder.every(text)?strategy.sectorOrder.join(' → '):null,
+        wholeTargetMm3:wholeTarget,wholeNonTargetMm3:wholeOther,
+        residualTargetMm3:residual,sourceTargetMm3:sourceVolume,
+        sourceFractionRemoved:sourceFraction,
+        additionalTargetMm3:quantity(outcome.deltaTargetMm3),
+        additionalNonTargetMm3:quantity(outcome.deltaNonTargetMm3),
+        simulatedSeconds:quantity(summary?.elapsedSeconds),
+        optionPhysicalCalls:quantity(cost?.totalPhysicalCalls),
+        withdrawal:sourceRow.withdrawal});
     }
     return rows;
   };
@@ -204,17 +315,22 @@ export function jointStrategyDisplay(artifact:unknown,response:SurgicalResponse|
         failure.cleanupComplete===failure.cleanupPending||
         !object(failure.verification)||
         typeof failure.verification.exactNativeReplay!=='boolean')return null;
-    const saved=branches[failure.branchId];
-    if(!object(saved)||saved.sceneId!==sceneId||
-        saved.stateId!==failure.finalStateId||!Array.isArray(saved.actions)||
-        saved.actions.length!==failure.nativeActions||
-        !response.branches.some(item=>item.id===failure.branchId&&item.steps===failure.nativeActions))return null;
+    const saved=branches?.[failure.branchId];
+    if(!response.branches.some(item=>item.id===failure.branchId&&item.steps===failure.nativeActions)||
+        (branches&&(!object(saved)||saved.sceneId!==sceneId||
+          saved.stateId!==failure.finalStateId||!Array.isArray(saved.actions)||
+          saved.actions.length!==failure.nativeActions)))return null;
     seen.add(failure.branchId);
     failures.push({branchId:failure.branchId,
       label:failure.branchId.replace('joint-failed-','').replaceAll('-',' '),
       method:String(failure.phase??'failed'),start:0,end:failure.nativeActions,
       status:'unpassed',cleanupComplete:failure.cleanupComplete,
-      reason:text(failure.reason)?failure.reason.slice(0,180):'Recorded native execution stopped'});
+      reason:text(failure.reason)?failure.reason.slice(0,180):'Recorded native execution stopped',
+      entryRas:null,hand:null,order:null,
+      wholeTargetMm3:null,wholeNonTargetMm3:null,residualTargetMm3:null,
+      sourceTargetMm3:null,sourceFractionRemoved:null,
+      additionalTargetMm3:null,additionalNonTargetMm3:null,
+      simulatedSeconds:null,optionPhysicalCalls:null,withdrawal:null});
   }
   const failedIds=failures.map(row=>row.branchId).sort();
   const trialFailures:string[]=[];
@@ -237,7 +353,7 @@ export function jointStrategyDisplay(artifact:unknown,response:SurgicalResponse|
       report.threeApproachTaskGateMet!==
         (access.length===3&&sectors.length===3&&passed===3))return null;
   return {caseHash:response.caseHash,sceneId,startStateId:report.startStateId as string,
-    sourceBranchId:artifact.branchId as string,
+    sourceBranchId,
     jointSeal:report.jointSeal as string,selectedRoutes:selected.size,
     accessExecuted:access.length,sectorPassed:passed,
     threeApproachTaskGateMet:report.threeApproachTaskGateMet as boolean,

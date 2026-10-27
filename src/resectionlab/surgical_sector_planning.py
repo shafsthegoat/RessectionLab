@@ -144,7 +144,9 @@ def _execute_strategy_option_core(engine, access_plan, option_id, *, corridor_bi
             'attempts': [], 'nativeActionsAppended': 0,
             'sectorDeltaMm3': {'near': 0., 'far': 0.},
             'cleanupComplete': not _cleanup_pending(engine),
-            'taskGateMet': False, 'corridorBinding': None}
+            'taskGateMet': False, 'corridorBinding': None,
+            'cleanupMode': 'intact_abstain', 'sourceCleanupReused': False,
+            'sourceCleanupAttempted': False, 'sourceCleanupRefusal': None}
     route = access_plan['route']
     sectors, evidence = _sector_cells(engine.scene, route)
     if any(row['sourceVolumeMm3'] < MIN_SECTOR_MM3 for row in evidence.values()):
@@ -153,6 +155,11 @@ def _execute_strategy_option_core(engine, access_plan, option_id, *, corridor_bi
     candidate = engine.clone()
     attempts = []
     failure = None
+    cleanup_mode = None
+    source_cleanup_attempted = False
+    source_cleanup_reused = False
+    source_cleanup_refusal = None
+    generic_stop_actions = None
     if option_id.startswith('corridor:'):
         hand = option_id.split(':')[1]
         if corridor_binding is not None or engine.actions or \
@@ -185,63 +192,111 @@ def _execute_strategy_option_core(engine, access_plan, option_id, *, corridor_bi
         if option_id != 'STOP' and option_id.split(':')[1] != hand:
             raise StrategyUnavailable('Post-corridor option cannot retroactively change hands')
         prefix_metrics = corridor_binding['prefixMetrics']
+        generic_stop_actions = [
+            {'slot': hand, 'operation': 'deactivate', 'duration': .2},
+            {'slot': hand, 'operation': 'withdraw',
+             'pose': copy.deepcopy(route['outsidePose']),
+             'parameters': {'radiusMm': TRANSIT_RADIUS_MM}, 'duration': 30.}]
         actions = (_sector_option_actions(route, option_id.split(':')[0], hand)
-                   if option_id != 'STOP' else
-                   [{'slot': hand, 'operation': 'deactivate', 'duration': .2},
-                    {'slot': hand, 'operation': 'withdraw',
-                     'pose': copy.deepcopy(route['outsidePose']),
-                     'parameters': {'radiusMm': TRANSIT_RADIUS_MM}, 'duration': 30.}])
+                   if option_id != 'STOP' else generic_stop_actions)
+        if option_id == 'STOP':
+            cleanup_mode = 'generic'
+            # An untouched, observed source corridor can use its own recorded
+            # checked exit. Only the slot changes; pose, parameters and the
+            # source duration remain exactly as saved. Any sector work or
+            # different native boundary must use the generic checked exit.
+            if (len(engine.actions) == len(prefix) and
+                    engine.state_id == corridor_binding['prefixStateId'] and
+                    access_plan['planSeal'] == semantic_digest({
+                        'sourceSceneId': engine.scene.identity,
+                        'startStateId': access_plan['startStateId'],
+                        'decisions': access_plan['decisions']})):
+                saved = [row['action'] for row in access_plan['decisions'][len(prefix):]]
+                if (len(saved) >= 2 and saved[0].get('operation') == 'deactivate' and
+                        saved[-1].get('operation') == 'withdraw' and
+                        all(action.get('slot') == 'left' and
+                            action.get('operation') in ('deactivate', 'move', 'withdraw')
+                            for action in saved)):
+                    actions = [dict(copy.deepcopy(action), slot=hand) for action in saved]
+                    source_cleanup_attempted = True
+                    cleanup_mode = 'saved_source_attempt'
         boundary = 'post_corridor_same_engine_same_hand'
 
-    for index, action in enumerate(actions):
-        for trial in _duration_variants(action):
-            check()
-            at = len(candidate.actions)
-            if at >= max_actions:
-                failure = 'ACTION_BUDGET'
-                attempts.append({'index': index, 'atActionPosition': at, 'action': trial,
-                                 'status': 'not_attempted', 'reason': failure})
+    def run_actions(sequence, *, cleanup_path=None, index_offset=0):
+        nonlocal failure
+        failure = None
+        for index, action in enumerate(sequence):
+            for trial in _duration_variants(action):
+                check()
+                at = len(candidate.actions)
+                if at >= max_actions:
+                    failure = 'ACTION_BUDGET'
+                    row = {'index': index+index_offset, 'atActionPosition': at,
+                           'action': copy.deepcopy(trial), 'status': 'not_attempted',
+                           'reason': failure}
+                    if cleanup_path is not None:
+                        row['cleanupPath'] = cleanup_path
+                    attempts.append(row)
+                    break
+                preview = candidate.preview(trial, check=check, include_view=False,
+                                            include_history=False)
+                removed = set(map(int, preview.get('deltas', {}).get('removedCells', ())))
+                sector_delta = {name: len(removed & cells)*engine.scene.voxel_mm3
+                                for name, cells in sectors.items()}
+                reason = preview.get('reason')
+                accepted = (preview['status'] == 'accepted' or
+                            preview['status'] == 'partial' and reason == 'TISSUE_ASPIRATION_IN_PROGRESS')
+                if accepted and preview['metrics']['nonTargetRemovedMm3'] > MAX_TOTAL_NON_TARGET_MM3+1e-9:
+                    accepted, reason = False, 'TOTAL_NON_TARGET_CAP'
+                if (accepted and prefix_metrics is not None and
+                        preview['metrics']['nonTargetRemovedMm3']-
+                        prefix_metrics['nonTargetRemovedMm3'] > MAX_ADDITIONAL_NON_TARGET_MM3+1e-9):
+                    accepted, reason = False, 'CONTINUATION_NON_TARGET_CAP'
+                if accepted and not option_id.startswith('corridor:') and removed:
+                    allowed = {row['id'] for row in engine.scene.regions
+                               if row['material'] == 'tumor' and row.get('target') or
+                                  row['material'] == 'soft_tissue' and row['name'].lower() == 'brain'}
+                    if any(int(engine.scene.labels.flat[cell]) not in allowed for cell in removed):
+                        accepted, reason = False, 'NON_BRAIN_OR_NON_TARGET_REMOVAL_REFUSED'
+                row = {'index': index+index_offset, 'atActionPosition': at,
+                       'action': copy.deepcopy(trial),
+                       'previewStatus': preview['status'], 'previewStateId': preview['stateId'],
+                       'status': preview['status'] if accepted else 'refused',
+                       'reason': reason, 'sectorDeltaMm3': sector_delta,
+                       'previewTargetRemovedMm3': preview['metrics']['targetRemovedMm3'],
+                       'previewNonTargetRemovedMm3': preview['metrics']['nonTargetRemovedMm3']}
+                if cleanup_path is not None:
+                    row['cleanupPath'] = cleanup_path
+                attempts.append(row)
+                if not accepted:
+                    failure = str(reason or preview['status'])
+                    if failure == 'SHAFT_COLLISION':
+                        continue
+                    break
+                result = candidate.step(trial, check=check)
+                if result['stateId'] != preview['stateId'] or result['status'] != preview['status']:
+                    raise ValueError('High-level option preview and native commit differ')
+                row['committedStateId'] = result['stateId']
+                failure = None
                 break
-            preview = candidate.preview(trial, check=check, include_view=False,
-                                        include_history=False)
-            removed = set(map(int, preview.get('deltas', {}).get('removedCells', ())))
-            sector_delta = {name: len(removed & cells)*engine.scene.voxel_mm3
-                            for name, cells in sectors.items()}
-            reason = preview.get('reason')
-            accepted = (preview['status'] == 'accepted' or
-                        preview['status'] == 'partial' and reason == 'TISSUE_ASPIRATION_IN_PROGRESS')
-            if accepted and preview['metrics']['nonTargetRemovedMm3'] > MAX_TOTAL_NON_TARGET_MM3+1e-9:
-                accepted, reason = False, 'TOTAL_NON_TARGET_CAP'
-            if (accepted and prefix_metrics is not None and
-                    preview['metrics']['nonTargetRemovedMm3']-
-                    prefix_metrics['nonTargetRemovedMm3'] > MAX_ADDITIONAL_NON_TARGET_MM3+1e-9):
-                accepted, reason = False, 'CONTINUATION_NON_TARGET_CAP'
-            if accepted and not option_id.startswith('corridor:') and removed:
-                allowed = {row['id'] for row in engine.scene.regions
-                           if row['material'] == 'tumor' and row.get('target') or
-                              row['material'] == 'soft_tissue' and row['name'].lower() == 'brain'}
-                if any(int(engine.scene.labels.flat[cell]) not in allowed for cell in removed):
-                    accepted, reason = False, 'NON_BRAIN_OR_NON_TARGET_REMOVAL_REFUSED'
-            row = {'index': index, 'atActionPosition': at, 'action': copy.deepcopy(trial),
-                   'previewStatus': preview['status'], 'previewStateId': preview['stateId'],
-                   'status': preview['status'] if accepted else 'refused',
-                   'reason': reason, 'sectorDeltaMm3': sector_delta,
-                   'previewTargetRemovedMm3': preview['metrics']['targetRemovedMm3'],
-                   'previewNonTargetRemovedMm3': preview['metrics']['nonTargetRemovedMm3']}
-            attempts.append(row)
-            if not accepted:
-                failure = str(reason or preview['status'])
-                if failure == 'SHAFT_COLLISION':
-                    continue
+            if failure is not None:
                 break
-            result = candidate.step(trial, check=check)
-            if result['stateId'] != preview['stateId'] or result['status'] != preview['status']:
-                raise ValueError('High-level option preview and native commit differ')
-            row['committedStateId'] = result['stateId']
-            failure = None
-            break
-        if failure is not None:
-            break
+
+    run_actions(actions, cleanup_path=('saved_source_access' if source_cleanup_attempted
+                else 'generic_stop' if option_id == 'STOP' else None))
+    if source_cleanup_attempted:
+        if failure is None and not _cleanup_pending(candidate):
+            source_cleanup_reused = True
+            cleanup_mode = 'saved_source_access'
+        else:
+            source_cleanup_refusal = failure or 'CHECKED_CLEANUP_INCOMPLETE'
+            if candidate.state['slots'][hand]['inserted']:
+                cleanup_mode = 'generic_after_source_refusal'
+                run_actions(generic_stop_actions,
+                            cleanup_path='generic_after_source_refusal',
+                            index_offset=len(attempts))
+            else:
+                failure = source_cleanup_refusal
 
     if option_id == 'STOP' and failure is not None and \
             candidate.state['slots'][hand]['inserted']:
@@ -355,7 +410,12 @@ def _execute_strategy_option_core(engine, access_plan, option_id, *, corridor_bi
                    set(engine.state['removed'])) & cells)*engine.scene.voxel_mm3
                    for name, cells in sectors.items()},
                'cleanupComplete': not _cleanup_pending(candidate),
-               'corridorBinding': corridor_binding}
+               'corridorBinding': corridor_binding,
+               **({'cleanupMode': cleanup_mode,
+                   'sourceCleanupReused': source_cleanup_reused,
+                   'sourceCleanupAttempted': source_cleanup_attempted,
+                   'sourceCleanupRefusal': source_cleanup_refusal}
+                  if option_id == 'STOP' else {})}
     return candidate, outcome
 
 

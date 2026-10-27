@@ -59,6 +59,11 @@ app.on('browser-window-created',(_event,window)=>{
         if(mode==='sector-execute'){
           await wait(`!!document.querySelector('.frozen-cusa-execution')`);
           const sourceScene=await js(`document.querySelector('.frozen-cusa-execution').dataset.sourceScene`);
+          if(process.env.INTEGRATED_RESEARCH_ACCESS_METHOD){
+            const method=process.env.INTEGRATED_RESEARCH_ACCESS_METHOD;
+            await js(`(()=>{const select=document.querySelector('[aria-label="Frozen policy access approach"]');const option=[...select.options].find(option=>option.value.endsWith(${JSON.stringify(method)}));if(!option)throw Error('Requested source approach unavailable');select.value=option.value;select.dispatchEvent(new Event('change',{bubbles:true}));})()`);
+            report.requestedAccessMethod=method;
+          }
           await click('Run frozen sector checkpoint');
           await wait(`document.body.innerText.includes('New frozen policy episode')&&!!document.querySelector('.learned-sector-execution')`,180);
           const created=newExecutionForScene(sourceScene);assert.equal(created.length,1);
@@ -90,13 +95,25 @@ app.on('browser-window-created',(_event,window)=>{
       }else if(mode==='joint'){
         await wait(`!!document.querySelector('.joint-strategies')`);
         await js(`document.querySelector('.joint-strategies').open=true`);
+        if(process.env.INTEGRATED_RESEARCH_GENERATE==='1'){
+          await wait(`!!document.querySelector('[aria-label="Acknowledge joint source assumptions"]')`);
+          await js(`document.querySelector('[aria-label="Acknowledge joint source assumptions"]').click()`);
+          await wait(`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Generate joint source strategies'&&!b.matches(':disabled'))`);
+          await click('Generate joint source strategies');
+          await wait(`document.querySelectorAll('[aria-label="Joint sector executions"] [data-joint-branch]').length>0`,180);
+          report.checks.push('Actual desktop joint planning generated native alternatives from the intact classic source');
+        }
         await wait(`document.querySelectorAll('[aria-label="Joint sector executions"] [data-joint-branch]').length>0`);
+        const wholeApproach=await js(`(()=>{const table=document.querySelector('[aria-label="Whole approach joint and classic reference outcomes"]');return{rows:table?.querySelectorAll('tbody tr').length??0,text:table?.textContent??'',summaryCards:document.querySelectorAll('[aria-label="Whole approach summaries"] > article').length}})()`);
+        assert.equal(wholeApproach.rows,4,'All three joint endpoints and the strongest classic reference expose whole approach effects');
+        assert.equal(wholeApproach.summaryCards,4,'Narrow inspector exposes readable whole approach summaries');
+        assert(wholeApproach.text.includes('Residual')&&wholeApproach.text.toLowerCase().includes('non-target'),'Whole approach comparison includes residual and cumulative non-target effects');
         const selection=await js(`(()=>{const rows=[...document.querySelectorAll('[aria-label="Joint sector executions"] > div')];const row=rows.find(row=>row.textContent.includes('Task gate passed'))??rows[0];const buttons=[...row.querySelectorAll('[data-joint-branch]')];return{branchId:buttons[0].dataset.jointBranch,start:Number(buttons[0].dataset.jointPosition),end:Number(buttons[1].dataset.jointPosition),gate:row.textContent.includes('Task gate passed')}})()`);
         await js(`(()=>{const details=[...document.querySelectorAll('.joint-strategies details')].find(d=>d.querySelector('summary')?.textContent.startsWith('Original classic comparison'));details.open=true})()`);
         await wait(`document.querySelectorAll('[aria-label="Original access comparison"] [data-joint-branch]').length>0`);
         const baseline=await js(`({access:document.querySelectorAll('[aria-label="Original access comparison"] [data-joint-branch]').length/2,sectors:document.querySelectorAll('[aria-label="Original sector comparison"] [data-joint-branch]').length/2})`);
         assert.equal(baseline.access,3);assert.equal(baseline.sectors,12);
-        report.joint={selection,baseline,text:await js(`document.querySelector('.joint-strategies').innerText`)};
+        report.joint={selection,baseline,wholeApproach,text:await js(`document.querySelector('.joint-strategies').innerText`)};
         await js(`document.querySelector('.joint-strategies').scrollIntoView({block:'start'})`);
         await capture('01-joint-and-classic-evidence');
         await js(`(()=>{const button=[...document.querySelectorAll('[aria-label="Joint sector executions"] [data-joint-branch]')].find(b=>b.dataset.jointBranch===${JSON.stringify(selection.branchId)}&&Number(b.dataset.jointPosition)===${selection.start});if(!button||button.disabled)throw Error('Joint native start unavailable');button.click()})()`);

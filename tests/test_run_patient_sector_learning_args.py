@@ -29,16 +29,41 @@ def test_parser_preserves_superior_defaults_and_accepts_explicit_axis_and_profil
     assert defaults.train_access_method == 'superior-access'
     assert defaults.transfer_access_method == 'superior-access'
     assert defaults.max_suite_physical_calls == 3600
+    assert defaults.ppo_source_schedule == 'train-only'
     assert not defaults.fit and not defaults.profile
     selected = runner.build_parser().parse_args(_argv() + [
         '--train-access-method', 'axis0-access',
         '--transfer-access-method', 'axis0-access',
-        '--max-suite-physical-calls', '5000', '--profile'])
+        '--max-suite-physical-calls', '5000',
+        '--ppo-source-schedule', 'paired-development', '--profile'])
     assert (selected.train_access_method, selected.transfer_access_method,
-            selected.max_suite_physical_calls, selected.profile) == (
-                'axis0-access', 'axis0-access', 5000, True)
+            selected.max_suite_physical_calls, selected.ppo_source_schedule,
+            selected.profile) == (
+                'axis0-access', 'axis0-access', 5000, 'paired-development', True)
     with pytest.raises(SystemExit):
         runner.build_parser().parse_args(_argv() + ['--fit', '--profile'])
+    with pytest.raises(SystemExit):
+        runner.build_parser().parse_args(_argv() + [
+            '--ppo-source-schedule', 'choose-best-case'])
+
+
+def test_fixed_ppo_source_plan_and_stage_specific_development_roles():
+    assert [row['sourceKey'] for row in runner.ppo_episode_plan('train-only')] == [
+        'train', 'train', 'train', 'train']
+    paired = runner.ppo_episode_plan('paired-development')
+    assert paired == [
+        {'update': 0, 'episode': 0, 'sourceKey': 'train'},
+        {'update': 0, 'episode': 1, 'sourceKey': 'transfer'},
+        {'update': 1, 'episode': 0, 'sourceKey': 'train'},
+        {'update': 1, 'episode': 1, 'sourceKey': 'transfer'}]
+    assert runner.optimization_role('bc', 'transfer', 'paired-development') == \
+        'DEV_EVALUATION_ONLY'
+    assert runner.optimization_role('ppo', 'train', 'paired-development') == \
+        'DEV_TRAINED_FOR_PPO'
+    assert runner.optimization_role('ppo', 'transfer', 'paired-development') == \
+        'DEV_TRAINED_FOR_PPO'
+    assert runner.optimization_role('ppo', 'transfer', 'train-only') == \
+        'DEV_FROZEN_TRANSFER_EVALUATION'
 
 
 def test_suite_check_uses_selected_cap_and_counts_every_native_category():
@@ -52,7 +77,12 @@ def test_suite_check_uses_selected_cap_and_counts_every_native_category():
             source_replays=5, exported_replays=6, max_physical_calls=19)
 
 
-def test_selected_methods_and_cap_are_receipted_before_first_rollout(monkeypatch, tmp_path):
+@pytest.mark.parametrize('schedule, expected_sources', [
+    ('train-only', ['train', 'train', 'train', 'train']),
+    ('paired-development', ['train', 'transfer', 'train', 'transfer']),
+])
+def test_selected_methods_and_cap_are_receipted_before_first_rollout(
+        monkeypatch, tmp_path, schedule, expected_sources):
     train = tmp_path / 'train.ressectionlab'
     transfer = tmp_path / 'transfer.ressectionlab'
     train.write_bytes(b'declared train source')
@@ -84,12 +114,21 @@ def test_selected_methods_and_cap_are_receipted_before_first_rollout(monkeypatch
         runner.run(train, transfer, output, fit=False,
             train_access_method='axis0-access',
             transfer_access_method='axis1-access',
-            max_suite_physical_calls=5000)
+            max_suite_physical_calls=5000,
+            ppo_source_schedule=schedule)
     receipt = json.loads((output / 'receipt.json').read_text())
     assert observed == ['axis0-access', 'axis1-access']
     assert receipt['requestedAccessMethods'] == {
         'train': 'axis0-access', 'transfer': 'axis1-access'}
     assert receipt['requestedMaxSuitePhysicalCalls'] == 5000
+    assert receipt['ppoSourceSchedule'] == schedule
+    assert receipt['ppoScheduleExecuted'] is False
+    assert [row['sourceKey'] for row in receipt['ppoEpisodePlan']] == expected_sources
+    assert receipt['plannedOptimizationRoles']['transfer']['ppo'] == (
+        'DEV_TRAINED_FOR_PPO' if schedule == 'paired-development' else
+        'DEV_FROZEN_TRANSFER_EVALUATION')
+    assert receipt['sources']['transfer']['plannedOptimizationRoles'] == \
+        receipt['plannedOptimizationRoles']['transfer']
     assert receipt['sources']['train']['accessMethod'] == 'axis0-access'
     assert receipt['sources']['transfer']['accessMethod'] == 'axis1-access'
     assert receipt['cost']['maxPhysicalCalls'] == 5000
@@ -103,3 +142,7 @@ def test_upper_call_cap_rejected_before_output_creation(tmp_path):
             runner.run('unused', 'unused', output,
                        max_suite_physical_calls=cap)
         assert not output.exists()
+    with pytest.raises(ValueError, match='Unknown PPO source schedule'):
+        runner.run('unused', 'unused', output,
+                   ppo_source_schedule='post-hoc-best')
+    assert not output.exists()

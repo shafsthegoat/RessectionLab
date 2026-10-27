@@ -116,6 +116,9 @@ def reusable_files(sizes):
 
 
 def acquire(case, declaration):
+    role = declaration.get("role")
+    if role not in ("DEVELOPMENT", "FROZEN_ASSESSMENT"):
+        raise ValueError("Source acquisition requires an explicit supported role")
     revision = declaration["mirror_revision"]
     rows = source_listing(case, revision)
     listed_size = sum(row["size"] for row in rows)
@@ -166,14 +169,21 @@ def acquire(case, declaration):
                         "checksum_authority": "pinned_mirror_git_lfs", "disposition": disposition,
                         "official_tcia_byte_equivalence": "unknown"})
     result = {"schema": "resectionlab.fresh-source-acquisition.v1", "patient_id": case,
-              "role": "DEVELOPMENT", "mirror_revision": revision, "declared_total_bytes": listed_size,
+              "role": role, "mirror_revision": revision, "declared_total_bytes": listed_size,
               "downloaded_bytes_this_run": downloaded, "files": receipt,
               "acquired_at": datetime.now(timezone.utc).isoformat()}
+    if declaration.get("role_declaration_sha256") is not None:
+        result["role_declaration_sha256"] = declaration["role_declaration_sha256"]
+    if declaration.get("checkpoint_freeze_sha256") is not None:
+        result["checkpoint_freeze_sha256"] = declaration["checkpoint_freeze_sha256"]
     write_json(destination / "source-receipt.json", result)
     return result
 
 
 def prepare(case, receipt, *, infer_brain):
+    role = receipt.get("role")
+    if role not in ("DEVELOPMENT", "FROZEN_ASSESSMENT"):
+        raise ValueError("Source preparation requires an explicit supported role receipt")
     paths = {Path(row["remote_path"]).name.removeprefix(case + "_").removesuffix(".nii.gz"):
              ROOT / row["path"] for row in receipt["files"]}
     if set(paths) != {*SEQUENCES, "tumor_segmentation"}:
@@ -221,7 +231,7 @@ def prepare(case, receipt, *, infer_brain):
         c.document["source_limitations"] = ["Skull-stripped structural mirror, not acquired CT or angiography",
             "Mirror-to-official TCIA byte equivalence and BraTS pretraining overlap unknown",
             "Source-provided coregistration has not received independent landmark review"]
-        c.save("source-bound fresh development import")
+        c.save("source-bound fresh " + role.lower() + " import")
     relabeled = False
     for item in c.document["layers"]:
         value = item.get("provenance", {}).get("source_label_value")
@@ -249,7 +259,9 @@ def prepare(case, receipt, *, infer_brain):
     reopened = PatientImagingCollection(c.root)
     if reopened.identity() != c.identity():
         raise ValueError("Native collection did not reopen identically")
-    report = {"schema": "resectionlab.fresh-development-preparation.v1", "patient_id": case,
+    report = {"schema": ("resectionlab.fresh-development-preparation.v1" if role == "DEVELOPMENT"
+                         else "resectionlab.frozen-assessment-preparation.v1"),
+              "patient_id": case, "source_role": role,
               "source_receipt": str((SOURCE_ROOT / case / "source-receipt.json").relative_to(ROOT)),
               "native_manifest": str((native / "patient-anatomy.json").relative_to(ROOT)),
               "native_snapshot_id": c.identity(), "native_reopen_identical": True,
@@ -270,6 +282,8 @@ def prepare(case, receipt, *, infer_brain):
               "missing_anatomy": c.document["missing"],
               "planning_limitations": c.document["source_limitations"],
               "clinical_validation": "none", "official_tcia_byte_equivalence": "unknown"}
+    if receipt.get("checkpoint_freeze_sha256") is not None:
+        report["checkpoint_freeze_sha256"] = receipt["checkpoint_freeze_sha256"]
     write_json(OUTPUT_ROOT / case / "preparation-receipt.json", report)
     return report
 

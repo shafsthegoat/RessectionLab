@@ -116,77 +116,9 @@ def _joint_documents(result, scene, intact):
 
 
 def _install_joint(record, result, access, sectors):
-    """Add versioned native branches and archive the exact classic pair."""
-    if sum(len(result[key]) for key in
-           ('accessBranches', 'sectorBranches', 'failedBranches')) > MAX_NEW_BRANCHES:
-        raise ValueError('Joint export exceeds six retained native branches')
-    source_branches = copy.deepcopy(record['branches'])
-    source_parents = copy.deepcopy(record.get('parents', {}))
-    source_access = copy.deepcopy(record['planning'])
-    source_sectors = copy.deepcopy(record['sectorPlanning'])
-    created = {}
-    for kind, key in (('access', 'accessBranches'), ('sector', 'sectorBranches'),
-                      ('failed', 'failedBranches')):
-        rows = result[key]
-        if not isinstance(rows, list):
-            raise ValueError('Joint native branch list differs')
-        for candidate, evidence in rows:
-            if (not isinstance(candidate, SurgicalEngine) or
-                    len(candidate.actions) > MAX_ACTIONS or
-                    not isinstance(evidence, dict)):
-                raise ValueError('Joint native branch or receipt differs')
-            branch_id = evidence.get('branchId')
-            if kind == 'access':
-                expected = 'joint-access-'+str(evidence.get('method'))
-            elif kind == 'sector':
-                expected = ('joint-sector-'+str(evidence.get('strategy', {}).get('sourceAccessMethod'))+
-                            '-left-far-first')
-            else:
-                expected = None
-            if (not isinstance(branch_id, str) or not branch_id.startswith('joint-') or
-                    branch_id in record['branches'] or branch_id in created or
-                    (expected is not None and branch_id != expected) or
-                    (kind == 'failed' and not branch_id.startswith('joint-failed-'))):
-                raise ValueError('Joint branch identity collides with classic source')
-            if kind == 'failed' and (evidence.get('schema') !=
-                    'resectionlab.joint-anatomy-failure.v1' or
-                    evidence.get('retentionRole') != 'stopped_native_branch_not_admitted' or
-                    evidence.get('nativeActions') != len(candidate.actions) or
-                    evidence.get('startStateId') !=
-                        record['branches'][record['branchId']]['stateId']):
-                raise ValueError('Retained failed native branch receipt differs')
-            snapshot = candidate.snapshot()
-            if (snapshot['sceneId'] != record['branches'][record['branchId']]['sceneId'] or
-                    snapshot['stateId'] != candidate.state_id or
-                    snapshot['actions'] != candidate.actions or
-                    (evidence.get('finalStateId') is not None and
-                     evidence['finalStateId'] != candidate.state_id)):
-                raise ValueError('Joint branch endpoint or native actions differ')
-            record['branches'][branch_id] = snapshot
-            record.setdefault('parents', {})[branch_id] = {
-                'branchId': record['branchId'], 'position': 0}
-            created[branch_id] = {'kind': kind, 'candidate': candidate,
-                                  'stateId': candidate.state_id,
-                                  'actionsHash': semantic_digest(candidate.actions)}
-    if len({row['branchId'] for row in access['alternatives']}) != len(result['accessBranches']) or \
-            {row['branchId'] for row in access['alternatives']} != {
-                row['branchId'] for _, row in result['accessBranches']} or \
-            len({row['branchId'] for row in sectors['alternatives']}) != len(result['sectorBranches']) or \
-            {row['branchId'] for row in sectors['alternatives']} != {
-                row['branchId'] for _, row in result['sectorBranches']}:
-        raise ValueError('Joint active comparison alternatives differ from native branches')
-    history = record.setdefault('sectorPlanningHistory', [])
-    if not isinstance(history, list) or len(history) >= 8:
-        raise ValueError('Classic comparison history capacity differs')
-    history.append({'sourceAccessComparison': source_access, 'comparison': source_sectors})
-    record['planning'] = copy.deepcopy(access)
-    record['sectorPlanning'] = copy.deepcopy(sectors)
-    record['sectorSourceAccessComparison'] = copy.deepcopy(access)
-    if (record['branchId'] not in source_branches or record['position'] != 0 or
-            any(record['branches'][key] != value for key, value in source_branches.items()) or
-            any(record['parents'].get(key) != value for key, value in source_parents.items())):
-        raise ValueError('Classic native branch or parent was changed')
-    return created
+    # The desktop bridge and export CLI share the same checked graph install.
+    from resectionlab.surgical_joint_planning import install_joint_comparison
+    return install_joint_comparison(record, result, access, sectors)
 
 
 def _validate_pair(scene, record, original_access, original_sectors):

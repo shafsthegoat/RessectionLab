@@ -21,6 +21,28 @@ from run_patient_sector_learning import (
     development_declaration, export_native, producer_identity)
 
 
+def execution_export_context(payload, scene_id):
+    """Preserve fitting exposure when a cold episode uses a saved DEV source.
+
+    A desktop save changes archive bytes. Patient exposure follows its sealed
+    scene identity; the execution receipt separately binds the actual archive.
+    """
+    proof = payload['trainingReceipt']
+    schedule = proof.get('ppoSourceSchedule', 'train-only')
+    binding = payload['sourceBinding']
+    bindings = proof.get('optimizationSourceBindings', {'train': binding})
+    expected = ({'train', 'transfer'} if schedule == 'paired-development' and
+                payload['stage'] == 'bc-initialized-ppo' else {'train'})
+    if (schedule not in ('train-only', 'paired-development') or
+            set(bindings) != expected or bindings['train'] != binding):
+        raise ValueError('Frozen checkpoint optimization source bindings differ')
+    role = 'train' if binding['sceneId'] == scene_id else 'transfer'
+    if schedule == 'paired-development' and role == 'transfer' and \
+            bindings['transfer']['sceneId'] != scene_id:
+        raise ValueError('Source is outside this paired DEVELOPMENT checkpoint exposure')
+    return role, schedule, bindings
+
+
 def run(source, checkpoint, output, *, access_method='superior-access'):
     started = time.perf_counter()
     source, checkpoint, output = Path(source).resolve(), Path(checkpoint).resolve(), Path(output).resolve()
@@ -43,11 +65,16 @@ def run(source, checkpoint, output, *, access_method='superior-access'):
             'sourceBinding':payload['sourceBinding'],
             'trainingReceiptSha256':semantic_digest(proof)}
         receipt.update(model=model,producerIdentity=producer,sourceRoleDeclaration=declaration)
+        source_key, schedule, bindings = execution_export_context(payload, prepared.scene.identity)
+        receipt['executionMode'] = 'new-frozen-inference'
+        receipt['optimizationSourceKey'] = source_key
+        receipt['ppoSourceSchedule'] = schedule
         trial = rollout(prepared,actor_choice(actor),method='desktop-frozen-hierarchical-policy')
         # This token identifies an inference export; it is not a new fitting seed.
-        derived = export_native(prepared,trial,model,'inference',output,
+        derived = export_native(prepared,trial,model,source_key,output,
             seed='runtime-'+uuid.uuid4().hex[:8],declaration=declaration,
-            optimizer_updates=updates)
+            optimizer_updates=updates, ppo_source_schedule=schedule,
+            optimization_source_bindings=bindings)
         execution = trial['report']
         calls = (execution['cost']['previewCalls']+execution['cost']['committedCalls']+
             execution['cost']['independentReplayCalls']+derived['nativeReplayCalls'])

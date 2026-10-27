@@ -22,6 +22,9 @@ FRESH_0007 = Path(__file__).resolve().parents[1]/(
 FRESH_0005 = Path(__file__).resolve().parents[1]/(
     'testcases/outputs/integrated-goal-20261026/fresh-patients/'
     'UCSF-PDGM-0005/access-comparison-v6/access-comparison.ressectionlab')
+JOINT_0005 = Path(__file__).resolve().parents[1]/(
+    'testcases/outputs/integrated-goal-20261026/'
+    'joint-native-profile-0005-v2/joint-comparison.ressectionlab')
 
 
 def test_generated_source_target_sectors_are_disjoint_and_affine_bound():
@@ -182,6 +185,7 @@ def test_post_corridor_observation_disallows_retroactive_hand_change():
     finished, receipt = execute_strategy_option(far, access, 'STOP',
                                                 corridor_binding=corridor['corridorBinding'])
     assert receipt['status'] == 'accepted' and receipt['cleanupComplete']
+    assert receipt['cleanupMode'] == 'generic' and not receipt['sourceCleanupReused']
     assert finished.actions[:len(far.actions)] == far.actions
     with pytest.raises(ValueError, match='post_corridor'):
         strategy_observation(engine, evidence, sectors,
@@ -205,6 +209,7 @@ def test_negative_case_retries_same_endpoint_then_checked_reverse_cleanup():
     finished, stop = execute_strategy_option(near, superior, 'STOP',
         corridor_binding=first['corridorBinding'])
     assert stop['status'] == 'accepted' and stop['cleanupComplete']
+    assert stop['cleanupMode'] == 'generic' and not stop['sourceCleanupAttempted']
     assert any(row['action']['operation'] == 'move' and
                row['action']['parameters']['radiusMm'] == .6 and
                row['status'] == 'accepted' for row in stop['attempts'])
@@ -221,6 +226,91 @@ def test_negative_case_retries_same_endpoint_then_checked_reverse_cleanup():
     assert trials[0]['action']['duration'] == .2 and trials[1]['action']['duration'] == .6
     assert (near.metrics()['nonTargetRemovedMm3']-
             first['corridorBinding']['prefixMetrics']['nonTargetRemovedMm3']) <= 20.
+
+
+@pytest.mark.skipif(not JOINT_0005.is_file(), reason='Ignored joint 0005 native case is unavailable')
+def test_exact_joint_0005_source_boundary_uses_recorded_checked_stop_for_both_hands():
+    _, artifacts, _ = load_workspace(JOINT_0005)
+    record = artifacts['surgical_toolbox']
+    scene = load_environment(JOINT_0005)
+    access = next(row for row in record['planning']['alternatives']
+                  if row['method'] == 'axis0-access')
+    intact = SurgicalEngine.restore(scene, record['branches']['main'])
+    source = intact.snapshot()
+    prefix_length = len(access['decisions'])-2
+    for hand in ('left', 'right'):
+        corridor, entry = execute_strategy_option(intact, access, 'corridor:'+hand)
+        assert entry['status'] == 'accepted'
+        assert len(corridor.actions) == prefix_length == 38
+        original_corridor = corridor.snapshot()
+        if hand == 'left':
+            refused, far = execute_strategy_option(corridor, access, 'far:left',
+                corridor_binding=entry['corridorBinding'])
+            assert far['status'] == 'refused'
+            assert far['reason'].startswith('ESCAPE_PREFLIGHT_MACRO_')
+            assert refused.snapshot() == original_corridor
+        else:
+            refused = corridor
+        stopped, stop = execute_strategy_option(refused, access, 'STOP',
+            corridor_binding=entry['corridorBinding'])
+        expected = [dict(copy.deepcopy(row['action']), slot=hand)
+                    for row in access['decisions'][prefix_length:]]
+        assert stop['status'] == 'accepted' and stop['cleanupComplete']
+        assert stop['cleanupMode'] == 'saved_source_access'
+        assert stop['sourceCleanupAttempted'] and stop['sourceCleanupReused']
+        assert stop['sourceCleanupRefusal'] is None
+        assert stop['nativeActionsAppended'] == 2 and len(stopped.actions) == 40
+        assert stopped.actions[prefix_length:] == expected
+        assert [row['action'] for row in stop['attempts']] == expected
+        assert all(row['cleanupPath'] == 'saved_source_access' and
+                   row['status'] == 'accepted' and
+                   row['previewStateId'] == row['committedStateId']
+                   for row in stop['attempts'])
+        assert stopped.metrics()['targetRemovedMm3'] == corridor.metrics()['targetRemovedMm3']
+        assert stopped.metrics()['nonTargetRemovedMm3'] == corridor.metrics()['nonTargetRemovedMm3']
+        replay = SurgicalEngine.restore(scene, stopped.snapshot(), use_cache=False)
+        assert replay.state_id == stopped.state_id and replay.actions == stopped.actions
+        if hand == 'left':
+            assert stopped.state_id == access['finalStateId']
+    assert intact.snapshot() == source
+
+
+@pytest.mark.skipif(not JOINT_0005.is_file(), reason='Ignored joint 0005 native case is unavailable')
+def test_saved_source_stop_budget_and_changed_binding_do_not_splice_history():
+    _, artifacts, _ = load_workspace(JOINT_0005)
+    record = artifacts['surgical_toolbox']
+    scene = load_environment(JOINT_0005)
+    access = next(row for row in record['planning']['alternatives']
+                  if row['method'] == 'axis0-access')
+    intact = SurgicalEngine.restore(scene, record['branches']['main'])
+    corridor, entry = execute_strategy_option(intact, access, 'corridor:left')
+    original = corridor.snapshot()
+    budgeted, stop = execute_strategy_option(corridor, access, 'STOP',
+        corridor_binding=entry['corridorBinding'], max_actions=len(corridor.actions)+1)
+    assert stop['status'] == 'refused' and stop['reason'] == 'ACTION_BUDGET'
+    assert stop['sourceCleanupAttempted'] and not stop['sourceCleanupReused']
+    assert stop['sourceCleanupRefusal'] == 'ACTION_BUDGET'
+    assert stop['cleanupMode'] == 'generic_after_source_refusal'
+    assert stop['nativeActionsAppended'] == 1 and len(budgeted.actions) == 39
+    assert any(row.get('cleanupPath') == 'saved_source_access' and
+               row['action']['operation'] == 'withdraw' and
+               row['status'] == 'not_attempted' for row in stop['attempts'])
+    assert any(row.get('cleanupPath') == 'generic_after_source_refusal'
+               for row in stop['attempts'])
+    assert corridor.snapshot() == original
+    changed = copy.deepcopy(entry['corridorBinding'])
+    changed['prefixStateId'] = 'sha256:changed-boundary'
+    with pytest.raises(ValueError, match='corridor ancestry'):
+        execute_strategy_option(corridor, access, 'STOP', corridor_binding=changed)
+    tampered = copy.deepcopy(access)
+    tampered['decisions'][-1]['action']['duration'] = 30.
+    _, stop = execute_strategy_option(corridor, tampered, 'STOP',
+        corridor_binding=entry['corridorBinding'])
+    assert not stop['sourceCleanupAttempted'] and not stop['sourceCleanupReused']
+    assert stop['cleanupMode'] == 'generic'
+    assert all(row.get('cleanupPath') != 'saved_source_access'
+               for row in stop['attempts'])
+    assert corridor.snapshot() == original
 
 
 @pytest.mark.skipif(not FRESH_0005.is_file(), reason='Ignored fresh-development case is unavailable')

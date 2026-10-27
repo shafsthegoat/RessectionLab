@@ -42,6 +42,31 @@ PPO_EPISODES_PER_UPDATE = 2
 MAX_SUITE_SECONDS = 900.
 MAX_SUITE_PHYSICAL_CALLS = 3600
 MAX_ALLOWED_SUITE_PHYSICAL_CALLS = 6000
+PPO_SOURCE_SCHEDULES = ('train-only', 'paired-development')
+
+
+def ppo_episode_plan(schedule):
+    """Declare all sampled source assignments before any patient physics."""
+    if schedule not in PPO_SOURCE_SCHEDULES:
+        raise ValueError('Unknown PPO source schedule')
+    if PPO_UPDATES != 2 or PPO_EPISODES_PER_UPDATE != 2:
+        raise ValueError('Fixed paired DEVELOPMENT PPO protocol changed')
+    return [{'update': update, 'episode': episode,
+             'sourceKey': ('transfer' if schedule == 'paired-development' and
+                           episode == 1 else 'train')}
+            for update in range(PPO_UPDATES)
+            for episode in range(PPO_EPISODES_PER_UPDATE)]
+
+
+def optimization_role(stage, source_key, schedule):
+    if stage not in ('bc', 'ppo') or source_key not in ('train', 'transfer') or \
+            schedule not in PPO_SOURCE_SCHEDULES:
+        raise ValueError('Unknown DEVELOPMENT optimization role')
+    if stage == 'bc':
+        return 'DEV_BC_TEACHER' if source_key == 'train' else 'DEV_EVALUATION_ONLY'
+    if source_key == 'train' or schedule == 'paired-development':
+        return 'DEV_TRAINED_FOR_PPO'
+    return 'DEV_FROZEN_TRANSFER_EVALUATION'
 
 
 def write_json(path, value):
@@ -124,7 +149,8 @@ def _source_validation_calls(prepared):
 
 
 def export_native(prepared, trial, model, role, output, *, seed, declaration,
-                  optimizer_updates):
+                  optimizer_updates, ppo_source_schedule='train-only',
+                  optimization_source_bindings=None):
     """Save the actual actor-selected history; reopen and check its native state."""
     case, artifacts, workspace = load_workspace(prepared.source)
     artifacts = copy.deepcopy(artifacts)
@@ -136,9 +162,33 @@ def export_native(prepared, trial, model, role, output, *, seed, declaration,
     record['branches'][branch_id] = trial['engine'].snapshot()
     record.setdefault('parents', {})[branch_id] = {
         'branchId': record['branchId'], 'position': 0}
+    if model['stage'] not in ('bc', 'bc-initialized-ppo'):
+        raise ValueError('Unknown exported checkpoint stage')
+    source_use = optimization_role(
+        'bc' if model['stage'] == 'bc' else 'ppo', role, ppo_source_schedule)
+    optimization_bindings = (optimization_source_bindings if
+                             optimization_source_bindings is not None else
+                             {'train': model['sourceBinding']})
+    if (set(optimization_bindings) !=
+            ({'train', 'transfer'} if model['stage'] == 'bc-initialized-ppo' and
+              ppo_source_schedule == 'paired-development' else {'train'}) or
+            optimization_bindings['train'] != model['sourceBinding']):
+        raise ValueError('Export optimization source bindings differ')
+    evaluation_role = (f'paired-development-{model["stage"]}-{role}-evaluation'
+                       if ppo_source_schedule == 'paired-development' else role)
     metadata = {'schema': SCHEMA, 'branchId': branch_id,
-        'sourceRole': 'DEVELOPMENT', 'evaluationRole': role,
+        'sourceRole': 'DEVELOPMENT', 'evaluationRole': evaluation_role,
+        'sourceRoleDetail': source_use,
+        'optimizationRole': source_use,
+        'ppoSourceSchedule': ppo_source_schedule,
+        'evaluationNote': (
+            'The internal transfer source key names a second declared DEVELOPMENT '
+            'case assigned to PPO optimization; neither case is held out.'
+            if ppo_source_schedule == 'paired-development' else
+            'Same-case declared DEVELOPMENT evaluation.' if role == 'train' else
+            'Prespecified second DEVELOPMENT case; not a held-out assessment.'),
         'trainingSourceBinding': model['sourceBinding'],
+        'trainingOptimizationSourceBindings': copy.deepcopy(optimization_bindings),
         'executionSourceArchiveSha256': prepared.source_sha256,
         'executionSourceSceneId': prepared.scene.identity,
         'executionAccessComparisonSeal': prepared.access_comparison_seal,
@@ -165,7 +215,12 @@ def export_native(prepared, trial, model, role, output, *, seed, declaration,
         'exactNativeReplay': actor['exactNativeReplay'],
         'promotionStatus': ('no-clinical-promotion-development-only' if actor['taskGateMet']
                             else 'not-promoted-unpassed-development-episode'),
-        'limitations': ['Two declared DEVELOPMENT cases; no held-out or clinical claim',
+        'limitations': [
+            ('Both declared DEVELOPMENT cases are assigned to PPO updates; '
+             'paired PPO checkpoints have DEV_TRAINED_FOR_PPO exposure to both; '
+             'no held-out or generalization claim'
+             if ppo_source_schedule == 'paired-development' else
+             'Two declared DEVELOPMENT cases; no held-out or clinical claim'),
                         'Skull and complete critical anatomy remain unsupported',
                         'Fixed native skill library; actor only chooses high-level options']}
     record['learnedSectorExecutions'] = [metadata]
@@ -209,13 +264,15 @@ def _suite_check(started, reports, *, source_replays=0, exported_replays=0,
 def run(train_source, transfer_source, output, *, fit=False,
         train_access_method=DEVELOPMENT_ACCESS_METHOD,
         transfer_access_method=DEVELOPMENT_ACCESS_METHOD,
-        max_suite_physical_calls=MAX_SUITE_PHYSICAL_CALLS):
+        max_suite_physical_calls=MAX_SUITE_PHYSICAL_CALLS,
+        ppo_source_schedule='train-only'):
     if (type(max_suite_physical_calls) is not int or
             not 1 <= max_suite_physical_calls <= MAX_ALLOWED_SUITE_PHYSICAL_CALLS):
         raise ValueError('Suite native-call cap must be an integer in 1..6000')
     if (not isinstance(train_access_method, str) or not train_access_method or
             not isinstance(transfer_access_method, str) or not transfer_access_method):
         raise ValueError('Both selected access methods must be nonempty strings')
+    episode_plan = ppo_episode_plan(ppo_source_schedule)
     output = Path(output).resolve()
     if output.exists() or 'testcases' not in output.parts:
         raise ValueError('Choose a new ignored testcases/ output directory')
@@ -223,8 +280,23 @@ def run(train_source, transfer_source, output, *, fit=False,
     started = time.perf_counter()
     receipt = {'schema': SCHEMA, 'status': 'running',
         'mode': 'fit' if fit else 'profile',
-        'scope': '0007 DEVELOPMENT same-case fit; prespecified 0005 DEVELOPMENT frozen transfer',
+        'scope': (
+            '0007 and 0005 declared DEVELOPMENT; 0007 BC teacher; one episode '
+            'from each case per PPO update is preassigned; profile performs no fit; '
+            'no held-out or generalization claim'
+            if ppo_source_schedule == 'paired-development' and not fit else
+            '0007 and 0005 declared DEVELOPMENT; 0007 BC teacher; both used for '
+            'paired PPO optimization; no held-out or generalization claim'
+            if ppo_source_schedule == 'paired-development' else
+            '0007 DEVELOPMENT same-case fit; prespecified 0005 DEVELOPMENT frozen transfer'),
         'sourceRole': 'DEVELOPMENT', 'seeds': SEEDS,
+        'ppoSourceSchedule': ppo_source_schedule,
+        'ppoEpisodePlan': episode_plan,
+        'ppoScheduleExecuted': False,
+        'plannedOptimizationRoles': {
+            label: {'bc': optimization_role('bc', label, ppo_source_schedule),
+                    'ppo': optimization_role('ppo', label, ppo_source_schedule)}
+            for label in ('train', 'transfer')},
         'requestedAccessMethods': {'train': train_access_method,
                                    'transfer': transfer_access_method},
         'requestedMaxSuitePhysicalCalls': max_suite_physical_calls,
@@ -254,6 +326,7 @@ def run(train_source, transfer_source, output, *, fit=False,
                 'sceneId': case.scene.identity,
                 'accessPlanSeal': case.access['planSeal'],
                 'accessMethod': case.access_method,
+                'plannedOptimizationRoles': receipt['plannedOptimizationRoles'][label],
                 'sectorCellSha256': {name: value['sourceCellSha256']
                                      for name, value in case.sector_evidence.items()},
                 'roleDeclaration': declaration,
@@ -294,7 +367,7 @@ def run(train_source, transfer_source, output, *, fit=False,
         transfer, transfer_declaration = prepared['transfer']
         for seed in SEEDS:
             run_receipt = {'seed': seed, 'untrained': {}, 'bc': {}, 'ppo': {},
-                           'failures': []}
+                           'ppoSampledEpisodeAssignments': [], 'failures': []}
             with torch.random.fork_rng(devices=[]):
                 torch.manual_seed(seed)
                 untrained = OptionActor(); untrained.eval()
@@ -316,6 +389,8 @@ def run(train_source, transfer_source, output, *, fit=False,
                 continue
             bc_training = {'sourceBinding': model_binding(train),
                 'producerIdentity': producer, 'bcFit': bc_fit,
+                'optimizationSourceRoles': {'train': 'DEV_BC_TEACHER',
+                                            'transfer': 'DEV_EVALUATION_ONLY'},
                 'demonstration': teacher['report'],
                 'demonstrationNativeCalls': _physical_calls(teacher['report']),
                 'role': 'same-case DEVELOPMENT supervised high-level option fit'}
@@ -328,7 +403,8 @@ def run(train_source, transfer_source, output, *, fit=False,
                 trial = rollout(case, actor_choice(bc_actor), method='frozen-bc-live')
                 reports.append(trial['report'])
                 derived = export_native(case, trial, bc_model, label, output,
-                    seed=seed, declaration=declaration, optimizer_updates=0)
+                    seed=seed, declaration=declaration, optimizer_updates=0,
+                    ppo_source_schedule=ppo_source_schedule)
                 exported_replays += derived['nativeReplayCalls']
                 run_receipt['bc']['evaluations'][label] = {'report': trial['report'],
                                                            'derived': derived}
@@ -350,10 +426,17 @@ def run(train_source, transfer_source, output, *, fit=False,
             for update in range(PPO_UPDATES):
                 episodes = []
                 for episode in range(PPO_EPISODES_PER_UPDATE):
-                    trial = rollout(train, actor_choice(actor, sample=True,
+                    assignment = episode_plan[update*PPO_EPISODES_PER_UPDATE+episode]
+                    source_key = assignment['sourceKey']
+                    sample_case, _ = prepared[source_key]
+                    trial = rollout(sample_case, actor_choice(actor, sample=True,
                         generator=generator), method=f'ppo-sampled-{update}-{episode}')
                     episodes.append(trial)
                     sampled_reports.append(trial['report'])
+                    run_receipt['ppoSampledEpisodeAssignments'].append({
+                        **assignment, 'sourceArchiveSha256': sample_case.source_sha256,
+                        'optimizationRole': optimization_role(
+                            'ppo', source_key, ppo_source_schedule)})
                     reports.append(trial['report'])
                     _suite_check(started, reports, source_replays=source_replays,
                                  exported_replays=exported_replays,
@@ -375,9 +458,22 @@ def run(train_source, transfer_source, output, *, fit=False,
                 'producerIdentity': producer,
                 'bcCheckpointSha256': bc_model['fileSha256'],
                 'bcActorSha256': bc_model['actorSha256'],
+                'ppoSourceSchedule': ppo_source_schedule,
+                'ppoEpisodePlan': episode_plan,
+                'sampledEpisodeAssignments': run_receipt['ppoSampledEpisodeAssignments'],
+                'optimizationSourceBindings': {
+                    label: model_binding(prepared[label][0])
+                    for label in (('train', 'transfer') if
+                                  ppo_source_schedule == 'paired-development' else ('train',))},
+                'optimizationSourceRoles': {
+                    label: optimization_role('ppo', label, ppo_source_schedule)
+                    for label in (('train', 'transfer') if
+                                  ppo_source_schedule == 'paired-development' else ('train',))},
                 'ppoUpdates': updates, 'sampledEpisodes': sampled_reports,
                 'actualPublicOptionDecisions': sum(len(row['decisions']) for row in sampled_reports),
-                'role': 'same-case DEVELOPMENT BC-initialized PPO high-level option fit'}
+                'role': ('paired DEVELOPMENT BC-initialized PPO high-level option fit'
+                         if ppo_source_schedule == 'paired-development' else
+                         'same-case DEVELOPMENT BC-initialized PPO high-level option fit')}
             ppo_model = seal_actor(actor, output/('ppo-seed'+str(seed)+'.pt'),
                 stage='bc-initialized-ppo', prepared=train, producer=producer,
                 training_receipt=ppo_training)
@@ -391,7 +487,9 @@ def run(train_source, transfer_source, output, *, fit=False,
                 reports.append(trial['report'])
                 derived = export_native(case, trial, ppo_model, label, output,
                     seed=seed, declaration=declaration,
-                    optimizer_updates=len(updates))
+                    optimizer_updates=len(updates),
+                    ppo_source_schedule=ppo_source_schedule,
+                    optimization_source_bindings=ppo_training['optimizationSourceBindings'])
                 exported_replays += derived['nativeReplayCalls']
                 run_receipt['ppo']['evaluations'][label] = {'report': trial['report'],
                                                             'derived': derived}
@@ -399,6 +497,9 @@ def run(train_source, transfer_source, output, *, fit=False,
             _suite_check(started, reports, source_replays=source_replays,
                          exported_replays=exported_replays,
                          max_physical_calls=max_suite_physical_calls)
+        receipt['ppoScheduleExecuted'] = all(
+            len(row['ppoSampledEpisodeAssignments']) == len(episode_plan)
+            for row in receipt['seedRuns'])
         receipt['status'] = 'saved'
         return receipt
     except BaseException as error:
@@ -434,6 +535,9 @@ def build_parser():
     parser.add_argument('--max-suite-physical-calls', type=int,
         default=MAX_SUITE_PHYSICAL_CALLS,
         help='Aggregate native-call cap, default 3600 and hard maximum 6000')
+    parser.add_argument('--ppo-source-schedule', choices=PPO_SOURCE_SCHEDULES,
+        default='train-only',
+        help='Fixed PPO episode sources: two 0007 episodes per update, or one 0007 then one 0005 DEVELOPMENT episode')
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument('--fit', action='store_true',
         help='Fit fixed-seed BC/PPO only after the source implementation is frozen')
@@ -447,7 +551,8 @@ def main():
     result = run(args.train_source, args.transfer_source, args.output, fit=args.fit,
         train_access_method=args.train_access_method,
         transfer_access_method=args.transfer_access_method,
-        max_suite_physical_calls=args.max_suite_physical_calls)
+        max_suite_physical_calls=args.max_suite_physical_calls,
+        ppo_source_schedule=args.ppo_source_schedule)
     print(json.dumps({'status': result['status'], 'mode': result['mode'],
         'cost': result['cost'], 'seeds': result['seeds']}))
 

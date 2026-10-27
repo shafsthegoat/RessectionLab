@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {jointStrategyDisplay} from '../src/joint-strategy-data.ts';
+import {jointGenerationEligibility,jointStrategyDisplay} from '../src/joint-strategy-data.ts';
 
 const scene='sha256:scene',start='sha256:intact';
 const methods=[['superior-access',2],['axis0-access',0],['axis1-access',1]];
@@ -93,6 +93,84 @@ test('joint display binds both native comparisons and preserves inspectable clas
   assert.equal(data.failures[0].cleanupComplete,false);
   assert.deepEqual([data.classicAccess.length,data.classicSectors.length],[3,2]);
   assert.deepEqual([data.classicSectors[0].start,data.classicSectors[0].end],[2,3]);
+});
+
+test('whole approach measures use sealed endpoint values and reject disagreement',()=>{
+  const data=fixture();
+  const access=data.artifact.planning.alternatives[0];
+  access.route.surfacePose={position:[1,2,3]};
+  access.withdrawalRecovery={fastPreviewRejection:'SHAFT_COLLISION',
+    slowStatus:'accepted',slowDurationSeconds:14.5};
+  const sector=data.artifact.sectorPlanning.alternatives[0];
+  sector.summary={targetRemovedMm3:20,nonTargetRemovedMm3:111,elapsedSeconds:9};
+  sector.modeledOutcomes={target:{removedMm3:20,residualMm3:80,
+    sourceVolumeMm3:100,fractionRemoved:.2},
+    nonTargetRemovedMm3:{value:111}};
+  sector.continuationOutcome={...sector.continuationOutcome,
+    deltaTargetMm3:12,deltaNonTargetMm3:1,totalNonTargetMm3:111};
+  sector.cost.totalPhysicalCalls=50;
+  const observed=jointStrategyDisplay(data.artifact,data.response);
+  assert.ok(observed);
+  assert.deepEqual(observed.sectors[0].entryRas,[1,2,3]);
+  assert.deepEqual([observed.sectors[0].wholeTargetMm3,
+    observed.sectors[0].wholeNonTargetMm3,observed.sectors[0].residualTargetMm3,
+    observed.sectors[0].sourceFractionRemoved,
+    observed.sectors[0].additionalTargetMm3,
+    observed.sectors[0].additionalNonTargetMm3,
+    observed.sectors[0].simulatedSeconds,
+    observed.sectors[0].optionPhysicalCalls],
+    [20,111,80,.2,12,1,9,50]);
+  assert.equal(observed.sectors[0].withdrawal.fastRefusal,'SHAFT_COLLISION');
+  sector.summary.targetRemovedMm3=21;
+  assert.equal(jointStrategyDisplay(data.artifact,data.response),null);
+  sector.summary.targetRemovedMm3=20;
+  sector.summary.elapsedSeconds=Infinity;
+  assert.equal(jointStrategyDisplay(data.artifact,data.response).sectors[0].simulatedSeconds,null);
+});
+
+test('live joint response takes precedence over a stale saved artifact',()=>{
+  const {artifact,response}=fixture();
+  response.jointPlanning=structuredClone(artifact.jointPlanning);
+  response.jointBaselineHistory=structuredClone(artifact.sectorPlanningHistory);
+  response.planning=structuredClone(artifact.planning);
+  response.sectorPlanning=structuredClone(artifact.sectorPlanning);
+  const stale={branchId:'main',branches:{main:artifact.branches.main},
+    jointPlanning:{schema:'forged old report'}};
+  const data=jointStrategyDisplay(stale,response);
+  assert.ok(data);
+  assert.equal(data.access.length,2);
+  assert.equal(data.classicSectors.length,2);
+  response.jointPlanning=null;
+  assert.equal(jointStrategyDisplay(stale,response),null);
+  response.jointPlanning=structuredClone(artifact.jointPlanning);
+  response.branches.find(row=>row.id==='joint-sector-superior-access-left-far-first').steps=2;
+  assert.equal(jointStrategyDisplay(stale,response),null);
+});
+
+test('joint generation requires an acknowledged classic pair at the common intact state',()=>{
+  const {artifact,response}=fixture();
+  const classic=artifact.sectorPlanningHistory[0];
+  response.planning={...structuredClone(classic.sourceAccessComparison),sourceRole:'Classic source'};
+  response.sectorPlanning=structuredClone(classic.comparison);
+  response.branchId='main';response.position=0;response.view.stateId=start;
+  response.planningAvailability={accessAvailable:true,skullAvailable:false,
+    modeledBrainLayerAvailable:true};
+  const original={branchId:'main',branches:artifact.branches};
+  assert.equal(jointGenerationEligibility(original,response).ready,true);
+  response.position=1;
+  assert.equal(jointGenerationEligibility(original,response).ready,false);
+  response.position=0;
+  response.sectorPlanning.sourceAccessComparisonSeal='sha256:forged';
+  assert.equal(jointGenerationEligibility(original,response).ready,false);
+  response.sectorPlanning.sourceAccessComparisonSeal=response.planning.comparisonSeal;
+  response.planningAvailability.skullAvailable=true;
+  assert.equal(jointGenerationEligibility(original,response).ready,false);
+  response.planningAvailability.skullAvailable=false;
+  response.jointPlanning={schema:'already-generated'};
+  assert.match(jointGenerationEligibility(original,response).reason,/already saved/);
+  response.jointPlanning=null;
+  response.verification={readOnly:true,status:'unverified-import'};
+  assert.equal(jointGenerationEligibility(original,response).ready,false);
 });
 
 test('joint display refuses scene, branch, and recorded step substitutions',()=>{
