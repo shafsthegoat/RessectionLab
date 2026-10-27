@@ -3,7 +3,7 @@
 const {app,dialog}=require('electron');
 const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),assert=require('node:assert/strict'),crypto=require('node:crypto');
 const root=path.resolve(__dirname,'../..'),input=path.resolve(process.env.INTEGRATED_RESEARCH_CASE||''),output=path.resolve(process.env.INTEGRATED_RESEARCH_OUTPUT||''),mode=process.env.INTEGRATED_RESEARCH_MODE;
-if(!['access','learned','cusa','cusa-execute','cusa-cancel','sector','sector-policy','sector-execute','joint'].includes(mode))throw Error('Set a supported INTEGRATED_RESEARCH_MODE');
+if(!['access','learned','cusa','cusa-execute','cusa-cancel','sector','sector-policy','sector-execute','joint','frozen-assessment'].includes(mode))throw Error('Set a supported INTEGRATED_RESEARCH_MODE');
 for(const p of [input,output])if(!p.startsWith(path.join(root,'testcases')+path.sep))throw Error('Input/output must be under testcases/');
 if(fs.existsSync(output))throw Error('Preserve previous evidence; use a new output directory');
 fs.mkdirSync(output,{recursive:true});
@@ -32,7 +32,7 @@ app.on('browser-window-created',(_event,window)=>{
   window.webContents.once('did-finish-load',async()=>{
     window.webContents.setBackgroundThrottling(false);window.setSize(1500,1000);
     const js=code=>window.webContents.executeJavaScript(code,true);
-    const wait=async(expression,seconds=240)=>{for(let i=0;i<seconds*4;i++){if(await js(expression))return;await delay(250);}throw Error('Timeout: '+expression);};
+    const wait=async(expression,seconds=240)=>{for(let i=0;i<seconds*4;i++){if(report.errors.length)throw Error('Renderer error: '+report.errors.join('; '));if(await js(expression))return;await delay(250);}throw Error('Timeout: '+expression);};
     const click=async label=>{await js(`(()=>{const b=[...document.querySelectorAll('button')].find(b=>b.textContent.trim()===${JSON.stringify(label)}||b.getAttribute('aria-label')===${JSON.stringify(label)}||b.querySelector('span')?.textContent.trim()===${JSON.stringify(label)});if(!b||b.matches(':disabled'))throw Error('Missing enabled button '+${JSON.stringify(label)});b.click();})()`);await delay(150);};
     const ready=()=>wait(`!!document.querySelector('.rl-viewer canvas')&&!document.querySelector('.viewer-loading')&&document.querySelector('.rl-viewer').dataset.surfacesPending==='0'&&!document.querySelector('.surgical-panel').innerText.includes('Computing instrument action')`);
     const capture=async name=>{await delay(300);await ready();await delay(200);fs.writeFileSync(path.join(output,name+'.png'),(await window.webContents.capturePage(undefined,{stayHidden:true,stayAwake:true})).toPNG());report.screenshots.push(name+'.png');};
@@ -92,6 +92,17 @@ app.on('browser-window-created',(_event,window)=>{
         // Start the recorded sector interval after its actual corridor actions.
         await js(`(()=>{const s=document.querySelector('[aria-label="Surgical timeline"]');const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(s,${target.start});s.dispatchEvent(new Event('input',{bubbles:true}));s.dispatchEvent(new Event('change',{bubbles:true}));})()`);
         await wait(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)===${target.start}`);
+      }else if(mode==='frozen-assessment'){
+        await wait(`!!document.querySelector('[aria-label="Frozen assessment sector outcomes"] [data-frozen-sector-branch]')`);
+        report.learning=await js(`document.querySelector('.learned-sector-execution').innerText`);
+        assert(report.learning.includes('saved native executions')&&report.learning.includes('does not run new inference'),'Assessment playback remains distinct from inference');
+        const target=await js(`(()=>{const b=document.querySelector('[data-frozen-sector-branch]');return{branchId:b.dataset.frozenSectorBranch,start:Number(b.dataset.frozenSectorStart),end:Number(b.dataset.frozenSectorEnd)}})()`);
+        report.frozenAssessment={...target,inspectionOnly:true};
+        await js(`document.querySelector('.learned-sector-execution').scrollIntoView({block:'start'})`);
+        await capture('01-frozen-assessment-evidence');
+        await js(`document.querySelector('[data-frozen-sector-branch]').click()`);
+        await wait(`document.querySelector('[aria-label="Surgical branch"]').value===${JSON.stringify(target.branchId)}&&Number(document.querySelector('[aria-label="Surgical timeline"]').value)===0`);
+        report.checks.push('Frozen assessment source, checkpoint and native decisions are inspectable without new inference');
       }else if(mode==='joint'){
         await wait(`!!document.querySelector('.joint-strategies')`);
         await js(`document.querySelector('.joint-strategies').open=true`);
@@ -181,15 +192,21 @@ app.on('browser-window-created',(_event,window)=>{
         await wait(`document.querySelector('[aria-label="Surgical branch"]').value===${JSON.stringify(target.branchId)}&&Number(document.querySelector('[aria-label="Surgical timeline"]').value)===${target.position}`);
       }
       await ready();
-      await wait(`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Play replay'&&!b.matches(':disabled'))`);
       const position=await js(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)`);
       const end=await js(`Number(document.querySelector('[aria-label="Surgical timeline"]').max)`);
-      const goal=Math.min(position+4,end);assert(goal>position,'Selected policy must contain actual native actions');
-      await click('Play replay');
-      await wait(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)>=${goal}`,180);
-      if(await js(`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Pause replay')`))await click('Pause replay');
-      await ready();report.playback={startPosition:position,observedPosition:await js(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)`)};
-      report.checks.push('Play advances actual recorded instrument/physics frames and pause stops scheduling');await capture('02-authoritative-playback');
+      const goal=Math.min(position+4,end);
+      if(goal>position){
+        await wait(`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Play replay'&&!b.matches(':disabled'))`);
+        await click('Play replay');
+        await wait(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)>=${goal}`,180);
+        if(await js(`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Pause replay')`))await click('Pause replay');
+        await ready();report.playback={startPosition:position,observedPosition:await js(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)`)};
+        report.checks.push('Play advances actual recorded instrument/physics frames and pause stops scheduling');await capture('02-authoritative-playback');
+      }else{
+        assert.equal(mode,'frozen-assessment','Selected policy must contain actual native actions');
+        report.playback={startPosition:position,observedPosition:position,skipped:'Frozen actor recorded no native actions'};
+        report.checks.push('Zero-action frozen abstention is retained without fabricating playback');
+      }
       if(mode==='sector')assert(await js(`document.querySelectorAll('[aria-label="Sector strategy outcomes"] tbody tr').length>0`),'Comparison evidence remains visible during compact playback');
       if(mode==='joint')assert(await js(`!!document.querySelector('.joint-strategies')&&!document.body.innerText.includes('Saved joint strategy evidence could not be bound')`),'Joint evidence remains bound during compact playback');
       await wait(`!![...document.querySelectorAll('header button')].find(b=>b.textContent.trim()==='Save'&&!b.matches(':disabled'))`);

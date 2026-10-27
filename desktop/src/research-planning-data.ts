@@ -1,5 +1,10 @@
 import type {SurgicalPlanAlternative} from './surgical-types';
 
+export function planningTimeLabel(value:unknown):string{
+  return typeof value==='number'&&Number.isFinite(value)&&value>=0?
+    `${value.toFixed(2)} s total`:'Computation time unavailable';
+}
+
 /** Align alternatives by decision count, counting rejected commands separately
  * from the native accepted-action timeline. No new simulation is run by replay. */
 export function planReplayPosition(plan:{prefixActions:number;decisions:Array<{status:string}>},decision:number):number {

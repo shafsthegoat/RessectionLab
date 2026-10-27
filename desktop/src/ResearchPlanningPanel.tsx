@@ -1,7 +1,7 @@
 import {useEffect,useState} from 'react';
 import type {SurgicalController} from './use-surgical';
 import type {SurgicalPlanAlternative} from './surgical-types';
-import {planDecisionReason,planReplayPosition,planLabel,planDecisionAtPosition} from './research-planning-data';
+import {planDecisionReason,planReplayPosition,planLabel,planDecisionAtPosition,planningTimeLabel} from './research-planning-data';
 import {surgicalPlaybackPosition} from './surgical-playback';
 import {ModeledOutcomesPanel} from './ModeledOutcomesPanel';
 
@@ -46,7 +46,7 @@ export function ResearchPlanningPanel({c,pause}:{c:SurgicalController;pause:()=>
     {!rescueContext&&!readiness?.checkpointAvailable&&<p className="surgical-note">Saved learner unavailable: {readiness?.checkpointReason??readiness?.reasons.join(' ')}</p>}
     {!rescueContext&&readiness?.checkpointAvailable&&<p className="surgical-note">Seed 17 is fixed in advance. This learner previously removed no additional target in both development assessments; it is not promoted.</p>}
     {comparison&&<>
-      <p><strong>{comparison.sourceRole}</strong> · {comparison.totalWallSeconds.toFixed(2)} s total · {comparison.optimizerUpdates} optimizer updates</p>
+      <p><strong>{comparison.sourceRole}</strong> · {planningTimeLabel(comparison.totalWallSeconds)} · {comparison.optimizerUpdates} optimizer updates</p>
       {access&&<p role="status" className="surgical-warning">{comparison.status==='three_executable_source_approaches'?'Three bounded source-anatomy approaches executed.':comparison.status==='insufficient_distinct_routes'?`${comparison.alternatives.length} of 3 directions executed; the three-approach gate remains unmet.`:'Three bounded source-tissue routes executed; skull entry and craniotomy remain unsupported.'}</p>}
       {access&&!!comparison.directionFailures?.length&&<ul>{comparison.directionFailures.map(failure=><li key={failure.nativeAxis}>Direction {failure.nativeAxis}: {failure.reason}</li>)}</ul>}
       {access&&<div className="rescue-comparison"><table aria-label="Access approach outcomes"><caption>Executed model outputs · mm³ and simulated seconds</caption><thead><tr><th>Approach</th><th>Target removed</th><th>Non-target incl. bone</th><th>Residual target</th><th>Time</th></tr></thead><tbody>{comparison.alternatives.map(plan=><tr key={plan.branchId} aria-selected={c.result?.branchId===plan.branchId}><th><button disabled={c.pending} onClick={()=>show(plan)}>{planLabel(plan)}</button></th><td>{plan.incrementalEndpoints.tumor_removed_mm3.toFixed(2)}</td><td>{plan.summary?.nonTargetRemovedMm3?.toFixed(2)??'Unknown'}</td><td>{plan.summary?.residualTargetMm3?.toFixed(2)??'Unknown'}</td><td>{plan.incrementalEndpoints.elapsed_seconds.toFixed(1)}</td></tr>)}</tbody></table><p className="surgical-note">Each row opens its actual instrument actions and evolving anatomy. Bounded endpoints retain residual target. Missing skull, vessels and functional anatomy limit feasibility assessment.</p></div>}

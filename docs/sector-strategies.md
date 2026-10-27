@@ -49,6 +49,12 @@ actions; it cannot replace an executed prefix or silently switch hands after
 access. Checked duration retries and reverse source-waypoint withdrawal retain
 their refusals and actual costs.
 
+STOP at an unchanged source-corridor boundary first tries that access plan's
+exact saved exit (including duration), with all current checks retained. A
+changed post-resection state uses the checked generic/reverse exit. Refusals
+and fallback attempts remain visible; saved actions are never spliced into a
+different state.
+
 Before admitting a sector option, the controller executes the proposed macro
 and its checked STOP on detached native branches. It admits the macro only if
 the complete option and withdrawal pass the same tissue and action limits.
@@ -76,6 +82,34 @@ The actor receives local fields, declared sector geometry and task ledgers,
 plus published tool/goal state including normalized absolute coordinates.
 Source/frame shortcuts remain possible. Matched same-case success and actor
 weight changes do not establish PPO benefit, transfer or clinical validity.
+
+For a predeclared paired DEVELOPMENT schedule, use
+`--ppo-source-schedule paired-development` and explicitly select both access
+methods. Each fixed PPO update then samples one episode per development case;
+neither case is held out. The single three-seed joint-axis0 run used 4,384 native
+calls in 155.57 seconds. All six cold checkpoints and twelve native exports
+passed independent audits. BC and PPO made identical evaluated decisions:
+0007 left → far → near → STOP passed at +96/+4 mm³ after access; 0005 left →
+STOP had zero continuation target and failed the task. PPO changed parameters
+but improved neither decisions nor reward over BC or the strongest search.
+
+Additional anatomy uses the separate `prepare_frozen_ucsf_assessment.py` and
+`evaluate_frozen_sector_assessment.py` workflow. Declare the patient/role and
+primary checkpoint rule before pixels; seal the six final models before
+acquisition; retain the fixed route, all controls and failures. Acquisition
+binds the protocol and checkpoint-freeze hashes. The executor performs zero
+optimizer updates and counts native preparation, previews, discarded probes,
+commits and replay within the aggregate cap. Its saved desktop inspection is
+explicitly labeled FROZEN_ASSESSMENT and playback, rather than new inference.
+
+The first prospective 0008 assessment retained the predeclared axis0 route and
+ran all 14 controls/checkpoints: zero task gates passed. BC/PPO seed 17 made
+identical choices and refused a sector macro whose checked exit collided with
+retained tissue. Discarded probe removal received no task credit. Their accepted
+whole approach removed 11 mm³ target and 98 mm³ non-target, with 42,562 mm³
+target residual and completed final cleanup. The complete suite used 1,617
+native calls and 61.1 seconds including access preparation. This is a negative
+structural-anatomy assessment, with no demonstrated learned benefit.
 
 ## Execute a checkpoint anew
 
