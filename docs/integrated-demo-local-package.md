@@ -1,6 +1,68 @@
 # Local integrated demo package
 
-## Hierarchical sector-policy package
+## Current hierarchy with checked exits
+
+The `exit-preflight-v1` profile freezes source commit
+`e75bf7ae6f4d1d4e61430ded937c37cc60b77181`, both v4 sector source cases,
+the six v5 BC/PPO checkpoints and twelve native policy trials, source MRI and
+model assets/licenses, fitting receipts, and real hidden Electron inference,
+playback and save evidence. Before admitting a sector option, the controller
+checks the complete macro and withdrawal on native clones. Discarded probes
+remain visible and count toward computation costs.
+
+The local archive is
+`testcases/outputs/integrated-goal-20261026/reproduction-package-hierarchical-v2/integrated-hierarchical-local.tar.gz`:
+240,256,594 bytes, SHA-256
+`373f40d8db3ad5ff0359c29bdd0cff11531ffcd954ea31549c39b4d32c83e858`.
+Its manifest contains 1,051 files and 272,268,407 content bytes. Relocated
+verification loaded six checkpoints, validated eighteen native records, and
+ran twelve fresh frozen executions from bundled source with zero optimizer
+updates and unchanged inputs. All six 0007 executions passed (+84 mm³ target,
++3 mm³ non-target); all six 0005 executions remained unpassed (+0/+0 after
+access) with cleanup complete. PPO did not improve on BC. The fixed three-seed
+fit used 3,268/3,600 physical calls and 184.703 seconds including instrumentation.
+
+The two original source archives and the desktop input snapshots have different
+bytes due workspace serialization. Both are preserved with their own hashes;
+native verification binds the source case, scene, comparison seals and all
+sixteen original branch state/action inventories. The new Electron inference
+reports record `windowMode: hidden` and `windowEverVisible: false`; captures keep
+the window hidden. No compositor FPS or fresh runtime installation is claimed.
+
+To rebuild, choose an unused ignored output directory:
+
+```sh
+.venv/bin/python scripts/package_hierarchical_integrated_demo.py build \
+  --profile exit-preflight-v1 \
+  --commit e75bf7ae6f4d1d4e61430ded937c37cc60b77181 \
+  --output testcases/outputs/integrated-goal-20261026/reproduction-package-hierarchical-v2-rebuild \
+  --desktop-0007-report testcases/outputs/integrated-goal-20261026/electron-sector-policy-escape-0007-v2/report.json \
+  --desktop-0005-report testcases/outputs/integrated-goal-20261026/electron-sector-policy-escape-0005-v2/report.json
+```
+
+Read-only verification of the existing relocated copy:
+
+```sh
+.venv/bin/python scripts/package_hierarchical_integrated_demo.py verify \
+  --bundle testcases/outputs/integrated-goal-20261026/reproduction-package-hierarchical-relocated-v2
+.venv/bin/python scripts/package_hierarchical_integrated_demo.py verify-models \
+  --bundle testcases/outputs/integrated-goal-20261026/reproduction-package-hierarchical-relocated-v2
+.venv/bin/python scripts/package_hierarchical_integrated_demo.py verify-native \
+  --bundle testcases/outputs/integrated-goal-20261026/reproduction-package-hierarchical-relocated-v2
+```
+
+The relocated `VERIFY.md` gives single-checkpoint commands and a bounded twelve-run
+cold check with a new output directory. Exact executed commands and durable
+receipts are under
+`testcases/outputs/integrated-goal-20261026/reproduction-package-hierarchical-verification-v2/`;
+the twelve-run receipt is `reproduction-package-hierarchical-cold-v2/verification.json`.
+The bundle requires the matching same-host Python/torch/numpy/scipy environment;
+it does not provision Python, Node, Electron or imaging runtimes. Historical
+bundles below remain unchanged. The full patient/strategy goal remains open:
+0005 does not pass the declared resection task, and missing skull, complete
+vascular/functional anatomy and clinical validation remain unavailable.
+
+## Historical hierarchical sector-policy package
 
 `scripts/package_hierarchical_integrated_demo.py` freezes the current
 hierarchical source and desktop implementation from commit
@@ -52,7 +114,7 @@ The package requires a compatible same-host Python/torch/numpy/scipy runtime;
 it does not provision Python, Node, Electron, or fresh-install imaging model
 runtimes, and does not claim fresh-install inference was tested.
 
-## Current v6 research package
+## Historical v6 research package
 
 `scripts/package_current_integrated_demo.py` freezes complete tracked source,
 scripts and desktop files from a named commit. The current package uses
