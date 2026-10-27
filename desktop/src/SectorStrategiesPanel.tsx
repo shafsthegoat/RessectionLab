@@ -13,7 +13,9 @@ export function SectorStrategiesPanel({c,pause}:{c:SurgicalController;pause:()=>
   const intact=!!source&&c.view?.stateId===source.startStateId;
   const show=(plan:SurgicalSectorPlan,boundary:'sector'|'source'|'endpoint')=>{pause();void c.run('selectBranch',{branchId:plan.branchId,position:boundary==='endpoint'?planReplayPosition(plan,plan.decisions.length):boundary==='sector'?(plan.sourceAccessPrefixActions??0):0});};
   return <details className="research-planning sector-strategies" open><summary>Resection order and tool arrangement</summary>
-    <p>Compare source-defined target sectors in different orders with left or right CUSA. Each action checks the full tool and other hand in the existing engine.</p>
+    <p>{source?.sourceRole?.startsWith('Joint source-only shortlist')?
+      'This saved joint comparison executed one fixed far-first sector order with left CUSA for each retained access route. Each action checked the full tool and other hand in the existing engine.':
+      'Compare source-defined target sectors in different orders with left or right CUSA. Each action checks the full tool and other hand in the existing engine.'}</p>
     <p className="surgical-warning">Partial anatomy and uncalibrated mechanics. These are bounded tasks with substantial residual target; complete surgery and clinical feasibility remain unassessed.</p>
     <label><input type="checkbox" checked={acknowledged} disabled={c.pending} onChange={e=>setAcknowledged(e.target.checked)}/>Use the recorded source anatomy and research assumptions for this comparison.</label>
     {!intact&&source?.alternatives[0]&&<button disabled={c.pending} onClick={()=>{pause();const start=c.result?.branches.find(item=>item.steps===0);void c.run(start?'selectBranch':'reset',start?{branchId:start.id,position:0}:{});}}>Return to common source start</button>}

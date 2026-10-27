@@ -8,6 +8,7 @@ import {reconstructedPrefix,surgicalReplayRoutes} from './surgical-authority.ts'
 import {nextSurgicalPlaybackFrame,surgicalPlaybackPosition,SurgicalPlaybackClock} from './surgical-playback.ts';
 import {ResearchPlanningPanel} from './ResearchPlanningPanel';
 import {SectorStrategiesPanel} from './SectorStrategiesPanel';
+import {JointStrategiesPanel} from './JointStrategiesPanel';
 import {LearnedSectorExecutionPanel} from './LearnedSectorExecutionPanel';
 import {RescueLearningPanel} from './RescueLearningPanel';
 import {LearnedExecutionPanel} from './LearnedExecutionPanel';
@@ -193,6 +194,7 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
     <LearnedSectorExecutionPanel c={c} artifact={cusaLearning} pause={()=>{setPlaying(false);c.pausePlayback();}}/>
     <PatientCusaLearningPanel c={c} artifact={cusaLearning} pause={()=>setPlaying(false)}/>
     <FrozenCusaExecutionPanel c={c} pending={frozenCusaPending} onRun={onRunFrozenCusa} onRunSector={onRunFrozenSector} pause={()=>{setPlaying(false);c.pausePlayback();}}/>
+    <JointStrategiesPanel c={c} artifact={cusaLearning} pause={()=>{setPlaying(false);c.pausePlayback();}}/>
     <fieldset disabled={readOnly} className="surgical-controls"><ResearchPlanningPanel c={c} pause={()=>setPlaying(false)}/></fieldset>
     <fieldset disabled={readOnly} className="surgical-controls"><SectorStrategiesPanel c={c} pause={()=>{setPlaying(false);c.pausePlayback();}}/></fieldset>
     <RecordedDetails summary="Source provenance and research assumptions">{()=><SceneResearchDetails view={displayed??v} preview={!!c.preview}/>}</RecordedDetails>

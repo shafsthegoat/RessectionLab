@@ -3,7 +3,7 @@
 const {app,dialog}=require('electron');
 const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),assert=require('node:assert/strict'),crypto=require('node:crypto');
 const root=path.resolve(__dirname,'../..'),input=path.resolve(process.env.INTEGRATED_RESEARCH_CASE||''),output=path.resolve(process.env.INTEGRATED_RESEARCH_OUTPUT||''),mode=process.env.INTEGRATED_RESEARCH_MODE;
-if(!['access','learned','cusa','cusa-execute','cusa-cancel','sector','sector-policy','sector-execute'].includes(mode))throw Error('Set a supported INTEGRATED_RESEARCH_MODE');
+if(!['access','learned','cusa','cusa-execute','cusa-cancel','sector','sector-policy','sector-execute','joint'].includes(mode))throw Error('Set a supported INTEGRATED_RESEARCH_MODE');
 for(const p of [input,output])if(!p.startsWith(path.join(root,'testcases')+path.sep))throw Error('Input/output must be under testcases/');
 if(fs.existsSync(output))throw Error('Preserve previous evidence; use a new output directory');
 fs.mkdirSync(output,{recursive:true});
@@ -87,6 +87,21 @@ app.on('browser-window-created',(_event,window)=>{
         // Start the recorded sector interval after its actual corridor actions.
         await js(`(()=>{const s=document.querySelector('[aria-label="Surgical timeline"]');const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(s,${target.start});s.dispatchEvent(new Event('input',{bubbles:true}));s.dispatchEvent(new Event('change',{bubbles:true}));})()`);
         await wait(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)===${target.start}`);
+      }else if(mode==='joint'){
+        await wait(`!!document.querySelector('.joint-strategies')`);
+        await js(`document.querySelector('.joint-strategies').open=true`);
+        await wait(`document.querySelectorAll('[aria-label="Joint sector executions"] [data-joint-branch]').length>0`);
+        const selection=await js(`(()=>{const rows=[...document.querySelectorAll('[aria-label="Joint sector executions"] > div')];const row=rows.find(row=>row.textContent.includes('Task gate passed'))??rows[0];const buttons=[...row.querySelectorAll('[data-joint-branch]')];return{branchId:buttons[0].dataset.jointBranch,start:Number(buttons[0].dataset.jointPosition),end:Number(buttons[1].dataset.jointPosition),gate:row.textContent.includes('Task gate passed')}})()`);
+        await js(`(()=>{const details=[...document.querySelectorAll('.joint-strategies details')].find(d=>d.querySelector('summary')?.textContent.startsWith('Original classic comparison'));details.open=true})()`);
+        await wait(`document.querySelectorAll('[aria-label="Original access comparison"] [data-joint-branch]').length>0`);
+        const baseline=await js(`({access:document.querySelectorAll('[aria-label="Original access comparison"] [data-joint-branch]').length/2,sectors:document.querySelectorAll('[aria-label="Original sector comparison"] [data-joint-branch]').length/2})`);
+        assert.equal(baseline.access,3);assert.equal(baseline.sectors,12);
+        report.joint={selection,baseline,text:await js(`document.querySelector('.joint-strategies').innerText`)};
+        await js(`document.querySelector('.joint-strategies').scrollIntoView({block:'start'})`);
+        await capture('01-joint-and-classic-evidence');
+        await js(`(()=>{const button=[...document.querySelectorAll('[aria-label="Joint sector executions"] [data-joint-branch]')].find(b=>b.dataset.jointBranch===${JSON.stringify(selection.branchId)}&&Number(b.dataset.jointPosition)===${selection.start});if(!button||button.disabled)throw Error('Joint native start unavailable');button.click()})()`);
+        await wait(`document.querySelector('[aria-label="Surgical branch"]').value===${JSON.stringify(selection.branchId)}&&Number(document.querySelector('[aria-label="Surgical timeline"]').value)===${selection.start}`);
+        report.checks.push('Joint source-ranked outcomes and all archived classic comparisons are inspectable');
       }else if(mode==='sector'){
         await wait(`!!document.querySelector('.sector-strategies')`);
         if(process.env.INTEGRATED_RESEARCH_GENERATE==='1'){
@@ -159,6 +174,7 @@ app.on('browser-window-created',(_event,window)=>{
       await ready();report.playback={startPosition:position,observedPosition:await js(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)`)};
       report.checks.push('Play advances actual recorded instrument/physics frames and pause stops scheduling');await capture('02-authoritative-playback');
       if(mode==='sector')assert(await js(`document.querySelectorAll('[aria-label="Sector strategy outcomes"] tbody tr').length>0`),'Comparison evidence remains visible during compact playback');
+      if(mode==='joint')assert(await js(`!!document.querySelector('.joint-strategies')&&!document.body.innerText.includes('Saved joint strategy evidence could not be bound')`),'Joint evidence remains bound during compact playback');
       await wait(`!![...document.querySelectorAll('header button')].find(b=>b.textContent.trim()==='Save'&&!b.matches(':disabled'))`);
       await click('Save');await wait(`![...document.querySelectorAll('header button')].find(b=>b.textContent.trim()==='Save')?.matches(':disabled')`);
       assert(fs.existsSync(saved));report.checks.push('Native desktop save writes the inspected trajectory');

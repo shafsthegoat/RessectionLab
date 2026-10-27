@@ -15,6 +15,7 @@ import numpy as np
 
 from .core import array_digest, semantic_digest
 from .surgical_engine import SurgicalEngine
+from .surgical_transition_meter import MeteredEngine
 from .surgical_environment import load_environment
 from .surgical_planning import validate_saved_comparison
 from .workspace_bundle import load_workspace
@@ -137,6 +138,13 @@ def summarize_engine_outcomes(engine: SurgicalEngine, *, baseline: SurgicalEngin
     Scalar ledgers are labeled with their simulator units; unsupported anatomy
     is null with an explicit reason rather than a reassuring zero.
     """
+    # The joint planner meters public transitions on a plain delegating proxy.
+    # This summary is read-only; unwrap only that exact proxy type so the
+    # authoritative engine type check below keeps rejecting arbitrary objects.
+    if type(engine) is MeteredEngine:
+        engine=engine.unwrap()
+    if type(baseline) is MeteredEngine:
+        baseline=baseline.unwrap()
     if not isinstance(engine,SurgicalEngine):
         raise TypeError('An authoritative SurgicalEngine is required')
     engine.scene.require_cache_source()
