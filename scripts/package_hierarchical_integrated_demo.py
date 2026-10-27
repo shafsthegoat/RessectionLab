@@ -327,6 +327,11 @@ def _exit_build(output, commit, desktop_reports):
                                      cwd=ROOT, text=True).strip()
     if len(commit) != 40:
         raise ValueError('Freeze a complete committed source revision')
+    helper = 'scripts/package_hierarchical_integrated_demo.py'
+    committed_helper = subprocess.run(['git', 'show', f'{commit}:{helper}'],
+                                      cwd=ROOT, capture_output=True)
+    if committed_helper.returncode == 0 and committed_helper.stdout != Path(__file__).read_bytes():
+        raise ValueError('Committed package helper differs from active builder; commit it before build')
     members = list(_exit_data_members(desktop_reports))
     output.mkdir(parents=True)
     bundle = output/'bundle'
@@ -336,9 +341,12 @@ def _exit_build(output, commit, desktop_reports):
         data = subprocess.check_output(['git', 'cat-file', 'blob', oid], cwd=ROOT)
         historical.write_bytes(bundle/path, data, 0o755 if mode == '100755' else 0o644)
         roles[path], origins[path] = 'committed-source', f'git:{commit}:{path}'
-    helper = 'scripts/package_hierarchical_integrated_demo.py'
-    historical.copy_exact(Path(__file__), bundle/helper)
-    roles[helper], origins[helper] = 'package-helper', 'local package builder outside actor fingerprint'
+    if helper in roles:
+        if historical.sha(bundle/helper) != historical.sha(Path(__file__)):
+            raise ValueError('Committed package helper differs from active builder; commit it before build')
+    else:
+        historical.copy_exact(Path(__file__), bundle/helper)
+        roles[helper], origins[helper] = 'package-helper', 'local package builder outside actor fingerprint'
     for target, source, role in members:
         historical.copy_exact(source, bundle/target)
         roles[target], origins[target] = role, str(source.relative_to(ROOT))
