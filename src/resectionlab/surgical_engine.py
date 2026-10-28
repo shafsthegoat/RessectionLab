@@ -752,6 +752,18 @@ class SurgicalEngine:
             vessel.contact(self, vessels, dt, params['forceN'] if active else 0.)
             brain.tick(self, dt)
             self.occupancy()
+            # Coupled tissue moves after the ordinary swept-tool check.
+            # Recheck every physical shaft against the updated occupancy so a
+            # patch cannot enter a stationary instrument on the last substep.
+            # Match the existing per-hand exemption for its own held cells.
+            if self.state.get('deformation'):
+                for shaft_key, shaft_slot in self.state['slots'].items():
+                    own_held = set(self.state['holds'].get(shaft_key, {}).get('cells', ()))
+                    shaft_tool = TOOLS[shaft_slot['instrument']]
+                    for a, b, radius, part in envelopes(shaft_tool, self.parameters(shaft_slot),
+                            shaft_slot['position'], shaft_slot['quaternion']):
+                        if part == 'shaft' and set(self.touched(a, b, radius))-own_held:
+                            raise ValueError('POST_DEFORMATION_SHAFT_COLLISION:'+shaft_key)
             drill.end_step(self, dt)
             vessel.tick(self, dt)
         tick_fields(self, dt)

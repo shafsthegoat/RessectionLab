@@ -1839,7 +1839,7 @@ class BridgeRuntime:
             timeout = message.get("timeoutMs", 120000)
             replay_admission = (operation == 'surgicalRehearsal' and args.get('command') in
                                 {'inspect', 'seek', 'seekFrame', 'selectBranch', 'undo', 'redo', 'selectScene'})
-            maximum_timeout = 3600000 if replay_admission else 300000
+            maximum_timeout = 1800000 if operation == 'anatomyReconstruct' else 3600000 if replay_admission else 300000
             if type(timeout) is not int or not 100 <= timeout <= maximum_timeout:
                 raise BridgeError("INVALID_ARGUMENT", f"timeoutMs must be an integer between 100 and {maximum_timeout}")
             if len(json.dumps(message, allow_nan=False).encode()) > MAX_REQUEST_BYTES:

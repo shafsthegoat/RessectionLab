@@ -7,7 +7,16 @@ import './SurgicalPanel.css';
 import {reconstructedPrefix,surgicalReplayRoutes} from './surgical-authority.ts';
 import {nextSurgicalPlaybackFrame,surgicalPlaybackPosition,SurgicalPlaybackClock} from './surgical-playback.ts';
 import {ResearchPlanningPanel} from './ResearchPlanningPanel';
+import {SectorStrategiesPanel} from './SectorStrategiesPanel';
+import {JointStrategiesPanel} from './JointStrategiesPanel';
+import {StagedStrategiesPanel} from './StagedStrategiesPanel';
+import {PrecisionContinuationPanel} from './PrecisionContinuationPanel';
+import {RetractionStudyPanel} from './RetractionStudyPanel';
+import {LearnedSectorExecutionPanel} from './LearnedSectorExecutionPanel';
 import {RescueLearningPanel} from './RescueLearningPanel';
+import {LearnedExecutionPanel} from './LearnedExecutionPanel';
+import {PatientCusaLearningPanel} from './PatientCusaLearningPanel';
+import {FrozenCusaExecutionPanel} from './FrozenCusaExecutionPanel';
 import {cusaContactModel,cusaParameterSpecs} from './cusa-research';
 import {FullCaseRehearsalPanel} from './FullCaseRehearsalPanel';
 import {summarizeSurgicalEvents} from './surgical-types.ts';
@@ -50,6 +59,7 @@ function SceneResearchDetails({view,preview}:{view:SurgicalView;preview:boolean}
   const source=view.scene.source,adapter=source?.adapter,physics=view.physics??view.scene.physics;
   const v2=physics?.profile?.schema==='resectionlab.tissue-physics.v2';
   const patientDerivative=adapter?.type==='native-patient-research-derivative';
+  const refinement=source?.workingGridRefinement as {schema?:unknown;factor?:unknown;noNewAnatomy?:unknown}|undefined;
   const mapped=new Set(view.scene.regions.map(r=>r.material));
   const metrics:Record<string,unknown>={...view.metrics,...physics?.metrics};
   const metricLabels:Record<string,string>={severedVesselConnections:'Severed local vessel adjacencies',activeVesselWounds:'Active modeled wound outlets',modeledVesselFluidGeneratedMm3:'Modeled vessel fluid generated · mm³',modeledVesselReservoirMm3:'Modeled vessel fluid retained · mm³'};
@@ -58,6 +68,7 @@ function SceneResearchDetails({view,preview}:{view:SurgicalView;preview:boolean}
     {patientDerivative&&<div className="surgical-warning"><strong>Patient-derived research estimate</strong><p>This scene is derived from patient anatomy. Material properties and flow behavior are declared research assumptions, not measured patient physiology. Derived geometry is separate from source annotations.</p></div>}
     {adapter?.warnings?.length? <ul className="surgical-warning">{adapter.warnings.map((warning,i)=><li key={i}>{warning}</li>)}</ul>:null}
     <p className="surgical-note">Scene grid: {view.scene.resolutionMm.map(n=>+n.toFixed(3)).join(' × ')} mm · {view.scene.shape.join(' × ')} cells.</p>
+    {refinement?.schema==='resectionlab.surgical-working-grid-refinement.v1'&&refinement.factor===2&&refinement.noNewAnatomy===true&&<p className="surgical-warning">Refined computational grid: each parent material cell was subdivided into eight children with the same physical bounds. The image is derived interpolation. This adds no acquired image resolution or anatomical evidence; it is a discretization study.</p>}
     {v2&&<p className="surgical-note">V2 research mechanics: coupled brain relaxation, work and heat based drilling, and pressure-driven clustered bleeding. Parameters are uncalibrated assumptions; the volume penalty is approximate and global perfusion is unknown.</p>}
     <details><summary>Provenance, material behavior, and assumptions</summary>
       {source&&<DeclaredFields data={Object.fromEntries(Object.entries(source).filter(([key])=>key!=='adapter'))}/>}
@@ -99,7 +110,7 @@ function MechanicsV2Details({view,preview}:{view:SurgicalView;preview:boolean}){
   return <details><summary>{preview?'Preview':'Recorded'} V2 mechanics and fluid budget</summary><dl className="surgical-declared-fields">{rows.map(([label,value])=><div key={label}><dt>{label}</dt><dd>{typeof value==='number'&&Number.isFinite(value)?+value.toFixed(5):displayValue(value)}</dd></div>)}</dl><p className="surgical-note">The vascular budget compares initial reserve plus refill against remaining reserve and generated fluid. These modeled quantities do not estimate patient blood loss or predict tissue injury.</p></details>;
 }
 
-export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,onFrameField,fieldDisplayControls,microscopeControls,learningReport}:{learningReport?:unknown;anatomyControls?:ReactNode;onFrameField?:()=>void;fieldDisplayControls?:ReactNode;microscopeControls?:ReactNode;c:SurgicalController;onFixture:()=>void;onImport?:(options:SurgicalImportOptions)=>Promise<void>|void;available:boolean}){
+export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,onFrameField,fieldDisplayControls,microscopeControls,learningReport,executionReport,cusaLearning,onRunFrozenCusa,onRunFrozenSector,frozenCusaPending=false}:{onRunFrozenCusa?:(branchId:string)=>Promise<void>;onRunFrozenSector?:(method:string)=>Promise<void>;frozenCusaPending?:boolean;cusaLearning?:unknown;executionReport?:unknown;learningReport?:unknown;anatomyControls?:ReactNode;onFrameField?:()=>void;fieldDisplayControls?:ReactNode;microscopeControls?:ReactNode;c:SurgicalController;onFixture:()=>void;onImport?:(options:SurgicalImportOptions)=>Promise<void>|void;available:boolean}){
   const [importOptions,setImportOptions]=useState<SurgicalImportOptions>({frame:'RAS+',units:'mm',material:'unknown',resolution:1,topology:'solid',thicknessMm:1});
   const [importing,setImporting]=useState(false),[importError,setImportError]=useState<string|null>(null);
   const [search,setSearch]=useState(''),[duration,setDuration]=useState(1),[operation,setOperation]=useState('apply'),[playing,setPlaying]=useState(false),[playbackSpeed,setPlaybackSpeed]=useState(1);
@@ -109,7 +120,7 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
   useEffect(()=>()=>c.stopPlayback(),[]);
   const v=c.view,selected=v?.slots[c.slot],tool=v?.catalog.find(t=>t.id===selected?.instrument),r=c.result;
   const displayed=c.preview??v;
-  const routes=surgicalReplayRoutes(r),prefix=reconstructedPrefix(r),observed=r?.playback,imported=routes.imported,unverifiedImport=imported&&!prefix,readOnly=!!observed||imported,position=surgicalPlaybackPosition(observed,r?.position??0);
+  const routes=surgicalReplayRoutes(r),prefix=reconstructedPrefix(r),observed=r?.playback,imported=routes.imported,unverifiedImport=imported&&!prefix,readOnly=!!observed||imported||r?.readOnly===true,position=surgicalPlaybackPosition(observed,r?.position??0);
   const freshOrigin=!!prefix&&!!r?.prefixOrigin,preparedOnly=prefix?.preparedCache?.mode==='only'&&!freshOrigin;
   const v2=v?.physics?.profile?.schema==='resectionlab.tissue-physics.v2';
   const cusaModel=cusaContactModel(v),cusaSelected=!!cusaModel&&tool?.id==='cusa';
@@ -154,8 +165,8 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
       <strong>{v.scene.environment?.standardized?'Standard V2 research environment':'Saved research environment'}</strong>
       <p>{v.scene.resolutionMm.map(n=>+n.toFixed(3)).join(' × ')} mm · {v2?'V2 mechanics':'Historical mechanics profile'} · RAS+ mm</p>
       {cusaModel&&<p>CUSA v3 contact model enabled · finite, uncalibrated aspiration capacity.</p>}
-      <p>{Object.entries(v.scene.environment?.anatomy??{}).map(([role,status])=>`${role}: ${status}`).join(' · ')}</p>
-      <p className="surgical-note">Supplied masks do not establish completeness. Missing anatomy and function remain unknown.</p>
+      <p>{Object.entries(v.scene.environment?.anatomy??{}).map(([role,status])=>`${role}: ${status==='supplied'?'mapped':status}`).join(' · ')}</p>
+      <p className="surgical-note">Mapped masks may be source annotations or unreviewed estimates. See source provenance; missing anatomy and function remain unknown.</p>
       <p className={v.protection?.mode==='strict-research'?'surgical-note':'surgical-warning'} role="status">Protection: {v.protection?.mode??'unconfigured-research'}. {v.protection?.configured?`${v.protection.structures.length} declared exclusion masks; clearance ${v.protection.clearanceMm??0} mm.`:'No critical-structure exclusion contract is bound to this episode.'} Anatomical completeness remains unknown.</p>
       {!!v.protection?.missingRequired.length&&<p className="surgical-warning">Required evidence unavailable: {v.protection.missingRequired.join(', ')}.</p>}
       {!v.scene.environment?.standardized&&<button disabled={c.pending||readOnly} onClick={()=>void c.create(v.scene.regions)}>Create standard V2 environment</button>}
@@ -184,7 +195,20 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
     <p className="surgical-note">{playing?(c.pending?'Buffering an exact recorded microstep…':`Playing observed engine states at ${playbackSpeed}×. Buffering can slow wall-clock playback.`):'Replay reconstructs successful engine microsteps and finalized action boundaries. Anatomy and tool poses stay exact. Active jaw close/release and recorded-RPM drill rotation are illustrative working-part animation during playback; they imply no additional cutting events.'}</p>
     <FullCaseRehearsalPanel c={c} pause={()=>setPlaying(false)} onFrameField={onFrameField} fieldDisplayControls={fieldDisplayControls}/>
     <RescueLearningPanel c={c} report={learningReport} pause={()=>setPlaying(false)}/>
+    <LearnedExecutionPanel c={c} report={executionReport} pause={()=>setPlaying(false)}/>
+    <LearnedSectorExecutionPanel c={c} artifact={cusaLearning} pause={()=>{setPlaying(false);c.pausePlayback();}}/>
+    <PatientCusaLearningPanel c={c} artifact={cusaLearning} pause={()=>setPlaying(false)}/>
+    <FrozenCusaExecutionPanel c={c} pending={frozenCusaPending} onRun={onRunFrozenCusa} onRunSector={onRunFrozenSector} pause={()=>{setPlaying(false);c.pausePlayback();}}/>
+    <JointStrategiesPanel c={c} artifact={cusaLearning} pause={()=>{setPlaying(false);c.pausePlayback();}}/>
+    <RetractionStudyPanel c={c} pause={()=>{setPlaying(false);c.pausePlayback();}}/>
+    <StagedStrategiesPanel c={c} artifact={cusaLearning}
+      pause={()=>{setPlaying(false);c.pausePlayback();}}
+      play={branchId=>{setPlaying(false);c.pausePlayback();void c.run('selectBranch',{branchId,position:0}).then(ok=>{if(ok)setPlaying(true);});}}/>
+    <PrecisionContinuationPanel c={c} artifact={cusaLearning}
+      pause={()=>{setPlaying(false);c.pausePlayback();}}
+      play={branchId=>{setPlaying(false);c.pausePlayback();void c.run('selectBranch',{branchId,position:0}).then(ok=>{if(ok)setPlaying(true);});}}/>
     <fieldset disabled={readOnly} className="surgical-controls"><ResearchPlanningPanel c={c} pause={()=>setPlaying(false)}/></fieldset>
+    <fieldset disabled={readOnly} className="surgical-controls"><SectorStrategiesPanel c={c} pause={()=>{setPlaying(false);c.pausePlayback();}}/></fieldset>
     <RecordedDetails summary="Source provenance and research assumptions">{()=><SceneResearchDetails view={displayed??v} preview={!!c.preview}/>}</RecordedDetails>
     <details><summary>Exchange instrument</summary><input aria-label="Search instruments" placeholder="Search instruments…" value={search} onChange={e=>setSearch(e.target.value)}/>
     <div className="surgical-toolbox">{v.catalog.filter(t=>(t.name+' '+t.category).toLowerCase().includes(search.toLowerCase())).map(t=><button key={t.id} aria-pressed={selected?.instrument===t.id} disabled={c.pending||playing||readOnly||selected?.instrument===t.id} onClick={()=>{if(selected?.instrument!==t.id)stopRun('step',{action:{slot:c.slot,operation:'exchange',instrument:t.id,duration:1}})}}><small>{t.category}</small>{t.name}</button>)}</div>
@@ -200,7 +224,17 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
     <label>Duration · s<Numeric label="Action duration" min={.01} max={30} value={duration} onChange={n=>{setDuration(n);c.clearPreview();}}/></label>
     <p>{c.path.length} stroke points{c.path.length?' · editing pose replaces this stroke':''} · {Number(v.metrics.elapsedSeconds).toFixed(2)} simulated s</p>
     <div className="surgical-actions"><button onClick={()=>stopRun('preview',{action:c.action(operation,params,duration)})}>Preview</button><button className="primary-button" onClick={()=>stopRun('step',{action:c.action(operation,params,duration)})}>Apply</button><button onClick={c.cancel}>Cancel</button></div>
+    {!cusaContactModel(v)&&Object.values(v.slots).filter(slot=>slot.instrument==='cusa'&&slot.inserted).length===1&&<button disabled={Object.values(v.slots).some(slot=>slot.grip.length||(slot.instrument!=='cusa'&&slot.inserted))||Object.keys(v.holds??{}).length>0||Number(v.metrics.nonTargetRemovedMm3)>200||(r?.position??0)>180||r?.exitRecovery?.sourceStateId===v.stateId}
+      onClick={()=>{c.pauseFullCase();stopRun('recoverExit');}}>Checked withdrawal</button>}
+    {!cusaContactModel(v)&&Object.values(v.slots).some(slot=>slot.instrument==='cusa'&&slot.inserted)&&<p className="surgical-note">Checked withdrawal uses the recorded outside placement and native collision checks, with zero additional non-target removal. A latest partial shaft-collision action must match its observed tip pose before its accepted steps can be reversed. Development research sources only.</p>}
     </fieldset>
+    {r?.exitRecovery?.sourceSceneId===v.scene.sceneId&&<section className="checked-exit-recovery" aria-label="Checked withdrawal evidence">
+      <h4>Recorded checked withdrawal · {r.exitRecovery.status==='accepted'?'complete':'refused'}</h4>
+      <p>{r.exitRecovery.sourceNativeActions} → {r.exitRecovery.finalNativeActions} native actions · {r.exitRecovery.mode?.replaceAll('_',' ')??r.exitRecovery.reason}. Independent native replay exact.</p>
+      <p>Target {r.exitRecovery.sourceMetrics.targetRemovedMm3.toFixed(3)} → {r.exitRecovery.finalMetrics.targetRemovedMm3.toFixed(3)} mm³ · non-target {r.exitRecovery.sourceMetrics.nonTargetRemovedMm3.toFixed(3)} → {r.exitRecovery.finalMetrics.nonTargetRemovedMm3.toFixed(3)} mm³.</p>
+      <p>{r.exitRecovery.cost.physicalCalls} / 240 public native calls including final replay · {r.exitRecovery.wallSeconds.toFixed(1)} / 45 wall seconds. This records instrument recovery; resection task and clinical outcomes remain separate.</p>
+      <button disabled={c.pending} data-exit-recovery-branch={r.exitRecovery.finalBranchId} data-exit-recovery-position={r.exitRecovery.finalNativeActions} onClick={()=>stopRun('selectBranch',{branchId:r.exitRecovery!.finalBranchId,position:r.exitRecovery!.finalNativeActions})}>Inspect withdrawal result</button>
+    </section>}
     {c.displayPending&&c.interaction?.preview&&<button onClick={c.cancel}>Cancel preview</button>}
     {c.preview&&<div className="surgical-preview" role="status"><strong>PREVIEW · uncommitted outcome</strong><p>Target removal +{(Number(c.preview.metrics.targetRemovedMm3)-Number(v.metrics.targetRemovedMm3)).toFixed(2)} mm³ · other removal +{(Number(c.preview.metrics.nonTargetRemovedMm3)-Number(v.metrics.nonTargetRemovedMm3)).toFixed(2)} mm³. Apply commits; Cancel returns to recorded anatomy.</p></div>}
     {latestOutcome&&<ActionResult outcome={latestOutcome} title={c.preview?'Preview result':observed?'Recorded action endpoint result':'Last action result'}/>}
@@ -208,7 +242,7 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
     {displayed&&cusaContactModel(displayed)&&<details><summary>CUSA contact and aspiration</summary><p className="surgical-note">Active contact supplies finite capacity; whole voxels remain until complete. Activation and duty are fractions, with fixed 1.5 mm tip radius. Rates and complete fragment capture are uncalibrated research assumptions.</p><dl>{[['cusaAspiratedSolidMm3','Aspirated solid · mm³'],['cusaPendingCapacityMm3','Pending contact capacity · mm³'],['cusaInputCapacityMm3','Supplied capacity · mm³'],['cusaUnusedCapacityMm3','Unused capacity · mm³'],['cusaDiscardedCapacityMm3','Discarded capacity · mm³']].map(([key,label])=><div key={key}><dt>{label}</dt><dd>{Number(displayed.metrics[key]??0).toFixed(3)}</dd></div>)}</dl><p className="surgical-note">Pending capacity is work toward voxel clearance, not removed tissue. Liquid aspiration and field fluid use separate ledgers.</p><DeclaredFields data={cusaContactModel(displayed)!}/></details>}
     {observation&&<StimulationObservation observation={observation} preview={!!c.preview}/>}
     <div className="surgical-actions"><button disabled={c.pending||readOnly||!r?.position} onClick={()=>stopRun('undo')}>Undo</button><button disabled={c.pending||readOnly||r?.position===steps} onClick={()=>stopRun('redo')}>Redo</button><button disabled={c.pending||readOnly} onClick={()=>stopRun('reset')}>Reset</button><button disabled={c.pending||readOnly} onClick={()=>stopRun('branch')}>Branch</button></div>
-    <div className="surgical-metrics">{[['targetRemovedMm3','Target removed · mm³'],['nonTargetRemovedMm3','Other removed · mm³'],['contactCellSeconds','Contact · cell·s'],['fluidPresentMm3','Fluid present · mm³']].map(([k,label])=><div key={k}><small>{label}</small><strong>{Number(v.metrics[k]??0).toFixed(2)}</strong></div>)}</div>
+    <div className="surgical-metrics">{[['targetRemovedMm3','Target removed · mm³'],['nonTargetRemovedMm3','Other removed · mm³'],['contactCellSeconds','Contact · cell·s'],['fluidPresentMm3','Fluid present · mm³']].map(([k,label])=><div key={k}><small>{label}</small><strong data-surgical-metric={k}>{Number(v.metrics[k]??0).toFixed(2)}</strong></div>)}</div>
     {v.scene.environment&&<p>Target remaining: {Math.max(0,v.scene.environment.target.initialVolumeMm3-Number(v.metrics.targetRemovedMm3??0)).toFixed(2)} mm³ / {v.scene.environment.target.initialVolumeMm3.toFixed(2)} mm³ initial. Target assignment is a research task declaration.</p>}
     <details><summary>{c.preview?'Preview':'Recorded'} effect details</summary><dl>
       {[['Thermal exposure · model units',displayed?.metrics.thermalExposure??Object.values(displayed?.thermal??{}).reduce((a,b)=>a+b,0)],['Fluid added · mm³',displayed?.metrics.fluidAddedMm3??0],['Fluid removed · mm³',displayed?.metrics.fluidRemovedMm3??0],['Fluid escaped · mm³',displayed?.metrics.fluidEscapedMm3??0],['Debris present · mm³',displayed?.metrics.debrisMm3??0],['Grid cut edges',displayed?.cutEdges?.length??0],['Transected grid edges',displayed?.transectedEdges?.length??0],['Mesh cut edges',displayed?.meshCutEdges?.length??0],['Retained mesh seams',displayed?.meshSeams?.length??0],['Separated attachments',displayed?.separatedAttachments?.length??0],['Retained flap components',displayed?.flapComponents?.length??0],['Separable flap components',displayed?.flapComponents?.filter(f=>f.separable===true).length??0],['Flaps with unknown separability',displayed?.flapComponents?.filter(f=>f.separable===null).length??0],...Object.entries(displayed?.slots??{}).map(([slot,state])=>[`${slot} hand held cells`,state.grip.length])].map(([label,value])=><div key={String(label)}><dt>{String(label)}</dt><dd>{typeof value==='number'?+value.toFixed(3):displayValue(value)}</dd></div>)}

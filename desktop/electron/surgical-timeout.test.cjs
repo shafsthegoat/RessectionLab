@@ -28,3 +28,15 @@ test('real sidecar admission accepts the scoped long budget and retains its norm
   for(const [op,args] of [['surgicalRehearsal',{command:'fullCase'}],['surgicalRehearsal',{command:'step'}],['loadCase',{command:'inspect'}]])await assert.rejects(engine.request(op,args,3600000),/Invalid operation time budget/);
   await assert.rejects(engine.request('surgicalRehearsal',{command:'inspect'},3600001),/Invalid operation time budget/);
 });
+test('anatomy reconstruction accepts its bounded model job budget through the real transport',async t=>{
+  const engine=Object.create(Sidecar.prototype),messages=[];
+  Object.assign(engine,{closed:false,pending:new Map(),child:{stdin:{write:message=>messages.push(JSON.parse(message))}}});
+  t.after(()=>{for(const pending of engine.pending.values())clearTimeout(pending.timeout);});
+  assert.equal(surgicalTransportLimitMs('anatomyReconstruct'),1800000);
+  const request=engine.request('anatomyReconstruct',{model:'synthstrip'},1800000);
+  assert.equal(messages.length,1);assert.equal(messages[0].timeoutMs,1800000);
+  const pending=engine.pending.get(messages[0].id);clearTimeout(pending.timeout);engine.pending.delete(messages[0].id);pending.resolve({document:{}});
+  assert.deepEqual(await request,{document:{}});
+  await assert.rejects(engine.request('anatomyReconstruct',{},1800001),/Invalid operation time budget/);
+  await assert.rejects(engine.request('anatomyImport',{},1800000),/Invalid operation time budget/);
+});

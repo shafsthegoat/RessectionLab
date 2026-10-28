@@ -7,6 +7,8 @@ const {vascularRequest,validateVascularResult}=require('./episode-vascular.cjs')
 const { app, BrowserWindow, dialog, ipcMain, session, Menu, screen } = require('electron');
 const {secondaryWindowOptions,isSecondaryDisplayConnected}=require('./secondary-display.cjs');
 const {surgicalTimeoutMs}=require('./surgical-timeout.cjs');
+const {runFrozenCusa,loadFrozenWorkspace}=require('./frozen-cusa.cjs');
+const {randomUUID}=require('node:crypto');
 const path = require('node:path');
 const fs = require('node:fs/promises');
 const os = require('node:os');
@@ -33,6 +35,8 @@ let startupConsumed = false;
 let caseLibrary;
 let currentCasePath;
 let pendingOpenPath;
+let frozenCusaAbort;
+let frozenCusaAdmission;
 const { RehearsalUnsaved } = require('./rehearsal-unsaved.cjs');
 const rehearsalUnsaved = new RehearsalUnsaved(async()=>{
   const answer = await dialog.showMessageBox(window, {type:'warning', title:'Unsaved rehearsal',
@@ -43,7 +47,8 @@ const rehearsalUnsaved = new RehearsalUnsaved(async()=>{
 let currentCaseHash;
 let currentCaseName = 'research-case';
 const secondaryDisplayOnly=process.argv.includes('--secondary-display');
-if(secondaryDisplayOnly&&process.platform==='darwin')app.setActivationPolicy('accessory');
+const automationHidden=process.argv.includes('--automation-hidden');
+if((secondaryDisplayOnly||automationHidden)&&process.platform==='darwin')app.setActivationPolicy('accessory');
 let secondaryDisplayId;
 let secondaryDisplayUnavailable=false;
 const casePaths = new Map();
@@ -138,7 +143,7 @@ function bindOperations() {
     anatomySaveView: ['viewState','saveArchive'],
     anatomyComponents: ['layerId'],
     anatomyGraph: ['layerId','point'],
-    anatomyReconstruct: ['seriesId','model','synthsegVersion'],
+    anatomyReconstruct: ['seriesId','model','synthsegVersion','brainLayerId'],
     anatomyPlan: ['start','end','radiusMm'], anatomyRemoval: ['point','radiusMm','reset'],
     anatomySection: ['seriesId','center','normal','spacingMm','movingId','checkerboard','layers'],
     anatomyView: ['seriesId','layers','original','highlightLayer','highlightComponents','reviewId','previewAlignment','vesselScope'],
@@ -149,7 +154,7 @@ function bindOperations() {
   for (const [operation, keys] of Object.entries(anatomyKeys))
     handle(operation, args => engine.request(operation, plainArgs(args, ['collectionId','snapshotId',...keys]), operation==='anatomyReconstruct'?1800000:300000));
   handle('anatomyImport', async args => {
-    args=plainArgs(args,['collectionId','snapshotId','kind','modality','timepoint','patientId','seriesId','label']);
+    args=plainArgs(args,['collectionId','snapshotId','kind','modality','timepoint','patientId','seriesId','label','roleMap','sequenceBySeries']);
     const selected=await dialog.showOpenDialog(window,{title:'Import this patient’s imaging',properties:[args.kind==='dicom'?'openDirectory':'openFile']});
     if(selected.canceled)return null;
     return engine.request('anatomyImport',{...args,path:selected.filePaths[0]},300000);
@@ -184,7 +189,50 @@ function bindOperations() {
     const result=await engine.request('importSurgicalScene', {...args,path:filename}, 120000);currentCasePath=null;return result;
   });
   handle('compareSurgicalAnatomy', args => engine.request('compareSurgicalAnatomy', plainArgs(args,['beforeCaseHash','afterCaseHash','changedLayers','prefix','decisions']),300000));
-  handle('surgicalRehearsal', async args => {args=plainArgs(args, ['caseHash','command','expectedStateId','action','mapping','position','frameIndex','cacheOnly','timelineToken','viewFieldTokens','prefixToken','prefixFieldTokens','branchId','source','sceneIndex','acknowledgeResearchUnknowns','opponent','scenario','maxActions']);const result=await engine.request('surgicalRehearsal',args,surgicalTimeoutMs(args.command));rehearsalUnsaved.changed(args,result);return result;});
+  handle('executeFrozenCusa', async args => {
+    args=plainArgs(args,['caseHash','branchId','kind']);
+    const kind=args.kind??'cusa';
+    if(!['cusa','sector'].includes(kind))throw Error('Unknown frozen policy kind');
+    if(app.isPackaged)throw Error('Frozen CUSA execution requires the local research checkout and matching Python runtime');
+    if(frozenCusaAbort||frozenCusaAdmission)throw Error('A frozen CUSA episode is already running or awaiting display');
+    if(args.caseHash!==currentCaseHash||typeof args.branchId!=='string'||!args.branchId||args.branchId.length>128)throw Error('Choose an access approach from the current case');
+    frozenCusaAbort=new AbortController();
+    try {
+      const checkpoint=await pick(kind==='sector'?'Choose a compatible frozen sector checkpoint':'Choose a compatible frozen CUSA checkpoint',['pt']);
+      if(!checkpoint)return null;
+      const repo=path.resolve(__dirname,'../..');
+      const folder=path.join(repo,kind==='sector'?'testcases/outputs/sector-desktop':'testcases/outputs/cusa-desktop',new Date().toISOString().replace(/[:.]/g,'-')+'-'+randomUUID().slice(0,8));
+      await fs.mkdir(folder,{recursive:true});
+      const source=path.join(folder,'input.ressectionlab');
+      // Snapshot the current cached workspace, including unsaved approaches.
+      // The original file and its navigation/save state remain untouched.
+      await engine.request('saveCase',{caseHash:args.caseHash,path:source,overwrite:false},300000);
+      const result=await runFrozenCusa({repo,source,branchId:args.branchId,checkpoint,kind,
+        output:path.join(folder,'execution'),signal:frozenCusaAbort.signal});
+      frozenCusaAbort.signal.throwIfAborted();
+      const next=await loadFrozenWorkspace(filename=>engine.request('loadCase',{path:filename},300000),
+        source,result.workspacePath,frozenCusaAbort.signal);
+      const admissionId=randomUUID();
+      frozenCusaAdmission={admissionId,source,result,caseHash:next.caseHash};
+      return {case:next,...result,admissionId};
+    } catch(error) {
+      if(frozenCusaAbort.signal.aborted)throw Error('Operation cancelled · Frozen policy source and any experiment evidence were preserved');
+      throw error;
+    } finally {frozenCusaAbort=null;}
+  });
+  handle('finishFrozenCusa',async args=>{
+    args=plainArgs(args,['admissionId','accepted']);
+    const pending=frozenCusaAdmission;
+    if(!pending||args.admissionId!==pending.admissionId||typeof args.accepted!=='boolean')throw Error('Frozen episode display admission is unavailable');
+    if(args.accepted){
+      currentCasePath=pending.result.workspacePath;casePaths.set(pending.caseHash,pending.result.workspacePath);
+      // Library bookkeeping cannot invalidate an already displayed native case.
+      try {await caseLibrary.remember(pending.result.workspacePath);}catch(error){log('Could not remember frozen episode: '+error);}
+    }else await engine.request('loadCase',{path:pending.source},300000);
+    frozenCusaAdmission=null;return true;
+  });
+  handle('cancelFrozenCusa',()=>{frozenCusaAbort?.abort();return true;});
+  handle('surgicalRehearsal', async args => {args=plainArgs(args, ['caseHash','command','expectedStateId','action','mapping','position','frameIndex','cacheOnly','timelineToken','viewFieldTokens','prefixToken','prefixFieldTokens','branchId','source','sceneIndex','acknowledgeResearchUnknowns','opponent','allowModeledBrainCorridor','scenario','maxActions','initialAccessRadiusMm','exploreExteriorFaces','cumulativeReentry']);const result=await engine.request('surgicalRehearsal',args,surgicalTimeoutMs(args.command));rehearsalUnsaved.changed(args,result);return result;});
   for (const op of ['createRehearsal','inspectRehearsal','stepRehearsal','compareRehearsal']) {
     handle(op, async args => {const result=await engine.request(op, plainArgs(args, op === 'stepRehearsal'
       ? ['caseHash','expectedStateId','action'] : op === 'compareRehearsal'
@@ -269,7 +317,7 @@ function bindOperations() {
 }
 
 async function createWindow() {
-  const secondary=secondaryDisplayOnly?secondaryWindowOptions(screen.getAllDisplays(),screen.getPrimaryDisplay().id):null;
+  const secondary=secondaryDisplayOnly&&!automationHidden?secondaryWindowOptions(screen.getAllDisplays(),screen.getPrimaryDisplay().id):null;
   secondaryDisplayId=secondary?.displayId;
   const devUrl = !app.isPackaged && process.env.RESSECTIONLAB_DEV_URL;
   if (devUrl && devUrl !== 'http://127.0.0.1:5173/') throw new Error('Development preview must use the configured local address');
@@ -304,7 +352,7 @@ async function createWindow() {
     }
   };
   if(secondaryDisplayOnly){screen.on('display-removed',guardSecondaryDisplay);screen.on('display-metrics-changed',guardSecondaryDisplay);}
-  window.once('ready-to-show', () => {if(secondaryAvailable()&&!secondaryDisplayUnavailable){if(secondaryDisplayOnly)window.showInactive();else window.show();}});
+  window.once('ready-to-show', () => {if(!automationHidden&&secondaryAvailable()&&!secondaryDisplayUnavailable){if(secondaryDisplayOnly)window.showInactive();else window.show();}});
   window.on('close', event=>{
     if(!quitting&&rehearsalUnsaved.dirty){event.preventDefault();void rehearsalUnsaved.allowNavigation().then(allowed=>{if(allowed){rehearsalUnsaved.saved();window?.close();}});}
   });
@@ -316,6 +364,7 @@ const ownsAppInstance = app.requestSingleInstanceLock();
 if (!ownsAppInstance) app.quit();
 app.on('open-file',(event,filename)=>{event.preventDefault();pendingOpenPath=filename;if(window&&!window.isDestroyed())window.webContents.send('research:event',{event:'menuAction',action:'openCase'});});
 app.on('second-instance', (_event,argv) => {
+  if(automationHidden){log('Hidden automation instance remains hidden.');return;}
   if(argv.includes('--secondary-display')&&!secondaryDisplayOnly){log('Refused secondary-display request for an existing unrestricted window. Close the existing app and relaunch with --secondary-display.');return;}
   if(secondaryDisplayOnly&&(secondaryDisplayUnavailable||!isSecondaryDisplayConnected(screen.getAllDisplays(),screen.getPrimaryDisplay().id,secondaryDisplayId))){window?.hide();log('Secondary display unavailable; ignored second-instance request.');return;}
   const index=argv.findIndex(a=>a==='--case'||a==='--anatomy');
@@ -325,9 +374,9 @@ app.on('second-instance', (_event,argv) => {
   if (window && !window.isDestroyed()) { if(secondaryDisplayOnly){window.showInactive();}else{if (window.isMinimized()) window.restore(); window.show(); window.focus();} }
 });
 if (ownsAppInstance) app.whenReady().then(async () => { log = createLogger(app.getPath('logs')); log(`Starting ${app.getVersion()} (${app.isPackaged ? 'packaged' : 'development'})`); await startEngine(); bindOperations(); await createWindow(); }).catch(error => {
-  if(!secondaryDisplayOnly)dialog.showErrorBox('RessectionLab could not start', error.message); log(error.stack); app.quit();
+  if(!secondaryDisplayOnly&&!automationHidden)dialog.showErrorBox('RessectionLab could not start', error.message); log(error.stack); app.quit();
 });
 app.on('window-all-closed', () => app.quit());
 app.on('before-quit', event => {
-  if (!quitting && engine) { event.preventDefault();void rehearsalUnsaved.allowNavigation().then(allowed=>{if(allowed){quitting = true;engine.stop().finally(() => app.quit());}}); }
+  if (!quitting && engine) { event.preventDefault();void rehearsalUnsaved.allowNavigation().then(allowed=>{if(allowed){quitting = true;frozenCusaAbort?.abort();engine.stop().finally(() => app.quit());}}); }
 });

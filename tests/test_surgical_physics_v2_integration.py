@@ -48,6 +48,40 @@ def test_public_brain_hold_couples_neighbors_and_release_recovers_without_source
     assert SurgicalEngine.restore(source, e.snapshot()).state_id == e.state_id
 
 
+def test_deformation_cannot_enter_a_stationary_other_tool_shaft_after_sweep():
+    from scipy.spatial.transform import Rotation
+    labels = np.zeros((24,24,20),np.uint16)
+    labels[8,8,8] = 1
+    source = SurgicalScene(labels,np.eye(4),
+        [{'id':1,'name':'brain','material':'soft_tissue','target':False}],
+        {'kind':'generated post-deformation shaft guard'}, {'tissuePhysicsV2':default_profile()})
+    e = SurgicalEngine(source)
+    q = Rotation.from_euler('z',90.,degrees=True).as_quat().tolist()
+    pose = lambda x,z,quat: {'position':[x,8.,z],'quaternion':quat}
+    for a in (
+        {'slot':'right','operation':'place','pose':pose(9.6,12.,[0.,0.,0.,1.]),
+         'parameters':{'radiusMm':.6},'duration':.05},
+        {'slot':'right','operation':'move','pose':pose(9.6,12.,[0.,0.,0.,1.]),'duration':.05},
+        {'slot':'left','operation':'exchange','instrument':'brain_retractor','duration':.05},
+        {'slot':'left','operation':'place','pose':pose(8.,2.,q),
+         'parameters':{'radiusMm':3.},'duration':.05},
+        {'slot':'left','operation':'move','pose':pose(8.,4.25,q),'duration':.4},
+        {'slot':'left','operation':'hold','pose':pose(8.,4.5,q),'duration':.05},
+        {'slot':'left','operation':'move','pose':pose(8.3,4.5,q),'duration':.5}):
+        accepted(e,a)
+    before = e.snapshot()
+    command = {'slot':'left','operation':'move','pose':pose(8.55,4.5,q),'duration':.05}
+    # The old ordering accepted this one-microstep action, then rasterized the
+    # held cell into the stationary right shaft. The new guard rolls it back.
+    preview = e.preview(command)
+    assert preview['status']=='rejected'
+    assert preview['reason']=='POST_DEFORMATION_SHAFT_COLLISION:right'
+    assert e.snapshot()==before
+    result = e.step(command)
+    assert result['status']=='rejected' and result['stateId']==before['stateId']
+    assert e.snapshot()==before
+
+
 def test_drill_pending_work_blocks_advance_and_preview_replays_energy():
     e = SurgicalEngine(scene('bone')); prepare_tool(e, 'cranial_drill')
     a = action('apply', [8., 8., 10.], parameters={'rpm': 1000., 'forceN': .1, 'duty': 1.}, duration=.3)

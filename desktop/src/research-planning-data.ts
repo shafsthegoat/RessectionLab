@@ -1,8 +1,13 @@
 import type {SurgicalPlanAlternative} from './surgical-types';
 
+export function planningTimeLabel(value:unknown):string{
+  return typeof value==='number'&&Number.isFinite(value)&&value>=0?
+    `${value.toFixed(2)} s total`:'Computation time unavailable';
+}
+
 /** Align alternatives by decision count, counting rejected commands separately
  * from the native accepted-action timeline. No new simulation is run by replay. */
-export function planReplayPosition(plan:SurgicalPlanAlternative,decision:number):number {
+export function planReplayPosition(plan:{prefixActions:number;decisions:Array<{status:string}>},decision:number):number {
   if(!Number.isInteger(decision)||decision<0||decision>Math.max(6,plan.decisions.length)||!Number.isInteger(plan.prefixActions)||plan.prefixActions<0)throw Error('Invalid research replay position');
   return plan.prefixActions+plan.decisions.slice(0,decision).filter(row=>row.status!=='rejected').length;
 }
@@ -27,7 +32,7 @@ export function planLabel(plan:SurgicalPlanAlternative):string {
 }
 
 export function planDecisionReason(plan:SurgicalPlanAlternative,decision:number):string {
-  if(decision===0)return 'Shared post-exposure starting state';
+  if(decision===0)return plan.route?'Shared source-anatomy starting state':'Shared post-exposure starting state';
   const row=plan.decisions[Math.min(decision,plan.decisions.length)-1];
   if(!row)return plan.stopReason.replaceAll('_',' ');
   if(row.actionId==='STOP')return 'Policy selected STOP; left tool deactivated. Residual target remains unassessed.';

@@ -144,6 +144,25 @@ def test_long_replay_admission_is_cancellable_without_extending_action_budgets(b
         assert result['event'] == 'error' and result['error']['code'] == 'INVALID_ARGUMENT'
 
 
+def test_reconstruction_transport_accepts_bounded_model_job_and_cancellation(bridge, monkeypatch):
+    runtime, events = bridge
+    entered = threading.Event()
+    def slow(operation, args, request_state, progress):
+        assert operation == 'anatomyReconstruct'
+        entered.set()
+        request_state.cancelled.wait(2)
+        request_state.check()
+    monkeypatch.setattr(runtime.session, 'execute', slow)
+    runtime.submit({'id': 'model-job', 'op': 'anatomyReconstruct', 'args': {}, 'timeoutMs': 1800000})
+    assert entered.wait(1)
+    runtime.submit({'id': 'cancel-model', 'op': 'cancel', 'args': {'requestId': 'model-job'}})
+    assert runtime.wait_idle(1)
+    assert [e['event'] for e in events if e['id'] == 'model-job'] == ['started', 'cancelled']
+    for operation, timeout in [('anatomyReconstruct', 1800001), ('anatomyImport', 1800000)]:
+        result = request(bridge, operation, operation, {}, timeoutMs=timeout)
+        assert result['event'] == 'error' and result['error']['code'] == 'INVALID_ARGUMENT'
+
+
 def test_cached_cases_bounded_and_evicted_hash_fails(bridge):
     first = synthetic(bridge)
     request(bridge, "second", "createSyntheticCase", {"shape": [25, 24, 24]})

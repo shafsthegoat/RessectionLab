@@ -67,7 +67,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     const saved=b.viewState?.snapshotId===b.document.snapshot_id?b.viewState:null;
     scopeRef.current=vesselScopeForView(saved);setVesselScope(scopeRef.current);
     const s=saved?.seriesId??b.document.reference_series??'';setSeries(s);
-    const views=saved?.states??{};const v=migrateSkullView(views[s]??initial(b,s),b.document.layers);setStates({...views,[s]:v});
+    const views=saved?.states??{};const v=migrateSkullView(views[s]??initial(b,s),b.document.layers);setStates(s?{...views,[s]:v}:{});
     if(s)await run(async()=>{setMessage('Checking study alignment…');const result=await api!.anatomyRegister({...args(b),action:'ensure'});const next={...b,document:result.document};setBinding(next);await loadView(next,s,v)});else setMessage('Add a source scan to begin.');
   },[api]);
   async function create(patientId:string,timepoint='preoperative'){let result:Binding|null=null;await run(async()=>{result=await api!.anatomyCreate({patientId,timepoint})});if(result)await install(result);return result;}
@@ -159,7 +159,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   }
   async function save(saveArchive=true){if(!binding||!api||draft)return;await run(async()=>{
     const viewState:NativeViewState={schema:'patient-anatomy-view-v1',patientId:binding.document.patient_id,snapshotId:binding.document.snapshot_id,seriesId:series,states,vesselScope:scopeRef.current,vesselDisplayVersion:2};
-    await api.anatomySaveView({...args(),viewState,saveArchive});setMessage('Workspace saved · scans, layers and views preserved');
+    if(series)await api.anatomySaveView({...args(),viewState,saveArchive});setMessage('Workspace saved · scans, layers and views preserved');
   });}
   async function reviewFragments(layerId=editLayer){
     if(!api||!layerId||!binding)return;setEditLayer(layerId);setTool('navigate');
@@ -173,7 +173,13 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   }
   function highlight(ids:number[]){if(!binding||!review||busy)return;setComponents(ids);const next={...state,cursor:ids.length===1?review.components.find(c=>c.id===ids[0])?.center??state.cursor:state.cursor};void run(()=>loadView(binding,series,next,original,{highlightLayer:editLayer,highlightComponents:ids,reviewId:review.reviewId}));}
   function compare(){if(!binding)return;setOriginal(!original);void run(()=>loadView(binding,series,state,!original));}
-  async function change(job:()=>Promise<{document:Binding['document']}|null>){if(!binding)return;await run(async()=>{const r=await job();if(!r)return;const imported={...binding,document:r.document};setBinding(imported);const aligned=await api!.anatomyRegister({...args(imported),action:'ensure'});const b={...imported,document:aligned.document};setBinding(b);const s=series||b.document.reference_series||'';setSeries(s);if(s)await loadView(b,s,migrateSkullView(states[s]??initial(b,s),b.document.layers));});}
+  async function change(job:()=>Promise<{document:Binding['document']}|null>){if(!binding)return;await run(async()=>{const r=await job();if(!r)return;const imported={...binding,document:r.document};setBinding(imported);const aligned=await api!.anatomyRegister({...args(imported),action:'ensure'});const b={...imported,document:aligned.document};setBinding(b);const s=series||b.document.reference_series||'';setSeries(s);if(s){
+      const previousLayers=new Set(binding.document.layers.map(layer=>layer.id));
+      const added=Object.fromEntries(b.document.layers.filter(layer=>!previousLayers.has(layer.id)).map(layer=>[layer.id,!['brain-region','review-region','head-envelope'].includes(layer.kind)]));
+      const current=states[s]??initial(b,s);
+      const next={...current,visible:{...current.visible,...added}};
+      await loadView(b,s,migrateSkullView(next,b.document.layers));
+    }});}
   function changeVesselScope(scope:VesselScope){
     if(active.current||busy||draft||!binding||scope===scopeRef.current)return;
     // Invalidate incremental requests before waiting for them; old filtered layers
@@ -182,7 +188,11 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     scopeRef.current=scope;setVesselScope(scope);
     void run(()=>loadView(binding,series,state,original));
   }
-  async function savePackage(){if(!binding||!api||draft)return;await save(false);await run(async()=>{const r=await api.anatomySavePackage(args());if(r)setMessage('Patient study file saved · '+r.path)});}
+  async function savePackage(){if(!binding||!api||draft)return;await run(async()=>{
+    const viewState:NativeViewState={schema:'patient-anatomy-view-v1',patientId:binding.document.patient_id,snapshotId:binding.document.snapshot_id,seriesId:series,states,vesselScope:scopeRef.current,vesselDisplayVersion:2};
+    if(series)await api.anatomySaveView({...args(),viewState,saveArchive:false});
+    const r=await api.anatomySavePackage(args());if(r)setMessage('Patient study file saved · '+r.path);
+  });}
   function changeSkullMode(mode:NonNullable<ViewerWorkspaceSettings['skullMode']>){
     if(!binding)return;
     const bone=Object.fromEntries(binding.document.layers.filter(l=>['bone','skull'].includes(l.kind)).map(l=>[l.id,mode==='transparent'?.08:1]));

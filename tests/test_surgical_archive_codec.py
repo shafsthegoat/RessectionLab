@@ -90,6 +90,40 @@ def test_old_raw_toolbox_archives_remain_readable(tmp_path):
     assert read_case_artifacts(path) == artifacts
 
 
+def test_large_staged_evidence_roundtrips_without_hiding_native_branches(tmp_path):
+    case, engine, artifacts = fixture()
+    del artifacts['surgical_toolbox']['fullCase']
+    report = {'schema': codec.STAGED_REPORT_SCHEMA,
+              'explicitGeneratedCodecPadding': 'native-probe-ledger;'*950_000}
+    artifacts['surgical_toolbox']['stagedPlanning'] = report
+    artifacts['surgical_toolbox']['stagedSummary'] = {'generatedCodecFixture': True}
+    original = copy.deepcopy(artifacts)
+    assert len(json.dumps(artifacts)) > MAX_MANIFEST_BYTES
+    path = save_case(case, tmp_path/'staged.ressectionlab', artifacts=artifacts)
+    stored = manifest(path)['artifacts']['surgical_toolbox']
+    assert stored['branches'] == original['surgical_toolbox']['branches']
+    assert stored['stagedPlanning']['schema'] == codec.STAGED_SCHEMA
+    assert 'payload' not in stored, 'historical readers retain ordinary native branch access'
+    assert read_case_artifacts(path) == original
+    assert artifacts == original
+    restored = SurgicalEngine.restore(engine.scene, stored['branches']['main'])
+    assert restored.state_id == engine.state_id
+    assert load_case(path).semantic_hash == case.semantic_hash
+    corrupt = copy.deepcopy({'surgical_toolbox': stored})
+    corrupt['surgical_toolbox']['stagedPlanning']['sha256'] = '0'*64
+    with pytest.raises(ValueError, match='checksum differs'):
+        codec.decode_artifacts(corrupt)
+
+
+def test_nested_staged_evidence_shares_the_expansion_budget(monkeypatch):
+    staged = codec._encode({'schema': codec.STAGED_REPORT_SCHEMA, 'generatedPadding': 'x'*2048}, codec.STAGED_SCHEMA)
+    outer = codec._encode({'fullCase': {'main': {}}, 'stagedPlanning': staged}, codec.SCHEMA)
+    monkeypatch.setattr(codec, 'MAX_UNCOMPRESSED_BYTES',
+                        outer['uncompressedBytes']+staged['uncompressedBytes']-1)
+    with pytest.raises(ValueError, match='bounded JSON limit'):
+        codec.decode_artifacts({'surgical_toolbox': outer})
+
+
 @pytest.mark.parametrize('change', [
     {'schema': 'resectionlab.surgical-toolbox-archive.v99'}, {'schema': 'wrong'}, {'encoding': 'unknown'},
     {'sha256': '0' * 64}, {'uncompressedBytes': True}, {'uncompressedBytes': -1},

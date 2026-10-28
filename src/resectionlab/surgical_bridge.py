@@ -146,12 +146,25 @@ def dispatch(session, operation, args, request, progress):
             metadata={'is_synthetic': True, 'generated': True, 'anatomy_layers': {r['name']: {'kind': r['material'], 'color': r['color'],
                        'provenance': 'generated engineering fixture'} for r in s.regions}, 'surgical_properties': s.properties})
         return session._install_case(case, {}, request)
-    argument_keys = {'caseHash', 'command', 'expectedStateId', 'action', 'mapping', 'position', 'branchId', 'source', 'sceneIndex', 'acknowledgeResearchUnknowns', 'opponent', 'scenario', 'maxActions', 'frameIndex', 'timelineToken', 'viewFieldTokens'}
+    argument_keys = {'caseHash', 'command', 'expectedStateId', 'action', 'mapping', 'position', 'branchId', 'source', 'sceneIndex', 'acknowledgeResearchUnknowns', 'allowModeledBrainCorridor', 'maxHealthyRemovalMm3', 'maxWallSeconds', 'opponent', 'scenario', 'maxActions', 'frameIndex', 'timelineToken', 'viewFieldTokens','initialAccessRadiusMm','exploreExteriorFaces','cumulativeReentry'}
     if args.get('command') == 'seekPrefixFrame':
         argument_keys.update({'prefixToken', 'prefixFieldTokens'})
     if args.get('command') == 'seekPrefix' and type(args.get('position')) is int and args['position'] == 0:
         argument_keys.add('cacheOnly')
     _keys(args, argument_keys)
+    if args.get('command') == 'recoverExit':
+        _keys(args, {'caseHash', 'command', 'expectedStateId'})
+    if 'cumulativeReentry' in args and (args.get('command') != 'plan' or
+            args.get('opponent') != 'anatomy-staged-strategy' or
+            type(args['cumulativeReentry']) is not bool):
+        raise ValueError('Cumulative re-entry applies only to staged source planning')
+    if 'exploreExteriorFaces' in args and (args.get('command') != 'plan' or
+            args.get('opponent') != 'anatomy-staged-strategy' or
+            type(args['exploreExteriorFaces']) is not bool):
+        raise ValueError('Exterior face exploration applies only to staged source planning')
+    if 'initialAccessRadiusMm' in args and (args.get('command')!='plan' or
+            args.get('opponent')!='anatomy-staged-strategy'):
+        raise ValueError('Initial access configuration applies only to staged source planning')
     _require_json_budget(args, 256 * 1024, 'SURGICAL_REQUEST_LIMIT', 'Instrument request exceeds budget')
     entry = None
     source = args.get('source')
@@ -193,7 +206,7 @@ def dispatch(session, operation, args, request, progress):
         # Replacement archives and all editable commands retain full admission.
         artifacts = entry.artifacts if hot_frame or args.get('command') in PREFIX_COMMANDS else thaw_json(entry.artifacts)
     command = args.get('command', 'inspect')
-    if command not in {'create', 'inspect', 'inspectArchive', 'preview', 'step', 'undo', 'redo', 'seek', 'branch', 'selectBranch', 'reset', 'selectScene', 'plan', 'fullCase', 'seekFrame', *PREFIX_COMMANDS}:
+    if command not in {'create', 'inspect', 'inspectArchive', 'preview', 'step', 'recoverExit', 'undo', 'redo', 'seek', 'branch', 'selectBranch', 'reset', 'selectScene', 'plan', 'fullCase', 'seekFrame', *PREFIX_COMMANDS}:
         raise ValueError('Unsupported surgical command')
     raw = artifacts.get(ARTIFACT)
     from .surgical_environment import standardize, default_target_names, SCHEMA as ENVIRONMENT_SCHEMA
@@ -442,8 +455,118 @@ def dispatch(session, operation, args, request, progress):
         record['position'] = len(engine.actions)
         record.setdefault('timeline', {})[record['branchId']] = copy.deepcopy(engine.history)
         outcome = {'status': 'accepted', 'reason': director.get('stopReason') or director.get('currentPhaseId'), 'completedFraction': 1., 'events': []}
+    elif command == 'plan' and args.get('opponent') == 'anatomy-precision-reentry':
+        from .surgical_precision_reentry import (
+            continue_precision_reentry, install_precision_continuation)
+        from .surgical_staged_planning import require_staged_development
+        if entry is None:
+            raise ValueError('Precision continuation requires a declared DEVELOPMENT patient')
+        require_staged_development(entry.case)
+        precision = continue_precision_reentry(engine, record,
+            acknowledge_unknowns=args.get('acknowledgeResearchUnknowns', False),
+            check=request.check, progress=progress)
+        install_precision_continuation(record, precision, engine.scene)
+        candidate = precision['engine']
+        branch_id = precision['report']['finalBranchId']
+        replay_cache.seek(candidate, record['branches'][branch_id],
+                          len(candidate.actions), check=request.check)
+        outcome = {'status': 'accepted', 'reason': 'precision_continuation_recorded',
+                   'completedFraction': 1., 'events': []}
+    elif command == 'plan' and args.get('opponent') == 'anatomy-staged-strategy':
+        from .surgical_staged_planning import (
+            compare_staged_strategies, install_staged_comparison,
+            require_staged_development)
+        from .surgical_planning import validate_saved_comparison
+        from .surgical_sector_planning import validate_saved_sector_comparison
+        if entry is None:
+            raise ValueError('Save and prepare a declared DEVELOPMENT source before staged execution')
+        role = require_staged_development(entry.case)
+        access, sectors = record.get('planning'), record.get('sectorPlanning')
+        if (not isinstance(access, dict) or not isinstance(sectors, dict) or
+                sectors.get('sourceAccessComparisonSeal') != access.get('comparisonSeal')):
+            raise ValueError('Staged work requires a paired source access/sector comparison')
+        if (record['position'] != 0 or engine.actions or
+                record['branches'][record['branchId']]['actions'] or
+                engine.state_id != access.get('startStateId') or 'stagedPlanning' in record):
+            raise ValueError('Open an original common intact source for staged work')
+        validate_saved_comparison(engine.scene, record, access)
+        validate_saved_sector_comparison(engine.scene, record, sectors)
+        staged = compare_staged_strategies(engine, record,
+            acknowledge_unknowns=args.get('acknowledgeResearchUnknowns', False),
+            initial_access_radius_mm=args.get('initialAccessRadiusMm'),
+            explore_fresh_corridors=args.get('exploreExteriorFaces', False),
+            include_opposite_faces=args.get('exploreExteriorFaces', False),
+            cumulative_reentry=args.get('cumulativeReentry', False),
+            check=request.check, progress=progress)
+        if staged['report'].get('interruption'):
+            raise ValueError('Staged comparison interrupted: '+staged['report']['interruption'])
+        install_staged_comparison(record, staged, engine.scene)
+        for candidate, row in staged['branches']:
+            replay_cache.seek(candidate, record['branches'][row['branchId']],
+                              len(candidate.actions), check=request.check)
+        outcome = {'status': 'accepted', 'reason': 'staged_comparison_recorded',
+                   'completedFraction': 1., 'events': []}
+    elif command == 'plan' and args.get('opponent') == 'anatomy-joint-strategy':
+        from .surgical_joint_planning import (
+            compare_joint_strategies, install_joint_comparison, validate_joint_report)
+        from .surgical_planning import validate_saved_comparison
+        from .surgical_sector_planning import validate_saved_sector_comparison
+        if 'jointPlanning' in record:
+            raise ValueError('Open an original classic source before generating another joint comparison')
+        access, sectors = record.get('planning'), record.get('sectorPlanning')
+        if (not isinstance(access, dict) or not isinstance(sectors, dict) or
+                access.get('task') != 'anatomy-access' or
+                sectors.get('task') != 'anatomy-strategy' or
+                sectors.get('sourceAccessComparisonSeal') != access.get('comparisonSeal')):
+            raise ValueError('Generate paired classic access and sector comparisons before joint planning')
+        if (record['position'] != 0 or record['branches'][record['branchId']]['actions'] or
+                engine.actions or engine.state_id != access['startStateId']):
+            raise ValueError('Return to the common intact source branch before joint planning')
+        if args.get('allowModeledBrainCorridor') is not True:
+            raise ValueError('Explicit mapped-brain corridor opt-in is required')
+        validate_saved_comparison(engine.scene, record, access)
+        validate_saved_sector_comparison(engine.scene, record, sectors)
+        joint = compare_joint_strategies(engine,
+            acknowledge_unknowns=args.get('acknowledgeResearchUnknowns', False),
+            max_native_actions=args.get('maxActions', 48),
+            check=request.check, progress=progress)
+        created = install_joint_comparison(record, joint,
+            joint['report']['accessComparison'], joint['report']['sectorComparison'])
+        record['jointPlanning'] = copy.deepcopy(joint['report'])
+        validate_joint_report(engine.scene, record, record['jointPlanning'])
+        for branch_id, item in created.items():
+            candidate = item['candidate']
+            # Live endpoint admission is read-only cache priming. It performs
+            # no additional physics for these just-verified native endpoints.
+            replay_cache.seek(candidate, record['branches'][branch_id], len(candidate.actions),
+                              check=request.check)
+            record.setdefault('timeline', {})[branch_id] = copy.deepcopy(candidate.history)
+        outcome = {'status': 'accepted', 'reason': 'joint_comparison_recorded',
+                   'completedFraction': 1., 'events': []}
     elif command == 'plan':
-        if args.get('opponent') == 'vascular-rescue':
+        sector_planning = args.get('opponent') == 'anatomy-strategy'
+        if sector_planning:
+            from .surgical_sector_planning import compare_sector_strategies
+            source_access = record.get('planning')
+            if not isinstance(source_access, dict) or source_access.get('task') != 'anatomy-access':
+                raise ValueError('Generate source-bound access approaches before comparing sector strategies')
+            branches, comparison = compare_sector_strategies(engine,
+                source_access, record['branches'],
+                acknowledge_unknowns=args.get('acknowledgeResearchUnknowns', False),
+                max_actions_per_strategy=args.get('maxActions', 48),
+                max_total_non_target_mm3=args.get('maxHealthyRemovalMm3', 200.),
+                max_wall_seconds=args.get('maxWallSeconds', 120.),
+                check=request.check, progress=progress)
+        elif args.get('opponent') == 'anatomy-access':
+            from .surgical_access_planning import compare_access_approaches
+            branches, comparison = compare_access_approaches(engine,
+                acknowledge_unknowns=args.get('acknowledgeResearchUnknowns', False),
+                allow_modeled_brain_corridor=args.get('allowModeledBrainCorridor', False),
+                max_actions_per_approach=args.get('maxActions', 48),
+                max_healthy_removed_mm3=args.get('maxHealthyRemovalMm3', 200.),
+                max_wall_seconds=args.get('maxWallSeconds', 120.),
+                check=request.check, progress=progress)
+        elif args.get('opponent') == 'vascular-rescue':
             from .surgical_strategy_planning import compare_rescue
             branches, comparison = compare_rescue(engine, record,
                 acknowledge_unknowns=args.get('acknowledgeResearchUnknowns', False),
@@ -466,14 +589,61 @@ def dispatch(session, operation, args, request, progress):
             record.setdefault('timeline', {})[branch_id] = copy.deepcopy(candidate.history)
             record.setdefault('parents', {})[branch_id] = {'branchId': record['branchId'], 'position': record['position']}
         comparison['comparisonSeal'] = semantic_digest(comparison)
-        record['planning'] = comparison
+        if record.get('sectorPlanning') is not None:
+            if sector_planning:
+                history = record.setdefault('sectorPlanningHistory', [])
+                if len(history) >= 8:
+                    raise ValueError('Save this workspace and open a new source before adding more sector comparisons')
+                history.append({'comparison': copy.deepcopy(record['sectorPlanning']),
+                    'sourceAccessComparison': copy.deepcopy(record.get('sectorSourceAccessComparison', record['planning']))})
+            elif 'sectorSourceAccessComparison' not in record:
+                record['sectorSourceAccessComparison'] = copy.deepcopy(record['planning'])
+        if sector_planning:
+            record['sectorSourceAccessComparison'] = copy.deepcopy(source_access)
+        record['sectorPlanning' if sector_planning else 'planning'] = comparison
+    elif command == 'recoverExit':
+        from .surgical_staged_exit import recover_checked_cusa
+        from .surgical_staged_planning import require_staged_development
+        if entry is None:
+            raise ValueError('Save a declared research source before checked withdrawal')
+        if not entry.case.metadata.get('is_synthetic'):
+            require_staged_development(entry.case)
+        previous = record.get('exitRecovery')
+        if previous and previous['sourceStateId'] == engine.state_id:
+            raise ValueError('Checked withdrawal was already evaluated at this native state')
+        parent = {'branchId': record['branchId'], 'position': record['position']}
+        candidate, recovery = recover_checked_cusa(engine, check=request.check)
+        recovery['sourceBranchId'] = parent['branchId']
+        if recovery['status'] == 'accepted':
+            branch = 'exit-recovery-'+str(len(record['branches']))
+            engine = candidate
+            record['branches'][branch] = engine.snapshot()
+            record.setdefault('timeline', {})[branch] = copy.deepcopy(engine.history)
+            record.setdefault('parents', {})[branch] = parent
+            record.update(branchId=branch, position=len(engine.actions))
+            replay_cache.seek(engine, record['branches'][branch], len(engine.actions), check=request.check)
+        recovery['finalBranchId'] = record['branchId']
+        recovery['comparisonSeal'] = semantic_digest(recovery)
+        if previous:
+            record.setdefault('exitRecoveryHistory', []).append(previous)
+        record['exitRecovery'] = recovery
+        outcome = {'status': 'accepted' if recovery['status'] == 'accepted' else 'rejected',
+            'reason': 'checked_withdrawal_'+str(recovery.get('mode') or recovery.get('reason')),
+            'completedFraction': 1. if recovery['status'] == 'accepted' else 0., 'events': []}
     elif command == 'step':
         action = args['action']
         unchanged_tool = action.get('operation') == 'exchange' and engine.state['slots'].get(action.get('slot'), {}).get('instrument') == action.get('instrument')
         outcome = {'status': 'accepted', 'reason': 'Instrument already selected; state unchanged.', 'completedFraction': 1., 'events': []} if unchanged_tool else engine.step(action, check=request.check)
         if outcome['status'] != 'rejected' and not unchanged_tool:
             full = record['branches'][record['branchId']]
-            planned_ids = {row['branchId'] for row in (record.get('planning') or {}).get('alternatives', [])}
+            planned_ids = {row['branchId'] for key in ('planning', 'sectorPlanning', 'stagedPlanning')
+                           for row in (record.get(key) or {}).get('alternatives', [])}
+            planned_ids.update(value for key in ('precisionPlanning', 'exitRecovery')
+                for field in ('sourceBranchId', 'finalBranchId')
+                if (value := (record.get(key) or {}).get(field)) is not None)
+            planned_ids.update(value for evidence in record.get('exitRecoveryHistory', [])
+                for field in ('sourceBranchId', 'finalBranchId')
+                if (value := evidence.get(field)) is not None)
             if record['position'] != len(full['actions']) or record['branchId'] in planned_ids:
                 parent = {'branchId': record['branchId'], 'position': record['position']}
                 record['branchId'] = 'branch-' + str(len(record['branches']))
@@ -518,7 +688,7 @@ def dispatch(session, operation, args, request, progress):
         shown_timeline = display_timeline(shown_timeline)
         shown_view['history'] = shown_timeline[:len(engine.actions)]
     result = {'caseHash': identity, 'view': shown_view, 'outcome': outcome,
-              'changed': command != 'inspect' and not unchanged_tool and (outcome is None or outcome['status'] != 'rejected'),
+              'changed': command == 'recoverExit' or command != 'inspect' and not unchanged_tool and (outcome is None or outcome['status'] != 'rejected'),
               'timeline': shown_timeline,
               'previousScenes': [{'index': i, 'label': f"Environment {i + 1}", 'branches': len(s.get('branches', {}))} for i, s in enumerate(artifacts.get('surgical_prior_scenes', []))],
               'branchId': record['branchId'], 'position': record['position'],
@@ -528,11 +698,46 @@ def dispatch(session, operation, args, request, progress):
     result['planningAvailability'] = availability(engine)
     from .surgical_strategy_planning import rescue_availability
     result['planningAvailability'].update(rescue_availability(engine, record))
+    from .surgical_access_planning import access_availability
+    result['planningAvailability'].update(access_availability(engine))
     comparison = copy.deepcopy(record.get('planning'))
     if comparison is not None:
         from .surgical_planning import validate_saved_comparison
         validate_saved_comparison(engine.scene, record, comparison)
     result['planning'] = comparison
+    sectors = copy.deepcopy(record.get('sectorPlanning'))
+    if sectors is not None:
+        from .surgical_sector_planning import validate_saved_sector_comparison
+        sector_record = {**record, 'planning': record.get('sectorSourceAccessComparison', record.get('planning'))}
+        validate_saved_sector_comparison(engine.scene, sector_record, sectors)
+    result['sectorPlanning'] = sectors
+    retraction_study = record.get('retractionStudy')
+    if isinstance(retraction_study, dict) and retraction_study.get('schema') == 'resectionlab.retractor-native-study.v1':
+        from .surgical_retraction_study import validate_retraction_study
+        validate_retraction_study(engine.scene, record, retraction_study)
+        result['retractionStudy'] = copy.deepcopy(retraction_study)
+    staged_report = record.get('stagedPlanning')
+    recovery_report = record.get('exitRecovery')
+    if recovery_report is not None:
+        from .surgical_staged_exit import validate_exit_recovery, exit_recovery_summary
+        validate_exit_recovery(engine.scene, record, recovery_report)
+        result['exitRecovery'] = exit_recovery_summary(recovery_report)
+    if staged_report is not None:
+        from .surgical_staged_planning import validate_staged_report, staged_summary
+        validate_staged_report(engine.scene, record, staged_report)
+        result['stagedPlanning'] = staged_summary(staged_report)
+    precision_report = record.get('precisionPlanning')
+    if precision_report is not None:
+        from .surgical_precision_reentry import validate_precision_report, precision_summary
+        validate_precision_report(engine.scene, record, precision_report)
+        result['precisionPlanning'] = precision_summary(precision_report)
+    joint_report = record.get('jointPlanning')
+    if joint_report is not None:
+        from .surgical_joint_planning import validate_joint_report
+        validate_joint_report(engine.scene, record, joint_report)
+        result['jointPlanning'] = copy.deepcopy(joint_report)
+        result['jointBaselineHistory'] = copy.deepcopy(record.get('jointBaselineHistory',
+            record.get('sectorPlanningHistory', [])[-1:]))
     _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Save this sequence before continuing')
     request.begin_commit()
     if command == 'create' and raw is not None:

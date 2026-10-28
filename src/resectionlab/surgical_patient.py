@@ -124,6 +124,9 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
     if np.prod(shape) > 80_000_000:
         raise ValueError('Requested derivative exceeds 80 million cells')
     rows = {name: collection.layer(layer_ids[name]) for name in selected_order}
+    for name, row in rows.items():
+        if row.get('units_status', 'mm') != 'mm':
+            raise ValueError('Selected anatomy layer requires declared millimeter units: ' + name)
     warnings = ['Research derivative of source annotations and segmentation estimates; provenance and review status are retained, not independently validated.',
                 'Bone/vessel any-hit coarse occupancy can enlarge boundaries and still miss structures smaller than 0.5 mm.',
                 'Wound aperture and flow parameters are explicit assumptions, not measured vessel diameter or patient physiology.']
