@@ -405,9 +405,20 @@ def _execute_brain_corridor(base, route, *, max_actions, healthy_cap, check):
     else:
         depths = [-.5]
     position = depths[0]
+    def observed_depth():
+        point = np.asarray(candidate.state['slots']['left']['position'])
+        if oblique:
+            return float(np.dot(point-np.asarray(route['surfacePose']['position']),
+                                np.asarray(route['inwardRasUnit'])))
+        return float((source.inverse[:3,:3]@(point-source.affine[:3,3]))[axis])
+    if candidate.history[-1]['status'] == 'partial':
+        # A contact-capacity CUSA may remain outside the requested surface.
+        # Retained partial work is real; requested depth is not observed travel.
+        position = observed_depth()
     first_stroke = True
     while True:
         if len(candidate.actions) >= max_actions:
+            director.update(status='stopped',stopReason='brain_corridor_action_budget')
             break
         if oblique:
             goal = route['pathLengthMm']+.5
@@ -416,8 +427,8 @@ def _execute_brain_corridor(base, route, *, max_actions, healthy_cap, check):
                 if position < goal-1e-9 and min(goal, position+step) > position+1e-9]
         else:
             options = depths[:1]
-            depths = depths[1:]
         if not options:
+            director.update(status='stopped',stopReason='brain_corridor_endpoint_without_required_progress')
             break
         advanced = False
         for depth in dict.fromkeys(options):
@@ -425,7 +436,12 @@ def _execute_brain_corridor(base, route, *, max_actions, healthy_cap, check):
                       'parameters': {'radiusMm': route['corridorRadiusMm']},
                       'duration': .6}
             if attempt(action):
-                position = depth
+                actual = observed_depth()
+                reached = np.linalg.norm(np.subtract(
+                    candidate.state['slots']['left']['position'],action['pose']['position'])) <= 1e-5
+                position = depth if reached else actual
+                if not oblique and reached:
+                    depths = depths[1:]
                 advanced = True
                 first_stroke = False
                 break

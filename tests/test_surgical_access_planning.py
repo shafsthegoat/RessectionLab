@@ -13,6 +13,47 @@ from resectionlab.surgical_planning import validate_saved_comparison
 from resectionlab.surgical_scene import SurgicalScene
 
 
+@pytest.mark.parametrize('oblique',[False,True])
+def test_contact_limited_corridor_replans_from_observed_tip_instead_of_requested_depth(oblique):
+    from resectionlab.surgical_cusa_v3 import default_profile
+    from scipy.spatial.transform import Rotation
+    labels=np.zeros((24,24,24),np.uint16)
+    if oblique:
+        labels[9,9,9]=1;labels[12,9,12]=2
+        origin=np.asarray([9.,9.,9.]);inward=np.asarray([1.,0.,1.])/np.sqrt(2.)
+        q=Rotation.align_vectors([inward],[[0.,0.,1.]])[0].as_quat().tolist()
+        length=np.sqrt(18.);entry=[12,9,12];surface=9
+    else:
+        labels[9,9,12]=1;labels[9,9,9]=2
+        origin=np.asarray([9.,9.,12.]);inward=np.asarray([0.,0.,-1.])
+        q=[1.,0.,0.,0.];length=3.;entry=[9,9,9];surface=12
+    profile=default_profile();profile['capacityMm3PerSecond']=.01
+    scene=SurgicalScene(labels,np.eye(4),[
+        {'id':1,'name':'brain','material':'soft_tissue'},
+        {'id':2,'name':'target','material':'tumor','target':True}],
+        {'kind':'generated contact-limited corridor'}, {'cusaV3':profile})
+    engine=SurgicalEngine(standardize(scene))
+    pose=lambda point:{'position':list(map(float,point)),'quaternion':q}
+    route={'nativeAxis':2,'targetEntryIndex':entry,
+        'pathType':'oblique_mapped_brain' if oblique else 'axis_mapped_brain',
+        'surfacePose':pose(origin),'entryPose':pose(origin+inward*length),
+        'outsidePose':pose(origin-inward*8.),'sourceBrainSurfaceIndex':surface,
+        'inwardRasUnit':inward.tolist(),'pathLengthMm':length,'corridorRadiusMm':1.5}
+    before=engine.snapshot()
+    candidate,director=_execute_brain_corridor(engine,route,max_actions=20,
+        healthy_cap=200.,check=lambda:None)
+    assert any(row['reason']=='TISSUE_ASPIRATION_IN_PROGRESS' for row in candidate.history)
+    assert np.dot(np.asarray(candidate.state['slots']['left']['position'])-origin,inward)<0.
+    # Pending native contact consumes budget at the real boundary. Requested
+    # endpoints cannot be counted as completed spatial progress.
+    assert len(candidate.actions)==20
+    assert director['status']=='stopped' and director['stopReason']=='brain_corridor_action_budget'
+    assert not candidate.state['removed'] and candidate.state['cusaV3']['progressExact']
+    assert engine.snapshot()==before
+    replay=SurgicalEngine.restore(engine.scene,candidate.snapshot())
+    assert replay.snapshot()==candidate.snapshot()
+
+
 def _engine(*, skull=True, axis0_barrier=False, affine=None):
     labels = np.zeros((20, 20, 20), np.uint16)
     labels[7:13, 7:13, 7:13] = 2
@@ -29,6 +70,31 @@ def _engine(*, skull=True, axis0_barrier=False, affine=None):
     scene = standardize(SurgicalScene(labels, np.eye(4) if affine is None else affine,
         regions, {'provenance': 'generated software test; no patient observation'}, {}))
     return SurgicalEngine(scene)
+
+
+def test_contact_limited_corridor_accumulates_capacity_then_resects_and_withdraws():
+    from resectionlab.surgical_cusa_v3 import default_profile
+    labels=np.zeros((24,24,24),np.uint16)
+    labels[9,9,12]=1;labels[8:11,8:11,8:10]=2
+    scene=standardize(SurgicalScene(labels,np.eye(4),[
+        {'id':1,'name':'brain','material':'soft_tissue'},
+        {'id':2,'name':'target','material':'tumor','target':True}],
+        {'kind':'generated native CUSA contact continuation'}, {'cusaV3':default_profile()}))
+    engine=SurgicalEngine(scene)
+    pose=lambda z:{'position':[9.,9.,z],'quaternion':[1.,0.,0.,0.]}
+    route={'nativeAxis':2,'targetEntryIndex':[9,9,9],
+        'surfacePose':pose(12.),'entryPose':pose(9.),'outsidePose':pose(20.),
+        'inwardRasUnit':[0.,0.,-1.],'sourceBrainSurfaceIndex':12,'corridorRadiusMm':1.5}
+    candidate,director=_execute_brain_corridor(engine,route,max_actions=48,
+        healthy_cap=200.,check=lambda:None)
+    assert sum(row['status']=='partial' for row in candidate.history)>1
+    assert candidate.metrics()['targetRemovedMm3']>=5.
+    assert candidate.metrics()['nonTargetRemovedMm3']==1.
+    assert director['stopReason']=='bounded_target_progress'
+    assert not candidate.state['holds'] and all(not slot['inserted'] and not slot['active']
+        for slot in candidate.state['slots'].values())
+    assert candidate.state['cusaV3']['aspiratedSolidMm3']==len(candidate.state['removed'])*scene.voxel_mm3
+    assert SurgicalEngine.restore(scene,candidate.snapshot()).snapshot()==candidate.snapshot()
 
 
 def _compare(engine):
