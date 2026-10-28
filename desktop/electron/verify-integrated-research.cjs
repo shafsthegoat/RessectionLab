@@ -3,7 +3,7 @@
 const {app,dialog}=require('electron');
 const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),assert=require('node:assert/strict'),crypto=require('node:crypto');
 const root=path.resolve(__dirname,'../..'),input=path.resolve(process.env.INTEGRATED_RESEARCH_CASE||''),output=path.resolve(process.env.INTEGRATED_RESEARCH_OUTPUT||''),mode=process.env.INTEGRATED_RESEARCH_MODE;
-if(!['access','learned','cusa','cusa-execute','cusa-cancel','sector','sector-policy','sector-execute','joint','staged','precision','bimanual','frozen-assessment'].includes(mode))throw Error('Set a supported INTEGRATED_RESEARCH_MODE');
+if(!['access','learned','cusa','cusa-execute','cusa-cancel','sector','sector-policy','sector-execute','joint','staged','precision','grid','bimanual','frozen-assessment'].includes(mode))throw Error('Set a supported INTEGRATED_RESEARCH_MODE');
 for(const p of [input,output])if(!p.startsWith(path.join(root,'testcases')+path.sep))throw Error('Input/output must be under testcases/');
 if(fs.existsSync(output))throw Error('Preserve previous evidence; use a new output directory');
 fs.mkdirSync(output,{recursive:true});
@@ -34,7 +34,7 @@ app.on('browser-window-created',(_event,window)=>{
     const js=code=>window.webContents.executeJavaScript(code,true);
     const wait=async(expression,seconds=240)=>{const started=Date.now();let logged=0;while(Date.now()-started<seconds*1000){if(report.errors.length)throw Error('Renderer error: '+report.errors.join('; '));if(await js(expression))return;const error=await js(`document.querySelector('.surgical-error')?.textContent??''`);if(/^Error:|^.*SURGICAL_[A-Z_]+:/.test(error))throw Error('Desktop action failed: '+error);if(await js(`document.body.innerText.includes('Staged strategy evidence could not be bound')`))throw Error('Staged native result could not be bound in the desktop');if(Date.now()-logged>10000){logged=Date.now();fs.writeFileSync(path.join(output,'progress.json'),JSON.stringify({waiting:expression,elapsedSeconds:(Date.now()-started)/1000,body:await js('document.body.innerText')},null,2));}await delay(250);}throw Error('Timeout: '+expression);};
     const click=async label=>{await js(`(()=>{const b=[...document.querySelectorAll('button')].find(b=>b.textContent.trim()===${JSON.stringify(label)}||b.getAttribute('aria-label')===${JSON.stringify(label)}||b.querySelector('span')?.textContent.trim()===${JSON.stringify(label)});if(!b||b.matches(':disabled'))throw Error('Missing enabled button '+${JSON.stringify(label)});b.click();})()`);await delay(150);};
-    const ready=()=>wait(`!!document.querySelector('.rl-viewer canvas')&&!document.querySelector('.viewer-loading')&&document.querySelector('.rl-viewer').dataset.surfacesPending==='0'&&!document.querySelector('.surgical-panel').innerText.includes('Computing instrument action')`);
+    const ready=()=>wait(`!!document.querySelector('.rl-viewer canvas')&&!document.querySelector('.viewer-loading')&&document.querySelector('.rl-viewer').dataset.surfacesPending==='0'&&![...document.querySelectorAll('.surgical-panel [role="status"]')].some(node=>/^(Computing instrument action|Preparing an exact recorded state|Preparing accepted display|Verifying saved source-bound rehearsal)/.test(node.textContent.trim()))`);
     const capture=async name=>{await delay(300);await ready();await delay(200);fs.writeFileSync(path.join(output,name+'.png'),(await window.webContents.capturePage(undefined,{stayHidden:true,stayAwake:true})).toPNG());report.screenshots.push(name+'.png');};
     try{
       await wait(`!!document.querySelector('.rl-viewer canvas')&&!document.querySelector('.viewer-loading')`);await click('Rehearse');await wait(`!!document.querySelector('.surgical-panel')`);
@@ -43,7 +43,7 @@ app.on('browser-window-created',(_event,window)=>{
         await click('Verify replay for planning');
         await wait(`![...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Verify replay for planning')`);
       }
-      await ready();report.checks.push(mode==='access'?'Actual native replay admitted the saved source and actions':mode==='learned'?'Imported learned endpoint retains read-only replay authority':'Fresh case retains source-bound comparison and learned branches');
+      await ready();report.checks.push(mode==='access'?'Actual native replay admitted the saved source and actions':mode==='learned'?'Imported learned endpoint retains read-only replay authority':mode==='grid'?'Prepared computational-grid case retains its source and native actions':'Fresh case retains source-bound comparison and learned branches');
       if(process.env.INTEGRATED_RESEARCH_SOURCE_BRANCH){
         const branch=process.env.INTEGRATED_RESEARCH_SOURCE_BRANCH;
         await js(`(()=>{const select=document.querySelector('[aria-label="Surgical branch"]');if(![...select.options].some(option=>option.value===${JSON.stringify(branch)}))throw Error('Source branch unavailable');select.value=${JSON.stringify(branch)};select.dispatchEvent(new Event('change',{bubbles:true}));})()`);
@@ -98,6 +98,28 @@ app.on('browser-window-created',(_event,window)=>{
         // Start the recorded sector interval after its actual corridor actions.
         await js(`(()=>{const s=document.querySelector('[aria-label="Surgical timeline"]');const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(s,${target.start});s.dispatchEvent(new Event('input',{bubbles:true}));s.dispatchEvent(new Event('change',{bubbles:true}));})()`);
         await wait(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)===${target.start}`);
+      }else if(mode==='grid'){
+        if(process.env.INTEGRATED_RESEARCH_GENERATE==='1'){
+          await wait(`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Checked withdrawal'&&!b.matches(':disabled'))`);
+          await click('Checked withdrawal');
+          await wait(`!!document.querySelector('.checked-exit-recovery')&&document.querySelector('.checked-exit-recovery').innerText.includes('complete')`,90);
+          report.checkedRecovery=await js(`document.querySelector('.checked-exit-recovery').innerText`);
+          report.checks.push('Actual desktop computed checked withdrawal from the saved partial native state');
+        }
+        await js(`(()=>{const summary=[...document.querySelectorAll('summary')].find(s=>s.textContent.trim()==='Source provenance and research assumptions');if(!summary)throw Error('Provenance details unavailable');summary.click();})()`);
+        await wait(`!!document.querySelector('.surgical-research-context')`);
+        report.grid={provenance:await js(`document.querySelector('.surgical-research-context').innerText`)};
+        assert(report.grid.provenance.includes('Refined computational grid')&&report.grid.provenance.includes('adds no acquired image resolution'));
+        report.grid.start=Number(process.env.INTEGRATED_RESEARCH_GRID_START||0);
+        report.grid.recovery=process.env.INTEGRATED_RESEARCH_GRID_RECOVERY==='1';
+        report.grid.expectedInserted=process.env.INTEGRATED_RESEARCH_GRID_INSERTED==='1';
+        await js(`(()=>{const s=document.querySelector('[aria-label="Surgical timeline"]');const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(s,${report.grid.start});s.dispatchEvent(new Event('input',{bubbles:true}));s.dispatchEvent(new Event('change',{bubbles:true}));})()`);
+        await wait(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)===${report.grid.start}`);
+        await ready();report.grid.targetBefore=await js(`document.querySelector('[data-surgical-metric="targetRemovedMm3"]').textContent`);
+        report.grid.nonTargetBefore=await js(`document.querySelector('[data-surgical-metric="nonTargetRemovedMm3"]').textContent`);
+        await js(`(()=>{const select=document.querySelector('[aria-label="Replay speed"]');select.value='4';select.dispatchEvent(new Event('change',{bubbles:true}));})()`);
+        await capture('01-refined-computational-grid-provenance');
+        report.checks.push('Derived working-grid provenance is visible without claiming new acquired resolution or anatomy');
       }else if(mode==='precision'){
         const sourceBranch=process.env.INTEGRATED_RESEARCH_STAGED_BRANCH;
         if(!sourceBranch)throw Error('Choose the existing staged source branch');
@@ -294,7 +316,7 @@ app.on('browser-window-created',(_event,window)=>{
       await ready();
       const position=await js(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)`);
       const end=await js(`Number(document.querySelector('[aria-label="Surgical timeline"]').max)`);
-      const goal=Math.min(mode==='precision'?report.precision.finalPosition:mode==='bimanual'?report.bimanual.goal:mode==='staged'&&report.staged?.playbackGoal?report.staged.playbackGoal:position+4,end);
+      const goal=Math.min(mode==='grid'&&report.grid.recovery?end:mode==='precision'?report.precision.finalPosition:mode==='bimanual'?report.bimanual.goal:mode==='staged'&&report.staged?.playbackGoal?report.staged.playbackGoal:position+4,end);
       if(goal>position){
         await wait(`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Play replay'&&!b.matches(':disabled'))`);
         await click('Play replay');
@@ -316,6 +338,33 @@ app.on('browser-window-created',(_event,window)=>{
         report.playback={startPosition:position,observedPosition:position,skipped:mode==='precision'?'No new precision stage admitted; source STOP retained':'Frozen actor recorded no native actions'};
         report.checks.push(mode==='precision'?'No-stage STOP is retained without fabricating new playback':'Zero-action frozen abstention is retained without fabricating playback');
       }
+      if(mode==='grid'){
+        report.grid.targetAfter=await js(`document.querySelector('[data-surgical-metric="targetRemovedMm3"]').textContent`);
+        if(report.grid.recovery){
+          assert.equal(report.grid.targetAfter,report.grid.targetBefore);
+          assert.equal(await js(`document.querySelector('[data-surgical-metric="nonTargetRemovedMm3"]').textContent`),report.grid.nonTargetBefore);
+        }else assert(Number(report.grid.targetAfter)>Number(report.grid.targetBefore));
+        const endPosition=await js(`Number(document.querySelector('[aria-label="Surgical timeline"]').max)`);
+        await js(`(()=>{const s=document.querySelector('[aria-label="Surgical timeline"]');const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(s,${endPosition});s.dispatchEvent(new Event('input',{bubbles:true}));s.dispatchEvent(new Event('change',{bubbles:true}));})()`);
+        await wait(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)===${endPosition}`);
+        await ready();report.grid.finalHands=await js(`document.querySelector('.surgical-slots').innerText`);
+        if(report.grid.expectedInserted)assert(report.grid.finalHands.includes('Inserted'),'Refused fine-grid withdrawal remains an incomplete native endpoint');
+        else assert.equal((report.grid.finalHands.match(/Withdrawn/g)||[]).length,2);
+        report.checks.push(report.grid.recovery?'Recovery playback preserves tissue volumes and reaches the checked native endpoint':'Finer-grid playback changes actual target removal and preserves the declared complete or incomplete native endpoint');
+        await capture('03-refined-grid-final-native-state');
+        if(process.env.INTEGRATED_RESEARCH_GRID_CONTINUE==='1'){
+          const recoveryBranch=await js(`document.querySelector('[data-exit-recovery-branch]').dataset.exitRecoveryBranch`);
+          await click('Inspect withdrawal result');
+          await wait(`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Apply'&&!b.matches(':disabled'))`);
+          await js(`(()=>{const s=document.querySelector('[aria-label="Instrument action"]');s.value='inspect';s.dispatchEvent(new Event('change',{bubbles:true}));})()`);
+          await wait(`document.querySelector('[aria-label="Instrument action"]').value==='inspect'`);
+          await click('Apply');
+          await wait(`document.querySelector('[aria-label="Surgical branch"]').value!==${JSON.stringify(recoveryBranch)}&&![...document.querySelectorAll('button')].find(b=>b.textContent.trim()==='Apply')?.matches(':disabled')`);
+          report.grid.manualContinuationBranch=await js(`document.querySelector('[aria-label="Surgical branch"]').value`);
+          assert(await js(`document.querySelector('.checked-exit-recovery').innerText.includes('complete')`));
+          report.checks.push('Manual continuation forks a new native branch and preserves the checked recovery evidence');
+        }
+      }
       if(mode==='precision'){
         assert(await js(`!!document.querySelector('.precision-continuation')&&!document.body.innerText.includes('Precision continuation evidence could not be bound')`));
         if(report.precision.finalPosition>report.precision.sourcePosition){const measured=await js(`document.querySelector('[data-surgical-metric="targetRemovedMm3"]').textContent`);assert(Number(measured)>Number(report.precision.targetBefore));report.precision.targetAfterPlayback=measured;}
@@ -336,10 +385,12 @@ app.on('browser-window-created',(_event,window)=>{
       await wait(`!![...document.querySelectorAll('header button')].find(b=>b.textContent.trim()==='Save'&&!b.matches(':disabled'))`);
       await click('Save');await wait(`![...document.querySelectorAll('header button')].find(b=>b.textContent.trim()==='Save')?.matches(':disabled')`);
       assert(fs.existsSync(saved));report.checks.push('Native desktop save writes the inspected trajectory');
-      if(mode==='precision'||mode==='bimanual'||mode==='staged'&&process.env.INTEGRATED_RESEARCH_REOPEN==='1'){
+      if(mode==='grid'||mode==='precision'||mode==='bimanual'||mode==='staged'&&process.env.INTEGRATED_RESEARCH_REOPEN==='1'){
         await click('Open');await wait(`!!document.querySelector('.rl-viewer canvas')&&!document.querySelector('.viewer-loading')`);
         await click('Rehearse');
-        if(mode==='precision'){
+        if(mode==='grid'){
+          await ready();report.checks.push('Actual desktop reopen retains the refined native case and recorded actions');
+        }else if(mode==='precision'){
           await wait(`!!document.querySelector('.precision-continuation')`);
           await js(`document.querySelector('.precision-continuation').open=true`);
           assert.equal(await js(`document.querySelector('.precision-continuation').innerText`),report.precision.text);

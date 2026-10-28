@@ -152,6 +152,8 @@ def dispatch(session, operation, args, request, progress):
     if args.get('command') == 'seekPrefix' and type(args.get('position')) is int and args['position'] == 0:
         argument_keys.add('cacheOnly')
     _keys(args, argument_keys)
+    if args.get('command') == 'recoverExit':
+        _keys(args, {'caseHash', 'command', 'expectedStateId'})
     if 'initialAccessRadiusMm' in args and (args.get('command')!='plan' or
             args.get('opponent')!='anatomy-staged-strategy'):
         raise ValueError('Initial access configuration applies only to staged source planning')
@@ -196,7 +198,7 @@ def dispatch(session, operation, args, request, progress):
         # Replacement archives and all editable commands retain full admission.
         artifacts = entry.artifacts if hot_frame or args.get('command') in PREFIX_COMMANDS else thaw_json(entry.artifacts)
     command = args.get('command', 'inspect')
-    if command not in {'create', 'inspect', 'inspectArchive', 'preview', 'step', 'undo', 'redo', 'seek', 'branch', 'selectBranch', 'reset', 'selectScene', 'plan', 'fullCase', 'seekFrame', *PREFIX_COMMANDS}:
+    if command not in {'create', 'inspect', 'inspectArchive', 'preview', 'step', 'recoverExit', 'undo', 'redo', 'seek', 'branch', 'selectBranch', 'reset', 'selectScene', 'plan', 'fullCase', 'seekFrame', *PREFIX_COMMANDS}:
         raise ValueError('Unsupported surgical command')
     raw = artifacts.get(ARTIFACT)
     from .surgical_environment import standardize, default_target_names, SCHEMA as ENVIRONMENT_SCHEMA
@@ -588,14 +590,49 @@ def dispatch(session, operation, args, request, progress):
         if sector_planning:
             record['sectorSourceAccessComparison'] = copy.deepcopy(source_access)
         record['sectorPlanning' if sector_planning else 'planning'] = comparison
+    elif command == 'recoverExit':
+        from .surgical_staged_exit import recover_checked_cusa
+        from .surgical_staged_planning import require_staged_development
+        if entry is None:
+            raise ValueError('Save a declared research source before checked withdrawal')
+        if not entry.case.metadata.get('is_synthetic'):
+            require_staged_development(entry.case)
+        previous = record.get('exitRecovery')
+        if previous and previous['sourceStateId'] == engine.state_id:
+            raise ValueError('Checked withdrawal was already evaluated at this native state')
+        parent = {'branchId': record['branchId'], 'position': record['position']}
+        candidate, recovery = recover_checked_cusa(engine, check=request.check)
+        recovery['sourceBranchId'] = parent['branchId']
+        if recovery['status'] == 'accepted':
+            branch = 'exit-recovery-'+str(len(record['branches']))
+            engine = candidate
+            record['branches'][branch] = engine.snapshot()
+            record.setdefault('timeline', {})[branch] = copy.deepcopy(engine.history)
+            record.setdefault('parents', {})[branch] = parent
+            record.update(branchId=branch, position=len(engine.actions))
+            replay_cache.seek(engine, record['branches'][branch], len(engine.actions), check=request.check)
+        recovery['finalBranchId'] = record['branchId']
+        recovery['comparisonSeal'] = semantic_digest(recovery)
+        if previous:
+            record.setdefault('exitRecoveryHistory', []).append(previous)
+        record['exitRecovery'] = recovery
+        outcome = {'status': 'accepted' if recovery['status'] == 'accepted' else 'rejected',
+            'reason': 'checked_withdrawal_'+str(recovery.get('mode') or recovery.get('reason')),
+            'completedFraction': 1. if recovery['status'] == 'accepted' else 0., 'events': []}
     elif command == 'step':
         action = args['action']
         unchanged_tool = action.get('operation') == 'exchange' and engine.state['slots'].get(action.get('slot'), {}).get('instrument') == action.get('instrument')
         outcome = {'status': 'accepted', 'reason': 'Instrument already selected; state unchanged.', 'completedFraction': 1., 'events': []} if unchanged_tool else engine.step(action, check=request.check)
         if outcome['status'] != 'rejected' and not unchanged_tool:
             full = record['branches'][record['branchId']]
-            planned_ids = {row['branchId'] for key in ('planning', 'sectorPlanning')
+            planned_ids = {row['branchId'] for key in ('planning', 'sectorPlanning', 'stagedPlanning')
                            for row in (record.get(key) or {}).get('alternatives', [])}
+            planned_ids.update(value for key in ('precisionPlanning', 'exitRecovery')
+                for field in ('sourceBranchId', 'finalBranchId')
+                if (value := (record.get(key) or {}).get(field)) is not None)
+            planned_ids.update(value for evidence in record.get('exitRecoveryHistory', [])
+                for field in ('sourceBranchId', 'finalBranchId')
+                if (value := evidence.get(field)) is not None)
             if record['position'] != len(full['actions']) or record['branchId'] in planned_ids:
                 parent = {'branchId': record['branchId'], 'position': record['position']}
                 record['branchId'] = 'branch-' + str(len(record['branches']))
@@ -640,7 +677,7 @@ def dispatch(session, operation, args, request, progress):
         shown_timeline = display_timeline(shown_timeline)
         shown_view['history'] = shown_timeline[:len(engine.actions)]
     result = {'caseHash': identity, 'view': shown_view, 'outcome': outcome,
-              'changed': command != 'inspect' and not unchanged_tool and (outcome is None or outcome['status'] != 'rejected'),
+              'changed': command == 'recoverExit' or command != 'inspect' and not unchanged_tool and (outcome is None or outcome['status'] != 'rejected'),
               'timeline': shown_timeline,
               'previousScenes': [{'index': i, 'label': f"Environment {i + 1}", 'branches': len(s.get('branches', {}))} for i, s in enumerate(artifacts.get('surgical_prior_scenes', []))],
               'branchId': record['branchId'], 'position': record['position'],
@@ -669,6 +706,11 @@ def dispatch(session, operation, args, request, progress):
         validate_retraction_study(engine.scene, record, retraction_study)
         result['retractionStudy'] = copy.deepcopy(retraction_study)
     staged_report = record.get('stagedPlanning')
+    recovery_report = record.get('exitRecovery')
+    if recovery_report is not None:
+        from .surgical_staged_exit import validate_exit_recovery, exit_recovery_summary
+        validate_exit_recovery(engine.scene, record, recovery_report)
+        result['exitRecovery'] = exit_recovery_summary(recovery_report)
     if staged_report is not None:
         from .surgical_staged_planning import validate_staged_report, staged_summary
         validate_staged_report(engine.scene, record, staged_report)

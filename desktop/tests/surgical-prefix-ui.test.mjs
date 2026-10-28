@@ -114,3 +114,17 @@ test('fresh origin labels reconstruction while retaining read-only edits and act
   assert.equal(find(tree,'button','Branch').props.disabled,true);
   assert.equal(c.result.verification.preparedCache.mode,'only');
 });
+
+test('checked withdrawal sends a bounded recovery command and stays unavailable during read-only playback',()=>{
+  const c=controller();delete c.result.verification;delete c.result.readOnly;
+  Object.assign(c.view.slots.left,{instrument:'cusa',inserted:true,active:true,grip:[]});
+  c.view.holds={};c.view.metrics.nonTargetRemovedMm3=10;
+  let tree=render(c);const button=find(tree,'button','Checked withdrawal');
+  assert(button);assert.equal(button.props.disabled,false);
+  button.props.onClick();assert.deepEqual(c.calls.at(-1),{command:'recoverExit'});
+  c.result.readOnly=true;tree=render(c);
+  const instrument=[...walk(tree)].find(node=>node.type==='fieldset'&&[...walk(node)].some(child=>child.props['aria-label']==='Instrument interaction'));
+  assert.equal(instrument.props.disabled,true);
+  delete c.result.readOnly;c.result.exitRecovery={sourceStateId:c.view.stateId};
+  assert.equal(find(render(c),'button','Checked withdrawal').props.disabled,true);
+});

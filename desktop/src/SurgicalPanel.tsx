@@ -120,7 +120,7 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
   useEffect(()=>()=>c.stopPlayback(),[]);
   const v=c.view,selected=v?.slots[c.slot],tool=v?.catalog.find(t=>t.id===selected?.instrument),r=c.result;
   const displayed=c.preview??v;
-  const routes=surgicalReplayRoutes(r),prefix=reconstructedPrefix(r),observed=r?.playback,imported=routes.imported,unverifiedImport=imported&&!prefix,readOnly=!!observed||imported,position=surgicalPlaybackPosition(observed,r?.position??0);
+  const routes=surgicalReplayRoutes(r),prefix=reconstructedPrefix(r),observed=r?.playback,imported=routes.imported,unverifiedImport=imported&&!prefix,readOnly=!!observed||imported||r?.readOnly===true,position=surgicalPlaybackPosition(observed,r?.position??0);
   const freshOrigin=!!prefix&&!!r?.prefixOrigin,preparedOnly=prefix?.preparedCache?.mode==='only'&&!freshOrigin;
   const v2=v?.physics?.profile?.schema==='resectionlab.tissue-physics.v2';
   const cusaModel=cusaContactModel(v),cusaSelected=!!cusaModel&&tool?.id==='cusa';
@@ -224,7 +224,17 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
     <label>Duration · s<Numeric label="Action duration" min={.01} max={30} value={duration} onChange={n=>{setDuration(n);c.clearPreview();}}/></label>
     <p>{c.path.length} stroke points{c.path.length?' · editing pose replaces this stroke':''} · {Number(v.metrics.elapsedSeconds).toFixed(2)} simulated s</p>
     <div className="surgical-actions"><button onClick={()=>stopRun('preview',{action:c.action(operation,params,duration)})}>Preview</button><button className="primary-button" onClick={()=>stopRun('step',{action:c.action(operation,params,duration)})}>Apply</button><button onClick={c.cancel}>Cancel</button></div>
+    {!cusaContactModel(v)&&Object.values(v.slots).filter(slot=>slot.instrument==='cusa'&&slot.inserted).length===1&&<button disabled={Object.values(v.slots).some(slot=>slot.grip.length||(slot.instrument!=='cusa'&&slot.inserted))||Object.keys(v.holds??{}).length>0||Number(v.metrics.nonTargetRemovedMm3)>200||(r?.position??0)>180||r?.exitRecovery?.sourceStateId===v.stateId}
+      onClick={()=>{c.pauseFullCase();stopRun('recoverExit');}}>Checked withdrawal</button>}
+    {!cusaContactModel(v)&&Object.values(v.slots).some(slot=>slot.instrument==='cusa'&&slot.inserted)&&<p className="surgical-note">Checked withdrawal uses the recorded outside placement and native collision checks, with zero additional non-target removal. A latest partial shaft-collision action must match its observed tip pose before its accepted steps can be reversed. Development research sources only.</p>}
     </fieldset>
+    {r?.exitRecovery?.sourceSceneId===v.scene.sceneId&&<section className="checked-exit-recovery" aria-label="Checked withdrawal evidence">
+      <h4>Recorded checked withdrawal · {r.exitRecovery.status==='accepted'?'complete':'refused'}</h4>
+      <p>{r.exitRecovery.sourceNativeActions} → {r.exitRecovery.finalNativeActions} native actions · {r.exitRecovery.mode?.replaceAll('_',' ')??r.exitRecovery.reason}. Independent native replay exact.</p>
+      <p>Target {r.exitRecovery.sourceMetrics.targetRemovedMm3.toFixed(3)} → {r.exitRecovery.finalMetrics.targetRemovedMm3.toFixed(3)} mm³ · non-target {r.exitRecovery.sourceMetrics.nonTargetRemovedMm3.toFixed(3)} → {r.exitRecovery.finalMetrics.nonTargetRemovedMm3.toFixed(3)} mm³.</p>
+      <p>{r.exitRecovery.cost.physicalCalls} / 240 public native calls including final replay · {r.exitRecovery.wallSeconds.toFixed(1)} / 45 wall seconds. This records instrument recovery; resection task and clinical outcomes remain separate.</p>
+      <button disabled={c.pending} data-exit-recovery-branch={r.exitRecovery.finalBranchId} data-exit-recovery-position={r.exitRecovery.finalNativeActions} onClick={()=>stopRun('selectBranch',{branchId:r.exitRecovery!.finalBranchId,position:r.exitRecovery!.finalNativeActions})}>Inspect withdrawal result</button>
+    </section>}
     {c.displayPending&&c.interaction?.preview&&<button onClick={c.cancel}>Cancel preview</button>}
     {c.preview&&<div className="surgical-preview" role="status"><strong>PREVIEW · uncommitted outcome</strong><p>Target removal +{(Number(c.preview.metrics.targetRemovedMm3)-Number(v.metrics.targetRemovedMm3)).toFixed(2)} mm³ · other removal +{(Number(c.preview.metrics.nonTargetRemovedMm3)-Number(v.metrics.nonTargetRemovedMm3)).toFixed(2)} mm³. Apply commits; Cancel returns to recorded anatomy.</p></div>}
     {latestOutcome&&<ActionResult outcome={latestOutcome} title={c.preview?'Preview result':observed?'Recorded action endpoint result':'Last action result'}/>}
