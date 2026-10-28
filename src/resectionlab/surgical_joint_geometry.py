@@ -73,9 +73,12 @@ def _route(scene, item, brain_regions, target_regions):
     outside = surface-direction*8.
     radius = 1. if item['pathLengthMm'] <= 20. else .6
     return {
-        'id': 'mapped-brain-joint-'+str(item['axis'])+'-'+str(item['surfaceFlatId'])+
+        'id': 'mapped-brain-joint-'+str(item['axis'])+
+              ('-negative' if item.get('sourceFaceSign', 1) == -1 else '')+
+              '-'+str(item['surfaceFlatId'])+
               '-'+str(item['targetFlatId']),
         'nativeAxis': item['axis'], 'pathType': 'oblique_mapped_brain',
+        **({'sourceFaceSign': item['sourceFaceSign']} if 'sourceFaceSign' in item else {}),
         'entryPose': {'position': goal.tolist(), 'quaternion': quat},
         'outsidePose': {'position': outside.tolist(), 'quaternion': quat},
         'surfacePose': {'position': surface.tolist(), 'quaternion': quat},
@@ -238,7 +241,8 @@ def _staged_work_tube_contact(scene, grid, item, corridor,
 
 def select_joint_corridors(scene, *, max_routes=3, max_surface_samples=4096,
                            nearest_targets=8, max_geometry_pairs=32768,
-                           goal='two-sector', check=lambda: None):
+                           goal='two-sector', include_opposite_faces=False,
+                           check=lambda: None):
     """Return at most one source-only route per native axis and a sealed report.
 
     The bounded scan samples mapped-brain exterior faces, pairing each with
@@ -247,8 +251,12 @@ def select_joint_corridors(scene, *, max_routes=3, max_surface_samples=4096,
     original fixed near/far capacity cuts; ``staged`` records those capacities
     without requiring them and ranks extended source work-tube contact first.
     Source contact cutoffs are shortlist heuristics, never modeled removal or
-    surgical safety claims.
+    surgical safety claims. With ``include_opposite_faces=True``, split the SAME
+    surface/pair budgets across both exterior signs of each native axis. Face
+    sign is in source-index coordinates, independent of the RAS affine.
     """
+    if type(include_opposite_faces) is not bool:
+        raise ValueError('include_opposite_faces must be boolean')
     bounds = (max_routes, max_surface_samples, nearest_targets, max_geometry_pairs)
     if any(type(v) is not int or v < 1 for v in bounds):
         raise ValueError('Joint corridor bounds must be positive integers')
@@ -310,6 +318,10 @@ def select_joint_corridors(scene, *, max_routes=3, max_surface_samples=4096,
             'heuristicActionMeaning': 'ceil(path/3) assumes travel to boundary; aspiration may contact sooner',
             'finalistsPerAxis': _FINALISTS_PER_AXIS,
             'noveltyMinEntryMm': 12., 'noveltyMinAngleDeg': 30.}
+    if include_opposite_faces:
+        rule.update(includeOppositeFaces=True, sourceExteriorFaceSigns=[1, -1],
+                    sourceFaceSignMeaning='outward neighbor sign in native index axis',
+                    surfaceBudgetMeaning='shared across all six axis/sign face groups')
     if goal == 'staged':
         rule.update(selectionGoal='staged',
             minSourceSectorVolumeMm3=None,
@@ -376,8 +388,11 @@ def select_joint_corridors(scene, *, max_routes=3, max_surface_samples=4096,
         reject('GEOMETRY_PAIR_BUDGET_TOO_SMALL')
         report['selectionSeal'] = semantic_digest(report)
         return [], report
-    per_axis = {axis: sample_budget//3 + (i < sample_budget%3)
-                for i,axis in enumerate(_AXES)}
+    face_groups = ([(axis, sign) for axis in _AXES for sign in (1, -1)]
+                   if include_opposite_faces else [(axis, 1) for axis in _AXES])
+    per_face = {group: sample_budget//len(face_groups) +
+                (i < sample_budget%len(face_groups))
+                for i, group in enumerate(face_groups)}
     boundary_world = _points(scene, boundary)
     target_tree = cKDTree(boundary_world)
     tumor_ijk=np.argwhere(tumor)
@@ -387,20 +402,24 @@ def select_joint_corridors(scene, *, max_routes=3, max_surface_samples=4096,
     brain_flat=brain.ravel()
     target_flat=tumor.ravel()
     preliminary = {axis: [] for axis in _AXES}
-    for axis in _AXES:
+    for axis, face_sign in face_groups:
         check()
         face = np.zeros_like(brain)
         inner = [slice(None)]*3; outer = [slice(None)]*3
-        inner[axis] = slice(0,-1); outer[axis] = slice(1,None)
+        if face_sign == 1:
+            inner[axis] = slice(0,-1); outer[axis] = slice(1,None)
+        else:
+            inner[axis] = slice(1,None); outer[axis] = slice(0,-1)
         face[tuple(inner)] = brain[tuple(inner)] & (labels[tuple(outer)]==0)
         surface = np.argwhere(face)
-        report['counts']['surfacePointsAvailable'][str(axis)] = int(len(surface))
-        n = min(len(surface), per_axis[axis])
+        face_key = f'{axis}:{face_sign:+d}' if include_opposite_faces else str(axis)
+        report['counts']['surfacePointsAvailable'][face_key] = int(len(surface))
+        n = min(len(surface), per_face[(axis, face_sign)])
         sampled = (surface[np.linspace(0,len(surface)-1,n,dtype=int)] if n else
                    np.empty((0,3),dtype=int))
-        report['counts']['surfacePointsSampled'][str(axis)] = int(len(sampled))
+        report['counts']['surfacePointsSampled'][face_key] = int(len(sampled))
         if not n:
-            reject('NO_SOURCE_EXTERIOR_FACE_AXIS_'+str(axis))
+            reject('NO_SOURCE_EXTERIOR_FACE_AXIS_'+face_key)
             continue
         surface_world = _points(scene, sampled)
         distances, neighbors = target_tree.query(surface_world,k=k)
@@ -415,7 +434,7 @@ def select_joint_corridors(scene, *, max_routes=3, max_surface_samples=4096,
                 if not 1. <= length <= _MAX_PATH_MM:
                     reject('PATH_LENGTH'); continue
                 goal_index = boundary[int(neighbors[row,col])]
-                if goal_index[axis]-entry_index[axis]>=-1:
+                if face_sign*(goal_index[axis]-entry_index[axis])>=-1:
                     reject('WRONG_INWARD_AXIS'); continue
                 # The 40 mm shaft must still span the source surface at the
                 # predeclared far working tip. This is a bounded access mode,
@@ -497,6 +516,8 @@ def select_joint_corridors(scene, *, max_routes=3, max_surface_samples=4096,
                       'farWorkingTargetMm3':far_t*scene.voxel_mm3,
                       'nearWorkingBrainMm3':near_b*scene.voxel_mm3,
                       'farWorkingBrainMm3':far_b*scene.voxel_mm3}
+                if include_opposite_faces:
+                    item['sourceFaceSign'] = face_sign
                 preliminary[axis].append(item)
                 report['counts']['cheapEligible'] += 1
     grid = GeometryScene(np.zeros(scene.shape,bool),scene.affine)
@@ -586,6 +607,7 @@ def select_joint_corridors(scene, *, max_routes=3, max_surface_samples=4096,
         used_axes.add(item['axis'])
         report['selected'].append({'rank':len(routes),'routeId':route['id'],
             'nativeAxis':item['axis'],'sourceSurfaceIndex':item['surfaceIndex'],
+            **({'sourceFaceSign': item['sourceFaceSign']} if 'sourceFaceSign' in item else {}),
             'sourceTargetBoundaryIndex':item['targetBoundaryIndex'],
             'sourceSectorCapacityMm3':exact_capacity,
             'sourceSectorCellSha256':{name:evidence[name]['sourceCellSha256']

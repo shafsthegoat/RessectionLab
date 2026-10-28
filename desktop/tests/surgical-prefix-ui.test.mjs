@@ -6,11 +6,12 @@ import {mkdtemp,rm,mkdir} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 import {checkedPrefixResponse,checkedPrefixWireResponse,checkedPrefixStartMode,replayAuthorityKey,surgicalAuthorityIssue,surgicalReplayRoutes} from '../src/surgical-authority.ts';
-let server,cache,SurgicalPanel;
+let server,cache,SurgicalPanel,StagedStrategiesPanel;
 before(async()=>{
   const output=fileURLToPath(new URL('../../testcases/outputs/rl-readiness-20261022/',import.meta.url));await mkdir(output,{recursive:true});cache=await mkdtemp(path.join(output,'prefix-ui-vite-'));
   server=await createServer({root:fileURLToPath(new URL('../',import.meta.url)),cacheDir:cache,logLevel:'error',optimizeDeps:{noDiscovery:true,include:[]},server:{middlewareMode:true,hmr:false,ws:false},appType:'custom'});
   ({SurgicalPanel}=await server.ssrLoadModule('/src/SurgicalPanel.tsx'));
+  ({StagedStrategiesPanel}=await server.ssrLoadModule('/src/StagedStrategiesPanel.tsx'));
 });
 after(async()=>{await server?.close();if(cache)await rm(cache,{recursive:true,force:true});});
 const prefix=()=>({readOnly:true,status:'reconstructed-prefix',verifiedThrough:4,totalActions:10,archiveEndpointVerified:false,originSnapshotHash:'origin',actionLogHash:'actions',implementation:'current',protectionContractHash:'guard',prefixImplementation:'prefix-v1'});
@@ -127,4 +128,30 @@ test('checked withdrawal sends a bounded recovery command and stays unavailable 
   assert.equal(instrument.props.disabled,true);
   delete c.result.readOnly;c.result.exitRecovery={sourceStateId:c.view.stateId};
   assert.equal(find(render(c),'button','Checked withdrawal').props.disabled,true);
+});
+
+test('expanded entry exploration is explicit and retains intact-source and acknowledgement fences',()=>{
+  const c=controller();delete c.result.verification;delete c.result.readOnly;
+  const seal=n=>'sha256:'+n.repeat(64),scene=seal('1'),start=seal('2');
+  c.view.scene.sceneId=scene;c.view.stateId=start;c.result.position=0;
+  c.result.branches=[{id:'main',steps:0}];
+  c.result.planning={task:'anatomy-access',sourceSceneId:scene,startStateId:start,comparisonSeal:seal('3'),alternatives:[{}]};
+  c.result.sectorPlanning={task:'anatomy-strategy',sourceSceneId:scene,startStateId:start,sourceAccessComparisonSeal:seal('3'),alternatives:[{}]};
+  const render=(ack,faces,cumulative=false)=>{
+    const internals=React.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE,previous=internals.H;
+    let index=0;const values=[ack,false,faces,cumulative];
+    internals.H={useState:()=>[values[index++],()=>{}],useEffect:()=>{}};
+    try{return StagedStrategiesPanel({c,artifact:null,pause:()=>{},play:()=>{}});}finally{internals.H=previous;}
+  };
+  let tree=render(true,false);find(tree,'button','Generate staged source strategies').props.onClick();
+  assert.equal(Object.hasOwn(c.calls.at(-1),'exploreExteriorFaces'),false);
+  tree=render(true,true);find(tree,'button','Generate staged source strategies').props.onClick();
+  assert.deepEqual(c.calls.at(-1),{command:'plan',opponent:'anatomy-staged-strategy',acknowledgeResearchUnknowns:true,exploreExteriorFaces:true});
+  tree=render(true,true,true);find(tree,'button','Generate staged source strategies').props.onClick();
+  assert.deepEqual(c.calls.at(-1),{command:'plan',opponent:'anatomy-staged-strategy',acknowledgeResearchUnknowns:true,cumulativeReentry:true});
+  assert.equal(find(tree,'select','Staged initial access configuration').props.disabled,true);
+  assert.equal(find(tree,'input','Explore additional entry surfaces').props.disabled,true);
+  assert.equal(find(render(false,true),'button','Generate staged source strategies').props.disabled,true);
+  c.result.position=1;
+  assert.equal(find(render(true,true),'button','Generate staged source strategies').props.disabled,true);
 });

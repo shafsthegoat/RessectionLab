@@ -23,6 +23,7 @@ export interface StagedStage {
   executionMode?:'requested_motion'|'checked_collision_prefix';requestedPoseReached?:boolean;
 }
 export interface StagedBranch {
+  executionMetrics?:{simulatedSeconds:number;instrumentTravelMm:number;completedReentries:number;workingConfigurations:number};
   branchId:string;sourceMethod:string;sourceAccessPlanSeal:string;hand:string;status:'passed'|'unpassed';
   finalStateId:string;nativeActions:number;stopReason:string;stages:StagedStage[];
   outcome:{taskGateMet:boolean;wholeTargetRemovedMm3:number;wholeNonTargetRemovedMm3:number;
@@ -36,6 +37,7 @@ export interface StagedBranch {
   unassignedPostAccessTargetMm3:number;
 }
 export interface StagedDisplay {
+  controllerMode?:'cumulative-reentry';
   sourceRole?:'DEVELOPMENT';
   comparisonScope:'source-routes'|'same-route-configurations';notes:string[];
   exportRecovery:{additionalReplayCalls:number|null;fullRunWithinWallCap:boolean|null}|null;
@@ -56,6 +58,7 @@ function compactFullReport(report:Record<string,unknown>):Record<string,unknown>
     comparisonSeal:report.comparisonSeal,sourceRole:report.sourceRole,
     optimizerUpdates:report.optimizerUpdates,task:report.task,
     cusaModel:report.cusaModel,
+    controllerMode:report.controllerMode,
     comparisonScope:report.configurationAlias!==undefined?'same-route-configurations':report.comparisonScope,
     limitations:report.limitations,exportRecovery:report.exportRecovery,
     sourceAccessPlans:report.sourceAccessPlans,
@@ -68,6 +71,7 @@ function compactFullReport(report:Record<string,unknown>):Record<string,unknown>
       return {branchId:value.branchId,sourceMethod:value.sourceMethod,
         sourceAccessPlanSeal:value.sourceAccessPlanSeal,hand:value.hand,
         status:value.status,finalStateId:value.finalStateId,nativeActions:value.nativeActions,
+        ...(value.executionMetrics!==undefined?{executionMetrics:value.executionMetrics}:{}),
         stopReason:value.stopReason,stages:value.stages,outcome:value.outcome,
         exactNativeReplay:value.exactNativeReplay,
         resumeVerified:object(value.interruptionRecovery)?value.interruptionRecovery.exactResume===true:false,
@@ -128,6 +132,7 @@ export function stagedStrategyDisplay(artifact:unknown,response:SurgicalResponse
       summary.cost.physicalCalls!==summary.cost.previewCalls+summary.cost.directStepCalls)return null;
   const task=summary.task;
   const notes=summary.limitations??[];
+  if(summary.controllerMode!==undefined&&summary.controllerMode!=='cumulative-reentry')return null;
   if(!Array.isArray(notes)||notes.length>16||notes.some(note=>typeof note!=='string'||note.length>1024))return null;
   let exportRecovery:StagedDisplay['exportRecovery']=null;
   if(summary.exportRecovery!==undefined){
@@ -305,12 +310,18 @@ export function stagedStrategyDisplay(artifact:unknown,response:SurgicalResponse
         Object.keys(configs).length!==byConfiguration.size||
         Object.entries(configs).some(([name,value])=>!byConfiguration.has(name)||
           !close(value as number,byConfiguration.get(name)!)))return null;
+    if(raw.executionMetrics!==undefined){
+      const metrics=raw.executionMetrics;
+      if(!object(metrics)||!amount(metrics.simulatedSeconds)||!amount(metrics.instrumentTravelMm)||
+          metrics.completedReentries!==stages.length||metrics.workingConfigurations!==byConfiguration.size)return null;
+    }
     seen.add(raw.branchId);
     rows.push({...raw,workAttempts:attempts,exitRefusals:refusals,
       unassignedPostAccessTargetMm3:Math.max(0,legacy.additionalTargetMm3-admittedTarget),
       stages,outcome:{...outcome,legacyTask:legacy}} as StagedBranch);
   }
   return {caseHash:response.caseHash,sceneId:summary.sourceSceneId as string,
+    ...(summary.controllerMode==='cumulative-reentry'?{controllerMode:'cumulative-reentry' as const}:{}),
     ...(summary.sourceRole==='DEVELOPMENT'?{sourceRole:'DEVELOPMENT' as const}:{}),
     comparisonScope:summary.comparisonScope==='same-route-configurations'?'same-route-configurations':'source-routes',
     notes,exportRecovery,

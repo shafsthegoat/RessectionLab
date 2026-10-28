@@ -474,12 +474,25 @@ def compare_staged_strategies(engine, record, *, acknowledge_unknowns=False,
                               max_physical_calls=MAX_CALLS, max_wall_seconds=MAX_SECONDS,
                               check=lambda: None, progress=lambda *_: None,
                               exercise_resume=True, explore_fresh_corridors=False,
-                              initial_access_radius_mm=None):
+                              initial_access_radius_mm=None,
+                              include_opposite_faces=False,
+                              cumulative_reentry=False):
     """Execute source-defined work with bounded lookahead and checked exit."""
     from .surgical_staged_exit import find_checked_exit
     from .surgical_joint_geometry import select_joint_corridors
     if acknowledge_unknowns is not True:
         raise ValueError('Explicit acknowledgment of unsupported anatomy is required')
+    if type(cumulative_reentry) is not bool:
+        raise ValueError('Cumulative re-entry mode must be boolean')
+    if cumulative_reentry:
+        if initial_access_radius_mm is not None or explore_fresh_corridors or include_opposite_faces:
+            raise ValueError('Cumulative re-entry selects its initial configuration from saved source routes')
+        from .surgical_staged_fan import compare_cumulative_reentries
+        return compare_cumulative_reentries(engine, record,
+            max_physical_calls=max_physical_calls, max_wall_seconds=max_wall_seconds,
+            check=check, progress=progress, exercise_resume=exercise_resume)
+    if type(include_opposite_faces) is not bool or include_opposite_faces and not explore_fresh_corridors:
+        raise ValueError('Opposite source faces require explicit fresh corridor exploration')
     if initial_access_radius_mm is not None and (type(initial_access_radius_mm) not in (int,float) or
             initial_access_radius_mm != .6):
         raise ValueError('The optional narrow initial access preset is fixed at 0.6 mm')
@@ -497,7 +510,8 @@ def compare_staged_strategies(engine, record, *, acknowledge_unknowns=False,
         if time.monotonic()-started > max_wall_seconds:
             raise TimeoutError('Staged controller aggregate wall budget exhausted')
     if explore_fresh_corridors:
-        routes, geometry = select_joint_corridors(engine.scene, goal='staged', check=bounded)
+        routes, geometry = select_joint_corridors(engine.scene, goal='staged',
+            include_opposite_faces=include_opposite_faces, check=bounded)
         inventory = build_inventory(engine.scene, record, fresh_routes=routes,
             fresh_geometry=geometry, check=bounded)
     else:
@@ -753,6 +767,8 @@ def compare_staged_strategies(engine, record, *, acknowledge_unknowns=False,
              'DEV scenes use legacy instantaneous CUSA removal with v2 mechanics, not contact-capacity CUSA v3'),
             'Tool size changes require checked external withdrawal and re-entry',
             'No actor or learned-policy gain claimed', 'Engineering effects are not clinical injury predictions']}
+    if include_opposite_faces:
+        report['limitations'].append('Entry exploration includes both source exterior face signs under the same finite geometry budget; selected directions alone do not establish successful complete strategies')
     report['comparisonSeal'] = semantic_digest(report)
     return {'branches': branches, 'report': report, 'meter': meter}
 
@@ -764,6 +780,7 @@ def staged_summary(report):
             'sourceSceneId', 'sourceStateId', 'sourceRole', 'comparisonSeal',
             'optimizerUpdates', 'task', 'wallSeconds')},
         'cusaModel': report.get('cusaModel', 'legacy-instantaneous-with-v2-mechanics'),
+        **({'controllerMode': report['controllerMode']} if 'controllerMode' in report else {}),
         'comparisonScope': ('same-route-configurations' if 'configurationAlias' in report else
                             report.get('comparisonScope','source-routes')),
         'limitations': copy.deepcopy(report.get('limitations', [])),
@@ -779,6 +796,7 @@ def staged_summary(report):
             'branchId', 'sourceMethod', 'sourceAccessPlanSeal', 'hand', 'status',
             'finalStateId', 'nativeActions', 'stopReason', 'stages', 'outcome',
             'exactNativeReplay')},
+            **({'executionMetrics': copy.deepcopy(row['executionMetrics'])} if 'executionMetrics' in row else {}),
             'resumeVerified': bool(row['interruptionRecovery'] and
                                     row['interruptionRecovery']['exactResume']),
             'workAttempts': len(row['attemptedWork']),
@@ -804,6 +822,17 @@ def validate_staged_report(scene, record, report):
     if len(ids) > 3 or len(ids) != len(set(ids)):
         raise ValueError('Staged native branch identities differ')
     zones, _ = source_zones(scene)
+    fan_inventory = None
+    if report.get('controllerMode') == 'cumulative-reentry':
+        from .surgical_fan_inventory import SCHEMA as FAN_SCHEMA, MAX_RAY_CONFIGURATIONS
+        fan_inventory = report['inventory']
+        if (fan_inventory.get('schema') != FAN_SCHEMA or
+                fan_inventory.get('sourceSceneId') != scene.identity or
+                fan_inventory.get('inventorySeal') != semantic_digest({
+                    key: value for key, value in fan_inventory.items() if key != 'inventorySeal'}) or
+                not 0 <= fan_inventory['counts']['rayConfigurationsExamined'] <= MAX_RAY_CONFIGURATIONS or
+                len(fan_inventory['fans']) > 3):
+            raise ValueError('Cumulative source inventory binding differs')
     for row in report['alternatives']:
         snapshot = record['branches'].get(row['branchId'])
         if (not isinstance(snapshot, dict) or snapshot['sceneId'] != scene.identity or
@@ -819,7 +848,33 @@ def validate_staged_report(scene, record, report):
                 source['startStateId'] != report['sourceStateId'] or
                 source['routeSeal'] != semantic_digest(row['route'])):
             raise ValueError('Staged source access geometry binding differs')
+        if fan_inventory is not None:
+            from .surgical_staged_fan import ray_actions
+            fan = next((value for value in fan_inventory['fans']
+                        if value['route'] == row['route']), None)
+            if fan is None or fan['fullSpecSeal'] != semantic_digest({
+                    key: value for key, value in fan.items()
+                    if key not in ('fullSpecSeal', 'id', 'noveltyComparisons')}):
+                raise ValueError('Cumulative selected source fan differs')
+            seen_rays = set()
+            for stage in row['stages']:
+                ray = next((value for value in fan['orderedRays'] if value['id'] == stage['tileId']), None)
+                if ray is None or ray['id'] in seen_rays:
+                    raise ValueError('Cumulative native stage is not a unique selected ray')
+                seen_rays.add(ray['id'])
+                start = stage['workStartPosition']
+                expected = [value.action for value in ray_actions(ray['raySpec'])]
+                if (snapshot['actions'][start:stage['nativeActions']] != expected or
+                        stage['configuration'] != f'radius-{ray["raySpec"]["radiusMm"]:g}' or
+                        stage.get('requestedPoseReached') is not True):
+                    raise ValueError('Cumulative native complete entry differs')
         removed = set(map(int, snapshot['checkpoint']['state']['removed']))
+        if 'executionMetrics' in row and row['executionMetrics'] != {
+                'simulatedSeconds': snapshot['checkpoint']['state']['elapsedSeconds'],
+                'instrumentTravelMm': snapshot['checkpoint']['state']['travelMm'],
+                'completedReentries': len(row['stages']),
+                'workingConfigurations': len(row['outcome']['configurationTargetRemovedMm3'])}:
+            raise ValueError('Staged whole-approach execution metrics differ')
         source_zones_removed = {key: len(cells & removed)*scene.voxel_mm3
                                 for key, cells in zones.items()}
         if source_zones_removed != row['outcome']['zoneTargetRemovedMm3']:
@@ -838,6 +893,9 @@ def validate_staged_report(scene, record, report):
                 outcome['cleanupComplete'] != clean):
             raise ValueError('Staged whole effects or cleanup differ from native checkpoint')
         history = record.get('timeline', {}).get(row['branchId'], [])
+        if fan_inventory is not None:
+            from .surgical_staged_fan import validate_cumulative_intervals
+            validate_cumulative_intervals(scene, report, row, source, fan, snapshot, history)
         if len(row['stages']) > MAX_STAGES:
             raise ValueError('Staged sequence exceeds the declared bounded library')
         config_totals = {}

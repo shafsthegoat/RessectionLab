@@ -232,7 +232,7 @@ function bindOperations() {
     frozenCusaAdmission=null;return true;
   });
   handle('cancelFrozenCusa',()=>{frozenCusaAbort?.abort();return true;});
-  handle('surgicalRehearsal', async args => {args=plainArgs(args, ['caseHash','command','expectedStateId','action','mapping','position','frameIndex','cacheOnly','timelineToken','viewFieldTokens','prefixToken','prefixFieldTokens','branchId','source','sceneIndex','acknowledgeResearchUnknowns','opponent','allowModeledBrainCorridor','scenario','maxActions','initialAccessRadiusMm']);const result=await engine.request('surgicalRehearsal',args,surgicalTimeoutMs(args.command));rehearsalUnsaved.changed(args,result);return result;});
+  handle('surgicalRehearsal', async args => {args=plainArgs(args, ['caseHash','command','expectedStateId','action','mapping','position','frameIndex','cacheOnly','timelineToken','viewFieldTokens','prefixToken','prefixFieldTokens','branchId','source','sceneIndex','acknowledgeResearchUnknowns','opponent','allowModeledBrainCorridor','scenario','maxActions','initialAccessRadiusMm','exploreExteriorFaces','cumulativeReentry']);const result=await engine.request('surgicalRehearsal',args,surgicalTimeoutMs(args.command));rehearsalUnsaved.changed(args,result);return result;});
   for (const op of ['createRehearsal','inspectRehearsal','stepRehearsal','compareRehearsal']) {
     handle(op, async args => {const result=await engine.request(op, plainArgs(args, op === 'stepRehearsal'
       ? ['caseHash','expectedStateId','action'] : op === 'compareRehearsal'

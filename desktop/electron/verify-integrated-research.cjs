@@ -162,6 +162,14 @@ app.on('browser-window-created',(_event,window)=>{
         await wait(`!!document.querySelector('.staged-strategies')`);
         await js(`document.querySelector('.staged-strategies').open=true`);
         if(process.env.INTEGRATED_RESEARCH_GENERATE==='1'){
+          if(process.env.INTEGRATED_RESEARCH_CUMULATIVE_REENTRY==='1'){
+            await js(`(()=>{const select=document.querySelector('[aria-label="Staged resection sequence"]');select.value='reentry';select.dispatchEvent(new Event('change',{bubbles:true}));})()`);
+            await wait(`document.querySelector('[aria-label="Staged resection sequence"]').value==='reentry'`);
+          }
+          if(process.env.INTEGRATED_RESEARCH_EXTERIOR_FACES==='1'){
+            await js(`document.querySelector('[aria-label="Explore additional entry surfaces"]').click()`);
+            await wait(`document.querySelector('[aria-label="Explore additional entry surfaces"]').checked`);
+          }
           if(process.env.INTEGRATED_RESEARCH_NARROW_ACCESS==='1'){
             await js(`(()=>{const select=document.querySelector('[aria-label="Staged initial access configuration"]');if(!select)throw Error('Initial access configuration selector unavailable');select.value='narrow';select.dispatchEvent(new Event('change',{bubbles:true}));})()`);
           }
@@ -171,19 +179,28 @@ app.on('browser-window-created',(_event,window)=>{
           report.checks.push('Actual desktop source planning executed native staged alternatives');
         }
         await wait(`!!document.querySelector('[aria-label="Staged whole approach summaries"] > article')`);
+        if(process.env.INTEGRATED_RESEARCH_EXTERIOR_FACES==='1'){
+          await js(`(()=>{const panel=document.querySelector('.staged-strategies');const details=[...panel.querySelectorAll('details')].find(d=>d.querySelector('summary')?.textContent==='Recorded scope and execution limits');if(!details)throw Error('Expanded entry search scope unavailable');details.open=true;})()`);
+        }
         report.staged=await js(`(()=>{const panel=document.querySelector('.staged-strategies');const rows=[...panel.querySelectorAll('[aria-label="Staged whole approach summaries"] > article')];const count=row=>Number(row.textContent.match(/(\\d+) admitted work stages/)?.[1]??0);const selected=${JSON.stringify(process.env.INTEGRATED_RESEARCH_STAGED_BRANCH||'')}?rows.find(row=>row.querySelector('[data-staged-branch]')?.dataset.stagedBranch===${JSON.stringify(process.env.INTEGRATED_RESEARCH_STAGED_BRANCH||'')}):${process.env.INTEGRATED_RESEARCH_EXPECT_CLIPPED==='1'}?rows.find(row=>row.querySelector('[data-staged-execution="checked_collision_prefix"]')):[...rows].sort((a,b)=>count(b)-count(a))[0];if(!selected)throw Error('Required staged native branch unavailable');const index=rows.indexOf(selected);const stages=[...selected.querySelectorAll('ol > li')];const firstClip=stages.findIndex(row=>row.dataset.stagedExecution==='checked_collision_prefix');selected.querySelector('details').open=true;const positions=[...selected.querySelectorAll('ol [data-staged-position]')].map(button=>Number(button.dataset.stagedPosition));return{text:panel.innerText,rows:rows.length,index,admittedStages:count(selected),clippedStages:stages.filter(row=>row.dataset.stagedExecution==='checked_collision_prefix').length,selectedText:selected.innerText,stagePositions:${process.env.INTEGRATED_RESEARCH_EXPECT_CLIPPED==='1'}?positions.slice(firstClip):positions}})()`);
         assert.equal(report.staged.rows,Number(process.env.INTEGRATED_RESEARCH_EXPECT_STAGED_ROWS||3),'Declared staged native alternatives remain inspectable');
+        if(process.env.INTEGRATED_RESEARCH_EXPECT_STAGES)assert(report.staged.admittedStages>=Number(process.env.INTEGRATED_RESEARCH_EXPECT_STAGES),'Declared multi-stage native work remains inspectable');
         if(process.env.INTEGRATED_RESEARCH_EXPECT_CLIPPED==='1')assert(report.staged.clippedStages>0&&report.staged.selectedText.includes('shortened command passed fresh native checks'),'Collision shortening is distinct from reaching the original requested waypoint');
         assert(report.staged.text.includes('original 48-action')&&report.staged.text.includes('larger staged task'),'Larger task and old gate are displayed separately');
+        if(process.env.INTEGRATED_RESEARCH_CUMULATIVE_REENTRY==='1')assert(report.staged.text.includes('Planned external re-entry: complete source-selected strokes'),'Actual desktop retains cumulative re-entry execution scope');
+        if(process.env.INTEGRATED_RESEARCH_EXTERIOR_FACES==='1')assert(report.staged.text.includes('both source exterior face signs'),'Actual desktop retains expanded source-face search scope');
         await capture('01-staged-native-evidence');
         await js(`document.querySelectorAll('[aria-label="Staged whole approach summaries"] > article')[${report.staged.index}].querySelector('button').click()`);
         await wait(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)===0&&document.querySelectorAll('[aria-label="Staged whole approach summaries"] > article')[${report.staged.index}].querySelector('[data-staged-branch]').dataset.stagedBranch===document.querySelector('[aria-label="Surgical branch"]').value`);
         if(report.staged.stagePositions.length){
-          const start=Math.max(0,report.staged.stagePositions[0]-2);
+          // Re-entry's work starts outside tissue; its first completed motion
+          // inserts the tool. Local staged work already starts inserted.
+          const start=Math.max(0,report.staged.stagePositions[0]-(process.env.INTEGRATED_RESEARCH_CUMULATIVE_REENTRY==='1'?1:2));
           await js(`(()=>{const s=document.querySelector('[aria-label="Surgical timeline"]');const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(s,${start});s.dispatchEvent(new Event('input',{bubbles:true}));s.dispatchEvent(new Event('change',{bubbles:true}));})()`);
           await wait(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)===${start}`);
           report.staged.playbackGoal=report.staged.stagePositions[1]??report.staged.stagePositions[0];
           await wait(`[...document.querySelectorAll('button')].some(button=>button.textContent.trim()==='Close tool view'&&!button.matches(':disabled'))`);
+          await ready();
           report.staged.targetBefore=await js(`document.querySelector('[data-surgical-metric="targetRemovedMm3"]').textContent`);
           await click('Close tool view');
           await js(`(()=>{const label=[...document.querySelectorAll('[aria-label="Close instrument view"] label')].find(label=>label.textContent.includes('Follow accepted tool'));const box=label?.querySelector('input');if(box&&!box.checked)box.click()})()`);
@@ -316,6 +333,10 @@ app.on('browser-window-created',(_event,window)=>{
       await ready();
       const position=await js(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)`);
       const end=await js(`Number(document.querySelector('[aria-label="Surgical timeline"]').max)`);
+      if(mode==='staged'&&process.env.INTEGRATED_RESEARCH_STAGED_FULL_PLAYBACK==='1'){
+        report.staged.playbackGoal=end;
+        await js(`(()=>{const select=document.querySelector('[aria-label="Replay speed"]');select.value='4';select.dispatchEvent(new Event('change',{bubbles:true}));})()`);
+      }
       const goal=Math.min(mode==='grid'&&report.grid.recovery?end:mode==='precision'?report.precision.finalPosition:mode==='bimanual'?report.bimanual.goal:mode==='staged'&&report.staged?.playbackGoal?report.staged.playbackGoal:position+4,end);
       if(goal>position){
         await wait(`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Play replay'&&!b.matches(':disabled'))`);
@@ -373,6 +394,14 @@ app.on('browser-window-created',(_event,window)=>{
       if(mode==='sector')assert(await js(`document.querySelectorAll('[aria-label="Sector strategy outcomes"] tbody tr').length>0`),'Comparison evidence remains visible during compact playback');
       if(mode==='joint')assert(await js(`!!document.querySelector('.joint-strategies')&&!document.body.innerText.includes('Saved joint strategy evidence could not be bound')`),'Joint evidence remains bound during compact playback');
       if(mode==='staged')assert(await js(`!!document.querySelector('.staged-strategies')&&!document.body.innerText.includes('Staged strategy evidence could not be bound')`),'Staged evidence remains bound during compact playback');
+      if(mode==='staged'&&process.env.INTEGRATED_RESEARCH_STAGED_FULL_PLAYBACK==='1'){
+        await ready();
+        report.staged.finalTarget=await js(`document.querySelector('[data-surgical-metric="targetRemovedMm3"]').textContent`);
+        report.staged.finalNonTarget=await js(`document.querySelector('[data-surgical-metric="nonTargetRemovedMm3"]').textContent`);
+        assert.equal((await js(`document.querySelector('.surgical-slots').innerText`)).match(/Withdrawn/g)?.length,2);
+        if(process.env.INTEGRATED_RESEARCH_EXPECT_TARGET_MM3)assert(Math.abs(Number(report.staged.finalTarget)-Number(process.env.INTEGRATED_RESEARCH_EXPECT_TARGET_MM3))<.01);
+        report.checks.push('Full recorded multi-stage program reaches actual clean native endpoint');
+      }
       if(mode==='bimanual'){
         await js(`document.querySelector('[data-bimanual-branch="'+${JSON.stringify(report.bimanual.branch)}+'"] [data-bimanual-phase="Final native endpoint"]').click()`);
         await wait(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)===Number(document.querySelector('[aria-label="Surgical timeline"]').max)`);
@@ -407,7 +436,18 @@ app.on('browser-window-created',(_event,window)=>{
         }
       }
       assert.equal(hash(input),sourceHash);report.sourcePreserved=true;report.savedCase=saved;report.passed=report.errors.length===0&&!report.windowEverVisible;
-    }catch(error){report.passed=false;report.failure=error.stack;report.failureText=await js('document.body.innerText');fs.writeFileSync(path.join(output,'failure.png'),(await window.webContents.capturePage(undefined,{stayHidden:true,stayAwake:true})).toPNG());console.error(error.stack);}
+    }catch(error){
+      report.passed=false;report.failure=error.stack;report.failureText=await js('document.body.innerText');
+      // A verifier assertion must not discard a completed native comparison.
+      // Save only when the actual UI has an idle, enabled save operation.
+      try{
+        if(!fs.existsSync(saved)&&await js(`!!document.querySelector('[aria-label="Staged whole approach summaries"] > article')&&!![...document.querySelectorAll('header button')].find(b=>b.textContent.trim()==='Save'&&!b.matches(':disabled'))`)){
+          await click('Save');await wait(`![...document.querySelectorAll('header button')].find(b=>b.textContent.trim()==='Save')?.matches(':disabled')`);
+        }
+        if(fs.existsSync(saved))report.failedSavedCase=saved;
+      }catch(persistenceError){report.failurePersistenceError=persistenceError.message;}
+      fs.writeFileSync(path.join(output,'failure.png'),(await window.webContents.capturePage(undefined,{stayHidden:true,stayAwake:true})).toPNG());console.error(error.stack);
+    }
     report.finishedUtc=new Date().toISOString();fs.writeFileSync(path.join(output,'report.json'),JSON.stringify(report,null,2));console.log(JSON.stringify(report));app.exit(report.passed?0:1);
   });
 });

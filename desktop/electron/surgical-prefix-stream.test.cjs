@@ -12,5 +12,9 @@ test('actual main IPC whitelist forwards prefix frame acknowledgments and still 
   assert.deepEqual(await invoke(args),{changed:false});assert.deepEqual(calls,[['surgicalRehearsal',args,120000]]);
   const start={caseHash:'case',command:'seekPrefix',branchId:'main',position:0,cacheOnly:true};
   assert.deepEqual(await invoke(start),{changed:false});assert.deepEqual(calls[1],['surgicalRehearsal',start,120000]);
-  await assert.rejects(invoke({...args,prefixPrivateState:{}}),/Unsupported operation argument/);assert.equal(calls.length,2);
+  const plan={caseHash:'case',command:'plan',opponent:'anatomy-staged-strategy',acknowledgeResearchUnknowns:true,exploreExteriorFaces:true};
+  assert.deepEqual(await invoke(plan),{changed:false});assert.deepEqual(calls[2],['surgicalRehearsal',plan,300000]);
+  const cumulative={...plan,exploreExteriorFaces:false,cumulativeReentry:true};
+  assert.deepEqual(await invoke(cumulative),{changed:false});assert.deepEqual(calls[3],['surgicalRehearsal',cumulative,300000]);
+  await assert.rejects(invoke({...args,prefixPrivateState:{}}),/Unsupported operation argument/);assert.equal(calls.length,4);
 });

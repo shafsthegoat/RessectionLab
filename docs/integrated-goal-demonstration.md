@@ -1,5 +1,41 @@
 # Integrated rehearsal development demonstration
 
+## Current cumulative re-entry milestone
+
+**Staged source strategies → Resection sequence → Planned external re-entry**
+extends the existing deterministic skill controller with complete external
+entries, checked withdrawal between stages, and tool configuration changes only
+outside tissue. It proposes a finite source-contact sequence from sealed routes
+already in the current development case. Native motion, contact and exit checks
+admit each stage; source contact alone does not establish feasibility. The
+original actual access baseline remains fixed across every later entry.
+
+The frozen two-patient native pilot completed five re-entry stages with three
+tip sizes on UCSF-PDGM-0007: **172 mm³ target / 187 mm³ non-target** over the entire
+approach, including initial access of 14/167. It completed two stages on 0005:
+**25/171 mm³**, including initial access of 6/158. Independent direct native
+replay verified both full trajectories, cleanup, original access accounting,
+checkpoint recovery and unchanged source records. The 0007 endpoint improves
+the removal pair over the earlier precision result of 137/197; it does not
+dominate the lower-damage joint result of 104/114. The 0005 result remains below
+the retained 33/174 original partial baseline. These are different bounded
+searches, not a matched-compute controller superiority experiment.
+
+Both larger task gates remain **unpassed**. The 0007 endpoint removes only
+0.89% of enhancing target, reaches one declared spatial zone, and fails the
+non-target/target ratio and meaningful configuration-contribution gates.
+Neither case demonstrates a complete operation. Six-face exterior search is
+also available as an opt-in for local staged work, within the original fixed
+surface/pair budgets; its tested alternatives did not replace the stronger
+saved baselines.
+
+Joint sector task results remain 2/3 on 0007 and 0/3 on 0005; the frozen 0008
+negative assessment remains 0/14 and is not training data. PPO has demonstrated
+no incremental benefit over BC/search. The useful next step is more distributed
+native clearance and target coverage within the original tissue budgets,
+before scaling learned execution. Missing skull, complete vascular anatomy,
+function and patient-calibrated outcomes remain unavailable.
+
 The desktop also exposes **Staged source strategies** from an intact, declared
 development access/sector comparison. This deterministic controller extends the
 existing engine with short source-anchored pivots, axial work, checked historical

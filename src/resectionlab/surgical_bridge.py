@@ -146,7 +146,7 @@ def dispatch(session, operation, args, request, progress):
             metadata={'is_synthetic': True, 'generated': True, 'anatomy_layers': {r['name']: {'kind': r['material'], 'color': r['color'],
                        'provenance': 'generated engineering fixture'} for r in s.regions}, 'surgical_properties': s.properties})
         return session._install_case(case, {}, request)
-    argument_keys = {'caseHash', 'command', 'expectedStateId', 'action', 'mapping', 'position', 'branchId', 'source', 'sceneIndex', 'acknowledgeResearchUnknowns', 'allowModeledBrainCorridor', 'maxHealthyRemovalMm3', 'maxWallSeconds', 'opponent', 'scenario', 'maxActions', 'frameIndex', 'timelineToken', 'viewFieldTokens','initialAccessRadiusMm'}
+    argument_keys = {'caseHash', 'command', 'expectedStateId', 'action', 'mapping', 'position', 'branchId', 'source', 'sceneIndex', 'acknowledgeResearchUnknowns', 'allowModeledBrainCorridor', 'maxHealthyRemovalMm3', 'maxWallSeconds', 'opponent', 'scenario', 'maxActions', 'frameIndex', 'timelineToken', 'viewFieldTokens','initialAccessRadiusMm','exploreExteriorFaces','cumulativeReentry'}
     if args.get('command') == 'seekPrefixFrame':
         argument_keys.update({'prefixToken', 'prefixFieldTokens'})
     if args.get('command') == 'seekPrefix' and type(args.get('position')) is int and args['position'] == 0:
@@ -154,6 +154,14 @@ def dispatch(session, operation, args, request, progress):
     _keys(args, argument_keys)
     if args.get('command') == 'recoverExit':
         _keys(args, {'caseHash', 'command', 'expectedStateId'})
+    if 'cumulativeReentry' in args and (args.get('command') != 'plan' or
+            args.get('opponent') != 'anatomy-staged-strategy' or
+            type(args['cumulativeReentry']) is not bool):
+        raise ValueError('Cumulative re-entry applies only to staged source planning')
+    if 'exploreExteriorFaces' in args and (args.get('command') != 'plan' or
+            args.get('opponent') != 'anatomy-staged-strategy' or
+            type(args['exploreExteriorFaces']) is not bool):
+        raise ValueError('Exterior face exploration applies only to staged source planning')
     if 'initialAccessRadiusMm' in args and (args.get('command')!='plan' or
             args.get('opponent')!='anatomy-staged-strategy'):
         raise ValueError('Initial access configuration applies only to staged source planning')
@@ -486,6 +494,9 @@ def dispatch(session, operation, args, request, progress):
         staged = compare_staged_strategies(engine, record,
             acknowledge_unknowns=args.get('acknowledgeResearchUnknowns', False),
             initial_access_radius_mm=args.get('initialAccessRadiusMm'),
+            explore_fresh_corridors=args.get('exploreExteriorFaces', False),
+            include_opposite_faces=args.get('exploreExteriorFaces', False),
+            cumulative_reentry=args.get('cumulativeReentry', False),
             check=request.check, progress=progress)
         if staged['report'].get('interruption'):
             raise ValueError('Staged comparison interrupted: '+staged['report']['interruption'])

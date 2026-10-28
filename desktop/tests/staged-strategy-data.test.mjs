@@ -91,6 +91,20 @@ test('configuration scope and failed export recovery remain distinct from planni
   assert.equal(stagedStrategyDisplay(artifact,response),null);
 });
 
+test('cumulative execution scope carries recorded time and travel without becoming a learned label',()=>{
+  const {artifact,response,summary,alternative}=fixture();
+  summary.controllerMode='cumulative-reentry';
+  alternative.executionMetrics={simulatedSeconds:100,instrumentTravelMm:300,completedReentries:2,workingConfigurations:2};
+  const shown=stagedStrategyDisplay(artifact,response);
+  assert.equal(shown.controllerMode,'cumulative-reentry');
+  assert.equal(shown.alternatives[0].executionMetrics.instrumentTravelMm,300);
+  alternative.executionMetrics.completedReentries=3;
+  assert.equal(stagedStrategyDisplay(artifact,response),null);
+  alternative.executionMetrics.completedReentries=2;
+  summary.controllerMode='trained-PPO';
+  assert.equal(stagedStrategyDisplay(artifact,response),null);
+});
+
 test('native branch binding accepts configuration-study IDs without requiring a planner naming convention',()=>{
   const data=fixture(),row=data.alternative;
   const old=row.branchId,branch='narrow-ingress-initial-outside-radius-0.6';
