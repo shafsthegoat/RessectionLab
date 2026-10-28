@@ -439,12 +439,18 @@ def _reconfigure_and_enter(engine, cached_exit, approach_actions, route, radius,
 def compare_staged_strategies(engine, record, *, acknowledge_unknowns=False,
                               max_physical_calls=MAX_CALLS, max_wall_seconds=MAX_SECONDS,
                               check=lambda: None, progress=lambda *_: None,
-                              exercise_resume=True, explore_fresh_corridors=False):
+                              exercise_resume=True, explore_fresh_corridors=False,
+                              initial_access_radius_mm=None):
     """Execute source-defined work with bounded lookahead and checked exit."""
     from .surgical_staged_exit import find_checked_exit
     from .surgical_joint_geometry import select_joint_corridors
     if acknowledge_unknowns is not True:
         raise ValueError('Explicit acknowledgment of unsupported anatomy is required')
+    if initial_access_radius_mm is not None and (type(initial_access_radius_mm) not in (int,float) or
+            initial_access_radius_mm != .6):
+        raise ValueError('The optional narrow initial access preset is fixed at 0.6 mm')
+    if initial_access_radius_mm is not None and 'cusaV3' in engine.scene.properties:
+        raise ValueError('CUSA v3 requires its unchanged fixed catalog geometry')
     if (type(max_physical_calls) is not int or not 1 <= max_physical_calls <= MAX_CALLS or
             type(max_wall_seconds) not in (int, float) or not math.isfinite(max_wall_seconds) or
             not 0 < max_wall_seconds <= MAX_SECONDS or max_physical_calls < EXPORT_RESERVE+240):
@@ -464,6 +470,22 @@ def compare_staged_strategies(engine, record, *, acknowledge_unknowns=False,
         # Keep the stronger measured access baseline. The optional source-only
         # staged selector has not earned replacement on the development cases.
         inventory = build_inventory(engine.scene, record, check=bounded)
+    if initial_access_radius_mm is not None:
+        # The existing native access executor generates a newly measured plan
+        # when initial outside geometry changes. No inserted radius is edited,
+        # and prior source comparisons/trajectories remain unchanged.
+        inventory = copy.deepcopy(inventory)
+        inventory['initialAccessRadiusMm'] = initial_access_radius_mm
+        for route_inventory in inventory['routes']:
+            prior = route_inventory['route']['corridorRadiusMm']
+            if prior != initial_access_radius_mm:
+                route_inventory['route']['corridorRadiusMm'] = initial_access_radius_mm
+                route_inventory['priorSelectedGeometryRadiusMm'] = prior
+                route_inventory['approachActions'] = None
+                route_inventory['sourceMethod'] += '-narrow'
+                route_inventory['sourcePlanSeal'] = None
+                route_inventory['approachController'] = 'existing_native_access_with_initial_external_configuration'
+        inventory['inventorySeal'] = semantic_digest({k:v for k,v in inventory.items() if k!='inventorySeal'})
     task = larger_task(engine.scene)
     zones, _ = source_zones(engine.scene)
     meter = TransitionMeter(max_physical_calls, check=bounded)
@@ -706,6 +728,12 @@ def staged_summary(report):
             'sourceSceneId', 'sourceStateId', 'sourceRole', 'comparisonSeal',
             'optimizerUpdates', 'task', 'wallSeconds')},
         'cusaModel': report.get('cusaModel', 'legacy-instantaneous-with-v2-mechanics'),
+        'comparisonScope': ('same-route-configurations' if 'configurationAlias' in report else
+                            report.get('comparisonScope','source-routes')),
+        'limitations': copy.deepcopy(report.get('limitations', [])),
+        **({'exportRecovery': {key: copy.deepcopy(report['exportRecovery'].get(key)) for key in (
+            'additionalAuthoritativeReplayCalls','fullSourceToRecoveredExport90SecondWallCapMet')}}
+           if 'exportRecovery' in report else {}),
         'sourceAccessPlans': [{key: row[key] for key in (
             'method', 'planSeal', 'startStateId', 'sourceSceneId', 'routeSeal')}
             for row in report['sourceAccessPlans']],

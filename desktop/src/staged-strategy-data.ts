@@ -8,7 +8,7 @@ const count=(value:unknown):value is number=>Number.isSafeInteger(value)&&(value
 const amount=(value:unknown):value is number=>typeof value==='number'&&Number.isFinite(value)&&value>=0;
 const close=(a:number,b:number)=>Math.abs(a-b)<=1e-5;
 const method=(value:unknown):value is string=>
-  typeof value==='string'&&/^[a-z][a-z0-9-]{0,95}$/.test(value);
+  typeof value==='string'&&/^[a-z][a-z0-9.-]{0,95}$/.test(value);
 const configuration=(value:unknown):value is string=>{
   if(typeof value!=='string'||!/^radius-(?:\d+(?:\.\d+)?)$/.test(value))return false;
   const radius=Number(value.slice('radius-'.length));
@@ -36,6 +36,8 @@ export interface StagedBranch {
   unassignedPostAccessTargetMm3:number;
 }
 export interface StagedDisplay {
+  comparisonScope:'source-routes'|'same-route-configurations';notes:string[];
+  exportRecovery:{additionalReplayCalls:number|null;fullRunWithinWallCap:boolean|null}|null;
   cusaModel:string;
   caseHash:string;sceneId:string;sourceStateId:string;sourceBranchId:string|null;
   comparisonSeal:string;task:{minimumWholeTargetMm3:number;minimumTargetPerZoneMm3:number;
@@ -53,6 +55,8 @@ function compactFullReport(report:Record<string,unknown>):Record<string,unknown>
     comparisonSeal:report.comparisonSeal,sourceRole:report.sourceRole,
     optimizerUpdates:report.optimizerUpdates,task:report.task,
     cusaModel:report.cusaModel,
+    comparisonScope:report.configurationAlias!==undefined?'same-route-configurations':report.comparisonScope,
+    limitations:report.limitations,exportRecovery:report.exportRecovery,
     sourceAccessPlans:report.sourceAccessPlans,
     cost:{physicalCalls:report.cost.physicalCalls,maxPhysicalCalls:report.cost.maxPhysicalCalls,
       previewCalls:report.cost.previewCalls,directStepCalls:report.cost.directStepCalls},
@@ -122,6 +126,16 @@ export function stagedStrategyDisplay(artifact:unknown,response:SurgicalResponse
       summary.cost.physicalCalls>summary.cost.maxPhysicalCalls||
       summary.cost.physicalCalls!==summary.cost.previewCalls+summary.cost.directStepCalls)return null;
   const task=summary.task;
+  const notes=summary.limitations??[];
+  if(!Array.isArray(notes)||notes.length>16||notes.some(note=>typeof note!=='string'||note.length>1024))return null;
+  let exportRecovery:StagedDisplay['exportRecovery']=null;
+  if(summary.exportRecovery!==undefined){
+    const recovery=summary.exportRecovery;
+    if(!object(recovery)||recovery.additionalAuthoritativeReplayCalls!=null&&!count(recovery.additionalAuthoritativeReplayCalls)||
+        recovery.fullSourceToRecoveredExport90SecondWallCapMet!=null&&typeof recovery.fullSourceToRecoveredExport90SecondWallCapMet!=='boolean')return null;
+    exportRecovery={additionalReplayCalls:recovery.additionalAuthoritativeReplayCalls as number|null??null,
+      fullRunWithinWallCap:recovery.fullSourceToRecoveredExport90SecondWallCapMet as boolean|null??null};
+  }
   if(!amount(task.minimumWholeTargetMm3)||task.minimumWholeTargetMm3===0||
       !amount(task.minimumTargetPerZoneMm3)||task.minimumTargetPerZoneMm3===0||
       !amount(task.minimumTargetPerConfigurationMm3)||task.minimumTargetPerConfigurationMm3===0||
@@ -165,7 +179,7 @@ export function stagedStrategyDisplay(artifact:unknown,response:SurgicalResponse
   let totalTarget:number|null=null;
   for(const [index,raw] of summary.alternatives.entries()){
     if(!object(raw)||!text(raw.branchId)||seen.has(raw.branchId)||
-        !method(raw.sourceMethod)||raw.branchId!==`staged-${index}-${raw.sourceMethod}`||
+        !method(raw.sourceMethod)||
         !sealed(raw.sourceAccessPlanSeal)||
         raw.hand!=='left'||!['passed','unpassed'].includes(String(raw.status))||
         !sealed(raw.finalStateId)||!count(raw.nativeActions)||raw.nativeActions>240||
@@ -296,6 +310,8 @@ export function stagedStrategyDisplay(artifact:unknown,response:SurgicalResponse
       stages,outcome:{...outcome,legacyTask:legacy}} as StagedBranch);
   }
   return {caseHash:response.caseHash,sceneId:summary.sourceSceneId as string,
+    comparisonScope:summary.comparisonScope==='same-route-configurations'?'same-route-configurations':'source-routes',
+    notes,exportRecovery,
     cusaModel:summary.cusaModel==='legacy-instantaneous-with-v2-mechanics'||summary.cusaModel==='contact-capacity-v3'?summary.cusaModel:'not-recorded',
     sourceStateId:summary.sourceStateId as string,sourceBranchId,
     comparisonSeal:summary.comparisonSeal as string,

@@ -1,13 +1,15 @@
 import {useEffect,useState} from 'react';
 import type {SurgicalController} from './use-surgical';
 import {stagedGenerationEligibility,stagedStrategyDisplay} from './staged-strategy-data';
+import {cusaContactModel} from './cusa-research';
 
 const mm=(value:number)=>value.toFixed(1);
 
 export function StagedStrategiesPanel({c,artifact,pause,play}:{c:SurgicalController;
   artifact:unknown;pause:()=>void;play:(branchId:string)=>void}){
   const [acknowledged,setAcknowledged]=useState(false);
-  useEffect(()=>setAcknowledged(false),[c.result?.caseHash,c.result?.view.scene.sceneId]);
+  const [narrowAccess,setNarrowAccess]=useState(false);
+  useEffect(()=>{setAcknowledged(false);setNarrowAccess(false);},[c.result?.caseHash,c.result?.view.scene.sceneId]);
   const record=artifact&&typeof artifact==='object'?artifact as Record<string,unknown>:null;
   const saved=!!record&&(Object.hasOwn(record,'stagedPlanning')||Object.hasOwn(record,'stagedSummary'));
   const live=c.result?.stagedPlanning!=null;
@@ -21,11 +23,16 @@ export function StagedStrategiesPanel({c,artifact,pause,play}:{c:SurgicalControl
     return <details className="research-planning staged-strategies"><summary>Staged source strategies</summary>
       <p className="surgical-warning">This structural source lacks skull opening, complete vessels and functional mapping. Native CUSA contact, withdrawal and tissue effects remain modeled research behavior.</p>
       <p>Run bounded, deterministic staged work from the common intact source. Source geometry proposes tiles; native previews, commits and checked exits decide which work is retained. The larger 240-action objective and the original 48-action sector gate are reported separately. No actor or optimizer runs.</p>
+      {!cusaContactModel(c.result?.view)&&<label>Initial CUSA access configuration<select aria-label="Staged initial access configuration" disabled={c.pending}
+        value={narrowAccess?'narrow':'saved'} onChange={event=>setNarrowAccess(event.target.value==='narrow')}>
+        <option value="saved">Saved selected tip radius</option><option value="narrow">Fixed narrow tip · 0.6 mm</option>
+      </select><small>A narrow initial tip can reduce approach removal while limiting resection progress. It is configured outside tissue; native checks and all task gates remain unchanged.</small></label>}
       <label><input aria-label="Acknowledge staged source assumptions" type="checkbox" checked={acknowledged}
         disabled={c.pending} onChange={event=>setAcknowledged(event.target.checked)}/>
         I acknowledge the missing anatomy and research-only source assumptions for this staged comparison.</label>
       <button disabled={c.pending||!acknowledged||!eligibility.ready} onClick={()=>{
-        pause();void c.run('plan',{opponent:'anatomy-staged-strategy',acknowledgeResearchUnknowns:true});
+        pause();void c.run('plan',{opponent:'anatomy-staged-strategy',acknowledgeResearchUnknowns:true,
+          ...(narrowAccess?{initialAccessRadiusMm:.6}:{})});
       }}>Generate staged source strategies</button>
       {!eligibility.ready&&<p role="status">{eligibility.reason}</p>}
     </details>;
@@ -36,12 +43,15 @@ export function StagedStrategiesPanel({c,artifact,pause,play}:{c:SurgicalControl
   };
   const passes=data.alternatives.filter(row=>row.outcome.taskGateMet).length;
   const legacyPasses=data.alternatives.filter(row=>row.outcome.legacyTask.taskGateMet).length;
-  return <details className="research-planning staged-strategies"><summary>Staged source strategies · {passes} / {data.alternatives.length} larger task gates passed</summary>
+  return <details className="research-planning staged-strategies"><summary>{data.comparisonScope==='same-route-configurations'?'Access configuration comparison':'Staged source strategies'} · {passes} / {data.alternatives.length} larger task gates passed</summary>
     <p className="surgical-warning">Deterministic research comparison on partial anatomy. Skull, complete vessels and functional mapping are unavailable; these modeled effects are not clinical risk estimates.</p>
     {data.cusaModel==='legacy-instantaneous-with-v2-mechanics'&&<p className="surgical-note">This scene uses legacy instantaneous CUSA removal with V2 tissue mechanics. It does not establish contact-capacity CUSA v3 or device fidelity.</p>}
     <p>{passes} / {data.alternatives.length} larger staged task gates passed. The original 48-action two-sector gate passed in {legacyPasses} / {data.alternatives.length} branches; that gate is a separate measure.</p>
+    {data.comparisonScope==='same-route-configurations'&&<p>These are initial tool configurations on the same access geometry, not distinct surgical approaches. Each row shows its whole approach and resection tradeoffs.</p>}
     <p>Earlier sector strategies can change working radius while inserted. Staged work keeps tip radius and depth fixed until a checked external exchange, so their tool-configuration assumptions differ.</p>
     <p>{data.physicalCalls} / {data.maxPhysicalCalls} physical calls for staged planning · {data.wallSeconds.toFixed(1)} wall seconds · zero optimizer updates. Failed work probes and checked exits are included in the planning cost.</p>
+    {data.exportRecovery&&<p className="surgical-warning">Export required recovery. {data.exportRecovery.additionalReplayCalls===null?'The additional native replay cost is unavailable.':`${data.exportRecovery.additionalReplayCalls} additional native replay calls; ${data.physicalCalls+data.exportRecovery.additionalReplayCalls} observed calls including planning.`} The full execution-and-export wall-time requirement {data.exportRecovery.fullRunWithinWallCap===null?'is unverified':data.exportRecovery.fullRunWithinWallCap?'passed':'did not pass'}. Recovery is recorded separately from planning.</p>}
+    {data.notes.length>0&&<details><summary>Recorded scope and execution limits</summary><ul>{data.notes.map((note,index)=><li key={index}>{note}</li>)}</ul></details>}
     {data.sourceBranchId&&<button disabled={disabled}
       data-staged-branch={data.sourceBranchId} data-staged-position={0}
       onClick={()=>inspect(data.sourceBranchId!,0)}>Inspect common intact source</button>}

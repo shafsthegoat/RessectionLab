@@ -102,19 +102,22 @@ app.on('browser-window-created',(_event,window)=>{
         await wait(`!!document.querySelector('.staged-strategies')`);
         await js(`document.querySelector('.staged-strategies').open=true`);
         if(process.env.INTEGRATED_RESEARCH_GENERATE==='1'){
+          if(process.env.INTEGRATED_RESEARCH_NARROW_ACCESS==='1'){
+            await js(`(()=>{const select=document.querySelector('[aria-label="Staged initial access configuration"]');if(!select)throw Error('Initial access configuration selector unavailable');select.value='narrow';select.dispatchEvent(new Event('change',{bubbles:true}));})()`);
+          }
           await js(`document.querySelector('[aria-label="Acknowledge staged source assumptions"]').click()`);
           await click('Generate staged source strategies');
           await wait(`!!document.querySelector('[aria-label="Staged whole approach summaries"] > article')`,300);
           report.checks.push('Actual desktop source planning executed native staged alternatives');
         }
         await wait(`!!document.querySelector('[aria-label="Staged whole approach summaries"] > article')`);
-        report.staged=await js(`(()=>{const panel=document.querySelector('.staged-strategies');const rows=[...panel.querySelectorAll('[aria-label="Staged whole approach summaries"] > article')];const count=row=>Number(row.textContent.match(/(\\d+) admitted work stages/)?.[1]??0);const selected=${process.env.INTEGRATED_RESEARCH_EXPECT_CLIPPED==='1'}?rows.find(row=>row.querySelector('[data-staged-execution="checked_collision_prefix"]')):[...rows].sort((a,b)=>count(b)-count(a))[0];if(!selected)throw Error('Required staged native branch unavailable');const index=rows.indexOf(selected);const stages=[...selected.querySelectorAll('ol > li')];const firstClip=stages.findIndex(row=>row.dataset.stagedExecution==='checked_collision_prefix');selected.querySelector('details').open=true;const positions=[...selected.querySelectorAll('ol [data-staged-position]')].map(button=>Number(button.dataset.stagedPosition));return{text:panel.innerText,rows:rows.length,index,admittedStages:count(selected),clippedStages:stages.filter(row=>row.dataset.stagedExecution==='checked_collision_prefix').length,selectedText:selected.innerText,stagePositions:${process.env.INTEGRATED_RESEARCH_EXPECT_CLIPPED==='1'}?positions.slice(firstClip):positions}})()`);
-        assert.equal(report.staged.rows,3,'Three staged source directions remain inspectable');
+        report.staged=await js(`(()=>{const panel=document.querySelector('.staged-strategies');const rows=[...panel.querySelectorAll('[aria-label="Staged whole approach summaries"] > article')];const count=row=>Number(row.textContent.match(/(\\d+) admitted work stages/)?.[1]??0);const selected=${JSON.stringify(process.env.INTEGRATED_RESEARCH_STAGED_BRANCH||'')}?rows.find(row=>row.querySelector('[data-staged-branch]')?.dataset.stagedBranch===${JSON.stringify(process.env.INTEGRATED_RESEARCH_STAGED_BRANCH||'')}):${process.env.INTEGRATED_RESEARCH_EXPECT_CLIPPED==='1'}?rows.find(row=>row.querySelector('[data-staged-execution="checked_collision_prefix"]')):[...rows].sort((a,b)=>count(b)-count(a))[0];if(!selected)throw Error('Required staged native branch unavailable');const index=rows.indexOf(selected);const stages=[...selected.querySelectorAll('ol > li')];const firstClip=stages.findIndex(row=>row.dataset.stagedExecution==='checked_collision_prefix');selected.querySelector('details').open=true;const positions=[...selected.querySelectorAll('ol [data-staged-position]')].map(button=>Number(button.dataset.stagedPosition));return{text:panel.innerText,rows:rows.length,index,admittedStages:count(selected),clippedStages:stages.filter(row=>row.dataset.stagedExecution==='checked_collision_prefix').length,selectedText:selected.innerText,stagePositions:${process.env.INTEGRATED_RESEARCH_EXPECT_CLIPPED==='1'}?positions.slice(firstClip):positions}})()`);
+        assert.equal(report.staged.rows,Number(process.env.INTEGRATED_RESEARCH_EXPECT_STAGED_ROWS||3),'Declared staged native alternatives remain inspectable');
         if(process.env.INTEGRATED_RESEARCH_EXPECT_CLIPPED==='1')assert(report.staged.clippedStages>0&&report.staged.selectedText.includes('shortened command passed fresh native checks'),'Collision shortening is distinct from reaching the original requested waypoint');
         assert(report.staged.text.includes('original 48-action')&&report.staged.text.includes('larger staged task'),'Larger task and old gate are displayed separately');
         await capture('01-staged-native-evidence');
         await js(`document.querySelectorAll('[aria-label="Staged whole approach summaries"] > article')[${report.staged.index}].querySelector('button').click()`);
-        await wait(`document.querySelector('[aria-label="Surgical branch"]').value.startsWith('staged-')&&Number(document.querySelector('[aria-label="Surgical timeline"]').value)===0`);
+        await wait(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)===0&&document.querySelectorAll('[aria-label="Staged whole approach summaries"] > article')[${report.staged.index}].querySelector('[data-staged-branch]').dataset.stagedBranch===document.querySelector('[aria-label="Surgical branch"]').value`);
         if(report.staged.stagePositions.length){
           const start=Math.max(0,report.staged.stagePositions[0]-2);
           await js(`(()=>{const s=document.querySelector('[aria-label="Surgical timeline"]');const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(s,${start});s.dispatchEvent(new Event('input',{bubbles:true}));s.dispatchEvent(new Event('change',{bubbles:true}));})()`);
@@ -290,11 +293,18 @@ app.on('browser-window-created',(_event,window)=>{
       await wait(`!![...document.querySelectorAll('header button')].find(b=>b.textContent.trim()==='Save'&&!b.matches(':disabled'))`);
       await click('Save');await wait(`![...document.querySelectorAll('header button')].find(b=>b.textContent.trim()==='Save')?.matches(':disabled')`);
       assert(fs.existsSync(saved));report.checks.push('Native desktop save writes the inspected trajectory');
-      if(mode==='bimanual'){
+      if(mode==='bimanual'||mode==='staged'&&process.env.INTEGRATED_RESEARCH_REOPEN==='1'){
         await click('Open');await wait(`!!document.querySelector('.rl-viewer canvas')&&!document.querySelector('.viewer-loading')`);
-        await click('Rehearse');await wait(`!!document.querySelector('.retraction-study')`);
-        assert.equal(await js(`document.querySelectorAll('[aria-label="Bimanual native study outcomes"] > article').length`),report.bimanual.rows);
-        report.checks.push('Actual desktop reopen retains source-bound paired-tool comparison and native branches');
+        await click('Rehearse');
+        if(mode==='bimanual'){
+          await wait(`!!document.querySelector('.retraction-study')`);
+          assert.equal(await js(`document.querySelectorAll('[aria-label="Bimanual native study outcomes"] > article').length`),report.bimanual.rows);
+          report.checks.push('Actual desktop reopen retains source-bound paired-tool comparison and native branches');
+        }else{
+          await wait(`!!document.querySelector('[aria-label="Staged whole approach summaries"] > article')`);
+          assert.equal(await js(`document.querySelectorAll('[aria-label="Staged whole approach summaries"] > article').length`),report.staged.rows);
+          report.checks.push('Actual desktop reopen retains staged native actions, source identity and comparison evidence');
+        }
       }
       assert.equal(hash(input),sourceHash);report.sourcePreserved=true;report.savedCase=saved;report.passed=report.errors.length===0&&!report.windowEverVisible;
     }catch(error){report.passed=false;report.failure=error.stack;report.failureText=await js('document.body.innerText');fs.writeFileSync(path.join(output,'failure.png'),(await window.webContents.capturePage(undefined,{stayHidden:true,stayAwake:true})).toPNG());console.error(error.stack);}

@@ -70,6 +70,41 @@ test('staged evidence binds native endpoints and keeps larger and legacy gates s
   }
 });
 
+test('configuration scope and failed export recovery remain distinct from planning cost',()=>{
+  const {artifact,response,summary}=fixture();
+  summary.comparisonScope='same-route-configurations';
+  summary.limitations=['Initial geometry configurations share one access route.'];
+  summary.exportRecovery={additionalAuthoritativeReplayCalls:7,
+    fullSourceToRecoveredExport90SecondWallCapMet:false};
+  const shown=stagedStrategyDisplay(artifact,response);
+  assert.equal(shown.comparisonScope,'same-route-configurations');
+  assert.equal(shown.physicalCalls,100);
+  assert.equal(shown.exportRecovery.additionalReplayCalls,7);
+  assert.equal(shown.exportRecovery.fullRunWithinWallCap,false);
+  assert.deepEqual(shown.notes,summary.limitations);
+  summary.exportRecovery={method:'earlier recovery metadata without measured accounting'};
+  const legacy=stagedStrategyDisplay(artifact,response);
+  assert.equal(legacy.exportRecovery.additionalReplayCalls,null);
+  assert.equal(legacy.exportRecovery.fullRunWithinWallCap,null);
+  summary.exportRecovery={additionalAuthoritativeReplayCalls:-1,
+    fullSourceToRecoveredExport90SecondWallCapMet:false};
+  assert.equal(stagedStrategyDisplay(artifact,response),null);
+});
+
+test('native branch binding accepts configuration-study IDs without requiring a planner naming convention',()=>{
+  const data=fixture(),row=data.alternative;
+  const old=row.branchId,branch='narrow-ingress-initial-outside-radius-0.6';
+  row.branchId=branch;row.sourceMethod='narrow-0.6-initial-config';
+  data.summary.sourceAccessPlans=[{method:row.sourceMethod,planSeal:row.sourceAccessPlanSeal,
+    sourceSceneId:scene,startStateId:start,routeSeal:seal('d')}];
+  data.artifact.branches[branch]=data.artifact.branches[old];delete data.artifact.branches[old];
+  data.artifact.parents[branch]=data.artifact.parents[old];delete data.artifact.parents[old];
+  data.response.branches[1].id=branch;
+  assert.ok(stagedStrategyDisplay(data.artifact,data.response));
+  data.response.branches[1].id='unbound';
+  assert.equal(stagedStrategyDisplay(data.artifact,data.response),null);
+});
+
 test('new source-only access plans bind staged branches while active classic routes remain unchanged',()=>{
   const data=fixture();
   const fresh={method:'source-bank-a',planSeal:seal('d'),startStateId:start,

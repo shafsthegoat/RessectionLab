@@ -180,6 +180,19 @@ def _seal_report(report):
         key: value for key, value in report.items() if key != 'comparisonSeal'})
 
 
+def test_older_export_recovery_remains_displayable_with_unknown_accounting(monkeypatch):
+    from resectionlab.surgical_staged_planning import staged_summary
+    _,_,report=_native_report()
+    report['alternatives'][0].update(hand='left',stopReason='generated',
+        attemptedWork=[],interruptionRecovery=None)
+    report['exportRecovery']={'method':'older saved native prefix recovery'}
+    monkeypatch.setattr(SurgicalEngine,'step',lambda *_a,**_k:pytest.fail('Display summary must not simulate'))
+    summary=staged_summary(report)
+    assert summary['exportRecovery']=={'additionalAuthoritativeReplayCalls':None,
+        'fullSourceToRecoveredExport90SecondWallCapMet':None}
+    assert summary['cost']['physicalCalls']==5
+
+
 def test_report_rechecks_native_gates_and_rejects_overlapping_configuration_work():
     scene, record, report = _native_report()
     assert validate_staged_report(scene, record, report)['verified']

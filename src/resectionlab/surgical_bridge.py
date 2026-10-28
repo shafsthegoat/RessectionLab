@@ -146,12 +146,15 @@ def dispatch(session, operation, args, request, progress):
             metadata={'is_synthetic': True, 'generated': True, 'anatomy_layers': {r['name']: {'kind': r['material'], 'color': r['color'],
                        'provenance': 'generated engineering fixture'} for r in s.regions}, 'surgical_properties': s.properties})
         return session._install_case(case, {}, request)
-    argument_keys = {'caseHash', 'command', 'expectedStateId', 'action', 'mapping', 'position', 'branchId', 'source', 'sceneIndex', 'acknowledgeResearchUnknowns', 'allowModeledBrainCorridor', 'maxHealthyRemovalMm3', 'maxWallSeconds', 'opponent', 'scenario', 'maxActions', 'frameIndex', 'timelineToken', 'viewFieldTokens'}
+    argument_keys = {'caseHash', 'command', 'expectedStateId', 'action', 'mapping', 'position', 'branchId', 'source', 'sceneIndex', 'acknowledgeResearchUnknowns', 'allowModeledBrainCorridor', 'maxHealthyRemovalMm3', 'maxWallSeconds', 'opponent', 'scenario', 'maxActions', 'frameIndex', 'timelineToken', 'viewFieldTokens','initialAccessRadiusMm'}
     if args.get('command') == 'seekPrefixFrame':
         argument_keys.update({'prefixToken', 'prefixFieldTokens'})
     if args.get('command') == 'seekPrefix' and type(args.get('position')) is int and args['position'] == 0:
         argument_keys.add('cacheOnly')
     _keys(args, argument_keys)
+    if 'initialAccessRadiusMm' in args and (args.get('command')!='plan' or
+            args.get('opponent')!='anatomy-staged-strategy'):
+        raise ValueError('Initial access configuration applies only to staged source planning')
     _require_json_budget(args, 256 * 1024, 'SURGICAL_REQUEST_LIMIT', 'Instrument request exceeds budget')
     entry = None
     source = args.get('source')
@@ -463,6 +466,7 @@ def dispatch(session, operation, args, request, progress):
         validate_saved_sector_comparison(engine.scene, record, sectors)
         staged = compare_staged_strategies(engine, record,
             acknowledge_unknowns=args.get('acknowledgeResearchUnknowns', False),
+            initial_access_radius_mm=args.get('initialAccessRadiusMm'),
             check=request.check, progress=progress)
         if staged['report'].get('interruption'):
             raise ValueError('Staged comparison interrupted: '+staged['report']['interruption'])
