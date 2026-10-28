@@ -59,6 +59,7 @@ function SceneResearchDetails({view,preview}:{view:SurgicalView;preview:boolean}
   const source=view.scene.source,adapter=source?.adapter,physics=view.physics??view.scene.physics;
   const v2=physics?.profile?.schema==='resectionlab.tissue-physics.v2';
   const patientDerivative=adapter?.type==='native-patient-research-derivative';
+  const refinement=source?.workingGridRefinement as {schema?:unknown;factor?:unknown;noNewAnatomy?:unknown}|undefined;
   const mapped=new Set(view.scene.regions.map(r=>r.material));
   const metrics:Record<string,unknown>={...view.metrics,...physics?.metrics};
   const metricLabels:Record<string,string>={severedVesselConnections:'Severed local vessel adjacencies',activeVesselWounds:'Active modeled wound outlets',modeledVesselFluidGeneratedMm3:'Modeled vessel fluid generated · mm³',modeledVesselReservoirMm3:'Modeled vessel fluid retained · mm³'};
@@ -67,6 +68,7 @@ function SceneResearchDetails({view,preview}:{view:SurgicalView;preview:boolean}
     {patientDerivative&&<div className="surgical-warning"><strong>Patient-derived research estimate</strong><p>This scene is derived from patient anatomy. Material properties and flow behavior are declared research assumptions, not measured patient physiology. Derived geometry is separate from source annotations.</p></div>}
     {adapter?.warnings?.length? <ul className="surgical-warning">{adapter.warnings.map((warning,i)=><li key={i}>{warning}</li>)}</ul>:null}
     <p className="surgical-note">Scene grid: {view.scene.resolutionMm.map(n=>+n.toFixed(3)).join(' × ')} mm · {view.scene.shape.join(' × ')} cells.</p>
+    {refinement?.schema==='resectionlab.surgical-working-grid-refinement.v1'&&refinement.factor===2&&refinement.noNewAnatomy===true&&<p className="surgical-warning">Refined computational grid: each parent material cell was subdivided into eight children with the same physical bounds. The image is derived interpolation. This adds no acquired image resolution or anatomical evidence; it is a discretization study.</p>}
     {v2&&<p className="surgical-note">V2 research mechanics: coupled brain relaxation, work and heat based drilling, and pressure-driven clustered bleeding. Parameters are uncalibrated assumptions; the volume penalty is approximate and global perfusion is unknown.</p>}
     <details><summary>Provenance, material behavior, and assumptions</summary>
       {source&&<DeclaredFields data={Object.fromEntries(Object.entries(source).filter(([key])=>key!=='adapter'))}/>}

@@ -147,7 +147,9 @@ def from_case(case, mapping=None):
         'provenance': 'source annotations and declared cached estimates',
         'adapter': thaw_json(case.metadata).get('surgical_adapter'),
         'annotationHashes': {name: array_digest(mask) for name, mask in masks.items()},
-        'overlapRule': 'last mapped region owns the material; original memberships retained'}, thaw_json(case.metadata).get('surgical_properties', {}))
+        'overlapRule': 'last mapped region owns the material; original memberships retained',
+        **({'workingGridRefinement': thaw_json(case.metadata['working_grid_refinement'])}
+           if 'working_grid_refinement' in case.metadata else {})}, thaw_json(case.metadata).get('surgical_properties', {}))
 
 
 def engineering_scene():
