@@ -3,7 +3,7 @@
 const {app,dialog}=require('electron');
 const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),assert=require('node:assert/strict'),crypto=require('node:crypto');
 const root=path.resolve(__dirname,'../..'),input=path.resolve(process.env.INTEGRATED_RESEARCH_CASE||''),output=path.resolve(process.env.INTEGRATED_RESEARCH_OUTPUT||''),mode=process.env.INTEGRATED_RESEARCH_MODE;
-if(!['access','learned','cusa','cusa-execute','cusa-cancel','sector','sector-policy','sector-execute','joint','staged','bimanual','frozen-assessment'].includes(mode))throw Error('Set a supported INTEGRATED_RESEARCH_MODE');
+if(!['access','learned','cusa','cusa-execute','cusa-cancel','sector','sector-policy','sector-execute','joint','staged','precision','bimanual','frozen-assessment'].includes(mode))throw Error('Set a supported INTEGRATED_RESEARCH_MODE');
 for(const p of [input,output])if(!p.startsWith(path.join(root,'testcases')+path.sep))throw Error('Input/output must be under testcases/');
 if(fs.existsSync(output))throw Error('Preserve previous evidence; use a new output directory');
 fs.mkdirSync(output,{recursive:true});
@@ -98,6 +98,44 @@ app.on('browser-window-created',(_event,window)=>{
         // Start the recorded sector interval after its actual corridor actions.
         await js(`(()=>{const s=document.querySelector('[aria-label="Surgical timeline"]');const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(s,${target.start});s.dispatchEvent(new Event('input',{bubbles:true}));s.dispatchEvent(new Event('change',{bubbles:true}));})()`);
         await wait(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)===${target.start}`);
+      }else if(mode==='precision'){
+        const sourceBranch=process.env.INTEGRATED_RESEARCH_STAGED_BRANCH;
+        if(!sourceBranch)throw Error('Choose the existing staged source branch');
+        await wait(`!!document.querySelector('.staged-strategies')`);
+        await js(`(()=>{const p=document.querySelector('.staged-strategies');p.open=true;const buttons=[...p.querySelectorAll('[data-staged-branch]')].filter(b=>b.dataset.stagedBranch===${JSON.stringify(sourceBranch)});const endpoint=buttons.sort((a,b)=>Number(b.dataset.stagedPosition)-Number(a.dataset.stagedPosition))[0];if(!endpoint||endpoint.disabled)throw Error('Source endpoint unavailable');endpoint.click();})()`);
+        await wait(`document.querySelector('[aria-label="Surgical branch"]').value===${JSON.stringify(sourceBranch)}&&Number(document.querySelector('[aria-label="Surgical timeline"]').value)===Number(document.querySelector('[aria-label="Surgical timeline"]').max)`);
+        await ready();
+        await wait(`!!document.querySelector('.precision-continuation')`);
+        await js(`document.querySelector('.precision-continuation').open=true;document.querySelector('.precision-continuation').scrollIntoView({block:'start'})`);
+        report.precision={sourceBranch,sourcePosition:await js(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)`),targetBefore:await js(`document.querySelector('[data-surgical-metric="targetRemovedMm3"]').textContent`)};
+        if(process.env.INTEGRATED_RESEARCH_GENERATE==='1'){
+          await js(`document.querySelector('[aria-label="Acknowledge precision continuation assumptions"]').click()`);
+          await wait(`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Generate precision continuation'&&!b.matches(':disabled'))`);
+          await click('Generate precision continuation');
+          await wait(`[...document.querySelectorAll('.precision-continuation button')].some(b=>b.textContent.trim()==='Inspect precision endpoint')`,150);
+          report.checks.push('Actual desktop ran bounded deterministic precision selection and native execution');
+        }
+        report.precision.text=await js(`document.querySelector('.precision-continuation').innerText`);
+        if(await js(`document.body.innerText.includes('Precision continuation evidence could not be bound')`))throw Error('Precision native evidence failed desktop binding');
+        await capture('01-precision-whole-effects-and-source-stop');
+        const precisionEndpoint=await js(`(()=>{const b=[...document.querySelectorAll('.precision-continuation button')].find(b=>b.textContent.trim()==='Inspect precision endpoint');return{branchId:b.dataset.precisionBranch,position:Number(b.dataset.precisionPosition)}})()`);
+        assert(precisionEndpoint.branchId&&Number.isSafeInteger(precisionEndpoint.position));
+        await click('Inspect precision endpoint');
+        await wait(`document.querySelector('[aria-label="Surgical branch"]').value===${JSON.stringify(precisionEndpoint.branchId)}&&Number(document.querySelector('[aria-label="Surgical timeline"]').value)===${precisionEndpoint.position}`);
+        await ready();
+        report.precision.finalBranch=await js(`document.querySelector('[aria-label="Surgical branch"]').value`);
+        report.precision.finalPosition=await js(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)`);
+        report.precision.finalTarget=await js(`document.querySelector('[data-surgical-metric="targetRemovedMm3"]').textContent`);
+        report.precision.finalHands=await js(`document.querySelector('.surgical-slots').innerText`);
+        assert.equal((report.precision.finalHands.match(/Withdrawn/g)||[]).length,2);
+        assert(!report.precision.finalHands.includes('Holding'));
+        await capture('02-precision-clean-endpoint');
+        if(report.precision.finalPosition>report.precision.sourcePosition){
+          await js(`(()=>{const s=document.querySelector('[aria-label="Surgical timeline"]');const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(s,${report.precision.sourcePosition});s.dispatchEvent(new Event('input',{bubbles:true}));s.dispatchEvent(new Event('change',{bubbles:true}));})()`);
+          await wait(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)===${report.precision.sourcePosition}`);
+          report.precision.playbackGoal=report.precision.finalPosition;
+        }
+        report.checks.push('Original STOP baseline, whole effects, failed gates and checked withdrawal remain visible');
       }else if(mode==='staged'){
         await wait(`!!document.querySelector('.staged-strategies')`);
         await js(`document.querySelector('.staged-strategies').open=true`);
@@ -256,7 +294,7 @@ app.on('browser-window-created',(_event,window)=>{
       await ready();
       const position=await js(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)`);
       const end=await js(`Number(document.querySelector('[aria-label="Surgical timeline"]').max)`);
-      const goal=Math.min(mode==='bimanual'?report.bimanual.goal:mode==='staged'&&report.staged?.playbackGoal?report.staged.playbackGoal:position+4,end);
+      const goal=Math.min(mode==='precision'?report.precision.finalPosition:mode==='bimanual'?report.bimanual.goal:mode==='staged'&&report.staged?.playbackGoal?report.staged.playbackGoal:position+4,end);
       if(goal>position){
         await wait(`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Play replay'&&!b.matches(':disabled'))`);
         await click('Play replay');
@@ -274,9 +312,14 @@ app.on('browser-window-created',(_event,window)=>{
         }
         report.checks.push('Play advances actual recorded instrument/physics frames and pause stops scheduling');await capture('02-authoritative-playback');
       }else{
-        assert.equal(mode,'frozen-assessment','Selected policy must contain actual native actions');
-        report.playback={startPosition:position,observedPosition:position,skipped:'Frozen actor recorded no native actions'};
-        report.checks.push('Zero-action frozen abstention is retained without fabricating playback');
+        assert(['frozen-assessment','precision'].includes(mode),'Selected execution must contain actual native actions');
+        report.playback={startPosition:position,observedPosition:position,skipped:mode==='precision'?'No new precision stage admitted; source STOP retained':'Frozen actor recorded no native actions'};
+        report.checks.push(mode==='precision'?'No-stage STOP is retained without fabricating new playback':'Zero-action frozen abstention is retained without fabricating playback');
+      }
+      if(mode==='precision'){
+        assert(await js(`!!document.querySelector('.precision-continuation')&&!document.body.innerText.includes('Precision continuation evidence could not be bound')`));
+        if(report.precision.finalPosition>report.precision.sourcePosition){const measured=await js(`document.querySelector('[data-surgical-metric="targetRemovedMm3"]').textContent`);assert(Number(measured)>Number(report.precision.targetBefore));report.precision.targetAfterPlayback=measured;}
+        report.checks.push('Precision evidence survives compact native playback');
       }
       if(mode==='sector')assert(await js(`document.querySelectorAll('[aria-label="Sector strategy outcomes"] tbody tr').length>0`),'Comparison evidence remains visible during compact playback');
       if(mode==='joint')assert(await js(`!!document.querySelector('.joint-strategies')&&!document.body.innerText.includes('Saved joint strategy evidence could not be bound')`),'Joint evidence remains bound during compact playback');
@@ -293,10 +336,16 @@ app.on('browser-window-created',(_event,window)=>{
       await wait(`!![...document.querySelectorAll('header button')].find(b=>b.textContent.trim()==='Save'&&!b.matches(':disabled'))`);
       await click('Save');await wait(`![...document.querySelectorAll('header button')].find(b=>b.textContent.trim()==='Save')?.matches(':disabled')`);
       assert(fs.existsSync(saved));report.checks.push('Native desktop save writes the inspected trajectory');
-      if(mode==='bimanual'||mode==='staged'&&process.env.INTEGRATED_RESEARCH_REOPEN==='1'){
+      if(mode==='precision'||mode==='bimanual'||mode==='staged'&&process.env.INTEGRATED_RESEARCH_REOPEN==='1'){
         await click('Open');await wait(`!!document.querySelector('.rl-viewer canvas')&&!document.querySelector('.viewer-loading')`);
         await click('Rehearse');
-        if(mode==='bimanual'){
+        if(mode==='precision'){
+          await wait(`!!document.querySelector('.precision-continuation')`);
+          await js(`document.querySelector('.precision-continuation').open=true`);
+          assert.equal(await js(`document.querySelector('.precision-continuation').innerText`),report.precision.text);
+          assert(await js(`!!document.querySelector('[aria-label="Staged whole approach summaries"] > article')`));
+          report.checks.push('Actual desktop reopen preserves precision evidence, original staged alternatives and native branches');
+        }else if(mode==='bimanual'){
           await wait(`!!document.querySelector('.retraction-study')`);
           assert.equal(await js(`document.querySelectorAll('[aria-label="Bimanual native study outcomes"] > article').length`),report.bimanual.rows);
           report.checks.push('Actual desktop reopen retains source-bound paired-tool comparison and native branches');

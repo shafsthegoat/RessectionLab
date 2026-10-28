@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {SurgicalComparisonContext} from '../src/surgical-comparison-context.ts';
-const full=()=>({caseHash:'case',view:{scene:{sceneId:'scene'}},planning:{alternatives:['baseline']},sectorPlanning:{alternatives:['near','far']},jointPlanning:{jointSeal:'sha256:joint'},jointBaselineHistory:[{comparison:'classic'}],stagedPlanning:{comparisonSeal:'sha256:staged'},retractionStudy:{comparisonSeal:'sha256:bimanual'}});
+const full=()=>({caseHash:'case',view:{scene:{sceneId:'scene'}},planning:{alternatives:['baseline']},sectorPlanning:{alternatives:['near','far']},jointPlanning:{jointSeal:'sha256:joint'},jointBaselineHistory:[{comparison:'classic'}],stagedPlanning:{comparisonSeal:'sha256:staged'},precisionPlanning:{comparisonSeal:'sha256:precision'},retractionStudy:{comparisonSeal:'sha256:bimanual'}});
 const frame=()=>({caseHash:'case',view:{scene:{sceneId:'scene'}},playback:{readOnly:true}});
 test('comparison evidence stays visible during read-only frames without changing frame authority',()=>{
   const cache=new SurgicalComparisonContext(),source={},initial=full();cache.accept(initial,source,false);
@@ -45,4 +45,15 @@ test('legacy responses without joint fields leave static artifact fallback avail
   assert.equal(Object.hasOwn(compact,'jointPlanning'),false);
   assert.equal(Object.hasOwn(compact,'jointBaselineHistory'),false);
   assert.equal(Object.hasOwn(compact,'stagedPlanning'),false);
+});
+
+test('precision receipts survive compact frames and explicit null revokes their fallback',()=>{
+  const cache=new SurgicalComparisonContext(),source={},initial=full();cache.accept(initial,source,false);
+  assert.equal(cache.accept(frame(),source,true).precisionPlanning,initial.precisionPlanning);
+  assert.equal(cache.accept({...frame(),precisionPlanning:null},source,true).precisionPlanning,null);
+  assert.equal(cache.accept(frame(),source,true).precisionPlanning,null);
+  cache.accept(initial,source,false);
+  assert.equal(cache.accept(frame(),{},true).precisionPlanning,undefined);
+  cache.accept(initial,source,false);
+  assert.equal(cache.accept({...frame(),view:{scene:{sceneId:'other'}}},source,true).precisionPlanning,undefined);
 });

@@ -10,6 +10,7 @@ import {ResearchPlanningPanel} from './ResearchPlanningPanel';
 import {SectorStrategiesPanel} from './SectorStrategiesPanel';
 import {JointStrategiesPanel} from './JointStrategiesPanel';
 import {StagedStrategiesPanel} from './StagedStrategiesPanel';
+import {PrecisionContinuationPanel} from './PrecisionContinuationPanel';
 import {RetractionStudyPanel} from './RetractionStudyPanel';
 import {LearnedSectorExecutionPanel} from './LearnedSectorExecutionPanel';
 import {RescueLearningPanel} from './RescueLearningPanel';
@@ -199,6 +200,9 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
     <JointStrategiesPanel c={c} artifact={cusaLearning} pause={()=>{setPlaying(false);c.pausePlayback();}}/>
     <RetractionStudyPanel c={c} pause={()=>{setPlaying(false);c.pausePlayback();}}/>
     <StagedStrategiesPanel c={c} artifact={cusaLearning}
+      pause={()=>{setPlaying(false);c.pausePlayback();}}
+      play={branchId=>{setPlaying(false);c.pausePlayback();void c.run('selectBranch',{branchId,position:0}).then(ok=>{if(ok)setPlaying(true);});}}/>
+    <PrecisionContinuationPanel c={c} artifact={cusaLearning}
       pause={()=>{setPlaying(false);c.pausePlayback();}}
       play={branchId=>{setPlaying(false);c.pausePlayback();void c.run('selectBranch',{branchId,position:0}).then(ok=>{if(ok)setPlaying(true);});}}/>
     <fieldset disabled={readOnly} className="surgical-controls"><ResearchPlanningPanel c={c} pause={()=>setPlaying(false)}/></fieldset>

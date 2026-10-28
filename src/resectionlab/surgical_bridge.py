@@ -445,6 +445,23 @@ def dispatch(session, operation, args, request, progress):
         record['position'] = len(engine.actions)
         record.setdefault('timeline', {})[record['branchId']] = copy.deepcopy(engine.history)
         outcome = {'status': 'accepted', 'reason': director.get('stopReason') or director.get('currentPhaseId'), 'completedFraction': 1., 'events': []}
+    elif command == 'plan' and args.get('opponent') == 'anatomy-precision-reentry':
+        from .surgical_precision_reentry import (
+            continue_precision_reentry, install_precision_continuation)
+        from .surgical_staged_planning import require_staged_development
+        if entry is None:
+            raise ValueError('Precision continuation requires a declared DEVELOPMENT patient')
+        require_staged_development(entry.case)
+        precision = continue_precision_reentry(engine, record,
+            acknowledge_unknowns=args.get('acknowledgeResearchUnknowns', False),
+            check=request.check, progress=progress)
+        install_precision_continuation(record, precision, engine.scene)
+        candidate = precision['engine']
+        branch_id = precision['report']['finalBranchId']
+        replay_cache.seek(candidate, record['branches'][branch_id],
+                          len(candidate.actions), check=request.check)
+        outcome = {'status': 'accepted', 'reason': 'precision_continuation_recorded',
+                   'completedFraction': 1., 'events': []}
     elif command == 'plan' and args.get('opponent') == 'anatomy-staged-strategy':
         from .surgical_staged_planning import (
             compare_staged_strategies, install_staged_comparison,
@@ -656,6 +673,11 @@ def dispatch(session, operation, args, request, progress):
         from .surgical_staged_planning import validate_staged_report, staged_summary
         validate_staged_report(engine.scene, record, staged_report)
         result['stagedPlanning'] = staged_summary(staged_report)
+    precision_report = record.get('precisionPlanning')
+    if precision_report is not None:
+        from .surgical_precision_reentry import validate_precision_report, precision_summary
+        validate_precision_report(engine.scene, record, precision_report)
+        result['precisionPlanning'] = precision_summary(precision_report)
     joint_report = record.get('jointPlanning')
     if joint_report is not None:
         from .surgical_joint_planning import validate_joint_report

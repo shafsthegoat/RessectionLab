@@ -36,6 +36,7 @@ export interface StagedBranch {
   unassignedPostAccessTargetMm3:number;
 }
 export interface StagedDisplay {
+  sourceRole?:'DEVELOPMENT';
   comparisonScope:'source-routes'|'same-route-configurations';notes:string[];
   exportRecovery:{additionalReplayCalls:number|null;fullRunWithinWallCap:boolean|null}|null;
   cusaModel:string;
@@ -310,6 +311,7 @@ export function stagedStrategyDisplay(artifact:unknown,response:SurgicalResponse
       stages,outcome:{...outcome,legacyTask:legacy}} as StagedBranch);
   }
   return {caseHash:response.caseHash,sceneId:summary.sourceSceneId as string,
+    ...(summary.sourceRole==='DEVELOPMENT'?{sourceRole:'DEVELOPMENT' as const}:{}),
     comparisonScope:summary.comparisonScope==='same-route-configurations'?'same-route-configurations':'source-routes',
     notes,exportRecovery,
     cusaModel:summary.cusaModel==='legacy-instantaneous-with-v2-mechanics'||summary.cusaModel==='contact-capacity-v3'?summary.cusaModel:'not-recorded',
