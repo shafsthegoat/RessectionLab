@@ -55,6 +55,60 @@ def test_physical_ras_zones_partition_unique_source_target():
     assert evidence['sourceTargetMm3'] == len(target)
 
 
+def _current_contact_coupon():
+    labels=np.zeros((24,24,24),np.uint16)
+    for point in ((9,9,9),(9,9,12),(13,9,12),(14,9,12)):
+        labels[point]=1
+    engine=SurgicalEngine(SurgicalScene(labels,np.eye(4),[
+        {'id':1,'name':'target','material':'tumor','target':True}],
+        {'kind':'generated current-contact scoring coupon'},{}))
+    pose=lambda point:{'position':list(point),'quaternion':[0.,0.,0.,1.]}
+    for action in (
+        {'slot':'left','operation':'exchange','instrument':'cusa','duration':.1},
+        {'slot':'left','operation':'place','pose':pose([9.,9.,3.]),'duration':.1},
+        {'slot':'left','operation':'apply','pose':pose([9.,9.,9.]),'duration':.2}):
+        assert engine.step(action)['status']=='accepted'
+    def tile(name,point,source_target):
+        return {'id':name,'pose':pose(point),'orientationMode':'source-ray',
+            'sourceFootprints':{'0.6':{'sourceTargetMm3':source_target,
+                'sourceBrainMm3':0.,'sourceOtherLabelContact':False}}}
+    return engine,tile('removed',[9.,9.,9.],1.),tile('retained',[13.,9.,12.],2.)
+
+
+def test_current_work_scoring_prunes_removed_target_without_mutating_source_inventory(monkeypatch):
+    import resectionlab.surgical_staged_planning as planning
+    engine,removed,retained=_current_contact_coupon()
+    inventory={'route':{},'tiles':[removed,retained]}
+    before,source=engine.snapshot(),copy.deepcopy(inventory)
+    monkeypatch.setattr(planning,'propose_cusa_maneuvers',lambda *_a,**_kw:[])
+    monkeypatch.setattr(SurgicalEngine,'step',lambda *_a,**_kw:pytest.fail('Scoring cannot execute'))
+    monkeypatch.setattr(SurgicalEngine,'preview',lambda *_a,**_kw:pytest.fail('Scoring cannot preview'))
+    # Source bank lacks a 1.5 mm cached footprint; the actual current tip is
+    # nevertheless catalog-valid and its retained contact can be read directly.
+    rows=planning._choose_work(engine,inventory,set(),radius=1.5)
+    assert [row['id'] for row in rows]==['retained']
+    assert rows[0]['currentContacts']['currentTargetContactMm3']>=2.
+    assert rows[0]['contactStateId']==engine.state_id
+    assert engine.snapshot()==before and inventory==source
+
+
+def test_current_contact_compares_local_and_source_tiles_on_the_same_retained_path(monkeypatch):
+    import resectionlab.surgical_staged_planning as planning
+    engine,_,retained=_current_contact_coupon()
+    local={'id':'local','pose':{'position':[9.,9.,11.],'quaternion':[0.,0.,0.,1.]},
+        'path':[{'position':[9.,9.,11.],'quaternion':[0.,0.,0.,1.]}],
+        'proposalStateId':engine.state_id,'orientationMode':'local-forward',
+        'sourceFootprints':{'1.5':{'sourceTargetMm3':2.,'sourceBrainMm3':0.,
+                                  'sourceOtherLabelContact':False}}}
+    monkeypatch.setattr(planning,'propose_cusa_maneuvers',lambda *_a,**_kw:[local])
+    inventory={'route':{},'tiles':[retained]}
+    rows=planning._choose_work(engine,inventory,set(),radius=1.5)
+    assert [row['id'] for row in rows]==['retained','local']
+    assert rows[0]['currentContacts']['currentTargetContactMm3']>rows[1]['currentContacts']['currentTargetContactMm3']
+    retried=planning._choose_work(engine,inventory,{('retained',1.5,engine.state_id)},radius=1.5)
+    assert [row['id'] for row in retried]==['local']
+
+
 def test_inventory_is_source_only_bounded_and_does_not_mutate_baselines(monkeypatch):
     scene = source()
     saved = record(scene)

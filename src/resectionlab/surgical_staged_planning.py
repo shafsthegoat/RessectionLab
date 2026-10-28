@@ -386,21 +386,55 @@ def _work_actions(engine, tile, radius, hand):
         'pose': copy.deepcopy(tile['pose']), 'parameters': parameters, 'duration': .6})]
 
 
+def _current_work_contacts(engine, tile, radius):
+    """Current tip-path contact proxy, without predicting a native transition.
+
+    Source tile footprints remain provenance. They cannot tell whether a later
+    action will encounter already removed tissue, nor account for its transit.
+    Full-tool clearance, real removal and checked exit still require execution.
+    """
+    previous = np.asarray(engine.state['slots']['left']['position'])
+    cells = set()
+    travel = 0.
+    previous_q = Rotation.from_quat(engine.state['slots']['left']['quaternion'])
+    for pose in tile.get('path',[tile['pose']]):
+        point = np.asarray(pose['position'])
+        cells.update(map(int,engine.touched(previous,point,radius)))
+        orientation = Rotation.from_quat(pose['quaternion'])
+        travel += float(np.linalg.norm(point-previous))+42.*float((orientation*previous_q.inv()).magnitude())
+        previous,previous_q = point,orientation
+    targets = {int(row['id']) for row in engine.scene.regions if row.get('target')}
+    brain = {int(row['id']) for row in engine.scene.regions
+             if row['material']=='soft_tissue' and 'brain' in row['name'].lower()}
+    labels = engine.scene.labels.ravel()
+    return {'currentTargetContactMm3':sum(int(labels[cell]) in targets for cell in cells)*engine.scene.voxel_mm3,
+        'currentBrainContactMm3':sum(int(labels[cell]) in brain for cell in cells)*engine.scene.voxel_mm3,
+        'otherRetainedLabelContact':any(int(labels[cell]) not in targets|brain for cell in cells),
+        'fullEnvelopeTravelProxyMm':travel,
+        'scope':'retained tip-path source contact only; not native removal or swept shaft clearance'}
+
+
 def _choose_work(engine, route_inventory, attempted, *, radius):
     current = np.asarray(engine.state['slots']['left']['position'])
     state = engine.state_id
     local = propose_cusa_maneuvers(engine, route_inventory['route'], max_options=15)
     # Retry a previously blocked region after accepted work changed anatomy;
     # repeated probes of an unchanged native state remain disallowed.
-    candidates = [tile for tile in [*local, *route_inventory['tiles']]
-                  if (tile['id'], radius, state) not in attempted and
-                  str(radius) in tile['sourceFootprints'] and
-                  not tile['sourceFootprints'][str(radius)]['sourceOtherLabelContact']]
+    candidates = []
+    for tile in [*local,*route_inventory['tiles']]:
+        if (tile['id'],radius,state) in attempted:
+            continue
+        contact = _current_work_contacts(engine,tile,radius)
+        if contact['currentTargetContactMm3']<=0 or contact['otherRetainedLabelContact']:
+            continue
+        candidate = copy.deepcopy(tile)
+        candidate.update(currentContacts=contact,contactStateId=state)
+        candidates.append(candidate)
     candidates.sort(key=lambda tile: (
+        tile['currentContacts']['currentBrainContactMm3'],
+        -tile['currentContacts']['currentTargetContactMm3'],
+        tile['currentContacts']['fullEnvelopeTravelProxyMm'],
         'proposalStateId' not in tile,
-        tile['orientationMode'] != 'source-ray',
-        tile['sourceFootprints'][str(radius)]['sourceBrainMm3'],
-        -tile['sourceFootprints'][str(radius)]['sourceTargetMm3'],
         float(np.linalg.norm(np.asarray(tile['pose']['position'])-current)), tile['id']))
     return candidates[:MAX_PROBES_PER_STAGE]
 
@@ -588,6 +622,8 @@ def compare_staged_strategies(engine, record, *, acknowledge_unknowns=False,
                                 limits=work_limits, meter=meter, check=bounded,
                                 phase=f'staged.{route_index}.stage{stage_index}.{tile["id"]}.work')
                         row = {'tileId': tile['id'], 'radiusMm': radius, 'work': receipt,
+                               'currentContacts': copy.deepcopy(tile.get('currentContacts')),
+                               'contactStateId': tile.get('contactStateId'),
                                'workStartPosition': work_start,
                                'orientationMode': tile['orientationMode'],
                                'status': 'work_refused'}
