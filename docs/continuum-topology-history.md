@@ -93,6 +93,25 @@ connectivity, supports, materials/spectrum, outside-domain removals/cuts and the
 its Schur partition. This identity does not authorize reuse of a changed
 exterior factor; that needs a separately verified update.
 
+The frozen native capture at `8eab7f14` completed all three programs in
+137.56 worker seconds (138.19 supervised), with 461,815,808 bytes sampled peak
+group RSS. Every action receipt and full final snapshot is exact. The resulting
+1,938 / 2,154 / 126 suffix steps preserve the seven core and one exterior
+additional removals, prefix source costs and checked STOP. This passes input
+capture only; larger-domain public actions remain unadmitted. Local receipts,
+input hashes and commands are retained under
+`testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/`.
+
+The [isolated source step profile](../manifests/experiments/continuum-step-profile-v1.json)
+compares the frozen `2e2de647` step with the revised step on the exact same
+admitted operators and one previously qualified full source state. It measures
+setup once, alternates eight repeated calls per kernel, requires byte-exact
+within-kernel repetition and unchanged field/force/energy tolerances, and
+profiles both calls. Contact release and rebinding must share the tissue
+preparation. This is a separate 180-second / 3 GiB / 8 MiB experiment with no
+retry. Its kernel extrapolation excludes topology, field guards, controls and
+independent checking, so cannot admit a complete-program run by itself.
+
 The focused event/capture/continuum/clone/cancellation selection passes 119
 tests. Independent code checks 45 bindings and 180 dense-control steps,
 including arbitrary exterior memory, contactless/rebound states and changing
