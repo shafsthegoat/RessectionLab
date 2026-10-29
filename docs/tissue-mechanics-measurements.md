@@ -1,5 +1,17 @@
 # Measured tissue mechanics: available evidence and first test
 
+October 29 follow-up: the Greiner 13960486 lead is already catalogued in
+[`artifacts/greiner-brain-mechanics-intake-v1/QUALIFICATION.md`](../artifacts/greiner-brain-mechanics-intake-v1/QUALIFICATION.md)
+and the [schema follow-up](../artifacts/brain-indentation-schema-followup-v1/RESULT.md).
+No duplicate acquisition or new response parsing was performed. The primary
+[methods](https://eprints.gla.ac.uk/343003/1/343003.pdf) identify a 71-year-old
+donor, distinct in reported age from the [2023 HBE donors](https://pmc.ncbi.nlm.nih.gov/articles/PMC10511383/);
+there is no cross-study donor-identity attestation. This strengthens
+cohort-separation evidence but does not resolve the released headerless columns,
+units, chronology or initial-history dependency. Existing disabled split and
+sealed responses remain unchanged. The small-gradient model has not gained a
+measured time-response validation from this follow-up.
+
 Checked October 4, 2026 using primary sources, metadata, archive previews and HTTP headers. No image/force arrays, bulk archives, registrations or mechanics fits were opened or executed by this audit. **Start with a measured specimen-force benchmark; evaluate patient displacement separately.** None of the imaging releases below supplies a verified synchronized retractor pose/load history, contact law or cutting-force reference.
 
 | Resource | Measurements and scope | Access verified in this audit |

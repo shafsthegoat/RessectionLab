@@ -11,6 +11,9 @@ An [opt-in vascular graph](docs/vascular-graph.md) separates compression,
 occlusion, transection, wound sealing and declared supply/drainage signals.
 Matched generated maneuvers pass independent numerical checks; patient-specific
 vascular evaluation and physiological RL remain on hold.
+The [acquired vascular geometry checks](docs/native-vascular-geometry.md) now
+retain original CTA voxel IDs, distinguish veins and sinuses, and certify a
+separate H₁ representative graph while exposing missing and ambiguous anatomy.
 
 The [full case rehearsal collaborator handoff](artifacts/full-case-rehearsal-20261020/README.md)
 includes the saved meningioma source and substantial primary resection, same-case

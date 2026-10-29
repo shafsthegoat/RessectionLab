@@ -12,6 +12,9 @@ vessel labels, so patient-specific vascular evaluation remains unsupported.
 The separate local TOPBRAIN CTA has partial arterial and venous annotations;
 it has not been merged with the glioma. Registered centerlines/connectivity,
 coverage review and measured boundaries remain open work on acquired cases.
+The separate [acquired-source geometry workflow](native-vascular-geometry.md)
+now checks CTA001 masks, source IDs, class semantics and connectivity; its
+representative subgraph remains unadmitted for physiological simulation.
 
 ## Model and action consequences
 
