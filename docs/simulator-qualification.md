@@ -160,3 +160,11 @@ physical/physiological acceptance. Geometry-only
 [exterior preparation](continuum-exterior-coupling.md) now makes the source-owned
 core/exterior partition and four larger-domain node joins explicit before any
 new boundary coupling solve.
+
+The separately frozen [offline exterior-history witness](continuum-exterior-coupling.md)
+now reproduces all 336 complete-20 mm history states through the induced core,
+with independent full-domain/interface force and physical spring-energy checks.
+It completes in 140.40 seconds including verification, within unchanged offline
+ceilings. The inner artificial clamp is replaced relative to that declared
+reference; outer-boundary adequacy still fails. Full changing-topology programs
+and live resource admission remain open, with every exterior DOF counted.

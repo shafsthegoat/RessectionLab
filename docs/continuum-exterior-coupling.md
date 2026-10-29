@@ -6,8 +6,9 @@ core clamp, while retaining the already studied 8 mm core and 20 mm outer
 domain. Both earlier 16-to-20 mm stress-stability gates remain failed. No new
 radius, material fit, source response, patient role or live cap is selected.
 
-The first step is executable geometry preparation, not a mechanical coupling
-solver. `scripts/prepare_continuum_exterior.py` reads only six geometry/support
+An offline fixed-domain exterior/history witness now passes its numerical
+qualification. Its geometry preparation remains a separate step without a
+mechanical response: `scripts/prepare_continuum_exterior.py` reads only six geometry/support
 arrays from the two SHA256-bound, already exposed reference exports. The
 [preparation declaration](../manifests/experiments/continuum-exterior-preparation-v1.json)
 binds these exact inputs. It does not decode displacement, compliance, basis or
@@ -62,37 +63,36 @@ OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 \
   testcases/outputs/simulator-qualification-20261029/continuum-exterior-v1/NEW-PREPARATION
 ```
 
-## Next executable mechanics milestone
+## Declared coupling and scope
 
-Implement and independently verify fixed-topology exterior condensation before
-another source response run. With equilibrium stiffness partitioned into
-retained core `I` and exterior-exclusive free DOFs `E`, the intended operator is
+The verified fixed-topology condensation partitions equilibrium stiffness into
+retained core `I` and exterior-exclusive free DOFs `E`, giving
 
 ```text
 H = K_II - K_IE K_EE⁻¹ K_EI
 ```
 
-The declared proportional Maxwell spectrum also requires the corresponding
+The declared proportional Maxwell spectrum requires the corresponding
 history forcing and exterior field recovery. An equilibrium-only replacement
 does not establish transient or full-energy equivalence. Primitive controls
-must check interface force cancellation, core/exterior source ownership,
-history recovery and full-domain energy/dissipation against independent dense
-block algebra. Then profile exterior assembly/factorization and bounded operator
-application on the fixed prepared source partition before freezing a full run.
+check source ownership, history recovery and full-domain energy/dissipation
+against independent dense block algebra. Frozen source samples independently
+check interface force cancellation and full-domain energy. Assembly/factor and
+bounded operator application are profiled before the complete source run.
 
-The initial witness is restricted to the two already exposed fixed-contact
+The completed witness is restricted to the two already exposed fixed-contact
 17-action-derived load histories, zero initial fields, unchanged proportional
-material spectrum, no body loads and the existing 20 mm outer supports. It must
-compare recovered core displacement, memory, reactions and fixed-probe
+material spectrum, no body loads and the existing 20 mm outer supports. It
+compares recovered core displacement, memory, reactions and fixed-probe
 instantaneous/cumulative strain/stress against the complete 20 mm equations,
 with prospective numerical thresholds and independent primitive exports. Cuts,
 CUSA removal, changing contacts and nonzero history transfer are later gates;
-this preparation grants no shortcut around their ownership checks.
+this witness grants no shortcut around their ownership checks.
 
-The existing offline reference ceilings remain the proposed upper bounds
+The qualification retains the existing offline reference ceilings
 (900 seconds, 3 GiB, 32 MiB output, 16,000 source cells, 60,000 DOFs, one numerical
-thread, no retry). Live 2,000-cell/24,000-DOF limits remain unchanged. A successful
-coupling comparison would reproduce a declared numerical reference; it would
+thread, no retry). Live 2,000-cell/24,000-DOF limits remain unchanged. The passed
+coupling comparison reproduces a declared numerical reference; it does
 not validate its 20 mm outer boundary, material/device response, patient shift,
 vasculature, neurological consequences or physiological RL. Those evidence
 gates and the broader scientific goal remain open.
@@ -212,3 +212,82 @@ Both run serially within one 900-second wall and 32-MiB output budget, with each
 process group capped at 3 GiB. The checker receives at most 60 seconds from the
 remaining wall budget. A completed mechanics worker alone cannot accept this
 gate; the frozen independent checker must also pass on the final report hash.
+
+## Completed fixed-domain source qualification
+
+The frozen witness at `2e2de647` passes in **140.40 seconds**, including the
+independent checker. The mechanics worker takes 137.03 seconds; independent
+verification takes 2.78 seconds. Peak worker RSS is **1,620,672,512 bytes**
+(1.51 GiB); sampled worker group peak is 1,614,282,752 bytes. The checker group
+peaks at 86,523,904 sampled bytes after the mechanics process has exited.
+Retained output is **4,482,443 bytes**, within the shared 32-MiB ceiling.
+
+All 336 complete free displacement/memory states reproduce the original 20 mm
+reference, including every per-contact/aggregate reaction, actual model energy,
+work/loss and fixed-source exposure comparison. Source inputs and code hashes
+remain unchanged. The six predetermined sample worlds reuse four identical
+payloads where their source histories have a common prefix; branch/step
+receipts remain separate. No field projection or history reduction is fitted.
+
+| Quantity | Maximum disagreement | Frozen absolute budget |
+| --- | ---: | ---: |
+| Full free displacement | 3.05e-16 mm | 1e-9 mm |
+| Full free Maxwell memory | 2.64e-16 mm | 1e-9 mm |
+| Per-contact/aggregate reaction | 4.34e-19 N | 1e-10 N |
+| Energy/work/loss quantities | 7.46e-20 N mm | 1e-10 N mm |
+| Instantaneous fixed-probe strain² volume | 4.51e-17 mm³ | 1e-9 mm³ |
+| Cumulative fixed-probe strain² | 6.94e-17 mm³ s | 1e-9 mm³ s |
+| Instantaneous fixed-probe stress² volume | 5.10e-11 Pa² mm³ | 0.001 Pa² mm³ |
+| Cumulative fixed-probe stress² | 1.17e-10 Pa² mm³ s | 0.001 Pa² mm³ s |
+
+Independent source-owner Q1 quadrature passes all six samples. Maximum free
+equilibrium residual is 6.44e-19 N, core/exterior interface imbalance 2.40e-19 N,
+and actual spring/tissue/Maxwell work-energy residual 4.58e-20 N mm. Independent
+coordinate/compliance algebra checks all 336 energy/reaction/probe records; its
+maximum stored-energy difference is 6.10e-20 N mm. The JSON and NPZ records agree
+exactly, and all sampled state statistics bind to their respective history rows.
+A final receipt-only audit passes 26 provenance/scope checks, including all six
+committed source hashes, immutable inputs, the executed checker/selftest binding,
+resource ceilings, four node joins and unchanged live/history code. The checker
+itself is retained under ignored evidence and bound by the committed protocol's
+SHA256; its contents are not claimed to be a Git blob.
+
+The source setup includes 5.58 seconds for exterior factor/certificate, 43.29
+seconds for all Schur columns and 1.44 seconds for core factor/contact basis.
+The 60/276-step histories take 15.36/70.78 seconds including full field guards,
+reference comparisons, energy accounting and exports. These research-verifier
+costs do not establish live instrument latency or planning throughput.
+
+The already exposed clamped-8 reference remains a descriptive control:
+
+| Program | Clamped-8 reaction | Coupled/reference-20 reaction | Fixed-probe stress² change |
+| --- | ---: | ---: | ---: |
+| Short hold | 0.8329 mN | 0.7254 mN | −26.97% |
+| Sustained hold | 0.7397 mN | 0.6375 mN | −28.67% |
+
+Those contrasts reuse the frozen original reference report and the same 257
+source probe cells; they are neither new measurement units nor patient evidence.
+Numerical coupling removes the arbitrary inner clamp relative to the declared
+20 mm model. The 20 mm *outer* support convention remains unaccepted, and both
+original 16-to-20 mm stress-stability failures are still failures.
+
+## Next executable gate
+
+Extend the offline witness to the complete original public programs with
+changing contacts, CUSA removal, relaxation and release. First verify
+source-corner history transfer across splits/joins, retained-interface support
+identity, removed tissue energy and explicit contact-binding energy jumps on
+small controls. Profile operator updates before freezing a complete source run;
+all original actions and physical refusals must remain counted. No parameter,
+radius, threshold or action adjustment is justified merely to obtain completion.
+Prescribing events captured from native programs is a mechanics witness; actual
+larger-domain public-action/collision admission requires separate verification.
+
+The complete operator has 33,360 free DOFs, including 27,864 exterior-only DOFs.
+Counting only the 5,496 core DOFs would conceal its state/resource cost and
+cannot admit it under the live 24,000-DOF cap. Any later live integration needs
+its own explicit domain/resource admission; this offline witness provides none.
+Measured tissue/device response, source-supported vascular physiology,
+functional consequences and acquired-anatomy validation remain open. Both
+physiological and large-scale RL stay on hold, and the scientific goal remains
+active.
