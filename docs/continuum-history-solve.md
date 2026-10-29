@@ -116,6 +116,60 @@ The subsequent engine, continuum, CUSA, rollback, replay/cache, vascular, therma
 and RL-hold regression selection passes 612 tests with one skip. No training
 updates are performed.
 
+## Completed revision-2 qualification
+
+The distinct `execution-v3-snapshot` attempt uses the unchanged revision-2
+protocol from source commit `0d66dd7e`. It completes in **874.76 seconds**
+(875.38 seconds including supervision), with **693,895,168 bytes** sampled peak
+group RSS and **8,632,110 bytes** of retained output. Exit status is zero;
+numerical execution acceptance is true. The cooperative 890-second margin is
+only 15.24 seconds, so this is completion evidence with limited timing headroom.
+
+All twelve paired runs finish in 620.68 seconds. This includes 300 detailed/new
+solver public transitions, preserving accepted and partial actions, retraction,
+CUSA work/removal, relaxation, release and checked STOP. All repeated per-action
+receipts and final snapshots match bit-exactly within each variant. Three
+separate observer replays also match their complete snapshots exactly, and all
+six original untagged snapshots reconstruct bit-exactly. Original arrays,
+archive SHA256 and frozen source-code hashes remain unchanged.
+
+| Full-state quantity | Maximum paired disagreement | Frozen absolute limit |
+| --- | ---: | ---: |
+| Displacement | 3.33e-16 mm | 1e-9 mm |
+| Force | 9.76e-19 N | 1e-10 N |
+| Energy | 3.05e-20 N mm | 1e-10 N mm |
+| Strain-squared volume-time | 1.67e-16 mm³ s | 1e-9 mm³ s |
+| Stress-squared volume-time | 1.16e-9 Pa² mm³ s | 0.001 Pa² mm³ s |
+| Other floating state | 1.33e-14 | 1e-9 |
+
+Discrete state remains exact. Both resection branches remove the expected
+additional 8 target mm³ and zero additional non-target mm³, export seven active
+source elements' stored energy once, and retain the full 4,940 mm³ non-target
+access cost. Residual target is 18,800 mm³. The complete exports contain 22
+systems and fourteen source-owned removal events.
+
+Median complete action times from the two alternating-order repetitions are:
+
+| Program | Detailed | Proportional history | Detailed / history |
+| --- | ---: | ---: | ---: |
+| Short hold | 67.66 s | 65.47 s | 1.033 |
+| Sustained hold | 73.64 s | 71.53 s | 1.029 |
+| Checked STOP | 13.60 s | 13.36 s | 1.018 |
+
+These are full accepted/partial action-program costs, excluding comparison and
+observer exports, with only two repetitions. The solver's complete-episode
+advantage is modest; private key work benefits both variants. They do not
+establish interactive latency or RL planning throughput. The remaining isolated
+profile costs include continuum checks/integration, rollback copying and
+occupancy reconstruction.
+
+The independent primitive checker passes all 22 exported systems and fourteen
+removal events. Its maximum free-force residual is 3.17e-19 N; separately
+integrated removal energy differs from the source-owned ledger by at most
+6.62e-23 N mm. A separate provenance audit passes 23 completion/hash/hold checks.
+This numerical gate is complete. Both prior timeouts retain their original
+failed/incomplete receipts and are not relabeled.
+
 Both variants reuse the same DEVELOPMENT UCSF-PDGM-0007 source archive by SHA256
 `0098232cceb946cbc5cccf00ca81b3b8b5c768c726d379fc8e8dbb503cd13127`.
 The 8 mm patch has 1,203 elements and 5,508 corner DOFs, within unchanged live
@@ -156,7 +210,10 @@ OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 \
 ```
 
 Ignored local `testcases/outputs/simulator-qualification-20261029/continuum-history-v1/`
-retains both attempts, source/launch hashes, raw timing samples, independent
-checker scripts and scored validation. Physiological RL remains on hold:
+retains all three attempts, source/launch hashes, raw timing samples, independent
+checker scripts and scored validation. The next
+[fixed-domain exterior preparation](continuum-exterior-coupling.md) begins the
+boundary-mechanics work; it does not promote the failed radius gates.
+Physiological RL remains on hold:
 boundary adequacy, measured transient/device response, accepted acquired shift
 prediction and patient vascular/functional evidence remain open.

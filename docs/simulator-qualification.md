@@ -152,5 +152,11 @@ caps; the second completed all twelve paired comparisons before timing out in
 observer replay. An isolated profile identified repeated occupancy-key encoding
 as a runtime bottleneck; an exact private snapshot reduces that cost while
 preserving canonical public state and the frozen programs, tolerances and caps.
+The subsequent unchanged revision-2 protocol completes in 874.76 seconds:
+all twelve paired runs, three exact observer replays, six exact legacy snapshots,
+22 independently checked systems and fourteen conserved removal events pass.
 Numerical completion remains separate from the failed boundary gates and
-physical/physiological acceptance.
+physical/physiological acceptance. Geometry-only
+[exterior preparation](continuum-exterior-coupling.md) now makes the source-owned
+core/exterior partition and four larger-domain node joins explicit before any
+new boundary coupling solve.
