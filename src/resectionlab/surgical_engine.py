@@ -585,6 +585,11 @@ class SurgicalEngine:
             if slot['grip'] or key in self.state['holds']: raise ValueError('RELEASE_BEFORE_WITHDRAWAL')
             slot['active'] = False
         active = op in ('apply', 'hold', 'grasp', 'extract', 'activate') or slot['active'] and op == 'move' or op == 'inspect' and tool['effect'] == 'probe'
+        # The explicit thermal model shares one physical clock: a persistent
+        # activation continues during inspection regardless of the selected hand.
+        # Historical recordings retain their original scheduling semantics.
+        if 'bipolarThermalV1' in self.scene.properties and op == 'inspect' and slot['active']:
+            active = True
         poses = [{'position': slot['position'], 'quaternion': slot['quaternion']}, *points]
         if len(poses) == 1: poses.append(poses[0])
         segments = []
@@ -679,6 +684,8 @@ class SurgicalEngine:
 
     def _protected_exposure(self):
         fields = {'thermal': self.state['thermal'],
+            'bipolarTemperatureRise': self.state.get('bipolarThermalV1', {}).get('temperatureRiseK', {}),
+            'bipolarTemperatureIntegral': self.state.get('bipolarThermalV1', {}).get('excessTemperatureIntegralKSeconds', {}),
             'boneTemperature': self.state.get('drillingV2', {}).get('temperatureC', {}),
             'boneDose': self.state.get('drillingV2', {}).get('thermalDoseCSeconds', {})}
         return {(name, cell): value for name, values in fields.items() for cell, value in values.items() if int(cell) in self._protected_ids}
@@ -727,6 +734,8 @@ class SurgicalEngine:
         if v2:
             from . import surgical_drilling_v2 as drill
             drill.begin_step(self)
+            from . import surgical_bipolar_thermal as bipolar_heat
+            bipolar_heat.begin_step(self)
             if active and slot['instrument'] == 'cranial_drill':
                 p, _ = drill.contact_limited_pose(self, previous, p, params['radiusMm'])
         cusa_v3 = slot['instrument'] == 'cusa' and cusa_profile(self) is not None
@@ -847,6 +856,7 @@ class SurgicalEngine:
                         if part == 'shaft' and set(self.touched(a, b, radius))-own_held:
                             raise ValueError('POST_DEFORMATION_SHAFT_COLLISION:'+shaft_key)
             drill.end_step(self, dt)
+            bipolar_heat.end_step(self, dt)
             vessel.tick(self, dt)
         tick_fields(self, dt)
         return events
@@ -957,6 +967,7 @@ class SurgicalEngine:
                     'transectedEdges', 'flapComponents', 'debris', 'sources', 'meshCutEdges', 'meshSeams',
                     'vesselConnections', 'vesselWounds', 'deformation', 'deformationModel', 'drillingV2', 'vesselsV2') if name not in omitted},
                 **({'vascularGraphV1': copy.deepcopy(self.state['vascularGraphV1'])} if 'vascularGraphV1' in self.state else {}),
+                **({'bipolarThermalV1': copy.deepcopy(self.state['bipolarThermalV1'])} if 'bipolarThermalV1' in self.state else {}),
                 **({'cusaV3': copy.deepcopy(self.state['cusaV3'])} if 'cusaV3' in self.state else {})}
 
     def snapshot(self):

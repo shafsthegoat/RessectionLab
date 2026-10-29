@@ -293,7 +293,17 @@ def summarize_engine_outcomes(engine: SurgicalEngine, *, baseline: SurgicalEngin
                      'travelMm':_metrics_group(metrics,baseline_metrics,('travelMm',),'mm')['travelMm'],
                      'elapsedSeconds':_metrics_group(metrics,baseline_metrics,('elapsedSeconds',),'s')['elapsedSeconds']},
         'thermal':{'coagulationPowerTimeExposure':_measured(metrics['thermalExposure'],'power_fraction*cell*s'),
-            'meaning':'Uncalibrated coagulation exposure proxy; not a temperature or injury dose.'},
+            'meaning':'Uncalibrated coagulation exposure proxy; not a temperature or injury dose.',
+            **({'bipolarHeat': {'status': 'declared_heat_model_only',
+                **{name: _measured(metrics[name], unit) for name, unit in (
+                    ('bipolarHeatInputJ', 'J'), ('bipolarHeatStoredJ', 'J'),
+                    ('bipolarHeatBathExportJ', 'J'), ('bipolarHeatRemovedJ', 'J'),
+                    ('bipolarHeatResidualJ', 'J'), ('bipolarPeakTemperatureC', 'degC'),
+                    ('bipolarMaxTemperatureC', 'degC'),
+                    ('bipolarExcessTemperatureVolumeTimeMm3KSeconds', 'mm3*K*s'))},
+                'coagulationAndTemperatureCoupled': False,
+                'meaning': 'Assumed delivered heat and passive conduction; not calibrated device temperature, patency or injury.'}}
+                if 'bipolarThermalV1' in engine.state else {})},
         'fluid':fluid,'localVessels':vessel,
         'globalPerfusion':_unavailable('no_anatomical_perfusion_network',status='unknown'),
         'neurologicalRisk':_unavailable('no_calibrated_neurological_outcome_model',status='unknown'),

@@ -105,6 +105,7 @@ function MechanicsV2Details({view,preview}:{view:SurgicalView;preview:boolean}){
   const drill=view.drillingV2,brain=view.deformationModel,vessels=view.vesselsV2;
   const continuum=view.physics?.brain?.model==='resectionlab.voxel-continuum.v1'?view.physics.brain.summary:undefined;
   const vascular=view.physics?.vessel?.model==='resectionlab.vascular-graph.v1'?view.physics.vessel:undefined;
+  const bipolar=view.physics?.bipolarThermal?.model==='resectionlab.bipolar-thermal.v1'?view.physics.bipolarThermal:undefined;
   const sum=(values:Record<string,number>|undefined)=>values?Object.values(values).reduce((a,b)=>a+b,0):undefined;
   const displacement=view.deformation?Math.max(0,...Object.values(view.deformation).map(v=>Math.hypot(...v))):undefined;
   const temperature=drill&&Object.keys(drill.temperatureC).length?Object.values(drill.temperatureC).reduce((max,value)=>Math.max(max,value),-Infinity):view.metrics.drillMaxTemperatureC;
@@ -112,7 +113,14 @@ function MechanicsV2Details({view,preview}:{view:SurgicalView;preview:boolean}){
     ['Drill input energy · J',drill?.inputEnergyJ??view.metrics.drillInputEnergyJ],
     ['Pending cutting work · J',sum(drill?.workJ)??view.metrics.drillPendingWorkJ],
     ['Generated heat · J',drill?.heatGeneratedJ??view.metrics.drillHeatGeneratedJ],
-    ['Maximum modeled temperature · °C',temperature],
+    ['Maximum modeled drill temperature · °C',temperature],
+    ...(bipolar?[
+      ['Bipolar deposited heat · J',view.metrics.bipolarHeatInputJ],
+      ['Bipolar stored / bath / removed heat · J',[view.metrics.bipolarHeatStoredJ,view.metrics.bipolarHeatBathExportJ,view.metrics.bipolarHeatRemovedJ]],
+      ['Bipolar current / peak modeled temperature · °C',[view.metrics.bipolarMaxTemperatureC,view.metrics.bipolarPeakTemperatureC]],
+      ['Bipolar heat budget residual · J',view.metrics.bipolarHeatResidualJ],
+      ['Bipolar excess temperature exposure · mm³·K·s · no injury calibration',view.metrics.bipolarExcessTemperatureVolumeTimeMm3KSeconds],
+    ] as Array<[string,unknown]>:[]),
     ['Brain elastic energy · N·mm',brain?.elasticEnergyNmm],
     ['Active deformation cells',brain?.activeNodes??brain?.active?.length],
     ['Maximum displacement · mm',displacement],
@@ -139,7 +147,7 @@ function MechanicsV2Details({view,preview}:{view:SurgicalView;preview:boolean}){
     ['Vascular budget residual · mm³',vessels?vessels.initialMm3+vessels.refilledMm3-vessels.remainingMm3-vessels.generatedMm3:undefined],
     ] as Array<[string,unknown]>),
   ];
-  return <details><summary>{preview?'Preview':'Recorded'} V2 mechanics and fluid budget</summary><dl className="surgical-declared-fields">{rows.map(([label,value])=><div key={label}><dt>{label}</dt><dd>{typeof value==='number'&&Number.isFinite(value)?+value.toFixed(5):displayValue(value)}</dd></div>)}</dl>{vascular&&<details><summary>Declared vascular graph and assumptions</summary><DeclaredFields data={vascular}/></details>}<p className="surgical-note">{vascular?'The graph budget compares initial pressure-supporting storage plus boundary inflow against remaining storage, boundary outflow and generated wound fluid. Zero unstressed volume and all flow coefficients are declared assumptions.':'The vascular budget compares initial reserve plus refill against remaining reserve and generated fluid.'} These modeled quantities do not estimate patient blood loss or predict tissue injury.</p></details>;
+  return <details><summary>{preview?'Preview':'Recorded'} V2 mechanics and fluid budget</summary><dl className="surgical-declared-fields">{rows.map(([label,value])=><div key={label}><dt>{label}</dt><dd>{typeof value==='number'&&Number.isFinite(value)?+value.toFixed(5):displayValue(value)}</dd></div>)}</dl>{bipolar&&<details><summary>Declared bipolar heat model and assumptions</summary><DeclaredFields data={bipolar}/><p>Delivered heat and temperature are modeled quantities. The coagulation proxy and vessel patency remain separate; temperature does not predict injury or successful hemostasis.</p></details>}{vascular&&<details><summary>Declared vascular graph and assumptions</summary><DeclaredFields data={vascular}/></details>}<p className="surgical-note">{vascular?'The graph budget compares initial pressure-supporting storage plus boundary inflow against remaining storage, boundary outflow and generated wound fluid. Zero unstressed volume and all flow coefficients are declared assumptions.':'The vascular budget compares initial reserve plus refill against remaining reserve and generated fluid.'} These modeled quantities do not estimate patient blood loss or predict tissue injury.</p></details>;
 }
 
 export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,onFrameField,fieldDisplayControls,microscopeControls,learningReport,executionReport,cusaLearning,onRunFrozenCusa,onRunFrozenSector,frozenCusaPending=false}:{onRunFrozenCusa?:(branchId:string)=>Promise<void>;onRunFrozenSector?:(method:string)=>Promise<void>;frozenCusaPending?:boolean;cusaLearning?:unknown;executionReport?:unknown;learningReport?:unknown;anatomyControls?:ReactNode;onFrameField?:()=>void;fieldDisplayControls?:ReactNode;microscopeControls?:ReactNode;c:SurgicalController;onFixture:()=>void;onImport?:(options:SurgicalImportOptions)=>Promise<void>|void;available:boolean}){

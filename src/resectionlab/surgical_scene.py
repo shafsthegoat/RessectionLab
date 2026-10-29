@@ -79,6 +79,8 @@ class SurgicalScene:
         validate_continuum(self)
         from .surgical_vascular_graph import validate as validate_vascular_graph
         validate_vascular_graph(self)
+        from .surgical_bipolar_thermal import validate as validate_bipolar_thermal
+        validate_bipolar_thermal(self)
         def cell(value):
             if type(value) is not int or not 0 <= value < self.labels.size:
                 raise ValueError('Property cell must index this source grid')

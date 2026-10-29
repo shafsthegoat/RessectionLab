@@ -277,6 +277,8 @@ def apply_effect(engine, key, op, cells, p, q, dt):
         state['fluidAddedMm3'] += budget
         return [{'kind': 'irrigation', 'volumeMm3': budget, 'outlet': outlet.tolist()}]
     if effect == 'coagulate':
+        if 'bipolarThermalV1' in engine.scene.properties and state.get('toolMechanicsRevision') not in (1, 2):
+            raise ValueError('BIPOLAR_THERMAL_REQUIRES_ELECTRODE_GEOMETRY')
         if state.get('toolMechanicsRevision') in (1, 2):
             # A bipolar circuit requires approximation of the two electrodes.
             # The 0.5-mm closure is the declared discretized contact convention,
@@ -286,6 +288,8 @@ def apply_effect(engine, key, op, cells, p, q, dt):
             cells = [i for i, v in zip(cells, local) if abs(v[0]) <= .35 + params['jawOpeningMm']/2
                      and abs(v[1]) <= .35 and -params['depthMm']-.35 <= v[2] <= .35]
             if not cells: return []
+        from .surgical_bipolar_thermal import deposit
+        heat_events = deposit(engine, cells, params['power'])
         exposure = params['power'] * dt
         for i in cells: state['thermal'][str(i)] = state['thermal'].get(str(i), 0.) + exposure
         changed = []
@@ -299,7 +303,7 @@ def apply_effect(engine, key, op, cells, p, q, dt):
                 source['exposure'] += exposure
                 if source['exposure'] >= source['coagulationExposure'] and source.get('bleedingActive', True):
                     source['bleedingActive'] = False; changed.append(source['id'])
-        return [{'kind': 'local_energy', 'exposure': exposure, 'controlledBleedingSources': changed}]
+        return [{'kind': 'local_energy', 'exposure': exposure, 'controlledBleedingSources': changed}, *heat_events]
     if effect == 'probe':
         probe = name.removesuffix('_probe')
         evidence = [e for e in engine.scene.properties.get('functionalEvidence', []) if e['probe'] == probe and e['cell'] in cells]

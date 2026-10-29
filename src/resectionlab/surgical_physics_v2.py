@@ -37,6 +37,8 @@ def initialize(engine):
     if enabled(engine):
         validate(engine.scene)
         brain.initialize(engine); bone.initialize(engine); vessel.initialize(engine)
+        from .surgical_bipolar_thermal import initialize as initialize_bipolar_thermal
+        initialize_bipolar_thermal(engine)
 
 def raster(engine):
     removed = set(engine.state['removed']); pairs = []
@@ -51,10 +53,12 @@ def raster(engine):
 def descriptor(engine):
     from .surgical_continuum import descriptor as continuum_descriptor
     from .surgical_vascular_graph import enabled as graph_enabled
+    from .surgical_bipolar_thermal import descriptor as thermal_descriptor
     return {'enabled': True, 'profile': copy.deepcopy(engine.scene.properties['tissuePhysicsV2']),
         'capabilities': {'patientCalibratedPhysiology': False, 'globalPerfusion': False,
             'damageTriggeredVesselWounds': True, 'coupledDeformation': True, 'workLimitedDrilling': True},
         'brain': continuum_descriptor(engine) or {'model': brain.profile()['model']}, 'bone': bone.descriptor(engine), 'vessel': vessel.descriptor(engine),
+        **({'bipolarThermal': thermal_descriptor(engine)} if 'bipolarThermalV1' in engine.scene.properties else {}),
         'limits': ['Uncalibrated research mechanics; no clinical outcome prediction.',
             'Continuous local displacements rasterized to the common source grid for collision, surfaces and slices.',
             'Compressed soft cells retain all source identities; rendered occupancy is their union, not incompressible FEM.',
@@ -67,7 +71,8 @@ def metrics(engine):
     displacements = engine.state.get('deformation', {})
     from .surgical_vascular_graph import enabled as graph_enabled
     vascular = vessel.metrics(engine)
-    return {**bone.metrics(engine), 'severedVesselConnections': (vascular['cutEdgeCount'] if graph_enabled(engine) else
+    from .surgical_bipolar_thermal import metrics as thermal_metrics
+    return {**bone.metrics(engine), **thermal_metrics(engine), 'severedVesselConnections': (vascular['cutEdgeCount'] if graph_enabled(engine) else
         sum(not f['patent'] for f in engine.state['vesselsV2']['faces'].values())), 'vesselPhysicsV2': vascular,
         'brainActiveNodes': len(displacements),
         'brainMaxDisplacementMm': max((float(np.linalg.norm(v)) for v in displacements.values()), default=0.),

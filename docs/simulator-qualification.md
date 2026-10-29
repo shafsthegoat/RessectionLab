@@ -117,3 +117,9 @@ signals, with independent numerical checks and matched generated maneuvers.
 Acquired vascular connectivity and measured flow response remain unvalidated.
 Separate motor/language evidence, device calibration, responsive viewer and
 bounded RL comparison remain subsequent open stages. Large-scale RL stays on hold.
+
+The [opt-in bipolar heat model](bipolar-thermal.md) now budgets delivered heat,
+passive conduction, declared bath exchange and heat exported with removal.
+Continuous/pulsed generated controls replay with distinct temperature histories.
+Temperature-to-coagulation, device response and injury remain unvalidated;
+independent numerical checks do not promote those gates.

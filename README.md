@@ -11,6 +11,10 @@ The [donor-held-out force comparison](docs/continuum-donor-transfer.md) now
 scores acquired human brain measurements: the calibrated continuum improves
 on the default lattice, but loses to zero force in tension. Physical acceptance
 and physiological RL remain on hold.
+An [opt-in bipolar heat model](docs/bipolar-thermal.md) now budgets delivered
+heat, tissue conduction and heat exported with removal. Equal-energy continuous
+and pulsed programs replay with distinct modeled temperature histories; device
+calibration, temperature-based coagulation and injury remain unvalidated.
 An [opt-in vascular graph](docs/vascular-graph.md) separates compression,
 occlusion, transection, wound sealing and declared supply/drainage signals.
 Matched generated maneuvers pass independent numerical checks; patient-specific

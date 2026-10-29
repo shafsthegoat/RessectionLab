@@ -4,13 +4,14 @@ const {app,dialog}=require('electron');
 const fs=require('node:fs'),path=require('node:path'),os=require('node:os');
 const assert=require('node:assert/strict'),crypto=require('node:crypto');
 const root=path.resolve(__dirname,'../..');
+const thermalMode=process.env.RESSECTIONLAB_THERMAL_QUALIFICATION==='1';
 const input=path.resolve(process.env.VASCULAR_CASE||''),output=path.resolve(process.env.VASCULAR_OUTPUT||'');
 for(const p of [input,output])if(!p.startsWith(path.join(root,'testcases')+path.sep))throw Error('Use ignored testcases paths');
 if(fs.existsSync(output))throw Error('Preserve prior evidence');fs.mkdirSync(output,{recursive:true});
 const hash=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex'),original=hash(input);
 const prepared=JSON.parse(fs.readFileSync(process.env.VASCULAR_REPORT||path.join(path.dirname(input),'report.json'),'utf8'));
-assert.equal(prepared.schema,'resectionlab.vascular-qualification.v1');
-const saved=path.join(output,'vascular-saved.ressectionlab');
+assert.equal(prepared.schema,thermalMode?'resectionlab.bipolar-thermal-result.v1':'resectionlab.vascular-qualification.v1');
+const saved=path.join(output,thermalMode?'bipolar-thermal-saved.ressectionlab':'vascular-saved.ressectionlab');
 const profile=fs.mkdtempSync(path.join(os.tmpdir(),'rslab-vascular-'));
 app.setPath('userData',profile);process.argv.push('--case',input,'--automation-hidden');
 dialog.showSaveDialog=async()=>({canceled:false,filePath:saved});
@@ -52,11 +53,23 @@ app.on('browser-window-created',(_event,window)=>{
           await select(branch.branch);await seek(branch.actions);const current=await capture(branch.branch);
           assert.equal(current.id,branch.stateId);assert.equal(current.removed,branch.removed.sourceCellCount);assert.equal(current.target,branch.removed.targetRemovedMm3);
           if(camera)assert.deepEqual(current.camera,camera);else camera=current.camera;
+          if(thermalMode){
+            await js(`(()=>{const s=[...document.querySelectorAll('summary')].find(s=>s.textContent.trim()==='Recorded V2 mechanics and fluid budget');if(!s)throw Error('Missing model budget');if(!s.parentElement.open)s.click();})()`);
+            const deposited=await js(`(()=>{const dt=[...document.querySelectorAll('dt')].find(n=>n.textContent==='Bipolar deposited heat · J');if(!dt)throw Error('Missing bipolar heat readout');return Number(dt.nextElementSibling.textContent);})()`);
+            assert(Math.abs(deposited-branch.thermal.bipolarHeatInputJ)<1e-5,'Native heat input matches source ledger');
+          }
         }
         report.checks.push('All four exact branch endpoints and source/target counts agree with independent headless report; fixed microscope optics and synchronized GPU/HUD');
         await js(`(()=>{const s=[...document.querySelectorAll('summary')].find(s=>s.textContent.trim()==='Recorded V2 mechanics and fluid budget');if(!s)throw Error('Missing model budget');if(!s.parentElement.open)s.click();})()`);
         await wait(`document.body.innerText.includes('Pressure-supporting vascular storage')&&document.body.innerText.includes('no injury calibration')`);
         report.checks.push('Graph storage, supply/drainage and no-injury-calibration disclosures are available');
+        if(thermalMode){
+          await js(`(()=>{const s=[...document.querySelectorAll('summary')].find(s=>s.textContent.trim()==='Declared bipolar heat model and assumptions');if(!s)throw Error('Missing heat assumptions');if(!s.parentElement.open)s.click();})()`);
+          await wait(`document.body.innerText.includes('temperature does not predict injury or successful hemostasis')`);
+          report.checks.push('Source heat ledgers, temperatures and separate coagulation/patency limits are available');
+          const selected=prepared.branches.find(b=>b.branch==='pulsed');await select('pulsed');await seek(selected.actions);
+          await capture('05-pulsed-save-state');
+        }
         report.savedView=await state();await click('Save');await wait(`document.body.innerText.includes('Workspace saved locally')`);
         assert(fs.existsSync(saved));report.saved=saved;report.checks.push('Native graph workspace save succeeds');
       }
