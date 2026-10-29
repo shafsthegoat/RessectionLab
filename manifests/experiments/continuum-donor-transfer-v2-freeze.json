@@ -1,0 +1,57 @@
+{
+  "schema": "resectionlab.continuum-donor-transfer-freeze.v1",
+  "protocol": "manifests/experiments/continuum-donor-transfer-v2.json",
+  "protocolSha256": "ae8b8466a9942e445b404837e44affa3420a947a757b0022be1580486ab2082d",
+  "preparation": "testcases/outputs/simulator-qualification-20261029/donor-transfer-v1/preparation-v2/preparation.json",
+  "preparationSha256": "25a2fe1ab7c4592758af4377b0b043beaeb115d839971bf82a0c54679d7f7bc8",
+  "implementationCommit": "b4d25bccd04b1f284260155b4bad7bd61d959ab3",
+  "scriptSha256": "7bfd77687101ac7118623449ea527ecc1555326b8f67b3b66aa935c6cf81e19a",
+  "helperSha256": "f5a6b65b1f94e5774edb21c1a70a89f2ed41c6cacd303fd121deaf971bfb7adf",
+  "muPa": 229.2622644877536,
+  "poissonRatio": 0.45,
+  "fitInterpretation": "Effective continuum shear scale conditional on declared fixture, source geometry and nu=.45; not intrinsic measured patient stiffness.",
+  "heldOutResponseMembersOpenedBeforeFreeze": [],
+  "numericalGates": {
+    "development": {
+      "finestReactionRelativeChange": 0.030435289460058135,
+      "finestVolumeRelativeError": 0.0004024994347704425,
+      "passed": true,
+      "lastTwoPlusPriorFineSlopeEnvelope": 0.04947630916104111
+    },
+    "evaluation": {
+      "finestReactionRelativeChange": 0.02839074785744733,
+      "finestVolumeRelativeError": 0.0004024994347706645,
+      "passed": true,
+      "lastTwoPlusPriorFineSlopeEnvelope": 0.04630095299035761
+    }
+  },
+  "evaluationPredictions": [
+    {
+      "xyCount": 12,
+      "zCount": 4,
+      "continuumSlopeNPerMm": 0.015060111345952882,
+      "legacySlopeNPerMm": 0.046033014955267626,
+      "legacyMatchedStrainSlopeNPerMm": 0.03452476121645071,
+      "legacyCenterSpanMm": 2.676615
+    },
+    {
+      "xyCount": 20,
+      "zCount": 7,
+      "continuumSlopeNPerMm": 0.01433046592559889,
+      "legacySlopeNPerMm": 0.08266989989261461,
+      "legacyMatchedStrainSlopeNPerMm": 0.07085991419366966,
+      "legacyCenterSpanMm": 3.0589885714285714
+    },
+    {
+      "xyCount": 28,
+      "zCount": 10,
+      "continuumSlopeNPerMm": 0.013923613280825472,
+      "legacySlopeNPerMm": 0.13869620841144611,
+      "legacyMatchedStrainSlopeNPerMm": 0.1248265875703015,
+      "legacyCenterSpanMm": 3.2119380000000004
+    }
+  ],
+  "physicalAcceptanceThreshold": null,
+  "patientMechanicsValidated": false,
+  "rlReady": false
+}
