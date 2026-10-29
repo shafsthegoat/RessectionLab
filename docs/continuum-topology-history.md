@@ -223,3 +223,46 @@ residual is 1.67e-15 in the generated controls' declared units. Independent
 per-element Q1 energy agrees within 2.12e-21 N mm. These are numerical controls,
 not source-program or physical acceptance. Topology/history and larger-domain
 public actions remain unqualified. Physiological RL remains on hold.
+
+## Retained factor and core support update
+
+`ExteriorCoreFactor.rebuild` accepts a new supported-free stiffness, explicit
+core order and injective new-free-to-old-free source lineage. Exterior lineage
+must cover the old exterior bijectively. Complete canonical CSR coefficient
+bits must match for KEE and both directed couplings KIE/KEI under that map.
+The exterior solve composes permutations back to the original factor's order.
+One-bit changes, missing exterior DOFs, split/merged lineage or changed coupling
+refuse this fast path; ordinary full construction remains available.
+
+The new Schur matrix subtracts the mapped **directly measured** exterior
+correction `KIE KEE^-1 KEI` from the current KII. The correction is immutable
+and shared; each new core owns its Schur matrix, Cholesky factor and empty
+body-load cache. Only 64 correction rows are indexed at once, and weak parent
+references let obsolete operators/Schurs/factors be collected. The unchanged
+Schur symmetry and positive-definite core certificate run on every rebuild.
+Reconstructing the correction as `KIIold - Sold` was rejected before commit:
+the independent `KIIold=1e16, correction=1` control loses that correction to
+roundoff and can falsely admit an unsupported new core. Direct retention
+preserves it exactly. The dense source correction adds about 241 MB and must
+be included in source memory admission.
+
+Seventy selected tests pass, including generated two-block removal/release
+exports checked by independent quadrature and a separate split-sector refusal.
+Independent dense controls cover 17 updates and 204 steps, chained I/E
+permutations, arbitrary exterior memory/body forces, contactless advancement
+and actual spring/Maxwell energy. Maximum displacement disagreement is
+7.04e-16 and energy-balance residual 3.05e-17 in the generated controls' units.
+One ill-conditioned control correctly refuses the unchanged symmetry bound.
+
+The [retained source pilot](../manifests/experiments/continuum-retained-pilot-v1.json)
+starts from the previously qualified nonzero step-30 source state. It traverses
+the nine frozen tissue masks at one physical step per mask, then releases and
+relaxes for two more steps. It declares two full exterior builds, seven retained
+core updates and eight removal-energy transfers. A changed exterior must refuse
+retention, and the old operator must be released before the second full build.
+Current-operator Schur probes, source gradients/reactions and cumulative
+removal/contact/BE energy stay within the existing budgets. Every full field
+is exported for source-owned continuity, force, quadrature energy and stress
+checks using the frozen independent checker. Worker and checker share 180
+seconds and 32 MiB outputs, each with 3 GiB sampled process-group RSS and one
+numerical thread. No run retry or full-program/physical acceptance is implied.

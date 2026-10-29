@@ -8,6 +8,7 @@ history projection, matrix symmetrization or approximate modal basis is used.
 from __future__ import annotations
 
 import time
+import weakref
 
 import numpy as np
 from scipy import sparse
@@ -22,6 +23,14 @@ def _finite(value, shape, name):
     if a.dtype.kind not in 'fiu' or a.shape != shape or not np.isfinite(a).all():
         raise ValueError('EXTERIOR_' + name)
     return a.astype(float, copy=False)
+
+
+def _same_sparse_bits(left, right):
+    a = left.tocsr(copy=True); b = right.tocsr(copy=True)
+    for matrix in (a,b):matrix.sum_duplicates();matrix.eliminate_zeros();matrix.sort_indices()
+    return (a.shape == b.shape and np.array_equal(a.indptr,b.indptr)
+            and np.array_equal(a.indices,b.indices)
+            and np.array_equal(a.data.view(np.uint64),b.data.view(np.uint64)))
 
 
 def source_stiffness(geometry, *, source_order=None, check=lambda: None):
@@ -92,10 +101,10 @@ def source_stiffness(geometry, *, source_order=None, check=lambda: None):
 
 class ExteriorOperator:
     """One sparse exterior factor; at most 64 harmonic-response columns at once."""
-    def __init__(self, stiffness, core_dofs, *, check=lambda: None):
+    def __init__(self, stiffness, core_dofs, *, retained=None, free_parent=None, check=lambda: None):
         started = time.perf_counter()
         self.k = sparse.csr_matrix(stiffness, dtype=float, copy=True)
-        self.k.eliminate_zeros()
+        self.k.sum_duplicates(); self.k.eliminate_zeros(); self.k.sort_indices()
         n = self.k.shape[0]
         if (self.k.shape != (n, n) or not 1 < n <= 60000
                 or not np.isfinite(self.k.data).all()):
@@ -117,6 +126,16 @@ class ExteriorOperator:
         self.interface = np.flatnonzero(np.diff(self.kei.indptr))
         self.stats = {'freeDofs': n, 'coreFreeDofs': len(self.core),
                       'exteriorFreeDofs': len(self.exterior), 'coupledCoreDofs': len(self.interface)}
+        self._retained_operator = None
+        self._factor_positions = np.arange(len(self.exterior))
+        self._factor_identity = True
+        if retained is not None:
+            self._retain(retained,free_parent)
+            self.stats.update(exteriorFactorSeconds=0.,exteriorFactorNnz=retained.stats['exteriorFactorNnz'],
+                retainedExteriorFactor=True,exactExteriorAndBothCouplings=True,
+                partitionAndFactorSeconds=time.perf_counter()-started)
+            self._freeze(); check(); return
+        if free_parent is not None: raise ValueError('EXTERIOR_RETAINED_PARENT_WITHOUT_OPERATOR')
         check(); begin = time.perf_counter()
         try:
             # With symmetric ordering and no diagonal pivoting, positive LDL
@@ -144,7 +163,62 @@ class ExteriorOperator:
         self.stats.update(exteriorFactorSeconds=time.perf_counter()-begin,
             exteriorFactorNnz=self.factor.L.nnz+self.factor.U.nnz,
             partitionAndFactorSeconds=time.perf_counter()-started)
-        check()
+        self._freeze(); check()
+
+    def _freeze(self):
+        # Factors and source blocks must describe the same admitted operator
+        # when another topology retains them. No episode fields live here.
+        for matrix in (self.k,self.kii,self.kie,self.kei,self.kee):
+            for array in (matrix.data,matrix.indices,matrix.indptr):array.flags.writeable=False
+        for array in (self.core,self.exterior,self.interface,self._factor_positions):array.flags.writeable=False
+
+    def _retain(self, old, free_parent):
+        if not isinstance(old,ExteriorOperator):raise ValueError('EXTERIOR_RETAINED_OPERATOR')
+        parents = np.asarray(free_parent)
+        if (parents.ndim!=1 or parents.dtype.kind not in 'iu' or len(parents)!=self.k.shape[0]
+                or len(np.unique(parents))!=len(parents) or np.any(parents<0) or np.any(parents>=old.k.shape[0])):
+            raise ValueError('EXTERIOR_RETAINED_FREE_LINEAGE')
+        # The retained fast path refuses splits/joins or lost E coordinates.
+        # Such a graph still has the ordinary full construction path.
+        ei = np.full(old.k.shape[0],-1,dtype=np.int64); ei[old.exterior]=np.arange(len(old.exterior))
+        ci = np.full(old.k.shape[0],-1,dtype=np.int64); ci[old.core]=np.arange(len(old.core))
+        e = ei[parents[self.exterior]]; i = ci[parents[self.core]]
+        if (len(e)!=len(old.exterior) or np.any(e<0) or len(np.unique(e))!=len(e) or np.any(i<0)):
+            raise ValueError('EXTERIOR_RETAINED_PARTITION_LINEAGE')
+        if not _same_sparse_bits(self.kee,old.kee[e][:,e]):
+            raise ValueError('EXTERIOR_RETAINED_EXTERIOR_COEFFICIENTS')
+        if (not _same_sparse_bits(self.kie,old.kie[i][:,e])
+                or not _same_sparse_bits(self.kei,old.kei[e][:,i])):
+            raise ValueError('EXTERIOR_RETAINED_COUPLING_COEFFICIENTS')
+        self.factor = old.factor
+        self._factor_positions = old._factor_positions[e].copy()
+        self._factor_identity = np.array_equal(self._factor_positions,np.arange(len(e)))
+        self._retained_core_rows = i.copy(); self._retained_core_rows.flags.writeable=False
+        # Retaining a factor must not keep every prior K/Schur/history alive.
+        self._retained_operator = weakref.ref(old)
+
+    def retained_schur(self, previous, *, check=lambda: None):
+        if (not isinstance(previous,ExteriorCoreFactor) or self._retained_operator is None
+                or self._retained_operator() is not previous.operator):
+            raise ValueError('EXTERIOR_RETAINED_SCHUR_ORIGIN')
+        begin=time.perf_counter();rows=previous._correction_rows[self._retained_core_rows]
+        schur=self.kii.toarray()
+        # Keep the original measured correction explicitly. Reconstructing it
+        # as KIIold-Sold can lose it to cancellation when KIIold is much larger.
+        # Only a 64-row indexed block is materialized; root correction storage
+        # is immutable/shared, never an E-by-I harmonic or episode-field basis.
+        for start in range(0,len(rows),64):
+            check();selected=rows[start:start+64]
+            correction=previous._correction[np.ix_(selected,rows)]
+            schur[start:start+len(selected)]-=correction
+        scale=float(np.max(np.abs(schur),initial=0.))
+        asymmetry=float(np.max(np.abs(schur-schur.T),initial=0.))
+        if not np.isfinite(schur).all() or asymmetry>EPS*scale:
+            raise ValueError('EXTERIOR_SCHUR_SYMMETRY')
+        self.stats.update(retainedSchurSeconds=time.perf_counter()-begin,schurColumnsSeconds=0.,
+            schurAsymmetryNPerMm=asymmetry,denseSchurBytes=schur.nbytes,
+            retainedSchurCoefficientProof=True,retainedSchurBatchRows=64)
+        check();return schur
 
     def solve_exterior(self, rhs):
         rhs = np.asarray(rhs, float)
@@ -152,12 +226,16 @@ class ExteriorOperator:
             raise ValueError('EXTERIOR_RHS')
         if rhs.ndim == 2 and rhs.shape[1] > 64:
             raise ValueError('EXTERIOR_BATCH_COLUMNS')
-        result = self.factor.solve(rhs)
+        if self._factor_identity:
+            result = self.factor.solve(rhs)
+        else:
+            factor_rhs=np.empty_like(rhs);factor_rhs[self._factor_positions]=rhs
+            result=self.factor.solve(factor_rhs)[self._factor_positions]
         if not np.isfinite(result).all():
             raise ValueError('EXTERIOR_NONFINITE_SOLVE')
         return result
 
-    def columns(self, columns):
+    def columns(self, columns, *, retain_correction=False):
         columns = np.asarray(columns)
         if (columns.ndim != 1 or columns.dtype.kind not in 'iu' or not 1 <= len(columns) <= 64
                 or np.any(columns < 0) or np.any(columns >= len(self.core))):
@@ -167,19 +245,25 @@ class ExteriorOperator:
         residual = float(np.max(np.abs(self.kee@response-rhs), initial=0.))
         if residual > 1e-9:
             raise ValueError('EXTERIOR_BASIS_RESIDUAL')
-        return self.kii[:, columns].toarray()-self.kie@response, residual
+        correction=self.kie@response
+        result=self.kii[:,columns].toarray()-correction
+        return (result,residual,correction) if retain_correction else (result,residual)
 
     def apply(self, core_field):
         value = _finite(core_field, (len(self.core),), 'CORE_FIELD')
         return self.kii@value-self.kie@self.solve_exterior(self.kei@value)
 
-    def dense_schur(self, *, batch_columns=64, check=lambda: None):
+    def dense_schur(self, *, batch_columns=64, retain_correction=False, check=lambda: None):
         if type(batch_columns) is not int or not 1 <= batch_columns <= 64:
             raise ValueError('EXTERIOR_BATCH_COLUMNS')
         begin = time.perf_counter(); schur = self.kii.toarray(); maximum = 0.
+        correction=np.zeros_like(schur) if retain_correction else None
         for start in range(0, len(self.interface), batch_columns):
             check(); columns = self.interface[start:start+batch_columns]
-            schur[:, columns], residual = self.columns(columns)
+            if retain_correction:
+                schur[:,columns],residual,correction[:,columns]=self.columns(columns,retain_correction=True)
+            else:
+                schur[:, columns], residual = self.columns(columns)
             maximum = max(maximum, residual)
         scale = float(np.max(np.abs(schur), initial=0.))
         asymmetry = float(np.max(np.abs(schur-schur.T), initial=0.))
@@ -188,15 +272,22 @@ class ExteriorOperator:
         self.stats.update(schurColumnsSeconds=time.perf_counter()-begin,
             maximumExteriorBasisResidualN=maximum, schurAsymmetryNPerMm=asymmetry,
             batchColumns=batch_columns, denseSchurBytes=schur.nbytes)
+        if retain_correction:self.stats['retainedCorrectionBytes']=correction.nbytes
         check()
-        return schur
+        return (schur,correction) if retain_correction else schur
 
 
 class ExteriorCoreFactor:
     """Fixed tissue operators shared by contact bindings, without history."""
-    def __init__(self, operator, *, check=lambda: None):
+    def __init__(self, operator, *, retained=None, check=lambda: None):
         self.operator = operator
-        self.schur = operator.dense_schur(check=check)
+        if retained is None:
+            self.schur,self._correction=operator.dense_schur(retain_correction=True,check=check)
+            self._correction_rows=np.arange(len(operator.core))
+        else:
+            self.schur=operator.retained_schur(retained,check=check)
+            self._correction=retained._correction
+            self._correction_rows=retained._correction_rows[operator._retained_core_rows].copy()
         begin = time.perf_counter()
         try:
             self.factor = cho_factor(self.schur, lower=True, check_finite=False)
@@ -205,9 +296,22 @@ class ExteriorCoreFactor:
         diagonal = np.diag(self.factor[0])
         if np.min(diagonal)**2 <= EPS*np.max(np.abs(self.schur)):
             raise ValueError('EXTERIOR_UNSUPPORTED_CORE')
+        self.schur.flags.writeable=False;self.factor[0].flags.writeable=False
+        self._correction.flags.writeable=False;self._correction_rows.flags.writeable=False
         self._body_force = None; self._body_field = None
         operator.stats['coreFactorSeconds'] = time.perf_counter()-begin
         check()
+
+    def rebuild(self, stiffness, core_dofs, free_parent, *, check=lambda: None):
+        """Retain proven fixed E/couplings, with a fresh core support factor.
+
+        free_parent maps every new supported-free DOF into this operator's
+        coordinates. No displacement, memory or removal energy is transferred.
+        A refusal leaves this preparation unchanged; full construction remains
+        required for changed exterior/couplings or non-bijective E lineage.
+        """
+        operator=ExteriorOperator(stiffness,core_dofs,retained=self.operator,free_parent=free_parent,check=check)
+        return type(self)(operator,retained=self,check=check)
 
     def body_field(self, body):
         """Exact full equilibrium field; invalidate on every changed load value."""
