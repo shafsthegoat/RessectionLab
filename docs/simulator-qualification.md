@@ -129,3 +129,9 @@ full access costs and separately modeled consequences in a vector. Matched
 parameter-world Pareto checks select a conditional research program; requiring
 unavailable vascular, motor, language and shift evidence selects checked STOP
 with residual. This adds no measured physical acceptance or training admission.
+
+The [non-affine domain audit](continuum-domain-sensitivity.md) exposes substantial
+retractor-force/stress changes between 4 and 8 mm artificial patches. Both 12 mm
+worlds refuse the unchanged source-cell budget, so the prespecified radius
+stability result is not estimable. Silent continuum patch truncation is now a
+rejected action, and the legacy scalar reward refuses this unqualified model.

@@ -19,6 +19,9 @@ The [recorded consequence comparison](docs/consequence-comparison.md) now
 selects between exact native programs with a vector and matched-scenario Pareto
 rule. Full access cost stays visible; requiring unavailable vascular, motor,
 language and shift evidence selects checked STOP with residual.
+An [artificial-boundary audit](docs/continuum-domain-sensitivity.md) finds material
+force/stress sensitivity to patch radius. Truncated continuum patches now reject
+and roll back; radius adequacy and physiological RL remain unqualified.
 An [opt-in vascular graph](docs/vascular-graph.md) separates compression,
 occlusion, transection, wound sealing and declared supply/drainage signals.
 Matched generated maneuvers pass independent numerical checks; patient-specific

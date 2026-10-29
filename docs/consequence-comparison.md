@@ -117,3 +117,9 @@ No new acquired dataset, source-role change, parameter fit or training occurred.
 Real acquired shift prediction, measured transient/device response, suitable
 patient vascular/functional evidence, full-task planning and a qualified RL
 pilot remain open requirements. The original physiological RL hold is unchanged.
+
+A subsequent [artificial-boundary audit](continuum-domain-sensitivity.md) finds
+material force/stress sensitivity between 4 and 8 mm patches and cannot estimate
+8-to-12 mm stability under the unchanged budget. The comparison above retains
+its original 4 mm domain and relaxation assumptions; it does not establish
+radius independence or measured mechanical fidelity.
