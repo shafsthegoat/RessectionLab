@@ -171,3 +171,44 @@ storage contributes to that risk. The certificate now checks identical
 coefficients in bounded 64-column blocks with the same positivity, permutation,
 symmetry and residual tests. Subsequent resource receipts distinguish retained
 resident factors from transient peak memory before the full path is admitted.
+
+The distinct second pilot at `2a53b11f` completes in 5.98 seconds. Peak process
+RSS falls to 1,533,493,248 bytes with the same 6.07e-18 N basis residual. Retained
+RSS is 1,290,256,384 bytes after factor admission and 1,533,444,096 after the
+first batch. That batch takes 0.930 seconds, implying 41.86 seconds across 45
+batches before core/field costs. These measurements support a separately frozen
+full-path witness under the original offline 900-second/3-GiB ceiling.
+
+The [complete source witness](../manifests/experiments/continuum-exterior-qualification-v1.json)
+binds both original 60/276-step schedules, complete-20 mm reference fields,
+geometry and partition hashes before execution. It compares all 336 full free
+displacement/memory states, per-contact and aggregate reaction, actual
+tissue/Maxwell/spring energy, work/dissipation and the fixed 257-cell probe.
+Instantaneous and cumulative quantities retain separate unit-specific absolute
+budgets; the failed 5% radius gates are not changed. Six predetermined
+before/after field samples support independent quadrature, interface-force and
+energy checks. Identical common-prefix sample payloads are reused by SHA256.
+
+The qualification selection passes 85 tests, including a homogeneous affine
+physical-gradient control in Cartesian and oblique reflected coordinates and
+an analytical moving-spring energy example. Volume integration uses only the
+eight Gauss points; eight additional corner points guard the gradient domain
+without adding volume. The controls caught and corrected an initial doubled
+exposure integral before any full source execution; its failed log is retained.
+
+The independent export checker and its generated selftest are SHA256-bound in
+the source protocol before execution. It independently integrates full Q1
+tissue/Maxwell and actual spring energy, backward-Euler work/loss, free
+equilibrium and core/exterior interface traction cancellation at the six
+predetermined steps. It also checks all 336 energy/reaction/probe-rate records
+against the existing complete-reference coordinates and compliance, plus exact
+JSON/NPZ agreement, schedule counts, unit-specific budgets and cumulative
+accounting. Its generated selftest includes an analytical shear field and four
+corruption/refusal controls. Shared identical sample files retain separate
+branch/step records and must have the same content hash.
+
+The worker releases its large factors before the independent export-only stage.
+Both run serially within one 900-second wall and 32-MiB output budget, with each
+process group capped at 3 GiB. The checker receives at most 60 seconds from the
+remaining wall budget. A completed mechanics worker alone cannot accept this
+gate; the frozen independent checker must also pass on the final report hash.
