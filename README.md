@@ -1,5 +1,10 @@
 # RessectionLab
 
+The [simulator qualification workflow](docs/simulator-qualification.md) now
+checks source evidence, exact replay, access-inclusive removal and lattice
+force/energy behavior before physiological planning. It exposes grid-dependent
+mechanics and keeps measured-response and large-scale RL gates open.
+
 The [full case rehearsal collaborator handoff](artifacts/full-case-rehearsal-20261020/README.md)
 includes the saved meningioma source and substantial primary resection, same-case
 vascular rescue, checkpoints, action histories, audit evidence and portable macOS
