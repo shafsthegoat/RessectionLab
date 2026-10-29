@@ -229,6 +229,49 @@ def test_hold_and_deformation_mutations_retain_canonical_invalidation():
     compare_changed()
 
 
+def test_displacement_snapshot_preserves_exact_bytes_and_canonical_key_order():
+    from resectionlab.surgical_engine import _displacement_snapshot
+    field = {'9': [1., -0., 3.], '2': [2., 0., 4.]}
+    saved = _displacement_snapshot(field)
+    assert saved == _displacement_snapshot(dict(reversed(list(field.items()))))
+    field['9'][1] = 0.
+    assert saved != _displacement_snapshot(field)
+    field['9'][0] = np.nextafter(1., 2.).item()
+    changed = _displacement_snapshot(field)
+    field['9'][0] = 1.
+    assert changed != _displacement_snapshot(field)
+    field['9'][0] = float('nan')
+    assert _displacement_snapshot(field) is None
+
+
+@pytest.mark.parametrize('value', [1, True, np.float64(1.), (1., 2., 3.),
+                                 [1., 2.], [float('inf'), 2., 3.]])
+def test_displacement_snapshot_unusual_values_keep_canonical_fallback(value):
+    from resectionlab.surgical_engine import _displacement_snapshot
+    assert _displacement_snapshot({'1': value}) is None
+
+
+def test_displacement_occupancy_key_matches_json_reference_after_public_edits():
+    actual, reference = SurgicalEngine(source()), LegacyKeyEngine(source())
+    cell = str(int(np.ravel_multi_index((9, 9, 9), actual.scene.shape)))
+    for engine in (actual, reference): engine.state['deformation'] = {cell: [0., 0., 0.]}
+    previous = actual.occupancy()
+    for value in [-0., .125, .25, 0.]:
+        for engine in (actual, reference): engine.state['deformation'][cell][0] = value
+        assert actual.occupancy() is not previous
+        assert_ownership(actual, reference)
+        previous = actual.occupancy()
+        assert actual.occupancy() is previous
+    # An equivalent numerical value with a different JSON representation must
+    # leave the exact-float path, and changing back must invalidate it again.
+    actual.state['deformation'][cell][0] = 0
+    actual.occupancy()
+    assert type(actual._occupancy_cache[0][1]) is str
+    actual.state['deformation'][cell][0] = 0.
+    actual.occupancy()
+    assert type(actual._occupancy_cache[0][1]) is tuple
+
+
 @pytest.mark.parametrize('v2', [False, True])
 def test_public_action_records_and_states_match_frozen_legacy_key_exactly(v2):
     scene = source(v2)

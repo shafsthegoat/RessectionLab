@@ -141,3 +141,16 @@ reproduces detailed fixed-topology histories and computes larger source domains
 within explicit resources. Independent primitive checks pass; both frozen
 16-to-20 mm stress-stability gates fail. Live model caps, measured physical
 acceptance and physiological RL admission are unchanged.
+
+The [distributed-history computation](continuum-history-solve.md) adds an
+explicitly versioned opt-in solver for source-owned memory through cuts,
+removal, contact changes and release. New tagged methods also rebuild support
+constraints when an outside-active neighbor is removed; historical untagged
+recordings preserve their prior behavior. Generated independent algebra,
+source-history and alias controls pass. Both first source runs hit their wall
+caps; the second completed all twelve paired comparisons before timing out in
+observer replay. An isolated profile identified repeated occupancy-key encoding
+as a runtime bottleneck; an exact private snapshot reduces that cost while
+preserving canonical public state and the frozen programs, tolerances and caps.
+Numerical completion remains separate from the failed boundary gates and
+physical/physiological acceptance.

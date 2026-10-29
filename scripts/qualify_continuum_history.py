@@ -132,7 +132,8 @@ def worker(output,launch):
     report={'schema':'resectionlab.continuum-history-qualification.v1','status':'started','sourceCommit':identity['commit'],
         'sourceHashes':identity['sourceHashes'],'protocolSha256':file_sha256(PROTOCOL),'sourceRole':p['sourceRole'],
         'physicalValidationPassed':False,'patientMechanicsValidated':False,'largeScaleRL':'hold','physiologicalRL':'hold',
-        'trainingUpdates':0,'newAcquiredDatasetBytes':0}
+        'trainingUpdates':0,'newAcquiredDatasetBytes':0,'phase':'source-admission',
+        'observerBranchesComplete':[],'legacyRecordings':[]}
     def check():
         if time.perf_counter()-started>p['caps']['wallSeconds']-10:raise TimeoutError('Qualification wall cap')
         if sum(f.stat().st_size for f in output.rglob('*') if f.is_file())>p['caps']['outputBytes']-65536:
@@ -152,6 +153,7 @@ def worker(output,launch):
             cases[method],scenes[method]=variant(case,record,method,p['patchRadiusMm'],p.get('tensorContraction'))
             if array_digest(scenes[method].labels)!=label_hash:raise ValueError('Source labels changed')
         fast='proportional-history-compliance';detailed='detailed'
+        report['phase']='paired'
         for repeat in range(p['repetitions']):
             for branch in p['branches']:
                 engines={name:SurgicalEngine(scenes[name]) for name in p['methods']};times={name:[] for name in p['methods']}
@@ -189,6 +191,7 @@ def worker(output,launch):
         trace_path.write_bytes(gzip.compress(json.dumps({branch:{method:traces[(branch,method)] for method in p['methods']} for branch in p['branches']},sort_keys=True,allow_nan=False).encode(),mtime=0))
         prefix=snapshots['retraction-start'];prefix_removed=removed_accounting(scenes[fast],prefix['checkpoint']['state'])
         for branch in p['branches']:
+            report.update(phase='observer',activeBranch=branch);write(output/'report.json',report)
             engine=SurgicalEngine(scenes[fast])
             with observe_history(output,branch,events,samples,p['caps']['maximumCapturedSystemsPerBranch']):
                 for index,action in enumerate(record['branches'][branch]['actions']):
@@ -208,12 +211,18 @@ def worker(output,launch):
                                        'nonTargetRemovedMm3':account['nonTargetRemovedMm3']-prefix_removed['nonTargetRemovedMm3']},
                     'removedStoredEnergyNmm':engine.state[c.PROPERTY]['removedStoredEnergyNmm'],
                     'removedElementCount':engine.state[c.PROPERTY]['removedElementCount'],'exactReplay':True})
+            report['observerBranchesComplete'].append(branch)
+            write(output/'removal-energy-events.json',events);write(output/'system-samples.json',samples)
+            print(json.dumps({'phase':'observer','branch':branch,'elapsedWallSeconds':time.perf_counter()-started}),flush=True)
         write(output/'removal-energy-events.json',events);write(output/'system-samples.json',samples)
         legacy=[]
         for name,snapshot in record['branches'].items():
+            report.update(phase='legacy',activeBranch=name);write(output/'report.json',report)
             replay=SurgicalEngine.restore(original,snapshot,check=check)
             if replay.snapshot()!=snapshot:raise ValueError('Original untagged recording changed: '+name)
             legacy.append({'branch':name,'stateId':replay.state_id,'exactFullSnapshot':True})
+            report['legacyRecordings']=legacy
+            print(json.dumps({'phase':'legacy','branch':name,'elapsedWallSeconds':time.perf_counter()-started}),flush=True)
         main=SurgicalEngine(scenes[fast]).snapshot();native_branches={'main':main,'authored-exposure':snapshots['authored-exposure'],'retraction-start':prefix,
             **{branch:snapshots[(branch,fast)] for branch in p['branches']}}
         parents={'main':None,'authored-exposure':{'branchId':'main','position':0},'retraction-start':{'branchId':'authored-exposure','position':4},
@@ -231,7 +240,7 @@ def worker(output,launch):
         for name,digest in identity['sourceHashes'].items():
             if file_sha256(ROOT/name)!=digest:raise ValueError('Source changed during qualification')
         stopped=native_branches['stop-at-model-limit']
-        report.update(status='completed',case=str(destination),sceneId=scenes[fast].identity,commonActions=p['commonActions'],branches=summary,
+        report.update(status='completed',phase='completed',case=str(destination),sceneId=scenes[fast].identity,commonActions=p['commonActions'],branches=summary,
             stop={'finalStateId':stopped['stateId'],'nativeActions':len(stopped['actions']),'acceptedPrefixStateId':prefix['stateId'],'toolsWithdrawn':True,'clinicalSafetyClaim':False},
             pairedRuns=rows,maximumStateDifferences=maximum,sourceArraysUnchanged=True,sourceArchiveSha256=p['sourceArchiveSha256'],
             legacyRecordings=legacy,systemSamples=samples,removalEnergyEventCount=len(events),linearSolve=solve.profile(tensor_contraction=p.get('tensorContraction')),
@@ -241,6 +250,9 @@ def worker(output,launch):
     except BaseException as error:
         report.update(status='invalid_or_incomplete',pairedRuns=rows,error=type(error).__name__+': '+str(error));raise
     finally:
+        # Preserve usable source/history exports even when an observer replay
+        # reaches its cooperative cap before the complete qualification gate.
+        write(output/'removal-energy-events.json',events);write(output/'system-samples.json',samples)
         report.update(wallSeconds=time.perf_counter()-started,peakRssBytes=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*(1 if sys.platform=='darwin' else 1024))
         write(output/'report.json',report)
     return report

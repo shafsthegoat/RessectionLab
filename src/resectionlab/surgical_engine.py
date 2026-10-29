@@ -13,6 +13,7 @@ import hashlib
 import json
 import math
 import itertools
+from array import array
 from itertools import repeat as _strict_int_repeat
 from operator import is_ as _strict_int_is
 import numpy as np
@@ -136,6 +137,27 @@ def _copy_atomic_type(kind):
     # Membership/equality would dispatch an unusual metaclass __eq__.
     # Only these exact built-in scalar types may bypass deepcopy.
     return kind is float or kind is int or kind is str or kind is bool or kind is type(None)
+
+
+def _displacement_snapshot(field):
+    """Exact private cache identity for built-in finite float triples.
+
+    A fresh sorted-key/IEEE-byte snapshot detects public in-place edits and
+    preserves signed zero without repeatedly formatting the displacement map
+    as JSON. Unusual containers/leaves retain the canonical validation path.
+    This identity never replaces a public state digest or serialized value.
+    """
+    if type(field) is not dict or not all(type(key) is str for key in field):
+        return None
+    keys = tuple(sorted(field))
+    rows = [field[key] for key in keys]
+    if not all(type(row) is list and len(row) == 3 and type(row[0]) is float and
+               type(row[1]) is float and type(row[2]) is float for row in rows):
+        return None
+    values = array('d', itertools.chain.from_iterable(rows))
+    if values.itemsize != 8 or not np.isfinite(np.frombuffer(values, dtype=np.float64)).all():
+        return None
+    return keys, values.tobytes()
 
 
 def _copy_engine_data(value, memo=None):
@@ -358,7 +380,13 @@ class SurgicalEngine:
                 (_try_removed_native(removed_ids) is True or
                  all(map(_strict_int_is, map(type, removed_ids), _strict_int_repeat(int))))
                 if type(removed_ids) is list else all(type(cell) is int for cell in removed_ids)):
-            key = (tuple(removed_ids), _owned_digest(changes))
+            displacement = _displacement_snapshot(changes['deformation']) if 'deformation' in changes else None
+            if displacement is None:
+                change_key = _owned_digest(changes)
+            else:
+                change_key = (_owned_digest({name: value for name, value in changes.items()
+                                             if name != 'deformation'}), displacement)
+            key = (tuple(removed_ids), change_key)
         else:
             key = _owned_digest({'removed': removed_ids, **changes})
         if self._occupancy_cache is not None and self._occupancy_cache[0] == key:
