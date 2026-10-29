@@ -199,7 +199,7 @@ def _viewer_state(case,viewer,cases):
         ranges={'angleDeg':(-70,70),'azimuthDeg':(-180,180),'workingDistanceMm':(60,350),
                 'fieldMm':(12,120),'focusOffsetMm':(-30,30),'light':(0,6)}
         required={'target','outward',*ranges}
-        if not isinstance(microscope,dict) or required-set(microscope) or set(microscope)-required-{'inspectionTransparency','inspectionCutaway'}:
+        if not isinstance(microscope,dict) or required-set(microscope) or set(microscope)-required-{'inspectionTransparency','inspectionCutaway','tissueStyle'}:
             raise ValueError('Invalid microscope settings')
         for name in ('target','outward'):
             vector=microscope[name]
@@ -209,6 +209,7 @@ def _viewer_state(case,viewer,cases):
         for name,(low,high) in ranges.items():
             n=microscope[name]
             if type(n) not in (int,float) or not math.isfinite(n) or not low<=n<=high:raise ValueError('Invalid microscope control: '+name)
+        if microscope.get('tissueStyle','operative') not in ('operative','labels'):raise ValueError('Invalid operative tissue style')
         for name in ('inspectionTransparency','inspectionCutaway'):
             if name in microscope and type(microscope[name]) is not bool:raise ValueError('Invalid microscope inspection flag')
     if 'contextStyle' in viewer and viewer['contextStyle'] not in ('shell','uniform'):

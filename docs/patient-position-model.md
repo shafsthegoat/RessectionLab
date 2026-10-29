@@ -72,3 +72,13 @@ Primary evidence informs qualitative context only:
   semisitting surgery; only the qualitative mechanism is retained here.
 - [NIST pressure conversion](https://www.nist.gov/document/00-20-h133-apdxefinal-17pdf)
   supplies the mmHg–Pa conversion.
+
+The most useful next extension is a measured free-surface/CSF support boundary
+coupled to local tissue mechanics and cavity collapse, calibrated against serial
+intraoperative imaging. This is a proposed research direction, not implemented
+physiology. [Nabavi et al., 2001](https://pubmed.ncbi.nlm.nih.gov/11322439/)
+measured serial deformations in 25 patients: gravity largely explained surface
+shift, while subsurface shift during resection included cavity collapse and
+complex internal changes. Their observations support evaluating that boundary
+model against repeated images; they do not supply a universal displacement,
+safety threshold, ICP or perfusion predictor.

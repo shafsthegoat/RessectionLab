@@ -107,15 +107,28 @@ function contactToolMesh(tool:SurgicalTool,slot:SurgicalSlot):THREE.Group {
     const material=envelope.part==='shaft'?metal:accent;
     // CapsuleGeometry's cylinder length is the centerline distance. Its two
     // caps therefore match the native Minkowski envelope, including the tip.
-    const mesh=new THREE.Mesh(new THREE.CapsuleGeometry(r,length,6,12),material);
-    mesh.position.copy(a).add(b).multiplyScalar(.5);
-    if(length>1e-8)mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),b.clone().sub(a).normalize());
-    part.add(mesh);group.add(part);
-    if(envelope.part==='working'&&['cusa','frazier_suction','irrigation'].includes(tool.id)){
-      // Dark mouth stays on the actual working capsule's distal cap.
-      const mouth=new THREE.Mesh(new THREE.CircleGeometry(r*.55,20),new THREE.MeshStandardMaterial({color:'#10191e',side:THREE.DoubleSide,roughness:.8}));
-      mouth.position.copy(b).add(new THREE.Vector3(0,0,r+.005));part.add(mouth);
+    const hollow=envelope.part==='working'&&['cusa','frazier_suction','irrigation'].includes(tool.id);
+    if(hollow){
+      // Hollow illustrative cannula stays INSIDE the native conservative
+      // capsule. The previous solid sphere/disc looked like a plunger and
+      // obscured the source-owned excavation directly beneath the tip.
+      const axis=length>1e-8?b.clone().sub(a).normalize():new THREE.Vector3(0,0,1);
+      const start=length>1e-8?a:b.clone().addScaledVector(axis,-r*.65),end=b.clone().addScaledVector(axis,r*.65);
+      const orientation=new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0,1,0),axis);
+      const inner=metal.clone();inner.side=THREE.BackSide;inner.color.set('#536168');
+      for(const [radius,shade]of [[r*.46,material],[r*.31,inner]] as const){
+        const tube=new THREE.Mesh(new THREE.CylinderGeometry(radius,radius,start.distanceTo(end),20,1,true),shade);
+        tube.quaternion.copy(orientation);tube.position.copy(start).add(end).multiplyScalar(.5);part.add(tube);
+      }
+      const rim=new THREE.Mesh(new THREE.TorusGeometry(r*.385,r*.075,8,24),material);
+      rim.position.copy(end);rim.quaternion.setFromUnitVectors(new THREE.Vector3(0,0,1),axis);part.add(rim);
+    }else{
+      const mesh=new THREE.Mesh(new THREE.CapsuleGeometry(r,length,6,12),material);
+      mesh.position.copy(a).add(b).multiplyScalar(.5);
+      if(length>1e-8)mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),b.clone().sub(a).normalize());
+      part.add(mesh);
     }
+    part.traverse(object=>{if(object instanceof THREE.Mesh){object.castShadow=true;object.receiveShadow=true;}});group.add(part);
   }
   updateSurgicalToolMesh(group,slot);return group;
 }

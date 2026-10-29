@@ -152,3 +152,23 @@ preview/replay and extraction checks. Existing V1/V2/V3, drilling, deformation,
 vessel, guard and frame suites remain applicable. No calibrated thermal injury,
 acoustic CUSA model, closed-loop suction pressure, membrane FEM, universal
 attachment inference or physiological stimulation-response model is claimed.
+
+## Operative geometry revision 2
+
+The integrated real-imaging raster exposed a CUSA discrepancy: revision 1's
+1.5 mm rear shoulder required tissue outside its aspirating tip sphere to be
+cleared first, so even prolonged accepted work stalled at that shoulder.
+Explicit `configure(mechanicsRevision=2)` uses the unchanged 1.5 mm working
+sphere and a continuous checked 0.5 mm shaft up to the tip. It removes the
+unaspirated shoulder; shaft, swept rotation, protected-material, two-tool and
+finite-work admission remain enforced. This is a declared conservative research
+proxy, not measured CUSA geometry. V3 capacity remains 2 mm³/s at unit power/duty.
+Old actions default to revision 1 and retain exact state hashes.
+
+`tests/test_operative_cusa_geometry.py` preserves a revision-1 golden replay,
+checks revision-2 source ownership and work budget, rotational/shaft/material/
+protection/two-tool guards, and exercises positive effects across all 15 tools.
+It also covers actual accepted/blocked jaw geometry, retained forceps ownership
+through release/regrasp and checked exterior extraction, and separate conserved
+fluid/debris ledgers. Cannula rendering is a hollow illustrative mesh enclosed
+by the native working envelope, at the exact recorded pose.

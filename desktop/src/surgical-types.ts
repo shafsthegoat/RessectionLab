@@ -3,7 +3,7 @@ export type SurgicalPose = {position:Point3;quaternion:[number,number,number,num
 export type SurgicalSlot = SurgicalPose & {instrument:string;active:boolean;inserted:boolean;grip:number[];parameters:Record<string,number>;contactGeometry?:Array<{a:Point3;b:Point3;radiusMm:number;part:string}>};
 export interface SurgicalTool {id:string;name:string;category:string;geometry:string;materials:string[];effect:string;radiusMm:number;shaftRadiusMm:number;workingLengthMm:number;parameters?:Record<string,{min:number;max:number;default:number;unit?:string}>;approximation?:string}
 export interface SurgicalRegion {id:number;name:string;material:string;target:boolean;color:string}
-export interface SurgicalAction {slot:string;operation:string;instrument?:string;pose?:SurgicalPose;path?:SurgicalPose[];parameters?:Record<string,number>;position?:PatientPosition;duration:number}
+export interface SurgicalAction {slot:string;operation:string;mechanicsRevision?:1|2;instrument?:string;pose?:SurgicalPose;path?:SurgicalPose[];parameters?:Record<string,number>;position?:PatientPosition;duration:number}
 export interface PatientPosition {preset:string;bodyTiltDeg?:number;headRotationRasDeg?:Point3;heartToSiteRasMm?:Point3;siteHeightAboveHeartMm?:number;heightEstimateSource?:string}
 export interface PositionEffects extends PatientPosition {gravityRasMPerS2:Point3;siteHeightAboveHeartEstimateMm:number;hydrostaticSiteMinusHeartPa:number;hydrostaticSiteMinusHeartMmHg:number;qualitativeContext:string[];mechanicsAssumptions:string}
 export interface SurgicalOutcome {status:'accepted'|'partial'|'rejected';reason:string|null;completedFraction:number;events:Array<Record<string,unknown>>}

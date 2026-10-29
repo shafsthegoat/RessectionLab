@@ -21,6 +21,7 @@ import {applySourceContextMaterial} from './sourceContextMaterial';
 import {displaySurfaceNormals} from './displaySurfaceNormals';
 import {applyVesselDepthMaterial} from './anatomySurfaceMaterial';
 import {microscopeFov} from './microscope';
+import {applyOperativeSurface} from './operativeMaterial';
 import {surfaceKind} from './surfacePolicy';
 import {packAnatomyLabels,materializeLayerMask,MAX_ANATOMY_LAYERS} from './labelPacking';
 import {checkedPublicGoal,PUBLIC_GOAL_COLOR} from './publicGoal';
@@ -686,6 +687,8 @@ export class VolumeRenderer {
       }),
     );
     placeInSourceFrame(mesh, this.affine);
+    mesh.castShadow=true;mesh.receiveShadow=true;
+    applyOperativeSurface(mesh.material,layer.kind,this.workspaceSettings);
     if(vessel)applyVesselDepthMaterial(mesh.material,this.bounds);
     applySourceContextMaterial(mesh.material,this.workspaceSettings.contextStyle==='shell'&&['brain','head-envelope','bone','skull'].includes(layer.kind??''));
     mesh.visible = this.surfaceVisible(layer.name);
@@ -973,7 +976,16 @@ export class VolumeRenderer {
       const fov=surgeon?microscopeFov(surgeon):34;
       if(this.camera.fov!==fov){this.camera.fov=fov;this.camera.updateProjectionMatrix();this.requestRender();}
     }
-    if(this.scene&&surgeon&&!this.operativeLight){this.operativeLight=new THREE.DirectionalLight(0xfff3e5,0);this.scene.add(this.operativeLight,this.operativeLight.target);}
+    if(this.scene&&surgeon&&!this.operativeLight){
+      this.operativeLight=new THREE.DirectionalLight(0xfff3e5,0);
+      this.operativeLight.shadow.mapSize.set(1024,1024);this.operativeLight.shadow.bias=-.0002;this.operativeLight.shadow.normalBias=.04;
+      this.scene.add(this.operativeLight,this.operativeLight.target);
+    }
+    if(this.renderer?.shadowMap){this.renderer.shadowMap.enabled=!!surgeon;this.renderer.shadowMap.type=THREE.PCFSoftShadowMap;}
+    if(this.operativeLight){
+      this.operativeLight.castShadow=!!surgeon;
+      if(surgeon){const c=this.operativeLight.shadow.camera,extent=Math.max(12,surgeon.fieldMm*.7);c.left=-extent;c.right=extent;c.top=extent;c.bottom=-extent;c.near=.1;c.far=surgeon.workingDistanceMm+160;c.updateProjectionMatrix();}
+    }
     if(this.operativeLight){this.operativeLight.intensity=surgeon?surgeon.light:0;this.updateOperativeLight();}
     if(this.panes?.anatomy)this.panes.anatomy.dataset.operativeView=surgeon?'surgeon':'external';
     const framingSignature=JSON.stringify(settings.sliceFraming);
@@ -982,7 +994,7 @@ export class VolumeRenderer {
     // materials. Compare values so cloned or in-place edited settings work too.
     const signature = JSON.stringify([settings.layerOpacity, settings.layerColor,
       settings.clipping, settings.clipBox, settings.obliqueClip,
-      settings.fusion?.opacity, settings.volumeRendering,settings.skullMode,settings.sliceOverlay,settings.contextStyle,settings.operativeView,settings.microscope?.inspectionTransparency]);
+      settings.fusion?.opacity, settings.volumeRendering,settings.skullMode,settings.sliceOverlay,settings.contextStyle,settings.operativeView,settings.microscope?.inspectionTransparency,settings.microscope?.inspectionCutaway,settings.microscope?.tissueStyle]);
     if (signature === this.appearanceSignature) return;
     if(this.appearanceSignature!=null){this.beginInteraction();this.endInteraction();}
     this.appearanceSignature = signature;
@@ -1008,6 +1020,7 @@ export class VolumeRenderer {
         mesh.visible=this.surfaceVisible(layer.name);
         const material=mesh.material as THREE.MeshStandardMaterial;
         material.color.set(appearance.color);material.opacity=appearance.opacity;
+        applyOperativeSurface(material,layer.kind,settings);
         applySourceContextMaterial(material,settings.contextStyle==='shell'&&['brain','head-envelope','bone','skull'].includes(layer.kind??''));
         const transparent = appearance.opacity < 1;
         if (material.transparent !== transparent) {
@@ -1041,6 +1054,13 @@ export class VolumeRenderer {
   private updateOperativeLight():void {
     if(!this.operativeLight)return;
     this.operativeLight.position.copy(this.camera.position);
+    // A small optical lighting offset reveals true descending walls. Shadow
+    // maps still use the actual retained surfaces; no cavity is painted on.
+    if(this.workspaceSettings?.operativeView==='surgeon'){
+      const direction=this.camera.position.clone().sub(this.controls.target).normalize();
+      const right=new THREE.Vector3().crossVectors(this.camera.up,direction).normalize();
+      this.operativeLight.position.addScaledVector(right,(this.workspaceSettings.microscope?.fieldMm??26)*.4);
+    }
     this.operativeLight.target.position.copy(this.controls.target);
   }
 
@@ -1057,6 +1077,7 @@ export class VolumeRenderer {
     if (layer) {
       const appearance = layerAppearance(layer.name, layer.color, this.workspaceSettings,layer.kind);
       material.color.set(appearance.color);
+      applyOperativeSurface(material,layer.kind,this.workspaceSettings);
       material.opacity = appearance.opacity;
       object.visible = this.surfaceVisible(layer.name);
     } else {

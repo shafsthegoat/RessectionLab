@@ -18,6 +18,8 @@ export function SurgeonViewControls({c,settings,onSettings}:{c:SurgicalControlle
     {enabled&&m&&<>
       {c.result?.researchSetup&&<p className="surgical-warning" aria-label="Operative exposure assumption">{c.result.researchSetup.description}</p>}
       <p className="surgical-note">Fixed optical viewpoint · opaque tissue occludes the field. Place the view above an actual opening; intact tissue remains in the way. No exposure is created by the camera.</p>
+      <label>Surface material<select aria-label="Operative surface material" value={m.tissueStyle??'operative'} onChange={e=>update({tissueStyle:e.target.value as 'operative'|'labels'})}><option value="operative">Illustrative tissue material</option><option value="labels">Source segmentation colours</option></select></label>
+      <p className="surgical-note">{m.tissueStyle==='labels'?'Source label colours.':'Illustrative tissue colours and roughness; no acquired tissue colour, vessels or surface anatomy are added.'} Linked MRI retains source label colours. Lighting and shadows use the retained surfaces.</p>
       {([
         ['angleDeg','Viewing angle',-70,70,1,'°'],['azimuthDeg','Angle direction',-180,180,5,'°'],['workingDistanceMm','Working distance',60,350,5,'mm'],['fieldMm','Field / magnification',12,120,1,'mm'],['focusOffsetMm','Focus plane offset',-30,30,.5,'mm'],['light','Operative light',0,6,.1,'']
       ] as const).map(([key,label,min,max,step,unit])=><label key={key}>{label} <input aria-label={label} type="range" min={min} max={max} step={step} value={m[key]} onChange={e=>update({[key]:Number(e.target.value)})}/><output>{m[key]} {unit}</output></label>)}

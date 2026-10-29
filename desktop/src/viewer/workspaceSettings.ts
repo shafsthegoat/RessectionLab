@@ -10,6 +10,7 @@ export interface MicroscopeSettings {
   fieldMm: number;
   focusOffsetMm: number;
   light: number;
+  tissueStyle?: 'operative'|'labels';
   inspectionTransparency?: boolean;
   inspectionCutaway?: boolean;
 }
@@ -17,11 +18,11 @@ export function validMicroscopeSettings(value:unknown):value is MicroscopeSettin
   if(!value||typeof value!=='object'||Array.isArray(value))return false;
   const s=value as MicroscopeSettings;
   const ranges={angleDeg:[-70,70],azimuthDeg:[-180,180],workingDistanceMm:[60,350],fieldMm:[12,120],focusOffsetMm:[-30,30],light:[0,6]} as const;
-  const allowed=['target','outward',...Object.keys(ranges),'inspectionTransparency','inspectionCutaway'];
+  const allowed=['target','outward',...Object.keys(ranges),'inspectionTransparency','inspectionCutaway','tissueStyle'];
   if(Object.keys(s).some(key=>!allowed.includes(key)))return false;
   if(![s.target,s.outward].every(v=>Array.isArray(v)&&v.length===3&&v.every(n=>typeof n==='number'&&Number.isFinite(n)&&Math.abs(n)<1e6))||Math.hypot(...s.outward)<1e-8)return false;
   if(Object.entries(ranges).some(([key,[min,max]])=>{const n=s[key as keyof typeof ranges];return typeof n!=='number'||!Number.isFinite(n)||n<min||n>max;}))return false;
-  return ['inspectionTransparency','inspectionCutaway'].every(key=>s[key as 'inspectionTransparency']===undefined||typeof s[key as 'inspectionTransparency']==='boolean');
+  return (s.tissueStyle===undefined||['operative','labels'].includes(s.tissueStyle))&&['inspectionTransparency','inspectionCutaway'].every(key=>s[key as 'inspectionTransparency']===undefined||typeof s[key as 'inspectionTransparency']==='boolean');
 }
 export interface ViewerClipping { axis: 'x'|'y'|'z'; value: number; enabled: boolean; flipped?: boolean }
 /** Display choices only. No setting changes source arrays, masks or registration. */

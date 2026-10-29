@@ -14,6 +14,13 @@ def envelopes(tool, parameters, position, quaternion, inflation=0.):
     shape = tool['geometry']
     def capsule(a, b, width, part):
         return p + r.apply(a), p + r.apply(b), width + inflation, part
+    if shape == 'aspirator' and parameters.get('contactGeometryRevision') == 2:
+        # V3 aspiration acts at the spherical tip. A widened rear capsule in
+        # revision1 demanded removal outside that sphere before further work.
+        # Revision2 keeps the declared 1.5-mm tip / .5-mm shaft and work rate,
+        # with a continuous checked shaft rather than an unaspirated shoulder.
+        return [capsule([0,0,-40],[0,0,0],tool['shaftRadiusMm'],'shaft'),
+                capsule([0,0,0],[0,0,0],radius,'working')]
     result = [capsule([0, 0, -40], [0, 0, -max(1., min(depth, 5.))], tool['shaftRadiusMm'], 'shaft')]
     if shape in ('scissors', 'forceps'):
         half = parameters.get('jawOpeningMm', 2.) / 2

@@ -52,7 +52,7 @@ def _holds(engine):
 
 
 def rigid_cells(engine):
-    if engine.state.get('toolMechanicsRevision') != 1: return set()
+    if engine.state.get('toolMechanicsRevision') not in (1, 2): return set()
     return {c for h in [*engine.state['holds'].values(), *engine.state.get('detachedFragments', [])]
             if 'target' not in h for c in h['cells']}
 

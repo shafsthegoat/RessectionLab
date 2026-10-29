@@ -391,7 +391,7 @@ class SurgicalEngine:
     def parameters(self, slot):
         tool = TOOLS[slot['instrument']]
         extra = {'rpm': 40000., 'forceN': 1., 'duty': 1.} if self.scene.properties.get('tissuePhysicsV2') else {}
-        return {**extra, 'radiusMm': tool['radiusMm'], 'depthMm': 2., 'flowMm3PerSecond': 20., 'power': 1., 'jawOpeningMm': 2., **slot['parameters']}
+        return {**extra, 'radiusMm': tool['radiusMm'], 'depthMm': 2., 'flowMm3PerSecond': 20., 'power': 1., 'jawOpeningMm': 2., **slot['parameters'], **({'contactGeometryRevision':2} if self.state.get('toolMechanicsRevision')==2 else {})}
 
     def preview(self, action, *, check=None, include_view=True, include_history=True):
         if check is not None: check()
@@ -420,7 +420,7 @@ class SurgicalEngine:
         return result
 
     def _validate(self, action):
-        if not isinstance(action, dict) or set(action) - {'slot', 'operation', 'instrument', 'pose', 'path', 'parameters', 'duration', 'position'}:
+        if not isinstance(action, dict) or set(action) - {'slot', 'operation', 'instrument', 'pose', 'path', 'parameters', 'duration', 'position', 'mechanicsRevision'}:
             raise ValueError('Unsupported action fields')
         if action.get('slot') not in self.state['slots']: raise ValueError('Choose left or right instrument slot')
         if action.get('operation') not in {'place', 'move', 'activate', 'deactivate', 'apply', 'hold', 'grasp', 'release', 'exchange', 'withdraw', 'extract', 'inspect', 'configure', 'position'}:
@@ -429,6 +429,7 @@ class SurgicalEngine:
         if not math.isfinite(duration) or not 0 < duration <= 30: raise ValueError('Duration must be in (0, 30] seconds')
         if len(self.actions) >= MAX_STEPS: raise ValueError('Action limit reached; save and start a new episode')
         points = action.get('path', [action['pose']] if 'pose' in action else [])
+        if 'mechanicsRevision' in action and (action['operation'] != 'configure' or type(action['mechanicsRevision']) is not int or action['mechanicsRevision'] not in (1,2)): raise ValueError('INVALID_INSTRUMENT_MECHANICS_REVISION')
         if 'position' in action and action['operation'] != 'position': raise ValueError('POSITION_PAYLOAD_REQUIRES_POSITION_OPERATION')
         if action['operation'] in ('configure', 'position'):
             if points or action.get('parameters') or action.get('instrument'): raise ValueError('SETUP_CANNOT_MOVE_INSTRUMENT')
@@ -503,10 +504,10 @@ class SurgicalEngine:
             if any(s['active'] or s['inserted'] for s in self.state['slots'].values()) or self.state['holds']:
                 raise ValueError('WITHDRAW_BOTH_TOOLS_BEFORE_SETUP')
             if op == 'configure':
-                self.state['toolMechanicsRevision'] = 1
+                self.state['toolMechanicsRevision'] = action.get('mechanicsRevision', 1)
                 from .surgical_cusa_v3 import initialize
                 initialize(self)
-                events = [{'kind': 'instrument_mechanics_enabled', 'revision': 1}]
+                events = [{'kind': 'instrument_mechanics_enabled', 'revision': self.state['toolMechanicsRevision']}]
             else:
                 from .surgical_position import apply_position
                 if not self.scene.properties.get('tissuePhysicsV2'): raise ValueError('POSITION_REQUIRES_V2_MECHANICS')
@@ -516,7 +517,7 @@ class SurgicalEngine:
                     if check is not None: _checked_operation(check)
                     events.extend(self._substep(key, 'inspect', np.asarray(slot['position']), np.asarray(slot['quaternion']), False, duration/max(1, math.ceil(duration/.1))))
             return {'status': 'accepted', 'reason': None, 'completedFraction': 1., 'events': events}
-        if op == 'extract' and self.state.get('toolMechanicsRevision') == 1:
+        if op == 'extract' and self.state.get('toolMechanicsRevision') in (1, 2):
             if slot['instrument'] != 'tumor_forceps' or points: raise ValueError('UNSUPPORTED_EXTRACTION')
             from .surgical_effects import extract_at_exit
             if key not in self.state['holds']: raise ValueError('GRASP_BEFORE_EXTRACTION')
@@ -536,7 +537,7 @@ class SurgicalEngine:
         tool = TOOLS[slot['instrument']]
         params = self.parameters(slot)
         jaw_target = params['jawOpeningMm']
-        articulate = self.state.get('toolMechanicsRevision') == 1 and tool['geometry'] in ('forceps','scissors') and previous_jaw != jaw_target
+        articulate = self.state.get('toolMechanicsRevision') in (1, 2) and tool['geometry'] in ('forceps','scissors') and previous_jaw != jaw_target
         if articulate: slot['parameters']['jawOpeningMm'] = previous_jaw
         cusa_v3 = slot['instrument'] == 'cusa' and cusa_profile(self) is not None
         if cusa_v3:
@@ -552,7 +553,7 @@ class SurgicalEngine:
         if op == 'activate': slot['active'] = True
         if op == 'release':
             retained = self.state['holds'].get(key)
-            if retained and 'target' not in retained and self.state.get('toolMechanicsRevision') == 1:
+            if retained and 'target' not in retained and self.state.get('toolMechanicsRevision') in (1, 2):
                 self.state.setdefault('detachedFragments', []).append(copy.deepcopy(retained))
             self.state['holds'].pop(key, None); slot['grip'] = []; slot['active'] = False
             self.occupancy()
@@ -717,7 +718,7 @@ class SurgicalEngine:
         end_pose = {'position': p, 'quaternion': q}
         swept = swept_envelopes(tool, params, slot, end_pose)
         shaft_cells = set()
-        revised_contact = self.state.get('toolMechanicsRevision') == 1 and tool['effect'] not in ('remove', 'suction', 'irrigate', 'probe')
+        revised_contact = self.state.get('toolMechanicsRevision') in (1, 2) and tool['effect'] not in ('remove', 'suction', 'irrigate', 'probe')
         working_cells = set() if revised_contact else set(tip_cells)
         for a, b, radius, part in swept:
             if part == 'shaft': shaft_cells.update(self.touched(a, b, radius))
@@ -725,7 +726,7 @@ class SurgicalEngine:
         if revised_contact: tip_cells = sorted(working_cells)
         held = set(self.state['holds'].get(key, {}).get('cells', []))
         if set(shaft_cells) - held: raise ValueError('SHAFT_COLLISION')
-        if cusa_v3 and active and working_cells - held - set(self.touched(p, p, params['radiusMm'])):
+        if cusa_v3 and active and self.state.get('toolMechanicsRevision') != 2 and working_cells - held - set(self.touched(p, p, params['radiusMm'])):
             raise ValueError('RETAINED_TISSUE_COLLISION: CUSA body requires a cleared corridor')
         for other_key, other in self.state['slots'].items():
             if other_key == key: continue
@@ -736,7 +737,7 @@ class SurgicalEngine:
             if any(self.by_label[int(self.scene.labels.ravel()[i])]['material'] not in tool['materials'] for i in working_cells - held):
                 raise ValueError('UNSUPPORTED_MATERIAL')
             if not active and key not in self.state['holds']: raise ValueError('RETAINED_TISSUE_COLLISION')
-        effect_cells = sorted(working_cells) if self.state.get('toolMechanicsRevision') == 1 and tool['effect'] not in ('remove','suction','irrigate','probe') else tip_cells
+        effect_cells = sorted(working_cells) if self.state.get('toolMechanicsRevision') in (1, 2) and tool['effect'] not in ('remove','suction','irrigate','probe') else tip_cells
         eligible = [i for i in effect_cells if self.by_label[int(self.scene.labels.ravel()[i])]['material'] in tool['materials']]
         field_action = active and tool['effect'] in ('suction', 'irrigate')
         if field_action and np.linalg.norm(p - previous) > 1e-8:
@@ -770,7 +771,7 @@ class SurgicalEngine:
                 from .surgical_deformation_v2 import set_target
                 set_target(self, key, p)
             else:
-                if self.state.get('toolMechanicsRevision') == 1 and (rotation(q)*rotation(slot['quaternion']).inv()).magnitude() > 1e-8:
+                if self.state.get('toolMechanicsRevision') in (1, 2) and (rotation(q)*rotation(slot['quaternion']).inv()).magnitude() > 1e-8:
                     raise ValueError('FRAGMENT_ROTATION_UNSUPPORTED: translate the source-bound fragment')
                 delta = self.scene.inverse[:3, :3] @ (p - finite(hold['origin'], 3))
                 hold['offset'] = (np.rint(delta).astype(int) + np.asarray(hold.get('baseOffset', [0,0,0]))).tolist()
@@ -780,7 +781,7 @@ class SurgicalEngine:
             if other_key == key or not other['active']: continue
             other_tool = TOOLS[other['instrument']]
             other_cells = self.touched(other['position'], other['position'], self.parameters(other)['radiusMm'])
-            if self.state.get('toolMechanicsRevision') == 1 and other_tool['effect'] not in ('remove','suction','irrigate','probe'):
+            if self.state.get('toolMechanicsRevision') in (1, 2) and other_tool['effect'] not in ('remove','suction','irrigate','probe'):
                 contacts = set()
                 for a,b,radius,part in envelopes(other_tool,self.parameters(other),other['position'],other['quaternion']):
                     if part != 'shaft': contacts.update(self.touched(a,b,radius))
@@ -892,7 +893,7 @@ class SurgicalEngine:
     def observe(self, *, _state_id=None):
         from .surgical_position import describe_position
         slots = copy.deepcopy(self.state['slots'])
-        if self.state.get('toolMechanicsRevision') == 1:
+        if self.state.get('toolMechanicsRevision') in (1, 2):
             from .surgical_motion import envelopes
             for key, slot in slots.items():
                 slot['contactGeometry'] = [{'a': a.tolist(), 'b': b.tolist(), 'radiusMm': radius, 'part': part}
