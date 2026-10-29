@@ -718,7 +718,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
       <div className="rl-viewer-anatomy rl-viewer-pane">
         <div className="rl-viewer-heading">
           <span className="rl-viewer-tag">3D</span>
-          <span>{settings.operativeView==='surgeon'?'Operative field · illustrative material':volumeDisplayed?'Volume + structures':'Segmentation surfaces'}</span>
+          <span>{settings.operativeView==='surgeon'?(settings.microscope?.tissueStyle==='labels'?'Operative field · source labels':'Operative field · illustrative material'):volumeDisplayed?'Volume + structures':'Segmentation surfaces'}</span>
           <span className="rl-viewer-frame">RAS · mm</span>
         </div>
         <div
@@ -736,7 +736,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         >
           {settings.operativeView==='surgeon'&&surgicalView&&<div className="operative-readout" data-operative-readout-state={surgicalView.stateId}>
             <strong>Native operative state · {Number(surgicalView.metrics.elapsedSeconds).toFixed(1)} s</strong>
-            <span>Target removed {Number(surgicalView.metrics.targetRemovedMm3).toFixed(1)} mm³ · remaining {Math.max(0,(surgicalView.scene.environment?.target.initialVolumeMm3??0)-Number(surgicalView.metrics.targetRemovedMm3)).toFixed(1)} mm³</span>
+            <span>Target removed {Number(surgicalView.metrics.targetRemovedMm3).toFixed(1)} mm³ · remaining {surgicalView.scene.environment?.target.initialVolumeMm3===undefined?'unknown':`${Math.max(0,surgicalView.scene.environment.target.initialVolumeMm3-Number(surgicalView.metrics.targetRemovedMm3)).toFixed(1)} mm³`}</span>
             <span>CUSA pending work {Number(surgicalView.metrics.cusaPendingCapacityMm3??0).toFixed(2)} mm³ · suction {Number(surgicalView.metrics.fluidRemovedMm3??0).toFixed(2)} mm³</span>
             <span>Field fluid {Number(surgicalView.metrics.fluidPresentMm3??0).toFixed(2)} mm³ · source grid {surgicalView.scene.resolutionMm.map(n=>n.toFixed(1)).join(' × ')} mm</span>
           </div>}

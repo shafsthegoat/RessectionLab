@@ -37,9 +37,18 @@ const parameterSpecs:Record<string,{label:string;min:number;max:number;default:n
 
 function ActionResult({outcome,title}:{outcome:Pick<SurgicalOutcome,'reason'|'events'>&{status:string;completedFraction?:number};title:string}){
   const summaries=summarizeSurgicalEvents(outcome.events??[]);
+  const explanation:Record<string,string>={
+    TISSUE_ASPIRATION_IN_PROGRESS:'The tip is held at retained tissue while finite aspiration work accumulates.',
+    WITHDRAW_BEFORE_EXCHANGE:'Withdraw this instrument before exchanging it.',
+    WITHDRAW_BOTH_TOOLS_BEFORE_SETUP:'Withdraw and deactivate both instruments before changing the setup.',
+    SHAFT_COLLISION:'The requested shaft sweep intersects retained tissue.',
+    TOOL_COLLISION:'The requested instrument sweep intersects the other hand.',
+    RETAINED_TISSUE_COLLISION:'Retained tissue blocks the requested movement.',
+  };
+  const why=outcome.reason?explanation[outcome.reason.split(':')[0]]:undefined;
   return <section aria-label={title} className="surgical-preview" role="status"><strong>{title} · {outcome.status}</strong>
     {Number.isFinite(outcome.completedFraction)&&<p>{+(100*outcome.completedFraction!).toFixed(1)}% of requested action completed</p>}
-    {outcome.reason&&<p>{outcome.reason}</p>}
+    {outcome.reason&&<p>{why&&<>{why} </>}<code>{outcome.reason}</code></p>}
     {summaries.length?<ul>{summaries.map(s=><li key={s.kind}>{s.label}{s.count>1?` (${s.count} samples)`:''}{s.details.length?`: ${s.details.join(' · ')}`:''}</li>)}</ul>:<p>{outcome.reason?'No effect events were recorded.':'No effect events were reported; the engine supplied no further effect reason.'}</p>}
   </section>;
 }

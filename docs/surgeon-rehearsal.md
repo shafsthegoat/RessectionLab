@@ -4,6 +4,9 @@ Use the existing primary checkout on `shaf/surgeon-physics-rehearsal`. The sourc
 anatomy, RAS-mm affine and persistent source-cell identities remain authoritative.
 No policy fitting, RL retraining or dataset acquisition is part of this increment.
 
+The latest visibly excavating, active-suction example and precise local evidence
+are described in [Operative demonstration](operative-demonstration.md).
+
 In Rehearse, **Surgeon / Microscope** installs a fixed optical camera with angle,
 working distance, field size, focus-plane offset and operative light controls.
 Tools never drive it after initial placement. Opaque retained anatomy occludes
@@ -15,7 +18,8 @@ save and cold restart. Focus changes the optical plane; depth-of-field blur and
 stereo optics are not modeled.
 
 **Enable revised instrument mechanics** is an explicit action after withdrawal
-of both hands. It selects finite CUSA V3, actual capsule working contacts, bounded
+of both hands. New UI actions select revision 2; revision-1 episodes offer
+**Upgrade operative tool geometry**. It selects finite CUSA V3, actual capsule working contacts, bounded
 blade cuts, closed bipolar contact, checked fragment evacuation and physics-state
 jaw articulation. Older recorded prefixes keep their prior semantics. See the
 [15-tool audit](surgeon-tool-audit.md) for the baseline, fixes and approximation
