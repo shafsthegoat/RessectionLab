@@ -145,3 +145,27 @@ def test_sparse_support_certificate_spans_multiple_column_blocks():
     expected = k[np.ix_(core,core)]-k[np.ix_(core,exterior)]@np.linalg.solve(k[np.ix_(exterior,exterior)],k[np.ix_(exterior,core)])
     np.testing.assert_allclose(op.dense_schur(), expected, atol=1e-11)
     assert len(calls) >= 5
+
+
+def test_contact_rebind_reuses_only_fixed_tissue_and_keeps_distributed_history(monkeypatch):
+    rng,k,core,c,d,alpha,times,held = problem()
+    def forbidden(**kwargs): raise AssertionError('Contact change must not rebuild Schur')
+    monkeypatch.setattr(held.operator,'dense_schur',forbidden)
+    released = held.rebind(np.empty((0,14)),[])
+    changed = held.rebind(c[::-1],d[::-1])
+    assert released.prepared is changed.prepared is held.prepared
+    u = rng.normal(size=14)*.001; z = rng.normal(size=(2,14))*.002
+    body = rng.normal(size=14)*.001
+    for binding in [held,released,changed,released]:
+        target = rng.normal(size=len(binding.spring))*.01; h=.07; r=times/(times+h)
+        a=(1+r@alpha)*k+binding.c.T@sparse.diags(binding.spring)@binding.c
+        rhs=body+binding.c.T@(binding.spring*target)
+        for aj,rj,zj in zip(alpha,r,z):rhs+=aj*rj*(k@zj)
+        expected=np.linalg.solve(a,rhs)
+        result=binding.step(u,z,body,target,h,previous_target=np.zeros(len(target)))
+        np.testing.assert_allclose(result['displacement'],expected,atol=1e-13)
+        u,z=result['displacement'],result['memories']
+        body[1]+=.0001  # Shared derived-load cache must notice public in-place edits.
+    other=ExteriorOperator(k,core)
+    with pytest.raises(ValueError,match='ANOTHER_OPERATOR'):
+        ExteriorHistorySolve(other,c,d,alpha,times,prepared=held.prepared)

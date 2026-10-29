@@ -158,6 +158,38 @@ class ExteriorOperator:
         return schur
 
 
+class ExteriorCoreFactor:
+    """Fixed tissue operators shared by contact bindings, without history."""
+    def __init__(self, operator, *, check=lambda: None):
+        self.operator = operator
+        self.schur = operator.dense_schur(check=check)
+        begin = time.perf_counter()
+        try:
+            self.factor = cho_factor(self.schur, lower=True, check_finite=False)
+        except np.linalg.LinAlgError as error:
+            raise ValueError('EXTERIOR_UNSUPPORTED_CORE') from error
+        diagonal = np.diag(self.factor[0])
+        if np.min(diagonal)**2 <= EPS*np.max(np.abs(self.schur)):
+            raise ValueError('EXTERIOR_UNSUPPORTED_CORE')
+        self._body_force = None; self._body_field = None
+        operator.stats['coreFactorSeconds'] = time.perf_counter()-begin
+        check()
+
+    def body_field(self, body):
+        """Exact full equilibrium field; invalidate on every changed load value."""
+        op = self.operator
+        if self._body_force is None or not np.array_equal(body, self._body_force):
+            field = np.zeros(op.k.shape[0])
+            if np.any(body):
+                outside = op.solve_exterior(body[op.exterior])
+                field[op.core] = cho_solve(self.factor, body[op.core]-op.kie@outside, check_finite=False)
+                field[op.exterior] = op.solve_exterior(body[op.exterior]-op.kei@field[op.core])
+                if np.max(np.abs(op.k@field-body),initial=0.) > 1e-9:
+                    raise ValueError('EXTERIOR_BODY_FIELD_RESIDUAL')
+            self._body_force = body.copy(); self._body_field = field
+        return self._body_field
+
+
 class ExteriorHistorySolve:
     """Full distributed-history BE advancement through an exact exterior map.
 
@@ -165,7 +197,7 @@ class ExteriorHistorySolve:
     this spectrum before construction. Contact changes require a separately
     constructed binding and their energy jump is outside a fixed-binding step.
     """
-    def __init__(self, operator, contact, spring, alpha, times, *, check=lambda: None):
+    def __init__(self, operator, contact, spring, alpha, times, *, prepared=None, check=lambda: None):
         self.operator = operator
         self.alpha = np.asarray(alpha, float).copy(); self.times = np.asarray(times, float).copy()
         if (self.alpha.ndim != 1 or len(self.alpha) > 2 or self.times.shape != self.alpha.shape
@@ -180,22 +212,31 @@ class ExteriorHistorySolve:
         if np.any(self.spring <= 0) or self.c[:, operator.exterior].nnz:
             raise ValueError('EXTERIOR_CONTACT_OUTSIDE_CORE_OR_NONPOSITIVE')
         self.ci = self.c[:, operator.core]
-        self.schur = operator.dense_schur(check=check)
+        if prepared is not None and (not isinstance(prepared, ExteriorCoreFactor) or prepared.operator is not operator):
+            raise ValueError('EXTERIOR_PREPARED_FOR_ANOTHER_OPERATOR')
+        self.prepared = ExteriorCoreFactor(operator,check=check) if prepared is None else prepared
+        self.schur = self.prepared.schur; self.core_factor = self.prepared.factor
         begin = time.perf_counter()
-        try:
-            self.core_factor = cho_factor(self.schur, lower=True, check_finite=False)
-        except np.linalg.LinAlgError as error:
-            raise ValueError('EXTERIOR_UNSUPPORTED_CORE') from error
-        diagonal = np.diag(self.core_factor[0])
-        if np.min(diagonal)**2 <= EPS*np.max(np.abs(self.schur)):
-            raise ValueError('EXTERIOR_UNSUPPORTED_CORE')
         self.basis = cho_solve(self.core_factor, self.ci.T.toarray(), check_finite=False)
+        # Recover a complete contact compliance basis once per binding. The
+        # distributed source memory remains full-dimensional in every step;
+        # it is never fitted to this contact basis.
+        self.full_basis = np.zeros((operator.k.shape[0],m)); self.full_basis[operator.core] = self.basis
+        if m:
+            self.full_basis[operator.exterior] = -operator.solve_exterior(operator.kei@self.basis)
         self.compliance = np.asarray(self.ci@self.basis)
-        defect = self.schur@self.basis-self.ci.T.toarray()
+        defect = operator.k@self.full_basis-self.c.T.toarray()
         if np.max(np.abs(defect), initial=0.) > 1e-9:
             raise ValueError('EXTERIOR_CORE_BASIS_RESIDUAL')
-        operator.stats['coreFactorAndBasisSeconds'] = time.perf_counter()-begin
+        self.binding_seconds = time.perf_counter()-begin
+        operator.stats['contactBindingSeconds'] = self.binding_seconds
+        operator.stats['fullContactBasisBytes'] = self.full_basis.nbytes
         check()
+
+    def rebind(self, contact, spring, *, check=lambda: None):
+        """Change only contacts; a changed tissue/topology needs a new operator."""
+        return type(self)(self.operator,contact,spring,self.alpha,self.times,
+                          prepared=self.prepared,check=check)
 
     def contact_energy(self, displacement, target):
         u = _finite(displacement, (self.operator.k.shape[0],), 'DISPLACEMENT')
@@ -214,16 +255,11 @@ class ExteriorHistorySolve:
             raise ValueError('EXTERIOR_PHYSICAL_STEP')
         ratios = self.times/(self.times+h); beta = 1+float(ratios@self.alpha)
         history = np.sum((ratios*self.alpha)[:, None]*old_z, axis=0)
-        exterior_body = op.solve_exterior(body[op.exterior])
-        force = body[op.core]-op.kie@exterior_body
-        base = (cho_solve(self.core_factor, force, check_finite=False)+history[op.core])/beta
+        base = (self.prepared.body_field(body)+history)/beta
         a = beta*np.eye(m)+self.spring[:, None]*self.compliance
-        rhs = self.spring*(target-self.ci@base)
+        rhs = self.spring*(target-self.c@base)
         q = lu_solve(lu_factor(a), rhs) if m else np.empty(0)
-        core = base+self.basis@q
-        u = np.empty(n); u[op.core] = core
-        u[op.exterior] = (history[op.exterior]+op.solve_exterior(
-            body[op.exterior]+op.kei@(history[op.core]-beta*core)))/beta
+        u = base+self.full_basis@q
         z = (self.times[:, None]*old_z+h*u)/(self.times[:, None]+h)
         delta = u-before; cu = self.c@u; cb = self.c@before
         external = body+self.c.T@(self.spring*target)

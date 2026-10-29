@@ -1,0 +1,52 @@
+{
+  "schema": "resectionlab.continuum-program-capture-protocol.v1",
+  "intent": "Capture only committed mechanics inputs of all3 qualified native programs, with bit-exact canonical action receipts and snapshots. This is no20mm public-action/collision admission.",
+  "sourceRole": "DEVELOPMENT; existing UCSF-PDGM-0007 qualified8mm native artifact and original20mm geometry only",
+  "qualifiedNativeCase": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-history-v1/execution-v3-snapshot/result/continuum-history.ressectionlab",
+    "sha256": "cbf03bfc8f7465c873ce2b660802516f13405d29eedd229342b13ec3cbf767a8"
+  },
+  "qualifiedActionTraces": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-history-v1/execution-v3-snapshot/result/paired-action-traces.json.gz",
+    "sha256": "d712c30529f451a23e797dca1f5173626a5b026c48823b4d65fe5ebfd27cc926"
+  },
+  "sourceSceneId": "sha256:25e7349ad48ee77244b05fc6768e09bdc049e04733b9f362e14ae0c87a743942",
+  "coreGeometry": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-reference-v1/execution-v1/result/domain-8.npz",
+    "sha256": "930d378221d4c1407cdf9362bd7e312eb360ef0486e986bc656511d9b020618f"
+  },
+  "referenceGeometry": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-reference-v1/execution-v1/result/domain-20.npz",
+    "sha256": "2f336591a89b7705532c17ec87183f493c68a892a888eddf0872490122b683d7"
+  },
+  "branches": [
+    "short-hold",
+    "sustained-hold",
+    "stop-at-model-limit"
+  ],
+  "commonActions": 15,
+  "expectedSuffixFixedSteps": {
+    "short-hold": 1938,
+    "sustained-hold": 2154,
+    "stop-at-model-limit": 126
+  },
+  "caps": {
+    "wallSeconds": 300,
+    "rssBytes": 2147483648,
+    "outputBytes": 33554432,
+    "maximumTicksPerBranch": 10000,
+    "numericalThreads": 1,
+    "retries": 0
+  },
+  "prefixPolicy": "Preserve whole native prefix/source costs,declare post-exposure zero-history activation of fixed20 geometry. Never assign zero exported energy to absent5500prefix owners.",
+  "suffixPolicy": "Retain every original accepted/partial/refused outcome and committed physical microtick; collect complete source removals/cuts/rigid/contacts,target,dt and fixed-clock remainders. Seven additional owners in core and eighth in exterior remain explicit.",
+  "forbidden": [
+    "changing native actions or scene properties",
+    "publishing failed or rolledback microsteps",
+    "claiming prescribed native events are20mm action admission",
+    "new data or response fitting",
+    "physiological RL"
+  ],
+  "physicalValidationPassed": false,
+  "physiologicalRL": "hold"
+}
