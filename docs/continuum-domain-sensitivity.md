@@ -89,3 +89,9 @@ domain/reference, resource and field-convergence study. The existing donor
 force comparison remains mixed/negative, and no new measured response,
 accepted acquired-anatomy prediction or patient-specific vascular/functional
 validation was added. Patient mechanics and physiological RL remain on hold.
+
+A separately frozen [offline contact-compliance study](continuum-contact-reference.md)
+now computes 8/12/16/20 mm reference domains without changing the live caps.
+The reduction reproduces detailed histories, but both 16-to-20 mm stress tests
+exceed the unchanged 5% stability limit. This resolves reference execution,
+while leaving artificial-boundary adequacy failed.

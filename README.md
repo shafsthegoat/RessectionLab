@@ -22,6 +22,9 @@ language and shift evidence selects checked STOP with residual.
 An [artificial-boundary audit](docs/continuum-domain-sensitivity.md) finds material
 force/stress sensitivity to patch radius. Truncated continuum patches now reject
 and roll back; radius adequacy and physiological RL remain unqualified.
+An [offline contact-compliance reference](docs/continuum-contact-reference.md)
+now reproduces detailed histories with a 21-coordinate update and runs larger
+domains. Both frozen 16-to-20 mm stress-stability tests still fail.
 An [opt-in vascular graph](docs/vascular-graph.md) separates compression,
 occlusion, transection, wound sealing and declared supply/drainage signals.
 Matched generated maneuvers pass independent numerical checks; patient-specific

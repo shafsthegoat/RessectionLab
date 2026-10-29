@@ -135,3 +135,9 @@ retractor-force/stress changes between 4 and 8 mm artificial patches. Both 12 mm
 worlds refuse the unchanged source-cell budget, so the prespecified radius
 stability result is not estimable. Silent continuum patch truncation is now a
 rejected action, and the legacy scalar reward refuses this unqualified model.
+
+The [offline contact-compliance reference](continuum-contact-reference.md) now
+reproduces detailed fixed-topology histories and computes larger source domains
+within explicit resources. Independent primitive checks pass; both frozen
+16-to-20 mm stress-stability gates fail. Live model caps, measured physical
+acceptance and physiological RL admission are unchanged.
