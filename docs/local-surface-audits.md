@@ -1,5 +1,9 @@
 # Reusing completed surface-intersection checks
 
+The [subsequent local polynomial filter](local-surface-filter.md) adds an exact
+dependency halo. This page preserves the preceding audit stage's measurements
+and remaining work at `84c94507`.
+
 The smoothed-surface worker can now reuse a completed intersection audit of
 unchanged source triangles and unchanged physical coordinates. It tests dirty
 triangles against a small current tree and a compact tree from the certified

@@ -1,0 +1,38 @@
+{
+  "schema": "resectionlab.local-polynomial-protocol.v1",
+  "baseline_revision": "84c94507",
+  "case_archive_sha256": "564ef8d81d806bcadd5c825e7ed98704520cbb19d8a90049462073d8bae2ddc3",
+  "scene_id": "sha256:b7c1e36161051be29b5e694aab35c9b11828f63b0c3444016824f6d506c0db12",
+  "branch": "operative-cusa",
+  "actions": 120,
+  "source_role": "Existing acquired UCSF-PDGM0007 development episode; source masks reused and TRAIN/SELECT/EVAL reservations unchanged",
+  "preparations_per_episode": 66,
+  "paired_repetitions": 3,
+  "warmups_per_variant": 1,
+  "order": "baseline/current, current/baseline, baseline/current",
+  "output_radius_graph_hops": "K = polynomial degree",
+  "reconstruction_radius_graph_hops": "2K",
+  "recurrence_frontier": "At order j compute distance(D)<=2K-j; preserve reference neighbor/axis/coefficient addition order",
+  "dirty_seeds": "Every old and new vertex in replaced source chunks, new active stable IDs, and changed original coordinates",
+  "lineage": "Same registry and same/immediately prior valid topology generation; failed updates invalidate generation and skipped generations force full reference",
+  "dense_halo_fallback_fraction": 0.6,
+  "large_surface_eligibility_faces": 100000,
+  "maximum_supported_local_degree": 128,
+  "worker_committed_budget_bytes": 134217728,
+  "raw_state": "Detached uncapped pre-repair Float64 source/raw fields plus active flags by historical stable-ID capacity; stage before caps and publish only after successful fairing",
+  "memory_admission": "Count old and staged raw fields; evict disposable other-layer residency when needed; report temporary/staging process RSS separately",
+  "required_controls": [
+    "Raw Float64 bit equality at K/2K boundary, duplicate/ordered neighbor sums, pins and cuts",
+    "Signed-zero coordinates/coefficients, changed registry/coefficients, skipped/failed generation and retries",
+    "Raw capture ownership through cap mutation and transfer; old/staged budget and dense fallback",
+    "Real chunk old/new seed coverage, canonical CSR order, undo and reappearing IDs",
+    "Every complete prepared position/normal/index buffer and non-timing diagnostic exact across all source episode updates",
+    "Hidden native microscope source counts, optics, synchronized GPU/HUD, scrub, save and cold reopen"
+  ],
+  "scope": "Exact display optimization; physical engine, source MRI, occupancy/cavity masks, material/device assumptions, conditioning policy and clinical gates unchanged",
+  "open": [
+    "Global graph/face preparation, normals, initial surface preparation and first physical branch admission remain material costs",
+    "One-second surface updates do not establish completed responsive replay",
+    "Independent specimen/device and patient anatomical validation remain open; no RL training admission"
+  ]
+}

@@ -14,12 +14,13 @@ vascular evaluation and physiological RL remain on hold.
 The [acquired vascular geometry checks](docs/native-vascular-geometry.md) now
 retain original CTA voxel IDs, distinguish veins and sinuses, and certify a
 separate H₁ representative graph while exposing missing and ambiguous anatomy.
-The [acquired-case performance comparison](docs/continuum-performance.md) now
-shows 8.9% higher headless throughput and 2.49× faster changed brain preparation
-with exact state/surface parity. A subsequent [incremental intersection audit](docs/local-surface-audits.md)
-reduces changed brain preparation from 3.17 to 2.12 seconds across the original
-120-action episode, retaining exact buffers. Local conditioning and responsive
-replay remain open.
+The [acquired-case performance comparison](docs/continuum-performance.md)
+profiles headless physics separately from display work. A
+[certified intersection cache](docs/local-surface-audits.md) and
+[exact polynomial dependency halo](docs/local-surface-filter.md) now reduce
+changed brain preparation from 1.97 to 1.16 seconds in the latest paired
+120-action comparison, retaining exact buffers. Global graph/face work, initial
+admission, responsive replay and physiological RL readiness remain open.
 
 The [full case rehearsal collaborator handoff](artifacts/full-case-rehearsal-20261020/README.md)
 includes the saved meningioma source and substantial primary resection, same-case

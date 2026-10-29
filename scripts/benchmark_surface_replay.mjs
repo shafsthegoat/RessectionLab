@@ -32,6 +32,8 @@ for(const name of retained){
   fs.writeFileSync(compiled(name),source);
 }
 const {IncrementalSurfaceEngine:BaselineEngine}=await import(pathToFileURL(path.resolve(compiled('incrementalSurface.ts'))));
+for(const name of ['incrementalSurfaceFilter.ts'])if(fs.existsSync(path.join(viewer,name)))
+  sourceHashes[name]={baseline:fs.existsSync(path.join(baseline,name))?sha(fs.readFileSync(path.join(baseline,name))):null,current:sha(fs.readFileSync(path.join(viewer,name)))};
 const inputs=fixture.layers.map(layer=>{
   const mask=new Uint8Array(zlib.gunzipSync(fs.readFileSync(path.join(path.dirname(input),layer.maskFile))));
   assert.equal(sha(mask),layer.maskSha256);return {...layer,mask};

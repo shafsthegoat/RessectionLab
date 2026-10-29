@@ -12,7 +12,7 @@ before(async()=>{
   server=await createServer({root:fileURLToPath(new URL('../../',import.meta.url)),cacheDir:cache,logLevel:'error',optimizeDeps:{noDiscovery:true,include:[]},server:{middlewareMode:true,hmr:false,ws:false},appType:'custom',plugins:[{
     name:'test-conditioning-calls',enforce:'pre',transform(code,id){
       if(!id.endsWith('/surfaceSmoothing.ts'))return;
-      const signature='export function fairIndexedSurface(points:Float32Array,indices:Uint32Array,affine:Affine,kind?:string,limits?:Float64Array,audit?:SurfaceIntersectionAudit){';
+      const signature='export function fairIndexedSurface(points:Float32Array,indices:Uint32Array,affine:Affine,kind?:string,limits?:Float64Array,audit?:SurfaceIntersectionAudit,filter?:SurfacePolynomialFilter){';
       assert(code.includes(signature),'conditioning call instrumentation must match the actual implementation');
       return code.replace(signature,signature+'\nglobalThis.__resectionLabConditioningCalls=(globalThis.__resectionLabConditioningCalls??0)+1;');
     }

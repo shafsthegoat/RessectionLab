@@ -1,6 +1,12 @@
 # Rehearsal performance and remaining gates
 
-The latest [incremental surface audit](local-surface-audits.md) checks the whole
+The latest [exact polynomial dependency halo](local-surface-filter.md) reduces
+changed brain preparation from 1.97 to 1.16 seconds against `84c94507` across
+the complete 120-action episode, with all 528 preparations exact. Its raw-cache
+lineage, shared memory budget, global work and remaining native latency are
+explicit.
+
+The earlier [incremental surface audit](local-surface-audits.md) checks the whole
 original 120-action acquired episode, reducing changed brain preparation from
 3.17 to 2.12 seconds with exact buffers. Its larger bounded cache and remaining
 whole-layer filtering/native latency are explicit.
