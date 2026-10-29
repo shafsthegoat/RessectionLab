@@ -57,6 +57,8 @@ class RewardTracker:
     deformation_cell_peaks accepts cumulative microstep maxima by source ID.
     """
     def __init__(self, engine, protected_source_ids=()):
+        if 'brainContinuumV1' in engine.scene.properties:
+            raise ValueError('CONTINUUM_RL_HOLD: material/contact, artificial boundaries and cumulative exposure reward remain unqualified')
         if 'bipolarThermalV1' in engine.scene.properties:
             raise ValueError('BIPOLAR_THERMAL_RL_HOLD: device response and heat-aware reward remain unqualified')
         if 'vascularGraphV1' in engine.scene.properties:

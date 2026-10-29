@@ -1,0 +1,29 @@
+{
+  "schema": "resectionlab.continuum-domain-sensitivity-protocol.v1",
+  "intent": "Non-affine artificial-boundary sensitivity of the exact acquired-source retractor history; no physical validation or planner selection",
+  "sourceArchive": "testcases/outputs/simulator-qualification-20261029/continuum-v1/rehearsal-v6/continuum-rehearsal.ressectionlab",
+  "sourceArchiveSha256": "0098232cceb946cbc5cccf00ca81b3b8b5c768c726d379fc8e8dbb503cd13127",
+  "sourceSceneId": "sha256:01719b5460564e004686c495bd096fe76902b6ac8d38bf2d9a6951e81b883025",
+  "sourceRole": "DEVELOPMENT, same UCSF-PDGM-0007 person in every numerical domain",
+  "branches": ["short-hold", "sustained-hold"],
+  "prefixActions": 15,
+  "probeActions": 17,
+  "patchRadiiMm": [4.0, 8.0, 12.0],
+  "fixedProbeCells": "All active source cells in the original radius-4 common prefix; identical source IDs for every comparison, including its artificial boundary cells",
+  "fixedProbeMeaning": "Center displacement and instantaneous Gauss-integrated strain/stress squared on the same retained source cells; whole-patch cumulative exposures are reported separately because their integration domain changes",
+  "stability": {
+    "lastTwoRadiiMm": [8.0, 12.0],
+    "maximumCenterDisplacementRmsDifferenceMm": 0.005,
+    "maximumReactionRelativeDifference": 0.05,
+    "maximumFixedProbeStrainSquaredRelativeDifference": 0.05,
+    "maximumFixedProbeStressSquaredRelativeDifference": 0.05,
+    "relativeDenominator": "Maximum absolute value of the compared nonnegative magnitudes; both zero gives zero",
+    "interpretation": "Prospective engineering radius-stability criteria only; no clinical tolerance, full-brain convergence, acquired shift, measured force or constitutive acceptance"
+  },
+  "preserved": ["source labels and affine", "material and relaxation spectrum", "held source cells and contact geometry", "all native action parameters and durations", "collision and small-gradient guards", "maxNodes and maxDofs", "old recordings and patient roles"],
+  "execution": "Replay each entire 17-action probe from intact source, then independently replay its generated snapshot and require exact full state, history and action equality. Nominal actions must match the original prefix. Reject rather than omit any failed domain or incomplete fixed probe support.",
+  "caps": {"wallSeconds": 900, "maximumRssBytes": 2147483648, "outputBytes": 16777216, "numericalThreads": 1, "retries": 0},
+  "forbidden": ["radius or threshold tuning after results", "new acquired data", "parameter fitting", "raising model caps", "claiming a complete executed surgical plan from this held-instrument probe", "RL training", "clinical claims"],
+  "physicalValidationPassed": false,
+  "physiologicalRL": "hold"
+}

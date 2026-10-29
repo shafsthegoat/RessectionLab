@@ -116,7 +116,10 @@ def begin_hold(engine, key, cells, position):
     distance = {c: 0. for c in cells}; queue = deque(cells)
     while queue:
         c = queue.popleft()
-        if c not in active and len(active) >= p['maxNodes']: continue
+        if c not in active and len(active) >= p['maxNodes']:
+            if 'brainContinuumV1' in engine.scene.properties:
+                raise ValueError('CONTINUUM_PATCH_TRUNCATED: source-cell budget cannot cover the declared physical radius')
+            continue
         active.add(c)
         for n, length in _neighbors(engine, c):
             d = distance[c] + length

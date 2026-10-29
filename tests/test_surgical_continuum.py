@@ -123,6 +123,28 @@ def held_engine(*, branches=(500.,), times=(.5,)):
     return e, c
 
 
+def test_continuum_patch_budget_refuses_instead_of_silently_moving_its_boundary():
+    source = block(7)
+    source.properties['tissuePhysicsV2']['brain']['maxNodes'] = 10
+    e = SurgicalEngine(source); before = copy.deepcopy(e.state)
+    c = int(np.ravel_multi_index((3, 3, 3), source.shape))
+    with pytest.raises(ValueError, match='CONTINUUM_PATCH_TRUNCATED'):
+        brain.begin_hold(e, 'left', [c], [3., 3., 3.])
+    assert e.state == before
+    # Preserve the separately versioned legacy surrogate and its recordings.
+    properties = copy.deepcopy(source.properties); properties.pop(continuum.PROPERTY)
+    legacy_source = SurgicalScene(source.labels, source.affine, source.regions, source.source, properties)
+    old = SurgicalEngine(legacy_source)
+    brain.begin_hold(old, 'left', [c], [3., 3., 3.])
+    assert len(old.state['deformationModel']['active']) == 10
+
+
+def test_legacy_reward_cannot_admit_unqualified_continuum_consequences():
+    from resectionlab.surgical_rl_rewards import RewardTracker
+    with pytest.raises(ValueError, match='CONTINUUM_RL_HOLD'):
+        RewardTracker(SurgicalEngine(block()))
+
+
 def test_history_relaxes_reaction_and_release_recovers_with_energy_balance():
     e, c = held_engine()
     brain.tick(e, .1)
