@@ -47,7 +47,7 @@ def field_metrics(geometry, free, u, memories, common_rows, alpha):
     full = np.zeros(geometry['nodes'].size); full[free] = u
     en = geometry['elementNodes']; gradients = element_operators(geometry['affine'])[2]
     local = full.reshape((-1,3))[en]
-    gradient = np.einsum('eai,gaj->egij', local, gradients)
+    gradient = np.einsum('eai,gaj->egij', local, gradients, optimize=True)
     max_gradient = float(np.linalg.norm(gradient, axis=(2,3)).max())
     max_displacement = float(np.linalg.norm(local.mean(axis=1), axis=1).max())
     # The first eight points are integration quadrature; the additional eight
@@ -59,7 +59,7 @@ def field_metrics(geometry, free, u, memories, common_rows, alpha):
     stress = 2*mu[:,None,None,None]*eps+lam[:,None,None,None]*np.trace(eps,axis1=2,axis2=3)[:,:,None,None]*np.eye(3)
     for a, memory in zip(alpha, memories):
         field = np.zeros_like(full); field[free] = u-memory
-        g = np.einsum('eai,gaj->egij', field.reshape((-1,3))[en[common_rows]], gradients[:8])
+        g = np.einsum('eai,gaj->egij', field.reshape((-1,3))[en[common_rows]], gradients[:8], optimize=True)
         strain = (g+g.transpose(0,1,3,2))/2
         stress += a*(2*mu[:,None,None,None]*strain+lam[:,None,None,None]*np.trace(strain,axis1=2,axis2=3)[:,:,None,None]*np.eye(3))
     weight = abs(float(np.linalg.det(geometry['affine'][:3,:3])))/8

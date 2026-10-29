@@ -112,11 +112,30 @@ preparation. This is a separate 180-second / 3 GiB / 8 MiB experiment with no
 retry. Its kernel extrapolation excludes topology, field guards, controls and
 independent checking, so cannot admit a complete-program run by itself.
 
+That profile passed at `8173a7e8` in 48.93 worker seconds (49.27 supervised),
+with 1,626,750,976 bytes sampled peak RSS. Median fixed-state step cost fell
+from 138.28 to 7.13 ms (19.40 times faster); maximum displacement / memory
+disagreement was 2.78e-17 / 3.47e-18 mm, reaction 4.07e-20 N and energy
+6.78e-21 N mm. Both kernels repeat byte-exactly. Release binding cost 0.78 ms;
+holding-contact rebinding cost 396.71 ms and reused the same preparation.
+The kernel-only 4,218-step estimate is now 30.06 seconds, excluding every
+unmeasured cost listed above. Setup remains dominated by 40.36 seconds of
+Schur columns, plus 4.71 seconds exterior factor and 1.07 seconds core factor.
+
+A separate source-sized field-check profile measured 52 of 58 ms in generic
+tensor contraction. Selecting NumPy's optimized contraction preserves all
+16 gradient guard points, eight integration points and Maxwell stresses;
+the source gradient tensor was bit-exact in the discovery check. Oblique,
+non-affine controls verify the full corner bound and 0/1/2 memory branches
+against direct element/point sums. The selected guard/event/capture/exterior
+regression passes 38 tests. A frozen multi-state field-check comparison and
+topology resource evidence remain necessary before complete-program admission.
+
 The focused event/capture/continuum/clone/cancellation selection passes 119
 tests. Independent code checks 45 bindings and 180 dense-control steps,
 including arbitrary exterior memory, contactless/rebound states and changing
 body loads. Maximum displacement disagreement is 4.08e-15; work-energy balance
 residual is 1.67e-15 in the generated controls' declared units. Independent
 per-element Q1 energy agrees within 2.12e-21 N mm. These are numerical controls,
-not source-program or physical acceptance. Measured source capture and kernel
-costs are the next admission evidence. Physiological RL remains on hold.
+not source-program or physical acceptance. Topology/history and larger-domain
+public actions remain unqualified. Physiological RL remains on hold.
