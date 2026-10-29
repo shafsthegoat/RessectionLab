@@ -695,6 +695,12 @@ class SurgicalEngine:
         for face in self.state.get('vesselsV2', {}).get('faces', {}).values():
             if face['damage'] > 0 and self._protected_ids.intersection(face['cells']):
                 raise ValueError('PROTECTED_STRUCTURE: indirect vessel injury is blocked')
+        graph_state = self.state.get('vascularGraphV1')
+        if graph_state:
+            for edge in self.scene.properties['vascularGraphV1']['edges']:
+                row = graph_state['edges'][edge['id']]
+                if (row['cutFace'] is not None or row['compressionFraction'] > 0 or row['occlusionFraction'] > 0) and self._protected_ids.intersection(edge['sourceCells']):
+                    raise ValueError('PROTECTED_STRUCTURE: indirect vascular conductance change is blocked')
         # A coupled patch can enter a parked instrument after the tool sweep.
         positions = self._positions()
         if positions is not None: self._guard_sweep(key, p, q, positions)
@@ -937,6 +943,7 @@ class SurgicalEngine:
                 **{name: _copy_engine_data(self.state.get(name)) for name in ('cutEdges', 'separatedAttachments',
                     'transectedEdges', 'flapComponents', 'debris', 'sources', 'meshCutEdges', 'meshSeams',
                     'vesselConnections', 'vesselWounds', 'deformation', 'deformationModel', 'drillingV2', 'vesselsV2') if name not in omitted},
+                **({'vascularGraphV1': copy.deepcopy(self.state['vascularGraphV1'])} if 'vascularGraphV1' in self.state else {}),
                 **({'cusaV3': copy.deepcopy(self.state['cusaV3'])} if 'cusaV3' in self.state else {})}
 
     def snapshot(self):

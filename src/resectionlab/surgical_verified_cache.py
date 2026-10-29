@@ -40,6 +40,7 @@ DEFAULT_DIRECTORY = Path(__file__).resolve().parents[2] / 'testcases/outputs/.ve
 _MODULES = ('core', 'geometry', 'surgical_scene', 'surgical_engine', 'surgical_tools',
             'surgical_motion', 'surgical_effects', 'surgical_flow_display', 'surgical_physics', 'surgical_physics_v2',
             'surgical_drilling_v2', 'surgical_vessels_v2', 'surgical_deformation_v2',
+            'surgical_continuum', 'surgical_vascular_graph',
             'surgical_occupancy', 'surgical_rl_protection', 'surgical_geometry_cache',
             'surgical_verified_cache', 'surgical_cusa_v3', 'surgical_idle_native',
             'build_surgical_idle_native')

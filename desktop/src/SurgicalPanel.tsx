@@ -71,6 +71,7 @@ function SceneResearchDetails({view,preview}:{view:SurgicalView;preview:boolean}
   const source=view.scene.source,adapter=source?.adapter,physics=view.physics??view.scene.physics;
   const v2=physics?.profile?.schema==='resectionlab.tissue-physics.v2';
   const continuum=physics?.brain?.model==='resectionlab.voxel-continuum.v1';
+  const vascular=physics?.vessel?.model==='resectionlab.vascular-graph.v1'?physics.vessel:undefined;
   const patientDerivative=adapter?.type==='native-patient-research-derivative';
   const refinement=source?.workingGridRefinement as {schema?:unknown;factor?:unknown;noNewAnatomy?:unknown}|undefined;
   const mapped=new Set(view.scene.regions.map(r=>r.material));
@@ -82,14 +83,14 @@ function SceneResearchDetails({view,preview}:{view:SurgicalView;preview:boolean}
     {adapter?.warnings?.length? <ul className="surgical-warning">{adapter.warnings.map((warning,i)=><li key={i}>{warning}</li>)}</ul>:null}
     <p className="surgical-note">Scene grid: {view.scene.resolutionMm.map(n=>+n.toFixed(3)).join(' × ')} mm · {view.scene.shape.join(' × ')} cells.</p>
     {refinement?.schema==='resectionlab.surgical-working-grid-refinement.v1'&&refinement.factor===2&&refinement.noNewAnatomy===true&&<p className="surgical-warning">Refined computational grid: each parent material cell was subdivided into eight children with the same physical bounds. The image is derived interpolation. This adds no acquired image resolution or anatomical evidence; it is a discretization study.</p>}
-    {v2&&<p className="surgical-note">{continuum?'Opted-in voxel continuum: small-gradient tissue deformation and declared stress relaxation.':'V2 research mechanics: coupled brain relaxation with an approximate volume penalty.'} Work and heat based drilling and clustered bleeding retain their declared assumptions. Patient physiology and global perfusion are unvalidated.</p>}
+    {v2&&<p className="surgical-note">{continuum?'Opted-in voxel continuum: small-gradient tissue deformation and declared stress relaxation.':'V2 research mechanics: coupled brain relaxation with an approximate volume penalty.'} {vascular?'The declared vascular graph separates compression, occlusion, transection and wound sealing.':'Work and heat based drilling and clustered bleeding retain their declared assumptions.'} Patient physiology and global perfusion are unvalidated.</p>}
     <details><summary>Provenance, material behavior, and assumptions</summary>
       {source&&<DeclaredFields data={Object.fromEntries(Object.entries(source).filter(([key])=>key!=='adapter'))}/>}
       {adapter&&<details><summary>Source adapter and declared patient source</summary><DeclaredFields data={adapter}/></details>}
       <ul className="surgical-note">
         {mapped.has('bone')&&<li>Bone: rigid cells; {v2?'drilling accumulates work before removal and models heat generation and cooling.':'drilling and kerf cutting remove cells and produce modeled debris.'}</li>}
         {(mapped.has('soft_tissue')||mapped.has('tumor'))&&<li>Brain / soft tissue and tumor: {continuum?'source-owned voxel elements with declared material properties, stress relaxation, cut-face separation and explicit local support. Large deformation and patient injury remain unsupported.':v2?'coupled local tissue deformation with timed relaxation after release, distinct assumed stiffness, and an approximate volume penalty.':'lattice patch displacement and compatible-tool removal; no calibrated deformation law.'}</li>}
-        {mapped.has('vessel')&&<li>Vessels: local adjacency cutting retains pieces. {v2?'Clustered wound outlets use assumed pressure, finite vascular reserves, and refill; the fluid budget is tracked.':physics?.capabilities?.damageTriggeredVesselWounds===true?'Declared damage-triggered wound outlets use an assumed local flow proxy.':'Damage-triggered vessel wound behavior is not declared as enabled.'} Global perfusion is unknown.</li>}
+        {mapped.has('vessel')&&<li>Vessels: local adjacency cutting retains pieces. {vascular?'Source-bound artery, vein, sinus or uncertain edges use declared conductance, compliance and boundaries. An occluded vessel may cause modeled flow deficits without bleeding. Sealing a cut does not reconnect it.':v2?'Clustered wound outlets use assumed pressure, finite vascular reserves, and refill; the fluid budget is tracked.':physics?.capabilities?.damageTriggeredVesselWounds===true?'Declared damage-triggered wound outlets use an assumed local flow proxy.':'Damage-triggered vessel wound behavior is not declared as enabled.'} Global perfusion is unknown.</li>}
         {mapped.has('membrane')&&<li>Membranes: retained cut seams and graph separation; no fabricated physical aperture.</li>}
         {mapped.has('unknown')&&<li>Unknown material remains explicitly unmapped; no tissue behavior is inferred from its label.</li>}
       </ul>
@@ -103,6 +104,7 @@ function SceneResearchDetails({view,preview}:{view:SurgicalView;preview:boolean}
 function MechanicsV2Details({view,preview}:{view:SurgicalView;preview:boolean}){
   const drill=view.drillingV2,brain=view.deformationModel,vessels=view.vesselsV2;
   const continuum=view.physics?.brain?.model==='resectionlab.voxel-continuum.v1'?view.physics.brain.summary:undefined;
+  const vascular=view.physics?.vessel?.model==='resectionlab.vascular-graph.v1'?view.physics.vessel:undefined;
   const sum=(values:Record<string,number>|undefined)=>values?Object.values(values).reduce((a,b)=>a+b,0):undefined;
   const displacement=view.deformation?Math.max(0,...Object.values(view.deformation).map(v=>Math.hypot(...v))):undefined;
   const temperature=drill&&Object.keys(drill.temperatureC).length?Object.values(drill.temperatureC).reduce((max,value)=>Math.max(max,value),-Infinity):view.metrics.drillMaxTemperatureC;
@@ -121,13 +123,23 @@ function MechanicsV2Details({view,preview}:{view:SurgicalView;preview:boolean}){
       ['Stored energy exported with removed tissue · N·mm',continuum.removedStoredEnergyNmm],
       ['Modeled mechanical exposure by original label · no injury calibration',continuum.exposureBySourceLabel],
     ] as Array<[string,unknown]>:[]),
+    ...(vascular?[
+      ['Declared vascular graph coverage',vascular.coverage],
+      ['Pressure-supporting vascular storage · mm³',vascular.summary?.storageMm3],
+      ['Boundary inflow / outflow · mm³',[vascular.summary?.boundaryInMm3,vascular.summary?.boundaryOutMm3]],
+      ['Cut / occluded / compressed graph edges',[vascular.summary?.cutEdgeCount,vascular.summary?.occludedEdgeCount,vascular.summary?.compressedEdgeCount]],
+      ['Generated wound fluid · mm³',vascular.summary?.generatedMm3],
+      ['Vascular budget residual · mm³',vascular.summary?.conservationResidualMm3],
+      ['Declared supply / drainage flow deficits · no injury calibration',vascular.summary?.regions],
+    ] as Array<[string,unknown]>:[
     ['Vascular pressure · Pa',vessels?.pressurePa],
     ['Vascular reserve remaining · mm³',vessels?.remainingMm3],
     ['Vascular refill · mm³',vessels?.refilledMm3],
     ['Generated wound fluid · mm³',vessels?.generatedMm3],
     ['Vascular budget residual · mm³',vessels?vessels.initialMm3+vessels.refilledMm3-vessels.remainingMm3-vessels.generatedMm3:undefined],
+    ] as Array<[string,unknown]>),
   ];
-  return <details><summary>{preview?'Preview':'Recorded'} V2 mechanics and fluid budget</summary><dl className="surgical-declared-fields">{rows.map(([label,value])=><div key={label}><dt>{label}</dt><dd>{typeof value==='number'&&Number.isFinite(value)?+value.toFixed(5):displayValue(value)}</dd></div>)}</dl><p className="surgical-note">The vascular budget compares initial reserve plus refill against remaining reserve and generated fluid. These modeled quantities do not estimate patient blood loss or predict tissue injury.</p></details>;
+  return <details><summary>{preview?'Preview':'Recorded'} V2 mechanics and fluid budget</summary><dl className="surgical-declared-fields">{rows.map(([label,value])=><div key={label}><dt>{label}</dt><dd>{typeof value==='number'&&Number.isFinite(value)?+value.toFixed(5):displayValue(value)}</dd></div>)}</dl>{vascular&&<details><summary>Declared vascular graph and assumptions</summary><DeclaredFields data={vascular}/></details>}<p className="surgical-note">{vascular?'The graph budget compares initial pressure-supporting storage plus boundary inflow against remaining storage, boundary outflow and generated wound fluid. Zero unstressed volume and all flow coefficients are declared assumptions.':'The vascular budget compares initial reserve plus refill against remaining reserve and generated fluid.'} These modeled quantities do not estimate patient blood loss or predict tissue injury.</p></details>;
 }
 
 export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,onFrameField,fieldDisplayControls,microscopeControls,learningReport,executionReport,cusaLearning,onRunFrozenCusa,onRunFrozenSector,frozenCusaPending=false}:{onRunFrozenCusa?:(branchId:string)=>Promise<void>;onRunFrozenSector?:(method:string)=>Promise<void>;frozenCusaPending?:boolean;cusaLearning?:unknown;executionReport?:unknown;learningReport?:unknown;anatomyControls?:ReactNode;onFrameField?:()=>void;fieldDisplayControls?:ReactNode;microscopeControls?:ReactNode;c:SurgicalController;onFixture:()=>void;onImport?:(options:SurgicalImportOptions)=>Promise<void>|void;available:boolean}){

@@ -116,6 +116,7 @@ class _ObservedEngine(SurgicalEngine):
         target = sum(bool(self.by_label[int(self.scene.labels.ravel()[cell])].get('target')) for cell in state['removed'])
         wound_sources = [source for source in state['sources'] if source.get('kind') == 'modeled-vessel-wound']
         wounds = state.get('vesselsV2', {}).get('wounds', state.get('vesselWounds'))
+        if 'vascularGraphV1' in state: wounds = state['vascularGraphV1']['ports']
         return {
             'timeSeconds': float(state['elapsedSeconds']), 'sampleKind': kind,
             'actionIndex': len(self._attempts), 'slots': slots,

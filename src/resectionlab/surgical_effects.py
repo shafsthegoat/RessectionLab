@@ -293,7 +293,7 @@ def apply_effect(engine, key, op, cells, p, q, dt):
             from .surgical_vessels_v2 import coagulate
             coagulate(engine, cells, params['power'], dt)
         for source in state['sources']:
-            if source.get('modelVersion') == 2: continue
+            if source.get('modelVersion') in (2, 'vascular-graph-v1'): continue
             if source['cell'] in cells:
                 if 'coagulationExposure' not in source: raise ValueError('MISSING_SOURCE_COAGULATION_PROPERTY')
                 source['exposure'] += exposure
@@ -326,10 +326,12 @@ def tick_fields(engine, dt):
     A source with no adjacent free outlet accumulates a declared reservoir until
     opened. This avoids placing fluid inside solid tissue or losing mass.
     """
+    from . import surgical_vascular_graph as graph
+    if graph.enabled(engine) and not graph.consume_field_interval(engine, dt): return
     flow = getattr(engine, '_flow_display_trace', None)
     if flow is not None and not flow.active: flow = None
     for source in engine.state['sources']:
-        if source.get('bleedingActive', True):
+        if source.get('modelVersion') != graph.MODEL_VERSION and source.get('bleedingActive', True):
             if 'rateMm3PerSecond' not in source or 'cell' not in source: raise ValueError('MISSING_BLEEDING_SOURCE_PROPERTIES')
             amount = source['rateMm3PerSecond'] * dt
             if source.get('kind') == 'modeled-vessel-wound': source['emittedMm3'] += amount

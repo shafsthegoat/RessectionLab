@@ -9,6 +9,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Sequence
 import hashlib
+import copy
 import math
 
 import numpy as np
@@ -250,7 +251,16 @@ def summarize_engine_outcomes(engine: SurgicalEngine, *, baseline: SurgicalEngin
     fluid=_metrics_group(metrics,baseline_metrics,(
         'fluidAddedMm3','fluidRemovedMm3','fluidPresentMm3','fluidEscapedMm3',
         'debrisMm3','debrisRemovedMm3','debrisEscapedMm3'),'mm3')
-    if mapped['vessels'] and v2:
+    if mapped['vessels'] and 'vascularGraphV1' in engine.state:
+        gm = metrics['vesselPhysicsV2']
+        vessel = {name: _measured(gm[name], unit) for name, unit in (
+            ('woundPortCount','count'), ('cutEdgeCount','count'), ('occludedEdgeCount','count'),
+            ('compressedEdgeCount','count'), ('storageMm3','mm3'), ('boundaryInMm3','mm3'),
+            ('boundaryOutMm3','mm3'), ('generatedMm3','mm3'), ('emittedMm3','mm3'),
+            ('blockedOutletReservoirMm3','mm3'), ('conservationResidualMm3','mm3'))}
+        vessel.update(status='declared_partial_graph_model_only', regions=copy.deepcopy(gm['regions']),
+                      coverage=copy.deepcopy(scene.properties['vascularGraphV1']['coverage']))
+    elif mapped['vessels'] and v2:
         vessel={name:_measured(metrics['vesselPhysicsV2'][name],unit) for name,unit in (
             ('woundCount','count'),('damagedFaceCount','count'),
             ('woundAreaMm2','mm2'),('activeWounds','count'),

@@ -104,6 +104,9 @@ freezes remain open.
 An [opt-in voxel continuum](voxel-continuum.md) now provides a source-owned
 discretization, material/history scenarios, numerical controls and a limited
 exposed-specimen comparison. Independent measured-response and patient-anatomy
-gates remain open. The vascular graph, separate
-motor/language evidence, device calibration, responsive viewer and bounded RL
-comparison remain subsequent open stages. Large-scale RL stays on hold.
+gates remain open. An [opt-in vascular graph](vascular-graph.md) now separates
+compression, occlusion, transection, sealing and declared supply/drainage
+signals, with independent numerical checks and matched generated maneuvers.
+Acquired vascular connectivity and measured flow response remain unvalidated.
+Separate motor/language evidence, device calibration, responsive viewer and
+bounded RL comparison remain subsequent open stages. Large-scale RL stays on hold.

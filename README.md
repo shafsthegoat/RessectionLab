@@ -7,6 +7,10 @@ mechanics and keeps measured-response and large-scale RL gates open.
 An [opt-in voxel continuum](docs/voxel-continuum.md) adds source-owned mechanics,
 stress relaxation, mechanical exposure and checked retraction/resection replay;
 its patient material and injury claims remain unvalidated.
+An [opt-in vascular graph](docs/vascular-graph.md) separates compression,
+occlusion, transection, wound sealing and declared supply/drainage signals.
+Matched generated maneuvers pass independent numerical checks; patient-specific
+vascular evaluation and physiological RL remain on hold.
 
 The [full case rehearsal collaborator handoff](artifacts/full-case-rehearsal-20261020/README.md)
 includes the saved meningioma source and substantial primary resection, same-case

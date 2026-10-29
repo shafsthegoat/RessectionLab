@@ -77,6 +77,8 @@ class SurgicalScene:
         # missing; it must never silently fall through to historical mechanics.
         from .surgical_continuum import validate as validate_continuum
         validate_continuum(self)
+        from .surgical_vascular_graph import validate as validate_vascular_graph
+        validate_vascular_graph(self)
         def cell(value):
             if type(value) is not int or not 0 <= value < self.labels.size:
                 raise ValueError('Property cell must index this source grid')
