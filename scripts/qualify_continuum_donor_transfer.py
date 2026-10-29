@@ -145,6 +145,13 @@ def prepare(output):
         development_points[name] = len(x)
     mu = numerator / denominator
     gates = {}; limits = p['admissionBeforeHeldOutRead']
+    prior = None
+    if 'priorFailedAttempt' in p:
+        binding = p['priorFailedAttempt']
+        prior_path = ROOT / binding['preparation']
+        if sha(prior_path) != binding['preparationSha256']:
+            raise ValueError('Prior numerical failure evidence changed')
+        prior = json.loads(prior_path.read_text())
     for name, rows in fixtures.items():
         height = d['heightMm'] if name == 'development' else s['height'] * 1000.
         change = abs(rows[-1]['continuumSlopeNPerMmPerPa'] / rows[-2]['continuumSlopeNPerMmPerPa'] - 1.)
@@ -158,6 +165,12 @@ def prepare(output):
                       and abs(rows[-1]['voxelVolumeMm3'] / rows[-1]['nominalVolumeMm3'] - 1.) <= limits['finestVolumeRelativeError']
                       and all(r['maximumGradientAtWindow'] <= limits['maximumElementGradient']
                               and r['freeResidualAtWindowN'] <= limits['freeResidualN'] for r in rows)}
+        if prior is not None:
+            slopes = [r['continuumSlopeNPerMmPerPa'] for r in rows[-2:]]
+            slopes.append(prior['fixtures'][name][-1]['continuumSlopeNPerMmPerPa'])
+            envelope = (max(slopes) - min(slopes)) / rows[-1]['continuumSlopeNPerMmPerPa']
+            gates[name]['lastTwoPlusPriorFineSlopeEnvelope'] = envelope
+            gates[name]['passed'] &= envelope <= limits['lastTwoPlusPriorFineSlopeEnvelope']
     rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
     if sys.platform != 'darwin': rss *= 1024
     result = {'schema': 'resectionlab.continuum-donor-transfer-preparation.v1',
@@ -172,6 +185,7 @@ def prepare(output):
         and result['wallSeconds'] <= p['caps']['prepareWallSeconds'] and rss <= p['caps']['peakRssBytes'])
     write(output / 'preparation.json', result)
     print(json.dumps({k: result[k] for k in ['fit', 'numericalGates', 'admittedForScoring', 'wallSeconds', 'peakRssBytes']}))
+    return result['admittedForScoring']
 
 
 def acquire(output):
@@ -269,8 +283,12 @@ if __name__ == '__main__':
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--archive', type=Path)
     parser.add_argument('--preparation', type=Path)
+    parser.add_argument('--protocol', type=Path, default=PROTOCOL)
+    parser.add_argument('--freeze', type=Path, default=FREEZE)
     args = parser.parse_args()
-    if args.phase == 'prepare': prepare(args.output)
+    PROTOCOL = args.protocol.resolve(); FREEZE = args.freeze.resolve()
+    if args.phase == 'prepare':
+        if not prepare(args.output): raise SystemExit(2)
     elif args.phase == 'acquire': acquire(args.output)
     elif args.archive and args.preparation: score(args.archive, args.preparation, args.output)
     else: parser.error('score requires --archive and --preparation')
