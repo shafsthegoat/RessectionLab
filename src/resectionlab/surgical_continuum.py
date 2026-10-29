@@ -43,7 +43,10 @@ def _number(value, low, high, label):
 
 def validate(scene):
     p = scene.properties.get(PROPERTY)
-    if p is None: return None
+    if p is None:
+        if 'continuumLinearSolveV1' in scene.properties:
+            raise ValueError('CONTINUUM_CONTACT_REQUIRES_CONTINUUM')
+        return None
     if 'tissuePhysicsV2' not in scene.properties:
         raise ValueError('CONTINUUM_REQUIRES_EXPLICIT_V2_ENVIRONMENT')
     if not isinstance(p, dict) or set(p) != set(research_profile({})) or p.get('schema') != SCHEMA:
@@ -75,6 +78,9 @@ def validate(scene):
         for mu in m['relaxationShearPa']: _number(mu, 0., 1e6, 'relaxationShearPa')
         if not isinstance(m['source'], str) or not m['source'].strip():
             raise ValueError('CONTINUUM_MATERIAL_SOURCE_REQUIRED')
+    if 'continuumLinearSolveV1' in scene.properties:
+        from .surgical_continuum_solve import validate as validate_solve
+        validate_solve(scene,p)
     return p
 
 
@@ -243,8 +249,15 @@ def _system(engine, ids, anchors, blocked, p, h):
     # state. Refuse an exchanged source instead of reusing a stale factorization.
     engine.scene.require_cache_source()
     holds = {key: tuple(sorted(set(hold['cells']) & set(ids))) for key, hold in engine.state['holds'].items() if 'target' in hold}
+    solver=engine.scene.properties.get('continuumLinearSolveV1')
+    fast=solver is not None and solver['method']=='proportional-history-compliance'
     signature = (tuple(ids), tuple(anchors), tuple(sorted(blocked)), tuple(sorted(holds.items())),
-        semantic_digest(p), tuple(engine.scene.affine.ravel()), h)
+        semantic_digest(p), tuple(engine.scene.affine.ravel()), h, semantic_digest(solver))
+    if solver is not None:
+        # Fixed faces also depend on removed neighbours outside the active patch.
+        # Keep historical scenes' replay convention; both new solve methods bind
+        # the same current retained-source interface.
+        signature+=(tuple(engine.state['removed']),)
     cached = getattr(engine, '_continuum_system_v1', None)
     if cached is not None and cached[0] == signature: return cached[1]
     mesh = voxel_mesh(engine.scene, ids, blocked, max_dofs=p['maxDofs'])
@@ -252,6 +265,8 @@ def _system(engine, ids, anchors, blocked, p, h):
     fixed_nodes = _fixed_nodes(engine, mesh, anchors, blocked)
     held_cells = {c for cells in holds.values() for c in cells}
     check_support(mesh, fixed_nodes, held_cells)
+    if fast:
+        check_support(mesh,fixed_nodes,set())
     index = {c: i for i, c in enumerate(mesh.cells)}
     rows = []; cols = []; values = []; contacts = []
     for key, cells in sorted(holds.items()):
@@ -270,11 +285,18 @@ def _system(engine, ids, anchors, blocked, p, h):
     free = np.ones(len(mesh.nodes) * 3, dtype=bool)
     for n in fixed_nodes: free[3*n:3*n+3] = False
     try:
-        solve = factorized(effective[free][:, free].tocsc()) if free.any() else lambda rhs: np.empty(0)
+        if fast:
+            from .surgical_continuum_solve import ProportionalHistorySolve
+            history_solve=ProportionalHistorySolve(matrices,free,contacts,ratios,p['materials'])
+            solve=None
+        else:
+            history_solve=None
+            solve = factorized(effective[free][:, free].tocsc()) if free.any() else lambda rhs: np.empty(0)
     except RuntimeError as error:
         raise ValueError('CONTINUUM_FACTORIZATION_FAILED: unsupported or ill-conditioned local system') from error
     result = dict(mesh=mesh, matrices=matrices, gradients=gradients, handle=handle,
         contacts=contacts, effective=effective, free=free, solve=solve, ratios=ratios)
+    if history_solve is not None:result['history_solve']=history_solve
     # The diagnostic uses unchanged reference adjacency/lengths. Cache its
     # original iteration order with this exact source/topology signature;
     # preserve scalar norm arithmetic so canonical recorded bits do not change.
@@ -428,9 +450,12 @@ def tick(engine, dt, diagnostic=None):
     numerical_total = state['numericalDissipationNmm']
     for _ in range(steps):
         before = u.copy(); old_memories = memories
-        rhs = external.copy()
-        for ratio, matrix, z in zip(system['ratios'], matrices[1:], memories): rhs += ratio * (matrix @ z)
-        u = np.zeros_like(before); u[free] = system['solve'](rhs[free])
+        if 'history_solve' in system:
+            u=system['history_solve'].advance(memories,gravity,targets)
+        else:
+            rhs = external.copy()
+            for ratio, matrix, z in zip(system['ratios'], matrices[1:], memories): rhs += ratio * (matrix @ z)
+            u = np.zeros_like(before); u[free] = system['solve'](rhs[free])
         if not np.isfinite(u).all(): raise ValueError('CONTINUUM_NONFINITE_RESPONSE')
         memories = update_memory(old_memories, u, p['relaxationSeconds'], h)
         nodal = u.reshape((-1, 3))
@@ -512,7 +537,7 @@ def tick(engine, dt, diagnostic=None):
 def descriptor(engine):
     p = engine.scene.properties.get(PROPERTY)
     if p is None: return None
-    return {'model': SCHEMA, 'element': 'source-voxel-owned full-integration hex8',
+    result={'model': SCHEMA, 'element': 'source-voxel-owned full-integration hex8',
         'materialParameterUnits': 'Pa; N/mm and N mm internally; displacement mm',
         'profile': copy.deepcopy(p), 'summary': {key: copy.deepcopy(value) for key, value in engine.state.get(PROPERTY, {}).items()
             if key not in ('cornerDisplacementMm', 'memoryDisplacementMm')},
@@ -523,3 +548,8 @@ def descriptor(engine):
             'Strain/stress volume-time integrals describe modeled exposure only; no injury threshold or deficit probability.',
             'No measured patient loads, CSF support, ICP or cavity-collapse validation.',
             'Source-center raster and existing collision guards remain approximations.']}
+    if 'continuumLinearSolveV1' in engine.scene.properties:
+        result['linearSolve']=copy.deepcopy(engine.scene.properties['continuumLinearSolveV1'])
+        if engine.scene.properties['continuumLinearSolveV1']['method']=='proportional-history-compliance':
+            result['limits'].append('The proportional-history solve requires independently anchored equilibrium and zero constrained memory; no inferred support or history reset.')
+    return result
