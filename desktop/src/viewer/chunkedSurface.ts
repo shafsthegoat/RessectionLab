@@ -2,6 +2,7 @@ import {maskSurfaceRegion} from './surface.ts';
 import {SourceVertexIndex,SurfaceIndexBudgetExceeded} from './sourceVertexIndex.ts';
 import type {Affine,Bounds3,Point3,Shape3} from './coordinates';
 import {IncrementalSourceNormals} from './incrementalSurfaceNormals.ts';
+import type {SourceAuditLayout} from './surfaceSafety';
 interface Chunk {low:Point3;high:Point3;data:Float32Array|Uint32Array;rowOffsets:Uint32Array;activeBounds?:Bounds3}
 const ACTIVE_BOUNDS_BYTES=256,MAX_STABLE_SNAPSHOT_BYTES=64*1024**2,MAX_PICKING_INPUT_BYTES=64*1024**2;
 /** Worker-owned source chunks. Row stitching preserves complete reference
@@ -91,14 +92,19 @@ export class ChunkedMaskSurface {
   }
   /** Fresh transferable buffers, with IDs assigned in original first-appearance
    * order. Stale registry vertices never enter the output or affect normals. */
-  indexed(affine?:Affine){
+  indexed(affine?:Affine,audit=false){
     this.cachedNormalsUsed=false;this.normalPreparationMs=0;
     if(!this.vertices)throw Error('Indexed source chunks were not admitted');
     const {rows,length}=this.rows(),indices=new Uint32Array(length),positions=new Float32Array(this.vertices.vertexCount*3),remap=new Uint32Array(this.vertices.vertexCount);
+    const vertexIds=audit?new Uint32Array(this.vertices.vertexCount):undefined,auditRows:SourceAuditLayout['rows']=[];
     let offset=0,count=0;
-    for(const row of rows)for(const id of row.data){
-      let mapped=remap[id];if(!mapped){mapped=++count;remap[id]=mapped;this.vertices.copy(id,positions,(mapped-1)*3);}
-      indices[offset++]=mapped-1;
+    for(const row of rows){
+      const begin=offset/3;
+      for(const id of row.data){
+        let mapped=remap[id];if(!mapped){mapped=++count;remap[id]=mapped;this.vertices.copy(id,positions,(mapped-1)*3);if(vertexIds)vertexIds[mapped-1]=id;}
+        indices[offset++]=mapped-1;
+      }
+      if(audit)auditRows.push({buffer:row.data.buffer,offset:row.data.byteOffset/12,begin,end:offset/3});
     }
     let normals:Float32Array|undefined;
     if(affine){
@@ -109,7 +115,8 @@ export class ChunkedMaskSurface {
       }catch(error){if(!(error instanceof SurfaceIndexBudgetExceeded))throw error;this.sourceNormals=undefined;}
       this.normalPreparationMs=performance.now()-normalStarted;
     }
-    return {positions:count===this.vertices.vertexCount?positions:positions.slice(0,count*3),indices,...(normals?{normals}:{})};
+    return {positions:count===this.vertices.vertexCount?positions:positions.slice(0,count*3),indices,...(normals?{normals}:{}),
+      ...(vertexIds?{auditLayout:{vertexIds:count===vertexIds.length?vertexIds:vertexIds.slice(0,count),vertexCapacity:this.vertices.vertexCount,rows:auditRows}}:{})};
   }
   /** Optional raw display representation. IDs include historical vertices, but
    * only current raster triangles draw. Never transfer resident cache buffers. */

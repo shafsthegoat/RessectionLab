@@ -3,6 +3,7 @@ import type {Affine,Shape3} from './coordinates';
 import {SURFACE_POLICY,surfaceKind,sincCoefficients} from './surfacePolicy.ts';
 import type {SurfaceDiagnostics} from './surfacePolicy';
 import {intersectionVertices} from './surfaceSafety.ts';
+import type {SurfaceIntersectionAudit} from './surfaceSafety';
 
 // Raster source soups revisit at most three adjacent half-cell X planes.
 // Keep that bounded lookup window; arbitrary triangle order falls back to the
@@ -78,7 +79,7 @@ export function vesselLimits(points:Float32Array,affine:Affine,mask?:Uint8Array,
   return limits;
 }
 
-export function fairIndexedSurface(points:Float32Array,indices:Uint32Array,affine:Affine,kind?:string,limits?:Float64Array){
+export function fairIndexedSurface(points:Float32Array,indices:Uint32Array,affine:Affine,kind?:string,limits?:Float64Array,audit?:SurfaceIntersectionAudit){
   if(points.length%3||indices.length%3||!points.every(Number.isFinite)||indices.some(v=>v>=points.length/3))throw Error('Invalid indexed display surface');
   const inv=inverseAffine(affine),h=1/Math.max(...inv.slice(0,3).map(r=>Math.hypot(...r.slice(0,3)))),profile=surfaceKind(kind);
   if(profile==='context'&&indices.length/3>SURFACE_POLICY.maxContextTriangles)return {positions:points.slice(),diagnostics:{
@@ -112,7 +113,7 @@ export function fairIndexedSurface(points:Float32Array,indices:Uint32Array,affin
   // Only quantize mutates physical. Face/contact inspection leaves it intact,
   // so a second audit of the same revision has precisely the same result.
   const contacts=()=>{
-    if(auditedRevision!==geometryRevision){auditedContacts=intersectionVertices(original,physical,indices);auditedRevision=geometryRevision;}
+    if(auditedRevision!==geometryRevision){auditedContacts=audit?audit.run(original,physical,indices):intersectionVertices(original,physical,indices);auditedRevision=geometryRevision;}
     return auditedContacts;
   };
   function quantize(){for(let i=0;i<points.length;i+=3){const delta=[0,1,2].map(a=>filtered[i+a]-original[i+a]);
@@ -159,6 +160,7 @@ export function fairIndexedSurface(points:Float32Array,indices:Uint32Array,affin
     let added=false;for(const v of contacts()){const c=find(v);if(!restored.has(c)){restored.add(c);added=true;}}if(!added)break;}
   let maximum=0;for(let i=0;i<points.length;i+=3)maximum=Math.max(maximum,Math.hypot(physical[i]-original[i],physical[i+1]-original[i+1],physical[i+2]-original[i+2]));
   const diagnostics:SurfaceDiagnostics={policy:SURFACE_POLICY.version,kind:profile,maxDisplacementMm:maximum,restoredComponents:restored.size,backedOffVertices:backedOff.size,intersectionCheck:restored.size?'source-restored':'passed'};
+  audit?.complete(original,physical,indices,contacts());
   return {positions:output,diagnostics};
 }
 

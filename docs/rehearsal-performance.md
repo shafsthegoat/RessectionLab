@@ -1,5 +1,10 @@
 # Rehearsal performance and remaining gates
 
+The latest [incremental surface audit](local-surface-audits.md) checks the whole
+original 120-action acquired episode, reducing changed brain preparation from
+3.17 to 2.12 seconds with exact buffers. Its larger bounded cache and remaining
+whole-layer filtering/native latency are explicit.
+
 The current [acquired continuum performance comparison](continuum-performance.md)
 profiles actual retraction/resection physics separately from CPU surface work.
 It preserves exact state and display buffers, improves headless throughput by

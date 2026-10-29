@@ -2,13 +2,14 @@
 """Small source-owned renderer fixtures from an existing executed recording.
 
 No MRI duplicates: only compressed categorical display masks plus exact source
-cell deltas. The first four exposure actions are replayed and the saved final
-removal set retained. No synthetic resection path or learning experience.
+cell deltas. Replay the exposure prefix or the complete recorded episode.
+No synthetic resection path or learning experience.
 """
 import argparse
 import gzip
 import hashlib
 import json
+import os
 from pathlib import Path
 import sys
 
@@ -28,6 +29,8 @@ def main():
     parser.add_argument('--case', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--branch', default='sustained-hold')
+    parser.add_argument('--all-actions', action='store_true')
+    parser.add_argument('--reuse-fixture', type=Path, help='Reuse identical already prepared display masks')
     args = parser.parse_args()
     if not args.output.resolve().is_relative_to(ROOT / 'testcases'):
         parser.error('Generated app-testing fixtures belong under ignored testcases/')
@@ -40,18 +43,35 @@ def main():
         raise ValueError('Source frame or declaration differs from saved episode')
     engine = SurgicalEngine(scene)
     states = [{'position': 0, 'stateId': engine.state_id, 'removed': []}]
-    for action in saved['actions'][:4]:
+    for action in saved['actions'] if args.all_actions else saved['actions'][:4]:
         receipt = engine.step(action)
         if receipt['status'] == 'rejected':
             raise ValueError(receipt)
         states.append({'position': len(engine.actions), 'stateId': engine.state_id, 'removed': engine.state['removed'].copy()})
-    states.append({'position': len(saved['actions']), 'stateId': saved['stateId'], 'removed': saved['checkpoint']['state']['removed']})
+    if args.all_actions:
+        if engine.snapshot() != saved:
+            raise ValueError('Complete executed episode differs from saved checkpoint')
+    else:
+        states.append({'position': len(saved['actions']), 'stateId': saved['stateId'], 'removed': saved['checkpoint']['state']['removed']})
+    mri_hash = array_digest(case.mri); labels_hash = array_digest(scene.labels)
+    reused = json.loads(args.reuse_fixture.read_text()) if args.reuse_fixture else None
+    if reused and (reused['mriHash'] != mri_hash or reused['labelsHash'] != labels_hash or
+            reused['shape'] != list(scene.shape) or reused['affine'] != scene.affine.tolist()):
+        raise ValueError('Reuse requires identical acquired MRI, source labels, shape and affine')
     layers = []
     for material, kind in (('soft_tissue', 'brain'), ('tumor', 'tumor')):
         labels = [row['id'] for row in scene.regions if row['material'] == material]
         mask = np.isin(scene.labels, labels).astype(np.uint8)
+        mask_hash = hashlib.sha256(mask.tobytes()).hexdigest()
         filename = kind + '.mask.gz'
-        (args.output / filename).write_bytes(gzip.compress(mask.tobytes(), mtime=0))
+        old = next((row for row in reused['layers'] if row['kind'] == kind and row['maskSha256'] == mask_hash), None) if reused else None
+        if old:
+            existing = (args.reuse_fixture.parent / old['maskFile']).resolve()
+            if hashlib.sha256(gzip.decompress(existing.read_bytes())).hexdigest() != mask_hash:
+                raise ValueError('Existing mask bytes differ from frozen reuse identity')
+            filename = os.path.relpath(existing, args.output.resolve())
+        else:
+            (args.output / filename).write_bytes(gzip.compress(mask.tobytes(), mtime=0))
         previous = set(); frames = []
         for state in states:
             removed = {cell for cell in state['removed'] if mask.flat[cell]}
@@ -61,13 +81,13 @@ def main():
                 'removedCells': sorted(removed - previous), 'totalRemovedCells': len(removed),
                 'removedVolumeMm3': len(removed) * scene.voxel_mm3})
             previous = removed
-        layers.append({'kind': kind, 'maskFile': filename, 'maskSha256': hashlib.sha256(mask.tobytes()).hexdigest(),
+        layers.append({'kind': kind, 'maskFile': filename, 'maskSha256': mask_hash, 'reusedExistingMask': bool(old),
             'occupiedSourceCells': int(mask.sum()), 'frames': frames})
     report = {'schema': 'resectionlab.surface-replay-fixture.v1', 'source': str(args.case.resolve()),
         'sourceSha256': hashlib.sha256(args.case.read_bytes()).hexdigest(), 'sceneId': scene.identity,
-        'mriHash': array_digest(case.mri), 'labelsHash': array_digest(scene.labels), 'branch': args.branch,
+        'mriHash': mri_hash, 'labelsHash': labels_hash, 'branch': args.branch, 'completeEpisodeReplayed': args.all_actions,
         'shape': list(scene.shape), 'affine': scene.affine.tolist(), 'layers': layers,
-        'scope': 'Source display surfaces at four actual exposure actions and the saved final endpoint; does not benchmark MRI or engine physics.'}
+        'scope': 'Source display surfaces at actual recorded actions; does not benchmark MRI or engine physics.'}
     (args.output / 'fixture.json').write_text(json.dumps(report, indent=2) + '\n')
     print(json.dumps({'output': str(args.output), 'layers': [(row['kind'], len(row['frames'])) for row in layers]}))
 

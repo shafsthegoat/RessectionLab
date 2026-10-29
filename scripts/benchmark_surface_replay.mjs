@@ -1,5 +1,5 @@
 // Exact paired worker benchmark from acquired-source exposure/removal masks.
-// The retained baseline differs only in the two frozen conditioning modules.
+// Frozen worker modules bind the declared baseline; no checkout switching.
 import fs from 'node:fs';
 import path from 'node:path';
 import {pathToFileURL} from 'node:url';
@@ -16,12 +16,13 @@ for(const name of [input,baseline,output])if(!path.resolve(name).startsWith(path
 if(fs.existsSync(output))throw Error('Preserve prior evidence');fs.mkdirSync(output,{recursive:true});
 const fixture=JSON.parse(fs.readFileSync(input,'utf8')),frozen=JSON.parse(fs.readFileSync(path.join(baseline,'viewer-manifest.json'),'utf8'));
 const sha=value=>crypto.createHash('sha256').update(value).digest('hex');
-const retained=['surfaceSafety.ts','surfaceSmoothing.ts','prepareSurface.ts','incrementalSurface.ts'];
+const retained=['surfaceSafety.ts','surfaceSmoothing.ts','prepareSurface.ts','incrementalSurface.ts',
+  ...['chunkedSurface.ts'].filter(name=>fs.existsSync(path.join(baseline,name)))];
 const compiled=name=>path.join(output,'retained-'+name.replace('.ts','.mjs'));
 const sourceHashes={};
 for(const name of retained){
-  const sourcePath=path.join(name.startsWith('surfaceS')?baseline:viewer,name),bytes=fs.readFileSync(sourcePath);
-  if(name.startsWith('surfaceS'))assert.equal(sha(bytes),frozen.files['desktop/src/viewer/'+name]);
+  const frozenPath=path.join(baseline,name),sourcePath=fs.existsSync(frozenPath)?frozenPath:path.join(viewer,name),bytes=fs.readFileSync(sourcePath);
+  if(fs.existsSync(frozenPath))assert.equal(sha(bytes),frozen.files['desktop/src/viewer/'+name]);
   sourceHashes[name]={baseline:sha(bytes),current:sha(fs.readFileSync(path.join(viewer,name)))};
   let source=stripTypeScriptTypes(bytes.toString(),{mode:'strip',sourceUrl:pathToFileURL(path.resolve(sourcePath)).href});
   source=source.replace(/from '(\.\/[^']+\.ts)'/g,(_match,specifier)=>{
@@ -53,6 +54,8 @@ function run(mode,repetition){
       rows.push({mode,repetition,layer:layer.kind,position:frame.position,initial:!previous,elapsedMs,work:result.work,
         removedVolumeMm3:frame.removedVolumeMm3,triangles:result.indices.length/3,vertices:result.positions.length/3,
         exactAllBuffersAndDiagnostics:true,...parity,memory:process.memoryUsage()});
+      fs.writeFileSync(path.join(output,'progress.json'),JSON.stringify({mode,repetition,layer:layer.kind,position:frame.position,
+        completedPreparations:rows.length,elapsedMs,exactAllBuffersAndDiagnostics:true,updatedAt:new Date().toISOString()}));
       previous=identity;
     }
   }
