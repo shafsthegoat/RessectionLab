@@ -131,6 +131,41 @@ against direct element/point sums. The selected guard/event/capture/exterior
 regression passes 38 tests. A frozen multi-state field-check comparison and
 topology resource evidence remain necessary before complete-program admission.
 
+The frozen guard comparison at `8350c3fb` passes all six source worlds (four
+distinct payloads): strain/stress rates and center bounds match exactly;
+maximum gradient-bound difference is 6.94e-18. Median cost falls from 54.72 to
+9.19 ms, a 5.95 times improvement, with byte-exact within-kernel repetition.
+Its 30-second/1 GiB supervisor completes in 2.34 seconds. Combining the isolated
+step and guard medians suggests 68.83 seconds for 4,218 calls, **excluding**
+setup, topology, transfer, controls, replay and independent verification.
+
+## Source-owned geometry and exact block admission
+
+Independent capture/geometry inspection finds nine tissue masks, eight
+single-owner removals, one contact release and no cut/rigid/support changes.
+The fourth removal, source owner `3441217`, contributes to 12 free exterior
+DOFs. Recomputing I from the surviving core elements would promote four old I
+nodes into E, growing E from 27,864 to 27,876 DOFs even for core-only events.
+Such a partition change cannot silently retain an exterior factor.
+
+The offline `SourceDomain` instead declares original I lineage explicitly.
+Every descendant retains that algebraic membership even when its last core
+element is removed. The existing source mesher rebuilds uncut-face sectors;
+original source corners supply supports and coefficients. It validates the
+complete baseline cut graph, permits splits and further cuts, refuses implicit
+joins, and owns no episode fields. The mesher's export bound remains separate
+from the unchanged live 24k-DOF limit. Eleven generated controls plus the
+selected exterior/partition/transfer/capture suite pass 56 tests.
+
+The [bounded topology identity audit](../manifests/experiments/continuum-program-topology-v1.json)
+assembles all nine frozen masks within 45 seconds/1 GiB/8 MiB, with no solve or
+factorization. It compares complete canonical CSR patterns and coefficient
+bits under source-free-DOF lineage. Exterior source removal requires a new
+block group. Core-only events qualify as reuse candidates only if both KEE
+and KIE identities are exact; even a one-bit assembly-order discrepancy is
+retained as a failed identity. Numerical factor/Schur updates and source
+history/energy qualification are still separate required gates.
+
 The focused event/capture/continuum/clone/cancellation selection passes 119
 tests. Independent code checks 45 bindings and 180 dense-control steps,
 including arbitrary exterior memory, contactless/rebound states and changing
