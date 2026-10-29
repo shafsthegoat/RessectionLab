@@ -1,0 +1,81 @@
+{
+  "schema": "resectionlab.continuum-program-topology-protocol.v2",
+  "intent": "Audit exact supported-free KEE/KIE identities across nine captured monotone removal states under an explicit stable original-I-descendant partition before any factor reuse.",
+  "sourceRole": "DEVELOPMENT; existing UCSF-PDGM-0007 reference exports only",
+  "sourceArchiveSha256": "0098232cceb946cbc5cccf00ca81b3b8b5c768c726d379fc8e8dbb503cd13127",
+  "geometry": {
+    "core": {
+      "path": "testcases/outputs/simulator-qualification-20261029/continuum-reference-v1/execution-v1/result/domain-8.npz",
+      "sha256": "930d378221d4c1407cdf9362bd7e312eb360ef0486e986bc656511d9b020618f"
+    },
+    "reference": {
+      "path": "testcases/outputs/simulator-qualification-20261029/continuum-reference-v1/execution-v1/result/domain-20.npz",
+      "sha256": "2f336591a89b7705532c17ec87183f493c68a892a888eddf0872490122b683d7"
+    }
+  },
+  "scope": "Existing source geometry/support/material and captured8mm prescribed program removals only; no matrices are factored, no state is advanced, no larger-domain public action or physical adequacy acceptance.",
+  "nextGate": "Only exact block/mapping identities can support a retained exterior operator implementation; any coefficient mismatch is preserved, never loosened to a tolerance. Exact retained Schur/factor updates and full-field/energy controls remain required.",
+  "physicalValidationPassed": false,
+  "physiologicalRL": "hold",
+  "partition": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-v1/preparation-v1/source-partition.npz",
+    "sha256": "384e47e474ee7c1c364c296faf966327101347f81b9dc65f4eff994451c3dd01"
+  },
+  "caps": {
+    "wallSeconds": 45,
+    "rssBytes": 1073741824,
+    "outputBytes": 8388608,
+    "numericalThreads": 1,
+    "retries": 0
+  },
+  "forbidden": [
+    "changing source geometry, materials or supports",
+    "changing live engine caps",
+    "new data acquisition or response fitting",
+    "weakening failed radius gates",
+    "physiological RL"
+  ],
+  "captureReport": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/native-capture-v1/result/report.json",
+    "sha256": "91541444c04de625e3bd23b3fa7f1b6e1c86517aa7f94ecbfb7a64e69cf0dba6"
+  },
+  "capturedPrograms": {
+    "short-hold": {
+      "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/native-capture-v1/result/short-hold-inputs.json.gz",
+      "sha256": "5945e7b795fffe9846fd8392822ea5eeafb3aeb9f245ed83989e9a33b72bface"
+    },
+    "sustained-hold": {
+      "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/native-capture-v1/result/sustained-hold-inputs.json.gz",
+      "sha256": "57e3491cb7408a4f26f447241cc15880bf969dc356fe1fe993ba06af984165e0"
+    },
+    "stop-at-model-limit": {
+      "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/native-capture-v1/result/stop-at-model-limit-inputs.json.gz",
+      "sha256": "1e962023b170f0763294d145b95a2c96220720ca7c1442a5de0df214bb42c419"
+    }
+  },
+  "expectedRemovalOrder": [
+    3404018,
+    3404173,
+    3403863,
+    3441217,
+    3366819,
+    3404019,
+    3366664,
+    3366974
+  ],
+  "coefficientComparison": "Canonical CSR pattern and float64 coefficient bits exactly equal under explicit source-free-DOF lineage; no tolerance, rounding or symmetry repair.",
+  "assembly": "canonical-source-owner-buckets",
+  "priorIdentityAudit": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/topology-identity-v1/result/report.json",
+    "sha256": "94c805a1abb233a5e9c3af594d04cb15a3aeea2d81ea34ec06947a295c6b679b"
+  },
+  "revisionReason": "Version1 found core-only bucket-boundary shifts changed untouched KEE/KIE coefficients by at most8.67e-19N/mm. Fixed buckets alone failed generated I/E identity because COO duplicate summation reordered ties. Canonical source-owner duplicate reduction plus frozen256-owner buckets preserves untouched entries exactly. Existing default assembly remains unchanged. Canonical baseline must pass the previously qualified full source world at unchanged force1e-10N/energy1e-10Nmm; reuse itself still requires bit-exact coefficients. No factorization/solve retried.",
+  "baselineWorld": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-v1/qualification-v1/result/short-hold-step-030.npz",
+    "sha256": "dd1a1b175d0b6040ac1332b9d1f7423f5054a3a3b653be2af07f78931a019eb7"
+  },
+  "baselineTolerances": {
+    "forceN": 1e-10,
+    "energyNmm": 1e-10
+  }
+}

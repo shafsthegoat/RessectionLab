@@ -103,6 +103,8 @@ def test_oblique_heterogeneous_source_coupon_and_own_affine_admission():
     full = source_stiffness(geometry)
     canonical = c.assemble(scene, mesh, materials)[0][0]
     assert np.max(np.abs((full-canonical).data), initial=0.) < 1e-14
+    planned = source_stiffness(geometry,source_order=np.sort(geometry['cells']))
+    assert np.max(np.abs((planned-canonical).data), initial=0.) < 1e-14
     cell = int(np.ravel_multi_index((2,2,1), scene.shape)); nodes = mesh.element_nodes[cell]
     contact = np.zeros((3, len(free)))
     for axis in range(3): contact[axis, 3*nodes+axis] = 1/8.
@@ -169,3 +171,35 @@ def test_contact_rebind_reuses_only_fixed_tissue_and_keeps_distributed_history(m
     other=ExteriorOperator(k,core)
     with pytest.raises(ValueError,match='ANOTHER_OPERATOR'):
         ExteriorHistorySolve(other,c,d,alpha,times,prepared=held.prepared)
+
+
+def test_frozen_source_buckets_preserve_untouched_blocks_across_owner_deletion():
+    from resectionlab.surgical_continuum import voxel_mesh
+    from resectionlab.surgical_scene import SurgicalScene
+    scene=SurgicalScene(np.ones((5,5,11),np.uint16),np.eye(4),
+        [{'id':1,'name':'Generated coupon','material':'soft_tissue'}],{'kind':'generated assembly-order control'}, {})
+    mesh=voxel_mesh(scene,range(scene.labels.size));cells=np.asarray(mesh.cells)
+    g=dict(cells=cells,shape=np.asarray(scene.shape),nodes=mesh.nodes,elementNodes=mesh.element_nodes,
+        affine=scene.affine,freeDofs=np.ones(mesh.nodes.size,bool),muPa=1000.+cells*.13,nu=np.full(len(cells),.3))
+    original=source_stiffness(g,source_order=cells);legacy=source_stiffness(g)
+    assert np.max(np.abs((original-legacy).data),initial=0.)<1e-14
+    removed=int(np.ravel_multi_index((2,2,3),scene.shape));keep=cells!=removed
+    new={key:value.copy() for key,value in g.items()}
+    for key in ('cells','elementNodes','muPa','nu'):new[key]=g[key][keep]
+    changed=source_stiffness(new,source_order=cells)
+    core=(3*mesh.element_nodes[removed,:,None]+np.arange(3)).ravel()
+    exterior=np.setdiff1d(np.arange(mesh.nodes.size),core)
+    for rows,columns in [(exterior,exterior),(core,exterior)]:
+        before=original[rows][:,columns].tocsr();after=changed[rows][:,columns].tocsr()
+        before.eliminate_zeros();after.eliminate_zeros()
+        np.testing.assert_array_equal(after.indptr,before.indptr)
+        np.testing.assert_array_equal(after.indices,before.indices)
+        np.testing.assert_array_equal(after.data.view(np.uint64),before.data.view(np.uint64))
+    assert np.max(np.abs((changed-original).data))>0  # Removed owner is not retained.
+    # Permuting input element rows must not redefine the frozen source buckets.
+    permuted={key:value.copy() for key,value in new.items()}
+    for key in ('cells','elementNodes','muPa','nu'):permuted[key]=new[key][::-1]
+    assert (source_stiffness(permuted,source_order=cells)-changed).nnz==0
+    for invalid in (cells[:-1],cells[::-1],cells.astype(float),np.r_[cells,cells[-1]]):
+        with pytest.raises(ValueError,match='SOURCE_ASSEMBLY_ORDER'):
+            source_stiffness(g,source_order=invalid)

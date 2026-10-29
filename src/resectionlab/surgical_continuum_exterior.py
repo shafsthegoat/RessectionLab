@@ -24,12 +24,19 @@ def _finite(value, shape, name):
     return a.astype(float, copy=False)
 
 
-def source_stiffness(geometry, *, check=lambda: None):
+def source_stiffness(geometry, *, source_order=None, check=lambda: None):
     """Assemble the declared source-cell equilibrium law in bounded batches.
 
     These are already exposed offline export arrays, not a new image adapter.
     Verify each input's own source-affine corner identity before using its
     mechanical coefficients. No unknown material or support is supplied.
+
+    An optional frozen full-source order pins the 256-owner assembly buckets
+    across deletions, with explicit source-owner reduction of duplicate matrix
+    entries inside each bucket. Unchanged block contributions then retain their
+    summation order instead of shifting when a different block loses an owner.
+    It neither keeps removed stiffness nor certifies factor reuse. The default
+    assembly path remains identical to the earlier fixed-domain witness.
     """
     from .surgical_continuum_partition import _validate
     from .surgical_continuum import CORNERS, element_operators
@@ -45,13 +52,40 @@ def source_stiffness(geometry, *, check=lambda: None):
         raise ValueError('EXTERIOR_SOURCE_MATERIAL')
     shear, lame, _ = element_operators(affine)
     matrix = sparse.csr_matrix((nodes.size, nodes.size))
-    for start in range(0, len(cells), 256):
-        check(); en = elements[start:start+256]
+    if source_order is None:
+        batches = (slice(start,start+256) for start in range(0,len(cells),256))
+    else:
+        order = np.asarray(source_order)
+        if (order.ndim != 1 or order.dtype.kind not in 'iu' or not len(cells) <= len(order) <= 16000
+                or np.any(order < 0) or np.any(order >= np.prod(shape)) or np.any(order[1:] <= order[:-1])):
+            raise ValueError('EXTERIOR_SOURCE_ASSEMBLY_ORDER')
+        positions = np.searchsorted(order,cells)
+        if np.any(positions >= len(order)) or not np.array_equal(order[positions],cells):
+            raise ValueError('EXTERIOR_SOURCE_ASSEMBLY_ORDER')
+        source_rows = np.argsort(positions,kind='stable'); positions = positions[source_rows]
+        batches = (source_rows[np.searchsorted(positions,start):np.searchsorted(positions,start+256)]
+                   for start in range(0,len(order),256))
+    for batch in batches:
+        check(); en = elements[batch]
+        if not len(en): continue
         dofs = (3*en[:, :, None]+np.arange(3)).reshape((-1, 24))
-        m = mu[start:start+256]*1e-6; v = nu[start:start+256]
+        m = mu[batch]*1e-6; v = nu[batch]
         values = m[:, None, None]*shear+(2*m*v/(1-2*v))[:, None, None]*lame
         rows = np.repeat(dofs, 24, axis=1).ravel(); columns = np.tile(dofs, (1, 24)).ravel()
-        matrix = matrix+sparse.coo_matrix((values.ravel(), (rows, columns)), shape=matrix.shape).tocsr()
+        if source_order is None:
+            part = sparse.coo_matrix((values.ravel(), (rows, columns)), shape=matrix.shape).tocsr()
+        else:
+            # COO->CSR duplicate summation does not promise source-owner order:
+            # deleting an I/I contribution can reorder untouched I/E ties.
+            # Reduce each coefficient in an explicit row/column/owner order
+            # before constructing CSR, leaving no duplicates for it to sum.
+            permutation = np.lexsort((np.repeat(cells[batch],576),columns,rows))
+            keys = rows[permutation]*nodes.size+columns[permutation]
+            starts = np.r_[0,np.flatnonzero(keys[1:]!=keys[:-1])+1]
+            reduced = np.add.reduceat(values.ravel()[permutation],starts)
+            part = sparse.coo_matrix((reduced,(rows[permutation][starts],columns[permutation][starts])),
+                                     shape=matrix.shape).tocsr()
+        matrix = matrix+part
     check()
     return matrix
 

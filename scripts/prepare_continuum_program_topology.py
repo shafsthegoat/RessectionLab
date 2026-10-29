@@ -17,10 +17,12 @@ sys.path.insert(0,str(ROOT/'src'))
 from resectionlab.surgical_continuum_exterior import source_stiffness
 from resectionlab.surgical_continuum_topology import SourceDomain
 from profile_continuum_exterior import load_geometry,free_partition,bound,sha,write
+from qualify_continuum_exterior import contact_matrix,full_accounting
 from febio_runtime import supervise
 
-PROTOCOL = ROOT/'manifests/experiments/continuum-program-topology-v1.json'
+PROTOCOL = ROOT/'manifests/experiments/continuum-program-topology-v2.json'
 SOURCES = [Path(__file__),ROOT/'scripts/profile_continuum_exterior.py',ROOT/'scripts/febio_runtime.py',
+    ROOT/'scripts/qualify_continuum_exterior.py',
     *[ROOT/'src/resectionlab'/name for name in ('surgical_continuum_topology.py','surgical_continuum_events.py',
         'surgical_continuum_exterior.py','surgical_continuum_partition.py','surgical_continuum.py')]]
 
@@ -42,7 +44,7 @@ def worker(output,launch):
     started=time.perf_counter();states=[]
     report={'schema':'resectionlab.continuum-program-topology-result.v1','status':'started','phase':'admission',
         'sourceCommit':identity['commit'],'sourceHashes':identity['sourceHashes'],'protocolSha256':sha(PROTOCOL),
-        'scope':p['scope'],'physicalValidationPassed':False,'physiologicalRL':'hold','largeScaleRL':'hold',
+        'scope':p['scope'],'assembly':p['assembly'],'physicalValidationPassed':False,'physiologicalRL':'hold','largeScaleRL':'hold',
         'mechanicsSolves':0,'factorizations':0,'newAcquiredDatasetBytes':0,'largerDomainPublicActionsAdmitted':False}
     def check():
         if time.perf_counter()-started>p['caps']['wallSeconds']-5:raise TimeoutError('Topology identity cooperative cap')
@@ -52,9 +54,11 @@ def worker(output,launch):
         if identity['protocolSha256']!=sha(PROTOCOL):raise ValueError('Launch protocol changed')
         for path,digest in identity['sourceHashes'].items():
             if sha(ROOT/path)!=digest:raise ValueError('Launch source changed')
-        for entry in [*p['geometry'].values(),p['partition'],p['captureReport'],*p['capturedPrograms'].values()]:bound(entry)
+        for entry in [*p['geometry'].values(),p['partition'],p['captureReport'],p['priorIdentityAudit'],
+                      p['baselineWorld'],*p['capturedPrograms'].values()]:bound(entry)
     try:
         check_sources();capture=json.loads(bound(p['captureReport']).read_text())
+        if p['assembly']!='canonical-source-owner-buckets':raise ValueError('Frozen assembly declaration changed')
         if capture['status']!='completed' or capture['suffixFixedSteps']!=4218:raise ValueError('Native input admission incomplete')
         branch_states={};orders={}
         for branch,entry in p['capturedPrograms'].items():
@@ -89,8 +93,33 @@ def worker(output,launch):
             check();begin=time.perf_counter();derived=domain.after(mask);g=derived['geometry']
             geometry_seconds=time.perf_counter()-begin;f=np.flatnonzero(g['freeDofs']);i=derived['coreFreeDofs'];e=np.setdiff1d(np.arange(len(f)),i)
             lineage=derived['originalFreeDofForNew'];il=lineage[i];el=lineage[e]
-            begin=time.perf_counter();full=source_stiffness(g,check=check);k=full[f][:,f].tocsr();del full
-            assembly_seconds=time.perf_counter()-begin;ee=k[e][:,e].tocsr();ie=k[i][:,e].tocsr();del k
+            begin=time.perf_counter();full=source_stiffness(g,source_order=geometry['cells'],check=check)
+            k=full[f][:,f].tocsr();del full
+            assembly_seconds=time.perf_counter()-begin
+            if index==0:
+                legacy=source_stiffness(g,check=check)
+                legacy=legacy[f][:,f].tocsr()
+                report['baselineCanonicalVsLegacyAssembly']=compare_sparse(k,legacy)
+                with np.load(bound(p['geometry']['reference']),allow_pickle=False) as raw:
+                    alpha,times,spring,contact_cells=(raw[key] for key in ('alpha','times','spring','contactCells'))
+                with np.load(bound(p['baselineWorld']),allow_pickle=False) as raw:
+                    sample={key:raw[key] for key in raw.files}
+                if not np.array_equal(sample['freeIndices'],f):raise ValueError('Baseline world free-DOF map differs')
+                c=contact_matrix(g,contact_cells)[:,f];u=sample['displacement'];z=sample['memories']
+                residual=k@u+c.T@(spring*(c@u-sample['target']))
+                for aj,memory in zip(alpha,z):residual+=aj*(k@(u-memory))
+                force=float(np.max(np.abs(residual),initial=0.))
+                accounts=[full_accounting(matrix,c,spring,alpha,times,sample['beforeDisplacement'],
+                    sample['beforeMemories'],u,z,sample['target'],sample['previousTarget'],float(sample['h']))
+                    for matrix in (legacy,k)]
+                energy=max(abs(accounts[0][key]-accounts[1][key]) for key in accounts[0])
+                report['baselineQualifiedWorldCheck']={'fullFreeResidualN':force,'maximumEnergyDisagreementNmm':energy,
+                    'forceLimitN':p['baselineTolerances']['forceN'],'energyLimitNmm':p['baselineTolerances']['energyNmm']}
+                if (not np.isfinite(force) or not np.isfinite(energy)
+                        or force>p['baselineTolerances']['forceN'] or energy>p['baselineTolerances']['energyNmm']):
+                    raise ValueError('Canonical assembly fails unchanged qualified-world force/energy limits')
+                del legacy
+            ee=k[e][:,e].tocsr();ie=k[i][:,e].tocsr();del k
             old_removed=set() if group is None else group['removed'];new_owners=set(mask)-old_removed
             touches_e=[]
             for cell in sorted(new_owners):

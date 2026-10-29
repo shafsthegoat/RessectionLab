@@ -166,6 +166,26 @@ and KIE identities are exact; even a one-bit assembly-order discrepancy is
 retained as a failed identity. Numerical factor/Schur updates and source
 history/energy qualification are still separate required gates.
 
+The version-1 audit at `c693edec` completes all nine states in 6.94 worker
+seconds (7.25 supervised), with 699,744,256 bytes sampled peak group RSS. It
+correctly **fails** exact reuse: core-only deletions shift the retained-row
+256-element buckets, changing up to 726 exterior coefficients by at most
+8.67e-19 N/mm. I/E ties also change inside COO-to-CSR duplicate reduction.
+The actual exterior owner changes KEE by up to 7.48e-4 N/mm. Geometry, supports
+and ordered lineage match independent source-face graph reconstruction in all
+nine worlds; E stays at 27,864 DOFs, and four orphan I nodes disappear.
+
+The [version-2 audit](../manifests/experiments/continuum-program-topology-v2.json)
+targets that measured assembly issue. Its optional assembly order pins buckets
+to the original full owner list and explicitly reduces row/column/owner ties
+before CSR construction. The earlier default path remains unchanged. Generated
+deletion and input-row permutation controls require exact untouched KEE/KIE
+coefficients; the oblique heterogeneous coupon also matches independent Q1
+assembly at its existing tolerance. The source audit additionally checks the
+previously qualified full source state against unchanged force/energy limits
+of 1e-10 N / 1e-10 N mm. The reuse criterion remains bit identity; no failed
+identity is replaced by a tolerance. No factor or Schur reuse is yet admitted.
+
 The focused event/capture/continuum/clone/cancellation selection passes 119
 tests. Independent code checks 45 bindings and 180 dense-control steps,
 including arbitrary exterior memory, contactless/rebound states and changing
