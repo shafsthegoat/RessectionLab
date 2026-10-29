@@ -200,6 +200,9 @@ def tick(engine, dt):
     p = _settings(engine); model = engine.state['deformationModel']; removed = set(engine.state['removed'])
     diagnostic = _diagnostics.get()
     if diagnostic is not None: diagnostic['ticks'] += 1
+    if 'brainContinuumV1' in engine.scene.properties:
+        from .surgical_continuum import tick as continuum_tick
+        return continuum_tick(engine, dt, diagnostic)
     if 'patientPosition' in engine.state:
         from .surgical_position import activate_exposed_patch
         activate_exposed_patch(engine, radius_mm=p['radiusMm'], max_nodes=p['maxNodes'])

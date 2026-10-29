@@ -4,6 +4,9 @@ The [simulator qualification workflow](docs/simulator-qualification.md) now
 checks source evidence, exact replay, access-inclusive removal and lattice
 force/energy behavior before physiological planning. It exposes grid-dependent
 mechanics and keeps measured-response and large-scale RL gates open.
+An [opt-in voxel continuum](docs/voxel-continuum.md) adds source-owned mechanics,
+stress relaxation, mechanical exposure and checked retraction/resection replay;
+its patient material and injury claims remain unvalidated.
 
 The [full case rehearsal collaborator handoff](artifacts/full-case-rehearsal-20261020/README.md)
 includes the saved meningioma source and substantial primary resection, same-case

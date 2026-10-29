@@ -44,6 +44,8 @@ function ActionResult({outcome,title}:{outcome:Pick<SurgicalOutcome,'reason'|'ev
     SHAFT_COLLISION:'The requested shaft sweep intersects retained tissue.',
     TOOL_COLLISION:'The requested instrument sweep intersects the other hand.',
     RETAINED_TISSUE_COLLISION:'Retained tissue blocks the requested movement.',
+    CONTINUUM_SMALL_GRADIENT_DOMAIN:'The requested deformation exceeds this research model’s supported range. The accepted state is unchanged.',
+    CONTINUUM_UNSUPPORTED_RIGID_COMPONENT:'The local tissue component lacks declared mechanical support.',
   };
   const why=outcome.reason?explanation[outcome.reason.split(':')[0]]:undefined;
   return <section aria-label={title} className="surgical-preview" role="status"><strong>{title} · {outcome.status}</strong>
@@ -68,6 +70,7 @@ function DeclaredFields({data}:{data:Record<string,unknown>}){
 function SceneResearchDetails({view,preview}:{view:SurgicalView;preview:boolean}){
   const source=view.scene.source,adapter=source?.adapter,physics=view.physics??view.scene.physics;
   const v2=physics?.profile?.schema==='resectionlab.tissue-physics.v2';
+  const continuum=physics?.brain?.model==='resectionlab.voxel-continuum.v1';
   const patientDerivative=adapter?.type==='native-patient-research-derivative';
   const refinement=source?.workingGridRefinement as {schema?:unknown;factor?:unknown;noNewAnatomy?:unknown}|undefined;
   const mapped=new Set(view.scene.regions.map(r=>r.material));
@@ -79,13 +82,13 @@ function SceneResearchDetails({view,preview}:{view:SurgicalView;preview:boolean}
     {adapter?.warnings?.length? <ul className="surgical-warning">{adapter.warnings.map((warning,i)=><li key={i}>{warning}</li>)}</ul>:null}
     <p className="surgical-note">Scene grid: {view.scene.resolutionMm.map(n=>+n.toFixed(3)).join(' × ')} mm · {view.scene.shape.join(' × ')} cells.</p>
     {refinement?.schema==='resectionlab.surgical-working-grid-refinement.v1'&&refinement.factor===2&&refinement.noNewAnatomy===true&&<p className="surgical-warning">Refined computational grid: each parent material cell was subdivided into eight children with the same physical bounds. The image is derived interpolation. This adds no acquired image resolution or anatomical evidence; it is a discretization study.</p>}
-    {v2&&<p className="surgical-note">V2 research mechanics: coupled brain relaxation, work and heat based drilling, and pressure-driven clustered bleeding. Parameters are uncalibrated assumptions; the volume penalty is approximate and global perfusion is unknown.</p>}
+    {v2&&<p className="surgical-note">{continuum?'Opted-in voxel continuum: small-gradient tissue deformation and declared stress relaxation.':'V2 research mechanics: coupled brain relaxation with an approximate volume penalty.'} Work and heat based drilling and clustered bleeding retain their declared assumptions. Patient physiology and global perfusion are unvalidated.</p>}
     <details><summary>Provenance, material behavior, and assumptions</summary>
       {source&&<DeclaredFields data={Object.fromEntries(Object.entries(source).filter(([key])=>key!=='adapter'))}/>}
       {adapter&&<details><summary>Source adapter and declared patient source</summary><DeclaredFields data={adapter}/></details>}
       <ul className="surgical-note">
         {mapped.has('bone')&&<li>Bone: rigid cells; {v2?'drilling accumulates work before removal and models heat generation and cooling.':'drilling and kerf cutting remove cells and produce modeled debris.'}</li>}
-        {(mapped.has('soft_tissue')||mapped.has('tumor'))&&<li>Brain / soft tissue and tumor: {v2?'coupled local tissue deformation with timed relaxation after release, distinct assumed stiffness, and an approximate volume penalty.':'lattice patch displacement and compatible-tool removal; no calibrated deformation law.'}</li>}
+        {(mapped.has('soft_tissue')||mapped.has('tumor'))&&<li>Brain / soft tissue and tumor: {continuum?'source-owned voxel elements with declared material properties, stress relaxation, cut-face separation and explicit local support. Large deformation and patient injury remain unsupported.':v2?'coupled local tissue deformation with timed relaxation after release, distinct assumed stiffness, and an approximate volume penalty.':'lattice patch displacement and compatible-tool removal; no calibrated deformation law.'}</li>}
         {mapped.has('vessel')&&<li>Vessels: local adjacency cutting retains pieces. {v2?'Clustered wound outlets use assumed pressure, finite vascular reserves, and refill; the fluid budget is tracked.':physics?.capabilities?.damageTriggeredVesselWounds===true?'Declared damage-triggered wound outlets use an assumed local flow proxy.':'Damage-triggered vessel wound behavior is not declared as enabled.'} Global perfusion is unknown.</li>}
         {mapped.has('membrane')&&<li>Membranes: retained cut seams and graph separation; no fabricated physical aperture.</li>}
         {mapped.has('unknown')&&<li>Unknown material remains explicitly unmapped; no tissue behavior is inferred from its label.</li>}
@@ -99,6 +102,7 @@ function SceneResearchDetails({view,preview}:{view:SurgicalView;preview:boolean}
 
 function MechanicsV2Details({view,preview}:{view:SurgicalView;preview:boolean}){
   const drill=view.drillingV2,brain=view.deformationModel,vessels=view.vesselsV2;
+  const continuum=view.physics?.brain?.model==='resectionlab.voxel-continuum.v1'?view.physics.brain.summary:undefined;
   const sum=(values:Record<string,number>|undefined)=>values?Object.values(values).reduce((a,b)=>a+b,0):undefined;
   const displacement=view.deformation?Math.max(0,...Object.values(view.deformation).map(v=>Math.hypot(...v))):undefined;
   const temperature=drill&&Object.keys(drill.temperatureC).length?Object.values(drill.temperatureC).reduce((max,value)=>Math.max(max,value),-Infinity):view.metrics.drillMaxTemperatureC;
@@ -111,6 +115,12 @@ function MechanicsV2Details({view,preview}:{view:SurgicalView;preview:boolean}){
     ['Active deformation cells',brain?.activeNodes??brain?.active?.length],
     ['Maximum displacement · mm',displacement],
     ['Maximum neighbor displacement / spacing',brain?.maxNeighborDisplacementRatio],
+    ...(continuum?[
+      ['Continuum active elements / DOFs',`${continuum.activeElements??0} / ${continuum.activeDofs??0}`],
+      ['Modeled viscous dissipation · N·mm',continuum.dissipatedEnergyNmm],
+      ['Stored energy exported with removed tissue · N·mm',continuum.removedStoredEnergyNmm],
+      ['Modeled mechanical exposure by original label · no injury calibration',continuum.exposureBySourceLabel],
+    ] as Array<[string,unknown]>:[]),
     ['Vascular pressure · Pa',vessels?.pressurePa],
     ['Vascular reserve remaining · mm³',vessels?.remainingMm3],
     ['Vascular refill · mm³',vessels?.refilledMm3],

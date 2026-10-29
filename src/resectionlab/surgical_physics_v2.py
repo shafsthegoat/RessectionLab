@@ -28,6 +28,8 @@ def validate(scene):
     if not isinstance(provenance, dict) or provenance.get('kind') != 'assumed-research' or not isinstance(provenance.get('description'), str) or not provenance['description'].strip():
         raise ValueError('EXPLICIT_ASSUMED_RESEARCH_PROVENANCE_REQUIRED')
     brain._settings(SimpleNamespace(scene=scene)); bone.validate(p['bone']); vessel.validate(p['vessel'])
+    from .surgical_continuum import validate as validate_continuum
+    validate_continuum(scene)
 
 def initialize(engine):
     if enabled(engine):
@@ -45,10 +47,11 @@ def raster(engine):
     return pairs
 
 def descriptor(engine):
+    from .surgical_continuum import descriptor as continuum_descriptor
     return {'enabled': True, 'profile': copy.deepcopy(engine.scene.properties['tissuePhysicsV2']),
         'capabilities': {'patientCalibratedPhysiology': False, 'globalPerfusion': False,
             'damageTriggeredVesselWounds': True, 'coupledDeformation': True, 'workLimitedDrilling': True},
-        'brain': {'model': brain.profile()['model']}, 'bone': bone.descriptor(engine), 'vessel': vessel.descriptor(engine),
+        'brain': continuum_descriptor(engine) or {'model': brain.profile()['model']}, 'bone': bone.descriptor(engine), 'vessel': vessel.descriptor(engine),
         'limits': ['Uncalibrated research mechanics; no clinical outcome prediction.',
             'Continuous local displacements rasterized to the common source grid for collision, surfaces and slices.',
             'Compressed soft cells retain all source identities; rendered occupancy is their union, not incompressible FEM.',
