@@ -204,12 +204,12 @@ deformation and CUSA source files also remain identical to the accepted
 `0d66dd7e` qualification. The optional canonical path changes summation order,
 with its numerical source checks stated above; it has no live admission.
 
-The next executable milestone is an exact retained-operator/Schur update with
+The retained-operator/Schur gate requires an exact update with
 explicit bijective exterior mapping, complete coefficient checks, a fresh core
 support certificate, and generated full-field/energy controls. It must reject
 one-bit coefficient changes, non-bijective exterior sector maps, and an
-unsupported new core. The measured source topology then permits a bounded
-two-block numerical pilot before freezing all 4,218 source program steps.
+unsupported new core. The implementation and bounded two-block numerical pilot
+below cover these checks before freezing all 4,218 source program steps.
 Neither a future cut nor a split constrained sector may inherit a factor or
 physical support claim from this no-cut source audit. The 16-to-20 mm stress
 stability failure, larger-domain public actions and physical/physiological RL
@@ -266,3 +266,46 @@ is exported for source-owned continuity, force, quadrature energy and stress
 checks using the frozen independent checker. Worker and checker share 180
 seconds and 32 MiB outputs, each with 3 GiB sampled process-group RSS and one
 numerical thread. No run retry or full-program/physical acceptance is implied.
+
+The frozen pilot at `e75599e8` passes in 131.07 worker seconds plus 5.33
+independent-supervisor seconds (136.75 combined). Sampled peak process-group
+RSS is 2,329,575,424 bytes; the worker's OS-reported peak is 2,383,200,256
+bytes. Outputs total 11,945,241 bytes. Both worker/checker exit 0 with no kill,
+approval issue or retry. The first/second complete tissue-state builds take
+50.60 / 52.22 seconds; seven retained state updates take 3.33–4.67 seconds
+(median 4.02), including source assembly, transfer, contact basis, checks and
+field export. Retained Schur construction alone takes 0.48–0.80 seconds instead
+of the measured 42.99 / 43.98 seconds of fresh Schur columns. The final root
+correction occupies 241,120,800 bytes.
+
+All 11 full source fields pass independent Q1 equilibrium, spring/Maxwell
+energy, stress/probe, support and source-corner continuity checks. Maximum
+independent free-force residual is 7.25e-19 N; step energy balance 1.05e-20
+N mm and cumulative event/BE balance 7.25e-21 N mm. All eight removal exports
+are positive and sum to 5.92448e-8 N mm in this pilot; release changes the
+declared spring-model potential by -1.48817e-5 N mm. These values belong to
+the prescribed step-30 pilot sequence, not the complete captured programs or
+measured device work. The exterior event refuses retention and the previous
+operator is collected before the new exterior build. Deterministic full
+program replay is not covered by this pilot.
+
+Input preflight verifies every suffix clock transition exactly for all three
+captures, including the native rounding rule, with no zero-fixed-step ticks.
+The post-prefix contact targets are initially zero. All three monotone stage
+sequences map into the same nine tissue states; short/sustained/STOP preserve
+1,938 / 2,154 / 126 fixed steps. A full harness can therefore interleave three
+**independent episode fields** by tissue stage while sharing immutable
+operators, then repeat from fresh inputs for deterministic replay. Two full
+exterior builds and seven retained core updates suffice per pass; keeping
+every historical dense factor resident is unnecessary.
+
+Using the measured 131.07-second two-block pilot plus the earlier 68.83-second
+kernel/guard estimate per pass gives about 399.8 seconds for two passes,
+excluding orchestration and the independent checker. Twenty-six proposed
+sample worlds with 24 expected byte-distinct field payloads would occupy about
+26.0 MB at the largest measured pilot payload size, before metric/provenance
+overhead. These are admission estimates, not a completed experiment. The next
+executable milestone is the tested full captured-input harness, per-branch
+removal/contact/clock accounting, exact replay hashes and a frozen 900-second
+protocol. No full run has been launched. The physical boundary-stability,
+larger-domain public-action and physiological RL holds remain unchanged.
