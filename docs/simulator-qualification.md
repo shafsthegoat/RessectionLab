@@ -123,3 +123,9 @@ passive conduction, declared bath exchange and heat exported with removal.
 Continuous/pulsed generated controls replay with distinct temperature histories.
 Temperature-to-coagulation, device response and injury remain unvalidated;
 independent numerical checks do not promote those gates.
+
+The [source-bound consequence comparison](consequence-comparison.md) now keeps
+full access costs and separately modeled consequences in a vector. Matched
+parameter-world Pareto checks select a conditional research program; requiring
+unavailable vascular, motor, language and shift evidence selects checked STOP
+with residual. This adds no measured physical acceptance or training admission.

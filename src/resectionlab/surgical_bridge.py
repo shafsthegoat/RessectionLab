@@ -638,6 +638,10 @@ def dispatch(session, operation, args, request, progress):
             full = record['branches'][record['branchId']]
             planned_ids = {row['branchId'] for key in ('planning', 'sectorPlanning', 'stagedPlanning')
                            for row in (record.get(key) or {}).get('alternatives', [])}
+            consequences = record.get('consequenceComparison') or {}
+            planned_ids.update(consequences.get('alternativeBranchIds', []))
+            if consequences.get('baselineBranchId') is not None:
+                planned_ids.add(consequences['baselineBranchId'])
             planned_ids.update(value for key in ('precisionPlanning', 'exitRecovery')
                 for field in ('sourceBranchId', 'finalBranchId')
                 if (value := (record.get(key) or {}).get(field)) is not None)
@@ -711,6 +715,11 @@ def dispatch(session, operation, args, request, progress):
         sector_record = {**record, 'planning': record.get('sectorSourceAccessComparison', record.get('planning'))}
         validate_saved_sector_comparison(engine.scene, sector_record, sectors)
     result['sectorPlanning'] = sectors
+    consequence_comparison = record.get('consequenceComparison')
+    if consequence_comparison is not None:
+        from .surgical_consequences import validate_saved_comparison as validate_consequences
+        validate_consequences(engine.scene, record, consequence_comparison)
+        result['consequenceComparison'] = copy.deepcopy(consequence_comparison)
     retraction_study = record.get('retractionStudy')
     if isinstance(retraction_study, dict) and retraction_study.get('schema') == 'resectionlab.retractor-native-study.v1':
         from .surgical_retraction_study import validate_retraction_study

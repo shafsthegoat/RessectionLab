@@ -13,6 +13,7 @@ import {JointStrategiesPanel} from './JointStrategiesPanel';
 import {StagedStrategiesPanel} from './StagedStrategiesPanel';
 import {PrecisionContinuationPanel} from './PrecisionContinuationPanel';
 import {RetractionStudyPanel} from './RetractionStudyPanel';
+import {ConsequenceComparisonPanel} from './ConsequenceComparisonPanel';
 import {LearnedSectorExecutionPanel} from './LearnedSectorExecutionPanel';
 import {RescueLearningPanel} from './RescueLearningPanel';
 import {LearnedExecutionPanel} from './LearnedExecutionPanel';
@@ -238,6 +239,7 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
     <p className="surgical-note">{playing?(c.pending?'Buffering an exact recorded microstep…':`Playing observed engine states at ${playbackSpeed}×. Buffering can slow wall-clock playback.`):((v?.toolMechanicsRevision??0)>=1?'Replay reconstructs accepted native microsteps. Instrument capsules and static jaw opening match collision geometry; recorded RPM drives drill phase.':'Replay reconstructs successful engine microsteps and finalized action boundaries. Anatomy and tool poses stay exact. Active jaw close/release and recorded-RPM drill rotation are illustrative working-part animation during playback; they imply no additional cutting events.')}</p>
     <FullCaseRehearsalPanel c={c} pause={()=>setPlaying(false)} onFrameField={onFrameField} fieldDisplayControls={fieldDisplayControls}/>
     <RescueLearningPanel c={c} report={learningReport} pause={()=>setPlaying(false)}/>
+    <ConsequenceComparisonPanel c={c} pause={()=>setPlaying(false)}/>
     <LearnedExecutionPanel c={c} report={executionReport} pause={()=>setPlaying(false)}/>
     <LearnedSectorExecutionPanel c={c} artifact={cusaLearning} pause={()=>{setPlaying(false);c.pausePlayback();}}/>
     <PatientCusaLearningPanel c={c} artifact={cusaLearning} pause={()=>setPlaying(false)}/>

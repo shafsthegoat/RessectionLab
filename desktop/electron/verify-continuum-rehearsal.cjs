@@ -9,6 +9,8 @@ for(const p of [input,output])if(!p.startsWith(path.join(root,'testcases')+path.
 if(fs.existsSync(output))throw Error('Preserve prior evidence');fs.mkdirSync(output,{recursive:true});
 const sha=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex'),original=sha(input);
 const prepared=JSON.parse(fs.readFileSync(process.env.CONTINUUM_REPORT||path.join(path.dirname(input),'report.json'),'utf8'));
+const consequence=process.env.CONSEQUENCE_REPORT?JSON.parse(fs.readFileSync(process.env.CONSEQUENCE_REPORT,'utf8')).comparison:null;
+if(consequence)assert.equal(consequence.schema,'resectionlab.surgical-consequence-comparison.v1');
 const saved=path.join(output,'continuum-saved.ressectionlab');
 const userData=fs.mkdtempSync(path.join(os.tmpdir(),'rslab-continuum-'));
 app.setPath('userData',userData);
@@ -54,6 +56,23 @@ app.on('browser-window-created',(_event,window)=>{
       report.checks.push('Native application declares the actual opted-in continuum model');
       const select=async name=>{const started=performance.now();await js(`(()=>{const s=document.querySelector('[aria-label="Surgical branch"]');s.value=${JSON.stringify(name)};s.dispatchEvent(new Event('change',{bubbles:true}));})()`);await ready();await synchronized();report.visualUpdates.push({kind:'branch',branch:name,latencyMs:performance.now()-started,...await state()});};
       await select('short-hold');await seek(prepared.commonActions);const initial=await capture('01-common-held-state');
+      if(consequence){
+        await js(`(()=>{const s=[...document.querySelectorAll('summary')].find(s=>s.textContent.startsWith('Recorded consequence comparison'));if(!s)throw Error('Missing consequence comparison');if(!s.parentElement.open)s.click();s.scrollIntoView({block:'center'});})()`);
+        for(const decision of consequence.decisions){
+          await wait(`document.querySelector('[data-consequence-decision="${decision.policy.id}"]')?.dataset.consequenceSelected===${JSON.stringify(decision.selectedBranchId)}`);
+        }
+        assert(await js(`document.querySelector('.consequence-comparison').innerText.includes('4940.00')`),'Whole non-target access cost remains visible');
+        assert(await js(`['motorEncounterMm3','languageEncounterMm3','patientShiftErrorMm','supplyDeficitSeconds'].every(k=>document.querySelector('.consequence-comparison').textContent.includes(k))`),'Missing required endpoints stay separately visible');
+        await capture('00-consequence-decisions');
+        for(const branch of consequence.alternativeBranchIds){
+          const expected=consequence.samples.find(s=>s.scenarioId==='nominal'&&s.branchId===branch).vector;
+          await js(`(()=>{const b=document.querySelector('[data-consequence-replay="${branch}"]');if(!b||b.disabled)throw Error('Missing enabled consequence replay');b.click();})()`);
+          await wait(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)===${expected.nativeActions}`);await ready();await synchronized();
+          const current=await capture('consequence-'+branch);assert.equal(current.id,expected.stateId);
+          assert.equal(current.target,expected.dimensions.targetRemovedMm3.cumulative);assert.deepEqual(current.camera,initial.camera);
+        }
+        report.checks.push('Both pinned research decisions, explicit unknown endpoints, full access cost and all nominal consequence replay buttons verified');
+      }
       for(const expected of prepared.branches){
         await select(expected.branch);await seek(expected.nativeActions);
         const current=await capture(expected.branch==='short-hold'?'02-short-hold-end':'03-sustained-hold-end');
