@@ -134,3 +134,14 @@ def test_release_preserves_distributed_history_with_separate_binding_energy_jump
     assert abs(after['oldEnergyNmm']-result['energyNmm']-jump) < 1e-13
     assert abs(after['energyBalanceResidualNmm']) < 1e-13
     assert np.max(np.abs(after['memories'])) > 0
+
+
+def test_sparse_support_certificate_spans_multiple_column_blocks():
+    rng = np.random.default_rng(103); a = rng.normal(size=(149,149))
+    k = a.T@a+2*np.eye(149); core = np.array([8, 71, 0, 140])
+    calls = []
+    op = ExteriorOperator(k, core, check=lambda: calls.append(True))
+    exterior = np.setdiff1d(np.arange(149), core)
+    expected = k[np.ix_(core,core)]-k[np.ix_(core,exterior)]@np.linalg.solve(k[np.ix_(exterior,exterior)],k[np.ix_(exterior,core)])
+    np.testing.assert_allclose(op.dense_schur(), expected, atol=1e-11)
+    assert len(calls) >= 5

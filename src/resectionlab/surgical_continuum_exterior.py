@@ -91,14 +91,22 @@ class ExteriorOperator:
                                options={'SymmetricMode': True})
         except RuntimeError as error:
             raise ValueError('EXTERIOR_UNSUPPORTED_EXTERIOR') from error
-        diagonal = self.factor.U.diagonal()
+        upper = self.factor.U
+        diagonal = upper.diagonal()
         factor_scale = float(np.max(np.abs(diagonal), initial=0.))
         if (not np.array_equal(self.factor.perm_r, self.factor.perm_c)
                 or not np.isfinite(diagonal).all() or np.min(diagonal) <= EPS*factor_scale):
             raise ValueError('EXTERIOR_UNSUPPORTED_EXTERIOR')
-        ldlt_defect = self.factor.U-sparse.diags(diagonal)@self.factor.L.T
-        if np.max(np.abs(ldlt_defect.data), initial=0.) > EPS*factor_scale:
-            raise ValueError('EXTERIOR_FACTOR_SYMMETRY')
+        # A complete U-D L.T temporary can rival the sparse factor itself.
+        # Certify the identical coefficients in bounded column blocks instead.
+        lower_rows = self.factor.L.tocsr()
+        for start in range(0, len(diagonal), 64):
+            check(); stop = start+64
+            dl = lower_rows[start:stop].T.multiply(diagonal[:,None]).tocsc()
+            defect = upper[:,start:stop]-dl
+            if np.max(np.abs(defect.data), initial=0.) > EPS*factor_scale:
+                raise ValueError('EXTERIOR_FACTOR_SYMMETRY')
+        del lower_rows, dl, defect
         self.stats.update(exteriorFactorSeconds=time.perf_counter()-begin,
             exteriorFactorNnz=self.factor.L.nnz+self.factor.U.nnz,
             partitionAndFactorSeconds=time.perf_counter()-started)

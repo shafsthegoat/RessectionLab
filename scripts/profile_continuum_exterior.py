@@ -32,6 +32,11 @@ def write(path, value):
     path.write_text(json.dumps(value, indent=2, allow_nan=False)+'\n')
 
 
+def resident_bytes():
+    return int(subprocess.check_output(['/bin/ps', '-o', 'rss=', '-p', str(os.getpid())],
+                                      text=True, timeout=1).strip())*1024
+
+
 def bound(entry):
     path = ROOT/entry['path']
     if sha(path) != entry['sha256']:
@@ -88,7 +93,8 @@ def worker(output, launch):
         report.update(assemblyAndPartitionSeconds=time.perf_counter()-begin,
             stiffnessNnz=stiffness.nnz, phase='exterior-factor'); write(output/'report.json', report)
         operator = ExteriorOperator(stiffness, core, check=check); del stiffness
-        report.update(operator=operator.stats, phase='single-batch'); write(output/'report.json', report)
+        report.update(operator=operator.stats, residentAfterFactorBytes=resident_bytes(),
+                      phase='single-batch'); write(output/'report.json', report)
         columns = operator.interface[:protocol['caps']['batchColumns']]
         if not len(columns): raise ValueError('Expected source interface absent')
         begin = time.perf_counter(); values, residual = operator.columns(columns); check()
@@ -100,6 +106,7 @@ def worker(output, launch):
             sampledSchurColumnBytes=values.nbytes, predictedBatches=batches,
             extrapolatedAllBatchSeconds=seconds*batches,
             denseCoreSchurBytes=dense_bytes, denseCoreSchurAndCholeskyBytes=2*dense_bytes,
+            residentAfterBatchBytes=resident_bytes(),
             unmeasuredCosts=['full Schur build/positive-definite admission', 'core factorization/contact basis',
                              'history advancement, field/energy checks and independent verification'],
             arrayEstimateExcludes='Sparse factors/certificate intermediates and numerical workspaces')

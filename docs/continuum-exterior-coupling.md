@@ -133,7 +133,7 @@ its own spring-energy jump; it is not silently included in a fixed-binding
 step. These are declared model identities, not measured actuator work. No live
 engine equation, historical recording or accepted history-gate result changes.
 
-The focused primitive/continuum regression selection passes 81 tests. Independent
+The focused primitive/continuum regression selection passes 82 tests. Independent
 code compares the implementation with complete dense equations over 24 systems
 and 288 steps, including zero/one/two branches, arbitrary nonzero exterior
 histories, changing body loads/targets, contactless states and reordered core
@@ -160,3 +160,14 @@ the interface block: 241,648,128 bytes for the matrix, plus its Cholesky copy.
 Those allocations, the complete 45-batch path, sparse factors/certificates and
 field/energy verification require full-path resource admission after the pilot.
 The 62.76 MiB interface-only estimate alone cannot establish that feasibility.
+
+The first committed pilot (`9cebb77b`) completes in 5.85 seconds. Assembly/free
+partition takes 0.35 seconds, the exterior factor/certificate 4.56 seconds, and
+one 64-column batch 0.881 seconds, with maximum residual 6.07e-18 N. A simple
+45-batch extrapolation is 39.64 seconds, excluding core factorization and fields.
+Peak process RSS is 2,589,409,280 bytes before any dense core allocation. This
+admits the pilot, not the complete path: transient full-size `U-D Lᵀ` certificate
+storage contributes to that risk. The certificate now checks identical
+coefficients in bounded 64-column blocks with the same positivity, permutation,
+symmetry and residual tests. Subsequent resource receipts distinguish retained
+resident factors from transient peak memory before the full path is admitted.
