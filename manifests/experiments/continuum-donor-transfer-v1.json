@@ -1,0 +1,227 @@
+{
+  "schema": "resectionlab.continuum-donor-transfer.v1",
+  "status": "prospective-before-new-donor-response-access",
+  "source": {
+    "url": "https://zenodo.org/records/8095559",
+    "doi": "10.5281/zenodo.8095559",
+    "license": "CC BY 4.0",
+    "methods": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10511383/",
+    "archiveBytes": 12968598,
+    "archiveMd5": "fef23ea6291afd10bb668f763d25863f",
+    "archiveSha256": "be1459acf9cae0fdca5f2e0d462a4bc5bb43b1e5674b06346d1dcb46984e4e2c",
+    "archiveUrl": "https://zenodo.org/api/records/8095559/files/HBE_Data.zip/content",
+    "metadata": {
+      "path": "artifacts/mechanics/hbe-8095559-acquisition-v1/metadata-inventory.json",
+      "sha256": "cd71420f5f1da0304fec32651a98eaf44544c696e4d470c753a20fd2434241f5"
+    }
+  },
+  "roles": {
+    "HBE_01": "DEVELOPMENT permanently; existing exposed HBE_01_03 compression/tension c3 only",
+    "HBE_02": "MEASUREMENT_EVAL; one selected MC specimen, all donor siblings and derivatives share role",
+    "HBE_03_through_07": "sealed, no new role or access",
+    "patient_roles": "unchanged"
+  },
+  "selectionRule": "First metadata-eligible MC/C specimen from numeric donor >1, then numeric specimen; no outcome substitution",
+  "selected": {
+    "specimen_id": "HBE_02_03",
+    "donor_id": "HBE_02",
+    "donor_numeric_id": 2,
+    "specimen_numeric_id": 3,
+    "governing_region": "C",
+    "region": "MC",
+    "geometry_member": "HBE_02/HBE_02_03/geometry.yaml",
+    "geometry_sha256": "83b428f15de4bf27f194da5eeef20c9f54eebe82721a2db19c1848f1bc1101ed",
+    "geometry_m": {
+      "height": 0.0035688200000000003,
+      "radius": 0.004,
+      "type": "cylinder"
+    },
+    "curve_members": [
+      {
+        "name": "HBE_02/HBE_02_03/compression_c1.csv",
+        "bytes": 1224,
+        "crc32": "22b19d78"
+      },
+      {
+        "name": "HBE_02/HBE_02_03/compression_c3.csv",
+        "bytes": 1222,
+        "crc32": "a4abe97d"
+      },
+      {
+        "name": "HBE_02/HBE_02_03/tension_c1.csv",
+        "bytes": 1167,
+        "crc32": "468be10b"
+      },
+      {
+        "name": "HBE_02/HBE_02_03/tension_c3.csv",
+        "bytes": 1167,
+        "crc32": "c3552146"
+      },
+      {
+        "name": "HBE_02/HBE_02_03/torsion_l1_c1_neg.csv",
+        "bytes": 1223,
+        "crc32": "883f4be2"
+      },
+      {
+        "name": "HBE_02/HBE_02_03/torsion_l1_c1_pos.csv",
+        "bytes": 1327,
+        "crc32": "eae03a64"
+      },
+      {
+        "name": "HBE_02/HBE_02_03/torsion_l1_c3_neg.csv",
+        "bytes": 1312,
+        "crc32": "4af86c94"
+      },
+      {
+        "name": "HBE_02/HBE_02_03/torsion_l1_c3_pos.csv",
+        "bytes": 1245,
+        "crc32": "dc33a1ac"
+      },
+      {
+        "name": "HBE_02/HBE_02_03/torsion_l2_c1_neg.csv",
+        "bytes": 1309,
+        "crc32": "35be47f9"
+      },
+      {
+        "name": "HBE_02/HBE_02_03/torsion_l2_c1_pos.csv",
+        "bytes": 1249,
+        "crc32": "5d9b395a"
+      },
+      {
+        "name": "HBE_02/HBE_02_03/torsion_l2_c3_neg.csv",
+        "bytes": 1303,
+        "crc32": "c4130510"
+      },
+      {
+        "name": "HBE_02/HBE_02_03/torsion_l2_c3_pos.csv",
+        "bytes": 1245,
+        "crc32": "b2294c78"
+      }
+    ],
+    "missing_expected_curve_members": [],
+    "metadata_eligible_for_c3_poc": true
+  },
+  "authorizedNewCurveMembers": [
+    {
+      "name": "HBE_02/HBE_02_03/compression_c3.csv",
+      "bytes": 1222,
+      "crc32": "a4abe97d"
+    },
+    {
+      "name": "HBE_02/HBE_02_03/tension_c3.csv",
+      "bytes": 1167,
+      "crc32": "c3552146"
+    }
+  ],
+  "development": {
+    "source": {
+      "path": "artifacts/hbe-v5-axial-calibration-result-v1/execution/fit.json",
+      "sha256": "b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a"
+    },
+    "specimen": "HBE_01_03",
+    "radiusMm": 4.0,
+    "heightMm": 4.89159,
+    "responseRole": "already exposed development axial curves, not independent holdout"
+  },
+  "continuum": {
+    "source": {
+      "path": "src/resectionlab/surgical_continuum.py",
+      "sha256": "e68bd87919ad498deb477e4c589a28058a4ca8c7f24be4ea3a120b931325a91e"
+    },
+    "law": "small-gradient isotropic linear elasticity, fully integrated affine source-voxel hex8",
+    "poissonRatio": 0.45,
+    "maxwellBranches": [],
+    "calibration": "Exactly one positive shear-scale least-squares fit using both already-exposed donor1 c3 axial branches at |displacement/height|<=.02 and finest-mesh bonded response; no offset, sign, modulus bounds, curve weighting or searches",
+    "publishedCohortParametersUsed": false,
+    "boundary": "both physical end faces bonded to rigid plates, zero lateral displacement there; remaining faces zero traction; no gravity, contact or CSF",
+    "calibrationWeights": "Equal weight to every admitted original row from both signed axial branches combined; repeated origin rows remain; no normalization by branch, amplitude or fitted result.",
+    "scaleInterpretation": "Effective continuum shear scale conditional on nu=.45, bonded ends and creator-derived geometry; not an independent intrinsic shear measurement."
+  },
+  "legacy": {
+    "source": {
+      "path": "src/resectionlab/surgical_deformation_v2.py",
+      "sha256": "73309091b2c2dd14cb61995b2ad7f6f65374b4441adf90607353a38ff7a8b557"
+    },
+    "law": "unchanged default equilibrium K, including divergence penalty and weak foundation; no drag, handles or runtime strain clipping",
+    "boundary": "all DOFs on first/last source-center layers prescribed; physical delta and nominal-strain-matched delta*(height-dz)/height both reported",
+    "convergenceGate": false
+  },
+  "meshes": [
+    {
+      "xyCount": 8,
+      "zCount": 4
+    },
+    {
+      "xyCount": 16,
+      "zCount": 8
+    },
+    {
+      "xyCount": 24,
+      "zCount": 12
+    }
+  ],
+  "geometry": "center-in-circle voxel selection, radius4mm, exact creator-derived height; no response-driven mesh selection",
+  "strainWindow": 0.02,
+  "csvSchema": {
+    "header": [
+      "displacement",
+      "force"
+    ],
+    "delimiter": ",",
+    "coordinateUnit": "m",
+    "responseUnit": "N",
+    "sign": "signed creator values unchanged"
+  },
+  "admissionBeforeHeldOutRead": {
+    "finestReactionSlopeRelativeChange": 0.05,
+    "finestVolumeRelativeError": 0.05,
+    "freeResidualN": 1e-08,
+    "maximumElementGradient": 0.2,
+    "finitePositiveFittedShear": true,
+    "physicalAcceptanceThreshold": null,
+    "interpretation": "Prespecified three-mesh stability and domain check, not proof of asymptotic convergence or experimental uncertainty."
+  },
+  "scoring": {
+    "points": "Every original signed row with |displacement/height|<=.02, no interpolation or post-reveal point exclusions; each branch must have at least3 points",
+    "primary": [
+      "force RMSE N per branch at finest mesh",
+      "signed force error N at largest absolute admitted displacement",
+      "absolute max force error N"
+    ],
+    "comparisons": [
+      "legacy default physical delta",
+      "legacy nominal-strain-matched center delta",
+      "revised continuum",
+      "zero force"
+    ],
+    "uncertainty": "No metrology covariance or clinical tolerance supplied. Report mesh response band and source-derived geometry. One specimen, correlated branches, no population interval.",
+    "verdict": "descriptive independent-donor response agreement only; no automatic physiological acceptance even if RMSE improves",
+    "zeroConvention": "Raw released signed displacement and force, unchanged absolute zero. No preload subtraction, offset, sign alignment, baseline shift or clamping.",
+    "calibrationConfounding": "Development-calibrated continuum versus unchanged default legacy; any holdout advantage combines calibration, material, boundary and discretization differences."
+  },
+  "caps": {
+    "prepareWallSeconds": 180,
+    "peakRssBytes": 2147483648,
+    "newArchiveBytes": 12968598,
+    "newOutputBytes": 16777216,
+    "threads": 1,
+    "automaticRetries": false,
+    "fitCalls": 1,
+    "meshPairs": 6
+  },
+  "prohibited": [
+    "all donor1 torsion and other sealed curves",
+    "donor2 c1 or torsion, sibling specimen values",
+    "other donor response members",
+    "refitting or changing model after donor2 reveal",
+    "patient or device response claims",
+    "RL training"
+  ],
+  "claims": {
+    "independentUnit": "one donor-held-out motor-cortex specimen, not an external-cohort test",
+    "timeResponseValidated": false,
+    "patientMechanicsValidated": false,
+    "deviceResponseValidated": false,
+    "rlReady": false
+  }
+}
