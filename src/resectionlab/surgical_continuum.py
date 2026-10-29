@@ -238,6 +238,7 @@ def check_support(mesh, fixed_nodes, held_cells):
 
 
 def _system(engine, ids, anchors, blocked, p, h):
+    from .surgical_deformation_v2 import _neighbors as old_neighbors
     # Source arrays/material declarations are shared, never mutable episode
     # state. Refuse an exchanged source instead of reusing a stale factorization.
     engine.scene.require_cache_source()
@@ -274,6 +275,13 @@ def _system(engine, ids, anchors, blocked, p, h):
         raise ValueError('CONTINUUM_FACTORIZATION_FAILED: unsupported or ill-conditioned local system') from error
     result = dict(mesh=mesh, matrices=matrices, gradients=gradients, handle=handle,
         contacts=contacts, effective=effective, free=free, solve=solve, ratios=ratios)
+    # The diagnostic uses unchanged reference adjacency/lengths. Cache its
+    # original iteration order with this exact source/topology signature;
+    # preserve scalar norm arithmetic so canonical recorded bits do not change.
+    retained = set(ids)
+    result['neighbor_pairs'] = tuple((i, index[other], length)
+        for i, c in enumerate(mesh.cells) for other, length in old_neighbors(engine, c)
+        if other in retained and c < other and (c, other) not in blocked)
     engine._continuum_system_v1 = (signature, result)
     return result
 
@@ -412,7 +420,6 @@ def tick(engine, dt, diagnostic=None):
         for n in nodes: handle_rhs[3*n:3*n+3] += k * target / 8.
         targets.append((key, nodes, k, target))
     external = gravity + handle_rhs
-    retained = set(ids)
     rest = engine.scene.points(ids)
     max_residual = state.get('maxFreeResidualN', 0.)
     max_balance = state.get('maxEnergyBalanceResidualNmm', 0.)
@@ -493,11 +500,9 @@ def tick(engine, dt, diagnostic=None):
     model['velocities'] = {str(c): ((centers[i] - last_centers[i]) / h).tolist() for i, c in enumerate(mesh.cells)}
     tissue_energy = .5 * u @ (matrices[0] @ u)
     for matrix, z in zip(matrices[1:], memories): tissue_energy += .5 * (u-z) @ (matrix @ (u-z))
-    cell_index = {c: i for i, c in enumerate(mesh.cells)}
     model.update(elasticEnergyNmm=float(tissue_energy), activeNodes=len(ids), model=SCHEMA,
         maxNeighborDisplacementRatio=max((float(np.linalg.norm(centers[i] - centers[j]) / length)
-            for i, c in enumerate(mesh.cells) for other, length in old._neighbors(engine, c)
-            if other in retained and c < other and (c, other) not in blocked for j in [cell_index[other]]), default=0.))
+            for i, j, length in system['neighbor_pairs']), default=0.))
     if diagnostic is not None:
         diagnostic['substeps'] += steps
         diagnostic['maxFreeResidualN'] = max(diagnostic['maxFreeResidualN'], max_residual)

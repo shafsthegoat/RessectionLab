@@ -108,6 +108,13 @@ export function fairIndexedSurface(points:Float32Array,indices:Uint32Array,affin
     const limit=profile==='vessel'?(limits?.[v]??h/8):cap,scale=Math.min(1,limit*.999/Math.max(d,1e-30));for(let a=0;a<3;a++)filtered[i+a]=original[i+a]+scale*(filtered[i+a]-original[i+a]);
   }
   const output=new Float32Array(points.length),physical=new Float64Array(points.length),restored=new Set<number>();
+  let geometryRevision=0,auditedRevision=-1,auditedContacts=new Set<number>();
+  // Only quantize mutates physical. Face/contact inspection leaves it intact,
+  // so a second audit of the same revision has precisely the same result.
+  const contacts=()=>{
+    if(auditedRevision!==geometryRevision){auditedContacts=intersectionVertices(original,physical,indices);auditedRevision=geometryRevision;}
+    return auditedContacts;
+  };
   function quantize(){for(let i=0;i<points.length;i+=3){const delta=[0,1,2].map(a=>filtered[i+a]-original[i+a]);
     for(let a=0;a<3;a++)output[i+a]=points[i+a]+inv[a].slice(0,3).reduce((s,v,k)=>s+v*delta[k],0);
     for(let a=0;a<3;a++)physical[i+a]=affine[a].slice(0,3).reduce((s,v,k)=>s+v*output[i+k],0);
@@ -115,7 +122,7 @@ export function fairIndexedSurface(points:Float32Array,indices:Uint32Array,affin
     if(Math.hypot(physical[i]-original[i],physical[i+1]-original[i+1],physical[i+2]-original[i+2])>limit){
       output.set(points.subarray(i,i+3),i);physical.set(original.subarray(i,i+3),i);filtered.set(original.subarray(i,i+3),i);
     }
-  }}
+  }geometryRevision++;}
   const faceNormals=new Float64Array(indices.length),faceAreaSquared=new Float64Array(indices.length/3);
   for(let f=0;f<indices.length;f+=3){const a=indices[f]*3,b=indices[f+1]*3,c=indices[f+2]*3;
     const ux=original[b]-original[a],uy=original[b+1]-original[a+1],uz=original[b+2]-original[a+2];
@@ -141,15 +148,15 @@ export function fairIndexedSurface(points:Float32Array,indices:Uint32Array,affin
   }};
   repairFaces();
   for(let attempt=0;attempt<4;attempt++){
-    const contacts=intersectionVertices(original,physical,indices);if(!contacts.size)break;
-    for(const v of contacts){backedOff.add(v);filtered.set(original.subarray(v*3,v*3+3),v*3);}quantize();repairFaces();
+    const bad=contacts();if(!bad.size)break;
+    for(const v of bad){backedOff.add(v);filtered.set(original.subarray(v*3,v*3+3),v*3);}quantize();repairFaces();
   }
   for(const v of invalidVertices())restored.add(find(v));
-  for(const v of intersectionVertices(original,physical,indices))restored.add(find(v));
+  for(const v of contacts())restored.add(find(v));
   // Recheck after component rollback: it must not introduce a contact with a
   // retained component. The restored set grows monotonically to termination.
   while(restored.size){for(let v=0;v<n;v++)if(restored.has(find(v)))filtered.set(original.subarray(v*3,v*3+3),v*3);quantize();
-    let added=false;for(const v of intersectionVertices(original,physical,indices)){const c=find(v);if(!restored.has(c)){restored.add(c);added=true;}}if(!added)break;}
+    let added=false;for(const v of contacts()){const c=find(v);if(!restored.has(c)){restored.add(c);added=true;}}if(!added)break;}
   let maximum=0;for(let i=0;i<points.length;i+=3)maximum=Math.max(maximum,Math.hypot(physical[i]-original[i],physical[i+1]-original[i+1],physical[i+2]-original[i+2]));
   const diagnostics:SurfaceDiagnostics={policy:SURFACE_POLICY.version,kind:profile,maxDisplacementMm:maximum,restoredComponents:restored.size,backedOffVertices:backedOff.size,intersectionCheck:restored.size?'source-restored':'passed'};
   return {positions:output,diagnostics};

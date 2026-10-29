@@ -132,6 +132,12 @@ def _owned_digest(value):
     return 'sha256:' + hashlib.sha256(payload.encode('utf-8')).hexdigest()
 
 
+def _copy_atomic_type(kind):
+    # Membership/equality would dispatch an unusual metaclass __eq__.
+    # Only these exact built-in scalar types may bypass deepcopy.
+    return kind is float or kind is int or kind is str or kind is bool or kind is type(None)
+
+
 def _copy_engine_data(value, memo=None):
     """Detach engine JSON graphs without visiting every scalar via deepcopy.
 
@@ -141,14 +147,13 @@ def _copy_engine_data(value, memo=None):
     Subclasses and other values keep ordinary deepcopy behavior.
     """
     memo = {} if memo is None else memo
-    atomic = (str, int, float, bool, type(None))
     kind = type(value)
-    if kind in atomic:
+    if _copy_atomic_type(kind):
         return value
     if id(value) in memo:
         return memo[id(value)]
     if kind is list:
-        if all(type(item) in atomic for item in value):
+        if all(_copy_atomic_type(type(item)) for item in value):
             result = value.copy()
             memo[id(value)] = result
             return result
@@ -156,8 +161,8 @@ def _copy_engine_data(value, memo=None):
         memo[id(value)] = result
         result.extend(_copy_engine_data(item, memo) for item in value)
         return result
-    if kind is dict and all(type(key) in atomic for key in value):
-        if all(type(item) in atomic for item in value.values()):
+    if kind is dict and all(_copy_atomic_type(type(key)) for key in value):
+        if all(_copy_atomic_type(type(item)) for item in value.values()):
             result = value.copy()
             memo[id(value)] = result
             return result
@@ -200,9 +205,9 @@ def _microstep_checkpoint(state):
 
     Surgical state is a JSON data graph with built-in scalar leaves. Exact
     flat removed/debris containers and three scalar drilling maps can be copied
-    in C and seeded into the deepcopy memo; all other data, including unusual
-    nested/subclass values, still uses ordinary deepcopy. Fresh guards also
-    handle public state edits.
+    in C and seeded into the deepcopy memo. Continuum/kinematic JSON fields use
+    the same alias-preserving copier as engine clones; unusual nested/subclass
+    values retain ordinary deepcopy. Fresh guards also handle public state edits.
     This preserves data-graph semantics, not adversarial custom __deepcopy__
     methods whose behavior depends on when another object enters the memo.
 
@@ -233,6 +238,14 @@ def _microstep_checkpoint(state):
             if type(value) is dict and all(type(key) is str and type(amount) in (int, float)
                                            for key, amount in value.items()):
                 memo[id(value)] = value.copy()
+    # Corner fields contain thousands of immutable scalar leaves. Recursing
+    # through deepcopy for every float dominated rollback during retraction.
+    # Use one shared memo across all fields so public cross-field aliases and
+    # cycles retain exactly the existing data-graph semantics.
+    for name in ('brainContinuumV1', 'deformation', 'deformationModel'):
+        value = state.get(name)
+        if type(value) is dict and id(value) not in memo:
+            _copy_engine_data(value, memo)
     return copy.deepcopy(state, memo)
 
 

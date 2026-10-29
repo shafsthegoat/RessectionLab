@@ -21,7 +21,8 @@ export function trianglesIntersect(p:Float64Array,q:Float64Array,ids:Uint32Array
 export function intersectionVertices(source:Float64Array,candidate:Float64Array,indices:Uint32Array):Set<number> {
   const count=indices.length/3,boxes=new Float64Array(count*6),order=Uint32Array.from({length:count},(_,i)=>i);
   for(let f=0;f<count;f++)for(let a=0;a<3;a++){
-    const v=[0,1,2].map(c=>candidate[indices[f*3+c]*3+a]);boxes[f*6+a]=Math.min(...v);boxes[f*6+a+3]=Math.max(...v);
+    const x=candidate[indices[f*3]*3+a],y=candidate[indices[f*3+1]*3+a],z=candidate[indices[f*3+2]*3+a];
+    boxes[f*6+a]=Math.min(x,y,z);boxes[f*6+a+3]=Math.max(x,y,z);
   }
   interface Node {box:number[];start:number;end:number;left?:Node;right?:Node}
   const build=(start:number,end:number):Node=>{
@@ -35,14 +36,23 @@ export function intersectionVertices(source:Float64Array,candidate:Float64Array,
     node.left=build(start,split);node.right=build(split,end);return node;
   };
   const bad=new Set<number>();if(!count)return bad;const root=build(0,count);
-  const overlap=(f:number,box:ArrayLike<number>)=>[0,1,2].every(a=>boxes[f*6+a]<=box[a+3]+1e-9&&boxes[f*6+a+3]>=box[a]-1e-9);
+  // Keep the exact axis order/epsilon without allocating arrays, callbacks or
+  // typed-array views for each of the millions of BVH overlap queries.
+  const overlap=(f:number,box:ArrayLike<number>,offset=0)=>
+    boxes[f*6]<=box[offset+3]+1e-9&&boxes[f*6+3]>=box[offset]-1e-9&&
+    boxes[f*6+1]<=box[offset+4]+1e-9&&boxes[f*6+4]>=box[offset+1]-1e-9&&
+    boxes[f*6+2]<=box[offset+5]+1e-9&&boxes[f*6+5]>=box[offset+2]-1e-9;
+  const stack:Node[]=[];
   for(let f=0;f<count;f++){
-    const stack=[root];while(stack.length){const n=stack.pop()!;if(!overlap(f,n.box))continue;
+    stack.push(root);while(stack.length){const n=stack.pop()!;if(!overlap(f,n.box))continue;
       if(n.left){stack.push(n.left,n.right!);continue;}
       for(let k=n.start;k<n.end;k++){
-        const g=order[k];if(g<=f||!overlap(f,boxes.subarray(g*6,g*6+6)))continue;
-        const a=indices.subarray(f*3,f*3+3),b=indices.subarray(g*3,g*3+3);if(a.some(v=>b.includes(v)))continue;
-        if(trianglesIntersect(candidate,candidate,indices,f*3,g*3)&&!trianglesIntersect(source,source,indices,f*3,g*3))for(const v of [...a,...b])bad.add(v);
+        const g=order[k];if(g<=f||!overlap(f,boxes,g*6))continue;
+        const a=indices[f*3],b=indices[f*3+1],c=indices[f*3+2],d=indices[g*3],e=indices[g*3+1],h=indices[g*3+2];
+        if(a===d||a===e||a===h||b===d||b===e||b===h||c===d||c===e||c===h)continue;
+        if(trianglesIntersect(candidate,candidate,indices,f*3,g*3)&&!trianglesIntersect(source,source,indices,f*3,g*3)){
+          bad.add(a);bad.add(b);bad.add(c);bad.add(d);bad.add(e);bad.add(h);
+        }
       }
     }
   }

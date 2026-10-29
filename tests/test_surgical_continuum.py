@@ -228,6 +228,26 @@ def test_cached_operator_refuses_unversioned_source_array_exchange():
         brain.tick(e, .1)
 
 
+def test_cached_neighbor_diagnostic_keeps_order_and_rebuilds_after_removal():
+    e, c = held_engine(); brain.tick(e, .1)
+
+    def expected(system):
+        cells = system['mesh'].cells; index = {c: i for i, c in enumerate(cells)}
+        blocked = brain._blocked(e)
+        return tuple((i, index[other], length) for i, cell in enumerate(cells)
+            for other, length in brain._neighbors(e, cell)
+            if other in index and cell < other and (cell, other) not in blocked)
+
+    system = e._continuum_system_v1[1]
+    assert system['neighbor_pairs'] == expected(system)
+    brain.tick(e, .1)
+    assert e._continuum_system_v1[1] is system
+    e.state['removed'] = [c]; brain.tick(e, .1)
+    changed = e._continuum_system_v1[1]
+    assert changed is not system and changed['neighbor_pairs'] == expected(changed)
+    assert c not in changed['mesh'].cells
+
+
 @pytest.mark.parametrize('change', [
     lambda p: p.update(maxElementGradientNorm=.9),
     lambda p: p['materials']['1'].update(poissonRatio=.49),

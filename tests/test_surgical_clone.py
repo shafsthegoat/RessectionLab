@@ -4,7 +4,7 @@ import struct
 
 import numpy as np
 
-from resectionlab.surgical_engine import SurgicalEngine, _copy_engine_data, _owned_digest
+from resectionlab.surgical_engine import SurgicalEngine, _copy_engine_data, _owned_digest, _microstep_checkpoint
 from resectionlab.core import semantic_digest
 import pytest
 from resectionlab.surgical_scene import SurgicalScene
@@ -24,6 +24,57 @@ def test_copy_preserves_order_float_bits_aliases_cycles_and_unusual_values():
     assert struct.pack('d', actual['list'][1]) == struct.pack('d', shared[1])
     assert np.isnan(actual['list'][2]) and np.isinf(actual['list'][3])
     assert not np.shares_memory(actual['array'], graph['array'])
+
+
+def test_mechanical_checkpoint_preserves_cross_field_graph_and_subclasses():
+    class PublicList(list):
+        pass
+
+    vector = [1., -0., 3.]
+    corners = {'9': [vector] * 8}
+    components = [{'cells': [9]}]
+    state = {'removed': [2], 'flapComponents': components,
+             'brainContinuumV1': {'cornerDisplacementMm': corners,
+                 'memoryDisplacementMm': [corners], 'unusual': PublicList([vector]),
+                 'array': np.array([2., 3.])},
+             'deformation': {'9': vector}, 'deformationModel': {'publicAlias': corners},
+             'externalAlias': vector}
+    state['brainContinuumV1']['cycle'] = state
+    actual = _microstep_checkpoint(state)
+    assert list(actual) == list(state)
+    assert actual['brainContinuumV1']['cycle'] is actual
+    field = actual['brainContinuumV1']['cornerDisplacementMm']
+    assert field is actual['brainContinuumV1']['memoryDisplacementMm'][0]
+    assert field is actual['deformationModel']['publicAlias']
+    assert all(v is actual['deformation']['9'] is actual['externalAlias'] for v in field['9'])
+    assert type(actual['brainContinuumV1']['unusual']) is PublicList
+    assert actual['brainContinuumV1']['unusual'][0] is actual['externalAlias']
+    assert actual['flapComponents'] is components  # Existing read-only exemption.
+    assert struct.pack('d', actual['externalAlias'][1]) == struct.pack('d', -0.)
+    actual['externalAlias'][0] = 7.
+    actual['removed'].append(9)
+    actual['brainContinuumV1']['array'][0] = 6.
+    assert vector == [1., -0., 3.] and state['removed'] == [2]
+    np.testing.assert_array_equal(state['brainContinuumV1']['array'], [2., 3.])
+
+
+def test_mechanical_checkpoint_does_not_call_subclass_metaclass_equality():
+    class Meta(type):
+        def __eq__(self, other):
+            raise AssertionError('Scalar classification must use exact type identity')
+        __hash__ = type.__hash__
+
+    class PublicInt(int, metaclass=Meta):
+        pass
+
+    value = PublicInt(2); value.data = [3.]
+    state = {'brainContinuumV1': {'nested': [value], 'mapping': {value: value}}}
+    actual = _microstep_checkpoint(state)
+    copied = actual['brainContinuumV1']['nested'][0]
+    assert type(copied) is PublicInt and copied is not value
+    assert actual['brainContinuumV1']['mapping'][copied] is copied
+    copied.data.append(4.)
+    assert value.data == [3.]
 
 
 def test_owned_digest_matches_canonical_validation_and_detects_public_edits():

@@ -10,10 +10,12 @@ if(fs.existsSync(output))throw Error('Preserve prior evidence');fs.mkdirSync(out
 const sha=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex'),original=sha(input);
 const prepared=JSON.parse(fs.readFileSync(process.env.CONTINUUM_REPORT||path.join(path.dirname(input),'report.json'),'utf8'));
 const saved=path.join(output,'continuum-saved.ressectionlab');
-app.setPath('userData',fs.mkdtempSync(path.join(os.tmpdir(),'rslab-continuum-')));
+const userData=fs.mkdtempSync(path.join(os.tmpdir(),'rslab-continuum-'));
+app.setPath('userData',userData);
 process.argv.push('--case',input,'--automation-hidden');
 dialog.showSaveDialog=async()=>({canceled:false,filePath:saved});
-const report={input,output,windowEverVisible:false,states:[],checks:[],errors:[]};
+const report={input,output,userData,windowEverVisible:false,states:[],checks:[],errors:[],visualUpdates:[],
+  timingScope:'Hidden native Electron branch selection/seek through synchronized HUD, final CPU frame and completed GPU query. Includes cache hits and no-op seeks; polling adds latency. This is not physical screen-presentation time.'};
 const delay=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 app.on('browser-window-created',(_event,window)=>{
   window.on('show',()=>{report.windowEverVisible=true;window.hide();});
@@ -24,16 +26,17 @@ app.on('browser-window-created',(_event,window)=>{
     const click=async label=>{await js(`(()=>{const b=[...document.querySelectorAll('button')].find(b=>b.textContent.trim()===${JSON.stringify(label)}||b.getAttribute('aria-label')===${JSON.stringify(label)});if(!b||b.disabled)throw Error('Missing enabled '+${JSON.stringify(label)});b.click();})()`);await delay(100);};
     const ready=()=>wait(`!!document.querySelector('.rl-viewer canvas')&&!document.querySelector('.viewer-loading')&&document.querySelector('.rl-viewer').dataset.surfacesPending==='0'&&![...document.querySelectorAll('.surgical-panel [role="status"]')].some(n=>/^(Computing instrument action|Preparing an exact recorded state|Preparing accepted display|Verifying saved source-bound rehearsal)/.test(n.textContent.trim()))`);
     const state=()=>js(`(()=>{const p=document.querySelector('[data-operative-view="surgeon"][data-surgical-state-id]');return p?{id:p.dataset.surgicalStateId,removed:Number(p.dataset.removedCells),camera:JSON.parse(p.dataset.opticalCamera),readout:document.querySelector('[data-operative-readout-state]')?.dataset.operativeReadoutState,target:Number(document.querySelector('[data-surgical-metric="targetRemovedMm3"]').textContent),position:Number(document.querySelector('[aria-label="Surgical timeline"]').value)}:null})()`);
-    const seek=async position=>{await js(`(()=>{const s=document.querySelector('[aria-label="Surgical timeline"]');if(s.disabled)throw Error('Timeline remains disabled');Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(s,${position});s.dispatchEvent(new Event('input',{bubbles:true}));s.dispatchEvent(new Event('change',{bubbles:true}));})()`);await wait(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)===${position}`);await ready();};
+    const synchronized=()=>wait(`(()=>{const p=document.querySelector('[data-operative-view="surgeon"][data-surgical-state-id]'),f=window.continuumFrames?.at(-1);return !!p&&!!f&&!f.interactive&&f.state===p.dataset.surgicalStateId&&window.continuumGpu?.includes(f.serial)&&document.querySelector('[data-operative-readout-state]')?.dataset.operativeReadoutState===p.dataset.surgicalStateId})()`);
+    const seek=async position=>{const started=performance.now();await js(`(()=>{const s=document.querySelector('[aria-label="Surgical timeline"]');if(s.disabled)throw Error('Timeline remains disabled');Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(s,${position});s.dispatchEvent(new Event('input',{bubbles:true}));s.dispatchEvent(new Event('change',{bubbles:true}));})()`);await wait(`Number(document.querySelector('[aria-label="Surgical timeline"]').value)===${position}`);await ready();await synchronized();report.visualUpdates.push({kind:'seek',requestedPosition:position,latencyMs:performance.now()-started,...await state()});};
     const capture=async name=>{
       await ready();
-      await wait(`(()=>{const p=document.querySelector('[data-operative-view="surgeon"][data-surgical-state-id]'),f=window.continuumFrames?.at(-1);return !!p&&!!f&&!f.interactive&&f.state===p.dataset.surgicalStateId&&window.continuumGpu?.includes(f.serial)&&document.querySelector('[data-operative-readout-state]')?.dataset.operativeReadoutState===p.dataset.surgicalStateId})()`);
+      await synchronized();
       const before=await state();const png=(await window.webContents.capturePage(undefined,{stayHidden:true,stayAwake:true})).toPNG();
       assert.deepEqual(await state(),before);assert.equal(before.id,before.readout);
       fs.writeFileSync(path.join(output,name+'.png'),png);report.states.push({name,...before});return before;
     };
     try{
-      await js(`window.continuumFrames=[];window.continuumGpu=[];document.addEventListener('anatomy-frame',e=>{window.continuumFrames.push({serial:e.detail.serial,state:e.detail.surgicalStateId,interactive:e.detail.interactive});if(window.continuumFrames.length>512)window.continuumFrames.shift();});document.addEventListener('anatomy-gpu',e=>{if(e.detail.completed)window.continuumGpu.push(e.detail.serial);if(window.continuumGpu.length>512)window.continuumGpu.shift();});`);
+      await js(`window.continuumFrames=[];window.continuumGpu=[];window.continuumWork=[];document.addEventListener('anatomy-frame',e=>{window.continuumFrames.push({serial:e.detail.serial,state:e.detail.surgicalStateId,interactive:e.detail.interactive});if(window.continuumFrames.length>512)window.continuumFrames.shift();});document.addEventListener('anatomy-gpu',e=>{if(e.detail.completed)window.continuumGpu.push(e.detail.serial);if(window.continuumGpu.length>512)window.continuumGpu.shift();});document.addEventListener('anatomy-work',e=>{if(e.detail.kind==='surface-preparation'||e.detail.kind==='modeled-surface-preparation')window.continuumWork.push(e.detail);});`);
       await wait(`!!document.querySelector('.rl-viewer canvas')&&!document.querySelector('.viewer-loading')`);await click('Rehearse');await ready();
       if(process.env.CONTINUUM_REOPEN_EXPECT){
         const expected=JSON.parse(fs.readFileSync(process.env.CONTINUUM_REOPEN_EXPECT,'utf8'));
@@ -49,7 +52,7 @@ app.on('browser-window-created',(_event,window)=>{
       await js(`(()=>{const s=[...document.querySelectorAll('summary')].find(s=>s.textContent.trim()==='Source provenance and research assumptions');if(!s)throw Error('Missing provenance inspector');if(!s.parentElement.open)s.click();})()`);
       await wait(`document.body.innerText.includes('Opted-in voxel continuum')`);
       report.checks.push('Native application declares the actual opted-in continuum model');
-      const select=async name=>{await js(`(()=>{const s=document.querySelector('[aria-label="Surgical branch"]');s.value=${JSON.stringify(name)};s.dispatchEvent(new Event('change',{bubbles:true}));})()`);await ready();};
+      const select=async name=>{const started=performance.now();await js(`(()=>{const s=document.querySelector('[aria-label="Surgical branch"]');s.value=${JSON.stringify(name)};s.dispatchEvent(new Event('change',{bubbles:true}));})()`);await ready();await synchronized();report.visualUpdates.push({kind:'branch',branch:name,latencyMs:performance.now()-started,...await state()});};
       await select('short-hold');await seek(prepared.commonActions);const initial=await capture('01-common-held-state');
       for(const expected of prepared.branches){
         await select(expected.branch);await seek(expected.nativeActions);
@@ -66,7 +69,7 @@ app.on('browser-window-created',(_event,window)=>{
       await select('short-hold');await seek(prepared.branches.find(b=>b.branch==='short-hold').nativeActions);
       report.savedView=await state();await click('Save');await wait(`document.body.innerText.includes('Workspace saved locally')`);
       assert(fs.existsSync(saved));report.saved=saved;report.sourcePreserved=sha(input)===original;assert(report.sourcePreserved);
-      report.passed=!report.windowEverVisible;report.checks.push('Native save succeeds and source archive is unchanged');
+      report.passed=!report.windowEverVisible;report.surfaceWork=await js('window.continuumWork');report.checks.push('Native save succeeds and source archive is unchanged');
       fs.writeFileSync(path.join(output,'report.json'),JSON.stringify(report,null,2));console.log(JSON.stringify({passed:report.passed,saved,checks:report.checks}));app.exit(report.passed?0:1);
     }catch(error){report.errors.push(String(error));report.body=await js('document.body.innerText').catch(()=>null);fs.writeFileSync(path.join(output,'report.json'),JSON.stringify(report,null,2));console.error(error);app.exit(1);}
   });

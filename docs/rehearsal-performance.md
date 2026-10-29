@@ -1,5 +1,12 @@
 # Rehearsal performance and remaining gates
 
+The current [acquired continuum performance comparison](continuum-performance.md)
+profiles actual retraction/resection physics separately from CPU surface work.
+It preserves exact state and display buffers, improves headless throughput by
+8.9% and changed brain preparation by 2.49×, and retains the remaining
+three-second surface latency as an open requirement. The historical results
+below concern their separately declared workloads.
+
 Measured October 22, 2026 on an Apple Silicon Mac with 16 GiB RAM,
 macOS 26.5.2 and Electron 44.5.1. These are bounded engineering measurements
 on the saved sub-06 research case. These performance checks ran no patient RL
