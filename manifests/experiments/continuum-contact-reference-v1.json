@@ -1,0 +1,100 @@
+{
+  "schema": "resectionlab.continuum-contact-reference-protocol.v1",
+  "intent": "Bounded offline larger-domain FEM reference and exact contact-compliance reduction; no live rollout, new material calibration or physical acceptance",
+  "sourceArchive": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-v1/rehearsal-v6/continuum-rehearsal.ressectionlab",
+    "sha256": "0098232cceb946cbc5cccf00ca81b3b8b5c768c726d379fc8e8dbb503cd13127"
+  },
+  "sourceSceneId": "sha256:01719b5460564e004686c495bd096fe76902b6ac8d38bf2d9a6951e81b883025",
+  "sourceRole": "DEVELOPMENT, same UCSF-PDGM-0007 person for all reference domains and derivative fields",
+  "geometryFeasibility": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-reference-v1/geometry-feasibility.json",
+    "sha256": "1dae018c23f881c5a7412c3a02d8227d3dd6133939bd7c27f6638731dea2592d"
+  },
+  "referenceRadiiMm": [
+    8.0,
+    12.0,
+    16.0,
+    20.0
+  ],
+  "branches": [
+    "short-hold",
+    "sustained-hold"
+  ],
+  "prefixBranch": "retraction-start",
+  "prefixActions": 15,
+  "probeActions": 17,
+  "nativePriorEndpoints": {
+    "short-hold": {
+      "fields": {
+        "path": "testcases/outputs/simulator-qualification-20261029/continuum-domain-v1/execution-v1/short-hold-radius-8.npz",
+        "sha256": "fc0431ba66ec2581890adb87fbdd3d8ef0135f10859fe4e483c3b1d758a4c29d"
+      },
+      "snapshot4": {
+        "path": "testcases/outputs/simulator-qualification-20261029/continuum-domain-v1/execution-v1/short-hold-radius-4.snapshot.json.gz",
+        "sha256": "546dc551d70ef6a0db885e2712f52a53f394efeef89cd35c94a42ad79554630e"
+      }
+    },
+    "sustained-hold": {
+      "fields": {
+        "path": "testcases/outputs/simulator-qualification-20261029/continuum-domain-v1/execution-v1/sustained-hold-radius-8.npz",
+        "sha256": "a3d45597d6922393fb59790f7f6af1ccdff949679f958ebd14e1051dc8b38d2c"
+      },
+      "snapshot4": {
+        "path": "testcases/outputs/simulator-qualification-20261029/continuum-domain-v1/execution-v1/sustained-hold-radius-4.snapshot.json.gz",
+        "sha256": "76edb788595c90427297eefa4684dddef6118ed5b69c5a32c082d22ae48f4acf"
+      }
+    }
+  },
+  "loadHistory": "Capture only accepted, complete native suffix actions16/17 at the original fixed-step clock. Require identical nominal endpoint snapshot from the already exposed4mm probe. Prescribe the resulting seven-contact target history to each fixed domain; no topology/contact/material/body-load changes.",
+  "referenceBoundary": "Same uncut source-voxel continuum, fixed physical corners only at interfaces to retained omitted soft tissue; remaining faces traction-free. No inferred skull, CSF, ICP or observed load. Larger domains are offline references with separate budgets; live caps unchanged.",
+  "reduction": "Kj=alpha_j K0 everywhere, fixed C and D, zero initial fields, no body forces. B=K0ff^-1 Cf^T, S=C B; u=B q and zj=B wj. Solve [beta I + D S]q=D target + sum(rj alphaj wj), wj_new=(tauj wj_old+h q)/(tauj+h), beta=1+sum(rj alphaj), rj=tauj/(tauj+h). Reject nonproportional spectra or unsupported histories.",
+  "fixedProbe": "The same257 active source cells in the original prefix; instantaneous and cumulative Gauss strain/stress squared, center displacement and spring reaction. Whole-domain size is not a new patient or a probability sample.",
+  "numericalGates": {
+    "maximumBasisResidualN": 1e-09,
+    "maximumReducedEnergyBalanceResidualNmm": 1e-08,
+    "maximumFullVsReducedDisplacementMm": 1e-09,
+    "maximumFullVsReducedMemoryMm": 1e-09,
+    "maximumNativeEndpointDisplacementMm": 1e-09,
+    "maximumNativeEndpointMemoryMm": 1e-09,
+    "maximumGlobalGradientNorm": 0.2,
+    "maximumCenterDisplacementMm": 3.0,
+    "maximumReactionN": 0.08
+  },
+  "stability": {
+    "lastTwoRadiiMm": [
+      16.0,
+      20.0
+    ],
+    "maximumCenterDisplacementRmsDifferenceMm": 0.005,
+    "maximumReactionRelativeDifference": 0.05,
+    "maximumFixedProbeStrainSquaredRelativeDifference": 0.05,
+    "maximumFixedProbeStressSquaredRelativeDifference": 0.05,
+    "maximumFixedProbeCumulativeStrainSquaredRelativeDifference": 0.05,
+    "maximumFixedProbeCumulativeStressSquaredRelativeDifference": 0.05,
+    "relativeDenominator": "Maximum absolute nonnegative magnitude; both zero gives zero",
+    "meaning": "Prospective engineering radius-stability criteria only; no full-brain, measured-force, acquired-anatomy, injury or clinical acceptance"
+  },
+  "timing": "Three repetitions of the same8mm detailed/reduced core history after construction, identical target sequence and material/timestep. Report all samples. Reconstruction/guard/export and construction timings remain separate; no end-to-end accepted-action/RL-throughput claim.",
+  "caps": {
+    "wallSeconds": 900,
+    "rssBytes": 3221225472,
+    "outputBytes": 33554432,
+    "maxSourceCells": 16000,
+    "maxDofs": 60000,
+    "maxContactCoordinates": 64,
+    "numericalThreads": 1,
+    "retries": 0
+  },
+  "forbidden": [
+    "changing live engine caps or old recordings",
+    "parameter/radius/threshold tuning after this reveal",
+    "dropping failed or missing reference worlds",
+    "new acquired data",
+    "RL training",
+    "claiming a held-instrument probe is a full plan",
+    "clinical or empirical-validation claims"
+  ],
+  "physicalValidationPassed": false,
+  "physiologicalRL": "hold"
+}
