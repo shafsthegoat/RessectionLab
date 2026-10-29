@@ -99,6 +99,13 @@ boundary-representation differences and the absence of metrology/acceptance
 thresholds prevent an independent physical-validation claim. Negative results
 remain in the report.
 
+A separate [prospectively frozen donor-transfer test](continuum-donor-transfer.md)
+now compares a development-calibrated continuum with the default lattice on
+one acquired, previously unopened motor-cortex specimen. Compression improves,
+but the zero-force baseline wins in tension; this mixed result leaves physical
+acceptance open. It does not replace the replay case's original assumed
+material scenarios or validate relaxation.
+
 `scripts/prepare_continuum_rehearsal.py` reuses the admitted acquired-source
 development archive and historical exposure. It executes native single-step
 blade acquisition, two timed holds, actual finite-CUSA work, release/withdrawal,

@@ -7,6 +7,10 @@ mechanics and keeps measured-response and large-scale RL gates open.
 An [opt-in voxel continuum](docs/voxel-continuum.md) adds source-owned mechanics,
 stress relaxation, mechanical exposure and checked retraction/resection replay;
 its patient material and injury claims remain unvalidated.
+The [donor-held-out force comparison](docs/continuum-donor-transfer.md) now
+scores acquired human brain measurements: the calibrated continuum improves
+on the default lattice, but loses to zero force in tension. Physical acceptance
+and physiological RL remain on hold.
 An [opt-in vascular graph](docs/vascular-graph.md) separates compression,
 occlusion, transection, wound sealing and declared supply/drainage signals.
 Matched generated maneuvers pass independent numerical checks; patient-specific

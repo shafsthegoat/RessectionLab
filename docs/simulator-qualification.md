@@ -92,6 +92,13 @@ validate the app lattice. The preserved
 [torsion format failure](../artifacts/hbe-v5-torsion-format-failure-v1/REPORT.txt)
 is not a held-out torque-validation pass.
 
+A separate [donor-held-out continuum comparison](continuum-donor-transfer.md)
+now uses a prospectively selected motor-cortex specimen and a development-only
+effective stiffness fit. The calibrated continuum beats both default-lattice
+variants, but loses to a zero-force baseline in tension. Numerical admission,
+independent scoring checks and this mixed measured result remain distinct;
+physical-response acceptance is still open.
+
 [ReMIND](https://www.cancerimagingarchive.net/collection/remind/) and
 [RESECT](https://doi.org/10.1002/mp.12268) can support appropriately framed paired
 anatomical observation tests. Missing maneuver records prevent interpreting
