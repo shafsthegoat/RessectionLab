@@ -104,7 +104,6 @@ def _owned_digest(value):
     semantic_digest's validation/conversion path. No mutable copy escapes.
     """
     pending, seen = [value], set()
-    atomic = (str, int, float, bool, type(None))
     while pending:
         current = pending.pop()
         if id(current) in seen:
@@ -123,7 +122,8 @@ def _owned_digest(value):
             child_kind = type(item)
             if child_kind is dict or child_kind is list or child_kind is tuple:
                 pending.append(item)
-            elif child_kind not in atomic:
+            elif not (child_kind is float or child_kind is int or child_kind is str or
+                      child_kind is bool or child_kind is type(None)):
                 return semantic_digest(value)
     try:
         payload = json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False)
@@ -156,6 +156,17 @@ def _copy_engine_data(value, memo=None):
         if all(_copy_atomic_type(type(item)) for item in value):
             result = value.copy()
             memo[id(value)] = result
+            return result
+        if (len(value)==8 and all(type(row) is list and len(row)==3 and
+                type(row[0]) is float and type(row[1]) is float and
+                type(row[2]) is float for row in value)):
+            # Source-cell corner fields are eight scalar triples. Copy rows in
+            # C, while preserving every pre-existing/cross-field memo alias.
+            result=[];memo[id(value)]=result
+            for row in value:
+                key=id(row)
+                if key not in memo:memo[key]=row.copy()
+                result.append(memo[key])
             return result
         result = []
         memo[id(value)] = result
@@ -347,9 +358,9 @@ class SurgicalEngine:
                 (_try_removed_native(removed_ids) is True or
                  all(map(_strict_int_is, map(type, removed_ids), _strict_int_repeat(int))))
                 if type(removed_ids) is list else all(type(cell) is int for cell in removed_ids)):
-            key = (tuple(removed_ids), semantic_digest(changes))
+            key = (tuple(removed_ids), _owned_digest(changes))
         else:
-            key = semantic_digest({'removed': removed_ids, **changes})
+            key = _owned_digest({'removed': removed_ids, **changes})
         if self._occupancy_cache is not None and self._occupancy_cache[0] == key:
             return self._occupancy_cache[1]
         from .surgical_occupancy import MaterialOccupancy

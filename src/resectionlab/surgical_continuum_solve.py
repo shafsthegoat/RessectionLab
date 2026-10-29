@@ -13,12 +13,17 @@ from scipy.sparse.linalg import splu
 
 PROPERTY='continuumLinearSolveV1'
 SCHEMA='resectionlab.continuum-linear-solve.v1'
+VECTOR_SCHEMA='resectionlab.continuum-linear-solve.v2'
 
 
-def profile(method='proportional-history-compliance'):
+def profile(method='proportional-history-compliance',*,tensor_contraction=None):
     if method not in ('detailed','proportional-history-compliance'):raise ValueError('Unknown continuum linear solver')
-    return {'schema':SCHEMA,'method':method,'supportIdentity':'current-retained-source-interface',
+    result={'schema':SCHEMA,'method':method,'supportIdentity':'current-retained-source-interface',
         'scope':'Research computation only; same constitutive law, boundaries, physical guards and evidence limits.'}
+    if tensor_contraction is not None:
+        if tensor_contraction!='blas-contiguous':raise ValueError('Unknown continuum tensor contraction')
+        result.update(schema=VECTOR_SCHEMA,tensorContraction=tensor_contraction,historyUnpack='source-owner-vectorized')
+    return result
 
 
 def alpha(materials):
@@ -32,7 +37,7 @@ def validate(scene,continuum_profile):
     declared=scene.properties.get(PROPERTY)
     if declared is None:return
     if continuum_profile is None:raise ValueError('CONTINUUM_CONTACT_REQUIRES_CONTINUUM')
-    if not isinstance(declared,dict) or declared.get('method') not in ('detailed','proportional-history-compliance') or declared!=profile(declared['method']):
+    if not isinstance(declared,dict) or declared.get('method') not in ('detailed','proportional-history-compliance') or declared!=profile(declared['method'],tensor_contraction=declared.get('tensorContraction')):
         raise ValueError('COMPLETE_CONTINUUM_LINEAR_SOLVE_DECLARATION_REQUIRED')
     if declared['method']=='proportional-history-compliance':alpha(continuum_profile['materials'])
 

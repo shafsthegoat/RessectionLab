@@ -62,9 +62,9 @@ def compare_state(a,b,limits,maximum,path='state'):
     elif a!=b:raise ValueError('Discrete state differs: '+path)
 
 
-def variant(case,record,method,radius):
+def variant(case,record,method,radius,tensor_contraction=None):
     metadata=thaw_json(case.metadata);physics=copy.deepcopy(record['physicsProfile']);physics['brain']['radiusMm']=radius
-    metadata['surgical_properties'][solve.PROPERTY]=solve.profile(method)
+    metadata['surgical_properties'][solve.PROPERTY]=solve.profile(method,tensor_contraction=tensor_contraction)
     metadata['surgical_properties']['tissuePhysicsV2']=physics
     derived=case.revised(metadata=metadata)
     scene=standardize(from_case(derived,record['mapping']),physics_profile=physics)
@@ -149,7 +149,7 @@ def worker(output,launch):
         mri_hash=array_digest(case.mri);label_hash=array_digest(original.labels)
         cases={};scenes={}
         for method in p['methods']:
-            cases[method],scenes[method]=variant(case,record,method,p['patchRadiusMm'])
+            cases[method],scenes[method]=variant(case,record,method,p['patchRadiusMm'],p.get('tensorContraction'))
             if array_digest(scenes[method].labels)!=label_hash:raise ValueError('Source labels changed')
         fast='proportional-history-compliance';detailed='detailed'
         for repeat in range(p['repetitions']):
@@ -234,7 +234,7 @@ def worker(output,launch):
         report.update(status='completed',case=str(destination),sceneId=scenes[fast].identity,commonActions=p['commonActions'],branches=summary,
             stop={'finalStateId':stopped['stateId'],'nativeActions':len(stopped['actions']),'acceptedPrefixStateId':prefix['stateId'],'toolsWithdrawn':True,'clinicalSafetyClaim':False},
             pairedRuns=rows,maximumStateDifferences=maximum,sourceArraysUnchanged=True,sourceArchiveSha256=p['sourceArchiveSha256'],
-            legacyRecordings=legacy,systemSamples=samples,removalEnergyEventCount=len(events),linearSolve=solve.profile(),
+            legacyRecordings=legacy,systemSamples=samples,removalEnergyEventCount=len(events),linearSolve=solve.profile(tensor_contraction=p.get('tensorContraction')),
             actionTraceFile=trace_path.name,actionTraceSha256=file_sha256(trace_path),perActionRepeatExact=True,
             materialAndBoundaryAcceptance=False,artificialRadiusStability='previous16-to-20mm stress gates remain failed')
         write(output/'report.json',report);check()
@@ -247,8 +247,10 @@ def worker(output,launch):
 
 
 def main():
+    global PROTOCOL
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('output',type=Path);parser.add_argument('--worker',action='store_true');parser.add_argument('--launch',type=Path)
-    args=parser.parse_args();output=args.output.resolve()
+    parser.add_argument('--protocol',type=Path,default=PROTOCOL)
+    args=parser.parse_args();output=args.output.resolve();PROTOCOL=args.protocol.resolve()
     if not output.is_relative_to(ROOT/'testcases'):raise ValueError('Evidence stays under testcases/')
     if args.worker:
         if args.launch is None:raise ValueError('Supervised launch required')
@@ -260,7 +262,7 @@ def main():
     write(launch,{'protocolSha256':file_sha256(PROTOCOL),'sourceHashes':{str(f.relative_to(ROOT)):file_sha256(f) for f in SOURCES},
         'commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()})
     environment=os.environ.copy();environment.update(OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1',VECLIB_MAXIMUM_THREADS='1')
-    receipt=supervise([sys.executable,str(Path(__file__)),'--worker','--launch',str(launch),str(output/'result')],output,
+    receipt=supervise([sys.executable,str(Path(__file__)),'--worker','--protocol',str(PROTOCOL),'--launch',str(launch),str(output/'result')],output,
         cwd=ROOT,environment=environment,seconds=p['caps']['wallSeconds'],rss_bytes=p['caps']['rssBytes'])
     valid=receipt['status']=='completed';r={}
     if valid:

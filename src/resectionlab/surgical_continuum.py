@@ -320,6 +320,31 @@ def _unpack(mesh, field):
     return vector.ravel()
 
 
+def _unpack_vectorized(mesh,field):
+    """Same smallest-source-owner rule; no averaging or history reset."""
+    present=np.array([str(cell) in field for cell in mesh.cells],bool)
+    if not present.any():return np.zeros(len(mesh.nodes)*3)
+    values=np.asarray([field[str(cell)] for cell in mesh.cells if str(cell) in field],float)
+    if values.shape!=(int(present.sum()),8,3) or not np.isfinite(values).all():
+        raise ValueError('CONTINUUM_INCONSISTENT_SHARED_CORNER_HISTORY')
+    owners=mesh.element_nodes[present].ravel();flat=values.reshape((-1,3))
+    first=np.full(len(mesh.nodes),len(flat),dtype=np.int64)
+    np.minimum.at(first,owners,np.arange(len(flat)))
+    known=first<len(flat);vector=np.zeros((len(mesh.nodes),3));vector[known]=flat[first[known]]
+    if np.max(np.abs(flat-vector[owners]),initial=0.)>1e-10:
+        raise ValueError('CONTINUUM_INCONSISTENT_SHARED_CORNER_HISTORY')
+    return vector.ravel()
+
+
+def _gradient(scene,local,gradients):
+    tag=scene.properties.get('continuumLinearSolveV1',{})
+    if tag.get('tensorContraction')=='blas-contiguous':
+        # Restore the original layout before reductions/norms. Revision2 is
+        # explicit because BLAS summation can vary with a numerical build.
+        return np.ascontiguousarray(np.einsum('eai,gaj->egij',local,gradients,optimize=True))
+    return np.einsum('eai,gaj->egij',local,gradients)
+
+
 def _pack(mesh, vector):
     vector = vector.reshape((-1, 3))
     return {str(c): vector[nodes].tolist() for c, nodes in zip(mesh.cells, mesh.element_nodes)}
@@ -339,12 +364,12 @@ def exposure_increment(scene, mesh, gradients, displacement, memories, materials
     """
     gradients = gradients[:8]
     local = displacement.reshape((-1, 3))[mesh.element_nodes]
-    gradient = np.einsum('eai,gaj->egij', local, gradients)
+    gradient = _gradient(scene,local,gradients)
     strain = (gradient + gradient.transpose(0, 1, 3, 2)) / 2.
     labels = np.asarray([int(scene.labels.flat[c]) for c in mesh.cells])
     stress = np.zeros_like(strain)
     for branch, field in enumerate([displacement, *[displacement-z for z in memories]]):
-        g = np.einsum('eai,gaj->egij', field.reshape((-1, 3))[mesh.element_nodes], gradients)
+        g = _gradient(scene,field.reshape((-1, 3))[mesh.element_nodes],gradients)
         eps = (g + g.transpose(0, 1, 3, 2)) / 2.
         mu = np.asarray([([materials[str(label)]['shearPa'], *materials[str(label)]['relaxationShearPa']])[branch] for label in labels])
         nu = np.asarray([materials[str(label)]['poissonRatio'] for label in labels])
@@ -416,8 +441,9 @@ def tick(engine, dt, diagnostic=None):
     if not steps: return
     system = _system(engine, ids, anchors, blocked, p, h)
     mesh = system['mesh']; matrices = system['matrices']; free = system['free']
-    u = _unpack(mesh, state['cornerDisplacementMm'])
-    memories = [_unpack(mesh, field) for field in state['memoryDisplacementMm']]
+    unpack=_unpack_vectorized if engine.scene.properties.get('continuumLinearSolveV1',{}).get('historyUnpack')=='source-owner-vectorized' else _unpack
+    u = unpack(mesh, state['cornerDisplacementMm'])
+    memories = [unpack(mesh, field) for field in state['memoryDisplacementMm']]
     if np.max(np.abs(u[~free]), initial=0.) > 1e-10:
         raise ValueError('CONTINUUM_SUPPORT_CHANGED_WITH_NONZERO_DISPLACEMENT')
     for i, c in enumerate(mesh.cells):
@@ -460,7 +486,7 @@ def tick(engine, dt, diagnostic=None):
         memories = update_memory(old_memories, u, p['relaxationSeconds'], h)
         nodal = u.reshape((-1, 3))
         local_u = nodal[mesh.element_nodes]
-        gradient = np.einsum('eai,gaj->egij', local_u, system['gradients'])
+        gradient = _gradient(engine.scene,local_u,system['gradients'])
         max_gradient = max(max_gradient, float(np.linalg.norm(gradient, axis=(2, 3)).max()))
         if max_gradient > p['maxElementGradientNorm'] + 1e-12:
             raise ValueError(f'CONTINUUM_SMALL_GRADIENT_DOMAIN: gradient norm {max_gradient:.6g} exceeds {p["maxElementGradientNorm"]:.6g}; no strain projection is allowed')
