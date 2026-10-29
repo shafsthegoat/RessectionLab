@@ -216,3 +216,25 @@ def test_saved_cursors_survive_additional_import_and_replay_stays_hidden(saved,t
         invalid={**saved['selection'],'visible':True}
         client.call('saveCase',{'caseHash':p['caseHash'],'path':str(tmp_path/'invalid.ressectionlab'),'workspace':{'episodeReplay':invalid}},error=True)
     finally:client.close()
+
+
+def test_microscope_settings_roundtrip_and_invalid_optics_do_not_modify_source(tmp_path):
+    case=load_nifti_case(image(tmp_path/'optical-source.nii.gz'),case_id='microscope-roundtrip')
+    optics={'target':[102.,6.,12.],'outward':[0.,0.,1.],'angleDeg':12.,'azimuthDeg':30.,
+            'workingDistanceMm':160.,'fieldMm':42.,'focusOffsetMm':0.,'light':2.5,
+            'inspectionTransparency':False,'inspectionCutaway':False}
+    camera={'position':[102.,6.,172.],'target':[102.,6.,12.],'up':[0.,1.,0.]}
+    settings={'operativeView':'surgeon','microscope':optics,'camera':camera,'externalCamera':camera}
+    state=view_state(case,[]);state['states']['primary']['viewer']=settings
+    destination=tmp_path/'microscope.ressectionlab'
+    save_workspace(case,destination,sources=[],imaging=state,episode=None,selection=None,artifacts={})
+    reopened,_,saved=load_workspace(destination)
+    assert saved['imagingState']['states']['primary']['viewer']==settings
+    assert reopened.semantic_hash==case.semantic_hash
+    np.testing.assert_array_equal(reopened.mri,case.mri)
+    for patch in ({'outward':[0,0,0]},{'workingDistanceMm':0},{'light':10},{'fieldMm':float('nan')},
+                  {'target':[True,0,0]},{'gravity':[0,0,-1]},{'inspectionTransparency':1}):
+        broken=copy.deepcopy(state);broken['states']['primary']['viewer']['microscope'].update(patch)
+        with pytest.raises(ValueError,match='microscope'):view_state(case,[],broken)
+    broken=copy.deepcopy(state);broken['states']['primary']['viewer']['operativeView']='unknown'
+    with pytest.raises(ValueError,match='operative'):view_state(case,[],broken)

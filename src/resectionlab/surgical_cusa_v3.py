@@ -52,7 +52,7 @@ def validate(value):
 
 
 def profile(engine):
-    return engine.scene.properties.get('cusaV3')
+    return engine.scene.properties.get('cusaV3') or (DEFAULT_PROFILE if engine.state.get('toolMechanicsRevision') in (1, 2) else None)
 
 
 def initialize(engine):

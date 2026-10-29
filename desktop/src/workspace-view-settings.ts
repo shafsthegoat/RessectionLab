@@ -1,6 +1,6 @@
 import type {CasePayload} from './types';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
-import {validCameraState} from './viewer/workspaceSettings.ts';
+import {validCameraState,validMicroscopeSettings} from './viewer/workspaceSettings.ts';
 import {displayBrainMask} from './case-data.ts';
 
 export function checkedViewerSettings(source:CasePayload,input:unknown):ViewerWorkspaceSettings|undefined {
@@ -9,7 +9,11 @@ export function checkedViewerSettings(source:CasePayload,input:unknown):ViewerWo
   if(!input || typeof input!=='object' || Array.isArray(input))return fail();
   const value=input as ViewerWorkspaceSettings;
   const labels=[...source.compartments.map(layer=>layer.name),...(displayBrainMask(source)?['brain']:[])];
-  if(Object.keys(value).some(key=>!['smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','presentation','sliceFraming','contextStyle'].includes(key)))return fail();
+  if(Object.keys(value).some(key=>!['smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','presentation','sliceFraming','contextStyle','operativeView','microscope','externalCamera'].includes(key)))return fail();
+  if(value.operativeView!==undefined&&!['external','surgeon'].includes(value.operativeView))return fail();
+  if(value.microscope!==undefined&&!validMicroscopeSettings(value.microscope))return fail();
+  if(value.operativeView==='surgeon'&&!value.microscope)return fail();
+  if(value.externalCamera&&!validCameraState(value.externalCamera))return fail();
   if(value.contextStyle!==undefined&&!['shell','uniform'].includes(value.contextStyle))return fail();
   if(value.sliceFraming!==undefined){
     const framing=value.sliceFraming;
