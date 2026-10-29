@@ -3,7 +3,8 @@
 These explicit engineering assumptions are NOT patient measurements or clinical
 validation. The small-strain vector Laplacian couples neighboring source cells;
 a squared discrete divergence penalizes volume change approximately. This is
-not incompressible FEM and does not model gravity, fluid pressure or fracture.
+not incompressible FEM. Opt-in patient posture supplies disclosed body forces;
+fluid pressure, buoyancy and fracture remain unsupported.
 Cuts delete lattice bonds, while source removal permanently deletes nodes.
 """
 from __future__ import annotations
@@ -50,6 +51,12 @@ def _holds(engine):
     return [h for h in engine.state['holds'].values() if 'target' in h]
 
 
+def rigid_cells(engine):
+    if engine.state.get('toolMechanicsRevision') != 1: return set()
+    return {c for h in [*engine.state['holds'].values(), *engine.state.get('detachedFragments', [])]
+            if 'target' not in h for c in h['cells']}
+
+
 def _material(engine, cell):
     return engine.by_label.get(int(engine.scene.labels.flat[cell]), {}).get('material')
 
@@ -72,6 +79,9 @@ def begin_hold(engine, key, cells, position):
     initialize(engine)
     p = _settings(engine); removed = set(engine.state['removed'])
     cells = sorted(set(map(int, cells)) - removed)
+    rigid = rigid_cells(engine)
+    if set(cells).intersection(rigid): raise ValueError('MATERIAL_ALREADY_HELD')
+    removed |= rigid
     cells = [c for c in cells if _material(engine, c) in ('soft_tissue', 'brain', 'tumor')]
     if not cells: return
     other = {c for k, hold in engine.state['holds'].items() if k != key for c in hold['cells']}
@@ -164,7 +174,11 @@ def tick(engine, dt):
     initialize(engine)
     if not np.isfinite(dt) or dt < 0: raise ValueError('INVALID_DEFORMATION_TIME')
     p = _settings(engine); model = engine.state['deformationModel']; removed = set(engine.state['removed'])
-    ids = [c for c in model['active'] if c not in removed]
+    if 'patientPosition' in engine.state:
+        from .surgical_position import activate_exposed_patch
+        activate_exposed_patch(engine, radius_mm=p['radiusMm'], max_nodes=p['maxNodes'])
+    rigid = rigid_cells(engine)
+    ids = [c for c in model['active'] if c not in removed and c not in rigid]
     model['active'] = ids
     for h in engine.state['holds'].values(): h['cells'] = [c for c in h['cells'] if c not in removed]
     for field in (engine.state['deformation'], model['velocities']):
@@ -189,6 +203,9 @@ def tick(engine, dt):
     targets *= np.minimum(1., p['maxDisplacementMm'] / np.maximum(lengths, 1e-15))[:, None]
     held = {c for hold in _holds(engine) for c in hold['cells']}
     forcing = targets * np.array([p['holdStiffnessNPerMm'] if c in held else 0 for c in ids])[:, None]
+    if 'patientPosition' in engine.state:
+        from .surgical_position import gravity_forces_n
+        forcing += gravity_forces_n(engine, ids)
     forcing *= np.minimum(1., p['maxForceN'] / np.maximum(np.linalg.norm(forcing, axis=1), 1e-15))[:, None]
     rest = np.column_stack(np.unravel_index(ids, engine.scene.shape)) @ engine.scene.affine[:3, :3].T + engine.scene.affine[:3, 3]
     removed_array = np.fromiter(removed, dtype=np.int64)

@@ -4,7 +4,7 @@ import type {SurgicalTool,SurgicalSlot} from '../surgical-types';
  * Position, orientation and activation are updated without allocating meshes. */
 export function surgicalToolGeometryKey(tool:SurgicalTool,slot:SurgicalSlot,ghost=false):string {
   return JSON.stringify([tool.id,tool.radiusMm,tool.shaftRadiusMm,tool.workingLengthMm,
-    slot.parameters.radiusMm??tool.radiusMm,slot.parameters.jawOpeningMm??2,ghost]);
+    slot.parameters.radiusMm??tool.radiusMm,slot.parameters.jawOpeningMm??2,slot.parameters.depthMm??2,slot.contactGeometry,ghost]);
 }
 export function updateSurgicalToolMesh(group:THREE.Group,slot:SurgicalSlot,ghost=false):void {
   group.position.set(...slot.position);group.quaternion.set(...slot.quaternion);
@@ -22,7 +22,7 @@ export function updateSurgicalToolAnimation(group:THREE.Group,sourceSeconds:numb
   if(bit)bit.rotation.z=active&&typeof rpm==='number'&&Number.isFinite(rpm)&&rpm>0?(sourceSeconds!*rpm/60*2*Math.PI)%(2*Math.PI):0;
   // One illustrative close/release per observed interval, not a claimed jaw
   // frequency or additional cutting event. No motion on scrub or pause.
-  const opening=active&&intervalProgress!==null ? .2+.8*Math.abs(Math.cos(Math.PI*intervalProgress)) : 1;
+  const opening=!group.userData.physicsContactGeometry&&active&&intervalProgress!==null ? .2+.8*Math.abs(Math.cos(Math.PI*intervalProgress)) : 1;
   for(const child of group.children)if(typeof child.userData.jawBaseX==='number'){
     child.position.x=child.userData.jawBaseX*opening;
     if(typeof child.userData.jawBaseAngle==='number')child.rotation.y=child.userData.jawBaseAngle*opening;
@@ -30,6 +30,7 @@ export function updateSurgicalToolAnimation(group:THREE.Group,sourceSeconds:numb
 }
 /** Generic research geometry, tip at local origin and working axis along +Z. */
 export function surgicalToolMesh(tool:SurgicalTool,slot:SurgicalSlot,ghost=false){
+  if(slot.contactGeometry&&!ghost)return contactToolMesh(tool,slot);
   const group=new THREE.Group(),radius=slot.parameters.radiusMm??tool.radiusMm;
   group.name=`instrument:${tool.id}`;
   const metal=new THREE.MeshStandardMaterial({color:ghost?'#95f4ce':'#a6c9d1',metalness:.5,roughness:.35,transparent:ghost,opacity:ghost?.35:1,depthWrite:!ghost});
@@ -91,6 +92,32 @@ export function surgicalToolMesh(tool:SurgicalTool,slot:SurgicalSlot,ghost=false
       sphere(radius);break;
   }
   updateSurgicalToolMesh(group,slot,ghost);return group;
+}
+
+/** Revised instruments consume the exact conservative capsules used by native
+ * collision/contact admission. Their generic physical proxy is explicit, not
+ * manufacturer CAD. Jaw opening is recorded physics, never a playback cycle. */
+function contactToolMesh(tool:SurgicalTool,slot:SurgicalSlot):THREE.Group {
+  const group=new THREE.Group();group.name=`instrument:${tool.id}`;group.userData.physicsContactGeometry=true;
+  const metal=new THREE.MeshStandardMaterial({color:'#b8c5ca',metalness:.7,roughness:.28});
+  const accent=metal.clone();accent.color.set('#41677a');group.userData.surgicalAccent=accent;
+  for(const envelope of slot.contactGeometry??[]){
+    const a=new THREE.Vector3(...envelope.a),b=new THREE.Vector3(...envelope.b),length=a.distanceTo(b),r=envelope.radiusMm;
+    const part=new THREE.Group();part.name=envelope.part==='working'&&tool.id==='cranial_drill'?'instrument:drill-bit':`instrument:${envelope.part}`;
+    const material=envelope.part==='shaft'?metal:accent;
+    // CapsuleGeometry's cylinder length is the centerline distance. Its two
+    // caps therefore match the native Minkowski envelope, including the tip.
+    const mesh=new THREE.Mesh(new THREE.CapsuleGeometry(r,length,6,12),material);
+    mesh.position.copy(a).add(b).multiplyScalar(.5);
+    if(length>1e-8)mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),b.clone().sub(a).normalize());
+    part.add(mesh);group.add(part);
+    if(envelope.part==='working'&&['cusa','frazier_suction','irrigation'].includes(tool.id)){
+      // Dark mouth stays on the actual working capsule's distal cap.
+      const mouth=new THREE.Mesh(new THREE.CircleGeometry(r*.55,20),new THREE.MeshStandardMaterial({color:'#10191e',side:THREE.DoubleSide,roughness:.8}));
+      mouth.position.copy(b).add(new THREE.Vector3(0,0,r+.005));part.add(mouth);
+    }
+  }
+  updateSurgicalToolMesh(group,slot);return group;
 }
 
 export type SurgicalEffectKind='contact'|'thermal'|'fluid'|'debris'|'cut'|'transection'|'obstruction';

@@ -20,6 +20,7 @@ import {mprView,sourceSignalBounds} from './mprFraming';
 import {applySourceContextMaterial} from './sourceContextMaterial';
 import {displaySurfaceNormals} from './displaySurfaceNormals';
 import {applyVesselDepthMaterial} from './anatomySurfaceMaterial';
+import {microscopeFov} from './microscope';
 import {surfaceKind} from './surfacePolicy';
 import {packAnatomyLabels,materializeLayerMask,MAX_ANATOMY_LAYERS} from './labelPacking';
 import {checkedPublicGoal,PUBLIC_GOAL_COLOR} from './publicGoal';
@@ -248,6 +249,7 @@ export class VolumeRenderer {
   private visible: Record<string, boolean> = {};
   private opacity = 0.4;
   private workspaceSettings: ViewerWorkspaceSettings = {};
+  private operativeLight: THREE.DirectionalLight | null = null;
   private appearanceSignature: string | null = null;
   private visibilitySignature: string | null = null;
   private extraClipPlanes: THREE.Plane[] = [];
@@ -279,7 +281,7 @@ export class VolumeRenderer {
     if(event.target===document||event.target===window||(event.target instanceof HTMLElement&&event.target.contains(this.container)))this.onLayout();
   };
   private readonly onBlur=()=>this.interaction.finish();
-  private readonly onControlsChange = () => this.requestRender(false);
+  private readonly onControlsChange = () => {this.updateOperativeLight();this.requestRender(false);};
   private refinementStarted=0;
   private readonly onControlsStart = () => { this.interaction.start(); };
   private readonly onControlsEnd = () => {
@@ -488,9 +490,11 @@ export class VolumeRenderer {
     this.scene.add(new THREE.HemisphereLight(0xb7d6df, 0x142738, .65));
     const centre = new THREE.Vector3(...this.cursor);
     const key = new THREE.DirectionalLight(0xe8f3f3, 2.0);
+    key.name='anatomy:key';
     key.position.copy(centre).add(new THREE.Vector3(170, -220, 240));
     key.target.position.copy(centre);
     const rim = new THREE.DirectionalLight(0x77bdb4, .75);
+    rim.name='anatomy:rim';
     rim.position.copy(centre).add(new THREE.Vector3(-190, 160, 70));
     rim.target.position.copy(centre);
     this.scene.add(key, key.target, rim, rim.target);
@@ -684,7 +688,7 @@ export class VolumeRenderer {
     placeInSourceFrame(mesh, this.affine);
     if(vessel)applyVesselDepthMaterial(mesh.material,this.bounds);
     applySourceContextMaterial(mesh.material,this.workspaceSettings.contextStyle==='shell'&&['brain','head-envelope','bone','skull'].includes(layer.kind??''));
-    mesh.visible = this.visible[layer.name] !== false;
+    mesh.visible = this.surfaceVisible(layer.name);
     mesh.userData.compartment = layer.name;
     this.picking?.install(mesh,geometry,eagerPicking);
     return {mesh,source:geometry,smooth,smoothingPrepared};
@@ -915,7 +919,7 @@ export class VolumeRenderer {
       this.volume.compartments.forEach((layer, index) => {
         if (visible[layer.name] !== false) bits |= 1 << index;
         const mesh = this.surfaces.get(layer.name);
-        if (mesh) mesh.visible = visible[layer.name] !== false;
+        if (mesh) mesh.visible = this.surfaceVisible(layer.name);
       });
       for (const group of [this.replayGroup, this.pendingReplayGroup])
         group?.children.forEach(mesh => this.applyReplaySurfaceAppearance(mesh));
@@ -955,27 +959,45 @@ export class VolumeRenderer {
 
   setWorkspaceSettings(settings: ViewerWorkspaceSettings): void {
     this.workspaceSettings = settings;
+    if(this.surgicalGhost)this.surgicalGhost.visible=!!this.surgicalInteraction&&!this.surgicalInteraction.readOnly&&(settings.operativeView!=='surgeon'||this.surgicalInteraction.mode!=='navigate');
+    const surgeon=settings.operativeView==='surgeon'&&settings.microscope;
+    if(this.scene){
+      this.scene.environmentIntensity=surgeon?.25:1;
+      for(const object of this.scene.children){
+        if(object instanceof THREE.HemisphereLight)object.intensity=surgeon?.2:.65;
+        if(object instanceof THREE.DirectionalLight&&object.name==='anatomy:key')object.intensity=surgeon?.3:2;
+        if(object instanceof THREE.DirectionalLight&&object.name==='anatomy:rim')object.intensity=surgeon?.1:.75;
+      }
+    }
+    if(this.camera){
+      const fov=surgeon?microscopeFov(surgeon):34;
+      if(this.camera.fov!==fov){this.camera.fov=fov;this.camera.updateProjectionMatrix();this.requestRender();}
+    }
+    if(this.scene&&surgeon&&!this.operativeLight){this.operativeLight=new THREE.DirectionalLight(0xfff3e5,0);this.scene.add(this.operativeLight,this.operativeLight.target);}
+    if(this.operativeLight){this.operativeLight.intensity=surgeon?surgeon.light:0;this.updateOperativeLight();}
+    if(this.panes?.anatomy)this.panes.anatomy.dataset.operativeView=surgeon?'surgeon':'external';
     const framingSignature=JSON.stringify(settings.sliceFraming);
     if(framingSignature!==this.sliceFramingSignature){this.sliceFramingSignature=framingSignature;this.requestRender();}
     // Camera persistence and toolbar/layout choices do not change anatomy
     // materials. Compare values so cloned or in-place edited settings work too.
     const signature = JSON.stringify([settings.layerOpacity, settings.layerColor,
       settings.clipping, settings.clipBox, settings.obliqueClip,
-      settings.fusion?.opacity, settings.volumeRendering,settings.skullMode,settings.sliceOverlay,settings.contextStyle]);
+      settings.fusion?.opacity, settings.volumeRendering,settings.skullMode,settings.sliceOverlay,settings.contextStyle,settings.operativeView,settings.microscope?.inspectionTransparency]);
     if (signature === this.appearanceSignature) return;
     if(this.appearanceSignature!=null){this.beginInteraction();this.endInteraction();}
     this.appearanceSignature = signature;
-    const clipping = clippingForBounds(settings.clipping,this.bounds);
+    const operativeOcclusion=settings.operativeView==='surgeon'&&!settings.microscope?.inspectionCutaway;
+    const clipping = clippingForBounds(operativeOcclusion?undefined:settings.clipping,this.bounds);
     const normal = new THREE.Vector3();
     normal.setComponent({x:0,y:1,z:2}[clipping.axis],clipping.flipped ? -1 : 1);
     this.clipPlane = clipping.enabled ? new THREE.Plane(normal,clipping.flipped ? clipping.value : -clipping.value) : null;
     this.extraClipPlanes=[];
-    const box=settings.clipBox;
+    const box=operativeOcclusion?undefined:settings.clipBox;
     if(box?.enabled && [...box.min,...box.max].every(Number.isFinite))for(let i=0;i<3;i++){
       const n=new THREE.Vector3().setComponent(i,1);
       this.extraClipPlanes.push(new THREE.Plane(n,-box.min[i]),new THREE.Plane(n.clone().negate(),box.max[i]));
     }
-    const oblique=settings.obliqueClip;
+    const oblique=operativeOcclusion?undefined:settings.obliqueClip;
     if(oblique?.enabled && [...oblique.normal,oblique.offset].every(Number.isFinite) && Math.hypot(...oblique.normal)>1e-5){
       const n=new THREE.Vector3(...oblique.normal);this.extraClipPlanes.push(new THREE.Plane(n,oblique.offset).normalize());
     }
@@ -983,6 +1005,7 @@ export class VolumeRenderer {
       const appearance=layerAppearance(layer.name,layer.color,settings,layer.kind);
       const mesh=this.surfaces.get(layer.name);
       if(mesh){
+        mesh.visible=this.surfaceVisible(layer.name);
         const material=mesh.material as THREE.MeshStandardMaterial;
         material.color.set(appearance.color);material.opacity=appearance.opacity;
         applySourceContextMaterial(material,settings.contextStyle==='shell'&&['brain','head-envelope','bone','skull'].includes(layer.kind??''));
@@ -1015,6 +1038,16 @@ export class VolumeRenderer {
     this.requestRender();
   }
 
+  private updateOperativeLight():void {
+    if(!this.operativeLight)return;
+    this.operativeLight.position.copy(this.camera.position);
+    this.operativeLight.target.position.copy(this.controls.target);
+  }
+
+  private surfaceVisible(name:string):boolean {
+    return this.workspaceSettings?.operativeView==='surgeon'&&!this.workspaceSettings.microscope?.inspectionTransparency ? true : this.visible?.[name]!==false;
+  }
+
   /** Display-only styling for derived anatomy/effects. Instrument groups never
    * enter this path: their complete safety geometry stays visible and unclipped. */
   private applyReplaySurfaceAppearance(object: THREE.Object3D): void {
@@ -1025,7 +1058,7 @@ export class VolumeRenderer {
       const appearance = layerAppearance(layer.name, layer.color, this.workspaceSettings,layer.kind);
       material.color.set(appearance.color);
       material.opacity = appearance.opacity;
-      object.visible = this.visible[layer.name] !== false;
+      object.visible = this.surfaceVisible(layer.name);
     } else {
       // Effect overlays retain their explicit evidence colors and opacity.
       object.visible = true;
@@ -1159,6 +1192,13 @@ export class VolumeRenderer {
     this.surgicalSlots??=new Map();
     this.displayWork.surgicalUpdates++;
     const {pose,path,selectedSlot,mode}=interaction;const view=interaction.preview??interaction.view;
+    if(this.panes?.anatomy){
+      this.panes.anatomy.dataset.surgicalStateId=view.stateId;
+      this.panes.anatomy.dataset.removedCells=String(view.removed.length);
+      this.panes.anatomy.dataset.positionEffects=JSON.stringify(view.positionEffects??null);
+      this.panes.anatomy.dataset.maxShiftMm=String(view.metrics.brainMaxDisplacementMm??0);
+      this.panes.anatomy.dataset.acceptedTools=JSON.stringify(Object.fromEntries(Object.entries(view.slots).map(([name,s])=>[name,{instrument:s.instrument,position:s.position,quaternion:s.quaternion,inserted:s.inserted}])));
+    }
     if(preparedFlow!==undefined){
       if(this.surgicalFlow){disposeObject(this.surgicalFlow);this.surgicalGroup.remove(this.surgicalFlow);}
       this.surgicalFlow=preparedFlow;this.surgicalFlowSource=incomingFlow;
@@ -1197,7 +1237,7 @@ export class VolumeRenderer {
       this.surgicalGizmo.addEventListener('dragging-changed',event=>{this.controls.enabled=!event.value;if(event.value)this.beginInteraction();else this.endInteraction();});
       this.surgicalGizmo.addEventListener('objectChange',()=>{if(this.surgicalGhost&&this.surgicalInteraction){this.surgicalInteraction.onPose({position:this.surgicalGhost.position.toArray(),quaternion:this.surgicalGhost.quaternion.toArray()});this.requestRender();}});
     }
-    this.surgicalGhost.visible=!interaction.readOnly;
+    this.surgicalGhost.visible=!interaction.readOnly&&(this.workspaceSettings?.operativeView!=='surgeon'||mode!=='navigate');
     this.surgicalGhost.position.set(...pose.position);this.surgicalGhost.quaternion.set(...pose.quaternion);
     const selected=view.slots[selectedSlot],tool=selected?view.catalog.find(t=>t.id===selected.instrument):undefined;
     const ghostSlot=selected?{...selected,parameters:{...selected.parameters,...interaction.parameters},position:[0,0,0] as Point3,quaternion:[0,0,0,1] as [number,number,number,number]}:null;
@@ -1271,6 +1311,8 @@ export class VolumeRenderer {
     this.camera.position.set(...state.position);this.controls.target.set(...state.target);this.camera.up.set(...state.up).normalize();
     this.camera.near=near;this.camera.far=far;
     this.camera.updateProjectionMatrix();this.controls.update();this.requestRender(false);
+    this.updateOperativeLight();
+    if(this.panes?.anatomy)this.panes.anatomy.dataset.opticalCamera=JSON.stringify(this.getCameraState());
   }
 
   cameraPreset(preset: 'oblique'|'anterior'|'left'|'superior'): void {

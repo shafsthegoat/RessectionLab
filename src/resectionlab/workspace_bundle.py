@@ -188,8 +188,29 @@ def _center(case):
 
 def _viewer_state(case,viewer,cases):
     """Bound display preferences without treating them as image registration."""
-    if not isinstance(viewer,dict) or set(viewer)-{'smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','presentation','sliceFraming','contextStyle'}:
+    if not isinstance(viewer,dict) or set(viewer)-{'smoothSurfaces','skullMode','volumeRendering','layerOpacity','layerColor','camera','clipping','fusion','layout','activePlane','showPlane','contrast','clipBox','obliqueClip','sliceOverlay','presentation','sliceFraming','contextStyle','operativeView','microscope','externalCamera'}:
         raise ValueError('Unknown viewer settings')
+    if 'operativeView' in viewer and viewer['operativeView'] not in ('external','surgeon'):
+        raise ValueError('Invalid operative view')
+    microscope=viewer.get('microscope')
+    if viewer.get('operativeView') == 'surgeon' and microscope is None:
+        raise ValueError('Surgeon view requires optical settings')
+    if microscope is not None:
+        ranges={'angleDeg':(-70,70),'azimuthDeg':(-180,180),'workingDistanceMm':(60,350),
+                'fieldMm':(12,120),'focusOffsetMm':(-30,30),'light':(0,6)}
+        required={'target','outward',*ranges}
+        if not isinstance(microscope,dict) or required-set(microscope) or set(microscope)-required-{'inspectionTransparency','inspectionCutaway'}:
+            raise ValueError('Invalid microscope settings')
+        for name in ('target','outward'):
+            vector=microscope[name]
+            if not isinstance(vector,list) or len(vector)!=3 or any(type(n) not in (int,float) or not math.isfinite(n) or abs(n)>=1e6 for n in vector):
+                raise ValueError('Invalid microscope vector')
+        if np.linalg.norm(microscope['outward'])<1e-8:raise ValueError('Invalid microscope direction')
+        for name,(low,high) in ranges.items():
+            n=microscope[name]
+            if type(n) not in (int,float) or not math.isfinite(n) or not low<=n<=high:raise ValueError('Invalid microscope control: '+name)
+        for name in ('inspectionTransparency','inspectionCutaway'):
+            if name in microscope and type(microscope[name]) is not bool:raise ValueError('Invalid microscope inspection flag')
     if 'contextStyle' in viewer and viewer['contextStyle'] not in ('shell','uniform'):
         raise ValueError('Invalid source context style')
     if 'sliceFraming' in viewer:
@@ -247,16 +268,17 @@ def _viewer_state(case,viewer,cases):
                     raise ValueError('Layer opacity must be between zero and one')
             elif not isinstance(value,str) or not re.fullmatch('#[a-fA-F0-9]{6}',value):
                 raise ValueError('Layer color must be a six-digit hex color')
-    camera=viewer.get('camera')
-    if camera is not None:
-        if not isinstance(camera,dict) or set(camera)!={'position','target','up'}:
-            raise ValueError('Unknown camera settings')
-        for vector in camera.values():
-            if (not isinstance(vector,list) or len(vector)!=3 or
-                    any(type(v) not in (int,float) or not math.isfinite(v) or abs(v)>1e7 for v in vector)):
-                raise ValueError('Camera vectors must be finite RAS values')
-        if np.linalg.norm(np.asarray(camera['up']))<1e-8 or np.linalg.norm(np.asarray(camera['position'])-camera['target'])<1e-8:
-            raise ValueError('Camera direction and up must be nonzero')
+    for camera_name in ('camera','externalCamera'):
+        camera=viewer.get(camera_name)
+        if camera is not None:
+            if not isinstance(camera,dict) or set(camera)!={'position','target','up'}:
+                raise ValueError('Unknown camera settings')
+            for vector in camera.values():
+                if (not isinstance(vector,list) or len(vector)!=3 or
+                        any(type(v) not in (int,float) or not math.isfinite(v) or abs(v)>1e7 for v in vector)):
+                    raise ValueError('Camera vectors must be finite RAS values')
+            if np.linalg.norm(np.asarray(camera['up']))<1e-8 or np.linalg.norm(np.asarray(camera['position'])-camera['target'])<1e-8:
+                raise ValueError('Camera direction and up must be nonzero')
     clipping=viewer.get('clipping')
     if clipping is not None:
         if (not isinstance(clipping,dict) or not {'axis','value','enabled'}<=set(clipping) or

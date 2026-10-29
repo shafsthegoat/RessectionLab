@@ -20,6 +20,7 @@ from scipy.spatial.transform import Rotation, Slerp
 from .core import semantic_digest
 from .geometry import GeometryScene, capsule_voxel_indices, segment_segment_distance
 from .surgical_tools import TOOLS, catalog
+from .surgical_cusa_v3 import profile as cusa_profile
 
 SCHEMA = 'resectionlab.surgical-toolbox.v1'
 MAX_STEPS = 8192
@@ -323,7 +324,7 @@ class SurgicalEngine:
         return other
 
     def occupancy(self):
-        changes = {'holds': self.state['holds'], **({'deformation': self.state['deformation']} if 'deformation' in self.state else {})}
+        changes = {'holds': self.state['holds'], **({'detachedFragments': self.state['detachedFragments']} if 'detachedFragments' in self.state else {}), **({'deformation': self.state['deformation']} if 'deformation' in self.state else {})}
         removed_ids = self.state['removed']
         # Built-in integer sequences have the same exact ordered identity in
         # tuples and canonical JSON. Avoid freezing/encoding thousands of IDs
@@ -343,7 +344,7 @@ class SurgicalEngine:
         cleared = set(removed)
         moves = []
         held_ids = set()
-        for hold in self.state['holds'].values():
+        for hold in [*self.state['holds'].values(), *self.state.get('detachedFragments', [])]:
             if 'target' in hold: continue
             retained = np.array([i for i in hold['cells'] if i not in removed], dtype=np.int64)
             if not len(retained): continue
@@ -419,15 +420,21 @@ class SurgicalEngine:
         return result
 
     def _validate(self, action):
-        if not isinstance(action, dict) or set(action) - {'slot', 'operation', 'instrument', 'pose', 'path', 'parameters', 'duration'}:
+        if not isinstance(action, dict) or set(action) - {'slot', 'operation', 'instrument', 'pose', 'path', 'parameters', 'duration', 'position'}:
             raise ValueError('Unsupported action fields')
         if action.get('slot') not in self.state['slots']: raise ValueError('Choose left or right instrument slot')
-        if action.get('operation') not in {'place', 'move', 'activate', 'deactivate', 'apply', 'hold', 'grasp', 'release', 'exchange', 'withdraw', 'extract', 'inspect'}:
+        if action.get('operation') not in {'place', 'move', 'activate', 'deactivate', 'apply', 'hold', 'grasp', 'release', 'exchange', 'withdraw', 'extract', 'inspect', 'configure', 'position'}:
             raise ValueError('Unsupported instrument operation')
         duration = float(action.get('duration', 1.))
         if not math.isfinite(duration) or not 0 < duration <= 30: raise ValueError('Duration must be in (0, 30] seconds')
         if len(self.actions) >= MAX_STEPS: raise ValueError('Action limit reached; save and start a new episode')
         points = action.get('path', [action['pose']] if 'pose' in action else [])
+        if 'position' in action and action['operation'] != 'position': raise ValueError('POSITION_PAYLOAD_REQUIRES_POSITION_OPERATION')
+        if action['operation'] in ('configure', 'position'):
+            if points or action.get('parameters') or action.get('instrument'): raise ValueError('SETUP_CANNOT_MOVE_INSTRUMENT')
+            if action['operation'] == 'position':
+                from .surgical_position import validate_position
+                validate_position(action.get('position', {}))
         if not isinstance(points, list) or len(points) > 512: raise ValueError('Path requires at most 512 poses')
         for p in points:
             if set(p) != {'position', 'quaternion'}: raise ValueError('Each pose needs position and quaternion')
@@ -490,7 +497,36 @@ class SurgicalEngine:
     def _execute(self, action, duration, points, *, check=None):
         key, op = action['slot'], action['operation']
         slot = self.state['slots'][key]
+        previous_jaw = self.parameters(slot)['jawOpeningMm']
         events = []
+        if op in ('configure', 'position'):
+            if any(s['active'] or s['inserted'] for s in self.state['slots'].values()) or self.state['holds']:
+                raise ValueError('WITHDRAW_BOTH_TOOLS_BEFORE_SETUP')
+            if op == 'configure':
+                self.state['toolMechanicsRevision'] = 1
+                from .surgical_cusa_v3 import initialize
+                initialize(self)
+                events = [{'kind': 'instrument_mechanics_enabled', 'revision': 1}]
+            else:
+                from .surgical_position import apply_position
+                if not self.scene.properties.get('tissuePhysicsV2'): raise ValueError('POSITION_REQUIRES_V2_MECHANICS')
+                apply_position(self.state, action['position'])
+                events = [{'kind': 'patient_position', 'preset': self.state['patientPosition']['preset']}]
+                for _ in range(max(1, math.ceil(duration/.1))):
+                    if check is not None: _checked_operation(check)
+                    events.extend(self._substep(key, 'inspect', np.asarray(slot['position']), np.asarray(slot['quaternion']), False, duration/max(1, math.ceil(duration/.1))))
+            return {'status': 'accepted', 'reason': None, 'completedFraction': 1., 'events': events}
+        if op == 'extract' and self.state.get('toolMechanicsRevision') == 1:
+            if slot['instrument'] != 'tumor_forceps' or points: raise ValueError('UNSUPPORTED_EXTRACTION')
+            from .surgical_effects import extract_at_exit
+            if key not in self.state['holds']: raise ValueError('GRASP_BEFORE_EXTRACTION')
+            events = extract_at_exit(self, key)
+            slot['active'] = False
+            count=max(1,math.ceil(duration/.1))
+            for _ in range(count):
+                if check is not None: _checked_operation(check)
+                events.extend(self._substep(key,'deactivate',np.asarray(slot['position']),np.asarray(slot['quaternion']),False,duration/count))
+            return {'status': 'accepted', 'reason': None, 'completedFraction': 1., 'events': events}
         if op == 'exchange':
             if slot['inserted'] or slot['active'] or slot['grip'] or key in self.state['holds']:
                 raise ValueError('WITHDRAW_BEFORE_EXCHANGE: deactivate, release, and withdraw first')
@@ -499,7 +535,10 @@ class SurgicalEngine:
         slot['parameters'].update(action.get('parameters', {}))
         tool = TOOLS[slot['instrument']]
         params = self.parameters(slot)
-        cusa_v3 = slot['instrument'] == 'cusa' and 'cusaV3' in self.scene.properties
+        jaw_target = params['jawOpeningMm']
+        articulate = self.state.get('toolMechanicsRevision') == 1 and tool['geometry'] in ('forceps','scissors') and previous_jaw != jaw_target
+        if articulate: slot['parameters']['jawOpeningMm'] = previous_jaw
+        cusa_v3 = slot['instrument'] == 'cusa' and cusa_profile(self) is not None
         if cusa_v3:
             from .surgical_cusa_v3 import validate_parameters
             validate_parameters(params)
@@ -512,6 +551,9 @@ class SurgicalEngine:
         if op == 'deactivate': slot['active'] = False
         if op == 'activate': slot['active'] = True
         if op == 'release':
+            retained = self.state['holds'].get(key)
+            if retained and 'target' not in retained and self.state.get('toolMechanicsRevision') == 1:
+                self.state.setdefault('detachedFragments', []).append(copy.deepcopy(retained))
             self.state['holds'].pop(key, None); slot['grip'] = []; slot['active'] = False
             self.occupancy()
         if op == 'place':
@@ -536,7 +578,8 @@ class SurgicalEngine:
             distance = np.linalg.norm(np.subtract(q['position'], p['position']))
             angle = (rotation(q['quaternion']) * rotation(p['quaternion']).inv()).magnitude()
             n = max(1, math.ceil((distance + 40 * angle) / min(.4, float(self.scene.spacing.min()) / 3)),
-                    math.ceil(duration / max(1, len(poses) - 1) / .1))
+                    math.ceil(duration / max(1, len(poses) - 1) / .1),
+                    math.ceil(abs(jaw_target-previous_jaw)/min(.4,float(self.scene.spacing.min())/3)/max(1,len(poses)-1)) if articulate else 1)
             segments.append((p, q, n))
         total = sum(n for _, _, n in segments)
         if total > 20000: raise ValueError('PATH_TOO_LONG: split this stroke into shorter actions')
@@ -556,6 +599,7 @@ class SurgicalEngine:
                 quat = interpolation(t).as_quat()
                 old = _microstep_checkpoint(self.state)
                 try:
+                    if articulate: self.state['slots'][key]['parameters']['jawOpeningMm'] = jaw_target if done+1==total else previous_jaw+(jaw_target-previous_jaw)*(done+1)/total
                     delta_events = self._substep(key, op, p, quat, active, duration / total)
                 except ValueError as error:
                     if check is not None: _checked_operation(check)
@@ -603,7 +647,7 @@ class SurgicalEngine:
         """Current protected source membership in the shared occupancy raster."""
         if not self._protected_ids: return None
         mapping = {}
-        for hold in self.state['holds'].values():
+        for hold in [*self.state['holds'].values(), *self.state.get('detachedFragments', [])]:
             if 'target' in hold or not any(hold['offset']): continue
             for cell in self._protected_ids.intersection(hold['cells']):
                 destination = np.asarray(np.unravel_index(cell, self.scene.shape)) + hold['offset']
@@ -665,7 +709,7 @@ class SurgicalEngine:
             drill.begin_step(self)
             if active and slot['instrument'] == 'cranial_drill':
                 p, _ = drill.contact_limited_pose(self, previous, p, params['radiusMm'])
-        cusa_v3 = slot['instrument'] == 'cusa' and 'cusaV3' in self.scene.properties
+        cusa_v3 = slot['instrument'] == 'cusa' and cusa_profile(self) is not None
         if cusa_v3 and active:
             from .surgical_cusa_v3 import contact_limited_pose
             p, _ = contact_limited_pose(self, previous, p, params['radiusMm'])
@@ -673,10 +717,12 @@ class SurgicalEngine:
         end_pose = {'position': p, 'quaternion': q}
         swept = swept_envelopes(tool, params, slot, end_pose)
         shaft_cells = set()
-        working_cells = set(tip_cells)
+        revised_contact = self.state.get('toolMechanicsRevision') == 1 and tool['effect'] not in ('remove', 'suction', 'irrigate', 'probe')
+        working_cells = set() if revised_contact else set(tip_cells)
         for a, b, radius, part in swept:
             if part == 'shaft': shaft_cells.update(self.touched(a, b, radius))
             else: working_cells.update(self.touched(a, b, radius))
+        if revised_contact: tip_cells = sorted(working_cells)
         held = set(self.state['holds'].get(key, {}).get('cells', []))
         if set(shaft_cells) - held: raise ValueError('SHAFT_COLLISION')
         if cusa_v3 and active and working_cells - held - set(self.touched(p, p, params['radiusMm'])):
@@ -690,7 +736,8 @@ class SurgicalEngine:
             if any(self.by_label[int(self.scene.labels.ravel()[i])]['material'] not in tool['materials'] for i in working_cells - held):
                 raise ValueError('UNSUPPORTED_MATERIAL')
             if not active and key not in self.state['holds']: raise ValueError('RETAINED_TISSUE_COLLISION')
-        eligible = [i for i in tip_cells if self.by_label[int(self.scene.labels.ravel()[i])]['material'] in tool['materials']]
+        effect_cells = sorted(working_cells) if self.state.get('toolMechanicsRevision') == 1 and tool['effect'] not in ('remove','suction','irrigate','probe') else tip_cells
+        eligible = [i for i in effect_cells if self.by_label[int(self.scene.labels.ravel()[i])]['material'] in tool['materials']]
         field_action = active and tool['effect'] in ('suction', 'irrigate')
         if field_action and np.linalg.norm(p - previous) > 1e-8:
             physical = set(self.touched(p, p, tool['shaftRadiusMm']))
@@ -698,8 +745,16 @@ class SurgicalEngine:
                 raise ValueError('RETAINED_TISSUE_COLLISION')
         if op == 'withdraw':
             previous_contacts = set(self.touched(previous, previous, params['radiusMm']))
-            if set(tip_cells) - previous_contacts: raise ValueError('WITHDRAWAL_PATH_BLOCKED')
-        if tip_cells and not field_action and (not active and key not in self.state['holds'] or len(eligible) != len(tip_cells)):
+            current_contacts = set(tip_cells)
+            if revised_contact:
+                previous_contacts = set()
+                current_contacts = set()
+                for a,b,radius,part in envelopes(tool,params,previous,slot['quaternion']):
+                    if part != 'shaft': previous_contacts.update(self.touched(a,b,radius))
+                for a,b,radius,part in envelopes(tool,params,p,q):
+                    if part != 'shaft': current_contacts.update(self.touched(a,b,radius))
+            if current_contacts - previous_contacts: raise ValueError('WITHDRAWAL_PATH_BLOCKED')
+        if tip_cells and not field_action and (not active and key not in self.state['holds'] or any(self.by_label[int(self.scene.labels.ravel()[i])]['material'] not in tool['materials'] for i in tip_cells)):
             if op not in ('withdraw', 'release', 'deactivate', 'inspect', 'exchange'):
                 raise ValueError('UNSUPPORTED_MATERIAL' if active else 'RETAINED_TISSUE_COLLISION')
         events = []
@@ -715,14 +770,21 @@ class SurgicalEngine:
                 from .surgical_deformation_v2 import set_target
                 set_target(self, key, p)
             else:
+                if self.state.get('toolMechanicsRevision') == 1 and (rotation(q)*rotation(slot['quaternion']).inv()).magnitude() > 1e-8:
+                    raise ValueError('FRAGMENT_ROTATION_UNSUPPORTED: translate the source-bound fragment')
                 delta = self.scene.inverse[:3, :3] @ (p - finite(hold['origin'], 3))
-                hold['offset'] = np.rint(delta).astype(int).tolist()
+                hold['offset'] = (np.rint(delta).astype(int) + np.asarray(hold.get('baseOffset', [0,0,0]))).tolist()
             self.occupancy()
         # A stationary active instrument shares the same clock and exposure.
         for other_key, other in self.state['slots'].items():
             if other_key == key or not other['active']: continue
             other_tool = TOOLS[other['instrument']]
             other_cells = self.touched(other['position'], other['position'], self.parameters(other)['radiusMm'])
+            if self.state.get('toolMechanicsRevision') == 1 and other_tool['effect'] not in ('remove','suction','irrigate','probe'):
+                contacts = set()
+                for a,b,radius,part in envelopes(other_tool,self.parameters(other),other['position'],other['quaternion']):
+                    if part != 'shaft': contacts.update(self.touched(a,b,radius))
+                other_cells = sorted(contacts)
             other_eligible = [i for i in other_cells if self.by_label[int(self.scene.labels.ravel()[i])]['material'] in other_tool['materials']]
             if other_tool['materials'] and len(other_eligible) != len(other_cells):
                 raise ValueError('OTHER_ACTIVE_TOOL_UNSUPPORTED_MATERIAL:' + other_key)
@@ -772,7 +834,7 @@ class SurgicalEngine:
     def _effect(self, key, op, cells, p, q, dt):
         slot = self.state['slots'][key]; tool = TOOLS[slot['instrument']]
         if tool['effect'] == 'remove':
-            if slot['instrument'] == 'cusa' and 'cusaV3' in self.scene.properties:
+            if slot['instrument'] == 'cusa' and cusa_profile(self) is not None:
                 from .surgical_cusa_v3 import apply
                 contacts = self.touched(p, p, self.parameters(slot)['radiusMm'])
                 return apply(self, contacts, dt, self.parameters(slot), position=p)
@@ -828,6 +890,13 @@ class SurgicalEngine:
                 'unknownMaterialCells': int(sum(np.count_nonzero(self.scene.labels == r['id']) for r in self.scene.regions if r['material'] == 'unknown'))}
 
     def observe(self, *, _state_id=None):
+        from .surgical_position import describe_position
+        slots = copy.deepcopy(self.state['slots'])
+        if self.state.get('toolMechanicsRevision') == 1:
+            from .surgical_motion import envelopes
+            for key, slot in slots.items():
+                slot['contactGeometry'] = [{'a': a.tolist(), 'b': b.tolist(), 'radiusMm': radius, 'part': part}
+                    for a, b, radius, part in envelopes(TOOLS[slot['instrument']], self.parameters(slot), [0.,0.,0.], [0.,0.,0.,1.])]
         from .surgical_physics import physics_descriptor
         if self.scene.properties.get('tissuePhysicsV2'):
             from .surgical_physics_v2 import descriptor as physics_descriptor
@@ -835,7 +904,9 @@ class SurgicalEngine:
         if 'cusaV3' in self.state:
             from .surgical_cusa_v3 import descriptor
             physics['cusaV3'] = descriptor(self)
-        return {'schema': SCHEMA, 'stateId': self.state_id if _state_id is None else _state_id, 'slots': copy.deepcopy(self.state['slots']),
+        return {'schema': SCHEMA, 'stateId': self.state_id if _state_id is None else _state_id, 'slots': slots,
+                **({'toolMechanicsRevision': self.state['toolMechanicsRevision']} if 'toolMechanicsRevision' in self.state else {}),
+                **({'patientPosition': copy.deepcopy(self.state['patientPosition']), 'positionEffects': describe_position(self.state['patientPosition'])} if 'patientPosition' in self.state else {}),
                 'protection': self.guard_report(),
                 'physics': physics,
                 'metrics': self.metrics(), 'observations': copy.deepcopy(self.state['observations']),
@@ -848,7 +919,7 @@ class SurgicalEngine:
         identity = self.state_id if _state_id is None else _state_id
         moved = []
         removed = set(self.state['removed'])
-        for hold in self.state['holds'].values():
+        for hold in [*self.state['holds'].values(), *self.state.get('detachedFragments', [])]:
             if not any(hold['offset']): continue
             for i in hold['cells']:
                 if i in removed: continue

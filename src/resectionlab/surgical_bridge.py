@@ -738,6 +738,8 @@ def dispatch(session, operation, args, request, progress):
         result['jointPlanning'] = copy.deepcopy(joint_report)
         result['jointBaselineHistory'] = copy.deepcopy(record.get('jointBaselineHistory',
             record.get('sectorPlanningHistory', [])[-1:]))
+    if record.get('researchSetup'):
+        result['researchSetup'] = copy.deepcopy(record['researchSetup'])
     _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Save this sequence before continuing')
     request.begin_commit()
     if command == 'create' and raw is not None:

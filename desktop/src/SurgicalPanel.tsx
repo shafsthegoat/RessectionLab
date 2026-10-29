@@ -1,3 +1,4 @@
+import {PatientPositionControls} from './PatientPositionControls';
 import {useEffect,useRef,useState} from 'react';
 import type {ReactNode} from 'react';
 import {Euler,Quaternion} from 'three';
@@ -161,6 +162,7 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
       <button onClick={()=>{setImporting(true);setImportError(null);Promise.resolve().then(()=>onImport({...importOptions,...(importOptions.topology==='solid'?{thicknessMm:undefined}:{})})).catch(e=>setImportError(String(e))).finally(()=>setImporting(false));}}>{importing?'Importing…':'Choose segmentation file…'}</button>
       </fieldset>{importError&&<p role="alert" className="surgical-error">{importError}</p>}</details>}
     {!v?<button className="primary-button" disabled={!available||c.pending||importing} onClick={()=>void c.create()}>Prepare instrument scene</button>:<>
+    {r?.researchSetup&&<p role="note" className="surgical-warning" aria-label="Exposure assumptions">{r.researchSetup.description}</p>}
     <section className="environment-summary" aria-label="Environment readiness">
       <strong>{v.scene.environment?.standardized?'Standard V2 research environment':'Saved research environment'}</strong>
       <p>{v.scene.resolutionMm.map(n=>+n.toFixed(3)).join(' × ')} mm · {v2?'V2 mechanics':'Historical mechanics profile'} · RAS+ mm</p>
@@ -171,6 +173,8 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
       {!!v.protection?.missingRequired.length&&<p className="surgical-warning">Required evidence unavailable: {v.protection.missingRequired.join(', ')}.</p>}
       {!v.scene.environment?.standardized&&<button disabled={c.pending||readOnly} onClick={()=>void c.create(v.scene.regions)}>Create standard V2 environment</button>}
     </section>
+    <section aria-label="Instrument mechanics revision"><p className="surgical-note">{v.toolMechanicsRevision===1?'Revised contact mechanics · finite CUSA, closed bipolar contact, checked fragment exit.':'Historical instrument behavior is preserved for this episode.'}</p>{v.toolMechanicsRevision!==1&&<button disabled={c.pending||readOnly||Object.values(v.slots).some(s=>s.inserted||s.active)||Object.keys(v.holds??{}).length>0} onClick={()=>stopRun('step',{action:{slot:c.slot,operation:'configure',duration:.1}})}>Enable revised instrument mechanics</button>}</section>
+    <PatientPositionControls c={c} readOnly={readOnly}/>
     {anatomyControls}
     <div className="surgical-slots">{Object.entries(v.slots).map(([s,t])=><button key={s} disabled={c.pending||playing||readOnly} aria-pressed={c.slot===s} onClick={()=>c.selectSlot(s)}><strong>{s} hand</strong><span>{v.catalog.find(x=>x.id===t.instrument)?.name}</span><small>{t.inserted?'Inserted':'Withdrawn'} · {(observed?.effectiveActivation?.[s]??t.active)?'Active':'Inactive'}{observed?' · observed':''}</small><small>Tip {t.position.map(n=>n.toFixed(1)).join(' / ')} mm RAS</small>{v.holds?.[s]&&<small>{v.holds[s].cells.length?`Holding ${v.holds[s].cells.length} source cell${v.holds[s].cells.length===1?'':'s'}`:'Hold empty · no retained tissue'}</small>}</button>)}</div>
     {!!r?.previousScenes?.length&&<label>Previous environment<select aria-label="Previous environment" value="" disabled={c.pending||readOnly} onChange={e=>{if(e.target.value!=='')stopRun('selectScene',{sceneIndex:+e.target.value});}}><option value="">Reopen a previous environment…</option>{r.previousScenes.map(s=><option key={s.index} value={s.index}>{s.label} · {s.branches} branches</option>)}</select></label>}
@@ -192,7 +196,7 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
         <RecordedDetails summary={`Sampled field operations · ${observed.flowDisplay.operations.length}`}>{()=><ol>{observed.flowDisplay!.operations.map((op,i)=><li key={i}>{op.kind} · {op.field} · {op.provenance} · {op.volumeMm3.toPrecision(4)} mm³ · {op.fromCell??(op.kind==='escape'?'off-grid outlet':'source')} → {op.toCell??'sink'} · {op.startSeconds.toFixed(3)}–{op.endSeconds.toFixed(3)} s</li>)}</ol>}</RecordedDetails>
       </>:<p>Transfer records are unavailable for this observation. Static field markers show the recorded endpoint.</p>}
     </section>}
-    <p className="surgical-note">{playing?(c.pending?'Buffering an exact recorded microstep…':`Playing observed engine states at ${playbackSpeed}×. Buffering can slow wall-clock playback.`):'Replay reconstructs successful engine microsteps and finalized action boundaries. Anatomy and tool poses stay exact. Active jaw close/release and recorded-RPM drill rotation are illustrative working-part animation during playback; they imply no additional cutting events.'}</p>
+    <p className="surgical-note">{playing?(c.pending?'Buffering an exact recorded microstep…':`Playing observed engine states at ${playbackSpeed}×. Buffering can slow wall-clock playback.`):(v?.toolMechanicsRevision===1?'Replay reconstructs accepted native microsteps. Instrument capsules and static jaw opening match collision geometry; recorded RPM drives drill phase.':'Replay reconstructs successful engine microsteps and finalized action boundaries. Anatomy and tool poses stay exact. Active jaw close/release and recorded-RPM drill rotation are illustrative working-part animation during playback; they imply no additional cutting events.')}</p>
     <FullCaseRehearsalPanel c={c} pause={()=>setPlaying(false)} onFrameField={onFrameField} fieldDisplayControls={fieldDisplayControls}/>
     <RescueLearningPanel c={c} report={learningReport} pause={()=>setPlaying(false)}/>
     <LearnedExecutionPanel c={c} report={executionReport} pause={()=>setPlaying(false)}/>

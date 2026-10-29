@@ -1,6 +1,28 @@
 import type { Bounds3, Point3 } from './coordinates';
 
 export interface ViewerCameraState { position: Point3; target: Point3; up: Point3 }
+export interface MicroscopeSettings {
+  target: Point3;
+  outward: Point3;
+  angleDeg: number;
+  azimuthDeg: number;
+  workingDistanceMm: number;
+  fieldMm: number;
+  focusOffsetMm: number;
+  light: number;
+  inspectionTransparency?: boolean;
+  inspectionCutaway?: boolean;
+}
+export function validMicroscopeSettings(value:unknown):value is MicroscopeSettings {
+  if(!value||typeof value!=='object'||Array.isArray(value))return false;
+  const s=value as MicroscopeSettings;
+  const ranges={angleDeg:[-70,70],azimuthDeg:[-180,180],workingDistanceMm:[60,350],fieldMm:[12,120],focusOffsetMm:[-30,30],light:[0,6]} as const;
+  const allowed=['target','outward',...Object.keys(ranges),'inspectionTransparency','inspectionCutaway'];
+  if(Object.keys(s).some(key=>!allowed.includes(key)))return false;
+  if(![s.target,s.outward].every(v=>Array.isArray(v)&&v.length===3&&v.every(n=>typeof n==='number'&&Number.isFinite(n)&&Math.abs(n)<1e6))||Math.hypot(...s.outward)<1e-8)return false;
+  if(Object.entries(ranges).some(([key,[min,max]])=>{const n=s[key as keyof typeof ranges];return typeof n!=='number'||!Number.isFinite(n)||n<min||n>max;}))return false;
+  return ['inspectionTransparency','inspectionCutaway'].every(key=>s[key as 'inspectionTransparency']===undefined||typeof s[key as 'inspectionTransparency']==='boolean');
+}
 export interface ViewerClipping { axis: 'x'|'y'|'z'; value: number; enabled: boolean; flipped?: boolean }
 /** Display choices only. No setting changes source arrays, masks or registration. */
 export interface ViewerWorkspaceSettings {
@@ -18,6 +40,9 @@ export interface ViewerWorkspaceSettings {
   layerOpacity?: Record<string, number>;
   layerColor?: Record<string, string>;
   camera?: ViewerCameraState | null;
+  operativeView?: 'external'|'surgeon';
+  microscope?: MicroscopeSettings;
+  externalCamera?: ViewerCameraState | null;
   clipping?: ViewerClipping;
   clipBox?: {enabled:boolean;min:Point3;max:Point3};
   obliqueClip?: {enabled:boolean;normal:Point3;offset:number};
@@ -28,7 +53,7 @@ export function layerAppearance(name: string, color: string, settings: ViewerWor
   const chosenColor = settings.layerColor?.[name];
   const defaultOpacity=kind==='tumor'||['vessel','vessels','artery','vein','sinus'].includes(kind??'')?1:
     ['brain','tissue','soft_tissue','head-envelope'].includes(kind??'')?.08:['bone','skull'].includes(kind??'')?.12:.66;
-  return { opacity: typeof opacity === 'number' && Number.isFinite(opacity) ? Math.min(1, Math.max(0, opacity)) : defaultOpacity,
+  return { opacity: settings.operativeView==='surgeon'&&!settings.microscope?.inspectionTransparency?1:typeof opacity === 'number' && Number.isFinite(opacity) ? Math.min(1, Math.max(0, opacity)) : defaultOpacity,
     color: chosenColor && /^#[\da-f]{6}$/i.test(chosenColor) ? chosenColor : color };
 }
 export function clippingForBounds(settings: ViewerClipping|undefined, bounds: Bounds3): ViewerClipping {
