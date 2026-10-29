@@ -128,8 +128,8 @@ tensor contraction. Selecting NumPy's optimized contraction preserves all
 the source gradient tensor was bit-exact in the discovery check. Oblique,
 non-affine controls verify the full corner bound and 0/1/2 memory branches
 against direct element/point sums. The selected guard/event/capture/exterior
-regression passes 38 tests. A frozen multi-state field-check comparison and
-topology resource evidence remain necessary before complete-program admission.
+regression passes 38 tests. That discovery alone does not admit a complete
+program; the following comparisons supply the next evidence.
 
 The frozen guard comparison at `8350c3fb` passes all six source worlds (four
 distinct payloads): strain/stress rates and center bounds match exactly;
@@ -185,6 +185,35 @@ assembly at its existing tolerance. The source audit additionally checks the
 previously qualified full source state against unchanged force/energy limits
 of 1e-10 N / 1e-10 N mm. The reuse criterion remains bit identity; no failed
 identity is replaced by a tolerance. No factor or Schur reuse is yet admitted.
+
+Version 2 at `5b6f820a` passes all nine masks in 13.03 worker seconds (13.36
+supervised), with 845,742,080 bytes sampled peak RSS. All seven core-only
+comparisons have bit-exact KEE and KIE patterns/coefficients. The exterior
+removal changes 144 KEE coefficients by up to 7.48e-4 N/mm and correctly starts
+the second block group. Canonical baseline assembly differs from the older
+summation order by at most 8.67e-19 N/mm; the previously qualified source
+world's full free-force residual is 5.27e-19 N, and its energy-accounting
+disagreement is zero. The 57 selected tests pass, and independent source-face
+graph verification matches all nine exported geometries, materials, supports
+and ordered free-DOF lineages.
+
+A separate full-source parity check confirms that the default assembly remains
+bit-exact to `2e2de647`: all 2,914,565 coefficients and the CSR pattern of the
+49,260-total-DOF matrix match. The live engine, continuum, history solver,
+deformation and CUSA source files also remain identical to the accepted
+`0d66dd7e` qualification. The optional canonical path changes summation order,
+with its numerical source checks stated above; it has no live admission.
+
+The next executable milestone is an exact retained-operator/Schur update with
+explicit bijective exterior mapping, complete coefficient checks, a fresh core
+support certificate, and generated full-field/energy controls. It must reject
+one-bit coefficient changes, non-bijective exterior sector maps, and an
+unsupported new core. The measured source topology then permits a bounded
+two-block numerical pilot before freezing all 4,218 source program steps.
+Neither a future cut nor a split constrained sector may inherit a factor or
+physical support claim from this no-cut source audit. The 16-to-20 mm stress
+stability failure, larger-domain public actions and physical/physiological RL
+evidence gates remain open.
 
 The focused event/capture/continuum/clone/cancellation selection passes 119
 tests. Independent code checks 45 bindings and 180 dense-control steps,
