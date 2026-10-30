@@ -8,7 +8,7 @@ import pytest
 
 from resectionlab import surgical_planar_contact as contact
 from resectionlab.surgical_scene import SurgicalScene
-from scripts.planar_blade_contact_fixtures import generated_fixture
+from scripts.planar_blade_contact_fixtures import generated_fixture, prescribed_schedule
 
 
 def model(*, partial=True, maxwell=True, **changes):
@@ -136,7 +136,7 @@ def test_finite_footprint_zero_tangential_force_and_unloaded_separation():
 
 
 def test_uniform_compression_closed_form_reaction_stored_energy_and_be_work():
-    kernel = model(partial=False, maxwell=False)
+    kernel = model(partial=False, maxwell=False, integration=contact.LEGACY_INTEGRATION)
     result = kernel.step(kernel.initial_state(), offset_mm=.04, dt_s=.1)
     receipt = result['receipt']
     # nu=0: E=2mu, A=16mm², H=4mm, indentation=.04mm.
@@ -147,6 +147,108 @@ def test_uniform_compression_closed_form_reaction_stored_energy_and_be_work():
     assert receipt['actuatorWorkNmm'] == pytest.approx(force * .04, rel=1e-10)
     assert receipt['numericalDissipationNmm'] == pytest.approx(energy, rel=1e-10)
     assert receipt['viscousDissipationNmm'] == 0
+
+
+def test_work_control_accepts_an_actual_finer_history_and_preserves_energy_ledger():
+    kernel = model(partial=False, maxwell=True)
+    old = kernel.initial_state()
+    result = kernel.step(old, offset_mm=.004, dt_s=.1)
+    receipt = result['receipt']; count = receipt['internalSubsteps']
+    assert count > 2
+    assert receipt['workErrorEstimateNmm'] <= receipt['workErrorToleranceNmm']
+    assert receipt['artificialDissipationNmm'] <= receipt['workErrorToleranceNmm']
+    assert receipt['integrationEvaluations'] == 2*count-1
+    assert result['state'].steps == 1 and old.steps == 0
+    # Independently replay the accepted BE partition. No extrapolation or
+    # subtraction of numerical loss may masquerade as measured actuator work.
+    current = old; receipts = []
+    for i in range(count):
+        raw = kernel._step_be(replace(current, steps=0), offset_mm=.004*(i+1)/count, dt_s=.1/count)
+        current = raw['state']; receipts.append(raw['receipt'])
+    np.testing.assert_array_equal(result['state'].displacement_mm, current.displacement_mm)
+    np.testing.assert_array_equal(result['state'].memory_mm, current.memory_mm)
+    for field in ('actuatorWorkNmm', 'numericalDissipationNmm', 'viscousDissipationNmm', 'contactActivationDissipationNmm'):
+        assert receipt[field] == sum(r[field] for r in receipts)
+    assert receipt['previousStoredEnergyNmm'] == 0.
+    assert abs(receipt['energyBalanceResidualNmm']) < 1e-10
+
+
+def test_unconverged_temporal_refinement_refuses_and_cancelled_trial_is_isolated(monkeypatch):
+    kernel = model(); old = kernel.initial_state()
+    monkeypatch.setattr(contact, 'MAX_INTERNAL_SUBSTEPS', 2)
+    with pytest.raises(ValueError, match='TEMPORAL_REFINEMENT_LIMIT'):
+        kernel.step(old, offset_mm=.02, dt_s=.1)
+    assert old.steps == 0 and not old.memory_mm.any()
+    calls = 0
+    original = kernel._step_be
+    def observed(*args, **kwargs):
+        nonlocal calls
+        calls += 1
+        return original(*args, **kwargs)
+    monkeypatch.setattr(kernel, '_step_be', observed)
+    def cancel():
+        if calls >= 2: raise RuntimeError('cancel internal trial')
+    with pytest.raises(RuntimeError, match='cancel internal trial'):
+        kernel.step(old, offset_mm=.02, dt_s=.1, check=cancel)
+    assert old.steps == 0 and not old.displacement_mm.any()
+
+
+def test_integration_method_is_bound_to_history_and_legacy_identity_is_distinct():
+    old = model(integration=contact.LEGACY_INTEGRATION)
+    revised = model()
+    assert old.identity != revised.identity
+    with pytest.raises(ValueError, match='STATE_OR_SCHEDULE'):
+        revised.step(old.initial_state(), offset_mm=.002, dt_s=.1)
+
+
+def test_adaptive_partition_and_physical_outputs_are_rigid_frame_invariant():
+    kernels = []
+    for rotated in (False, True):
+        f = generated_fixture(4, partial=True, maxwell=True, rotated=rotated)
+        kernels.append((f, contact.build(f.scene, f.cells, contact_faces=f.contact_faces,
+            support_faces=f.support_faces, blade=f.blade)))
+    states = [k.initial_state() for _, k in kernels]
+    for row in prescribed_schedule(.1, partial=True):
+        solved = [k.step(s, offset_mm=row['offsetMm'], dt_s=row['dtS']) for (_, k), s in zip(kernels, states)]
+        a, b = solved; rotation = kernels[1][0].rotation
+        assert a['receipt']['internalSubsteps'] == b['receipt']['internalSubsteps']
+        np.testing.assert_allclose(a['state'].displacement_mm.reshape(-1, 3) @ rotation.T,
+            b['state'].displacement_mm.reshape(-1, 3), atol=1e-8, rtol=0)
+        assert abs(a['receipt']['normalReactionN']-b['receipt']['normalReactionN']) <= 1e-10
+        states = [r['state'] for r in solved]
+
+
+def test_finer_requested_dt_tightens_temporal_budget_instead_of_coarsening_integration():
+    kernel = model(partial=False, maxwell=False)
+    a = kernel.step(kernel.initial_state(), offset_mm=.002, dt_s=.1)['receipt']
+    b = kernel.step(kernel.initial_state(), offset_mm=.002, dt_s=.05)['receipt']
+    assert b['workErrorToleranceNmm'] == pytest.approx(a['workErrorToleranceNmm']/4)
+    assert b['internalSubsteps'] > a['internalSubsteps']
+    exact_elastic_energy = .5*(.008*.002)*.002
+    assert abs(b['actuatorWorkNmm']-exact_elastic_energy) < abs(a['actuatorWorkNmm']-exact_elastic_energy)
+
+
+def test_release_cannot_alias_zero_work_in_both_coarse_and_doubled_trials():
+    kernel = model(partial=False, maxwell=True)
+    state = kernel.initial_state()
+    # Short indent/hold and the still-loaded first withdrawal endpoint.
+    for i in range(8):
+        state = kernel._step_be(state, offset_mm=.02*(i+1)/8, dt_s=.025)['state']
+    for _ in range(8):
+        state = kernel._step_be(state, offset_mm=.02, dt_s=.025)['state']
+    state = kernel._step_be(state, offset_mm=.005, dt_s=.025)['state']
+    one = kernel._step_be(state, offset_mm=-.01, dt_s=.025)
+    half = kernel._step_be(state, offset_mm=-.0025, dt_s=.0125)
+    two = kernel._step_be(half['state'], offset_mm=-.01, dt_s=.0125)
+    assert one['receipt']['actuatorWorkNmm'] == 0.
+    assert half['receipt']['actuatorWorkNmm'] + two['receipt']['actuatorWorkNmm'] == 0.
+    refined = kernel.step(state, offset_mm=-.01, dt_s=.025)
+    r = refined['receipt']
+    assert r['actuatorWorkNmm'] < 0., 'resolve the loaded part of withdrawal before separation'
+    assert r['internalSubsteps'] >= 8
+    assert r['artificialDissipationNmm'] <= r['workErrorToleranceNmm']
+    assert r['normalReactionN'] == 0.
+    assert refined['state'].steps == state.steps+1
 
 
 def test_normal_schedule_is_bounded_and_model_exposes_no_tangential_motion_api():

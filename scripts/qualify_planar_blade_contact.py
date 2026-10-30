@@ -115,20 +115,24 @@ def scenario_specs():
     return specs
 
 
-def uniform_analytical(schedule, maxwell):
+def uniform_analytical(schedule, maxwell, *, memory=0., offset=0.):
     """Scalar uniaxial BE recurrence, independently derived for nu=0 coupon."""
     f = frozen_protocol()['fixtures']
     mu, branch, tau = f['equilibriumShearPa'], f['maxwellBranchShearPa'], f['maxwellRelaxationSeconds']
-    z = 0.
+    z = memory
     rows = []
     for step in schedule:
-        ratio = tau / (tau + step['dtS'])
-        # Compression positive; a released surface recovers against zero load.
-        free = ratio * branch * z / (mu + ratio * branch) if maxwell else 0.
-        d = max(step['offsetMm'], free)
-        z = ratio * z + (1 - ratio) * d if maxwell else 0.
-        reaction = 2e-6 * 16 / 4 * (mu * d + (branch * (d - z) if maxwell else 0.))
-        if free >= step['offsetMm']: reaction = 0.
+        count = step.get('internalSubsteps', 1)
+        ratio = tau / (tau + step['dtS']/count)
+        for i in range(count):
+            target = offset + (step['offsetMm']-offset)*(i+1)/count
+            # Compression positive; a released surface recovers against zero load.
+            free = ratio * branch * z / (mu + ratio * branch) if maxwell else 0.
+            d = max(target, free)
+            z = ratio * z + (1 - ratio) * d if maxwell else 0.
+            reaction = 2e-6 * 16 / 4 * (mu * d + (branch * (d - z) if maxwell else 0.))
+            if free >= target: reaction = 0.
+        offset = step['offsetMm']
         rows.append({'indentationMm': d, 'memoryIndentationMm': z, 'normalReactionN': reaction})
     return rows
 
@@ -138,7 +142,7 @@ def _compare(run, check, observed, maximum, **extra):
         run['failures'].append({'check': check, 'observed': observed, 'maximum': maximum, **extra})
 
 
-def _run_scenario(spec, protocol):
+def _run_scenario(spec, protocol, *, integration='work-controlled-backward-euler-v1'):
     import numpy as np
     from resectionlab import surgical_planar_contact as contact
     import planar_contact_dense_oracle as oracle
@@ -148,7 +152,7 @@ def _run_scenario(spec, protocol):
     started = time.perf_counter()
     try:
         kernel = contact.build(fixture.scene, fixture.cells, contact_faces=fixture.contact_faces,
-            support_faces=fixture.support_faces, blade=fixture.blade, quadrature_order=spec['order'])
+            support_faces=fixture.support_faces, blade=fixture.blade, quadrature_order=spec['order'], integration=integration)
         state = kernel.initial_state()
         source_identity = fixture.scene.identity
         source_labels_sha256 = hashlib.sha256(fixture.scene.labels.tobytes()).hexdigest()
@@ -167,7 +171,7 @@ def _run_scenario(spec, protocol):
         for name, maximum in [('sourceCells', 'maxSourceCells'), ('dofs', 'maxDofs'),
                               ('contactPoints', 'maxContactPoints'), ('scheduleSteps', 'maxScheduleSteps')]:
             _compare(run, name, run['resources'][name], protocol['resources'][maximum])
-        analytical = uniform_analytical(schedule, spec['maxwell']) if not spec['partial'] else None
+        analytical_memory = 0.
         oracle_state = None
         if spec['partial'] and spec['n'] == 2 and spec['order'] == 2:
             element_index = {c: i for i, c in enumerate(kernel.mesh.cells)}
@@ -177,6 +181,7 @@ def _run_scenario(spec, protocol):
                 fixture.blade.inward_normal, fixture.blade.size_mm, order=spec['order'], include_guards=True)
         for i, step in enumerate(schedule):
             clock = time.perf_counter()
+            previous_offset = state.offset_mm
             result = kernel.step(state, offset_mm=step['offsetMm'], dt_s=step['dtS'])
             wall = time.perf_counter() - clock
             state = result['state']; receipt = result['receipt']
@@ -191,8 +196,10 @@ def _run_scenario(spec, protocol):
             for field, cap in [('optimizerIterations', 'maxDualIterations'), ('optimizerFunctionCalls', 'maxDualFunctionCalls')]:
                 if field in receipt: _compare(run, field, receipt[field], protocol['resources'][cap], step=i + 1)
             u = np.asarray(state.displacement_mm).reshape((-1, 3))
-            if analytical:
-                expected = analytical[i]
+            if not spec['partial']:
+                expected = uniform_analytical([{**step, 'internalSubsteps': receipt.get('internalSubsteps', 1)}],
+                    spec['maxwell'], memory=analytical_memory, offset=previous_offset)[0]
+                analytical_memory = expected['memoryIndentationMm']
                 local_nodes = (kernel.mesh.nodes - fixture.translation_mm) @ fixture.rotation
                 expected_u = np.zeros_like(u)
                 expected_u[:, 2] = -expected['indentationMm'] * local_nodes[:, 2] / 4
@@ -204,11 +211,14 @@ def _run_scenario(spec, protocol):
                 _compare(run, 'analyticalUniformDisplacementRelative', error, protocol['tolerances']['analyticalUniformRelative'], step=i + 1)
                 _compare(run, 'analyticalUniformReactionRelative', force_error, protocol['tolerances']['analyticalUniformRelative'], step=i + 1)
             if spec['partial'] and spec['n'] == 2 and spec['order'] == 2:
-                oracle_state = oracle.solve(kernel.mesh.nodes, kernel.mesh.element_nodes, 1000., .3,
-                    [500.] if spec['maxwell'] else [], [.5] if spec['maxwell'] else [],
-                    kernel.free, rows['contact_rows'], rows['targets_at_zero_mm'] + step['offsetMm'], step['dtS'],
-                    None if oracle_state is None else oracle_state['u_mm'],
-                    None if oracle_state is None else oracle_state['z_mm'])
+                count = receipt.get('internalSubsteps', 1)
+                for j in range(count):
+                    offset = previous_offset + (step['offsetMm']-previous_offset)*(j+1)/count
+                    oracle_state = oracle.solve(kernel.mesh.nodes, kernel.mesh.element_nodes, 1000., .3,
+                        [500.] if spec['maxwell'] else [], [.5] if spec['maxwell'] else [],
+                        kernel.free, rows['contact_rows'], rows['targets_at_zero_mm'] + offset, step['dtS']/count,
+                        None if oracle_state is None else oracle_state['u_mm'],
+                        None if oracle_state is None else oracle_state['z_mm'])
                 displacement_error = float(np.max(np.abs(u.ravel() - oracle_state['u_mm'])))
                 oracle_force = oracle_state['contact_nodal_force_n'].reshape((-1, 3)).sum(axis=0)
                 force_error = float(np.max(np.abs(np.asarray(result['contact_nodal_force_n']).reshape((-1, 3)).sum(axis=0) - oracle_force)))
@@ -331,7 +341,7 @@ def negative_controls():
     return results
 
 
-def run_worker(output):
+def run_worker(output, integration):
     protocol = frozen_protocol(); start = time.perf_counter()
     source_files = sorted((ROOT / 'src/resectionlab').glob('*.py')) + [
         Path(__file__).resolve(), ROOT / 'scripts/planar_blade_contact_fixtures.py',
@@ -357,9 +367,9 @@ def run_worker(output):
             'gitHead': subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=ROOT, capture_output=True, text=True).stdout.strip()},
         'sourceSha256': source_sha256, 'sourceArchiveRelativeDirectory': 'sources',
         'blasEnvironment': {k: os.environ.get(k) for k in ('OPENBLAS_NUM_THREADS', 'OMP_NUM_THREADS', 'MKL_NUM_THREADS', 'VECLIB_MAXIMUM_THREADS')},
-        'runs': [], 'allFailures': []}
+        'integrationMethod': integration, 'runs': [], 'allFailures': []}
     for spec in scenario_specs():
-        run = _run_scenario(spec, protocol); report['runs'].append(run)
+        run = _run_scenario(spec, protocol, integration=integration); report['runs'].append(run)
         if not run['diagnosticOnly']:
             report['allFailures'].extend({'run': run['id'], **f} for f in run['failures'])
         print(f"{run['id']}: {run['status']}, {len(run['steps'])} steps, {run['wallS']:.2f}s", flush=True)
@@ -382,17 +392,20 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, default=ROOT / 'testcases/outputs/planar-blade-contact-20261030/qualification.json')
     parser.add_argument('--worker', action='store_true', help=argparse.SUPPRESS)
+    parser.add_argument('--integration', choices=['backward-euler', 'work-controlled-backward-euler-v1'],
+                        default='work-controlled-backward-euler-v1')
     args = parser.parse_args(); output = args.output.resolve()
     if not output.is_relative_to((ROOT / 'testcases').resolve()): parser.error('generated evidence must remain under testcases/')
     output.parent.mkdir(parents=True, exist_ok=True)
     if output.exists(): parser.error('preserve existing evidence; select a new output filename')
-    if args.worker: return run_worker(output)
+    if args.worker: return run_worker(output, args.integration)
     env = os.environ.copy()
     for name in ('OPENBLAS_NUM_THREADS', 'OMP_NUM_THREADS', 'MKL_NUM_THREADS', 'VECLIB_MAXIMUM_THREADS', 'NUMEXPR_NUM_THREADS'):
         env[name] = str(frozen_protocol()['resources']['blasThreads'])
     start = time.perf_counter()
     try:
-        result = subprocess.run([sys.executable, str(Path(__file__).resolve()), '--worker', '--output', str(output)], env=env, cwd=ROOT, timeout=frozen_protocol()['resources']['maxQualificationWallSeconds'])
+        result = subprocess.run([sys.executable, str(Path(__file__).resolve()), '--worker', '--output', str(output),
+                                 '--integration', args.integration], env=env, cwd=ROOT, timeout=frozen_protocol()['resources']['maxQualificationWallSeconds'])
     except subprocess.TimeoutExpired:
         partial = output.with_suffix('.partial.json')
         report = json.loads(partial.read_text()) if partial.exists() else {'allFailures': [], 'runs': []}

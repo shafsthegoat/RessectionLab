@@ -3,9 +3,12 @@
 One opt-in approach–indent–hold–withdraw maneuver now runs through the actual
 desktop and the same native headless actions. The generated engineering fixture
 passes kernel/native agreement, transaction, save/reopen and replay checks.
-**No compatible acquired-source maneuver was admitted.** The preceding kernel's
-failed cycle-work sensitivity gates remain failed; this integration changes no
-physiological, patient-prediction, planning or RL eligibility.
+**No compatible acquired-source maneuver was admitted.** The subsequent
+[temporal correction](planar-blade-temporal-correction.md) passes the unchanged
+frozen work gates and three-resolution canonical work checks. New declarations
+bind the refined integration method; existing saved declarations preserve original
+BE and its failed work gates. Physiological, patient-prediction, planning and RL
+eligibility remain unchanged.
 
 ## Supported configuration
 
@@ -56,7 +59,7 @@ and the matching pad/shaft; original MRI/source arrays remain unchanged. First
 microscope entry frames the declared surface once. Subsequent actions never move
 the camera. The inactive parked hand is omitted from this one-tool optical field.
 
-## Measured engineering result
+## Original measured engineering result (before temporal correction)
 
 The clearly generated 4 mm cube has eight source Q1 cells, a 4×4 mm blade,
 independent bottom-face clamps, μ=1,000 Pa, ν=0, and one 500 Pa / 0.5 s Maxwell
@@ -103,7 +106,8 @@ An original 29-action `short-hold` episode still restores its complete snapshot
 exactly with `use_cache=False` in 21.839 s. The original archives, source masks,
 materials and branch histories remain unchanged.
 
-The original 5% net-cycle-work sensitivity gate still fails at **10.08% / 11.41%**.
+The original BE 5% net-cycle-work sensitivity gate fails at **10.08% / 11.41%**;
+the [correction report](planar-blade-temporal-correction.md) records current results.
 Small-deformation contact/replay agreement does not establish time-converged cycle
 work, measured tissue behavior, patient prediction, clinical safety or RL readiness.
 

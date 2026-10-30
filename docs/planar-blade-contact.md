@@ -1,11 +1,15 @@
 # Finite planar blade: bounded numerical verification
 
-The standalone opt-in kernel in `surgical_planar_contact.py` passes its contact,
-equilibrium and discrete-energy checks on 24 generated histories / 960 steps.
-**Overall frozen numerical qualification fails:** net cycle actuator work changes
-by 10.0844% and 11.4132% between the two finest time steps, above the declared 5%.
-The implementation is available for numerical inspection, with that limitation
-retained. No live surgical action or planning/training eligibility is changed.
+The corrected standalone kernel passes all frozen numerical gates on 24 generated
+histories / 960 prescribed steps, with final work changes of 1.2765% and 2.6517%
+against the unchanged 5% limit. See the [temporal correction report](planar-blade-temporal-correction.md)
+for the algorithm, three-resolution before/after results, canonical native action
+study, runtime and remaining limits. General physical, patient-specific and
+clinical validation and planning/training eligibility remain unavailable.
+
+The original BE algorithm and its failed qualification are retained below as the
+`2e88f45` baseline. Saved declarations without the new integration revision retain
+that algorithm and its exact recorded behavior.
 
 ## Model and admission
 
@@ -88,7 +92,7 @@ loss are explicit backward-Euler accounting, separate from assumed viscous
 dissipation. Tiny signed roundoff values are retained, not silently clamped.
 Neither dissipation quantity is an injury measure.
 
-## Frozen controls and results
+## Original frozen controls and results (before temporal correction)
 
 [Protocol v1](../manifests/experiments/planar-blade-contact-v1.json) froze the
 fixtures, tolerances and limits before numerical probes. Pre-qualification review

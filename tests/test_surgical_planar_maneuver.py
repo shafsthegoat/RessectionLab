@@ -307,3 +307,17 @@ def test_material_change_requires_redeclared_material_binding():
     props['brainContinuumV1']['materials']['1']['shearPa'] *= 2
     with pytest.raises(ValueError, match='FIXED_DOMAIN_REQUIRED'):
         SurgicalScene(scene.labels, scene.affine, scene.regions, scene.source, props)
+
+
+def test_saved_declaration_without_integration_revision_replays_original_numerics():
+    source = maneuver.engineering_scene(); props = copy.deepcopy(source.properties)
+    del props[maneuver.PROPERTY]['schedule']['integration']
+    scene = SurgicalScene(source.labels, source.affine, source.regions, source.source, props)
+    engine = run(SurgicalEngine(scene))
+    assert maneuver.model(engine).integration == contact.LEGACY_INTEGRATION
+    assert engine.state[maneuver.PROPERTY]['actuatorWorkNmm'] == pytest.approx(2.2005997916089315e-6, rel=1e-12)
+    saved = engine.snapshot()
+    restored = SurgicalEngine.restore(scene, saved)
+    assert restored.snapshot() == saved
+    replay = run(SurgicalEngine(scene))
+    assert replay.state_id == engine.state_id

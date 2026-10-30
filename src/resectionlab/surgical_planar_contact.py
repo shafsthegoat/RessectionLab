@@ -6,7 +6,7 @@ action integration, friction, edge migration or finite-strain contact is implied
 """
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from itertools import product
 import time
 
@@ -24,6 +24,14 @@ FORCE_N = 1e-10
 BALANCE_NMM = 1e-10
 MAX_CELLS, MAX_DOFS, MAX_POINTS, MAX_STEPS = 512, 2187, 512, 120
 MAX_STEP_SECONDS = 15.
+LEGACY_INTEGRATION = 'backward-euler'
+ADAPTIVE_INTEGRATION = 'work-controlled-backward-euler-v1'
+# Local step-doubling controls, separate from (and never replacing) the frozen
+# cycle-work/force/energy qualification gates. Failure to converge refuses.
+WORK_ATOL_NMM, WORK_RTOL = 1e-9, 1e-4
+STATE_ATOL_MM, STATE_RTOL = 1e-6, 1e-4
+ERROR_REFERENCE_DT_S = .025
+MAX_INTERNAL_SUBSTEPS = 2048
 
 
 def _owned(value, dtype=float):
@@ -146,9 +154,12 @@ def _surface(scene, mesh, faces, blade, order):
     return c, _owned(b0), _owned(weights), _owned(points), _owned(source_ids, np.int64), _owned(guards, bool), tuple(shape_rows)
 
 
-def build(scene, cells, *, contact_faces, support_faces, blade, quadrature_order=2):
+def build(scene, cells, *, contact_faces, support_faces, blade, quadrature_order=2,
+          integration=ADAPTIVE_INTEGRATION):
     """Explicit opt-in builder. It installs no scene property or live engine mode."""
     scene.require_cache_source()
+    if integration not in (LEGACY_INTEGRATION, ADAPTIVE_INTEGRATION):
+        raise ValueError('PLANAR_CONTACT_INTEGRATION_METHOD')
     if not isinstance(blade, PlanarBlade):
         raise ValueError('PLANAR_CONTACT_EXPLICIT_BLADE_REQUIRED')
     # Revalidate even directly constructed dataclasses; detach all input arrays.
@@ -175,18 +186,23 @@ def build(scene, cells, *, contact_faces, support_faces, blade, quadrature_order
         raise ValueError('PLANAR_CONTACT_FREE_TISSUE_REQUIRED')
     matrices, gradients = continuum.assemble(scene, mesh, p['materials'])
     surface = _surface(scene, mesh, contacts, blade, quadrature_order)
-    identity = semantic_digest({'schema': SCHEMA, 'sceneId': scene.identity, 'cells': list(mesh.cells),
+    binding = {'schema': SCHEMA, 'sceneId': scene.identity, 'cells': list(mesh.cells),
         'contactFaces': [list(f) for f in contact_faces], 'supportFaces': [list(f) for f in support_faces],
         'blade': {k: v.tolist() for k, v in vars(blade).items()}, 'gaussOrder': quadrature_order,
-        'materials': p['materials'], 'relaxationSeconds': p['relaxationSeconds']})
+        'materials': p['materials'], 'relaxationSeconds': p['relaxationSeconds']}
+    # Preserve the exact identity/algorithm of already saved legacy histories.
+    if integration != LEGACY_INTEGRATION:
+        binding['integration'] = integration
+    identity = semantic_digest(binding)
     return PlanarContact(scene, mesh, matrices, gradients, _owned(free, bool), blade, surface,
-                         _owned(p['relaxationSeconds']), identity)
+                         _owned(p['relaxationSeconds']), identity, integration)
 
 
 class PlanarContact:
-    def __init__(self, scene, mesh, matrices, gradients, free, blade, surface, times, identity):
+    def __init__(self, scene, mesh, matrices, gradients, free, blade, surface, times, identity, integration):
         self.scene, self.mesh, self.matrices, self.gradients = scene, mesh, matrices, gradients
         self.free, self.blade, self.times, self.identity = free, blade, times, identity
+        self.integration = integration
         (self.contact, self.targets_at_zero_mm, self.weights_mm2, self.points_mm,
          self.source_ids, self.guard_rows, self._shape_rows) = surface
         self._prepared = {}
@@ -204,7 +220,7 @@ class PlanarContact:
         self._matrix_shapes = tuple(matrix.shape for matrix in (*self.matrices, self.contact))
 
     def _binding_objects(self):
-        return (self.scene, self.mesh, self.blade, self.free, self.times,
+        return (self.scene, self.mesh, self.blade, self.free, self.times, self.integration,
             self.mesh.nodes, self.mesh.element_nodes, self.mesh.element_dofs,
             self.mesh.cells, self.mesh.node_owners, self.mesh.components, self.gradients,
             self.blade.origin_mm, self.blade.axis_u, self.blade.axis_v,
@@ -254,6 +270,90 @@ class PlanarContact:
         return result
 
     def step(self, state, *, offset_mm, dt_s, check=lambda: None):
+        """Integrate the same linear blade path with bounded work-error control.
+
+        Compare N and 2N backward-Euler histories from the SAME accepted state.
+        Accept the finer history, never a Richardson-extrapolated work value.
+        Every internal solve must satisfy the original KKT and energy checks.
+        Public step count, prescribed endpoints and duration remain unchanged.
+        """
+        if self.integration == LEGACY_INTEGRATION:
+            return self._step_be(state, offset_mm=offset_mm, dt_s=dt_s, check=check)
+        started = time.perf_counter()
+        def guard():
+            check()
+            if time.perf_counter() - started > MAX_STEP_SECONDS:
+                raise ValueError('PLANAR_CONTACT_STEP_TIME_LIMIT')
+
+        def integrate(count):
+            current = state
+            receipts = []
+            for i in range(count):
+                # _step_be performs all input checks, including the public
+                # history cap. Internal subdivisions do not consume actions.
+                result = self._step_be(replace(current, steps=state.steps),
+                    offset_mm=state.offset_mm + (offset_mm-state.offset_mm)*(i+1)/count,
+                    dt_s=dt_s/count, check=guard)
+                current = result['state']; receipts.append(result['receipt'])
+            return result, receipts
+
+        # Validate the original request before doing interpolation/arithmetic.
+        coarse = self._step_be(state, offset_mm=offset_mm, dt_s=dt_s, check=guard)
+        coarse_work = coarse['receipt']['actuatorWorkNmm']
+        count = 2; evaluations = 1
+        while count <= MAX_INTERNAL_SUBSTEPS:
+            fine, receipts = integrate(count); evaluations += count
+            work = sum(r['actuatorWorkNmm'] for r in receipts)
+            error = abs(work - coarse_work)
+            scale = max(r['storedEnergyNmm'] for r in receipts)
+            # BE step doubling estimates an O(h^2) local error. Scale its
+            # budget likewise: a finer requested schedule must demand finer
+            # internal accuracy, rather than admitting coarser microsteps.
+            budget_scale = (dt_s/ERROR_REFERENCE_DT_S)**2
+            tolerance = (WORK_ATOL_NMM + WORK_RTOL*scale)*budget_scale
+            a, b = coarse['state'], fine['state']
+            def maximum_motion(vector):
+                # The refinement decision must be invariant under a rigid RAS
+                # frame rotation, just like the contact/body equations.
+                return float(np.linalg.norm(vector.reshape(-1, 3), axis=1).max(initial=0.))
+            state_error = max(maximum_motion(a.displacement_mm-b.displacement_mm),
+                              maximum_motion(a.memory_mm-b.memory_mm))
+            state_scale = max(maximum_motion(b.displacement_mm), maximum_motion(b.memory_mm))
+            state_tolerance = (STATE_ATOL_MM + STATE_RTOL*state_scale)*budget_scale
+            artificial = sum(r['numericalDissipationNmm'] + r['contactActivationDissipationNmm'] for r in receipts)
+            # Two endpoint quadratures can both miss a short loaded interval
+            # before separation and falsely agree at zero work. The BE energy
+            # identity exposes that missed recovery as artificial loss. Bound
+            # it independently; agreement of coarse/fine work alone is unsafe.
+            if error <= tolerance and artificial <= tolerance and state_error <= state_tolerance:
+                receipt = dict(fine['receipt'])
+                for field in ('actuatorWorkNmm', 'viscousDissipationNmm',
+                              'numericalDissipationNmm', 'contactActivationDissipationNmm'):
+                    receipt[field] = sum(r[field] for r in receipts)
+                receipt['previousStoredEnergyNmm'] = receipts[0]['previousStoredEnergyNmm']
+                receipt['energyBalanceResidualNmm'] = (work - receipt['storedEnergyNmm']
+                    + receipt['previousStoredEnergyNmm'] - sum(receipt[k] for k in (
+                        'viscousDissipationNmm', 'numericalDissipationNmm', 'contactActivationDissipationNmm')))
+                for field in ('maxPenetrationMm', 'maxTensileForceN', 'maxTangentialForceN',
+                              'maxComplementarityNmm', 'maxEquilibriumResidualN', 'maxElementGradientNorm',
+                              'maxReferenceFootprintMigrationMm', 'maxLoadedFootprintMigrationMm',
+                              'optimizerIterations', 'optimizerFunctionCalls'):
+                    receipt[field] = max(r[field] for r in receipts)
+                receipt.update(integrationMethod=self.integration, internalSubsteps=count,
+                    integrationEvaluations=evaluations, internalDtS=dt_s/count,
+                    workErrorEstimateNmm=error, workErrorToleranceNmm=tolerance,
+                    artificialDissipationNmm=artificial,
+                    stateErrorEstimateMm=state_error, stateErrorToleranceMm=state_tolerance,
+                    wallSeconds=time.perf_counter()-started)
+                if abs(receipt['energyBalanceResidualNmm']) > BALANCE_NMM:
+                    raise ValueError('PLANAR_CONTACT_ENERGY_BALANCE')
+                guard(); self._require_binding(); self.scene.require_cache_source()
+                return {**fine, 'receipt': receipt}
+            coarse, coarse_work = fine, work
+            count *= 2
+        raise ValueError('PLANAR_CONTACT_TEMPORAL_REFINEMENT_LIMIT')
+
+    def _step_be(self, state, *, offset_mm, dt_s, check=lambda: None):
         """Return a detached candidate state and certified receipt; never mutate history.
 
         Positive offset moves the plane inward. g=C*u-b >=0 means separation;

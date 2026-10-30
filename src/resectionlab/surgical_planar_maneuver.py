@@ -39,7 +39,8 @@ def geometry_hash(scene):
                             'regions': scene.regions, 'source': source})
 
 
-def declaration(scene, cells, contact_faces, support_faces, blade, binding=None):
+def declaration(scene, cells, contact_faces, support_faces, blade, binding=None, *,
+                integration=contact.ADAPTIVE_INTEGRATION):
     """Declare geometry/assumptions explicitly, never infer patient exposure."""
     return {'schema': SCHEMA, 'sourceGeometryHash': geometry_hash(scene),
         'materialProfileHash': semantic_digest(scene.properties[continuum.PROPERTY]),
@@ -49,7 +50,8 @@ def declaration(scene, cells, contact_faces, support_faces, blade, binding=None)
             'axisV': blade.axis_v.tolist(), 'inwardNormal': blade.inward_normal.tolist(),
             'sizeMm': blade.size_mm.tolist(), 'thicknessMm': THICKNESS, 'shaftRadiusMm': SHAFT_RADIUS},
         'schedule': {'phases': list(PHASES), 'durationsSeconds': list(DURATIONS),
-            'endOffsetsMm': list(OFFSETS), 'initialOffsetMm': -.1, 'fixedStepSeconds': DT},
+            'endOffsetsMm': list(OFFSETS), 'initialOffsetMm': -.1, 'fixedStepSeconds': DT,
+            **({'integration': integration} if integration != contact.LEGACY_INTEGRATION else {})},
         'binding': copy.deepcopy(binding or {'kind': 'generated-engineering-fixture', 'patientData': False}),
         'domain': 'One fixed rectangular reference face, fixed topology/support, normal-only motion; other hand parked. No tissue removal, friction, current edge migration, multi-tool coupling or RL.',
         'priorNumericalQualification': {'cycleWorkSensitivityPassed': False,
@@ -72,7 +74,10 @@ def validate(scene):
     if not isinstance(b, dict) or set(b) != {'originMm', 'axisU', 'axisV', 'inwardNormal', 'sizeMm', 'thicknessMm', 'shaftRadiusMm'}:
         raise ValueError('PLANAR_MANEUVER_COMPLETE_BLADE_REQUIRED')
     blade = contact.PlanarBlade.create(b['originMm'], b['axisU'], b['axisV'], b['inwardNormal'], b['sizeMm'])
-    expected = declaration(scene, p['cells'], p['contactFaces'], p['supportFaces'], blade, p['binding'])
+    integration = p.get('schedule', {}).get('integration', contact.LEGACY_INTEGRATION)
+    if integration not in (contact.LEGACY_INTEGRATION, contact.ADAPTIVE_INTEGRATION):
+        raise ValueError('PLANAR_MANEUVER_INTEGRATION_METHOD')
+    expected = declaration(scene, p['cells'], p['contactFaces'], p['supportFaces'], blade, p['binding'], integration=integration)
     if semantic_digest(p) != semantic_digest(expected):
         raise ValueError('PLANAR_MANEUVER_FIXED_DOMAIN_REQUIRED')
     if not isinstance(p['binding'], dict) or not p['binding'].get('kind'):
@@ -106,7 +111,8 @@ def model(engine):
         return cached[2]
     b = p['blade']
     blade = contact.PlanarBlade.create(b['originMm'], b['axisU'], b['axisV'], b['inwardNormal'], b['sizeMm'])
-    kernel = contact.build(engine.scene, p['cells'], contact_faces=p['contactFaces'], support_faces=p['supportFaces'], blade=blade)
+    kernel = contact.build(engine.scene, p['cells'], contact_faces=p['contactFaces'], support_faces=p['supportFaces'],
+        blade=blade, integration=p['schedule'].get('integration', contact.LEGACY_INTEGRATION))
     engine._planar_maneuver_model = (engine.scene, identifier, kernel)
     return kernel
 

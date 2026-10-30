@@ -185,7 +185,7 @@ def prepare_engineering(output):
     return result
 
 
-def uniform_maxwell_oracle(actions):
+def uniform_maxwell_oracle(actions, partitions=None):
     """Independent scalar BE recurrence for the frozen nu=0,4mm coupon.
 
     Compression-positive free recovery satisfies mu*d + mu1*(d-z)=0.
@@ -195,20 +195,25 @@ def uniform_maxwell_oracle(actions):
     memory = 0.
     elapsed = 0.
     rows = []
+    cursor = 0
     endings = {'approach': 0., 'indent': .02, 'hold': .02, 'withdraw': -.1}
     for row in actions:
         action = row.get('action', row)
         phase = action['maneuverPhase']
         count = round(action['duration'] / .025)
         for step in range(1, count + 1):
-            offset = phase_start + (endings[phase] - phase_start) * step / count
-            ratio = .5 / (.5 + .025)
-            free = ratio * 500. * memory / (1000. + ratio * 500.)
-            compression = max(offset, free)
-            memory = ratio * memory + (1 - ratio) * compression
-            reaction = 2e-6 * 16. / 4. * (1000. * compression + 500. * (compression - memory))
-            if free >= offset:
-                reaction = 0.
+            begin = phase_start + (endings[phase] - phase_start) * (step-1) / count
+            substeps = partitions[cursor] if partitions is not None else 1
+            ratio = .5 / (.5 + .025/substeps)
+            for inner in range(1, substeps+1):
+                offset = begin + (endings[phase] - phase_start)/count * inner/substeps
+                free = ratio * 500. * memory / (1000. + ratio * 500.)
+                compression = max(offset, free)
+                memory = ratio * memory + (1 - ratio) * compression
+                reaction = 2e-6 * 16. / 4. * (1000. * compression + 500. * (compression - memory))
+                if free >= offset:
+                    reaction = 0.
+            cursor += 1
             elapsed += .025
         rows.append({'phase': phase, 'offsetMm': endings[phase],
                      'maxDisplacementMm': compression, 'memoryIndentationMm': memory,
@@ -237,12 +242,31 @@ def run_bridge(case_path, actions_path, output, *, uniform_oracle=False):
     actions = raw_actions['steps'] if isinstance(raw_actions, dict) else raw_actions
     if not isinstance(actions, list) or not 1 <= len(actions) <= 120:
         raise ValueError('One bounded explicit maneuver schedule required')
-    oracle = uniform_maxwell_oracle(actions) if uniform_oracle else None
+    oracle = None
     original_hash = sha(case_path)
     case, original_artifacts, _ = load_workspace(case_path)
     original_record = original_artifacts['surgical_toolbox']
     original_arrays = source_arrays(case)
     scene = scene_for(case, original_record)
+    if uniform_oracle:
+        # Record only accepted time partitions; expected displacement, force and
+        # memory are then calculated by the independent scalar equations above.
+        from resectionlab import surgical_planar_maneuver as maneuver
+        class PartitionEngine(SurgicalEngine):
+            def __init__(self, scene):
+                super().__init__(scene); self.partitions = []
+            def clone(self):
+                candidate = super().clone(); candidate.partitions = list(self.partitions)
+                return candidate
+            def _substep(self, *args):
+                events = super()._substep(*args)
+                self.partitions.append(self.state[maneuver.PROPERTY]['receipt'].get('internalSubsteps', 1))
+                return events
+        numerical = PartitionEngine(scene)
+        for row in actions:
+            result = numerical.step(row.get('action', row))
+            assert result['status'] == 'accepted', result
+        oracle = uniform_maxwell_oracle(actions, numerical.partitions)
     original_labels = array_digest(scene.labels)
     original_properties = copy.deepcopy(scene.properties)
     report = {'schema': 'resectionlab.planar-blade-bridge-check.v1', 'input': str(case_path),
