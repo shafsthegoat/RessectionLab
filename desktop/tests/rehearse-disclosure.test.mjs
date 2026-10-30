@@ -1,6 +1,7 @@
 import test,{before,after} from 'node:test';
 import assert from 'node:assert/strict';
 import * as React from 'react';
+import {renderToStaticMarkup} from 'react-dom/server';
 import {createServer} from 'vite';
 import {mkdtemp,mkdir,rm} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
@@ -66,4 +67,38 @@ test('one outcome readout distinguishes unknown from measured zero and follows p
 test('inspection notice reflects active optical state and remains outside settings disclosures',()=>{
   assert.equal(inspectionNotice({}),null);assert.match(inspectionNotice({layerOpacity:{brain:.1}}),/transparent anatomy/);assert.match(inspectionNotice({clipping:{enabled:true}}),/cutaway/);
   assert.equal(inspectionNotice({operativeView:'surgeon',layerOpacity:{brain:.1},microscope:{}}),null,'opaque microscope ignores external alpha');assert.match(inspectionNotice({operativeView:'surgeon',microscope:{inspectionTransparency:true,inspectionCutaway:true}}),/transparent anatomy and cutaway/);
+});
+
+// Render every mounted child, including closed native disclosures. A component
+// count alone missed the accepted-state cards hidden in environment setup.
+test('entire rendered toolbox has one workflow and authoritative displayed-state measurements',()=>{
+  const c=controller();
+  const html=()=>renderToStaticMarkup(React.createElement(Panel,{c,available:true,onFixture(){}}));
+  const check=(markup,target,fluid)=>{
+    for(const [pattern,label] of [
+      [/aria-label="Instrument action"/g,'manual action'],
+      [/aria-label="Instrument interaction"/g,'pose controls'],
+      [/aria-label="Search instruments"/g,'exchange'],
+      [/Research Planning · compare approaches/g,'planning'],
+      [/aria-label="Acknowledge research planning assumptions"/g,'planning acknowledgment'],
+      [/Action timeline/g,'timeline'],
+      [/>Undo<\/button>/g,'undo'],
+      [/>Apply<\/button>/g,'apply'],
+      [/>Preview<\/button>/g,'preview'],
+    ])assert.equal([...markup.matchAll(pattern)].length,1,label);
+    for(const [key,value] of [['targetRemovedMm3',target],['nonTargetRemovedMm3','0.00'],['fluidPresentMm3',fluid],['contactCellSeconds','Unknown']]){
+      const readings=[...markup.matchAll(new RegExp(`data-surgical-metric="${key}"[^>]*>([^<]*)<`,'g'))].map(m=>m[1]);
+      assert.deepEqual(readings,[value],key);
+    }
+    assert.equal([...markup.matchAll(/Target removed · mm³/g)].length,1);
+    assert.equal([...markup.matchAll(/Other removed · mm³/g)].length,1);
+    assert(!markup.includes('NaN'));
+  };
+  check(html(),'0.00','Unknown');
+  c.preview={...c.view,stateId:'preview',metrics:{...c.view.metrics,targetRemovedMm3:1.5,fluidPresentMm3:0}};
+  const preview=html();check(preview,'1.50','0.00');assert.match(preview,/Preview · uncommitted/);assert.match(preview,/Preview modeled outcome/);
+  assert(!preview.includes('Target remaining: 10.00'),'no contradictory accepted-state remainder');
+  c.preview={...c.preview,metrics:{nonTargetRemovedMm3:0}};
+  check(html(),'Unknown','Unknown');
+  assert.equal(c.view.metrics.targetRemovedMm3,0);assert.deepEqual(c.calls,[]);
 });
