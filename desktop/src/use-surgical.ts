@@ -87,6 +87,9 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
     const authorityIssue=surgicalAuthorityIssue(c.result,command,extra);if(authorityIssue){setError(authorityIssue);return false;}
     if(command==='fullCase'&&(!acceptedFullCaseState()||!['primary','vascular'].includes(String(extra.scenario))||
       !fullCaseScenarioAvailable(c.result,c.source.caseHash,extra.scenario as 'primary'|'vascular'))){setError('Full-case rehearsal is blocked for the accepted case state. Review readiness before starting.');return false;}
+    if(command==='reevaluateConsequences'&&!acceptedFullCaseState()){
+      setError('Return to the accepted common checkpoint and cancel any preview before reassessing checked alternatives.');return false;
+    }
     if(c.result?.playback?.readOnly&&!surgicalCursorCommand(command)){setError('Return to a recorded action boundary before applying or branching instrument actions.');return false;}
     if(c.displayFailed&&['step','preview','plan','fullCase'].includes(command)){setError('The accepted anatomy could not be displayed. Seek to a recorded state or reopen the case before applying another instrument action.');return false;}
     const prefixRestart=command==='seekPrefix'&&extra.position===0;

@@ -507,3 +507,16 @@ test('manual prefix commands cannot borrow stale authority after a source render
     }finally{f.harness.close();}
   }
 });
+
+test('policy reassessment waits for the exact accepted display before reaching the backend',async()=>{
+  let f;f=replayFixture(q=>['inspect','reevaluateConsequences'].includes(q.command)?readyReceipt(f):undefined);
+  const extra={expectedComparisonSeal:'sha256:'+'a'.repeat(64),policyInput:{minimumAdditionalTargetMm3:8,maximumCumulativeNonTargetMm3:4940,requiredMetrics:[],maxBrainStrainSquaredMm3S:null,maxBrainStressSquaredPa2Mm3S:null}};
+  try{
+    f.render();await f.flush();let c=f.render();assert(c.displayPending);
+    assert.equal(await c.run('reevaluateConsequences',extra),false);assert.equal(f.calls.length,1);
+    c=f.admit();assert.equal(await c.run('reevaluateConsequences',extra),true);
+    assert.equal(f.calls.at(-1).expectedStateId,'editable');assert.deepEqual(f.calls.at(-1).policyInput,extra.policyInput);
+    c=f.render();assert(c.displayPending);assert.equal(await c.run('reevaluateConsequences',extra),false);
+    assert.equal(f.calls.filter(q=>q.command==='reevaluateConsequences').length,1);
+  }finally{f.harness.close();}
+});

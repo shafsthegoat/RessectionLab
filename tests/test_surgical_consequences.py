@@ -103,12 +103,23 @@ def test_native_edits_preserve_compared_endpoints_and_prefix_on_reopen(tmp_path,
                       timeline={name: e.history for name, e in engines.items()})
         entry.artifacts = freeze_json(artifacts)
         state = call('surgicalRehearsal', caseHash=key, command='inspect')
+        policy_input = {'minimumAdditionalTargetMm3': 0., 'maximumCumulativeNonTargetMm3': 0.,
+                        'requiredMetrics': [], 'maxBrainStrainSquaredMm3S': None,
+                        'maxBrainStressSquaredPa2Mm3S': None}
+        state = call('surgicalRehearsal', caseHash=key, command='reevaluateConsequences',
+                     expectedStateId=state['view']['stateId'],
+                     expectedComparisonSeal=report['comparisonSeal'], policyInput=policy_input)
+        analysis = copy.deepcopy(state['consequenceAnalysis']['latest'])
+        assert state['consequenceAnalysis']['current'] and analysis['revision'] == 1
+        assert analysis['newPhysicalActions'] == analysis['optimizerUpdates'] == 0
         state = call('surgicalRehearsal', caseHash=key, command='selectBranch', branchId=edited_branch,
                      expectedStateId=state['view']['stateId'])
         state = call('surgicalRehearsal', caseHash=key, command='step', expectedStateId=state['view']['stateId'],
                      action={'slot': 'left', 'operation': 'inspect', 'duration': .1})
         assert state['branchId'] not in frozen_branches
         assert state['consequenceComparison'] == report
+        assert not state['consequenceAnalysis']['current']
+        assert state['consequenceAnalysis']['latest'] == analysis
         saved = thaw_json(entry.artifacts)['surgical_toolbox']
         assert all(saved['branches'][name] == snapshot for name, snapshot in frozen_branches.items())
         assert saved['parents'][state['branchId']] == {'branchId': edited_branch, 'position': len(engines[edited_branch].actions)}
@@ -119,6 +130,10 @@ def test_native_edits_preserve_compared_endpoints_and_prefix_on_reopen(tmp_path,
         restored = call('surgicalRehearsal', caseHash=reopened['caseHash'], command='inspect')
         assert restored['view']['stateId'] == state['view']['stateId']
         assert restored['consequenceComparison'] == report
+        assert restored['consequenceAnalysis']['latest'] == analysis
+        assert not restored['consequenceAnalysis']['current']
+        assert all(thaw_json(session._get_case(key).artifacts)['surgical_toolbox']['branches'][name] == snapshot
+                   for name, snapshot in frozen_branches.items())
     finally:
         session.close()
 

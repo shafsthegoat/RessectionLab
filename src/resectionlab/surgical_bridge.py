@@ -152,11 +152,15 @@ def dispatch(session, operation, args, request, progress):
         argument_keys.update({'prefixToken', 'prefixFieldTokens'})
     if args.get('command') == 'attachProtection':
         argument_keys.add('protectionPath')
+    if args.get('command') == 'reevaluateConsequences':
+        argument_keys.update({'policyInput', 'expectedComparisonSeal'})
     if args.get('command') == 'seekPrefix' and type(args.get('position')) is int and args['position'] == 0:
         argument_keys.add('cacheOnly')
     _keys(args, argument_keys)
     if args.get('command') == 'recoverExit':
         _keys(args, {'caseHash', 'command', 'expectedStateId'})
+    if args.get('command') == 'reevaluateConsequences':
+        _keys(args, {'caseHash', 'command', 'expectedStateId', 'policyInput', 'expectedComparisonSeal'})
     if 'cumulativeReentry' in args and (args.get('command') != 'plan' or
             args.get('opponent') != 'anatomy-staged-strategy' or
             type(args['cumulativeReentry']) is not bool):
@@ -209,7 +213,7 @@ def dispatch(session, operation, args, request, progress):
         # Replacement archives and all editable commands retain full admission.
         artifacts = entry.artifacts if hot_frame or args.get('command') in PREFIX_COMMANDS else thaw_json(entry.artifacts)
     command = args.get('command', 'inspect')
-    if command not in {'create', 'inspect', 'inspectArchive', 'preview', 'step', 'recoverExit', 'undo', 'redo', 'seek', 'branch', 'selectBranch', 'reset', 'selectScene', 'plan', 'fullCase', 'attachProtection', 'seekFrame', *PREFIX_COMMANDS}:
+    if command not in {'create', 'inspect', 'inspectArchive', 'preview', 'step', 'recoverExit', 'undo', 'redo', 'seek', 'branch', 'selectBranch', 'reset', 'selectScene', 'plan', 'fullCase', 'attachProtection', 'reevaluateConsequences', 'seekFrame', *PREFIX_COMMANDS}:
         raise ValueError('Unsupported surgical command')
     raw = artifacts.get(ARTIFACT)
     from .surgical_environment import standardize, default_target_names, SCHEMA as ENVIRONMENT_SCHEMA
@@ -440,7 +444,16 @@ def dispatch(session, operation, args, request, progress):
             'branches': [{'id': k, 'steps': len(v['actions']), 'parent': record.get('parents', {}).get(k)} for k,v in record['branches'].items()]}
         _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Playback frame exceeds the display budget')
         return result
-    if command == 'attachProtection':
+    if command == 'reevaluateConsequences':
+        from .surgical_consequence_analysis import reevaluate_analysis
+        comparison = record.get('consequenceComparison')
+        if comparison is None:
+            raise ValueError('Open the admitted checked-alternative comparison before reassessing its policy')
+        record = reevaluate_analysis(engine, record, comparison, identity,
+            args.get('policyInput'), args.get('expectedComparisonSeal'))
+        # This appends analysis evidence only. The checked programs, common
+        # checkpoint and frozen experiment remain exactly their saved values.
+    elif command == 'attachProtection':
         from .full_case_rehearsal import bind_case_protection
         path = args.get('protectionPath')
         if not isinstance(path, str) or not path.strip():
@@ -758,6 +771,10 @@ def dispatch(session, operation, args, request, progress):
         from .surgical_consequences import validate_saved_comparison as validate_consequences
         validate_consequences(engine.scene, record, consequence_comparison)
         result['consequenceComparison'] = copy.deepcopy(consequence_comparison)
+        from .surgical_consequence_analysis import analysis_view
+        result['consequenceAnalysis'] = analysis_view(engine, record, consequence_comparison, identity)
+    elif record.get('consequenceAnalyses'):
+        raise ValueError('Saved policy analysis has no bound frozen comparison')
     retraction_study = record.get('retractionStudy')
     if isinstance(retraction_study, dict) and retraction_study.get('schema') == 'resectionlab.retractor-native-study.v1':
         from .surgical_retraction_study import validate_retraction_study

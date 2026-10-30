@@ -123,3 +123,68 @@ material force/stress sensitivity between 4 and 8 mm patches and cannot estimate
 8-to-12 mm stability under the unchanged budget. The comparison above retains
 its original 4 mm domain and relaxation assumptions; it does not establish
 radius independence or measured mechanical fidelity.
+
+## Interactive reassessment of the checked alternatives
+
+In Rehearse → Advanced research workflows → Recorded consequence comparison,
+**Reassess checked alternatives** edits a separate declared research task over
+this one admitted comparison. Open the common checkpoint before reassessing.
+The editor supports minimum additional target removal (mm³), a **cumulative**
+non-target removal budget (mm³), and required vascular, motor, language or
+acquired-shift evidence. Optional cumulative strain²/stress² caps stay under
+advanced controls and are unvalidated research quantities. The fixed objectives
+are additional target removal, cumulative non-target removal and modeled duration.
+
+The shared backend comparator recomputes eligibility, per-world violations and
+paired-world Pareto dominance from the checked vectors. It does not generate or
+optimize routes, execute new action programs, fit models or train RL. Each
+alternative shows additional and residual target, cumulative non-target removal,
+modeled duration, required unavailable evidence and its actual exclusion reasons.
+Ambiguous Pareto fronts remain ambiguous. Checked STOP retains its executable
+release/withdrawal program and residual task status, including unmet requirements.
+
+With minimum 8 mm³ and cumulative budget 4,940 mm³, both continuations are eligible
+and short hold is the unique frontier. Raising the minimum to 9 mm³ excludes both.
+Requiring motor evidence also excludes both because that consequence is Unknown;
+STOP remains executable with the declared task **not met**. These are policy
+reassessments of existing evidence, not new physical or physiological validation.
+
+Each explicit reassessment appends a sealed
+`resectionlab.surgical-consequence-user-analysis.v1` revision under
+`consequenceAnalyses`, bound to source identity/geometry, the exact checkpoint,
+native program snapshots/actions, declared worlds, vectors and frozen declaration.
+All revisions are preserved; the bounded history rejects a 33rd revision. The
+original experiment, policies and independent declaration checks remain unchanged.
+Changing branch/cursor makes the saved analysis historical; returning to the
+exact common checkpoint revalidates it. Source, checkpoint, program or scenario
+changes reject stale bindings. Draft edits invalidate the displayed decision
+until explicit reassessment and never issue commands by themselves.
+
+Inspect buttons use verified nominal native replay. They move the viewing cursor
+without editing a source program. Native save/reopen preserves all revisions,
+edited policy and the reproduced decision; observed replay retains historical
+evidence without granting reassessment authority.
+
+Verification added 43 generated adversarial backend checks and extended native
+branch-preservation checks. Source-backed BridgeSession and hidden Electron
+checks demonstrated the eligibility changes above, unchanged source arrays,
+original report and six snapshots, canonical STOP replay, and cold save/reopen.
+The 68 consequence checks, 87 bridge/replay integration checks, 617 renderer
+tests, 318 main-process tests and desktop build passed. Hidden captures checked
+1440×900 and 1180×760 layouts. The original nine-world physical qualification
+was not rerun. Reproduction:
+
+```sh
+.venv/bin/python -m pytest tests/test_surgical_consequences.py tests/test_surgical_consequence_analysis.py -q
+pnpm --dir desktop test:renderer
+pnpm --dir desktop test:main
+pnpm --dir desktop build
+.venv/bin/python scripts/check_consequence_editor.py --output testcases/outputs/consequence-editor-next
+CONSEQUENCE_EDITOR_OUTPUT="$PWD/testcases/outputs/consequence-editor-desktop-next" desktop/node_modules/.bin/electron desktop/electron/verify-consequence-editor.cjs
+```
+
+The source-backed commands require the existing local UCSF-PDGM-0007 comparison
+archive under `testcases/cases/`; they do not download missing data. Use a fresh
+output directory to preserve prior evidence. Local reports, captures and cold
+reopen commands are in
+`testcases/outputs/consequence-editor-20261030/README.md`.

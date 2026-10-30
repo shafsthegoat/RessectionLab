@@ -22,3 +22,11 @@ test('cancelled selection and foreign or unaccepted workspace requests cannot at
   for(const args of [{...request(),caseHash:'foreign'},{...request(),expectedStateId:undefined},{...request(),source:{collectionId:'external'}}])await assert.rejects(f.invoke(args),/current workspace/);
   assert.equal(f.dialogs.length,1);assert.equal(f.calls.length,0);
 });
+test('checked consequence reassessment forwards the explicit policy and seal without a file dialog',async()=>{
+  const f=fixture(),policyInput={minimumAdditionalTargetMm3:9,maximumCumulativeNonTargetMm3:4940,requiredMetrics:['motorEncounterMm3'],maxBrainStrainSquaredMm3S:null,maxBrainStressSquaredPa2Mm3S:null};
+  const args={caseHash:'case',command:'reevaluateConsequences',expectedStateId:'accepted-state',expectedComparisonSeal:'sha256:comparison',policyInput};
+  await f.invoke(args);
+  assert.deepEqual(JSON.parse(JSON.stringify(f.calls[0][1])),args);assert.equal(f.dialogs.length,0);
+  await assert.rejects(f.invoke({...args,analysisPath:'/workspace/renderer-selected.json'}),/Unsupported operation argument/);
+  assert.equal(f.calls.length,1);
+});
