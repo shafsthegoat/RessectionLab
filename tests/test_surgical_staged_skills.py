@@ -165,7 +165,9 @@ def test_checked_prefix_refusal_keeps_original_engine_and_exact_public_call_coun
     fingerprint = implementation_fingerprint()
     meter = TransitionMeter(20)
     preview_code, step_code = SurgicalEngine.preview.__code__, SurgicalEngine.step.__code__
-    observed = {'preview': 0, 'previewInternalStep': 0, 'directStep': 0}
+    prepare_code = SurgicalEngine._prepare_step.__code__
+    observed = {'preview': 0, 'previewInternalStep': 0, 'directStep': 0,
+                'previewPreparations': 0, 'stepPreparations': 0}
 
     def profile(frame, event, arg):
         if event != 'call':
@@ -175,6 +177,9 @@ def test_checked_prefix_refusal_keeps_original_engine_and_exact_public_call_coun
         elif frame.f_code is step_code:
             key = ('previewInternalStep' if frame.f_back is not None and
                    frame.f_back.f_code is preview_code else 'directStep')
+            observed[key] += 1
+        elif frame.f_code is prepare_code:
+            key = 'previewPreparations' if frame.f_back.f_code is preview_code else 'stepPreparations'
             observed[key] += 1
 
     sys.setprofile(profile)
@@ -193,7 +198,8 @@ def test_checked_prefix_refusal_keeps_original_engine_and_exact_public_call_coun
     assert candidate.actions == [INSPECT]
     assert original.snapshot() == original_snapshot
     assert receipt['committedPrefix']['actionPrefixSeal'] == semantic_digest([INSPECT])
-    assert observed == {'preview': 2, 'previewInternalStep': 2, 'directStep': 1}
+    assert observed == {'preview': 2, 'previewInternalStep': 0, 'directStep': 1,
+                        'previewPreparations': 2, 'stepPreparations': 1}
     assert receipt['physicalCallCost'] == {'publicCalls': 3,
         'previewCalls': 2, 'directStepCalls': 1}
     assert implementation_fingerprint() == fingerprint

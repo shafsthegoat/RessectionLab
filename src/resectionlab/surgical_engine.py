@@ -447,8 +447,22 @@ class SurgicalEngine:
 
     def preview(self, action, *, check=None, include_view=True, include_history=True):
         if check is not None: check()
-        candidate = self._transition_clone()
-        result = candidate.step(action) if check is None else candidate.step(action, check=check)
+        if (type(self) is SurgicalEngine and all(
+                name not in self.__dict__ and getattr(SurgicalEngine, name) is method
+                for name, method in _PREVIEW_NATIVE_METHODS)):
+            # Preparation already owns one detached candidate. Publishing it to
+            # another disposable engine would copy its state a second time.
+            candidate, result = self._prepare_step(action, check=check)
+            if candidate is not None:
+                result = {**result, 'metrics': candidate.metrics()}
+            elif include_view:
+                # Validation/execution can mutate a rejected candidate. Render
+                # a clean detached source, as the public step path always did.
+                candidate = self._transition_clone()
+        else:
+            # Observers and extensions retain their clone and public step hooks.
+            candidate = self._transition_clone()
+            result = candidate.step(action) if check is None else candidate.step(action, check=check)
         view = candidate.view(_state_id=result['stateId'], include_history=include_history) if include_view else None
         if check is not None: check()
         return {**result, 'preview': True, **({'view': view} if include_view else {})}
@@ -513,6 +527,19 @@ class SurgicalEngine:
         return duration, points
 
     def step(self, action, *, check=None):
+        candidate, result = self._prepare_step(action, check=check)
+        if candidate is None:
+            return result
+        self.__dict__.update(candidate.__dict__)
+        # Keep committed-step metrics after publication, including subclass hooks.
+        return {**result, 'metrics': self.metrics()}
+
+    def _prepare_step(self, action, *, check=None):
+        """Evaluate one transaction without publishing its detached candidate.
+
+        A rejected candidate is discarded. Only public step publishes a valid
+        candidate; preview consumes it without changing the authoritative owner.
+        """
         if check is not None: check()
         before = self.state_id
         after = before
@@ -526,7 +553,7 @@ class SurgicalEngine:
             raise interrupted.cause from None
         except (ValueError, KeyError, TypeError, OverflowError) as error:
             if check is not None: check()
-            return {'status': 'rejected', 'reason': str(error), 'reasonCode': str(error).split(':')[0] if str(error).split(':')[0].isupper() else 'INVALID_ACTION', 'completedFraction': 0., 'elapsedSeconds': 0., 'stateId': before, 'events': [], 'deltas': {}, 'metrics': self.metrics()}
+            return None, {'status': 'rejected', 'reason': str(error), 'reasonCode': str(error).split(':')[0] if str(error).split(':')[0].isupper() else 'INVALID_ACTION', 'completedFraction': 0., 'elapsedSeconds': 0., 'stateId': before, 'events': [], 'deltas': {}, 'metrics': self.metrics()}
         if check is not None: check()
         result['reasonCode'] = result['reason'].split(':')[0] if result.get('reason') else None
         result.setdefault('elapsedSeconds', candidate.state['elapsedSeconds'] - before_time if result['status'] != 'rejected' else 0.)
@@ -544,8 +571,8 @@ class SurgicalEngine:
             candidate.history.append({'action': copy.deepcopy(action), 'stateBefore': before,
                                       'stateAfter': after, **_copy_engine_data(result)})
             if check is not None: check()
-            self.__dict__.update(candidate.__dict__)
-        return {**result, 'stateId': after, 'metrics': self.metrics()}
+            return candidate, {**result, 'stateId': after}
+        return None, {**result, 'stateId': after, 'metrics': self.metrics()}
 
     def _execute(self, action, duration, points, *, check=None):
         key, op = action['slot'], action['operation']
@@ -1094,3 +1121,8 @@ _DRILL_CONTACT_QUERY_ORIGINALS = (
               ({'shape': GeometryScene.shape.fget}, ('shape',)),
               (vars(_DrillContactOccupancy), ('material_ids', '__getitem__')))
           for name in names for function in (namespace[name],)))
+
+# Definition-time identities keep patched/instance methods on the public hook
+# path, as well as every subclass. No public clone or extension contract changes.
+_PREVIEW_NATIVE_METHODS = tuple((name, getattr(SurgicalEngine, name)) for name in
+    ('step', 'clone', '_transition_clone', 'metrics', 'view'))

@@ -15,6 +15,7 @@ from .surgical_replay_cache import SurgicalReplayCache
 OPERATIONS = frozenset({'surgicalRehearsal', 'createSurgicalFixture', 'importSurgicalScene', 'prepareSurgicalEnvironment', 'compareSurgicalAnatomy'})
 ARTIFACT = 'surgical_toolbox'
 RESULT_BYTES = 32 * 1024**2 - 4096  # Reserve the bounded JSONL envelope.
+_NATIVE_PREVIEW = SurgicalEngine.preview
 PREFIX_COMMANDS = frozenset({'seekPrefix', 'seekPrefixFrame'})
 
 
@@ -369,8 +370,11 @@ def dispatch(session, operation, args, request, progress):
     cursor_commands = {'undo', 'redo', 'seek', 'selectBranch'}
     # Cursor reconstruction returns a detached engine and never writes its
     # current-engine input. Avoid copying a complete unchanged effect state
-    # before immediately replacing it with that reconstructed result.
-    if command not in cursor_commands and command != 'seekFrame':
+    # before immediately replacing it with that reconstructed result. The native
+    # preview owns its transaction candidate and returns before persistence.
+    pure_preview = (command == 'preview' and type(engine) is SurgicalEngine
+                    and getattr(engine.preview, '__func__', None) is _NATIVE_PREVIEW)
+    if command not in cursor_commands and command != 'seekFrame' and not pure_preview:
         engine = engine.clone()
     if command not in ('create', 'inspect', 'selectScene') and args.get('expectedStateId') != engine.state_id:
         raise BridgeError('SURGICAL_STATE_STALE', 'The scene changed. Refresh before applying this action.')

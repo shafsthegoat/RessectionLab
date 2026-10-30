@@ -39,6 +39,14 @@ type Action = {
 
 `step(action)` returns `accepted`, `partial`, or `rejected`, plus a reason, completed fraction, state identity, and events. Successful transitions include elapsed time, deltas, and metrics. Partial transitions retain completed safe microsteps and report the contact stop. A rejected transition leaves the live state unchanged. `preview(action)` runs on a clone and includes its candidate view.
 
+Native preview consumes one privately prepared transition candidate; public
+`step` publishes that same preparation before computing committed metrics.
+Public `clone()` still detaches state, actions and history. Subclasses and
+patched public methods retain their clone/step dispatch; rejected previews
+render a clean detached source. The bridge reuses its admitted engine only for
+the native pure preview and retains stale-state and result-budget checks.
+See [paired backend measurements](shared-surgical-guards.md#preview-candidate-ownership-2026-10-30).
+
 `place` requires one free-space pose and a withdrawn/inactive instrument. `exchange` requires deactivation, release, and withdrawal. `hold` is specific to the retractor; `grasp` and `extract` are specific to tumor forceps. Exchange, release, deactivate, activate, inspect, and extract cannot also move the instrument. `apply` performs a finite operation; `activate` enables continuing activity and applies exposure during its own duration. An active stationary instrument continues acting while actions on the other slot advance the shared clock. `deactivate` stops that exposure. Administrative actions also use the simulated action duration; they are not wall-clock waits.
 
 Release removes the reversible hold. It does not restore cells that another instrument has removed. Two holds cannot own the same source cells. Extraction requires a held fragment with no remaining nonbreakable declared attachment.

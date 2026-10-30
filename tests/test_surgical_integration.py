@@ -273,11 +273,29 @@ def test_bridge_preview_and_stale_actions_leave_committed_history_untouched(tmp_
         key = fixture['caseHash']
         created = call(session, 'surgicalRehearsal', {'caseHash': key, 'command': 'create'})
         current = created['view']['stateId']
+        owner = session.surgical_sessions[key][1]
+        owner_snapshot, owner_history = owner.snapshot(), copy.deepcopy(owner.history)
+        owner_scene = owner.scene.descriptor()
+        artifacts = session.cases[key].artifacts
+        record = session.surgical_sessions[key][2]
         args = {'caseHash': key, 'command': 'preview', 'expectedStateId': current,
                 'action': action('left', 'place', [12, 15, 10])}
         preview = call(session, 'surgicalRehearsal', args)
         assert preview['status'] == 'accepted'
         assert preview['stateId'] != current
+        expected = copy.deepcopy(preview)
+        # The handler now lets preview own the candidate directly. Neither its
+        # public payload nor its speculative ancestry may alias the cached owner.
+        preview['events'].append({'kind': 'caller annotation'})
+        preview['view']['history'][-1]['events'].append({'kind': 'caller history'})
+        preview['view']['history'][-1]['action']['operation'] = 'caller-edited'
+        preview['view']['slots']['left']['position'][0] += 100.
+        preview['view']['scene']['source']['caller-edited'] = True
+        assert session.surgical_sessions[key][1] is owner
+        assert session.surgical_sessions[key][2] is record
+        assert session.cases[key].artifacts is artifacts
+        assert owner.snapshot() == owner_snapshot and owner.history == owner_history
+        assert owner.scene.descriptor() == owner_scene
         inspected = call(session, 'surgicalRehearsal', {'caseHash': key, 'command': 'inspect'})
         assert inspected['view']['stateId'] == current and inspected['position'] == 0
         with pytest.raises(BridgeError) as error:
@@ -285,6 +303,9 @@ def test_bridge_preview_and_stale_actions_leave_committed_history_untouched(tmp_
         assert error.value.code == 'SURGICAL_STATE_STALE'
         inspected = call(session, 'surgicalRehearsal', {'caseHash': key, 'command': 'inspect'})
         assert inspected['view']['stateId'] == current and inspected['position'] == 0
+        committed = call(session, 'surgicalRehearsal', {**args, 'command': 'step'})
+        assert committed['view']['stateId'] == expected['stateId']
+        assert committed['view'] == expected['view']
     finally:
         session.close()
 
