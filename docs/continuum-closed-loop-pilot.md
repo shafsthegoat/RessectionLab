@@ -72,3 +72,45 @@ selected first/last BE checkpoints and all-step hashes/scalars, and pass an
 independent source Q1/ledger checker. No full 900-second replay is justified by
 an unmeasured extrapolation. Existing live caps and failed outer-radius evidence
 remain unchanged; physical validation is false and both RL holds remain intact.
+
+## Completed cost profile
+
+The frozen profile at `50ca6c0f` completes in **102.83 seconds supervised**
+(101.90 seconds worker), at 2,360,492,032 sampled RSS bytes and 2,362,540,032 OS
+peak bytes. Metadata output is 29,486 bytes. The preceding seed-only preflight
+takes 2.36 seconds at 390,086,656 sampled bytes, with no episode or solve.
+
+| Algebraic core | Root core free DOFs | Initial preparation | Candidate rebuild | First microtick |
+| --- | ---: | ---: | ---: | ---: |
+| Original 8 mm core | 5,496 | 58.04 s | 4.26 s, retained exterior | 1.18 s |
+| Spring coordinates | 96 | 18.18 s | 16.57 s, fresh exterior | 1.17 s |
+
+The smaller core reduces Schur-column time from 48.42 to 2.96 seconds, while
+its larger exterior factor increases factor time from 5.61 to 12.19 seconds.
+Both partitions retain all 33,360 supported-free and 49,260 total source DOFs.
+Their complete first-microtick displacement/memory difference is 1.87e-16 mm,
+within the unchanged 1e-9 mm comparison budget. No physical model was reduced.
+
+For the profiled nine-tick intervention and at most two new removals, measured
+two-pass worker estimates are 156.42 seconds for the original core and 125.69
+seconds for the spring-coordinate core. These are estimates, not unseen-step
+or second-removal peak guarantees. The source profile executes only one real
+microtick per partition; its next-owner deletion is a matrix/history cost probe.
+
+## Prospective complete short pilot
+
+The next frozen intervention adds one active CUSA microtick after the profiled
+six, to exercise advance into a newly cleared corridor. Seven active ticks,
+one release and two passive ticks total ten microticks/120 BE steps. The exact
+initial pending work plus seven budgets still bounds new whole-owner removal
+at two cells. No owner identity or removal timing is prescribed.
+
+Use the measured spring-coordinate partition, keep all physical DOFs and old/new
+factor overlap charged, and retain a hard 180-second combined, 3-GiB, 32-MiB
+ceiling. The worker has at most 145 seconds and the independent checker at most
+30 seconds from the remaining combined wall budget. Two fresh histories must
+match every full-field/scalar hash and causal tick receipt exactly. Twenty first
+and last BE sample worlds, propagated capacity decisions, transfer/removal energy,
+release, relaxation, clocks, source ownership and advance require independent
+export verification. Only committed batches publish observations; partial or
+failed execution retains its receipts and cannot admit the pilot.
