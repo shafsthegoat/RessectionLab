@@ -1,0 +1,57 @@
+{
+  "sourceRole": "DEVELOPMENT; existing UCSF-PDGM-0007 qualified8mm native artifact and original20mm geometry only",
+  "sourceSceneId": "sha256:25e7349ad48ee77244b05fc6768e09bdc049e04733b9f362e14ae0c87a743942",
+  "nativeCase": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-history-v1/execution-v3-snapshot/result/continuum-history.ressectionlab",
+    "sha256": "cbf03bfc8f7465c873ce2b660802516f13405d29eedd229342b13ec3cbf767a8"
+  },
+  "nativeInputs": {
+    "short-hold": {
+      "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/native-capture-v1/result/short-hold-inputs.json.gz",
+      "sha256": "5945e7b795fffe9846fd8392822ea5eeafb3aeb9f245ed83989e9a33b72bface"
+    },
+    "sustained-hold": {
+      "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/native-capture-v1/result/sustained-hold-inputs.json.gz",
+      "sha256": "57e3491cb7408a4f26f447241cc15880bf969dc356fe1fe993ba06af984165e0"
+    },
+    "stop-at-model-limit": {
+      "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/native-capture-v1/result/stop-at-model-limit-inputs.json.gz",
+      "sha256": "1e962023b170f0763294d145b95a2c96220720ca7c1442a5de0df214bb42c419"
+    }
+  },
+  "fullProgramReport": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/full-programs-v1/result/report.json",
+    "sha256": "280780aae906a5aa9c92daf9d8d064f77ab1b3836667a4abf774e15a77c116c5"
+  },
+  "commonActions": 15,
+  "expectedEvents": 16,
+  "schema": "resectionlab.continuum-pre-effect-survey-protocol.v1",
+  "intent": "Independent16one-step CUSA event comparisons on losslessly reconstructed native/coupled old geometry; not a20mm action sequence",
+  "nativeCaptureReport": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/native-pre-effect-capture-v1/result/report.json",
+    "sha256": "31e5228ec7a5ed396350666e832d786b292e81ec55534ae991e941bde4c2a2a5"
+  },
+  "nativeCaptureAcceptance": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/native-pre-effect-capture-v1/acceptance.json",
+    "sha256": "2790eb578060d41925a6d59265e5e4db03f81ead40f6b16c5dcacdd6fac099d7"
+  },
+  "nativeCaptureProtocolSha256": "abbc86735e741789c40be8e407600453cd64dc779dcb867f1a13388fb5bb5f2b",
+  "preflightEventIndices": [
+    0,
+    6,
+    15
+  ],
+  "caps": {
+    "wallSeconds": 60,
+    "rssBytes": 1073741824,
+    "outputBytes": 16777216,
+    "numericalThreads": 1,
+    "retries": 0
+  },
+  "geometryToleranceMm": 1e-09,
+  "require": "All16 exact source-event/old phase joins before selection; lossless pre-removal full displacement/memory previousArrayHash. Native limiter/apply query/ledger/events oracle exact before comparing20. Each20event resets to its own captured native before-ledger; no propagation. Swept-cover positive points are cover overlaps, not actual swept contacts. No protection/public-action/physical/physiological admission.",
+  "largerDomainPublicActionsAdmitted": false,
+  "physicalValidationPassed": false,
+  "physiologicalRL": "hold",
+  "largeScaleRL": "hold"
+}
