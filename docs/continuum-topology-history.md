@@ -309,3 +309,52 @@ executable milestone is the tested full captured-input harness, per-branch
 removal/contact/clock accounting, exact replay hashes and a frozen 900-second
 protocol. No full run has been launched. The physical boundary-stability,
 larger-domain public-action and physiological RL holds remain unchanged.
+
+## Complete captured-input qualification protocol
+
+The [full program protocol](../manifests/experiments/continuum-program-qualification-v1.json)
+freezes the complete 1,938 / 2,154 / 126 fixed-step schedules. Each branch has
+independent full displacement/Maxwell fields, modeled spring targets, source
+removal and work/energy ledgers. Tissue-stage scheduling shares only immutable
+operators/contact bases. STOP ends at stage 0 and is never transferred through
+the later removals. The second pass reconstructs the operators and episodes
+from fresh inputs; every full-field/scalar record and final branch chain must
+replay exactly. Numerical/material/gradient/reaction limits remain unchanged.
+
+The last prefix hold supplies the initial seven zero-target springs. A moving
+target contributes actuator work on the first BE step of its captured tick;
+later steps use that target as the previous target. Contact removal has a
+separate signed potential jump. The captured programs contain no simultaneous
+topology/target or topology/binding changes; the parser refuses to invent an
+event-work policy for such a case. Native fixed-clock counts, remainders and
+elapsed times are checked against the frozen records. The source case's native
+mapping identifies target label 2; the full reference source labels separately
+verify the eight additional target owners and unchanged non-target cost.
+
+All 4,218 records retain residual, actual spring/tissue/Maxwell energy,
+dissipation, probe rates, cumulative exposure, source-event and full-array
+hashes. Twenty-six field sample worlds cover initial actuation, stage endpoints,
+every source event, release and final relaxation. Samples store the vanished
+old-node values alongside the current before-state. Independent source-corner
+mapping then reconstructs the complete pre-event field and checks its prior
+step hash, preserving nonzero orphan-node memory without exporting a second
+full state. No retained source history is projected onto a contact basis.
+
+Independent checking derives the exact unique sample/event set from the native
+inputs, validates physical h and scope/RL flags, folds all scalar/clock/source
+ledgers, checks final summaries, and computes full Q1 force/energy/stress for
+every sampled world. Generated controls exercise both fresh replay passes,
+reversed branch order, nonzero vanished-node recovery and checker refusals for
+checksummed one-ULP orphan corruption, duplicate samples, negative h, missing
+events, altered final energy and promoted RL flags. The selected suite passes
+75 tests. The pure independent quadrature functions are now tracked code;
+generated tests no longer depend on an ignored source-case checker file.
+
+Worker and checker share one 900-second / 32 MiB budget, each with 3 GiB sampled
+group RSS and one numerical thread. A one-second finalization reserve is
+charged before accepting the combined wall time. Source edits, changed inputs,
+failed replay or limits preserve an incomplete receipt and partial metrics;
+the launcher never retries or overwrites a previous output path. This protocol
+qualifies prescribed inputs on the larger mesh; actual larger-domain public
+actions/collisions, outer-radius stability and physiological validation remain
+separate gates.
