@@ -8,6 +8,8 @@ import pytest
 from resectionlab import surgical_cusa_v3 as cusa
 from resectionlab.geometry import GeometryScene
 from resectionlab.surgical_continuum_program import field_hash
+from resectionlab.surgical_scene import SurgicalScene
+from resectionlab.surgical_source_contacts import SourceContactGeometry
 from resectionlab.surgical_pre_effect_capture import capture_pre_effects
 from resectionlab.surgical_pre_effect_witness import (pre_event_fields,capacity_prediction,
     pre_effect_prediction,require_native_prediction_exact,require_pre_effect_context)
@@ -86,3 +88,30 @@ def test_protected_context_refuses_until_pre_effect_protection_is_modeled(protec
     with capture_pre_effects():engine.step({'slot':'right','operation':'apply','duration':.1})
     frame=engine.pre_effect_frames()[0];frame['protectedSourceIds']=protected;frame['guardReport']['configured']=configured
     with pytest.raises(ValueError,match='CONTEXT_UNADMITTED'):require_pre_effect_context(frame)
+
+
+def test_subvoxel_deformation_changes_real_cusa_allocation_without_changing_raster_candidates():
+    labels=np.zeros((7,7,7),np.uint16);labels[3,2,3]=labels[3,4,3]=1
+    scene=SurgicalScene(labels,np.eye(4),[{'id':1,'material':'soft_tissue'}],{'kind':'generated rank-flip control'},
+        {'cusaV3':cusa.default_profile()})
+    cells=np.array([np.ravel_multi_index(i,scene.shape) for i in [(3,2,3),(3,4,3)]])
+    grid=GeometryScene(np.zeros(scene.shape,bool),scene.affine);tip=np.array([3.,3.,1.2]);params={'radiusMm':1.5}
+    a=np.zeros((2,8,3));a[:,:,1]=.01;b=-a
+    native=SourceContactGeometry(scene,grid,[],cells,a,holds={},detached_fragments=[])
+    coupled=SourceContactGeometry(scene,grid,[],cells,b,holds={},detached_fragments=[])
+    def view(geometry):
+        return SimpleNamespace(scene=scene,by_label=geometry.by_label,state={'removed':[],'holds':{},'toolMechanicsRevision':2,
+            'deformation':{str(int(c)):v.tolist() for c,v in zip(cells,geometry.u.mean(axis=1))}},
+            touched=lambda x,y,r:geometry.occupancy.material_ids(geometry.grid_cover(x,y,r)))
+    first,second=view(native),view(coupled);cusa.initialize(first)
+    assert first.touched(tip,tip,1.5)==second.touched(tip,tip,1.5)==cells.tolist()
+    assert cusa._ordered_contacts(first,cells,tip)==cells.tolist()
+    assert cusa._ordered_contacts(second,cells,tip)==cells[::-1].tolist()
+    for _ in range(4):cusa.apply(first,cells,.1,params,position=tip)
+    second.state['cusaV3']=copy.deepcopy(first.state['cusaV3'])
+    before=copy.deepcopy(first.state['cusaV3'])
+    actual_native=cusa.apply(first,cells,.1,params,position=tip)
+    actual_coupled=cusa.apply(second,cells,.1,params,position=tip)
+    assert actual_native[0]['removedCells']==[int(cells[0])] and actual_coupled[0]['removedCells']==[]
+    predicted=capacity_prediction(before,[],cells[::-1].tolist(),1.,cusa.default_profile(),params,.1,True)
+    assert predicted['events']==actual_coupled and predicted['cusaAfter']==second.state['cusaV3']

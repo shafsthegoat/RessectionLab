@@ -105,10 +105,10 @@ and neurological consequences remain open. Conditional geometry results cannot
 clear any of those gates. Physical validation remains false and physiological
 and large-scale RL remain on hold.
 
-The next executable action gate is a small, source-bound pre-effect witness at
-the original removal transitions: capture the old resolved pose, old occupancy,
-CUSA limiter/candidate order and capacity state before effects, then compare
-both conditional fields through the same sweeps without applying a larger-domain
-action. Profile this before any complete public-program attempt. Endpoint
-agreement cannot replace those temporal/effect checks. Outer-support adequacy
-and full live resource admission remain separate required gates.
+The subsequent [pre-effect study](continuum-pre-effect-qualification.md) now
+completes all 16 original removal-transition comparisons in 13.26 seconds.
+Two conditional comparisons change contact ordering and fail whole-cell removal
+equivalence despite identical raster candidates and resolved poses. Endpoint
+agreement cannot replace those temporal/effect checks. The next action gate is
+a state-driven closed-loop mechanics/CUSA pilot; outer-support adequacy and full
+live resource admission remain separate required gates.
