@@ -7,6 +7,11 @@ it does not establish living-patient mechanics or surgical injury prediction.
 The [frozen protocol](../manifests/experiments/continuum-mechanics-v1.json)
 defines numerical controls and the limited exposed-specimen comparison.
 
+The separate [finite planar-blade kernel](planar-blade-contact.md) is an explicit
+offline numerical mode with independent tissue supports and unilateral normal
+surface contact. Its generated controls retain failed cycle-work sensitivity
+gates; it does not change historical holds, live actions or physiological claims.
+
 ## Material and geometry
 
 Each retained source voxel owns one affine hex8 element occupying exactly its
