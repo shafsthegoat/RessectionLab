@@ -52,6 +52,49 @@ Small controls cover clipped CUSA poses, exact phase refusal, outside-field
 source coverage, own-versus-other held shafts, unresolved working contact,
 fragment refusal, protected visibility and center-raster contact blind spots.
 
+## Completed source capture and endpoint survey
+
+Native capture at `bd1f2598` completes in **169.62 seconds supervised**
+(168.95 seconds worker). All three complete native programs preserve every
+public receipt, final snapshot and mechanics input exactly. It records all
+26 selected phases in 24 distinct field payloads: five committed tick endpoints
+and 21 intermediate conditional phases. Sampled peak RSS is 481,067,008 bytes;
+the OS worker peak is 483,819,520 bytes. Retained output is 1,054,662 bytes.
+
+The frozen query at `930c7993` first passes its three-world preflight in
+3.28 seconds supervised, at 374,865,920 sampled bytes. The maximum paired-world
+cost of 0.747 seconds projects 19.90 seconds for the complete set. The actual
+26-world survey completes in **22.25 seconds supervised** (21.45 seconds worker),
+at 379,142,144 sampled bytes and 379,224,064 OS peak bytes. Retained output is
+545,352 bytes. Every bound source/input remains unchanged. These costs include
+full scene coverage and full native/coupled fields, with no mechanics solve.
+
+All 130 capsules per model are reported, including both hands' shafts and all
+working pieces. Neither native nor coupled geometry has a positive forbidden
+shaft witness, an indeterminate forbidden shaft overlap, or a raster-forbidden
+shaft contact in these samples. Endpoint tool envelopes do not conflict. Raster
+membership, positive material-point membership and the instantaneous post-field
+CUSA candidate order are identical across the two models. Six right-hand working
+capsule comparisons have fewer indeterminate owners in the coupled geometry;
+eight owner incidences disappear (ten native versus two coupled). Each model
+retains 161 positive working-contact incidences. None is promoted to working
+contact legality. The point survey reports no
+declared blocking-label or outside-grid point witnesses. That negative survey
+does not validate obstacles, missing anatomy or physical bounds. No protected
+source IDs were configured, so critical-anatomy coverage remains unknown.
+
+The selected regression suite passes **197 tests in 8.45 seconds**. Independent
+small controls verify Q1 interpolation and conservative contact classifications;
+a scalar obstacle-point oracle agrees in 60 generated cases, including oblique
+affines, nonaffine fields, boundary points, removal and different batch sizes.
+An independent export audit reconstructs all 322 positive source Q1 points and
+capsule distances exactly at stored precision. The three preflight worlds match
+their complete-query counterparts exactly after excluding measured timing.
+Initial fixture/import failures remain in versioned ignored logs. The source
+capture, preflight and full query are terminal, with no retry or process left
+running. Exact local paths, hashes, commands, receipts and independent reviews
+are indexed under `testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/`.
+
 ## Remaining admission gates
 
 The 20 mm model still fails both original 16-to-20 mm stress-stability checks
@@ -61,3 +104,11 @@ checking, calibrated tissue/tool response, source-supported vascular physiology
 and neurological consequences remain open. Conditional geometry results cannot
 clear any of those gates. Physical validation remains false and physiological
 and large-scale RL remain on hold.
+
+The next executable action gate is a small, source-bound pre-effect witness at
+the original removal transitions: capture the old resolved pose, old occupancy,
+CUSA limiter/candidate order and capacity state before effects, then compare
+both conditional fields through the same sweeps without applying a larger-domain
+action. Profile this before any complete public-program attempt. Endpoint
+agreement cannot replace those temporal/effect checks. Outer-support adequacy
+and full live resource admission remain separate required gates.

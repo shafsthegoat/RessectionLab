@@ -1,5 +1,11 @@
 # Contact and topology history before larger-domain program replay
 
+The complete prescribed-input source programs below now pass. A subsequent
+[conditional contact survey](continuum-contact-feasibility.md) also covers all
+26 frozen sample phases at matching native poses, without a new solve or public
+action admission. It preserves the remaining sweep, effect, boundary, physical
+and RL gates.
+
 The [fixed-domain exterior witness](continuum-exterior-coupling.md) passes, but
 does not admit changing topology or larger-domain instrument actions. This next
 stage preserves the original three programs and develops explicit source-owned
