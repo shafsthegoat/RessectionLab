@@ -26,7 +26,7 @@ from febio_runtime import supervise
 PROTOCOL=ROOT/'manifests/experiments/continuum-contact-survey-v1.json'
 SOURCES=[Path(__file__),ROOT/'scripts/profile_continuum_exterior.py',ROOT/'scripts/febio_runtime.py',
     *[ROOT/'src/resectionlab'/name for name in ('surgical_contact_survey.py','surgical_contact_witness.py',
-        'surgical_geometry_view.py','independent_geometry_batch.py','surgical_motion.py','geometry.py',
+        'surgical_geometry_view.py','surgical_source_contacts.py','independent_geometry_batch.py','surgical_motion.py','geometry.py',
         'surgical_tools.py','surgical_occupancy.py','surgical_physics_v2.py','workspace_bundle.py','surgical_scene.py')]]
 
 
