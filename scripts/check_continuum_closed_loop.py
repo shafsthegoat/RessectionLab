@@ -167,10 +167,20 @@ class Audit:
         need(self.report['wallSeconds']<=145 and self.report['peakRssBytes']<=3221225472 and all(v=='1' for v in self.report['numericalThreads'].values()),'Worker resource/thread receipt')
         need('DEVELOPMENT' in self.p['sourceRole'] and self.report['sourceRole']==self.p['sourceRole'],'Source role')
         need(self.p['passes']==2 and self.p['expectedTicks']==10 and self.p['expectedFixedSteps']==120 and self.p['expectedSamples']==20,'Pilot coverage declaration')
-        need(self.p['algebraicCorePolicy']==self.report['algebraicCorePolicy']=='contact-core-fresh','Algebraic policy')
+        self.policy=self.p['algebraicCorePolicy'];need(self.policy==self.report['algebraicCorePolicy'] and self.policy in ('contact-core-fresh','conservative-corridor-retained'),'Algebraic policy')
         profile=read(self.bound(self.p['costProfileReport']));accepted=read(self.bound(self.p['costProfileAcceptance']))
-        need(profile['status']=='completed' and profile['sourceInputsUnchanged'] and accepted['sourceCostProfileComplete'] and accepted['supervisionStatus']=='completed' and profile['selectedFastestPolicy']=='contact-core-fresh','Cost profile admission')
-        chosen=[v for v in profile['variants'] if v['policy']=='contact-core-fresh'];need(len(chosen)==1 and chosen[0]['rootCoreFreeDofsSha256']==self.p['rootCoreFreeDofsSha256'],'Measured core identity')
+        need(profile['status']=='completed' and profile['sourceInputsUnchanged'] and accepted['supervisionStatus']=='completed','Cost profile admission')
+        if self.policy=='conservative-corridor-retained':
+            witness=read(self.bound(self.p['costProfileIndependent']))
+            need(accepted['corridorCostProfileComplete'] and accepted['independentSupervisionStatus']=='completed' and witness['status']=='passed'
+                and profile['hypothetical']['exactRetainedExteriorAndBothCouplings'] and profile['rootCoreFreeDofsSha256']==self.p['rootCoreFreeDofsSha256']
+                and profile['corridorSourceIdsSha256']==self.p['corridorSourceIdsSha256'] and profile['estimatedTwoPassWorkerSeconds']<=self.p['workerWallSeconds']-10,'Measured corridor identity/retention/budget')
+            numerical={path:digest for path,digest in profile['sourceHashes'].items() if path.startswith('src/resectionlab/')}
+            need(all('src/resectionlab/'+name in numerical for name in ('surgical_continuum_corridor.py','surgical_closed_loop.py','surgical_continuum_exterior.py')),'Missing measured numerical sources')
+            for path,digest in numerical.items():need(sha(self.rootpath(path))==digest,'Measured numerical source changed')
+        else:
+            need(accepted['sourceCostProfileComplete'] and profile['selectedFastestPolicy']=='contact-core-fresh','Contact cost profile admission')
+            chosen=[v for v in profile['variants'] if v['policy']=='contact-core-fresh'];need(len(chosen)==1 and chosen[0]['rootCoreFreeDofsSha256']==self.p['rootCoreFreeDofsSha256'],'Measured core identity')
         self.limits=self.p['limits'];self.energy_tol=self.limits['energyNmm'];self.force_tol=self.limits['forceN'];self.balance_tol=self.limits['balanceNmm']
         need(self.limits==dict(forceN=1e-10,energyNmm=1e-10,balanceNmm=1e-8,maxGradientNorm=.2,maxCenterDisplacementMm=3.,maxReactionN=.08),'Changed numerical/physical budgets')
         need(self.bound(self.p['independentChecker']).resolve()==Path(__file__).resolve(),'Checker identity')
@@ -265,6 +275,21 @@ class Audit:
                 for axis in range(3):
                     dof=3*int(node)+axis
                     if self.root['freeDofs'][dof]:full.add(dof)
+        if self.policy=='conservative-corridor-retained':
+            initial=self.report['initial'];active=[c for c in self.p['commands'] if c['operation']=='apply'];need(bool(active),'No corridor request');slot=active[0]['slot']
+            need(all(c['slot']==slot and c['pose']==active[0]['pose'] for c in active),'Nonrepeated absolute corridor request')
+            need(initial['slots'][slot]['instrument']=='cusa' and initial['parametersBySlot'][slot]['radiusMm']==1.5,'Corridor tip geometry')
+            A=np.array(self.root['affine'][:3,:3],np.longdouble);a=np.array(initial['slots'][slot]['position'],np.longdouble);b=np.array(active[0]['pose']['position'],np.longdouble)
+            need(np.allclose(np.asarray(A.T@A,float),np.diag(np.asarray(np.diag(A.T@A),float)),rtol=0,atol=1e-12),'Corridor orthogonal source frame')
+            half=float(max(np.sqrt(np.sum((np.array(c,np.longdouble)@A.T)**2)) for c in product((-.5,.5),repeat=3)))
+            bound=float(np.nextafter(1.5+self.p['limits']['maxCenterDisplacementMm']+2*half+1e-9,np.inf))
+            centers=np.array(np.unravel_index(self.root['cells'],self.root['shape']),np.longdouble).T@A.T+self.root['affine'][:3,3];v=b-a;length=v@v
+            t=np.clip(np.sum((centers-a)*v,axis=1)/length,0,1) if length else np.zeros(len(centers))
+            rows=np.flatnonzero(np.sqrt(np.sum((centers-a-t[:,None]*v)**2,axis=1))<=bound)
+            self.corridor_source_ids=set(map(int,self.root['cells'][rows]));digest=hashlib.sha256(self.root['cells'][rows].astype(np.int64).tobytes()).hexdigest()
+            need(digest==self.p['corridorSourceIdsSha256']==self.report['corridorSourceIdsSha256'],'Independent corridor owner hash')
+            dofs=np.unique((3*self.root['elementNodes'][rows,:,None]+np.arange(3)).ravel());full.update(map(int,dofs[self.root['freeDofs'][dofs]]))
+            declaration=self.report['partitionSelection'];need(declaration['factorRetentionCertified'] is False and declaration['corridorSourceCells']==len(rows),'Geometry-to-factor promotion')
         self.root_core=np.searchsorted(self.root_free,sorted(full));need(0<len(self.root_core)<len(self.root_free),'Root contact core')
         digest=hashlib.sha256(self.root_core.astype(np.int64).tobytes()).hexdigest();need(digest==self.p['rootCoreFreeDofsSha256']==self.report['rootCoreFreeDofsSha256'],'Root core hash')
     def fields(self,geometry,filename,digest,names=('displacement','memories')):
@@ -380,7 +405,40 @@ class Audit:
         near(fields['h'],self.p['stepSeconds'],0.,'Initial h');self.slot_stiffness={slot:scalar(self.handle_stiffness,'source handle stiffness') for slot in initial['holds']};need(contacts_from_holds(initial['holds'],self.slot_stiffness)==initial['contacts'],'Initial spring/hold contract')
         expected_target=np.array([c['targetDisplacementMm'] for c in initial['contacts']],float).ravel();bits(fields['target'],expected_target,'Initial target')
         _,energies,_,_=self.local(g,U,Z);contact,cn,k,e=self.potential(g,U,initial['contacts'],expected_target);E0=float(energies.sum()+contact);near(initial['energyNmm'],E0,self.energy_tol,'Initial nonzero energy');need(E0>0 and np.max(np.abs(Z))>0,'Nonzero initial full history')
-        need(self.p['algebraicCorePolicy']=='contact-core-fresh','Contact policy');return frame,g,U,Z,E0,energies
+        need(self.policy in ('contact-core-fresh','conservative-corridor-retained'),'Qualified partition policy');return frame,g,U,Z,E0,energies
+    def compare_reference(self,steps,samples,ticks):
+        path=self.bound(self.p['referencePilotReport']);reference=read(path);admission=read(self.bound(self.p['referencePilotAcceptance']))
+        need(admission['conditionalClosedLoopPilotComplete'] and reference['status']=='completed' and reference['allStepReplayExact'],'Reference pilot incomplete')
+        def nested(name,digest):return self.bound({'path':str((path.parent/name).relative_to(ROOT)),'sha256':digest})
+        old_steps=json.loads(gzip.decompress(nested(reference['metricsFile'],reference['metricsSha256']).read_bytes()))
+        old_samples=read(nested(reference['samplesFile'],reference['samplesSha256']));need(len(steps)==len(old_steps)==120 and len(samples)==len(old_samples)==20,'Reference coverage')
+        for a,b in zip(steps,old_steps):
+            for name in ('tick','withinTick','fixedStep','h','contacts'):need(a[name]==b[name],'Reference scalar phase/binding '+name)
+            for name in ('energyNmm','oldEnergyNmm','contactEnergyNmm','dissipatedEnergyNmm','numericalDissipationNmm','workNmm','bodyWorkNmm','targetWorkNmm','energyBalanceResidualNmm','cumulativeEventBalanceResidualNmm'):
+                near(a[name],b[name],self.energy_tol,'Reference '+name)
+            for name in ('contactReactionN','maxFreeResidualN'):near(a[name],b[name],self.force_tol,'Reference '+name)
+            for name in ('maxGradientNorm','maxCenterDisplacementMm'):near(a[name],b[name],1e-10,'Reference '+name)
+            near(a['rates'][0],b['rates'][0],1e-9,'Reference strain rate');near(a['rates'][1],b['rates'][1],.001,'Reference stress rate')
+        maximum=0.
+        for a,b in zip(samples,old_samples):
+            need(all(a[k]==b[k] for k in ('tick','withinTick','fixedStep','contacts')),'Reference checkpoint phase')
+            actual=self.npz(self.exported(a['fieldsFile'],a['fieldsSha256']));old=self.npz(nested(b['fieldsFile'],b['fieldsSha256']))
+            need(np.array_equal(actual['freeIndices'],old['freeIndices']),'Reference checkpoint free support')
+            for name in ('displacement','memories','beforeDisplacement','beforeMemories'):
+                maximum=max(maximum,near(actual[name],old[name],1e-9,'Reference full '+name))
+            for name in ('target','previousTarget','h'):bits(actual[name],old[name],'Reference '+name)
+            old_g=self.raw_geometry(nested(b['geometry']['file'],b['geometry']['sha256']));new_g=self.geometry(a['geometry'])
+            need(all(np.array_equal(old_g[k],new_g[k]) for k in KEYS),'Reference full physical geometry/material/support')
+        need(len(ticks)==len(reference['ticks'])==10,'Reference causal coverage')
+        for a,b in zip(ticks,reference['ticks']):
+            for name in ('command','resolvedPose','limiter','orderedSourceIds','cusaEvents','fixedSteps','remainderSeconds','elapsedSeconds','postEndpointCovers','contacts','cusaAfter','removedSourceIds'):
+                need(a[name]==b[name],'Reference causal decision '+name)
+            if a['sourceEvent'] is None or b['sourceEvent'] is None:need(a['sourceEvent']==b['sourceEvent'],'Reference event phase')
+            else:
+                for name in ('removedSourceIds','removedElementCount','splitParents','joinedNodes'):need(a['sourceEvent'][name]==b['sourceEvent'][name],'Reference source topology '+name)
+                for name in ('removedStoredEnergyNmm','oldTissueEnergyNmm','transferredTissueEnergyNmm','tissueEventBalanceResidualNmm'):near(a['sourceEvent'][name],b['sourceEvent'][name],self.energy_tol,'Reference event energy')
+        return {'scalarRecords':120,'sampleWorlds':20,'causalDecisions':10,'maximumCompleteFieldDifferenceMm':maximum,'completePhysicalGeometryUnchanged':True}
+
     def run(self):
         frame,g,U,Z,E0,cellenergy=self.seed_check();p=self.p;r=self.report;initial=r['initial'];ticks=r['ticks'];need(p['cusaTicks']==7 and p['relaxTicks']==2 and len(p['commands'])==10,'Frozen microtick intervention');need(len(ticks)==p['expectedTicks'] and r['allStepReplayExact'] is True and r['allStepCount']==120 and r['sampleWorlds']==20,'Run coverage')
         for path,digest in r['inputHashes'].items():need(sha(self.rootpath(path))==digest,'Input changed '+path)
@@ -398,6 +456,7 @@ class Audit:
         ledger={'removedSourceIds':[],'removedEnergyNmm':0.,'events':[]};target=np.array([c['targetDisplacementMm'] for c in values['contacts']],float).ravel();exposure=np.zeros(2)
         need(state_hash(U,Z,values,ledger,target,exposure)==initial['stateHash'],'Initial complete causal state hash')
         old_mask=set(values['removed']);seed_mask=old_mask.copy();all_new=set();pos=0;shaft_proofs=0;removal_checks=[];cusa_checks=[];advanced=False
+        need(float(np.linalg.norm(U[g['elementNodes']].mean(axis=1),axis=1).max())<=p['limits']['maxCenterDisplacementMm'],'Initial displacement domain')
         need(len(values['removed'])==len(set(values['removed'])) and all(self.labels.flat[c] for c in values['removed']),'Whole original-source mask')
         need(set(map(int,g['cells']))==set(map(int,self.root['cells']))-old_mask,'Initial source/domain cover')
         force,_,_,_=self.local(g,U,Z);assembled=np.zeros_like(U);np.add.at(assembled,g['elementNodes'],force);_,cn,k,e=self.potential(g,U,values['contacts'],target)
@@ -413,6 +472,7 @@ class Audit:
             if op=='apply':
                 need(values['slots'][key]['instrument']=='cusa' and key not in values['holds'],'CUSA-only activity');need(values['parametersBySlot'][key]['radiusMm']==1.5,'CUSA radius')
                 raster=Raster(self.labels,self.affine,old_g,old_u,values['removed'],self.soft);resolved,order,queries=raster.limiter(values['slots'][key]['position'],requested,self.soft)
+                if self.policy=='conservative-corridor-retained':need(set(order).intersection(self.root_lookup)<=self.corridor_source_ids,'In-domain candidate escaped root corridor')
                 expected_limiter={'startMm':values['slots'][key]['position'],'requestedMm':requested.tolist(),'radiusMm':1.5,'resolvedMm':resolved.tolist(),'retainedSourceIds':order,'queries':queries}
                 need(tick['limiter']==expected_limiter and tick['orderedSourceIds']==order,'Independent current-state limiter/order trace')
                 shaft_proofs+=self.collision(old_g,old_u,values['removed'],values['slots'],values['parametersBySlot'],values['holds'],key,{'position':resolved.tolist(),'quaternion':q})
@@ -485,9 +545,15 @@ class Audit:
         for name in ('energyNmm','initialEnergyNmm','removedEnergyNmm','contactJumpNmm','workNmm','lossNmm'):near(final[name],values[name],self.energy_tol,'Final '+name)
         near(final['exposure'][0],exposure[0],1e-9,'Final strain exposure');near(final['exposure'][1],exposure[1],.001,'Final stress exposure');need(len(r['passes'])==2,'Fresh pass count')
         for run in r['passes']:need(run['finalStateHash']==final['stateHash'] and run['finalArrayHash']==final['arrayHash'] and run['ticks']==10 and run['fixedSteps']==120 and run['preparationReleased'] is True,'Fresh pass identity/lifetime')
+        comparison=None
+        if self.policy=='conservative-corridor-retained':
+            for run in r['passes']:
+                builds=run['builds'];need(len(builds)==1+len(removal_checks) and not builds[0]['retainedExterior'],'Corridor build coverage')
+                need(all(b['retainedExterior'] and b['operator']['exactExteriorAndBothCouplings'] and b['operator']['retainedSchurCoefficientProof'] for b in builds[1:]),'Every removal must retain exact exterior/couplings')
+            comparison=self.compare_reference(steps,samples,ticks)
         near(final['cusa']['aspiratedSolidMm3']-initial['cusa']['aspiratedSolidMm3'],len(all_new)*self.volume,1e-10,'CUSA source-volume conservation')
         source_counts={str(label):{'initialRemoved':sum(int(self.labels.flat[c])==label for c in seed_mask),'newRemoved':sum(int(self.labels.flat[c])==label for c in all_new),'finalRemoved':sum(int(self.labels.flat[c])==label for c in values['removed'])} for label in sorted(set(self.soft))}
-        return {'schema':'resectionlab.closed-loop-independent.v1','status':'passed','initialInterpretation':self.report['seed']['initialInterpretation'],'sourceRole':self.p['sourceRole'],'allStepRecords':120,'sampleWorlds':20,'causalTicks':10,'sourceSolves':0,'appImports':0,'mriDecoded':False,'independentShaftProofs':shaft_proofs,'rootPhysicalCells':len(self.root['cells']),'rootPhysicalTotalDofs':self.root['nodes'].size,'rootPhysicalFreeDofs':int(self.root['freeDofs'].sum()),'rootAlgebraicCoreFreeDofs':len(self.root_core),'sourceCounts':source_counts,'dynamicRemovalChecks':removal_checks,'cusaChecks':cusa_checks,'samples':self.checked,'allIntermediateFieldsIndependentlyRecomputed':False,'unannotatedAnatomyValidated':False,'unconfiguredCriticalAnatomyValidated':False,'completeActionChecks':False,'patientMechanicsValidated':False,'physicalValidationPassed':False,'largerDomainPublicActionsAdmitted':False,'physiologicalRL':'hold','largeScaleRL':'hold','wallSeconds':time.perf_counter()-self.start}
+        return {'schema':'resectionlab.closed-loop-independent.v1','status':'passed','initialInterpretation':self.report['seed']['initialInterpretation'],'sourceRole':self.p['sourceRole'],'algebraicCorePolicy':self.policy,'crossPartitionReference':comparison,'allStepRecords':120,'sampleWorlds':20,'causalTicks':10,'sourceSolves':0,'appImports':0,'mriDecoded':False,'independentShaftProofs':shaft_proofs,'rootPhysicalCells':len(self.root['cells']),'rootPhysicalTotalDofs':self.root['nodes'].size,'rootPhysicalFreeDofs':int(self.root['freeDofs'].sum()),'rootAlgebraicCoreFreeDofs':len(self.root_core),'sourceCounts':source_counts,'dynamicRemovalChecks':removal_checks,'cusaChecks':cusa_checks,'samples':self.checked,'allIntermediateFieldsIndependentlyRecomputed':False,'unannotatedAnatomyValidated':False,'unconfiguredCriticalAnatomyValidated':False,'completeActionChecks':False,'patientMechanicsValidated':False,'physicalValidationPassed':False,'largerDomainPublicActionsAdmitted':False,'physiologicalRL':'hold','largeScaleRL':'hold','wallSeconds':time.perf_counter()-self.start}
 
 def self_test(workdir=None):
     if workdir is None:

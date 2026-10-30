@@ -20,6 +20,7 @@ import scipy
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'src'))
 from resectionlab.surgical_closed_loop import CusaContinuumEpisode,CoupledPreparation,hold_contacts
 from resectionlab.surgical_continuum_topology import SourceDomain
+from resectionlab.surgical_corridor_research import prepare_corridor_domain,create_corridor_episode
 from resectionlab.surgical_continuum_program import contact_matrix,field_hash,record_hash
 from closed_loop_source import seed
 from qualify_continuum_exterior import field_metrics
@@ -27,9 +28,9 @@ from profile_continuum_closed_loop import SOURCES as PROFILE_SOURCES
 from profile_continuum_exterior import bound,sha,write
 from febio_runtime import supervise
 
-PROTOCOL=ROOT/'manifests/experiments/continuum-closed-loop-pilot-v2.json'
+PROTOCOL=ROOT/'manifests/experiments/continuum-closed-loop-pilot-v3.json'
 CHECKER=ROOT/'scripts/check_continuum_closed_loop.py'
-SOURCES=[Path(__file__),CHECKER,ROOT/'scripts/continuum_quadrature.py',*PROFILE_SOURCES]
+SOURCES=[Path(__file__),CHECKER,ROOT/'scripts/continuum_quadrature.py',*[ROOT/'src/resectionlab'/n for n in ('surgical_continuum_corridor.py','surgical_corridor_research.py')],*PROFILE_SOURCES]
 
 
 class CappedOutput:
@@ -114,12 +115,26 @@ def worker(output,launch):
             replayFile='replay-digests.json',replaySha256=sha(output/'replay-digests.json'))
     try:
         check_sources();profile=json.loads(frozen(p['costProfileReport']).read_text());accepted=json.loads(frozen(p['costProfileAcceptance']).read_text())
-        if (profile['status']!='completed' or not profile['sourceInputsUnchanged'] or not accepted['sourceCostProfileComplete']
-                or profile['selectedFastestPolicy']!=p['algebraicCorePolicy']):raise ValueError('Measured source cost admission missing')
-        measured=next(v for v in profile['variants'] if v['policy']==p['algebraicCorePolicy'])
-        if measured['rootCoreFreeDofsSha256']!=p['rootCoreFreeDofsSha256']:raise ValueError('Profiled algebraic core differs')
+        if profile['status']!='completed' or not profile['sourceInputsUnchanged']:raise ValueError('Incomplete measured source cost profile')
+        if p['algebraicCorePolicy']=='conservative-corridor-retained':
+            independent=json.loads(frozen(p['costProfileIndependent']).read_text())
+            if (not accepted['corridorCostProfileComplete'] or accepted['supervisionStatus']!='completed'
+                    or accepted['independentSupervisionStatus']!='completed' or independent['status']!='passed'
+                    or not profile['hypothetical']['exactRetainedExteriorAndBothCouplings']
+                    or profile['rootCoreFreeDofsSha256']!=p['rootCoreFreeDofsSha256']
+                    or profile['corridorSourceIdsSha256']!=p['corridorSourceIdsSha256']
+                    or profile['estimatedTwoPassWorkerSeconds']>p['workerWallSeconds']-10):
+                raise ValueError('Measured conservative corridor admission missing')
+            numerical={path:digest for path,digest in profile['sourceHashes'].items() if path.startswith('src/resectionlab/')}
+            if not all('src/resectionlab/'+name in numerical for name in ('surgical_continuum_corridor.py','surgical_closed_loop.py','surgical_continuum_exterior.py')):
+                raise ValueError('Missing measured numerical source identity')
+            for path,digest in numerical.items():frozen({'path':path,'sha256':digest})
+        else:
+            if not accepted['sourceCostProfileComplete'] or profile['selectedFastestPolicy']!=p['algebraicCorePolicy']:raise ValueError('Measured source cost admission missing')
+            measured=next(v for v in profile['variants'] if v['policy']==p['algebraicCorePolicy'])
+            if measured['rootCoreFreeDofsSha256']!=p['rootCoreFreeDofsSha256']:raise ValueError('Profiled algebraic core differs')
         frozen(p['independentQuadrature']);frozen(p['independentChecker'])
-        for name in ('baselineFailureReport','baselineFailureDiagnosis'):
+        for name in ('baselineFailureReport','baselineFailureDiagnosis','referencePilotReport','referencePilotAcceptance'):
             if name in p:frozen(p[name])
         scene,grid,original,initial,alpha,times,h,common,commands,metadata=seed(p,inputs,check)
         root=original.geometry;root_free=np.flatnonzero(root['freeDofs'])
@@ -127,6 +142,11 @@ def worker(output,launch):
             core=np.unique(contact_matrix(root,hold_contacts(scene,initial['holds']))[:,root_free].indices)
             domain=SourceDomain(root,core);fresh=True
         elif p['algebraicCorePolicy']=='original-core-retained':domain=original;fresh=False
+        elif p['algebraicCorePolicy']=='conservative-corridor-retained':
+            domain,selection,partition=prepare_corridor_domain(scene,original,initial,commands,p['limits'])
+            owners=hashlib.sha256(partition['corridorSourceIds'].tobytes()).hexdigest()
+            if owners!=p['corridorSourceIdsSha256']:raise ValueError('Current corridor owners changed')
+            fresh=False;report.update(partitionSelection=selection,corridorSourceIdsSha256=owners)
         else:raise ValueError('Unqualified algebraic core policy')
         core_digest=hashlib.sha256(domain.original_core.astype(np.int64).tobytes()).hexdigest()
         if core_digest!=p['rootCoreFreeDofsSha256']:raise ValueError('Current root core changed')
@@ -137,8 +157,13 @@ def worker(output,launch):
         first_final=None;initial_hash=None
         for pass_index in range(p['passes']):
             begin=time.perf_counter();check();report.update(phase='initial-preparation',passIndex=pass_index);artifacts.json(output/'report.json',report)
-            backend=CoupledPreparation(domain,alpha,times,allow_fresh_exterior_updates=fresh,check=check)
-            episode=CusaContinuumEpisode(scene,grid,domain,initial,alpha,times,h,measure,p['limits'],backend=backend,check=check)
+            if p['algebraicCorePolicy']=='conservative-corridor-retained':
+                episode,current_selection,current_partition=create_corridor_episode(scene,grid,original,initial,alpha,times,h,measure,p['limits'],commands,check=check)
+                if current_selection!=selection or not np.array_equal(current_partition['coreFreeDofs'],domain.original_core):raise ValueError('Fresh research corridor changed')
+                backend=episode.backend
+            else:
+                backend=CoupledPreparation(domain,alpha,times,allow_fresh_exterior_updates=fresh,check=check)
+                episode=CusaContinuumEpisode(scene,grid,domain,initial,alpha,times,h,measure,p['limits'],backend=backend,check=check)
             if pass_index==0:
                 s=episode.state;free=np.flatnonzero(s['stage']['geometry']['freeDofs']);geo=export_geometry(s['stage'],s['sourceOperatorIdentity'],pass_index)
                 file,digest=export_fields({'freeIndices':free,'displacement':s['u'][free],'memories':s['z'][:,free],
@@ -196,7 +221,12 @@ def worker(output,launch):
                 raise ValueError('Frozen dynamic removal/release/relaxation/advance coverage incomplete')
             if pass_index==0:first_final=final
             elif final!=first_final:raise ValueError('Fresh replay final causal state changed')
-            builds=copy_json(backend.builds);reference=weakref.ref(backend.prepared);del episode,backend;gc.collect()
+            builds=copy_json(backend.builds)
+            if p['algebraicCorePolicy']=='conservative-corridor-retained':
+                events=sum(t['sourceEvent'] is not None for t in pass_ticks)
+                if len(builds)!=1+events or builds[0]['retainedExterior'] or not all(b['retainedExterior'] for b in builds[1:]):
+                    raise ValueError('Corridor did not retain every actual removal exterior')
+            reference=weakref.ref(backend.prepared);del episode,backend;gc.collect()
             if reference() is not None:raise ValueError('Previous pass preparation remains resident')
             passes.append({'wallSeconds':time.perf_counter()-begin,'finalStateHash':final['stateHash'],'finalArrayHash':final['arrayHash'],
                 'ticks':final['ticks'],'fixedSteps':final['fixedSteps'],'builds':builds,'preparationReleased':True})

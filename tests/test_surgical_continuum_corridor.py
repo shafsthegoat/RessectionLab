@@ -1,5 +1,8 @@
 """Native raster ownership controls for a conservative algebraic selection."""
 import copy
+import hashlib
+from pathlib import Path
+import runpy
 
 import numpy as np
 import pytest
@@ -73,3 +76,35 @@ def test_shear_source_corner_mismatch_and_missing_spring_owner_refuse():
     wrong=copy.deepcopy(g);wrong['elementNodes'][0]=wrong['elementNodes'][0,::-1]
     with pytest.raises(ValueError,match='CORNER_OWNERSHIP'):corridor_partition(wrong,[],[0,0,0],[0,0,0],1.5,0.)
     with pytest.raises(ValueError,match='CONTACT_OUTSIDE'):corridor_partition(g,[{'sourceCell':0}],[0,0,0],[0,0,0],1.5,0.)
+
+
+def test_full_export_checker_reconstructs_corridor_independently_and_refuses_claimed_core_hash():
+    from resectionlab.surgical_closed_loop import hold_contacts
+    from test_surgical_closed_loop import fixture,commands,LIMITS
+    scene,grid,domain,initial,alpha,times,h=fixture(two_tip_candidates=True,long_corridor=True);g=domain.geometry;plan=commands(initial)
+    contacts=hold_contacts(scene,initial['holds']);summary,partition=corridor_partition(g,contacts,initial['slots']['right']['position'],plan[0]['pose']['position'],1.5,3.)
+    digest=hashlib.sha256(partition['coreFreeDofs'].tobytes()).hexdigest();owners=hashlib.sha256(partition['corridorSourceIds'].tobytes()).hexdigest()
+    api=runpy.run_path(str(Path(__file__).resolve().parents[1]/'scripts/check_continuum_closed_loop.py'))
+    auditor=api['Audit'].__new__(api['Audit']);auditor.policy='conservative-corridor-retained';auditor.root=g
+    auditor.root_lookup={int(c):i for i,c in enumerate(g['cells'])};auditor.root_free=np.flatnonzero(g['freeDofs'])
+    auditor.p={'commands':plan,'limits':LIMITS,'rootCoreFreeDofsSha256':digest,'corridorSourceIdsSha256':owners}
+    auditor.report={'initial':{'slots':initial['slots'],'parametersBySlot':initial['parametersBySlot']},
+        'rootCoreFreeDofsSha256':digest,'corridorSourceIdsSha256':owners,'partitionSelection':summary}
+    auditor.root_partition(contacts)
+    assert np.array_equal(auditor.root_core,partition['coreFreeDofs']) and auditor.corridor_source_ids==set(partition['corridorSourceIds'])
+    auditor.p['rootCoreFreeDofsSha256']='0'*64
+    with pytest.raises(ValueError,match='Root core hash'):auditor.root_partition(contacts)
+
+
+def test_research_episode_uses_retained_policy_and_refuses_unplanned_request_atomically():
+    from resectionlab.surgical_corridor_research import create_corridor_episode
+    from test_surgical_closed_loop import fixture,commands,LIMITS,metrics
+    scene,grid,domain,initial,alpha,times,h=fixture(two_tip_candidates=True,long_corridor=True);plan=commands(initial)
+    episode,selection,partition=create_corridor_episode(scene,grid,domain,initial,alpha,times,h,metrics,LIMITS,plan)
+    assert not episode.backend.allow_fresh_exterior_updates and selection['physicalTotalDofs']==domain.geometry['nodes'].size
+    before=episode.state_hash();bad=copy.deepcopy(plan[0]);bad['pose']['position'][2]+=1.
+    with pytest.raises(ValueError,match='UNPLANNED_REQUEST'):episode.advance(bad)
+    assert episode.state_hash()==before and episode.last_committed_batch() is None
+    receipt=episode.advance(plan[0])
+    assert receipt['fixedSteps']==12 and episode.state['ticks']==1 and episode.state_hash()!=before
+    assert selection['coreFreeDofs']==len(partition['coreFreeDofs'])

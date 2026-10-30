@@ -59,8 +59,8 @@ class DirectBackend:
         self.current=Solve();return self.current,source_operator_identity(g,alpha,times,core_free_dofs=stage['coreFreeDofs'],removed_source_ids=removed)
 
 
-def fixture(*,two_tip_candidates=False):
-    labels=np.zeros((10,10,10),np.uint16);labels[3:6,3:6,3:6]=1
+def fixture(*,two_tip_candidates=False,long_corridor=False):
+    labels=np.zeros((14,14,14) if long_corridor else (10,10,10),np.uint16);labels[3:6,3:6,3:(12 if long_corridor else 6)]=1
     if two_tip_candidates:labels[4,3,3]=labels[4,4,3]=0
     props={c.PROPERTY:c.research_profile({'1':{'shearPa':1000.,'poissonRatio':.3,'relaxationShearPa':[500.],
         'source':'Generated closed-loop control'}},relaxation_seconds=[.5]),'cusaV3':cusa.default_profile(),

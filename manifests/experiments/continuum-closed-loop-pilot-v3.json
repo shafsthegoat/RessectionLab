@@ -1,0 +1,296 @@
+{
+  "schema": "resectionlab.closed-loop-source-pilot-protocol.v1",
+  "intent": "Two fresh state-driven conditional CUSA continuum histories; no prescribed future masks. Independent source Q1, transfer, ledger, geometry and causal replay checks.",
+  "sourceRole": "DEVELOPMENT UCSF-PDGM-0007; existing before-stage2 short-hold discrepancy seed; native CUSA ledger is an explicit initial condition",
+  "sourceSceneId": "sha256:25e7349ad48ee77244b05fc6768e09bdc049e04733b9f362e14ae0c87a743942",
+  "geometry": {
+    "core": {
+      "path": "testcases/outputs/simulator-qualification-20261029/continuum-reference-v1/execution-v1/result/domain-8.npz",
+      "sha256": "930d378221d4c1407cdf9362bd7e312eb360ef0486e986bc656511d9b020618f"
+    },
+    "reference": {
+      "path": "testcases/outputs/simulator-qualification-20261029/continuum-reference-v1/execution-v1/result/domain-20.npz",
+      "sha256": "2f336591a89b7705532c17ec87183f493c68a892a888eddf0872490122b683d7"
+    }
+  },
+  "partition": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-v1/preparation-v1/source-partition.npz",
+    "sha256": "384e47e474ee7c1c364c296faf966327101347f81b9dc65f4eff994451c3dd01"
+  },
+  "nativeCase": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-history-v1/execution-v3-snapshot/result/continuum-history.ressectionlab",
+    "sha256": "cbf03bfc8f7465c873ce2b660802516f13405d29eedd229342b13ec3cbf767a8"
+  },
+  "fullProgramReport": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/full-programs-v1/result/report.json",
+    "sha256": "280780aae906a5aa9c92daf9d8d064f77ab1b3836667a4abf774e15a77c116c5"
+  },
+  "preEffectCaptureReport": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/native-pre-effect-capture-v1/result/report.json",
+    "sha256": "31e5228ec7a5ed396350666e832d786b292e81ec55534ae991e941bde4c2a2a5"
+  },
+  "preEffectSurveyReport": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/pre-effect-survey-v1/result/report.json",
+    "sha256": "314a574c2e189fd4d9011dd343f50c370e3284ab4751b24bd765ed4823dd9cfe"
+  },
+  "nativeInput": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/native-capture-v1/result/short-hold-inputs.json.gz",
+    "sha256": "5945e7b795fffe9846fd8392822ea5eeafb3aeb9f245ed83989e9a33b72bface"
+  },
+  "commonActions": 15,
+  "seed": {
+    "branch": "short-hold",
+    "coupledStep": 853
+  },
+  "stepSeconds": 0.008333333333333333,
+  "tickSeconds": 0.1,
+  "cusaTicks": 7,
+  "relaxTicks": 2,
+  "commands": [
+    {
+      "slot": "right",
+      "operation": "apply",
+      "effectiveActive": true,
+      "durationSeconds": 0.1,
+      "pose": {
+        "position": [
+          -90.0,
+          118.0,
+          61.93954425269988
+        ],
+        "quaternion": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "slot": "right",
+      "operation": "apply",
+      "effectiveActive": true,
+      "durationSeconds": 0.1,
+      "pose": {
+        "position": [
+          -90.0,
+          118.0,
+          61.93954425269988
+        ],
+        "quaternion": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "slot": "right",
+      "operation": "apply",
+      "effectiveActive": true,
+      "durationSeconds": 0.1,
+      "pose": {
+        "position": [
+          -90.0,
+          118.0,
+          61.93954425269988
+        ],
+        "quaternion": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "slot": "right",
+      "operation": "apply",
+      "effectiveActive": true,
+      "durationSeconds": 0.1,
+      "pose": {
+        "position": [
+          -90.0,
+          118.0,
+          61.93954425269988
+        ],
+        "quaternion": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "slot": "right",
+      "operation": "apply",
+      "effectiveActive": true,
+      "durationSeconds": 0.1,
+      "pose": {
+        "position": [
+          -90.0,
+          118.0,
+          61.93954425269988
+        ],
+        "quaternion": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "slot": "right",
+      "operation": "apply",
+      "effectiveActive": true,
+      "durationSeconds": 0.1,
+      "pose": {
+        "position": [
+          -90.0,
+          118.0,
+          61.93954425269988
+        ],
+        "quaternion": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "slot": "right",
+      "operation": "apply",
+      "effectiveActive": true,
+      "durationSeconds": 0.1,
+      "pose": {
+        "position": [
+          -90.0,
+          118.0,
+          61.93954425269988
+        ],
+        "quaternion": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "slot": "left",
+      "operation": "release",
+      "effectiveActive": false,
+      "durationSeconds": 0.1,
+      "pose": "current"
+    },
+    {
+      "slot": "right",
+      "operation": "inspect",
+      "effectiveActive": false,
+      "durationSeconds": 0.1,
+      "pose": "current"
+    },
+    {
+      "slot": "right",
+      "operation": "inspect",
+      "effectiveActive": false,
+      "durationSeconds": 0.1,
+      "pose": "current"
+    }
+  ],
+  "maximumNewRemovals": 2,
+  "limits": {
+    "forceN": 1e-10,
+    "energyNmm": 1e-10,
+    "balanceNmm": 1e-08,
+    "maxGradientNorm": 0.2,
+    "maxCenterDisplacementMm": 3.0,
+    "maxReactionN": 0.08
+  },
+  "tolerances": {
+    "displacementMm": 1e-09
+  },
+  "caps": {
+    "wallSeconds": 180,
+    "rssBytes": 3221225472,
+    "outputBytes": 33554432,
+    "numericalThreads": 1,
+    "retries": 0
+  },
+  "resourceAccounting": "All full-source cells, total/free DOFs, physical material/history, immutable shared exterior/correction, rollback checkpoints, current dense core factors and certificate workspaces count. Corridor I is algebraic only; outside-domain removals and live caps remain unchanged. Fresh exterior fallback is disabled after initial preparation.",
+  "physicalValidationPassed": false,
+  "largerDomainPublicActionsAdmitted": false,
+  "physiologicalRL": "hold",
+  "largeScaleRL": "hold",
+  "newAcquiredDatasetBytes": 0,
+  "trainingUpdates": 0,
+  "outputPolicy": "First fresh pass exports 20 first/last BE checkpoint worlds across 10microticks and all120full-array/scalar hashes; deduplicated field payloads. Second fresh pass compares every complete causal receipt and full field/scalar hash; no duplicated arrays. Independent checker recomputes20Q1worlds;100intermediate fields get scalar/hash/replay coverage only.",
+  "scope": "Offline physical microticks from declared coupled pre-event fields plus captured native pending-work ledger; not an original20mm episode, public-action scheduler, patient mechanics validation, live-cap admission or RL admission.",
+  "minimumNewRemovals": 1,
+  "passes": 2,
+  "expectedTicks": 10,
+  "expectedFixedSteps": 120,
+  "expectedSamples": 20,
+  "algebraicCorePolicy": "conservative-corridor-retained",
+  "rootCoreFreeDofsSha256": "257a0dd7a5072d354b4ecf80838edf5665c1f70080c5a00b23b57765653906f1",
+  "workerWallSeconds": 145,
+  "checkerWallSeconds": 30,
+  "checkerCaps": {
+    "wallSeconds": 30
+  },
+  "dynamicCoverage": "Actual current-geometry CUSA ordering and propagated exact pending work determine owners/timing. At least one new owner and actual tool advance required; maximum two new owners follows exact capacity. Release plus two passive ticks keep CUSA off and nonzero history.",
+  "measuredAdmission": {
+    "costProfileFrozenCommit": "ae1082f3",
+    "tenTickTwoPassWorkerEstimateSeconds": 120.43826441722922,
+    "initialPreparationSeconds": 43.74157787498552,
+    "oneActualTickSeconds": 1.1386440419591963,
+    "oneHypotheticalTransferSeconds": 0.18245279102120548,
+    "oneHypotheticalRetainedPreparationSeconds": 2.363104165997356,
+    "estimateScope": "One actual12BEtick and one separately hypothetical current-owner deletion; no unseen timing/peak guarantee. The complete pilot has its unchanged own hard caps."
+  },
+  "costProfileReport": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/corridor-cost-profile-v1/result/report.json",
+    "sha256": "495451e6fd8ba141cebb90a3ab15695b73135e15462789c7de6185464a735ff5"
+  },
+  "costProfileAcceptance": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/corridor-cost-profile-v1/acceptance.json",
+    "sha256": "68083659f3c9e20a396410aa3327014b90d5b70758bba2a0073eba9093b1a8a7"
+  },
+  "independentChecker": {
+    "path": "scripts/check_continuum_closed_loop.py",
+    "sha256": "bb8f2349c9ce2ef5d7296c638f18983a399da185d5839a3d98d253fd6e2e1e8d"
+  },
+  "independentQuadrature": {
+    "path": "scripts/continuum_quadrature.py",
+    "sha256": "150ce4ca6f330329a3d5076660a84ad2fe11140ac6d7468628917a316bad8d47"
+  },
+  "executionRevision": 3,
+  "executionChange": "Freeze conservative root corridor plus spring stencils; retain exterior/correction only after exact lineage/EE/both-coupling proof on every actual removal. Fresh fallback disabled. Physical commands, fields, model limits and all resource caps unchanged.",
+  "baselineFailureReport": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/closed-loop-pilot-v1/result/report.json",
+    "sha256": "4eaf295b08827fcc34b59da330f72d184ce2f1534f9ae0f74399e2996a14951f"
+  },
+  "baselineFailureDiagnosis": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/closed-loop-pilot-v1-failure-diagnosis.json",
+    "sha256": "e5a0437977b91736955d3999e435024ce20a426227aa5b50a529891063f20ac2"
+  },
+  "corridorSourceIdsSha256": "e1f76e788db376d356a3cb6c7b234eddde67a35cb3933dc8fb8ddc05cab822ed",
+  "costProfileIndependent": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/corridor-cost-profile-v1/result/checker-result.json",
+    "sha256": "555e68b9fb70351337d6fc8d74479ce39c53769bf69c70409f1a4e1f3c65a285"
+  },
+  "referencePilotReport": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/closed-loop-pilot-v2/result/report.json",
+    "sha256": "cb923281a0e9c5f2f53e0f34f46b99b582621afdc59126a084b0542c60834648"
+  },
+  "referencePilotAcceptance": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/closed-loop-pilot-v2/acceptance.json",
+    "sha256": "80d1ad79aa61d0109809db1b1efb6436352ed81c7e8dc37f8f8024cb8267339a"
+  },
+  "requireEveryRemovalRetained": true,
+  "referenceComparison": "All120 scalar records within unchanged force/energy/probe budgets,20full before/after free-field checkpoints within1e-9mm and identical physical geometry,10exact source capacity/pose/topology decisions. Every own complete field/scalar record and causal receipt must replay bit-exactly in second fresh pass. No future owner mask inputs."
+}

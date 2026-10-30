@@ -68,3 +68,49 @@ Public scheduler qualification must still start from a prefix evolved by the
 coupled model. Failed boundary-stability and measured mechanics evidence,
 source-supported vascular/neurological consequences and both RL holds remain.
 The fidelity-first scientific goal remains active.
+
+
+## Completed source cost profile and research integration
+
+Frozen `ae1082f3` passes the profile in 51.83385 seconds combined: 49.68357
+worker seconds and 1.11092 checker seconds. Sampled group peak is 1,895,186,432
+bytes, OS peak 1,900,756,992 bytes; all output totals 2,041,939 bytes. Both PIDs
+are terminal and absent. Initial preparation takes 43.74158 seconds, the actual
+microtick 1.13864 seconds, and the hypothetical transfer/preparation 0.18245 /
+2.36310 seconds. Exact E/E, both coupling and retained-Schur proofs pass; the
+original complete physical state and numeric binding are restored afterward.
+
+This trades more initial work for cheaper removals. The exterior factor takes
+9.32039 seconds with 61,525,088 stored entries. The 1,320 coupled core columns
+take 31.96578 seconds; the retained update needs no new exterior factor or column
+solves. Its dense correction is 53,003,808 bytes, shared immutably. The first
+whole displacement/history checkpoint differs from the accepted spring-core
+run by 1.11e-16 mm. Independent Q1 free force is 4.04e-19 N and BE energy balance
+is -3.71e-21 N mm. Exact source-owned transfer and removed energy also pass.
+These are preparation/one-world results, not a completed replay claim.
+
+The measured two-pass ten-tick estimate is 120.4383 seconds. The prospective
+`continuum-closed-loop-pilot-v3.json` retains the complete 180-second combined,
+145-second worker, 30-second checker, 3-GiB, 32-MiB gate. Every actual removal
+must retain the exterior under exact proofs, with one initial build plus one
+retained build per actual source event. Full state-driven CUSA decisions,
+release, relaxation, all 120 record/hash replays and 20 independent Q1 worlds
+remain mandatory. Independent cross-partition comparison additionally checks all
+120 scalar records, 20 complete before/after field checkpoints and 10 causal
+capacity/pose/topology decisions against the accepted spring-core run.
+
+`create_corridor_episode` integrates the policy into the source-driven research
+simulator as an opt-in reusable backend. It owns a fresh episode/factor per run,
+refuses a different absolute CUSA request before physical mutation, and preserves
+normal release/inspection, current-geometry CUSA allocation and all inherited
+physics guards. A generated long-beam comparison exercises both actual algebraic
+partitions, their complete histories and negative energy/ledger controls. This
+API does not grant the larger domain a live public-action/collision admission.
+
+This is the final bounded corridor performance round before biological fidelity
+work. No constitutive or contact law has changed in this milestone. The next
+physical target is finite exposed-face, nonadhesive retractor contact, with
+separation/sliding and a reproducible maneuver comparison. Bonded HBE specimen
+fixtures, donor roles, failed tension results and failed outer-support evidence
+must remain separate and unchanged. More solver optimization is not a substitute
+for that physical work.
