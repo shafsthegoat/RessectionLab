@@ -230,3 +230,11 @@ patient/tumor response, source-supported vascular consequences and neurological
 consequences remain unresolved. Physical and larger-domain public admission are
 false; physiological and large-scale RL stay on hold. The scientific goal remains
 active.
+
+
+The [corridor preparation/integration milestone](continuum-corridor-preparation.md)
+now completes its bounded full benchmark at `e013aff1`: 136.55 seconds, 2.24 GB
+OS peak, one initial plus two exact retained builds per pass, unchanged physical
+fields/decisions and complete fresh replay. It is integrated through the opt-in
+research episode API; it does not admit the larger-domain public engine. The
+performance round is closed and the next work is biological/contact fidelity.

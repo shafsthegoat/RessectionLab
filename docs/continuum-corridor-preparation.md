@@ -114,3 +114,51 @@ separation/sliding and a reproducible maneuver comparison. Bonded HBE specimen
 fixtures, donor roles, failed tension results and failed outer-support evidence
 must remain separate and unchanged. More solver optimization is not a substitute
 for that physical work.
+
+
+## Completed full corridor benchmark
+
+Frozen `e013aff1` passes the complete gate in **136.54786 seconds combined**:
+126.31293 worker seconds and 8.96654 checker seconds. Sampled group peak RSS is
+2,221,604,864 bytes; OS peak is 2,241,576,960 bytes. All output totals 25,082,839
+bytes. The same 180-second / 3-GiB / 32-MiB combined limits hold. Both worker and
+checker exit 0; PIDs 94383 and 95540 are terminal and absent.
+
+Both fresh histories match all 120 complete field/scalar hashes and all 10
+causal receipts exactly. Each pass performs **one initial exterior build and two
+exact retained updates**, with no fresh fallback. Initial build times are 43.108
+and 40.871 seconds; actual retained update builds take 1.418–1.715 seconds.
+The two histories take 63.017 / 61.360 seconds and release their preparations.
+
+The independent checker passes all 20 Q1 sample worlds, source history/removal
+energy, release/relaxation, complete clock/scalar/hash chains and 40 full-source
+shaft-cover separation proofs. It also checks all 120 scalar records, all 20
+full before/after field checkpoints and all 10 causal CUSA/pose/topology decisions
+against the accepted spring-core run. Maximum full checkpoint difference is
+1.39e-16 mm; physical geometry, supports and materials are identical. The 100
+unsampled middle fields still have hash/fresh-replay coverage, not independent
+quadrature. Maximum independent sampled free residual is 5.08e-19 N and step
+energy balance is 1.09e-20 N mm; cumulative event balance is 5.10e-20 N mm.
+
+The same two target owners are removed; the next owner retains 0.2 mm³ pending
+work. Source costs remain 4,940 mm³ non-target and 563 mm³ total target removal,
+including the explicitly declared initial condition. No constitutive, contact,
+vascular, neurological or physiological behavior changed in this performance
+milestone. The measured worker time improves by 4.48% and OS peak RSS by 23.14%
+relative to the spring-core benchmark. Two removals amortize only part of the
+larger initial core cost; no unseen long-program speedup is claimed.
+
+All **277 selected regression tests pass in 24.49 seconds**, alongside 12
+independent generated checker controls. The new research API is exercised by the
+full source run and by generated unplanned-request, exact replay, actual factor
+reuse and corrupted energy/ledger controls. Its numerical core files remain
+identical to the measured preparation profile. No acquisition or training occurs.
+Receipts and exact hashes are in ignored `corridor-stage-v1.json` and the
+`closed-loop-pilot-v3/` result collection. Each experiment remains bound to its
+frozen source commit; later wrapper evolution does not rewrite older protocols.
+
+The bounded performance round is **closed**. The larger-domain public scheduler
+and hybrid-seed limitation remain; physical admission is false and both RL holds
+remain. Work now moves to actual biological/contact fidelity and an authoritative
+engine/desktop maneuver demonstration, preserving the existing failed material
+and boundary evidence.
