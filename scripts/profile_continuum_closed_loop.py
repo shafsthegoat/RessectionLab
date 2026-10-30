@@ -39,8 +39,9 @@ def worker(output,launch,seed_only=False):
     inputs={};variants=[];report={'schema':'resectionlab.closed-loop-profile-result.v1','status':'started','phase':'admission',
         'sourceCommit':identity['commit'],'sourceHashes':identity['sourceHashes'],'protocolSha256':sha(PROTOCOL),
         'physicalValidationPassed':False,'physiologicalRL':'hold','largeScaleRL':'hold','largerDomainPublicActionsAdmitted':False,
-        'newAcquiredDatasetBytes':0,'trainingUpdates':0,'completePilot':False,
-        'scope':'One actual conditional microtick and a separately labeled hypothetical removal preparation per algebraic partition'}
+        'newAcquiredDatasetBytes':0,'trainingUpdates':0,'completePilot':False,'mode':'seed-only' if seed_only else 'partition-costs',
+        'scope':('Provenance and field reconstruction only; no episode, factor or solve' if seed_only else
+            'One actual conditional microtick and a separately labeled hypothetical removal preparation per algebraic partition')}
     def check():
         if time.perf_counter()-started>caps['wallSeconds']-5:raise TimeoutError('Closed-loop source profile cooperative cap')
     def check_sources():
