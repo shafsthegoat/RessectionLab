@@ -307,7 +307,8 @@ sample worlds with 24 expected byte-distinct field payloads would occupy about
 overhead. These are admission estimates, not a completed experiment. The next
 executable milestone is the tested full captured-input harness, per-branch
 removal/contact/clock accounting, exact replay hashes and a frozen 900-second
-protocol. No full run has been launched. The physical boundary-stability,
+protocol. These were preflight estimates; the frozen run is reported below.
+The physical boundary-stability,
 larger-domain public-action and physiological RL holds remain unchanged.
 
 ## Complete captured-input qualification protocol
@@ -358,3 +359,55 @@ the launcher never retries or overwrites a previous output path. This protocol
 qualifies prescribed inputs on the larger mesh; actual larger-domain public
 actions/collisions, outer-radius stability and physiological validation remain
 separate gates.
+
+## Complete source result
+
+The frozen protocol at `a6b32ddb` passes in **449.72 seconds combined**:
+434.30 worker seconds (434.82 supervised) and 14.90 independent-supervisor
+seconds. The two fresh passes take 215.81 / 217.75 seconds. Sampled group RSS
+peaks at 2,466,758,656 bytes; OS-reported worker peak is 2,469,756,928 bytes.
+All outputs total 26,169,468 bytes. Worker and checker exit 0, with no kill,
+approval issue, retry, changed threshold or changed source input.
+
+All 4,218 complete supported-free fields and scalar records replay exactly
+through source removal, target motion, release and relaxation. Twenty-six
+sample worlds use 24 byte-distinct payloads. Independent Q1 checks pass every
+sample, including lossless pre-event fields and all 16 removal events; the
+checker also folds every one of the 4,218 scalar/clock records. It performs no
+source-sized mechanics solve and does not claim independent full-field checks
+at every step. Maximum sampled free-force residual is 6.61e-19 N and sampled
+step energy balance is 4.74e-20 N mm. Across all worker steps, maximum residual
+is 1.07e-18 N and cumulative event/BE balance is 1.29e-19 N mm.
+
+| Prescribed program | Fixed steps | Suffix duration | Additional target owners | Final target removed / residual (mm³) | Fixed-probe stress² integral (Pa² mm³ s) |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Short hold | 1,938 | 16.15 s | 8 | 568 / 18,800 | 763,054.95 |
+| Sustained hold | 2,154 | 17.95 s | 8 | 568 / 18,800 | 861,310.08 |
+| Checked STOP | 126 | 1.05 s | 0 | 560 / 18,808 | 0 |
+
+Both resection histories preserve the same seven core plus one exterior source
+owner removal. Removed stored energy is 6.11443e-8 / 6.11467e-8 N mm for
+short/sustained hold, respectively. Each releases the held spring model and
+relaxes with nonzero retained memory. STOP releases the zero-target initial
+hold, remains at the baseline geometry and has zero subsequent modeled
+mechanical exposure. Every branch still includes **4,940 mm³ non-target access
+removal** in its preserved prefix; zero later mechanics does not erase that
+cost or establish absence of injury.
+
+Maximum full-program gradient norm is 0.066588, center displacement 0.075834 mm
+and handle reaction 0.78539 mN, within the unchanged declared model limits.
+The physical interpretation of that stress integral and the boundary/material
+law remains unvalidated. These programs prescribe the already qualified
+native 8 mm inputs to the larger world; they do not reevaluate its complete
+public action/collision responses. Full dimensions remain 33,360 initial free
+and 49,260 total DOFs, exceeding the unchanged live 24k cap.
+
+The original revision-2 native detailed/history qualification remains intact;
+the live engine, continuum, history-solve, deformation and CUSA files are
+unchanged from `0d66dd7e`. Numerical progression now supports a separately
+bounded larger-domain public-action/collision feasibility test. That next test
+must account for every exterior DOF and preserve model refusals before any live
+resource admission. The original 16-to-20 mm stress-stability failures,
+mixed/negative donor-force evidence, patient action-response, source-supported
+vascular/neural physiological evidence and both RL holds remain open. The
+scientific goal is not complete.

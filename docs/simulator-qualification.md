@@ -166,5 +166,11 @@ now reproduces all 336 complete-20 mm history states through the induced core,
 with independent full-domain/interface force and physical spring-energy checks.
 It completes in 140.40 seconds including verification, within unchanged offline
 ceilings. The inner artificial clamp is replaced relative to that declared
-reference; outer-boundary adequacy still fails. Full changing-topology programs
-and live resource admission remain open, with every exterior DOF counted.
+reference; outer-boundary adequacy still fails. The subsequent
+[complete captured-input qualification](continuum-topology-history.md)
+passes 4,218 full-field steps and exact fresh replay in 449.72 seconds including
+independent verification. All 26 sampled Q1 worlds and all scalar/clock/event
+records pass. This preserves eight removals, release, relaxation and whole
+source costs on the declared larger mesh; actual larger-domain public actions
+and collisions are not re-admitted. Every exterior DOF remains counted, the
+live caps are unchanged, and physical/physiological RL gates remain open.
