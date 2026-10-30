@@ -1,0 +1,225 @@
+{
+  "schema": "resectionlab.closed-loop-source-profile-protocol.v1",
+  "intent": "Profile two algebraic partitions of identical full20physical mesh/source/history; one actual seeded microtick and explicitly hypothetical3863removal preparation, no fullpilot/actionadmission",
+  "sourceRole": "DEVELOPMENT UCSF-PDGM-0007; existing before-stage2 short-hold discrepancy seed; native CUSA ledger is an explicit initial condition",
+  "sourceSceneId": "sha256:25e7349ad48ee77244b05fc6768e09bdc049e04733b9f362e14ae0c87a743942",
+  "geometry": {
+    "core": {
+      "path": "testcases/outputs/simulator-qualification-20261029/continuum-reference-v1/execution-v1/result/domain-8.npz",
+      "sha256": "930d378221d4c1407cdf9362bd7e312eb360ef0486e986bc656511d9b020618f"
+    },
+    "reference": {
+      "path": "testcases/outputs/simulator-qualification-20261029/continuum-reference-v1/execution-v1/result/domain-20.npz",
+      "sha256": "2f336591a89b7705532c17ec87183f493c68a892a888eddf0872490122b683d7"
+    }
+  },
+  "partition": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-v1/preparation-v1/source-partition.npz",
+    "sha256": "384e47e474ee7c1c364c296faf966327101347f81b9dc65f4eff994451c3dd01"
+  },
+  "nativeCase": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-history-v1/execution-v3-snapshot/result/continuum-history.ressectionlab",
+    "sha256": "cbf03bfc8f7465c873ce2b660802516f13405d29eedd229342b13ec3cbf767a8"
+  },
+  "fullProgramReport": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/full-programs-v1/result/report.json",
+    "sha256": "280780aae906a5aa9c92daf9d8d064f77ab1b3836667a4abf774e15a77c116c5"
+  },
+  "preEffectCaptureReport": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/native-pre-effect-capture-v1/result/report.json",
+    "sha256": "31e5228ec7a5ed396350666e832d786b292e81ec55534ae991e941bde4c2a2a5"
+  },
+  "preEffectSurveyReport": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/pre-effect-survey-v1/result/report.json",
+    "sha256": "314a574c2e189fd4d9011dd343f50c370e3284ab4751b24bd765ed4823dd9cfe"
+  },
+  "nativeInput": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/native-capture-v1/result/short-hold-inputs.json.gz",
+    "sha256": "5945e7b795fffe9846fd8392822ea5eeafb3aeb9f245ed83989e9a33b72bface"
+  },
+  "commonActions": 15,
+  "seed": {
+    "branch": "short-hold",
+    "coupledStep": 853
+  },
+  "stepSeconds": 0.008333333333333333,
+  "tickSeconds": 0.1,
+  "cusaTicks": 6,
+  "relaxTicks": 2,
+  "commands": [
+    {
+      "slot": "right",
+      "operation": "apply",
+      "effectiveActive": true,
+      "durationSeconds": 0.1,
+      "pose": {
+        "position": [
+          -90.0,
+          118.0,
+          61.93954425269988
+        ],
+        "quaternion": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "slot": "right",
+      "operation": "apply",
+      "effectiveActive": true,
+      "durationSeconds": 0.1,
+      "pose": {
+        "position": [
+          -90.0,
+          118.0,
+          61.93954425269988
+        ],
+        "quaternion": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "slot": "right",
+      "operation": "apply",
+      "effectiveActive": true,
+      "durationSeconds": 0.1,
+      "pose": {
+        "position": [
+          -90.0,
+          118.0,
+          61.93954425269988
+        ],
+        "quaternion": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "slot": "right",
+      "operation": "apply",
+      "effectiveActive": true,
+      "durationSeconds": 0.1,
+      "pose": {
+        "position": [
+          -90.0,
+          118.0,
+          61.93954425269988
+        ],
+        "quaternion": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "slot": "right",
+      "operation": "apply",
+      "effectiveActive": true,
+      "durationSeconds": 0.1,
+      "pose": {
+        "position": [
+          -90.0,
+          118.0,
+          61.93954425269988
+        ],
+        "quaternion": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "slot": "right",
+      "operation": "apply",
+      "effectiveActive": true,
+      "durationSeconds": 0.1,
+      "pose": {
+        "position": [
+          -90.0,
+          118.0,
+          61.93954425269988
+        ],
+        "quaternion": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "slot": "left",
+      "operation": "release",
+      "effectiveActive": false,
+      "durationSeconds": 0.1,
+      "pose": "current"
+    },
+    {
+      "slot": "right",
+      "operation": "inspect",
+      "effectiveActive": false,
+      "durationSeconds": 0.1,
+      "pose": "current"
+    },
+    {
+      "slot": "right",
+      "operation": "inspect",
+      "effectiveActive": false,
+      "durationSeconds": 0.1,
+      "pose": "current"
+    }
+  ],
+  "maximumNewRemovals": 2,
+  "variants": [
+    "original-core-retained",
+    "contact-core-fresh"
+  ],
+  "limits": {
+    "forceN": 1e-10,
+    "energyNmm": 1e-10,
+    "balanceNmm": 1e-08,
+    "maxGradientNorm": 0.2,
+    "maxCenterDisplacementMm": 3.0,
+    "maxReactionN": 0.08
+  },
+  "tolerances": {
+    "displacementMm": 1e-09
+  },
+  "caps": {
+    "wallSeconds": 120,
+    "rssBytes": 3221225472,
+    "outputBytes": 16777216,
+    "numericalThreads": 1,
+    "retries": 0
+  },
+  "prospectivePilot": "Nine physical microticks/108BE from declaredseed, sixCUSA commands then release+relax; not public-action scheduler. Fresh two-pass exact replay and independent Q1/scalar/ledger checker within180s3GiB32MiB onlyif this measured profile supports it. Dynamic removals only; no prescribedfuturemasks.",
+  "resourceAccounting": "All free/total DOFs/full source material/history and all rollback old+new factor overlap count. Contact core is algebraic only, with root free DOFs selected from ALL current retractor C nonzeros and frozen through release. Existing live caps unchanged.",
+  "physicalValidationPassed": false,
+  "largerDomainPublicActionsAdmitted": false,
+  "physiologicalRL": "hold",
+  "largeScaleRL": "hold",
+  "newAcquiredDatasetBytes": 0,
+  "trainingUpdates": 0,
+  "seedPreflightCaps": {
+    "wallSeconds": 15,
+    "rssBytes": 1073741824,
+    "outputBytes": 2097152,
+    "numericalThreads": 1,
+    "retries": 0
+  },
+  "outputPolicy": "Profile stores metadata/timing and one microtick receipt per variant, no field arrays. Full fields compared transiently. Future pilot first pass exports selected first+last BE checkpoints per9microticks, deduplicated; every108step full-array/scalar hash compared in second fresh pass. No allstep array archive or duplicated replay payloads."
+}
