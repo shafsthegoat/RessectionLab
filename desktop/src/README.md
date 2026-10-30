@@ -14,9 +14,19 @@ The React shell owns case review, source visibility, route comparison, and local
 - `StructuralImportDialog.tsx`: imports the original image, native-grid proposed mask and extraction report through three main-owned file dialogs. Cancellation at any stage leaves the case unchanged. Import does not accept a proposal or grant cortical access.
 - `refinement-readiness.ts`: checks engine preflight identity against the exact selected route entry, target, access window and complete tool, including LPS-to-RAS conversion. No legal initial cutting actions disables new optimization; the original route remains inspectable.
 - `full-case-readiness.ts`: binds full-rehearsal availability to the accepted case, scene and state. The panel shows short blockers, optional details and supported recovery; explicit protection attachment uses the main-process JSON picker and preserves prior branches. See `docs/surgical-toolbox-api.md` for contracts and bounded verification.
+- `SurgicalPanel.tsx`: standard Rehearse order is current state, selected hands, primary/manual actions, replay, and one `SurgicalOutcomeSummary`. Native disclosures keep tool/setup/research drafts mounted; only large read-only records use deferred rendering. Preview, refusals, partial state, computation and inspection notices stay outside technical disclosures. Cancel stays available during pending actions.
+- `SurgeonViewControls.tsx`: microscope settings are secondary; the current inspection notice also appears beside accepted-state status. Transparency/cutaway change the view and never imply operative exposure.
 - `ReplayStepControl.tsx` and `replay-step-request.ts`: separate requested timeline position from the certified applied step. A 150 ms debounce, one in-flight request and one replaceable latest request bound sidecar work. Superseded responses, case/route changes and source-view restoration cannot publish a stale removal overlay. Pointer, keyboard and accessibility changes share the same change handler.
 - `training-data.ts`: checks replay identity, independent certificate, source frame, binary mask and volume accounting before allowing a modeled removal overlay. It does not approve imported simulation artifacts.
 - `preview-api.ts`: explicitly read-only development adapter for an ignored local export of a real public case. It cannot train, search, save or substitute invented results. Patient preview assets are excluded from production packaging.
+
+Rehearse disclosure verification uses `electron/verify-rehearse-disclosure.cjs`
+with `DISCLOSURE_AFTER=1`, `DISCLOSURE_CASE` pointing to a source-bound case,
+and `DISCLOSURE_OUTPUT` set to a fresh directory under `testcases/outputs/`.
+It keeps Electron hidden, records source preservation and request/state invariants,
+and captures the source-backed workspace at 1440×900 and 1050×720. The layout
+follows [progressive disclosure](https://www.nngroup.com/articles/progressive-disclosure/);
+native summary controls retain [Enter/Space keyboard operation](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/).
 
 For fractional source annotations, the binary target is labeled threshold-derived and the recorded threshold is shown in the evidence inspector. Structural proposal inventories display review status and annotation-exclusion flags without presenting those metrics as segmentation accuracy. An explicit View on MRI action adds a separate lavender contour to the original MRI panels. Estimates never replace working anatomy or source target masks, and clearing the view, changing cases or entering modeled replay invalidates pending proposal transfers. No review/acceptance or cortical-permission action is exposed.
 

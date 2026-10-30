@@ -45,6 +45,8 @@ export function SurgicalCloseViewControls({c,source,settings,cursor,onSettings,o
     setFollow(false);lastFollow.current=null;onSettings(snapshot.settings);onCursor(snapshot.cursor);if(!validCameraState(snapshot.settings.camera))onFitAnatomy();setSnapshot(null);setPin(null);
   }
   return <section aria-label="Close instrument view" data-pinned-state-id={owns?pin?.stateId:undefined} data-pinned-slot={owns?pin?.name:undefined} data-field-mm={owns?pin?.fieldMm:undefined} data-follow-accepted-tool={follow&&owns}>
+    {owns&&(cutaway||translucent)&&<p role="status" className="surgical-warning">INSPECTION ONLY · {cutaway?'local anatomy cutaway':''}{cutaway&&translucent?' and ':''}{translucent?'context transparency':''} enabled</p>}
+    <details><summary>Close tool view and inspection</summary>
     <button disabled={disabled} onClick={frame}>{owns?'Refocus accepted tool':'Close tool view'}</button>
     <label><input type="checkbox" checked={follow&&owns} disabled={!follow&&disabled} onChange={event=>{
       const enabled=event.target.checked;if(enabled&&!owns)frame();else if(enabled)lastFollow.current=null;setFollow(enabled);
@@ -65,5 +67,6 @@ export function SurgicalCloseViewControls({c,source,settings,cursor,onSettings,o
       }}/>Context transparency · display only</label>
       <p className="surgical-note">{translucent?'Display alpha: context soft tissue 4.5%, non-target bone 55%, membrane 14%, unknown 8%; declared targets 90%, vessels 100%.':'Original layer opacities restored.'} Visibility and clipping controls still apply. Linked slices retain the source image.</p>
     </>}
+    </details>
   </section>;
 }

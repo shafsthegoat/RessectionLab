@@ -22,3 +22,30 @@
 .rescue-learning th small {display:block;font-size:10px;font-weight:normal;white-space:normal;}
 .rescue-learning td {font-size:10.5px;overflow-wrap:anywhere;}
 .full-case-rehearsal{display:flex;flex-direction:column;gap:10px;border:1px solid #609d91;border-radius:8px;background:#152e31;padding:12px}.full-case-rehearsal>strong{font-size:15px;color:#b4e6da}.surgical-panel .full-case-phase-jump{flex-direction:column;align-items:stretch}.full-case-phase-jump select{width:100%}
+
+/* Keep decisions ahead of evidence. Native disclosures retain mounted drafts. */
+.surgical-panel{padding:10px;gap:8px;min-width:0}
+.rehearsal-heading h2{font-size:16px}.rehearsal-heading span{font-size:11px}
+.rehearsal-state{border-left:3px solid #76d4bd;padding:5px 8px;background:#142b2b;overflow-wrap:anywhere}
+.rehearsal-state p{color:#a9c1cb;font-size:11px;margin-top:3px}
+.surgical-panel h3{font-size:13px;color:#c6e4df}
+.surgical-panel button{padding:6px 8px}
+.surgical-slots button{gap:3px;font-size:11px}.surgical-slots small{font-size:10px;line-height:1.35}
+.surgical-panel summary{line-height:1.4;color:#b9d6d1;padding:2px 0}
+.surgical-panel summary:focus-visible{outline:2px solid #a1ebd8;outline-offset:3px;border-radius:3px}
+.surgical-panel details[open]>summary{margin-bottom:8px}
+.surgical-panel details>p,.surgical-panel details>.surgical-controls{margin-top:7px}
+.full-case-rehearsal{padding:8px;gap:6px}.full-case-rehearsal>strong{font-size:13px}
+.full-case-rehearsal .surgical-actions>.primary-button{width:100%}
+.surgical-panel .primary-button{background:#254e43;border-color:#73b8a5;color:#dbf7ee}
+.manual-actions,.rehearsal-replay,.surgical-outcome,.rehearsal-view-controls{display:flex;flex-direction:column;gap:7px;border-top:1px solid #35505b;padding-top:8px;min-width:0}
+.surgical-outcome .surgical-metrics{font-variant-numeric:tabular-nums}
+.surgical-outcome .surgical-metrics strong{font-size:14px}
+.surgical-panel .surgeon-view,.surgical-panel [aria-label="Close instrument view"]{display:flex;flex-direction:column;gap:6px}
+.surgeon-view>div{display:flex;flex-wrap:wrap;gap:5px}
+.surgeon-view>strong[role=status]{color:#f2d5a5;line-height:1.4}
+.surgical-panel .rehearsal-anatomy{margin:8px 0}
+.surgical-panel details .surgical-preview{margin-top:7px}
+.surgical-panel .rehearsal-secondary>section{margin:10px 0}
+.rehearsal-environment{margin:0 16px 4px;font-size:11px;color:#a9c1cb}.rehearsal-environment>summary{cursor:pointer;padding:5px 0}.rehearsal-environment .rehearsal-model{margin:6px 0}
+.rehearsal-environment>summary:focus-visible{outline:2px solid #a1ebd8;outline-offset:2px}
