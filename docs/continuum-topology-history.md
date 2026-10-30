@@ -417,3 +417,11 @@ resource admission. The original 16-to-20 mm stress-stability failures,
 mixed/negative donor-force evidence, patient action-response, source-supported
 vascular/neural physiological evidence and both RL holds remain open. The
 scientific goal is not complete.
+
+
+The subsequent [state-driven conditional pilot](continuum-closed-loop-pilot.md)
+now passes 10 physical microticks/120 BE steps and exact fresh replay, with 20
+independent Q1 checkpoints. Its first wall-cap failure and measured output-guard
+bottleneck are preserved; targeted accounting repair completes the same frozen
+physics/caps in 142.21 seconds. This advances conditional action coupling only;
+a coupled public prefix/scheduler and physical/physiological admission remain open.

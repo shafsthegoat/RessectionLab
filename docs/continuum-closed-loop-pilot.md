@@ -167,3 +167,66 @@ complete export/verified replay batch. A generated failure while exporting tick 
 must report physical tick 2 and exported tick 1, retain only tick 1's complete
 scalar/sample batch, and remain unqualified. Partial file-write failures reconcile
 actual bytes and propagate; they cannot turn into successful qualification.
+
+## Completed conditional source pilot
+
+Execution revision 2, frozen at `97e9a23e`, passes in **142.2078 seconds combined**.
+Worker time is 132.2352 seconds (133.1127 supervised); the independent checker
+takes 8.7165 seconds. Both worker and checker exit 0. Sampled group peak RSS is
+2,910,568,448 bytes; OS worker peak is 2,916,483,072 bytes, below the unchanged
+3-GiB ceiling. Output is 25,065,953 bytes, below 32 MiB. Both processes are terminal
+and absent. The first and second fresh histories take 66.3638 and 64.0568 seconds.
+
+All **120 complete field/scalar records and 10 causal microtick receipts replay
+exactly**. Twenty first/last BE sample worlds, plus the initial payload, are
+exported. The independent checker folds every scalar/clock/hash record, reconstructs
+the complete seed and dynamic source graph, and independently integrates all 20
+sampled Q1 force/Maxwell/spring/energy worlds. The other 100 intermediate fields
+have scalar/hash/fresh-replay coverage, not independent full quadrature.
+
+The propagated coupled ledger removes tumor owners `3403863` and `3404173` on
+ticks 5 and 6, in that order. Tick 7 advances the CUSA tip by 0.322821 mm and
+leaves exactly 0.2 mm³ pending work on owner `3441217`; it does not remove that
+owner. Release and two passive ticks leave the CUSA ledger unchanged and preserve
+nonzero Maxwell memory. New removal is 2 mm³ of target tissue and zero non-target
+tissue. The declared initial condition already includes 561 mm³ target and
+4,940 mm³ non-target removal; those costs remain in the complete source ledger.
+This one-second intervention is not the original short-hold program outcome.
+
+Removed tissue/history energy is 7.9276621e-9 N mm; release contributes a signed
+spring-model jump of -1.0664364e-5 N mm. Initial and final stored energies are
+3.1653995e-5 and 3.1552053e-6 N mm. Mechanical work is zero; viscous plus BE loss
+is 1.7826498e-5 N mm. Maximum cumulative event/step balance residual is 3.95e-20
+N mm. Maximum independent sampled free-force residual is 2.87e-19 N; sampled
+step energy balance is 8.91e-21 N mm. All original thresholds remain unchanged.
+
+The checker also proves separation of 40 sampled full-source shaft covers and
+all associated conservative tool-pair covers. This does not validate unsampled
+contacts, unannotated critical anatomy, patient/device response or physiology.
+Across execution revisions, all 10 first-history causal receipts (excluding
+artifact-container metadata) and all 160 arrays in the 20 checkpoint worlds are
+byte-exact. The unchanged live engine, continuum, history solve, deformation and
+CUSA files still match accepted commit `0d66dd7e`.
+
+The expanded suite passes **265 regression tests in 22.41 seconds**, alongside
+12 independent generated checker controls. Exact launch/source/input hashes,
+resource receipts, partial-failure evidence and cross-execution comparisons are
+in the ignored `continuum-exterior-events-v1/` collection, summarized by
+`closed-loop-stage-v1.json`.
+
+## Remaining executable gate
+
+Six fresh source preparations consume 97.947 seconds, about 74% of worker time.
+The physical root still contains 13,211 cells, 49,260 total and 33,360 free DOFs;
+the 96-coordinate algebraic core does not reduce that model or bypass live caps.
+Profile conservative tool-corridor algebraic partitions next, checking exact
+exterior/coupling identity and full-field parity before using retained updates.
+Then qualify the actual public scheduler from a prefix evolved by the coupled
+model, with state-driven geometry, capacity and masks throughout. The present
+hybrid declared seed does not establish that complete original 20 mm trajectory.
+
+The failed 16-to-20 mm stress-stability gate, mixed/negative donor mechanics,
+patient/tumor response, source-supported vascular consequences and neurological
+consequences remain unresolved. Physical and larger-domain public admission are
+false; physiological and large-scale RL stay on hold. The scientific goal remains
+active.
