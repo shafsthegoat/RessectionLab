@@ -1,0 +1,53 @@
+{
+  "schema": "resectionlab.planar-blade-maneuver-supported-domain.v1",
+  "role": "GENERATED_ENGINEERING_AND_SOURCE_COMPATIBILITY_CHECKS_ONLY",
+  "sceneProperty": "planarBladeManeuverV1",
+  "runtimeDeclarationSchema": "resectionlab.planar-blade-maneuver.v1",
+  "kernel": "resectionlab.planar-blade-contact.v1",
+  "kernelVerificationProtocol": "planar-blade-contact-v2.json",
+  "action": {"operation": "bladeManeuver", "slot": "left", "phaseField": "maneuverPhase"},
+  "program": {
+    "phases": ["approach", "indent", "hold", "withdraw"],
+    "durationsSeconds": [0.1, 0.2, 0.2, 0.2],
+    "initialOffsetMm": -0.1,
+    "endOffsetsMm": [0.0, 0.02, 0.02, -0.1],
+    "fixedStepSeconds": 0.025,
+    "totalKernelSteps": 28,
+    "phaseTransactions": "Atomic public actions; cancellation or any failed increment discards the whole candidate phase"
+  },
+  "rigidGeometry": {
+    "contactFace": "Explicitly declared finite rectangle; local +Y inward, X width, Z length",
+    "padThicknessMm": 0.2,
+    "padCenterLocal": "[0, -thickness/2, -depth/2] from the tool tip",
+    "shaftRadiusMm": 0.3,
+    "shaftEndpointsLocal": "[0,-thickness-radius,-40] to [0,-thickness-radius,-depth]",
+    "coupledSweep": "Fixed frame, linear interpolation of pose and Q1 corners between accepted BE increments; conservative endpoint-corner space-time hull; unresolved overlap refuses"
+  },
+  "requirements": [
+    "Explicit source labels/affine/region/provenance and material-profile bindings",
+    "One active retractor, unchanged parked second hand, no native rigid holds",
+    "Fresh zero continuum history, fixed intact source topology, no patient-position/body load or coupled CUSA/thermal/vascular model",
+    "Explicit coplanar source-exposed faces, independently fixed support faces, orthogonal affine grid",
+    "Existing kernel and stricter source DOF/gradient/force/displacement limits",
+    "Loaded footprint migration <=1e-9 mm; rendered boundary-face nonplanarity <=1e-9 mm",
+    "No planning, full-case rehearsal, protection replacement, tissue removal, topology change, multi-tool coupling or RL"
+  ],
+  "engineeringFixture": {
+    "kind": "generated numerical coupon; no patient anatomy",
+    "blockMm": [4, 4, 4], "cellsPerAxis": 2,
+    "equilibriumShearPa": 1000, "poissonRatio": 0,
+    "relaxationShearPa": [500], "relaxationSeconds": [0.5],
+    "bladeFaceOriginMm": [2, 2, 4], "bladeSizeMm": [4, 4],
+    "support": "All three displacement components on declared bottom source faces; independent of contact"
+  },
+  "retainedKernelLimitations": {
+    "fixedReferenceFootprint": true,
+    "cycleWorkSensitivityPassed": false,
+    "uniformRelativeChange": 0.10084383288364987,
+    "partialRelativeChange": 0.11413225425522984,
+    "originalLimit": 0.05
+  },
+  "clinicalValidation": false,
+  "patientPredictionValidation": false,
+  "physiologicalRL": "hold"
+}

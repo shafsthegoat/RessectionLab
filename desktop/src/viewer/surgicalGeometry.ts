@@ -3,6 +3,10 @@ import type {SurgicalTool,SurgicalSlot} from '../surgical-types';
 /** Only the parameters consumed by this display geometry belong in its key.
  * Position, orientation and activation are updated without allocating meshes. */
 export function surgicalToolGeometryKey(tool:SurgicalTool,slot:SurgicalSlot,ghost=false):string {
+  if(tool.id==='brain_retractor'&&slot.parameters.planarBladeContactRevision===1&&slot.planarBladeGeometry){
+    const {inContact:_,...geometry}=slot.planarBladeGeometry;
+    return JSON.stringify([tool.id,'planar-blade-contact-v1',geometry,ghost]);
+  }
   return JSON.stringify([tool.id,tool.radiusMm,tool.shaftRadiusMm,tool.workingLengthMm,
     slot.parameters.radiusMm??tool.radiusMm,slot.parameters.jawOpeningMm??2,slot.parameters.depthMm??2,slot.contactGeometry,ghost]);
 }
@@ -11,7 +15,7 @@ export function updateSurgicalToolMesh(group:THREE.Group,slot:SurgicalSlot,ghost
   group.userData.effectiveActive=!ghost&&slot.active;
   group.userData.recordedRpm=slot.parameters.rpm;
   const accent=group.userData.surgicalAccent as THREE.MeshStandardMaterial|undefined;
-  accent?.color.set(ghost?'#95f4ce':slot.active?'#e0b35d':'#41677a');
+  accent?.color.set(ghost?'#95f4ce':group.userData.planarBladeContactGeometry?(slot.planarBladeGeometry?.inContact?SURGICAL_EFFECT_COLORS.contact:'#41677a'):slot.active?'#e0b35d':'#41677a');
 }
 /** Illustrative working-part motion only. The instrument's recorded root pose
  * never changes; paused review restores the commanded jaw geometry. */
@@ -30,6 +34,7 @@ export function updateSurgicalToolAnimation(group:THREE.Group,sourceSeconds:numb
 }
 /** Generic research geometry, tip at local origin and working axis along +Z. */
 export function surgicalToolMesh(tool:SurgicalTool,slot:SurgicalSlot,ghost=false){
+  if(tool.id==='brain_retractor'&&slot.parameters.planarBladeContactRevision===1&&slot.planarBladeGeometry)return planarBladeToolMesh(tool,slot,ghost);
   if(slot.contactGeometry&&!ghost)return contactToolMesh(tool,slot);
   const group=new THREE.Group(),radius=slot.parameters.radiusMm??tool.radiusMm;
   group.name=`instrument:${tool.id}`;
@@ -91,6 +96,21 @@ export function surgicalToolMesh(tool:SurgicalTool,slot:SurgicalSlot,ghost=false
     default:
       sphere(radius);break;
   }
+  updateSurgicalToolMesh(group,slot,ghost);return group;
+}
+
+/** Backend-owned rigid primitives share the solver's finite contact face.
+ * Local +Y is inward; the pad occupies only the exterior half-space. */
+function planarBladeToolMesh(tool:SurgicalTool,slot:SurgicalSlot,ghost:boolean):THREE.Group {
+  const descriptor=slot.planarBladeGeometry!,group=new THREE.Group();
+  group.name=`instrument:${tool.id}`;group.userData.physicsContactGeometry=true;group.userData.planarBladeContactGeometry=true;
+  const metal=new THREE.MeshStandardMaterial({color:ghost?'#95f4ce':'#b8c5ca',metalness:.7,roughness:.28,transparent:ghost,opacity:ghost?.35:1,depthWrite:!ghost});
+  const accent=metal.clone();group.userData.surgicalAccent=accent;
+  const pad=new THREE.Mesh(new THREE.BoxGeometry(...descriptor.sizeMm),accent);pad.name='instrument:planar-blade-pad';pad.position.set(...descriptor.centerLocalMm);group.add(pad);
+  const a=new THREE.Vector3(...descriptor.shaft.a),b=new THREE.Vector3(...descriptor.shaft.b),length=a.distanceTo(b);
+  const shaft=new THREE.Mesh(new THREE.CapsuleGeometry(descriptor.shaft.radiusMm,length,6,12),metal);shaft.name='instrument:shaft';shaft.position.copy(a).add(b).multiplyScalar(.5);
+  if(length>1e-8)shaft.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),b.clone().sub(a).normalize());group.add(shaft);
+  group.traverse(object=>{if(object instanceof THREE.Mesh){object.castShadow=true;object.receiveShadow=true;}});
   updateSurgicalToolMesh(group,slot,ghost);return group;
 }
 
@@ -195,6 +215,12 @@ export function surgicalEffectMarkers(view:import('../surgical-types').SurgicalV
 /** Disposable THREE group for the same marker list used by linked MPR views. */
 export function surgicalEffectGroup(view:import('../surgical-types').SurgicalView,preview=false,outcome?:import('../surgical-types').SurgicalOutcome|null):THREE.Group {
   const group=new THREE.Group();group.name=`surgical-effects:${view.stateId}`;group.userData={stateId:view.stateId,preview};
+  const surface=view.planarBladeManeuver?.contactSurface;
+  if(surface&&surface.positionsMm.length&&surface.triangles.length){
+    const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(surface.positionsMm.flat(),3));geometry.setIndex(surface.triangles.flat());geometry.computeVertexNormals();
+    const mesh=new THREE.Mesh(geometry,new THREE.MeshStandardMaterial({color:'#c9a5a2',roughness:.6,side:THREE.DoubleSide}));
+    mesh.name='effect:planar-blade-q1-surface';mesh.userData.sourceIds=surface.sourceIds;mesh.castShadow=true;mesh.receiveShadow=true;group.add(mesh);
+  }
   const markers=surgicalEffectMarkers(view,outcome),kinds=Object.keys(SURGICAL_EFFECT_COLORS) as SurgicalEffectKind[];
   const scale=Math.max(.2,Math.min(...view.scene.resolutionMm));
   for(const kind of kinds){

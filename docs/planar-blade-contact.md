@@ -183,3 +183,9 @@ provide the broader finite-surface contact reference. FEBio describes penalty
 and augmented-Lagrangian enforcement; this bounded linearized kernel uses the
 convex constrained solve above. It does not reproduce their finite-deformation,
 frictional examples or claim a FEBio cross-solver validation.
+
+The subsequent [canonical maneuver integration](planar-blade-maneuver.md) exposes
+one opt-in engineering sequence through native actions and desktop replay. It
+retains the failed work-sensitivity gates above and additionally refuses loaded
+footprint migration and nonplanar rendered boundary faces. It changes no
+historical episode or physiological admission.

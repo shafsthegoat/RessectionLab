@@ -180,6 +180,28 @@ Overlapping raw source masks are separate evidence: zero removed owned
 healthy-tissue injury. Full source annotation and owned target denominators must
 be reported separately.
 
+## Opt-in finite planar blade maneuver
+
+An explicitly bound `planarBladeManeuverV1` scene admits only four ordered native
+actions: `{slot:'left', operation:'bladeManeuver', maneuverPhase, duration}`.
+Phases are `approach`, `indent`, `hold`, `withdraw`, with fixed durations
+0.1/0.2/0.2/0.2 seconds and 0.025-second kernel increments. The declaration binds
+source geometry, material profile, finite pad/shaft, exposed faces and independent
+support faces. Missing declarations and unsupported geometry/history refuse;
+ordinary historical scenes keep their previous actions and behavior.
+
+Each phase uses the existing preview/step transaction and observer microsteps.
+Canonical JSON owns acquisition/release, Q1 displacement, Maxwell memory and
+energy/work ledgers; measured wall time stays outside state/history. The typed
+`view.planarBladeManeuver` carries concise status/next actions, declared rigid
+primitives and source-owned deformed boundary corners. The same data drive the
+desktop pad/shaft and Q1 surface, with a fixed initial optical frame. Source/MPR
+arrays remain original. Unsupported planning/full-case commands stay blocked.
+
+See [supported domain, measured results and reproduction](planar-blade-maneuver.md).
+This integration retains the standalone kernel's failed 5% cycle-work sensitivity
+gates and establishes no physiological or patient-prediction qualification.
+
 ## Current limits
 
 Mechanics are conservative capsule contact, whole-cell removal, graph cuts, and lattice displacement. Energy is a local scalar, not a calibrated thermal or physiological model. Mesh seams retain connectivity records without remeshing faces or opening a physical aperture. Native mesh seam cutting after lattice displacement rejects explicitly because vertices are not remapped by that deformation model. These outputs support inspection and deterministic engineering tests, not clinical safety or outcome estimates.

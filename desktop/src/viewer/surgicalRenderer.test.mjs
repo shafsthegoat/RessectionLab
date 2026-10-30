@@ -36,6 +36,13 @@ function interaction(){return {view:{stateId:'accepted',scene:{shape:[3,3,3],res
 function renderer(){const r=Object.create(VolumeRenderer.prototype);Object.assign(r,{scene:new THREE.Scene(),surgicalGroup:null,surgicalGhost:new THREE.Group(),surgicalGhostKey:null,
   surgicalGizmo:{attach(){},detach(){},setMode(){}},surgicalSlots:new Map(),surgicalEffects:null,surgicalEffectsView:null,surgicalPath:null,surgicalPathSource:null,
   displayWork:{surgicalUpdates:0,toolBuilds:0,effectBuilds:0,pathBufferBuilds:0},controls:{enabled:true},requestRender(){}});return r;}
+test('declared exact Q1 body hides only represented rounded anatomy, restores it on exit and leaves source masks intact',()=>{
+  const r=renderer(),input=interaction(),mask=Uint8Array.from({length:27},(_,i)=>i===13?1:0),other=Uint8Array.from({length:27},(_,i)=>i===5?1:0);
+  r.volume={shape:[3,3,3],compartments:[{name:'body',mask},{name:'other',mask:other}]};r.surfaces=new Map([['body',new THREE.Mesh()],['other',new THREE.Mesh()]]);r.visible={};
+  input.view.planarBladeManeuver={contactSurface:{positionsMm:[[1,1,1],[2,1,1],[1,2,1]],triangles:[[0,1,2]],sourceIds:[13]}};
+  const bytes=[...mask];r.setSurgical(input);assert.equal(r.surfaces.get('body').visible,false);assert.equal(r.surfaces.get('other').visible,true);assert(r.surgicalEffects.getObjectByName('effect:planar-blade-q1-surface'));assert.deepEqual([...mask],bytes);
+  r.setSurgical({...input,view:{...input.view,planarBladeManeuver:undefined}});assert.equal(r.surfaces.get('body').visible,true);assert.equal(r.surgicalEffects.getObjectByName('effect:planar-blade-q1-surface'),undefined);assert.deepEqual([...mask],bytes);
+});
 test('pose-only rehearsal edits retain all accepted geometry and only transform the resident ghost',()=>{
   const r=renderer(),input=interaction(),before=structuredClone(input.view);r.setSurgical(input);
   const accepted=r.surgicalGroup.children.slice(),ghost=r.surgicalGhost.children[0],counts={...r.displayWork};

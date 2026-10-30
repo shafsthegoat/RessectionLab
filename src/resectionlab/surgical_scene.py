@@ -77,6 +77,8 @@ class SurgicalScene:
         # missing; it must never silently fall through to historical mechanics.
         from .surgical_continuum import validate as validate_continuum
         validate_continuum(self)
+        from .surgical_planar_maneuver import validate as validate_planar_maneuver
+        validate_planar_maneuver(self)
         from .surgical_vascular_graph import validate as validate_vascular_graph
         validate_vascular_graph(self)
         from .surgical_bipolar_thermal import validate as validate_bipolar_thermal

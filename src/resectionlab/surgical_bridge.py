@@ -382,6 +382,8 @@ def dispatch(session, operation, args, request, progress):
         engine = engine.clone()
     if command not in ('create', 'inspect', 'selectScene') and args.get('expectedStateId') != engine.state_id:
         raise BridgeError('SURGICAL_STATE_STALE', 'The scene changed. Refresh before applying this action.')
+    if 'planarBladeManeuverV1' in engine.scene.properties and command in ('plan', 'fullCase', 'recoverExit', 'attachProtection'):
+        raise ValueError('PLANAR_MANEUVER_ONLY: this opt-in scene admits only the declared blade actions and supported replay')
     outcome = None
     verified_display_state_id = None
     unchanged_tool = False

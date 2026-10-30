@@ -17,7 +17,8 @@ export function SurgeonViewControls({c,settings,onSettings}:{c:SurgicalControlle
   function enter(){
     if(enabled)return;
     const slots=Object.values(c.view?.slots??{}),slot=slots.find(s=>s.inserted)??slots[0];if(!slot)return;
-    const microscope:MicroscopeSettings=m??{target:[...slot.position],outward:new THREE.Vector3(0,0,-1).applyQuaternion(new THREE.Quaternion(...slot.quaternion)).toArray() as Point3,angleDeg:0,azimuthDeg:0,workingDistanceMm:160,fieldMm:42,focusOffsetMm:0,light:2.5};
+    const blade=c.view?.planarBladeManeuver?.opticalFrame;
+    const microscope:MicroscopeSettings=m??{target:blade?[...blade.targetMm]:[...slot.position],outward:blade?[...blade.outward]:new THREE.Vector3(0,0,-1).applyQuaternion(new THREE.Quaternion(...slot.quaternion)).toArray() as Point3,angleDeg:blade?30:0,azimuthDeg:0,workingDistanceMm:160,fieldMm:blade?12:42,focusOffsetMm:0,light:2.5};
     onSettings({...settings,operativeView:'surgeon',microscope,externalCamera:settings.camera,camera:microscopeCamera(microscope),layout:'3d-focus',showPlane:false,contextStyle:'uniform',clipping:undefined,clipBox:undefined,obliqueClip:undefined,volumeRendering:{...settings.volumeRendering,enabled:false}});
   }
   function update(patch:Partial<MicroscopeSettings>){if(!m)return;const next={...m,...patch};onSettings({...settings,microscope:next,camera:microscopeCamera(next)});}

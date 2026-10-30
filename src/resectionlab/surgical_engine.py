@@ -486,11 +486,13 @@ class SurgicalEngine:
         return result
 
     def _validate(self, action):
-        if not isinstance(action, dict) or set(action) - {'slot', 'operation', 'instrument', 'pose', 'path', 'parameters', 'duration', 'position', 'mechanicsRevision'}:
+        if not isinstance(action, dict) or set(action) - {'slot', 'operation', 'instrument', 'pose', 'path', 'parameters', 'duration', 'position', 'mechanicsRevision', 'maneuverPhase'}:
             raise ValueError('Unsupported action fields')
         if action.get('slot') not in self.state['slots']: raise ValueError('Choose left or right instrument slot')
-        if action.get('operation') not in {'place', 'move', 'activate', 'deactivate', 'apply', 'hold', 'grasp', 'release', 'exchange', 'withdraw', 'extract', 'inspect', 'configure', 'position'}:
+        if action.get('operation') not in {'place', 'move', 'activate', 'deactivate', 'apply', 'hold', 'grasp', 'release', 'exchange', 'withdraw', 'extract', 'inspect', 'configure', 'position', 'bladeManeuver'}:
             raise ValueError('Unsupported instrument operation')
+        if 'maneuverPhase' in action and action.get('operation') != 'bladeManeuver':
+            raise ValueError('PLANAR_MANEUVER_PHASE_REQUIRES_MANEUVER_ACTION')
         duration = float(action.get('duration', 1.))
         if not math.isfinite(duration) or not 0 < duration <= 30: raise ValueError('Duration must be in (0, 30] seconds')
         if len(self.actions) >= MAX_STEPS: raise ValueError('Action limit reached; save and start a new episode')
@@ -548,12 +550,15 @@ class SurgicalEngine:
         candidate = self._transition_clone()
         try:
             duration, points = candidate._validate(action)
+            candidate._transition_check=(lambda:_checked_operation(check)) if check is not None else None
             result = candidate._execute(copy.deepcopy(action), duration, points, check=check)
         except _OperationCheckFailed as interrupted:
             raise interrupted.cause from None
         except (ValueError, KeyError, TypeError, OverflowError) as error:
             if check is not None: check()
             return None, {'status': 'rejected', 'reason': str(error), 'reasonCode': str(error).split(':')[0] if str(error).split(':')[0].isupper() else 'INVALID_ACTION', 'completedFraction': 0., 'elapsedSeconds': 0., 'stateId': before, 'events': [], 'deltas': {}, 'metrics': self.metrics()}
+        finally:
+            candidate.__dict__.pop('_transition_check',None)
         if check is not None: check()
         result['reasonCode'] = result['reason'].split(':')[0] if result.get('reason') else None
         result.setdefault('elapsedSeconds', candidate.state['elapsedSeconds'] - before_time if result['status'] != 'rejected' else 0.)
@@ -575,6 +580,11 @@ class SurgicalEngine:
         return None, {**result, 'stateId': after, 'metrics': self.metrics()}
 
     def _execute(self, action, duration, points, *, check=None):
+        if 'planarBladeManeuverV1' in self.scene.properties or action['operation'] == 'bladeManeuver':
+            from .surgical_planar_maneuver import PROPERTY, execute
+            if PROPERTY not in self.scene.properties:
+                raise ValueError('PLANAR_MANEUVER_EXPLICIT_DECLARATION_REQUIRED')
+            return execute(self, action, check=check)
         key, op = action['slot'], action['operation']
         slot = self.state['slots'][key]
         previous_jaw = self.parameters(slot)['jawOpeningMm']
@@ -793,6 +803,9 @@ class SurgicalEngine:
         return events
 
     def _physical_substep(self, key, op, p, q, active, dt):
+        if op == 'bladeManeuver':
+            from .surgical_planar_maneuver import advance
+            return advance(self, key, p, q, dt)
         from .surgical_motion import envelopes, swept_envelopes, pair_conflict
         slot = self.state['slots'][key]; tool = TOOLS[slot['instrument']]; params = self.parameters(slot)
         axis = rotation(q).apply([0, 0, 1]); previous = finite(slot['position'], 3)
@@ -1009,6 +1022,10 @@ class SurgicalEngine:
                 'unknowns': ['unmapped anatomy', 'uncalibrated mechanics', 'clinical outcomes unknown']}
 
     def view(self, *, _state_id=None, include_history=True, _omit_fields=()):
+        planar_view = {}
+        if 'planarBladeManeuverV1' in self.scene.properties:
+            from .surgical_planar_maneuver import view as describe_planar_maneuver
+            planar_view['planarBladeManeuver'] = describe_planar_maneuver(self)
         omitted = frozenset(_omit_fields)
         if omitted - self._view_omit_fields:
             raise ValueError('Unsupported display field omission')
@@ -1034,7 +1051,8 @@ class SurgicalEngine:
                     'vesselConnections', 'vesselWounds', 'deformation', 'deformationModel', 'drillingV2', 'vesselsV2') if name not in omitted},
                 **({'vascularGraphV1': copy.deepcopy(self.state['vascularGraphV1'])} if 'vascularGraphV1' in self.state else {}),
                 **({'bipolarThermalV1': copy.deepcopy(self.state['bipolarThermalV1'])} if 'bipolarThermalV1' in self.state else {}),
-                **({'cusaV3': copy.deepcopy(self.state['cusaV3'])} if 'cusaV3' in self.state else {})}
+                **({'cusaV3': copy.deepcopy(self.state['cusaV3'])} if 'cusaV3' in self.state else {}),
+                **planar_view}
 
     def snapshot(self):
         return {'schema': SCHEMA, 'sceneId': self.scene.identity, 'actions': copy.deepcopy(self.actions), 'stateId': self.state_id,
