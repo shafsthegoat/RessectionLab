@@ -4,6 +4,7 @@ import type {Point3} from './viewer/coordinates';
 import {SurgicalRequestQueue} from './surgical-request-queue.ts';
 import {SurgicalDisplayAdmission} from './surgical-display-admission.ts';
 import {FullCaseComputation} from './full-case-computation.ts';
+import {boundFullCaseReadiness,fullCaseScenarioAvailable} from './full-case-readiness.ts';
 import {checkedPrefixResponse,checkedPrefixWireResponse,checkedPrefixStartMode,frameCommand,prefixCommand,reconstructedPrefix,replayAuthorityKey,surgicalAuthorityIssue} from './surgical-authority.ts';
 import {SurgicalTimelineStream} from './surgical-timeline-stream.ts';
 import {SurgicalComparisonContext} from './surgical-comparison-context.ts';
@@ -69,10 +70,23 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
   const requestQueue=useRef<SurgicalRequestQueue<{command:string;extra:Record<string,unknown>;caseHash:string;source:ViewerVolume;generation:number}>|null>(null);
   useEffect(()=>{stopPlayback();replayPendingLease.current=null;setReplayPending(false);timelineStream.current.clear();comparisonContext.current.clear();pauseFullCase();generation.current++;requestQueue.current?.invalidate();busy.current=false;backendResult.current=null;acceptedResponseSource.current=null;displayAdmission.current.invalidate();pendingPoseView.current=null;setResult(null);setDesiredResult(null);setDesiredPreview(null);setDesiredPreviewOutcome(null);setDisplayFailed(false);setPreview(null);setPreviewOutcome(null);setPath([]);setMode('navigate');setSlot('left');setPending(false);setError(null);},[source]);
   useEffect(()=>()=>{stopPlayback();fullCaseComputation.current.pause();generation.current++;requestQueue.current?.invalidate();},[]);
+  function acceptedFullCaseState(){
+    const c=current.current;
+    return c.enabled&&!!c.source&&acceptedResponseSource.current===c.source&&responseSource.current===c.source&&!!c.result&&
+      desired.current.result===c.result&&!desired.current.preview&&!c.displayFailed&&
+      backendResult.current?.view.stateId===c.result.view.stateId&&backendResult.current?.view.scene.sceneId===c.result.view.scene.sceneId;
+  }
+  function canStartFullCase(scenario:'primary'|'vascular'){
+    const c=current.current;
+    return acceptedFullCaseState()&&!busy.current&&!manualRequests.current&&replayPendingLease.current===null&&
+      !replayLane.current!.active&&fullCaseScenarioAvailable(c.result,c.source?.caseHash,scenario);
+  }
   async function execute(command:string,extra:Record<string,unknown>,isCurrent:()=>boolean):Promise<boolean>{
     const c=current.current;if(!c.enabled||!c.source||!c.api?.surgicalRehearsal||busy.current)return false;
     if(prefixCommand(command)&&(responseSource.current!==c.source||acceptedResponseSource.current!==c.source||c.result?.caseHash!==c.source.caseHash)){setError('Inspect this source checkpoint before reconstructing a read-only prefix.');return false;}
     const authorityIssue=surgicalAuthorityIssue(c.result,command,extra);if(authorityIssue){setError(authorityIssue);return false;}
+    if(command==='fullCase'&&(!acceptedFullCaseState()||!['primary','vascular'].includes(String(extra.scenario))||
+      !fullCaseScenarioAvailable(c.result,c.source.caseHash,extra.scenario as 'primary'|'vascular'))){setError('Full-case rehearsal is blocked for the accepted case state. Review readiness before starting.');return false;}
     if(c.result?.playback?.readOnly&&!surgicalCursorCommand(command)){setError('Return to a recorded action boundary before applying or branching instrument actions.');return false;}
     if(c.displayFailed&&['step','preview','plan','fullCase'].includes(command)){setError('The accepted anatomy could not be displayed. Seek to a recorded state or reopen the case before applying another instrument action.');return false;}
     const prefixRestart=command==='seekPrefix'&&extra.position===0;
@@ -84,6 +98,7 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
       let next=await c.api.surgicalRehearsal({caseHash:c.source.caseHash,command,...(!prefixCommand(command)?{expectedStateId:backendResult.current?.view.stateId}:{}),...requestExtra,
         ...(command==='seekFrame'?{timelineToken,viewFieldTokens:timelineStream.current.fieldTokens(c.source.caseHash,branchId,timelineToken)}:{})});
       if(token!==generation.current||!current.current.enabled||current.current.source!==c.source)return false;
+      if(command==='attachProtection'&&!next)return false;
       if(next){if(prefixCommand(command)){
         (command==='seekPrefixFrame'?checkedPrefixWireResponse:checkedPrefixResponse)(next);
         if(next.caseHash!==c.source.caseHash||next.branchId!==branchId||(reconstructedPrefix(c.result)&&replayAuthorityKey(next,!prefixRestart)!==replayAuthorityKey(c.result!,!prefixRestart)))throw Error('Reconstructed prefix response changed source or authority');
@@ -191,10 +206,11 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
   }
   function action(operation:string,params:Record<string,number>=parameters,duration=1):SurgicalAction{return {slot,operation,parameters:params,duration,...(['apply','move','hold','grasp','place'].includes(operation)?{path:path.length?path:[pose]}:{})};}
   return {result,view,volume,previewVolume,pending,pendingCommand:requestPending?pendingCommand:replayRequestPending?(replayOwner.current?.prefix?'seekPrefixFrame':'seekFrame'):pendingCommand,simulationPending:requestPending||replayRequestPending,displayPending,error,slot,pose,path,mode,preview:displayedPreview,previewOutcome,parameters,setPose,setMode,selectSlot,run,action,
+    fullCaseReadiness:view?boundFullCaseReadiness(result,source?.caseHash):null,canStartFullCase,
     playbackVersion,startPlayback,runPlayback,stopPlayback,showFlowTransfers,setShowFlowTransfers,setPlaybackDisplay,
     pausePlayback:()=>{stopPlayback();setPlaybackVersion(n=>n+1);},
     computingFullCase:fullCaseComputation.current.scenario,pauseFullCase,
-    startFullCase:(scenario:'primary'|'vascular')=>{if(current.current.enabled&&!busy.current&&!current.current.result?.playback?.readOnly&&!current.current.result?.verification?.readOnly){fullCaseComputation.current.start(scenario);setFullCaseVersion(n=>n+1);}},
+    startFullCase:(scenario:'primary'|'vascular')=>{if(!canStartFullCase(scenario))return false;fullCaseComputation.current.start(scenario);setFullCaseVersion(n=>n+1);return true;},
     setParameters:(p:Record<string,number>)=>{setParameters(p);clearPreview();},
     clearPreview,
     create:(mapping?:SurgicalRegion[])=>{const issue=mapping?validateMapping(mapping):null;if(issue){setError(issue);return Promise.resolve(false);}return run('create',mapping?{mapping}:{});},

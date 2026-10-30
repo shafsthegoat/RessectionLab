@@ -6,12 +6,13 @@ import {mkdtemp,rm,mkdir} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 import {checkedPrefixResponse,checkedPrefixWireResponse,checkedPrefixStartMode,replayAuthorityKey,surgicalAuthorityIssue,surgicalReplayRoutes} from '../src/surgical-authority.ts';
-let server,cache,SurgicalPanel,StagedStrategiesPanel;
+let server,cache,SurgicalPanel,StagedStrategiesPanel,FullCaseRehearsalPanel;
 before(async()=>{
   const output=fileURLToPath(new URL('../../testcases/outputs/rl-readiness-20261022/',import.meta.url));await mkdir(output,{recursive:true});cache=await mkdtemp(path.join(output,'prefix-ui-vite-'));
   server=await createServer({root:fileURLToPath(new URL('../',import.meta.url)),cacheDir:cache,logLevel:'error',optimizeDeps:{noDiscovery:true,include:[]},server:{middlewareMode:true,hmr:false,ws:false},appType:'custom'});
   ({SurgicalPanel}=await server.ssrLoadModule('/src/SurgicalPanel.tsx'));
   ({StagedStrategiesPanel}=await server.ssrLoadModule('/src/StagedStrategiesPanel.tsx'));
+  ({FullCaseRehearsalPanel}=await server.ssrLoadModule('/src/FullCaseRehearsalPanel.tsx'));
 });
 after(async()=>{await server?.close();if(cache)await rm(cache,{recursive:true,force:true});});
 const prefix=()=>({readOnly:true,status:'reconstructed-prefix',verifiedThrough:4,totalActions:10,archiveEndpointVerified:false,originSnapshotHash:'origin',actionLogHash:'actions',implementation:'current',protectionContractHash:'guard',prefixImplementation:'prefix-v1'});
@@ -28,6 +29,21 @@ function render(c){
 function* walk(node){if(Array.isArray(node)){for(const child of node)yield*walk(child);}else if(node&&typeof node==='object'&&node.props){yield node;yield*walk(node.props.children);}}
 const text=node=>Array.isArray(node)?node.map(text).join(''):node?.props?text(node.props.children):typeof node==='string'||typeof node==='number'?String(node):'';
 const find=(tree,type,label)=>[...walk(tree)].find(node=>node.type===type&&(node.props['aria-label']===label||text(node)===label));
+
+test('full-case panel presents blocked readiness before start controls and offers explicit staged recovery',()=>{
+  const c=controller();delete c.result.verification;
+  c.fullCaseReadiness={status:'blocked',availableActions:['inspect','seekInitial'],blockers:[{code:'not-intact',message:'Return to the intact state before attaching protection.',details:['Recorded actions remain on the original branch.']}],recovery:{action:'seekInitial',label:'Return to initial state',position:0},protectionContractId:null};
+  c.canStartFullCase=()=>false;
+  let tree=FullCaseRehearsalPanel({c,pause:()=>{}});
+  assert(text(tree).indexOf('Full-case rehearsal blocked')<text(tree).indexOf('Start primary rehearsal'));
+  assert.equal(find(tree,'button','Start primary rehearsal').props.disabled,true);assert.equal(find(tree,'button','Start vascular injury / rescue').props.disabled,true);
+  const details=find(tree,'details','Readiness detailsReturn to the intact state before attaching protection.Recorded actions remain on the original branch.Protection contract: None attached');assert(details);assert.equal(details.props.open,undefined,'details remain collapsed by default');
+  find(tree,'button','Return to initial state').props.onClick();assert.deepEqual(c.calls.at(-1),{command:'seek',position:0});
+  c.fullCaseReadiness={...c.fullCaseReadiness,availableActions:['attachProtection'],recovery:{action:'attachProtection',label:'Attach protection JSON'}};
+  tree=FullCaseRehearsalPanel({c,pause:()=>{}});find(tree,'button','Attach protection JSON').props.onClick();assert.deepEqual(c.calls.at(-1),{command:'attachProtection'});
+  c.fullCaseReadiness={...c.fullCaseReadiness,status:'ready',blockers:[],recovery:null,availableActions:['primary']};c.canStartFullCase=scenario=>scenario==='primary';
+  tree=FullCaseRehearsalPanel({c,pause:()=>{}});assert(text(tree).includes('Ready for full-case rehearsal'));assert.equal(find(tree,'button','Start primary rehearsal').props.disabled,false);assert.equal(find(tree,'button','Start vascular injury / rescue').props.disabled,true);
+});
 
 test('imported endpoint offers explicit read-only start and retains full verification while ordinary replay stays blocked',async()=>{
   const c=controller({readOnly:true,status:'unverified-import',causalReplayVerified:false,limitations:[]}),tree=render(c);

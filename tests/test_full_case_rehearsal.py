@@ -484,22 +484,22 @@ def test_new_drill_cycle_resets_and_counts_only_actual_owned_bone(monkeypatch, l
     assert engine.state['removed'] == []
 
 
-def test_matching_strict_protection_replaces_only_an_intact_relaxed_engine(monkeypatch):
+def test_matching_strict_protection_replaces_only_an_intact_relaxed_engine(tmp_path):
     from resectionlab import surgical_rl_protection as protection
     scene = _engine().scene
     annotation = protection.ProtectionAnnotation(
         'brainstem', (0,), protection.grid_binding(scene), 'explicit fixture', 'unreviewed', 'Fixture brainstem')
     supplied = protection.ProtectionSet(scene, [annotation], strict=True)
-    monkeypatch.setattr(Path, 'exists', lambda _path: True)
-    monkeypatch.setattr(protection, 'load_protection', lambda *_a, **_k: supplied)
+    manifest = tmp_path / 'explicit-generated-protection.json'
+    protection.save_protection(supplied, manifest)
     relaxed = SurgicalEngine(scene, guard_config=protection.GuardConfig(require_critical_coverage=False))
-    bound = director.bind_case_protection(relaxed)
+    bound = director.bind_case_protection(relaxed, manifest)
     assert bound.guard_config.require_critical_coverage
     assert bound._protected_ids == frozenset({0})
     assert relaxed._protected_ids == frozenset()
     assert relaxed.step({'slot': 'right', 'operation': 'inspect', 'duration': .2})['status'] == 'accepted'
     with pytest.raises(ValueError, match='intact|initial'):
-        director.bind_case_protection(relaxed)
+        director.bind_case_protection(relaxed, manifest)
 
 
 def _runner():
@@ -524,7 +524,12 @@ def _saved_workspace(path, *, case_id, branch_history=False, v2=False):
                     compartments={'target': mask}, affine=np.eye(4),
                     source_refs=(SourceRef('fixture', 'synthetic://full-case-tests', provenance='simulated'),),
                     metadata=metadata)
-    engine = SurgicalEngine(from_case(case))
+    from resectionlab.surgical_rl_protection import ProtectionAnnotation, ProtectionSet, grid_binding
+    scene = from_case(case)
+    protection = ProtectionSet(scene, [ProtectionAnnotation(
+        'brainstem', (0,), grid_binding(scene),
+        'GENERATED numerical CLI archive control; not acquired anatomy')], strict=True)
+    engine = SurgicalEngine(scene, protection=protection)
     meta = director.new_director(engine, 'vascular' if branch_history else 'primary')
     record = {'mapping': engine.scene.regions, 'branches': {'main': engine.snapshot()},
               'branchId': 'main', 'position': 0, 'parents': {'main': None},

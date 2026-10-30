@@ -79,6 +79,36 @@ function replayFixture(intercept=()=>undefined,options={}){
 const selection=(frameIndex,position=0,branchId='main')=>({branchId,position,frameIndex});
 const deferred=()=>{let resolve,reject;const promise=new Promise((a,b)=>{resolve=a;reject=b;});return {promise,resolve,reject};};
 
+function readyReceipt(f){
+  const receipt=f.frame(selection(0));delete receipt.playback;
+  receipt.view={...receipt.view,stateId:'editable',scene:{...receipt.view.scene,sceneId:'scene'}};
+  receipt.fullCaseReadiness={schema:'resectionlab.full-case-readiness.v1',caseHash:'case',sceneId:'scene',stateId:'editable',status:'ready',availableActions:['primary'],blockers:[],recovery:null,protectionContractId:'contract'};
+  return receipt;
+}
+test('full-case controller requires admitted readiness and the exact permitted scenario',async()=>{
+  let f;f=replayFixture(q=>q.command==='inspect'?readyReceipt(f):q.command==='fullCase'?{...readyReceipt(f),fullCase:{scenario:'primary',status:'stopped'}}:undefined);
+  try{
+    let c=f.render();assert.equal(c.startFullCase('primary'),false,'no accepted evidence');await f.flush();c=f.render();
+    assert(c.displayPending);assert.equal(c.startFullCase('primary'),false,'receipt must be displayed before it can authorize a run');
+    c=f.admit();assert(c.canStartFullCase('primary'));assert.equal(c.startFullCase('vascular'),false,'scenario must be explicitly offered');
+    assert(c.startFullCase('primary'));c=f.render();await f.flush();c=f.render();
+    assert.equal(f.calls.filter(q=>q.command==='fullCase').length,1);assert.equal(f.calls.at(-1).expectedStateId,'editable');
+    assert.equal(c.startFullCase('primary'),false,'pending anatomy cannot authorize another run');
+  }finally{f.harness.close();}
+});
+test('blocked or stale readiness cannot bypass the controller through start or direct run',async()=>{
+  for(const mutate of [r=>{delete r.fullCaseReadiness;},r=>{r.fullCaseReadiness.status='blocked';},r=>{r.fullCaseReadiness.stateId='stale';},r=>{r.fullCaseReadiness.sceneId='stale';},r=>{r.fullCaseReadiness.caseHash='other';},r=>{r.readOnly=true;}]){
+    let f;f=replayFixture(q=>{if(q.command==='inspect'){const receipt=readyReceipt(f);mutate(receipt);return receipt;}});
+    try{const c=await f.open();assert.equal(c.startFullCase('primary'),false);assert.equal(await c.run('fullCase',{scenario:'primary',maxActions:2}),false);assert.equal(f.calls.length,1,'no unauthorized full-case request reaches IPC');}
+    finally{f.harness.close();}
+  }
+});
+test('canceling protection selection preserves the accepted view and editable state binding',async()=>{
+  let f;f=replayFixture(q=>q.command==='inspect'?readyReceipt(f):q.command==='attachProtection'?null:undefined);
+  try{let c=await f.open();const accepted=c.view;assert.equal(await c.run('attachProtection'),false);c=f.render();assert.equal(c.view,accepted);assert.equal(c.interaction.view,accepted);assert.equal(c.pending,false);assert.equal(f.calls.at(-1).expectedStateId,'editable');}
+  finally{f.harness.close();}
+});
+
 test('automatic replay fetches ahead but admits every exact frame FIFO, with no extra volume until display acknowledgment',async()=>{
   const f=replayFixture();try{
     let c=await f.open();assert(c.startPlayback());

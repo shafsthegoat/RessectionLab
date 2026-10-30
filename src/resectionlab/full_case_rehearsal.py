@@ -7,7 +7,6 @@ Its resumable bookkeeping is outside the patient engine identity.
 from __future__ import annotations
 import copy
 import itertools
-from pathlib import Path
 import time
 import numpy as np
 from .core import semantic_digest
@@ -51,21 +50,18 @@ def accounting(engine):
             'unknownRemovedMm3': counts.get('unknown', 0) * engine.scene.voxel_mm3}
 
 
-def bind_case_protection(engine):
-    """Bind only matching local source evidence; never relax an existing guard."""
-    from .surgical_rl_protection import load_protection, GuardConfig
-    root = Path(__file__).resolve().parents[2]
-    path = root / 'testcases/environments/meningioma-sub-06/rl-protection.json'
-    # load_protection verifies the source-grid identity and all supplied masks.
-    if not path.exists():
-        raise ValueError('Matching source exclusion evidence is unavailable for full rehearsal')
-    protection = load_protection(engine.scene, path, strict=True)
-    strict = SurgicalEngine(engine.scene, protection=protection, guard_config=GuardConfig())
-    if engine._protection_contract == strict._protection_contract:
+def bind_case_protection(engine, protection_path=None):
+    """Resolve explicit or saved source-bound evidence under the strict policy.
+
+    A new engine is returned only at the intact initial checkpoint. An existing
+    action history can continue only with exactly its already bound contract.
+    """
+    from .full_case_readiness import checked_case_protection
+    protection, contract = checked_case_protection(engine, protection_path)
+    if engine._protection_contract == contract:
         return engine
-    if engine.actions:
-        raise ValueError('Bind matching strict protection at an intact initial checkpoint before full rehearsal')
-    return strict
+    from .surgical_rl_protection import GuardConfig
+    return SurgicalEngine(engine.scene, protection=protection, guard_config=GuardConfig())
 
 
 def new_director(engine, scenario='primary', *, full_annotation_target_mm3=None):

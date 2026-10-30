@@ -232,7 +232,17 @@ function bindOperations() {
     frozenCusaAdmission=null;return true;
   });
   handle('cancelFrozenCusa',()=>{frozenCusaAbort?.abort();return true;});
-  handle('surgicalRehearsal', async args => {args=plainArgs(args, ['caseHash','command','expectedStateId','action','mapping','position','frameIndex','cacheOnly','timelineToken','viewFieldTokens','prefixToken','prefixFieldTokens','branchId','source','sceneIndex','acknowledgeResearchUnknowns','opponent','allowModeledBrainCorridor','scenario','maxActions','initialAccessRadiusMm','exploreExteriorFaces','cumulativeReentry']);const result=await engine.request('surgicalRehearsal',args,surgicalTimeoutMs(args.command));rehearsalUnsaved.changed(args,result);return result;});
+  handle('surgicalRehearsal', async args => {
+    args=plainArgs(args, ['caseHash','command','expectedStateId','action','mapping','position','frameIndex','cacheOnly','timelineToken','viewFieldTokens','prefixToken','prefixFieldTokens','branchId','source','sceneIndex','acknowledgeResearchUnknowns','opponent','allowModeledBrainCorridor','scenario','maxActions','initialAccessRadiusMm','exploreExteriorFaces','cumulativeReentry']);
+    if(args.command==='attachProtection'){
+      if(!currentCaseHash||args.caseHash!==currentCaseHash||typeof args.expectedStateId!=='string'||!args.expectedStateId||args.source)throw Error('Choose the accepted state in the current workspace before attaching protection');
+      const caseHash=currentCaseHash,protectionPath=await pick('Choose surgical-rl-protection-v1 JSON',['json']);
+      if(!protectionPath)return null;
+      if(currentCaseHash!==caseHash)throw Error('Workspace changed while choosing protection');
+      args={...args,protectionPath};
+    }
+    const result=await engine.request('surgicalRehearsal',args,surgicalTimeoutMs(args.command));rehearsalUnsaved.changed(args,result);return result;
+  });
   for (const op of ['createRehearsal','inspectRehearsal','stepRehearsal','compareRehearsal']) {
     handle(op, async args => {const result=await engine.request(op, plainArgs(args, op === 'stepRehearsal'
       ? ['caseHash','expectedStateId','action'] : op === 'compareRehearsal'

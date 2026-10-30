@@ -6,16 +6,23 @@ const amount=(value:number|null|undefined,digits=2)=>typeof value==='number'&&Nu
 
 export function FullCaseRehearsalPanel({c,pause,onFrameField,fieldDisplayControls}:{c:SurgicalController;pause:()=>void;onFrameField?:()=>void;fieldDisplayControls?:ReactNode}) {
   const v=c.view,r=c.result;if(!v)return null;
-  const summary=fullCaseStateSummary(v),record=r?.fullCase,readOnly=!!r?.playback||!!r?.verification?.readOnly,
+  const summary=fullCaseStateSummary(v),record=r?.fullCase,readOnly=!!r?.readOnly||!!r?.playback||!!r?.verification?.readOnly,
     position=surgicalPlaybackPosition(r?.playback,r?.position??0),
     phase=recordedFullCasePhase(record,position);
   const run=(scenario:'primary'|'vascular')=>{pause();c.cancel();c.startFullCase(scenario);};
+  const readiness=c.fullCaseReadiness,recovery=readiness?.recovery;
   return <section className="full-case-rehearsal" aria-label="Full Case Rehearsal">
     <strong>Full Case Rehearsal</strong>
     <p className="surgical-note">Compute the rehearsal in bounded slices, recording each action for replay. Pause stops after the current slice finishes.</p>
+    <p role="status" className={readiness?.status==='ready'?'surgical-note':'surgical-warning'}>{readiness?.status==='ready'?'Ready for full-case rehearsal':`Full-case rehearsal blocked${readiness?.blockers[0]?.message?`: ${readiness.blockers[0].message}`:': readiness for this case state is unavailable.'}`}</p>
+    {readiness&&<details><summary>Readiness details</summary>
+      {readiness.blockers.length?<ul>{readiness.blockers.map(blocker=><li key={blocker.code}>{blocker.message}{blocker.details.length>0&&<ul>{blocker.details.map((detail,index)=><li key={index}>{detail}</li>)}</ul>}</li>)}</ul>:<p>Required evidence is available for this case state.</p>}
+      <p className="surgical-note">Protection contract: {readiness.protectionContractId??'None attached'}</p>
+    </details>}
+    {recovery&&<button disabled={c.pending||readOnly||!readiness.availableActions.includes(recovery.action)} onClick={()=>{pause();void c.run(recovery.action==='seekInitial'?'seek':'attachProtection',recovery.action==='seekInitial'?{position:0}:{});}}>{recovery.label}</button>}
     <div className="surgical-actions">
-      <button disabled={c.pending||readOnly} onClick={()=>run('primary')}>{record?.scenario==='primary'?'Resume primary rehearsal':'Start primary rehearsal'}</button>
-      <button disabled={c.pending||readOnly} onClick={()=>run('vascular')}>{record?.scenario==='vascular'?'Resume vascular injury / rescue':'Start vascular injury / rescue'}</button>
+      <button disabled={c.pending||!c.canStartFullCase('primary')} onClick={()=>run('primary')}>{record?.scenario==='primary'?'Resume primary rehearsal':'Start primary rehearsal'}</button>
+      <button disabled={c.pending||!c.canStartFullCase('vascular')} onClick={()=>run('vascular')}>{record?.scenario==='vascular'?'Resume vascular injury / rescue':'Start vascular injury / rescue'}</button>
       {c.computingFullCase&&<button onClick={c.pauseFullCase}>Pause computation</button>}
       {onFrameField&&<button onClick={onFrameField}>Frame operative field</button>}
     </div>

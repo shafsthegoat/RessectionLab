@@ -38,6 +38,8 @@ def main():
     parser.add_argument('--output', type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument('--scenario', choices=['primary', 'vascular'], default='primary')
     parser.add_argument('--resume', type=Path)
+    parser.add_argument('--protection', type=Path,
+                        help='Explicit source-bound protection manifest; otherwise reuse the saved contract')
     parser.add_argument('--max-slices', type=int, default=1000)
     parser.add_argument('--slice-actions', type=int, default=2)
     args = parser.parse_args()
@@ -59,6 +61,10 @@ def main():
     branch_id = record['branchId']
     initial_snapshot = record['branches'][branch_id]
     engine = SurgicalEngine.restore(scene, initial_snapshot, use_cache=True)
+    # Saved contracts are portable. An external manifest is an explicit input,
+    # never inferred from the source name or a local testing directory.
+    engine = (bind_case_protection(engine, protection_path=args.protection)
+              if args.protection is not None else bind_case_protection(engine))
     existing = record.get('fullCase', {}).get(branch_id)
     parent = record.get('parents', {}).get(branch_id)
     if existing and existing['scenario'] == args.scenario:
@@ -67,7 +73,6 @@ def main():
         director = resume_director(existing)
     else:
         parent = {'branchId': branch_id, 'position': len(engine.actions)}
-        engine = bind_case_protection(engine)
         names = {r['name'] for r in scene.regions if r.get('target')}
         annotation = sum(int(case.compartments[name].sum()) for name in names if name in case.compartments) * scene.voxel_mm3
         director = new_director(engine, args.scenario, full_annotation_target_mm3=annotation)

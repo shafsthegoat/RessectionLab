@@ -149,6 +149,8 @@ def dispatch(session, operation, args, request, progress):
     argument_keys = {'caseHash', 'command', 'expectedStateId', 'action', 'mapping', 'position', 'branchId', 'source', 'sceneIndex', 'acknowledgeResearchUnknowns', 'allowModeledBrainCorridor', 'maxHealthyRemovalMm3', 'maxWallSeconds', 'opponent', 'scenario', 'maxActions', 'frameIndex', 'timelineToken', 'viewFieldTokens','initialAccessRadiusMm','exploreExteriorFaces','cumulativeReentry'}
     if args.get('command') == 'seekPrefixFrame':
         argument_keys.update({'prefixToken', 'prefixFieldTokens'})
+    if args.get('command') == 'attachProtection':
+        argument_keys.add('protectionPath')
     if args.get('command') == 'seekPrefix' and type(args.get('position')) is int and args['position'] == 0:
         argument_keys.add('cacheOnly')
     _keys(args, argument_keys)
@@ -206,7 +208,7 @@ def dispatch(session, operation, args, request, progress):
         # Replacement archives and all editable commands retain full admission.
         artifacts = entry.artifacts if hot_frame or args.get('command') in PREFIX_COMMANDS else thaw_json(entry.artifacts)
     command = args.get('command', 'inspect')
-    if command not in {'create', 'inspect', 'inspectArchive', 'preview', 'step', 'recoverExit', 'undo', 'redo', 'seek', 'branch', 'selectBranch', 'reset', 'selectScene', 'plan', 'fullCase', 'seekFrame', *PREFIX_COMMANDS}:
+    if command not in {'create', 'inspect', 'inspectArchive', 'preview', 'step', 'recoverExit', 'undo', 'redo', 'seek', 'branch', 'selectBranch', 'reset', 'selectScene', 'plan', 'fullCase', 'attachProtection', 'seekFrame', *PREFIX_COMMANDS}:
         raise ValueError('Unsupported surgical command')
     raw = artifacts.get(ARTIFACT)
     from .surgical_environment import standardize, default_target_names, SCHEMA as ENVIRONMENT_SCHEMA
@@ -434,13 +436,43 @@ def dispatch(session, operation, args, request, progress):
             'branches': [{'id': k, 'steps': len(v['actions']), 'parent': record.get('parents', {}).get(k)} for k,v in record['branches'].items()]}
         _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Playback frame exceeds the display budget')
         return result
-    if command == 'fullCase':
+    if command == 'attachProtection':
+        from .full_case_rehearsal import bind_case_protection
+        path = args.get('protectionPath')
+        if not isinstance(path, str) or not path.strip():
+            raise ValueError('Select an explicit source-bound protection manifest')
+        if engine.actions:
+            raise ValueError('Return to an intact initial checkpoint before attaching protection')
+        bound = bind_case_protection(engine, protection_path=path)
+        if bound._protection_contract == engine._protection_contract:
+            unchanged_tool = True
+        else:
+            parent = {'branchId': record['branchId'], 'position': record['position']}
+            # Keep the old branch, its guard and every recorded action intact.
+            engine = bound
+            branch_id = 'protection-' + str(len(record['branches']))
+            while branch_id in record['branches']:
+                branch_id += '-next'
+            record['branchId'] = branch_id
+            record.setdefault('parents', {})[branch_id] = parent
+            record['branches'][branch_id] = engine.snapshot()
+            record['position'] = 0
+            record.setdefault('timeline', {})[branch_id] = []
+    elif command == 'fullCase':
         from .full_case_rehearsal import bind_case_protection, new_director, run_slice, resume_director
+        from .full_case_readiness import full_case_readiness
         scenario = args.get('scenario', 'primary')
+        readiness = full_case_readiness(engine)
+        if scenario not in ('primary', 'vascular'):
+            raise ValueError('Choose primary or vascular full-case scenario')
+        if scenario not in readiness['availableActions']:
+            raise BridgeError('FULL_CASE_UNAVAILABLE', readiness['blockers'][0]['message'])
+        # Recheck protection for resumed directors too. Bookkeeping is never
+        # authority to execute against a missing, changed or relaxed contract.
+        engine = bind_case_protection(engine)
         director = record.get('fullCase', {}).get(record['branchId'])
         if not director or director.get('scenario') != scenario or director.get('lastStateId', director.get('startStateId')) != engine.state_id:
             parent = {'branchId': record['branchId'], 'position': record['position']}
-            engine = bind_case_protection(engine)
             annotation = None
             if entry is not None:
                 names = {r['name'] for r in engine.scene.regions if r.get('target')}
@@ -698,6 +730,8 @@ def dispatch(session, operation, args, request, progress):
               'branchId': record['branchId'], 'position': record['position'],
               'fullCase': copy.deepcopy(record.get('fullCase', {}).get(record['branchId'])),
               'branches': [{'id': k, 'steps': len(v['actions']), 'parent': record.get('parents', {}).get(k)} for k, v in record['branches'].items()]}
+    from .full_case_readiness import full_case_readiness
+    result['fullCaseReadiness'] = {**full_case_readiness(engine), 'caseHash': identity}
     from .surgical_planning import availability
     result['planningAvailability'] = availability(engine)
     from .surgical_strategy_planning import rescue_availability
