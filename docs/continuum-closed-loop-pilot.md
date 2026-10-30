@@ -114,3 +114,56 @@ and last BE sample worlds, propagated capacity decisions, transfer/removal energ
 release, relaxation, clocks, source ownership and advance require independent
 export verification. Only committed batches publish observations; partial or
 failed execution retains its receipts and cannot admit the pilot.
+
+## Preserved first pilot failure and targeted revision
+
+Frozen `dac5247e` runs the complete first history in 73.2141 seconds, including
+54.0802 seconds in its three source operator preparations. Actual removals are
+`3403863` on tick 5 and `3404173` on tick 6; tick 7 advances the CUSA tip by
+0.322821 mm. Release and both passive ticks complete in that first history.
+Twenty committed field checkpoints are preserved.
+
+The second fresh history reaches its final passive tick, then the worker refuses
+at its unchanged 140-second cooperative threshold inside the pre-tick geometry
+check. Supervision ends at 140.8036 seconds; sampled group RSS is 2,613,821,440
+bytes and OS peak RSS is 2,693,857,280 bytes, both under 3 GiB. PID 87131 is
+terminal and absent. There is no recorded physics failure, memory-cap kill or
+tool/approval failure. The independent checker never starts. The pilot is
+**incomplete**, and its failure receipts remain under `closed-loop-pilot-v1/`.
+The first launcher did not persist its partial second-pass replay digests; reaching
+the final tick is not a substitute for the missing complete replay artifact.
+
+An isolated, read-only profile reconstructs all 100 before-sweep/after-endpoint
+Q1 capsule queries from the first history's exports, with no source solve or MRI
+decode. All post-endpoint Q1 memberships match their committed receipts. The
+geometry queries take 2.548 seconds without the execution callback; with the
+original output-directory guard they take 6.322 seconds. Its 10,939 callbacks
+spend 3.713 seconds rescanning the output directory, including about 580,000
+filesystem stat calls. At most seven of 13,210 source boxes are contact candidates,
+but changing the geometry algorithm is unnecessary to remove this guard cost.
+
+Execution revision 2 routes every owned artifact write through a byte ledger.
+It checks the exact prospective total before writing, counts replacements once,
+and audits the complete directory at exit. The same 64 KiB worker reserve and
+32 MiB combined ceiling remain. Every physics checkpoint still checks elapsed
+time. Generated controls require pre-write cap refusal without file corruption,
+replacement accounting, and refusal of an unexpected file at the final audit.
+
+Committed progress is recorded only after a whole physical tick succeeds.
+The first-pass scalars/checkpoints and partial second-pass replay digests persist
+on interruption. A generated second-pass cancellation verifies that exactly the
+previous committed tick is reported and incomplete status remains false for
+qualification. No physical equation, contact/rank rule, numerical threshold,
+intervention, fresh-replay requirement or resource cap changes in revision 2.
+
+The revised wall-only callback takes 0.004665 seconds across those same 10,939
+calls. Complete query time is 2.5573 seconds, a 2.47x isolated speedup over the
+original guarded version, and every full query-result digest is identical.
+These are instrumented geometry measurements, not a full-pilot completion claim.
+The final acceptance file is included in the global prospective byte total.
+
+Failure receipts distinguish the last actual physical commit from the last
+complete export/verified replay batch. A generated failure while exporting tick 2
+must report physical tick 2 and exported tick 1, retain only tick 1's complete
+scalar/sample batch, and remain unqualified. Partial file-write failures reconcile
+actual bytes and propagate; they cannot turn into successful qualification.
