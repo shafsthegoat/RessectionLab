@@ -21,6 +21,9 @@ from .surgical_tools import TOOLS
 from .surgical_task_admission import admission, validate_admission
 
 SCHEMA = 'resectionlab.source-context-encounter.v1'
+BINDING_SCHEMA_V2 = 'resectionlab.source-context-binding.v2'
+ELIGIBILITY_SCHEMA = 'resectionlab.native-context-eligibility.v1'
+ELIGIBILITY_RULE = 'observed-lesion-context-sharing-verified-categorical-source-v1'
 METHOD = 'unique-retained-source-cells-in-complete-nominal-axial-tool-envelope-v1'
 SCOPE = ('Whole-cell geometric near-encounter within a declared research margin; '
          'not tissue removal, mechanical injury, function or clinical deficit. '
@@ -29,6 +32,20 @@ SCOPE = ('Whole-cell geometric near-encounter within a declared research margin;
 
 def _require(value, message):
     if not value: raise ValueError('ANATOMICAL_ENCOUNTER: '+message)
+
+
+def _unedited_label(row):
+    """Additional native declarations cannot contradict the authenticated class."""
+    if row.get('edits') or 'original_data' in row or 'original_label_value' in row: return False
+    label = row.get('label_value'); provenance = row.get('provenance', {})
+    return all(type(provenance[key]) is int and provenance[key] == label
+               for key in ('annotation_value', 'source_label_value') if key in provenance)
+
+
+def _eligibility(row):
+    return {'schema': ELIGIBILITY_SCHEMA, 'rule': ELIGIBILITY_RULE,
+        'nativeKind': row['kind'], 'nativeRole': row['role'],
+        'provenanceKind': row['provenance']['kind'], 'sourceSeries': row['source_series']}
 
 
 def _eligible(engine):
@@ -47,7 +64,9 @@ def _eligible(engine):
             and row.get('affine') == r['sourceAffine']
             and row.get('source_series') == native_layers[r['layerId']]['source_series']
             and row.get('provenance', {}).get('source') == r['provenance'].get('source')), None)
-        if (sibling is not None and row.get('role') == 'context' and row.get('kind') == 'context'
+        supported = (row.get('kind') == 'context' or
+                     (row.get('kind') == 'lesion-context' and _unedited_label(row)))
+        if (sibling is not None and row.get('role') == 'context' and supported
                 and type(row.get('label_value')) is int and row['label_value'] > 0
                 and row.get('provenance', {}).get('kind') == 'observed_source_annotation'
                 # add_layer's native_affine uses its source-series RAS frame;
@@ -119,6 +138,9 @@ def project_context(engine, layer_id):
     _require(np.array_equal(registered, engine.scene.affine), 'exact source frame differs')
     observation = AnatomicalObservation(array == row['label_value'], registered,
         'reviewed' if row['review_status'] == 'reviewed' else 'unreviewed')
+    if row['kind'] == 'lesion-context':
+        targets = [r['id'] for r in engine.scene.regions if r.get('target') and r['material'] == 'tumor']
+        _require(not np.any(observation.mask & np.isin(engine.scene.labels, targets)), 'source context overlaps owned target')
     binding = {'schema': SCHEMA, 'sourceCollectionHash': native.identity(),
         'nativeManifestSha256': value['verification']['nativeManifestSha256'],
         'layerId': layer_id, 'labelValue': row['label_value'], 'revision': row.get('revision', 0),
@@ -128,6 +150,8 @@ def project_context(engine, layer_id):
         'reviewStatus': row['review_status'], 'coverage': row.get('coverage', 'unknown'),
         'provenance': copy.deepcopy(row['provenance']), 'verifiedSiblingLayerId': sibling['layerId'],
         'publicObservation': observation.manifest()}
+    if row['kind'] == 'lesion-context':
+        binding.update(schema=BINDING_SCHEMA_V2, eligibility=_eligibility(row))
     binding['bindingSeal'] = semantic_digest(binding)
     return observation, binding
 

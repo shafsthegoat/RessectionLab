@@ -27,6 +27,7 @@ from resectionlab.surgical_task_admission import bind_admission, validate_admiss
 from resectionlab.workspace_bundle import load_workspace
 
 SCHEMA = 'resectionlab.source-context-encounter.v1'
+BINDING_SCHEMA_V2 = 'resectionlab.source-context-binding.v2'
 METHOD = 'unique-retained-source-cells-in-complete-nominal-axial-tool-envelope-v1'
 BOUNDARY_TOLERANCE_MM = 1e-9
 SCOPE = ('Whole-cell geometric near-encounter within a declared research margin; '
@@ -231,8 +232,27 @@ def load_source_context(engine, report):
     matches = [r for r in collection.document['layers'] if r['id'] == binding['layerId']]
     require(len(matches) == 1, 'source context layer differs')
     row = matches[0]
-    require(row['role'] == 'context' and row['kind'] == 'context' and type(row['label_value']) is int and row['label_value'] > 0 and
+    # Private source eligibility is versioned independently from geometry. Do
+    # not import the producer's eligibility helper or accept a self-sealed rule.
+    eligibility = None
+    if binding.get('schema') == SCHEMA:
+        require(row['kind'] == 'context', 'legacy binding requires native context kind')
+    else:
+        require(binding.get('schema') == BINDING_SCHEMA_V2 and row['kind'] == 'lesion-context',
+                'unsupported source context binding or native kind')
+        require(not row.get('edits') and 'original_data' not in row and 'original_label_value' not in row,
+                'edited lesion context requires qualified derivation')
+        for key in ('annotation_value', 'source_label_value'):
+            declared = row['provenance'].get(key, row['label_value'])
+            require(type(declared) is int and declared == row['label_value'], 'source context label declaration differs')
+        eligibility = {'schema': 'resectionlab.native-context-eligibility.v1',
+            'rule': 'observed-lesion-context-sharing-verified-categorical-source-v1',
+            'nativeKind': row['kind'], 'nativeRole': row['role'],
+            'provenanceKind': row['provenance']['kind'], 'sourceSeries': row['source_series']}
+    require(row['role'] == 'context' and type(row['label_value']) is int and row['label_value'] > 0 and
             row['provenance']['kind'] == 'observed_source_annotation', 'explicit supplied categorical context required')
+    parent = collection.series(row['source_series'])
+    require(row.get('units_status', parent.get('units_status')) == 'mm', 'source context units differ')
     original = row['provenance']['source']
     require(file_hash(collection.path(original['path'])) == original['sha256'], 'original annotation bytes differ')
     require(file_hash(collection.path(row['data']['path'])) == row['data']['sha256'], 'native annotation array bytes differ')
@@ -262,6 +282,8 @@ def load_source_context(engine, report):
         'registration': collection.document['transforms'], 'reviewStatus': row['review_status'],
         'coverage': row.get('coverage', 'unknown'), 'provenance': row['provenance'],
         'verifiedSiblingLayerId': sibling['layerId'], 'publicObservation': expected_manifest}
+    if eligibility is not None:
+        expected.update(schema=BINDING_SCHEMA_V2, eligibility=eligibility)
     expected['bindingSeal'] = semantic_digest(expected)
     require(semantic_digest(expected) == semantic_digest(binding), 'source context binding fields differ')
     require(report['publicPlan']['publicObservation']['anatomicalContext'] == expected_manifest, 'public source context manifest differs')

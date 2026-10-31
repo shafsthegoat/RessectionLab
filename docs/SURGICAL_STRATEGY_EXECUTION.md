@@ -751,6 +751,62 @@ headers, warm corruption and cancellation refuse as intended. All1,221desktop
 tests and the final build pass. Failed initial runs remain in the ignored record;
 no previous refusal, replay/hash constraint or research hold was weakened.
 
+## Implemented: executed source preparation and third acquired task
+
+A generic finite preparer now turns mapped, unadmitted anatomy into an executed
+intracerebral checkpoint. It proposes source-surface rays from the detached public
+baseline, uses the fixed 1.5 mm CUSA tip, and records every apply, withdrawal and
+remote parking action under shared-clock capacity. Optional lateral displacement
+means separate real passes. Action, simulated-time, tissue and computation caps
+are explicit. The public choice seals before native replay of all held attempts;
+incomplete or failed attempts never install. Source bytes, a cold baseline replay,
+native prefixes, irreversible burdens and final core task admission are checked.
+No mask editing, tool shrinking, privileged removal or old task replacement occurs.
+This prepares mapped non-target tissue only; source background does not establish
+a skull/dura opening, complete vascular anatomy or clinical access.
+
+UCSF-PDGM-0004 is now the third DEVELOPMENT anatomy with an admitted native task.
+All eight stored arrays, non-artifact source manifest fields and original branches
+remain exact. Three declared runs remove 43/66/101 mm³ non-target and zero target,
+using 23.8/43.2/60.2 simulated seconds. They select different source rays, so these
+are preparation costs and feasibility observations, not a matched width experiment
+or exposure-search advantage. The narrow preparation retains later geometry STOP;
+the broader preparations permit one inactive approach but no complete tested
+two-tool sequence. Full withdrawal includes remote parking: a withdrawn instrument
+left at the entry can still obstruct the other hand.
+
+An independent auditor uses literal complete CUSA/parked-tool capsules, a separate
+segment-distance implementation and source voxel boxes. It checks actual native
+microsteps, source-boundary/target stand-off, both-tool occupancy, irreversible
+source removal and single-interval capacity conservation. The final narrow/broad
+runs pass 283/815 microsteps and 7,388/27,872 occupied-source box tests. Producer
+receipts alone are insufficient. Forgery controls exposed boolean/numeric equality
+ambiguities; exact JSON comparisons and strict declaration types now reject them.
+Search coverage, unknown exterior anatomy and empirical mechanics remain outside
+this audit's scope.
+
+Observed native `lesion-context` annotations now use an explicit v2 private source
+binding with exact shared categorical source/frame, unedited class declarations,
+review opt-in and no owned-target overlap. Existing native `context` bindings and
+all numerical/public manifests remain exactly v1. The actual hidden desktop selects
+0004's supplied context; a 3 mm margin and zero near-volume allowance refuses
+primary access with 5 mm³ near encounter, independently reconstructed from original
+source cells. Restoring zero margin restores access while two-tool sequence STOP
+persists. This is geometric annotation evidence, not function or injury prediction.
+
+Hidden desktop controls preview/install the checked inactive route, return to the
+exact planning checkpoint, refuse missing functional evidence, compare six strategy
+reports and retain two zero/1 mm studies. All seven declared offset outcomes here
+are STOP; no new robustness advantage follows. Cold reopen/resave preserves every
+report, branch, ancestry, timeline and admission exactly. The previous 0007 workspace
+also retains all nine comparisons, two applications and two studies exactly.
+No automation window becomes visible. All 1,221 desktop tests and the build pass.
+The 686-test broad backend regression passes in 557.58 s; after final hardening,
+91 overlapping preparation/context controls and 55 independent auditor controls pass.
+Full regression results, source hashes, failed prototypes and exact reproduction
+commands are kept in `testcases/source-exposure-v1/README.md`. Timings there are
+observations during concurrent verification, not paired performance improvements.
+
 ## Remaining milestones and next dependency
 
 This is a bounded acquired-anatomy operating task, not the complete strategy
@@ -760,10 +816,11 @@ geometric source constraint, not a qualified motor/language map. The new finite
 execution stress is integrated but does not complete uncertainty qualification.
 Add supported anatomical/execution uncertainty, a frozen comparison with matched
 route-search baselines and independent challenge cases; continue reducing cold
-proof/display cost and migrate remaining planner interfaces. The next patient
-slice is a genuinely executed, source-bound0004exposure and declared task, plus
-an explicit generic compatibility rule for its supplied context kind. The new
-preflight must continue refusing until those gates pass. Expand the patient
-distribution without touching reserved evaluations. Older lattice resolution dependence and
+proof/display cost and migrate remaining planner interfaces. The next exposure
+experiment should hold source rays and budgets fixed while comparing corridor-first
+and complete-plan-aware preparation, counting all added tissue and failed executions.
+The current source-distance preparer establishes no planning advantage and does not
+solve two-tool operation on 0004. Expand the patient distribution without touching
+reserved evaluations. Older lattice resolution dependence and
 continuum empirical/domain gates remain qualification holds. No RL campaign,
 new data acquisition, clinical-outcome probability or novelty claim was added.

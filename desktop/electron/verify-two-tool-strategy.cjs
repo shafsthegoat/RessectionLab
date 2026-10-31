@@ -7,6 +7,8 @@ const input=fs.realpathSync(process.env.STRATEGY_CASE||''),output=path.resolve(p
 for(const p of [input,output])assert(p.startsWith(base+path.sep));assert(!fs.existsSync(output),'Preserve previous evidence');fs.mkdirSync(output,{recursive:true});
 const sha=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex'),original=sha(input);
 const report={input,sourceSha256:original,output,expected:process.env.STRATEGY_EXPECT||'paired',requests:[],interactions:[],timingScope:'IPC backend separately from click-to-accepted-display; latter includes UI dispatch/polling and surface preparation',checks:[],windowEverVisible:false};
+assert(['paired','no-route','no-sequence','missing-target'].includes(report.expected),'Declare the expected complete-plan result');
+const stoppedReason=report.expected==='no-sequence'?'NO_COMPLETE_TWO_TOOL_SEQUENCE':'NO_COMPLETE_TOOL_ACCESS';
 const saved=path.join(output,'strategies-saved.ressectionlab');let last=null;
 app.setPath('userData',path.join(output,'hidden-profile'));process.argv.push('--case',input,'--automation-hidden');
 dialog.showSaveDialog=async()=>({canceled:false,filePath:saved});
@@ -57,6 +59,7 @@ app.on('browser-window-created',(_event,window)=>{
      const context=last.strategyPlanningAvailability.contextOptions.find(x=>x.labelValue===2);assert(context);report.contextLayerId=context.layerId;
      await set('Anatomical context layer',context.layerId);await set('Context margin mm',0);await set('Context near volume limit mm3',0);
      study=await generate('context-zero-margin');assert.equal(study.schema,'resectionlab.two-tool-comparison.v2');assert.equal(study.contextBinding.layerId,context.layerId);assert.equal(study.contextBinding.reviewStatus,context.reviewStatus);assert.equal(study.publicPlan.publicObservation.evaluationReferencesExposed,false);
+     if(process.env.STRATEGY_CONTEXT_BINDING){assert.equal(study.contextBinding.schema,process.env.STRATEGY_CONTEXT_BINDING);if(study.contextBinding.schema==='resectionlab.source-context-binding.v2'){assert.equal(typeof study.contextBinding.eligibility.sourceSeries,'string');assert(study.contextBinding.eligibility.sourceSeries);assert.deepEqual(study.contextBinding.eligibility,{schema:'resectionlab.native-context-eligibility.v1',rule:'observed-lesion-context-sharing-verified-categorical-source-v1',nativeKind:'lesion-context',nativeRole:'context',provenanceKind:'observed_source_annotation',sourceSeries:study.contextBinding.eligibility.sourceSeries});}}
      if(report.expected==='paired'){
       assert.equal(study.publicPlan.decision.operation,'COMPARE');assert(study.publicPlan.alternatives.every(x=>x.anatomicalEncounter.nearMm3===0));
       await set('Context margin mm',3);const stopped=await generate('context-limit-stop');assert.equal(stopped.publicPlan.decision.reason,'ANATOMICAL_CONTEXT_LIMIT');assert.equal(stopped.publicPlan.chosenPair,null);assert(stopped.publicPlan.rejections.some(x=>x.anatomicalEncounter?.nearMm3>0));assert(await js(`!!document.querySelector('[aria-label="Source context refusals"]')`));await capture('context-stop-markers');
@@ -64,7 +67,16 @@ app.on('browser-window-created',(_event,window)=>{
       await click('Select Longer contact');assert(await js(`[...document.querySelectorAll('button')].find(x=>x.textContent.trim()==='Preview strategy checkpoint').disabled`));report.contextSequentialRevision=sequential.revision;await capture('context-sequential-stop','[aria-label="Selected two-tool strategy"]');
       await set('Context near volume limit mm3',1000);study=await generate('context-allowed');assert.equal(study.publicPlan.decision.operation,'COMPARE');assert(study.publicPlan.alternatives.slice(0,2).every(x=>x.anatomicalEncounter.nearMm3===3&&x.anatomicalEncounter.newRemovedContextMm3===0&&x.anatomicalEncounter.baselineRemovedContextMm3===1036));
       report.contextRevision=study.revision;await capture('context-comparison','[aria-label="Anatomical encounter consequence"]');
-     }else{assert.equal(study.publicPlan.decision.reason,'NO_COMPLETE_TOOL_ACCESS');await capture('context-no-access');}
+     }else{
+      assert.equal(study.publicPlan.decision.reason,stoppedReason);await capture('context-no-access');
+      if(report.expected==='no-sequence'){
+       await set('Context margin mm',3);const limited=await generate('context-primary-limit-stop');
+       assert.equal(limited.publicPlan.decision.reason,'ANATOMICAL_CONTEXT_LIMIT');assert.equal(limited.publicPlan.chosenPair,null);
+       assert(limited.publicPlan.rejections.some(x=>x.reason==='ANATOMICAL_CONTEXT_LIMIT:primary-access'&&x.anatomicalEncounter?.nearMm3>0));
+       await capture('context-primary-limit-stop');await set('Context margin mm',0);study=await generate('context-restored-no-sequence');assert.equal(study.publicPlan.decision.reason,stoppedReason);
+       report.checks.push('Changing the supplied context margin excludes primary access; restoring it retains the independent two-tool sequence refusal');
+      }
+     }
      report.checks.push('Exact supplied context selection propagates through public observation, source-linked limit and native comparison; no functional localization or injury probability');
     }
     if(report.expected==='paired'){
@@ -87,7 +99,7 @@ app.on('browser-window-created',(_event,window)=>{
      await set('Shared entry patch radius',study.publicPlan.constraints.geometry.entry.radiusMm);
      report.checks.push('Actual controls change contact duration, removed target and preferred complete sequence; two distinct branches installed without new non-target removal');
     }else{
-     assert.equal(study.publicPlan.decision.operation,'STOP');assert.equal(study.publicPlan.alternatives.length,1);assert.equal(study.publicPlan.decision.reason,'NO_COMPLETE_TOOL_ACCESS');await capture('no-access-stop');
+     assert.equal(study.publicPlan.decision.operation,'STOP');assert.equal(study.publicPlan.alternatives.length,1);assert.equal(study.publicPlan.decision.reason,stoppedReason);await capture('no-access-stop');
     }
     await click('Require functional evidence for strategies','input[type=checkbox]');study=await generate('functional-evidence-stop');assert.equal(study.publicPlan.decision.operation,'STOP');assert.equal(study.publicPlan.decision.reason,'REQUIRED_EVIDENCE_UNAVAILABLE');assert.equal(study.publicPlan.alternatives.length,1);await capture('functional-stop');
     if(process.env.STRATEGY_SENSITIVITY==='1'){
@@ -99,7 +111,7 @@ app.on('browser-window-created',(_event,window)=>{
       const candidate=nonzero.candidates.find(c=>c.id==='long'),failed=candidate.outcomes.find(o=>o.scenarioId==='R+');assert(failed.failure);const point=failed.actionProgram[failed.failure.actionIndex].pose.position;
       await click('Show failed commanded pose long R+');await until(()=>js(`document.querySelector('.rl-viewer-statusbar')?.textContent.includes(${JSON.stringify(point.map(x=>x.toFixed(1)).join(' / '))})`),'failed command RAS cursor');assert.equal(last.view.stateId,report.baselineStateId);report.failedCommandRasMm=point;await capture('execution-failed-command','.strategy-sensitivity');
      }
-     report.sensitivityPolicies=nonzero.policies;report.sensitivityScenarioCount=nonzero.scenarioCount;report.checks.push('Zero offset reproduces nominal preference; finite coherent offsets expose complete-program failures and select STOP without changing native state');
+     report.sensitivityPolicies=nonzero.policies;report.sensitivityScenarioCount=nonzero.scenarioCount;report.checks.push('Zero offset reproduces nominal preference; finite coherent offsets produce native-verified policy decisions without changing the baseline');
     }
     await click('Save');await until(()=>fs.existsSync(saved),'native save');report.saved=saved;report.savedStateId=last.view.stateId;
    }
