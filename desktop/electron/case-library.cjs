@@ -58,7 +58,7 @@ class CaseLibrary {
       if (addedCatalog.has(row.id)) return;
       addedCatalog.add(row.id);this.paths.set(row.id,{catalog:true,external:row.id.startsWith('external-')});
       rows.push({id:row.id,title:row.title,recent:wasRecent,bytes:row.bytes,qualifiedCatalog:true,
-        source:row.source,anatomy:row.anatomy,missingAnatomy:row.missingAnatomy,...(row.sourceLocation?{sourceLocation:row.sourceLocation}:{})});
+        source:row.source,anatomy:row.anatomy,missingAnatomy:row.missingAnatomy,...(row.id.startsWith('external-')?{reviewedExternal:true,capabilities:row.capabilities,limitations:row.limitations}:{}),...(row.sourceLocation?{sourceLocation:row.sourceLocation}:{})});
     };
     for (const filename of [...new Set([...recent, ...this.nativePaths, ...prepared])]) {
       try {

@@ -4,7 +4,7 @@ import type {CasePayload,ResectionApi,CaseLibraryFolder} from './types';
 import {ImagingWorkspacePanel} from './ImagingWorkspacePanel';
 import type {DisplaySeriesView,ImportDisplaySeriesRequest} from './workspace-imaging-types';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
-export type LibraryCase={id:string;title:string;recent:boolean;bytes:number;native?:boolean;portable?:boolean;timepoint?:string;scanCount?:number;qualifiedCatalog?:boolean;source?:string;anatomy?:string[];missingAnatomy?:string[];sourceLocation?:{label:string;status:'source-reported-unreviewed'}};
+export type LibraryCase={id:string;title:string;recent:boolean;bytes:number;native?:boolean;portable?:boolean;timepoint?:string;scanCount?:number;qualifiedCatalog?:boolean;reviewedExternal?:boolean;source?:string;anatomy?:string[];capabilities?:string[];limitations?:string[];missingAnatomy?:string[];sourceLocation?:{label:string;status:'source-reported-unreviewed'}};
 export type AnatomyRecord={label?:string;provenance?:string;kind?:string;coverage?:string;review_status?:string;runtime_seconds?:number;
   source_sha256?:string;cache_key?:string;model?:{name?:string;version?:string;license?:string;requirements?:string;weights_path?:string;weights_sha256?:string;device?:string;peak_memory_bytes?:number}};
 export function anatomyDescription(record:AnatomyRecord|undefined,fallback:string):string {
@@ -21,7 +21,7 @@ export function filterLibraryCases(cases:LibraryCase[],query:string):LibraryCase
   const terms=normalize(query.trim()).split(/\s+/).filter(Boolean);
   if(!terms.length)return cases;
   return cases.filter(row=>{const location=row.qualifiedCatalog&&row.sourceLocation?.status==='source-reported-unreviewed'?row.sourceLocation.label:'';
-    const text=normalize([row.title,row.source??'',...(row.anatomy??[]),location].join(' '));return terms.every(term=>text.includes(term));});
+    const text=normalize([row.title,row.source??'',...(row.anatomy??[]),...(row.capabilities??[]).map(name=>name.replaceAll('_',' ')),location].join(' '));return terms.every(term=>text.includes(term));});
 }
 export function CaseLibraryPanel({cases,onOpen,onBrowse,busy,libraryFolder,onChooseLibrary,libraryError}:{cases:LibraryCase[];onOpen:(id:string)=>void;onBrowse:()=>void;busy:boolean;libraryFolder?:CaseLibraryFolder|null;onChooseLibrary?:()=>void;libraryError?:string|null}) {
   const [query,setQuery]=useState('');
@@ -40,7 +40,7 @@ export function CaseLibraryPanel({cases,onOpen,onBrowse,busy,libraryFolder,onCho
     <p className="muted-note" role="status">{shown.length} {shown.length===1?'case':'cases'}{query.trim()?` matching “${query.trim()}”`:''}</p>
     {shown.map(row=><button className="poc-case-card" key={row.id} onClick={()=>onOpen(row.id)} disabled={busy}>
       <strong>{row.title}</strong><span>{row.recent?'Recently opened':row.qualifiedCatalog?`${row.source} catalog`:'Prepared public case'} · {row.native?`${studyLabel(row.timepoint??'preoperative')} · ${row.scanCount??0} scans`:row.portable?'Portable patient study':`${(row.bytes/1048576).toFixed(0)} MB`}</span>
-      {row.qualifiedCatalog&&<><span>{row.anatomy?.length?row.anatomy.map(name=>name[0].toUpperCase()+name.slice(1)).join(' + '):'Anatomy coverage unknown'}</span><span>Source checked · anatomy unreviewed</span></>}
+      {row.reviewedExternal?<><span>{row.capabilities?.map(name=>name.replaceAll('_',' ')).join(' · ')}</span><span>Engineering review · limited capabilities</span>{row.limitations?.length?<span>{row.limitations[0]}</span>:null}</>:row.qualifiedCatalog&&<><span>{row.anatomy?.length?row.anatomy.map(name=>name[0].toUpperCase()+name.slice(1)).join(' + '):'Anatomy coverage unknown'}</span><span>Source checked · anatomy unreviewed</span></>}
       {row.qualifiedCatalog&&row.sourceLocation?.status==='source-reported-unreviewed'&&<span className="poc-source-location">Reported site: {row.sourceLocation.label}<small>Dataset / paper report · review pending</small></span>}
     </button>)}
     {!shown.length&&<p className="muted-note">{cases.length?'No matching cases. Try a different name, source, anatomy or reported site.':'Open or import imaging to start a case.'}</p>}

@@ -617,6 +617,8 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
       onPointerUpCapture={event=>{if((event.target as HTMLInputElement).type==='range')engine.current?.endInteraction();}}
       onPointerCancelCapture={()=>engine.current?.endInteraction()}
       data-layout={layout}
+      data-source-case-hash={caseData?.caseHash}
+      data-renderer-ready={ready&&!error&&!modelDisplayPending&&remaining===0?'true':'false'}
       data-surfaces-pending={remaining}
       data-expanded={expanded ?? undefined}
       aria-label="Linked patient imaging workspace"

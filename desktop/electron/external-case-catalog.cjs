@@ -14,7 +14,14 @@ async function verifyVolume(root,marker){
   if(process.platform!=='darwin')fail('external volume verification currently requires macOS.');
   const mount=marker.mount_point;
   if(typeof mount!=='string'||!path.isAbsolute(mount)||mount==='/'||!inside(mount,root))fail('invalid volume identity marker.');
-  const {stdout}=await exec('diskutil',['info','-plist',mount],{timeout:15000,maxBuffer:65536});
+  const {stdout:mounts}=await exec('/sbin/mount',[],{timeout:5000,maxBuffer:65536});
+  const entry=mounts.split('\n').map(line=>line.split(' on ')).find(parts=>parts.length===2&&parts[1].split(' (')[0]===mount&&parts[0].startsWith('/dev/'));
+  if(!entry)fail('the recorded external volume is not mounted.');
+  let stdout;
+  for(let attempt=0;attempt<2;attempt++){
+    try{({stdout}=await exec('diskutil',['info','-plist',entry[0]],{timeout:15000,maxBuffer:65536}));break;}
+    catch(error){if(attempt===1)throw error;}
+  }
   const uuid=stdout.match(/<key>VolumeUUID<\/key>\s*<string>([^<]+)<\/string>/)?.[1];
   if(uuid!==marker.volume_uuid||!/<key>Internal<\/key>\s*<false\s*\/>/.test(stdout))fail('connect the recorded external volume.');
   if((await fs.stat(root)).dev!==(await fs.stat(mount)).dev)fail('data directory is on a different volume.');
@@ -44,7 +51,9 @@ class ExternalCaseCatalog{
           !row.path.endsWith('.ressectionlab')||row.path.split(/[\\/]/).includes('..')||
           !/^[a-f0-9]{64}$/.test(row.sha256)||!Number.isSafeInteger(row.bytes)||row.bytes<1||
           typeof row.review_path!=='string'||path.isAbsolute(row.review_path)||row.review_path.split(/[\\/]/).includes('..')||
-          !/^[a-f0-9]{64}$/.test(row.review_sha256)||!Array.isArray(row.capabilities)||!Array.isArray(row.missing_anatomy))fail('case acceptance record is invalid.');
+          !/^[a-f0-9]{64}$/.test(row.review_sha256)||!Array.isArray(row.capabilities)||!Array.isArray(row.missing_anatomy)||
+          !row.capabilities.every(value=>typeof value==='string')||!row.missing_anatomy.every(value=>typeof value==='string')||
+          (row.source!==undefined&&typeof row.source!=='string')||(row.limitations!==undefined&&(!Array.isArray(row.limitations)||!row.limitations.every(value=>typeof value==='string'))))fail('case acceptance record is invalid.');
         const filename=path.resolve(this.root,row.path),review=path.resolve(this.root,row.review_path);
         if(!inside(this.root,filename)||!inside(this.root,review))fail('case or review path escapes the root.');
         if(await fs.realpath(filename)!==filename||await fs.realpath(review)!==review)fail('case dependencies may not escape through symbolic links.');
@@ -53,8 +62,8 @@ class ExternalCaseCatalog{
         const id='external-'+crypto.createHash('sha256').update(marker.root_id+'\0'+row.case_id).digest('hex');
         if(ids.has(id))fail('duplicate case identity.');ids.add(id);
         rows.push({id,title:row.case_id,bytes:row.bytes,aliases:[filename],filename,review,
-          source:{dataset:row.source||'external',person:row.person_id},anatomy:row.capabilities,
-          missingAnatomy:row.missing_anatomy,sourceLocation:filename,sha256:row.sha256,reviewSha256:row.review_sha256});
+          source:row.source||'External',anatomy:[],capabilities:row.capabilities,limitations:row.limitations||[],
+          missingAnatomy:row.missing_anatomy,sha256:row.sha256,reviewSha256:row.review_sha256});
       }
       return rows;
     }catch(error){if(error.message.startsWith('External data library:'))throw error;

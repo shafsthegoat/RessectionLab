@@ -38,10 +38,26 @@ def volume_info(root: Path) -> dict:
     mount_candidate = root.resolve()
     while mount_candidate.parent != mount_candidate and not os.path.ismount(mount_candidate):
         mount_candidate = mount_candidate.parent
-    try:
-        info = plistlib.loads(subprocess.check_output(["diskutil", "info", "-plist", str(mount_candidate)], timeout=15))
-    except (subprocess.SubprocessError, ValueError) as exc:
-        raise DataRootError("Cannot verify the external data volume.") from exc
+    # Query the currently mounted device directly. Resolving an ExFAT pathname
+    # through Disk Arbitration can stall during heavy writes; the kernel mount
+    # table supplies its current device without retaining an old device number.
+    device = str(mount_candidate)
+    mounts = subprocess.check_output(["/sbin/mount"], text=True, timeout=5)
+    for line in mounts.splitlines():
+        if " on " in line:
+            source, location = line.split(" on ", 1)
+            if location.split(" (", 1)[0] == str(mount_candidate) and source.startswith("/dev/"):
+                device = source
+                break
+    failure = None
+    for _ in range(2):
+        try:
+            info = plistlib.loads(subprocess.check_output(["diskutil", "info", "-plist", device], timeout=15))
+            break
+        except (subprocess.SubprocessError, ValueError) as exc:
+            failure = exc
+    else:
+        raise DataRootError("Cannot verify the external data volume after two bounded attempts.") from failure
     mount = Path(info.get("MountPoint", "/"))
     if (not info.get("MountPoint") or info.get("Internal", True) or mount == Path("/")
             or not os.path.ismount(mount) or not root.resolve().is_relative_to(mount)

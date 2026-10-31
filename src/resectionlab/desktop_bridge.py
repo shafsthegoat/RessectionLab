@@ -344,7 +344,12 @@ class BinaryTransfers:
                 self._entries.pop(key)
 
     def close(self) -> None:
-        shutil.rmtree(self.root)
+        def vanished(_operation, _path, error):
+            # On macOS ExFAT, removing a data file can remove its AppleDouble
+            # companion too. rmtree may already have listed that companion.
+            if not isinstance(error, FileNotFoundError):
+                raise error
+        shutil.rmtree(self.root, onexc=vanished)
 
 
 @dataclass

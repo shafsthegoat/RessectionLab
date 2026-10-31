@@ -1544,6 +1544,7 @@ export default function App() {
             libraryFolder={libraryFolder} libraryError={libraryError} onChooseLibrary={api?.chooseCaseLibrary?()=>void chooseCaseLibrary():undefined}
             onOpen={id=>void act(async()=>{if(api?.openListedCase){const next=nativeApi?.openListedWorkspace?await nativeApi.openListedWorkspace(id):await api.openListedCase(id);if(isNativeBinding(next)){setPayload(null);setCaseData(null);await native.install(next);await api.workspaceInstalled?.({caseHash:next.collectionId,caseId:next.document.patient_id});setWorkbenchTab('anatomy')}else if(next){await installCase(next,api)}else return;}})}/></> : <>
             <div className="workspace-tabs"><button className={workbenchTab==='data'?'selected':''} onClick={()=>setWorkbenchTab('data')}>Scans</button><button className={workbenchTab==='anatomy'?'selected':''} onClick={()=>setWorkbenchTab('anatomy')}>Anatomy</button></div><h1 title={title}>{title}</h1><p className="case-subtitle">{displayedSource ? String(displayedSource.metadata.selected_modality??'Source image') : 'Open a case to begin'}</p>
+            {typeof displayedSource?.metadata.observation_role==='string'&&displayedSource.metadata.observation_role.startsWith('baseline_reference')&&<p role="status">Baseline reference acquisition · before synthetic tumor insertion.</p>}
             {workbenchTab==='data' && payload && displayedSource && <WorkbenchDataPanel source={payload} displayed={displayedSource} series={imaging.series} selectedId={imaging.selectedId}
               busy={busy||engineStopped} api={api} onSelect={imaging.select} onImport={request=>void act(()=>imaging.importSeries(request))}
               settings={primaryViewer} onSettingsChange={setPrimaryViewer}/>}
@@ -1555,8 +1556,9 @@ export default function App() {
                 visibleLayers={displayedLayers} onVisibilityChange={setDisplayedLayers} settings={viewerSettings} onSettingsChange={setViewerSettings}
                 missingStructures={Array.isArray(displayedSource?.metadata.missing_anatomy)?displayedSource.metadata.missing_anatomy as string[]:['Skull','Vessels','Brain structures'].filter(name=>!displayedCase?.compartments.some(layer=>{
                   const kind=(displayedSource?.metadata.anatomy_layers as Record<string,{kind?:string}>|undefined)?.[layer.name]?.kind?.toLowerCase();
-                  const kinds=name==='Skull'?['skull','bone']:name==='Vessels'?['vessel','vessels']:['brain','soft_tissue'];
-                  return (kind!==undefined&&kinds.includes(kind))||layer.name.toLowerCase().includes(name==='Brain structures'?'brain':name.toLowerCase());
+                  const kinds=name==='Skull'?['skull','bone']:name==='Vessels'?['vessel','vessels','artery','vein','sinus']:['brain','soft_tissue'];
+                  const named=name==='Vessels'?/vessel|artery|arterial|vein|venous|sinus/i.test(layer.name):layer.name.toLowerCase().includes(name==='Brain structures'?'brain':name.toLowerCase());
+                  return (kind!==undefined&&kinds.includes(kind))||named;
                 }))}
                 provenanceLabel="Cached masks · no inference on view changes"/>
               <AnnotationCenterButton center={imaging.selected?null:annotationCenterMm} onCenter={setCursor}/>
