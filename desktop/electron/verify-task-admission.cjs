@@ -9,6 +9,7 @@ assert(!fs.existsSync(output),'Preserve prior evidence; choose a fresh output');
 const sha=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex'),original=sha(input);
 const report={input,output,inputSha256:original,expected:process.env.ADMISSION_EXPECT||'geometric_candidates',windowEverVisible:false,checks:[],requests:[]};
 const saved=path.join(output,'admitted-saved.ressectionlab');
+const expectedSchema=process.env.ADMISSION_SCHEMA||'resectionlab.interactive-source-approaches.v3';
 app.setPath('userData',path.join(output,'hidden-profile'));process.argv.push('--case',input,'--automation-hidden');
 dialog.showSaveDialog=async()=>({canceled:false,filePath:saved});
 let lastResponse=null;
@@ -18,7 +19,8 @@ ipcMain.handle=(name,handler)=>handle(name,async(...args)=>{
   if(name==='research:surgicalRehearsal'){
     lastResponse=result;report.requests.push({command:args[1]?.command,stateId:result?.view?.stateId,
       position:result?.position,branchId:result?.branchId,status:result?.interactivePlanning?.status,
-      routes:result?.interactivePlanning?.routes?.length,admission:result?.interactivePlanningAvailability?.admission?.admissionSeal,
+      publicInputHash:result?.interactivePlanning?.publicObservation?.inputHash,decision:result?.interactivePlanning?.decision,
+      publicPlanSeal:result?.interactivePlanning?.publicPlanSeal,routes:result?.interactivePlanning?.routes?.length,admission:result?.interactivePlanningAvailability?.admission?.admissionSeal,
       refusal:result?.interactivePlanningAvailability?.reason});
   }
   return result;
@@ -58,19 +60,26 @@ app.on('browser-window-created',(_event,window)=>{
         await capture('qualified-source','[aria-label="Patient task evidence"]');
         await js(`document.querySelector('[aria-label="Patient task evidence"]').open=false`);
         if(process.env.ADMISSION_REOPEN_ONLY==='1'){
-          assert(initial.interactivePlanning?.schema.endsWith('.v2'));
+          assert.equal(initial.interactivePlanning?.schema,expectedSchema);
           assert.equal(initial.view.stateId,process.env.ADMISSION_EXPECTED_STATE);
-          report.checks.push('Fresh hidden Electron process verifies the saved V2 report, exact native baseline and external source-byte admission');
+          report.checks.push('Fresh hidden Electron process verifies the saved versioned report, exact native baseline and external source-byte admission');
         }else{
           assert(initial.interactivePlanningAvailability.available);
           await click('Acknowledge interactive planning unknowns','input[type=checkbox]');
-          const comparison=await generate();assert.equal(comparison.schema,'resectionlab.interactive-source-approaches.v2');
+          const comparison=await generate();assert.equal(comparison.schema,expectedSchema);
+          assert(comparison.publicObservation?.inputHash);assert.equal(comparison.publicObservation.evaluationReferencesExposed,false);
+          assert(comparison.publicPlanSeal);assert.equal(comparison.decision.operation,comparison.routes.length?'COMPARE':'STOP');
+          assert(await js(`!!document.querySelector('[aria-label="Planning decision"]')`));
+          for(const route of comparison.routes)assert(route.publicExecution?.accessAccepted&&route.publicExecution?.withdrawalAccepted);
+          report.checks.push('V3 candidates, native suffix previews and explicit COMPARE/STOP share a sealed public observation');
           assert.equal(comparison.status,report.expected);assert.equal(lastResponse.view.stateId,initial.view.stateId);
           assert.equal(comparison.taskAdmissionSeal,qualification.admissionSeal);
           fs.writeFileSync(path.join(output,'desktop-comparison.json'),JSON.stringify(comparison,null,2));
           if(comparison.routes.length){
             await click('Source approach 1');await click('Preview checked approach');await ready();
             assert(lastResponse.approachPreview?.receipt?.publicAccessAccepted);assert(lastResponse.approachPreview.receipt.publicWithdrawalAccepted);
+            assert(lastResponse.approachPreview.receipt.nativeMatchesPublicPrediction);
+            assert.equal(lastResponse.approachPreview.receipt.publicInputHash,comparison.publicObservation.inputHash);
             assert.equal(lastResponse.view.stateId,initial.view.stateId);await capture('checked-native-preview');
             await click('Install checked branch');await ready();assert.notEqual(lastResponse.view.stateId,initial.view.stateId);
             assert.equal(lastResponse.interactivePlanningAvailability.available,false);await capture('installed-native-branch');
@@ -83,6 +92,8 @@ app.on('browser-window-created',(_event,window)=>{
           await capture('geometric-comparison');
           await click('Require functional evidence','input[type=checkbox]');
           const refusal=await generate();assert.equal(refusal.status,'required_evidence_unavailable');
+          assert.equal(refusal.decision.operation,'STOP');assert.equal(refusal.publicObservation.inputHash,comparison.publicObservation.inputHash);
+          fs.writeFileSync(path.join(output,'desktop-refusal.json'),JSON.stringify(refusal,null,2));
           assert.deepEqual(refusal.missingRequiredEvidence,['functional']);assert.deepEqual(refusal.routes,[]);
           assert.equal(lastResponse.view.stateId,initial.view.stateId);await capture('functional-evidence-refusal');
           report.checks.push('Missing functional evidence refuses every route without changing physical state');

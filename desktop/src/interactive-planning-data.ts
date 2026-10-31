@@ -24,6 +24,8 @@ export interface InteractivePlanningLimit {name:string;positionMm:Point3;reason:
 export interface InteractivePlanningReport {
   schema:string;status:string;current?:boolean;revision?:number;historyCount?:number;sourceBranchId?:string;sourcePosition?:number;applications?:unknown[];sourceSceneId:string;startStateId:string;prefixActions:number;
   targetSelection?:Record<string,unknown>;constraints:InteractivePlanningConstraints;evidence:Record<string,unknown>;routes:InteractivePlanningRoute[];
+  publicObservation?:{schema:string;track:string;inputHash:string;remainingActions:number;evaluationReferencesExposed:boolean};
+  decision?:{operation:'COMPARE'|'STOP';candidateIds:string[];reason:string;rule:string};publicPlanSeal?:string;
   missingRequiredEvidence?:string[];rejections:Array<Record<string,unknown>>;reportSeal:string;limitingStructures?:InteractivePlanningLimit[];
 }
 export interface InteractivePlanningOverlay {

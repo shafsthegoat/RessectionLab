@@ -157,12 +157,74 @@ Generic reproduction (from the repository root; choose a fresh output):
   --output testcases/task-admission-fresh
 ```
 
+## Completed: public-input boundary for admitted inactive approaches
+
+New V3 reports use a typed immutable `PlanningObservation`. Exact allowlists
+project annotated material ownership, target roles, affine, declared protection
+cells, both tool states, supported physical ledgers, task/evidence roles and the
+remaining native action budget. A fresh public scene/engine has no original
+source identity, raw provenance, histories, evaluator arrays, callbacks or
+inherited caches. Numeric passive burdens are retained; unsupported profiles,
+contact/topology history or pending deformation/vascular state explicitly refuse
+this narrow track. Constructor checks prevent bypass by hand-built packets.
+
+The same public model supplies proposals, complete-tool screening, native suffix
+previews, deterministic candidate order and COMPARE/STOP. Its complete plan is
+sealed before attaching native source/audit bindings. Installation executes the
+native engine separately and requires exact predicted physical-state hashes at
+access and withdrawal; a disagreement refuses installation without changing the
+public decision. V1/V2 records retain their historical behavior and are never
+promoted to a V3 information-boundary claim. This migrates the admitted inactive
+workflow only; other historical planners/learned components remain outside this
+new track. Annotation-assisted planning is not image-only planning.
+
+Generated controls cover private reference/identity/history/provenance swaps,
+metadata canonicalization, direct packet construction, public anatomy/physics/
+protection changes, passive burden preservation, remaining action budgets,
+preproposal time-budget STOP, resealed refusal attacks and post-seal evaluator
+mutation. The evaluator diagnostic counts reference membership of proposed
+contact cells; it is neither clinical harm nor independent tool verification.
+
+Both acquired development baselines were rerun through the actual hidden desktop:
+0007 generates three candidates, previews and installs a native branch, returns
+to its exact baseline, saves and reopens in a fresh process. 0005 preserves its
+no-route STOP. Both refuse missing functional evidence, and the exact missing-
+target control still exposes no Generate action. All three 0007 programs match
+native physical-state predictions, cold-replay exactly and pass the separate
+continuous complete-tool/other-hand/withdrawal geometry checker. Screenshots
+were inspected; no automation window became visible.
+
+Representative local backend timings (single cold/warm pair, not an optimization
+claim): generation including public suffix previews 2.28/2.28 s for 0007 and
+1.36/1.29 s for 0005; functional-evidence STOP 0.15 s. 0007 native validation/
+materialization is 3.05 s cold, 0.72–0.81 s thereafter; fresh suffix replays are
+1.09–1.30 s. Independent geometry takes 4.91 s. Sources and original baselines
+are unchanged. Full evidence, fingerprints, scripts and run logs are indexed in
+`testcases/planning-observation-v1/README.md`.
+
+Reproduce the source-bound checks with existing prepared inputs:
+
+```sh
+.venv/bin/python -m pytest tests/test_surgical_planning_observation.py tests/test_surgical_task_admission.py tests/test_surgical_interactive_planning.py -q
+.venv/bin/python scripts/check_planning_observation.py \
+  testcases/task-admission-v1/acquired-0007-v2/admitted-planning.ressectionlab \
+  --output testcases/planning-observation-fresh
+```
+
+Choose a fresh output; substitute the existing 0005-v1 input for the no-route
+control. No new data, learning, physical calibration or reserved evaluation was
+used. Final proposed-commit verification passes 209 backend tests, including 39
+observation-boundary controls. All 1,212 desktop tests and the build pass
+(existing bundle-size warning). The two saved workspaces retain 19 exact cold-
+replayed branches. Exact hidden-native commands are in the ignored inventory.
+
 ## Remaining milestones and next dependency
 
-Next: extend this admission into a common observation contract across planners
-and an executable two-tool strategy comparison. Add source-linked functional
-encounters only with actual compatible evidence. End-to-end profiling and the
-frozen uncertainty comparison remain open. Older lattice resolution dependence
-and continuum empirical/domain gates remain qualification holds. No speed,
-learned planning advantage, neurological probability or clinical-readiness claim
-is made.
+Next: extend this boundary to a new, explicitly versioned executable two-tool
+manipulation/reassessment task, then migrate the remaining planner interfaces.
+The current admission intentionally permits no active removal or information
+acquisition. Source-linked functional consequences need compatible evidence;
+end-to-end optimization and frozen uncertainty comparison remain open. Older
+lattice resolution dependence and continuum empirical/domain gates remain
+qualification holds. No learned advantage, neurological probability or
+clinical-readiness claim is made.

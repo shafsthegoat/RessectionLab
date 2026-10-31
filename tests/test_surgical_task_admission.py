@@ -246,7 +246,7 @@ def test_missing_required_evidence_is_a_sealed_refusal(prepared):
     _, e, _, _ = prepared[0]
     defaults = interactive_planning_availability(e)['defaults']; defaults['requiredEvidence'].append('functional')
     report = generate_interactive_approaches(e, defaults)
-    assert report['schema'].endswith('.v2') and report['status'] == 'required_evidence_unavailable'
+    assert report['schema'].endswith('.v3') and report['status'] == 'required_evidence_unavailable'
     assert report['missingRequiredEvidence'] == ['functional'] and not report['routes']
     assert validate_saved_interactive_report(e.scene, e.snapshot(), report)
 
@@ -255,7 +255,7 @@ def test_generation_exact_native_materialization_and_workspace_reopen(prepared, 
     from resectionlab.desktop_bridge import BridgeSession, _Request
     case, e, record, _ = prepared[0]
     before = e.snapshot(); report = generate_interactive_approaches(e, interactive_planning_availability(e)['defaults'])
-    assert report['schema'].endswith('.v2') and report['routes'], report['rejections'][:5]
+    assert report['schema'].endswith('.v3') and report['routes'], report['rejections'][:5]
     candidate, receipt = materialize_interactive_approach(e, report, report['routes'][0]['id'])
     assert receipt['publicAccessAccepted'] and receipt['publicWithdrawalAccepted']
     assert candidate.state['removed'] == e.state['removed'] and e.snapshot() == before
@@ -275,3 +275,48 @@ def test_generation_exact_native_materialization_and_workspace_reopen(prepared, 
         assert read_case_artifacts(save)['surgical_toolbox']['taskAdmission'] == record['taskAdmission']
     finally:
         session.close()
+
+
+@pytest.mark.parametrize('field', ['publicObservation', 'publicExecution', 'publicPlanSeal', 'decision'])
+def test_resealed_v3_public_bindings_cannot_be_exchanged(prepared, field):
+    _, e, _, _ = prepared[0]
+    report = generate_interactive_approaches(e, interactive_planning_availability(e)['defaults'])
+    if field == 'publicObservation': report[field]['inputHash'] = 'sha256:'+'0'*64
+    elif field == 'publicExecution': report['routes'][0][field]['withdrawalPhysicalStateHash'] = 'sha256:'+'0'*64
+    elif field == 'publicPlanSeal': report[field] = 'sha256:'+'0'*64
+    else: report[field]['operation'] = 'STOP'
+    report.pop('reportSeal'); report['reportSeal'] = semantic_digest(report)
+    with pytest.raises(ValueError, match='public'):
+        validate_saved_interactive_report(e.scene, e.snapshot(), report)
+
+
+def test_historical_acquired_v2_reports_reopen_without_public_contract_promotion(monkeypatch):
+    from resectionlab.workspace_bundle import load_workspace
+    from resectionlab.surgical_interactive_workspace import validate_workspace
+    path = Path(__file__).resolve().parents[1]/'testcases/task-admission-v1/desktop-0007-05/admitted-saved.ressectionlab'
+    if not path.exists(): pytest.skip('Local historical V2 native artifact unavailable')
+    case, artifacts, _ = load_workspace(path); record = artifacts['surgical_toolbox']
+    scene = load_environment(path)
+    reports = [item['report'] for item in record['interactiveApproaches']]
+    assert reports and all(r['schema'].endswith('.v2') for r in reports)
+    assert all('publicObservation' not in r and 'publicPlanSeal' not in r for r in reports)
+    monkeypatch.setattr(admission, '_DECLARATIONS_ROOT', Path(__file__).resolve().parents[1]/'testcases/downloaded-datasets')
+    assert validate_workspace(scene, record, case.semantic_hash)
+
+
+@pytest.mark.parametrize('change', ['invented-missing', 'wrong-status', 'stop-with-routes'])
+def test_self_resealed_v3_refusal_must_match_public_evidence_and_count(prepared, change):
+    from resectionlab.surgical_interactive_planning import _public_report_body
+    _, e, _, _ = prepared[0]
+    report = generate_interactive_approaches(e, interactive_planning_availability(e)['defaults'])
+    if change == 'invented-missing':
+        report['routes'] = []; report['status'] = 'required_evidence_unavailable'; report['missingRequiredEvidence'] = ['invented']
+    elif change == 'wrong-status': report['status'] = 'no_geometric_route'
+    else: report['decision']['operation'] = 'STOP'
+    if change != 'stop-with-routes':
+        report['decision'].update(operation='COMPARE' if report['routes'] else 'STOP',
+                                  candidateIds=[r['id'] for r in report['routes']], reason=report['status'])
+    report['publicPlanSeal'] = semantic_digest(_public_report_body(report))
+    report.pop('reportSeal'); report['reportSeal'] = semantic_digest(report)
+    with pytest.raises(ValueError, match='public'):
+        validate_saved_interactive_report(e.scene, e.snapshot(), report)
