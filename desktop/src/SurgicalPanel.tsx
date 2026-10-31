@@ -1,3 +1,5 @@
+import {InteractivePlanningPanel} from './InteractivePlanningPanel';
+import type {Point3} from './viewer/coordinates';
 import {PatientPositionControls} from './PatientPositionControls';
 import {useEffect,useRef,useState} from 'react';
 import type {ReactNode} from 'react';
@@ -157,7 +159,7 @@ function MechanicsV2Details({view,preview}:{view:SurgicalView;preview:boolean}){
   return <details><summary>{preview?'Preview':'Recorded'} V2 mechanics and fluid budget</summary><dl className="surgical-declared-fields">{rows.map(([label,value])=><div key={label}><dt>{label}</dt><dd>{typeof value==='number'&&Number.isFinite(value)?+value.toFixed(5):displayValue(value)}</dd></div>)}</dl>{bipolar&&<details><summary>Declared bipolar heat model and assumptions</summary><DeclaredFields data={bipolar}/><p>Delivered heat and temperature are modeled quantities. The coagulation proxy and vessel patency remain separate; temperature does not predict injury or successful hemostasis.</p></details>}{vascular&&<details><summary>Declared vascular graph and assumptions</summary><DeclaredFields data={vascular}/></details>}<p className="surgical-note">{vascular?'The graph budget compares initial pressure-supporting storage plus boundary inflow against remaining storage, boundary outflow and generated wound fluid. Zero unstressed volume and all flow coefficients are declared assumptions.':'The vascular budget compares initial reserve plus refill against remaining reserve and generated fluid.'} These modeled quantities do not estimate patient blood loss or predict tissue injury.</p></details>;
 }
 
-export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,onFrameField,fieldDisplayControls,microscopeControls,learningReport,executionReport,cusaLearning,onRunFrozenCusa,onRunFrozenSector,frozenCusaPending=false,inspectionNotice}:{inspectionNotice?:string|null;onRunFrozenCusa?:(branchId:string)=>Promise<void>;onRunFrozenSector?:(method:string)=>Promise<void>;frozenCusaPending?:boolean;cusaLearning?:unknown;executionReport?:unknown;learningReport?:unknown;anatomyControls?:ReactNode;onFrameField?:()=>void;fieldDisplayControls?:ReactNode;microscopeControls?:ReactNode;c:SurgicalController;onFixture:()=>void;onImport?:(options:SurgicalImportOptions)=>Promise<void>|void;available:boolean}){
+export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,onFrameField,fieldDisplayControls,microscopeControls,learningReport,executionReport,cusaLearning,onRunFrozenCusa,onRunFrozenSector,frozenCusaPending=false,inspectionNotice,planningCursor,onPlanningCursor}:{planningCursor?:Point3|null;onPlanningCursor?:(p:Point3)=>void;inspectionNotice?:string|null;onRunFrozenCusa?:(branchId:string)=>Promise<void>;onRunFrozenSector?:(method:string)=>Promise<void>;frozenCusaPending?:boolean;cusaLearning?:unknown;executionReport?:unknown;learningReport?:unknown;anatomyControls?:ReactNode;onFrameField?:()=>void;fieldDisplayControls?:ReactNode;microscopeControls?:ReactNode;c:SurgicalController;onFixture:()=>void;onImport?:(options:SurgicalImportOptions)=>Promise<void>|void;available:boolean}){
   const [importOptions,setImportOptions]=useState<SurgicalImportOptions>({frame:'RAS+',units:'mm',material:'unknown',resolution:1,topology:'solid',thicknessMm:1});
   const [importing,setImporting]=useState(false),[importError,setImportError]=useState<string|null>(null);
   const [search,setSearch]=useState(''),[duration,setDuration]=useState(1),[operation,setOperation]=useState('apply'),[playing,setPlaying]=useState(false),[playbackSpeed,setPlaybackSpeed]=useState(1);
@@ -197,7 +199,7 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
       <strong>{c.preview?'Preview · uncommitted':observed?'Read-only replay':readOnly?'Read-only recorded state':'Committed state · editable'}</strong>
       <p>Action {position} / {steps} · {r?.branchId}</p>
       {inspectionNotice&&<p className="surgical-warning">{inspectionNotice}</p>}
-      {c.preview&&<><p>Apply commits; Cancel returns to committed anatomy.</p><button onClick={c.cancel}>Cancel preview</button></>}
+      {c.preview&&<><p>{c.approachPreview?'Install checked branch below commits this approach. Cancel returns to the planning checkpoint.':'Apply commits; Cancel returns to committed anatomy.'}</p><button onClick={c.cancel}>Cancel preview</button></>}
       {c.pending&&<><button onClick={c.cancel}>Cancel</button><p>Cancel clears the draft. The current request continues.</p></>}
       {observed&&<button disabled={c.pending} onClick={()=>stopRun(routes.boundary,{branchId:r?.branchId,position})}>Return to recorded boundary</button>}
       {imported&&!observed&&<button disabled={c.pending} onClick={()=>stopRun('inspect',{branchId:r?.branchId})}>Verify saved replay</button>}
@@ -211,17 +213,18 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
     <div className="surgical-toolbox">{v.catalog.filter(t=>(t.name+' '+t.category).toLowerCase().includes(search.toLowerCase())).map(t=><button key={t.id} aria-pressed={selected?.instrument===t.id} disabled={c.pending||playing||readOnly||!!v.planarBladeManeuver||selected?.instrument===t.id} onClick={()=>{if(selected?.instrument!==t.id)stopRun('step',{action:{slot:c.slot,operation:'exchange',instrument:t.id,duration:1}})}}><small>{t.category}</small>{t.name}</button>)}</div>
     <p className="surgical-note">Choosing a different instrument commits an exchange. The selected instrument does not advance time.</p></details>
 
+    {!v.planarBladeManeuver&&<InteractivePlanningPanel c={c} cursor={planningCursor} onCursor={onPlanningCursor} pause={()=>{setPlaying(false);c.pauseFullCase();}}/>}
     {!v.planarBladeManeuver&&<FullCaseRehearsalPanel c={c} pause={()=>setPlaying(false)}/>}
     {v.planarBladeManeuver&&<PlanarBladeManeuverPanel c={c} disabled={playing||readOnly} pause={()=>{setPlaying(false);c.pauseFullCase();}}/>}
-    <section className="manual-actions" aria-label="Manual instrument actions"><h3>Manual action</h3>
+    <section className="manual-actions" aria-label="Manual instrument actions"><h3>Manual action</h3>{c.approachPreview&&<p className="surgical-note">Install or cancel the checked approach preview before a manual instrument action.</p>}
     {v.planarBladeManeuver&&<p className="surgical-note">Use the declared fixed blade maneuver above. Other instrument actions are unavailable in this scene.</p>}
     {!compatible&&<p className="surgical-warning">No compatible material is mapped in this scene. Placement and inspection remain available; tissue effects require compatible material.</p>}
-    <fieldset disabled={c.pending||playing||readOnly||!!v.planarBladeManeuver} className="surgical-controls">
+    <fieldset disabled={c.pending||playing||readOnly||!!v.planarBladeManeuver||!!c.approachPreview} className="surgical-controls">
     <label>Action<select aria-label="Instrument action" value={operation} onChange={e=>{setOperation(e.target.value);c.clearPreview();}}>{['apply','place','move','hold','grasp','extract','activate','deactivate','release','withdraw','inspect'].map(op=><option key={op}>{op}</option>)}</select></label>
     </fieldset>
-    <div className="surgical-actions"><button disabled={c.pending||playing||readOnly||!!v.planarBladeManeuver} onClick={()=>stopRun('preview',{action:c.action(operation,params,duration)})}>Preview</button><button className="primary-button" disabled={c.pending||playing||readOnly||!!v.planarBladeManeuver} onClick={()=>stopRun('step',{action:c.action(operation,params,duration)})}>Apply</button>{!c.preview&&!c.pending&&<button onClick={c.cancel}>Cancel</button>}</div>
+    <div className="surgical-actions"><button disabled={c.pending||playing||readOnly||!!v.planarBladeManeuver||!!c.approachPreview} onClick={()=>stopRun('preview',{action:c.action(operation,params,duration)})}>Preview</button><button className="primary-button" disabled={c.pending||playing||readOnly||!!v.planarBladeManeuver||!!c.approachPreview} onClick={()=>stopRun('step',{action:c.action(operation,params,duration)})}>Apply</button>{!c.preview&&!c.pending&&<button onClick={c.cancel}>Cancel</button>}</div>
     <details><summary>Pose, stroke and tool settings</summary>
-    <fieldset disabled={c.pending||playing||readOnly||!!v.planarBladeManeuver} className="surgical-controls">
+    <fieldset disabled={c.pending||playing||readOnly||!!v.planarBladeManeuver||!!c.approachPreview} className="surgical-controls">
     <p className="surgical-note">{tool?.name} · {tool?.materials.length?`Compatible: ${tool.materials.join(', ')}`:'Modeled fluid and debris'}</p>
     <label>Viewport<select aria-label="Instrument interaction" value={c.mode} onChange={e=>c.setMode(e.target.value as typeof c.mode)}><option value="navigate">Navigate anatomy</option><option value="draw">Draw stroke on anatomy</option><option value="translate">Translate tool</option><option value="rotate">Rotate tool</option></select></label>
     <div className="surgical-vector">{c.pose.position.map((n,i)=><label key={i}>{['R','A','S'][i]} mm<Numeric label={`Tool position ${['R','A','S'][i]}`} step={.5} value={n} onChange={value=>{const p=[...c.pose.position] as [number,number,number];p[i]=value;c.setPose({...c.pose,position:p});}}/></label>)}</div>
@@ -231,7 +234,7 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
     <label>Duration · s<Numeric label="Action duration" min={.01} max={30} value={duration} onChange={n=>{setDuration(n);c.clearPreview();}}/></label>
     <p>{c.path.length} stroke points{c.path.length?' · editing pose replaces this stroke':''} · {amount(v.metrics.elapsedSeconds)} simulated s</p>
     </fieldset></details>
-    <fieldset disabled={c.pending||playing||readOnly||!!v.planarBladeManeuver} className="surgical-controls">
+    <fieldset disabled={c.pending||playing||readOnly||!!v.planarBladeManeuver||!!c.approachPreview} className="surgical-controls">
     {!cusaContactModel(v)&&Object.values(v.slots).filter(slot=>slot.instrument==='cusa'&&slot.inserted).length===1&&<button disabled={Object.values(v.slots).some(slot=>slot.grip.length||(slot.instrument!=='cusa'&&slot.inserted))||Object.keys(v.holds??{}).length>0||Number(v.metrics.nonTargetRemovedMm3)>200||(r?.position??0)>180||r?.exitRecovery?.sourceStateId===v.stateId}
       onClick={()=>{c.pauseFullCase();stopRun('recoverExit');}}>Checked withdrawal</button>}
     {!cusaContactModel(v)&&Object.values(v.slots).some(slot=>slot.instrument==='cusa'&&slot.inserted)&&<details><summary>Checked withdrawal limits</summary><p className="surgical-note">Checked withdrawal uses the recorded outside placement and native collision checks, with zero additional non-target removal. A latest partial shaft-collision action must match its observed tip pose before its accepted steps can be reversed. Development research sources only.</p></details>}

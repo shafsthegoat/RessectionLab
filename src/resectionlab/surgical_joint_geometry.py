@@ -7,6 +7,7 @@ The classic access selector remains available for its existing callers.
 from __future__ import annotations
 
 import math
+import copy
 
 import numpy as np
 from scipy.ndimage import binary_erosion
@@ -15,6 +16,8 @@ from scipy.spatial.transform import Rotation
 
 from .core import array_digest, semantic_digest
 from .geometry import GeometryScene, capsule_voxel_indices, point_segment_distances
+from .surgical_motion import envelopes, pair_conflict, swept_envelopes
+from .surgical_tools import TOOLS
 from .surgical_access_planning import (
     _brain_regions, _brain_route_novelty, _layer_evidence,
 )
@@ -670,3 +673,192 @@ def select_joint_corridors(scene, *, max_routes=3, max_surface_samples=4096,
             'Small fixed near/far sectors and their working spheres are recorded but do not gate staged selection.')
     report['selectionSeal']=semantic_digest(report)
     return routes,report
+
+
+# Interactive post-exposure proposals use the same complete instrument geometry
+# and source identity as the intact joint shortlist above. They have no tissue
+# effects and must pass unchanged public engine access/withdrawal validation.
+_POST_EXPOSURE_SCOPE = ('Inactive approach inside an existing authored exposure; current source-cell geometry only. '
+    'Zero additional tissue traversal/removal. Missing anatomy and clinical consequences remain unknown. '
+    'Exact public access and withdrawal validation is required before installation.')
+
+def _pose(point, quaternion):
+    return {'position': np.asarray(point, float).tolist(), 'quaternion': np.asarray(quaternion, float).tolist()}
+
+
+def _params(engine, radius):
+    slot = copy.deepcopy(engine.state['slots']['left'])
+    slot['instrument'] = 'cusa'; slot['parameters'] = {'radiusMm': radius}
+    return engine.parameters(slot)
+
+
+def _axial_cover(engine, start, end, params):
+    """Bound all engine midpoint sweeps during fixed-axis axial translation.
+
+    The union of endpoint capsules, inflated by half the maximum engine
+    microstep translation, encloses its midpoint inflation including endcaps.
+    """
+    axis = Rotation.from_quat(start['quaternion']).apply([0., 0., 1.])
+    if np.linalg.norm(np.cross(np.asarray(end['position'])-start['position'], axis)) > 1e-7:
+        raise ValueError('Only fixed-axis axial routes are admitted')
+    inflation = min(.4, float(engine.scene.spacing.min())/3.)/2.
+    first = envelopes(TOOLS['cusa'], params, start['position'], start['quaternion'])
+    last = envelopes(TOOLS['cusa'], params, end['position'], end['quaternion'])
+    result = []
+    for (a, b, r, part), (c, d, _, _) in zip(first, last):
+        points = [a, b, c, d]
+        result.append((min(points, key=lambda p: float(p@axis)), max(points, key=lambda p: float(p@axis)), r+inflation, part))
+    return result
+
+
+def _screen_cover(engine, cover, non_target_clearance_mm=0.):
+    shafts, working = set(), set()
+    for a, b, r, part in cover:
+        (shafts if part == 'shaft' else working).update(engine.touched(a, b, r))
+    for key, other in engine.state['slots'].items():
+        if key != 'left' and pair_conflict(cover, envelopes(TOOLS[other['instrument']], engine.parameters(other), other['position'], other['quaternion'])):
+            return 'TOOL_COLLISION:'+key, shafts, working
+    if engine.protection is not None:
+        positions = engine._positions()
+        if any(len(engine.protection.capsule_hits(a, b, r, positions=positions)) for a, b, r, _ in cover):
+            return 'PROTECTED_STRUCTURE', shafts, working
+        for key, other in engine.state['slots'].items():
+            if key == 'left':
+                continue
+            static = envelopes(TOOLS[other['instrument']], engine.parameters(other), other['position'], other['quaternion'])
+            if any(len(engine.protection.capsule_hits(a, b, r, positions=positions)) for a, b, r, _ in static):
+                return 'PROTECTED_STRUCTURE_OTHER_TOOL:'+key, shafts, working
+    if non_target_clearance_mm:
+        target_ids = {r['id'] for r in engine.scene.regions if r.get('target') and r['material'] == 'tumor'}
+        labels = engine.scene.labels.ravel()
+        for a, b, radius, _ in cover:
+            if any(int(labels[cell]) not in target_ids for cell in engine.touched(a, b, radius+non_target_clearance_mm)):
+                return 'NON_TARGET_CLEARANCE', shafts, working
+    return ('SHAFT_COLLISION' if shafts else 'RETAINED_TISSUE_COLLISION' if working else None), shafts, working
+
+
+def _post_exposure_rejection(engine, cover, reason, non_target_clearance_mm=0.):
+    """Locate an actual covered source owner, never substitute the requested tip.
+
+    Markers identify the current occupied whole-cell center, not an estimated
+    subvoxel point of contact. Source identity and original position are kept
+    separately when the shared occupancy has moved that source owner.
+    """
+    result = {'reason': reason}
+    base_reason = reason.removeprefix('WITHDRAWAL_')
+    if base_reason not in ('SHAFT_COLLISION', 'NON_TARGET_CLEARANCE',
+                           'NON_TARGET_TRAVERSAL_REQUIRED', 'EXPOSURE_ENTRY_BLOCKED'):
+        return result
+    target_ids = {r['id'] for r in engine.scene.regions if r.get('target') and r['material'] == 'tumor'}
+    owner = engine.occupancy()
+    for start, end, radius, part in cover:
+        if base_reason == 'SHAFT_COLLISION' and part != 'shaft':
+            continue
+        if base_reason == 'NON_TARGET_TRAVERSAL_REQUIRED' and part != 'working':
+            continue
+        margin = non_target_clearance_mm if base_reason == 'NON_TARGET_CLEARANCE' else 0.
+        cells = engine.cells(start, end, radius+margin)
+        for occupancy_cell in cells[owner[cells] != 0]:
+            occupancy_cell = int(occupancy_cell)
+            sources = owner.memberships.get(occupancy_cell, [int(owner[occupancy_cell])-1])
+            for source_cell in sorted(sources):
+                label = int(engine.scene.labels.ravel()[source_cell])
+                if base_reason in ('NON_TARGET_CLEARANCE', 'NON_TARGET_TRAVERSAL_REQUIRED') and label in target_ids:
+                    continue
+                region = engine.by_label[label]
+                result.update(limitingSourceCell=int(source_cell), occupancyCell=occupancy_cell,
+                    structureName=region['name'], part=part,
+                    positionMm=engine.scene.points([occupancy_cell])[0].tolist(),
+                    sourcePositionMm=engine.scene.points([source_cell])[0].tolist(),
+                    positionMeaning='Current occupied whole-cell center inside the checked capsule cover')
+                return result
+    return result
+
+
+def post_exposure_proposal(engine, entry, goal, radius, check, *, non_target_clearance_mm=0.):
+    if type(non_target_clearance_mm) not in (int, float) or not np.isfinite(non_target_clearance_mm) or not 0. <= non_target_clearance_mm <= 2.:
+        raise ValueError('Mapped non-target clearance must be in [0, 2] mm')
+    direction = goal-entry; length = np.linalg.norm(direction)
+    if length < 1.:
+        return None, {'reason': 'TARGET_TOO_CLOSE_TO_ENTRY'}
+    axis = direction/length
+    q = Rotation.align_vectors([axis], [[0., 0., 1.]])[0].as_quat()
+    outside = entry-axis*max(30., radius+5.)
+    start, end = _pose(outside, q), _pose(goal, q)
+    params = _params(engine, radius)
+    initial_cover = _axial_cover(engine, start, end, params)
+    reason, _, working = _screen_cover(engine, initial_cover, non_target_clearance_mm)
+    if reason and reason != 'RETAINED_TISSUE_COLLISION':
+        return None, _post_exposure_rejection(engine, initial_cover, reason, non_target_clearance_mm)
+    if not working:
+        return None, {'reason': 'NO_SOURCE_TARGET_CONTACT'}
+    low, high = 0., 1.
+    for _ in range(16):
+        check(); middle = (low+high)/2.
+        candidate = _pose(outside+(goal-outside)*middle, q)
+        failure, _, _ = _screen_cover(engine, _axial_cover(engine, start, candidate, params), non_target_clearance_mm)
+        if failure: high = middle
+        else: low = middle
+    endpoint = outside+(goal-outside)*low
+    contact_pose = _pose(outside+(goal-outside)*high, q)
+    contact_cover = _axial_cover(engine, start, contact_pose, params)
+    failure, _, contacts = _screen_cover(engine, contact_cover, non_target_clearance_mm)
+    labels = engine.scene.labels.ravel()
+    if failure != 'RETAINED_TISSUE_COLLISION' or not contacts or any(int(labels[c]) not in {r['id'] for r in engine.scene.regions if r.get('target') and r['material'] == 'tumor'} for c in contacts):
+        return None, _post_exposure_rejection(engine, contact_cover, 'NON_TARGET_TRAVERSAL_REQUIRED', non_target_clearance_mm)
+    if np.dot(endpoint-entry, axis) < 0.:
+        return None, _post_exposure_rejection(engine, contact_cover, 'EXPOSURE_ENTRY_BLOCKED', non_target_clearance_mm)
+    terminal = _pose(endpoint, q)
+    withdrawal_cover = _axial_cover(engine, terminal, start, params)
+    failure, _, _ = _screen_cover(engine, withdrawal_cover, non_target_clearance_mm)
+    if failure:
+        return None, _post_exposure_rejection(engine, withdrawal_cover, 'WITHDRAWAL_'+failure, non_target_clearance_mm)
+    basis = Rotation.from_quat(q).as_matrix()
+    accepted_probes = 0
+    for offset in (basis[:, 0]*.25, -basis[:, 0]*.25, basis[:, 1]*.25, -basis[:, 1]*.25):
+        check()
+        displaced = _pose(endpoint+offset, q)
+        cover = swept_envelopes(TOOLS['cusa'], params, terminal, displaced)
+        if _screen_cover(engine, cover, non_target_clearance_mm)[0] is None:
+            accepted_probes += 1
+    program = []
+    if engine.state['slots']['left']['instrument'] != 'cusa':
+        program.append({'slot': 'left', 'operation': 'exchange', 'instrument': 'cusa', 'duration': .1})
+    program += [{'slot': 'left', 'operation': 'place', 'pose': start, 'parameters': {'radiusMm': radius}, 'duration': .1},
+                {'slot': 'left', 'operation': 'move', 'pose': terminal, 'duration': .2}]
+    return {'entryPose': _pose(entry, q), 'targetPose': terminal, 'sourceTargetPointMm': goal.tolist(),
+            'outsidePose': start, 'axisRasUnit': axis.tolist(), 'actionProgram': program,
+            'sourceProtection': {'nonTargetClearanceMm': float(non_target_clearance_mm),
+                                 'scope': 'Retained mapped non-target source-cell capsule margin; no clinical buffer claim'},
+            'withdrawalProgram': [{'slot': 'left', 'operation': 'withdraw', 'pose': start, 'duration': .2}],
+            'requiredTargetRemoval': {'sourceCells': sorted(contacts), 'additionalNonTargetTraversalAllowedMm3': 0.,
+                'status': 'Retained source target boundary only; removal needs a separate active public action'},
+            'metrics': {'pathLengthMm': float(np.linalg.norm(endpoint-outside)), 'actionCount': len(program),
+                        'nonTargetTraversalMm3': 0., 'targetRemovedMm3': 0., 'minimumClearanceMm': None,
+                        'localManeuverability': {'acceptedCount': accepted_probes, 'attemptedCount': 4,
+                            'probeTranslationMm': .25, 'scope': 'Static full-tool swept translation probes; no tissue/continuum effect'},
+                        'deformationInjuryMm3': None, 'clinicalRisk': None},
+            'scope': _POST_EXPOSURE_SCOPE}, None
+
+
+
+def post_exposure_candidate_pairs(entry, goal, source_axis, radius):
+    """Deterministic bounded disk-to-target rays in an existing exposure plane.
+
+    Only proposal sampling: no labels, occupancy, tool state or physics changes.
+    Candidate screening uses post_exposure_proposal and shared engine capsules.
+    """
+    entry, goal = np.asarray(entry, float), np.asarray(goal, float)
+    source_axis = np.asarray(source_axis, float)
+    if (entry.shape != (3,) or goal.shape != (3,) or source_axis.shape != (3,) or
+            not np.isfinite([entry, goal, source_axis]).all() or
+            not np.isclose(np.linalg.norm(source_axis), 1.) or
+            type(radius) not in (int, float) or not np.isfinite(radius) or not 0. < radius <= 30.):
+        raise ValueError('Finite exposure/target points, unit axis and bounded disk radius required')
+    basis = Rotation.align_vectors([source_axis], [[0., 0., 1.]])[0].as_matrix()
+    offsets = [(0., 0.)]
+    for fraction in (.5, .8, 1.):
+        for x, y in ((1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (-1, 1), (1, -1), (-1, -1)):
+            offset = np.asarray([x, y], float); offset *= radius*fraction/np.linalg.norm(offset)
+            offsets.append(tuple(offset))
+    return [(entry+basis[:, :2]@np.asarray(offset), goal) for offset in offsets]

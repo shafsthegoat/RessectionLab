@@ -30,3 +30,14 @@ test('checked consequence reassessment forwards the explicit policy and seal wit
   await assert.rejects(f.invoke({...args,analysisPath:'/workspace/renderer-selected.json'}),/Unsupported operation argument/);
   assert.equal(f.calls.length,1);
 });
+test('interactive approach commands forward bounded editor data and checked candidate identity',async()=>{
+  const f=fixture(),constraints={target:{centerRasMm:[-84,118,66],radiusMm:4},entry:{centerRasMm:[-84,118,42],radiusMm:7},tool:{instrument:'cusa',radiusMm:1},requiredEvidence:[]};
+  for(const args of [
+    {caseHash:'case',command:'generateApproaches',expectedStateId:'accepted-state',constraints,acknowledgeResearchUnknowns:true},
+    {caseHash:'case',command:'previewApproach',expectedStateId:'accepted-state',expectedPlanSeal:'sha256:report',candidateId:'approach-1'},
+    {caseHash:'case',command:'applyApproach',expectedStateId:'accepted-state',expectedPlanSeal:'sha256:report',candidateId:'approach-1'},
+  ]){await f.invoke(args);assert.deepEqual(JSON.parse(JSON.stringify(f.calls.at(-1)[1])),args);}
+  assert.equal(f.dialogs.length,0);
+  await assert.rejects(f.invoke({caseHash:'case',command:'generateApproaches',reportPath:'/renderer/path'}),/Unsupported operation argument/);
+  assert.equal(f.calls.length,3);
+});

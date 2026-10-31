@@ -1,5 +1,11 @@
 # RessectionLab
 
+The [interactive patient approach planner](docs/interactive-patient-planning.md)
+generates new, source-bound post-exposure CUSA approaches from edited target,
+entry, tool and mapped-tissue constraints. The desktop compares trajectories,
+checks native insertion/withdrawal, and installs ordinary replayable branches.
+Its one development case retains missing anatomy and all scientific holds.
+
 The [simulator qualification workflow](docs/simulator-qualification.md) now
 checks source evidence, exact replay, access-inclusive removal and lattice
 force/energy behavior before physiological planning. It exposes grid-dependent

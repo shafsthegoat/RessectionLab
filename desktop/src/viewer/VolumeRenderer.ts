@@ -1,3 +1,4 @@
+import {interactivePlanningGroup} from './interactivePlanningGeometry';
 import {TransformControls} from "three/addons/controls/TransformControls.js";
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 import {cachedSurface,retainSurface} from './surfaceCache';
@@ -1154,6 +1155,8 @@ export class VolumeRenderer {
   }
 
   private surgicalGroup: THREE.Group | null = null;
+  private planningGroup:THREE.Group|null=null;
+  private planningOverlaySource:SurgicalInteraction['planningOverlay'];
   private surgicalGhost: THREE.Group | null = null;
   private surgicalGizmo: TransformControls | null = null;
   private surgicalInteraction: SurgicalInteraction | null = null;
@@ -1218,6 +1221,7 @@ export class VolumeRenderer {
       this.surgicalFlow=null;this.surgicalFlowSource=undefined;
       this.surgicalAnimation=null;this.surgicalAnimationKey=null;
       this.surgicalPath=null;this.surgicalPathSource=null;
+      this.planningGroup=null;this.planningOverlaySource=undefined;
       this.surgicalGizmo?.detach();if(this.surgicalGhost)this.surgicalGhost.visible=false;
       this.controls.enabled=true;this.requestRender();return;
     }
@@ -1244,9 +1248,19 @@ export class VolumeRenderer {
       this.surgicalGroup.add(this.surgicalEffects);this.displayWork.effectBuilds++;
       this.surgicalEffectsView=view;this.surgicalEffectsOutcome=interaction.outcome;this.surgicalEffectsPreview=!!interaction.preview;
     }
+    if(interaction.planningOverlay!==this.planningOverlaySource){
+      if(this.planningGroup){disposeObject(this.planningGroup);this.surgicalGroup.remove(this.planningGroup);}
+      this.planningOverlaySource=interaction.planningOverlay;
+      this.planningGroup=interaction.planningOverlay?interactivePlanningGroup(interaction.planningOverlay):null;
+      if(this.planningGroup)this.surgicalGroup.add(this.planningGroup);
+      if(this.panes?.anatomy)this.panes.anatomy.dataset.planningRoutes=JSON.stringify(interaction.planningOverlay?.routes.map(r=>r.id)??[]);
+    }
     this.clipSurgicalFieldEffects();
     const retained=new Set<string>();
     for(const [name,recordedSlot] of Object.entries(view.slots)){
+      // Planning guides remain visible through the existing exposure; canonical
+      // withdrawn poses still belong to acceptedTools and collision state.
+      if(interaction.planningOverlay&&!recordedSlot.inserted)continue;
       // The explicitly parked second hand stays outside this one-tool field.
       // Its canonical pose is retained for collision/admission and replay.
       if(view.planarBladeManeuver&&name!=='left'&&!recordedSlot.inserted)continue;
