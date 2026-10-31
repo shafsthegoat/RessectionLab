@@ -5,17 +5,92 @@ import copy
 from collections import OrderedDict
 from types import SimpleNamespace
 
-from .core import semantic_digest
+from .core import semantic_digest, _copy_builtin_json, _JSON_COPY_FALLBACK
 from .surgical_engine import SurgicalEngine
 from .surgical_task_admission import bind_admission, validate_admission
-from .surgical_two_tool import validate_report, materialize
+from .surgical_two_tool import validate_report, materialize, _engine_owner_signature
+from .surgical_program_cache import _json_size
 from .surgical_interactive_workspace import _seal, _checked_seal
 
 SCHEMA = 'resectionlab.two-tool-workspace.v1'
 _VALIDATED = OrderedDict()
+_LAST_BASELINE_STATS = {}
+
+
+def baseline_cache_stats():
+    """Last invocation diagnostics, never native owners or checkpoints."""
+    return dict(_LAST_BASELINE_STATS)
+
+
+class _BaselineScope:
+    """Reuse verified native restores only inside one workspace proof.
+
+    Root state/ancestry are detached for every consumer; admission is rebound
+    and source verification still runs at the existing validation boundaries.
+    The bounds account JSON state/history, separately from grid/guard owners.
+    """
+    def __init__(self, scene, *, check):
+        self.scene = scene; self.check = check; self.roots = OrderedDict(); self.bytes = 0
+        self.hits = self.misses = self.bypasses = self.evictions = self.peak_bytes = 0
+
+    def restore(self, snapshot):
+        if self.scene is None: raise ValueError('Native baseline validation scope is closed')
+        self.check(); self.scene.require_cache_source()
+        copied = _copy_builtin_json(snapshot)
+        if copied is _JSON_COPY_FALLBACK:
+            # Preserve native validation/dispatch for non-JSON representations;
+            # a tuple/subclass must not borrow an equal list's cached authority.
+            self.bypasses += 1; self.misses += 1
+            return SurgicalEngine.restore(self.scene, snapshot, check=self.check)
+        snapshot = copied; key = semantic_digest(snapshot)
+        found = self.roots.get(key)
+        if found is None:
+            self.misses += 1
+            root = SurgicalEngine.restore(self.scene, snapshot, check=self.check)
+            # Occupancy depends on changing physical state; each consumer starts
+            # cold. Only the existing pure geometry cache can share its owner.
+            root._occupancy_cache = None
+            size = _json_size({'state': root.state, 'actions': root.actions, 'history': root.history})
+            if size is None or size > 16*1024**2:
+                self.bypasses += 1
+                return root
+            owner = _engine_owner_signature(root)
+            while self.roots and (len(self.roots) >= 2 or self.bytes+size > 16*1024**2):
+                _, old = self.roots.popitem(last=False); self.bytes -= old[2]; self.evictions += 1
+            self.check(); self.roots[key] = found = (root, owner, size); self.bytes += size
+            self.peak_bytes = max(self.peak_bytes, self.bytes)
+        else:
+            self.hits += 1; self.roots.move_to_end(key)
+        root, owner, _ = found
+        if owner != _engine_owner_signature(root): raise ValueError('Native baseline validation owner changed')
+        engine = root.clone(); engine._protection_contract = copy.deepcopy(root._protection_contract)
+        engine._protected_ids = root._protected_ids.copy(); engine.by_label = copy.deepcopy(root.by_label)
+        self.check(); return engine
+
+    def __enter__(self): return self
+
+    def __exit__(self, exc_type, exc, traceback):
+        global _LAST_BASELINE_STATS
+        completed = False
+        try:
+            if exc_type is None:
+                for root, owner, _ in self.roots.values():
+                    if owner != _engine_owner_signature(root): raise ValueError('Native baseline validation owner changed')
+                completed = True
+        finally:
+            values = {'hits': self.hits, 'restores': self.misses, 'bypasses': self.bypasses,
+                'evictions': self.evictions, 'peakAccountedPayloadBytes': self.peak_bytes,
+                'maxEntries': 2, 'maxPayloadBytes': 16*1024**2, 'completed': completed}
+            self.roots.clear(); self.bytes = 0; self.scene = self.check = None
+            _LAST_BASELINE_STATS = {**values, 'retainedAfterClose': 0}
 
 
 def validate_workspace(scene, record, case_hash, *, check=lambda: None):
+    with _BaselineScope(scene, check=check) as scope:
+        return _validate_workspace(scene, record, case_hash, check=check, restore=scope.restore)
+
+
+def _validate_workspace(scene, record, case_hash, *, check, restore):
     check()
     history = record.get('strategyComparisons', []); applications = record.get('strategyApplications', [])
     sensitivities = record.get('strategySensitivityStudies', [])
@@ -36,7 +111,7 @@ def validate_workspace(scene, record, case_hash, *, check=lambda: None):
         validate_admission(SimpleNamespace(scene=scene), item['report']['taskAdmission'], require_baseline=False)
         key = (scene.identity, semantic_digest(baseline), semantic_digest(item))
         if key not in _VALIDATED:
-            engine = SurgicalEngine.restore(scene, baseline, check=check)
+            engine = restore(baseline)
             bind_admission(engine, item['report']['taskAdmission']); validate_report(engine, item['report'], check=check)
             check()
             _VALIDATED[key] = True
@@ -56,7 +131,7 @@ def validate_workspace(scene, record, case_hash, *, check=lambda: None):
             raise ValueError('Two-tool installed program differs')
         key = (scene.identity, semantic_digest(item), semantic_digest(snapshot), semantic_digest(app))
         if key not in _VALIDATED:
-            engine = SurgicalEngine.restore(scene, baseline, check=check); bind_admission(engine, item['report']['taskAdmission'])
+            engine = restore(baseline); bind_admission(engine, item['report']['taskAdmission'])
             candidate, _, receipt = materialize(engine, item['report'], app['candidateId'], check=check)
             if candidate.snapshot() != snapshot or receipt != app['receipt']:
                 raise ValueError('Two-tool installed state or receipt differs')
@@ -73,7 +148,7 @@ def validate_workspace(scene, record, case_hash, *, check=lambda: None):
         key = (scene.identity, semantic_digest(comparison), semantic_digest(item))
         if key not in _VALIDATED:
             from .surgical_strategy_sensitivity import validate_sensitivity
-            engine = SurgicalEngine.restore(scene, record['branches'][comparison['sourceBranchId']], check=check)
+            engine = restore(record['branches'][comparison['sourceBranchId']])
             bind_admission(engine, comparison['report']['taskAdmission'])
             validate_sensitivity(engine, comparison['report'], item['study'], check=check)
             check(); _VALIDATED[key] = True

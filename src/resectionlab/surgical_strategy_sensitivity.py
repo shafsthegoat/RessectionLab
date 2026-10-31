@@ -85,7 +85,7 @@ def _fixed_clearance(engine, action, previous, controls, extra):
                 _require(not len(engine.protection.capsule_hits(a, b, radius+extra, positions=engine._positions())), 'FIXED_MARGIN_PROTECTED_CLEARANCE')
 
 
-def _replay(engine, row, controls, context, world, *, fixed_extra=None, check=lambda: None):
+def _replay(engine, row, controls, context, world, *, fixed_extra=None, check=lambda: None, prefix_scope=None):
     """Execute a held program; a failed/partial prefix is retained, never installed."""
     before = copy.deepcopy(engine.state)
     tracker = EncounterTracker(context, engine, controls['encounter'])
@@ -96,7 +96,12 @@ def _replay(engine, row, controls, context, world, *, fixed_extra=None, check=la
     reassess = next((p for p in row['phases'] if p['id'] == 'reassess'), None)
     for index, action in enumerate(actions):
         check(); previous = copy.deepcopy(engine.state['slots'])
-        result = engine.step(copy.deepcopy(action), check=check)
+        prefix = actions[:index+1]
+        found = prefix_scope.cache.get(prefix, check=check) if prefix_scope is not None else None
+        if found is None:
+            result = engine.step(copy.deepcopy(action), check=check)
+        else:
+            engine = prefix_scope.restore(found); result = found['result']; check()
         receipts.append({key: result.get(key) for key in ('status', 'reason', 'completedFraction', 'elapsedSeconds')})
         hashes.append(physical_state_hash(engine))
         # An accepted finite-time CUSA action may stop spatially while activation
@@ -123,6 +128,10 @@ def _replay(engine, row, controls, context, world, *, fixed_extra=None, check=la
             probe_action = _shift(row['reassessment']['probeAction'], world)
             trial = engine.clone(); outcome = trial.step(copy.deepcopy(probe_action), check=check)
             probe = {'action': probe_action, 'status': outcome['status'], 'reason': outcome.get('reason')}
+        if prefix_scope is not None and found is None:
+            prefix_scope.require_owner()
+            prefix_scope.cache.put(prefix, {'state': engine.state, 'actions': engine.actions, 'history': engine.history,
+                'result': {key: result.get(key) for key in ('status','reason','reasonCode','completedFraction','elapsedSeconds')}}, check=check)
         for phase in row['phases']:
             if phase['endAction'] == index+1:
                 phases.append({'id': phase['id'], 'endAction': index+1,
@@ -166,23 +175,24 @@ def assess_observed(observation, plan, raw, *, check=lambda: None, progress=lamb
     model = FrozenDecisionModel.create(case_hash=observation.manifest()['inputHash'],
         geometry=observation.manifest(), objectives=controls, tools=thaw_json(observation.task),
         world_generator=config.to_dict(), action_primitives={r['id']: r['actionProgram'] for r in plan['alternatives']})
-    candidates = []
+    candidates = [{'id': row['id'], 'outcomes': []} for row in plan['alternatives']]
     count = len(plan['alternatives'])*len(worlds)
-    for row_index, row in enumerate(plan['alternatives']):
-        outcomes = []
+    # Adjacent candidates in one world share exact requested prefixes. Preserve
+    # the original canonical candidate/world output order after computation.
+    with planning._CompilationScope(observation, controls, kind='sensitivity-public') as scope:
         for world_index, world in enumerate(worlds):
-            done = row_index*len(worlds)+world_index
-            check(); progress(done/(2*count), f'Checking public execution offsets {done+1}/{count}: {row["id"]} {world.world_id}')
-            result = _replay(observation.planning_engine(), row, controls, observation.context, world,
-                fixed_extra=config.offset_mm if world.world_id == 'nominal' else None, check=check)
-            if world.world_id == 'nominal':
-                _require(result['completeExecution'] and result['actionReceipts'] == row.get('actionReceipts', [])
-                    and result['physicalStateHashes'] == row.get('physicalStateHashes', [])
-                    and semantic_digest(result['summary']) == semantic_digest(row['summary'])
-                    and semantic_digest(result['anatomicalEncounter']) == semantic_digest(row['anatomicalEncounter']),
-                    'zero-offset replay differs from the canonical nominal program')
-            outcomes.append(result)
-        candidates.append({'id': row['id'], 'outcomes': outcomes})
+            for row_index, row in enumerate(plan['alternatives']):
+                done = world_index*len(plan['alternatives'])+row_index
+                check(); progress(done/(2*count), f'Checking public execution offsets {done+1}/{count}: {row["id"]} {world.world_id}')
+                result = _replay(scope.model(observation, controls), row, controls, observation.context, world,
+                    fixed_extra=config.offset_mm if world.world_id == 'nominal' else None, check=check, prefix_scope=scope)
+                if world.world_id == 'nominal':
+                    _require(result['completeExecution'] and result['actionReceipts'] == row.get('actionReceipts', [])
+                        and result['physicalStateHashes'] == row.get('physicalStateHashes', [])
+                        and semantic_digest(result['summary']) == semantic_digest(row['summary'])
+                        and semantic_digest(result['anatomicalEncounter']) == semantic_digest(row['anatomicalEncounter']),
+                        'zero-offset replay differs from the canonical nominal program')
+                candidates[row_index]['outcomes'].append(result)
     def ranks(index=0, fixed=False, all_worlds=False):
         result = []
         for candidate in candidates:

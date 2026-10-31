@@ -55,6 +55,34 @@ def prefix_cache_stats():
     with _VALIDATION_LOCK: return copy.deepcopy(_LAST_PREFIX_STATS)
 
 
+def _engine_owner_signature(root, *, public_task=False):
+    """Fingerprint a cold qualified owner; never copy arbitrary attributes."""
+    root.scene.require_cache_source()
+    _require(root._occupancy_cache is None, 'public compilation owner changed: occupancy must stay cold')
+    guard = root.protection
+    _require(guard is None or guard.scene is root.scene, 'public compilation owner changed: guard scene')
+    grid = root.grid
+    return semantic_digest({'scene': root.scene.identity, 'sceneOwner': id(root.scene),
+        'state': root.state, 'actions': root.actions, 'history': root.history,
+        'protectedIds': sorted(root._protected_ids),
+        'publicTask': {'task': root._task, 'remaining': root._remaining_actions} if public_task else None,
+        'guardContract': root._protection_contract, 'catalog': catalog(),
+        'byLabel': [[key, value] for key, value in root.by_label.items()], 'guardOwner': id(guard),
+        'guardConfig': None if root.guard_config is None else asdict(root.guard_config),
+        'grid': {'owner': id(grid), 'coverOwner': id(root._cell_cover_cache), 'shape': grid.shape,
+            'affine': array_digest(grid.affine), 'inverse': array_digest(grid._inverse),
+            'radius': grid._cell_radius_mm,
+            'spacing': None if grid._orthogonal_spacing is None else grid._orthogonal_spacing.tolist()},
+        'guard': None if guard is None else {'annotations': [asdict(a) for a in guard.annotations],
+            'cells': array_digest(guard.cells), 'points': array_digest(guard._points.reshape(-1)),
+            'pointsShape': guard._points.shape, 'radius': guard._radius,
+            'treeOwner': id(guard._tree), 'treeData': array_digest(guard._tree.data.reshape(-1)),
+            'treeShape': guard._tree.data.shape, 'treeIndices': array_digest(guard._tree.indices),
+            'treeMin': array_digest(guard._tree.mins), 'treeMax': array_digest(guard._tree.maxes),
+            'clearance': guard.clearance_mm, 'required': guard.required, 'missing': guard.missing,
+            'config': asdict(root.guard_config)}})
+
+
 class _CompilationScope:
     """One public scene owner and detached checkpoints, released on every exit."""
     def __init__(self, observation, controls, *, kind):
@@ -63,28 +91,7 @@ class _CompilationScope:
         self.cache = ProgramPrefixCache(); self.kind = kind; self.root = None; self.owner = None
 
     def _owner_signature(self):
-        root = self.root; root.scene.require_cache_source()
-        _require(root._occupancy_cache is None, 'public compilation owner changed: occupancy must stay cold')
-        guard = root.protection
-        grid = root.grid
-        return semantic_digest({'scene': root.scene.identity, 'sceneOwner': id(root.scene),
-            'state': root.state, 'actions': root.actions, 'history': root.history,
-            'protectedIds': sorted(root._protected_ids), 'task': root._task, 'remaining': root._remaining_actions,
-            'guardContract': root._protection_contract, 'catalog': catalog(),
-            'byLabel': [[key, value] for key, value in root.by_label.items()], 'guardOwner': id(guard),
-            'guardConfig': None if root.guard_config is None else asdict(root.guard_config),
-            'grid': {'owner': id(grid), 'coverOwner': id(root._cell_cover_cache), 'shape': grid.shape,
-                'affine': array_digest(grid.affine), 'inverse': array_digest(grid._inverse),
-                'radius': grid._cell_radius_mm,
-                'spacing': None if grid._orthogonal_spacing is None else grid._orthogonal_spacing.tolist()},
-            'guard': None if guard is None else {'annotations': [asdict(a) for a in guard.annotations],
-                'cells': array_digest(guard.cells), 'points': array_digest(guard._points.reshape(-1)),
-                'pointsShape': guard._points.shape, 'radius': guard._radius,
-                'treeOwner': id(guard._tree), 'treeData': array_digest(guard._tree.data.reshape(-1)),
-                'treeShape': guard._tree.data.shape, 'treeIndices': array_digest(guard._tree.indices),
-                'treeMin': array_digest(guard._tree.mins), 'treeMax': array_digest(guard._tree.maxes),
-                'clearance': guard.clearance_mm, 'required': guard.required, 'missing': guard.missing,
-                'config': asdict(root.guard_config)}})
+        return _engine_owner_signature(self.root, public_task=True)
 
     def model(self, observation, controls):
         _require(self.binding == semantic_digest({'observation': observation.manifest(), 'controls': controls}),

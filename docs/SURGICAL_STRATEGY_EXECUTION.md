@@ -604,6 +604,85 @@ claim was introduced. Supported anatomical/execution uncertainty, withheld or
 continuous perturbations, broader frozen patients and matched robust-search
 baselines remain required for the research milestone.
 
+## Implemented: bounded cold-workspace proof reuse
+
+The saved nine-comparison/two-application/two-sensitivity workspace was profiled
+before this change. Its780engine steps (300native/480public) perform38,439physical
+microstep attempts. Thirteen native restores replay the same seven-action
+baseline. Of161.233profiled seconds,126.872are in engine steps and13.701in native
+restore. These cProfile numbers include instrumentation overhead and are not
+paired timing denominators.
+
+`surgical_strategy_workspace` now restores each exact built-in JSON baseline
+once per validation invocation, detaches each consumer's state, ancestry, region
+records and protection metadata, and checks source/owner dependencies before
+reuse and successful exit. Admission remains rebound per consumer. Non-JSON
+inputs retain original native dispatch; forged/changed snapshots cannot borrow
+cached authority. Native suffix installation, scenario execution and speculative
+reassessment probes still execute independently. The existing public-only prefix
+cache now also covers adjacent frozen sensitivity candidates in each world.
+All burdens, full-tool/context/fixed-margin checks, phase receipts and decisions
+are recomputed. Canonical output order and schema are unchanged.
+
+Native reuse retains at most two roots and16MiB of accounted state/actions/history
+objects; the observed single root costs286,841bytes. This excludes source/grid/
+guard owners, geometry caches and active consumers and is not an RSS cap. Public
+reuse retains at most64JSON checkpoints/16MiB, with one lazy public scene owner.
+Both scopes release all retained roots/payloads/callbacks at exit, including
+cancellation/failure. Only numeric diagnostics remain. No cross-call native
+checkpoint authority or installation bypass is added.
+
+The reusable paired harness `scripts/benchmark_strategy_workspace.py` loads the
+retained9352e7c1planning/proof modules without changing the checkout. Both arms
+use identical physics, alternating order and empty canonical proof caches against
+one frozen DEVELOPMENT workspace. Source/OS caches are warm; source loading and
+rendering are excluded, while source qualification and complete canonical proof
+are included. It verifies complete comparison/application/sensitivity/branch/
+ancestry fields and original source bytes, rather than comparing only choices.
+The three unrelated ongoing physics edits remain untouched; backend tests and
+paired measurements load those three files from the index in memory. Actual
+Electron checks use the shared working checkout and remain hidden.
+
+Three alternating paired cold proofs reduce median108.833→94.179s (13.5% lower;
+before108.717–110.488s, after93.462–94.674s). Warm medians124.573→123.668ms
+are effectively unchanged. Every run reduces300→216native and480→428public
+step attempts (780→644total), and38,439→34,301physical microstep attempts.
+The84native steps are12redundant seven-action baseline replays; native scenario
+and installation actions still execute. Public reuse skips52exact repeated
+steps, while failed prefixes and reassessment probes still execute. The final
+seven-world public scope records45hits and15,300,429peak accounted payload bytes;
+all scopes retain zero entries after close. Every frozen report, installed
+application, sensitivity, branch and ancestry field remains exact. This is
+backend proof improvement, not a rendering/GPU or clinical efficacy claim.
+
+All443backend regressions pass, including43new baseline/public-cache controls,
+source/metadata forging, private-reference invariance, cold and warm validation,
+cancellation, legacy/shared-clock behavior and independent geometry/auditor tests.
+The independent native auditor also passes all24outcomes in the two newly saved
+studies. Actual hidden desktop controls regenerate all nine immediately prior
+comparisons, both installed applications and both sensitivity studies exactly,
+with identical branches, ancestry, timeline and task admission. Both installed
+physical endpoint hashes remain exact. The second acquired case still selects
+STOP and the missing-target control exposes no planning action. New zero/1mm
+assessment observations are7.745/36.443sIPC and7.841/36.578saccepted display;
+these ran concurrently with regressions/controls and are not paired speedups.
+Fresh hidden process reopen then passes with97.459sfirst inspect and0.856swarm
+inspect. All nine comparisons, both applications/studies, branches, ancestry,
+timeline and task admission remain exact after another native save. These are
+application observations, separate from the paired backend timing. All windows
+stay hidden and source bytes remain unchanged. No renderer change is required.
+
+A separate bounded metadata/path inventory found only0005/0007currently task
+admitted. Historical larger manifests reference absent source/bundle paths;
+they do not establish a ready8–12patient benchmark. Existing exposed0004has
+source-grid categorical target/context, but lacks the role/provenance declarations
+accepted by current admission and a post-exposure checkpoint. Its older context
+descriptor also needs semantic qualification. PAT22recovery remains exposed
+TRAIN with explicit target-policy/research-episode holds and a derived fractional
+annotation, not a new independent evaluation case or calibrated uncertainty.
+The ignored inventory, measurements, failures and commands live together in
+`testcases/execution-proof-performance-v1/README.md`.
+
 ## Remaining milestones and next dependency
 
 This is a bounded acquired-anatomy operating task, not the complete strategy
@@ -612,8 +691,10 @@ the functional control remains a refusal. The new anatomical endpoint is a
 geometric source constraint, not a qualified motor/language map. The new finite
 execution stress is integrated but does not complete uncertainty qualification.
 Add supported anatomical/execution uncertainty, a frozen comparison with matched
-route-search baselines and independent challenge cases; reduce the measured cold
-proof/display cost and migrate remaining planner interfaces. Expand the patient distribution
-without touching reserved evaluations. Older lattice resolution dependence and
+route-search baselines and independent challenge cases; continue reducing cold
+proof/display cost and migrate remaining planner interfaces. The next patient
+slice is a generic provenance/admission preflight for the existing exposed0004
+source, without fabricating declarations or a ready exposure. Expand the patient
+distribution without touching reserved evaluations. Older lattice resolution dependence and
 continuum empirical/domain gates remain qualification holds. No RL campaign,
 new data acquisition, clinical-outcome probability or novelty claim was added.

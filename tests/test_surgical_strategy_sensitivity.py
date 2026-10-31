@@ -196,6 +196,45 @@ def test_offset_worlds_replay_every_held_candidate_with_explicit_failures(contex
     assert engine.snapshot() == before
 
 
+def test_public_prefix_reuse_keeps_complete_outcomes_and_all_native_execution(context_case, context_report, monkeypatch):
+    from resectionlab.surgical_engine import SurgicalEngine
+    from resectionlab import surgical_two_tool as planning
+    engine = context_case[1]; planning.validate_report(engine, context_report)
+    before = engine.snapshot(); native = []; original_step = SurgicalEngine.step
+    def step(e, *a, **k):
+        if type(e) is SurgicalEngine: native.append(1)
+        return original_step(e, *a, **k)
+    monkeypatch.setattr(SurgicalEngine, 'step', step)
+    cached = sensitivity.generate_sensitivity(engine, context_report, {'offsetMm': 0.})
+    count = len(native); assert count > 0
+    assert planning.prefix_cache_stats()['sensitivity-public']['hits'] > 0
+    original_scope = planning._CompilationScope
+    def uncached(*a, **k):
+        scope = original_scope(*a, **k); scope.cache.max_entries = 0
+        return scope
+    monkeypatch.setattr(planning, '_CompilationScope', uncached)
+    plain = sensitivity.generate_sensitivity(engine, context_report, {'offsetMm': 0.})
+    assert plain == cached and len(native) == 2*count
+    assert engine.snapshot() == before
+    assert planning.prefix_cache_stats()['sensitivity-public']['retainedAfterClose'] == 0
+
+
+def test_cancellation_on_a_reused_prefix_closes_the_public_scope(context_case, context_report, monkeypatch):
+    from resectionlab.desktop_bridge import _Request, BridgeError
+    from resectionlab import surgical_two_tool as planning
+    request = _Request('cached-prefix'); original = planning.ProgramPrefixCache.get
+    def get(cache, *a, **k):
+        found = original(cache, *a, **k)
+        if found is not None: request.cancel()
+        return found
+    monkeypatch.setattr(planning.ProgramPrefixCache, 'get', get)
+    observation = sensitivity._observation(context_case[1], context_report)
+    with pytest.raises(BridgeError, match='cancelled'):
+        sensitivity.assess_observed(observation, context_report['publicPlan'], {'offsetMm': 0.}, check=request.check)
+    info = planning.prefix_cache_stats()['sensitivity-public']
+    assert info['hits'] > 0 and not info['completed'] and info['closed'] and info['retainedAfterClose'] == 0
+
+
 @pytest.mark.parametrize('raw', [{'offsetMm': True}, {'offsetMm': -1.}, {'offsetMm': 3.},
     {'offsetMm': 1., 'patientProbability': .99}])
 def test_uncalibrated_input_cannot_smuggle_probability_or_unbounded_worlds(context_case, context_report, raw):
