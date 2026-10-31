@@ -2,6 +2,8 @@
 from pathlib import Path
 import sys
 import zipfile
+import hashlib
+import json
 
 import pytest
 import numpy as np
@@ -101,3 +103,24 @@ def test_volume_rendering_off_changes_saved_view_but_no_array_payload(tmp_path):
     assert workspace['imagingState']['states']['primary']['viewer']['volumeRendering']['enabled'] is False
     assert reopened.semantic_hash == case.semantic_hash
     assert topbrain.package_array_hashes(original) == topbrain.package_array_hashes(revised)
+
+
+def test_completed_resume_requires_current_policy_and_unchanged_package(tmp_path):
+    family = {'subject': '001', 'role': 'DEVELOPMENT'}
+    entries = []
+    contact = tmp_path / 'qc/source-contact.png'
+    contact.parent.mkdir()
+    contact.write_bytes(b'test contact sentinel')
+    for suffix in ['CTA-v3', 'TOF-MRA-v3-display-v2']:
+        path = tmp_path / f'staging/candidates/clinical/TopCoW-001-{suffix}.ressectionlab'
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(b'previously validated native bytes')
+        entries.append({'path': str(path.relative_to(tmp_path)), 'sha256': hashlib.sha256(path.read_bytes()).hexdigest(), 'contact_sheet': str(contact.relative_to(tmp_path))})
+    receipt = tmp_path / 'catalog/topbrain/001-native-candidates.json'
+    receipt.parent.mkdir(parents=True)
+    result = {'family': family, 'candidates': entries}
+    receipt.write_text(json.dumps(result))
+    assert topbrain.completed_native(tmp_path, family) == result
+    (tmp_path / entries[0]['path']).write_bytes(b'same-size changed native content')
+    with pytest.raises(ValueError, match='immutable preparation receipt'):
+        topbrain.completed_native(tmp_path, family)

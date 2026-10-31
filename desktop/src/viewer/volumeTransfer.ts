@@ -5,7 +5,7 @@ export type VolumePreset = 'auto' | 'ct-bone' | 'ct-tissue' | 'ct-angiography' |
 export interface VolumeRenderingSettings { enabled?: boolean; preset?: VolumePreset; density?: number; window?: [number,number]; shadows?: boolean; isolateLabels?: boolean; points?: Array<[number,number,number,number,number]> }
 export const isCtModality=(modality:string)=>/^\s*(CT|CTA)(\b|[-_\s])/i.test(modality);
 export function volumeSettings(input: VolumeRenderingSettings = {}, modality = 'MRI') {
-  const ct=isCtModality(modality), acquired=!/segmentation only|analytic signal/i.test(modality);
+  const ct=isCtModality(modality), acquired=!/segmentation only|analytic signal|generated image signal/i.test(modality);
   const explicit=input.preset && ['ct-bone','ct-tissue','ct-angiography','mri'].includes(input.preset)?input.preset:null;
   // Stored presets stay readable, but HU thresholds must never be applied to
   // arbitrary MRI signal (including a saved CT preset opened on a T1CE scan).

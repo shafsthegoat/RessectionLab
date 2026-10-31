@@ -15,6 +15,31 @@ from resectionlab.data_root import atomic_json,checked_root,sha256_file
 REPO=Path(__file__).resolve().parents[1]
 
 
+def effective_subjects(root,plan,plan_path):
+    """Apply an explicit, checksummed resource replacement; preserve frozen roles."""
+    path=root/'catalog/healthy-host-replacement-IXI051.json'
+    if not path.exists():return plan['subjects']
+    replacement=json.loads(path.read_text())
+    old=replacement['blocked_generation_host'];new=replacement['replacement']
+    original=next(row for row in plan['subjects'] if row['person_id']==old)
+    if original['role']!=new['role'] or new['role']!='TRAIN':raise ValueError('Replacement must preserve frozen TRAIN role')
+    if replacement['replacement_acquisition']['status']!='bytes_and_header_validated_awaiting_independent_review':
+        raise ValueError('Replacement acquisition is not validated')
+    for row in replacement['replacement_acquisition']['files']:
+        if sha256_file(root/row['path'])!=row['sha256']:raise ValueError('Replacement source changed')
+    subjects=[row for row in plan['subjects'] if row['person_id']!=old]
+    if any(row['person_id']==new['person_id'] for row in subjects):raise ValueError('Duplicate replacement family')
+    subjects.append({'subject':new['subject'],'person_id':new['person_id'],'role':new['role'],'variants':4,'mass_effect':False})
+    extension={'schema':'ressectionlab-healthy-plan-extension-v1','original_plan_sha256':sha256_file(plan_path),
+        'replacement_manifest_sha256':sha256_file(path),'blocked_generation_host':old,
+        'replacement_person_id':new['person_id'],'source_roles_unchanged':True,
+        'failed_source_retained':True,'subjects':subjects,'expected_hosts':len(subjects),'expected_synthetic_variants':4*len(subjects)}
+    extension_path=root/'catalog/healthy-batch/plan-v5-resource-extension.json'
+    if extension_path.exists() and json.loads(extension_path.read_text())!=extension:raise ValueError('Existing plan extension differs')
+    if not extension_path.exists():atomic_json(extension_path,extension)
+    return subjects
+
+
 def run(root=None,limit=None):
     root=checked_root(root,required_bytes=20*1024**3)
     gate_path=root/'qc/independent/IXI016-synthetic-scale-review-v5.json'
@@ -49,7 +74,7 @@ def run(root=None,limit=None):
     state=json.loads(state_path.read_text()) if state_path.exists() else {'schema':'ressectionlab-healthy-preparation-state-v5','plan_sha256':sha256_file(plan_path),'subjects':{}}
     if state['plan_sha256']!=sha256_file(plan_path):raise ValueError('Batch plan changed')
     attempted=0
-    for row in plan['subjects']:
+    for row in effective_subjects(root,plan,plan_path):
         name=row['subject']
         if state['subjects'].get(name,{}).get('status')=='prepared_awaiting_independent_review':continue
         if limit is not None and attempted>=limit:break
@@ -58,6 +83,8 @@ def run(root=None,limit=None):
         attempt=1+state['subjects'].get(name,{}).get('attempt',0)
         log=log_dir/f'{name}-v5-attempt-{attempt}.log'
         command=[str(REPO/'.venv/bin/python'),str(builder),'--subject',name,'--variants','4']
+        if name.startswith('sub-'):
+            command=[str(REPO/'.venv/bin/python'),str(REPO/'scripts/data_rebuild_prepare_adapted.py'),'--subject',name]
         if row['mass_effect']:command.append('--mass-effect')
         record={'status':'running','attempt':attempt,'command':command,'log':str(log.relative_to(root)),
             'started_utc':datetime.now(timezone.utc).isoformat()}

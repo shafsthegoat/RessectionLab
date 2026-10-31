@@ -17,6 +17,18 @@ async function verifyVolume(root,marker){
   const {stdout:mounts}=await exec('/sbin/mount',[],{timeout:5000,maxBuffer:65536});
   const entry=mounts.split('\n').map(line=>line.split(' on ')).find(parts=>parts.length===2&&parts[1].split(' (')[0]===mount&&parts[0].startsWith('/dev/'));
   if(!entry)fail('the recorded external volume is not mounted.');
+  const [rootStat,mountStat]=await Promise.all([fs.stat(root),fs.stat(mount)]);
+  if(rootStat.dev!==mountStat.dev)fail('data directory is on a different volume.');
+  // The checkout engine supplies a fast native macOS check, including the live
+  // filesystem UUID. Packaged engines retain their existing diskutil path.
+  const repo=path.resolve(__dirname,'../..'),python=path.join(repo,'.venv/bin/python');
+  let checkout=false;try{await fs.access(python);checkout=true;}catch{}
+  if(checkout){
+    const {stdout}=await exec(python,['-m','resectionlab.data_root','--volume-info',root],{cwd:repo,timeout:5000,maxBuffer:65536});
+    const info=JSON.parse(stdout);
+    if(info.volume_uuid!==marker.volume_uuid||info.mount_point!==mount||'/dev/'+info.device!==entry[0])fail('connect the recorded external volume.');
+    return;
+  }
   let stdout;
   for(let attempt=0;attempt<2;attempt++){
     try{({stdout}=await exec('diskutil',['info','-plist',entry[0]],{timeout:15000,maxBuffer:65536}));break;}
@@ -24,7 +36,6 @@ async function verifyVolume(root,marker){
   }
   const uuid=stdout.match(/<key>VolumeUUID<\/key>\s*<string>([^<]+)<\/string>/)?.[1];
   if(uuid!==marker.volume_uuid||!/<key>Internal<\/key>\s*<false\s*\/>/.test(stdout))fail('connect the recorded external volume.');
-  if((await fs.stat(root)).dev!==(await fs.stat(mount)).dev)fail('data directory is on a different volume.');
 }
 
 class ExternalCaseCatalog{

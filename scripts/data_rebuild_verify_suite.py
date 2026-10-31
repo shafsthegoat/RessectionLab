@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Serial actual hidden desktop checks on the curated data core."""
+import argparse
 import json
 import os
 from pathlib import Path
@@ -14,16 +15,23 @@ CASES=[
  ('real-ucsf0061-outlier','real/UCSF-PDGM-0061-structural-v1.ressectionlab',False),
  ('real-ucsf0005-existing','real/UCSF-PDGM-0005-existing-v2.ressectionlab',True),
  ('measured-topbrain001-cta','clinical/TopCoW-001-CTA-v3.ressectionlab',False),
- ('measured-topbrain001-mra','clinical/TopCoW-001-TOF-MRA-v3.ressectionlab',False),
+ ('measured-topbrain001-mra','clinical/TopCoW-001-TOF-MRA-v3-display-v2.ressectionlab',False),
  ('synthetic-ixi016-geometry','synthetic/IXI-016-SYNTHETIC-geometry-00-v5.ressectionlab',True),
+]
+EXPANSION=[
+ ('lausanne091-appearance','synthetic/Lausanne-sub-091-SYNTHETIC-appearance-01-v5.ressectionlab',True),
+ ('lausanne197-native-display-lod','synthetic/Lausanne-sub-197-SYNTHETIC-appearance-03-v5.ressectionlab',False),
+ ('measured-topbrain002-largest-mra','clinical/TopCoW-002-TOF-MRA-v3-display-v2.ressectionlab',False),
+ ('synthetic-ixi016-geometry-caption','synthetic/IXI-016-SYNTHETIC-geometry-00-v5.ressectionlab',False),
 ]
 
 
-def run(root=None):
+def run(root=None,*,expansion=False):
     root=checked_root(root,required_bytes=3*1024**3)
     document={'schema':'ressectionlab-curated-hidden-suite-v1','cases':[]}
-    index=root/'qc/hidden-app/curated-suite-v1.json'
-    for name,relative,rehearse in CASES:
+    index=root/'qc/hidden-app'/('expansion-suite-v1.json' if expansion else 'curated-suite-v1.json')
+    renderer_sha=sha256_file(REPO/'desktop/dist/index.html')
+    for name,relative,rehearse in EXPANSION if expansion else CASES:
         source=root/'staging/candidates'/relative
         if not source.is_file():
             document['cases'].append({'name':name,'status':'source_not_ready','path':str(source)});atomic_json(index,document);continue
@@ -34,7 +42,8 @@ def run(root=None):
             report=output/'report.json'
             if report.exists():
                 previous=json.loads(report.read_text())
-                if previous.get('passed') and previous.get('inputSha256')==source_sha:break
+                if (previous.get('passed') and previous.get('inputSha256')==source_sha
+                        and previous.get('rendererIndexSha256')==renderer_sha):break
             if not output.exists():break
             attempts+=1
         if not report.exists():
@@ -56,4 +65,6 @@ def run(root=None):
     return document
 
 
-if __name__=='__main__':run()
+if __name__=='__main__':
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--expansion',action='store_true');args=parser.parse_args()
+    run(expansion=args.expansion)

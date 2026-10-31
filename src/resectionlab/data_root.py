@@ -2,10 +2,10 @@
 from __future__ import annotations
 
 import hashlib
+import ctypes
 import json
 import os
 from pathlib import Path
-import plistlib
 import shutil
 import subprocess
 import sys
@@ -28,13 +28,70 @@ def configured_root() -> Path:
     return Path(value)
 
 
+def _native_volume_info(mount,device):
+    """Read current Disk Arbitration properties and the filesystem's own UUID.
+
+    diskutil additionally probes filesystem statistics and can stall under
+    ExFAT writes. These read-only system APIs avoid that unnecessary probe.
+    """
+    pointer=ctypes.c_void_p
+    cf=ctypes.CDLL('/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation')
+    da=ctypes.CDLL('/System/Library/Frameworks/DiskArbitration.framework/DiskArbitration')
+    def bind(library,name,args,result):
+        function=getattr(library,name);function.argtypes=args;function.restype=result;return function
+    release=bind(cf,'CFRelease',[pointer],None)
+    session=disk=description=None
+    try:
+        session=bind(da,'DASessionCreate',[pointer],pointer)(None)
+        disk=bind(da,'DADiskCreateFromBSDName',[pointer,pointer,ctypes.c_char_p],pointer)(None,session,os.fsencode(device))
+        if not session or not disk:raise DataRootError('Cannot inspect the mounted device.')
+        description=bind(da,'DADiskCopyDescription',[pointer],pointer)(disk)
+        if not description:raise DataRootError('Mounted device description is unavailable.')
+        get=bind(cf,'CFDictionaryGetValue',[pointer,pointer],pointer)
+        def value(name):
+            result=get(description,pointer.in_dll(da,'kDADiskDescription'+name+'Key'))
+            if not result:raise DataRootError('Mounted device property is unavailable: '+name)
+            return result
+        boolean=bind(cf,'CFBooleanGetValue',[pointer],ctypes.c_bool)
+        def string(ref):
+            buffer=ctypes.create_string_buffer(4096)
+            if not bind(cf,'CFStringGetCString',[pointer,ctypes.c_char_p,ctypes.c_long,ctypes.c_uint32],ctypes.c_bool)(ref,buffer,len(buffer),0x08000100):
+                raise DataRootError('Cannot decode mounted device property.')
+            return buffer.value.decode('utf8')
+        actual_device=string(value('MediaBSDName'))
+        if '/dev/'+actual_device!=device:raise DataRootError('Mounted device changed during verification.')
+        uuid_ref=bind(cf,'CFUUIDCreateString',[pointer,pointer],pointer)(None,value('VolumeUUID'))
+        try:volume_uuid=string(uuid_ref)
+        finally:release(uuid_ref)
+        path_ref=bind(cf,'CFURLCopyFileSystemPath',[pointer,ctypes.c_long],pointer)(value('VolumePath'),0)
+        try:actual_mount=string(path_ref)
+        finally:release(path_ref)
+        class Attributes(ctypes.Structure):
+            _fields_=[('count',ctypes.c_uint16),('reserved',ctypes.c_uint16),('common',ctypes.c_uint32),
+                      ('volume',ctypes.c_uint32),('directory',ctypes.c_uint32),('file',ctypes.c_uint32),('fork',ctypes.c_uint32)]
+        attributes=Attributes(5,0,0,0x80040000,0,0,0) # ATTR_VOL_INFO | ATTR_VOL_UUID; sys/attr.h
+        buffer=ctypes.create_string_buffer(20)
+        getattrlist=bind(ctypes.CDLL(None,use_errno=True),'getattrlist',
+            [ctypes.c_char_p,ctypes.POINTER(Attributes),pointer,ctypes.c_size_t,ctypes.c_ulong],ctypes.c_int)
+        if getattrlist(os.fsencode(mount),ctypes.byref(attributes),buffer,len(buffer),0)!=0 or int.from_bytes(buffer.raw[:4],sys.byteorder)!=20:
+            raise DataRootError('Cannot verify the live filesystem UUID.')
+        if str(uuid.UUID(bytes=buffer.raw[4:20])).upper()!=volume_uuid.upper() or actual_mount!=str(mount):
+            raise DataRootError('Live filesystem identity differs from the mounted-device description.')
+        return {'MountPoint':actual_mount,'Internal':boolean(value('DeviceInternal')),
+            'WritableVolume':boolean(value('MediaWritable')) and os.access(mount,os.W_OK),
+            'VolumeUUID':volume_uuid,'DeviceIdentifier':actual_device,'FilesystemType':string(value('VolumeKind'))}
+    finally:
+        for reference in [description,disk,session]:
+            if reference:release(reference)
+
+
 def volume_info(root: Path) -> dict:
     """Inspect the existing mount without mkdir or an internal-disk fallback."""
     root = Path(root)
     if not root.is_absolute() or not root.is_dir() or root.is_symlink():
         raise DataRootError("External data directory is unavailable. Connect its volume.")
     if sys.platform != "darwin":
-        raise DataRootError("External-volume verification currently requires macOS diskutil.")
+        raise DataRootError("External-volume verification currently requires macOS.")
     mount_candidate = root.resolve()
     while mount_candidate.parent != mount_candidate and not os.path.ismount(mount_candidate):
         mount_candidate = mount_candidate.parent
@@ -49,15 +106,11 @@ def volume_info(root: Path) -> dict:
             if location.split(" (", 1)[0] == str(mount_candidate) and source.startswith("/dev/"):
                 device = source
                 break
-    failure = None
-    for _ in range(2):
-        try:
-            info = plistlib.loads(subprocess.check_output(["diskutil", "info", "-plist", device], timeout=15))
-            break
-        except (subprocess.SubprocessError, ValueError) as exc:
-            failure = exc
-    else:
-        raise DataRootError("Cannot verify the external data volume after two bounded attempts.") from failure
+    # Check the live mount and UUID on every call, including device-number reuse.
+    root_stat, mount_stat = root.stat(), mount_candidate.stat()
+    if mount_candidate == Path('/') or not os.path.ismount(mount_candidate) or not device.startswith('/dev/'):
+        raise DataRootError('The configured external volume is not mounted.')
+    info=_native_volume_info(mount_candidate,device)
     mount = Path(info.get("MountPoint", "/"))
     if (not info.get("MountPoint") or info.get("Internal", True) or mount == Path("/")
             or not os.path.ismount(mount) or not root.resolve().is_relative_to(mount)
@@ -133,3 +186,8 @@ def atomic_json(path, document):
         os.replace(temporary, path)
     finally:
         temporary.unlink(missing_ok=True)
+
+
+if __name__=='__main__':
+    if len(sys.argv)!=3 or sys.argv[1]!='--volume-info':raise SystemExit('Usage: python -m resectionlab.data_root --volume-info ROOT')
+    print(json.dumps(volume_info(Path(sys.argv[2]))))

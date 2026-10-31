@@ -1434,6 +1434,10 @@ export default function App() {
     [certifiedReplay, caseData, episodeVisible, displayedEpisodeView, displayedEpisodeStep,episodeWorkflow,activeContactView,activeContactStep],
   );
   const synthetic = !!payload?.metadata.is_synthetic;
+  const dataCase=payload?.metadata.data_case as Record<string,unknown>|undefined;
+  const syntheticOnAcquired=synthetic&&dataCase?.classification==='synthetic_scenario_on_acquired_host';
+  const geometryOnBaseline=syntheticOnAcquired&&(dataCase?.observations as Record<string,unknown>|undefined)?.primary_T1==='baseline_acquired_background_geometry_only';
+  const generatedPrimaryImage=synthetic&&!geometryOnBaseline;
   const supportGate = researchSupportGate(payload);
   const needsSupport = supportGate.requiresEstimatedSupport;
   const canGenerate =
@@ -1450,7 +1454,7 @@ export default function App() {
     fractionalAnnotation?.derived_provenance === "estimated"
       ? "Threshold-derived annotation"
       : "Supplied annotation";
-  const title = synthetic
+  const title = synthetic&&!syntheticOnAcquired
     ? "Synthetic access fixture"
     : (payload?.caseId ?? "No case open");
 
@@ -1583,7 +1587,7 @@ export default function App() {
         <p className="case-subtitle">
           {displayedSource
             ? displayedSource.metadata.is_synthetic
-              ? "Geometry demonstration · no patient data"
+              ? syntheticOnAcquired?(geometryOnBaseline?'Synthetic target on acquired baseline MRI · geometry only':'Synthetic MRI appearance on acquired anatomy · engineering scenario'):"Geometry demonstration · no patient data"
               : displayedSource.compartments.length > 0
                 ? "Annotation-assisted structural workspace"
                 : "Source-image workspace · no target annotations"
@@ -1627,7 +1631,7 @@ export default function App() {
               <strong>
                 {displayedSource
                   ? String(
-                      displayedSource.metadata.is_synthetic ? "Generated analytic signal" : imaging.selected?.descriptor.modality ?? displayedSource.metadata.selected_modality ?? "Structural MRI",
+                      display.primaryOverlaysPermitted&&generatedPrimaryImage ? "Generated image signal" : imaging.selected?.descriptor.modality ?? displayedSource.metadata.selected_modality ?? "Structural MRI",
                     )
                   : "No MRI loaded"}
               </strong>
@@ -1876,7 +1880,7 @@ export default function App() {
               registeredFusion={native.binding?null:registeredFusion}
               diagnosticLayer={native.binding?null:diagnostic.view?.layer ?? null}
               diagnosticSourceSha256={diagnostic.view?.sourceSha256 ?? null}
-              generatedSignal={display.primaryOverlaysPermitted && synthetic}
+              generatedSignal={display.primaryOverlaysPermitted && generatedPrimaryImage}
               segmentationOnly={!native.binding && displayedSource?.metadata.generated_signal===true}
               publicGoal={!native.binding && display.primaryOverlaysPermitted ? publicGoalMarker : null}
               caseData={surgical.previewVolume??surgical.volume??displayedCase}

@@ -348,6 +348,26 @@ def remote_extract(root, subject):
     return result
 
 
+def completed_native(root, family):
+    """Reuse only complete, checksum-identical packages at the current policy."""
+    path = safe_path(root, CATALOG + f'/{family["subject"]}-native-candidates.json')
+    if not path.exists():
+        return None
+    result = json.loads(path.read_text())
+    subject = family['subject']
+    expected = {f'staging/candidates/clinical/TopCoW-{subject}-CTA-v3.ressectionlab',
+                f'staging/candidates/clinical/TopCoW-{subject}-TOF-MRA-v3-display-v2.ressectionlab'}
+    if result.get('family') != family or {c['path'] for c in result.get('candidates', [])} != expected:
+        return None
+    for candidate in result['candidates']:
+        package = safe_path(root, candidate['path'])
+        if not package.exists() or not candidate.get('contact_sheet') or not safe_path(root, candidate['contact_sheet']).is_file():
+            return None
+        if sha256_file(package) != candidate['sha256']:
+            raise ValueError('Completed native package differs from its immutable preparation receipt')
+    return result
+
+
 def batch(root, review_path, count):
     """Expand reviewed preparation while retaining every case as a candidate."""
     if review_path is None:
@@ -365,8 +385,13 @@ def batch(root, review_path, count):
         guard(root, 2 * 1024**3)
         try:
             remote_extract(root, subject)
-            result = export_native(root, subject)
-            result['source_and_preparation_elapsed_seconds'] = time.monotonic() - started
+            result = completed_native(root, family)
+            if result is None:
+                result = export_native(root, subject)
+                result['source_and_preparation_elapsed_seconds'] = time.monotonic() - started
+            else:
+                result['resume_disposition'] = 'completed_source_and_native_sha_verified_without_repreparation'
+                result['resume_verification_seconds'] = time.monotonic() - started
             results.append(result)
             atomic_json(safe_path(root, CATALOG + '/batch-candidates.json'), {
                 'independent_review_path': str(review_path), 'independent_review_sha256': sha256_file(review_path),

@@ -81,9 +81,17 @@ def inspect(root,receipt):
         payload=archive.read(baseline_row['member'])
         if hashlib.sha256(payload).hexdigest()!=baseline_row['sha256']:raise ValueError('Baseline source package changed')
         with ZipFile(BytesIO(payload)) as nested:
-            _,baseline_arrays=primary(nested)
+            baseline_manifest,baseline_arrays=primary(nested)
         baseline=baseline_arrays['mri']
-        if baseline.shape!=image.shape or not np.array_equal(baseline_arrays['affine'],affine):raise ValueError('Baseline/source grid mismatch')
+        if baseline.shape!=image.shape or not np.array_equal(baseline_arrays['affine'],affine):
+            lod=baseline_manifest['metadata'].get('display_resampling')
+            if not lod or lod.get('planning_input') is not False:raise ValueError('Baseline/source grid mismatch without explicit display derivative')
+            original=next(row for row in contract['source_files'] if row['modality'] in {'T1','T1w'} and row['path'].endswith(('.nii','.nii.gz')))
+            original_path=safe_path(root,original['path'])
+            if sha256_file(original_path)!=original['sha256']:raise ValueError('Native baseline source changed')
+            native=nib.load(original_path);baseline=np.asarray(native.dataobj,np.float32)
+            if baseline.shape!=image.shape or not np.allclose(native.affine,affine,rtol=0,atol=1e-4):raise ValueError('Native baseline reference has a different physical grid')
+            result['baseline_comparison']='native immutable source; auxiliary1mm derivative is display-only'
         difference=int(np.count_nonzero(image!=baseline))
         if receipt['stage']=='geometry' and difference:raise ValueError('Geometry-only case altered the acquired background')
         if receipt['stage']!='geometry' and not difference:raise ValueError('Generated observation equals baseline')

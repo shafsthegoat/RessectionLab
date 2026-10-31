@@ -100,7 +100,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     catch (cause) { return {goal:null,error:cause instanceof Error?cause.message:String(cause)}; }
   },[caseData,props.publicGoal,diagnosticRequested,passiveRequested,rehearsalRequested]);
   const publicGoal = goalSelection.goal;
-  const signalName = props.segmentationOnly ? 'segmentation only' : props.generatedSignal ? "analytic signal" : (props.sourceLabel ?? "MRI");
+  const signalName = props.segmentationOnly ? 'segmentation only' : props.generatedSignal ? "generated image signal" : (props.sourceLabel ?? "MRI");
   const [localSettings,setLocalSettings] = useState<ViewerWorkspaceSettings>({});
   const settings=props.workspaceSettings ?? localSettings;
   const scanVolume=volumeSettings(settings.volumeRendering,signalName);
@@ -751,7 +751,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               ? `Generated passive replay · frame ${passiveReplay.frameIndex}/${passiveReplay.stepCount}`
               : modeled
               ? `Modeled residual annotations · step ${replay.step}/${replay.stepCount}`
-              : `${signalName} · ${volumeDisplayed?'source volume + labels':'source-derived labels'}`}
+              : `${signalName} · ${volumeDisplayed?'source volume + labels':'structures'}`}
             {rehearsalMode && <>
               <span className="rl-viewer-replay-key">Mint: modeled removal · violet: assumed initial exposure · amber: field-management contact</span>
               <span className="rl-viewer-replay-key">Two persistent tools · {rehearsalState.elapsedSeconds.toFixed(1)} simulated s · source {signalName} unchanged · uncalibrated physics</span>
@@ -935,7 +935,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
                 {scaleMm} mm
               </span>
               <span className="rl-viewer-slice-note">
-                {props.segmentationOnly ? 'SEGMENTATION ONLY · NO ACQUIRED IMAGE' : props.generatedSignal ? "GENERATED ANALYTIC SIGNAL" : `SOURCE ${signalName.toUpperCase()}`}
+                {props.segmentationOnly ? 'SEGMENTATION ONLY · NO ACQUIRED IMAGE' : props.generatedSignal ? "GENERATED IMAGE SIGNAL" : `SOURCE ${signalName.toUpperCase()}`}
                 {surgicalView ? (displayedSurgical?.preview?" · MODELED PREVIEW":" · MODELED EFFECT OVERLAY") : rehearsalMode ? " · RESEARCH EFFECT OVERLAY" : inspected
                   ? " · UNEXECUTED TOOL PREVIEW"
                   : proposalReviewLabel

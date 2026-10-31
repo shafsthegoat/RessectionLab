@@ -1,4 +1,5 @@
 import json
+import plistlib
 from pathlib import Path
 
 import pytest
@@ -35,3 +36,25 @@ def test_volume_identity_and_free_space_are_checked_on_each_write(monkeypatch, t
     info["volume_uuid"] = "replacement"
     with pytest.raises(DataRootError, match="identity"):
         checked_root(tmp_path)
+
+
+def test_live_uuid_never_hides_a_missing_or_reused_device_mount(monkeypatch,tmp_path):
+    import resectionlab.data_root as module
+    root=tmp_path/'data';root.mkdir()
+    state={'mounted':True,'device':'/dev/disk9s1','uuid':'one','queries':0}
+    monkeypatch.setattr(module.os.path,'ismount',lambda p:state['mounted'] and Path(p)==tmp_path)
+    def output(command,**kwargs):
+        if command[0]=='/sbin/mount':return f"{state['device']} on {tmp_path} (exfat, local)\n"
+        pytest.fail('Storage verification must not invoke diskutil')
+    def native(*_):
+        state['queries']+=1
+        return {'MountPoint':str(tmp_path),'Internal':False,'WritableVolume':True,'VolumeUUID':state['uuid']}
+    monkeypatch.setattr(module,'_native_volume_info',native)
+    monkeypatch.setattr(module.subprocess,'check_output',output)
+    assert module.volume_info(root)['volume_uuid']=='one'
+    assert module.volume_info(root)['volume_uuid']=='one' and state['queries']==2
+    state.update(uuid='two') # Same device number and inode are not a UUID attestation.
+    assert module.volume_info(root)['volume_uuid']=='two' and state['queries']==3
+    state['mounted']=False
+    with pytest.raises(DataRootError,match='not mounted'):
+        module.volume_info(root)
