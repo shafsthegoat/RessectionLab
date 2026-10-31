@@ -488,13 +488,13 @@ def _validate_observed_report(engine, report):
     validate_public_approach_plan(observation, {**_public_report_body(report), 'publicPlanSeal': report['publicPlanSeal']})
 
 
-def validate_public_approach_plan(observation, report):
+def validate_public_approach_plan(observation, report, *, check=lambda: None):
     """Shared complete validator for a standalone public plan or native envelope."""
     from .core import thaw_json
     from .surgical_planning_observation import PlanningObservation, preview_inactive_program
     if type(observation) is not PlanningObservation or type(report) is not dict:
         raise ValueError('Typed public approach observation and plan required')
-    fields = thaw_json(observation.fields)
+    check(); fields = thaw_json(observation.fields)
     if normalize_constraints(observation.planning_engine(), report['constraints'], task=fields['task']) != report['constraints']:
         raise ValueError('Interactive public constraints differ')
     if report.get('evidence') != {'availableEvidence': fields['availableEvidence']}:
@@ -522,7 +522,8 @@ def validate_public_approach_plan(observation, report):
     public = observation.planning_engine()
     _validate_routes(public, body, public_task=fields['task'])
     for row in report['routes']:
-        if row.get('publicExecution') != preview_inactive_program(public, row):
+        check()
+        if row.get('publicExecution') != preview_inactive_program(public, row, check=check):
             raise ValueError('Interactive public execution differs')
 
 

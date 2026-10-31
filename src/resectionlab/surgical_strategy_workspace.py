@@ -15,13 +15,15 @@ SCHEMA = 'resectionlab.two-tool-workspace.v1'
 _VALIDATED = OrderedDict()
 
 
-def validate_workspace(scene, record, case_hash):
+def validate_workspace(scene, record, case_hash, *, check=lambda: None):
+    check()
     history = record.get('strategyComparisons', []); applications = record.get('strategyApplications', [])
     if type(history) is not list or len(history) > 16 or type(applications) is not list or len(applications) > 64:
         raise ValueError('Two-tool study history exceeds its bounded schema')
     if not history and not applications: return history
     reports = {}
     for revision, item in enumerate(history, 1):
+        check()
         _checked_seal(item, 'workspaceSeal')
         if set(item) != {'schema', 'revision', 'caseHash', 'sourceBranchId', 'sourceSnapshotHash', 'report', 'workspaceSeal'} or item['schema'] != SCHEMA or item['revision'] != revision or type(item['revision']) is not int or item['caseHash'] != case_hash:
             raise ValueError('Two-tool study identity/revision differs')
@@ -31,11 +33,13 @@ def validate_workspace(scene, record, case_hash):
         validate_admission(SimpleNamespace(scene=scene), item['report']['taskAdmission'], require_baseline=False)
         key = (scene.identity, semantic_digest(baseline), semantic_digest(item))
         if key not in _VALIDATED:
-            engine = SurgicalEngine.restore(scene, baseline)
-            bind_admission(engine, item['report']['taskAdmission']); validate_report(engine, item['report'])
+            engine = SurgicalEngine.restore(scene, baseline, check=check)
+            bind_admission(engine, item['report']['taskAdmission']); validate_report(engine, item['report'], check=check)
+            check()
             _VALIDATED[key] = True
         reports[revision] = item
     for app in applications:
+        check()
         _checked_seal(app, 'applicationSeal')
         if set(app) != {'revision', 'reportSeal', 'candidateId', 'branchId', 'snapshotHash', 'receipt', 'applicationSeal'}:
             raise ValueError('Two-tool application schema differs')
@@ -49,19 +53,19 @@ def validate_workspace(scene, record, case_hash):
             raise ValueError('Two-tool installed program differs')
         key = (scene.identity, semantic_digest(item), semantic_digest(snapshot), semantic_digest(app))
         if key not in _VALIDATED:
-            engine = SurgicalEngine.restore(scene, baseline); bind_admission(engine, item['report']['taskAdmission'])
-            candidate, _, receipt = materialize(engine, item['report'], app['candidateId'])
+            engine = SurgicalEngine.restore(scene, baseline, check=check); bind_admission(engine, item['report']['taskAdmission'])
+            candidate, _, receipt = materialize(engine, item['report'], app['candidateId'], check=check)
             if candidate.snapshot() != snapshot or receipt != app['receipt']:
                 raise ValueError('Two-tool installed state or receipt differs')
-            _VALIDATED[key] = True
+            check(); _VALIDATED[key] = True
     while len(_VALIDATED) > 64: _VALIDATED.popitem(last=False)
     return history
 
 
-def install_report(engine, record, case_hash, report):
-    history = validate_workspace(engine.scene, record, case_hash)
+def install_report(engine, record, case_hash, report, *, check=lambda: None):
+    history = validate_workspace(engine.scene, record, case_hash, check=check)
     if len(history) >= 16: raise ValueError('Two-tool comparison revision limit reached; save this study')
-    validate_report(engine, report)
+    validate_report(engine, report, check=check); check()
     branch = 'strategy-source-'+str(len(record['branches']))
     while branch in record['branches']: branch += '-next'
     snapshot = engine.snapshot()
@@ -75,12 +79,12 @@ def install_report(engine, record, case_hash, report):
     return item
 
 
-def current_report(engine, record, case_hash, seal):
-    history = validate_workspace(engine.scene, record, case_hash)
+def current_report(engine, record, case_hash, seal, *, check=lambda: None):
+    history = validate_workspace(engine.scene, record, case_hash, check=check)
     if not history or history[-1]['report']['reportSeal'] != seal:
         raise ValueError('Two-tool comparison changed; regenerate or inspect the current study')
     item = history[-1]
-    validate_report(engine, item['report'])
+    validate_report(engine, item['report'], check=check)
     return item
 
 
@@ -94,8 +98,8 @@ def install_application(record, item, branch, engine, candidate_id, receipt):
     _VALIDATED[(engine.scene.identity, semantic_digest(item), app['snapshotHash'], semantic_digest(app))] = True
 
 
-def planning_view(engine, record, case_hash):
-    history = validate_workspace(engine.scene, record, case_hash)
+def planning_view(engine, record, case_hash, *, check=lambda: None):
+    history = validate_workspace(engine.scene, record, case_hash, check=check)
     if not history: return None
     item = history[-1]; report = item['report']
     return {**copy.deepcopy(report), 'revision': item['revision'], 'sourceBranchId': item['sourceBranchId'],

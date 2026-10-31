@@ -26,6 +26,8 @@ def main():
     parser.add_argument('--case', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--reference-commit', required=True)
+    parser.add_argument('--controls-json', type=Path, help='Exact native draft controls, including optional context selection')
+    parser.add_argument('--candidate', help='Materialize this admissible candidate; default is the report selection')
     parser.add_argument('--repeats', type=int, default=3)
     parser.add_argument('--isolate-index-physics', action='store_true',
         help='Read the three shared physics modules from the index without changing the checkout')
@@ -70,7 +72,8 @@ def main():
     _, artifacts, _ = load_workspace(source); record = artifacts['surgical_toolbox']
     engine = SurgicalEngine.restore(load_environment(source), record['branches'][record['branchId']])
     bind_admission(engine, record['taskAdmission'])
-    controls = after.defaults(engine)['defaults']; initial = engine.snapshot()
+    controls = json.loads(args.controls_json.read_text()) if args.controls_json else after.defaults(engine)['defaults']
+    initial = engine.snapshot()
     result = {'case': str(source), 'sourceSha256': source_hash, 'referenceCommit': reference_commit,
         'head': git('rev-parse', 'HEAD').decode().strip(), 'python': platform.python_version(),
         'platform': platform.platform(), 'controls': controls, 'startStateId': engine.state_id,
@@ -80,20 +83,32 @@ def main():
         'timingScope': 'backend only; warm source admission; cold canonical cache per round; alternating order',
         'rounds': []}
     canonical = None
+    counters = {}
+    native_step, physical_substep = SurgicalEngine.step, SurgicalEngine._physical_substep
+    def counted_step(self, *values, **options):
+        key = 'nativeStepAttempts' if type(self) is SurgicalEngine else 'publicStepAttempts'
+        counters[key] = counters.get(key, 0)+1
+        return native_step(self, *values, **options)
+    def counted_physical(self, *values, **options):
+        counters['physicalMicrostepAttempts'] = counters.get('physicalMicrostepAttempts', 0)+1
+        return physical_substep(self, *values, **options)
+    SurgicalEngine.step, SurgicalEngine._physical_substep = counted_step, counted_physical
     def timed(operation):
+        counters.clear()
         start = time.perf_counter(); value = operation()
-        return value, time.perf_counter()-start
+        return value, time.perf_counter()-start, counters.copy()
     for round_id in range(args.repeats):
         for label, module in ([('before', before), ('after', after)] if round_id % 2 == 0 else [('after', after), ('before', before)]):
             if hasattr(module, '_VALIDATED_REPORTS'): module._VALIDATED_REPORTS.clear()
-            report, generation = timed(lambda: module.generate_comparison(engine, controls))
-            _, cold = timed(lambda: module.validate_report(engine, report))
-            _, warm = timed(lambda: module.validate_report(engine, report))
+            report, generation, generation_counts = timed(lambda: module.generate_comparison(engine, controls))
+            candidate_id = args.candidate or report['publicPlan']['decision']['selectedId']
+            _, cold, cold_counts = timed(lambda: module.validate_report(engine, report))
+            _, warm, warm_counts = timed(lambda: module.validate_report(engine, report))
             def preview():
                 module.validate_report(engine, report)  # current_report's live validation
-                return module.materialize(engine, report, 'long')  # validates again, then executes
-            (native, checkpoints, receipt), preview_seconds = timed(preview)
-            (again, phases_again, receipt_again), materialize_seconds = timed(lambda: module.materialize(engine, report, 'long'))
+                return module.materialize(engine, report, candidate_id)  # validates again, then executes
+            (native, checkpoints, receipt), preview_seconds, preview_counts = timed(preview)
+            (again, phases_again, receipt_again), materialize_seconds, materialize_counts = timed(lambda: module.materialize(engine, report, candidate_id))
             proof = {'reportHash': semantic_digest(report), 'endpointHash': semantic_digest(native.snapshot()),
                 'receiptHash': semantic_digest(receipt),
                 'phaseHashes': {key: semantic_digest(value.snapshot()) for key, value in checkpoints.items()}}
@@ -106,7 +121,10 @@ def main():
             assert canonical == proof, 'Exact canonical report/native endpoint/receipt/phase parity failed'
             row = {'round': round_id+1, 'arm': label, 'generationSeconds': generation, 'coldValidationSeconds': cold,
                 'warmValidationSeconds': warm, 'previewSeconds': preview_seconds, 'materializeSeconds': materialize_seconds,
-                'exactProof': proof,
+                'exactProof': proof, 'candidateId': candidate_id,
+                'computationCounts': {'generation': generation_counts, 'coldValidation': cold_counts,
+                    'warmValidation': warm_counts, 'preview': preview_counts, 'materialize': materialize_counts},
+                'prefixScopes': module.prefix_cache_stats() if hasattr(module, 'prefix_cache_stats') else None,
                 'validationCache': module.validation_cache_stats() if hasattr(module, 'validation_cache_stats') else None}
             result['rounds'].append(row)
             (output/'results.json').write_text(json.dumps(result, indent=2)+'\n')

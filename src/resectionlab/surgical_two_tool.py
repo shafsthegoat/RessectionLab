@@ -11,20 +11,21 @@ import copy
 import sys
 import time
 from collections import OrderedDict
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 from threading import RLock
 
 import numpy as np
 from scipy.spatial.transform import Rotation
 
-from .core import freeze_json, semantic_digest, thaw_json
+from .core import array_digest, freeze_json, semantic_digest, thaw_json
 from .surgical_engine import SurgicalEngine
 from .surgical_planning_observation import PlanningObservation, project_observation, physical_state_hash
 from .surgical_interactive_planning import (interactive_planning_availability, normalize_constraints,
     plan_observed_approaches, validate_public_approach_plan, _binding, _evidence, _retained_targets)
 from .surgical_task_admission import admission, bind_admission, validate_admission
 from .surgical_motion import envelopes, pair_conflict
-from .surgical_tools import TOOLS
+from .surgical_tools import TOOLS, catalog
+from .surgical_program_cache import ProgramPrefixCache
 from .surgical_anatomical_encounter import (AnatomicalObservation, EncounterTracker, context_options,
     project_context, normalize_limit, axial_envelope)
 
@@ -46,6 +47,80 @@ _VALIDATION_CACHE_ENTRIES = 32
 _VALIDATED_REPORTS = OrderedDict()
 _VALIDATION_LOCK = RLock()
 _VALIDATION_COUNTS = dict(hits=0, misses=0, evictions=0)
+_LAST_PREFIX_STATS = {}
+
+
+def prefix_cache_stats():
+    """Last invocation diagnostics; never model/checkpoint handles."""
+    with _VALIDATION_LOCK: return copy.deepcopy(_LAST_PREFIX_STATS)
+
+
+class _CompilationScope:
+    """One public scene owner and detached checkpoints, released on every exit."""
+    def __init__(self, observation, controls, *, kind):
+        _require(type(observation) is TwoToolObservation, 'typed public compilation scope required')
+        self.binding = semantic_digest({'observation': observation.manifest(), 'controls': controls})
+        self.cache = ProgramPrefixCache(); self.kind = kind; self.root = None; self.owner = None
+
+    def _owner_signature(self):
+        root = self.root; root.scene.require_cache_source()
+        _require(root._occupancy_cache is None, 'public compilation owner changed: occupancy must stay cold')
+        guard = root.protection
+        grid = root.grid
+        return semantic_digest({'scene': root.scene.identity, 'sceneOwner': id(root.scene),
+            'state': root.state, 'actions': root.actions, 'history': root.history,
+            'protectedIds': sorted(root._protected_ids), 'task': root._task, 'remaining': root._remaining_actions,
+            'guardContract': root._protection_contract, 'catalog': catalog(),
+            'byLabel': [[key, value] for key, value in root.by_label.items()], 'guardOwner': id(guard),
+            'guardConfig': None if root.guard_config is None else asdict(root.guard_config),
+            'grid': {'owner': id(grid), 'coverOwner': id(root._cell_cover_cache), 'shape': grid.shape,
+                'affine': array_digest(grid.affine), 'inverse': array_digest(grid._inverse),
+                'radius': grid._cell_radius_mm,
+                'spacing': None if grid._orthogonal_spacing is None else grid._orthogonal_spacing.tolist()},
+            'guard': None if guard is None else {'annotations': [asdict(a) for a in guard.annotations],
+                'cells': array_digest(guard.cells), 'points': array_digest(guard._points.reshape(-1)),
+                'pointsShape': guard._points.shape, 'radius': guard._radius,
+                'treeOwner': id(guard._tree), 'treeData': array_digest(guard._tree.data.reshape(-1)),
+                'treeShape': guard._tree.data.shape, 'treeIndices': array_digest(guard._tree.indices),
+                'treeMin': array_digest(guard._tree.mins), 'treeMax': array_digest(guard._tree.maxes),
+                'clearance': guard.clearance_mm, 'required': guard.required, 'missing': guard.missing,
+                'config': asdict(root.guard_config)}})
+
+    def model(self, observation, controls):
+        _require(self.binding == semantic_digest({'observation': observation.manifest(), 'controls': controls}),
+                 'public compilation observation or controls changed')
+        _require(thaw_json(observation.baseline.fields)['instrumentCatalog'] == catalog(),
+                 'instrument catalog changed during public compilation')
+        if self.root is None:
+            self.root = observation.planning_engine(); self.owner = self._owner_signature()
+        self.require_owner()
+        model = self.root.clone(); model._task = copy.deepcopy(self.root._task)
+        model._protected_ids = self.root._protected_ids.copy()
+        model._protection_contract = copy.deepcopy(self.root._protection_contract)
+        return model
+
+    def restore(self, payload):
+        self.require_owner()
+        # get() already detached the whole checkpoint graph. Start from a cold
+        # public shell: only immutable scene/guard and pure cell covers share.
+        model = copy.copy(self.root)
+        model.state, model.actions, model.history = payload['state'], payload['actions'], payload['history']
+        model._task = copy.deepcopy(self.root._task); model._protected_ids = self.root._protected_ids.copy()
+        model._protection_contract = copy.deepcopy(self.root._protection_contract)
+        return model
+
+    def require_owner(self):
+        _require(self.owner == self._owner_signature(), 'public compilation owner changed')
+
+    def __enter__(self): return self
+
+    def __exit__(self, exc_type, exc, traceback):
+        values = {**self.cache.stats(), 'publicRoots': int(self.root is not None),
+            'sceneLabelBytes': self.root.scene.labels.nbytes if self.root is not None else 0,
+            'completed': exc_type is None}
+        self.cache.close(); self.root = None; self.owner = None
+        values.update(retainedAfterClose=self.cache.stats()['entries'], closed=True)
+        with _VALIDATION_LOCK: _LAST_PREFIX_STATS[self.kind] = values
 
 
 def validation_cache_stats():
@@ -267,22 +342,45 @@ def _check_action_clearance(engine, action, previous_slots, margin):
                  'mapped non-target clearance violated during the complete sequence')
 
 
-def _compile(observation, controls, route, secondary, seconds, identity, *, probe_pose=None, check=lambda: None):
-    e = observation.planning_engine(); before = copy.deepcopy(e.state); program = []; states = []; phases = []; receipts = []
+def _compile(observation, controls, route, secondary, seconds, identity, *, probe_pose=None, check=lambda: None, prefix_scope=None):
+    e = prefix_scope.model(observation, controls) if prefix_scope is not None else observation.planning_engine()
+    before = copy.deepcopy(e.state); program = []; states = []; phases = []; receipts = []
     tracker = _tracker(observation, e, controls); context_hashes = []
     def step(action):
-        check(); previous_slots = copy.deepcopy(e.state['slots'])
+        nonlocal e
+        check()
+        if tracker: tracker.observation.assert_intact()
+        prefix = [*program, action]
+        found = prefix_scope.cache.get(prefix, check=check) if prefix_scope is not None else None
+        if found is not None:
+            e = prefix_scope.restore(found)
+            if tracker:
+                tracker.observation.assert_intact()
+                tracker.seen = {key: set(value) for key, value in found['contextSeen'].items()}
+            check()
+            receipts.append(found['receipt']); program.append(copy.deepcopy(action)); states.append(found['physicalHash'])
+            if tracker: context_hashes.append(found['contextHash'])
+            return
+        previous_slots = copy.deepcopy(e.state['slots'])
         result = e.step(copy.deepcopy(action), check=check)
         finite_contact = (action['slot'] == 'left' and action['operation'] == 'apply' and result['status'] == 'partial'
                           and result.get('reasonCode') == 'TISSUE_ASPIRATION_IN_PROGRESS'
                           and abs(result['elapsedSeconds']-action['duration']) <= 1e-8)
         _require(result['status'] == 'accepted' or finite_contact, 'native public '+action['slot']+' '+action['operation']+' refused: '+str(result.get('reason')))
-        receipts.append({key: result.get(key) for key in ('status', 'reason', 'completedFraction', 'elapsedSeconds')})
+        receipt = {key: result.get(key) for key in ('status', 'reason', 'completedFraction', 'elapsedSeconds')}
         _check_burdens(e, before, controls)
         _check_action_clearance(e, action, previous_slots, controls['geometry']['nonTargetClearanceMm'])
+        context_hash = None
         if tracker:
-            tracker.observe(e, action, previous_slots); context_hashes.append(semantic_digest(tracker.receipt(e)))
-        program.append(copy.deepcopy(action)); states.append(physical_state_hash(e))
+            tracker.observe(e, action, previous_slots); context_hash = semantic_digest(tracker.receipt(e))
+            context_hashes.append(context_hash)
+        physical_hash = physical_state_hash(e)
+        if prefix_scope is not None:
+            prefix_scope.require_owner()
+            prefix_scope.cache.put(prefix, {'state': e.state, 'actions': e.actions, 'history': e.history,
+                'receipt': receipt, 'physicalHash': physical_hash, 'contextHash': context_hash,
+                'contextSeen': {key: sorted(value) for key, value in tracker.seen.items()} if tracker else None}, check=check)
+        receipts.append(receipt); program.append(copy.deepcopy(action)); states.append(physical_hash)
     def phase(name, actions):
         start = len(program)
         for action in actions: step(action)
@@ -360,6 +458,7 @@ def plan_observed_strategies(observation, raw, *, check=lambda: None, progress=l
     approaches = plan_observed_approaches(observation.baseline, controls['geometry'], check=bounded, progress=progress)
     stop = _stop(observation, controls)
     alternatives = []; rejected = []; chosen = None; reason = None; context_failed = False; rejected_pair = None
+    prefix_scope = _CompilationScope(observation, controls, kind='planning')
     try:
         for route in approaches['routes']:
             access = observation.planning_engine()
@@ -385,7 +484,8 @@ def plan_observed_strategies(observation, raw, *, check=lambda: None, progress=l
                 for identity, key in (('short', 'shortSeconds'), ('long', 'longSeconds')):
                     try:
                         common_probe = variants[0]['reassessment']['probeAction']['pose'] if variants else None
-                        variants.append(_compile(observation, controls, route, secondary, controls[key], identity, probe_pose=common_probe, check=bounded))
+                        variants.append(_compile(observation, controls, route, secondary, controls[key], identity,
+                            probe_pose=common_probe, check=bounded, prefix_scope=prefix_scope))
                     except ValueError as error:
                         rejected.append({'routeId': route['id'], 'pairIndex': index, 'strategy': identity, 'reason': str(error)})
                 if len(variants) == 2:
@@ -402,6 +502,8 @@ def plan_observed_strategies(observation, raw, *, check=lambda: None, progress=l
             if chosen is not None: break
     except TimeoutError:
         reason = 'COMPUTATION_BUDGET'
+    finally:
+        prefix_scope.__exit__(*sys.exc_info())
     if not approaches['routes']:
         reason = _approach_stop_reason(approaches)
     if chosen is None and reason is None:
@@ -440,7 +542,7 @@ def generate_comparison(engine, raw, *, check=lambda: None, progress=lambda *_: 
     return report
 
 
-def _validate_context_rejections(observation, controls, public, expected):
+def _validate_context_rejections(observation, controls, public, expected, *, prefix_scope=None, check=lambda: None):
     """Refusal counts are recomputed from public source cells, never self-seals."""
     routes = {row['id']: row for row in public['approaches']['routes']}; access_cache = {}
     _require(type(public['rejections']) is list and len(public['rejections']) <=
@@ -453,14 +555,15 @@ def _validate_context_rejections(observation, controls, public, expected):
                  'anatomical STOP cannot hide an unfinished approach search')
         # Bind the parent shortlist too: truncating both its routes and their
         # context refusals must not turn a subset into a complete-family proof.
-        canonical_approaches = plan_observed_approaches(observation.baseline, controls['geometry'])
+        canonical_approaches = plan_observed_approaches(observation.baseline, controls['geometry'], check=check)
         _require(semantic_digest(canonical_approaches) == semantic_digest(public['approaches']),
                  'anatomical STOP approach-family coverage differs')
         canonical = []; fallback = None
         for route in public['approaches']['routes']:
+            check()
             access = observation.planning_engine(); tracker = _tracker(observation, access, controls)
             for action in route['actionProgram']:
-                previous = copy.deepcopy(access.state['slots']); result = access.step(copy.deepcopy(action))
+                previous = copy.deepcopy(access.state['slots']); result = access.step(copy.deepcopy(action), check=check)
                 _require(result['status'] == 'accepted', 'context coverage access differs')
                 tracker.observe(access, action, previous)
             receipt = tracker.receipt(access)
@@ -468,18 +571,22 @@ def _validate_context_rejections(observation, controls, public, expected):
                 canonical.append({'routeId': route['id'], 'reason': 'ANATOMICAL_CONTEXT_LIMIT:primary-access',
                     'anatomicalEncounter': receipt}); continue
             for index, secondary in enumerate(_pair_poses(observation, route, controls['geometry']['entry'])):
+                check()
                 failure = _screen_pair(access, secondary, controls['geometry']['nonTargetClearanceMm'], tracker)
                 if failure:
                     canonical.append({'routeId': route['id'], 'pairIndex': index, 'reason': failure,
                         **({'anatomicalEncounter': _pair_context_receipt(access, secondary, tracker)}
                             if failure.startswith('ANATOMICAL_CONTEXT_LIMIT') else {})}); continue
-                variants = []
-                for identity, key in (('short', 'shortSeconds'), ('long', 'longSeconds')):
-                    try:
-                        probe = variants[0]['reassessment']['probeAction']['pose'] if variants else None
-                        variants.append(_compile(observation, controls, route, secondary, controls[key], identity, probe_pose=probe))
-                    except ValueError as error:
-                        canonical.append({'routeId': route['id'], 'pairIndex': index, 'strategy': identity, 'reason': str(error)})
+                chosen = public['chosenPair']
+                variants = copy.deepcopy(expected) if chosen and chosen['route']['id'] == route['id'] and chosen['pairIndex'] == index else []
+                if not variants:
+                    for identity, key in (('short', 'shortSeconds'), ('long', 'longSeconds')):
+                        try:
+                            probe = variants[0]['reassessment']['probeAction']['pose'] if variants else None
+                            variants.append(_compile(observation, controls, route, secondary, controls[key], identity,
+                                probe_pose=probe, prefix_scope=prefix_scope, check=check))
+                        except ValueError as error:
+                            canonical.append({'routeId': route['id'], 'pairIndex': index, 'strategy': identity, 'reason': str(error)})
                 if len(variants) == 2:
                     _require(not any(row['feasible'] and row['taskProgressMet'] for row in variants),
                              'anatomical STOP omitted a complete admissible progress-qualified sequence')
@@ -496,6 +603,7 @@ def _validate_context_rejections(observation, controls, public, expected):
         return
     verified = 0
     for rejection in public['rejections']:
+        check()
         _require(type(rejection) is dict and type(rejection.get('reason')) is str, 'rejection schema differs')
         reason = rejection['reason']
         if not reason.startswith('ANATOMICAL_CONTEXT_LIMIT'): continue
@@ -505,7 +613,7 @@ def _validate_context_rejections(observation, controls, public, expected):
         if route['id'] not in access_cache:
             access = observation.planning_engine(); tracker = _tracker(observation, access, controls)
             for action in route['actionProgram']:
-                previous = copy.deepcopy(access.state['slots']); result = access.step(copy.deepcopy(action))
+                previous = copy.deepcopy(access.state['slots']); result = access.step(copy.deepcopy(action), check=check)
                 _require(result['status'] == 'accepted', 'context refusal access replay differs')
                 tracker.observe(access, action, previous)
             access_cache[route['id']] = access, tracker
@@ -527,7 +635,8 @@ def _validate_context_rejections(observation, controls, public, expected):
                 if not rows:
                     for identity, key in (('short', 'shortSeconds'), ('long', 'longSeconds')):
                         probe = rows[0]['reassessment']['probeAction']['pose'] if rows else None
-                        rows.append(_compile(observation, controls, route, pairs[index], controls[key], identity, probe_pose=probe))
+                        rows.append(_compile(observation, controls, route, pairs[index], controls[key], identity,
+                            probe_pose=probe, prefix_scope=prefix_scope, check=check))
                 receipts = [row['anatomicalEncounter'] for row in rows]
                 wanted = {'routeId': route['id'], 'pairIndex': index, 'reason': reason, 'anatomicalEncounters': receipts}
                 _require(all(not row['withinLimit'] for row in receipts), 'invented complete-sequence context limit')
@@ -537,7 +646,7 @@ def _validate_context_rejections(observation, controls, public, expected):
         _require(verified > 0, 'context STOP has no verified source-cell refusal')
 
 
-def validate_report(engine, report):
+def validate_report(engine, report, *, check=lambda: None):
     """Rebuild live inputs; reuse only previously complete canonical validation.
 
     The source byte-verification fingerprint, full native binding and current
@@ -546,6 +655,7 @@ def validate_report(engine, report):
     A cold report still executes the canonical approach and two-tool recipes.
     Native materialization is never cached here.
     """
+    check()
     _require(type(report) is dict, 'comparison must be an object')
     _require(report.get('schema') in (SCHEMA, CONTEXT_SCHEMA) and report.get('reportSeal') == semantic_digest({k: v for k, v in report.items() if k != 'reportSeal'}), 'comparison seal differs')
     value = admission(engine)
@@ -576,7 +686,7 @@ def validate_report(engine, report):
         if cache_key in _VALIDATED_REPORTS:
             _VALIDATED_REPORTS.move_to_end(cache_key)
             _VALIDATION_COUNTS['hits'] += 1
-            return True
+            check(); return True
         _VALIDATION_COUNTS['misses'] += 1
     controls = _normalize(observation, public['constraints'])
     _require(semantic_digest(controls) == semantic_digest(public['constraints']), 'public controls differ')
@@ -591,29 +701,32 @@ def validate_report(engine, report):
         _require(not approaches['routes'] and approaches.get('missingRequiredEvidence') == missing and approaches['status'] == 'required_evidence_unavailable', 'missing-evidence refusal differs')
     else:
         _require('missingRequiredEvidence' not in approaches, 'invented missing evidence')
-    validate_public_approach_plan(observation.baseline, approaches)
-    expected = []
-    chosen = public['chosenPair']
-    if chosen is not None:
-        _require(type(chosen) is dict and set(chosen) == {'route', 'pairIndex', 'secondary'}, 'paired geometry schema differs')
-        matches = [r for r in approaches['routes'] if r['id'] == chosen['route']['id']]
-        _require(len(matches) == 1 and matches[0] == chosen['route'], 'paired approach differs')
-        pairs = list(_pair_poses(observation, chosen['route'], controls['geometry']['entry'])); index = chosen['pairIndex']
-        _require(type(index) is int and 0 <= index < len(pairs) and pairs[index] == chosen['secondary'], 'paired placement is not a declared candidate')
-        for identity, key in (('short', 'shortSeconds'), ('long', 'longSeconds')):
-            probe = expected[0]['reassessment']['probeAction']['pose'] if expected else None
-            expected.append(_compile(observation, controls, chosen['route'], chosen['secondary'], controls[key], identity, probe_pose=probe))
-        claimed = public['decision'].get('reason')
-        reason = claimed if with_context and public['decision'].get('operation') == 'STOP' and claimed in ('ANATOMICAL_CONTEXT_LIMIT', 'COMPUTATION_BUDGET') else None
-        if reason is not None: _require(reason in ('ANATOMICAL_CONTEXT_LIMIT', 'COMPUTATION_BUDGET'), 'context refusal reason differs')
-    else:
-        reason = _approach_stop_reason(approaches) if not approaches['routes'] else public['decision'].get('reason')
-        _require(reason in {'REQUIRED_EVIDENCE_UNAVAILABLE', 'NO_COMPLETE_TOOL_ACCESS', 'NO_COMPLETE_TWO_TOOL_SEQUENCE', 'COMPUTATION_BUDGET'} |
-                 ({'ANATOMICAL_CONTEXT_LIMIT'} if with_context else set()), 'STOP reason differs')
-    if with_context: _validate_context_rejections(observation, controls, public, expected)
-    expected.append(_stop(observation, controls))
-    _require(semantic_digest(public['alternatives']) == semantic_digest(expected), 'canonical programs, physical predictions or reassessment differ')
-    _require(semantic_digest(public['decision']) == semantic_digest(_decision(expected, controls, reason)), 'public strategy/STOP decision differs')
+    validate_public_approach_plan(observation.baseline, approaches, check=check)
+    with _CompilationScope(observation, controls, kind='validation') as prefix_scope:
+        expected = []
+        chosen = public['chosenPair']
+        if chosen is not None:
+            _require(type(chosen) is dict and set(chosen) == {'route', 'pairIndex', 'secondary'}, 'paired geometry schema differs')
+            matches = [r for r in approaches['routes'] if r['id'] == chosen['route']['id']]
+            _require(len(matches) == 1 and matches[0] == chosen['route'], 'paired approach differs')
+            pairs = list(_pair_poses(observation, chosen['route'], controls['geometry']['entry'])); index = chosen['pairIndex']
+            _require(type(index) is int and 0 <= index < len(pairs) and pairs[index] == chosen['secondary'], 'paired placement is not a declared candidate')
+            for identity, key in (('short', 'shortSeconds'), ('long', 'longSeconds')):
+                probe = expected[0]['reassessment']['probeAction']['pose'] if expected else None
+                expected.append(_compile(observation, controls, chosen['route'], chosen['secondary'], controls[key], identity,
+                    probe_pose=probe, prefix_scope=prefix_scope, check=check))
+            claimed = public['decision'].get('reason')
+            reason = claimed if with_context and public['decision'].get('operation') == 'STOP' and claimed in ('ANATOMICAL_CONTEXT_LIMIT', 'COMPUTATION_BUDGET') else None
+            if reason is not None: _require(reason in ('ANATOMICAL_CONTEXT_LIMIT', 'COMPUTATION_BUDGET'), 'context refusal reason differs')
+        else:
+            reason = _approach_stop_reason(approaches) if not approaches['routes'] else public['decision'].get('reason')
+            _require(reason in {'REQUIRED_EVIDENCE_UNAVAILABLE', 'NO_COMPLETE_TOOL_ACCESS', 'NO_COMPLETE_TWO_TOOL_SEQUENCE', 'COMPUTATION_BUDGET'} |
+                     ({'ANATOMICAL_CONTEXT_LIMIT'} if with_context else set()), 'STOP reason differs')
+        if with_context: _validate_context_rejections(observation, controls, public, expected, prefix_scope=prefix_scope, check=check)
+        expected.append(_stop(observation, controls))
+        _require(semantic_digest(public['alternatives']) == semantic_digest(expected), 'canonical programs, physical predictions or reassessment differ')
+        _require(semantic_digest(public['decision']) == semantic_digest(_decision(expected, controls, reason)), 'public strategy/STOP decision differs')
+    check()
     with _VALIDATION_LOCK:
         _VALIDATED_REPORTS[cache_key] = True
         _VALIDATED_REPORTS.move_to_end(cache_key)
@@ -625,7 +738,7 @@ def validate_report(engine, report):
 
 def materialize(engine, report, candidate_id, *, check=lambda: None):
     """Independent native execution after the complete public plan is sealed."""
-    validate_report(engine, report)
+    validate_report(engine, report, check=check)
     matches = [row for row in report['publicPlan']['alternatives'] if row['id'] == candidate_id]
     _require(len(matches) == 1, 'unknown strategy')
     strategy = matches[0]; native = engine.clone(); before = copy.deepcopy(engine.state); checkpoints = {}

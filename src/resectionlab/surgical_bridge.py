@@ -463,11 +463,11 @@ def dispatch(session, operation, args, request, progress):
         from .surgical_two_tool import generate_comparison
         from .surgical_strategy_workspace import install_report
         generated = generate_comparison(engine, args.get('constraints'), check=request.check, progress=progress)
-        install_report(engine, record, identity, generated)
+        install_report(engine, record, identity, generated, check=request.check)
     elif command in {'previewStrategy', 'applyStrategy'}:
         from .surgical_two_tool import materialize
         from .surgical_strategy_workspace import current_report, install_application
-        item = current_report(engine, record, identity, args.get('expectedPlanSeal'))
+        item = current_report(engine, record, identity, args.get('expectedPlanSeal'), check=request.check)
         candidate_id = args.get('candidateId')
         candidate, checkpoints, receipt = materialize(engine, item['report'], candidate_id, check=request.check)
         if command == 'previewStrategy':
@@ -848,7 +848,7 @@ def dispatch(session, operation, args, request, progress):
     from .surgical_two_tool import defaults as strategy_availability
     from .surgical_strategy_workspace import planning_view as strategy_view
     result['strategyPlanningAvailability'] = strategy_availability(engine)
-    result['strategyPlanning'] = strategy_view(engine, record, identity)
+    result['strategyPlanning'] = strategy_view(engine, record, identity, check=request.check)
     if approach_preview is not None:
         result['approachPreview'] = approach_preview
     comparison = copy.deepcopy(record.get('planning'))

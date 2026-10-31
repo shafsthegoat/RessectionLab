@@ -428,14 +428,89 @@ its constraints were not relaxed. The immutable context mask adds one byte per
 source voxel (about 8.5 MiB here), with transient arrays during projection; the
 validation LRU still retains only bounded digest entries, not masks or engines.
 
+## Completed: exact public action-prefix reuse in cold proofs
+
+The context-limit proof's profile identifies repeated native compilation as the
+main cost:16 recipe compilations,256 public step attempts and12,535 physical
+microstep attempts. An invocation-local cache now reuses detached checkpoints of
+fully checked, complete ordered action prefixes. Keys include exact durations,
+poses, hands and parameters, bound to the full public observation and normalized
+controls. Generation and cold validation own separate caches. Failed actions and
+speculative reassessment probes never enter. A cold proof still reconstructs the
+parent shortlist, checks every declared approach/pair and verifies its ordered
+refusal transcript; its already independently rebuilt chosen pair is reused
+within that proof. Native installation executes every action again.
+
+One public root supplies immutable scene/guard owners and existing pure geometry
+caches. Owner checks cover source/grid/guard metadata, state/ancestry, material
+table, task, catalog and a cold occupancy cache. Checkpoints detach state,
+ancestry, receipts and encounter sets. All exits release root and payloads;
+only numeric diagnostics survive. The separate complete-report digest LRU keeps
+its existing live source/native/public-input checks. Cancellation now propagates
+through canonical validation, workspace validation/install/read and bridge calls;
+a canceled proof cannot publish a study or completed-validation authority.
+
+Three alternating paired runs against281b40dd on the same admitted0007 source and
+index physics give these backend medians with warm source/OS caches and an empty
+completed-validation cache for each arm:
+
+| Workload | Before | After | Reduction |
+| --- | ---: | ---: | ---: |
+| Context limit2, generation |29.33s|19.59s|33.2%|
+| Context limit2, cold canonical proof |35.26s|21.84s|38.1%|
+| Permissive context, generation |6.54s|5.81s|11.1%|
+| Permissive context, cold canonical proof |6.03s|5.33s|11.6%|
+
+The full reports, decisions, native endpoints, receipts and every phase snapshot
+hash are exact across arms and repeats. The limit2 decision still distinguishes
+access from operating: a route passes access at2mm³, but complete maneuvers reach
+3mm³ and remain un-installable counterfactuals with STOP. Cold public attempts
+fall256→150 and physical microsteps12,535→8,070, including rejected trials.
+There are77 prefix hits; the selected canonical pair also avoids duplicate
+compilation. This is exact reuse, not a relaxed geometric or physical check.
+The permissive long strategy still executes15native actions/642physical
+microsteps on every preview or installation; native materialization medians are
+1.541s in both arms. Warm completed validation remains about0.13s. Source/OS
+cache warmth, backend work and native execution are measured separately; these
+figures do not measure rendering.
+
+Payload retention is bounded to64entries and16MiB of accounted key/payload
+objects; this case peaks at14.8MiB, evicts48entries and retains none after exit.
+One public root contains17,856,000bytes of labels, plus its grid and existing pure
+geometry caches. The payload accounting excludes OrderedDict nodes/value tuples,
+bookkeeping, observations, active engines and transient copy overlap: it is not
+an RSS cap. No persistent checkpoint/scene cache or new dependency was introduced.
+The ignored `testcases/context-proof-performance-v1/README.md` preserves exact
+commands, source/code hashes, counters, timing scopes and failed intermediate
+controls. These are DEVELOPMENT workloads, not generalization or clinical evidence.
+All318backend regression tests,1,217desktop tests and the build pass. The45new
+controls cover exact V1/V2 uncached equivalence, duration/type-sensitive prefixes,
+detachment, bounded eviction, owner/source tampering, failed-check exclusion,
+cleanup and cancellation during cold/warm proof and atomic bridge installation.
+Six older V1 studies/two applications replay exactly; default regeneration keeps
+the same full report hash recorded above.
+Actual hidden Electron regenerates8studies, previews/installs both timed branches,
+saves and cold-reopens. Long/modified-short endpoint hashes stay exact; paired
+comparison of original and optimized8-study and9-study saves also verifies all
+reports, applications, branches, cursor position and ancestry in full. Independent
+literal-tool/source-cell audits pass the over-limit counterfactuals, permissive
+comparison and changed duration. The real full-sequence-limit STOP takes42.156sIPC
+and42.228sclick-to-accepted-display; positive previews take2.152–2.499sIPC. These
+display intervals include dispatch/polling and surface preparation, not isolated
+GPU time. Fresh reopen's first inspect takes63.984s for8studies/2applications;
+it is a current application measurement, not a matched speedup experiment.
+The source point drives linked MRI RAS[-76,120,62]mm with no native action.
+The second acquired case still refuses full access through the same hidden
+interface, and the exact missing-target control exposes no strategy action.
+Original source files remain unchanged and no window becomes visible.
+
 ## Remaining milestones and next dependency
 
 This is a bounded acquired-anatomy operating task, not the complete strategy
 platform. Patient-specific functional consequences still need compatible evidence;
 the functional control remains a refusal. The new anatomical endpoint is a
-geometric source constraint, not a qualified motor/language map. Profile and
-reuse exact physical prefixes in the 65-second cold negative proof, migrate remaining
-planner interfaces and reduce cold generation/display costs, then build the frozen
+geometric source constraint, not a qualified motor/language map. Migrate remaining
+planner interfaces and reduce remaining cold generation/display costs, then build the frozen
 uncertainty comparison with matched baselines. Expand the patient distribution
 without touching reserved evaluations. Older lattice resolution dependence and
 continuum empirical/domain gates remain qualification holds. No RL campaign,
