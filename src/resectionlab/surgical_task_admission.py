@@ -10,7 +10,6 @@ import copy
 from collections import OrderedDict
 from dataclasses import dataclass
 from pathlib import Path
-from types import SimpleNamespace
 
 import numpy as np
 
@@ -52,9 +51,8 @@ def source_evidence(scene, *, declarations_root=None):
              'native semantic snapshot differs')
     _require(_hash(adapter.get('sourceManifestSha256')), 'original native-manifest byte hash is missing')
     _require(np.array_equal(scene.affine, adapter.get('targetAffine')), 'derivative coordinate frame differs')
-    from .surgical_staged_planning import require_staged_development
-    role = require_staged_development(SimpleNamespace(metadata={'surgical_adapter': adapter}),
-        _DECLARATIONS_ROOT if declarations_root is None else declarations_root)
+    from .surgical_source_roles import development_role
+    role = development_role(adapter, declarations_root=_DECLARATIONS_ROOT if declarations_root is None else declarations_root)
     series = manifest.get('series', [])
     _require(type(series) is list and bool(series), 'acquired imaging series are missing')
     _require(manifest.get('study_timepoint') == 'preoperative' and all(row.get('timepoint') == 'preoperative' for row in series),
@@ -168,7 +166,7 @@ def _source_members(scene):
     return originals, arrays
 
 
-def _verify_source_bytes(scene, verification):
+def _verify_source_bytes(scene, verification, *, check=lambda: None):
     """Cold-check source bytes; warm reuse also checks every member's metadata.
 
     This process-private bounded cache never trusts a caller's self-seal as a
@@ -176,12 +174,13 @@ def _verify_source_bytes(scene, verification):
     full recheck. Paths stay within the declared native collection.
     """
     try:
-        return _verify_source_members(scene, verification)
+        return _verify_source_members(scene, verification, check=check)
     except OSError as error:
         raise ValueError('TASK_ADMISSION: native source evidence is unavailable: '+str(error.filename)) from error
 
 
-def _verify_source_members(scene, verification):
+def _verify_source_members(scene, verification, *, check=lambda: None):
+    check(); scene.require_cache_source()
     collection = PatientImagingCollection(verification['nativeCollectionPath'])
     manifest_path = collection.root/'patient-anatomy.json'
     adapter = scene.source['adapter']
@@ -198,17 +197,23 @@ def _verify_source_members(scene, verification):
     key = (scene.identity, semantic_digest(verification))
     if _SOURCE_CHECKS.get(key) == before:
         _SOURCE_CHECKS.move_to_end(key)
+        check()
         return
     _require(file_hash(manifest_path) == adapter['sourceManifestSha256'], 'original native manifest bytes differ')
     for row in originals:
+        check()
         _require(file_hash(collection.path(row['path'])) == row['sha256'], 'original acquired image or annotation bytes differ')
-    for row in arrays: collection.array(row)
+    for row in arrays:
+        check(); collection.array(row)
+    from .surgical_source_decode import verify_original_decodes
+    verify_original_decodes(collection, adapter, check=check)
     # Recompute the declared derivative from the verified native masks. Hashes
     # copied into adapter metadata alone cannot authorize exchanged labels.
     from .surgical_patient import _resample
     native_layers = {row['id']: row for row in collection.document['layers']}
     ownership = np.zeros(scene.shape, np.uint16)
     for region in scene.regions:
+        check()
         name = region['name']; layer = adapter['sourceLayers'][name]
         original = native_layers[layer['layerId']]
         registered = collection.registration_matrix(original['source_series']) @ np.asarray(original['affine'])
@@ -218,9 +223,26 @@ def _verify_source_members(scene, verification):
         _require(array_digest(sampled) == layer['sampledMaskHash'], 'derived anatomy does not match verified native source')
         ownership[sampled] = region['id']
     _require(np.array_equal(ownership, scene.labels), 'material ownership does not match the verified source masks')
+    check(); scene.require_cache_source()
     _require(before == fingerprint(), 'native source changed during byte verification')
     _SOURCE_CHECKS[key] = before
     while len(_SOURCE_CHECKS) > 8: _SOURCE_CHECKS.popitem(last=False)
+
+
+def verify_source(scene, *, native_collection, check=lambda: None):
+    """Verify declared native originals/arrays/layout without admitting a task."""
+    check(); evidence = source_evidence(scene)
+    collection = PatientImagingCollection(native_collection)
+    native_path = collection.root/'patient-anatomy.json'
+    _require(collection.identity() == evidence['sourceCollectionHash'] and file_hash(native_path) == evidence['sourceManifestSha256'],
+             'original native manifest differs from the source adapter')
+    originals, arrays = _source_members(scene)
+    verification = {'nativeCollectionPath': str(collection.root.resolve()), 'nativeManifestSha256': file_hash(native_path),
+        'verifiedOriginalSha256': sorted({row['sha256'] for row in originals}),
+        'verifiedArraySha256': sorted({row['sha256'] for row in arrays}),
+        'scope': 'source-byte-and-layout-consistency; no anatomical or clinical validation'}
+    _verify_source_bytes(scene, verification, check=check); check()
+    return verification
 
 
 @dataclass(frozen=True)

@@ -170,10 +170,14 @@ def interactive_planning_availability(engine):
                 'evidence': _evidence(engine), 'scope': _ADMITTED_SCOPE, 'admission': admitted}
     supported = _source_supported(engine.scene)
     if not supported:
+        from .surgical_source_preflight import source_preflight
+        adapter = engine.scene.source.get('adapter')
+        diagnostic = ({'sourcePreflight': source_preflight(engine)}
+            if type(adapter) is dict and adapter.get('type') == 'native-patient-research-derivative' else {})
         return {'available': False,
                 'reason': ('A source-declared tumor target is required; this case has no supported removal target.' if not _target_ids(engine)
                            else 'A declared patient/task admission is required. Historical planning is limited to the documented UCSF-PDGM-0007 source grid.'),
-                'defaults': None, 'evidence': None, 'scope': _SCOPE}
+                'defaults': None, 'evidence': None, 'scope': _SCOPE, **diagnostic}
     exposure = _exposure(engine)
     if not engine.state['removed'] or exposure is None:
         reasons.append('Select the authored post-exposure checkpoint first.')

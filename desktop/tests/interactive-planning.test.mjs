@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {planningBinding,currentPlanningReport,selectedPlanningRoute,planningDraftIssue,planningConstraintKey,planningOverlayForView,planningSliceSegments,planningSphereSliceRadius} from '../src/interactive-planning-data.ts';
+import {planningBinding,currentPlanningReport,currentSourcePreflight,selectedPlanningRoute,planningDraftIssue,planningConstraintKey,planningOverlayForView,planningSliceSegments,planningSphereSliceRadius} from '../src/interactive-planning-data.ts';
 const constraints=()=>({target:{centerMm:[10,10,10],radiusMm:2},entry:{centerMm:[10,0,10],radiusMm:4},tool:{instrument:'cusa',radiusMm:1.5},requiredEvidence:[],candidateCount:3,nonTargetClearanceMm:0});
 const pose=position=>({position,quaternion:[0,0,0,1]});
 function fixture(){
@@ -9,6 +9,19 @@ function fixture(){
   const response={caseHash:'patient',branchId:'source',position:7,view:{stateId:'state',scene:{sceneId:'scene'}},interactivePlanning:report};
   const submitted={binding:planningBinding(response),revision:4};return {draft,response,report,route,submitted};
 }
+test('source readiness is shown only for its verified native response and grants no route authority',()=>{
+  const {response}=fixture();
+  const report={schema:'resectionlab.surgical-source-preflight.v1',sourceSceneId:'scene',startStateId:'state',prefixActions:7,planningAdmitted:false,checks:[],sourceEvidence:null,scope:'Read-only'};
+  const bound={...response,interactivePlanning:null,interactivePlanningAvailability:{available:false,defaults:null,sourcePreflight:report}};
+  assert.equal(currentSourcePreflight(bound),report);
+  assert.equal(bound.interactivePlanningAvailability.available,false);
+  assert.equal(currentPlanningReport(bound,constraints(),null,0),null);
+  for(const [key,value] of [['schema','unknown'],['sourceSceneId','other'],['startStateId','other'],['prefixActions',8]]){
+    assert.equal(currentSourcePreflight({...bound,interactivePlanningAvailability:{...bound.interactivePlanningAvailability,sourcePreflight:{...report,[key]:value}}}),null);
+  }
+  for(const flags of [{readOnly:true},{playback:{readOnly:true}},{verification:{readOnly:true}}])assert.equal(currentSourcePreflight({...bound,...flags}),null);
+  assert.equal(currentSourcePreflight(null),null);
+});
 test('current report requires the exact source/checkpoint and submitted draft revision',()=>{
   const f=fixture();assert.equal(currentPlanningReport(f.response,f.draft,f.submitted,4),f.report);
   for(const [key,value] of [['caseHash','another-patient'],['branchId','another-branch'],['position',8]]){

@@ -15,7 +15,18 @@ export interface PlanningTaskAdmission {
   task:{id:string;inputContract:string;toolRadiusMm:number};
   models:{toolMechanicsRevision:number;physicalClockRevision:number};
 }
-export interface InteractivePlanningAvailability {available:boolean;reason:string|null;defaults:InteractivePlanningConstraints|null;evidence:Record<string,unknown>;scope:string;admission?:PlanningTaskAdmission}
+export interface SourcePreflight {
+  schema:'resectionlab.surgical-source-preflight.v1';sourceSceneId:string;startStateId:string;prefixActions:number;
+  planningAdmitted:boolean;scope:string;
+  checks:Array<{id:string;status:string;description:string}>;
+  sourceEvidence:PlanningTaskAdmission['sourceEvidence']|null;
+}
+export interface InteractivePlanningAvailability {available:boolean;reason:string|null;defaults:InteractivePlanningConstraints|null;evidence:Record<string,unknown>;scope:string;admission?:PlanningTaskAdmission;sourcePreflight?:SourcePreflight}
+export function currentSourcePreflight(response:SurgicalResponse|null|undefined):SourcePreflight|null {
+  const report=response?.interactivePlanningAvailability?.sourcePreflight;
+  return report&&report.schema==='resectionlab.surgical-source-preflight.v1'&&response&&!response.readOnly&&!response.playback&&!response.verification?.readOnly&&
+    report.sourceSceneId===response.view.scene.sceneId&&report.startStateId===response.view.stateId&&report.prefixActions===response.position?report:null;
+}
 export interface InteractivePlanningRoute {
   id:string;label:string;entryPose:SurgicalPose;targetPose:SurgicalPose;outsidePose:SurgicalPose;
   actionProgram:unknown[];metrics:Record<string,unknown>;separationComparisons?:Array<{routeId:string;entrySeparationMm:number;angleDeg:number}>;requiredTargetRemoval?:{sourceCells:number[];additionalNonTargetTraversalAllowedMm3:number;status:string};scope:string;

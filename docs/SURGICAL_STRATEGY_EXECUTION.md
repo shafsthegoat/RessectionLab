@@ -683,6 +683,74 @@ annotation, not a new independent evaluation case or calibrated uncertainty.
 The ignored inventory, measurements, failures and commands live together in
 `testcases/execution-proof-performance-v1/README.md`.
 
+## Implemented: acquired-source preflight and decoded provenance
+
+Older acquired collections can now resolve DEVELOPMENT authority from the trusted
+cohort registry and pinned acquisition declaration without changing their native
+manifest. Exact patient/visit/collection, acquired originals and modalities must
+join; ambiguous identities and alias/derivative role conflicts refuse. Any native
+mirror revision still uses the unchanged older staged gate; a broken declaration
+never falls back. Receipts bind current authority bytes and native source identity.
+They establish declared development use, not official-source byte equivalence,
+independent patients, clinical inputs or anatomical qualification. The old staged
+and learning holds remain unchanged.
+
+Independent review exposed a pre-existing source-verification gap: genuine
+original NIfTI files and arbitrary resealed native arrays could each pass their
+own checksums and the derivative ownership reconstruction. The common cold source
+verifier now proves original→native float32 MRI pixels/affine/mm/spacing, and
+the entire supplied categorical array's exact integer classes/affine/source-label
+declaration. Both lossless native uint8/uint16 storage widths remain valid.
+Single-file NIfTI1/2 is supported; paired sidecar data needs additional source-
+member binding. Unknown annotation units inherit mm only on the identical verified
+parent image grid. Edited supplied masks require a separately qualified derivation;
+unreviewed model estimates retain their provenance. Source fingerprints fence warm
+reuse, and canceled/failed work cannot publish verified cache entries. This adds
+source consistency, not anatomical correctness or biological validation.
+
+The generic read-only CLI and actual desktop now show source/checkpoint readiness
+for native patients without an admitted task. Source proof, original bytes/replay,
+clock/tool versions, actual exposure, withdrawn/static baseline, task and review
+are separate checks. Metadata-only desktop inspection explicitly leaves original
+bytes unverified there. A preflight adds no action, clears no tissue and grants
+no planning authority. Existing admitted controls and public planner inputs stay
+unchanged. Automatic inspection excludes generated fixtures, preserving the exact
+existing warm replay hash-count/no-clone gate.
+
+Actual0004qualification uses its existing exposed registry/acquisition source.
+The older derivative correctly refuses omitted layer-revision metadata. Re-export
+through the current generic path preserves MRI, affine and every selected source
+mask exactly; the original case and native manifest stay unchanged. Five originals
+and seven native arrays pass decoded source checks, but the intact0-action/
+0-removal checkpoint still has no exposure/task or modern tool/clock setup.
+Its annotations and estimated vessels remain unreviewed. `lesion-context` is still
+outside the current context endpoint; no relabeling or functional claim is made.
+PAT22still refuses the native source pipeline, with its older holds intact.
+This is the third development anatomy with verified source bindings; it remains
+outside the admitted task distribution and does not establish an8–12patient benchmark.
+
+Hidden desktop checks cover the current/older0004derivatives, the missing-target
+control,0005admission and the full saved0007workspace. Fresh0004save/reopen retains
+zero actions/removal/no admission and exact branches/timeline; no planning control
+appears. All nine existing0007comparisons, two applications/studies and native
+ancestry/admission/timeline remain exact after cold reopen. Its first/warm inspect
+observations are97.885/0.899s during concurrent verification, not paired speedups.
+The whole0004CLI process takes3.75s/642MBmaximum RSS in the recorded observation;
+loading/decompression and bounded transient original decodes are included, rendering
+is excluded. No decoded volume is cached by this verifier. The current ignored
+evidence, failed strict-width/hot-cursor runs and reproduction commands live in
+`testcases/source-preflight-v1/README.md`.
+
+The595-test broad backend run passes. Final source-focused verification passes
+186overlapping controls after adding the single-file and overflow-safe header/
+shape checks; all three real-source preflights pass against those exact module
+hashes. These include104role controls,42decoded-source controls,9preflight
+controls and the existing31admission checks. Coordinated reseals, stale authority,
+alias/derivative conflicts, noninteger labels, units, paired sidecars, oversized
+headers, warm corruption and cancellation refuse as intended. All1,221desktop
+tests and the final build pass. Failed initial runs remain in the ignored record;
+no previous refusal, replay/hash constraint or research hold was weakened.
+
 ## Remaining milestones and next dependency
 
 This is a bounded acquired-anatomy operating task, not the complete strategy
@@ -693,8 +761,9 @@ execution stress is integrated but does not complete uncertainty qualification.
 Add supported anatomical/execution uncertainty, a frozen comparison with matched
 route-search baselines and independent challenge cases; continue reducing cold
 proof/display cost and migrate remaining planner interfaces. The next patient
-slice is a generic provenance/admission preflight for the existing exposed0004
-source, without fabricating declarations or a ready exposure. Expand the patient
+slice is a genuinely executed, source-bound0004exposure and declared task, plus
+an explicit generic compatibility rule for its supplied context kind. The new
+preflight must continue refusing until those gates pass. Expand the patient
 distribution without touching reserved evaluations. Older lattice resolution dependence and
 continuum empirical/domain gates remain qualification holds. No RL campaign,
 new data acquisition, clinical-outcome probability or novelty claim was added.

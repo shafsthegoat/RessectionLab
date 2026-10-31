@@ -1,7 +1,8 @@
 import {useEffect,useRef,useState} from 'react';
 import type {SurgicalController} from './use-surgical';
 import type {Point3} from './viewer/coordinates';
-import {currentPlanningReport,planningBinding,planningDraftIssue,selectedPlanningRoute,PLANNING_ROUTE_COLORS} from './interactive-planning-data';
+import {currentPlanningReport,currentSourcePreflight,planningBinding,planningDraftIssue,selectedPlanningRoute,PLANNING_ROUTE_COLORS} from './interactive-planning-data';
+import {SourcePreflightPanel} from './SourcePreflightPanel';
 import type {InteractivePlanningConstraints,InteractivePlanningReport} from './interactive-planning-data';
 
 const numberLabel=(n:unknown,digits=1)=>typeof n==='number'&&Number.isFinite(n)?n.toFixed(digits):'Unassessed';
@@ -21,9 +22,11 @@ export function RegionEditor({name,value,onChange,cursor,onCursor,disabled}:{nam
 export function InteractivePlanningPanel({c,cursor=null,onCursor,pause}:{c:SurgicalController;cursor?:Point3|null;onCursor?:(p:Point3)=>void;pause:()=>void}){
   const a=c.result?.interactivePlanningAvailability,stored=c.result?.interactivePlanning;
   const qualification=a?.admission;
+  const sourcePreflight=currentSourcePreflight(c.result);
   const historicalExposure=(stored?.evidence.historicalExposure??a?.evidence?.historicalExposure) as {targetRemovedMm3?:number;nonTargetRemovedMm3?:number}|undefined;
   const savedCurrent=stored?.current===true&&stored.sourceSceneId===c.view?.scene.sceneId&&stored.startStateId===c.view?.stateId&&stored.prefixActions===c.result?.position;
   return <details className="interactive-planning" open><summary>Plan an approach · post-exposure</summary>
+    {sourcePreflight&&<SourcePreflightPanel report={sourcePreflight}/>}
     {qualification&&<details aria-label="Patient task evidence"><summary>Patient and task evidence</summary>
       <p>{qualification.sourceEvidence.patientId} · {qualification.sourceEvidence.sourceRole} research · {qualification.sourceEvidence.studyTimepoint}</p>
       <p className="surgical-note">Planning uses source annotations, model estimates and the completed native state. Image-only planning and clinical outcomes are unsupported.</p>
