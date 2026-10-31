@@ -1,0 +1,45 @@
+{
+  "schema": "resectionlab.continuum-mechanics-protocol.v1",
+  "model": "voxel-owned hex8 small-gradient isotropic equilibrium elasticity plus up to two linear Maxwell branches",
+  "intent": "Correct the measured lattice grid dependence and infinitesimal rigid-rotation stiffness without changing saved legacy mechanics",
+  "source_ownership": "One full affine voxel per element; corner DOFs shared only through uncut face connectivity; no display mesh physics",
+  "boundaries": "Explicit fixed artificial local-patch faces against retained inactive soft tissue; remaining faces have zero declared traction. No inferred skull fixation, ICP, CSF pressure or buoyancy.",
+  "material_evidence": {
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10511383/",
+    "table": "11",
+    "selection": "preconditioned, assumed Poisson ratio0.45; cortex258.77Pa, corpus callosum51.80Pa, corona radiata132.34Pa",
+    "transfer": "Published postmortem hyperelastic small-strain shear limits used as explicit research material scenarios; not individual patient estimates or a fitted linear viscoelastic law",
+    "tumor": "No patient tumor mechanics measured; any distinct tumor assignment must be labeled an assumed sensitivity scenario",
+    "relaxation": "No relaxation constants inferred from the processed hyperelastic dataset; user-declared branch strengths/times remain assumptions"
+  },
+  "numerical_controls": {
+    "energy_relative_tolerance": 1e-10,
+    "rigid_mode_absolute_eigenvalue_relative_to_largest": 1e-10,
+    "expected_hex8_rigid_modes": 6,
+    "rigid_translation_and_infinitesimal_rotation": "zero internal force/energy",
+    "affines": ["orthogonal anisotropic", "oblique", "rotated", "reflected"],
+    "physical_cube_mm": 2,
+    "spacings_mm": [1, 0.5, 0.25],
+    "fixed_gradient": 0.01,
+    "force_residual_N": 1e-8,
+    "constant_target_discrete_energy_residual_Nmm": 1e-8,
+    "maximum_gradient_norm": 0.2,
+    "maximum_poisson_ratio_for_this_release": 0.45,
+    "excluded": "No near-incompressible or finite-rotation/finite-strain qualification"
+  },
+  "measured_development_comparison": {
+    "source": "artifacts/hbe-v5-axial-calibration-result-v1/execution/fit.json",
+    "source_sha256": "b6b23a297f81b9481a6a0c7b584c8d1d84907baf86dd4ecb62b78474caf9666a",
+    "role": "already exposed DEVELOPMENT axial curves; no fresh independent or held-out claim",
+    "purpose": "Descriptive force comparison with an actual acquired specimen reference after numerical verification; no new fitting",
+    "loading": "bonded cylinder, radius4mm, height4.89159mm; compare only recorded points with absolute axial strain at most0.02",
+    "resolutions": "1 and0.5mm in-plane, exact declared cylinder height over5 and10 layers",
+    "parameter_freeze": "cortex shear258.77Pa, nu0.45, no Maxwell branches for processed quasi-static curves; no parameter search. Baseline uses unchanged lattice coefficients and bonded source-center layers rather than the revised physical end faces; both differences are disclosed.",
+    "metrics": ["force_RMSE_N", "signed_endpoint_error_N", "point_count", "voxel_geometry_volume_error", "mesh_response_change"],
+    "overlap": "Published cohort parameter includes this donor; descriptive development only",
+    "torsion_or_other_specimen_reads": false,
+    "physical_acceptance_threshold": null
+  },
+  "research_ready": false,
+  "open": ["Measured time-dependent material response", "Nonlinear deformation", "Patient anatomy prediction on reserved observations", "Cavity/CSF boundary validation", "Contact/force and injury calibration"]
+}

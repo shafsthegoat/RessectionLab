@@ -1,0 +1,247 @@
+{
+  "schema": "resectionlab.native-vascular-graph-protocol.v2",
+  "date": "2026-10-29",
+  "patient_id": "TOPBRAIN-2025-TopCoW-CTA-001",
+  "source_role": "EXISTING_VASCULAR_DEVELOPMENT_NON_GLIOMA",
+  "native_manifest_sha256": "e5b9b0ac25861ad495d09e1593c7bac8b7c687540309730a845a115641c16fb1",
+  "source_labels_sha256": "f65ee1b03bf776f33c55ef0db314e8a3d4122ccaea06499f73219995c1bfa5f0",
+  "labelmap_sha256": "3b4fe16212d8525a50279127baa46a928aeb44b11e4e8f6ffa74957b335bc1c8",
+  "source_sha256": {
+    "src/resectionlab/anatomy_geometry.py": "0f386611a1628143d36afaaa32558a6f6407cbeedc2f9a22bf005077cd5d3776",
+    "scripts/qualify_native_vascular_graph.py": "421a456c8fadb18711456478aa8a749a06c7a514358fdc4bdd9870e57983f32a"
+  },
+  "classes": [
+    {
+      "value": 1,
+      "name": "BA",
+      "kind": "artery"
+    },
+    {
+      "value": 2,
+      "name": "R-P1P2",
+      "kind": "artery"
+    },
+    {
+      "value": 3,
+      "name": "L-P1P2",
+      "kind": "artery"
+    },
+    {
+      "value": 4,
+      "name": "R-ICA",
+      "kind": "artery"
+    },
+    {
+      "value": 5,
+      "name": "R-M1",
+      "kind": "artery"
+    },
+    {
+      "value": 6,
+      "name": "L-ICA",
+      "kind": "artery"
+    },
+    {
+      "value": 7,
+      "name": "L-M1",
+      "kind": "artery"
+    },
+    {
+      "value": 8,
+      "name": "R-Pcom",
+      "kind": "artery"
+    },
+    {
+      "value": 9,
+      "name": "L-Pcom",
+      "kind": "artery"
+    },
+    {
+      "value": 10,
+      "name": "Acom",
+      "kind": "artery"
+    },
+    {
+      "value": 11,
+      "name": "R-A1A2",
+      "kind": "artery"
+    },
+    {
+      "value": 12,
+      "name": "L-A1A2",
+      "kind": "artery"
+    },
+    {
+      "value": 13,
+      "name": "R-A3",
+      "kind": "artery"
+    },
+    {
+      "value": 14,
+      "name": "L-A3",
+      "kind": "artery"
+    },
+    {
+      "value": 15,
+      "name": "3rd-A2",
+      "kind": "artery"
+    },
+    {
+      "value": 16,
+      "name": "3rd-A3",
+      "kind": "artery"
+    },
+    {
+      "value": 17,
+      "name": "R-M2",
+      "kind": "artery"
+    },
+    {
+      "value": 18,
+      "name": "R-M3",
+      "kind": "artery"
+    },
+    {
+      "value": 19,
+      "name": "L-M2",
+      "kind": "artery"
+    },
+    {
+      "value": 20,
+      "name": "L-M3",
+      "kind": "artery"
+    },
+    {
+      "value": 21,
+      "name": "R-P3P4",
+      "kind": "artery"
+    },
+    {
+      "value": 22,
+      "name": "L-P3P4",
+      "kind": "artery"
+    },
+    {
+      "value": 23,
+      "name": "R-VA",
+      "kind": "artery"
+    },
+    {
+      "value": 24,
+      "name": "L-VA",
+      "kind": "artery"
+    },
+    {
+      "value": 25,
+      "name": "R-SCA",
+      "kind": "artery"
+    },
+    {
+      "value": 26,
+      "name": "L-SCA",
+      "kind": "artery"
+    },
+    {
+      "value": 27,
+      "name": "R-AICA",
+      "kind": "artery"
+    },
+    {
+      "value": 28,
+      "name": "L-AICA",
+      "kind": "artery"
+    },
+    {
+      "value": 29,
+      "name": "R-PICA",
+      "kind": "artery"
+    },
+    {
+      "value": 30,
+      "name": "L-PICA",
+      "kind": "artery"
+    },
+    {
+      "value": 31,
+      "name": "R-AChA",
+      "kind": "artery"
+    },
+    {
+      "value": 32,
+      "name": "L-AChA",
+      "kind": "artery"
+    },
+    {
+      "value": 33,
+      "name": "R-OA",
+      "kind": "artery"
+    },
+    {
+      "value": 34,
+      "name": "L-OA",
+      "kind": "artery"
+    },
+    {
+      "value": 35,
+      "name": "VoG",
+      "kind": "vein"
+    },
+    {
+      "value": 36,
+      "name": "StS",
+      "kind": "sinus"
+    },
+    {
+      "value": 37,
+      "name": "ICVs",
+      "kind": "vein"
+    },
+    {
+      "value": 38,
+      "name": "R-BVR",
+      "kind": "vein"
+    },
+    {
+      "value": 39,
+      "name": "L-BVR",
+      "kind": "vein"
+    },
+    {
+      "value": 40,
+      "name": "SSS",
+      "kind": "sinus"
+    }
+  ],
+  "semantic_source": "https://topbrain2025.grand-challenge.org/data/",
+  "source_page": "https://zenodo.org/records/16623496",
+  "license": "Attribution, noncommercial research; commercial permission from data owner required; no new download or redistribution of patient arrays",
+  "payload_scope": "Only this original CTA label array and its two existing binary masks decoded; original CTA header and hashes checked; no CT intensity array decoded",
+  "coordinate_rule": "CTA must declare millimetres with nonzero sform; annotation must share exact named source grid and explicitly associated source identity. An unset annotation unit inherits that reference grid; explicit conflicting units, mismatched grid or missing association refused. No original header changes.",
+  "group_rule": "Arterial union values1..34; venous union35..40 with source35/37/38/39 veins and36/40 sinuses; class0 and absent labels are unassessed",
+  "algorithm": "source-owned-skeleton-26-v2: Lee thinning, separate source6/26 connectivity, skeleton26 Euler/components, missing-component counts and local face-path diagnostics",
+  "radius_meaning": "Foreground-to-background sample-center distance, not lumen radius; padding outside image is unknown and boundary-limited estimates flagged",
+  "flow_model_admitted": false,
+  "pressure_flow_compliance_or_territory_inferred": false,
+  "glioma_case_fusion": false,
+  "source_review": "Unreviewed publisher annotations; no local clinical/anatomical acceptance",
+  "no_gap_bridging": true,
+  "no_component_deletion": true,
+  "no_evaluation_role_changes": true,
+  "max_wall_seconds": 60,
+  "max_peak_rss_bytes": 2147483648,
+  "max_output_bytes": 16777216,
+  "output_root": "testcases/outputs/simulator-qualification-20261029/native-vascular-graph-v1",
+  "expected_independent_checks": [
+    "Original source-cell IDs and exact affine coordinates",
+    "Source6 and source26 connected components from independent positive-voxel BFS",
+    "Unrepresented source components remain in denominator",
+    "Native binary masks equal exact original class unions",
+    "Published CTA vein/sinus semantics kept separate",
+    "No physiological boundary or clinical risk claim"
+  ],
+  "previous_attempt": {
+    "protocol": "manifests/experiments/native-vascular-graph-v1.json",
+    "status": "STRICT_HEADER_GATE_FAILED_BEFORE_ARRAY_ACCESS",
+    "receipt": "testcases/outputs/simulator-qualification-20261029/native-vascular-graph-v1/run-v1/header-diagnostic.json"
+  }
+}

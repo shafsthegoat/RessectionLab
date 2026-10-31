@@ -12,7 +12,7 @@ before(async()=>{
   server=await createServer({root:fileURLToPath(new URL('../../',import.meta.url)),cacheDir:cache,logLevel:'error',optimizeDeps:{noDiscovery:true,include:[]},server:{middlewareMode:true,hmr:false,ws:false},appType:'custom',plugins:[{
     name:'test-conditioning-calls',enforce:'pre',transform(code,id){
       if(!id.endsWith('/surfaceSmoothing.ts'))return;
-      const signature='export function fairIndexedSurface(points:Float32Array,indices:Uint32Array,affine:Affine,kind?:string,limits?:Float64Array){';
+      const signature='export function fairIndexedSurface(points:Float32Array,indices:Uint32Array,affine:Affine,kind?:string,limits?:Float64Array,audit?:SurfaceIntersectionAudit,filter?:SurfacePolynomialFilter){';
       assert(code.includes(signature),'conditioning call instrumentation must match the actual implementation');
       return code.replace(signature,signature+'\nglobalThis.__resectionLabConditioningCalls=(globalThis.__resectionLabConditioningCalls??0)+1;');
     }
@@ -36,6 +36,13 @@ function interaction(){return {view:{stateId:'accepted',scene:{shape:[3,3,3],res
 function renderer(){const r=Object.create(VolumeRenderer.prototype);Object.assign(r,{scene:new THREE.Scene(),surgicalGroup:null,surgicalGhost:new THREE.Group(),surgicalGhostKey:null,
   surgicalGizmo:{attach(){},detach(){},setMode(){}},surgicalSlots:new Map(),surgicalEffects:null,surgicalEffectsView:null,surgicalPath:null,surgicalPathSource:null,
   displayWork:{surgicalUpdates:0,toolBuilds:0,effectBuilds:0,pathBufferBuilds:0},controls:{enabled:true},requestRender(){}});return r;}
+test('declared exact Q1 body hides only represented rounded anatomy, restores it on exit and leaves source masks intact',()=>{
+  const r=renderer(),input=interaction(),mask=Uint8Array.from({length:27},(_,i)=>i===13?1:0),other=Uint8Array.from({length:27},(_,i)=>i===5?1:0);
+  r.volume={shape:[3,3,3],compartments:[{name:'body',mask},{name:'other',mask:other}]};r.surfaces=new Map([['body',new THREE.Mesh()],['other',new THREE.Mesh()]]);r.visible={};
+  input.view.planarBladeManeuver={contactSurface:{positionsMm:[[1,1,1],[2,1,1],[1,2,1]],triangles:[[0,1,2]],sourceIds:[13]}};
+  const bytes=[...mask];r.setSurgical(input);assert.equal(r.surfaces.get('body').visible,false);assert.equal(r.surfaces.get('other').visible,true);assert(r.surgicalEffects.getObjectByName('effect:planar-blade-q1-surface'));assert.deepEqual([...mask],bytes);
+  r.setSurgical({...input,view:{...input.view,planarBladeManeuver:undefined}});assert.equal(r.surfaces.get('body').visible,true);assert.equal(r.surgicalEffects.getObjectByName('effect:planar-blade-q1-surface'),undefined);assert.deepEqual([...mask],bytes);
+});
 test('pose-only rehearsal edits retain all accepted geometry and only transform the resident ghost',()=>{
   const r=renderer(),input=interaction(),before=structuredClone(input.view);r.setSurgical(input);
   const accepted=r.surgicalGroup.children.slice(),ghost=r.surgicalGhost.children[0],counts={...r.displayWork};
@@ -404,4 +411,29 @@ test('mid-flight preference changes cancel the old quality and cannot publish st
     r.installSurgicalState(b,request(viewB));const latest=r.modelWorker;assert.equal(active.terminated,true);active.flush();assert.deepEqual(ready,[]);
     while(latest.queue.length)latest.flush();submitPreparedState(r);assert.equal(r.volume,b);assert.deepEqual(ready,[viewB]);assert.equal(r.surfaceGeometry.get('brain').smoothingPrepared,true);
   }finally{mock.restore();}
+});
+
+test('interactive approach guides retain source-RAS trajectories and limits, reuse pose edits and dispose on invalidation',()=>{
+  const r=renderer(),input=interaction(),before=structuredClone(input.view),pose=position=>({position,quaternion:[0,0,0,1]});
+  const route={id:'patient-route',label:'Approach 1',outsidePose:pose([-10,2,3]),entryPose:pose([1,2,3]),targetPose:pose([7,8,9]),metrics:{},actionProgram:[],scope:'Geometry only'};
+  const planningOverlay={binding:'source-state',constraints:{target:{centerMm:[7,8,9],radiusMm:2},entry:{centerMm:[1,2,3],radiusMm:4},tool:{instrument:'cusa',radiusMm:1.5},requiredEvidence:[],candidateCount:3,nonTargetClearanceMm:0},routes:[route],selectedId:route.id,limitingStructures:[{name:'Retained brain',positionMm:[4,5,6],reason:'source collision'}]};
+  r.setSurgical({...input,planningOverlay});const group=r.planningGroup,line=group.getObjectByName('approach:patient-route');
+  assert.deepEqual([...line.geometry.attributes.position.array],[-10,2,3,1,2,3,7,8,9]);
+  assert.deepEqual(group.getObjectByName('planning-limit:Retained brain').position.toArray(),[4,5,6]);
+  assert.deepEqual(group.getObjectByName('planning-target-region').position.toArray(),[7,8,9]);
+  assert.equal(group.getObjectByName('planning-target-region').geometry.parameters.radius,2);
+  let created=0,disposed=0;group.traverse(o=>{if(o.geometry){created++;o.geometry.addEventListener('dispose',()=>disposed++);}});
+  r.setSurgical({...input,planningOverlay,pose:pose([9,9,9])});assert.equal(r.planningGroup,group);assert.equal(disposed,0);assert.deepEqual(input.view,before);
+  r.setSurgical(input);assert.equal(r.planningGroup,null);assert.equal(disposed,created);assert.deepEqual(input.view,before);
+});
+
+test('planning display hides only withdrawn tools while retaining canonical poses and restores ordinary instrument rendering',()=>{
+  const r=renderer(),input=interaction();input.view.metrics={};input.view.slots.left.inserted=false;input.view.slots.right.inserted=false;
+  r.panes={anatomy:{dataset:{}}};r.setSurgical(input);assert.equal(r.surgicalSlots.size,2);
+  const before=structuredClone(input.view),planningOverlay={binding:'source-state',constraints:{target:{centerMm:[7,8,9],radiusMm:2},entry:{centerMm:[1,2,3],radiusMm:4},tool:{instrument:'cusa',radiusMm:1.5},requiredEvidence:[],candidateCount:3,nonTargetClearanceMm:0},routes:[],selectedId:null,limitingStructures:[]};
+  r.setSurgical({...input,planningOverlay});assert.equal(r.surgicalSlots.size,0);
+  const canonical=JSON.parse(r.panes.anatomy.dataset.acceptedTools);assert.deepEqual(canonical.left.position,input.view.slots.left.position);assert.equal(canonical.left.inserted,false);assert.equal(Object.keys(canonical).length,2);
+  const preview={...input.view,stateId:'preview',slots:{...input.view.slots,left:{...input.view.slots.left,inserted:true}}};
+  r.setSurgical({...input,planningOverlay,preview});assert.equal(r.surgicalSlots.size,1);assert(r.surgicalSlots.has('left'));assert.deepEqual(input.view,before);
+  r.setSurgical(input);assert.equal(r.surgicalSlots.size,2);assert.deepEqual(input.view,before);
 });

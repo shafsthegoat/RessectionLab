@@ -57,3 +57,21 @@ test('precision receipts survive compact frames and explicit null revokes their 
   cache.accept(initial,source,false);
   assert.equal(cache.accept({...frame(),view:{scene:{sceneId:'other'}}},source,true).precisionPlanning,undefined);
 });
+
+test('consequence policy evidence survives observed frames only as explicitly historical',()=>{
+  const source={},cache=new SurgicalComparisonContext();
+  const initial={...full(),branchId:'baseline',position:15,view:{stateId:'baseline-state',scene:{sceneId:'scene'}},
+    consequenceComparison:{comparisonSeal:'frozen'},consequenceAnalysis:{caseHash:'case',comparisonSeal:'frozen',available:true,current:true,
+      context:{branchId:'baseline',position:15,stateId:'baseline-state'},latest:{revision:1,policyInput:{minimumAdditionalTargetMm3:8},decision:{selectedBranchId:'short'}}}};
+  cache.accept(initial,source,false);
+  const wire={...frame(),branchId:'short',position:16,view:{stateId:'observed-frame',scene:{sceneId:'scene'}}};
+  const display=cache.accept(wire,source,true);
+  assert.equal(display.consequenceComparison,initial.consequenceComparison);
+  assert.equal(display.consequenceAnalysis.latest,initial.consequenceAnalysis.latest);
+  assert.equal(display.consequenceAnalysis.current,false);assert.equal(display.consequenceAnalysis.available,false);
+  assert.deepEqual(display.consequenceAnalysis.context,{branchId:'short',position:16,stateId:'observed-frame'});
+  assert.equal(initial.consequenceAnalysis.current,true);assert.equal(wire.consequenceAnalysis,undefined);
+  assert.equal(cache.accept(wire,{},true).consequenceAnalysis,undefined,'new source installation loses saved analysis context');
+  cache.accept(initial,source,false);cache.accept({...wire,consequenceAnalysis:null,consequenceComparison:null},source,true);
+  const revoked=cache.accept(wire,source,true);assert.equal(revoked.consequenceAnalysis,null);assert.equal(revoked.consequenceComparison,null);
+});

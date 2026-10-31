@@ -1,0 +1,62 @@
+{
+  "schema": "resectionlab.native-pre-effect-capture-protocol.v1",
+  "intent": "Native before-physical-substep CUSA limiter/query/capacity observations at all16 existing source-removal transitions; exact native oracle, no new20mm solve or larger-domain action admission",
+  "sourceRole": "DEVELOPMENT; existing UCSF-PDGM-0007 qualified8mm native artifact and original20mm geometry only",
+  "sourceSceneId": "sha256:25e7349ad48ee77244b05fc6768e09bdc049e04733b9f362e14ae0c87a743942",
+  "nativeCase": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-history-v1/execution-v3-snapshot/result/continuum-history.ressectionlab",
+    "sha256": "cbf03bfc8f7465c873ce2b660802516f13405d29eedd229342b13ec3cbf767a8"
+  },
+  "qualifiedActionTraces": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-history-v1/execution-v3-snapshot/result/paired-action-traces.json.gz",
+    "sha256": "d712c30529f451a23e797dca1f5173626a5b026c48823b4d65fe5ebfd27cc926"
+  },
+  "nativeInputs": {
+    "short-hold": {
+      "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/native-capture-v1/result/short-hold-inputs.json.gz",
+      "sha256": "5945e7b795fffe9846fd8392822ea5eeafb3aeb9f245ed83989e9a33b72bface"
+    },
+    "sustained-hold": {
+      "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/native-capture-v1/result/sustained-hold-inputs.json.gz",
+      "sha256": "57e3491cb7408a4f26f447241cc15880bf969dc356fe1fe993ba06af984165e0"
+    },
+    "stop-at-model-limit": {
+      "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/native-capture-v1/result/stop-at-model-limit-inputs.json.gz",
+      "sha256": "1e962023b170f0763294d145b95a2c96220720ca7c1442a5de0df214bb42c419"
+    }
+  },
+  "fullProgramReport": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/full-programs-v1/result/report.json",
+    "sha256": "280780aae906a5aa9c92daf9d8d064f77ab1b3836667a4abf774e15a77c116c5"
+  },
+  "commonActions": 15,
+  "caps": {
+    "wallSeconds": 300,
+    "rssBytes": 2147483648,
+    "outputBytes": 33554432,
+    "numericalThreads": 1,
+    "retries": 0
+  },
+  "require": "All canonical native receipts/full snapshots/mechanics projections exact. Selected rows are all16 source events at withinTick0. Actual pre-state, limiter queries/resolved pose, apply order/exact before-after ledger/removal/events published only after complete committed microticks. Native one-step prediction must match every captured limiter trace, contacts, ledgers and events. No propagated counterfactual state.",
+  "physicalValidationPassed": false,
+  "physiologicalRL": "hold",
+  "largeScaleRL": "hold",
+  "largerDomainPublicActionsAdmitted": false,
+  "expectedEvents": 16,
+  "expectedEventsByBranch": {
+    "short-hold": 8,
+    "sustained-hold": 8,
+    "stop-at-model-limit": 0
+  },
+  "prospectiveConditionalQuery": {
+    "wallSeconds": 60,
+    "rssBytes": 1073741824,
+    "outputBytes": 16777216,
+    "preflightEventIndices": [
+      0,
+      6,
+      15
+    ],
+    "scope": "Losslessly reconstructed pre-event old full20 fields via orphan supplements and previousArrayHash. Each event conditioned independently on captured native before-ledger. Inflated sweep-cover point overlaps never assert actual swept contact. No clinical/public-action/physical/RL admission."
+  }
+}

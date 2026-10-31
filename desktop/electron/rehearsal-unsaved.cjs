@@ -3,7 +3,7 @@
 class RehearsalUnsaved {
   constructor(ask) { this.ask = ask; this.dirty = false; }
   changed(request, result) {
-    if (!request.source && result && result.changed !== false && !['inspect','preview'].includes(request.command) && result.outcome?.status !== 'rejected') this.dirty = true;
+    if (!request.source && result && result.changed !== false && !['inspect','preview','previewApproach'].includes(request.command) && result.outcome?.status !== 'rejected') this.dirty = true;
   }
   saved() { this.dirty = false; }
   async allowNavigation() {

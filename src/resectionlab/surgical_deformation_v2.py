@@ -10,9 +10,33 @@ Cuts delete lattice bonds, while source removal permanently deletes nodes.
 from __future__ import annotations
 
 from collections import deque
+from contextlib import contextmanager
+from contextvars import ContextVar
 import numpy as np
 from scipy import sparse
 from scipy.sparse.linalg import factorized
+
+
+_diagnostics = ContextVar('surgical_deformation_diagnostics', default=None)
+
+
+@contextmanager
+def diagnostic_scope():
+    """Observe attempted solves without changing canonical state or recordings.
+
+    Includes preview/rolled-back work if the caller executes it in this scope.
+    Aggregate storage is constant size. No diagnostic is a tissue injury limit.
+    """
+    report = dict(scope='attempted numerical solves, including rolled-back trials',
+        ticks=0, substeps=0, targetCapNodeTicks=0, forceCapNodeTicks=0,
+        displacementCapNodeSteps=0, strainProjectionSteps=0, collisionRejectedSteps=0,
+        maxPreStrainProjectionNeighborRatio=0., maxFreeResidualN=0.,
+        maxAbsDiscreteEnergyBalanceNmm=0.)
+    token = _diagnostics.set(report)
+    try:
+        yield report
+    finally:
+        _diagnostics.reset(token)
 
 
 def profile():
@@ -92,7 +116,10 @@ def begin_hold(engine, key, cells, position):
     distance = {c: 0. for c in cells}; queue = deque(cells)
     while queue:
         c = queue.popleft()
-        if c not in active and len(active) >= p['maxNodes']: continue
+        if c not in active and len(active) >= p['maxNodes']:
+            if 'brainContinuumV1' in engine.scene.properties:
+                raise ValueError('CONTINUUM_PATCH_TRUNCATED: source-cell budget cannot cover the declared physical radius')
+            continue
         active.add(c)
         for n, length in _neighbors(engine, c):
             d = distance[c] + length
@@ -174,6 +201,11 @@ def tick(engine, dt):
     initialize(engine)
     if not np.isfinite(dt) or dt < 0: raise ValueError('INVALID_DEFORMATION_TIME')
     p = _settings(engine); model = engine.state['deformationModel']; removed = set(engine.state['removed'])
+    diagnostic = _diagnostics.get()
+    if diagnostic is not None: diagnostic['ticks'] += 1
+    if 'brainContinuumV1' in engine.scene.properties:
+        from .surgical_continuum import tick as continuum_tick
+        return continuum_tick(engine, dt, diagnostic)
     if 'patientPosition' in engine.state:
         from .surgical_position import activate_exposed_patch
         activate_exposed_patch(engine, radius_mm=p['radiusMm'], max_nodes=p['maxNodes'])
@@ -200,12 +232,18 @@ def tick(engine, dt):
         for c in hold['cells']:
             if c in index: targets[index[c]] = delta + hold.get('baseDisplacements', {}).get(str(c), [0., 0., 0.])
     lengths = np.linalg.norm(targets, axis=1)
+    if diagnostic is not None:
+        diagnostic['targetCapNodeTicks'] += int(np.count_nonzero(lengths > p['maxDisplacementMm']))
     targets *= np.minimum(1., p['maxDisplacementMm'] / np.maximum(lengths, 1e-15))[:, None]
     held = {c for hold in _holds(engine) for c in hold['cells']}
     forcing = targets * np.array([p['holdStiffnessNPerMm'] if c in held else 0 for c in ids])[:, None]
+    if diagnostic is not None:
+        diagnostic_hold_diagonal = np.repeat([p['holdStiffnessNPerMm'] if c in held else 0 for c in ids], 3)
     if 'patientPosition' in engine.state:
         from .surgical_position import gravity_forces_n
         forcing += gravity_forces_n(engine, ids)
+    if diagnostic is not None:
+        diagnostic['forceCapNodeTicks'] += int(np.count_nonzero(np.linalg.norm(forcing, axis=1) > p['maxForceN']))
     forcing *= np.minimum(1., p['maxForceN'] / np.maximum(np.linalg.norm(forcing, axis=1), 1e-15))[:, None]
     rest = np.column_stack(np.unravel_index(ids, engine.scene.shape)) @ engine.scene.affine[:3, :3].T + engine.scene.affine[:3, 3]
     removed_array = np.fromiter(removed, dtype=np.int64)
@@ -215,9 +253,16 @@ def tick(engine, dt):
     for _ in range(steps):
         old = u.copy(); rhs = (p['dragNsPerMm'] / h * u + forcing).ravel()
         result = np.zeros(u.size); result[free] = solve(rhs[free]); u = result.reshape((-1, 3))
+        if diagnostic is not None:
+            diagnostic['substeps'] += 1
+            diagnostic['displacementCapNodeSteps'] += int(np.count_nonzero(np.linalg.norm(u, axis=1) > p['maxDisplacementMm']))
         u *= np.minimum(1., p['maxDisplacementMm'] / np.maximum(np.linalg.norm(u, axis=1), 1e-15))[:, None]
         # Global rescaling preserves continuity while bounding every bond strain.
         scale = min((p['maxEdgeStrain'] * length / max(np.linalg.norm(u[j] - u[i]), 1e-15) for i, j, length in edges), default=1.)
+        if diagnostic is not None:
+            diagnostic['strainProjectionSteps'] += int(scale < 1)
+            ratio = max((float(np.linalg.norm(u[j] - u[i]) / length) for i, j, length in edges), default=0.)
+            diagnostic['maxPreStrainProjectionNeighborRatio'] = max(diagnostic['maxPreStrainProjectionNeighborRatio'], ratio)
         if scale < 1: u *= scale
         # Conservative swept point-in-source-cell obstacle constraint; collision
         # integration additionally accounts for the displaced voxel's extent.
@@ -230,6 +275,20 @@ def tick(engine, dt):
         # Reject the coupled increment as a whole: clamping single nodes would
         # introduce fresh strain discontinuities after the strain projection.
         if collision: u = old
+        if diagnostic is not None:
+            diagnostic['collisionRejectedSteps'] += int(collision)
+            delta = (u - old).ravel()
+            ku = K @ u.ravel() + diagnostic_hold_diagonal * u.ravel()
+            kold = K @ old.ravel() + diagnostic_hold_diagonal * old.ravel()
+            kdelta = K @ delta + diagnostic_hold_diagonal * delta
+            residual = (ku + p['dragNsPerMm'] / h * delta - forcing.ravel())[free]
+            diagnostic['maxFreeResidualN'] = max(diagnostic['maxFreeResidualN'], float(np.max(np.abs(residual), initial=0.)))
+            # Constant-target implicit Euler balance includes the hold-spring
+            # quadratic potential, viscous and algorithmic dissipation. This
+            # is solver verification, not measured retractor work.
+            change = .5 * (u.ravel() @ ku - old.ravel() @ kold)
+            balance = forcing.ravel() @ delta - change - p['dragNsPerMm'] / h * (delta @ delta) - .5 * delta @ kdelta
+            diagnostic['maxAbsDiscreteEnergyBalanceNmm'] = max(diagnostic['maxAbsDiscreteEnergyBalanceNmm'], abs(float(balance)))
         velocity = (u - old) / h
     if steps:
         engine.state['deformation'] = {str(c): u[i].tolist() for i, c in enumerate(ids)}

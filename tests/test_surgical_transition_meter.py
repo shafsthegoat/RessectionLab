@@ -37,8 +37,9 @@ def test_meter_matches_original_public_code_objects_across_clones_and_rejections
     wrapped = meter.wrap(original)
     assert not isinstance(wrapped, SurgicalEngine)
     counts = {'previewCalls': 0, 'previewInternalStepCalls': 0,
-              'directStepCalls': 0}
+              'directStepCalls': 0, 'previewPreparations': 0, 'stepPreparations': 0}
     preview_code, step_code = SurgicalEngine.preview.__code__, SurgicalEngine.step.__code__
+    prepare_code = SurgicalEngine._prepare_step.__code__
 
     def profile(frame, event, arg):
         if event != 'call':
@@ -48,6 +49,9 @@ def test_meter_matches_original_public_code_objects_across_clones_and_rejections
         elif frame.f_code is step_code:
             key = ('previewInternalStepCalls' if frame.f_back is not None and
                    frame.f_back.f_code is preview_code else 'directStepCalls')
+            counts[key] += 1
+        elif frame.f_code is prepare_code:
+            key = 'previewPreparations' if frame.f_back.f_code is preview_code else 'stepPreparations'
             counts[key] += 1
 
     sys.setprofile(profile)
@@ -63,8 +67,9 @@ def test_meter_matches_original_public_code_objects_across_clones_and_rejections
     finally:
         sys.setprofile(None)
     report = meter.report()
-    assert counts == {'previewCalls': 1, 'previewInternalStepCalls': 1,
-                      'directStepCalls': 3}
+    assert counts == {'previewCalls': 1, 'previewInternalStepCalls': 0,
+                      'directStepCalls': 3, 'previewPreparations': 1, 'stepPreparations': 3}
+    assert counts['previewPreparations'] + counts['stepPreparations'] == report['physicalCalls']
     assert report['physicalCalls'] == 4 == counts['previewCalls'] + counts['directStepCalls']
     assert report['byPhase']['access']['physicalCalls'] == 3
     assert report['byPhase']['replay']['physicalCalls'] == 1

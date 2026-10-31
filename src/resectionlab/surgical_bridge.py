@@ -15,6 +15,7 @@ from .surgical_replay_cache import SurgicalReplayCache
 OPERATIONS = frozenset({'surgicalRehearsal', 'createSurgicalFixture', 'importSurgicalScene', 'prepareSurgicalEnvironment', 'compareSurgicalAnatomy'})
 ARTIFACT = 'surgical_toolbox'
 RESULT_BYTES = 32 * 1024**2 - 4096  # Reserve the bounded JSONL envelope.
+_NATIVE_PREVIEW = SurgicalEngine.preview
 PREFIX_COMMANDS = frozenset({'seekPrefix', 'seekPrefixFrame'})
 
 
@@ -149,11 +150,23 @@ def dispatch(session, operation, args, request, progress):
     argument_keys = {'caseHash', 'command', 'expectedStateId', 'action', 'mapping', 'position', 'branchId', 'source', 'sceneIndex', 'acknowledgeResearchUnknowns', 'allowModeledBrainCorridor', 'maxHealthyRemovalMm3', 'maxWallSeconds', 'opponent', 'scenario', 'maxActions', 'frameIndex', 'timelineToken', 'viewFieldTokens','initialAccessRadiusMm','exploreExteriorFaces','cumulativeReentry'}
     if args.get('command') == 'seekPrefixFrame':
         argument_keys.update({'prefixToken', 'prefixFieldTokens'})
+    if args.get('command') == 'attachProtection':
+        argument_keys.add('protectionPath')
+    if args.get('command') == 'reevaluateConsequences':
+        argument_keys.update({'policyInput', 'expectedComparisonSeal'})
+    if args.get('command') in {'generateApproaches', 'previewApproach', 'applyApproach'}:
+        argument_keys.update({'constraints', 'candidateId', 'expectedPlanSeal'})
     if args.get('command') == 'seekPrefix' and type(args.get('position')) is int and args['position'] == 0:
         argument_keys.add('cacheOnly')
     _keys(args, argument_keys)
     if args.get('command') == 'recoverExit':
         _keys(args, {'caseHash', 'command', 'expectedStateId'})
+    if args.get('command') == 'reevaluateConsequences':
+        _keys(args, {'caseHash', 'command', 'expectedStateId', 'policyInput', 'expectedComparisonSeal'})
+    if args.get('command') == 'generateApproaches':
+        _keys(args, {'caseHash', 'command', 'expectedStateId', 'constraints', 'acknowledgeResearchUnknowns'})
+    if args.get('command') in {'previewApproach', 'applyApproach'}:
+        _keys(args, {'caseHash', 'command', 'expectedStateId', 'candidateId', 'expectedPlanSeal'})
     if 'cumulativeReentry' in args and (args.get('command') != 'plan' or
             args.get('opponent') != 'anatomy-staged-strategy' or
             type(args['cumulativeReentry']) is not bool):
@@ -206,7 +219,7 @@ def dispatch(session, operation, args, request, progress):
         # Replacement archives and all editable commands retain full admission.
         artifacts = entry.artifacts if hot_frame or args.get('command') in PREFIX_COMMANDS else thaw_json(entry.artifacts)
     command = args.get('command', 'inspect')
-    if command not in {'create', 'inspect', 'inspectArchive', 'preview', 'step', 'recoverExit', 'undo', 'redo', 'seek', 'branch', 'selectBranch', 'reset', 'selectScene', 'plan', 'fullCase', 'seekFrame', *PREFIX_COMMANDS}:
+    if command not in {'create', 'inspect', 'inspectArchive', 'preview', 'step', 'recoverExit', 'undo', 'redo', 'seek', 'branch', 'selectBranch', 'reset', 'selectScene', 'plan', 'fullCase', 'attachProtection', 'reevaluateConsequences', 'generateApproaches', 'previewApproach', 'applyApproach', 'seekFrame', *PREFIX_COMMANDS}:
         raise ValueError('Unsupported surgical command')
     raw = artifacts.get(ARTIFACT)
     from .surgical_environment import standardize, default_target_names, SCHEMA as ENVIRONMENT_SCHEMA
@@ -367,14 +380,20 @@ def dispatch(session, operation, args, request, progress):
     cursor_commands = {'undo', 'redo', 'seek', 'selectBranch'}
     # Cursor reconstruction returns a detached engine and never writes its
     # current-engine input. Avoid copying a complete unchanged effect state
-    # before immediately replacing it with that reconstructed result.
-    if command not in cursor_commands and command != 'seekFrame':
+    # before immediately replacing it with that reconstructed result. The native
+    # preview owns its transaction candidate and returns before persistence.
+    pure_preview = (command == 'preview' and type(engine) is SurgicalEngine
+                    and getattr(engine.preview, '__func__', None) is _NATIVE_PREVIEW)
+    if command not in cursor_commands and command != 'seekFrame' and not pure_preview:
         engine = engine.clone()
     if command not in ('create', 'inspect', 'selectScene') and args.get('expectedStateId') != engine.state_id:
         raise BridgeError('SURGICAL_STATE_STALE', 'The scene changed. Refresh before applying this action.')
+    if 'planarBladeManeuverV1' in engine.scene.properties and command in ('plan', 'fullCase', 'recoverExit', 'attachProtection', 'generateApproaches', 'previewApproach', 'applyApproach'):
+        raise ValueError('PLANAR_MANEUVER_ONLY: this opt-in scene admits only the declared blade actions and supported replay')
     outcome = None
     verified_display_state_id = None
     unchanged_tool = False
+    approach_preview = None
     if command == 'preview':
         result = {**engine.preview(args['action'], check=request.check, include_history=not bool(record.get('fullCase'))), 'caseHash': identity}
         _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Preview exceeds the display budget')
@@ -434,13 +453,85 @@ def dispatch(session, operation, args, request, progress):
             'branches': [{'id': k, 'steps': len(v['actions']), 'parent': record.get('parents', {}).get(k)} for k,v in record['branches'].items()]}
         _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Playback frame exceeds the display budget')
         return result
-    if command == 'fullCase':
+    if command == 'generateApproaches':
+        if args.get('acknowledgeResearchUnknowns') is not True:
+            raise ValueError('Acknowledge the post-exposure research scope and missing anatomy before generating approaches')
+        from .surgical_interactive_planning import generate_interactive_approaches
+        from .surgical_interactive_workspace import install_report
+        generated = generate_interactive_approaches(engine, args.get('constraints'),
+            check=request.check, progress=progress)
+        install_report(engine, record, identity, generated)
+    elif command in {'previewApproach', 'applyApproach'}:
+        from .surgical_interactive_planning import materialize_interactive_approach
+        from .surgical_interactive_workspace import current_report, install_application
+        item = current_report(engine, record, identity, args.get('expectedPlanSeal'))
+        candidate_id = args.get('candidateId')
+        candidate, receipt = materialize_interactive_approach(engine, item['report'], candidate_id,
+            check=request.check)
+        if command == 'previewApproach':
+            approach_preview = {'view': candidate.view(), 'outcome': {'status': 'accepted',
+                'reason': None,
+                'completedFraction': 1., 'events': []},
+                'candidateId': candidate_id, 'reportSeal': item['report']['reportSeal'], 'receipt': receipt}
+        else:
+            parent = {'branchId': record['branchId'], 'position': record['position']}
+            branch = 'approach-' + str(len(record['branches']))
+            while branch in record['branches']:
+                branch += '-next'
+            engine = candidate
+            record['branches'][branch] = engine.snapshot()
+            record.setdefault('timeline', {})[branch] = copy.deepcopy(engine.history)
+            record.setdefault('parents', {})[branch] = parent
+            record.update(branchId=branch, position=len(engine.actions))
+            install_application(record, item, branch, engine, candidate_id, receipt)
+            outcome = {'status': 'accepted', 'reason': 'Checked source-bound approach installed',
+                       'completedFraction': 1., 'events': []}
+    elif command == 'reevaluateConsequences':
+        from .surgical_consequence_analysis import reevaluate_analysis
+        comparison = record.get('consequenceComparison')
+        if comparison is None:
+            raise ValueError('Open the admitted checked-alternative comparison before reassessing its policy')
+        record = reevaluate_analysis(engine, record, comparison, identity,
+            args.get('policyInput'), args.get('expectedComparisonSeal'))
+        # This appends analysis evidence only. The checked programs, common
+        # checkpoint and frozen experiment remain exactly their saved values.
+    elif command == 'attachProtection':
+        from .full_case_rehearsal import bind_case_protection
+        path = args.get('protectionPath')
+        if not isinstance(path, str) or not path.strip():
+            raise ValueError('Select an explicit source-bound protection manifest')
+        if engine.actions:
+            raise ValueError('Return to an intact initial checkpoint before attaching protection')
+        bound = bind_case_protection(engine, protection_path=path)
+        if bound._protection_contract == engine._protection_contract:
+            unchanged_tool = True
+        else:
+            parent = {'branchId': record['branchId'], 'position': record['position']}
+            # Keep the old branch, its guard and every recorded action intact.
+            engine = bound
+            branch_id = 'protection-' + str(len(record['branches']))
+            while branch_id in record['branches']:
+                branch_id += '-next'
+            record['branchId'] = branch_id
+            record.setdefault('parents', {})[branch_id] = parent
+            record['branches'][branch_id] = engine.snapshot()
+            record['position'] = 0
+            record.setdefault('timeline', {})[branch_id] = []
+    elif command == 'fullCase':
         from .full_case_rehearsal import bind_case_protection, new_director, run_slice, resume_director
+        from .full_case_readiness import full_case_readiness
         scenario = args.get('scenario', 'primary')
+        readiness = full_case_readiness(engine)
+        if scenario not in ('primary', 'vascular'):
+            raise ValueError('Choose primary or vascular full-case scenario')
+        if scenario not in readiness['availableActions']:
+            raise BridgeError('FULL_CASE_UNAVAILABLE', readiness['blockers'][0]['message'])
+        # Recheck protection for resumed directors too. Bookkeeping is never
+        # authority to execute against a missing, changed or relaxed contract.
+        engine = bind_case_protection(engine)
         director = record.get('fullCase', {}).get(record['branchId'])
         if not director or director.get('scenario') != scenario or director.get('lastStateId', director.get('startStateId')) != engine.state_id:
             parent = {'branchId': record['branchId'], 'position': record['position']}
-            engine = bind_case_protection(engine)
             annotation = None
             if entry is not None:
                 names = {r['name'] for r in engine.scene.regions if r.get('target')}
@@ -638,12 +729,18 @@ def dispatch(session, operation, args, request, progress):
             full = record['branches'][record['branchId']]
             planned_ids = {row['branchId'] for key in ('planning', 'sectorPlanning', 'stagedPlanning')
                            for row in (record.get(key) or {}).get('alternatives', [])}
+            consequences = record.get('consequenceComparison') or {}
+            planned_ids.update(consequences.get('alternativeBranchIds', []))
+            if consequences.get('baselineBranchId') is not None:
+                planned_ids.add(consequences['baselineBranchId'])
             planned_ids.update(value for key in ('precisionPlanning', 'exitRecovery')
                 for field in ('sourceBranchId', 'finalBranchId')
                 if (value := (record.get(key) or {}).get(field)) is not None)
             planned_ids.update(value for evidence in record.get('exitRecoveryHistory', [])
                 for field in ('sourceBranchId', 'finalBranchId')
                 if (value := evidence.get(field)) is not None)
+            from .surgical_interactive_workspace import protected_branches
+            planned_ids.update(protected_branches(record))
             if record['position'] != len(full['actions']) or record['branchId'] in planned_ids:
                 parent = {'branchId': record['branchId'], 'position': record['position']}
                 record['branchId'] = 'branch-' + str(len(record['branches']))
@@ -688,18 +785,26 @@ def dispatch(session, operation, args, request, progress):
         shown_timeline = display_timeline(shown_timeline)
         shown_view['history'] = shown_timeline[:len(engine.actions)]
     result = {'caseHash': identity, 'view': shown_view, 'outcome': outcome,
-              'changed': command == 'recoverExit' or command != 'inspect' and not unchanged_tool and (outcome is None or outcome['status'] != 'rejected'),
+              'changed': command == 'recoverExit' or command not in {'inspect', 'previewApproach'} and not unchanged_tool and (outcome is None or outcome['status'] != 'rejected'),
               'timeline': shown_timeline,
               'previousScenes': [{'index': i, 'label': f"Environment {i + 1}", 'branches': len(s.get('branches', {}))} for i, s in enumerate(artifacts.get('surgical_prior_scenes', []))],
               'branchId': record['branchId'], 'position': record['position'],
               'fullCase': copy.deepcopy(record.get('fullCase', {}).get(record['branchId'])),
               'branches': [{'id': k, 'steps': len(v['actions']), 'parent': record.get('parents', {}).get(k)} for k, v in record['branches'].items()]}
+    from .full_case_readiness import full_case_readiness
+    result['fullCaseReadiness'] = {**full_case_readiness(engine), 'caseHash': identity}
     from .surgical_planning import availability
     result['planningAvailability'] = availability(engine)
     from .surgical_strategy_planning import rescue_availability
     result['planningAvailability'].update(rescue_availability(engine, record))
     from .surgical_access_planning import access_availability
     result['planningAvailability'].update(access_availability(engine))
+    from .surgical_interactive_planning import interactive_planning_availability
+    from .surgical_interactive_workspace import planning_view
+    result['interactivePlanningAvailability'] = interactive_planning_availability(engine)
+    result['interactivePlanning'] = planning_view(engine, record, identity)
+    if approach_preview is not None:
+        result['approachPreview'] = approach_preview
     comparison = copy.deepcopy(record.get('planning'))
     if comparison is not None:
         from .surgical_planning import validate_saved_comparison
@@ -711,6 +816,15 @@ def dispatch(session, operation, args, request, progress):
         sector_record = {**record, 'planning': record.get('sectorSourceAccessComparison', record.get('planning'))}
         validate_saved_sector_comparison(engine.scene, sector_record, sectors)
     result['sectorPlanning'] = sectors
+    consequence_comparison = record.get('consequenceComparison')
+    if consequence_comparison is not None:
+        from .surgical_consequences import validate_saved_comparison as validate_consequences
+        validate_consequences(engine.scene, record, consequence_comparison)
+        result['consequenceComparison'] = copy.deepcopy(consequence_comparison)
+        from .surgical_consequence_analysis import analysis_view
+        result['consequenceAnalysis'] = analysis_view(engine, record, consequence_comparison, identity)
+    elif record.get('consequenceAnalyses'):
+        raise ValueError('Saved policy analysis has no bound frozen comparison')
     retraction_study = record.get('retractionStudy')
     if isinstance(retraction_study, dict) and retraction_study.get('schema') == 'resectionlab.retractor-native-study.v1':
         from .surgical_retraction_study import validate_retraction_study
@@ -741,6 +855,9 @@ def dispatch(session, operation, args, request, progress):
     if record.get('researchSetup'):
         result['researchSetup'] = copy.deepcopy(record['researchSetup'])
     _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Save this sequence before continuing')
+    if command == 'previewApproach':
+        request.check()
+        return result
     request.begin_commit()
     if command == 'create' and raw is not None:
         artifacts.setdefault('surgical_prior_scenes', []).append(raw)

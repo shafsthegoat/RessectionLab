@@ -1,0 +1,39 @@
+{
+  "schema": "resectionlab.continuum-exterior-pilot-protocol.v1",
+  "intent": "Profile supported exterior setup and one64-column Schur batch only; no contact-load history, core-support acceptance, full-domain adequacy or RL.",
+  "sourceRole": "DEVELOPMENT; existing UCSF-PDGM-0007 reference exports only",
+  "sourceArchiveSha256": "0098232cceb946cbc5cccf00ca81b3b8b5c768c726d379fc8e8dbb503cd13127",
+  "geometry": {
+    "core": {
+      "path": "testcases/outputs/simulator-qualification-20261029/continuum-reference-v1/execution-v1/result/domain-8.npz",
+      "sha256": "930d378221d4c1407cdf9362bd7e312eb360ef0486e986bc656511d9b020618f"
+    },
+    "reference": {
+      "path": "testcases/outputs/simulator-qualification-20261029/continuum-reference-v1/execution-v1/result/domain-20.npz",
+      "sha256": "2f336591a89b7705532c17ec87183f493c68a892a888eddf0872490122b683d7"
+    }
+  },
+  "scope": "Read frozen geometry/supports and already declared equilibrium mu/nu; source-affine corner check; full supported-free matrix, induced core partition, exterior sparse factor with LDL certificate, one bounded64-column response and measured residual. No core factor or target history.",
+  "nextGate": "Use measured setup/batch costs and full dense-core+Cholesky allocation estimates before freezing complete exterior/history source witness.",
+  "physicalValidationPassed": false,
+  "physiologicalRL": "hold",
+  "partition": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-v1/preparation-v1/source-partition.npz",
+    "sha256": "384e47e474ee7c1c364c296faf966327101347f81b9dc65f4eff994451c3dd01"
+  },
+  "caps": {
+    "wallSeconds": 180,
+    "rssBytes": 3221225472,
+    "outputBytes": 8388608,
+    "batchColumns": 64,
+    "numericalThreads": 1,
+    "retries": 0
+  },
+  "forbidden": [
+    "changing source geometry, materials or supports",
+    "changing live engine caps",
+    "new data acquisition or response fitting",
+    "weakening failed radius gates",
+    "physiological RL"
+  ]
+}

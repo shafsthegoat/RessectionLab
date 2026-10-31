@@ -73,6 +73,16 @@ class SurgicalScene:
         validate(self)
         from .surgical_cusa_v3 import validate as validate_cusa
         validate_cusa(self)
+        # Reject a continuum declaration even when its required V2 parent is
+        # missing; it must never silently fall through to historical mechanics.
+        from .surgical_continuum import validate as validate_continuum
+        validate_continuum(self)
+        from .surgical_planar_maneuver import validate as validate_planar_maneuver
+        validate_planar_maneuver(self)
+        from .surgical_vascular_graph import validate as validate_vascular_graph
+        validate_vascular_graph(self)
+        from .surgical_bipolar_thermal import validate as validate_bipolar_thermal
+        validate_bipolar_thermal(self)
         def cell(value):
             if type(value) is not int or not 0 <= value < self.labels.size:
                 raise ValueError('Property cell must index this source grid')

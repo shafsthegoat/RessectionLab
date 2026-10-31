@@ -1,0 +1,42 @@
+{
+  "schema": "resectionlab.continuum-contact-survey-protocol.v1",
+  "intent": "Read-only conditional endpoint contact witnesses for all26 frozen native/coupled phases; no new solve or public action admission",
+  "sourceRole": "DEVELOPMENT; existing UCSF-PDGM-0007 qualified8mm native artifact and original20mm geometry only",
+  "sourceSceneId": "sha256:25e7349ad48ee77244b05fc6768e09bdc049e04733b9f362e14ae0c87a743942",
+  "nativeCase": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-history-v1/execution-v3-snapshot/result/continuum-history.ressectionlab",
+    "sha256": "cbf03bfc8f7465c873ce2b660802516f13405d29eedd229342b13ec3cbf767a8"
+  },
+  "fullProgramReport": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/full-programs-v1/result/report.json",
+    "sha256": "280780aae906a5aa9c92daf9d8d064f77ab1b3836667a4abf774e15a77c116c5"
+  },
+  "nativeCaptureReport": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/native-contact-capture-v1/result/report.json",
+    "sha256": "ed9d48d27c2d5dc62f3f0eee9b4713aea4bd185ee3e40ad809c82c9717d47c13"
+  },
+  "nativeCaptureAcceptance": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/native-contact-capture-v1/acceptance.json",
+    "sha256": "4a7772015e989a01139229af16bab27794f6f45484f10a85fb533f7c0ccb4615"
+  },
+  "nativeCaptureProtocolSha256": "eca15bb187f6b58d7ec3565637d1241745d5da0990b1bf23eb39e09393eb038d",
+  "expectedSampleWorlds": 26,
+  "preflightSampleIndices": [
+    0,
+    11,
+    25
+  ],
+  "caps": {
+    "wallSeconds": 60,
+    "rssBytes": 1073741824,
+    "outputBytes": 16777216,
+    "numericalThreads": 1,
+    "retries": 0
+  },
+  "require": "All26 exact source/field/phase joins before selection; report every shaft/working capsule for both hands, same-hand shaft exemption only, all retained resting source owners outside local fields included. Non-target rigid holds/fragments refuse. Positive Q1 points, AABB separation and indeterminate overlaps remain distinct. No working/CUSA/sweep/public-action legality inferred. Negative obstacle point survey never means clearance.",
+  "geometryToleranceMm": 1e-09,
+  "physicalValidationPassed": false,
+  "largerDomainPublicActionsAdmitted": false,
+  "physiologicalRL": "hold",
+  "largeScaleRL": "hold"
+}

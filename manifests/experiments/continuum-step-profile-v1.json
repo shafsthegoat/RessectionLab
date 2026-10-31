@@ -1,0 +1,59 @@
+{
+  "schema": "resectionlab.continuum-step-profile-protocol.v1",
+  "intent": "Compare legacy and revised exact source-sized fixed-step kernels and contact rebinding before admitting complete source programs.",
+  "sourceRole": "DEVELOPMENT; existing UCSF-PDGM-0007 reference exports only",
+  "sourceArchiveSha256": "0098232cceb946cbc5cccf00ca81b3b8b5c768c726d379fc8e8dbb503cd13127",
+  "geometry": {
+    "core": {
+      "path": "testcases/outputs/simulator-qualification-20261029/continuum-reference-v1/execution-v1/result/domain-8.npz",
+      "sha256": "930d378221d4c1407cdf9362bd7e312eb360ef0486e986bc656511d9b020618f"
+    },
+    "reference": {
+      "path": "testcases/outputs/simulator-qualification-20261029/continuum-reference-v1/execution-v1/result/domain-20.npz",
+      "sha256": "2f336591a89b7705532c17ec87183f493c68a892a888eddf0872490122b683d7"
+    }
+  },
+  "scope": "Repeated isolated step at one frozen source state. Old/new kernels share identical admitted full tissue, Schur, Cholesky and contact operators. Setup is measured once, never compared. Not topology history, complete surgical program, physical adequacy or RL.",
+  "nextGate": "Measure topology/source transfer and full field guards, plus detailed/independent controls; kernel-only extrapolation cannot admit complete-program run.",
+  "physicalValidationPassed": false,
+  "physiologicalRL": "hold",
+  "partition": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-v1/preparation-v1/source-partition.npz",
+    "sha256": "384e47e474ee7c1c364c296faf966327101347f81b9dc65f4eff994451c3dd01"
+  },
+  "caps": {
+    "wallSeconds": 180,
+    "rssBytes": 3221225472,
+    "outputBytes": 8388608,
+    "numericalThreads": 1,
+    "retries": 0
+  },
+  "forbidden": [
+    "changing source geometry, materials or supports",
+    "changing live engine caps",
+    "new data acquisition or response fitting",
+    "weakening failed radius gates",
+    "physiological RL"
+  ],
+  "legacy": {
+    "commit": "2e2de6477bcaabc1c277f9f6c038766311e969c4",
+    "path": "src/resectionlab/surgical_continuum_exterior.py",
+    "sha256": "18cd4713664ee36455025398c4c4e83ad162a39bf58fcdf91ca11f465e686a54"
+  },
+  "sample": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-v1/qualification-v1/result/short-hold-step-030.npz",
+    "sha256": "dd1a1b175d0b6040ac1332b9d1f7423f5054a3a3b653be2af07f78931a019eb7"
+  },
+  "priorWitnessReport": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-v1/qualification-v1/result/report.json",
+    "sha256": "9270214f27cf4298d2cb18d65520fc650829adde29fe783b9c2390a92245c527"
+  },
+  "repetitions": 8,
+  "suffixFixedSteps": 4218,
+  "tolerances": {
+    "displacementMm": 1e-09,
+    "memoryMm": 1e-09,
+    "forceN": 1e-10,
+    "energyNmm": 1e-10
+  }
+}

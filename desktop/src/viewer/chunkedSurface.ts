@@ -2,6 +2,7 @@ import {maskSurfaceRegion} from './surface.ts';
 import {SourceVertexIndex,SurfaceIndexBudgetExceeded} from './sourceVertexIndex.ts';
 import type {Affine,Bounds3,Point3,Shape3} from './coordinates';
 import {IncrementalSourceNormals} from './incrementalSurfaceNormals.ts';
+import type {SourceAuditLayout} from './surfaceSafety';
 interface Chunk {low:Point3;high:Point3;data:Float32Array|Uint32Array;rowOffsets:Uint32Array;activeBounds?:Bounds3}
 const ACTIVE_BOUNDS_BYTES=256,MAX_STABLE_SNAPSHOT_BYTES=64*1024**2,MAX_PICKING_INPUT_BYTES=64*1024**2;
 /** Worker-owned source chunks. Row stitching preserves complete reference
@@ -15,6 +16,10 @@ export class ChunkedMaskSurface {
   private sourceNormals?:IncrementalSourceNormals;
   private normalPreparationMs=0;
   private cachedNormalsUsed=false;
+  private generation=0;
+  private generationValid=true;
+  private dirtyIds?:Set<number>;
+  private changedVertices=new Uint32Array();
   private readonly indexBudget?:number;
   readonly chunkSize:number;
   readonly shape:Shape3;
@@ -35,7 +40,7 @@ export class ChunkedMaskSurface {
     for(let x=min[0];x<=max[0];x++)for(let y=min[1];y<=max[1];y++)for(let z=min[2];z<=max[2];z++)this.extract([x,y,z]);
   }
   get indexedChunks(){return !!this.vertices;}
-  get retainedBytes(){return this.mask.byteLength+this.chunkBytes+this.boundsBytes+(this.vertices?.retainedBytes??0)+(this.sourceNormals?.retainedBytes??0);}
+  get retainedBytes(){return this.mask.byteLength+this.chunkBytes+this.boundsBytes+this.changedVertices.byteLength+(this.vertices?.retainedBytes??0)+(this.sourceNormals?.retainedBytes??0);}
   get normalWork(){return {cachedNormals:this.cachedNormalsUsed,normalPreparationMs:this.normalPreparationMs,dirtyNormalVertices:this.cachedNormalsUsed?this.sourceNormals?.lastDirtyVertices??0:0,recomputedNormalFaces:this.cachedNormalsUsed?this.sourceNormals?.lastRecomputedFaces??0:0,scannedNormalFaces:this.cachedNormalsUsed?this.sourceNormals?.lastScannedFaces??0:0,normalFullScan:this.cachedNormalsUsed?this.sourceNormals?.lastFullScan??true:true,normalSelectionBytes:this.sourceNormals?.selectionBytes??0};}
   get totalChunks(){return this.shape.reduce((n,s)=>n*Math.ceil((s+1)/this.chunkSize),1);}
   private discardActiveBounds(){
@@ -46,6 +51,7 @@ export class ChunkedMaskSurface {
     const low=coordinate.map(n=>n*this.chunkSize-1) as Point3,high=coordinate.map((n,a)=>Math.min(this.shape[a]-1,(n+1)*this.chunkSize-2)) as Point3;
     const key=coordinate.join(','),result=maskSurfaceRegion(this.mask,this.shape,low,high);this.lastRemeshedChunks++;
     const old=this.chunks.get(key);if(old&&this.sourceNormals)this.sourceNormals.mark(old.data as Uint32Array,coordinate);if(old){this.chunkBytes-=old.data.byteLength+old.rowOffsets.byteLength;if(old.activeBounds)this.boundsBytes-=ACTIVE_BOUNDS_BYTES;}
+    if(old&&this.vertices&&this.dirtyIds)for(const id of old.data)this.dirtyIds.add(id);
     if(!result.positions.length){this.chunks.delete(key);return;}
     let data:Float32Array|Uint32Array=result.positions,activeBounds:Bounds3|undefined;
     if(this.vertices){
@@ -59,6 +65,7 @@ export class ChunkedMaskSurface {
       const bounds=this.stableBoundsAvailable?[[Infinity,Infinity,Infinity],[-Infinity,-Infinity,-Infinity]] as Bounds3:undefined;
       for(let i=0;i<data.length;i++){
         const x=result.positions[3*i],y=result.positions[3*i+1],z=result.positions[3*i+2];data[i]=this.vertices.intern(x,y,z);
+        this.dirtyIds?.add(data[i]);
         if(bounds){bounds[0][0]=Math.min(bounds[0][0],x);bounds[0][1]=Math.min(bounds[0][1],y);bounds[0][2]=Math.min(bounds[0][2],z);bounds[1][0]=Math.max(bounds[1][0],x);bounds[1][1]=Math.max(bounds[1][1],y);bounds[1][2]=Math.max(bounds[1][2],z);}
       }
       if(bounds&&this.stableBoundsAvailable){
@@ -71,6 +78,9 @@ export class ChunkedMaskSurface {
     this.chunks.set(key,{low,high,data,rowOffsets:result.rowOffsets,...(activeBounds?{activeBounds}:{})});
   }
   update(indices:Iterable<number>){
+    const previousValid=this.generationValid;this.generationValid=false;
+    this.generation++;this.changedVertices=new Uint32Array();this.dirtyIds=this.vertices?new Set():undefined;
+    try{
     const dirty=new Set<string>();this.lastRemeshedChunks=0;this.lastIndexedCorners=0;
     for(const index of indices){
       if(!Number.isInteger(index)||index<0||index>=this.mask.length)throw Error('Invalid changed source cell');
@@ -78,6 +88,8 @@ export class ChunkedMaskSurface {
       for(let dx=0;dx<2;dx++)for(let dy=0;dy<2;dy++)for(let dz=0;dz<2;dz++)dirty.add(p.map((v,a)=>Math.floor((v+[dx,dy,dz][a])/this.chunkSize)).join(','));
     }
     for(const key of dirty)this.extract(key.split(',').map(Number) as Point3);
+    this.generationValid=previousValid;
+    }finally{this.changedVertices=Uint32Array.from(this.dirtyIds??[]);this.dirtyIds=undefined;}
   }
   private rows(){
     const rows:Array<{x:number;y:number;z:number;data:Float32Array|Uint32Array}>=[];let length=0;
@@ -91,14 +103,19 @@ export class ChunkedMaskSurface {
   }
   /** Fresh transferable buffers, with IDs assigned in original first-appearance
    * order. Stale registry vertices never enter the output or affect normals. */
-  indexed(affine?:Affine){
+  indexed(affine?:Affine,audit=false){
     this.cachedNormalsUsed=false;this.normalPreparationMs=0;
     if(!this.vertices)throw Error('Indexed source chunks were not admitted');
     const {rows,length}=this.rows(),indices=new Uint32Array(length),positions=new Float32Array(this.vertices.vertexCount*3),remap=new Uint32Array(this.vertices.vertexCount);
+    const vertexIds=audit?new Uint32Array(this.vertices.vertexCount):undefined,auditRows:SourceAuditLayout['rows']=[];
     let offset=0,count=0;
-    for(const row of rows)for(const id of row.data){
-      let mapped=remap[id];if(!mapped){mapped=++count;remap[id]=mapped;this.vertices.copy(id,positions,(mapped-1)*3);}
-      indices[offset++]=mapped-1;
+    for(const row of rows){
+      const begin=offset/3;
+      for(const id of row.data){
+        let mapped=remap[id];if(!mapped){mapped=++count;remap[id]=mapped;this.vertices.copy(id,positions,(mapped-1)*3);if(vertexIds)vertexIds[mapped-1]=id;}
+        indices[offset++]=mapped-1;
+      }
+      if(audit)auditRows.push({buffer:row.data.buffer,offset:row.data.byteOffset/12,begin,end:offset/3});
     }
     let normals:Float32Array|undefined;
     if(affine){
@@ -109,7 +126,9 @@ export class ChunkedMaskSurface {
       }catch(error){if(!(error instanceof SurfaceIndexBudgetExceeded))throw error;this.sourceNormals=undefined;}
       this.normalPreparationMs=performance.now()-normalStarted;
     }
-    return {positions:count===this.vertices.vertexCount?positions:positions.slice(0,count*3),indices,...(normals?{normals}:{})};
+    return {positions:count===this.vertices.vertexCount?positions:positions.slice(0,count*3),indices,...(normals?{normals}:{}),
+      ...(vertexIds?{auditLayout:{vertexIds:count===vertexIds.length?vertexIds:vertexIds.slice(0,count),vertexCapacity:this.vertices.vertexCount,rows:auditRows,
+        registry:this.vertices,generation:this.generation,generationValid:this.generationValid,dirtyVertices:this.changedVertices}}:{})};
   }
   /** Optional raw display representation. IDs include historical vertices, but
    * only current raster triangles draw. Never transfer resident cache buffers. */

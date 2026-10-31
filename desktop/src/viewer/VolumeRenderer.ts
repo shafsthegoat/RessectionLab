@@ -1,3 +1,4 @@
+import {interactivePlanningGroup} from './interactivePlanningGeometry';
 import {TransformControls} from "three/addons/controls/TransformControls.js";
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 import {cachedSurface,retainSurface} from './surfaceCache';
@@ -1065,6 +1066,7 @@ export class VolumeRenderer {
   }
 
   private surfaceVisible(name:string):boolean {
+    if(this.planarBladeSurfaceLayers?.has(name))return false;
     return this.workspaceSettings?.operativeView==='surgeon'&&!this.workspaceSettings.microscope?.inspectionTransparency ? true : this.visible?.[name]!==false;
   }
 
@@ -1153,6 +1155,8 @@ export class VolumeRenderer {
   }
 
   private surgicalGroup: THREE.Group | null = null;
+  private planningGroup:THREE.Group|null=null;
+  private planningOverlaySource:SurgicalInteraction['planningOverlay'];
   private surgicalGhost: THREE.Group | null = null;
   private surgicalGizmo: TransformControls | null = null;
   private surgicalInteraction: SurgicalInteraction | null = null;
@@ -1160,6 +1164,7 @@ export class VolumeRenderer {
   private surgicalEffectsOutcome: SurgicalInteraction['outcome'];
   private surgicalEffectsPreview = false;
   private surgicalEffects: THREE.Group | null = null;
+  private planarBladeSurfaceLayers = new Set<string>();
   private surgicalFlow: THREE.Group | null = null;
   private surgicalFlowSource: SurgicalInteraction['flowDisplay'];
   private surgicalAnimation:{key:string;startedAt:number;speed:number;startSeconds:number;endSeconds:number}|null=null;
@@ -1190,6 +1195,16 @@ export class VolumeRenderer {
     // leave both the previous endpoint and its transfer evidence installed.
     const preparedFlow=incomingFlow!==this.surgicalFlowSource?(incomingFlow?surgicalFlowGroup(incomingView!,incomingFlow):null):undefined;
     this.surgicalInteraction=interaction;
+    // Only the declared opt-in body replaces its rounded display surface.
+    // Exact Q1 corners remain an overlay; source masks and linked MPR do not change.
+    const planarIds=incomingView?.planarBladeManeuver?.contactSurface?.sourceIds??[];
+    if(this.volume&&this.surfaces&&(planarIds.length||this.planarBladeSurfaceLayers?.size)){
+      const source=modeledAnatomy(this.volume)?.source??this.volume;
+      this.planarBladeSurfaceLayers=new Set(planarIds.length?source.compartments.filter(layer=>{
+        const mask=materializeLayerMask(source,layer);return planarIds.some(id=>!!mask[id]);
+      }).map(layer=>layer.name):[]);
+      for(const [name,mesh] of this.surfaces)mesh.visible=this.surfaceVisible(name);
+    }
     const frame=interaction?.recordedFrame,display=interaction?.preview?undefined:interaction?.playbackDisplay;
     const animationKey=frame?JSON.stringify([frame.branchId,frame.position,frame.frameIndex,incomingView?.stateId]):null;
     if(animationKey!==this.surgicalAnimationKey){
@@ -1206,6 +1221,7 @@ export class VolumeRenderer {
       this.surgicalFlow=null;this.surgicalFlowSource=undefined;
       this.surgicalAnimation=null;this.surgicalAnimationKey=null;
       this.surgicalPath=null;this.surgicalPathSource=null;
+      this.planningGroup=null;this.planningOverlaySource=undefined;
       this.surgicalGizmo?.detach();if(this.surgicalGhost)this.surgicalGhost.visible=false;
       this.controls.enabled=true;this.requestRender();return;
     }
@@ -1232,9 +1248,22 @@ export class VolumeRenderer {
       this.surgicalGroup.add(this.surgicalEffects);this.displayWork.effectBuilds++;
       this.surgicalEffectsView=view;this.surgicalEffectsOutcome=interaction.outcome;this.surgicalEffectsPreview=!!interaction.preview;
     }
+    if(interaction.planningOverlay!==this.planningOverlaySource){
+      if(this.planningGroup){disposeObject(this.planningGroup);this.surgicalGroup.remove(this.planningGroup);}
+      this.planningOverlaySource=interaction.planningOverlay;
+      this.planningGroup=interaction.planningOverlay?interactivePlanningGroup(interaction.planningOverlay):null;
+      if(this.planningGroup)this.surgicalGroup.add(this.planningGroup);
+      if(this.panes?.anatomy)this.panes.anatomy.dataset.planningRoutes=JSON.stringify(interaction.planningOverlay?.routes.map(r=>r.id)??[]);
+    }
     this.clipSurgicalFieldEffects();
     const retained=new Set<string>();
     for(const [name,recordedSlot] of Object.entries(view.slots)){
+      // Planning guides remain visible through the existing exposure; canonical
+      // withdrawn poses still belong to acceptedTools and collision state.
+      if(interaction.planningOverlay&&!recordedSlot.inserted)continue;
+      // The explicitly parked second hand stays outside this one-tool field.
+      // Its canonical pose is retained for collision/admission and replay.
+      if(view.planarBladeManeuver&&name!=='left'&&!recordedSlot.inserted)continue;
       const effective=interaction.effectiveActivation?.[name];
       const slot=typeof effective==='boolean'?{...recordedSlot,active:effective}:recordedSlot;
       const tool=view.catalog.find(t=>t.id===slot.instrument);if(!tool)continue;

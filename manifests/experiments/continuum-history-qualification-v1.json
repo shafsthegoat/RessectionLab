@@ -1,0 +1,61 @@
+{
+  "schema": "resectionlab.continuum-history-qualification-protocol.v1",
+  "intent": "Paired full native retraction/CUSA/removal/release with distributed-history compliance solve and current retained-interface cache identity. No material fit or RL.",
+  "sourceArchive": "testcases/outputs/simulator-qualification-20261029/continuum-v1/rehearsal-v6/continuum-rehearsal.ressectionlab",
+  "sourceArchiveSha256": "0098232cceb946cbc5cccf00ca81b3b8b5c768c726d379fc8e8dbb503cd13127",
+  "sourceRole": "DEVELOPMENT; same UCSF-PDGM-0007 person and original acquired arrays in all solver variants",
+  "sourceSceneId": "sha256:01719b5460564e004686c495bd096fe76902b6ac8d38bf2d9a6951e81b883025",
+  "patchRadiusMm": 8.0,
+  "rationale": "Original17-action8mm geometry has1203 active source cells within unchanged2000-cell cap. Seven of the original8 subsequently removed source cells lie in this active domain; no new source response used to select it.",
+  "methods": [
+    "detailed",
+    "proportional-history-compliance"
+  ],
+  "supportPolicy": "Both opt-in variants use the current removed source IDs in support-cache identity. Untagged recordings keep their prior convention; support/solver effects are separated.",
+  "branches": [
+    "short-hold",
+    "sustained-hold",
+    "stop-at-model-limit"
+  ],
+  "repetitions": 2,
+  "commonActions": 15,
+  "execution": "Each pair starts from intact source, follows the same complete recorded public program, and compares every accepted/partial action and physical state. Alternate first method by repetition. Stop on any rejected or diverging action. Timings exclude state comparison and observer exports.",
+  "expectedAdditionalTargetMm3": 8.0,
+  "expectedAdditionalNonTargetMm3": 0.0,
+  "expectedRemovedActiveElements": 7,
+  "verification": "Separate source-owned history/energy export replay for all3 new-solver branches; require exact new snapshots. Original six untagged branch snapshots must replay bit-exact. No source or parameter substitution on failure. Require each repeated action state ID and complete receipt to match, plus the final snapshot. Export actual nodal gravity and any declared position with each equilibrium sample.",
+  "tolerances": {
+    "displacementMm": 1e-09,
+    "forceN": 1e-10,
+    "energyNmm": 1e-10,
+    "strainExposureMm3S": 1e-09,
+    "stressExposurePa2Mm3S": 0.001,
+    "otherFloat": 1e-09,
+    "discreteState": "exact",
+    "replayWithinEachVariant": "bit-exact"
+  },
+  "caps": {
+    "wallSeconds": 900,
+    "rssBytes": 2147483648,
+    "outputBytes": 33554432,
+    "numericalThreads": 1,
+    "maximumCapturedSystemsPerBranch": 12,
+    "retries": 0
+  },
+  "forbidden": [
+    "changing material/relaxation/contact/tool parameters",
+    "raising live cell or DOF caps",
+    "changing source masks/affines/patient roles",
+    "substituting removal as a performance shortcut",
+    "training or clinical acceptance",
+    "weakening failed radius-stability gates"
+  ],
+  "openGates": [
+    "artificial-domain adequacy remains failed",
+    "measured device/transient/contact response",
+    "accepted withheld acquired anatomy prediction",
+    "patient vascular/functional evidence"
+  ],
+  "physicalValidationPassed": false,
+  "physiologicalRL": "hold"
+}

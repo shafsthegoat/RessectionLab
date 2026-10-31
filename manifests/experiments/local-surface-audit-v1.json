@@ -1,0 +1,41 @@
+{
+  "schema": "resectionlab.surface-certificate-protocol.v1",
+  "baseline_revision": "66b85c87",
+  "case_archive_sha256": "564ef8d81d806bcadd5c825e7ed98704520cbb19d8a90049462073d8bae2ddc3",
+  "scene_id": "sha256:b7c1e36161051be29b5e694aab35c9b11828f63b0c3444016824f6d506c0db12",
+  "branch": "operative-cusa",
+  "actions": 120,
+  "case_role": "Previously exposed acquired UCSF-PDGM0007 development recording; preserves all existing TRAIN/SELECT/EVAL reservations",
+  "fixture": "Execute every recorded action to its exact saved checkpoint; retain exact source-cell deltas and reuse identical pre-existing masks after MRI/label/shape/affine/byte checks",
+  "changed_brain_states": 23,
+  "changed_tumor_states": 41,
+  "preparations_per_episode": 66,
+  "paired_repetitions": 3,
+  "warmups_per_variant": 1,
+  "order": "baseline/current, current/baseline, baseline/current",
+  "cache_admission_minimum_faces": 100000,
+  "maximum_dirty_fraction_before_full_audit": 0.35,
+  "existing_worker_residency_budget_bytes": 134217728,
+  "certificate_requirements": [
+    "Explicitly completed empty final contact result before publishing detached certification",
+    "Injective stable vertex IDs, complete valid source-row ranges and ordered source corner triplets",
+    "Preserved relative canonical face order and finite bit-exact source/physical coordinates including signed zero",
+    "Current dirty/dirty BVH plus certified-base dirty/clean BVH with removed/changed old faces excluded",
+    "Same per-face AABB epsilon, shared-index rejection, source-contact exemption and SAT using current canonical min/max face IDs",
+    "Recompare every quantized candidate revision; retain public full-reference traversal and fallback",
+    "Charge certificate and compact-tree residency with source masks/chunks/registry in existing budget"
+  ],
+  "parity_requirements": [
+    "All five position/normal/index buffers and all non-timing diagnostics exact across the entire episode",
+    "Internal partial contact membership exact; Set order may differ only because current contact resets/component operations commute",
+    "Independent failures/epsilon/source/provenance/budget/repair/restore controls",
+    "Hidden native microscope/GPU/HUD/source counts/camera/save/cold reopen checks"
+  ],
+  "scope": "Exact display optimization; no physical mechanism, CUSA rate, segmentation, source MRI, conditioning policy or clinical gate changes",
+  "open": [
+    "Whole-layer polynomial filtering, graph construction and face preparation remain material costs",
+    "Two-second changed brain preparation and first physical branch admission still fail the responsive replay objective",
+    "Source-linked independent specimen/device and patient anatomical validation remain open",
+    "No training or physiological RL admission follows from implementation parity"
+  ]
+}

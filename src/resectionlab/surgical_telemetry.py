@@ -116,6 +116,8 @@ class _ObservedEngine(SurgicalEngine):
         target = sum(bool(self.by_label[int(self.scene.labels.ravel()[cell])].get('target')) for cell in state['removed'])
         wound_sources = [source for source in state['sources'] if source.get('kind') == 'modeled-vessel-wound']
         wounds = state.get('vesselsV2', {}).get('wounds', state.get('vesselWounds'))
+        if 'vascularGraphV1' in state: wounds = state['vascularGraphV1']['ports']
+        from .surgical_bipolar_thermal import metrics as bipolar_thermal_metrics
         return {
             'timeSeconds': float(state['elapsedSeconds']), 'sampleKind': kind,
             'actionIndex': len(self._attempts), 'slots': slots,
@@ -134,6 +136,8 @@ class _ObservedEngine(SurgicalEngine):
             'vesselEncounterCells': len(state['vesselEncounters']),
             'invalidActionsCumulative': self._invalid, 'toolExchangesCumulative': self._exchanges,
             'contactStopsCumulative': self._contact_stops,
+            **({'bipolarThermal': bipolar_thermal_metrics(self)}
+               if 'bipolarThermalV1' in state else {}),
         }
 
     def _substep(self, key, op, p, q, active, dt):

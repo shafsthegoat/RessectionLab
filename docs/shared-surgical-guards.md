@@ -60,3 +60,87 @@ Median / p95 milliseconds, five repeats on this Mac:
 The profile identified repeated serialization of the same completed physical state as a substantial patient-action cost. The only optimization reuses that exact digest across result/history and preview/view assembly. There is no persistent state-digest cache and no change to collision resolution, physics integration, or microsteps. The measured step includes cloning the fixed starting engine and checking its resulting identity. The sweep query measures full action geometry against protection and excludes indirect postchecks. Reset now verifies and hashes self-contained protection evidence, which adds patient overhead. Five samples describe this fixed workload; they do not establish general interactive latency or training throughput.
 
 The separate [full RL transition receipt](../artifacts/shared-surgical-guards-performance/full-rl-step.json) measures current `step_action()` including action validation, engine transition, reward accounting, observation construction, and info assembly. Each of its five repeats reconstructs the identical seeded prefix outside the timer. Median / p95 is **106.21 / 110.08 ms** for the small case and **1455.40 / 1548.32 ms** for sub-06. States, observations, rewards, terms, and episode flags match across repeats. These measurements have no pre-optimization full-wrapper baseline and are distinct from the engine-step timings above. Reproduce with the same benchmark command plus `--rl-step-only`. All benchmark actions are fixed engineering checks; no policy or training loop runs.
+
+## Preview candidate ownership, 2026-10-30
+
+The native preview now consumes its already prepared candidate instead of
+copying through an outer speculative engine. The bridge omits its additional
+public engine clone for native pure preview. Public clone, subclass-owned
+ledgers and patched public-method dispatch retain their prior behavior.
+Validation/execution rejection, microstep rollback, finalization/cancellation
+checks, detached public payloads, history and publication-before-metrics order
+remain intact. Archive copying, renderer work, physics, solvers, planners and
+replay formats are outside this change.
+
+`scripts/benchmark_surgical_preview.py` measures direct engine preview with its
+complete view/history and the actual `BridgeSession.execute` preview handler,
+including its real response and budget checks. The fixed generated numerical
+control uses 4/122 accepted inspect actions. The existing UCSF-PDGM-0007
+operative-demo source uses canonical branch-7 prefixes of 16/122 actions; the
+long checkpoint has 5,849 removed source cells and substantial retained effects.
+Its original endpoint, prefix snapshots, source identity and full response
+hashes agree before/after. No patient effect state was fabricated. The source
+long response is 1,080,822 bytes directly and 1,080,907 bytes through the handler.
+
+Each cell below has **25 unprofiled samples after 3 warmups**, with preparation,
+canonical restore/seek and final JSON encoding outside timing. Source-backed
+archives here have `fullCase=false`; history-omitting full-case responses are
+not the measured workload. Raw samples, complete response JSON, hardware,
+source/checkpoint/code hashes and separate profiles are under ignored
+`testcases/outputs/preview-ownership-20261030/`. Frozen before/after source
+archives preserve the actual checkout, including identical contact-mechanics
+work in progress; they are source archives, not Git worktrees.
+
+Hardware: Apple M2 Pro, 10 cores, 16 GiB, macOS 26.5.2 arm64, Python 3.12.12;
+BLAS thread counts fixed to one. This was a sequential shared-desktop-host run
+with unrelated background activity, not a randomized or isolated-host trial.
+
+| Input / actions | API | Before p50 / p95 ms | After p50 / p95 ms | Fresh-process OS peak MiB before → after |
+|---|---|---:|---:|---:|
+| Generated / 4 | Engine | 1.187 / 1.294 | 1.183 / 1.274 | 106.6 → 106.4 |
+| Generated / 4 | Handler | 2.264 / 2.401 | 2.216 / 2.537 | 98.9 → 97.8 |
+| Generated / 122 | Engine | 2.350 / 2.498 | 2.407 / 2.625 | 100.1 → 99.5 |
+| Generated / 122 | Handler | 8.503 / 8.949 | 7.360 / 7.767 | 99.6 → 99.9 |
+| Source / 16 | Engine | 13.021 / 13.199 | 12.564 / 13.647 | 491.1 → 497.4 |
+| Source / 16 | Handler | 225.780 / 246.183 | 225.521 / 245.640 | 454.1 → 501.9 |
+| Source / 122 | Engine | 294.356 / 313.728 | 294.951 / 318.891 | 494.9 → 495.1 |
+| Source / 122 | Handler | 586.252 / 597.262 | 561.429 / 576.586 | 496.6 → 484.4 |
+
+Each memory value is one fresh worker's **lifetime** peak including identical
+preparation/admission and outside-timer encoding, not preview-only allocation.
+No consistent memory reduction is established. Direct previews are flat/mixed,
+including a generated-long p50/p95 regression and higher source-direct p95s.
+The long source handler's measured p50/p95 is 4.23%/3.46% lower in this run;
+the short source handler is essentially unchanged. These are backend timings,
+not time until Electron displays a result. No display-speed claim is made.
+
+Separate three-call cProfile runs confirm direct clone counts 6→3 and handler
+counts 9→3. Source handler clone cumulative time falls 252.50→28.66 ms, while
+archive/view deepcopy retains 1,684,410 calls (1647.80→1721.13 ms profiled).
+Nested cumulative costs overlap and cannot be added. The unchanged archive
+copying is substantial; profiling times are not endpoint latency samples.
+
+Reproduce with fresh output directories; the source-backed input must already
+be present. The saved source archives reproduce the measured code versions:
+
+```sh
+.venv/bin/python scripts/benchmark_surgical_preview.py \
+  --source-root testcases/outputs/preview-ownership-20261030/before-source/src \
+  --label before --output testcases/outputs/preview-ownership-20261030/recheck-before --profiles
+.venv/bin/python scripts/benchmark_surgical_preview.py \
+  --source-root testcases/outputs/preview-ownership-20261030/after-source/src \
+  --label after --output testcases/outputs/preview-ownership-20261030/recheck-after --profiles
+```
+
+For a current-checkout run, omit `--source-root`. The driver refuses existing
+outputs and writes generated evidence only under `testcases/`. The measured
+driver and its later output-safety-only revision are both preserved and hashed.
+All 12 paired unprofiled/profile response and checkpoint comparisons are exact.
+The controls verify software transaction behavior, not physiological validity.
+Validation passed 253 focused regressions and 56 checks against an exported
+source archive of only the staged goal changes. Coverage includes rejected and
+partial transitions, detached payloads, subclass/patched hooks, cancellation in
+execution/finalization, committed history, replay and restore. A pre-existing
+cursor test counted two state checks; frozen-before reproduction confirmed its
+failure after readiness added a third. The assertion now requires all three;
+no correctness check was removed.

@@ -1,0 +1,42 @@
+{
+  "schema": "resectionlab.simulator-qualification-contract.v1",
+  "task": "Source-bound post-exposure finite CUSA debulking of selected enhancing source label 4, retaining non-target access cost, observation and stop-with-residual options",
+  "tumor_boundary": "Radiographic annotation, not a separable capsule or calibrated infiltration probability. Nonenhancing core and edema remain separate source context; unlabelled tissue is not established tumor-free.",
+  "development_case": "UCSF-PDGM-0007",
+  "baseline_archive_sha256": "564ef8d81d806bcadd5c825e7ed98704520cbb19d8a90049462073d8bae2ddc3",
+  "baseline_branch": "operative-cusa",
+  "baseline_state_id": "sha256:79262b24f409725a23f6e0506b8fcaeb676e4d8f452c11416e6e3f0094aad133",
+  "development_role_basis": "docs/fresh-patient-reproduction.md; existing acquired-source development use, no reassignment to a held-out role",
+  "independent_evaluation": {
+    "status": "not admitted; relevant mechanisms do not yet pass measured-response gates",
+    "prospective_candidates_metadata_only": ["ReMIND-067", "RESECT:Case8"],
+    "rules": "Preserve all existing SELECT/MEASUREMENT_EVAL and Case4 B/C/V reservations. No patient payload access or tuning is authorized by this declaration. Review exact modality/measurement support and freeze metrics before opening evaluation data."
+  },
+  "validation_levels": {
+    "A": "Numerical correctness: conservation, units/frames, source occupancy, time step and replay",
+    "B": "Independent measured device/specimen response",
+    "C": "Withheld acquired intraoperative anatomy/cavity/shift prediction",
+    "D": "Recorded event/workflow plausibility",
+    "E": "Linked neurological outcomes with external calibration"
+  },
+  "questions": [
+    {"id": "A-source", "question": "Do original source labels independently reproduce every removed volume including access, with no regenerated or duplicate cells?", "required": true},
+    {"id": "A-replay", "question": "Does canonical action replay reproduce the recorded full state while preserving source arrays?", "required": true},
+    {"id": "A-energy", "question": "Does an unprojected lattice solve satisfy its declared implicit-Euler force and energy balance?", "required": true, "max_free_residual_N": 1e-10, "max_abs_energy_balance_Nmm": 1e-10, "tolerance_kind": "numerical engineering tolerance, not tissue/clinical threshold"},
+    {"id": "A-domain", "question": "Which target, force, displacement, strain or collision projections govern the attempted response?", "required": true},
+    {"id": "A-convergence", "question": "How do time-step and fixed-physical-domain grid changes affect displacement, force and energy?", "required": true},
+    {"id": "B-material", "question": "Does the app model predict withheld human specimen force and torque with suitable geometry/loading history?", "required": true, "status": "unvalidated"},
+    {"id": "B-device", "question": "Do measured matched-device data constrain CUSA rate, retractor forces and bipolar thermal/patency response?", "required": true, "status": "unvalidated"},
+    {"id": "C-shift", "question": "Does prediction improve on frozen rigid/no-shift/interpolation baselines on withheld paired acquired observations?", "required": true, "status": "unvalidated; unknown maneuvers cannot validate causal tool response"},
+    {"id": "vascular", "question": "Are registered artery/vein evidence, connectivity, wound conservation and occlusion-without-bleeding distinguished?", "required": true, "status": "current glioma source unsupported"},
+    {"id": "function", "question": "Are motor/language evidence, encounters, manipulation, ischemia, imaging injury and deficits distinct?", "required": true, "status": "outcomes unvalidated"}
+  ],
+  "mechanisms": [
+    {"id": "deformation", "current": "Local vector-spring lattice, absolute nodal drag, approximate divergence penalty; displacement/force/strain caps and collision projection", "needed": "Applicable continuum/history model, declared open boundary/CSF support, measured response and numerical sensitivity", "sources": ["https://doi.org/10.1016/j.jmbbm.2017.07.014", "https://pmc.ncbi.nlm.nih.gov/articles/PMC10511383/"], "test": "tests/test_surgical_deformation_qualification.py", "unsupported": "Living-patient retractor injury, calibrated tumor/brain mechanics, cavity-collapse prediction"},
+    {"id": "cusa", "current": "Revision 2 geometry with 2 mm3/s default finite contact capacity; assumed normalized activation", "needed": "Matched device, settings, specimen and trajectory/removal observations", "sources": [], "test": "tests/test_surgical_cusa_v3.py", "unsupported": "Physiological fragmentation rate or selective glioma capsule"},
+    {"id": "vascular", "current": "Shared finite compliant reservoir, grid-face patency/wounds, assumed pressure and refill; no supply/drainage graph", "needed": "Registered typed vascular coverage, explicit uncertain connectivity and boundaries, distinct occlusion/bleeding/perfusion", "sources": [], "test": "tests/test_surgical_vessels_v2.py", "unsupported": "Patient perfusion, ischemia or complete microvasculature"},
+    {"id": "functional", "current": "Separate evidence contracts exist; development glioma source has no motor/language mapping", "needed": "Registered domain-specific tract/mapping observations and linked outcomes before calibrated risk", "sources": ["https://pmc.ncbi.nlm.nih.gov/articles/PMC10093517/"], "test": "tests/test_functional_evidence.py", "unsupported": "Patient paralysis/aphasia probabilities"},
+    {"id": "observation", "current": "Source-pinned MRI, immutable ownership and real recorded replay; missing exposure anatomy", "needed": "Paired withheld intraoperative observations with frames/measurement uncertainty; maneuver records for causal claims", "sources": ["https://www.cancerimagingarchive.net/collection/remind/", "https://doi.org/10.1002/mp.12268"], "test": "tests/test_simulator_qualification.py", "unsupported": "Clinical access plan, causal brain-shift validation"}
+  ],
+  "large_scale_RL": "hold until task-relevant physical and evidence gates pass; existing generated/model experience is not external validation"
+}

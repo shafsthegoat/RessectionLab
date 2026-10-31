@@ -1,0 +1,176 @@
+# Simulator qualification before physiological planning
+
+The qualification runner preserves the current engine and recordings while
+checking what an episode can support. Its frozen
+[contract](../manifests/experiments/simulator-qualification-v1.json) specifies a
+post-exposure, finite-CUSA development task, mechanism gaps, validation questions
+and numerical tolerances. It grants no held-out payload access, training
+admission, physiological calibration or clinical outcome claim.
+
+`scripts/qualify_surgical_simulator.py` inventories native-study metadata without
+decoding image arrays. Patient versions remain separate. Series/layer identity,
+declared units/affines, registration status, source hashes, review status,
+vascular modality and typed labels are inspectable. Missing layer units remain
+unknown even when the reference image declares millimetres. Diffusion and
+diagnostic tensor scalars do not establish functional pathways. This inventory
+does not requalify absent historical catalogs or legacy-only bundles.
+
+An optional baseline replay admits the entire frozen archive by SHA-256 before
+loading any primary or auxiliary payload. It reconstructs public actions from
+intact source anatomy and compares the full final state. An independent checker
+counts original source labels, checks uniqueness/ownership/monotonic removal
+after every action, and reports exposure, setup, finite work and cleanup costs.
+The historical authored opening remains a cost and an explicit assumption.
+It is not a measured or clinically planned exposure.
+
+Run with existing local data and a new ignored output directory:
+
+```sh
+.venv/bin/python scripts/qualify_surgical_simulator.py \
+  --native-root "$CASE_ROOT" --native-root "$LEGACY_NATIVE_ROOT" \
+  --case "$FROZEN_BASELINE_ARCHIVE" --mechanics \
+  --output "$NEW_OUTPUT_UNDER_TESTCASES"
+```
+
+The local `testcases/README.md` points to exact case paths, commands, report
+versions and test logs. Outputs are compact JSON; the runner copies no patient
+datasets or workspaces. `coverage.json`, `baseline.json`, `mechanics.json` and
+`validation-suite.json` distinguish numerical passes, partial evidence, failed
+grid invariance and unvalidated physical mechanisms. A baseline pass applies
+only to canonical replay and source accounting. An episode with zero active
+deformation substeps has not exercised deformation, even if all diagnostic
+residuals are zero.
+
+## Observing the existing lattice
+
+`surgical_deformation_v2.diagnostic_scope()` collects constant-size aggregate
+counts outside canonical state: target/force/displacement caps, strain
+projection, collision rejection, free-node residual and discrete energy defect.
+Its scope includes attempted and rolled-back solves; it is not an injury ledger.
+Nested scopes and exceptions restore the prior observer. Unobserved engine
+arithmetic and recorded state remain unchanged.
+
+The residual uses the actual system, including hold-spring stiffness. For a
+constant target and zero fixed anchors, with `A = K_tissue + K_hold`,
+`d = u_new - u_old`, and nodal drag `c`, the independent identity is:
+
+```text
+r = A u_new + (c/h) d - f
+f·d - Δ(½uᵀAu) - (c/h)||d||² - ½dᵀAd = -r·d
+```
+
+The quadratic hold potential is included. This is solver verification, not
+measured retractor work or a constitutive energy-damage law. Collision rejection
+can have zero displacement/work but nonzero residual, so residuals and
+projection counts must be read together. Changing prescribed anchor positions
+would require separate constraint-work accounting.
+
+`scripts/qualify_surgical_mechanics.py` checks a one-node response against both
+an independently derived backward-Euler recurrence and its continuous solution.
+A fixed-physical-cube energy check uses independent bond/foundation counts at
+three spacings. It deliberately exposes the unchanged profile's grid dependence;
+it does not tune coefficients to hide it. The cube excludes the bulk penalty to
+isolate these terms. It is not a complete mesh-convergence assessment of patient
+mechanics; its finest static kernel audit exceeds the runtime patch-node cap
+and is not offered as a runnable patient patch. Tests separately force all five
+cap/projection/rejection mechanisms.
+
+## What the human measurements support
+
+[Budday et al.](https://doi.org/10.1016/j.jmbbm.2017.07.014) measured postmortem
+human tissue under controlled shear, axial loading and relaxation. Their finite
+viscoelastic identification supports testing loading history and force relaxation.
+It does not identify this app's absolute nodal drag or a surgical CUSA rate.
+[Hinrichsen et al.](https://pmc.ncbi.nlm.nih.gov/articles/PMC10511383/) provide
+region-dependent, bonded-specimen axial/torsional measurements; processed
+hyperelastic curves do not identify relaxation time constants. Neither provides
+glioma cutting/separation or living-patient retractor-injury calibration.
+
+The existing [specimen calibration result](../artifacts/hbe-v5-axial-calibration-result-v1/RESULT.md)
+retains large axial residuals. Its separate FEBio numerical controls do not
+validate the app lattice. The preserved
+[torsion format failure](../artifacts/hbe-v5-torsion-format-failure-v1/REPORT.txt)
+is not a held-out torque-validation pass.
+
+A separate [donor-held-out continuum comparison](continuum-donor-transfer.md)
+now uses a prospectively selected motor-cortex specimen and a development-only
+effective stiffness fit. The calibrated continuum beats both default-lattice
+variants, but loses to a zero-force baseline in tension. Numerical admission,
+independent scoring checks and this mixed measured result remain distinct;
+physical-response acceptance is still open.
+
+[ReMIND](https://www.cancerimagingarchive.net/collection/remind/) and
+[RESECT](https://doi.org/10.1002/mp.12268) can support appropriately framed paired
+anatomical observation tests. Missing maneuver records prevent interpreting
+anatomical agreement as causal validation of an instrument. Existing
+TRAIN/SELECT/MEASUREMENT_EVAL and Case4 boundary/calibration/validation
+reservations remain intact. Prospective evaluation candidates in the contract
+are metadata-only; actual acquisition/admission, measurement coverage and metric
+freezes remain open.
+
+An [opt-in voxel continuum](voxel-continuum.md) now provides a source-owned
+discretization, material/history scenarios, numerical controls and a limited
+exposed-specimen comparison. Independent measured-response and patient-anatomy
+gates remain open. An [opt-in vascular graph](vascular-graph.md) now separates
+compression, occlusion, transection, sealing and declared supply/drainage
+signals, with independent numerical checks and matched generated maneuvers.
+Acquired vascular connectivity and measured flow response remain unvalidated.
+Separate motor/language evidence, device calibration, responsive viewer and
+bounded RL comparison remain subsequent open stages. Large-scale RL stays on hold.
+
+The [opt-in bipolar heat model](bipolar-thermal.md) now budgets delivered heat,
+passive conduction, declared bath exchange and heat exported with removal.
+Continuous/pulsed generated controls replay with distinct temperature histories.
+Temperature-to-coagulation, device response and injury remain unvalidated;
+independent numerical checks do not promote those gates.
+
+The [source-bound consequence comparison](consequence-comparison.md) now keeps
+full access costs and separately modeled consequences in a vector. Matched
+parameter-world Pareto checks select a conditional research program; requiring
+unavailable vascular, motor, language and shift evidence selects checked STOP
+with residual. This adds no measured physical acceptance or training admission.
+
+The [non-affine domain audit](continuum-domain-sensitivity.md) exposes substantial
+retractor-force/stress changes between 4 and 8 mm artificial patches. Both 12 mm
+worlds refuse the unchanged source-cell budget, so the prespecified radius
+stability result is not estimable. Silent continuum patch truncation is now a
+rejected action, and the legacy scalar reward refuses this unqualified model.
+
+The [offline contact-compliance reference](continuum-contact-reference.md) now
+reproduces detailed fixed-topology histories and computes larger source domains
+within explicit resources. Independent primitive checks pass; both frozen
+16-to-20 mm stress-stability gates fail. Live model caps, measured physical
+acceptance and physiological RL admission are unchanged.
+
+The [distributed-history computation](continuum-history-solve.md) adds an
+explicitly versioned opt-in solver for source-owned memory through cuts,
+removal, contact changes and release. New tagged methods also rebuild support
+constraints when an outside-active neighbor is removed; historical untagged
+recordings preserve their prior behavior. Generated independent algebra,
+source-history and alias controls pass. Both first source runs hit their wall
+caps; the second completed all twelve paired comparisons before timing out in
+observer replay. An isolated profile identified repeated occupancy-key encoding
+as a runtime bottleneck; an exact private snapshot reduces that cost while
+preserving canonical public state and the frozen programs, tolerances and caps.
+The subsequent unchanged revision-2 protocol completes in 874.76 seconds:
+all twelve paired runs, three exact observer replays, six exact legacy snapshots,
+22 independently checked systems and fourteen conserved removal events pass.
+Numerical completion remains separate from the failed boundary gates and
+physical/physiological acceptance. Geometry-only
+[exterior preparation](continuum-exterior-coupling.md) now makes the source-owned
+core/exterior partition and four larger-domain node joins explicit before any
+new boundary coupling solve.
+
+The separately frozen [offline exterior-history witness](continuum-exterior-coupling.md)
+now reproduces all 336 complete-20 mm history states through the induced core,
+with independent full-domain/interface force and physical spring-energy checks.
+It completes in 140.40 seconds including verification, within unchanged offline
+ceilings. The inner artificial clamp is replaced relative to that declared
+reference; outer-boundary adequacy still fails. The subsequent
+[complete captured-input qualification](continuum-topology-history.md)
+passes 4,218 full-field steps and exact fresh replay in 449.72 seconds including
+independent verification. All 26 sampled Q1 worlds and all scalar/clock/event
+records pass. This preserves eight removals, release, relaxation and whole
+source costs on the declared larger mesh; actual larger-domain public actions
+and collisions are not re-admitted. Every exterior DOF remains counted, the
+live caps are unchanged, and physical/physiological RL gates remain open.

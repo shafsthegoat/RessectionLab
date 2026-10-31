@@ -226,7 +226,7 @@ def test_bridge_warm_cursor_uses_detached_state_and_verified_view_hash_without_r
         clones = []
         monkeypatch.setattr(SurgicalEngine, 'clone', lambda engine: clones.append(id(engine)) or original_clone(engine))
         result = call({'caseHash': key, 'command': 'seek', 'position': 1, 'expectedStateId': result['view']['stateId']})
-        assert len(hashes) == 2, 'retain expected-state and complete reconstructed-state checks'
+        assert len(hashes) == 3, 'retain expected-state, reconstructed-state and full-case readiness checks'
         assert clones == [], 'a hot cursor must not clone the engine it only reads'
         assert json.dumps(result['view'], sort_keys=True, separators=(',', ':')).encode() == reference[1]
         record = thaw_json(session.cases[key].artifacts)['surgical_toolbox']

@@ -1,0 +1,120 @@
+{
+  "schema": "resectionlab.planar-blade-contact-verification.v2",
+  "role": "GENERATED_NUMERICAL_VERIFICATION_ONLY",
+  "frozenBeforeScoring": true,
+  "scope": "One fixed-orientation rectangular rigid plane; prescribed normal motion; explicit planar exposed source faces; fixed topology; independent fixed tissue supports; small-strain Q1 elastic/one-Maxwell material. No live actions, friction, cutting, CUSA, fitting or physiological validation.",
+  "fixtures": {
+    "blockMm": [
+      4.0,
+      4.0,
+      4.0
+    ],
+    "paddingSourceCells": 1,
+    "meshCellsPerAxis": [
+      2,
+      4,
+      8
+    ],
+    "support": "All three components on the explicitly selected bottom source faces, independent of blade contact",
+    "surface": "Explicit top source faces, in-image void neighbor; rectangular reference footprint clipped exactly to faces",
+    "equilibriumShearPa": 1000.0,
+    "uniformPoissonRatio": 0.0,
+    "partialPoissonRatio": 0.3,
+    "maxwellBranchShearPa": 500.0,
+    "maxwellRelaxationSeconds": 0.5,
+    "uniformFootprintMm": [
+      4.0,
+      4.0
+    ],
+    "partialFootprintMm": [
+      2.0,
+      2.0
+    ],
+    "footprintCenterMm": [
+      2.0,
+      2.0,
+      4.0
+    ],
+    "uniformIndentationMm": 0.04,
+    "partialIndentationMm": 0.02,
+    "schedule": {
+      "rampSeconds": 1.0,
+      "holdSeconds": 1.0,
+      "withdrawSeconds": 1.0,
+      "finalOffsetMm": -0.02
+    },
+    "timeStepsSeconds": [
+      0.1,
+      0.05,
+      0.025
+    ],
+    "surfaceGaussOrders": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "scoredSurfaceGaussOrder": 2,
+    "rotationDegreesXYZ": [
+      23.0,
+      -31.0,
+      17.0
+    ],
+    "rotationTranslationMm": [
+      7.0,
+      -3.0,
+      2.0
+    ],
+    "denseOracle": "Independent dense Q1 assembly and primal constrained solve on the coarsest partial fixture; compare displacement and aggregate contact force, never nonunique point pressure"
+  },
+  "tolerances": {
+    "penetrationMm": 1e-09,
+    "tensileMultiplierN": 1e-10,
+    "equilibriumResidualN": 1e-10,
+    "complementarityNmm": 1e-10,
+    "energyBalanceNmm": 1e-10,
+    "tangentialContactForceN": 1e-12,
+    "analyticalUniformRelative": 1e-07,
+    "denseOracleDisplacementMm": 1e-07,
+    "denseOracleReactionN": 1e-09,
+    "rotationDisplacementMm": 1e-08,
+    "rotationReactionN": 1e-10,
+    "rotationEnergyNmm": 1e-10,
+    "meshFineReactionRelativeChange": 0.25,
+    "meshFineEnergyRelativeChange": 0.25,
+    "surfaceOrder2To4ReactionRelativeChange": 0.1,
+    "surfaceOrder2To4AreaRelativeChange": 0.1,
+    "timeStepFineHoldReactionRelativeChange": 0.02,
+    "timeStepFineWorkRelativeChange": 0.05,
+    "maximumElementGradientNorm": 0.2
+  },
+  "resources": {
+    "maxSourceCells": 512,
+    "maxDofs": 2187,
+    "maxContactPoints": 512,
+    "maxScheduleSteps": 120,
+    "maxDualIterations": 1000,
+    "maxDualFunctionCalls": 5000,
+    "maxStepWallSeconds": 15.0,
+    "maxQualificationWallSeconds": 600.0,
+    "maxFreshProcessPeakMiB": 768.0,
+    "blasThreads": 1
+  },
+  "failurePolicy": "Retain every scored failure and refused configuration. No tolerance/fixture changes in this version. Underintegrated order1 is diagnostic and may refuse continuous penetration. Require all order2 admitted steps to pass equilibrium, positivity, complementarity, full clipped-face corner gap and discrete energy checks. Refuse unsupported bodies even while touching. Sharp-edge peak stress is not a convergence metric.",
+  "clinicalValidation": false,
+  "patientPredictionValidation": false,
+  "physiologicalRL": "hold",
+  "predecessor": {
+    "path": "manifests/experiments/planar-blade-contact-v1.json",
+    "sha256": "5e0536b0c58a1eca38e1fb1096e99f0c8d4509e9580d4c3259b0648d98195dd4",
+    "reason": "Method clarification before any production-kernel scoring; fixtures, tolerances and resource limits unchanged."
+  },
+  "discretization": {
+    "gap": "g = C u - b >= 0 mm; inward normal; positive prescribed offset indents; lambda >= 0 N; K u - C^T lambda = history load",
+    "surface": "Exact reference-rectangle clipping of explicitly selected aligned planar source Q1 faces; Gauss rows plus all four clipped-rectangle vertex inequalities per face. Bilinear Q1 gap extrema occur at these vertices, bounding the complete clipped reference patch.",
+    "forces": "All multipliers are integrated normal forces in N, including zero-integration-weight corner guards. No point-pressure uniqueness or peak-stress convergence claim.",
+    "area": "Reference Gauss area where gap <= declared tolerance; corner guards have zero area weight. Surface order sweep tests integration/area and algebraic consistency over the same vertex-bounded feasible set, not independent force accuracy.",
+    "footprint": "Linearized fixed REFERENCE footprint. Projected deformed/loaded footprint migration is reported, not treated as qualified current-configuration edge geometry. No tangential blade motion or friction.",
+    "enforcement": "Positive-semidefinite dual bound QP with rank-revealing polish and full primal/dual/stationarity/complementarity/energy residual checks; no penalty spring."
+  }
+}

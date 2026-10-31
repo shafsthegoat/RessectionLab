@@ -154,6 +154,16 @@ def test_runtime_changes_and_force_verify_do_not_skip_public_replay(tmp_path, mo
     assert cache.hits == 0 and cache.publications == 2
 
 
+@pytest.mark.parametrize('name', ['surgical_continuum', 'surgical_vascular_graph'])
+def test_opt_in_physics_runtime_replacement_disables_cache_admission(name, monkeypatch):
+    import importlib
+    from resectionlab.surgical_verified_cache import implementation_fingerprint
+    module = importlib.import_module('resectionlab.' + name)
+    assert implementation_fingerprint() is not None
+    monkeypatch.setattr(module, 'tick', lambda *args, **kwargs: None)
+    assert implementation_fingerprint() is None
+
+
 def test_cancellation_never_publishes_a_partial_seal_and_cache_hits_still_check(tmp_path):
     full = engine()
     record = full.snapshot()

@@ -58,15 +58,35 @@ def test_once_only_value_error_from_check_is_never_a_surgical_rejection():
     assert exc.value is failure and encoded(e) == before
 
 
-def test_cancellation_after_finalization_still_withholds_authority(monkeypatch):
+@pytest.mark.parametrize('method', ['step', 'preview'])
+def test_cancellation_after_finalization_still_withholds_authority(monkeypatch, method):
     import resectionlab.surgical_effects as effects
     e = engine(); before = encoded(e); request = _Request('cancel-finalize')
     original = effects.finalize_action
     def finalize(candidate):
         original(candidate); request.cancel()
     monkeypatch.setattr(effects, 'finalize_action', finalize)
-    with pytest.raises(BridgeError) as exc: e.step(action(), check=request.check)
+    with pytest.raises(BridgeError) as exc: getattr(e, method)(action(), check=request.check)
     assert exc.value.code == 'CANCELLED' and encoded(e) == before
+
+
+def test_preview_cancellation_during_view_still_withholds_authority(monkeypatch):
+    e = engine(); request = _Request('cancel-preview-view')
+    e.step(action()); before = encoded(e)
+    history = json.loads(json.dumps(e.history)); original = SurgicalEngine.view
+    calls = []
+
+    def view(candidate, *args, **kwargs):
+        result = original(candidate, *args, **kwargs)
+        calls.append(result['stateId'])
+        request.cancel()
+        return result
+
+    monkeypatch.setattr(SurgicalEngine, 'view', view)
+    with pytest.raises(BridgeError) as exc:
+        e.preview(action(), check=request.check)
+    assert exc.value.code == 'CANCELLED'
+    assert len(calls) == 1 and encoded(e) == before and e.history == history
 
 
 @pytest.mark.parametrize('method', ['restore', 'branch'])

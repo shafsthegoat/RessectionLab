@@ -45,6 +45,8 @@ def _profile(engine):
 
 
 def initialize(engine):
+    from . import surgical_vascular_graph as graph
+    if graph.enabled(engine): return graph.initialize(engine)
     p = _profile(engine)
     if p is None: return None
     validate(p)
@@ -140,6 +142,8 @@ def _recluster(engine):
 
 
 def damage(engine, edges, dt=0., kind='transection'):
+    from . import surgical_vascular_graph as graph
+    if graph.enabled(engine): return graph.damage(engine, edges, dt, kind)
     _positive(dt, 'DT')
     if kind not in ('transection', 'incision', 'ablation', 'drill'): raise ValueError('UNKNOWN_V2_VESSEL_DAMAGE_KIND')
     state = initialize(engine)
@@ -158,6 +162,8 @@ def damage(engine, edges, dt=0., kind='transection'):
 
 
 def contact(engine, cells, dt, force_n, temperature=None):
+    from . import surgical_vascular_graph as graph
+    if graph.enabled(engine): return graph.contact(engine, cells, dt, force_n, temperature)
     dt = _positive(dt, 'DT'); force_n = _positive(force_n, 'FORCE')
     if temperature is not None: _positive(temperature, 'TEMPERATURE')
     state = initialize(engine)
@@ -190,6 +196,8 @@ def contact(engine, cells, dt, force_n, temperature=None):
 
 
 def coagulate(engine, cells, power, dt):
+    from . import surgical_vascular_graph as graph
+    if graph.enabled(engine): return graph.coagulate(engine, cells, power, dt)
     power = _positive(power, 'POWER'); dt = _positive(dt, 'DT')
     state = initialize(engine)
     if state is None: return []
@@ -204,6 +212,10 @@ def coagulate(engine, cells, power, dt):
 
 
 def tick(engine, dt):
+    from . import surgical_vascular_graph as graph
+    if graph.enabled(engine):
+        graph.refresh_compression(engine)
+        return graph.tick(engine, dt)
     dt = _positive(dt, 'DT')
     state = initialize(engine)
     if state is None: return
@@ -258,6 +270,8 @@ def tick(engine, dt):
 
 
 def descriptor(engine):
+    from . import surgical_vascular_graph as graph
+    if graph.enabled(engine): return graph.descriptor(engine)
     p = _profile(engine)
     return {'enabled': p is not None, 'model': MODEL, 'profile': copy.deepcopy(p),
             'patientCalibratedPhysiology': False, 'globalPerfusion': 'unknown',
@@ -270,6 +284,8 @@ def descriptor(engine):
 
 
 def metrics(engine):
+    from . import surgical_vascular_graph as graph
+    if graph.enabled(engine): return graph.metrics(engine)
     state = engine.state.get('vesselsV2')
     if state is None: return {'enabled': False}
     sources = [s for s in engine.state['sources'] if s.get('modelVersion') == 2]

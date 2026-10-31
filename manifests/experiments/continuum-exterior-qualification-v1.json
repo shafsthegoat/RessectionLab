@@ -1,0 +1,98 @@
+{
+  "schema": "resectionlab.continuum-exterior-qualification-protocol.v1",
+  "intent": "Exact fixed8/core20 exterior-history/energy witness against complete20mm equations; no new radius, fit, live engine or physical acceptance.",
+  "sourceRole": "DEVELOPMENT; existing UCSF-PDGM-0007 reference exports only",
+  "sourceArchiveSha256": "0098232cceb946cbc5cccf00ca81b3b8b5c768c726d379fc8e8dbb503cd13127",
+  "geometry": {
+    "core": {
+      "path": "testcases/outputs/simulator-qualification-20261029/continuum-reference-v1/execution-v1/result/domain-8.npz",
+      "sha256": "930d378221d4c1407cdf9362bd7e312eb360ef0486e986bc656511d9b020618f"
+    },
+    "reference": {
+      "path": "testcases/outputs/simulator-qualification-20261029/continuum-reference-v1/execution-v1/result/domain-20.npz",
+      "sha256": "2f336591a89b7705532c17ec87183f493c68a892a888eddf0872490122b683d7"
+    }
+  },
+  "scope": "Induced full20 core topology and outer supports. Zero initial fields, fixed source contacts, proportional Maxwell spectrum, exact original60/276step target schedules. Compare all336 full free displacement/memory states, reactions, actual spring+tissue energy/work/dissipation, instantaneous/cumulative fixed257probe fields. Six predefined full-field before/after exports for independent quadrature/interface/energy checks. No cuts/removal/contact-change/nonzero transfer claims.",
+  "nextGate": "Independent exported full-domain/interface energy equilibrium validation; complete pass reproduces fixed20 reference, not physical20mm adequacy or live native coupling.",
+  "physicalValidationPassed": false,
+  "physiologicalRL": "hold",
+  "partition": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-v1/preparation-v1/source-partition.npz",
+    "sha256": "384e47e474ee7c1c364c296faf966327101347f81b9dc65f4eff994451c3dd01"
+  },
+  "caps": {
+    "wallSeconds": 900,
+    "rssBytes": 3221225472,
+    "outputBytes": 33554432,
+    "numericalThreads": 1,
+    "retries": 0
+  },
+  "forbidden": [
+    "changing source geometry, materials or supports",
+    "changing live engine caps",
+    "new data acquisition or response fitting",
+    "weakening failed radius gates",
+    "physiological RL"
+  ],
+  "bodyForce": "zero",
+  "referenceReport": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-reference-v1/execution-v1/result/report.json",
+    "sha256": "c68678b7b82c11368c965a2753de521870dddc3200867600b6155be9786d24e5"
+  },
+  "loadSchedules": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-reference-v1/execution-v1/result/load-schedules.npz",
+    "sha256": "2e7f36012dbe5d0bc7b2179bdcbe341d2858ca24b9bb2970a5183a272051a0e9"
+  },
+  "referenceHistories": {
+    "short-hold": {
+      "path": "testcases/outputs/simulator-qualification-20261029/continuum-reference-v1/execution-v1/result/short-hold-radius-20.npz",
+      "sha256": "3bd374a33aed4d2954651c7de5060566a0a201ed441998ee961e04cf4d876dd8"
+    },
+    "sustained-hold": {
+      "path": "testcases/outputs/simulator-qualification-20261029/continuum-reference-v1/execution-v1/result/sustained-hold-radius-20.npz",
+      "sha256": "487e3594f59a5546f536da78c64af548b774c53cae61ac12a427117ecc8377e4"
+    }
+  },
+  "branches": [
+    "short-hold",
+    "sustained-hold"
+  ],
+  "stepSeconds": 0.008333333333333333,
+  "sampleSteps": {
+    "short-hold": [
+      1,
+      30,
+      60
+    ],
+    "sustained-hold": [
+      1,
+      60,
+      276
+    ]
+  },
+  "tolerances": {
+    "displacementMm": 1e-09,
+    "memoryMm": 1e-09,
+    "forceN": 1e-10,
+    "energyNmm": 1e-10,
+    "strainSquaredMm3": 1e-09,
+    "cumulativeStrainSquaredMm3S": 1e-09,
+    "stressSquaredPa2Mm3": 0.001,
+    "cumulativeStressSquaredPa2Mm3S": 0.001
+  },
+  "domain": {
+    "maxGradientNorm": 0.2,
+    "maxCenterDisplacementMm": 3.0,
+    "maxReactionN": 0.08
+  },
+  "independentChecker": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-v1/independent-v1/check_source_exports.py",
+    "sha256": "68e049b54508c46aa189337ed00b7c1acb5fd8f1b923f5e1cc9b5ad0e433a355"
+  },
+  "independentCheckerSelfTest": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-v1/independent-v1/source-checker-selftest.json",
+    "sha256": "b4256efea69153146a9447ce62a8c7b443d8d8ad6163e68825484fd62e68cb2f"
+  },
+  "resourceAccounting": "Source worker and subsequent frozen export-only checker run sequentially under one900s workflow wall and32MiB total-output cap; each process group capped3GiB. Checker stage at most60s of remaining wall budget. No automatic retry."
+}

@@ -1,0 +1,20 @@
+{
+  "schema": "resectionlab.continuum-exterior-preparation.v1",
+  "intent": "Geometry-only fixed8/core20 exterior partition, including source-corner connectivity changes. No mechanical response, new radius, fit, history transfer or live-engine change.",
+  "sourceRole": "DEVELOPMENT; existing UCSF-PDGM-0007 reference exports only",
+  "sourceArchiveSha256": "0098232cceb946cbc5cccf00ca81b3b8b5c768c726d379fc8e8dbb503cd13127",
+  "geometry": {
+    "core": {
+      "path": "testcases/outputs/simulator-qualification-20261029/continuum-reference-v1/execution-v1/result/domain-8.npz",
+      "sha256": "930d378221d4c1407cdf9362bd7e312eb360ef0486e986bc656511d9b020618f"
+    },
+    "reference": {
+      "path": "testcases/outputs/simulator-qualification-20261029/continuum-reference-v1/execution-v1/result/domain-20.npz",
+      "sha256": "2f336591a89b7705532c17ec87183f493c68a892a888eddf0872490122b683d7"
+    }
+  },
+  "scope": "Read only cells, shape, nodes, elementNodes, affine and freeDofs. Source-cell/corner ownership is authoritative; coordinates only verify it. Export original-to-reference node joins and the induced core topology. No displacement, basis, compliance or measured response arrays read.",
+  "nextGate": "Separately freeze and qualify exterior Schur/history coupling against complete fixed20 equations, with independent interface-force/energy checks and explicit resource admission. No nonzero source history may be merged silently.",
+  "physicalValidationPassed": false,
+  "physiologicalRL": "hold"
+}

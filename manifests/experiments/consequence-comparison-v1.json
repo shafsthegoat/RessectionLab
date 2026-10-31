@@ -1,0 +1,116 @@
+{
+  "schema": "resectionlab.consequence-comparison-protocol.v1",
+  "intent": "Paired-scenario vector comparison of fully executed source-bound development plans, with exact STOP and no scalar reward or learning",
+  "sourceArchive": "testcases/outputs/simulator-qualification-20261029/continuum-v1/rehearsal-v6/continuum-rehearsal.ressectionlab",
+  "sourceArchiveSha256": "0098232cceb946cbc5cccf00ca81b3b8b5c768c726d379fc8e8dbb503cd13127",
+  "sourceRole": "DEVELOPMENT",
+  "outcomesAlreadyExposed": true,
+  "newIndependentValidationClaim": false,
+  "prefixBranch": "retraction-start",
+  "prefixActions": 15,
+  "alternativeBranches": [
+    "short-hold",
+    "sustained-hold",
+    "stop-at-model-limit"
+  ],
+  "stopBranch": "stop-at-model-limit",
+  "scenarios": [
+    {
+      "id": "nominal",
+      "relaxationTimeScale": 1.0
+    },
+    {
+      "id": "faster-relaxation",
+      "relaxationTimeScale": 0.5
+    },
+    {
+      "id": "slower-relaxation",
+      "relaxationTimeScale": 2.0
+    }
+  ],
+  "uncertaintyMeaning": "Uncalibrated engineering time-constant sensitivity; not measured patient uncertainty, independent patients, probability samples or confidence limits. Material and contact remain frozen.",
+  "policies": [
+    {
+      "id": "counts-and-modeled-mechanics",
+      "basis": "declared_research_task_not_clinical_threshold",
+      "objectives": [
+        "targetRemovedMm3",
+        "nonTargetRemovedMm3",
+        "brainStrainSquaredMm3S",
+        "brainStressSquaredPa2Mm3S",
+        "elapsedSeconds"
+      ],
+      "constraints": [
+        {
+          "metric": "targetRemovedMm3",
+          "scope": "incremental",
+          "operator": "at_least",
+          "value": 8.0
+        },
+        {
+          "metric": "nonTargetRemovedMm3",
+          "scope": "incremental",
+          "operator": "at_most",
+          "value": 0.0
+        }
+      ],
+      "requiredMetrics": []
+    },
+    {
+      "id": "require-vascular-motor-language-observation",
+      "basis": "declared_research_task_not_clinical_threshold",
+      "objectives": [
+        "targetRemovedMm3",
+        "nonTargetRemovedMm3",
+        "brainStrainSquaredMm3S",
+        "brainStressSquaredPa2Mm3S",
+        "elapsedSeconds"
+      ],
+      "constraints": [
+        {
+          "metric": "targetRemovedMm3",
+          "scope": "incremental",
+          "operator": "at_least",
+          "value": 8.0
+        },
+        {
+          "metric": "nonTargetRemovedMm3",
+          "scope": "incremental",
+          "operator": "at_most",
+          "value": 0.0
+        }
+      ],
+      "requiredMetrics": [
+        "supplyDeficitSeconds",
+        "motorEncounterMm3",
+        "languageEncounterMm3",
+        "patientShiftErrorMm"
+      ]
+    }
+  ],
+  "objectives": "Target is incremental source-label removal. Costs and cumulative mechanical exposure include full exposure/setup/history, with exact prefix values also retained.",
+  "dominance": "Matched-world robust Pareto: no worse in every objective in every same-parameter scenario, strictly better somewhere. No weighting, averaging or interval mixing.",
+  "stopMeaning": "Checked release/withdrawal with zero additional tissue removal; fallback may leave resection task unsatisfied and is not clinical clearance.",
+  "caps": {
+    "scenarios": 3,
+    "plansPerScenario": 3,
+    "maximumNativeActionsPerPlan": 40,
+    "wallSeconds": 900,
+    "outputBytes": 33554432
+  },
+  "forbidden": [
+    "RL training",
+    "changing source anatomy, patient roles, geometry or collision guards",
+    "refitting parameters from outcomes",
+    "clinical risk thresholds or probabilities",
+    "ignoring a failed/missing scenario"
+  ],
+  "openGates": [
+    "measured time-dependent response",
+    "withheld acquired anatomy prediction",
+    "patient vascular and functional coverage",
+    "clinical outcome calibration"
+  ],
+  "sourceSceneId": "sha256:01719b5460564e004686c495bd096fe76902b6ac8d38bf2d9a6951e81b883025",
+  "sourceGeometryHash": "sha256:7d615a21b735d35f72a060a24c80785e3c43d44a90e18f36033553e78495182a"
+}

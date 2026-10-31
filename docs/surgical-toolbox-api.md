@@ -39,6 +39,14 @@ type Action = {
 
 `step(action)` returns `accepted`, `partial`, or `rejected`, plus a reason, completed fraction, state identity, and events. Successful transitions include elapsed time, deltas, and metrics. Partial transitions retain completed safe microsteps and report the contact stop. A rejected transition leaves the live state unchanged. `preview(action)` runs on a clone and includes its candidate view.
 
+Native preview consumes one privately prepared transition candidate; public
+`step` publishes that same preparation before computing committed metrics.
+Public `clone()` still detaches state, actions and history. Subclasses and
+patched public methods retain their clone/step dispatch; rejected previews
+render a clean detached source. The bridge reuses its admitted engine only for
+the native pure preview and retains stale-state and result-budget checks.
+See [paired backend measurements](shared-surgical-guards.md#preview-candidate-ownership-2026-10-30).
+
 `place` requires one free-space pose and a withdrawn/inactive instrument. `exchange` requires deactivation, release, and withdrawal. `hold` is specific to the retractor; `grasp` and `extract` are specific to tumor forceps. Exchange, release, deactivate, activate, inspect, and extract cannot also move the instrument. `apply` performs a finite operation; `activate` enables continuing activity and applies exposure during its own duration. An active stationary instrument continues acting while actions on the other slot advance the shared clock. `deactivate` stops that exposure. Administrative actions also use the simulated action duration; they are not wall-clock waits.
 
 Release removes the reversible hold. It does not restore cells that another instrument has removed. Two holds cannot own the same source cells. Extraction requires a held fragment with no remaining nonbreakable declared attachment.
@@ -107,6 +115,55 @@ director records phases, attempts and specific stop reasons outside engine state
 it does not change source labels or bypass tool, shaft or protection checks.
 The engine permits at most 8,192 accepted/partial actions per branch.
 
+Full rehearsal resolves protection from the current engine's saved
+`resectionlab.surgical-protection-contract.v1` contract. There is no implicit
+patient-name, filename or local dataset lookup. Ordinary editable responses
+include `fullCaseReadiness` (`resectionlab.full-case-readiness.v1`): bound case,
+scene and state IDs, `ready | blocked`, available actions, concise blockers with
+optional technical details, a recovery action when it can resolve the blockers,
+and the prospective strict protection contract ID. The desktop checks this
+binding before enabling either start control; the bridge rechecks before every
+slice, including resumed directors. Read-only archive/prefix/frame views do not
+grant execution readiness. Inspection and supported replay remain available.
+
+At an intact checkpoint, **Attach matching protection** opens a JSON picker for
+an explicit `surgical-rl-protection-v1` manifest and its adjacent hashed NPZ.
+The bridge `attachProtection` command takes `protectionPath` and
+`expectedStateId`; desktop paths come from the main-process picker. It checks
+source identity, label/grid digest, exact affine, array integrity, nonempty
+brainstem and declared required coverage, and the unchanged strict displacement
+policy. Existing clearance, required structures and protected cells cannot be
+reduced. A changed binding creates a new branch and preserves the old actions
+and contract. After actions, seek to the initial checkpoint before attaching;
+full rehearsal can continue an action checkpoint only with its identical strict
+contract. Native Save/Open embeds that contract and requires no external
+manifest on reopen. Missing targets or unsupported director grids remain blocked.
+
+The CLI accepts `--protection PATH` for explicit initial attachment, otherwise
+it reuses the saved contract. It also rechecks resumed histories. Reproduce the
+bounded source-backed integration check (fresh output directory required):
+
+```sh
+.venv/bin/python scripts/check_full_case_readiness.py \
+  --output testcases/outputs/full-case-readiness-20261030/source-check-fresh
+.venv/bin/python -m pytest tests/test_full_case_readiness.py \
+  tests/test_full_case_protection_bridge.py tests/test_full_case_rehearsal.py -q \
+  --basetemp=testcases/outputs/full-case-readiness-20261030/pytest-fresh
+READINESS_OUTPUT="$PWD/testcases/outputs/full-case-readiness-20261030/electron-fresh" \
+  desktop/node_modules/.bin/electron desktop/electron/verify-full-case-readiness.cjs
+```
+
+The local check uses existing sub-06, UCSF-PDGM-0004 and sub-13 source cases,
+one action per compatible target case, immutable rejection checks and fresh
+canonical save/reopen replay. Missing local inputs are reported explicitly.
+Generated adversarial tests cover source/label/affine changes and action-boundary
+restrictions. These checks establish software binding, not physiological
+validation; planning and training admission rules are unchanged.
+Local verification on 2026-10-30 passed all three source cases in 23.13 seconds,
+87 focused Python tests, 575 renderer tests, 317 main-process tests and the
+desktop build. Hidden Electron attachment and cold-reopen checks also passed;
+no full episode or physiological verification was performed.
+
 `seekFrame` takes a recorded action `position`, `frameIndex`, and optional
 `branchId`. Frames observe successful engine microsteps at 0.2-second intervals
 plus action start/final boundaries; no pose or tissue interpolation is used.
@@ -122,6 +179,28 @@ Overlapping raw source masks are separate evidence: zero removed owned
 `soft_tissue` cells does not establish zero raw brain-mask membership or clinical
 healthy-tissue injury. Full source annotation and owned target denominators must
 be reported separately.
+
+## Opt-in finite planar blade maneuver
+
+An explicitly bound `planarBladeManeuverV1` scene admits only four ordered native
+actions: `{slot:'left', operation:'bladeManeuver', maneuverPhase, duration}`.
+Phases are `approach`, `indent`, `hold`, `withdraw`, with fixed durations
+0.1/0.2/0.2/0.2 seconds and 0.025-second kernel increments. The declaration binds
+source geometry, material profile, finite pad/shaft, exposed faces and independent
+support faces. Missing declarations and unsupported geometry/history refuse;
+ordinary historical scenes keep their previous actions and behavior.
+
+Each phase uses the existing preview/step transaction and observer microsteps.
+Canonical JSON owns acquisition/release, Q1 displacement, Maxwell memory and
+energy/work ledgers; measured wall time stays outside state/history. The typed
+`view.planarBladeManeuver` carries concise status/next actions, declared rigid
+primitives and source-owned deformed boundary corners. The same data drive the
+desktop pad/shaft and Q1 surface, with a fixed initial optical frame. Source/MPR
+arrays remain original. Unsupported planning/full-case commands stay blocked.
+
+See [supported domain, measured results and reproduction](planar-blade-maneuver.md).
+This integration retains the standalone kernel's failed 5% cycle-work sensitivity
+gates and establishes no physiological or patient-prediction qualification.
 
 ## Current limits
 

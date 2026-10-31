@@ -1,0 +1,81 @@
+{
+  "schema": "resectionlab.vascular-qualification-protocol.v1",
+  "date": "2026-10-29",
+  "model_property": "vascularGraphV1",
+  "model_schema": "resectionlab.vascular-graph.v1",
+  "task": "Generated post-exposure RC and instrument verification; acquired glioma vascular planning remains unsupported",
+  "data_policy": {
+    "downloads": "none",
+    "generated_control": "scripts/qualify_vascular_graph.py:make_case",
+    "acquired_development": "Existing UCSF-PDGM-0007 source remains the acquired tumor task; no vascular imaging or vessel labels have been added",
+    "separate_native_cta": "TOPBRAIN-2025-TopCoW-CTA-001 has partial artery/vein annotations in another source case; no anatomy is transferred",
+    "held_out_sources": "No TRAIN/SELECT/EVAL roles changed and no reserved payloads decoded",
+    "output_root": "testcases/outputs/simulator-qualification-20261029/vascular-v1"
+  },
+  "assumptions": {
+    "storage": "V is pressure-supporting storage in mm3, P=V/C in Pa relative to zero field; zero unstressed volume, not measured total anatomical blood volume",
+    "conductance": "Explicit mm3/(Pa*s) coefficients, never estimated from voxel-face area or radius alone",
+    "compliance": "Explicit mm3/Pa coefficients; no autoregulation, collapse, pulsatility or systemic-volume model",
+    "boundaries": "Declared nonnegative constant gauge pressures with separately integrated signed inflow/outflow; no patient ICP or estimated heart-height correction",
+    "geometry": "Physical graph edges bind one oriented source-neighbor face and explicit vessel source cells; abstract links have no acquired geometry",
+    "compression": "Actual closed bipolar electrode contact with forceN/fullCompressionForceN linear proxy, including contacted wound ports; reversible and uncalibrated",
+    "occlusion": "Persistent edge conductance loss with accumulated power_fraction*s / declared coagulation dose; no wound required",
+    "transection": "Categorical disconnection plus two separately supplied endpoint ports; unmatched source faces refused",
+    "seal": "Only contacted stumps seal; neither coagulation nor compression reconnects a cut edge; an earlier intact occlusion does not automatically seal a future cut",
+    "clot": "Exponential decline of each wound conductance, explicit uncalibrated rate; no field-pressure/tamponade feedback",
+    "regional_endpoints": "Explicit signed supply/drainage interfaces and positive flow targets; integrated missing-flow mm3 and normalized deficit seconds, plus storage change; no oxygen or injury interpretation",
+    "field_handoff": "Pending integrated per-port volumes validated and consumed once before any field mutation; blocked outlets retain already emitted fluid outside vascular storage"
+  },
+  "frozen_controls": [
+    "Analytic one-node storage, wound and boundary integrals",
+    "Analytic closed two-node pressure-difference decay and conserved storage",
+    "Analytic isolated two-stump drainage without duplicated storage",
+    "Analytic boundary reversal inside one interval, checking separate in/out ledgers",
+    "Analytic isolated natural-clot conductance decay",
+    "Intact arterial occlusion without hemorrhage; supply deficit",
+    "Venous occlusion without hemorrhage; distinct drainage deficit and storage rise",
+    "Alternate signed collateral drain with reversed flow and reduced storage accumulation",
+    "Progressive stump sealing, persistent cut continuity loss and distal backbleeding",
+    "Time partitions, blocked/open outlet, duplicate/missing/wrong-duration handoff and zero duration",
+    "Adversarial source IDs, source cells and incomplete/nonfinite source ledgers fail before mutation",
+    "Source-frame invariance, immutable-source refusal and unmapped vessel uncertainty",
+    "Public bipolar geometry compression, release, occlusion, outcome export and canonical replay",
+    "Existing RL reward refuses graph scenes because it omits supply/drainage consequences"
+  ],
+  "maneuver_protocol": {
+    "branches": ["preserve-flow", "occlude-artery", "occlude-vein", "transect-and-seal"],
+    "comparison_horizon_seconds": 30,
+    "resection": "Identical current-tip CUSA revision2 actions at unchanged 2mm3/s, independently counted original source IDs",
+    "independent_checker": "Matrix exponential of separately assembled continuous RC system at every accepted native microstep; wound and boundary integrals; separate eight-point Gaussian integration of regional flow deficits",
+    "replay": "Full ordinary SurgicalEngine replay, same state and source identity; both tools withdrawn at STOP",
+    "viewer": "Hidden native Electron GPU/HUD/state parity, fixed microscope camera, save and fresh-process reopen"
+  },
+  "sources": [
+    {
+      "url": "https://pubmed.ncbi.nlm.nih.gov/11792673/",
+      "study": "Olufsen et al. 2002, cerebral flow regulation",
+      "supports": "Lumped resistance/compliance abstraction; fitted finger pressure and MCA Doppler responses in ten healthy subjects during posture change",
+      "does_not_validate": "Surgical wound coefficients, local tissue delivery or this model's numerical parameters"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3210348/",
+      "study": "Nguyen et al. 2011, rat ascending venular occlusion",
+      "supports": "Measured upstream RBC-speed reductions, flow reversals and collateral dependence",
+      "does_not_validate": "Patient surgical injury or clean occlusion blood loss; induction itself can cause local injury and extravasation"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4141079/",
+      "study": "Blinder et al. 2013, reconstructed mouse cortical networks",
+      "supports": "Topology, edge resistance and boundary conditions affect flow redistribution; radius alone does not identify tissue delivery",
+      "does_not_validate": "Complete human microvascular anatomy, low-flow arrest, wound kinetics or neurological endpoints"
+    }
+  ],
+  "acceptance": {
+    "A": "Admit only individual passed numerical/source/fluid/replay controls; this is not external physiology validation",
+    "B": "HOLD: no independently measured surgical flow/pressure or device response comparison",
+    "C": "HOLD: generated coupon is not acquired anatomical validation; no glioma vascular graph admitted",
+    "D": "HOLD: no paired recorded operative event",
+    "E": "HOLD: no calibrated linked outcomes",
+    "large_scale_RL": "HOLD"
+  }
+}

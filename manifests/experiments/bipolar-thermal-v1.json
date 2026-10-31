@@ -1,0 +1,83 @@
+{
+  "schema": "resectionlab.bipolar-thermal-protocol.v1",
+  "purpose": "Opt-in source-owned heat storage/spread and conservation under actual generic bipolar contact; generated task, no clinical/device calibration",
+  "sources": [
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8235733/",
+      "doi": "10.3390/s21124236",
+      "use": "Measured calf-brain33C scenario: conductivity .553W/m/K, volumetric capacity3.83MJ/m3/K; coefficients held constant as an assumption, no transfer to live human tissue",
+      "license": "CC BY4.0"
+    },
+    {
+      "url": "https://doi.org/10.3233/978-1-60750-706-2-166",
+      "use": "Supports separating nominal setting from delivered heating; no numeric device calibration transferred"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3779387/",
+      "use": "Source-described thermal spread and delayed remote warming; no digitization, figure redistribution or matched-device claim"
+    }
+  ],
+  "sourceDomain": "Generated vascular coupon extended with a connected15cell thermal patch; no new acquired anatomy or patient aliases",
+  "materialScenario": {
+    "volumetricHeatCapacityJPerMm3K": 0.00383,
+    "conductivityWPerMmK": 0.000553,
+    "ambientTemperatureC": 33.0,
+    "maximumTemperatureC": 60.0,
+    "heatWattsPerActivation": 0.02,
+    "retainedPatchBoundary": "insulated",
+    "exposedHeatTransferWPerMm2K": 0.0,
+    "interpretation": "All patch labels use uniform calf-brain-like coefficients as an explicit assumption, including vessel labels; no inferred vessel properties"
+  },
+  "numerics": {
+    "method": "backward Euler finite-volume heat balance with positive symmetric orthogonal-face conductance",
+    "sourceCellCap": 4096,
+    "obliqueNonorthogonal": "reject",
+    "referenceGeometry": "fixed undeformed source cells; cuts and removal change connectivity",
+    "conservationAbsoluteJ": 1e-10,
+    "removedHeat": "export excess energy relative to baseline once, retaining exposure history by source identity",
+    "timestepStudySeconds": [
+      0.1,
+      0.05,
+      0.025
+    ],
+    "temperatureErrors": "report against analytic transient and independent matrix-exponential solution, no clinical temperature tolerance"
+  },
+  "programs": {
+    "no-heat": "unpowered exposure then identical finite CUSA and STOP",
+    "continuous": "2.1s unit activation at closed generic electrodes then identical CUSA and STOP",
+    "pulsed": "1.05s unit activation,6s off,1.05s unit activation then identical CUSA and STOP",
+    "stop-with-residual": "no further resection; withdrawn tools and same40s observation horizon"
+  },
+  "commonHorizonSeconds": 40.0,
+  "fixedRemoval": "same original target cells in all three resecting branches; no non-target removal",
+  "requiredChecks": [
+    "shared physical electrode contacts",
+    "total delivered watts independent of contact voxel count",
+    "two-hand single clock",
+    "warming after deactivation without extra input",
+    "no conduction across cut/removed source face",
+    "outside-patch removal invalidates bath factor",
+    "exported removal heat once",
+    "bath exchange budget",
+    "unknown coverage refusal",
+    "protected indirect heat refusal",
+    "temperature-domain rejection without clipping",
+    "canonical replay and cold reopen",
+    "historical recording equivalence",
+    "desktop values match source state"
+  ],
+  "validation": {
+    "A": "numerical only, result pending",
+    "B": "unvalidated device response",
+    "C": "unsupported generated coupon",
+    "D": "no recorded surgical workflow",
+    "E": "no clinical injury or outcome mapping"
+  },
+  "prohibited": [
+    "temperature-derived coagulation, patency or injury calibration",
+    "patient vascular/functional claims",
+    "RL training",
+    "new scientific dataset acquisition",
+    "changing saved historical semantics"
+  ]
+}

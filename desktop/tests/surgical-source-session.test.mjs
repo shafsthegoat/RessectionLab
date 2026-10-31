@@ -79,6 +79,36 @@ function replayFixture(intercept=()=>undefined,options={}){
 const selection=(frameIndex,position=0,branchId='main')=>({branchId,position,frameIndex});
 const deferred=()=>{let resolve,reject;const promise=new Promise((a,b)=>{resolve=a;reject=b;});return {promise,resolve,reject};};
 
+function readyReceipt(f){
+  const receipt=f.frame(selection(0));delete receipt.playback;
+  receipt.view={...receipt.view,stateId:'editable',scene:{...receipt.view.scene,sceneId:'scene'}};
+  receipt.fullCaseReadiness={schema:'resectionlab.full-case-readiness.v1',caseHash:'case',sceneId:'scene',stateId:'editable',status:'ready',availableActions:['primary'],blockers:[],recovery:null,protectionContractId:'contract'};
+  return receipt;
+}
+test('full-case controller requires admitted readiness and the exact permitted scenario',async()=>{
+  let f;f=replayFixture(q=>q.command==='inspect'?readyReceipt(f):q.command==='fullCase'?{...readyReceipt(f),fullCase:{scenario:'primary',status:'stopped'}}:undefined);
+  try{
+    let c=f.render();assert.equal(c.startFullCase('primary'),false,'no accepted evidence');await f.flush();c=f.render();
+    assert(c.displayPending);assert.equal(c.startFullCase('primary'),false,'receipt must be displayed before it can authorize a run');
+    c=f.admit();assert(c.canStartFullCase('primary'));assert.equal(c.startFullCase('vascular'),false,'scenario must be explicitly offered');
+    assert(c.startFullCase('primary'));c=f.render();await f.flush();c=f.render();
+    assert.equal(f.calls.filter(q=>q.command==='fullCase').length,1);assert.equal(f.calls.at(-1).expectedStateId,'editable');
+    assert.equal(c.startFullCase('primary'),false,'pending anatomy cannot authorize another run');
+  }finally{f.harness.close();}
+});
+test('blocked or stale readiness cannot bypass the controller through start or direct run',async()=>{
+  for(const mutate of [r=>{delete r.fullCaseReadiness;},r=>{r.fullCaseReadiness.status='blocked';},r=>{r.fullCaseReadiness.stateId='stale';},r=>{r.fullCaseReadiness.sceneId='stale';},r=>{r.fullCaseReadiness.caseHash='other';},r=>{r.readOnly=true;}]){
+    let f;f=replayFixture(q=>{if(q.command==='inspect'){const receipt=readyReceipt(f);mutate(receipt);return receipt;}});
+    try{const c=await f.open();assert.equal(c.startFullCase('primary'),false);assert.equal(await c.run('fullCase',{scenario:'primary',maxActions:2}),false);assert.equal(f.calls.length,1,'no unauthorized full-case request reaches IPC');}
+    finally{f.harness.close();}
+  }
+});
+test('canceling protection selection preserves the accepted view and editable state binding',async()=>{
+  let f;f=replayFixture(q=>q.command==='inspect'?readyReceipt(f):q.command==='attachProtection'?null:undefined);
+  try{let c=await f.open();const accepted=c.view;assert.equal(await c.run('attachProtection'),false);c=f.render();assert.equal(c.view,accepted);assert.equal(c.interaction.view,accepted);assert.equal(c.pending,false);assert.equal(f.calls.at(-1).expectedStateId,'editable');}
+  finally{f.harness.close();}
+});
+
 test('automatic replay fetches ahead but admits every exact frame FIFO, with no extra volume until display acknowledgment',async()=>{
   const f=replayFixture();try{
     let c=await f.open();assert(c.startPlayback());
@@ -475,5 +505,65 @@ test('manual prefix commands cannot borrow stale authority after a source render
       assert.equal(await c.run('inspect'),true);assert.equal(f.calls.at(-1).command,'inspect');assert.equal(f.calls.at(-1).caseHash,caseHash);
       f.harness.flushEffects();await f.flush();assert.equal(f.calls.at(-1).command,'inspectArchive');assert.equal(f.calls.at(-1).expectedStateId,undefined);
     }finally{f.harness.close();}
+  }
+});
+
+test('policy reassessment waits for the exact accepted display before reaching the backend',async()=>{
+  let f;f=replayFixture(q=>['inspect','reevaluateConsequences'].includes(q.command)?readyReceipt(f):undefined);
+  const extra={expectedComparisonSeal:'sha256:'+'a'.repeat(64),policyInput:{minimumAdditionalTargetMm3:8,maximumCumulativeNonTargetMm3:4940,requiredMetrics:[],maxBrainStrainSquaredMm3S:null,maxBrainStressSquaredPa2Mm3S:null}};
+  try{
+    f.render();await f.flush();let c=f.render();assert(c.displayPending);
+    assert.equal(await c.run('reevaluateConsequences',extra),false);assert.equal(f.calls.length,1);
+    c=f.admit();assert.equal(await c.run('reevaluateConsequences',extra),true);
+    assert.equal(f.calls.at(-1).expectedStateId,'editable');assert.deepEqual(f.calls.at(-1).policyInput,extra.policyInput);
+    c=f.render();assert(c.displayPending);assert.equal(await c.run('reevaluateConsequences',extra),false);
+    assert.equal(f.calls.filter(q=>q.command==='reevaluateConsequences').length,1);
+  }finally{f.harness.close();}
+});
+
+test('interactive approach preview admits a separate display without replacing editable checkpoint and install stays baseline bound',async()=>{
+  let f,previewView;
+  f=replayFixture(q=>{
+    if(q.command==='inspect')return readyReceipt(f);
+    if(q.command==='previewApproach'){
+      const baseline=readyReceipt(f);previewView={...baseline.view,stateId:'approach-preview'};
+      return {...baseline,approachPreview:{candidateId:q.candidateId,reportSeal:q.expectedPlanSeal,view:previewView,outcome:{status:'accepted',reason:null,completedFraction:1,events:[]}}};
+    }
+  });
+  try{
+    f.render();await f.flush();let c=f.render();
+    assert.equal(await c.run('generateApproaches',{constraints:{}}),false,'unadmitted anatomy cannot authorize approach generation');
+    assert.equal(f.calls.length,1);
+    c=f.admit();const baseline=c.view;
+    assert(await c.run('previewApproach',{candidateId:'route-a',expectedPlanSeal:'seal-a'}));c=f.render();
+    assert.equal(c.view,baseline);assert.equal(c.result.view,baseline);assert.equal(c.interaction.preview,previewView);assert.equal(c.preview,null,'preview awaits display admission');assert.equal(c.approachPreview,null);
+    const callCount=f.calls.length;assert.equal(await c.run('applyApproach',{candidateId:'route-a',expectedPlanSeal:'seal-a'}),false,'install awaits exact preview admission');assert.equal(f.calls.length,callCount);
+    c.interaction.onDisplayReady(previewView);c=f.render();assert.equal(c.preview,previewView);assert.equal(c.view,baseline);assert.equal(c.approachPreview.candidateId,'route-a');
+    assert(await c.run('applyApproach',{candidateId:'route-a',expectedPlanSeal:'seal-a'}));
+    assert.equal(f.calls.at(-1).expectedStateId,'editable','install is bound to committed checkpoint, never preview state');
+    assert.equal(f.calls.at(-1).candidateId,'route-a');assert.equal(f.calls.at(-1).expectedPlanSeal,'seal-a');
+  }finally{f.harness.close();}
+});
+test('interactive route overlays disappear during a new source render before passive cleanup',async()=>{
+  let f;f=replayFixture(q=>q.command==='inspect'?readyReceipt(f):undefined);
+  try{
+    let c=await f.open();const constraints={target:{centerMm:[0,0,0],radiusMm:1},entry:{centerMm:[0,0,1],radiusMm:1},tool:{instrument:'cusa',radiusMm:1},requiredEvidence:[],candidateCount:3,nonTargetClearanceMm:0};
+    const overlay={binding:JSON.stringify(['case','scene','editable','main',0]),constraints,routes:[],selectedId:null,limitingStructures:[]};
+    c.setPlanningOverlay(overlay);c=f.render();assert.equal(c.interaction.planningOverlay,overlay);
+    c=f.harness.render({...f.source},f.api,{passive:false});assert.equal(c.view,null);assert.equal(c.interaction.planningOverlay,undefined);
+  }finally{f.harness.close();}
+});
+
+test('approach preview route, seal and source substitutions fail before display admission',async()=>{
+  for(const mutate of [r=>r.approachPreview.candidateId='stale',r=>r.approachPreview.reportSeal='stale',r=>r.branchId='other',r=>r.caseHash='other',r=>r.view={...r.view,stateId:'other'},r=>r.approachPreview.view={...r.approachPreview.view,scene:{...r.view.scene,sceneId:'other'}},r=>r.approachPreview.outcome.status='rejected']){
+    let f;f=replayFixture(q=>{
+      if(q.command==='inspect')return readyReceipt(f);
+      if(q.command==='previewApproach'){
+        const r=readyReceipt(f);r.approachPreview={candidateId:'route-a',reportSeal:'seal-a',view:{...r.view,stateId:'preview'},outcome:{status:'accepted',reason:null,completedFraction:1,events:[]}};
+        mutate(r);return r;
+      }
+    });
+    try{let c=await f.open();const baseline=c.view;assert.equal(await c.run('previewApproach',{candidateId:'route-a',expectedPlanSeal:'seal-a'}),false);c=f.render();assert.equal(c.view,baseline);assert.equal(c.preview,null);assert.equal(c.approachPreview,null);assert.match(c.error,/selected route or accepted source checkpoint/);}
+    finally{f.harness.close();}
   }
 });

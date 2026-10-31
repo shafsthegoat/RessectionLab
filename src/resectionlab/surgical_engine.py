@@ -13,6 +13,7 @@ import hashlib
 import json
 import math
 import itertools
+from array import array
 from itertools import repeat as _strict_int_repeat
 from operator import is_ as _strict_int_is
 import numpy as np
@@ -104,7 +105,6 @@ def _owned_digest(value):
     semantic_digest's validation/conversion path. No mutable copy escapes.
     """
     pending, seen = [value], set()
-    atomic = (str, int, float, bool, type(None))
     while pending:
         current = pending.pop()
         if id(current) in seen:
@@ -123,13 +123,41 @@ def _owned_digest(value):
             child_kind = type(item)
             if child_kind is dict or child_kind is list or child_kind is tuple:
                 pending.append(item)
-            elif child_kind not in atomic:
+            elif not (child_kind is float or child_kind is int or child_kind is str or
+                      child_kind is bool or child_kind is type(None)):
                 return semantic_digest(value)
     try:
         payload = json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False)
     except (TypeError, ValueError):
         return semantic_digest(value)
     return 'sha256:' + hashlib.sha256(payload.encode('utf-8')).hexdigest()
+
+
+def _copy_atomic_type(kind):
+    # Membership/equality would dispatch an unusual metaclass __eq__.
+    # Only these exact built-in scalar types may bypass deepcopy.
+    return kind is float or kind is int or kind is str or kind is bool or kind is type(None)
+
+
+def _displacement_snapshot(field):
+    """Exact private cache identity for built-in finite float triples.
+
+    A fresh sorted-key/IEEE-byte snapshot detects public in-place edits and
+    preserves signed zero without repeatedly formatting the displacement map
+    as JSON. Unusual containers/leaves retain the canonical validation path.
+    This identity never replaces a public state digest or serialized value.
+    """
+    if type(field) is not dict or not all(type(key) is str for key in field):
+        return None
+    keys = tuple(sorted(field))
+    rows = [field[key] for key in keys]
+    if not all(type(row) is list and len(row) == 3 and type(row[0]) is float and
+               type(row[1]) is float and type(row[2]) is float for row in rows):
+        return None
+    values = array('d', itertools.chain.from_iterable(rows))
+    if values.itemsize != 8 or not np.isfinite(np.frombuffer(values, dtype=np.float64)).all():
+        return None
+    return keys, values.tobytes()
 
 
 def _copy_engine_data(value, memo=None):
@@ -141,23 +169,33 @@ def _copy_engine_data(value, memo=None):
     Subclasses and other values keep ordinary deepcopy behavior.
     """
     memo = {} if memo is None else memo
-    atomic = (str, int, float, bool, type(None))
     kind = type(value)
-    if kind in atomic:
+    if _copy_atomic_type(kind):
         return value
     if id(value) in memo:
         return memo[id(value)]
     if kind is list:
-        if all(type(item) in atomic for item in value):
+        if all(_copy_atomic_type(type(item)) for item in value):
             result = value.copy()
             memo[id(value)] = result
+            return result
+        if (len(value)==8 and all(type(row) is list and len(row)==3 and
+                type(row[0]) is float and type(row[1]) is float and
+                type(row[2]) is float for row in value)):
+            # Source-cell corner fields are eight scalar triples. Copy rows in
+            # C, while preserving every pre-existing/cross-field memo alias.
+            result=[];memo[id(value)]=result
+            for row in value:
+                key=id(row)
+                if key not in memo:memo[key]=row.copy()
+                result.append(memo[key])
             return result
         result = []
         memo[id(value)] = result
         result.extend(_copy_engine_data(item, memo) for item in value)
         return result
-    if kind is dict and all(type(key) in atomic for key in value):
-        if all(type(item) in atomic for item in value.values()):
+    if kind is dict and all(_copy_atomic_type(type(key)) for key in value):
+        if all(_copy_atomic_type(type(item)) for item in value.values()):
             result = value.copy()
             memo[id(value)] = result
             return result
@@ -200,9 +238,9 @@ def _microstep_checkpoint(state):
 
     Surgical state is a JSON data graph with built-in scalar leaves. Exact
     flat removed/debris containers and three scalar drilling maps can be copied
-    in C and seeded into the deepcopy memo; all other data, including unusual
-    nested/subclass values, still uses ordinary deepcopy. Fresh guards also
-    handle public state edits.
+    in C and seeded into the deepcopy memo. Continuum/kinematic JSON fields use
+    the same alias-preserving copier as engine clones; unusual nested/subclass
+    values retain ordinary deepcopy. Fresh guards also handle public state edits.
     This preserves data-graph semantics, not adversarial custom __deepcopy__
     methods whose behavior depends on when another object enters the memo.
 
@@ -233,6 +271,14 @@ def _microstep_checkpoint(state):
             if type(value) is dict and all(type(key) is str and type(amount) in (int, float)
                                            for key, amount in value.items()):
                 memo[id(value)] = value.copy()
+    # Corner fields contain thousands of immutable scalar leaves. Recursing
+    # through deepcopy for every float dominated rollback during retraction.
+    # Use one shared memo across all fields so public cross-field aliases and
+    # cycles retain exactly the existing data-graph semantics.
+    for name in ('brainContinuumV1', 'deformation', 'deformationModel'):
+        value = state.get(name)
+        if type(value) is dict and id(value) not in memo:
+            _copy_engine_data(value, memo)
     return copy.deepcopy(state, memo)
 
 
@@ -334,9 +380,15 @@ class SurgicalEngine:
                 (_try_removed_native(removed_ids) is True or
                  all(map(_strict_int_is, map(type, removed_ids), _strict_int_repeat(int))))
                 if type(removed_ids) is list else all(type(cell) is int for cell in removed_ids)):
-            key = (tuple(removed_ids), semantic_digest(changes))
+            displacement = _displacement_snapshot(changes['deformation']) if 'deformation' in changes else None
+            if displacement is None:
+                change_key = _owned_digest(changes)
+            else:
+                change_key = (_owned_digest({name: value for name, value in changes.items()
+                                             if name != 'deformation'}), displacement)
+            key = (tuple(removed_ids), change_key)
         else:
-            key = semantic_digest({'removed': removed_ids, **changes})
+            key = _owned_digest({'removed': removed_ids, **changes})
         if self._occupancy_cache is not None and self._occupancy_cache[0] == key:
             return self._occupancy_cache[1]
         from .surgical_occupancy import MaterialOccupancy
@@ -395,8 +447,22 @@ class SurgicalEngine:
 
     def preview(self, action, *, check=None, include_view=True, include_history=True):
         if check is not None: check()
-        candidate = self._transition_clone()
-        result = candidate.step(action) if check is None else candidate.step(action, check=check)
+        if (type(self) is SurgicalEngine and all(
+                name not in self.__dict__ and getattr(SurgicalEngine, name) is method
+                for name, method in _PREVIEW_NATIVE_METHODS)):
+            # Preparation already owns one detached candidate. Publishing it to
+            # another disposable engine would copy its state a second time.
+            candidate, result = self._prepare_step(action, check=check)
+            if candidate is not None:
+                result = {**result, 'metrics': candidate.metrics()}
+            elif include_view:
+                # Validation/execution can mutate a rejected candidate. Render
+                # a clean detached source, as the public step path always did.
+                candidate = self._transition_clone()
+        else:
+            # Observers and extensions retain their clone and public step hooks.
+            candidate = self._transition_clone()
+            result = candidate.step(action) if check is None else candidate.step(action, check=check)
         view = candidate.view(_state_id=result['stateId'], include_history=include_history) if include_view else None
         if check is not None: check()
         return {**result, 'preview': True, **({'view': view} if include_view else {})}
@@ -420,11 +486,13 @@ class SurgicalEngine:
         return result
 
     def _validate(self, action):
-        if not isinstance(action, dict) or set(action) - {'slot', 'operation', 'instrument', 'pose', 'path', 'parameters', 'duration', 'position', 'mechanicsRevision'}:
+        if not isinstance(action, dict) or set(action) - {'slot', 'operation', 'instrument', 'pose', 'path', 'parameters', 'duration', 'position', 'mechanicsRevision', 'maneuverPhase'}:
             raise ValueError('Unsupported action fields')
         if action.get('slot') not in self.state['slots']: raise ValueError('Choose left or right instrument slot')
-        if action.get('operation') not in {'place', 'move', 'activate', 'deactivate', 'apply', 'hold', 'grasp', 'release', 'exchange', 'withdraw', 'extract', 'inspect', 'configure', 'position'}:
+        if action.get('operation') not in {'place', 'move', 'activate', 'deactivate', 'apply', 'hold', 'grasp', 'release', 'exchange', 'withdraw', 'extract', 'inspect', 'configure', 'position', 'bladeManeuver'}:
             raise ValueError('Unsupported instrument operation')
+        if 'maneuverPhase' in action and action.get('operation') != 'bladeManeuver':
+            raise ValueError('PLANAR_MANEUVER_PHASE_REQUIRES_MANEUVER_ACTION')
         duration = float(action.get('duration', 1.))
         if not math.isfinite(duration) or not 0 < duration <= 30: raise ValueError('Duration must be in (0, 30] seconds')
         if len(self.actions) >= MAX_STEPS: raise ValueError('Action limit reached; save and start a new episode')
@@ -461,6 +529,19 @@ class SurgicalEngine:
         return duration, points
 
     def step(self, action, *, check=None):
+        candidate, result = self._prepare_step(action, check=check)
+        if candidate is None:
+            return result
+        self.__dict__.update(candidate.__dict__)
+        # Keep committed-step metrics after publication, including subclass hooks.
+        return {**result, 'metrics': self.metrics()}
+
+    def _prepare_step(self, action, *, check=None):
+        """Evaluate one transaction without publishing its detached candidate.
+
+        A rejected candidate is discarded. Only public step publishes a valid
+        candidate; preview consumes it without changing the authoritative owner.
+        """
         if check is not None: check()
         before = self.state_id
         after = before
@@ -469,12 +550,15 @@ class SurgicalEngine:
         candidate = self._transition_clone()
         try:
             duration, points = candidate._validate(action)
+            candidate._transition_check=(lambda:_checked_operation(check)) if check is not None else None
             result = candidate._execute(copy.deepcopy(action), duration, points, check=check)
         except _OperationCheckFailed as interrupted:
             raise interrupted.cause from None
         except (ValueError, KeyError, TypeError, OverflowError) as error:
             if check is not None: check()
-            return {'status': 'rejected', 'reason': str(error), 'reasonCode': str(error).split(':')[0] if str(error).split(':')[0].isupper() else 'INVALID_ACTION', 'completedFraction': 0., 'elapsedSeconds': 0., 'stateId': before, 'events': [], 'deltas': {}, 'metrics': self.metrics()}
+            return None, {'status': 'rejected', 'reason': str(error), 'reasonCode': str(error).split(':')[0] if str(error).split(':')[0].isupper() else 'INVALID_ACTION', 'completedFraction': 0., 'elapsedSeconds': 0., 'stateId': before, 'events': [], 'deltas': {}, 'metrics': self.metrics()}
+        finally:
+            candidate.__dict__.pop('_transition_check',None)
         if check is not None: check()
         result['reasonCode'] = result['reason'].split(':')[0] if result.get('reason') else None
         result.setdefault('elapsedSeconds', candidate.state['elapsedSeconds'] - before_time if result['status'] != 'rejected' else 0.)
@@ -492,10 +576,15 @@ class SurgicalEngine:
             candidate.history.append({'action': copy.deepcopy(action), 'stateBefore': before,
                                       'stateAfter': after, **_copy_engine_data(result)})
             if check is not None: check()
-            self.__dict__.update(candidate.__dict__)
-        return {**result, 'stateId': after, 'metrics': self.metrics()}
+            return candidate, {**result, 'stateId': after}
+        return None, {**result, 'stateId': after, 'metrics': self.metrics()}
 
     def _execute(self, action, duration, points, *, check=None):
+        if 'planarBladeManeuverV1' in self.scene.properties or action['operation'] == 'bladeManeuver':
+            from .surgical_planar_maneuver import PROPERTY, execute
+            if PROPERTY not in self.scene.properties:
+                raise ValueError('PLANAR_MANEUVER_EXPLICIT_DECLARATION_REQUIRED')
+            return execute(self, action, check=check)
         key, op = action['slot'], action['operation']
         slot = self.state['slots'][key]
         previous_jaw = self.parameters(slot)['jawOpeningMm']
@@ -572,6 +661,11 @@ class SurgicalEngine:
             if slot['grip'] or key in self.state['holds']: raise ValueError('RELEASE_BEFORE_WITHDRAWAL')
             slot['active'] = False
         active = op in ('apply', 'hold', 'grasp', 'extract', 'activate') or slot['active'] and op == 'move' or op == 'inspect' and tool['effect'] == 'probe'
+        # The explicit thermal model shares one physical clock: a persistent
+        # activation continues during inspection regardless of the selected hand.
+        # Historical recordings retain their original scheduling semantics.
+        if 'bipolarThermalV1' in self.scene.properties and op == 'inspect' and slot['active']:
+            active = True
         poses = [{'position': slot['position'], 'quaternion': slot['quaternion']}, *points]
         if len(poses) == 1: poses.append(poses[0])
         segments = []
@@ -666,6 +760,8 @@ class SurgicalEngine:
 
     def _protected_exposure(self):
         fields = {'thermal': self.state['thermal'],
+            'bipolarTemperatureRise': self.state.get('bipolarThermalV1', {}).get('temperatureRiseK', {}),
+            'bipolarTemperatureIntegral': self.state.get('bipolarThermalV1', {}).get('excessTemperatureIntegralKSeconds', {}),
             'boneTemperature': self.state.get('drillingV2', {}).get('temperatureC', {}),
             'boneDose': self.state.get('drillingV2', {}).get('thermalDoseCSeconds', {})}
         return {(name, cell): value for name, values in fields.items() for cell, value in values.items() if int(cell) in self._protected_ids}
@@ -695,12 +791,21 @@ class SurgicalEngine:
         for face in self.state.get('vesselsV2', {}).get('faces', {}).values():
             if face['damage'] > 0 and self._protected_ids.intersection(face['cells']):
                 raise ValueError('PROTECTED_STRUCTURE: indirect vessel injury is blocked')
+        graph_state = self.state.get('vascularGraphV1')
+        if graph_state:
+            for edge in self.scene.properties['vascularGraphV1']['edges']:
+                row = graph_state['edges'][edge['id']]
+                if (row['cutFace'] is not None or row['compressionFraction'] > 0 or row['occlusionFraction'] > 0) and self._protected_ids.intersection(edge['sourceCells']):
+                    raise ValueError('PROTECTED_STRUCTURE: indirect vascular conductance change is blocked')
         # A coupled patch can enter a parked instrument after the tool sweep.
         positions = self._positions()
         if positions is not None: self._guard_sweep(key, p, q, positions)
         return events
 
     def _physical_substep(self, key, op, p, q, active, dt):
+        if op == 'bladeManeuver':
+            from .surgical_planar_maneuver import advance
+            return advance(self, key, p, q, dt)
         from .surgical_motion import envelopes, swept_envelopes, pair_conflict
         slot = self.state['slots'][key]; tool = TOOLS[slot['instrument']]; params = self.parameters(slot)
         axis = rotation(q).apply([0, 0, 1]); previous = finite(slot['position'], 3)
@@ -708,6 +813,8 @@ class SurgicalEngine:
         if v2:
             from . import surgical_drilling_v2 as drill
             drill.begin_step(self)
+            from . import surgical_bipolar_thermal as bipolar_heat
+            bipolar_heat.begin_step(self)
             if active and slot['instrument'] == 'cranial_drill':
                 p, _ = drill.contact_limited_pose(self, previous, p, params['radiusMm'])
         cusa_v3 = slot['instrument'] == 'cusa' and cusa_profile(self) is not None
@@ -828,6 +935,7 @@ class SurgicalEngine:
                         if part == 'shaft' and set(self.touched(a, b, radius))-own_held:
                             raise ValueError('POST_DEFORMATION_SHAFT_COLLISION:'+shaft_key)
             drill.end_step(self, dt)
+            bipolar_heat.end_step(self, dt)
             vessel.tick(self, dt)
         tick_fields(self, dt)
         return events
@@ -914,6 +1022,10 @@ class SurgicalEngine:
                 'unknowns': ['unmapped anatomy', 'uncalibrated mechanics', 'clinical outcomes unknown']}
 
     def view(self, *, _state_id=None, include_history=True, _omit_fields=()):
+        planar_view = {}
+        if 'planarBladeManeuverV1' in self.scene.properties:
+            from .surgical_planar_maneuver import view as describe_planar_maneuver
+            planar_view['planarBladeManeuver'] = describe_planar_maneuver(self)
         omitted = frozenset(_omit_fields)
         if omitted - self._view_omit_fields:
             raise ValueError('Unsupported display field omission')
@@ -937,7 +1049,10 @@ class SurgicalEngine:
                 **{name: _copy_engine_data(self.state.get(name)) for name in ('cutEdges', 'separatedAttachments',
                     'transectedEdges', 'flapComponents', 'debris', 'sources', 'meshCutEdges', 'meshSeams',
                     'vesselConnections', 'vesselWounds', 'deformation', 'deformationModel', 'drillingV2', 'vesselsV2') if name not in omitted},
-                **({'cusaV3': copy.deepcopy(self.state['cusaV3'])} if 'cusaV3' in self.state else {})}
+                **({'vascularGraphV1': copy.deepcopy(self.state['vascularGraphV1'])} if 'vascularGraphV1' in self.state else {}),
+                **({'bipolarThermalV1': copy.deepcopy(self.state['bipolarThermalV1'])} if 'bipolarThermalV1' in self.state else {}),
+                **({'cusaV3': copy.deepcopy(self.state['cusaV3'])} if 'cusaV3' in self.state else {}),
+                **planar_view}
 
     def snapshot(self):
         return {'schema': SCHEMA, 'sceneId': self.scene.identity, 'actions': copy.deepcopy(self.actions), 'stateId': self.state_id,
@@ -1024,3 +1139,8 @@ _DRILL_CONTACT_QUERY_ORIGINALS = (
               ({'shape': GeometryScene.shape.fget}, ('shape',)),
               (vars(_DrillContactOccupancy), ('material_ids', '__getitem__')))
           for name in names for function in (namespace[name],)))
+
+# Definition-time identities keep patched/instance methods on the public hook
+# path, as well as every subclass. No public clone or extension contract changes.
+_PREVIEW_NATIVE_METHODS = tuple((name, getattr(SurgicalEngine, name)) for name in
+    ('step', 'clone', '_transition_clone', 'metrics', 'view'))

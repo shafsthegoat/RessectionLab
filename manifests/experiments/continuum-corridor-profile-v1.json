@@ -1,0 +1,273 @@
+{
+  "schema": "resectionlab.continuum-corridor-profile-protocol.v1",
+  "intent": "Measure one conservative root corridor preparation, one actual current-state CUSA microtick, and one explicitly hypothetical current-owner removal with exact retained exterior proof. No complete pilot or public-action admission.",
+  "sourceRole": "DEVELOPMENT UCSF-PDGM-0007; existing before-stage2 short-hold discrepancy seed; native CUSA ledger is an explicit initial condition",
+  "sourceSceneId": "sha256:25e7349ad48ee77244b05fc6768e09bdc049e04733b9f362e14ae0c87a743942",
+  "geometry": {
+    "core": {
+      "path": "testcases/outputs/simulator-qualification-20261029/continuum-reference-v1/execution-v1/result/domain-8.npz",
+      "sha256": "930d378221d4c1407cdf9362bd7e312eb360ef0486e986bc656511d9b020618f"
+    },
+    "reference": {
+      "path": "testcases/outputs/simulator-qualification-20261029/continuum-reference-v1/execution-v1/result/domain-20.npz",
+      "sha256": "2f336591a89b7705532c17ec87183f493c68a892a888eddf0872490122b683d7"
+    }
+  },
+  "partition": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-v1/preparation-v1/source-partition.npz",
+    "sha256": "384e47e474ee7c1c364c296faf966327101347f81b9dc65f4eff994451c3dd01"
+  },
+  "nativeCase": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-history-v1/execution-v3-snapshot/result/continuum-history.ressectionlab",
+    "sha256": "cbf03bfc8f7465c873ce2b660802516f13405d29eedd229342b13ec3cbf767a8"
+  },
+  "fullProgramReport": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/full-programs-v1/result/report.json",
+    "sha256": "280780aae906a5aa9c92daf9d8d064f77ab1b3836667a4abf774e15a77c116c5"
+  },
+  "preEffectCaptureReport": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/native-pre-effect-capture-v1/result/report.json",
+    "sha256": "31e5228ec7a5ed396350666e832d786b292e81ec55534ae991e941bde4c2a2a5"
+  },
+  "preEffectSurveyReport": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/pre-effect-survey-v1/result/report.json",
+    "sha256": "314a574c2e189fd4d9011dd343f50c370e3284ab4751b24bd765ed4823dd9cfe"
+  },
+  "nativeInput": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/native-capture-v1/result/short-hold-inputs.json.gz",
+    "sha256": "5945e7b795fffe9846fd8392822ea5eeafb3aeb9f245ed83989e9a33b72bface"
+  },
+  "commonActions": 15,
+  "seed": {
+    "branch": "short-hold",
+    "coupledStep": 853
+  },
+  "stepSeconds": 0.008333333333333333,
+  "tickSeconds": 0.1,
+  "cusaTicks": 7,
+  "relaxTicks": 2,
+  "commands": [
+    {
+      "slot": "right",
+      "operation": "apply",
+      "effectiveActive": true,
+      "durationSeconds": 0.1,
+      "pose": {
+        "position": [
+          -90.0,
+          118.0,
+          61.93954425269988
+        ],
+        "quaternion": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "slot": "right",
+      "operation": "apply",
+      "effectiveActive": true,
+      "durationSeconds": 0.1,
+      "pose": {
+        "position": [
+          -90.0,
+          118.0,
+          61.93954425269988
+        ],
+        "quaternion": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "slot": "right",
+      "operation": "apply",
+      "effectiveActive": true,
+      "durationSeconds": 0.1,
+      "pose": {
+        "position": [
+          -90.0,
+          118.0,
+          61.93954425269988
+        ],
+        "quaternion": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "slot": "right",
+      "operation": "apply",
+      "effectiveActive": true,
+      "durationSeconds": 0.1,
+      "pose": {
+        "position": [
+          -90.0,
+          118.0,
+          61.93954425269988
+        ],
+        "quaternion": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "slot": "right",
+      "operation": "apply",
+      "effectiveActive": true,
+      "durationSeconds": 0.1,
+      "pose": {
+        "position": [
+          -90.0,
+          118.0,
+          61.93954425269988
+        ],
+        "quaternion": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "slot": "right",
+      "operation": "apply",
+      "effectiveActive": true,
+      "durationSeconds": 0.1,
+      "pose": {
+        "position": [
+          -90.0,
+          118.0,
+          61.93954425269988
+        ],
+        "quaternion": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "slot": "right",
+      "operation": "apply",
+      "effectiveActive": true,
+      "durationSeconds": 0.1,
+      "pose": {
+        "position": [
+          -90.0,
+          118.0,
+          61.93954425269988
+        ],
+        "quaternion": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    {
+      "slot": "left",
+      "operation": "release",
+      "effectiveActive": false,
+      "durationSeconds": 0.1,
+      "pose": "current"
+    },
+    {
+      "slot": "right",
+      "operation": "inspect",
+      "effectiveActive": false,
+      "durationSeconds": 0.1,
+      "pose": "current"
+    },
+    {
+      "slot": "right",
+      "operation": "inspect",
+      "effectiveActive": false,
+      "durationSeconds": 0.1,
+      "pose": "current"
+    }
+  ],
+  "maximumNewRemovals": 2,
+  "limits": {
+    "forceN": 1e-10,
+    "energyNmm": 1e-10,
+    "balanceNmm": 1e-08,
+    "maxGradientNorm": 0.2,
+    "maxCenterDisplacementMm": 3.0,
+    "maxReactionN": 0.08
+  },
+  "tolerances": {
+    "displacementMm": 1e-09
+  },
+  "caps": {
+    "wallSeconds": 90,
+    "rssBytes": 3221225472,
+    "outputBytes": 8388608,
+    "numericalThreads": 1,
+    "retries": 0
+  },
+  "resourceAccounting": "All full-source free/total DOFs, materials and history count. Root core includes every selected in-domain corridor element corner plus all spring stencils. Full rollback checkpoints, shared exterior factor/correction, current core/Schur factors and certificate workspaces are charged. Exact coefficient/lineage proof is required at the hypothetical update; fresh fallback is disabled. Existing live caps remain unchanged.",
+  "physicalValidationPassed": false,
+  "largerDomainPublicActionsAdmitted": false,
+  "physiologicalRL": "hold",
+  "largeScaleRL": "hold",
+  "newAcquiredDatasetBytes": 0,
+  "trainingUpdates": 0,
+  "outputPolicy": "Only partition arrays, one committed last-BE checkpoint and its physical geometry, and one separate hypothetical transfer geometry/history. Independent geometry/field/transfer/block-structure checker. No second fresh replay, original20mm trajectory, live caps or physiological admission.",
+  "scope": "All physical20mm DOFs/materials/supports/history retained. Root I from all in-domain source centers in r+U+2H+1e-9 of initial-to-repeated-absolute-request segment, plus all spring stencils. U=3mm must hold before every query. Outside-domain removals still refuse. Geometric containment never substitutes for exact EE/IE proof. Future masks are never inputs to partition selection.",
+  "algebraicCorePolicy": "conservative-corridor-retained",
+  "rootCoreFreeDofsSha256": "257a0dd7a5072d354b4ecf80838edf5665c1f70080c5a00b23b57765653906f1",
+  "workerWallSeconds": 80,
+  "checkerWallSeconds": 10,
+  "independentQuadrature": {
+    "path": "scripts/continuum_quadrature.py",
+    "sha256": "150ce4ca6f330329a3d5076660a84ad2fe11140ac6d7468628917a316bad8d47"
+  },
+  "corridorSourceIdsSha256": "e1f76e788db376d356a3cb6c7b234eddde67a35cb3933dc8fb8ddc05cab822ed",
+  "qualifiedPilotReport": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/closed-loop-pilot-v2/result/report.json",
+    "sha256": "cb923281a0e9c5f2f53e0f34f46b99b582621afdc59126a084b0542c60834648"
+  },
+  "qualifiedPilotAcceptance": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/closed-loop-pilot-v2/acceptance.json",
+    "sha256": "80d1ad79aa61d0109809db1b1efb6436352ed81c7e8dc37f8f8024cb8267339a"
+  },
+  "independentChecker": {
+    "path": "scripts/check_continuum_corridor_profile.py",
+    "sha256": "01f36b66fef03dbd55a378c07f2210a94ab2f223886f35a4bc48ca4710e19584"
+  },
+  "quadratureChecker": {
+    "path": "scripts/check_continuum_closed_loop.py",
+    "sha256": "7fe283fb27b786236c6bef62b2fe544783853081cb76cf611f3a01cbfa986e12"
+  },
+  "completePilot": false,
+  "geometryPreflight": {
+    "path": "testcases/outputs/simulator-qualification-20261029/continuum-exterior-events-v1/corridor-preflight-v1/report.json",
+    "sha256": "51a07f3eca8fd9b7942749d1dd0e8257d55ac4fec76479bac4a0c67c4da2748a"
+  },
+  "profileActualMicroticks": 1,
+  "profileActualFixedSteps": 12,
+  "prospectivePilot": {
+    "physicalMicroticks": 10,
+    "fixedSteps": 120,
+    "freshPasses": 2,
+    "minimumNewRemovals": 1,
+    "maximumNewRemovals": 2,
+    "scope": "Cost estimate only; this profile does not execute or qualify the complete prospective pilot."
+  }
+}

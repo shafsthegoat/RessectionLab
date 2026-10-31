@@ -277,6 +277,8 @@ def apply_effect(engine, key, op, cells, p, q, dt):
         state['fluidAddedMm3'] += budget
         return [{'kind': 'irrigation', 'volumeMm3': budget, 'outlet': outlet.tolist()}]
     if effect == 'coagulate':
+        if 'bipolarThermalV1' in engine.scene.properties and state.get('toolMechanicsRevision') not in (1, 2):
+            raise ValueError('BIPOLAR_THERMAL_REQUIRES_ELECTRODE_GEOMETRY')
         if state.get('toolMechanicsRevision') in (1, 2):
             # A bipolar circuit requires approximation of the two electrodes.
             # The 0.5-mm closure is the declared discretized contact convention,
@@ -286,6 +288,8 @@ def apply_effect(engine, key, op, cells, p, q, dt):
             cells = [i for i, v in zip(cells, local) if abs(v[0]) <= .35 + params['jawOpeningMm']/2
                      and abs(v[1]) <= .35 and -params['depthMm']-.35 <= v[2] <= .35]
             if not cells: return []
+        from .surgical_bipolar_thermal import deposit
+        heat_events = deposit(engine, cells, params['power'])
         exposure = params['power'] * dt
         for i in cells: state['thermal'][str(i)] = state['thermal'].get(str(i), 0.) + exposure
         changed = []
@@ -293,13 +297,13 @@ def apply_effect(engine, key, op, cells, p, q, dt):
             from .surgical_vessels_v2 import coagulate
             coagulate(engine, cells, params['power'], dt)
         for source in state['sources']:
-            if source.get('modelVersion') == 2: continue
+            if source.get('modelVersion') in (2, 'vascular-graph-v1'): continue
             if source['cell'] in cells:
                 if 'coagulationExposure' not in source: raise ValueError('MISSING_SOURCE_COAGULATION_PROPERTY')
                 source['exposure'] += exposure
                 if source['exposure'] >= source['coagulationExposure'] and source.get('bleedingActive', True):
                     source['bleedingActive'] = False; changed.append(source['id'])
-        return [{'kind': 'local_energy', 'exposure': exposure, 'controlledBleedingSources': changed}]
+        return [{'kind': 'local_energy', 'exposure': exposure, 'controlledBleedingSources': changed}, *heat_events]
     if effect == 'probe':
         probe = name.removesuffix('_probe')
         evidence = [e for e in engine.scene.properties.get('functionalEvidence', []) if e['probe'] == probe and e['cell'] in cells]
@@ -326,10 +330,12 @@ def tick_fields(engine, dt):
     A source with no adjacent free outlet accumulates a declared reservoir until
     opened. This avoids placing fluid inside solid tissue or losing mass.
     """
+    from . import surgical_vascular_graph as graph
+    if graph.enabled(engine) and not graph.consume_field_interval(engine, dt): return
     flow = getattr(engine, '_flow_display_trace', None)
     if flow is not None and not flow.active: flow = None
     for source in engine.state['sources']:
-        if source.get('bleedingActive', True):
+        if source.get('modelVersion') != graph.MODEL_VERSION and source.get('bleedingActive', True):
             if 'rateMm3PerSecond' not in source or 'cell' not in source: raise ValueError('MISSING_BLEEDING_SOURCE_PROPERTIES')
             amount = source['rateMm3PerSecond'] * dt
             if source.get('kind') == 'modeled-vessel-wound': source['emittedMm3'] += amount

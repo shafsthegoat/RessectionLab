@@ -1,5 +1,23 @@
 # Rehearsal performance and remaining gates
 
+The latest [exact polynomial dependency halo](local-surface-filter.md) reduces
+changed brain preparation from 1.97 to 1.16 seconds against `84c94507` across
+the complete 120-action episode, with all 528 preparations exact. Its raw-cache
+lineage, shared memory budget, global work and remaining native latency are
+explicit.
+
+The earlier [incremental surface audit](local-surface-audits.md) checks the whole
+original 120-action acquired episode, reducing changed brain preparation from
+3.17 to 2.12 seconds with exact buffers. Its larger bounded cache and remaining
+whole-layer filtering/native latency are explicit.
+
+The current [acquired continuum performance comparison](continuum-performance.md)
+profiles actual retraction/resection physics separately from CPU surface work.
+It preserves exact state and display buffers, improves headless throughput by
+8.9% and changed brain preparation by 2.49×, and retains the remaining
+three-second surface latency as an open requirement. The historical results
+below concern their separately declared workloads.
+
 Measured October 22, 2026 on an Apple Silicon Mac with 16 GiB RAM,
 macOS 26.5.2 and Electron 44.5.1. These are bounded engineering measurements
 on the saved sub-06 research case. These performance checks ran no patient RL

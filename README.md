@@ -1,5 +1,51 @@
 # RessectionLab
 
+The [interactive patient approach planner](docs/interactive-patient-planning.md)
+generates new, source-bound post-exposure CUSA approaches from edited target,
+entry, tool and mapped-tissue constraints. The desktop compares trajectories,
+checks native insertion/withdrawal, and installs ordinary replayable branches.
+Its one development case retains missing anatomy and all scientific holds.
+
+The [simulator qualification workflow](docs/simulator-qualification.md) now
+checks source evidence, exact replay, access-inclusive removal and lattice
+force/energy behavior before physiological planning. It exposes grid-dependent
+mechanics and keeps measured-response and large-scale RL gates open.
+An [opt-in voxel continuum](docs/voxel-continuum.md) adds source-owned mechanics,
+stress relaxation, mechanical exposure and checked retraction/resection replay;
+its patient material and injury claims remain unvalidated.
+The [donor-held-out force comparison](docs/continuum-donor-transfer.md) now
+scores acquired human brain measurements: the calibrated continuum improves
+on the default lattice, but loses to zero force in tension. Physical acceptance
+and physiological RL remain on hold.
+An [opt-in bipolar heat model](docs/bipolar-thermal.md) now budgets delivered
+heat, tissue conduction and heat exported with removal. Equal-energy continuous
+and pulsed programs replay with distinct modeled temperature histories; device
+calibration, temperature-based coagulation and injury remain unvalidated.
+The [recorded consequence comparison](docs/consequence-comparison.md) now
+selects between exact native programs with a vector and matched-scenario Pareto
+rule. Full access cost stays visible; requiring unavailable vascular, motor,
+language and shift evidence selects checked STOP with residual.
+An [artificial-boundary audit](docs/continuum-domain-sensitivity.md) finds material
+force/stress sensitivity to patch radius. Truncated continuum patches now reject
+and roll back; radius adequacy and physiological RL remain unqualified.
+An [offline contact-compliance reference](docs/continuum-contact-reference.md)
+now reproduces detailed histories with a 21-coordinate update and runs larger
+domains. Both frozen 16-to-20 mm stress-stability tests still fail.
+An [opt-in vascular graph](docs/vascular-graph.md) separates compression,
+occlusion, transection, wound sealing and declared supply/drainage signals.
+Matched generated maneuvers pass independent numerical checks; patient-specific
+vascular evaluation and physiological RL remain on hold.
+The [acquired vascular geometry checks](docs/native-vascular-geometry.md) now
+retain original CTA voxel IDs, distinguish veins and sinuses, and certify a
+separate H₁ representative graph while exposing missing and ambiguous anatomy.
+The [acquired-case performance comparison](docs/continuum-performance.md)
+profiles headless physics separately from display work. A
+[certified intersection cache](docs/local-surface-audits.md) and
+[exact polynomial dependency halo](docs/local-surface-filter.md) now reduce
+changed brain preparation from 1.97 to 1.16 seconds in the latest paired
+120-action comparison, retaining exact buffers. Global graph/face work, initial
+admission, responsive replay and physiological RL readiness remain open.
+
 The [full case rehearsal collaborator handoff](artifacts/full-case-rehearsal-20261020/README.md)
 includes the saved meningioma source and substantial primary resection, same-case
 vascular rescue, checkpoints, action histories, audit evidence and portable macOS

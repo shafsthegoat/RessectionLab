@@ -4,18 +4,29 @@ import type {ViewerWorkspaceSettings,MicroscopeSettings} from './viewer/workspac
 import {microscopeCamera} from './viewer/microscope';
 import type {Point3} from './viewer/coordinates';
 
+/** Surface inspection is display state, never a claim of operative exposure. */
+export function inspectionNotice(settings:ViewerWorkspaceSettings):string|null {
+  const surgeon=settings.operativeView==='surgeon';
+  const transparent=surgeon?settings.microscope?.inspectionTransparency:Object.values(settings.layerOpacity??{}).some(value=>typeof value==='number'&&value<1);
+  const cutaway=surgeon?settings.microscope?.inspectionCutaway:settings.clipping?.enabled||settings.clipBox?.enabled||settings.obliqueClip?.enabled;
+  return transparent||cutaway?`Inspection only · ${[transparent?'transparent anatomy':'',cutaway?'cutaway':''].filter(Boolean).join(' and ')}`:null;
+}
+
 export function SurgeonViewControls({c,settings,onSettings}:{c:SurgicalController;settings:ViewerWorkspaceSettings;onSettings:(s:ViewerWorkspaceSettings)=>void}) {
   const enabled=settings.operativeView==='surgeon',m=settings.microscope;
   function enter(){
     if(enabled)return;
     const slots=Object.values(c.view?.slots??{}),slot=slots.find(s=>s.inserted)??slots[0];if(!slot)return;
-    const microscope:MicroscopeSettings=m??{target:[...slot.position],outward:new THREE.Vector3(0,0,-1).applyQuaternion(new THREE.Quaternion(...slot.quaternion)).toArray() as Point3,angleDeg:0,azimuthDeg:0,workingDistanceMm:160,fieldMm:42,focusOffsetMm:0,light:2.5};
+    const blade=c.view?.planarBladeManeuver?.opticalFrame;
+    const microscope:MicroscopeSettings=m??{target:blade?[...blade.targetMm]:[...slot.position],outward:blade?[...blade.outward]:new THREE.Vector3(0,0,-1).applyQuaternion(new THREE.Quaternion(...slot.quaternion)).toArray() as Point3,angleDeg:blade?30:0,azimuthDeg:0,workingDistanceMm:160,fieldMm:blade?12:42,focusOffsetMm:0,light:2.5};
     onSettings({...settings,operativeView:'surgeon',microscope,externalCamera:settings.camera,camera:microscopeCamera(microscope),layout:'3d-focus',showPlane:false,contextStyle:'uniform',clipping:undefined,clipBox:undefined,obliqueClip:undefined,volumeRendering:{...settings.volumeRendering,enabled:false}});
   }
   function update(patch:Partial<MicroscopeSettings>){if(!m)return;const next={...m,...patch};onSettings({...settings,microscope:next,camera:microscopeCamera(next)});}
   return <section className="surgeon-view" aria-label="Surgeon microscope view" data-operative-view={enabled?'surgeon':'external'}>
     <div><button disabled={!c.view} aria-pressed={enabled} onClick={enter}>Surgeon / Microscope</button> <button disabled={!enabled} onClick={()=>onSettings({...settings,operativeView:'external',camera:settings.externalCamera??settings.camera})}>External anatomy view</button></div>
     {enabled&&m&&<>
+      {(m.inspectionTransparency||m.inspectionCutaway)&&<strong role="status">INSPECTION ONLY · view through tissue enabled</strong>}
+      <details><summary>Microscope settings and inspection</summary>
       {c.result?.researchSetup&&<p className="surgical-warning" aria-label="Operative exposure assumption">{c.result.researchSetup.description}</p>}
       <p className="surgical-note">Fixed optical viewpoint · opaque tissue occludes the field. Place the view above an actual opening; intact tissue remains in the way. No exposure is created by the camera.</p>
       <label>Surface material<select aria-label="Operative surface material" value={m.tissueStyle??'operative'} onChange={e=>update({tissueStyle:e.target.value as 'operative'|'labels'})}><option value="operative">Illustrative tissue material</option><option value="labels">Source segmentation colours</option></select></label>
@@ -27,7 +38,7 @@ export function SurgeonViewControls({c,settings,onSettings}:{c:SurgicalControlle
       <button disabled={c.pending||!c.view} onClick={()=>{const slot=c.view?.slots[c.slot];if(slot)update({target:[...slot.position],focusOffsetMm:0});}}>Center field on accepted tip once</button>
       <label><input type="checkbox" checked={!!m.inspectionTransparency} onChange={e=>update({inspectionTransparency:e.target.checked})}/>Inspection-only transparency / hidden anatomy</label>
       <label><input type="checkbox" checked={!!m.inspectionCutaway} onChange={e=>{const next={...m,inspectionCutaway:e.target.checked};onSettings({...settings,microscope:next,clipping:{axis:'z',value:m.target[2],enabled:e.target.checked}});}}/>Inspection-only cutaway</label>
-      {(m.inspectionTransparency||m.inspectionCutaway)&&<strong>INSPECTION ONLY · view through tissue enabled</strong>}
+      </details>
     </>}
   </section>;
 }

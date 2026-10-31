@@ -1,0 +1,34 @@
+{
+  "schema": "resectionlab.performance-protocol.v1",
+  "baseline_revision": "02bca78a",
+  "case_archive_sha256": "0098232cceb946cbc5cccf00ca81b3b8b5c768c726d379fc8e8dbb503cd13127",
+  "case_scene_id": "sha256:01719b5460564e004686c495bd096fe76902b6ac8d38bf2d9a6951e81b883025",
+  "branch": "sustained-hold",
+  "actions": 29,
+  "source_role": "Existing acquired UCSF-PDGM0007 development case; explicit post-exposure research mechanics. No new measurements or training.",
+  "paired_repetitions": 3,
+  "warmups_per_variant": 1,
+  "order": "baseline/current, current/baseline, baseline/current",
+  "headless_baseline_selection": "Retained checkpoint copier and continuum tick; unchanged engine code and source arrays shared. No checkout or branch switching.",
+  "renderer_baseline_selection": "Retained surfaceSafety.ts and surfaceSmoothing.ts; identical extraction, normals, masks, policy and worker orchestration.",
+  "headless_acceptance": [
+    "Exact every committed full state and receipt, including partial collision stops",
+    "Exact saved final snapshot and source array identities",
+    "Ownership, cancellation, topology invalidation and source-substitution controls"
+  ],
+  "renderer_acceptance": [
+    "Byte-identical raw positions, normals, triangle IDs, smoothed positions and smoothed normals",
+    "Identical non-timing conditioning diagnostics",
+    "Audit every changed quantized physical geometry; only identical revisions may reuse audit results",
+    "Preserve face repair, source-contact exemption, component restoration, displacement caps and policy",
+    "Hidden native GPU/frame/HUD/source-count/camera/save/reopen verification"
+  ],
+  "memory": "Report retained cache bytes, process memory samples and whole-process peak. Paired-process high-water marks do not establish per-variant peak reductions.",
+  "latency_scope": "CPU worker preparation includes extraction, assembly, conditioning and normals. Native hidden GPU completion is a separate measurement; neither establishes physical screen-presentation latency.",
+  "open": [
+    "Three-second changed brain preparation remains too slow for responsive replay; halo-aware local conditioning and reusable spatial audits remain open",
+    "Headless throughput remains about one accepted/partial action per second on this episode",
+    "Measured device/specimen response and withheld patient anatomical prediction remain independent open gates",
+    "No RL readiness or physiological validation follows from numerical/display parity"
+  ]
+}
