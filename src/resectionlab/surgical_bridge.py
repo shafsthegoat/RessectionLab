@@ -159,6 +159,7 @@ def dispatch(session, operation, args, request, progress):
     if args.get('command') == 'seekPrefix' and type(args.get('position')) is int and args['position'] == 0:
         argument_keys.add('cacheOnly')
     if args.get('command') == 'previewStrategy': argument_keys.add('phase')
+    if args.get('command') == 'analyzeStrategySensitivity': argument_keys.update({'offsetMm', 'expectedPlanSeal'})
     _keys(args, argument_keys)
     if args.get('command') == 'recoverExit':
         _keys(args, {'caseHash', 'command', 'expectedStateId'})
@@ -166,6 +167,8 @@ def dispatch(session, operation, args, request, progress):
         _keys(args, {'caseHash', 'command', 'expectedStateId', 'policyInput', 'expectedComparisonSeal'})
     if args.get('command') in {'generateApproaches', 'generateStrategies'}:
         _keys(args, {'caseHash', 'command', 'expectedStateId', 'constraints', 'acknowledgeResearchUnknowns'})
+    if args.get('command') == 'analyzeStrategySensitivity':
+        _keys(args, {'caseHash', 'command', 'expectedStateId', 'offsetMm', 'expectedPlanSeal', 'acknowledgeResearchUnknowns'})
     if args.get('command') in {'previewApproach', 'applyApproach', 'previewStrategy', 'applyStrategy'}:
         _keys(args, {'caseHash', 'command', 'expectedStateId', 'candidateId', 'expectedPlanSeal', *({'phase'} if args.get('command') == 'previewStrategy' else set())})
     if 'cumulativeReentry' in args and (args.get('command') != 'plan' or
@@ -220,7 +223,7 @@ def dispatch(session, operation, args, request, progress):
         # Replacement archives and all editable commands retain full admission.
         artifacts = entry.artifacts if hot_frame or args.get('command') in PREFIX_COMMANDS else thaw_json(entry.artifacts)
     command = args.get('command', 'inspect')
-    if command not in {'create', 'inspect', 'inspectArchive', 'preview', 'step', 'recoverExit', 'undo', 'redo', 'seek', 'branch', 'selectBranch', 'reset', 'selectScene', 'plan', 'fullCase', 'attachProtection', 'reevaluateConsequences', 'generateApproaches', 'previewApproach', 'applyApproach', 'generateStrategies', 'previewStrategy', 'applyStrategy', 'seekFrame', *PREFIX_COMMANDS}:
+    if command not in {'create', 'inspect', 'inspectArchive', 'preview', 'step', 'recoverExit', 'undo', 'redo', 'seek', 'branch', 'selectBranch', 'reset', 'selectScene', 'plan', 'fullCase', 'attachProtection', 'reevaluateConsequences', 'generateApproaches', 'previewApproach', 'applyApproach', 'generateStrategies', 'previewStrategy', 'applyStrategy', 'analyzeStrategySensitivity', 'seekFrame', *PREFIX_COMMANDS}:
         raise ValueError('Unsupported surgical command')
     raw = artifacts.get(ARTIFACT)
     from .surgical_environment import standardize, default_target_names, SCHEMA as ENVIRONMENT_SCHEMA
@@ -392,7 +395,7 @@ def dispatch(session, operation, args, request, progress):
         engine = engine.clone()
     if command not in ('create', 'inspect', 'selectScene') and args.get('expectedStateId') != engine.state_id:
         raise BridgeError('SURGICAL_STATE_STALE', 'The scene changed. Refresh before applying this action.')
-    if 'planarBladeManeuverV1' in engine.scene.properties and command in ('plan', 'fullCase', 'recoverExit', 'attachProtection', 'generateApproaches', 'previewApproach', 'applyApproach', 'generateStrategies', 'previewStrategy', 'applyStrategy'):
+    if 'planarBladeManeuverV1' in engine.scene.properties and command in ('plan', 'fullCase', 'recoverExit', 'attachProtection', 'generateApproaches', 'previewApproach', 'applyApproach', 'generateStrategies', 'previewStrategy', 'applyStrategy', 'analyzeStrategySensitivity'):
         raise ValueError('PLANAR_MANEUVER_ONLY: this opt-in scene admits only the declared blade actions and supported replay')
     outcome = None
     verified_display_state_id = None
@@ -464,6 +467,14 @@ def dispatch(session, operation, args, request, progress):
         from .surgical_strategy_workspace import install_report
         generated = generate_comparison(engine, args.get('constraints'), check=request.check, progress=progress)
         install_report(engine, record, identity, generated, check=request.check)
+    elif command == 'analyzeStrategySensitivity':
+        if args.get('acknowledgeResearchUnknowns') is not True:
+            raise ValueError('Acknowledge the uncalibrated execution stress and missing anatomy')
+        from .surgical_strategy_sensitivity import generate_sensitivity
+        from .surgical_strategy_workspace import current_report, install_sensitivity
+        item = current_report(engine, record, identity, args.get('expectedPlanSeal'), check=request.check)
+        study = generate_sensitivity(engine, item['report'], {'offsetMm': args.get('offsetMm')}, check=request.check, progress=progress)
+        install_sensitivity(engine, record, identity, item, study, check=request.check)
     elif command in {'previewStrategy', 'applyStrategy'}:
         from .surgical_two_tool import materialize
         from .surgical_strategy_workspace import current_report, install_application

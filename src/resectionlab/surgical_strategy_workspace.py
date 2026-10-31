@@ -18,9 +18,12 @@ _VALIDATED = OrderedDict()
 def validate_workspace(scene, record, case_hash, *, check=lambda: None):
     check()
     history = record.get('strategyComparisons', []); applications = record.get('strategyApplications', [])
+    sensitivities = record.get('strategySensitivityStudies', [])
     if type(history) is not list or len(history) > 16 or type(applications) is not list or len(applications) > 64:
         raise ValueError('Two-tool study history exceeds its bounded schema')
-    if not history and not applications: return history
+    if type(sensitivities) is not list or len(sensitivities) > 8:
+        raise ValueError('Execution sensitivity study history exceeds its bounded schema')
+    if not history and not applications and not sensitivities: return history
     reports = {}
     for revision, item in enumerate(history, 1):
         check()
@@ -58,6 +61,22 @@ def validate_workspace(scene, record, case_hash, *, check=lambda: None):
             if candidate.snapshot() != snapshot or receipt != app['receipt']:
                 raise ValueError('Two-tool installed state or receipt differs')
             check(); _VALIDATED[key] = True
+    for revision, item in enumerate(sensitivities, 1):
+        check(); _checked_seal(item, 'workspaceSeal')
+        if (set(item) != {'schema', 'revision', 'comparisonRevision', 'study', 'workspaceSeal'}
+                or item['schema'] != 'resectionlab.strategy-sensitivity-workspace.v1'
+                or type(item['revision']) is not int or item['revision'] != revision
+                or type(item['comparisonRevision']) is not int):
+            raise ValueError('Execution sensitivity workspace schema differs')
+        comparison = reports.get(item['comparisonRevision'])
+        if comparison is None: raise ValueError('Execution sensitivity comparison is missing')
+        key = (scene.identity, semantic_digest(comparison), semantic_digest(item))
+        if key not in _VALIDATED:
+            from .surgical_strategy_sensitivity import validate_sensitivity
+            engine = SurgicalEngine.restore(scene, record['branches'][comparison['sourceBranchId']], check=check)
+            bind_admission(engine, comparison['report']['taskAdmission'])
+            validate_sensitivity(engine, comparison['report'], item['study'], check=check)
+            check(); _VALIDATED[key] = True
     while len(_VALIDATED) > 64: _VALIDATED.popitem(last=False)
     return history
 
@@ -88,6 +107,20 @@ def current_report(engine, record, case_hash, seal, *, check=lambda: None):
     return item
 
 
+def install_sensitivity(engine, record, case_hash, comparison, study, *, check=lambda: None):
+    current = current_report(engine, record, case_hash, comparison['report']['reportSeal'], check=check)
+    if current != comparison: raise ValueError('Execution sensitivity source comparison changed')
+    history = record.get('strategySensitivityStudies', [])
+    if len(history) >= 8: raise ValueError('Execution sensitivity study limit reached; save this study')
+    from .surgical_strategy_sensitivity import validate_sensitivity
+    validate_sensitivity(engine, comparison['report'], study, check=check); check()
+    item = _seal({'schema': 'resectionlab.strategy-sensitivity-workspace.v1',
+        'revision': len(history)+1, 'comparisonRevision': comparison['revision'], 'study': copy.deepcopy(study)}, 'workspaceSeal')
+    record.setdefault('strategySensitivityStudies', []).append(item)
+    _VALIDATED[(engine.scene.identity, semantic_digest(comparison), semantic_digest(item))] = True
+    return item
+
+
 def install_application(record, item, branch, engine, candidate_id, receipt):
     applications = record.setdefault('strategyApplications', [])
     if len(applications) >= 64: raise ValueError('Two-tool installed-branch limit reached; save this study')
@@ -102,9 +135,12 @@ def planning_view(engine, record, case_hash, *, check=lambda: None):
     history = validate_workspace(engine.scene, record, case_hash, check=check)
     if not history: return None
     item = history[-1]; report = item['report']
+    sensitivity = next((s for s in reversed(record.get('strategySensitivityStudies', []))
+        if s['comparisonRevision'] == item['revision']), None)
     return {**copy.deepcopy(report), 'revision': item['revision'], 'sourceBranchId': item['sourceBranchId'],
         'sourcePosition': report['prefixActions'], 'current': engine.state_id == report['startStateId'] and semantic_digest(engine.actions) == report['baselineActionHash'],
-        'applications': [copy.deepcopy(a) for a in record.get('strategyApplications', [])]}
+        'applications': [copy.deepcopy(a) for a in record.get('strategyApplications', [])],
+        **({'executionSensitivity': copy.deepcopy(sensitivity)} if sensitivity else {})}
 
 
 def protected_branches(record):

@@ -5,6 +5,7 @@ import {RegionEditor} from './InteractivePlanningPanel';
 import type {Point3} from './viewer/coordinates';
 import {strategyControlKey,strategyControls} from './two-tool-data';
 import type {TwoToolControls,TwoToolComparison,ContextOption,AnatomicalEncounter} from './two-tool-data';
+import {StrategySensitivityPanel} from './StrategySensitivityPanel';
 
 const n=(value:number|undefined)=>typeof value==='number'?value.toFixed(2):'Unassessed';
 const labels:Record<string,string>={inspect:'Inspection',access:'CUSA access','position-secondary':'Suction positioned',operate:'After finite contact',reassess:'Reassessment',withdraw:'Complete withdrawal'};
@@ -77,6 +78,7 @@ function StrategyDraft({c,pause,cursor,onCursor,defaults,saved,contexts}:{c:Surg
         <div className="surgical-actions"><button disabled={locked||!ack||!row.feasible} onClick={()=>{pause();void c.run('previewStrategy',{candidateId:row.id,expectedPlanSeal:report!.reportSeal,phase});}}>Preview strategy checkpoint</button><button disabled={locked||!ack||!preview||!row.feasible} onClick={()=>{pause();void c.run('applyStrategy',{candidateId:row.id,expectedPlanSeal:report!.reportSeal});}}>Install strategy branch</button></div>
         {preview&&<p role="status">Uncommitted checkpoint shown. Installation creates the complete checked sequence through withdrawal.</p>}
       </section>}
+      {report?.contextBinding&&<StrategySensitivityPanel key={report.reportSeal} c={c} report={report} locked={locked} ack={ack} pause={pause} onSelect={setSelected} onCursor={onCursor}/>}
       <details><summary>Strategy evidence and receipts</summary><p>{plan.scope}</p><pre>{JSON.stringify({decision:plan.decision,contextBinding:report?.contextBinding,publicInputHash:plan.publicObservation.inputHash,publicPlanSeal:plan.publicPlanSeal,rejections:plan.rejections,alternatives:plan.alternatives,previewReceipt:c.approachPreview?.receipt},null,2)}</pre></details>
     </>}
   </section>;

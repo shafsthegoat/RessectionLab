@@ -247,6 +247,7 @@ class LatentWorld:
     model_version: str
     _matrix_bytes: bytes
     deterministic: bool
+    interpretation: str = 'registration_scenario'
 
     @property
     def anatomy_transform_mm(self) -> np.ndarray:
@@ -263,7 +264,44 @@ class LatentWorld:
         # World ID, seed and sampled transform are deliberately absent. The
         # actor receives source estimates from the environment, never latent truth.
         return {"world_model_version": self.model_version,
-                "uncertainty_mode": "deterministic" if self.deterministic else "registration_scenario"}
+                "uncertainty_mode": "deterministic" if self.deterministic else self.interpretation}
+
+
+@dataclass(frozen=True)
+class AxisTranslationStress:
+    """Finite command-offset witnesses, never an anatomical error distribution.
+
+    All poses of both tools share one RAS translation for the entire program.
+    Intervening translations, rotations and changing offsets are not covered.
+    The nominal candidate programs must be frozen before these worlds are used.
+    """
+    offset_mm: float
+
+    def __post_init__(self):
+        if type(self.offset_mm) not in (int, float) or not np.isfinite(self.offset_mm) or self.offset_mm < 0:
+            raise ValueError('A finite nonnegative physical offset is required')
+        object.__setattr__(self, 'offset_mm', float(self.offset_mm))
+
+    def to_dict(self):
+        return {'family': 'nominal-and-six-RAS-axis-command-translations-v1',
+                'offsetMm': self.offset_mm, 'frame': 'RAS+', 'units': 'mm',
+                'appliedTo': 'all commanded instrument poses; fixed observed anatomy',
+                'parameterBasis': 'declared-uncalibrated-execution-stress',
+                'distribution': None, 'patientCalibration': None}
+
+    def worlds(self):
+        offsets = [('nominal', np.zeros(3))]
+        if self.offset_mm:
+            for axis, name in enumerate('RAS'):
+                for sign in (-1, 1):
+                    vector = np.zeros(3); vector[axis] = sign*self.offset_mm
+                    offsets.append((name+('+' if sign > 0 else '-'), vector))
+        result = []
+        for name, vector in offsets:
+            matrix = np.eye(4); matrix[:3, 3] = vector
+            result.append(LatentWorld(name, 'coherent-command-translation-v1', matrix.tobytes(), not np.any(vector),
+                interpretation='execution_offset_stress'))
+        return tuple(result)
 
 
 @dataclass(frozen=True)

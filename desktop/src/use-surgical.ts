@@ -95,8 +95,8 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
       setError('Return to the accepted common checkpoint and cancel any preview before reassessing checked alternatives.');return false;
     }
     if(c.result?.playback?.readOnly&&!surgicalCursorCommand(command)){setError('Return to a recorded action boundary before applying or branching instrument actions.');return false;}
-    if(['generateApproaches','previewApproach','applyApproach','generateStrategies','previewStrategy','applyStrategy'].includes(command)&&(!acceptedFullCaseState(!['generateApproaches','generateStrategies'].includes(command))||c.result?.readOnly)){setError('Return to the accepted editable checkpoint and cancel any preview before planning approaches.');return false;}
-    if(c.displayFailed&&['step','preview','plan','fullCase','generateApproaches','previewApproach','applyApproach','generateStrategies','previewStrategy','applyStrategy'].includes(command)){setError('The accepted anatomy could not be displayed. Seek to a recorded state or reopen the case before applying another instrument action.');return false;}
+    if(['generateApproaches','previewApproach','applyApproach','generateStrategies','previewStrategy','applyStrategy','analyzeStrategySensitivity'].includes(command)&&(!acceptedFullCaseState(!['generateApproaches','generateStrategies','analyzeStrategySensitivity'].includes(command))||c.result?.readOnly)){setError('Return to the accepted editable checkpoint and cancel any preview before planning approaches.');return false;}
+    if(c.displayFailed&&['step','preview','plan','fullCase','generateApproaches','previewApproach','applyApproach','generateStrategies','previewStrategy','applyStrategy','analyzeStrategySensitivity'].includes(command)){setError('The accepted anatomy could not be displayed. Seek to a recorded state or reopen the case before applying another instrument action.');return false;}
     const prefixRestart=command==='seekPrefix'&&extra.position===0;
     const token=generation.current;busy.current=true;setPending(true);setPendingCommand(command);setError(null);
     try{

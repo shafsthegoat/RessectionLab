@@ -238,7 +238,7 @@ function bindOperations() {
   });
   handle('cancelFrozenCusa',()=>{frozenCusaAbort?.abort();return true;});
   handle('surgicalRehearsal', async args => {
-    args=plainArgs(args, ['caseHash','command','expectedStateId','action','mapping','position','frameIndex','cacheOnly','timelineToken','viewFieldTokens','prefixToken','prefixFieldTokens','branchId','source','sceneIndex','acknowledgeResearchUnknowns','opponent','allowModeledBrainCorridor','scenario','maxActions','initialAccessRadiusMm','exploreExteriorFaces','cumulativeReentry','policyInput','expectedComparisonSeal','constraints','candidateId','expectedPlanSeal','phase']);
+    args=plainArgs(args, ['caseHash','command','expectedStateId','action','mapping','position','frameIndex','cacheOnly','timelineToken','viewFieldTokens','prefixToken','prefixFieldTokens','branchId','source','sceneIndex','acknowledgeResearchUnknowns','opponent','allowModeledBrainCorridor','scenario','maxActions','initialAccessRadiusMm','exploreExteriorFaces','cumulativeReentry','policyInput','expectedComparisonSeal','constraints','candidateId','expectedPlanSeal','phase','offsetMm']);
     if(args.command==='attachProtection'){
       if(!currentCaseHash||args.caseHash!==currentCaseHash||typeof args.expectedStateId!=='string'||!args.expectedStateId||args.source)throw Error('Choose the accepted state in the current workspace before attaching protection');
       const caseHash=currentCaseHash,protectionPath=await pick('Choose surgical-rl-protection-v1 JSON',['json']);

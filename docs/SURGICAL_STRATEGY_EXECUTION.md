@@ -504,14 +504,116 @@ The second acquired case still refuses full access through the same hidden
 interface, and the exact missing-target control exposes no strategy action.
 Original source files remain unchanged and no window becomes visible.
 
+## Implemented: complete-program execution-offset sensitivity
+
+The desktop can now assess a frozen supplied-context comparison under declared
+command offsets, retain the result in its native workspace, select its all-tested-
+offset result and inspect a failed commanded pose in linked MRI. Zero offset has
+one scenario; nonzero offset has nominal and six±RAS-axis translations. Both
+hands' commanded poses share one translation for the complete program. Durations,
+orientations, anatomy and the physical model stay fixed. The0–2mm control is a
+software stress bound, not measured execution or registration error. Subvoxel
+commands change physical pose prefixes directly without image/mask resampling.
+
+`AxisTranslationStress` extends the existing world/frozen-decision infrastructure.
+Public program/observation snapshots detach before callbacks. Each action retains
+native receipts, physical/context prefix hashes, phases, progress, reassessment,
+withdrawal and first failure. A committed partial access is a failed complete
+program, not a full successful movement. Public decisions seal before every world
+is executed again on native clones; every result must agree exactly. Fresh source
+qualification runs again before publication. Canceled/timed-out studies do not
+publish. Eight native attachments and32process-local complete-content digest
+entries bound persistence/reuse; no engine, scene or dense observation is cached.
+One public snapshot costs26,784,000label/context bytes on0007, plus source
+projection, one active public model/grid, pure geometry caches and transient copies.
+This is not a process RSS cap.
+
+Three policies use the same held candidate family and source constraints:
+nominal; fixed nominal geometric margin; and feasibility in every declared
+scenario followed by nominal duration/target/ID ordering. Fixed margin expands
+all retained shaft clearance, mapped non-target working clearance, supplied
+protection and context. It does not predict offset-dependent target progress.
+This evaluates existing programs; it is not an uncertainty-aware route-search
+optimizer, a continuous-offset guarantee or a matched-budget efficacy benchmark.
+
+The actual hidden0007 run retains nine comparisons, two installed nominal branches
+and two sensitivity attachments. Existing long/modified-short endpoint hashes
+remain exact. In the existing0.75/1s comparison, zero offset selects short for all
+three policies. At declared1mm:
+
+| Nominal selection | Fixed margin | Every tested offset |
+| --- | --- | --- |
+| Short |STOP|STOP|
+
+At−S, short removes0mm³ of new target while long removes1mm³: preference changes
+to long. At+R/+S, both programs stop partially during access, before complete
+withdrawal. No new non-target tissue is removed. Fixed margin already rejects
+both nominal programs. **No scenario-method selection advantage is established.**
+The changed preference and failure location are useful diagnostics, not clinical
+outcome predictions. The failed requested pose drives MRI RAS
+[-79.394037,118,62.832796]mm without changing native state; it is not the actual
+partial-stop/collision location. Source bytes and original baseline remain exact.
+
+Actual desktop assessment costs8.684sIPC/8.823saccepted display at zero and
+41.983sIPC/42.044saccepted display at1mm. These include complete public and native
+replays and ran alongside regression work; they are not isolated benchmarks or
+speedup claims. Cold reopen with all nine comparisons/two applications/two
+attachments takes115.480sfirst inspect in the final UI run. This added proof cost remains
+a measured optimization target. Native source profiles for unrelated ongoing
+retractor work are disabled in these cases.
+
+The independent auditor predicts using literal tools, separate cell-distance
+geometry and actual native transitions, without strategy/sensitivity predictor
+imports. It verifies both saved studies'24candidate/scenario outcomes, including
+partial prefixes, source-byte/context bindings, fixed margin and policy choices.
+All400backend regression tests,1,220desktop tests and the final build pass.
+The26independent auditor controls include retained-target shaft clearance,
+working-target contact, private-owner traps, source corruption and resealed
+world/prefix/metric/choice forgeries. Eighteen producer/integration controls
+include subvoxel physical prefixes, detached callback inputs, numeric progress,
+bounded cache dependencies, cancellation and source-linked save/cold reopen.
+The final56producer/world checks also preserve the old registration actor
+descriptor while identifying the new sanitized descriptor as execution stress;
+execution offsets are not mislabeled as anatomical registration uncertainty.
+Fresh hidden reopen restores the studies and scenario STOP selection. The second
+acquired case retains no operative candidate and all methods STOP; the exact
+missing-target control exposes no planning or sensitivity action. All windows
+stay hidden and original source bytes stay unchanged. Seven of eight previous
+comparisons and both installed applications remain exact. Restricted-entry
+comparison7 examines19rather than20proposals before the same wall cap; both
+honestly select COMPUTATION_BUDGET/STOP. The common rejection prefix and every
+other field/physical result match; partial inventory seals consequently differ.
+All nine current comparisons,
+applications, sensitivities, branches and ancestry also match after final reopen.
+Six older V1 studies/two applications and default report hash remain exact too.
+The current ignored inventory and exact reproduction commands are in
+`testcases/execution-sensitivity-v1/README.md`; it retains the weaker exploratory
+context-only baseline, STOP empty-receipt mismatch and actual desktop progress-
+protocol failure, followed by their fixes. No historical result was rewritten.
+
+Prior art and evidence gates remain explicit. [Fitzpatrick et al.](https://pubmed.ncbi.nlm.nih.gov/9874293/)
+distinguish target error from fiducial fit residual; neither supplies execution
+calibration here. [Jungo et al.](https://pmc.ncbi.nlm.nih.gov/articles/PMC7156850/)
+show why aggregate segmentation calibration does not establish subject-level
+calibration. [Frisken et al.](https://scholar.harvard.edu/files/sfrisken/files/incorporating_uncertainty_into_path_planning.pdf)
+already incorporate segmentation/brain-shift uncertainty into neurosurgical path
+planning. This integration does not claim first uncertainty-aware planning.
+The explicit calibration result remains unsupported. These DEVELOPMENT cases
+are already exposed; no frozen EVAL data, acquisition, training or probability
+claim was introduced. Supported anatomical/execution uncertainty, withheld or
+continuous perturbations, broader frozen patients and matched robust-search
+baselines remain required for the research milestone.
+
 ## Remaining milestones and next dependency
 
 This is a bounded acquired-anatomy operating task, not the complete strategy
 platform. Patient-specific functional consequences still need compatible evidence;
 the functional control remains a refusal. The new anatomical endpoint is a
-geometric source constraint, not a qualified motor/language map. Migrate remaining
-planner interfaces and reduce remaining cold generation/display costs, then build the frozen
-uncertainty comparison with matched baselines. Expand the patient distribution
+geometric source constraint, not a qualified motor/language map. The new finite
+execution stress is integrated but does not complete uncertainty qualification.
+Add supported anatomical/execution uncertainty, a frozen comparison with matched
+route-search baselines and independent challenge cases; reduce the measured cold
+proof/display cost and migrate remaining planner interfaces. Expand the patient distribution
 without touching reserved evaluations. Older lattice resolution dependence and
 continuum empirical/domain gates remain qualification holds. No RL campaign,
 new data acquisition, clinical-outcome probability or novelty claim was added.

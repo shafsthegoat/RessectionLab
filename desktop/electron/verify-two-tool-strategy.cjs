@@ -18,7 +18,7 @@ app.on('browser-window-created',(_event,window)=>{
  window.webContents.once('did-finish-load',async()=>{
   window.webContents.setBackgroundThrottling(false);window.setContentSize(1440,900);
   const js=async code=>{const x=await window.webContents.executeJavaScript(`try{${code}}catch(error){({automationError:String(error)})}`,true);if(x?.automationError)throw Error(x.automationError);return x;};
-  const until=async(fn,label,seconds=120)=>{const t=Date.now();while(Date.now()-t<seconds*1000){if(await fn())return;const error=await js(`document.querySelector('.surgical-panel .surgical-error')?.textContent`);if(error)throw Error(error);await delay(80);}throw Error('Timeout '+label);};
+  const until=async(fn,label,seconds=process.env.STRATEGY_REOPEN_SENSITIVITY==='1'?240:120)=>{const t=Date.now();while(Date.now()-t<seconds*1000){if(await fn())return;const error=await js(`document.querySelector('.surgical-panel .surgical-error')?.textContent`);if(error)throw Error(error);await delay(80);}throw Error('Timeout '+label);};
   const ready=()=>until(()=>js(`!!document.querySelector('[data-surgical-state-id]')&&document.querySelector('.rl-viewer')?.dataset.surfacesPending==='0'&&!document.querySelector('.viewer-loading')&&![...document.querySelectorAll('.surgical-panel [role="status"]')].some(n=>/^(Computing instrument action|Preparing an exact recorded state|Preparing accepted display|Verifying saved source-bound rehearsal)/.test(n.textContent.trim()))`),'accepted display');
   const click=async(label,selector='button')=>{await js(`(()=>{const b=[...document.querySelectorAll(${JSON.stringify(selector)})].find(b=>b.textContent.trim()===${JSON.stringify(label)}||b.getAttribute('aria-label')===${JSON.stringify(label)});if(!b||b.matches(':disabled'))throw Error('Missing enabled '+${JSON.stringify(label)});for(let p=b.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS'&&!(b.tagName==='SUMMARY'&&p===b.parentElement))p.open=true;b.click()})()`);await delay(100);};
   const set=async(label,value)=>{await js(`(()=>{const e=document.querySelector('[aria-label='+${JSON.stringify(JSON.stringify(label))}+']');if(!e)throw Error('Missing input');Object.getOwnPropertyDescriptor(e.tagName==='SELECT'?HTMLSelectElement.prototype:HTMLInputElement.prototype,'value').set.call(e,${JSON.stringify(String(value))});e.dispatchEvent(new Event(e.tagName==='SELECT'?'change':'input',{bubbles:true}));})()`);await delay(150);};
@@ -26,12 +26,19 @@ app.on('browser-window-created',(_event,window)=>{
   const timing=(name,command,start,count)=>{const request=report.requests.slice(count).find(x=>x.command===command);assert(request);report.interactions.push({name,command,backendSeconds:request.seconds,clickToAcceptedDisplaySeconds:(Date.now()-start)/1000});};
   const generate=async name=>{const count=report.requests.length,start=Date.now();await click('Compare executable strategies');await until(()=>report.requests.slice(count).some(x=>x.command==='generateStrategies'),'strategy result');await ready();timing(name,'generateStrategies',start,count);const study=last.strategyPlanning;assert(study?.publicPlan);assert.equal(last.view.stateId,report.baselineStateId);fs.writeFileSync(path.join(output,name+'.json'),JSON.stringify(study,null,2));return study;};
   const preview=async(candidate,label,phase='operate')=>{await click('Select '+label);await set('Strategy preview checkpoint',phase);const count=report.requests.length,start=Date.now();await click('Preview strategy checkpoint');await until(()=>report.requests.slice(count).some(x=>x.command==='previewStrategy'),'strategy preview');await ready();timing(candidate+'-'+phase,'previewStrategy',start,count);assert.equal(last.approachPreview?.candidateId,candidate);assert.equal(last.approachPreview?.phaseId,phase);assert(last.approachPreview.receipt.nativeMatchesPublicPrediction&&last.approachPreview.receipt.withdrawalComplete);assert.equal(last.view.stateId,report.baselineStateId);return last.approachPreview;};
+  const assess=async(offset,name)=>{await set('Execution command offset mm',offset);const count=report.requests.length,start=Date.now();await click('Assess declared execution offsets');await until(()=>report.requests.slice(count).some(x=>x.command==='analyzeStrategySensitivity'),'execution-offset study');await ready();timing(name,'analyzeStrategySensitivity',start,count);const item=last.strategyPlanning.executionSensitivity;assert(item?.study.nativeReplayVerified);assert.equal(item.study.assessment.controls.offsetMm,offset);assert.equal(item.study.assessment.scenarioCount,offset?7:1);assert.equal(item.study.assessment.calibratedUncertainty.supported,false);assert.equal(last.view.stateId,report.baselineStateId);fs.writeFileSync(path.join(output,name+'.json'),JSON.stringify(item,null,2));return item.study.assessment;};
   try{
    await until(()=>js(`!!document.querySelector('.rl-viewer canvas')&&!document.querySelector('.viewer-loading')`),'case load');await click('Rehearse');await ready();
    if(await js(`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Verify saved replay')`)){await click('Verify saved replay');await ready();}
    report.baselineStateId=last.view.stateId;report.caseHash=last.caseHash;report.sourceSceneId=last.view.scene.sceneId;
    if(process.env.STRATEGY_REOPEN_ONLY==='1'){
     assert.equal(last.view.stateId,process.env.STRATEGY_EXPECTED_STATE);assert(last.strategyPlanning?.publicPlan.publicPlanSeal);report.checks.push('Fresh hidden process verifies saved comparison and exact native state');
+    if(process.env.STRATEGY_REOPEN_SENSITIVITY==='1'){
+     assert(last.strategyPlanning.executionSensitivity?.study.nativeReplayVerified);await click('Compare two-tool strategies','summary');await click('Execution-offset sensitivity','summary');
+     const assessment=last.strategyPlanning.executionSensitivity.study.assessment;assert.equal(assessment.scenarioCount,7);assert.equal(assessment.policies.allDeclaredScenarios,'stop');assert(await js(`!!document.querySelector('[aria-label="Execution sensitivity decision"]')`));
+     await click('Select result for all tested offsets');assert(await js(`document.querySelector('[data-strategy-candidate="stop"]').getAttribute('aria-selected')==='true'`));await capture('reopened-execution-offsets','.strategy-sensitivity');
+     await click('Save');await until(()=>fs.existsSync(saved),'reopened sensitivity save');report.saved=saved;report.savedStateId=last.view.stateId;report.checks.push('Fresh process replays saved finite-offset studies and restores the scenario-based STOP selection');
+    }
     if(process.env.STRATEGY_REOPEN_CONTEXT==='1'){
      await click('Compare two-tool strategies','summary');await click('Acknowledge two-tool research scope','input[type=checkbox]');
      if(await js(`document.querySelector('[aria-label="Require functional evidence for strategies"]').checked`))await click('Require functional evidence for strategies','input[type=checkbox]');
@@ -42,7 +49,7 @@ app.on('browser-window-created',(_event,window)=>{
     }
    }else if(report.expected==='missing-target'){
     assert.equal(last.strategyPlanningAvailability.available,false);assert.match(last.strategyPlanningAvailability.reason,/tumor target is required/);
-    assert.equal(await js(`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Compare executable strategies')`),false);await capture('missing-target');
+    assert.equal(await js(`[...document.querySelectorAll('button')].some(b=>['Compare executable strategies','Assess declared execution offsets'].includes(b.textContent.trim()))`),false);await capture('missing-target');
    }else{
     assert(last.strategyPlanningAvailability.available);await click('Compare two-tool strategies','summary');await click('Acknowledge two-tool research scope','input[type=checkbox]');
     let study=await generate('default-comparison');report.defaultPublicPlanSeal=study.publicPlan.publicPlanSeal;
@@ -83,6 +90,17 @@ app.on('browser-window-created',(_event,window)=>{
      assert.equal(study.publicPlan.decision.operation,'STOP');assert.equal(study.publicPlan.alternatives.length,1);assert.equal(study.publicPlan.decision.reason,'NO_COMPLETE_TOOL_ACCESS');await capture('no-access-stop');
     }
     await click('Require functional evidence for strategies','input[type=checkbox]');study=await generate('functional-evidence-stop');assert.equal(study.publicPlan.decision.operation,'STOP');assert.equal(study.publicPlan.decision.reason,'REQUIRED_EVIDENCE_UNAVAILABLE');assert.equal(study.publicPlan.alternatives.length,1);await capture('functional-stop');
+    if(process.env.STRATEGY_SENSITIVITY==='1'){
+     await click('Require functional evidence for strategies','input[type=checkbox]');study=await generate('sensitivity-conditional-comparison');
+     await click('Execution-offset sensitivity','summary');const zero=await assess(0,'execution-offset-zero');assert(Object.values(zero.policies).every(id=>id===study.publicPlan.decision.selectedId));
+     const nonzero=await assess(1,'execution-offset-one');assert.equal(nonzero.policies.allDeclaredScenarios,'stop');
+     await click('Select result for all tested offsets');assert(await js(`document.querySelector('[data-strategy-candidate="stop"]').getAttribute('aria-selected')==='true'`));await capture('execution-offset-decision','.strategy-sensitivity');
+     if(report.expected==='paired'){
+      const candidate=nonzero.candidates.find(c=>c.id==='long'),failed=candidate.outcomes.find(o=>o.scenarioId==='R+');assert(failed.failure);const point=failed.actionProgram[failed.failure.actionIndex].pose.position;
+      await click('Show failed commanded pose long R+');await until(()=>js(`document.querySelector('.rl-viewer-statusbar')?.textContent.includes(${JSON.stringify(point.map(x=>x.toFixed(1)).join(' / '))})`),'failed command RAS cursor');assert.equal(last.view.stateId,report.baselineStateId);report.failedCommandRasMm=point;await capture('execution-failed-command','.strategy-sensitivity');
+     }
+     report.sensitivityPolicies=nonzero.policies;report.sensitivityScenarioCount=nonzero.scenarioCount;report.checks.push('Zero offset reproduces nominal preference; finite coherent offsets expose complete-program failures and select STOP without changing native state');
+    }
     await click('Save');await until(()=>fs.existsSync(saved),'native save');report.saved=saved;report.savedStateId=last.view.stateId;
    }
    assert.equal(sha(input),original);assert(!report.windowEverVisible&&!window.isVisible());report.sourcePreserved=true;report.passed=true;
