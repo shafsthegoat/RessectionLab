@@ -218,13 +218,85 @@ observation-boundary controls. All 1,212 desktop tests and the build pass
 (existing bundle-size warning). The two saved workspaces retain 19 exact cold-
 replayed branches. Exact hidden-native commands are in the ignored inventory.
 
+## Completed: executable CUSA/Frazier strategy comparison
+
+`post-exposure-two-tool-limited-debulking-v1` separately declares a finite action
+suffix from the existing source-qualified inactive baseline. It does not extend
+historical inactive-task permissions. The typed public baseline drives entry
+proposals, full paired-tool screening, finite native-model execution, reassessment,
+withdrawal and STOP. Both entry points obey the user's requested patch. The
+catalog radii stay 1.5 mm; no new non-target work/removal or target-region escape
+is accepted. Caps bound activation, total duration, actions and search. Unsupported
+physical regimes still refuse. V1/V2/V3 approach behavior remains versioned.
+
+**Rehearse → Compare two-tool strategies** compares two user-controlled CUSA
+activation intervals and STOP. It previews actual inspection, access, suction
+positioning, manipulation, reassessment and withdrawal checkpoints, then installs
+complete checked branches. Target/entry editors use linked MRI coordinates.
+The rule meets a declared research progress threshold, then minimizes modeled
+duration. Required missing functional evidence, exhausted computation and failed
+bounded geometry have distinct STOP reasons. Visibility and clinical outcomes
+remain unassessed; STOP executes no new actions. Existing exposure costs and
+residual source target remain attributed, not counted as new task success.
+
+On the unchanged 0007 DEVELOPMENT baseline, 0.25 s produces zero whole-cell removal
+and 0.5 mm³ pending CUSA work; 1 s removes 2 mm³ target with no new non-target
+removal. The same inactive follow-up pose rejects after the shorter interval and
+accepts after the longer one. With a 1-mm³ research progress requirement, changing
+the short interval to 0.75 s removes 1 mm³ and reverses the modeled preference to
+the shorter sequence. These are consequences of an assumed contact-capacity law
+and whole source cells, not measured device rates or surgical recommendations.
+Suction removes zero liquid in this dry modeled baseline; no hemostatic benefit
+is claimed. Pending work, removal, both tool states and clock survive branching.
+
+Actual hidden Electron controls preview these checkpoints, install two different
+branches, restrict the shared entry, force missing-functional-evidence STOP,
+save and reopen. 0005 retains its no-access STOP; the exact missing-target case
+still offers no comparison action. All automation remains hidden. Native
+checkpoints and public predictions agree at every committed suffix action;
+manual edits fork protected study branches rather than altering checked evidence.
+
+The separate `verify_two_tool_geometry.py` consumes exported programs, never the
+planner. It observes actual native microsteps and uses `geometry.check_route` for
+both complete tools, stationary occupancy and shafts. Controlled target working
+contact is separate from shaft/non-target exclusions. Axial retreat from contact
+requires a whole-cell forward-halfspace proof; it never shrinks tools or clears
+extra tissue. Default programs pass 1,595/1,606 independent checks; modified
+intervals pass 1,598/1,604. All endpoints cold replay exactly. Falsification controls
+reject non-target working contact, target shaft collision, other-tool collision,
+forward 'retreat' and clipped submillimeter-grid obstacles.
+
+The native `.ressectionlab` archive is the reproducible plan/evidence export.
+Use it for certification: JavaScript diagnostic JSON does not preserve Python's
+numeric type identity for seals. Cold verification checks source bytes, frozen
+reports, prefix predictions and installed programs. Private-reference changes and
+self-resealed program, metric, nested-approach and decision changes are tested.
+
+Measured IPC backend requests on 0007: generation/validation 12.78/12.55 s;
+checkpoint preview 13.11–14.09 s; branch installation 13.30–13.38 s; missing-evidence
+STOP 1.39 s. These exclude renderer admission and are not a speedup claim. Repeated
+canonical execution and per-action summaries are profiling targets. Exact outputs,
+failed prototypes and reproduction commands are indexed in the ignored
+`testcases/two-tool-strategy-v1/README.md`. Final proposed-commit regression:
+232 backend checks, all 1,214 desktop tests and build pass. Six frozen studies
+and two installed endpoints verify with index simulator sources; all 14 original
+source branches remain unchanged.
+
+```sh
+.venv/bin/python -m pytest tests/test_surgical_two_tool.py tests/test_two_tool_geometry_audit.py -q
+.venv/bin/python scripts/verify_two_tool_geometry.py \
+  testcases/two-tool-strategy-v1/desktop-0007-03/strategies-saved.ressectionlab \
+  testcases/two-tool-strategy-v1/desktop-0007-03/strategies-saved.ressectionlab \
+  --revision 1 --output testcases/two-tool-strategy-v1/independent-fresh.json
+```
+
 ## Remaining milestones and next dependency
 
-Next: extend this boundary to a new, explicitly versioned executable two-tool
-manipulation/reassessment task, then migrate the remaining planner interfaces.
-The current admission intentionally permits no active removal or information
-acquisition. Source-linked functional consequences need compatible evidence;
-end-to-end optimization and frozen uncertainty comparison remain open. Older
-lattice resolution dependence and continuum empirical/domain gates remain
-qualification holds. No learned advantage, neurological probability or
-clinical-readiness claim is made.
+This is a bounded acquired-anatomy operating task, not the complete strategy
+platform. Source-linked functional consequences still need compatible evidence;
+the current functional control is an honest refusal. Migrate remaining planner
+interfaces, profile and remove repeated native work, then build the frozen
+uncertainty comparison with matched baselines. Expand the patient distribution
+without touching reserved evaluations. Older lattice resolution dependence and
+continuum empirical/domain gates remain qualification holds. No RL campaign,
+new data acquisition, clinical-outcome probability or novelty claim was added.

@@ -41,3 +41,14 @@ test('interactive approach commands forward bounded editor data and checked cand
   await assert.rejects(f.invoke({caseHash:'case',command:'generateApproaches',reportPath:'/renderer/path'}),/Unsupported operation argument/);
   assert.equal(f.calls.length,3);
 });
+
+test('two-tool task forwards explicit controls, phase preview and sealed installation identity',async()=>{
+  const f=fixture(),constraints={geometry:{requiredEvidence:['functional']},shortSeconds:.25,longSeconds:1,minimumTargetMm3:1};
+  for(const args of [
+    {caseHash:'case',command:'generateStrategies',expectedStateId:'state',constraints,acknowledgeResearchUnknowns:true},
+    {caseHash:'case',command:'previewStrategy',expectedStateId:'state',expectedPlanSeal:'seal',candidateId:'long',phase:'reassess'},
+    {caseHash:'case',command:'applyStrategy',expectedStateId:'state',expectedPlanSeal:'seal',candidateId:'long'},
+  ]){await f.invoke(args);assert.deepEqual(JSON.parse(JSON.stringify(f.calls.at(-1)[1])),args);}
+  assert.equal(f.dialogs.length,0);
+  await assert.rejects(f.invoke({caseHash:'case',command:'generateStrategies',privateReferencePath:'/private/oracle'}),/Unsupported operation argument/);
+});

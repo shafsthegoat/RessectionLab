@@ -12,7 +12,7 @@ function maneuverabilityLabel(value:unknown):string {
   }
   return 'Unassessed';
 }
-function RegionEditor({name,value,onChange,cursor,onCursor,disabled}:{name:string;value:InteractivePlanningConstraints['target'];onChange:(v:InteractivePlanningConstraints['target'])=>void;cursor:Point3|null;onCursor?:(p:Point3)=>void;disabled:boolean}){
+export function RegionEditor({name,value,onChange,cursor,onCursor,disabled}:{name:string;value:InteractivePlanningConstraints['target'];onChange:(v:InteractivePlanningConstraints['target'])=>void;cursor:Point3|null;onCursor?:(p:Point3)=>void;disabled:boolean}){
   return <fieldset className="approach-region" disabled={disabled}><legend>{name}</legend>
     <div className="approach-coordinates">{['R','A','S'].map((axis,i)=><label key={axis}>{axis} · mm<input aria-label={`${name} ${axis} coordinate`} type="number" step="0.5" value={value.centerMm[i]} onChange={e=>{const p=[...value.centerMm] as Point3;p[i]=e.target.valueAsNumber;onChange({...value,centerMm:p});}}/></label>)}</div><label className="approach-radius">Radius · mm<input aria-label={`${name} radius`} type="number" min="0.5" max="30" step="0.5" value={value.radiusMm} onChange={e=>onChange({...value,radiusMm:e.target.valueAsNumber})}/></label>
     <div className="surgical-actions"><button disabled={!cursor} onClick={()=>cursor&&onChange({...value,centerMm:[...cursor]})}>Use linked MRI cursor</button><button disabled={!onCursor||value.centerMm.some(n=>!Number.isFinite(n))} onClick={()=>onCursor?.(value.centerMm)}>Show in linked views</button></div>

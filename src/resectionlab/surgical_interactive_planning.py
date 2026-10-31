@@ -480,14 +480,30 @@ def _public_report_body(report):
 
 
 def _validate_observed_report(engine, report):
-    from .surgical_planning_observation import project_observation, preview_inactive_program
+    from .surgical_planning_observation import project_observation
     admitted = admission(engine)
     if report['evidence'] != _evidence(engine):
         raise ValueError('Interactive report source evidence differs')
     observation = project_observation(engine, admitted['task'], report['evidence']['availableEvidence'])
+    validate_public_approach_plan(observation, {**_public_report_body(report), 'publicPlanSeal': report['publicPlanSeal']})
+
+
+def validate_public_approach_plan(observation, report):
+    """Shared complete validator for a standalone public plan or native envelope."""
+    from .core import thaw_json
+    from .surgical_planning_observation import PlanningObservation, preview_inactive_program
+    if type(observation) is not PlanningObservation or type(report) is not dict:
+        raise ValueError('Typed public approach observation and plan required')
+    fields = thaw_json(observation.fields)
+    if normalize_constraints(observation.planning_engine(), report['constraints'], task=fields['task']) != report['constraints']:
+        raise ValueError('Interactive public constraints differ')
+    if report.get('evidence') != {'availableEvidence': fields['availableEvidence']}:
+        raise ValueError('Interactive public evidence differs')
     if report.get('publicObservation') != observation.manifest():
         raise ValueError('Interactive public observation differs')
     body = _public_report_body(report)
+    if set(report) != {*body, 'publicPlanSeal'}:
+        raise ValueError('Interactive public plan schema differs')
     if report.get('publicPlanSeal') != semantic_digest(body):
         raise ValueError('Interactive public plan seal differs')
     expected = {'operation': 'COMPARE' if report['routes'] else 'STOP',
@@ -504,7 +520,7 @@ def _validate_observed_report(engine, report):
                                       else 'missingRequiredEvidence' in report)):
         raise ValueError('Interactive public refusal status differs from evidence and route count')
     public = observation.planning_engine()
-    _validate_routes(public, body, public_task=admitted['task'])
+    _validate_routes(public, body, public_task=fields['task'])
     for row in report['routes']:
         if row.get('publicExecution') != preview_inactive_program(public, row):
             raise ValueError('Interactive public execution differs')
@@ -569,6 +585,16 @@ def _validate_routes(engine, report, *, public_task=None):
         previous.append((entry, inward))
         expected, rejection = post_exposure_proposal(engine, entry, goal, constraints['tool']['radiusMm'], lambda: None,
             non_target_clearance_mm=constraints['nonTargetClearanceMm'], stop_at_first_contact=admitted is not None or public_task is not None)
+        if public_task is not None and not rejection:
+            keys = {*expected, 'id', 'label', 'separationComparisons', 'publicExecution'}
+            if set(route) != keys:
+                raise ValueError('Interactive public route schema differs')
+            comparisons = [{'routeId': report['routes'][j]['id'],
+                'entrySeparationMm': float(np.linalg.norm(entry-other_entry)),
+                'angleDeg': float(np.degrees(np.arccos(np.clip(inward@other_axis, -1., 1.))))}
+                for j, (other_entry, other_axis) in enumerate(previous[:-1])]
+            if semantic_digest(route.get('separationComparisons')) != semantic_digest(comparisons):
+                raise ValueError('Interactive public separation receipts differ')
         if (rejection or any(route.get(key) != value for key, value in expected.items()) or
                 route['id'] != 'approach-'+str(index) or route.get('label') != 'Source approach '+str(index)):
             raise ValueError('Interactive approach program or geometry metrics differ')

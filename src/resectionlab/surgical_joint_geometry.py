@@ -692,7 +692,7 @@ def _params(engine, radius):
     return engine.parameters(slot)
 
 
-def _axial_cover(engine, start, end, params):
+def _axial_cover(engine, start, end, params, *, instrument='cusa'):
     """Bound all engine midpoint sweeps during fixed-axis axial translation.
 
     The union of endpoint capsules, inflated by half the maximum engine
@@ -702,8 +702,8 @@ def _axial_cover(engine, start, end, params):
     if np.linalg.norm(np.cross(np.asarray(end['position'])-start['position'], axis)) > 1e-7:
         raise ValueError('Only fixed-axis axial routes are admitted')
     inflation = min(.4, float(engine.scene.spacing.min())/3.)/2.
-    first = envelopes(TOOLS['cusa'], params, start['position'], start['quaternion'])
-    last = envelopes(TOOLS['cusa'], params, end['position'], end['quaternion'])
+    first = envelopes(TOOLS[instrument], params, start['position'], start['quaternion'])
+    last = envelopes(TOOLS[instrument], params, end['position'], end['quaternion'])
     result = []
     for (a, b, r, part), (c, d, _, _) in zip(first, last):
         points = [a, b, c, d]

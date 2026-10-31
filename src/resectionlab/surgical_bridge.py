@@ -154,19 +154,20 @@ def dispatch(session, operation, args, request, progress):
         argument_keys.add('protectionPath')
     if args.get('command') == 'reevaluateConsequences':
         argument_keys.update({'policyInput', 'expectedComparisonSeal'})
-    if args.get('command') in {'generateApproaches', 'previewApproach', 'applyApproach'}:
+    if args.get('command') in {'generateApproaches', 'previewApproach', 'applyApproach', 'generateStrategies', 'previewStrategy', 'applyStrategy'}:
         argument_keys.update({'constraints', 'candidateId', 'expectedPlanSeal'})
     if args.get('command') == 'seekPrefix' and type(args.get('position')) is int and args['position'] == 0:
         argument_keys.add('cacheOnly')
+    if args.get('command') == 'previewStrategy': argument_keys.add('phase')
     _keys(args, argument_keys)
     if args.get('command') == 'recoverExit':
         _keys(args, {'caseHash', 'command', 'expectedStateId'})
     if args.get('command') == 'reevaluateConsequences':
         _keys(args, {'caseHash', 'command', 'expectedStateId', 'policyInput', 'expectedComparisonSeal'})
-    if args.get('command') == 'generateApproaches':
+    if args.get('command') in {'generateApproaches', 'generateStrategies'}:
         _keys(args, {'caseHash', 'command', 'expectedStateId', 'constraints', 'acknowledgeResearchUnknowns'})
-    if args.get('command') in {'previewApproach', 'applyApproach'}:
-        _keys(args, {'caseHash', 'command', 'expectedStateId', 'candidateId', 'expectedPlanSeal'})
+    if args.get('command') in {'previewApproach', 'applyApproach', 'previewStrategy', 'applyStrategy'}:
+        _keys(args, {'caseHash', 'command', 'expectedStateId', 'candidateId', 'expectedPlanSeal', *({'phase'} if args.get('command') == 'previewStrategy' else set())})
     if 'cumulativeReentry' in args and (args.get('command') != 'plan' or
             args.get('opponent') != 'anatomy-staged-strategy' or
             type(args['cumulativeReentry']) is not bool):
@@ -219,7 +220,7 @@ def dispatch(session, operation, args, request, progress):
         # Replacement archives and all editable commands retain full admission.
         artifacts = entry.artifacts if hot_frame or args.get('command') in PREFIX_COMMANDS else thaw_json(entry.artifacts)
     command = args.get('command', 'inspect')
-    if command not in {'create', 'inspect', 'inspectArchive', 'preview', 'step', 'recoverExit', 'undo', 'redo', 'seek', 'branch', 'selectBranch', 'reset', 'selectScene', 'plan', 'fullCase', 'attachProtection', 'reevaluateConsequences', 'generateApproaches', 'previewApproach', 'applyApproach', 'seekFrame', *PREFIX_COMMANDS}:
+    if command not in {'create', 'inspect', 'inspectArchive', 'preview', 'step', 'recoverExit', 'undo', 'redo', 'seek', 'branch', 'selectBranch', 'reset', 'selectScene', 'plan', 'fullCase', 'attachProtection', 'reevaluateConsequences', 'generateApproaches', 'previewApproach', 'applyApproach', 'generateStrategies', 'previewStrategy', 'applyStrategy', 'seekFrame', *PREFIX_COMMANDS}:
         raise ValueError('Unsupported surgical command')
     raw = artifacts.get(ARTIFACT)
     from .surgical_environment import standardize, default_target_names, SCHEMA as ENVIRONMENT_SCHEMA
@@ -391,7 +392,7 @@ def dispatch(session, operation, args, request, progress):
         engine = engine.clone()
     if command not in ('create', 'inspect', 'selectScene') and args.get('expectedStateId') != engine.state_id:
         raise BridgeError('SURGICAL_STATE_STALE', 'The scene changed. Refresh before applying this action.')
-    if 'planarBladeManeuverV1' in engine.scene.properties and command in ('plan', 'fullCase', 'recoverExit', 'attachProtection', 'generateApproaches', 'previewApproach', 'applyApproach'):
+    if 'planarBladeManeuverV1' in engine.scene.properties and command in ('plan', 'fullCase', 'recoverExit', 'attachProtection', 'generateApproaches', 'previewApproach', 'applyApproach', 'generateStrategies', 'previewStrategy', 'applyStrategy'):
         raise ValueError('PLANAR_MANEUVER_ONLY: this opt-in scene admits only the declared blade actions and supported replay')
     outcome = None
     verified_display_state_id = None
@@ -456,7 +457,40 @@ def dispatch(session, operation, args, request, progress):
             'branches': [{'id': k, 'steps': len(v['actions']), 'parent': record.get('parents', {}).get(k)} for k,v in record['branches'].items()]}
         _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Playback frame exceeds the display budget')
         return result
-    if command == 'generateApproaches':
+    if command == 'generateStrategies':
+        if args.get('acknowledgeResearchUnknowns') is not True:
+            raise ValueError('Acknowledge the finite two-tool research task and missing anatomy')
+        from .surgical_two_tool import generate_comparison
+        from .surgical_strategy_workspace import install_report
+        generated = generate_comparison(engine, args.get('constraints'), check=request.check, progress=progress)
+        install_report(engine, record, identity, generated)
+    elif command in {'previewStrategy', 'applyStrategy'}:
+        from .surgical_two_tool import materialize
+        from .surgical_strategy_workspace import current_report, install_application
+        item = current_report(engine, record, identity, args.get('expectedPlanSeal'))
+        candidate_id = args.get('candidateId')
+        candidate, checkpoints, receipt = materialize(engine, item['report'], candidate_id, check=request.check)
+        if command == 'previewStrategy':
+            phase = args.get('phase', 'operate')
+            if phase not in ('inspect', 'access', 'position-secondary', 'operate', 'reassess', 'withdraw'):
+                raise ValueError('Unknown strategy checkpoint')
+            shown = checkpoints.get(phase, candidate)
+            approach_preview = {'view': shown.view(), 'outcome': {'status': 'accepted', 'reason': None,
+                'completedFraction': 1., 'events': []}, 'kind': 'strategy', 'phaseId': phase,
+                'candidateId': candidate_id, 'reportSeal': item['report']['reportSeal'], 'receipt': receipt}
+        else:
+            parent = {'branchId': record['branchId'], 'position': record['position']}
+            branch = 'strategy-'+str(len(record['branches']))
+            while branch in record['branches']: branch += '-next'
+            engine = candidate
+            record['branches'][branch] = engine.snapshot()
+            record.setdefault('timeline', {})[branch] = copy.deepcopy(engine.history)
+            record.setdefault('parents', {})[branch] = parent
+            record.update(branchId=branch, position=len(engine.actions))
+            install_application(record, item, branch, engine, candidate_id, receipt)
+            outcome = {'status': 'accepted', 'reason': 'Checked complete two-tool strategy installed',
+                       'completedFraction': 1., 'events': []}
+    elif command == 'generateApproaches':
         if args.get('acknowledgeResearchUnknowns') is not True:
             raise ValueError('Acknowledge the post-exposure research scope and missing anatomy before generating approaches')
         from .surgical_interactive_planning import generate_interactive_approaches
@@ -744,6 +778,8 @@ def dispatch(session, operation, args, request, progress):
                 if (value := evidence.get(field)) is not None)
             from .surgical_interactive_workspace import protected_branches
             planned_ids.update(protected_branches(record))
+            from .surgical_strategy_workspace import protected_branches as strategy_branches
+            planned_ids.update(strategy_branches(record))
             if record['position'] != len(full['actions']) or record['branchId'] in planned_ids:
                 parent = {'branchId': record['branchId'], 'position': record['position']}
                 record['branchId'] = 'branch-' + str(len(record['branches']))
@@ -788,7 +824,7 @@ def dispatch(session, operation, args, request, progress):
         shown_timeline = display_timeline(shown_timeline)
         shown_view['history'] = shown_timeline[:len(engine.actions)]
     result = {'caseHash': identity, 'view': shown_view, 'outcome': outcome,
-              'changed': command == 'recoverExit' or command not in {'inspect', 'previewApproach'} and not unchanged_tool and (outcome is None or outcome['status'] != 'rejected'),
+              'changed': command == 'recoverExit' or command not in {'inspect', 'previewApproach', 'previewStrategy'} and not unchanged_tool and (outcome is None or outcome['status'] != 'rejected'),
               'timeline': shown_timeline,
               'previousScenes': [{'index': i, 'label': f"Environment {i + 1}", 'branches': len(s.get('branches', {}))} for i, s in enumerate(artifacts.get('surgical_prior_scenes', []))],
               'branchId': record['branchId'], 'position': record['position'],
@@ -809,6 +845,10 @@ def dispatch(session, operation, args, request, progress):
         bind_admission(engine, record['taskAdmission'])
     result['interactivePlanningAvailability'] = interactive_planning_availability(engine)
     result['interactivePlanning'] = planning_view(engine, record, identity)
+    from .surgical_two_tool import defaults as strategy_availability
+    from .surgical_strategy_workspace import planning_view as strategy_view
+    result['strategyPlanningAvailability'] = strategy_availability(engine)
+    result['strategyPlanning'] = strategy_view(engine, record, identity)
     if approach_preview is not None:
         result['approachPreview'] = approach_preview
     comparison = copy.deepcopy(record.get('planning'))
@@ -861,7 +901,7 @@ def dispatch(session, operation, args, request, progress):
     if record.get('researchSetup'):
         result['researchSetup'] = copy.deepcopy(record['researchSetup'])
     _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Save this sequence before continuing')
-    if command == 'previewApproach':
+    if command in {'previewApproach', 'previewStrategy'}:
         request.check()
         return result
     request.begin_commit()

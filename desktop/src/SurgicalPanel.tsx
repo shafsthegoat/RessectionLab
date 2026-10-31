@@ -1,3 +1,4 @@
+import {TwoToolStrategyPanel} from './TwoToolStrategyPanel';
 import {InteractivePlanningPanel} from './InteractivePlanningPanel';
 import type {Point3} from './viewer/coordinates';
 import {PatientPositionControls} from './PatientPositionControls';
@@ -199,7 +200,7 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
       <strong>{c.preview?'Preview · uncommitted':observed?'Read-only replay':readOnly?'Read-only recorded state':'Committed state · editable'}</strong>
       <p>Action {position} / {steps} · {r?.branchId}</p>
       {inspectionNotice&&<p className="surgical-warning">{inspectionNotice}</p>}
-      {c.preview&&<><p>{c.approachPreview?'Install checked branch below commits this approach. Cancel returns to the planning checkpoint.':'Apply commits; Cancel returns to committed anatomy.'}</p><button onClick={c.cancel}>Cancel preview</button></>}
+      {c.preview&&<><p>{c.approachPreview?'Install checked branch below commits this plan. Cancel returns to the planning checkpoint.':'Apply commits; Cancel returns to committed anatomy.'}</p><button onClick={c.cancel}>Cancel preview</button></>}
       {c.pending&&<><button onClick={c.cancel}>Cancel</button><p>Cancel clears the draft. The current request continues.</p></>}
       {observed&&<button disabled={c.pending} onClick={()=>stopRun(routes.boundary,{branchId:r?.branchId,position})}>Return to recorded boundary</button>}
       {imported&&!observed&&<button disabled={c.pending} onClick={()=>stopRun('inspect',{branchId:r?.branchId})}>Verify saved replay</button>}
@@ -213,10 +214,11 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
     <div className="surgical-toolbox">{v.catalog.filter(t=>(t.name+' '+t.category).toLowerCase().includes(search.toLowerCase())).map(t=><button key={t.id} aria-pressed={selected?.instrument===t.id} disabled={c.pending||playing||readOnly||!!v.planarBladeManeuver||selected?.instrument===t.id} onClick={()=>{if(selected?.instrument!==t.id)stopRun('step',{action:{slot:c.slot,operation:'exchange',instrument:t.id,duration:1}})}}><small>{t.category}</small>{t.name}</button>)}</div>
     <p className="surgical-note">Choosing a different instrument commits an exchange. The selected instrument does not advance time.</p></details>
 
+    {!v.planarBladeManeuver&&<TwoToolStrategyPanel c={c} cursor={planningCursor} onCursor={onPlanningCursor} pause={()=>{setPlaying(false);c.pauseFullCase();}}/>}
     {!v.planarBladeManeuver&&<InteractivePlanningPanel c={c} cursor={planningCursor} onCursor={onPlanningCursor} pause={()=>{setPlaying(false);c.pauseFullCase();}}/>}
     {!v.planarBladeManeuver&&<FullCaseRehearsalPanel c={c} pause={()=>setPlaying(false)}/>}
     {v.planarBladeManeuver&&<PlanarBladeManeuverPanel c={c} disabled={playing||readOnly} pause={()=>{setPlaying(false);c.pauseFullCase();}}/>}
-    <section className="manual-actions" aria-label="Manual instrument actions"><h3>Manual action</h3>{c.approachPreview&&<p className="surgical-note">Install or cancel the checked approach preview before a manual instrument action.</p>}
+    <section className="manual-actions" aria-label="Manual instrument actions"><h3>Manual action</h3>{c.approachPreview&&<p className="surgical-note">Install or cancel the checked plan preview before a manual instrument action.</p>}
     {v.planarBladeManeuver&&<p className="surgical-note">Use the declared fixed blade maneuver above. Other instrument actions are unavailable in this scene.</p>}
     {!compatible&&<p className="surgical-warning">No compatible material is mapped in this scene. Placement and inspection remain available; tissue effects require compatible material.</p>}
     <fieldset disabled={c.pending||playing||readOnly||!!v.planarBladeManeuver||!!c.approachPreview} className="surgical-controls">
