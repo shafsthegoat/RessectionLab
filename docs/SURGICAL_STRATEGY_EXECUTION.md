@@ -903,6 +903,43 @@ Detailed commands, source/field hashes, observations and preserved failures are 
 `testcases/desktop-preparation-v1/README.md`. Empirical mechanics, complete exterior
 anatomy and clinical/function claims remain unqualified.
 
+## Implemented: bounded paired-lane preparation with a software positive
+
+The earlier failure includes a hard pair-geometry constraint: the held 0004 route
+cannot accommodate both full working heads at its 0.5 mm entry radius, regardless
+of tissue removal. Entry enlargement alone also leaves retained-tissue obstruction.
+The new opt-in v3 preparation keeps the declared source ray, adds one parallel
+lane along its fixed tool-frame Y direction, and executes fixed 0.3 mm local passes
+around each lane. Coincident paths deduplicate; zero separation still has five
+passes, nonzero separation at most ten. Each endpoint is capped at the central
+reference depth and clips earlier for source target. Catalog geometry, zero target
+preparation, 200 mm³/128-action/180-second caps and withdrawal remain unchanged.
+Original v1/v2 native proofs and endpoints match frozen pre-family code exactly.
+
+The desktop exposes family and separation controls without automatically enlarging
+the entry patch. Edits invalidate prior previews; saved applications retain their
+own family. In a labeled shallow generated control with a common 6 mm entry patch,
+one lane costs 76 mm³/48.2 s and ends in two-tool STOP. A 3.42 mm second lane costs
+130 mm³/85.2 s, then a 15-action, 2.44 s complete suffix removes 2 mm³ target with
+zero additional non-target and full withdrawal. Independent literal geometry,
+source boxes, native prefixes, costs, policies and installed branches pass. This
+qualifies a software decision predicate, not acquired evidence, Frazier benefit,
+clinical preference or algorithm superiority; both policies use the same offline
+table. A larger ring and deeper prototype retain their budget failures.
+
+The fixed exposed-DEVELOPMENT 0004 challenge stays negative: zero separation
+prepares 63 mm³/41.2 s then STOP; 1.71/3.42 mm lanes are generator refusals. Producer
+diagnostics identify earlier target clipping before the shifted entry plane;
+these diagnostics and empty-row audits do not prove exhaustive infeasibility.
+Hidden desktop controls reproduce the native report exactly. New and older saved
+workspaces retain their entire engine records, all eight source arrays and original
+branches on cold reopen. Independent checks include canonical source-frame roll,
+coordinated geometry forgeries and actual earlier-clipped oblique attempted paths.
+All 369 selected backend tests, 1,244 desktop tests and the build pass. No window
+becomes visible. Detailed provenance, exact commands, timings and failures remain
+in `testcases/preparation-working-room-v1/README.md`; no speed or acquired-plan
+advantage, empirical calibration, new acquisition, training or clinical claim follows.
+
 ## Remaining milestones and next dependency
 
 This is a bounded acquired-anatomy operating task, not the complete strategy
@@ -914,10 +951,12 @@ Add supported anatomical/execution uncertainty, a frozen comparison with matched
 route-search baselines and independent challenge cases; continue reducing cold
 proof/display cost and migrate remaining planner interfaces. The matched exposure
 experiment is now an explicit negative result: the current preparation family does
-not solve two-tool operation on 0004. Common surgeon controls now connect preparation alternatives and their complete-plan
-consequences. Next use measured failure constraints to design a bounded next
-family before evaluating it. Establish
-positive generated software controls separately from acquired evidence. Expand the
+not solve two-tool operation on 0004. Common surgeon controls now connect
+preparation alternatives and their complete-plan consequences; paired lanes have
+a complete generated software control and an explicit acquired negative. Next
+qualify the limiting source/entry geometry and anatomy/execution perturbations
+against matched baselines. Continue checking cold image delivery separately from
+native array/study preservation. Expand the
 patient distribution without touching
 reserved evaluations. Older lattice resolution dependence and
 continuum empirical/domain gates remain qualification holds. No RL campaign,

@@ -60,3 +60,4 @@
 
 .preparation-planning .approach-table{min-width:0;max-width:100%}.preparation-planning .approach-table table{table-layout:fixed}.preparation-planning .approach-table th:first-child{width:21%}.preparation-planning .approach-table th,.preparation-planning .approach-table td{vertical-align:top;padding:6px 4px;overflow-wrap:normal;word-break:normal}.preparation-planning .approach-table button{white-space:nowrap}.preparation-planning .approach-table td p{margin-top:5px;font-size:11px}
 .preparation-planning{min-width:0}.preparation-draft{min-width:0;grid-template-columns:minmax(0,1fr)}.preparation-draft>*{min-width:0}.preparation-draft .approach-selection{box-sizing:border-box;max-width:100%;overflow-wrap:anywhere}
+.preparation-draft[data-preparation-family="paired-lanes-v1"] .approach-table th:first-child{width:27%}

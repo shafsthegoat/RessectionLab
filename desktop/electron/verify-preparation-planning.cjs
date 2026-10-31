@@ -35,7 +35,34 @@ app.on('browser-window-created',(_event,window)=>{
    await until(()=>js(`!!document.querySelector('.rl-viewer canvas')&&!document.querySelector('.viewer-loading')`),'case load');await click('Rehearse');await ready();
    if(await js(`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Verify saved replay')`)){await click('Verify saved replay');await ready();}
    report.baselineStateId=last.view.stateId;report.baselineBranchId=last.branchId;report.sourceSceneId=last.view.scene.sceneId;report.caseHash=last.caseHash;
-   if(process.env.PREPARATION_LAYOUT_ONLY==='1'){
+   if(process.env.PREPARATION_PAIRED_REOPEN_ONLY==='1'){
+    assert.equal(last.view.stateId,process.env.PREPARATION_EXPECTED_STATE);assert.equal(last.preparationPlanning.revision,1);
+    assert.equal(last.preparationPlanning.controls.preparationFamily,'paired-lanes-v1');assert.equal(last.preparationPlanning.applications.length,1);
+    const app=last.preparationPlanning.applications[0];assert.equal(app.preparationFamily,'paired-lanes-v1');
+    const label=await js(`document.querySelector('[data-preparation-branch] button')?.textContent.trim()`);assert(label);await click(label);await ready();
+    assert.equal(last.view.stateId,app.receipt.preparationStateId);assert(last.interactivePlanningAvailability.available);
+    await click('Open preparation comparison checkpoint');await ready();assert.equal(last.view.stateId,report.baselineStateId);
+    await set('Surgical branch',report.baselineBranchId);await ready();await capture('paired-studies-reopened','[aria-label="Preparation comparison table"]');
+    report.checks.push('Cold paired-family report, owned native application and original source cursor preserved');
+   }else if(process.env.PREPARATION_PAIRED_ONLY==='1'){
+    assert(last.preparationPlanningAvailability.available);assert.equal(last.view.metrics.nonTargetRemovedMm3,0);
+    await click('Compare preparation and complete plans','summary');await acknowledge();
+    await request('Suggest source ray from public anatomy','suggestPreparation');await until(()=>js(`document.querySelector('[aria-label="Source surface cell A coordinate"]')?.value==='85'`),'suggested source cells');
+    await set('Source surface cell A coordinate',83);await set('Source surface cell S coordinate',123);
+    await set('Preparation family','paired-lanes-v1');await set('Shared entry-patch radius · mm',6);
+    const context=last.preparationPlanningAvailability.contextOptions.find(x=>x.labelValue===2);assert(context);
+    await set('Preparation context layer',context.layerId);await set('Preparation context near volume mm3',1000);
+    const study=await generate('paired-comparison');assert.equal(study.schema,'resectionlab.source-preparation-comparison.v2');assert.deepEqual(study.rows.map(r=>r.widthMm),[0,1.71,3.42]);
+    assert.equal(study.controls.entryRadiusMm,6);assert.equal(study.controls.preparationFamily,'paired-lanes-v1');
+    assert.equal(study.rows[0].preparation.schema,'resectionlab.source-exposure-preparation.v3');
+    assert.equal(study.rows[0].preparation.publicPlan.attempts[0].summary.additionalNonTargetMm3,63);
+    assert.equal(study.rows[0].comparison.publicPlan.decision.selectedId,'stop');assert(study.rows.slice(1).every(r=>r.reason==='PREPARATION_GENERATOR_REFUSAL'));
+    await capture('paired-comparison-table','[aria-label="Preparation comparison table"]');await preview(0);
+    assert.equal(last.approachPreview.view.metrics.nonTargetRemovedMm3,63);await request('Install preparation branch','applyPreparation');
+    assert(last.interactivePlanningAvailability.available);report.pairedStateId=last.view.stateId;assert.equal(last.view.metrics.targetRemovedMm3,0);
+    await click('Open preparation comparison checkpoint');await ready();assert.equal(last.view.stateId,report.baselineStateId);assert(!last.interactivePlanningAvailability.available);
+    report.checks.push('Real paired-lane controls produce finite 63mm3 preparation+STOP and two generator refusals, with costful preview/install/source return');
+   }else if(process.env.PREPARATION_LAYOUT_ONLY==='1'){
     if(!last.preparationPlanning.current){await click('Open preparation comparison checkpoint');await ready();}
     await click('Compare preparation and complete plans','summary');await capture('numeric-comparison-layout','[aria-label="Preparation comparison table"]');
     await set('Surgical branch',report.baselineBranchId);await ready();assert.equal(last.view.stateId,report.baselineStateId);

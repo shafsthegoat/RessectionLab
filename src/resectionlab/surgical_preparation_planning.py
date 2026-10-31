@@ -16,12 +16,13 @@ import numpy as np
 
 from .core import semantic_digest
 from .surgical_engine import SurgicalEngine
-from .surgical_exposure import DEFAULTS, normalize, normalize_source_ray, project_exposure, prepare, _shortlist
+from .surgical_exposure import DEFAULTS, normalize, normalize_source_ray, project_exposure, prepare, _shortlist, PAIRED_FAMILY
 from .surgical_task_admission import source_evidence, verify_source, task_spec, prepare_admission, bind_admission
 from .surgical_anatomical_encounter import normalize_limit
 from . import surgical_two_tool as two_tool
 
 SCHEMA = 'resectionlab.source-preparation-comparison.v1'
+FAMILY_SCHEMA = 'resectionlab.source-preparation-comparison.v2'
 SCOPE = ('Annotation-assisted intracerebral preparation and finite two-tool comparison. '
     'Executed mapped non-target removal is an explicit preparation cost; target progress is counted only in the suffix. '
     'Exterior/skull/dura, complete vessels, optical visibility and functional/clinical outcomes remain unassessed. '
@@ -68,15 +69,17 @@ def availability(engine, record, collection_path):
         for r in rows if r.get('kind') in ('context','lesion-context') and r.get('role')=='context'
         and type(r.get('label_value')) is int and r['label_value']>0
         and r.get('provenance',{}).get('kind')=='observed_source_annotation']
-    return {**value,'available':True,'defaults':copy.deepcopy(DEFAULT_CONTROLS),'contextOptions':options,
+    return {**value,'available':True,'defaults':{**copy.deepcopy(DEFAULT_CONTROLS),'preparationFamily':'cardinal-v1'},'contextOptions':options,
         'reason':'Original bytes and the complete source checkpoint are verified when a suggestion or comparison is requested.'}
 
 
 def normalize_controls(raw):
-    require(type(raw) is dict and set(raw)==set(DEFAULT_CONTROLS),'exact preparation controls required')
+    require(type(raw) is dict and set(raw) in (set(DEFAULT_CONTROLS),set(DEFAULT_CONTROLS)|{'preparationFamily'}),'exact preparation controls required')
+    family=raw.get('preparationFamily','cardinal-v1')
+    require(type(family) is str and family in ('cardinal-v1',PAIRED_FAMILY),'unknown preparation family')
     ray=normalize_source_ray(raw['sourceRay']);widths=raw['widthsMm']
-    require(type(widths) is list and 1<=len(widths)<=3 and all(type(w) in (int,float) and np.isfinite(w) and 0<=w<=1 for w in widths)
-        and len(set(widths))==len(widths),'one to three distinct displacements from zero to one mm required')
+    require(type(widths) is list and 1<=len(widths)<=3 and all(type(w) in (int,float) and np.isfinite(w) and 0<=w<=(4. if family==PAIRED_FAMILY else 1.) for w in widths)
+        and len(set(widths))==len(widths),'one to three distinct displacements within the selected family bounds required')
     limits=normalize({**DEFAULTS,'maxNonTargetMm3':raw['maxNonTargetMm3'],'maxActions':raw['maxActions'],
         'maxSeconds':raw['maxSeconds'],'maxCandidates':1,'maxWallSeconds':90.})
     task=task_spec(entry={'centerMm':ray['surfaceMm'],'radiusMm':raw['entryRadiusMm']},target=raw['target'],
@@ -93,7 +96,8 @@ def normalize_controls(raw):
     return {'sourceRay':ray,'target':task['target'],'widthsMm':list(map(float,widths)),
         **{k:limits[k] for k in ('maxNonTargetMm3','maxActions','maxSeconds')},'entryRadiusMm':task['entry']['radiusMm'],
         **{k:float(raw[k]) for k in ('shortSeconds','longSeconds','minimumTargetMm3')},
-        'requiredEvidence':task['requiredEvidence'],'encounter':encounter}
+        'requiredEvidence':task['requiredEvidence'],'encounter':encounter,
+        **({'preparationFamily':family} if 'preparationFamily' in raw else {})}
 
 
 def configured_source(engine, *, check):
@@ -166,7 +170,9 @@ def generate(engine, raw, collection_path, *, check=lambda:None, progress=lambda
         else:
             limits={**DEFAULTS,**{k:controls[k] for k in ('maxNonTargetMm3','maxActions','maxSeconds')},
                 'maxCandidates':1,'maxWallSeconds':90.,'lateralSweepMm':width}
-            prepared,proof=prepare(source,limits,native_collection=collection_path,source_ray=controls['sourceRay'],check=guard)
+            family=controls.get('preparationFamily','cardinal-v1')
+            prepared,proof=prepare(source,limits,native_collection=collection_path,source_ray=controls['sourceRay'],check=guard,
+                **({'family':family} if family==PAIRED_FAMILY else {}))
             row['preparation']=proof
             if prepared is None:row['reason']='PREPARATION_GENERATOR_REFUSAL' if not proof['publicPlan']['attempts'] else 'PREPARATION_EXECUTION_REFUSED'
             else:
@@ -185,7 +191,7 @@ def generate(engine, raw, collection_path, *, check=lambda:None, progress=lambda
         'strategy':r['comparison']['publicPlan'] if r['comparison'] else None} for r in rows]
     corridor,joint=choose_policies(public)
     def decision(row):return {'selectedPreparationId':row['id'] if row else None,'suffixId':row['strategy']['decision']['selectedId'] if row else 'stop'}
-    result={'schema':SCHEMA,'sourceSceneId':engine.scene.identity,'startStateId':before['stateId'],
+    result={'schema':FAMILY_SCHEMA if 'preparationFamily' in controls else SCHEMA,'sourceSceneId':engine.scene.identity,'startStateId':before['stateId'],
         'prefixActions':len(engine.actions),'sourceSnapshotHash':semantic_digest(before),'configuredSnapshot':configured,
         'sourceVerification':verification,'controls':controls,'rows':rows,'publicPolicyInputHash':semantic_digest(public),
         'policies':{'corridorFirst':decision(corridor),'completePlanAware':decision(joint)},
@@ -207,7 +213,7 @@ def generate(engine, raw, collection_path, *, check=lambda:None, progress=lambda
 
 def validate_report(engine, report, *, check=lambda:None):
     check();engine.scene.require_cache_source()
-    require(type(report) is dict and report.get('schema')==SCHEMA and report.get('reportSeal')==semantic_digest({k:v for k,v in report.items() if k!='reportSeal'}),
+    require(type(report) is dict and report.get('schema') in (SCHEMA,FAMILY_SCHEMA) and report.get('reportSeal')==semantic_digest({k:v for k,v in report.items() if k!='reportSeal'}),
         'comparison content or schema differs')
     require(report['sourceSceneId']==engine.scene.identity and report['startStateId']==engine.state_id
         and report['sourceSnapshotHash']==semantic_digest(engine.snapshot()),'comparison source checkpoint differs')

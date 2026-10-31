@@ -188,15 +188,72 @@ def geometry(row, baseline, controls, occupied, targets, exterior):
     require(abs(len(union)*scene.voxel_mm3-row['sourceTubeMm3'])<1e-9 and row['sourceTubeMm3']<=controls['maxNonTargetMm3'],'source tube union differs')
 
 
+def paired_geometry(row, baseline, controls, occupied, targets, exterior):
+    """Literal bounded paired lanes, separate from the producer's route builder."""
+    from scipy.spatial.transform import Rotation
+    scene=baseline.scene;removed=set(baseline.state['removed'])
+    source,goal=source_ray_points({k:row[k] for k in ('surfaceMm','sourceTargetMm')},baseline,exterior)
+    distance=float(np.linalg.norm(goal-source));direction=(goal-source)/distance
+    require(3.5<distance<controls['maxPathMm'] and abs(distance-row['surfaceTargetDistanceMm'])<1e-8
+        and np.allclose(direction,row['axisRasUnit'],atol=1e-9,rtol=0.),'declared paired source ray differs')
+    basis=Rotation.from_quat(row['quaternion']).as_matrix()
+    require(np.allclose(basis[:,2],direction,atol=1e-9,rtol=0.),'paired tool axis differs')
+    # Frame Y defines the second lane, so canonical roll is part of this v3
+    # family contract, even when coordinated path edits preserve the ray axis.
+    canonical=Rotation.align_vectors([direction],[[0.,0.,1.]])[0].as_matrix()
+    require(np.allclose(basis,canonical,atol=1e-9,rtol=0.),'paired source frame roll differs')
+    central_start=source-direction*8.
+    require(not (targets._cells(central_start,central_start,1.5)-removed)
+        and bool(targets._cells(central_start,goal,1.5)-removed),'central target ray is not bracketed')
+    low,high=0.,distance+8.
+    for _ in range(26):
+        middle=(low+high)/2
+        if targets._cells(central_start,central_start+direction*middle,1.5)-removed:high=middle
+        else:low=middle
+    central_depth=low-.25
+    coefficients=[]
+    for lane in (0.,controls['lateralSweepMm']):
+        for x,y in ((0.,0.),(.3,0.),(-.3,0.),(0.,.3),(0.,-.3)):
+            pair=(round(x,12),round(lane+y,12))
+            if pair not in coefficients:coefficients.append(pair)
+    require(len(row['paths'])==len(coefficients),'paired path inventory differs')
+    require(row['outsideMm']==row['paths'][0]['outsideMm'] and row['endpointMm']==row['paths'][0]['endpointMm'],
+        'displayed paired primary path differs')
+    materials={r['id']:r['material'] for r in scene.regions};union=set()
+    for (x,y),path in zip(coefficients,row['paths'],strict=True):
+        offset=basis[:,0]*x+basis[:,1]*y;start=central_start+offset
+        require(np.allclose(path['outsideMm'],start,atol=1e-8,rtol=0.),'paired lane offset differs')
+        require(not (targets._cells(start,start,1.5)-removed),'paired path starts in target')
+        depth=central_depth
+        if targets._cells(start,start+direction*(central_depth+.25),1.5)-removed:
+            low,high=0.,central_depth+.25
+            for _ in range(26):
+                middle=(low+high)/2
+                if targets._cells(start,start+direction*middle,1.5)-removed:high=middle
+                else:low=middle
+            depth=min(central_depth,low-.25)
+        endpoint=start+direction*depth
+        require(np.dot(endpoint-(source+offset),direction)>=.5
+            and np.allclose(endpoint,path['endpointMm'],atol=1e-7,rtol=0.),'paired capped target stand-off or depth differs')
+        cells=occupied._cells(start,endpoint,1.5)-removed
+        require(all(materials[int(scene.labels.flat[c])]=='soft_tissue' for c in cells),'paired tube contains non-brain/target source material')
+        union.update(cells)
+    require(abs(len(union)*scene.voxel_mm3-row['sourceTubeMm3'])<1e-9
+        and row['sourceTubeMm3']<=controls['maxNonTargetMm3'],'paired source tube union differs')
+
+
 def verify(case_path, preparation_path, *, expected_snapshot=None):
     case_path, preparation_path = Path(case_path).resolve(), Path(preparation_path).resolve()
     require(all(p.is_relative_to(ROOT/'testcases') for p in (case_path, preparation_path)), 'inputs must stay in testcases')
     inputs = {str(p): file_hash(p) for p in (case_path, preparation_path)}
     proof = json.loads(preparation_path.read_text()); seal(proof, 'preparationSeal'); public = proof['publicPlan']; seal(public, 'publicSeal')
-    fixed=proof['schema']=='resectionlab.source-exposure-preparation.v2'
-    require((proof['schema'],public['schema']) == (('resectionlab.source-exposure-preparation.v2','resectionlab.public-source-exposure-preparation.v2') if fixed
+    paired=proof['schema']=='resectionlab.source-exposure-preparation.v3'
+    fixed=paired or proof['schema']=='resectionlab.source-exposure-preparation.v2'
+    require((proof['schema'],public['schema']) == (('resectionlab.source-exposure-preparation.v3','resectionlab.public-source-exposure-preparation.v3') if paired else
+        ('resectionlab.source-exposure-preparation.v2','resectionlab.public-source-exposure-preparation.v2') if fixed
         else ('resectionlab.source-exposure-preparation.v1','resectionlab.public-source-exposure-preparation.v1')),'preparation schema differs')
     require(('sourceRay' in public)==fixed,'source ray schema differs')
+    if paired:require(public.get('family')=='paired-lanes-v1','paired preparation family differs')
     require(proof['nativeReplayVerified'] is True,'native replay declaration differs')
     _, artifacts, _ = load_workspace(case_path); record = artifacts['surgical_toolbox']; scene = load_environment(case_path)
     expected_snapshot=record['branches'][record['branchId']] if expected_snapshot is None else expected_snapshot
@@ -231,13 +288,13 @@ def verify(case_path, preparation_path, *, expected_snapshot=None):
     require(0 < controls['maxNonTargetMm3'] <= 200 and 6 <= controls['maxActions'] <= 128 and 2 <= controls['maxSeconds'] <= 180, 'unbounded preparation')
     require(1 <= controls['maxCandidates'] <= 12 and len(public['attempts']) <= controls['maxCandidates'], 'candidate inventory differs')
     require(not fixed or len(public['attempts'])<=1,'fixed source ray permits at most one held attempt')
-    require(0<=controls['lateralSweepMm']<=1. and 3.5<controls['maxPathMm']<=40. and 1<=controls['maxProposals']<=1024 and 0<controls['maxWallSeconds']<=90.,'proposal bounds differ')
+    require(0<=controls['lateralSweepMm']<=(4. if paired else 1.) and 3.5<controls['maxPathMm']<=40. and 1<=controls['maxProposals']<=1024 and 0<controls['maxWallSeconds']<=90.,'proposal bounds differ')
     require(public['decision']['selectedIndex'] is None or type(public['decision']['selectedIndex']) is int,'selection type differs')
     rate = scene.properties.get('cusaV3', {}).get('capacityMm3PerSecond', 2.); results = []; chosen = None; microsteps = 0
     for index, attempt in enumerate(public['attempts']):
         require(type(attempt['complete']) is bool,'completion type differs')
         if fixed:require(semantic_digest({k:attempt['route'][k] for k in public['sourceRay']})==semantic_digest(public['sourceRay']),'held attempt replaced source ray')
-        geometry(attempt['route'],baseline,controls,boxes,target_boxes,exterior)
+        (paired_geometry if paired else geometry)(attempt['route'],baseline,controls,boxes,target_boxes,exterior)
         engine = baseline.clone(); engine.__class__ = Capture; engine.trace = []; phases = []
         require(len(attempt['actionProgram']) <= controls['maxActions'] and sum(a['duration'] for a in attempt['actionProgram']) <= controls['maxSeconds']+1e-10, 'program exceeds action/clock bound')
         for action, receipt, expected in zip(attempt['actionProgram'], attempt['actionReceipts'], attempt['physicalStateHashes'], strict=True):

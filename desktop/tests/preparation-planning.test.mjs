@@ -1,10 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {planningBinding} from '../src/interactive-planning-data.ts';
-import {PREPARATION_SCHEMA,currentPreparationReport,currentPreparationSuggestion,preparationActions,
+import {PREPARATION_SCHEMA,PREPARATION_SCHEMA_V2,changePreparationFamily,currentPreparationReport,currentPreparationSuggestion,preparationActions,preparationApplicationLabel,
   preparationControlKey,preparationDraftIssue,preparationLocked,preparationPhaseAvailable,
   preparationPreviewMatches,preparationBaselineText,preparationCost,preparationIncomplete,snapPreparationPoint,
-  preparationPointIsCell} from '../src/preparation-planning-data.ts';
+  preparationPointIsCell,preparationFamilyName,preparationWidthOptions,preparationWidthPresets} from '../src/preparation-planning-data.ts';
 
 function fixture(){
   const controls={sourceRay:{surfaceMm:[3,3,3],sourceTargetMm:[3,3,10]},target:{centerMm:[3,3,10],radiusMm:6},
@@ -82,7 +82,7 @@ test('suggestions are accepted only from the current editable source and remain 
 test('invalid points, widths, budgets, durations and required evidence cannot authorize comparison',()=>{
   const f=fixture();assert.equal(preparationDraftIssue(f.controls),null);
   const edits=[c=>c.sourceRay=null,c=>c.sourceRay.surfaceMm[0]=NaN,c=>c.sourceRay.sourceTargetMm=c.sourceRay.surfaceMm,
-    c=>c.target=null,c=>c.target.radiusMm=16,c=>c.widthsMm=[],c=>c.widthsMm=[0,0],c=>c.widthsMm=[.6],
+    c=>c.target=null,c=>c.target.radiusMm=16,c=>c.widthsMm=[],c=>c.widthsMm=[0,0],c=>c.widthsMm=[1.01],
     c=>c.maxNonTargetMm3=0,c=>c.maxNonTargetMm3=201,c=>c.maxActions=5,c=>c.maxActions=128.5,
     c=>c.maxSeconds=181,c=>c.maxSeconds=Infinity,c=>c.entryRadiusMm=.4,c=>c.shortSeconds=2,
     c=>c.longSeconds=.1,c=>c.minimumTargetMm3=9,c=>c.requiredEvidence=['target'],c=>c.requiredEvidence=['brain','target','brain']];
@@ -170,4 +170,89 @@ test('iterative source burdens stay separate from additional preparation cost an
   assert.equal(preparationBaselineText({...f.report,baselineBurden:undefined}),null,'old saved reports do not invent a zero history');
   assert.equal(preparationBaselineText({...f.report,baselineBurden:{targetRemovedMm3:0,nonTargetRemovedMm3:0,elapsedSeconds:0}})?.includes('0.00 mm³'),true);
   assert.equal(preparationBaselineText({...f.report,baselineBurden:{...f.report.baselineBurden,elapsedSeconds:NaN}}),null);
+});
+
+test('rendering legacy family defaults preserves absent fields and nullable saved controls exactly',()=>{
+  const f=fixture(),before=structuredClone(f.controls),key=preparationControlKey(f.controls);
+  assert.equal(preparationFamilyName(undefined),'Cardinal local sweeps');
+  assert.deepEqual(preparationWidthPresets(undefined),[0,.3,1]);
+  assert.deepEqual(preparationWidthOptions(f.controls),[0,.3,1]);
+  assert.equal(currentPreparationReport(f.response,f.controls,f.submitted,4),f.report);
+  assert.deepEqual(f.controls,before);assert.equal(Object.hasOwn(f.controls,'preparationFamily'),false);
+  assert.equal(f.controls.encounter,null);assert.equal(preparationControlKey(f.controls),key);
+  const empty={...f.controls,sourceRay:null,target:null};const saved=JSON.stringify(empty);
+  preparationWidthOptions(empty);preparationDraftIssue(empty);
+  assert.equal(JSON.stringify(empty),saved,'reading empty defaults never upgrades their family or replaces null points');
+});
+
+test('an explicit family selection resets only width presets, preserving entry radius and physical caps',()=>{
+  const f=fixture();f.controls.entryRadiusMm=6;const before=structuredClone(f.controls);
+  const paired=changePreparationFamily(f.controls,'paired-lanes-v1');
+  assert.deepEqual(paired.widthsMm,[0,1.71,3.42]);assert.equal(paired.preparationFamily,'paired-lanes-v1');
+  for(const key of ['entryRadiusMm','maxNonTargetMm3','maxActions','maxSeconds','sourceRay','target','encounter'])assert.deepEqual(paired[key],before[key]);
+  paired.sourceRay.surfaceMm[0]++;assert.deepEqual(f.controls,before,'edited new family never mutates an old saved study');
+  const cardinal=changePreparationFamily(paired,'cardinal-v1');
+  assert.deepEqual(cardinal.widthsMm,[0,.3,1]);assert.equal(cardinal.entryRadiusMm,6);
+  assert.notEqual(preparationControlKey(cardinal),preparationControlKey(before),'explicit cardinal is a new versioned declaration');
+  assert.throws(()=>changePreparationFamily(before,'unrecognized'),/Unsupported/);
+});
+
+test('family width ranges retain saved custom values while offering mode-specific presets',()=>{
+  const f=fixture();assert.equal(preparationDraftIssue({...f.controls,widthsMm:[0,.6,1]}),null);
+  const paired={...f.controls,preparationFamily:'paired-lanes-v1',widthsMm:[4,2.5]};
+  assert.equal(preparationDraftIssue(paired),null);
+  assert.deepEqual(preparationWidthOptions(paired),[0,1.71,2.5,3.42,4]);
+  assert.deepEqual(paired.widthsMm,[4,2.5],'options do not reorder the canonical matrix');
+  for(const widthsMm of [[],[0,0],[0,1,2,3],[4.01],[-.1],[NaN],[Infinity],[true]])assert(preparationDraftIssue({...paired,widthsMm}));
+  assert(preparationDraftIssue({...paired,preparationFamily:'unknown'}));
+  assert(preparationDraftIssue({...f.controls,preparationFamily:null}));
+});
+
+test('explicit cardinal uses comparison v2 with legacy cardinal proof and cannot downgrade',()=>{
+  const f=fixture();const draft={...f.controls,preparationFamily:'cardinal-v1'};f.report.controls=structuredClone(draft);
+  assert.equal(currentPreparationReport(f.response,draft,f.submitted,4),null,'present family cannot use comparison v1');
+  f.report.schema=PREPARATION_SCHEMA_V2;
+  assert.equal(currentPreparationReport(f.response,draft,f.submitted,4),f.report);
+  assert.equal(preparationPhaseAvailable(f.row,'prepared','cardinal-v1'),true);
+  f.row.preparation.schema='resectionlab.source-exposure-preparation.v3';
+  assert.equal(currentPreparationReport(f.response,draft,f.submitted,4),null,'cardinal cannot borrow paired proof');
+  assert.equal(preparationPhaseAvailable(f.row,'prepared','cardinal-v1'),false);
+});
+
+test('paired reports and previews require paired proof even at zero separation',()=>{
+  const f=fixture();const draft=changePreparationFamily(f.controls,'paired-lanes-v1');
+  f.report.controls=structuredClone(draft);f.report.schema=PREPARATION_SCHEMA_V2;f.report.reportSeal='paired-report';
+  assert.equal(currentPreparationReport(f.response,draft,f.submitted,4),null,'paired report cannot reuse single-lane cardinal proof');
+  f.row.preparation.schema='resectionlab.source-exposure-preparation.v3';
+  assert.equal(currentPreparationReport(f.response,draft,f.submitted,4),null,'paired proof must declare the same public family');
+  f.row.preparation.publicPlan.family='paired-lanes-v1';
+  assert.equal(currentPreparationReport(f.response,draft,f.submitted,4),f.report);
+  assert.equal(preparationPhaseAvailable(f.row,'prepared','paired-lanes-v1'),true);
+  assert.equal(preparationPhaseAvailable(f.row,'withdraw','paired-lanes-v1'),true);
+  assert.equal(preparationPhaseAvailable(f.row,'prepared'),false,'legacy callers cannot silently reinterpret paired zero');
+  assert.equal(preparationPreviewMatches(f.report,f.row,'prepared',f.preview,f.displayed),false,'old seal cannot authorize new family');
+  assert.equal(preparationPreviewMatches(f.report,f.row,'prepared',{...f.preview,reportSeal:'paired-report'},f.displayed),true);
+  f.report.schema=PREPARATION_SCHEMA;
+  assert.equal(currentPreparationReport(f.response,draft,f.submitted,4),null);
+});
+
+test('changing family invalidates submitted draft and a revert does not revive old preview authority',()=>{
+  const f=fixture();const draft=changePreparationFamily(f.controls,'paired-lanes-v1');
+  assert.notEqual(preparationControlKey(draft),preparationControlKey(f.controls));
+  assert.equal(currentPreparationReport(f.response,draft,f.submitted,5),null);
+  assert.equal(currentPreparationReport(f.response,f.controls,f.submitted,6),null);
+  const input={response:f.response,draft,submitted:f.submitted,revision:5,candidateId:f.row.id,phase:'prepared',preview:f.preview,displayed:f.displayed,pending:false,acknowledged:true};
+  assert.equal(preparationActions(input).installAllowed,false);
+  const noFamily={...f.report,controls:structuredClone(f.controls),schema:PREPARATION_SCHEMA_V2};
+  assert.equal(currentPreparationReport({...f.response,preparationPlanning:noFamily},f.controls,f.submitted,4),null,'v2 must explicitly bind its family');
+});
+
+test('installed application family comes from its own revision and keeps legacy cardinal button text',()=>{
+  const legacy={widthMm:.3};const cardinal={widthMm:.3,preparationFamily:'cardinal-v1'};
+  const paired={widthMm:3.42,preparationFamily:'paired-lanes-v1'};
+  assert.equal(preparationApplicationLabel(legacy),'Inspect installed 0.3 mm preparation');
+  assert.equal(preparationApplicationLabel(cardinal),preparationApplicationLabel(legacy));
+  assert.equal(preparationApplicationLabel(paired),'Inspect installed paired lanes at 3.42 mm separation');
+  assert.equal(preparationFamilyName(paired.preparationFamily),'Paired lanes');
+  assert.equal(preparationFamilyName(legacy.preparationFamily),'Cardinal local sweeps');
 });

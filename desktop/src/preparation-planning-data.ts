@@ -5,9 +5,12 @@ import type {SurgicalResponse} from './surgical-types';
 import type {ContextOption,EncounterControls,TwoToolComparison,TwoToolAlternative} from './two-tool-data';
 
 export const PREPARATION_SCHEMA='resectionlab.source-preparation-comparison.v1';
+export const PREPARATION_SCHEMA_V2='resectionlab.source-preparation-comparison.v2';
+export type PreparationFamily='cardinal-v1'|'paired-lanes-v1';
 export type PreparationPhase='prepared'|'withdraw';
 export interface PreparationRay {surfaceMm:Point3;sourceTargetMm:Point3}
 export interface PreparationControls {
+  preparationFamily?:PreparationFamily;
   sourceRay:PreparationRay|null;target:{centerMm:Point3;radiusMm:number}|null;widthsMm:number[];
   maxNonTargetMm3:number;maxActions:number;maxSeconds:number;entryRadiusMm:number;
   shortSeconds:number;longSeconds:number;minimumTargetMm3:number;requiredEvidence:string[];
@@ -17,10 +20,10 @@ export interface PreparationSuggestion {sourceSceneId:string;startStateId:string
 export interface PreparationAvailability {available:boolean;reason:string|null;scope:string;defaults:PreparationControls|null;contextOptions?:ContextOption[]}
 export interface PreparationSummary {additionalTargetMm3:number;additionalNonTargetMm3:number;elapsedSeconds:number;withdrawn:boolean}
 export interface PreparationAttempt {complete:boolean;failure:string|null;summary:PreparationSummary;actionProgram:unknown[];physicalStateHashes:string[]}
-export interface PreparationProof {schema:string;preparationSeal:string;publicPlan:{attempts:PreparationAttempt[];decision:{operation:string;selectedIndex:number|null};scope:string}}
+export interface PreparationProof {schema:string;preparationSeal:string;publicPlan:{family?:PreparationFamily;attempts:PreparationAttempt[];decision:{operation:string;selectedIndex:number|null};scope:string}}
 export type PreparationSuffixComparison=TwoToolComparison&{publicPlan:TwoToolComparison['publicPlan']&{approaches:TwoToolComparison['publicPlan']['approaches']&{routes?:unknown[];rejections?:Array<{reason?:string}>}}};
 export interface PreparationRow {id:string;widthMm:number;preparation:PreparationProof|null;preparedAdmission:unknown|null;comparison:PreparationSuffixComparison|null;reason:string|null;missingEvidence?:string[]}
-export interface PreparationApplication {branchId:string;preparationBranchId:string;revision:number;candidateId:string;widthMm:number;phase:PreparationPhase;preparationSummary:PreparationSummary;receipt:Record<string,unknown>}
+export interface PreparationApplication {branchId:string;preparationBranchId:string;revision:number;candidateId:string;widthMm:number;phase:PreparationPhase;preparationFamily?:PreparationFamily;preparationSummary:PreparationSummary;receipt:Record<string,unknown>}
 export interface PreparationComparison {
   schema:string;reportSeal:string;sourceSceneId:string;startStateId:string;sourceBranchId:string;sourcePosition:number;
   prefixActions:number;sourceSnapshotHash?:string;current:boolean;revision:number;controls:PreparationControls;rows:PreparationRow[];
@@ -42,6 +45,30 @@ export interface PreparationSubmission {binding:string;revision:number}
 
 const finitePoint=(p:unknown):p is Point3=>Array.isArray(p)&&p.length===3&&p.every(n=>typeof n==='number'&&Number.isFinite(n));
 const bounded=(n:number,low:number,high:number)=>Number.isFinite(n)&&n>=low&&n<=high;
+const familyValid=(family:unknown)=>family===undefined||family==='cardinal-v1'||family==='paired-lanes-v1';
+export function preparationFamilyName(family:PreparationFamily|undefined):string {
+  return family==='paired-lanes-v1'?'Paired lanes':family===undefined||family==='cardinal-v1'?'Cardinal local sweeps':'Unsupported preparation family';
+}
+export function preparationWidthPresets(family:PreparationFamily|undefined):number[] {
+  return family==='paired-lanes-v1'?[0,1.71,3.42]:[0,.3,1];
+}
+export function preparationWidthOptions(controls:PreparationControls):number[] {
+  return [...new Set([...preparationWidthPresets(controls.preparationFamily),...controls.widthsMm.filter(Number.isFinite)])].sort((a,b)=>a-b);
+}
+/** Only an explicit operator change adds a family or resets width choices. */
+export function changePreparationFamily(controls:PreparationControls,family:PreparationFamily):PreparationControls {
+  if(family!=='cardinal-v1'&&family!=='paired-lanes-v1')throw new Error('Unsupported preparation family');
+  return {...structuredClone(controls),preparationFamily:family,widthsMm:preparationWidthPresets(family)};
+}
+export function preparationApplicationLabel(app:Pick<PreparationApplication,'widthMm'|'preparationFamily'>):string {
+  return app.preparationFamily==='paired-lanes-v1'?`Inspect installed paired lanes at ${app.widthMm} mm separation`:`Inspect installed ${app.widthMm} mm preparation`;
+}
+function preparationReportSchemaMatches(report:PreparationComparison):boolean {
+  return familyValid(report.controls.preparationFamily)&&report.schema===('preparationFamily' in report.controls?PREPARATION_SCHEMA_V2:PREPARATION_SCHEMA);
+}
+function preparationProofMatches(row:PreparationRow|undefined,family:PreparationFamily|undefined):boolean {
+  return familyValid(family)&&row?.preparation?.schema===(family==='paired-lanes-v1'?'resectionlab.source-exposure-preparation.v3':'resectionlab.source-exposure-preparation.v2')&&row.preparation.publicPlan.family===(family==='paired-lanes-v1'?'paired-lanes-v1':undefined);
+}
 export function preparationLocked(response:PreparationResponse|null|undefined,pending=false):boolean {
   return pending||!response||!!response.readOnly||!!response.playback||!!response.verification?.readOnly;
 }
@@ -52,10 +79,12 @@ export function preparationControlKey(controls:PreparationControls):string {
   return JSON.stringify(canonical({...controls,requiredEvidence:[...controls.requiredEvidence].sort()}));
 }
 export function preparationDraftIssue(c:PreparationControls,contexts?:ContextOption[]):string|null {
+  if(!familyValid(c.preparationFamily)||('preparationFamily' in c&&c.preparationFamily===undefined))return 'Choose a supported preparation family.';
   if(!c.sourceRay||!finitePoint(c.sourceRay.surfaceMm)||!finitePoint(c.sourceRay.sourceTargetMm))return 'Choose source surface and target-boundary cells in RAS millimeters.';
   if(Math.hypot(...c.sourceRay.surfaceMm.map((n,i)=>n-c.sourceRay!.sourceTargetMm[i]))<=3.5)return 'This preparation family requires a source ray longer than 3.5 mm.';
   if(!c.target||!finitePoint(c.target.centerMm)||!bounded(c.target.radiusMm,.5,15))return 'Choose a common target region with a radius from 0.5 to 15 mm.';
-  if(!c.widthsMm.length||c.widthsMm.length>3||new Set(c.widthsMm).size!==c.widthsMm.length||c.widthsMm.some(w=>![0,.3,1].includes(w)))return 'Select one to three declared lateral sweeps: 0, 0.3 or 1 mm.';
+  const widthMax=c.preparationFamily==='paired-lanes-v1'?4:1;
+  if(!c.widthsMm.length||c.widthsMm.length>3||new Set(c.widthsMm).size!==c.widthsMm.length||c.widthsMm.some(w=>!bounded(w,0,widthMax)))return `Select one to three distinct ${c.preparationFamily==='paired-lanes-v1'?'lane separations':'local sweeps'} from 0 to ${widthMax} mm.`;
   if(!bounded(c.maxNonTargetMm3,Number.MIN_VALUE,200)||!Number.isInteger(c.maxActions)||!bounded(c.maxActions,6,128)||!bounded(c.maxSeconds,2,180))return 'Preparation limits must be positive and at most 200 mm³, 128 actions and 180 seconds.';
   if(!bounded(c.entryRadiusMm,.5,15))return 'The shared entry-patch radius must be from 0.5 to 15 mm.';
   if(!bounded(c.shortSeconds,.1,2)||!bounded(c.longSeconds,.1,2)||c.shortSeconds>=c.longSeconds||!bounded(c.minimumTargetMm3,0,8))return 'Use increasing contact durations from 0.1 to 2 seconds and target progress from 0 to 8 mm³.';
@@ -65,11 +94,12 @@ export function preparationDraftIssue(c:PreparationControls,contexts?:ContextOpt
 }
 export function currentPreparationReport(response:PreparationResponse|null|undefined,draft:PreparationControls,submitted:PreparationSubmission|null,revision:number):PreparationComparison|null {
   const report=response?.preparationPlanning;
-  return response&&report&&report.schema===PREPARATION_SCHEMA&&report.current===true&&!preparationLocked(response)&&
+  return response&&report&&preparationReportSchemaMatches(report)&&report.current===true&&!preparationLocked(response)&&
     submitted?.binding===planningBinding(response)&&submitted.revision===revision&&
     report.sourceSceneId===response.view.scene.sceneId&&report.startStateId===response.view.stateId&&
     report.sourcePosition===response.position&&report.prefixActions===response.position&&
-    !preparationDraftIssue(draft)&&preparationControlKey(report.controls)===preparationControlKey(draft)?report:null;
+    !preparationDraftIssue(draft)&&preparationControlKey(report.controls)===preparationControlKey(draft)&&
+    report.rows.every(row=>row.preparation===null||preparationProofMatches(row,report.controls.preparationFamily))?report:null;
 }
 export function currentPreparationSuggestion(response:PreparationResponse|null|undefined):PreparationSuggestion|null {
   const s=response?.preparationSuggestion;
@@ -89,9 +119,9 @@ export function preparationSuffix(row:PreparationRow|undefined):TwoToolAlternati
   const plan=row?.comparison?.publicPlan,id=plan?.decision.selectedId;
   return plan&&id&&id!=='stop'?plan.alternatives.find(x=>x.id===id)??null:null;
 }
-export function preparationPhaseAvailable(row:PreparationRow|undefined,phase:PreparationPhase):boolean {
+export function preparationPhaseAvailable(row:PreparationRow|undefined,phase:PreparationPhase,family?:PreparationFamily):boolean {
   const attempt=preparationAttempt(row);
-  if(row?.preparation?.schema!=='resectionlab.source-exposure-preparation.v2'||row.preparation.publicPlan.decision.operation!=='PREPARE'||
+  if(!preparationProofMatches(row,family)||row?.preparation?.publicPlan.decision.operation!=='PREPARE'||
     !attempt||attempt.complete!==true||attempt.failure!==null||attempt.summary.withdrawn!==true||!row.preparedAdmission||
     attempt.summary.additionalTargetMm3!==0||!Number.isFinite(attempt.summary.additionalNonTargetMm3)||attempt.summary.additionalNonTargetMm3<=0||
     !Number.isFinite(attempt.summary.elapsedSeconds)||attempt.summary.elapsedSeconds<=0)return false;
@@ -100,8 +130,8 @@ export function preparationPhaseAvailable(row:PreparationRow|undefined,phase:Pre
   return row.comparison?.publicPlan.decision.operation==='COMPARE'&&!!suffix&&suffix.feasible===true&&suffix.taskProgressMet===true&&(suffix as TwoToolAlternative&{withdrawal?:string}).withdrawal==='complete';
 }
 export function preparationPreviewMatches(report:PreparationComparison|null,row:PreparationRow|undefined,phase:PreparationPhase,preview:PreparationPreview|null|undefined,displayed:object|null|undefined):boolean {
-  return !!report&&!!row&&!!displayed&&!!preview&&preview.kind==='preparation'&&preview.phaseId===phase&&
-    preview.candidateId===row.id&&preview.reportSeal===report.reportSeal&&preview.view===displayed&&preparationPhaseAvailable(row,phase);
+  return !!report&&preparationReportSchemaMatches(report)&&!!row&&!!displayed&&!!preview&&preview.kind==='preparation'&&preview.phaseId===phase&&
+    preview.candidateId===row.id&&preview.reportSeal===report.reportSeal&&preview.view===displayed&&preparationPhaseAvailable(row,phase,report.controls.preparationFamily);
 }
 export function preparationActions(input:{response:PreparationResponse|null|undefined;draft:PreparationControls;submitted:PreparationSubmission|null;revision:number;candidateId:string|null|undefined;phase:PreparationPhase;preview:PreparationPreview|null|undefined;displayed:object|null|undefined;pending:boolean;acknowledged:boolean;contexts?:ContextOption[]}) {
   const report=currentPreparationReport(input.response,input.draft,input.submitted,input.revision);
@@ -110,7 +140,7 @@ export function preparationActions(input:{response:PreparationResponse|null|unde
   const ray=input.draft.sourceRay;
   const cells=!!input.response&&!!ray&&[ray.surfaceMm,ray.sourceTargetMm].every(p=>preparationPointIsCell(p,input.response!.view.scene));
   const previewAllowed=!!report&&!!row&&!preparationLocked(input.response,input.pending)&&input.acknowledged&&cells&&!preparationDraftIssue(input.draft,input.contexts)&&
-    preparationPhaseAvailable(row,input.phase)&&(!input.displayed||matching);
+    preparationPhaseAvailable(row,input.phase,input.draft.preparationFamily)&&(!input.displayed||matching);
   return {report,row,matchingPreview:matching,previewAllowed,installAllowed:previewAllowed&&matching};
 }
 export function preparationIncomplete(row:PreparationRow):boolean {

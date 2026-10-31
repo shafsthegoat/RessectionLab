@@ -106,7 +106,7 @@ def verify(case_path, output, *, revision=None):
         require(set(item)=={'schema','revision','caseHash','sourceBranchId','sourceSnapshotHash','configuredBranchId','report','workspaceSeal'},'workspace schema differs')
         require(item['schema']=='resectionlab.source-preparation-workspace.v1' and type(item['revision']) is int
             and item['revision']==number and item['caseHash']==case.semantic_hash, 'workspace source/revision differs')
-        require(report['schema']=='resectionlab.source-preparation-comparison.v1', 'report schema differs')
+        require(report['schema']==('resectionlab.source-preparation-comparison.v2' if 'preparationFamily' in report['controls'] else 'resectionlab.source-preparation-comparison.v1'), 'report schema differs')
         snap=record['branches'][item['sourceBranchId']];equal(semantic_digest(snap),item['sourceSnapshotHash'],'workspace source hash differs')
         equal(item['sourceSnapshotHash'],report['sourceSnapshotHash'],'report source hash differs')
         root=SurgicalEngine.restore(scene,snap,use_cache=False)
@@ -123,20 +123,22 @@ def verify(case_path, output, *, revision=None):
         equal(configured.snapshot(),report['configuredSnapshot'],'configured snapshot differs')
         equal(record['branches'][item['configuredBranchId']],configured.snapshot(),'configured branch differs')
         require(item['sourceBranchId']!=item['configuredBranchId'],'study branch ownership repeats')
-        controls=report['controls'];rows=report['rows'];widths=controls['widthsMm']
+        controls=report['controls'];rows=report['rows'];widths=controls['widthsMm'];family=controls.get('preparationFamily','cardinal-v1')
+        require(type(family) is str and family in ('cardinal-v1','paired-lanes-v1'),'preparation family differs')
         require({'brain','target'}<=set(controls['requiredEvidence']),'brain and target evidence must remain required')
         require(type(rows) is list and type(widths) is list and 1<=len(rows)==len(widths)<=3 and len(set(widths))==len(widths), 'row/width inventory differs')
         missing=sorted(set(controls['requiredEvidence'])-set(source_evidence(scene)['availableEvidence']));audits=[];native_rows={}
         for index,(row,width) in enumerate(zip(rows,widths,strict=True)):
             require(set(row)=={'id','widthMm','preparation','preparedSnapshot','preparedAdmission','comparison','reason','missingEvidence'},'row schema differs')
-            require(row['id']=='width-'+str(index) and row['widthMm']==width and type(width) in (int,float) and np.isfinite(width) and 0<=width<=1,'row identity/width differs')
+            require(row['id']=='width-'+str(index) and row['widthMm']==width and type(width) in (int,float) and np.isfinite(width) and 0<=width<=(4. if family=='paired-lanes-v1' else 1.),'row identity/width differs')
             equal(row['missingEvidence'],missing,'missing evidence differs')
             if row['preparation'] is None:
                 require(bool(missing) and row['reason']=='REQUIRED_EVIDENCE_UNAVAILABLE' and all(row[k] is None for k in ('preparedSnapshot','preparedAdmission','comparison')), 'empty row has effects or false missing evidence')
                 audits.append({'id':row['id'],'missingEvidenceVerified':True});continue
             require(not missing,'preparation executed despite missing required evidence')
             proof=row['preparation'];public=proof['publicPlan']
-            require(proof['schema']=='resectionlab.source-exposure-preparation.v2','fixed source-ray proof required')
+            require(proof['schema']==('resectionlab.source-exposure-preparation.v3' if family=='paired-lanes-v1' else 'resectionlab.source-exposure-preparation.v2'),'fixed source-ray proof required')
+            require(proof['publicPlan'].get('family')==('paired-lanes-v1' if family=='paired-lanes-v1' else None),'source-ray family differs')
             equal(proof['sourceSnapshotHash'],semantic_digest(configured.snapshot()),'preparation baseline differs')
             equal(public['sourceRay'],controls['sourceRay'],'row source ray differs')
             equal(public['controls'],{**{k:controls[k] for k in ('maxNonTargetMm3','maxActions','maxSeconds')},

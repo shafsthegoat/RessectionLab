@@ -191,6 +191,7 @@ def planning_view(engine,record,case_hash,*,check=lambda:None):
         row=next(r for r in reports[app['revision']]['rows'] if r['id']==app['candidateId'])
         selected=row['preparation']['publicPlan']['decision']['selectedIndex']
         applications.append({**copy.deepcopy(app),'widthMm':row['widthMm'],
+            **({'preparationFamily':reports[app['revision']]['controls']['preparationFamily']} if 'preparationFamily' in reports[app['revision']]['controls'] else {}),
             'preparationSummary':copy.deepcopy(row['preparation']['publicPlan']['attempts'][selected]['summary'])})
     return {**copy.deepcopy(report),'revision':item['revision'],'sourceBranchId':item['sourceBranchId'],
         'sourcePosition':report['prefixActions'],'current':semantic_digest(engine.snapshot())==report['sourceSnapshotHash'],

@@ -24,6 +24,9 @@ SCHEMA = 'resectionlab.source-exposure-preparation.v1'
 PUBLIC_SCHEMA = 'resectionlab.public-source-exposure-preparation.v1'
 FIXED_SCHEMA = 'resectionlab.source-exposure-preparation.v2'
 FIXED_PUBLIC_SCHEMA = 'resectionlab.public-source-exposure-preparation.v2'
+PAIRED_SCHEMA = 'resectionlab.source-exposure-preparation.v3'
+PAIRED_PUBLIC_SCHEMA = 'resectionlab.public-source-exposure-preparation.v3'
+PAIRED_FAMILY = 'paired-lanes-v1'
 SCOPE = ('Finite annotation-assisted intracerebral preparation through mapped non-target tissue, '
     'with zero additional target removal. Exterior/skull/dura and complete vascular/functional anatomy '
     'remain unassessed. Native masks and source annotations are unchanged; only executed cell removal '
@@ -36,11 +39,12 @@ def _require(value, reason):
     if not value: raise ValueError('SOURCE_EXPOSURE: '+reason)
 
 
-def normalize(raw):
+def normalize(raw, *, family=None):
+    _require(family is None or type(family) is str and family == PAIRED_FAMILY, 'unknown preparation family')
     _require(type(raw) is dict and set(raw) == set(DEFAULTS), 'exact bounded controls required')
     result = {}
     for key, high in [('maxNonTargetMm3', 200.), ('maxActions', 128), ('maxSeconds', 180.),
-                      ('maxCandidates', 12), ('maxProposals', 1024), ('maxPathMm', 40.), ('maxWallSeconds', 90.), ('lateralSweepMm', 1.)]:
+                      ('maxCandidates', 12), ('maxProposals', 1024), ('maxPathMm', 40.), ('maxWallSeconds', 90.), ('lateralSweepMm', 4. if family == PAIRED_FAMILY else 1.)]:
         value = raw[key]; integer = key in ('maxActions', 'maxCandidates', 'maxProposals')
         _require(type(value) is int if integer else type(value) in (int, float), 'numeric control differs: '+key)
         _require(np.isfinite(value) and (0 <= value if key == 'lateralSweepMm' else 0 < value) and value <= high,
@@ -167,7 +171,47 @@ def _route(model, labels, brain, targets, s, t, controls, check, *, length=None)
         'paths': paths, 'sourceTubeMm3': len(union)*scene.voxel_mm3, 'surfaceTargetDistanceMm': length}
 
 
-def _fixed_route(observation, controls, ray, check):
+def _paired_route(model, labels, brain, targets, s, t, controls, check):
+    """Two real lanes with fixed local passes; no additional tissue tolerance.
+
+    Lane separation is measured in the declared ray's tool-frame Y direction.
+    Every pass stays at or proximal to the central reference depth and clips
+    earlier for source target. Background still asserts no exterior anatomy.
+    """
+    central = _route(model, labels, brain, targets, s, t, {**controls, 'lateralSweepMm': 0.}, check)
+    if central is None: return None
+    scene = model.scene; axis = np.asarray(central['axisRasUnit'])
+    basis = Rotation.from_quat(central['quaternion']).as_matrix(); outside = np.asarray(central['outsideMm'])
+    depth = float((np.asarray(central['endpointMm'])-outside)@axis)
+    local = [(0., 0.), (.3, 0.), (-.3, 0.), (0., .3), (0., -.3)]
+    coefficients = list(dict.fromkeys((round(x, 12), round(y+center, 12))
+        for center in (0., controls['lateralSweepMm']) for x, y in local))
+    paths = []; union = set()
+    for x, y in coefficients:
+        check(); offset = basis[:, 0]*x+basis[:, 1]*y; start = outside+offset
+        def touches_target(point):
+            return any(int(labels.flat[c]) in targets for c in model.cells(start, point, 1.5))
+        if touches_target(start): return None
+        end_depth = depth
+        if touches_target(start+axis*(depth+.25)):
+            low, high = 0., depth+.25
+            for _ in range(26):
+                check(); middle = (low+high)/2.
+                if touches_target(start+axis*middle): high = middle
+                else: low = middle
+            end_depth = min(depth, low-.25)
+        endpoint = start+axis*end_depth
+        if np.dot(endpoint-(s+offset), axis) < .5: return None
+        cells = [int(c) for c in model.cells(start, endpoint, 1.5) if labels.flat[c]]
+        if not np.isin(labels.flat[cells], brain).all(): return None
+        union.update(cells)
+        if len(union)*scene.voxel_mm3 > controls['maxNonTargetMm3']: return None
+        paths.append({'outsideMm': start.tolist(), 'endpointMm': endpoint.tolist()})
+    return {**central, 'outsideMm': paths[0]['outsideMm'], 'endpointMm': paths[0]['endpointMm'],
+        'paths': paths, 'sourceTubeMm3': len(union)*scene.voxel_mm3}
+
+
+def _fixed_route(observation, controls, ray, check, *, family=None):
     model, labels, brain, targets, surface, boundary = _source_grid(observation, controls, check)
     scene = model.scene; points = []
     for key, mask in (('surfaceMm',surface),('sourceTargetMm',boundary)):
@@ -176,7 +220,8 @@ def _fixed_route(observation, controls, ray, check):
                  'source ray must use original cell centers')
         _require(mask[tuple(np.rint(ijk).astype(int))], 'source ray requires retained exterior-connected brain surface and target boundary')
         points.append(point)
-    row = _route(model, labels, brain, targets, *points, controls, check)
+    route = _paired_route if family == PAIRED_FAMILY else _route
+    row = route(model, labels, brain, targets, *points, controls, check)
     return [row] if row is not None else []
 
 
@@ -254,17 +299,18 @@ def _compile(model, row, controls, check):
         'summary': _summary(model, before), 'failure': failure, 'complete': reached and failure is None and _summary(model, before)['withdrawn']}
 
 
-def plan_observed(observation, raw, *, source_ray=None, check=lambda: None):
+def plan_observed(observation, raw, *, source_ray=None, family=None, check=lambda: None):
     _require(type(observation) is ExposureObservation, 'typed public exposure observation required')
     observation = ExposureObservation(PlanningObservation(observation.baseline.labels, observation.baseline.affine, observation.baseline.fields))
-    controls = normalize(raw); ray = normalize_source_ray(source_ray) if source_ray is not None else None
-    rows = _shortlist(observation, controls, check) if ray is None else _fixed_route(observation, controls, ray, check)
+    controls = normalize(raw, family=family); ray = normalize_source_ray(source_ray) if source_ray is not None else None
+    _require(family is None or ray is not None, 'paired lanes require an explicit fixed source ray')
+    rows = _shortlist(observation, controls, check) if ray is None else _fixed_route(observation, controls, ray, check, family=family)
     attempts = []
     for row in rows:
         check(); attempt = _compile(observation.planning_engine(controls), row, controls, check); attempts.append(attempt)
         if attempt['complete']: break
-    value = {'schema': PUBLIC_SCHEMA if ray is None else FIXED_PUBLIC_SCHEMA, 'publicObservation': observation.manifest(), 'controls': controls,
-        **({'sourceRay': ray} if ray is not None else {}),
+    value = {'schema': PAIRED_PUBLIC_SCHEMA if family else PUBLIC_SCHEMA if ray is None else FIXED_PUBLIC_SCHEMA, 'publicObservation': observation.manifest(), 'controls': controls,
+        **({'sourceRay': ray} if ray is not None else {}), **({'family': family} if family else {}),
         'attempts': attempts, 'decision': {'operation': 'PREPARE' if attempts and attempts[-1]['complete'] else 'STOP',
             'selectedIndex': len(attempts)-1 if attempts and attempts[-1]['complete'] else None,
             'rule': ('First complete execution in deterministic source-distance order, under declared budgets; no optimality or clinical-access claim'
@@ -273,9 +319,10 @@ def plan_observed(observation, raw, *, source_ray=None, check=lambda: None):
     return value
 
 
-def prepare(engine, raw, *, native_collection, source_ray=None, check=lambda: None):
+def prepare(engine, raw, *, native_collection, source_ray=None, family=None, check=lambda: None):
     """Public choice seals first; every held attempt then executes natively."""
-    controls = normalize(raw); ray = normalize_source_ray(source_ray) if source_ray is not None else None
+    controls = normalize(raw, family=family); ray = normalize_source_ray(source_ray) if source_ray is not None else None
+    _require(family is None or ray is not None, 'paired lanes require an explicit fixed source ray')
     before = engine.snapshot(); engine.scene.require_cache_source()
     verification = verify_source(engine.scene, native_collection=native_collection, check=check)
     restored = SurgicalEngine.restore(engine.scene, before, check=check, use_cache=False)
@@ -284,13 +331,18 @@ def prepare(engine, raw, *, native_collection, source_ray=None, check=lambda: No
     def guard():
         check()
         _require(time.monotonic()-started <= controls['maxWallSeconds'], 'preparation computation budget exhausted; no partial study may publish')
-    public = plan_observed(observation, controls, check=guard, **({'source_ray':ray} if ray is not None else {})); selected = None
-    _require(public['schema'] == (PUBLIC_SCHEMA if ray is None else FIXED_PUBLIC_SCHEMA) and public['scope'] == SCOPE
+    public = plan_observed(observation, controls, check=guard, **({'source_ray':ray} if ray is not None else {}), **({'family':family} if family else {})); selected = None
+    _require(public['schema'] == (PAIRED_PUBLIC_SCHEMA if family else PUBLIC_SCHEMA if ray is None else FIXED_PUBLIC_SCHEMA) and public['scope'] == SCOPE
              and semantic_digest(public['publicObservation']) == semantic_digest(observation.manifest())
              and semantic_digest(public['controls']) == semantic_digest(controls),
              'public preparation inputs differ')
     _require(('sourceRay' not in public if ray is None else semantic_digest(public.get('sourceRay')) == semantic_digest(ray)),
              'public preparation source ray differs')
+    _require(('family' not in public if family is None else public.get('family') == family), 'public preparation family differs')
+    if family is not None:
+        canonical = _fixed_route(observation, controls, ray, guard, family=family)
+        _require(semantic_digest([a['route'] for a in public['attempts']]) == semantic_digest(canonical),
+                 'paired-lane source geometry differs')
     _require(type(public['attempts']) is list and len(public['attempts']) <= (controls['maxCandidates'] if ray is None else 1),
              'public preparation exceeds candidate budget')
     _require(public['publicSeal'] == semantic_digest({k: v for k, v in public.items() if k != 'publicSeal'}),
@@ -326,7 +378,7 @@ def prepare(engine, raw, *, native_collection, source_ray=None, check=lambda: No
     guard(); _require(before == engine.snapshot(), 'native source checkpoint changed during preparation')
     _require(project_exposure(engine).manifest() == observation.manifest(), 'public source inputs changed during preparation')
     verify_source(engine.scene, native_collection=native_collection, check=guard)
-    value = {'schema': SCHEMA if ray is None else FIXED_SCHEMA, 'sourceSceneId': engine.scene.identity, 'sourceStateId': before['stateId'],
+    value = {'schema': PAIRED_SCHEMA if family else SCHEMA if ray is None else FIXED_SCHEMA, 'sourceSceneId': engine.scene.identity, 'sourceStateId': before['stateId'],
         'sourceSnapshotHash': semantic_digest(before), 'sourceVerification': verification,
         'publicPlan': public, 'nativeReplayVerified': True, 'scope': SCOPE}
     value['preparationSeal'] = semantic_digest(value)
