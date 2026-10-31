@@ -57,7 +57,7 @@ const cliValue = name => { const index = process.argv.indexOf(name); return inde
 async function startEngine() {
   const bundled = path.join(process.resourcesPath, 'research-engine', 'ressectionlab-engine');
   const repo = path.resolve(__dirname, '../..');
-  caseLibrary = new CaseLibrarySelection({userData:app.getPath('userData'),defaultRoot:app.isPackaged?null:repo,
+  caseLibrary = new CaseLibrarySelection({userData:app.getPath('userData'),defaultRoot:app.isPackaged?null:repo,externalRoot:process.env.RESSECTIONLAB_DATA_ROOT||null,
     preparedRoot:app.isPackaged?path.join(app.getPath('userData'),'prepared-cases'):path.join(repo,'outputs/poc-cases'),nativePaths:[path.join(app.getPath('downloads'),'RessectionLab-Native-Anatomy-sub-06/patient-anatomy.json')]});
   await caseLibrary.restore();
   const runDir = path.join(app.getPath('userData'), 'research-runs');
@@ -70,7 +70,12 @@ async function startEngine() {
   await fs.mkdir(app.getPath('userData'), { recursive: true });
   await fs.access(config.executable || config.python);
   const createWorker = async ({prefixWorker} = {}) => {
-    const transferDir = await fs.mkdtemp(path.join(os.tmpdir(), 'ressectionlab-'));
+    let transferRoot=os.tmpdir();
+    if(process.env.RESSECTIONLAB_DATA_ROOT){
+      await new (require('./external-case-catalog.cjs').ExternalCaseCatalog)(process.env.RESSECTIONLAB_DATA_ROOT).load();
+      transferRoot=path.join(process.env.RESSECTIONLAB_DATA_ROOT,'staging','transfers');await fs.mkdir(transferRoot,{recursive:true});
+    }
+    const transferDir = await fs.mkdtemp(path.join(transferRoot, 'ressectionlab-'));
     await fs.chmod(transferDir, 0o700);
     try { return new Sidecar({...config, transferDir, ...(prefixWorker ? {prefixWorker} : {})}); }
     catch (error) { await fs.rm(transferDir, {recursive:true, force:true}); throw error; }

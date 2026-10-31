@@ -136,7 +136,8 @@ def worker(request):
         write_mask(values > parameters.get("threshold", .5), reference, destination / "vessels_mask.nii.gz")
     elif model_id == "synthstrip-main":
         from .brain_extraction import mps_runner_source
-        original = ROOT / "data/models/synthstrip-v1/mri_synthstrip"
+        original = (Path(os.environ["RESSECTIONLAB_MODEL_ROOT"]) / "synthstrip-v1/mri_synthstrip"
+                    if os.environ.get("RESSECTIONLAB_MODEL_ROOT") else ROOT / "data/models/synthstrip-v1/mri_synthstrip")
         runner = original
         if device == "mps":
             runner = destination / "synthstrip_mps.py"
@@ -174,8 +175,18 @@ def _run(image: Path, case: str, model_id: str, modality: str, device: str="mps"
             model["parameters"]["input_domain"] = "T1CE-experimental"
     if modality not in model["modality"]:
         raise ValueError(f"{model_id} requires {model['modality']}, got {modality}")
+    weights_root = os.environ.get("RESSECTIONLAB_MODEL_ROOT")
+    if weights_root:
+        from .data_root import checked_root, safe_path
+        data_root = checked_root()
+        model_root = Path(weights_root).resolve()
+        if not model_root.is_relative_to(data_root):
+            raise ValueError("Configured model cache must be inside the external data root")
+        weight_paths = sorted(model_root.glob(model["weights_glob"].removeprefix("data/models/")))
+    else:
+        weight_paths = sorted(ROOT.glob(model["weights_glob"]))
     weights = [{"path": str(p.resolve()), "sha256": sha256(p), "bytes": p.stat().st_size}
-               for p in sorted(ROOT.glob(model["weights_glob"]))]
+               for p in weight_paths]
     if not weights:
         raise FileNotFoundError("Weights missing; run scripts/poc_model_assets.py")
     source_hash = sha256(image)
@@ -187,7 +198,9 @@ def _run(image: Path, case: str, model_id: str, modality: str, device: str="mps"
         raise ValueError("Case must be a single safe directory name")
     cache_root = ROOT / "outputs/poc-models" if output_root is None else Path(output_root).resolve()
     if output_root is not None and not cache_root.is_relative_to((ROOT / 'testcases').resolve()):
-        raise ValueError('Explicit app-testing inference output must remain under testcases/')
+        from .data_root import checked_root
+        if not cache_root.is_relative_to(checked_root(required_bytes=2*1024**3)):
+            raise ValueError('Inference output must remain under testcases/ or the verified external data root')
     output = cache_root / case / model_id / key
     # Cancelled/failed stages are retained. Resume starts a fresh attempt and
     # searches successful attempts first; it never overwrites historical logs.
@@ -213,6 +226,10 @@ def _run(image: Path, case: str, model_id: str, modality: str, device: str="mps"
     command = [str(RUNTIME), "-m", "resectionlab.poc_models", "--worker", str(output / "request.json")]
     environment = dict(os.environ, PYTHONPATH=str(ROOT / "src"), OMP_NUM_THREADS="2", OPENBLAS_NUM_THREADS="2",
                        PYTORCH_ENABLE_MPS_FALLBACK="1", MPLBACKEND="Agg", nnUNet_compile="false")
+    if os.environ.get("RESSECTIONLAB_DATA_ROOT") and cache_root.is_relative_to(Path(os.environ["RESSECTIONLAB_DATA_ROOT"]).resolve()):
+        temporary_root = Path(os.environ["RESSECTIONLAB_DATA_ROOT"]) / "staging" / "tmp"
+        temporary_root.mkdir(exist_ok=True)
+        environment.update(TMPDIR=str(temporary_root), TEMP=str(temporary_root), TMP=str(temporary_root))
     start = time.monotonic()
     maximum_rss = 0
     failure = None
@@ -240,7 +257,9 @@ def _run(image: Path, case: str, model_id: str, modality: str, device: str="mps"
     reference = nib.load(image)
     outputs = []
     if process.returncode == 0:
-        for mask_path in sorted(output.glob("*_mask.nii.gz")):
+        # ExFAT stores Finder extended attributes in AppleDouble sidecars.
+        # They share the NIfTI suffix but are not image observations.
+        for mask_path in sorted(p for p in output.glob("*_mask.nii.gz") if not p.name.startswith("._")):
             mask = nib.load(mask_path)
             data = np.asanyarray(mask.dataobj)
             if mask.shape != reference.shape or not np.allclose(mask.affine, reference.affine, atol=1e-5):

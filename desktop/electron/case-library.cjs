@@ -17,12 +17,13 @@ async function readMetadata(filename, maxBytes) {
 // Native file dialogs, prepared cases and the fixed source-checked catalog admit paths.
 // The renderer receives opaque list IDs, never authority to open an arbitrary path.
 class CaseLibrary {
-  constructor(userData, preparedRoot, nativePaths = [], catalogRoot = null) {
+  constructor(userData, preparedRoot, nativePaths = [], catalogRoot = null, externalRoot = null) {
     this.record = path.join(userData, 'anatomy-cases.json');
     this.preparedRoot = preparedRoot;
     this.paths = new Map();
     this.nativePaths = nativePaths;
     this.catalog = catalogRoot ? new PatientCatalog(catalogRoot) : null;
+    this.external = externalRoot ? new (require('./external-case-catalog.cjs').ExternalCaseCatalog)(externalRoot) : null;
   }
   async read() {
     try {
@@ -44,7 +45,7 @@ class CaseLibrary {
   async list() {
     // Check catalog metadata before touching any listed bundle. Listing never
     // reads ZIP/image payloads or accepts a catalog path from the renderer.
-    const catalog = this.catalog ? await this.catalog.load() : [];
+    const catalog = [...(this.catalog ? await this.catalog.load() : []), ...(this.external ? await this.external.load() : [])];
     const catalogAliases = new Map(catalog.flatMap(row => row.aliases.map(filename => [filename,row])));
     const recent = await this.read();
     let names = [];
@@ -55,7 +56,7 @@ class CaseLibrary {
     const addedCatalog = new Set();
     const addCatalog = (row,wasRecent=false) => {
       if (addedCatalog.has(row.id)) return;
-      addedCatalog.add(row.id);this.paths.set(row.id,{catalog:true});
+      addedCatalog.add(row.id);this.paths.set(row.id,{catalog:true,external:row.id.startsWith('external-')});
       rows.push({id:row.id,title:row.title,recent:wasRecent,bytes:row.bytes,qualifiedCatalog:true,
         source:row.source,anatomy:row.anatomy,missingAnatomy:row.missingAnatomy,...(row.sourceLocation?{sourceLocation:row.sourceLocation}:{})});
     };
@@ -77,12 +78,12 @@ class CaseLibrary {
     return rows;
   }
   async resolve(id) {
-    if (typeof id !== 'string' || !/^(?:catalog-)?[a-f0-9]{64}$/.test(id))
+    if (typeof id !== 'string' || !/^(?:catalog-|external-)?[a-f0-9]{64}$/.test(id))
       throw new Error('Select a saved case from the current library.');
     await this.list();
     if (typeof id !== 'string' || !this.paths.has(id)) throw new Error('Select a saved case from the current library.');
     const selected=this.paths.get(id);
-    return selected?.catalog ? this.catalog.resolve(id) : selected;
+    return selected?.catalog ? (selected.external ? this.external : this.catalog).resolve(id) : selected;
   }
 }
 module.exports = {CaseLibrary};

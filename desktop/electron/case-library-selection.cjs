@@ -14,12 +14,12 @@ const sameIds=(a,b)=>a.length===b.length&&a.every((id,index)=>id===b[index]);
 // Only the host's native folder dialog may supply a new root. Renderer requests
 // carry no paths, release pins, allowlists or engine configuration.
 class CaseLibrarySelection {
-  constructor({userData,defaultRoot=null,preparedRoot,nativePaths=[]}) {
-    this.userData=userData;this.defaultRoot=defaultRoot;this.preparedRoot=preparedRoot;this.nativePaths=nativePaths;
+  constructor({userData,defaultRoot=null,preparedRoot,nativePaths=[],externalRoot=null}) {
+    this.userData=userData;this.defaultRoot=defaultRoot;this.preparedRoot=preparedRoot;this.nativePaths=nativePaths;this.externalRoot=externalRoot;
     this.record=path.join(userData,'case-library-settings.json');this.root=defaultRoot;this.blocked=null;this.selecting=false;
     this.current=this.makeLibrary(defaultRoot);this.admission=null;
   }
-  makeLibrary(root){return new CaseLibrary(this.userData,root?path.join(root,'outputs/poc-cases'):this.preparedRoot,this.nativePaths,root);}
+  makeLibrary(root){return new CaseLibrary(this.userData,root?path.join(root,'outputs/poc-cases'):this.preparedRoot,this.nativePaths,root,this.externalRoot);}
   info(){return {folder:this.root,...(this.blocked?{error:this.blocked}:{})};}
   async readRecord() {
     let stat;try{stat=await fs.lstat(this.record);}catch(error){if(error.code==='ENOENT')return null;throw error;}
