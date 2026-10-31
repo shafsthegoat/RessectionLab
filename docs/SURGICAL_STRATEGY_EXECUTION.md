@@ -342,14 +342,100 @@ ignored `testcases/two-tool-performance-v1/README.md`.
   --reference-commit b3da4b10 --isolate-index-physics
 ```
 
+## Completed: source-linked anatomical encounter through strategy comparison
+
+The optional V2 task binds a deliberately selected supplied categorical context
+layer to its verified native collection, original annotation, array, revision,
+registration, review status and exact source grid. Public planning receives only
+an immutable mask/frame/canonical review declaration. Original identifiers and
+provenance remain in the outer native audit binding. A context must share the
+verified categorical source/frame with selected anatomy; this version refuses
+a mismatch with the supplied source grid, sheared cells and unavailable evidence.
+Legacy layer APIs inherit
+millimeter units only from that verified shared source series; explicitly unknown
+units refuse. No anatomy is relabeled or retroactive native guard attached.
+
+For the acquired DEVELOPMENT cases, supplied label 2 is FLAIR context. It can
+include nonenhancing tumor and edema, rather than establish healthy tissue or
+function. The source segmentation used algorithmic proposals, human corrections
+and expert approval; local import/registration review remains unreviewed. See the
+[original UCSF-PDGM paper](https://escholarship.org/content/qt7gt8f8w4/qt7gt8f8w4.pdf)
+and [official label definitions](https://www.med.upenn.edu/cbica/brats2021/).
+No motor/language localization, injury law or deficit probability is introduced.
+
+In **Compare two-tool strategies**, select supplied context, a research margin
+and a maximum unique near-context volume. The exact nominal complete axial
+CUSA/Frazier envelope includes both shafts, working parts, the stationary other
+hand and withdrawal. Source-cell boxes use the existing 1e-9 mm closed-boundary
+convention. Intersected retained source cells count once across the whole sequence,
+independent of partition or reverse traversal of an identical fixed-axis path.
+Historical context removal,
+new removal, working/shaft proximity and representative RAS coordinates stay
+separate. These are whole-cell geometric quantities, not continuous overlap
+volumes or biological harm. Outside the source image grid remains unassessed.
+
+The same limit filters primary access and paired placement, governs complete
+sequence admissibility, changes comparison/STOP and is rechecked at every native
+prefix before installation. Anatomical-limit STOP rebuilds its parent shortlist,
+replays the complete declared approach/pair family and checks its ordered refusal transcript and fallback;
+omitting, duplicating or reordering failures cannot self-seal a refusal. Search
+expiry remains COMPUTATION_BUDGET, not proof of geometric infeasibility. Infeasible
+counterfactual sequences stay inspectable as evidence and cannot be previewed or
+installed. Source-cell markers and **Show supplied context in linked views**
+connect the numerical constraint to the actual MRI RAS cursor.
+
+Actual hidden 0007 controls demonstrate:
+
+- Margin 0 / allowed near-volume 0: the existing two timed plans remain admitted.
+- Margin 3 mm / limit 0: the three returned approaches encounter 3/7/2 mm³ of
+  retained context during access; finite-family validation supports STOP.
+- Margin 3 / limit 2: the third approach passes access, but complete maneuvers
+  encounter 3 mm³. Both over-limit alternatives are rejected; backend installation
+  refuses and the native baseline is unchanged. This distinguishes reaching from
+  operating and withdrawing under the same anatomical constraint.
+- Margin 3 / permissive limit: both timed strategies encounter the same 3 mm³,
+  entirely working-part proximity. Historical source-context removal is 1036 mm³,
+  new context/non-target removal is zero. Geometry does not distinguish their
+  durations; existing target progress/reassessment still does. The two installed
+  endpoint state IDs remain exact. The second acquired case still refuses full
+  access, the exact no-target negative exposes no action, and missing functional
+  evidence still selects STOP. Fresh native reopen verifies all saved studies;
+  the representative context point drives linked MRI coordinates without an action.
+
+Independent literal-tool/box-distance audits verify every exported physical and
+context prefix, part counts, representative coordinates and cold replay. The
+new third-route counterfactuals also pass 1645/1659 independent complete-tool
+geometry checks. The independent endpoint auditor covers native programs and
+recorded primary-access refusals; finite-family coverage and other rejection
+reasons remain the canonical validator's responsibility. Fifteen source/contract
+controls plus seventeen independent-auditor controls cover masks, source bytes,
+private-reference invariance, missing/unknown units, exact transforms, false
+metrics, source-binding forgeries, stationary hands, shafts, withdrawal and
+partition invariance. Existing V1 six studies/two applications replay exactly;
+regenerated default report hash remains `sha256:7b0f0d51fbc69e1e8ac83565b98cff8d5d4c92a332d391d01bcdbb8fa7c10d73`.
+
+The 273-test backend regression, latest 32 endpoint/auditor checks, 1,217 desktop
+tests and build pass. Final-code cold verification also checks the nine-study/two-
+application native save and the second case's three studies without changing them.
+The final checks and exact commands are in the ignored
+`testcases/anatomical-encounter-v1/README.md`. No acquisition, EVAL read, training
+or clinical calibration occurred. This is a DEVELOPMENT integration, not held-out
+decision-quality evidence. Positive context previews take 2.23–2.48 s IPC in this
+run; the harder complete-family negative required **64.94 s** for generation and
+canonical validation before final parent-shortlist hardening. Final cold verification
+of the nine-study/two-application workspace takes **87.02 s**. That cold proof is a measured next optimization target;
+its constraints were not relaxed. The immutable context mask adds one byte per
+source voxel (about 8.5 MiB here), with transient arrays during projection; the
+validation LRU still retains only bounded digest entries, not masks or engines.
+
 ## Remaining milestones and next dependency
 
 This is a bounded acquired-anatomy operating task, not the complete strategy
-platform. Source-linked functional consequences still need compatible evidence;
-the current functional control is an honest refusal. Existing supplied anatomical
-context may support a geometric encounter endpoint after explicit source/task
-binding; it is not a qualified patient motor/language map. Migrate remaining planner
-interfaces, qualify that endpoint, reduce cold generation/display costs, then build the frozen
+platform. Patient-specific functional consequences still need compatible evidence;
+the functional control remains a refusal. The new anatomical endpoint is a
+geometric source constraint, not a qualified motor/language map. Profile and
+reuse exact physical prefixes in the 65-second cold negative proof, migrate remaining
+planner interfaces and reduce cold generation/display costs, then build the frozen
 uncertainty comparison with matched baselines. Expand the patient distribution
 without touching reserved evaluations. Older lattice resolution dependence and
 continuum empirical/domain gates remain qualification holds. No RL campaign,

@@ -25,10 +25,15 @@ from .surgical_interactive_planning import (interactive_planning_availability, n
 from .surgical_task_admission import admission, bind_admission, validate_admission
 from .surgical_motion import envelopes, pair_conflict
 from .surgical_tools import TOOLS
+from .surgical_anatomical_encounter import (AnatomicalObservation, EncounterTracker, context_options,
+    project_context, normalize_limit, axial_envelope)
 
 TASK = 'post-exposure-two-tool-limited-debulking-v1'
 SCHEMA = 'resectionlab.two-tool-comparison.v1'
 PUBLIC_SCHEMA = 'resectionlab.public-two-tool-plan.v1'
+CONTEXT_TASK = 'post-exposure-two-tool-source-context-v2'
+CONTEXT_SCHEMA = 'resectionlab.two-tool-comparison.v2'
+CONTEXT_PUBLIC_SCHEMA = 'resectionlab.public-two-tool-plan.v2'
 SCOPE = ('Source-annotation-assisted CUSA/Frazier sequence with an assumed contact-capacity law. '
          'No new non-target removal, source exclusions stay active, complete withdrawal required. '
          'Missing anatomy, optical visibility, empirical device rates and clinical outcomes remain unassessed.')
@@ -57,31 +62,45 @@ def _require(value, message):
     if not value: raise ValueError('TWO_TOOL_TASK: '+message)
 
 
-def task_spec():
-    return {'id': TASK, 'inputContract': 'annotation-assisted-two-tool-native-state-v1',
+def task_spec(*, with_context=False):
+    result = {'id': TASK, 'inputContract': 'annotation-assisted-two-tool-native-state-v1',
         'baselineQualification': 'existing source-byte-qualified inactive-access admission',
         'allowedOperations': ['exchange', 'inspect', 'place', 'move', 'apply', 'activate', 'deactivate', 'withdraw'],
         'allowedTools': ['cusa', 'frazier_suction'], 'maxActions': 24, 'maxDurationSeconds': 10.,
         'maxCusaActivationSeconds': 3., 'maxAdditionalTargetMm3': 8., 'maxAdditionalNonTargetMm3': 0.,
         'maxPairCandidatesPerRoute': 12, 'cusaRadiusMm': 1.5, 'suctionRadiusMm': 1.5,
         'clinicalOutcomes': 'unsupported'}
+    if with_context:
+        result.update(id=CONTEXT_TASK, inputContract='annotation-assisted-two-tool-source-context-v2',
+            anatomicalEndpoint='unique retained supplied context cells in complete nominal axial-tool clearance envelope',
+            maxContextMarginMm=5., maxContextNearMm3=1000.)
+    return result
 
 
 @dataclass(frozen=True)
 class TwoToolObservation:
     baseline: PlanningObservation
     task: object
+    context: AnatomicalObservation | None = None
 
     def __post_init__(self):
         _require(type(self.baseline) is PlanningObservation, 'typed public baseline required')
         frozen = freeze_json(self.task)
-        _require(semantic_digest(frozen) == semantic_digest(task_spec()), 'task capability/limit declaration differs')
+        _require(self.context is None or type(self.context) is AnatomicalObservation, 'typed public context required')
+        _require(semantic_digest(frozen) == semantic_digest(task_spec(with_context=self.context is not None)), 'task capability/limit declaration differs')
+        if self.context is not None:
+            _require(self.context.mask.shape == self.baseline.labels.shape and np.array_equal(self.context.affine, self.baseline.affine),
+                     'public context frame differs from baseline')
+            targets = [r['id'] for r in thaw_json(self.baseline.fields)['regions'] if r.get('target') and r['material'] == 'tumor']
+            _require(not np.any(self.context.mask & np.isin(self.baseline.labels, targets)), 'source context overlaps owned target')
         object.__setattr__(self, 'task', frozen)
 
     def manifest(self):
         baseline = self.baseline.manifest()
         body = {'schema': 'resectionlab.two-tool-observation.v1', 'baseline': baseline,
                 'taskHash': semantic_digest(self.task)}
+        if self.context is not None:
+            body.update(schema='resectionlab.two-tool-observation.v2', anatomicalContext=self.context.manifest())
         return {**body, 'inputHash': semantic_digest(body), 'evaluationReferencesExposed': False}
 
     def planning_engine(self):
@@ -121,12 +140,13 @@ def defaults(engine):
     available = interactive_planning_availability(engine)
     if not available['available'] or admission(engine) is None:
         return {'available': False, 'reason': available['reason'] or 'A qualified task baseline is required', 'defaults': None, 'scope': SCOPE}
-    return {'available': True, 'reason': None, 'scope': SCOPE, 'task': task_spec(),
+    return {'available': True, 'reason': None, 'scope': SCOPE, 'task': task_spec(), 'contextOptions': context_options(engine),
             'defaults': {'geometry': available['defaults'], 'shortSeconds': .25, 'longSeconds': 1., 'minimumTargetMm3': 1.}}
 
 
 def _normalize(observation, raw):
-    _require(type(raw) is dict and set(raw) == {'geometry', 'shortSeconds', 'longSeconds', 'minimumTargetMm3'},
+    keys = {'geometry', 'shortSeconds', 'longSeconds', 'minimumTargetMm3'} | ({'encounter'} if observation.context is not None else set())
+    _require(type(raw) is dict and set(raw) == keys,
              'exact geometry, duration and progress controls required')
     result = {}
     for key, low, high in (('shortSeconds', .1, 2.), ('longSeconds', .1, 2.), ('minimumTargetMm3', 0., 8.)):
@@ -136,7 +156,21 @@ def _normalize(observation, raw):
     _require(result['shortSeconds'] < result['longSeconds'], 'short duration must be less than long duration')
     fields = thaw_json(observation.baseline.fields)
     result['geometry'] = normalize_constraints(observation.baseline.planning_engine(), raw['geometry'], task=fields['task'])
+    if observation.context is not None: result['encounter'] = normalize_limit(raw['encounter'])
     return result
+
+
+def _tracker(observation, engine, controls):
+    return EncounterTracker(observation.context, engine, controls['encounter']) if observation.context is not None else None
+
+
+def _stop(observation, controls):
+    baseline = observation.planning_engine(); before = copy.deepcopy(baseline.state)
+    row = {'id': 'stop', 'label': 'STOP now', 'feasible': True, 'taskProgressMet': controls['minimumTargetMm3'] == 0.,
+           'actionProgram': [], 'physicalStateHashes': [], 'phases': [], 'summary': _summary(baseline, before)}
+    tracker = _tracker(observation, baseline, controls)
+    if tracker: row.update(anatomicalEncounter=tracker.receipt(baseline), contextPrefixHashes=[])
+    return row
 
 
 def _summary(engine, before):
@@ -189,7 +223,15 @@ def _pair_poses(observation, route, entry_region=None):
                    'outside': {'position': outside.tolist(), 'quaternion': q.as_quat().tolist()}}
 
 
-def _screen_pair(engine, secondary, clearance):
+def _pair_context_receipt(engine, secondary, context_tracker):
+    slot = copy.deepcopy(engine.state['slots']['right'])
+    slot.update(instrument='frazier_suction', parameters={'radiusMm': 1.5, 'depthMm': 2.})
+    trial = copy.copy(context_tracker); trial.seen = {k: v.copy() for k, v in context_tracker.seen.items()}
+    trial.add_cover(engine, axial_envelope(secondary['outside'], secondary['tip'], 'frazier_suction', engine.parameters(slot)))
+    return trial.receipt(engine)
+
+
+def _screen_pair(engine, secondary, clearance, context_tracker=None):
     from .surgical_joint_geometry import _axial_cover
     slot = copy.deepcopy(engine.state['slots']['right']); slot.update(instrument='frazier_suction', parameters={'radiusMm': 1.5, 'depthMm': 2.})
     params = engine.parameters(slot)
@@ -205,6 +247,8 @@ def _screen_pair(engine, secondary, clearance):
     left = engine.state['slots']['left']
     if pair_conflict(cover, envelopes(TOOLS[left['instrument']], engine.parameters(left), left['position'], left['quaternion'])):
         return 'SECONDARY_TOOL_COLLISION'
+    if context_tracker is not None:
+        if not _pair_context_receipt(engine, secondary, context_tracker)['withinLimit']: return 'ANATOMICAL_CONTEXT_LIMIT:secondary-access'
     return None
 
 
@@ -225,6 +269,7 @@ def _check_action_clearance(engine, action, previous_slots, margin):
 
 def _compile(observation, controls, route, secondary, seconds, identity, *, probe_pose=None, check=lambda: None):
     e = observation.planning_engine(); before = copy.deepcopy(e.state); program = []; states = []; phases = []; receipts = []
+    tracker = _tracker(observation, e, controls); context_hashes = []
     def step(action):
         check(); previous_slots = copy.deepcopy(e.state['slots'])
         result = e.step(copy.deepcopy(action), check=check)
@@ -235,11 +280,14 @@ def _compile(observation, controls, route, secondary, seconds, identity, *, prob
         receipts.append({key: result.get(key) for key in ('status', 'reason', 'completedFraction', 'elapsedSeconds')})
         _check_burdens(e, before, controls)
         _check_action_clearance(e, action, previous_slots, controls['geometry']['nonTargetClearanceMm'])
+        if tracker:
+            tracker.observe(e, action, previous_slots); context_hashes.append(semantic_digest(tracker.receipt(e)))
         program.append(copy.deepcopy(action)); states.append(physical_state_hash(e))
     def phase(name, actions):
         start = len(program)
         for action in actions: step(action)
         phases.append({'id': name, 'startAction': start, 'endAction': len(program), 'physicalStateHash': physical_state_hash(e)})
+        if tracker: phases[-1]['contextHash'] = semantic_digest(tracker.receipt(e))
     approach = copy.deepcopy(route['actionProgram'])
     setup = [approach.pop(0)] if approach and approach[0]['operation'] == 'exchange' else []
     phase('inspect', setup+[{'slot': 'left', 'operation': 'inspect', 'duration': .01}])
@@ -264,18 +312,23 @@ def _compile(observation, controls, route, secondary, seconds, identity, *, prob
         'summary': _summary(e, before), 'meaning': 'Inactive continuation into the same proposed source space after finite aspiration'}
     if outcome['status'] == 'accepted':
         step(probe); phases[-1].update(endAction=len(program), physicalStateHash=physical_state_hash(e))
+        if tracker: phases[-1]['contextHash'] = semantic_digest(tracker.receipt(e))
     phase('withdraw', [
         {'slot': 'right', 'operation': 'deactivate', 'duration': .01},
         {'slot': 'right', 'operation': 'withdraw', 'pose': secondary['outside'], 'duration': .2},
         *route['withdrawalProgram']])
     _require(all(not s['active'] and not s['inserted'] and not s['grip'] for s in e.state['slots'].values()), 'complete withdrawal required')
     summary = _check_burdens(e, before, controls)
-    return {'id': identity, 'label': 'Short contact' if identity == 'short' else 'Longer contact', 'contactSeconds': seconds,
+    row = {'id': identity, 'label': 'Short contact' if identity == 'short' else 'Longer contact', 'contactSeconds': seconds,
         'routeId': route['id'], 'secondary': secondary, 'actionProgram': program, 'physicalStateHashes': states, 'actionReceipts': receipts,
         'phases': phases, 'summary': summary, 'reassessment': reassessment, 'feasible': True,
         'taskProgressMet': summary['additionalTargetMm3'] >= controls['minimumTargetMm3'],
         'access': 'native-complete-tool', 'workingRoom': 'native-sequential-persistent-pair', 'withdrawal': 'complete',
         'visibility': None, 'visibilityReason': 'NO_QUALIFIED_OPTICAL_VISIBILITY_MODEL', 'clinicalRisk': None}
+    if tracker:
+        receipt = tracker.receipt(e)
+        row.update(anatomicalEncounter=receipt, contextPrefixHashes=context_hashes, feasible=receipt['withinLimit'])
+    return row
 
 
 def _approach_stop_reason(approaches):
@@ -288,10 +341,14 @@ def _decision(alternatives, controls, reason=None):
     feasible = [row for row in alternatives if row['feasible'] and row['taskProgressMet']]
     selected = min(feasible, key=lambda r: (r['summary']['elapsedSeconds'], -r['summary']['additionalTargetMm3'], r['id'])) if feasible else None
     operate = selected is not None and selected['id'] != 'stop'
+    if selected is None and any(row.get('anatomicalEncounter', {}).get('withinLimit') is False and row['taskProgressMet'] for row in alternatives):
+        reason = reason or 'ANATOMICAL_CONTEXT_LIMIT'
     return {'operation': 'COMPARE' if operate else 'STOP', 'selectedId': selected['id'] if selected else 'stop',
         'reason': reason or ('MODELED_PROGRESS_THRESHOLD_MET' if operate else 'PROGRESS_ALREADY_SATISFIED'
                             if selected else 'NO_COMPLETE_STRATEGY_MEETS_PROGRESS_THRESHOLD'),
-        'rule': 'Meet the declared research progress threshold with zero new non-target removal, then minimize modeled duration; not a clinical recommendation'}
+        'rule': 'Meet the declared research progress threshold with zero new non-target removal, '+
+            ('respect the supplied context near-volume limit, ' if 'encounter' in controls else '')+
+            'then minimize modeled duration; not a clinical recommendation'}
 
 
 def plan_observed_strategies(observation, raw, *, check=lambda: None, progress=lambda *_: None):
@@ -301,20 +358,29 @@ def plan_observed_strategies(observation, raw, *, check=lambda: None, progress=l
         check()
         if time.monotonic()-started > MAX_WALL_SECONDS: raise TimeoutError('Two-tool comparison wall budget')
     approaches = plan_observed_approaches(observation.baseline, controls['geometry'], check=bounded, progress=progress)
-    baseline = observation.planning_engine(); before = copy.deepcopy(baseline.state)
-    stop = {'id': 'stop', 'label': 'STOP now', 'feasible': True, 'taskProgressMet': controls['minimumTargetMm3'] == 0.,
-            'actionProgram': [], 'physicalStateHashes': [], 'phases': [], 'summary': _summary(baseline, before)}
-    alternatives = []; rejected = []; chosen = None; reason = None
+    stop = _stop(observation, controls)
+    alternatives = []; rejected = []; chosen = None; reason = None; context_failed = False; rejected_pair = None
     try:
         for route in approaches['routes']:
             access = observation.planning_engine()
+            access_context = _tracker(observation, access, controls)
             for action in route['actionProgram']:
+                previous_slots = copy.deepcopy(access.state['slots'])
                 bounded(); result = access.step(copy.deepcopy(action), check=bounded)
                 _require(result['status'] == 'accepted', 'source approach no longer executes')
+                if access_context: access_context.observe(access, action, previous_slots)
+            if access_context and not access_context.receipt(access)['withinLimit']:
+                context_failed = True
+                rejected.append({'routeId': route['id'], 'reason': 'ANATOMICAL_CONTEXT_LIMIT:primary-access',
+                    'anatomicalEncounter': access_context.receipt(access)})
+                continue
             for index, secondary in enumerate(_pair_poses(observation, route, controls['geometry']['entry'])):
-                bounded(); failure = _screen_pair(access, secondary, controls['geometry']['nonTargetClearanceMm'])
+                bounded(); failure = _screen_pair(access, secondary, controls['geometry']['nonTargetClearanceMm'], access_context)
                 if failure:
-                    rejected.append({'routeId': route['id'], 'pairIndex': index, 'reason': failure}); continue
+                    context_failed |= failure.startswith('ANATOMICAL_CONTEXT_LIMIT')
+                    rejected.append({'routeId': route['id'], 'pairIndex': index, 'reason': failure,
+                        **({'anatomicalEncounter': _pair_context_receipt(access, secondary, access_context)}
+                           if failure.startswith('ANATOMICAL_CONTEXT_LIMIT') else {})}); continue
                 variants = []
                 for identity, key in (('short', 'shortSeconds'), ('long', 'longSeconds')):
                     try:
@@ -323,15 +389,30 @@ def plan_observed_strategies(observation, raw, *, check=lambda: None, progress=l
                     except ValueError as error:
                         rejected.append({'routeId': route['id'], 'pairIndex': index, 'strategy': identity, 'reason': str(error)})
                 if len(variants) == 2:
-                    alternatives = variants; chosen = {'route': route, 'pairIndex': index, 'secondary': secondary}; break
+                    pair = {'route': route, 'pairIndex': index, 'secondary': secondary}
+                    if observation.context is None or any(row['feasible'] and row['taskProgressMet'] for row in variants):
+                        alternatives = variants; chosen = pair; break
+                    rejected_pair = (variants, pair)
+                    if any(not row['feasible'] for row in variants):
+                        context_failed = True
+                        rejected.append({'routeId': route['id'], 'pairIndex': index, 'reason': 'ANATOMICAL_CONTEXT_LIMIT:complete-sequences',
+                            'anatomicalEncounters': [row['anatomicalEncounter'] for row in variants]})
+                    else:
+                        rejected.append({'routeId': route['id'], 'pairIndex': index, 'reason': 'NO_COMPLETE_STRATEGY_MEETS_PROGRESS_THRESHOLD'})
             if chosen is not None: break
     except TimeoutError:
         reason = 'COMPUTATION_BUDGET'
     if not approaches['routes']:
         reason = _approach_stop_reason(approaches)
-    if chosen is None and reason is None: reason = 'NO_COMPLETE_TWO_TOOL_SEQUENCE'
+    if chosen is None and reason is None:
+        reason = ('COMPUTATION_BUDGET' if observation.context is not None and any(
+            r.get('reason') == 'GEOMETRY_WALL_BUDGET' for r in approaches['rejections']) else
+            'ANATOMICAL_CONTEXT_LIMIT' if context_failed else None if rejected_pair is not None else 'NO_COMPLETE_TWO_TOOL_SEQUENCE')
+    if chosen is None and rejected_pair is not None:
+        alternatives, chosen = rejected_pair
     alternatives.append(stop)
-    report = {'schema': PUBLIC_SCHEMA, 'task': task_spec(), 'publicObservation': observation.manifest(),
+    report = {'schema': CONTEXT_PUBLIC_SCHEMA if observation.context is not None else PUBLIC_SCHEMA,
+        'task': thaw_json(observation.task), 'publicObservation': observation.manifest(),
         'constraints': controls, 'approaches': approaches, 'chosenPair': chosen, 'alternatives': alternatives,
         'rejections': rejected, 'decision': _decision(alternatives, controls, reason), 'scope': SCOPE}
     report['publicPlanSeal'] = semantic_digest(report)
@@ -342,11 +423,118 @@ def generate_comparison(engine, raw, *, check=lambda: None, progress=lambda *_: 
     value = admission(engine); _require(value is not None, 'source/baseline admission is required')
     validate_admission(engine, value)
     available = defaults(engine); _require(available['available'], available['reason'])
-    observation = TwoToolObservation(project_observation(engine, value['task'], _evidence(engine)['availableEvidence']), task_spec())
-    public = plan_observed_strategies(observation, raw, check=check, progress=progress)
-    report = {'schema': SCHEMA, 'publicPlan': public, 'taskAdmission': value, **_binding(engine), 'sourceEvidence': _evidence(engine)}
+    context = binding = None; public_raw = copy.deepcopy(raw)
+    if type(raw) is dict and 'encounter' in raw:
+        selection = raw['encounter']
+        _require(type(selection) is dict and set(selection) == {'layerId', 'marginMm', 'maxNearMm3'}
+                 and type(selection['layerId']) is str, 'explicit source context selection and limits required')
+        context, binding = project_context(engine, selection['layerId'])
+        public_raw['encounter'].pop('layerId')
+    observation = TwoToolObservation(project_observation(engine, value['task'], _evidence(engine)['availableEvidence']),
+        task_spec(with_context=context is not None), context)
+    public = plan_observed_strategies(observation, public_raw, check=check, progress=progress)
+    report = {'schema': CONTEXT_SCHEMA if context is not None else SCHEMA, 'publicPlan': public, 'taskAdmission': value,
+              **_binding(engine), 'sourceEvidence': _evidence(engine)}
+    if binding is not None: report['contextBinding'] = binding
     report['reportSeal'] = semantic_digest(report)
     return report
+
+
+def _validate_context_rejections(observation, controls, public, expected):
+    """Refusal counts are recomputed from public source cells, never self-seals."""
+    routes = {row['id']: row for row in public['approaches']['routes']}; access_cache = {}
+    _require(type(public['rejections']) is list and len(public['rejections']) <=
+        37*controls['geometry']['candidateCount']+1, 'context rejection budget differs')
+    if public['decision'].get('reason') == 'ANATOMICAL_CONTEXT_LIMIT':
+        # This stronger refusal certifies the complete *declared finite family*,
+        # not merely a genuine failure selected from an omitted search. Budget
+        # expiry has a separate unresolved reason and cannot claim this proof.
+        _require(not any(r.get('reason') == 'GEOMETRY_WALL_BUDGET' for r in public['approaches']['rejections']),
+                 'anatomical STOP cannot hide an unfinished approach search')
+        # Bind the parent shortlist too: truncating both its routes and their
+        # context refusals must not turn a subset into a complete-family proof.
+        canonical_approaches = plan_observed_approaches(observation.baseline, controls['geometry'])
+        _require(semantic_digest(canonical_approaches) == semantic_digest(public['approaches']),
+                 'anatomical STOP approach-family coverage differs')
+        canonical = []; fallback = None
+        for route in public['approaches']['routes']:
+            access = observation.planning_engine(); tracker = _tracker(observation, access, controls)
+            for action in route['actionProgram']:
+                previous = copy.deepcopy(access.state['slots']); result = access.step(copy.deepcopy(action))
+                _require(result['status'] == 'accepted', 'context coverage access differs')
+                tracker.observe(access, action, previous)
+            receipt = tracker.receipt(access)
+            if not receipt['withinLimit']:
+                canonical.append({'routeId': route['id'], 'reason': 'ANATOMICAL_CONTEXT_LIMIT:primary-access',
+                    'anatomicalEncounter': receipt}); continue
+            for index, secondary in enumerate(_pair_poses(observation, route, controls['geometry']['entry'])):
+                failure = _screen_pair(access, secondary, controls['geometry']['nonTargetClearanceMm'], tracker)
+                if failure:
+                    canonical.append({'routeId': route['id'], 'pairIndex': index, 'reason': failure,
+                        **({'anatomicalEncounter': _pair_context_receipt(access, secondary, tracker)}
+                            if failure.startswith('ANATOMICAL_CONTEXT_LIMIT') else {})}); continue
+                variants = []
+                for identity, key in (('short', 'shortSeconds'), ('long', 'longSeconds')):
+                    try:
+                        probe = variants[0]['reassessment']['probeAction']['pose'] if variants else None
+                        variants.append(_compile(observation, controls, route, secondary, controls[key], identity, probe_pose=probe))
+                    except ValueError as error:
+                        canonical.append({'routeId': route['id'], 'pairIndex': index, 'strategy': identity, 'reason': str(error)})
+                if len(variants) == 2:
+                    _require(not any(row['feasible'] and row['taskProgressMet'] for row in variants),
+                             'anatomical STOP omitted a complete admissible progress-qualified sequence')
+                    fallback = {'route': route, 'pairIndex': index, 'secondary': secondary}
+                    canonical.append({'routeId': route['id'], 'pairIndex': index,
+                        **({'reason': 'ANATOMICAL_CONTEXT_LIMIT:complete-sequences',
+                            'anatomicalEncounters': [row['anatomicalEncounter'] for row in variants]}
+                           if any(not row['feasible'] for row in variants) else
+                           {'reason': 'NO_COMPLETE_STRATEGY_MEETS_PROGRESS_THRESHOLD'})})
+        _require(any(r['reason'].startswith('ANATOMICAL_CONTEXT_LIMIT') for r in canonical),
+                 'anatomical STOP has no verified source-cell refusal')
+        _require(semantic_digest(canonical) == semantic_digest(public['rejections']) and public['chosenPair'] == fallback,
+                 'anatomical STOP candidate coverage, order or fallback differs')
+        return
+    verified = 0
+    for rejection in public['rejections']:
+        _require(type(rejection) is dict and type(rejection.get('reason')) is str, 'rejection schema differs')
+        reason = rejection['reason']
+        if not reason.startswith('ANATOMICAL_CONTEXT_LIMIT'): continue
+        _require(reason in ('ANATOMICAL_CONTEXT_LIMIT:primary-access', 'ANATOMICAL_CONTEXT_LIMIT:secondary-access',
+            'ANATOMICAL_CONTEXT_LIMIT:complete-sequences'), 'unknown context refusal')
+        route = routes.get(rejection.get('routeId')); _require(route is not None, 'context refusal route differs')
+        if route['id'] not in access_cache:
+            access = observation.planning_engine(); tracker = _tracker(observation, access, controls)
+            for action in route['actionProgram']:
+                previous = copy.deepcopy(access.state['slots']); result = access.step(copy.deepcopy(action))
+                _require(result['status'] == 'accepted', 'context refusal access replay differs')
+                tracker.observe(access, action, previous)
+            access_cache[route['id']] = access, tracker
+        access, tracker = access_cache[route['id']]
+        if reason.endswith('primary-access'):
+            receipt = tracker.receipt(access)
+            wanted = {'routeId': route['id'], 'reason': reason, 'anatomicalEncounter': receipt}
+            _require(not receipt['withinLimit'], 'invented primary context limit')
+        else:
+            pairs = list(_pair_poses(observation, route, controls['geometry']['entry'])); index = rejection.get('pairIndex')
+            _require(type(index) is int and 0 <= index < len(pairs), 'context refusal pair differs')
+            if reason.endswith('secondary-access'):
+                receipt = _pair_context_receipt(access, pairs[index], tracker)
+                wanted = {'routeId': route['id'], 'pairIndex': index, 'reason': reason, 'anatomicalEncounter': receipt}
+                _require(not receipt['withinLimit'], 'invented secondary context limit')
+            else:
+                chosen = public['chosenPair']
+                rows = expected if chosen and chosen['route']['id'] == route['id'] and chosen['pairIndex'] == index else []
+                if not rows:
+                    for identity, key in (('short', 'shortSeconds'), ('long', 'longSeconds')):
+                        probe = rows[0]['reassessment']['probeAction']['pose'] if rows else None
+                        rows.append(_compile(observation, controls, route, pairs[index], controls[key], identity, probe_pose=probe))
+                receipts = [row['anatomicalEncounter'] for row in rows]
+                wanted = {'routeId': route['id'], 'pairIndex': index, 'reason': reason, 'anatomicalEncounters': receipts}
+                _require(all(not row['withinLimit'] for row in receipts), 'invented complete-sequence context limit')
+        _require(semantic_digest(rejection) == semantic_digest(wanted), 'context refusal measurement differs')
+        verified += 1
+    if public['chosenPair'] is None and public['decision'].get('reason') == 'ANATOMICAL_CONTEXT_LIMIT':
+        _require(verified > 0, 'context STOP has no verified source-cell refusal')
 
 
 def validate_report(engine, report):
@@ -359,17 +547,26 @@ def validate_report(engine, report):
     Native materialization is never cached here.
     """
     _require(type(report) is dict, 'comparison must be an object')
-    _require(report.get('schema') == SCHEMA and report.get('reportSeal') == semantic_digest({k: v for k, v in report.items() if k != 'reportSeal'}), 'comparison seal differs')
+    _require(report.get('schema') in (SCHEMA, CONTEXT_SCHEMA) and report.get('reportSeal') == semantic_digest({k: v for k, v in report.items() if k != 'reportSeal'}), 'comparison seal differs')
     value = admission(engine)
     _require(value is not None and value == report.get('taskAdmission'), 'source baseline qualification differs')
     validate_admission(engine, value)
     binding = _binding(engine)
-    _require(set(report) == {'schema', 'publicPlan', 'taskAdmission', 'sourceEvidence', 'reportSeal', *binding}, 'comparison schema differs')
+    with_context = report['schema'] == CONTEXT_SCHEMA
+    _require(set(report) == {'schema', 'publicPlan', 'taskAdmission', 'sourceEvidence', 'reportSeal', *binding} |
+             ({'contextBinding'} if with_context else set()), 'comparison schema differs')
     _require(all(report.get(k) == v for k, v in binding.items()) and report['sourceEvidence'] == _evidence(engine), 'source identity or planning checkpoint differs')
-    observation = TwoToolObservation(project_observation(engine, value['task'], report['sourceEvidence']['availableEvidence']), task_spec())
+    context = None
+    if with_context:
+        _require(type(report['contextBinding']) is dict, 'source context binding must be an object')
+        context, source_binding = project_context(engine, report['contextBinding'].get('layerId'))
+        _require(semantic_digest(source_binding) == semantic_digest(report['contextBinding']), 'source context binding differs')
+    observation = TwoToolObservation(project_observation(engine, value['task'], report['sourceEvidence']['availableEvidence']),
+        task_spec(with_context=with_context), context)
     public = report['publicPlan']
     _require(type(public) is dict and set(public) == {'schema', 'task', 'publicObservation', 'constraints', 'approaches', 'chosenPair', 'alternatives', 'rejections', 'decision', 'scope', 'publicPlanSeal'}, 'public plan schema differs')
-    _require(public['schema'] == PUBLIC_SCHEMA and semantic_digest(public['task']) == semantic_digest(task_spec()) and public['scope'] == SCOPE,
+    _require(public['schema'] == (CONTEXT_PUBLIC_SCHEMA if with_context else PUBLIC_SCHEMA)
+             and semantic_digest(public['task']) == semantic_digest(task_spec(with_context=with_context)) and public['scope'] == SCOPE,
              'two-tool task declaration differs')
     _require(public['publicPlanSeal'] == semantic_digest({k: v for k, v in public.items() if k != 'publicPlanSeal'}), 'public plan seal differs')
     manifest = observation.manifest()
@@ -406,13 +603,15 @@ def validate_report(engine, report):
         for identity, key in (('short', 'shortSeconds'), ('long', 'longSeconds')):
             probe = expected[0]['reassessment']['probeAction']['pose'] if expected else None
             expected.append(_compile(observation, controls, chosen['route'], chosen['secondary'], controls[key], identity, probe_pose=probe))
-        reason = None
+        claimed = public['decision'].get('reason')
+        reason = claimed if with_context and public['decision'].get('operation') == 'STOP' and claimed in ('ANATOMICAL_CONTEXT_LIMIT', 'COMPUTATION_BUDGET') else None
+        if reason is not None: _require(reason in ('ANATOMICAL_CONTEXT_LIMIT', 'COMPUTATION_BUDGET'), 'context refusal reason differs')
     else:
         reason = _approach_stop_reason(approaches) if not approaches['routes'] else public['decision'].get('reason')
-        _require(reason in ('REQUIRED_EVIDENCE_UNAVAILABLE', 'NO_COMPLETE_TOOL_ACCESS', 'NO_COMPLETE_TWO_TOOL_SEQUENCE', 'COMPUTATION_BUDGET'), 'STOP reason differs')
-    baseline = observation.planning_engine(); before = copy.deepcopy(baseline.state)
-    expected.append({'id': 'stop', 'label': 'STOP now', 'feasible': True, 'taskProgressMet': controls['minimumTargetMm3'] == 0.,
-        'actionProgram': [], 'physicalStateHashes': [], 'phases': [], 'summary': _summary(baseline, before)})
+        _require(reason in {'REQUIRED_EVIDENCE_UNAVAILABLE', 'NO_COMPLETE_TOOL_ACCESS', 'NO_COMPLETE_TWO_TOOL_SEQUENCE', 'COMPUTATION_BUDGET'} |
+                 ({'ANATOMICAL_CONTEXT_LIMIT'} if with_context else set()), 'STOP reason differs')
+    if with_context: _validate_context_rejections(observation, controls, public, expected)
+    expected.append(_stop(observation, controls))
     _require(semantic_digest(public['alternatives']) == semantic_digest(expected), 'canonical programs, physical predictions or reassessment differ')
     _require(semantic_digest(public['decision']) == semantic_digest(_decision(expected, controls, reason)), 'public strategy/STOP decision differs')
     with _VALIDATION_LOCK:
@@ -430,6 +629,11 @@ def materialize(engine, report, candidate_id, *, check=lambda: None):
     matches = [row for row in report['publicPlan']['alternatives'] if row['id'] == candidate_id]
     _require(len(matches) == 1, 'unknown strategy')
     strategy = matches[0]; native = engine.clone(); before = copy.deepcopy(engine.state); checkpoints = {}
+    _require(strategy['feasible'], 'declared anatomical context limit prevents installation of this sequence')
+    tracker = None
+    if report['schema'] == CONTEXT_SCHEMA:
+        context, _ = project_context(engine, report['contextBinding']['layerId'])
+        tracker = EncounterTracker(context, native, report['publicPlan']['constraints']['encounter'])
     phases = {row['endAction']: row['id'] for row in strategy['phases']}
     reassess = next((row for row in strategy['phases'] if row['id'] == 'reassess'), None)
     for index, action in enumerate(strategy['actionProgram']):
@@ -440,16 +644,24 @@ def materialize(engine, report, candidate_id, *, check=lambda: None):
                  'native action differs from sealed public prediction; no branch installed')
         _check_burdens(native, before, report['publicPlan']['constraints'])
         _check_action_clearance(native, action, previous_slots, report['publicPlan']['constraints']['geometry']['nonTargetClearanceMm'])
+        if tracker:
+            tracker.observe(native, action, previous_slots)
+            _require(semantic_digest(tracker.receipt(native)) == strategy['contextPrefixHashes'][index],
+                     'native anatomical encounter differs from public prefix prediction')
         if reassess and index+1 == reassess['startAction']+2:
             trial = native.clone(); probe = trial.step(copy.deepcopy(strategy['reassessment']['probeAction']), check=check)
             _require(probe['status'] == strategy['reassessment']['probeStatus'] and probe.get('reason') == strategy['reassessment']['probeReason'],
                      'native reassessment differs from public prediction')
         if index+1 in phases: checkpoints[phases[index+1]] = native.clone()
     _require(_summary(native, before) == strategy['summary'], 'native consequence vector differs')
+    if tracker:
+        _require(tracker.receipt(native) == strategy['anatomicalEncounter'] and tracker.receipt(native)['withinLimit'],
+                 'native complete sequence violates or differs from the declared anatomical context limit')
     _require(all(not s['active'] and not s['inserted'] and not s['grip'] for s in native.state['slots'].values()), 'native withdrawal incomplete')
     receipt = {'candidateId': candidate_id, 'reportSeal': report['reportSeal'], 'publicPlanSeal': report['publicPlan']['publicPlanSeal'],
-        'publicInputHash': report['publicPlan']['publicObservation']['inputHash'], 'taskId': TASK,
+        'publicInputHash': report['publicPlan']['publicObservation']['inputHash'], 'taskId': report['publicPlan']['task']['id'],
         'startStateId': engine.state_id, 'finalStateId': native.state_id, 'actionCount': len(strategy['actionProgram']),
         'nativeMatchesPublicPrediction': True, 'withdrawalComplete': True, 'summary': strategy['summary'],
         'phases': [{'id': key, 'stateId': e.state_id, 'position': len(e.actions)} for key, e in checkpoints.items()]}
+    if tracker: receipt.update(anatomicalEncounter=tracker.receipt(native), contextBindingSeal=report['contextBinding']['bindingSeal'])
     return native, checkpoints, receipt
