@@ -68,7 +68,18 @@ app.on('browser-window-created',(_event,window)=>{
       }
       await capture('01-native-source');report.checks.push('Production importer and renderer open actual external native package');
       if(process.env.DATA_REBUILD_USE_CATALOG==='1'){
+        const listedAt=performance.now();
+        const listed=await js('window.resectionApi.listCases()');
+        const reviewed=listed.filter(row=>row.reviewedExternal);
+        report.catalog={listedRows:listed.length,reviewedExternalRows:reviewed.length,listMs:performance.now()-listedAt,
+          releaseSha256:digest(path.join(root,'catalog/release.json'))};
+        if(process.env.DATA_REBUILD_EXPECT_CATALOG_COUNT){
+          const expected=Number(process.env.DATA_REBUILD_EXPECT_CATALOG_COUNT);
+          assert(Number.isSafeInteger(expected)&&expected>0);assert.equal(reviewed.length,expected);
+        }
         await click('Cases');await wait(`!!document.querySelector('.poc-case-card')`);
+        report.catalog.renderedCards=await js(`document.querySelectorAll('.poc-case-card').length`);
+        await capture('01a-reviewed-case-library');
         await js(`(()=>{const b=[...document.querySelectorAll('.poc-case-card')].find(b=>b.querySelector('strong')?.textContent===${JSON.stringify(process.env.DATA_REBUILD_CATALOG_ID||'UCSF-PDGM-0009')});if(!b)throw Error('Reviewed external case missing from actual library');b.click()})()`);
         await ready();await capture('01b-opened-through-reviewed-library');
         assert(report.requests.some(row=>row.operation==='research:openListedWorkspace'));

@@ -66,10 +66,16 @@ def publish(root=None,*,freeze=None):
         ids.add(case_id)
         source=Path(decision['path'])
         if not source.is_absolute():source=safe_path(root,source)
-        if not source.resolve().is_relative_to(root) or sha256_file(source)!=decision['sha256']:raise ValueError('Reviewed candidate bytes changed')
+        if not source.resolve().is_relative_to(root):raise ValueError('Reviewed candidate escapes data root')
         prior=previous.get(decision['sha256'])
+        verified_canonical=safe_path(root,prior['path']) if prior else None
+        # Existing accepted bytes are the publication input on a resume. Hash
+        # those bytes directly, avoiding a second read of an unused staging copy.
+        publication_input=verified_canonical or source
+        if sha256_file(publication_input)!=decision['sha256']:
+            raise ValueError('Preserve different existing release package' if prior else 'Reviewed candidate bytes changed')
         if prior:
-            with ZipFile(source) as archive:manifest=json.loads(archive.read('manifest.json'))
+            with ZipFile(publication_input) as archive:manifest=json.loads(archive.read('manifest.json'))
             contract=manifest['metadata'].get('data_case',{});native_case_id=prior['native_case_id']
         else:
             case,_,_=load_workspace(source)
@@ -78,17 +84,17 @@ def publish(root=None,*,freeze=None):
         family=contract.get('family_id',contract.get('person_id'))
         if family!=decision.get('family_id') or contract.get('role')!=decision.get('role'):raise ValueError('Independent family/role binding differs')
         classification=contract.get('classification',contract.get('case_type','real_patient_partial'))
-        with ZipFile(source) as archive:workspace=json.loads(archive.read('workspace.json'))
+        with ZipFile(publication_input) as archive:workspace=json.loads(archive.read('workspace.json'))
         inference_evidence=[inference_by_mask[row['sha256']] for row in workspace.get('originalFiles',[])
             if row.get('role')=='model-result' and row['sha256'] in inference_by_mask]
         category='synthetic' if classification.startswith('synthetic') else 'controls' if 'control' in classification else 'real'
         destination=root/'cases'/category/source.name
-        checked_root(root,required_bytes=source.stat().st_size*2)
+        checked_root(root,required_bytes=publication_input.stat().st_size*2)
         if destination.exists():
-            if sha256_file(destination)!=decision['sha256']:raise ValueError('Preserve different existing release package')
+            if destination!=verified_canonical and sha256_file(destination)!=decision['sha256']:raise ValueError('Preserve different existing release package')
         else:
             temporary=destination.with_name(destination.name+'.partial')
-            shutil.copyfile(source,temporary)
+            shutil.copyfile(publication_input,temporary)
             if sha256_file(temporary)!=decision['sha256']:raise ValueError('Package copy checksum failed')
             temporary.replace(destination)
         if prior and str(destination.relative_to(root))==prior['path']:
@@ -97,7 +103,7 @@ def publish(root=None,*,freeze=None):
             if sha256_file(safe_path(root,reopen_evidence['path']))!=reopen_evidence['sha256']:
                 raise ValueError('Original production reopen receipt changed')
         else:
-            if prior:case,_,_=load_workspace(source)
+            if prior:case,_,_=load_workspace(publication_input)
             reopened,_,_=load_workspace(destination)
             if reopened.semantic_hash!=case.semantic_hash:raise ValueError('Production final-location reopen changed anatomy')
             reopen_evidence=None

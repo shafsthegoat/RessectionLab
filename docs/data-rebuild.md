@@ -9,6 +9,11 @@ publication belongs to this cycle.
 
 ## Open accepted cases
 
+The completed frozen release is `2026-10-31-data-foundation-v1`: 355 native
+packages, 130 source person families and 200 synthetic variants. On the data
+drive, start with `catalog/START-HERE.md` and its 11-case curated core. The final
+report and retrospective coverage matrix are in `catalog/reporting/`.
+
 Set `RESSECTIONLAB_DATA_ROOT` to your actual mounted data directory, then launch
 from the existing primary checkout:
 
@@ -17,16 +22,19 @@ export RESSECTIONLAB_DATA_ROOT="/absolute/path/on/mounted/RessectionLabData"
 ./scripts/launch_poc.sh
 ```
 
-Choose the external Case Library and open a reviewed case. The portable app has
-no committed machine-specific bulk-data default. It checks the mounted volume's
-identity through fresh native Disk Arbitration properties and the live filesystem
+Open **Cases**; reviewed external entries appear automatically. Committed app defaults
+contain no machine-specific bulk-data location. The current checkout app checks
+the mounted volume's identity through fresh native Disk Arbitration properties and the live filesystem
 UUID on every call, without cached leases, and reports an unavailable drive
-rather than treating missing anatomy
-as a valid empty case. Preparation reserves the larger of 50 GiB and 10% of the
+rather than treating missing anatomy as a valid empty case. Preparation reserves the larger of 50 GiB and 10% of the
 volume. Twelve recorded native guard probes had a 6.6 ms median
 (`qc/native-volume-guard-probe.json`); this replaces diskutil probing that stalled
-under ExFAT writes. Source archives, extraction/download partials, model caches, derivatives,
+under ExFAT writes. These app proofs cover the checkout app, not a packaged build;
+a packaged engine without the checkout helper retains a bounded diskutil fallback.
+Source archives, extraction/download partials, model caches, derivatives,
 native projects, review images and archived evidence stay on the data drive.
+
+`catalog/reporting/coverage-<stage>.json` and its compact Markdown companion summarize actual saved synthetic preparation metadata retrospectively. They separate generated variants from source people and bind usable counts to the published release. Recipe margins, radii and volumes do not establish clinical depth, vessel clearance, corridor safety, skull constraints or functional anatomy.
 
 `catalog/release.json` is the current accepted index. Each entry binds an exact
 package SHA256 to a checksummed `qc/case-decisions/` sidecar containing allowed
@@ -65,6 +73,7 @@ Commands below reuse verified source bytes and completed receipts:
 .venv/bin/python scripts/data_rebuild_surgical_change.py
 
 # Automated engineering checks and representative hidden app save/reopen checks.
+.venv/bin/python scripts/data_rebuild_proxy_units.py
 .venv/bin/python scripts/data_rebuild_qc.py
 .venv/bin/python scripts/data_rebuild_verify_suite.py --expansion
 
@@ -133,7 +142,7 @@ and originals remain available. It is display LOD, not anatomical registration.
 Historical internal placement proxies with unknown spatial units retain their
 original bytes. Header-only `v2-mm` companions declare mm without changing masks,
 affines or native anatomy. Their independent byte proofs are in
-`qc/independent/placement-proxy-unit-repairs-independent-v1.json`; current case
+`qc/independent/placement-proxy-unit-repairs-independent-v3.json`; current case
 sidecars link the importable companions. Never silently reinterpret a v1 helper
 as an acquired image or a validated tissue segmentation.
 

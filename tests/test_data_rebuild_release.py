@@ -36,6 +36,7 @@ def test_republication_reuses_only_unchanged_production_reopen(tmp_path,monkeypa
     review=json.loads((tmp_path/second['cases'][0]['review_path']).read_text())
     assert review['reused_production_reopen_receipt']['path']==str(original.relative_to(tmp_path))
     assert original.read_bytes()==before
+    package.unlink() # Canonical self-contained bytes are independently usable.
     release.publish(tmp_path) # Repeated snapshots cannot introduce a self-reference.
     (tmp_path/second['cases'][0]['path']).write_bytes(b'changed canonical package')
     with pytest.raises(ValueError,match='different existing release'):
