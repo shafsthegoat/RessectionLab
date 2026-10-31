@@ -328,13 +328,14 @@ def replay_program(baseline, mask, affine, limit, program, exported=None):
     return trial, tracker, prefixes
 
 
-def verify(report, source, *, branch=None, revision=1):
+def verify(report, source, *, branch=None, revision=1, source_snapshot=None):
     source = Path(source).resolve()
     require(source.is_relative_to(ROOT / 'testcases'), 'source must stay in ignored testcases')
     source_sha = file_hash(source)
     _, artifacts, _ = load_workspace(source)
     record = artifacts['surgical_toolbox']
     saved_item = None
+    require(source_snapshot is None or type(report) is dict,'explicit source snapshots require a canonical report object')
     if not isinstance(report, dict):
         report_path = Path(report)
         if report_path.suffix == '.ressectionlab':
@@ -352,7 +353,7 @@ def verify(report, source, *, branch=None, revision=1):
     plan = report['publicPlan']
     require(plan['publicPlanSeal'] == semantic_digest({k: v for k, v in plan.items() if k != 'publicPlanSeal'}), 'public plan seal differs')
     scene = load_environment(source)
-    snapshot = record['branches'][branch or record['branchId']]
+    snapshot = record['branches'][branch or record['branchId']] if source_snapshot is None else source_snapshot
     if saved_item:
         require(semantic_digest(snapshot) == saved_item['sourceSnapshotHash'], 'saved study baseline differs')
     count = report['prefixActions']

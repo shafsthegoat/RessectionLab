@@ -188,7 +188,7 @@ def geometry(row, baseline, controls, occupied, targets, exterior):
     require(abs(len(union)*scene.voxel_mm3-row['sourceTubeMm3'])<1e-9 and row['sourceTubeMm3']<=controls['maxNonTargetMm3'],'source tube union differs')
 
 
-def verify(case_path, preparation_path):
+def verify(case_path, preparation_path, *, expected_snapshot=None):
     case_path, preparation_path = Path(case_path).resolve(), Path(preparation_path).resolve()
     require(all(p.is_relative_to(ROOT/'testcases') for p in (case_path, preparation_path)), 'inputs must stay in testcases')
     inputs = {str(p): file_hash(p) for p in (case_path, preparation_path)}
@@ -199,6 +199,8 @@ def verify(case_path, preparation_path):
     require(('sourceRay' in public)==fixed,'source ray schema differs')
     require(proof['nativeReplayVerified'] is True,'native replay declaration differs')
     _, artifacts, _ = load_workspace(case_path); record = artifacts['surgical_toolbox']; scene = load_environment(case_path)
+    expected_snapshot=record['branches'][record['branchId']] if expected_snapshot is None else expected_snapshot
+    require(type(expected_snapshot) is dict,'expected native checkpoint must be explicit JSON')
     source = [s for s in record['branches'].values() if semantic_digest(s) == proof['sourceSnapshotHash']]
     require(bool(source) and scene.identity == proof['sourceSceneId'], 'preparation source branch differs')
     require(semantic_digest(verify_source(scene, native_collection=proof['sourceVerification']['nativeCollectionPath'])) == semantic_digest(proof['sourceVerification']), 'source qualification differs')
@@ -253,14 +255,14 @@ def verify(case_path, preparation_path):
             require(attempt['summary']['additionalTargetMm3'] == 0 and 0 < attempt['summary']['additionalNonTargetMm3'] <= controls['maxNonTargetMm3'], 'complete preparation burden differs')
             if chosen is None: chosen = index
         if index == public['decision']['selectedIndex']:
-            require(engine.snapshot() == record['branches'][record['branchId']], 'installed preparation differs')
+            require(semantic_digest(engine.snapshot()) == semantic_digest(expected_snapshot), 'installed preparation differs')
         results.append({'index':index, 'complete':done, 'summary':attempt['summary']})
     require(public['decision']['selectedIndex'] == chosen and public['decision']['operation'] == ('PREPARE' if chosen is not None else 'STOP'), 'selection differs')
-    if chosen is None:require(semantic_digest(record['branches'][record['branchId']])==semantic_digest(baseline.snapshot()),'STOP installed an unselected physical state')
+    if chosen is None:require(semantic_digest(expected_snapshot)==semantic_digest(baseline.snapshot()),'STOP installed an unselected physical state')
     require(all(file_hash(Path(p)) == h for p,h in inputs.items()), 'native inputs changed')
     require(verify_source(scene,native_collection=proof['sourceVerification']['nativeCollectionPath'])==proof['sourceVerification'],'source bytes changed during audit')
     return {'passed':True,'sourceSceneId':scene.identity,'results':results,'microsteps':microsteps,
-        'boxTests':boxes.box_tests,'sourceInputsUnchanged':True,'inputSha256':inputs,
+        'boxTests':boxes.box_tests,'sourceInputsUnchanged':True,'inputSha256':inputs,'expectedSnapshotHash':semantic_digest(expected_snapshot),
         'scope':'Independent literal complete CUSA/axial-source-box checks, native prefixes, irreversible source removal and clock/capacity conservation. No preparation search optimality, unknown exterior anatomy, clinical risk or empirical mechanics claim.'}
 
 

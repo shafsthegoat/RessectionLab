@@ -50,7 +50,7 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
   const [fullCaseVersion,setFullCaseVersion]=useState(0);
   const [playbackVersion,setPlaybackVersion]=useState(0);
   function pauseFullCase(){if(fullCaseComputation.current.scenario){fullCaseComputation.current.pause();setFullCaseVersion(n=>n+1);}}
-  const generation=useRef(0),busy=useRef(false),current=useRef({source,api,result,slot,enabled,displayFailed,preview});current.current={source,api,result,slot,enabled,displayFailed,preview};
+  const generation=useRef(0),busy=useRef(false),current=useRef({source,api,result,slot,enabled,displayFailed,preview,approachPreview});current.current={source,api,result,slot,enabled,displayFailed,preview,approachPreview};
   const manualRequests=useRef(0);
   const [manualPending,setManualPending]=useState(0);
   const replayOwner=useRef<{source:ViewerVolume;generation:number;branchId:string;authority:string;prefix:boolean}|null>(null);
@@ -95,8 +95,13 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
       setError('Return to the accepted common checkpoint and cancel any preview before reassessing checked alternatives.');return false;
     }
     if(c.result?.playback?.readOnly&&!surgicalCursorCommand(command)){setError('Return to a recorded action boundary before applying or branching instrument actions.');return false;}
-    if(['generateApproaches','previewApproach','applyApproach','generateStrategies','previewStrategy','applyStrategy','analyzeStrategySensitivity'].includes(command)&&(!acceptedFullCaseState(!['generateApproaches','generateStrategies','analyzeStrategySensitivity'].includes(command))||c.result?.readOnly)){setError('Return to the accepted editable checkpoint and cancel any preview before planning approaches.');return false;}
-    if(c.displayFailed&&['step','preview','plan','fullCase','generateApproaches','previewApproach','applyApproach','generateStrategies','previewStrategy','applyStrategy','analyzeStrategySensitivity'].includes(command)){setError('The accepted anatomy could not be displayed. Seek to a recorded state or reopen the case before applying another instrument action.');return false;}
+    if(['generateApproaches','previewApproach','applyApproach','generateStrategies','previewStrategy','applyStrategy','analyzeStrategySensitivity','suggestPreparation','generatePreparations','previewPreparation','applyPreparation'].includes(command)&&(!acceptedFullCaseState(!['generateApproaches','generateStrategies','analyzeStrategySensitivity','suggestPreparation','generatePreparations'].includes(command))||c.result?.readOnly)){setError('Return to the accepted editable checkpoint and cancel any preview before planning approaches.');return false;}
+    if(c.displayFailed&&['step','preview','plan','fullCase','generateApproaches','previewApproach','applyApproach','generateStrategies','previewStrategy','applyStrategy','analyzeStrategySensitivity','suggestPreparation','generatePreparations','previewPreparation','applyPreparation'].includes(command)){setError('The accepted anatomy could not be displayed. Seek to a recorded state or reopen the case before applying another instrument action.');return false;}
+    if(command==='applyPreparation'){
+      const p=c.approachPreview;
+      if(!c.preview||!p||p.kind!=='preparation'||p.phaseId!==extra.phase||p.candidateId!==extra.candidateId||
+        p.reportSeal!==extra.expectedPlanSeal||p.view!==c.preview){setError('Preview this exact preparation checkpoint before installing its branch.');return false;}
+    }
     const prefixRestart=command==='seekPrefix'&&extra.position===0;
     const token=generation.current;busy.current=true;setPending(true);setPendingCommand(command);setError(null);
     try{
@@ -115,12 +120,12 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
       // A superseded seek still moved the backend cursor. Preserve its state
       // identity for the next ordered request while withholding obsolete UI.
       if(frameCommand(command)&&next){checkedSurgicalPlayback(next,{...extra,branchId});setMode('navigate');setPath([]);}
-      if(!['previewApproach','previewStrategy'].includes(command)&&updatesEditableSurgicalCursor(command)&&!next?.verification?.readOnly)backendResult.current=next;
+      if(!['previewApproach','previewStrategy','previewPreparation'].includes(command)&&updatesEditableSurgicalCursor(command)&&!next?.verification?.readOnly)backendResult.current=next;
       if(!isCurrent())return false;
       setDisplayFailed(false);
-      if(['previewApproach','previewStrategy'].includes(command)){
+      if(['previewApproach','previewStrategy','previewPreparation'].includes(command)){
         const p=next?.approachPreview;
-        if(!next||!p||p.candidateId!==extra.candidateId||p.reportSeal!==extra.expectedPlanSeal||p.outcome?.status!=='accepted'||(command==='previewStrategy'&&(p.kind!=='strategy'||p.phaseId!==extra.phase))||
+        if(!next||!p||p.candidateId!==extra.candidateId||p.reportSeal!==extra.expectedPlanSeal||p.outcome?.status!=='accepted'||(command==='previewStrategy'&&(p.kind!=='strategy'||p.phaseId!==extra.phase))||(command==='previewPreparation'&&(p.kind!=='preparation'||p.phaseId!==extra.phase))||
           next.caseHash!==c.result?.caseHash||next.branchId!==c.result.branchId||next.position!==c.result.position||
           next.view.stateId!==c.result.view.stateId||next.view.scene.sceneId!==c.result.view.scene.sceneId||p.view.scene.sceneId!==c.result.view.scene.sceneId)
           throw Error('Checked approach preview differs from its selected route or accepted source checkpoint.');

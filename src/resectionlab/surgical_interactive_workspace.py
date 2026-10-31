@@ -56,9 +56,9 @@ def validate_workspace(scene, record, case_hash):
         baseline = record['branches'].get(item.get('sourceBranchId'))
         if baseline is None or semantic_digest(baseline) != item.get('sourceSnapshotHash'):
             raise ValueError('Interactive planning source checkpoint changed')
-        if (item['report'].get('taskAdmission') is not None and
-                item['report']['taskAdmission'] != record.get('taskAdmission')):
-            raise ValueError('Interactive planning workspace task admission differs')
+        if item['report'].get('taskAdmission') is not None and item['report']['taskAdmission'] != record.get('taskAdmission'):
+            from .surgical_preparation_workspace import require_owned_admission
+            require_owned_admission(scene,record,case_hash,item['report']['taskAdmission'])
         validate_saved_interactive_report(scene, baseline, item['report'])
         timeline = record.get('timeline', {}).get(item['sourceBranchId'])
         if timeline is not None and semantic_digest(timeline) != item['report'].get('baselineHistoryHash'):
@@ -106,7 +106,7 @@ def validate_workspace(scene, record, case_hash):
             source = SurgicalEngine.restore(scene, baseline)
             if item['report'].get('taskAdmission') is not None:
                 from .surgical_task_admission import bind_admission
-                bind_admission(source, record['taskAdmission'])
+                bind_admission(source, item['report']['taskAdmission'])
             expected, expected_receipt = materialize_interactive_approach(source, item['report'], route['id'])
             if (semantic_digest(expected.snapshot()) != semantic_digest(snapshot)
                     or semantic_digest(expected_receipt) != semantic_digest(receipt)):

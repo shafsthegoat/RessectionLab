@@ -16,6 +16,7 @@ from resectionlab.surgical_exposure import DEFAULTS,prepare,normalize,normalize_
 from resectionlab.surgical_two_tool import defaults,generate_comparison,validate_report
 from prepare_source_exposure import save_native
 from resectionlab.surgical_anatomical_encounter import normalize_limit
+from resectionlab.surgical_preparation_planning import choose_policies,incomplete_search_rows
 import numpy as np
 
 
@@ -32,37 +33,6 @@ def validate_operating_design(design):
     if downstream['shortSeconds']>=downstream['longSeconds']:raise ValueError('Short contact must precede longer contact')
     if type(downstream['contextLabelValue']) is not int or downstream['contextLabelValue']<=0:raise ValueError('Explicit categorical context required')
     normalize_limit({'marginMm':downstream['contextMarginMm'],'maxNearMm3':downstream['contextMaxNearMm3']})
-
-def choose_policies(public):
-    def cost(row):
-        item=row['preparation']['attempts'][row['preparation']['decision']['selectedIndex']]['summary']
-        return item['additionalNonTargetMm3'],item['elapsedSeconds'],public.index(row)
-    access=[r for r in public if r['strategy'] is not None and r['strategy']['approaches']['routes']]
-    corridor=min(access,key=cost) if access else None
-    complete=[]
-    for row in public:
-        plan=row['strategy']
-        if plan is None or plan['decision']['selectedId']=='stop':continue
-        selected=next(a for a in plan['alternatives'] if a['id']==plan['decision']['selectedId'])
-        if selected['feasible'] is True and selected['taskProgressMet'] is True:complete.append(row)
-    def total_cost(row):
-        choice=next(a for a in row['strategy']['alternatives'] if a['id']==row['strategy']['decision']['selectedId'])
-        a,b,c=cost(row)
-        return a+choice['summary']['additionalNonTargetMm3'],b+choice['summary']['elapsedSeconds'],c
-    joint=min(complete,key=total_cost) if complete else None
-    return corridor,joint
-
-
-def incomplete_search_rows(public):
-    result=[]
-    for row in public:
-        plan=row["strategy"]
-        if plan is None:continue
-        reasons=[plan["decision"].get("reason"),*[r.get("reason") for r in plan["rejections"]],
-                 *[r.get("reason") for r in plan["approaches"]["rejections"]]]
-        if any(reason in ("COMPUTATION_BUDGET","GEOMETRY_WALL_BUDGET") for reason in reasons):result.append(row["id"])
-    return result
-
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
@@ -90,7 +60,7 @@ def main():
     normalize({**design['controls'],'lateralSweepMm':0.})
     validate_operating_design(design)
     implementation_paths=[Path(__file__),*[ROOT/'src/resectionlab'/name for name in ('surgical_exposure.py','surgical_engine.py',
-        'surgical_motion.py','surgical_planning_observation.py','surgical_two_tool.py','surgical_task_admission.py','surgical_anatomical_encounter.py')]]
+        'surgical_motion.py','surgical_planning_observation.py','surgical_two_tool.py','surgical_task_admission.py','surgical_anatomical_encounter.py','surgical_preparation_planning.py')]]
     implementation={str(p.relative_to(ROOT)):digest(p) for p in implementation_paths}
     output.mkdir(parents=True)
     case,artifacts,workspace=load_workspace(source);scene=load_environment(source)

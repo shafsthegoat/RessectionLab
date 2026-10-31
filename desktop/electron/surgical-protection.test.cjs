@@ -53,3 +53,15 @@ test('two-tool task forwards explicit controls, phase preview and sealed install
   assert.equal(f.dialogs.length,0);
   await assert.rejects(f.invoke({caseHash:'case',command:'generateStrategies',privateReferencePath:'/private/oracle'}),/Unsupported operation argument/);
 });
+
+test('preparation requests carry numeric drafts and native seals without renderer file paths',async()=>{
+  const f=fixture();
+  for(const args of [
+    {caseHash:'case',command:'suggestPreparation',expectedStateId:'state',acknowledgeResearchUnknowns:true},
+    {caseHash:'case',command:'generatePreparations',expectedStateId:'state',constraints:{sourceRay:{surfaceMm:[1,2,3],sourceTargetMm:[1,2,8]},widthsMm:[0,.3,1]},acknowledgeResearchUnknowns:true},
+    {caseHash:'case',command:'previewPreparation',expectedStateId:'state',expectedPlanSeal:'seal',candidateId:'width-1',phase:'prepared'},
+    {caseHash:'case',command:'applyPreparation',expectedStateId:'state',expectedPlanSeal:'seal',candidateId:'width-1',phase:'withdraw'},
+  ]){await f.invoke(args);assert.deepEqual(JSON.parse(JSON.stringify(f.calls.at(-1)[1])),args);}
+  assert.equal(f.dialogs.length,0);
+  await assert.rejects(f.invoke({caseHash:'case',command:'generatePreparations',nativeCollectionPath:'/renderer/private'}),/Unsupported operation argument/);
+});

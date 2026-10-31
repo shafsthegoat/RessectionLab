@@ -1,4 +1,5 @@
 import {TwoToolStrategyPanel} from './TwoToolStrategyPanel';
+import {PreparationPlanningPanel} from './PreparationPlanningPanel';
 import {InteractivePlanningPanel} from './InteractivePlanningPanel';
 import type {Point3} from './viewer/coordinates';
 import {PatientPositionControls} from './PatientPositionControls';
@@ -214,6 +215,7 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
     <div className="surgical-toolbox">{v.catalog.filter(t=>(t.name+' '+t.category).toLowerCase().includes(search.toLowerCase())).map(t=><button key={t.id} aria-pressed={selected?.instrument===t.id} disabled={c.pending||playing||readOnly||!!v.planarBladeManeuver||selected?.instrument===t.id} onClick={()=>{if(selected?.instrument!==t.id)stopRun('step',{action:{slot:c.slot,operation:'exchange',instrument:t.id,duration:1}})}}><small>{t.category}</small>{t.name}</button>)}</div>
     <p className="surgical-note">Choosing a different instrument commits an exchange. The selected instrument does not advance time.</p></details>
 
+    {!v.planarBladeManeuver&&<PreparationPlanningPanel c={c} cursor={planningCursor} onCursor={onPlanningCursor} pause={()=>{setPlaying(false);c.pauseFullCase();}}/>}
     {!v.planarBladeManeuver&&<TwoToolStrategyPanel c={c} cursor={planningCursor} onCursor={onPlanningCursor} pause={()=>{setPlaying(false);c.pauseFullCase();}}/>}
     {!v.planarBladeManeuver&&<InteractivePlanningPanel c={c} cursor={planningCursor} onCursor={onPlanningCursor} pause={()=>{setPlaying(false);c.pauseFullCase();}}/>}
     {!v.planarBladeManeuver&&<FullCaseRehearsalPanel c={c} pause={()=>setPlaying(false)}/>}

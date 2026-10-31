@@ -106,8 +106,11 @@ def _validate_workspace(scene, record, case_hash, *, check, restore):
         if set(item) != {'schema', 'revision', 'caseHash', 'sourceBranchId', 'sourceSnapshotHash', 'report', 'workspaceSeal'} or item['schema'] != SCHEMA or item['revision'] != revision or type(item['revision']) is not int or item['caseHash'] != case_hash:
             raise ValueError('Two-tool study identity/revision differs')
         baseline = record['branches'].get(item['sourceBranchId'])
-        if baseline is None or semantic_digest(baseline) != item['sourceSnapshotHash'] or item['report']['taskAdmission'] != record.get('taskAdmission'):
+        if baseline is None or semantic_digest(baseline) != item['sourceSnapshotHash']:
             raise ValueError('Two-tool study source checkpoint differs')
+        if item['report']['taskAdmission'] != record.get('taskAdmission'):
+            from .surgical_preparation_workspace import require_owned_admission
+            require_owned_admission(scene,record,case_hash,item['report']['taskAdmission'],check=check)
         validate_admission(SimpleNamespace(scene=scene), item['report']['taskAdmission'], require_baseline=False)
         key = (scene.identity, semantic_digest(baseline), semantic_digest(item))
         if key not in _VALIDATED:

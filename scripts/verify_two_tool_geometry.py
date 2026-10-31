@@ -105,8 +105,9 @@ def check_geometry(trace,scene,base_removed,protection=None):
  'proof':'Fixed-axis exit moves away from every retained contacted target cell lying wholly in its forward half-space. Whole-cell shaft/non-target/other-tool checks remain active. Whole tool is checked against all retained tissue during inactive access/suction movement.',
  'outsideImageAnatomy':'unknown; original source field only'}
 
-def verify(report,source,*,branch=None,revision=1):
+def verify(report,source,*,branch=None,revision=1,source_snapshot=None):
  source=Path(source).resolve();require(source.is_relative_to(ROOT/'testcases'),'source must stay in ignored testcases')
+ require(source_snapshot is None or type(report) is dict,'explicit source snapshots require a canonical report object')
  if not isinstance(report,dict):
   report_path=Path(report)
   if report_path.suffix=='.ressectionlab':
@@ -116,7 +117,7 @@ def verify(report,source,*,branch=None,revision=1):
    if report_path.resolve()==source and branch is None:branch=item['sourceBranchId']
   else:report=json.loads(report_path.read_text())
  sha=hashlib.sha256(source.read_bytes()).hexdigest();_,art,_=load_workspace(source);record=art['surgical_toolbox'];scene=load_environment(source)
- snap=record['branches'][branch or record['branchId']];count=report['prefixActions']
+ snap=record['branches'][branch or record['branchId']] if source_snapshot is None else source_snapshot;count=report['prefixActions']
  require(len(snap['actions'])>=count,'source prefix is too short')
  protection=config=None
  if snap.get('protectionContract'):

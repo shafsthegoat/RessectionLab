@@ -860,6 +860,49 @@ Bimanual workspace/task evaluation is established prior art, including
 That articulated device's experiments do not calibrate this rigid-tool simulator.
 This bounded comparison makes no novelty claim or transfer of empirical parameters.
 
+## Implemented: surgeon-controlled preparation comparison in the desktop
+
+The acquired-source desktop now exposes common source-cell ray, target region,
+entry radius, lateral-pass widths, removal/action/time limits, contact durations
+and optional source-context controls. A public-anatomy suggestion changes no native
+state. Linked MRI coordinates use the actual source affine. Editing a constraint,
+even back to its previous value, invalidates the displayed draft until recomputed.
+The table separates inactive access, preparation burden and complete-sequence STOP.
+A preparation-only checkpoint remains explicitly costful; full-plan installation
+requires a progress-qualified suffix and complete withdrawal.
+
+Preparation task admissions now belong to installed native branches. Installing a
+second alternative preserves the first admission and its earlier approach/two-tool
+studies, while returning to the original source restores its unadmitted state.
+Reports retain frozen source/configured branches, native programs and receipts.
+Resealed forgeries, altered source bytes, cyclic ancestry, stale previews and
+cancelled transactions refuse. Existing single-admission workspaces retain their
+original validation path. A named ten-minute transport allowance covers bounded
+preparation comparison; engine computation and cancellation guards remain active.
+
+Actual hidden Electron controls on exposed-DEVELOPMENT 0004 reproduce the prior
+frozen ray-B cells exactly in the native save. The 0/0.3 mm preparations remove
+46/66 mm³ non-target and zero target; both complete sequences STOP. The 1 mm cell
+remains a generator refusal. Two distinct preparations install and remain
+inspectable after a third, missing-functional-evidence comparison. Independent
+literal replay, source-box geometry, context and policy checks pass on all three
+saved revisions and both installed applications. Empty generator refusals still
+establish source/baseline integrity only, without exhaustive infeasibility proof.
+All eight source arrays, non-artifact manifest fields and original branches remain
+exact; cold reopen preserves every study, application, admission, timeline and
+branch. The previous 0007 workspace retains its nine comparisons, two applications
+and two sensitivity studies exactly. No automation window becomes visible.
+
+The 464-test source/planning regression, 93 overlapping independent-auditor controls,
+two transport/cancellation controls, 1,237 desktop tests and desktop build pass.
+The final observed first/repeated comparison takes 28.804/14.987 backend seconds;
+first preview takes 2.784 backend seconds and 8.488 seconds to accepted display.
+These concurrent verification timings establish no paired speed improvement.
+The held acquired case still offers no new complete-plan feasibility advantage.
+Detailed commands, source/field hashes, observations and preserved failures are in
+`testcases/desktop-preparation-v1/README.md`. Empirical mechanics, complete exterior
+anatomy and clinical/function claims remain unqualified.
+
 ## Remaining milestones and next dependency
 
 This is a bounded acquired-anatomy operating task, not the complete strategy
@@ -871,9 +914,9 @@ Add supported anatomical/execution uncertainty, a frozen comparison with matched
 route-search baselines and independent challenge cases; continue reducing cold
 proof/display cost and migrate remaining planner interfaces. The matched exposure
 experiment is now an explicit negative result: the current preparation family does
-not solve two-tool operation on 0004. Next connect preparation alternatives and
-their complete-plan consequences to common surgeon controls, and use measured
-failure constraints to design a bounded next family before evaluating it. Establish
+not solve two-tool operation on 0004. Common surgeon controls now connect preparation alternatives and their complete-plan
+consequences. Next use measured failure constraints to design a bounded next
+family before evaluating it. Establish
 positive generated software controls separately from acquired evidence. Expand the
 patient distribution without touching
 reserved evaluations. Older lattice resolution dependence and
