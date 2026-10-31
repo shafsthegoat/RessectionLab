@@ -275,7 +275,7 @@ self-resealed program, metric, nested-approach and decision changes are tested.
 Measured IPC backend requests on 0007: generation/validation 12.78/12.55 s;
 checkpoint preview 13.11–14.09 s; branch installation 13.30–13.38 s; missing-evidence
 STOP 1.39 s. These exclude renderer admission and are not a speedup claim. Repeated
-canonical execution and per-action summaries are profiling targets. Exact outputs,
+canonical execution was the main subsequent profiling bottleneck. Exact outputs,
 failed prototypes and reproduction commands are indexed in the ignored
 `testcases/two-tool-strategy-v1/README.md`. Final proposed-commit regression:
 232 backend checks, all 1,214 desktop tests and build pass. Six frozen studies
@@ -290,12 +290,66 @@ source branches remain unchanged.
   --revision 1 --output testcases/two-tool-strategy-v1/independent-fresh.json
 ```
 
+## Completed: exact reuse of full strategy validation
+
+Profiling found that validation repeated two complete strategy recipes and three
+approach previews; materialization repeated that validation before native execution.
+Full-volume residual summaries were a smaller cost. A process-private LRU now
+retains at most 32 successful complete-validation digests. Every hit still checks
+source admission/member fingerprints, the full native checkpoint/history/actions,
+report content/seals and freshly projected public inputs, including actual live
+guard masks/configuration and the instrument catalog. Reports, observations and
+engines are not retained. Native materialization still executes every action,
+checks every predicted prefix and receipt, and preserves accumulated burdens.
+
+Three alternating paired runs against `b3da4b10`, using identical source and
+physics, give median backend preview-path latency **12.960 → 1.482 s (8.75×)**.
+Repeated validation is 5.816 → 0.082 s; materialization of an already validated
+report is 7.193 → 1.406 s. First validation (5.866/5.846 s) and generation
+(6.323/6.317 s) are unchanged. These use warm source admission; “cold” denotes
+an empty canonical-validation cache, not cold storage or source-byte verification.
+All six runs have identical complete reports, endpoint snapshots, receipts and
+six phase snapshots. One entry estimates 484 bytes; filling 32 digest entries
+estimates 6,912 bytes, reaching 8,176 bytes after 10,000 replacements on this
+Python as dictionary capacity changes. These exclude other process memory.
+
+Actual hidden Electron preview requests take 1.84–2.16 s; accepted displays are
+ready in 2.02–2.61 s including UI dispatch/polling and surface preparation.
+Installation takes 2.07–2.09 s. Generation remains 12.75–12.91 s. Duration changes,
+the two installed endpoints, missing-functional-evidence STOP and narrow-entry
+STOP retain their behavior. All 15 native branch snapshots and both application
+receipts equal the prior saved workspace. The narrow-entry wall-budget run
+records 21 rejected proposals rather than 20, changing its diagnostic seals;
+its controls, STOP decision and alternatives are identical. Full report equality
+is claimed for the paired benchmark and other three desktop studies, not that
+wall-budget diagnostic. The second acquired case still refuses complete access;
+the exact missing-target negative exposes no comparison action. A fresh hidden
+process reopens and verifies the positive native save. Source archives remain
+unchanged and no verification window becomes visible.
+
+All 241 selected backend controls, 1,214 desktop tests and build pass. New controls
+cover warm native execution, equivalent clones, source-byte/state/history/catalog
+invalidation, live guards with stale serialized contracts, eviction and resealed
+forgeries. Independent bounded review found no cache-specific hole. Physics,
+candidate rules, subdivision, replay and report formats are unchanged. Exact
+commands, profiles, paired proofs and desktop evidence are indexed under the
+ignored `testcases/two-tool-performance-v1/README.md`.
+
+```sh
+.venv/bin/python scripts/benchmark_two_tool_validation.py \
+  --case testcases/task-admission-v1/acquired-0007-v2/admitted-planning.ressectionlab \
+  --output testcases/two-tool-performance-v1/paired-fresh \
+  --reference-commit b3da4b10 --isolate-index-physics
+```
+
 ## Remaining milestones and next dependency
 
 This is a bounded acquired-anatomy operating task, not the complete strategy
 platform. Source-linked functional consequences still need compatible evidence;
-the current functional control is an honest refusal. Migrate remaining planner
-interfaces, profile and remove repeated native work, then build the frozen
+the current functional control is an honest refusal. Existing supplied anatomical
+context may support a geometric encounter endpoint after explicit source/task
+binding; it is not a qualified patient motor/language map. Migrate remaining planner
+interfaces, qualify that endpoint, reduce cold generation/display costs, then build the frozen
 uncertainty comparison with matched baselines. Expand the patient distribution
 without touching reserved evaluations. Older lattice resolution dependence and
 continuum empirical/domain gates remain qualification holds. No RL campaign,

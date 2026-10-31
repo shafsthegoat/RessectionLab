@@ -220,6 +220,116 @@ def test_preproposal_computation_budget_is_not_reported_as_geometric_infeasibili
     assert report['publicPlan']['decision']['reason'] == 'COMPUTATION_BUDGET'
 
 
+def test_completed_validation_is_reused_but_native_execution_is_not(qualified, comparison, monkeypatch):
+    from resectionlab import surgical_two_tool as planning
+    _, engine, _, _ = qualified
+    planning._VALIDATED_REPORTS.clear()
+    compile_calls = []; native_actions = []
+    compile_recipe, step = planning._compile, SurgicalEngine.step
+    def compile_counted(*args, **kwargs):
+        compile_calls.append(1)
+        return compile_recipe(*args, **kwargs)
+    def step_counted(self, *args, **kwargs):
+        if type(self) is SurgicalEngine: native_actions.append(1)
+        return step(self, *args, **kwargs)
+    monkeypatch.setattr(planning, '_compile', compile_counted)
+    monkeypatch.setattr(SurgicalEngine, 'step', step_counted)
+    before = engine.snapshot()
+    assert validate_report(engine, comparison)
+    assert len(compile_calls) == 2
+    assert validate_report(engine.clone(), copy.deepcopy(comparison))
+    cold, phases_a, receipt_a = materialize(engine, comparison, 'long')
+    first_actions = len(native_actions)
+    warm, phases_b, receipt_b = materialize(engine, copy.deepcopy(comparison), 'long')
+    assert len(compile_calls) == 2  # No repeated public recipes on complete-content hits.
+    assert first_actions > 0 and len(native_actions) == 2*first_actions
+    assert cold.snapshot() == warm.snapshot() and receipt_a == receipt_b
+    assert {k: v.snapshot() for k, v in phases_a.items()} == {k: v.snapshot() for k, v in phases_b.items()}
+    assert engine.snapshot() == before
+    info = planning.validation_cache_stats()
+    assert info['entries'] == 1 and not info['reportsRetained'] and not info['enginesRetained']
+
+
+@pytest.mark.parametrize('field', ['state', 'actions', 'history', 'catalog', 'source-bytes'])
+def test_validation_hit_rechecks_native_and_source_dependencies(qualified, comparison, monkeypatch, field):
+    from resectionlab import surgical_planning_observation as public
+    from resectionlab import surgical_two_tool as planning
+    _, engine, _, _ = qualified
+    planning._VALIDATED_REPORTS.clear(); assert validate_report(engine, comparison)
+    hits = planning.validation_cache_stats()['hits']; changed = engine.clone()
+    path = original = None
+    try:
+        if field == 'state': changed.state['elapsedSeconds'] += .1
+        elif field == 'actions': changed.actions[0]['duration'] += .01
+        elif field == 'history': changed.history[0]['private-canary'] = True
+        elif field == 'catalog':
+            altered = public.catalog(); altered[0]['private-canary'] = True
+            monkeypatch.setattr(public, 'catalog', lambda: copy.deepcopy(altered))
+        else:
+            from resectionlab.patient_anatomy import PatientImagingCollection
+            from resectionlab.surgical_task_admission import admission
+            collection = PatientImagingCollection(admission(engine)['verification']['nativeCollectionPath'])
+            path = collection.path(collection.series('T1')['original']['path']); original = path.read_bytes()
+            path.write_bytes(original+b'changed after validation')
+        with pytest.raises(ValueError): validate_report(changed, comparison)
+        assert planning.validation_cache_stats()['hits'] == hits
+    finally:
+        if path is not None: path.write_bytes(original)
+
+
+@pytest.mark.parametrize('field', ['mask', 'config'])
+def test_validation_hit_projects_actual_guards_even_with_unchanged_serialized_contract(qualified, field):
+    from dataclasses import replace
+    from resectionlab import surgical_two_tool as planning
+    from resectionlab.surgical_rl_protection import ProtectionAnnotation, ProtectionSet, GuardConfig
+    from resectionlab.surgical_task_admission import admission
+    _, original, _, controls = qualified
+    def protection(cell):
+        mask = np.zeros(original.scene.shape, bool); mask[cell] = True
+        return ProtectionSet(original.scene, [ProtectionAnnotation.from_mask(original.scene, 'brainstem', mask,
+            provenance='Generated invalidation control')], clearance_mm=0.)
+    engine = SurgicalEngine(original.scene, protection=protection((0, 0, 0)),
+        guard_config=GuardConfig(require_critical_coverage=False))
+    engine.state = copy.deepcopy(original.state); engine.actions = copy.deepcopy(original.actions)
+    engine.history = copy.deepcopy(original.history)
+    contract = prepare_admission(engine, native_collection=admission(original)['verification']['nativeCollectionPath'],
+        task=admission(original)['task']); bind_admission(engine, contract)
+    required = copy.deepcopy(controls); required['geometry']['requiredEvidence'].append('functional')
+    report = generate_comparison(engine, required)
+    planning._VALIDATED_REPORTS.clear(); assert validate_report(engine, report)
+    changed = engine.clone()
+    if field == 'mask': changed.protection = protection((18, 18, 20))
+    else: changed.guard_config = replace(changed.guard_config, critical_max_displacement_mm=.123)
+    assert planning._binding(engine) == planning._binding(changed)  # Serialized contract is deliberately stale.
+    hits = planning.validation_cache_stats()['hits']
+    with pytest.raises(ValueError, match='public observation differs'): validate_report(changed, report)
+    assert planning.validation_cache_stats()['hits'] == hits
+
+
+def test_validation_cache_is_bounded_and_resealed_failures_are_never_admitted(qualified, monkeypatch):
+    from resectionlab import surgical_two_tool as planning
+    _, engine, _, controls = qualified
+    planning._VALIDATED_REPORTS.clear(); monkeypatch.setattr(planning, '_VALIDATION_CACHE_ENTRIES', 3)
+    required = copy.deepcopy(controls); required['geometry']['requiredEvidence'].append('functional')
+    reports = []
+    for seconds in (.2, .3, .4, .5, .6):
+        required['shortSeconds'] = seconds
+        report = generate_comparison(engine, required); assert validate_report(engine, report); reports.append(report)
+        assert planning.validation_cache_stats()['entries'] <= 3
+    info = planning.validation_cache_stats()
+    assert info['entries'] == 3 and info['estimatedResidentBytes'] < 4096
+    misses = info['misses']; assert validate_report(engine, reports[0])
+    assert planning.validation_cache_stats()['misses'] == misses+1  # Oldest content really was evicted.
+    forged = copy.deepcopy(reports[0]); public = forged['publicPlan']
+    public['alternatives'][0]['summary']['additionalNonTargetMm3'] = False
+    public['publicPlanSeal'] = semantic_digest({k: v for k, v in public.items() if k != 'publicPlanSeal'})
+    forged['reportSeal'] = semantic_digest({k: v for k, v in forged.items() if k != 'reportSeal'})
+    for _ in range(2):
+        with pytest.raises(ValueError, match='canonical programs'): validate_report(engine, forged)
+    after = planning.validation_cache_stats()
+    assert after['entries'] == 3 and after['hits'] == info['hits']
+
+
 def test_requested_entry_patch_restricts_both_instruments(qualified):
     _, e, _, controls = qualified
     restricted = copy.deepcopy(controls); restricted['geometry']['entry']['radiusMm'] = .5

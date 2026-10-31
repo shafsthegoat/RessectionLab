@@ -8,8 +8,11 @@ No device/patient calibration, optical visibility or neurological prediction.
 from __future__ import annotations
 
 import copy
+import sys
 import time
+from collections import OrderedDict
 from dataclasses import dataclass
+from threading import RLock
 
 import numpy as np
 from scipy.spatial.transform import Rotation
@@ -30,6 +33,24 @@ SCOPE = ('Source-annotation-assisted CUSA/Frazier sequence with an assumed conta
          'No new non-target removal, source exclusions stay active, complete withdrawal required. '
          'Missing anatomy, optical visibility, empirical device rates and clinical outcomes remain unassessed.')
 MAX_WALL_SECONDS = 60.
+
+# Only successful, complete canonical validations are retained. Keys contain
+# content digests, never reports, observations, engines or caller-owned objects.
+# Every lookup follows fresh native/source and live public-input validation.
+_VALIDATION_CACHE_ENTRIES = 32
+_VALIDATED_REPORTS = OrderedDict()
+_VALIDATION_LOCK = RLock()
+_VALIDATION_COUNTS = dict(hits=0, misses=0, evictions=0)
+
+
+def validation_cache_stats():
+    """Process-local diagnostics; no validation authority is exported."""
+    with _VALIDATION_LOCK:
+        return {**_VALIDATION_COUNTS, 'entries': len(_VALIDATED_REPORTS),
+            'maxEntries': _VALIDATION_CACHE_ENTRIES,
+            'estimatedResidentBytes': sys.getsizeof(_VALIDATED_REPORTS) + sum(
+                sys.getsizeof(key)+sys.getsizeof(value) for key, value in _VALIDATED_REPORTS.items()),
+            'reportsRetained': False, 'enginesRetained': False}
 
 
 def _require(value, message):
@@ -329,7 +350,14 @@ def generate_comparison(engine, raw, *, check=lambda: None, progress=lambda *_: 
 
 
 def validate_report(engine, report):
-    """Rebuild public inputs and execute canonical recipes, not caller receipts."""
+    """Rebuild live inputs; reuse only previously complete canonical validation.
+
+    The source byte-verification fingerprint, full native binding and current
+    public projection are checked even on hits. In particular, serialized guard
+    contracts alone cannot hide a changed live protection mask/configuration.
+    A cold report still executes the canonical approach and two-tool recipes.
+    Native materialization is never cached here.
+    """
     _require(type(report) is dict, 'comparison must be an object')
     _require(report.get('schema') == SCHEMA and report.get('reportSeal') == semantic_digest({k: v for k, v in report.items() if k != 'reportSeal'}), 'comparison seal differs')
     value = admission(engine)
@@ -344,7 +372,15 @@ def validate_report(engine, report):
     _require(public['schema'] == PUBLIC_SCHEMA and semantic_digest(public['task']) == semantic_digest(task_spec()) and public['scope'] == SCOPE,
              'two-tool task declaration differs')
     _require(public['publicPlanSeal'] == semantic_digest({k: v for k, v in public.items() if k != 'publicPlanSeal'}), 'public plan seal differs')
-    _require(public['publicObservation'] == observation.manifest(), 'public observation differs')
+    manifest = observation.manifest()
+    _require(public['publicObservation'] == manifest, 'public observation differs')
+    cache_key = semantic_digest({'report': report, 'nativeBinding': binding, 'publicObservation': manifest})
+    with _VALIDATION_LOCK:
+        if cache_key in _VALIDATED_REPORTS:
+            _VALIDATED_REPORTS.move_to_end(cache_key)
+            _VALIDATION_COUNTS['hits'] += 1
+            return True
+        _VALIDATION_COUNTS['misses'] += 1
     controls = _normalize(observation, public['constraints'])
     _require(semantic_digest(controls) == semantic_digest(public['constraints']), 'public controls differ')
     approaches = public['approaches']
@@ -379,6 +415,12 @@ def validate_report(engine, report):
         'actionProgram': [], 'physicalStateHashes': [], 'phases': [], 'summary': _summary(baseline, before)})
     _require(semantic_digest(public['alternatives']) == semantic_digest(expected), 'canonical programs, physical predictions or reassessment differ')
     _require(semantic_digest(public['decision']) == semantic_digest(_decision(expected, controls, reason)), 'public strategy/STOP decision differs')
+    with _VALIDATION_LOCK:
+        _VALIDATED_REPORTS[cache_key] = True
+        _VALIDATED_REPORTS.move_to_end(cache_key)
+        while len(_VALIDATED_REPORTS) > _VALIDATION_CACHE_ENTRIES:
+            _VALIDATED_REPORTS.popitem(last=False)
+            _VALIDATION_COUNTS['evictions'] += 1
     return True
 
 
