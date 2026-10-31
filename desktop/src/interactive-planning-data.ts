@@ -7,7 +7,15 @@ export interface InteractivePlanningConstraints {
   requiredEvidence:string[];candidateCount:number;nonTargetClearanceMm:number;
   minEntrySeparationMm?:number;minAngleDeg?:number;maxCandidates?:number;maxWallSeconds?:number;
 }
-export interface InteractivePlanningAvailability {available:boolean;reason:string|null;defaults:InteractivePlanningConstraints|null;evidence:Record<string,unknown>;scope:string}
+export interface PlanningTaskAdmission {
+  admissionSeal:string;
+  sourceEvidence:{patientId:string;sourceRole:string;studyTimepoint:string;unknownEvidence:string[];
+    images:Array<{id:string;modality:string;timepoint:string}>;
+    anatomy:Record<string,{kind:string;reviewStatus:string;coverage:string}>};
+  task:{id:string;inputContract:string;toolRadiusMm:number};
+  models:{toolMechanicsRevision:number;physicalClockRevision:number};
+}
+export interface InteractivePlanningAvailability {available:boolean;reason:string|null;defaults:InteractivePlanningConstraints|null;evidence:Record<string,unknown>;scope:string;admission?:PlanningTaskAdmission}
 export interface InteractivePlanningRoute {
   id:string;label:string;entryPose:SurgicalPose;targetPose:SurgicalPose;outsidePose:SurgicalPose;
   actionProgram:unknown[];metrics:Record<string,unknown>;separationComparisons?:Array<{routeId:string;entrySeparationMm:number;angleDeg:number}>;requiredTargetRemoval?:{sourceCells:number[];additionalNonTargetTraversalAllowedMm3:number;status:string};scope:string;

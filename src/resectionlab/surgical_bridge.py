@@ -376,6 +376,9 @@ def dispatch(session, operation, args, request, progress):
         full = SurgicalEngine.restore(scene, record['branches'][record['branchId']], check=request.check, use_cache=bool(record.get('fullCase')))
         engine, timeline = replay_cache.seek(full, record['branches'][record['branchId']], record['position'], check=request.check, include_history=True)
         record.setdefault('timeline', {})[record['branchId']] = timeline
+    if record.get('taskAdmission') is not None:
+        from .surgical_task_admission import bind_admission
+        bind_admission(engine, record['taskAdmission'])
     request.check()
     cursor_commands = {'undo', 'redo', 'seek', 'selectBranch'}
     # Cursor reconstruction returns a detached engine and never writes its
@@ -801,6 +804,9 @@ def dispatch(session, operation, args, request, progress):
     result['planningAvailability'].update(access_availability(engine))
     from .surgical_interactive_planning import interactive_planning_availability
     from .surgical_interactive_workspace import planning_view
+    if record.get('taskAdmission') is not None:
+        from .surgical_task_admission import bind_admission
+        bind_admission(engine, record['taskAdmission'])
     result['interactivePlanningAvailability'] = interactive_planning_availability(engine)
     result['interactivePlanning'] = planning_view(engine, record, identity)
     if approach_preview is not None:

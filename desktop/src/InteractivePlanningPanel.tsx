@@ -20,9 +20,18 @@ function RegionEditor({name,value,onChange,cursor,onCursor,disabled}:{name:strin
 }
 export function InteractivePlanningPanel({c,cursor=null,onCursor,pause}:{c:SurgicalController;cursor?:Point3|null;onCursor?:(p:Point3)=>void;pause:()=>void}){
   const a=c.result?.interactivePlanningAvailability,stored=c.result?.interactivePlanning;
+  const qualification=a?.admission;
   const historicalExposure=(stored?.evidence.historicalExposure??a?.evidence?.historicalExposure) as {targetRemovedMm3?:number;nonTargetRemovedMm3?:number}|undefined;
   const savedCurrent=stored?.current===true&&stored.sourceSceneId===c.view?.scene.sceneId&&stored.startStateId===c.view?.stateId&&stored.prefixActions===c.result?.position;
   return <details className="interactive-planning" open><summary>Plan an approach · post-exposure</summary>
+    {qualification&&<details aria-label="Patient task evidence"><summary>Patient and task evidence</summary>
+      <p>{qualification.sourceEvidence.patientId} · {qualification.sourceEvidence.sourceRole} research · {qualification.sourceEvidence.studyTimepoint}</p>
+      <p className="surgical-note">Planning uses source annotations, model estimates and the completed native state. Image-only planning and clinical outcomes are unsupported.</p>
+      <p>Acquired modalities: {qualification.sourceEvidence.images.map(image=>image.modality).join(', ')}.</p>
+      <ul>{Object.entries(qualification.sourceEvidence.anatomy).map(([name,row])=><li key={name}>{name}: {row.kind} · {row.reviewStatus}. {row.coverage}</li>)}</ul>
+      <p>Unknown evidence: {qualification.sourceEvidence.unknownEvidence.join(', ')}.</p>
+      <p className="surgical-note">Tool geometry revision {qualification.models.toolMechanicsRevision} · shared clock revision {qualification.models.physicalClockRevision}. Qualification applies to this declared task and checkpoint.</p>
+    </details>}
     {historicalExposure&&<p className="surgical-note" aria-label="Prior source exposure cost">Prior source exposure: {numberLabel(historicalExposure.targetRemovedMm3,0)} mm³ target + {numberLabel(historicalExposure.nonTargetRemovedMm3,0)} mm³ non-target removed before route planning.</p>}
     {!a?.available||!a.defaults?<p role="status">{a?.reason??'Inspect a verified patient checkpoint to check planning availability.'}</p>:<PlanningDraft key={planningBinding(c.result)} c={c} cursor={cursor} onCursor={onCursor} pause={pause} defaults={savedCurrent?stored!.constraints:a.defaults} savedCurrent={savedCurrent?stored:null}/>}
     {stored&&!savedCurrent&&<details className="approach-history" data-planning-status="historical"><summary>Saved approach comparison · historical</summary><p className="surgical-note">{stored.routes.length} routes from a different planning checkpoint. Editing and installation require that checkpoint.</p><ul>{stored.routes.map(route=><li key={route.id}>{route.label} · {numberLabel(route.metrics.pathLengthMm)} mm · {numberLabel(route.metrics.actionCount,0)} actions</li>)}</ul><button disabled={c.pending||!stored.sourceBranchId||!Number.isInteger(stored.sourcePosition)||!c.result?.branches.some(b=>b.id===stored.sourceBranchId&&b.steps>=stored.sourcePosition!)} onClick={()=>{pause();void c.run('selectBranch',{branchId:stored.sourceBranchId,position:stored.sourcePosition});}}>Open planning checkpoint</button><details><summary>Saved evidence and receipts</summary><pre>{JSON.stringify(stored,null,2)}</pre></details></details>}
@@ -68,7 +77,8 @@ function PlanningDraft({c,cursor,onCursor,pause,defaults,savedCurrent}:{savedCur
     <RegionEditor name="Target region" value={draft.target} onChange={target=>edit({...draft,target})} cursor={cursor} onCursor={onCursor} disabled={c.pending||immutable}/>
     <RegionEditor name="Allowable entry region" value={draft.entry} onChange={entry=>edit({...draft,entry})} cursor={cursor} onCursor={onCursor} disabled={c.pending||immutable}/>
     <fieldset className="approach-tool" disabled={c.pending||immutable}><legend>CUSA and protection</legend>
-      <label>Tip radius · mm<input aria-label="Planning CUSA tip radius" type="number" min="0.1" max="6" step="0.1" value={draft.tool.radiusMm} onChange={e=>edit({...draft,tool:{instrument:'cusa',radiusMm:e.target.valueAsNumber}})}/></label>
+      <label>Tip radius · mm<input aria-label="Planning CUSA tip radius" type="number" min={a.admission?.task.toolRadiusMm??.1} max={a.admission?.task.toolRadiusMm??6} disabled={!!a.admission} step="0.1" value={draft.tool.radiusMm} onChange={e=>edit({...draft,tool:{instrument:'cusa',radiusMm:e.target.valueAsNumber}})}/></label>
+      {a.admission&&<p className="surgical-note">This task binds the fixed catalog CUSA geometry.</p>}
       <label>Mapped non-target clearance · mm<input aria-label="Mapped non-target clearance mm" type="number" min="0" max="2" step="0.1" value={draft.nonTargetClearanceMm} onChange={e=>edit({...draft,nonTargetClearanceMm:e.target.valueAsNumber})}/></label>
       <p className="surgical-note">Research buffer around retained source non-target geometry. This does not establish a clinical safe margin.</p>
       <p className="surgical-note">Stock shaft: 0.5 mm radius · 40 mm working length. Source protection guards remain active.</p>

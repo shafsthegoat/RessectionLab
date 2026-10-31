@@ -8,6 +8,7 @@ from __future__ import annotations
 import copy
 import time
 from collections import OrderedDict
+from types import SimpleNamespace
 
 import numpy as np
 from scipy.spatial.transform import Rotation
@@ -16,13 +17,18 @@ from .core import array_digest, semantic_digest
 from .full_case_directional import directional_access_candidates
 from .full_case_geometry import access_candidates
 from .surgical_joint_geometry import post_exposure_proposal, post_exposure_candidate_pairs, _axial_cover, _params, _pose
+from .surgical_task_admission import admission, bind_admission, validate_admission, check_program
 
 SCHEMA = 'resectionlab.interactive-source-approaches.v1'
+ADMITTED_SCHEMA = 'resectionlab.interactive-source-approaches.v2'
 _SOURCE_LABELS_HASH = 'sha256:3c9911fed460598201fb904d36f752ef02129b779bc8dcf98b402ca35da3fa61'
 _UNKNOWN = ('vessels', 'functional', 'shift', 'skull')
 _SCOPE = ('Inactive approach inside an existing authored exposure; current source-cell geometry only. '
           'Zero additional tissue traversal/removal. Missing anatomy and clinical consequences remain unknown. '
           'Exact public access and withdrawal validation is required before installation.')
+_ADMITTED_SCOPE = ('Inactive approach from a declared clear entry linked to removed source tissue at an exactly replayed, released and undeformed native baseline. '
+                   'Source-annotation-assisted geometry only; zero additional tissue traversal/removal. '
+                   'Missing anatomy and clinical consequences remain unknown; complete public access and withdrawal are required.')
 _SAVED_VALIDATION_CACHE = OrderedDict()
 _ROUTE_VALIDATION_CACHE = OrderedDict()
 _VALIDATION_CACHE_ENTRIES = 32  # Holds all 16 saved revisions plus recent current variants.
@@ -76,6 +82,12 @@ def _retained_targets(engine):
 
 def _exposure(engine):
     """Recorded authored removal, never a hole inferred from display surfaces."""
+    admitted = admission(engine)
+    if admitted is not None:
+        # In the admitted workflow this is a declared proposal direction/entry,
+        # not evidence that a requested cutting trajectory was completed.
+        task = admitted['task']; entry = np.asarray(task['entry']['centerMm'], float)
+        return entry, entry+np.asarray(task['axisRasUnit']), task['entry']['radiusMm']
     # Initial slots are outside anatomy; replay only declarative action poses.
     slots = {key: {'instrument': tool, 'parameters': {}, 'position': None}
              for key, tool in (('left', 'cranial_drill'), ('right', 'cusa'))}
@@ -100,16 +112,31 @@ def _evidence(engine):
     guard = engine.guard_report()
     known = ['target', 'brain'] + [r['id'] for r in guard['structures'] if r.get('sourceCells')]
     target_removed = int(np.count_nonzero(np.isin(engine.scene.labels.ravel()[engine.state['removed']], list(_target_ids(engine)))))*engine.scene.voxel_mm3
-    return {'sourceCaseId': engine.scene.source.get('caseId'), 'sourcePatient': 'UCSF-PDGM-0007',
+    result = {'sourceCaseId': engine.scene.source.get('caseId'), 'sourcePatient': 'UCSF-PDGM-0007',
             'targetProvenance': copy.deepcopy(layers.get('tumor', {})),
             'brainProvenance': copy.deepcopy(layers.get('brain', {})),
             'protections': guard['structures'], 'guardContractId': guard['contractId'],
             'availableEvidence': known, 'unknownEvidence': [x for x in _UNKNOWN if x not in known],
             'historicalExposure': {'targetRemovedMm3': target_removed,
                                    'nonTargetRemovedMm3': len(engine.state['removed'])*engine.scene.voxel_mm3-target_removed}}
+    admitted = admission(engine)
+    if admitted is not None:
+        source = admitted['sourceEvidence']
+        result.update(sourcePatient=source['patientId'], availableEvidence=sorted(set(source['availableEvidence']) | set(known[2:])),
+            unknownEvidence=source['unknownEvidence'], taskAdmissionSeal=admitted['admissionSeal'],
+            sourceQualification=source, inputContract=admitted['task']['inputContract'])
+    return result
 
 
 def _defaults(engine, exposure):
+    admitted = admission(engine)
+    if admitted is not None:
+        task = admitted['task']
+        return {'entry': copy.deepcopy(task['entry']), 'target': copy.deepcopy(task['target']),
+            'tool': {'instrument': 'cusa', 'radiusMm': task['toolRadiusMm']},
+            'requiredEvidence': task['requiredEvidence'][:], 'nonTargetClearanceMm': 0.,
+            'candidateCount': 3, 'maxCandidates': 32, 'minEntrySeparationMm': 2.,
+            'minAngleDeg': 0., 'maxWallSeconds': 15.}
     start, end, radius = exposure
     axis = (end-start)/np.linalg.norm(end-start)
     projection = (engine.scene.points(engine.state['removed'])-start) @ axis
@@ -129,10 +156,20 @@ def _defaults(engine, exposure):
 
 def interactive_planning_availability(engine):
     reasons = []
+    admitted = admission(engine)
+    if admitted is not None:
+        try:
+            validate_admission(engine, admitted)
+        except ValueError as error:
+            return {'available': False, 'reason': str(error), 'defaults': None,
+                    'evidence': _evidence(engine), 'scope': _ADMITTED_SCOPE, 'admission': admitted}
+        return {'available': True, 'reason': None, 'defaults': _defaults(engine, None),
+                'evidence': _evidence(engine), 'scope': _ADMITTED_SCOPE, 'admission': admitted}
     supported = _source_supported(engine.scene)
     if not supported:
         return {'available': False,
-                'reason': 'Interactive planning is limited to the documented UCSF-PDGM-0007 source grid.',
+                'reason': ('A source-declared tumor target is required; this case has no supported removal target.' if not _target_ids(engine)
+                           else 'A declared patient/task admission is required. Historical planning is limited to the documented UCSF-PDGM-0007 source grid.'),
                 'defaults': None, 'evidence': None, 'scope': _SCOPE}
     exposure = _exposure(engine)
     if not engine.state['removed'] or exposure is None:
@@ -154,10 +191,20 @@ def normalize_constraints(engine, raw):
     if tool.get('instrument') != 'cusa':
         raise ValueError('Only existing CUSA geometry is supported for this bounded source approach')
     result['tool'] = {'instrument': 'cusa', 'radiusMm': _number(tool.get('radiusMm'), 'tool.radiusMm', .1, 6.)}
+    admitted = admission(engine)
+    if admitted is not None and result['tool']['radiusMm'] != admitted['task']['toolRadiusMm']:
+        raise ValueError('Task admission requires the fixed catalog CUSA radius')
     required = raw.get('requiredEvidence', [])
     if type(required) is not list or len(required) > 32 or any(type(x) is not str or not x or len(x) > 128 for x in required):
         raise ValueError('requiredEvidence must be a bounded list of evidence names')
     result['requiredEvidence'] = sorted(set(required))
+    if admitted is not None and not set(admitted['task']['requiredEvidence']).issubset(result['requiredEvidence']):
+        raise ValueError('Task admission required evidence cannot be removed')
+    if admitted is not None:
+        for name in ('entry', 'target'):
+            declared = admitted['task'][name]; requested = result[name]
+            if np.linalg.norm(np.subtract(requested['centerMm'], declared['centerMm'])) + requested['radiusMm'] > declared['radiusMm'] + 1e-9:
+                raise ValueError('Requested '+name+' sphere exceeds the admitted task region')
     for name, default, upper in [('candidateCount', 3, 6), ('maxCandidates', 32, 96)]:
         value = raw.get(name, default)
         if type(value) is not int or not 1 <= value <= upper:
@@ -181,7 +228,9 @@ def normalize_constraints(engine, raw):
 
 
 def _binding(engine):
-    return {'sourceSceneId': engine.scene.identity, 'startStateId': engine.state_id,
+    admitted = admission(engine)
+    return {**({'taskAdmissionSeal': admitted['admissionSeal']} if admitted is not None else {}),
+            'sourceSceneId': engine.scene.identity, 'startStateId': engine.state_id,
             'prefixActions': len(engine.actions), 'baselineActionHash': semantic_digest(engine.actions),
             'baselineHistoryHash': semantic_digest(engine.history),
             'sourceLabelsHash': array_digest(engine.scene.labels), 'physicsHash': semantic_digest(engine.scene.properties),
@@ -199,8 +248,11 @@ def generate_interactive_approaches(engine, constraints, *, check=lambda: None, 
     target_points = engine.scene.points(target_cells)
     selected_mask = np.linalg.norm(target_points-normalized['target']['centerMm'], axis=1) <= normalized['target']['radiusMm']
     selected_cells = target_cells[selected_mask]
-    report = {'schema': SCHEMA, **_binding(engine), 'constraints': normalized, 'evidence': available['evidence'],
-              'routes': [], 'rejections': [], 'limitingStructures': [], 'scope': _SCOPE,
+    admitted = admission(engine)
+    report = {'schema': ADMITTED_SCHEMA if admitted is not None else SCHEMA,
+              **({'taskAdmission': admitted} if admitted is not None else {}),
+              **_binding(engine), 'constraints': normalized, 'evidence': available['evidence'],
+              'routes': [], 'rejections': [], 'limitingStructures': [], 'scope': available['scope'],
               'targetSelection': {'retainedSourceCells': int(len(selected_cells)),
                                   'sourceCellHash': semantic_digest(selected_cells.tolist()),
                                   'volumeMm3': float(len(selected_cells)*engine.scene.voxel_mm3),
@@ -247,7 +299,7 @@ def generate_interactive_approaches(engine, constraints, *, check=lambda: None, 
         for index, (point, goal) in enumerate(proposals[:normalized['maxCandidates']]):
             bounded_check()
             row, rejection = post_exposure_proposal(engine, point, goal, normalized['tool']['radiusMm'], bounded_check,
-                non_target_clearance_mm=normalized['nonTargetClearanceMm'])
+                non_target_clearance_mm=normalized['nonTargetClearanceMm'], stop_at_first_contact=admitted is not None)
             if rejection:
                 report['rejections'].append({'proposal': index, 'entryPointMm': point.tolist(),
                     'sourceTargetPointMm': goal.tolist(), **rejection})
@@ -284,15 +336,19 @@ def _validate_seal(report):
     if type(report) is not dict:
         raise ValueError('Interactive report must be an object')
     payload = copy.deepcopy(report); seal = payload.pop('reportSeal', None)
-    if payload.get('schema') != SCHEMA or semantic_digest(payload) != seal:
+    if payload.get('schema') not in (SCHEMA, ADMITTED_SCHEMA) or semantic_digest(payload) != seal:
         raise ValueError('Interactive report seal differs')
+    if (payload['schema'] == ADMITTED_SCHEMA) != ('taskAdmission' in payload):
+        raise ValueError('Interactive report admission version differs')
 
 
 def validate_saved_interactive_report(scene, snapshot, report):
     """Canonically admit saved content once, then reuse only complete-content keys."""
     _validate_seal(report)
-    if not _source_supported(scene):
+    if report['schema'] == SCHEMA and not _source_supported(scene):
         raise ValueError('Saved interactive source is outside the documented source grid')
+    if report['schema'] == ADMITTED_SCHEMA:
+        validate_admission(SimpleNamespace(scene=scene), report['taskAdmission'], require_baseline=False)
     cache_key = (scene.identity, semantic_digest(snapshot), semantic_digest(report))
     if cache_key in _SAVED_VALIDATION_CACHE:
         _SAVED_VALIDATION_CACHE.move_to_end(cache_key)
@@ -312,6 +368,11 @@ def validate_saved_interactive_report(scene, snapshot, report):
     # complete content, never caller object identity or mutable references.
     from .surgical_engine import SurgicalEngine
     baseline = SurgicalEngine.restore(scene, snapshot)
+    if report['schema'] == ADMITTED_SCHEMA:
+        bind_admission(baseline, report['taskAdmission'])
+        validate_admission(baseline, report['taskAdmission'])
+        if report.get('taskAdmissionSeal') != report['taskAdmission']['admissionSeal']:
+            raise ValueError('Saved interactive task admission differs')
     if report.get('baselineHistoryHash') != semantic_digest(baseline.history):
         raise ValueError('Saved interactive canonical native history differs')
     if normalize_constraints(baseline, report['constraints']) != report['constraints']:
@@ -327,6 +388,11 @@ def validate_interactive_report(engine, report, *, require_current=True):
     _validate_seal(report)
     engine.scene.require_cache_source()
     binding = _binding(engine)
+    if report['schema'] == ADMITTED_SCHEMA:
+        admitted = admission(engine)
+        if admitted is None or report['taskAdmission'] != admitted:
+            raise ValueError('Interactive report task admission differs')
+        if require_current: validate_admission(engine, admitted)
     fields = binding if require_current else ('sourceSceneId', 'sourceLabelsHash', 'physicsHash', 'guardContractId')
     if any(report.get(key) != binding[key] for key in fields):
         raise ValueError('Interactive report source or baseline differs; regenerate approaches')
@@ -346,9 +412,10 @@ def validate_interactive_report(engine, report, *, require_current=True):
 
 def _validate_routes(engine, report):
     constraints = report['constraints']
-    if not _source_supported(engine.scene) or report['evidence'] != _evidence(engine):
+    admitted = admission(engine)
+    if (admitted is None and not _source_supported(engine.scene)) or report['evidence'] != _evidence(engine):
         raise ValueError('Interactive report source evidence differs')
-    if report.get('scope') != _SCOPE or report.get('screening') != {
+    if report.get('scope') != (_ADMITTED_SCOPE if admitted is not None else _SCOPE) or report.get('screening') != {
             'method': 'shared_engine_current_occupancy_and_complete_capsules',
             'continuumEvaluated': False, 'tissueAltered': False, 'publicValidationRequired': True}:
         raise ValueError('Interactive report geometry scope differs')
@@ -400,7 +467,7 @@ def _validate_routes(engine, report):
                 raise ValueError('Interactive route separation differs')
         previous.append((entry, inward))
         expected, rejection = post_exposure_proposal(engine, entry, goal, constraints['tool']['radiusMm'], lambda: None,
-            non_target_clearance_mm=constraints['nonTargetClearanceMm'])
+            non_target_clearance_mm=constraints['nonTargetClearanceMm'], stop_at_first_contact=admitted is not None)
         if (rejection or any(route.get(key) != value for key, value in expected.items()) or
                 route['id'] != 'approach-'+str(index) or route.get('label') != 'Source approach '+str(index)):
             raise ValueError('Interactive approach program or geometry metrics differ')
@@ -468,6 +535,7 @@ def materialize_interactive_approach(engine, report, candidate_id, *, check=lamb
     if len(candidates) != 1:
         raise ValueError('Unknown interactive approach candidate')
     route = candidates[0]
+    check_program(engine, route['actionProgram']+route['withdrawalProgram'])
     candidate = engine.clone(); before_removed = list(engine.state['removed']); receipts = []
     for action in route['actionProgram']:
         check(); result = candidate.step(copy.deepcopy(action), check=check)
@@ -485,7 +553,8 @@ def materialize_interactive_approach(engine, report, candidate_id, *, check=lamb
         'startStateId': engine.state_id, 'approachStateId': candidate.state_id, 'withdrawalStateId': cleanup.state_id,
         'actionCount': len(route['actionProgram']), 'withdrawalActionCount': len(route['withdrawalProgram']),
         'publicAccessAccepted': True, 'publicWithdrawalAccepted': True, 'exactPhysicsPreserved': True,
-        'additionalTargetRemovedMm3': 0., 'additionalNonTargetRemovedMm3': 0., 'receipts': receipts, 'scope': _SCOPE}
+        'additionalTargetRemovedMm3': 0., 'additionalNonTargetRemovedMm3': 0., 'receipts': receipts,
+        'scope': _ADMITTED_SCOPE if admission(engine) is not None else _SCOPE}
 
 
 materialize = materialize_interactive_approach

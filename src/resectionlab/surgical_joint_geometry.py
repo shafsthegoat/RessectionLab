@@ -775,7 +775,7 @@ def _post_exposure_rejection(engine, cover, reason, non_target_clearance_mm=0.):
     return result
 
 
-def post_exposure_proposal(engine, entry, goal, radius, check, *, non_target_clearance_mm=0.):
+def post_exposure_proposal(engine, entry, goal, radius, check, *, non_target_clearance_mm=0., stop_at_first_contact=False):
     if type(non_target_clearance_mm) not in (int, float) or not np.isfinite(non_target_clearance_mm) or not 0. <= non_target_clearance_mm <= 2.:
         raise ValueError('Mapped non-target clearance must be in [0, 2] mm')
     direction = goal-entry; length = np.linalg.norm(direction)
@@ -788,7 +788,11 @@ def post_exposure_proposal(engine, entry, goal, radius, check, *, non_target_cle
     params = _params(engine, radius)
     initial_cover = _axial_cover(engine, start, end, params)
     reason, _, working = _screen_cover(engine, initial_cover, non_target_clearance_mm)
-    if reason and reason != 'RETAINED_TISSUE_COLLISION':
+    # A goal inside tumor can put the hypothetical terminal shaft in tissue
+    # beyond the first reachable tip contact. The admitted V2 workflow checks
+    # the monotone swept prefixes before deciding which part contacts first.
+    # Historical reports retain their original whole-goal rejection semantics.
+    if not stop_at_first_contact and reason and reason != 'RETAINED_TISSUE_COLLISION':
         return None, _post_exposure_rejection(engine, initial_cover, reason, non_target_clearance_mm)
     if not working:
         return None, {'reason': 'NO_SOURCE_TARGET_CONTACT'}
@@ -804,6 +808,8 @@ def post_exposure_proposal(engine, entry, goal, radius, check, *, non_target_cle
     contact_cover = _axial_cover(engine, start, contact_pose, params)
     failure, _, contacts = _screen_cover(engine, contact_cover, non_target_clearance_mm)
     labels = engine.scene.labels.ravel()
+    if stop_at_first_contact and failure != 'RETAINED_TISSUE_COLLISION':
+        return None, _post_exposure_rejection(engine, contact_cover, failure or 'NO_SOURCE_TARGET_CONTACT', non_target_clearance_mm)
     if failure != 'RETAINED_TISSUE_COLLISION' or not contacts or any(int(labels[c]) not in {r['id'] for r in engine.scene.regions if r.get('target') and r['material'] == 'tumor'} for c in contacts):
         return None, _post_exposure_rejection(engine, contact_cover, 'NON_TARGET_TRAVERSAL_REQUIRED', non_target_clearance_mm)
     if np.dot(endpoint-entry, axis) < 0.:

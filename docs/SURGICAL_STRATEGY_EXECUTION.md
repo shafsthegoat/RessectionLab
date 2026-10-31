@@ -89,18 +89,80 @@ its identical native generated control on subsequent runs. For a cold desktop
 reopen, run the same verifier with `CLOCK_REOPEN_ONLY=1`, `CLOCK_CASE` set to the
 saved workspace, `CLOCK_EXPECTED_STATE` from its report, and a fresh `CLOCK_OUTPUT`.
 
-## Remaining milestones and next dependency
-
 The scheduling defect is repaired in an explicit opt-in mode. This is software
 and numerical scheduling evidence, not empirical mechanics accuracy or clinical
 validation. Legacy episodes intentionally retain the historical defect.
 
-Next: declarative patient/task admission for two independently prepared acquired
-cases and a missing-evidence control, with the clock/physics versions and public
-observation contract bound to each task. Preserve the frozen assessment failures
-and missing-anatomy refusals; do not merely remove the UCSF-0007 name check.
-The common planner information boundary, complete-tool sequence checks,
-source-linked functional endpoint, end-to-end profiling and frozen uncertainty
-comparison remain open. Older lattice resolution dependence and unresolved
-continuum empirical/domain gates remain qualification holds. No speed, learned
-planning advantage, neurological probability or clinical-readiness claim is made.
+## Completed: bounded reusable patient/task admission
+
+`surgical_task_admission.py` binds the actual native source snapshot, original
+image/annotation bytes, native arrays, registered/resampled masks, ownership,
+DEVELOPMENT declaration, source review/coverage, models, permitted actions,
+annotation-assisted observation contract and exact planning baseline. Cold
+admission reads the external native source; a self-resealed verification claim
+does not establish proof. An eight-entry process-private cache rechecks every
+member's inode, size, mtime and ctime before reusing byte/raster verification.
+
+The workspace owns the contract; case, scene, source arrays and historical branch
+identities stay unchanged. The first task requires coherent preoperative source
+imaging, a released/undeformed executed baseline, locally removed tissue at a
+clear declared entry, retained source tumor, geometry revision 2 and shared
+clock 1. Later observations require their own compatible task. Edited entry and
+target spheres must stay inside the admission; allowed CUSA programs are checked
+as a complete access/withdrawal sequence. The task supports inactive access,
+not another removal operation or clinical qualification.
+
+V2 interactive reports validate this admission on generation, load, preview and
+installation. Historical V1 reports retain their original source gate and
+whole-goal screening. V2 searches monotone swept prefixes to locate first target
+contact before rejecting an unreachable deeper shaft pose; protection, shaft,
+other-tool and non-target first failures remain explicit. Full public access,
+reverse withdrawal and an independent geometry implementation still check every
+accepted route. The desktop shows source modalities, estimates versus supplied
+annotations, review/coverage, missing evidence and effective model versions.
+
+The same generic preparer and actual hidden desktop interface were run on:
+
+| Acquired source | Outcome at its preserved authored baseline |
+| --- | --- |
+| UCSF-PDGM-0007 DEVELOPMENT | Three inactive approaches; all three pass independent continuous full-tool, other-hand and reverse-withdrawal checks. Actual preview, installed branch, return to admitted checkpoint, save and fresh Electron reopen pass. |
+| UCSF-PDGM-0005 DEVELOPMENT | Admission passes; its historical 0.6-mm corridor does not admit the current 1.5-mm catalog tool. Zero routes are retained; the UI offers no executable preview. Save and cold native replay pass. |
+| Exact sub-13 standard-v2 missing-target control | Common interface refuses a missing tumor target and exposes no Generate action. This exact bundle is used; the later native collection has different annotations. |
+
+Both DEVELOPMENT cases explicitly refuse all routes when functional evidence is
+required. Brain estimates/registration and supplied tumor annotations remain
+unreviewed; skull, vessels, tractography and functional evidence are missing.
+The UCSF-0007 baseline already removed 4,940 mm³ non-target and 560 mm³ target
+before this task; no new exposure is created or counted as success here.
+The 0005 no-route result is preserved, not repaired by changing anatomy or
+shrinking the qualified instrument. These are two development integrations,
+not held-out generalization or physical/clinical validation.
+
+Checks: the final proposed-commit backend run passes 116 tests; 23 focused admission checks
+cover source exchange, cold original-byte rechecks, native ownership, task bounds,
+observation scope, stage compatibility, first-contact failure ordering and native
+persistence. Desktop build and all 1,212 desktop tests pass. Counts overlap.
+Current local evidence and exact run commands are indexed in
+`testcases/task-admission-v1/README.md`; acquired data remain ignored. No download,
+optimizer update or reserved evaluation was used.
+
+Generic reproduction (from the repository root; choose a fresh output):
+
+```sh
+.venv/bin/python -m pytest tests/test_surgical_task_admission.py -q
+.venv/bin/python scripts/prepare_admitted_planning.py \
+  --source testcases/cases/UCSF-PDGM-0007-operative-demo.ressectionlab \
+  --branch original-exposure \
+  --native-collection testcases/outputs/integrated-goal-20261026/fresh-patients/UCSF-PDGM-0007/native \
+  --output testcases/task-admission-fresh
+```
+
+## Remaining milestones and next dependency
+
+Next: extend this admission into a common observation contract across planners
+and an executable two-tool strategy comparison. Add source-linked functional
+encounters only with actual compatible evidence. End-to-end profiling and the
+frozen uncertainty comparison remain open. Older lattice resolution dependence
+and continuum empirical/domain gates remain qualification holds. No speed,
+learned planning advantage, neurological probability or clinical-readiness claim
+is made.
