@@ -22,6 +22,7 @@ from .core import semantic_digest
 from .geometry import GeometryScene, capsule_voxel_indices, segment_segment_distance
 from .surgical_tools import TOOLS, catalog
 from .surgical_cusa_v3 import profile as cusa_profile
+from . import surgical_clock
 
 SCHEMA = 'resectionlab.surgical-toolbox.v1'
 MAX_STEPS = 8192
@@ -486,7 +487,7 @@ class SurgicalEngine:
         return result
 
     def _validate(self, action):
-        if not isinstance(action, dict) or set(action) - {'slot', 'operation', 'instrument', 'pose', 'path', 'parameters', 'duration', 'position', 'mechanicsRevision', 'maneuverPhase'}:
+        if not isinstance(action, dict) or set(action) - {'slot', 'operation', 'instrument', 'pose', 'path', 'parameters', 'duration', 'position', 'mechanicsRevision', 'clockRevision', 'maneuverPhase'}:
             raise ValueError('Unsupported action fields')
         if action.get('slot') not in self.state['slots']: raise ValueError('Choose left or right instrument slot')
         if action.get('operation') not in {'place', 'move', 'activate', 'deactivate', 'apply', 'hold', 'grasp', 'release', 'exchange', 'withdraw', 'extract', 'inspect', 'configure', 'position', 'bladeManeuver'}:
@@ -498,6 +499,8 @@ class SurgicalEngine:
         if len(self.actions) >= MAX_STEPS: raise ValueError('Action limit reached; save and start a new episode')
         points = action.get('path', [action['pose']] if 'pose' in action else [])
         if 'mechanicsRevision' in action and (action['operation'] != 'configure' or type(action['mechanicsRevision']) is not int or action['mechanicsRevision'] not in (1,2)): raise ValueError('INVALID_INSTRUMENT_MECHANICS_REVISION')
+        if 'clockRevision' in action and (action['operation'] != 'configure' or type(action['clockRevision']) is not int or action['clockRevision'] != surgical_clock.REVISION):
+            raise ValueError('INVALID_PHYSICAL_CLOCK_REVISION')
         if 'position' in action and action['operation'] != 'position': raise ValueError('POSITION_PAYLOAD_REQUIRES_POSITION_OPERATION')
         if action['operation'] in ('configure', 'position'):
             if points or action.get('parameters') or action.get('instrument'): raise ValueError('SETUP_CANNOT_MOVE_INSTRUMENT')
@@ -593,10 +596,13 @@ class SurgicalEngine:
             if any(s['active'] or s['inserted'] for s in self.state['slots'].values()) or self.state['holds']:
                 raise ValueError('WITHDRAW_BOTH_TOOLS_BEFORE_SETUP')
             if op == 'configure':
-                self.state['toolMechanicsRevision'] = action.get('mechanicsRevision', 1)
-                from .surgical_cusa_v3 import initialize
-                initialize(self)
-                events = [{'kind': 'instrument_mechanics_enabled', 'revision': self.state['toolMechanicsRevision']}]
+                if 'mechanicsRevision' in action or 'clockRevision' not in action:
+                    self.state['toolMechanicsRevision'] = action.get('mechanicsRevision', 1)
+                    from .surgical_cusa_v3 import initialize
+                    initialize(self)
+                    events.append({'kind': 'instrument_mechanics_enabled', 'revision': self.state['toolMechanicsRevision']})
+                if 'clockRevision' in action:
+                    events.append(surgical_clock.configure(self))
             else:
                 from .surgical_position import apply_position
                 if not self.scene.properties.get('tissuePhysicsV2'): raise ValueError('POSITION_REQUIRES_V2_MECHANICS')
@@ -666,6 +672,8 @@ class SurgicalEngine:
         # Historical recordings retain their original scheduling semantics.
         if 'bipolarThermalV1' in self.scene.properties and op == 'inspect' and slot['active']:
             active = True
+        if surgical_clock.enabled(self):
+            active = bool(active or slot['active'])
         poses = [{'position': slot['position'], 'quaternion': slot['quaternion']}, *points]
         if len(poses) == 1: poses.append(poses[0])
         segments = []
@@ -866,7 +874,10 @@ class SurgicalEngine:
             if op not in ('withdraw', 'release', 'deactivate', 'inspect', 'exchange'):
                 raise ValueError('UNSUPPORTED_MATERIAL' if active else 'RETAINED_TISSUE_COLLISION')
         events = []
-        if active:
+        shared_clock = surgical_clock.enabled(self)
+        if shared_clock:
+            events = surgical_clock.advance_instruments(self, key, op, p, q, active, dt, working_cells, eligible)
+        elif active:
             events = self._effect(key, op, eligible, p, q, dt)
         if key in self.state['holds']:
             self.occupancy()
@@ -885,7 +896,7 @@ class SurgicalEngine:
             self.occupancy()
         # A stationary active instrument shares the same clock and exposure.
         for other_key, other in self.state['slots'].items():
-            if other_key == key or not other['active']: continue
+            if shared_clock or other_key == key or not other['active']: continue
             other_tool = TOOLS[other['instrument']]
             other_cells = self.touched(other['position'], other['position'], self.parameters(other)['radiusMm'])
             if self.state.get('toolMechanicsRevision') in (1, 2) and other_tool['effect'] not in ('remove','suction','irrigate','probe'):
@@ -901,14 +912,15 @@ class SurgicalEngine:
                 from .surgical_vessels_v2 import contact
                 contact(self, other_cells, dt, self.parameters(other)['forceN'])
         vessels = [i for i in working_cells if self.by_label[int(self.scene.labels.ravel()[i])]['material'] == 'vessel']
-        self.state['vesselEncounters'] = sorted(set(self.state['vesselEncounters']) | set(vessels))
-        for i in working_cells:
-            material = self.by_label[int(self.scene.labels.ravel()[i])]['material']
-            self.state['materialExposure'][material] = self.state['materialExposure'].get(material, 0.) + dt
+        if not shared_clock:
+            self.state['vesselEncounters'] = sorted(set(self.state['vesselEncounters']) | set(vessels))
+            for i in working_cells:
+                material = self.by_label[int(self.scene.labels.ravel()[i])]['material']
+                self.state['materialExposure'][material] = self.state['materialExposure'].get(material, 0.) + dt
         contact_cells = set(working_cells) if tool['effect'] in ('elevate', 'dissect') else set()
         for hold in self.state['holds'].values(): contact_cells.update(hold['cells'])
         contact_cells.difference_update(self.state['removed'])
-        for cell in contact_cells:
+        for cell in contact_cells if not shared_clock else ():
             k = str(cell); self.state['contact'][k] = self.state['contact'].get(k, 0.) + dt
         slot.update(position=p.tolist(), quaternion=q.tolist())
         if op not in ('place', 'exchange', 'release', 'inspect', 'deactivate'): slot['inserted'] = True
@@ -919,7 +931,7 @@ class SurgicalEngine:
             from . import surgical_deformation_v2 as brain
             from . import surgical_vessels_v2 as vessel
             # Force is an explicit proxy, never inferred from a segmentation.
-            vessel.contact(self, vessels, dt, params['forceN'] if active else 0.)
+            if not shared_clock: vessel.contact(self, vessels, dt, params['forceN'] if active else 0.)
             brain.tick(self, dt)
             self.occupancy()
             # Coupled tissue moves after the ordinary swept-tool check.
@@ -1014,6 +1026,7 @@ class SurgicalEngine:
             from .surgical_cusa_v3 import descriptor
             physics['cusaV3'] = descriptor(self)
         return {'schema': SCHEMA, 'stateId': self.state_id if _state_id is None else _state_id, 'slots': slots,
+                **({'physicalClock': surgical_clock.descriptor()} if surgical_clock.enabled(self) else {}),
                 **({'toolMechanicsRevision': self.state['toolMechanicsRevision']} if 'toolMechanicsRevision' in self.state else {}),
                 **({'patientPosition': copy.deepcopy(self.state['patientPosition']), 'positionEffects': describe_position(self.state['patientPosition'])} if 'patientPosition' in self.state else {}),
                 'protection': self.guard_report(),

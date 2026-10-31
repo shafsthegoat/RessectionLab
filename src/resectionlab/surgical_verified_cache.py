@@ -43,7 +43,7 @@ _MODULES = ('core', 'geometry', 'surgical_scene', 'surgical_engine', 'surgical_t
             'surgical_continuum', 'surgical_continuum_solve', 'surgical_planar_contact', 'surgical_planar_maneuver',
             'surgical_vascular_graph', 'surgical_bipolar_thermal',
             'surgical_occupancy', 'surgical_rl_protection', 'surgical_geometry_cache',
-            'surgical_verified_cache', 'surgical_cusa_v3', 'surgical_idle_native',
+            'surgical_verified_cache', 'surgical_cusa_v3', 'surgical_clock', 'surgical_idle_native',
             'build_surgical_idle_native')
 
 
