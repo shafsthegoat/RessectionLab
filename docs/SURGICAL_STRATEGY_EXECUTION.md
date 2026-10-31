@@ -807,6 +807,59 @@ Full regression results, source hashes, failed prototypes and exact reproduction
 commands are kept in `testcases/source-exposure-v1/README.md`. Timings there are
 observations during concurrent verification, not paired performance improvements.
 
+## Implemented: fixed-ray exposure controls and matched negative comparison
+
+Preparation can now hold exact source surface/target cells fixed while changing
+lateral passes. The explicit v2 contract refuses a replacement ray, authenticates
+the declared points against retained source boundaries, and binds every native
+attempt to them. The original default v1 plans, receipts, hashes, full native proof
+and endpoint match the pre-refactor implementation exactly. Refused preparation
+also saves its configured, unchanged source checkpoint for audit and desktop
+inspection; zero removal still grants no task admission.
+
+The generic comparison CLI evaluates one held ray×width table with common tissue,
+action and time caps, one target ROI, fixed entry radius and identical downstream
+context/approach/secondary-pair settings. Both policy choices seal from public
+rows before native downstream validation. Corridor-first uses inactive access;
+complete-plan-aware selection requires a progress-qualified complete suffix.
+Planning computation, each counterfactual preparation cost and selected plan cost
+remain distinct. Wall-budget partial searches are unknown, not geometric failures.
+Design/implementation/source bytes and historical branches are fenced; compatible
+native cases can be reused. Ambiguous context sources refuse.
+
+The frozen exposed-DEVELOPMENT 0004 study contains three previously used rays at
+0/0.3/1 mm displacement, with 200 mm³/128 action/180 s preparation caps for all nine
+cells. Six preparations complete; three are generator geometric refusals with no
+replacement. Only one cell provides inactive access, at 66 mm³ non-target and
+43.2 simulated seconds, but no tested complete two-tool plan meets the goal.
+Corridor-first therefore ends with a futile preparation plus STOP; the complete-
+plan-aware policy selects STOP before preparation. Complete-plan feasibility does
+not improve. No clinical advantage, statistical generalization or algorithm-cost
+advantage is established. The common ROI is held fixed across rays; earlier broad
+preparation with its different target ROI is not substituted into this comparison.
+
+Independent source/geometry/replay audits cover all nine records: 2,954 actual
+microsteps and 107,752 occupied-source box tests across the six executed programs.
+For empty cells these audits prove source-point/baseline integrity, not independent
+absence of a feasible preparation. Search and STOP conclusions remain conditional
+on the declared generators and finite tool-pair/program family. The generic CLI
+reproduces all public cells and both policy seals exactly. Hidden desktop controls
+preview/install the 66 mm³ inactive route, retain two-tool STOP, enforce source
+context and functional-evidence limits, and save/reopen the resulting studies.
+The refused preparation opens with zero removal, one recorded model setup and no
+planning authority. All windows remain hidden. Detailed manifests, tests, negative
+results and commands are in `testcases/matched-exposure-v1/README.md`.
+The 224-test source/planning regression passes in 139.41 s, including 33 fixed-ray
+controls and exact v1 compatibility. Thirty separate policy/runner controls pass
+in 16.89 s; their stubbed downstream adapters test transaction handling only.
+All 1,221 desktop tests and the build pass. The final implementation-fenced run
+reuses all six compatible preparation cases and the common configured source.
+
+Bimanual workspace/task evaluation is established prior art, including
+[Price et al., 2023](https://pmc.ncbi.nlm.nih.gov/articles/PMC10801784/).
+That articulated device's experiments do not calibrate this rigid-tool simulator.
+This bounded comparison makes no novelty claim or transfer of empirical parameters.
+
 ## Remaining milestones and next dependency
 
 This is a bounded acquired-anatomy operating task, not the complete strategy
@@ -816,11 +869,13 @@ geometric source constraint, not a qualified motor/language map. The new finite
 execution stress is integrated but does not complete uncertainty qualification.
 Add supported anatomical/execution uncertainty, a frozen comparison with matched
 route-search baselines and independent challenge cases; continue reducing cold
-proof/display cost and migrate remaining planner interfaces. The next exposure
-experiment should hold source rays and budgets fixed while comparing corridor-first
-and complete-plan-aware preparation, counting all added tissue and failed executions.
-The current source-distance preparer establishes no planning advantage and does not
-solve two-tool operation on 0004. Expand the patient distribution without touching
+proof/display cost and migrate remaining planner interfaces. The matched exposure
+experiment is now an explicit negative result: the current preparation family does
+not solve two-tool operation on 0004. Next connect preparation alternatives and
+their complete-plan consequences to common surgeon controls, and use measured
+failure constraints to design a bounded next family before evaluating it. Establish
+positive generated software controls separately from acquired evidence. Expand the
+patient distribution without touching
 reserved evaluations. Older lattice resolution dependence and
 continuum empirical/domain gates remain qualification holds. No RL campaign,
 new data acquisition, clinical-outcome probability or novelty claim was added.

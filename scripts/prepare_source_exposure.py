@@ -24,10 +24,18 @@ from resectionlab.surgical_task_admission import verify_source, task_spec, prepa
 from resectionlab.workspace_bundle import load_workspace, save_workspace
 
 
+def save_native(case, artifacts, workspace, destination):
+    if workspace is None: save_case(case, destination, artifacts=artifacts)
+    else:
+        save_workspace(case, destination, sources=workspace['sources'], imaging=workspace['imagingState'],
+            episode=workspace['episode'], selection=workspace['selection'], originals=workspace['originals'], artifacts=artifacts)
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--source', type=Path, required=True); p.add_argument('--native-collection', type=Path, required=True)
     p.add_argument('--output', type=Path, required=True); p.add_argument('--branch')
+    p.add_argument('--source-ray', type=Path, help='JSON surfaceMm/sourceTargetMm at original source-cell centers in RAS mm; no replacement ray')
     p.add_argument('--acknowledge-research', action='store_true', required=True)
     p.add_argument('--entry-radius', type=float, default=.5); p.add_argument('--target-radius', type=float, default=6.)
     p.add_argument('--max-non-target-mm3', type=float, default=DEFAULTS['maxNonTargetMm3'])
@@ -54,10 +62,21 @@ def main():
             if result['status'] != 'accepted': raise ValueError('Model setup refused: '+str(result.get('reason')))
         controls = {**DEFAULTS, 'maxNonTargetMm3': args.max_non_target_mm3, 'maxCandidates': args.max_candidates,
                     'lateralSweepMm': args.lateral_sweep_mm, 'maxActions': args.max_actions, 'maxSeconds': args.max_seconds}
-        selected, proof = prepare(engine, controls, native_collection=args.native_collection)
+        ray = json.loads(args.source_ray.read_text()) if args.source_ray else None
+        selected, proof = prepare(engine, controls, native_collection=args.native_collection, source_ray=ray)
         (output/'preparation.json').write_text(json.dumps(proof, indent=2)+'\n')
         if selected is None:
-            report.update(status='STOP', decision=proof['publicPlan']['decision'], nativeSourceUnchanged=True)
+            prefix = 'preparation-source-'+str(len(record['branches']))
+            if prefix in record['branches']: raise ValueError('Preparation source branch name conflict')
+            record['branches'][prefix] = engine.snapshot()
+            record.setdefault('parents', {})[prefix] = {'branchId':branch,'position':len(historical[branch]['actions'])}
+            record.setdefault('timeline', {})[prefix] = copy.deepcopy(engine.history)
+            record.update(branchId=prefix,position=len(engine.actions))
+            destination=output/'source-checkpoint.ressectionlab';save_native(case,artifacts,workspace,destination)
+            cold=SurgicalEngine.restore(load_environment(destination),engine.snapshot(),use_cache=False)
+            if cold.snapshot()!=engine.snapshot():raise ValueError('Cold refused-preparation source differs')
+            report.update(status='STOP', decision=proof['publicPlan']['decision'], nativeSourceUnchanged=True,
+                sourceCheckpoint=str(destination),preparationSeal=proof['preparationSeal'])
             return
         row = proof['publicPlan']['attempts'][proof['publicPlan']['decision']['selectedIndex']]['route']
         task = task_spec(entry={'centerMm': row['surfaceMm'], 'radiusMm': args.entry_radius},
@@ -73,10 +92,7 @@ def main():
         for key, value in historical.items():
             if record['branches'][key] != value: raise ValueError('Historical source branch changed')
         destination = output/'admitted-preparation.ressectionlab'
-        if workspace is None: save_case(case, destination, artifacts=artifacts)
-        else:
-            save_workspace(case, destination, sources=workspace['sources'], imaging=workspace['imagingState'],
-                episode=workspace['episode'], selection=workspace['selection'], originals=workspace['originals'], artifacts=artifacts)
+        save_native(case, artifacts, workspace, destination)
         loaded, saved, _ = load_workspace(destination)
         if loaded.semantic_hash != case.semantic_hash or saved['surgical_toolbox'] != record: raise ValueError('Saved source/record differs')
         cold = SurgicalEngine.restore(load_environment(destination), record['branches'][result_branch], use_cache=False)

@@ -8,6 +8,7 @@ for(const p of [input,output])assert(p.startsWith(base+path.sep));assert(!fs.exi
 const sha=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex'),original=sha(input);
 const saved=path.join(output,'source-readiness-saved.ressectionlab');
 const report={input,sourceSha256:original,expected:process.env.PREFLIGHT_EXPECT||'intact',windowEverVisible:false,requests:[]};let last=null;
+assert(['intact','configured','admitted','source-refused','missing-target'].includes(report.expected),'Declare expected source readiness');
 app.setPath('userData',path.join(output,'hidden-profile'));process.argv.push('--case',input,'--automation-hidden');
 dialog.showSaveDialog=async()=>({canceled:false,filePath:saved});
 const handle=ipcMain.handle.bind(ipcMain);
@@ -34,10 +35,11 @@ app.on('browser-window-created',(_event,window)=>{
     assert.equal(value.available,false);const preflight=value.sourcePreflight;assert(preflight);assert.equal(preflight.planningAdmitted,false);
     assert.equal(preflight.sourceSceneId,last.view.scene.sceneId);assert.equal(preflight.startStateId,last.view.stateId);assert.equal(preflight.prefixActions,last.position);
     const statuses=Object.fromEntries(preflight.checks.map(r=>[r.id,r.status]));report.statuses=statuses;report.preflight=preflight;
-    if(report.expected==='intact'){
-     assert.equal(statuses['source-role'],'passed');for(const key of ['model-versions','executed-exposure','declared-task'])assert.equal(statuses[key],'required');
+    if(report.expected==='intact'||report.expected==='configured'){
+     assert.equal(statuses['source-role'],'passed');for(const key of ['executed-exposure','declared-task'])assert.equal(statuses[key],'required');
+     assert.equal(statuses['model-versions'],report.expected==='configured'?'passed':'required');
      assert.equal(statuses['source-bytes'],'not-checked');assert.equal(statuses['evidence-review'],'requires-research-opt-in');
-     assert.equal(last.position,0);assert.equal(last.view.metrics.targetRemovedMm3,0);assert.equal(last.view.metrics.nonTargetRemovedMm3,0);
+     assert.equal(last.position,report.expected==='configured'?1:0);assert.equal(last.view.metrics.targetRemovedMm3,0);assert.equal(last.view.metrics.nonTargetRemovedMm3,0);
     }else{assert.equal(statuses['source-role'],'refused');if(report.expected==='missing-target')assert.match(value.reason,/tumor target is required/);}
     assert.equal(await js(`[...document.querySelectorAll('button')].some(b=>['Generate approaches','Compare executable strategies','Assess declared execution offsets'].includes(b.textContent.trim()))`),false);
     assert(await js(`!!document.querySelector('[aria-label="Planning readiness"]')`));

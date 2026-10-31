@@ -22,6 +22,8 @@ from .surgical_task_admission import source_evidence, verify_source, task_spec
 
 SCHEMA = 'resectionlab.source-exposure-preparation.v1'
 PUBLIC_SCHEMA = 'resectionlab.public-source-exposure-preparation.v1'
+FIXED_SCHEMA = 'resectionlab.source-exposure-preparation.v2'
+FIXED_PUBLIC_SCHEMA = 'resectionlab.public-source-exposure-preparation.v2'
 SCOPE = ('Finite annotation-assisted intracerebral preparation through mapped non-target tissue, '
     'with zero additional target removal. Exterior/skull/dura and complete vascular/functional anatomy '
     'remain unassessed. Native masks and source annotations are unchanged; only executed cell removal '
@@ -107,7 +109,17 @@ def project_exposure(engine):
     return ExposureObservation(project_observation(engine, proposal, source_evidence(engine.scene)['availableEvidence']))
 
 
-def _shortlist(observation, controls, check):
+def normalize_source_ray(raw):
+    _require(type(raw) is dict and set(raw) == {'surfaceMm','sourceTargetMm'}, 'exact source ray required')
+    result = {}
+    for key, point in raw.items():
+        _require(type(point) is list and len(point) == 3 and all(type(x) in (int,float) and np.isfinite(x) for x in point),
+                 'source ray points must be finite RAS millimeters')
+        result[key] = list(map(float,point))
+    return result
+
+
+def _source_grid(observation, controls, check):
     model = observation.planning_engine(controls); scene = model.scene
     labels = scene.labels.copy(); labels.flat[model.state['removed']] = 0
     brain = [r['id'] for r in scene.regions if r['material'] == 'soft_tissue']
@@ -117,8 +129,60 @@ def _shortlist(observation, controls, check):
         for side in (0, -1):
             index = [slice(None)]*3; index[axis] = side; seed[tuple(index)] = free[tuple(index)]
     check(); exterior = ndi.binary_propagation(seed, mask=free)
-    surface = np.argwhere(np.isin(labels, brain) & ndi.binary_dilation(exterior))
-    target = np.isin(labels, targets); boundary = np.argwhere(target & ~ndi.binary_erosion(target))
+    surface = np.isin(labels, brain) & ndi.binary_dilation(exterior)
+    target = np.isin(labels, targets); boundary = target & ~ndi.binary_erosion(target)
+    return model, labels, brain, targets, surface, boundary
+
+
+def _route(model, labels, brain, targets, s, t, controls, check, *, length=None):
+    scene = model.scene; length = float(np.linalg.norm(t-s)) if length is None else length
+    if not 3.5 < length < controls['maxPathMm']: return None
+    direction = (t-s)/length; outside = s-direction*8.
+    samples = np.linspace(s, t, max(2, int(np.ceil(length/.3))))
+    ijk = np.rint((samples-scene.affine[:3, 3])@scene.inverse[:3, :3].T).astype(int)
+    if not np.isin(labels[tuple(ijk.T)], brain+targets).all(): return None
+    quaternion = Rotation.align_vectors([direction], [[0., 0., 1.]])[0].as_quat().tolist()
+    basis = Rotation.from_quat(quaternion).as_matrix(); width = controls['lateralSweepMm']
+    offsets = [np.zeros(3)] + ([basis[:, 0]*width, -basis[:, 0]*width, basis[:, 1]*width, -basis[:, 1]*width] if width else [])
+    paths = []; union = set()
+    for offset in offsets:
+        shifted = outside+offset
+        def touches_target(point):
+            return any(int(labels.flat[c]) in targets for c in model.cells(shifted, point, 1.5))
+        if touches_target(shifted) or not touches_target(t+offset): return None
+        low, high = 0., length+8.
+        for _ in range(26):
+            check(); middle = (low+high)/2.
+            if touches_target(shifted+direction*middle): high = middle
+            else: low = middle
+        endpoint = shifted+direction*(low-.25)
+        if np.dot(endpoint-(s+offset), direction) < .5: return None
+        cells = [int(c) for c in model.cells(shifted, endpoint, 1.5) if labels.flat[c]]
+        if not cells or not np.isin(labels.flat[cells], brain).all(): return None
+        union.update(cells)
+        if len(union)*scene.voxel_mm3 > controls['maxNonTargetMm3']: return None
+        paths.append({'outsideMm': shifted.tolist(), 'endpointMm': endpoint.tolist()})
+    return {'surfaceMm': s.tolist(), 'sourceTargetMm': t.tolist(), 'outsideMm': outside.tolist(),
+        'endpointMm': paths[0]['endpointMm'], 'axisRasUnit': direction.tolist(), 'quaternion': quaternion,
+        'paths': paths, 'sourceTubeMm3': len(union)*scene.voxel_mm3, 'surfaceTargetDistanceMm': length}
+
+
+def _fixed_route(observation, controls, ray, check):
+    model, labels, brain, targets, surface, boundary = _source_grid(observation, controls, check)
+    scene = model.scene; points = []
+    for key, mask in (('surfaceMm',surface),('sourceTargetMm',boundary)):
+        point = np.asarray(ray[key]); ijk = (point-scene.affine[:3,3])@scene.inverse[:3,:3].T
+        _require(np.allclose(ijk,np.rint(ijk),atol=1e-8,rtol=0.) and np.all(ijk>=0) and np.all(ijk<scene.shape),
+                 'source ray must use original cell centers')
+        _require(mask[tuple(np.rint(ijk).astype(int))], 'source ray requires retained exterior-connected brain surface and target boundary')
+        points.append(point)
+    row = _route(model, labels, brain, targets, *points, controls, check)
+    return [row] if row is not None else []
+
+
+def _shortlist(observation, controls, check):
+    model, labels, brain, targets, surface, boundary = _source_grid(observation, controls, check)
+    scene = model.scene; surface, boundary = np.argwhere(surface), np.argwhere(boundary)
     if not len(surface) or not len(boundary): return []
     world = lambda ijk: ijk@scene.affine[:3, :3].T+scene.affine[:3, 3]
     points, goals = world(surface), world(boundary)
@@ -132,35 +196,8 @@ def _shortlist(observation, controls, check):
     rows = []
     for flat in rank:
         check(); i, j = np.unravel_index(flat, distance.shape); s, t = points[neighbor[i, j]], goals[i]
-        length = float(distance[i, j]); direction = (t-s)/length; outside = s-direction*8.
-        samples = np.linspace(s, t, max(2, int(np.ceil(length/.3))))
-        ijk = np.rint((samples-scene.affine[:3, 3])@scene.inverse[:3, :3].T).astype(int)
-        if not np.isin(labels[tuple(ijk.T)], brain+targets).all(): continue
-        quaternion = Rotation.align_vectors([direction], [[0., 0., 1.]])[0].as_quat().tolist()
-        basis = Rotation.from_quat(quaternion).as_matrix(); width = controls['lateralSweepMm']
-        offsets = [np.zeros(3)] + ([basis[:, 0]*width, -basis[:, 0]*width, basis[:, 1]*width, -basis[:, 1]*width] if width else [])
-        paths = []; union = set()
-        for offset in offsets:
-            shifted = outside+offset
-            def touches_target(point):
-                return any(int(labels.flat[c]) in targets for c in model.cells(shifted, point, 1.5))
-            if touches_target(shifted) or not touches_target(t+offset): break
-            low, high = 0., length+8.
-            for _ in range(26):
-                check(); middle = (low+high)/2.
-                if touches_target(shifted+direction*middle): high = middle
-                else: low = middle
-            endpoint = shifted+direction*(low-.25)
-            if np.dot(endpoint-(s+offset), direction) < .5: break
-            cells = [int(c) for c in model.cells(shifted, endpoint, 1.5) if labels.flat[c]]
-            if not cells or not np.isin(labels.flat[cells], brain).all(): break
-            union.update(cells)
-            if len(union)*scene.voxel_mm3 > controls['maxNonTargetMm3']: break
-            paths.append({'outsideMm': shifted.tolist(), 'endpointMm': endpoint.tolist()})
-        if len(paths) != len(offsets): continue
-        row = {'surfaceMm': s.tolist(), 'sourceTargetMm': t.tolist(), 'outsideMm': outside.tolist(),
-            'endpointMm': paths[0]['endpointMm'], 'axisRasUnit': direction.tolist(), 'quaternion': quaternion,
-            'paths': paths, 'sourceTubeMm3': len(union)*scene.voxel_mm3, 'surfaceTargetDistanceMm': length}
+        row = _route(model, labels, brain, targets, s, t, controls, check, length=float(distance[i,j]))
+        if row is None: continue
         rows.append(row)
         if len(rows) == controls['maxCandidates']: break
     return rows
@@ -217,24 +254,29 @@ def _compile(model, row, controls, check):
         'summary': _summary(model, before), 'failure': failure, 'complete': reached and failure is None and _summary(model, before)['withdrawn']}
 
 
-def plan_observed(observation, raw, *, check=lambda: None):
+def plan_observed(observation, raw, *, source_ray=None, check=lambda: None):
     _require(type(observation) is ExposureObservation, 'typed public exposure observation required')
     observation = ExposureObservation(PlanningObservation(observation.baseline.labels, observation.baseline.affine, observation.baseline.fields))
-    controls = normalize(raw); rows = _shortlist(observation, controls, check); attempts = []
+    controls = normalize(raw); ray = normalize_source_ray(source_ray) if source_ray is not None else None
+    rows = _shortlist(observation, controls, check) if ray is None else _fixed_route(observation, controls, ray, check)
+    attempts = []
     for row in rows:
         check(); attempt = _compile(observation.planning_engine(controls), row, controls, check); attempts.append(attempt)
         if attempt['complete']: break
-    value = {'schema': PUBLIC_SCHEMA, 'publicObservation': observation.manifest(), 'controls': controls,
+    value = {'schema': PUBLIC_SCHEMA if ray is None else FIXED_PUBLIC_SCHEMA, 'publicObservation': observation.manifest(), 'controls': controls,
+        **({'sourceRay': ray} if ray is not None else {}),
         'attempts': attempts, 'decision': {'operation': 'PREPARE' if attempts and attempts[-1]['complete'] else 'STOP',
             'selectedIndex': len(attempts)-1 if attempts and attempts[-1]['complete'] else None,
-            'rule': 'First complete execution in deterministic source-distance order, under declared budgets; no optimality or clinical-access claim'}, 'scope': SCOPE}
+            'rule': ('First complete execution in deterministic source-distance order, under declared budgets; no optimality or clinical-access claim'
+                if ray is None else 'Execute only the declared source ray under fixed budgets; no replacement ray, optimality or clinical-access claim')}, 'scope': SCOPE}
     value['publicSeal'] = semantic_digest(value)
     return value
 
 
-def prepare(engine, raw, *, native_collection, check=lambda: None):
+def prepare(engine, raw, *, native_collection, source_ray=None, check=lambda: None):
     """Public choice seals first; every held attempt then executes natively."""
-    controls = normalize(raw); before = engine.snapshot(); engine.scene.require_cache_source()
+    controls = normalize(raw); ray = normalize_source_ray(source_ray) if source_ray is not None else None
+    before = engine.snapshot(); engine.scene.require_cache_source()
     verification = verify_source(engine.scene, native_collection=native_collection, check=check)
     restored = SurgicalEngine.restore(engine.scene, before, check=check, use_cache=False)
     _require(restored.snapshot() == before, 'source baseline does not cold-replay exactly')
@@ -242,17 +284,24 @@ def prepare(engine, raw, *, native_collection, check=lambda: None):
     def guard():
         check()
         _require(time.monotonic()-started <= controls['maxWallSeconds'], 'preparation computation budget exhausted; no partial study may publish')
-    public = plan_observed(observation, controls, check=guard); selected = None
-    _require(public['schema'] == PUBLIC_SCHEMA and public['scope'] == SCOPE
+    public = plan_observed(observation, controls, check=guard, **({'source_ray':ray} if ray is not None else {})); selected = None
+    _require(public['schema'] == (PUBLIC_SCHEMA if ray is None else FIXED_PUBLIC_SCHEMA) and public['scope'] == SCOPE
              and semantic_digest(public['publicObservation']) == semantic_digest(observation.manifest())
              and semantic_digest(public['controls']) == semantic_digest(controls),
              'public preparation inputs differ')
+    _require(('sourceRay' not in public if ray is None else semantic_digest(public.get('sourceRay')) == semantic_digest(ray)),
+             'public preparation source ray differs')
+    _require(type(public['attempts']) is list and len(public['attempts']) <= (controls['maxCandidates'] if ray is None else 1),
+             'public preparation exceeds candidate budget')
     _require(public['publicSeal'] == semantic_digest({k: v for k, v in public.items() if k != 'publicSeal'}),
              'public preparation seal differs')
     _require(public['decision']['selectedIndex'] is None or type(public['decision']['selectedIndex']) is int,
              'public preparation selection type differs')
     for index, attempt in enumerate(public['attempts']):
         model = engine.clone(); phases = []
+        if ray is not None:
+            _require(semantic_digest({k:attempt['route'][k] for k in ray}) == semantic_digest(ray),
+                     'public preparation replaced the declared source ray')
         _require(type(attempt['complete']) is bool, 'public preparation completion type differs')
         _require(len(attempt['actionProgram']) <= controls['maxActions'] and
             sum(a['duration'] for a in attempt['actionProgram']) <= controls['maxSeconds']+1e-10,
@@ -277,7 +326,7 @@ def prepare(engine, raw, *, native_collection, check=lambda: None):
     guard(); _require(before == engine.snapshot(), 'native source checkpoint changed during preparation')
     _require(project_exposure(engine).manifest() == observation.manifest(), 'public source inputs changed during preparation')
     verify_source(engine.scene, native_collection=native_collection, check=guard)
-    value = {'schema': SCHEMA, 'sourceSceneId': engine.scene.identity, 'sourceStateId': before['stateId'],
+    value = {'schema': SCHEMA if ray is None else FIXED_SCHEMA, 'sourceSceneId': engine.scene.identity, 'sourceStateId': before['stateId'],
         'sourceSnapshotHash': semantic_digest(before), 'sourceVerification': verification,
         'publicPlan': public, 'nativeReplayVerified': True, 'scope': SCOPE}
     value['preparationSeal'] = semantic_digest(value)

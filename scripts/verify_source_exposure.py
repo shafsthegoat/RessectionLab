@@ -138,16 +138,18 @@ def complete(phases, row, original):
     return last is not None and index == len(phases) and not last['active'] and not last['inserted'] and not last['grip']
 
 
-def geometry(row, baseline, controls, occupied, targets, exterior):
+def source_ray_points(ray, baseline, exterior):
     scene = baseline.scene; removed = set(baseline.state['removed'])
-    source, goal = np.asarray(row['surfaceMm']), np.asarray(row['sourceTargetMm'])
+    require(type(ray) is dict and set(ray)=={'surfaceMm','sourceTargetMm'} and all(type(p) is list and len(p)==3
+        and all(type(x) in (int,float) and np.isfinite(x) for x in p) for p in ray.values()),'source ray declaration differs')
+    source, goal = np.asarray(ray['surfaceMm']), np.asarray(ray['sourceTargetMm'])
     def owner(point):
         index = (point-scene.affine[:3,3])@scene.inverse[:3,:3].T
         require(np.allclose(index,np.rint(index),atol=1e-8,rtol=0.) and np.all(index>=0) and np.all(index<scene.shape), 'source representative is not a native cell center')
         cell = int(np.ravel_multi_index(np.rint(index).astype(int),scene.shape)); require(cell not in removed,'source representative was already removed'); return cell
     materials = {r['id']:r['material'] for r in scene.regions}; target_ids = {r['id'] for r in scene.regions if r.get('target') and r['material']=='tumor'}
     source_cell,goal_cell=owner(source),owner(goal)
-    require(materials[int(scene.labels.flat[source_cell])]=='soft_tissue' and int(scene.labels.flat[goal_cell]) in target_ids,'declared source surface/target ownership differs')
+    require(materials.get(int(scene.labels.flat[source_cell]))=='soft_tissue' and int(scene.labels.flat[goal_cell]) in target_ids,'declared source surface/target ownership differs')
     def neighbors(cell):
         ijk=np.asarray(np.unravel_index(cell,scene.shape))
         for axis in range(3):
@@ -156,6 +158,13 @@ def geometry(row, baseline, controls, occupied, targets, exterior):
                 if np.all(other>=0) and np.all(other<scene.shape):yield int(np.ravel_multi_index(other,scene.shape))
     require(any(exterior.flat[c] for c in neighbors(source_cell)),'source representative lacks exterior-connected boundary')
     require(any(c in removed or int(scene.labels.flat[c]) not in target_ids for c in neighbors(goal_cell)),'target representative is not a retained boundary cell')
+    return source,goal
+
+
+def geometry(row, baseline, controls, occupied, targets, exterior):
+    scene=baseline.scene;removed=set(baseline.state['removed'])
+    source,goal=source_ray_points({k:row[k] for k in ('surfaceMm','sourceTargetMm')},baseline,exterior)
+    materials={r['id']:r['material'] for r in scene.regions}
     distance = float(np.linalg.norm(goal-source)); direction = (goal-source)/distance
     require(3.5<distance<controls['maxPathMm'] and abs(distance-row['surfaceTargetDistanceMm'])<1e-8 and np.allclose(direction,row['axisRasUnit'],atol=1e-9,rtol=0.),'declared source ray differs')
     from scipy.spatial.transform import Rotation
@@ -184,7 +193,10 @@ def verify(case_path, preparation_path):
     require(all(p.is_relative_to(ROOT/'testcases') for p in (case_path, preparation_path)), 'inputs must stay in testcases')
     inputs = {str(p): file_hash(p) for p in (case_path, preparation_path)}
     proof = json.loads(preparation_path.read_text()); seal(proof, 'preparationSeal'); public = proof['publicPlan']; seal(public, 'publicSeal')
-    require(proof['schema'] == 'resectionlab.source-exposure-preparation.v1' and public['schema'] == 'resectionlab.public-source-exposure-preparation.v1', 'preparation schema differs')
+    fixed=proof['schema']=='resectionlab.source-exposure-preparation.v2'
+    require((proof['schema'],public['schema']) == (('resectionlab.source-exposure-preparation.v2','resectionlab.public-source-exposure-preparation.v2') if fixed
+        else ('resectionlab.source-exposure-preparation.v1','resectionlab.public-source-exposure-preparation.v1')),'preparation schema differs')
+    require(('sourceRay' in public)==fixed,'source ray schema differs')
     require(proof['nativeReplayVerified'] is True,'native replay declaration differs')
     _, artifacts, _ = load_workspace(case_path); record = artifacts['surgical_toolbox']; scene = load_environment(case_path)
     source = [s for s in record['branches'].values() if semantic_digest(s) == proof['sourceSnapshotHash']]
@@ -210,16 +222,19 @@ def verify(case_path, preparation_path):
         for side in (0,-1):
             slab=[slice(None)]*3;slab[axis]=side;seed[tuple(slab)]=free[tuple(slab)]
     exterior=binary_propagation(seed,mask=free)
+    if fixed:source_ray_points(public['sourceRay'],baseline,exterior)
     controls = public['controls']; require(set(controls) == {'maxNonTargetMm3','maxActions','maxSeconds','maxCandidates','maxProposals','maxPathMm','maxWallSeconds','lateralSweepMm'}, 'control schema differs')
     require(all(type(value) is int if key in ('maxActions','maxCandidates','maxProposals')
         else type(value) in (int,float) and np.isfinite(value) for key,value in controls.items()),'control types differ')
     require(0 < controls['maxNonTargetMm3'] <= 200 and 6 <= controls['maxActions'] <= 128 and 2 <= controls['maxSeconds'] <= 180, 'unbounded preparation')
     require(1 <= controls['maxCandidates'] <= 12 and len(public['attempts']) <= controls['maxCandidates'], 'candidate inventory differs')
+    require(not fixed or len(public['attempts'])<=1,'fixed source ray permits at most one held attempt')
     require(0<=controls['lateralSweepMm']<=1. and 3.5<controls['maxPathMm']<=40. and 1<=controls['maxProposals']<=1024 and 0<controls['maxWallSeconds']<=90.,'proposal bounds differ')
     require(public['decision']['selectedIndex'] is None or type(public['decision']['selectedIndex']) is int,'selection type differs')
     rate = scene.properties.get('cusaV3', {}).get('capacityMm3PerSecond', 2.); results = []; chosen = None; microsteps = 0
     for index, attempt in enumerate(public['attempts']):
         require(type(attempt['complete']) is bool,'completion type differs')
+        if fixed:require(semantic_digest({k:attempt['route'][k] for k in public['sourceRay']})==semantic_digest(public['sourceRay']),'held attempt replaced source ray')
         geometry(attempt['route'],baseline,controls,boxes,target_boxes,exterior)
         engine = baseline.clone(); engine.__class__ = Capture; engine.trace = []; phases = []
         require(len(attempt['actionProgram']) <= controls['maxActions'] and sum(a['duration'] for a in attempt['actionProgram']) <= controls['maxSeconds']+1e-10, 'program exceeds action/clock bound')
@@ -241,6 +256,7 @@ def verify(case_path, preparation_path):
             require(engine.snapshot() == record['branches'][record['branchId']], 'installed preparation differs')
         results.append({'index':index, 'complete':done, 'summary':attempt['summary']})
     require(public['decision']['selectedIndex'] == chosen and public['decision']['operation'] == ('PREPARE' if chosen is not None else 'STOP'), 'selection differs')
+    if chosen is None:require(semantic_digest(record['branches'][record['branchId']])==semantic_digest(baseline.snapshot()),'STOP installed an unselected physical state')
     require(all(file_hash(Path(p)) == h for p,h in inputs.items()), 'native inputs changed')
     require(verify_source(scene,native_collection=proof['sourceVerification']['nativeCollectionPath'])==proof['sourceVerification'],'source bytes changed during audit')
     return {'passed':True,'sourceSceneId':scene.identity,'results':results,'microsteps':microsteps,
