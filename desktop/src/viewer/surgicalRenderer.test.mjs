@@ -338,17 +338,17 @@ test('modeled failure still reports a visible generic error for callers without 
     assert.equal(r.volume,source);assert.match(r.lastError,/previous accepted state: surface worker failed/);
   }finally{mock.restore();}
 });
-test('only the latest tool state publishes after submission and newer tissue preparation retains published effects',()=>{
+test('only the latest tool state publishes after a completed frame and newer tissue preparation retains published effects',()=>{
   const mock=modelWorkerMock();try{
     const {r,source,derive}=modeledFixture(),ready=[],a={stateId:'a'},b={stateId:'b'},c={stateId:'c'},d={stateId:'d'};
     const request=view=>({view,onDisplayReady:reported=>ready.push(reported)});
     r.installSurgicalState(source,request(a));assert.equal(ready.length,0);r.finishSurgicalFrame();assert.deepEqual(ready,[a]);
     r.installSurgicalState(source,request(b));r.installSurgicalState(source,request(c));assert.deepEqual(ready,[a]);r.finishSurgicalFrame();assert.deepEqual(ready,[a,c]);
-    r.installSurgicalState(source,request(d));const tissue={stateId:'tissue'},next=derive([22]);r.installSurgicalState(next,request(tissue));
-    assert.equal(r.surgicalInteraction.view,c,'pending tool state was not published and must not leak into the retained display');r.finishSurgicalFrame();assert.deepEqual(ready,[a,c]);
+    const pendingTool=request(d);r.installSurgicalState(source,pendingTool);const tissue={stateId:'tissue'},next=derive([22]);r.installSurgicalState(next,request(tissue));
+    assert.equal(r.surgicalInteraction.view,c,'pending tool state was not published and must not leak into the retained display');r.finishSurgicalFrame(pendingTool);assert.deepEqual(ready,[a,c]);
     const worker=r.modelWorker;while(worker.queue.length)worker.flush();assert.equal(r.volume,source);assert.deepEqual(ready,[a,c]);
-    r.commitModelStage(r.modelStage);assert.equal(r.volume,next);assert.deepEqual(ready,[a,c],'CPU resource installation is not submission');
-    r.finishSurgicalFrame();assert.deepEqual(ready,[a,c,tissue]);
+    r.commitModelStage(r.modelStage);assert.equal(r.volume,next);assert.deepEqual(ready,[a,c],'CPU resource installation is not GPU completion');
+    r.finishSurgicalFrame(pendingTool);assert.deepEqual(ready,[a,c],'an old tool fence cannot certify newer tissue');r.finishSurgicalFrame();assert.deepEqual(ready,[a,c,tissue]);
     const previous=r.modelWorker.messages.length;r.installSurgicalState(next,request(tissue));assert.deepEqual(ready,[a,c,tissue,tissue]);assert.equal(r.modelWorker.messages.length,previous,'already published pose update needs no anatomy work');
   }finally{mock.restore();}
 });

@@ -207,7 +207,8 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
   function onDisplayReady(reported:SurgicalView|null){
     if(!reported||!currentDisplay(reported))return;
     if(!displayAdmission.current.isCurrent(displayTicket,reported))return;
-    current.current.displayFailed=false;setDisplayFailed(false);
+    const recovering=current.current.displayFailed;current.current.displayFailed=false;setDisplayFailed(false);
+    if(recovering)setError(null);
     if(!displayAdmission.current.commit(displayTicket,reported))return;
     if(reported===desired.current.preview){setPreview(reported);setPreviewOutcome(desired.current.previewOutcome);if(desired.current.previewOutcome?.reason)setError(desired.current.previewOutcome.reason);return;}
     const next=desired.current.result!;acceptedResponseSource.current=displaySourceObject;setResult(next);setPreview(null);setPreviewOutcome(null);

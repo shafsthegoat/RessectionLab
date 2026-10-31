@@ -238,7 +238,7 @@ test('GPU backpressure coalesces input and submits the latest pending frame only
   globalThis.window={devicePixelRatio:1};globalThis.requestAnimationFrame=callback=>{callbacks.set(++id,callback);return id};
   try{
     const {r}=renderer(),empty={getBoundingClientRect:()=>({left:0,top:0,width:0,height:0})};
-    const gl={SYNC_GPU_COMMANDS_COMPLETE:1,TIMEOUT_EXPIRED:2,WAIT_FAILED:3,fenceSync:()=>({}),flush(){},clientWaitSync:()=>ready?4:2,deleteSync(){deleted++}};
+    const gl={SYNC_GPU_COMMANDS_COMPLETE:1,TIMEOUT_EXPIRED:2,WAIT_FAILED:3,ALREADY_SIGNALED:4,CONDITION_SATISFIED:5,fenceSync:()=>({}),flush(){},clientWaitSync:()=>ready?4:2,deleteSync(){deleted++}};
     Object.assign(r,{requestRender:VolumeRenderer.prototype.requestRender,disposed:false,frame:0,renderSerial:0,width:100,height:100,sliceRevision:0,interacting:false,refinementStarted:0,budget:{longEdge:360},gpuSync:null,estimateAllocation:()=>({}),retiredSurfaces:[],
       container:{getBoundingClientRect:()=>({left:0,top:0,width:100,height:100})},panes:{anatomy:empty,axial:empty,coronal:empty,sagittal:empty},canvas:{dispatchEvent(){}},scanVolume:{active:false},controls:{update(){}},
       renderer:{info:{reset(){resets++},memory:{},render:{calls:0}},getContext:()=>gl,getPixelRatio:()=>1,setScissorTest(){},clear(){}}});
@@ -248,3 +248,71 @@ test('GPU backpressure coalesces input and submits the latest pending frame only
     tick();assert.equal(r.gpuSync,null);assert.equal(callbacks.size,0);assert.equal(resets,2,'statistics reset once per complete frame');
   }finally{globalThis.window=previousWindow;globalThis.requestAnimationFrame=previousRaf;}
 });
+
+// Exercise the actual render/fence/poll pipeline with a deterministic GPU seam.
+// These controls qualify publication ordering, not rendered medical pixels.
+function fencedFrame(run){
+  const previous={window:globalThis.window,raf:globalThis.requestAnimationFrame,cancel:globalThis.cancelAnimationFrame};
+  const callbacks=new Map(),live=new Set(),status=new Map(),events=[],ready=[],errors=[];let id=0,syncId=0;
+  globalThis.window={devicePixelRatio:1};globalThis.requestAnimationFrame=fn=>{callbacks.set(++id,fn);return id};globalThis.cancelAnimationFrame=key=>callbacks.delete(key);
+  try{
+    const {r}=renderer(),empty={getBoundingClientRect:()=>({left:0,top:0,width:0,height:0})};
+    const gl={SYNC_GPU_COMMANDS_COMPLETE:1,TIMEOUT_EXPIRED:2,WAIT_FAILED:3,ALREADY_SIGNALED:4,CONDITION_SATISFIED:5,
+      fenceSync(){if(gl.noFence)return null;if(gl.throwFence)throw Error('fence');assert.equal(live.size,0,'one live GPU fence');const sync={id:++syncId};live.add(sync);return sync},
+      flush(){if(gl.throwFlush)throw Error('flush')},clientWaitSync(sync){if(gl.throwWait)throw Error('wait');return status.get(sync)??gl.TIMEOUT_EXPIRED},deleteSync(sync){assert(live.delete(sync))}};
+    Object.assign(r,{requestRender:VolumeRenderer.prototype.requestRender,disposed:false,graphicsLost:false,frame:0,renderSerial:0,width:100,height:100,sliceRevision:0,interacting:false,refinementStarted:0,budget:{longEdge:360},gpuSync:null,estimateAllocation:()=>({}),retiredSurfaces:[],
+      container:{getBoundingClientRect:()=>({left:0,top:0,width:100,height:100})},panes:{anatomy:empty,axial:empty,coronal:empty,sagittal:empty},canvas:{dispatchEvent(event){events.push(event);f.onEvent?.(event)}},scanVolume:{active:false},controls:{update(){}},
+      renderer:{info:{reset(){},memory:{},render:{calls:0}},getContext:()=>gl,getPixelRatio:()=>1,setScissorTest(){},clear(){}}});
+    const f={r,gl,callbacks,events,ready,errors,live,onEvent:null,
+      request(name,onReady){const interaction={view:{stateId:name},onDisplayReady:view=>{ready.push(view.stateId);events.push({type:'accepted',detail:{stateId:view.stateId}});onReady?.()},onDisplayError:(view,message)=>errors.push({stateId:view.stateId,message})};r.surgicalInteraction=interaction;r.queueSurgicalPublication(interaction);return interaction},
+      tick(){const first=callbacks.entries().next().value;assert(first,'a frame or fence poll must be queued');callbacks.delete(first[0]);first[1]()},
+      complete(value=gl.CONDITION_SATISFIED){assert(r.gpuSync);status.set(r.gpuSync,value);f.tick()}};
+    run(f);
+  }finally{globalThis.window=previous.window;globalThis.requestAnimationFrame=previous.raf;globalThis.cancelAnimationFrame=previous.cancel;}
+}
+test('native display publication waits for an explicitly successful GPU fence, after its event',()=>fencedFrame(f=>{
+  f.request('A');f.tick();assert.deepEqual(f.ready,[]);assert.equal(f.r.renderSerial,1);
+  for(let i=0;i<3;i++){f.tick();assert.deepEqual(f.ready,[]);assert.equal(f.r.renderSerial,1)}
+  f.complete(f.gl.ALREADY_SIGNALED);assert.deepEqual(f.ready,['A']);assert.equal(f.live.size,0);
+  assert.deepEqual(f.events.map(e=>e.type),['anatomy-frame','anatomy-gpu','anatomy-surgical-display','accepted']);
+  assert.equal(f.events[2].detail.frameSerial,f.events[1].detail.serial);assert.equal(f.events[1].detail.surgicalStateId,'A');assert.equal(f.events[1].detail.sourceCaseHash,source.caseHash);
+}));
+test('a completed older frame cannot publish a newer tool request',()=>fencedFrame(f=>{
+  f.request('B');f.tick();f.request('C');assert.deepEqual(f.ready,[]);f.complete();
+  assert.deepEqual(f.ready,[]);assert.equal(f.r.renderSerial,2);f.complete();assert.deepEqual(f.ready,['C']);
+}));
+test('returning to published A during B submission must redraw and fence A',()=>fencedFrame(f=>{
+  const a=f.request('A');f.tick();f.complete();f.request('B');f.tick();
+  f.r.surgicalInteraction=a;f.r.queueSurgicalPublication(a);assert.deepEqual(f.ready,['A']);
+  f.complete();assert.deepEqual(f.ready,['A']);assert.equal(f.r.renderSerial,3);f.complete();assert.deepEqual(f.ready,['A','A']);
+}));
+test('synchronous frame telemetry cannot substitute an undrawn publication',()=>fencedFrame(f=>{
+  f.onEvent=event=>{if(event.type==='anatomy-frame'&&event.detail.surgicalStateId==='B')f.request('C')};
+  f.request('B');f.tick();f.complete();assert.deepEqual(f.ready,[]);f.complete();assert.deepEqual(f.ready,['C']);
+}));
+test('synchronous GPU telemetry cannot certify a request queued by that event',()=>fencedFrame(f=>{
+  f.onEvent=event=>{if(event.type==='anatomy-gpu'&&event.detail.surgicalStateId==='B')f.request('C')};
+  f.request('B');f.tick();f.complete();assert.deepEqual(f.ready,[]);assert.equal(f.callbacks.size,1);
+  f.tick();f.complete();assert.deepEqual(f.ready,['C']);
+}));
+test('publication callback and coalesced redraw retain a single scheduled frame and live fence',()=>fencedFrame(f=>{
+  f.request('A',()=>f.r.requestRender(false));f.tick();f.r.requestRender(false);f.complete();
+  assert.deepEqual(f.ready,['A']);assert.equal(f.r.renderSerial,1);assert.equal(f.callbacks.size,1);
+  f.tick();assert.equal(f.r.renderSerial,2);assert.equal(f.live.size,1);f.complete();assert.equal(f.live.size,0);assert.equal(f.callbacks.size,0);
+}));
+for(const failure of ['noFence','throwFence','throwFlush','WAIT_FAILED','throwWait','unknown-status'])test(`GPU ${failure} rejects the exact unpublished state`,()=>fencedFrame(f=>{
+  if(['noFence','throwFence','throwFlush','throwWait'].includes(failure))f.gl[failure]=true;
+  f.request('A');f.tick();if(failure==='WAIT_FAILED')f.complete(f.gl.WAIT_FAILED);if(failure==='unknown-status')f.complete(999);if(failure==='throwWait')f.tick();
+  assert.deepEqual(f.ready,[]);assert.equal(f.errors.length,1);assert.equal(f.errors[0].stateId,'A');assert.equal(f.r.pendingSurgicalPublication,null);assert.equal(f.live.size,0);assert.equal(f.callbacks.size,0);
+}));
+for(const flag of ['disposed','graphicsLost'])test(`${flag} before completion cannot admit or resubmit a view`,()=>fencedFrame(f=>{
+  f.request('A');f.tick();f.r[flag]=true;f.tick();assert.deepEqual(f.ready,[]);assert.equal(f.r.renderSerial,1);
+}));
+test('publication telemetry supersession cannot admit a stale callback',()=>fencedFrame(f=>{
+  f.onEvent=event=>{if(event.type==='anatomy-surgical-display'&&event.detail.surgicalStateId==='B')f.request('C')};
+  f.request('B');f.tick();f.complete();assert.deepEqual(f.ready,[]);f.tick();f.complete();assert.deepEqual(f.ready,['C']);
+}));
+test('publication telemetry disposal cannot admit a view',()=>fencedFrame(f=>{
+  f.onEvent=event=>{if(event.type==='anatomy-surgical-display')f.r.disposed=true};
+  f.request('A');f.tick();f.complete();assert.deepEqual(f.ready,[]);assert.equal(f.r.renderSerial,1);
+}));

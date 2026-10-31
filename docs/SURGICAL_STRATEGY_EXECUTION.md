@@ -940,6 +940,37 @@ becomes visible. Detailed provenance, exact commands, timings and failures remai
 in `testcases/preparation-working-room-v1/README.md`; no speed or acquired-plan
 advantage, empirical calibration, new acquisition, training or clinical claim follows.
 
+## Verified: source slices and GPU-qualified display admission
+
+The earlier concern about missing greyscale in cold captures was a visual
+misinterpretation. The original 0004 source-pane pixels exactly match new cold
+loads, branch return, scrolling, restored contrast and restored graphics. No MRI
+array or texture reset defect was established; no source-image workaround was added.
+
+A separate readiness gap was verified in code: `onDisplayReady` ran after CPU
+submission, before the frame fence completed. Publication now binds the exact
+request/target to an explicitly successful GPU fence. Late frames cannot approve
+newer tools or tissue; returning to an older view after a different submitted view
+requires its own completed redraw. Synchronous callbacks retain one scheduled
+render/fence. Missing/failed synchronization refuses the matching pending request.
+GPU completion events carry captured source/state/frame identity. This qualifies
+GPU command completion, not monitor scanout or optical/clinical visibility.
+
+Graphics context loss now blocks instrument execution even for an already accepted
+view. Retry restores the source, clears only the matching display error, and permits
+continued use. Actual hidden 0004 and 0007 controls verify GPU-before-acceptance,
+contrast response, byte-exact three-pane source return and context-loss recovery;
+no instrument IPC occurs while graphics are lost. Entire engine records, original
+branches and all source arrays remain exact on save/reopen (eight 0004 arrays,
+six 0007 arrays), including the older nine comparisons/two applications/two studies.
+Sixteen new GPU ordering/failure/reentrancy controls pass; all desktop tests and the
+build pass (1,262 tests in the shared checkout, including two concurrent data tests).
+Those unrelated data edits are excluded from this change. No simulator transition,
+planning outcome or source data changed. Earlier click-to-accepted-display timings
+were CPU-acknowledgment observations; future timings must state this stronger GPU
+boundary. Detailed commands, pixel hashes, failed verifier assumptions and the
+corrected warning are in `testcases/cold-mri-display-v1/README.md`.
+
 ## Remaining milestones and next dependency
 
 This is a bounded acquired-anatomy operating task, not the complete strategy
@@ -955,8 +986,8 @@ not solve two-tool operation on 0004. Common surgeon controls now connect
 preparation alternatives and their complete-plan consequences; paired lanes have
 a complete generated software control and an explicit acquired negative. Next
 qualify the limiting source/entry geometry and anatomy/execution perturbations
-against matched baselines. Continue checking cold image delivery separately from
-native array/study preservation. Expand the
+against matched baselines. Source pixels and GPU-qualified display admission are now verified separately
+from native array/study preservation. Expand the
 patient distribution without touching
 reserved evaluations. Older lattice resolution dependence and
 continuum empirical/domain gates remain qualification holds. No RL campaign,

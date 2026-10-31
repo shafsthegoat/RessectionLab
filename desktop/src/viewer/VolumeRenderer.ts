@@ -241,6 +241,7 @@ export class VolumeRenderer {
   private publishedSurgicalView:SurgicalInteraction['view']=null;
   private publishedSurgicalInteraction:SurgicalInteraction|null=null;
   private pendingSurgicalPublication:SurgicalInteraction|null=null;
+  private lastSubmittedSurgicalView:SurgicalInteraction['view']|null=null;
   private initialSurgicalInteraction:SurgicalInteraction|null=null;
   private readonly retiredSurfaces:Array<{layer:Pick<ViewerVolume['compartments'][number],'name'|'kind'|'mask'>;pair:SurfacePair;bytes:number}>=[];
   private disposed = false;
@@ -296,7 +297,10 @@ export class VolumeRenderer {
   private readonly onContextLost = (event: Event) => {
     event.preventDefault();
     this.graphicsLost=true;cancelAnimationFrame(this.frame);this.frame=0;cancelAnimationFrame(this.gpuPoll);this.gpuPoll=0;
-    this.gpuSync=null;this.needsFrame=false;
+    this.gpuSync=null;this.needsFrame=false;this.lastSubmittedSurgicalView=null;
+    const requested=this.modelStage?.interaction??this.initialSurgicalInteraction??this.pendingSurgicalPublication??this.surgicalInteraction;
+    this.pendingSurgicalPublication=null;
+    requested?.onDisplayError?.(requested.preview??requested.view,'The graphics context was lost. Restore graphics before continuing instrument actions.');
     this.gpuTimer?.dispose('context-lost');
     this.onGraphicsStatus?.('lost');
     this.onError(
@@ -737,13 +741,26 @@ export class VolumeRenderer {
   private queueSurgicalPublication(interaction:SurgicalInteraction|null){
     if(!interaction){this.pendingSurgicalPublication=null;this.publishedSurgicalView=null;this.publishedSurgicalInteraction=null;return;}
     const target=interaction.preview??interaction.view;
-    if(target===this.publishedSurgicalView){this.publishedSurgicalInteraction=interaction;interaction.onDisplayReady?.(target);return;}
+    if(target===this.publishedSurgicalView&&target===this.lastSubmittedSurgicalView&&!this.pendingSurgicalPublication&&!this.graphicsLost){this.publishedSurgicalInteraction=interaction;interaction.onDisplayReady?.(target);return;}
     this.pendingSurgicalPublication=interaction;this.requestRender();
   }
-  private finishSurgicalFrame(){
-    const interaction=this.pendingSurgicalPublication;if(!interaction)return;
+  /** Only a successfully fenced submission may publish its captured request.
+   * Never certify a newer pending view with an older frame's completion. */
+  private finishSurgicalFrame(interaction:SurgicalInteraction|null=this.pendingSurgicalPublication,frameSerial?:number){
+    if(!interaction||interaction!==this.pendingSurgicalPublication||this.disposed||this.graphicsLost)return;
     const target=interaction.preview??interaction.view,installed=this.surgicalInteraction?.preview??this.surgicalInteraction?.view??null;
-    if(target!==installed)return;this.pendingSurgicalPublication=null;this.publishedSurgicalView=target;this.publishedSurgicalInteraction=interaction;interaction.onDisplayReady?.(target);
+    if(target!==installed)return;this.pendingSurgicalPublication=null;this.publishedSurgicalView=target;this.lastSubmittedSurgicalView=target;
+    this.publishedSurgicalInteraction=interaction;
+    if(frameSerial!==undefined)this.canvas.dispatchEvent(new CustomEvent('anatomy-surgical-display',{bubbles:true,detail:{frameSerial,sourceCaseHash:this.volume.caseHash,surgicalStateId:target?.stateId??null}}));
+    if(this.disposed||this.graphicsLost||target!==(this.surgicalInteraction?.preview??this.surgicalInteraction?.view??null))return;
+    interaction.onDisplayReady?.(target);
+  }
+  private failSurgicalFrame(interaction:SurgicalInteraction|null,message:string){
+    if(!interaction){this.onError?.(message);return;}
+    if(interaction!==this.pendingSurgicalPublication)return;
+    this.pendingSurgicalPublication=null;
+    if(interaction.onDisplayError)interaction.onDisplayError(interaction.preview??interaction.view,message);
+    else this.onError?.(message);
   }
   private modelIdentity(value:object){let key=this.modelIdentities.get(value);if(!key){key=`tissue-${++this.modelIdentityCounter}`;this.modelIdentities.set(value,key);}return key;}
   private disposeSurfacePair(pair:SurfacePair){
@@ -2054,7 +2071,7 @@ export class VolumeRenderer {
     this.scanVolume?.invalidate?.();
     if(slicesChanged)this.sliceRevision++;
     if(this.disposed||this.graphicsLost)return;
-    if(this.rendering)return;
+    if(this.rendering){this.needsFrame=true;return;}
     if(this.gpuSync){this.needsFrame=true;return;}
     if(this.frame)return;
     this.frame = requestAnimationFrame(() => {
@@ -2078,6 +2095,9 @@ export class VolumeRenderer {
     this.rendering=true;
     if(this.modelStage?.ready)this.commitModelStage(this.modelStage);
     const surgicalAnimationActive=this.advanceSurgicalAnimation(performance.now());
+    // Capture before any synchronous telemetry listener can replace the view.
+    const publication=this.pendingSurgicalPublication,renderedView=this.surgicalInteraction?.preview??this.surgicalInteraction?.view??null;
+    const sourceCaseHash=this.volume.caseHash,surgicalStateId=renderedView?.stateId??null,surgicalFrame=this.surgicalInteraction?.recordedFrame??null;
     this.labelTextureUpdates?.sync(this.renderer,this.labelTexture);
     // Interaction quality changes only offscreen 3D targets. The shared canvas
     // and linked slices retain their display resolution throughout a gesture.
@@ -2135,44 +2155,52 @@ export class VolumeRenderer {
     }
     this.renderer.setScissorTest(false);
     this.gpuTimer?.end();
-    this.rendering=false;
+    this.lastSubmittedSurgicalView=renderedView;
     const interactive=this.interacting,cpuMs=performance.now()-frameStarted;
     this.canvas.dispatchEvent(new CustomEvent('anatomy-frame',{bubbles:true,detail:{serial,at:frameStarted,cpuMs,cpuMeasurement:'CPU-frame-submission',interactive,volume:this.scanVolume.active,sliceDraws,longEdge:interactive?this.budget.longEdge:1300,
       resources:{...this.renderer.info.memory},drawCalls:this.renderer.info.render.calls,drawStatistics:{...this.renderer.info.render},gpuTimingSupported:this.gpuTimer?.supported??false,
       estimatedAllocation:this.estimateAllocation(),displayWork:{...this.displayWork},workers:{source:this.sourceWorkerActive?1:0,replay:this.replayWorker?1:0,modeled:this.modelWorker?1:0,picking:this.picking?.stats().workerLive??0},surfaceQuality,
       surfaceCache:{budgetBytes:RETIRED_SURFACE_BUDGET_BYTES,retiredBytes:this.retiredSurfaces.reduce((sum,entry)=>sum+entry.bytes,0),retiredEntries:this.retiredSurfaces.length},
       labelUploads:this.labelTextureUpdates?.work??null,
-      sourceCaseHash:this.volume.caseHash,surgicalStateId:(this.surgicalInteraction?.preview??this.surgicalInteraction?.view)?.stateId??null,
-      surgicalFrame:this.surgicalInteraction?.recordedFrame??null,
+      sourceCaseHash,surgicalStateId,surgicalFrame,
       recordedFlow:this.surgicalFlowSource?{startSeconds:this.surgicalFlowSource.startSeconds,endSeconds:this.surgicalFlowSource.endSeconds,operations:this.surgicalFlowSource.operations.length,truncated:this.surgicalFlowSource.truncated,
         animated:surgicalAnimationActive,approximation:'Retrospective source-interval overlay; 3x radius display gain',
         glyphInstances:this.surgicalFlow?.children.reduce((sum,object)=>sum+(object instanceof THREE.InstancedMesh&&object.name!=='flow:ledger-droplets'?object.count:0),0)??0,
         dropletInstances:(this.surgicalFlow?.getObjectByName('flow:ledger-droplets') as THREE.InstancedMesh|undefined)?.count??0}:null,
       picking:this.picking?.stats()??null}}));
-    this.finishSurgicalFrame();
     if(surgicalAnimationActive)this.needsFrame=true;
     const gl=this.renderer.getContext() as WebGL2RenderingContext;
-    const sync=gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE,0);
-    if(!sync)return;
-    this.gpuSync=sync;gl.flush();
+    if(this.disposed||this.graphicsLost){this.rendering=false;return;}
+    let sync:WebGLSync|null=null;
+    try{sync=gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE,0);}catch{/* Report the matching request below. */}
+    if(!sync){this.rendering=false;this.failSurgicalFrame(publication,'The GPU could not fence the requested image frame. Reopen the source before continuing.');
+      if(this.needsFrame){this.needsFrame=false;this.requestRender(false);}return;}
+    this.gpuSync=sync;
+    try{gl.flush();}catch{gl.deleteSync(sync);this.gpuSync=null;this.rendering=false;this.failSurgicalFrame(publication,'The GPU could not submit the requested image frame. Reopen the source before continuing.');
+      if(this.needsFrame){this.needsFrame=false;this.requestRender(false);}return;}
     const refinement=!interactive?this.refinementStarted:0;
     const poll=()=>{
       this.gpuPoll=0;
-      if(this.disposed)return;
-      const status=gl.clientWaitSync(sync,0,0);
+      if(this.disposed||this.graphicsLost)return;
+      let status:number;try{status=gl.clientWaitSync(sync,0,0);}catch{status=gl.WAIT_FAILED;}
       if(status===gl.TIMEOUT_EXPIRED){this.gpuPoll=requestAnimationFrame(poll);return;}
       gl.deleteSync(sync);this.gpuSync=null;
       const elapsed=performance.now()-frameStarted;
-      if(interactive&&status!==gl.WAIT_FAILED)this.budget.sample(elapsed);
-      this.canvas.dispatchEvent(new CustomEvent('anatomy-gpu',{bubbles:true,detail:{serial,completed:status!==gl.WAIT_FAILED,milliseconds:elapsed,completionPollMs:elapsed,measurement:'submission-to-fence-poll-upper-bound'}}));
+      if(interactive&&(status===gl.ALREADY_SIGNALED||status===gl.CONDITION_SATISFIED))this.budget.sample(elapsed);
+      const completed=status===gl.ALREADY_SIGNALED||status===gl.CONDITION_SATISFIED;
+      this.canvas.dispatchEvent(new CustomEvent('anatomy-gpu',{bubbles:true,detail:{serial,sourceCaseHash,surgicalStateId,surgicalFrame,completed,milliseconds:elapsed,completionPollMs:elapsed,measurement:'submission-to-fence-poll-upper-bound'}}));
+      if(this.disposed||this.graphicsLost)return;
+      if(completed)this.finishSurgicalFrame(publication,serial);
+      else this.failSurgicalFrame(publication,'The GPU did not complete the requested image frame. Reopen the source before continuing.');
+      if(this.disposed||this.graphicsLost)return;
       if(!interactive&&!this.replayActive&&!this.passiveActive&&this.scanVolume.needsRefinement)this.needsFrame=true;
       if(refinement&&this.refinementStarted===refinement&&!this.interacting&&!this.needsFrame){
         this.refinementStarted=0;
-        this.canvas.dispatchEvent(new CustomEvent('anatomy-refined',{bubbles:true,detail:{completed:status!==gl.WAIT_FAILED,milliseconds:performance.now()-refinement,volume:this.scanVolume.active}}));
+        this.canvas.dispatchEvent(new CustomEvent('anatomy-refined',{bubbles:true,detail:{completed,milliseconds:performance.now()-refinement,volume:this.scanVolume.active}}));
       }
-      if(this.needsFrame){this.needsFrame=false;this.controls.update();this.render();}
+      if(this.needsFrame){this.needsFrame=false;if(!this.frame){this.controls.update();this.render();}}
     };
-    this.gpuPoll=requestAnimationFrame(poll);
+    this.rendering=false;this.gpuPoll=requestAnimationFrame(poll);
   }
 
   dispose(): void {
