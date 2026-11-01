@@ -9,6 +9,7 @@ import argparse
 import itertools
 import json
 import re
+import shutil
 from pathlib import Path
 import sys
 import time
@@ -94,6 +95,160 @@ def metrics(mask, affine, spacing):
         world = corners @ affine[:3,:3].T + affine[:3,3]
         result['minimum_ras_mm'] = world.min(0).tolist(); result['maximum_ras_mm'] = world.max(0).tolist()
     return result
+
+
+def additive_brain_proposal(ct, vessels, spacing, old_brain, old_skull, model_brain):
+    """Add coarse brain protection; never delete or reinterpret old dense bone."""
+    arrays = [np.asarray(a) for a in (ct, vessels, old_brain, old_skull, model_brain)]
+    if (arrays[0].ndim != 3 or any(a.shape != arrays[0].shape for a in arrays)
+            or any(not np.isfinite(a).all() for a in arrays)):
+        raise ValueError('Finite, identical native source shapes required')
+    for mask in arrays[2:]:
+        if not np.isin(mask, [0, 1]).all():
+            raise ValueError('Binary old/model estimates required')
+    spacing = np.asarray(spacing, float)
+    if spacing.shape != (3,) or not np.isfinite(spacing).all() or np.any(spacing <= 0):
+        raise ValueError('Finite positive native spacing required')
+    brain = arrays[2].astype(bool) | arrays[4].astype(bool)
+    vessel_distance = ndi.distance_transform_edt(~(arrays[1] > 0), sampling=spacing)
+    support = (brain & (arrays[0] >= 10) & (arrays[0] <= 90)
+               & (vessel_distance > 3.)
+               & (ndi.distance_transform_edt(brain, sampling=spacing) >= 4.))
+    return {'brain_estimate': brain, 'observed_skull': arrays[3].astype(bool).copy(),
+            'tumor_placement_support': support}
+
+
+def prepare_additive(root, subject, *, version, model_pilot, prior_version='enclosure-v1'):
+    """Unaccepted native-grid union proposal, with byte-identical prior skull.
+
+    The learned skull is provenance/display context only. Original enclosure
+    coverage remains a distinct, unchanged superior support observation; adding
+    a brain estimate does not enlarge an entry/task domain or authorize actions.
+    """
+    for token in (version, prior_version):
+        if not isinstance(token, str) or not re.fullmatch(r'[A-Za-z0-9_-]+', token):
+            raise ValueError('Use a plain safe immutable version token')
+    if subject not in {'004', '006', '012', '014', '018'}:
+        raise ValueError('Only the five pinned TRAIN source people are permitted')
+    root = checked_root(root, expected_uuid=UUID, required_bytes=1024**3)
+    destination = safe_path(root, f'integrated-v1/anatomy/TopCoW-{subject}/{version}')
+    if destination.exists():
+        raise FileExistsError(f'Immutable output exists: {destination}')
+    import nibabel as nib
+    started = time.monotonic()
+    prior = safe_path(root, f'integrated-v1/anatomy/TopCoW-{subject}/{prior_version}')
+    pilot = safe_path(root, model_pilot)
+    receipt_path = safe_path(root, f'catalog/topbrain/{subject}-selective-extraction.json')
+    receipt = json.loads(receipt_path.read_text())
+    if receipt['family']['family_id'] != f'TopCoW:{subject}' or receipt['family']['role'] != 'TRAIN':
+        raise ValueError('Pinned TRAIN source identity required')
+    entries = [next(e for e in receipt['files'] if text in e['source_member'])
+               for text in ('/imagesTr_topbrain/topcow_ct_', '/labelsTr_topbrain_v1_ct/')]
+    source_images = []
+    for entry in entries:
+        path = safe_path(root, entry['path'])
+        if sha256_file(path) != entry['sha256']:
+            raise ValueError('Acquired source hash mismatch')
+        source_images.append(nib.load(path))
+    image, annotation = source_images
+    affine = image.affine
+    if (image.header.get_xyzt_units()[0] != 'mm' or annotation.shape != image.shape
+            or not np.array_equal(annotation.affine, affine)
+            or not np.allclose(affine[:3, :3], np.diag(np.diag(affine[:3, :3])), atol=1e-5)):
+        raise ValueError('Exact orthogonal native image/annotation grid required; no resampling')
+    prior_report_path = prior/'provenance.json'
+    prior_report = json.loads(prior_report_path.read_text())
+    if (prior_report['family_id'] != f'TopCoW:{subject}'
+            or [e['sha256'] for e in prior_report['sources']] != [e['sha256'] for e in entries]):
+        raise ValueError('Prior proposal must bind the same acquired sources')
+    method_path, result_path = pilot/'prospective-method.json', pilot/'result.json'
+    method, result = json.loads(method_path.read_text()), json.loads(result_path.read_text())
+    if (method['subject'] != subject or method['role'] != 'TRAIN'
+            or method['source']['sha256'] != entries[0]['sha256']
+            or method['source']['path'] != entries[0]['path']
+            or result['status'] != 'succeeded_pending_independent_review'
+            or not result.get('versions') or not method.get('weights')):
+        raise ValueError('Successful cached model must bind this exact TRAIN source')
+    for weight in method['weights']:
+        if sha256_file(safe_path(root, weight['path'])) != weight['sha256']:
+            raise ValueError('Cached model weight hash mismatch')
+    inputs = {}
+
+    def read_mask(name, path, digest):
+        if sha256_file(path) != digest:
+            raise ValueError('Estimate input hash mismatch: '+name)
+        obj = nib.load(path)
+        if obj.shape != image.shape or not np.array_equal(obj.affine, affine):
+            raise ValueError('Exact estimate native grid required: '+name)
+        data = np.asanyarray(obj.dataobj)
+        if not np.isfinite(data).all() or not np.isin(data, [0, 1]).all():
+            raise ValueError('Finite binary estimate required: '+name)
+        inputs[name] = {'path':str(path.relative_to(root)), 'sha256':digest}
+        return data.astype(bool)
+
+    old = {}
+    for name in ('brain_estimate', 'observed_skull', 'enclosed_coverage', 'tumor_placement_support'):
+        row = prior_report['outputs'][name]
+        path = safe_path(root, row['path'])
+        if path != prior/(name+'.nii.gz'):
+            raise ValueError('Prior output path does not belong to the bound proposal')
+        old[name] = read_mask('prior_'+name, path, row['sha256'])
+    models = {}
+    for name in ('brain', 'skull'):
+        path = pilot/(name+'_mask.nii.gz')
+        rows = [row for row in result['outputs'] if row['path'] == str(path.relative_to(root))]
+        if len(rows) != 1:
+            raise ValueError('Model result must bind its exact exported masks')
+        models[name] = read_mask('model_'+name, path, rows[0]['sha256'])
+    spacing = np.linalg.norm(affine[:3, :3], axis=0)
+    ct, vessels = np.asarray(image.dataobj, np.float32), np.asanyarray(annotation.dataobj)
+    proposals = additive_brain_proposal(ct, vessels, spacing, old['brain_estimate'],
+                                        old['observed_skull'], models['brain'])
+    proposals['enclosed_coverage'] = old['enclosed_coverage']
+    checked_root(root, expected_uuid=UUID, required_bytes=ct.nbytes)
+    destination.mkdir(parents=True)
+    outputs = {}
+    for name, data in proposals.items():
+        path = destination/(name+'.nii.gz')
+        if name in ('observed_skull', 'enclosed_coverage'):
+            shutil.copyfile(prior/(name+'.nii.gz'), path)
+            if sha256_file(path) != prior_report['outputs'][name]['sha256']:
+                raise ValueError('Unchanged prior mask bytes were not preserved')
+        else:
+            header = image.header.copy(); header.set_data_dtype(np.uint8)
+            nib.save(nib.Nifti1Image(data.astype(np.uint8), affine, header), path)
+        saved = nib.load(path)
+        if (saved.shape != image.shape or not np.array_equal(saved.affine, affine)
+                or not np.array_equal(np.asanyarray(saved.dataobj), data)):
+            raise ValueError('Output native grid/array changed')
+        outputs[name] = {'path':str(path.relative_to(root)), 'sha256':sha256_file(path),
+                         **metrics(data, affine, spacing)}
+    report = {'schema':'ressectionlab-additive-model-brain-proposal-v1',
+              'family_id':f'TopCoW:{subject}', 'role':'TRAIN', 'preparation_version':version,
+              'sources':entries, 'receipt_sha256':sha256_file(receipt_path),
+              'prior_proposal':{'path':str(prior_report_path.relative_to(root)), 'sha256':sha256_file(prior_report_path)},
+              'model_method':{'path':str(method_path.relative_to(root)), 'sha256':sha256_file(method_path)},
+              'model_result':{'path':str(result_path.relative_to(root)), 'sha256':sha256_file(result_path)},
+              'model_versions':result['versions'], 'model_weights':method['weights'], 'inputs':inputs,
+              'method':'brain=old_brain OR model_brain; skull and enclosed_coverage copied byteexact from prior; no modelskull mechanics',
+              'support_method':'union_brain AND originalCT10..90 AND supplied_vessel_distance>3mm AND union_brain_EDT>=4mm, exactly prior support thresholds',
+              'outputs':outputs, 'shape':list(image.shape), 'affine_ras':affine.tolist(),
+              'physical_bounds':physical_bounds(image.shape, affine), 'spacing_mm':spacing.tolist(),
+              'old_brain_retained_all':bool(np.all(proposals['brain_estimate'][old['brain_estimate']])),
+              'model_skull_mechanical':False, 'accepted':False, 'review_status':'pending_independent_proposal_review',
+              'task_domain_changed':False, 'native_exported':False, 'actions_executed':0,
+              'brain_semantics':'Coarse estimated observed brain/intracranial envelope including possible CSF; not clinical parenchyma or pial boundary',
+              'coverage_semantics':'enclosed_coverage remains the original superior-only observation; it is not broadened to match the union brain and does not authorize new entry',
+              'limitations':['Model exclusions remain unknown, never newly free space; old brain protection retained',
+                             'Prior dense skull retained byteexact including all old obstacles; model skull is uncertainty/display only',
+                             'Crop faces and original reviewed task box unchanged; no approach or action approval',
+                             'HU-like CT, original DICOM calibration unverified; fast3mm model restoration is not native-resolution evidence',
+                             'Supplied vessels partial, no vessel-free truth; target unchanged only in existing native case'],
+              'script_sha256':sha256_file(__file__), 'elapsed_seconds':time.monotonic()-started}
+    (destination/'data_integrated_anatomy.py.snapshot').write_bytes(Path(__file__).read_bytes())
+    checked_root(root, expected_uuid=UUID)
+    atomic_json(destination/'provenance.json', report)
+    return report
 
 
 def prepare(root, subject, *, version='enclosure-v1'):
@@ -182,6 +337,16 @@ def prepare(root, subject, *, version='enclosure-v1'):
 
 if __name__ == '__main__':
     parser=argparse.ArgumentParser();parser.add_argument('--root',required=True);parser.add_argument('--subject',required=True);parser.add_argument('--version',default='enclosure-v1')
+    parser.add_argument('--mode',choices=['enclosure','additive-model-brain'],default='enclosure')
+    parser.add_argument('--model-pilot',help='Existing successful model pilot directory relative to DATA')
+    parser.add_argument('--prior-version',default='enclosure-v1')
     args=parser.parse_args()
     if not args.subject.isdigit() or len(args.subject)!=3: parser.error('Three digit source subject required')
-    print(json.dumps(prepare(Path(args.root),args.subject,version=args.version),indent=2))
+    if args.mode == 'additive-model-brain':
+        if not args.model_pilot: parser.error('--model-pilot required for additive-model-brain')
+        result=prepare_additive(Path(args.root),args.subject,version=args.version,
+                                model_pilot=args.model_pilot,prior_version=args.prior_version)
+    else:
+        if args.model_pilot: parser.error('--model-pilot only belongs to additive-model-brain')
+        result=prepare(Path(args.root),args.subject,version=args.version)
+    print(json.dumps(result,indent=2))

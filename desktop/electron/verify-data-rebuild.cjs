@@ -135,11 +135,11 @@ app.on('browser-window-created',(_event,window)=>{
             assert.equal(before.position,Number(process.env.DATA_REBUILD_EXPECT_REPLAY_ACTIONS));
             report.physicalReplay={stateId:before.view.stateId,position:before.position,metrics:before.view.metrics};
             report.checks.push('Actual desktop verifies the exact saved physical action prefix and metrics');
-            if(process.env.DATA_REBUILD_REQUIRE_GPU_STATE==='1'){
-              await wait(`(()=>{const p=window.__dataRebuildFrames,s=${JSON.stringify(process.env.DATA_REBUILD_EXPECT_STATE_ID)},v=p?.publications.findLast(v=>v.surgicalStateId===s);return document.querySelector('.surgical-panel')?.dataset.stateId===s&&!!v&&p.gpu.some(g=>g.serial===v.frameSerial&&g.surgicalStateId===s&&g.sourceCaseHash===v.sourceCaseHash&&g.completed&&g.at<=v.at)})()`);
-              report.physicalReplayGpu=await js(`(()=>{const p=window.__dataRebuildFrames,v=p.publications.findLast(v=>v.surgicalStateId===${JSON.stringify(process.env.DATA_REBUILD_EXPECT_STATE_ID)});return{publication:v,gpu:p.gpu.findLast(g=>g.serial===v.frameSerial&&g.surgicalStateId===v.surgicalStateId&&g.completed)}})()`);
-              report.checks.push('Accepted physical state is bound to its actual completed GPU frame');
-            }
+          }
+          if(process.env.DATA_REBUILD_REQUIRE_GPU_STATE==='1'){
+            await wait(`(()=>{const p=window.__dataRebuildFrames,s=${JSON.stringify(before.view.stateId)},v=p?.publications.findLast(v=>v.surgicalStateId===s);return document.querySelector('.surgical-panel')?.dataset.stateId===s&&!!v&&p.gpu.some(g=>g.serial===v.frameSerial&&g.surgicalStateId===s&&g.sourceCaseHash===v.sourceCaseHash&&g.completed&&g.at<=v.at)})()`);
+            report.physicalReplayGpu=await js(`(()=>{const p=window.__dataRebuildFrames,v=p.publications.findLast(v=>v.surgicalStateId===${JSON.stringify(before.view.stateId)});return{publication:v,gpu:p.gpu.findLast(g=>g.serial===v.frameSerial&&g.surgicalStateId===v.surgicalStateId&&g.completed)}})()`);
+            report.checks.push('Accepted physical state is bound to its actual completed GPU frame');
           }
           const denied=await js(`window.resectionApi.surgicalRehearsal({caseHash:${JSON.stringify(caseHash)},command:'preview',expectedStateId:${JSON.stringify(before.view.stateId)},action:{slot:'left',operation:'place',duration:.1,pose:{position:[10000,10000,10000],quaternion:[0,0,0,1]}}})`);
           const after=await js(`window.resectionApi.surgicalRehearsal({caseHash:${JSON.stringify(caseHash)},command:'inspect'})`);
