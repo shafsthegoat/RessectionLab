@@ -408,13 +408,21 @@ def dispatch(session, operation, args, request, progress):
     if 'planarBladeManeuverV1' in engine.scene.properties and command in ('plan', 'fullCase', 'recoverExit', 'attachProtection', 'generateApproaches', 'previewApproach', 'applyApproach', 'generateStrategies', 'previewStrategy', 'applyStrategy', 'analyzeStrategySensitivity',
         'suggestPreparation','generatePreparations','previewPreparation','applyPreparation'):
         raise ValueError('PLANAR_MANEUVER_ONLY: this opt-in scene admits only the declared blade actions and supported replay')
+    from .surgical_task_domain import reviewed_domain, action_rejection, BRIDGE_COMMANDS
+    task_domain = reviewed_domain(engine.scene)
+    if task_domain is not None and command not in BRIDGE_COMMANDS:
+        raise BridgeError('REVIEWED_TASK_DOMAIN_COMMAND_UNSUPPORTED',
+            'This reviewed task box admits manual checked actions and read-only replay; autonomous preparation/planning is not admitted.')
     outcome = None
     verified_display_state_id = None
     unchanged_tool = False
     approach_preview = None
     preparation_suggestion = None
     if command == 'preview':
-        result = {**engine.preview(args['action'], check=request.check, include_history=not bool(record.get('fullCase'))), 'caseHash': identity}
+        refusal = action_rejection(engine, args['action'], domain=task_domain, check=request.check) if task_domain is not None else None
+        preview = ({**refusal, 'preview': True, 'view': engine.view(_state_id=refusal['stateId'], include_history=not bool(record.get('fullCase')))}
+                   if refusal is not None else engine.preview(args['action'], check=request.check, include_history=not bool(record.get('fullCase'))))
+        result = {**preview, 'caseHash': identity}
         _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Preview exceeds the display budget')
         return result
     if command == 'seekFrame':
@@ -815,7 +823,8 @@ def dispatch(session, operation, args, request, progress):
     elif command == 'step':
         action = args['action']
         unchanged_tool = action.get('operation') == 'exchange' and engine.state['slots'].get(action.get('slot'), {}).get('instrument') == action.get('instrument')
-        outcome = {'status': 'accepted', 'reason': 'Instrument already selected; state unchanged.', 'completedFraction': 1., 'events': []} if unchanged_tool else engine.step(action, check=request.check)
+        refusal = action_rejection(engine, action, domain=task_domain, check=request.check) if task_domain is not None else None
+        outcome = refusal if refusal is not None else ({'status': 'accepted', 'reason': 'Instrument already selected; state unchanged.', 'completedFraction': 1., 'events': []} if unchanged_tool else engine.step(action, check=request.check))
         if outcome['status'] != 'rejected' and not unchanged_tool:
             full = record['branches'][record['branchId']]
             planned_ids = {row['branchId'] for key in ('planning', 'sectorPlanning', 'stagedPlanning')

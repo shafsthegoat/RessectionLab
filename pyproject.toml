@@ -23,6 +23,7 @@ dependencies = [
 rl = ["gymnasium>=1,<2"]
 rl-training = ["gymnasium>=1,<2", "stable-baselines3==2.9.0"]
 anatomy = ["vtk==9.7.0", "SimpleITK>=2.5,<3", "pydicom>=3,<4", "psutil>=6,<8"]
+data-preparation = ["SimpleITK>=2.5,<3", "matplotlib>=3.10,<4"]
 dev = ["pytest>=8,<10", "pyinstaller>=6,<7"]
 diffusion = ["dipy>=1.12,<1.13", "SimpleITK>=2.5,<3"]
 brain-extraction = ["surfa==0.6.3", "xxhash==4.0.1"]

@@ -22,9 +22,9 @@ from resectionlab.workspace_bundle import load_workspace
 ACCEPTED={'accepted_for_stated_capabilities','accepted_with_explicit_limitations'}
 
 
-def publish(root=None,*,freeze=None):
+def publish(root=None,*,freeze=None,decision_relative='qc/independent/release-decisions-v1.json',inherit_relative=None):
     root=checked_root(root,required_bytes=10*1024**3)
-    decision_path=root/'qc/independent/release-decisions-v1.json';raw=decision_path.read_bytes()
+    decision_path=safe_path(root,decision_relative);raw=decision_path.read_bytes()
     decisions=json.loads(raw)
     if decisions.get('schema')!='ressectionlab-independent-release-decisions-v1' or not decisions.get('reviewer'):
         raise ValueError('Independent release decisions are required')
@@ -58,7 +58,28 @@ def publish(root=None,*,freeze=None):
             if (document.get('package_sha256')==row['sha256'] and document.get('package_path')==row['path']
                     and document.get('production_final_location_reopen')=='passed'):
                 previous[row['sha256']]={**row,'receipt':document}
-    rows=[];ids=set()
+    rows=[];ids=set();inherited=None
+    if inherit_relative is not None:
+        # New review authority applies only to additions. Preserve every old row,
+        # package and exact-byte acceptance receipt from the frozen base release.
+        base_path=safe_path(root,inherit_relative)
+        if base_path.parent!=root/'catalog/releases':raise ValueError('Inherit a frozen release')
+        base=json.loads(base_path.read_text())
+        if base.get('schema')!='ressectionlab-data-release-v1' or base.get('case_count')!=len(base.get('cases',[])):
+            raise ValueError('Invalid inherited release')
+        for row in base['cases']:
+            package=safe_path(root,row['path']);review=safe_path(root,row['review_path'])
+            if (row['case_id'] in ids or row['decision'] not in ACCEPTED
+                    or package.stat().st_size!=row['bytes'] or sha256_file(review)!=row['review_sha256']):
+                raise ValueError('Inherited acceptance changed')
+            receipt=json.loads(review.read_text())
+            if (receipt.get('package_sha256')!=row['sha256'] or receipt.get('package_path')!=row['path']
+                    or receipt.get('production_final_location_reopen')!='passed'):
+                raise ValueError('Inherited acceptance does not bind the package')
+            ids.add(row['case_id']);rows.append(row)
+        inherited={'path':str(base_path.relative_to(root)),'sha256':sha256_file(base_path),
+            'case_count':len(rows),'independent_review_snapshot':base.get('independent_review_snapshot'),
+            'validation':'Original rows and acceptance receipts preserved; package sizes checked; no new anatomical review claimed'}
     for decision in decisions['cases']:
         if decision['decision'] not in ACCEPTED:continue
         case_id=decision['case_id']
@@ -84,6 +105,9 @@ def publish(root=None,*,freeze=None):
         family=contract.get('family_id',contract.get('person_id'))
         if family!=decision.get('family_id') or contract.get('role')!=decision.get('role'):raise ValueError('Independent family/role binding differs')
         classification=contract.get('classification',contract.get('case_type','real_patient_partial'))
+        variant_count=contract.get('synthetic_variant_count',int(classification.startswith('synthetic')))
+        if type(variant_count) is not int or variant_count not in (0,1) or (variant_count and not classification.startswith('synthetic')):
+            raise ValueError('Invalid declared synthetic variant count')
         with ZipFile(publication_input) as archive:workspace=json.loads(archive.read('workspace.json'))
         inference_evidence=[inference_by_mask[row['sha256']] for row in workspace.get('originalFiles',[])
             if row.get('role')=='model-result' and row['sha256'] in inference_by_mask]
@@ -112,6 +136,7 @@ def publish(root=None,*,freeze=None):
         sidecar={'schema':'ressectionlab-case-acceptance-v1','case_id':case_id,'native_case_id':native_case_id,
             'package_path':str(destination.relative_to(root)),'package_sha256':decision['sha256'],
             'person_id':family,'family_id':family,'role':decision['role'],'classification':classification,
+            'synthetic_variant_count':variant_count,
             'source':contract.get('source'),'source_version':contract.get('source_version'),
             'license':contract.get('license',contract.get('source_license')),'exposure':contract.get('exposure'),
             'components':contract.get('components'),'observations':contract.get('observations',contract.get('source_files')),
@@ -129,14 +154,16 @@ def publish(root=None,*,freeze=None):
         rows.append({'case_id':case_id,'native_case_id':native_case_id,'path':str(destination.relative_to(root)),
             'sha256':decision['sha256'],'bytes':destination.stat().st_size,'person_id':family,'role':decision['role'],
             'classification':classification,'source':contract.get('source','External'),
+            'synthetic_variant_count':variant_count,
             'decision':decision['decision'],'capabilities':decision['capabilities'],'limitations':decision['limitations'],
             'missing_anatomy':missing,'review_path':str(sidecar_path.relative_to(root)),'review_sha256':sha256_file(sidecar_path)})
         print(json.dumps({'published_case':case_id,'production_reopen_receipt_reused':bool(reopen_evidence),'completed':len(rows)}),flush=True)
     document={'schema':'ressectionlab-data-release-v1','release_id':freeze or 'development-reviewed-preview',
         'built_utc':datetime.now(timezone.utc).isoformat(),'independent_review_snapshot':str(snapshot.relative_to(root)),
         'clinical_validation':False,'cases':rows,'case_count':len(rows),'person_family_count':len({row['person_id'] for row in rows}),
-        'synthetic_variant_count':sum(row['classification'].startswith('synthetic') for row in rows),
+        'synthetic_variant_count':sum(row.get('synthetic_variant_count',int(row['classification'].startswith('synthetic'))) for row in rows),
         'exact_acquired_tumor_MRI_skull_CT_dedicated_angiography_subjects':0}
+    if inherited is not None:document['inherited_release']=inherited
     if freeze:
         if not re.fullmatch(r'[A-Za-z0-9_.-]{1,100}',freeze):raise ValueError('Safe release name required')
         releases=root/'catalog/releases';releases.mkdir(exist_ok=True);frozen=releases/(freeze+'.json')
@@ -148,5 +175,8 @@ def publish(root=None,*,freeze=None):
 
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--freeze');args=parser.parse_args()
-    publish(freeze=args.freeze)
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--freeze')
+    parser.add_argument('--decisions',default='qc/independent/release-decisions-v1.json',help='Independent decision file relative to guarded data root')
+    parser.add_argument('--inherit',help='Frozen base release relative to guarded data root; its rows remain unchanged')
+    args=parser.parse_args()
+    publish(freeze=args.freeze,decision_relative=args.decisions,inherit_relative=args.inherit)

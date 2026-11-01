@@ -86,8 +86,9 @@ def worker(request):
             memory["driver_bytes_max_sampled"] = max(memory["driver_bytes_max_sampled"], torch.mps.driver_allocated_memory())
 
     if model_id == "totalsegmentator-skull":
-        os.environ["TOTALSEG_HOME_DIR"] = str(ROOT / "data/models/poc-totalsegmentator/config")
-        os.environ["TOTALSEG_WEIGHTS_PATH"] = str(ROOT / "data/models/poc-totalsegmentator/weights")
+        model_root = Path(os.environ.get("RESSECTIONLAB_MODEL_ROOT") or ROOT / "data/models")
+        os.environ["TOTALSEG_HOME_DIR"] = str(model_root / "poc-totalsegmentator/config")
+        os.environ["TOTALSEG_WEIGHTS_PATH"] = str(model_root / "poc-totalsegmentator/weights")
         from totalsegmentator.config import setup_totalseg, set_config_key
         setup_totalseg()
         set_config_key("send_usage_stats", False)

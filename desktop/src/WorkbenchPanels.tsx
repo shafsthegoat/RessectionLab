@@ -64,12 +64,12 @@ export function WorkbenchDataPanel(props:{source:CasePayload;displayed:CasePaylo
       {props.selectedId?<p className="muted-note">Select the reference scan to blend a registered modality.</p>:registered.length?<>
         <label>Blend with<select aria-label="Blend registered modality" value={props.settings.fusion?.seriesId??''}
           onChange={e=>props.onSettingsChange({...props.settings,fusion:{seriesId:e.target.value||null,opacity:props.settings.fusion?.opacity??.4}})}>
-          <option value="">None</option>{registered.map(s=><option key={s.descriptor.seriesId} value={s.descriptor.seriesId}>{s.descriptor.modality} · source registered</option>)}
+          <option value="">None</option>{registered.map(s=><option key={s.descriptor.seriesId} value={s.descriptor.seriesId}>{s.descriptor.modality} · {s.descriptor.registration.status==='verified'?'reviewed derived alignment':'source registered'}</option>)}
         </select></label>
         {!!props.settings.fusion?.seriesId&&<label>Blend {Math.round(props.settings.fusion.opacity*100)}%
           <input type="range" aria-label="Registered blend opacity" min="0" max="1" step="0.01" value={props.settings.fusion.opacity}
             onChange={e=>props.onSettingsChange({...props.settings,fusion:{seriesId:props.settings.fusion!.seriesId,opacity:Number(e.target.value)}})}/></label>}
-        <p className="muted-note">Source dataset registration. Independent anatomical review pending.</p>
+        <p className="muted-note">{registered.some(s=>s.descriptor.registration.status==='verified')?'Derived alignment reviewed for its stated research scope. Original observations and alignment uncertainty remain in the evidence record.':'Source dataset registration. Independent anatomical review pending.'}</p>
       </>:<p className="muted-note">No registered second modality. Unverified images remain in their own frames.</p>}
     </section>
     <section className="case-section"><h2>Source record</h2>

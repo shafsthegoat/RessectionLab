@@ -682,7 +682,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             <details><summary>Oblique & box cuts</summary><label>Angle · degrees<input aria-label="Oblique angle" type="number" min="-180" max="180" value={obliqueAngle} onChange={e=>setObliqueAngle(+e.target.value)}/></label><button onClick={()=>{const normal:Point3=[Math.sin(obliqueAngle*Math.PI/180),0,Math.cos(obliqueAngle*Math.PI/180)];changeSettings({...settings,obliqueClip:{enabled:true,normal,offset:-normal.reduce((sum,n,i)=>sum+n*currentCursor[i],0)}})}}>Cut at cursor</button><button onClick={()=>changeSettings({...settings,clipBox:{enabled:true,min:currentCursor.map(n=>n-50) as Point3,max:currentCursor.map(n=>n+50) as Point3}})}>100 mm box at cursor</button><button onClick={()=>changeSettings({...settings,clipBox:undefined,obliqueClip:undefined})}>Clear extra cuts</button></details>
           </>}
         </div>}
-        {props.registeredFusion&&!fusionError&&<div className="rl-fusion-readout" role="status">Fused source images · {signalName} + {props.registeredFusion.label}<span>{props.registeredFusion.registration.status==='source-provided'?'Source-provided registration':'Verified registration'} · {Math.round((settings.fusion?.opacity??.5)*100)}% blend</span></div>}
+        {props.registeredFusion&&!fusionError&&<div className="rl-fusion-readout" role="status">Fused source images · {signalName} + {props.registeredFusion.label}<span>{props.registeredFusion.registration.status==='source-provided'?'Source-provided registration':'Reviewed alignment'} · {Math.round((settings.fusion?.opacity??.5)*100)}% blend</span></div>}
         {expanded && (
           <span className="rl-viewer-expanded-note">
             {TITLES[expanded]} {signalName} expanded
