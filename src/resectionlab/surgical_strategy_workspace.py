@@ -97,7 +97,7 @@ def _validate_workspace(scene, record, case_hash, *, check, restore):
     if type(history) is not list or len(history) > 16 or type(applications) is not list or len(applications) > 64:
         raise ValueError('Two-tool study history exceeds its bounded schema')
     if type(sensitivities) is not list or len(sensitivities) > 8:
-        raise ValueError('Execution sensitivity study history exceeds its bounded schema')
+        raise ValueError('Strategy sensitivity study history exceeds its bounded schema')
     if not history and not applications and not sensitivities: return history
     reports = {}
     for revision, item in enumerate(history, 1):
@@ -145,9 +145,9 @@ def _validate_workspace(scene, record, case_hash, *, check, restore):
                 or item['schema'] != 'resectionlab.strategy-sensitivity-workspace.v1'
                 or type(item['revision']) is not int or item['revision'] != revision
                 or type(item['comparisonRevision']) is not int):
-            raise ValueError('Execution sensitivity workspace schema differs')
+            raise ValueError('Strategy sensitivity workspace schema differs')
         comparison = reports.get(item['comparisonRevision'])
-        if comparison is None: raise ValueError('Execution sensitivity comparison is missing')
+        if comparison is None: raise ValueError('Strategy sensitivity comparison is missing')
         key = (scene.identity, semantic_digest(comparison), semantic_digest(item))
         if key not in _VALIDATED:
             from .surgical_strategy_sensitivity import validate_sensitivity
@@ -187,9 +187,9 @@ def current_report(engine, record, case_hash, seal, *, check=lambda: None):
 
 def install_sensitivity(engine, record, case_hash, comparison, study, *, check=lambda: None):
     current = current_report(engine, record, case_hash, comparison['report']['reportSeal'], check=check)
-    if current != comparison: raise ValueError('Execution sensitivity source comparison changed')
+    if current != comparison: raise ValueError('Strategy sensitivity source comparison changed')
     history = record.get('strategySensitivityStudies', [])
-    if len(history) >= 8: raise ValueError('Execution sensitivity study limit reached; save this study')
+    if len(history) >= 8: raise ValueError('Strategy sensitivity study limit reached; save this study')
     from .surgical_strategy_sensitivity import validate_sensitivity
     validate_sensitivity(engine, comparison['report'], study, check=check); check()
     item = _seal({'schema': 'resectionlab.strategy-sensitivity-workspace.v1',
@@ -213,12 +213,16 @@ def planning_view(engine, record, case_hash, *, check=lambda: None):
     history = validate_workspace(engine.scene, record, case_hash, check=check)
     if not history: return None
     item = history[-1]; report = item['report']
-    sensitivity = next((s for s in reversed(record.get('strategySensitivityStudies', []))
-        if s['comparisonRevision'] == item['revision']), None)
+    studies = [s for s in record.get('strategySensitivityStudies', []) if s['comparisonRevision'] == item['revision']]
+    sensitivity = next((s for s in reversed(studies)
+        if s['study']['schema'] == 'resectionlab.two-tool-execution-sensitivity.v1'), None)
+    anatomical = next((s for s in reversed(studies)
+        if s['study']['schema'] == 'resectionlab.two-tool-context-label-sensitivity.v1'), None)
     return {**copy.deepcopy(report), 'revision': item['revision'], 'sourceBranchId': item['sourceBranchId'],
         'sourcePosition': report['prefixActions'], 'current': engine.state_id == report['startStateId'] and semantic_digest(engine.actions) == report['baselineActionHash'],
         'applications': [copy.deepcopy(a) for a in record.get('strategyApplications', [])],
-        **({'executionSensitivity': copy.deepcopy(sensitivity)} if sensitivity else {})}
+        **({'executionSensitivity': copy.deepcopy(sensitivity)} if sensitivity else {}),
+        **({'anatomicalSensitivity': copy.deepcopy(anatomical)} if anatomical else {})}
 
 
 def protected_branches(record):

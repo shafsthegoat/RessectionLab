@@ -160,7 +160,7 @@ def dispatch(session, operation, args, request, progress):
     if args.get('command') == 'seekPrefix' and type(args.get('position')) is int and args['position'] == 0:
         argument_keys.add('cacheOnly')
     if args.get('command') in {'previewStrategy','previewPreparation','applyPreparation'}: argument_keys.add('phase')
-    if args.get('command') == 'analyzeStrategySensitivity': argument_keys.update({'offsetMm', 'expectedPlanSeal'})
+    if args.get('command') == 'analyzeStrategySensitivity': argument_keys.update({'offsetMm', 'contextVoxelShift', 'expectedPlanSeal'})
     _keys(args, argument_keys)
     if args.get('command') == 'recoverExit':
         _keys(args, {'caseHash', 'command', 'expectedStateId'})
@@ -171,7 +171,8 @@ def dispatch(session, operation, args, request, progress):
     if args.get('command')=='suggestPreparation':
         _keys(args,{'caseHash','command','expectedStateId','acknowledgeResearchUnknowns'})
     if args.get('command') == 'analyzeStrategySensitivity':
-        _keys(args, {'caseHash', 'command', 'expectedStateId', 'offsetMm', 'expectedPlanSeal', 'acknowledgeResearchUnknowns'})
+        control = 'contextVoxelShift' if 'contextVoxelShift' in args else 'offsetMm'
+        _keys(args, {'caseHash', 'command', 'expectedStateId', control, 'expectedPlanSeal', 'acknowledgeResearchUnknowns'})
     if args.get('command') in {'previewApproach', 'applyApproach', 'previewStrategy', 'applyStrategy'}:
         _keys(args, {'caseHash', 'command', 'expectedStateId', 'candidateId', 'expectedPlanSeal', *({'phase'} if args.get('command') == 'previewStrategy' else set())})
     if args.get('command') in {'previewPreparation','applyPreparation'}:
@@ -506,11 +507,16 @@ def dispatch(session, operation, args, request, progress):
         install_report(engine, record, identity, generated, check=request.check)
     elif command == 'analyzeStrategySensitivity':
         if args.get('acknowledgeResearchUnknowns') is not True:
-            raise ValueError('Acknowledge the uncalibrated execution stress and missing anatomy')
-        from .surgical_strategy_sensitivity import generate_sensitivity
+            raise ValueError('Acknowledge the uncalibrated sensitivity stress and missing anatomy')
+        if 'contextVoxelShift' in args:
+            from .surgical_anatomical_sensitivity import generate_sensitivity
+            controls = {'contextVoxelShift': args['contextVoxelShift']}
+        else:
+            from .surgical_strategy_sensitivity import generate_sensitivity
+            controls = {'offsetMm': args.get('offsetMm')}
         from .surgical_strategy_workspace import current_report, install_sensitivity
         item = current_report(engine, record, identity, args.get('expectedPlanSeal'), check=request.check)
-        study = generate_sensitivity(engine, item['report'], {'offsetMm': args.get('offsetMm')}, check=request.check, progress=progress)
+        study = generate_sensitivity(engine, item['report'], controls, check=request.check, progress=progress)
         install_sensitivity(engine, record, identity, item, study, check=request.check)
     elif command in {'previewStrategy', 'applyStrategy'}:
         from .surgical_two_tool import materialize

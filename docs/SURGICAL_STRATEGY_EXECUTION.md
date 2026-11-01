@@ -971,6 +971,59 @@ were CPU-acknowledgment observations; future timings must state this stronger GP
 boundary. Detailed commands, pixel hashes, failed verifier assumptions and the
 corrected warning are in `testcases/cold-mri-display-v1/README.md`.
 
+## Implemented: source-grid context-label sensitivity
+
+The desktop now compares the same complete CUSA/Frazier programs under declared
+context-label translations on the original voxel grid. Integer source-axis
+shifts map destination cell `i` to source cell `i-k`, with RAS displacement
+`A[:3,:3] @ k`; no interpolation, source edits or relaxed nominal affine/target
+guards. The source mask and provenance remain bound to the comparison. This
+changes context membership on fixed tissue, target and tool commands, **not**
+physical registration, brain shift or calibrated patient uncertainty. Software
+bounds are 0–2 voxels, at most 2 mm, and at most 5 mm expanded context margin.
+
+Unknown shifted-in coverage disqualifies encountered or worked destination cells.
+Any new CUSA work in hypothetical context also disqualifies a program, including
+partial work and cells subsequently removed. Work volume counts whole cells
+receiving any additional capacity; it is not allocated capacity or injury. Source
+context shifted out of field and historical removal remain explicit. The new
+versioned study coexists with old execution-offset records; public choices seal
+before native replay, and cancellation precedes validation-cache publication.
+
+Six frozen evaluations reuse previously exposed 0007 comparisons 4/5/9 and the
+0005 no-access control: **94 program/scenario outcomes independently pass**.
+For comparison 4 (3 mm margin, 2 mm³ limit), nominal STOP changes to long under
+three negative source-axis shifts; fixed-margin and all-scenario choices stay
+STOP. For permissive comparison 9, nominal/fixed margin select short; all tested
+1/2-voxel shifts select STOP because `grid-2+` leaves 153/305 mm³ of encountered
+grid-cell volume without label support. This is a source-edge coverage refusal,
+including image-background cells, not evidence of tissue injury or an algorithm
+advantage. 0005 remains STOP. These are development stress results, not held-out
+patient validation, supported error bounds or robust route-search comparisons.
+
+Hidden actual desktop runs on 0007/0005 and the missing-target control pass;
+fresh 0007 reopening restores the same study and links the coverage refusal to
+RAS `[-80,125,0]`. All original arrays, nine comparisons, two applications, two
+execution studies, branches and admissions remain exact; only two new studies
+are added. The complete cold record is unchanged. 150 backend regressions plus
+two final hazard/cancellation controls pass; 1268 shared-checkout desktop tests
+and the build pass (five desktop tests belong to concurrent uncommitted data
+work). Three final controls also pass against staged bridge/physics sources,
+excluding concurrent task-domain edits. Backend 0007 assessments observe
+12.818/15.841 s for zero/one voxel;
+cold inspect/reopen observe 144.026/132.855 s under concurrent work. No speedup
+claim. Exact commands, frozen declarations, independent proofs, source hashes
+and preserved development failures are in `testcases/anatomical-sensitivity-v1/README.md`.
+
+[Frisken et al.](https://doi.org/10.1109/TMRB.2021.3122357) already model
+neurosurgical path uncertainty. [Zwanenburg et al.](https://www.nature.com/articles/s41598-018-36938-4)
+evaluate perturbation robustness against test–retest radiomics; their evidence
+does not calibrate this endpoint. [Rohlfing](https://pubmed.ncbi.nlm.nih.gov/21827972/)
+shows why image/overlap agreement alone cannot certify registration accuracy.
+No novelty or empirical uncertainty claim follows from these stress controls.
+Compatible reviewed landmark/repeated-annotation errors and negative coverage
+evidence are still needed before qualifying an anatomical uncertainty model.
+
 ## Remaining milestones and next dependency
 
 This is a bounded acquired-anatomy operating task, not the complete strategy
@@ -985,8 +1038,10 @@ experiment is now an explicit negative result: the current preparation family do
 not solve two-tool operation on 0004. Common surgeon controls now connect
 preparation alternatives and their complete-plan consequences; paired lanes have
 a complete generated software control and an explicit acquired negative. Next
-qualify the limiting source/entry geometry and anatomy/execution perturbations
-against matched baselines. Source pixels and GPU-qualified display admission are now verified separately
+qualify the limiting source/entry geometry and anatomical/execution error models
+against matched route-search baselines. Finite source-label stress now exposes
+decision changes and coverage refusals; calibrated uncertainty remains open.
+Source pixels and GPU-qualified display admission are now verified separately
 from native array/study preservation. Expand the
 patient distribution without touching
 reserved evaluations. Older lattice resolution dependence and

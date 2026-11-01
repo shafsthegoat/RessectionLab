@@ -47,6 +47,7 @@ test('two-tool task forwards explicit controls, phase preview and sealed install
   for(const args of [
     {caseHash:'case',command:'generateStrategies',expectedStateId:'state',constraints,acknowledgeResearchUnknowns:true},
     {caseHash:'case',command:'analyzeStrategySensitivity',expectedStateId:'state',expectedPlanSeal:'seal',offsetMm:1,acknowledgeResearchUnknowns:true},
+    {caseHash:'case',command:'analyzeStrategySensitivity',expectedStateId:'state',expectedPlanSeal:'seal',contextVoxelShift:1,acknowledgeResearchUnknowns:true},
     {caseHash:'case',command:'previewStrategy',expectedStateId:'state',expectedPlanSeal:'seal',candidateId:'long',phase:'reassess'},
     {caseHash:'case',command:'applyStrategy',expectedStateId:'state',expectedPlanSeal:'seal',candidateId:'long'},
   ]){await f.invoke(args);assert.deepEqual(JSON.parse(JSON.stringify(f.calls.at(-1)[1])),args);}

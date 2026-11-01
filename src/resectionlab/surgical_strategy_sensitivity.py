@@ -260,6 +260,9 @@ def generate_sensitivity(engine, report, raw, *, check=lambda: None, progress=la
 
 
 def validate_sensitivity(engine, report, study, *, check=lambda: None):
+    if type(study) is dict and study.get('schema') == 'resectionlab.two-tool-context-label-sensitivity.v1':
+        from .surgical_anatomical_sensitivity import validate_sensitivity as validate_anatomical
+        return validate_anatomical(engine, report, study, check=check)
     check()
     report = thaw_json(freeze_json(report)); study = thaw_json(freeze_json(study))
     _require(type(study) is dict and set(study) == {'schema', 'comparisonReportSeal', 'contextBindingSeal', 'assessment', 'nativeReplayVerified', 'studySeal'}, 'study schema differs')
