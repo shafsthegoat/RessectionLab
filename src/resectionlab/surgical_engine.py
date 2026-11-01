@@ -98,6 +98,45 @@ _removed_caller_globals = _try_removed_native.__globals__
 _removed_caller_builtins = _try_removed_native.__builtins__
 
 
+_removed_proof_tuple = ().__class__
+_removed_proof_all = _removed_stock_bindings[2][1]
+_removed_proof_map = _removed_stock_bindings[3][1]
+
+
+def _removed_snapshot_dispatch(value):
+    """Qualify only the dispatch skipped by reusing an integer snapshot.
+
+    The native-selection call still runs first in occupancy. Use intrinsic
+    container lengths here: a replaced builtin len was never part of the
+    original predicate. Bound retained proof references to 32,768 source IDs.
+    """
+    if (not _removed_captures_genuine or _removed_stock_type(value) is not _removed_stock_list or
+            _removed_stock_len(value) > 32768 or
+            _removed_stock_type(_removed_caller_globals) is not _removed_stock_dict or
+            _removed_stock_type(_removed_caller_builtins) is not _removed_stock_dict):
+        return False
+    for name, original in _removed_stock_bindings:
+        if (_removed_caller_globals.get(name, original) is not original or
+                _removed_caller_builtins.get(name) is not original):
+            return False
+    return (_removed_caller_globals.get('_strict_int_is') is _removed_stock_is and
+            _removed_caller_globals.get('_strict_int_repeat') is _removed_stock_repeat and
+            _removed_caller_globals.get('tuple', _removed_proof_tuple) is _removed_proof_tuple and
+            _removed_caller_builtins.get('tuple') is _removed_proof_tuple)
+
+
+def _reuse_removed_snapshot(value, snapshot):
+    # A strong reference to each proved, immutable exact int prevents object-ID
+    # reuse. Equality would admit bools, NumPy scalars and arbitrary hooks.
+    # Called only after the caller dispatch check, before the legacy predicate.
+    if (_removed_stock_type(snapshot) is _removed_proof_tuple and
+            _removed_stock_type(value) is _removed_stock_list and
+            _removed_stock_len(value) == _removed_proof_tuple.__len__(snapshot) and
+            _removed_proof_all(_removed_proof_map(_removed_stock_is, value, snapshot))):
+        return snapshot
+    return None
+
+
 def _owned_digest(value):
     """Canonical hash of synchronously owned engine JSON, without detaching it.
 
@@ -321,6 +360,7 @@ class SurgicalEngine:
         self.actions = []
         self.history = []
         self._occupancy_cache = None
+        self._removed_ids_proof = None
         from .surgical_effects import initialize_effect_state
         initialize_effect_state(self)
 
@@ -373,14 +413,26 @@ class SurgicalEngine:
     def occupancy(self):
         changes = {'holds': self.state['holds'], **({'detachedFragments': self.state['detachedFragments']} if 'detachedFragments' in self.state else {}), **({'deformation': self.state['deformation']} if 'deformation' in self.state else {})}
         removed_ids = self.state['removed']
+        proved = self._removed_ids_proof
+        self._removed_ids_proof = None
+        removed_snapshot = None
+        removed_dispatch = False
         # Built-in integer sequences have the same exact ordered identity in
         # tuples and canonical JSON. Avoid freezing/encoding thousands of IDs
         # at every occupancy lookup; snapshot the contents to detect in-place
         # edits. Other representations retain the complete legacy JSON key.
         if isinstance(removed_ids, list) and (
                 (_try_removed_native(removed_ids) is True or
+                 ((removed_dispatch := _removed_snapshot_dispatch(removed_ids)) and
+                  (removed_snapshot := _reuse_removed_snapshot(removed_ids, proved)) is not None) or
                  all(map(_strict_int_is, map(type, removed_ids), _strict_int_repeat(int))))
                 if type(removed_ids) is list else all(type(cell) is int for cell in removed_ids)):
+            if removed_dispatch:
+                # Capture immediately after the genuine predicate, before a
+                # custom changes/digest fallback could alter the public list.
+                # The key below still constructs its tuple at the legacy point.
+                self._removed_ids_proof = (removed_snapshot if removed_snapshot is not None
+                                          else _removed_proof_tuple(removed_ids))
             displacement = _displacement_snapshot(changes['deformation']) if 'deformation' in changes else None
             if displacement is None:
                 change_key = _owned_digest(changes)

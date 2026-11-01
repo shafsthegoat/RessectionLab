@@ -1059,8 +1059,42 @@ isolation, optional transition-count parity and explicit RSS scope. Exact comman
 all six timing rows, rejected source/tests, review failures and an in-memory
 reproduction wrapper are preserved in
 `testcases/cold-label-proof-performance-v1/README.md`. No runs were discarded or
-replaced. Next investigate the larger repeated removed-cell occupancy/type-proof
-cost while retaining mutable-list semantics and independent source checks.
+replaced. This negative selected repeated removed-cell occupancy/type qualification
+as the next measured target, while retaining mutable-list and source checks.
+
+## Implemented: bounded reuse of exact-integer occupancy qualification
+
+Occupancy now retains one verified tuple of immutable integer objects per engine.
+Every reuse checks the exact list type, caller builtin/helper bindings, intrinsic
+length and each element's object identity. In-place edits, equal-valued noninteger
+replacements, custom dispatch and list subclasses retain the original predicate
+and fallback behavior. Native-selection calls still run in their original order.
+The occupancy key is constructed at its original point after changes validation,
+so callbacks can still alter the public list there. Holds, deformation, evidence,
+clock integration, physical transitions and saved schemas are unchanged.
+
+Three alternating fresh-process pairs against `dfe4a449` pass the predeclared
+retention gate: cold median **118.213 → 110.014 s (6.935% lower)**, with disjoint
+ranges **117.631–118.887 / 109.899–110.061 s**. Each arm preserves the entire
+native record/source and executes exactly 268 native steps, 480 public steps and
+39,413 microsteps. Warm medians are 0.149906 / 0.149490 s, with no simulation
+steps. Source loading/rendering are excluded; source admission remains timed.
+The benchmark loads frozen shared/numerical source snapshots and its captured
+recipe. Local monitoring counts original methods without replacing them or
+disabling native preview. Independent review corrected the exploratory harness
+before these final runs; exploratory results are kept separate.
+
+Retained proof is capped at 32,768 references (262,184 tuple bytes here), excluding
+referenced integers and allocator/RSS costs. Fresh-worker lifetime peak RSS
+medians are 702,758,912 / 707,018,752 bytes, including load and warm proof; these
+do not establish incremental proof memory. 358 broad regressions, 148 focused
+controls and 37 overlapping final controls pass. Hidden actual 0007/0005 reopening
+preserves all six source arrays and complete native records, including coverage
+and no-access STOP outcomes. Earlier test-assumption failures are retained.
+Exact commands, all rows, bounds and independent receipt checks are in
+`testcases/occupancy-snapshot-performance-v1/README.md`. This is a development
+workload gain; the small 0005 timing control showed no speed benefit. Patient
+uncertainty calibration and broader task/physical qualification remain open.
 
 ## Remaining milestones and next dependency
 
