@@ -54,6 +54,11 @@ app.on('browser-window-created',(_event,window)=>{
     const capture=async name=>{await ready();assert.equal(window.isVisible(),false);fs.writeFileSync(path.join(output,name+'.png'),(await window.webContents.capturePage(undefined,{stayHidden:true,stayAwake:true})).toPNG());};
     const set=async(label,value)=>{await js(`(()=>{const el=document.querySelector('[aria-label='+${JSON.stringify(JSON.stringify(label))}+']');if(!el)throw Error('Missing '+${JSON.stringify(label)});for(let p=el.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;Object.getOwnPropertyDescriptor(el.tagName==='SELECT'?HTMLSelectElement.prototype:HTMLInputElement.prototype,'value').set.call(el,${JSON.stringify(value)});el.dispatchEvent(new Event(el.tagName==='SELECT'?'change':'input',{bubbles:true}))})()`);await delay(100);};
     try{
+      if(process.env.DATA_REBUILD_REQUIRE_GPU_STATE==='1')await js(`(()=>{
+        const p=window.__dataRebuildFrames={gpu:[],publications:[]};
+        document.addEventListener('anatomy-gpu',e=>{p.gpu.push({...e.detail,at:performance.now()});if(p.gpu.length>64)p.gpu.shift()});
+        document.addEventListener('anatomy-surgical-display',e=>{p.publications.push({...e.detail,at:performance.now()});if(p.publications.length>32)p.publications.shift()});
+      })()`);
       if(process.env.DATA_REBUILD_EXPECT_FAILURE==='1'){
         await wait(`/Bundle must contain|INVALID_BUNDLE_MEMBERS|Reopened case differs|CASE_HASH_MISMATCH/.test(document.body.innerText)`);
         assert.equal(await js(`!!document.querySelector('.rl-viewer')?.dataset.sourceCaseHash`),false);
@@ -130,6 +135,11 @@ app.on('browser-window-created',(_event,window)=>{
             assert.equal(before.position,Number(process.env.DATA_REBUILD_EXPECT_REPLAY_ACTIONS));
             report.physicalReplay={stateId:before.view.stateId,position:before.position,metrics:before.view.metrics};
             report.checks.push('Actual desktop verifies the exact saved physical action prefix and metrics');
+            if(process.env.DATA_REBUILD_REQUIRE_GPU_STATE==='1'){
+              await wait(`(()=>{const p=window.__dataRebuildFrames,s=${JSON.stringify(process.env.DATA_REBUILD_EXPECT_STATE_ID)},v=p?.publications.findLast(v=>v.surgicalStateId===s);return document.querySelector('.surgical-panel')?.dataset.stateId===s&&!!v&&p.gpu.some(g=>g.serial===v.frameSerial&&g.surgicalStateId===s&&g.sourceCaseHash===v.sourceCaseHash&&g.completed&&g.at<=v.at)})()`);
+              report.physicalReplayGpu=await js(`(()=>{const p=window.__dataRebuildFrames,v=p.publications.findLast(v=>v.surgicalStateId===${JSON.stringify(process.env.DATA_REBUILD_EXPECT_STATE_ID)});return{publication:v,gpu:p.gpu.findLast(g=>g.serial===v.frameSerial&&g.surgicalStateId===v.surgicalStateId&&g.completed)}})()`);
+              report.checks.push('Accepted physical state is bound to its actual completed GPU frame');
+            }
           }
           const denied=await js(`window.resectionApi.surgicalRehearsal({caseHash:${JSON.stringify(caseHash)},command:'preview',expectedStateId:${JSON.stringify(before.view.stateId)},action:{slot:'left',operation:'place',duration:.1,pose:{position:[10000,10000,10000],quaternion:[0,0,0,1]}}})`);
           const after=await js(`window.resectionApi.surgicalRehearsal({caseHash:${JSON.stringify(caseHash)},command:'inspect'})`);
