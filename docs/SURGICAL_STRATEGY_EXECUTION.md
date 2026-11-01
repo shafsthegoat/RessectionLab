@@ -1024,6 +1024,44 @@ No novelty or empirical uncertainty claim follows from these stress controls.
 Compatible reviewed landmark/repeated-annotation errors and negative coverage
 evidence are still needed before qualifying an anatomical uncertainty model.
 
+## Measured negative: sharing pure cell covers during cold proof
+
+The saved 0007 workspace now contains nine comparisons, two applications and four
+uncertainty stress studies. Profiling its complete cold validation measured
+179.03 s with profiler overhead: occupancy checks consumed 32.04 s and cell-cover
+queries 27.37 s (23.68 s inside the geometric kernel). These are development
+workload measurements, excluding source loading and rendering.
+
+A prototype shared exact geometric cell covers across engines within one proof,
+bounded to 8 MiB array payload and 4,096 entries. Candidate slabs stayed local;
+occupancy, evidence, feasibility and all transitions were recomputed. Independent
+review exposed stale custom-helper slabs and custom-radius arithmetic that could
+contaminate another owner; final provenance, dispatch and storage controls closed
+those paths. Prototype validation comprised 235 broad regressions followed by 48
+overlapping final qualification controls, including cancellation and immutable
+storage; the final controls also cover later import/frame qualification changes.
+Hidden actual 0007/0005 reopening preserved complete native records and source
+arrays; unknown-coverage and no-access STOP decisions remained unchanged.
+
+Three alternating pairs against `71f5e263` preserved source bytes, the entire
+record, and exactly 268 native steps, 480 public steps and 39,413 microsteps in
+every cold arm. Cold medians were **115.566 s reference / 112.779 s prototype**,
+but ranges **114.292–116.822 / 112.736–115.222 s overlapped**. This failed the
+predeclared disjoint-range retention gate despite a 2.412% lower median. Warm
+medians were 0.130829 / 0.131317 s. The prototype reused 32,060 covers per proof
+and released its shared payload at exit; the 8 MiB bound excluded local LRUs and
+metadata. Whole alternating-process lifetime peak RSS was 696,008,704 bytes,
+which cannot identify per-arm memory overhead.
+
+**The shared-cache runtime was removed; the existing runtime is retained.** The
+benchmark improvements remain: source snapshots/digests, anatomical-study module
+isolation, optional transition-count parity and explicit RSS scope. Exact commands,
+all six timing rows, rejected source/tests, review failures and an in-memory
+reproduction wrapper are preserved in
+`testcases/cold-label-proof-performance-v1/README.md`. No runs were discarded or
+replaced. Next investigate the larger repeated removed-cell occupancy/type-proof
+cost while retaining mutable-list semantics and independent source checks.
+
 ## Remaining milestones and next dependency
 
 This is a bounded acquired-anatomy operating task, not the complete strategy

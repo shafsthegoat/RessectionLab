@@ -13,6 +13,8 @@ import importlib.util
 import json
 from pathlib import Path
 import platform
+import os
+import resource
 import statistics
 import subprocess
 import sys
@@ -27,6 +29,7 @@ def main():
     parser.add_argument('--reference-commit', required=True)
     parser.add_argument('--repeats', type=int, default=3)
     parser.add_argument('--isolate-index-physics', action='store_true')
+    parser.add_argument('--require-transition-count-parity', action='store_true')
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]; sys.path.insert(0, str(root/'src'))
     output = args.output.resolve(); source = args.case.resolve()
@@ -54,6 +57,8 @@ def main():
     from resectionlab import surgical_two_tool as after_plan
     from resectionlab import surgical_strategy_sensitivity as after_sensitivity
     from resectionlab import surgical_strategy_workspace as after_workspace
+    from resectionlab import surgical_anatomical_sensitivity as after_anatomical
+    from resectionlab import surgical_geometry_cache as after_geometry
     from resectionlab.core import semantic_digest
     from resectionlab.surgical_engine import SurgicalEngine
     from resectionlab.surgical_environment import load_environment
@@ -70,6 +75,14 @@ def main():
     before_sensitivity = retained('surgical_strategy_sensitivity'); before_sensitivity.planning = before_plan
     before_workspace = retained('surgical_strategy_workspace')
     before_workspace.validate_report = before_plan.validate_report; before_workspace.materialize = before_plan.materialize
+    if hasattr(before_plan, '_engine_owner_signature'):
+        before_workspace._engine_owner_signature = before_plan._engine_owner_signature
+    anatomical_path = reference+':src/resectionlab/surgical_anatomical_sensitivity.py'
+    anatomical_available = subprocess.run(['git','-C',str(root),'cat-file','-e',anatomical_path],
+        stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL).returncode == 0
+    before_anatomical = retained('surgical_anatomical_sensitivity') if anatomical_available else None
+    if before_anatomical is not None: before_anatomical.planning = before_plan
+    before_geometry = retained('surgical_geometry_cache')
     source_sha = sha256(source.read_bytes()).hexdigest()
     case, artifacts, _ = load_workspace(source); record = artifacts['surgical_toolbox']; scene = load_environment(source)
     original = semantic_digest(record)
@@ -88,25 +101,48 @@ def main():
         'head':git('rev-parse','HEAD').decode().strip(),'python':platform.python_version(),'platform':platform.platform(),
         'referenceCodeSha256':{n:sha256(s).hexdigest() for n,s in retained_sources.items()},
         'currentCodeSha256':{n:sha256(Path(m.__file__).read_bytes()).hexdigest() for n,m in
-            (('surgical_two_tool',after_plan),('surgical_strategy_sensitivity',after_sensitivity),('surgical_strategy_workspace',after_workspace))},
+            (('surgical_two_tool',after_plan),('surgical_strategy_sensitivity',after_sensitivity),('surgical_strategy_workspace',after_workspace),
+             ('surgical_anatomical_sensitivity',after_anatomical),('surgical_geometry_cache',after_geometry))},
         'indexPhysicsSha256':{n:sha256(s).hexdigest() for n,s in physics.items()},
         'scope':'backend canonical proof; source load excluded; empty proof caches per arm; warm source/OS; alternating order',
         'exactSourceFieldHashes':expected,'rounds':[]}
-    arms = {'before':(before_workspace,before_sensitivity,before_plan),'after':(after_workspace,after_sensitivity,after_plan)}
+    arms = {'before':(before_workspace,before_sensitivity,before_plan,before_anatomical,before_geometry),
+            'after':(after_workspace,after_sensitivity,after_plan,after_anatomical,after_geometry)}
+    # Bind an editable-checkout experiment to the code actually selected before
+    # timing. Retained Git modules and isolated physics remain reproducible too.
+    snapshots = output/'source'; snapshots.mkdir()
+    for label, modules in (('current', (after_workspace, after_sensitivity, after_plan, after_anatomical, after_geometry)),):
+        folder = snapshots/label; folder.mkdir()
+        for module in modules:
+            (folder/(module.__name__.rsplit('.',1)[-1]+'.py')).write_bytes(Path(module.__file__).read_bytes())
+    for label, sources in (('reference',retained_sources),('index-physics',physics)):
+        folder = snapshots/label; folder.mkdir()
+        for name, data in sources.items(): (folder/(name.rsplit('.',1)[-1]+'.py')).write_bytes(data)
+    result.update(benchmarkRecipeSha256=sha256(Path(__file__).read_bytes()).hexdigest(),
+        referenceAnatomicalModulePresent=anatomical_available,
+        memoryScope='RSS before/after each proof; lifetime peak belongs to the whole alternating process, not an isolated arm. Shared payload bounds exclude local LRUs and metadata.')
+    def current_rss():
+        return 1024*int(subprocess.check_output(['ps','-o','rss=','-p',str(os.getpid())],text=True).strip())
     try:
         for repeat in range(args.repeats):
             for label in (('before','after') if repeat%2 == 0 else ('after','before')):
-                workspace, sensitivity, planning = arms[label]
+                workspace, sensitivity, planning, anatomical, geometry_cache = arms[label]
                 # Workspace validation imports this leaf lazily. Keep reference
                 # and current proof caches/implementations fully separate.
                 sys.modules['resectionlab.surgical_strategy_sensitivity'] = sensitivity
                 resectionlab.surgical_strategy_sensitivity = sensitivity
+                sys.modules['resectionlab.surgical_two_tool'] = planning; resectionlab.surgical_two_tool = planning
+                sys.modules['resectionlab.surgical_anatomical_sensitivity'] = anatomical or after_anatomical
+                resectionlab.surgical_anatomical_sensitivity = anatomical or after_anatomical
+                sys.modules['resectionlab.surgical_geometry_cache'] = geometry_cache; resectionlab.surgical_geometry_cache = geometry_cache
                 workspace._VALIDATED.clear(); sensitivity._VALIDATED.clear(); planning._VALIDATED_REPORTS.clear()
-                counts.clear(); start = time.perf_counter()
+                counts.clear(); rss_before = current_rss(); start = time.perf_counter()
                 workspace.validate_workspace(scene,record,case.semantic_hash)
                 cold = time.perf_counter()-start; cold_counts = counts.copy()
                 diagnostics = {'baseline':workspace.baseline_cache_stats() if hasattr(workspace,'baseline_cache_stats') else None,
-                    'publicPrefixes':planning.prefix_cache_stats()}
+                    'publicPrefixes':planning.prefix_cache_stats(),
+                    'sharedGeometry':geometry_cache.shared_cell_cover_stats() if hasattr(geometry_cache,'shared_cell_cover_stats') else None}
+                rss_after = current_rss()
                 assert semantic_digest(record) == original
                 assert {k:semantic_digest(record.get(k)) for k in expected} == expected
                 counts.clear(); start = time.perf_counter()
@@ -114,15 +150,23 @@ def main():
                 warm = time.perf_counter()-start
                 row = {'round':repeat+1,'arm':label,'coldSeconds':cold,'warmSeconds':warm,
                     'coldCounts':cold_counts,'warmCounts':counts.copy(),'diagnostics':diagnostics,'allSourceFieldsExact':True}
+                row.update(rssBeforeBytes=rss_before,rssAfterBytes=rss_after,
+                    lifetimePeakRssBytes=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss*(1 if sys.platform=='darwin' else 1024))
                 result['rounds'].append(row)
                 (output/'results.json').write_text(json.dumps(result,indent=2)+'\n')
                 print(json.dumps(row),flush=True)
     finally:
         sys.modules['resectionlab.surgical_strategy_sensitivity'] = after_sensitivity
         resectionlab.surgical_strategy_sensitivity = after_sensitivity
+        for name, module in (('surgical_two_tool',after_plan),('surgical_anatomical_sensitivity',after_anatomical),('surgical_geometry_cache',after_geometry)):
+            sys.modules['resectionlab.'+name] = module; setattr(resectionlab,name,module)
         SurgicalEngine.step, SurgicalEngine._physical_substep = native_step, physical
     assert sha256(source.read_bytes()).hexdigest() == source_sha
+    if args.require_transition_count_parity:
+        assert all(r['coldCounts'] == result['rounds'][0]['coldCounts'] and r['warmCounts'] == result['rounds'][0]['warmCounts']
+                   for r in result['rounds']), 'Transition/microstep counts changed'
     result.update(sourcePreserved=True,exactParity=True,
+        transitionCountParityRequired=args.require_transition_count_parity,
         medians={arm:{key:statistics.median(r[key] for r in result['rounds'] if r['arm']==arm)
             for key in ('coldSeconds','warmSeconds')} for arm in arms})
     (output/'results.json').write_text(json.dumps(result,indent=2)+'\n')
