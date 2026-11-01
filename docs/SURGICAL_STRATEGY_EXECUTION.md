@@ -1096,6 +1096,51 @@ Exact commands, all rows, bounds and independent receipt checks are in
 workload gain; the small 0005 timing control showed no speed benefit. Patient
 uncertainty calibration and broader task/physical qualification remain open.
 
+## Implemented: implementation-bound strategy verdict reuse
+
+Five controls reproduced content-only warm verdicts hiding a changed report
+validator, tuple baseline representation, instance point transform, public
+compiler or source resampler. The shared process-local proof boundary now binds
+loaded physics, strategy, observation, source and preparation implementation.
+Scopes qualify original DTOs before normalization, check live source/engine
+ownership, and recheck inputs and dispatch before reuse/publication and return.
+Observed temporary violations taint parent scopes even after restoration. Closed
+contexts release their scene, engine, input and certificate references.
+
+Exact JSON aliases remain eligible. Non-JSON DTOs, instance overrides and unknown
+closures retain original validation with reuse disabled. Genuine builtin captures
+and effective function builtin mappings, including copied mappings and project
+global shadows, are checked before mutable helper dispatch or metadata admission.
+Existing verdict LRUs retain their limits and primitive-only payloads. Invocation
+JSON certificates retain references only until close; the one-million-node
+eligibility limit bounds this optimization, not admitted patient/task size.
+Current implementation signatures retain code/default references, not model state.
+
+331 broad strategy regressions and 234 source/admission/observation/preparation
+controls pass; 40 focused controls overlap the broad suite. Independent review
+passes 12 bounded adversarial controls. Counter tests observe original code with
+`sys.monitoring`, preserving implementation identity and their original reuse and
+native-execution assertions. Earlier fixture-copy errors, interrupted checks and
+failed prototypes remain indexed under `testcases/strategy-proof-cache-v1/README.md`.
+Hidden actual Electron 0007/0005 reopen/save checks preserve all six source arrays
+and entire native records; 0007 still changes nominal/fixed short contact to STOP
+across all tested label shifts, while 0005 remains all-policy STOP. Windows never
+become visible. The frozen 291-file backend matches the staged commit; unrelated
+data/physics changes are excluded. The first snapshot's missing-declaration
+refusal is preserved, with its resource mapping corrected in the test harness.
+
+A single serial fresh-process pair observes a correctness cost: cold canonical
+proof **113.449 → 126.612 s**, warm **0.136863 → 2.133818 s**. Both arms
+preserve the entire source/record and exactly 268 native steps, 480 public steps
+and 39,413 microsteps; warm arms execute no simulation steps. Source loading and
+rendering are excluded, source admission included. Lifetime worker peak RSS is
+655,196,160 / 673,071,104 bytes, including source load and
+cold/warm proof; this does not measure incremental proof memory. Earlier timing
+and profile failures are retained separately. This repair establishes process
+verdict authority and makes no speedup claim. Authenticated cross-session strategy
+reuse remains deferred; reducing repeated proof cost is the next performance
+dependency. Physics, saved schemas and qualification holds remain unchanged.
+
 ## Remaining milestones and next dependency
 
 This is a bounded acquired-anatomy operating task, not the complete strategy

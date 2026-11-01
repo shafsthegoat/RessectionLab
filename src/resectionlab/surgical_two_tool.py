@@ -10,13 +10,13 @@ from __future__ import annotations
 import copy
 import sys
 import time
-from collections import OrderedDict
 from dataclasses import dataclass, asdict
 from threading import RLock
 
 import numpy as np
 from scipy.spatial.transform import Rotation
 
+from .surgical_proof_cache import ProofCache, proof_scope
 from .core import array_digest, freeze_json, semantic_digest, thaw_json
 from .surgical_engine import SurgicalEngine
 from .surgical_planning_observation import PlanningObservation, project_observation, physical_state_hash
@@ -44,7 +44,7 @@ MAX_WALL_SECONDS = 60.
 # content digests, never reports, observations, engines or caller-owned objects.
 # Every lookup follows fresh native/source and live public-input validation.
 _VALIDATION_CACHE_ENTRIES = 32
-_VALIDATED_REPORTS = OrderedDict()
+_VALIDATED_REPORTS = ProofCache()
 _VALIDATION_LOCK = RLock()
 _VALIDATION_COUNTS = dict(hits=0, misses=0, evictions=0)
 _LAST_PREFIX_STATS = {}
@@ -55,10 +55,10 @@ def prefix_cache_stats():
     with _VALIDATION_LOCK: return copy.deepcopy(_LAST_PREFIX_STATS)
 
 
-def _engine_owner_signature(root, *, public_task=False):
+def _engine_owner_signature(root, *, public_task=False, require_cold=True):
     """Fingerprint a cold qualified owner; never copy arbitrary attributes."""
     root.scene.require_cache_source()
-    _require(root._occupancy_cache is None, 'public compilation owner changed: occupancy must stay cold')
+    _require(not require_cold or root._occupancy_cache is None, 'public compilation owner changed: occupancy must stay cold')
     guard = root.protection
     _require(guard is None or guard.scene is root.scene, 'public compilation owner changed: guard scene')
     grid = root.grid
@@ -654,6 +654,11 @@ def _validate_context_rejections(observation, controls, public, expected, *, pre
 
 
 def validate_report(engine, report, *, check=lambda: None):
+    with proof_scope(engine.scene, report, engine=engine):
+        return _canonical_validate_report(engine, report, check=check)
+
+
+def _canonical_validate_report(engine, report, *, check=lambda: None):
     """Rebuild live inputs; reuse only previously complete canonical validation.
 
     The source byte-verification fingerprint, full native binding and current

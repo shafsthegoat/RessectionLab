@@ -5,6 +5,7 @@ import copy
 from collections import OrderedDict
 from types import SimpleNamespace
 
+from .surgical_proof_cache import ProofCache, proof_scope
 from .core import semantic_digest, _copy_builtin_json, _JSON_COPY_FALLBACK
 from .surgical_engine import SurgicalEngine
 from .surgical_task_admission import bind_admission, validate_admission
@@ -13,7 +14,7 @@ from .surgical_program_cache import _json_size
 from .surgical_interactive_workspace import _seal, _checked_seal
 
 SCHEMA = 'resectionlab.two-tool-workspace.v1'
-_VALIDATED = OrderedDict()
+_VALIDATED = ProofCache()
 _LAST_BASELINE_STATS = {}
 
 
@@ -86,6 +87,11 @@ class _BaselineScope:
 
 
 def validate_workspace(scene, record, case_hash, *, check=lambda: None):
+    with proof_scope(scene, record):
+        return _canonical_validate_workspace(scene, record, case_hash, check=check)
+
+
+def _canonical_validate_workspace(scene, record, case_hash, *, check=lambda: None):
     with _BaselineScope(scene, check=check) as scope:
         return _validate_workspace(scene, record, case_hash, check=check, restore=scope.restore)
 

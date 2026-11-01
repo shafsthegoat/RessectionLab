@@ -10,11 +10,11 @@ from __future__ import annotations
 
 import copy
 import time
-from collections import OrderedDict
 from threading import RLock
 
 import numpy as np
 
+from .surgical_proof_cache import ProofCache, proof_scope
 from .core import semantic_digest, thaw_json, freeze_json
 from .worlds import AxisTranslationStress, FrozenDecisionModel
 from .surgical_anatomical_encounter import AnatomicalObservation, EncounterTracker, project_context, axial_envelope
@@ -32,7 +32,7 @@ SCOPE = ('Finite coherent command-offset stress against fixed observed anatomy. 
     'between tested offsets. Outside the supplied source grid remains unassessed. '
     'Selection covers only the frozen comparison programs; no new route search.')
 MAX_WALL_SECONDS = 90.
-_VALIDATED = OrderedDict()
+_VALIDATED = ProofCache()
 _LOCK = RLock()
 
 
@@ -228,6 +228,11 @@ def _observation(engine, report):
 
 
 def generate_sensitivity(engine, report, raw, *, check=lambda: None, progress=lambda *_: None):
+    with proof_scope(engine.scene, report, raw, engine=engine):
+        return _canonical_generate_sensitivity(engine, report, raw, check=check, progress=progress)
+
+
+def _canonical_generate_sensitivity(engine, report, raw, *, check=lambda: None, progress=lambda *_: None):
     started = time.monotonic()
     report = thaw_json(freeze_json(report))
     def bounded():
@@ -260,6 +265,11 @@ def generate_sensitivity(engine, report, raw, *, check=lambda: None, progress=la
 
 
 def validate_sensitivity(engine, report, study, *, check=lambda: None):
+    with proof_scope(engine.scene, report, study, engine=engine):
+        return _canonical_validate_sensitivity(engine, report, study, check=check)
+
+
+def _canonical_validate_sensitivity(engine, report, study, *, check=lambda: None):
     if type(study) is dict and study.get('schema') == 'resectionlab.two-tool-context-label-sensitivity.v1':
         from .surgical_anatomical_sensitivity import validate_sensitivity as validate_anatomical
         return validate_anatomical(engine, report, study, check=check)

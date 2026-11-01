@@ -225,29 +225,35 @@ def test_completed_validation_is_reused_but_native_execution_is_not(qualified, c
     _, engine, _, _ = qualified
     planning._VALIDATED_REPORTS.clear()
     compile_calls = []; native_actions = []
-    compile_recipe, step = planning._compile, SurgicalEngine.step
-    def compile_counted(*args, **kwargs):
-        compile_calls.append(1)
-        return compile_recipe(*args, **kwargs)
-    def step_counted(self, *args, **kwargs):
-        if type(self) is SurgicalEngine: native_actions.append(1)
-        return step(self, *args, **kwargs)
-    monkeypatch.setattr(planning, '_compile', compile_counted)
-    monkeypatch.setattr(SurgicalEngine, 'step', step_counted)
-    before = engine.snapshot()
-    assert validate_report(engine, comparison)
-    assert len(compile_calls) == 2
-    assert validate_report(engine.clone(), copy.deepcopy(comparison))
-    cold, phases_a, receipt_a = materialize(engine, comparison, 'long')
-    first_actions = len(native_actions)
-    warm, phases_b, receipt_b = materialize(engine, copy.deepcopy(comparison), 'long')
-    assert len(compile_calls) == 2  # No repeated public recipes on complete-content hits.
-    assert first_actions > 0 and len(native_actions) == 2*first_actions
-    assert cold.snapshot() == warm.snapshot() and receipt_a == receipt_b
-    assert {k: v.snapshot() for k, v in phases_a.items()} == {k: v.snapshot() for k, v in phases_b.items()}
-    assert engine.snapshot() == before
-    info = planning.validation_cache_stats()
-    assert info['entries'] == 1 and not info['reportsRetained'] and not info['enginesRetained']
+    # Count original code entry without installing a different implementation.
+    import sys
+    compile_code, step_code = planning._compile.__code__, SurgicalEngine.step.__code__
+    monitoring = sys.monitoring; ident = monitoring.PROFILER_ID
+    def started(code, offset):
+        if code is compile_code: compile_calls.append(1)
+        elif type(sys._getframe(1).f_locals['self']) is SurgicalEngine: native_actions.append(1)
+    monitoring.use_tool_id(ident, 'proof-cache-test')
+    monitoring.register_callback(ident, monitoring.events.PY_START, started)
+    for code in (compile_code, step_code): monitoring.set_local_events(ident, code, monitoring.events.PY_START)
+    try:
+        before = engine.snapshot()
+        assert validate_report(engine, comparison)
+        assert len(compile_calls) == 2
+        assert validate_report(engine.clone(), copy.deepcopy(comparison))
+        cold, phases_a, receipt_a = materialize(engine, comparison, 'long')
+        first_actions = len(native_actions)
+        warm, phases_b, receipt_b = materialize(engine, copy.deepcopy(comparison), 'long')
+        assert len(compile_calls) == 2  # No repeated public recipes on complete-content hits.
+        assert first_actions > 0 and len(native_actions) == 2*first_actions
+        assert cold.snapshot() == warm.snapshot() and receipt_a == receipt_b
+        assert {k: v.snapshot() for k, v in phases_a.items()} == {k: v.snapshot() for k, v in phases_b.items()}
+        assert engine.snapshot() == before
+        info = planning.validation_cache_stats()
+        assert info['entries'] == 1 and not info['reportsRetained'] and not info['enginesRetained']
+    finally:
+        for code in (compile_code, step_code): monitoring.set_local_events(ident, code, 0)
+        monitoring.free_tool_id(ident)
+
 
 
 @pytest.mark.parametrize('field', ['state', 'actions', 'history', 'catalog', 'source-bytes'])

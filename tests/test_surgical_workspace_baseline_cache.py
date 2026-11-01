@@ -256,31 +256,41 @@ def test_cold_workspace_reuses_baseline_without_skipping_native_application(qual
         'candidateId': 'long', 'branchId': 'installed-long', 'snapshotHash': semantic_digest(candidate.snapshot()),
         'receipt': receipt}, 'applicationSeal')]
     before = copy.deepcopy(record); workspace._VALIDATED.clear()
-    calls = count_restores(monkeypatch); native_steps = []
-    original_step = SurgicalEngine.step
-    def counted_step(self, action, **kwargs):
-        if type(self) is SurgicalEngine: native_steps.append(copy.deepcopy(action))
-        return original_step(self, action, **kwargs)
-    monkeypatch.setattr(SurgicalEngine, 'step', counted_step)
-    admissions = []; original_admission = workspace.validate_admission
-    def checked_admission(*args, **kwargs):
-        admissions.append(1)
-        return original_admission(*args, **kwargs)
-    monkeypatch.setattr(workspace, 'validate_admission', checked_admission)
-    assert workspace.validate_workspace(engine.scene, record, case.semantic_hash) == record['strategyComparisons']
-    assert len(calls) == 1
-    assert workspace.baseline_cache_stats()['hits'] == 3
-    row = next(r for r in comparison['publicPlan']['alternatives'] if r['id'] == 'long')
-    reassess = next(p for p in row['phases'] if p['id'] == 'reassess')
-    expected_native = copy.deepcopy(snapshot['actions'])
-    for index, action in enumerate(row['actionProgram'], 1):
-        expected_native.append(action)
-        if index == reassess['startAction'] + 2:
-            expected_native.append(row['reassessment']['probeAction'])
-    assert native_steps == expected_native
-    assert len(admissions) == 3 and record == before and engine.snapshot() == snapshot
-    assert workspace.baseline_cache_stats()['retainedAfterClose'] == 0
-    # Existing cross-call workspace authority still rechecks source admission;
-    # this invocation-local optimization contributes no retained roots.
-    workspace.validate_workspace(engine.scene, record, case.semantic_hash)
-    assert len(calls) == 1 and len(admissions) == 6
+    import sys
+    calls = []; native_steps = []; admissions = []
+    restore_code = SurgicalEngine.restore.__func__.__code__
+    step_code = SurgicalEngine.step.__code__
+    admission_code = workspace.validate_admission.__code__
+    workspace_code = workspace._validate_workspace.__code__
+    monitoring = sys.monitoring; ident = monitoring.PROFILER_ID
+    def started(code, offset):
+        frame = sys._getframe(1)
+        if code is restore_code: calls.append(1)
+        elif code is step_code and type(frame.f_locals['self']) is SurgicalEngine:
+            native_steps.append(copy.deepcopy(frame.f_locals['action']))
+        elif code is admission_code and sys._getframe(2).f_code is workspace_code:
+            admissions.append(1)
+    monitoring.use_tool_id(ident, 'workspace-proof-test')
+    monitoring.register_callback(ident, monitoring.events.PY_START, started)
+    for code in (restore_code, step_code, admission_code): monitoring.set_local_events(ident, code, monitoring.events.PY_START)
+    try:
+        assert workspace.validate_workspace(engine.scene, record, case.semantic_hash) == record['strategyComparisons']
+        assert len(calls) == 1
+        assert workspace.baseline_cache_stats()['hits'] == 3
+        row = next(r for r in comparison['publicPlan']['alternatives'] if r['id'] == 'long')
+        reassess = next(p for p in row['phases'] if p['id'] == 'reassess')
+        expected_native = copy.deepcopy(snapshot['actions'])
+        for index, action in enumerate(row['actionProgram'], 1):
+            expected_native.append(action)
+            if index == reassess['startAction'] + 2:
+                expected_native.append(row['reassessment']['probeAction'])
+        assert native_steps == expected_native
+        assert len(admissions) == 3 and record == before and engine.snapshot() == snapshot
+        assert workspace.baseline_cache_stats()['retainedAfterClose'] == 0
+        # Existing cross-call workspace authority still rechecks source admission;
+        # this invocation-local optimization contributes no retained roots.
+        workspace.validate_workspace(engine.scene, record, case.semantic_hash)
+        assert len(calls) == 1 and len(admissions) == 6
+    finally:
+        for code in (restore_code, step_code, admission_code): monitoring.set_local_events(ident, code, 0)
+        monitoring.free_tool_id(ident)

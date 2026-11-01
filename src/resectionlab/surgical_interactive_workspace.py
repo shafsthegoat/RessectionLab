@@ -7,13 +7,13 @@ are retained so later edits fork rather than rewriting their evidence.
 from __future__ import annotations
 
 import copy
-from collections import OrderedDict
 
+from .surgical_proof_cache import ProofCache, proof_scope
 from .core import semantic_digest
 
 SCHEMA = 'resectionlab.interactive-approach-workspace.v1'
 MAX_REVISIONS = 16
-_APPLICATION_ADMISSIONS = OrderedDict()
+_APPLICATION_ADMISSIONS = ProofCache()
 
 
 def _application_key(scene, baseline, report, snapshot, application):
@@ -43,6 +43,11 @@ def _checked_seal(value, field):
 
 
 def validate_workspace(scene, record, case_hash):
+    with proof_scope(scene, record):
+        return _canonical_validate_workspace(scene, record, case_hash)
+
+
+def _canonical_validate_workspace(scene, record, case_hash):
     from .surgical_interactive_planning import validate_saved_interactive_report
     history = record.get('interactiveApproaches', [])
     if not isinstance(history, list) or len(history) > MAX_REVISIONS:

@@ -96,12 +96,22 @@ def test_resealed_studies_cannot_change_decisions_prefixes_or_evidence(context_c
 
 def test_completed_cache_rebuilds_live_inputs_and_never_keeps_payload_owners(context_case, context_report, zero_study, monkeypatch):
     engine = context_case[1]
-    def forbidden(*a, **k): pytest.fail('Recomputed a previously complete exact study')
-    monkeypatch.setattr(sensitivity, 'assess_observed', forbidden)
-    assert sensitivity.validate_sensitivity(engine, context_report, copy.deepcopy(zero_study))
-    changed = engine.clone(); changed.state['elapsedSeconds'] += .1
-    with pytest.raises(ValueError): sensitivity.validate_sensitivity(changed, context_report, zero_study)
-    assert len(sensitivity._VALIDATED) <= 32 and all(type(k) is str and v is True for k, v in sensitivity._VALIDATED.items())
+    import sys
+    monitoring = sys.monitoring; ident = monitoring.PROFILER_ID
+    code = sensitivity.assess_observed.__code__; calls = []
+    monitoring.use_tool_id(ident, 'sensitivity-proof-test')
+    monitoring.register_callback(ident, monitoring.events.PY_START, lambda *_: calls.append(1))
+    monitoring.set_local_events(ident, code, monitoring.events.PY_START)
+    try:
+        assert sensitivity.validate_sensitivity(engine, context_report, copy.deepcopy(zero_study))
+        assert calls == []
+        changed = engine.clone(); changed.state['elapsedSeconds'] += .1
+        with pytest.raises(ValueError): sensitivity.validate_sensitivity(changed, context_report, zero_study)
+        assert len(sensitivity._VALIDATED) <= 32
+        assert all(type(k) is tuple and len(k) == 2 and type(k[0]) is int and type(k[1]) is str and v is True
+                   for k, v in sensitivity._VALIDATED.items())
+    finally:
+        monitoring.set_local_events(ident, code, 0); monitoring.free_tool_id(ident)
 
 
 def test_private_evaluator_owners_do_not_affect_stress_inputs_or_selections(context_case, context_report, zero_study):

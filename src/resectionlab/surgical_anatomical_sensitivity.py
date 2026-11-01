@@ -13,6 +13,7 @@ from fractions import Fraction
 
 import numpy as np
 
+from .surgical_proof_cache import proof_scope
 from .core import array_digest, freeze_json, thaw_json, semantic_digest
 from .surgical_anatomical_encounter import axial_envelope, AnatomicalObservation
 from .surgical_motion import envelopes
@@ -203,6 +204,11 @@ def assess_observed(observation, plan, raw, *, check=lambda: None, progress=lamb
 
 
 def generate_sensitivity(engine, report, raw, *, check=lambda: None, progress=lambda *_: None):
+    with proof_scope(engine.scene, report, raw, engine=engine):
+        return _canonical_generate_sensitivity(engine, report, raw, check=check, progress=progress)
+
+
+def _canonical_generate_sensitivity(engine, report, raw, *, check=lambda: None, progress=lambda *_: None):
     from .surgical_strategy_sensitivity import _observation, _remember, _cache_key, MAX_WALL_SECONDS
     started = time.monotonic(); report = thaw_json(freeze_json(report))
     def bounded():
@@ -230,6 +236,11 @@ def generate_sensitivity(engine, report, raw, *, check=lambda: None, progress=la
 
 
 def validate_sensitivity(engine, report, study, *, check=lambda: None):
+    with proof_scope(engine.scene, report, study, engine=engine):
+        return _canonical_validate_sensitivity(engine, report, study, check=check)
+
+
+def _canonical_validate_sensitivity(engine, report, study, *, check=lambda: None):
     from .surgical_strategy_sensitivity import _observation, _cache_key, _LOCK, _VALIDATED
     check(); report = thaw_json(freeze_json(report)); study = thaw_json(freeze_json(study))
     _require(type(study) is dict and set(study) == {'schema', 'comparisonReportSeal', 'contextBindingSeal', 'assessment', 'nativeReplayVerified', 'studySeal'}, 'study schema differs')

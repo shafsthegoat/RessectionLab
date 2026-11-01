@@ -33,11 +33,11 @@ def test_original_header_bounds_and_native_shape_are_checked_before_pixel_alloca
 
 @pytest.fixture(autouse=True)
 def isolated_source_cache():
-    old = admission._SOURCE_CHECKS.copy()
+    # Verdict authority is scoped; fixtures clear it rather than copying raw
+    # epoch keys and republishing them outside their original proof boundary.
     admission._SOURCE_CHECKS.clear()
     yield
     admission._SOURCE_CHECKS.clear()
-    admission._SOURCE_CHECKS.update(old)
 
 
 @pytest.fixture
@@ -275,17 +275,22 @@ def test_warm_source_proof_does_not_hide_member_corruption(source, member):
 
 
 def test_warm_proof_reuses_only_unchanged_members_and_changed_metadata_redecodes(source, monkeypatch):
+    import sys
     scene = source.export(); calls = []
-    original = decode.verify_original_decodes
-    def capture(*args, **kwargs):
-        calls.append(True); return original(*args, **kwargs)
-    monkeypatch.setattr(decode, 'verify_original_decodes', capture)
-    verify(source, scene); verify(source, scene)
-    assert len(calls) == 1
-    path = source.collection.path(source.collection.series('T1')['data']['path'])
-    path.touch()
-    verify(source, scene)
-    assert len(calls) == 2
+    code = decode.verify_original_decodes.__code__
+    monitoring = sys.monitoring; ident = monitoring.PROFILER_ID
+    monitoring.use_tool_id(ident, 'source-proof-test')
+    monitoring.register_callback(ident, monitoring.events.PY_START, lambda *_: calls.append(True))
+    monitoring.set_local_events(ident, code, monitoring.events.PY_START)
+    try:
+        verify(source, scene); verify(source, scene)
+        assert len(calls) == 1
+        path = source.collection.path(source.collection.series('T1')['data']['path'])
+        path.touch()
+        verify(source, scene)
+        assert len(calls) == 2
+    finally:
+        monitoring.set_local_events(ident, code, 0); monitoring.free_tool_id(ident)
 
 
 def test_cancellation_during_decode_never_publishes_a_completed_proof(source, monkeypatch):

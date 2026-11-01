@@ -7,13 +7,13 @@ unknown exterior access remain unknown; no empirical or clinical claim follows.
 from __future__ import annotations
 
 import copy
-from collections import OrderedDict
 from pathlib import Path
 import time
 from urllib.parse import urlparse, unquote
 
 import numpy as np
 
+from .surgical_proof_cache import ProofCache, proof_scope
 from .core import semantic_digest
 from .surgical_engine import SurgicalEngine
 from .surgical_exposure import DEFAULTS, normalize, normalize_source_ray, project_exposure, prepare, _shortlist, PAIRED_FAMILY
@@ -28,7 +28,7 @@ SCOPE = ('Annotation-assisted intracerebral preparation and finite two-tool comp
     'Exterior/skull/dura, complete vessels, optical visibility and functional/clinical outcomes remain unassessed. '
     'STOP and feasibility are conditional on this finite generator, tool pair and assumed mechanics.')
 MAX_WALL_SECONDS = 180.
-_VALIDATED = OrderedDict()
+_VALIDATED = ProofCache()
 DEFAULT_CONTROLS = {'sourceRay':None,'target':None,'widthsMm':[0.,.3,1.],
     'maxNonTargetMm3':200.,'maxActions':128,'maxSeconds':180.,'entryRadiusMm':.5,
     'shortSeconds':.25,'longSeconds':1.,'minimumTargetMm3':1.,'requiredEvidence':['brain','target'],'encounter':None}
@@ -212,6 +212,11 @@ def generate(engine, raw, collection_path, *, check=lambda:None, progress=lambda
 
 
 def validate_report(engine, report, *, check=lambda:None):
+    with proof_scope(engine.scene, report, engine=engine):
+        return _canonical_validate_report(engine, report, check=check)
+
+
+def _canonical_validate_report(engine, report, *, check=lambda:None):
     check();engine.scene.require_cache_source()
     require(type(report) is dict and report.get('schema') in (SCHEMA,FAMILY_SCHEMA) and report.get('reportSeal')==semantic_digest({k:v for k,v in report.items() if k!='reportSeal'}),
         'comparison content or schema differs')

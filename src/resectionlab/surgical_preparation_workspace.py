@@ -6,8 +6,8 @@ stays unchanged. A report, seal or branch label alone never grants authority.
 from __future__ import annotations
 
 import copy
-from collections import OrderedDict
 
+from .surgical_proof_cache import ProofCache, proof_scope
 from .core import semantic_digest
 from .surgical_engine import SurgicalEngine
 from .surgical_task_admission import bind_admission
@@ -15,7 +15,7 @@ from .surgical_interactive_workspace import _seal, _checked_seal
 from . import surgical_preparation_planning as planning
 
 SCHEMA='resectionlab.source-preparation-workspace.v1'
-_APPLICATIONS=OrderedDict()
+_APPLICATIONS = ProofCache()
 
 
 def unused(record,prefix):
@@ -25,6 +25,11 @@ def unused(record,prefix):
 
 
 def validate_workspace(scene,record,case_hash,*,check=lambda:None):
+    with proof_scope(scene, record):
+        return _canonical_validate_workspace(scene,record,case_hash,check=check)
+
+
+def _canonical_validate_workspace(scene,record,case_hash,*,check=lambda:None):
     check();history=record.get('preparationComparisons',[]);applications=record.get('preparationApplications',[])
     planning.require(type(history) is list and len(history)<=4 and type(applications) is list and len(applications)<=12,
         'preparation history exceeds bounded schema')

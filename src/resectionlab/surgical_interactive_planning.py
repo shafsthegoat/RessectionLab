@@ -7,12 +7,12 @@ from __future__ import annotations
 
 import copy
 import time
-from collections import OrderedDict
 from types import SimpleNamespace
 
 import numpy as np
 from scipy.spatial.transform import Rotation
 
+from .surgical_proof_cache import ProofCache, proof_scope
 from .core import array_digest, semantic_digest
 from .full_case_directional import directional_access_candidates
 from .full_case_geometry import access_candidates
@@ -30,8 +30,8 @@ _SCOPE = ('Inactive approach inside an existing authored exposure; current sourc
 _ADMITTED_SCOPE = ('Inactive approach from a declared clear entry linked to removed source tissue at an exactly replayed, released and undeformed native baseline. '
                    'Source-annotation-assisted geometry only; zero additional tissue traversal/removal. '
                    'Missing anatomy and clinical consequences remain unknown; complete public access and withdrawal are required.')
-_SAVED_VALIDATION_CACHE = OrderedDict()
-_ROUTE_VALIDATION_CACHE = OrderedDict()
+_SAVED_VALIDATION_CACHE = ProofCache()
+_ROUTE_VALIDATION_CACHE = ProofCache()
 _VALIDATION_CACHE_ENTRIES = 32  # Holds all 16 saved revisions plus recent current variants.
 
 
@@ -401,6 +401,11 @@ def _validate_seal(report):
 
 
 def validate_saved_interactive_report(scene, snapshot, report):
+    with proof_scope(scene, snapshot, report):
+        return _canonical_validate_saved_interactive_report(scene, snapshot, report)
+
+
+def _canonical_validate_saved_interactive_report(scene, snapshot, report):
     """Canonically admit saved content once, then reuse only complete-content keys."""
     _validate_seal(report)
     if report['schema'] == SCHEMA and not _source_supported(scene):
@@ -446,6 +451,11 @@ def validate_saved_interactive_report(scene, snapshot, report):
 
 
 def validate_interactive_report(engine, report, *, require_current=True):
+    with proof_scope(engine.scene, report, engine=engine):
+        return _canonical_validate_interactive_report(engine, report, require_current=require_current)
+
+
+def _canonical_validate_interactive_report(engine, report, *, require_current=True):
     _validate_seal(report)
     engine.scene.require_cache_source()
     binding = _binding(engine)

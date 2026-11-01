@@ -7,12 +7,12 @@ Physical snapshots stay unchanged; this record belongs to the workspace.
 from __future__ import annotations
 
 import copy
-from collections import OrderedDict
 from dataclasses import dataclass
 from pathlib import Path
 
 import numpy as np
 
+from .surgical_proof_cache import ProofCache, proof_scope
 from .core import array_digest, freeze_json, semantic_digest, thaw_json
 from .patient_anatomy import PatientImagingCollection, digest, file_hash
 from .surgical_tools import catalog
@@ -23,7 +23,7 @@ INPUT_CONTRACT = 'annotation-assisted-source-geometry-v1'
 OPERATIONS = ['exchange', 'place', 'move', 'withdraw']
 UNKNOWN_ROLES = ('skull', 'vessels', 'functional', 'tractography', 'shift')
 _DECLARATIONS_ROOT = Path(__file__).resolve().parents[2]/'testcases/downloaded-datasets'
-_SOURCE_CHECKS = OrderedDict()
+_SOURCE_CHECKS = ProofCache()
 
 
 def _require(condition, message):
@@ -167,6 +167,11 @@ def _source_members(scene):
 
 
 def _verify_source_bytes(scene, verification, *, check=lambda: None):
+    with proof_scope(scene, verification):
+        return _canonical_verify_source_bytes(scene, verification, check=check)
+
+
+def _canonical_verify_source_bytes(scene, verification, *, check=lambda: None):
     """Cold-check source bytes; warm reuse also checks every member's metadata.
 
     This process-private bounded cache never trusts a caller's self-seal as a
