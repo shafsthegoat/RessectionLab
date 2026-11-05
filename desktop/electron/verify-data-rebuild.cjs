@@ -133,9 +133,18 @@ app.on('browser-window-created',(_event,window)=>{
         await click('Cases');await wait(`!!document.querySelector('.poc-case-card')`);
         report.catalog.renderedCards=await js(`document.querySelectorAll('.poc-case-card').length`);
         await capture('01a-reviewed-case-library');
+        const firstOpenRequest=report.requests.length;
         await js(`(()=>{const b=[...document.querySelectorAll('.poc-case-card')].find(b=>b.querySelector('strong')?.textContent===${JSON.stringify(process.env.DATA_REBUILD_CATALOG_ID||'UCSF-PDGM-0009')});if(!b)throw Error('Reviewed external case missing from actual library');b.click()})()`);
+        const openStarted=Date.now();
+        let opened;
+        while(!(opened=report.requests.slice(firstOpenRequest).find(row=>row.operation==='research:openListedWorkspace'))){
+          if(Date.now()-openStarted>180000)throw Error('Timed out waiting for reviewed library case open');
+          await delay(100);
+        }
+        assert(!opened.error,opened.error);
+        if(opened.caseHash)await wait(`document.querySelector('.rl-viewer')?.dataset.sourceCaseHash===${JSON.stringify(opened.caseHash)}`);
         await ready();await capture('01b-opened-through-reviewed-library');
-        assert(report.requests.some(row=>row.operation==='research:openListedWorkspace'));
+        report.catalog.openedCaseHash=opened.caseHash;
         report.checks.push('Actual Cases card uses opaque external ID and checksum-bound catalog open');
       }
       report.initialBody=await js('document.body.innerText');
