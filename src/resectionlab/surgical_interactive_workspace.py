@@ -7,13 +7,13 @@ are retained so later edits fork rather than rewriting their evidence.
 from __future__ import annotations
 
 import copy
-from collections import OrderedDict
 
+from .surgical_proof_cache import ProofCache, proof_scope
 from .core import semantic_digest
 
 SCHEMA = 'resectionlab.interactive-approach-workspace.v1'
 MAX_REVISIONS = 16
-_APPLICATION_ADMISSIONS = OrderedDict()
+_APPLICATION_ADMISSIONS = ProofCache()
 
 
 def _application_key(scene, baseline, report, snapshot, application):
@@ -43,6 +43,11 @@ def _checked_seal(value, field):
 
 
 def validate_workspace(scene, record, case_hash):
+    with proof_scope(scene, record):
+        return _canonical_validate_workspace(scene, record, case_hash)
+
+
+def _canonical_validate_workspace(scene, record, case_hash):
     from .surgical_interactive_planning import validate_saved_interactive_report
     history = record.get('interactiveApproaches', [])
     if not isinstance(history, list) or len(history) > MAX_REVISIONS:
@@ -56,6 +61,9 @@ def validate_workspace(scene, record, case_hash):
         baseline = record['branches'].get(item.get('sourceBranchId'))
         if baseline is None or semantic_digest(baseline) != item.get('sourceSnapshotHash'):
             raise ValueError('Interactive planning source checkpoint changed')
+        if item['report'].get('taskAdmission') is not None and item['report']['taskAdmission'] != record.get('taskAdmission'):
+            from .surgical_preparation_workspace import require_owned_admission
+            require_owned_admission(scene,record,case_hash,item['report']['taskAdmission'])
         validate_saved_interactive_report(scene, baseline, item['report'])
         timeline = record.get('timeline', {}).get(item['sourceBranchId'])
         if timeline is not None and semantic_digest(timeline) != item['report'].get('baselineHistoryHash'):
@@ -101,6 +109,9 @@ def validate_workspace(scene, record, case_hash):
             from .surgical_engine import SurgicalEngine
             from .surgical_interactive_planning import materialize_interactive_approach
             source = SurgicalEngine.restore(scene, baseline)
+            if item['report'].get('taskAdmission') is not None:
+                from .surgical_task_admission import bind_admission
+                bind_admission(source, item['report']['taskAdmission'])
             expected, expected_receipt = materialize_interactive_approach(source, item['report'], route['id'])
             if (semantic_digest(expected.snapshot()) != semantic_digest(snapshot)
                     or semantic_digest(expected_receipt) != semantic_digest(receipt)):

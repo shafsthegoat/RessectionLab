@@ -100,7 +100,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     catch (cause) { return {goal:null,error:cause instanceof Error?cause.message:String(cause)}; }
   },[caseData,props.publicGoal,diagnosticRequested,passiveRequested,rehearsalRequested]);
   const publicGoal = goalSelection.goal;
-  const signalName = props.segmentationOnly ? 'segmentation only' : props.generatedSignal ? "analytic signal" : (props.sourceLabel ?? "MRI");
+  const signalName = props.segmentationOnly ? 'segmentation only' : props.generatedSignal ? "generated image signal" : (props.sourceLabel ?? "MRI");
   const [localSettings,setLocalSettings] = useState<ViewerWorkspaceSettings>({});
   const settings=props.workspaceSettings ?? localSettings;
   const scanVolume=volumeSettings(settings.volumeRendering,signalName);
@@ -617,6 +617,8 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
       onPointerUpCapture={event=>{if((event.target as HTMLInputElement).type==='range')engine.current?.endInteraction();}}
       onPointerCancelCapture={()=>engine.current?.endInteraction()}
       data-layout={layout}
+      data-source-case-hash={caseData?.caseHash}
+      data-renderer-ready={ready&&!error&&!modelDisplayPending&&remaining===0?'true':'false'}
       data-surfaces-pending={remaining}
       data-expanded={expanded ?? undefined}
       aria-label="Linked patient imaging workspace"
@@ -680,7 +682,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             <details><summary>Oblique & box cuts</summary><label>Angle · degrees<input aria-label="Oblique angle" type="number" min="-180" max="180" value={obliqueAngle} onChange={e=>setObliqueAngle(+e.target.value)}/></label><button onClick={()=>{const normal:Point3=[Math.sin(obliqueAngle*Math.PI/180),0,Math.cos(obliqueAngle*Math.PI/180)];changeSettings({...settings,obliqueClip:{enabled:true,normal,offset:-normal.reduce((sum,n,i)=>sum+n*currentCursor[i],0)}})}}>Cut at cursor</button><button onClick={()=>changeSettings({...settings,clipBox:{enabled:true,min:currentCursor.map(n=>n-50) as Point3,max:currentCursor.map(n=>n+50) as Point3}})}>100 mm box at cursor</button><button onClick={()=>changeSettings({...settings,clipBox:undefined,obliqueClip:undefined})}>Clear extra cuts</button></details>
           </>}
         </div>}
-        {props.registeredFusion&&!fusionError&&<div className="rl-fusion-readout" role="status">Fused source images · {signalName} + {props.registeredFusion.label}<span>{props.registeredFusion.registration.status==='source-provided'?'Source-provided registration':'Verified registration'} · {Math.round((settings.fusion?.opacity??.5)*100)}% blend</span></div>}
+        {props.registeredFusion&&!fusionError&&<div className="rl-fusion-readout" role="status">Fused source images · {signalName} + {props.registeredFusion.label}<span>{props.registeredFusion.registration.status==='source-provided'?'Source-provided registration':'Reviewed alignment'} · {Math.round((settings.fusion?.opacity??.5)*100)}% blend</span></div>}
         {expanded && (
           <span className="rl-viewer-expanded-note">
             {TITLES[expanded]} {signalName} expanded
@@ -749,7 +751,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               ? `Generated passive replay · frame ${passiveReplay.frameIndex}/${passiveReplay.stepCount}`
               : modeled
               ? `Modeled residual annotations · step ${replay.step}/${replay.stepCount}`
-              : `${signalName} · ${volumeDisplayed?'source volume + labels':'source-derived labels'}`}
+              : `${signalName} · ${volumeDisplayed?'source volume + labels':'structures'}`}
             {rehearsalMode && <>
               <span className="rl-viewer-replay-key">Mint: modeled removal · violet: assumed initial exposure · amber: field-management contact</span>
               <span className="rl-viewer-replay-key">Two persistent tools · {rehearsalState.elapsedSeconds.toFixed(1)} simulated s · source {signalName} unchanged · uncalibrated physics</span>
@@ -933,7 +935,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
                 {scaleMm} mm
               </span>
               <span className="rl-viewer-slice-note">
-                {props.segmentationOnly ? 'SEGMENTATION ONLY · NO ACQUIRED IMAGE' : props.generatedSignal ? "GENERATED ANALYTIC SIGNAL" : `SOURCE ${signalName.toUpperCase()}`}
+                {props.segmentationOnly ? 'SEGMENTATION ONLY · NO ACQUIRED IMAGE' : props.generatedSignal ? "GENERATED IMAGE SIGNAL" : `SOURCE ${signalName.toUpperCase()}`}
                 {surgicalView ? (displayedSurgical?.preview?" · MODELED PREVIEW":" · MODELED EFFECT OVERLAY") : rehearsalMode ? " · RESEARCH EFFECT OVERLAY" : inspected
                   ? " · UNEXECUTED TOOL PREVIEW"
                   : proposalReviewLabel

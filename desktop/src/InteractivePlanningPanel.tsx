@@ -1,7 +1,8 @@
 import {useEffect,useRef,useState} from 'react';
 import type {SurgicalController} from './use-surgical';
 import type {Point3} from './viewer/coordinates';
-import {currentPlanningReport,planningBinding,planningDraftIssue,selectedPlanningRoute,PLANNING_ROUTE_COLORS} from './interactive-planning-data';
+import {currentPlanningReport,currentSourcePreflight,planningBinding,planningDraftIssue,selectedPlanningRoute,PLANNING_ROUTE_COLORS} from './interactive-planning-data';
+import {SourcePreflightPanel} from './SourcePreflightPanel';
 import type {InteractivePlanningConstraints,InteractivePlanningReport} from './interactive-planning-data';
 
 const numberLabel=(n:unknown,digits=1)=>typeof n==='number'&&Number.isFinite(n)?n.toFixed(digits):'Unassessed';
@@ -12,7 +13,7 @@ function maneuverabilityLabel(value:unknown):string {
   }
   return 'Unassessed';
 }
-function RegionEditor({name,value,onChange,cursor,onCursor,disabled}:{name:string;value:InteractivePlanningConstraints['target'];onChange:(v:InteractivePlanningConstraints['target'])=>void;cursor:Point3|null;onCursor?:(p:Point3)=>void;disabled:boolean}){
+export function RegionEditor({name,value,onChange,cursor,onCursor,disabled}:{name:string;value:InteractivePlanningConstraints['target'];onChange:(v:InteractivePlanningConstraints['target'])=>void;cursor:Point3|null;onCursor?:(p:Point3)=>void;disabled:boolean}){
   return <fieldset className="approach-region" disabled={disabled}><legend>{name}</legend>
     <div className="approach-coordinates">{['R','A','S'].map((axis,i)=><label key={axis}>{axis} · mm<input aria-label={`${name} ${axis} coordinate`} type="number" step="0.5" value={value.centerMm[i]} onChange={e=>{const p=[...value.centerMm] as Point3;p[i]=e.target.valueAsNumber;onChange({...value,centerMm:p});}}/></label>)}</div><label className="approach-radius">Radius · mm<input aria-label={`${name} radius`} type="number" min="0.5" max="30" step="0.5" value={value.radiusMm} onChange={e=>onChange({...value,radiusMm:e.target.valueAsNumber})}/></label>
     <div className="surgical-actions"><button disabled={!cursor} onClick={()=>cursor&&onChange({...value,centerMm:[...cursor]})}>Use linked MRI cursor</button><button disabled={!onCursor||value.centerMm.some(n=>!Number.isFinite(n))} onClick={()=>onCursor?.(value.centerMm)}>Show in linked views</button></div>
@@ -20,9 +21,20 @@ function RegionEditor({name,value,onChange,cursor,onCursor,disabled}:{name:strin
 }
 export function InteractivePlanningPanel({c,cursor=null,onCursor,pause}:{c:SurgicalController;cursor?:Point3|null;onCursor?:(p:Point3)=>void;pause:()=>void}){
   const a=c.result?.interactivePlanningAvailability,stored=c.result?.interactivePlanning;
+  const qualification=a?.admission;
+  const sourcePreflight=currentSourcePreflight(c.result);
   const historicalExposure=(stored?.evidence.historicalExposure??a?.evidence?.historicalExposure) as {targetRemovedMm3?:number;nonTargetRemovedMm3?:number}|undefined;
   const savedCurrent=stored?.current===true&&stored.sourceSceneId===c.view?.scene.sceneId&&stored.startStateId===c.view?.stateId&&stored.prefixActions===c.result?.position;
   return <details className="interactive-planning" open><summary>Plan an approach · post-exposure</summary>
+    {sourcePreflight&&<SourcePreflightPanel report={sourcePreflight}/>}
+    {qualification&&<details aria-label="Patient task evidence"><summary>Patient and task evidence</summary>
+      <p>{qualification.sourceEvidence.patientId} · {qualification.sourceEvidence.sourceRole} research · {qualification.sourceEvidence.studyTimepoint}</p>
+      <p className="surgical-note">Planning uses source annotations, model estimates and the completed native state. Image-only planning and clinical outcomes are unsupported.</p>
+      <p>Acquired modalities: {qualification.sourceEvidence.images.map(image=>image.modality).join(', ')}.</p>
+      <ul>{Object.entries(qualification.sourceEvidence.anatomy).map(([name,row])=><li key={name}>{name}: {row.kind} · {row.reviewStatus}. {row.coverage}</li>)}</ul>
+      <p>Unknown evidence: {qualification.sourceEvidence.unknownEvidence.join(', ')}.</p>
+      <p className="surgical-note">Tool geometry revision {qualification.models.toolMechanicsRevision} · shared clock revision {qualification.models.physicalClockRevision}. Qualification applies to this declared task and checkpoint.</p>
+    </details>}
     {historicalExposure&&<p className="surgical-note" aria-label="Prior source exposure cost">Prior source exposure: {numberLabel(historicalExposure.targetRemovedMm3,0)} mm³ target + {numberLabel(historicalExposure.nonTargetRemovedMm3,0)} mm³ non-target removed before route planning.</p>}
     {!a?.available||!a.defaults?<p role="status">{a?.reason??'Inspect a verified patient checkpoint to check planning availability.'}</p>:<PlanningDraft key={planningBinding(c.result)} c={c} cursor={cursor} onCursor={onCursor} pause={pause} defaults={savedCurrent?stored!.constraints:a.defaults} savedCurrent={savedCurrent?stored:null}/>}
     {stored&&!savedCurrent&&<details className="approach-history" data-planning-status="historical"><summary>Saved approach comparison · historical</summary><p className="surgical-note">{stored.routes.length} routes from a different planning checkpoint. Editing and installation require that checkpoint.</p><ul>{stored.routes.map(route=><li key={route.id}>{route.label} · {numberLabel(route.metrics.pathLengthMm)} mm · {numberLabel(route.metrics.actionCount,0)} actions</li>)}</ul><button disabled={c.pending||!stored.sourceBranchId||!Number.isInteger(stored.sourcePosition)||!c.result?.branches.some(b=>b.id===stored.sourceBranchId&&b.steps>=stored.sourcePosition!)} onClick={()=>{pause();void c.run('selectBranch',{branchId:stored.sourceBranchId,position:stored.sourcePosition});}}>Open planning checkpoint</button><details><summary>Saved evidence and receipts</summary><pre>{JSON.stringify(stored,null,2)}</pre></details></details>}
@@ -68,7 +80,8 @@ function PlanningDraft({c,cursor,onCursor,pause,defaults,savedCurrent}:{savedCur
     <RegionEditor name="Target region" value={draft.target} onChange={target=>edit({...draft,target})} cursor={cursor} onCursor={onCursor} disabled={c.pending||immutable}/>
     <RegionEditor name="Allowable entry region" value={draft.entry} onChange={entry=>edit({...draft,entry})} cursor={cursor} onCursor={onCursor} disabled={c.pending||immutable}/>
     <fieldset className="approach-tool" disabled={c.pending||immutable}><legend>CUSA and protection</legend>
-      <label>Tip radius · mm<input aria-label="Planning CUSA tip radius" type="number" min="0.1" max="6" step="0.1" value={draft.tool.radiusMm} onChange={e=>edit({...draft,tool:{instrument:'cusa',radiusMm:e.target.valueAsNumber}})}/></label>
+      <label>Tip radius · mm<input aria-label="Planning CUSA tip radius" type="number" min={a.admission?.task.toolRadiusMm??.1} max={a.admission?.task.toolRadiusMm??6} disabled={!!a.admission} step="0.1" value={draft.tool.radiusMm} onChange={e=>edit({...draft,tool:{instrument:'cusa',radiusMm:e.target.valueAsNumber}})}/></label>
+      {a.admission&&<p className="surgical-note">This task binds the fixed catalog CUSA geometry.</p>}
       <label>Mapped non-target clearance · mm<input aria-label="Mapped non-target clearance mm" type="number" min="0" max="2" step="0.1" value={draft.nonTargetClearanceMm} onChange={e=>edit({...draft,nonTargetClearanceMm:e.target.valueAsNumber})}/></label>
       <p className="surgical-note">Research buffer around retained source non-target geometry. This does not establish a clinical safe margin.</p>
       <p className="surgical-note">Stock shaft: 0.5 mm radius · 40 mm working length. Source protection guards remain active.</p>
@@ -84,13 +97,14 @@ function PlanningDraft({c,cursor,onCursor,pause,defaults,savedCurrent}:{savedCur
 
     {!report&&submitted===null&&c.result?.interactivePlanning&&<p className="surgical-note">The draft changed. Generate again to compare and install current approaches.</p>}
     {report&&<>
+      {report.decision&&<p role="status" aria-label="Planning decision">{report.decision.operation==='STOP'?'STOP · no executable approach meets this draft.':'Compare approaches · access and withdrawal passed the declared planning model.'}</p>}
       <p role="status">{report.routes.length} / {draft.candidateCount} checked candidates · {report.routes.length<2?'No distinct approach comparison available.':report.routes.length<draft.candidateCount?'Only these candidates met the current geometry constraints.':'Select a route to inspect it in 3D and linked MRI.'}</p>
       {report.routes.length===0&&!!report.missingRequiredEvidence?.length&&<p role="alert" className="surgical-error">Approaches refused: required evidence is unavailable for {report.missingRequiredEvidence.join(', ')}.</p>}
       {report.routes.length>0&&<div className="approach-table"><table aria-label="Interactive approach comparison"><caption>Entry angle relative to the first route</caption><thead><tr><th>Route</th><th>Travel / actions</th><th>Angle</th><th>Probes</th></tr></thead><tbody>{report.routes.map((route,i)=><tr key={route.id} data-planning-candidate={route.id} aria-selected={selected?.id===route.id}><th><button disabled={c.pending} aria-label={route.label} aria-pressed={selected?.id===route.id} onClick={()=>choose(route.id)}><span style={{color:PLANNING_ROUTE_COLORS[i%PLANNING_ROUTE_COLORS.length]}}>● </span>{i+1}</button></th><td>{numberLabel(route.metrics.pathLengthMm)} mm / {numberLabel(route.metrics.actionCount,0)}</td><td>{numberLabel(route.separationComparisons?.[0]?.angleDeg??0)}°</td><td>{maneuverabilityLabel(route.metrics.localManeuverability)}</td></tr>)}</tbody></table></div>}
       {selected&&<section className="approach-selection" aria-label="Selected approach"><strong>{selected.label}</strong><p className="surgical-note">Path {numberLabel(selected.metrics.pathLengthMm)} mm · entry angle {numberLabel(selected.separationComparisons?.[0]?.angleDeg??0)}° · {numberLabel(selected.metrics.actionCount,0)} actions.</p>{contactCount!==undefined&&<p className="surgical-note">Target boundary contact assumption: {contactCount} source cells ({numberLabel(contactMm3)} mm³). Tissue remains retained.</p>}<p className="surgical-note">Inactive approach · additional target removal {numberLabel(selected.metrics.targetRemovedMm3)} mm³ · non-target traversal {numberLabel(selected.metrics.nonTargetTraversalMm3)} mm³. Four local geometric probes do not characterize all maneuvers. MRI guides show current slice intersections.</p><div className="surgical-actions"><button disabled={c.pending} onClick={()=>onCursor?.(selected.targetPose.position)}>Show target</button><button disabled={c.pending||!ack} onClick={preview}>Preview checked approach</button><button className="primary-button" disabled={c.pending||!ack||previewed!==selected.id||!c.preview||c.approachPreview?.candidateId!==selected.id||c.approachPreview.reportSeal!==report.reportSeal} onClick={apply}>Install checked branch</button></div>{previewed===selected.id&&c.preview&&<p role="status">Preview shown · anatomy is uncommitted. Install creates the checked branch.</p>}</section>}
       {report.limitingStructures?.length?<p className="surgical-note">Limiting structures: {[...new Set(report.limitingStructures.map(s=>s.name))].join(', ')}. Amber markers identify limiting source cells.</p>:<p className="surgical-note">No located limiting structure was supplied. Missing anatomy remains unknown.</p>}
       {report.rejections.length>0&&<details><summary>Refused route samples · {report.rejections.length}</summary><ul>{report.rejections.slice(0,12).map((rejection,i)=><li key={i}>{String(rejection.reason??rejection.message??JSON.stringify(rejection)).replaceAll('_',' ')}</li>)}</ul></details>}
-      <details><summary>Evidence and technical receipts</summary><p>{a.scope}</p><p>Source scene: <code>{report.sourceSceneId}</code></p><p>Checkpoint: <code>{report.startStateId}</code></p><p>Plan seal: <code>{report.reportSeal}</code></p><pre>{JSON.stringify({evidence:report.evidence,targetSelection:report.targetSelection,constraints:report.constraints,routes:report.routes.map(({id,metrics,scope,separationComparisons})=>({id,metrics,scope,separationComparisons})),previewReceipt:c.approachPreview?.receipt},null,2)}</pre></details>
+      <details><summary>Evidence and technical receipts</summary><p>{a.scope}</p><p>Source scene: <code>{report.sourceSceneId}</code></p><p>Checkpoint: <code>{report.startStateId}</code></p><p>Plan seal: <code>{report.reportSeal}</code></p><pre>{JSON.stringify({publicObservation:report.publicObservation,publicPlanSeal:report.publicPlanSeal,decision:report.decision,evidence:report.evidence,targetSelection:report.targetSelection,constraints:report.constraints,routes:report.routes.map(({id,metrics,scope,separationComparisons})=>({id,metrics,scope,separationComparisons})),previewReceipt:c.approachPreview?.receipt},null,2)}</pre></details>
     </>}
   </div>;
 }

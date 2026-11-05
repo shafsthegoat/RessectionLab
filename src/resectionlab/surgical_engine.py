@@ -22,6 +22,7 @@ from .core import semantic_digest
 from .geometry import GeometryScene, capsule_voxel_indices, segment_segment_distance
 from .surgical_tools import TOOLS, catalog
 from .surgical_cusa_v3 import profile as cusa_profile
+from . import surgical_clock
 
 SCHEMA = 'resectionlab.surgical-toolbox.v1'
 MAX_STEPS = 8192
@@ -95,6 +96,45 @@ def _try_removed_native(value):
 # a copy rather than builtins.__dict__. Keep the actual caller mapping bound.
 _removed_caller_globals = _try_removed_native.__globals__
 _removed_caller_builtins = _try_removed_native.__builtins__
+
+
+_removed_proof_tuple = ().__class__
+_removed_proof_all = _removed_stock_bindings[2][1]
+_removed_proof_map = _removed_stock_bindings[3][1]
+
+
+def _removed_snapshot_dispatch(value):
+    """Qualify only the dispatch skipped by reusing an integer snapshot.
+
+    The native-selection call still runs first in occupancy. Use intrinsic
+    container lengths here: a replaced builtin len was never part of the
+    original predicate. Bound retained proof references to 32,768 source IDs.
+    """
+    if (not _removed_captures_genuine or _removed_stock_type(value) is not _removed_stock_list or
+            _removed_stock_len(value) > 32768 or
+            _removed_stock_type(_removed_caller_globals) is not _removed_stock_dict or
+            _removed_stock_type(_removed_caller_builtins) is not _removed_stock_dict):
+        return False
+    for name, original in _removed_stock_bindings:
+        if (_removed_caller_globals.get(name, original) is not original or
+                _removed_caller_builtins.get(name) is not original):
+            return False
+    return (_removed_caller_globals.get('_strict_int_is') is _removed_stock_is and
+            _removed_caller_globals.get('_strict_int_repeat') is _removed_stock_repeat and
+            _removed_caller_globals.get('tuple', _removed_proof_tuple) is _removed_proof_tuple and
+            _removed_caller_builtins.get('tuple') is _removed_proof_tuple)
+
+
+def _reuse_removed_snapshot(value, snapshot):
+    # A strong reference to each proved, immutable exact int prevents object-ID
+    # reuse. Equality would admit bools, NumPy scalars and arbitrary hooks.
+    # Called only after the caller dispatch check, before the legacy predicate.
+    if (_removed_stock_type(snapshot) is _removed_proof_tuple and
+            _removed_stock_type(value) is _removed_stock_list and
+            _removed_stock_len(value) == _removed_proof_tuple.__len__(snapshot) and
+            _removed_proof_all(_removed_proof_map(_removed_stock_is, value, snapshot))):
+        return snapshot
+    return None
 
 
 def _owned_digest(value):
@@ -320,6 +360,7 @@ class SurgicalEngine:
         self.actions = []
         self.history = []
         self._occupancy_cache = None
+        self._removed_ids_proof = None
         from .surgical_effects import initialize_effect_state
         initialize_effect_state(self)
 
@@ -372,14 +413,26 @@ class SurgicalEngine:
     def occupancy(self):
         changes = {'holds': self.state['holds'], **({'detachedFragments': self.state['detachedFragments']} if 'detachedFragments' in self.state else {}), **({'deformation': self.state['deformation']} if 'deformation' in self.state else {})}
         removed_ids = self.state['removed']
+        proved = self._removed_ids_proof
+        self._removed_ids_proof = None
+        removed_snapshot = None
+        removed_dispatch = False
         # Built-in integer sequences have the same exact ordered identity in
         # tuples and canonical JSON. Avoid freezing/encoding thousands of IDs
         # at every occupancy lookup; snapshot the contents to detect in-place
         # edits. Other representations retain the complete legacy JSON key.
         if isinstance(removed_ids, list) and (
                 (_try_removed_native(removed_ids) is True or
+                 ((removed_dispatch := _removed_snapshot_dispatch(removed_ids)) and
+                  (removed_snapshot := _reuse_removed_snapshot(removed_ids, proved)) is not None) or
                  all(map(_strict_int_is, map(type, removed_ids), _strict_int_repeat(int))))
                 if type(removed_ids) is list else all(type(cell) is int for cell in removed_ids)):
+            if removed_dispatch:
+                # Capture immediately after the genuine predicate, before a
+                # custom changes/digest fallback could alter the public list.
+                # The key below still constructs its tuple at the legacy point.
+                self._removed_ids_proof = (removed_snapshot if removed_snapshot is not None
+                                          else _removed_proof_tuple(removed_ids))
             displacement = _displacement_snapshot(changes['deformation']) if 'deformation' in changes else None
             if displacement is None:
                 change_key = _owned_digest(changes)
@@ -443,7 +496,12 @@ class SurgicalEngine:
     def parameters(self, slot):
         tool = TOOLS[slot['instrument']]
         extra = {'rpm': 40000., 'forceN': 1., 'duty': 1.} if self.scene.properties.get('tissuePhysicsV2') else {}
-        return {**extra, 'radiusMm': tool['radiusMm'], 'depthMm': 2., 'flowMm3PerSecond': 20., 'power': 1., 'jawOpeningMm': 2., **slot['parameters'], **({'contactGeometryRevision':2} if self.state.get('toolMechanicsRevision')==2 else {})}
+        return {**extra, 'radiusMm': tool['radiusMm'], 'depthMm': 2., 'flowMm3PerSecond': 20., 'power': 1., 'jawOpeningMm': 2., **slot['parameters'], **({'contactGeometryRevision':2} if self.state.get('toolMechanicsRevision')==2 else {}),
+            **({'retractorFaceContactRevision':1} if slot['instrument']=='brain_retractor' and 'retractorSurfaceContactV1' in self.scene.properties else {})}
+
+    def _shaft_held_cells(self,key):
+        from .surgical_retractor_runtime import is_surface_slot
+        return set() if is_surface_slot(self,key) else set(self.state['holds'].get(key,{}).get('cells',()))
 
     def preview(self, action, *, check=None, include_view=True, include_history=True):
         if check is not None: check()
@@ -486,7 +544,7 @@ class SurgicalEngine:
         return result
 
     def _validate(self, action):
-        if not isinstance(action, dict) or set(action) - {'slot', 'operation', 'instrument', 'pose', 'path', 'parameters', 'duration', 'position', 'mechanicsRevision', 'maneuverPhase'}:
+        if not isinstance(action, dict) or set(action) - {'slot', 'operation', 'instrument', 'pose', 'path', 'parameters', 'duration', 'position', 'mechanicsRevision', 'clockRevision', 'maneuverPhase'}:
             raise ValueError('Unsupported action fields')
         if action.get('slot') not in self.state['slots']: raise ValueError('Choose left or right instrument slot')
         if action.get('operation') not in {'place', 'move', 'activate', 'deactivate', 'apply', 'hold', 'grasp', 'release', 'exchange', 'withdraw', 'extract', 'inspect', 'configure', 'position', 'bladeManeuver'}:
@@ -498,6 +556,8 @@ class SurgicalEngine:
         if len(self.actions) >= MAX_STEPS: raise ValueError('Action limit reached; save and start a new episode')
         points = action.get('path', [action['pose']] if 'pose' in action else [])
         if 'mechanicsRevision' in action and (action['operation'] != 'configure' or type(action['mechanicsRevision']) is not int or action['mechanicsRevision'] not in (1,2)): raise ValueError('INVALID_INSTRUMENT_MECHANICS_REVISION')
+        if 'clockRevision' in action and (action['operation'] != 'configure' or type(action['clockRevision']) is not int or action['clockRevision'] != surgical_clock.REVISION):
+            raise ValueError('INVALID_PHYSICAL_CLOCK_REVISION')
         if 'position' in action and action['operation'] != 'position': raise ValueError('POSITION_PAYLOAD_REQUIRES_POSITION_OPERATION')
         if action['operation'] in ('configure', 'position'):
             if points or action.get('parameters') or action.get('instrument'): raise ValueError('SETUP_CANNOT_MOVE_INSTRUMENT')
@@ -593,10 +653,13 @@ class SurgicalEngine:
             if any(s['active'] or s['inserted'] for s in self.state['slots'].values()) or self.state['holds']:
                 raise ValueError('WITHDRAW_BOTH_TOOLS_BEFORE_SETUP')
             if op == 'configure':
-                self.state['toolMechanicsRevision'] = action.get('mechanicsRevision', 1)
-                from .surgical_cusa_v3 import initialize
-                initialize(self)
-                events = [{'kind': 'instrument_mechanics_enabled', 'revision': self.state['toolMechanicsRevision']}]
+                if 'mechanicsRevision' in action or 'clockRevision' not in action:
+                    self.state['toolMechanicsRevision'] = action.get('mechanicsRevision', 1)
+                    from .surgical_cusa_v3 import initialize
+                    initialize(self)
+                    events.append({'kind': 'instrument_mechanics_enabled', 'revision': self.state['toolMechanicsRevision']})
+                if 'clockRevision' in action:
+                    events.append(surgical_clock.configure(self))
             else:
                 from .surgical_position import apply_position
                 if not self.scene.properties.get('tissuePhysicsV2'): raise ValueError('POSITION_REQUIRES_V2_MECHANICS')
@@ -666,6 +729,8 @@ class SurgicalEngine:
         # Historical recordings retain their original scheduling semantics.
         if 'bipolarThermalV1' in self.scene.properties and op == 'inspect' and slot['active']:
             active = True
+        if surgical_clock.enabled(self):
+            active = bool(active or slot['active'])
         poses = [{'position': slot['position'], 'quaternion': slot['quaternion']}, *points]
         if len(poses) == 1: poses.append(poses[0])
         segments = []
@@ -832,7 +897,7 @@ class SurgicalEngine:
             else: working_cells.update(self.touched(a, b, radius))
         if revised_contact: tip_cells = sorted(working_cells)
         held = set(self.state['holds'].get(key, {}).get('cells', []))
-        if set(shaft_cells) - held: raise ValueError('SHAFT_COLLISION')
+        if set(shaft_cells) - self._shaft_held_cells(key): raise ValueError('SHAFT_COLLISION')
         if cusa_v3 and active and self.state.get('toolMechanicsRevision') != 2 and working_cells - held - set(self.touched(p, p, params['radiusMm'])):
             raise ValueError('RETAINED_TISSUE_COLLISION: CUSA body requires a cleared corridor')
         for other_key, other in self.state['slots'].items():
@@ -866,7 +931,10 @@ class SurgicalEngine:
             if op not in ('withdraw', 'release', 'deactivate', 'inspect', 'exchange'):
                 raise ValueError('UNSUPPORTED_MATERIAL' if active else 'RETAINED_TISSUE_COLLISION')
         events = []
-        if active:
+        shared_clock = surgical_clock.enabled(self)
+        if shared_clock:
+            events = surgical_clock.advance_instruments(self, key, op, p, q, active, dt, working_cells, eligible)
+        elif active:
             events = self._effect(key, op, eligible, p, q, dt)
         if key in self.state['holds']:
             self.occupancy()
@@ -885,7 +953,7 @@ class SurgicalEngine:
             self.occupancy()
         # A stationary active instrument shares the same clock and exposure.
         for other_key, other in self.state['slots'].items():
-            if other_key == key or not other['active']: continue
+            if shared_clock or other_key == key or not other['active']: continue
             other_tool = TOOLS[other['instrument']]
             other_cells = self.touched(other['position'], other['position'], self.parameters(other)['radiusMm'])
             if self.state.get('toolMechanicsRevision') in (1, 2) and other_tool['effect'] not in ('remove','suction','irrigate','probe'):
@@ -901,14 +969,17 @@ class SurgicalEngine:
                 from .surgical_vessels_v2 import contact
                 contact(self, other_cells, dt, self.parameters(other)['forceN'])
         vessels = [i for i in working_cells if self.by_label[int(self.scene.labels.ravel()[i])]['material'] == 'vessel']
-        self.state['vesselEncounters'] = sorted(set(self.state['vesselEncounters']) | set(vessels))
-        for i in working_cells:
-            material = self.by_label[int(self.scene.labels.ravel()[i])]['material']
-            self.state['materialExposure'][material] = self.state['materialExposure'].get(material, 0.) + dt
+        if not shared_clock:
+            self.state['vesselEncounters'] = sorted(set(self.state['vesselEncounters']) | set(vessels))
+            for i in working_cells:
+                material = self.by_label[int(self.scene.labels.ravel()[i])]['material']
+                self.state['materialExposure'][material] = self.state['materialExposure'].get(material, 0.) + dt
         contact_cells = set(working_cells) if tool['effect'] in ('elevate', 'dissect') else set()
-        for hold in self.state['holds'].values(): contact_cells.update(hold['cells'])
+        from .surgical_retractor_runtime import is_surface_slot
+        for hold_key,hold in self.state['holds'].items():
+            if not is_surface_slot(self,hold_key):contact_cells.update(hold['cells'])
         contact_cells.difference_update(self.state['removed'])
-        for cell in contact_cells:
+        for cell in contact_cells if not shared_clock else ():
             k = str(cell); self.state['contact'][k] = self.state['contact'].get(k, 0.) + dt
         slot.update(position=p.tolist(), quaternion=q.tolist())
         if op not in ('place', 'exchange', 'release', 'inspect', 'deactivate'): slot['inserted'] = True
@@ -919,7 +990,7 @@ class SurgicalEngine:
             from . import surgical_deformation_v2 as brain
             from . import surgical_vessels_v2 as vessel
             # Force is an explicit proxy, never inferred from a segmentation.
-            vessel.contact(self, vessels, dt, params['forceN'] if active else 0.)
+            if not shared_clock: vessel.contact(self, vessels, dt, params['forceN'] if active else 0.)
             brain.tick(self, dt)
             self.occupancy()
             # Coupled tissue moves after the ordinary swept-tool check.
@@ -928,7 +999,7 @@ class SurgicalEngine:
             # Match the existing per-hand exemption for its own held cells.
             if self.state.get('deformation'):
                 for shaft_key, shaft_slot in self.state['slots'].items():
-                    own_held = set(self.state['holds'].get(shaft_key, {}).get('cells', ()))
+                    own_held = self._shaft_held_cells(shaft_key)
                     shaft_tool = TOOLS[shaft_slot['instrument']]
                     for a, b, radius, part in envelopes(shaft_tool, self.parameters(shaft_slot),
                             shaft_slot['position'], shaft_slot['quaternion']):
@@ -1014,6 +1085,7 @@ class SurgicalEngine:
             from .surgical_cusa_v3 import descriptor
             physics['cusaV3'] = descriptor(self)
         return {'schema': SCHEMA, 'stateId': self.state_id if _state_id is None else _state_id, 'slots': slots,
+                **({'physicalClock': surgical_clock.descriptor()} if surgical_clock.enabled(self) else {}),
                 **({'toolMechanicsRevision': self.state['toolMechanicsRevision']} if 'toolMechanicsRevision' in self.state else {}),
                 **({'patientPosition': copy.deepcopy(self.state['patientPosition']), 'positionEffects': describe_position(self.state['patientPosition'])} if 'patientPosition' in self.state else {}),
                 'protection': self.guard_report(),

@@ -4,13 +4,13 @@ import type {SurgicalResponse} from './surgical-types';
  * It never grants edit/replay authority or crosses a source installation.
  */
 export class SurgicalComparisonContext {
-  private resident:{source:object;caseHash:string;sceneId:string;planning:SurgicalResponse['planning'];sectorPlanning:SurgicalResponse['sectorPlanning'];jointPlanning:SurgicalResponse['jointPlanning'];jointBaselineHistory:SurgicalResponse['jointBaselineHistory'];stagedPlanning:SurgicalResponse['stagedPlanning'];precisionPlanning:SurgicalResponse['precisionPlanning'];exitRecovery:SurgicalResponse['exitRecovery'];retractionStudy:SurgicalResponse['retractionStudy'];consequenceComparison:SurgicalResponse['consequenceComparison'];consequenceAnalysis:SurgicalResponse['consequenceAnalysis']}|null=null;
+  private resident:{source:object;caseHash:string;sceneId:string;strategyPlanning:SurgicalResponse['strategyPlanning'];planning:SurgicalResponse['planning'];sectorPlanning:SurgicalResponse['sectorPlanning'];jointPlanning:SurgicalResponse['jointPlanning'];jointBaselineHistory:SurgicalResponse['jointBaselineHistory'];stagedPlanning:SurgicalResponse['stagedPlanning'];precisionPlanning:SurgicalResponse['precisionPlanning'];exitRecovery:SurgicalResponse['exitRecovery'];retractionStudy:SurgicalResponse['retractionStudy'];consequenceComparison:SurgicalResponse['consequenceComparison'];consequenceAnalysis:SurgicalResponse['consequenceAnalysis']}|null=null;
   clear(){this.resident=null;}
   accept(response:SurgicalResponse,source:object,frame:boolean):SurgicalResponse{
     const prior=this.resident;
     if(!frame){
       this.resident={source,caseHash:response.caseHash,sceneId:response.view.scene.sceneId,
-        planning:response.planning,sectorPlanning:response.sectorPlanning,
+        strategyPlanning:response.strategyPlanning,planning:response.planning,sectorPlanning:response.sectorPlanning,
         jointPlanning:response.jointPlanning,jointBaselineHistory:response.jointBaselineHistory,
         stagedPlanning:response.stagedPlanning,precisionPlanning:response.precisionPlanning,exitRecovery:response.exitRecovery,retractionStudy:response.retractionStudy,consequenceComparison:response.consequenceComparison,consequenceAnalysis:response.consequenceAnalysis};
       return response;
@@ -19,6 +19,7 @@ export class SurgicalComparisonContext {
       this.clear();return response;
     }
     this.resident={...prior,
+      ...(Object.hasOwn(response,'strategyPlanning')?{strategyPlanning:response.strategyPlanning}:{}),
       ...(Object.hasOwn(response,'planning')?{planning:response.planning}:{}),
       ...(Object.hasOwn(response,'sectorPlanning')?{sectorPlanning:response.sectorPlanning}:{}),
       ...(Object.hasOwn(response,'jointPlanning')?{jointPlanning:response.jointPlanning}:{}),
@@ -38,6 +39,8 @@ export class SurgicalComparisonContext {
       reason:'Read-only observed replay. Return to the accepted common checkpoint and explicitly reassess.'
     }:savedAnalysis;
     return {...response,
+      ...(!Object.hasOwn(response,'strategyPlanning')&&this.resident.strategyPlanning!==undefined?
+        {strategyPlanning:this.resident.strategyPlanning?{...this.resident.strategyPlanning,current:false}:this.resident.strategyPlanning}:{}),
       ...(!Object.hasOwn(response,'planning')?{planning:this.resident.planning}:{}),
       ...(!Object.hasOwn(response,'sectorPlanning')?{sectorPlanning:this.resident.sectorPlanning}:{}),
       ...(!Object.hasOwn(response,'jointPlanning')&&this.resident.jointPlanning!==undefined?

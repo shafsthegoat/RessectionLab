@@ -63,6 +63,7 @@ test('angiography is automatic only for declared CTA, with MRI sequence and segm
   assert.equal(volumeSettings({preset:'ct-angiography'},'CT').preset,'ct-angiography');
   assert.equal(volumeSettings({preset:'ct-angiography'},'T1CE').preset,'mri');
   assert.equal(volumeSettings({},'segmentation only').enabled,false);assert.equal(volumeSettings({},'analytic signal').enabled,false);
+  assert.equal(volumeSettings({enabled:true},'generated image signal').enabled,false);
   assert.notDeepEqual(volumeTransfer('mri',[0,900],{},'T2').data,volumeTransfer('mri',[0,900],{},'T1').data);
   const custom={points:[[0,0,0,0,0],[1,.8,.5,.2,.4]]};
   assert.deepEqual(volumeTransfer('mri',[0,900],custom,'T1').data,volumeTransfer('mri',[0,900],custom,'T2').data);

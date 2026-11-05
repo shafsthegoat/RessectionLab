@@ -75,3 +75,14 @@ test('consequence policy evidence survives observed frames only as explicitly hi
   cache.accept(initial,source,false);cache.accept({...wire,consequenceAnalysis:null,consequenceComparison:null},source,true);
   const revoked=cache.accept(wire,source,true);assert.equal(revoked.consequenceAnalysis,null);assert.equal(revoked.consequenceComparison,null);
 });
+
+test('two-tool evidence survives observed frames as historical and cannot cross source identity',()=>{
+  const cache=new SurgicalComparisonContext(),source={},strategy={current:true,reportSeal:'sealed',publicPlan:{decision:{selectedId:'long'}}};
+  cache.accept({...full(),strategyPlanning:strategy},source,false);
+  const wire=frame(),display=cache.accept(wire,source,true);
+  assert.equal(display.strategyPlanning.current,false);assert.equal(display.strategyPlanning.publicPlan,strategy.publicPlan);
+  assert.equal(strategy.current,true);assert.equal(wire.strategyPlanning,undefined);
+  assert.equal(cache.accept(frame(),{},true).strategyPlanning,undefined);
+  cache.accept({...full(),strategyPlanning:strategy},source,false);
+  assert.equal(cache.accept({...frame(),strategyPlanning:null},source,true).strategyPlanning,null);
+});

@@ -182,6 +182,8 @@ def source_registration(primary,display):
         'sourceToReferenceRasMm':None,'registrationHash':None,'overlayPermitted':False}
     first=thaw_json(primary.metadata.get('workspace_registration'))
     second=thaw_json(display.metadata.get('workspace_registration'))
+    reviewed=reviewed_derived_registration(primary,display,first,second)
+    if reviewed is not None:return reviewed
     required={'kind','patient_id','group_id','source_sha256_by_modality','evidence_sha256','evidence_url'}
     if (not isinstance(first,dict) or first!=second or set(first)!=required or
             first['kind']!='source-provided-coregistration' or
@@ -209,3 +211,52 @@ def source_registration(primary,display):
                                             'sourceFrameHash':structural_frame_hash(display)}),
         'overlayPermitted':True}
     return association,registration
+
+
+def reviewed_derived_registration(primary,display,first,second):
+    """Admit a reviewed resampled observation without claiming upstream fusion.
+
+    The original rigid mapping records derivation; the displayed derivative is
+    already on the primary grid, so applying that mapping again would be wrong.
+    Acceptance of a dataset remains the separately checksummed release decision.
+    """
+    required={'kind','patient_id','source_person_id','group_id','source_sha256_by_modality',
+        'evidence_sha256','evidence_path','reviewer','review_decision','method_report_sha256',
+        'original_moving_image_sha256','original_annotation_sha256',
+        'original_moving_to_reference_ras_mm','reference_to_original_moving_ras_mm','registered_grid'}
+    if (not isinstance(first,dict) or first!=second or set(first)!=required or
+        first.get('kind')!='independently-reviewed-derived-registration-v1' or
+        first.get('patient_id')!=primary.case_id or primary.case_id!=display.case_id or
+        first.get('review_decision') not in {'accepted_for_bounded_engineering_alignment','accepted_for_registered_overlay_inspection_with_alignment_uncertainty'} or
+        first.get('registered_grid')!='reference-native-grid'):
+        return None
+    for name in ['evidence_sha256','method_report_sha256','original_moving_image_sha256','original_annotation_sha256']:
+        if not isinstance(first[name],str) or not re.fullmatch('[a-f0-9]{64}',first[name]):return None
+    if any(not isinstance(first[name],str) or not first[name].strip() for name in ['source_person_id','group_id','reviewer','evidence_path']):return None
+    if first['evidence_path'].startswith(('/','\\')) or '..' in first['evidence_path'].replace('\\','/').split('/'):return None
+    hashes=first['source_sha256_by_modality']
+    if not isinstance(hashes,dict):return None
+    for case in (primary,display):
+        contract=case.metadata.get('data_case',{})
+        if contract.get('person_id')!=first['source_person_id'] or contract.get('deformation') is not None:return None
+        refs=[ref for ref in case.source_refs if ref.source_id=='structural']
+        if (len(refs)!=1 or not isinstance(refs[0].sha256,str) or not re.fullmatch('[a-f0-9]{64}',refs[0].sha256)
+            or hashes.get(case.metadata.get('selected_modality'))!=refs[0].sha256):return None
+    try:
+        forward=np.asarray(first['original_moving_to_reference_ras_mm'],dtype=float)
+        pull=np.asarray(first['reference_to_original_moving_ras_mm'],dtype=float)
+        for matrix in [forward,pull]:
+            if (matrix.shape!=(4,4) or not np.isfinite(matrix).all() or
+                not np.allclose(matrix[3],[0,0,0,1],rtol=0,atol=1e-8) or
+                not np.allclose(matrix[:3,:3].T@matrix[:3,:3],np.eye(3),rtol=0,atol=1e-5) or
+                not np.isclose(np.linalg.det(matrix[:3,:3]),1.,rtol=0,atol=1e-5)):return None
+        if not np.allclose(forward@pull,np.eye(4),rtol=0,atol=1e-6):return None
+    except (TypeError,ValueError):return None
+    if (primary.frame!=display.frame or primary.mri.shape!=display.mri.shape or
+        not np.allclose(primary.affine,display.affine,rtol=0,atol=1e-6)):return None
+    return ({'kind':'source_dataset_identity','samePersonVerified':True,'sameTimeVerified':False},
+        {'status':'verified','reason':('Reviewed derived alignment for overlay inspection with unresolved alignment uncertainty; precise navigation is unsupported. ' if first['review_decision']=='accepted_for_registered_overlay_inspection_with_alignment_uncertainty' else 'Independently reviewed derived engineering alignment. ')+
+         'Current derivative is on the reference grid; original observations and rigid mapping retained. Timing and clinical accuracy unknown.',
+         'sourceToReferenceRasMm':np.eye(4).tolist(),
+         'registrationHash':semantic_digest({'declaration':first,'referenceFrameHash':structural_frame_hash(primary),'sourceFrameHash':structural_frame_hash(display)}),
+         'overlayPermitted':True})

@@ -1,4 +1,5 @@
 import {useSurgical} from "./use-surgical";
+import {caseImageEvidence,caseLayerEvidence,conditionalRehearsalNotice} from './data-case-evidence';
 import {SurgicalPanel} from "./SurgicalPanel";
 import {EnvironmentPreparationPanel} from './EnvironmentPreparationPanel';
 import {rehearsalPresentation,initialRehearsalPresentation} from './rehearsal-presentation';
@@ -689,7 +690,7 @@ export default function App() {
   const fusionSeries = !imaging.selected && primaryViewer.fusion?.seriesId ? imaging.series.find(s=>s.descriptor.seriesId===primaryViewer.fusion?.seriesId && s.descriptor.registration.overlayPermitted) : null;
   const registeredFusion = useMemo(()=>fusionSeries && payload && fusionSeries.descriptor.registration.sourceToReferenceRasMm ? {
     seriesId:fusionSeries.descriptor.seriesId,referenceCaseHash:payload.caseHash,
-    registration:{status:"source-provided" as const,overlayPermitted:true as const,sourceToReferenceRasMm:fusionSeries.descriptor.registration.sourceToReferenceRasMm},
+    registration:{status:fusionSeries.descriptor.registration.status==='verified'?'verified' as const:'source-provided' as const,overlayPermitted:true as const,sourceToReferenceRasMm:fusionSeries.descriptor.registration.sourceToReferenceRasMm},
     volume:fusionSeries.volume,label:fusionSeries.descriptor.modality,
   }:null,[fusionSeries,payload]);
   const surgicalApi = useMemo(()=>api?.surgicalRehearsal ? {
@@ -1433,7 +1434,14 @@ export default function App() {
         : null,
     [certifiedReplay, caseData, episodeVisible, displayedEpisodeView, displayedEpisodeStep,episodeWorkflow,activeContactView,activeContactStep],
   );
-  const synthetic = !!payload?.metadata.is_synthetic;
+  const imageEvidence=caseImageEvidence(payload?.metadata);
+  const synthetic = imageEvidence.synthetic;
+  const dataCase=payload?.metadata.data_case as Record<string,unknown>|undefined;
+  const syntheticOnAcquired=imageEvidence.onAcquiredHost;
+  const geometryOnBaseline=imageEvidence.geometryOnly;
+  const conditionalNotice=conditionalRehearsalNotice(payload?.metadata);
+  const alignmentUncertain=(payload?.metadata.workspace_registration as Record<string,unknown>|undefined)?.review_decision==='accepted_for_registered_overlay_inspection_with_alignment_uncertainty';
+  const generatedPrimaryImage=imageEvidence.generatedImage;
   const supportGate = researchSupportGate(payload);
   const needsSupport = supportGate.requiresEstimatedSupport;
   const canGenerate =
@@ -1446,11 +1454,11 @@ export default function App() {
   const fractionalAnnotation = payload?.metadata.fractional_annotation as
     | Record<string, unknown>
     | undefined;
-  const annotationDescription = synthetic ? "Generated engineering geometry" :
+  const annotationDescription = syntheticOnAcquired ? 'Mixed source annotations, estimates and synthetic geometry' : synthetic ? "Generated engineering geometry" :
     fractionalAnnotation?.derived_provenance === "estimated"
       ? "Threshold-derived annotation"
       : "Supplied annotation";
-  const title = synthetic
+  const title = synthetic&&!syntheticOnAcquired
     ? "Synthetic access fixture"
     : (payload?.caseId ?? "No case open");
 
@@ -1517,6 +1525,8 @@ export default function App() {
       </nav>
 
       <aside className="case-panel" id="case-evidence-panel">
+        {conditionalNotice&&<p className="poc-caution" role="status">{conditionalNotice}</p>}
+        {alignmentUncertain&&<p className="poc-caution" role="status">Derived MRA alignment is reviewed for overlays with unresolved quantitative accuracy. Precise navigation and clinical vascular clearance are unsupported; skull CT is unavailable.</p>}
         {workbenchTab==='rehearsal'?<>
           <div className="panel-heading"><span className="eyebrow">SURGICAL RESEARCH</span><button className="icon-button" aria-label="Collapse case panel" onClick={()=>setCasePanel(false)}><PanelLeftClose size={15}/></button></div>
           {native.binding ? <EnvironmentPreparationPanel key={native.binding.collectionId} binding={native.binding} busy={busy} onAnatomy={()=>setWorkbenchTab('data')} onPrepare={async options=>{
@@ -1544,6 +1554,7 @@ export default function App() {
             libraryFolder={libraryFolder} libraryError={libraryError} onChooseLibrary={api?.chooseCaseLibrary?()=>void chooseCaseLibrary():undefined}
             onOpen={id=>void act(async()=>{if(api?.openListedCase){const next=nativeApi?.openListedWorkspace?await nativeApi.openListedWorkspace(id):await api.openListedCase(id);if(isNativeBinding(next)){setPayload(null);setCaseData(null);await native.install(next);await api.workspaceInstalled?.({caseHash:next.collectionId,caseId:next.document.patient_id});setWorkbenchTab('anatomy')}else if(next){await installCase(next,api)}else return;}})}/></> : <>
             <div className="workspace-tabs"><button className={workbenchTab==='data'?'selected':''} onClick={()=>setWorkbenchTab('data')}>Scans</button><button className={workbenchTab==='anatomy'?'selected':''} onClick={()=>setWorkbenchTab('anatomy')}>Anatomy</button></div><h1 title={title}>{title}</h1><p className="case-subtitle">{displayedSource ? String(displayedSource.metadata.selected_modality??'Source image') : 'Open a case to begin'}</p>
+            {typeof displayedSource?.metadata.observation_role==='string'&&displayedSource.metadata.observation_role.startsWith('baseline_reference')&&<p role="status">Baseline reference acquisition · before synthetic tumor insertion.</p>}
             {workbenchTab==='data' && payload && displayedSource && <WorkbenchDataPanel source={payload} displayed={displayedSource} series={imaging.series} selectedId={imaging.selectedId}
               busy={busy||engineStopped} api={api} onSelect={imaging.select} onImport={request=>void act(()=>imaging.importSeries(request))}
               settings={primaryViewer} onSettingsChange={setPrimaryViewer}/>}
@@ -1551,12 +1562,13 @@ export default function App() {
               {payload && <label className="poc-scan-selector">Source scan<select aria-label="Source scan" value={imaging.selectedId??''} disabled={busy}
                 onChange={e=>imaging.select(e.target.value||null)}><option value="">{String(payload.metadata.selected_modality??'Reference image')} · reference</option>
                 {imaging.series.map(s=><option key={s.descriptor.seriesId} value={s.descriptor.seriesId}>{displaySeriesLabel(s.descriptor)}</option>)}</select></label>}
-              <AnatomyPanel layers={(displayedCase?.compartments??[]).map(layer=>({...layer,label:(displayedSource?.metadata.anatomy_layers as Record<string,{label?:string}>|undefined)?.[layer.name]?.label,provenance:anatomyDescription((displayedSource?.metadata.anatomy_layers as Record<string,AnatomyRecord>|undefined)?.[layer.name],imaging.selected?.descriptor.annotationKind==='estimated'?'Model estimate':annotationDescription)}))}
+              <AnatomyPanel layers={(displayedCase?.compartments??[]).map(layer=>({...layer,label:(displayedSource?.metadata.anatomy_layers as Record<string,{label?:string}>|undefined)?.[layer.name]?.label,provenance:anatomyDescription(caseLayerEvidence(displayedSource?.metadata,layer.name) as AnatomyRecord|undefined,imaging.selected?.descriptor.annotationKind==='estimated'?'Model estimate':annotationDescription)}))}
                 visibleLayers={displayedLayers} onVisibilityChange={setDisplayedLayers} settings={viewerSettings} onSettingsChange={setViewerSettings}
                 missingStructures={Array.isArray(displayedSource?.metadata.missing_anatomy)?displayedSource.metadata.missing_anatomy as string[]:['Skull','Vessels','Brain structures'].filter(name=>!displayedCase?.compartments.some(layer=>{
                   const kind=(displayedSource?.metadata.anatomy_layers as Record<string,{kind?:string}>|undefined)?.[layer.name]?.kind?.toLowerCase();
-                  const kinds=name==='Skull'?['skull','bone']:name==='Vessels'?['vessel','vessels']:['brain','soft_tissue'];
-                  return (kind!==undefined&&kinds.includes(kind))||layer.name.toLowerCase().includes(name==='Brain structures'?'brain':name.toLowerCase());
+                  const kinds=name==='Skull'?['skull','bone']:name==='Vessels'?['vessel','vessels','artery','vein','sinus']:['brain','soft_tissue'];
+                  const named=name==='Vessels'?/vessel|artery|arterial|vein|venous|sinus/i.test(layer.name):layer.name.toLowerCase().includes(name==='Brain structures'?'brain':name.toLowerCase());
+                  return (kind!==undefined&&kinds.includes(kind))||named;
                 }))}
                 provenanceLabel="Cached masks · no inference on view changes"/>
               <AnnotationCenterButton center={imaging.selected?null:annotationCenterMm} onCenter={setCursor}/>
@@ -1581,7 +1593,7 @@ export default function App() {
         <p className="case-subtitle">
           {displayedSource
             ? displayedSource.metadata.is_synthetic
-              ? "Geometry demonstration · no patient data"
+              ? syntheticOnAcquired?(geometryOnBaseline?'Synthetic target on acquired baseline image · geometry only':'Synthetic MRI appearance on acquired anatomy · engineering scenario'):"Geometry demonstration · no patient data"
               : displayedSource.compartments.length > 0
                 ? "Annotation-assisted structural workspace"
                 : "Source-image workspace · no target annotations"
@@ -1625,7 +1637,7 @@ export default function App() {
               <strong>
                 {displayedSource
                   ? String(
-                      displayedSource.metadata.is_synthetic ? "Generated analytic signal" : imaging.selected?.descriptor.modality ?? displayedSource.metadata.selected_modality ?? "Structural MRI",
+                      display.primaryOverlaysPermitted&&generatedPrimaryImage ? "Generated image signal" : imaging.selected?.descriptor.modality ?? displayedSource.metadata.selected_modality ?? "Structural MRI",
                     )
                   : "No MRI loaded"}
               </strong>
@@ -1874,7 +1886,7 @@ export default function App() {
               registeredFusion={native.binding?null:registeredFusion}
               diagnosticLayer={native.binding?null:diagnostic.view?.layer ?? null}
               diagnosticSourceSha256={diagnostic.view?.sourceSha256 ?? null}
-              generatedSignal={display.primaryOverlaysPermitted && synthetic}
+              generatedSignal={display.primaryOverlaysPermitted && generatedPrimaryImage}
               segmentationOnly={!native.binding && displayedSource?.metadata.generated_signal===true}
               publicGoal={!native.binding && display.primaryOverlaysPermitted ? publicGoalMarker : null}
               caseData={surgical.previewVolume??surgical.volume??displayedCase}
