@@ -6,7 +6,35 @@ external data root. The resumable ledger is `integrated-v1/ledger.json`.
 The current accepted catalog and its checksummed independent decisions determine
 capabilities; a native preparation flag does not grant acceptance.
 
-## Acquired CTA: five distinct source people
+## Reusable acquired CTA anatomy hosts
+
+TopCoW 004, 006, 012, 014 and 018 each have a `CTA-ANATOMY-v1` anatomy base.
+Each contains the original CTA in its native RAS+ grid, a coarse
+brain estimate, a local dense skull estimate derived from that CTA, and two
+partial vascular layers from the supplied artery and vein/sinus annotations.
+Each package retains six acquired originals and its existing TRAIN family.
+
+These baselines have no modeled target. The case reports bind the paired
+synthetic variants and prove that they share the same image, frame and four
+anatomy arrays. The target sits in the retained brain membership, so the
+baseline contains brain at those cells. Adding a tumor remains a separate
+scenario decision. The CTA stays the acquired reference in both packages.
+
+The brain estimate may include CSF. The local skull mask covers part of the
+calvarium. Skull base and cropped anatomy remain uncertain. The vascular masks
+cover selected vessels and sinuses. The host packages support anatomy inspection
+and scenario preparation. Instrument permissions and histories belong to the
+separate reviewed task cases.
+
+On the external data root, `integrated-v1/anatomy-hosts-v1/candidate-index.json`
+binds the native inputs, generated packages and preparation reports. To reproduce
+the anatomy preparation in a new output version, use the existing environment:
+
+```sh
+.venv/bin/python scripts/data_integrated_hosts.py --subject 006 --version reproduction-v1
+```
+
+## Original integrated CTA rehearsal variants
 
 TopCoW 004, 006, 012, 014 and 018 from the acquired TopBrain v3 (2026-08-17)
 release retain their original TRAIN assignments and

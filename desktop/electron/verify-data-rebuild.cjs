@@ -52,6 +52,24 @@ app.on('browser-window-created',(_event,window)=>{
       throw Error('Source rendering did not settle: '+await js('document.body.innerText'));
     };
     const capture=async name=>{await ready();assert.equal(window.isVisible(),false);fs.writeFileSync(path.join(output,name+'.png'),(await window.webContents.capturePage(undefined,{stayHidden:true,stayAwake:true})).toPNG());};
+    const inspectHostLayers=async()=>{
+      await click('Anatomy');
+      await wait(`document.querySelectorAll('.anatomy-layer').length>=4`);
+      const layers=await js(`[...document.querySelectorAll('.anatomy-layer-identity')].map(layer=>({
+        name:layer.querySelector('strong').textContent,
+        provenance:layer.querySelector('.anatomy-layer-origin').textContent,
+      }))`);
+      for(const structure of [/brain/i,/skull|calvari/i]){
+        assert(layers.some(layer=>structure.test(layer.name)&&/estimate/i.test(layer.provenance)),
+          `Expected a visible estimated layer for ${structure}`);
+      }
+      for(const structure of [/arterial/i,/venous|sinus/i]){
+        assert(layers.some(layer=>structure.test(layer.name)&&/^(Source-provided|Supplied) annotation\b/.test(layer.provenance)),
+          `Expected a visible supplied annotation for ${structure}`);
+      }
+      assert(!layers.some(layer=>/synthetic|tumor|target/i.test(layer.name)), 'An anatomy host must not contain a tumor or target layer');
+      return layers;
+    };
     const set=async(label,value)=>{await js(`(()=>{const el=document.querySelector('[aria-label='+${JSON.stringify(JSON.stringify(label))}+']');if(!el)throw Error('Missing '+${JSON.stringify(label)});for(let p=el.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;Object.getOwnPropertyDescriptor(el.tagName==='SELECT'?HTMLSelectElement.prototype:HTMLInputElement.prototype,'value').set.call(el,${JSON.stringify(value)});el.dispatchEvent(new Event(el.tagName==='SELECT'?'change':'input',{bubbles:true}))})()`);await delay(100);};
     try{
       if(process.env.DATA_REBUILD_REQUIRE_GPU_STATE==='1')await js(`(()=>{
@@ -72,6 +90,11 @@ app.on('browser-window-created',(_event,window)=>{
         report.checks.push('Explicit structures-only 3D display with unchanged full native source slices');
       }
       await capture('01-native-source');report.checks.push('Production importer and renderer open actual external native package');
+      if(process.env.DATA_REBUILD_EXPECT_ACQUIRED_HOST==='1'){
+        report.acquiredHost={layers:await inspectHostLayers()};
+        await capture('01a-host-anatomy-provenance');
+        report.checks.push('Actual CTA host displays estimated brain and CT skull with separate supplied arterial and venous layers');
+      }
       if(process.env.DATA_REBUILD_EXPECT_CONDITIONAL==='1'){
         assert((await js('document.body.innerText')).includes('Conditional research stage: scalp exposure is assumed; dural opening is not simulated.'));
         report.checks.push('Conditional superficial/dural assumptions and baseline CTA scope are visible');
@@ -176,6 +199,11 @@ app.on('browser-window-created',(_event,window)=>{
         await wait(`!!document.querySelector('.surgical-panel')`);
         await wait(`!!document.querySelector('[aria-label="Instrument action"]')||[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Verify saved replay'&&!b.disabled)`);
         if(await js(`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Verify saved replay'&&!b.disabled)`))await click('Verify saved replay');
+      }
+      if(report.acquiredHost){
+        report.acquiredHost.reopenedLayers=await inspectHostLayers();
+        assert.deepEqual(report.acquiredHost.reopenedLayers,report.acquiredHost.layers);
+        report.checks.push('Native save and reopen preserve all displayed host anatomy layers and their provenance');
       }
       await capture('04-native-reopened');report.checks.push('Actual UI reopens the saved native package');
       if(process.env.DATA_REBUILD_FUSION==='1'){
