@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prepare the CTA006 mineralized skull estimate as a separate display-only series."""
+"""Prepare individually reviewed mineralized skull estimates as display-only series."""
 from __future__ import annotations
 
 import argparse
@@ -19,10 +19,15 @@ from resectionlab.workspace_bundle import load_workspace, save_workspace, view_s
 from resectionlab.workspace_imaging import DisplaySource
 
 HOSTS = 'integrated-v1/anatomy-hosts-v1'
-HOST_ID = 'TopCoW-006-CTA-ANATOMY-v1'
+SUBJECTS = ('006', '012', '014', '018')
 REVIEW = 'integrated-v1/qc/independent/CTA-006-hybrid-preparation-candidate-decision-v1.json'
 PILOT = 'integrated-v1/anatomy/TopCoW-006/single-array-pilot-v1'
 SOURCE_SHEET = f'{PILOT}/qc/hybrid-density-three-plane-review.png'
+SCREEN = 'integrated-v1/qc/ct-skull-coverage-screen-v1.json'
+PANELS = 'integrated-v1/qc/ct-skull-coverage-source-comparisons-v1/index.json'
+SCREEN_FORMULA = 'Reviewed local skull OR (model prior skull AND acquired CTA scaled value >= 500)'
+LEGACY_PLANES = [(0, 145, 'Sagittal'), (1, 201, 'Coronal'),
+                 (2, 58, 'Inferior axial'), (2, 162, 'Superior axial')]
 MASK_NAME = 'broader_mineralized_skull_estimate'
 LIMITS = (
     'The broader mask estimates mineralized tissue using acquired CTA density inside a model-derived skull prior.',
@@ -42,14 +47,12 @@ def binary_input(path, case):
     return values.astype(bool)
 
 
-def inspect_overlay(case, broader, path):
+def inspect_overlay(case, broader, path, subject, planes):
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
     from matplotlib.lines import Line2D
 
-    planes = [(0, 145, 'Sagittal'), (1, 201, 'Coronal'),
-              (2, 58, 'Inferior axial'), (2, 162, 'Superior axial')]
     rows = (('Acquired CTA, bone window', (-250, 1250), {}),
             ('Acquired CTA, skull comparison', (-250, 1250),
              {'old local dense skull': ('#6dff82', case.compartments['estimated_skull']),
@@ -79,46 +82,95 @@ def inspect_overlay(case, broader, path):
                                  linestyles='dotted' if name == 'old local dense skull' else 'solid')
                 legend.setdefault(name, Line2D([], [], color=color, label=name,
                                   linestyle='dotted' if name == 'old local dense skull' else 'solid'))
-    figure.suptitle('CTA006 | Broader mineralized skull estimate for display only')
+    figure.suptitle(f'CTA{subject} | Broader mineralized skull estimate for display only')
     figure.legend(handles=legend.values(), loc='outside lower center', ncols=5, frameon=False)
     figure.savefig(path, dpi=140)
     plt.close(figure)
     return [{'axis': axis, 'index': index, 'name': title} for axis, index, title in planes]
 
 
-def build(root, version):
+def reviewed_screen(root, subject, authority_path, host_row, proposal_record, proposal):
+    """Require the subject's exact independently accepted screen and source panel."""
+    review = json.loads(authority_path.read_text())
+    family = f'TopCoW:{subject}'
+    if (review.get('schema') != 'independent-CTA-skull-display-preparation-v1'
+            or review.get('decision') != 'accepted_for_exact_display_only_native_export'
+            or not review.get('reviewer') or review.get('subject') != subject
+            or review.get('family_id') != family
+            or review.get('core_host') != {key: host_row[key] for key in ('path', 'sha256')}
+            or review.get('screen', {}).get('path') != SCREEN):
+        raise ValueError('Exact independent display-only skull export authority required')
+    screen = json.loads(checked_file(root, review['screen']).read_text())
+    panel_index = json.loads(safe_path(root, PANELS).read_text())
+    if (screen.get('schema') != 'readonly-source-bound-CTA-skull-coverage-screen-v1'
+            or screen.get('formula') != SCREEN_FORMULA
+            or panel_index.get('schema') != 'CTA-ct-skull-source-comparisons-v1'
+            or panel_index.get('numerical_screen_sha256') != review['screen']['sha256']):
+        raise ValueError('Source panels do not bind the reviewed numerical screen')
+    row = next(entry for entry in screen['rows'] if entry['person'] == family)
+    panel = next(entry for entry in panel_index['rows'] if entry['subject'] == subject)
+    panel_binding = {key: panel[key] for key in ('path', 'sha256')}
+    if (row['source_proposal'] != proposal_record or row['role'] != 'TRAIN'
+            or row['added_voxels'] != review.get('added_voxels')
+            or row['added_conflicts_by_existing_membership'] != {'brain': 0, 'arterial': 0, 'venous_sinus': 0}
+            or panel['arterial_conflict_voxels'] != 0 or review.get('source_panel') != panel_binding):
+        raise ValueError('Reviewed screen or panel has a different identity or retained-anatomy conflict')
+    sources = {'cta': proposal['sources'][0], 'supplied_vessels': proposal['sources'][1],
+               'skull_model': proposal['inputs']['model_skull'],
+               'local_skull': proposal['outputs']['observed_skull'], 'brain': proposal['outputs']['brain_estimate']}
+    if row['source_inputs'] != {name: {key: record[key] for key in ('path', 'sha256')}
+                               for name, record in sources.items()}:
+        raise ValueError('Reviewed screen does not bind the host source inputs')
+    checked_file(root, panel_binding)
+    return screen['formula'], row, panel_binding, panel['native_planes'], review['screen']
+
+
+def build(root, version, *, subject='006', authority=None):
     if not re.fullmatch(r'[A-Za-z0-9_-]+', version):
         raise ValueError('Use a plain immutable version token')
+    if subject not in SUBJECTS:
+        raise ValueError('Only CTA006, CTA012, CTA014 and CTA018 are eligible for skull display export')
+    if (subject == '006') != (authority is None):
+        raise ValueError('CTA012/014/018 require --authority; CTA006 uses its original review')
     started = time.perf_counter()
     root = checked_root(root, expected_uuid=UUID, required_bytes=2 * 1024**3)
-    directory = safe_path(root, f'integrated-v1/skull-display-{version}')
+    host_id = f'TopCoW-{subject}-CTA-ANATOMY-v1'
+    suffix = '' if subject == '006' else f'-CTA{subject}'
+    directory = safe_path(root, f'integrated-v1/skull-display{suffix}-{version}')
     if directory.exists():
         raise FileExistsError(f'Immutable candidate exists: {directory}')
     index_path = safe_path(root, f'{HOSTS}/candidate-index.json')
-    host_row = next(row for row in json.loads(index_path.read_text())['cases'] if row['case_id'] == HOST_ID)
+    host_row = next(row for row in json.loads(index_path.read_text())['cases'] if row['case_id'] == host_id)
     host_report_record = {'path': host_row['report_path'], 'sha256': host_row['report_sha256']}
     host_report = json.loads(checked_file(root, host_report_record).read_text())
     if host_report['sha256'] != host_row['sha256']:
         raise ValueError('Host receipt points to another primary package')
-    host, artifacts, workspace = load_workspace(checked_file(root, host_row))
-    if (host.case_id != HOST_ID or set(host.compartments) != set(ORDER) or workspace is None
-            or artifacts or workspace['sources'] or workspace['episode'] is not None):
-        raise ValueError('Exact target-free CTA006 core host required')
-
     proposal_record = host_report['source']['anatomy_proposal']
     proposal = json.loads(checked_file(root, proposal_record).read_text())
-    review_path = safe_path(root, REVIEW)
-    review = json.loads(review_path.read_text())
-    historical_sheet = {'path': SOURCE_SHEET, 'sha256': review['source_review_sheet_sha256']}
-    checked_file(root, historical_sheet)
     source = proposal['sources'][0]
     inputs = proposal['inputs']
-    if (review['schema'] != 'independent006-additive-density-spatial-prior-preparation-review-v1'
-            or review['decision'] != 'accepted_as_separate_additive_research_geometry_candidate_pending_actual_native_QC'
-            or source['sha256'] != review['source_sha256']
-            or inputs['model_brain']['sha256'] != review['brain_mask_sha256']
-            or inputs['model_skull']['sha256'] != review['model_skull_sha256']):
-        raise ValueError('CTA006 spatial prior and source do not match the preparation review')
+    screen_row, screen_binding = None, None
+    if subject == '006':
+        review_path = safe_path(root, REVIEW)
+        review = json.loads(review_path.read_text())
+        historical_sheet = {'path': SOURCE_SHEET, 'sha256': review['source_review_sheet_sha256']}
+        checked_file(root, historical_sheet)
+        if (review['schema'] != 'independent006-additive-density-spatial-prior-preparation-review-v1'
+                or review['decision'] != 'accepted_as_separate_additive_research_geometry_candidate_pending_actual_native_QC'
+                or source['sha256'] != review['source_sha256']
+                or inputs['model_brain']['sha256'] != review['brain_mask_sha256']
+                or inputs['model_skull']['sha256'] != review['model_skull_sha256']):
+            raise ValueError('CTA006 spatial prior and source do not match the preparation review')
+        formula, expected_voxels, planes = review['formula'], review['hybrid_voxels_independently_reproduced'], LEGACY_PLANES
+    else:
+        review_path = safe_path(root, authority)
+        formula, screen_row, historical_sheet, planes, screen_binding = reviewed_screen(
+            root, subject, review_path, host_row, proposal_record, proposal)
+        expected_voxels = round(screen_row['candidate_skull_ml'] * 1000 / screen_row['voxel_volume_mm3'])
+    host, artifacts, workspace = load_workspace(checked_file(root, host_row))
+    if (host.case_id != host_id or set(host.compartments) != set(ORDER) or workspace is None
+            or artifacts or workspace['sources'] or workspace['episode'] is not None):
+        raise ValueError('Exact target-free CTA core host required')
     ct = nib.load(checked_file(root, source))
     if (ct.header.get_xyzt_units()[0] != 'mm' or not np.array_equal(ct.affine, host.affine)
             or not np.array_equal(ct.get_fdata(dtype=np.float32), host.mri)):
@@ -129,14 +181,17 @@ def build(root, version):
     model = binary_input(checked_file(root, inputs['model_skull']), host)
     candidate = old | (model & (host.mri >= 500))
     added = candidate & ~old
-    if (np.count_nonzero(candidate) != review['hybrid_voxels_independently_reproduced']
+    if (np.count_nonzero(candidate) != expected_voxels
             or any(host.compartments[name][added].any() for name in ORDER if name != 'estimated_skull')):
         raise ValueError('Broader skull support differs from reviewed count or overlaps retained brain or vessels')
     low_density_excluded = model & ~candidate
     covered_faces = {f'{axis}:{index}': int(np.count_nonzero(np.take(candidate, index, axis=axis)))
                      for axis in range(3) for index in (0, -1)}
+    if screen_row is not None and (np.count_nonzero(added) != screen_row['added_voxels']
+            or list(covered_faces.values()) != screen_row['candidate_boundary_voxels_per_face']):
+        raise ValueError('Reconstructed skull differs from the reviewed screen')
     mask_name = 'broader-mineralized-skull-estimate.nii.gz'
-    project_name = f'{HOST_ID}-broader-skull-display-{version}.ressectionlab'
+    project_name = f'{host_id}-broader-skull-display-{version}.ressectionlab'
     checked_root(root, expected_uuid=UUID, required_bytes=2 * 1024**3)
     with tempfile.TemporaryDirectory(prefix='.skull-display-', dir=directory.parent) as temp:
         staging = Path(temp) / directory.name
@@ -151,7 +206,7 @@ def build(root, version):
         structural = next(ref for ref in host.source_refs if ref.source_id == 'structural')
         estimate = SourceRef('supplied_target_annotation', (directory / mask_name).as_uri(),
                              estimate_binding['sha256'], native_frame='RAS+', provenance='estimated')
-        display = CaseData(case_id=f'{HOST_ID}-broader-skull-display', mri=host.mri,
+        display = CaseData(case_id=f'{host_id}-broader-skull-display', mri=host.mri,
                            affine=host.affine, frame=host.frame, compartments={MASK_NAME: candidate},
                            source_refs=(structural, estimate), metadata={
                                'display_label': 'Acquired CTA + broader mineralized skull estimate',
@@ -176,15 +231,15 @@ def build(root, version):
                 or saved['imagingState']['selectedSeriesId'] != series.identity(host)):
             raise ValueError('Native display export changed primary anatomy, originals, or auxiliary evidence')
         overlay = staging / 'source-skull-comparison.png'
-        planes = inspect_overlay(reopened, saved['sources'][0].case.compartments[MASK_NAME], overlay)
+        planes = inspect_overlay(reopened, saved['sources'][0].case.compartments[MASK_NAME], overlay, subject, planes)
         report = {
-            'schema': 'ressectionlab-CTA006-broader-skull-display-candidate-v1',
+            'schema': f'resectionlab-CTA{subject}-broader-skull-display-candidate-v1',
             'path': str((directory / project_name).relative_to(root)), 'sha256': sha256_file(native),
-            'bytes': native.stat().st_size, 'case_hash': reopened.semantic_hash, 'family_id': 'TopCoW:006',
+            'bytes': native.stat().st_size, 'case_hash': reopened.semantic_hash, 'family_id': f'TopCoW:{subject}',
             'primary_host': host_row, 'display_series': series.manifest(host), 'accepted': False,
             'primary_material_memberships_unchanged': True, 'instrument_task_authorized': False,
             'clinical_validation': False, 'new_source_people': 0, 'new_synthetic_variants': 0,
-            'formula': review['formula'], 'source_ct': {key: source[key] for key in ('path', 'sha256')},
+            'formula': formula, 'source_ct': {key: source[key] for key in ('path', 'sha256')},
             'source_proposal': proposal_record, 'model_skull': inputs['model_skull'],
             'preparation_review': binding(root, review_path), 'historical_overlay': historical_sheet,
             'estimated_mask': estimate_binding, 'estimated_mask_array_hash': array_digest(candidate),
@@ -197,6 +252,8 @@ def build(root, version):
             'production_workspace_roundtrip': 'passed', 'limitations': list(LIMITS),
             'elapsed_seconds': time.perf_counter() - started, 'builder_sha256': sha256_file(__file__),
         }
+        if screen_binding is not None:
+            report['numerical_screen'] = screen_binding
         atomic_json(staging / 'report.json', report)
         checked_root(root, expected_uuid=UUID)
         staging.rename(directory)
@@ -207,5 +264,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root')
     parser.add_argument('--version', default='v1')
+    parser.add_argument('--subject', choices=SUBJECTS, default='006')
+    parser.add_argument('--authority', help='Data-root-relative independent export decision for CTA012/014/018')
     args = parser.parse_args()
-    print(json.dumps(build(args.root, args.version), indent=2))
+    print(json.dumps(build(args.root, args.version, subject=args.subject, authority=args.authority), indent=2))
