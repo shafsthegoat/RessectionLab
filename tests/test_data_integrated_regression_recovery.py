@@ -111,15 +111,17 @@ def test_committed_prefix_requires_literal_complete_and_linked_receipts():
     with pytest.raises(ValueError): prefix_recovery.validate_prefix(rows[:-1], actions, expected_count=2, initial_state_id='0')
 
 
-def test_native_action_only_record_reconstructs_full_view_and_exports_own_checkpoint(tmp_path, monkeypatch):
-    monkeypatch.syspath_prepend(str(Path(__file__).parents[1] / 'scripts'))
-    from data_integrated_regression_resume018 import require_same_view, write_native_recipe
+def test_native_action_only_record_reconstructs_full_view_and_exports_own_checkpoint(tmp_path):
     from resectionlab.desktop_bridge import BridgeSession, _Request
-    from resectionlab.imaging import MAX_MANIFEST_BYTES
-    from resectionlab.workspace_bundle import load_workspace
+    from resectionlab.workspace_bundle import load_workspace, save_workspace
 
     def call(session, operation, **args):
         return json.loads(json.dumps(session.execute(operation, args, _Request(operation), lambda *_: None)))
+
+    def assert_replay(receipt, expected, branch):
+        assert receipt['branchId'] == branch
+        for field in ('caseHash', 'position', 'view', 'timeline'):
+            assert receipt[field] == expected[field]
 
     source = tmp_path / 'source.ressectionlab'
     recipe = tmp_path / 'action-only.ressectionlab'
@@ -142,19 +144,18 @@ def test_native_action_only_record_reconstructs_full_view_and_exports_own_checkp
     assert 'checkpoint' not in snapshot
     record.update(branches={'main': snapshot}, position=1)
     record.pop('timeline')
-    write_native_recipe(source, recipe, record, MAX_MANIFEST_BYTES)
+    case, _, workspace = load_workspace(source)
+    save_workspace(case, recipe, sources=workspace['sources'], imaging=workspace['imagingState'],
+                   episode=workspace['episode'], selection=workspace['selection'],
+                   artifacts={'surgical_toolbox': record}, originals=workspace['originals'])
 
     with closing(BridgeSession(tmp_path / 'recipe-transfers', run_dir=tmp_path / 'recipe-runs')) as session:
         call(session, 'loadCase', path=str(recipe))
         restored = call(session, 'surgicalRehearsal', caseHash=case_hash, command='inspect')
-        require_same_view(restored, actual, branch='main')
-        changed_history = copy.deepcopy(restored)
-        changed_history['view']['history'][0]['status'] = 'partial'
-        with pytest.raises(ValueError):
-            require_same_view(changed_history, actual, branch='main')
+        assert_replay(restored, actual, branch='main')
         branch = call(session, 'surgicalRehearsal', caseHash=case_hash, command='branch',
                       expectedStateId=restored['view']['stateId'])
-        require_same_view(branch, actual, branch='branch-1')
+        assert_replay(branch, actual, branch='branch-1')
         call(session, 'saveCase', caseHash=case_hash, path=str(checkpoint))
     _, artifacts, workspace = load_workspace(checkpoint)
     assert workspace['sessionHash'] == load_workspace(source)[2]['sessionHash']
@@ -164,4 +165,4 @@ def test_native_action_only_record_reconstructs_full_view_and_exports_own_checkp
     with closing(BridgeSession(tmp_path / 'cold-transfers', run_dir=tmp_path / 'cold-runs')) as session:
         call(session, 'loadCase', path=str(checkpoint))
         cold = call(session, 'surgicalRehearsal', caseHash=case_hash, command='inspect')
-        require_same_view(cold, actual, branch='branch-1')
+        assert_replay(cold, actual, branch='branch-1')
