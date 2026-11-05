@@ -34,12 +34,14 @@ the anatomy preparation in a new output version, use the existing environment:
 .venv/bin/python scripts/data_integrated_hosts.py --subject 006 --version reproduction-v1
 ```
 
-CTA006 has a separate native project with a broader skull overlay. The overlay
-uses the original CTA density within a reviewed model prior and shows more of the
-mineralized shell and skull base. Lower-density bone and crop boundaries remain
-uncertain. The app opens the estimate as a display series. The primary case
-retains the four original material memberships. The external handoff links the
-project, source comparisons and independent desktop review.
+CTA006, CTA012, CTA014 and CTA018 each have a separate native project with a
+broader skull overlay. The overlay uses the original CTA density within a
+reviewed model prior and shows more of the mineralized shell and skull base.
+Lower-density bone and crop boundaries remain uncertain. The app opens the
+estimate as a display series. The primary case retains the four original
+material memberships. The wider CTA004 estimate was withheld because it overlaps
+279 supplied arterial voxels. The external handoff links the projects, source
+comparisons and independent desktop reviews.
 
 ## Original integrated CTA rehearsal variants
 
@@ -119,6 +121,15 @@ unsupported. The application displays these limits and uses identity mapping for
 the already resampled image, preventing a second application of the original rigid
 transform. Original rigid transforms, annotation/source hashes and review receipts
 remain in provenance.
+
+The additional superficial IXI077 variant has a saved conditional CUSA rehearsal.
+The procedure assumes prior scalp exposure, a local skull opening and dural
+opening. It retains the original T1 and both MRA source grids. The stock CUSA
+advanced 26.31 mm along the fixed route, removed 28.48 mm³ of synthetic target and
+331.17 mm³ of modeled brain, then withdrew along the same line. The target center
+remained 3.69 mm farther along the route. The recorded vessel encounter count
+applies to the supplied partial labels. The desktop shows both the operating and
+withdrawn states, with an exact native save and reopen.
 
 ## Open and reproduce
 

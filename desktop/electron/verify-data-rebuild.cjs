@@ -52,6 +52,11 @@ app.on('browser-window-created',(_event,window)=>{
       throw Error('Source rendering did not settle: '+await js('document.body.innerText'));
     };
     const capture=async name=>{await ready();assert.equal(window.isVisible(),false);fs.writeFileSync(path.join(output,name+'.png'),(await window.webContents.capturePage(undefined,{stayHidden:true,stayAwake:true})).toPNG());};
+    const completedFrame=async stateId=>{
+      const state=JSON.stringify(stateId);
+      await wait(`(()=>{const p=window.__dataRebuildFrames,s=${state},v=p?.publications.findLast(v=>v.surgicalStateId===s);return document.querySelector('.surgical-panel')?.dataset.stateId===s&&!!v&&p.gpu.some(g=>g.serial===v.frameSerial&&g.surgicalStateId===s&&g.sourceCaseHash===v.sourceCaseHash&&g.completed&&g.at<=v.at)})()`);
+      return js(`(()=>{const p=window.__dataRebuildFrames,v=p.publications.findLast(v=>v.surgicalStateId===${state});return{publication:v,gpu:p.gpu.findLast(g=>g.serial===v.frameSerial&&g.surgicalStateId===v.surgicalStateId&&g.completed)}})()`);
+    };
     const inspectHostLayers=async()=>{
       await click('Anatomy');
       await wait(`document.querySelectorAll('.anatomy-layer').length>=4`);
@@ -165,7 +170,8 @@ app.on('browser-window-created',(_event,window)=>{
         if(await js(`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Prepare instrument scene'&&!b.disabled)`))await click('Prepare instrument scene');
         await wait(`!!document.querySelector('[aria-label="Instrument action"]')`);await ready();await capture('02-rehearsal');
         report.checks.push('Actual production surgical scene initializes; missing evidence remains unavailable');
-        if(process.env.DATA_REBUILD_EXPECT_TASK_DOMAIN==='1'){
+        const checkTaskDomain=process.env.DATA_REBUILD_EXPECT_TASK_DOMAIN==='1';
+        if(checkTaskDomain||process.env.DATA_REBUILD_EXPECT_STATE_ID||process.env.DATA_REBUILD_REQUIRE_GPU_STATE==='1'){
           const caseHash=report.requests.findLast(row=>row.operation==='research:surgicalRehearsal'&&row.caseHash)?.caseHash;
           assert(caseHash,'Actual rehearsal source identity is required');
           const before=await js(`window.resectionApi.surgicalRehearsal({caseHash:${JSON.stringify(caseHash)},command:'inspect'})`);
@@ -176,17 +182,34 @@ app.on('browser-window-created',(_event,window)=>{
             report.checks.push('Actual desktop verifies the exact saved physical action prefix and metrics');
           }
           if(process.env.DATA_REBUILD_REQUIRE_GPU_STATE==='1'){
-            await wait(`(()=>{const p=window.__dataRebuildFrames,s=${JSON.stringify(before.view.stateId)},v=p?.publications.findLast(v=>v.surgicalStateId===s);return document.querySelector('.surgical-panel')?.dataset.stateId===s&&!!v&&p.gpu.some(g=>g.serial===v.frameSerial&&g.surgicalStateId===s&&g.sourceCaseHash===v.sourceCaseHash&&g.completed&&g.at<=v.at)})()`);
-            report.physicalReplayGpu=await js(`(()=>{const p=window.__dataRebuildFrames,v=p.publications.findLast(v=>v.surgicalStateId===${JSON.stringify(before.view.stateId)});return{publication:v,gpu:p.gpu.findLast(g=>g.serial===v.frameSerial&&g.surgicalStateId===v.surgicalStateId&&g.completed)}})()`);
+            report.physicalReplayGpu=await completedFrame(before.view.stateId);
             report.checks.push('Accepted physical state is bound to its actual completed GPU frame');
           }
-          const denied=await js(`window.resectionApi.surgicalRehearsal({caseHash:${JSON.stringify(caseHash)},command:'preview',expectedStateId:${JSON.stringify(before.view.stateId)},action:{slot:'left',operation:'place',duration:.1,pose:{position:[10000,10000,10000],quaternion:[0,0,0,1]}}})`);
-          const after=await js(`window.resectionApi.surgicalRehearsal({caseHash:${JSON.stringify(caseHash)},command:'inspect'})`);
-          assert(JSON.stringify(denied).includes('REVIEWED_TASK_DOMAIN_OUTSIDE'));
-          assert.equal(after.view.stateId,before.view.stateId);
-          report.taskDomainProbe={sourceCaseHash:caseHash,stateBefore:before.view.stateId,stateAfter:after.view.stateId,
-            refusal:'REVIEWED_TASK_DOMAIN_OUTSIDE',api:'Actual renderer preload -> production surgicalRehearsal preview',uncommitted:true};
-          report.checks.push('Production desktop rejects unknown-space whole-tool placement with unchanged state');
+          if(process.env.DATA_REBUILD_EXPECT_OPERATING_STATE_ID){
+            const operatingState=process.env.DATA_REBUILD_EXPECT_OPERATING_STATE_ID;
+            await click('Previous recorded state');
+            const gpu=await completedFrame(operatingState);
+            const operating=await js(`window.resectionApi.surgicalRehearsal({caseHash:${JSON.stringify(caseHash)},command:'inspect'})`);
+            assert.equal(operating.view.stateId,operatingState);
+            assert.equal(operating.position,before.position-1);
+            assert.equal(operating.view.slots.right.instrument,'cusa');
+            assert.equal(operating.view.slots.right.inserted,true);
+            assert(operating.view.metrics.targetRemovedMm3>0);
+            report.operatingReplay={stateId:operatingState,position:operating.position,metrics:operating.view.metrics,slots:operating.view.slots,gpu};
+            await capture('02b-recorded-target-effect');
+            await click('Next recorded state');
+            await completedFrame(before.view.stateId);
+            report.checks.push('Actual replay controls render the recorded target effect and return to the verified withdrawal');
+          }
+          if(checkTaskDomain){
+            const denied=await js(`window.resectionApi.surgicalRehearsal({caseHash:${JSON.stringify(caseHash)},command:'preview',expectedStateId:${JSON.stringify(before.view.stateId)},action:{slot:'left',operation:'place',duration:.1,pose:{position:[10000,10000,10000],quaternion:[0,0,0,1]}}})`);
+            const after=await js(`window.resectionApi.surgicalRehearsal({caseHash:${JSON.stringify(caseHash)},command:'inspect'})`);
+            assert(JSON.stringify(denied).includes('REVIEWED_TASK_DOMAIN_OUTSIDE'));
+            assert.equal(after.view.stateId,before.view.stateId);
+            report.taskDomainProbe={sourceCaseHash:caseHash,stateBefore:before.view.stateId,stateAfter:after.view.stateId,
+              refusal:'REVIEWED_TASK_DOMAIN_OUTSIDE',api:'Actual renderer preload -> production surgicalRehearsal preview',uncommitted:true};
+            report.checks.push('Production desktop rejects unknown-space whole-tool placement with unchanged state');
+          }
         }
         await set('Instrument action','inspect');await click('Preview');
         await wait(`document.querySelector('.surgical-panel').textContent.includes('Preview · uncommitted')${process.env.DATA_REBUILD_EXPECT_TASK_DOMAIN==='1'?"||document.querySelector('.surgical-panel').textContent.includes('REVIEWED_TASK_DOMAIN')":''}`);await ready();await capture('03-inspect-preview');
@@ -208,6 +231,10 @@ app.on('browser-window-created',(_event,window)=>{
         await wait(`!!document.querySelector('.surgical-panel')`);
         await wait(`!!document.querySelector('[aria-label="Instrument action"]')||[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Verify saved replay'&&!b.disabled)`);
         if(await js(`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Verify saved replay'&&!b.disabled)`))await click('Verify saved replay');
+        if(report.physicalReplay){
+          await wait(`document.querySelector('.surgical-panel')?.dataset.stateId===${JSON.stringify(report.physicalReplay.stateId)}`);
+          report.checks.push('Reopened desktop shows the same verified physical state');
+        }
       }
       if(report.acquiredHost){
         report.acquiredHost.reopenedLayers=await inspectHostLayers();
