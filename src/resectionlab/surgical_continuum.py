@@ -44,6 +44,8 @@ def _number(value, low, high, label):
 def validate(scene):
     p = scene.properties.get(PROPERTY)
     if p is None:
+        if 'retractorSurfaceContactV1' in scene.properties:
+            raise ValueError('RETRACTOR_SURFACE_REQUIRES_PROPORTIONAL_CONTINUUM')
         if 'continuumLinearSolveV1' in scene.properties:
             raise ValueError('CONTINUUM_CONTACT_REQUIRES_CONTINUUM')
         return None
@@ -81,6 +83,8 @@ def validate(scene):
     if 'continuumLinearSolveV1' in scene.properties:
         from .surgical_continuum_solve import validate as validate_solve
         validate_solve(scene,p)
+    from .surgical_retractor_runtime import validate as validate_retractor
+    validate_retractor(scene,p)
     return p
 
 
@@ -243,12 +247,12 @@ def check_support(mesh, fixed_nodes, held_cells):
             raise ValueError('CONTINUUM_UNSUPPORTED_RIGID_COMPONENT: explicit support is required')
 
 
-def _system(engine, ids, anchors, blocked, p, h):
+def _system(engine, ids, anchors, blocked, p, h, *, excluded_contact_slots=()):
     from .surgical_deformation_v2 import _neighbors as old_neighbors
     # Source arrays/material declarations are shared, never mutable episode
     # state. Refuse an exchanged source instead of reusing a stale factorization.
     engine.scene.require_cache_source()
-    holds = {key: tuple(sorted(set(hold['cells']) & set(ids))) for key, hold in engine.state['holds'].items() if 'target' in hold}
+    holds = {key: tuple(sorted(set(hold['cells']) & set(ids))) for key, hold in engine.state['holds'].items() if 'target' in hold and key not in excluded_contact_slots}
     solver=engine.scene.properties.get('continuumLinearSolveV1')
     fast=solver is not None and solver['method']=='proportional-history-compliance'
     signature = (tuple(ids), tuple(anchors), tuple(sorted(blocked)), tuple(sorted(holds.items())),
@@ -428,6 +432,8 @@ def tick(engine, dt, diagnostic=None):
         state['cornerDisplacementMm'].pop(key)
         for memory in state['memoryDisplacementMm']: memory.pop(key)
     if not ids:
+        if 'retractorSurfaceContactV1' in engine.state:
+            engine.state['retractorSurfaceContactV1'].update(queue=[],observed={},solved={})
         state['cornerDisplacementMm'] = {}; state['memoryDisplacementMm'] = [{} for _ in p['relaxationSeconds']]
         if 'activeElements' in state:
             state.update(activeElements=0, activeDofs=0, handleReactionsN={})
@@ -438,8 +444,12 @@ def tick(engine, dt, diagnostic=None):
     h = settings['fixedStepSeconds']; total = model['remainderSeconds'] + dt
     steps = int(np.floor((total + 1e-12) / h))
     model['remainderSeconds'] = max(0., round(total - steps*h, 14))
+    from . import surgical_retractor_runtime as retractor
+    surface_contact=retractor.enabled(engine)
+    if surface_contact:retractor.enqueue(engine,dt)
     if not steps: return
-    system = _system(engine, ids, anchors, blocked, p, h)
+    system = _system(engine, ids, anchors, blocked, p, h,
+        excluded_contact_slots=tuple(engine.state['holds']) if surface_contact else ())
     mesh = system['mesh']; matrices = system['matrices']; free = system['free']
     unpack=_unpack_vectorized if engine.scene.properties.get('continuumLinearSolveV1',{}).get('historyUnpack')=='source-owner-vectorized' else _unpack
     u = unpack(mesh, state['cornerDisplacementMm'])
@@ -459,6 +469,8 @@ def tick(engine, dt, diagnostic=None):
         forces = gravity_forces_n(engine, mesh.cells)
         for nodes, force in zip(mesh.element_nodes, forces):
             for n in nodes: gravity[3*n:3*n+3] += force / 8.
+    if surface_contact:
+        return retractor.advance(engine,system,u,memories,gravity,steps,h,diagnostic)
     handle_rhs = np.zeros_like(u); targets = []
     for key, c, nodes, k in system['contacts']:
         hold = engine.state['holds'][key]

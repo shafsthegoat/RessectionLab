@@ -26,7 +26,14 @@ def envelopes(tool, parameters, position, quaternion, inflation=0.):
         half = parameters.get('jawOpeningMm', 2.) / 2
         result.extend(capsule([sign * half, 0, -depth], [sign * half, 0, 0], .35, 'working') for sign in (-1, 1))
     elif shape in ('blade', 'elevator', 'kerf'):
-        result.extend(capsule([-radius, 0, -z], [radius, 0, -z], .4, 'working') for z in (0., min(depth, 5.)))
+        if shape=='blade' and parameters.get('retractorFaceContactRevision')==1:
+            # Cover the whole finite pad, including the interior between the
+            # historical two crossbars. Rounded-edge contact remains unqualified.
+            length=min(depth,5.);count=max(1,int(np.ceil(length/.25)))
+            width=float(np.hypot(.4,length/count/2))
+            result.extend(capsule([-radius,0,-z],[radius,0,-z],width,'working') for z in np.linspace(0,length,count+1))
+        else:
+            result.extend(capsule([-radius, 0, -z], [radius, 0, -z], .4, 'working') for z in (0., min(depth, 5.)))
     else:
         result.append(capsule([0, 0, -min(depth, 3.)], [0, 0, 0], radius, 'working'))
     return result

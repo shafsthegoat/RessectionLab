@@ -11,6 +11,8 @@ from resectionlab.surgical_observed_cache import (
     FrameAdmission, ImplementationChanged, light_implementation_seal)
 from resectionlab.surgical_prefix_replay import SurgicalPrefixReplay, PrefixInvalidated
 from resectionlab import surgical_idle_native as native
+from resectionlab import surgical_retractor_runtime as retractor
+from resectionlab.surgical_proof_cache import implementation_epoch
 
 
 def empty_engine():
@@ -83,3 +85,16 @@ def test_unavailable_selected_native_refuses_old_observed_and_prefix_owners(monk
     selected.pop('unavailable')
     with pytest.raises(PrefixInvalidated):
         prefix.seek(0)
+
+
+def test_loaded_retractor_change_invalidates_replay_and_strategy_proofs(monkeypatch):
+    fingerprints = (implementation_fingerprint, light_implementation_seal, implementation_epoch)
+    original = tuple(fingerprint() for fingerprint in fingerprints)
+    assert all(value is not None for value in original)
+
+    def changed(state, h):
+        return {}
+
+    monkeypatch.setattr(retractor._consume, '__code__', changed.__code__)
+    assert all(fingerprint() != previous
+               for fingerprint, previous in zip(fingerprints, original, strict=True))

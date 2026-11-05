@@ -1,0 +1,181 @@
+{
+  "schema": "ressectionlab-integrated-milestone-reference-v1",
+  "data_root_environment": "RESSECTIONLAB_DATA_ROOT",
+  "release_id": "2026-10-31-integrated-rehearsal-v1",
+  "release": {
+    "path": "catalog/releases/2026-10-31-integrated-rehearsal-v1.json",
+    "sha256": "89fd56fab2c26e4bde57c8fda82b23d9d8e4c73dbc8dfb33eb7d4bfce40685a3"
+  },
+  "independent_review": {
+    "path": "integrated-v1/qc/independent/release-decisions-v1.json",
+    "sha256": "d878934b0cff1c08c1e21d5307ff7db3ac0af069e41f2cf5f33e743635af019c"
+  },
+  "counts": {
+    "packages_before": 355,
+    "packages_after": 362,
+    "source_person_families": 130,
+    "synthetic_variants_before": 200,
+    "synthetic_variants_after": 207,
+    "new_source_people": 0,
+    "integrated_CTA_people": 5,
+    "healthy_approximate_overlay_people": 2,
+    "acquired_case_target_reach_successes": 0,
+    "exact_acquired_tumor_MRI_skull_CT_dedicated_angiography_subjects": 0
+  },
+  "full_goal_complete": false,
+  "report": "integrated-v1/report.md",
+  "handoff": "integrated-v1/handoff.json",
+  "reproduction_commands": "integrated-v1/reproduce-commands.json",
+  "validation": "integrated-v1/validation.json",
+  "cases": [
+    {
+      "person_id": "TopCoW:004",
+      "case_id": "TopCoW-004-CTA-INTEGRATED-integration-conditional-stage-v3",
+      "path": "cases/synthetic/TopCoW-004-CTA-INTEGRATED-integration-conditional-stage-v3.ressectionlab",
+      "sha256": "51d303c084d2b55a558b19db7dae6b1413d357df199bd47d287bb87fc4faace9",
+      "role": "TRAIN",
+      "capabilities": [
+        "unchanged_native_CTA_and_partial_supplied_vascular_reference_inspection",
+        "reviewed_local_superior_intracranial_and_dense_calvarial_geometry",
+        "source_frame_geometry_only_synthetic_target",
+        "bounded_conditional_calvarial_drilling_and_correct_material_refusal_fixture",
+        "full_instrument_reviewed_task_domain_refusal",
+        "exact_public_physical_history_replay_and_actual_hidden_app_save_reopen"
+      ],
+      "withheld": [
+        "intact-head access",
+        "simulated scalp/dura opening",
+        "target reach",
+        "clinical safety",
+        "full brain/skull/vascular coverage"
+      ]
+    },
+    {
+      "person_id": "TopCoW:006",
+      "case_id": "TopCoW-006-CTA-INTEGRATED-integration-conditional-stage-v3",
+      "path": "cases/synthetic/TopCoW-006-CTA-INTEGRATED-integration-conditional-stage-v3.ressectionlab",
+      "sha256": "4b5a20fe1cb910d75ce3738af8436e6eaaa7356bf8de40a2f34d94dfc70120ab",
+      "role": "TRAIN",
+      "capabilities": [
+        "unchanged_native_CTA_and_partial_supplied_vascular_reference_inspection",
+        "reviewed_local_superior_intracranial_and_dense_calvarial_geometry",
+        "source_frame_geometry_only_synthetic_target",
+        "bounded_conditional_calvarial_drilling_and_correct_material_refusal_fixture",
+        "full_instrument_reviewed_task_domain_refusal",
+        "exact_public_physical_history_replay_and_actual_hidden_app_save_reopen"
+      ],
+      "withheld": [
+        "intact-head access",
+        "simulated scalp/dura opening",
+        "target reach",
+        "clinical safety",
+        "full brain/skull/vascular coverage"
+      ]
+    },
+    {
+      "person_id": "TopCoW:012",
+      "case_id": "TopCoW-012-CTA-INTEGRATED-integration-conditional-stage-v3",
+      "path": "cases/synthetic/TopCoW-012-CTA-INTEGRATED-integration-conditional-stage-v3.ressectionlab",
+      "sha256": "526857a5edde283e8ffce0e6b3f46ac6e696d98c1cfa383fd4becd222d79e2f1",
+      "role": "TRAIN",
+      "capabilities": [
+        "unchanged_native_CTA_and_partial_supplied_vascular_reference_inspection",
+        "reviewed_local_superior_intracranial_and_dense_calvarial_geometry",
+        "source_frame_geometry_only_synthetic_target",
+        "bounded_conditional_calvarial_drilling_and_correct_material_refusal_fixture",
+        "full_instrument_reviewed_task_domain_refusal",
+        "exact_public_physical_history_replay_and_actual_hidden_app_save_reopen"
+      ],
+      "withheld": [
+        "intact-head access",
+        "simulated scalp/dura opening",
+        "target reach",
+        "clinical safety",
+        "full brain/skull/vascular coverage"
+      ]
+    },
+    {
+      "person_id": "TopCoW:014",
+      "case_id": "TopCoW-014-CTA-INTEGRATED-integration-conditional-stage-v3",
+      "path": "cases/synthetic/TopCoW-014-CTA-INTEGRATED-integration-conditional-stage-v3.ressectionlab",
+      "sha256": "22e8da2f7a2e33383bb7bddd542bec55f0a3195b15e16beda85f334f5b56fdb1",
+      "role": "TRAIN",
+      "capabilities": [
+        "unchanged_native_CTA_and_partial_supplied_vascular_reference_inspection",
+        "reviewed_local_superior_intracranial_and_dense_calvarial_geometry",
+        "source_frame_geometry_only_synthetic_target",
+        "bounded_conditional_calvarial_drilling_and_correct_material_refusal_fixture",
+        "full_instrument_reviewed_task_domain_refusal",
+        "exact_public_physical_history_replay_and_actual_hidden_app_save_reopen"
+      ],
+      "withheld": [
+        "intact-head access",
+        "simulated scalp/dura opening",
+        "target reach",
+        "clinical safety",
+        "full brain/skull/vascular coverage"
+      ]
+    },
+    {
+      "person_id": "TopCoW:018",
+      "case_id": "TopCoW-018-CTA-INTEGRATED-integration-conditional-stage-v3",
+      "path": "cases/synthetic/TopCoW-018-CTA-INTEGRATED-integration-conditional-stage-v3.ressectionlab",
+      "sha256": "566e1e2ff2a185ba42f20a532283caab29745973a4ea6a75fdcff45744f24e8c",
+      "role": "TRAIN",
+      "capabilities": [
+        "unchanged_native_CTA_and_partial_supplied_vascular_reference_inspection",
+        "reviewed_local_superior_intracranial_and_dense_calvarial_geometry",
+        "source_frame_geometry_only_synthetic_target",
+        "bounded_conditional_calvarial_drilling_and_correct_material_refusal_fixture",
+        "full_instrument_reviewed_task_domain_refusal",
+        "exact_public_physical_history_replay_and_actual_hidden_app_save_reopen"
+      ],
+      "withheld": [
+        "intact-head access",
+        "simulated scalp/dura opening",
+        "target reach",
+        "clinical safety",
+        "full brain/skull/vascular coverage"
+      ]
+    },
+    {
+      "person_id": "IXI:077",
+      "case_id": "IXI-077-T1-MRA-INTEGRATED-geometry-v1",
+      "path": "cases/synthetic/IXI-077-T1-MRA-INTEGRATED-geometry-v1.ressectionlab",
+      "sha256": "1a84b2cd4009dad61ff2e9c7fbba45ddd78dcc80276e7b0578c594408314132f",
+      "role": "TRAIN",
+      "capabilities": [
+        "unchanged_T1_and_original_native_MRA_inspection",
+        "reviewed_registered_partial_vessel_overlay_inspection_with_alignment_uncertainty",
+        "physical_frame_geometry_only_synthetic_target_fixture",
+        "actual_hidden_app_registered_blend_save_reopen"
+      ],
+      "withheld": [
+        "precise navigation",
+        "clinical vascular clearance",
+        "measured skull drilling",
+        "full rehearsal"
+      ]
+    },
+    {
+      "person_id": "IXI:081",
+      "case_id": "IXI-081-T1-MRA-INTEGRATED-geometry-v1",
+      "path": "cases/synthetic/IXI-081-T1-MRA-INTEGRATED-geometry-v1.ressectionlab",
+      "sha256": "e9d1195d4ef84dfd65824037d8c01d5f01821833fea9fc61a998bb4f0ab40b70",
+      "role": "TRAIN",
+      "capabilities": [
+        "unchanged_T1_and_original_native_MRA_inspection",
+        "reviewed_registered_partial_vessel_overlay_inspection_with_alignment_uncertainty",
+        "physical_frame_geometry_only_synthetic_target_fixture",
+        "actual_hidden_app_registered_blend_save_reopen"
+      ],
+      "withheld": [
+        "precise navigation",
+        "clinical vascular clearance",
+        "measured skull drilling",
+        "full rehearsal"
+      ]
+    }
+  ],
+  "remaining": "No acquired target reach; five conditional negative workflows and two approximate overlay fixtures. Read-only CTA012 local access diagnosis continues under unchanged constraints."
+}

@@ -54,6 +54,11 @@ app.on('browser-window-created',(_event,window)=>{
     const capture=async name=>{await ready();assert.equal(window.isVisible(),false);fs.writeFileSync(path.join(output,name+'.png'),(await window.webContents.capturePage(undefined,{stayHidden:true,stayAwake:true})).toPNG());};
     const set=async(label,value)=>{await js(`(()=>{const el=document.querySelector('[aria-label='+${JSON.stringify(JSON.stringify(label))}+']');if(!el)throw Error('Missing '+${JSON.stringify(label)});for(let p=el.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;Object.getOwnPropertyDescriptor(el.tagName==='SELECT'?HTMLSelectElement.prototype:HTMLInputElement.prototype,'value').set.call(el,${JSON.stringify(value)});el.dispatchEvent(new Event(el.tagName==='SELECT'?'change':'input',{bubbles:true}))})()`);await delay(100);};
     try{
+      if(process.env.DATA_REBUILD_REQUIRE_GPU_STATE==='1')await js(`(()=>{
+        const p=window.__dataRebuildFrames={gpu:[],publications:[]};
+        document.addEventListener('anatomy-gpu',e=>{p.gpu.push({...e.detail,at:performance.now()});if(p.gpu.length>64)p.gpu.shift()});
+        document.addEventListener('anatomy-surgical-display',e=>{p.publications.push({...e.detail,at:performance.now()});if(p.publications.length>32)p.publications.shift()});
+      })()`);
       if(process.env.DATA_REBUILD_EXPECT_FAILURE==='1'){
         await wait(`/Bundle must contain|INVALID_BUNDLE_MEMBERS|Reopened case differs|CASE_HASH_MISMATCH/.test(document.body.innerText)`);
         assert.equal(await js(`!!document.querySelector('.rl-viewer')?.dataset.sourceCaseHash`),false);
@@ -67,6 +72,31 @@ app.on('browser-window-created',(_event,window)=>{
         report.checks.push('Explicit structures-only 3D display with unchanged full native source slices');
       }
       await capture('01-native-source');report.checks.push('Production importer and renderer open actual external native package');
+      if(process.env.DATA_REBUILD_EXPECT_CONDITIONAL==='1'){
+        assert((await js('document.body.innerText')).includes('Conditional research stage: scalp exposure is assumed; dural opening is not simulated.'));
+        report.checks.push('Conditional superficial/dural assumptions and baseline CTA scope are visible');
+        await click('Anatomy');await wait(`document.body.innerText.includes('Source-provided annotation. Derived union of supplied source classes')`);
+        const body=await js('document.body.innerText');
+        assert(body.includes('Supplied Arterial Annotation Union')&&body.includes('Supplied Venous Sinus Annotation Union'));
+        await capture('01a-component-provenance');
+        report.checks.push('Supplied arterial/sinus class unions retain source annotation provenance inside the synthetic case');
+      }
+      if(process.env.DATA_REBUILD_EXPECT_HEALTHY_EXPOSURE==='1'){
+        const body=await js('document.body.innerText');
+        assert(body.includes('Conditional exposed-brain geometry task: scalp exposure, a local skull opening and dural opening are assumed and not simulated.'));
+        assert(body.includes('T1/MRA remain baseline references; skull CT is unavailable.'));
+        assert(!body.includes('The acquired CTA remains a baseline reference.'));
+        report.checks.push('Actual healthy task declares unmodeled exposure, baseline T1/MRA and unavailable skull CT');
+      }
+      if(process.env.DATA_REBUILD_FUSION==='1'){
+        await click('Data');await wait(`!!document.querySelector('[aria-label="Blend registered modality"]')`);
+        const options=await js(`[...document.querySelector('[aria-label="Blend registered modality"]').options].filter(o=>o.value).map(o=>({value:o.value,label:o.textContent}))`);
+        assert.equal(options.length,1,'Only independently reviewed derived MRA may fuse; original native MRA stays separate');
+        await set('Blend registered modality',options[0].value);await ready();
+        await wait(`!!document.querySelector('.rl-fusion-readout')`);await capture('01b-reviewed-registered-fusion');
+        assert((await js('document.body.innerText')).includes('unresolved quantitative accuracy'));
+        report.checks.push('Actual UI blends the reviewed registered MRA on primary T1 with alignment limits visible');
+      }
       if(process.env.DATA_REBUILD_USE_CATALOG==='1'){
         const listedAt=performance.now();
         const listed=await js('window.resectionApi.listCases()');
@@ -103,9 +133,34 @@ app.on('browser-window-created',(_event,window)=>{
         if(await js(`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Prepare instrument scene'&&!b.disabled)`))await click('Prepare instrument scene');
         await wait(`!!document.querySelector('[aria-label="Instrument action"]')`);await ready();await capture('02-rehearsal');
         report.checks.push('Actual production surgical scene initializes; missing evidence remains unavailable');
+        if(process.env.DATA_REBUILD_EXPECT_TASK_DOMAIN==='1'){
+          const caseHash=report.requests.findLast(row=>row.operation==='research:surgicalRehearsal'&&row.caseHash)?.caseHash;
+          assert(caseHash,'Actual rehearsal source identity is required');
+          const before=await js(`window.resectionApi.surgicalRehearsal({caseHash:${JSON.stringify(caseHash)},command:'inspect'})`);
+          if(process.env.DATA_REBUILD_EXPECT_STATE_ID){
+            assert.equal(before.view.stateId,process.env.DATA_REBUILD_EXPECT_STATE_ID);
+            assert.equal(before.position,Number(process.env.DATA_REBUILD_EXPECT_REPLAY_ACTIONS));
+            report.physicalReplay={stateId:before.view.stateId,position:before.position,metrics:before.view.metrics};
+            report.checks.push('Actual desktop verifies the exact saved physical action prefix and metrics');
+          }
+          if(process.env.DATA_REBUILD_REQUIRE_GPU_STATE==='1'){
+            await wait(`(()=>{const p=window.__dataRebuildFrames,s=${JSON.stringify(before.view.stateId)},v=p?.publications.findLast(v=>v.surgicalStateId===s);return document.querySelector('.surgical-panel')?.dataset.stateId===s&&!!v&&p.gpu.some(g=>g.serial===v.frameSerial&&g.surgicalStateId===s&&g.sourceCaseHash===v.sourceCaseHash&&g.completed&&g.at<=v.at)})()`);
+            report.physicalReplayGpu=await js(`(()=>{const p=window.__dataRebuildFrames,v=p.publications.findLast(v=>v.surgicalStateId===${JSON.stringify(before.view.stateId)});return{publication:v,gpu:p.gpu.findLast(g=>g.serial===v.frameSerial&&g.surgicalStateId===v.surgicalStateId&&g.completed)}})()`);
+            report.checks.push('Accepted physical state is bound to its actual completed GPU frame');
+          }
+          const denied=await js(`window.resectionApi.surgicalRehearsal({caseHash:${JSON.stringify(caseHash)},command:'preview',expectedStateId:${JSON.stringify(before.view.stateId)},action:{slot:'left',operation:'place',duration:.1,pose:{position:[10000,10000,10000],quaternion:[0,0,0,1]}}})`);
+          const after=await js(`window.resectionApi.surgicalRehearsal({caseHash:${JSON.stringify(caseHash)},command:'inspect'})`);
+          assert(JSON.stringify(denied).includes('REVIEWED_TASK_DOMAIN_OUTSIDE'));
+          assert.equal(after.view.stateId,before.view.stateId);
+          report.taskDomainProbe={sourceCaseHash:caseHash,stateBefore:before.view.stateId,stateAfter:after.view.stateId,
+            refusal:'REVIEWED_TASK_DOMAIN_OUTSIDE',api:'Actual renderer preload -> production surgicalRehearsal preview',uncommitted:true};
+          report.checks.push('Production desktop rejects unknown-space whole-tool placement with unchanged state');
+        }
         await set('Instrument action','inspect');await click('Preview');
-        await wait(`document.querySelector('.surgical-panel').textContent.includes('Preview · uncommitted')`);await ready();await capture('03-inspect-preview');
-        await click('Cancel preview');await ready();report.checks.push('Native instrument inspect preview and cancel preserve accepted state');
+        await wait(`document.querySelector('.surgical-panel').textContent.includes('Preview · uncommitted')${process.env.DATA_REBUILD_EXPECT_TASK_DOMAIN==='1'?"||document.querySelector('.surgical-panel').textContent.includes('REVIEWED_TASK_DOMAIN')":''}`);await ready();await capture('03-inspect-preview');
+        if(await js(`document.querySelector('.surgical-panel').textContent.includes('Preview · uncommitted')`)){
+          await click('Cancel preview');await ready();report.checks.push('Native instrument inspect preview and cancel preserve accepted state');
+        }else report.checks.push('Unplaced instrument inspection is correctly restricted by the declared observed task box');
         if(process.env.DATA_REBUILD_ACTIONS==='1'){
           await js(`(()=>{const b=[...document.querySelectorAll('.surgical-toolbox button')].find(b=>b.textContent.includes('CUSA')&&!b.disabled);if(!b)throw Error('No available CUSA exchange');for(let p=b.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;b.click()})()`);
           await wait(`document.querySelector('.surgical-slots button')?.textContent.includes('CUSA')`);await ready();
@@ -123,6 +178,10 @@ app.on('browser-window-created',(_event,window)=>{
         if(await js(`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Verify saved replay'&&!b.disabled)`))await click('Verify saved replay');
       }
       await capture('04-native-reopened');report.checks.push('Actual UI reopens the saved native package');
+      if(process.env.DATA_REBUILD_FUSION==='1'){
+        await wait(`!!document.querySelector('.rl-fusion-readout')`);
+        report.checks.push('Registered fusion choice survives actual UI save/reopen');
+      }
       report.finalBody=await js('document.body.innerText');assert.equal(digest(input),inputSha);assert.equal(report.windowEverVisible,false);report.passed=true;
     }catch(error){report.error=String(error);report.body=await js('document.body.innerText').catch(()=>null);fs.writeFileSync(path.join(output,'failure.png'),(await window.webContents.capturePage(undefined,{stayHidden:true,stayAwake:true})).toPNG());}
     finally{report.finishedUtc=new Date().toISOString();fs.writeFileSync(path.join(output,'report.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({passed:report.passed,error:report.error,output}));app.exit(report.passed?0:1);}

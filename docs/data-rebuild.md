@@ -9,10 +9,20 @@ publication belongs to this cycle.
 
 ## Open accepted cases
 
-The completed frozen release is `2026-10-31-data-foundation-v1`: 355 native
-packages, 130 source person families and 200 synthetic variants. On the data
-drive, start with `catalog/START-HERE.md` and its 11-case curated core. The final
-report and retrospective coverage matrix are in `catalog/reporting/`.
+The latest integration release is `2026-10-31-integrated-rehearsal-v1`: 362
+native packages, 130 source person families and 207 synthetic variants. Its seven
+additions reuse existing people: five CTA cases support bounded conditional
+negative instrument workflows, and two healthy cases support reviewed approximate
+MRI/MRA overlay inspection. No acquired-case target reach or full rehearsal is
+claimed. See [integrated-suite instructions](data-integrated-rehearsal.md) and
+`integrated-v1/START-HERE.md` on the data drive for the capability table, exact
+reproduction commands, independent decisions and actual app captures.
+
+The original frozen `2026-10-31-data-foundation-v1` release remains unchanged:
+355 native packages, 130 source person families and 200 synthetic variants.
+Its 11-case core, final report and retrospective coverage matrix remain in
+`catalog/START-HERE.md` and `catalog/reporting/`. The current accepted index
+preserves all 355 original rows and receipts.
 
 Set `RESSECTIONLAB_DATA_ROOT` to your actual mounted data directory, then launch
 from the existing primary checkout:

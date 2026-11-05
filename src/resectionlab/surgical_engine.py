@@ -496,7 +496,12 @@ class SurgicalEngine:
     def parameters(self, slot):
         tool = TOOLS[slot['instrument']]
         extra = {'rpm': 40000., 'forceN': 1., 'duty': 1.} if self.scene.properties.get('tissuePhysicsV2') else {}
-        return {**extra, 'radiusMm': tool['radiusMm'], 'depthMm': 2., 'flowMm3PerSecond': 20., 'power': 1., 'jawOpeningMm': 2., **slot['parameters'], **({'contactGeometryRevision':2} if self.state.get('toolMechanicsRevision')==2 else {})}
+        return {**extra, 'radiusMm': tool['radiusMm'], 'depthMm': 2., 'flowMm3PerSecond': 20., 'power': 1., 'jawOpeningMm': 2., **slot['parameters'], **({'contactGeometryRevision':2} if self.state.get('toolMechanicsRevision')==2 else {}),
+            **({'retractorFaceContactRevision':1} if slot['instrument']=='brain_retractor' and 'retractorSurfaceContactV1' in self.scene.properties else {})}
+
+    def _shaft_held_cells(self,key):
+        from .surgical_retractor_runtime import is_surface_slot
+        return set() if is_surface_slot(self,key) else set(self.state['holds'].get(key,{}).get('cells',()))
 
     def preview(self, action, *, check=None, include_view=True, include_history=True):
         if check is not None: check()
@@ -892,7 +897,7 @@ class SurgicalEngine:
             else: working_cells.update(self.touched(a, b, radius))
         if revised_contact: tip_cells = sorted(working_cells)
         held = set(self.state['holds'].get(key, {}).get('cells', []))
-        if set(shaft_cells) - held: raise ValueError('SHAFT_COLLISION')
+        if set(shaft_cells) - self._shaft_held_cells(key): raise ValueError('SHAFT_COLLISION')
         if cusa_v3 and active and self.state.get('toolMechanicsRevision') != 2 and working_cells - held - set(self.touched(p, p, params['radiusMm'])):
             raise ValueError('RETAINED_TISSUE_COLLISION: CUSA body requires a cleared corridor')
         for other_key, other in self.state['slots'].items():
@@ -970,7 +975,9 @@ class SurgicalEngine:
                 material = self.by_label[int(self.scene.labels.ravel()[i])]['material']
                 self.state['materialExposure'][material] = self.state['materialExposure'].get(material, 0.) + dt
         contact_cells = set(working_cells) if tool['effect'] in ('elevate', 'dissect') else set()
-        for hold in self.state['holds'].values(): contact_cells.update(hold['cells'])
+        from .surgical_retractor_runtime import is_surface_slot
+        for hold_key,hold in self.state['holds'].items():
+            if not is_surface_slot(self,hold_key):contact_cells.update(hold['cells'])
         contact_cells.difference_update(self.state['removed'])
         for cell in contact_cells if not shared_clock else ():
             k = str(cell); self.state['contact'][k] = self.state['contact'].get(k, 0.) + dt
@@ -992,7 +999,7 @@ class SurgicalEngine:
             # Match the existing per-hand exemption for its own held cells.
             if self.state.get('deformation'):
                 for shaft_key, shaft_slot in self.state['slots'].items():
-                    own_held = set(self.state['holds'].get(shaft_key, {}).get('cells', ()))
+                    own_held = self._shaft_held_cells(shaft_key)
                     shaft_tool = TOOLS[shaft_slot['instrument']]
                     for a, b, radius, part in envelopes(shaft_tool, self.parameters(shaft_slot),
                             shaft_slot['position'], shaft_slot['quaternion']):

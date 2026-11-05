@@ -7,7 +7,7 @@ export interface DisplaySeriesPayload {
   schema:'workspace-display-series-v1'; seriesId:string; referenceCaseHash:string;
   referenceFrameHash:string; sourceFrameHash:string;
   association:{kind:'explicit_user_selected'|'source_dataset_identity';samePersonVerified:boolean;sameTimeVerified:false};
-  registration:{status:'unreviewed'|'source-provided';reason:string;sourceToReferenceRasMm:Mat4|null;registrationHash:string|null;overlayPermitted:boolean};
+  registration:{status:'unreviewed'|'source-provided'|'verified';reason:string;sourceToReferenceRasMm:Mat4|null;registrationHash:string|null;overlayPermitted:boolean};
   scope:'display-only-native-grid'; planningEligible:false; evaluationEligible:false;
   modality:DisplayModality;modalityOrigin:'user_declared'|'source_metadata';annotationKind:AnnotationKind;
   annotationCoverage:string;acquisitionDatetime:string|null;expandedBytes:number;volume:CasePayload;
