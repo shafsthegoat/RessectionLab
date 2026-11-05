@@ -1,4 +1,5 @@
 import importlib.util
+import json
 from pathlib import Path
 import numpy as np
 import pytest
@@ -76,3 +77,41 @@ def test_fixed_translation_route_preserves_endpoints_and_bounded_steps():
     assert np.max(np.linalg.norm(np.diff(points,axis=0),axis=1))<=.25
     assert np.allclose(points,module.fixed_translation_route(b,a)[::-1])
     with pytest.raises(ValueError):module.fixed_translation_route(a,b,interval_mm=0)
+
+
+def test_separate_exact_native_export_authority_required(tmp_path, monkeypatch):
+    monkeypatch.setattr(module, 'checked_root', lambda *args, **kwargs: tmp_path)
+    base = tmp_path / 'integrated-v1/healthy/IXI077'
+    registration = base / 'rigid-v1/registration.json'
+    proposal = base / 'source-reviewed-superficial-v1/proposal.json'
+    registration.parent.mkdir(parents=True)
+    proposal.parent.mkdir()
+    registration.write_text('{}')
+    registration_sha = module.sha256_file(registration)
+    proposal.write_text(json.dumps({'registration_sha256': registration_sha,
+                                    'target_sha256': 'a' * 64, 'support_sha256': 'b' * 64}))
+    stage = 'conditional_exposed_brain_geometry'
+    alternate = {'target_proposal_version': proposal.parent.name, 'anatomy_stage': stage}
+    with pytest.raises(ValueError, match='require.*explicit conditional stage'):
+        module.build_native(tmp_path, 'IXI077', target_proposal_version=proposal.parent.name)
+    with pytest.raises(ValueError, match='separate native export decisions'):
+        module.build_native(tmp_path, 'IXI077', **alternate)
+    reviewed_registration = tmp_path / 'registration-decision.json'
+    reviewed_target = tmp_path / 'target-decision.json'
+    prospective_export = tmp_path / 'native-export-decision.json'
+    reviewed_registration.write_text(json.dumps({
+        'reviewer': 'fixture reviewer', 'decision': 'accepted_for_bounded_engineering_alignment',
+        'registration_sha256': registration_sha}))
+    reviewed_target.write_text(json.dumps({
+        'reviewer': 'fixture reviewer', 'target_contract_accepted': True, 'native_export_approved': False,
+        'decision': 'accepted_with_explicit_limits_for_exact_source_reviewed_synthetic_geometry_target',
+        'proposal_sha256': module.sha256_file(proposal), 'target_sha256': 'a' * 64, 'support_sha256': 'b' * 64}))
+    prospective_export.write_text(json.dumps({
+        'schema': 'independent-IXI077-source-reviewed-superficial-native-export-authority-v1',
+        'decision': 'accepted_for_one_exact_native_geometry_export_with_explicit_limits',
+        'reviewer': 'fixture reviewer', 'native_export_approved': True, 'subject': 'IXI077', 'stage': stage,
+        'proposal_sha256': module.sha256_file(proposal), 'registration_sha256': registration_sha,
+        'target_decision_sha256': 'c' * 64, 'registration_decision_sha256': module.sha256_file(reviewed_registration)}))
+    with pytest.raises(ValueError, match='missing exact source and stage bindings'):
+        module.build_native(tmp_path, 'IXI077', registration_decision=reviewed_registration,
+                            target_decision=reviewed_target, native_export_decision=prospective_export, **alternate)

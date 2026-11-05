@@ -346,7 +346,8 @@ def target_proposal(root,subject):
     atomic_json(output/'proposal.json',result);return result
 
 
-def build_native(root,subject,*,registration_decision=None,target_decision=None,version='geometry-v1'):
+def build_native(root,subject,*,registration_decision=None,target_decision=None,version='geometry-v1',
+                 target_proposal_version='target-proposal-v2',anatomy_stage='baseline',native_export_decision=None):
     """Export a review-bound zero-mass geometry scenario on unchanged native T1."""
     from dataclasses import replace
     from resectionlab.core import SourceRef,array_digest,thaw_json
@@ -355,10 +356,59 @@ def build_native(root,subject,*,registration_decision=None,target_decision=None,
     from resectionlab.imaging import load_nifti_case
     from resectionlab.surgical_scene import from_case
     root=checked_root(root,required_bytes=2*1024**3);base=root/'integrated-v1/healthy'/subject
-    if not re.fullmatch(r'[A-Za-z0-9_-]+',version):raise ValueError('Plain immutable version token required')
+    if any(not re.fullmatch(r'[A-Za-z0-9_-]+',token) for token in (version,target_proposal_version)):
+        raise ValueError('Plain immutable version tokens required')
+    conditional=anatomy_stage=='conditional_exposed_brain_geometry'
+    if conditional:
+        if (subject!='IXI077' or target_proposal_version!='source-reviewed-superficial-v1'
+                or not all((registration_decision,target_decision,native_export_decision))):
+            raise ValueError('Conditional IXI077 export requires exact source-reviewed target, registration, and separate native export decisions')
+    elif anatomy_stage!='baseline' or target_proposal_version!='target-proposal-v2' or native_export_decision:
+        raise ValueError('Alternative target proposals require explicit conditional stage and native export review')
     registration_path=base/'rigid-v1/registration.json';registration=json.loads(registration_path.read_text())
-    proposal_path=base/'target-proposal-v2/proposal.json';proposal=json.loads(proposal_path.read_text())
+    proposal_directory=safe_path(root,f'integrated-v1/healthy/{subject}/{target_proposal_version}')
+    proposal_path=proposal_directory/'proposal.json';proposal=json.loads(proposal_path.read_text())
     if sha256_file(registration_path)!=proposal['registration_sha256']:raise ValueError('Target belongs to another registration')
+    review_bindings={}
+    for name,decision_path in [('registration',registration_decision),('target',target_decision),
+                               ('native_export',native_export_decision)]:
+        if decision_path is None:continue
+        path=Path(decision_path).resolve()
+        if not path.is_relative_to(root):raise ValueError('Independent decision must remain under data root')
+        decision=json.loads(path.read_text())
+        if not decision.get('reviewer'):raise ValueError('Independent reviewer missing')
+        expected=sha256_file(registration_path if name=='registration' else proposal_path)
+        if name=='registration':
+            if decision.get('decision') not in {'accepted_for_bounded_engineering_alignment','accepted_for_registered_overlay_inspection_with_alignment_uncertainty'} or decision.get('registration_json_sha256',decision.get('registration_sha256'))!=expected:
+                raise ValueError('Independent registration decision missing exact method binding')
+        elif name=='target':
+            if conditional:
+                if (decision.get('decision')!='accepted_with_explicit_limits_for_exact_source_reviewed_synthetic_geometry_target'
+                        or decision.get('target_contract_accepted') is not True
+                        or any(decision.get(key)!=proposal[key] for key in ('target_sha256','support_sha256'))):
+                    raise ValueError('Independent exact source-reviewed target decision required')
+            elif decision.get('decision')!='accepted_for_geometry_target':
+                raise ValueError('Independent target decision missing acceptance')
+            if decision.get('proposal_sha256')!=expected:
+                raise ValueError('Independent target decision missing exact proposal binding')
+        else:
+            export_expected={'schema':'independent-IXI077-source-reviewed-superficial-native-export-authority-v1',
+                             'decision':'accepted_for_one_exact_native_geometry_export_with_explicit_limits',
+                             'native_export_approved':True,'subject':subject,'stage':anatomy_stage,
+                             'proposal_sha256':expected,'registration_sha256':sha256_file(registration_path),
+                             'target_decision_sha256':review_bindings['target']['sha256'],
+                             'registration_decision_sha256':review_bindings['registration']['sha256']}
+            if decision.get('native_export_approved') is not True or any(
+                    decision.get(key)!=value for key,value in export_expected.items()):
+                raise ValueError('Separate independent native export decision missing exact source and stage bindings')
+            for field in ('route_report','route_scope_review','source_context'):
+                receipt=decision[field]
+                if sha256_file(safe_path(root,receipt['path']))!=receipt['sha256']:
+                    raise ValueError('Read-only route provenance differs from native export review')
+            if (decision['actual_native_source']!={'path':proposal['source_native_path'],'sha256':proposal['source_native_sha256']}
+                    or decision['actual_unchanged_original_T1']!={key:registration['fixed_T1'][key] for key in ('path','sha256')}):
+                raise ValueError('Native export review differs from original acquired source')
+        review_bindings[name]={'path':str(path.relative_to(root)),'sha256':sha256_file(path),'decision':decision}
     for entry in registration['outputs']:
         if sha256_file(safe_path(root,entry['path']))!=entry['sha256']:raise ValueError('Registration output changed')
     source=safe_path(root,proposal['source_native_path'])
@@ -370,7 +420,7 @@ def build_native(root,subject,*,registration_decision=None,target_decision=None,
     for entry in [registration['fixed_T1'],registration['moving_MRA']]:
         if sha256_file(safe_path(root,entry['path']))!=entry['sha256']:raise ValueError('Acquired source changed')
     arrays={}
-    for name,path,expected in [('synthetic_target',base/'target-proposal-v2/target.nii.gz',proposal['target_sha256']),
+    for name,path,expected in [('synthetic_target',proposal_directory/'target.nii.gz',proposal['target_sha256']),
                                ('registered_partial_vessels',base/'rigid-v1/registered-vascular-reference.nii.gz',proposal['registered_vessel_sha256']),
                                ('MRA-observed-coverage',base/'rigid-v1/MRA-observed-coverage.nii.gz',proposal['coverage_sha256'])]:
         if sha256_file(path)!=expected:raise ValueError('Derived mask checksum differs')
@@ -379,21 +429,11 @@ def build_native(root,subject,*,registration_decision=None,target_decision=None,
         arrays[name]=np.asarray(image.dataobj)>0
     target=arrays['synthetic_target'];vessels=arrays['registered_partial_vessels'];coverage=arrays['MRA-observed-coverage']
     if np.any(target&~host.brain_mask) or np.any(target&~coverage) or np.any(target&vessels):raise ValueError('Invalid target support')
-    review_bindings={}
-    for name,decision_path in [('registration',registration_decision),('target',target_decision)]:
-        if decision_path is None:continue
-        path=Path(decision_path).resolve()
-        if not path.is_relative_to(root):raise ValueError('Independent decision must remain under data root')
-        decision=json.loads(path.read_text())
-        if not decision.get('reviewer'):raise ValueError('Independent reviewer missing')
-        expected=sha256_file(registration_path if name=='registration' else proposal_path)
-        if name=='registration':
-            if decision.get('decision') not in {'accepted_for_bounded_engineering_alignment','accepted_for_registered_overlay_inspection_with_alignment_uncertainty'} or decision.get('registration_json_sha256',decision.get('registration_sha256'))!=expected:
-                raise ValueError('Independent registration decision missing exact method binding')
-        else:
-            if decision.get('decision')!='accepted_for_geometry_target' or decision.get('proposal_sha256')!=expected:
-                raise ValueError('Independent target decision missing exact proposal binding')
-        review_bindings[name]={'path':str(path.relative_to(root)),'sha256':sha256_file(path),'decision':decision}
+    if conditional:
+        if (array_digest(target)!=proposal['target_array_hash']
+                or sha256_file(proposal_directory/'tissue-placement-support.nii.gz')!=proposal['support_sha256']
+                or sha256_file(safe_path(root,proposal['review_image']))!=proposal['review_image_sha256']):
+            raise ValueError('Exact source-reviewed target, original support and overlay must remain unchanged')
     case_id=proposal['person_id'].replace(':','-')+'-T1-MRA-INTEGRATED-'+version
     directory=root/'integrated-v1/cases'/case_id
     if directory.exists():raise FileExistsError('Immutable healthy native version exists')
@@ -422,9 +462,17 @@ def build_native(root,subject,*,registration_decision=None,target_decision=None,
           'mass_effect':False,'appearance':None,'deformation':None,'clinical_validation':False,'new_real_patient_count':0}
     metadata.update(data_case=data,anatomy_layers=layers,is_synthetic=True,selected_modality='T1',
                     display_label='Baseline healthy T1 + synthetic geometry target + partial registered vessels',
-                    annotation_review='independent registration/target reviewed; integrated runtime pending' if len(review_bindings)==2 else 'pending',
+                    annotation_review='independent registration/target reviewed; integrated runtime pending' if {'registration','target'}<=review_bindings.keys() else 'pending',
                     benchmark_track='synthetic_engineering_development',surgical_adapter={'ownershipPrecedence':['brain','registered_partial_vessels','synthetic_target'],
                     'sourceCaseHash':host.semantic_hash,'sourcePackageSha256':proposal['source_native_sha256'],'coverageLimitations':restrictions,'MRAObservedCoverageSha256':proposal['coverage_sha256']})
+    if conditional:
+        assumptions=['Scalp exposure, a local skull opening and dural opening are assumed and unsimulated.',
+                     'Baseline T1 and MRA do not demonstrate an opening, clearance or traversable space.',
+                     'Native export supports geometry and overlay inspection only. Route screening is read-only provenance.']
+        metadata['integrated_rehearsal']={'stage':anatomy_stage,'assumptions':assumptions,
+                                          'sourceImageRole':'acquired_baseline_before_assumed_exposure',
+                                          'intact_head_access_supported':False}
+        data['limitations']=[*restrictions,*assumptions]
     derived_data={**data,'case_type':'real','classification':'derived_acquired_MRA_display','components':{'MRA':'rigidly_resampled_acquired_image'},'recipe':None,'capabilities':['registered_MRA_source_inspection']}
     shared=None
     if 'registration' in review_bindings:
@@ -469,14 +517,22 @@ def build_native(root,subject,*,registration_decision=None,target_decision=None,
             'independent_reviews':review_bindings,'target_proposal_sha256':sha256_file(proposal_path),'registration_sha256':sha256_file(registration_path),
             'production_save_reopen':'passed','simulator_regions':scene.regions,'target_and_vessel_material_ownership_preserved':True,'skull':'missing','mass_effect':False,
             'restrictions':restrictions,'generator_sha256':GENERATOR_SHA}
+    if conditional:
+        report.update(anatomy_stage=anatomy_stage,target_proposal_version=target_proposal_version,
+                      restrictions=data['limitations'],reviewed_task_domain=None,physical_execution_approved=False)
     (directory/'data_integrated_healthy.py.snapshot').write_bytes(GENERATOR_SOURCE)
     atomic_json(directory/'report.json',report);return report
 
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('stage',choices=['sources','register','review','propose','build']);parser.add_argument('--subject',choices=SUBJECTS);parser.add_argument('--registration-decision');parser.add_argument('--target-decision');parser.add_argument('--version',default='geometry-v1');args=parser.parse_args()
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('stage',choices=['sources','register','review','propose','build']);parser.add_argument('--subject',choices=SUBJECTS);parser.add_argument('--registration-decision');parser.add_argument('--target-decision');parser.add_argument('--version',default='geometry-v1')
+    parser.add_argument('--target-proposal-version',default='target-proposal-v2')
+    parser.add_argument('--anatomy-stage',choices=['baseline','conditional_exposed_brain_geometry'],default='baseline')
+    parser.add_argument('--native-export-decision')
+    args=parser.parse_args()
     root=checked_root()
     if args.stage=='sources':sources(root)
     else:
         if args.subject is None:parser.error('--subject is required for register')
-        build_native(root,args.subject,registration_decision=args.registration_decision,target_decision=args.target_decision,version=args.version) if args.stage=='build' else {'register':register,'review':registration_review,'propose':target_proposal}[args.stage](root,args.subject)
+        build_native(root,args.subject,registration_decision=args.registration_decision,target_decision=args.target_decision,version=args.version,
+                     target_proposal_version=args.target_proposal_version,anatomy_stage=args.anatomy_stage,native_export_decision=args.native_export_decision) if args.stage=='build' else {'register':register,'review':registration_review,'propose':target_proposal}[args.stage](root,args.subject)
