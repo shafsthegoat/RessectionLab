@@ -1,5 +1,6 @@
 """No simulator work: fail closed on uncertain interrupted execution evidence."""
 import copy
+from contextlib import closing
 import importlib.util
 import json
 from pathlib import Path
@@ -108,3 +109,59 @@ def test_committed_prefix_requires_literal_complete_and_linked_receipts():
         changed = copy.deepcopy(rows);changed[-1][field] = value
         with pytest.raises(ValueError): prefix_recovery.validate_prefix(changed, actions, expected_count=2, initial_state_id='0')
     with pytest.raises(ValueError): prefix_recovery.validate_prefix(rows[:-1], actions, expected_count=2, initial_state_id='0')
+
+
+def test_native_action_only_record_reconstructs_full_view_and_exports_own_checkpoint(tmp_path, monkeypatch):
+    monkeypatch.syspath_prepend(str(Path(__file__).parents[1] / 'scripts'))
+    from data_integrated_regression_resume018 import require_same_view, write_native_recipe
+    from resectionlab.desktop_bridge import BridgeSession, _Request
+    from resectionlab.imaging import MAX_MANIFEST_BYTES
+    from resectionlab.workspace_bundle import load_workspace
+
+    def call(session, operation, **args):
+        return json.loads(json.dumps(session.execute(operation, args, _Request(operation), lambda *_: None)))
+
+    source = tmp_path / 'source.ressectionlab'
+    recipe = tmp_path / 'action-only.ressectionlab'
+    checkpoint = tmp_path / 'verified.ressectionlab'
+    with closing(BridgeSession(tmp_path / 'original-transfers', run_dir=tmp_path / 'original-runs')) as session:
+        case_hash = call(session, 'createSurgicalFixture')['caseHash']
+        call(session, 'saveCase', caseHash=case_hash, path=str(source))
+        created = call(session, 'surgicalRehearsal', caseHash=case_hash, command='create')
+        zero_path = tmp_path / 'fresh-zero.ressectionlab'
+        call(session, 'saveCase', caseHash=case_hash, path=str(zero_path))
+        _, zero_artifacts, _ = load_workspace(zero_path)
+        record = zero_artifacts['surgical_toolbox']
+        action = {'operation': 'configure', 'slot': 'right', 'duration': .1,
+                  'mechanicsRevision': 2, 'clockRevision': 1}
+        actual = call(session, 'surgicalRehearsal', caseHash=case_hash, command='step',
+                      expectedStateId=created['view']['stateId'], action=action)
+
+    snapshot = prefix_recovery.replay_snapshot(record['branches']['main'],
+                                               {'committed_actions': [action], 'state_id': actual['view']['stateId']})
+    assert 'checkpoint' not in snapshot
+    record.update(branches={'main': snapshot}, position=1)
+    record.pop('timeline')
+    write_native_recipe(source, recipe, record, MAX_MANIFEST_BYTES)
+
+    with closing(BridgeSession(tmp_path / 'recipe-transfers', run_dir=tmp_path / 'recipe-runs')) as session:
+        call(session, 'loadCase', path=str(recipe))
+        restored = call(session, 'surgicalRehearsal', caseHash=case_hash, command='inspect')
+        require_same_view(restored, actual, branch='main')
+        changed_history = copy.deepcopy(restored)
+        changed_history['view']['history'][0]['status'] = 'partial'
+        with pytest.raises(ValueError):
+            require_same_view(changed_history, actual, branch='main')
+        branch = call(session, 'surgicalRehearsal', caseHash=case_hash, command='branch',
+                      expectedStateId=restored['view']['stateId'])
+        require_same_view(branch, actual, branch='branch-1')
+        call(session, 'saveCase', caseHash=case_hash, path=str(checkpoint))
+    _, artifacts, workspace = load_workspace(checkpoint)
+    assert workspace['sessionHash'] == load_workspace(source)[2]['sessionHash']
+    own = artifacts['surgical_toolbox']['branches']['branch-1']
+    assert own['actions'] == [action] and own['checkpoint']['position'] == 1
+
+    with closing(BridgeSession(tmp_path / 'cold-transfers', run_dir=tmp_path / 'cold-runs')) as session:
+        call(session, 'loadCase', path=str(checkpoint))
+        cold = call(session, 'surgicalRehearsal', caseHash=case_hash, command='inspect')
+        require_same_view(cold, actual, branch='branch-1')

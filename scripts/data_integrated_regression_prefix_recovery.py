@@ -24,3 +24,29 @@ def validate_prefix(rows, literal_actions, *, expected_count, initial_state_id):
     return {'state_id': prior, 'committed_actions': [row['action'] for row in rows],
             'declared_seconds': sum(row['action'].get('duration', 1.) for row in rows),
             'removed_source_ids': sorted({cell for row in rows for cell in row['actual']['outcome']['deltas'].get('removedCells', [])})}
+
+
+def validate_history(rows, history):
+    """Bind every replay entry to the separately persisted public step."""
+    if len(history) != len(rows):
+        raise ValueError('Complete public history required')
+    for row, entry in zip(rows, history):
+        outcome = row['actual']['outcome']
+        if (entry['action'] != row['action'] or entry['stateBefore'] != row['state_before']
+                or entry['stateAfter'] != row['state_after']
+                or any(entry.get(key) != outcome.get(key) for key in
+                       ('status', 'reason', 'reasonCode', 'completedFraction', 'events',
+                        'elapsedSeconds', 'deltas', 'contactPosition'))):
+            raise ValueError('Public history differs from the committed journal')
+
+
+def replay_snapshot(fresh_zero, prefix):
+    """Use source bindings and exact actions; the replay must create its own state."""
+    import copy
+    return copy.deepcopy({
+        'schema': fresh_zero['schema'],
+        'sceneId': fresh_zero['sceneId'],
+        'protectionContract': fresh_zero['protectionContract'],
+        'actions': prefix['committed_actions'],
+        'stateId': prefix['state_id'],
+    })
