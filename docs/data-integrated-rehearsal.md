@@ -34,6 +34,13 @@ the anatomy preparation in a new output version, use the existing environment:
 .venv/bin/python scripts/data_integrated_hosts.py --subject 006 --version reproduction-v1
 ```
 
+CTA006 has a separate native project with a broader skull overlay. The overlay
+uses the original CTA density within a reviewed model prior and shows more of the
+mineralized shell and skull base. Lower-density bone and crop boundaries remain
+uncertain. The app opens the estimate as a display series. The primary case
+retains the four original material memberships. The external handoff links the
+project, source comparisons and independent desktop review.
+
 ## Original integrated CTA rehearsal variants
 
 TopCoW 004, 006, 012, 014 and 018 from the acquired TopBrain v3 (2026-08-17)
