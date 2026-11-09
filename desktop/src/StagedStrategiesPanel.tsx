@@ -1,3 +1,5 @@
+import {WorkflowAlternatives,WorkflowPlanningShell} from './WorkflowAlternatives';
+import type {WorkflowPlanningPresentation} from './WorkflowAlternatives';
 import {useEffect,useState} from 'react';
 import type {SurgicalController} from './use-surgical';
 import {stagedGenerationEligibility,stagedStrategyDisplay} from './staged-strategy-data';
@@ -5,13 +7,14 @@ import {cusaContactModel} from './cusa-research';
 
 const mm=(value:number)=>value.toFixed(1);
 
-export function StagedStrategiesPanel({c,artifact,pause,play}:{c:SurgicalController;
+export function StagedStrategiesPanel({c,artifact,pause,play,stage,onCompared,onInstalled}:WorkflowPlanningPresentation&{c:SurgicalController;
   artifact:unknown;pause:()=>void;play:(branchId:string)=>void}){
   const [acknowledged,setAcknowledged]=useState(false);
   const [narrowAccess,setNarrowAccess]=useState(false);
   const [exploreFaces,setExploreFaces]=useState(false);
   const [cumulative,setCumulative]=useState(false);
   const [planningHorizon,setPlanningHorizon]=useState<1|2|3>(2);
+  const [selectedBranch,setSelectedBranch]=useState<string|null>(null);
   useEffect(()=>{setAcknowledged(false);setNarrowAccess(false);setExploreFaces(false);setCumulative(false);},[c.result?.caseHash,c.result?.view.scene.sceneId]);
   const record=artifact&&typeof artifact==='object'?artifact as Record<string,unknown>:null;
   const saved=!!record&&(Object.hasOwn(record,'stagedPlanning')||Object.hasOwn(record,'stagedSummary'));
@@ -23,7 +26,8 @@ export function StagedStrategiesPanel({c,artifact,pause,play}:{c:SurgicalControl
   const eligibility=stagedGenerationEligibility(artifact,c.result);
   if(!data){
     if(saved||live)return <p role="alert" className="surgical-warning">Staged strategy evidence could not be bound to this scene and its saved native branches.</p>;
-    return <details className="research-planning staged-strategies"><summary>Staged source strategies</summary>
+    return <WorkflowPlanningShell stage={stage} className="research-planning staged-strategies" title="Staged source strategies">
+      <div hidden={!!stage&&stage!=='plan'}>
       <p className="surgical-warning">This structural source lacks skull opening, complete vessels and functional mapping. Native CUSA contact, withdrawal and tissue effects remain modeled research behavior.</p>
       <p>Run bounded, deterministic staged work from the common intact source. Source geometry proposes tiles; native previews, commits and checked exits decide which work is retained. The larger 240-action objective and the original 48-action sector gate are reported separately. No actor or optimizer runs.</p>
       {!cusaContactModel(c.result?.view)&&<label>Resection sequence<select aria-label="Staged resection sequence" disabled={c.pending}
@@ -48,13 +52,15 @@ export function StagedStrategiesPanel({c,artifact,pause,play}:{c:SurgicalControl
       <label><input aria-label="Acknowledge staged source assumptions" type="checkbox" checked={acknowledged}
         disabled={c.pending} onChange={event=>setAcknowledged(event.target.checked)}/>
         I acknowledge the missing anatomy and research-only source assumptions for this staged comparison.</label>
-      <button disabled={c.pending||!acknowledged||!eligibility.ready} onClick={()=>{
+      <button className="primary-button" disabled={c.pending||!acknowledged||!eligibility.ready} onClick={()=>{
         pause();void c.run('plan',{opponent:'anatomy-staged-strategy',acknowledgeResearchUnknowns:true,
           ...(cumulative?{cumulativeReentry:true}:{planningHorizon,beamWidth:3,...(exploreFaces?{exploreExteriorFaces:true}:{}),
-          ...(narrowAccess?{initialAccessRadiusMm:.6}:{})})});
+          ...(narrowAccess?{initialAccessRadiusMm:.6}:{})})}).then(ok=>{if(ok)onCompared?.();});
       }}>Generate staged source strategies</button>
       {!eligibility.ready&&<p role="status">{eligibility.reason}</p>}
-    </details>;
+      </div>
+      {stage==='compare'&&<p role="status">No current staged comparison. Return to Plan to generate from the eligible intact source.</p>}
+    </WorkflowPlanningShell>;
   }
   const disabled=c.pending||c.result?.verification?.status==='unverified-import'||c.result?.readOnly;
   const inspect=(branchId:string,position:number)=>{
@@ -62,7 +68,16 @@ export function StagedStrategiesPanel({c,artifact,pause,play}:{c:SurgicalControl
   };
   const passes=data.alternatives.filter(row=>row.outcome.taskGateMet).length;
   const legacyPasses=data.alternatives.filter(row=>row.outcome.legacyTask.taskGateMet).length;
-  return <details className="research-planning staged-strategies"><summary>{data.comparisonScope==='same-route-configurations'?'Access configuration comparison':'Staged source strategies'} · {passes} / {data.alternatives.length} larger task gates passed</summary>
+  const recordedCursor=c.result?.view.stateId===data.sourceStateId&&c.result.position===0||
+    data.alternatives.some(row=>row.branchId===c.result?.branchId&&c.result.branches.some(branch=>branch.id===row.branchId&&branch.steps===row.nativeActions));
+  return <WorkflowPlanningShell stage={stage} className="research-planning staged-strategies" title={stage?'Staged source strategies':`${data.comparisonScope==='same-route-configurations'?'Access configuration comparison':'Staged source strategies'} · ${passes} / ${data.alternatives.length} larger task gates passed`}>
+    {stage==='plan'&&<p role="status">This is a recorded comparison. Its source task and tool settings are fixed. Open the original intact source case to revise settings and run a new search; current branch edits do not recalculate these recorded alternatives.</p>}
+    <div hidden={!!stage&&stage!=='compare'}>
+    {stage&&<p role="status">Recorded native comparison · {data.controllerMode==='bounded-sequence-lookahead'?`${data.sequenceSearch!.horizon}-skill lookahead`:'staged source research'}. Playback selects saved actions; it does not calculate a new plan.</p>}
+    {stage&&!recordedCursor&&<p role="status" className="surgical-warning">Current branch differs from this recorded comparison. Edits have not been recomputed. Inspect a recorded branch below, or open the original intact source for a new search.</p>}
+    {data.sequenceSearch&&<details><summary>Search preference and budget</summary><p>Horizon {data.sequenceSearch.horizon} · beam {data.sequenceSearch.beamWidth} · at most {data.sequenceSearch.maxExpansionsPerSearch} expansions per search.</p><p>{data.sequenceSearch.preference}</p><p>{data.sequenceSearch.baseline}</p></details>}
+    {stage&&<WorkflowAlternatives selectedId={selectedBranch} disabled={!!disabled} rows={data.alternatives.map(row=>({id:row.branchId,label:`${row.sourceMethod} · ${row.hand} hand`,status:row.outcome.cleanupComplete?'Recorded sequence · withdrawal complete':'Recorded sequence · withdrawal incomplete',removedMm3:row.outcome.wholeTargetRemovedMm3,residualMm3:row.outcome.residualTargetMm3,fractionRemoved:null,nonTargetMm3:row.outcome.wholeNonTargetRemovedMm3,seconds:row.executionMetrics?.simulatedSeconds??null,reason:row.outcome.taskGateMet?'Meets the recorded engineering task criteria; patient eligibility remains separate.':`Recorded task criteria unmet: ${row.outcome.failedGates.join(', ')||row.stopReason}.`,unknowns:'Partial source anatomy, functional outcomes and clinical risk remain unassessed. Residual volume uses the mapped source task; original annotation membership coverage is not recorded in this summary.',residualLocation:'Residual location not recorded for this alternative.',recommended:false}))} onSelect={branchId=>{const row=data.alternatives.find(item=>item.branchId===branchId);if(!row)return;setSelectedBranch(branchId);pause();void c.run('selectBranch',{branchId,position:row.nativeActions}).then(ok=>{if(ok)onInstalled?.();});}}/>}
+    <details open={!stage}><summary>Recorded stages, costs and task criteria</summary>
     <p className="surgical-warning">Deterministic research comparison on partial anatomy. Skull, complete vessels and functional mapping are unavailable; these modeled effects are not clinical risk estimates.</p>
     {data.cusaModel==='legacy-instantaneous-with-v2-mechanics'&&<p className="surgical-note">This scene uses legacy instantaneous CUSA removal with V2 tissue mechanics. It does not establish contact-capacity CUSA v3 or device fidelity.</p>}
     <p>{passes} / {data.alternatives.length} larger staged task gates passed. The original 48-action two-sector gate passed in {legacyPasses} / {data.alternatives.length} branches; that gate is a separate measure.</p>
@@ -117,5 +132,7 @@ export function StagedStrategiesPanel({c,artifact,pause,play}:{c:SurgicalControl
       <p>Whole non-target ≤200 mm³ and at most 0.2 times whole target removal; continuation non-target ≤20 mm³; accepted actions ≤240. Checked final withdrawal and exact replay are required.</p>
       <p>Case {data.caseHash} · scene {data.sceneId} · intact state {data.sourceStateId} · comparison {data.comparisonSeal}.</p>
     </details>
-  </details>;
+    </details>
+    </div>
+  </WorkflowPlanningShell>;
 }

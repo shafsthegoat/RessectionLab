@@ -61,3 +61,25 @@
 .preparation-planning .approach-table{min-width:0;max-width:100%}.preparation-planning .approach-table table{table-layout:fixed}.preparation-planning .approach-table th:first-child{width:21%}.preparation-planning .approach-table th,.preparation-planning .approach-table td{vertical-align:top;padding:6px 4px;overflow-wrap:normal;word-break:normal}.preparation-planning .approach-table button{white-space:nowrap}.preparation-planning .approach-table td p{margin-top:5px;font-size:11px}
 .preparation-planning{min-width:0}.preparation-draft{min-width:0;grid-template-columns:minmax(0,1fr)}.preparation-draft>*{min-width:0}.preparation-draft .approach-selection{box-sizing:border-box;max-width:100%;overflow-wrap:anywhere}
 .preparation-draft[data-preparation-family="paired-lanes-v1"] .approach-table th:first-child{width:27%}
+
+/* Keep the supported workflow in the existing instrument panel. */
+.surgical-workflow{border-block:1px solid var(--border,#35505b);padding-block:12px;margin-block:12px}
+.surgical-workflow nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}
+.surgical-workflow nav button{display:flex;align-items:center;gap:6px;padding:8px;min-width:0;font-size:12px;line-height:1.25;white-space:normal}
+.surgical-workflow nav button span{font-size:11px;opacity:.7}
+.surgical-workflow nav button[aria-current="step"]{border-color:#76d4bd;background:#24443f;color:#d9ebee;font-weight:650}
+.workflow-identity{overflow-wrap:anywhere}
+.workflow-bindings code{overflow-wrap:anywhere;font-size:10px}
+.workflow-alternatives{display:grid;gap:9px;margin-block:12px}
+.workflow-alternative{border:1px solid var(--border,#35505b);border-radius:7px;padding:10px;background:var(--panel,#12252d)}
+.workflow-alternative:has(button[aria-pressed="true"]){border-color:#76d4bd}
+.workflow-alternative>strong{display:block;font-size:14px}
+.workflow-alternative p{margin-block:6px}
+.workflow-alternative dl,.surgical-workflow dl{margin-block:8px}
+.workflow-alternative dl>div,.surgical-workflow dl>div{display:flex;justify-content:space-between;gap:12px;margin-block:5px}
+.workflow-alternative dt,.surgical-workflow dt{font-size:12px;color:var(--muted,#9ab0bc)}
+.workflow-alternative dd,.surgical-workflow dd{margin:0;text-align:right;font-size:12px;overflow-wrap:anywhere}
+.workflow-alternative dl>div{display:grid;grid-template-columns:minmax(0,1fr) minmax(65px,.9fr);gap:7px}
+.workflow-alternative dd{overflow-wrap:normal}
+/* Author styles may otherwise override the browser's hidden display rule. */
+.surgical-panel [hidden]{display:none!important}

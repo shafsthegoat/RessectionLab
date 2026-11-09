@@ -31,6 +31,14 @@ Implemented:
   checked observed prefix after shaft collision. Full geometry, source domain,
   caller permissions and tissue caps remain authoritative; incomplete macro
   prefixes cannot become selected plans.
+- The existing desktop now has one Case → Plan → Compare → Rehearse/edit
+  workflow. Supported task selection reuses one mounted draft, including bounded
+  staged search on eligible paired sources. Complete native branches, preparation
+  and inactive access retain their distinct scopes. Alternative cards, a shared
+  checkpoint ledger and explicit recorded/historical results replace duplicated
+  primary panels; other research controls remain under progressive disclosure.
+  Draft edits, including edit/revert, require regeneration. Recorded staged
+  comparisons require their original intact source for another search.
 
 Evidence is retained under `testcases/decision-system-v1/` (ignored). The
 independent case review verified source planes, units/transforms, originals,
@@ -57,9 +65,12 @@ improvement over the strongest baseline. Evidence: `patient-search-v1/`.
 The bounded official SynthSeg CT pilot was withheld after two engineering source
 reviews found visible inferior coverage missing. No estimated mask was promoted.
 The distinct TotalSegmentator brain-structures route lacks configured licensed
-weights and has an ontology ambiguity requiring review. Source identity and
-coverage for existing MR companions are being investigated before any additional
-inference or registration. Evidence: `task-repair-v1/`.
+weights and has an ontology ambiguity requiring review. Read-only review verified
+the five existing TOF-MRA companions are the same patients, but their different
+frames and cropped fields do not qualify brainstem-mask transfer. Case006 is
+clearly cropped inferiorly; the other four have unresolved named-boundary
+coverage. No inference, registration, acquisition or label transfer followed.
+Evidence: `task-repair-v1/`, including `paired-modality-feasibility-v1/`.
 
 The explicit protected-overlap before/after control changes actual manual/bridge
 execution from accepted forbidden removal to zero-effect rejection. The native
@@ -85,7 +96,7 @@ brainstem annotation review, and actual waypoints must match the declared
 bounded opening family. Final evidence is in `independent-review-v2/` and
 `patient-tasks-intact-v3/`. Generated control passes are not patient evidence.
 
-Hidden Electron checks pass on UCSF-0007 and the UCSF-0005 no-route case, including
+Earlier hidden Electron checks pass on UCSF-0007 and the UCSF-0005 no-route case, including
 edits, missing-evidence refusal, actual backend cancellation, preview/installation,
 save and fresh-process reopen. The 0007 cold run also plays/pauses recorded native
 frames, returns to an action boundary/planning checkpoint, and recalculates the
@@ -93,6 +104,21 @@ original-target ledger. Every window stayed hidden and source archives stayed
 unchanged. `milestone-results.json` indexes results and the retained failed
 verifier attempts. Screenshots were inspected; native actions and state assertions,
 not the screenshots, establish behavior.
+
+The consolidated workflow passes all 1,288 desktop tests (325 main, 691 renderer,
+272 viewer) and the production build. Independent frontend review passes 56
+overlapping checks and build. Fresh hidden warm/cold runs on both 0007 and the
+0005 no-route case pass with the same final renderer: real cancellation,
+edit/revert staleness, positive/STOP comparison, native preview/install where
+available, recorded playback/pause, checkpoint return, unavailable-functional-
+evidence refusal/restoration, shared ledger, save and fresh-process reopen.
+Source archives are byte-exact and no window became visible. See `workflow-v1/`
+and `independent-review-v2/UI-REVIEW.md`. These reused structural cases verify
+application behavior; they are not new completed patient treatment tasks.
+The promoted CTA014 opening also passes hidden warm/cold desktop load, real
+recorded playback/pause, exact nine-action endpoint, shared ledger and save.
+The app reproduces 13.977324 mm³ skull/zero brain/zero target and complete
+withdrawal without generating a plan or changing its missing-anatomy eligibility.
 
 Reproduce focused checks:
 
@@ -113,15 +139,16 @@ pnpm --dir desktop test
 DECISION_SYSTEM_CHECK=1 \
  INTERACTIVE_PLANNING_OUTPUT="$PWD/testcases/decision-system-v1/desktop-repeat" \
  desktop/node_modules/.bin/electron desktop/electron/verify-interactive-planning.cjs
+WORKFLOW_OUTPUT="$PWD/testcases/decision-system-v1/workflow-v1/NEW-warm" \
+ desktop/node_modules/.bin/electron desktop/electron/verify-surgical-workflow.cjs
 ```
 
 Next substantive dependency: qualify a source-bound task with the required
-critical/coverage evidence and whole-tool opening geometry, then freeze
-size-appropriate target/spatial/burden/exit/computation goals before comparing
+critical/coverage evidence and whole-tool opening geometry, then bind the
+prospectively declared target/spatial/burden/exit/computation goals before comparing
 the strongest existing controller with a search that jointly branches over
 opening, preparation, work configuration and target order. Preserve the CTA014
 positive and all five negative cases. Do not turn missing labels into clear
 space, change original splits, shrink instruments, or treat correct STOP as
-completed treatment. The unified Case → Plan → Compare → Rehearse workflow,
-three meaningful completed patient tasks, uncertainty evaluation and matched
-patient improvement remain open.
+completed treatment. Joint opening/target-work search, three meaningful completed
+patient tasks, uncertainty evaluation and matched patient improvement remain open.
