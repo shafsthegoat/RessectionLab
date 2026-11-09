@@ -168,8 +168,11 @@ reviewed upper band. Independent source/overlay and full-mask checks confirm
 exact recipe/affine/hashes. This is an engineering containment region, not a
 precise brainstem segmentation or anatomical volume. It does not qualify a CT
 transform, patient task, other critical anatomy or workspace. Equivalent retained
-sub-06/sub-13 source review is recorded separately. No native patient action or
-original-case change followed (`craniotomy-v2/sub01-source-pilot/`,
+sub-06/sub-13 containers cover full x/y and k0..226, upper faces −441.25/−443.0 mm,
+with the same explicit 8 mm allowance. Root independently inspected all dense
+packets/actual overlays and streamed all three full masks to verify every included
+and excluded plane, original affine/units and source hashes. No native patient
+action or original-case change followed (`craniotomy-v2/sub01-source-pilot/`,
 `craniotomy-v2/retained-source-qualification-v1/`).
 
 ## Validation and next dependency
