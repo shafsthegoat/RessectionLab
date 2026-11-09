@@ -42,7 +42,7 @@ def _budget_reason(reason):
 
 def checked_sequence_search(engine, route, *, propose, motion, hand, radius,
                             limits, meter, horizon=2, beam_width=3,
-                            max_expansions=24, check=lambda: None,
+                            max_expansions=24, max_contact_replans=8, check=lambda: None,
                             can_expand=lambda: True, phase='staged.lookahead'):
     """Return a checked positive sequence, attempts, and explicit search evidence.
 
@@ -53,7 +53,8 @@ def checked_sequence_search(engine, route, *, propose, motion, hand, radius,
     """
     if (type(horizon) is not int or not 1 <= horizon <= 3 or
             type(beam_width) is not int or not 2 <= beam_width <= 4 or
-            type(max_expansions) is not int or not 1 <= max_expansions <= 24):
+            type(max_expansions) is not int or not 1 <= max_expansions <= 24 or
+            type(max_contact_replans) is not int or not 0 <= max_contact_replans <= 8):
         raise ValueError('Keep sequence horizon 1..3, beam 2..4 and expansions 1..24')
     baseline = engine.metrics()
     frontier = [SequenceNode(engine, None, (), 0., 0., 0.)]
@@ -74,6 +75,7 @@ def checked_sequence_search(engine, route, *, propose, motion, hand, radius,
                 before = parent.work.metrics()
                 work, receipt = checked_cusa_motion(parent.work, motion(parent.work, tile),
                     limits=limits, meter=meter, check=check,
+                    max_contact_replans=max_contact_replans,
                     phase=f'{phase}.depth{depth}.{expansions}.work')
                 row = {'tileId': tile['id'], 'radiusMm': radius, 'work': receipt,
                     'currentContacts': tile.get('currentContacts'),
@@ -136,6 +138,7 @@ def checked_sequence_search(engine, route, *, propose, motion, hand, radius,
     evidence = {'horizon': horizon, 'beamWidth': beam_width,
         'maxExpansions': max_expansions, 'expansions': expansions,
         'maxProposalsPerNode': 6,
+        'maxContactReplansPerSkill': max_contact_replans,
         'deepestCompletedDepth': deepest, 'budgetExhausted': budget_stopped,
         'physicalCalls': meter.calls-first_calls,
         'decision': 'CONTINUE' if selected is not None else 'STOP',

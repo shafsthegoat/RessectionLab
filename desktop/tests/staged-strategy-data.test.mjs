@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {stagedGenerationEligibility,stagedStrategyDisplay} from '../src/staged-strategy-data.ts';
 
-import {fixture,seal,scene,start,end,comparison} from './staged-strategy-fixture.mjs';
+import {fixture,zeroPreparationFixture,seal,scene,start,end,comparison} from './staged-strategy-fixture.mjs';
 
 test('staged evidence binds native endpoints and keeps larger and legacy gates separate',()=>{
   const {artifact,response}=fixture();
@@ -181,4 +181,17 @@ test('bounded lookahead is displayed only with a valid declared search receipt',
  f.summary.sequenceSearch={horizon:2,beamWidth:3,maxExpansionsPerSearch:24,baseline:'Immediate-removal baseline',preference:'Native constraints then target/non-target/time Pareto outcomes'};
  const shown=stagedStrategyDisplay(f.artifact,f.response);assert.equal(shown.controllerMode,'bounded-sequence-lookahead');assert.equal(shown.sequenceSearch.horizon,2);
  for(const patch of [{horizon:1},{horizon:4},{beamWidth:5},{maxExpansionsPerSearch:25},{maxExpansionsPerSearch:0},{preference:''}]){const search={...f.summary.sequenceSearch};Object.assign(f.summary.sequenceSearch,patch);assert.equal(stagedStrategyDisplay(f.artifact,f.response),null);f.summary.sequenceSearch=search;}
+});
+
+test('finite aspiration policy is optional for historical reports and bounded for new ones',()=>{
+ const f=fixture();assert.equal(stagedStrategyDisplay(f.artifact,f.response).maxContactReplansPerSkill,undefined);
+ f.summary.maxContactReplansPerSkill=8;assert.equal(stagedStrategyDisplay(f.artifact,f.response).maxContactReplansPerSkill,8);
+ for(const value of [true,-1,9,1.5]){f.summary.maxContactReplansPerSkill=value;assert.equal(stagedStrategyDisplay(f.artifact,f.response),null);}
+});
+
+test('actual bounded zero-target preparation remains visible without target credit or weaker binding',()=>{
+ const f=zeroPreparationFixture(),shown=stagedStrategyDisplay(f.artifact,f.response);assert(shown);
+ const row=shown.alternatives[0];assert.equal(row.stages[4].tileId,'prepare-3330234');assert.equal(row.stages[4].targetIncrementMm3,0);assert.equal(row.stages[5].targetIncrementMm3,3);
+ assert.equal(row.stages.reduce((total,stage)=>total+stage.targetIncrementMm3,0),30);assert.equal(row.outcome.configurationTargetRemovedMm3['radius-1'],30);assert.equal(row.outcome.wholeTargetRemovedMm3,41);assert.equal(row.outcome.wholeNonTargetRemovedMm3,135);assert.equal(row.outcome.taskGateMet,false);
+ for(const edit of [g=>{delete g.summary.controllerMode;delete g.summary.sequenceSearch;},g=>g.summary.sequenceSearch.horizon=1,g=>g.summary.controllerMode='unvalidated-preparation',g=>g.alternative.stages[4].targetIncrementMm3=-1,g=>g.alternative.stages[4].checkedExitStateId='unverified',g=>g.response.view.scene.sceneId=seal('b')]){const g=zeroPreparationFixture();edit(g);assert.equal(stagedStrategyDisplay(g.artifact,g.response),null);}
 });

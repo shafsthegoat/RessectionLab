@@ -108,7 +108,15 @@ def larger_task(scene):
     return task
 
 
-def _source_work(scene, route, max_tiles):
+def _working_radii(scene, actions=(), *, mechanics_revision=0):
+    """Use the actual fixed CUSA catalog when contact capacity is enabled."""
+    for action in actions:
+        if action.get('operation') == 'configure' and 'mechanicsRevision' in action:
+            mechanics_revision = action['mechanicsRevision']
+    return (1.5,) if 'cusaV3' in scene.properties or mechanics_revision in (1, 2) else RADII_MM
+
+
+def _source_work(scene, route, max_tiles, *, radii=RADII_MM):
     target_ids = {int(row['id']) for row in scene.regions if row.get('target')}
     brain_ids = {int(row['id']) for row in scene.regions
                  if row['material'] == 'soft_tissue' and 'brain' in row['name'].lower()}
@@ -147,7 +155,7 @@ def _source_work(scene, route, max_tiles):
             axis = axis/np.linalg.norm(axis)
             quaternion = Rotation.align_vectors([axis], [[0., 0., 1.]])[0].as_quat()
             measurements = {}
-            for radius in RADII_MM:
+            for radius in radii:
                 footprint = capsule_voxel_indices(grid, point-axis*2., point, radius)
                 cells = np.ravel_multi_index(footprint.T, scene.shape)
                 values = scene.labels.ravel()[cells]
@@ -174,7 +182,7 @@ def _source_work(scene, route, max_tiles):
                 int(scene.labels[tuple(index)]) not in target_ids:
             continue
         measurements = {}
-        for radius in RADII_MM:
+        for radius in radii:
             footprint = capsule_voxel_indices(grid, point-inward*2., point, radius)
             values = scene.labels[tuple(footprint.T)]
             measurements[str(radius)] = {
@@ -188,16 +196,18 @@ def _source_work(scene, route, max_tiles):
             'orientationMode': 'source-ray', 'depthFromTargetEntryMm': float(offset),
             'radialFromOriginalRayMm': 0., 'sourceFootprints': measurements})
     # Prioritize efficient target work, but retain axial and lateral alternatives.
+    rank_radius = str(2.2 if 2.2 in radii else radii[0])
     tiles.sort(key=lambda row: (
         row['orientationMode'] != 'source-ray',
-        row['sourceFootprints']['2.2']['sourceBrainMm3'],
+        row['sourceFootprints'][rank_radius]['sourceBrainMm3'],
         row['radialFromOriginalRayMm'], row['depthFromTargetEntryMm'],
-        -row['sourceFootprints']['2.2']['sourceTargetMm3'], row['id']))
+        -row['sourceFootprints'][rank_radius]['sourceTargetMm3'], row['id']))
     return tiles[:max_tiles]
 
 
 def build_inventory(scene, record, *, max_routes=3, max_tiles=MAX_TILES,
-                    fresh_routes=None, fresh_geometry=None, check=lambda: None):
+                    fresh_routes=None, fresh_geometry=None, check=lambda: None,
+                    mechanics_revision=0):
     """Reuse sealed joint/classic routes; rank extended work from source anatomy."""
     if type(max_routes) is not int or not 1 <= max_routes <= 3 or \
             type(max_tiles) is not int or not 1 <= max_tiles <= MAX_TILES:
@@ -229,9 +239,11 @@ def build_inventory(scene, record, *, max_routes=3, max_tiles=MAX_TILES,
                     'sourceSceneId': scene.identity, 'startStateId': access['startStateId'],
                     'decisions': access['decisions']}):
                 raise ValueError('Source access plan seal differs')
-            tiles = _source_work(scene, route, max_tiles)
             prefix = _prefix_actions(access)
-            estimate = sum(row['sourceFootprints']['2.2']['sourceTargetMm3'] for row in tiles)
+            radii = _working_radii(scene, prefix, mechanics_revision=mechanics_revision)
+            tiles = _source_work(scene, route, max_tiles, radii=radii)
+            rank_radius = str(2.2 if 2.2 in radii else radii[0])
+            estimate = sum(row['sourceFootprints'][rank_radius]['sourceTargetMm3'] for row in tiles)
             snapshot = record.get('branches', {}).get(access.get('branchId'), {})
             state = snapshot.get('checkpoint', {}).get('state', {})
             slots = state.get('slots', {})
@@ -244,6 +256,7 @@ def build_inventory(scene, record, *, max_routes=3, max_tiles=MAX_TILES,
                 'sourceMethod': access['method'], 'sourcePlanSeal': access['planSeal'],
                 'sourceComparisonSeal': comparison['comparisonSeal'],
                 'approachActions': copy.deepcopy(prefix), 'tiles': tiles,
+                'workingRadiiMm': list(radii),
                 'sourceWorkContactSumMm3': estimate,
                 'sealedAccessNonTargetMm3': observed_brain,
                 'sealedAccessCleanupComplete': checked_cleanup,
@@ -257,12 +270,15 @@ def build_inventory(scene, record, *, max_routes=3, max_tiles=MAX_TILES,
         if signature in seen:
             continue
         seen.add(signature)
-        tiles = _source_work(scene, route, max_tiles)
-        estimate = sum(row['sourceFootprints']['2.2']['sourceTargetMm3'] for row in tiles)
+        radii = _working_radii(scene, mechanics_revision=mechanics_revision)
+        tiles = _source_work(scene, route, max_tiles, radii=radii)
+        rank_radius = str(2.2 if 2.2 in radii else radii[0])
+        estimate = sum(row['sourceFootprints'][rank_radius]['sourceTargetMm3'] for row in tiles)
         method = {2: 'superior-access', 0: 'axis0-access', 1: 'axis1-access'}[route['nativeAxis']]
         candidates.append({'route': copy.deepcopy(route), 'sourceMethod': method,
             'sourcePlanSeal': None, 'sourceComparisonSeal': fresh_geometry['selectionSeal'],
             'approachActions': None, 'tiles': tiles, 'sourceWorkContactSumMm3': estimate,
+            'workingRadiiMm': list(radii),
             'rankKey': [0, -estimate, route['pathLengthMm'], signature],
             'approachController': 'existing_native_access_from_source_route'})
     candidates.sort(key=lambda row: tuple(row['rankKey']))
@@ -280,7 +296,8 @@ def build_inventory(scene, record, *, max_routes=3, max_tiles=MAX_TILES,
     inventory = {'schema': INVENTORY_SCHEMA, 'sourceSceneId': scene.identity,
         'sourceLabelsSha256': array_digest(scene.labels),
         'candidateRoutesExamined': len(candidates), 'maxRoutes': max_routes,
-        'maxTilesPerRoute': max_tiles, 'workingRadiiMm': list(RADII_MM),
+        'maxTilesPerRoute': max_tiles,
+        'workingRadiiMm': sorted({radius for row in selected for radius in row['workingRadiiMm']}),
         'shaftRadiusMm': .5, 'shaftLengthMm': 40., 'workingDepthMm': 2.,
         'sourceOnlySelection': False, 'nativeSelectionCalls': 0,
         'localManeuverRule': {'angleStepDeg': .5, 'advanceStepMm': .5,
@@ -375,8 +392,10 @@ def _work_actions(engine, tile, radius, hand):
         travel += distance+42.*angle
         previous = pose
     duration = min(30., max(1., travel))
-    parameters = {'radiusMm': radius, 'depthMm': float(engine.parameters(start)['depthMm']), 'forceN': 0.,
-                  'power': 1., 'duty': 1., 'flowMm3PerSecond': 0.}
+    parameters = {'radiusMm': radius, 'depthMm': float(engine.parameters(start)['depthMm']),
+                  'power': 1., 'flowMm3PerSecond': 0.}
+    if engine.scene.properties.get('tissuePhysicsV2'):
+        parameters.update(forceN=0., duty=1.)
     motion = {'path': copy.deepcopy(path)} if 'path' in tile else {'pose': copy.deepcopy(tile['pose'])}
     return [SkillAction({'slot': hand, 'operation': 'apply',
         **motion, 'parameters': parameters,
@@ -534,14 +553,15 @@ def compare_staged_strategies(engine, record, *, acknowledge_unknowns=False,
                               initial_access_radius_mm=None,
                               include_opposite_faces=False,
                               cumulative_reentry=False,
-                              planning_horizon=1, beam_width=3):
+                              planning_horizon=1, beam_width=3, max_contact_replans=8):
     """Execute source-defined work with bounded lookahead and checked exit."""
     from .surgical_staged_exit import find_checked_exit
     from .surgical_joint_geometry import select_joint_corridors
     if acknowledge_unknowns is not True:
         raise ValueError('Explicit acknowledgment of unsupported anatomy is required')
     if (type(planning_horizon) is not int or not 1 <= planning_horizon <= 3 or
-            type(beam_width) is not int or not 2 <= beam_width <= 4):
+            type(beam_width) is not int or not 2 <= beam_width <= 4 or
+            type(max_contact_replans) is not int or not 0 <= max_contact_replans <= 8):
         raise ValueError('Keep staged planning horizon 1..3 and beam width 2..4')
     if type(cumulative_reentry) is not bool:
         raise ValueError('Cumulative re-entry mode must be boolean')
@@ -576,11 +596,13 @@ def compare_staged_strategies(engine, record, *, acknowledge_unknowns=False,
         routes, geometry = select_joint_corridors(engine.scene, goal='staged',
             include_opposite_faces=include_opposite_faces, check=bounded)
         inventory = build_inventory(engine.scene, record, fresh_routes=routes,
-            fresh_geometry=geometry, check=bounded)
+            fresh_geometry=geometry, check=bounded,
+            mechanics_revision=engine.state.get('toolMechanicsRevision', 0))
     else:
         # Keep the stronger measured access baseline. The optional source-only
         # staged selector has not earned replacement on the development cases.
-        inventory = build_inventory(engine.scene, record, check=bounded)
+        inventory = build_inventory(engine.scene, record, check=bounded,
+            mechanics_revision=engine.state.get('toolMechanicsRevision', 0))
     if initial_access_radius_mm is not None:
         # The existing native access executor generates a newly measured plan
         # when initial outside geometry changes. No inserted radius is edited,
@@ -668,7 +690,9 @@ def compare_staged_strategies(engine, record, *, acknowledge_unknowns=False,
                     radius = current_radius
                     if (configuration_target.get(f'radius-{current_radius:g}', 0.) >=
                             task['minimumTargetPerConfigurationMm3'] or no_admission >= 2):
-                        larger = [value for value in RADII_MM if value > current_radius+1e-9]
+                        available = _working_radii(engine.scene,
+                            mechanics_revision=candidate.state.get('toolMechanicsRevision', 0))
+                        larger = [value for value in available if value > current_radius+1e-9]
                         radius = larger[0] if larger else current_radius
                     prepared_work = candidate
                     reconfiguration = None
@@ -698,6 +722,7 @@ def compare_staged_strategies(engine, record, *, acknowledge_unknowns=False,
                                 limits=work_limits, meter=meter,
                                 horizon=min(planning_horizon, MAX_STAGES-len(stages)),
                                 beam_width=beam_width, check=bounded,
+                                max_contact_replans=max_contact_replans,
                                 can_expand=lambda: meter.calls-route_start_calls < route_quota-MAX_ACTIONS,
                                 phase=f'staged.{route_index}.stage{stage_index}.lookahead')
                         sequence_searches.append(evidence)
@@ -754,6 +779,7 @@ def compare_staged_strategies(engine, record, *, acknowledge_unknowns=False,
                         with meter.reserve(EXPORT_RESERVE):
                             work, receipt = checked_cusa_motion(prepared_work, _work_actions(prepared_work, tile, radius, hand)[0],
                                 limits=work_limits, meter=meter, check=bounded,
+                                max_contact_replans=max_contact_replans,
                                 phase=f'staged.{route_index}.stage{stage_index}.{tile["id"]}.work')
                         row = {'tileId': tile['id'], 'radiusMm': radius, 'work': receipt,
                                'currentContacts': copy.deepcopy(tile.get('currentContacts')),
@@ -877,6 +903,7 @@ def compare_staged_strategies(engine, record, *, acknowledge_unknowns=False,
     report = {'schema': SCHEMA, 'sourceSceneId': engine.scene.identity,
         'sourceStateId': engine.state_id, 'sourceRole': 'DEVELOPMENT',
         'controller': 'deterministic source work inventory and native checked-stage search',
+        'maxContactReplansPerSkill': max_contact_replans,
         'optimizerUpdates': 0, 'task': task, 'inventory': inventory,
         'cusaModel': ('contact-capacity-v3' if 'cusaV3' in engine.scene.properties else
                       'legacy-instantaneous-with-v2-mechanics'),
@@ -908,6 +935,8 @@ def staged_summary(report):
             'sourceSceneId', 'sourceStateId', 'sourceRole', 'comparisonSeal',
             'optimizerUpdates', 'task', 'wallSeconds')},
         'cusaModel': report.get('cusaModel', 'legacy-instantaneous-with-v2-mechanics'),
+        **({'maxContactReplansPerSkill': report['maxContactReplansPerSkill']}
+           if 'maxContactReplansPerSkill' in report else {}),
         **({'controllerMode': report['controllerMode']} if 'controllerMode' in report else {}),
         **({'sequenceSearch': copy.deepcopy(report['sequenceSearch'])} if 'sequenceSearch' in report else {}),
         'comparisonScope': ('same-route-configurations' if 'configurationAlias' in report else
@@ -944,6 +973,10 @@ def validate_staged_report(scene, record, report):
         raise ValueError('Staged report source or content seal differs')
     if report['task'] != larger_task(scene):
         raise ValueError('Staged task gate differs from the predeclared objective')
+    if ('maxContactReplansPerSkill' in report and
+            (type(report['maxContactReplansPerSkill']) is not int or
+             not 0 <= report['maxContactReplansPerSkill'] <= 8)):
+        raise ValueError('Staged finite-contact continuation budget differs')
     cost = report['cost']
     if not (cost['physicalCalls'] == cost['previewCalls']+cost['directStepCalls'] <=
             cost['maxPhysicalCalls'] <= MAX_CALLS) or report['wallSeconds'] > MAX_SECONDS:
@@ -1023,6 +1056,24 @@ def validate_staged_report(scene, record, report):
                 outcome['cleanupComplete'] != clean):
             raise ValueError('Staged whole effects or cleanup differ from native checkpoint')
         history = record.get('timeline', {}).get(row['branchId'], [])
+        contact_budget = report.get('maxContactReplansPerSkill')
+        if contact_budget is not None:
+            for attempted in row.get('attemptedWork', []):
+                work = attempted.get('work')
+                if work is not None:
+                    if type(work) is not dict:
+                        raise ValueError('Staged work contact policy receipt is invalid')
+                    continuations = work.get('contactContinuations')
+                    if (type(work.get('maxContactReplans')) is not int or
+                            work['maxContactReplans'] != contact_budget or
+                            type(continuations) is not list or len(continuations) > contact_budget or
+                            work.get('status') == 'accepted' and
+                            work.get('nativeActionsAppended') != 2+2*len(continuations)):
+                        raise ValueError('Staged work contact policy differs from its declared budget')
+            if any(type(search.get('maxContactReplansPerSkill')) is not int or
+                   search['maxContactReplansPerSkill'] != contact_budget
+                   for search in row.get('sequenceSearches', [])):
+                raise ValueError('Staged search contact policy differs from its declared budget')
         if fan_inventory is not None:
             from .surgical_staged_fan import validate_cumulative_intervals
             validate_cumulative_intervals(scene, report, row, source, fan, snapshot, history)
@@ -1041,6 +1092,18 @@ def validate_staged_report(scene, record, report):
                 raise ValueError('Staged work interval differs from native history')
             previous_end = end
             previous_stage = stage['stage']
+            if contact_budget is not None:
+                # Bind policy claims to selected native history even if a
+                # resealed report drops its optional speculative receipts.
+                records = history[start:end]
+                partials = [event for event in records if event['status'] == 'partial']
+                count = len(partials)
+                expected_status = ['partial', 'accepted']*count+['accepted', 'accepted']
+                if (count > contact_budget or len(records) != 2+2*count or
+                        [event['status'] for event in records] != expected_status or
+                        any(event.get('reason') != 'TISSUE_ASPIRATION_IN_PROGRESS'
+                            for event in partials)):
+                    raise ValueError('Staged selected native contact recipe exceeds its declared budget')
             config_radius = float(stage['configuration'].removeprefix('radius-'))
             work_cells = set()
             for position in range(start, end):

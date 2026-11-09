@@ -5,7 +5,10 @@ SurgicalEngine`. The engine owns material checks, complete-tool swept geometry,
 both instruments, declared protection, reviewed task boxes, physical effects and
 transaction publication. Geometry shortlists and scalar rewards cannot authorize
 an engine refusal. The original reported brainstem run has not been identified;
-the replacement regression is explicitly generated engineering geometry.
+the replacement regression is explicitly generated engineering geometry. The user
+clarified that the concern was an implausible access route (possibly posterior or
+inferior), not an established named-structure injury. A case-specific cranial
+entry window and actual skull opening/flap removal are required next.
 
 Four separate concepts currently run:
 
@@ -78,8 +81,14 @@ pass a fresh complete native preview and commit. Protected/material/domain
 refusals are never shortened. Only a completed macro can be retained; stopped
 internal prefixes remain unadmitted attempts. The declared proposal family checks
 actual straight 0.12 mm waypoints, stock geometry and at most 24 mm depth.
-This is an opening primitive for a future joint controller, not evidence of a
-completed patient target task or a new bridge qualification.
+This removes kerfs only. Complete closed cutting, attachment separation, guarded
+whole-flap transport, exterior evacuation and empty-holder withdrawal are not yet
+implemented. Tiny slivers cannot satisfy the requested skull-opening task. A
+source-bound access policy must reject an undeclared entry even if it looks
+cheap; posterior access is case-specific rather than universally forbidden. Full
+kerf plus flap volume remains non-target under existing tasks. A separate bone-only
+prospectus may state different burdens before testing, but cannot retroactively
+pass the original 200 mm³ combined cap or open full tumor/physics/RL eligibility.
 
 `TransitionMeter` charges previews, discarded probes, checked exits, commits and
 replay. Those are computation costs, separate from accepted patient treatment.
@@ -88,6 +97,9 @@ coordinates/octants. Dynamic removals, tools, constraints and outcomes are
 remeasured. Scene/source/transform edits invalidate it. Tests compare cached and
 uncached results and exercise cavity edits. Native execution remains the main
 planning expense; no end-to-end speedup is claimed from the geometry cache.
+A duplicate unchanged boundary preview can refuse an already proven removal-limit
+violation without repeating the same unsafe query. This is refusal-only; successful
+actions and any shortened command still require fresh native checking.
 
 The current generated fixed-radius regression demonstrates clearance followed by
 target work, exact replay and withdrawal. It is a mechanism check, not patient
