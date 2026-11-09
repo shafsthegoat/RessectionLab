@@ -1,6 +1,16 @@
 'use strict';
 // Exercise the real consolidated workflow offscreen. Never show or focus a window.
-const {app,ipcMain,dialog}=require('electron');
+const {app,ipcMain,dialog,BrowserWindow}=require('electron');
+// Install before filesystem preflight or assertions: Electron's default fatal
+// handling can display a native dialog even when no BrowserWindow was created.
+let hiddenFatalHandled=false;
+const exitHiddenHarness=(error,kind)=>{
+ if(!hiddenFatalHandled){hiddenFatalHandled=true;try{console.error('HIDDEN_WORKFLOW_FATAL '+JSON.stringify({kind,error:String(error),browserWindows:BrowserWindow.getAllWindows().length}));}catch{}}
+ try{app.exit(1);}finally{process.exit(1);}
+};
+process.prependListener('uncaughtException',error=>exitHiddenHarness(error,'uncaughtException'));
+process.prependListener('unhandledRejection',error=>exitHiddenHarness(error,'unhandledRejection'));
+dialog.showErrorBox=(title,content)=>exitHiddenHarness(`${title}: ${content}`,'blocked-native-error-box');
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),assert=require('node:assert/strict');
 const root=path.resolve(__dirname,'../..'),base=path.join(root,'testcases');
 const input=fs.realpathSync(process.env.WORKFLOW_CASE||path.join(base,'outputs/interactive-planning-20261031/bridge-v4-head-physics/interactive-planning.ressectionlab'));

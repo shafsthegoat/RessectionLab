@@ -202,12 +202,16 @@ checks, cancellation, edit staleness and actual paired-source staged Generate ar
 retained with their implementation hashes in `contact-continuation-v1/desktop/`;
 the three legacy 0007 branches remain unpassed, not completed patient tasks.
 
-Current hidden milling warm-v2 and cold-v1 pass all six actual checkpoints
+Current hidden milling warm-v2 and cold-v2 pass all six actual checkpoints
 (0/3/10/13/21/22), returned cutting-partial history, debris quantities, full ledger,
 play/pause, Save and fresh reopen. Both remain hidden, with stable backend/source
 hashes and renderer `71653cf6…`. Root inspected the actual suction/final captures.
-The first harness attempt stopped before browser creation on a file-inventory
-typo; its log is retained. Reproduction and 32 screenshots are indexed in
+The first harness attempt failed before browser creation on a file-inventory
+typo and left an Electron process alive; it was terminated. Early fatal handlers
+now suppress native error boxes and exit immediately. A forced startup failure
+exits1 in0.532 seconds with zero windows/dialog attempts and no owned process left;
+positive cold-v2 passes after this fix. The earlier error-dialog visibility was
+not measured. Logs, reproduction commands and screenshots are indexed in
 `craniotomy-v2/desktop-control-v1/`.
 
 Next: qualify a patient full-thickness aperture, local inner boundary, retained
