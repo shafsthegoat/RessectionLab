@@ -137,6 +137,17 @@ conserved generated/collected/present/escaped mass, followed by complete native
 withdrawal, completes the opening. It never fabricates flap transport or grants
 dural/CUSA entry. Unknown source evidence remains a refusal.
 
+`surgical_milling_contact_proposals` supplies bounded, current-cavity stock
+drill/suction poses and separate actual-debris suction programs. Its contact
+inversion uses the existing exact orthogonal-cell kernel; shear refuses. Source
+ordering and generation costs are reported separately, including source-wide
+binding work. The fixed-attitude approach/withdrawal union is only a geometry
+shortlist. Native staging `place` has endpoint/setup semantics, so its prior
+repositioning requires separate caller verification. Every action, finite work,
+debris collection, complete original aperture and exit still needs the existing
+checked policy. Neither a nominal contact footprint nor a resealed caller proposal
+grants admission, resets computation time or refunds a discarded native prefix.
+
 The same checked macro can retain a genuine positive-time, single-endpoint
 `BONE_CUTTING_IN_PROGRESS` prefix and repeat the identical stock command within
 an explicit bound (default six continuations). Multiwaypoint partials and other

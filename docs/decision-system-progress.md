@@ -51,6 +51,21 @@ Frazier collection; mass conservation and real withdrawal are required. Milling
 never claims flap evacuation or authorizes dura/CUSA entry. Old flap semantics
 remain unchanged.
 
+`surgical_milling_contact_proposals` now generates stock drill/suction contacts
+from the current native cavity and separately targets actual tagged debris.
+It inverts the existing exact orthogonal-cell contact kernel, reuses explicitly
+counted source-wide outward ordering, and reports bounded contact checks and all
+geometry wall costs. Sheared-cell contact inversion refuses. Whole collinear
+approach/withdrawal capsules are checked conservatively against current obstacles;
+staging repositioning still requires caller verification because native `place`
+has endpoint/setup semantics. Proposal seals confer no execution permission.
+The generated native control removes 5 mm³ bone and collects all 5 mm³ debris,
+then correctly refuses the residual 76-cell opening. All 144 selected tests pass;
+independent review reproduces 16 focused tests and scalar/route geometry checks.
+This is a reusable proposal helper, not an automatic full-opening controller or
+desktop Generate integration. Evidence: `craniotomy-v4/generated-milling-contact-proposals-v1/`
+and `milling-contact-independent-review-v1/`.
+
 The checked macro freezes a separate explicit bone budget, canonical source,
 charged ancestry, shared meter and deadline. Added target/nonbone removal is zero.
 Refreezing, resealed replacement limits or unlogged state cannot refund burdens.
@@ -285,13 +300,24 @@ the shared original-annotation target measure as unavailable and motor outcome
 as unknown. It uses the legacy generated flap opening, not patient milling or a
 qualified patient task. Evidence: `craniotomy-v4/joint-stage-independent-review-v1/`.
 
-The next source operator fits a local outer-surface normal from 64 fixed,
-target-independent raw main-CT300 contacts at each of six existing anchors.
-Its 24 pure controls pass, including transformed geometry, the full fixed R8 chart,
-absolute neighbor depths and retained later bone. Patient fits have not run.
-Reconstruction direction and stock tool attitude remain separate; a normal cannot
-grant material, entry or exit permission. Evidence and the pending bounded protocol:
-`craniotomy-v4/sub06-surface-normal-kernel-v1/`.
+The local outer-surface operator now fits all six existing sub06 anchors from
+64 fixed, target-independent raw main-CT300 contacts each. All predeclared fit
+checks pass; directions differ 38–44° from the old sampling direction. Independent
+JSON replay reproduces all 384 contacts and fits in 29,238 checks. Root and reviewer
+inspected the three actual source sheets. This is one patient's reconstruction
+evidence, not six patient improvements or instrument attitudes. The bounded fit
+costs 1.513 s/188 MB sampled aggregate RSS; source masks and full target stay exact.
+Evidence: `craniotomy-v4/sub06-surface-normal-kernel-v1/`.
+
+A separate six-region material study costs 7.045 s/425 MB sampled aggregate RSS.
+All six remain withheld: one-to-three-sample calvarial runs behind the selected
+group prevent full fixed-R8/halo support. Independent replay passes 252,177 checks;
+no complete cell cover or A was built. Empty output coordinates do not mean empty
+anatomy. A prospective repair will include every subsequent true bone run in the
+material grouping under the unchanged density, gap, span and clearance gates,
+rather than omit small runs from the required extent. No source-class promotion,
+native patient action or opening admission follows. Evidence:
+`craniotomy-v4/sub06-fitted-normal-material-kernel-v3/` and its independent review.
 
 Next, qualify a real patient's full A/R, local stops, support, membrane and exterior
 without suppressing source uncertainty. Freeze source-role tasks and matched
