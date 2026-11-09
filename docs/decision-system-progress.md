@@ -240,6 +240,39 @@ budget can stop actual partial work without refunding costs. A bounded endpoint
 also completes and exits. Eleven joint controls pass in 50.10 s; old 200/20 task
 caps, patient roles and physiological/RL holds remain unchanged.
 
+The checked joint exit adapter verifies actual full stock bodies, both posed
+hands, no active/inserted/gripping tools and no held/released fragments. An
+intermediate bone-stage exit does not claim membrane clearance or treatment.
+Bounded joint search now considers source-bound opening/preparation/work programs,
+retains zero-target preparation and continues to another candidate after a local
+contact controller failure. Goals freeze before any native call, preserve the full
+original denominator and require owned-target treatment credit in three fixed
+spatial zones. Whole B/P/W costs and all speculative computation remain charged.
+Available modeled consequences join the Pareto comparison; missing values remain
+unknown. This is a reusable backend mechanism with a supplied inventory and fixed
+opening, not automatic patient access generation or new desktop Generate behavior.
+
+The generated search control selects opening → membrane preparation → finite
+target work and checked exit; a longer competing CUSA command exhausts its contact
+controller without suppressing the feasible continuation. Its immediate-target
+horizon-one ablation stops after zero-target opening. This is an algorithm check,
+not superiority over the strongest patient controller or a completed patient task.
+
+Latest sub06 source review reproduces all five constructed windows' target,
+inferior-exclusion or UNKNOWN conflicts and genuine required-hole coverage misses.
+A nearest-versus-trilinear endpoint disagreement is real, but that endpoint's
+entire interpolation neighborhood overlaps the unchanged original target, so it
+cannot grant bone permission. CT files share geometry but have different raw
+scales/values; calibrated HU are unverified. A new anterior/superior shortlist
+resolves an arbitrary central reference-probe limit using the actual cached ray
+interval, then still refuses all twelve placements on local span, profile or
+cached-support gates. Root inspected all four actual CT/MRI pages. The 16 mm
+ray-span rule is an estimator bound, distinct from the stock 40 mm shaft; neither
+failed search nor a crop boundary proves anatomical impossibility. Full target
+360,280 cells, exclusions and source masks remain intact; native patient calls
+remain zero. Evidence: `sub06-reviewed-composite-independent-review-v1/` and
+`sub06-central-reference-material-v7/` under `craniotomy-v4/`.
+
 Independent curved B/P/W reproduction completes 112 native actions: 18/27 mm³
 owned target removed, 9 remaining, B285 + P113 + healthy W1 = 399 mm³ whole
 non-target removal, all 176 retained rim cells intact, zero protected removal and
@@ -260,6 +293,17 @@ patients. All five originals remain in reporting. STOP or bone-only success does
 not complete tumor treatment.
 
 ## Validation and desktop evidence
+
+The joint search/exit integration passes all 37 selected tests in one final
+180.89 s run, including existing joint limits. Independent review separately
+passes six native controls in 54.09 s and two comparator controls in 0.34 s.
+An actual CaseData overlap control removes 18/27 original annotation cells as
+non-target work while earning zero treatment credit; it retains all 352 mm³
+non-target burden and fails the task. Other controls cover competing native
+continuations, incomplete spatial coverage, exact call bounds, cancellation and
+late readout time. Source and guards remain authoritative. Evidence:
+`craniotomy-v4/joint-search-v1/` and `craniotomy-v5/` joint exit/search review.
+No frontend changed and no new desktop Generate integration is claimed here.
 
 Current joint-stage milestone: 626 selected backend tests pass in 493.68 s,
 including native membrane transport, whole B/P/W accounting, source/guard binding,

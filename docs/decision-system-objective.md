@@ -167,6 +167,32 @@ retains unknown prior exposure cost. These checked programs do not qualify a
 patient, promote source roles, alter the old 200/20 policy, or establish planner
 superiority; patient source evidence and complete task evaluation remain required.
 
+`surgical_joint_cranial_search` adds a separate bounded search over source-bound
+native opening, preparation, configuration and work programs. It retains several
+work states and zero-target preparation, checks both-hand exits on separate
+branches, and charges failed contacts and discarded probes to the original meter.
+The frozen goal precedes every native call: at least half the full original target
+and three fixed source-centroid octants each contributing 5%. Only source-owned
+target cells earn treatment credit; physical removal of an original annotation
+cell later owned by another material remains separately reported. Preparation
+cannot shrink the denominator or refund source B/P/W burdens.
+
+Pareto comparison retains separate B/P/W costs, modeled time, exchanges and
+available shared mechanical, thermal and vascular consequences. Different evidence
+availability is incomparable, never zero risk. The explicit recommendation order
+is greater original-target treatment credit, then less whole non-target removal,
+then less modeled time. Proposal names and animation duration alone do not create
+distinct alternatives. Cancellation or the final readout crossing a bound prevents
+plan admission. A local finite-contact controller failure can leave other search
+branches available.
+
+This API uses a caller-supplied skill inventory and one fixed source opening
+contract; it does not generate another patient window. Horizon one is an immediate-
+target ablation, not the strongest applicable patient baseline. The existing
+desktop Generate path is not yet wired to this new search. Later export and
+verification replay must use the same meter with prospectively reserved calls.
+Generated opening/preparation/work results do not qualify patient tasks.
+
 Replay adapters bind derived opening proofs to the exact returned checkpoint's
 accepted ancestry. Rewinding drops a future proof; a genuine earlier bone proof
 can remain through later membrane/work history. Current stage permission always
