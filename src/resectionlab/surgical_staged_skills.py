@@ -559,7 +559,7 @@ def checked_actions(engine, actions, *, limits: SkillLimits, check=None,
     return candidate, receipt
 
 
-def _clip_cusa_motion(engine, action, preview):
+def _clip_native_motion(engine, action, preview, *, instrument):
     """Propose a shorter command from the observed successful native pose.
 
     The failed contactPosition is deliberately ignored. Native completed-step
@@ -569,7 +569,7 @@ def _clip_cusa_motion(engine, action, preview):
     """
     if (preview.get('status') != 'partial' or preview.get('reason') != 'SHAFT_COLLISION' or
             action.get('operation') != 'apply' or
-            engine.state['slots'][action['slot']]['instrument'] != 'cusa'):
+            engine.state['slots'][action['slot']]['instrument'] != instrument):
         return None
     view = preview.get('view')
     if not isinstance(view, dict) or view.get('stateId') != preview.get('stateId'):
@@ -622,6 +622,91 @@ def _clip_cusa_motion(engine, action, preview):
     clipped['path'] = prefix
     clipped['duration'] = min(duration, float(elapsed))
     return clipped
+
+
+def _clip_cusa_motion(engine, action, preview):
+    return _clip_native_motion(engine, action, preview, instrument='cusa')
+
+
+def checked_kerf_motion(engine, motion, *, limits, meter=None, check=None,
+                        phase='staged.kerf'):
+    """A stock bone-only kerf, optionally shortened and checked again.
+
+    An obstructed preview is never treatment. Only its actually observed safe
+    prefix may propose another command, which must finish a new full native
+    preview/commit. This cannot shorten protection/domain refusals, change the
+    tool, enlarge allowed removal, or admit a speculative geometry estimate.
+    """
+    motion = motion if isinstance(motion, SkillAction) else SkillAction(motion)
+    motion = replace(motion, require_endpoint=True)
+    candidate, meter = _metered_candidate(engine, meter, limits)
+    hand = motion.action.get('slot')
+    if hand not in candidate.state['slots'] or motion.action.get('operation') != 'apply':
+        raise ValueError('Checked kerf motion requires an apply in a native slot')
+    slot = candidate.state['slots'][hand]
+    parameters = {**candidate.parameters(slot), **motion.action.get('parameters', {})}
+    if (slot['instrument'] != 'craniotome' or candidate.state.get('toolMechanicsRevision') != 2
+            or parameters['radiusMm'] != TOOLS['craniotome']['radiusMm']
+            or parameters['depthMm'] != 2.):
+        raise ValueError('STOCK_KERF_GEOMETRY_REQUIRED')
+    bone = tuple(row['id'] for row in candidate.scene.regions if row['material'] == 'bone')
+    if not bone:
+        raise ValueError('Checked kerf requires mapped bone')
+    # Intersect caller eligibility; never widen an existing source-label rule.
+    allowed = set(bone) if limits.allowed_removed_label_ids is None else set(bone) & set(limits.allowed_removed_label_ids)
+    if not allowed:
+        raise ValueError('Checked kerf has no permitted bone removal label')
+    limits = replace(limits, allowed_removed_label_ids=tuple(sorted(allowed)))
+    baseline = _ledger(candidate, limits, meter)
+    start_state, start_actions, start_calls = candidate.state_id, len(candidate.actions), meter.calls
+    attempts, clipped = [], None
+    receipt = None
+    status, reason = 'accepted', None
+    try:
+        if check is not None: check()
+        if len(candidate.actions) >= limits.max_native_actions:
+            raise TransitionBudgetExceeded('NATIVE_ACTION_BUDGET')
+        if limits.prior_public_calls+meter.calls >= limits.max_public_calls:
+            raise TransitionBudgetExceeded('Staged public native-call cap reached')
+        with meter.phase(phase+'.boundary_probe'):
+            preview = candidate.preview(motion.action, check=check,
+                include_view=True, include_history=False)
+        observed = preview['view']['slots'][hand]
+        attempts.append({'status': 'uncommitted_motion_probe',
+            'action': copy.deepcopy(motion.action), 'previewStatus': preview['status'],
+            'previewReason': preview.get('reason'), 'previewStateId': preview['stateId'],
+            'previewRemovedCellIds': preview.get('deltas', {}).get('removedCells', []),
+            'observedEndPose': {key: copy.deepcopy(observed[key]) for key in ('position', 'quaternion')},
+            'completedFraction': preview.get('completedFraction')})
+        clipped = _clip_native_motion(candidate, motion.action, preview, instrument='craniotome')
+        command = SkillAction(clipped, require_endpoint=True) if clipped is not None else motion
+        candidate, receipt = checked_actions(candidate, [command], limits=limits,
+            meter=meter, check=check, phase=phase+'.motion')
+        status, reason = receipt['status'], receipt['reason']
+        attempts.extend(receipt['attempts'])
+    except _INTERRUPTIONS as error:
+        status, reason = 'interrupted', type(error).__name__+': '+str(error)
+    ledger = _ledger(candidate, limits, meter)
+    requested = motion.action.get('pose') or motion.action.get('path', [None])[-1]
+    actual = candidate.state['slots'][hand]
+    observed_end = {key: copy.deepcopy(actual[key]) for key in ('position', 'quaternion')}
+    reached = requested is not None and (
+        np.linalg.norm(np.subtract(actual['position'], requested['position'])) <= 1e-6 and
+        (Rotation.from_quat(actual['quaternion'])*Rotation.from_quat(requested['quaternion']).inv()).magnitude() <= 1e-6)
+    return candidate, {'schema': SCHEMA, 'status': status, 'reason': reason,
+        'phase': phase, 'sourceStateId': start_state, 'finalStateId': candidate.state_id,
+        'sourceNativeActions': start_actions, 'nativeActionsAppended': len(candidate.actions)-start_actions,
+        'executionMode': 'checked_collision_prefix' if clipped is not None else 'requested_motion',
+        'requestedPoseReached': bool(reached), 'observedEndPose': observed_end,
+        'requestedEndPose': copy.deepcopy(requested), 'clippedProposal': clipped,
+        'attempts': attempts, 'retentionRole': 'accepted_native_skill' if status == 'accepted' else 'stopped_native_prefix_not_admitted',
+        'admittedSkillProgressMm3': ledger['targetRemovedMm3']-baseline['targetRemovedMm3'] if status == 'accepted' else 0.,
+        'committedPrefix': {'nativeActions': len(candidate.actions), 'stateId': candidate.state_id,
+                            'actionPrefixSeal': semantic_digest(candidate.actions)},
+        'ledger': ledger, 'transitionTrace': copy.deepcopy(meter.trace[start_calls:meter.calls]),
+        'physicalCallCost': {'publicCalls': meter.calls-start_calls,
+            'previewCalls': sum(x['kind'] == 'preview' for x in meter.trace[start_calls:meter.calls]),
+            'directStepCalls': sum(x['kind'] == 'step' for x in meter.trace[start_calls:meter.calls])}}
 
 
 def checked_cusa_motion(engine, motion, *, limits, meter=None, check=None,

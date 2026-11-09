@@ -43,6 +43,23 @@ Categorical-only scenes lack original annotation evidence and report it unknown.
 Historical task gates keep their declared owned-target definitions; their large
 500 mm³ floors do not qualify small synthetic targets for a new study.
 
+`surgical_patient_task` prospectively freezes a separate source-sized engineering
+task: at least 50% of the original target, with owned treatment credit in three
+source-centroid RAS octants each contributing at least 5% of its original volume.
+The whole-sequence 200 mm³ non-target cap, post-preparation 20 mm³ cap, complete
+exit, 240 accepted actions, 4,000 physical calls and 240 seconds remain explicit.
+The treatment baseline must extend the exact frozen prefix and precede target
+removal; it cannot refund earlier tissue costs. Missing replay or computation
+evidence fails its gates. This task is a prospectus/evaluator, not an autonomous
+execution admission path. All five current patient tasks remain ineligible.
+
+Patient role claims require a caller-supplied trusted catalog and an exact join
+to a predecode TRAIN receipt, original observed-file SHA, native image pixels and
+RAS affine. Case metadata cannot select a trusted catalog or grant a reserved
+patient a new role. Generated controls are explicitly separate from patient
+evidence. Critical annotation review includes the mandatory brainstem floor even
+if a supplied contract has an empty required-structures list.
+
 Horizon 1 preserves the existing immediate-removal staged controller. The desktop
 offers horizon 2 or 3 with beam width 3; the backend permits width 2–4 and at
 most 24 work expansions per selection. Native checks and checked exits verify
@@ -52,6 +69,17 @@ preparation alone never becomes successful treatment. Failed search means a
 finite generator/controller or computation limit, not anatomical impossibility.
 External radius changes and access/re-entry still use the existing outer schedule;
 this milestone does not search their full joint configuration space.
+
+The stock opening skills now provide a reusable bone-only macro: checked shallow
+kerf, gradual active roll, active cutting return, then inactive withdrawal. Every
+return cut and second contributes to the same ledger. A shaft-collision preview
+may propose its actually observed shorter command, but that new command must
+pass a fresh complete native preview and commit. Protected/material/domain
+refusals are never shortened. Only a completed macro can be retained; stopped
+internal prefixes remain unadmitted attempts. The declared proposal family checks
+actual straight 0.12 mm waypoints, stock geometry and at most 24 mm depth.
+This is an opening primitive for a future joint controller, not evidence of a
+completed patient target task or a new bridge qualification.
 
 `TransitionMeter` charges previews, discarded probes, checked exits, commits and
 replay. Those are computation costs, separate from accepted patient treatment.

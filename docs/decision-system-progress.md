@@ -21,6 +21,16 @@ Implemented:
   treatment, modeled time, exchanges, withdrawal and missing evidence. The
   desktop exposes this within the existing outcome summary on demand. Native
   cancellation now targets the request itself, including before progress.
+- Source-sized prospective tasks now freeze original-target/spatial progress,
+  complete burdens, exit and computation bounds before search. A trusted
+  predecode catalog, original-file SHA, pixels and RAS affine establish source
+  role; editable metadata cannot grant TRAIN status. All five unchanged TRAIN
+  cases have frozen tasks and remain ineligible for missing critical annotations.
+- A checked stock opening macro performs shallow kerf, gradual roll, active
+  bone-cutting return and withdrawal. Native clipping only proposes a newly
+  checked observed prefix after shaft collision. Full geometry, source domain,
+  caller permissions and tissue caps remain authoritative; incomplete macro
+  prefixes cannot become selected plans.
 
 Evidence is retained under `testcases/decision-system-v1/` (ignored). The
 independent case review verified source planes, units/transforms, originals,
@@ -33,6 +43,23 @@ The strongest existing baseline found is CTA014 stock kerf preparation followed
 by CUSA: 15.810416 mm³ target (5.8524%), 272.901532 mm³ cumulative non-target,
 280.04 modeled seconds and completed withdrawal, reproduced by independent
 cold replay. This is retained as baseline evidence, not a new improvement.
+
+The new promoted CTA014 opening branch removes 13.977324 mm³ skull, zero brain,
+target or vessel, and fully withdraws both tools. Its nine actions reproduce by
+fresh native replay and actual cold public bridge reopen; originals and prior
+histories remain unchanged. The round costs 37 native calls, 40.40 seconds and
+1.59 GB process peak, including save/load validation; charging the reused route
+inventory gives 61 calls/52.29 seconds. A broader bounded opening study removes
+46.972976 mm³ skull but still leaves 201 CUSA-path skull cells. These are checked
+preparation capabilities, not meaningful tumor-task completions or a matched
+improvement over the strongest baseline. Evidence: `patient-search-v1/`.
+
+The bounded official SynthSeg CT pilot was withheld after two engineering source
+reviews found visible inferior coverage missing. No estimated mask was promoted.
+The distinct TotalSegmentator brain-structures route lacks configured licensed
+weights and has an ontology ambiguity requiring review. Source identity and
+coverage for existing MR companions are being investigated before any additional
+inference or registration. Evidence: `task-repair-v1/`.
 
 The explicit protected-overlap before/after control changes actual manual/bridge
 execution from accepted forbidden removal to zero-effect rejection. The native
@@ -49,6 +76,14 @@ size warning). Independent review reproduced the safety counterexample,
 original-target overlap accounting and strongest CTA014 baseline. It also
 retained an obsolete training test which fails before cancellation because its
 synthetic-case API is disabled; no bypass was introduced.
+
+Current native additions pass 134 selected backend tests. Independent review
+passes 48 overlapping checks, verifies all five exact original-source joins,
+and reproduces the promoted CTA014 branch through the real public bridge. It
+caught and rechecked two fixes: an empty required-structures list cannot skip
+brainstem annotation review, and actual waypoints must match the declared
+bounded opening family. Final evidence is in `independent-review-v2/` and
+`patient-tasks-intact-v3/`. Generated control passes are not patient evidence.
 
 Hidden Electron checks pass on UCSF-0007 and the UCSF-0005 no-route case, including
 edits, missing-evidence refusal, actual backend cancellation, preview/installation,
@@ -67,6 +102,12 @@ Reproduce focused checks:
  tests/test_surgical_staged_planning.py tests/test_surgical_staged_skills.py \
  tests/test_surgical_staged_exit.py tests/test_shared_surgical_guards.py \
  tests/test_surgical_task_domain.py tests/test_surgical_modeled_outcomes.py
+.venv/bin/python -m pytest -q tests/test_surgical_patient_role.py \
+ tests/test_surgical_patient_task.py tests/test_surgical_kerf_skill.py \
+ tests/test_surgical_opening_skills.py
+.venv/bin/python scripts/freeze_patient_sequence_tasks.py \
+ --manifest testcases/decision-system-v1/case-qualification/case-manifest.json \
+ --output testcases/decision-system-v1/NEW-frozen-tasks --start intact
 pnpm --dir desktop build
 pnpm --dir desktop test
 DECISION_SYSTEM_CHECK=1 \
