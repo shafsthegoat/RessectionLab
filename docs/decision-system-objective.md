@@ -37,8 +37,8 @@ shared prefix once, retains access/preparation/tool-exchange/exit costs, and
 separates cumulative, incremental and peak quantities. Native continuum and heat
 exposures keep their model units. Instantaneous lattice displacement is not
 reported as accumulated injury. Missing motor/language, mechanics or vascular
-evidence remains null. Comprehensive swept-shaft contact and calibrated clinical
-injury remain unsupported.
+evidence remains null. Whole-tool capsule checks establish geometric constraints;
+calibrated shaft-contact mechanics and clinical injury remain unsupported.
 
 Owned categorical target removal is treatment credit. Original target annotation
 membership is reported separately, including cells later owned by a protected
