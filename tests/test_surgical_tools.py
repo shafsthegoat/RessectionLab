@@ -20,9 +20,9 @@ def effect(e, tool, cells=None, p=(3, 3, 3), q=(0, 0, 0, 1), op='apply', dt=1):
     return apply_effect(e, 'left', op, list(map(int, np.flatnonzero(e.scene.labels))) if cells is None else cells, np.array(p, float), q, dt)
 
 
-def test_catalog_distinct_fifteen():
+def test_catalog_distinct_sixteen():
     tools = catalog()
-    assert len(tools) == 15 and len({t['id'] for t in tools}) == 15
+    assert len(tools) == 16 and len({t['id'] for t in tools}) == 16
     assert len({t['effect'] for t in tools}) == 13
 
 

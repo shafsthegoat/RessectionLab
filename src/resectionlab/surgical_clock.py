@@ -66,7 +66,7 @@ def advance_instruments(engine, key, op, p, q, active, dt, working_cells, eligib
             for a, b, radius, part in envelopes(tool, params, position, quaternion):
                 cells = set(engine.touched(a, b, radius))
                 if part == 'shaft':
-                    if cells - set(engine.state['holds'].get(hand, {}).get('cells', ())):
+                    if cells - engine._shaft_held_cells(hand):
                         raise ValueError('SHAFT_COLLISION:' + hand)
                 else:
                     contacts.update(cells)

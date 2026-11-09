@@ -329,6 +329,8 @@ class SurgicalEngine:
     _view_omit_fields = frozenset({'flapComponents'})
     def __init__(self, scene, *, protection=None, guard_config=None):
         self.scene = scene
+        from .surgical_craniotomy import validate_contract
+        self._cranial_access = validate_contract(scene)
         from .surgical_rl_protection import GuardConfig, ProtectionSet, missing_critical, protection_contract, declared_scene_protection
         declared = declared_scene_protection(scene, protection)
         if declared is not protection:
@@ -508,7 +510,7 @@ class SurgicalEngine:
 
     def _shaft_held_cells(self,key):
         from .surgical_retractor_runtime import is_surface_slot
-        return set() if is_surface_slot(self,key) else set(self.state['holds'].get(key,{}).get('cells',()))
+        return set() if is_surface_slot(self,key) or self.state['slots'][key]['instrument'] == 'bone_flap_holder' else set(self.state['holds'].get(key,{}).get('cells',()))
 
     def preview(self, action, *, check=None, include_view=True, include_history=True):
         if check is not None: check()
@@ -617,6 +619,10 @@ class SurgicalEngine:
         candidate = self._transition_clone()
         try:
             candidate._transition_check=(lambda:_checked_operation(check)) if check is not None else None
+            if candidate._cranial_access is not None:
+                candidate.scene.require_cache_source()
+                from .surgical_craniotomy import validate_bone_scope
+                candidate._cranial_access = validate_bone_scope(candidate)
             from .surgical_task_domain import action_rejection, reviewed_domain
             domain = reviewed_domain(candidate.scene)
             if domain is not None:
@@ -684,7 +690,7 @@ class SurgicalEngine:
                     events.extend(self._substep(key, 'inspect', np.asarray(slot['position']), np.asarray(slot['quaternion']), False, duration/max(1, math.ceil(duration/.1))))
             return {'status': 'accepted', 'reason': None, 'completedFraction': 1., 'events': events}
         if op == 'extract' and self.state.get('toolMechanicsRevision') in (1, 2):
-            if slot['instrument'] != 'tumor_forceps' or points: raise ValueError('UNSUPPORTED_EXTRACTION')
+            if slot['instrument'] not in ('tumor_forceps', 'bone_flap_holder') or points: raise ValueError('UNSUPPORTED_EXTRACTION')
             from .surgical_effects import extract_at_exit
             if key not in self.state['holds']: raise ValueError('GRASP_BEFORE_EXTRACTION')
             events = extract_at_exit(self, key)
@@ -702,6 +708,9 @@ class SurgicalEngine:
         slot['parameters'].update(action.get('parameters', {}))
         tool = TOOLS[slot['instrument']]
         params = self.parameters(slot)
+        if slot['instrument'] == 'bone_flap_holder' and op != 'exchange':
+            from .surgical_bone_transport import validate_holder
+            validate_holder(self, key)
         jaw_target = params['jawOpeningMm']
         articulate = self.state.get('toolMechanicsRevision') in (1, 2) and tool['geometry'] in ('forceps','scissors') and previous_jaw != jaw_target
         if articulate: slot['parameters']['jawOpeningMm'] = previous_jaw
@@ -777,7 +786,10 @@ class SurgicalEngine:
                     delta_events = self._substep(key, op, p, quat, active, duration / total)
                 except ValueError as error:
                     if check is not None: _checked_operation(check)
-                    if str(error).split(':', 1)[0] == 'PROTECTED_STRUCTURE' and not getattr(self, '_restoring_legacy_guard_partial', False):
+                    code = str(error).split(':', 1)[0]
+                    if ((code == 'PROTECTED_STRUCTURE' and not getattr(self, '_restoring_legacy_guard_partial', False))
+                            or self._cranial_access is not None
+                            or code.startswith(('CRANIAL_ACCESS_', 'CRANIOTOMY_', 'BONE_FLAP_'))):
                         # Discard the complete proposed transaction, including
                         # safe treatment earlier in this same drawn stroke.
                         raise
@@ -804,9 +816,14 @@ class SurgicalEngine:
         if reason:
             events.append({'kind': 'contact_stop', 'reason': reason, 'position': contact_position})
         if done == 0: return {'status': 'rejected', 'reason': reason, 'completedFraction': 0., 'events': events}
-        if op == 'withdraw' and not reason: slot = self.state['slots'][key]; slot['inserted'] = False
+        if op == 'withdraw' and not reason:
+            if self._cranial_access is not None:
+                from .surgical_cranial_guards import require_exterior_withdrawal
+                require_exterior_withdrawal(self, key)
+            slot = self.state['slots'][key]; slot['inserted'] = False
         if op in ('hold', 'grasp') and key in self.state['holds'] and 'target' not in self.state['holds'][key]:
-            self.state['holds'][key]['origin'] = self.state['slots'][key]['position'][:]
+            if self.state['holds'][key].get('kind') != 'bone-flap-v1':
+                self.state['holds'][key]['origin'] = self.state['slots'][key]['position'][:]
         if active and not events:
             events.append({'kind': 'no_material_effect', 'reason': 'No compatible structure intersected by the working tip'})
         events.insert(0, {'kind': op, 'instrument': tool['name'], 'slot': key})
@@ -891,6 +908,9 @@ class SurgicalEngine:
             return advance(self, key, p, q, dt)
         from .surgical_motion import envelopes, swept_envelopes, pair_conflict
         slot = self.state['slots'][key]; tool = TOOLS[slot['instrument']]; params = self.parameters(slot)
+        if self.state['holds'].get(key, {}).get('kind') == 'bone-flap-v1':
+            if (rotation(q)*rotation(slot['quaternion']).inv()).magnitude() > 1e-8:
+                raise ValueError('BONE_FLAP_ROTATION_UNSUPPORTED: translate the source-bound fragment')
         axis = rotation(q).apply([0, 0, 1]); previous = finite(slot['position'], 3)
         v2 = bool(self.scene.properties.get('tissuePhysicsV2'))
         if v2:
@@ -907,6 +927,9 @@ class SurgicalEngine:
         tip_cells = self.touched(previous, p, params['radiusMm'])
         end_pose = {'position': p, 'quaternion': q}
         swept = swept_envelopes(tool, params, slot, end_pose)
+        if self._cranial_access is not None:
+            from .surgical_bone_transport import check_tool_sweep
+            check_tool_sweep(self, key, end_pose, op)
         shaft_cells = set()
         revised_contact = self.state.get('toolMechanicsRevision') in (1, 2) and tool['effect'] not in ('remove', 'suction', 'irrigate', 'probe')
         working_cells = set() if revised_contact else set(tip_cells)
@@ -914,6 +937,9 @@ class SurgicalEngine:
             if part == 'shaft': shaft_cells.update(self.touched(a, b, radius))
             else: working_cells.update(self.touched(a, b, radius))
         if revised_contact: tip_cells = sorted(working_cells)
+        if self._cranial_access is not None:
+            from .surgical_cranial_guards import enforce
+            enforce(self, key, op, p, q, working_cells)
         held = set(self.state['holds'].get(key, {}).get('cells', []))
         if set(shaft_cells) - self._shaft_held_cells(key): raise ValueError('SHAFT_COLLISION')
         if cusa_v3 and active and self.state.get('toolMechanicsRevision') != 2 and working_cells - held - set(self.touched(p, p, params['radiusMm'])):
@@ -956,7 +982,7 @@ class SurgicalEngine:
             events = self._effect(key, op, eligible, p, q, dt)
         if key in self.state['holds']:
             self.occupancy()
-        if key in self.state['holds'] and op == 'move':
+        if key in self.state['holds'] and (op == 'move' or self.state['holds'][key].get('kind') == 'bone-flap-v1'):
             from .surgical_effects import validate_hold_motion
             validate_hold_motion(self, key)
             hold = self.state['holds'][key]
@@ -967,7 +993,11 @@ class SurgicalEngine:
                 if self.state.get('toolMechanicsRevision') in (1, 2) and (rotation(q)*rotation(slot['quaternion']).inv()).magnitude() > 1e-8:
                     raise ValueError('FRAGMENT_ROTATION_UNSUPPORTED: translate the source-bound fragment')
                 delta = self.scene.inverse[:3, :3] @ (p - finite(hold['origin'], 3))
-                hold['offset'] = (np.rint(delta).astype(int) + np.asarray(hold.get('baseOffset', [0,0,0]))).tolist()
+                offset = (np.rint(delta).astype(int) + np.asarray(hold.get('baseOffset', [0,0,0]))).tolist()
+                if slot['instrument'] == 'bone_flap_holder':
+                    from .surgical_bone_transport import check_sweep
+                    check_sweep(self, key, offset, end_pose)
+                hold['offset'] = offset
             self.occupancy()
         # A stationary active instrument shares the same clock and exposure.
         for other_key, other in self.state['slots'].items():
@@ -1026,6 +1056,14 @@ class SurgicalEngine:
             drill.end_step(self, dt)
             bipolar_heat.end_step(self, dt)
             vessel.tick(self, dt)
+        # A coupled field or the other hand can approach a parked flap too.
+        for hold_key, hold in self.state['holds'].items():
+            if hold.get('kind') == 'bone-flap-v1':
+                from .surgical_bone_transport import check_sweep
+                check_sweep(self, hold_key, hold['offset'], self.state['slots'][hold_key])
+        if self._cranial_access is not None:
+            from .surgical_bone_transport import check_detached
+            check_detached(self)
         tick_fields(self, dt)
         return events
 
@@ -1047,7 +1085,7 @@ class SurgicalEngine:
                 self.state['debrisMm3'] = sum(self.state['debris'].values())
                 # Preserve v1 replay interpretation for earlier scenes. The
                 # explicit material profile enables updated bone connectivity.
-                if new and self.scene.properties.get('tissuePhysics'):
+                if new and (self.scene.properties.get('tissuePhysics') or self._cranial_access is not None):
                     self.state['boneTopologyDirty'] = True
             return [{'kind': 'removal', 'cells': len(new), 'volumeMm3': len(new) * self.scene.voxel_mm3}] if new else []
         if tool['effect'] == 'retract':
@@ -1102,7 +1140,12 @@ class SurgicalEngine:
         if 'cusaV3' in self.state:
             from .surgical_cusa_v3 import descriptor
             physics['cusaV3'] = descriptor(self)
+        cranial = {}
+        if self._cranial_access is not None:
+            from .surgical_bone_transport import describe
+            cranial['craniotomy'] = describe(self)
         return {'schema': SCHEMA, 'stateId': self.state_id if _state_id is None else _state_id, 'slots': slots,
+                **cranial,
                 **({'physicalClock': surgical_clock.descriptor()} if surgical_clock.enabled(self) else {}),
                 **({'toolMechanicsRevision': self.state['toolMechanicsRevision']} if 'toolMechanicsRevision' in self.state else {}),
                 **({'patientPosition': copy.deepcopy(self.state['patientPosition']), 'positionEffects': describe_position(self.state['patientPosition'])} if 'patientPosition' in self.state else {}),

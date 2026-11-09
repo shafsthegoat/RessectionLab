@@ -81,14 +81,35 @@ pass a fresh complete native preview and commit. Protected/material/domain
 refusals are never shortened. Only a completed macro can be retained; stopped
 internal prefixes remain unadmitted attempts. The declared proposal family checks
 actual straight 0.12 mm waypoints, stock geometry and at most 24 mm depth.
-This removes kerfs only. Complete closed cutting, attachment separation, guarded
-whole-flap transport, exterior evacuation and empty-holder withdrawal are not yet
-implemented. Tiny slivers cannot satisfy the requested skull-opening task. A
-source-bound access policy must reject an undeclared entry even if it looks
-cheap; posterior access is case-specific rather than universally forbidden. Full
-kerf plus flap volume remains non-target under existing tasks. A separate bone-only
-prospectus may state different burdens before testing, but cannot retroactively
-pass the original 200 mm³ combined cap or open full tumor/physics/RL eligibility.
+A separate `cranialAccessV1` contract now binds an original source/target, full-
+thickness F/K bone scope, entry rectangle/cone, retained-skull anchors, attachment
+coverage and exterior workspace. The authoritative engine checks both tools and
+every pose, including placement and persistent other-hand actions. Undeclared
+entry, inner-table crossing before evacuation and invalid source evidence refuse
+atomically. Posterior access remains case-specific, not universally forbidden.
+
+A fixed generic `bone_flap_holder` uses the existing stock forceps envelope. An
+exact component resolver requires complete kerf, no face/edge/corner bridge, all
+retained skull supported and all declared supported attachments actually released.
+The whole flap is swept against anatomy, protection, domains and both tools, with
+no whole-flap shaft exemption. Translation uses snapped affine cells; rotation is
+unsupported through every pose operation. Native extraction requires complete
+exterior passage, then empty-holder withdrawal past the actual exit plane.
+`craniotomy.openingComplete` cannot be inferred from removed slivers or slot flags.
+
+`surgical_craniotomy_skills` freezes a separate bone-only policy against the
+canonical native source, guard/contract, shared meter and original deadline. It
+requires explicit whole-bone burden, zero added target/nonbone removal, complete
+checked endpoints and full withdrawal. Only supported, declared flap attachments
+may be released. Imported prefix costs need charged native ancestry. Refreezing,
+resealed replacement limits or unlogged runtime state cannot reset the budget.
+
+Kerf plus entire flap remain unique non-target source IDs. The original 200 mm³
+`SkillLimits` and patient tumor-task caps are unchanged. The generated 285 mm³
+control passes only its distinct prospectively declared bone-only policy; the old
+200 mm³ policy refuses it. No patient window or full tumor/physics/RL admission is
+opened by this mechanism. Patient attachment, source coverage and mechanical
+evidence remain required before qualifying the requested patient workflow.
 
 `TransitionMeter` charges previews, discarded probes, checked exits, commits and
 replay. Those are computation costs, separate from accepted patient treatment.

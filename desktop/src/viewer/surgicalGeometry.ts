@@ -80,6 +80,7 @@ export function surgicalToolMesh(tool:SurgicalTool,slot:SurgicalSlot,ghost=false
       cylinder(radius*.85,6,0,0,-3);tube(radius,0);box(.8,.8,3,0,radius,-5,accent);break;
     case 'bipolar_forceps':
     case 'tumor_forceps':
+    case 'bone_flap_holder':
       for(const sign of [-1,1]){
         const jawGroup=new THREE.Group();jawGroup.position.x=sign*jaw/2;jawGroup.userData.jawBaseX=jawGroup.position.x;group.add(jawGroup);parent=jawGroup;
         const arm=box(.45,.65,9,sign*.2,0,-4);arm.rotation.y=sign*-.08;

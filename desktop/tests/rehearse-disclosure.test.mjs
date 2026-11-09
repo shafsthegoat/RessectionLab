@@ -64,6 +64,34 @@ test('one outcome readout distinguishes unknown from measured zero and follows p
   const c=controller();let tree=Outcome({c});assert.equal(text(find(tree,'strong','0.00')),'0.00');let fluid=nodes(tree).find(n=>n.props['data-surgical-metric']==='fluidPresentMm3');assert.equal(text(fluid),'Unknown');
   c.preview={...c.view,stateId:'preview',metrics:{...c.view.metrics,targetRemovedMm3:1.5,fluidPresentMm3:0}};tree=Outcome({c});assert(text(tree).includes('Preview modeled outcome'));assert.equal(text(nodes(tree).find(n=>n.props['data-surgical-metric']==='targetRemovedMm3')),'1.50');assert.equal(text(nodes(tree).find(n=>n.props['data-surgical-metric']==='fluidPresentMm3')),'0.00');assert.equal(c.view.metrics.targetRemovedMm3,0);
 });
+test('native bone opening summary uses aperture and withdrawal flags independently of bone count',()=>{
+  const c=controller();
+  assert.equal(find(Outcome({c}),'div','Native bone opening'),undefined);
+  c.view.craniotomy={contractHash:'contract',phase:'EVACUATED',kerfRemovedMm3:236,flapEvacuatedMm3:49,declaredBoneRemovedMm3:285,apertureEvacuated:true,openingComplete:false,clinicalValidation:'none'};
+  let tree=Outcome({c}),opening=find(tree,'div','Native bone opening');
+  assert(opening);assert(text(opening).includes('Opening stage: Flap removed; withdrawal pending'));
+  assert(text(opening).includes('Aperture: Evacuated. Opening with both hands withdrawn: Incomplete.'));
+  for(const [key,value]of [['kerfRemovedMm3','236.00'],['flapEvacuatedMm3','49.00'],['declaredBoneRemovedMm3','285.00']])assert.equal(text(nodes(opening).find(n=>n.props['data-craniotomy-metric']===key)),value);
+  assert(text(opening).includes('Tumor-task completion and clinical safety remain unassessed.'));
+  c.view.craniotomy={...c.view.craniotomy,phase:'HOLDER_WITHDRAWN',openingComplete:true};
+  assert(text(find(Outcome({c}),'div','Native bone opening')).includes('Opening with both hands withdrawn: Complete.'));
+  assert.deepEqual(c.calls,[]);
+});
+test('native bone opening follows preview status and preserves missing quantities as unknown',()=>{
+  const c=controller();
+  c.view.craniotomy={phase:'HOLDER_WITHDRAWN',kerfRemovedMm3:236,flapEvacuatedMm3:49,declaredBoneRemovedMm3:285,apertureEvacuated:true,openingComplete:true};
+  c.preview={...c.view,stateId:'preview',craniotomy:{phase:'BOUND',kerfRemovedMm3:0,flapEvacuatedMm3:0,declaredBoneRemovedMm3:0,apertureEvacuated:false,openingComplete:false}};
+  let opening=find(Outcome({c}),'div','Native bone opening');
+  assert(text(opening).includes('Opening stage: Opening not started.'));
+  assert(text(opening).includes('Aperture: Not evacuated. Opening with both hands withdrawn: Incomplete.'));
+  assert.equal(text(nodes(opening).find(n=>n.props['data-craniotomy-metric']==='declaredBoneRemovedMm3')),'0.00');
+  c.preview.craniotomy={phase:'UNRECOGNIZED_INTERNAL_PHASE'};opening=find(Outcome({c}),'div','Native bone opening');
+  assert(text(opening).includes('Opening stage: Unknown.'));assert(!text(opening).includes('UNRECOGNIZED_INTERNAL_PHASE'));
+  c.preview.craniotomy.phase='constructor';assert(text(find(Outcome({c}),'div','Native bone opening')).includes('Opening stage: Unknown.'));
+  assert(text(opening).includes('Aperture: Unknown. Opening with both hands withdrawn: Unknown.'));
+  assert.equal(text(nodes(opening).find(n=>n.props['data-craniotomy-metric']==='flapEvacuatedMm3')),'Unknown');
+  assert.equal(c.view.craniotomy.openingComplete,true);assert.deepEqual(c.calls,[]);
+});
 test('inspection notice reflects active optical state and remains outside settings disclosures',()=>{
   assert.equal(inspectionNotice({}),null);assert.match(inspectionNotice({layerOpacity:{brain:.1}}),/transparent anatomy/);assert.match(inspectionNotice({clipping:{enabled:true}}),/cutaway/);
   assert.equal(inspectionNotice({operativeView:'surgeon',layerOpacity:{brain:.1},microscope:{}}),null,'opaque microscope ignores external alpha');assert.match(inspectionNotice({operativeView:'surgeon',microscope:{inspectionTransparency:true,inspectionCutaway:true}}),/transparent anatomy and cutaway/);

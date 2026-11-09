@@ -123,6 +123,9 @@ def apply_effect(engine, key, op, cells, p, q, dt):
     state = engine.state; slot = state['slots'][key]; name = slot['instrument']
     effect = TOOLS[name]['effect']; params = engine.parameters(slot)
     p = np.asarray(p, float); orientation = Rotation.from_quat(q)
+    if name == 'bone_flap_holder':
+        from .surgical_bone_transport import grasp
+        return grasp(engine, key, cells, p, q)
     if effect in ('incise', 'sheet_cut', 'kerf', 'transect'):
         if cells:
             local = orientation.inv().apply(_current_points(engine, cells) - p)
@@ -414,6 +417,10 @@ def fixture_properties(labels):
 
 def validate_hold_motion(engine, key):
     """Prevent moving a forceps fragment through declared intact attachments."""
+    if engine.state['slots'][key]['instrument'] == 'bone_flap_holder':
+        from .surgical_bone_transport import validate_hold
+        validate_hold(engine, key)
+        return
     if engine.state['slots'][key]['instrument'] != 'tumor_forceps': return
     if 'attachments' not in engine.scene.properties: raise ValueError('MISSING_ATTACHMENT_PROPERTIES')
     hold = engine.state['holds'][key]
@@ -431,6 +438,9 @@ def extract_at_exit(engine, key):
     original occupied-anatomy bounding box, while remaining inside the grid.
     No force or biological detachment threshold is invented here.
     """
+    if engine.state['slots'][key]['instrument'] == 'bone_flap_holder':
+        from .surgical_bone_transport import extract
+        return extract(engine, key)
     state = engine.state; hold = state['holds'][key]
     cells = set(hold['cells']) - set(state['removed'])
     if not cells: raise ValueError('NO_RETAINED_FRAGMENT')

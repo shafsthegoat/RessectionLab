@@ -3,11 +3,13 @@ import {fullCaseStateSummary} from './full-case-presentation';
 export const amount=(value:unknown,digits=2)=>typeof value==='number'&&Number.isFinite(value)?value.toLocaleString(undefined,{maximumFractionDigits:digits}):'Unknown';
 const metricAmount=(value:unknown)=>typeof value==='number'&&Number.isFinite(value)?value.toFixed(2):'Unknown';
 const evidenceLabels:Record<string,string>={brainStrainSquaredMm3S:'accumulated strain exposure',brainStressSquaredPa2Mm3S:'accumulated stress exposure',thermalPeakC:'peak temperature',thermalExposureMm3KS:'thermal exposure',bloodGeneratedMm3:'modeled blood generation',motorEncounterMm3:'motor mapping',languageEncounterMm3:'language mapping'};
+const openingStages:Record<string,string>={BOUND:'Opening not started',KERF_IN_PROGRESS:'Bone cutting / separation',GRASPED_OR_TRANSPORTED:'Flap held or lifted',DETACHED_IN_FIELD:'Flap released in field',EVACUATED:'Flap removed; withdrawal pending',HOLDER_WITHDRAWN:'Flap removed and instruments withdrawn'};
 
 /** One readout for the anatomy actually displayed. Missing values stay unknown. */
 export function SurgicalOutcomeSummary({c}:{c:SurgicalController}) {
   const v=c.preview??c.view,r=c.result;if(!v)return null;
   const summary=fullCaseStateSummary(v),record=r?.fullCase;
+  const opening=v.craniotomy;
   const ledger=r?.sequenceOutcome?.stateId===v.stateId&&r.sequenceOutcome.sceneId===v.scene.sceneId?r.sequenceOutcome:null;
   return <section className="surgical-outcome" aria-label="Modeled outcome summary">
     <h3>{c.preview?'Preview modeled outcome':'Modeled outcome'}</h3>
@@ -18,6 +20,16 @@ export function SurgicalOutcomeSummary({c}:{c:SurgicalController}) {
       <div><small>Modeled field fluid · mm³</small><strong data-surgical-metric="fluidPresentMm3">{metricAmount(v.metrics.fluidPresentMm3)}</strong></div>
     </div>
     <p className="surgical-note">{summary.targetRemovedPercent===null?'Unknown fraction':amount(summary.targetRemovedPercent)+'%'} of {amount(summary.initialTargetMm3)} mm³ modeled target. Functional injury remains Unknown.</p>
+    {opening&&<div aria-label="Native bone opening">
+      <div className="surgical-metrics">
+        <div><small>Kerf removed · mm³</small><strong data-craniotomy-metric="kerfRemovedMm3">{metricAmount(opening.kerfRemovedMm3)}</strong></div>
+        <div><small>Flap evacuated · mm³</small><strong data-craniotomy-metric="flapEvacuatedMm3">{metricAmount(opening.flapEvacuatedMm3)}</strong></div>
+        <div><small>Opening bone removed · mm³</small><strong data-craniotomy-metric="declaredBoneRemovedMm3">{metricAmount(opening.declaredBoneRemovedMm3)}</strong></div>
+      </div>
+      <p>Opening stage: {Object.hasOwn(openingStages,opening.phase)?openingStages[opening.phase]:'Unknown'}.</p>
+      <p>Aperture: {opening.apertureEvacuated===true?'Evacuated':opening.apertureEvacuated===false?'Not evacuated':'Unknown'}. Opening with both hands withdrawn: {opening.openingComplete===true?'Complete':opening.openingComplete===false?'Incomplete':'Unknown'}.</p>
+      <p className="surgical-note">Bone-opening research model. Tumor-task completion and clinical safety remain unassessed.</p>
+    </div>}
     <details><summary>Source target, material and fluid accounting</summary>
     {record?.fullAnnotationTargetMm3!==undefined&&<p className="surgical-note">Full source annotation: {amount(record.fullAnnotationTargetMm3)} mm³. Displayed percentages use the modeled source grid target.</p>}
     <div className="surgical-metrics" aria-label="Recorded normal and unknown material accounting">

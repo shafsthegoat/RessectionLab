@@ -129,6 +129,8 @@ class SurgicalScene:
                 if field == 'functionalEvidence' and row.get('probe') not in ('cortical', 'subcortical'):
                     raise ValueError('Functional evidence requires declared cortical/subcortical coverage')
         for value in self.properties.get('boneAnchors', []): cell(value)
+        from .surgical_craniotomy import validate_contract
+        validate_contract(self)
 
     @property
     def shape(self): return self.labels.shape
@@ -188,14 +190,24 @@ def from_case(case, mapping=None):
             'reviewStatus': layer.get('review_status', 'unreviewed'), 'displayName': r['name']})
     affine = case.affine.copy()
     if case.frame == 'LPS+': affine = np.diag([-1., -1., 1., 1.]) @ affine
+    properties = thaw_json(case.metadata).get('surgical_properties', {})
+    cranial_source = {}
+    if 'cranialAccessV1' in properties:
+        # The contract is stored in metadata, which also contributes to the
+        # full case hash. Bind its predeclaration case without a hash cycle.
+        # Every array, affine and all other metadata remain in this manifest.
+        base = case.to_manifest(include_hash=False)
+        base['metadata']['surgical_properties'].pop('cranialAccessV1')
+        cranial_source['cranialAccessBaseCaseHash'] = semantic_digest(base)
     scene = SurgicalScene(labels, affine, regions, {'caseHash': case.semantic_hash, 'caseId': case.case_id,
+        **cranial_source,
         'provenance': 'source annotations and declared cached estimates',
         'adapter': thaw_json(case.metadata).get('surgical_adapter'),
         'annotationHashes': {name: array_digest(mask) for name, mask in masks.items()},
         **({'protectedAnatomyV1': protected} if protected else {}),
         'overlapRule': 'last mapped region owns the material; original memberships retained',
         **({'workingGridRefinement': thaw_json(case.metadata['working_grid_refinement'])}
-           if 'working_grid_refinement' in case.metadata else {})}, thaw_json(case.metadata).get('surgical_properties', {}))
+           if 'working_grid_refinement' in case.metadata else {})}, properties)
     _bind_original_target_memberships(scene, {r['name']: immutable_array(
         np.flatnonzero(masks[r['name']]), np.int64) for r in regions if r.get('target')})
     return scene

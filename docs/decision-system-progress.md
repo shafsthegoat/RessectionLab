@@ -1,139 +1,148 @@
 # Decision-system progress and next dependency
 
-Branch: `shaf/decision-system-v1`; baseline `53c49019`. Existing primary checkout.
-The patient-resection goal remains open; no clinical validation is claimed.
-Local evidence and full reproduction commands are under ignored
-`testcases/decision-system-v1/`; bulk patient files stay on the external drive.
+Branch: `shaf/decision-system-v1`; baseline `53c49019`. Primary checkout only.
+The patient-resection goal remains open. No clinical validation is claimed.
+Ignored evidence is under `testcases/decision-system-v1/`; bulk patient files
+remain on the external drive. `milestone-results.json` indexes versioned results.
 
-## Implemented and verified
+## Implemented
 
-- Authoritative protected/critical source masks survive target overlap. Both tools,
-  active effects, shaft, continuous instrument sweep, withdrawal and supported
-  indirect effects are checked transactionally. Reviewed task domains also bind
-  direct actions and checked skills; search/reward cannot override a refusal.
-- Shared sequence accounting preserves original-target residuals, unique cumulative
-  tissue removal, preparation, exchanges, modeled time, exits and unknown evidence.
-  Source-sized prospective tasks freeze 50% original-target progress plus three
-  spatial zones, whole200/work20 mm³ non-target caps and computation limits. Trusted
-  predecode receipts, originals and RAS affines bind patient roles; editable case
-  metadata cannot convert a reserved patient into TRAIN.
-- Bounded two/three-skill lookahead retains delayed-benefit preparation and native
-  checked exits. Finite CUSA contact can now clear at the actual stop and resume
-  only unreached path legs, up to eight times by default. Immediate and lookahead
-  policies get the same capability; explicit zero reproduces single-motion work.
-  Partial costs persist, but incomplete skills cannot be selected as treatment.
-  Actual stock v3 uses fixed1.5mm geometry; legacy radii stay explicitly legacy.
-- A refusal-only shortcut avoids repeating an identical native boundary query once
-  its removal-limit violation is certain. It grants no admission and never reuses
-  a preview to authorize a changed/clipped command. The unchanged native physics,
-  source protection, tissue caps and replay checks remain authoritative.
-- Stock opening macros perform shallow kerf, gradual roll, active cutting return
-  and checked withdrawal. These remove slivers, **not a complete bone flap**.
-- The desktop uses one Case → Plan → Compare → Rehearse/edit workflow and one draft.
-  Edits/reverts stale comparisons; recorded results retain source/branch identity.
-  Native cancellation, comparison cards, checkpoint ledger, playback and cold
-  reopen work. The parser now accepts a zero-target preparation stage only with
-  its validated bounded-lookahead receipt; legacy/malformed zero stages still fail.
+- Source protection survives target overlap. The authoritative engine checks both
+  instruments, full swept geometry, withdrawal and supported indirect effects;
+  forbidden actions roll back the whole proposal. Reviewed domains also bind
+  direct actions and checked skills. Rewards/search cannot override refusals.
+- Shared accounting preserves original-target residuals, unique cumulative tissue,
+  preparation, exchanges, modeled time, exit and unknown evidence. Prospective
+  patient tasks freeze 50% original-target progress in three spatial zones,
+  whole 200/work 20 mm³ non-target caps and compute limits. Trusted predecode source
+  receipts and exact originals/affines bind roles; metadata cannot grant TRAIN.
+- Bounded two/three-skill lookahead retains delayed-benefit preparation and checked
+  exits. Finite CUSA work clears at the actual stop and resumes only unreached
+  path legs, with the same default eight-continuation budget for immediate and
+  lookahead policies. Incomplete skills retain costs without treatment admission.
+  Stock v3 uses fixed 1.5 mm geometry; adjustable legacy radii stay labeled legacy.
+  A refusal-only optimization removes an identical unsafe boundary query; it never
+  reuses a preview to admit changed commands or alters physics/tissue limits.
+- The desktop uses one Case → Plan → Compare → Rehearse/edit workflow and draft.
+  Edits/reverts stale results. Native cancellation, cards, checkpoint ledger,
+  recorded playback and Save/Open work. Zero-target preparation displays only
+  with its validated bounded-lookahead receipt; it remains zero treatment credit.
+
+The user clarified that the unlocated incident concerned an implausible entry
+route, possibly posterior/inferior, rather than an established brainstem injury.
+The new requested scope includes actual skull resection and removal of the flap.
+
+## Full bone-opening mechanism
+
+`cranialAccessV1` now binds source/target, original entry rectangle/cone, intended
+flap/kerf IDs, retained skull/anchors, attachment coverage and exterior workspace.
+The native gate checks every pose and both hands, including placement, parked
+instruments and original crop/model gaps. Before evacuation, tools cannot pass
+beyond the exact affine inner table. Unknown coverage remains blocked; a posterior
+approach is case-specific rather than globally forbidden.
+
+A fixed generic bone holder resolves the exact full component, including pieces
+larger than display summaries. Complete kerf, no face/edge/corner bridge, supported
+retained skull and actual release of declared attachments precede grasp. Whole
+flap sweeps check anatomy, protection, domains, both tools and coupled updates.
+There is no whole-flap shaft exemption. All held pose operations share translation
+and rotation guards; the disclosed surrogate uses snapped affine cells and
+supports translation only. Released pieces remain in field until actually removed.
+Extraction requires the whole flap at its declared exterior; empty-holder
+withdrawal must clear the actual exit face, independently of slot flags.
+
+The checked macro freezes an explicit **separate bone-only** budget, native source,
+shared meter and deadline. Whole kerf plus flap are charged once. Supported flap
+attachments may be released; added target/nonbone removal remains zero. Imported
+prefixes need charged native ancestry. Refreezing, resealed limit substitution and
+unlogged runtime state cannot reset costs. The old200 mm³ tumor/access caps remain
+unchanged. Existing patient, physiological and RL qualifications remain separate.
+
+A generated closed-shell control executes 18 native actions: stock cutting,
+periosteal release, grasp, lift, full evacuation and withdrawal. It removes
+236 mm³ kerf plus 49 mm³ flap, zero target/brain. The 285 mm³ control passes only its
+prospective bone-only policy. Old `SkillLimits(200)` refuses after 199 mm³ accepted
+bone when the next preview reaches 236; a 260 mm³ bone policy refuses the entire
+49 mm³ flap extraction. These are mechanism controls, not patient completions.
+
+The final bounded generated run costs 104 actual native evaluations across macro,
+fresh replay, lifted checkpoint and lifted/final cold reopen, 7.109 seconds and
+152.7 MB peak RSS. Its original archive is byte-exact. The prior successful run
+is preserved; the repeat was justified by source/budget integrity fixes, with
+identical geometry/actions/bounds. Development tests/probes and desktop replay are
+additional; no matched speedup or end-to-end patient performance is claimed.
+Evidence: `craniotomy-v1/desktop-control-v1/`.
 
 ## Patient results and retained failures
 
-All five TopCoW TRAIN originals004/006/012/014/018 remain unchanged and reported.
-Their source planes, units/affines, target recipes, source roles and native replay
-were independently checked (`case-qualification/`, `patient-tasks-intact-v3/`).
-All five full tumor tasks remain ineligible for missing reviewed critical coverage;
-none is counted as completed. The original incident replay was not located. The
-user clarified that the concern was an absurd entry route, possibly posterior or
-inferior; the affected case/structure remains unverified. New access restrictions
-must be case-specific and authoritative, not a global ban on posterior approaches.
+All five unchanged TopCoW TRAIN originals 004/006/012/014/018 remain reported.
+Independent review checked source planes, units/affines, target recipes, roles
+and native replay (`case-qualification/`, `patient-tasks-intact-v3/`). None completes
+a meaningful full tumor task. Their five proposed calvarial windows remain unset:
+plausible local bone is not attachment, full-aperture or exit qualification.
 
-The strongest retained CTA014 baseline removes15.810416mm³ target(5.8524%),
-272.901532mm³ cumulative non-target,280.04modeledseconds and fully withdraws.
-It exceeds the current200mm³ cap. The promoted nine-action opening removes
-13.977324mm³ skull and zero brain/target/vessel with complete exit; fresh public
-cold replay and hidden desktop reopen agree. Its round costs37nativecalls,
-40.40seconds and1.59GB peak; including reused inventory61calls/52.29seconds.
-The broader47-expansion study removes46.972976mm³ skull but leaves201 route-bone
-cells. Neither result completes meaningful tumor treatment (`patient-search-v1/`).
+The strongest retained CTA014 baseline removes15.810416 mm³ target (5.8524%),
+272.901532 mm³ cumulative non-target, 280.04 modeled seconds and fully withdraws;
+it exceeds the current 200 mm³ cap. Its newer nine-action sliver opening removes
+13.977324 mm³ skull, zero brain/target/vessel, with verified exit and cold replay.
+The round costs 37 calls/40.40 seconds/1.59 GB; including reused inventory,
+61 calls/52.29 seconds. A broader 47-expansion study removes46.972976 mm³ skull
+but leaves 201 route-bone cells. Slivers are not a complete craniotomy or treatment
+(`patient-search-v1/`).
 
-Finite-contact testing on authentic CTA014 prefix44 retains187.891903mm³ prior
-non-target. The next recorded30second action is refused by both policy0 and8:
-its unchanged preview reaches222.262373mm³ total and34.37047mm³ new brain.
-The checked withdrawal then completes; no target is removed. The final bounded
-negative component proof uses93calls,57.529driverseconds and1.174GB peak, including
-fresh exact45action replay. The earlier94call attempt exhausted its wall budget
-during replay and is preserved as incomplete. Only the refusal-query optimization
-justified the second attempt; no matched speedup or positive patient claim follows
+Authentic CTA014 prefix 44 retains 187.891903 mm³ prior non-target. Both old and
+finite-contact policies refuse the next recorded action: preview 222.262373 mm³
+total and 34.37047 mm³ new brain. Checked withdrawal and fresh exact 45-action replay
+complete within 93 calls/57.529 seconds/1.174 GB. The earlier 94-call wall-budget
+failure during replay remains explicitly incomplete. No target is removed
 (`contact-continuation-v1/patient-probe/`).
 
-Corrected fixed-axis source geometry shows the finite kerf family cannot cover
-three remaining route-bone cells. A new6912-axis screen per case014/012 also finds
-no cap-compatible meaningful continuation; its cheapest complete geometric paths
-cost237.385/244.330mm³ non-target with20.9%/10.3% target. No new native round was
-justified. These are generator screens, not anatomical-impossibility proofs
-(`patient-search-v1/lateral-opening-v1/`, `access-family-v2/`).
+The finite lateral kerf family misses three remaining route-bone cells. A separate
+6912-axis source screen per 014/012 finds no cap-compatible meaningful continuation;
+cheapest complete geometric paths cost 237.385/244.330 mm³ non-target for 20.9%/10.3%
+target. No further native round followed. These are generator limits, not proofs
+of anatomical impossibility (`access-family-v2/`).
 
-CT intensity, units, normalization and source crop were checked without finding a
-repair. A separately justified official-default SynthSeg pilot was still withheld
-by independent source-plane review; no mask was promoted. Current CTA coverage
-insufficiency is not established. Conservative named-structure coverage remains
-unresolved. Existing structural MRI alternatives are skull-stripped and lack the
-full skull/vascular/attachment package, so none was promoted as a substitute
-(`task-repair-v2/`; prior attempts remain in `task-repair-v1/`).
+CT intensity/units/windowing checks found no correction. A justified official-
+default SynthSeg pilot was still withheld by independent source review; no mask
+was promoted. Missing acquired CTA coverage is not established. Existing structural
+MRI alternatives are skull-stripped and lack the full skull/vascular/attachment
+package (`task-repair-v2/`; older failures retained in `task-repair-v1/`).
 
-## Current validation
+## Validation and next dependency
 
-The current finite-contact/backend suite passes152tests; independent review
-passes77overlapping checks plus a real-native post-preview cancellation control.
-Generated fixed-v3, finite-capacity, protection, caps, remaining-waypoint and
-report-tamper controls are software tests, not patient successes. Earlier safety
-before/after and delayed-preparation regressions remain independently reproduced.
+Current backend: 421 selected tests pass, including new native controls, prior
+finite-contact/staged work, protection/domain/material/clock/RL guards, physics,
+archive and replay. Independent review reproduces 42 contract+17 native tests and
+adversarial entry, full-flap, all-held-operation, old200 cap and persistence checks.
+It exposed and rechecked source-hash recursion, false withdrawal, non-move rotation,
+inner-table, budget resealing and unlogged-prefix errors; failures are retained.
 
-All1290desktoptests pass(325main/693renderer/272viewer), as does production build.
-Final hidden warm/cold workflows pass on0007and the0005no-route case, including
-cancellation, edits, native preview/install, missing-evidence refusal, ledger,
-playback, checkpoint return and Save/Open. Actual default-depth staged Generate
-on the original paired DEVELOPMENT0007source yields three replay-exact, withdrawn
-but unpassed branches(41/44/81mm³ target;135/119/135mm³ non-target), each honestly
-labeled legacy. The run costs2589calls/67.63plannerseconds; upfront validation is
-additional. An initial successful backend result exposed the zero-preparation UI
-bug; the failed display and its2589calls remain charged. A justified rerun and
-cold reopen pass on the final renderer. Historical CTA014sliver playback also
-passes warm/cold. All windows remained hidden and source archives byte-exact.
-See `contact-continuation-v1/desktop/qa-summary.json` for exact hashes, costs,
-screenshot sequence and retained failures; `milestone-results.json` indexes all.
+All 1293 desktop tests pass and production build passes. Hidden warm/cold generated
+bone replay verifies cutting, attachment release, 49 moved cells at action 16,
+evacuation 17, actual withdrawal 18, full 285 mm³ ledger, playback and Save/Open.
+Windows remain hidden and originals unchanged. See `craniotomy-v1/` for final
+renderer/backend hashes and screenshot sequence. Earlier multiple-patient workflow
+checks, cancellation, edit staleness and actual paired-source staged Generate are
+retained with their implementation hashes in `contact-continuation-v1/desktop/`;
+the three legacy 0007 branches remain unpassed, not completed patient tasks.
 
-## Next substantive dependency
+Next: source-review a patient cranial window/full-thickness contour, attachments,
+retained-skull support, full-tool workspace and flap exit; freeze its complete
+bone/brain/target/burden goals before joint opening/work search. Do not substitute
+an idealized control for patient evidence. Old boxes exclude 35.32% of CTA012's
+original target and 9.58% of CTA014's; all five targets plus fixed 10 mm buffers fit
+acquired CTA FOV. New source-context review is distinct from absent imaging or
+anatomical clearance; preserve old benchmarks/bounds rather than expanding them
+to admit a failed route. See `craniotomy-v1/access-window-review/`.
 
-Implement the requested **full skull opening and bone removal**: a source/target-
-bound cranial window; complete kerf and attachment state; exact flap component;
-whole-flap swept protection/domain/both-tool checks; exterior evacuation; empty-
-holder withdrawal; and one unique kerf-plus-flap ledger. Start with declared closed-
-shell engineering controls, then require a reviewed patient evidence package.
-Read-only design and all five source-bound access proposals are retained in
-`craniotomy-v1/`. Every proposed window is still unset. Local calvarial columns
-are plausible, but attachments, retained-skull support, complete cut, whole-flap
-exit and the intended full aperture are unproven. Full flap volume stays charged;
-any separate bone-only task must freeze its own burden before testing.
-
-The old reviewed boxes exclude35.32%of CTA012's target and9.58%of CTA014's target.
-All five complete targets plus fixed10mm buffers fit in acquired CTA FOV. Source
-review for a new domain is distinct from absent imaging or anatomical clearance;
-old bounds are preserved. Do not enlarge a box merely to admit a failed route.
-
-Joint opening/work search, source-qualified full tasks on at least three suitable
+Joint patient opening/work search, meaningful completed tasks on three suitable
 patients, uncertainty and matched material patient improvement remain open.
-Preserve all five original cases and old benchmarks, unknown anatomy, actual tool
-geometry and physics/RL holds. Correct STOP and preparation alone are not treatment.
-
-Reproduce focused current checks:
+Correct STOP, preparation or a generated bone-only pass do not close this goal.
 
 ```sh
-.venv/bin/python -m pytest -q tests/test_surgical_contact_continuation.py \
- tests/test_surgical_staged_planning.py tests/test_surgical_sequence_search.py \
- tests/test_surgical_staged_skills.py tests/test_surgical_staged_exit.py \
- tests/test_surgical_patient_task.py tests/test_surgical_patient_role.py
+.venv/bin/python -m pytest -q tests/test_surgical_craniotomy.py \
+ tests/test_surgical_bone_transport.py tests/test_surgical_craniotomy_skills.py
 pnpm --dir desktop test
 pnpm --dir desktop build
-WORKFLOW_OUTPUT="$PWD/testcases/decision-system-v1/NEW-hidden-workflow" \
- desktop/node_modules/.bin/electron desktop/electron/verify-surgical-workflow.cjs
 ```

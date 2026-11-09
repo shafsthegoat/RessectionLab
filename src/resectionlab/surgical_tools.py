@@ -17,6 +17,7 @@ TOOLS = {
     'bipolar_forceps': _tool('Bipolar forceps', 'Energy', 'forceps', ['soft_tissue', 'tumor', 'vessel', 'membrane'], 'coagulate'),
     'micro_scissors': _tool('Micro scissors', 'Cutting', 'scissors', ['vessel', 'soft_tissue', 'tumor'], 'transect'),
     'tumor_forceps': _tool('Tumor forceps', 'Manipulation', 'forceps', ['tumor'], 'grasp', 1.5),
+    'bone_flap_holder': _tool('Bone flap holder', 'Bone', 'forceps', ['bone'], 'grasp', 1.5),
     'irrigation': _tool('Irrigation', 'Fluid', 'irrigator', [], 'irrigate', 1.5),
     'cortical_probe': _tool('Cortical stimulation probe', 'Mapping', 'probe', ['soft_tissue', 'functional_region'], 'probe'),
     'subcortical_probe': _tool('Subcortical stimulation probe', 'Mapping', 'probe', ['soft_tissue', 'tumor', 'functional_region'], 'probe'),

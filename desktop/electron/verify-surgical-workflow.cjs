@@ -10,7 +10,9 @@ assert(input.startsWith(base+path.sep)||(process.env.WORKFLOW_RECORDED_ONLY==='1
 assert(output.startsWith(base+path.sep),'Keep generated evidence in ignored testcases');
 assert(!fs.existsSync(output),'Preserve previous evidence');fs.mkdirSync(output,{recursive:true});
 const sha=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex'),original=sha(input),saved=path.join(output,'workflow-saved.ressectionlab');
-const backendFiles=['surgical_staged_skills.py','surgical_sequence_search.py','surgical_staged_planning.py'].map(name=>path.join(root,'src/resectionlab',name));
+const backendFiles=['surgical_staged_skills.py','surgical_sequence_search.py','surgical_staged_planning.py',
+ 'surgical_engine.py','surgical_scene.py','surgical_effects.py','surgical_tools.py','surgical_clock.py',
+ 'surgical_craniotomy.py','surgical_bone_transport.py','surgical_cranial_guards.py','surgical_craniotomy_skills.py'].map(name=>path.join(root,'src/resectionlab',name));
 const backendSourceHashes=()=>Object.fromEntries(backendFiles.map(file=>[path.basename(file),sha(file)]));
 const report={input,output,sourceSha256:original,backendSourceSha256:backendSourceHashes(),rendererIndexSha256:sha(path.join(root,'desktop/dist/index.html')),windowEverVisible:false,requests:[],checks:[],captures:[],passed:false};let last;
 app.setPath('userData',path.join(output,'hidden-profile'));process.argv.push('--case',input,'--automation-hidden');
@@ -50,6 +52,30 @@ app.on('browser-window-created',(_event,window)=>{
     report.recordedOutcome={position:last.position,stateId:last.view.stateId,boneRemovedMm3:removed('bone'),brainRemovedMm3:removed('soft_tissue'),targetRemovedMm3:last.view.metrics.targetRemovedMm3};
     if(process.env.WORKFLOW_EXPECT_BONE_MM3!==undefined)assert(Math.abs(report.recordedOutcome.boneRemovedMm3-Number(process.env.WORKFLOW_EXPECT_BONE_MM3))<1e-5);
     if(process.env.WORKFLOW_EXPECT_NO_BRAIN_TARGET==='1'){assert.equal(report.recordedOutcome.brainRemovedMm3,0);assert.equal(report.recordedOutcome.targetRemovedMm3,0);}
+    if(process.env.WORKFLOW_CRANIOTOMY==='1'){
+     report.craniotomyCheckpoints=[];
+     for(const item of [{position:8,phase:'KERF_IN_PROGRESS',removed:236,moved:0},
+       {position:11,phase:'KERF_IN_PROGRESS',removed:236,moved:0},
+       {position:15,phase:'GRASPED_OR_TRANSPORTED',removed:236,moved:0},
+       {position:16,phase:'GRASPED_OR_TRANSPORTED',removed:236,moved:49},
+       {position:17,phase:'EVACUATED',removed:285,moved:0},
+       {position:18,phase:'HOLDER_WITHDRAWN',removed:285,moved:0}]){
+      const since=report.requests.length;await set('Surgical timeline',item.position);
+      const started=Date.now();while(!report.requests.slice(since).some(row=>row.command==='seek')){if(Date.now()-started>120000)throw Error('Missing craniotomy checkpoint seek');await delay(80);}await ready();
+      assert.equal(last.position,item.position);assert.equal(last.view.craniotomy.phase,item.phase);
+      assert.equal(last.view.metrics.nonTargetRemovedMm3,item.removed);assert.equal(last.view.metrics.targetRemovedMm3,0);assert.equal(last.view.moved.length,item.moved);
+      assert.equal(last.view.craniotomy.openingComplete,item.position===18);
+      if(item.position>=11)assert(last.view.separatedAttachments.includes('idealized-periosteal'));
+      report.craniotomyCheckpoints.push({position:last.position,stateId:last.view.stateId,opening:last.view.craniotomy,movedCells:last.view.moved.length,removedCells:last.view.removed.length});
+      await capture('craniotomy-'+item.position,'.workflow-rehearsal');
+     }
+     await stage('Compare');await js(`(()=>{const d=document.querySelector('.workflow-checkpoint-burdens');if(!d.open)d.querySelector('summary').click()})()`);
+     assert(await js(`document.querySelector('[aria-label="Native bone opening"]')?.checkVisibility()`));
+     report.craniotomyDisplayed=await js(`document.querySelector('[aria-label="Native bone opening"]').innerText`);
+     assert(report.craniotomyDisplayed.includes('285')&&report.craniotomyDisplayed.includes('49')&&report.craniotomyDisplayed.includes('236'));
+     await capture('craniotomy-native-summary','.workflow-checkpoint-burdens');await stage('Rehearse/edit');
+     report.checks.push('Generated bone-only replay shows actual cutting, declared attachment release,49-cell lift, exterior evacuation, empty-holder withdrawal and native complete phase; whole285mm3 remains non-target and no tumor-task pass is claimed');
+    }
     await capture('03-recorded-endpoint-after-play','.workflow-rehearsal');report.checks.push('Recorded-only native replay plays actual frames, pauses, seeks the exact endpoint and preserves declared bone/brain/target quantities; no plan is generated');
    }else if(process.env.WORKFLOW_STAGED_ONLY==='1'){
     await stage('Plan');assert.equal(await js(`document.querySelector('.surgical-workflow').dataset.workflowPlanner`),'staged','A genuine paired source must expose the existing staged scope without eligibility changes');
