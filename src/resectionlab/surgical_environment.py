@@ -6,7 +6,7 @@ only an explicit new-environment operation selects the standard V2 profile.
 import copy
 import numpy as np
 from .core import semantic_digest
-from .surgical_scene import SurgicalScene
+from .surgical_scene import SurgicalScene, propagate_original_target_memberships
 from .surgical_physics_v2 import default_profile
 
 SCHEMA = 'resectionlab.surgical-environment.v1'
@@ -65,7 +65,8 @@ def standardize(scene, target_names=None, physics_profile=None):
         region['color'] = COLORS.get(region['material'], region.get('color', '#92a7b8'))
         if target_names is not None:
             region['target'] = region['name'] in target_names
-    return SurgicalScene(scene.labels, scene.affine, regions, source, properties)
+    return propagate_original_target_memberships(scene,
+        SurgicalScene(scene.labels, scene.affine, regions, source, properties))
 
 
 def descriptor(scene):

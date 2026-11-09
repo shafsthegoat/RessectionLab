@@ -414,7 +414,58 @@ def _current_work_contacts(engine, tile, radius):
         'scope':'retained tip-path source contact only; not native removal or swept shaft clearance'}
 
 
-def _choose_work(engine, route_inventory, attempted, *, radius):
+def _preparation_tiles(engine, target_tiles, radius):
+    """Propose at most two small cavity clearances from retained shaft contacts.
+
+    These are source-centered paths, never a proof of clearance. Retreat along
+    the current tool axis before translating toward the obstructing cell; both
+    segments must pass the ordinary swept native tool and material checks.
+    """
+    from .surgical_tools import TOOLS
+    from .surgical_motion import swept_envelopes
+    slot = engine.state['slots']['left']
+    state_id = engine.state_id
+    current = np.asarray(slot['position'])
+    orientation = Rotation.from_quat(slot['quaternion'])
+    axis = orientation.apply([0., 0., 1.])
+    labels = engine.scene.labels.ravel()
+    brain = {int(r['id']) for r in engine.scene.regions if
+        r['material'] == 'soft_tissue' and 'brain' in r['name'].lower()}
+    cells = set()
+    for tile in target_tiles[:MAX_PROBES_PER_STAGE]:
+        previous = slot
+        for pose in tile.get('path', [tile['pose']]):
+            for a, b, width, part in swept_envelopes(
+                    TOOLS['cusa'], engine.parameters(slot), previous, pose):
+                if part == 'shaft':
+                    cells.update(int(c) for c in engine.touched(a, b, width)
+                                 if int(labels[c]) in brain)
+            previous = pose
+    candidates = []
+    ids = np.asarray(sorted(cells), dtype=np.int64)
+    points = engine.scene.points(ids)
+    offsets = points-current
+    distances = np.linalg.norm(offsets, axis=1)
+    eligible = np.flatnonzero((distances <= 6.) & (offsets@axis <= 1e-9))
+    shortlisted = sorted(eligible, key=lambda i: (float(distances[i]), int(ids[i])))[:8]
+    for index in shortlisted:
+        cell, point = int(ids[index]), points[index]
+        retreat = current+axis*float(np.dot(point-current, axis))
+        poses = [{'position': p.tolist(), 'quaternion': list(slot['quaternion'])}
+                 for p in (retreat, point)]
+        tile = {'id': 'prepare-'+str(cell), 'pose': poses[-1], 'path': poses,
+            'proposalStateId': state_id, 'orientationMode': 'retained-shaft-preparation'}
+        contact = _current_work_contacts(engine, tile, radius)
+        if (contact['currentTargetContactMm3'] == 0 and
+                contact['currentBrainContactMm3'] > 0 and not contact['otherRetainedLabelContact']):
+            tile.update(currentContacts=contact, contactStateId=state_id)
+            candidates.append(tile)
+    candidates.sort(key=lambda t: (t['currentContacts']['currentBrainContactMm3'],
+        t['currentContacts']['fullEnvelopeTravelProxyMm'], t['id']))
+    return candidates[:2]
+
+
+def _choose_work(engine, route_inventory, attempted, *, radius, include_preparation=False):
     current = np.asarray(engine.state['slots']['left']['position'])
     state = engine.state_id
     local = propose_cusa_maneuvers(engine, route_inventory['route'], max_options=15)
@@ -436,6 +487,12 @@ def _choose_work(engine, route_inventory, attempted, *, radius):
         tile['currentContacts']['fullEnvelopeTravelProxyMm'],
         'proposalStateId' not in tile,
         float(np.linalg.norm(np.asarray(tile['pose']['position'])-current)), tile['id']))
+    if include_preparation:
+        preparation = [t for t in _preparation_tiles(engine, candidates, radius)
+                       if (t['id'], radius, state) not in attempted]
+        # Extra preparation probes must not evict a useful baseline work option.
+        # All six share the same fixed aggregate native-call/wall budget.
+        return [*candidates[:MAX_PROBES_PER_STAGE], *preparation]
     return candidates[:MAX_PROBES_PER_STAGE]
 
 
@@ -476,15 +533,21 @@ def compare_staged_strategies(engine, record, *, acknowledge_unknowns=False,
                               exercise_resume=True, explore_fresh_corridors=False,
                               initial_access_radius_mm=None,
                               include_opposite_faces=False,
-                              cumulative_reentry=False):
+                              cumulative_reentry=False,
+                              planning_horizon=1, beam_width=3):
     """Execute source-defined work with bounded lookahead and checked exit."""
     from .surgical_staged_exit import find_checked_exit
     from .surgical_joint_geometry import select_joint_corridors
     if acknowledge_unknowns is not True:
         raise ValueError('Explicit acknowledgment of unsupported anatomy is required')
+    if (type(planning_horizon) is not int or not 1 <= planning_horizon <= 3 or
+            type(beam_width) is not int or not 2 <= beam_width <= 4):
+        raise ValueError('Keep staged planning horizon 1..3 and beam width 2..4')
     if type(cumulative_reentry) is not bool:
         raise ValueError('Cumulative re-entry mode must be boolean')
     if cumulative_reentry:
+        if planning_horizon != 1:
+            raise ValueError('Sequence lookahead and cumulative re-entry are separate controllers')
         if initial_access_radius_mm is not None or explore_fresh_corridors or include_opposite_faces:
             raise ValueError('Cumulative re-entry selects its initial configuration from saved source routes')
         from .surgical_staged_fan import compare_cumulative_reentries
@@ -549,6 +612,7 @@ def compare_staged_strategies(engine, record, *, acknowledge_unknowns=False,
             base = meter.wrap(engine).clone()
             route_start_calls = meter.calls
             attempts, stages, configuration_target = [], [], {}
+            sequence_searches = []
             access_plan, access_error = None, None
             approach_actions = route_inventory['approachActions']
             if approach_actions is None:
@@ -590,6 +654,9 @@ def compare_staged_strategies(engine, record, *, acknowledge_unknowns=False,
             no_admission = 0
             if approach['status'] == 'accepted':
                 for stage_index in range(MAX_STAGES):
+                    if len(stages) >= MAX_STAGES:
+                        stop_reason = 'MAXIMUM_ADMITTED_STAGES'
+                        break
                     if (meter.remaining <= EXPORT_RESERVE+MAX_ACTIONS+120 or
                             meter.calls-route_start_calls >= route_quota-MAX_ACTIONS or
                             len(candidate.actions) >= MAX_ACTIONS-30):
@@ -620,6 +687,59 @@ def compare_staged_strategies(engine, record, *, acknowledge_unknowns=False,
                             prepared_work, radius, reconfiguration = candidate, current_radius, None
                     elif abs(radius-current_radius) > 1e-9:
                         radius = current_radius
+                    if planning_horizon > 1:
+                        from .surgical_sequence_search import checked_sequence_search
+                        with meter.reserve(EXPORT_RESERVE):
+                            selected_sequence, searched, evidence = checked_sequence_search(
+                                prepared_work, route, hand=hand, radius=radius,
+                                propose=lambda state: _choose_work(state, route_inventory, attempted,
+                                    radius=radius, include_preparation=True),
+                                motion=lambda state, tile: _work_actions(state, tile, radius, hand)[0],
+                                limits=work_limits, meter=meter,
+                                horizon=min(planning_horizon, MAX_STAGES-len(stages)),
+                                beam_width=beam_width, check=bounded,
+                                can_expand=lambda: meter.calls-route_start_calls < route_quota-MAX_ACTIONS,
+                                phase=f'staged.{route_index}.stage{stage_index}.lookahead')
+                        sequence_searches.append(evidence)
+                        attempts.extend(searched)
+                        attempted.update((r['tileId'], radius, r['contactStateId']) for r in searched)
+                        if selected_sequence is None:
+                            stop_reason = evidence['reason']
+                            no_admission += 1
+                            continue
+                        candidate, cached_exit = selected_sequence.work, selected_sequence.exited
+                        no_admission = 0
+                        config = f'radius-{radius:g}'
+                        for selected in selected_sequence.path:
+                            if reconfiguration is not None:
+                                selected['configuration'] = reconfiguration
+                            admitted += int(selected['targetIncrementMm3'] > 0)
+                            configuration_target[config] = configuration_target.get(config, 0.)+selected['targetIncrementMm3']
+                            stages.append({'stage': len(stages), 'tileId': selected['tileId'],
+                                'workStartPosition': selected['workStartPosition'],
+                                'configuration': config, 'stateId': selected['workStateId'],
+                                'nativeActions': selected['workEndPosition'],
+                                'targetIncrementMm3': selected['targetIncrementMm3'],
+                                'executionMode': selected['work']['executionMode'],
+                                'requestedPoseReached': selected['work']['requestedPoseReached'],
+                                'observedEndPose': selected['work']['observedEndPose'],
+                                'checkedExitStateId': selected['checkedExitStateId'],
+                                'checkedExitActions': selected['checkedExitActions']})
+                        if exercise_resume and resume_evidence is None:
+                            checkpoint = make_skill_checkpoint(candidate,
+                                source_seal=plan_seal, task_seal=task['taskSeal'],
+                                inventory_seal=inventory['inventorySeal'], limits=work_limits,
+                                meter=meter, stage=f'after-stage-{len(stages)-1}')
+                            with meter.reserve(EXPORT_RESERVE):
+                                restored, _, ledger = restore_skill_checkpoint(engine.scene, checkpoint,
+                                    source_seal=plan_seal, task_seal=task['taskSeal'],
+                                    inventory_seal=inventory['inventorySeal'], meter=meter, check=bounded)
+                            resume_evidence = {'checkpoint': checkpoint, 'restoredStateId': restored.state_id,
+                                'ledger': ledger, 'exactResume': restored.state_id == candidate.state_id}
+                            candidate = restored
+                        progress((route_index+(stage_index+1)/MAX_STAGES)/max(1,len(inventory['routes'])),
+                            f'Checked sequence work {route_index+1}, stage {len(stages)}')
+                        continue
                     proposals = _choose_work(prepared_work, route_inventory, attempted, radius=radius)
                     if not proposals:
                         no_admission += 1
@@ -742,6 +862,8 @@ def compare_staged_strategies(engine, record, *, acknowledge_unknowns=False,
                     'instrumentTravelMm': candidate.state['travelMm']},
                 'modeledOutcomes': summarize_engine_outcomes(candidate, baseline=base),
                 'exactNativeReplay': exact}
+            if planning_horizon > 1:
+                report['sequenceSearches'] = sequence_searches
             alternatives.append(report)
             branches.append((candidate.unwrap(), report))
     except (TransitionBudgetExceeded, TimeoutError) as error:
@@ -767,6 +889,12 @@ def compare_staged_strategies(engine, record, *, acknowledge_unknowns=False,
              'DEV scenes use legacy instantaneous CUSA removal with v2 mechanics, not contact-capacity CUSA v3'),
             'Tool size changes require checked external withdrawal and re-entry',
             'No actor or learned-policy gain claimed', 'Engineering effects are not clinical injury predictions']}
+    if planning_horizon > 1:
+        report.update(controllerMode='bounded-sequence-lookahead',
+            sequenceSearch={'horizon': planning_horizon, 'beamWidth': beam_width,
+                'maxExpansionsPerSearch': 24,
+                'baseline': 'planning_horizon=1 preserves the existing immediate-target controller',
+                'preference': 'native constraints, then target/non-target/time Pareto outcomes; target descending, non-target ascending, modeled time ascending'})
     if include_opposite_faces:
         report['limitations'].append('Entry exploration includes both source exterior face signs under the same finite geometry budget; selected directions alone do not establish successful complete strategies')
     report['comparisonSeal'] = semantic_digest(report)
@@ -781,6 +909,7 @@ def staged_summary(report):
             'optimizerUpdates', 'task', 'wallSeconds')},
         'cusaModel': report.get('cusaModel', 'legacy-instantaneous-with-v2-mechanics'),
         **({'controllerMode': report['controllerMode']} if 'controllerMode' in report else {}),
+        **({'sequenceSearch': copy.deepcopy(report['sequenceSearch'])} if 'sequenceSearch' in report else {}),
         'comparisonScope': ('same-route-configurations' if 'configurationAlias' in report else
                             report.get('comparisonScope','source-routes')),
         'limitations': copy.deepcopy(report.get('limitations', [])),
@@ -797,6 +926,7 @@ def staged_summary(report):
             'finalStateId', 'nativeActions', 'stopReason', 'stages', 'outcome',
             'exactNativeReplay')},
             **({'executionMetrics': copy.deepcopy(row['executionMetrics'])} if 'executionMetrics' in row else {}),
+            **({'sequenceSearches': copy.deepcopy(row['sequenceSearches'])} if 'sequenceSearches' in row else {}),
             'resumeVerified': bool(row['interruptionRecovery'] and
                                     row['interruptionRecovery']['exactResume']),
             'workAttempts': len(row['attemptedWork']),
@@ -962,7 +1092,8 @@ def validate_staged_report(scene, record, report):
         sectors, _ = _sector_cells(scene, row['route'])
         expected = assess_task(view, report['task'], zones, config_totals,
             exact_replay=row['exactNativeReplay'], baseline=baseline,
-            admitted_strokes=len(row['stages']), legacy_sectors=sectors)
+            admitted_strokes=sum(stage['targetIncrementMm3'] > 0 for stage in row['stages']),
+            legacy_sectors=sectors)
         if expected != outcome:
             raise ValueError('Staged task gates differ from native effects and intervals')
     return {'verified': True, 'branches': len(ids)}

@@ -207,9 +207,16 @@ class SurgicalReplayCache:
             result.actions = copy.deepcopy(archive['snapshot']['actions'][:start])
             result.history = copy.deepcopy(archive['history'][:start])
             archive['checkpoints'].move_to_end(start)
-        for action in archive['snapshot']['actions'][start:position]:
+        for index, action in enumerate(archive['snapshot']['actions'][start:position], start):
             check()
-            if result.step(action, check=check)['status'] == 'rejected':
+            observed = archive['history'][index]
+            result._restoring_legacy_guard_partial = (observed.get('status') == 'partial'
+                and str(observed.get('reason', '')).split(':', 1)[0] == 'PROTECTED_STRUCTURE')
+            try:
+                outcome = result.step(action, check=check)
+            finally:
+                result.__dict__.pop('_restoring_legacy_guard_partial', None)
+            if outcome['status'] == 'rejected':
                 raise ValueError('Saved action no longer replays')
             check()
         if result.state_id != expected:

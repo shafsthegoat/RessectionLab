@@ -202,7 +202,7 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
       <p>Action {position} / {steps} · {r?.branchId}</p>
       {inspectionNotice&&<p className="surgical-warning">{inspectionNotice}</p>}
       {c.preview&&<><p>{c.approachPreview?'Install checked branch below commits this plan. Cancel returns to the planning checkpoint.':'Apply commits; Cancel returns to committed anatomy.'}</p><button onClick={c.cancel}>Cancel preview</button></>}
-      {c.pending&&<><button onClick={c.cancel}>Cancel</button><p>Cancel clears the draft. The current request continues.</p></>}
+      {c.canCancelComputation&&<button disabled={c.cancelling} onClick={()=>void c.cancelComputation()}>{c.cancelling?'Cancelling…':'Cancel computation'}</button>}
       {observed&&<button disabled={c.pending} onClick={()=>stopRun(routes.boundary,{branchId:r?.branchId,position})}>Return to recorded boundary</button>}
       {imported&&!observed&&<button disabled={c.pending} onClick={()=>stopRun('inspect',{branchId:r?.branchId})}>Verify saved replay</button>}
     </section>}

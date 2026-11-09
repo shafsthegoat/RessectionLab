@@ -695,6 +695,7 @@ export default function App() {
   }:null,[fusionSeries,payload]);
   const surgicalApi = useMemo(()=>api?.surgicalRehearsal ? {
     surgicalRehearsal:(input:import('./surgical-types').SurgicalRequest)=>api.surgicalRehearsal!({...input,...(native.binding?{source:{collectionId:native.binding.collectionId,snapshotId:native.binding.document.snapshot_id,seriesId:native.series}}:{})}),
+    cancel:(requestId:string)=>api.cancel(requestId),
   }:null,[api,native.binding?.collectionId,native.binding?.document.snapshot_id,native.series]);
   const surgical = useSurgical(displayedCase, surgicalApi, workbenchTab === "rehearsal" && rehearsalModel==='standard' && !native.binding,
     !!(payload?.artifacts?.surgical_toolbox as {archivePreviewAvailable?:boolean}|undefined)?.archivePreviewAvailable);

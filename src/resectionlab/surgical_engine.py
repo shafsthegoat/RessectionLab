@@ -329,7 +329,13 @@ class SurgicalEngine:
     _view_omit_fields = frozenset({'flapComponents'})
     def __init__(self, scene, *, protection=None, guard_config=None):
         self.scene = scene
-        from .surgical_rl_protection import GuardConfig, ProtectionSet, missing_critical, protection_contract
+        from .surgical_rl_protection import GuardConfig, ProtectionSet, missing_critical, protection_contract, declared_scene_protection
+        declared = declared_scene_protection(scene, protection)
+        if declared is not protection:
+            # Missing evidence remains explicit unknown coverage. Declared
+            # memberships are nevertheless mandatory for every live caller.
+            protection = declared
+            if guard_config is None: guard_config = GuardConfig(require_critical_coverage=False)
         self.protection = protection
         self.guard_config = guard_config
         self._protection_contract = None
@@ -359,6 +365,7 @@ class SurgicalEngine:
                                 for s, tool, dx in [('left', 'cranial_drill', -6), ('right', 'cusa', 6)]}}
         self.actions = []
         self.history = []
+        self._legacy_guard_partial_actions = frozenset()
         self._occupancy_cache = None
         self._removed_ids_proof = None
         from .surgical_effects import initialize_effect_state
@@ -609,8 +616,15 @@ class SurgicalEngine:
         before_removed = set(self.state['removed'])
         candidate = self._transition_clone()
         try:
-            duration, points = candidate._validate(action)
             candidate._transition_check=(lambda:_checked_operation(check)) if check is not None else None
+            from .surgical_task_domain import action_rejection, reviewed_domain
+            domain = reviewed_domain(candidate.scene)
+            if domain is not None:
+                refusal = action_rejection(candidate, action, domain=domain,
+                    check=candidate._transition_check or (lambda: None))
+                if refusal is not None:
+                    return None, refusal
+            duration, points = candidate._validate(action)
             result = candidate._execute(copy.deepcopy(action), duration, points, check=check)
         except _OperationCheckFailed as interrupted:
             raise interrupted.cause from None
@@ -763,6 +777,10 @@ class SurgicalEngine:
                     delta_events = self._substep(key, op, p, quat, active, duration / total)
                 except ValueError as error:
                     if check is not None: _checked_operation(check)
+                    if str(error).split(':', 1)[0] == 'PROTECTED_STRUCTURE' and not getattr(self, '_restoring_legacy_guard_partial', False):
+                        # Discard the complete proposed transaction, including
+                        # safe treatment earlier in this same drawn stroke.
+                        raise
                     self.state = old
                     reason = str(error)
                     contact_position = p.tolist()
@@ -1126,8 +1144,18 @@ class SurgicalEngine:
                 **({'cusaV3': copy.deepcopy(self.state['cusaV3'])} if 'cusaV3' in self.state else {}),
                 **planar_view}
 
+    def _historical_guard_partials(self):
+        # Cache restorers hydrate verified history directly; derive the legacy
+        # indices from that causal history as well as canonical full replay.
+        return self._legacy_guard_partial_actions | frozenset(i for i, row in enumerate(self.history)
+            if row.get('status') == 'partial' and str(row.get('reason', '')).split(':', 1)[0] == 'PROTECTED_STRUCTURE')
+
     def snapshot(self):
+        legacy = self._historical_guard_partials()
         return {'schema': SCHEMA, 'sceneId': self.scene.identity, 'actions': copy.deepcopy(self.actions), 'stateId': self.state_id,
+                **({'hardConstraintPolicy': 'atomic-protection-v1',
+                    **({'legacyGuardPartialActions': sorted(legacy)} if legacy else {})}
+                   if self._protected_ids else {}),
                 **({'protectionContract': copy.deepcopy(self._protection_contract)} if self._protection_contract else {}),
                 'checkpoint': {'position': len(self.actions), 'stateId': self.state_id, 'state': copy.deepcopy(self.state)}}
 
@@ -1150,14 +1178,26 @@ class SurgicalEngine:
             protection, config = restore_protection_contract(scene, record['protectionContract'])
             options = {'protection': protection, 'guard_config': config}
         result = cls(scene, **options)
+        legacy = record.get('legacyGuardPartialActions', [])
+        if (type(legacy) is not list or any(type(i) is not int or not 0 <= i < len(record['actions']) for i in legacy)
+                or record.get('hardConstraintPolicy') not in (None, 'atomic-protection-v1')):
+            raise ValueError('Invalid saved hard constraint policy')
+        legacy = set(legacy)
+        historical = 'hardConstraintPolicy' not in record
         writer = cache._begin_replay(result, record) if cache is not None else None
         try:
             if writer is not None:
                 writer.capture(result, check)
-            for action in record['actions']:
+            for index, action in enumerate(record['actions']):
                 if check is not None: check()
-                outcome = result.step(action) if check is None else result.step(action, check=check)
+                result._restoring_legacy_guard_partial = historical or index in legacy
+                try:
+                    outcome = result.step(action) if check is None else result.step(action, check=check)
+                finally:
+                    result.__dict__.pop('_restoring_legacy_guard_partial', None)
                 if outcome['status'] == 'rejected': raise ValueError('Saved action no longer replays')
+                if outcome['status'] == 'partial' and outcome.get('reasonCode') == 'PROTECTED_STRUCTURE':
+                    result._legacy_guard_partial_actions = result._legacy_guard_partial_actions | {index}
                 if check is not None: check()
                 if writer is not None:
                     writer.capture(result, check)
@@ -1176,10 +1216,17 @@ class SurgicalEngine:
     def branch(self, position, *, check=None):
         if type(position) is not int or not 0 <= position <= len(self.actions): raise ValueError('Invalid history position')
         result = self.fresh()
+        legacy = self._historical_guard_partials()
         for action in self.actions[:position]:
             if check is not None: check()
-            if check is None: result.step(action)
-            else: result.step(action, check=check)
+            result._restoring_legacy_guard_partial = len(result.actions) in legacy
+            try:
+                if check is None: result.step(action)
+                else: result.step(action, check=check)
+            finally:
+                result.__dict__.pop('_restoring_legacy_guard_partial', None)
+            if len(result.actions)-1 in legacy:
+                result._legacy_guard_partial_actions = result._legacy_guard_partial_actions | {len(result.actions)-1}
         if check is not None: check()
         return result
 

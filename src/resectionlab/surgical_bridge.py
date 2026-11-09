@@ -148,6 +148,10 @@ def dispatch(session, operation, args, request, progress):
                        'provenance': 'generated engineering fixture'} for r in s.regions}, 'surgical_properties': s.properties})
         return session._install_case(case, {}, request)
     argument_keys = {'caseHash', 'command', 'expectedStateId', 'action', 'mapping', 'position', 'branchId', 'source', 'sceneIndex', 'acknowledgeResearchUnknowns', 'allowModeledBrainCorridor', 'maxHealthyRemovalMm3', 'maxWallSeconds', 'opponent', 'scenario', 'maxActions', 'frameIndex', 'timelineToken', 'viewFieldTokens','initialAccessRadiusMm','exploreExteriorFaces','cumulativeReentry'}
+    if args.get('command') == 'plan' and args.get('opponent') == 'anatomy-staged-strategy':
+        argument_keys.update({'planningHorizon', 'beamWidth'})
+    if args.get('command') == 'inspect':
+        argument_keys.add('includeSequenceOutcome')
     if args.get('command') == 'seekPrefixFrame':
         argument_keys.update({'prefixToken', 'prefixFieldTokens'})
     if args.get('command') == 'attachProtection':
@@ -162,6 +166,8 @@ def dispatch(session, operation, args, request, progress):
     if args.get('command') in {'previewStrategy','previewPreparation','applyPreparation'}: argument_keys.add('phase')
     if args.get('command') == 'analyzeStrategySensitivity': argument_keys.update({'offsetMm', 'contextVoxelShift', 'expectedPlanSeal'})
     _keys(args, argument_keys)
+    if 'includeSequenceOutcome' in args and type(args['includeSequenceOutcome']) is not bool:
+        raise ValueError('Complete-sequence outcome request must be boolean')
     if args.get('command') == 'recoverExit':
         _keys(args, {'caseHash', 'command', 'expectedStateId'})
     if args.get('command') == 'reevaluateConsequences':
@@ -687,6 +693,8 @@ def dispatch(session, operation, args, request, progress):
             explore_fresh_corridors=args.get('exploreExteriorFaces', False),
             include_opposite_faces=args.get('exploreExteriorFaces', False),
             cumulative_reentry=args.get('cumulativeReentry', False),
+            planning_horizon=args.get('planningHorizon', 1),
+            beam_width=args.get('beamWidth', 3),
             check=request.check, progress=progress)
         if staged['report'].get('interruption'):
             raise ValueError('Staged comparison interrupted: '+staged['report']['interruption'])
@@ -895,6 +903,9 @@ def dispatch(session, operation, args, request, progress):
               'branchId': record['branchId'], 'position': record['position'],
               'fullCase': copy.deepcopy(record.get('fullCase', {}).get(record['branchId'])),
               'branches': [{'id': k, 'steps': len(v['actions']), 'parent': record.get('parents', {}).get(k)} for k, v in record['branches'].items()]}
+    if args.get('includeSequenceOutcome') is True:
+        from .surgical_sequence_outcomes import sequence_outcome
+        result['sequenceOutcome'] = sequence_outcome(engine)
     from .full_case_readiness import full_case_readiness
     result['fullCaseReadiness'] = {**full_case_readiness(engine), 'caseHash': identity}
     from .surgical_planning import availability

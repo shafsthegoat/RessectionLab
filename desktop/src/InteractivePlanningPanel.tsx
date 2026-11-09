@@ -25,7 +25,7 @@ export function InteractivePlanningPanel({c,cursor=null,onCursor,pause}:{c:Surgi
   const sourcePreflight=currentSourcePreflight(c.result);
   const historicalExposure=(stored?.evidence.historicalExposure??a?.evidence?.historicalExposure) as {targetRemovedMm3?:number;nonTargetRemovedMm3?:number}|undefined;
   const savedCurrent=stored?.current===true&&stored.sourceSceneId===c.view?.scene.sceneId&&stored.startStateId===c.view?.stateId&&stored.prefixActions===c.result?.position;
-  return <details className="interactive-planning" open><summary>Plan an approach · post-exposure</summary>
+  return <details className="interactive-planning approach-planning" open><summary>Plan an approach · post-exposure</summary>
     {sourcePreflight&&<SourcePreflightPanel report={sourcePreflight}/>}
     {qualification&&<details aria-label="Patient task evidence"><summary>Patient and task evidence</summary>
       <p>{qualification.sourceEvidence.patientId} · {qualification.sourceEvidence.sourceRole} research · {qualification.sourceEvidence.studyTimepoint}</p>

@@ -52,7 +52,7 @@ def test_bare_engine_rl_preview_partial_and_replay_are_identical():
         actual = engine.step(action); rl = env.step_action(action)[4]['outcome']
         assert actual['stateId'] == preview['stateId'] == rl['stateId']
         assert actual['status'] == preview['status'] == rl['status']
-    assert actual['status'] == 'partial' and actual['reasonCode'] == 'PROTECTED_STRUCTURE'
+    assert actual['status'] == 'rejected' and actual['reasonCode'] == 'PROTECTED_STRUCTURE'
     assert engine.state['holds']['left']['offset'] == [0, 0, 0]
     reopened = SurgicalEngine.restore(scene, json.loads(json.dumps(engine.snapshot(), allow_nan=False)))
     assert reopened.state == engine.state
@@ -60,7 +60,9 @@ def test_bare_engine_rl_preview_partial_and_replay_are_identical():
     next_action = sequence()[-1]
     assert reopened.step(next_action) == engine.step(next_action)
     assert engine.branch(2).guard_report() == engine.guard_report()
-    assert engine.replay(sequence()).state_id == env.engine.state_id
+    assert engine.replay(sequence()[:-1]).state_id == env.engine.state_id
+    with pytest.raises(ValueError, match='inadmissible'):
+        engine.replay(sequence())
     engine.reset()
     assert engine.guard_report()['mode'] == 'strict-research' and not engine.actions
 

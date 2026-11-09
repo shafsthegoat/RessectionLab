@@ -7,6 +7,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import copy
+from types import MappingProxyType
 import numpy as np
 from .core import array_digest, immutable_array, semantic_digest, thaw_json
 
@@ -14,6 +15,13 @@ MATERIALS = ('unknown', 'bone', 'soft_tissue', 'tumor', 'membrane', 'vessel', 'f
 KINDS = {'skull': 'bone', 'brain': 'soft_tissue', 'tissue': 'soft_tissue', 'tumor': 'tumor',
          'dura': 'membrane', 'membrane': 'membrane', 'vessels': 'vessel', 'vessel': 'vessel',
          'artery': 'vessel', 'vein': 'vessel', 'sinus': 'vessel', 'bone': 'bone', 'soft_tissue': 'soft_tissue'}
+
+
+def explicitly_protected(declaration):
+    for flag in ('protected', 'critical'):
+        if flag in declaration and type(declaration[flag]) is not bool:
+            raise ValueError('Explicit anatomical protection flags must be boolean')
+    return any(declaration.get(flag) is True for flag in ('protected', 'critical'))
 
 
 @dataclass
@@ -56,6 +64,11 @@ class SurgicalScene:
         self._cache_metadata = semantic_digest([self.regions, self.source, self.properties])
         self._cache_identity = self.identity
         self._cache_voxel_mm3 = self.voxel_mm3
+        # Optional exact source-mask evidence belongs to the case adapter,
+        # independently of later categorical ownership. Bare categorical scenes
+        # cannot reconstruct it and retain an explicit unknown value.
+        self._original_target_memberships = None
+        self._original_target_proof = None
 
     def require_cache_source(self):
         arrays = (self.labels, self.affine, self.inverse, self.spacing)
@@ -64,6 +77,16 @@ class SurgicalScene:
                 for current, (original, shape, dtype, strides) in zip(arrays, self._cache_arrays))
                 or semantic_digest([self.regions, self.source, self.properties]) != self._cache_metadata):
             raise ValueError('Source scene changed; construct a newly versioned scene before cached replay')
+        proof = self._original_target_proof
+        if proof is None:
+            if self._original_target_memberships is not None:
+                raise ValueError('Original target source membership binding changed')
+        elif (self._original_target_memberships is not proof[0] or proof[1] != self.identity
+                or any(self.source.get('annotationHashes', {}).get(name) != mask_hash
+                    or self._original_target_memberships.get(name) is not ids
+                    or ids.flags.writeable or (ids.shape, ids.dtype.str, ids.strides) != layout
+                    for name, mask_hash, ids, layout in proof[2])):
+            raise ValueError('Original target source membership binding changed')
 
     def _validate_properties(self):
         """Reject invalid explicit physics before any transition can run."""
@@ -151,15 +174,67 @@ def from_case(case, mapping=None):
     labels = np.zeros(case.mri.shape, np.uint16)
     for r in regions:
         labels[masks[r['name']]] = r['id']
+    # Exclusion membership is independent of categorical material ownership.
+    # Only an explicit declaration grants protection; names/kinds do not.
+    protected = []
+    for r in regions:
+        layer = layers.get(r['name'], {})
+        declared = [explicitly_protected(row) for row in (r, layer)]
+        if not any(declared):
+            continue
+        protected.append({'structureId': r.get('structureId', layer.get('structure_id', r['name'])),
+            'cells': np.flatnonzero(masks[r['name']]).tolist(),
+            'provenance': 'Explicit protected source annotation; mask=' + array_digest(masks[r['name']]),
+            'reviewStatus': layer.get('review_status', 'unreviewed'), 'displayName': r['name']})
     affine = case.affine.copy()
     if case.frame == 'LPS+': affine = np.diag([-1., -1., 1., 1.]) @ affine
-    return SurgicalScene(labels, affine, regions, {'caseHash': case.semantic_hash, 'caseId': case.case_id,
+    scene = SurgicalScene(labels, affine, regions, {'caseHash': case.semantic_hash, 'caseId': case.case_id,
         'provenance': 'source annotations and declared cached estimates',
         'adapter': thaw_json(case.metadata).get('surgical_adapter'),
         'annotationHashes': {name: array_digest(mask) for name, mask in masks.items()},
+        **({'protectedAnatomyV1': protected} if protected else {}),
         'overlapRule': 'last mapped region owns the material; original memberships retained',
         **({'workingGridRefinement': thaw_json(case.metadata['working_grid_refinement'])}
            if 'working_grid_refinement' in case.metadata else {})}, thaw_json(case.metadata).get('surgical_properties', {}))
+    _bind_original_target_memberships(scene, {r['name']: immutable_array(
+        np.flatnonzero(masks[r['name']]), np.int64) for r in regions if r.get('target')})
+    return scene
+
+
+def _bind_original_target_memberships(scene, memberships):
+    """Adapter-only binding of bytes-backed immutable source-cell indices."""
+    retained = memberships if isinstance(memberships, MappingProxyType) else MappingProxyType(dict(memberships))
+    scene._original_target_memberships = retained
+    scene._original_target_proof = (retained, scene.identity, tuple(
+        (name, scene.source['annotationHashes'][name], ids, (ids.shape, ids.dtype.str, ids.strides))
+        for name, ids in retained.items()))
+
+
+def original_target_memberships(scene):
+    """Exact original active target masks, or None for missing source evidence.
+
+    Values are immutable sorted flat source IDs. Union them before counting;
+    distinct source targets may overlap. This does not infer target membership
+    from categorical material labels or grant removal eligibility.
+    """
+    scene.require_cache_source()
+    retained = scene._original_target_memberships
+    names = {r['name'] for r in scene.regions if r.get('target')}
+    if retained is None or not names <= retained.keys():
+        return None
+    return MappingProxyType({name: retained[name] for name in sorted(names)})
+
+
+def propagate_original_target_memberships(source, target):
+    """Share validated source IDs across an unchanged-grid environment adapter."""
+    source.require_cache_source()
+    retained = source._original_target_memberships
+    names = {r['name'] for r in target.regions if r.get('target')}
+    if (retained is not None and names <= retained.keys() and target.shape == source.shape
+            and np.array_equal(target.affine, source.affine)
+            and target.source.get('annotationHashes') == source.source.get('annotationHashes')):
+        _bind_original_target_memberships(target, retained)
+    return target
 
 
 def engineering_scene():

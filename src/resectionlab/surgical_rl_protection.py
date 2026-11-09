@@ -81,7 +81,7 @@ class ProtectionAnnotation:
     display_name: str = ''
 
     def __post_init__(self):
-        if not self.structure_id or not self.source_binding or not self.provenance:
+        if type(self.structure_id) is not str or not self.structure_id or not self.source_binding or not self.provenance:
             raise ValueError('Explicit structure identity, source binding and provenance required')
         cells = tuple(self.cells)
         if any(not isinstance(c, (int, np.integer)) or c < 0 for c in cells):
@@ -162,6 +162,50 @@ class ProtectionSet:
         hits = [self.capsule_hits(a, b, radius, positions=positions)
                 for a, b, radius, _ in swept_envelopes(tool, parameters, start, end)]
         return np.unique(np.concatenate(hits)) if hits else np.empty(0, np.int64)
+
+
+def declared_scene_protection(scene, protection=None):
+    """Bind explicit exclusions, retaining memberships hidden by later owners.
+
+    Supplemental contracts may enlarge these exclusions, never remove them.
+    A material name alone supplies no anatomical protection evidence.
+    """
+    if protection is not None and protection.scene.identity != scene.identity:
+        raise ValueError('Protection scene mismatch')
+    rows = list(scene.source.get('protectedAnatomyV1', ()))
+    declared = {row['structureId'] for row in rows}
+    from .surgical_scene import explicitly_protected
+    for region in scene.regions:
+        if not explicitly_protected(region):
+            continue
+        identity = region.get('structureId', region['name'])
+        if identity not in declared:
+            rows.append({'structureId': identity, 'cells': np.flatnonzero(scene.labels == region['id']).tolist(),
+                'provenance': 'Explicit protected material-region declaration',
+                'reviewStatus': region.get('reviewStatus', 'unreviewed'), 'displayName': region['name']})
+            declared.add(identity)
+    if not rows:
+        return protection
+    binding = grid_binding(scene)
+    annotations = {} if protection is None else {a.structure_id: a for a in protection.annotations}
+    changed = False
+    for row in rows:
+        annotation = ProtectionAnnotation(row['structureId'], tuple(row['cells']), binding,
+            row['provenance'], row.get('reviewStatus', 'unreviewed'), row.get('displayName', ''))
+        old = annotations.get(annotation.structure_id)
+        if old is not None:
+            if set(annotation.cells) <= set(old.cells):
+                continue
+            annotation = ProtectionAnnotation(old.structure_id, tuple(sorted(set(old.cells) | set(annotation.cells))),
+                binding, old.provenance + '; ' + annotation.provenance,
+                old.review_status if old.review_status == annotation.review_status else 'unreviewed', old.display_name)
+        annotations[annotation.structure_id] = annotation
+        changed = True
+    if protection is not None and not changed:
+        return protection
+    return ProtectionSet(scene, annotations.values(),
+        clearance_mm=protection.clearance_mm if protection is not None else 2.,
+        required=protection.required if protection is not None else ('brainstem',))
 
 
 def annotation_from_nifti(scene, path, structure_id, *, source_binding, registration_ras_mm,

@@ -11,6 +11,7 @@ export function StagedStrategiesPanel({c,artifact,pause,play}:{c:SurgicalControl
   const [narrowAccess,setNarrowAccess]=useState(false);
   const [exploreFaces,setExploreFaces]=useState(false);
   const [cumulative,setCumulative]=useState(false);
+  const [planningHorizon,setPlanningHorizon]=useState<1|2|3>(2);
   useEffect(()=>{setAcknowledged(false);setNarrowAccess(false);setExploreFaces(false);setCumulative(false);},[c.result?.caseHash,c.result?.view.scene.sceneId]);
   const record=artifact&&typeof artifact==='object'?artifact as Record<string,unknown>:null;
   const saved=!!record&&(Object.hasOwn(record,'stagedPlanning')||Object.hasOwn(record,'stagedSummary'));
@@ -30,6 +31,11 @@ export function StagedStrategiesPanel({c,artifact,pause,play}:{c:SurgicalControl
         <option value="local">Local staged work</option><option value="reentry">Planned external re-entry</option>
       </select></label>}
       {cumulative&&<p>Plans complete entries through each selected surface, with tool size changes after checked withdrawal. Initial access and all later removal count toward the displayed effects. Source contact predicts a work order; native checks determine which stages complete.</p>}
+      {!cumulative&&<label>Planning depth<select aria-label="Staged planning depth" disabled={c.pending}
+        value={planningHorizon} onChange={event=>setPlanningHorizon(Number(event.target.value) as 1|2|3)}>
+        <option value={2}>Two skills ahead</option><option value={3}>Three skills ahead</option>
+        <option value={1}>Immediate removal baseline</option>
+      </select><small>Lookahead retains different cavity states, including preparation with no immediate target removal. Every retained continuation requires a checked exit.</small></label>}
       {!cusaContactModel(c.result?.view)&&<label>Initial CUSA access configuration<select aria-label="Staged initial access configuration" disabled={c.pending||cumulative}
         value={cumulative?'automatic':narrowAccess?'narrow':'saved'} onChange={event=>setNarrowAccess(event.target.value==='narrow')}>
         {cumulative&&<option value="automatic">Selected with the re-entry sequence</option>}
@@ -44,7 +50,7 @@ export function StagedStrategiesPanel({c,artifact,pause,play}:{c:SurgicalControl
         I acknowledge the missing anatomy and research-only source assumptions for this staged comparison.</label>
       <button disabled={c.pending||!acknowledged||!eligibility.ready} onClick={()=>{
         pause();void c.run('plan',{opponent:'anatomy-staged-strategy',acknowledgeResearchUnknowns:true,
-          ...(cumulative?{cumulativeReentry:true}:{...(exploreFaces?{exploreExteriorFaces:true}:{}),
+          ...(cumulative?{cumulativeReentry:true}:{planningHorizon,beamWidth:3,...(exploreFaces?{exploreExteriorFaces:true}:{}),
           ...(narrowAccess?{initialAccessRadiusMm:.6}:{})})});
       }}>Generate staged source strategies</button>
       {!eligibility.ready&&<p role="status">{eligibility.reason}</p>}
