@@ -145,3 +145,24 @@ test('entire rendered toolbox has one workflow and authoritative displayed-state
   check(html(),'Unknown','Unknown');
   assert.equal(c.view.metrics.targetRemovedMm3,0);assert.deepEqual(c.calls,[]);
 });
+
+function nativeMembrane(c,extra={}){return {schema:'resectionlab.cranial-stages.v1',contractHash:'stage',stateId:c.view.stateId,sceneId:c.view.scene.sceneId,phase:'CUT_RETAINED',assessmentCurrent:true,startingExposure:'conditional_post_scalp_exposure',sourceUnknowns:['Uncalibrated membrane mechanics','Clinical outcomes unknown'],patchCells:49,requiredBoundaryEdges:28,cutBoundaryEdges:28,boundaryCutComplete:true,patchHeld:false,patchDetached:false,patchExtracted:false,bonePrefixVerified:true,duraCleared:false,workEntrySupported:false,wholeExitComplete:false,clinicalValidation:'none',reason:null,membrane:{removedMembraneMm3:0,actualNativeExtractionEvents:0,retainedRimIntact:true},...extra};}
+test('native membrane stage distinguishes retained cuts, held/released pieces and real extraction',()=>{
+  const c=controller();c.view.cranialStages=nativeMembrane(c);
+  let stage=find(Outcome({c}),'div','Native membrane stage');assert(stage);assert(text(stage).includes('Boundary cut; membrane retained'));assert(text(stage).includes('Work-region entry: Not permitted'));assert(text(stage).includes('Conditional post-scalp exposure; scalp opening was not simulated and prior exposure cost unknown.'));assert(text(stage).includes('Clinical outcomes unknown'));
+  for(const [phase,label] of [['HELD','Membrane held or lifted'],['RELEASED_IN_FIELD','Membrane released in field']]){c.view.cranialStages=nativeMembrane(c,{phase});assert(text(find(Outcome({c}),'div','Native membrane stage')).includes(label));}
+  c.view.cranialStages=nativeMembrane(c,{phase:'EXTRACTED',patchExtracted:true,duraCleared:true,workEntrySupported:true,membrane:{removedMembraneMm3:49,actualNativeExtractionEvents:1,retainedRimIntact:true}});
+  stage=find(Outcome({c}),'div','Native membrane stage');assert(text(stage).includes('Membrane extracted; instrument exit pending'));assert(text(stage).includes('Permitted by native stage checks'));assert(text(stage).includes('Both instruments withdrawn: No'));assert.equal(text(nodes(stage).find(n=>n.props['data-membrane-metric']==='removedMembraneMm3')),'49.00');assert.deepEqual(c.calls,[]);
+});
+test('membrane readout binds displayed preview state and scene; unknown or stale permission is never shown',()=>{
+  const c=controller();c.view.cranialStages=nativeMembrane(c,{workEntrySupported:true});c.preview={...c.view,stateId:'preview'};
+  assert.equal(find(Outcome({c}),'div','Native membrane stage'),undefined);
+  c.preview.cranialStages=nativeMembrane(c,{stateId:'preview',phase:'constructor',assessmentCurrent:false,workEntrySupported:true});
+  let stage=find(Outcome({c}),'div','Native membrane stage');assert(text(stage).includes('Membrane stage: Unknown'));assert(text(stage).includes('Work-region entry: Unassessed'));assert(!text(stage).includes('constructor'));
+  c.preview.cranialStages.sceneId='other';assert.equal(find(Outcome({c}),'div','Native membrane stage'),undefined);assert.equal(c.view.cranialStages.workEntrySupported,true);assert.deepEqual(c.calls,[]);
+});
+test('plain milling remains bone-only while a current stage frame reports separate membrane permission',()=>{
+  const c=controller();c.view.craniotomy={method:'milling',phase:'MILLING_WITHDRAWN',milledBoneMm3:81,declaredBoneRemovedMm3:81,apertureEvacuated:true,openingComplete:true,milling:{debrisRemovedMm3:81,debrisPresentMm3:0,debrisEscapedMm3:0,treatmentEntrySupported:false}};
+  assert(text(Outcome({c})).includes('Dural opening and tumor entry remain unsupported.'));
+  c.view.cranialStages=nativeMembrane(c);assert(text(Outcome({c})).includes('Bone clearance alone does not permit work-region entry.'));assert(text(Outcome({c})).includes('Work-region entry: Not permitted'));assert(!text(Outcome({c})).includes('Dural opening and tumor entry remain unsupported.'));
+});

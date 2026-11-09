@@ -130,8 +130,8 @@ def _nonbone_effects(view, bone, flap_attachment_ids=(), *, milling=False):
 def _require_prefix_call_evidence(engine, meter):
     """Never treat an imported native prefix's unknown execution costs as zero."""
     if not engine.actions:
-        canonical = SurgicalEngine(engine.scene, protection=engine.protection,
-                                   guard_config=engine.guard_config)
+        canonical = SurgicalEngine(engine.scene, protection=engine.protection, guard_config=engine.guard_config,
+            **({'cranial_stages':engine._cranial_stages} if getattr(engine, '_cranial_stages', None) is not None else {}))
         if engine.history or engine.state_id != canonical.state_id:
             raise ValueError('CRANIOTOMY_CANONICAL_INTACT_SOURCE_REQUIRED')
         return

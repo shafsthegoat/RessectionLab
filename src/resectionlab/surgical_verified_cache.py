@@ -46,7 +46,7 @@ _MODULES = ('core', 'geometry', 'surgical_scene', 'surgical_engine', 'surgical_t
             'surgical_vascular_graph', 'surgical_bipolar_thermal',
             'surgical_occupancy', 'surgical_rl_protection', 'surgical_geometry_cache',
             'surgical_verified_cache', 'surgical_cusa_v3', 'surgical_clock', 'surgical_idle_native',
-            'build_surgical_idle_native')
+            'build_surgical_idle_native', 'surgical_cranial_stages', 'surgical_membrane_transport')
 
 
 def _code_signature(code):
@@ -309,6 +309,8 @@ class VerifiedSurgicalCache:
         _check(check)
         scene.require_cache_source()
         from .surgical_engine import SurgicalEngine
+        if 'cranialStagesContract' in record:
+            return None  # Stage boundary proofs must be rederived by public replay.
         if cls is not SurgicalEngine:
             return None  # A subclass's transitions are a different implementation.
         try:

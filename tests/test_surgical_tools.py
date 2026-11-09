@@ -20,9 +20,10 @@ def effect(e, tool, cells=None, p=(3, 3, 3), q=(0, 0, 0, 1), op='apply', dt=1):
     return apply_effect(e, 'left', op, list(map(int, np.flatnonzero(e.scene.labels))) if cells is None else cells, np.array(p, float), q, dt)
 
 
-def test_catalog_distinct_sixteen():
+def test_catalog_distinct_seventeen():
     tools = catalog()
-    assert len(tools) == 16 and len({t['id'] for t in tools}) == 16
+    assert len(tools) == 17 and len({t['id'] for t in tools}) == 17
+    assert tools[-1]['id'] == 'membrane_forceps'
     assert len({t['effect'] for t in tools}) == 13
 
 

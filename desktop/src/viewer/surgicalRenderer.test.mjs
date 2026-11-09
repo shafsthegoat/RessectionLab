@@ -149,7 +149,7 @@ test('retrospective animation never replays on pause, resume, pose edits or scru
   r.setSurgical({...input,flowDisplay:undefined,playbackDisplay:undefined});assert.equal(r.surgicalFlow,null);assert.equal(r.advanceSurgicalAnimation(performance.now()),false);
 });
 test('working-part animation respects explicit activation and leaves recorded root poses exact',()=>{
-  for(const id of ['micro_scissors','dural_scissors','bipolar_forceps','tumor_forceps','bone_flap_holder']){
+  for(const id of ['micro_scissors','dural_scissors','bipolar_forceps','tumor_forceps','bone_flap_holder','membrane_forceps']){
     const recorded={...slot(id),active:true},group=surgicalToolMesh(tool(id),recorded),jaws=group.children.filter(o=>typeof o.userData.jawBaseX==='number');
     assert.equal(jaws.length,2);const exact=jaws.map(o=>o.position.x),pose=group.matrix.clone();
     updateSurgicalToolAnimation(group,.1,.5);assert(jaws.every((o,i)=>Math.abs(o.position.x)<Math.abs(exact[i])));assert(group.matrix.equals(pose));assert.deepEqual(group.position.toArray(),recorded.position);
@@ -161,13 +161,13 @@ test('working-part animation respects explicit activation and leaves recorded ro
   updateSurgicalToolAnimation(drill,null,null);assert.equal(bit.rotation.z,0);
   delete drill.userData.recordedRpm;updateSurgicalToolAnimation(drill,.25,.5);assert.equal(bit.rotation.z,0,'missing RPM has no inferred spin');
 });
-test('stock bone holder shares generic forceps while native contact capsules remain exact during playback',()=>{
-  const holder={id:'bone_flap_holder',name:'Bone flap holder',category:'Bone',geometry:'forceps',materials:['bone'],effect:'grasp',radiusMm:1.5,shaftRadiusMm:.5,workingLengthMm:40};
+for(const id of ['bone_flap_holder','membrane_forceps'])test(`stock ${id} shares generic forceps while native contact capsules remain exact during playback`,()=>{
+  const holder={id,name:'Bone flap holder',category:'Bone',geometry:'forceps',materials:['bone'],effect:'grasp',radiusMm:1.5,shaftRadiusMm:.5,workingLengthMm:40};
   const recorded={...slot(holder.id),active:true,parameters:{radiusMm:1.5,depthMm:2,jawOpeningMm:.35},quaternion:[0,0,1,0]};
   const before=structuredClone(recorded),signature=group=>{group.updateMatrixWorld(true);const meshes=[];group.traverse(o=>{if(o.isMesh)meshes.push([o.geometry.type,o.geometry.parameters,o.matrixWorld.toArray()]);});return meshes;};
   for(const ghost of [false,true]){
     const mesh=surgicalToolMesh(holder,recorded,ghost),reference=surgicalToolMesh({...holder,id:'tumor_forceps'},{...recorded,instrument:'tumor_forceps'},ghost);
-    assert.equal(mesh.name,'instrument:bone_flap_holder');assert.deepEqual(signature(mesh),signature(reference));
+    assert.equal(mesh.name,'instrument:'+id);assert.deepEqual(signature(mesh),signature(reference));
     assert.deepEqual(mesh.position.toArray(),recorded.position);assert.deepEqual(mesh.quaternion.toArray(),recorded.quaternion);
     assert.deepEqual(mesh.children.filter(o=>typeof o.userData.jawBaseX==='number').map(o=>o.position.x),[-.175,.175]);
     for(const group of [mesh,reference])group.traverse(o=>{o.geometry?.dispose();o.material?.dispose();});

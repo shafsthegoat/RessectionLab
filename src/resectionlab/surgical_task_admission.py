@@ -160,9 +160,12 @@ def _compatible_models(engine, models):
     # Adding the unrelated holder does not alter any of its tools or physics.
     # Recompute the complete preceding catalog, rather than accepting a caller's
     # arbitrary old hash; any change to an existing instrument still refuses.
-    preceding = dict(current, instrumentCatalogHash=semantic_digest(
-        [tool for tool in catalog() if tool['id'] != 'bone_flap_holder']))
-    return models == preceding
+    for extra_ids in ({'membrane_forceps'}, {'membrane_forceps', 'bone_flap_holder'}):
+        preceding = dict(current, instrumentCatalogHash=semantic_digest(
+            [tool for tool in catalog() if tool['id'] not in extra_ids]))
+        if models == preceding:
+            return True
+    return False
 
 
 def _source_members(scene):

@@ -41,7 +41,7 @@ from .surgical_rl_rewards import RewardConfig, RewardTracker, compute_reward
 # v2 deliberately invalidates v1 episode snapshots: success now includes
 # cleanup, and the observation declares the remaining episode budgets.
 SCHEMA = 'resectionlab.surgical-rl.v2'
-ACTION_CONTRACT = 'catalog-radius-fixed-while-inserted.v1'
+ACTION_CONTRACT = 'catalog-radius-fixed-while-inserted.v2-membrane17'
 OPERATIONS = ('place','move','activate','deactivate','apply','hold','grasp','release','exchange','withdraw','extract','inspect')
 INSTRUMENTS = tuple(TOOLS)
 PARAMETERS = ('radiusMm','depthMm','flowMm3PerSecond','power','jawOpeningMm','amplitudeMa','frequencyHz','pulseWidthUs','rpm','forceN','duty')

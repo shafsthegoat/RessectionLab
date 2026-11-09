@@ -309,7 +309,7 @@ def test_holder_catalog_extension_preserves_only_unchanged_historical_models(mon
     engine = SimpleNamespace(scene=SimpleNamespace(properties={}))
     original_catalog = admission.catalog()
     preceding = dict(admission._models(engine), instrumentCatalogHash=semantic_digest(
-        [row for row in original_catalog if row['id'] != 'bone_flap_holder']))
+        [row for row in original_catalog if row['id'] not in ('bone_flap_holder', 'membrane_forceps')]))
     assert admission._compatible_models(engine, preceding)
     for field, value in (('physicsHash', 'sha256:'+'0'*64),
                          ('toolMechanicsRevision', 1), ('physicalClockRevision', 0),

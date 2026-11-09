@@ -1,7 +1,7 @@
 # Decision-system progress and next dependency
 
 Branch `shaf/decision-system-v1`, primary checkout; baseline `53c49019`.
-Implementation milestone `cb240834` is tested and pushed. **The goal remains open:
+The native bone/membrane/work execution milestone is validated. **The goal remains open:
 zero completed patient tumor tasks.** No clinical validation is claimed.
 The objective contract is in `docs/decision-system-objective.md`. Ignored results,
 source inventories, retained failures and reproduction scripts are indexed by
@@ -193,25 +193,74 @@ retain original target membership and hard outside-domain unknowns; crop faces
 cannot become exterior. Conditional post-scalp exposure must retain unknown prior
 cost; intact-head results require actual scalp preparation.
 
-Dural scissors currently create a seam while leaving membrane occupied. Actual
-source-bound membrane displacement/extraction and separately versioned joint-stage
-authority are needed before CUSA passage. New joint B/P/W limits must charge all
-bone, nonbone preparation and brain-work/exit source IDs without refunding old
-200/20 policy. Preserve existing bone-only gates and physiological/RL holds.
-The concrete native hook/interface audit is in `craniotomy-v3/stage-integration-audit-v1/`.
-Then freeze source-role tasks and matched baseline/search budgets, complete joint
+The first source-exact 06 construction retains all 360,280 original target cells
+in a 0.5 mm ROI and preserves the raw CT/MRI and all old annotations. Its frozen
+24-configuration study costs 18.071 s/1.836 GB: 15 aperture estimates intersect
+the original target, seven fail an overbroad profile-square test, and two have no
+central bone contact. No native transition or opening admission occurs. Independent
+review reproduces the preservation/failures and finds inner-envelope overfill:
+c04 has 46 target conflicts, 44 introduced below the CT300 threshold. These stay
+blocked. Source-based table/component repair and distinct more anterior R8
+configurations are being examined without target edits. Small dense islands stay
+UNKNOWN/collidable; they cannot be deleted or anchored by fiat. Root inspected
+all three new paired CT/MRI conflict sheets. Evidence: `craniotomy-v4/`.
+
+Native `cranialStagesContract` now requires a real completed bone prefix, then
+actual whole-patch membrane cutting, attachment release, checked translation and
+exterior extraction. Cuts alone leave occupied membrane and deny CUSA. Released
+patches remain collidable; retained rim, both hands and whole-tool guards remain.
+Planar and curved/thick generated patches replay and cold-restore exactly, and
+subsequent finite CUSA work and exit run through the native stage guard. This is
+an uncalibrated categorical transport surrogate, not patient dural qualification.
+The optional source contract survives native CaseData Save/Open; standalone
+milling remains bone-only. The existing desktop outcome readout shows actual
+membrane state and preserves bone/preparation burdens.
+
+The new checked joint program freezes separate explicit B/P/W caps and shares
+one source ledger, meter and original deadline across all stages and branches.
+Bone and membrane preparation are never subtracted before work. Its generated
+285+49 mm³ preparation control retains 334 mm³ whole non-target removal; a 48 mm³
+preparation cap refuses the whole 49 mm³ extraction. An eight-continuation CUSA
+budget can stop actual partial work without refunding costs. A bounded endpoint
+also completes and exits. Eleven joint controls pass in 50.10 s; old 200/20 task
+caps, patient roles and physiological/RL holds remain unchanged.
+
+Independent curved B/P/W reproduction completes 112 native actions: 18/27 mm³
+owned target removed, 9 remaining, B285 + P113 + healthy W1 = 399 mm³ whole
+non-target removal, all 176 retained rim cells intact, zero protected removal and
+complete withdrawal. The overlapping protected target cell remains. Cold public
+replay matches the full snapshot/metrics; all 13 controls and 163 independent LP
+cell-sweep cases pass. Total audit cost is 358 public calls, 45.522 s and
+156,401,664 B sampled peak RSS. The exit receipt's earlier 246-call snapshot
+excludes the subsequent 112 verification calls. This categorical control reports
+the shared original-annotation target measure as unavailable and motor outcome
+as unknown. It uses the legacy generated flap opening, not patient milling or a
+qualified patient task. Evidence: `craniotomy-v4/joint-stage-independent-review-v1/`.
+
+Next, qualify a real patient's full A/R, local stops, support, membrane and exterior
+without suppressing source uncertainty. Freeze source-role tasks and matched
+baseline/search budgets, complete joint
 opening/work/exit and demonstrate material improvement on at least three suitable
 patients. All five originals remain in reporting. STOP or bone-only success does
 not complete tumor treatment.
 
 ## Validation and desktop evidence
 
-Current exclusion milestone: 286 selected backend tests pass in 132.69 s, including
+Current joint-stage milestone: 626 selected backend tests pass in 493.68 s,
+including native membrane transport, whole B/P/W accounting, source/guard binding,
+legacy bone/milling/CUSA, task admission, RL contracts and cold replay. Independent
+native reproduction and its exact scope/costs are recorded above. All 1,299 desktop
+tests pass (325 main, 700 renderer, 274 viewer); the final prior-exposure wording
+also passes 12 focused readout tests and the production build. Hidden joint-stage
+desktop verification is prepared and remains pending.
+
+Prior exclusion milestone: 286 selected backend tests pass in 132.69 s, including
 actual collection/native refusal and legacy protection/patient/domain/milling/flap
 paths. Independent review passes 22 controls and 1,944 LP intersection checks after
 a numerical boundary-underexclusion fix; original 21/22 result is retained. Source
 mapping's first case 06 memory failure and bounded stored-dtype repair remain recorded.
-These scopes overlap and are not a sum of unique tests. No frontend changed here.
+These scopes overlap and are not a sum of unique tests. No frontend changed in
+that exclusion milestone.
 
 Prior milling milestone: 460 distinct selected backend tests, 16 independent native
 controls and 82 macro controls pass. Its two catalog-related failures were repaired

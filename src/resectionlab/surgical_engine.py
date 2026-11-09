@@ -327,7 +327,7 @@ class SurgicalEngine:
     # value. This advertises optional copy omission to older replay adapters;
     # ordinary/public views retain the complete detached payload.
     _view_omit_fields = frozenset({'flapComponents'})
-    def __init__(self, scene, *, protection=None, guard_config=None):
+    def __init__(self, scene, *, protection=None, guard_config=None, cranial_stages=None):
         self.scene = scene
         from .surgical_milling import resolve_contract
         self._cranial_access = resolve_contract(scene)
@@ -372,15 +372,23 @@ class SurgicalEngine:
         self._removed_ids_proof = None
         from .surgical_effects import initialize_effect_state
         initialize_effect_state(self)
+        self._cranial_stages = None
+        self._cranial_stage_bone_prefix = None
+        self._cranial_stage_permission = None
+        if cranial_stages is not None:
+            from .surgical_cranial_stages import validate_stage_contract
+            self._cranial_stages = validate_stage_contract(self, cranial_stages)
 
     @property
     def state_id(self):
         return _owned_digest({'scene': self.scene.identity, 'state': self.state,
-            **({'protectionContract': self._protection_contract['contentHash']} if self._protection_contract else {})})
+            **({'protectionContract': self._protection_contract['contentHash']} if self._protection_contract else {}),
+            **({'cranialStagesContract': self._cranial_stages.content_hash} if self._cranial_stages is not None else {})})
 
     def fresh(self):
         """Intact anatomy with the same evidence and guard policy."""
-        return type(self)(self.scene, protection=self.protection, guard_config=self.guard_config)
+        return type(self)(self.scene, protection=self.protection, guard_config=self.guard_config,
+            **({'cranial_stages':self._cranial_stages} if self._cranial_stages is not None else {}))
 
     def guard_report(self):
         from .surgical_rl_protection import missing_critical
@@ -510,7 +518,7 @@ class SurgicalEngine:
 
     def _shaft_held_cells(self,key):
         from .surgical_retractor_runtime import is_surface_slot
-        return set() if is_surface_slot(self,key) or self.state['slots'][key]['instrument'] == 'bone_flap_holder' else set(self.state['holds'].get(key,{}).get('cells',()))
+        return set() if is_surface_slot(self,key) or self.state['slots'][key]['instrument'] in ('bone_flap_holder', 'membrane_forceps') else set(self.state['holds'].get(key,{}).get('cells',()))
 
     def preview(self, action, *, check=None, include_view=True, include_history=True):
         if check is not None: check()
@@ -619,6 +627,9 @@ class SurgicalEngine:
         candidate = self._transition_clone()
         try:
             candidate._transition_check=(lambda:_checked_operation(check)) if check is not None else None
+            if candidate._cranial_stages is not None:
+                from .surgical_cranial_stages import prepare_transition
+                prepare_transition(candidate)
             if candidate._cranial_access is not None:
                 candidate.scene.require_cache_source()
                 from .surgical_milling import validate_source_scope
@@ -690,7 +701,7 @@ class SurgicalEngine:
                     events.extend(self._substep(key, 'inspect', np.asarray(slot['position']), np.asarray(slot['quaternion']), False, duration/max(1, math.ceil(duration/.1))))
             return {'status': 'accepted', 'reason': None, 'completedFraction': 1., 'events': events}
         if op == 'extract' and self.state.get('toolMechanicsRevision') in (1, 2):
-            if slot['instrument'] not in ('tumor_forceps', 'bone_flap_holder') or points: raise ValueError('UNSUPPORTED_EXTRACTION')
+            if slot['instrument'] not in ('tumor_forceps', 'bone_flap_holder', 'membrane_forceps') or points: raise ValueError('UNSUPPORTED_EXTRACTION')
             from .surgical_effects import extract_at_exit
             if key not in self.state['holds']: raise ValueError('GRASP_BEFORE_EXTRACTION')
             events = extract_at_exit(self, key)
@@ -710,6 +721,9 @@ class SurgicalEngine:
         params = self.parameters(slot)
         if slot['instrument'] == 'bone_flap_holder' and op != 'exchange':
             from .surgical_bone_transport import validate_holder
+            validate_holder(self, key)
+        if slot['instrument'] == 'membrane_forceps' and op != 'exchange':
+            from .surgical_membrane_transport import validate_holder
             validate_holder(self, key)
         jaw_target = params['jawOpeningMm']
         articulate = self.state.get('toolMechanicsRevision') in (1, 2) and tool['geometry'] in ('forceps','scissors') and previous_jaw != jaw_target
@@ -908,6 +922,9 @@ class SurgicalEngine:
             return advance(self, key, p, q, dt)
         from .surgical_motion import envelopes, swept_envelopes, pair_conflict
         slot = self.state['slots'][key]; tool = TOOLS[slot['instrument']]; params = self.parameters(slot)
+        if self.state['holds'].get(key, {}).get('kind') == 'membrane-patch-v1':
+            if (rotation(q)*rotation(slot['quaternion']).inv()).magnitude() > 1e-8:
+                raise ValueError('MEMBRANE_PATCH_ROTATION_UNSUPPORTED')
         if self.state['holds'].get(key, {}).get('kind') == 'bone-flap-v1':
             if (rotation(q)*rotation(slot['quaternion']).inv()).magnitude() > 1e-8:
                 raise ValueError('BONE_FLAP_ROTATION_UNSUPPORTED: translate the source-bound fragment')
@@ -930,6 +947,9 @@ class SurgicalEngine:
         if self._cranial_access is not None:
             from .surgical_bone_transport import check_tool_sweep
             check_tool_sweep(self, key, end_pose, op)
+        if self._cranial_stages is not None:
+            from .surgical_membrane_transport import check_tool_sweep as check_membrane_tool_sweep
+            check_membrane_tool_sweep(self, key, end_pose, op)
         shaft_cells = set()
         revised_contact = self.state.get('toolMechanicsRevision') in (1, 2) and tool['effect'] not in ('remove', 'suction', 'irrigate', 'probe')
         working_cells = set() if revised_contact else set(tip_cells)
@@ -982,7 +1002,7 @@ class SurgicalEngine:
             events = self._effect(key, op, eligible, p, q, dt)
         if key in self.state['holds']:
             self.occupancy()
-        if key in self.state['holds'] and (op == 'move' or self.state['holds'][key].get('kind') == 'bone-flap-v1'):
+        if key in self.state['holds'] and (op == 'move' or self.state['holds'][key].get('kind') in ('bone-flap-v1', 'membrane-patch-v1')):
             from .surgical_effects import validate_hold_motion
             validate_hold_motion(self, key)
             hold = self.state['holds'][key]
@@ -997,6 +1017,9 @@ class SurgicalEngine:
                 if slot['instrument'] == 'bone_flap_holder':
                     from .surgical_bone_transport import check_sweep
                     check_sweep(self, key, offset, end_pose)
+                if slot['instrument'] == 'membrane_forceps':
+                    from .surgical_membrane_transport import check_sweep as check_membrane_sweep
+                    check_membrane_sweep(self, key, offset, end_pose)
                 hold['offset'] = offset
             self.occupancy()
         # A stationary active instrument shares the same clock and exposure.
@@ -1065,6 +1088,14 @@ class SurgicalEngine:
             from .surgical_bone_transport import check_detached
             check_detached(self)
         tick_fields(self, dt)
+        if self._cranial_stages is not None:
+            from .surgical_membrane_transport import check_sweep as check_membrane_sweep, check_detached as check_membrane_detached
+            from .surgical_cranial_stages import validate_effects
+            for hold_key, hold in self.state['holds'].items():
+                if hold.get('kind') == 'membrane-patch-v1':
+                    check_membrane_sweep(self, hold_key, hold['offset'], self.state['slots'][hold_key])
+            check_membrane_detached(self)
+            validate_effects(self)
         return events
 
     def _effect(self, key, op, cells, p, q, dt):
@@ -1144,6 +1175,9 @@ class SurgicalEngine:
         if self._cranial_access is not None:
             from .surgical_bone_transport import describe
             cranial['craniotomy'] = describe(self)
+        if self._cranial_stages is not None:
+            from .surgical_cranial_stages import stage_readiness
+            cranial['cranialStages'] = stage_readiness(self)
         return {'schema': SCHEMA, 'stateId': self.state_id if _state_id is None else _state_id, 'slots': slots,
                 **cranial,
                 **({'physicalClock': surgical_clock.descriptor()} if surgical_clock.enabled(self) else {}),
@@ -1200,6 +1234,7 @@ class SurgicalEngine:
                     **({'legacyGuardPartialActions': sorted(legacy)} if legacy else {})}
                    if self._protected_ids else {}),
                 **({'protectionContract': copy.deepcopy(self._protection_contract)} if self._protection_contract else {}),
+                **({'cranialStagesContract': self._cranial_stages.as_dict()} if self._cranial_stages is not None else {}),
                 'checkpoint': {'position': len(self.actions), 'stateId': self.state_id, 'state': copy.deepcopy(self.state)}}
 
     @classmethod
@@ -1207,7 +1242,7 @@ class SurgicalEngine:
         if check is not None: check()
         if record['schema'] != SCHEMA or record['sceneId'] != scene.identity: raise ValueError('Saved scene or engine version differs')
         cache = None
-        if use_cache:
+        if use_cache and 'cranialStagesContract' not in record:
             from .surgical_verified_cache import VerifiedSurgicalCache
             scene.require_cache_source()
             cache = verified_cache if verified_cache is not None else VerifiedSurgicalCache()
@@ -1220,6 +1255,8 @@ class SurgicalEngine:
             from .surgical_rl_protection import restore_protection_contract
             protection, config = restore_protection_contract(scene, record['protectionContract'])
             options = {'protection': protection, 'guard_config': config}
+        if 'cranialStagesContract' in record:
+            options['cranial_stages'] = record['cranialStagesContract']
         result = cls(scene, **options)
         legacy = record.get('legacyGuardPartialActions', [])
         if (type(legacy) is not list or any(type(i) is not int or not 0 <= i < len(record['actions']) for i in legacy)

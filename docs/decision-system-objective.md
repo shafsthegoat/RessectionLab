@@ -145,6 +145,28 @@ and shared meter. Wall time starts at meter creation, including any earlier
 prefix, discarded probes and idle time; freezing a downstream policy cannot
 refund it. These bone-only controls do not change the patient tumor-task caps.
 
+An optional, separately bound `cranialStagesContract` now adds native membrane
+preparation after a genuinely completed opening. Its original B/P/W source sets
+are disjoint: bone, nonbone membrane preparation, and tumor/brain work. Cutting
+leaves the membrane occupied. The stock membrane holder requires the whole
+boundary cut and actual attachment release, then moves the complete patch through
+checked space and extracts it beyond the true exterior. Released patches remain
+collidable. Retained rim/support and whole-tool guards remain enforced. Curved
+categorical patches are supported within the declared stock scissor family;
+continuum mechanics and clinical calibration remain unknown. Bone clearance alone
+still grants no work entry, and standalone milling remains bone-only.
+
+`surgical_joint_cranial_skills` freezes explicit B/P/W caps, action/call/deadline
+bounds and one canonical source before any action. All preparation and work remain
+in the same unique-source non-target total and shared sequence outcome. Native
+history and charged branch ancestry are required for continuation; replacing or
+resealing limits cannot refund a prefix. Finite CUSA contact continuations reuse
+the existing bounded remainder/clearance generator. Interrupted work retains its
+physical costs and remains unadmitted. An assumed post-scalp start explicitly
+retains unknown prior exposure cost. These checked programs do not qualify a
+patient, promote source roles, alter the old 200/20 policy, or establish planner
+superiority; patient source evidence and complete task evaluation remain required.
+
 `TransitionMeter` charges previews, discarded probes, checked exits, commits and
 replay. Those are computation costs, separate from accepted patient treatment.
 The source-geometry cache reuses only immutable label counts and target

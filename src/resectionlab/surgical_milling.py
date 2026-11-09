@@ -263,7 +263,8 @@ def _number(value):
 def _history_evidence(engine, contract):
     """Check native accepted ancestry/events; never execute an inline replay."""
     from .surgical_engine import SurgicalEngine
-    canonical = SurgicalEngine(engine.scene, protection=engine.protection, guard_config=engine.guard_config)
+    canonical = SurgicalEngine(engine.scene, protection=engine.protection, guard_config=engine.guard_config,
+            **({'cranial_stages':engine._cranial_stages} if getattr(engine, '_cranial_stages', None) is not None else {}))
     previous = canonical.state_id
     instruments = {key: slot['instrument'] for key, slot in canonical.state['slots'].items()}
     active = {key: slot['active'] for key, slot in canonical.state['slots'].items()}

@@ -24,9 +24,9 @@ def command(operation='inspect', **kwargs):
     return {'slot': 'left', 'operation': operation, 'duration': .1, **kwargs}
 
 
-def test_reset_spaces_seed_and_all_sixteen_tools():
+def test_reset_spaces_seed_and_all_seventeen_tools():
     e = env(); first, info = e.reset(seed=17)
-    assert len(INSTRUMENTS) == 16 and 'bone_flap_holder' in INSTRUMENTS
+    assert len(INSTRUMENTS) == 17 and INSTRUMENTS[-1] == 'membrane_forceps' and 'bone_flap_holder' in INSTRUMENTS
     assert e.observation_space.contains(first)
     second, _ = e.reset(seed=17)
     for key in first: np.testing.assert_array_equal(first[key], second[key])

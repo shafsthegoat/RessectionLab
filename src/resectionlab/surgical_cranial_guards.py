@@ -65,6 +65,10 @@ def _inside_entry(contract, segments):
 
 def enforce(engine, key, op, position, quaternion, working_cells=()):
     """Check both complete instruments at every native substep, before effects."""
+    if getattr(engine, '_cranial_stages', None) is not None:
+        from .surgical_cranial_stages import enforce as enforce_stages
+        if enforce_stages(engine, key, op, position, quaternion, working_cells):
+            return
     contract = getattr(engine, '_cranial_access', None)
     if contract is None:
         return

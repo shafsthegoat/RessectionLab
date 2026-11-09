@@ -3,6 +3,7 @@ import {fullCaseStateSummary} from './full-case-presentation';
 export const amount=(value:unknown,digits=2)=>typeof value==='number'&&Number.isFinite(value)?value.toLocaleString(undefined,{maximumFractionDigits:digits}):'Unknown';
 const metricAmount=(value:unknown)=>typeof value==='number'&&Number.isFinite(value)?value.toFixed(2):'Unknown';
 const evidenceLabels:Record<string,string>={brainStrainSquaredMm3S:'accumulated strain exposure',brainStressSquaredPa2Mm3S:'accumulated stress exposure',thermalPeakC:'peak temperature',thermalExposureMm3KS:'thermal exposure',bloodGeneratedMm3:'modeled blood generation',motorEncounterMm3:'motor mapping',languageEncounterMm3:'language mapping'};
+const membraneStages:Record<string,string>={BOUND:'Membrane opening not started',BONE_WORK:'Bone stage; membrane retained',MEMBRANE_READY:'Bone cleared; membrane retained',MEMBRANE_CUTTING:'Membrane cutting; tissue retained',CUT_RETAINED:'Boundary cut; membrane retained',HELD:'Membrane held or lifted',RELEASED_IN_FIELD:'Membrane released in field',EXTRACTED:'Membrane extracted; instrument exit pending',WITHDRAWN:'Membrane extracted and instruments withdrawn'};
 const openingStages:Record<string,string>={BOUND:'Opening not started',KERF_IN_PROGRESS:'Bone cutting / separation',GRASPED_OR_TRANSPORTED:'Flap held or lifted',DETACHED_IN_FIELD:'Flap released in field',EVACUATED:'Flap removed; withdrawal pending',HOLDER_WITHDRAWN:'Flap removed and instruments withdrawn',MILLING_BOUND:'Milling not started',MILLING_IN_PROGRESS:'Milling bone',MILLING_DEBRIS_RETAINED:'Bone removed; debris collection pending',MILLING_CLEARED:'Bone and debris cleared; withdrawal pending',MILLING_WITHDRAWN:'Bone and debris cleared; instruments withdrawn'};
 
 /** One readout for the anatomy actually displayed. Missing values stay unknown. */
@@ -10,6 +11,7 @@ export function SurgicalOutcomeSummary({c}:{c:SurgicalController}) {
   const v=c.preview??c.view,r=c.result;if(!v)return null;
   const summary=fullCaseStateSummary(v),record=r?.fullCase;
   const opening=v.craniotomy;
+  const stage=v.cranialStages?.schema==='resectionlab.cranial-stages.v1'&&v.cranialStages.stateId===v.stateId&&v.cranialStages.sceneId===v.scene.sceneId?v.cranialStages:null;
   const ledger=r?.sequenceOutcome?.stateId===v.stateId&&r.sequenceOutcome.sceneId===v.scene.sceneId?r.sequenceOutcome:null;
   return <section className="surgical-outcome" aria-label="Modeled outcome summary">
     <h3>{c.preview?'Preview modeled outcome':'Modeled outcome'}</h3>
@@ -34,8 +36,18 @@ export function SurgicalOutcomeSummary({c}:{c:SurgicalController}) {
       </div>
       <p>Opening stage: {Object.hasOwn(openingStages,opening.phase)?openingStages[opening.phase]:'Unknown'}.</p>
       <p>Aperture: {opening.apertureEvacuated===true?'Evacuated':opening.apertureEvacuated===false?'Not evacuated':'Unknown'}. Opening with both hands withdrawn: {opening.openingComplete===true?'Complete':opening.openingComplete===false?'Incomplete':'Unknown'}.</p>
-      {opening.method==='milling'&&<p>Bone debris escaped: {metricAmount(opening.milling?.debrisEscapedMm3)} mm³. Dural opening and tumor entry remain unsupported.</p>}
+      {opening.method==='milling'&&<p>Bone debris escaped: {metricAmount(opening.milling?.debrisEscapedMm3)} mm³. {stage?'Bone clearance alone does not permit work-region entry.':'Dural opening and tumor entry remain unsupported.'}</p>}
       <p className="surgical-note">Bone-opening research model. Tumor-task completion and clinical safety remain unassessed.</p>
+    </div>}
+    {stage&&<div aria-label="Native membrane stage">
+      <p>Membrane stage: {Object.hasOwn(membraneStages,stage.phase)?membraneStages[stage.phase]:'Unknown'}.</p>
+      <div className="surgical-metrics">
+        <div><small>Cut boundary edges</small><strong>{amount(stage.cutBoundaryEdges,0)} / {amount(stage.requiredBoundaryEdges,0)}</strong></div>
+        <div><small>Membrane removed · mm³</small><strong data-membrane-metric="removedMembraneMm3">{metricAmount(stage.membrane?.removedMembraneMm3)}</strong></div>
+      </div>
+      <p>Work-region entry: {stage.assessmentCurrent===true?(stage.workEntrySupported===true?'Permitted by native stage checks':'Not permitted'):'Unassessed'}. Both instruments withdrawn: {stage.assessmentCurrent===true?(stage.wholeExitComplete===true?'Yes':'No'):'Unknown'}.</p>
+      <p className="surgical-note">{stage.startingExposure==='conditional_post_scalp_exposure'?'Conditional post-scalp exposure; scalp opening was not simulated and prior exposure cost unknown.':'Starting exposure is unsupported or unknown.'} Source-bound research model; tumor-task completion and clinical safety remain unassessed.</p>
+      <p className="surgical-note">Unknowns: {stage.sourceUnknowns?.join('; ')||'Source coverage and clinical consequences remain unassessed'}.</p>
     </div>}
     <details><summary>Source target, material and fluid accounting</summary>
     {record?.fullAnnotationTargetMm3!==undefined&&<p className="surgical-note">Full source annotation: {amount(record.fullAnnotationTargetMm3)} mm³. Displayed percentages use the modeled source grid target.</p>}

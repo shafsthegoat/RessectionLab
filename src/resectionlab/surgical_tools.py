@@ -21,6 +21,7 @@ TOOLS = {
     'irrigation': _tool('Irrigation', 'Fluid', 'irrigator', [], 'irrigate', 1.5),
     'cortical_probe': _tool('Cortical stimulation probe', 'Mapping', 'probe', ['soft_tissue', 'functional_region'], 'probe'),
     'subcortical_probe': _tool('Subcortical stimulation probe', 'Mapping', 'probe', ['soft_tissue', 'tumor', 'functional_region'], 'probe'),
+    'membrane_forceps': _tool('Membrane forceps', 'Manipulation', 'forceps', ['membrane'], 'grasp', 1.5),
 }
 
 

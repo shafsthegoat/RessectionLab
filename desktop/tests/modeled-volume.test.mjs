@@ -65,3 +65,14 @@ test('source and mapping changes use a complete independent fallback; invalid na
   assert.throws(()=>modeledVolume(a,view(a,{removed:[a.mri.length]})),/Invalid removed/);
   assert.throws(()=>modeledVolume(a,view(a,{moved:[[0,-1]]})),/Invalid displacement/);
 });
+
+test('whole membrane patch rendering survives release and clears only after actual extraction',()=>{
+  const count=125,mask=new Uint8Array(count);mask[62]=mask[63]=1;
+  const region={id:31,name:'source membrane',material:'membrane',color:'#82c8d8',target:false};
+  const s={caseHash:'generated-membrane-source',shape:[5,5,5],affine,frame:'RAS+',mri:new Float32Array(count),compartments:[{name:region.name,kind:'membrane',color:region.color,mask}]};
+  const frame={stateId:'held',scene:{shape:s.shape,affine,regions:[region]},removed:[],moved:[[62,37],[63,38]],holds:{left:{kind:'membrane-patch-v1',cells:[62,63]}}};
+  const held=modeledVolume(s,frame);assert.equal(held.compartments[0].mask[62],0);assert.equal(held.compartments[0].mask[37],1);assert.equal(held.compartments[0].mask[38],1);
+  const released=modeledVolume(s,{...frame,stateId:'released',holds:{}});assert.equal(released,held,'native moved source IDs retain the piece without a hold');
+  const extracted=modeledVolume(s,{...frame,stateId:'extracted',holds:{},moved:[],removed:[62,63]});assert.equal(extracted.compartments[0].mask.reduce((a,b)=>a+b,0),0);
+  assert.equal(mask[62],1);assert.equal(mask[63],1);assert.equal(mask[37],0);assert.equal(mask[38],0);
+});

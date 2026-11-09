@@ -270,6 +270,11 @@ def describe(engine):
     contract = engine._cranial_access
     from .surgical_milling import is_milling, milling_readiness
     if is_milling(contract):
+        if getattr(engine, '_cranial_stages', None) is not None:
+            from .surgical_cranial_stages import bone_prefix_description
+            staged = bone_prefix_description(engine)
+            if staged is not None:
+                return staged
         status = milling_readiness(engine)
         phase = ('MILLING_WITHDRAWN' if status['openingComplete'] else
                  'MILLING_CLEARED' if status['apertureCleared'] else
