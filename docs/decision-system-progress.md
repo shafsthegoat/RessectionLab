@@ -62,6 +62,19 @@ inventory gives 61 calls/52.29 seconds. A broader bounded opening study removes
 preparation capabilities, not meaningful tumor-task completions or a matched
 improvement over the strongest baseline. Evidence: `patient-search-v1/`.
 
+A follow-up source-geometry check includes native sweep padding and all 132
+entry-domain-admitted lateral options through 24 mm. Even their optimistic
+working-envelope union misses three of the 201 remaining route-bone cells.
+The fixed straight path's nominal static footprint also accounts for 208.7433 mm³
+bone plus brain before first target contact, screening above 200 mm³. This is
+not an executed native cap refusal. No additional native round was justified.
+Independent review reconstructs the enclosing geometry and all three witnesses.
+This is a finite candidate-family
+limit, not anatomical impossibility or proof about different paths; change the
+source-reviewed entry plane/attitude or opening family before further native
+search. See `patient-search-v1/lateral-opening-v1/` for superseded nominal bounds,
+the corrected enclosing geometry, source cells and costs.
+
 The bounded official SynthSeg CT pilot was withheld after two engineering source
 reviews found visible inferior coverage missing. No estimated mask was promoted.
 The distinct TotalSegmentator brain-structures route lacks configured licensed
