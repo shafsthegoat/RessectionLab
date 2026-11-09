@@ -298,6 +298,27 @@ def verified_bone_prefix(engine,contract=None,*,full=True):
     return proof
 
 
+
+def rebind_checkpoint_runtime(engine):
+    """Rebind derived runtime after an authenticated state/ancestry projection.
+
+    A retained bone proof may witness an earlier native prefix of this state.
+    An endpoint shell's future proof cannot travel backward with state-only
+    checkpoints. Permissions always derive again at the current native boundary.
+    This helper never changes physical state or creates a new permission/proof.
+    """
+    contract=getattr(engine,'_cranial_stages',None)
+    if contract is None:return
+    validate_stage_contract(engine,contract)
+    proof=getattr(engine,'_cranial_stage_bone_prefix',None)
+    if proof is not None:
+        if _PREFIXES.get(id(proof)) is not proof:_fail('DERIVED_BONE_PREFIX_CHANGED')
+        if any((getattr(proof,k) is not v if isinstance(v,tuple) else getattr(proof,k)!=v) for k,v in _PREFIX_FACTS[id(proof)]):_fail('DERIVED_BONE_PREFIX_CHANGED')
+        if proof.position>len(engine.actions):engine._cranial_stage_bone_prefix=None
+        else:verified_bone_prefix(engine,contract)
+    engine._cranial_stage_permission=None
+
+
 def stage_readiness(engine):
     contract=getattr(engine,'_cranial_stages',None)
     if contract is None:return None

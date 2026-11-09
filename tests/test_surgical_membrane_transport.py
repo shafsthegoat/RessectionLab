@@ -276,3 +276,19 @@ def test_native_milling_membrane_descriptor_retains_verified_bone_prefix():
     assert e.metrics()['nonTargetRemovedMm3']==90. and e.metrics()['targetRemovedMm3']==0.
     restored=SurgicalEngine.restore(scene,e.snapshot(),use_cache=False);assert restored.snapshot()==e.snapshot()
     assert restored.observe()['craniotomy']==bone
+    # State-only checkpoint shells must retain a legitimate earlier bone proof,
+    # even though the current full history now includes real membrane removal.
+    from resectionlab.surgical_replay_cache import SurgicalReplayCache
+    from resectionlab.surgical_frame_replay import SurgicalFrameCache
+    cache=SurgicalReplayCache();saved=restored.snapshot();position=len(restored.actions)-1
+    pending,timeline=cache.seek(restored,saved,position,include_history=True)
+    pending,_=cache.seek(pending,saved,position,include_history=True)
+    status=pending.observe();assert status['cranialStages']['duraCleared']
+    assert status['craniotomy']['milledBoneMm3']==81. and status['craniotomy']['milling']['debrisRemovedMm3']==81.
+    assert pending._cranial_stage_bone_prefix.position<position
+    frame_cache=SurgicalFrameCache()
+    _,_,info=frame_cache.seek(restored,saved,position,0,cache,verified_history=timeline)
+    final_frame,_,_=frame_cache.seek(restored,saved,position,info['frameCount']-1,cache,verified_history=timeline)
+    assert final_frame.snapshot()==saved and final_frame.observe()['cranialStages']['wholeExitComplete']
+    reference=timeline[-1];actual=pending.step(saved['actions'][-1])
+    assert actual['status']==reference['status'] and pending.snapshot()==saved

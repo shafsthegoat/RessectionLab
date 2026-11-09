@@ -105,6 +105,13 @@ class SurgicalReplayCache:
         result.__dict__.pop('_drill_step_powers', None)
         return result
 
+    @staticmethod
+    def _checkpoint_runtime(engine):
+        if getattr(engine, '_cranial_stages', None) is not None:
+            from .surgical_cranial_stages import rebind_checkpoint_runtime
+            rebind_checkpoint_runtime(engine)
+        return engine
+
     def _template(self, full):
         template = self._shell(full)
         if self._archives:
@@ -114,7 +121,8 @@ class SurgicalReplayCache:
             template.grid = shared.grid
             if hasattr(shared, '_cell_cover_cache'):
                 template._cell_cover_cache = shared._cell_cover_cache
-            if template._protection_contract == shared._protection_contract:
+            if (getattr(template, '_cranial_stages', None) is None
+                    and template._protection_contract == shared._protection_contract):
                 template.protection = shared.protection
                 template.guard_config = shared.guard_config
                 template._protected_ids = shared._protected_ids
@@ -207,6 +215,7 @@ class SurgicalReplayCache:
             result.actions = copy.deepcopy(archive['snapshot']['actions'][:start])
             result.history = copy.deepcopy(archive['history'][:start])
             archive['checkpoints'].move_to_end(start)
+        self._checkpoint_runtime(result)
         for index, action in enumerate(archive['snapshot']['actions'][start:position], start):
             check()
             observed = archive['history'][index]

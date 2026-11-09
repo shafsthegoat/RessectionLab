@@ -205,6 +205,21 @@ configurations are being examined without target edits. Small dense islands stay
 UNKNOWN/collidable; they cannot be deleted or anchored by fiat. Root inspected
 all three new paired CT/MRI conflict sheets. Evidence: `craniotomy-v4/`.
 
+Two cached repairs preserve all originals and target cells. The first costs
+6.802 s/605 MB and refuses all 24 configurations before A creation. Independent
+same-ray review (4.098 s/551 MB) finds 793 split-density profile refusals with
+0.875..2.25 mm gaps, plus finite-ray/tangential failures; absent skull is not
+established. The source-guided paired-table repair costs 14.151 s/1.229 GB and
+forms r15 A19,630 cells/2,453.75 mm³ with zero target overlap. It remains blocked:
+359 protected cells, 14 UNKNOWN cells, 1,301 uncovered A cells, upper-ROI shaft
+spill and two unsupported retained singletons far outside A. Exact target and
+paired source evidence are independently reproduced (4.139 s/~630 MB). Root
+inspected the three diagnostic sheets, actual r15 overlay and added-cell planes.
+These are source-model results, not native openings. The reported shaft spill is
+against this reviewed ROI; the witness capsules fit original acquired CT bounds,
+which alone grants no protection/workspace clearance. Next test the horizontal
+projection of the actual fitted normal and a fully checked staged exterior exit.
+
 Native `cranialStagesContract` now requires a real completed bone prefix, then
 actual whole-patch membrane cutting, attachment release, checked translation and
 exterior extraction. Cuts alone leave occupied membrane and deny CUSA. Released
@@ -251,8 +266,33 @@ including native membrane transport, whole B/P/W accounting, source/guard bindin
 legacy bone/milling/CUSA, task admission, RL contracts and cold replay. Independent
 native reproduction and its exact scope/costs are recorded above. All 1,299 desktop
 tests pass (325 main, 700 renderer, 274 viewer); the final prior-exposure wording
-also passes 12 focused readout tests and the production build. Hidden joint-stage
-desktop verification is prepared and remains pending.
+also passes 12 focused readout tests and the production build.
+
+Actual hidden playback exposed a state-only checkpoint carrying a future opening
+proof backward during rewind. Replay/frame adapters now validate exact accepted
+ancestry, discard future proofs, retain genuine earlier bone proofs through later
+membrane history, and recompute current permissions. The optional bounded-prefix
+API refuses this new envelope; canonical replay works. Focused validation has
+201 distinct passes/1 skip across documented overlapping runs, including actual
+post-membrane Milling cache/frame/editable withdrawal. Earlier 16 fixture setup
+failures and their corrections remain recorded; this is not one clean 201-test run.
+
+Current generated CaseData control completes 115 actions and 460 all-phase native
+evaluations in 49.092 s external wall (181,452,800 B final-stdout RSS). It retains
+399 mm³ whole non-target burden and original annotation 27→18 removed/9 remaining,
+with actual release/regrasp and exact fresh/cold replay. Three versioned formal
+runs cost 1,380 development evaluations in total, separate from GUI IPC work.
+The first hidden fixture failed image loading because its synthetic MRI was all
+zero; corrected categorical display intensities load without anatomy changes.
+The second exposed the replay defect. Both failures remain preserved.
+
+Hidden warm-v3/cold-v1 now pass: 11 exact checkpoints, Play/Pause, accepted boundary
+return, whole ledger, original denominator, actual Save/Open and 52 captures on
+renderer `c1f6463d…`. Root inspected lift/release/regrasp/final-summary/ledger
+captures. No window was visible; bounded supervisors cleaned transient residual
+process groups and verified none remain. This is recorded generated playback,
+not newly generated patient treatment. Evidence and reproduction commands:
+`craniotomy-v4/desktop-control-v1/`.
 
 Prior exclusion milestone: 286 selected backend tests pass in 132.69 s, including
 actual collection/native refusal and legacy protection/patient/domain/milling/flap

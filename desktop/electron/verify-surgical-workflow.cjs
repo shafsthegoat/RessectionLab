@@ -23,6 +23,8 @@ const sha=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex'
 const backendFiles=['surgical_staged_skills.py','surgical_sequence_search.py','surgical_staged_planning.py',
  'surgical_engine.py','surgical_scene.py','surgical_effects.py','surgical_tools.py','surgical_clock.py',
  'surgical_craniotomy.py','surgical_bone_transport.py','surgical_cranial_guards.py','surgical_craniotomy_skills.py',
+ 'surgical_cranial_stages.py','surgical_membrane_transport.py','surgical_joint_cranial_skills.py',
+ 'surgical_replay_cache.py','surgical_frame_replay.py','surgical_observed_cache.py','surgical_prefix_replay.py',
  'surgical_milling.py','surgical_transition_meter.py','surgical_drilling_v2.py','surgical_physics_v2.py','surgical_task_admission.py'].map(name=>path.join(root,'src/resectionlab',name));
 const backendSourceHashes=()=>Object.fromEntries(backendFiles.map(file=>[path.basename(file),sha(file)]));
 const report={input,output,sourceSha256:original,backendSourceSha256:backendSourceHashes(),rendererIndexSha256:sha(path.join(root,'desktop/dist/index.html')),windowEverVisible:false,requests:[],checks:[],captures:[],passed:false};let last;
@@ -37,6 +39,21 @@ if(process.env.WORKFLOW_MILLING==='1'){
  assert.equal(millingCheckpoints.schema,'resectionlab.generated-milling-checkpoints.v1');
  assert.equal(millingCheckpoints.checkpoints.length,6);
  report.millingCheckpointPath=millingCheckpointPath;report.millingCheckpointSha256=sha(millingCheckpointPath);
+}
+let membraneCheckpoints,membraneCheckpointPath;
+if(process.env.WORKFLOW_MEMBRANE==='1'){
+ assert.equal(process.env.WORKFLOW_RECORDED_ONLY,'1','Membrane harness verifies recorded native controls only');
+ assert.notEqual(process.env.WORKFLOW_MILLING,'1','Select one dynamic native checkpoint protocol');
+ assert.notEqual(process.env.WORKFLOW_CRANIOTOMY,'1','Select one dynamic native checkpoint protocol');
+ assert(process.env.WORKFLOW_MEMBRANE_CHECKPOINTS,'Use the sealed native stage checkpoint file');
+ membraneCheckpointPath=path.resolve(process.env.WORKFLOW_MEMBRANE_CHECKPOINTS);
+ assert(membraneCheckpointPath.startsWith(base+path.sep),'Keep checkpoint provenance in ignored testcases');
+ membraneCheckpoints=JSON.parse(fs.readFileSync(membraneCheckpointPath,'utf8'));
+ assert.equal(membraneCheckpoints.schema,'resectionlab.generated-membrane-checkpoints.v1');
+ assert(membraneCheckpoints.checkpoints.length>=6,'Keep source, cuts, hold, extraction, work and exit checkpoints');
+ assert.equal(process.env.WORKFLOW_MEMBRANE_ARCHIVE_SHA256||membraneCheckpoints.replayArchiveSha256,original,'Use the sealed native archive or the explicitly hashed real Save output');
+ report.membraneNativeArchiveSha256=membraneCheckpoints.replayArchiveSha256;
+ report.membraneCheckpointPath=membraneCheckpointPath;report.membraneCheckpointSha256=sha(membraneCheckpointPath);
 }
 app.setPath('userData',path.join(output,'hidden-profile'));process.argv.push('--case',input,'--automation-hidden');
 dialog.showSaveDialog=async()=>({canceled:false,filePath:saved});
@@ -75,6 +92,39 @@ app.on('browser-window-created',(_event,window)=>{
     report.recordedOutcome={position:last.position,stateId:last.view.stateId,boneRemovedMm3:removed('bone'),brainRemovedMm3:removed('soft_tissue'),targetRemovedMm3:last.view.metrics.targetRemovedMm3};
     if(process.env.WORKFLOW_EXPECT_BONE_MM3!==undefined)assert(Math.abs(report.recordedOutcome.boneRemovedMm3-Number(process.env.WORKFLOW_EXPECT_BONE_MM3))<1e-5);
     if(process.env.WORKFLOW_EXPECT_NO_BRAIN_TARGET==='1'){assert.equal(report.recordedOutcome.brainRemovedMm3,0);assert.equal(report.recordedOutcome.targetRemovedMm3,0);}
+    if(process.env.WORKFLOW_MEMBRANE==='1'){
+     assert.equal(last.view.scene.sceneId,membraneCheckpoints.sourceSceneId);
+     assert.equal(last.position,membraneCheckpoints.finalPosition);assert.equal(last.view.stateId,membraneCheckpoints.finalStateId);
+     report.membraneCheckpoints=[];
+     for(const item of membraneCheckpoints.checkpoints){
+      const since=report.requests.length;await set('Surgical timeline',item.position);
+      const started=Date.now();while(!report.requests.slice(since).some(row=>row.command==='seek')){if(Date.now()-started>120000)throw Error('Missing membrane checkpoint seek');await delay(80);}await ready();
+      assert.equal(last.position,item.position);assert.equal(last.view.stateId,item.stateId);
+      const native=last.view.cranialStages;
+      assert.equal(native.schema,'resectionlab.cranial-stages.v1');assert.equal(native.stateId,last.view.stateId);assert.equal(native.sceneId,membraneCheckpoints.sourceSceneId);
+      assert.equal(native.contractHash,membraneCheckpoints.contractHash);
+      for(const [key,value]of Object.entries(item.stage))assert.deepEqual(native[key],value,'native stage '+key);
+      assert.equal(last.view.metrics.targetRemovedMm3,item.targetRemovedMm3);assert.equal(last.view.metrics.nonTargetRemovedMm3,item.nonTargetRemovedMm3);
+      assert.equal(last.view.moved.length,item.movedCells);
+      const event=last.view.history?.at(-1);
+      if(item.position===0&&Array.isArray(last.view.history))assert.equal(last.view.history.length,0);
+      if(item.position>0&&event){assert.equal(event.status,item.lastNativeStatus);assert.equal(event.reason??null,item.lastNativeReason??null);}
+      await capture('membrane-'+item.position+'-'+item.name,'.workflow-rehearsal');
+      await stage('Compare');await js(`(()=>{const d=document.querySelector('.workflow-checkpoint-burdens');if(!d.open)d.querySelector('summary').click()})()`);
+      assert(await js(`document.querySelector('[aria-label="Native membrane stage"]')?.checkVisibility()`));
+      const displayed=await js(`document.querySelector('[aria-label="Native membrane stage"]').innerText`);
+      assert(displayed.includes('prior exposure cost unknown'));assert(displayed.includes('tumor-task completion and clinical safety remain unassessed'));
+      assert(displayed.includes('Work-region entry: '+(item.stage.assessmentCurrent?(item.stage.workEntrySupported?'Permitted by native stage checks':'Not permitted'):'Unassessed')));
+      const membraneAmount=await js(`document.querySelector('[data-membrane-metric="removedMembraneMm3"]').textContent`);
+      if(item.removedMembraneMm3===null)assert.equal(membraneAmount,'Unknown');else assert.equal(Number(membraneAmount),Number(Number(item.removedMembraneMm3).toFixed(2)));
+      assert.equal(Number(await js(`document.querySelector('[data-craniotomy-metric="declaredBoneRemovedMm3"]').textContent`)),Number(Number(item.boneRemovedMm3).toFixed(2)));
+      assert.equal(Number(await js(`document.querySelector('[data-surgical-metric="nonTargetRemovedMm3"]').textContent`)),Number(Number(item.nonTargetRemovedMm3).toFixed(2)));
+      report.membraneCheckpoints.push({position:last.position,stateId:last.view.stateId,stage:native,displayed,movedCells:last.view.moved.length,lastNativeStatus:event?.status??null,lastNativeReason:event?.reason??null});
+      await capture('membrane-summary-'+item.position,'.workflow-checkpoint-burdens');await stage('Rehearse/edit');
+     }
+     assert.equal(last.position,membraneCheckpoints.finalPosition);assert.equal(last.view.stateId,membraneCheckpoints.finalStateId);
+     report.checks.push('Recorded native joint sequence retains actual cut membrane, whole-patch movement/extraction, bone burden, bounded work, true withdrawal and unknown prior scalp cost; no patient task is admitted');
+    }
     if(process.env.WORKFLOW_MILLING==='1'){
      assert.equal(last.view.scene.sceneId,millingCheckpoints.sourceSceneId);
      assert.equal(last.position,millingCheckpoints.finalPosition);
@@ -206,11 +256,12 @@ app.on('browser-window-created',(_event,window)=>{
    if(process.env.WORKFLOW_LEDGER==='1'){
     await stage('Compare');await js(`(()=>{const d=document.querySelector('.workflow-checkpoint-burdens');if(!d.open)d.querySelector('summary').click();const ledger=[...d.querySelectorAll('details')].find(e=>e.querySelector('summary')?.textContent==='Complete-sequence breakdown');if(ledger&&!ledger.open)ledger.querySelector('summary').click()})()`);
     if(await js(`[...document.querySelectorAll('button')].some(e=>e.textContent.trim()==='Calculate sequence breakdown'&&e.checkVisibility()&&!e.disabled)`))await request('Calculate sequence breakdown','inspect');
-    assert.equal(last.sequenceOutcome.stateId,last.view.stateId);if(process.env.WORKFLOW_EXPECT_WITHDRAWN==='1')assert.equal(last.sequenceOutcome.withdrawalComplete,true);assert.equal(last.sequenceOutcome.dimensions.nonTargetRemovedMm3.cumulative,last.view.metrics.nonTargetRemovedMm3);report.sequenceOutcome=last.sequenceOutcome;
+    assert.equal(last.sequenceOutcome.stateId,last.view.stateId);if(membraneCheckpoints){assert.equal(last.sequenceOutcome.target.sourceVolumeMm3,membraneCheckpoints.ownedTargetMm3);assert.deepEqual(last.sequenceOutcome.originalTarget,membraneCheckpoints.originalTarget);}
+    if(process.env.WORKFLOW_EXPECT_WITHDRAWN==='1')assert.equal(last.sequenceOutcome.withdrawalComplete,true);assert.equal(last.sequenceOutcome.dimensions.nonTargetRemovedMm3.cumulative,last.view.metrics.nonTargetRemovedMm3);report.sequenceOutcome=last.sequenceOutcome;
     await capture('06-complete-sequence-ledger','.workflow-checkpoint-burdens');report.checks.push('Compare expands the single accepted-state sequence ledger, retaining access burden and unknown evidence');
    }
-   await click('Save');await wait(`true`,'save dispatch');const savedAt=Date.now();while(!fs.existsSync(saved)){if(Date.now()-savedAt>30000)throw Error('Missing native save');await delay(80);}report.saved=saved;report.savedState=await state();
-   assert.equal(sha(input),original);if(millingCheckpointPath)assert.equal(sha(millingCheckpointPath),report.millingCheckpointSha256);assert.deepEqual(backendSourceHashes(),report.backendSourceSha256,'Backend source must remain frozen throughout this run');assert(!window.isVisible()&&!report.windowEverVisible);report.backendSourceStable=true;report.sourcePreserved=true;report.passed=true;
+   await click('Save');await wait(`true`,'save dispatch');const savedAt=Date.now();while(!fs.existsSync(saved)){if(Date.now()-savedAt>30000)throw Error('Missing native save');await delay(80);}report.saved=saved;report.savedSha256=sha(saved);report.savedState=await state();
+   assert.equal(sha(input),original);if(millingCheckpointPath)assert.equal(sha(millingCheckpointPath),report.millingCheckpointSha256);if(membraneCheckpointPath)assert.equal(sha(membraneCheckpointPath),report.membraneCheckpointSha256);assert.deepEqual(backendSourceHashes(),report.backendSourceSha256,'Backend source must remain frozen throughout this run');assert(!window.isVisible()&&!report.windowEverVisible);report.backendSourceStable=true;report.sourcePreserved=true;report.passed=true;
   }catch(error){report.error=String(error);report.sourcePreserved=sha(input)===original;report.failureState=await state().catch(()=>null);report.body=await js('document.body.innerText').catch(()=>null);fs.writeFileSync(path.join(output,'failure.png'),(await window.webContents.capturePage(undefined,{stayHidden:true,stayAwake:true})).toPNG());console.error(error);}
   fs.writeFileSync(path.join(output,'report.json'),JSON.stringify(report,null,2));console.log(JSON.stringify({passed:report.passed,error:report.error,saved:report.saved}));app.exit(report.passed?0:1);
  });

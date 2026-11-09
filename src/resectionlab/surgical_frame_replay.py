@@ -179,6 +179,7 @@ class SurgicalFrameCache:
             result.actions = thaw_json(admission.snapshot['actions'][:count])
             result.history = thaw_json(admission.history[:count])
             history = thaw_json(admission.history)
+        SurgicalReplayCache._checkpoint_runtime(result)
         return result, history
 
     @staticmethod
@@ -297,6 +298,7 @@ class SurgicalFrameCache:
         position = item['receipt']['position'] + int(final)
         result.actions = copy.deepcopy(snapshot['actions'][:position])
         result.history = copy.deepcopy(history[:position])
+        SurgicalReplayCache._checkpoint_runtime(result)
         if final and result.state_id != item['receipt']['stateAfter']:
             raise ValueError('Playback boundary identity differs')
         if frame_index == 0 and result.state_id != item['receipt']['stateBefore']:

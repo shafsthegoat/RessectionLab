@@ -28,6 +28,7 @@ def hash_shell():
     engine = object.__new__(prefix._PrefixEngine)
     engine.scene = SimpleNamespace(identity='sha256:' + '1' * 64)
     engine._protection_contract = {'contentHash': 'sha256:' + '2' * 64}
+    engine._cranial_stages = None
     engine.state = {'z': [-0.0, 1.25], 'é': {'b': 2, 'a': [True, None]}}
     return engine
 

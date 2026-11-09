@@ -167,6 +167,14 @@ retains unknown prior exposure cost. These checked programs do not qualify a
 patient, promote source roles, alter the old 200/20 policy, or establish planner
 superiority; patient source evidence and complete task evaluation remain required.
 
+Replay adapters bind derived opening proofs to the exact returned checkpoint's
+accepted ancestry. Rewinding drops a future proof; a genuine earlier bone proof
+can remain through later membrane/work history. Current stage permission always
+derives again from that boundary. Ordinary and persistent observed frames use
+the same rule and must match canonical endpoint/receipt identity. The optional
+bounded-prefix replay API explicitly refuses this external stage envelope;
+default canonical recorded-state replay remains supported.
+
 `TransitionMeter` charges previews, discarded probes, checked exits, commits and
 replay. Those are computation costs, separate from accepted patient treatment.
 The source-geometry cache reuses only immutable label counts and target
