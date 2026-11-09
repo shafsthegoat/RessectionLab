@@ -26,6 +26,10 @@ _GOALS = weakref.WeakValueDictionary()
 _GOAL_FACTS = {}
 _INTERRUPTIONS = (TransitionBudgetExceeded, TimeoutError, InterruptedError,
                   KeyboardInterrupt, asyncio.CancelledError)
+_MILLING_STAGING_LIMITS = frozenset(('JOINT_MILLING_INITIAL_STAGING_UNQUALIFIED',
+    'JOINT_MILLING_INITIAL_STAGING_NOT_EXTERIOR',
+    'JOINT_MILLING_POSED_ATTITUDE_STAGING_UNQUALIFIED',
+    'JOINT_MILLING_INITIAL_STOCK_STAGING_UNQUALIFIED'))
 
 
 @dataclass(frozen=True)
@@ -212,7 +216,9 @@ def _physical_key(engine):
 
 def _failure_category(reason):
     text = str(reason)
-    if any(s in text for s in ('CONTACT_CONTINUATION', 'ENDPOINT', 'NO_PHYSICAL_PROGRESS')):
+    if text in _MILLING_STAGING_LIMITS or any(s in text for s in ('CONTACT_CONTINUATION', 'ENDPOINT', 'NO_PHYSICAL_PROGRESS',
+            'MILLING_CONTACT_CONTROLLER_DEFICIT', 'MILLING_NO_ACTUAL_BONE_OR_DEBRIS_PROGRESS',
+            'MILLING_BATCH_BUDGET', 'POSED_ATTITUDE_STAGING_UNQUALIFIED')):
         return 'CANDIDATE_CONTROLLER_LIMIT'
     if any(s in text for s in ('Budget', 'BUDGET', 'Timeout', 'Interrupted', 'Cancelled')):
         return 'COMPUTATION_BUDGET_OR_CANCELLATION'
@@ -241,9 +247,17 @@ def _proposal(value, state_id):
         raise ValueError('Joint proposal requires id, sourceStateId and kind')
     p = copy.deepcopy(value)
     if (type(p['id']) is not str or not p['id'] or p['sourceStateId'] != state_id or
-            p['kind'] not in ('opening', 'preparation', 'configuration', 'work', 'cusa')):
+            p['kind'] not in ('opening', 'milling_opening', 'preparation', 'configuration', 'work', 'cusa')):
         raise ValueError('Joint proposal must name a supported kind and the current native source state')
-    if p['kind'] == 'cusa':
+    if p['kind'] == 'milling_opening':
+        allowed = {'approach', 'drill_seconds', 'suction_seconds', 'staging_seconds',
+            'slot', 'max_batches', 'max_contacts', 'max_examined_cells',
+            'max_contact_probes', 'point_scheme'}
+        spec = p.get('milling')
+        if ('actions' in p or 'motion' in p or type(spec) is not dict or
+                set(spec) != allowed or type(spec['approach']) is not dict):
+            raise ValueError('Joint milling proposal needs one explicit bounded milling spec; policy, meter and callbacks remain search-owned')
+    elif p['kind'] == 'cusa':
         if 'actions' in p or type(p.get('motion')) is not dict:
             raise ValueError('Joint CUSA proposal needs one native motion')
     elif ('motion' in p or not isinstance(p.get('actions'), (list, tuple)) or
@@ -315,7 +329,27 @@ def checked_joint_sequence_search(engine, route=None, *, propose, limits, goal,
                     attempts.append(row)
                     kwargs = dict(limits=limits, meter=meter, check=check,
                         phase=f'{phase}.depth{depth+1}.proposal{expansions}.work')
-                    if p['kind'] == 'cusa':
+                    if p['kind'] == 'milling_opening':
+                        from .surgical_joint_milling_opening import checked_joint_milling_opening
+                        before_calls, before_state = meter.calls, work_parent.state_id
+                        try:
+                            work, receipt = checked_joint_milling_opening(work_parent, **p['milling'], **kwargs)
+                        except ValueError as error:
+                            # These named adapter checks occur before native work.
+                            # An unsupported staging candidate must not suppress
+                            # another declared alternative or invent a free exit.
+                            if str(error) not in _MILLING_STAGING_LIMITS:
+                                raise
+                            if meter.calls != before_calls or work_parent.state_id != before_state:
+                                raise ValueError('JOINT_MILLING_STAGING_BOUNDARY_CHANGED_DURING_REFUSAL') from error
+                            work = work_parent
+                            receipt = {'status': 'refused', 'reason': str(error),
+                                'sourceStateId': before_state, 'finalStateId': before_state,
+                                'nativeActionsAppended': 0, 'publicCalls': 0,
+                                'retentionRole': 'unsupported_initial_staging_candidate',
+                                'admittedBoneOpening': False, 'admittedPatientTask': False,
+                                'ledger': joint_cranial_ledger(work_parent, limits)}
+                    elif p['kind'] == 'cusa':
                         work, receipt = checked_joint_cusa_motion(work_parent, p['motion'], **kwargs)
                     else:
                         work, receipt = checked_joint_actions(work_parent, p['actions'], **kwargs)
@@ -404,7 +438,7 @@ def checked_joint_sequence_search(engine, route=None, *, propose, limits, goal,
         'selectedProposalIds': [r['proposalId'] for r in selected.path] if selected else [],
         'preference': 'Exclude native or source-policy violations first. Retain owned treatment credit against the full original target, separate B/P/W costs, modeled time, exchanges and available shared mechanical/thermal/vascular consequence Pareto outcomes. Different evidence availability is incomparable; unavailable values never become zero. Recommend greatest original-target treatment credit, then least whole source non-target removal, then least modeled time; no scalar weights.',
         'openingConfigurationScope': 'The source-bound opening and anatomy contract are fixed. Proposal programs may choose supported physical opening, preparation, tool configuration and work order; this search does not invent another source window.',
-        'proposalScope': 'Caller-supplied source geometry/native skill inventory; not automatic patient access generation.',
+        'proposalScope': 'Caller-supplied source geometry/native skill inventory; not automatic patient access generation. A declarative milling_opening spec invokes the bounded adaptive checked skill as one search expansion, including all internal contact/debris batches on this same policy and meter.',
         'costScope': 'All search previews, commits, discarded candidates and exit probes share the original meter. Later export/verification replay must use that same meter and be reported separately; the caller must reserve it prospectively.',
         'admittedPatientTask': False, 'caseQualificationRequired': True,
         'scope': 'Finite proposal inventory and controller; search failure does not prove anatomical impossibility.',

@@ -71,6 +71,26 @@ desktop Generate integration. Evidence: `craniotomy-v4/generated-milling-contact
 and `milling-contact-independent-review-v1/`, `milling-quarter-cell-probes-v1/`
 and `milling-quarter-cell-independent-review-v1/`.
 
+The separate checked adaptive milling skill now completes the generated 81-cell
+opening in two actual-state batches: drilling, then current-debris suction.
+All 81 mm³ is removed and collected, with zero present/escaped debris, a verified
+bone prefix and full exterior withdrawal. Dura remains uncleared; target/P/W
+removal is zero. Execution costs 332 macro actions/664 calls, or 334 actions/668
+calls including explicit other-hand setup, and 108.940 s from the shared origin.
+Independent literal replay reproduces every recorded transition and the exact
+final state in 334 direct calls/47.430 s at its inclusive action/call cap.
+An intermediate other-hand collision rejects swept staging despite clear endpoints.
+
+All 23 skill tests and 42 selected joint-search regressions pass. Structured
+`milling_opening` proposals now invoke the skill as one bounded lookahead expansion
+on the same ledger and meter; independent dispatch review adds seven boundary
+controls. No source window or source role is invented. The center control used
+one batch and the completed quarter control allowed eight: these are functional
+controls, not a matched baseline or speed comparison. Patient tasks and desktop
+Generate integration remain open. Evidence: `joint-milling-opening-adapter-v1/`,
+`joint-milling-opening-independent-review-v1/`, `joint-milling-search-dispatch-v1/`
+and `joint-milling-search-independent-review-v1/`.
+
 The checked macro freezes a separate explicit bone budget, canonical source,
 charged ancestry, shared meter and deadline. Added target/nonbone removal is zero.
 Refreezing, resealed replacement limits or unlogged state cannot refund burdens.
@@ -329,11 +349,25 @@ whole-cover proposals intersect the unchanged original target (890/1,492/283/601
 950 cells), with additional UNKNOWN, vessel or retained-material conflicts; none
 is admitted. The sixth has four endpoint-density failures and two otherwise-valid
 neighbor failures. These are actual source-window placement/qualification limits.
-Six new anterior/superior seed lines have been proposed using the full visible
-target; their fresh source observations, fitted normals, material and stock fit
-remain untested. Original arrays, old windows, caps and failures remain preserved.
+A separate cached-role audit reproduces every conflict and source ID in 4.510 s/
+533 MB; root and reviewer inspected both actual CT-BONE/CT-BRAIN/MRI pages.
+Tumor-cell centers remain inside the proposed bone hulls, so boundary inflation
+alone does not explain these refusals. Original arrays, old windows, caps and
+failures remain preserved.
 Evidence: `craniotomy-v4/sub06-fitted-normal-material-kernel-v4/`, its independent
-review, and `craniotomy-v4/source-window-proposal-v1/`.
+review, and `craniotomy-v4/sub06-material-v4-source-audit-v1/`.
+
+The next fixed six-placement source study costs 1.107 s/240 MB, with 262 fresh
+captured rays and zero material queries. All six remain withheld before material:
+one complete 64-point field exceeds the unchanged 1 mm plane-residual limit
+(maximum 1.435 mm); three lack required contacts/context; two lack a central main
+contact. Independent replay passes 14,256 checks on all 1,048 captured arrays.
+Eleven context failures hit the internal crop face at original source i179;
+larger acquired imaging exists beyond it. This supports a separately versioned
+cache-support repair, not a claim that every missing line contains bone.
+No normals, source classes, thresholds, target cells or protection were relaxed.
+Evidence: `craniotomy-v4/source-window-proposal-v1/`, `source-window-combined-study-v1/`
+and `source-window-combined-independent-review-v1/` in that directory.
 
 Next, qualify a real patient's full A/R, local stops, support, membrane and exterior
 without suppressing source uncertainty. Freeze source-role tasks and matched

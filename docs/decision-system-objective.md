@@ -153,6 +153,24 @@ Every individual inversion counts against a separate explicit 2,048-probe bound;
 at most 32 matching suction inversions are additional. An off-center bracket
 includes its affine anchor offset, including on long anisotropic cells.
 
+`surgical_joint_milling_opening` turns those proposals into a bounded adaptive
+bone-opening skill on the original registered joint limits and meter. It replans
+from actual remaining A and tagged debris for at most eight batches. Only the
+first unposed setup may use `place`; later staging uses checked native withdrawal
+motions. An already posed attitude change requires a separately qualified path.
+Full original-A removal, conserved collected debris, the native bone-prefix proof
+and exterior tools are required. Dura and tumor permission remain separate.
+Final receipt construction, hashing and cancellation checks count against the
+original deadline; physical completion cannot override a late refusal.
+
+Joint search accepts a declarative `milling_opening` specification as one skill
+expansion. All internal batches share the search policy, meter and goal. The
+specification cannot inject policy objects or callbacks. Named pre-work staging
+limits and local contact/batch failures permit other candidates to continue;
+source, policy or unlogged-history failures remain invalid. This adds backend
+inventory support, without automatic source-window generation or new desktop
+Generate behavior.
+
 The same checked macro can retain a genuine positive-time, single-endpoint
 `BONE_CUTTING_IN_PROGRESS` prefix and repeat the identical stock command within
 an explicit bound (default six continuations). Multiwaypoint partials and other
