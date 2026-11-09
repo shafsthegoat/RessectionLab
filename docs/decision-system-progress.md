@@ -285,6 +285,14 @@ the shared original-annotation target measure as unavailable and motor outcome
 as unknown. It uses the legacy generated flap opening, not patient milling or a
 qualified patient task. Evidence: `craniotomy-v4/joint-stage-independent-review-v1/`.
 
+The next source operator fits a local outer-surface normal from 64 fixed,
+target-independent raw main-CT300 contacts at each of six existing anchors.
+Its 24 pure controls pass, including transformed geometry, the full fixed R8 chart,
+absolute neighbor depths and retained later bone. Patient fits have not run.
+Reconstruction direction and stock tool attitude remain separate; a normal cannot
+grant material, entry or exit permission. Evidence and the pending bounded protocol:
+`craniotomy-v4/sub06-surface-normal-kernel-v1/`.
+
 Next, qualify a real patient's full A/R, local stops, support, membrane and exterior
 without suppressing source uncertainty. Freeze source-role tasks and matched
 baseline/search budgets, complete joint
@@ -293,6 +301,28 @@ patients. All five originals remain in reporting. STOP or bone-only success does
 not complete tumor treatment.
 
 ## Validation and desktop evidence
+
+Static protection optimization: all 272 selected backend tests pass in one final
+263.67 s run, including 49 independent cache/security/full-scan controls. Immutable
+source buffers and an opaque private index remove repeated full-point validation
+and full index allocation on static queries. Full dynamic-position validation and
+physical margins remain. Two draft instance-method shadowing bypasses were found
+and fixed before delivery; their original failures remain preserved.
+
+One matched instrumented generated control with 1,048,576 protected cells retains
+all 648 static queries, 15 public calls and identical native state/actions/burdens.
+Native control time is 0.693960 versus 1.054638 s (34.2% lower); including source/
+guard initialization, 2.242328 versus 2.562948 s (12.5% lower). This single pair
+does not establish patient-planner throughput. Evidence: `protection-hotpath-v2/`
+and `protection-hotpath-post-final-v1/` under the main ignored results directory.
+
+One fresh hidden cold check passes on the same backend: 11 exact recorded states,
+Play/Pause, 399 mm³ whole non-target burden, 18/27 target, ledger and new Save.
+All 325 source/backend/renderer files stay stable; window visibility remains false
+and the process group exits empty. Root inspected lift/final-summary/ledger images.
+This archive has no ProtectionSet contract, so this is replay compatibility, not
+a large-mask app exercise or new Generate result. Evidence and its 26 captures:
+`craniotomy-v5/protection-app-smoke-v1/`.
 
 The joint search/exit integration passes all 37 selected tests in one final
 180.89 s run, including existing joint limits. Independent review separately

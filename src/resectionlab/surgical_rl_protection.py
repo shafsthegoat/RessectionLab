@@ -8,11 +8,85 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass
 import itertools
 from pathlib import Path
+import weakref
 import numpy as np
 from scipy.spatial import cKDTree
-from .core import array_digest, semantic_digest
+from .core import array_digest, immutable_array, semantic_digest
 
 GUARD_SCHEMA = 'resectionlab.surgical-protection-contract.v1'
+_INDEXES = weakref.WeakKeyDictionary()
+_GEOMETRY = weakref.WeakKeyDictionary()
+
+
+def _array_facts(array):
+    """Bind immutable buffers as well as their mutable ndarray view metadata."""
+    facts = []
+    while isinstance(array, np.ndarray):
+        facts.append((array, array.shape, array.dtype.str, array.strides,
+            array.__array_interface__['data'][0], array.base))
+        array = array.base
+    if not isinstance(array, bytes):
+        raise ValueError('Protection geometry requires an immutable byte owner')
+    return tuple(facts)
+
+
+def _array_current(array, facts):
+    if array is not facts[0][0]:
+        return False
+    return all(not value.flags.writeable and value.shape == shape and
+        value.dtype.str == dtype and value.strides == strides and
+        value.__array_interface__['data'][0] == pointer and value.base is owner
+        for value, shape, dtype, strides, pointer, owner in facts)
+
+
+def _private_view(array):
+    """Separate operative ndarray headers from exposed immutable inspection views."""
+    owner = array
+    while isinstance(owner, np.ndarray):
+        owner = owner.base
+    if not isinstance(owner, bytes):
+        raise ValueError('Protection geometry requires an immutable byte owner')
+    return np.frombuffer(owner, dtype=array.dtype).reshape(array.shape)
+
+
+@dataclass(frozen=True, eq=False)
+class _ProtectionIndex:
+    """Immutable inspection metadata; the operative KD tree never escapes.
+
+    A read-only flag on cKDTree-owned indices can be reversed. Exposing those
+    operative arrays would allow an index edit to evade an O(1) cache witness.
+    These are immutable snapshots, used by existing owner fingerprints too.
+    """
+    data: np.ndarray
+    indices: np.ndarray
+    mins: np.ndarray
+    maxes: np.ndarray
+    n: int
+    m: int
+    leafsize: int
+
+    def _validate_metadata(self):
+        registered = _INDEXES.get(self)
+        if registered is None:
+            raise ValueError('Protection static index changed; construct a new ProtectionSet')
+        _, arrays, scalars = registered
+        current = (self.n, self.m, self.leafsize)
+        if (any(type(a) is not type(b) or a != b for a, b in zip(current, scalars)) or any(
+                not _array_current(getattr(self, name), facts) for name, facts in arrays)):
+            raise ValueError('Protection static index changed; construct a new ProtectionSet')
+
+    def query_ball_point(self, *args, **kwargs):
+        _ProtectionIndex._validate_metadata(self)
+        return _INDEXES[self][0].query_ball_point(*args, **kwargs)
+
+
+def _make_index(points):
+    tree = cKDTree(_private_view(points))
+    index = _ProtectionIndex(points, immutable_array(tree.indices),
+        immutable_array(tree.mins), immutable_array(tree.maxes), tree.n, tree.m, tree.leafsize)
+    _INDEXES[index] = (tree, tuple((name, _array_facts(getattr(index, name)))
+        for name in ('data', 'indices', 'mins', 'maxes')), (tree.n, tree.m, tree.leafsize))
+    return index
 
 
 @dataclass(frozen=True)
@@ -114,11 +188,32 @@ class ProtectionSet:
         self.missing = tuple(s for s in self.required if s not in present)
         if strict and self.missing:
             raise ValueError('Missing required critical annotations: ' + ', '.join(self.missing))
-        self.cells = np.asarray(sorted({c for a in self.annotations for c in a.cells}), dtype=np.int64)
-        self.cells.flags.writeable = False
-        self._points = scene.points(self.cells)
+        self.cells = immutable_array(sorted({c for a in self.annotations for c in a.cells}), np.int64)
+        self._points = immutable_array(scene.points(self.cells), np.float64)
+        if self._points.shape != (len(self.cells), 3) or not np.isfinite(self._points).all():
+            raise ValueError('Finite RAS-mm source-cell positions required')
         self._radius = cell_radius(scene.affine)
-        self._tree = cKDTree(self._points)
+        self._tree = _make_index(self._points)
+        # Direct aliases make the extra immutable index snapshots visible to
+        # existing shared-protection array accounting, without counting data twice.
+        self._index_indices = self._tree.indices
+        self._index_mins = self._tree.mins
+        self._index_maxes = self._tree.maxes
+        _GEOMETRY[self] = (scene, scene.identity, self._radius, self._tree,
+            tuple((name, _array_facts(getattr(self, name))) for name in
+                ('cells', '_points', '_index_indices', '_index_mins', '_index_maxes')),
+            _array_facts(scene.affine), _array_facts(scene.labels), _private_view(self.cells))
+
+    def _require_geometry(self):
+        original = _GEOMETRY.get(self)
+        if original is None:
+            raise ValueError('Protection static geometry changed; construct a new ProtectionSet')
+        scene, identity, radius, tree, arrays, affine, labels, _ = original
+        if (self.scene is not scene or scene.identity != identity or self._radius != radius or
+                self._tree is not tree or not _array_current(scene.affine, affine) or
+                not _array_current(scene.labels, labels) or any(
+                    not _array_current(getattr(self, name), facts) for name, facts in arrays)):
+            raise ValueError('Protection static geometry changed; construct a new ProtectionSet')
 
     def report(self):
         return {'status': 'unknown-coverage' if self.missing else 'declared-masks-only',
@@ -141,20 +236,34 @@ class ProtectionSet:
         Optional positions must be current RAS-mm centers in self.cells order.
         Source IDs remain fixed even when tissue moves or ownership overlaps.
         """
+        # Instance attributes cannot replace these trusted validators or the
+        # operative query. Authenticated private views also prevent a later
+        # exposed-header edit from changing the geometry used by this call.
+        ProtectionSet._require_geometry(self)
+        _, _, source_radius, index, _, _, _, source_cells = _GEOMETRY[self]
         a, b = np.asarray(start, float), np.asarray(end, float)
-        p = self._points if positions is None else np.asarray(positions, float)
-        if a.shape != (3,) or b.shape != (3,) or p.shape != self._points.shape or not np.isfinite([a, b]).all() or not np.isfinite(p).all() or not np.isfinite(radius_mm) or radius_mm < 0:
+        clearance = self.clearance_mm
+        if (a.shape != (3,) or b.shape != (3,) or not np.isfinite([a, b]).all() or
+                not np.isfinite(radius_mm) or radius_mm < 0 or
+                not np.isfinite(clearance) or clearance < 0):
             raise ValueError('Finite RAS-mm capsule and source-cell positions required')
-        candidate = np.arange(len(self.cells))
-        if positions is None and len(self.cells):
-            candidate = np.asarray(self._tree.query_ball_point((a + b) / 2,
-                np.linalg.norm(b - a) / 2 + radius_mm + self.clearance_mm + self._radius + 1e-9), dtype=np.int64)
-            p = p[candidate]
+        clearance, radius_mm = float(clearance), float(radius_mm)
+        source_points = _INDEXES[index][0].data
+        if positions is None:
+            candidate = np.asarray(_ProtectionIndex.query_ball_point(index, (a + b) / 2,
+                np.linalg.norm(b - a) / 2 + radius_mm + clearance + source_radius + 1e-9), dtype=np.int64)
+            p = source_points[candidate]
+        else:
+            _ProtectionIndex._validate_metadata(index)
+            p = np.asarray(positions, float)
+            if p.shape != source_points.shape or not np.isfinite(p).all():
+                raise ValueError('Finite RAS-mm capsule and source-cell positions required')
+            candidate = np.arange(len(source_cells))
         delta = b - a
         length2 = float(delta @ delta)
         t = np.clip((p - a) @ delta / length2, 0, 1) if length2 else np.zeros(len(p))
         distance = np.linalg.norm(p - a - t[:, None] * delta, axis=1)
-        return self.cells[candidate[distance <= radius_mm + self.clearance_mm + self._radius + 1e-9]]
+        return source_cells[candidate[distance <= radius_mm + clearance + source_radius + 1e-9]]
 
     def sweep_hits(self, tool, parameters, start, end, *, positions=None):
         """Conservative continuous translation/rotation of working part AND shaft."""

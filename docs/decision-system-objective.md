@@ -212,6 +212,21 @@ A duplicate unchanged boundary preview can refuse an already proven removal-limi
 violation without repeating the same unsafe query. This is refusal-only; successful
 actions and any shortened command still require fresh native checking.
 
+Static protection queries now reuse immutable source IDs/points and an opaque
+registered spatial index. Buffer owners, pointers, layouts, source geometry and
+index metadata bind the cache; exposed inspection arrays cannot edit the operative
+tree. Trusted class dispatch prevents instance helper/query shadows from bypassing
+validation. Static queries avoid repeated whole-point finite scans and full index
+allocation; moved protected tissue still receives full current-position validation.
+Source/guard contracts, physical margins and capsule-distance results are unchanged.
+Independent exhaustive scans, mutation controls and native replay check this scope.
+
+One matched instrumented million-cell control reduced native execution from
+1.054638 to 0.693960 s; initialization plus control fell 12.5%, with identical
+state/actions/calls/quantities. This is one generated control, not patient-planner
+throughput or completed treatment evidence. The complete cost and retained draft
+failures are indexed in the progress handoff.
+
 The current generated fixed-radius regression demonstrates clearance followed by
 target work, exact replay and withdrawal. It is a mechanism check, not patient
 performance or superiority over the strongest full staged controller, which can
