@@ -228,11 +228,15 @@ def annotation_from_nifti(scene, path, structure_id, *, source_binding, registra
         provenance=provenance, review_status=review_status)
 
 
-def annotation_from_collection(scene, root, layer_id, structure_id, *, allow_unreviewed=False):
+def annotation_from_collection(scene, root, layer_id, structure_id, *, allow_unreviewed=False,
+        slab_transfer=None, max_native_protection_cells=2_000_000, check=lambda: None):
     """Conservatively register an existing native layer; never generate anatomy.
 
-    Circumsphere overlap may enlarge boundaries, but cannot omit an intersecting
-    source/target affine cell. Full source memberships survive material priority.
+    The default circumsphere path is unchanged. An explicit slab_transfer uses
+    complete affine-cell support for a verified full inferior container, with
+    assumed continuous rigid stresses and outside-source-grid unknown exclusion.
+    Neither path grants source/anatomy/registration review. Full source
+    memberships survive material priority.
     """
     from .patient_anatomy import PatientImagingCollection
     collection = PatientImagingCollection(Path(root))
@@ -261,6 +265,27 @@ def annotation_from_collection(scene, root, layer_id, structure_id, *, allow_unr
     if sid == reference_id and not np.allclose(brain_evidence.get('registeredAffine', np.zeros((4, 4))), expected_reference, rtol=0, atol=1e-6):
         raise ValueError('Collection registration disagrees with saved scene source')
     affine = matrix @ np.asarray(row['affine'])
+    if slab_transfer is not None:
+        import json
+        from .surgical_protection_transfer import verify_inferior_slab, transfer_inferior_slab
+        if (type(slab_transfer) is not dict or set(slab_transfer) != {
+                'assumed_translation_mm', 'assumed_rotation_degrees', 'rotation_pivot_target_ras_mm'}):
+            raise ValueError('Explicit complete assumed slab-transfer stress declaration required')
+        if type(max_native_protection_cells) is not int or max_native_protection_cells < 1:
+            raise ValueError('A positive native protection allocation limit is required')
+        slab = verify_inferior_slab(collection.array(row['data']), label_value=row['label_value'], check=check)
+        result = transfer_inferior_slab(slab, row['affine'], scene.shape, scene.affine,
+            matrix, **slab_transfer, check=check)
+        if result['report']['combinedProtectedCells'] > max_native_protection_cells:
+            raise ValueError('Native protection cell budget exceeded before point/tuple allocation')
+        provenance = json.dumps({'collection': collection.document['snapshot_id'],
+            'layerId': layer_id, 'sourceArraySha256': row['data']['sha256'],
+            'sourceLayer': row, 'transfer': result['report'],
+            'meaning': 'Registered conservative exclusion container, not an anatomical segmentation; assumed stress bounds are not measured registration error'},
+            sort_keys=True)
+        return ProtectionAnnotation.from_mask(scene, structure_id, result['protectedMask'],
+            provenance=provenance, review_status=row.get('review_status', 'unknown'),
+            display_name=row.get('label', layer_id))
     native = np.argwhere(collection.array(row['data']) == row['label_value'])
     mask = np.zeros(scene.shape, bool)
     if len(native):

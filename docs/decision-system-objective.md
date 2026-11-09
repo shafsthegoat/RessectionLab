@@ -68,6 +68,17 @@ A future regional policy would need affirmative source landmarks, the complete
 reachable action/effect domain, conservative uncertainty and independent review;
 an empty label or a reviewed bounding box cannot establish regional exclusion.
 
+`surgical_protection_transfer` now supplies one explicitly requested geometry
+path for a verified full inferior source container. Exact affine-cell support
+and an analytic enclosure cover declared continuous rigid stress sets; source
+grid boundary/escape is separately unknown and protected. Known interior padding
+requires an additional explicit exclusion. These assumed stress bounds do not
+measure registration accuracy. The collection adapter still validates its exact
+source snapshot, units, registration graph and anatomy review, retains unreviewed
+status under research opt-in, and caps native cell allocation. Its default
+import algorithm is unchanged. Three acquired-source guard controls verify both
+hands' atomic native refusal and exact cold replay; no operative task follows.
+
 Horizon 1 preserves the existing immediate-removal staged controller. The desktop
 offers horizon 2 or 3 with beam width 3; the backend permits width 2–4 and at
 most 24 work expansions per selection. Native checks and checked exits verify

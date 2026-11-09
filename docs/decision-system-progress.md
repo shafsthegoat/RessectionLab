@@ -175,7 +175,53 @@ and excluded plane, original affine/units and source hashes. No native patient
 action or original-case change followed (`craniotomy-v2/sub01-source-pilot/`,
 `craniotomy-v2/retained-source-qualification-v1/`).
 
+## Source-bound exclusion transfer
+
+The three MRI-native inferior containers now have separate CT-bound derivatives.
+Paired source review supports coded identity as conditional engineering geometry;
+the old06 bone transform visibly misaligns calvarial context and remains preserved.
+No registration is promoted to clinical truth. Assumed stresses are ±5 mm per
+RAS axis plus arbitrary-axis3° for01 (enclosed by an L2 radius√3×5 mm), and a
+4 mm L2 translation ball with no rotation for06/13. The separate8 mm source
+containment allowance is not a measured registration error.
+
+`surgical_protection_transfer` verifies every source cell of the declared slab
+and transfers complete affine cells with an analytic continuous rigid-stress
+enclosure. It avoids the old tens-of-millions-point source cloud. Source-grid
+escape/contact remains unknown and protected. Exact source-zero padding bands
+are separately transferred and unioned as unknown; they are never exterior air.
+The collection importer opts in explicitly, keeps all original review gates and
+unreviewed statuses, and caps native cell allocation before tuple construction.
+Its default circumsphere route remains unchanged.
+
+Root checked all six full decoded native/coarse masks, exact OR/unknown subsets,
+all cells against an independent matched-axis reference for06/13, and7,820
+in-domain forward stress samples per01 grid (9,000 attempted;1,180 outside the
+target grid). All seven final source-overlay sheets were inspected. The check
+cost11.01 seconds /1.777 GB RSS. A first audit stopped on an arbitrary>8,000
+in-domain count assertion; identical samples and its failure remain preserved.
+Independent geometry review passes22 controls after correcting a numerical
+source-boundary underexclusion; the original21/22 result is retained.
+
+Actual acquired-source native controls now bind the final2 mm exclusions for
+01/06/13:1,102,248 /884,780 /706,768 protected cells. At a predeclared empty-material
+point inside each exclusion, both stock-tool hands refuse preview and direct
+placement with `PROTECTED_STRUCTURE`, atomically preserving the accepted prefix.
+Real CaseData Save/Open and fresh/cold native replay preserve exact states,
+source/guard identity and original files. Each run costs8 all-phase evaluations;
+driver wall15.98 /7.41 /5.92 seconds, peak RSS0.991 /0.859 /0.753 GB. Only configure
+is accepted; no physical work, target creation or patient-task admission occurs.
+These controls establish source guard binding, not a usable operative window.
+Source/model roles, the06 original45,035 mm³ target,13 empty target and all five
+original tasks remain unchanged. Evidence: `craniotomy-v3/`.
+
 ## Validation and next dependency
+
+The exclusion-transfer milestone passes286 selected backend tests in132.69
+seconds, including actual collection import/native refusal and unchanged legacy
+protection, patient/domain, milling/flap and checked macro behavior. Independent
+geometry checks use1,944 LP intersection tests on oblique/sheared cells. No
+frontend changed or additional desktop claim is made by this milestone.
 
 Current backend: 460 distinct selected tests pass across the broad run and focused
 compatibility rerun, covering milling, flap, finite-contact/staged work, protection,
@@ -219,14 +265,23 @@ support and complete stock-tool workspace. Flap removal additionally needs actua
 attachment/release and whole-fragment exit evidence; milling instead needs finite
 cutting and actual debris collection. Neither supplies critical-anatomy, target
 registration or dural-entry evidence. Freeze the complete bone/brain/target/burden
-goals before joint opening/work search. Source-bound conservative exclusion zones
-may be preferable to pretending an exact anatomical segmentation, but need
-affirmative landmark/uncertainty review. Do not substitute an idealized control
+goals before joint opening/work search. The new conditional source exclusion
+transfers supply conservative geometry, not complete anatomical or workspace
+qualification. Do not substitute an idealized control
 for patient evidence. Old boxes exclude 35.32% of CTA012's
 original target and 9.58% of CTA014's; all five targets plus fixed 10 mm buffers fit
 acquired CTA FOV. New source-context review is distinct from absent imaging or
 anatomical clearance; preserve old benchmarks/bounds rather than expanding them
 to admit a failed route. See `craniotomy-v1/access-window-review/`.
+
+An interface audit also found that current dural scissors create a seam while
+leaving the membrane occupied. This cannot authorize CUSA passage. A source-bound
+cut-and-transport/extract membrane mechanism and separately versioned joint stage
+authority are required; bone clearance alone must continue refusing deeper entry.
+Joint B/P/W budgets must count all bone, nonbone preparation and brain-work/exit
+burdens without changing or refunding the old200/20 policy. A conditional
+post-scalp start must be explicit; an intact-head result needs actual scalp work.
+See `craniotomy-v3/stage-integration-audit-v1/` for existing native hooks.
 
 Joint patient opening/work search, meaningful completed tasks on three suitable
 patients, uncertainty and matched material patient improvement remain open.
