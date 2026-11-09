@@ -147,6 +147,11 @@ repositioning requires separate caller verification. Every action, finite work,
 debris collection, complete original aperture and exit still needs the existing
 checked policy. Neither a nominal contact footprint nor a resealed caller proposal
 grants admission, resets computation time or refunds a discarded native prefix.
+An optional fixed center-plus-eight-quarter-cell point scheme addresses missed
+corner contacts without changing tools or source A. The default remains centered.
+Every individual inversion counts against a separate explicit 2,048-probe bound;
+at most 32 matching suction inversions are additional. An off-center bracket
+includes its affine anchor offset, including on long anisotropic cells.
 
 The same checked macro can retain a genuine positive-time, single-endpoint
 `BONE_CUTTING_IN_PROGRESS` prefix and repeat the identical stock command within

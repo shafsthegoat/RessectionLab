@@ -32,10 +32,13 @@ from .surgical_transition_meter import MeteredEngine
 SCHEMA = 'resectionlab.milling-contact-proposals.v1'
 APPROACH_SCHEMA = 'resectionlab.milling-contact-approach.v1'
 _OVERLAP_MM = .10
+_POINT_SCHEMES = ('center', 'center_and_quarter_cell_corners')
 _ALGORITHM = {'name': 'native-orthogonal-cell-ray-inverse-v1',
     'kernel': 'geometry._segment_cell_distances', 'iterations': 64,
-    'bracket': '[0, stockRadius+cellCircumsphere+1e-6] mm',
-    'pose': 'cellCenter-axis*(nativeLeadingContactDistance-0.10mm)',
+    'bracket': '[0, stockRadius+cellCircumsphere+anchorOffsetNorm+1e-6] mm',
+    'pose': 'declared interior cell point-axis*(nativeLeadingContactDistance-0.10mm)',
+    'pointSchemes': list(_POINT_SCHEMES),
+    'quarterCellCorners': 'center followed by all eight affine quarter-cell corners; fixed source geometry, not tool shrinkage',
     'candidateOrder': 'all-A outward-axis depth and source ID, computed once at explicit approach binding',
     'suction': 'independent stock-radius inversion; no universal .5mm offset',
     'shearedAffine': 'unsupported; native kernel is only a distance lower bound'}
@@ -65,7 +68,7 @@ def _finite_positive(value):
 
 
 def bind_milling_approach(engine, *, quaternion, outside_plane_point_ras_mm,
-                          maximum_approach_mm):
+                          maximum_approach_mm, point_scheme='center'):
     """Bind explicitly supplied fixed attitude and exterior plane to the Scene.
 
     This records a proposal route, not a reviewed exterior/clearance proof.
@@ -80,6 +83,10 @@ def bind_milling_approach(engine, *, quaternion, outside_plane_point_ras_mm,
            'contractHash': contract.content_hash, 'quaternion': list(quaternion),
            'outsidePlanePointRasMm': list(outside_plane_point_ras_mm),
            'maximumApproachMm': maximum_approach_mm}
+    if point_scheme not in _POINT_SCHEMES:
+        raise ValueError('MILLING_CONTACT_DECLARED_POINT_SCHEME_REQUIRED')
+    if point_scheme != 'center':
+        raw['pointScheme'] = point_scheme
     _, _, axis = _approach(engine, contract, raw, require_order=False)
     started = time.monotonic()
     cells = list(contract.aperture_cells)
@@ -100,12 +107,16 @@ def _approach(engine, contract, raw, *, require_order=True):
         raise ValueError('MILLING_CONTACT_NATIVE_CONTRACT_BINDING_DIFFERS')
     fields = {'schema', 'sceneId', 'contractHash', 'quaternion',
               'outsidePlanePointRasMm', 'maximumApproachMm'}
+    if isinstance(raw, dict) and 'pointScheme' in raw:
+        fields.add('pointScheme')
     if require_order:
         fields.update(('sourceOrdering', 'sourceOrderingHash'))
     if (not isinstance(raw, dict) or set(raw) != fields or
             raw['schema'] != APPROACH_SCHEMA or raw['sceneId'] != engine.scene.identity or
             raw['contractHash'] != contract.content_hash):
         raise ValueError('MILLING_CONTACT_APPROACH_SOURCE_BINDING_REQUIRED')
+    if raw.get('pointScheme', 'center') not in _POINT_SCHEMES:
+        raise ValueError('MILLING_CONTACT_DECLARED_POINT_SCHEME_REQUIRED')
     q, point = np.asarray(raw['quaternion'], float), np.asarray(raw['outsidePlanePointRasMm'], float)
     if (q.shape != (4,) or point.shape != (3,) or not np.isfinite(q).all() or
             not np.isfinite(point).all() or abs(np.linalg.norm(q)-1.) > 1e-9 or
@@ -137,7 +148,8 @@ def _pose(position, quaternion):
 def _contact(engine, cell, point, axis, radius, rho, q):
     """Invert the existing exact orthogonal-cell distance on an outward ray."""
     index = np.asarray([np.unravel_index(cell, engine.scene.shape)], dtype=np.int64)
-    lo, hi = 0., radius+rho+1e-6
+    center = engine.scene.affine[:3, :3]@index[0]+engine.scene.affine[:3, 3]
+    lo, hi = 0., radius+rho+float(np.linalg.norm(point-center))+1e-6
     for _ in range(_ALGORITHM['iterations']):
         middle = (lo+hi)/2
         tip = point-axis*middle
@@ -148,6 +160,15 @@ def _contact(engine, cell, point, axis, radius, rho, q):
     threshold = (lo+hi)/2
     pose = _pose(point-axis*(threshold-_OVERLAP_MM), q)
     return pose, threshold
+
+
+def _contact_points(engine, cell, approach):
+    """Fixed interior source points; every inversion counts against the probe cap."""
+    center = engine.scene.points([cell])[0]
+    yield 0, center
+    if approach.get('pointScheme', 'center') == 'center_and_quarter_cell_corners':
+        for index, offset in enumerate(product((-.25, .25), repeat=3), 1):
+            yield index, center+engine.scene.affine[:3, :3]@np.asarray(offset)
 
 
 def _segments(name, pose):
@@ -203,11 +224,12 @@ def _program(drill, suction, outside, slot, drill_seconds, suction_seconds):
     return result
 
 
-def _context(engine, approach, slot, max_examined_cells, max_contacts, *durations):
+def _context(engine, approach, slot, max_examined_cells, max_contacts, max_contact_probes, *durations):
     if not isinstance(engine, (SurgicalEngine, MeteredEngine)):
         raise TypeError('MILLING_CONTACT_NATIVE_ENGINE_REQUIRED')
     if (type(max_examined_cells) is not int or not 1 <= max_examined_cells <= 2048 or
-            type(max_contacts) is not int or not 1 <= max_contacts <= 32):
+            type(max_contacts) is not int or not 1 <= max_contacts <= 32 or
+            type(max_contact_probes) is not int or not 1 <= max_contact_probes <= 2048):
         raise ValueError('MILLING_CONTACT_EXPLICIT_BOUNDS_REQUIRED')
     if any(not _finite_positive(duration) for duration in durations):
         raise ValueError('MILLING_CONTACT_EXPLICIT_DURATIONS_REQUIRED')
@@ -279,11 +301,11 @@ def _geometry_checker(engine, contract, slot, removed, protected):
 
 
 def generate_milling_contact_proposals(engine, *, approach, max_examined_cells=2048,
-        max_contacts=32, drill_seconds, suction_seconds, slot='left'):
+        max_contacts=32, max_contact_probes=2048, drill_seconds, suction_seconds, slot='left'):
     """Return JSON paired contacts and one native program from the current state.
 
-    Bounds count cell-centred drill candidates and selected matching suction
-    checks (at most 2048 + 32); source binding/readiness scans are not native
+    Bounds count source cells, individual drill inversions and selected matching
+    suction checks (at most 2048 + 32 inversions); binding/readiness scans are not native
     calls. No evaluator trajectories or nominal/deepest-column stops enter.
     Full-A residual IDs are retained even when the candidate bound truncates.
     Use ``actions`` with existing checked policies, whose completion gates and
@@ -292,45 +314,54 @@ def generate_milling_contact_proposals(engine, *, approach, max_examined_cells=2
     """
     started = time.monotonic()
     contract, q, plane, axis, before, readiness, removed, remaining, protected, rho = _context(
-        engine, approach, slot, max_examined_cells, max_contacts, drill_seconds, suction_seconds)
+        engine, approach, slot, max_examined_cells, max_contacts, max_contact_probes, drill_seconds, suction_seconds)
     cells = [cell for cell in approach['sourceOrdering']['orderedCells'] if cell in remaining]
-    examined = cells[:max_examined_cells]
+    examined, incomplete_cells, probes = [], [], 0
     rejections, candidates, diagnostics = [], [], []
 
     check_geometry = _geometry_checker(engine, contract, slot, removed, protected)
 
-    for cell in examined:
-        point = engine.scene.points([cell])[0]
-        drill, threshold = _contact(engine, cell, point, axis, TOOLS['cranial_drill']['radiusMm'], rho, q)
-        prior = _pose(point-axis*(TOOLS['cranial_drill']['radiusMm']+rho-_OVERLAP_MM), q)
-        index = np.asarray([np.unravel_index(cell, engine.scene.shape)], dtype=np.int64)
-        prior_distance = float(_segment_cell_distances(engine.grid, index,
-            np.asarray(prior['position']), np.asarray(prior['position']))[0])
-        diagnostics.append({'cell': cell, 'circumsphereOnlyDrillPose': prior,
-            'circumsphereOnlyNativeCellHit': prior_distance <= TOOLS['cranial_drill']['radiusMm']+1e-9,
-            'nativeLeadingDrillContactDistanceMm': threshold})
-        distance = float((np.asarray(drill['position'])-plane)@axis)
-        outside = _pose(np.asarray(drill['position'])-distance*axis, q)
-        if not 0 < distance <= approach['maximumApproachMm']:
-            rejections.append({'cell': cell, 'reason': 'APPROACH_LENGTH_OUTSIDE_BOUND'})
-            continue
-        reason, hits = check_geometry('cranial_drill', drill, outside, allowed_work=remaining)
-        if reason:
-            rejections.append({'cell': cell, 'reason': reason, 'witnessCell': hits})
-            continue
-        if cell not in hits:
-            rejections.append({'cell': cell, 'reason': 'NO_CURRENT_A_CONTACT'})
-            continue
-        candidates.append({'cell': cell, 'drillPose': drill, 'outsidePose': outside, 'hits': hits,
-                           'nativeLeadingDrillContactDistanceMm': threshold})
+    for cell in cells[:max_examined_cells]:
+        if probes >= max_contact_probes:
+            break
+        examined.append(cell)
+        for point_index, point in _contact_points(engine, cell, approach):
+            if probes >= max_contact_probes:
+                incomplete_cells.append(cell)
+                break
+            probes += 1
+            witness = {'cell': cell, 'pointIndex': point_index}
+            drill, threshold = _contact(engine, cell, point, axis, TOOLS['cranial_drill']['radiusMm'], rho, q)
+            prior = _pose(point-axis*(TOOLS['cranial_drill']['radiusMm']+rho-_OVERLAP_MM), q)
+            index = np.asarray([np.unravel_index(cell, engine.scene.shape)], dtype=np.int64)
+            prior_distance = float(_segment_cell_distances(engine.grid, index,
+                np.asarray(prior['position']), np.asarray(prior['position']))[0])
+            diagnostics.append({**witness, 'circumsphereOnlyDrillPose': prior,
+                'circumsphereOnlyNativeCellHit': prior_distance <= TOOLS['cranial_drill']['radiusMm']+1e-9,
+                'nativeLeadingDrillContactDistanceMm': threshold})
+            distance = float((np.asarray(drill['position'])-plane)@axis)
+            outside = _pose(np.asarray(drill['position'])-distance*axis, q)
+            if not 0 < distance <= approach['maximumApproachMm']:
+                rejections.append({**witness, 'reason': 'APPROACH_LENGTH_OUTSIDE_BOUND'})
+                continue
+            reason, hits = check_geometry('cranial_drill', drill, outside, allowed_work=remaining)
+            if reason:
+                rejections.append({**witness, 'reason': reason, 'witnessCell': hits})
+                continue
+            if cell not in hits:
+                rejections.append({**witness, 'reason': 'NO_CURRENT_A_CONTACT'})
+                continue
+            candidates.append({**witness, 'contactAnchorRasMm': point.tolist(),
+                'drillPose': drill, 'outsidePose': outside, 'hits': hits,
+                'nativeLeadingDrillContactDistanceMm': threshold})
     uncovered, selected, attempted_pairs = set(remaining), [], 0
     while candidates and attempted_pairs < max_contacts:
-        best = min(candidates, key=lambda row: (-len(row['hits'] & uncovered), row['cell']))
+        best = min(candidates, key=lambda row: (-len(row['hits'] & uncovered), row['cell'], row['pointIndex']))
         candidates.remove(best)
         if not best['hits'] & uncovered:
             break
         attempted_pairs += 1
-        suction, threshold = _contact(engine, best['cell'], engine.scene.points([best['cell']])[0],
+        suction, threshold = _contact(engine, best['cell'], np.asarray(best['contactAnchorRasMm']),
             axis, TOOLS['frazier_suction']['radiusMm'], rho, q)
         distance = float((np.asarray(suction['position'])-plane)@axis)
         if not 0 < distance <= approach['maximumApproachMm']:
@@ -355,11 +386,13 @@ def generate_milling_contact_proposals(engine, *, approach, max_examined_cells=2
         'protectedSourceCellsSeal': semantic_digest(sorted(protected)),
         'toolCatalogHash': semantic_digest({name: TOOLS[name] for name in ('cranial_drill', 'frazier_suction')}),
         'contractHash': contract.content_hash, 'approach': copy.deepcopy(approach),
-        'bounds': {'maxExaminedCells': max_examined_cells, 'maxContacts': max_contacts},
+        'bounds': {'maxExaminedCells': max_examined_cells, 'maxContacts': max_contacts,
+                   'maxContactProbes': max_contact_probes},
         'examinedCells': examined, 'examinedContactCells': len(examined),
+        'testedDrillContactProbes': probes, 'incompletelyExaminedCurrentACells': incomplete_cells,
         'orderingCells': approach['sourceOrdering']['orderingCells'], 'orderingCoordinatesComputedThisCall': 0,
         'matchingSuctionChecks': attempted_pairs,
-        'unexaminedCurrentACells': cells[max_examined_cells:],
+        'unexaminedCurrentACells': cells[len(examined):],
         'stockGeometry': {'drillRadiusMm': 2., 'suctionRadiusMm': 1.5, 'shaftRadiusMm': .5,
                           'shaftLengthMm': 40., 'workingDepthMm': 2., 'cellCircumsphereMm': rho,
                           'nominalOverlapMm': _OVERLAP_MM},
@@ -390,7 +423,7 @@ def generate_milling_contact_proposals(engine, *, approach, max_examined_cells=2
 
 
 def generate_milling_debris_proposals(engine, *, approach, max_examined_cells=2048,
-        max_contacts=32, suction_seconds, slot='left'):
+        max_contacts=32, max_contact_probes=2048, suction_seconds, slot='left'):
     """Propose stock suction against actual current tagged debris, not future A.
 
     Every candidate body/route must clear the current native cavity without
@@ -403,7 +436,7 @@ def generate_milling_debris_proposals(engine, *, approach, max_examined_cells=20
     """
     started = time.monotonic()
     contract, q, plane, axis, before, readiness, removed, remaining, protected, rho = _context(
-        engine, approach, slot, max_examined_cells, max_contacts, suction_seconds)
+        engine, approach, slot, max_examined_cells, max_contacts, max_contact_probes, suction_seconds)
     debris = {int(c): float(amount) for c, amount in engine.state['debris'].items() if amount > 0}
     if any(not 0 <= c < engine.scene.labels.size for c in debris):
         raise ValueError('MILLING_CONTACT_TAGGED_DEBRIS_SOURCE_CELL_INVALID')
@@ -413,32 +446,42 @@ def generate_milling_debris_proposals(engine, *, approach, max_examined_cells=20
     depths = dict(zip(cells, points@axis))
     cells = sorted(cells, key=lambda c: (round(float(depths[c]), 9), c))
     ordering_wall = time.monotonic()-ordering_started
-    examined, rejections, candidates = cells[:max_examined_cells], [], []
+    examined, incomplete_cells, probes, rejections, candidates = [], [], 0, [], []
     check_geometry = _geometry_checker(engine, contract, slot, removed, protected)
-    for cell in examined:
-        contact, threshold = _contact(engine, cell, engine.scene.points([cell])[0],
-            axis, TOOLS['frazier_suction']['radiusMm'], rho, q)
-        distance = float((np.asarray(contact['position'])-plane)@axis)
-        outside = _pose(np.asarray(contact['position'])-distance*axis, q)
-        if not 0 < distance <= approach['maximumApproachMm']:
-            rejections.append({'cell': cell, 'reason': 'APPROACH_LENGTH_OUTSIDE_BOUND'})
-            continue
-        reason, witness = check_geometry('frazier_suction', contact, outside, allowed_work=set())
-        if reason:
-            rejections.append({'cell': cell, 'reason': reason, 'witnessCell': witness})
-            continue
-        # Native suction uptake uses the spherical spatial outlet, not the
-        # entire working capsule. Existing native kernel supplies its cells.
-        hits = set(map(int, engine.cells(contact['position'], contact['position'],
-                        TOOLS['frazier_suction']['radiusMm']))) & set(debris)
-        if cell not in hits:
-            rejections.append({'cell': cell, 'reason': 'NO_CURRENT_TAGGED_DEBRIS_CONTACT'})
-            continue
-        candidates.append({'cell': cell, 'suctionPose': contact, 'outsidePose': outside,
-                           'nativeLeadingSuctionContactDistanceMm': threshold, 'hits': hits})
+    for cell in cells[:max_examined_cells]:
+        if probes >= max_contact_probes:
+            break
+        examined.append(cell)
+        for point_index, point in _contact_points(engine, cell, approach):
+            if probes >= max_contact_probes:
+                incomplete_cells.append(cell)
+                break
+            probes += 1
+            record = {'cell': cell, 'pointIndex': point_index}
+            contact, threshold = _contact(engine, cell, point,
+                axis, TOOLS['frazier_suction']['radiusMm'], rho, q)
+            distance = float((np.asarray(contact['position'])-plane)@axis)
+            outside = _pose(np.asarray(contact['position'])-distance*axis, q)
+            if not 0 < distance <= approach['maximumApproachMm']:
+                rejections.append({**record, 'reason': 'APPROACH_LENGTH_OUTSIDE_BOUND'})
+                continue
+            reason, witness = check_geometry('frazier_suction', contact, outside, allowed_work=set())
+            if reason:
+                rejections.append({**record, 'reason': reason, 'witnessCell': witness})
+                continue
+            # Native uptake is the spatial spherical outlet, not the whole capsule.
+            hits = set(map(int, engine.cells(contact['position'], contact['position'],
+                            TOOLS['frazier_suction']['radiusMm']))) & set(debris)
+            if cell not in hits:
+                rejections.append({**record, 'reason': 'NO_CURRENT_TAGGED_DEBRIS_CONTACT'})
+                continue
+            candidates.append({**record, 'contactAnchorRasMm': point.tolist(),
+                'suctionPose': contact, 'outsidePose': outside,
+                'nativeLeadingSuctionContactDistanceMm': threshold, 'hits': hits})
     uncovered, selected = set(debris), []
     while candidates and len(selected) < max_contacts:
-        best = min(candidates, key=lambda row: (-sum(debris[c] for c in row['hits'] & uncovered), row['cell']))
+        best = min(candidates, key=lambda row: (-sum(debris[c] for c in row['hits'] & uncovered),
+                                               row['cell'], row['pointIndex']))
         candidates.remove(best)
         if not best['hits'] & uncovered:
             break
@@ -455,12 +498,14 @@ def generate_milling_debris_proposals(engine, *, approach, max_examined_cells=20
         'guardSeal': semantic_digest(engine.guard_report()), 'protectedSourceCellsSeal': semantic_digest(sorted(protected)),
         'toolCatalogHash': semantic_digest({name: TOOLS[name] for name in ('cranial_drill', 'frazier_suction')}),
         'contractHash': contract.content_hash, 'approach': copy.deepcopy(approach),
-        'bounds': {'maxExaminedCells': max_examined_cells, 'maxContacts': max_contacts},
+        'bounds': {'maxExaminedCells': max_examined_cells, 'maxContacts': max_contacts,
+                   'maxContactProbes': max_contact_probes},
         'orderingCells': len(debris), 'orderingCoordinatesComputedThisCall': len(debris),
         'stockGeometry': {'suctionRadiusMm': 1.5, 'shaftRadiusMm': .5, 'shaftLengthMm': 40.,
                           'workingDepthMm': 2., 'cellCircumsphereMm': rho, 'nominalOverlapMm': _OVERLAP_MM},
         'examinedCells': examined, 'examinedContactCells': len(examined),
-        'unexaminedTaggedDebrisCells': cells[max_examined_cells:],
+        'testedSuctionContactProbes': probes, 'incompletelyExaminedTaggedDebrisCells': incomplete_cells,
+        'unexaminedTaggedDebrisCells': cells[len(examined):],
         'currentTaggedDebris': [{'cell': c, 'volumeMm3': debris[c]} for c in sorted(debris)],
         'currentDebrisSeal': semantic_digest(engine.state['debris']), 'currentDebrisMm3': sum(debris.values()),
         'contacts': selected, 'actions': [a for row in selected for a in row['actions']],

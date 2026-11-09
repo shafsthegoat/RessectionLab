@@ -60,11 +60,16 @@ approach/withdrawal capsules are checked conservatively against current obstacle
 staging repositioning still requires caller verification because native `place`
 has endpoint/setup semantics. Proposal seals confer no execution permission.
 The generated native control removes 5 mm³ bone and collects all 5 mm³ debris,
-then correctly refuses the residual 76-cell opening. All 144 selected tests pass;
-independent review reproduces 16 focused tests and scalar/route geometry checks.
+then correctly refuses the residual 76-cell opening. An optional fixed quarter-
+cell point scheme addresses four corner cells missed by center-only proposals;
+the stock geometry, source A and native checks remain unchanged. A separate
+2,048-probe cap counts every inversion. Native corner removal and all 151 selected
+tests pass. Independent review reproduces all 23 focused tests, 576 transformed
+box-contact oracles, the explicit probe caps and unchanged center-only programs.
 This is a reusable proposal helper, not an automatic full-opening controller or
 desktop Generate integration. Evidence: `craniotomy-v4/generated-milling-contact-proposals-v1/`
-and `milling-contact-independent-review-v1/`.
+and `milling-contact-independent-review-v1/`, `milling-quarter-cell-probes-v1/`
+and `milling-quarter-cell-independent-review-v1/`.
 
 The checked macro freezes a separate explicit bone budget, canonical source,
 charged ancestry, shared meter and deadline. Added target/nonbone removal is zero.
@@ -313,11 +318,22 @@ A separate six-region material study costs 7.045 s/425 MB sampled aggregate RSS.
 All six remain withheld: one-to-three-sample calvarial runs behind the selected
 group prevent full fixed-R8/halo support. Independent replay passes 252,177 checks;
 no complete cell cover or A was built. Empty output coordinates do not mean empty
-anatomy. A prospective repair will include every subsequent true bone run in the
-material grouping under the unchanged density, gap, span and clearance gates,
-rather than omit small runs from the required extent. No source-class promotion,
-native patient action or opening admission follows. Evidence:
+anatomy. No source-class promotion, native patient action or opening admission follows. Evidence:
 `craniotomy-v4/sub06-fitted-normal-material-kernel-v3/` and its independent review.
+
+The subsequent all-positive-run repair includes those small runs under the same
+density, gap, span and clearance gates. It forms five complete material geometries
+in 27.543 s/562 MB sampled aggregate RSS. Independent replay reproduces all 7,350
+profiles and each full R8/12 mm hull-coordinate union in 83,150 checks. All five
+whole-cover proposals intersect the unchanged original target (890/1,492/283/601/
+950 cells), with additional UNKNOWN, vessel or retained-material conflicts; none
+is admitted. The sixth has four endpoint-density failures and two otherwise-valid
+neighbor failures. These are actual source-window placement/qualification limits.
+Six new anterior/superior seed lines have been proposed using the full visible
+target; their fresh source observations, fitted normals, material and stock fit
+remain untested. Original arrays, old windows, caps and failures remain preserved.
+Evidence: `craniotomy-v4/sub06-fitted-normal-material-kernel-v4/`, its independent
+review, and `craniotomy-v4/source-window-proposal-v1/`.
 
 Next, qualify a real patient's full A/R, local stops, support, membrane and exterior
 without suppressing source uncertainty. Freeze source-role tasks and matched

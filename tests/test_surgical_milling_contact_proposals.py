@@ -364,3 +364,121 @@ def test_native_A_gone_with_real_debris_still_generates_suction_candidates():
     assert not result['unexaminedTaggedDebrisCells']
     assert result['nominalUncoveredTaggedDebrisCells']
     assert current.snapshot() == before and meter.calls == calls
+
+
+def quarter_approach(engine):
+    return bind_milling_approach(engine, quaternion=[0., 0., 0., 1.],
+        outside_plane_point_ras_mm=[32., 32., 55.], maximum_approach_mm=10.,
+        point_scheme='center_and_quarter_cell_corners')
+
+
+def test_quarter_cell_points_cover_corner_deficit_without_changing_stock_or_A():
+    engine, _ = milling_shell()
+    center = bind_milling_approach(engine, quaternion=[0., 0., 0., 1.],
+        outside_plane_point_ras_mm=[32., 32., 55.], maximum_approach_mm=10.)
+    before = engine.snapshot()
+    old = propose(engine, center)
+    corners = {int(np.ravel_multi_index((x, y, 60), engine.scene.shape))
+               for x in (28, 36) for y in (28, 36)}
+    assert set(old['nominalUncoveredCurrentACells']) == corners
+    result = propose(engine, quarter_approach(engine))
+    assert result['nominalWholeAContactCoverage'] and not result['nominalUncoveredCurrentACells']
+    assert result['testedDrillContactProbes'] == 9*81
+    assert result['examinedContactCells'] == 81
+    assert any(c['pointIndex'] > 0 for c in result['contacts'])
+    aperture = set(engine._cranial_access.aperture_cells)
+    for row in result['contacts']:
+        anchor_index = engine.scene.inverse[:3, :3]@np.asarray(row['contactAnchorRasMm'])+engine.scene.inverse[:3, 3]
+        index = np.asarray(np.unravel_index(row['cell'], engine.scene.shape))
+        assert np.max(np.abs(anchor_index-index)) <= .25+1e-12
+        assert set(row['nominalCurrentAContactCells']) <= aperture
+        # Independently sample the unchanged native stock envelopes along the
+        # proposed collinear route; no retained bone becomes permissible.
+        from resectionlab.surgical_motion import envelopes
+        from resectionlab.surgical_tools import TOOLS
+        for name, pose in [('cranial_drill', row['drillPose']), ('frazier_suction', row['suctionPose'])]:
+            assert TOOLS[name]['radiusMm'] == (2. if name == 'cranial_drill' else 1.5)
+            for fraction in np.linspace(0., 1., 5):
+                position = (np.asarray(row['outsidePose']['position'])*(1-fraction)+
+                            np.asarray(pose['position'])*fraction)
+                for a, b, radius, part in envelopes(TOOLS[name], {'radiusMm': TOOLS[name]['radiusMm'], 'depthMm': 2.},
+                        position, pose['quaternion']):
+                    occupied = {int(c) for c in engine.cells(a, b, radius) if engine.scene.labels.flat[c] != 0}
+                    assert not occupied if part == 'shaft' else occupied <= aperture
+    assert result['nativeCalls'] == 0 and not result['admittedOpening'] and not result['openingComplete']
+    assert result['contentHash'] == proposal_hash(result) and engine.snapshot() == before
+
+
+@pytest.mark.parametrize('probe_cap,expected_cells,incomplete', [(1, 1, True), (9, 1, False), (10, 2, True)])
+def test_quarter_contact_probes_have_a_separate_explicit_total_bound(probe_cap, expected_cells, incomplete):
+    engine, _ = milling_shell()
+    result = propose(engine, quarter_approach(engine), max_contact_probes=probe_cap)
+    assert result['testedDrillContactProbes'] == probe_cap
+    assert result['examinedContactCells'] == expected_cells
+    assert bool(result['incompletelyExaminedCurrentACells']) == incomplete
+    assert len(result['unexaminedCurrentACells']) == 81-expected_cells
+    assert len(result['remainingOriginalACells']) == 81 and result['controllerDeficit']
+    assert len(result['inverseContactDiagnostics']) == probe_cap
+    for bad in (0, 2049, True):
+        with pytest.raises(ValueError, match='BOUNDS_REQUIRED'):
+            propose(engine, quarter_approach(engine), max_contact_probes=bad)
+
+
+def test_quarter_anchor_is_affine_bound_and_point_scheme_is_explicit():
+    rotation = Rotation.from_euler('xyz', [17., -11., 28.], degrees=True)
+    engine, center = generated(world_rotation=rotation)
+    approach = bind_milling_approach(engine, quaternion=center['quaternion'],
+        outside_plane_point_ras_mm=center['outsidePlanePointRasMm'], maximum_approach_mm=25.,
+        point_scheme='center_and_quarter_cell_corners')
+    result = propose(engine, approach, max_contact_probes=729)
+    assert result['testedDrillContactProbes'] == 729
+    assert result['contacts']
+    for row in result['contacts']:
+        native = engine.scene.inverse[:3, :3]@np.asarray(row['contactAnchorRasMm'])+engine.scene.inverse[:3, 3]
+        cell = np.asarray(np.unravel_index(row['cell'], engine.scene.shape))
+        assert np.max(np.abs(native-cell)) <= .25+1e-10
+    bad = copy.deepcopy(approach)
+    bad['pointScheme'] = 'shrink_the_drill'
+    with pytest.raises(ValueError, match='POINT_SCHEME_REQUIRED'):
+        propose(engine, bad)
+    with pytest.raises(ValueError, match='POINT_SCHEME_REQUIRED'):
+        bind_milling_approach(engine, quaternion=center['quaternion'],
+            outside_plane_point_ras_mm=center['outsidePlanePointRasMm'], maximum_approach_mm=25.,
+            point_scheme='unbounded_offsets')
+
+
+def test_quarter_corner_contact_executes_native_finite_work_without_opening_credit():
+    engine, _ = milling_shell()
+    proposal = propose(engine, quarter_approach(engine))
+    corner = int(np.ravel_multi_index((28, 28, 60), engine.scene.shape))
+    selected = next(row for row in proposal['contacts'] if corner in row['nominalCurrentAContactCells'])
+    assert selected['pointIndex'] > 0
+    meter = TransitionMeter(100)
+    limits = freeze_bone_opening_limits(engine, max_total_bone_mm3=81.,
+        max_native_actions=50, max_public_calls=100, max_wall_seconds=90., meter=meter)
+    candidate, receipt = checked_craniotomy_actions(engine, selected['actions'], limits=limits)
+    assert corner in candidate.state['removed']
+    assert set(candidate.state['removed']) <= set(engine._cranial_access.aperture_cells)
+    assert candidate.metrics()['targetRemovedMm3'] == 0
+    assert receipt['reason'] == 'COMPLETE_NATIVE_OPENING_REQUIRED' and not receipt['admittedOpening']
+    assert milling_readiness(candidate)['debrisConserved']
+    assert meter.calls == 2*receipt['nativeActionsAppended']
+
+
+def test_off_center_contact_bracket_includes_anchor_offset_on_long_affine_cells():
+    from types import SimpleNamespace
+    from resectionlab.geometry import GeometryScene, _segment_cell_distances
+    from resectionlab.surgical_milling_contact_proposals import _contact
+    affine = np.diag([1., 1., 10., 1.])
+    labels = np.zeros((3, 3, 3), dtype=np.uint8)
+    scene = GeometryScene(labels, affine)
+    engine = SimpleNamespace(grid=scene, scene=SimpleNamespace(shape=labels.shape, affine=affine))
+    cell = int(np.ravel_multi_index((1, 1, 1), labels.shape))
+    point = np.array([1.25, 1.25, 12.5])
+    rho = np.linalg.norm([.5, .5, 5.])
+    pose, threshold = _contact(engine, cell, point, np.array([0., 0., 1.]), 2., rho,
+                               np.array([0., 0., 0., 1.]))
+    assert threshold == pytest.approx(9.5)
+    assert pose['position'][2] == pytest.approx(3.1)
+    assert float(_segment_cell_distances(scene, np.array([[1, 1, 1]]),
+        np.array(pose['position']), np.array(pose['position']))[0]) == pytest.approx(1.9)
