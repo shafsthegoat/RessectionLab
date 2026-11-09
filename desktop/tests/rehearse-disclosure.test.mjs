@@ -92,6 +92,21 @@ test('native bone opening follows preview status and preserves missing quantitie
   assert.equal(text(nodes(opening).find(n=>n.props['data-craniotomy-metric']==='flapEvacuatedMm3')),'Unknown');
   assert.equal(c.view.craniotomy.openingComplete,true);assert.deepEqual(c.calls,[]);
 });
+test('milling reports actual collected and remaining debris without a flap removal claim',()=>{
+  const c=controller();
+  c.view.craniotomy={method:'milling',phase:'MILLING_DEBRIS_RETAINED',kerfRemovedMm3:0,flapEvacuatedMm3:0,milledBoneMm3:81,declaredBoneRemovedMm3:81,apertureEvacuated:false,openingComplete:false,milling:{debrisRemovedMm3:0,debrisPresentMm3:81,debrisEscapedMm3:0,treatmentEntrySupported:false}};
+  let opening=find(Outcome({c}),'div','Native bone opening');
+  assert(text(opening).includes('Bone removed; debris collection pending'));
+  assert(!text(opening).includes('Flap evacuated'));
+  for(const [key,value]of [['milledBoneMm3','81.00'],['debrisRemovedMm3','0.00'],['debrisPresentMm3','81.00']])assert.equal(text(nodes(opening).find(n=>n.props['data-craniotomy-metric']===key)),value);
+  c.view.craniotomy={...c.view.craniotomy,phase:'MILLING_WITHDRAWN',apertureEvacuated:true,openingComplete:true,milling:{debrisRemovedMm3:81,debrisPresentMm3:0,debrisEscapedMm3:0,treatmentEntrySupported:false}};
+  opening=find(Outcome({c}),'div','Native bone opening');
+  assert(text(opening).includes('Bone and debris cleared; instruments withdrawn'));
+  assert(text(opening).includes('Dural opening and tumor entry remain unsupported.'));
+  delete c.view.craniotomy.milling;
+  assert.equal(text(nodes(find(Outcome({c}),'div','Native bone opening')).find(n=>n.props['data-craniotomy-metric']==='debrisRemovedMm3')),'Unknown');
+  assert.deepEqual(c.calls,[]);
+});
 test('inspection notice reflects active optical state and remains outside settings disclosures',()=>{
   assert.equal(inspectionNotice({}),null);assert.match(inspectionNotice({layerOpacity:{brain:.1}}),/transparent anatomy/);assert.match(inspectionNotice({clipping:{enabled:true}}),/cutaway/);
   assert.equal(inspectionNotice({operativeView:'surgeon',layerOpacity:{brain:.1},microscope:{}}),null,'opaque microscope ignores external alpha');assert.match(inspectionNotice({operativeView:'surgeon',microscope:{inspectionTransparency:true,inspectionCutaway:true}}),/transparent anatomy and cutaway/);

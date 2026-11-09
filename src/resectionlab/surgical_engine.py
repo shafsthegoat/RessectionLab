@@ -329,8 +329,8 @@ class SurgicalEngine:
     _view_omit_fields = frozenset({'flapComponents'})
     def __init__(self, scene, *, protection=None, guard_config=None):
         self.scene = scene
-        from .surgical_craniotomy import validate_contract
-        self._cranial_access = validate_contract(scene)
+        from .surgical_milling import resolve_contract
+        self._cranial_access = resolve_contract(scene)
         from .surgical_rl_protection import GuardConfig, ProtectionSet, missing_critical, protection_contract, declared_scene_protection
         declared = declared_scene_protection(scene, protection)
         if declared is not protection:
@@ -621,8 +621,8 @@ class SurgicalEngine:
             candidate._transition_check=(lambda:_checked_operation(check)) if check is not None else None
             if candidate._cranial_access is not None:
                 candidate.scene.require_cache_source()
-                from .surgical_craniotomy import validate_bone_scope
-                candidate._cranial_access = validate_bone_scope(candidate)
+                from .surgical_milling import validate_source_scope
+                candidate._cranial_access = validate_source_scope(candidate)
             from .surgical_task_domain import action_rejection, reviewed_domain
             domain = reviewed_domain(candidate.scene)
             if domain is not None:

@@ -257,6 +257,10 @@ def extract(engine, key):
 
 
 def aperture_evacuated(engine, contract=None):
+    from .surgical_milling import is_milling, milling_readiness
+    candidate = engine._cranial_access if contract is None else contract
+    if is_milling(candidate):
+        return milling_readiness(engine)['apertureCleared']
     contract = _contract(engine) if contract is None else contract
     return (set(contract.flap_cells) | set(contract.kerf_cells) <= set(engine.state['removed']) and
             any(event.get('contractHash') == contract.content_hash for event in engine.state.get('boneFlapEvacuations', [])))
@@ -264,6 +268,21 @@ def aperture_evacuated(engine, contract=None):
 
 def describe(engine):
     contract = engine._cranial_access
+    from .surgical_milling import is_milling, milling_readiness
+    if is_milling(contract):
+        status = milling_readiness(engine)
+        phase = ('MILLING_WITHDRAWN' if status['openingComplete'] else
+                 'MILLING_CLEARED' if status['apertureCleared'] else
+                 'MILLING_DEBRIS_RETAINED' if status['apertureRemoved'] else
+                 'MILLING_IN_PROGRESS' if status['removedBoneMm3'] else 'MILLING_BOUND')
+        return {'contractHash': contract.content_hash, 'method': 'milling', 'phase': phase,
+                'kerfRemovedMm3': 0., 'flapEvacuatedMm3': 0.,
+                'milledBoneMm3': status['removedBoneMm3'],
+                'declaredBoneRemovedMm3': status['removedBoneMm3'],
+                'apertureEvacuated': status['apertureCleared'],
+                'openingComplete': status['openingComplete'], 'milling': status,
+                'transport': 'native solid-to-debris erosion and metered suction; no rigid flap',
+                'clinicalValidation': 'none'}
     removed = set(engine.state['removed'])
     kerf = len(removed & set(contract.kerf_cells))
     flap = len(removed & set(contract.flap_cells))

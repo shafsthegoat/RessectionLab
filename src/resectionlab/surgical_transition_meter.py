@@ -8,6 +8,7 @@ therefore consumes budget even when its branch is discarded.
 from __future__ import annotations
 
 import copy
+import time
 from contextlib import contextmanager
 
 from .surgical_engine import SurgicalEngine
@@ -30,6 +31,9 @@ class TransitionMeter:
         if check is not None and not callable(check):
             raise TypeError('Native transition cancellation check must be callable')
         self.max_calls = max_calls
+        # Entire-comparison wall origin, including discarded probes and any
+        # native prefix executed before a downstream policy is frozen.
+        self._created_monotonic = time.monotonic()
         self.check = check
         self.preview_calls = 0
         self.direct_step_calls = 0

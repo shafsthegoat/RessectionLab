@@ -12,9 +12,22 @@ assert(!fs.existsSync(output),'Preserve previous evidence');fs.mkdirSync(output,
 const sha=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex'),original=sha(input),saved=path.join(output,'workflow-saved.ressectionlab');
 const backendFiles=['surgical_staged_skills.py','surgical_sequence_search.py','surgical_staged_planning.py',
  'surgical_engine.py','surgical_scene.py','surgical_effects.py','surgical_tools.py','surgical_clock.py',
- 'surgical_craniotomy.py','surgical_bone_transport.py','surgical_cranial_guards.py','surgical_craniotomy_skills.py'].map(name=>path.join(root,'src/resectionlab',name));
+ 'surgical_craniotomy.py','surgical_bone_transport.py','surgical_cranial_guards.py','surgical_craniotomy_skills.py',
+ 'surgical_milling.py','surgical_transition_meter.py','surgical_drilling_v2.py','surgical_physics_v2.py','surgical_task_admission.py'].map(name=>path.join(root,'src/resectionlab',name));
 const backendSourceHashes=()=>Object.fromEntries(backendFiles.map(file=>[path.basename(file),sha(file)]));
 const report={input,output,sourceSha256:original,backendSourceSha256:backendSourceHashes(),rendererIndexSha256:sha(path.join(root,'desktop/dist/index.html')),windowEverVisible:false,requests:[],checks:[],captures:[],passed:false};let last;
+let millingCheckpoints,millingCheckpointPath;
+if(process.env.WORKFLOW_MILLING==='1'){
+ assert.equal(process.env.WORKFLOW_RECORDED_ONLY,'1','Milling harness verifies recorded native controls only');
+ assert.notEqual(process.env.WORKFLOW_CRANIOTOMY,'1','Select one native opening method');
+ assert(process.env.WORKFLOW_MILLING_CHECKPOINTS,'Use the formal dynamic native checkpoint file');
+ millingCheckpointPath=path.resolve(process.env.WORKFLOW_MILLING_CHECKPOINTS);
+ assert(millingCheckpointPath.startsWith(base+path.sep),'Keep checkpoint provenance in ignored testcases');
+ millingCheckpoints=JSON.parse(fs.readFileSync(millingCheckpointPath,'utf8'));
+ assert.equal(millingCheckpoints.schema,'resectionlab.generated-milling-checkpoints.v1');
+ assert.equal(millingCheckpoints.checkpoints.length,6);
+ report.millingCheckpointPath=millingCheckpointPath;report.millingCheckpointSha256=sha(millingCheckpointPath);
+}
 app.setPath('userData',path.join(output,'hidden-profile'));process.argv.push('--case',input,'--automation-hidden');
 dialog.showSaveDialog=async()=>({canceled:false,filePath:saved});
 const handle=ipcMain.handle.bind(ipcMain);
@@ -52,6 +65,48 @@ app.on('browser-window-created',(_event,window)=>{
     report.recordedOutcome={position:last.position,stateId:last.view.stateId,boneRemovedMm3:removed('bone'),brainRemovedMm3:removed('soft_tissue'),targetRemovedMm3:last.view.metrics.targetRemovedMm3};
     if(process.env.WORKFLOW_EXPECT_BONE_MM3!==undefined)assert(Math.abs(report.recordedOutcome.boneRemovedMm3-Number(process.env.WORKFLOW_EXPECT_BONE_MM3))<1e-5);
     if(process.env.WORKFLOW_EXPECT_NO_BRAIN_TARGET==='1'){assert.equal(report.recordedOutcome.brainRemovedMm3,0);assert.equal(report.recordedOutcome.targetRemovedMm3,0);}
+    if(process.env.WORKFLOW_MILLING==='1'){
+     assert.equal(last.view.scene.sceneId,millingCheckpoints.sourceSceneId);
+     assert.equal(last.position,millingCheckpoints.finalPosition);
+     assert.equal(last.view.stateId,millingCheckpoints.finalStateId);
+     report.millingCheckpoints=[];
+     for(const item of millingCheckpoints.checkpoints){
+      const since=report.requests.length;await set('Surgical timeline',item.position);
+      const started=Date.now();while(!report.requests.slice(since).some(row=>row.command==='seek')){if(Date.now()-started>120000)throw Error('Missing milling checkpoint seek');await delay(80);}await ready();
+      assert.equal(last.position,item.position);assert.equal(last.view.stateId,item.stateId);
+      const opening=last.view.craniotomy,proof=opening.milling;
+      assert.equal(opening.method,'milling');assert.equal(opening.phase,item.phase);
+      assert.equal(opening.openingComplete,item.openingComplete);assert.equal(opening.apertureEvacuated,item.apertureEvacuated);
+      assert.equal(opening.milledBoneMm3,item.milledBoneMm3);assert.equal(last.view.metrics.nonTargetRemovedMm3,item.nonTargetRemovedMm3);
+      assert.equal(last.view.metrics.targetRemovedMm3,0);assert.equal(last.view.moved.length,0);
+      assert.equal(opening.flapEvacuatedMm3,0);assert.equal(proof.treatmentEntrySupported,false);
+      const nativeEvent=last.view.history?.at(-1);
+      if(item.position===0&&Array.isArray(last.view.history))assert.equal(last.view.history.length,0);
+      if(item.position>0&&nativeEvent){assert.equal(nativeEvent.status,item.lastNativeStatus);assert.equal(nativeEvent.reason??null,item.lastNativeReason??null);}
+      for(const key of ['apertureRemoved','historyVerified','debrisConserved','generatedBoneDebrisMm3','debrisRemovedMm3','debrisPresentMm3','debrisEscapedMm3'])assert.equal(proof[key],item[key],key);
+      await capture('milling-'+item.position+'-'+item.name,'.workflow-rehearsal');
+      await stage('Compare');await js(`(()=>{const d=document.querySelector('.workflow-checkpoint-burdens');if(!d.open)d.querySelector('summary').click()})()`);
+      assert(await js(`document.querySelector('[aria-label="Native bone opening"]')?.checkVisibility()`));
+      const displayed=await js(`document.querySelector('[aria-label="Native bone opening"]').innerText`);
+      assert(displayed.includes('Milled bone')&&displayed.includes('Bone debris collected')&&displayed.includes('Bone debris remaining'));
+      assert(displayed.includes('Dural opening and tumor entry remain unsupported.'));
+      assert(displayed.includes('Opening with both hands withdrawn: '+(item.openingComplete?'Complete':'Incomplete')));
+      assert(!await js(`!!document.querySelector('[aria-label="Native bone opening"] [data-craniotomy-metric="flapEvacuatedMm3"]')`));
+      for(const [key,value]of [['milledBoneMm3',item.milledBoneMm3],['debrisRemovedMm3',item.debrisRemovedMm3],['debrisPresentMm3',item.debrisPresentMm3]]){
+       const text=await js(`document.querySelector('[aria-label="Native bone opening"] [data-craniotomy-metric="${key}"]').textContent`);
+       assert.equal(Number(text),Number(Number(value).toFixed(2)),key+' displayed native quantity');
+      }
+      if(item.name==='bone-removed-debris-retained')assert(displayed.includes('debris collection pending'));
+      if(item.name==='debris-collected-withdrawal-pending')assert(displayed.includes('withdrawal pending'));
+      if(item.name==='complete-native-withdrawal')assert(displayed.includes('instruments withdrawn'));
+      report.millingCheckpoints.push({position:last.position,stateId:last.view.stateId,opening,displayed,
+       nativeHistoryAvailable:!!nativeEvent,lastNativeStatus:nativeEvent?.status??null,lastNativeReason:nativeEvent?.reason??null});
+      await capture('milling-summary-'+item.position,'.workflow-checkpoint-burdens');await stage('Rehearse/edit');
+     }
+     assert.equal(last.position,millingCheckpoints.finalPosition);assert.equal(last.view.stateId,millingCheckpoints.finalStateId);
+     report.millingDisplayed=report.millingCheckpoints.at(-1).displayed;
+     report.checks.push('Dynamic actual native milling checkpoints preserve capacity partials, wholeA81 removal, global debris collection, true exterior withdrawal and unsupported dural/tumor entry; recorded playback supplies no new patient plan');
+    }
     if(process.env.WORKFLOW_CRANIOTOMY==='1'){
      report.craniotomyCheckpoints=[];
      for(const item of [{position:8,phase:'KERF_IN_PROGRESS',removed:236,moved:0},
@@ -145,7 +200,7 @@ app.on('browser-window-created',(_event,window)=>{
     await capture('06-complete-sequence-ledger','.workflow-checkpoint-burdens');report.checks.push('Compare expands the single accepted-state sequence ledger, retaining access burden and unknown evidence');
    }
    await click('Save');await wait(`true`,'save dispatch');const savedAt=Date.now();while(!fs.existsSync(saved)){if(Date.now()-savedAt>30000)throw Error('Missing native save');await delay(80);}report.saved=saved;report.savedState=await state();
-   assert.equal(sha(input),original);assert.deepEqual(backendSourceHashes(),report.backendSourceSha256,'Backend source must remain frozen throughout this run');assert(!window.isVisible()&&!report.windowEverVisible);report.backendSourceStable=true;report.sourcePreserved=true;report.passed=true;
+   assert.equal(sha(input),original);if(millingCheckpointPath)assert.equal(sha(millingCheckpointPath),report.millingCheckpointSha256);assert.deepEqual(backendSourceHashes(),report.backendSourceSha256,'Backend source must remain frozen throughout this run');assert(!window.isVisible()&&!report.windowEverVisible);report.backendSourceStable=true;report.sourcePreserved=true;report.passed=true;
   }catch(error){report.error=String(error);report.sourcePreserved=sha(input)===original;report.failureState=await state().catch(()=>null);report.body=await js('document.body.innerText').catch(()=>null);fs.writeFileSync(path.join(output,'failure.png'),(await window.webContents.capturePage(undefined,{stayHidden:true,stayAwake:true})).toPNG());console.error(error);}
   fs.writeFileSync(path.join(output,'report.json'),JSON.stringify(report,null,2));console.log(JSON.stringify({passed:report.passed,error:report.error,saved:report.saved}));app.exit(report.passed?0:1);
  });

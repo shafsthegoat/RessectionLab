@@ -129,8 +129,8 @@ class SurgicalScene:
                 if field == 'functionalEvidence' and row.get('probe') not in ('cortical', 'subcortical'):
                     raise ValueError('Functional evidence requires declared cortical/subcortical coverage')
         for value in self.properties.get('boneAnchors', []): cell(value)
-        from .surgical_craniotomy import validate_contract
-        validate_contract(self)
+        from .surgical_milling import resolve_contract
+        resolve_contract(self)
 
     @property
     def shape(self): return self.labels.shape
@@ -192,13 +192,17 @@ def from_case(case, mapping=None):
     if case.frame == 'LPS+': affine = np.diag([-1., -1., 1., 1.]) @ affine
     properties = thaw_json(case.metadata).get('surgical_properties', {})
     cranial_source = {}
-    if 'cranialAccessV1' in properties:
+    declarations = [name for name in ('cranialAccessV1', 'cranialMillingV1') if name in properties]
+    if declarations:
         # The contract is stored in metadata, which also contributes to the
         # full case hash. Bind its predeclaration case without a hash cycle.
         # Every array, affine and all other metadata remain in this manifest.
         base = case.to_manifest(include_hash=False)
-        base['metadata']['surgical_properties'].pop('cranialAccessV1')
-        cranial_source['cranialAccessBaseCaseHash'] = semantic_digest(base)
+        if len(declarations) != 1:
+            raise ValueError('CRANIAL_ACCESS_MULTIPLE_METHODS: choose one versioned opening method')
+        base['metadata']['surgical_properties'].pop(declarations[0])
+        field = 'cranialAccessBaseCaseHash' if declarations[0] == 'cranialAccessV1' else 'cranialMillingBaseCaseHash'
+        cranial_source[field] = semantic_digest(base)
     scene = SurgicalScene(labels, affine, regions, {'caseHash': case.semantic_hash, 'caseId': case.case_id,
         **cranial_source,
         'provenance': 'source annotations and declared cached estimates',

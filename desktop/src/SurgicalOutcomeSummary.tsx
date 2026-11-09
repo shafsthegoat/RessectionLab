@@ -3,7 +3,7 @@ import {fullCaseStateSummary} from './full-case-presentation';
 export const amount=(value:unknown,digits=2)=>typeof value==='number'&&Number.isFinite(value)?value.toLocaleString(undefined,{maximumFractionDigits:digits}):'Unknown';
 const metricAmount=(value:unknown)=>typeof value==='number'&&Number.isFinite(value)?value.toFixed(2):'Unknown';
 const evidenceLabels:Record<string,string>={brainStrainSquaredMm3S:'accumulated strain exposure',brainStressSquaredPa2Mm3S:'accumulated stress exposure',thermalPeakC:'peak temperature',thermalExposureMm3KS:'thermal exposure',bloodGeneratedMm3:'modeled blood generation',motorEncounterMm3:'motor mapping',languageEncounterMm3:'language mapping'};
-const openingStages:Record<string,string>={BOUND:'Opening not started',KERF_IN_PROGRESS:'Bone cutting / separation',GRASPED_OR_TRANSPORTED:'Flap held or lifted',DETACHED_IN_FIELD:'Flap released in field',EVACUATED:'Flap removed; withdrawal pending',HOLDER_WITHDRAWN:'Flap removed and instruments withdrawn'};
+const openingStages:Record<string,string>={BOUND:'Opening not started',KERF_IN_PROGRESS:'Bone cutting / separation',GRASPED_OR_TRANSPORTED:'Flap held or lifted',DETACHED_IN_FIELD:'Flap released in field',EVACUATED:'Flap removed; withdrawal pending',HOLDER_WITHDRAWN:'Flap removed and instruments withdrawn',MILLING_BOUND:'Milling not started',MILLING_IN_PROGRESS:'Milling bone',MILLING_DEBRIS_RETAINED:'Bone removed; debris collection pending',MILLING_CLEARED:'Bone and debris cleared; withdrawal pending',MILLING_WITHDRAWN:'Bone and debris cleared; instruments withdrawn'};
 
 /** One readout for the anatomy actually displayed. Missing values stay unknown. */
 export function SurgicalOutcomeSummary({c}:{c:SurgicalController}) {
@@ -22,12 +22,19 @@ export function SurgicalOutcomeSummary({c}:{c:SurgicalController}) {
     <p className="surgical-note">{summary.targetRemovedPercent===null?'Unknown fraction':amount(summary.targetRemovedPercent)+'%'} of {amount(summary.initialTargetMm3)} mm³ modeled target. Functional injury remains Unknown.</p>
     {opening&&<div aria-label="Native bone opening">
       <div className="surgical-metrics">
+        {opening.method==='milling'?<>
+        <div><small>Milled bone · mm³</small><strong data-craniotomy-metric="milledBoneMm3">{metricAmount(opening.milledBoneMm3)}</strong></div>
+        <div><small>Bone debris collected · mm³</small><strong data-craniotomy-metric="debrisRemovedMm3">{metricAmount(opening.milling?.debrisRemovedMm3)}</strong></div>
+        <div><small>Bone debris remaining · mm³</small><strong data-craniotomy-metric="debrisPresentMm3">{metricAmount(opening.milling?.debrisPresentMm3)}</strong></div>
+        </>:<>
         <div><small>Kerf removed · mm³</small><strong data-craniotomy-metric="kerfRemovedMm3">{metricAmount(opening.kerfRemovedMm3)}</strong></div>
         <div><small>Flap evacuated · mm³</small><strong data-craniotomy-metric="flapEvacuatedMm3">{metricAmount(opening.flapEvacuatedMm3)}</strong></div>
+        </>}
         <div><small>Opening bone removed · mm³</small><strong data-craniotomy-metric="declaredBoneRemovedMm3">{metricAmount(opening.declaredBoneRemovedMm3)}</strong></div>
       </div>
       <p>Opening stage: {Object.hasOwn(openingStages,opening.phase)?openingStages[opening.phase]:'Unknown'}.</p>
       <p>Aperture: {opening.apertureEvacuated===true?'Evacuated':opening.apertureEvacuated===false?'Not evacuated':'Unknown'}. Opening with both hands withdrawn: {opening.openingComplete===true?'Complete':opening.openingComplete===false?'Incomplete':'Unknown'}.</p>
+      {opening.method==='milling'&&<p>Bone debris escaped: {metricAmount(opening.milling?.debrisEscapedMm3)} mm³. Dural opening and tumor entry remain unsupported.</p>}
       <p className="surgical-note">Bone-opening research model. Tumor-task completion and clinical safety remain unassessed.</p>
     </div>}
     <details><summary>Source target, material and fluid accounting</summary>

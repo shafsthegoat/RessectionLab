@@ -304,6 +304,23 @@ def test_historical_acquired_v2_reports_reopen_without_public_contract_promotion
     assert validate_workspace(scene, record, case.semantic_hash)
 
 
+def test_holder_catalog_extension_preserves_only_unchanged_historical_models(monkeypatch):
+    from types import SimpleNamespace
+    engine = SimpleNamespace(scene=SimpleNamespace(properties={}))
+    original_catalog = admission.catalog()
+    preceding = dict(admission._models(engine), instrumentCatalogHash=semantic_digest(
+        [row for row in original_catalog if row['id'] != 'bone_flap_holder']))
+    assert admission._compatible_models(engine, preceding)
+    for field, value in (('physicsHash', 'sha256:'+'0'*64),
+                         ('toolMechanicsRevision', 1), ('physicalClockRevision', 0),
+                         ('instrumentCatalogHash', 'sha256:'+'0'*64)):
+        assert not admission._compatible_models(engine, dict(preceding, **{field: value}))
+    changed = copy.deepcopy(original_catalog)
+    next(row for row in changed if row['id'] == 'cusa')['radiusMm'] += .1
+    monkeypatch.setattr(admission, 'catalog', lambda: changed)
+    assert not admission._compatible_models(engine, preceding)
+
+
 @pytest.mark.parametrize('change', ['invented-missing', 'wrong-status', 'stop-with-routes'])
 def test_self_resealed_v3_refusal_must_match_public_evidence_and_count(prepared, change):
     from resectionlab.surgical_interactive_planning import _public_report_body

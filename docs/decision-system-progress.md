@@ -73,6 +73,29 @@ identical geometry/actions/bounds. Development tests/probes and desktop replay a
 additional; no matched speedup or end-to-end patient performance is claimed.
 Evidence: `craniotomy-v1/desktop-control-v1/`.
 
+The separate `cranialMillingV1` method now covers full-aperture removal without
+claiming a freely detached flap. Source-bound A/R partitions, anchors, local
+inner boundary, original entry and full-tool workspace remain hard gates.
+Fixed stock drilling uses finite v2 cutting work and shared physical time. The
+native ledger keeps all milled bone as debris until actual stock Frazier suction
+collects it; full mass conservation and real tool withdrawal are mandatory.
+Bone clearance never authorizes dura or intracranial treatment. Legacy flap
+snapshots/events retain their original semantics.
+
+The existing checked macro handles only genuine positive-time, single-endpoint
+bone-capacity partials, repeating the unchanged command at most six times by
+default. Every prefix, continuation, preview and replay remains charged. Its
+wall budget now begins at shared-meter creation, closing a prefix-time refund
+found by independent review. The old 200 mm³ patient policy remains unchanged.
+Generated controls exercise the entire 81 mm³ aperture, actual 81 mm³ debris
+collection, zero escaped debris, zero target/brain and real withdrawal; these
+remain mechanism evidence. See `craniotomy-v2/` for frozen sources and controls.
+The sealed run completes 22 actual actions, including one genuine cutting-work
+partial, in 98 native evaluations across macro, exact fresh replay and both
+debris-retained/final cold restorations: 20.548 seconds and 169.4 MB peak RSS.
+Actual statuses, reasons and state identities replay exactly. Source-only work
+was co-running; these measured bounds make no patient speedup claim.
+
 ## Patient results and retained failures
 
 All five unchanged TopCoW TRAIN originals 004/006/012/014/018 remain reported.
@@ -109,17 +132,66 @@ was promoted. Missing acquired CTA coverage is not established. Existing structu
 MRI alternatives are skull-stripped and lack the full skull/vascular/attachment
 package (`task-repair-v2/`; older failures retained in `task-repair-v1/`).
 
+A source-only full-aperture screen now accounts for every supplied bone cell in
+each fixed 8 mm disk: 2076/1414/2051/1404/1368 mm³ for 004/006/012/014/018. All
+exceed the unchanged 200 mm³ task cap. A constant deepest-column drill envelope
+also touches known brain, so categorical bone IDs cannot supply an inner-table
+recipe. A frozen 504-record cone screen finds two literal CTA014 full-shaft FOV
+fits (only 0.020/0.013 mm margins), neither satisfying conservative sweep and
+fixed-aperture bounds. Other sampled fits fail; this finite screen does not prove
+continuous anatomical impossibility or that new imaging is required.
+
+Retained meningioma sub-06/sub-13 original CT arrays support 16/33 and 10/33
+predeclared upper full-stock-tool pose families inside the released CT grid.
+They remain previously exposed development sources, with unqualified target,
+critical/dural evidence and registration. Original headers have the same physical
+FOV as stored grids; rereading originals does not recover a wider acquisition.
+Existing privacy removal remains intact. Header-only official sub-01/02/03 probes
+were prospectively sealed as unreserved development candidates, not official
+TRAIN: nine released 0.5 mm CT/MR headers, 599,778 transferred bytes, 5.42 seconds,
+60 MB RSS and no pixels/native action. Header geometry alone qualifies no case.
+See `craniotomy-v2/{source-milling-review,cone-workspace-review,retained-ct-review,
+header-source-probe}/` for identities, costs and exact limits.
+
+The predeclared lexical sub-01 pilot then acquired only its three released
+CT-BRAIN/CT-BONE/CE-T1W members: 212,819,983 response bytes, 209.05 seconds,
+55.8 MB RSS. Full ZIP-member/gzip CRCs, lengths, original header hashes and
+observed SHA256s pass; publisher whole-archive MD5 remains unverified. Source-plane
+review preserves the existing privacy cut. MRI k0..8 and325..380 are all zero;
+header extent or padding alone cannot establish observed exterior workspace.
+
+Dense source MRI review now supports broad inferior-compartment exclusions as a
+concrete annotation repair. Sub-01's separately preserved MRI-native container
+covers full x/y and k0..240, including extra brain, air and padding; its upper
+face is −426.75 mm RAS-z, with an explicitly assumed 8 mm allowance above the
+reviewed upper band. Independent source/overlay and full-mask checks confirm
+exact recipe/affine/hashes. This is an engineering containment region, not a
+precise brainstem segmentation or anatomical volume. It does not qualify a CT
+transform, patient task, other critical anatomy or workspace. Equivalent retained
+sub-06/sub-13 source review is recorded separately. No native patient action or
+original-case change followed (`craniotomy-v2/sub01-source-pilot/`,
+`craniotomy-v2/retained-source-qualification-v1/`).
+
 ## Validation and next dependency
 
-Current backend: 421 selected tests pass, including new native controls, prior
-finite-contact/staged work, protection/domain/material/clock/RL guards, physics,
-archive and replay. Independent review reproduces 42 contract+17 native tests and
-adversarial entry, full-flap, all-held-operation, old200 cap and persistence checks.
-It exposed and rechecked source-hash recursion, false withdrawal, non-move rotation,
-inner-table, budget resealing and unlogged-prefix errors; failures are retained.
+Current backend: 460 distinct selected tests pass across the broad run and focused
+compatibility rerun, covering milling, flap, finite-contact/staged work, protection,
+domain/material/clock/RL guards and persistence. The initial broad run retained two
+failures from the holder catalog extension: an obsolete fifteen-tool test and
+historical CUSA-only report reopening. The focused 78-test rerun passes after a
+narrow compatibility repair: only the complete preceding catalog without the new
+holder is accepted, with all existing tools, physics and clock unchanged. Unknown
+catalog hashes and changed CUSA geometry still refuse. New declarations retain
+the full current catalog; historical reports acquire no public-plan qualification.
 
-All 1293 desktop tests pass and production build passes. Hidden warm/cold generated
-bone replay verifies cutting, attachment release, 49 moved cells at action 16,
+Independent milling review passes 16 native/adversarial controls and 82 checked
+macro controls, including actual finite-work prefixes, both hands, mass/exit,
+budget ancestry, wall-origin and injury-seal checks. Prior independent flap
+coverage and retained failures remain in `craniotomy-v1/`. No patient window is
+qualified by these generated tests.
+
+All 1294 desktop tests pass and production build passes. Prior hidden warm/cold
+flap replay verifies cutting, attachment release, 49 moved cells at action 16,
 evacuation 17, actual withdrawal 18, full 285 mm³ ledger, playback and Save/Open.
 Windows remain hidden and originals unchanged. See `craniotomy-v1/` for final
 renderer/backend hashes and screenshot sequence. Earlier multiple-patient workflow
@@ -127,10 +199,23 @@ checks, cancellation, edit staleness and actual paired-source staged Generate ar
 retained with their implementation hashes in `contact-continuation-v1/desktop/`;
 the three legacy 0007 branches remain unpassed, not completed patient tasks.
 
-Next: source-review a patient cranial window/full-thickness contour, attachments,
-retained-skull support, full-tool workspace and flap exit; freeze its complete
-bone/brain/target/burden goals before joint opening/work search. Do not substitute
-an idealized control for patient evidence. Old boxes exclude 35.32% of CTA012's
+Current hidden milling warm-v2 and cold-v1 pass all six actual checkpoints
+(0/3/10/13/21/22), returned cutting-partial history, debris quantities, full ledger,
+play/pause, Save and fresh reopen. Both remain hidden, with stable backend/source
+hashes and renderer `71653cf6…`. Root inspected the actual suction/final captures.
+The first harness attempt stopped before browser creation on a file-inventory
+typo; its log is retained. Reproduction and 32 screenshots are indexed in
+`craniotomy-v2/desktop-control-v1/`.
+
+Next: qualify a patient full-thickness aperture, local inner boundary, retained
+support and complete stock-tool workspace. Flap removal additionally needs actual
+attachment/release and whole-fragment exit evidence; milling instead needs finite
+cutting and actual debris collection. Neither supplies critical-anatomy, target
+registration or dural-entry evidence. Freeze the complete bone/brain/target/burden
+goals before joint opening/work search. Source-bound conservative exclusion zones
+may be preferable to pretending an exact anatomical segmentation, but need
+affirmative landmark/uncertainty review. Do not substitute an idealized control
+for patient evidence. Old boxes exclude 35.32% of CTA012's
 original target and 9.58% of CTA014's; all five targets plus fixed 10 mm buffers fit
 acquired CTA FOV. New source-context review is distinct from absent imaging or
 anatomical clearance; preserve old benchmarks/bounds rather than expanding them
@@ -142,7 +227,8 @@ Correct STOP, preparation or a generated bone-only pass do not close this goal.
 
 ```sh
 .venv/bin/python -m pytest -q tests/test_surgical_craniotomy.py \
- tests/test_surgical_bone_transport.py tests/test_surgical_craniotomy_skills.py
+ tests/test_surgical_bone_transport.py tests/test_surgical_craniotomy_skills.py \
+ tests/test_surgical_milling.py tests/test_surgical_milling_native.py
 pnpm --dir desktop test
 pnpm --dir desktop build
 ```

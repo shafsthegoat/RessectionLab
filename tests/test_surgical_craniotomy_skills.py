@@ -408,3 +408,238 @@ def test_runtime_state_and_history_must_still_be_canonical_at_invocation(sequenc
     with pytest.raises(ValueError, match='CRANIOTOMY_FROZEN_BUDGET_IDENTITY_REQUIRED'):
         checked_craniotomy_actions(source, sequence, limits=changed)
     assert meter.calls == 0
+
+
+def milling_recipe():
+    """Original full-aperture targets; runtime capacity repeats are not preplayed."""
+    cut = [request('configure', mechanicsRevision=2, clockRevision=1),
+           request('place', pose=pose(29.5, 29.5, 55.))]
+    cut.extend(request('apply', pose=pose(x, y, 58.3), duration=30.)
+        for x, y in ((29.5, 29.5), (34.5, 29.5), (34.5, 32.),
+                     (29.5, 32.), (29.5, 34.5), (34.5, 34.5)))
+    cut.append(request('withdraw', pose=pose(34.5, 34.5, 55.)))
+    suction = [request('exchange', instrument='frazier_suction'), request('place', pose=pose(29., 29., 55.))]
+    suction.extend(request('apply', pose=pose(x, y, 58.7), duration=2.)
+        for y, xs in ((29., (29., 32., 35.)), (32., (35., 32., 29.)), (35., (29., 32., 35.))) for x in xs)
+    suction.append(request('withdraw', pose=pose(35., 35., 55.)))
+    return cut, suction
+
+
+def milling_budget(source, *, cap=81., calls=160, actions=64, wall=120., replans=None):
+    meter = TransitionMeter(calls)
+    limits = freeze_bone_opening_limits(source, max_total_bone_mm3=cap,
+        max_native_actions=actions, max_public_calls=calls, max_wall_seconds=wall,
+        max_milling_contact_replans=replans, meter=meter)
+    return limits, meter
+
+
+@pytest.fixture(scope='module')
+def complete_milling_macro():
+    from test_surgical_milling_native import milling_case
+    _, source = milling_case()
+    before = source.snapshot(); cut, suction = milling_recipe()
+    limits, meter = milling_budget(source)
+    result, report = checked_craniotomy_actions(source, [*cut, *suction], limits=limits)
+    assert report['status'] == 'accepted', report['reason']
+    assert source.snapshot() == before
+    return source, result, report, limits, meter, cut, suction
+
+
+def test_shared_checked_macro_completes_real_finite_milling_suction_and_exit(complete_milling_macro):
+    source, result, report, limits, meter, cut, suction = complete_milling_macro
+    assert report['openingMethod'] == 'milling' and report['admittedOpening'] and report['admittedBoneOpening']
+    assert limits.max_milling_contact_replans == 6
+    assert report['ledger']['boneRemovedMm3'] == report['ledger']['nonTargetRemovedMm3'] == 81.
+    assert report['ledger']['targetRemovedMm3'] == report['ledger']['additionalNonboneRemovedMm3'] == 0.
+    proof = report['nativeOpening']['milling']
+    assert proof['apertureCleared'] and proof['openingComplete'] and proof['historyVerified']
+    assert proof['generatedBoneDebrisMm3'] == pytest.approx(81.)
+    assert proof['debrisRemovedMm3'] == pytest.approx(81.)
+    assert proof['debrisPresentMm3'] == proof['debrisEscapedMm3'] == 0.
+    assert not proof['treatmentEntrySupported']
+    assert report['millingContactContinuations'] > 0
+    assert len(result.actions) > len(cut+suction)
+    assert meter.calls == 2*len(result.actions)
+    assert report['physicalCallCost']['publicCalls'] == meter.calls
+    for entry in report['attempts']:
+        assert entry['action'] == (cut+suction)[entry['index']]
+        if entry['capacityPartial']:
+            assert not entry['endpointReached'] and entry['status'] == 'committed'
+        else:
+            assert entry['endpointReached']
+    assert source.actions == [] and source.state['removed'] == []
+    assert report['nativeMetrics']['elapsedSeconds'] == result.metrics()['elapsedSeconds']
+    assert report['nativeMetrics']['vesselPhysicsV2']['generatedMm3'] == 0.
+
+
+def test_lower_whole_bone_cap_refuses_unsafe_finite_work_preview_before_commit():
+    from test_surgical_milling_native import milling_shell
+    source, _ = milling_shell(); cut, _ = milling_recipe()
+    limits, meter = milling_budget(source, cap=1.)
+    result, report = checked_craniotomy_actions(source, cut, limits=limits)
+    assert report['status'] == 'refused' and report['reason'] == 'TOTAL_BONE_CAP'
+    assert not report['admittedBoneOpening']
+    assert result.actions == cut[:2] and result.state['removed'] == []
+    assert report['attempts'][-1]['previewBoneRemovedMm3'] > 1.
+    assert meter.calls == 5
+
+
+def test_full_bone_removal_without_actual_debris_clearance_is_unadmitted():
+    from test_surgical_milling_native import milling_shell
+    source, _ = milling_shell(); cut, _ = milling_recipe()
+    limits, _ = milling_budget(source)
+    result, report = checked_craniotomy_actions(source, cut, limits=limits)
+    assert report['reason'] == 'COMPLETE_NATIVE_OPENING_REQUIRED'
+    assert not report['admittedBoneOpening'] and not report['admittedOpening']
+    assert report['ledger']['boneRemovedMm3'] == 81.
+    assert report['nativeOpening']['milling']['debrisPresentMm3'] == 81.
+    assert report['nativeOpening']['milling']['debrisRemovedMm3'] == 0.
+    assert not result.state['holds']
+
+
+@pytest.mark.parametrize('stop', ['calls', 'wall', 'cancel', 'continuations'])
+def test_milling_hard_stops_keep_actual_capacity_prefix_and_spent_cost(stop, monkeypatch):
+    from test_surgical_milling_native import milling_shell
+    source, _ = milling_shell(); cut, _ = milling_recipe()
+    limits, meter = milling_budget(source, calls=6 if stop == 'calls' else 160,
+                                   replans=0 if stop == 'continuations' else None)
+    def committed_capacity():
+        return any(row.get('status') == 'partial' and row['kind'] == 'step' for row in meter.trace)
+    if stop == 'wall':
+        from resectionlab import surgical_craniotomy_skills as skills
+        original = skills.time.monotonic
+        monkeypatch.setattr(skills.time, 'monotonic', lambda: limits.frozen_at+121. if committed_capacity() else original())
+    def cancel():
+        if stop == 'cancel' and committed_capacity():
+            raise InterruptedError('cancel after finite bone capacity prefix')
+    result, report = checked_craniotomy_actions(source, cut, limits=limits, check=cancel)
+    assert report['status'] == 'interrupted' and not report['admittedBoneOpening']
+    assert len(result.actions) == 3 and result.history[-1]['status'] == 'partial'
+    assert report['ledger']['boneRemovedMm3'] > 0.
+    assert meter.calls == report['ledger']['spentPublicCalls'] == 6
+    assert source.actions == [] and source.state['removed'] == []
+
+
+def test_milling_continuation_policy_cannot_change_or_be_resealed_after_freeze():
+    from test_surgical_milling_native import milling_shell
+    source, _ = milling_shell(); cut, _ = milling_recipe()
+    limits, meter = milling_budget(source, replans=1)
+    with pytest.raises(ValueError, match='ALREADY_FROZEN'):
+        freeze_bone_opening_limits(source, max_total_bone_mm3=81., max_native_actions=64,
+            max_public_calls=160, max_wall_seconds=120., meter=meter, max_milling_contact_replans=6)
+    changed = replace(limits, max_milling_contact_replans=8)
+    changed = replace(changed, content_hash=semantic_digest(changed.declaration()))
+    with pytest.raises(ValueError, match='IDENTITY_REQUIRED'):
+        checked_craniotomy_actions(source, cut, limits=changed)
+    assert meter.calls == 0
+
+
+def test_real_zero_spatial_fraction_is_committed_as_work_but_never_opening_credit():
+    from test_surgical_milling_native import milling_shell
+    source, _ = milling_shell(); cut, _ = milling_recipe()
+    short = copy.deepcopy(cut[:3]); short[-1]['duration'] = .1
+    limits, meter = milling_budget(source, replans=1)
+    result, report = checked_craniotomy_actions(source, short, limits=limits)
+    assert report['reason'] == 'MILLING_CONTACT_CONTINUATION_BUDGET'
+    assert not report['admittedBoneOpening']
+    assert len(result.actions) == 4 and meter.calls == 8
+    assert report['attempts'][-1]['capacityPartial']
+    assert report['attempts'][-1]['previewCompletedFraction'] == 0.
+    assert report['attempts'][-1]['previewElapsedSeconds'] > 0.
+    assert report['attempts'][-1]['status'] == 'committed'
+    assert report['nativeMetrics']['drillCuttingWorkJ'] > 0.
+    assert all(row['action'] == short[-1] for row in report['attempts'][2:])
+
+
+@pytest.mark.parametrize('replans', [-1, 9, True, 1.5])
+def test_milling_contact_budget_requires_prospective_bounded_integer(replans):
+    from test_surgical_milling_native import milling_shell
+    source, _ = milling_shell()
+    with pytest.raises(ValueError, match='0..8'):
+        milling_budget(source, replans=replans)
+
+
+def test_v1_cannot_enable_the_new_milling_partial_policy(sequence):
+    source, _, _, _ = shell()
+    with pytest.raises(ValueError, match='does not allow'):
+        freeze_bone_opening_limits(source, max_total_bone_mm3=285., max_native_actions=30,
+            max_public_calls=100, max_wall_seconds=60., meter=TransitionMeter(100),
+            max_milling_contact_replans=6)
+    limits, _ = budget(source, 285.)
+    assert limits.max_milling_contact_replans == 0
+
+
+def test_v1_native_finite_bone_partial_remains_uncommitted():
+    from resectionlab.surgical_craniotomy import binding
+    from resectionlab.surgical_physics_v2 import default_profile
+    from resectionlab.surgical_engine import SurgicalEngine
+    from resectionlab.surgical_scene import SurgicalScene
+    source, contour, _, _ = shell()
+    old = source.scene
+    props = {key: copy.deepcopy(value) for key, value in old.properties.items() if key != PROPERTY}
+    props['tissuePhysicsV2'] = default_profile()
+    base = SurgicalScene(old.labels, old.affine, old.regions, old.source, props)
+    raw = copy.deepcopy(old.properties[PROPERTY]); raw.update(binding(base)); raw['contentHash'] = contract_hash(raw)
+    source = SurgicalEngine(SurgicalScene(base.labels, base.affine, base.regions, base.source, {**props, PROPERTY: raw}))
+    meter = TransitionMeter(100); source = meter.wrap(source)
+    accepted(source, 'configure', mechanicsRevision=2)
+    accepted(source, 'place', pose=pose(26., 26., 55.))
+    actions = [request('apply', pose=contour[0], duration=.1)]
+    limits, meter = budget(source, 285., meter=meter)
+    result, report = checked_craniotomy_actions(source, actions, limits=limits)
+    assert report['openingMethod'] == 'flap'
+    assert report['status'] == 'refused' and report['reason'] == 'BONE_CUTTING_IN_PROGRESS'
+    assert result.actions == source.actions and result.state['removed'] == []
+    assert meter.calls == 5 and not report['admittedBoneOpening']
+
+
+def test_prior_metered_prefix_wall_time_is_never_refunded(sequence, monkeypatch):
+    from resectionlab import surgical_craniotomy_skills as skills
+    source, _, _, _ = shell(); meter = TransitionMeter(100)
+    source = meter.wrap(source)
+    accepted(source, 'configure', mechanicsRevision=2)
+    before = source.snapshot(); spent = meter.calls
+    origin = meter._created_monotonic
+    monkeypatch.setattr(skills.time, 'monotonic', lambda: origin+61.)
+    limits, _ = budget(source, 285., meter=meter)
+    assert limits.frozen_at == origin
+    result, report = checked_craniotomy_actions(source, sequence[1:], limits=limits)
+    assert report['status'] == 'interrupted' and 'wall limit' in report['reason']
+    assert report['wallTimeScope'] == 'since_shared_meter_creation'
+    assert report['ledger']['wallSecondsSinceFreeze'] == 61.
+    assert meter.calls == spent and result.snapshot() == before
+    assert not report['admittedBoneOpening']
+
+
+@pytest.mark.parametrize('origin', ['missing', float('nan'), float('inf'), 'future'])
+def test_unknown_invalid_or_future_meter_wall_origin_cannot_be_frozen(origin):
+    source, _, _, _ = shell(); meter = TransitionMeter(100)
+    if origin == 'missing': del meter._created_monotonic
+    elif origin == 'future': meter._created_monotonic += 1000.
+    else: meter._created_monotonic = origin
+    with pytest.raises(ValueError, match='METER_WALL_ORIGIN_REQUIRED'):
+        budget(source, 285., meter=meter)
+    assert meter.calls == 0
+
+
+def test_meter_origin_cannot_change_after_registered_budget_freeze(sequence):
+    source, _, _, _ = shell(); limits, meter = budget(source, 285.)
+    meter._created_monotonic -= 1.
+    with pytest.raises(ValueError, match='METER_WALL_ORIGIN_CHANGED'):
+        checked_craniotomy_actions(source, sequence, limits=limits)
+    assert meter.calls == 0
+
+
+def test_mixed_integer_float_milling_geometry_remains_bound_during_freeze():
+    from test_surgical_milling import fixture, rebuild
+    from resectionlab.surgical_milling import resolve_contract, validate_contract
+    source, raw = fixture()
+    raw['entry'].update(centerRasMm=[32, 32.0, 59.5], normalRasUnit=[0, 0.0, 1],
+        uRasUnit=[1.0, 0, 0.0], halfExtentsMm=[6, 6.0], maximumInwardMm=30,
+        maximumAngleDegrees=30.0)
+    raw['exit']['planeVoxelBoundary'] = 59
+    source, raw = rebuild(source, raw)
+    typed = resolve_contract(source.scene)
+    assert typed.as_dict() == raw and validate_contract(source.scene, typed) == typed
+    limits, meter = milling_budget(source)
+    assert limits.contract_hash == raw['contentHash'] and meter.calls == 0

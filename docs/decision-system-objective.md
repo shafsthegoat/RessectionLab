@@ -8,7 +8,8 @@ an engine refusal. The original reported brainstem run has not been identified;
 the replacement regression is explicitly generated engineering geometry. The user
 clarified that the concern was an implausible access route (possibly posterior or
 inferior), not an established named-structure injury. A case-specific cranial
-entry window and actual skull opening/flap removal are required next.
+entry window and actual skull removal are now enforced mechanisms; qualifying
+those mechanisms on patient anatomy remains open.
 
 Four separate concepts currently run:
 
@@ -60,8 +61,12 @@ Patient role claims require a caller-supplied trusted catalog and an exact join
 to a predecode TRAIN receipt, original observed-file SHA, native image pixels and
 RAS affine. Case metadata cannot select a trusted catalog or grant a reserved
 patient a new role. Generated controls are explicitly separate from patient
-evidence. Critical annotation review includes the mandatory brainstem floor even
-if a supplied contract has an empty required-structures list.
+evidence. The current v1 task policy requires reviewed brainstem coverage even
+if a supplied contract has an empty required-structures list. This is an
+engineering admission policy, not a verified injury from the reported incident.
+A future regional policy would need affirmative source landmarks, the complete
+reachable action/effect domain, conservative uncertainty and independent review;
+an empty label or a reviewed bounding box cannot establish regional exclusion.
 
 Horizon 1 preserves the existing immediate-removal staged controller. The desktop
 offers horizon 2 or 3 with beam width 3; the backend permits width 2–4 and at
@@ -110,6 +115,24 @@ control passes only its distinct prospectively declared bone-only policy; the ol
 200 mm³ policy refuses it. No patient window or full tumor/physics/RL admission is
 opened by this mechanism. Patient attachment, source coverage and mechanical
 evidence remain required before qualifying the requested patient workflow.
+
+The mutually exclusive `cranialMillingV1` method declares the entire aperture A
+and retained skull R separately from the flap contract. It requires reviewed
+bone scope, inner boundary, entry/exit and supported retained skull. Fixed stock
+drilling uses finite v2 work and the shared physical clock; original source IDs,
+actual native ancestry and tagged instrument effects prove every removal. Full
+bone removal leaves debris in the field. Only actual Frazier collection with
+conserved generated/collected/present/escaped mass, followed by complete native
+withdrawal, completes the opening. It never fabricates flap transport or grants
+dural/CUSA entry. Unknown source evidence remains a refusal.
+
+The same checked macro can retain a genuine positive-time, single-endpoint
+`BONE_CUTTING_IN_PROGRESS` prefix and repeat the identical stock command within
+an explicit bound (default six continuations). Multiwaypoint partials and other
+refusals do not receive this continuation. All partial costs remain in the ledger
+and shared meter. Wall time starts at meter creation, including any earlier
+prefix, discarded probes and idle time; freezing a downstream policy cannot
+refund it. These bone-only controls do not change the patient tumor-task caps.
 
 `TransitionMeter` charges previews, discarded probes, checked exits, commits and
 replay. Those are computation costs, separate from accepted patient treatment.

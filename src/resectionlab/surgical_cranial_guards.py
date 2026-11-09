@@ -68,11 +68,19 @@ def enforce(engine, key, op, position, quaternion, working_cells=()):
     contract = getattr(engine, '_cranial_access', None)
     if contract is None:
         return
-    from .surgical_craniotomy import require_evidence
+    from .surgical_milling import is_milling, require_coverage
     from .surgical_bone_transport import aperture_evacuated
     from .surgical_task_domain import _outside, _posed
     workspace = SimpleNamespace(minimum=contract.exit.minimum_voxel_boundary,
                                 maximum=contract.exit.maximum_voxel_boundary)
+    milling = is_milling(contract)
+    preparation_tools = frozenset({'cranial_drill', 'frazier_suction'}) if milling else BONE_PREPARATION_TOOLS
+    if milling and (engine.state.get('toolMechanicsRevision') != 2 or engine.state.get('physicalClockRevision') != 1):
+        raise ValueError('CRANIAL_ACCESS_MILLING_STOCK_AND_CLOCK_REQUIRED')
+    # Milling remains a bone-only operation after clearance too. Keeping its
+    # inner-boundary guard does not require rescanning replay history at every
+    # physical microstep; completion is evaluated at accepted checkpoints.
+    evacuated = False if milling else aperture_evacuated(engine, contract)
     for hand, slot in engine.state['slots'].items():
         if not _posed(engine, hand) and (hand != key or op in ('exchange', 'inspect', 'deactivate')):
             continue
@@ -85,13 +93,17 @@ def enforce(engine, key, op, position, quaternion, working_cells=()):
             raise ValueError('CRANIAL_ACCESS_OUTSIDE_REVIEWED_WORKSPACE')
         if not _inside_entry(contract, segments):
             continue
-        require_evidence(contract)
+        require_coverage(contract)
+        if milling and slot['instrument'] not in preparation_tools:
+            # Bone-only clearance is not evidence of a dural opening or a
+            # qualified intracranial treatment task.
+            raise ValueError('CRANIAL_ACCESS_MILLING_TREATMENT_UNQUALIFIED')
         axis = Rotation.from_quat(end['quaternion']).apply([0., 0., 1.])
         if float(axis@np.asarray(contract.entry.normal_ras_unit)) < np.cos(np.deg2rad(contract.entry.maximum_angle_degrees))-1e-9:
             raise ValueError('CRANIAL_ACCESS_ATTITUDE_OUTSIDE')
-        if not aperture_evacuated(engine, contract) and slot['instrument'] not in BONE_PREPARATION_TOOLS:
+        if not evacuated and slot['instrument'] not in preparation_tools:
             raise ValueError('CRANIAL_ACCESS_REQUIRES_EVACUATED_FLAP')
-        if not aperture_evacuated(engine, contract) and slot['instrument'] in BONE_PREPARATION_TOOLS:
+        if not evacuated and slot['instrument'] in preparation_tools:
             # Bone preparation has no permission to travel beyond the original
             # inner table. This also blocks a shortcut through a crop/model gap.
             bone = engine.scene.points(contract.window_cells)
@@ -110,6 +122,18 @@ def enforce(engine, key, op, position, quaternion, working_cells=()):
         if hand != key and not slot['active']:
             continue
         name = slot['instrument']
+        if milling and name in preparation_tools:
+            params = engine.parameters(slot)
+            if params['radiusMm'] != TOOLS[name]['radiusMm'] or params['depthMm'] != 2.:
+                raise ValueError('CRANIAL_ACCESS_MILLING_STOCK_GEOMETRY_REQUIRED')
+        if milling and name == 'frazier_suction':
+            cells = set(working_cells) if hand == key else set()
+            if hand != key:
+                for a, b, radius, part in envelopes(TOOLS[name], engine.parameters(slot), slot['position'], slot['quaternion']):
+                    if part != 'shaft':
+                        cells.update(engine.touched(a, b, radius))
+            if cells:
+                raise ValueError('CRANIAL_ACCESS_MILLING_SUCTION_REQUIRES_CLEARED_VOID')
         if name not in ('cranial_drill', 'craniotome', 'bone_flap_holder'):
             continue
         if hand == key:
