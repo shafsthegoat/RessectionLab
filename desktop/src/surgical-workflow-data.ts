@@ -1,3 +1,4 @@
+import {cranialPlanningPresent} from './cranial-workflow-data.ts';
 import type {SurgicalResponse} from './surgical-types';
 import type {PreparationComparison,PreparationRow} from './preparation-planning-data';
 import {preparationCost,preparationSuffix,preparationIncomplete,preparationPhaseAvailable} from './preparation-planning-data.ts';
@@ -6,9 +7,9 @@ import type {InteractivePlanningRoute} from './interactive-planning-data';
 import {stagedGenerationEligibility,stagedStrategyDisplay} from './staged-strategy-data.ts';
 
 export type SurgicalWorkflowStage='case'|'plan'|'compare'|'rehearse';
-export type SurgicalWorkflowPlanner='staged'|'preparation'|'strategy'|'approach';
+export type SurgicalWorkflowPlanner='cranial'|'staged'|'preparation'|'strategy'|'approach';
 export interface WorkflowAlternative {
-  id:string;label:string;status:string;removedMm3:number|null;residualMm3:number|null;
+  coverageLabel?:string;coverageHelp?:string;quantityScope?:'whole-sequence';id:string;label:string;status:string;removedMm3:number|null;residualMm3:number|null;
   fractionRemoved:number|null;nonTargetMm3:number|null;seconds:number|null;
   reason:string;unknowns:string;residualLocation:string;recommended:boolean;
 }
@@ -28,6 +29,7 @@ export function workflowReportCurrent(response:SurgicalResponse|null|undefined,r
 }
 export function workflowPlannerOptions(r:SurgicalResponse|null|undefined,artifact?:unknown):SurgicalWorkflowPlanner[] {
   if(!r)return [];
+  if(cranialPlanningPresent(r))return ['cranial'];
   return [
     (stagedGenerationEligibility(artifact,r).ready||stagedStrategyDisplay(artifact,r))&&'staged',
     (r.preparationPlanningAvailability?.available||r.preparationPlanning)&&'preparation',
@@ -38,6 +40,7 @@ export function workflowPlannerOptions(r:SurgicalResponse|null|undefined,artifac
 /** Prefer a recorded treatment comparison over incidental preparation eligibility. */
 export function preferredWorkflowPlanner(r:SurgicalResponse|null|undefined,artifact?:unknown):SurgicalWorkflowPlanner|null {
   if(!r)return null;
+  if(cranialPlanningPresent(r))return 'cranial';
   if(stagedStrategyDisplay(artifact,r)||stagedGenerationEligibility(artifact,r).ready)return 'staged';
   const meaningfulPreparation=r.preparationPlanning?.rows.some(row=>preparationPhaseAvailable(row,'withdraw',r.preparationPlanning!.controls.preparationFamily));
   const meaningfulStrategy=r.strategyPlanning?.publicPlan.alternatives.some(row=>row.id!=='stop'&&row.feasible&&row.taskProgressMet);

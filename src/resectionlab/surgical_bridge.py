@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import tempfile
+import time
 from types import MappingProxyType
 import numpy as np
 from .core import CaseData, SourceRef, freeze_json, thaw_json, semantic_digest
@@ -74,14 +75,85 @@ def _frame_admission(session, frames, engine, snapshot, history, replay_cache,
         serial = getattr(session, 'surgical_frame_serial', 0) + 1
         session.surgical_frame_serial = serial
         stream_token = token.snapshot_hash + '/' + token.history_hash + '/' + str(serial)
-        item = (snapshot, history, engine.scene, token, shown, stream_token)
+        item = (snapshot, history, engine.scene, token, shown, stream_token, engine)
         admissions.pop(key, None)
         admissions[key] = item
         session.surgical_frame_admissions = dict(list(admissions.items())[-4:])
     return item[3], item[4], item[5]
 
 
+def _cranial_generated_control(case):
+    from .surgical_patient_role import patient_role_evidence
+    data = case.metadata.get('data_case', {})
+    return (data.get('role') is None and data.get('split') is None and not data.get('family_id') and
+        patient_role_evidence(case).get('status') == 'generated_control')
+
+
+def _cranial_critical_blockers(record, root_ids=None):
+    """Acquired-source floor, matching the declared patient task guard review."""
+    blockers = []
+    for row in record.get('cranialPlanningRoots', {}).get('roots', []):
+        if root_ids is not None and row['id'] not in root_ids:
+            continue
+        guard = row['sourceSnapshot'].get('protectionContract') or {}
+        annotations = {a['structureId']: a for a in guard.get('annotations', [])}
+        for structure in sorted({'brainstem', *guard.get('required', [])}):
+            annotation = annotations.get(structure)
+            if annotation is None or not annotation.get('cells'):
+                code = 'MISSING_CRITICAL_ANNOTATIONS'
+            elif annotation.get('reviewStatus') not in ('reviewed', 'engineering-reviewed'):
+                code = 'CRITICAL_ANNOTATION_REVIEW_REQUIRED'
+            else:
+                continue
+            blockers.append({'rootId': row['id'], 'structureId': structure, 'code': code,
+                'message': f"Opening {row['id']} requires nonempty reviewed {structure} source evidence."})
+    return blockers
+
+
+def _cranial_context_availability(case, record, available):
+    if available is None or _cranial_generated_control(case):
+        return available
+    result = copy.deepcopy(available)
+    blockers = _cranial_critical_blockers(record)
+    for row in result.get('roots', []):
+        failed = [b for b in blockers if b['rootId'] == row['rootId']]
+        if failed:
+            row['available'] = False
+            row.setdefault('blockers', []).extend(failed)
+    if blockers:
+        result['available'] = result['available'] and any(r['available'] for r in result.get('roots', []))
+        result.setdefault('blockers', []).extend(blockers)
+    return result
+
+
+def _cranial_source_role(session, case):
+    """Use trusted app-owned role evidence; metadata cannot promote a patient."""
+    from .surgical_patient_role import patient_role_evidence
+    data = case.metadata.get('data_case', {})
+    role = data.get('role')
+    split = data.get('split')
+    if role not in (None, 'TRAIN', 'DEVELOPMENT') or (
+            split is not None and split != role):
+        raise ValueError('SOURCE_ROLE: reserved or conflicting source role')
+    # This root is application/session configuration, never a path in case data
+    # or request JSON. Without it acquired TRAIN remains explicitly unavailable.
+    evidence = patient_role_evidence(case, getattr(session, 'surgical_patient_role_root', None))
+    if (evidence.get('status') == 'generated_control' and role is None and
+            split is None and not data.get('family_id')):
+        return 'GENERATED_CONTROL'
+    if role == 'TRAIN':
+        if data.get('split') != 'TRAIN' or evidence.get('status') != 'verified_train_source':
+            raise ValueError('SOURCE_ROLE: trusted original TRAIN evidence is required')
+        return 'TRAIN'
+    from .surgical_source_roles import development_role
+    development_role(thaw_json(case.metadata.get('surgical_adapter', {})), declarations_root=getattr(
+        session, 'surgical_development_declarations_root',
+        Path(__file__).resolve().parents[2]/'testcases/downloaded-datasets'))
+    return 'DEVELOPMENT'
+
+
 def dispatch(session, operation, args, request, progress):
+    command_started = time.monotonic()
     from .desktop_bridge import BridgeError, _keys, _require_json_budget
     if operation == 'compareSurgicalAnatomy':
         _keys(args, {'beforeCaseHash', 'afterCaseHash', 'changedLayers', 'prefix', 'decisions'})
@@ -148,7 +220,8 @@ def dispatch(session, operation, args, request, progress):
                        'provenance': 'generated engineering fixture'} for r in s.regions}, 'surgical_properties': s.properties})
         return session._install_case(case, {}, request)
     argument_keys = {'caseHash', 'command', 'expectedStateId', 'action', 'mapping', 'position', 'branchId', 'source', 'sceneIndex', 'acknowledgeResearchUnknowns', 'allowModeledBrainCorridor', 'maxHealthyRemovalMm3', 'maxWallSeconds', 'opponent', 'scenario', 'maxActions', 'frameIndex', 'timelineToken', 'viewFieldTokens','initialAccessRadiusMm','exploreExteriorFaces','cumulativeReentry'}
-    if args.get('command') == 'plan' and args.get('opponent') == 'anatomy-staged-strategy':
+    if args.get('command') == 'plan' and args.get('opponent') in (
+            'anatomy-staged-strategy', 'anatomy-cranial-strategy'):
         argument_keys.update({'planningHorizon', 'beamWidth'})
     if args.get('command') == 'inspect':
         argument_keys.add('includeSequenceOutcome')
@@ -166,6 +239,14 @@ def dispatch(session, operation, args, request, progress):
     if args.get('command') in {'previewStrategy','previewPreparation','applyPreparation'}: argument_keys.add('phase')
     if args.get('command') == 'analyzeStrategySensitivity': argument_keys.update({'offsetMm', 'contextVoxelShift', 'expectedPlanSeal'})
     _keys(args, argument_keys)
+    if args.get('command') == 'plan' and args.get('opponent') == 'anatomy-cranial-strategy':
+        _keys(args, {'caseHash', 'command', 'expectedStateId', 'opponent',
+            'acknowledgeResearchUnknowns', 'planningHorizon', 'beamWidth'})
+        if (type(args.get('planningHorizon', 5)) is not int or
+                not 1 <= args.get('planningHorizon', 5) <= 5 or
+                type(args.get('beamWidth', 3)) is not int or
+                not 2 <= args.get('beamWidth', 3) <= 4):
+            raise ValueError('Keep cranial horizon 1..5 and beam width 2..4')
     if 'includeSequenceOutcome' in args and type(args['includeSequenceOutcome']) is not bool:
         raise ValueError('Complete-sequence outcome request must be boolean')
     if args.get('command') == 'recoverExit':
@@ -239,7 +320,8 @@ def dispatch(session, operation, args, request, progress):
                        'suggestPreparation','generatePreparations','previewPreparation','applyPreparation','seekFrame', *PREFIX_COMMANDS}:
         raise ValueError('Unsupported surgical command')
     raw = artifacts.get(ARTIFACT)
-    from .surgical_environment import standardize, default_target_names, SCHEMA as ENVIRONMENT_SCHEMA
+    from .surgical_environment import (
+        standardize, default_target_names, resolve_branch_scene, SCHEMA as ENVIRONMENT_SCHEMA)
     original_builder = scene_builder
     scene_builder = lambda mapping=None: standardize(original_builder(mapping), default_target_names(entry.case) if entry is not None and mapping is None else None,
         raw.get('physicsProfile') if raw and command != 'create' else None) if (
@@ -294,6 +376,8 @@ def dispatch(session, operation, args, request, progress):
             prefix_scene = original_builder(raw_mapping)
             if raw.get('environmentSchema') == ENVIRONMENT_SCHEMA:
                 prefix_scene = standardize(prefix_scene, physics_profile=raw_profile)
+            if raw.get('cranialPlanningRoots') is not None:
+                prefix_scene = resolve_branch_scene(prefix_scene, raw, selected)
             owner = SurgicalPrefixReplay._borrow_frozen_snapshot(prefix_scene, frozen_snapshot,
                 max_input_bytes=128 * 1024**2, max_frame_bytes=64 * 1024**2,
                 _display_row_projection=display_receipt, _prepared_store=PreparedPrefixStore(),
@@ -328,8 +412,12 @@ def dispatch(session, operation, args, request, progress):
             return None
         if raw.get('fullCase'):
             from .surgical_archive_view import inspect_archive_checkpoint
-            result = inspect_archive_checkpoint(scene_builder(raw['mapping']), raw,
-                branch_id=args.get('branchId'), check=request.check)
+            selected = args.get('branchId', raw.get('branchId'))
+            archive_scene = scene_builder(raw['mapping'])
+            if raw.get('cranialPlanningRoots') is not None:
+                archive_scene = resolve_branch_scene(archive_scene, raw, selected)
+            result = inspect_archive_checkpoint(archive_scene, raw,
+                branch_id=selected, check=request.check)
             result.update(caseHash=identity, changed=False)
             _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Imported checkpoint exceeds the display budget')
             # Display data never enters surgical_sessions, artifacts, or either
@@ -377,6 +465,7 @@ def dispatch(session, operation, args, request, progress):
         command = 'inspect'  # An unchanged mapping must not erase a timeline.
     if command == 'create' or raw is None and command != 'inspect':
         scene = scene_builder(args.get('mapping'))
+        base_scene = scene
         from .surgical_rl_protection import GuardConfig
         engine = SurgicalEngine(scene, guard_config=GuardConfig(require_critical_coverage=False))
         record = {'environmentSchema': ENVIRONMENT_SCHEMA, 'physicsProfile': copy.deepcopy(scene.properties['tissuePhysicsV2']), 'mapping': scene.regions, 'branches': {'main': engine.snapshot()}, 'branchId': 'main', 'position': 0, 'parents': {'main': None}, 'timeline': {'main': []}}
@@ -387,12 +476,32 @@ def dispatch(session, operation, args, request, progress):
         # the editable engine. Avoid copying the entire long archive twice.
         engine = cached[1]
         record = cached[2] if command == 'seekFrame' else copy.deepcopy(cached[2])
+        base_scene = cached[4] if len(cached) > 4 else (
+            scene_builder(record['mapping']) if record.get('cranialPlanningRoots') is not None else engine.scene)
     else:
         record = copy.deepcopy(raw)
-        scene = scene_builder(record['mapping'])
+        base_scene = scene_builder(record['mapping'])
+        scene = (resolve_branch_scene(base_scene, record, record['branchId'])
+            if record.get('cranialPlanningRoots') is not None else base_scene)
         full = SurgicalEngine.restore(scene, record['branches'][record['branchId']], check=request.check, use_cache=bool(record.get('fullCase')))
         engine, timeline = replay_cache.seek(full, record['branches'][record['branchId']], record['position'], check=request.check, include_history=True)
         record.setdefault('timeline', {})[record['branchId']] = timeline
+    def owner_for_branch(branch_id, current_engine):
+        snapshot = record['branches'][branch_id]
+        if snapshot['sceneId'] == current_engine.scene.identity:
+            return current_engine
+        selected_scene = resolve_branch_scene(base_scene, record, branch_id)
+        return SurgicalEngine.restore(selected_scene, snapshot, check=request.check,
+            use_cache=bool(record.get('fullCase')))
+
+    def inherit_root(branch_id, parent_branch_id):
+        registry = record.get('cranialPlanningRoots')
+        root_id = registry.get('branchRoots', {}).get(parent_branch_id) if registry is not None else None
+        if root_id is not None:
+            from .surgical_cranial_planning_roots import bind_branch_root
+            bind_branch_root(base_scene, record, branch_id, root_id)
+
+    cranial_computation = None
     if record.get('preparationComparisons') or record.get('preparationApplications'):
         from .surgical_preparation_workspace import bind_for_branch
         bind_for_branch(engine,record,identity,check=request.check)
@@ -416,7 +525,8 @@ def dispatch(session, operation, args, request, progress):
         raise ValueError('PLANAR_MANEUVER_ONLY: this opt-in scene admits only the declared blade actions and supported replay')
     from .surgical_task_domain import reviewed_domain, action_rejection, BRIDGE_COMMANDS
     task_domain = reviewed_domain(engine.scene)
-    if task_domain is not None and command not in BRIDGE_COMMANDS:
+    cranial_request = command == 'plan' and args.get('opponent') == 'anatomy-cranial-strategy'
+    if task_domain is not None and command not in BRIDGE_COMMANDS and not cranial_request:
         raise BridgeError('REVIEWED_TASK_DOMAIN_COMMAND_UNSUPPORTED',
             'This reviewed task box admits manual checked actions and read-only replay; autonomous preparation/planning is not admitted.')
     outcome = None
@@ -438,10 +548,15 @@ def dispatch(session, operation, args, request, progress):
             frames = session.surgical_frame_cache = SurgicalFrameCache()
         branch_id = args.get('branchId', record['branchId'])
         if branch_id not in record['branches']: raise ValueError('Unknown playback branch')
-        token, shown_timeline, timeline_token = _frame_admission(session, frames, engine,
+        owned = getattr(session, 'surgical_frame_admissions', {}).get((identity, branch_id))
+        snapshot = record['branches'][branch_id]
+        history = record.get('timeline', {}).get(branch_id)
+        playback_engine = (owned[6] if owned is not None and len(owned) > 6 and
+            owned[0] is snapshot and owned[1] is history else owner_for_branch(branch_id, engine))
+        token, shown_timeline, timeline_token = _frame_admission(session, frames, playback_engine,
             record['branches'][branch_id], record.get('timeline', {}).get(branch_id), replay_cache,
             identity, branch_id, request.check)
-        displayed, _, playback = frames.seek(engine, token.snapshot, args.get('position'),
+        displayed, _, playback = frames.seek(playback_engine, token.snapshot, args.get('position'),
             args.get('frameIndex'), replay_cache, check=request.check,
             verified_history=token.history, admission=token, display_only=True)
         playback['branchId'] = branch_id
@@ -607,6 +722,8 @@ def dispatch(session, operation, args, request, progress):
             raise ValueError('Select an explicit source-bound protection manifest')
         if engine.actions:
             raise ValueError('Return to an intact initial checkpoint before attaching protection')
+        if record.get('cranialPlanningRoots', {}).get('branchRoots', {}).get(record['branchId']) is not None:
+            raise ValueError('Return to the common source and prepare new cranial roots before changing their frozen protection')
         bound = bind_case_protection(engine, protection_path=path)
         if bound._protection_contract == engine._protection_contract:
             unchanged_tool = True
@@ -667,6 +784,37 @@ def dispatch(session, operation, args, request, progress):
         replay_cache.seek(candidate, record['branches'][branch_id],
                           len(candidate.actions), check=request.check)
         outcome = {'status': 'accepted', 'reason': 'precision_continuation_recorded',
+                   'completedFraction': 1., 'events': []}
+    elif command == 'plan' and args.get('opponent') == 'anatomy-cranial-strategy':
+        from .surgical_cranial_planning import (
+            compare_cranial_strategies, install_cranial_comparison)
+        if entry is None:
+            raise ValueError('Save a trusted unreserved source before complete cranial planning')
+        if args.get('acknowledgeResearchUnknowns') is not True:
+            raise ValueError('Acknowledge the complete cranial sequence research assumptions and missing evidence')
+        source_role = _cranial_source_role(session, entry.case)
+        if source_role != 'GENERATED_CONTROL':
+            from .surgical_cranial_planning import cranial_planning_availability
+            available = cranial_planning_availability(base_scene, record)
+            eligible = {r['rootId'] for r in (available or {}).get('roots', []) if r['available']}
+            critical = _cranial_critical_blockers(record, eligible)
+            if critical:
+                raise BridgeError('CRANIAL_CRITICAL_EVIDENCE_REQUIRED',
+                    '; '.join(b['code']+': '+b['message'] for b in critical))
+        if (record['position'] != 0 or engine.actions or engine.scene.identity != base_scene.identity or
+                record['branches'][record['branchId']]['actions'] or
+                record.get('cranialPlanningRoots', {}).get('branchRoots', {}).get(record['branchId']) is not None):
+            raise ValueError('Return to the unacted common patient source before complete cranial planning')
+        cranial_computation = compare_cranial_strategies(base_scene, record,
+            planning_horizon=args.get('planningHorizon', 5), beam_width=args.get('beamWidth', 3),
+            started_at=command_started, check=request.check, progress=progress)
+        install_cranial_comparison(record, cranial_computation, base_scene)
+        for candidate, row in cranial_computation['branches']:
+            branch_id = row['branchId']
+            replay_cache.seek(candidate, record['branches'][branch_id],
+                len(candidate.actions), check=request.check)
+        cranial_computation['budget'].check()
+        outcome = {'status': 'accepted', 'reason': 'complete_cranial_comparison_recorded',
                    'completedFraction': 1., 'events': []}
     elif command == 'plan' and args.get('opponent') == 'anatomy-staged-strategy':
         from .surgical_staged_planning import (
@@ -816,6 +964,7 @@ def dispatch(session, operation, args, request, progress):
             branch = 'exit-recovery-'+str(len(record['branches']))
             engine = candidate
             record['branches'][branch] = engine.snapshot()
+            inherit_root(branch, parent['branchId'])
             record.setdefault('timeline', {})[branch] = copy.deepcopy(engine.history)
             record.setdefault('parents', {})[branch] = parent
             record.update(branchId=branch, position=len(engine.actions))
@@ -830,13 +979,21 @@ def dispatch(session, operation, args, request, progress):
             'completedFraction': 1. if recovery['status'] == 'accepted' else 0., 'events': []}
     elif command == 'step':
         action = args['action']
+        source_branch_id = record['branchId']
         unchanged_tool = action.get('operation') == 'exchange' and engine.state['slots'].get(action.get('slot'), {}).get('instrument') == action.get('instrument')
         refusal = action_rejection(engine, action, domain=task_domain, check=request.check) if task_domain is not None else None
         outcome = refusal if refusal is not None else ({'status': 'accepted', 'reason': 'Instrument already selected; state unchanged.', 'completedFraction': 1., 'events': []} if unchanged_tool else engine.step(action, check=request.check))
         if outcome['status'] != 'rejected' and not unchanged_tool:
             full = record['branches'][record['branchId']]
-            planned_ids = {row['branchId'] for key in ('planning', 'sectorPlanning', 'stagedPlanning')
+            planned_ids = {row['branchId'] for key in ('planning', 'sectorPlanning', 'stagedPlanning', 'cranialPlanning')
                            for row in (record.get(key) or {}).get('alternatives', [])}
+            cranial = record.get('cranialPlanning') or {}
+            if cranial.get('sourceBranchId') is not None:
+                planned_ids.add(cranial['sourceBranchId'])
+            registry = record.get('cranialPlanningRoots') or {}
+            root_sources = {row['id']: row['sourceSnapshot']['stateId'] for row in registry.get('roots', [])}
+            planned_ids.update(branch for branch, root_id in registry.get('branchRoots', {}).items()
+                if record['branches'][branch]['stateId'] == root_sources.get(root_id))
             consequences = record.get('consequenceComparison') or {}
             planned_ids.update(consequences.get('alternativeBranchIds', []))
             if consequences.get('baselineBranchId') is not None:
@@ -858,6 +1015,8 @@ def dispatch(session, operation, args, request, progress):
                 record['branchId'] = 'branch-' + str(len(record['branches']))
                 record.setdefault('parents', {})[record['branchId']] = parent
             record['branches'][record['branchId']] = engine.snapshot()
+            if record['branchId'] != source_branch_id:
+                inherit_root(record['branchId'], source_branch_id)
             record['position'] = len(engine.actions)
             record.setdefault('timeline', {})[record['branchId']] = copy.deepcopy(engine.history)
     elif command in ('undo', 'redo', 'seek', 'selectBranch'):
@@ -873,6 +1032,7 @@ def dispatch(session, operation, args, request, progress):
         if observed_boundary is not None:
             engine, timeline = observed_boundary
         else:
+            engine = owner_for_branch(record['branchId'], engine)
             engine, timeline = replay_cache.seek(engine, snapshot, n, check=request.check, include_history=True)
         record['position'] = n
         # Rebuild optional legacy/malformed timelines from admitted history.
@@ -888,6 +1048,7 @@ def dispatch(session, operation, args, request, progress):
         record['branchId'] = 'branch-' + str(len(record['branches']))
         record.setdefault('parents', {})[record['branchId']] = parent
         record['branches'][record['branchId']] = engine.snapshot()
+        inherit_root(record['branchId'], parent['branchId'])
         record['position'] = len(engine.actions)
         record.setdefault('timeline', {})[record['branchId']] = copy.deepcopy(engine.history)
     full_case = bool(record.get('fullCase'))
@@ -928,6 +1089,12 @@ def dispatch(session, operation, args, request, progress):
     from .surgical_strategy_workspace import planning_view as strategy_view
     result['strategyPlanningAvailability'] = strategy_availability(engine)
     result['strategyPlanning'] = strategy_view(engine, record, identity, check=request.check)
+    from .surgical_cranial_planning import cranial_planning_availability
+    cranial_available = cranial_planning_availability(base_scene, record)
+    if entry is not None:
+        cranial_available = _cranial_context_availability(entry.case, record, cranial_available)
+    if cranial_available is not None:
+        result['cranialPlanningAvailability'] = cranial_available
     if entry is not None and ((engine.scene.source.get('adapter') or {}).get('type')=='native-patient-research-derivative'
                               or record.get('preparationComparisons')):
         from .surgical_preparation_planning import native_collection as preparation_source, availability as preparation_availability
@@ -986,12 +1153,19 @@ def dispatch(session, operation, args, request, progress):
         result['jointPlanning'] = copy.deepcopy(joint_report)
         result['jointBaselineHistory'] = copy.deepcopy(record.get('jointBaselineHistory',
             record.get('sectorPlanningHistory', [])[-1:]))
+    cranial_report = record.get('cranialPlanning')
+    if cranial_report is not None:
+        from .surgical_cranial_planning import validate_cranial_report, cranial_summary
+        validate_cranial_report(base_scene, record, cranial_report)
+        result['cranialPlanning'] = cranial_summary(cranial_report)
     if record.get('researchSetup'):
         result['researchSetup'] = copy.deepcopy(record['researchSetup'])
     _require_json_budget(result, RESULT_BYTES, 'SURGICAL_RESULT_LIMIT', 'Save this sequence before continuing')
     if command in {'previewApproach', 'previewStrategy','previewPreparation','suggestPreparation'}:
         request.check()
         return result
+    if cranial_computation is not None:
+        cranial_computation['budget'].check()
     request.begin_commit()
     if command == 'create' and raw is not None:
         artifacts.setdefault('surgical_prior_scenes', []).append(raw)
@@ -1018,6 +1192,6 @@ def dispatch(session, operation, args, request, progress):
     else:
         entry.artifacts = freeze_json(artifacts)
     cache[identity] = (semantic_digest(persisted_record) if destination else None, engine, record,
-                       entry.artifacts if entry is not None else None)
+                       entry.artifacts if entry is not None else None, base_scene)
     session.surgical_sessions = dict(list(cache.items())[-4:])
     return result

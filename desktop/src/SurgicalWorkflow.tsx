@@ -1,3 +1,4 @@
+import {CranialStrategiesPanel} from './CranialStrategiesPanel';
 import {useState} from 'react';
 import type {SurgicalController} from './use-surgical';
 import type {Point3} from './viewer/coordinates';
@@ -10,7 +11,7 @@ import {StagedStrategiesPanel} from './StagedStrategiesPanel';
 import {stagedStrategyDisplay} from './staged-strategy-data';
 
 const stages:Array<{id:SurgicalWorkflowStage;label:string}>=[{id:'case',label:'Case'},{id:'plan',label:'Plan'},{id:'compare',label:'Compare'},{id:'rehearse',label:'Rehearse/edit'}];
-const labels:Record<SurgicalWorkflowPlanner,string>={staged:'Bounded staged source sequence · partial anatomy',preparation:'Preparation + complete two-tool sequence',strategy:'Two-tool sequence in existing exposure',approach:'Inactive approach only · no treatment'};
+const labels:Record<SurgicalWorkflowPlanner,string>={cranial:'Opening, preparation, target work and exit',staged:'Bounded staged source sequence · partial anatomy',preparation:'Preparation + complete two-tool sequence',strategy:'Two-tool sequence in existing exposure',approach:'Inactive approach only · no treatment'};
 /** One mounted draft owns generation, editing and preview authority across stages. */
 export function SurgicalWorkflow({c,stage,onStage,pause,cursor,onCursor,artifact,playRecorded=()=>{}}:{c:SurgicalController;stage:SurgicalWorkflowStage;onStage:(stage:SurgicalWorkflowStage)=>void;pause:()=>void;cursor?:Point3|null;onCursor?:(point:Point3)=>void;artifact?:unknown;playRecorded?:(branchId:string)=>void}) {
   const options=workflowPlannerOptions(c.result,artifact),preferred=preferredWorkflowPlanner(c.result,artifact);
@@ -40,10 +41,11 @@ export function SurgicalWorkflow({c,stage,onStage,pause,cursor,onCursor,artifact
     </section>
     <div hidden={stage!=='plan'&&stage!=='compare'}>
       {options.length>1&&<label>Supported task<select aria-label="Supported planning task" disabled={c.pending||!!c.preview} value={planner??''} onChange={event=>{pause();c.clearPreview();setRequested(event.target.value as SurgicalWorkflowPlanner);onStage('plan');}}>{options.map(option=><option key={option} value={option}>{labels[option]}</option>)}</select></label>}
-      {planner&&<p className="surgical-note">{labels[planner]}. {planner==='approach'?'Checks inactive placement and withdrawal; target removal is outside this task.':planner==='staged'?'Generate from an eligible intact paired source, compare complete recorded outcomes, then open a saved native branch for rehearsal. Playback does not recalculate a plan.':'Generate a bounded comparison, inspect complete costs, then preview and install a checked branch.'}</p>}
+      {planner&&<p className="surgical-note">{labels[planner]}. {planner==='cranial'?'Compare complete native sequences across source-bound opening roots. Missing qualification blocks generation; bone clearance alone never completes the target task.':planner==='approach'?'Checks inactive placement and withdrawal; target removal is outside this task.':planner==='staged'?'Generate from an eligible intact paired source, compare complete recorded outcomes, then open a saved native branch for rehearsal. Playback does not recalculate a plan.':'Generate a bounded comparison, inspect complete costs, then preview and install a checked branch.'}</p>}
       {!!report&&!current&&<p role="status" className="surgical-warning">Saved comparison · historical checkpoint. Anatomy, tools, accepted actions or constraints may have changed. Open its saved checkpoint below or return to Plan and regenerate.</p>}
       {!planner&&<p role="status">No checked planning task is available at this checkpoint. Inspect source qualification or verify the saved replay. Rehearse/edit retains recorded playback and supported manual actions.</p>}
     </div>
+    {planner==='cranial'&&<CranialStrategiesPanel {...presentation} play={playRecorded}/>}
     {planner==='preparation'&&<PreparationPlanningPanel {...presentation}/>}
     {planner==='strategy'&&<TwoToolStrategyPanel {...presentation}/>}
     {planner==='approach'&&<InteractivePlanningPanel {...presentation}/>}

@@ -244,6 +244,28 @@ def joint_cranial_ledger(engine, limits):
         'clinicalValidation': 'none'}
 
 
+def _joint_bone_capacity_partial(engine, action, preview):
+    """Retain stock finite-work prefixes for either opening method.
+
+    Standardized desktop physics makes flap kerfs require finite work too.
+    Only the same single-pose drill command can continue under the existing
+    bound. Native geometry, stage guards and preview B/P/W checks still apply.
+    """
+    if _milling_capacity_partial(engine, action, preview):
+        return True
+    from .surgical_craniotomy import CranialAccessContract
+    from .surgical_drilling_v2 import profile
+    fraction, elapsed = preview.get('completedFraction'), preview.get('elapsedSeconds')
+    return (type(engine._cranial_access) is CranialAccessContract and
+        profile(engine) is not None and action.get('operation') == 'apply' and
+        'path' not in action and type(action.get('pose')) is dict and
+        action.get('slot') in ('left', 'right') and
+        engine.state['slots'][action['slot']]['instrument'] == 'cranial_drill' and
+        preview.get('status') == 'partial' and preview.get('reason') == 'BONE_CUTTING_IN_PROGRESS' and
+        type(fraction) in (int, float) and math.isfinite(fraction) and 0 <= fraction <= 1. and
+        type(elapsed) in (int, float) and math.isfinite(elapsed) and elapsed > 0.)
+
+
 def checked_joint_actions(engine, actions, *, limits, meter=None, check=None,
         phase='cranial.joint', _allow_tissue_partial=False):
     """Preview/commit under B/P/W; an interrupted physical prefix stays charged."""
@@ -293,7 +315,7 @@ def checked_joint_actions(engine, actions, *, limits, meter=None, check=None,
                         raise ValueError('Joint preview changed accepted prefix')
                     entry.update(previewStatus=preview['status'], previewReason=preview.get('reason'),
                                  previewStateId=preview['stateId'])
-                    bone_partial = _milling_capacity_partial(candidate, original, preview)
+                    bone_partial = _joint_bone_capacity_partial(candidate, original, preview)
                     tissue_partial = (_allow_tissue_partial and original.get('operation') == 'apply' and
                         candidate.state['slots'][original['slot']]['instrument'] == 'cusa' and
                         preview['status'] == 'partial' and preview.get('reasonCode') == 'TISSUE_ASPIRATION_IN_PROGRESS' and

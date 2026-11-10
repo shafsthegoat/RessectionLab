@@ -1,3 +1,4 @@
+import {cranialGenerationIssue} from './cranial-workflow-data.ts';
 import {planningOverlayForView} from './interactive-planning-data.ts';
 import type {InteractivePlanningOverlay} from './interactive-planning-data';
 import {useEffect,useMemo,useRef,useState} from 'react';
@@ -90,6 +91,10 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
   async function execute(command:string,extra:Record<string,unknown>,isCurrent:()=>boolean):Promise<boolean>{
     const c=current.current;if(!c.enabled||!c.source||!c.api?.surgicalRehearsal||busy.current)return false;
     if(prefixCommand(command)&&(responseSource.current!==c.source||acceptedResponseSource.current!==c.source||c.result?.caseHash!==c.source.caseHash)){setError('Inspect this source checkpoint before reconstructing a read-only prefix.');return false;}
+    if(command==='plan'&&extra.opponent==='anatomy-cranial-strategy'){
+      const issue=cranialGenerationIssue(c.result);
+      if(issue||!acceptedFullCaseState()){setError(issue??'Return to the accepted editable checkpoint and cancel any preview before planning cranial strategies.');return false;}
+    }
     const authorityIssue=surgicalAuthorityIssue(c.result,command,extra);if(authorityIssue){setError(authorityIssue);return false;}
     if(command==='fullCase'&&(!acceptedFullCaseState()||!['primary','vascular'].includes(String(extra.scenario))||
       !fullCaseScenarioAvailable(c.result,c.source.caseHash,extra.scenario as 'primary'|'vascular'))){setError('Full-case rehearsal is blocked for the accepted case state. Review readiness before starting.');return false;}
