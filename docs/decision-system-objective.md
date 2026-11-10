@@ -153,6 +153,14 @@ Every individual inversion counts against a separate explicit 2,048-probe bound;
 at most 32 matching suction inversions are additional. An off-center bracket
 includes its affine anchor offset, including on long anisotropic cells.
 
+The opt-in `axial_diverse_current_a` schedule chooses existing source cells at
+several depths from each active current column, using the same contact inverse.
+Immutable source geometry is separate from current membership and fresh collision
+checks. Fully cleared columns are excluded before the candidate limit; missing
+or duplicate depth slots within active columns still reserve their allotment.
+All source preparation and current scans remain inside the original wall scope;
+candidate support is never credited as actual removal. The default stays unchanged.
+
 `surgical_joint_milling_opening` turns those proposals into a bounded adaptive
 bone-opening skill on the original registered joint limits and meter. It replans
 from actual remaining A and tagged debris for at most eight batches. Only the

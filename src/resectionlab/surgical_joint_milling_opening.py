@@ -21,7 +21,7 @@ from .surgical_joint_cranial_skills import (
 from .surgical_milling import milling_readiness, validate_source_scope
 from .surgical_milling_contact_proposals import (
     _approach, _exterior, _segments, _within_workspace, _approach_declaration,
-    _local_path_clearance, _same_pose, _staging_plan, bind_milling_approach,
+    _local_path_clearance, _same_pose, _staging_plan, _CELL_SCHEDULES, bind_milling_approach,
     generate_milling_contact_proposals, generate_milling_debris_proposals)
 from .surgical_task_domain import _posed
 from .surgical_transition_meter import MeteredEngine, TransitionBudgetExceeded, TransitionMeter
@@ -143,7 +143,7 @@ def checked_joint_milling_opening(engine, *, approach, limits, meter=None,
         drill_seconds, suction_seconds, staging_seconds=.1, slot='left',
         max_batches=8, max_contacts=32, max_examined_cells=2048,
         max_contact_probes=2048, point_scheme='center', check=None,
-        phase='cranial.joint.milling-opening', staging_plan=None):
+        phase='cranial.joint.milling-opening', staging_plan=None, cell_schedule='surface_first'):
     """Return a checked complete bone-opening prefix or an exact charged stop.
 
     The adapter rebinds all-A ordering once inside the original shared wall
@@ -160,6 +160,7 @@ def checked_joint_milling_opening(engine, *, approach, limits, meter=None,
             type(max_examined_cells) is not int or not 1 <= max_examined_cells <= 2048 or
             type(max_contact_probes) is not int or not 1 <= max_contact_probes <= 2048 or
             type(point_scheme) is not str or point_scheme not in _POINT_SCHEMES or
+            type(cell_schedule) is not str or cell_schedule not in _CELL_SCHEDULES or
             not all(_positive(value) for value in (drill_seconds, suction_seconds, staging_seconds)) or
             check is not None and not callable(check)):
         raise ValueError('JOINT_MILLING_EXPLICIT_BOUNDED_SPEC_REQUIRED')
@@ -175,6 +176,8 @@ def checked_joint_milling_opening(engine, *, approach, limits, meter=None,
     _approach(current, contract, approach)
     if approach.get('pointScheme', 'center') != point_scheme:
         raise ValueError('JOINT_MILLING_POINT_SCHEME_BINDING_DIFFERS')
+    if approach.get('cellSchedule', 'surface_first') != cell_schedule:
+        raise ValueError('JOINT_MILLING_CELL_SCHEDULE_BINDING_DIFFERS')
     if set(current.state['removed'])-set(limits._bone):
         raise ValueError('JOINT_MILLING_BONE_ONLY_SOURCE_PREFIX_REQUIRED')
     initial_stage = validation['stageReadiness']
@@ -194,6 +197,8 @@ def checked_joint_milling_opening(engine, *, approach, limits, meter=None,
         'maxContactProbes': max_contact_probes}
     if staging_plan is not None:
         spec['stagingPlan'] = copy.deepcopy(staging_plan)
+    if cell_schedule != 'surface_first':
+        spec['cellSchedule'] = cell_schedule
     batches, decisions, binding = [], [], None
     staging_transitions = []
     status, reason = validation['status'], validation['reason']
@@ -310,9 +315,12 @@ def checked_joint_milling_opening(engine, *, approach, limits, meter=None,
         guard()
         # Caller order/cost fields are not trusted. The actual source is ordered
         # once here, after the original meter/wall origin is authenticated.
+        binding_kwargs = {} if cell_schedule == 'surface_first' else {
+            'cell_schedule': cell_schedule, 'check': guard}
         binding = bind_milling_approach(current, quaternion=declaration['quaternion'],
             outside_plane_point_ras_mm=declaration['outsidePlanePointRasMm'],
-            maximum_approach_mm=declaration['maximumApproachMm'], point_scheme=point_scheme)
+            maximum_approach_mm=declaration['maximumApproachMm'], point_scheme=point_scheme,
+            **binding_kwargs)
         guard()
         local_tool = None
         for batch in range(max_batches):
@@ -336,6 +344,8 @@ def checked_joint_milling_opening(engine, *, approach, limits, meter=None,
                 suction_seconds=suction_seconds, slot=slot)
             if staging_plan is not None:
                 kwargs['staging_plan'] = staging_plan
+            if cell_schedule != 'surface_first':
+                kwargs['check'] = guard
             guard()
             if use_debris:
                 proposal = generate_milling_debris_proposals(current, **kwargs)

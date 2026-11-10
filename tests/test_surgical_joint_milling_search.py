@@ -93,6 +93,7 @@ def test_optional_staging_plan_is_copied_and_dispatched_on_original_policy(monke
         inbound=[park], outbound=[park])
     raw = proposal(source, approach)
     raw['milling']['staging_plan'] = plan
+    raw['milling']['cell_schedule'] = 'axial_diverse_current_a'
     copied = _proposal(raw, source.state_id)
     copied['milling']['staging_plan']['globalPark']['position'][0] += 1
     assert raw['milling']['staging_plan'] == plan
@@ -113,9 +114,21 @@ def test_optional_staging_plan_is_copied_and_dispatched_on_original_policy(monke
     result = checked_joint_sequence_search(source, propose=lambda e: [raw],
         limits=limits, goal=goal, meter=meter, horizon=1)
     assert len(seen) == 1 and seen[0]['staging_plan'] == plan
+    assert seen[0]['cell_schedule'] == 'axial_diverse_current_a'
     assert seen[0]['limits'] is limits and seen[0]['meter'] is meter
     assert meter.calls == before_calls+2 and result.evidence['expansions'] == 1
     assert not result.selected and result.attempts[0]['status'] == 'no_immediate_target'
+
+
+@pytest.mark.parametrize('mode', [None, [], 1, True, 'unfrozen-adaptive-mode'])
+def test_unqualified_cell_schedule_is_rejected_without_native_calls(mode):
+    source, _, _, approach, meter, _ = fixture(park_other=False)
+    raw = proposal(source, approach)
+    raw['milling']['cell_schedule'] = mode
+    before = source.snapshot()
+    with pytest.raises(ValueError, match='explicit bounded milling spec'):
+        _proposal(raw, source.state_id)
+    assert meter.calls == 0 and source.snapshot() == before
 
 
 def test_staged_start_pose_mismatch_retains_next_candidate_without_native_alignment():

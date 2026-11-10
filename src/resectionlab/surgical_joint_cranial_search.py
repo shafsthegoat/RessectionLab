@@ -256,9 +256,11 @@ def _proposal(value, state_id):
             'max_contact_probes', 'point_scheme'}
         spec = p.get('milling')
         if ('actions' in p or 'motion' in p or type(spec) is not dict or
-                set(spec) not in (required, required | {'staging_plan'}) or
+                not required <= set(spec) <= required | {'staging_plan', 'cell_schedule'} or
                 type(spec['approach']) is not dict or
-                ('staging_plan' in spec and type(spec['staging_plan']) is not dict)):
+                ('staging_plan' in spec and type(spec['staging_plan']) is not dict) or
+                ('cell_schedule' in spec and (type(spec['cell_schedule']) is not str or
+                    spec['cell_schedule'] not in ('surface_first', 'axial_diverse_current_a')))):
             raise ValueError('Joint milling proposal needs one explicit bounded milling spec; policy, meter and callbacks remain search-owned')
     elif p['kind'] == 'cusa':
         if 'actions' in p or type(p.get('motion')) is not dict:

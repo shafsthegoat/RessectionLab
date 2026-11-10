@@ -650,3 +650,238 @@ def test_staged_routes_keep_critical_clearance_other_hand_and_workspace():
     outside = {'position': [95., 48., 55.], 'quaternion': [0., 0., 0., 1.]}
     reason, _ = _local_path_clearance(engine, engine._cranial_access, 'cranial_drill', [outside], 'left')
     assert reason == 'MILLING_STAGING_OUTSIDE_WORKSPACE' and not engine.actions
+
+
+def axial_slab(*, world_rotation=None, point_scheme='center_and_quarter_cell_corners'):
+    """Full generatedR8-overlapx16mm A; geometry only, never patient arrays."""
+    from resectionlab.surgical_engine import SurgicalEngine
+    from resectionlab.surgical_milling import binding, contract_hash
+    from resectionlab.surgical_scene import SurgicalScene
+    old, _ = milling_shell()
+    labels = np.zeros((64, 64, 128), np.uint16)
+    labels[8:57, 8:57, 92:124] = 1
+    labels[31:34, 31:34, 126] = 2
+    affine = np.diag([.5, .5, .5, 1.]); affine[:3, 3] = [-16., -16., -45.75]
+    aperture = sorted(int(np.ravel_multi_index((x, y, z), labels.shape))
+        for x in range(64) for y in range(64)
+        if np.linalg.norm(np.maximum(np.abs(np.array([x, y])*.5-16)-.25, 0)) <= 8.
+        for z in range(92, 124))
+    props = copy.deepcopy(old.scene.properties); raw = props.pop(PROPERTY)
+    anchor = int(np.ravel_multi_index((8, 8, 92), labels.shape)); props['boneAnchors'] = [anchor]
+    center, outside = np.array([0., 0., 0.]), np.array([0., 0., -3.])
+    rotation = Rotation.identity() if world_rotation is None else world_rotation
+    if world_rotation is not None:
+        transform = np.eye(4); transform[:3, :3] = rotation.as_matrix(); transform[:3, 3] = [50., -20., 13.]
+        affine = transform@affine
+        center = rotation.apply(center)+transform[:3, 3]
+        outside = rotation.apply(outside)+transform[:3, 3]
+    base = SurgicalScene(labels, affine, old.scene.regions,
+        {'kind': 'generated current-A axial geometry study; not patient'}, props)
+    raw.update(binding(base), apertureCells=aperture,
+        retainedSkullCells=sorted(set(map(int, np.flatnonzero(labels == 1)))-set(aperture)),
+        boneAnchorCells=[anchor])
+    raw['entry'].update(centerRasMm=center.tolist(), normalRasUnit=rotation.apply([0., 0., 1.]).tolist(),
+        uRasUnit=rotation.apply([1., 0., 0.]).tolist(), halfExtentsMm=[10., 10.])
+    raw['exit'] = {'axis': 2, 'side': -1, 'planeVoxelBoundary': 91.5,
+        'minimumVoxelBoundary': [-.5]*3, 'maximumVoxelBoundary': [63.5, 63.5, 127.5]}
+    raw['contentHash'] = contract_hash(raw); props[PROPERTY] = raw
+    engine = SurgicalEngine(SurgicalScene(labels, affine, base.regions, base.source, props))
+    approach = bind_milling_approach(engine, quaternion=rotation.as_quat().tolist(),
+        outside_plane_point_ras_mm=outside.tolist(), maximum_approach_mm=20.,
+        point_scheme=point_scheme, cell_schedule='axial_diverse_current_a')
+    return engine, set(aperture), approach
+
+
+def test_axial_current_a_reaches_deeper_existing_inverse_cells_with_explicit_whole_A_deficit():
+    engine, aperture, approach = axial_slab()
+    before = engine.snapshot()
+    outside = {'position': [0., 0., -3.], 'quaternion': [0., 0., 0., 1.]}
+    plan = bind_milling_staging_plan(engine, approach=approach, global_park=outside,
+        inbound=[outside], outbound=[outside])
+    result = propose(engine, approach, max_contact_probes=2016, max_contacts=32, staging_plan=plan)
+    schedule = result['axialSchedule']
+    assert len(aperture) == 28064 and result['remainingOriginalACells'] == sorted(aperture)
+    assert schedule['columnCount'] == 56 and schedule['consideredCellSlots'] == 224
+    assert schedule['reservedContactProbeSlots'] == result['testedDrillContactProbes'] == 2016
+    assert result['examinedContactCells'] == schedule['uniqueScheduledCurrentACells'] == 224
+    assert not schedule['missingCellSlots'] and not schedule['duplicateCellSlots']
+    covered = set().union(*(set(row['nominalCurrentAContactCells']) for row in result['contacts']))
+    assert len(result['contacts']) <= 32 and len(covered)*.125 > 500.
+    assert any(engine.scene.points([row['cell']])[0, 2] > 3. for row in result['contacts'])
+    assert covered < aperture and result['controllerDeficit'] and not result['admittedOpening']
+    assert result['sourceGeometryCost']['axialCurrentScheduling']['currentMembershipVisits'] == 28064
+    prep = schedule['cachedSourcePreparation']
+    assert prep['sourceCoordinates'] == 28064 and prep['maximinDistancePairs'] == prep['voronoiDistancePairs'] == 28064*56
+    assert prep['maximumDistanceChunkCells'] == 1024
+    assert result['nativeCalls'] == 0 and engine.snapshot() == before
+
+
+def test_axial_schedule_uses_actual_current_membership_without_claiming_native_history():
+    from resectionlab.surgical_milling_contact_proposals import _axial_current_cells
+    engine, aperture, approach = axial_slab()
+    first, report = _axial_current_cells(engine, engine._cranial_access, approach, aperture, 224, 2016, None)
+    removed = {cell for cell in aperture if engine.scene.points([cell])[0, 2] < 1.}
+    later, changed = _axial_current_cells(engine, engine._cranial_access, approach, aperture-removed, 224, 2016, None)
+    assert len(removed) == 1754 and set(c for c, _ in first) != set(c for c, _ in later)
+    assert all(cell in aperture-removed for cell, _ in later)
+    assert set(engine.scene.points([c for c, _ in later])[:, 2]) == {1.25, 2.25, 3.25, 4.25}
+    assert changed['currentMembershipVisits'] == report['currentMembershipVisits'] == 28064
+    assert not engine.state['removed'] and not engine.actions
+    # The public proposal path still refuses a fabricated accepted cavity.
+    engine.state['removed'] = sorted(removed)
+    with pytest.raises(ValueError, match='NATIVE_CAVITY_HISTORY'):
+        propose(engine, approach, max_contact_probes=1)
+
+
+@pytest.mark.parametrize('remaining', [
+    {465468, 465852, 483708, 484092}, {437628}, set()])
+def test_axial_cleared_columns_do_not_starve_current_residual_under_original_caps(remaining):
+    from resectionlab.surgical_milling_contact_proposals import _axial_current_cells
+    engine, aperture, old, _ = staging_plate()
+    approach = bind_milling_approach(engine, quaternion=old['quaternion'],
+        outside_plane_point_ras_mm=old['outsidePlanePointRasMm'], maximum_approach_mm=10.,
+        point_scheme='center_and_quarter_cell_corners', cell_schedule='axial_diverse_current_a')
+    # An explicit geometric input, not a fabricated native removed ledger.
+    # These residuals belong to late source columns in the frozen counterexample.
+    assert remaining <= aperture
+    before = engine.snapshot()
+    selected, report = _axial_current_cells(engine, engine._cranial_access,
+        approach, remaining, 81, 729, None)
+    assert {cell for cell, _ in selected} == remaining
+    assert report['currentMembershipVisits'] == len(aperture) == 81
+    assert report['currentColumnActivationVisits'] == report['columnCount'] == 56
+    assert report['activeCurrentColumnCount'] == len(remaining)
+    assert len(report['clearedCurrentColumns']) == 56-len(remaining)
+    assert report['reservedContactProbeSlots'] == len(remaining)*4*9 <= 729
+    assert len(report['missingCellSlots']) == len(remaining)*3
+    assert all(allowance == 9 for _, allowance in selected)
+    assert engine.snapshot() == before and not engine.actions
+
+
+def test_axial_mode_supports_center_only_with_no_hidden_extra_columns_or_tests():
+    engine, _, approach = axial_slab(point_scheme='center')
+    result = propose(engine, approach, max_contact_probes=2048, max_contacts=1)
+    assert result['testedDrillContactProbes'] == result['axialSchedule']['reservedContactProbeSlots'] == 224
+    assert result['axialSchedule']['columnCount'] == 56
+    assert all(row['pointIndex'] == 0 for row in result['inverseContactDiagnostics'])
+
+
+@pytest.mark.parametrize('cap,cells', [(1, 1), (10, 2)])
+def test_axial_partial_anchor_allotments_obey_the_same_total_probe_cap(cap, cells):
+    engine, _, approach = axial_slab()
+    result = propose(engine, approach, max_contact_probes=cap, max_examined_cells=224, max_contacts=1)
+    assert result['testedDrillContactProbes'] == result['axialSchedule']['reservedContactProbeSlots'] == cap
+    assert result['examinedContactCells'] == cells
+    assert len(result['incompletelyExaminedCurrentACells']) == 1
+    assert len(result['unexaminedCurrentACells']) == 28064-cells and result['controllerDeficit']
+
+
+def test_axial_missing_and_duplicate_slots_reserve_small_caps_without_reselection():
+    from resectionlab.surgical_milling_contact_proposals import _axial_current_cells
+    engine, _ = milling_shell()
+    approach = bind_milling_approach(engine, quaternion=[0., 0., 0., 1.],
+        outside_plane_point_ras_mm=[32., 32., 55.], maximum_approach_mm=10.,
+        point_scheme='center_and_quarter_cell_corners', cell_schedule='axial_diverse_current_a')
+    result = propose(engine, approach, max_contact_probes=18, max_examined_cells=2)
+    assert result['testedDrillContactProbes'] == 9
+    assert result['axialSchedule']['reservedContactProbeSlots'] == 18
+    assert len(result['axialSchedule']['missingCellSlots']) == 1 and result['examinedContactCells'] == 1
+    raw = copy.deepcopy(engine.scene.properties[PROPERTY]); raw['entry']['centerRasMm'][2] = 238.
+    engine, _ = rebuild(engine, raw, affine=np.diag([1., 1., 4., 1.]))
+    approach = bind_milling_approach(engine, quaternion=[0., 0., 0., 1.],
+        outside_plane_point_ras_mm=[32., 32., 230.], maximum_approach_mm=20.,
+        point_scheme='center_and_quarter_cell_corners', cell_schedule='axial_diverse_current_a')
+    selected, report = _axial_current_cells(engine, engine._cranial_access, approach,
+        set(engine._cranial_access.aperture_cells), 2, 18, None)
+    assert len(selected) == 1 and selected[0][1] == 9
+    assert report['axialCellHalfSupportMm'] == 2. and len(report['duplicateCellSlots']) == 1
+    assert report['reservedContactProbeSlots'] == 18
+
+
+def test_axial_schedule_is_rigid_affine_covariant_and_source_id_ties_are_stable():
+    from resectionlab.surgical_milling_contact_proposals import _axial_current_cells
+    original, aperture, approach = axial_slab()
+    rotated, other_a, other = axial_slab(world_rotation=Rotation.from_euler('xyz', [17., -11., 28.], degrees=True))
+    assert aperture == other_a
+    first, _ = _axial_current_cells(original, original._cranial_access, approach, aperture, 224, 2016, None)
+    second, _ = _axial_current_cells(rotated, rotated._cranial_access, other, other_a, 224, 2016, None)
+    assert first == second
+    assert approach['sourceOrdering']['axialCache']['seedCells'] == other['sourceOrdering']['axialCache']['seedCells']
+    assert approach['sourceOrdering']['axialCache']['columnAssignments'] == other['sourceOrdering']['axialCache']['columnAssignments']
+
+
+def test_axial_cache_and_staging_binding_reject_stale_tampered_mode_and_geometry():
+    from resectionlab.surgical_milling_contact_proposals import _ordering_hash, _staging_plan
+    engine, _, approach = axial_slab()
+    stale = copy.deepcopy(approach)
+    assignments = stale['sourceOrdering']['axialCache']['columnAssignments']
+    assignments[0] = (assignments[0]+1) % 56
+    with pytest.raises(ValueError, match='SOURCE_ORDERING_BINDING'):
+        propose(engine, stale, max_contact_probes=1)
+    stale = copy.deepcopy(approach)
+    stale['sourceOrdering']['axialCache']['projectedCoordinates'][0][0] += 1.
+    stale['sourceOrderingHash'] = _ordering_hash(stale['sourceOrdering'])
+    with pytest.raises(ValueError, match='SOURCE_COORDINATES_DIFFER'):
+        propose(engine, stale, max_contact_probes=1)
+    stale = copy.deepcopy(approach); stale.pop('pointScheme')
+    with pytest.raises(ValueError, match='AXIAL_SOURCE_CACHE_BINDING'):
+        propose(engine, stale, max_contact_probes=1)
+    plate, _, surface, plan = staging_plate()
+    axial = bind_milling_approach(plate, quaternion=surface['quaternion'],
+        outside_plane_point_ras_mm=surface['outsidePlanePointRasMm'], maximum_approach_mm=10.,
+        point_scheme='center_and_quarter_cell_corners', cell_schedule='axial_diverse_current_a')
+    with pytest.raises(ValueError, match='STAGING_SOURCE_BINDING'):
+        _staging_plan(plate, plate._cranial_access, axial, plan)
+
+
+def test_axial_binding_cancellation_interrupts_chunked_source_work_without_mutation(monkeypatch):
+    engine, _, _ = axial_slab()
+    before, calls, sizes = engine.snapshot(), 0, []
+    points = engine.scene.points
+    def observed(ids):
+        sizes.append(len(ids)); return points(ids)
+    monkeypatch.setattr(engine.scene, 'points', observed)
+    def stop():
+        nonlocal calls
+        calls += 1
+        if calls == 8:
+            raise InterruptedError('generated source-cache cancellation')
+    with pytest.raises(InterruptedError, match='source-cache cancellation'):
+        bind_milling_approach(engine, quaternion=[0., 0., 0., 1.],
+            outside_plane_point_ras_mm=[0., 0., -3.], maximum_approach_mm=20.,
+            cell_schedule='axial_diverse_current_a', check=stop)
+    assert sizes and max(sizes) <= 1024 and sum(sizes) < 28064
+    assert engine.snapshot() == before and not engine.actions
+
+
+def test_explicit_surface_first_keeps_default_binding_hash_and_program_unchanged():
+    engine, _ = milling_shell()
+    kwargs = dict(quaternion=[0., 0., 0., 1.], outside_plane_point_ras_mm=[32., 32., 55.], maximum_approach_mm=10.)
+    implicit = bind_milling_approach(engine, **kwargs)
+    explicit = bind_milling_approach(engine, cell_schedule='surface_first', **kwargs)
+    assert 'cellSchedule' not in implicit and 'cellSchedule' not in explicit
+    assert 'axialCache' not in implicit['sourceOrdering']
+    assert implicit['sourceOrderingHash'] == explicit['sourceOrderingHash']
+    first = propose(engine, implicit, max_examined_cells=2, max_contact_probes=2, max_contacts=1)
+    second = propose(engine, explicit, max_examined_cells=2, max_contact_probes=2, max_contacts=1)
+    assert first['actions'] == second['actions'] and first['contentHash'] == second['contentHash']
+
+
+def test_axial_mode_refuses_shear_and_leaves_debris_ordering_actual_tag_only():
+    engine, _ = milling_shell()
+    raw = copy.deepcopy(engine.scene.properties[PROPERTY])
+    affine = np.eye(4); affine[0, 1] = .05
+    raw['entry']['centerRasMm'][0] = 33.6
+    sheared, _ = rebuild(engine, raw, affine=affine)
+    with pytest.raises(ValueError, match='SHEARED_AFFINE_CONTACT_UNSUPPORTED'):
+        bind_milling_approach(sheared, quaternion=[0., 0., 0., 1.],
+            outside_plane_point_ras_mm=[33.6, 32., 55.], maximum_approach_mm=10.,
+            cell_schedule='axial_diverse_current_a')
+    approach = bind_milling_approach(engine, quaternion=[0., 0., 0., 1.],
+        outside_plane_point_ras_mm=[32., 32., 55.], maximum_approach_mm=10.,
+        cell_schedule='axial_diverse_current_a')
+    debris = generate_milling_debris_proposals(engine, approach=approach, suction_seconds=2.)
+    assert debris['cellScheduleScope'] == 'bone_only' and 'axialSchedule' not in debris
+    assert debris['appliedDebrisOrdering'] == 'actual_current_tagged_debris_outward_depth_then_source_id'
+    assert not debris['contacts'] and debris['currentDebrisMm3'] == 0.
+    assert debris['controllerDeficit'] and not debris['admittedOpening'] and not engine.actions

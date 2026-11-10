@@ -115,6 +115,23 @@ The skipped witness was executed once separately above; no native trial is hidde
 in that skip. Frozen implementation/test hashes remain exact. Evidence:
 `staged-milling-regression-v1/`.
 
+The opt-in axial-diverse schedule tests existing current-A cells across depth,
+with unchanged inverse/tool/guard geometry. Source preparation and current scans
+are explicit. Pure review exposed cleared columns consuming a small slot budget;
+version 2 skips those columns while retaining missing/duplicate reservations
+inside active columns. The counterexample and unexecuted v1 native packet remain
+preserved. V2 passes 21 pure controls and 97 independent checks, then completes
+the identical generated 81-cell opening in three batches/272 actions/544 calls,
+170.71 s including startup/336 MB aggregate RSS, with all debris collected and
+verified exit/bone prefix. The earlier controller used 528 calls on this case;
+no performance improvement is claimed here. Legacy regression before the small
+mode-only correction passed 124 tests/one expected skip; final default programs
+and physical kernels compare exactly. A distinct deeper case still requires its
+constructive reference qualification. No patient or new desktop admission follows.
+Evidence: `axial-current-a-active-columns-v2/`, `axial-known81-functional-v2/`,
+`axial-known81-scheduler-counterexample-v1/`, `axial-current-a-independent-review-v1/`
+and `axial-current-a-regression-v1/`.
+
 The checked macro freezes a separate explicit bone budget, canonical source,
 charged ancestry, shared meter and deadline. Added target/nonbone removal is zero.
 Refreezing, resealed replacement limits or unlogged state cannot refund burdens.
@@ -185,6 +202,12 @@ CT-BONE and CE-T1W total 212,819,983 transferred bytes/209.05 s/55.8 MB RSS.
 ZIP-member/gzip CRCs, lengths, headers and observed SHA256s pass; publisher whole-
 archive MD5 was not measured. Original privacy cuts and every old mask/transform
 remain preserved. Original06 target is 360,280 source cells = 45,035 mm³;13 is empty.
+These are stored unreviewed model proposals, not publisher reference segmentations:
+06 uses the preexisting Raidionics meningioma output and 13's stored proposal is
+empty. The acquired 01 image archive contains no target annotation, and no local
+full target has been prepared; its original-target volume is unknown, not zero.
+Any new 01 annotation derivative needs a fixed producer, whole-output review and
+target freeze before a planner comparison. It cannot stand in as reference truth.
 
 Dense MRI source review and independent full-mask checks support broad inferior
 containers: full x/y,01 k0..240 and06/13 k0..226, with a separate assumed 8 mm
@@ -426,6 +449,23 @@ vessel cells, with four retained-bone/two UNKNOWN cells behind the inner surface
 and unsupported retained components. All remain withheld, including unqualified
 support anchors and unadmitted added classes. No A, native case or patient task
 was created. Evidence: `craniotomy-v4/sub06-surface-aligned-source-study-v1/`.
+
+Independent saved-data review reproduces all 195 fit rays and 7,350 material rays,
+with 12,177 fit checks and 144,795 profile/full-hull checks. A separate actual-mask
+and source-plane audit costs 6.40 s including imports/808 MB aggregate RSS. Root
+and reviewer inspected all three exact CT/MRI pages. Of 234 UNKNOWN conflicts,
+206 centers lie inside the material hulls; all ten vessel cells touch the closed
+cover boundary and remain hard conflicts. The proposed removal also creates one
+new unsupported singleton, distinct from two preexisting unanchored estimates.
+OriginalBone is an unreviewed threshold of the same CT source, not independent
+anatomical validation. The UNKNOWN trace points to rejected closed-hole components
+under the old extent rule; no class or threshold was changed. Evidence:
+`craniotomy-v4/sub06-aligned-window-source-QA-v1/` and
+`sub06-aligned-uncertainty-provenance-v1/`. Fresh independent mask replay passes
+391 checks in 3.728 s/783 MB, reproducing all scalar/role fields and six plane
+counts. The 234 cells belong to four closed-hole components wholly inside the
+acquired ROI; their original extent-only refusals remain unchanged. This is a
+source-material classification hold, not missing acquired pixels or clear air.
 
 Next, qualify a real patient's full A/R, local stops, support, membrane and exterior
 without suppressing source uncertainty. Freeze source-role tasks and matched

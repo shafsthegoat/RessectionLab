@@ -20,7 +20,7 @@ import numpy as np
 from scipy.spatial.transform import Rotation, Slerp
 
 from .core import semantic_digest
-from .geometry import _segment_cell_distances
+from .geometry import GEOMETRY_VERSION, _segment_cell_distances
 from .surgical_craniotomy import _original_targets
 from .surgical_cranial_guards import _inside_entry
 from .surgical_engine import SurgicalEngine
@@ -34,6 +34,10 @@ APPROACH_SCHEMA = 'resectionlab.milling-contact-approach.v1'
 STAGING_SCHEMA = 'resectionlab.milling-staging-plan.v1'
 _OVERLAP_MM = .10
 _POINT_SCHEMES = ('center', 'center_and_quarter_cell_corners')
+_CELL_SCHEDULES = ('surface_first', 'axial_diverse_current_a')
+_AXIAL_ALGORITHM = {'name': 'source-maximin-current-a-axial-v2', 'columns': 56,
+    'levelsMm': [0., 1., 2., 3.], 'chunkCells': 1024, 'tieRoundingDecimals': 9,
+    'scope': 'bone-only; existing inverse and current-cavity guards unchanged'}
 _ALGORITHM = {'name': 'native-orthogonal-cell-ray-inverse-v1',
     'kernel': 'geometry._segment_cell_distances', 'iterations': 64,
     'bracket': '[0, stockRadius+cellCircumsphere+anchorOffsetNorm+1e-6] mm',
@@ -69,8 +73,162 @@ def _finite_positive(value):
 
 
 def _approach_declaration(approach):
-    return {key: copy.deepcopy(approach[key]) for key in (
+    value = {key: copy.deepcopy(approach[key]) for key in (
         'sceneId', 'contractHash', 'quaternion', 'outsidePlanePointRasMm', 'maximumApproachMm')}
+    if 'cellSchedule' in approach:
+        value['cellSchedule'] = approach['cellSchedule']
+    return value
+
+
+def _geometry_check(check):
+    if check is not None:
+        check()
+
+
+def _axial_source_binding(engine, contract, approach):
+    return {'sceneId': engine.scene.identity, 'contractHash': contract.content_hash,
+        'originalAHash': semantic_digest(list(contract.aperture_cells)),
+        'affineHash': semantic_digest(engine.scene.affine.tolist()),
+        'quaternion': list(approach['quaternion']), 'pointScheme': approach.get('pointScheme', 'center'),
+        'cellSchedule': approach['cellSchedule'], 'algorithmHash': semantic_digest(_AXIAL_ALGORITHM),
+        'geometryVersion': GEOMETRY_VERSION,
+        'stockCatalogHash': semantic_digest({name: TOOLS[name] for name in ('cranial_drill', 'frazier_suction')})}
+
+
+def _axial_columns(cells, coordinates, check):
+    """Fixed source maximin/Voronoi work; temporary distances are <=1024x56."""
+    count, chunk = len(cells), _AXIAL_ALGORITHM['chunkCells']
+    ids = np.asarray(cells, dtype=np.int64)
+    uv = coordinates[:, :2]
+    center = (uv.min(0)+uv.max(0))/2
+    radial = np.sum((uv-center)**2, axis=1)
+    current = min(range(count), key=lambda j: (round(float(radial[j]), 9), int(ids[j])))
+    nearest = np.full(count, np.inf)
+    seeds, pairs = [], 0
+    for _ in range(min(56, count)):
+        seeds.append(current)
+        for start in range(0, count, chunk):
+            _geometry_check(check)
+            stop = min(start+chunk, count)
+            nearest[start:stop] = np.minimum(nearest[start:stop],
+                np.sum((uv[start:stop]-uv[current])**2, axis=1))
+            pairs += stop-start
+        rounded = np.round(nearest, 9)
+        maximum = float(rounded.max())
+        if maximum <= 0 or len(seeds) == 56:
+            break
+        current = min(np.flatnonzero(rounded == maximum), key=lambda j: int(ids[j]))
+    seed_uv = uv[seeds]
+    rank = np.argsort(ids[seeds])  # Equal-distance columns use source-ID ties.
+    assignments = np.empty(count, dtype=np.int64)
+    for start in range(0, count, chunk):
+        _geometry_check(check)
+        stop = min(start+chunk, count)
+        squared = np.sum((uv[start:stop, None]-seed_uv[None, rank])**2, axis=2)
+        assignments[start:stop] = rank[np.round(squared, 9).argmin(axis=1)]
+    return [int(ids[j]) for j in seeds], assignments.tolist(), {
+        'initialSeedDistancePairs': count, 'maximinDistancePairs': pairs,
+        'voronoiDistancePairs': count*len(seeds), 'maximumDistanceChunkCells': min(chunk, count)}
+
+
+def _build_axial_cache(engine, contract, approach, cells, points, check):
+    if engine.grid._orthogonal_spacing is None:
+        raise ValueError('MILLING_CONTACT_SHEARED_AFFINE_CONTACT_UNSUPPORTED')
+    basis = Rotation.from_quat(approach['quaternion']).as_matrix()
+    coordinates = points@basis
+    seeds, assignments, cost = _axial_columns(cells, coordinates, check)
+    return {'binding': _axial_source_binding(engine, contract, approach),
+        'projectedCoordinates': coordinates.tolist(), 'seedCells': seeds,
+        'columnAssignments': assignments, 'preparationCost': {
+            'sourceCoordinates': len(cells), **cost}}
+
+
+def _validate_axial_cache(engine, contract, approach, check):
+    ordering = approach['sourceOrdering']
+    cache = ordering['axialCache']
+    fields = {'binding', 'projectedCoordinates', 'seedCells', 'columnAssignments', 'preparationCost'}
+    cells = ordering['orderedCells']
+    source_a = set(contract.aperture_cells)
+    if (type(cache) is not dict or set(cache) != fields or
+            cache['binding'] != _axial_source_binding(engine, contract, approach) or
+            type(cache['seedCells']) is not list or not 1 <= len(cache['seedCells']) <= 56 or
+            any(type(c) is not int or c not in source_a for c in cache['seedCells']) or
+            len(set(cache['seedCells'])) != len(cache['seedCells']) or
+            type(cache['projectedCoordinates']) is not list or len(cache['projectedCoordinates']) != len(cells) or
+            type(cache['columnAssignments']) is not list or len(cache['columnAssignments']) != len(cells) or
+            any(type(c) is not int or not 0 <= c < len(cache['seedCells']) for c in cache['columnAssignments'])):
+        raise ValueError('MILLING_CONTACT_AXIAL_SOURCE_CACHE_BINDING_REQUIRED')
+    try:
+        coordinates = np.asarray(cache['projectedCoordinates'], dtype=float)
+    except (ValueError, TypeError):
+        raise ValueError('MILLING_CONTACT_AXIAL_SOURCE_COORDINATES_DIFFER') from None
+    if coordinates.shape != (len(cells), 3) or not np.isfinite(coordinates).all():
+        raise ValueError('MILLING_CONTACT_AXIAL_SOURCE_COORDINATES_DIFFER')
+    basis = Rotation.from_quat(approach['quaternion']).as_matrix()
+    for start in range(0, len(cells), _AXIAL_ALGORITHM['chunkCells']):
+        _geometry_check(check)
+        actual = engine.scene.points(cells[start:start+1024])@basis
+        if not np.allclose(actual, coordinates[start:start+1024], atol=1e-9, rtol=0):
+            raise ValueError('MILLING_CONTACT_AXIAL_SOURCE_COORDINATES_DIFFER')
+    return cache, coordinates
+
+
+def _axial_current_cells(engine, contract, approach, remaining, max_cells, max_probes, check):
+    cache, coordinates = _validate_axial_cache(engine, contract, approach, check)
+    groups = [[] for _ in cache['seedCells']]
+    cells = approach['sourceOrdering']['orderedCells']
+    for start in range(0, len(cells), 1024):
+        _geometry_check(check)
+        for j in range(start, min(start+1024, len(cells))):
+            if cells[j] in remaining:
+                groups[cache['columnAssignments'][j]].append(j)
+    lookup = {cell: j for j, cell in enumerate(cells)}
+    axis = Rotation.from_quat(approach['quaternion']).apply([0., 0., 1.])
+    support = .5*float(np.abs(engine.scene.affine[:3, :3].T@axis).sum())
+    slots, used = [], set()
+    for column, members in enumerate(groups):
+        _geometry_check(check)
+        # A fully cleared CURRENT column has no candidate to reserve. Keep
+        # missing/duplicate depth slots inside active columns bounded below.
+        if not members:
+            continue
+        outer = min(float(coordinates[j, 2]) for j in members)
+        seed = coordinates[lookup[cache['seedCells'][column]], :2]
+        for level in _AXIAL_ALGORITHM['levelsMm']:
+            _geometry_check(check)
+            eligible = [j for j in members if abs(float(coordinates[j, 2])-outer-level) <= support+1e-9]
+            chosen = min(eligible, key=lambda j: (
+                round(abs(float(coordinates[j, 2])-outer-level), 9),
+                round(float(np.sum((coordinates[j, :2]-seed)**2)), 9), cells[j])) if eligible else None
+            cell = cells[chosen] if chosen is not None else None
+            reason = 'MISSING_CURRENT_A_LEVEL' if cell is None else (
+                'DUPLICATE_CURRENT_A_CELL' if cell in used else None)
+            slots.append({'column': column, 'levelMm': level, 'cell': cell, 'reason': reason})
+            if cell is not None:
+                used.add(cell)
+    anchors = 9 if approach.get('pointScheme', 'center') != 'center' else 1
+    considered = slots[:min(max_cells, math.ceil(max_probes/anchors))]
+    selected, reserved = [], 0
+    for slot in considered:
+        allowance = min(anchors, max_probes-reserved)
+        reserved += allowance
+        if slot['reason'] is None:
+            selected.append((slot['cell'], allowance))
+    return selected, {'algorithm': copy.deepcopy(_AXIAL_ALGORITHM), 'scope': 'bone_only',
+        'columnCount': len(groups), 'axialCellHalfSupportMm': support,
+        'activeCurrentColumnCount': sum(bool(group) for group in groups),
+        'clearedCurrentColumns': [j for j, group in enumerate(groups) if not group],
+        'currentColumnActivationVisits': len(groups),
+        'scheduledCellSlots': slots, 'consideredCellSlots': len(considered),
+        'reservedContactProbeSlots': reserved,
+        'missingCellSlots': [s for s in considered if s['reason'] == 'MISSING_CURRENT_A_LEVEL'],
+        'duplicateCellSlots': [s for s in considered if s['reason'] == 'DUPLICATE_CURRENT_A_CELL'],
+        'uniqueScheduledCurrentACells': len(selected),
+        'currentMembershipVisits': len(cells), 'currentColumnAssignmentsVisited': len(cells),
+        'currentFrontierDepthVisits': sum(map(len, groups)),
+        'currentDepthBandVisits': 4*sum(map(len, groups)),
+        'sourceCoordinateValidationCells': len(cells),
+        'cachedSourcePreparation': copy.deepcopy(cache['preparationCost'])}
 
 
 def _same_pose(first, second):
@@ -209,14 +367,21 @@ def _local_path_clearance(engine, contract, name, poses, slot, *, check=lambda: 
 
 
 def bind_milling_approach(engine, *, quaternion, outside_plane_point_ras_mm,
-                          maximum_approach_mm, point_scheme='center'):
+                          maximum_approach_mm, point_scheme='center',
+                          cell_schedule='surface_first', check=None):
     """Bind explicitly supplied fixed attitude and exterior plane to the Scene.
 
     This records a proposal route, not a reviewed exterior/clearance proof.
     Per-contact exterior/body/workspace tests run during generation; native
     verification must still check staging repositioning and every motion.
+    The opt-in axial schedule binds <=56 source columns and four actual-current
+    A depth levels; all source-wide preparation remains separately reported.
+    Both point schemes are supported (<=224 center or2016 quarter probes).
     """
     binding_started = time.monotonic()
+    if type(cell_schedule) is not str or cell_schedule not in _CELL_SCHEDULES or check is not None and not callable(check):
+        raise ValueError('MILLING_CONTACT_DECLARED_CELL_SCHEDULE_REQUIRED')
+    _geometry_check(check)
     contract = validate_source_scope(engine)
     if not is_milling(contract):
         raise ValueError('MILLING_CONTACT_MILLING_CONTRACT_REQUIRED')
@@ -228,18 +393,35 @@ def bind_milling_approach(engine, *, quaternion, outside_plane_point_ras_mm,
         raise ValueError('MILLING_CONTACT_DECLARED_POINT_SCHEME_REQUIRED')
     if point_scheme != 'center':
         raw['pointScheme'] = point_scheme
+    if cell_schedule != 'surface_first':
+        raw['cellSchedule'] = cell_schedule
     _, _, axis = _approach(engine, contract, raw, require_order=False)
     started = time.monotonic()
     cells = list(contract.aperture_cells)
-    points = engine.scene.points(cells)
+    if cell_schedule == 'surface_first':
+        points = engine.scene.points(cells)
+    else:
+        chunks = []
+        for start in range(0, len(cells), 1024):
+            _geometry_check(check)
+            chunks.append(engine.scene.points(cells[start:start+1024]))
+        points = np.concatenate(chunks)
     depths = dict(zip(cells, points@axis))
     ordering = {'sceneId': engine.scene.identity, 'contractHash': contract.content_hash,
         'quaternion': list(quaternion), 'orderedCells': sorted(cells,
             key=lambda c: (round(float(depths[c]), 9), c)),
         'orderingCells': len(cells), 'orderingWallSeconds': time.monotonic()-started,
         'bindingWallSeconds': time.monotonic()-binding_started}
+    if cell_schedule != 'surface_first':
+        lookup = {cell: j for j, cell in enumerate(cells)}
+        ordered_points = points[[lookup[cell] for cell in ordering['orderedCells']]]
+        ordering['axialCache'] = _build_axial_cache(engine, contract, raw,
+            ordering['orderedCells'], ordered_points, check)
+        ordering['orderingWallSeconds'] = time.monotonic()-started
+        ordering['bindingWallSeconds'] = time.monotonic()-binding_started
     raw['sourceOrdering'] = ordering
     raw['sourceOrderingHash'] = _ordering_hash(ordering)
+    _geometry_check(check)
     return raw
 
 
@@ -250,6 +432,8 @@ def _approach(engine, contract, raw, *, require_order=True):
               'outsidePlanePointRasMm', 'maximumApproachMm'}
     if isinstance(raw, dict) and 'pointScheme' in raw:
         fields.add('pointScheme')
+    if isinstance(raw, dict) and 'cellSchedule' in raw:
+        fields.add('cellSchedule')
     if require_order:
         fields.update(('sourceOrdering', 'sourceOrderingHash'))
     if (not isinstance(raw, dict) or set(raw) != fields or
@@ -258,6 +442,9 @@ def _approach(engine, contract, raw, *, require_order=True):
         raise ValueError('MILLING_CONTACT_APPROACH_SOURCE_BINDING_REQUIRED')
     if raw.get('pointScheme', 'center') not in _POINT_SCHEMES:
         raise ValueError('MILLING_CONTACT_DECLARED_POINT_SCHEME_REQUIRED')
+    schedule = raw.get('cellSchedule', 'surface_first')
+    if type(schedule) is not str or schedule not in _CELL_SCHEDULES or 'cellSchedule' in raw and schedule == 'surface_first':
+        raise ValueError('MILLING_CONTACT_DECLARED_CELL_SCHEDULE_REQUIRED')
     q, point = np.asarray(raw['quaternion'], float), np.asarray(raw['outsidePlanePointRasMm'], float)
     if (q.shape != (4,) or point.shape != (3,) or not np.isfinite(q).all() or
             not np.isfinite(point).all() or abs(np.linalg.norm(q)-1.) > 1e-9 or
@@ -269,8 +456,11 @@ def _approach(engine, contract, raw, *, require_order=True):
         raise ValueError('MILLING_CONTACT_ATTITUDE_OUTSIDE_ENTRY_CONE')
     if require_order:
         ordering = raw['sourceOrdering']
-        if (not isinstance(ordering, dict) or set(ordering) != {'sceneId', 'contractHash', 'quaternion',
-                'orderedCells', 'orderingCells', 'orderingWallSeconds', 'bindingWallSeconds'} or
+        ordering_fields = {'sceneId', 'contractHash', 'quaternion',
+                'orderedCells', 'orderingCells', 'orderingWallSeconds', 'bindingWallSeconds'}
+        if schedule != 'surface_first':
+            ordering_fields.add('axialCache')
+        if (not isinstance(ordering, dict) or set(ordering) != ordering_fields or
                 raw['sourceOrderingHash'] != _ordering_hash(ordering) or
                 ordering['sceneId'] != engine.scene.identity or ordering['contractHash'] != contract.content_hash or
                 ordering['quaternion'] != raw['quaternion'] or
@@ -279,6 +469,9 @@ def _approach(engine, contract, raw, *, require_order=True):
                 not _finite_positive(ordering['orderingWallSeconds']) or
                 not _finite_positive(ordering['bindingWallSeconds'])):
             raise ValueError('MILLING_CONTACT_SOURCE_ORDERING_BINDING_REQUIRED')
+        if schedule != 'surface_first' and (type(ordering['axialCache']) is not dict or
+                ordering['axialCache'].get('binding') != _axial_source_binding(engine, contract, raw)):
+            raise ValueError('MILLING_CONTACT_AXIAL_SOURCE_CACHE_BINDING_REQUIRED')
     return q, point, axis
 
 
@@ -483,7 +676,7 @@ def _local_contact_program(contact, outside, slot, duration, *, suction=False):
 
 def generate_milling_contact_proposals(engine, *, approach, max_examined_cells=2048,
         max_contacts=32, max_contact_probes=2048, drill_seconds, suction_seconds, slot='left',
-        staging_plan=None):
+        staging_plan=None, check=None):
     """Return JSON paired contacts and one native program from the current state.
 
     Bounds count source cells, individual drill inversions and selected matching
@@ -498,21 +691,35 @@ def generate_milling_contact_proposals(engine, *, approach, max_examined_cells=2
     must supply checked global entry/exit and later actual-debris collection.
     """
     started = time.monotonic()
+    if check is not None and not callable(check):
+        raise ValueError('MILLING_CONTACT_CHECK_CALLBACK_REQUIRED')
+    _geometry_check(check)
     contract, q, plane, axis, before, readiness, removed, remaining, protected, rho = _context(
         engine, approach, slot, max_examined_cells, max_contacts, max_contact_probes,
         drill_seconds, suction_seconds, staging_plan=staging_plan)
-    cells = [cell for cell in approach['sourceOrdering']['orderedCells'] if cell in remaining]
+    axial = approach.get('cellSchedule', 'surface_first') != 'surface_first'
+    schedule, point_allowance = None, {}
+    if axial:
+        scheduled, schedule = _axial_current_cells(engine, contract, approach, remaining,
+            max_examined_cells, max_contact_probes, check)
+        cells = [cell for cell, _ in scheduled]
+        point_allowance = dict(scheduled)
+    else:
+        cells = [cell for cell in approach['sourceOrdering']['orderedCells'] if cell in remaining]
     examined, incomplete_cells, probes = [], [], 0
     rejections, candidates, diagnostics = [], [], []
+    effect_support_queries = 0
 
     check_geometry = _geometry_checker(engine, contract, slot, removed, protected, local=staging_plan is not None)
 
     for cell in cells[:max_examined_cells]:
+        _geometry_check(check)
         if probes >= max_contact_probes:
             break
         examined.append(cell)
         for point_index, point in _contact_points(engine, cell, approach):
-            if probes >= max_contact_probes:
+            _geometry_check(check)
+            if probes >= max_contact_probes or axial and point_index >= point_allowance[cell]:
                 incomplete_cells.append(cell)
                 break
             probes += 1
@@ -534,6 +741,10 @@ def generate_milling_contact_proposals(engine, *, approach, max_examined_cells=2
             if reason:
                 rejections.append({**witness, 'reason': reason, 'witnessCell': hits})
                 continue
+            if axial:
+                hits = set(map(int, engine.cells(outside['position'], drill['position'],
+                                                TOOLS['cranial_drill']['radiusMm']))) & remaining
+                effect_support_queries += 1
             if cell not in hits:
                 rejections.append({**witness, 'reason': 'NO_CURRENT_A_CONTACT'})
                 continue
@@ -587,7 +798,7 @@ def generate_milling_contact_proposals(engine, *, approach, max_examined_cells=2
         'testedDrillContactProbes': probes, 'incompletelyExaminedCurrentACells': incomplete_cells,
         'orderingCells': approach['sourceOrdering']['orderingCells'], 'orderingCoordinatesComputedThisCall': 0,
         'matchingSuctionChecks': attempted_pairs,
-        'unexaminedCurrentACells': cells[len(examined):],
+        'unexaminedCurrentACells': (sorted(remaining-set(examined)) if axial else cells[len(examined):]),
         'stockGeometry': {'drillRadiusMm': 2., 'suctionRadiusMm': 1.5, 'shaftRadiusMm': .5,
                           'shaftLengthMm': 40., 'workingDepthMm': 2., 'cellCircumsphereMm': rho,
                           'nominalOverlapMm': _OVERLAP_MM},
@@ -614,18 +825,30 @@ def generate_milling_contact_proposals(engine, *, approach, max_examined_cells=2
             nativeObligations=['checked global staging and complete current-body local transitions',
                 'actual full original A removal before global withdrawal and instrument exchange',
                 'recompute suction from actual tagged debris; all native guards and shared costs retained'])
+    if axial:
+        schedule.update(actualContactProbeTests=probes, potentialTipEffectSupportQueries=effect_support_queries)
+        result.update(cellSchedule='axial_diverse_current_a', cellScheduleScope='bone_only',
+            axialSchedule=schedule, orderingCoordinatesComputedThisCall=len(approach['sourceOrdering']['orderedCells']),
+            effectSupport='potential native spherical tip sweep; not actual removal')
     result['contentHash'] = proposal_hash(result)
     result['sourceGeometryCost'] = {'orderingCells': approach['sourceOrdering']['orderingCells'],
         'orderingWallSeconds': approach['sourceOrdering']['orderingWallSeconds'],
         'bindingWallSeconds': approach['sourceOrdering']['bindingWallSeconds'],
         'orderingReused': True, 'generationWallSeconds': time.monotonic()-started}
+    if axial:
+        result['sourceGeometryCost']['axialSourcePreparation'] = schedule['cachedSourcePreparation']
+        result['sourceGeometryCost']['axialCurrentScheduling'] = {key: schedule[key] for key in (
+            'currentMembershipVisits', 'currentColumnAssignmentsVisited', 'currentColumnActivationVisits',
+            'currentFrontierDepthVisits', 'currentDepthBandVisits',
+            'sourceCoordinateValidationCells', 'potentialTipEffectSupportQueries')}
     if engine.state_id != before:
         raise ValueError('MILLING_CONTACT_SOURCE_STATE_CHANGED')
     return result
 
 
 def generate_milling_debris_proposals(engine, *, approach, max_examined_cells=2048,
-        max_contacts=32, max_contact_probes=2048, suction_seconds, slot='left', staging_plan=None):
+        max_contacts=32, max_contact_probes=2048, suction_seconds, slot='left', staging_plan=None,
+        check=None):
     """Propose stock suction against actual current tagged debris, not future A.
 
     Every candidate body/route must clear the current native cavity without
@@ -637,6 +860,9 @@ def generate_milling_debris_proposals(engine, *, approach, max_examined_cells=20
     suction_seconds is charged separately for approach and stationary dwell.
     """
     started = time.monotonic()
+    if check is not None and not callable(check):
+        raise ValueError('MILLING_CONTACT_CHECK_CALLBACK_REQUIRED')
+    _geometry_check(check)
     contract, q, plane, axis, before, readiness, removed, remaining, protected, rho = _context(
         engine, approach, slot, max_examined_cells, max_contacts, max_contact_probes,
         suction_seconds, staging_plan=staging_plan)
@@ -652,10 +878,12 @@ def generate_milling_debris_proposals(engine, *, approach, max_examined_cells=20
     examined, incomplete_cells, probes, rejections, candidates = [], [], 0, [], []
     check_geometry = _geometry_checker(engine, contract, slot, removed, protected, local=staging_plan is not None)
     for cell in cells[:max_examined_cells]:
+        _geometry_check(check)
         if probes >= max_contact_probes:
             break
         examined.append(cell)
         for point_index, point in _contact_points(engine, cell, approach):
+            _geometry_check(check)
             if probes >= max_contact_probes:
                 incomplete_cells.append(cell)
                 break
@@ -727,6 +955,9 @@ def generate_milling_debris_proposals(engine, *, approach, max_examined_cells=20
     if staging_plan is not None:
         result.update(stagingPlanHash=staging_plan['contentHash'], requiredInstrument='frazier_suction',
                       localRetreatIsCompletedWithdrawal=False)
+    if approach.get('cellSchedule', 'surface_first') != 'surface_first':
+        result.update(cellSchedule='axial_diverse_current_a', cellScheduleScope='bone_only',
+                      appliedDebrisOrdering='actual_current_tagged_debris_outward_depth_then_source_id')
     result['contentHash'] = proposal_hash(result)
     result['sourceGeometryCost'] = {'orderingCells': len(debris), 'orderingWallSeconds': ordering_wall,
         'sourceApproachBindingWallSeconds': approach['sourceOrdering']['bindingWallSeconds'],

@@ -415,3 +415,46 @@ def test_generated_noncollinear_staged_controller_completes_actual81A_debris_and
     assert all(t['native']['status'] == 'accepted' for t in receipt['stagingTransitions'])
     assert [t['kind'] for t in receipt['stagingTransitions']] == ['inbound', 'outbound', 'inbound', 'outbound']
     assert source.snapshot() == before
+
+
+@pytest.mark.parametrize('bound,argument', [('surface_first', 'axial_diverse_current_a'),
+                                         ('axial_diverse_current_a', 'surface_first')])
+def test_cell_schedule_mode_mismatch_is_invalid_source_before_any_native_work(bound, argument):
+    _, current, _, original, meter, limits = fixture(park_other=False)
+    approach = bind_milling_approach(current, quaternion=original['quaternion'],
+        outside_plane_point_ras_mm=original['outsidePlanePointRasMm'], maximum_approach_mm=10.,
+        cell_schedule=bound)
+    before, spent = current.snapshot(), meter.calls
+    with pytest.raises(ValueError, match='CELL_SCHEDULE_BINDING_DIFFERS'):
+        run(current, approach, limits, cell_schedule=argument)
+    assert current.snapshot() == before and meter.calls == spent == 0
+
+
+def test_axial_macro_binding_uses_original_guard_and_retains_cancelled_zero_work_prefix(monkeypatch):
+    import resectionlab.surgical_joint_milling_opening as module
+    _, current, _, old, meter, limits = fixture(park_other=False)
+    approach = bind_milling_approach(current, quaternion=old['quaternion'],
+        outside_plane_point_ras_mm=old['outsidePlanePointRasMm'], maximum_approach_mm=10.,
+        cell_schedule='axial_diverse_current_a')
+    calls = []
+    def cancelled_binding(*args, **kwargs):
+        assert kwargs['cell_schedule'] == 'axial_diverse_current_a' and callable(kwargs['check'])
+        kwargs['check']()
+        calls.append('guarded source binding')
+        raise InterruptedError('generated axial binding cancellation')
+    monkeypatch.setattr(module, 'bind_milling_approach', cancelled_binding)
+    before = current.snapshot()
+    result, receipt = run(current, approach, limits, cell_schedule='axial_diverse_current_a')
+    assert calls == ['guarded source binding']
+    assert receipt['status'] == 'interrupted' and 'axial binding cancellation' in receipt['reason']
+    assert receipt['spec']['cellSchedule'] == 'axial_diverse_current_a'
+    assert not receipt['admittedBoneOpening'] and not receipt['appliedActions']
+    assert receipt['publicCalls'] == meter.calls == 0 and result.snapshot() == before
+
+
+@pytest.mark.parametrize('schedule', [None, True, 'deepest_column', {'mode': 'axial_diverse_current_a'}])
+def test_cell_schedule_rejects_unsupported_specs_without_relaxing_limits(schedule):
+    _, current, _, approach, meter, limits = fixture(park_other=False)
+    with pytest.raises(ValueError, match='EXPLICIT_BOUNDED_SPEC'):
+        run(current, approach, limits, cell_schedule=schedule)
+    assert meter.calls == 0 and not current.actions
