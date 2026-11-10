@@ -322,3 +322,96 @@ def test_cancellation_after_final_hash_retains_complete_physics_without_admissio
     assert receipt['finalReadout']['cancelledOrInterrupted']
     assert branch.snapshot() == before and meter.calls == calls
     assert receipt['contentHash'] == original_hash(receipt)
+
+
+def test_multileg_program_places_only_initial_global_and_exits_with_final_withdraw():
+    from resectionlab.surgical_joint_milling_opening import _multileg_entry_actions, _multileg_exit_actions
+    from test_surgical_milling_contact_proposals import staging_plate
+    engine, _, _, plan = staging_plate()
+    entry = _multileg_entry_actions(engine, plan, 'cranial_drill', 'left', .3)
+    assert [a['operation'] for a in entry] == ['configure', 'place', 'move']
+    assert entry[1]['pose'] == plan['globalPark'] and entry[-1]['pose'] == plan['inbound'][-1]
+    # This pure program-shape control asserts no native ancestry or clearance.
+    engine.state['slots']['left'].update(copy.deepcopy(plan['inbound'][-1]))
+    engine.actions.append({'slot': 'left', 'operation': 'move'})
+    exit_actions = _multileg_exit_actions(engine, plan, 'left', .3)
+    assert [a['operation'] for a in exit_actions] == ['withdraw']
+    assert exit_actions[-1]['pose'] == plan['globalPark']
+    engine.state['slots']['left'].update(copy.deepcopy(plan['globalPark']))
+    reentry = _multileg_entry_actions(engine, plan, 'frazier_suction', 'left', .3)
+    assert [a['operation'] for a in reentry] == ['configure', 'exchange', 'move']
+    assert reentry[1]['instrument'] == 'frazier_suction' and all(a['operation'] != 'place' for a in reentry)
+
+
+def test_multileg_posed_start_matches_declared_parking_attitude_not_working_attitude():
+    from resectionlab.surgical_joint_milling_opening import _initial_multileg_staging
+    from resectionlab.surgical_milling_contact_proposals import bind_milling_staging_plan
+    from test_surgical_milling_contact_proposals import staging_plate
+    engine, _, approach, old = staging_plate()
+    park = copy.deepcopy(old['globalPark'])
+    park['quaternion'] = Rotation.from_euler('x', -90., degrees=True).as_quat().tolist()
+    plan = bind_milling_staging_plan(engine, approach=approach, global_park=park,
+        inbound=[old['globalPark'], *old['inbound']], outbound=[*old['outbound'], park])
+    engine.state['slots']['left'].update(copy.deepcopy(park))
+    engine.actions.append({'slot': 'left', 'operation': 'place'})
+    # Pure pose validation only: the actual macro additionally authenticates
+    # the frozen initial state and every native staging preview/commit.
+    _initial_multileg_staging(engine, plan, 'left')
+    engine.state['slots']['left']['position'][1] += 1
+    with pytest.raises(ValueError, match='GLOBAL_START_POSE_DIFFERS'):
+        _initial_multileg_staging(engine, plan, 'left')
+    engine.state['slots']['left'].update(copy.deepcopy(park), active=True)
+    with pytest.raises(ValueError, match='INITIAL_STAGING_UNQUALIFIED'):
+        _initial_multileg_staging(engine, plan, 'left')
+
+
+@pytest.mark.skipif(os.environ.get('RESECTIONLAB_STAGED_MILLING_NATIVE') != '1',
+                    reason='Prospective full generated staging protocol requires explicit launch')
+def test_generated_noncollinear_staged_controller_completes_actual81A_debris_and_global_exit():
+    """Frozen generated native witness; not part of the pure implementation run."""
+    from resectionlab.surgical_joint_cranial_exit import joint_exit_complete
+    from resectionlab.surgical_milling_contact_proposals import bind_milling_staging_plan
+    from test_surgical_milling_contact_proposals import staging_plate
+    bare, aperture, _, plan = staging_plate()
+    patch = tuple(int(np.ravel_multi_index((x, y, 64), bare.scene.shape))
+                  for x in range(47, 50) for y in range(47, 50))
+    rim = tuple(sorted(set(map(int, np.flatnonzero(bare.scene.labels == 3)))-set(patch)))
+    proof = {'status': 'reviewed', 'provenance': 'Generated noncollinear plate staging; no patient evidence',
+             'evidenceSha256': '6'*64}
+    stage = freeze_cranial_stage_contract(bare, membrane_cells=patch,
+        retained_membrane_cells=rim, membrane_anchor_cells=(rim[0],),
+        work_cells=tuple(map(int, np.flatnonzero(bare.scene.labels == 2))),
+        evidence={name: dict(proof) for name in PROOFS})
+    source = SurgicalEngine(bare.scene, cranial_stages=stage)
+    meter = TransitionMeter(4000)
+    limits = freeze_joint_cranial_limits(source, meter=meter, max_bone_mm3=81.,
+        max_preparation_nonbone_mm3=0., max_work_nonbone_mm3=0.,
+        max_native_actions=2000, max_public_calls=4000, max_wall_seconds=300.,
+        max_bone_contact_replans=6)
+    approach = bind_milling_approach(source, quaternion=[0., 0., 0., 1.],
+        outside_plane_point_ras_mm=[48., 48., 55.], maximum_approach_mm=10.,
+        point_scheme='center_and_quarter_cell_corners')
+    plan = bind_milling_staging_plan(source, approach=approach, global_park=plan['globalPark'],
+        inbound=plan['inbound'], outbound=plan['outbound'])
+    before = source.snapshot()
+    result, receipt = run(source, approach, limits, staging_plan=plan,
+        point_scheme='center_and_quarter_cell_corners', max_batches=8,
+        max_contacts=32, max_examined_cells=81, max_contact_probes=729)
+    record_case('noncollinear-staged-full-opening', result, receipt)
+    assert receipt['status'] == 'accepted', receipt['reason']
+    assert receipt['admittedBoneOpening'] and not receipt['admittedPatientTask']
+    assert set(result.state['removed']) == aperture and not receipt['remainingOriginalACells']
+    assert receipt['batchCount'] <= 8 and receipt['publicCalls'] <= 4000
+    assert receipt['nativeActionsAppended'] <= 2000 and receipt['ledger']['withinLimits']
+    assert receipt['ledger']['boneRemovedMm3'] == 81.
+    assert receipt['ledger']['preparationNonboneRemovedMm3'] == receipt['ledger']['workNonTargetRemovedMm3'] == 0.
+    opening = milling_readiness(result)
+    assert opening['historyVerified'] and opening['debrisConserved'] and opening['openingComplete']
+    assert opening['generatedBoneDebrisMm3'] == opening['debrisRemovedMm3'] == 81.
+    assert opening['debrisPresentMm3'] == opening['debrisEscapedMm3'] == 0.
+    assert joint_exit_complete(result) and receipt['stageReadiness']['bonePrefixVerified']
+    operations = [a['operation'] for a in receipt['appliedActions']]
+    assert operations.count('place') == 1 and operations.count('exchange') == 1
+    assert all(t['native']['status'] == 'accepted' for t in receipt['stagingTransitions'])
+    assert [t['kind'] for t in receipt['stagingTransitions']] == ['inbound', 'outbound', 'inbound', 'outbound']
+    assert source.snapshot() == before

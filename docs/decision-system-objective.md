@@ -156,8 +156,13 @@ includes its affine anchor offset, including on long anisotropic cells.
 `surgical_joint_milling_opening` turns those proposals into a bounded adaptive
 bone-opening skill on the original registered joint limits and meter. It replans
 from actual remaining A and tagged debris for at most eight batches. Only the
-first unposed setup may use `place`; later staging uses checked native withdrawal
-motions. An already posed attitude change requires a separately qualified path.
+first unposed setup may use `place`; default staging then uses checked native
+withdrawal motions. An optional source-bound multileg plan connects an explicit
+global parking pose to a local working pose using native moves. Full-body source,
+protection, workspace and other-hand sweeps are checked, including intermediate
+rotations. Local retreat is tested against the actual accepted cavity and never
+counts as completed withdrawal. This mode keeps the drill until A is gone, then
+withdraws globally before exchanging to suction and collecting actual debris.
 Full original-A removal, conserved collected debris, the native bone-prefix proof
 and exterior tools are required. Dura and tumor permission remain separate.
 Final receipt construction, hashing and cancellation checks count against the

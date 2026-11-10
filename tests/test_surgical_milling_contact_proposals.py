@@ -9,7 +9,8 @@ from scipy.spatial.transform import Rotation
 from resectionlab.surgical_craniotomy_skills import checked_craniotomy_actions, freeze_bone_opening_limits
 from resectionlab.surgical_milling import PROPERTY, milling_readiness
 from resectionlab.surgical_milling_contact_proposals import (
-    bind_milling_approach, generate_milling_contact_proposals, generate_milling_debris_proposals, proposal_hash)
+    bind_milling_approach, bind_milling_staging_plan, generate_milling_contact_proposals,
+    generate_milling_debris_proposals, proposal_hash)
 from resectionlab.surgical_transition_meter import TransitionMeter
 from test_surgical_milling import rebuild
 from test_surgical_milling_native import milling_shell
@@ -482,3 +483,170 @@ def test_off_center_contact_bracket_includes_anchor_offset_on_long_affine_cells(
     assert pose['position'][2] == pytest.approx(3.1)
     assert float(_segment_cell_distances(scene, np.array([[1, 1, 1]]),
         np.array(pose['position']), np.array(pose['position']))[0]) == pytest.approx(1.9)
+
+
+def staging_plate(*, obstacle=None, material='unknown', protected=False):
+    """Unexecuted96-cube plate: noncollinear local approach/global-X exit."""
+    from resectionlab.surgical_engine import SurgicalEngine
+    from resectionlab.surgical_milling import binding, contract_hash
+    from resectionlab.surgical_scene import SurgicalScene
+    old, _ = milling_shell()
+    labels = np.zeros((96, 96, 96), np.uint16)
+    labels[20:76, 20:76, 60] = 1
+    labels[47:50, 47:50, 68:71] = 2
+    labels[41:56, 41:56, 64] = 3
+    regions = copy.deepcopy(old.scene.regions)+[
+        {'id': 3, 'name': 'Generated membrane', 'material': 'membrane'}]
+    if obstacle is not None:
+        labels[obstacle] = 4
+        regions.append({'id': 4, 'name': 'Generated staging obstacle',
+                        'material': material, 'protected': protected})
+    props = copy.deepcopy(old.scene.properties)
+    raw = props.pop(PROPERTY)
+    anchor = int(np.ravel_multi_index((20, 20, 60), labels.shape))
+    props['boneAnchors'] = [anchor]
+    aperture = {int(np.ravel_multi_index((x, y, 60), labels.shape))
+                for x in range(44, 53) for y in range(44, 53)}
+    base = SurgicalScene(labels, np.eye(4), regions,
+        {'kind': 'generated noncollinear staging plate; no patient'}, props)
+    raw.update(binding(base), apertureCells=sorted(aperture),
+        retainedSkullCells=sorted(set(map(int, np.flatnonzero(labels == 1)))-aperture),
+        boneAnchorCells=[anchor])
+    raw['entry']['centerRasMm'] = [48., 48., 59.5]
+    raw['exit'] = {'axis': 0, 'side': -1, 'planeVoxelBoundary': 19.5,
+        'minimumVoxelBoundary': [-.5]*3, 'maximumVoxelBoundary': [95.5]*3}
+    raw['contentHash'] = contract_hash(raw)
+    props[PROPERTY] = raw
+    engine = SurgicalEngine(SurgicalScene(labels, base.affine, regions, base.source, props))
+    approach = bind_milling_approach(engine, quaternion=[0., 0., 0., 1.],
+        outside_plane_point_ras_mm=[48., 48., 55.], maximum_approach_mm=10.,
+        point_scheme='center_and_quarter_cell_corners')
+    park = {'position': [16., 48., 55.], 'quaternion': [0., 0., 0., 1.]}
+    local = {'position': [48., 48., 55.], 'quaternion': [0., 0., 0., 1.]}
+    plan = bind_milling_staging_plan(engine, approach=approach, global_park=park,
+        inbound=[local], outbound=[local, park])
+    return engine, aperture, approach, plan
+
+
+def test_staged_plate_geometry_proposes_full_A_where_legacy_collinear_exit_refuses():
+    engine, aperture, approach, plan = staging_plate()
+    before = engine.snapshot()
+    legacy = propose(engine, approach, max_contact_probes=729)
+    staged = propose(engine, approach, max_contact_probes=729, staging_plan=plan)
+    repeated = propose(engine, approach, max_contact_probes=729, staging_plan=plan)
+    assert not legacy['contacts'] and not legacy['nominalWholeAContactCoverage']
+    assert {r['reason'] for r in legacy['rejections']} == {'OUTSIDE_POSE_NOT_AT_ORIGINAL_EXIT'}
+    assert staged['nominalWholeAContactCoverage'] and not staged['nominalUncoveredCurrentACells']
+    assert set(staged['remainingOriginalACells']) == aperture and len(staged['contacts']) <= 32
+    assert staged['testedDrillContactProbes'] == 729 and staged['matchingSuctionChecks'] == 0
+    assert staged['requiredInstrument'] == 'cranial_drill'
+    assert {a['operation'] for a in staged['actions']} == {'move', 'apply', 'deactivate'}
+    assert all([a['operation'] for a in row['actions']] == ['move', 'apply', 'deactivate', 'move']
+               for row in staged['contacts'])
+    assert not staged['openingComplete'] and not staged['admittedOpening'] and staged['controllerDeficit']
+    assert staged['contentHash'] == repeated['contentHash'] == proposal_hash(staged)
+    assert engine.snapshot() == before and not engine.actions and staged['nativeCalls'] == 0
+
+
+@pytest.mark.parametrize('material,protected', [('unknown', False), ('soft_tissue', False), ('soft_tissue', True)])
+def test_staging_preflight_catches_midroute_material_and_protected_obstacles(material, protected):
+    from resectionlab.surgical_milling_contact_proposals import _local_path_clearance
+    engine, _, _, plan = staging_plate(obstacle=(32, 48, 55), material=material, protected=protected)
+    reason, count = _local_path_clearance(engine, engine._cranial_access, 'cranial_drill',
+        [plan['globalPark'], *plan['inbound']], 'left')
+    assert reason == ('MILLING_STAGING_ORIGINAL_TARGET_OR_PROTECTED_CONTACT' if protected else
+                      'MILLING_STAGING_CURRENT_MATERIAL_CONTACT')
+    assert 0 < count <= 20_000 and not engine.actions
+
+
+def test_staging_paths_bind_source_state_pose_endpoints_and_explicit_caps():
+    from resectionlab.core import semantic_digest
+    from resectionlab.surgical_milling_contact_proposals import _staging_plan
+    engine, _, approach, plan = staging_plate()
+    def sealed(changes):
+        value = copy.deepcopy(plan)
+        value.update(changes)
+        value['contentHash'] = semantic_digest({k: v for k, v in value.items() if k != 'contentHash'})
+        return value
+    for changes, reason in [({'inbound': []}, 'PATH_BOUNDS'),
+            ({'inbound': plan['inbound']*9}, 'PATH_BOUNDS'),
+            ({'outbound': plan['outbound']*5}, 'PATH_BOUNDS'),
+            ({'outbound': [plan['globalPark']]}, 'ENDPOINTS_DIFFER'),
+            ({'sourceStateId': 'not-the-current-state'}, 'SOURCE_BINDING'),
+            ({'actions': []}, 'SOURCE_BINDING')]:
+        with pytest.raises(ValueError, match=reason):
+            _staging_plan(engine, engine._cranial_access, approach, sealed(changes), require_source_state=True)
+    tampered = copy.deepcopy(plan)
+    tampered['globalPark']['position'][0] += 1
+    with pytest.raises(ValueError, match='SOURCE_BINDING'):
+        _staging_plan(engine, engine._cranial_access, approach, tampered)
+    assert not engine.actions
+
+
+def test_local_body_geometry_and_history_override_inserted_or_clear_flags(monkeypatch):
+    import resectionlab.surgical_milling_contact_proposals as module
+    engine, _, approach, plan = staging_plate()
+    hand = engine.state['slots']['left']
+    hand.update(position=[48., 48., 55.], quaternion=approach['quaternion'], inserted=True)
+    # A fabricated ledger is rejected before it can grant local permission.
+    with pytest.raises(ValueError, match='NATIVE_CAVITY_HISTORY'):
+        propose(engine, approach, staging_plan=plan, max_contact_probes=1)
+    # Isolate geometry/context with a declared test-only history stub. This is
+    # not native-history evidence; the full native witness is separately gated.
+    monkeypatch.setattr(module, 'milling_readiness', lambda _: {
+        'historyVerified': True, 'debrisConserved': True, 'debrisPresentMm3': 0., 'openingComplete': False})
+    context = module._context(engine, approach, 'left', 1, 1, 1, 1., staging_plan=plan)
+    assert context[0] == engine._cranial_access
+    with pytest.raises(ValueError, match='PARKED_INACTIVE'):
+        module._context(engine, approach, 'left', 1, 1, 1, 1.)
+    hand.update(position=[48., 48., 58.], inserted=False)
+    # Mark this unsafe endpoint posed without asserting any valid ancestry.
+    engine.actions.append({'slot': 'left', 'operation': 'move'})
+    with pytest.raises(ValueError, match='BODY_NOT_OUTSIDE_ENTRY'):
+        module._context(engine, approach, 'left', 1, 1, 1, 1., staging_plan=plan)
+    hand.update(position=[48., 48., 55.], active=True)
+    with pytest.raises(ValueError, match='PARKED_INACTIVE'):
+        module._context(engine, approach, 'left', 1, 1, 1, 1., staging_plan=plan)
+
+
+def test_bounded_rotation_path_uses_native_swept_envelopes_without_calls():
+    from resectionlab.surgical_milling_contact_proposals import _local_path_clearance
+    engine, _, approach, plan = staging_plate()
+    park = copy.deepcopy(plan['globalPark'])
+    park['quaternion'] = Rotation.from_euler('x', -90., degrees=True).as_quat().tolist()
+    rotated = bind_milling_staging_plan(engine, approach=approach, global_park=park,
+        inbound=[plan['globalPark'], *plan['inbound']],
+        outbound=[*plan['outbound'], park])
+    reason, intervals = _local_path_clearance(engine, engine._cranial_access, 'cranial_drill',
+        [rotated['globalPark'], *rotated['inbound']], 'left')
+    assert reason is None and intervals >= 218 and not engine.actions
+
+
+def test_local_retreat_preflight_never_assumes_the_contact_footprint_was_removed():
+    from resectionlab.surgical_milling_contact_proposals import _local_path_clearance
+    engine, _, _, plan = staging_plate()
+    contact = {'position': [48., 48., 57.6], 'quaternion': [0., 0., 0., 1.]}
+    reason, count = _local_path_clearance(engine, engine._cranial_access, 'cranial_drill',
+        [contact, plan['inbound'][-1]], 'left', allow_entry_retreat=True)
+    assert reason == 'MILLING_STAGING_CURRENT_MATERIAL_CONTACT' and count == 0
+    assert not engine.state['removed'] and not engine.actions
+
+
+def test_staged_routes_keep_critical_clearance_other_hand_and_workspace():
+    from resectionlab.surgical_milling_contact_proposals import _local_path_clearance
+    engine, _, _, plan = staging_plate(obstacle=(32, 52, 55), material='soft_tissue', protected=True)
+    # Four millimetres off the path: no direct2mm working-cell contact, but
+    # the unchanged critical clearance/full-cell support still vetoes it.
+    reason, _ = _local_path_clearance(engine, engine._cranial_access, 'cranial_drill',
+        [plan['globalPark'], *plan['inbound']], 'left')
+    assert reason == 'MILLING_STAGING_ORIGINAL_TARGET_OR_PROTECTED_CONTACT'
+    engine, _, _, plan = staging_plate()
+    engine.state['slots']['right'].update(position=[32., 48., 55.],
+        quaternion=[0., 0., 0., 1.], inserted=True)
+    reason, _ = _local_path_clearance(engine, engine._cranial_access, 'cranial_drill',
+        [plan['globalPark'], *plan['inbound']], 'left')
+    assert reason == 'MILLING_STAGING_OTHER_HAND_CONTACT'
+    engine.state['slots']['right']['inserted'] = False
+    outside = {'position': [95., 48., 55.], 'quaternion': [0., 0., 0., 1.]}
+    reason, _ = _local_path_clearance(engine, engine._cranial_access, 'cranial_drill', [outside], 'left')
+    assert reason == 'MILLING_STAGING_OUTSIDE_WORKSPACE' and not engine.actions

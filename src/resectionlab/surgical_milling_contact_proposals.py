@@ -17,7 +17,7 @@ import time
 from itertools import product
 
 import numpy as np
-from scipy.spatial.transform import Rotation
+from scipy.spatial.transform import Rotation, Slerp
 
 from .core import semantic_digest
 from .geometry import _segment_cell_distances
@@ -25,12 +25,13 @@ from .surgical_craniotomy import _original_targets
 from .surgical_cranial_guards import _inside_entry
 from .surgical_engine import SurgicalEngine
 from .surgical_milling import is_milling, milling_readiness, validate_source_scope
-from .surgical_motion import envelopes, pair_conflict
+from .surgical_motion import envelopes, pair_conflict, swept_envelopes
 from .surgical_tools import TOOLS
 from .surgical_transition_meter import MeteredEngine
 
 SCHEMA = 'resectionlab.milling-contact-proposals.v1'
 APPROACH_SCHEMA = 'resectionlab.milling-contact-approach.v1'
+STAGING_SCHEMA = 'resectionlab.milling-staging-plan.v1'
 _OVERLAP_MM = .10
 _POINT_SCHEMES = ('center', 'center_and_quarter_cell_corners')
 _ALGORITHM = {'name': 'native-orthogonal-cell-ray-inverse-v1',
@@ -65,6 +66,146 @@ def proposal_hash(result):
 
 def _finite_positive(value):
     return type(value) in (int, float) and math.isfinite(value) and value > 0
+
+
+def _approach_declaration(approach):
+    return {key: copy.deepcopy(approach[key]) for key in (
+        'sceneId', 'contractHash', 'quaternion', 'outsidePlanePointRasMm', 'maximumApproachMm')}
+
+
+def _same_pose(first, second):
+    return (np.linalg.norm(np.subtract(first['position'], second['position'])) <= 1e-9 and
+            (Rotation.from_quat(first['quaternion'])*Rotation.from_quat(
+                second['quaternion']).inv()).magnitude() <= 1e-9)
+
+
+def _staging_approach_hash(approach):
+    return semantic_digest({'approach': _approach_declaration(approach),
+                            'pointScheme': approach.get('pointScheme', 'center')})
+
+
+def bind_milling_staging_plan(engine, *, approach, global_park, inbound, outbound):
+    """Freeze bounded native staging proposals, never exterior/clearance evidence.
+
+    Inbound vertices follow globalPark and end at the local working attitude.
+    Outbound starts at that same local vertex and ends at globalPark. Posed
+    callers must actually start at globalPark; no implicit alignment is added.
+    """
+    contract = validate_source_scope(engine)
+    _approach(engine, contract, approach)
+    plan = {'schema': STAGING_SCHEMA, 'sceneId': engine.scene.identity,
+        'contractHash': contract.content_hash, 'sourceStateId': engine.state_id,
+        'approachHash': _staging_approach_hash(approach),
+        'globalPark': copy.deepcopy(global_park), 'inbound': copy.deepcopy(inbound),
+        'outbound': copy.deepcopy(outbound)}
+    plan['contentHash'] = semantic_digest(plan)
+    return _staging_plan(engine, contract, approach, plan, require_source_state=True)
+
+
+def _staging_plan(engine, contract, approach, plan, *, require_source_state=False):
+    fields = {'schema', 'sceneId', 'contractHash', 'sourceStateId', 'approachHash',
+              'globalPark', 'inbound', 'outbound', 'contentHash'}
+    if (type(plan) is not dict or set(plan) != fields or plan['schema'] != STAGING_SCHEMA or
+            plan['sceneId'] != engine.scene.identity or plan['contractHash'] != contract.content_hash or
+            plan['approachHash'] != _staging_approach_hash(approach) or
+            plan['contentHash'] != semantic_digest({k: v for k, v in plan.items() if k != 'contentHash'}) or
+            require_source_state and plan['sourceStateId'] != engine.state_id):
+        raise ValueError('MILLING_STAGING_SOURCE_BINDING_REQUIRED')
+    if any(type(plan[name]) is not list or not 1 <= len(plan[name]) <= 8
+           for name in ('inbound', 'outbound')):
+        raise ValueError('MILLING_STAGING_EXPLICIT_PATH_BOUNDS_REQUIRED')
+    poses = [plan['globalPark'], *plan['inbound'], *plan['outbound']]
+    for pose in poses:
+        if type(pose) is not dict or set(pose) != {'position', 'quaternion'}:
+            raise ValueError('MILLING_STAGING_FINITE_NATIVE_POSES_REQUIRED')
+        p, q = pose['position'], pose['quaternion']
+        if (type(p) is not list or type(q) is not list or len(p) != 3 or len(q) != 4 or
+                any(type(x) not in (int, float) or not math.isfinite(x) for x in [*p, *q]) or
+                abs(np.linalg.norm(q)-1.) > 1e-9):
+            raise ValueError('MILLING_STAGING_FINITE_NATIVE_POSES_REQUIRED')
+    local = plan['inbound'][-1]
+    if (not _same_pose(local, plan['outbound'][0]) or
+            not _same_pose(plan['globalPark'], plan['outbound'][-1]) or
+            (Rotation.from_quat(local['quaternion'])*Rotation.from_quat(
+                approach['quaternion']).inv()).magnitude() > 1e-9 or
+            abs(float((np.asarray(local['position'])-approach['outsidePlanePointRasMm'])@
+                Rotation.from_quat(approach['quaternion']).apply([0., 0., 1.]))) > 1e-9):
+        raise ValueError('MILLING_STAGING_PATH_ENDPOINTS_DIFFER')
+    for path in ([plan['globalPark'], *plan['inbound']], plan['outbound']):
+        if any(np.linalg.norm(np.subtract(b['position'], a['position'])) > 250
+               for a, b in zip(path, path[1:])):
+            raise ValueError('MILLING_STAGING_NATIVE_LEG_BOUND_EXCEEDED')
+    for name in ('cranial_drill', 'frazier_suction'):
+        if not _exterior(engine.scene, contract, _segments(name, plan['globalPark'])):
+            raise ValueError('MILLING_STAGING_GLOBAL_PARK_NOT_EXTERIOR')
+    return copy.deepcopy(plan)
+
+
+def _local_clearance(engine, contract, segments, removed, protected, slot, *, require_outside_entry=True):
+    """Conservative source geometry refusal only; native guards remain mandatory."""
+    from .surgical_task_domain import _outside, _posed, reviewed_domain
+    if not _within_workspace(engine.scene, contract, segments):
+        return 'MILLING_STAGING_OUTSIDE_WORKSPACE'
+    domain = reviewed_domain(engine.scene)
+    if domain is not None and _outside(engine.scene, domain, segments):
+        return 'MILLING_STAGING_OUTSIDE_REVIEWED_DOMAIN'
+    try:
+        if _inside_entry(contract, segments) and require_outside_entry:
+            return 'MILLING_STAGING_BODY_NOT_OUTSIDE_ENTRY'
+    except ValueError:
+        return 'MILLING_STAGING_BODY_NOT_OUTSIDE_ENTRY'
+    other = 'right' if slot == 'left' else 'left'
+    if _posed(engine, other):
+        current = engine.state['slots'][other]
+        if pair_conflict(segments, envelopes(TOOLS[current['instrument']], engine.parameters(current),
+                current['position'], current['quaternion'])):
+            return 'MILLING_STAGING_OTHER_HAND_CONTACT'
+    for a, b, radius, _ in segments:
+        cells = set(map(int, engine.cells(a, b, radius)))
+        if cells & protected or (engine.protection is not None and
+                len(engine.protection.capsule_hits(a, b, radius))):
+            return 'MILLING_STAGING_ORIGINAL_TARGET_OR_PROTECTED_CONTACT'
+        if any(engine.scene.labels.ravel()[c] != 0 for c in cells-removed):
+            return 'MILLING_STAGING_CURRENT_MATERIAL_CONTACT'
+    return None
+
+
+def _local_path_clearance(engine, contract, name, poses, slot, *, check=lambda: None,
+                          allow_entry_retreat=False):
+    """Bounded source preflight with native swept envelopes, not native admission.
+
+    The <=.25mm/1degree subdivisions match reviewed-task-domain path checks;
+    the separate 20,000-interval bound includes every proposed staging leg.
+    """
+    protected = set(engine._protected_ids) | _original_targets(engine.scene)
+    removed = set(engine.state['removed'])
+    intervals = 0
+    reason = _local_clearance(engine, contract, _segments(name, poses[0]), removed, protected, slot,
+                              require_outside_entry=not allow_entry_retreat)
+    if reason:
+        return reason, intervals
+    previous = poses[0]
+    for end in poses[1:]:
+        rotations = Rotation.from_quat([previous['quaternion'], end['quaternion']])
+        angle = float((rotations[1]*rotations[0].inv()).magnitude())
+        count = max(1, math.ceil(np.linalg.norm(np.subtract(end['position'], previous['position']))/.25),
+                    math.ceil(angle/np.deg2rad(1.)))
+        intervals += count
+        if intervals > 20_000:
+            return 'MILLING_STAGING_GEOMETRY_INTERVAL_BOUND', intervals
+        start = previous
+        interpolation = Slerp([0., 1.], rotations)
+        for fraction in np.linspace(0., 1., count+1)[1:]:
+            check()
+            pose = _pose((1-fraction)*np.asarray(start['position'])+fraction*np.asarray(end['position']),
+                         interpolation(fraction).as_quat())
+            segments = swept_envelopes(TOOLS[name], {'radiusMm': TOOLS[name]['radiusMm'], 'depthMm': 2.}, previous, pose)
+            reason = _local_clearance(engine, contract, segments, removed, protected, slot,
+                                      require_outside_entry=not allow_entry_retreat)
+            if reason:
+                return reason, intervals
+            previous = pose
+    return _local_clearance(engine, contract, _segments(name, poses[-1]), removed, protected, slot), intervals
 
 
 def bind_milling_approach(engine, *, quaternion, outside_plane_point_ras_mm,
@@ -224,7 +365,8 @@ def _program(drill, suction, outside, slot, drill_seconds, suction_seconds):
     return result
 
 
-def _context(engine, approach, slot, max_examined_cells, max_contacts, max_contact_probes, *durations):
+def _context(engine, approach, slot, max_examined_cells, max_contacts, max_contact_probes,
+             *durations, staging_plan=None):
     if not isinstance(engine, (SurgicalEngine, MeteredEngine)):
         raise TypeError('MILLING_CONTACT_NATIVE_ENGINE_REQUIRED')
     if (type(max_examined_cells) is not int or not 1 <= max_examined_cells <= 2048 or
@@ -240,10 +382,13 @@ def _context(engine, approach, slot, max_examined_cells, max_contacts, max_conta
     if not is_milling(contract):
         raise ValueError('MILLING_CONTACT_MILLING_CONTRACT_REQUIRED')
     q, plane, axis = _approach(engine, contract, approach)
+    if staging_plan is not None:
+        _staging_plan(engine, contract, approach, staging_plan)
     if engine.grid._orthogonal_spacing is None:
         raise ValueError('MILLING_CONTACT_SHEARED_AFFINE_CONTACT_UNSUPPORTED')
-    if slot not in engine.state['slots'] or any(s['inserted'] or s['active'] or s['grip']
-            for s in engine.state['slots'].values()):
+    if slot not in engine.state['slots'] or any(s['active'] or s['grip'] or
+            s['inserted'] and (staging_plan is None or hand != slot)
+            for hand, s in engine.state['slots'].items()):
         raise ValueError('MILLING_CONTACT_PARKED_INACTIVE_HANDS_REQUIRED')
     if (engine.state['holds'] or engine.state.get('detachedFragments') or
             any(any(offset) for offset in engine.state.get('deformation', {}).values())):
@@ -259,19 +404,40 @@ def _context(engine, approach, slot, max_examined_cells, max_contacts, max_conta
         protected.update(row['cells'])
     protected.update(map(int, np.flatnonzero(np.isin(engine.scene.labels, [r['id'] for r in
         engine.scene.regions if r.get('protected') is True or r.get('critical') is True]))))
+    if staging_plan is not None:
+        from .surgical_task_domain import _posed
+        current = engine.state['slots'][slot]
+        if _posed(engine, slot):
+            if (current['instrument'] not in ('cranial_drill', 'frazier_suction') or
+                    engine.parameters(current)['radiusMm'] != TOOLS[current['instrument']]['radiusMm'] or
+                    engine.parameters(current)['depthMm'] != 2.):
+                raise ValueError('MILLING_STAGING_STOCK_TOOL_REQUIRED')
+            reason = _local_clearance(engine, contract, envelopes(TOOLS[current['instrument']],
+                engine.parameters(current), current['position'], current['quaternion']), removed, protected, slot)
+            if reason:
+                raise ValueError(reason)
     # Maximum corner norm is valid for oblique AND sheared affine cells.
     corners = np.asarray(list(product((-.5, .5), repeat=3)))@engine.scene.affine[:3, :3].T
     rho = float(np.linalg.norm(corners, axis=1).max())
     return contract, q, plane, axis, before, readiness, removed, remaining, protected, rho
 
 
-def _geometry_checker(engine, contract, slot, removed, protected):
+def _geometry_checker(engine, contract, slot, removed, protected, *, local=False):
     def check_geometry(name, contact, outside, *, allowed_work):
         route = _route(name, outside, contact)
-        if not _exterior(engine.scene, contract, _segments(name, outside)):
+        if local:
+            reason = _local_clearance(engine, contract, _segments(name, outside), removed, protected, slot)
+            if reason:
+                return reason, None
+        elif not _exterior(engine.scene, contract, _segments(name, outside)):
             return 'OUTSIDE_POSE_NOT_AT_ORIGINAL_EXIT', None
         if not _within_workspace(engine.scene, contract, route):
             return 'OUTSIDE_REVIEWED_WORKSPACE', None
+        if local:
+            from .surgical_task_domain import _outside, reviewed_domain
+            domain = reviewed_domain(engine.scene)
+            if domain is not None and _outside(engine.scene, domain, route):
+                return 'MILLING_STAGING_OUTSIDE_REVIEWED_DOMAIN', None
         try:
             _inside_entry(contract, route)
         except ValueError as error:
@@ -288,6 +454,10 @@ def _geometry_checker(engine, contract, slot, removed, protected):
             touched = set(map(int, engine.cells(a, b, radius)))
             if touched & protected:
                 return 'ORIGINAL_TARGET_OR_PROTECTED_CONTACT', min(touched & protected)
+            if local and engine.protection is not None:
+                guarded = engine.protection.capsule_hits(a, b, radius)
+                if len(guarded):
+                    return 'ORIGINAL_TARGET_OR_PROTECTED_CONTACT', int(guarded[0])
             occupied = {c for c in touched-removed if engine.scene.labels.ravel()[c] != 0}
             if part == 'shaft' and occupied:
                 return 'CURRENT_CAVITY_SHAFT_OCCUPIED', min(occupied)
@@ -300,8 +470,20 @@ def _geometry_checker(engine, contract, slot, removed, protected):
     return check_geometry
 
 
+def _local_contact_program(contact, outside, slot, duration, *, suction=False):
+    """Same-tool local retreat is move, never a false completed withdrawal."""
+    actions = [{'slot': slot, 'operation': 'move', 'pose': copy.deepcopy(outside), 'duration': .1},
+               {'slot': slot, 'operation': 'apply', 'pose': copy.deepcopy(contact), 'duration': duration}]
+    if suction:
+        actions.append({'slot': slot, 'operation': 'apply', 'pose': copy.deepcopy(contact), 'duration': duration})
+    actions.extend(({'slot': slot, 'operation': 'deactivate', 'duration': .1},
+        {'slot': slot, 'operation': 'move', 'pose': copy.deepcopy(outside), 'duration': .1}))
+    return actions
+
+
 def generate_milling_contact_proposals(engine, *, approach, max_examined_cells=2048,
-        max_contacts=32, max_contact_probes=2048, drill_seconds, suction_seconds, slot='left'):
+        max_contacts=32, max_contact_probes=2048, drill_seconds, suction_seconds, slot='left',
+        staging_plan=None):
     """Return JSON paired contacts and one native program from the current state.
 
     Bounds count source cells, individual drill inversions and selected matching
@@ -311,15 +493,19 @@ def generate_milling_contact_proposals(engine, *, approach, max_examined_cells=2
     Use ``actions`` with existing checked policies, whose completion gates and
     shared prospective budgets are unchanged. Any refused suction pair is
     retained; there is no extra reselection loop beyond the selected bound.
+    With an explicit staging_plan, propose drill-only same-tool contacts from
+    a geometrically checked local outside-entry plane; the staged controller
+    must supply checked global entry/exit and later actual-debris collection.
     """
     started = time.monotonic()
     contract, q, plane, axis, before, readiness, removed, remaining, protected, rho = _context(
-        engine, approach, slot, max_examined_cells, max_contacts, max_contact_probes, drill_seconds, suction_seconds)
+        engine, approach, slot, max_examined_cells, max_contacts, max_contact_probes,
+        drill_seconds, suction_seconds, staging_plan=staging_plan)
     cells = [cell for cell in approach['sourceOrdering']['orderedCells'] if cell in remaining]
     examined, incomplete_cells, probes = [], [], 0
     rejections, candidates, diagnostics = [], [], []
 
-    check_geometry = _geometry_checker(engine, contract, slot, removed, protected)
+    check_geometry = _geometry_checker(engine, contract, slot, removed, protected, local=staging_plan is not None)
 
     for cell in cells[:max_examined_cells]:
         if probes >= max_contact_probes:
@@ -355,11 +541,20 @@ def generate_milling_contact_proposals(engine, *, approach, max_examined_cells=2
                 'drillPose': drill, 'outsidePose': outside, 'hits': hits,
                 'nativeLeadingDrillContactDistanceMm': threshold})
     uncovered, selected, attempted_pairs = set(remaining), [], 0
-    while candidates and attempted_pairs < max_contacts:
+    selected_attempts = 0
+    while candidates and selected_attempts < max_contacts:
         best = min(candidates, key=lambda row: (-len(row['hits'] & uncovered), row['cell'], row['pointIndex']))
         candidates.remove(best)
         if not best['hits'] & uncovered:
             break
+        selected_attempts += 1
+        if staging_plan is not None:
+            record = {key: value for key, value in best.items() if key != 'hits'}
+            record.update(nominalCurrentAContactCells=sorted(best['hits']),
+                actions=_local_contact_program(best['drillPose'], best['outsidePose'], slot, drill_seconds))
+            selected.append(record)
+            uncovered.difference_update(best['hits'])
+            continue
         attempted_pairs += 1
         suction, threshold = _contact(engine, best['cell'], np.asarray(best['contactAnchorRasMm']),
             axis, TOOLS['frazier_suction']['radiusMm'], rho, q)
@@ -412,6 +607,13 @@ def generate_milling_contact_proposals(engine, *, approach, max_examined_cells=2
             'finite drill work and full endpoint before suction', 'actual debris collection and complete original A',
             'recompute suction contacts from actual current debris; paired cell contact is not footprint collection',
             'unchanged shared policy/meter budgets and completed exterior exit']}
+    if staging_plan is not None:
+        result.update(proposalKind='staged_same_tool_current_cavity_drill',
+            stagingPlanHash=staging_plan['contentHash'], requiredInstrument='cranial_drill',
+            localRetreatIsCompletedWithdrawal=False,
+            nativeObligations=['checked global staging and complete current-body local transitions',
+                'actual full original A removal before global withdrawal and instrument exchange',
+                'recompute suction from actual tagged debris; all native guards and shared costs retained'])
     result['contentHash'] = proposal_hash(result)
     result['sourceGeometryCost'] = {'orderingCells': approach['sourceOrdering']['orderingCells'],
         'orderingWallSeconds': approach['sourceOrdering']['orderingWallSeconds'],
@@ -423,7 +625,7 @@ def generate_milling_contact_proposals(engine, *, approach, max_examined_cells=2
 
 
 def generate_milling_debris_proposals(engine, *, approach, max_examined_cells=2048,
-        max_contacts=32, max_contact_probes=2048, suction_seconds, slot='left'):
+        max_contacts=32, max_contact_probes=2048, suction_seconds, slot='left', staging_plan=None):
     """Propose stock suction against actual current tagged debris, not future A.
 
     Every candidate body/route must clear the current native cavity without
@@ -436,7 +638,8 @@ def generate_milling_debris_proposals(engine, *, approach, max_examined_cells=20
     """
     started = time.monotonic()
     contract, q, plane, axis, before, readiness, removed, remaining, protected, rho = _context(
-        engine, approach, slot, max_examined_cells, max_contacts, max_contact_probes, suction_seconds)
+        engine, approach, slot, max_examined_cells, max_contacts, max_contact_probes,
+        suction_seconds, staging_plan=staging_plan)
     debris = {int(c): float(amount) for c, amount in engine.state['debris'].items() if amount > 0}
     if any(not 0 <= c < engine.scene.labels.size for c in debris):
         raise ValueError('MILLING_CONTACT_TAGGED_DEBRIS_SOURCE_CELL_INVALID')
@@ -447,7 +650,7 @@ def generate_milling_debris_proposals(engine, *, approach, max_examined_cells=20
     cells = sorted(cells, key=lambda c: (round(float(depths[c]), 9), c))
     ordering_wall = time.monotonic()-ordering_started
     examined, incomplete_cells, probes, rejections, candidates = [], [], 0, [], []
-    check_geometry = _geometry_checker(engine, contract, slot, removed, protected)
+    check_geometry = _geometry_checker(engine, contract, slot, removed, protected, local=staging_plan is not None)
     for cell in cells[:max_examined_cells]:
         if probes >= max_contact_probes:
             break
@@ -488,7 +691,9 @@ def generate_milling_debris_proposals(engine, *, approach, max_examined_cells=20
         record = {key: value for key, value in best.items() if key != 'hits'}
         record.update(taggedDebrisContactCells=sorted(best['hits']),
             taggedDebrisContactVolumeMm3=sum(debris[c] for c in best['hits']),
-            actions=_program(None, best['suctionPose'], best['outsidePose'], slot, None, suction_seconds))
+            actions=(_program(None, best['suctionPose'], best['outsidePose'], slot, None, suction_seconds)
+                if staging_plan is None else _local_contact_program(
+                    best['suctionPose'], best['outsidePose'], slot, suction_seconds, suction=True)))
         selected.append(record)
         uncovered.difference_update(best['hits'])
     result = {'schema': SCHEMA, 'proposalKind': 'current_tagged_debris_suction',
@@ -519,6 +724,9 @@ def generate_milling_debris_proposals(engine, *, approach, max_examined_cells=20
         'nativeObligations': ['checked current-cavity approach, uptake and complete exterior exit',
             'retain all shared-meter costs and actual fluid/debris mass accounting',
             'recompute from actual remaining tags after native execution; full original A still required']}
+    if staging_plan is not None:
+        result.update(stagingPlanHash=staging_plan['contentHash'], requiredInstrument='frazier_suction',
+                      localRetreatIsCompletedWithdrawal=False)
     result['contentHash'] = proposal_hash(result)
     result['sourceGeometryCost'] = {'orderingCells': len(debris), 'orderingWallSeconds': ordering_wall,
         'sourceApproachBindingWallSeconds': approach['sourceOrdering']['bindingWallSeconds'],

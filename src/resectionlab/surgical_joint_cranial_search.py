@@ -29,7 +29,8 @@ _INTERRUPTIONS = (TransitionBudgetExceeded, TimeoutError, InterruptedError,
 _MILLING_STAGING_LIMITS = frozenset(('JOINT_MILLING_INITIAL_STAGING_UNQUALIFIED',
     'JOINT_MILLING_INITIAL_STAGING_NOT_EXTERIOR',
     'JOINT_MILLING_POSED_ATTITUDE_STAGING_UNQUALIFIED',
-    'JOINT_MILLING_INITIAL_STOCK_STAGING_UNQUALIFIED'))
+    'JOINT_MILLING_INITIAL_STOCK_STAGING_UNQUALIFIED',
+    'JOINT_MILLING_DECLARED_GLOBAL_START_POSE_DIFFERS'))
 
 
 @dataclass(frozen=True)
@@ -250,12 +251,14 @@ def _proposal(value, state_id):
             p['kind'] not in ('opening', 'milling_opening', 'preparation', 'configuration', 'work', 'cusa')):
         raise ValueError('Joint proposal must name a supported kind and the current native source state')
     if p['kind'] == 'milling_opening':
-        allowed = {'approach', 'drill_seconds', 'suction_seconds', 'staging_seconds',
+        required = {'approach', 'drill_seconds', 'suction_seconds', 'staging_seconds',
             'slot', 'max_batches', 'max_contacts', 'max_examined_cells',
             'max_contact_probes', 'point_scheme'}
         spec = p.get('milling')
         if ('actions' in p or 'motion' in p or type(spec) is not dict or
-                set(spec) != allowed or type(spec['approach']) is not dict):
+                set(spec) not in (required, required | {'staging_plan'}) or
+                type(spec['approach']) is not dict or
+                ('staging_plan' in spec and type(spec['staging_plan']) is not dict)):
             raise ValueError('Joint milling proposal needs one explicit bounded milling spec; policy, meter and callbacks remain search-owned')
     elif p['kind'] == 'cusa':
         if 'actions' in p or type(p.get('motion')) is not dict:

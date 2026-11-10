@@ -91,6 +91,30 @@ Generate integration remain open. Evidence: `joint-milling-opening-adapter-v1/`,
 `joint-milling-opening-independent-review-v1/`, `joint-milling-search-dispatch-v1/`
 and `joint-milling-search-independent-review-v1/`.
 
+An optional checked multileg controller now separates global parking from local
+working approach. It retains the drill for all bone batches, withdraws globally
+before the suction exchange, and checks each local retreat against the actual
+accepted cavity. Intermediate rotation, current material, protection, workspace
+and other-hand checks remain mandatory; local retreat never clears `inserted`.
+The generated noncollinear-exit control completes 81/81 A with all 81 mm³ debris
+collected, zero P/W/target removal and a verified bone prefix/global exit in
+264 actions/528 calls, 154.288 s external wall and 318 MB sampled process-tree RSS.
+The right hand remains unposed. Independent pure review passes 42 checks and
+dispatch review passes 35. Independent literal replay matches all 264 full native
+history rows, including 20 finite-work partials, and the complete final snapshot
+in 264 direct calls/zero previews, 57.025 s and 169 MB sampled aggregate RSS.
+Every prefix retains the registered B/P/W limits; JSON roundtrip is exact. This
+run does not execute an additional cold restore or refund the 528 planning calls.
+The exit geometry differs from the earlier control,
+so these figures do not establish a speed improvement. Patient admission and
+desktop Generate remain open. Evidence: `staged-milling-controller-v1/`,
+`staged-milling-independent-review-v1/` and `staged-milling-search-dispatch-v1/`.
+The combined contact, opening, joint-search/exit/ledger regression passes all
+101 tests with one expected opt-in witness skip in 422.718 s/255 MB sampled RSS.
+The skipped witness was executed once separately above; no native trial is hidden
+in that skip. Frozen implementation/test hashes remain exact. Evidence:
+`staged-milling-regression-v1/`.
+
 The checked macro freezes a separate explicit bone budget, canonical source,
 charged ancestry, shared meter and deadline. Added target/nonbone removal is zero.
 Refreezing, resealed replacement limits or unlogged state cannot refund burdens.
@@ -368,6 +392,40 @@ cache-support repair, not a claim that every missing line contains bone.
 No normals, source classes, thresholds, target cells or protection were relaxed.
 Evidence: `craniotomy-v4/source-window-proposal-v1/`, `source-window-combined-study-v1/`
 and `source-window-combined-independent-review-v1/` in that directory.
+
+The separate acquired-data cache repair now passes in 9.691 s/1.461 GB sampled
+process-tree RSS, with 70.36 MB of outputs. It extends only the source-i range by
+80 native cells, using each original scan/guard decode once. The old raw main
+component, operational classes, target IDs and protection roles remain exact;
+crop-dependent estimator differences are recorded separately and not adopted.
+Independent saved-layer review passes 6,562 checks. Added skull/UNKNOWN estimates
+remain unadmitted, all twelve mapped support anchors remain unqualified, and every
+crop face remains outside the known domain. The cache grants no air, workspace,
+opening or patient permission. Evidence: `craniotomy-v4/sub06-expanded-source-roi-cache-v2/`
+and `sub06-expanded-source-roi-independent-review-v1/`.
+
+Repeating the same six placements on that layered cache costs 2.366 s/351 MB.
+All six central contacts are observed, with 64/64/64/55/61/39 valid outer contacts.
+All fits remain withheld under the original gates; the best complete field still
+has a 1.435 mm maximum residual against the unchanged 1 mm limit. The other two
+complete fields also fail residual, footprint or reference/anchor checks. All
+390 fit queries/330,254 samples are captured, with zero material/native queries.
+The cache repair resolves missing context without granting a fit or opening.
+Evidence: `craniotomy-v4/sub06-expanded-source-window-study-v1/`.
+Independent captured-ray replay passes 22,525 checks on all 1,560 saved arrays;
+the expanded ROI removes every prior 2 mm context failure. Other missing contacts
+and all failed fit gates remain explicit.
+
+Three prospectively frozen surface-aligned directions then use the failed fields
+only as unqualified proposals and take fresh central/all-64 observations. All
+three pass the unchanged fit gates, with maximum residuals 0.452/0.619/0.536 mm
+and unchanged central points. The 11.733 s/785 MB source-only run retains every
+material/guard hold. Two fail full-chart material support; one forms a complete
+20,825-cell cover with zero target/U4 overlap, but intersects 234 UNKNOWN and ten
+vessel cells, with four retained-bone/two UNKNOWN cells behind the inner surface
+and unsupported retained components. All remain withheld, including unqualified
+support anchors and unadmitted added classes. No A, native case or patient task
+was created. Evidence: `craniotomy-v4/sub06-surface-aligned-source-study-v1/`.
 
 Next, qualify a real patient's full A/R, local stops, support, membrane and exterior
 without suppressing source uncertainty. Freeze source-role tasks and matched

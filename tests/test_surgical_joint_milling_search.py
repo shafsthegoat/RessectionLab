@@ -84,6 +84,66 @@ def test_search_dispatches_one_macro_expansion_on_original_policy_and_meter(monk
     assert source.snapshot() == before
 
 
+def test_optional_staging_plan_is_copied_and_dispatched_on_original_policy(monkeypatch):
+    import resectionlab.surgical_joint_milling_opening as module
+    from resectionlab.surgical_milling_contact_proposals import bind_milling_staging_plan
+    _, source, approach, meter, limits, goal = configured_source()
+    park = {'position': [32., 32., 55.], 'quaternion': [0., 0., 0., 1.]}
+    plan = bind_milling_staging_plan(source, approach=approach, global_park=park,
+        inbound=[park], outbound=[park])
+    raw = proposal(source, approach)
+    raw['milling']['staging_plan'] = plan
+    copied = _proposal(raw, source.state_id)
+    copied['milling']['staging_plan']['globalPark']['position'][0] += 1
+    assert raw['milling']['staging_plan'] == plan
+    for invalid in (None, [], 'unchecked-route'):
+        bad = copy.deepcopy(raw)
+        bad['milling']['staging_plan'] = invalid
+        with pytest.raises(ValueError, match='explicit bounded milling spec'):
+            _proposal(bad, source.state_id)
+    seen, before_calls = [], meter.calls
+
+    def inspect_dispatch(engine, **kwargs):
+        seen.append(kwargs)
+        return checked_joint_actions(engine,
+            [{'slot': 'left', 'operation': 'inspect', 'duration': .1}],
+            limits=kwargs['limits'], meter=kwargs['meter'], check=kwargs['check'])
+
+    monkeypatch.setattr(module, 'checked_joint_milling_opening', inspect_dispatch)
+    result = checked_joint_sequence_search(source, propose=lambda e: [raw],
+        limits=limits, goal=goal, meter=meter, horizon=1)
+    assert len(seen) == 1 and seen[0]['staging_plan'] == plan
+    assert seen[0]['limits'] is limits and seen[0]['meter'] is meter
+    assert meter.calls == before_calls+2 and result.evidence['expansions'] == 1
+    assert not result.selected and result.attempts[0]['status'] == 'no_immediate_target'
+
+
+def test_staged_start_pose_mismatch_retains_next_candidate_without_native_alignment():
+    from resectionlab.surgical_milling_contact_proposals import bind_milling_staging_plan
+    _, source, approach, meter, limits, goal = configured_source()
+    source, setup = checked_joint_actions(source, [
+        {'slot': 'left', 'operation': 'place', 'duration': .1,
+         'pose': {'position': [31., 32., 55.], 'quaternion': [0., 0., 0., 1.]}}],
+        limits=limits, meter=meter)
+    assert setup['status'] == 'accepted'
+    park = {'position': [32., 32., 55.], 'quaternion': [0., 0., 0., 1.]}
+    plan = bind_milling_staging_plan(source, approach=approach, global_park=park,
+        inbound=[park], outbound=[park])
+    raw = proposal(source, approach)
+    raw['milling']['staging_plan'] = plan
+    before, before_calls = source.snapshot(), meter.calls
+    result = checked_joint_sequence_search(source, propose=lambda e: [raw, {
+        'id': 'next', 'kind': 'configuration', 'sourceStateId': e.state_id,
+        'actions': [{'slot': 'left', 'operation': 'inspect', 'duration': .1}]}],
+        limits=limits, goal=goal, meter=meter, horizon=1)
+    first = result.attempts[0]
+    assert first['failureCategory'] == 'CANDIDATE_CONTROLLER_LIMIT'
+    assert first['work']['reason'] == 'JOINT_MILLING_DECLARED_GLOBAL_START_POSE_DIFFERS'
+    assert first['work']['publicCalls'] == first['work']['nativeActionsAppended'] == 0
+    assert result.attempts[1]['status'] == 'no_immediate_target'
+    assert meter.calls == before_calls+2 and source.snapshot() == before
+
+
 def test_local_milling_controller_limit_retains_cost_and_allows_next_candidate(monkeypatch):
     import resectionlab.surgical_joint_milling_opening as module
     _, source, approach, meter, limits, goal = configured_source()

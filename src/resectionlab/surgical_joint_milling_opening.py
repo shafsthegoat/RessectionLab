@@ -20,7 +20,8 @@ from .surgical_joint_cranial_skills import (
     JointCranialLimits, _INTERRUPTIONS, checked_joint_actions, joint_cranial_ledger)
 from .surgical_milling import milling_readiness, validate_source_scope
 from .surgical_milling_contact_proposals import (
-    _approach, _exterior, _segments, _within_workspace, bind_milling_approach,
+    _approach, _exterior, _segments, _within_workspace, _approach_declaration,
+    _local_path_clearance, _same_pose, _staging_plan, bind_milling_approach,
     generate_milling_contact_proposals, generate_milling_debris_proposals)
 from .surgical_task_domain import _posed
 from .surgical_transition_meter import MeteredEngine, TransitionBudgetExceeded, TransitionMeter
@@ -81,6 +82,45 @@ def _checked_staging_program(engine, actions, slot, staging_seconds):
     return result, modes
 
 
+def _initial_multileg_staging(engine, plan, slot):
+    native = _native(engine)
+    _initial_staging(engine, plan['globalPark']['quaternion'], slot)
+    if any(any(offset) for offset in native.state.get('deformation', {}).values()):
+        raise ValueError('JOINT_MILLING_UNMOVED_SOURCE_CAVITY_REQUIRED')
+    if _posed(native, slot) and not _same_pose(native.state['slots'][slot], plan['globalPark']):
+        raise ValueError('JOINT_MILLING_DECLARED_GLOBAL_START_POSE_DIFFERS')
+
+
+def _multileg_entry_actions(engine, plan, name, slot, duration):
+    """Only a genuinely unposed hand receives endpoint-only global placement."""
+    native = _native(engine)
+    actions = [{'slot': slot, 'operation': 'configure', 'duration': .1,
+                'mechanicsRevision': 2, 'clockRevision': 1}]
+    if native.state['slots'][slot]['instrument'] != name:
+        actions.append({'slot': slot, 'operation': 'exchange', 'duration': .1, 'instrument': name})
+    if not _posed(native, slot):
+        actions.append({'slot': slot, 'operation': 'place', 'duration': duration,
+                        'pose': copy.deepcopy(plan['globalPark'])})
+    actions.extend({'slot': slot, 'operation': 'move', 'duration': duration, 'pose': copy.deepcopy(pose)}
+                   for pose in plan['inbound'])
+    return actions
+
+
+def _multileg_exit_actions(engine, plan, slot, duration):
+    """Local moves precede one final whole-body global withdrawal."""
+    pose = _native(engine).state['slots'][slot]
+    vertices = plan['outbound']
+    actions = []
+    for end in vertices[:-1]:
+        if not _same_pose(pose, end):
+            actions.append({'slot': slot, 'operation': 'move', 'duration': duration,
+                            'pose': copy.deepcopy(end)})
+        pose = end
+    actions.append({'slot': slot, 'operation': 'withdraw', 'duration': duration,
+                    'pose': copy.deepcopy(vertices[-1])})
+    return actions
+
+
 def _opening_facts(engine):
     native = _native(engine)
     opening = milling_readiness(engine)
@@ -103,14 +143,15 @@ def checked_joint_milling_opening(engine, *, approach, limits, meter=None,
         drill_seconds, suction_seconds, staging_seconds=.1, slot='left',
         max_batches=8, max_contacts=32, max_examined_cells=2048,
         max_contact_probes=2048, point_scheme='center', check=None,
-        phase='cranial.joint.milling-opening'):
+        phase='cranial.joint.milling-opening', staging_plan=None):
     """Return a checked complete bone-opening prefix or an exact charged stop.
 
     The adapter rebinds all-A ordering once inside the original shared wall
     scope. Each accepted batch replans from actual cavity and tagged debris.
-    First posed attitude changes are refused; subsequent outside positioning
-    uses checked native withdraw translations rather than endpoint-only place.
-    This function is not yet a structured skill kind in joint sequence search.
+    The default requires a fixed-attitude global exterior start. An optional
+    frozen staging_plan uses checked native multileg moves, same-tool bone
+    batches, a full global withdrawal before exchange, and actual-debris-only
+    collection. Local retreats never clear inserted or count as global exit.
     """
     if (not isinstance(limits, JointCranialLimits) or type(approach) is not dict or
             type(phase) is not str or not phase or slot not in ('left', 'right') or
@@ -140,15 +181,21 @@ def checked_joint_milling_opening(engine, *, approach, limits, meter=None,
     if initial_stage and (initial_stage['cutBoundaryEdges'] or initial_stage['patchHeld'] or
             initial_stage['patchDetached'] or initial_stage['patchExtracted']):
         raise ValueError('JOINT_MILLING_LATER_STAGE_SOURCE_NOT_SUPPORTED')
-    _initial_staging(current, approach['quaternion'], slot)
-    declaration = {key: copy.deepcopy(approach[key]) for key in (
-        'sceneId', 'contractHash', 'quaternion', 'outsidePlanePointRasMm', 'maximumApproachMm')}
+    if staging_plan is None:
+        _initial_staging(current, approach['quaternion'], slot)
+    else:
+        staging_plan = _staging_plan(current, contract, approach, staging_plan, require_source_state=True)
+        _initial_multileg_staging(current, staging_plan, slot)
+    declaration = _approach_declaration(approach)
     spec = {'approach': declaration, 'pointScheme': point_scheme, 'slot': slot,
         'drillSeconds': drill_seconds, 'suctionSeconds': suction_seconds,
         'stagingSeconds': staging_seconds, 'maxBatches': max_batches,
         'maxContacts': max_contacts, 'maxExaminedCells': max_examined_cells,
         'maxContactProbes': max_contact_probes}
+    if staging_plan is not None:
+        spec['stagingPlan'] = copy.deepcopy(staging_plan)
     batches, decisions, binding = [], [], None
+    staging_transitions = []
     status, reason = validation['status'], validation['reason']
 
     def guard():
@@ -190,6 +237,8 @@ def checked_joint_milling_opening(engine, *, approach, limits, meter=None,
             'wallTimeScope': 'original shared joint meter creation, including geometry and prior prefixes',
             'sourceAChanged': False, 'clinicalValidation': 'none'}
         value['contentHash'] = _content_hash(value)
+        if staging_plan is not None:
+            value['stagingTransitions'] = copy.deepcopy(staging_transitions)
         # Verification, meter report copies and hashing are part of the original
         # wall/cancellation scope. Completion at the exact call cap is valid;
         # the next native call would be refused, not this completed readout.
@@ -222,6 +271,35 @@ def checked_joint_milling_opening(engine, *, approach, limits, meter=None,
             value['contentHash'] = _content_hash(value)
         return current, value
 
+    def staged_transition(name, *, enter):
+        nonlocal current, status, reason
+        guard()
+        pose = {key: copy.deepcopy(current.state['slots'][slot][key])
+                for key in ('position', 'quaternion')}
+        if enter:
+            if _posed(_native(current), slot) and not _same_pose(pose, staging_plan['globalPark']):
+                raise ValueError('JOINT_MILLING_DECLARED_GLOBAL_START_POSE_DIFFERS')
+            poses = [staging_plan['globalPark'], *staging_plan['inbound']]
+            actions = _multileg_entry_actions(current, staging_plan, name, slot, staging_seconds)
+        else:
+            poses = [pose, *staging_plan['outbound']]
+            actions = _multileg_exit_actions(current, staging_plan, slot, staging_seconds)
+        refusal, intervals = _local_path_clearance(current, contract, name, poses, slot, check=guard)
+        record = {'kind': 'inbound' if enter else 'outbound', 'instrument': name,
+            'sourceStateId': current.state_id, 'geometryIntervals': intervals, 'geometryRefusal': refusal,
+            'actions': copy.deepcopy(actions)}
+        staging_transitions.append(record)
+        if refusal:
+            status, reason = 'refused', refusal
+            return False
+        current, part = checked_joint_actions(current, actions, limits=limits, meter=meter,
+            check=check, phase=f'{phase}.staging{len(staging_transitions)}.{record["kind"]}')
+        record['native'] = part
+        if part['status'] != 'accepted':
+            status, reason = part['status'], part['reason']
+            return False
+        return True
+
     if status != 'accepted':
         return finish()
     try:
@@ -236,15 +314,30 @@ def checked_joint_milling_opening(engine, *, approach, limits, meter=None,
             outside_plane_point_ras_mm=declaration['outsidePlanePointRasMm'],
             maximum_approach_mm=declaration['maximumApproachMm'], point_scheme=point_scheme)
         guard()
+        local_tool = None
         for batch in range(max_batches):
             before_removed = set(current.state['removed'])
             before_debris = sum(current.state['debris'].values())
-            kind = 'current_tagged_debris' if before_debris > 0 else 'current_cavity_drill'
+            remaining = set(contract.aperture_cells)-before_removed
+            # The optional controller finishes bone on one drill before any
+            # exchange. Debris-first legacy behavior is deliberately retained.
+            use_debris = before_debris > 0 and (staging_plan is None or not remaining)
+            kind = 'current_tagged_debris' if use_debris else 'current_cavity_drill'
+            if staging_plan is not None:
+                name = 'frazier_suction' if use_debris else 'cranial_drill'
+                if local_tool != name:
+                    if local_tool is not None and not staged_transition(local_tool, enter=False):
+                        return finish()
+                    if not staged_transition(name, enter=True):
+                        return finish()
+                    local_tool = name
             kwargs = dict(approach=binding, max_examined_cells=max_examined_cells,
                 max_contacts=max_contacts, max_contact_probes=max_contact_probes,
                 suction_seconds=suction_seconds, slot=slot)
+            if staging_plan is not None:
+                kwargs['staging_plan'] = staging_plan
             guard()
-            if before_debris > 0:
+            if use_debris:
                 proposal = generate_milling_debris_proposals(current, **kwargs)
             else:
                 proposal = generate_milling_contact_proposals(current,
@@ -259,16 +352,56 @@ def checked_joint_milling_opening(engine, *, approach, limits, meter=None,
                 status, reason = 'refused', 'MILLING_CONTACT_CONTROLLER_DEFICIT'
                 decision.update(status=status, reason=reason, finalStateId=current.state_id)
                 return finish()
-            actions, modes = _checked_staging_program(current, proposal['actions'], slot, staging_seconds)
+            if staging_plan is None:
+                actions, modes = _checked_staging_program(current, proposal['actions'], slot, staging_seconds)
+            else:
+                actions = copy.deepcopy(proposal['actions'])
+                modes = ['checked_same_tool_local_moves_not_completed_withdrawal']
+                if proposal.get('requiredInstrument') != local_tool:
+                    raise ValueError('JOINT_MILLING_LOCAL_PROPOSAL_INSTRUMENT_DIFFERS')
             record['stagingModes'] = modes
-            current, part = checked_joint_actions(current, actions, limits=limits, meter=meter,
-                check=check, phase=f'{phase}.batch{batch+1}.{kind}')
-            record['native'] = part
+            if staging_plan is None:
+                current, part = checked_joint_actions(current, actions, limits=limits, meter=meter,
+                    check=check, phase=f'{phase}.batch{batch+1}.{kind}')
+                record['native'] = part
+            else:
+                # Query local transitions at their ACTUAL accepted prefix.
+                # A retreat may initially remain within the entry prism, but
+                # no occupied cell is assumed removed and its endpoint must
+                # place the entire body outside the entry halfspace.
+                record['nativeParts'] = []
+                previous_operation = None
+                for index, action in enumerate(actions):
+                    guard()
+                    if action['operation'] == 'move':
+                        pose = {key: current.state['slots'][slot][key]
+                                for key in ('position', 'quaternion')}
+                        refusal, intervals = _local_path_clearance(current, contract, local_tool,
+                            [pose, action['pose']], slot, check=guard,
+                            allow_entry_retreat=previous_operation == 'deactivate')
+                        record.setdefault('localMoveGeometry', []).append(
+                            {'index': index, 'intervals': intervals, 'refusal': refusal,
+                             'sourceStateId': current.state_id})
+                        if refusal:
+                            raise ValueError(refusal)
+                    current, part = checked_joint_actions(current, [action], limits=limits, meter=meter,
+                        check=check, phase=f'{phase}.batch{batch+1}.{kind}.action{index+1}')
+                    record['nativeParts'].append(part)
+                    if part['status'] != 'accepted':
+                        break
+                    previous_operation = action['operation']
             decision.update(status=part['status'], reason=part['reason'], finalStateId=current.state_id)
             if part['status'] != 'accepted':
                 status, reason = part['status'], part['reason']
                 return finish()
             opening, stage, complete = _opening_facts(current)
+            if staging_plan is not None and not (
+                    set(contract.aperture_cells)-set(current.state['removed'])) and not any(
+                    amount > 0 for amount in current.state['debris'].values()):
+                if not staged_transition(local_tool, enter=False):
+                    return finish()
+                local_tool = None
+                opening, stage, complete = _opening_facts(current)
             if complete:
                 status, reason = 'accepted', None
                 return finish()
@@ -277,7 +410,8 @@ def checked_joint_milling_opening(engine, *, approach, limits, meter=None,
                 status, reason = 'refused', 'MILLING_NO_ACTUAL_BONE_OR_DEBRIS_PROGRESS'
                 decision.update(status=status, reason=reason)
                 return finish()
-            _initial_staging(current, declaration['quaternion'], slot)
+            if staging_plan is None:
+                _initial_staging(current, declaration['quaternion'], slot)
             guard()
         status, reason = 'refused', 'MILLING_BATCH_BUDGET'
     except _INTERRUPTIONS as error:
