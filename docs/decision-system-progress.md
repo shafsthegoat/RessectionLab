@@ -127,7 +127,15 @@ verified exit/bone prefix. The earlier controller used 528 calls on this case;
 no performance improvement is claimed here. Legacy regression before the small
 mode-only correction passed 124 tests/one expected skip; final default programs
 and physical kernels compare exactly. A distinct deeper case still requires its
-constructive reference qualification. No patient or new desktop admission follows.
+constructive reference qualification. Its separately frozen 324-cell reference
+reached the 300 s wall cap during debris collection (300.05 s external/334 MB
+aggregate RSS). The last returned prefix has 415 actions/830 calls, all 324 mm³
+bone removed, 108 collected/216 present debris, zero P/W/target removal and no
+completed global exit or bone prefix. This is an unqualified compute/controller
+failure; no retry, cap increase or matched helper study follows. Source and
+program remain exact. Evidence: `axial-milling-324-case-qualification-v1/` and
+`axial-milling-324-independent-review-v1/` (778 generated review checks).
+No patient or new desktop admission follows.
 Evidence: `axial-current-a-active-columns-v2/`, `axial-known81-functional-v2/`,
 `axial-known81-scheduler-counterexample-v1/`, `axial-current-a-independent-review-v1/`
 and `axial-current-a-regression-v1/`.
@@ -204,10 +212,22 @@ archive MD5 was not measured. Original privacy cuts and every old mask/transform
 remain preserved. Original06 target is 360,280 source cells = 45,035 mm³;13 is empty.
 These are stored unreviewed model proposals, not publisher reference segmentations:
 06 uses the preexisting Raidionics meningioma output and 13's stored proposal is
-empty. The acquired 01 image archive contains no target annotation, and no local
-full target has been prepared; its original-target volume is unknown, not zero.
-Any new 01 annotation derivative needs a fixed producer, whole-output review and
-target freeze before a planner comparison. It cannot stand in as reference truth.
+empty. The acquired 01 image archive contains no publisher target annotation.
+One fixed Raidionics producer attempt now freezes a new full-grid model proposal:
+60,338 cells/7,542.25 mm³, one component, 149.66 s external/4.17 GB aggregate RSS,
+zero retries/native actions and unchanged source/runtime/guards. Publisher ground
+truth remains unknown. All proposal cells lie outside the old skull-study ROI
+and inside the broad inferior exclusion. Independent full probability/mask/ID/
+component/guard QA confirms every intersection in 56.43 s external/1.85 GB
+aggregate RSS, with all source/runtime hashes unchanged. All target cells have
+finite nonzero MRI support; none intersect padding. Root and independent reviewer
+inspected all three exact native-plane pages. The C-order median member selects axial k166 with only
+six target cells, limiting visual volume coverage; dense axial review remains a
+separate dependency. The complete proposal stays unreviewed and withheld, with
+no filtering, guard relaxation or route qualification. Evidence:
+`craniotomy-v4/sub01-fixed-meningioma-annotation-v1/` and
+`craniotomy-v4/sub01-target-derived-geometry-v1/`,
+`craniotomy-v4/sub01-independent-annotation-QA-v1/`.
 
 Dense MRI source review and independent full-mask checks support broad inferior
 containers: full x/y,01 k0..240 and06/13 k0..226, with a separate assumed 8 mm
