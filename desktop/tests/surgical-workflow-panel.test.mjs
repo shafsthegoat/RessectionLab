@@ -67,6 +67,25 @@ test('advanced staged playback and inspection expose the existing rehearsal cont
  }finally{h.close();}
 });
 
+test('accepted cranial root display preserves Inspect destination and resets only for a new source',()=>{
+ const f=fixture();Object.assign(f.c.view.scene,{resolutionMm:[1,1,1]});Object.assign(f.c.view,{catalog:[],slots:{},metrics:{elapsedSeconds:0},history:[]});Object.assign(f.c,{slot:'left',pose:{position:[0,0,0],quaternion:[0,0,0,1]},parameters:{},path:[],setPlaybackDisplay(){},stopPlayback(){},pausePlayback(){},pauseFullCase(){},canStartFullCase(){return false;}});
+ f.c.result.cranialPlanningAvailability={sourceSceneId:'common-source'};
+ const h=harness(SurgicalPanel),props={c:f.c,onFixture(){},available:true};
+ try{
+  let tree=h.render(props),workflow=find(tree,node=>node.type?.name==='SurgicalWorkflow');assert.equal(workflow.props.stage,'case');
+  // Inspect resolves before the renderer commits the selected native root.
+  workflow.props.onStage('rehearse');tree=h.render(props);
+  f.c.view.scene={...f.c.view.scene,sceneId:'opening-root'};f.c.result.view=f.c.view;
+  tree=h.render(props);workflow=find(tree,node=>node.type?.name==='SurgicalWorkflow');
+  assert.equal(workflow.props.stage,'rehearse');assert.equal(workflow.key,'common-source');assert.equal(find(tree,node=>node.props?.['aria-label']==='Rehearse and edit branch').props.hidden,false);
+  workflow.props.onStage('compare');tree=h.render(props);
+  f.c.result.cranialPlanningAvailability={sourceSceneId:'changed-anatomy'};f.c.view.scene={...f.c.view.scene,sceneId:'changed-root'};
+  tree=h.render(props);workflow=find(tree,node=>node.type?.name==='SurgicalWorkflow');assert.equal(workflow.props.stage,'case');assert.equal(workflow.key,'changed-anatomy');
+  workflow.props.onStage('rehearse');tree=h.render(props);delete f.c.result.cranialPlanningAvailability;f.c.view.scene={...f.c.view.scene,sceneId:'legacy-new-scene'};
+  tree=h.render(props);assert.equal(find(tree,node=>node.type?.name==='SurgicalWorkflow').props.stage,'case');
+ }finally{h.close();}
+});
+
 test('eligible paired source uses the single primary staged draft, preserves edits across stages and opens recorded branches',async()=>{
  const f=stagedFixture();f.response.view.scene.regions=[];delete f.artifact.stagedSummary;const calls=[],events=[],c={result:f.response,view:f.response.view,pending:false};c.run=async(command,args)=>{calls.push({command,...args});if(command==='plan'){f.response.stagedPlanning={...f.summary,controllerMode:'bounded-sequence-lookahead',sequenceSearch:{horizon:3,beamWidth:3,maxExpansionsPerSearch:24,baseline:'Immediate baseline',preference:'Native constraints then Pareto outcomes'}};}return true;};
  const owner=harness(Workflow),props={c,artifact:f.artifact,stage:'plan',onStage(){},pause(){}};const tree=owner.render(props);assert(find(tree,node=>node.type?.name==='StagedStrategiesPanel'));assert.equal(nodes(tree).filter(node=>['PreparationPlanningPanel','TwoToolStrategyPanel','InteractivePlanningPanel','StagedStrategiesPanel'].includes(node.type?.name)).length,1);owner.close();

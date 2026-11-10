@@ -79,8 +79,22 @@ partials still refuse. First invalid instantaneous-fixture and proof-stub failur
 are preserved; final bridge checks use the real adapter for a configuration-only
 STOP and pass all9 focused controls. No full-procedure claim comes from that STOP.
 
-Actual new hidden desktop Generate/Compare/Rehearse/Save/Open verification is
-pending. Prior hidden warm/cold recorded playback verified real bone/membrane
+Actual new hidden desktop verification reaches Generate and Compare, but the
+complete Rehearse/Save/cold Open flow is still pending. V1 correctly refuses an
+all-zero synthetic display image before Generate; V2 repairs only that image and
+shows the completed generated-control comparison. The user paused V2 at232.175s
+(762MB sampled aggregate RSS), before branch inspection was verified. Its partial
+attempt is preserved and grants no complete desktop witness. The instrumented
+V3 run establishes a UI defect: exact cross-root branch selection succeeds in
+9.732s, then the scene-change effect resets navigation to Case. Its actual
+Generate returns two completed generated-control alternatives:119 actions/100%
+and112 actions/66.7% full-target treatment, both with334mm³ non-target cost.
+All537 search/export calls and45.112s are charged. V3 was stopped after the
+wrong-stage proof at152.817s/839MB; no cold run followed. Navigation now follows
+the common source identity, preserving Inspect's destination across registered
+roots and resetting for changed anatomy; full desktop re-verification is pending.
+Prior hidden
+warm/cold recorded playback verified real bone/membrane
 transport, branch checkpoints, ledger and Save/Open without showing a window;
 that evidence did not execute the newly integrated Generate path.
 
@@ -144,9 +158,21 @@ verified acquired image archive; model outputs below are proposals.
   superior extensions remain uncertain, with no filtering. Independent fixed62-
   plane source review agrees on nominal full-xy inferior k0..192 containment;
   root additionally froze8mm containment margin and assumed ±5mm/RAS-axis,3°
-  registration stress before reading target geometry. Conservative field transfer
-  and full-target overlap audit are next. Calvarium/material, local venous/falx/
+  registration stress before reading target geometry. Full-grid conservative
+  transfer completes in61.16s/986MB and its saved arrays independently reconcile:
+  57903 original target cells are protected;90623(61.0149%) remain outside these
+  fields, with four frozen zones each above5% of the original target. This is a
+  spatial upper bound, not accessibility or removal evidence. No guard or target
+  was changed. Calvarium/material, local venous/falx/
   dura/exterior coverage, registration and trusted source-role join remain open.
+  One full-CT alternative-window study completes in93.50s/2.054GB, retaining
+  651MB including two value-verified raw caches. All42 directions are evaluated;
+  six pass the frozen surface fit, three distinct entries receive full material
+  profiles. All three fail complete R8 chart/support: earlier/later positive
+  islands and nearest-versus-interpolated density disagreements remain. No A or
+  tool route is admitted. The other three fitted entries are budget-excluded,
+  not proven infeasible. Actual source-plane review is next; a threshold label
+  alone does not establish calvarium or the identity of intracranial density.
   No CaseData, native patient run or complete task exists.
 - **Meningioma06:** preexisting unreviewed full proposal360280 cells/45035mm³.
   Three source-aligned windows pass engineering surface fit, but the best whole
@@ -166,9 +192,9 @@ local AGENTS.md is committed.
 
 1. Verify the real hidden desktop new Generate workflow and cold Save/Open,
    retaining exact source/root/branch/ledger identity and visible-window=false.
-2. Finish source02's frozen conservative coverage/protection transfer and audit
-   full-target/spatial eligibility without changing target/guard rules to obtain
-   a pass. Qualify actual calvarium, local critical/venous/dural and exterior data;
+2. Test source02's alternative source-fitted openings on both full CT volumes,
+   retaining frozen protection, full-target denominators and unknown source bands.
+   Qualify actual calvarium, local critical/venous/dural and exterior data;
    resolve trusted developmental provenance without promoting a reserved case.
 3. Construct and compare genuinely different source-qualified opening/work/exit
    alternatives, freeze patient tasks and fair baseline/search budgets, and run

@@ -171,6 +171,7 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
   useEffect(()=>{c.setPlaybackDisplay({playing,speed:playbackSpeed});},[playing,playbackSpeed]);
   useEffect(()=>()=>c.stopPlayback(),[]);
   const v=c.view,selected=v?.slots[c.slot],tool=v?.catalog.find(t=>t.id===selected?.instrument),r=c.result;
+  const workflowSceneId=r?.cranialPlanningAvailability?.sourceSceneId??v?.scene.sceneId;
   const displayed=c.preview??v;
   const routes=surgicalReplayRoutes(r),prefix=reconstructedPrefix(r),observed=r?.playback,imported=routes.imported,unverifiedImport=imported&&!prefix,readOnly=!!observed||imported||r?.readOnly===true,position=surgicalPlaybackPosition(observed,r?.position??0);
   const freshOrigin=!!prefix&&!!r?.prefixOrigin,preparedOnly=prefix?.preparedCache?.mode==='only'&&!freshOrigin;
@@ -183,7 +184,10 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
   const observation=displayed?.observations?.at(-1);
   const q=new Euler().setFromQuaternion(new Quaternion(...c.pose.quaternion));
   const steps=r?.branches.find(b=>b.id===r.branchId)?.steps??0;
-  useEffect(()=>{setWorkflowStage('case');setMapping(null);setPlaying(false);setImportError(null);setOperation('apply');setDuration(1);},[v?.scene.sceneId]);
+  // Registered openings share one case workflow despite distinct native scenes.
+  // Reset navigation for a new source, after which Inspect owns its destination.
+  useEffect(()=>{setWorkflowStage('case');setPlaying(false);},[workflowSceneId]);
+  useEffect(()=>{setMapping(null);setImportError(null);setOperation('apply');setDuration(1);},[v?.scene.sceneId]);
   useEffect(()=>setPlaying(false),[c.playbackVersion]);
   useEffect(()=>{if(!c.pending)setSeekTarget(null);},[c.pending,r?.position,r?.branchId]);
   const playback=r?nextSurgicalPlaybackFrame(r,steps,playbackSpeed):null;
@@ -213,7 +217,7 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
     {!v?<button className="primary-button" disabled={!available||c.pending||importing} onClick={()=>void c.create()}>Prepare instrument scene</button>:<>
 
     {latestOutcome&&importantOutcome&&<ActionResult outcome={latestOutcome} title={c.preview?'Preview result':observed?'Recorded action endpoint result':'Last action result'} onWithdraw={!readOnly?()=>{setOperation('withdraw');c.clearPreview();}:undefined}/>}
-    {!v.planarBladeManeuver&&<SurgicalWorkflow key={v.scene.sceneId} c={c} artifact={cusaLearning} playRecorded={playRecordedBranch} stage={workflowStage} onStage={setWorkflowStage} cursor={planningCursor} onCursor={onPlanningCursor} pause={()=>{setPlaying(false);c.pauseFullCase();c.pausePlayback();}}/>}
+    {!v.planarBladeManeuver&&<SurgicalWorkflow key={workflowSceneId} c={c} artifact={cusaLearning} playRecorded={playRecordedBranch} stage={workflowStage} onStage={setWorkflowStage} cursor={planningCursor} onCursor={onPlanningCursor} pause={()=>{setPlaying(false);c.pauseFullCase();c.pausePlayback();}}/>}
     <div hidden={!v.planarBladeManeuver&&workflowStage!=='rehearse'} className="workflow-rehearsal" aria-label="Rehearse and edit branch">
     <div className="surgical-slots">{Object.entries(v.slots).map(([s,t])=><button key={s} disabled={c.pending||playing||readOnly} aria-pressed={c.slot===s} onClick={()=>c.selectSlot(s)}><strong>{s} hand</strong><span>{t.instrument==='cusa'?'CUSA':v.catalog.find(x=>x.id===t.instrument)?.name}</span><small>{t.inserted?'Inserted':'Withdrawn'}{(observed?.effectiveActivation?.[s]??t.active)?' · active':t.inserted?' · inactive':''}{observed?' · observed':''}</small>{v.holds?.[s]&&<small>{v.holds[s].cells.length?`Holding ${v.holds[s].cells.length} source cell${v.holds[s].cells.length===1?'':'s'}`:'Hold empty · no retained tissue'}</small>}</button>)}</div>
     <details><summary>Exchange instrument</summary><input aria-label="Search instruments" placeholder="Search instruments…" value={search} onChange={e=>setSearch(e.target.value)}/>
