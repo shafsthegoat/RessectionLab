@@ -458,3 +458,70 @@ def test_cell_schedule_rejects_unsupported_specs_without_relaxing_limits(schedul
     with pytest.raises(ValueError, match='EXPLICIT_BOUNDED_SPEC'):
         run(current, approach, limits, cell_schedule=schedule)
     assert meter.calls == 0 and not current.actions
+
+
+@pytest.fixture
+def cavity_ray_macro_pure(monkeypatch):
+    def forbidden(*args, **kwargs):
+        raise AssertionError('cavity-ray macro pure control attempted native preview/step')
+    monkeypatch.setattr(SurgicalEngine, 'preview', forbidden)
+    monkeypatch.setattr(SurgicalEngine, 'step', forbidden)
+
+
+def cavity_ray_macro_spec(current, old):
+    from resectionlab.surgical_milling_contact_proposals import bind_milling_staging_plan
+    approach = bind_milling_approach(current, quaternion=old['quaternion'],
+        outside_plane_point_ras_mm=old['outsidePlanePointRasMm'], maximum_approach_mm=10.,
+        point_scheme='center_and_quarter_cell_corners', cell_schedule='axial_diverse_current_a',
+        contact_pose_family='cavity_carried_rays')
+    outside = {'position': old['outsidePlanePointRasMm'], 'quaternion': old['quaternion']}
+    plan = bind_milling_staging_plan(current, approach=approach, global_park=outside,
+        inbound=[outside], outbound=[outside])
+    return approach, dict(staging_plan=plan, point_scheme='center_and_quarter_cell_corners',
+        cell_schedule='axial_diverse_current_a', contact_pose_family='cavity_carried_rays')
+
+
+@pytest.mark.parametrize('override', [
+    {'contact_pose_family': None}, {'contact_pose_family': True}, {'contact_pose_family': 'depth_cursor'},
+    {'staging_plan': None}, {'point_scheme': 'center'}, {'cell_schedule': 'surface_first'}])
+def test_cavity_ray_macro_requires_explicit_family_staging_and_scheme(cavity_ray_macro_pure, override):
+    _, current, _, old, meter, limits = fixture(park_other=False)
+    approach, options = cavity_ray_macro_spec(current, old)
+    options.update(override)
+    with pytest.raises(ValueError, match='EXPLICIT_BOUNDED_SPEC'):
+        checked_joint_milling_opening(current, approach=approach, limits=limits,
+            drill_seconds=5., suction_seconds=2., staging_seconds=5., **options)
+    assert meter.calls == 0 and not current.actions
+
+
+def test_cavity_ray_macro_family_mismatch_is_invalid_source_before_work(cavity_ray_macro_pure):
+    _, current, _, old, meter, limits = fixture(park_other=False)
+    approach, options = cavity_ray_macro_spec(current, old)
+    options['contact_pose_family'] = 'leading_touch'
+    with pytest.raises(ValueError, match='CONTACT_POSE_FAMILY_BINDING_DIFFERS'):
+        checked_joint_milling_opening(current, approach=approach, limits=limits,
+            drill_seconds=5., suction_seconds=2., staging_seconds=5., **options)
+    assert meter.calls == 0 and not current.actions
+
+
+def test_cavity_ray_macro_rebinding_and_timings_remain_in_original_meter(cavity_ray_macro_pure, monkeypatch):
+    import resectionlab.surgical_joint_milling_opening as module
+    _, current, _, old, meter, limits = fixture(park_other=False)
+    approach, options = cavity_ray_macro_spec(current, old)
+    seen = []
+    def stop_during_binding(engine, **kwargs):
+        assert kwargs['contact_pose_family'] == 'cavity_carried_rays'
+        assert kwargs['cell_schedule'] == 'axial_diverse_current_a' and callable(kwargs['check'])
+        assert limits._meter is meter and meter.calls == 0
+        kwargs['check']()
+        seen.append('original guarded cavity source rebind')
+        raise InterruptedError('pure cavity binding cancellation')
+    monkeypatch.setattr(module, 'bind_milling_approach', stop_during_binding)
+    before = current.snapshot()
+    result, receipt = checked_joint_milling_opening(current, approach=approach, limits=limits,
+        drill_seconds=7., suction_seconds=2., staging_seconds=5., **options)
+    assert seen == ['original guarded cavity source rebind'] and result.snapshot() == before
+    assert receipt['status'] == 'interrupted' and not receipt['admittedBoneOpening']
+    assert receipt['spec']['contactPoseFamily'] == 'cavity_carried_rays'
+    assert receipt['spec']['drillSeconds'] == 7. and receipt['spec']['stagingSeconds'] == 5.
+    assert receipt['publicCalls'] == meter.calls == 0 and not receipt['appliedActions']

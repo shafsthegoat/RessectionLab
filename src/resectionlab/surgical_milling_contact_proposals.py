@@ -14,7 +14,7 @@ from __future__ import annotations
 import copy
 import math
 import time
-from itertools import product
+from itertools import islice, product
 
 import numpy as np
 from scipy.spatial.transform import Rotation, Slerp
@@ -35,6 +35,14 @@ STAGING_SCHEMA = 'resectionlab.milling-staging-plan.v1'
 _OVERLAP_MM = .10
 _POINT_SCHEMES = ('center', 'center_and_quarter_cell_corners')
 _CELL_SCHEDULES = ('surface_first', 'axial_diverse_current_a')
+_CONTACT_POSE_FAMILIES = ('leading_touch', 'cavity_carried_rays')
+_CAVITY_RAY_ALGORITHM = {'name': 'current-verified-a-cavity-carried-rays-v1',
+    'carrierDistances': ['0', 'stockRadius', 'stockRadius+cellCircumsphere'],
+    'carrierFractions': [-.375, .375], 'tieRoundingDecimals': 10,
+    'reservedProbesPerTarget': 36, 'maximumTargets': 56,
+    'activeCommandMm': .20, 'overlapMm': .10,
+    'passiveMoveSeconds': 'explicit caller staging_seconds; exact native one-leg subdivision',
+    'dwell': 'separate stationary apply at the same caller-declared drill_seconds'}
 _AXIAL_ALGORITHM = {'name': 'source-maximin-current-a-axial-v2', 'columns': 56,
     'levelsMm': [0., 1., 2., 3.], 'chunkCells': 1024, 'tieRoundingDecimals': 9,
     'scope': 'bone-only; existing inverse and current-cavity guards unchanged'}
@@ -77,6 +85,8 @@ def _approach_declaration(approach):
         'sceneId', 'contractHash', 'quaternion', 'outsidePlanePointRasMm', 'maximumApproachMm')}
     if 'cellSchedule' in approach:
         value['cellSchedule'] = approach['cellSchedule']
+    if 'contactPoseFamily' in approach:
+        value['contactPoseFamily'] = approach['contactPoseFamily']
     return value
 
 
@@ -86,13 +96,17 @@ def _geometry_check(check):
 
 
 def _axial_source_binding(engine, contract, approach):
-    return {'sceneId': engine.scene.identity, 'contractHash': contract.content_hash,
+    value = {'sceneId': engine.scene.identity, 'contractHash': contract.content_hash,
         'originalAHash': semantic_digest(list(contract.aperture_cells)),
         'affineHash': semantic_digest(engine.scene.affine.tolist()),
         'quaternion': list(approach['quaternion']), 'pointScheme': approach.get('pointScheme', 'center'),
         'cellSchedule': approach['cellSchedule'], 'algorithmHash': semantic_digest(_AXIAL_ALGORITHM),
         'geometryVersion': GEOMETRY_VERSION,
         'stockCatalogHash': semantic_digest({name: TOOLS[name] for name in ('cranial_drill', 'frazier_suction')})}
+    if 'contactPoseFamily' in approach:
+        value.update(contactPoseFamily=approach['contactPoseFamily'],
+                     contactPoseAlgorithmHash=semantic_digest(_CAVITY_RAY_ALGORITHM))
+    return value
 
 
 def _axial_columns(cells, coordinates, check):
@@ -173,7 +187,8 @@ def _validate_axial_cache(engine, contract, approach, check):
     return cache, coordinates
 
 
-def _axial_current_cells(engine, contract, approach, remaining, max_cells, max_probes, check):
+def _axial_current_cells(engine, contract, approach, remaining, max_cells, max_probes, check,
+                         *, probe_slots=None):
     cache, coordinates = _validate_axial_cache(engine, contract, approach, check)
     groups = [[] for _ in cache['seedCells']]
     cells = approach['sourceOrdering']['orderedCells']
@@ -206,7 +221,9 @@ def _axial_current_cells(engine, contract, approach, remaining, max_cells, max_p
             slots.append({'column': column, 'levelMm': level, 'cell': cell, 'reason': reason})
             if cell is not None:
                 used.add(cell)
-    anchors = 9 if approach.get('pointScheme', 'center') != 'center' else 1
+    anchors = probe_slots or (9 if approach.get('pointScheme', 'center') != 'center' else 1)
+    if probe_slots is not None:
+        max_cells = min(max_cells, 56)
     considered = slots[:min(max_cells, math.ceil(max_probes/anchors))]
     selected, reserved = [], 0
     for slot in considered:
@@ -299,9 +316,12 @@ def _staging_plan(engine, contract, approach, plan, *, require_source_state=Fals
     return copy.deepcopy(plan)
 
 
-def _local_clearance(engine, contract, segments, removed, protected, slot, *, require_outside_entry=True):
+def _local_clearance(engine, contract, segments, removed, protected, slot, *, require_outside_entry=True,
+                     geometry_cost=None):
     """Conservative source geometry refusal only; native guards remain mandatory."""
     from .surgical_task_domain import _outside, _posed, reviewed_domain
+    if geometry_cost is not None:
+        geometry_cost['wholeBodyChecks'] = geometry_cost.get('wholeBodyChecks', 0)+1
     if not _within_workspace(engine.scene, contract, segments):
         return 'MILLING_STAGING_OUTSIDE_WORKSPACE'
     domain = reviewed_domain(engine.scene)
@@ -320,6 +340,10 @@ def _local_clearance(engine, contract, segments, removed, protected, slot, *, re
             return 'MILLING_STAGING_OTHER_HAND_CONTACT'
     for a, b, radius, _ in segments:
         cells = set(map(int, engine.cells(a, b, radius)))
+        if geometry_cost is not None:
+            geometry_cost['bodyCapsuleQueries'] += 1
+            geometry_cost['bodyCoveredCellVisits'] += len(cells)
+            geometry_cost['protectionCapsuleQueries'] += engine.protection is not None
         if cells & protected or (engine.protection is not None and
                 len(engine.protection.capsule_hits(a, b, radius))):
             return 'MILLING_STAGING_ORIGINAL_TARGET_OR_PROTECTED_CONTACT'
@@ -329,17 +353,32 @@ def _local_clearance(engine, contract, segments, removed, protected, slot, *, re
 
 
 def _local_path_clearance(engine, contract, name, poses, slot, *, check=lambda: None,
-                          allow_entry_retreat=False):
+                          allow_entry_retreat=False, allow_cleared_cavity_lead=False, geometry_cost=None,
+                          native_duration=None):
     """Bounded source preflight with native swept envelopes, not native admission.
 
-    The <=.25mm/1degree subdivisions match reviewed-task-domain path checks;
-    the separate 20,000-interval bound includes every proposed staging leg.
+    Legacy paths retain <=.25mm/1degree subdivisions. When native_duration is
+    declared, use the exact native one-leg distance/angle/duration rule instead.
+    The separate 20,000-interval bound includes every proposed staging leg.
     """
     protected = set(engine._protected_ids) | _original_targets(engine.scene)
+    if native_duration is not None and not _finite_positive(native_duration):
+        raise ValueError('MILLING_STAGING_EXPLICIT_NATIVE_DURATION_REQUIRED')
+    if allow_cleared_cavity_lead and native_duration is None:
+        raise ValueError('MILLING_STAGING_EXPLICIT_NATIVE_DURATION_REQUIRED')
+    if allow_cleared_cavity_lead and allow_entry_retreat:
+        raise ValueError('MILLING_STAGING_DISTINCT_LEAD_AND_RETREAT_REQUIRED')
+    if allow_cleared_cavity_lead and (engine.state['holds'] or engine.state.get('detachedFragments') or
+            any(hand['active'] or hand['grip'] for hand in engine.state['slots'].values()) or
+            any(any(offset) for offset in engine.state.get('deformation', {}).values())):
+        return 'MILLING_STAGING_INACTIVE_UNMOVED_CAVITY_REQUIRED', 0
+    if allow_cleared_cavity_lead:
+        for row in engine.scene.source.get('protectedAnatomyV1', []):
+            protected.update(row['cells'])
     removed = set(engine.state['removed'])
     intervals = 0
     reason = _local_clearance(engine, contract, _segments(name, poses[0]), removed, protected, slot,
-                              require_outside_entry=not allow_entry_retreat)
+                              require_outside_entry=not allow_entry_retreat, geometry_cost=geometry_cost)
     if reason:
         return reason, intervals
     previous = poses[0]
@@ -348,6 +387,11 @@ def _local_path_clearance(engine, contract, name, poses, slot, *, check=lambda: 
         angle = float((rotations[1]*rotations[0].inv()).magnitude())
         count = max(1, math.ceil(np.linalg.norm(np.subtract(end['position'], previous['position']))/.25),
                     math.ceil(angle/np.deg2rad(1.)))
+        if native_duration is not None:
+            # Match the actual one-leg native program, including its duration.
+            # Finer unrelated preflight subdivisions can hide native inflation.
+            count = max(1, math.ceil((np.linalg.norm(np.subtract(end['position'], previous['position']))+
+                40.*angle)/min(.4, float(engine.scene.spacing.min())/3.)), math.ceil(native_duration/.1))
         intervals += count
         if intervals > 20_000:
             return 'MILLING_STAGING_GEOMETRY_INTERVAL_BOUND', intervals
@@ -359,16 +403,18 @@ def _local_path_clearance(engine, contract, name, poses, slot, *, check=lambda: 
                          interpolation(fraction).as_quat())
             segments = swept_envelopes(TOOLS[name], {'radiusMm': TOOLS[name]['radiusMm'], 'depthMm': 2.}, previous, pose)
             reason = _local_clearance(engine, contract, segments, removed, protected, slot,
-                                      require_outside_entry=not allow_entry_retreat)
+                                      require_outside_entry=not (allow_entry_retreat or allow_cleared_cavity_lead),
+                                      geometry_cost=geometry_cost)
             if reason:
                 return reason, intervals
             previous = pose
-    return _local_clearance(engine, contract, _segments(name, poses[-1]), removed, protected, slot), intervals
+    return _local_clearance(engine, contract, _segments(name, poses[-1]), removed, protected, slot,
+        require_outside_entry=not allow_cleared_cavity_lead, geometry_cost=geometry_cost), intervals
 
 
 def bind_milling_approach(engine, *, quaternion, outside_plane_point_ras_mm,
                           maximum_approach_mm, point_scheme='center',
-                          cell_schedule='surface_first', check=None):
+                          cell_schedule='surface_first', check=None, contact_pose_family='leading_touch'):
     """Bind explicitly supplied fixed attitude and exterior plane to the Scene.
 
     This records a proposal route, not a reviewed exterior/clearance proof.
@@ -377,10 +423,16 @@ def bind_milling_approach(engine, *, quaternion, outside_plane_point_ras_mm,
     The opt-in axial schedule binds <=56 source columns and four actual-current
     A depth levels; all source-wide preparation remains separately reported.
     Both point schemes are supported (<=224 center or2016 quarter probes).
+    The separate opt-in cavity-carried family requires quarter points and the
+    axial schedule; generation also requires an explicit staging plan/duration.
     """
     binding_started = time.monotonic()
     if type(cell_schedule) is not str or cell_schedule not in _CELL_SCHEDULES or check is not None and not callable(check):
         raise ValueError('MILLING_CONTACT_DECLARED_CELL_SCHEDULE_REQUIRED')
+    if (type(contact_pose_family) is not str or contact_pose_family not in _CONTACT_POSE_FAMILIES or
+            contact_pose_family != 'leading_touch' and (point_scheme != _POINT_SCHEMES[1] or
+                                                       cell_schedule != _CELL_SCHEDULES[1])):
+        raise ValueError('MILLING_CONTACT_DECLARED_POSE_FAMILY_REQUIRED')
     _geometry_check(check)
     contract = validate_source_scope(engine)
     if not is_milling(contract):
@@ -395,6 +447,8 @@ def bind_milling_approach(engine, *, quaternion, outside_plane_point_ras_mm,
         raw['pointScheme'] = point_scheme
     if cell_schedule != 'surface_first':
         raw['cellSchedule'] = cell_schedule
+    if contact_pose_family != 'leading_touch':
+        raw['contactPoseFamily'] = contact_pose_family
     _, _, axis = _approach(engine, contract, raw, require_order=False)
     started = time.monotonic()
     cells = list(contract.aperture_cells)
@@ -434,6 +488,8 @@ def _approach(engine, contract, raw, *, require_order=True):
         fields.add('pointScheme')
     if isinstance(raw, dict) and 'cellSchedule' in raw:
         fields.add('cellSchedule')
+    if isinstance(raw, dict) and 'contactPoseFamily' in raw:
+        fields.add('contactPoseFamily')
     if require_order:
         fields.update(('sourceOrdering', 'sourceOrderingHash'))
     if (not isinstance(raw, dict) or set(raw) != fields or
@@ -445,6 +501,9 @@ def _approach(engine, contract, raw, *, require_order=True):
     schedule = raw.get('cellSchedule', 'surface_first')
     if type(schedule) is not str or schedule not in _CELL_SCHEDULES or 'cellSchedule' in raw and schedule == 'surface_first':
         raise ValueError('MILLING_CONTACT_DECLARED_CELL_SCHEDULE_REQUIRED')
+    if ('contactPoseFamily' in raw and (raw['contactPoseFamily'] != 'cavity_carried_rays' or
+            schedule != _CELL_SCHEDULES[1] or raw.get('pointScheme') != _POINT_SCHEMES[1])):
+        raise ValueError('MILLING_CONTACT_DECLARED_POSE_FAMILY_REQUIRED')
     q, point = np.asarray(raw['quaternion'], float), np.asarray(raw['outsidePlanePointRasMm'], float)
     if (q.shape != (4,) or point.shape != (3,) or not np.isfinite(q).all() or
             not np.isfinite(point).all() or abs(np.linalg.norm(q)-1.) > 1e-9 or
@@ -479,12 +538,13 @@ def _pose(position, quaternion):
     return {'position': np.asarray(position).tolist(), 'quaternion': np.asarray(quaternion).tolist()}
 
 
-def _contact(engine, cell, point, axis, radius, rho, q):
+def _contact(engine, cell, point, axis, radius, rho, q, *, check=None):
     """Invert the existing exact orthogonal-cell distance on an outward ray."""
     index = np.asarray([np.unravel_index(cell, engine.scene.shape)], dtype=np.int64)
     center = engine.scene.affine[:3, :3]@index[0]+engine.scene.affine[:3, 3]
     lo, hi = 0., radius+rho+float(np.linalg.norm(point-center))+1e-6
     for _ in range(_ALGORITHM['iterations']):
+        _geometry_check(check)
         middle = (lo+hi)/2
         tip = point-axis*middle
         if float(_segment_cell_distances(engine.grid, index, tip, tip)[0]) <= radius:
@@ -575,6 +635,8 @@ def _context(engine, approach, slot, max_examined_cells, max_contacts, max_conta
     if not is_milling(contract):
         raise ValueError('MILLING_CONTACT_MILLING_CONTRACT_REQUIRED')
     q, plane, axis = _approach(engine, contract, approach)
+    if approach.get('contactPoseFamily') == 'cavity_carried_rays' and staging_plan is None:
+        raise ValueError('MILLING_CONTACT_CAVITY_RAYS_REQUIRE_STAGING_PLAN')
     if staging_plan is not None:
         _staging_plan(engine, contract, approach, staging_plan)
     if engine.grid._orthogonal_spacing is None:
@@ -674,9 +736,234 @@ def _local_contact_program(contact, outside, slot, duration, *, suction=False):
     return actions
 
 
+def _cavity_ray_anchors(engine, cell, cavity, cavity_points, axis, rho, cost, check):
+    """36 RESERVED slots; absent/duplicate carriers and projected rays stay slots."""
+    center = engine.scene.points([cell])[0]
+    for j, point in _contact_points(engine, cell, {'pointScheme': _POINT_SCHEMES[1]}):
+        yield j, point, None
+    cost['cavityCentroidVisits'] += len(cavity)
+    direction = cavity_points.mean(0)-center if len(cavity) else np.zeros(3)
+    direction -= axis*float(direction@axis)
+    length = float(np.linalg.norm(direction))
+    used = set()
+    for k, distance in enumerate((0., 2., 2.+rho)):
+        _geometry_check(check)
+        carrier = None
+        if length > 1e-12:
+            query = center+distance*direction/length
+            best = None
+            for start in range(0, len(cavity), 1024):
+                _geometry_check(check)
+                points = cavity_points[start:start+1024]
+                delta = points-query
+                delta -= np.outer(delta@axis, axis)
+                squared = np.round(np.sum(delta**2, axis=1), 10)
+                axial = np.round(np.abs((points-center)@axis), 10)
+                cost['carrierDistancePairs'] += len(points)
+                for j in range(len(points)):
+                    candidate = (float(squared[j]), float(axial[j]), cavity[start+j], start+j)
+                    if best is None or candidate < best:
+                        best = candidate
+            carrier = best[3]
+            if carrier in used:
+                carrier = None
+            else:
+                used.add(carrier)
+        offsets = [np.zeros(3), *(np.asarray(o) for o in product((-.375, .375), repeat=3))]
+        for j, offset in enumerate(offsets):
+            point = None if carrier is None else cavity_points[carrier]+engine.scene.affine[:3, :3]@offset
+            anchor = None if point is None else point+axis*float((center-point)@axis)
+            yield 9+k*9+j, anchor, None if carrier is None else cavity[carrier]
+
+
+def _cavity_body_check(engine, contract, segments, removed, remaining, protected, slot, cost, check):
+    """Only working material in CURRENT A may contact the full active enclosure."""
+    from .surgical_task_domain import _outside, _posed, reviewed_domain
+    cost['wholeBodyChecks'] += 1
+    if not _within_workspace(engine.scene, contract, segments):
+        return 'OUTSIDE_REVIEWED_WORKSPACE', set()
+    domain = reviewed_domain(engine.scene)
+    if domain is not None and _outside(engine.scene, domain, segments):
+        return 'MILLING_STAGING_OUTSIDE_REVIEWED_DOMAIN', set()
+    try:
+        _inside_entry(contract, segments)
+    except ValueError as error:
+        return str(error), set()
+    other = 'right' if slot == 'left' else 'left'
+    if _posed(engine, other):
+        hand = engine.state['slots'][other]
+        if pair_conflict(segments, envelopes(TOOLS[hand['instrument']], engine.parameters(hand),
+                hand['position'], hand['quaternion'])):
+            return 'OTHER_HAND_CONTACT', set()
+    hits = set()
+    for a, b, radius, part in segments:
+        _geometry_check(check)
+        touched = set(map(int, engine.cells(a, b, radius)))
+        cost['bodyCapsuleQueries'] += 1
+        cost['bodyCoveredCellVisits'] += len(touched)
+        if touched & protected:
+            return 'ORIGINAL_TARGET_OR_PROTECTED_CONTACT', set()
+        if engine.protection is not None:
+            cost['protectionCapsuleQueries'] += 1
+            if len(engine.protection.capsule_hits(a, b, radius)):
+                return 'ORIGINAL_TARGET_OR_PROTECTED_CONTACT', set()
+        occupied = {c for c in touched-removed if engine.scene.labels.ravel()[c] != 0}
+        if part == 'shaft' and occupied:
+            return 'CURRENT_CAVITY_SHAFT_OCCUPIED', set()
+        if occupied-remaining:
+            return 'WORKING_CONTACT_OUTSIDE_ALLOWED_CURRENT_A', set()
+        hits.update(occupied)
+    return None, hits
+
+
+def _generate_cavity_ray_contacts(engine, approach, context, max_cells, max_contacts, max_probes,
+                                   drill_seconds, staging_seconds, slot, staging_plan, check, started):
+    contract, q, plane, axis, before, readiness, removed, remaining, protected, rho = context
+    cost = dict(originalACurrentMembershipVisits=0, cavityCoordinates=0, cavityCentroidVisits=0,
+        carrierDistancePairs=0, inverseEligibilityQueries=0, inverseKernelQueries=0,
+        bodyCapsuleQueries=0, bodyCoveredCellVisits=0, protectionCapsuleQueries=0,
+        wholeBodyChecks=0, passiveLeadIntervals=0, tipEffectSupportQueries=0)
+    source = list(contract.aperture_cells)
+    cavity = []
+    for start in range(0, len(source), 1024):
+        _geometry_check(check)
+        cavity.extend(c for c in source[start:start+1024] if c in removed)
+        cost['originalACurrentMembershipVisits'] += len(source[start:start+1024])
+    chunks = []
+    for start in range(0, len(cavity), 1024):
+        _geometry_check(check)
+        chunks.append(engine.scene.points(cavity[start:start+1024]))
+    cavity_points = np.concatenate(chunks) if chunks else np.empty((0, 3))
+    cost['cavityCoordinates'] = len(cavity)
+    scheduled, schedule = _axial_current_cells(engine, contract, approach, remaining,
+        max_cells, max_probes, check, probe_slots=36)
+    candidates, rejections, examined, incomplete = [], [], [], []
+    probes = 0
+    for cell, allowance in scheduled:
+        _geometry_check(check)
+        examined.append(cell)
+        seen = set()
+        if allowance < 36:
+            incomplete.append(cell)
+        for point_index, point, carrier in islice(_cavity_ray_anchors(engine, cell, cavity, cavity_points,
+                                                                    axis, rho, cost, check), allowance):
+            _geometry_check(check)
+            probes += 1
+            witness = {'cell': cell, 'pointIndex': point_index, 'carrierSourceCell': carrier}
+            if point is None:
+                rejections.append({**witness, 'reason': 'MISSING_CURRENT_CAVITY_CARRIER'})
+                continue
+            key = tuple(np.round(engine.scene.inverse[:3, :3]@point+engine.scene.inverse[:3, 3], 10))
+            if key in seen:
+                rejections.append({**witness, 'reason': 'DUPLICATE_RESERVED_CONTACT_RAY'})
+                continue
+            seen.add(key)
+            index = np.asarray([np.unravel_index(cell, engine.scene.shape)], dtype=np.int64)
+            cost['inverseEligibilityQueries'] += 1
+            if float(_segment_cell_distances(engine.grid, index, point, point)[0]) > 2.:
+                rejections.append({**witness, 'reason': 'RAY_ANCHOR_OUTSIDE_TARGET_CONTACT_INTERVAL'})
+                continue
+            drill, threshold = _contact(engine, cell, point, axis, 2., rho, q, check=check)
+            cost['inverseKernelQueries'] += _ALGORITHM['iterations']
+            tip = np.asarray(drill['position'])
+            cost['inverseEligibilityQueries'] += 1
+            if float(_segment_cell_distances(engine.grid, index, tip, tip)[0]) > 2.+1e-9:
+                rejections.append({**witness, 'reason': 'FIXED_OVERLAP_EXITS_TARGET_CONTACT_INTERVAL'})
+                continue
+            distance = float((tip-plane)@axis)
+            lead = _pose(tip-.20*axis, q)
+            outside = _pose(tip-distance*axis, q)
+            if not .20 < distance <= approach['maximumApproachMm']:
+                rejections.append({**witness, 'reason': 'APPROACH_LENGTH_OUTSIDE_BOUND'})
+                continue
+            # Check the whole current-body passive route, including an entry endpoint.
+            refusal, intervals = _local_path_clearance(engine, contract, 'cranial_drill',
+                [outside, lead], slot, check=check or (lambda: None),
+                allow_cleared_cavity_lead=True, geometry_cost=cost, native_duration=staging_seconds)
+            cost['passiveLeadIntervals'] += intervals
+            if refusal is None:
+                enclosure = swept_envelopes(TOOLS['cranial_drill'], {'radiusMm': 2., 'depthMm': 2.},
+                                            lead, drill)
+                refusal, _ = _cavity_body_check(engine, contract, enclosure, removed, remaining,
+                                                protected, slot, cost, check)
+            if refusal:
+                rejections.append({**witness, 'reason': refusal})
+                continue
+            hits = set(map(int, engine.cells(lead['position'], drill['position'], 2.))) & remaining
+            cost['tipEffectSupportQueries'] += 1
+            if cell not in hits:
+                rejections.append({**witness, 'reason': 'NO_CURRENT_A_CONTACT'})
+                continue
+            candidates.append({**witness, 'contactAnchorRasMm': point.tolist(),
+                'drillPose': drill, 'leadPose': lead, 'outsidePose': outside,
+                'nativeLeadingDrillContactDistanceMm': threshold, 'hits': hits})
+    uncovered, selected, poses = set(remaining), [], set()
+    while candidates and len(selected) < max_contacts:
+        _geometry_check(check)
+        best = min(candidates, key=lambda row: (-len(row['hits'] & uncovered), row['cell'], row['pointIndex']))
+        candidates.remove(best)
+        key = tuple(np.round(best['drillPose']['position'], 10))
+        if not best['hits'] & uncovered or key in poses:
+            continue
+        poses.add(key)
+        actions = [
+            {'slot': slot, 'operation': 'move', 'pose': copy.deepcopy(best['outsidePose']), 'duration': staging_seconds},
+            {'slot': slot, 'operation': 'move', 'pose': copy.deepcopy(best['leadPose']), 'duration': staging_seconds},
+            {'slot': slot, 'operation': 'apply', 'pose': copy.deepcopy(best['drillPose']), 'duration': drill_seconds},
+            {'slot': slot, 'operation': 'apply', 'pose': copy.deepcopy(best['drillPose']), 'duration': drill_seconds},
+            {'slot': slot, 'operation': 'deactivate', 'duration': .1},
+            {'slot': slot, 'operation': 'move', 'pose': copy.deepcopy(best['outsidePose']), 'duration': staging_seconds}]
+        selected.append({**{k: v for k, v in best.items() if k != 'hits'},
+            'nominalCurrentAContactCells': sorted(best['hits']), 'actions': actions})
+        uncovered.difference_update(best['hits'])
+    _geometry_check(check)
+    result = {'schema': SCHEMA, 'sceneId': engine.scene.identity, 'sourceStateId': before,
+        'sourceActionsSeal': semantic_digest(engine.actions), 'contractHash': contract.content_hash,
+        'sourceBinding': contract.source_binding, 'guardSeal': semantic_digest(engine.guard_report()),
+        'protectedSourceCellsSeal': semantic_digest(sorted(protected)), 'approach': copy.deepcopy(approach),
+        'algorithm': copy.deepcopy(_CAVITY_RAY_ALGORITHM), 'algorithmHash': semantic_digest(_CAVITY_RAY_ALGORITHM),
+        'inverseAlgorithmHash': semantic_digest(_ALGORITHM), 'contactPoseFamily': 'cavity_carried_rays',
+        'commandDurations': {'drillSeconds': drill_seconds, 'stationaryDwellSeconds': drill_seconds,
+                             'passiveMoveSeconds': staging_seconds},
+        'proposalKind': 'staged_current_cavity_carried_ray_drill', 'requiredInstrument': 'cranial_drill',
+        'stagingPlanHash': staging_plan['contentHash'], 'localRetreatIsCompletedWithdrawal': False,
+        'cellSchedule': 'axial_diverse_current_a', 'cellScheduleScope': 'bone_only', 'axialSchedule': schedule,
+        'bounds': {'maxExaminedCells': max_cells, 'maxContacts': max_contacts, 'maxContactProbes': max_probes},
+        'examinedCells': examined, 'examinedContactCells': len(examined),
+        'matchingSuctionChecks': 0,
+        'testedDrillContactProbes': probes, 'reservedContactProbeSlots': schedule['reservedContactProbeSlots'],
+        'incompletelyExaminedCurrentACells': incomplete, 'unexaminedCurrentACells': sorted(remaining-set(examined)),
+        'currentVerifiedRemovedACarriers': cavity, 'remainingOriginalACells': sorted(remaining),
+        'contacts': selected, 'actions': [a for row in selected for a in row['actions']], 'rejections': rejections,
+        'nominalUncoveredCurrentACells': sorted(uncovered), 'nominalWholeAContactCoverage': not uncovered,
+        'controllerDeficit': bool(uncovered) or not readiness['openingComplete'],
+        'nativeOpening': readiness, 'openingComplete': readiness['openingComplete'],
+        'currentDebrisMm3': readiness['debrisPresentMm3'],
+        'currentDebrisReplanRequired': readiness['debrisPresentMm3'] > 0,
+        'actualDebrisReplanRequiredAfterWork': True,
+        'stockGeometry': {'drillRadiusMm': 2., 'suctionRadiusMm': 1.5, 'shaftRadiusMm': .5,
+            'shaftLengthMm': 40., 'workingDepthMm': 2., 'cellCircumsphereMm': rho, 'nominalOverlapMm': .10},
+        'admittedOpening': False, 'nativeVerificationRequired': True, 'nativeCalls': 0,
+        'scope': 'current verified cavity geometry; no nominal removal, debris uptake or exit credit',
+        'nativeObligations': ['actual endpoint and fresh full-body retreat after work',
+            'full original A, actual debris conservation and full global exit under original checked meter']}
+    result['contentHash'] = proposal_hash(result)
+    result['sourceGeometryCost'] = {**cost, 'generationWallSeconds': time.monotonic()-started,
+        'contextInputCardinalities': {'sourceLabelCells': engine.scene.labels.size,
+            'originalACells': len(source), 'removedSourceIDs': len(removed), 'historyActions': len(engine.actions)},
+        'axialSourcePreparation': copy.deepcopy(schedule['cachedSourcePreparation']),
+        'axialCurrentScheduling': {k: v for k, v in schedule.items() if k.endswith('Visits') or k.endswith('Cells')},
+        'bindingWallSeconds': approach['sourceOrdering']['bindingWallSeconds'],
+        'orderingWallSeconds': approach['sourceOrdering']['orderingWallSeconds']}
+    _geometry_check(check)
+    if engine.state_id != before:
+        raise ValueError('MILLING_CONTACT_SOURCE_STATE_CHANGED')
+    return result
+
+
 def generate_milling_contact_proposals(engine, *, approach, max_examined_cells=2048,
         max_contacts=32, max_contact_probes=2048, drill_seconds, suction_seconds, slot='left',
-        staging_plan=None, check=None):
+        staging_plan=None, check=None, staging_seconds=None):
     """Return JSON paired contacts and one native program from the current state.
 
     Bounds count source cells, individual drill inversions and selected matching
@@ -689,14 +976,23 @@ def generate_milling_contact_proposals(engine, *, approach, max_examined_cells=2
     With an explicit staging_plan, propose drill-only same-tool contacts from
     a geometrically checked local outside-entry plane; the staged controller
     must supply checked global entry/exit and later actual-debris collection.
+    cavity_carried_rays additionally requires staging_seconds: every passive
+    move uses it, and native interval inflation is checked at that exact duration.
+    Its separate active command and stationary dwell each charge drill_seconds.
     """
     started = time.monotonic()
     if check is not None and not callable(check):
         raise ValueError('MILLING_CONTACT_CHECK_CALLBACK_REQUIRED')
     _geometry_check(check)
-    contract, q, plane, axis, before, readiness, removed, remaining, protected, rho = _context(
+    if isinstance(approach, dict) and approach.get('contactPoseFamily') == 'cavity_carried_rays' and not _finite_positive(staging_seconds):
+        raise ValueError('MILLING_CONTACT_CAVITY_RAYS_EXPLICIT_STAGING_DURATION_REQUIRED')
+    context = _context(
         engine, approach, slot, max_examined_cells, max_contacts, max_contact_probes,
         drill_seconds, suction_seconds, staging_plan=staging_plan)
+    if approach.get('contactPoseFamily') == 'cavity_carried_rays':
+        return _generate_cavity_ray_contacts(engine, approach, context, max_examined_cells, max_contacts,
+            max_contact_probes, drill_seconds, staging_seconds, slot, staging_plan, check, started)
+    contract, q, plane, axis, before, readiness, removed, remaining, protected, rho = context
     axial = approach.get('cellSchedule', 'surface_first') != 'surface_first'
     schedule, point_allowance = None, {}
     if axial:

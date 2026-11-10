@@ -22,7 +22,11 @@ from .surgical_milling import milling_readiness, validate_source_scope
 from .surgical_milling_contact_proposals import (
     _approach, _exterior, _segments, _within_workspace, _approach_declaration,
     _local_path_clearance, _same_pose, _staging_plan, _CELL_SCHEDULES, bind_milling_approach,
+    _CONTACT_POSE_FAMILIES, _cavity_body_check,
     generate_milling_contact_proposals, generate_milling_debris_proposals)
+from .surgical_craniotomy import _original_targets
+from .surgical_motion import swept_envelopes
+from .surgical_tools import TOOLS
 from .surgical_task_domain import _posed
 from .surgical_transition_meter import MeteredEngine, TransitionBudgetExceeded, TransitionMeter
 
@@ -143,7 +147,8 @@ def checked_joint_milling_opening(engine, *, approach, limits, meter=None,
         drill_seconds, suction_seconds, staging_seconds=.1, slot='left',
         max_batches=8, max_contacts=32, max_examined_cells=2048,
         max_contact_probes=2048, point_scheme='center', check=None,
-        phase='cranial.joint.milling-opening', staging_plan=None, cell_schedule='surface_first'):
+        phase='cranial.joint.milling-opening', staging_plan=None, cell_schedule='surface_first',
+        contact_pose_family='leading_touch'):
     """Return a checked complete bone-opening prefix or an exact charged stop.
 
     The adapter rebinds all-A ordering once inside the original shared wall
@@ -152,6 +157,9 @@ def checked_joint_milling_opening(engine, *, approach, limits, meter=None,
     frozen staging_plan uses checked native multileg moves, same-tool bone
     batches, a full global withdrawal before exchange, and actual-debris-only
     collection. Local retreats never clear inserted or count as global exit.
+    Optional cavity_carried_rays requires the staged axial/quarter mode and
+    charges staging_seconds on passive moves; both the short active command
+    and its separate stationary dwell charge drill_seconds.
     """
     if (not isinstance(limits, JointCranialLimits) or type(approach) is not dict or
             type(phase) is not str or not phase or slot not in ('left', 'right') or
@@ -161,6 +169,9 @@ def checked_joint_milling_opening(engine, *, approach, limits, meter=None,
             type(max_contact_probes) is not int or not 1 <= max_contact_probes <= 2048 or
             type(point_scheme) is not str or point_scheme not in _POINT_SCHEMES or
             type(cell_schedule) is not str or cell_schedule not in _CELL_SCHEDULES or
+            type(contact_pose_family) is not str or contact_pose_family not in _CONTACT_POSE_FAMILIES or
+            contact_pose_family != 'leading_touch' and (staging_plan is None or
+                cell_schedule != 'axial_diverse_current_a' or point_scheme != _POINT_SCHEMES[1]) or
             not all(_positive(value) for value in (drill_seconds, suction_seconds, staging_seconds)) or
             check is not None and not callable(check)):
         raise ValueError('JOINT_MILLING_EXPLICIT_BOUNDED_SPEC_REQUIRED')
@@ -178,6 +189,8 @@ def checked_joint_milling_opening(engine, *, approach, limits, meter=None,
         raise ValueError('JOINT_MILLING_POINT_SCHEME_BINDING_DIFFERS')
     if approach.get('cellSchedule', 'surface_first') != cell_schedule:
         raise ValueError('JOINT_MILLING_CELL_SCHEDULE_BINDING_DIFFERS')
+    if approach.get('contactPoseFamily', 'leading_touch') != contact_pose_family:
+        raise ValueError('JOINT_MILLING_CONTACT_POSE_FAMILY_BINDING_DIFFERS')
     if set(current.state['removed'])-set(limits._bone):
         raise ValueError('JOINT_MILLING_BONE_ONLY_SOURCE_PREFIX_REQUIRED')
     initial_stage = validation['stageReadiness']
@@ -199,6 +212,8 @@ def checked_joint_milling_opening(engine, *, approach, limits, meter=None,
         spec['stagingPlan'] = copy.deepcopy(staging_plan)
     if cell_schedule != 'surface_first':
         spec['cellSchedule'] = cell_schedule
+    if contact_pose_family != 'leading_touch':
+        spec['contactPoseFamily'] = contact_pose_family
     batches, decisions, binding = [], [], None
     staging_transitions = []
     status, reason = validation['status'], validation['reason']
@@ -289,7 +304,8 @@ def checked_joint_milling_opening(engine, *, approach, limits, meter=None,
         else:
             poses = [pose, *staging_plan['outbound']]
             actions = _multileg_exit_actions(current, staging_plan, slot, staging_seconds)
-        refusal, intervals = _local_path_clearance(current, contract, name, poses, slot, check=guard)
+        path_kwargs = ({'native_duration': staging_seconds} if contact_pose_family == 'cavity_carried_rays' else {})
+        refusal, intervals = _local_path_clearance(current, contract, name, poses, slot, check=guard, **path_kwargs)
         record = {'kind': 'inbound' if enter else 'outbound', 'instrument': name,
             'sourceStateId': current.state_id, 'geometryIntervals': intervals, 'geometryRefusal': refusal,
             'actions': copy.deepcopy(actions)}
@@ -317,6 +333,8 @@ def checked_joint_milling_opening(engine, *, approach, limits, meter=None,
         # once here, after the original meter/wall origin is authenticated.
         binding_kwargs = {} if cell_schedule == 'surface_first' else {
             'cell_schedule': cell_schedule, 'check': guard}
+        if contact_pose_family != 'leading_touch':
+            binding_kwargs['contact_pose_family'] = contact_pose_family
         binding = bind_milling_approach(current, quaternion=declaration['quaternion'],
             outside_plane_point_ras_mm=declaration['outsidePlanePointRasMm'],
             maximum_approach_mm=declaration['maximumApproachMm'], point_scheme=point_scheme,
@@ -350,6 +368,8 @@ def checked_joint_milling_opening(engine, *, approach, limits, meter=None,
             if use_debris:
                 proposal = generate_milling_debris_proposals(current, **kwargs)
             else:
+                if contact_pose_family == 'cavity_carried_rays':
+                    kwargs['staging_seconds'] = staging_seconds
                 proposal = generate_milling_contact_proposals(current,
                     drill_seconds=drill_seconds, **kwargs)
             guard()
@@ -386,12 +406,40 @@ def checked_joint_milling_opening(engine, *, approach, limits, meter=None,
                     if action['operation'] == 'move':
                         pose = {key: current.state['slots'][slot][key]
                                 for key in ('position', 'quaternion')}
+                        move_cost = (dict(bodyCapsuleQueries=0, bodyCoveredCellVisits=0, protectionCapsuleQueries=0)
+                                     if contact_pose_family == 'cavity_carried_rays' else None)
                         refusal, intervals = _local_path_clearance(current, contract, local_tool,
                             [pose, action['pose']], slot, check=guard,
-                            allow_entry_retreat=previous_operation == 'deactivate')
+                            allow_entry_retreat=previous_operation == 'deactivate',
+                            allow_cleared_cavity_lead=contact_pose_family == 'cavity_carried_rays' and
+                                not use_debris and index % 6 == 1, geometry_cost=move_cost,
+                            native_duration=action['duration'] if contact_pose_family == 'cavity_carried_rays' else None)
                         record.setdefault('localMoveGeometry', []).append(
                             {'index': index, 'intervals': intervals, 'refusal': refusal,
                              'sourceStateId': current.state_id})
+                        if move_cost is not None:
+                            record['localMoveGeometry'][-1]['cost'] = move_cost
+                        if refusal:
+                            raise ValueError(refusal)
+                    if contact_pose_family == 'cavity_carried_rays' and not use_debris and action['operation'] == 'apply':
+                        pose = {key: current.state['slots'][slot][key] for key in ('position', 'quaternion')}
+                        if index % 6 == 2 and (not _same_pose(pose, actions[index-1]['pose']) or
+                                math.dist(pose['position'], action['pose']['position']) > .20+1e-9 or
+                                (Rotation.from_quat(pose['quaternion'])*Rotation.from_quat(
+                                    action['pose']['quaternion']).inv()).magnitude() > 1e-9):
+                            raise ValueError('JOINT_MILLING_ACTUAL_BOUNDED_LEAD_REQUIRED')
+                        if index % 6 == 3 and not _same_pose(pose, action['pose']):
+                            raise ValueError('JOINT_MILLING_ACTUAL_DRILL_ENDPOINT_REQUIRED')
+                        segments = swept_envelopes(TOOLS['cranial_drill'], {'radiusMm': 2., 'depthMm': 2.},
+                                                    pose, action['pose'])
+                        geometry = dict(wholeBodyChecks=0, bodyCapsuleQueries=0, bodyCoveredCellVisits=0,
+                                        protectionCapsuleQueries=0)
+                        native = _native(current)
+                        refusal, _ = _cavity_body_check(native, contract, segments, set(current.state['removed']),
+                            set(contract.aperture_cells)-set(current.state['removed']),
+                            set(native._protected_ids) | _original_targets(native.scene), slot, geometry, guard)
+                        record.setdefault('activeCommandGeometry', []).append(
+                            {'index': index, 'refusal': refusal, 'sourceStateId': current.state_id, 'cost': geometry})
                         if refusal:
                             raise ValueError(refusal)
                     current, part = checked_joint_actions(current, [action], limits=limits, meter=meter,

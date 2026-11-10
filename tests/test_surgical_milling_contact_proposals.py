@@ -40,6 +40,9 @@ def generated(*, world_rotation=None):
 
 
 def propose(engine, approach, **kwargs):
+    if approach.get('contactPoseFamily') == 'cavity_carried_rays':
+        # Explicit generated test command timing, charged on every new passive move.
+        kwargs.setdefault('staging_seconds', 5.)
     return generate_milling_contact_proposals(engine, approach=approach,
         drill_seconds=30., suction_seconds=2., **kwargs)
 
@@ -885,3 +888,231 @@ def test_axial_mode_refuses_shear_and_leaves_debris_ordering_actual_tag_only():
     assert debris['appliedDebrisOrdering'] == 'actual_current_tagged_debris_outward_depth_then_source_id'
     assert not debris['contacts'] and debris['currentDebrisMm3'] == 0.
     assert debris['controllerDeficit'] and not debris['admittedOpening'] and not engine.actions
+
+
+@pytest.fixture
+def cavity_ray_pure(monkeypatch):
+    """Prohibit native preview/step throughout setup and every new control."""
+    from resectionlab.surgical_engine import SurgicalEngine
+    def forbidden(*args, **kwargs):
+        raise AssertionError('cavity-ray pure control attempted native preview/step')
+    monkeypatch.setattr(SurgicalEngine, 'preview', forbidden)
+    monkeypatch.setattr(SurgicalEngine, 'step', forbidden)
+
+
+def cavity_ray_case(*, transform=None, z_spacing=1., obstacle=None, material='unknown', protected=False):
+    """Hypothetical cavity for geometry ONLY, not authenticated removal/history."""
+    from resectionlab.surgical_engine import SurgicalEngine
+    from resectionlab.surgical_scene import SurgicalScene
+    from resectionlab.surgical_milling import binding, contract_hash
+    old, _, _, _ = staging_plate()
+    labels = old.scene.labels.copy(); labels[20:76, 20:76, 60:64] = 1
+    regions = copy.deepcopy(old.scene.regions)
+    if obstacle is not None:
+        labels[obstacle] = 4
+        regions.append({'id': 4, 'name': 'Cavity-ray guard', 'material': material, 'protected': protected})
+    affine = np.diag([1., 1., z_spacing, 1.])
+    transform = np.eye(4) if transform is None else transform
+    affine = transform@affine
+    rotation = Rotation.from_matrix(transform[:3, :3]) if np.linalg.det(transform[:3, :3]) > 0 else Rotation.identity()
+    props = copy.deepcopy(old.scene.properties); raw = props.pop(PROPERTY)
+    aperture = sorted(int(np.ravel_multi_index((x, y, z), labels.shape))
+        for x in range(44, 53) for y in range(44, 53) for z in range(60, 64))
+    world = lambda p: (affine[:3, :3]@np.asarray(p)+affine[:3, 3]).tolist()
+    bone_ids = [r['id'] for r in regions if r['material'] == 'bone']
+    raw.update(apertureCells=aperture,
+        retainedSkullCells=sorted(set(map(int, np.flatnonzero(np.isin(labels, bone_ids))))-set(aperture)))
+    raw['entry'].update(centerRasMm=world([48, 48, 59.5]),
+        normalRasUnit=(affine[:3, 2]/z_spacing).tolist(), uRasUnit=affine[:3, 0].tolist())
+    base = SurgicalScene(labels, affine, regions, old.scene.source, props)
+    raw.update(binding(base)); raw['contentHash'] = contract_hash(raw); props[PROPERTY] = raw
+    engine = SurgicalEngine(SurgicalScene(labels, affine, regions, base.source, props))
+    remaining = {int(np.ravel_multi_index((x, y, 63), labels.shape)) for x in (44, 52) for y in (44, 52)}
+    engine.state['removed'] = sorted(set(aperture)-remaining)
+    approach = bind_milling_approach(engine, quaternion=rotation.as_quat().tolist(),
+        outside_plane_point_ras_mm=world([48, 48, 55]), maximum_approach_mm=20.,
+        point_scheme='center_and_quarter_cell_corners', cell_schedule='axial_diverse_current_a',
+        contact_pose_family='cavity_carried_rays')
+    park = {'position': world([16, 48, 55]), 'quaternion': rotation.as_quat().tolist()}
+    local = {'position': world([48, 48, 55]), 'quaternion': rotation.as_quat().tolist()}
+    plan = bind_milling_staging_plan(engine, approach=approach, global_park=park,
+        inbound=[local], outbound=[local, park])
+    return engine, set(aperture), remaining, approach, plan
+
+
+def cavity_ray_geometry_stub(monkeypatch):
+    """Explicit geometry seam; cannot establish native-history eligibility."""
+    import resectionlab.surgical_milling_contact_proposals as module
+    monkeypatch.setattr(module, 'milling_readiness', lambda _: {
+        'historyVerified': True, 'debrisConserved': True, 'debrisPresentMm3': 0., 'openingComplete': False})
+
+
+def test_cavity_ray_requires_verified_history_not_a_synthetic_removed_mask(cavity_ray_pure):
+    engine, _, _, approach, plan = cavity_ray_case()
+    with pytest.raises(ValueError, match='NATIVE_CAVITY_HISTORY'):
+        propose(engine, approach, staging_plan=plan, max_contact_probes=36)
+    assert not engine.actions
+
+
+def test_cavity_ray_empty_actual_cavity_reserves_missing_carriers_and_56_target_cap(cavity_ray_pure):
+    from resectionlab.surgical_milling_contact_proposals import _axial_current_cells
+    engine, aperture, _, approach, plan = cavity_ray_case()
+    engine.state['removed'] = []  # Return to the genuine unacted source, not a fabricated cut.
+    result = propose(engine, approach, staging_plan=plan, max_examined_cells=1, max_contact_probes=36)
+    assert result['currentVerifiedRemovedACarriers'] == []
+    assert result['testedDrillContactProbes'] == result['reservedContactProbeSlots'] == 36
+    assert sum(r['reason'] == 'MISSING_CURRENT_CAVITY_CARRIER' for r in result['rejections']) == 27
+    selected, schedule = _axial_current_cells(engine, engine._cranial_access, approach, aperture,
+        2048, 2048, None, probe_slots=36)
+    assert len(selected) <= 56 and schedule['reservedContactProbeSlots'] == 2016
+    assert result['remainingOriginalACells'] == sorted(aperture) and not result['openingComplete']
+
+
+def test_cavity_ray_finds_four_corners_with_current_cavity_and_declared_dwell(cavity_ray_pure, monkeypatch):
+    engine, aperture, remaining, approach, plan = cavity_ray_case()
+    cavity_ray_geometry_stub(monkeypatch)
+    before = engine.snapshot()
+    result = propose(engine, approach, staging_plan=plan, max_contact_probes=2016)
+    assert {r['cell'] for r in result['contacts']} == remaining
+    assert result['testedDrillContactProbes'] == 144
+    assert result['reservedContactProbeSlots'] == 576  # Missing depth levels retain slots.
+    first = min(result['contacts'], key=lambda r: r['cell'])
+    assert first['carrierSourceCell'] == int(np.ravel_multi_index((46, 46, 63), engine.scene.shape))
+    assert np.allclose(first['drillPose']['position'], [45.625, 45.625, 62.5-np.sqrt(4-2*1.125**2)+.1])
+    assert [a['operation'] for a in first['actions']] == ['move', 'move', 'apply', 'apply', 'deactivate', 'move']
+    assert [a['duration'] for a in first['actions'][2:4]] == [30., 30.]
+    assert np.linalg.norm(np.subtract(first['drillPose']['position'], first['leadPose']['position'])) == pytest.approx(.20)
+    assert result['controllerDeficit'] and not result['openingComplete'] and not result['admittedOpening']
+    assert set(result['currentVerifiedRemovedACarriers']) == aperture-remaining
+    assert engine.snapshot() == before and result['nativeCalls'] == 0
+    cost = result['sourceGeometryCost']
+    assert cost['originalACurrentMembershipVisits'] == 324 and cost['cavityCoordinates'] == 320
+    assert cost['carrierDistancePairs'] == 3*320*4 and cost['cavityCentroidVisits'] == 320*4
+    assert cost['inverseKernelQueries'] % 64 == 0 and cost['bodyCapsuleQueries'] > 0
+    assert result['contentHash'] == proposal_hash(result)
+
+
+@pytest.mark.parametrize('cap,covered', [(1, 0), (28, 0), (29, 1), (36, 1), (144, 1)])
+def test_cavity_ray_partial_caps_retain_missing_slots_and_full_residual(cavity_ray_pure, monkeypatch, cap, covered):
+    engine, _, remaining, approach, plan = cavity_ray_case(); cavity_ray_geometry_stub(monkeypatch)
+    result = propose(engine, approach, staging_plan=plan, max_contact_probes=cap)
+    assert len(result['contacts']) == covered and result['reservedContactProbeSlots'] == cap
+    assert result['testedDrillContactProbes'] <= cap
+    assert set(result['remainingOriginalACells']) == remaining
+    assert len(result['nominalUncoveredCurrentACells']) == 4-covered
+    assert result['controllerDeficit'] and not result['admittedOpening']
+
+
+@pytest.mark.parametrize('kind', ['rigid', 'reflection', 'anisotropic'])
+def test_cavity_ray_affines_use_source_cells_and_unchanged_stock(cavity_ray_pure, monkeypatch, kind):
+    cavity_ray_geometry_stub(monkeypatch)
+    transform = np.eye(4); spacing = 1.
+    if kind == 'rigid':
+        transform[:3, :3] = Rotation.from_euler('xyz', [19., -31., 47.], degrees=True).as_matrix()
+        transform[:3, 3] = [101., -73., 28.]
+    elif kind == 'reflection':
+        transform[0, 0] = -1.
+    else:
+        spacing = 1.5
+    engine, _, remaining, approach, plan = cavity_ray_case(transform=transform, z_spacing=spacing)
+    result = propose(engine, approach, staging_plan=plan, max_contact_probes=2016)
+    assert {r['cell'] for r in result['contacts']} == remaining
+    assert result['algorithm']['overlapMm'] == .10 and result['algorithm']['activeCommandMm'] == .20
+    for row in result['contacts']:
+        p = engine.scene.inverse[:3, :3]@row['drillPose']['position']+engine.scene.inverse[:3, 3]
+        assert np.allclose(np.abs(p[:2]-48), [2.375, 2.375])
+    assert not engine.actions
+
+
+@pytest.mark.parametrize('material,protected', [('unknown', False), ('soft_tissue', False), ('soft_tissue', True)])
+def test_cavity_ray_passive_body_keeps_source_guards(cavity_ray_pure, monkeypatch, material, protected):
+    engine, _, _, approach, plan = cavity_ray_case(obstacle=(46, 46, 50), material=material, protected=protected)
+    cavity_ray_geometry_stub(monkeypatch)
+    result = propose(engine, approach, staging_plan=plan, max_contact_probes=36)
+    assert not result['contacts'] and result['controllerDeficit']
+    assert any('MATERIAL' in r['reason'] or 'PROTECTED' in r['reason'] for r in result['rejections'])
+
+
+@pytest.mark.parametrize('removed', [False, True])
+def test_cavity_ray_original_protection_cannot_be_waived_by_current_or_removed_A(cavity_ray_pure, monkeypatch, removed):
+    engine, aperture, remaining, approach, plan = cavity_ray_case()
+    cavity_ray_geometry_stub(monkeypatch)
+    cell = min(aperture-remaining) if removed else min(remaining)
+    engine._protected_ids = frozenset([cell])
+    with pytest.raises(ValueError, match='PROTECTED_STRUCTURE'):
+        propose(engine, approach, staging_plan=plan, max_contact_probes=36)
+    assert not engine.actions
+
+
+def test_cavity_ray_other_hand_and_retreat_cannot_use_nominal_removal(cavity_ray_pure, monkeypatch):
+    from resectionlab.surgical_milling_contact_proposals import _local_path_clearance
+    engine, _, _, approach, plan = cavity_ray_case(); cavity_ray_geometry_stub(monkeypatch)
+    row = propose(engine, approach, staging_plan=plan, max_contact_probes=36)['contacts'][0]
+    reason, _ = _local_path_clearance(engine, engine._cranial_access, 'cranial_drill',
+        [row['drillPose'], row['outsidePose']], 'left', allow_entry_retreat=True)
+    assert reason == 'MILLING_STAGING_CURRENT_MATERIAL_CONTACT'
+    engine.state['slots']['right'].update(position=row['leadPose']['position'], quaternion=[0., 0., 0., 1.])
+    engine.actions.append({'slot': 'right', 'operation': 'move'})  # Geometry obstacle, not valid history.
+    blocked = propose(engine, approach, staging_plan=plan, max_contact_probes=36)
+    assert not blocked['contacts'] and any('OTHER_HAND' in r['reason'] for r in blocked['rejections'])
+
+
+def test_cavity_ray_staging_cache_mode_and_cancel_are_bound(cavity_ray_pure, monkeypatch):
+    engine, _, _, approach, plan = cavity_ray_case(); cavity_ray_geometry_stub(monkeypatch)
+    with pytest.raises(ValueError, match='EXPLICIT_STAGING_DURATION'):
+        generate_milling_contact_proposals(engine, approach=approach, staging_plan=plan,
+            drill_seconds=30., suction_seconds=2., max_contact_probes=1)
+    with pytest.raises(ValueError, match='REQUIRE_STAGING_PLAN'):
+        propose(engine, approach, max_contact_probes=1)
+    stale = copy.deepcopy(approach); stale.pop('contactPoseFamily')
+    with pytest.raises(ValueError, match='AXIAL_SOURCE_CACHE_BINDING'):
+        propose(engine, stale, staging_plan=plan, max_contact_probes=1)
+    old = bind_milling_approach(engine, quaternion=approach['quaternion'],
+        outside_plane_point_ras_mm=approach['outsidePlanePointRasMm'], maximum_approach_mm=20.,
+        point_scheme='center_and_quarter_cell_corners', cell_schedule='axial_diverse_current_a')
+    with pytest.raises(ValueError, match='STAGING_SOURCE_BINDING'):
+        propose(engine, old, staging_plan=plan, max_contact_probes=1)
+    calls = []
+    def cancel():
+        calls.append(1)
+        if len(calls) == 15:
+            raise InterruptedError('pure cavity geometry cancel')
+    before = engine.snapshot()
+    with pytest.raises(InterruptedError, match='geometry cancel'):
+        propose(engine, approach, staging_plan=plan, max_contact_probes=36, check=cancel)
+    assert len(calls) == 15 and engine.snapshot() == before
+
+
+def test_cavity_ray_native_duration_controls_passive_lead_and_retreat_inflation(cavity_ray_pure, monkeypatch):
+    from resectionlab.surgical_milling_contact_proposals import _local_path_clearance
+    engine, aperture, _, approach, plan = cavity_ray_case(); cavity_ray_geometry_stub(monkeypatch)
+    coarse = propose(engine, approach, staging_plan=plan, max_contact_probes=36, staging_seconds=.1)
+    fine = propose(engine, approach, staging_plan=plan, max_contact_probes=36, staging_seconds=5.)
+    assert not coarse['contacts'] and len(fine['contacts']) == 1
+    assert coarse['sourceGeometryCost']['passiveLeadIntervals'] < fine['sourceGeometryCost']['passiveLeadIntervals']
+    row = fine['contacts'][0]
+    assert all(a['duration'] == 5. for a in row['actions'] if a['operation'] == 'move')
+    # This isolates geometry after a HYPOTHETICAL full cut, never valid native history.
+    engine.state['removed'] = sorted(aperture)
+    poses = [row['drillPose'], row['outsidePose']]
+    reason, count = _local_path_clearance(engine, engine._cranial_access, 'cranial_drill', poses, 'left',
+        allow_entry_retreat=True, native_duration=.1)
+    other, other_count = _local_path_clearance(engine, engine._cranial_access, 'cranial_drill', poses, 'left',
+        allow_entry_retreat=True, native_duration=5.)
+    assert reason == 'MILLING_STAGING_CURRENT_MATERIAL_CONTACT' and other is None
+    assert count == 20 and other_count == 50
+
+
+def test_cavity_ray_default_omits_new_binding_fields(cavity_ray_pure):
+    engine, _ = milling_shell()
+    kwargs = dict(quaternion=[0., 0., 0., 1.], outside_plane_point_ras_mm=[32., 32., 55.], maximum_approach_mm=10.)
+    first = bind_milling_approach(engine, **kwargs)
+    explicit = bind_milling_approach(engine, contact_pose_family='leading_touch', **kwargs)
+    from resectionlab.surgical_milling_contact_proposals import _approach_declaration
+    assert _approach_declaration(first) == _approach_declaration(explicit)
+    assert first['sourceOrderingHash'] == explicit['sourceOrderingHash']
+    assert 'contactPoseFamily' not in first and 'contactPoseFamily' not in explicit
+    for values in ({'contact_pose_family': None}, {'contact_pose_family': 'depth_cursor'},
+                   {'contact_pose_family': 'cavity_carried_rays'}):
+        with pytest.raises(ValueError, match='POSE_FAMILY'):
+            bind_milling_approach(engine, **kwargs, **values)

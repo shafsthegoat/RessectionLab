@@ -12,6 +12,11 @@ possibly posterior/inferior, rather than an established named-structure injury.
 No annotation/replay is available. Case-specific entry and actual skull removal
 are required; there is no blanket posterior ban.
 
+Current priority: integrate qualified alternative cranial openings into desktop
+Generate and complete patient opening → preparation → tumor work → withdrawal.
+Further isolated milling optimization is deferred unless it directly unblocks a
+patient. Skull-only completion never counts as patient-task success.
+
 ## Implemented behavior
 
 - Authoritative native protection survives overlapping target/material labels.
@@ -140,6 +145,28 @@ Evidence: `axial-current-a-active-columns-v2/`, `axial-known81-functional-v2/`,
 `axial-known81-scheduler-counterexample-v1/`, `axial-current-a-independent-review-v1/`
 and `axial-current-a-regression-v1/`.
 
+An opt-in `cavity_carried_rays` family now uses actually cleared original-A cells
+to propose deeper stock-drill contacts, with explicit passive durations and
+native-matched swept intervals. It requires staged axial/quarter mode; legacy
+programs remain exact. Source/guard/tool geometry and actual retreat checks stay
+authoritative. Final validation passes 28 focused pure controls, 19 search-dispatch
+tests, independent 38 selected tests plus 34 generated checks, and the full
+162-test legacy regression with one expected witness skip (478.43 s external).
+These overlapping scopes are not a sum of unique tests.
+
+One separate native regression reproduces the genuine 341-action/318-removed
+prefix of the failed 324-cell reference, then generates one contact from that
+current cavity. All six contact parts and final global withdrawal pass; two more
+bone cells are removed. Total cost is 353 actions/365 calls, 153.59 s external and
+214 MB sampled aggregate RSS, including exact source/runtime pre/post checks.
+Four aperture cells and all 320 mm³ of debris remain. This is local contact
+validation: the macro stops at its one-batch limit, with no completed opening,
+full-task/patient admission, suction or retry of the failed reference. Independent
+literal reproduction was not run; the user prioritized patient integration over
+further isolated milling work. Evidence: `cavity-carried-rays-implementation-v1/`,
+`cavity-carried-rays-independent-review-v1/`, `cavity-carried-rays-legacy-regression-v1/`
+and `cavity-carried-rays-genuine-prefix-regression-v1/`.
+
 The checked macro freezes a separate explicit bone budget, canonical source,
 charged ancestry, shared meter and deadline. Added target/nonbone removal is zero.
 Refreezing, resealed replacement limits or unlogged state cannot refund burdens.
@@ -205,7 +232,24 @@ do not expand old bounds/caps to admit failed routes. Detailed manifests/results
 
 Meningioma06/13 are previously exposed development sources, not new holdouts or
 fabricated TRAIN members. Sub01 was declared an unreserved development candidate
-before header/full transfer;02/03 remain header-only. Released sub01 CT-BRAIN,
+before header/full transfer. Sub02's three originals are now integrity-verified;
+03 remains header-only. Sub02's one transfer used 213,766,613 application bytes
+and 218.36 s external/79.45 MB aggregate RSS, with zero retries or scalar/model/
+native interpretation. Its fixed role predates image inspection. A separate
+97.49 s/577 MB source audit checks all 381 planes per modality; root and independent
+reviewer inspect all 20 predetermined sheets. Facial cuts, inferior truncation and
+uniform unavailable bands k0..8/317..380 remain UNKNOWN, never exterior air.
+Gross cross-modality appearance consistency is not measured registration.
+Anatomy labels, target and patient admission remain unqualified. Evidence:
+`craniotomy-v4/sub02-original-source-QA-v1/`,
+`sub02-root-source-visual-review-v1/` and `sub02-actual-source-visual-review-v1/`.
+One unchanged fixed producer now supplies a full sub02 proposal: 148,526 cells/
+18,565.75 mm³, two components retained, 185.90 s/3.31 GB aggregate RSS, zero
+retries/native calls and exact input/runtime checks. Source MRI/full-mask QA and
+independent critical containment remain pending; this output grants no route or
+patient admission. Evidence: `craniotomy-v4/sub02-fixed-meningioma-annotation-v1/`.
+Evidence: `craniotomy-v4/sub02-source-acquisition-v2/`; the unexecuted v1 and its
+post-observer clock-gap defect remain preserved. Released sub01 CT-BRAIN,
 CT-BONE and CE-T1W total 212,819,983 transferred bytes/209.05 s/55.8 MB RSS.
 ZIP-member/gzip CRCs, lengths, headers and observed SHA256s pass; publisher whole-
 archive MD5 was not measured. Original privacy cuts and every old mask/transform
@@ -221,13 +265,17 @@ and inside the broad inferior exclusion. Independent full probability/mask/ID/
 component/guard QA confirms every intersection in 56.43 s external/1.85 GB
 aggregate RSS, with all source/runtime hashes unchanged. All target cells have
 finite nonzero MRI support; none intersect padding. Root and independent reviewer
-inspected all three exact native-plane pages. The C-order median member selects axial k166 with only
-six target cells, limiting visual volume coverage; dense axial review remains a
-separate dependency. The complete proposal stays unreviewed and withheld, with
+inspected all three exact native-plane pages. Their sparse axial coverage led to
+a separate fixed all-52-plane supplement: all 60,338 IDs appear exactly once,
+90.16 s external/1.23 GB aggregate RSS, seven sheets independently inspected.
+The bulk outline follows the lower-central bright focus; small upper extensions
+over bright round/tubular signal retain unresolved tissue identity and boundary
+accuracy. No mask filtering follows. The complete proposal stays unreviewed and withheld, with
 no filtering, guard relaxation or route qualification. Evidence:
 `craniotomy-v4/sub01-fixed-meningioma-annotation-v1/` and
 `craniotomy-v4/sub01-target-derived-geometry-v1/`,
-`craniotomy-v4/sub01-independent-annotation-QA-v1/`.
+`craniotomy-v4/sub01-independent-annotation-QA-v1/` and
+`craniotomy-v4/sub01-dense-axial-annotation-QA-v1/`.
 
 Dense MRI source review and independent full-mask checks support broad inferior
 containers: full x/y,01 k0..240 and06/13 k0..226, with a separate assumed 8 mm
