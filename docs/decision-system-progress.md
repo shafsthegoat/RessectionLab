@@ -44,6 +44,12 @@ Skull-only results never count as patient-task success.
   cases require trusted source roles and actual reviewed critical coverage before
   Generate. A missing registry/qualification gives explicit blockers rather than
   falling back to an exposed-tissue planner. Generated controls stay non-patient.
+- A metadata-only candidate provenance API now joins explicitly configured trusted
+  declarations, all three acquired originals and current reservations/aliases.
+  It returns DEVELOPMENT_CANDIDATE, never TRAIN or annotation/task authority.
+  All136 focused role controls pass; a virtual descriptor joins the actual source02
+  catalog without image reads. The app registry remains unconfigured and bridge
+  gates are unchanged. Chronology is a trusted pinned declaration assertion.
 - Existing Case → Plan → Compare → Rehearse/edit controls show complete B/P/W,
   original-target credit/residuals, whole exit, unknowns and failed attempts.
   Stage-bound direct prefix replay keeps its existing refusal; canonical recorded
@@ -181,8 +187,13 @@ verified acquired image archive; model outputs below are proposals.
   six pass the frozen surface fit, three distinct entries receive full material
   profiles. All three fail complete R8 chart/support: earlier/later positive
   islands and nearest-versus-interpolated density disagreements remain. No A or
-  tool route is admitted. The other three fitted entries are budget-excluded,
-  not proven infeasible. Eleven fixed paired-CT source pages render from the
+  tool route is admitted. A separate57.186s/1.750GB cached study evaluates the
+  remaining06/07/12 frames without refitting. All three also fail complete material
+  qualification; full target/guards and every island remain intact. The required
+  chart has16/14/40 bad nodes respectively, including support failures. No A,
+  route or native action is produced. This exhausts the six eligible fits in the
+  frozen42-direction family, not all anatomical openings. Eleven fixed paired-CT
+  source pages render from the
   verified caches in42.054s/332MB, with padding explicitly UNKNOWN. Root and an
   independent reviewer view every page: central cranial bands are visible, while
   earlier/endpoint signals near the outer surface and separate intracranial
@@ -206,9 +217,10 @@ local AGENTS.md is committed.
 
 ## Next substantive dependencies
 
-1. Evaluate source02's remaining unchanged fitted directions and resolve source
-   tissue identity from the retained CT evidence. Preserve full target, protection,
-   unknowns and all failed windows; do not infer anatomical impossibility.
+1. Test a source-seeded component/table proposal for source02's actual calvarium,
+   reviewing exact seed cells and complete component geometry. Preserve all
+   other density as target/protected/collidable UNKNOWN; no largest-component
+   deletion, island skipping, guard change or anatomical promotion from threshold.
 2. Qualify actual calvarium, local critical/venous/dural and exterior data;
    resolve trusted developmental provenance without promoting a reserved case.
 3. Construct and compare genuinely different source-qualified opening/work/exit

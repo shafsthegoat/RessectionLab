@@ -132,13 +132,19 @@ def _registry_role(adapter):
             'declarationSha256': semantic_digest(proof), 'roleQualification': proof}
 
 
-def development_role(adapter, *, declarations_root):
+def development_role(adapter, *, declarations_root, candidate_registry_root=None):
     """Preserve the exact old path when any native mirror revision is declared.
 
     A broken/conflicting modern declaration never falls back to the registry.
     Older manifests use current trusted registry/acquisition bytes, not a role or
     self-sealed certificate attached by the caller. Nothing is persisted here.
+    An explicitly configured candidate registry can instead return the distinct
+    DEVELOPMENT_CANDIDATE role; callers must retain that qualification.
     """
+    from .surgical_development_candidates import development_candidate_role
+    candidate = development_candidate_role(adapter, registry_root=candidate_registry_root)
+    if candidate is not None:
+        return candidate
     series = adapter.get('sourceManifest', {}).get('series', [])
     if any(r.get('source_mirror_revision') is not None for r in series):
         from .surgical_staged_planning import require_staged_development
