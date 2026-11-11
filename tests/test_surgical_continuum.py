@@ -125,7 +125,9 @@ def held_engine(*, branches=(500.,), times=(.5,)):
 
 def test_continuum_patch_budget_refuses_instead_of_silently_moving_its_boundary():
     source = block(7)
-    source.properties['tissuePhysicsV2']['brain']['maxNodes'] = 10
+    properties = copy.deepcopy(source.properties)
+    properties['tissuePhysicsV2']['brain']['maxNodes'] = 10
+    source = SurgicalScene(source.labels, source.affine, source.regions, source.source, properties)
     e = SurgicalEngine(source); before = copy.deepcopy(e.state)
     c = int(np.ravel_multi_index((3, 3, 3), source.shape))
     with pytest.raises(ValueError, match='CONTINUUM_PATCH_TRUNCATED'):

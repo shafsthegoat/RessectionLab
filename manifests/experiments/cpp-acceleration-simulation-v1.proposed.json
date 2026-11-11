@@ -1,0 +1,1227 @@
+{
+  "schema": "resectionlab.cpp-acceleration-supplement-proposal.v1",
+  "status": "fixture-checked-unfrozen",
+  "preparedAt": "2026-11-11",
+  "prerequisite": "Current geometry/state/motion increment must first pass integrated checks and source, clean wheel and frozen delivery. Coordinator grants the sole heavyweight-job slot before any runs.",
+  "originalPlanningManifest": "manifests/experiments/cpp-acceleration-v1.json",
+  "originalPlanningManifestSha256": "f507080eb60f214fd4f050e1595d551bff6222b6fef6cad6d6f7b7a98abb0f67",
+  "originalContract": "The original planning workload, >=2x objective, regression gates and failures remain unchanged. These controls supplement the second profile and never replace that workload.",
+  "sourceCommitAtProposal": "b59983b1",
+  "referenceBasis": "After qualification, capture the current fully verified integrated CPP source/extension/build-manifest as an immutable pre-second-pass source outside tracked dirs. Use --supplemental --baseline-source CAPTURE/src --baseline-backend cpp to compare pre-pass CPP against final CPP. Also report current reference vs current CPP separately when relevant. Exact source commit, loaded binary/build identity and fixture source hash are recorded before optimization.",
+  "workloadFreezePolicy": "Literal source parameters/action sequences below are proposed from existing passing generated controls. First reference qualification must freeze result digests, available public attempt/committed-action counts and exact public traces, family inventory and any justified fixture correction before any supplementary optimization. Retain all attempted families and failure receipts. Do not tune actions, safety settings, budgets or input sizes after results for a performance claim.",
+  "noTraining": true,
+  "patientAssetsRequired": false,
+  "paidServicesRequired": false,
+  "threads": {
+    "native": 1,
+    "OPENBLAS_NUM_THREADS": 1,
+    "OMP_NUM_THREADS": 1,
+    "VECLIB_MAXIMUM_THREADS": 1,
+    "MKL_NUM_THREADS": 1,
+    "NUMEXPR_NUM_THREADS": 1,
+    "BLIS_NUM_THREADS": 1
+  },
+  "measurement": {
+    "pairedRepetitions": 5,
+    "warmupsPerBackend": 1,
+    "order": [
+      [
+        "reference",
+        "cpp"
+      ],
+      [
+        "cpp",
+        "reference"
+      ],
+      [
+        "reference",
+        "cpp"
+      ],
+      [
+        "cpp",
+        "reference"
+      ],
+      [
+        "reference",
+        "cpp"
+      ]
+    ],
+    "freshProcessPerSample": true,
+    "oneHeavyweightJob": true,
+    "processTreeRssSampleSeconds": 0.02,
+    "workerHardCapBytes": 1073741824,
+    "workerHardWallSeconds": 900,
+    "primaryTiming": "Whole fresh fixture/environment construction + reset + complete literal episode(s), including public action encoding/decoding where declared, rewards, observations, info, actual binding/conversion/copy costs and cleanup commands. Stop timing before comparison hashes, snapshot serialization/restore checks, output writes and attribution analysis.",
+    "separateAttribution": "One separate cProfile pass per complete suite after qualification; profiler results never enter paired samples. Family-level elapsed time is diagnostic; complete-suite/episode elapsed time is authoritative.",
+    "statistics": "All pairs/order, median/min/max/stdev/sample count, public attempts/episodes per second, pre-audit timed peak memory, full process-tree peak diagnostics, exact ordered requested actions/preview+step receipts/accepted history/Gym results and native backend counters. Supplement bare/Gym calls do not use TransitionMeter; do not call their requested attempt counts an actual physical microstep trace. Native substep call counts are available in separate cProfile attribution only. Original planner370-call trace remains unchanged. No p95/tail claim from five samples.",
+    "regressionLimit": "Within10% of original selected workload latency and peak memory; investigate failures independently. Keep original tiny-control fixed16MiB extension-load allowance separate from input-dependent allocation.",
+    "supplementarySpeedupTarget": "Report complete episode and complete simulation throughput honestly; select any additional native port only when the bounded profile shows material Python work and plausible end-to-end benefit. The existing planning2x target is unchanged.",
+    "counterSnapshot": "Snapshot backend identity/counters immediately after timed work and before goal/hash/restore correctness checks, so diagnostic native-copy calls do not inflate measured workload usage.",
+    "memoryReporting": "Primary supplementary memory regression compares process high-water immediately after timed work and before audit projection/restore/hash. Whole-process-tree peak including audit output allocation remains a diagnostic and must stay below the1GiB hardcap. Original planning memory rules are unchanged."
+  },
+  "exactComparison": {
+    "arrays": "Preserve ndarray dtype, shape, byte order and exact C-order bytes for every returned observation/action tensor. Preserve scalar float.hex() including signed zero; JSON conversion cannot silently reduce precision.",
+    "simulation": "Every requested action and returned complete receipt/status/reason/stateId, ordered accepted action/history chain, final full physical snapshot, source labels/affine/provenance and conservation/temperature/exposure/work ledgers. Supplementary direct/Gym episodes qualify exact available public action/receipt/history traces, not an uninstrumented claim of private physical-call accounting.",
+    "rl": "Initial reset observation/info and seed state; every encoded action, observation, reward, reward_terms, info, termination/truncation/cleanup/budget result; final measurements, complete episode/engine snapshot and source arrays. Restore an identical saved episode after timing and compare complete restored state, observations and RNG state.",
+    "tolerances": [],
+    "permittedIdentityDifferences": "Only already declared backend/build identities remain outside the physical comparison; enumerate any actual process-local identity path before ports. Do not generically drop metadata/hashes.",
+    "workAccounting": "Fixed literal public attempts including refusals and partial prefixes, separate public preview attempts, exact committed native action/history counts, and encoded Gym results. No retry-until-success, early-stop truncation or action coalescing. Do not insert timing hooks or monkeypatch production methods to infer private substeps. Existing original Generate TransitionMeter accounting remains exact and separate.",
+    "qualification": "Generated non-patient provenance throughout. Standard safety/protected membership and unsupported continuum/vascular RL holds remain. Do not enable RL on held research physics.",
+    "timingSeparation": "All production state/proof/semantic hashes remain endogenous and timed. Per-result typed-byte projection, equality hash, final snapshot/restore/metrics verification and report writes occur after timer and profiler stop, with auditProjectionAndRestoreSeconds and auditEqualityHashSeconds reported separately."
+  },
+  "families": {
+    "simulation-target-episode": {
+      "origin": "tests/test_surgical_rl_contract.py:test_target_removal_requires_withdrawal_before_success_and_cannot_repeat_reward and tests/test_cpp_independent_acceptance.py:RL_TRACE",
+      "fixture": {
+        "shape": [
+          24,
+          24,
+          20
+        ],
+        "affine": "identity",
+        "dtype": "uint16",
+        "labels": [
+          {
+            "slices": [
+              [
+                8,
+                11
+              ],
+              [
+                8,
+                11
+              ],
+              [
+                8,
+                11
+              ]
+            ],
+            "value": 1
+          }
+        ],
+        "regions": [
+          {
+            "id": 1,
+            "name": "Generated independent RL target",
+            "material": "tumor",
+            "target": true
+          }
+        ],
+        "source": {
+          "kind": "generated independent software acceptance control"
+        },
+        "properties": {
+          "tissuePhysicsV2": "unmodified default_profile() at frozen source commit"
+        }
+      },
+      "interface": "Fresh SurgicalEngine.step for each action; return all receipts. No RL wrapper in this family.",
+      "actions": [
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              9.0,
+              9.0,
+              9.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "exchange",
+          "duration": 0.1,
+          "instrument": "cusa"
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              8.0,
+              9.0,
+              -5.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "parameters": {
+            "radiusMm": 1.5
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 1.0,
+          "pose": {
+            "position": [
+              8.0,
+              9.0,
+              11.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 1.0
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              10.0,
+              9.0,
+              -5.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 1.0,
+          "pose": {
+            "position": [
+              10.0,
+              9.0,
+              11.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 1.0
+        }
+      ],
+      "expectedStructuralOutcome": "First malformed pose refuses atomically; target removal work and whole withdrawal occur; exact baseline outcome/counts frozen by first run.",
+      "validationNote": "First fixture qualification established that bare SurgicalEngine.step returns an atomic rejected receipt for the zero quaternion. No action or simulation setting changed. The initially hypothesized raised ValueError was a failed auditor expectation, retained in fixtures-v1.log/xml; auditors now assert the actual public refusal contract."
+    },
+    "simulation-drill-thermal": {
+      "origin": "tests/test_surgical_drilling_v2.py:test_public_drill_preview_partial_rejection_and_cooling_match_legacy",
+      "fixture": {
+        "shape": [
+          16,
+          16,
+          16
+        ],
+        "affine": "identity",
+        "dtype": "uint16",
+        "labels": [
+          {
+            "slices": [
+              [
+                4,
+                7
+              ],
+              [
+                4,
+                7
+              ],
+              [
+                8,
+                9
+              ]
+            ],
+            "value": 1
+          },
+          {
+            "voxel": [
+              5,
+              5,
+              6
+            ],
+            "value": 2
+          }
+        ],
+        "regions": [
+          {
+            "id": 1,
+            "name": "bone",
+            "material": "bone"
+          },
+          {
+            "id": 2,
+            "name": "target",
+            "material": "tumor",
+            "target": true
+          }
+        ],
+        "source": {
+          "kind": "explicit-thermal-parity-fixture"
+        },
+        "properties": {
+          "tissuePhysicsV2": "unmodified default_profile() at frozen source commit"
+        }
+      },
+      "interface": "Fresh SurgicalEngine; each fixed action receives public preview(include_view=False) followed by direct step; require exact preview endpoint parity and all outcomes.",
+      "actions": [
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.2,
+          "pose": {
+            "position": [
+              5.0,
+              5.0,
+              15.0
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "parameters": {
+            "radiusMm": 1.0,
+            "forceN": 0.0,
+            "rpm": 0.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              5.0,
+              5.0,
+              7.0
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 5.0,
+          "pose": {
+            "position": [
+              5.0,
+              5.0,
+              7.0
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "parameters": {
+            "forceN": 20.0,
+            "rpm": 80000.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "exchange",
+          "duration": 0.2,
+          "instrument": "cusa"
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.7,
+          "pose": {
+            "position": [
+              5.0,
+              5.0,
+              15.0
+            ],
+            "quaternion": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        },
+        {
+          "slot": "right",
+          "operation": "inspect",
+          "duration": 2.5
+        }
+      ],
+      "expectedStructuralOutcome": "Positive work-limited removal and thermal history; accepted/partial/rejected attempts retained; idle cooling occurs."
+    },
+    "simulation-cusa-v3": {
+      "origin": "tests/test_surgical_cusa_v3.py:test_public_motion_stops_at_tissue_and_persists_pending_contact_before_clearance",
+      "fixture": {
+        "shape": [
+          20,
+          20,
+          20
+        ],
+        "affine": "identity",
+        "dtype": "uint16",
+        "labels": [
+          {
+            "voxel": [
+              9,
+              9,
+              9
+            ],
+            "value": 1
+          }
+        ],
+        "regions": [
+          {
+            "id": 1,
+            "name": "Generated contact coupon",
+            "material": "tumor",
+            "target": true
+          }
+        ],
+        "source": {
+          "kind": "generated CUSA contact coupon; no acquired anatomy"
+        },
+        "properties": {
+          "cusaV3": "default_profile() with capacityMm3PerSecond=2.0, no tissuePhysicsV2"
+        }
+      },
+      "interface": "Fresh SurgicalEngine.step; fixed8 continuation attempts even after clearance (no dynamic loop bound).",
+      "actions": [
+        {
+          "slot": "left",
+          "operation": "exchange",
+          "duration": 0.1,
+          "instrument": "cusa"
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              9.0,
+              9.0,
+              3.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.05,
+          "pose": {
+            "position": [
+              9.0,
+              9.0,
+              11.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              9.0,
+              9.0,
+              11.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              9.0,
+              9.0,
+              11.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              9.0,
+              9.0,
+              11.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              9.0,
+              9.0,
+              11.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              9.0,
+              9.0,
+              11.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              9.0,
+              9.0,
+              11.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              9.0,
+              9.0,
+              11.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              9.0,
+              9.0,
+              11.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "deactivate",
+          "duration": 0.1
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.3,
+          "pose": {
+            "position": [
+              9.0,
+              9.0,
+              3.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        }
+      ],
+      "expectedStructuralOutcome": "Initial legitimate aspiration partial, persisted pending capacity, one source cell aspirated, cleanup. Conservation and exact endpoint history frozen before ports."
+    },
+    "simulation-vascular": {
+      "origin": "tests/test_surgical_vascular_graph.py:profile/engine and test_public_bipolar_geometry_compression_release_occlusion_export_and_replay",
+      "fixture": "Promote the existing8x5x5 generated three-node/two-edge RC graph, explicit source cells, tissuePhysicsV2/default profile, source coefficient text and graph assumptions into reusable fixture code without pytest imports; copy every existing numeric coefficient unchanged.",
+      "interface": "Fresh SurgicalEngine.step public bipolar compression/release/coagulation sequence. No RL admission.",
+      "actions": [
+        {
+          "slot": "left",
+          "operation": "configure",
+          "duration": 0.1,
+          "mechanicsRevision": 2
+        },
+        {
+          "slot": "left",
+          "operation": "exchange",
+          "duration": 0.1,
+          "instrument": "bipolar_forceps"
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              2.5,
+              1.0,
+              -4.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.5,
+            "forceN": 1.0,
+            "power": 0.0,
+            "depthMm": 1.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.5,
+          "pose": {
+            "position": [
+              2.5,
+              1.0,
+              1.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "deactivate",
+          "duration": 0.1
+        },
+        {
+          "slot": "left",
+          "operation": "inspect",
+          "duration": 0.3
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "parameters": {
+            "jawOpeningMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "parameters": {
+            "jawOpeningMm": 0.5,
+            "forceN": 0.0,
+            "power": 0.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 2.1,
+          "parameters": {
+            "power": 1.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1
+        }
+      ],
+      "expectedStructuralOutcome": "No unpowered heat or bleed, compression release, powered persistent occlusion and final withdrawal; local-graph consequences remain declared partial and global perfusion unknown."
+    },
+    "simulation-continuum": {
+      "origin": "resectionlab.generated_cpp_fixture.continuum_fixture(13), existing frozen stress; tests/test_surgical_continuum_capture.py native inspect tick pattern",
+      "fixture": "Reuse the exact declared13\u00b3 continuum_fixture(13):600Pa relaxation branch,0.5s time constant,0.01mm held displacement. Active element/DOF counts are frozen from this public-step family during fresh-process qualification; the original stress coupon128/840 figures describe its separate post-removal state.",
+      "initialization": "Explicit fixture-only hold, as in existing engineering controls. This is not evidence of a public clinical placement.",
+      "interface": "After fixture construction use public engine.step inspect on right hand to advance real physical substeps; existing frozen original stress remains the separate cut/removal/history-transfer control.",
+      "actions": [
+        {
+          "slot": "right",
+          "operation": "inspect",
+          "duration": 0.1
+        },
+        {
+          "slot": "right",
+          "operation": "inspect",
+          "duration": 0.2
+        },
+        {
+          "slot": "right",
+          "operation": "inspect",
+          "duration": 0.3
+        }
+      ],
+      "expectedStructuralOutcome": "Nonzero viscoelastic strain/exposure/dissipation and state progression; same topology/source/history ownership. No reward-policy qualification or invented tissue assumptions.",
+      "validationNote": "The fixture-only preinitialized hold is an engineering numeric state, not a replay-canonical zero-action source. Compare exact physical/numerical ownership fields and step receipts; do not demand ordinary engine.restore for this family. Full snapshot/restore/RNG checks apply to canonical RL families only."
+    },
+    "rl-success-episode": {
+      "origin": "tests/test_surgical_rl_contract.py and independently reproduced RL_TRACE",
+      "fixtureFamily": "simulation-target-episode",
+      "seed": 318,
+      "interface": "Fresh SurgicalRLEnv(reset seed318), encode_action + public Gym step on each action. Include all observations/rewards/info. No policy or optimizer.",
+      "config": "RLConfig(require_critical_coverage=False), all other defaults; this declared generated coverage exception matches existing tests and grants no patient qualification.",
+      "actions": [
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              9.0,
+              9.0,
+              9.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "exchange",
+          "duration": 0.1,
+          "instrument": "cusa"
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              8.0,
+              9.0,
+              -5.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "parameters": {
+            "radiusMm": 1.5
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 1.0,
+          "pose": {
+            "position": [
+              8.0,
+              9.0,
+              11.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 1.0
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              10.0,
+              9.0,
+              -5.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 1.0,
+          "pose": {
+            "position": [
+              10.0,
+              9.0,
+              11.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 1.0
+        }
+      ],
+      "expectedStructuralOutcome": "Finite complete episode, first invalid action penalty, incremental target reward without repeated credit, target_fraction_reached only after cleanup/withdrawal; exact encoded-path result qualified before ports."
+    },
+    "rl-protected-attempt-episode": {
+      "origin": "tests/test_cpp_independent_acceptance.py:RL_TRACE strict brainstem exclusion control",
+      "fixtureFamily": "simulation-target-episode",
+      "seed": 318,
+      "protection": {
+        "maskVoxel": [
+          9,
+          9,
+          8
+        ],
+        "structureId": "brainstem",
+        "clearanceMm": 1.0,
+        "strict": true,
+        "provenance": "Generated overlap-exclusion control; no acquired anatomy"
+      },
+      "config": "RLConfig(max_steps=4), all other defaults; the explicit protection supplies strict required coverage.",
+      "interface": "Fresh SurgicalRLEnv, encode_action + public Gym step; preserve complete four-attempt episode, no dynamic retries.",
+      "actions": [
+        {
+          "slot": "left",
+          "operation": "exchange",
+          "duration": 0.1,
+          "instrument": "cusa"
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              9.0,
+              9.0,
+              -5.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "parameters": {
+            "radiusMm": 0.5
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              9.0,
+              9.0,
+              9.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1
+        }
+      ],
+      "expectedStructuralOutcome": "Protected original source cell never removed; protected_damage_mm3=0; rejection/partial retained; complete declared attempt budget truncation unless an existing earlier safety termination occurs (qualify exact endpoint before ports)."
+    },
+    "rl-independent-instances": {
+      "role": "Complete bounded independent-environment throughput and ownership probe",
+      "interface": "Four freshly constructed independent copies of rl-success-episode, seeds318,319,320,321. Execute sequentially single-threaded in fixed environment-index/action-index order. No shared mutable scratch, no threads, no collapsed step charges.",
+      "episodeFamily": "rl-success-episode",
+      "seeds": [
+        318,
+        319,
+        320,
+        321
+      ],
+      "instances": 4,
+      "expectedStructuralOutcome": "Each complete episode independently matches its singleton fixed-seed receipt; source arrays and RNG/state ownership remain isolated. Compare aggregate wall/peak memory and episodes/sec including all four initializations/resets.",
+      "postTimingChecks": "Pairwise distinct RNGs, state dicts, removal lists, slot maps and slot records; no shared source label memory; identical physical final snapshot across fixed-action seeds. No mutation or extra episode in the timed work."
+    },
+    "simulation-vascular-wound": {
+      "origin": "tests/test_surgical_vascular_graph.py:test_public_unpowered_stump_compression_controls_bleed_only_while_held",
+      "fixtureFamily": "simulation-vascular",
+      "interface": "Fresh declared generated vascular graph; public scissors cut then unpowered bipolar compression, dwell, release, withdrawal. No RL admission.",
+      "actions": [
+        {
+          "slot": "left",
+          "operation": "configure",
+          "duration": 0.1,
+          "mechanicsRevision": 2
+        },
+        {
+          "slot": "left",
+          "operation": "exchange",
+          "duration": 0.1,
+          "instrument": "micro_scissors"
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              2.5,
+              1.0,
+              -4.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865476,
+              0.7071067811865476
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0,
+            "depthMm": 1.0,
+            "forceN": 0.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.5,
+          "pose": {
+            "position": [
+              2.5,
+              1.0,
+              1.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865476,
+              0.7071067811865476
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "deactivate",
+          "duration": 0.1
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1
+        },
+        {
+          "slot": "left",
+          "operation": "exchange",
+          "duration": 0.1,
+          "instrument": "bipolar_forceps"
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              2.5,
+              1.0,
+              -4.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.5,
+            "forceN": 1.0,
+            "power": 0.0,
+            "depthMm": 1.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.5,
+          "pose": {
+            "position": [
+              2.5,
+              1.0,
+              1.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "deactivate",
+          "duration": 0.1
+        },
+        {
+          "slot": "left",
+          "operation": "inspect",
+          "duration": 1.0
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.2,
+          "parameters": {
+            "jawOpeningMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1
+        }
+      ],
+      "qualificationRequired": "One cut edge and nonzero wound ports/generated/emitted fluid; positive evolving pressure-supported flow/storage, compressed contact while held and released bleed; all conservation and source ledgers exact.",
+      "preQualificationAdditionReason": "The original vascular compression/occlusion trace has no wound. This separate existing public cut/bleed control was added before any supplementary execution to exercise actual vascular/fluid updates; the original vascular family remains unchanged.",
+      "postTimingChecks": "Retained receipts prove emitted/generated bleeding does not increase from deactivate through held inspect, then increases on jaw release; final positive wound/emission and conservation checks also required."
+    }
+  },
+  "suitePlan": {
+    "simulation-steps": [
+      "simulation-target-episode",
+      "simulation-drill-thermal",
+      "simulation-cusa-v3",
+      "simulation-vascular",
+      "simulation-vascular-wound",
+      "simulation-continuum"
+    ],
+    "rl-episodes": [
+      "rl-success-episode",
+      "rl-protected-attempt-episode",
+      "rl-independent-instances"
+    ],
+    "reuse": "Extend existing scripts/benchmark_cpp_acceleration.py with explicitly selected supplement manifest/workload branches; preserve original defaults and comparison contract. Reuse its fresh-process, thread, paired-order, memory and receipt writer. No second benchmarking framework.",
+    "jobBound": "At most one initial reference qualification+one attribution profile per suite; if bounded execution fails, retain failure and fix only demonstrated fixture defects transparently before freezing. No repeated runs without changed hypothesis.",
+    "nextAction": "Coordinator grants a small qualification-test slot; qualify both complete fixed suites, freeze exact result digests and source/trace inventories, capture verified pre-pass CPP source+binary outside tracked dirs, then wait for packaged-increment acceptance before separate attribution/performance jobs. No native port before measured evidence."
+  },
+  "attributionPlan": {
+    "interpretedOrAllocationCandidates": [
+      "surgical_engine:_microstep_checkpoint/clone/_prepare_step repeated state copy",
+      "surgical_motion:swept_envelopes/envelopes repeated rotation object construction and crossings",
+      "surgical_continuum:voxel_mesh/assemble/_pack/_unpack/exposure_increment Python topology/history orchestration",
+      "surgical_drilling_v2 contact frontiers/thermal dictionary traversal",
+      "surgical_cusa_v3 capacity/pending-contact bookkeeping",
+      "surgical_vessels_v2 and surgical_vascular_graph field/bookkeeping and tick handoffs",
+      "surgical_rl_env:_observe local729-cell\u00d7two-hand Python loops/_measure/_info/encode_action/decode_action",
+      "repeated public steps/substeps and independent per-env overhead"
+    ],
+    "compiledWorkAlreadyPresent": [
+      "NumPy ufuncs/reductions/einsum and BLAS paths",
+      "SciPy sparse assembly/factorization/SuperLU and spatial Rotation/Slerp extension operations",
+      "Existing optional C idle/prefix helpers and the qualified C++ extension"
+    ],
+    "pytorch": "SurgicalRLEnv itself uses NumPy/Gym and no policy network. Report PyTorch as not executed unless an actual in-scope orchestration call uses it; do not invent training or replace compiled tensor operators merely because their caller is Python.",
+    "method": "Retain full cProfile raw entries, exclusive named-module stage totals and top inclusive call paths. Distinguish Python allocation/control loops from calls already handled by compiled libraries. Python caller cumulative time alone never proves interpreted computation. Inclusive categories overlap and never substitute for elapsed throughput.",
+    "nativeBoundary": "Record selected backend/build identity, scalar/batch invocation and primitive/item counts, fallback reasons, output sizes, copy/conversion inclusion, pool/thread settings and source scene identity."
+  },
+  "runnerImplementation": {
+    "module": "resectionlab.generated_cpp_supplement",
+    "runner": "scripts/benchmark_cpp_acceleration.py",
+    "suiteSelection": "--supplemental",
+    "qualification": "--mode qualify --freeze-supplement",
+    "profiling": "--mode profile --backend cpp",
+    "pairedCppBeforeAfter": "--baseline-source CAPTURE/src --baseline-backend cpp",
+    "originalDefaultsUnchanged": true,
+    "capturePrepassCpp": "--supplemental --capture-supplement-baseline CAPTURE; captures exact verified source, extension/build manifest, qualified workload manifest, source-file hashes and loaded binary identity. Capture must precede supplementary optimization."
+  },
+  "microbaselinePrefixes": [
+    {
+      "family": "simulation-drill-thermal",
+      "factory": "simulation_fixture",
+      "attemptPrefixLength": 3,
+      "interface": "Apply literal actions[:3] through engine.step; no fixture retuning."
+    },
+    {
+      "family": "simulation-cusa-v3",
+      "factory": "simulation_fixture",
+      "attemptPrefixLength": 4,
+      "interface": "Apply literal actions[:4] through engine.step; this retains pending aspiration/history."
+    },
+    {
+      "family": "rl-success-episode",
+      "factory": "rl_fixture",
+      "attemptPrefixLength": 4,
+      "interface": "reset(seed=318), then encode_action + env.step for literal actions[:4]. Use env.engine for actual acted metadata/state."
+    }
+  ],
+  "structuralQualificationPolicy": "Every fixed family must exercise its intended model before it can freeze: nonzero bone work/temperature/debris; CUSA progressive pending/contact and solid capacity; vascular flow/storage/compression/occlusion plus separate wound/emission; continuum active topology/nonzero gradient/history/exposure/dissipation; complete RL success/cleanup and protected attempt-budget truncation. Identical failures in both backends cannot qualify an unexercised area. Failures retain exact proposed traces and evidence; correct only demonstrated fixture defects with an explicit protocol note.",
+  "qualificationAttempts": [
+    {
+      "status": "failed-auditor-expectation",
+      "evidence": "outputs/cpp-acceleration-v1/supplement-qualification/fixtures-v1.log",
+      "checks": "2 failed/3 passed; test expected bare-engine ValueError but engine returned rejected receipt",
+      "correction": "Auditor/test expectation only; no literal trace, geometry, physics or objective change."
+    },
+    {
+      "status": "fixture-structural-checks-passed",
+      "backend": "reference",
+      "checks": "5 passed in4.40s",
+      "evidence": "outputs/cpp-acceleration-v1/supplement-qualification/fixtures-v2-reference.xml"
+    },
+    {
+      "status": "fixture-structural-checks-passed",
+      "backend": "cpp",
+      "checks": "5 passed in3.72s",
+      "evidence": "outputs/cpp-acceleration-v1/supplement-qualification/fixtures-v2-cpp.xml"
+    }
+  ],
+  "commands": {
+    "qualifyAndFreeze": "RESSECTIONLAB_NUMERICAL_BACKEND=reference PYTHONPATH=src .venv/bin/python scripts/benchmark_cpp_acceleration.py --supplemental --mode qualify --freeze-supplement --output outputs/cpp-acceleration-v1/supplement-qualify-v1",
+    "capturePrepassCpp": "RESSECTIONLAB_NUMERICAL_BACKEND=cpp PYTHONPATH=src .venv/bin/python scripts/benchmark_cpp_acceleration.py --supplemental --capture-supplement-baseline outputs/cpp-acceleration-v1/supplement-prepass-cpp",
+    "profileBothSupplementSuitesOnce": "PYTHONPATH=src .venv/bin/python scripts/benchmark_cpp_acceleration.py --supplemental --mode profile --backend cpp --output outputs/cpp-acceleration-v1/supplement-profile-v1",
+    "profileLatestPlanningOnce": "PYTHONPATH=src .venv/bin/python scripts/benchmark_cpp_acceleration.py --mode profile --backend cpp --workload generate --output outputs/cpp-acceleration-v1/latest-planning-profile-v1",
+    "compareCppBeforeAfter": "PYTHONPATH=src .venv/bin/python scripts/benchmark_cpp_acceleration.py --supplemental --baseline-source outputs/cpp-acceleration-v1/supplement-prepass-cpp/src --baseline-backend cpp --output outputs/cpp-acceleration-v1/supplement-before-after-v1",
+    "compareCurrentReferenceCpp": "PYTHONPATH=src .venv/bin/python scripts/benchmark_cpp_acceleration.py --supplemental --output outputs/cpp-acceleration-v1/supplement-reference-cpp-v1"
+  },
+  "boundedProfilePlan": {
+    "attributionJobs": [
+      {
+        "backend": "cpp",
+        "workload": "simulation-steps"
+      },
+      {
+        "backend": "cpp",
+        "workload": "rl-episodes"
+      },
+      {
+        "backend": "cpp",
+        "workload": "original generate"
+      }
+    ],
+    "numberOfJobs": 3,
+    "policy": "One separate attribution pass per complete supplement suite plus one latest CPP original Generate pass after package acceptance. No doubled reference profiles; exact qualification pair supplies reference behavior evidence. Stop and inspect profile before choosing any new port."
+  }
+}
