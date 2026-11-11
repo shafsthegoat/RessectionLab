@@ -193,9 +193,12 @@ def test_public_transaction_submits_multiple_cold_covers_and_matches_sequential(
         'pose': {'position': [0., 0., 3.], 'quaternion': [0., 0., 0., 1.]}}
     native_backend.reset_counters()
     result = actual.step(action)
-    usage = native_backend.backend_identity()['counters']
+    identity = native_backend.backend_identity()
+    usage = identity['counters']
     assert result['status'] == 'accepted'
-    assert usage['maxBatchItems'] >= 2 and usage['batchItems'] > 1
+    resident = identity.get('residentExecution', {})
+    assert (usage['maxBatchItems'] >= 2 and usage['batchItems'] > 1 or
+            resident.get('geometryBatchMaxItems', 0) >= 2 and resident.get('geometryBatchItems', 0) > 1)
     assert usage['maxPrimitiveCandidates'] <= native_backend.MAX_PRIMITIVES
     assert result == sequential.step(action)
     assert actual.snapshot() == sequential.snapshot()

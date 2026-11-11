@@ -1,14 +1,17 @@
 # C++ acceleration acceptance record
 
 The C++17 backend is integrated into the Python simulator and actual signed Mac
-application. The original **2× complete fresh planning target remains unmet**.
-Useful correct improvements are retained; kernel speedups do not complete that gate.
+application. The resident engine's frozen source comparison now exceeds the
+original **2× complete fresh planning target**; final acceptance remains pending
+a tiny-control regression, expanded physics/RL integration and packaged delivery.
 All controls are generated engineering cases. Patient validation is unavailable;
 the project still has zero completed patient tumor tasks and makes no clinical claim.
 
-The current numerical implementation is `2d9712f8`. Its complete 23-stage delivery
-and independent code review pass. The original performance objective remains
-incomplete. Earlier v6 results are retained below as history.
+The latest committed source increment is `4aab223e` (v11), pushed to
+`origin/shaf/decision-system-v1`. The last complete 23-stage packaged delivery is
+`2d9712f8` (v9); its evidence does not qualify the current working resident engine.
+Overall engineering acceptance remains incomplete.
+Earlier results are retained below as history.
 
 ## Top-three native pass v11 — verified source increment
 
@@ -49,15 +52,60 @@ The current request requires owned native working state and a complete native
 transaction, rather than helper bindings around Python state. Pure C++17 value,
 scene/state, motion, geometry, occupancy, cancellation and hashing foundations
 are being integrated with native effects, CUSA exact accounting, cranial stages,
-transport and the action executor. They are unbound and not an execution claim yet.
+transport and the action executor now execute through the existing extension.
 Python remains the outer API/RL/training boundary. Unsupported configurations
 must be classified before mutation; no retry after a partially mutated action.
 
-Root owns the executor and API integration. Effects, exact CUSA accounting,
-transport, cranial guards/stages and physical substeps have disjoint owners.
-Next: compile and connect one complete native Generate transaction, differential
-check complete generated traces, then extend remaining physics and RL execution.
-The original frozen benchmarks, performance target and delivery gates remain intact.
+The fixed Generate pilot executes all **370 evaluations / 7,820 physical substeps**
+in owned C++ state, including transactions, geometry, legacy effects, CUSA, cranial
+validation, native copies/rollback and canonical hashing. It makes zero calls to
+the former Python-backed trajectory/substep executors. Complete output digest is
+unchanged (`78246b9c…afcc3ec`). The first complete pilot was **6.098454 s**;
+profiling exposed repeated whole-program admission checks, not numerical work, as
+the remaining large cost. Reusing scoped stock-function admission reduced a
+second unprofiled pilot to **3.969723 s** (setup 0.192665 s, compute 3.777059 s,
+peak RSS 146,882,560 B). These are diagnostics, **not five-pair acceptance**.
+Raw receipts are `outputs/cpp-acceleration-v1/resident-generate-pilot{,-b}-v12.json`;
+the separate instrumented profile is `resident-generate-profile-v12`.
+
+Focused whole-action/reference, state/history/snapshot, ordering, clone,
+preview/cancellation and control-propagation checks initially passed **21 tests**.
+The broader integration run passed 208 checks and found metric-key ordering plus
+an obsolete batch-counter assertion; both were corrected. The affected **73 checks
+pass** (8.16 s), including real multi-item native substep batches and deformed
+occupancy controls. The reviewer also identified exceptional-input fallback gaps;
+they now detach before reference execution and do not catch computational errors.
+Numeric-image qualification has a separate **12-test** pass and preserves code,
+data and ABI identity across signing while checking the actual whole file live.
+Native state is authoritative; Python materializes detached values only at outer
+API/planning boundaries and imports external edits before the next transaction.
+Unknown callbacks and unsupported profiles decline before mutation.
+
+Five alternating frozen-source pairs now give **17.156064 → 4.274005 s** complete
+Generate, **4.01405×**, with exact output/work traces and passing memory gates.
+All 370 evaluations / 7,820 substeps remain native. Standard-physics refusal is
+1.389210 → 1.088771 s and stress is 0.973256 → 0.534825 s, also exact with passing
+latency/memory gates. The small control regresses **0.001792 → 0.002575 s**, failing
+the unchanged 10% gate; the larger native source list makes repeated Python
+file-stat qualification expensive. A native owned file-identity scan is the next
+measured fix. No samples were removed or repetitions extended. This is a working
+increment, not full acceptance; final source and supplementary RL/physics must be
+measured again. [Compact receipt](../artifacts/cpp-acceleration-v1/resident-working-increment-v12.json)
+retains all samples, variability, hashes, counters and the failed gate.
+
+Remaining work: fix the tiny-control regression and finish native physics/RL,
+five paired final planning/simulation/RL measurements, independent review, wheel/frozen/
+signed application delivery, and native execution of remaining physics families.
+V2 drilling/vessels/vascular/deformation and continuum headers are in progress;
+they are not yet admitted or a runtime claim. Exact SciPy LSODA/SuperLU C sources
+are being linked to public Accelerate BLAS/LAPACK rather than calling Python or
+replacing solvers. Root owns shared integration/build/API; native_kernels owns
+deformed occupancy/batches, hash_native_v11 the numeric provider, state_kernels
+continuum, motion_native_v11 position hooks, packaging_workflow signing profiles,
+and independent_review a bounded read-only audit. One heavy job runs at a time.
+The original frozen benchmarks, exactness, performance and delivery gates remain
+intact. Next: focused public integration checks, then paired source measurements
+while the remaining native numerical provider is connected.
 
 ## Executor increment v9 — integrated and verified
 

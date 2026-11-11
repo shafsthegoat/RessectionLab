@@ -14,7 +14,19 @@ from setuptools import setup
 
 ROOT = Path(__file__).parent
 SOURCES = ('geometry_native.cpp', 'state_native.hpp', 'executor_native.hpp',
-           'json_native.hpp', 'motion_native.hpp', 'validation_native.hpp')
+           'json_native.hpp', 'motion_native.hpp', 'validation_native.hpp',
+           'simulation_value_native.hpp', 'simulation_state_native.hpp',
+           'simulation_control_native.hpp', 'simulation_motion_native.hpp',
+           'simulation_geometry_native.hpp', 'simulation_tools_native.hpp',
+           'simulation_queries_native.hpp', 'simulation_hash_native.hpp',
+           'simulation_dyadic_native.hpp', 'simulation_cusa_native.hpp',
+           'simulation_effects_native.hpp', 'simulation_snapshot_native.hpp',
+           'simulation_protection_native.hpp', 'simulation_transport_native.hpp',
+           'simulation_cranial_native.hpp', 'simulation_guards_native.hpp',
+           'simulation_physical_native.hpp', 'simulation_domain_native.hpp',
+           'simulation_engine_native.hpp', 'simulation_bindings_native.hpp',
+           'simulation_stats_native.hpp', 'simulation_intset_native.hpp',
+           'simulation_admission_native.hpp', 'simulation_deformation_native.hpp')
 FLAGS = ['-O3', '-fno-fast-math', '-ffp-contract=off']
 
 

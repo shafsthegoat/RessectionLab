@@ -127,7 +127,8 @@ class TransitionMeter:
         def combined():
             self.check()
             caller_check()
-        return combined
+        from .surgical_native_control import combine_native_checks
+        return combine_native_checks(self.check, caller_check, combined)
 
     def _charge(self, kind, branch_id, before_state_id, before_actions):
         if self.calls >= self.max_calls:

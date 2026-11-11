@@ -321,6 +321,10 @@ def rebind_checkpoint_runtime(engine):
 
 
 def stage_readiness(engine):
+    if getattr(engine, '_resident', None) is not None:
+        from .surgical_native_engine import query
+        native = query(engine, 'cranialStages')
+        if native is not NotImplemented:return native
     contract=getattr(engine,'_cranial_stages',None)
     if contract is None:return None
     result={'schema':SCHEMA,'contractHash':contract.content_hash,'stateId':engine.state_id,'sceneId':engine.scene.identity,

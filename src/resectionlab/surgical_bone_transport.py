@@ -272,6 +272,10 @@ def aperture_evacuated(engine, contract=None):
 
 
 def describe(engine):
+    if getattr(engine, '_resident', None) is not None:
+        from .surgical_native_engine import query
+        native = query(engine, 'craniotomy')
+        if native is not NotImplemented:return native
     contract = engine._cranial_access
     from .surgical_milling import is_milling, milling_readiness
     if is_milling(contract):

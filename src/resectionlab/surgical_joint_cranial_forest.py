@@ -33,6 +33,10 @@ class OpeningComparisonBudget:
             raise ValueError('CRANIAL_COMPARISON_CLOCK_ORIGIN_REQUIRED')
         self._meters = {}
         self._exporting = False
+        if clock is time.monotonic:
+            from .surgical_native_control import derive_native_check
+            self.check = derive_native_check(check, self.check,
+                deadline=self.started_at + self.max_wall_seconds)
 
     @property
     def calls(self):

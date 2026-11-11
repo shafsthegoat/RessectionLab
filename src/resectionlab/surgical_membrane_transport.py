@@ -323,6 +323,10 @@ def extract(engine, key):
 
 
 def clearance(engine,contract=None):
+    if getattr(engine, '_resident', None) is not None and (contract is None or contract is engine._cranial_stages):
+        from .surgical_native_engine import query
+        native = query(engine, 'membrane')
+        if native is not NotImplemented:return native
     """Require actual native extraction ancestry, not a removed count/flag alone."""
     contract=_contract(engine) if contract is None else contract
     from .surgical_cranial_stages import source_partition_sets

@@ -688,7 +688,8 @@ def main():
                 for r in rows['cpp'])
             if workload == 'generate':
                 result['productionMultiItemBatchPassed'] = all(
-                    r['backend'].get('counters', {}).get('maxBatchItems', 0) > 1
+                    (r['backend'].get('counters', {}).get('maxBatchItems', 0) > 1 or
+                     r['backend'].get('residentExecution', {}).get('geometryBatchMaxItems', 0) > 1)
                     for r in rows['cpp'])
         receipt['workloads'][workload] = result
         receipt['passed'] &= (result['exactEquivalent'] and result['memoryHardCapPassed'] and

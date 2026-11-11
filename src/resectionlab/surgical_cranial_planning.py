@@ -223,6 +223,11 @@ def _proposer(planning):
 def compare_cranial_strategies(base_scene, record, *, check=lambda: None,
         progress=lambda *args: None, planning_horizon=5, beam_width=3, started_at=None):
     from .surgical_engine import SurgicalEngine
+    if check is _DEFAULT_NATIVE_CHECK:
+        from . import native_backend
+        if native_backend.cpp_enabled():
+            from .surgical_native_control import NativeCheck
+            check = NativeCheck(check, native_backend._module.SimulationStopToken())
     from .surgical_joint_cranial_exit import joint_exit_complete
     if started_at is None:
         started_at = time.monotonic()
@@ -450,3 +455,6 @@ def cranial_summary(report):
     public['cost'] = copy.deepcopy(report['cost'])
     public.update(admittedPatientTask=False, clinicalValidation='none')
     return public
+
+
+_DEFAULT_NATIVE_CHECK = compare_cranial_strategies.__kwdefaults__['check']

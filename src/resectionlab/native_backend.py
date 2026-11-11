@@ -110,7 +110,11 @@ def _load():
                               ('capsule_chunk', 'copy_builtin_json', 'segment_predicate', 'copy_engine_graph',
                                'segment_predicate_batch', 'run_trajectory', 'physical_substep', 'owned_digest',
                                'function_identities', 'occupancy_values', 'canonical_json_digest',
-                               'motion_envelopes', 'cranial_cells_partition'))
+                               'motion_envelopes', 'cranial_cells_partition',
+                               'simulation_create', 'simulation_identity', 'simulation_clone',
+                               'simulation_data', 'simulation_import', 'simulation_step',
+                               'simulation_prepare', 'simulation_query', 'simulation_json', 'simulation_stats',
+                               'simulation_json_guard'))
         if (sys.modules.get(_MODULE_NAME) is not module
                 or Path(module.__spec__.origin).resolve() != binary
                 or any(type(function) is not BuiltinFunctionType
@@ -143,6 +147,9 @@ def reset_counters():
                      physicalSubstepCalls=0, ownedDigestCalls=0, cacheIdentityCalls=0,
                      occupancyCalls=0, canonicalDigestCalls=0, canonicalDigestFallbackCalls=0,
                      motionEnvelopeCalls=0, cranialCellsCalls=0, batchSizes={})
+    _counters['residentActionCalls'] = 0
+    if _module is not None:
+        _module.simulation_stats(True)
 
 
 reset_counters()
@@ -192,6 +199,8 @@ def implementation_identity():
 def backend_identity():
     result = strict_live_identity()
     result['counters'] = json.loads(_canonical(_counters))
+    if _module is not None:
+        result['residentExecution'] = _module.simulation_stats()
     return result
 
 

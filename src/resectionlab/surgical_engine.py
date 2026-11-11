@@ -397,6 +397,40 @@ class SurgicalEngine:
     # value. This advertises optional copy omission to older replay adapters;
     # ordinary/public views retain the complete detached payload.
     _view_omit_fields = frozenset({'flapComponents'})
+
+    @property
+    def state(self):
+        if self.__dict__.get('_resident') is None:
+            return self.__dict__['state']
+        from .surgical_native_engine import field
+        return field(self, 'state')
+
+    @state.setter
+    def state(self, value):
+        self.__dict__['state'] = value
+
+    @property
+    def actions(self):
+        if self.__dict__.get('_resident') is None:
+            return self.__dict__['actions']
+        from .surgical_native_engine import field
+        return field(self, 'actions')
+
+    @actions.setter
+    def actions(self, value):
+        self.__dict__['actions'] = value
+
+    @property
+    def history(self):
+        if self.__dict__.get('_resident') is None:
+            return self.__dict__['history']
+        from .surgical_native_engine import field
+        return field(self, 'history')
+
+    @history.setter
+    def history(self, value):
+        self.__dict__['history'] = value
+
     def __init__(self, scene, *, protection=None, guard_config=None, cranial_stages=None):
         scene.require_cache_source()
         self.scene = scene
@@ -453,9 +487,14 @@ class SurgicalEngine:
         if cranial_stages is not None:
             from .surgical_cranial_stages import validate_stage_contract
             self._cranial_stages = validate_stage_contract(self, cranial_stages)
+        self._native_initial_state_id = self.state_id
 
     @property
     def state_id(self):
+        if self.__dict__.get('_resident') is not None:
+            from .surgical_native_engine import sync
+            if sync(self):
+                return native_backend._module.simulation_identity(self.__dict__['_resident'])
         return _owned_digest({'scene': self.scene.identity, 'state': self.state,
             **({'protectionContract': self._protection_contract['contentHash']} if self._protection_contract else {}),
             **({'cranialStagesContract': self._cranial_stages.content_hash} if self._cranial_stages is not None else {})})
@@ -482,6 +521,11 @@ class SurgicalEngine:
             'criticalMaxDisplacementMm': self.guard_config.critical_max_displacement_mm}
 
     def clone(self):
+        if self.__dict__.get('_resident') is not None:
+            from .surgical_native_engine import clone
+            result = clone(self)
+            if result is not None:
+                return result
         other = copy.copy(self)
         other.state = _copy_engine_data(self.state)
         other.actions = _copy_engine_data(self.actions)
@@ -498,6 +542,8 @@ class SurgicalEngine:
         Invoke the subclass clone hook on an empty-ancestry shell so observers
         and reward ledgers preserve their transactional behavior too.
         """
+        if self.__dict__.get('_resident') is not None:
+            return self.clone()
         shell = copy.copy(self)
         shell.actions, shell.history = [], []
         other = shell.clone()
@@ -708,6 +754,9 @@ class SurgicalEngine:
         candidate, result = self._prepare_step(action, check=check)
         if candidate is None:
             return result
+        if candidate.__dict__.get('_resident') is not None:
+            for name in ('state', 'actions', 'history'):
+                self.__dict__.pop(name, None)
         self.__dict__.update(candidate.__dict__)
         # Keep committed-step metrics after publication, including subclass hooks.
         return {**result, 'metrics': self.metrics()}
@@ -719,6 +768,10 @@ class SurgicalEngine:
         candidate; preview consumes it without changing the authoritative owner.
         """
         if check is not None: check()
+        from .surgical_native_engine import prepare
+        prepared = prepare(self, action, check)
+        if prepared is not NotImplemented:
+            return prepared
         from .surgical_source_inspection import inspection_only, REASON
         if self._source_inspection_only or inspection_only(self.scene):
             self.scene.require_cache_source()
@@ -1254,6 +1307,10 @@ class SurgicalEngine:
         return apply_effect(self, key, op, cells, p, q, dt)
 
     def metrics(self):
+        if self.__dict__.get('_resident') is not None:
+            from .surgical_native_engine import sync
+            if sync(self, 'metrics'):
+                return native_backend._module.simulation_data(self.__dict__['_resident'], 'metrics')
         from .surgical_physics import physics_metrics
         from .surgical_physics_v2 import metrics as v2_metrics
         by_label = {}
@@ -1349,6 +1406,10 @@ class SurgicalEngine:
             if row.get('status') == 'partial' and str(row.get('reason', '')).split(':', 1)[0] == 'PROTECTED_STRUCTURE')
 
     def snapshot(self):
+        if self.__dict__.get('_resident') is not None:
+            from .surgical_native_engine import sync
+            if sync(self):
+                return native_backend._module.simulation_data(self.__dict__['_resident'], 'snapshot')
         legacy = self._historical_guard_partials()
         return {'schema': SCHEMA, 'sceneId': self.scene.identity, 'actions': copy.deepcopy(self.actions), 'stateId': self.state_id,
                 **({'hardConstraintPolicy': 'atomic-protection-v1',

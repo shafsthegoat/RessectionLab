@@ -40,7 +40,9 @@ def trajectory_probe() -> dict:
     from . import native_backend, surgical_motion
     from .surgical_engine import SurgicalEngine
     from .surgical_scene import SurgicalScene
-    engine = SurgicalEngine(SurgicalScene(np.zeros((8, 8, 8), np.uint16), np.eye(4), [], {}, {}))
+    class ObservedEngine(SurgicalEngine):
+        """Unknown Python observers retain the callback-capable fallback."""
+    engine = ObservedEngine(SurgicalScene(np.zeros((8, 8, 8), np.uint16), np.eye(4), [], {}, {}))
     batches, scalar, substeps = [], [], []
     target = surgical_motion.Slerp.__call__.__code__
 
@@ -79,6 +81,31 @@ def trajectory_probe() -> dict:
             "physicalSubsteps": len(substeps), "elapsedSeconds": elapsed,
             "nativeTrajectoryCalls": native_trajectories, "nativePhysicalSubstepCalls": native_substeps,
             "quaternionsSha256": hashlib.sha256(b"".join(substeps)).hexdigest()}
+
+
+def resident_probe() -> dict:
+    """Exercise the unmodified public engine with no Python substep observers."""
+    import numpy as np
+    from . import native_backend
+    from .surgical_engine import SurgicalEngine
+    from .surgical_scene import SurgicalScene
+    engine = SurgicalEngine(SurgicalScene(np.zeros((8, 8, 8), np.uint16), np.eye(4), [], {}, {}))
+    before = native_backend.backend_identity()
+    receipt = engine.step({'slot':'left','operation':'inspect','duration':3.3})
+    after = native_backend.backend_identity()
+    native = native_backend.cpp_enabled()
+    resident = engine.__dict__.get('_resident') is not None
+    assert resident is native and receipt['status'] == 'accepted'
+    counts = {name: value - before.get('residentExecution', {}).get(name, 0)
+              for name, value in after.get('residentExecution', {}).items()}
+    assert counts.get('actions', 0) == (1 if native else 0)
+    assert counts.get('physicalSubsteps', 0) == (33 if native else 0)
+    if native:
+        assert counts['geometryBatchItems'] > counts['geometryBatches'] > 0
+        for name in ('trajectoryCalls', 'physicalSubstepCalls'):
+            assert after['counters'][name] == before['counters'][name]
+    return {'passed':True, 'nativeResident':resident, 'nativeCounts':counts,
+            'stateId':engine.state_id, 'elapsedSeconds':engine.state['elapsedSeconds']}
 
 
 def segment_batch_probe() -> dict:
@@ -189,6 +216,7 @@ def probe() -> dict:
     assert all(motion.values()), "Stock SciPy angular helpers did not qualify in this runtime"
     segment_batch = segment_batch_probe()
     trajectory = trajectory_probe()
+    resident = resident_probe()
     replay = replay_probe()
     proof_lifecycle = gc_proof_probe()
     return {"schema": "resectionlab-native-runtime-probe-v1", "passed": True,
@@ -203,6 +231,7 @@ def probe() -> dict:
             "replay": replay,
             "checkpoint": checkpoint,
             "trajectory": trajectory,
+            "resident": resident,
             "segmentBatch": segment_batch,
             "motionCache": motion,
             "proofLifecycle": proof_lifecycle,

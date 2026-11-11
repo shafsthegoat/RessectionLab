@@ -15,6 +15,7 @@
 #include "json_native.hpp"
 #include "motion_native.hpp"
 #include "validation_native.hpp"
+#include "simulation_bindings_native.hpp"
 
 namespace py = pybind11;
 namespace {
@@ -331,4 +332,5 @@ PYBIND11_MODULE(_geometry_cpp, module) {
     bind_canonical_json(module);
     bind_motion_native(module);
     bind_validation_native(module);
+    resectionlab::sim::boundary::bind(module);
 }

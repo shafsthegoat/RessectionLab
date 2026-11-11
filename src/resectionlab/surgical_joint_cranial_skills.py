@@ -288,6 +288,9 @@ def checked_joint_actions(engine, actions, *, limits, meter=None, check=None,
         if time.monotonic()-limits.frozen_at >= limits.max_wall_seconds:
             raise TimeoutError('Joint cranial wall bound since meter creation')
 
+    from .surgical_native_control import derive_native_check
+    guard = derive_native_check(check, guard, deadline=limits.frozen_at+limits.max_wall_seconds)
+
     def require_call():
         guard()
         if meter.calls >= limits.max_public_calls:
