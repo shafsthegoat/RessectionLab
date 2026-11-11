@@ -1,0 +1,2946 @@
+{
+  "schema": "resectionlab-residual-roi-v7",
+  "status": "Bounded ROI pass and final independent audit complete. All additional optimization candidates declined; unsafe effects trial reverted. Qualified v6 numerical source and byte-exact application restored. Original fixed 2x performance gate remains unmet.",
+  "baseCommit": "87c97490e32ada52cee0143de1d0c8f8347bf33f",
+  "numericalCodeCommit": "9da0ef8a4cc1d7ea877ce71bdac7c07571c3038a",
+  "goalComplete": false,
+  "productionChanges": "No numerical change retained. Restore original literal union expression; add finalizer regressions to the existing cranial test file and verifier.",
+  "priorIntegratedAcceptance": {
+    "path": "artifacts/cpp-acceleration-v1/predicate-batch-acceptance-v6.json",
+    "sha256": "284043b181b2f8fdc045e7ce014e311766fca2848b4c974ec549a9ff1698e86f"
+  },
+  "profilesReused": {
+    "planning": {
+      "path": "outputs/cpp-acceleration-v1/post-predicate-planning-profile-v6/generate-profile.json",
+      "sha256": "eb9db4cb01aa6dac5cf37557bd05d3b69474dfa2cba39bbcf33441eb264d901b"
+    },
+    "simulation-steps": {
+      "path": "outputs/cpp-acceleration-v1/post-predicate-supplement-profile-v6/simulation-steps-profile.json",
+      "sha256": "19d4fd492f4c5f48f0455b17e7cf1b39fc2eee073c8748b4d40105c6e7b611e8"
+    },
+    "rl-episodes": {
+      "path": "outputs/cpp-acceleration-v1/post-predicate-supplement-profile-v6/rl-episodes-profile.json",
+      "sha256": "e31349f340ed5d77c4bd593f14714e318cc92b12cd3f4c234b5fe7b9ad0a81be"
+    }
+  },
+  "profileScope": "Existing exact timed fixture/public computation profiles; audits excluded. Inclusive costs overlap. Attribution is not performance timing.",
+  "metadataIdentities": {
+    "assessment": {
+      "path": "outputs/cpp-acceleration-v1/metadata-identity-roi-v7/assessment.json",
+      "sha256": "53d28fcd0ba2564bb434f05ca8ae9acd93a674f0d963216af4181f3559a62f6e"
+    },
+    "decision": "Do not prototype or add a native binding.",
+    "profileSeamSeconds": 1.168285264,
+    "potentialAuditCallbacksPerGroup": 92,
+    "estimatedAddedPostcheckSeconds": 0.621707085,
+    "impossibleBestRemainingSpeedup": 1.0256145200743738,
+    "reason": "Audited metadata/id operations and live checks must remain. The 1.0256x optimistic profile ceiling precedes binding, qualification, output construction and numerical work; no complete adapter was measured."
+  },
+  "rotationApply": {
+    "assessment": {
+      "path": "outputs/cpp-acceleration-v1/rotation-apply-roi-v7/assessment.json",
+      "sha256": "452da8915a49474e305fe78cae9cb3366455184e19b7ad5e381641c41b9bf514"
+    },
+    "decision": "Keep compiled SciPy and independent owned endpoints; no new cache, formula or batching.",
+    "applyCalls": 248434,
+    "eligibleRevision2EnvelopeCalls": null,
+    "actualRevision2UsageConfirmed": true,
+    "existingGuardMicroseconds": 14.456647120073141,
+    "estimatedGrossSavingMicroseconds": 11.684906503429712,
+    "unattestedAllEligibleIdealSpeedup": 1.0245942690743235,
+    "unusedAxisApplyIdealSpeedup": 1.0020919888350672,
+    "reason": "Required admission costs exceed the estimated tiny local repeat saving. Aggregate profile and saved action counts do not establish eligible call frequency. No complete-helper speedup is claimed."
+  },
+  "occupancyMembership": {
+    "observation": {
+      "path": "outputs/cpp-acceleration-v1/occupancy-membership-observation-v7/result.json",
+      "sha256": "408fd51e388afb7b28610e003f74a03084f48bfc2691e3f271b7343b52b08404"
+    },
+    "captureScript": {
+      "path": "outputs/cpp-acceleration-v1/occupancy-membership-observation-v7/capture.py",
+      "sha256": "15660cce7b310064d87ec9fabbc8dcd0e64f0a1194d2540cfad27df38be4011c"
+    },
+    "exactDigest": "sha256:78246b9c6a0be381afc15cd1b6b2c6dac82442253669c6fe16cf374c1afcc3ec",
+    "observedLookupCalls": 68648,
+    "smallIntegerCalls": 67637,
+    "largeIntegerCalls": 927,
+    "emptyLedgerCalls": 84,
+    "reservoirSamples": 110,
+    "reservoirBuckets": 14,
+    "seed": 817,
+    "result": {
+      "path": "outputs/cpp-acceleration-v1/occupancy-membership-helper-v7/result.json",
+      "sha256": "ddc6bf2b49d1e262a25737954192990f0a2b176d10e58d20f403b66681a1b227"
+    },
+    "protocol": {
+      "path": "outputs/cpp-acceleration-v1/occupancy-membership-helper-v7/protocol.json",
+      "sha256": "69f2507ba9bc76500de76f6cd0c78b06f840304b29e0e215730c8949c22085bc"
+    },
+    "controls": {
+      "path": "outputs/cpp-acceleration-v1/occupancy-membership-helper-v7/controls.json",
+      "sha256": "c94628cb4095b2cbdae9e27262817aefc7ae1c03097d0f0b04b2f8346b2e214c"
+    },
+    "experiment": {
+      "path": "outputs/cpp-acceleration-v1/occupancy-membership-helper-v7/experiment.py",
+      "sha256": "4ab539d049e17f32a5dd19e2248a483aae9a9d62a17071de583f8dc58b8c2273"
+    },
+    "candidate": {
+      "path": "outputs/cpp-acceleration-v1/occupancy-membership-helper-v7/candidate.py",
+      "sha256": "d3de64c90b9490efdf27a7d38687acd052f780d876f997fcc789cd96dbf8dfc7"
+    },
+    "timingScope": "Single-process five alternating complete-lookup pairs; 5 warmup calls/sample/role, 500 timed calls/sample/role/pair; constructions outside. Actual bucket counts weight reservoir means. No integrated, RSS or fresh-process performance claim.",
+    "originalWeightedSamplesSeconds": [
+      0.35646213272599997,
+      0.3600494432775,
+      0.36568040344525005,
+      0.36436513602725,
+      0.36625517151174997
+    ],
+    "candidateWeightedSamplesSeconds": [
+      0.2967880148695,
+      0.300481868633,
+      0.300970555208,
+      0.30172224889325,
+      0.30314335739099996
+    ],
+    "originalWeightedMedianSeconds": 0.36436513602725,
+    "candidateWeightedMedianSeconds": 0.300970555208,
+    "medianSpeedup": 1.210633830194579,
+    "allFivePairsPositive": true,
+    "weightedSavingSeconds": 0.06339458081925003,
+    "savingDividedByAcceptedGenerateForScaleOnly": 0.005115034936348505,
+    "scopeLimit": "The approximately 63.4ms estimate is neither a bound nor a prediction of integrated improvement. No timings assigned to the 1011 uncaptured large/empty calls.",
+    "controlsPassed": 137,
+    "capturedInputsExact": 110,
+    "temporaryAllocationPeaks": [
+      {
+        "ids": 4096,
+        "admitted": true,
+        "temporaryAllocationPeakBytes": {
+          "original": 71392,
+          "candidate": 192912
+        }
+      },
+      {
+        "ids": 262144,
+        "admitted": false,
+        "temporaryAllocationPeakBytes": {
+          "original": 4458208,
+          "candidate": 4458208
+        }
+      }
+    ],
+    "isolatedOwnerDecision": "GO-isolated-only",
+    "productionDecision": "NO-GO",
+    "reason": "About 40 guard lines and 121520B additional peak temporary allocation at 4096 admitted IDs are poor return for the small modeled budget. New map/builtin/startup-hook admission is incomplete; adding it would consume more budget. Keep the original lazy generator and vectorized large-input route."
+  },
+  "effectsUnion": {
+    "isolatedResult": {
+      "path": "outputs/cpp-acceleration-v1/effects-union-roi-v7/result.json",
+      "sha256": "e86036460656206a62d53723306c7c08a2d5293300476cae45ac747c51f97f43"
+    },
+    "protocol": {
+      "path": "outputs/cpp-acceleration-v1/effects-union-roi-v7/protocol.json",
+      "sha256": "e19a24f923bb9d69f7526892517a3c329ad59a2d9e31c0e983e26ca49168cbb8"
+    },
+    "inputObservation": {
+      "path": "outputs/cpp-acceleration-v1/effects-union-roi-v7/inputs.json",
+      "sha256": "03203a6bd3e49346ce1d1bbf8563639184d868edc2ba02accc63d97e5e083550"
+    },
+    "captureScript": {
+      "path": "outputs/cpp-acceleration-v1/effects-union-roi-v7/capture.py",
+      "sha256": "edfa4e8a8127e37cbbbc254ed2689f85d09e839f53d4c67abfac0a10f897b270"
+    },
+    "experiment": {
+      "path": "outputs/cpp-acceleration-v1/effects-union-roi-v7/experiment.py",
+      "sha256": "6be9ca3f53914dd1c5e18be8c43e15079992be7373071a2c5e7b280d82c51263"
+    },
+    "candidate": {
+      "path": "outputs/cpp-acceleration-v1/effects-union-roi-v7/candidate.py",
+      "sha256": "7843f7d6ff00e7631dfa25e4d467b753b57e0b0b8f4a1860129ee65fe87b94c9"
+    },
+    "controls": {
+      "path": "outputs/cpp-acceleration-v1/effects-union-roi-v7/controls.json",
+      "sha256": "cbb89aac0bae5e9fa4c17b8218c4c3d4ca1a75899343d2f8752e6528963c18c7"
+    },
+    "originalWeightedSamplesSeconds": [
+      0.42195791196925003,
+      0.4222235945975,
+      0.42087374364425,
+      0.43500815097375,
+      0.42583391355800004
+    ],
+    "candidateWeightedSamplesSeconds": [
+      0.1614701759375,
+      0.16085818148125,
+      0.160052922405,
+      0.16730107670824998,
+      0.16129949682275
+    ],
+    "originalWeightedMedianSeconds": 0.4222235945975,
+    "candidateWeightedMedianSeconds": 0.16129949682275,
+    "medianSpeedup": 2.617637394501461,
+    "allFivePairsPositive": true,
+    "zeroEdgeMedianNanosecondsPerCall": {
+      "original": 8423.24975,
+      "candidate": 8236.12525
+    },
+    "memory": [
+      {
+        "edgeCounts": [
+          0,
+          0
+        ],
+        "fullCallTemporaryPeakBytes": {
+          "original": 35544,
+          "candidate": 35544
+        }
+      },
+      {
+        "edgeCounts": [
+          28,
+          0
+        ],
+        "fullCallTemporaryPeakBytes": {
+          "original": 66264,
+          "candidate": 66264
+        }
+      }
+    ],
+    "capturedInputsExact": 232,
+    "controlRecords": 20,
+    "scope": "Class-weighted reservoir full-helper estimate only; unchanged Generate observation is not performance evidence; no production admission claim.",
+    "isolatedDecision": "GO-isolated-only",
+    "productionDecision": "NO-GO; source reverted despite measured 1.024699x whole-planning gain.",
+    "initialReviewCorrection": "None memo sentinel collision fixed statically before timing; original union now precedes passive admission on each miss.",
+    "briefStopHistory": {
+      "path": "outputs/cpp-acceleration-v1/effects-union-roi-v7/production-trial-stopped.json",
+      "sha256": "5170b3ab3792bf7b150d24cd831359ed20df459ee58e0aca31ae63461c3883e6"
+    },
+    "latestUserSteering": "Finish this last approximately2% trial. Pursue further optimizations only with credible >=0.5 second complete-planning savings; otherwise stop.",
+    "integratedRetentionProtocol": {
+      "path": "outputs/cpp-acceleration-v1/effects-incremental-v7/protocol.json",
+      "sha256": "d8dbe27f9dfcaad90ada3287cd6d7dc9f2cfe0473180896c9e853dbca4395a3e"
+    },
+    "precedingCppCapture": {
+      "path": "outputs/cpp-acceleration-v1/effects-prepass-cpp-v7/capture.json",
+      "sha256": "acaa0668232ad1588487bb39ba95fc4009f6e5a915e612c8bb7892732efafe9e"
+    },
+    "integratedMedianPlanningSavingSeconds": 0.30109010345768183,
+    "reason": "Strong references delay finalizers for both exact preparation operands and memo-ineligible custom union temporaries. Weak memo registration is itself publicly observable and can change validation. Source-owner and hook qualification would add disproportionate complexity for ~0.30s measured saving."
+  },
+  "verificationReuse": "Restored numerical source is byte-identical to accepted v6; reuse existing v6 original/cumulative benchmarks, source/wheel/native/23-stage acceptance. Rejected v7 full delivery is historical only. Add two focused lifetime regressions, restore qualified v6 bundles and independently audit restoration.",
+  "limitations": [
+    "Original fixed 2x planning gate remains unmet.",
+    "Generated engineering fixtures only; unavailable patient validation and zero completed patient tumor tasks.",
+    "No PyTorch training run or training speedup claim."
+  ],
+  "independentReview": {
+    "raw": {
+      "path": "outputs/cpp-acceleration-v1/independent-roi-v7/review.json",
+      "sha256": "ff960aeb5b931e194a4225eb5a14f6f14937e8c7cdf416b29fd147338e90d12c"
+    },
+    "status": "FINAL: v7 candidates rejected; rollback and restored v6 delivery verified",
+    "engineeringDisposition": "GO restored accepted v6 numerical implementation plus two lifetime regressions; NO-GO all additional v7 production candidates",
+    "reviewedSnapshot": {
+      "path": "outputs/cpp-acceleration-v1/independent-roi-v7/coordinator-receipt-reviewed-snapshot.json",
+      "sha256": "7b0d9a81be58626c745109707214d1e8dbb11c69759edc580c08ac3327f9ddb2",
+      "matchesCurrentTrackedArtifactBeforeAnnotation": true,
+      "referencedFilesHashesVerified": 35,
+      "docPath": "outputs/cpp-acceleration-v1/independent-roi-v7/coordinator-doc-reviewed-snapshot.md",
+      "docSha256": "4a7c1e3808e5e2c2406abea8cdddf447ee96af98e449d089bb928e4ef4616a13",
+      "cycleAvoidance": "Snapshot frozen before its independent review pointer/status annotation; no hash of future annotated owner artifact is claimed"
+    },
+    "original2xGateUnmet": true,
+    "noUnresolvedProductionDefects": true
+  },
+  "nativeCodeUnchangedFrom": "9da0ef8a4cc1d7ea877ce71bdac7c07571c3038a",
+  "delivery": {
+    "restoreReceipt": {
+      "path": "testcases/outputs/cpp-v6-restored-verification-v8/restore-receipt.json",
+      "sha256": "6975d757ac68fd69af3eddec29b5678a226e5da1e7ecadbc49c659f412f11009"
+    },
+    "passed": true,
+    "byteExactRestoration": true,
+    "identities": {
+      "engineSha256": "f4f3179c61e229492e2c1817e3265d492954504b39bed0cb23ff23862ea5b47c",
+      "codeDirectoryHash": "308f8caf17c0eb41fc043520a2e8bebc52fb4a5a",
+      "sourceDigest": "c58b4a210b9062147f671a0033b6e26d2d65f53d64de0f854b106e65556ede46",
+      "archiveSha256": "73636b356c92bc4f774ceb973e7263010ece87b41fe6770cd019c7808bd38db7",
+      "nativeSha256": "f463eab21ed9a06121e8d9e6b251268bedce1ee21ffaa6c674d011425165fa35"
+    },
+    "treeCounts": {
+      "distribution": {
+        "matched": true,
+        "entries": 4916,
+        "regularFiles": 3650,
+        "symlinks": 41,
+        "bytes": 1170494903,
+        "manifestSha256": "3b2822749a5511bea5cbecf0cd543e0f32a9d2667234b5e012e3bd69748c83c1"
+      },
+      "standalone-engine": {
+        "matched": true,
+        "entries": 3673,
+        "regularFiles": 3076,
+        "symlinks": 27,
+        "bytes": 810834229,
+        "manifestSha256": "df1ac8e06e4b40b2f4eab2d940309505723fb15dd9154ae9e714805f8bc1b298"
+      },
+      "standalone-notices": {
+        "matched": true,
+        "entries": 525,
+        "regularFiles": 230,
+        "symlinks": 0,
+        "bytes": 4115514,
+        "manifestSha256": "5619f0ea9a3cac7a3116b0ba0e58ecbfc03443f8b822a338820d69e6e6b55c52"
+      }
+    },
+    "runtimeEnvironments": [
+      "source",
+      "preserved-v6-wheel",
+      "restored-standalone",
+      "restored-signed-app"
+    ],
+    "variantsPerRuntime": 5,
+    "actualSignedColdOpens": [
+      "original-v6-cpp",
+      "original-v6-reference"
+    ],
+    "coldPlanningCommands": 0,
+    "fullSnapshotsExact": true,
+    "strictSignaturePassed": true,
+    "rejectedBundlesPreserved": true,
+    "newBuildPerformed": false,
+    "newOriginalCumulativeComparisonPerformed": false,
+    "reuse": "Accepted v6 current numerical source/wheel/23-stage/common-flow/original and cumulative benchmark evidence remains unchanged after exact rollback."
+  },
+  "remainingOptimizationPolicy": {
+    "userCutoffSeconds": 0.5,
+    "scope": "Finish the permitted last approximately2% increment, then require credible >=0.5s whole-planning savings for any new optimization.",
+    "decision": "No further port justified. Stop new optimization after rollback verification and push; original 2x objective remains incomplete.",
+    "targetNotWaived": "Original fixed 2x performance gate remains unmet until independently measured otherwise."
+  },
+  "rejectedTrialCommit": "f533cb6dbc6c151eaa4029db278c8f0e04251a58",
+  "rejectedMeasuredTrial": {
+    "predeclaredProtocol": {
+      "path": "outputs/cpp-acceleration-v1/effects-incremental-v7/protocol.json",
+      "sha256": "d8dbe27f9dfcaad90ada3287cd6d7dc9f2cfe0473180896c9e853dbca4395a3e"
+    },
+    "sourceSnapshot": {
+      "path": "outputs/cpp-acceleration-v1/effects-incremental-v7/source-snapshot-final.json",
+      "sha256": "9520a1f1d8ed2d8a132747313e8e37c2d4d9c1815ba203100e0ad1b0d47b63c5"
+    },
+    "planningRaw": {
+      "path": "outputs/cpp-acceleration-v1/effects-incremental-v7/summary.json",
+      "sha256": "17d86ba6cc936d5d8e02579cc32f40a3a2b72d483110c4839fc4555095a38529"
+    },
+    "planning": {
+      "schema": "resectionlab-fixed-generate-increment-v7",
+      "status": "complete",
+      "purpose": "Separate immediately-prior CPP comparison; does not replace the original baseline,2x target,or manifests.",
+      "protocol": {
+        "workload": "generate",
+        "pairedRepetitions": 10,
+        "alternatingOrder": true,
+        "warmupsPerRole": 1,
+        "freshProcess": true,
+        "threads": 1,
+        "profile": false,
+        "retentionCriteria": "Exact frozen outcomes and physical work,memory/hardcaps,and positive median gain plus lower95%paired bootstrap geometric speedup>1. No posthoc repeat extension.",
+        "bootstrap": {
+          "method": "paired bootstrap of mean log(before/after)",
+          "seed": 817,
+          "resamples": 10000,
+          "percentiles": [
+            2.5,
+            97.5
+          ]
+        }
+      },
+      "scriptSha256": "f2c25c2e0b3a35946cd127710f7ef652ae5c040ec06eb7016a59df5dcb70d697",
+      "manifestSha256": "f507080eb60f214fd4f050e1595d551bff6222b6fef6cad6d6f7b7a98abb0f67",
+      "roles": {
+        "reference": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/effects-prepass-cpp-v7/src",
+        "cpp": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src"
+      },
+      "selection": {
+        "reference": "cpp",
+        "cpp": "cpp"
+      },
+      "pairs": [
+        {
+          "index": 0,
+          "order": [
+            "reference",
+            "cpp"
+          ]
+        },
+        {
+          "index": 1,
+          "order": [
+            "cpp",
+            "reference"
+          ]
+        },
+        {
+          "index": 2,
+          "order": [
+            "reference",
+            "cpp"
+          ]
+        },
+        {
+          "index": 3,
+          "order": [
+            "cpp",
+            "reference"
+          ]
+        },
+        {
+          "index": 4,
+          "order": [
+            "reference",
+            "cpp"
+          ]
+        },
+        {
+          "index": 5,
+          "order": [
+            "cpp",
+            "reference"
+          ]
+        },
+        {
+          "index": 6,
+          "order": [
+            "reference",
+            "cpp"
+          ]
+        },
+        {
+          "index": 7,
+          "order": [
+            "cpp",
+            "reference"
+          ]
+        },
+        {
+          "index": 8,
+          "order": [
+            "reference",
+            "cpp"
+          ]
+        },
+        {
+          "index": 9,
+          "order": [
+            "cpp",
+            "reference"
+          ]
+        }
+      ],
+      "backends": {
+        "reference": {
+          "medianSeconds": 12.49130081248586,
+          "minSeconds": 12.114103915984742,
+          "maxSeconds": 12.63953824993223,
+          "stdevSeconds": 0.15278284911832987,
+          "sampleCount": 10,
+          "samplesSeconds": [
+            12.114103915984742,
+            12.63953824993223,
+            12.341410458029713,
+            12.432413708011154,
+            12.493338165979367,
+            12.456284667016007,
+            12.588590333994944,
+            12.557751832995564,
+            12.58773808402475,
+            12.489263458992355
+          ],
+          "medianPeakRssBytes": 141942784.0,
+          "peakRssBytes": 142901248
+        },
+        "cpp": {
+          "medianSeconds": 12.190210709028179,
+          "minSeconds": 11.888346125022508,
+          "maxSeconds": 12.413865374983288,
+          "stdevSeconds": 0.16956628690765943,
+          "sampleCount": 10,
+          "samplesSeconds": [
+            11.888346125022508,
+            11.941416416026186,
+            12.282727958983742,
+            12.036656124982983,
+            12.220912751043215,
+            12.159508667013142,
+            12.338507290987764,
+            12.413865374983288,
+            12.238215251010843,
+            12.128119083994534
+          ],
+          "medianPeakRssBytes": 142163968.0,
+          "peakRssBytes": 144244736
+        }
+      },
+      "speedup": 1.0246993354458338,
+      "pairedGeometricSpeedup": 1.0251099434387865,
+      "pairedBootstrap95PercentSpeedup": [
+        1.0175673711440991,
+        1.0343411659213846
+      ],
+      "exactEquivalent": true,
+      "memoryRegressionPassed": true,
+      "improvementSupported": true
+    },
+    "simulationRlRaw": {
+      "path": "outputs/cpp-acceleration-v1/effects-supplement-incremental-v7/summary.json",
+      "sha256": "b4f030cc385f03729e14051efb63c4bcbee9001ea35d8b9c670ca96294ada946"
+    },
+    "simulationRl": {
+      "manifestSha256": "7c4eb89e4b1061f2d3ed08d39c53dc1396f549c93b842e8b0dc4c7b157cd177a",
+      "manifest": {
+        "schema": "resectionlab.cpp-acceleration-supplement.v1",
+        "status": "qualified-workloads-frozen",
+        "preparedAt": "2026-11-11",
+        "prerequisite": "Current geometry/state/motion increment must first pass integrated checks and source, clean wheel and frozen delivery. Coordinator grants the sole heavyweight-job slot before any runs.",
+        "originalPlanningManifest": "manifests/experiments/cpp-acceleration-v1.json",
+        "originalPlanningManifestSha256": "f507080eb60f214fd4f050e1595d551bff6222b6fef6cad6d6f7b7a98abb0f67",
+        "originalContract": "The original planning workload, >=2x objective, regression gates and failures remain unchanged. These controls supplement the second profile and never replace that workload.",
+        "sourceCommitAtProposal": "b59983b1",
+        "referenceBasis": "After qualification, capture the current fully verified integrated CPP source/extension/build-manifest as an immutable pre-second-pass source outside tracked dirs. Use --supplemental --baseline-source CAPTURE/src --baseline-backend cpp to compare pre-pass CPP against final CPP. Also report current reference vs current CPP separately when relevant. Exact source commit, loaded binary/build identity and fixture source hash are recorded before optimization.",
+        "workloadFreezePolicy": "Literal source parameters/action sequences below are proposed from existing passing generated controls. First reference qualification must freeze result digests, available public attempt/committed-action counts and exact public traces, family inventory and any justified fixture correction before any supplementary optimization. Retain all attempted families and failure receipts. Do not tune actions, safety settings, budgets or input sizes after results for a performance claim.",
+        "noTraining": true,
+        "patientAssetsRequired": false,
+        "paidServicesRequired": false,
+        "threads": {
+          "native": 1,
+          "OPENBLAS_NUM_THREADS": 1,
+          "OMP_NUM_THREADS": 1,
+          "VECLIB_MAXIMUM_THREADS": 1,
+          "MKL_NUM_THREADS": 1,
+          "NUMEXPR_NUM_THREADS": 1,
+          "BLIS_NUM_THREADS": 1
+        },
+        "measurement": {
+          "pairedRepetitions": 5,
+          "warmupsPerBackend": 1,
+          "order": [
+            [
+              "reference",
+              "cpp"
+            ],
+            [
+              "cpp",
+              "reference"
+            ],
+            [
+              "reference",
+              "cpp"
+            ],
+            [
+              "cpp",
+              "reference"
+            ],
+            [
+              "reference",
+              "cpp"
+            ]
+          ],
+          "freshProcessPerSample": true,
+          "oneHeavyweightJob": true,
+          "processTreeRssSampleSeconds": 0.02,
+          "workerHardCapBytes": 1073741824,
+          "workerHardWallSeconds": 900,
+          "primaryTiming": "Whole fresh fixture/environment construction + reset + complete literal episode(s), including public action encoding/decoding where declared, rewards, observations, info, actual binding/conversion/copy costs and cleanup commands. Stop timing before comparison hashes, snapshot serialization/restore checks, output writes and attribution analysis.",
+          "separateAttribution": "One separate cProfile pass per complete suite after qualification; profiler results never enter paired samples. Family-level elapsed time is diagnostic; complete-suite/episode elapsed time is authoritative.",
+          "statistics": "All pairs/order, median/min/max/stdev/sample count, public attempts/episodes per second, pre-audit timed peak memory, full process-tree peak diagnostics, exact ordered requested actions/preview+step receipts/accepted history/Gym results and native backend counters. Supplement bare/Gym calls do not use TransitionMeter; do not call their requested attempt counts an actual physical microstep trace. Native substep call counts are available in separate cProfile attribution only. Original planner370-call trace remains unchanged. No p95/tail claim from five samples.",
+          "regressionLimit": "Within10% of original selected workload latency and peak memory; investigate failures independently. Keep original tiny-control fixed16MiB extension-load allowance separate from input-dependent allocation.",
+          "supplementarySpeedupTarget": "Report complete episode and complete simulation throughput honestly; select any additional native port only when the bounded profile shows material Python work and plausible end-to-end benefit. The existing planning2x target is unchanged.",
+          "counterSnapshot": "Snapshot backend identity/counters immediately after timed work and before goal/hash/restore correctness checks, so diagnostic native-copy calls do not inflate measured workload usage.",
+          "memoryReporting": "Primary supplementary memory regression compares process high-water immediately after timed work and before audit projection/restore/hash. Whole-process-tree peak including audit output allocation remains a diagnostic and must stay below the1GiB hardcap. Original planning memory rules are unchanged."
+        },
+        "exactComparison": {
+          "arrays": "Preserve ndarray dtype, shape, byte order and exact C-order bytes for every returned observation/action tensor. Preserve scalar float.hex() including signed zero; JSON conversion cannot silently reduce precision.",
+          "simulation": "Every requested action and returned complete receipt/status/reason/stateId, ordered accepted action/history chain, final full physical snapshot, source labels/affine/provenance and conservation/temperature/exposure/work ledgers. Supplementary direct/Gym episodes qualify exact available public action/receipt/history traces, not an uninstrumented claim of private physical-call accounting.",
+          "rl": "Initial reset observation/info and seed state; every encoded action, observation, reward, reward_terms, info, termination/truncation/cleanup/budget result; final measurements, complete episode/engine snapshot and source arrays. Restore an identical saved episode after timing and compare complete restored state, observations and RNG state.",
+          "tolerances": [],
+          "permittedIdentityDifferences": "Only already declared backend/build identities remain outside the physical comparison; enumerate any actual process-local identity path before ports. Do not generically drop metadata/hashes.",
+          "workAccounting": "Fixed literal public attempts including refusals and partial prefixes, separate public preview attempts, exact committed native action/history counts, and encoded Gym results. No retry-until-success, early-stop truncation or action coalescing. Do not insert timing hooks or monkeypatch production methods to infer private substeps. Existing original Generate TransitionMeter accounting remains exact and separate.",
+          "qualification": "Generated non-patient provenance throughout. Standard safety/protected membership and unsupported continuum/vascular RL holds remain. Do not enable RL on held research physics.",
+          "timingSeparation": "All production state/proof/semantic hashes remain endogenous and timed. Per-result typed-byte projection, equality hash, final snapshot/restore/metrics verification and report writes occur after timer and profiler stop, with auditProjectionAndRestoreSeconds and auditEqualityHashSeconds reported separately."
+        },
+        "families": {
+          "simulation-target-episode": {
+            "origin": "tests/test_surgical_rl_contract.py:test_target_removal_requires_withdrawal_before_success_and_cannot_repeat_reward and tests/test_cpp_independent_acceptance.py:RL_TRACE",
+            "fixture": {
+              "shape": [
+                24,
+                24,
+                20
+              ],
+              "affine": "identity",
+              "dtype": "uint16",
+              "labels": [
+                {
+                  "slices": [
+                    [
+                      8,
+                      11
+                    ],
+                    [
+                      8,
+                      11
+                    ],
+                    [
+                      8,
+                      11
+                    ]
+                  ],
+                  "value": 1
+                }
+              ],
+              "regions": [
+                {
+                  "id": 1,
+                  "name": "Generated independent RL target",
+                  "material": "tumor",
+                  "target": true
+                }
+              ],
+              "source": {
+                "kind": "generated independent software acceptance control"
+              },
+              "properties": {
+                "tissuePhysicsV2": "unmodified default_profile() at frozen source commit"
+              }
+            },
+            "interface": "Fresh SurgicalEngine.step for each action; return all receipts. No RL wrapper in this family.",
+            "actions": [
+              {
+                "slot": "left",
+                "operation": "place",
+                "duration": 0.1,
+                "pose": {
+                  "position": [
+                    9.0,
+                    9.0,
+                    9.0
+                  ],
+                  "quaternion": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0
+                  ]
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "exchange",
+                "duration": 0.1,
+                "instrument": "cusa"
+              },
+              {
+                "slot": "left",
+                "operation": "place",
+                "duration": 0.1,
+                "pose": {
+                  "position": [
+                    8.0,
+                    9.0,
+                    -5.0
+                  ],
+                  "quaternion": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                },
+                "parameters": {
+                  "radiusMm": 1.5
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "apply",
+                "duration": 1.0,
+                "pose": {
+                  "position": [
+                    8.0,
+                    9.0,
+                    11.0
+                  ],
+                  "quaternion": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "withdraw",
+                "duration": 1.0
+              },
+              {
+                "slot": "left",
+                "operation": "place",
+                "duration": 0.1,
+                "pose": {
+                  "position": [
+                    10.0,
+                    9.0,
+                    -5.0
+                  ],
+                  "quaternion": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "apply",
+                "duration": 1.0,
+                "pose": {
+                  "position": [
+                    10.0,
+                    9.0,
+                    11.0
+                  ],
+                  "quaternion": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "withdraw",
+                "duration": 1.0
+              }
+            ],
+            "expectedStructuralOutcome": "First malformed pose refuses atomically; target removal work and whole withdrawal occur; exact baseline outcome/counts frozen by first run.",
+            "validationNote": "First fixture qualification established that bare SurgicalEngine.step returns an atomic rejected receipt for the zero quaternion. No action or simulation setting changed. The initially hypothesized raised ValueError was a failed auditor expectation, retained in fixtures-v1.log/xml; auditors now assert the actual public refusal contract."
+          },
+          "simulation-drill-thermal": {
+            "origin": "tests/test_surgical_drilling_v2.py:test_public_drill_preview_partial_rejection_and_cooling_match_legacy",
+            "fixture": {
+              "shape": [
+                16,
+                16,
+                16
+              ],
+              "affine": "identity",
+              "dtype": "uint16",
+              "labels": [
+                {
+                  "slices": [
+                    [
+                      4,
+                      7
+                    ],
+                    [
+                      4,
+                      7
+                    ],
+                    [
+                      8,
+                      9
+                    ]
+                  ],
+                  "value": 1
+                },
+                {
+                  "voxel": [
+                    5,
+                    5,
+                    6
+                  ],
+                  "value": 2
+                }
+              ],
+              "regions": [
+                {
+                  "id": 1,
+                  "name": "bone",
+                  "material": "bone"
+                },
+                {
+                  "id": 2,
+                  "name": "target",
+                  "material": "tumor",
+                  "target": true
+                }
+              ],
+              "source": {
+                "kind": "explicit-thermal-parity-fixture"
+              },
+              "properties": {
+                "tissuePhysicsV2": "unmodified default_profile() at frozen source commit"
+              }
+            },
+            "interface": "Fresh SurgicalEngine; each fixed action receives public preview(include_view=False) followed by direct step; require exact preview endpoint parity and all outcomes.",
+            "actions": [
+              {
+                "slot": "left",
+                "operation": "place",
+                "duration": 0.2,
+                "pose": {
+                  "position": [
+                    5.0,
+                    5.0,
+                    15.0
+                  ],
+                  "quaternion": [
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0
+                  ]
+                },
+                "parameters": {
+                  "radiusMm": 1.0,
+                  "forceN": 0.0,
+                  "rpm": 0.0
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "apply",
+                "duration": 0.1,
+                "pose": {
+                  "position": [
+                    5.0,
+                    5.0,
+                    7.0
+                  ],
+                  "quaternion": [
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0
+                  ]
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "apply",
+                "duration": 5.0,
+                "pose": {
+                  "position": [
+                    5.0,
+                    5.0,
+                    7.0
+                  ],
+                  "quaternion": [
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0
+                  ]
+                },
+                "parameters": {
+                  "forceN": 20.0,
+                  "rpm": 80000.0
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "exchange",
+                "duration": 0.2,
+                "instrument": "cusa"
+              },
+              {
+                "slot": "left",
+                "operation": "withdraw",
+                "duration": 0.7,
+                "pose": {
+                  "position": [
+                    5.0,
+                    5.0,
+                    15.0
+                  ],
+                  "quaternion": [
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0
+                  ]
+                }
+              },
+              {
+                "slot": "right",
+                "operation": "inspect",
+                "duration": 2.5
+              }
+            ],
+            "expectedStructuralOutcome": "Positive work-limited removal and thermal history; accepted/partial/rejected attempts retained; idle cooling occurs."
+          },
+          "simulation-cusa-v3": {
+            "origin": "tests/test_surgical_cusa_v3.py:test_public_motion_stops_at_tissue_and_persists_pending_contact_before_clearance",
+            "fixture": {
+              "shape": [
+                20,
+                20,
+                20
+              ],
+              "affine": "identity",
+              "dtype": "uint16",
+              "labels": [
+                {
+                  "voxel": [
+                    9,
+                    9,
+                    9
+                  ],
+                  "value": 1
+                }
+              ],
+              "regions": [
+                {
+                  "id": 1,
+                  "name": "Generated contact coupon",
+                  "material": "tumor",
+                  "target": true
+                }
+              ],
+              "source": {
+                "kind": "generated CUSA contact coupon; no acquired anatomy"
+              },
+              "properties": {
+                "cusaV3": "default_profile() with capacityMm3PerSecond=2.0, no tissuePhysicsV2"
+              }
+            },
+            "interface": "Fresh SurgicalEngine.step; fixed8 continuation attempts even after clearance (no dynamic loop bound).",
+            "actions": [
+              {
+                "slot": "left",
+                "operation": "exchange",
+                "duration": 0.1,
+                "instrument": "cusa"
+              },
+              {
+                "slot": "left",
+                "operation": "place",
+                "duration": 0.1,
+                "pose": {
+                  "position": [
+                    9.0,
+                    9.0,
+                    3.0
+                  ],
+                  "quaternion": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "apply",
+                "duration": 0.05,
+                "pose": {
+                  "position": [
+                    9.0,
+                    9.0,
+                    11.0
+                  ],
+                  "quaternion": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "apply",
+                "duration": 0.1,
+                "pose": {
+                  "position": [
+                    9.0,
+                    9.0,
+                    11.0
+                  ],
+                  "quaternion": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "apply",
+                "duration": 0.1,
+                "pose": {
+                  "position": [
+                    9.0,
+                    9.0,
+                    11.0
+                  ],
+                  "quaternion": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "apply",
+                "duration": 0.1,
+                "pose": {
+                  "position": [
+                    9.0,
+                    9.0,
+                    11.0
+                  ],
+                  "quaternion": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "apply",
+                "duration": 0.1,
+                "pose": {
+                  "position": [
+                    9.0,
+                    9.0,
+                    11.0
+                  ],
+                  "quaternion": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "apply",
+                "duration": 0.1,
+                "pose": {
+                  "position": [
+                    9.0,
+                    9.0,
+                    11.0
+                  ],
+                  "quaternion": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "apply",
+                "duration": 0.1,
+                "pose": {
+                  "position": [
+                    9.0,
+                    9.0,
+                    11.0
+                  ],
+                  "quaternion": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "apply",
+                "duration": 0.1,
+                "pose": {
+                  "position": [
+                    9.0,
+                    9.0,
+                    11.0
+                  ],
+                  "quaternion": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "apply",
+                "duration": 0.1,
+                "pose": {
+                  "position": [
+                    9.0,
+                    9.0,
+                    11.0
+                  ],
+                  "quaternion": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "deactivate",
+                "duration": 0.1
+              },
+              {
+                "slot": "left",
+                "operation": "withdraw",
+                "duration": 0.3,
+                "pose": {
+                  "position": [
+                    9.0,
+                    9.0,
+                    3.0
+                  ],
+                  "quaternion": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                }
+              }
+            ],
+            "expectedStructuralOutcome": "Initial legitimate aspiration partial, persisted pending capacity, one source cell aspirated, cleanup. Conservation and exact endpoint history frozen before ports."
+          },
+          "simulation-vascular": {
+            "origin": "tests/test_surgical_vascular_graph.py:profile/engine and test_public_bipolar_geometry_compression_release_occlusion_export_and_replay",
+            "fixture": "Promote the existing8x5x5 generated three-node/two-edge RC graph, explicit source cells, tissuePhysicsV2/default profile, source coefficient text and graph assumptions into reusable fixture code without pytest imports; copy every existing numeric coefficient unchanged.",
+            "interface": "Fresh SurgicalEngine.step public bipolar compression/release/coagulation sequence. No RL admission.",
+            "actions": [
+              {
+                "slot": "left",
+                "operation": "configure",
+                "duration": 0.1,
+                "mechanicsRevision": 2
+              },
+              {
+                "slot": "left",
+                "operation": "exchange",
+                "duration": 0.1,
+                "instrument": "bipolar_forceps"
+              },
+              {
+                "slot": "left",
+                "operation": "place",
+                "duration": 0.1,
+                "pose": {
+                  "position": [
+                    2.5,
+                    1.0,
+                    -4.0
+                  ],
+                  "quaternion": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                },
+                "parameters": {
+                  "jawOpeningMm": 0.5,
+                  "forceN": 1.0,
+                  "power": 0.0,
+                  "depthMm": 1.0
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "apply",
+                "duration": 0.5,
+                "pose": {
+                  "position": [
+                    2.5,
+                    1.0,
+                    1.8
+                  ],
+                  "quaternion": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "deactivate",
+                "duration": 0.1
+              },
+              {
+                "slot": "left",
+                "operation": "inspect",
+                "duration": 0.3
+              },
+              {
+                "slot": "left",
+                "operation": "apply",
+                "duration": 0.1,
+                "parameters": {
+                  "jawOpeningMm": 2.0
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "apply",
+                "duration": 0.1,
+                "parameters": {
+                  "jawOpeningMm": 0.5,
+                  "forceN": 0.0,
+                  "power": 0.0
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "apply",
+                "duration": 2.1,
+                "parameters": {
+                  "power": 1.0
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "withdraw",
+                "duration": 0.1
+              }
+            ],
+            "expectedStructuralOutcome": "No unpowered heat or bleed, compression release, powered persistent occlusion and final withdrawal; local-graph consequences remain declared partial and global perfusion unknown."
+          },
+          "simulation-continuum": {
+            "origin": "resectionlab.generated_cpp_fixture.continuum_fixture(13), existing frozen stress; tests/test_surgical_continuum_capture.py native inspect tick pattern",
+            "fixture": "Reuse the exact declared13\u00b3 continuum_fixture(13):600Pa relaxation branch,0.5s time constant,0.01mm held displacement. Active element/DOF counts are frozen from this public-step family during fresh-process qualification; the original stress coupon128/840 figures describe its separate post-removal state.",
+            "initialization": "Explicit fixture-only hold, as in existing engineering controls. This is not evidence of a public clinical placement.",
+            "interface": "After fixture construction use public engine.step inspect on right hand to advance real physical substeps; existing frozen original stress remains the separate cut/removal/history-transfer control.",
+            "actions": [
+              {
+                "slot": "right",
+                "operation": "inspect",
+                "duration": 0.1
+              },
+              {
+                "slot": "right",
+                "operation": "inspect",
+                "duration": 0.2
+              },
+              {
+                "slot": "right",
+                "operation": "inspect",
+                "duration": 0.3
+              }
+            ],
+            "expectedStructuralOutcome": "Nonzero viscoelastic strain/exposure/dissipation and state progression; same topology/source/history ownership. No reward-policy qualification or invented tissue assumptions.",
+            "validationNote": "The fixture-only preinitialized hold is an engineering numeric state, not a replay-canonical zero-action source. Compare exact physical/numerical ownership fields and step receipts; do not demand ordinary engine.restore for this family. Full snapshot/restore/RNG checks apply to canonical RL families only."
+          },
+          "rl-success-episode": {
+            "origin": "tests/test_surgical_rl_contract.py and independently reproduced RL_TRACE",
+            "fixtureFamily": "simulation-target-episode",
+            "seed": 318,
+            "interface": "Fresh SurgicalRLEnv(reset seed318), encode_action + public Gym step on each action. Include all observations/rewards/info. No policy or optimizer.",
+            "config": "RLConfig(require_critical_coverage=False), all other defaults; this declared generated coverage exception matches existing tests and grants no patient qualification.",
+            "actions": [
+              {
+                "slot": "left",
+                "operation": "place",
+                "duration": 0.1,
+                "pose": {
+                  "position": [
+                    9.0,
+                    9.0,
+                    9.0
+                  ],
+                  "quaternion": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0
+                  ]
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "exchange",
+                "duration": 0.1,
+                "instrument": "cusa"
+              },
+              {
+                "slot": "left",
+                "operation": "place",
+                "duration": 0.1,
+                "pose": {
+                  "position": [
+                    8.0,
+                    9.0,
+                    -5.0
+                  ],
+                  "quaternion": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                },
+                "parameters": {
+                  "radiusMm": 1.5
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "apply",
+                "duration": 1.0,
+                "pose": {
+                  "position": [
+                    8.0,
+                    9.0,
+                    11.0
+                  ],
+                  "quaternion": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "withdraw",
+                "duration": 1.0
+              },
+              {
+                "slot": "left",
+                "operation": "place",
+                "duration": 0.1,
+                "pose": {
+                  "position": [
+                    10.0,
+                    9.0,
+                    -5.0
+                  ],
+                  "quaternion": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "apply",
+                "duration": 1.0,
+                "pose": {
+                  "position": [
+                    10.0,
+                    9.0,
+                    11.0
+                  ],
+                  "quaternion": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "withdraw",
+                "duration": 1.0
+              }
+            ],
+            "expectedStructuralOutcome": "Finite complete episode, first invalid action penalty, incremental target reward without repeated credit, target_fraction_reached only after cleanup/withdrawal; exact encoded-path result qualified before ports."
+          },
+          "rl-protected-attempt-episode": {
+            "origin": "tests/test_cpp_independent_acceptance.py:RL_TRACE strict brainstem exclusion control",
+            "fixtureFamily": "simulation-target-episode",
+            "seed": 318,
+            "protection": {
+              "maskVoxel": [
+                9,
+                9,
+                8
+              ],
+              "structureId": "brainstem",
+              "clearanceMm": 1.0,
+              "strict": true,
+              "provenance": "Generated overlap-exclusion control; no acquired anatomy"
+            },
+            "config": "RLConfig(max_steps=4), all other defaults; the explicit protection supplies strict required coverage.",
+            "interface": "Fresh SurgicalRLEnv, encode_action + public Gym step; preserve complete four-attempt episode, no dynamic retries.",
+            "actions": [
+              {
+                "slot": "left",
+                "operation": "exchange",
+                "duration": 0.1,
+                "instrument": "cusa"
+              },
+              {
+                "slot": "left",
+                "operation": "place",
+                "duration": 0.1,
+                "pose": {
+                  "position": [
+                    9.0,
+                    9.0,
+                    -5.0
+                  ],
+                  "quaternion": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                },
+                "parameters": {
+                  "radiusMm": 0.5
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "apply",
+                "duration": 0.1,
+                "pose": {
+                  "position": [
+                    9.0,
+                    9.0,
+                    9.0
+                  ],
+                  "quaternion": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "withdraw",
+                "duration": 0.1
+              }
+            ],
+            "expectedStructuralOutcome": "Protected original source cell never removed; protected_damage_mm3=0; rejection/partial retained; complete declared attempt budget truncation unless an existing earlier safety termination occurs (qualify exact endpoint before ports)."
+          },
+          "rl-independent-instances": {
+            "role": "Complete bounded independent-environment throughput and ownership probe",
+            "interface": "Four freshly constructed independent copies of rl-success-episode, seeds318,319,320,321. Execute sequentially single-threaded in fixed environment-index/action-index order. No shared mutable scratch, no threads, no collapsed step charges.",
+            "episodeFamily": "rl-success-episode",
+            "seeds": [
+              318,
+              319,
+              320,
+              321
+            ],
+            "instances": 4,
+            "expectedStructuralOutcome": "Each complete episode independently matches its singleton fixed-seed receipt; source arrays and RNG/state ownership remain isolated. Compare aggregate wall/peak memory and episodes/sec including all four initializations/resets.",
+            "postTimingChecks": "Pairwise distinct RNGs, state dicts, removal lists, slot maps and slot records; no shared source label memory; identical physical final snapshot across fixed-action seeds. No mutation or extra episode in the timed work."
+          },
+          "simulation-vascular-wound": {
+            "origin": "tests/test_surgical_vascular_graph.py:test_public_unpowered_stump_compression_controls_bleed_only_while_held",
+            "fixtureFamily": "simulation-vascular",
+            "interface": "Fresh declared generated vascular graph; public scissors cut then unpowered bipolar compression, dwell, release, withdrawal. No RL admission.",
+            "actions": [
+              {
+                "slot": "left",
+                "operation": "configure",
+                "duration": 0.1,
+                "mechanicsRevision": 2
+              },
+              {
+                "slot": "left",
+                "operation": "exchange",
+                "duration": 0.1,
+                "instrument": "micro_scissors"
+              },
+              {
+                "slot": "left",
+                "operation": "place",
+                "duration": 0.1,
+                "pose": {
+                  "position": [
+                    2.5,
+                    1.0,
+                    -4.0
+                  ],
+                  "quaternion": [
+                    0.0,
+                    0.0,
+                    0.7071067811865476,
+                    0.7071067811865476
+                  ]
+                },
+                "parameters": {
+                  "jawOpeningMm": 0.0,
+                  "depthMm": 1.0,
+                  "forceN": 0.0
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "apply",
+                "duration": 0.5,
+                "pose": {
+                  "position": [
+                    2.5,
+                    1.0,
+                    1.8
+                  ],
+                  "quaternion": [
+                    0.0,
+                    0.0,
+                    0.7071067811865476,
+                    0.7071067811865476
+                  ]
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "deactivate",
+                "duration": 0.1
+              },
+              {
+                "slot": "left",
+                "operation": "withdraw",
+                "duration": 0.1
+              },
+              {
+                "slot": "left",
+                "operation": "exchange",
+                "duration": 0.1,
+                "instrument": "bipolar_forceps"
+              },
+              {
+                "slot": "left",
+                "operation": "place",
+                "duration": 0.1,
+                "pose": {
+                  "position": [
+                    2.5,
+                    1.0,
+                    -4.0
+                  ],
+                  "quaternion": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                },
+                "parameters": {
+                  "jawOpeningMm": 0.5,
+                  "forceN": 1.0,
+                  "power": 0.0,
+                  "depthMm": 1.0
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "apply",
+                "duration": 0.5,
+                "pose": {
+                  "position": [
+                    2.5,
+                    1.0,
+                    1.8
+                  ],
+                  "quaternion": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                  ]
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "deactivate",
+                "duration": 0.1
+              },
+              {
+                "slot": "left",
+                "operation": "inspect",
+                "duration": 1.0
+              },
+              {
+                "slot": "left",
+                "operation": "apply",
+                "duration": 0.2,
+                "parameters": {
+                  "jawOpeningMm": 2.0
+                }
+              },
+              {
+                "slot": "left",
+                "operation": "withdraw",
+                "duration": 0.1
+              }
+            ],
+            "qualificationRequired": "One cut edge and nonzero wound ports/generated/emitted fluid; positive evolving pressure-supported flow/storage, compressed contact while held and released bleed; all conservation and source ledgers exact.",
+            "preQualificationAdditionReason": "The original vascular compression/occlusion trace has no wound. This separate existing public cut/bleed control was added before any supplementary execution to exercise actual vascular/fluid updates; the original vascular family remains unchanged.",
+            "postTimingChecks": "Retained receipts prove emitted/generated bleeding does not increase from deactivate through held inspect, then increases on jaw release; final positive wound/emission and conservation checks also required."
+          }
+        },
+        "suitePlan": {
+          "simulation-steps": [
+            "simulation-target-episode",
+            "simulation-drill-thermal",
+            "simulation-cusa-v3",
+            "simulation-vascular",
+            "simulation-vascular-wound",
+            "simulation-continuum"
+          ],
+          "rl-episodes": [
+            "rl-success-episode",
+            "rl-protected-attempt-episode",
+            "rl-independent-instances"
+          ],
+          "reuse": "Extend existing scripts/benchmark_cpp_acceleration.py with explicitly selected supplement manifest/workload branches; preserve original defaults and comparison contract. Reuse its fresh-process, thread, paired-order, memory and receipt writer. No second benchmarking framework.",
+          "jobBound": "At most one initial reference qualification+one attribution profile per suite; if bounded execution fails, retain failure and fix only demonstrated fixture defects transparently before freezing. No repeated runs without changed hypothesis.",
+          "nextAction": "Coordinator grants a small qualification-test slot; qualify both complete fixed suites, freeze exact result digests and source/trace inventories, capture verified pre-pass CPP source+binary outside tracked dirs, then wait for packaged-increment acceptance before separate attribution/performance jobs. No native port before measured evidence."
+        },
+        "attributionPlan": {
+          "interpretedOrAllocationCandidates": [
+            "surgical_engine:_microstep_checkpoint/clone/_prepare_step repeated state copy",
+            "surgical_motion:swept_envelopes/envelopes repeated rotation object construction and crossings",
+            "surgical_continuum:voxel_mesh/assemble/_pack/_unpack/exposure_increment Python topology/history orchestration",
+            "surgical_drilling_v2 contact frontiers/thermal dictionary traversal",
+            "surgical_cusa_v3 capacity/pending-contact bookkeeping",
+            "surgical_vessels_v2 and surgical_vascular_graph field/bookkeeping and tick handoffs",
+            "surgical_rl_env:_observe local729-cell\u00d7two-hand Python loops/_measure/_info/encode_action/decode_action",
+            "repeated public steps/substeps and independent per-env overhead"
+          ],
+          "compiledWorkAlreadyPresent": [
+            "NumPy ufuncs/reductions/einsum and BLAS paths",
+            "SciPy sparse assembly/factorization/SuperLU and spatial Rotation/Slerp extension operations",
+            "Existing optional C idle/prefix helpers and the qualified C++ extension"
+          ],
+          "pytorch": "SurgicalRLEnv itself uses NumPy/Gym and no policy network. Report PyTorch as not executed unless an actual in-scope orchestration call uses it; do not invent training or replace compiled tensor operators merely because their caller is Python.",
+          "method": "Retain full cProfile raw entries, exclusive named-module stage totals and top inclusive call paths. Distinguish Python allocation/control loops from calls already handled by compiled libraries. Python caller cumulative time alone never proves interpreted computation. Inclusive categories overlap and never substitute for elapsed throughput.",
+          "nativeBoundary": "Record selected backend/build identity, scalar/batch invocation and primitive/item counts, fallback reasons, output sizes, copy/conversion inclusion, pool/thread settings and source scene identity."
+        },
+        "runnerImplementation": {
+          "module": "resectionlab.generated_cpp_supplement",
+          "runner": "scripts/benchmark_cpp_acceleration.py",
+          "suiteSelection": "--supplemental",
+          "qualification": "--mode qualify --freeze-supplement",
+          "profiling": "--mode profile --backend cpp",
+          "pairedCppBeforeAfter": "--baseline-source CAPTURE/src --baseline-backend cpp",
+          "originalDefaultsUnchanged": true,
+          "capturePrepassCpp": "--supplemental --capture-supplement-baseline CAPTURE; captures exact verified source, extension/build manifest, qualified workload manifest, source-file hashes and loaded binary identity. Capture must precede supplementary optimization."
+        },
+        "microbaselinePrefixes": [
+          {
+            "family": "simulation-drill-thermal",
+            "factory": "simulation_fixture",
+            "attemptPrefixLength": 3,
+            "interface": "Apply literal actions[:3] through engine.step; no fixture retuning."
+          },
+          {
+            "family": "simulation-cusa-v3",
+            "factory": "simulation_fixture",
+            "attemptPrefixLength": 4,
+            "interface": "Apply literal actions[:4] through engine.step; this retains pending aspiration/history."
+          },
+          {
+            "family": "rl-success-episode",
+            "factory": "rl_fixture",
+            "attemptPrefixLength": 4,
+            "interface": "reset(seed=318), then encode_action + env.step for literal actions[:4]. Use env.engine for actual acted metadata/state."
+          }
+        ],
+        "structuralQualificationPolicy": "Every fixed family must exercise its intended model before it can freeze: nonzero bone work/temperature/debris; CUSA progressive pending/contact and solid capacity; vascular flow/storage/compression/occlusion plus separate wound/emission; continuum active topology/nonzero gradient/history/exposure/dissipation; complete RL success/cleanup and protected attempt-budget truncation. Identical failures in both backends cannot qualify an unexercised area. Failures retain exact proposed traces and evidence; correct only demonstrated fixture defects with an explicit protocol note.",
+        "qualificationAttempts": [
+          {
+            "status": "failed-auditor-expectation",
+            "evidence": "outputs/cpp-acceleration-v1/supplement-qualification/fixtures-v1.log",
+            "checks": "2 failed/3 passed; test expected bare-engine ValueError but engine returned rejected receipt",
+            "correction": "Auditor/test expectation only; no literal trace, geometry, physics or objective change."
+          },
+          {
+            "status": "fixture-structural-checks-passed",
+            "backend": "reference",
+            "checks": "5 passed in4.40s",
+            "evidence": "outputs/cpp-acceleration-v1/supplement-qualification/fixtures-v2-reference.xml"
+          },
+          {
+            "status": "fixture-structural-checks-passed",
+            "backend": "cpp",
+            "checks": "5 passed in3.72s",
+            "evidence": "outputs/cpp-acceleration-v1/supplement-qualification/fixtures-v2-cpp.xml"
+          }
+        ],
+        "commands": {
+          "qualifyAndFreeze": "RESSECTIONLAB_NUMERICAL_BACKEND=reference PYTHONPATH=src .venv/bin/python scripts/benchmark_cpp_acceleration.py --supplemental --mode qualify --freeze-supplement --output outputs/cpp-acceleration-v1/supplement-qualify-v1",
+          "capturePrepassCpp": "RESSECTIONLAB_NUMERICAL_BACKEND=cpp PYTHONPATH=src .venv/bin/python scripts/benchmark_cpp_acceleration.py --supplemental --capture-supplement-baseline outputs/cpp-acceleration-v1/supplement-prepass-cpp",
+          "profileBothSupplementSuitesOnce": "PYTHONPATH=src .venv/bin/python scripts/benchmark_cpp_acceleration.py --supplemental --mode profile --backend cpp --output outputs/cpp-acceleration-v1/supplement-profile-v1",
+          "profileLatestPlanningOnce": "PYTHONPATH=src .venv/bin/python scripts/benchmark_cpp_acceleration.py --mode profile --backend cpp --workload generate --output outputs/cpp-acceleration-v1/latest-planning-profile-v1",
+          "compareCppBeforeAfter": "PYTHONPATH=src .venv/bin/python scripts/benchmark_cpp_acceleration.py --supplemental --baseline-source outputs/cpp-acceleration-v1/supplement-prepass-cpp/src --baseline-backend cpp --output outputs/cpp-acceleration-v1/supplement-before-after-v1",
+          "compareCurrentReferenceCpp": "PYTHONPATH=src .venv/bin/python scripts/benchmark_cpp_acceleration.py --supplemental --output outputs/cpp-acceleration-v1/supplement-reference-cpp-v1"
+        },
+        "boundedProfilePlan": {
+          "attributionJobs": [
+            {
+              "backend": "cpp",
+              "workload": "simulation-steps"
+            },
+            {
+              "backend": "cpp",
+              "workload": "rl-episodes"
+            },
+            {
+              "backend": "cpp",
+              "workload": "original generate"
+            }
+          ],
+          "numberOfJobs": 3,
+          "policy": "One separate attribution pass per complete supplement suite plus one latest CPP original Generate pass after package acceptance. No doubled reference profiles; exact qualification pair supplies reference behavior evidence. Stop and inspect profile before choosing any new port."
+        },
+        "qualification": {
+          "workloads": {
+            "simulation-steps": {
+              "qualificationOnly": true,
+              "exactEquivalent": true,
+              "nativeExecutionPassed": true,
+              "exactDigest": "sha256:91819f86b18115336f3ca366675b79d0ddceea51ff1a3756bdfdc36f7cf8143f",
+              "work": {
+                "requestedAttempts": 53,
+                "publicPreviewAttempts": 6,
+                "episodes": 0,
+                "committedNativeActions": 51
+              },
+              "families": [
+                {
+                  "family": "simulation-target-episode",
+                  "structuralQualification": {
+                    "receiptStatuses": [
+                      "rejected",
+                      "accepted",
+                      "accepted",
+                      "accepted",
+                      "accepted",
+                      "accepted",
+                      "accepted",
+                      "accepted"
+                    ],
+                    "exceptions": []
+                  }
+                },
+                {
+                  "family": "simulation-drill-thermal",
+                  "structuralQualification": {
+                    "receiptStatuses": [
+                      "accepted",
+                      "partial",
+                      "partial",
+                      "rejected",
+                      "accepted",
+                      "accepted"
+                    ],
+                    "exceptions": [],
+                    "drilling": {
+                      "workJ": {},
+                      "temperatureC": {
+                        "1368": [
+                          "float",
+                          "0x1.24fe5d271ee6dp+6"
+                        ],
+                        "1112": [
+                          "float",
+                          "0x1.28f7afcdfd53ep+6"
+                        ],
+                        "1352": [
+                          "float",
+                          "0x1.28f7afcdfd53ep+6"
+                        ],
+                        "1384": [
+                          "float",
+                          "0x1.28f7afcdfd53ep+6"
+                        ],
+                        "1624": [
+                          "float",
+                          "0x1.28f7afcdfd53ep+6"
+                        ],
+                        "1096": [
+                          "float",
+                          "0x1.2ea8ed6fcd2d8p+6"
+                        ],
+                        "1128": [
+                          "float",
+                          "0x1.2ea8ed6fcd2d8p+6"
+                        ],
+                        "1608": [
+                          "float",
+                          "0x1.2ea8ed6fcd2d8p+6"
+                        ],
+                        "1640": [
+                          "float",
+                          "0x1.2ea8ed6fcd2d8p+6"
+                        ]
+                      },
+                      "thermalDoseCSeconds": {
+                        "1368": [
+                          "float",
+                          "0x1.6f6ef0a61c41ep+8"
+                        ],
+                        "1112": [
+                          "float",
+                          "0x1.68b083cc56645p+8"
+                        ],
+                        "1352": [
+                          "float",
+                          "0x1.68b083cc56645p+8"
+                        ],
+                        "1384": [
+                          "float",
+                          "0x1.68b083cc56645p+8"
+                        ],
+                        "1624": [
+                          "float",
+                          "0x1.68b083cc56645p+8"
+                        ],
+                        "1096": [
+                          "float",
+                          "0x1.5f1ad555837dep+8"
+                        ],
+                        "1128": [
+                          "float",
+                          "0x1.5f1ad555837dep+8"
+                        ],
+                        "1608": [
+                          "float",
+                          "0x1.5f1ad555837dep+8"
+                        ],
+                        "1640": [
+                          "float",
+                          "0x1.5f1ad555837dep+8"
+                        ]
+                      },
+                      "inputEnergyJ": [
+                        "float",
+                        "0x1.0c152382d7365p+3"
+                      ],
+                      "cuttingWorkJ": [
+                        "float",
+                        "0x1.2000000000000p+2"
+                      ],
+                      "heatGeneratedJ": [
+                        "float",
+                        "0x1.9333333333333p+0"
+                      ],
+                      "coolingLossJ": [
+                        "float",
+                        "0x1.ca5dff752cd22p-1"
+                      ],
+                      "unusedEnergyJ": [
+                        "float",
+                        "0x1.f0548e0b5cd95p+1"
+                      ],
+                      "removedVolumeMm3": [
+                        "float",
+                        "0x1.2000000000000p+3"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "family": "simulation-cusa-v3",
+                  "structuralQualification": {
+                    "receiptStatuses": [
+                      "accepted",
+                      "accepted",
+                      "partial",
+                      "partial",
+                      "partial",
+                      "partial",
+                      "partial",
+                      "accepted",
+                      "accepted",
+                      "accepted",
+                      "accepted",
+                      "accepted",
+                      "accepted"
+                    ],
+                    "exceptions": [],
+                    "capacityConservationResidualMm3": [
+                      "float",
+                      "-0x1.4000000000000p-49"
+                    ]
+                  }
+                },
+                {
+                  "family": "simulation-vascular",
+                  "structuralQualification": {
+                    "receiptStatuses": [
+                      "accepted",
+                      "accepted",
+                      "accepted",
+                      "accepted",
+                      "accepted",
+                      "accepted",
+                      "accepted",
+                      "accepted",
+                      "accepted",
+                      "accepted"
+                    ],
+                    "exceptions": [],
+                    "vascular": {
+                      "model": "resectionlab.vascular-graph.v1",
+                      "initialPressureSupportingStorageMm3": [
+                        "float",
+                        "0x1.e000000000000p+3"
+                      ],
+                      "storageMm3": [
+                        "float",
+                        "0x1.debdb43cc01e4p+3"
+                      ],
+                      "boundaryInMm3": [
+                        "float",
+                        "0x1.a9f5ddd8c9495p-1"
+                      ],
+                      "boundaryOutMm3": [
+                        "float",
+                        "0x1.be1a9a0cc7074p-1"
+                      ],
+                      "generatedMm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "emittedMm3": 0,
+                      "pendingEmissionMm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "blockedOutletReservoirMm3": 0,
+                      "conservationResidualMm3": [
+                        "float",
+                        "0x1.7800000000000p-43"
+                      ],
+                      "roundoffCorrectionMm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "woundPortCount": 0,
+                      "cutEdgeCount": 0,
+                      "occludedEdgeCount": 1,
+                      "compressedEdgeCount": 0,
+                      "unmappedContactCells": 0,
+                      "regions": {
+                        "declared-region": {
+                          "supplyDeficitMm3": [
+                            "float",
+                            "0x1.95c64040b64dap-2"
+                          ],
+                          "drainageDeficitMm3": [
+                            "float",
+                            "0x1.449773cbfa9cap-5"
+                          ],
+                          "supplyDeficitSeconds": [
+                            "float",
+                            "0x1.95c64040b64dap+0"
+                          ],
+                          "drainageDeficitSeconds": [
+                            "float",
+                            "0x1.449773cbfa9cap-3"
+                          ],
+                          "supplyMm3PerSecond": [
+                            "float",
+                            "0x0.0p+0"
+                          ],
+                          "drainageMm3PerSecond": [
+                            "float",
+                            "0x1.bf460e2dffa32p-3"
+                          ],
+                          "storageMm3": [
+                            "float",
+                            "0x1.297962452f100p+2"
+                          ],
+                          "storageChangeMm3": [
+                            "float",
+                            "-0x1.6869dbad0f000p-2"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "family": "simulation-vascular-wound",
+                  "structuralQualification": {
+                    "receiptStatuses": [
+                      "accepted",
+                      "accepted",
+                      "accepted",
+                      "accepted",
+                      "accepted",
+                      "accepted",
+                      "accepted",
+                      "accepted",
+                      "accepted",
+                      "accepted",
+                      "accepted",
+                      "accepted",
+                      "accepted"
+                    ],
+                    "exceptions": [],
+                    "heldSuppressedBleed": true,
+                    "vascular": {
+                      "model": "resectionlab.vascular-graph.v1",
+                      "initialPressureSupportingStorageMm3": [
+                        "float",
+                        "0x1.e000000000000p+3"
+                      ],
+                      "storageMm3": [
+                        "float",
+                        "0x1.b2d245726d46dp+3"
+                      ],
+                      "boundaryInMm3": [
+                        "float",
+                        "0x1.9dd432cb3e993p-1"
+                      ],
+                      "boundaryOutMm3": [
+                        "float",
+                        "0x1.7a07f805ff816p-1"
+                      ],
+                      "generatedMm3": [
+                        "float",
+                        "0x1.7b53f1cf35300p+0"
+                      ],
+                      "emittedMm3": [
+                        "float",
+                        "0x1.7b53f1cf35302p+0"
+                      ],
+                      "pendingEmissionMm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "blockedOutletReservoirMm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "conservationResidualMm3": [
+                        "float",
+                        "0x1.2c00000000000p-43"
+                      ],
+                      "roundoffCorrectionMm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "woundPortCount": 2,
+                      "cutEdgeCount": 1,
+                      "occludedEdgeCount": 0,
+                      "compressedEdgeCount": 0,
+                      "unmappedContactCells": 0,
+                      "regions": {
+                        "declared-region": {
+                          "supplyDeficitMm3": [
+                            "float",
+                            "0x1.31111111110fdp-1"
+                          ],
+                          "drainageDeficitMm3": [
+                            "float",
+                            "0x1.12c2e6189ad3bp-3"
+                          ],
+                          "supplyDeficitSeconds": [
+                            "float",
+                            "0x1.31111111110fdp+1"
+                          ],
+                          "drainageDeficitSeconds": [
+                            "float",
+                            "0x1.12c2e6189ad3bp-1"
+                          ],
+                          "supplyMm3PerSecond": [
+                            "float",
+                            "0x0.0p+0"
+                          ],
+                          "drainageMm3PerSecond": [
+                            "float",
+                            "0x1.465c0dd066d38p-3"
+                          ],
+                          "storageMm3": [
+                            "float",
+                            "0x1.fc4b5c3f36b0bp+1"
+                          ],
+                          "storageChangeMm3": [
+                            "float",
+                            "-0x1.07694781929eap+0"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "family": "simulation-continuum",
+                  "structuralQualification": {
+                    "receiptStatuses": [
+                      "accepted",
+                      "accepted",
+                      "accepted"
+                    ],
+                    "exceptions": [],
+                    "continuum": {
+                      "activeElements": 129,
+                      "activeDofs": 840,
+                      "maxGradientNorm": [
+                        "float",
+                        "0x1.9622a73d94b60p-8"
+                      ],
+                      "dissipatedEnergyNmm": [
+                        "float",
+                        "0x1.93a5560689563p-24"
+                      ],
+                      "exposureBySourceLabel": {
+                        "1": {
+                          "strainSquaredVolumeTimeMm3Seconds": [
+                            "float",
+                            "0x1.718b163c2458cp-14"
+                          ],
+                          "stressSquaredVolumeTimePa2Mm3Seconds": [
+                            "float",
+                            "0x1.2c33c12f8ec78p+10"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "backendIdentities": {
+                "reference": {
+                  "fallbackReason": null,
+                  "nativeThreads": 1,
+                  "requested": "reference",
+                  "schema": "resectionlab-numerical-backend-v1",
+                  "selected": "reference",
+                  "counters": {
+                    "ambiguousCandidates": 0,
+                    "batchCalls": 0,
+                    "batchItems": 0,
+                    "batchSizes": {},
+                    "bindingCalls": 0,
+                    "geometryBindingCalls": 0,
+                    "jsonCopyCalls": 0,
+                    "jsonCopyFallbackCalls": 0,
+                    "maxBatchItems": 0,
+                    "maxPrimitiveCandidates": 0,
+                    "primitiveCandidates": 0,
+                    "referenceCalls": 5335,
+                    "segmentPredicateCalls": 0,
+                    "segmentPredicateRefinements": 0,
+                    "unsupportedCalls": 0
+                  }
+                },
+                "cpp": {
+                  "binaryPath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src/resectionlab/_geometry_cpp.cpython-312-darwin.so",
+                  "binarySha256": "cd9ef617e414c2a268ca7efac637afcaab6717b7ac66496f627ba6cb0d41ae9e",
+                  "buildIdentity": {
+                    "compiler": {
+                      "path": "/usr/bin/clang++",
+                      "version": "Apple clang version 21.0.0 (clang-2100.1.1.101)"
+                    },
+                    "cppStandard": 17,
+                    "flags": [
+                      "-fvisibility=hidden",
+                      "-g0",
+                      "-std=c++17",
+                      "-mmacosx-version-min=10.14",
+                      "-O3",
+                      "-fno-fast-math",
+                      "-ffp-contract=off"
+                    ],
+                    "platform": {
+                      "machine": "arm64",
+                      "system": "Darwin"
+                    },
+                    "pybind11": "3.1.0",
+                    "python": {
+                      "abi": "cpython-312-darwin",
+                      "version": "3.12.14"
+                    },
+                    "recipeSha256": "d81266ac59c3e7dbf2459666af0aa38b568b3ecba204d373de71e3729876a83c",
+                    "schema": "resectionlab-geometry-cpp-v1",
+                    "sources": {
+                      "geometry_native.cpp": "4975f886b32c604fe45b0266b0882b34aee6a9859ca32e8588e9101e8b50b32c",
+                      "state_native.hpp": "74c28949be7bba88064bb2baf9b63a8d72e288d90699ad92e7c565c32bf7b521"
+                    }
+                  },
+                  "fallbackReason": null,
+                  "manifestPath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src/resectionlab/_geometry_cpp.build.json",
+                  "nativeThreads": 1,
+                  "requested": "cpp",
+                  "schema": "resectionlab-numerical-backend-v1",
+                  "selected": "cpp",
+                  "counters": {
+                    "ambiguousCandidates": 33,
+                    "batchCalls": 1178,
+                    "batchItems": 1509,
+                    "batchSizes": {
+                      "1": 881,
+                      "2": 263,
+                      "3": 34
+                    },
+                    "bindingCalls": 10189,
+                    "geometryBindingCalls": 7672,
+                    "jsonCopyCalls": 2517,
+                    "jsonCopyFallbackCalls": 0,
+                    "maxBatchItems": 3,
+                    "maxPrimitiveCandidates": 1300,
+                    "primitiveCandidates": 107372,
+                    "referenceCalls": 0,
+                    "segmentPredicateCalls": 6494,
+                    "segmentPredicateRefinements": 0,
+                    "unsupportedCalls": 0
+                  }
+                }
+              }
+            },
+            "rl-episodes": {
+              "qualificationOnly": true,
+              "exactEquivalent": true,
+              "nativeExecutionPassed": true,
+              "exactDigest": "sha256:7d98d39947eb060788920b184a767d5b4959086dc1fe7deeb974a1a262242143",
+              "work": {
+                "requestedAttempts": 44,
+                "publicPreviewAttempts": 0,
+                "episodes": 6,
+                "committedNativeActions": 38
+              },
+              "families": [
+                {
+                  "family": "rl-success-episode",
+                  "structuralQualification": {
+                    "terminationReason": "target_fraction_reached",
+                    "terminated": true,
+                    "truncated": false,
+                    "measurements": {
+                      "tumor_removed_mm3": [
+                        "float",
+                        "0x1.b000000000000p+4"
+                      ],
+                      "healthy_removed_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "bone_removed_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "healthy_cut_mm2": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "deformation_injury_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "healthy_thermal_exposure": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "vessel_damage_mm2": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "bleeding_generated_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "protected_damage_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "near_contact_exposure_mm3_seconds": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "elapsed_seconds": [
+                        "float",
+                        "0x1.1333333333351p+2"
+                      ]
+                    }
+                  },
+                  "terminationReason": "target_fraction_reached"
+                },
+                {
+                  "family": "rl-protected-attempt-episode",
+                  "structuralQualification": {
+                    "terminationReason": "attempt_limit",
+                    "terminated": false,
+                    "truncated": true,
+                    "measurements": {
+                      "tumor_removed_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "healthy_removed_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "bone_removed_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "healthy_cut_mm2": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "deformation_injury_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "healthy_thermal_exposure": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "vessel_damage_mm2": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "bleeding_generated_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "protected_damage_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "near_contact_exposure_mm3_seconds": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "elapsed_seconds": [
+                        "float",
+                        "0x1.3333333333328p-2"
+                      ]
+                    }
+                  },
+                  "terminationReason": "attempt_limit"
+                },
+                {
+                  "family": "rl-independent-instances",
+                  "structuralQualification": {
+                    "terminationReason": "target_fraction_reached",
+                    "terminated": true,
+                    "truncated": false,
+                    "measurements": {
+                      "tumor_removed_mm3": [
+                        "float",
+                        "0x1.b000000000000p+4"
+                      ],
+                      "healthy_removed_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "bone_removed_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "healthy_cut_mm2": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "deformation_injury_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "healthy_thermal_exposure": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "vessel_damage_mm2": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "bleeding_generated_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "protected_damage_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "near_contact_exposure_mm3_seconds": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "elapsed_seconds": [
+                        "float",
+                        "0x1.1333333333351p+2"
+                      ]
+                    }
+                  },
+                  "terminationReason": "target_fraction_reached"
+                },
+                {
+                  "family": "rl-independent-instances",
+                  "structuralQualification": {
+                    "terminationReason": "target_fraction_reached",
+                    "terminated": true,
+                    "truncated": false,
+                    "measurements": {
+                      "tumor_removed_mm3": [
+                        "float",
+                        "0x1.b000000000000p+4"
+                      ],
+                      "healthy_removed_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "bone_removed_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "healthy_cut_mm2": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "deformation_injury_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "healthy_thermal_exposure": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "vessel_damage_mm2": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "bleeding_generated_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "protected_damage_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "near_contact_exposure_mm3_seconds": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "elapsed_seconds": [
+                        "float",
+                        "0x1.1333333333351p+2"
+                      ]
+                    }
+                  },
+                  "terminationReason": "target_fraction_reached"
+                },
+                {
+                  "family": "rl-independent-instances",
+                  "structuralQualification": {
+                    "terminationReason": "target_fraction_reached",
+                    "terminated": true,
+                    "truncated": false,
+                    "measurements": {
+                      "tumor_removed_mm3": [
+                        "float",
+                        "0x1.b000000000000p+4"
+                      ],
+                      "healthy_removed_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "bone_removed_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "healthy_cut_mm2": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "deformation_injury_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "healthy_thermal_exposure": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "vessel_damage_mm2": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "bleeding_generated_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "protected_damage_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "near_contact_exposure_mm3_seconds": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "elapsed_seconds": [
+                        "float",
+                        "0x1.1333333333351p+2"
+                      ]
+                    }
+                  },
+                  "terminationReason": "target_fraction_reached"
+                },
+                {
+                  "family": "rl-independent-instances",
+                  "structuralQualification": {
+                    "terminationReason": "target_fraction_reached",
+                    "terminated": true,
+                    "truncated": false,
+                    "measurements": {
+                      "tumor_removed_mm3": [
+                        "float",
+                        "0x1.b000000000000p+4"
+                      ],
+                      "healthy_removed_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "bone_removed_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "healthy_cut_mm2": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "deformation_injury_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "healthy_thermal_exposure": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "vessel_damage_mm2": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "bleeding_generated_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "protected_damage_mm3": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "near_contact_exposure_mm3_seconds": [
+                        "float",
+                        "0x0.0p+0"
+                      ],
+                      "elapsed_seconds": [
+                        "float",
+                        "0x1.1333333333351p+2"
+                      ]
+                    }
+                  },
+                  "terminationReason": "target_fraction_reached"
+                }
+              ],
+              "backendIdentities": {
+                "reference": {
+                  "fallbackReason": null,
+                  "nativeThreads": 1,
+                  "requested": "reference",
+                  "schema": "resectionlab-numerical-backend-v1",
+                  "selected": "reference",
+                  "counters": {
+                    "ambiguousCandidates": 0,
+                    "batchCalls": 0,
+                    "batchItems": 0,
+                    "batchSizes": {},
+                    "bindingCalls": 0,
+                    "geometryBindingCalls": 0,
+                    "jsonCopyCalls": 0,
+                    "jsonCopyFallbackCalls": 0,
+                    "maxBatchItems": 0,
+                    "maxPrimitiveCandidates": 0,
+                    "primitiveCandidates": 0,
+                    "referenceCalls": 7974,
+                    "segmentPredicateCalls": 0,
+                    "segmentPredicateRefinements": 0,
+                    "unsupportedCalls": 0
+                  }
+                },
+                "cpp": {
+                  "binaryPath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src/resectionlab/_geometry_cpp.cpython-312-darwin.so",
+                  "binarySha256": "cd9ef617e414c2a268ca7efac637afcaab6717b7ac66496f627ba6cb0d41ae9e",
+                  "buildIdentity": {
+                    "compiler": {
+                      "path": "/usr/bin/clang++",
+                      "version": "Apple clang version 21.0.0 (clang-2100.1.1.101)"
+                    },
+                    "cppStandard": 17,
+                    "flags": [
+                      "-fvisibility=hidden",
+                      "-g0",
+                      "-std=c++17",
+                      "-mmacosx-version-min=10.14",
+                      "-O3",
+                      "-fno-fast-math",
+                      "-ffp-contract=off"
+                    ],
+                    "platform": {
+                      "machine": "arm64",
+                      "system": "Darwin"
+                    },
+                    "pybind11": "3.1.0",
+                    "python": {
+                      "abi": "cpython-312-darwin",
+                      "version": "3.12.14"
+                    },
+                    "recipeSha256": "d81266ac59c3e7dbf2459666af0aa38b568b3ecba204d373de71e3729876a83c",
+                    "schema": "resectionlab-geometry-cpp-v1",
+                    "sources": {
+                      "geometry_native.cpp": "4975f886b32c604fe45b0266b0882b34aee6a9859ca32e8588e9101e8b50b32c",
+                      "state_native.hpp": "74c28949be7bba88064bb2baf9b63a8d72e288d90699ad92e7c565c32bf7b521"
+                    }
+                  },
+                  "fallbackReason": null,
+                  "manifestPath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src/resectionlab/_geometry_cpp.build.json",
+                  "nativeThreads": 1,
+                  "requested": "cpp",
+                  "schema": "resectionlab-numerical-backend-v1",
+                  "selected": "cpp",
+                  "counters": {
+                    "ambiguousCandidates": 0,
+                    "batchCalls": 2547,
+                    "batchItems": 2547,
+                    "batchSizes": {
+                      "1": 2547
+                    },
+                    "bindingCalls": 11308,
+                    "geometryBindingCalls": 11259,
+                    "jsonCopyCalls": 49,
+                    "jsonCopyFallbackCalls": 0,
+                    "maxBatchItems": 1,
+                    "maxPrimitiveCandidates": 200,
+                    "primitiveCandidates": 263320,
+                    "referenceCalls": 0,
+                    "segmentPredicateCalls": 8712,
+                    "segmentPredicateRefinements": 0,
+                    "unsupportedCalls": 0
+                  }
+                }
+              }
+            }
+          },
+          "sourceCommit": "15b17f055ee4410f80f7283f0524ff5e3db525c3",
+          "fixtureSourceSha256": "d08f164de0a50695ffda5d8782a5325422ba9d78a5bc8aa90d6234d2d667d7bf",
+          "receipt": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/supplement-qualify-v1/summary.json"
+        }
+      },
+      "mode": "compare",
+      "workloads": {
+        "simulation-steps": {
+          "pairs": [
+            {
+              "index": 0,
+              "order": [
+                "reference",
+                "cpp"
+              ]
+            },
+            {
+              "index": 1,
+              "order": [
+                "cpp",
+                "reference"
+              ]
+            },
+            {
+              "index": 2,
+              "order": [
+                "reference",
+                "cpp"
+              ]
+            },
+            {
+              "index": 3,
+              "order": [
+                "cpp",
+                "reference"
+              ]
+            },
+            {
+              "index": 4,
+              "order": [
+                "reference",
+                "cpp"
+              ]
+            }
+          ],
+          "backends": {
+            "reference": {
+              "medianSeconds": 1.111754750018008,
+              "minSeconds": 1.095180167001672,
+              "maxSeconds": 1.1212656669667922,
+              "stdevSeconds": 0.010404217948453877,
+              "sampleCount": 5,
+              "samplesSeconds": [
+                1.095180167001672,
+                1.111754750018008,
+                1.1164007499464788,
+                1.103429207985755,
+                1.1212656669667922
+              ],
+              "medianPeakRssBytes": 110100480,
+              "peakRssBytes": 110198784,
+              "medianTimedWorkPeakRssBytes": 110100480
+            },
+            "cpp": {
+              "medianSeconds": 1.1048554580193013,
+              "minSeconds": 1.0980660829809494,
+              "maxSeconds": 1.2517701250035316,
+              "stdevSeconds": 0.06542679822530281,
+              "sampleCount": 5,
+              "samplesSeconds": [
+                1.1041607910301536,
+                1.2517701250035316,
+                1.1187252919771709,
+                1.0980660829809494,
+                1.1048554580193013
+              ],
+              "medianPeakRssBytes": 110067712,
+              "peakRssBytes": 111460352,
+              "medianTimedWorkPeakRssBytes": 110067712
+            }
+          },
+          "exactEquivalent": true,
+          "exactDigests": [
+            "sha256:91819f86b18115336f3ca366675b79d0ddceea51ff1a3756bdfdc36f7cf8143f"
+          ],
+          "memoryHardCapPassed": true,
+          "frozenExactEquivalent": true,
+          "throughput": {
+            "reference": {
+              "attemptsPerSecond": 47.672384578650565,
+              "committedNativeActionsPerSecond": 45.87342667002224,
+              "episodesPerSecond": 0.0
+            },
+            "cpp": {
+              "attemptsPerSecond": 47.97007573734058,
+              "committedNativeActionsPerSecond": 46.159884200082445,
+              "episodesPerSecond": 0.0
+            }
+          },
+          "speedup": 1.0062445199945658,
+          "latencyPassed": true,
+          "memoryRegressionPassed": true,
+          "memoryComparisonBasis": "Pre-audit timedWorkPeakRssBytes; whole-process audit/restore peak is diagnostic and remains under the hard cap.",
+          "nativeExecutionPassed": true
+        },
+        "rl-episodes": {
+          "pairs": [
+            {
+              "index": 0,
+              "order": [
+                "reference",
+                "cpp"
+              ]
+            },
+            {
+              "index": 1,
+              "order": [
+                "cpp",
+                "reference"
+              ]
+            },
+            {
+              "index": 2,
+              "order": [
+                "reference",
+                "cpp"
+              ]
+            },
+            {
+              "index": 3,
+              "order": [
+                "cpp",
+                "reference"
+              ]
+            },
+            {
+              "index": 4,
+              "order": [
+                "reference",
+                "cpp"
+              ]
+            }
+          ],
+          "backends": {
+            "reference": {
+              "medianSeconds": 1.1509655420086347,
+              "minSeconds": 1.1446928749792278,
+              "maxSeconds": 1.1596086669596843,
+              "stdevSeconds": 0.00542049967271666,
+              "sampleCount": 5,
+              "samplesSeconds": [
+                1.1516457090037875,
+                1.1446928749792278,
+                1.1596086669596843,
+                1.1509655420086347,
+                1.149144291994162
+              ],
+              "medianPeakRssBytes": 139018240,
+              "peakRssBytes": 139051008,
+              "medianTimedWorkPeakRssBytes": 101744640
+            },
+            "cpp": {
+              "medianSeconds": 1.1373202920076437,
+              "minSeconds": 1.1359745420049876,
+              "maxSeconds": 1.1432350419927388,
+              "stdevSeconds": 0.0028957011349742346,
+              "sampleCount": 5,
+              "samplesSeconds": [
+                1.1373202920076437,
+                1.1381857499945909,
+                1.1359745420049876,
+                1.136623625003267,
+                1.1432350419927388
+              ],
+              "medianPeakRssBytes": 139149312,
+              "peakRssBytes": 139198464,
+              "medianTimedWorkPeakRssBytes": 101793792
+            }
+          },
+          "exactEquivalent": true,
+          "exactDigests": [
+            "sha256:7d98d39947eb060788920b184a767d5b4959086dc1fe7deeb974a1a262242143"
+          ],
+          "memoryHardCapPassed": true,
+          "frozenExactEquivalent": true,
+          "throughput": {
+            "reference": {
+              "attemptsPerSecond": 38.22877262095298,
+              "committedNativeActionsPerSecond": 33.01575817264121,
+              "episodesPerSecond": 5.21301444831177
+            },
+            "cpp": {
+              "attemptsPerSecond": 38.68743071692621,
+              "committedNativeActionsPerSecond": 33.41187198279991,
+              "episodesPerSecond": 5.275558734126301
+            }
+          },
+          "speedup": 1.0119977196370107,
+          "latencyPassed": true,
+          "memoryRegressionPassed": true,
+          "memoryComparisonBasis": "Pre-audit timedWorkPeakRssBytes; whole-process audit/restore peak is diagnostic and remains under the hard cap.",
+          "nativeExecutionPassed": true
+        }
+      },
+      "passed": true,
+      "comparisonRoles": {
+        "reference": {
+          "meaning": "baseline",
+          "selectedBackend": "cpp",
+          "sourceRoot": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/effects-prepass-cpp-v7/src"
+        },
+        "cpp": {
+          "meaning": "current",
+          "selectedBackend": "cpp",
+          "sourceRoot": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src"
+        }
+      }
+    },
+    "focused": {
+      "path": "outputs/cpp-acceleration-v1/effects-production-trial-v7/focused-receipt.json",
+      "sha256": "b4bb3653235ce439c1d39b31e7badae053a6784d2a2b64d0c12450a2213b3fb6"
+    },
+    "staticReview": {
+      "path": "outputs/cpp-acceleration-v1/independent-roi-v7/effects-production-static.json",
+      "sha256": "5abf8da274ce563a0d2c4136aeb784dc352ee425215f37656f001cc8f9c9681b"
+    },
+    "accepted": false,
+    "reason": "Two P1 lifetime counterexamples change a legacy attachment-release refusal into a successful return; runtime/common-case exactness and throughput do not establish full equivalence.",
+    "finalizerFailure": {
+      "path": "outputs/cpp-acceleration-v1/independent-roi-v7/effects-finalizer-lifetime.json",
+      "sha256": "1145b2121dee22678698c0e9d047efa2df6b1c4942f8a15feb464b60480e6dad"
+    },
+    "disposition": {
+      "path": "outputs/cpp-acceleration-v1/independent-roi-v7/effects-finalizer-disposition.json",
+      "sha256": "ddd564674d14e8e423e8d413bc9251c3b546fd1f3f9359e226461f038de68f0c"
+    },
+    "weakrefRepairFailure": {
+      "path": "outputs/cpp-acceleration-v1/independent-roi-v7/effects-weakref-count.json",
+      "sha256": "0a31340e96921d6e6d24691d2f334f97d871f7aec2144441fdd052161462d54c"
+    },
+    "commonCaseDelivery": {
+      "path": "testcases/outputs/cpp-union-final-verification-v7/verification.json",
+      "sha256": "b95a02f2b09c3c59c26b302516fa92fcd022d90c752161754903aa952835984e"
+    },
+    "commonCaseDeliveryPassed": true,
+    "commonCaseDeliveryStages": 23,
+    "notAcceptedDespiteCommonCaseDelivery": "Independent callback lifetime failures supersede the initial static GO and common-case source/wheel/frozen/signed pass."
+  },
+  "acceptedMeasurementsUnchanged": {
+    "originalPlanning": {
+      "speedup": 1.4070200349044457,
+      "exactEquivalent": true,
+      "memoryRegressionPassed": true,
+      "memoryHardCapPassed": true,
+      "latencyPassed": false
+    },
+    "planningReferenceMedianSeconds": 17.438286625023466,
+    "planningCppMedianSeconds": 12.393772791023366,
+    "completeSimulation": {
+      "before": 1.195483957999386,
+      "after": 1.1226744579616934,
+      "speedup": 1.064853617646102
+    },
+    "completeRlEpisodes": {
+      "before": 1.2472362919943407,
+      "after": 1.1406028750352561,
+      "speedup": 1.0934886447272794
+    },
+    "supplementBaseline": "Frozen first C++ capture before native copier, not original Python.",
+    "additionalPlanningReductionNeededFraction": 0.29648998254777714
+  },
+  "rollbackCommit": "8597d7fde0edfac8ef21b7127fe7d1c15c62be5c",
+  "newRegressions": {
+    "file": "tests/test_surgical_cranial_stages.py",
+    "audit": {
+      "path": "outputs/cpp-acceleration-v1/independent-roi-v7/restored-validation.json",
+      "sha256": "846a6f6d32576da0b3ebf12c1ea7e122477018cd8493c65b37f8f48f04d7890c"
+    },
+    "cppPassed": 21,
+    "referencePassed": 21,
+    "scope": "Two finalizer regressions added to the existing module; both backend modes included in complete verifier. No numerical change."
+  },
+  "push": {
+    "target": "origin/shaf/decision-system-v1",
+    "policy": "Normal fast-forward after final audit; verify remote SHA and authorship. No force or main merge.",
+    "receiptPath": "outputs/cpp-acceleration-v1/roi-push-v7.json"
+  },
+  "stopStatus": "Stop further optimization after publication at the user-specified >=0.5-second complete-planning ROI cutoff. No qualifying residual opportunity found; original 2x objective remains incomplete."
+}

@@ -621,3 +621,121 @@ Delivery target is `origin/shaf/decision-system-v1`, using a normal fast-forward
 push. Verify local/remote identity with `git rev-parse HEAD` and
 `git ls-remote origin refs/heads/shaf/decision-system-v1`. The final response
 records the verified pushed commit; binaries and bulky raw evidence remain ignored.
+
+## Residual ROI pass after `87c97490`
+
+The preceding goal turn retained predicate batching with complete independent
+delivery/measurement acceptance and normal push. Its numerical source is
+`9da0ef8a`, accepted at `87c97490`, where this pass started. The fixed 2× planning
+gate remains unmet; the preceding accepted result is 1.40702×.
+
+The next bounded pass reuses the exact v6 timed-only profile rather than rerunning
+an unchanged failure. Metadata identities consume 1.1683 s including their
+surrounding generator. A conservative native design must preserve ordered
+metadata/id audit callbacks and live checks; one additional postcheck costs
+0.6217 s of profile attribution before any kernel/qualification, leaving an
+impossible-best 1.0256× whole-profile ceiling. A separate extra precheck consumes
+the entire budget. No metadata prototype is justified by this evidence.
+
+An unchanged generated planning observation retains the exact frozen output and
+all physical work. Every occupancy lookup receives an ndarray: 67,637 use the
+small-cover exact-integer set path, 927 the large-cover path, and 84 an empty
+ledger. A seed-817 reservoir stores 110 complete numeric/owner inputs across
+14 size buckets. Five alternating complete-lookup pairs, including qualification,
+arrays, masks and moved-cell overrides, estimate 0.364365 → 0.300971 s over those
+67,637 calls (1.21063×). All five pairs improve and 137 controls pass. These are
+reservoir-weighted isolated estimates, not integrated timings. The approximately
+63.4 ms modeled saving is only 0.51% of current planning, while the guarded path
+adds about 40 lines and up to 121,520 B temporary allocation at its 4,096-ID cap.
+The unmeasured new `map` binding would also need qualification. Decline production
+promotion: this small budget does not justify the extra branch/guard surface.
+Replaced NumPy functions and owner attribute hooks retain the original lazy
+generator behavior in the unchanged production implementation.
+
+Repeated scalar rotation work already dispatches to SciPy. Actual revision-2 CUSA
+use is confirmed; its envelope-call frequency is unknown, and saved action counts
+cannot substitute for that frequency. Even assuming every envelope were eligible,
+removing two repeated applies has an ideal 1.0246× whole-profile ceiling before
+guards. Existing rotation qualification costs about 14.46 µs versus 11.68 µs
+gross estimated saving per eligible call; adding more hook checks has poor ROI.
+Keep SciPy and separately owned endpoint arrays. The unused-axis apply has only
+an ideal 1.0021× ceiling, with quaternion validation still required.
+
+The final isolated probe measures preparation/retained set union reuse inside
+`validate_effects` (0.5114 s Python self time; entire-function impossible best
+profile ceiling 1.0254×). The unchanged Generate has 7,820 calls: 723 have no
+edges, each count 1–27 has 165 calls, and 2,642 have 28; none has transected edges.
+A seed-817 reservoir retains eight inputs per class, 232 in total. Five alternating
+complete-validator pairs estimate 0.422224 → 0.161299 s (2.61764×) over that
+distribution. All five improve; 232 input comparisons and 20 callback/refusal
+control records pass. Zero-edge calls show no observed regression; temporary
+peaks are unchanged at 35,544 B / 66,264 B for zero / 28 edges. The 260.9 ms saving
+is a model from isolated calls, not integrated evidence. A None sentinel collision
+was caught and fixed in static review before timing.
+
+This larger budget justified one integration trial: local immutable-integer union
+reuse, keeping the existing compiled set operators. No new C++ binding was needed.
+Startup builtin admission followed the existing proof-cache type/heap-flag
+pattern, without a new qualification framework. Root captured the unchanged
+334-file `87c97490` source/native baseline at `effects-prepass-cpp-v7` before edits.
+The predeclared retention protocol uses ten alternating fresh-process planning
+pairs, one warmup per role, positive median and lower 95% paired-bootstrap speedup
+above one, plus five complete simulation/RL pairs with existing exactness,
+regression and memory gates. No repeat extension, target or workload change.
+Latest user steering explicitly permits finishing this approximately 2% trial,
+then limits further optimization to credible savings of at least 0.5 s on the
+complete planning run. Existing residual profiles provide no such additional
+opportunity: the metadata and rotation ceilings precede unavoidable work, while
+occupancy's isolated estimate is only 63 ms. Stop expansion after this increment.
+The rejected trial is preserved as `f533cb6d`. Initial focused checks passed 189
+C++ / 188 reference with one intentional native-only skip, and initial independent
+static review passed. Ten
+planning pairs give 12.491301 → 12.190211 s, 1.024699×, with paired geometric
+1.025110× and bootstrap 95% interval [1.017567, 1.034341]. All ten pairs improve;
+all exact/work/memory gates pass. Source stayed frozen across both roles.
+Five separate complete simulation/RL pairs pass exactness, median regression and
+memory: 1.111755 → 1.104855 s / 1.150966 → 1.137320 s. These are regression checks,
+not a robust simulation/RL improvement claim; one simulation after-sample is
+1.251770 s and remains in the evidence. No repetitions were extended or removed.
+
+All 23 source/wheel/frozen/signed stages also passed: 881 C++ / 361 reference
+checks, expected skips, all runtime variants and four actual signed workflows.
+**Final independent review nevertheless rejected the trial.** Holding the
+preparation operand longer delays its finalizer when a custom boundary mapping
+replaces it. Holding even a memo-ineligible custom union temporary also delays
+its finalizer. Both generated controls turn the original attachment-release
+refusal into a successful return. Common-case exactness and fast timings do not
+satisfy the full behavior contract. A weak-memo repair adds publicly observable
+weak references and changes a third control from acceptance into refusal. No
+such repair or larger ownership/hook framework is retained.
+
+`8597d7fd` restores the original literal expression and removes the trial helper
+and trial test file. It keeps two focused finalizer regressions in the existing
+cranial test module and adds that module to both modes of the existing complete
+verifier. The module passes 21 C++ / 21 reference checks. All 334 accepted
+numerical/build source files match v6 exactly; the sole expected change among its
+15 final snapshot files is the verifier's added test selection. The two P1
+controls supersede the initial static GO. The rejected trial, common-case
+verification, all measured samples, failed repairs and review diagnostics remain
+separate from accepted evidence in the
+[residual ROI receipt](../artifacts/cpp-acceleration-v1/residual-roi-v7.json).
+
+The exact qualified v6 app, sidecar and notices are restored from preserved
+bundles; the rejected v7 bundle and reports remain archived. Complete file hashes,
+symlink targets and modes match before and after promotion (4,916 distribution /
+3,673 engine / 525 notices entries). All four runtimes pass five variants. The
+restored signed C++ and reference cold Opens reproduce original-v6 full snapshots
+with zero planning; strict signature passes with original CDHash `308f8caf…4a5a`.
+No rebuild or new original/cumulative benchmark is warranted after byte-exact
+numerical rollback; accepted v6 results and 23-stage delivery remain applicable.
+Root owns the final record/push and the independent reviewer audits restoration.
+No additional optimization meets the user's 0.5 s whole-planning cutoff; stop
+expansion after this closeout, leaving 2× unmet.
+
+Final independent rollback/delivery and record audit passes: all installed tree
+bytes/modes/links and 334 source inputs, strict signature, 20 runtime outcomes,
+two exact cold snapshots and all 40 measured / six warmup trial receipts. Its
+frozen review is `ff960aeb…0d12c`; the reviewed owner snapshot precedes only final
+status/review-pointer annotation, avoiding a circular hash. No production defect
+remains. The trial remains rejected, accepted v6 results remain unchanged, and
+further optimization stops at the requested cutoff after a normal verified push.
