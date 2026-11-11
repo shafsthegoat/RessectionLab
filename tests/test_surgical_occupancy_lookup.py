@@ -16,7 +16,9 @@ def test_sorted_cleared_lookup_handles_arbitrary_shape_duplicates_and_replaced_s
         return np.array([[owner.moved.get(int(i), 0 if i in owner.cleared or not labels[i] else i + 1)
                           for i in row] for row in ids])
     np.testing.assert_array_equal(owner[ids], expected())
-    with pytest.raises(ValueError): owner._sorted_integer_cleared.setflags(write=True)
+    # Native lookup needs no sorted ledger; the reference ledger stays immutable.
+    if owner._sorted_integer_cleared is not None:
+        with pytest.raises(ValueError): owner._sorted_integer_cleared.setflags(write=True)
     saved = owner._sorted_integer_cleared
     np.testing.assert_array_equal(owner[ids], expected())
     assert owner._sorted_integer_cleared is saved

@@ -11,6 +11,7 @@
 #include <stdexcept>
 #include <tuple>
 #include "state_native.hpp"
+#include "executor_native.hpp"
 
 namespace py = pybind11;
 namespace {
@@ -319,4 +320,9 @@ PYBIND11_MODULE(_geometry_cpp, module) {
     module.def("segment_predicate_batch", &segment_predicate_batch,
                py::arg("endpoints").noconvert(), py::arg("thresholds").noconvert(), py::arg("eps"));
     bind_state_native(module);
+    bind_executor_physical(module);
+    bind_executor_trajectory(module);
+    bind_executor_state(module);
+    bind_executor_cache(module);
+    bind_executor_occupancy(module);
 }

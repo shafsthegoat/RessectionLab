@@ -4,13 +4,14 @@ Transactional engine clones share this cache, never mutable tissue, occupancy,
 clearance or acceptance decisions. Fresh engines own an empty cache. Qualified
 numerical backends produce the same ordered full-cell covers, including shear.
 """
+import builtins
 from collections import OrderedDict
 from threading import RLock
 from types import FunctionType
 
 import numpy as np
 
-from . import geometry
+from . import geometry, native_backend
 from .core import immutable_array
 
 _REFERENCE_CAPSULE_KERNEL = geometry.capsule_voxel_indices
@@ -31,6 +32,23 @@ def _function_identity(function):
     # Retain identities without invoking user equality; mutable defaults cannot authorize reuse.
     return (id(function), function, id(code), code, id(defaults), defaults, id(keywords), keywords,
         tuple((id(k), k, id(v), v) for k, v in items), None if scalar_defaults else object())
+
+
+_IDENTITY_FUNCTION = _function_identity
+_IDENTITY_CODE = _function_identity.__code__
+_IDENTITY_TYPE = FunctionType
+_IDENTITY_ATOMS = _DEFAULT_ATOMS
+_IDENTITY_BUILTINS = tuple((name, getattr(builtins, name)) for name in
+                          ('id', 'type', 'object', 'dict', 'tuple', 'all', 'any'))
+
+
+def _identity_batch_supported():
+    return (_function_identity is _IDENTITY_FUNCTION and _function_identity.__code__ is _IDENTITY_CODE
+        and _function_identity.__defaults__ is None and _function_identity.__kwdefaults__ is None
+        and FunctionType is _IDENTITY_TYPE is _IDENTITY_FUNCTION.__class__
+        and _DEFAULT_ATOMS is _IDENTITY_ATOMS
+        and all(_function_identity.__builtins__.get(name) is original
+                and globals().get(name, original) is original for name, original in _IDENTITY_BUILTINS))
 
 
 class SurgicalCellCoverCache:
@@ -118,8 +136,11 @@ class SurgicalCellCoverCache:
             geometry.GeometryScene.voxel_to_world, geometry.capsule_voxel_indices_batch,
             geometry._capsule_voxel_indices_reference, geometry._native_capsule_supported,
             type(self)._query_values, type(self)._remember, _function_identity)
-        return (self.VERSION, geometry.GEOMETRY_VERSION, geometry._EPS, implementation_identity(),
-            tuple(_function_identity(function) for function in functions))
+        implementation = implementation_identity()
+        identities = (native_backend.function_identities(functions, _DEFAULT_ATOMS)
+            if native_backend._module is not None and _identity_batch_supported()
+            else tuple(_function_identity(function) for function in functions))
+        return self.VERSION, geometry.GEOMETRY_VERSION, geometry._EPS, implementation, identities
 
     def _validate_frame(self, grid, implementation):
         if grid is not self.grid or self._frame_identity() != self._frame:

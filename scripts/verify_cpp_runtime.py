@@ -64,6 +64,8 @@ def successful(record: dict, native: bool, package_root: Path) -> None:
         assert (json.loads(helper) if isinstance(helper, str) else helper)["mode"] == "python", helper
     if native:
         assert backend["binarySha256"] and backend["buildIdentity"], backend
+        assert backend["counters"]["physicalSubstepCalls"] > 0, "Physical executor was not native"
+        assert backend["counters"]["trajectoryCalls"] > 0, "Trajectory executor was not native"
         assert Path(backend["binaryPath"]).is_relative_to(package_root), backend
         assert backend["counters"]["bindingCalls"] > record["before"]["counters"]["bindingCalls"], "Public call did not enter C++"
     else:

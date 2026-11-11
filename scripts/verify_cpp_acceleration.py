@@ -72,7 +72,7 @@ def main():
     try:
         run('build-tools', [python, '-m', 'pip', 'install', 'setuptools>=77', 'pybind11>=3,<4'], clean=True)
         run('source-extension', [python, 'setup.py', 'build_ext', '--inplace'])
-        focused = ['tests/test_generated_cpp_fixture.py', 'tests/test_cpp_geometry.py',
+        focused = ['tests/test_cpp_executor.py', 'tests/test_generated_cpp_fixture.py', 'tests/test_cpp_geometry.py',
             'tests/test_cpp_state.py', 'tests/test_cpp_motion.py', 'tests/test_cpp_trajectory.py',
             'tests/test_cpp_predicate_batch_native.py', 'tests/test_cpp_predicate_contacts.py',
             'tests/test_cpp_independent_acceptance.py',

@@ -15,6 +15,7 @@ from pathlib import Path
 import platform
 import sys
 import sysconfig
+import threading
 import numpy as np
 from types import BuiltinFunctionType
 
@@ -107,7 +108,8 @@ def _load():
             _files[path] = (_stat(path), _digest(path))
         _entry_points = tuple((name, getattr(module, name)) for name in
                               ('capsule_chunk', 'copy_builtin_json', 'segment_predicate', 'copy_engine_graph',
-                               'segment_predicate_batch'))
+                               'segment_predicate_batch', 'run_trajectory', 'physical_substep', 'owned_digest',
+                               'function_identities', 'occupancy_values'))
         if (sys.modules.get(_MODULE_NAME) is not module
                 or Path(module.__spec__.origin).resolve() != binary
                 or any(type(function) is not BuiltinFunctionType
@@ -126,6 +128,7 @@ def _load():
 _load()
 _identity_json = _canonical(_identity)
 _counters = {}
+_execution = threading.local()
 
 
 def reset_counters():
@@ -135,7 +138,9 @@ def reset_counters():
                      segmentBatchExamined=0, batchCalls=0, batchItems=0, maxBatchItems=0,
                      primitiveCandidates=0, maxPrimitiveCandidates=0, ambiguousCandidates=0,
                      referenceCalls=0, unsupportedCalls=0, jsonCopyCalls=0, jsonCopyFallbackCalls=0,
-                     engineCopyCalls=0, engineCopyFallbackCalls=0, batchSizes={})
+                     engineCopyCalls=0, engineCopyFallbackCalls=0, trajectoryCalls=0,
+                     physicalSubstepCalls=0, ownedDigestCalls=0, cacheIdentityCalls=0,
+                     occupancyCalls=0, batchSizes={})
 
 
 reset_counters()
@@ -156,6 +161,10 @@ def _check_live():
         raise NativeIntegrityError('Loaded numerical backend metadata unavailable') from exc
     if changed:
         raise NativeIntegrityError('Loaded numerical backend implementation changed')
+    # The bounded executor verifies disk identity before entry and before exit.
+    # Inner bindings still validate environment, module and entrypoints above.
+    if getattr(_execution, 'depth', 0):
+        return
     try:
         for path, (previous_stat, expected) in tuple(_files.items()):
             current_stat = _stat(path)
@@ -268,3 +277,47 @@ def try_segment_batch(endpoints, thresholds, eps):
     _counters['segmentBatchExamined'] += result[2]
     _check_live()
     return result
+
+
+def run_trajectory(*args):
+    _check_live()
+    _counters['bindingCalls'] += 1
+    _counters['trajectoryCalls'] += 1
+    return _module.run_trajectory(*args)
+
+
+def physical_substep(*args):
+    _check_live()
+    _counters['bindingCalls'] += 1
+    _counters['physicalSubstepCalls'] += 1
+    _execution.depth = getattr(_execution, 'depth', 0) + 1
+    try:
+        return _module.physical_substep(*args)
+    finally:
+        _execution.depth -= 1
+        _check_live()
+
+
+def owned_digest(value, dumps, sha256, fallback):
+    if _module is None:
+        return fallback
+    _check_live()
+    _counters['bindingCalls'] += 1
+    _counters['ownedDigestCalls'] += 1
+    return _module.owned_digest(value, dumps, sha256, fallback)
+
+
+def function_identities(functions, atoms):
+    # Called immediately after implementation_identity validated this binding.
+    _counters['bindingCalls'] += 1
+    _counters['cacheIdentityCalls'] += 1
+    return _module.function_identities(functions, atoms)
+
+
+def occupancy_values(labels, ids, cleared, moved, fallback):
+    if _module is None:
+        return fallback
+    _check_live()
+    _counters['bindingCalls'] += 1
+    _counters['occupancyCalls'] += 1
+    return _module.occupancy_values(labels, ids, cleared, moved, fallback)

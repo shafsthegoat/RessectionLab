@@ -21,6 +21,7 @@ import numpy as np
 from scipy.spatial.transform import Rotation, Slerp
 from .core import semantic_digest
 from .native_backend import native_engine_copy
+from . import native_backend
 from .geometry import GeometryScene, capsule_voxel_indices, segment_segment_distance
 from .surgical_tools import TOOLS, catalog
 from .surgical_cusa_v3 import profile as cusa_profile
@@ -139,7 +140,18 @@ def _reuse_removed_snapshot(value, snapshot):
     return None
 
 
+_digest_fallback = object()
+
+
 def _owned_digest(value):
+    if native_backend._module is not None:
+        result = native_backend.owned_digest(value, json.dumps, hashlib.sha256, _digest_fallback)
+        if result is not _digest_fallback:
+            return result
+    return _owned_digest_reference(value)
+
+
+def _owned_digest_reference(value):
     """Canonical hash of synchronously owned engine JSON, without detaching it.
 
     Transitions and cursor reads are serialized by the engine owner. Validate
@@ -875,56 +887,61 @@ class SurgicalEngine:
         if total > 20000: raise ValueError('PATH_TOO_LONG: split this stroke into shorter actions')
         if any(np.linalg.norm(np.subtract(q['position'], p['position'])) > 250 for p, q, _ in segments):
             raise ValueError('PATH_TOO_LONG')
-        done = 0
-        reason = None
-        contact_position = None
-        path_fraction = None
-        completed_length = 0.
-        from .surgical_motion import _trajectory_quaternion
-        for start, end, n in segments:
-            interpolation = Slerp([0, 1], Rotation.from_quat([start['quaternion'], end['quaternion']]))
-            quaternion_chunk = None
-            for j in range(n):
-                if check is not None: _checked_operation(check)
-                t = (j + 1) / n
-                p = ((1 - t) * finite(start['position'], 3) + t * finite(end['position'], 3))
-                quat, quaternion_chunk = _trajectory_quaternion(
-                    interpolation, j, n, quaternion_chunk, Rotation, Slerp)
-                if quat is None:
-                    quat = interpolation(t).as_quat()
-                old = _microstep_checkpoint(self.state)
-                try:
-                    if articulate: self.state['slots'][key]['parameters']['jawOpeningMm'] = jaw_target if done+1==total else previous_jaw+(jaw_target-previous_jaw)*(done+1)/total
-                    delta_events = self._substep(key, op, p, quat, active, duration / total)
-                except ValueError as error:
+        if native_backend._module is not None:
+            done, reason, contact_position, path_fraction = native_backend.run_trajectory(
+                self, key, op, segments, active, duration, total, articulate,
+                jaw_target, previous_jaw, progress_reason, cusa_v3, check, events)
+        else:
+            done = 0
+            reason = None
+            contact_position = None
+            path_fraction = None
+            completed_length = 0.
+            from .surgical_motion import _trajectory_quaternion
+            for start, end, n in segments:
+                interpolation = Slerp([0, 1], Rotation.from_quat([start['quaternion'], end['quaternion']]))
+                quaternion_chunk = None
+                for j in range(n):
                     if check is not None: _checked_operation(check)
-                    code = str(error).split(':', 1)[0]
-                    if ((code == 'PROTECTED_STRUCTURE' and not getattr(self, '_restoring_legacy_guard_partial', False))
-                            or self._cranial_access is not None
-                            or code.startswith(('CRANIAL_ACCESS_', 'CRANIOTOMY_', 'BONE_FLAP_'))):
-                        # Discard the complete proposed transaction, including
-                        # safe treatment earlier in this same drawn stroke.
-                        raise
-                    self.state = old
-                    reason = str(error)
-                    contact_position = p.tolist()
-                    break
-                events.extend(delta_events)
-                done += 1
-            if reason: break
-            segment_length = float(np.linalg.norm(np.subtract(end['position'], start['position'])))
-            # A stalled waypoint cannot be skipped in favor of a later leg:
-            # that would change a drawn trajectory into an unintended shortcut.
-            if len(segments) > 1 and active and progress_reason:
-                remaining = float(np.linalg.norm(np.subtract(self.state['slots'][key]['position'], end['position'])))
-                if remaining > 1e-5:
-                    length = sum(float(np.linalg.norm(np.subtract(b['position'], a['position']))) for a, b, _ in segments)
-                    path_fraction = (completed_length + max(0., segment_length - remaining)) / max(length, 1e-15)
-                    reason = progress_reason
-                    contact_position = self.state['slots'][key]['position'][:]
-                    events.append({'kind': 'cusa_contact_dwell' if cusa_v3 else 'drill_contact_dwell', 'position': contact_position, 'remainingPathMm': length * (1. - path_fraction)})
-                    break
-            completed_length += segment_length
+                    t = (j + 1) / n
+                    p = ((1 - t) * finite(start['position'], 3) + t * finite(end['position'], 3))
+                    quat, quaternion_chunk = _trajectory_quaternion(
+                        interpolation, j, n, quaternion_chunk, Rotation, Slerp)
+                    if quat is None:
+                        quat = interpolation(t).as_quat()
+                    old = _microstep_checkpoint(self.state)
+                    try:
+                        if articulate: self.state['slots'][key]['parameters']['jawOpeningMm'] = jaw_target if done+1==total else previous_jaw+(jaw_target-previous_jaw)*(done+1)/total
+                        delta_events = self._substep(key, op, p, quat, active, duration / total)
+                    except ValueError as error:
+                        if check is not None: _checked_operation(check)
+                        code = str(error).split(':', 1)[0]
+                        if ((code == 'PROTECTED_STRUCTURE' and not getattr(self, '_restoring_legacy_guard_partial', False))
+                                or self._cranial_access is not None
+                                or code.startswith(('CRANIAL_ACCESS_', 'CRANIOTOMY_', 'BONE_FLAP_'))):
+                            # Discard the complete proposed transaction, including
+                            # safe treatment earlier in this same drawn stroke.
+                            raise
+                        self.state = old
+                        reason = str(error)
+                        contact_position = p.tolist()
+                        break
+                    events.extend(delta_events)
+                    done += 1
+                if reason: break
+                segment_length = float(np.linalg.norm(np.subtract(end['position'], start['position'])))
+                # A stalled waypoint cannot be skipped in favor of a later leg:
+                # that would change a drawn trajectory into an unintended shortcut.
+                if len(segments) > 1 and active and progress_reason:
+                    remaining = float(np.linalg.norm(np.subtract(self.state['slots'][key]['position'], end['position'])))
+                    if remaining > 1e-5:
+                        length = sum(float(np.linalg.norm(np.subtract(b['position'], a['position']))) for a, b, _ in segments)
+                        path_fraction = (completed_length + max(0., segment_length - remaining)) / max(length, 1e-15)
+                        reason = progress_reason
+                        contact_position = self.state['slots'][key]['position'][:]
+                        events.append({'kind': 'cusa_contact_dwell' if cusa_v3 else 'drill_contact_dwell', 'position': contact_position, 'remainingPathMm': length * (1. - path_fraction)})
+                        break
+                completed_length += segment_length
         if reason:
             events.append({'kind': 'contact_stop', 'reason': reason, 'position': contact_position})
         if done == 0: return {'status': 'rejected', 'reason': reason, 'completedFraction': 0., 'events': events}
@@ -1015,6 +1032,11 @@ class SurgicalEngine:
         return events
 
     def _physical_substep(self, key, op, p, q, active, dt):
+        if native_backend._module is not None:
+            return native_backend.physical_substep(self, key, op, p, q, active, dt)
+        return self._physical_substep_reference(key, op, p, q, active, dt)
+
+    def _physical_substep_reference(self, key, op, p, q, active, dt):
         if op == 'bladeManeuver':
             from .surgical_planar_maneuver import advance
             return advance(self, key, p, q, dt)

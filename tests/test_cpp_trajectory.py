@@ -428,7 +428,8 @@ def test_real_engine_callback_can_replace_and_restore_the_interpolator(monkeypat
     selected = motion.native_backend.cpp_enabled()
 
     def customized(self, times):
-        if sys._getframe(1).f_code is SurgicalEngine._execute.__code__:
+        if sys._getframe(1).f_code in (SurgicalEngine._execute.__code__,
+                                      motion.native_backend.run_trajectory.__code__):
             scalar_hooks.append(times)
         return original(self, times)
 

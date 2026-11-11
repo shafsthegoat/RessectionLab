@@ -56,12 +56,18 @@ def trajectory_probe() -> dict:
             substeps.append(frame.f_locals["q"].tobytes())
 
     previous = sys.getprofile()
+    before = native_backend.backend_identity()['counters']
     sys.setprofile(observe)
     try:
         result = engine.step({"slot": "left", "operation": "inspect", "duration": 3.3})
     finally:
         sys.setprofile(previous)
     native = native_backend.cpp_enabled()
+    after = native_backend.backend_identity()['counters']
+    native_trajectories = after['trajectoryCalls'] - before['trajectoryCalls']
+    native_substeps = after['physicalSubstepCalls'] - before['physicalSubstepCalls']
+    assert native_trajectories == (1 if native else 0)
+    assert native_substeps == (33 if native else 0)
     assert result["status"] == "accepted" and len(substeps) == 33
     assert batches == ([32, 1] if native else [])
     assert scalar == ([] if native else [(j + 1) / 33 for j in range(33)])
@@ -71,6 +77,7 @@ def trajectory_probe() -> dict:
     assert engine.state["elapsedSeconds"] == elapsed
     return {"passed": True, "batchSizes": batches, "scalarCalls": len(scalar),
             "physicalSubsteps": len(substeps), "elapsedSeconds": elapsed,
+            "nativeTrajectoryCalls": native_trajectories, "nativePhysicalSubstepCalls": native_substeps,
             "quaternionsSha256": hashlib.sha256(b"".join(substeps)).hexdigest()}
 
 
