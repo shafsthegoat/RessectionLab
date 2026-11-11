@@ -49,6 +49,10 @@ def successful(record: dict, native: bool, package_root: Path) -> None:
     assert checkpoint["selected"] == ("cpp" if native else "reference")
     assert checkpoint["nativeCalls"] >= 1 if native else checkpoint["nativeCalls"] == 0
     assert record["motionCache"]["sourceQualified"] and record["motionCache"]["helpersUnchanged"]
+    trajectory = record["trajectory"]
+    assert trajectory["passed"] and trajectory["physicalSubsteps"] == 33
+    assert trajectory["batchSizes"] == ([32, 1] if native else [])
+    assert trajectory["scalarCalls"] == (0 if native else 33)
     assert Path(record["runtime"]["packagePath"]).is_relative_to(package_root), record["runtime"]
     backend = record["backend"]
     assert backend["selected"] == ("cpp" if native else "reference"), backend
@@ -94,6 +98,8 @@ def verify(args) -> dict:
         successful(reference, False, package_root)
         assert reference["publicCall"] == cpp["publicCall"], "Reference/C++ ordered cells differ"
         assert reference["replay"] == cpp["replay"], "Reference/C++ accepted replay differs"
+        for key in ("physicalSubsteps", "elapsedSeconds", "quaternionsSha256"):
+            assert reference["trajectory"][key] == cpp["trajectory"][key], "Reference/C++ trajectory differs"
 
         manifest_path = isolated_package / "_geometry_cpp.build.json"
         original = manifest_path.read_bytes()

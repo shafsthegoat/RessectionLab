@@ -880,13 +880,18 @@ class SurgicalEngine:
         contact_position = None
         path_fraction = None
         completed_length = 0.
+        from .surgical_motion import _trajectory_quaternion
         for start, end, n in segments:
             interpolation = Slerp([0, 1], Rotation.from_quat([start['quaternion'], end['quaternion']]))
+            quaternion_chunk = None
             for j in range(n):
                 if check is not None: _checked_operation(check)
                 t = (j + 1) / n
                 p = ((1 - t) * finite(start['position'], 3) + t * finite(end['position'], 3))
-                quat = interpolation(t).as_quat()
+                quat, quaternion_chunk = _trajectory_quaternion(
+                    interpolation, j, n, quaternion_chunk, Rotation, Slerp)
+                if quat is None:
+                    quat = interpolation(t).as_quat()
                 old = _microstep_checkpoint(self.state)
                 try:
                     if articulate: self.state['slots'][key]['parameters']['jawOpeningMm'] = jaw_target if done+1==total else previous_jaw+(jaw_target-previous_jaw)*(done+1)/total

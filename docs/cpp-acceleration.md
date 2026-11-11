@@ -403,6 +403,71 @@ headers and binaries are unchanged. The next action is to consider a further
 port only when a new measured numerical bottleneck supports a concrete design
 that preserves behavior. The original 2× target remains unmet.
 
+## Trajectory batching candidate after `43b4d6aa`
+
+The next measured seam is repeated scalar SciPy interpolation: 7,816 calls take
+0.574 s inclusive in the current timed-only planning profile. This work is
+already partly compiled. Bounded batches may remove repeated Python dispatch
+while retaining SciPy's numerical implementation and every physical substep.
+No new C++ entrypoint or physics algorithm is proposed.
+
+Before implementation, 56,165 quaternion rows in 219 generated trajectories and
+1,869 chunks match scalar output bits exactly. Coverage includes the actual
+fixture orientations/counts, signed zeros, random/near-zero/near-pi/antipodal
+rotations and two full 20,000-step controls. Each returned row is privately owned.
+With selection and helper qualification repeated per row, five paired helper
+samples improve about 2.1×. These are supporting measurements, not integrated
+acceptance or evidence for the original 2× gate.
+
+The preceding C++ source/binary is captured at
+`outputs/cpp-acceleration-v1/trajectory-prepass-cpp-v5`, with all 334 files checked.
+The unchanged workers will run ten alternating fresh-process pairs with one
+warmup per role. Before timing, retention requires exact frozen work, memory and
+hard caps, a positive median gain, and a positive lower 95% paired-bootstrap
+geometric-speedup interval. No post-hoc extension of repetitions is planned.
+The original pre-port comparison and target remain separate and unchanged.
+
+The motion owner has frozen the small local 32-row buffer in
+`surgical_motion.py` and `surgical_engine.py`; the coordinator owns measurement
+and delivery, and the independent reviewer checks behavior and fairness. Review
+found three concrete issues before timing: a callback can change NumPy underflow
+policy after prefetch, a replacement method descriptor can masquerade as the
+original function, and instance attribute hooks can be hidden by cached work.
+These also expose defects in the existing angular cache. Their failed controls
+are retained. Shared source-qualified policy, raw descriptor and bounded class
+protocol checks now preserve scalar dispatch for these cases. The fixes remain
+required independently of the batching retention decision.
+
+Focused checks pass: 85 C++ tests; 84 reference tests and one intentional skip.
+Proof epochs/fingerprints remain qualified. Ten alternating fresh-process pairs
+pass the declared retention gate: **12.928910 → 12.627930 s**, **1.02383×** median
+speedup, with paired geometric speedup 1.02222× and bootstrap 95% interval
+**[1.01633, 1.02736]**. Exact frozen work and memory pass (median RSS
+141,934,592 → 141,672,448 B). This measures the combined guard corrections and
+batching against the preceding captured C++ implementation; the gain cannot be
+attributed solely to batching. Both changes are retained.
+
+A complete public 33-substep runtime probe now observes C++-selected SciPy batches
+`[32, 1]` versus 33 scalar reference calls, with identical quaternion bytes and
+clock accounting. Source execution passes all five available/unavailable/integrity
+variants. Its first diagnostic run used the wrong frame argument name; only the
+observer was corrected, and that failed receipt is retained.
+
+Fresh timed-only supplementary profiles retain both exact frozen outputs. They
+cover 1.953 s simulation / 2.146 s RL of profiled work. Checkpoint calls take
+0.044 / 0.064 s inclusive and transition clones 0.0036 / 0.0022 s after the
+existing native copier. Simulation mesh/assembly/history remain 0.0032 / 0.0229 /
+0.0121 s; vascular integration includes 0.115 s in SciPy's `solve_ivp`, which mixes
+Python integration control and compiled array operations. RL observations take
+0.0860 s inclusive (4.01%), with 0.0537 s Python
+self time. The new underflow qualification costs 0.0063 / 0.0114 s inclusive.
+These overlapping attribution values are not before/after speed evidence. The
+six-area inventory above remains applicable: no further numerical port is
+justified by these small residual seams. Refreshed delivery and paired complete
+simulation/RL results remain pending; the prior packaged acceptance still applies
+to the captured production version. See the
+[trajectory receipt](../artifacts/cpp-acceleration-v1/trajectory-followup-acceptance-v5.json).
+
 Delivery target is `origin/shaf/decision-system-v1`, using a normal fast-forward
 push. Verify local/remote identity with `git rev-parse HEAD` and
 `git ls-remote origin refs/heads/shaf/decision-system-v1`. The final response

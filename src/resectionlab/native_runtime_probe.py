@@ -34,6 +34,46 @@ def checkpoint_probe() -> dict:
             "selected": after["selected"], "nativeCalls": calls, "nativeFallbackCalls": fallbacks}
 
 
+def trajectory_probe() -> dict:
+    """Observe bounded interpolation inside a complete public simulator step."""
+    import numpy as np
+    from . import native_backend, surgical_motion
+    from .surgical_engine import SurgicalEngine
+    from .surgical_scene import SurgicalScene
+    engine = SurgicalEngine(SurgicalScene(np.zeros((8, 8, 8), np.uint16), np.eye(4), [], {}, {}))
+    batches, scalar, substeps = [], [], []
+    target = surgical_motion.Slerp.__call__.__code__
+
+    def observe(frame, event, arg):
+        if event != "call":
+            return
+        if frame.f_code is target:
+            if frame.f_back.f_code is surgical_motion._trajectory_quaternion.__code__:
+                batches.append(len(frame.f_locals["times"]))
+            elif frame.f_back.f_code is SurgicalEngine._execute.__code__:
+                scalar.append(frame.f_locals["times"])
+        elif frame.f_code is SurgicalEngine._substep.__code__:
+            substeps.append(frame.f_locals["q"].tobytes())
+
+    previous = sys.getprofile()
+    sys.setprofile(observe)
+    try:
+        result = engine.step({"slot": "left", "operation": "inspect", "duration": 3.3})
+    finally:
+        sys.setprofile(previous)
+    native = native_backend.cpp_enabled()
+    assert result["status"] == "accepted" and len(substeps) == 33
+    assert batches == ([32, 1] if native else [])
+    assert scalar == ([] if native else [(j + 1) / 33 for j in range(33)])
+    elapsed = 0.
+    for _ in range(33):
+        elapsed += 3.3 / 33
+    assert engine.state["elapsedSeconds"] == elapsed
+    return {"passed": True, "batchSizes": batches, "scalarCalls": len(scalar),
+            "physicalSubsteps": len(substeps), "elapsedSeconds": elapsed,
+            "quaternionsSha256": hashlib.sha256(b"".join(substeps)).hexdigest()}
+
+
 def gc_proof_probe() -> dict:
     """Qualify cancellation-style owner cleanup in the actual loaded runtime."""
     import gc
@@ -119,6 +159,7 @@ def probe() -> dict:
     motion = {"sourceQualified": surgical_motion._rotation_captures_genuine,
               "helpersUnchanged": surgical_motion._rotation_helpers_unchanged()}
     assert all(motion.values()), "Stock SciPy angular helpers did not qualify in this runtime"
+    trajectory = trajectory_probe()
     replay = replay_probe()
     proof_lifecycle = gc_proof_probe()
     return {"schema": "resectionlab-native-runtime-probe-v1", "passed": True,
@@ -132,6 +173,7 @@ def probe() -> dict:
                            "orderedCellsSha256": hashlib.sha256(cells.tobytes()).hexdigest()},
             "replay": replay,
             "checkpoint": checkpoint,
+            "trajectory": trajectory,
             "motionCache": motion,
             "proofLifecycle": proof_lifecycle,
             "olderOptionalHelpers": {"idle": idle_identity(), "prefixJson": prefix_identity()}}
