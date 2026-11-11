@@ -1,0 +1,1866 @@
+{
+  "schema": "resectionlab-cpp-top-three-native-v11",
+  "passedCorrectnessAndRegressions": true,
+  "sourceCommit": null,
+  "previousCppSourceCommit": "6d7c4ef08ff9ae247f7db703d9bc94c8d5b11f62",
+  "policy": "Five fresh-process pairs with alternating order after one warmup per role/workload; unchanged existing worker, complete elapsed including setup/bindings/copies/production hashes, untimed audit; numerical pools one thread. Three roles on Generate alternate original/current and previous/current simultaneously. No profiling in timing samples.",
+  "sources": {
+    "original-reference": {
+      "root": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/baseline/source/src",
+      "backend": "reference"
+    },
+    "previous-cpp": {
+      "root": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-prepass-v11/src",
+      "backend": "cpp"
+    },
+    "current-cpp": {
+      "root": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src",
+      "backend": "cpp"
+    }
+  },
+  "manifests": {
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/manifests/experiments/cpp-acceleration-v1.json": "f507080eb60f214fd4f050e1595d551bff6222b6fef6cad6d6f7b7a98abb0f67",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/manifests/experiments/cpp-acceleration-simulation-v1.json": "7c4eb89e4b1061f2d3ed08d39c53dc1396f549c93b842e8b0dc4c7b157cd177a"
+  },
+  "workloads": {
+    "generate": {
+      "pairs": [
+        {
+          "index": 0,
+          "order": [
+            "original-reference",
+            "previous-cpp",
+            "current-cpp"
+          ]
+        },
+        {
+          "index": 1,
+          "order": [
+            "current-cpp",
+            "previous-cpp",
+            "original-reference"
+          ]
+        },
+        {
+          "index": 2,
+          "order": [
+            "original-reference",
+            "previous-cpp",
+            "current-cpp"
+          ]
+        },
+        {
+          "index": 3,
+          "order": [
+            "current-cpp",
+            "previous-cpp",
+            "original-reference"
+          ]
+        },
+        {
+          "index": 4,
+          "order": [
+            "original-reference",
+            "previous-cpp",
+            "current-cpp"
+          ]
+        }
+      ],
+      "roles": {
+        "original-reference": {
+          "medianSeconds": 17.245107375027146,
+          "minSeconds": 17.117296332959086,
+          "maxSeconds": 17.31991045799805,
+          "stdevSeconds": 0.08295126369063233,
+          "sampleCount": 5,
+          "samplesSeconds": [
+            17.117296332959086,
+            17.20863179297885,
+            17.31991045799805,
+            17.311222666932736,
+            17.245107375027146
+          ],
+          "medianPeakRssBytes": 150323200,
+          "peakRssBytes": 150519808
+        },
+        "previous-cpp": {
+          "medianSeconds": 10.95123941701604,
+          "minSeconds": 10.927538499003276,
+          "maxSeconds": 11.044954958022572,
+          "stdevSeconds": 0.04695481543278615,
+          "sampleCount": 5,
+          "samplesSeconds": [
+            10.927538499003276,
+            10.95123941701604,
+            10.991054332989734,
+            10.945061124977656,
+            11.044954958022572
+          ],
+          "medianPeakRssBytes": 142295040,
+          "peakRssBytes": 143753216
+        },
+        "current-cpp": {
+          "medianSeconds": 9.656631833000574,
+          "minSeconds": 9.595033001038246,
+          "maxSeconds": 9.726671249954961,
+          "stdevSeconds": 0.05275700761860736,
+          "sampleCount": 5,
+          "samplesSeconds": [
+            9.656631833000574,
+            9.726671249954961,
+            9.595033001038246,
+            9.712491958052851,
+            9.651893458969425
+          ],
+          "medianPeakRssBytes": 144441344,
+          "peakRssBytes": 144818176
+        }
+      },
+      "exactEquivalent": true,
+      "exactDigests": [
+        "sha256:78246b9c6a0be381afc15cd1b6b2c6dac82442253669c6fe16cf374c1afcc3ec"
+      ],
+      "speedupOverBaseline": 1.785830471044129,
+      "secondsSaved": 7.588475542026572,
+      "memoryRegressionPassed": true,
+      "latencyRegressionPassed": true,
+      "hardMemoryCapPassed": true,
+      "nativeCounters": {
+        "ambiguousCandidates": 306,
+        "batchCalls": 16697,
+        "batchItems": 20693,
+        "batchSizes": {
+          "1": 12709,
+          "2": 3980,
+          "3": 8
+        },
+        "bindingCalls": 312851,
+        "cacheIdentityCalls": 55860,
+        "canonicalDigestCalls": 83142,
+        "canonicalDigestFallbackCalls": 7,
+        "cranialCellsCalls": 1003,
+        "engineCopyCalls": 11901,
+        "engineCopyFallbackCalls": 0,
+        "geometryBindingCalls": 39151,
+        "jsonCopyCalls": 7,
+        "jsonCopyFallbackCalls": 7,
+        "maxBatchItems": 3,
+        "maxPrimitiveCandidates": 1125,
+        "motionEnvelopeCalls": 44958,
+        "occupancyCalls": 68648,
+        "ownedDigestCalls": 67046,
+        "physicalSubstepCalls": 7820,
+        "primitiveCandidates": 2918780,
+        "referenceCalls": 0,
+        "segmentBatchCalls": 21638,
+        "segmentBatchExamined": 105230,
+        "segmentBatchItems": 105230,
+        "segmentPredicateCalls": 816,
+        "segmentPredicateRefinements": 0,
+        "trajectoryCalls": 361,
+        "unsupportedCalls": 0
+      },
+      "backend": {
+        "binaryPath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src/resectionlab/_geometry_cpp.cpython-312-darwin.so",
+        "binarySha256": "c3a2d0998db2dd8d1b68fb692eeb028cff8235f4128ec8578adbb9818ce87832",
+        "buildIdentity": {
+          "compiler": {
+            "path": "/usr/bin/clang++",
+            "version": "Apple clang version 21.0.0 (clang-2100.1.1.101)"
+          },
+          "cppStandard": 17,
+          "flags": [
+            "-fvisibility=hidden",
+            "-g0",
+            "-std=c++17",
+            "-mmacosx-version-min=10.14",
+            "-O3",
+            "-fno-fast-math",
+            "-ffp-contract=off"
+          ],
+          "platform": {
+            "machine": "arm64",
+            "system": "Darwin"
+          },
+          "pybind11": "3.1.0",
+          "python": {
+            "abi": "cpython-312-darwin",
+            "version": "3.12.14"
+          },
+          "recipeSha256": "8cb767f44920b530faf32b7d2642566c00e8f8165ad564cb7efd0184129e21fc",
+          "schema": "resectionlab-geometry-cpp-v1",
+          "sources": {
+            "executor_native.hpp": "15473d8eaf0f0d793a81cd5926342073c85b9c5888be837534148059bc4e1044",
+            "geometry_native.cpp": "5e65a19cdd52c330c3de48e5e78d48d2d3912c5d9f18204c3580841752344851",
+            "json_native.hpp": "4b86a9202b8eff914dfc62c80270f89e333dd253e014493f090d2e1d6afd0a0a",
+            "motion_native.hpp": "02920c7ee6512a05a9ab10f99703e9fb840019d20df83d4c4af82efb39b2b59d",
+            "state_native.hpp": "90877501a659920b1af0543a317e4b9fb9d6a55b23a8750d7910b243e037b8d3",
+            "validation_native.hpp": "99795e42912fe703c8c5661106436aca0b5c829db6b19685c25d439bbe30e613"
+          }
+        },
+        "fallbackReason": null,
+        "manifestPath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src/resectionlab/_geometry_cpp.build.json",
+        "nativeThreads": 1,
+        "requested": "cpp",
+        "schema": "resectionlab-numerical-backend-v1",
+        "selected": "cpp",
+        "counters": {
+          "ambiguousCandidates": 306,
+          "batchCalls": 16697,
+          "batchItems": 20693,
+          "batchSizes": {
+            "1": 12709,
+            "2": 3980,
+            "3": 8
+          },
+          "bindingCalls": 312851,
+          "cacheIdentityCalls": 55860,
+          "canonicalDigestCalls": 83142,
+          "canonicalDigestFallbackCalls": 7,
+          "cranialCellsCalls": 1003,
+          "engineCopyCalls": 11901,
+          "engineCopyFallbackCalls": 0,
+          "geometryBindingCalls": 39151,
+          "jsonCopyCalls": 7,
+          "jsonCopyFallbackCalls": 7,
+          "maxBatchItems": 3,
+          "maxPrimitiveCandidates": 1125,
+          "motionEnvelopeCalls": 44958,
+          "occupancyCalls": 68648,
+          "ownedDigestCalls": 67046,
+          "physicalSubstepCalls": 7820,
+          "primitiveCandidates": 2918780,
+          "referenceCalls": 0,
+          "segmentBatchCalls": 21638,
+          "segmentBatchExamined": 105230,
+          "segmentBatchItems": 105230,
+          "segmentPredicateCalls": 816,
+          "segmentPredicateRefinements": 0,
+          "trajectoryCalls": 361,
+          "unsupportedCalls": 0
+        }
+      },
+      "samples": {
+        "original-reference": [
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/generate-pair-0-original-reference.json",
+            "timings": {
+              "fixtureSeconds": 0.14990399999078363,
+              "computeSeconds": 16.967392332968302,
+              "completeSeconds": 17.117296332959086
+            },
+            "peakRssBytes": 149962752
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/generate-pair-1-original-reference.json",
+            "timings": {
+              "fixtureSeconds": 0.15187633398454636,
+              "computeSeconds": 17.056755458994303,
+              "completeSeconds": 17.20863179297885
+            },
+            "peakRssBytes": 150421504
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/generate-pair-2-original-reference.json",
+            "timings": {
+              "fixtureSeconds": 0.15347175003262237,
+              "computeSeconds": 17.166438707965426,
+              "completeSeconds": 17.31991045799805
+            },
+            "peakRssBytes": 150061056
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/generate-pair-3-original-reference.json",
+            "timings": {
+              "fixtureSeconds": 0.15177849994506687,
+              "computeSeconds": 17.15944416698767,
+              "completeSeconds": 17.311222666932736
+            },
+            "peakRssBytes": 150519808
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/generate-pair-4-original-reference.json",
+            "timings": {
+              "fixtureSeconds": 0.15616704104468226,
+              "computeSeconds": 17.088940333982464,
+              "completeSeconds": 17.245107375027146
+            },
+            "peakRssBytes": 150323200
+          }
+        ],
+        "previous-cpp": [
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/generate-pair-0-previous-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.14675408299081028,
+              "computeSeconds": 10.780784416012466,
+              "completeSeconds": 10.927538499003276
+            },
+            "peakRssBytes": 143130624
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/generate-pair-1-previous-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.14675979199819267,
+              "computeSeconds": 10.804479625017848,
+              "completeSeconds": 10.95123941701604
+            },
+            "peakRssBytes": 143753216
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/generate-pair-2-previous-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.14758158300537616,
+              "computeSeconds": 10.843472749984358,
+              "completeSeconds": 10.991054332989734
+            },
+            "peakRssBytes": 142295040
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/generate-pair-3-previous-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.14780212502228096,
+              "computeSeconds": 10.797258999955375,
+              "completeSeconds": 10.945061124977656
+            },
+            "peakRssBytes": 141312000
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/generate-pair-4-previous-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.14894041704246774,
+              "computeSeconds": 10.896014540980104,
+              "completeSeconds": 11.044954958022572
+            },
+            "peakRssBytes": 141541376
+          }
+        ],
+        "current-cpp": [
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/generate-pair-0-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.1362245409982279,
+              "computeSeconds": 9.520407292002346,
+              "completeSeconds": 9.656631833000574
+            },
+            "peakRssBytes": 144818176
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/generate-pair-1-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.1370524590020068,
+              "computeSeconds": 9.589618790952954,
+              "completeSeconds": 9.726671249954961
+            },
+            "peakRssBytes": 143245312
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/generate-pair-2-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.14143083401722834,
+              "computeSeconds": 9.453602167021018,
+              "completeSeconds": 9.595033001038246
+            },
+            "peakRssBytes": 144080896
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/generate-pair-3-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.137871292012278,
+              "computeSeconds": 9.574620666040573,
+              "completeSeconds": 9.712491958052851
+            },
+            "peakRssBytes": 144687104
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/generate-pair-4-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.13819695898564532,
+              "computeSeconds": 9.51369649998378,
+              "completeSeconds": 9.651893458969425
+            },
+            "peakRssBytes": 144441344
+          }
+        ]
+      },
+      "speedupOverPreviousCpp": 1.134064092574315,
+      "secondsSavedOverPreviousCpp": 1.2946075840154663,
+      "originalTwoTimesTargetPassed": false,
+      "originalFrozenReportAndSnapshotsPassed": true
+    },
+    "small": {
+      "pairs": [
+        {
+          "index": 0,
+          "order": [
+            "original-reference",
+            "current-cpp"
+          ]
+        },
+        {
+          "index": 1,
+          "order": [
+            "current-cpp",
+            "original-reference"
+          ]
+        },
+        {
+          "index": 2,
+          "order": [
+            "original-reference",
+            "current-cpp"
+          ]
+        },
+        {
+          "index": 3,
+          "order": [
+            "current-cpp",
+            "original-reference"
+          ]
+        },
+        {
+          "index": 4,
+          "order": [
+            "original-reference",
+            "current-cpp"
+          ]
+        }
+      ],
+      "roles": {
+        "original-reference": {
+          "medianSeconds": 0.001915041997563094,
+          "minSeconds": 0.0019087910186499357,
+          "maxSeconds": 0.002062999992631376,
+          "stdevSeconds": 6.695109035643249e-05,
+          "sampleCount": 5,
+          "samplesSeconds": [
+            0.002062999992631376,
+            0.0019109579734504223,
+            0.001915041997563094,
+            0.0019195000058971345,
+            0.0019087910186499357
+          ],
+          "medianPeakRssBytes": 67239936,
+          "peakRssBytes": 67551232
+        },
+        "current-cpp": {
+          "medianSeconds": 0.001593666966073215,
+          "minSeconds": 0.001569083018694073,
+          "maxSeconds": 0.0017353330040350556,
+          "stdevSeconds": 6.63822447306788e-05,
+          "sampleCount": 5,
+          "samplesSeconds": [
+            0.0016107080155052245,
+            0.001593666966073215,
+            0.0017353330040350556,
+            0.001569083018694073,
+            0.0015891249640844762
+          ],
+          "medianPeakRssBytes": 67616768,
+          "peakRssBytes": 67698688
+        }
+      },
+      "exactEquivalent": true,
+      "exactDigests": [
+        "sha256:4aed87ce69a4646b601926d14c2ad9ac4bc81ad9a1ed774082f5c7c7343fbfec"
+      ],
+      "speedupOverBaseline": 1.2016575848853446,
+      "secondsSaved": 0.0003213750314898789,
+      "memoryRegressionPassed": true,
+      "latencyRegressionPassed": true,
+      "hardMemoryCapPassed": true,
+      "nativeCounters": {
+        "ambiguousCandidates": 0,
+        "batchCalls": 16,
+        "batchItems": 16,
+        "batchSizes": {
+          "1": 16
+        },
+        "bindingCalls": 16,
+        "cacheIdentityCalls": 0,
+        "canonicalDigestCalls": 0,
+        "canonicalDigestFallbackCalls": 0,
+        "cranialCellsCalls": 0,
+        "engineCopyCalls": 0,
+        "engineCopyFallbackCalls": 0,
+        "geometryBindingCalls": 16,
+        "jsonCopyCalls": 0,
+        "jsonCopyFallbackCalls": 0,
+        "maxBatchItems": 1,
+        "maxPrimitiveCandidates": 1728,
+        "motionEnvelopeCalls": 0,
+        "occupancyCalls": 0,
+        "ownedDigestCalls": 0,
+        "physicalSubstepCalls": 0,
+        "primitiveCandidates": 7216,
+        "referenceCalls": 0,
+        "segmentBatchCalls": 0,
+        "segmentBatchExamined": 0,
+        "segmentBatchItems": 0,
+        "segmentPredicateCalls": 0,
+        "segmentPredicateRefinements": 0,
+        "trajectoryCalls": 0,
+        "unsupportedCalls": 0
+      },
+      "backend": {
+        "binaryPath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src/resectionlab/_geometry_cpp.cpython-312-darwin.so",
+        "binarySha256": "c3a2d0998db2dd8d1b68fb692eeb028cff8235f4128ec8578adbb9818ce87832",
+        "buildIdentity": {
+          "compiler": {
+            "path": "/usr/bin/clang++",
+            "version": "Apple clang version 21.0.0 (clang-2100.1.1.101)"
+          },
+          "cppStandard": 17,
+          "flags": [
+            "-fvisibility=hidden",
+            "-g0",
+            "-std=c++17",
+            "-mmacosx-version-min=10.14",
+            "-O3",
+            "-fno-fast-math",
+            "-ffp-contract=off"
+          ],
+          "platform": {
+            "machine": "arm64",
+            "system": "Darwin"
+          },
+          "pybind11": "3.1.0",
+          "python": {
+            "abi": "cpython-312-darwin",
+            "version": "3.12.14"
+          },
+          "recipeSha256": "8cb767f44920b530faf32b7d2642566c00e8f8165ad564cb7efd0184129e21fc",
+          "schema": "resectionlab-geometry-cpp-v1",
+          "sources": {
+            "executor_native.hpp": "15473d8eaf0f0d793a81cd5926342073c85b9c5888be837534148059bc4e1044",
+            "geometry_native.cpp": "5e65a19cdd52c330c3de48e5e78d48d2d3912c5d9f18204c3580841752344851",
+            "json_native.hpp": "4b86a9202b8eff914dfc62c80270f89e333dd253e014493f090d2e1d6afd0a0a",
+            "motion_native.hpp": "02920c7ee6512a05a9ab10f99703e9fb840019d20df83d4c4af82efb39b2b59d",
+            "state_native.hpp": "90877501a659920b1af0543a317e4b9fb9d6a55b23a8750d7910b243e037b8d3",
+            "validation_native.hpp": "99795e42912fe703c8c5661106436aca0b5c829db6b19685c25d439bbe30e613"
+          }
+        },
+        "fallbackReason": null,
+        "manifestPath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src/resectionlab/_geometry_cpp.build.json",
+        "nativeThreads": 1,
+        "requested": "cpp",
+        "schema": "resectionlab-numerical-backend-v1",
+        "selected": "cpp",
+        "counters": {
+          "ambiguousCandidates": 0,
+          "batchCalls": 16,
+          "batchItems": 16,
+          "batchSizes": {
+            "1": 16
+          },
+          "bindingCalls": 16,
+          "cacheIdentityCalls": 0,
+          "canonicalDigestCalls": 0,
+          "canonicalDigestFallbackCalls": 0,
+          "cranialCellsCalls": 0,
+          "engineCopyCalls": 0,
+          "engineCopyFallbackCalls": 0,
+          "geometryBindingCalls": 16,
+          "jsonCopyCalls": 0,
+          "jsonCopyFallbackCalls": 0,
+          "maxBatchItems": 1,
+          "maxPrimitiveCandidates": 1728,
+          "motionEnvelopeCalls": 0,
+          "occupancyCalls": 0,
+          "ownedDigestCalls": 0,
+          "physicalSubstepCalls": 0,
+          "primitiveCandidates": 7216,
+          "referenceCalls": 0,
+          "segmentBatchCalls": 0,
+          "segmentBatchExamined": 0,
+          "segmentBatchItems": 0,
+          "segmentPredicateCalls": 0,
+          "segmentPredicateRefinements": 0,
+          "trajectoryCalls": 0,
+          "unsupportedCalls": 0
+        }
+      },
+      "samples": {
+        "original-reference": [
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/small-pair-0-original-reference.json",
+            "timings": {
+              "fixtureSeconds": 0.0,
+              "computeSeconds": 0.002062999992631376,
+              "completeSeconds": 0.002062999992631376
+            },
+            "peakRssBytes": 67190784
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/small-pair-1-original-reference.json",
+            "timings": {
+              "fixtureSeconds": 0.0,
+              "computeSeconds": 0.0019109579734504223,
+              "completeSeconds": 0.0019109579734504223
+            },
+            "peakRssBytes": 67239936
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/small-pair-2-original-reference.json",
+            "timings": {
+              "fixtureSeconds": 0.0,
+              "computeSeconds": 0.001915041997563094,
+              "completeSeconds": 0.001915041997563094
+            },
+            "peakRssBytes": 67551232
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/small-pair-3-original-reference.json",
+            "timings": {
+              "fixtureSeconds": 0.0,
+              "computeSeconds": 0.0019195000058971345,
+              "completeSeconds": 0.0019195000058971345
+            },
+            "peakRssBytes": 67174400
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/small-pair-4-original-reference.json",
+            "timings": {
+              "fixtureSeconds": 0.0,
+              "computeSeconds": 0.0019087910186499357,
+              "completeSeconds": 0.0019087910186499357
+            },
+            "peakRssBytes": 67321856
+          }
+        ],
+        "current-cpp": [
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/small-pair-0-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.0,
+              "computeSeconds": 0.0016107080155052245,
+              "completeSeconds": 0.0016107080155052245
+            },
+            "peakRssBytes": 67469312
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/small-pair-1-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.0,
+              "computeSeconds": 0.001593666966073215,
+              "completeSeconds": 0.001593666966073215
+            },
+            "peakRssBytes": 67600384
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/small-pair-2-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.0,
+              "computeSeconds": 0.0017353330040350556,
+              "completeSeconds": 0.0017353330040350556
+            },
+            "peakRssBytes": 67633152
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/small-pair-3-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.0,
+              "computeSeconds": 0.001569083018694073,
+              "completeSeconds": 0.001569083018694073
+            },
+            "peakRssBytes": 67616768
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/small-pair-4-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.0,
+              "computeSeconds": 0.0015891249640844762,
+              "completeSeconds": 0.0015891249640844762
+            },
+            "peakRssBytes": 67698688
+          }
+        ]
+      }
+    },
+    "standardized-refusal": {
+      "pairs": [
+        {
+          "index": 0,
+          "order": [
+            "original-reference",
+            "current-cpp"
+          ]
+        },
+        {
+          "index": 1,
+          "order": [
+            "current-cpp",
+            "original-reference"
+          ]
+        },
+        {
+          "index": 2,
+          "order": [
+            "original-reference",
+            "current-cpp"
+          ]
+        },
+        {
+          "index": 3,
+          "order": [
+            "current-cpp",
+            "original-reference"
+          ]
+        },
+        {
+          "index": 4,
+          "order": [
+            "original-reference",
+            "current-cpp"
+          ]
+        }
+      ],
+      "roles": {
+        "original-reference": {
+          "medianSeconds": 1.3950780839659274,
+          "minSeconds": 1.3846686240285635,
+          "maxSeconds": 1.398851000063587,
+          "stdevSeconds": 0.006346934973447668,
+          "sampleCount": 5,
+          "samplesSeconds": [
+            1.398851000063587,
+            1.3846686240285635,
+            1.398121124948375,
+            1.3950780839659274,
+            1.3878048749757
+          ],
+          "medianPeakRssBytes": 116932608,
+          "peakRssBytes": 117080064
+        },
+        "current-cpp": {
+          "medianSeconds": 0.9039587909937836,
+          "minSeconds": 0.9019285829272121,
+          "maxSeconds": 0.9130839590216056,
+          "stdevSeconds": 0.00433659391771216,
+          "sampleCount": 5,
+          "samplesSeconds": [
+            0.9130839590216056,
+            0.9019285829272121,
+            0.9038521659676917,
+            0.905904583982192,
+            0.9039587909937836
+          ],
+          "medianPeakRssBytes": 116801536,
+          "peakRssBytes": 116883456
+        }
+      },
+      "exactEquivalent": true,
+      "exactDigests": [
+        "sha256:b069195c72729b847f4faa91585cc941b818b1b3f23bf1139bf16fe74be9e8d1"
+      ],
+      "speedupOverBaseline": 1.5432983205265616,
+      "secondsSaved": 0.49111929297214374,
+      "memoryRegressionPassed": true,
+      "latencyRegressionPassed": true,
+      "hardMemoryCapPassed": true,
+      "nativeCounters": {
+        "ambiguousCandidates": 152,
+        "batchCalls": 1338,
+        "batchItems": 1691,
+        "batchSizes": {
+          "1": 985,
+          "2": 353
+        },
+        "bindingCalls": 25210,
+        "cacheIdentityCalls": 3970,
+        "canonicalDigestCalls": 7208,
+        "canonicalDigestFallbackCalls": 7,
+        "cranialCellsCalls": 50,
+        "engineCopyCalls": 1092,
+        "engineCopyFallbackCalls": 0,
+        "geometryBindingCalls": 2281,
+        "jsonCopyCalls": 7,
+        "jsonCopyFallbackCalls": 7,
+        "maxBatchItems": 2,
+        "maxPrimitiveCandidates": 1125,
+        "motionEnvelopeCalls": 4735,
+        "occupancyCalls": 4914,
+        "ownedDigestCalls": 5810,
+        "physicalSubstepCalls": 944,
+        "primitiveCandidates": 345292,
+        "referenceCalls": 0,
+        "segmentBatchCalls": 943,
+        "segmentBatchExamined": 3772,
+        "segmentBatchItems": 3772,
+        "segmentPredicateCalls": 0,
+        "segmentPredicateRefinements": 0,
+        "trajectoryCalls": 9,
+        "unsupportedCalls": 0
+      },
+      "backend": {
+        "binaryPath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src/resectionlab/_geometry_cpp.cpython-312-darwin.so",
+        "binarySha256": "c3a2d0998db2dd8d1b68fb692eeb028cff8235f4128ec8578adbb9818ce87832",
+        "buildIdentity": {
+          "compiler": {
+            "path": "/usr/bin/clang++",
+            "version": "Apple clang version 21.0.0 (clang-2100.1.1.101)"
+          },
+          "cppStandard": 17,
+          "flags": [
+            "-fvisibility=hidden",
+            "-g0",
+            "-std=c++17",
+            "-mmacosx-version-min=10.14",
+            "-O3",
+            "-fno-fast-math",
+            "-ffp-contract=off"
+          ],
+          "platform": {
+            "machine": "arm64",
+            "system": "Darwin"
+          },
+          "pybind11": "3.1.0",
+          "python": {
+            "abi": "cpython-312-darwin",
+            "version": "3.12.14"
+          },
+          "recipeSha256": "8cb767f44920b530faf32b7d2642566c00e8f8165ad564cb7efd0184129e21fc",
+          "schema": "resectionlab-geometry-cpp-v1",
+          "sources": {
+            "executor_native.hpp": "15473d8eaf0f0d793a81cd5926342073c85b9c5888be837534148059bc4e1044",
+            "geometry_native.cpp": "5e65a19cdd52c330c3de48e5e78d48d2d3912c5d9f18204c3580841752344851",
+            "json_native.hpp": "4b86a9202b8eff914dfc62c80270f89e333dd253e014493f090d2e1d6afd0a0a",
+            "motion_native.hpp": "02920c7ee6512a05a9ab10f99703e9fb840019d20df83d4c4af82efb39b2b59d",
+            "state_native.hpp": "90877501a659920b1af0543a317e4b9fb9d6a55b23a8750d7910b243e037b8d3",
+            "validation_native.hpp": "99795e42912fe703c8c5661106436aca0b5c829db6b19685c25d439bbe30e613"
+          }
+        },
+        "fallbackReason": null,
+        "manifestPath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src/resectionlab/_geometry_cpp.build.json",
+        "nativeThreads": 1,
+        "requested": "cpp",
+        "schema": "resectionlab-numerical-backend-v1",
+        "selected": "cpp",
+        "counters": {
+          "ambiguousCandidates": 152,
+          "batchCalls": 1338,
+          "batchItems": 1691,
+          "batchSizes": {
+            "1": 985,
+            "2": 353
+          },
+          "bindingCalls": 25210,
+          "cacheIdentityCalls": 3970,
+          "canonicalDigestCalls": 7208,
+          "canonicalDigestFallbackCalls": 7,
+          "cranialCellsCalls": 50,
+          "engineCopyCalls": 1092,
+          "engineCopyFallbackCalls": 0,
+          "geometryBindingCalls": 2281,
+          "jsonCopyCalls": 7,
+          "jsonCopyFallbackCalls": 7,
+          "maxBatchItems": 2,
+          "maxPrimitiveCandidates": 1125,
+          "motionEnvelopeCalls": 4735,
+          "occupancyCalls": 4914,
+          "ownedDigestCalls": 5810,
+          "physicalSubstepCalls": 944,
+          "primitiveCandidates": 345292,
+          "referenceCalls": 0,
+          "segmentBatchCalls": 943,
+          "segmentBatchExamined": 3772,
+          "segmentBatchItems": 3772,
+          "segmentPredicateCalls": 0,
+          "segmentPredicateRefinements": 0,
+          "trajectoryCalls": 9,
+          "unsupportedCalls": 0
+        }
+      },
+      "samples": {
+        "original-reference": [
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/standardized-refusal-pair-0-original-reference.json",
+            "timings": {
+              "fixtureSeconds": 0.15529487503226846,
+              "computeSeconds": 1.2435561250313185,
+              "completeSeconds": 1.398851000063587
+            },
+            "peakRssBytes": 117047296
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/standardized-refusal-pair-1-original-reference.json",
+            "timings": {
+              "fixtureSeconds": 0.15426816599210724,
+              "computeSeconds": 1.2304004580364563,
+              "completeSeconds": 1.3846686240285635
+            },
+            "peakRssBytes": 117080064
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/standardized-refusal-pair-2-original-reference.json",
+            "timings": {
+              "fixtureSeconds": 0.15270999999484047,
+              "computeSeconds": 1.2454111249535345,
+              "completeSeconds": 1.398121124948375
+            },
+            "peakRssBytes": 116932608
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/standardized-refusal-pair-3-original-reference.json",
+            "timings": {
+              "fixtureSeconds": 0.1544106670189649,
+              "computeSeconds": 1.2406674169469625,
+              "completeSeconds": 1.3950780839659274
+            },
+            "peakRssBytes": 116817920
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/standardized-refusal-pair-4-original-reference.json",
+            "timings": {
+              "fixtureSeconds": 0.1552327909739688,
+              "computeSeconds": 1.2325720840017311,
+              "completeSeconds": 1.3878048749757
+            },
+            "peakRssBytes": 116916224
+          }
+        ],
+        "current-cpp": [
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/standardized-refusal-pair-0-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.13929879199713469,
+              "computeSeconds": 0.7737851670244709,
+              "completeSeconds": 0.9130839590216056
+            },
+            "peakRssBytes": 116801536
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/standardized-refusal-pair-1-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.141800457960926,
+              "computeSeconds": 0.7601281249662861,
+              "completeSeconds": 0.9019285829272121
+            },
+            "peakRssBytes": 116801536
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/standardized-refusal-pair-2-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.14430591597920284,
+              "computeSeconds": 0.7595462499884889,
+              "completeSeconds": 0.9038521659676917
+            },
+            "peakRssBytes": 116686848
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/standardized-refusal-pair-3-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.14236566697945818,
+              "computeSeconds": 0.7635389170027338,
+              "completeSeconds": 0.905904583982192
+            },
+            "peakRssBytes": 116768768
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/standardized-refusal-pair-4-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.14215133298421279,
+              "computeSeconds": 0.7618074580095708,
+              "completeSeconds": 0.9039587909937836
+            },
+            "peakRssBytes": 116883456
+          }
+        ]
+      }
+    },
+    "stress": {
+      "pairs": [
+        {
+          "index": 0,
+          "order": [
+            "original-reference",
+            "current-cpp"
+          ]
+        },
+        {
+          "index": 1,
+          "order": [
+            "current-cpp",
+            "original-reference"
+          ]
+        },
+        {
+          "index": 2,
+          "order": [
+            "original-reference",
+            "current-cpp"
+          ]
+        },
+        {
+          "index": 3,
+          "order": [
+            "current-cpp",
+            "original-reference"
+          ]
+        },
+        {
+          "index": 4,
+          "order": [
+            "original-reference",
+            "current-cpp"
+          ]
+        }
+      ],
+      "roles": {
+        "original-reference": {
+          "medianSeconds": 0.9586423339787871,
+          "minSeconds": 0.9502627089968883,
+          "maxSeconds": 1.009824207983911,
+          "stdevSeconds": 0.023845391680597128,
+          "sampleCount": 5,
+          "samplesSeconds": [
+            1.009824207983911,
+            0.9586423339787871,
+            0.9502627089968883,
+            0.9747798750177026,
+            0.9578586250427179
+          ],
+          "medianPeakRssBytes": 153616384,
+          "peakRssBytes": 164593664
+        },
+        "current-cpp": {
+          "medianSeconds": 0.5204599999706261,
+          "minSeconds": 0.5157167919678614,
+          "maxSeconds": 0.64887891698163,
+          "stdevSeconds": 0.05831969791664464,
+          "sampleCount": 5,
+          "samplesSeconds": [
+            0.5204599999706261,
+            0.5157167919678614,
+            0.64887891698163,
+            0.5165237500332296,
+            0.5216780829941854
+          ],
+          "medianPeakRssBytes": 112410624,
+          "peakRssBytes": 116457472
+        }
+      },
+      "exactEquivalent": true,
+      "exactDigests": [
+        "sha256:0d46e29fa50ea3c893a9859fc465022aeda7a2fdf724214bd6535c71c0f61a6e"
+      ],
+      "speedupOverBaseline": 1.8419135649865337,
+      "secondsSaved": 0.438182334008161,
+      "memoryRegressionPassed": true,
+      "latencyRegressionPassed": true,
+      "hardMemoryCapPassed": true,
+      "nativeCounters": {
+        "ambiguousCandidates": 0,
+        "batchCalls": 696,
+        "batchItems": 696,
+        "batchSizes": {
+          "1": 696
+        },
+        "bindingCalls": 719,
+        "cacheIdentityCalls": 0,
+        "canonicalDigestCalls": 23,
+        "canonicalDigestFallbackCalls": 0,
+        "cranialCellsCalls": 0,
+        "engineCopyCalls": 0,
+        "engineCopyFallbackCalls": 0,
+        "geometryBindingCalls": 696,
+        "jsonCopyCalls": 0,
+        "jsonCopyFallbackCalls": 0,
+        "maxBatchItems": 1,
+        "maxPrimitiveCandidates": 32768,
+        "motionEnvelopeCalls": 0,
+        "occupancyCalls": 0,
+        "ownedDigestCalls": 0,
+        "physicalSubstepCalls": 0,
+        "primitiveCandidates": 22285200,
+        "referenceCalls": 0,
+        "segmentBatchCalls": 0,
+        "segmentBatchExamined": 0,
+        "segmentBatchItems": 0,
+        "segmentPredicateCalls": 0,
+        "segmentPredicateRefinements": 0,
+        "trajectoryCalls": 0,
+        "unsupportedCalls": 0
+      },
+      "backend": {
+        "binaryPath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src/resectionlab/_geometry_cpp.cpython-312-darwin.so",
+        "binarySha256": "c3a2d0998db2dd8d1b68fb692eeb028cff8235f4128ec8578adbb9818ce87832",
+        "buildIdentity": {
+          "compiler": {
+            "path": "/usr/bin/clang++",
+            "version": "Apple clang version 21.0.0 (clang-2100.1.1.101)"
+          },
+          "cppStandard": 17,
+          "flags": [
+            "-fvisibility=hidden",
+            "-g0",
+            "-std=c++17",
+            "-mmacosx-version-min=10.14",
+            "-O3",
+            "-fno-fast-math",
+            "-ffp-contract=off"
+          ],
+          "platform": {
+            "machine": "arm64",
+            "system": "Darwin"
+          },
+          "pybind11": "3.1.0",
+          "python": {
+            "abi": "cpython-312-darwin",
+            "version": "3.12.14"
+          },
+          "recipeSha256": "8cb767f44920b530faf32b7d2642566c00e8f8165ad564cb7efd0184129e21fc",
+          "schema": "resectionlab-geometry-cpp-v1",
+          "sources": {
+            "executor_native.hpp": "15473d8eaf0f0d793a81cd5926342073c85b9c5888be837534148059bc4e1044",
+            "geometry_native.cpp": "5e65a19cdd52c330c3de48e5e78d48d2d3912c5d9f18204c3580841752344851",
+            "json_native.hpp": "4b86a9202b8eff914dfc62c80270f89e333dd253e014493f090d2e1d6afd0a0a",
+            "motion_native.hpp": "02920c7ee6512a05a9ab10f99703e9fb840019d20df83d4c4af82efb39b2b59d",
+            "state_native.hpp": "90877501a659920b1af0543a317e4b9fb9d6a55b23a8750d7910b243e037b8d3",
+            "validation_native.hpp": "99795e42912fe703c8c5661106436aca0b5c829db6b19685c25d439bbe30e613"
+          }
+        },
+        "fallbackReason": null,
+        "manifestPath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src/resectionlab/_geometry_cpp.build.json",
+        "nativeThreads": 1,
+        "requested": "cpp",
+        "schema": "resectionlab-numerical-backend-v1",
+        "selected": "cpp",
+        "counters": {
+          "ambiguousCandidates": 0,
+          "batchCalls": 696,
+          "batchItems": 696,
+          "batchSizes": {
+            "1": 696
+          },
+          "bindingCalls": 719,
+          "cacheIdentityCalls": 0,
+          "canonicalDigestCalls": 23,
+          "canonicalDigestFallbackCalls": 0,
+          "cranialCellsCalls": 0,
+          "engineCopyCalls": 0,
+          "engineCopyFallbackCalls": 0,
+          "geometryBindingCalls": 696,
+          "jsonCopyCalls": 0,
+          "jsonCopyFallbackCalls": 0,
+          "maxBatchItems": 1,
+          "maxPrimitiveCandidates": 32768,
+          "motionEnvelopeCalls": 0,
+          "occupancyCalls": 0,
+          "ownedDigestCalls": 0,
+          "physicalSubstepCalls": 0,
+          "primitiveCandidates": 22285200,
+          "referenceCalls": 0,
+          "segmentBatchCalls": 0,
+          "segmentBatchExamined": 0,
+          "segmentBatchItems": 0,
+          "segmentPredicateCalls": 0,
+          "segmentPredicateRefinements": 0,
+          "trajectoryCalls": 0,
+          "unsupportedCalls": 0
+        }
+      },
+      "samples": {
+        "original-reference": [
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/stress-pair-0-original-reference.json",
+            "timings": {
+              "fixtureSeconds": 0.0,
+              "computeSeconds": 1.009824207983911,
+              "completeSeconds": 1.009824207983911
+            },
+            "peakRssBytes": 164593664
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/stress-pair-1-original-reference.json",
+            "timings": {
+              "fixtureSeconds": 0.0,
+              "computeSeconds": 0.9586423339787871,
+              "completeSeconds": 0.9586423339787871
+            },
+            "peakRssBytes": 153616384
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/stress-pair-2-original-reference.json",
+            "timings": {
+              "fixtureSeconds": 0.0,
+              "computeSeconds": 0.9502627089968883,
+              "completeSeconds": 0.9502627089968883
+            },
+            "peakRssBytes": 152158208
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/stress-pair-3-original-reference.json",
+            "timings": {
+              "fixtureSeconds": 0.0,
+              "computeSeconds": 0.9747798750177026,
+              "completeSeconds": 0.9747798750177026
+            },
+            "peakRssBytes": 154271744
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/stress-pair-4-original-reference.json",
+            "timings": {
+              "fixtureSeconds": 0.0,
+              "computeSeconds": 0.9578586250427179,
+              "completeSeconds": 0.9578586250427179
+            },
+            "peakRssBytes": 153419776
+          }
+        ],
+        "current-cpp": [
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/stress-pair-0-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.0,
+              "computeSeconds": 0.5204599999706261,
+              "completeSeconds": 0.5204599999706261
+            },
+            "peakRssBytes": 112410624
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/stress-pair-1-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.0,
+              "computeSeconds": 0.5157167919678614,
+              "completeSeconds": 0.5157167919678614
+            },
+            "peakRssBytes": 112525312
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/stress-pair-2-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.0,
+              "computeSeconds": 0.64887891698163,
+              "completeSeconds": 0.64887891698163
+            },
+            "peakRssBytes": 116457472
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/stress-pair-3-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.0,
+              "computeSeconds": 0.5165237500332296,
+              "completeSeconds": 0.5165237500332296
+            },
+            "peakRssBytes": 112148480
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/stress-pair-4-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.0,
+              "computeSeconds": 0.5216780829941854,
+              "completeSeconds": 0.5216780829941854
+            },
+            "peakRssBytes": 112312320
+          }
+        ]
+      }
+    },
+    "simulation-steps": {
+      "pairs": [
+        {
+          "index": 0,
+          "order": [
+            "previous-cpp",
+            "current-cpp"
+          ]
+        },
+        {
+          "index": 1,
+          "order": [
+            "current-cpp",
+            "previous-cpp"
+          ]
+        },
+        {
+          "index": 2,
+          "order": [
+            "previous-cpp",
+            "current-cpp"
+          ]
+        },
+        {
+          "index": 3,
+          "order": [
+            "current-cpp",
+            "previous-cpp"
+          ]
+        },
+        {
+          "index": 4,
+          "order": [
+            "previous-cpp",
+            "current-cpp"
+          ]
+        }
+      ],
+      "roles": {
+        "previous-cpp": {
+          "medianSeconds": 1.048613041988574,
+          "minSeconds": 1.0410804999992251,
+          "maxSeconds": 1.0576592499855906,
+          "stdevSeconds": 0.005930301959464252,
+          "sampleCount": 5,
+          "samplesSeconds": [
+            1.048613041988574,
+            1.0505632919957861,
+            1.0410804999992251,
+            1.0482057079789229,
+            1.0576592499855906
+          ],
+          "medianPeakRssBytes": 109985792,
+          "peakRssBytes": 110198784,
+          "medianTimedWorkPeakRssBytes": 109985792
+        },
+        "current-cpp": {
+          "medianSeconds": 1.023974125040695,
+          "minSeconds": 1.010499374999199,
+          "maxSeconds": 1.031494750001002,
+          "stdevSeconds": 0.008421369085123987,
+          "sampleCount": 5,
+          "samplesSeconds": [
+            1.0155144169693813,
+            1.031494750001002,
+            1.023974125040695,
+            1.0260630000266246,
+            1.010499374999199
+          ],
+          "medianPeakRssBytes": 110198784,
+          "peakRssBytes": 110247936,
+          "medianTimedWorkPeakRssBytes": 110198784
+        }
+      },
+      "exactEquivalent": true,
+      "exactDigests": [
+        "sha256:91819f86b18115336f3ca366675b79d0ddceea51ff1a3756bdfdc36f7cf8143f"
+      ],
+      "speedupOverBaseline": 1.0240620503441917,
+      "secondsSaved": 0.024638916947878897,
+      "memoryRegressionPassed": true,
+      "latencyRegressionPassed": true,
+      "hardMemoryCapPassed": true,
+      "nativeCounters": {
+        "ambiguousCandidates": 33,
+        "batchCalls": 1178,
+        "batchItems": 1509,
+        "batchSizes": {
+          "1": 881,
+          "2": 263,
+          "3": 34
+        },
+        "bindingCalls": 37945,
+        "cacheIdentityCalls": 6495,
+        "canonicalDigestCalls": 13946,
+        "canonicalDigestFallbackCalls": 0,
+        "cranialCellsCalls": 0,
+        "engineCopyCalls": 1566,
+        "engineCopyFallbackCalls": 0,
+        "geometryBindingCalls": 2511,
+        "jsonCopyCalls": 0,
+        "jsonCopyFallbackCalls": 0,
+        "maxBatchItems": 3,
+        "maxPrimitiveCandidates": 1300,
+        "motionEnvelopeCalls": 3631,
+        "occupancyCalls": 8409,
+        "ownedDigestCalls": 11429,
+        "physicalSubstepCalls": 1333,
+        "primitiveCandidates": 107372,
+        "referenceCalls": 0,
+        "segmentBatchCalls": 1333,
+        "segmentBatchExamined": 6494,
+        "segmentBatchItems": 6494,
+        "segmentPredicateCalls": 0,
+        "segmentPredicateRefinements": 0,
+        "trajectoryCalls": 54,
+        "unsupportedCalls": 0
+      },
+      "backend": {
+        "binaryPath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src/resectionlab/_geometry_cpp.cpython-312-darwin.so",
+        "binarySha256": "c3a2d0998db2dd8d1b68fb692eeb028cff8235f4128ec8578adbb9818ce87832",
+        "buildIdentity": {
+          "compiler": {
+            "path": "/usr/bin/clang++",
+            "version": "Apple clang version 21.0.0 (clang-2100.1.1.101)"
+          },
+          "cppStandard": 17,
+          "flags": [
+            "-fvisibility=hidden",
+            "-g0",
+            "-std=c++17",
+            "-mmacosx-version-min=10.14",
+            "-O3",
+            "-fno-fast-math",
+            "-ffp-contract=off"
+          ],
+          "platform": {
+            "machine": "arm64",
+            "system": "Darwin"
+          },
+          "pybind11": "3.1.0",
+          "python": {
+            "abi": "cpython-312-darwin",
+            "version": "3.12.14"
+          },
+          "recipeSha256": "8cb767f44920b530faf32b7d2642566c00e8f8165ad564cb7efd0184129e21fc",
+          "schema": "resectionlab-geometry-cpp-v1",
+          "sources": {
+            "executor_native.hpp": "15473d8eaf0f0d793a81cd5926342073c85b9c5888be837534148059bc4e1044",
+            "geometry_native.cpp": "5e65a19cdd52c330c3de48e5e78d48d2d3912c5d9f18204c3580841752344851",
+            "json_native.hpp": "4b86a9202b8eff914dfc62c80270f89e333dd253e014493f090d2e1d6afd0a0a",
+            "motion_native.hpp": "02920c7ee6512a05a9ab10f99703e9fb840019d20df83d4c4af82efb39b2b59d",
+            "state_native.hpp": "90877501a659920b1af0543a317e4b9fb9d6a55b23a8750d7910b243e037b8d3",
+            "validation_native.hpp": "99795e42912fe703c8c5661106436aca0b5c829db6b19685c25d439bbe30e613"
+          }
+        },
+        "fallbackReason": null,
+        "manifestPath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src/resectionlab/_geometry_cpp.build.json",
+        "nativeThreads": 1,
+        "requested": "cpp",
+        "schema": "resectionlab-numerical-backend-v1",
+        "selected": "cpp",
+        "counters": {
+          "ambiguousCandidates": 33,
+          "batchCalls": 1178,
+          "batchItems": 1509,
+          "batchSizes": {
+            "1": 881,
+            "2": 263,
+            "3": 34
+          },
+          "bindingCalls": 37945,
+          "cacheIdentityCalls": 6495,
+          "canonicalDigestCalls": 13946,
+          "canonicalDigestFallbackCalls": 0,
+          "cranialCellsCalls": 0,
+          "engineCopyCalls": 1566,
+          "engineCopyFallbackCalls": 0,
+          "geometryBindingCalls": 2511,
+          "jsonCopyCalls": 0,
+          "jsonCopyFallbackCalls": 0,
+          "maxBatchItems": 3,
+          "maxPrimitiveCandidates": 1300,
+          "motionEnvelopeCalls": 3631,
+          "occupancyCalls": 8409,
+          "ownedDigestCalls": 11429,
+          "physicalSubstepCalls": 1333,
+          "primitiveCandidates": 107372,
+          "referenceCalls": 0,
+          "segmentBatchCalls": 1333,
+          "segmentBatchExamined": 6494,
+          "segmentBatchItems": 6494,
+          "segmentPredicateCalls": 0,
+          "segmentPredicateRefinements": 0,
+          "trajectoryCalls": 54,
+          "unsupportedCalls": 0
+        }
+      },
+      "samples": {
+        "previous-cpp": [
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/simulation-steps-pair-0-previous-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.02441795897902921,
+              "computeSeconds": 1.0241950830095448,
+              "completeSeconds": 1.048613041988574
+            },
+            "peakRssBytes": 109953024
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/simulation-steps-pair-1-previous-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.024905749945901334,
+              "computeSeconds": 1.0256575420498848,
+              "completeSeconds": 1.0505632919957861
+            },
+            "peakRssBytes": 110116864
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/simulation-steps-pair-2-previous-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.024570293084252626,
+              "computeSeconds": 1.0165102069149725,
+              "completeSeconds": 1.0410804999992251
+            },
+            "peakRssBytes": 110198784
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/simulation-steps-pair-3-previous-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.024728833988774568,
+              "computeSeconds": 1.0234768739901483,
+              "completeSeconds": 1.0482057079789229
+            },
+            "peakRssBytes": 109821952
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/simulation-steps-pair-4-previous-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.025401208084076643,
+              "computeSeconds": 1.032258041901514,
+              "completeSeconds": 1.0576592499855906
+            },
+            "peakRssBytes": 109985792
+          }
+        ],
+        "current-cpp": [
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/simulation-steps-pair-0-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.024465916969347745,
+              "computeSeconds": 0.9910485000000335,
+              "completeSeconds": 1.0155144169693813
+            },
+            "peakRssBytes": 110198784
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/simulation-steps-pair-1-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.026001958933193237,
+              "computeSeconds": 1.0054927910678089,
+              "completeSeconds": 1.031494750001002
+            },
+            "peakRssBytes": 110198784
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/simulation-steps-pair-2-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.024917874892707914,
+              "computeSeconds": 0.9990562501479872,
+              "completeSeconds": 1.023974125040695
+            },
+            "peakRssBytes": 110198784
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/simulation-steps-pair-3-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.024953083076979965,
+              "computeSeconds": 1.0011099169496447,
+              "completeSeconds": 1.0260630000266246
+            },
+            "peakRssBytes": 110247936
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/simulation-steps-pair-4-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.024619916977826506,
+              "computeSeconds": 0.9858794580213726,
+              "completeSeconds": 1.010499374999199
+            },
+            "peakRssBytes": 110215168
+          }
+        ]
+      },
+      "frozenExactPassed": true
+    },
+    "rl-episodes": {
+      "pairs": [
+        {
+          "index": 0,
+          "order": [
+            "previous-cpp",
+            "current-cpp"
+          ]
+        },
+        {
+          "index": 1,
+          "order": [
+            "current-cpp",
+            "previous-cpp"
+          ]
+        },
+        {
+          "index": 2,
+          "order": [
+            "previous-cpp",
+            "current-cpp"
+          ]
+        },
+        {
+          "index": 3,
+          "order": [
+            "current-cpp",
+            "previous-cpp"
+          ]
+        },
+        {
+          "index": 4,
+          "order": [
+            "previous-cpp",
+            "current-cpp"
+          ]
+        }
+      ],
+      "roles": {
+        "previous-cpp": {
+          "medianSeconds": 1.066619459015783,
+          "minSeconds": 1.0528397079906426,
+          "maxSeconds": 1.0692308340221643,
+          "stdevSeconds": 0.008100994500526764,
+          "sampleCount": 5,
+          "samplesSeconds": [
+            1.0692308340221643,
+            1.066619459015783,
+            1.0528397079906426,
+            1.0529545830213465,
+            1.0668577919714153
+          ],
+          "medianPeakRssBytes": 139247616,
+          "peakRssBytes": 139362304,
+          "medianTimedWorkPeakRssBytes": 101810176
+        },
+        "current-cpp": {
+          "medianSeconds": 1.097526542027481,
+          "minSeconds": 1.0847702080500312,
+          "maxSeconds": 1.1036832079989836,
+          "stdevSeconds": 0.0073726447039147965,
+          "sampleCount": 5,
+          "samplesSeconds": [
+            1.0847702080500312,
+            1.1036832079989836,
+            1.0932023749919608,
+            1.097526542027481,
+            1.1007041670382023
+          ],
+          "medianPeakRssBytes": 146063360,
+          "peakRssBytes": 146096128,
+          "medianTimedWorkPeakRssBytes": 102137856
+        }
+      },
+      "exactEquivalent": true,
+      "exactDigests": [
+        "sha256:7d98d39947eb060788920b184a767d5b4959086dc1fe7deeb974a1a262242143"
+      ],
+      "speedupOverBaseline": 0.9718393297763872,
+      "secondsSaved": -0.030907083011697978,
+      "memoryRegressionPassed": true,
+      "latencyRegressionPassed": true,
+      "hardMemoryCapPassed": true,
+      "nativeCounters": {
+        "ambiguousCandidates": 0,
+        "batchCalls": 2547,
+        "batchItems": 2547,
+        "batchSizes": {
+          "1": 2547
+        },
+        "bindingCalls": 43583,
+        "cacheIdentityCalls": 8195,
+        "canonicalDigestCalls": 12826,
+        "canonicalDigestFallbackCalls": 0,
+        "cranialCellsCalls": 0,
+        "engineCopyCalls": 2334,
+        "engineCopyFallbackCalls": 0,
+        "geometryBindingCalls": 4725,
+        "jsonCopyCalls": 0,
+        "jsonCopyFallbackCalls": 0,
+        "maxBatchItems": 1,
+        "maxPrimitiveCandidates": 200,
+        "motionEnvelopeCalls": 5091,
+        "occupancyCalls": 8195,
+        "ownedDigestCalls": 12777,
+        "physicalSubstepCalls": 2178,
+        "primitiveCandidates": 263320,
+        "referenceCalls": 0,
+        "segmentBatchCalls": 2178,
+        "segmentBatchExamined": 8712,
+        "segmentBatchItems": 8712,
+        "segmentPredicateCalls": 0,
+        "segmentPredicateRefinements": 0,
+        "trajectoryCalls": 39,
+        "unsupportedCalls": 0
+      },
+      "backend": {
+        "binaryPath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src/resectionlab/_geometry_cpp.cpython-312-darwin.so",
+        "binarySha256": "c3a2d0998db2dd8d1b68fb692eeb028cff8235f4128ec8578adbb9818ce87832",
+        "buildIdentity": {
+          "compiler": {
+            "path": "/usr/bin/clang++",
+            "version": "Apple clang version 21.0.0 (clang-2100.1.1.101)"
+          },
+          "cppStandard": 17,
+          "flags": [
+            "-fvisibility=hidden",
+            "-g0",
+            "-std=c++17",
+            "-mmacosx-version-min=10.14",
+            "-O3",
+            "-fno-fast-math",
+            "-ffp-contract=off"
+          ],
+          "platform": {
+            "machine": "arm64",
+            "system": "Darwin"
+          },
+          "pybind11": "3.1.0",
+          "python": {
+            "abi": "cpython-312-darwin",
+            "version": "3.12.14"
+          },
+          "recipeSha256": "8cb767f44920b530faf32b7d2642566c00e8f8165ad564cb7efd0184129e21fc",
+          "schema": "resectionlab-geometry-cpp-v1",
+          "sources": {
+            "executor_native.hpp": "15473d8eaf0f0d793a81cd5926342073c85b9c5888be837534148059bc4e1044",
+            "geometry_native.cpp": "5e65a19cdd52c330c3de48e5e78d48d2d3912c5d9f18204c3580841752344851",
+            "json_native.hpp": "4b86a9202b8eff914dfc62c80270f89e333dd253e014493f090d2e1d6afd0a0a",
+            "motion_native.hpp": "02920c7ee6512a05a9ab10f99703e9fb840019d20df83d4c4af82efb39b2b59d",
+            "state_native.hpp": "90877501a659920b1af0543a317e4b9fb9d6a55b23a8750d7910b243e037b8d3",
+            "validation_native.hpp": "99795e42912fe703c8c5661106436aca0b5c829db6b19685c25d439bbe30e613"
+          }
+        },
+        "fallbackReason": null,
+        "manifestPath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src/resectionlab/_geometry_cpp.build.json",
+        "nativeThreads": 1,
+        "requested": "cpp",
+        "schema": "resectionlab-numerical-backend-v1",
+        "selected": "cpp",
+        "counters": {
+          "ambiguousCandidates": 0,
+          "batchCalls": 2547,
+          "batchItems": 2547,
+          "batchSizes": {
+            "1": 2547
+          },
+          "bindingCalls": 43583,
+          "cacheIdentityCalls": 8195,
+          "canonicalDigestCalls": 12826,
+          "canonicalDigestFallbackCalls": 0,
+          "cranialCellsCalls": 0,
+          "engineCopyCalls": 2334,
+          "engineCopyFallbackCalls": 0,
+          "geometryBindingCalls": 4725,
+          "jsonCopyCalls": 0,
+          "jsonCopyFallbackCalls": 0,
+          "maxBatchItems": 1,
+          "maxPrimitiveCandidates": 200,
+          "motionEnvelopeCalls": 5091,
+          "occupancyCalls": 8195,
+          "ownedDigestCalls": 12777,
+          "physicalSubstepCalls": 2178,
+          "primitiveCandidates": 263320,
+          "referenceCalls": 0,
+          "segmentBatchCalls": 2178,
+          "segmentBatchExamined": 8712,
+          "segmentBatchItems": 8712,
+          "segmentPredicateCalls": 0,
+          "segmentPredicateRefinements": 0,
+          "trajectoryCalls": 39,
+          "unsupportedCalls": 0
+        }
+      },
+      "samples": {
+        "previous-cpp": [
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/rl-episodes-pair-0-previous-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.03996383404592052,
+              "computeSeconds": 1.0292669999762438,
+              "completeSeconds": 1.0692308340221643
+            },
+            "peakRssBytes": 126107648
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/rl-episodes-pair-1-previous-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.03911408205749467,
+              "computeSeconds": 1.0275053769582883,
+              "completeSeconds": 1.066619459015783
+            },
+            "peakRssBytes": 138936320
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/rl-episodes-pair-2-previous-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.0390914169838652,
+              "computeSeconds": 1.0137482910067774,
+              "completeSeconds": 1.0528397079906426
+            },
+            "peakRssBytes": 139329536
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/rl-episodes-pair-3-previous-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.03961624903604388,
+              "computeSeconds": 1.0133383339853026,
+              "completeSeconds": 1.0529545830213465
+            },
+            "peakRssBytes": 139247616
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/rl-episodes-pair-4-previous-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.03972033300669864,
+              "computeSeconds": 1.0271374589647166,
+              "completeSeconds": 1.0668577919714153
+            },
+            "peakRssBytes": 139362304
+          }
+        ],
+        "current-cpp": [
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/rl-episodes-pair-0-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.03878883388824761,
+              "computeSeconds": 1.0459813741617836,
+              "completeSeconds": 1.0847702080500312
+            },
+            "peakRssBytes": 146096128
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/rl-episodes-pair-1-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.03960075002396479,
+              "computeSeconds": 1.0640824579750188,
+              "completeSeconds": 1.1036832079989836
+            },
+            "peakRssBytes": 144113664
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/rl-episodes-pair-2-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.04014958394691348,
+              "computeSeconds": 1.0530527910450473,
+              "completeSeconds": 1.0932023749919608
+            },
+            "peakRssBytes": 146014208
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/rl-episodes-pair-3-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.040476375026628375,
+              "computeSeconds": 1.0570501670008525,
+              "completeSeconds": 1.097526542027481
+            },
+            "peakRssBytes": 146079744
+          },
+          {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-comparison-v11/rl-episodes-pair-4-current-cpp.json",
+            "timings": {
+              "fixtureSeconds": 0.03968337504193187,
+              "computeSeconds": 1.0610207919962704,
+              "completeSeconds": 1.1007041670382023
+            },
+            "peakRssBytes": 146063360
+          }
+        ]
+      },
+      "frozenExactPassed": true
+    }
+  },
+  "sourceCommitNote": "Verified working increment on 6d7c4ef0 parent; see native source hashes below; unbound simulation_* headers excluded from compiled binary.",
+  "sourceHashes": {
+    "setup.py": "8cb767f44920b530faf32b7d2642566c00e8f8165ad564cb7efd0184129e21fc",
+    "src/resectionlab/core.py": "83c6de6c6b6fcf4dce9a64f8778c3424cc9109ed47aaf7bc7b4bafea9cc1a381",
+    "src/resectionlab/geometry_native.cpp": "5e65a19cdd52c330c3de48e5e78d48d2d3912c5d9f18204c3580841752344851",
+    "src/resectionlab/native_backend.py": "c67610ac05668175e010c95ce7b341c8f8566930e892550b8b603f4b6d899447",
+    "src/resectionlab/surgical_craniotomy.py": "6927059bd79ab35ee468b37bca2ca25bf89db80c202dce07197256999e9af5a5",
+    "src/resectionlab/surgical_motion.py": "fe8a7d48d52962e51bb22786981484fc51f94e34e5853bdb8b342007bf671a51",
+    "src/resectionlab/json_native.hpp": "4b86a9202b8eff914dfc62c80270f89e333dd253e014493f090d2e1d6afd0a0a",
+    "src/resectionlab/motion_native.hpp": "02920c7ee6512a05a9ab10f99703e9fb840019d20df83d4c4af82efb39b2b59d",
+    "src/resectionlab/validation_native.hpp": "99795e42912fe703c8c5661106436aca0b5c829db6b19685c25d439bbe30e613"
+  },
+  "verification": {
+    "focusedCpp": "351 passed in 4.77s",
+    "independentStaticReview": "GO; scoped v11 only, no remaining material blocker",
+    "delivery": "v11 source benchmark verified; wheel/frozen/signed v11 not yet rebuilt; v9 delivery remains historical"
+  }
+}

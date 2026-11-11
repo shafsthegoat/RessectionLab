@@ -17,7 +17,7 @@ import sys
 import sysconfig
 import threading
 import numpy as np
-from types import BuiltinFunctionType
+from types import BuiltinFunctionType, CodeType, FunctionType, WrapperDescriptorType
 
 _ENVIRONMENT = 'RESSECTIONLAB_NUMERICAL_BACKEND'
 _MODULE_NAME = 'resectionlab._geometry_cpp'
@@ -109,7 +109,8 @@ def _load():
         _entry_points = tuple((name, getattr(module, name)) for name in
                               ('capsule_chunk', 'copy_builtin_json', 'segment_predicate', 'copy_engine_graph',
                                'segment_predicate_batch', 'run_trajectory', 'physical_substep', 'owned_digest',
-                               'function_identities', 'occupancy_values'))
+                               'function_identities', 'occupancy_values', 'canonical_json_digest',
+                               'motion_envelopes', 'cranial_cells_partition'))
         if (sys.modules.get(_MODULE_NAME) is not module
                 or Path(module.__spec__.origin).resolve() != binary
                 or any(type(function) is not BuiltinFunctionType
@@ -140,7 +141,8 @@ def reset_counters():
                      referenceCalls=0, unsupportedCalls=0, jsonCopyCalls=0, jsonCopyFallbackCalls=0,
                      engineCopyCalls=0, engineCopyFallbackCalls=0, trajectoryCalls=0,
                      physicalSubstepCalls=0, ownedDigestCalls=0, cacheIdentityCalls=0,
-                     occupancyCalls=0, batchSizes={})
+                     occupancyCalls=0, canonicalDigestCalls=0, canonicalDigestFallbackCalls=0,
+                     motionEnvelopeCalls=0, cranialCellsCalls=0, batchSizes={})
 
 
 reset_counters()
@@ -301,6 +303,11 @@ def physical_substep(*args):
 def owned_digest(value, dumps, sha256, fallback):
     if _module is None:
         return fallback
+    if type(value) in (dict, list, tuple):
+        result = canonical_digest(value, dumps, sha256, fallback, owned=True)
+        if result is not fallback:
+            _counters['ownedDigestCalls'] += 1
+            return result
     _check_live()
     _counters['bindingCalls'] += 1
     _counters['ownedDigestCalls'] += 1
@@ -321,3 +328,119 @@ def occupancy_values(labels, ids, cleared, moved, fallback):
     _counters['bindingCalls'] += 1
     _counters['occupancyCalls'] += 1
     return _module.occupancy_values(labels, ids, cleared, moved, fallback)
+
+
+def _capture_json_encoder():
+    """Admit the stock canonical encoder; changed helpers keep their callbacks."""
+    import _json
+    import json.encoder as encoder
+    try:
+        cls = encoder.JSONEncoder
+        if (json.JSONEncoder is not cls or type(cls) is not type
+                or len(cls.__bases__) != 1 or cls.__bases__[0] is not object
+                or type(encoder.encode_basestring_ascii) is not BuiltinFunctionType
+                or encoder.encode_basestring_ascii.__name__ != 'encode_basestring_ascii'
+                or encoder.encode_basestring_ascii.__module__ != '_json'
+                or encoder.encode_basestring_ascii.__self__ is not _json
+                or encoder.encode_basestring_ascii is not _json.encode_basestring_ascii
+                or encoder.c_make_encoder is not _json.make_encoder
+                or type(_json.make_encoder) is not type
+                or _json.make_encoder.__name__ != 'Encoder'
+                or _json.make_encoder.__module__ != '_json'
+                or type(_json.make_encoder.__call__) is not WrapperDescriptorType
+                or _json.make_encoder.__call__.__objclass__ is not _json.make_encoder
+                or type(_json.make_encoder.__new__) is not BuiltinFunctionType
+                or _json.make_encoder.__new__.__self__ is not _json.make_encoder):
+            return None
+        bindings, functions = [], []
+        for owner, names in ((vars(json), ('dumps', 'JSONEncoder')),
+                (vars(encoder), ('JSONEncoder', 'c_make_encoder', 'encode_basestring_ascii', 'INFINITY')),
+                (vars(_json), ('make_encoder', 'encode_basestring_ascii')),
+                (_json.make_encoder, ('__new__', '__call__', '__init__', '__getattribute__',
+                                     '__getattr__', '__setattr__', '__delattr__', '__del__')),
+                (cls, ('__init__', 'encode', 'iterencode', 'default', '__getattribute__',
+                       '__getattr__', '__setattr__', '__delattr__', '__new__', '__del__',
+                       'skipkeys', 'ensure_ascii', 'check_circular', 'allow_nan', 'sort_keys',
+                       'indent', 'item_separator', 'key_separator'))):
+            namespace = vars(owner) if type(owner) is type else owner
+            bindings.extend((owner, name, namespace.get(name), name in namespace) for name in names)
+        defaults = {'skipkeys': False, 'ensure_ascii': True, 'check_circular': True,
+                    'allow_nan': True, 'sort_keys': False, 'indent': None,
+                    'separators': None, 'default': None}
+        for module, class_name, names in ((json, None, ('dumps',)),
+                (encoder, 'JSONEncoder', ('__init__', 'encode', 'iterencode', 'default'))):
+            source = module.__spec__.loader.get_code(module.__name__)
+            if class_name is not None:
+                source, = (code for code in source.co_consts
+                           if type(code) is CodeType and code.co_name == class_name)
+            originals = {code.co_name: code for code in source.co_consts if type(code) is CodeType}
+            for name in names:
+                function = vars(module)[name] if class_name is None else vars(cls)[name]
+                if (type(function) is not FunctionType or function.__globals__ is not vars(module)
+                        or function.__code__ != originals[name]):
+                    return None
+                expected_kw = {**defaults, 'cls': None} if name == 'dumps' else defaults if name == '__init__' else None
+                keywords = function.__kwdefaults__
+                if expected_kw is None:
+                    if keywords is not None:
+                        return None
+                elif (type(keywords) is not dict or any(type(key) is not str for key in keywords)
+                        or keywords.keys() != expected_kw.keys()
+                        or any(keywords[key] is not value for key, value in expected_kw.items())):
+                    return None
+                positional = function.__defaults__
+                if (name == 'iterencode' and (type(positional) is not tuple
+                        or len(positional) != 1 or positional[0] is not False)) or (
+                        name != 'iterencode' and positional is not None):
+                    return None
+                functions.append((function, function.__code__, function.__defaults__, keywords,
+                                  () if keywords is None else tuple(keywords.items())))
+                # These are the builtin operations used by the source-qualified wrappers.
+                for key, original in (('str', ''.__class__), ('float', (0.).__class__),
+                        ('list', [].__class__), ('tuple', ().__class__),
+                        ('isinstance', isinstance), ('repr', repr), ('ValueError', ValueError)):
+                    if function.__builtins__.get(key) is not original:
+                        return None
+                    namespace = function.__globals__
+                    if key in namespace and namespace[key] is not original:
+                        return None
+                    bindings.append((function.__builtins__, key, original, True))
+                    bindings.append((namespace, key, namespace.get(key), key in namespace))
+        functions.append((native_json_copy, native_json_copy.__code__, native_json_copy.__defaults__,
+                          native_json_copy.__kwdefaults__, ()))
+        return tuple(bindings), tuple(functions)
+    except (AttributeError, ImportError, KeyError, OSError, NotImplementedError, TypeError, ValueError):
+        return None
+
+
+_canonical_dumps = (json.dumps,)
+_json_encoder_guard = _capture_json_encoder()
+
+
+def canonical_digest(value, dumps, sha256, fallback, *, owned=False):
+    if _module is None or _json_encoder_guard is None or dumps is not _canonical_dumps[0]:
+        return fallback
+    _check_live()
+    _counters['bindingCalls'] += 1
+    _counters['canonicalDigestCalls'] += 1
+    result = _module.canonical_json_digest(value, sha256, fallback, owned,
+                                         64 if owned else 32, _json_encoder_guard)
+    if result is fallback:
+        _counters['canonicalDigestFallbackCalls'] += 1
+    return result
+
+
+def motion_envelopes(*args):
+    _check_live()
+    if _module is None:
+        return args[-1]
+    _counters['bindingCalls'] += 1
+    _counters['motionEnvelopeCalls'] += 1
+    return _module.motion_envelopes(*args)
+
+
+def cranial_cells_partition(*args):
+    _check_live()
+    _counters['bindingCalls'] += 1
+    _counters['cranialCellsCalls'] += 1
+    return _module.cranial_cells_partition(*args)

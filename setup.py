@@ -13,7 +13,8 @@ from pybind11.setup_helpers import Pybind11Extension, build_ext
 from setuptools import setup
 
 ROOT = Path(__file__).parent
-SOURCES = ('geometry_native.cpp', 'state_native.hpp', 'executor_native.hpp')
+SOURCES = ('geometry_native.cpp', 'state_native.hpp', 'executor_native.hpp',
+           'json_native.hpp', 'motion_native.hpp', 'validation_native.hpp')
 FLAGS = ['-O3', '-fno-fast-math', '-ffp-contract=off']
 
 
@@ -54,5 +55,5 @@ class NativeBuild(build_ext):
 
 setup(ext_modules=[Pybind11Extension('resectionlab._geometry_cpp',
     ['src/resectionlab/geometry_native.cpp'], cxx_std=17,
-    depends=['src/resectionlab/state_native.hpp', 'src/resectionlab/executor_native.hpp', 'setup.py'],
+    depends=['src/resectionlab/' + name for name in SOURCES[1:]] + ['setup.py'],
     extra_compile_args=FLAGS)], cmdclass={'build_ext': NativeBuild})

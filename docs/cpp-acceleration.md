@@ -10,6 +10,55 @@ The current numerical implementation is `2d9712f8`. Its complete 23-stage delive
 and independent code review pass. The original performance objective remains
 incomplete. Earlier v6 results are retained below as history.
 
+## Top-three native pass v11 — verified source increment
+
+The accepted v9 source and binary were captured unchanged from `6d7c4ef0` at
+`outputs/cpp-acceleration-v1/native-prepass-v11` before edits. The retained changes
+fuse capsule transforms, canonical JSON validation/encoding and stock cranial
+cell/partition validation in the existing extension. Stock SciPy quaternion
+construction remains once per envelope call. The smaller effects-validation seam
+was dropped; it added ownership complexity for little integrated return.
+
+Focused checks pass **351 tests**, including signed-zero motion, live JSON guard
+changes, bounded fallback and forced-GC ownership. Independent static review gives
+GO for this increment. Five alternating fresh-process pairs retain all fixed
+workloads, original exactness contracts, one-thread pools and memory limits.
+
+| Complete workload | Baseline | v11 C++ | Speedup |
+|---|---:|---:|---:|
+| generate, original-reference | 17.245107 s | 9.656632 s | 1.78583× |
+| generate, previous-cpp | 10.951239 s | 9.656632 s | 1.13406× |
+| small, original-reference | 0.001915 s | 0.001594 s | 1.20166× |
+| standardized-refusal, original-reference | 1.395078 s | 0.903959 s | 1.54330× |
+| stress, original-reference | 0.958642 s | 0.520460 s | 1.84191× |
+| simulation-steps, previous-cpp | 1.048613 s | 1.023974 s | 1.02406× |
+| rl-episodes, previous-cpp | 1.066619 s | 1.097527 s | 0.97184× |
+
+Planning saves **1.294608 seconds** against the
+contemporary v9 capture. All exactness, other latency, memory and 1 GiB caps pass.
+The original 2× planning target remains **unmet** (1.78583×).
+RL has no demonstrated gain from these three seams. Binding/conversion/copy and
+production hashing are included in elapsed time. Setup/build/profiling are separate.
+[Compact receipt](../artifacts/cpp-acceleration-v1/top-three-native-acceptance-v11.json)
+retains every sample, variability, memory and counters. v11 wheel/frozen/app
+rebuild is pending; prior v9 packaging evidence is not reused as a v11 delivery pass.
+
+## Resident native engine v12 — implementation in progress
+
+The current request requires owned native working state and a complete native
+transaction, rather than helper bindings around Python state. Pure C++17 value,
+scene/state, motion, geometry, occupancy, cancellation and hashing foundations
+are being integrated with native effects, CUSA exact accounting, cranial stages,
+transport and the action executor. They are unbound and not an execution claim yet.
+Python remains the outer API/RL/training boundary. Unsupported configurations
+must be classified before mutation; no retry after a partially mutated action.
+
+Root owns the executor and API integration. Effects, exact CUSA accounting,
+transport, cranial guards/stages and physical substeps have disjoint owners.
+Next: compile and connect one complete native Generate transaction, differential
+check complete generated traces, then extend remaining physics and RL execution.
+The original frozen benchmarks, performance target and delivery gates remain intact.
+
 ## Executor increment v9 — integrated and verified
 
 The physical substep and ordered trajectory/rollback loops now execute in the

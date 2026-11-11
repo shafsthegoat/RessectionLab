@@ -4,6 +4,7 @@ Inflated midpoint capsules conservatively enclose translation and rotation over
 each deterministic substep. Working geometry never shrinks the physical shaft.
 """
 from collections import OrderedDict
+import functools as _envelope_functools
 import sys
 from types import BuiltinFunctionType, CodeType, FunctionType, ModuleType
 
@@ -28,7 +29,8 @@ _ROTATION_OBJECT_HOOKS = ('__getattribute__', '__getattr__', '__setattr__', '__d
 def _capture_rotation_helpers():
     result = []
     for owner, names in ((Rotation, ('__init__', '__len__', '__getitem__', '__mul__', 'from_quat',
-                                     'from_rotvec', 'inv', 'magnitude', 'as_quat', 'as_rotvec')),
+                                     'from_rotvec', 'inv', 'magnitude', 'as_quat', 'as_rotvec',
+                                     'apply', 'as_matrix')),
                          (Slerp, ('__init__', '__call__'))):
         if type(owner) is not type:
             return ((owner, None, None, None),)
@@ -187,7 +189,7 @@ def _ordinary_vector(value, length):
             and all(type(component) in (int, float) for component in value))
 
 
-def envelopes(tool, parameters, position, quaternion, inflation=0.):
+def _envelopes_reference(tool, parameters, position, quaternion, inflation=0.):
     p = np.asarray(position, float); r = Rotation.from_quat(quaternion)
     radius = parameters['radiusMm']; depth = parameters.get('depthMm', 2.)
     shape = tool['geometry']
@@ -216,6 +218,131 @@ def envelopes(tool, parameters, position, quaternion, inflation=0.):
     else:
         result.append(capsule([0, 0, -min(depth, 3.)], [0, 0, 0], radius, 'working'))
     return result
+
+
+def _capture_envelope_helpers():
+    """Qualify the stock scalar apply path that the fused helper replaces."""
+    if not _rotation_captures_genuine:
+        return None
+    try:
+        owner = sys.modules[_ROTATION.__module__]
+        namespace = vars(owner)
+        cython, extra = namespace['cython_backend'], namespace['xpx']
+        registry = namespace['backend_registry']
+        if type(registry) is not dict or len(registry) != 1:
+            return None
+        xp, = registry
+        if (type(xp) is not ModuleType or registry[xp] is not cython
+                or xp.__name__ != 'scipy._external.array_api_compat.numpy'):
+            return None
+        if (type(cython) is not ModuleType or type(extra) is not ModuleType
+                or cython.__name__ != 'scipy.spatial.transform._rotation_cy'):
+            return None
+        if type(np.asarray) is not BuiltinFunctionType or type(np.asarray.__self__) is not ModuleType:
+            return None
+        if type(np.atleast_2d) is not vars(np.asarray.__self__).get('_ArrayFunctionDispatcher'):
+            return None
+        if type(namespace['is_numpy']) is not _envelope_functools._lru_cache_wrapper:
+            return None
+        scalar_helpers = (namespace['select_backend'], namespace['xp_device'],
+                          vars(extra).get('atleast_nd'), vars(xp).get('asarray'))
+        if any(type(function) is not FunctionType for function in scalar_helpers):
+            return None
+        bindings = [(owner, 'select_backend'), (owner, 'xp_device'), (owner, 'is_numpy'), (owner, 'np'),
+                    (owner, 'cython_backend'), (owner, 'xpx'), (owner, 'backend_registry'),
+                    (cython, 'apply'), (cython, 'as_matrix'), (cython, 'np'), (extra, 'atleast_nd'),
+                    (np, 'asarray'), (np, 'matmul'), (np, 'atleast_2d'), (np, 'float64'),
+                    (xp, 'asarray'), (xp, 'atleast_2d'), (np, 'array'), (np, 'dtype')]
+        functions = [*scalar_helpers, namespace['is_numpy'].__wrapped__, np.atleast_2d.__wrapped__]
+        array_helpers = xp.asarray.__globals__['_helpers']
+        if type(array_helpers) is not ModuleType:
+            return None
+        bindings.append((array_helpers, '_check_device'))
+        functions.append(vars(array_helpers).get('_check_device'))
+        device_namespace = namespace['xp_device'].__globals__
+        for name in ('is_numpy_array', '_issubclass_fast', '_compat_module_name'):
+            helper = device_namespace[name]
+            bindings.append((sys.modules[namespace['xp_device'].__module__], name))
+            if type(helper) is FunctionType:
+                functions.append(helper)
+            elif type(helper) is _envelope_functools._lru_cache_wrapper:
+                functions.append(helper.__wrapped__)
+            else:
+                return None
+        bindings.append((sys.modules[extra.atleast_nd.__module__], 'is_numpy_namespace'))
+        namespace_helper = extra.atleast_nd.__globals__['is_numpy_namespace']
+        if type(namespace_helper) is not _envelope_functools._lru_cache_wrapper:
+            return None
+        functions.append(namespace_helper.__wrapped__)
+        shape_module = sys.modules[np.atleast_2d.__wrapped__.__module__]
+        bindings.extend(((shape_module, 'asanyarray'), (shape_module, '_nx'),
+                         (sys.modules['builtins'], 'min'), (sys.modules['builtins'], 'max'),
+                         (sys.modules['builtins'], 'float')))
+        captured = tuple((module, name, vars(module)[name]) for module, name in bindings)
+        for function in functions:
+            if type(function) is not FunctionType:
+                return None
+            module = sys.modules[function.__module__]
+            if function.__globals__ is not vars(module):
+                return None
+            body = module.__spec__.loader.get_code(module.__name__)
+            original, = (code for code in body.co_consts
+                         if type(code) is CodeType and code.co_name == function.__name__)
+            if function.__code__ != original:
+                return None
+        if (Rotation.apply.__defaults__ != (False,) or Rotation.apply.__kwdefaults__ is not None
+                or Rotation.as_matrix.__defaults__ is not None or Rotation.as_matrix.__kwdefaults__ is not None
+                or type(cython.apply).__name__ != 'cython_function_or_method'
+                or cython.apply.__module__ != cython.__name__
+                or cython.apply.__name__ != 'apply'
+                or cython.as_matrix.__module__ != cython.__name__
+                or cython.as_matrix.__name__ != 'as_matrix'
+                or type(np.asarray) is not BuiltinFunctionType
+                or np.asarray.__name__ != 'asarray'
+                or type(np.asarray.__self__) is not ModuleType
+                or np.asarray.__self__.__name__ not in ('numpy._core._multiarray_umath', 'numpy.core._multiarray_umath')
+                or vars(np.asarray.__self__).get('asarray') is not np.asarray
+                or vars(np.asarray.__self__).get('array') is not np.array
+                or vars(np.asarray.__self__).get('dtype') is not np.dtype
+                or cython.np is not np
+                or type(np.matmul) is not np.ufunc or np.matmul.__name__ != 'matmul'
+                or vars(np.asarray.__self__).get('matmul') is not np.matmul
+                or vars(sys.modules['builtins'])['float'] is not (0.).__class__
+                or any(type(vars(sys.modules['builtins'])[name]) is not BuiltinFunctionType
+                       or vars(sys.modules['builtins'])[name].__name__ != name
+                       or vars(sys.modules['builtins'])[name].__self__ is not sys.modules['builtins']
+                       for name in ('min', 'max'))):
+            return None
+        return captured, tuple(_function_state(function) for function in functions), registry, cython, xp
+    except (AttributeError, ImportError, KeyError, OSError, NotImplementedError, TypeError, ValueError):
+        return None
+
+
+_ENVELOPE_HELPERS = _capture_envelope_helpers()
+_ENVELOPE_FALLBACK = object()
+
+
+def _envelope_helpers_unchanged():
+    if _ENVELOPE_HELPERS is None or not _rotation_helpers_unchanged():
+        return False
+    bindings, states, registry, cython, xp = _ENVELOPE_HELPERS
+    if any(vars(owner).get(name) is not original for owner, name, original in bindings):
+        return False
+    if len(registry) != 1 or registry.get(xp) is not cython:
+        return False
+    return all(_function_state(state[0]) == state for state in states)
+
+
+def envelopes(tool, parameters, position, quaternion, inflation=0.):
+    if (native_backend.cpp_enabled() and _envelope_helpers_unchanged()
+            and type(tool) is dict and type(parameters) is dict
+            and _ordinary_vector(position, 3) and _ordinary_vector(quaternion, 4)
+            and type(inflation) in (float, int, np.float64)):
+        result = native_backend.motion_envelopes(tool, parameters, position, quaternion, inflation,
+                                                 Rotation, _ENVELOPE_FALLBACK)
+        if result is not _ENVELOPE_FALLBACK:
+            return result
+    return _envelopes_reference(tool, parameters, position, quaternion, inflation)
 
 
 def _swept_envelopes_reference(tool, parameters, start, end):

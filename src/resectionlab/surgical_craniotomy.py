@@ -8,6 +8,7 @@ before scene.identity exists, so bindings never depend on it or its cache.
 from __future__ import annotations
 
 from dataclasses import dataclass
+import builtins as _validation_builtins
 import itertools
 import math
 import re
@@ -16,6 +17,7 @@ import numpy as np
 from scipy.ndimage import label
 
 from .core import array_digest, semantic_digest
+from . import native_backend
 
 PROPERTY = 'cranialAccessV1'
 SCHEMA = 'resectionlab.cranial-access.v1'
@@ -151,6 +153,34 @@ def _cells(value, size, name, *, empty=False):
     return tuple(value)
 
 
+_CELL_FUNCTION, _CELL_CODE = _cells, _cells.__code__
+_CELL_INVALID, _CELL_INVALID_CODE = _invalid, _invalid.__code__
+_CELL_NUMPY = tuple((name, function, implementation, getattr(implementation,'__code__',None),
+        getattr(implementation,'__defaults__',None),
+        None if getattr(implementation,'__kwdefaults__',None) is None else
+            tuple(implementation.__kwdefaults__.items()))
+    for name in ('isin', 'flatnonzero') for function in (getattr(np, name),)
+    for implementation in (getattr(function,'_implementation',None),))
+_CELL_NAMESPACE = globals()
+_CELL_BINDINGS = tuple((name, getattr(_validation_builtins, name)) for name in
+    ('type', 'list', 'tuple', 'any', 'int', 'len', 'sorted', 'set', 'map', 'ValueError'))
+_CELL_FALLBACK = object()
+_CELL_ARRAY_TYPE = np.ndarray
+
+
+def _native_cells_supported():
+    return (_cells is _CELL_FUNCTION and _cells.__code__ is _CELL_CODE and
+        _invalid is _CELL_INVALID and _invalid.__code__ is _CELL_INVALID_CODE and
+        all(code is not None and getattr(np,name) is function and function._implementation is implementation and
+            implementation.__code__ is code and implementation.__defaults__ is defaults and
+            (implementation.__kwdefaults__ is None if keywords is None else
+             type(implementation.__kwdefaults__) is dict and
+             len(implementation.__kwdefaults__)==len(keywords) and
+             all(type(key) is str for key in implementation.__kwdefaults__) and
+             all(implementation.__kwdefaults__.get(key,_CELL_FALLBACK) is value for key,value in keywords))
+            for name,function,implementation,code,defaults,keywords in _CELL_NUMPY))
+
+
 def _vector(value, count, name):
     if (type(value) not in (list, tuple) or len(value) != count or
             any(type(v) not in (int, float) or not math.isfinite(v) for v in value)):
@@ -252,16 +282,22 @@ def validate_contract(scene, contract=None):
         _invalid('exact versioned declaration required')
     if raw['contentHash'] != contract_hash(raw) or any(raw[k] != v for k, v in binding(scene).items()):
         _invalid('content or source/target/attachment binding differs')
-    parsed = [_cells(raw[name], scene.labels.size, name, empty=name == 'boneAnchorCells')
-              for name in ('windowCells', 'flapCells', 'kerfCells', 'retainedSkullCells', 'boneAnchorCells')]
-    window, flap, kerf, retained, anchors = map(set, parsed)
-    bone = set(map(int, np.flatnonzero(np.isin(scene.labels, [r['id'] for r in scene.regions if r['material'] == 'bone']))))
-    if flap & kerf or retained & (flap | kerf) or flap | kerf | retained != bone:
-        _invalid('F/K/R must partition all categorical source bone')
-    if not (flap | kerf) <= window <= bone or not anchors <= retained:
-        _invalid('window must contain F union K; anchors must belong to retained skull')
-    if not set(scene.properties.get('boneAnchors', ())) <= anchors:
-        _invalid('declared source bone anchors cannot be omitted or reassigned')
+    parsed = _CELL_FALLBACK
+    if native_backend._module is not None and _native_cells_supported():
+        from .surgical_scene import SurgicalScene
+        parsed = native_backend.cranial_cells_partition(raw,scene,(SurgicalScene,_CELL_ARRAY_TYPE),
+            _CELL_NAMESPACE,_validation_builtins.__dict__,_CELL_BINDINGS,_CELL_FALLBACK)
+    if parsed is _CELL_FALLBACK:
+        parsed = [_cells(raw[name], scene.labels.size, name, empty=name == 'boneAnchorCells')
+                  for name in ('windowCells', 'flapCells', 'kerfCells', 'retainedSkullCells', 'boneAnchorCells')]
+        window, flap, kerf, retained, anchors = map(set, parsed)
+        bone = set(map(int, np.flatnonzero(np.isin(scene.labels, [r['id'] for r in scene.regions if r['material'] == 'bone']))))
+        if flap & kerf or retained & (flap | kerf) or flap | kerf | retained != bone:
+            _invalid('F/K/R must partition all categorical source bone')
+        if not (flap | kerf) <= window <= bone or not anchors <= retained:
+            _invalid('window must contain F union K; anchors must belong to retained skull')
+        if not set(scene.properties.get('boneAnchors', ())) <= anchors:
+            _invalid('declared source bone anchors cannot be omitted or reassigned')
     entry, exit_geometry = _entry(raw['entry']), _exit(raw['exit'], scene.shape)
     scope, proofs = _proofs(raw['evidence'])
     _window_geometry(scene, parsed[0], entry, exit_geometry)

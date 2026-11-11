@@ -12,6 +12,9 @@
 #include <tuple>
 #include "state_native.hpp"
 #include "executor_native.hpp"
+#include "json_native.hpp"
+#include "motion_native.hpp"
+#include "validation_native.hpp"
 
 namespace py = pybind11;
 namespace {
@@ -325,4 +328,7 @@ PYBIND11_MODULE(_geometry_cpp, module) {
     bind_executor_state(module);
     bind_executor_cache(module);
     bind_executor_occupancy(module);
+    bind_canonical_json(module);
+    bind_motion_native(module);
+    bind_validation_native(module);
 }

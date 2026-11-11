@@ -20,7 +20,7 @@ from typing import Any, TYPE_CHECKING
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
-from .native_backend import native_json_copy
+from .native_backend import canonical_digest, native_json_copy
 
 if TYPE_CHECKING:
     from .critical_evidence import CriticalStructureEvidence
@@ -87,6 +87,7 @@ def thaw_json(value: Any) -> Any:
 
 
 _JSON_COPY_FALLBACK = object()
+_DIGEST_NATIVE_COPY = native_json_copy
 
 
 def _copy_builtin_json(value: Any, depth: int = 0) -> Any:
@@ -126,6 +127,10 @@ def _copy_builtin_json(value: Any, depth: int = 0) -> Any:
 
 def semantic_digest(value: Any) -> str:
     """Content digest for JSON metadata; mapping insertion order is irrelevant."""
+    if native_json_copy is _DIGEST_NATIVE_COPY:
+        result = canonical_digest(value, json.dumps, hashlib.sha256, _JSON_COPY_FALLBACK)
+        if result is not _JSON_COPY_FALLBACK:
+            return result
     copied = native_json_copy(value, _JSON_COPY_FALLBACK)
     if copied is _JSON_COPY_FALLBACK:
         try:
