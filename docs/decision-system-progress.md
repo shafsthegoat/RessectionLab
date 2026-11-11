@@ -247,8 +247,17 @@ verified acquired image archive; model outputs below are proposals.
   inspection exclusions.56 focused checks,714 renderer and275 viewer tests pass;
   TypeScript/production build passes. The general failing allocation primitive
   remains unproven; this fixes the unnecessary inspection representation change.
-  Hidden V3 and separate terminal-cleanup repair remain pending. Neither earlier
-  attempt grants native effects, treatment or cold evidence.
+  V3 repairs terminal cleanup by checking owned PID/birth identities and retains
+  both earlier failures. Actual full-resolution warm/cold desktop inspection now
+  passes in205.485s/5.708GB aggregate peak,330MB artifacts. Warm creates one real
+  source scene; cold restores it without recreation. All four stages, visible
+  blockers, disabled Generate after acknowledgement, actual Save, all five masks,
+  nine source refs,148526 target cells/full-ID SHA and the unchanged empty native
+  snapshot reconcile. No physical/planning IPC or accepted native action occurs;
+  both windows remain hidden/unfocused. Root views warm Plan and cold Case images;
+  independent review views all8 images and passes37 metadata plus91 array checks
+  with one cold-case load(2.870s/2.388GB). This verifies inspection and safe
+  refusal, not an opening, treatment, withdrawal or completed patient task.
   No native patient action or complete tumor task exists.
 - **Meningioma06:** preexisting unreviewed full proposal360280 cells/45035mm³.
   Three source-aligned windows pass engineering surface fit, but the best whole
@@ -273,12 +282,20 @@ local AGENTS.md is committed.
    cells lie behind. The1029 local positives in the behind cover also lie in the
    proposed removal subset; they are closed-face overlap, not retained islands.
    Study34.320s/1.020GB; saved-ID/SAT audit11045 checks pass in4.95s/431MB. Next:
-   qualify six prospective adjacent openings without filtering target/guards or
-   expanding the reviewed source scope silently. Preserve all other
+   The subsequent six-position study completes in31.246s/896MB:6 fresh quality
+   fits/390 fit queries,102 tool attitudes,0 material candidates,0 native calls.
+   Every first refusal is the parked Frazier shaft against unchanged guard and
+   UNKNOWN fields(7340..8592 hit occurrences per attitude, overlapping counts).
+   No parked target/dense contact is found; active-hand/pair tests are never
+   reached. All6 translated old-cover target proxies worsen the original1748.
+   This is a fixed parking/attitude limitation plus checked obstruction, not
+   active-opening or anatomical impossibility. Next check the active hand
+   independently, then search independent parked-hand poses before new fits.
+   Preserve all other
    density as target/protected/collidable UNKNOWN; no whole-component anatomical
    promotion, largest-component deletion, island skipping or guard change.
-2. Verify the fixed unchanged inspection-mask display, actual blocked Generate,
-   Save and cold reopen. Qualify calvarium, local critical/venous/dural and exterior data. Preserve
+2. Qualify calvarium, local critical/venous/dural and exterior data for real
+   execution; inspection and safe refusal alone are insufficient. Preserve
    candidate-role proof without promoting a reserved case or annotation authority.
 3. Construct and compare genuinely different source-qualified opening/work/exit
    alternatives, freeze patient tasks and fair baseline/search budgets, and run
