@@ -16,9 +16,11 @@ import itertools
 from array import array
 from itertools import repeat as _strict_int_repeat
 from operator import is_ as _strict_int_is
+from types import FunctionType as _copy_function_type, CodeType as _copy_code_type
 import numpy as np
 from scipy.spatial.transform import Rotation, Slerp
 from .core import semantic_digest
+from .native_backend import native_engine_copy
 from .geometry import GeometryScene, capsule_voxel_indices, segment_segment_distance
 from .surgical_tools import TOOLS, catalog
 from .surgical_cusa_v3 import profile as cusa_profile
@@ -200,7 +202,58 @@ def _displacement_snapshot(field):
     return keys, values.tobytes()
 
 
+_engine_copy_fallback = object()
+_engine_copy_names = ('deepcopy', '_deepcopy_atomic', '_deepcopy_list', '_deepcopy_dict', '_keep_alive')
+_engine_copy_functions = tuple(getattr(copy, name, None) for name in _engine_copy_names)
+_engine_copy_genuine = all(type(function) is _copy_function_type
+    and function.__module__ == 'copy' and function.__name__ == name
+    and function.__globals__ is copy.__dict__
+    for name, function in zip(_engine_copy_names, _engine_copy_functions))
+_engine_copy_originals = (tuple((function.__code__, function.__defaults__)
+    for function in _engine_copy_functions) if _engine_copy_genuine else ())
+_engine_copy_dispatch = getattr(copy, '_deepcopy_dispatch', None)
+_engine_copy_entries = tuple(zip((type(None), int, float, bool, str, list, dict),
+    (*(_engine_copy_functions[1],) * 5, _engine_copy_functions[2], _engine_copy_functions[3])))
+_engine_copy_genuine = (_engine_copy_genuine and type(_engine_copy_dispatch) is dict
+    and all(_engine_copy_dispatch.get(kind) is function for kind, function in _engine_copy_entries))
+try:
+    # Unexecuted loader code detects hooks installed before this module imported.
+    _engine_copy_module_code = copy.__spec__.loader.get_code('copy')
+    _engine_copy_source_codes = {code.co_name: code for code in _engine_copy_module_code.co_consts
+                                if type(code) is _copy_code_type}
+    _engine_copy_genuine = (_engine_copy_genuine and all(function.__code__ == _engine_copy_source_codes.get(name)
+        for name, function in zip(_engine_copy_names, _engine_copy_functions)))
+except (AttributeError, ImportError, OSError, NotImplementedError, TypeError, ValueError):
+    _engine_copy_genuine = False
+if _engine_copy_genuine:
+    _engine_copy_defaults = _engine_copy_functions[0].__defaults__
+    _engine_copy_genuine = (type(_engine_copy_defaults) is tuple and len(_engine_copy_defaults) == 2
+        and _engine_copy_defaults[0] is None and type(_engine_copy_defaults[1]) is list
+        and len(_engine_copy_defaults[1]) == 0
+        and _engine_copy_functions[1].__defaults__ is None
+        and all(type(function.__defaults__) is tuple and len(function.__defaults__) == 1
+            and function.__defaults__[0] is _engine_copy_functions[0]
+            for function in _engine_copy_functions[2:4])
+        and _engine_copy_functions[4].__defaults__ is None)
+
+
+def _engine_copy_hooks_unchanged():
+    return (_engine_copy_genuine and copy.__dict__.get('_deepcopy_dispatch') is _engine_copy_dispatch
+        and all(copy.__dict__.get(name) is function and function.__code__ is code
+            and function.__defaults__ is defaults
+            for name, function, (code, defaults) in zip(
+                _engine_copy_names, _engine_copy_functions, _engine_copy_originals))
+        and all(_engine_copy_dispatch.get(kind) is function for kind, function in _engine_copy_entries))
+
+
 def _copy_engine_data(value, memo=None):
+    """Detach engine graphs with native or unchanged reference copy semantics."""
+    memo = {} if memo is None else memo
+    copied = native_engine_copy(value, memo, _engine_copy_fallback)
+    return _copy_engine_data_reference(value, memo) if copied is _engine_copy_fallback else copied
+
+
+def _copy_engine_data_reference(value, memo=None):
     """Detach engine JSON graphs without visiting every scalar via deepcopy.
 
     Long histories contain large flat cell/pose/event arrays. Built-in scalar
@@ -232,7 +285,7 @@ def _copy_engine_data(value, memo=None):
             return result
         result = []
         memo[id(value)] = result
-        result.extend(_copy_engine_data(item, memo) for item in value)
+        result.extend(_copy_engine_data_reference(item, memo) for item in value)
         return result
     if kind is dict and all(_copy_atomic_type(type(key)) for key in value):
         if all(_copy_atomic_type(type(item)) for item in value.values()):
@@ -242,7 +295,7 @@ def _copy_engine_data(value, memo=None):
         result = {}
         memo[id(value)] = result
         for key, item in value.items():
-            result[key] = _copy_engine_data(item, memo)
+            result[key] = _copy_engine_data_reference(item, memo)
         return result
     return copy.deepcopy(value, memo)
 
@@ -311,6 +364,11 @@ def _microstep_checkpoint(state):
             if type(value) is dict and all(type(key) is str and type(amount) in (int, float)
                                            for key, amount in value.items()):
                 memo[id(value)] = value.copy()
+    # Preserve caller-installed deepcopy hooks and the established flat-field admission.
+    if _engine_copy_hooks_unchanged():
+        copied = native_engine_copy(state, memo, _engine_copy_fallback)
+        if copied is not _engine_copy_fallback:
+            return copy.deepcopy(state, memo)
     # Corner fields contain thousands of immutable scalar leaves. Recursing
     # through deepcopy for every float dominated rollback during retraction.
     # Use one shared memo across all fields so public cross-field aliases and

@@ -21,6 +21,8 @@ _ENVIRONMENT = 'RESSECTIONLAB_NUMERICAL_BACKEND'
 _MODULE_NAME = 'resectionlab._geometry_cpp'
 MAX_PRIMITIVES = 32768
 MAX_BATCH_ITEMS = 64
+MAX_ENGINE_COPY_ITEMS = 262144
+MAX_ENGINE_COPY_DEPTH = 64
 
 
 class NativeUnavailableError(RuntimeError):
@@ -86,7 +88,9 @@ def _load():
                 or build['cppStandard'] != 17
                 or build['python']['abi'] != sysconfig.get_config_var('SOABI')
                 or build['platform'] != {'system': platform.system(), 'machine': platform.machine()}
-                or module.MAX_PRIMITIVES != MAX_PRIMITIVES or module.MAX_BATCH_ITEMS != MAX_BATCH_ITEMS):
+                or module.MAX_PRIMITIVES != MAX_PRIMITIVES or module.MAX_BATCH_ITEMS != MAX_BATCH_ITEMS
+                or module.MAX_ENGINE_COPY_ITEMS != MAX_ENGINE_COPY_ITEMS
+                or module.MAX_ENGINE_COPY_DEPTH != MAX_ENGINE_COPY_DEPTH):
             raise ValueError('build/runtime identity mismatch')
         binary_digest = _digest(binary)
         if binary_digest != manifest['binarySha256']:
@@ -101,7 +105,7 @@ def _load():
         for path in (binary, manifest_path):
             _files[path] = (_stat(path), _digest(path))
         _entry_points = tuple((name, getattr(module, name)) for name in
-                              ('capsule_chunk', 'copy_builtin_json', 'segment_predicate'))
+                              ('capsule_chunk', 'copy_builtin_json', 'segment_predicate', 'copy_engine_graph'))
         if (sys.modules.get(_MODULE_NAME) is not module
                 or Path(module.__spec__.origin).resolve() != binary
                 or any(type(function) is not BuiltinFunctionType
@@ -127,7 +131,8 @@ def reset_counters():
     _counters.update(bindingCalls=0, geometryBindingCalls=0, segmentPredicateCalls=0,
                      segmentPredicateRefinements=0, batchCalls=0, batchItems=0, maxBatchItems=0,
                      primitiveCandidates=0, maxPrimitiveCandidates=0, ambiguousCandidates=0,
-                     referenceCalls=0, unsupportedCalls=0, jsonCopyCalls=0, jsonCopyFallbackCalls=0, batchSizes={})
+                     referenceCalls=0, unsupportedCalls=0, jsonCopyCalls=0, jsonCopyFallbackCalls=0,
+                     engineCopyCalls=0, engineCopyFallbackCalls=0, batchSizes={})
 
 
 reset_counters()
@@ -216,6 +221,19 @@ def native_json_copy(value, fallback_marker, depth=0):
     result = _module.copy_builtin_json(value, fallback_marker, depth)
     if result is fallback_marker:
         _counters['jsonCopyFallbackCalls'] += 1
+    return result
+
+
+def native_engine_copy(value, memo, fallback_marker):
+    """Copy a bounded exact-builtin graph; unsupported inputs leave memo intact."""
+    _check_live()
+    if _module is None:
+        return fallback_marker
+    _counters['bindingCalls'] += 1
+    _counters['engineCopyCalls'] += 1
+    result = _module.copy_engine_graph(value, memo, fallback_marker)
+    if result is fallback_marker:
+        _counters['engineCopyFallbackCalls'] += 1
     return result
 
 
