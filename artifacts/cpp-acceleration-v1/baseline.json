@@ -1,0 +1,25 @@
+{
+  "schema": "resectionlab.cpp-acceleration-baseline.v1",
+  "baselineCommit": "27f59e85c5b0d6f5b918989bec32976789bf391a",
+  "sampleCount": 1,
+  "timings": {
+    "fixtureSeconds": 0.16947162500582635,
+    "computeSeconds": 18.514200041012373,
+    "completeSeconds": 18.6836716660182,
+    "peakRssBytes": 144932864
+  },
+  "physicalCalls": 370,
+  "previewCalls": 129,
+  "directStepCalls": 241,
+  "exportedActions": [
+    112
+  ],
+  "targetRemovedMm3": 18.0,
+  "nonTargetRemovedMm3": 334.0,
+  "profiledSeconds": 36.289020458003506,
+  "rawSha256": {
+    "pre-port-unprofiled.json": "963c112d7107ab55e3fca4d7945b7fadabd7f2ef982fc582c0adfbfd0231e456",
+    "generate-profile.json": "c5480cf405064d76fcbf5797e61a76c1bab0f525bc9ec5da39dc5f7630314ebb"
+  },
+  "limits": "Single pre-port baseline and separate attribution, not five-pair performance acceptance. Generated legacy physics only; no patient validation."
+}

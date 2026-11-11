@@ -1,0 +1,2604 @@
+{
+  "schema": "resectionlab.cpp-acceleration-experiment.v1",
+  "protocolVersion": 2,
+  "frozenAt": "2026-11-11",
+  "baselineCommit": "27f59e85c5b0d6f5b918989bec32976789bf391a",
+  "provenance": "Generated engineering controls only; no acquired patient data, qualification or clinical task success.",
+  "fixtureModule": "resectionlab.generated_cpp_fixture",
+  "seed": 0,
+  "randomness": "No random calls; source geometry and sequences below are literal.",
+  "nativeThreads": 1,
+  "warmupsPerBackendPerWorkload": 1,
+  "pairedRepetitions": 5,
+  "threads": {
+    "OPENBLAS_NUM_THREADS": 1,
+    "OMP_NUM_THREADS": 1,
+    "VECLIB_MAXIMUM_THREADS": 1,
+    "MKL_NUM_THREADS": 1,
+    "NUMEXPR_NUM_THREADS": 1,
+    "BLIS_NUM_THREADS": 1
+  },
+  "pairedOrder": [
+    [
+      "reference",
+      "cpp"
+    ],
+    [
+      "cpp",
+      "reference"
+    ],
+    [
+      "reference",
+      "cpp"
+    ],
+    [
+      "cpp",
+      "reference"
+    ],
+    [
+      "reference",
+      "cpp"
+    ]
+  ],
+  "isolation": "One fresh process per warmup/sample; original pre-port source may be captured with git archive. No concurrent heavyweight work.",
+  "timing": "Complete fresh fixture creation + complete public Generate/search/export; explicit setup and computation also reported. Imports/process startup, output serialization, equality hashes and profiling are separate. Geometry stress includes geometry construction, continuum fixture construction and continuum ticks.",
+  "processTreeMemory": {
+    "samplingSeconds": 0.02,
+    "includesWorkerHighWaterRss": true,
+    "hardCapBytes": 1073741824,
+    "representativeAndStressMaximumRatio": 1.1,
+    "tinyAbsoluteExtensionLoadingAllowanceBytes": 16777216,
+    "tinyAllowanceAppliesTo": [
+      "small"
+    ]
+  },
+  "nativeCancellation": {
+    "latencyBudgetSeconds": 0.1,
+    "maximumPrimitiveCandidatesPerChunk": 32768,
+    "maximumBatchItems": 64,
+    "checkBetweenChunks": true,
+    "checkBeforePublish": true,
+    "largestGeneratedQueryShape": [
+      96,
+      96,
+      128
+    ]
+  },
+  "correctness": {
+    "comparison": "Exact canonical JSON digest for every returned field unless explicitly listed below; complete snapshots, ordered history/action/physical-call traces, receipts, decisions, refusal reasons, source/geometry/target memberships, rewards and termination interfaces retain their established exact contracts.",
+    "floatingToleranceFields": [],
+    "excludedMeasuredWallPaths": [
+      "result.report.cost.wallSeconds",
+      "result.report.alternatives[].ledger.wallSecondsSinceMeterCreation"
+    ],
+    "excludedDerivedSealPaths": [
+      "result.report.comparisonSeal"
+    ],
+    "derivedSealRequirement": "Before projection validate semantic_digest over the complete report excluding only comparisonSeal itself. No other seal, proof identity, state identity, backend metadata or numeric field is omitted.",
+    "expectedImplementationDifferences": [
+      "Separately reported backend identity mode, compiler/build/source/binary hashes, module paths, backend execution counters and documented fallback reasons.",
+      "Proof/cache identities explicitly bound to implementation must change and be validated by runtime-specific qualification tests; same-build cold load preserves recorded identities. Physical result projection has no generic metadata exclusion."
+    ],
+    "exactBaselineRepresentativeSnapshotHashes": [
+      "sha256:30cd5e92496d0ec7da897c46652fec721bd5afca5bd72dca7cd4bda900badc5c"
+    ],
+    "exactBaselineRepresentativeCanonicalReportDigest": "sha256:35876bdef5c68ebed1f87c90bef14c6c01a5717641bd6e346c943465e15366c8",
+    "excludedProcessBoundProofPaths": [
+      "result.report.alternatives[].goalAssessment.goalHash"
+    ],
+    "processBoundProofReason": "Existing JointCranialLimits.declaration hashes frozen_at=time.monotonic() and meter_identity=id(meter); JointResectionGoal.declaration hashes that limitsHash. Thus goalHash differs across fresh processes even on unchanged reference. Each run retains the actual registered goal and verifies _require_goal, goal.content_hash==semantic_digest(goal.declaration()), limits.content_hash==semantic_digest(limits.declaration()), and report goalHash membership. Raw contracts/identities stay in diagnostics. The exact result includes deterministic goal+limits declarations after removing only limits.frozen_at and limits.meter_identity and recomputing normalized limitsHash; all safety/source fields remain exact.",
+    "registeredGoalObservation": "The already-supported progress callback reads the existing weak _GOALS registry after forest preparation, filters each fixed source root state, and retains read-only goal refs. It replaces no production function. All seal/registration validation happens after elapsed stops; both backends use this same callback."
+  },
+  "performanceGates": {
+    "representativeMinimumWholeWorkloadSpeedup": 2.0,
+    "migratedKernelSupportingTarget": 3.0,
+    "otherWorkloadMaximumLatencyRatio": 1.1,
+    "report": "All paired samples, medians, sample count, min/max/stdev, actual work/call traces and backend counters; no tail-latency claim from five samples.",
+    "preportReferenceGuard": "Revised reference must reproduce pre-port outcomes and be compared against captured original timing. A slower refactor is not an acceleration baseline."
+  },
+  "workloads": {
+    "small": {
+      "role": "Small exact geometry correctness + warm repeats",
+      "shape": [
+        12,
+        13,
+        14
+      ],
+      "affines": [
+        [
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ],
+        [
+          [
+            0.8,
+            0.2,
+            0,
+            3
+          ],
+          [
+            0,
+            1.1,
+            0.15,
+            -2
+          ],
+          [
+            0,
+            0,
+            1.4,
+            5
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ]
+      ],
+      "queriesVoxelSpace": [
+        [
+          [
+            3,
+            3,
+            3
+          ],
+          [
+            3,
+            3,
+            3
+          ],
+          0
+        ],
+        [
+          [
+            1,
+            1,
+            1
+          ],
+          [
+            10,
+            10,
+            10
+          ],
+          0.5
+        ],
+        [
+          [
+            1.5,
+            0,
+            0
+          ],
+          [
+            1.5,
+            12,
+            0
+          ],
+          0
+        ],
+        [
+          [
+            -5,
+            -5,
+            -5
+          ],
+          [
+            -2,
+            -2,
+            -2
+          ],
+          0
+        ],
+        [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            11,
+            0,
+            0
+          ],
+          1
+        ]
+      ],
+      "repetitionsPerQuery": 2
+    },
+    "generate": {
+      "role": "Primary representative genuine fresh production cranial Generate",
+      "shape": [
+        64,
+        64,
+        96
+      ],
+      "physics": "declared_legacy; no tissuePhysicsV2 source profile",
+      "physicsConfigureAction": {
+        "slot": "left",
+        "operation": "configure",
+        "duration": 0.1,
+        "mechanicsRevision": 2,
+        "clockRevision": 1
+      },
+      "labelsHash": "sha256:338f48b0d01d27d75ebe4fcfaeaa3f26fef4f453a215d4144b2781ff265e349d",
+      "affineHash": "sha256:0a02006154b1285bd52c99defbda45d9b472a933b18e6bf958530e6173750ab4",
+      "displayHash": "sha256:d29c4b60186d6c551249a8f86051a9f78cd3ca2d01f06a76ac66b6b6751293d5",
+      "sourceSceneId": "sha256:b073baaee45496618bb440f8d2919a5e767634a81bef98dfa5bff1f09d6ec4fe",
+      "caseSemanticHash": "sha256:26b2f26224e766deed9256f66737ebe78db84db4dfbfe2621319ae86e4332806",
+      "planningHorizon": 3,
+      "beamWidth": 3,
+      "openingRoots": 1,
+      "openingSkill": {
+        "id": "opening",
+        "kind": "opening",
+        "actions": [
+          {
+            "slot": "left",
+            "operation": "configure",
+            "duration": 0.1,
+            "mechanicsRevision": 2,
+            "clockRevision": 1
+          },
+          {
+            "slot": "left",
+            "operation": "place",
+            "duration": 0.1,
+            "pose": {
+              "position": [
+                26,
+                26,
+                55
+              ],
+              "quaternion": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
+          },
+          {
+            "slot": "left",
+            "operation": "apply",
+            "duration": 0.1,
+            "pose": {
+              "position": [
+                26,
+                26,
+                58.3
+              ],
+              "quaternion": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
+          },
+          {
+            "slot": "left",
+            "operation": "apply",
+            "duration": 0.1,
+            "pose": {
+              "position": [
+                38,
+                26,
+                58.3
+              ],
+              "quaternion": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
+          },
+          {
+            "slot": "left",
+            "operation": "apply",
+            "duration": 0.1,
+            "pose": {
+              "position": [
+                38,
+                38,
+                58.3
+              ],
+              "quaternion": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
+          },
+          {
+            "slot": "left",
+            "operation": "apply",
+            "duration": 0.1,
+            "pose": {
+              "position": [
+                26,
+                38,
+                58.3
+              ],
+              "quaternion": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
+          },
+          {
+            "slot": "left",
+            "operation": "apply",
+            "duration": 0.1,
+            "pose": {
+              "position": [
+                26,
+                26,
+                58.3
+              ],
+              "quaternion": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
+          },
+          {
+            "slot": "left",
+            "operation": "withdraw",
+            "duration": 0.1,
+            "pose": {
+              "position": [
+                26,
+                26,
+                55
+              ],
+              "quaternion": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
+          },
+          {
+            "slot": "left",
+            "operation": "exchange",
+            "duration": 0.1,
+            "instrument": "bone_flap_holder"
+          },
+          {
+            "slot": "left",
+            "operation": "place",
+            "duration": 0.1,
+            "pose": {
+              "position": [
+                32.0,
+                32.0,
+                55.0
+              ],
+              "quaternion": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            },
+            "parameters": {
+              "jawOpeningMm": 0.0
+            }
+          },
+          {
+            "slot": "left",
+            "operation": "grasp",
+            "duration": 0.1,
+            "pose": {
+              "position": [
+                32.0,
+                32.0,
+                59.5
+              ],
+              "quaternion": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
+          },
+          {
+            "slot": "left",
+            "operation": "move",
+            "duration": 0.1,
+            "pose": {
+              "position": [
+                32.0,
+                32.0,
+                54.5
+              ],
+              "quaternion": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
+          },
+          {
+            "slot": "left",
+            "operation": "extract",
+            "duration": 0.1
+          },
+          {
+            "slot": "left",
+            "operation": "withdraw",
+            "duration": 0.1,
+            "pose": {
+              "position": [
+                32.0,
+                32.0,
+                54.5
+              ],
+              "quaternion": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
+          }
+        ]
+      },
+      "preparationActions": [
+        {
+          "slot": "left",
+          "operation": "exchange",
+          "duration": 0.1,
+          "instrument": "dural_scissors"
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              28.5,
+              29.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0,
+            "depthMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              28.5,
+              29.0,
+              63.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              28.5,
+              29.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              28.5,
+              30.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0,
+            "depthMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              28.5,
+              30.0,
+              63.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              28.5,
+              30.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              28.5,
+              31.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0,
+            "depthMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              28.5,
+              31.0,
+              63.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              28.5,
+              31.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              28.5,
+              32.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0,
+            "depthMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              28.5,
+              32.0,
+              63.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              28.5,
+              32.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              28.5,
+              33.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0,
+            "depthMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              28.5,
+              33.0,
+              63.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              28.5,
+              33.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              28.5,
+              34.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0,
+            "depthMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              28.5,
+              34.0,
+              63.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              28.5,
+              34.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              28.5,
+              35.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0,
+            "depthMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              28.5,
+              35.0,
+              63.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              28.5,
+              35.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              29.0,
+              28.5,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0,
+            "depthMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              29.0,
+              28.5,
+              63.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              29.0,
+              28.5,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              29.0,
+              35.5,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0,
+            "depthMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              29.0,
+              35.5,
+              63.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              29.0,
+              35.5,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              30.0,
+              28.5,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0,
+            "depthMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              30.0,
+              28.5,
+              63.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              30.0,
+              28.5,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              30.0,
+              35.5,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0,
+            "depthMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              30.0,
+              35.5,
+              63.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              30.0,
+              35.5,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              31.0,
+              28.5,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0,
+            "depthMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              31.0,
+              28.5,
+              63.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              31.0,
+              28.5,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              31.0,
+              35.5,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0,
+            "depthMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              31.0,
+              35.5,
+              63.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              31.0,
+              35.5,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              32.0,
+              28.5,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0,
+            "depthMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              32.0,
+              28.5,
+              63.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              32.0,
+              28.5,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              32.0,
+              35.5,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0,
+            "depthMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              32.0,
+              35.5,
+              63.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              32.0,
+              35.5,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              33.0,
+              28.5,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0,
+            "depthMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              33.0,
+              28.5,
+              63.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              33.0,
+              28.5,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              33.0,
+              35.5,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0,
+            "depthMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              33.0,
+              35.5,
+              63.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              33.0,
+              35.5,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              34.0,
+              28.5,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0,
+            "depthMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              34.0,
+              28.5,
+              63.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              34.0,
+              28.5,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              34.0,
+              35.5,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0,
+            "depthMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              34.0,
+              35.5,
+              63.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              34.0,
+              35.5,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              35.0,
+              28.5,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0,
+            "depthMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              35.0,
+              28.5,
+              63.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              35.0,
+              28.5,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              35.5,
+              29.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0,
+            "depthMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              35.5,
+              29.0,
+              63.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              35.5,
+              29.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              35.5,
+              30.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0,
+            "depthMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              35.5,
+              30.0,
+              63.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              35.5,
+              30.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              35.5,
+              31.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0,
+            "depthMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              35.5,
+              31.0,
+              63.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              35.5,
+              31.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              35.5,
+              32.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0,
+            "depthMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              35.5,
+              32.0,
+              63.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              35.5,
+              32.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              35.5,
+              33.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0,
+            "depthMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              35.5,
+              33.0,
+              63.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              35.5,
+              33.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              35.5,
+              34.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0,
+            "depthMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              35.5,
+              34.0,
+              63.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              35.5,
+              34.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              35.0,
+              35.5,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0,
+            "depthMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              35.0,
+              35.5,
+              63.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              35.0,
+              35.5,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              35.5,
+              35.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0,
+            "depthMm": 2.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "apply",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              35.5,
+              35.0,
+              63.8
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              35.5,
+              35.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.7071067811865475,
+              0.7071067811865476
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "exchange",
+          "duration": 0.1,
+          "instrument": "membrane_forceps"
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              32.0,
+              32.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "parameters": {
+            "jawOpeningMm": 0.0
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "grasp",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              32.0,
+              32.0,
+              63.5
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "move",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              32.0,
+              32.0,
+              54.5
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "extract",
+          "duration": 0.1
+        },
+        {
+          "slot": "left",
+          "operation": "withdraw",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              32.0,
+              32.0,
+              54.5
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "slot": "left",
+          "operation": "exchange",
+          "duration": 0.1,
+          "instrument": "cusa"
+        },
+        {
+          "slot": "left",
+          "operation": "place",
+          "duration": 0.1,
+          "pose": {
+            "position": [
+              32.0,
+              32.0,
+              55.0
+            ],
+            "quaternion": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          }
+        }
+      ],
+      "workRoutes": [
+        {
+          "id": "unreached-long-work",
+          "motion": {
+            "slot": "left",
+            "operation": "apply",
+            "duration": 0.05,
+            "pose": {
+              "position": [
+                32.0,
+                32.0,
+                68.0
+              ],
+              "quaternion": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
+          }
+        },
+        {
+          "id": "target-work",
+          "motion": {
+            "slot": "left",
+            "operation": "apply",
+            "duration": 30.0,
+            "pose": {
+              "position": [
+                32.0,
+                32.0,
+                66.5
+              ],
+              "quaternion": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            }
+          }
+        }
+      ],
+      "outsidePoses": {},
+      "limits": {
+        "max_bone_mm3": 285.0,
+        "max_preparation_nonbone_mm3": 49.0,
+        "max_work_nonbone_mm3": 20.0,
+        "max_native_actions": 300,
+        "max_public_calls": 1400,
+        "max_wall_seconds": 600.0,
+        "max_bone_contact_replans": 6,
+        "max_tissue_contact_replans": 8,
+        "export_replay_reserve_calls": 300
+      },
+      "expected": {
+        "decision": "COMPLETED_FROZEN_TASK",
+        "physicalCalls": 370,
+        "previewCalls": 129,
+        "directStepCalls": 241,
+        "exportedActions": [
+          112
+        ],
+        "targetRemovedMm3": 18,
+        "originalTargetMm3": 27,
+        "wholeNonTargetRemovedMm3": 334,
+        "admittedPatientTask": false
+      }
+    },
+    "standardized-refusal": {
+      "role": "Unchanged standard-physics safety negative; no passing physics substitution",
+      "shape": [
+        64,
+        64,
+        96
+      ],
+      "physics": "standardize(from_case(...)) tissuePhysicsV2",
+      "openingActionsApplyDurationSeconds": 15.0,
+      "planningHorizon": 3,
+      "beamWidth": 3,
+      "limits": {
+        "max_bone_mm3": 285.0,
+        "max_preparation_nonbone_mm3": 49.0,
+        "max_work_nonbone_mm3": 20.0,
+        "max_native_actions": 300,
+        "max_public_calls": 1400,
+        "max_wall_seconds": 600.0,
+        "max_bone_contact_replans": 6,
+        "max_tissue_contact_replans": 8,
+        "export_replay_reserve_calls": 300
+      },
+      "expectedFirstRefusal": "CRANIAL_ACCESS_BEYOND_INNER_TABLE_BEFORE_EVACUATION",
+      "expectedExportedBranches": 0
+    },
+    "stress": {
+      "role": "Distinct/cold and identical/warm long orthogonal and sheared capsules plus genuine continuum topology/history/exposure work",
+      "geometryShape": [
+        96,
+        96,
+        128
+      ],
+      "geometryAffines": [
+        [
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ],
+        [
+          [
+            0.8,
+            0.2,
+            0,
+            3
+          ],
+          [
+            0,
+            1.1,
+            0.15,
+            -2
+          ],
+          [
+            0,
+            0,
+            1.4,
+            5
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ]
+      ],
+      "queriesVoxelSpace": [
+        {
+          "start": [
+            3.0,
+            5,
+            7
+          ],
+          "end": [
+            90,
+            89.0,
+            118
+          ],
+          "radiusMm": 1.25
+        },
+        {
+          "start": [
+            3.125,
+            5,
+            7
+          ],
+          "end": [
+            90,
+            88.875,
+            118
+          ],
+          "radiusMm": 1.25
+        },
+        {
+          "start": [
+            3.25,
+            5,
+            7
+          ],
+          "end": [
+            90,
+            88.75,
+            118
+          ],
+          "radiusMm": 1.25
+        },
+        {
+          "start": [
+            3.375,
+            5,
+            7
+          ],
+          "end": [
+            90,
+            88.625,
+            118
+          ],
+          "radiusMm": 1.25
+        },
+        {
+          "start": [
+            3.5,
+            5,
+            7
+          ],
+          "end": [
+            90,
+            88.5,
+            118
+          ],
+          "radiusMm": 1.25
+        },
+        {
+          "start": [
+            3.625,
+            5,
+            7
+          ],
+          "end": [
+            90,
+            88.375,
+            118
+          ],
+          "radiusMm": 1.25
+        }
+      ],
+      "repetitionsPerQuery": 2,
+      "continuum": {
+        "shape": [
+          13,
+          13,
+          13
+        ],
+        "material": {
+          "shearPa": 1000.0,
+          "poissonRatio": 0.3,
+          "relaxationShearPa": [
+            600.0
+          ],
+          "source": "Generated numerical control coefficient; not a patient measurement"
+        },
+        "relaxationSeconds": [
+          0.5
+        ],
+        "handleTargetOffsetMm": [
+          0.01,
+          0,
+          0
+        ],
+        "sequence": [
+          {
+            "tickSeconds": 0.1
+          },
+          {
+            "tickSeconds": 0.2
+          },
+          {
+            "tickSeconds": 0.3
+          },
+          {
+            "removeCellVoxel": [
+              6,
+              6,
+              6
+            ]
+          },
+          {
+            "tickSeconds": 0.1
+          },
+          {
+            "releaseSlot": "left"
+          },
+          {
+            "tickSeconds": 0.2
+          }
+        ],
+        "physics": "default tissuePhysicsV2 + explicit research brainContinuumV1"
+      }
+    }
+  },
+  "baselineAttribution": {
+    "profiledSeconds": 36.284433333,
+    "actualGeneratePhysicalCalls": 370,
+    "selectedInclusiveFunctions": [
+      {
+        "function": "capsule_voxel_indices",
+        "calls": 20689,
+        "selfSeconds": 0.353993722,
+        "cumulativeSeconds": 1.9947107190000002
+      },
+      {
+        "function": "_segment_cell_distances",
+        "calls": 20689,
+        "selfSeconds": 0.264206894,
+        "cumulativeSeconds": 0.563269865
+      },
+      {
+        "function": "_capsule_candidate_grid",
+        "calls": 6504,
+        "selfSeconds": 0.014146969,
+        "cumulativeSeconds": 0.182986529
+      },
+      {
+        "function": "point_segment_distances",
+        "calls": 444873,
+        "selfSeconds": 1.306115498,
+        "cumulativeSeconds": 3.589632688
+      },
+      {
+        "function": "segment_segment_distance",
+        "calls": 106046,
+        "selfSeconds": 0.42910264400000003,
+        "cumulativeSeconds": 3.764585791
+      },
+      {
+        "function": "_microstep_checkpoint",
+        "calls": 7814,
+        "selfSeconds": 0.031010274,
+        "cumulativeSeconds": 3.9532844810000003
+      },
+      {
+        "function": "require_cache_source",
+        "calls": 9527,
+        "selfSeconds": 0.030201763000000003,
+        "cumulativeSeconds": 6.135492978
+      },
+      {
+        "function": "_copy_builtin_json",
+        "calls": 32067227,
+        "selfSeconds": 4.7927575970000005,
+        "cumulativeSeconds": 6.053680711
+      }
+    ],
+    "selectedCapsuleFraction": 0.05498225593578681,
+    "capsuleInfiniteSpeedupCeiling": 1.0581811889577077,
+    "implication": "Capsule-only migration cannot plausibly reach 2x representative throughput. Additional measured hot paths are required. Inclusive costs overlap; use profiler solely for attribution.",
+    "unprofiledPreportSingleSample": {
+      "fixtureSeconds": 0.16947162500582635,
+      "computeSeconds": 18.514200041012373,
+      "completeSeconds": 18.6836716660182,
+      "peakRssBytes": 144932864
+    },
+    "rawEvidenceDirectory": "outputs/cpp-acceleration-v1/baseline (ignored)"
+  },
+  "commands": {
+    "baseline": "PYTHONPATH=src python scripts/benchmark_cpp_acceleration.py --mode baseline --output outputs/cpp-acceleration-v1/baseline-five",
+    "compare": "PYTHONPATH=src python scripts/benchmark_cpp_acceleration.py --output outputs/cpp-acceleration-v1/comparison",
+    "profile": "PYTHONPATH=src python scripts/benchmark_cpp_acceleration.py --mode profile --workload generate --output outputs/cpp-acceleration-v1/profile",
+    "export": "PYTHONPATH=src python scripts/benchmark_cpp_acceleration.py --output outputs/cpp-acceleration-v1/export --export-case outputs/cpp-acceleration-v1/generated-source.ressectionlab"
+  },
+  "protocolNotes": [
+    {
+      "date": "2026-11-11",
+      "initialFrozenManifestSha256": "e8a7d33b17cd5e3e8fb18dbe2c674964520c0d844f3cdcaa7cd71621a377db6a",
+      "correction": "Legacy saved source record omits standardized environmentSchema/physicsProfile; legacy load_environment respects its declared saved region mapping. Standardized records retain the standard schema/profile.",
+      "workloadEffect": "No source case/base/root identity, geometry, physics, action/proposal sequence, limits, expected decision, work trace or frozen result hash changes. This corrects source Save/Open classification before the desktop witness."
+    },
+    {
+      "date": "2026-11-11",
+      "previousManifestSha256": "a222b9b841fac9478a90158c264ced09ae239931346ac20b86185c8f5e2c735b",
+      "correction": "Protocol v2 validates and normalizes the existing process-bound goalAssessment.goalHash through actual registered goal/limits declarations. First preport/current-CPP report comparison differed at exactly that path; complete physical snapshots matched.",
+      "workloadEffect": "No geometry, physics, action/proposal sequence, limits, fixed work, timing/resource gate or expected decision changes. Original protocol1 reports and failed digest evidence retained; future exact results also compare full normalized goal contracts."
+    },
+    {
+      "date": "2026-11-11",
+      "correction": "Empty geometry controls hash exact ordered int64 bytes directly because existing core.array_digest raises on empty-array memoryviews.",
+      "workloadEffect": "No geometry queries or kernel work changed. Initial failed small-reference stderr preserved; no successful timing existed before this output-encoding fix."
+    },
+    {
+      "date": "2026-11-11",
+      "correction": "Continuum coupon was set to the existing held-engine size13 before first stress execution, preserving retained inactive soft-tissue support. The initially drafted size6 was not executed or timed and provided no valid stress evidence.",
+      "workloadEffect": "Frozen published manifest began with13; all stress comparisons use that same13\u00b3 coupon, same profile and literal tick/removal/release sequence."
+    }
+  ]
+}

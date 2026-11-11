@@ -36,7 +36,7 @@ def load_environment(path, *, branch_id=None):
     case = load_case(path)
     record = read_case_artifacts(path).get('surgical_toolbox')
     if not record or record.get('environmentSchema') != SCHEMA:
-        scene = from_case(case)
+        scene = from_case(case, record.get('mapping') if record else None)
         if record and 'cranialPlanningRoots' in record:
             return resolve_branch_scene(scene, record, branch_id)
         return scene
