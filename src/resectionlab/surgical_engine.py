@@ -540,7 +540,7 @@ class SurgicalEngine:
             indices = np.column_stack(np.unravel_index(retained, self.scene.shape)) + hold['offset']
             if np.any(indices < 0) or np.any(indices >= self.scene.shape): raise ValueError('DISPLACEMENT_OUTSIDE_GRID')
             destination = np.ravel_multi_index(indices.T, self.scene.shape)
-            cleared.update(retained)
+            cleared.update(retained.tolist() if all(type(cell) is int for cell in cleared) else retained)
             moves.append((retained, destination))
         destinations = {}
         base = self.scene.labels.ravel()
