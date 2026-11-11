@@ -1,6 +1,8 @@
 """Generated source-bound stage contracts; no patient/clinical qualification."""
 import copy
 from dataclasses import replace
+from types import SimpleNamespace
+import weakref
 import numpy as np
 import pytest
 from resectionlab import surgical_cranial_stages as stages
@@ -138,3 +140,55 @@ def test_cached_stage_binds_actual_live_guard_policy_not_only_its_prior_hash(cha
         source.guard_config=guard
         object.__setattr__(guard,'critical_max_displacement_mm',0.)
         object.__setattr__(guard,'require_critical_coverage',False)
+
+
+def _effects_lifetime_case():
+    partitions={'bone':frozenset({1}),'preparation':frozenset({2}),
+        'retained':frozenset({3}),'work':frozenset({4}),'boundary':frozenset({(2,3)})}
+    engine=SimpleNamespace(_cranial_stages=SimpleNamespace(attachment_ids=()),
+        state={'removed':[],'holds':{},'cutEdges':[(2,3)],'transectedEdges':[],
+            'separatedAttachments':[]},scene=SimpleNamespace(properties={'attachments':[]}))
+    return engine,partitions
+
+
+def test_effects_replaced_preparation_finalizes_before_remaining_validation(monkeypatch):
+    engine,partitions=_effects_lifetime_case();events=[]
+    class Partitions(dict):
+        def __getitem__(self,key):
+            if key=='boundary':
+                events.append('boundary-enter')
+                self['preparation']=frozenset({4})
+                events.append('boundary-exit')
+            return super().__getitem__(key)
+    partitions=Partitions(partitions)
+    def finalized():
+        events.append('preparation-finalized')
+        engine.state['separatedAttachments'].append('unbound')
+    finalizer=weakref.finalize(partitions['preparation'],finalized)
+    monkeypatch.setattr(stages,'source_partition_sets',lambda contract:partitions)
+    with pytest.raises(ValueError,match='^CRANIAL_STAGE_ATTACHMENT_RELEASE_SOURCE_SCOPE$'):
+        stages.validate_effects(engine)
+    assert events==['boundary-enter','preparation-finalized','boundary-exit']
+    assert not finalizer.alive and engine.state['separatedAttachments']==['unbound']
+
+
+def test_effects_union_temporary_finalizes_before_boundary_and_remaining_validation(monkeypatch):
+    engine,partitions=_effects_lifetime_case();events=[]
+    def finalized():
+        events.append('union-finalized')
+        engine.state['separatedAttachments'].append('unbound')
+    class Preparation(frozenset):
+        def __or__(self,other):
+            union=super().__or__(other)
+            weakref.finalize(union,finalized)
+            return union
+    class Partitions(dict):
+        def __getitem__(self,key):
+            if key=='boundary':events.append('boundary-read')
+            return super().__getitem__(key)
+    partitions=Partitions(partitions);partitions['preparation']=Preparation({2})
+    monkeypatch.setattr(stages,'source_partition_sets',lambda contract:partitions)
+    with pytest.raises(ValueError,match='^CRANIAL_STAGE_ATTACHMENT_RELEASE_SOURCE_SCOPE$'):
+        stages.validate_effects(engine)
+    assert events==['union-finalized','boundary-read']
+    assert engine.state['separatedAttachments']==['unbound']

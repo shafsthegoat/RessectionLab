@@ -83,7 +83,7 @@ def main():
             'tests/test_surgical_idle_native.py', 'tests/test_surgical_prefix_json_native.py',
             'tests/test_surgical_clone.py', 'tests/test_surgical_rollback_copy.py',
             'tests/test_surgical_occupancy_lookup.py', 'tests/test_surgical_occupancy_key.py',
-            'tests/test_surgical_query_optimization.py', 'tests/test_surgical_effects_union.py',
+            'tests/test_surgical_query_optimization.py', 'tests/test_surgical_cranial_stages.py',
             'tests/test_surgical_continuum.py', 'tests/test_surgical_continuum_topology.py',
             'tests/test_surgical_continuum_solve.py', 'tests/test_surgical_continuum_vector_kernels.py',
             'tests/test_surgical_cranial_planning.py', 'tests/test_build_electron_sidecar.py',
@@ -102,7 +102,7 @@ def main():
             'tests/test_geometry.py', 'tests/test_surgical_geometry_cache.py',
             'tests/test_surgical_cancellation.py', 'tests/test_surgical_rl_contract.py',
             'tests/test_surgical_occupancy_lookup.py', 'tests/test_surgical_occupancy_key.py',
-            'tests/test_surgical_query_optimization.py', 'tests/test_surgical_effects_union.py',
+            'tests/test_surgical_query_optimization.py', 'tests/test_surgical_cranial_stages.py',
             'tests/test_cpp_engine_copy.py', 'tests/test_generated_cpp_supplement.py',
             'tests/test_surgical_cusa_v3.py::test_well_formed_legacy_cusa_extraction_reaches_native_refusal_without_mutation',
             'tests/test_generated_cpp_fixture.py'], extra={'RESSECTIONLAB_NUMERICAL_BACKEND': 'reference'})

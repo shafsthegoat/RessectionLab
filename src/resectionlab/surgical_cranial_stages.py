@@ -31,17 +31,6 @@ _contract_fields={}
 _geometry={}
 _guard_config={}
 
-_effects_type=(0).__class__.__class__
-_effects_int=(0).__class__
-_effects_set={0}.__class__
-_effects_tuple=().__class__
-_effects_frozenset=frozenset
-_effects_frozenset_genuine=(
-    _effects_type(_effects_frozenset) is _effects_type
-    and not _effects_frozenset.__flags__&512
-    and _effects_frozenset.__name__=='frozenset'
-    and _effects_frozenset.__module__=='builtins')
-
 
 def _fail(reason):raise ValueError('CRANIAL_STAGE_'+reason)
 def _cells(value,size,*,empty=False):
@@ -463,12 +452,6 @@ def enforce(engine,key,operation,position,quaternion,working_cells=()):
     return True
 
 
-def _effects_integer_members(values):
-    for value in values:
-        if _effects_type(value) is not _effects_int:return False
-    return True
-
-
 def validate_effects(engine):
     """Native post-coupling source partition and retained-rim invariants."""
     contract=getattr(engine,'_cranial_stages',None)
@@ -479,25 +462,10 @@ def validate_effects(engine):
     if any(int(c) in rim and np.linalg.norm(v)>0 for c,v in engine.state.get('deformation',{}).items()):_fail('RETAINED_RIM_DEFORMATION')
     fragments=[*engine.state['holds'].values(),*engine.state.get('detachedFragments',[])]
     if any(rim&set(h['cells']) for h in fragments):_fail('RETAINED_RIM_HOLD')
-    memo_preparation=memo_union=None
     for field in ('cutEdges','transectedEdges'):
         for edge in engine.state.get(field,[]):
             e=tuple(sorted(edge))
-            edge_cells=set(e)
-            preparation=sets['preparation']
-            if (memo_union is not None and preparation is memo_preparation
-                    and _effects_type(edge_cells) is _effects_set and _effects_type(e) is _effects_tuple
-                    and _effects_integer_members(e)):
-                membrane=memo_union
-            else:
-                membrane=preparation|rim
-                if (_effects_frozenset_genuine and _effects_type(edge_cells) is _effects_set
-                        and _effects_type(e) is _effects_tuple and _effects_integer_members(e)
-                        and _effects_type(preparation) is _effects_frozenset
-                        and _effects_type(rim) is _effects_frozenset
-                        and _effects_integer_members(preparation) and _effects_integer_members(rim)):
-                    memo_preparation,memo_union=preparation,membrane
-            if edge_cells&membrane and e not in sets['boundary']:_fail('RETAINED_MEMBRANE_TOPOLOGY')
+            if set(e)&(sets['preparation']|rim) and e not in sets['boundary']:_fail('RETAINED_MEMBRANE_TOPOLOGY')
     allowed=set(contract.attachment_ids)
     allowed.update(a['id'] for a in engine.scene.properties['attachments'] if set(a['cells'])&sets['bone'] and a['kind'] in ('soft','periosteal'))
     if set(engine.state['separatedAttachments'])-allowed:_fail('ATTACHMENT_RELEASE_SOURCE_SCOPE')
