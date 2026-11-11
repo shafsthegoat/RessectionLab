@@ -43,6 +43,11 @@ def successful(record: dict, native: bool, package_root: Path) -> None:
     assert record["replay"]["passed"] and record["replay"]["acceptedActions"] == 1
     assert record["replay"]["acceptedStateUnchanged"] and record["replay"]["frameCount"] >= 2
     assert record["proofLifecycle"]["passed"] and record["proofLifecycle"]["genuineOwnerGcEpochStable"]
+    checkpoint = record["checkpoint"]
+    assert checkpoint["passed"] and checkpoint["stockCopyHooksQualified"] and checkpoint["stockCopyHooksUnchanged"]
+    assert checkpoint["componentExemptionPreserved"] and checkpoint["nativeFallbackCalls"] == 0
+    assert checkpoint["selected"] == ("cpp" if native else "reference")
+    assert checkpoint["nativeCalls"] >= 1 if native else checkpoint["nativeCalls"] == 0
     assert Path(record["runtime"]["packagePath"]).is_relative_to(package_root), record["runtime"]
     backend = record["backend"]
     assert backend["selected"] == ("cpp" if native else "reference"), backend

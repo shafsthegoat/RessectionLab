@@ -10,6 +10,30 @@ import sysconfig
 import tempfile
 
 
+def checkpoint_probe() -> dict:
+    """Verify stock-copy qualification and the actual rollback copy dispatch."""
+    from . import native_backend, surgical_engine
+    genuine = surgical_engine._engine_copy_genuine
+    unchanged = surgical_engine._engine_copy_hooks_unchanged()
+    assert genuine and unchanged, "Stock deepcopy hooks did not qualify in this runtime"
+    components = [{"cells": [2, 1]}]
+    state = {"flapComponents": components, "componentAlias": components,
+             "removed": [1], "debris": {"2": .5}, "nested": {"position": [1., -0., 3.]}}
+    before = native_backend.backend_identity()
+    copied = surgical_engine._microstep_checkpoint(state)
+    after = native_backend.backend_identity()
+    calls = after["counters"]["engineCopyCalls"] - before["counters"]["engineCopyCalls"]
+    fallbacks = after["counters"]["engineCopyFallbackCalls"] - before["counters"]["engineCopyFallbackCalls"]
+    assert copied == state and copied is not state
+    assert copied["flapComponents"] is copied["componentAlias"] is components
+    assert copied["removed"] is not state["removed"] and copied["debris"] is not state["debris"]
+    assert copied["nested"]["position"] is not state["nested"]["position"]
+    assert (calls >= 1 and fallbacks == 0) if after["selected"] == "cpp" else calls == 0
+    return {"passed": True, "stockCopyHooksQualified": genuine,
+            "stockCopyHooksUnchanged": unchanged, "componentExemptionPreserved": True,
+            "selected": after["selected"], "nativeCalls": calls, "nativeFallbackCalls": fallbacks}
+
+
 def gc_proof_probe() -> dict:
     """Qualify cancellation-style owner cleanup in the actual loaded runtime."""
     import gc
@@ -91,6 +115,7 @@ def probe() -> dict:
     cells = geometry.capsule_voxel_indices(scene, [1., 2., 1.], [6., 5., 5.], .75)
     assert cells.dtype == np.int64 and cells.ndim == 2 and cells.shape[1] == 3 and len(cells) > 0
     assert not cells.flags.writeable
+    checkpoint = checkpoint_probe()
     replay = replay_probe()
     proof_lifecycle = gc_proof_probe()
     return {"schema": "resectionlab-native-runtime-probe-v1", "passed": True,
@@ -103,6 +128,7 @@ def probe() -> dict:
             "publicCall": {"name": "geometry.capsule_voxel_indices", "cells": len(cells),
                            "orderedCellsSha256": hashlib.sha256(cells.tobytes()).hexdigest()},
             "replay": replay,
+            "checkpoint": checkpoint,
             "proofLifecycle": proof_lifecycle,
             "olderOptionalHelpers": {"idle": idle_identity(), "prefixJson": prefix_identity()}}
 
