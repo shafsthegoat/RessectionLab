@@ -1,0 +1,200 @@
+{
+  "schema": "resectionlab-postcopy-profile-review-v1",
+  "sourceBaseCommit": "11aaa79c64608c659e3cec547521cb5bb745ef7b",
+  "purpose": "Bounded residual planning profile and motion-reuse investigation after the measured graph copier increment; attribution only, never a throughput comparison.",
+  "profileScopeCorrection": {
+    "version": 2,
+    "scope": "Only timed fixture creation and public computation; exclude imports before fixture, registered-goal/report/snapshot audits, backend snapshots and output encoding.",
+    "originalTimedWorkUnchanged": true,
+    "ordinaryTimingProtocolUnchanged": true,
+    "previousPlanningProfileIncludedUntimedWork": true,
+    "previousPlanningAttributionSuperseded": true,
+    "supplementaryProfilesAlreadyTimedOnly": true,
+    "selfCheck": "Benchmark runner rejects profile entries for backend_snapshot, canonical_result, exact_bits and qualify_supplement_row."
+  },
+  "profile": {
+    "rawPath": "outputs/cpp-acceleration-v1/postcopy-planning-profile-v1/generate-profile.json",
+    "sha256": "d8cac2b890bbf8eddeba85ae3c4780ef8491308d647d9f004cfa8b32f26f6754",
+    "totalProfileSeconds": 22.583641396999962,
+    "timingsWithProfiler": {
+      "fixtureSeconds": 0.2053272919729352,
+      "computeSeconds": 22.454661624971777,
+      "completeSeconds": 22.659988916944712
+    },
+    "exactDigest": "sha256:78246b9c6a0be381afc15cd1b6b2c6dac82442253669c6fe16cf374c1afcc3ec",
+    "functions": [
+      {
+        "file": "src/resectionlab/surgical_motion.py",
+        "line": 113,
+        "function": "swept_envelopes",
+        "calls": 31562,
+        "selfSeconds": 0.149219548,
+        "cumulativeSeconds": 2.941984986,
+        "inclusiveFraction": 0.13027062085704286
+      },
+      {
+        "file": "src/resectionlab/native_backend.py",
+        "line": 141,
+        "function": "_check_live",
+        "calls": 254859,
+        "selfSeconds": 0.416227343,
+        "cumulativeSeconds": 2.6298000580000003,
+        "inclusiveFraction": 0.1164471225773779
+      },
+      {
+        "file": "src/resectionlab/surgical_motion.py",
+        "line": 72,
+        "function": "envelopes",
+        "calls": 44958,
+        "selfSeconds": 0.067196645,
+        "cumulativeSeconds": 2.021850058,
+        "inclusiveFraction": 0.0895271945944282
+      },
+      {
+        "file": "src/resectionlab/surgical_engine.py",
+        "line": 142,
+        "function": "_owned_digest",
+        "calls": 67046,
+        "selfSeconds": 0.949365659,
+        "cumulativeSeconds": 2.008052631,
+        "inclusiveFraction": 0.08891624675136545
+      },
+      {
+        "file": "src/resectionlab/surgical_occupancy.py",
+        "line": 23,
+        "function": "__getitem__",
+        "calls": 68648,
+        "selfSeconds": 0.36020055500000003,
+        "cumulativeSeconds": 1.3687312820000002,
+        "inclusiveFraction": 0.06060720049255759
+      },
+      {
+        "file": "src/resectionlab/surgical_motion.py",
+        "line": 53,
+        "function": "_rotation_helpers_unchanged",
+        "calls": 31562,
+        "selfSeconds": 0.153137669,
+        "cumulativeSeconds": 0.748420725,
+        "inclusiveFraction": 0.03313994903848505
+      },
+      {
+        "file": "src/resectionlab/surgical_engine.py",
+        "line": 329,
+        "function": "_microstep_checkpoint",
+        "calls": 7814,
+        "selfSeconds": 0.03072843,
+        "cumulativeSeconds": 0.5854343830000001,
+        "inclusiveFraction": 0.02592294009228157
+      }
+    ],
+    "inclusiveCostsOverlap": true,
+    "compiledLibrariesRetained": [
+      "NumPy arrays/isin/fromiter",
+      "SciPy Rotation and Slerp",
+      "sparse continuum solvers",
+      "C-accelerated JSON encoding"
+    ]
+  },
+  "motionReuse": {
+    "rawPath": "outputs/cpp-acceleration-v1/motion-reuse-diagnostic-v1/result.json",
+    "sha256": "b8d49a4f840b459e047c38c9a30d5ebfef07261f75ebfbf4e8bf9c03f3245e96",
+    "method": "sys.setprofile observes unmodified original input frames and returned capsule bytes; no result substitution",
+    "capacityEntries": 64,
+    "performanceTiming": false,
+    "exactDigest": "sha256:78246b9c6a0be381afc15cd1b6b2c6dac82442253669c6fe16cf374c1afcc3ec",
+    "physicalCalls": 370,
+    "exportedActions": [
+      112
+    ],
+    "planningEstimates": {
+      "attributionSource": "outputs/cpp-acceleration-v1/postcopy-planning-profile-v1/generate-profile.json",
+      "profileTotalSeconds": 22.583641396999962,
+      "notMeasuredSpeedup": true,
+      "uniformCallCostAssumption": "Hit-weighted estimates assume equal cost per call; actual capsule families differ. Infinite-speed estimates remove the entire profiled category.",
+      "envelope": {
+        "profileInclusiveSeconds": 2.021850058,
+        "infiniteWholeCategorySpeedupCeiling": 1.0983304433288903,
+        "hitWeightedZeroOverheadSpeedupEstimate": 1.0727719109906986
+      },
+      "sweep": {
+        "profileInclusiveSeconds": 2.941984986,
+        "infiniteWholeCategorySpeedupCeiling": 1.1497829370618862,
+        "hitWeightedZeroOverheadSpeedupEstimate": 1.1208570128824331,
+        "existingQualificationSecondsThatCannotBeSkipped": 0.748420725,
+        "hitWeightedEstimateAfterRetainingQualificationButBeforeKeyAndCopyCosts": 1.0874239546314368
+      },
+      "doNotAddCategories": true,
+      "recommendation": "Defer additional full-result cache: repeated inputs are common, but the whole-workload ceiling is modest; genuine helper qualification, cold key/conversion overhead and detached result copies reduce it further. It cannot plausibly close the remaining 2x target."
+    },
+    "caches": {
+      "envelopeFullInputKey": {
+        "calls": 44958,
+        "misses": 10893,
+        "hits": 34065,
+        "evictions": 10829,
+        "hitRatio": 0.7577071933804884,
+        "capacityEntries": 64,
+        "finalEntries": 64,
+        "peakImmutablePayloadBytes": 49665,
+        "peakConservativePythonHeapBytes": 562311,
+        "largestEntryPayloadBytes": 781
+      },
+      "envelopeConsumedDimensionsKey": {
+        "calls": 44958,
+        "misses": 10893,
+        "hits": 34065,
+        "evictions": 10829,
+        "hitRatio": 0.7577071933804884,
+        "capacityEntries": 64,
+        "finalEntries": 64,
+        "peakImmutablePayloadBytes": 40956,
+        "peakConservativePythonHeapBytes": 422388,
+        "largestEntryPayloadBytes": 645
+      },
+      "sweepFullInputKey": {
+        "calls": 31562,
+        "misses": 5438,
+        "hits": 26124,
+        "evictions": 5374,
+        "hitRatio": 0.8277042012546734,
+        "capacityEntries": 64,
+        "finalEntries": 64,
+        "peakImmutablePayloadBytes": 55242,
+        "peakConservativePythonHeapBytes": 650169,
+        "largestEntryPayloadBytes": 864
+      }
+    },
+    "implemented": false
+  },
+  "decision": "Defer full envelope/sweep result cache. The repeat-rate estimate is optimistic before key construction, result ownership, native qualification and cold misses. It cannot plausibly close the fixed 2x objective. Existing effective C++ and numerical-library work stays intact.",
+  "compatibilityFix": {
+    "area": "Existing angular cache admission",
+    "defect": "A SciPy helper installed before surgical_motion import could be captured as stock and have later calls skipped by reuse. Keyword default keys also risked invoking user equality during qualification.",
+    "change": "Source-loader CodeType/globals/default qualification at startup, conservative direct-library bypass when unavailable or customized, identity-first strong keyword key/value snapshots. No numerical formulas or native API added.",
+    "focused": {
+      "cpp": "34 passed",
+      "reference": "33 passed, 1 real-native proof skip",
+      "proofIdentityStable": true,
+      "newCases": [
+        "fresh stock",
+        "preimport wrapper",
+        "preimport in-place code",
+        "preimport mutable default",
+        "unavailable loader",
+        "live keyword-key callbacks"
+      ]
+    },
+    "runtimeQualificationRequired": [
+      "source",
+      "external clean wheel",
+      "frozen engine",
+      "actual signed application"
+    ]
+  },
+  "status": "Complete bounded residual investigation, compatibility integration,23-stage delivery, current paired comparisons and independent reproduction/audit. M1-M5 and non-2x gates pass; fixed2x Generate performance objective remains incomplete.",
+  "unchangedManifests": {
+    "manifests/experiments/cpp-acceleration-v1.json": "f507080eb60f214fd4f050e1595d551bff6222b6fef6cad6d6f7b7a98abb0f67",
+    "manifests/experiments/cpp-acceleration-simulation-v1.json": "7c4eb89e4b1061f2d3ed08d39c53dc1396f549c93b842e8b0dc4c7b157cd177a"
+  },
+  "currentAcceptance": "motion-followup-acceptance-v2.json"
+}
