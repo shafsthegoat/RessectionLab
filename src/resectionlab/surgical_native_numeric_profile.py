@@ -80,12 +80,18 @@ def _macho_profile(data):
             or link_memory != _page_size(link_extent)
             or any(start + extent > position for start, extent in segments)):
         raise ValueError('signature is not the bounded link-edit tail')
-    image = bytearray(data[:position])
-    struct.pack_into('<I', image, command + 12, 0)
     semantic_extent = position - link_start
-    struct.pack_into('<Q', image, link_command + 32, _page_size(semantic_extent))
-    struct.pack_into('<Q', image, link_command + 48, semantic_extent)
-    return hashlib.sha256(image).hexdigest()
+    patches = sorted(((command + 12, struct.pack('<I', 0)),
+        (link_command + 32, struct.pack('<Q', _page_size(semantic_extent))),
+        (link_command + 48, struct.pack('<Q', semantic_extent))))
+    digest, cursor = hashlib.sha256(), 0
+    view = memoryview(data)
+    for offset, replacement in patches:
+        digest.update(view[cursor:offset])
+        digest.update(replacement)
+        cursor = offset + len(replacement)
+    digest.update(view[cursor:position])
+    return digest.hexdigest()
 
 
 def qualified_modules():

@@ -412,8 +412,10 @@ def _source_contact_helpers_genuine():
             if state is None:
                 return None
             function, code, defaults, keywords = state
+            expected_keywords = {'resident_sources': True} if owner is native_backend and name == '_check_live' else None
             if (function.__globals__ is not vars(owner) or function.__module__ != owner.__name__
-                    or defaults is not None or function.__kwdefaults__ is not None):
+                    or defaults is not None or function.__kwdefaults__ != expected_keywords
+                    or expected_keywords is not None and function.__kwdefaults__['resident_sources'] is not True):
                 return None
             body = owner.__spec__.loader.get_code(owner.__name__)
             original, = (value for value in body.co_consts if type(value) is CodeType and value.co_name == name)
@@ -467,7 +469,9 @@ def _contact_helpers_unchanged(predicate):
     for owner, name, state in _CONTACT_HELPERS:
         function = state[0]
         if (vars(owner).get(name) is not function or function.__code__ is not state[1]
-                or function.__defaults__ is not state[2] or function.__kwdefaults__ is not None):
+                or function.__defaults__ is not state[2]
+                or (_function_state(function)[3] != state[3] if owner is native_backend and name == '_check_live'
+                    else function.__kwdefaults__ is not None)):
             return False
     for name, original in zip(_CONTACT_NUMPY_NAMES, _CONTACT_NUMPY):
         if vars(np).get(name) is not original:

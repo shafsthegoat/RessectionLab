@@ -1,17 +1,69 @@
 # C++ acceleration acceptance record
 
 The C++17 backend is integrated into the Python simulator and actual signed Mac
-application. The resident engine's frozen source comparison now exceeds the
-original **2× complete fresh planning target**; final acceptance remains pending
-a tiny-control regression, expanded physics/RL integration and packaged delivery.
+application. The resident engine's frozen source comparison exceeds the original
+**2× complete fresh planning target**. The user explicitly ended further
+optimization and requested a working closeout and commit. Remaining physics ports
+are deferred; the unchanged small-control regression is recorded separately.
 All controls are generated engineering cases. Patient validation is unavailable;
 the project still has zero completed patient tumor tasks and makes no clinical claim.
 
-The latest committed source increment is `4aab223e` (v11), pushed to
-`origin/shaf/decision-system-v1`. The last complete 23-stage packaged delivery is
-`2d9712f8` (v9); its evidence does not qualify the current working resident engine.
-Overall engineering acceptance remains incomplete.
-Earlier results are retained below as history.
+The resident source increment is `2e7b4211`, following the pushed v11 helper
+increment `4aab223e`. Final closeout evidence is recorded below; historical v9
+delivery does not qualify the resident engine. Earlier failed runs and all selected
+benchmark samples remain available.
+
+## Final user-requested closeout
+
+The user accepted stopping with the reported remaining RL slowdown and requested
+commit/push. No more ports, profiling or millisecond tuning will be performed.
+The [closeout receipt](../artifacts/cpp-acceleration-v1/resident-closeout-v12.json)
+retains every selected paired sample, correctness evidence, failed gates and scope.
+
+| Gate | Result at stop |
+|---|---|
+| M1: generated fixtures/contracts | Passed; original frozen workloads unchanged |
+| M2: complete native transaction | Passed for qualified legacy/CUSA/craniotomy; other physics retain existing executor |
+| M3: actual production batching | Passed in frozen Generate: 370 evaluations / 7,820 native substeps, exact outputs and multi-item geometry batches |
+| M4: source/wheel/frozen delivery | Final source packaging pending; earlier source/wheel probes passed before replay fix |
+| M5: review/application workflow | Scoped independent review GO; final signed app lifecycle pending |
+| Original planning performance | 17.156064 → 4.274005 s, **4.01405×**, five alternating pairs; before closeout guard fixes |
+| Small-control regression | 1.792 → 2.575 ms; unchanged 10% gate fails, user declined further tuning |
+| Complete simulation, previous C++ | 1.036964 → 1.053625 s; exact, latency/memory gates pass |
+| Complete six RL episodes, previous C++ | 1.060244 → 1.254298 s; exact/memory pass, unchanged latency gate fails (+18.3%); user accepts stopping |
+
+Simulation/RL values are five alternating frozen-source pairs with one warmup per
+role. Source comparison includes bindings/conversions/copies and complete episodes.
+Timed-work median RSS is 109,953,024 → 116,736,000 B simulation and
+101,793,792 → 102,825,984 B RL; both pass the 10% memory gate and 1 GiB hard cap.
+The last two reviewed guard edits remove redundant inventory construction and
+keyword-tuple work without changing numerical computation; they receive focused
+correctness checks, not another speedup claim. The planning value describes its
+frozen working increment, not a retimed final build.
+
+Broad closeout checks passed 1,084 C++ tests / 77 skips and 355 reference tests /
+one skip. Review then found loss of native bone-prefix authority in a replay shell;
+using the existing detach function fixes it. Fifty affected replay/resident checks
+pass, including a real native bone-plus-membrane endpoint, verified stage proof and
+exact saved snapshot. The final focused run passes **123 tests in 12.42 s** on the committed closeout source.
+The superseded packaging run was stopped so its pre-fix wheel is not represented
+as final acceptance. The complete verifier remains available:
+
+```sh
+PYTHONPATH=src .venv/bin/python scripts/verify_cpp_acceleration.py --output testcases/outputs/cpp-resident-closeout-next --node /Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node
+```
+
+The original benchmark command remains unchanged (the captured original baseline
+is local ignored evidence); use a new output directory to preserve all samples:
+
+```sh
+PYTHONPATH=src .venv/bin/python scripts/benchmark_cpp_acceleration.py --baseline-source outputs/cpp-acceleration-v1/baseline/source/src --output outputs/cpp-acceleration-v1/next-comparison
+```
+
+Original complete engineering acceptance is **not claimed**: final packaged Mac
+verification and the two latency regression gates remain open. Remaining native
+physics work and patient validation are deferred. The user-approved deliverable
+is the correct, reviewed working increment committed to the requested branch.
 
 ## Top-three native pass v11 — verified source increment
 
@@ -46,7 +98,7 @@ production hashing are included in elapsed time. Setup/build/profiling are separ
 retains every sample, variability, memory and counters. v11 wheel/frozen/app
 rebuild is pending; prior v9 packaging evidence is not reused as a v11 delivery pass.
 
-## Resident native engine v12 — implementation in progress
+## Resident native engine v12 — bounded working increment
 
 The current request requires owned native working state and a complete native
 transaction, rather than helper bindings around Python state. Pure C++17 value,
@@ -86,26 +138,32 @@ Generate, **4.01405×**, with exact output/work traces and passing memory gates.
 All 370 evaluations / 7,820 substeps remain native. Standard-physics refusal is
 1.389210 → 1.088771 s and stress is 0.973256 → 0.534825 s, also exact with passing
 latency/memory gates. The small control regresses **0.001792 → 0.002575 s**, failing
-the unchanged 10% gate; the larger native source list makes repeated Python
-file-stat qualification expensive. A native owned file-identity scan is the next
-measured fix. No samples were removed or repetitions extended. This is a working
-increment, not full acceptance; final source and supplementary RL/physics must be
-measured again. [Compact receipt](../artifacts/cpp-acceleration-v1/resident-working-increment-v12.json)
+the unchanged 10% gate. The user explicitly waived pursuing sub-millisecond
+savings. No samples were removed or repetitions extended. This pre-closeout
+working comparison is retained separately from final measurements.
+[Compact receipt](../artifacts/cpp-acceleration-v1/resident-working-increment-v12.json)
 retains all samples, variability, hashes, counters and the failed gate.
 
-Remaining work: fix the tiny-control regression and finish native physics/RL,
-five paired final planning/simulation/RL measurements, independent review, wheel/frozen/
-signed application delivery, and native execution of remaining physics families.
-V2 drilling/vessels/vascular/deformation and continuum headers are in progress;
-they are not yet admitted or a runtime claim. Exact SciPy LSODA/SuperLU C sources
-are being linked to public Accelerate BLAS/LAPACK rather than calling Python or
-replacing solvers. Root owns shared integration/build/API; native_kernels owns
-deformed occupancy/batches, hash_native_v11 the numeric provider, state_kernels
-continuum, motion_native_v11 position hooks, packaging_workflow signing profiles,
-and independent_review a bounded read-only audit. One heavy job runs at a time.
-The original frozen benchmarks, exactness, performance and delivery gates remain
-intact. Next: focused public integration checks, then paired source measurements
-while the remaining native numerical provider is connected.
+The supported resident path is legacy/CUSA/craniotomy with its qualified numerical
+profile. V2 physics, vascular and continuum configurations and custom engine
+subclasses retain the existing executor and effective NumPy/SciPy operations.
+The requested complete native engine across every physics family is therefore
+not claimed. At the user's stop, unverified native solver/physics work was removed
+from active source and preserved under ignored
+`outputs/cpp-acceleration-v1/deferred-native-physics-v12`, including its patch and
+77 files. It is not part of installation or the release.
+
+Closeout fixes preserve native container ownership, custom-helper fallback, lazy
+Python field access, replay shells and observer subclasses. Detaching a replay
+shell exports the accepted native bone-prefix proof before clearing its fields.
+A native file-stat scan and binding identity check reuse the existing extension;
+live hashes, environment checks and changed/custom helper behavior remain checked.
+Early rejection of unsupported physics/subclasses avoids needless numeric-image
+qualification. Streaming the same normalized Mach-O digest avoids a full binary
+copy. These address measured complete simulation/RL overhead, rather than adding
+another physics port. The initial closeout comparison's 0.419 s RL regression and
+memory failure, later diagnostic runs, compatibility failures and corrected review
+finding are retained, not averaged into final results. One heavy job runs at a time.
 
 ## Executor increment v9 — integrated and verified
 

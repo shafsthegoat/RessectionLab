@@ -74,12 +74,18 @@ def _stock(engine):
     from .surgical_engine import SurgicalEngine
     from .surgical_scene import SurgicalScene
     from .surgical_rl_protection import GuardConfig, ProtectionSet
-    if not _numeric_qualified() or type(engine) is not SurgicalEngine or any(name in engine.__dict__
+    if type(engine) is not SurgicalEngine or any(name in engine.__dict__
             for name, method in vars(SurgicalEngine).items() if type(method) is FunctionType):
         return False
     if (type(engine.scene) is not SurgicalScene or
             engine.protection is not None and type(engine.protection) is not ProtectionSet or
             engine.guard_config is not None and type(engine.guard_config) is not GuardConfig):
+        return False
+    if type(engine.scene.properties) is dict and any(name in engine.scene.properties
+            for name in ('tissuePhysicsV2', 'brainContinuumV1', 'vascularGraphV1',
+                         'bipolarThermalV1', 'planarBladeManeuverV1', 'retractorSurfaceContactV1')):
+        return False
+    if not _numeric_qualified():
         return False
     if _stock_capture is None:
         captures = []
@@ -108,6 +114,10 @@ def _stock(engine):
                         method = method.__func__
                     elif type(method) is property:
                         method = method.fget
+                    expected_name = key if owner is module else owner.__qualname__ + '.' + key
+                    if expected_name in declared and (type(method) is not FunctionType
+                            or method.__code__ not in declared[expected_name]):
+                        return False
                     if type(method) is FunctionType and method.__module__ == module.__name__:
                         codes = declared.get(method.__qualname__)
                         if codes is None:
@@ -209,6 +219,9 @@ def _source_facts(engine):
 def _source_current(engine):
     before = engine.__dict__.get('_resident_source')
     if before is not None:
+        if any(a is not b for a,b in zip(before[:6],(engine.scene,engine.protection,engine.guard_config,
+                engine._protected_ids,engine._cranial_access,engine._cranial_stages))):
+            return False
         current = _source_facts(engine)
         if any(a is not b for a, b in zip(before[:6], current[:6])) or before[6] != current[6]:
             return False

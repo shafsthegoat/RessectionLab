@@ -41,9 +41,11 @@ def test_public_step_runs_native_loop_and_physics_with_exact_reference_result(co
                         lambda *args: pytest.fail('native executor called Python physical loop'))
     assert actual.step(action) == receipt
     assert actual.snapshot() == snapshot
-    counts = backend.backend_identity()['counters']
-    assert counts['trajectoryCalls'] == 1
-    assert counts['physicalSubstepCalls'] == 3
+    identity = backend.backend_identity()
+    counts = identity['counters']
+    resident = identity.get('residentExecution', {})
+    assert counts['trajectoryCalls'] + resident.get('trajectories', 0) == 1
+    assert counts['physicalSubstepCalls'] + resident.get('physicalSubsteps', 0) == 3
 
 
 @pytest.mark.parametrize('failure', [None, ValueError('stop'), RuntimeError('cancel')])

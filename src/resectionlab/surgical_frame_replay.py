@@ -99,6 +99,14 @@ class ObservedFrameCollector:
 
 
 class _ObservedFrames(SurgicalEngine):
+    @classmethod
+    def from_engine(cls, engine):
+        result = engine.clone()
+        from .surgical_native_engine import detach
+        detach(result)
+        result.__class__ = cls
+        return result
+
     def clone(self):
         other = super().clone()
         other._frames = self._frames[:]
@@ -228,8 +236,7 @@ class SurgicalFrameCache:
                 verified_history=admission.history, admission=admission)
             baseline, _ = boundary if boundary is not None else replay_cache.seek(
                 current, snapshot, position, check=check, include_history=True)
-            observed = _ObservedFrames(baseline.scene, protection=baseline.protection, guard_config=baseline.guard_config)
-            observed.__dict__.update(baseline.clone().__dict__)
+            observed = _ObservedFrames.from_engine(baseline)
             observed._frames = []
             observed._frame_max_bytes = self.max_bytes
             observed._last_effective_activation = None
@@ -345,8 +352,7 @@ class SurgicalFrameCache:
             self._ancestry(snapshot, history)
             if history[position]['stateBefore'] != baseline.state_id:
                 raise ValueError('Playback action ancestry differs from canonical admission')
-            observed = _ObservedFrames(baseline.scene, protection=baseline.protection, guard_config=baseline.guard_config)
-            observed.__dict__.update(baseline.clone().__dict__)
+            observed = _ObservedFrames.from_engine(baseline)
             observed._frames = []
             observed._frame_max_bytes = self.max_bytes
             observed._last_effective_activation = None

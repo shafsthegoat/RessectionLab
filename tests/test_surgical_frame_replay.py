@@ -156,7 +156,7 @@ def test_failed_first_microstep_never_observes_or_lights_an_energized_tip(tmp_pa
              {'slot':'left','operation':'place','pose':pose(6.5),'parameters':{'radiusMm':.9},'duration':.1}]
     for action in actions: assert engine.step(action)['status']=='accepted'
     failed={'slot':'left','operation':'apply','pose':pose(6.9),'duration':.1}
-    legacy=_ObservedFrames(scene); legacy.__dict__.update(engine.clone().__dict__)
+    legacy=_ObservedFrames.from_engine(engine)
     legacy._frames=[]; legacy._next_frame_time=legacy.state['elapsedSeconds']+.2
     legacy._last_effective_activation=None
     outcome=legacy.step(failed)

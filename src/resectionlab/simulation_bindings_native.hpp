@@ -25,6 +25,7 @@ inline std::string string(PyObject* value) {
 struct Parser {
     std::unordered_set<PyObject*> active;
     std::size_t count = 0;
+    bool tree_only = false;
     Value operator()(PyObject* value,std::size_t depth=0) {
         if (++count > 1048576 || depth > 64) throw UnsupportedBoundary("Native simulation boundary exceeds its value limit");
         if (value == Py_None) return {};
@@ -41,6 +42,7 @@ struct Parser {
         if (PyUnicode_CheckExact(value)) return string(value);
         if (!PyList_CheckExact(value) && !PyTuple_CheckExact(value) && !PyDict_CheckExact(value))
             throw UnsupportedBoundary("Native simulation requires builtin JSON values");
+        if (tree_only && PyTuple_CheckExact(value)) throw UnsupportedBoundary("Native state requires JSON lists");
         if (!active.insert(value).second) throw UnsupportedBoundary("Native simulation requires acyclic JSON values");
         Value result;
         if (PyDict_CheckExact(value)) {
@@ -57,10 +59,13 @@ struct Parser {
             for (Py_ssize_t i = 0; i < size; ++i)
                 result.append((*this)(PyList_CheckExact(value) ? PyList_GET_ITEM(value,i) : PyTuple_GET_ITEM(value,i),depth+1));
         }
-        active.erase(value); return result;
+        if (!tree_only) active.erase(value);
+        return result;
     }
 };
-inline Value from_python(py::handle value) { return Parser{}(value.ptr()); }
+inline Value from_python(py::handle value, bool tree_only=false) {
+    Parser parser; parser.tree_only=tree_only; return parser(value.ptr());
+}
 
 inline bool exact(const Value& a,const Value& b) {
     if(a.kind()!=b.kind()) return false;
@@ -200,7 +205,7 @@ inline void bind(py::module_& module) {
                     const py::array& spacing,double voxel_mm3,py::object metadata,py::object data) -> py::tuple {
         const auto meta=from_python(metadata);
         auto source=scene(labels,affine,inverse,spacing,voxel_mm3,meta);
-        auto owned=from_python(data); State value(source); value.state=owned.at("state");
+        auto owned=from_python(data,true); State value(source); value.state=owned.at("state");
         value.actions=owned.at("actions"); value.history=owned.at("history");
         if(const auto* initial=meta.find("initialStateId")) source->initial_state_id=initial->as_string();
         else if(value.actions.as_array().empty()) source->initial_state_id=state_id(value);
@@ -225,7 +230,7 @@ inline void bind(py::module_& module) {
         return to_python(result);
     });
     module.def("simulation_import",[](Engine& engine,py::object data) {
-        auto incoming=from_python(data);
+        auto incoming=from_python(data,true);
         std::string reason;
         { py::gil_scoped_release release;
           auto held=engine.lock();

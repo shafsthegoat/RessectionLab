@@ -16,6 +16,7 @@
 #include "motion_native.hpp"
 #include "validation_native.hpp"
 #include "simulation_bindings_native.hpp"
+#include "file_identity_native.hpp"
 
 namespace py = pybind11;
 namespace {
@@ -313,6 +314,10 @@ std::tuple<int, int, int> segment_predicate_batch(
 }  // namespace
 
 PYBIND11_MODULE(_geometry_cpp, module) {
+    module.def("bindings_unchanged",&resectionlab::file_identity::bindings_unchanged);
+    py::class_<resectionlab::file_identity::FileIdentities>(module,"FileIdentities")
+        .def(py::init<py::handle,py::handle>())
+        .def("changed",&resectionlab::file_identity::FileIdentities::changed);
     module.attr("BUILD_IDENTITY") = RSL_BUILD_IDENTITY;
     module.attr("MAX_PRIMITIVES") = max_primitives;
     module.attr("MAX_BATCH_ITEMS") = max_items;

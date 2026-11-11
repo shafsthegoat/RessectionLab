@@ -99,6 +99,8 @@ class SurgicalReplayCache:
     @staticmethod
     def _shell(engine):
         result = copy.copy(engine)
+        from .surgical_native_engine import detach
+        detach(result)
         result.state, result.actions, result.history = {}, [], []
         result._occupancy_cache = None
         result.__dict__.pop('_deformation_system_v2', None)

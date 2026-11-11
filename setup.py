@@ -26,7 +26,8 @@ SOURCES = ('geometry_native.cpp', 'state_native.hpp', 'executor_native.hpp',
            'simulation_physical_native.hpp', 'simulation_domain_native.hpp',
            'simulation_engine_native.hpp', 'simulation_bindings_native.hpp',
            'simulation_stats_native.hpp', 'simulation_intset_native.hpp',
-           'simulation_admission_native.hpp', 'simulation_deformation_native.hpp')
+           'simulation_admission_native.hpp', 'simulation_deformation_native.hpp',
+           'file_identity_native.hpp')
 FLAGS = ['-O3', '-fno-fast-math', '-ffp-contract=off']
 
 

@@ -66,6 +66,24 @@ def test_complete_native_cranial_opening_and_preparation(compiled,monkeypatch):
     compare_actions(compiled,engine,actions,monkeypatch)
 
 
+def test_live_replay_retains_native_cranial_prefix(compiled):
+    from resectionlab.generated_cpp_fixture import (joint_source, bone_actions,
+        membrane_cut_actions, membrane_grasp_actions, request, pose)
+    from resectionlab.surgical_replay_cache import SurgicalReplayCache
+    engine, contract, contour, _, _ = joint_source()
+    actions = bone_actions(contour) + membrane_cut_actions(engine, contract) + membrane_grasp_actions() + [
+        request('move', pose=pose(z=54.5)), request('extract'), request('withdraw', pose=pose(z=54.5))]
+    for action in actions:
+        assert engine.step(action)['status'] != 'rejected'
+    assert engine.__dict__.get('_resident') is not None
+    assert compiled.simulation_query(engine._resident, 'bonePrefix') is not None
+    snapshot = engine.snapshot()
+    replay = SurgicalReplayCache().seek(engine, snapshot, len(engine.actions))
+    assert replay._cranial_stage_bone_prefix is not None
+    assert replay.observe()['cranialStages']['bonePrefixVerified']
+    assert replay.snapshot() == snapshot
+
+
 def test_native_clone_preview_and_cancel_are_atomic(compiled):
     native,reason=create(empty())
     assert reason is None
@@ -105,6 +123,21 @@ def test_public_engine_owns_native_state_and_clones(compiled,monkeypatch):
     assert compiled.simulation_stats()['physicalSubsteps']>0
 
 
+def test_initial_method_replacement_declines_resident_execution(compiled, monkeypatch):
+    from resectionlab import surgical_native_engine as adapter
+    monkeypatch.setattr(adapter, '_stock_capture', None)
+    original = SurgicalEngine._physical_substep_reference
+
+    def changed(self, *args):
+        return original(self, *args)
+
+    monkeypatch.setattr(SurgicalEngine, '_physical_substep_reference', changed)
+    engine = empty()
+    assert not adapter._stock(engine)
+    engine.step({'slot': 'left', 'operation': 'inspect', 'duration': .1})
+    assert engine.__dict__.get('_resident') is None
+
+
 @pytest.mark.parametrize('action', [
     {'slot':'left','operation':'inspect','duration':'0.2'},
     {'slot':'left','operation':'inspect','parameters':{'power':np.float64(1.)}},
@@ -139,6 +172,32 @@ def test_resident_reads_invalidate_changed_source_and_metrics(compiled, monkeypa
     snapshot=engine.snapshot()
     assert snapshot['sceneId']==engine.scene.identity
     assert engine.__dict__.get('_resident') is None
+
+
+def test_resident_import_custom_leaf_falls_back(compiled, monkeypatch):
+    engine=empty()
+    engine.step({'slot':'left','operation':'inspect','duration':.1})
+    engine.state['thermal']['0']=np.float64(.25)
+    expected=copy.deepcopy(engine.__dict__['state'])
+    engine.metrics()
+    assert engine.__dict__.get('_resident') is None
+    assert engine.state==expected
+
+
+@pytest.mark.parametrize('alias', [False, True])
+def test_external_state_container_ownership_uses_reference(compiled, alias):
+    engine=empty()
+    engine.step({'slot':'left','operation':'inspect','duration':.1})
+    if alias:
+        engine.state['contact']=engine.state['thermal']
+    else:
+        engine.state['removed']=()
+    engine.step({'slot':'left','operation':'inspect','duration':.1})
+    assert engine.__dict__.get('_resident') is None
+    if alias:
+        assert engine.state['contact'] is engine.state['thermal']
+    else:
+        assert type(engine.state['removed']) is tuple
 
 
 def _ordering_fixture(ids, instrument='dissector'):

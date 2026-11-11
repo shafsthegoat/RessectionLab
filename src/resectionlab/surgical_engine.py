@@ -398,38 +398,11 @@ class SurgicalEngine:
     # ordinary/public views retain the complete detached payload.
     _view_omit_fields = frozenset({'flapComponents'})
 
-    @property
-    def state(self):
-        if self.__dict__.get('_resident') is None:
-            return self.__dict__['state']
-        from .surgical_native_engine import field
-        return field(self, 'state')
-
-    @state.setter
-    def state(self, value):
-        self.__dict__['state'] = value
-
-    @property
-    def actions(self):
-        if self.__dict__.get('_resident') is None:
-            return self.__dict__['actions']
-        from .surgical_native_engine import field
-        return field(self, 'actions')
-
-    @actions.setter
-    def actions(self, value):
-        self.__dict__['actions'] = value
-
-    @property
-    def history(self):
-        if self.__dict__.get('_resident') is None:
-            return self.__dict__['history']
-        from .surgical_native_engine import field
-        return field(self, 'history')
-
-    @history.setter
-    def history(self, value):
-        self.__dict__['history'] = value
+    def __getattr__(self, name):
+        if name in ('state', 'actions', 'history') and self.__dict__.get('_resident') is not None:
+            from .surgical_native_engine import field
+            return field(self, name)
+        raise AttributeError(f"'{type(self).__name__}' object has no attribute '{name}'")
 
     def __init__(self, scene, *, protection=None, guard_config=None, cranial_stages=None):
         scene.require_cache_source()

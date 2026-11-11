@@ -61,12 +61,20 @@ _entry_points = ()
 _embedded_identity = None
 _binary_path = None
 _files = {}
+_file_helpers = ()
+_file_methods = ()
+_file_cache = None
+_stat_functions = tuple((function, function.__code__, function.__defaults__,
+                        None if function.__kwdefaults__ is None else tuple(function.__kwdefaults__.items()))
+                       for function in (_stat, Path.stat, Path.__str__, Path.__fspath__))
+_os_stat = os.stat
+_path_class = type(Path())
 _identity = {'schema': 'resectionlab-numerical-backend-v1', 'requested': _requested,
              'selected': 'reference', 'fallbackReason': None, 'nativeThreads': 1}
 
 
 def _load():
-    global _module, _entry_points, _embedded_identity, _binary_path
+    global _module, _entry_points, _embedded_identity, _binary_path, _file_helpers, _file_methods
     if _requested == 'reference':
         return
     if importlib.util.find_spec(_MODULE_NAME) is None:
@@ -76,6 +84,8 @@ def _load():
         return
     try:
         module = importlib.import_module(_MODULE_NAME)
+        _file_helpers = (module.FileIdentities, module.FileIdentities.changed, module.bindings_unchanged)
+        _file_methods = tuple((name, vars(module.FileIdentities).get(name)) for name in ('__init__', '__new__', 'changed'))
         binary = Path(module.__file__).resolve(strict=True)
         manifest_path = binary.with_name('_geometry_cpp.build.json')
         if manifest_path.stat().st_size > 1024 * 1024:
@@ -114,7 +124,7 @@ def _load():
                                'simulation_create', 'simulation_identity', 'simulation_clone',
                                'simulation_data', 'simulation_import', 'simulation_step',
                                'simulation_prepare', 'simulation_query', 'simulation_json', 'simulation_stats',
-                               'simulation_json_guard'))
+                               'simulation_json_guard', 'bindings_unchanged'))
         if (sys.modules.get(_MODULE_NAME) is not module
                 or Path(module.__spec__.origin).resolve() != binary
                 or any(type(function) is not BuiltinFunctionType
@@ -155,17 +165,19 @@ def reset_counters():
 reset_counters()
 
 
-def _check_live():
+def _check_live(*, resident_sources=True):
+    global _file_cache
     if os.environ.get(_ENVIRONMENT) != _configured_environment:
         raise NativeIntegrityError('Numerical backend environment changed after selection')
     if _module is None:
         return
+    file_class, file_changed, bindings_guard = _file_helpers
     try:
         changed = (sys.modules.get(_MODULE_NAME) is not _module
             or _module.BUILD_IDENTITY is not _embedded_identity
             or _module.__file__ != _binary_path
             or _module.__spec__.origin != _binary_path
-            or any(getattr(_module, name, None) is not function for name, function in _entry_points))
+            or not bindings_guard(_module, _entry_points))
     except (AttributeError, TypeError, ValueError) as exc:
         raise NativeIntegrityError('Loaded numerical backend metadata unavailable') from exc
     if changed:
@@ -175,12 +187,34 @@ def _check_live():
     if getattr(_execution, 'depth', 0):
         return
     try:
-        for path, (previous_stat, expected) in tuple(_files.items()):
+        if (_module.FileIdentities is not file_class or
+                any(vars(file_class).get(name) is not method for name, method in _file_methods)):
+            raise NativeIntegrityError('Loaded numerical backend file guard changed')
+        # Legacy substeps use the original kernels; outer/resident boundaries check every source.
+        inventory = tuple(_files.items()) if resident_sources else tuple(
+            (path, facts) for path, facts in _files.items() if not path.name.startswith('simulation_'))
+        stock_stat = (os.stat is _os_stat and _path_class.__getattribute__ is object.__getattribute__
+            and all(getattr(_path_class, name) is getattr(Path, name) for name in ('stat', '__str__', '__fspath__'))
+            and all(path.__class__ is _path_class for path, _ in inventory) and
+            all(current is original and current.__code__ is code and current.__defaults__ is defaults
+                and (None if current.__kwdefaults__ is None else tuple(current.__kwdefaults__.items())) == keywords
+                for current, (original, code, defaults, keywords) in zip(
+                    (_stat, Path.stat, Path.__str__, Path.__fspath__), _stat_functions)))
+        if stock_stat:
+            if _file_cache is None or _file_cache[0] != inventory:
+                _file_cache = (inventory, file_class([str(path) for path, _ in inventory],
+                    [facts[0] for _, facts in inventory]))
+            changed = file_changed(_file_cache[1])
+            selected = (inventory[index] for index in changed)
+        else:
+            selected = inventory
+        for path, (previous_stat, expected) in selected:
             current_stat = _stat(path)
             if current_stat != previous_stat:
                 if _digest(path) != expected:
                     raise NativeIntegrityError('Loaded numerical backend file changed: ' + path.name)
                 _files[path] = (current_stat, expected)
+                _file_cache = None
     except OSError as exc:
         raise NativeIntegrityError('Loaded numerical backend file unavailable') from exc
 
@@ -298,7 +332,7 @@ def run_trajectory(*args):
 
 
 def physical_substep(*args):
-    _check_live()
+    _check_live(resident_sources=False)
     _counters['bindingCalls'] += 1
     _counters['physicalSubstepCalls'] += 1
     _execution.depth = getattr(_execution, 'depth', 0) + 1
@@ -306,7 +340,7 @@ def physical_substep(*args):
         return _module.physical_substep(*args)
     finally:
         _execution.depth -= 1
-        _check_live()
+        _check_live(resident_sources=False)
 
 
 def owned_digest(value, dumps, sha256, fallback):
