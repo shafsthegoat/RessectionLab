@@ -48,6 +48,7 @@ def successful(record: dict, native: bool, package_root: Path) -> None:
     assert checkpoint["componentExemptionPreserved"] and checkpoint["nativeFallbackCalls"] == 0
     assert checkpoint["selected"] == ("cpp" if native else "reference")
     assert checkpoint["nativeCalls"] >= 1 if native else checkpoint["nativeCalls"] == 0
+    assert record["motionCache"]["sourceQualified"] and record["motionCache"]["helpersUnchanged"]
     assert Path(record["runtime"]["packagePath"]).is_relative_to(package_root), record["runtime"]
     backend = record["backend"]
     assert backend["selected"] == ("cpp" if native else "reference"), backend

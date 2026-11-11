@@ -97,11 +97,13 @@ def geometry_control(stress=False):
             'affines': [a.tolist() for a in affines]}
 
 
-def perform(workload):
+def perform(workload, profile=None):
     import numpy as np
     from resectionlab.core import semantic_digest
     from resectionlab.generated_cpp_fixture import cranial_generate_fixture, continuum_fixture
     from resectionlab.surgical_cranial_planning import compare_cranial_strategies
+    if profile:
+        profile.enable()
     started = time.perf_counter()
     diagnostics = {}
     if workload in ('generate', 'standardized-refusal'):
@@ -122,6 +124,8 @@ def perform(workload):
         result = compare_cranial_strategies(base, record, planning_horizon=3, beam_width=3,
                                             progress=retain_goals)
         elapsed = time.perf_counter() - compute
+        if profile:
+            profile.disable()
         diagnostics['backendAfterTimedWork'] = backend_snapshot()
         assert len(goals) == len(roots), 'Supported progress callback did not retain each registered root goal'
         assert semantic_digest(record) == before, 'Generate mutated the accepted common source'
@@ -178,6 +182,8 @@ def perform(workload):
         setup = 0.
         value = geometry_control()
         elapsed = time.perf_counter() - started
+    if profile:
+        profile.disable()
     return value, {'fixtureSeconds': setup, 'computeSeconds': elapsed,
                    'completeSeconds': setup + elapsed}, diagnostics
 
@@ -397,11 +403,7 @@ def worker(args):
     if args.worker in SUPPLEMENT_WORKLOADS:
         value, timings, diagnostics = perform_supplement(args.worker, profile)
     else:
-        if profile:
-            profile.enable()
-        value, timings, diagnostics = perform(args.worker)
-        if profile:
-            profile.disable()
+        value, timings, diagnostics = perform(args.worker, profile)
     # Registered-goal/hash checks can themselves use native JSON copies.
     backend = diagnostics.get('backendAfterTimedWork') or backend_snapshot()
     audit_hash_started = time.perf_counter()
@@ -421,7 +423,11 @@ def worker(args):
                'threads': {k: os.environ.get(k) for k in THREADS}}}
     if profile:
         stats = pstats.Stats(profile)
-        row['profile'] = {'totalSeconds': stats.total_tt, 'functions': [
+        for function in (backend_snapshot, canonical_result, exact_bits, qualify_supplement_row):
+            code = function.__code__
+            assert (code.co_filename, code.co_firstlineno, code.co_name) not in stats.stats, 'Timed profile includes audit work'
+        row['profile'] = {'scopeVersion': 2, 'scope': 'timed fixture and public computation only',
+            'auditExcluded': True, 'totalSeconds': stats.total_tt, 'functions': [
             {'file': k[0], 'line': k[1], 'function': k[2], 'calls': v[1],
              'selfSeconds': v[2], 'cumulativeSeconds': v[3]}
             for k, v in sorted(stats.stats.items(), key=lambda item: item[1][3], reverse=True)]}

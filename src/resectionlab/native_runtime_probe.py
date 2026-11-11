@@ -106,7 +106,7 @@ def replay_probe() -> dict:
 
 def probe() -> dict:
     import numpy as np
-    from . import geometry, native_backend
+    from . import geometry, native_backend, surgical_motion
     from .surgical_idle_native import strict_live_identity as idle_identity
     from .surgical_prefix_json_native import strict_live_identity as prefix_identity
 
@@ -116,6 +116,9 @@ def probe() -> dict:
     assert cells.dtype == np.int64 and cells.ndim == 2 and cells.shape[1] == 3 and len(cells) > 0
     assert not cells.flags.writeable
     checkpoint = checkpoint_probe()
+    motion = {"sourceQualified": surgical_motion._rotation_captures_genuine,
+              "helpersUnchanged": surgical_motion._rotation_helpers_unchanged()}
+    assert all(motion.values()), "Stock SciPy angular helpers did not qualify in this runtime"
     replay = replay_probe()
     proof_lifecycle = gc_proof_probe()
     return {"schema": "resectionlab-native-runtime-probe-v1", "passed": True,
@@ -129,6 +132,7 @@ def probe() -> dict:
                            "orderedCellsSha256": hashlib.sha256(cells.tobytes()).hexdigest()},
             "replay": replay,
             "checkpoint": checkpoint,
+            "motionCache": motion,
             "proofLifecycle": proof_lifecycle,
             "olderOptionalHelpers": {"idle": idle_identity(), "prefixJson": prefix_identity()}}
 

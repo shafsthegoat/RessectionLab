@@ -4,6 +4,8 @@ Inflated midpoint capsules conservatively enclose translation and rotation over
 each deterministic substep. Working geometry never shrinks the physical shaft.
 """
 from collections import OrderedDict
+import sys
+from types import CodeType, FunctionType
 
 import numpy as np
 from scipy.spatial.transform import Rotation, Slerp
@@ -13,9 +15,11 @@ from . import native_backend
 
 def _function_state(function):
     function = getattr(function, '__func__', function)
+    keywords = getattr(function, '__kwdefaults__', None)
     return (function, getattr(function, '__code__', None),
             getattr(function, '__defaults__', None),
-            tuple((key, id(value)) for key, value in (getattr(function, '__kwdefaults__', None) or {}).items()))
+            tuple((id(key), key, id(value), value) for key, value in keywords.items())
+            if type(keywords) is dict else (() if keywords is None else object()))
 
 
 _ROTATION = Rotation
@@ -28,6 +32,41 @@ _ROTATION_HELPERS = tuple(
     for name in names)
 
 
+def _source_rotation_helpers_genuine():
+    # shortcut: source-qualify Python wrappers; qualify native-only versions if profiling warrants reuse.
+    try:
+        classes = {}
+        for owner, name, state in _ROTATION_HELPERS:
+            if type(owner) is not type or type(owner.__module__) is not str:
+                return False
+            module = sys.modules[owner.__module__]
+            function = state[0]
+            if (type(function) is not FunctionType or function.__globals__ is not vars(module)
+                    or function.__module__ != module.__name__):
+                return False
+            if owner not in classes:
+                code = module.__spec__.loader.get_code(module.__name__)
+                body, = (value for value in code.co_consts
+                         if type(value) is CodeType and value.co_name == owner.__name__)
+                classes[owner] = {value.co_name: value for value in body.co_consts if type(value) is CodeType}
+            if function.__code__ != classes[owner].get(name):
+                return False
+            defaults, keywords = function.__defaults__, function.__kwdefaults__
+            if ((defaults is not None and type(defaults) is not tuple)
+                    or (keywords is not None and type(keywords) is not dict)):
+                return False
+            if keywords is not None and any(type(key) is not str for key in keywords):
+                return False
+            values = (() if defaults is None else defaults) + (() if keywords is None else tuple(keywords.values()))
+            if any(all(type(value) is not atom for atom in (type(None), bool, int, float, str, bytes))
+                   for value in values):
+                return False
+        return True
+    except (AttributeError, ImportError, KeyError, OSError, NotImplementedError, TypeError, ValueError):
+        return False
+
+
+_rotation_captures_genuine = _source_rotation_helpers_genuine()
 _sweep_rotation_cache = OrderedDict()
 
 
@@ -51,7 +90,8 @@ _SWEEP_STATE = _function_state(_SWEEP_BODY)
 
 
 def _rotation_helpers_unchanged():
-    if Rotation is not _ROTATION or Slerp is not _SLERP or _sweep_rotation is not _SWEEP_BODY:
+    if (not _rotation_captures_genuine or Rotation is not _ROTATION
+            or Slerp is not _SLERP or _sweep_rotation is not _SWEEP_BODY):
         return False
     for function, expected in ((_SWEEP_BODY, _SWEEP_STATE), *(
             (getattr(owner, name), state) for owner, name, state in _ROTATION_HELPERS)):

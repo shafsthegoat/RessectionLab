@@ -1,5 +1,10 @@
 """Exact swept geometry with bounded reuse of SciPy angular calculations."""
 import copy
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
 
 import numpy as np
 import pytest
@@ -121,6 +126,119 @@ def test_scipy_hook_changes_bypass_previously_cached_results(monkeypatch, mutati
         with pytest.raises(RuntimeError, match='changed SciPy hook was called'):
             motion.swept_envelopes(TOOLS['cranial_drill'], parameters, start, end)
     assert len(motion._sweep_rotation_cache) == 1
+
+
+def test_live_keyword_default_key_callbacks_retain_original_call_count(monkeypatch):
+    pose = {'position': [0., 0., 0.], 'quaternion': [0., 0., 0., 1.]}
+    parameters = {'radiusMm': 2.}
+    tool = TOOLS['cranial_drill']
+    motion.swept_envelopes(tool, parameters, pose, pose)
+    calls = []
+
+    class Keyword(str):
+        __hash__ = str.__hash__
+
+        def __eq__(self, other):
+            calls.append(str(self))
+            return str.__eq__(self, other)
+
+    function = getattr(Rotation.from_quat, '__func__', Rotation.from_quat)
+    keywords = dict(function.__kwdefaults__)
+    value = keywords.pop('scalar_first')
+    keywords[Keyword('scalar_first')] = value
+    monkeypatch.setattr(function, '__kwdefaults__', keywords)
+    expected = [motion._swept_envelopes_reference(tool, parameters, pose, pose) for _ in range(2)]
+    expected_calls = list(calls)
+    calls.clear()
+    actual = [motion.swept_envelopes(tool, parameters, pose, pose) for _ in range(2)]
+    assert expected_calls and calls == expected_calls
+    for first, second in zip(actual, expected):
+        assert_exact(first, second)
+    assert len(motion._sweep_rotation_cache) == 1
+
+
+@pytest.mark.parametrize('mutation', ['stock', 'replace', 'code', 'mutable_default', 'unavailable_loader'])
+def test_fresh_import_qualifies_stock_scipy_and_retains_preimport_hooks(mutation):
+    program = '''
+import json, sys, types
+import numpy as np
+from scipy.spatial.transform import Rotation, Slerp
+
+assert 'resectionlab.surgical_motion' not in sys.modules
+mutation = sys.argv[1]
+original = Slerp.__call__
+assert type(original) is types.FunctionType
+if mutation == 'replace':
+    def installed(self, times):
+        return original(self, times)
+    installed.__module__ = original.__module__
+    installed.__name__ = original.__name__
+    installed.__qualname__ = original.__qualname__
+    Slerp.__call__ = installed
+elif mutation == 'code':
+    clone = types.FunctionType(original.__code__, original.__globals__,
+                               original.__name__, original.__defaults__, original.__closure__)
+    original.__globals__['_motion_preimport_original'] = clone
+    exec('def installed(self, times):\\n return _motion_preimport_original(self, times)',
+         original.__globals__)
+    original.__code__ = original.__globals__['installed'].__code__
+elif mutation == 'mutable_default':
+    original.__defaults__ = ([],)
+elif mutation == 'unavailable_loader':
+    def unavailable(name):
+        raise ImportError('stock SciPy source code unavailable')
+    sys.modules[original.__module__].__spec__.loader.get_code = unavailable
+
+target = Slerp.__call__.__code__
+from resectionlab import surgical_motion as motion
+from resectionlab.surgical_tools import TOOLS
+# Exercise the Python cache seam under either backend selection, as in the
+# in-process motion fixture. Native loader selection and integrity stay intact.
+selected = motion.native_backend.backend_identity()['selected']
+motion.native_backend.cpp_enabled = lambda: True
+pose = {'position': [0., 0., 0.], 'quaternion': [0., 0., 0., 1.]}
+end = {'position': [1., 2., 3.], 'quaternion': [0., .2, 0., .9]}
+parameters = {'radiusMm': 2.}
+tool = TOOLS['cranial_drill']
+calls = []
+def profile(frame, event, arg):
+    if event == 'call' and frame.f_code is target:
+        calls.append(True)
+def invoke(function):
+    calls.clear()
+    sys.setprofile(profile)
+    try:
+        results = [function(tool, parameters, pose, end) for _ in range(2)]
+    finally:
+        sys.setprofile(None)
+    return results, len(calls)
+def output_bytes(results):
+    return [[[[a.dtype.str, list(a.shape), a.tobytes().hex()],
+              [b.dtype.str, list(b.shape), b.tobytes().hex()],
+              np.float64(radius).tobytes().hex(), part]
+             for a, b, radius, part in result] for result in results]
+
+actual, actual_calls = invoke(motion.swept_envelopes)
+expected, reference_calls = invoke(motion._swept_envelopes_reference)
+print(json.dumps({'stock': motion._rotation_captures_genuine,
+                  'calls': actual_calls, 'referenceCalls': reference_calls,
+                  'cacheSize': len(motion._sweep_rotation_cache),
+                  'actualBytes': output_bytes(actual), 'referenceBytes': output_bytes(expected),
+                  'selectedBefore': selected,
+                  'selectedAfter': motion.native_backend.backend_identity()['selected']}))
+'''
+    root = Path(__file__).resolve().parents[1]
+    child = subprocess.run([sys.executable, '-c', program, mutation], cwd=root,
+        env=dict(os.environ, PYTHONPATH=str(root / 'src')), text=True, capture_output=True, timeout=30)
+    assert child.returncode == 0, child.stderr
+    result = json.loads(child.stdout)
+    stock = mutation == 'stock'
+    assert result['stock'] is stock
+    assert result['calls'] == (1 if stock else 2)
+    assert result['referenceCalls'] == 2
+    assert result['cacheSize'] == (1 if stock else 0)
+    assert result['actualBytes'] == result['referenceBytes']
+    assert result['selectedBefore'] == result['selectedAfter']
 
 
 def test_reference_selection_uses_original_without_cache(monkeypatch):
