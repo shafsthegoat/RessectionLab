@@ -150,6 +150,13 @@ def _planning_errors(base_scene, root, base_snapshot):
 
 def cranial_planning_availability(base_scene, record):
     """Presence never falls back to an exposed-brain planner or invents a root."""
+    from .surgical_source_inspection import inspection_only, inspection_blockers
+    if inspection_only(base_scene):
+        current = record.get('branches', {}).get(record.get('branchId'), {})
+        return {'present': True, 'available': False, 'roots': [],
+            'sourceSceneId': base_scene.identity,
+            'sourceStateId': current.get('stateId', base_scene.identity),
+            'blockers': inspection_blockers(base_scene)}
     if FIELD not in record and not any(r.get('material') == 'bone' for r in base_scene.regions) and not any(
             name in base_scene.properties for name in ('cranialAccessV1', 'cranialMillingV1')):
         return None

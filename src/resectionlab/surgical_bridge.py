@@ -323,6 +323,15 @@ def dispatch(session, operation, args, request, progress):
     from .surgical_environment import (
         standardize, default_target_names, resolve_branch_scene, SCHEMA as ENVIRONMENT_SCHEMA)
     original_builder = scene_builder
+    # Source-only Case inspection is useful before any native qualification.
+    # Its presence must not fall back to an exposed-brain/legacy planner.
+    if entry is not None:
+        from .surgical_source_inspection import PROPERTY as INSPECTION_PROPERTY, REASON as INSPECTION_REASON
+        if INSPECTION_PROPERTY in entry.case.metadata.get('surgical_properties', {}) and command not in {
+                'create', 'inspect', 'inspectArchive', 'seek', 'seekFrame',
+                'seekPrefix', 'seekPrefixFrame', 'selectBranch', 'selectScene'}:
+            raise BridgeError(INSPECTION_REASON,
+                'This source project retains annotations for inspection only; native actions and plan generation require separate qualification.')
     scene_builder = lambda mapping=None: standardize(original_builder(mapping), default_target_names(entry.case) if entry is not None and mapping is None else None,
         raw.get('physicsProfile') if raw and command != 'create' else None) if (
         command == 'create' or raw and raw.get('environmentSchema') == ENVIRONMENT_SCHEMA) else original_builder(mapping)
@@ -467,7 +476,9 @@ def dispatch(session, operation, args, request, progress):
         scene = scene_builder(args.get('mapping'))
         base_scene = scene
         from .surgical_rl_protection import GuardConfig
-        engine = SurgicalEngine(scene, guard_config=GuardConfig(require_critical_coverage=False))
+        from .surgical_source_inspection import inspection_only
+        engine = (SurgicalEngine(scene) if inspection_only(scene) else
+                  SurgicalEngine(scene, guard_config=GuardConfig(require_critical_coverage=False)))
         record = {'environmentSchema': ENVIRONMENT_SCHEMA, 'physicsProfile': copy.deepcopy(scene.properties['tissuePhysicsV2']), 'mapping': scene.regions, 'branches': {'main': engine.snapshot()}, 'branchId': 'main', 'position': 0, 'parents': {'main': None}, 'timeline': {'main': []}}
     elif raw is None:
         return None

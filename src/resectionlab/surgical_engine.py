@@ -328,11 +328,16 @@ class SurgicalEngine:
     # ordinary/public views retain the complete detached payload.
     _view_omit_fields = frozenset({'flapComponents'})
     def __init__(self, scene, *, protection=None, guard_config=None, cranial_stages=None):
+        scene.require_cache_source()
         self.scene = scene
+        from .surgical_source_inspection import inspection_only
+        self._source_inspection_only = inspection_only(scene)
+        if self._source_inspection_only and any(value is not None for value in (protection, guard_config, cranial_stages)):
+            raise ValueError('SOURCE_INSPECTION_ONLY: executable protection/stage contracts cannot be attached')
         from .surgical_milling import resolve_contract
         self._cranial_access = resolve_contract(scene)
         from .surgical_rl_protection import GuardConfig, ProtectionSet, missing_critical, protection_contract, declared_scene_protection
-        declared = declared_scene_protection(scene, protection)
+        declared = protection if self._source_inspection_only else declared_scene_protection(scene, protection)
         if declared is not protection:
             # Missing evidence remains explicit unknown coverage. Declared
             # memberships are nevertheless mandatory for every live caller.
@@ -396,7 +401,9 @@ class SurgicalEngine:
             return {'configured': False, 'mode': 'unconfigured-research', 'contractId': None,
                 'status': 'unknown-coverage', 'missingRequired': ['brainstem'], 'clearanceMm': 0.,
                 'criticalMaxDisplacementMm': None, 'anatomicalCompleteness': 'unknown',
-                'clinicalValidation': 'none', 'structures': [], 'unknownStructures': ['critical anatomy not supplied']}
+                'clinicalValidation': 'none', 'structures': [], 'unknownStructures': (
+                    ['Source annotations retained for inspection; physical protection index not constructed; all native actions forbidden.']
+                    if self._source_inspection_only else ['critical anatomy not supplied'])}
         missing = missing_critical(self.protection)
         return {**self.protection.report(), 'configured': True,
             'mode': 'strict-research' if self.guard_config.require_critical_coverage else 'relaxed-research',
@@ -522,6 +529,11 @@ class SurgicalEngine:
 
     def preview(self, action, *, check=None, include_view=True, include_history=True):
         if check is not None: check()
+        from .surgical_source_inspection import inspection_only
+        if self._source_inspection_only or inspection_only(self.scene):
+            _, result = self._prepare_step(action, check=check)
+            return {**result, 'preview': True,
+                **({'view': self.view(_state_id=result['stateId'], include_history=include_history)} if include_view else {})}
         if (type(self) is SurgicalEngine and all(
                 name not in self.__dict__ and getattr(SurgicalEngine, name) is method
                 for name, method in _PREVIEW_NATIVE_METHODS)):
@@ -620,6 +632,12 @@ class SurgicalEngine:
         candidate; preview consumes it without changing the authoritative owner.
         """
         if check is not None: check()
+        from .surgical_source_inspection import inspection_only, REASON
+        if self._source_inspection_only or inspection_only(self.scene):
+            self.scene.require_cache_source()
+            return None, {'status': 'rejected', 'reason': REASON, 'reasonCode': REASON,
+                'completedFraction': 0., 'elapsedSeconds': 0., 'stateId': self.state_id,
+                'events': [], 'deltas': {}, 'metrics': self.metrics()}
         before = self.state_id
         after = before
         before_time = self.state['elapsedSeconds']
@@ -1241,6 +1259,10 @@ class SurgicalEngine:
     def restore(cls, scene, record, *, check=None, use_cache=False, force_verify=False, verified_cache=None):
         if check is not None: check()
         if record['schema'] != SCHEMA or record['sceneId'] != scene.identity: raise ValueError('Saved scene or engine version differs')
+        from .surgical_source_inspection import inspection_only
+        if inspection_only(scene) and (record.get('actions') != []
+                or 'protectionContract' in record or 'cranialStagesContract' in record):
+            raise ValueError('SOURCE_INSPECTION_ONLY: only unacted inspection snapshots can be restored')
         cache = None
         if use_cache and 'cranialStagesContract' not in record:
             from .surgical_verified_cache import VerifiedSurgicalCache

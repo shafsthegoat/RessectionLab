@@ -50,6 +50,15 @@ Skull-only results never count as patient-task success.
   All136 focused role controls pass; a virtual descriptor joins the actual source02
   catalog without image reads. The app registry remains unconfigured and bridge
   gates are unchanged. Chronology is a trusted pinned declaration assertion.
+- Exact-grid source inspection now preserves arbitrary overlapping masks, all
+  originals and the complete original target count/ID SHA in the existing case
+  format. A source marker blocks every native action and Generate before any
+  transition/clone or physical-protection allocation, including after cold load.
+  It prevents an unqualified target-only export falling into exposed-tissue
+  planning. Inspection exclusions remain exact masks and declarations; they are
+  explicitly not an executable physical protection index. Root80 focused checks
+  pass in6.42s;35 new and60 compatibility checks also pass. An earlier combined
+  test-order STRATEGY_PROOF failure remains unexplained and recorded.
 - Existing Case → Plan → Compare → Rehearse/edit controls show complete B/P/W,
   original-target credit/residuals, whole exit, unknowns and failed attempts.
   Stage-bound direct prefix replay keeps its existing refusal; canonical recorded
@@ -136,13 +145,13 @@ Further standalone milling work stopped at the user's priority change.
 TopCoW004/006/012/014/018 remain unqualified for complete treatment. Their original
 whole200/work20mm³ non-target,240-action/4000-call/240s task caps are unchanged.
 
-|Case|Full original target mm³|R8 opening bone cells|Complete task|
-|---|---:|---:|---|
-|004|114.720653|2076|Unpassed|
-|006|180.363464|1414|Unpassed|
-|012|691.441298|2051|Unpassed|
-|014|270.151895|1404|Unpassed|
-|018|270.724179|1368|Unpassed|
+|Case|Full original target mm³|R8 bone cells|R8 bone mm³|Complete task|
+|---|---:|---:|---:|---|
+|004|114.720653|17971|2076.178100|Unpassed|
+|006|180.363464|8038|1414.401489|Unpassed|
+|012|691.441298|16536|2050.883102|Unpassed|
+|014|270.151895|6129|1404.377406|Unpassed|
+|018|270.724179|7838|1368.108393|Unpassed|
 
 Critical/vascular coverage and complete opening/dura evidence remain insufficient.
 R8 bone alone exceeds the original whole cap. The strongest retained014 baseline
@@ -180,8 +189,9 @@ verified acquired image archive; model outputs below are proposals.
   57903 original target cells are protected;90623(61.0149%) remain outside these
   fields, with four frozen zones each above5% of the original target. This is a
   spatial upper bound, not accessibility or removal evidence. No guard or target
-  was changed. Calvarium/material, local venous/falx/
-  dura/exterior coverage, registration and trusted source-role join remain open.
+  was changed. Calvarium/material, local venous/falx/dura/exterior coverage and
+  measured registration remain open. The trusted candidate-role join now passes
+  on the actual native collection; app-wide candidate execution is not enabled.
   One full-CT alternative-window study completes in93.50s/2.054GB, retaining
   651MB including two value-verified raw caches. All42 directions are evaluated;
   six pass the frozen surface fit, three distinct entries receive full material
@@ -200,7 +210,27 @@ verified acquired image archive; model outputs below are proposals.
   density remain unresolved.
   This supports tissue-identity/sampling limitations, not absent bone. No island
   is erased or promoted to calvarium; complete source-class review remains open.
-  No CaseData, native patient run or complete task exists.
+  A fixed three-seed/full6-connected-component proposal completes in50.803s/
+  1.559GB. All three native cells lie in local cranial dense bands and join
+  component1864(3210485 cells); all100426 other positive cells remain separately
+  retained as UNKNOWN proposals. Root views all10 pages. The shared component
+  also contains skull-base/facial/inferior context, so whole-component calvarium
+  adoption remains withheld. No threshold, target, guard or operational class is
+  changed. Saved-ray/component mapping retains all23752 occurrences. A51.888s/
+  768MB dense CT review covers all67 native planes in both reconstructions; root
+  and independent reviewers view all18 pages. Thirteen later UNKNOWN cells lie
+  inward and apart from the continuous local cranial band; the earlier cell is
+  on its outer boundary and must be included rather than erased. A local table
+  estimator correction is being prepared, with all1225/1117 chart nodes retained.
+  Actual exact-grid source import completes in74.617s/2.237GB sampled aggregate
+  RSS, preserving all148526 target cells and five source masks in1,032,662,528B
+  of CaseData. All three originals are reused; no CT re-decode, resampling or
+  segmentation is performed. One MRI decode supplies the reference. The first
+  attempt's binary-uint8 assumption and monitor temporary-rename failure remain
+  preserved; its whole wall/peak memory are UNKNOWN. The corrected attempt reuses
+  content-addressed arrays. CT registration remains unreviewed; source inspection
+  does not grant execution. Actual desktop/cold inspection remains to be checked.
+  No native patient action or complete tumor task exists.
 - **Meningioma06:** preexisting unreviewed full proposal360280 cells/45035mm³.
   Three source-aligned windows pass engineering surface fit, but the best whole
   removal proposal still conflicts with234 UNKNOWN cells,10 vessel cells,
@@ -217,12 +247,13 @@ local AGENTS.md is committed.
 
 ## Next substantive dependencies
 
-1. Test a source-seeded component/table proposal for source02's actual calvarium,
-   reviewing exact seed cells and complete component geometry. Preserve all
-   other density as target/protected/collidable UNKNOWN; no largest-component
-   deletion, island skipping, guard change or anatomical promotion from threshold.
-2. Qualify actual calvarium, local critical/venous/dural and exterior data;
-   resolve trusted developmental provenance without promoting a reserved case.
+1. Correct source02's local table estimator using the reviewed continuous band
+   and exact outer-edge occupancy, then qualify every original required node. Preserve all other
+   density as target/protected/collidable UNKNOWN; no whole-component anatomical
+   promotion, largest-component deletion, island skipping or guard change.
+2. Verify actual source inspection/blocked Generate/cold reopen in the desktop;
+   qualify calvarium, local critical/venous/dural and exterior data. Preserve
+   candidate-role proof without promoting a reserved case or annotation authority.
 3. Construct and compare genuinely different source-qualified opening/work/exit
    alternatives, freeze patient tasks and fair baseline/search budgets, and run
    complete native patient resection. Report failures and all five originals.
