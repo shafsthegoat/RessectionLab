@@ -19,16 +19,17 @@ from .surgical_rl_protection import grid_binding
 
 SCHEMA='resectionlab.cranial-stages.v1'
 PROOFS=('exposure','membrane','support','attachments','work','exit')
-_PREFIXES=weakref.WeakValueDictionary()
-_PREFIX_FACTS={}
-_CONTRACTS=weakref.WeakValueDictionary()
-_SOURCE_FACTS={}
-_SUPPORT={}
-_INITIAL_STATE={}
-_PARTITIONS={}
-_CONTRACT_FIELDS={}
-_GEOMETRY={}
-_GUARD_CONFIG={}
+# Per-owner runtime witnesses; collection does not change implementation constants.
+_prefixes=weakref.WeakValueDictionary()
+_prefix_facts={}
+_contracts=weakref.WeakValueDictionary()
+_source_facts={}
+_support={}
+_initial_state={}
+_partitions={}
+_contract_fields={}
+_geometry={}
+_guard_config={}
 
 
 def _fail(reason):raise ValueError('CRANIAL_STAGE_'+reason)
@@ -154,16 +155,16 @@ def freeze_cranial_stage_contract(engine,*,membrane_cells,retained_membrane_cell
 
 def validate_stage_contract(engine,contract):
     """Typed revalidation and exact source/protection equality, no evidence promotion."""
-    if isinstance(contract,CranialStageContract) and _CONTRACTS.get(id(contract)) is contract:
-        witness,evidence_witness=_CONTRACT_FIELDS[id(contract)]
+    if isinstance(contract,CranialStageContract) and _contracts.get(id(contract)) is contract:
+        witness,evidence_witness=_contract_fields[id(contract)]
         if any((getattr(contract,k) is not v if isinstance(v,tuple) else getattr(contract,k)!=v) for k,v in witness):_fail('FROZEN_CONTRACT_CHANGED')
         if any((p.status,p.provenance,p.evidence_sha256)!=(status,provenance,evidence_hash) for p,status,provenance,evidence_hash in evidence_witness):_fail('FROZEN_EVIDENCE_CHANGED')
         scene=engine.scene;scene.require_cache_source()
-        guard,guard_values=_GUARD_CONFIG[id(contract)]
+        guard,guard_values=_guard_config[id(contract)]
         if engine.guard_config is not guard or (guard is not None and
             ((type(guard.require_critical_coverage),guard.require_critical_coverage),
              (type(guard.critical_max_displacement_mm),guard.critical_max_displacement_mm))!=guard_values):_fail('PROTECTION_CONFIG_CHANGED')
-        original_proof,protection,guard_facts=_SOURCE_FACTS[id(contract)]
+        original_proof,protection,guard_facts=_source_facts[id(contract)]
         if (scene.identity!=contract.source_scene_id or scene._original_target_proof is not original_proof or
             _protection(engine)!=contract.protection_binding or engine._cranial_access is None or
             engine._cranial_access.content_hash!=contract.bone_contract_hash):_fail('CONTRACT_SOURCE_CHANGED')
@@ -192,30 +193,30 @@ def _register(engine,contract):
     from scipy.ndimage import label
     protection=engine.protection
     guard=engine.guard_config
-    _GUARD_CONFIG[id(contract)]=(guard,None if guard is None else
+    _guard_config[id(contract)]=(guard,None if guard is None else
         ((type(guard.require_critical_coverage),guard.require_critical_coverage),
          (type(guard.critical_max_displacement_mm),guard.critical_max_displacement_mm)))
-    _CONTRACTS[id(contract)]=contract
-    _CONTRACT_FIELDS[id(contract)]=(tuple((f.name,getattr(contract,f.name)) for f in fields(contract)),
+    _contracts[id(contract)]=contract
+    _contract_fields[id(contract)]=(tuple((f.name,getattr(contract,f.name)) for f in fields(contract)),
         tuple((p,p.status,p.provenance,p.evidence_sha256) for _,p in contract.evidence))
-    _SOURCE_FACTS[id(contract)]=(engine.scene._original_target_proof,protection,None if protection is None else
+    _source_facts[id(contract)]=(engine.scene._original_target_proof,protection,None if protection is None else
         (protection.clearance_mm,protection.required,protection.annotations,protection.cells))
     mask=np.zeros(engine.scene.shape,bool);mask.ravel()[list(contract.retained_membrane_cells)]=True
     groups,count=label(mask)
     covered=set(map(int,groups.ravel()[list(contract.membrane_anchor_cells)]));covered.discard(0)
-    _SUPPORT[id(contract)]=len(covered)==count
+    _support[id(contract)]=len(covered)==count
     normal_axis=contract.membrane_lift_axis;bone=engine._cranial_access
     normal=np.asarray(bone.entry.normal_ras_unit);center=np.asarray(bone.entry.center_ras_mm)
     inner=float(((engine.scene.points(contract.membrane_cells)-center)@normal).max())+.5*float(np.abs(engine.scene.affine[:3,:3].T@normal).sum())
-    _GEOMETRY[id(contract)]=(normal_axis,contract.membrane_outward_sign,inner)
+    _geometry[id(contract)]=(normal_axis,contract.membrane_outward_sign,inner)
     engine._cranial_stage_guard_ids=engine._protected_ids
-    _PARTITIONS[id(contract)]=MappingProxyType({'bone':frozenset(contract.bone_cells),'preparation':frozenset(contract.membrane_cells),
+    _partitions[id(contract)]=MappingProxyType({'bone':frozenset(contract.bone_cells),'preparation':frozenset(contract.membrane_cells),
         'retained':frozenset(contract.retained_membrane_cells),'work':frozenset(contract.work_cells),'original_target':frozenset(contract.original_target_cells),
         'boundary':frozenset(contract.boundary_edges)})
     def cleanup(key):
-        for cache in (_SOURCE_FACTS,_SUPPORT,_INITIAL_STATE,_PARTITIONS,_CONTRACT_FIELDS,_GEOMETRY,_GUARD_CONFIG):cache.pop(key,None)
+        for cache in (_source_facts,_support,_initial_state,_partitions,_contract_fields,_geometry,_guard_config):cache.pop(key,None)
     weakref.finalize(contract,cleanup,id(contract))
-    _INITIAL_STATE[id(contract)]=semantic_digest({'scene':engine.scene.identity,'state':engine.state,
+    _initial_state[id(contract)]=semantic_digest({'scene':engine.scene.identity,'state':engine.state,
         **({'protectionContract':engine._protection_contract['contentHash']} if engine._protection_contract else {}),
         'cranialStagesContract':contract.content_hash})
     return contract
@@ -224,7 +225,7 @@ def _register(engine,contract):
 def require_evidence(engine,contract):
     if contract.starting_exposure!='conditional_post_scalp_exposure':_fail('INTACT_SCALP_STAGE_UNSUPPORTED')
     if any(p.status!='reviewed' or p.evidence_sha256 is None for _,p in contract.evidence):_fail('REVIEWED_STAGE_EVIDENCE_REQUIRED')
-    if not _SUPPORT.get(id(contract),False):_fail('RETAINED_RIM_SUPPORT_REQUIRED')
+    if not _support.get(id(contract),False):_fail('RETAINED_RIM_SUPPORT_REQUIRED')
     if any(a['kind']!='soft' for a in engine.scene.properties['attachments'] if a['id'] in contract.attachment_ids):_fail('ATTACHMENT_KIND_UNSUPPORTED')
     if engine.state.get('toolMechanicsRevision')!=2 or engine.state.get('physicalClockRevision')!=1:_fail('MECHANICS2_CLOCK1_REQUIRED')
     return contract
@@ -248,7 +249,7 @@ class NativeBonePrefix:
 def _history_current(engine):
     if len(engine.actions)!=len(engine.history):_fail('NATIVE_HISTORY_REQUIRED')
     contract=getattr(engine,'_cranial_stages',None)
-    previous=_INITIAL_STATE.get(id(contract))
+    previous=_initial_state.get(id(contract))
     if previous is None:_fail('CANONICAL_STAGE_SOURCE_REQUIRED')
     for action,event in zip(engine.actions,engine.history):
         if event.get('action')!=action or event['stateBefore']!=previous:_fail('NATIVE_HISTORY_REQUIRED')
@@ -277,18 +278,18 @@ def prepare_transition(engine):
     proof=NativeBonePrefix(contract.content_hash,len(engine.actions),engine.state_id,semantic_digest(engine.actions),
         semantic_digest(engine.history),tuple(sorted(set(engine.state['removed'])&set(contract.bone_cells))),
         json.dumps(status,sort_keys=True,separators=(',',':'),allow_nan=False))
-    _PREFIXES[id(proof)]=proof
-    _PREFIX_FACTS[id(proof)]=tuple((f.name,getattr(proof,f.name)) for f in fields(proof))
-    weakref.finalize(proof,_PREFIX_FACTS.pop,id(proof),None)
+    _prefixes[id(proof)]=proof
+    _prefix_facts[id(proof)]=tuple((f.name,getattr(proof,f.name)) for f in fields(proof))
+    weakref.finalize(proof,_prefix_facts.pop,id(proof),None)
     engine._cranial_stage_bone_prefix=proof
     _prepare_permission(engine,contract)
 
 
 def verified_bone_prefix(engine,contract=None,*,full=True):
     contract=contract or getattr(engine,'_cranial_stages',None);proof=getattr(engine,'_cranial_stage_bone_prefix',None)
-    if proof is not None and _PREFIXES.get(id(proof)) is proof:
-        if any((getattr(proof,k) is not v if isinstance(v,tuple) else getattr(proof,k)!=v) for k,v in _PREFIX_FACTS[id(proof)]):_fail('DERIVED_BONE_PREFIX_CHANGED')
-    if (contract is None or proof is None or _PREFIXES.get(id(proof)) is not proof or proof.stage_hash!=contract.content_hash or
+    if proof is not None and _prefixes.get(id(proof)) is proof:
+        if any((getattr(proof,k) is not v if isinstance(v,tuple) else getattr(proof,k)!=v) for k,v in _prefix_facts[id(proof)]):_fail('DERIVED_BONE_PREFIX_CHANGED')
+    if (contract is None or proof is None or _prefixes.get(id(proof)) is not proof or proof.stage_hash!=contract.content_hash or
         not 0<proof.position<=len(engine.actions) or len(engine.history)<proof.position or
         engine.history[proof.position-1]['stateAfter']!=proof.state_id or
         full and (semantic_digest(engine.actions[:proof.position])!=proof.actions_hash or semantic_digest(engine.history[:proof.position])!=proof.history_hash) or
@@ -312,8 +313,8 @@ def rebind_checkpoint_runtime(engine):
     validate_stage_contract(engine,contract)
     proof=getattr(engine,'_cranial_stage_bone_prefix',None)
     if proof is not None:
-        if _PREFIXES.get(id(proof)) is not proof:_fail('DERIVED_BONE_PREFIX_CHANGED')
-        if any((getattr(proof,k) is not v if isinstance(v,tuple) else getattr(proof,k)!=v) for k,v in _PREFIX_FACTS[id(proof)]):_fail('DERIVED_BONE_PREFIX_CHANGED')
+        if _prefixes.get(id(proof)) is not proof:_fail('DERIVED_BONE_PREFIX_CHANGED')
+        if any((getattr(proof,k) is not v if isinstance(v,tuple) else getattr(proof,k)!=v) for k,v in _prefix_facts[id(proof)]):_fail('DERIVED_BONE_PREFIX_CHANGED')
         if proof.position>len(engine.actions):engine._cranial_stage_bone_prefix=None
         else:verified_bone_prefix(engine,contract)
     engine._cranial_stage_permission=None
@@ -357,8 +358,8 @@ def stage_readiness(engine):
 
 def source_partition_sets(contract):
     """Immutable prevalidated sets; no million-cell reconstruction in microsteps."""
-    if _CONTRACTS.get(id(contract)) is not contract:_fail('VALIDATED_CONTRACT_REQUIRED')
-    return _PARTITIONS[id(contract)]
+    if _contracts.get(id(contract)) is not contract:_fail('VALIDATED_CONTRACT_REQUIRED')
+    return _partitions[id(contract)]
 
 
 @dataclass(frozen=True)
@@ -368,16 +369,16 @@ class NativeStagePermission:
     state_id:str
     dura_cleared:bool
 
-_PERMISSIONS=weakref.WeakValueDictionary()
-_PERMISSION_FACTS={}
+_permissions=weakref.WeakValueDictionary()
+_permission_facts={}
 
 def _prepare_permission(engine,contract):
     from .surgical_membrane_transport import clearance
     status=clearance(engine,contract)
     permission=NativeStagePermission(contract.content_hash,len(engine.actions),engine.state_id,status['cleared'])
-    _PERMISSIONS[id(permission)]=permission
-    _PERMISSION_FACTS[id(permission)]=tuple(getattr(permission,f.name) for f in fields(permission))
-    weakref.finalize(permission,_PERMISSION_FACTS.pop,id(permission),None)
+    _permissions[id(permission)]=permission
+    _permission_facts[id(permission)]=tuple(getattr(permission,f.name) for f in fields(permission))
+    weakref.finalize(permission,_permission_facts.pop,id(permission),None)
     engine._cranial_stage_permission=permission
 
 
@@ -405,10 +406,10 @@ def enforce(engine,key,operation,position,quaternion,working_cells=()):
         return False
     verified_bone_prefix(engine,contract,full=False)
     permission=getattr(engine,'_cranial_stage_permission',None)
-    if (permission is None or _PERMISSIONS.get(id(permission)) is not permission or permission.stage_hash!=contract.content_hash or
+    if (permission is None or _permissions.get(id(permission)) is not permission or permission.stage_hash!=contract.content_hash or
         permission.position!=len(engine.actions) or not engine.history or permission.state_id!=engine.history[-1]['stateAfter']):
         _fail('NATIVE_STAGE_PREPARATION_REQUIRED')
-    if tuple(getattr(permission,f.name) for f in fields(permission))!=_PERMISSION_FACTS[id(permission)]:_fail('DERIVED_STAGE_PERMISSION_CHANGED')
+    if tuple(getattr(permission,f.name) for f in fields(permission))!=_permission_facts[id(permission)]:_fail('DERIVED_STAGE_PERMISSION_CHANGED')
     from .surgical_cranial_guards import _inside_entry
     from .surgical_task_domain import _outside,_posed
     from scipy.spatial.transform import Rotation
@@ -416,7 +417,7 @@ def enforce(engine,key,operation,position,quaternion,working_cells=()):
     bone=engine._cranial_access
     workspace=SimpleNamespace(minimum=bone.exit.minimum_voxel_boundary,maximum=bone.exit.maximum_voxel_boundary)
     normal=np.asarray(bone.entry.normal_ras_unit);center=np.asarray(bone.entry.center_ras_mm)
-    mem_inner=_GEOMETRY[id(contract)][2]
+    mem_inner=_geometry[id(contract)][2]
     membrane_tools={'dural_scissors','dissector','membrane_forceps','frazier_suction'}
     work_tools={'cusa','brain_retractor','frazier_suction'}
     for hand,slot in engine.state['slots'].items():
@@ -471,8 +472,8 @@ def validate_effects(engine):
 
 
 def membrane_geometry(contract):
-    if _CONTRACTS.get(id(contract)) is not contract:_fail('VALIDATED_CONTRACT_REQUIRED')
-    return _GEOMETRY[id(contract)]
+    if _contracts.get(id(contract)) is not contract:_fail('VALIDATED_CONTRACT_REQUIRED')
+    return _geometry[id(contract)]
 
 
 def bone_prefix_description(engine):
