@@ -444,7 +444,9 @@ def save_workspace(primary,path,*,sources,imaging,episode,selection,artifacts,or
         if len(raw)>MAX_JSON:raise ValueError('Workspace metadata exceeds limit')
         with ZipFile(base) as plain:
             manifest=_json(plain.read('manifest.json'));manifest['workspace_sha256']=sha256(raw).hexdigest()
-            encoded_manifest=encoded(manifest)
+            # Transport preserves artifact insertion order; encoded() remains
+            # canonical for workspace/proof identities above.
+            encoded_manifest=json.dumps(manifest,separators=(',',':'),allow_nan=False).encode()
             if len(encoded_manifest)>MAX_MANIFEST_BYTES:raise ValueError('Primary manifest exceeds limit')
             with ZipFile(tmp/'complete','w',compression=ZIP_STORED) as out:
                 out.writestr('manifest.json',encoded_manifest);out.writestr('arrays.npz',plain.read('arrays.npz'))

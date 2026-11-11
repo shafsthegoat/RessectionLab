@@ -24,7 +24,7 @@ _FIELDS = {'schema', 'encoding', 'sha256', 'uncompressedBytes', 'payload'}
 
 
 def _encode(value, schema):
-    raw = json.dumps(value, separators=(',', ':'), sort_keys=True, allow_nan=False).encode('utf-8')
+    raw = json.dumps(value, separators=(',', ':'), allow_nan=False).encode('utf-8')
     if len(raw) > MAX_UNCOMPRESSED_BYTES:
         raise ValueError('Full-case surgical archive exceeds the 128 MiB expanded JSON limit')
     payload = base64.b64encode(gzip.compress(raw, compresslevel=6, mtime=0)).decode('ascii')

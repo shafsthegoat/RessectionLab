@@ -29,6 +29,44 @@ def engine(count=4):
     return result
 
 
+def test_signed_state_roundtrip_preserves_actual_contact_iteration_order(tmp_path):
+    labels = np.zeros((24, 24, 24), np.uint16)
+    labels[10:12, 10:12, 10:13] = 1
+    source = SurgicalScene(labels, np.eye(4),
+        [{'id': 1, 'name': 'target', 'material': 'tumor', 'target': True}], {},
+        {'attachments': [{'id': 'generated-soft-attachment', 'kind': 'soft',
+                          'cells': list(map(int, np.flatnonzero(labels)))}]})
+    full = SurgicalEngine(source)
+    for action in [
+        {'slot': 'left', 'operation': 'exchange', 'instrument': 'dissector', 'duration': .2},
+        {'slot': 'left', 'operation': 'place', 'pose': {'position': [10., 10., 5.],
+            'quaternion': [0., 0., 0., 1.]}, 'parameters': {'radiusMm': .6}, 'duration': .2},
+        {'slot': 'left', 'operation': 'apply', 'pose': {'position': [10., 10., 12.],
+            'quaternion': [0., 0., 0., 1.]}, 'duration': 1.2},
+    ]:
+        assert full.step(action)['status'] in ('accepted', 'partial')
+    expected = list(full.state['contact'])
+    assert len(expected) > 1 and expected != sorted(expected), 'Use genuine nonsorted public contact history'
+    cache = VerifiedSurgicalCache(tmp_path / 'verified')
+    SurgicalEngine.restore(source, full.snapshot(), use_cache=True, verified_cache=cache)
+    restored = cache.restore(SurgicalEngine, source, full.snapshot(), include_history=True)[0]
+    assert cache.hits == 1
+    assert list(restored.state['contact']) == expected
+    assert restored.view() == full.view()
+    from resectionlab.surgical_frame_replay import SurgicalFrameCache
+    frames = SurgicalFrameCache(directory=tmp_path / 'observed')
+    replay = SurgicalReplayCache()
+    token = frames.admit(full, full.snapshot(), replay, verified_history=full.history)
+    _, _, info = frames.seek(full, token.snapshot, 2, 0, replay,
+                            verified_history=token.history, admission=token)
+    assert frames.store.publications == 1
+    reopened = SurgicalFrameCache(directory=tmp_path / 'observed')
+    observed, _, _ = reopened.seek(full, token.snapshot, 2, info['frameCount'] - 1,
+                                 replay, verified_history=token.history, admission=token)
+    assert list(observed.state['contact']) == expected
+    assert observed.view() == full.view()
+
+
 def test_only_complete_independent_replay_seals_and_cached_states_are_detached(tmp_path):
     full = engine()
     record = full.snapshot()

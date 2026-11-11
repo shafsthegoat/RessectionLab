@@ -156,7 +156,7 @@ def _encode(value):
 
 
 def _encode_sized(value):
-    raw = json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False).encode()
+    raw = json.dumps(value, separators=(',', ':'), allow_nan=False).encode()
     if len(raw) > MAX_JSON_BYTES:
         raise ValueError('Verified cache JSON exceeds transient decode budget')
     return gzip.compress(raw, compresslevel=1, mtime=0), len(raw)
