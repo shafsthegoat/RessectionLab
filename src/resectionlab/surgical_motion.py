@@ -10,7 +10,7 @@ from types import BuiltinFunctionType, CodeType, FunctionType, ModuleType
 import numpy as np
 from scipy.spatial.transform import Rotation, Slerp
 from .geometry import segments_within_distance
-from . import native_backend
+from . import geometry as _contact_geometry, native_backend
 
 
 def _function_state(function):
@@ -258,6 +258,152 @@ def _trajectory_quaternion(interpolation, index, count, chunk, rotation_type, sl
     return chunk[1][index - chunk[0]].copy(), chunk
 
 
+def _capture_contact_helpers():
+    result = []
+    for owner, names in ((_contact_geometry, ('segments_within_distance', 'segment_segment_distance',
+                                             'point_segment_distances')),
+                         (native_backend, ('try_segment_predicate', 'try_segment_batch', '_check_live'))):
+        for name in names:
+            function = vars(owner).get(name) if type(owner) is ModuleType else None
+            result.append((owner, name, _function_state(function) if type(function) is FunctionType else None))
+    return tuple(result)
+
+
+_CONTACT_HELPERS = _capture_contact_helpers()
+_CONTACT_NUMPY_NAMES = ('array', 'float64', 'ndarray', 'dtype')
+_CONTACT_NUMPY = tuple(vars(np).get(name) for name in _CONTACT_NUMPY_NAMES)
+_CONTACT_EPS = _contact_geometry._EPS
+_CONTACT_ANY = any
+_CONTACT_MATH = sys.modules.get('math')
+_CONTACT_FINITE = vars(_CONTACT_MATH).get('isfinite') if type(_CONTACT_MATH) is ModuleType else None
+_CONTACT_ADAPTER_BUILTINS = (('type', ().__class__.__class__), ('float', (0.).__class__), ('len', len))
+
+
+def _source_contact_helpers_genuine():
+    try:
+        for owner, name, state in _CONTACT_HELPERS:
+            if state is None:
+                return None
+            function, code, defaults, keywords = state
+            if (function.__globals__ is not vars(owner) or function.__module__ != owner.__name__
+                    or defaults is not None or function.__kwdefaults__ is not None):
+                return None
+            body = owner.__spec__.loader.get_code(owner.__name__)
+            original, = (value for value in body.co_consts if type(value) is CodeType and value.co_name == name)
+            if code != original:
+                return None
+        adapter_builtins = _CONTACT_HELPERS[4][2][0].__builtins__
+        if type(adapter_builtins) is not dict:
+            return None
+        for name, original in _CONTACT_ADAPTER_BUILTINS:
+            if vars(native_backend).get(name, original) is not original or adapter_builtins.get(name) is not original:
+                return None
+        length = _CONTACT_ADAPTER_BUILTINS[2][1]
+        if (type(length) is not BuiltinFunctionType or length.__name__ != 'len'
+                or length.__self__ is not sys.modules['builtins']):
+            return None
+        array, scalar, ndarray, dtype = _CONTACT_NUMPY
+        if type(array) is not BuiltinFunctionType or type(array.__self__) is not ModuleType:
+            return None
+        owner = array.__self__
+        if (owner.__name__ not in ('numpy._core._multiarray_umath', 'numpy.core._multiarray_umath')
+                or sys.modules.get(owner.__name__) is not owner or array.__name__ != 'array'
+                or vars(owner).get('array') is not array or vars(owner).get('ndarray') is not ndarray
+                or vars(owner).get('dtype') is not dtype or type(_CONTACT_EPS) is not float
+                or _CONTACT_EPS != 1e-9 or type(_CONTACT_ANY) is not BuiltinFunctionType
+                or _CONTACT_ANY.__name__ != 'any' or _CONTACT_ANY.__module__ != 'builtins'
+                or _CONTACT_ANY.__self__ is not sys.modules['builtins']
+                or native_backend.math is not _CONTACT_MATH or type(_CONTACT_FINITE) is not BuiltinFunctionType
+                or _CONTACT_FINITE.__name__ != 'isfinite' or _CONTACT_FINITE.__self__ is not _CONTACT_MATH):
+            return None
+        example = array([], dtype='float64')
+        return example.dtype if type(example) is ndarray and example.dtype.type is scalar else None
+    except (AttributeError, ImportError, KeyError, OSError, NotImplementedError, TypeError, ValueError):
+        return None
+
+
+_CONTACT_DTYPE = _source_contact_helpers_genuine()
+
+
+def _contact_helpers_unchanged(predicate):
+    if (_CONTACT_DTYPE is None or predicate is not _CONTACT_HELPERS[0][2][0]
+            or _contact_geometry._EPS is not _CONTACT_EPS or _contact_geometry.np is not np
+            or native_backend.np is not np or _contact_geometry.native_backend is not native_backend
+            or native_backend.math is not _CONTACT_MATH or _CONTACT_MATH.isfinite is not _CONTACT_FINITE
+            or _contact_geometry._segment_predicate_reference is not _CONTACT_HELPERS[1][2][0]
+            or _contact_geometry._segment_predicate_point is not _CONTACT_HELPERS[2][2][0]):
+        return False
+    codes = _contact_geometry._segment_predicate_codes
+    if (type(codes) is not tuple or len(codes) != 2 or codes[0] is not _CONTACT_HELPERS[1][2][1]
+            or codes[1] is not _CONTACT_HELPERS[2][2][1]):
+        return False
+    for owner, name, state in _CONTACT_HELPERS:
+        function = state[0]
+        if (vars(owner).get(name) is not function or function.__code__ is not state[1]
+                or function.__defaults__ is not state[2] or function.__kwdefaults__ is not None):
+            return False
+    for name, original in zip(_CONTACT_NUMPY_NAMES, _CONTACT_NUMPY):
+        if vars(np).get(name) is not original:
+            return False
+    for name, original in _CONTACT_ADAPTER_BUILTINS:
+        if (vars(native_backend).get(name, original) is not original
+                or _CONTACT_HELPERS[4][2][0].__builtins__.get(name) is not original):
+            return False
+    return True
+
+
+def _try_capsule_contact(first, second, predicate):
+    """First ordered contact index, -1 for clear, or None for scalar authority."""
+    # Presence is only a hint; the adapter owns both live checks and publication.
+    if (native_backend._module is None or type(first) not in (list, tuple)
+            or type(second) not in (list, tuple) or not 2 <= len(first) * len(second) <= 64
+            or not _contact_helpers_unchanged(predicate)):
+        return None
+    for capsules in (first, second):
+        for capsule in capsules:
+            if type(capsule) not in (list, tuple) or len(capsule) != 4:
+                return None
+            for point in capsule[:2]:
+                if (type(point) is not _CONTACT_NUMPY[2] or point.shape != (3,)
+                        or type(point.dtype) is not type(_CONTACT_DTYPE) or point.dtype != _CONTACT_DTYPE):
+                    return None
+            width = capsule[2]
+            if type(width) is not float and type(width) is not _CONTACT_NUMPY[1]:
+                return None
+            # Bounded nonnegative operands make eager typed additions harmless.
+            if not 0. <= (0.).__class__(width) <= 1e100:
+                return None
+    endpoints = np.array([(a, b, c, d) for a, b, _, _ in first for c, d, _, _ in second], dtype=np.float64)
+    thresholds = np.array([ar + br + 1e-9 for _, _, ar, _ in first for _, _, br, _ in second], dtype=np.float64)
+    result = native_backend.try_segment_batch(endpoints, thresholds, _contact_geometry._EPS)
+    return None if result is None or result[1] < 0 else result[0]
+
+
+def _held_cell_contact(start, end, radius, capsules, key, source_id, grip, predicate):
+    if (native_backend._module is None or type(capsules) is not dict or type(key) is not str
+            or type(source_id) is not int or type(grip) is not set
+            or not all(type(value) is int for value in grip)):
+        return None
+    for hand, segments in capsules.items():
+        if type(hand) is not str or type(segments) not in (list, tuple):
+            return None
+        for segment in segments:
+            if type(segment) not in (list, tuple) or len(segment) != 4 or type(segment[3]) is not str:
+                return None
+    selected, hands = [], []
+    for hand, segments in capsules.items():
+        for segment in segments:
+            if hand == key and segment[3] != 'shaft' and source_id in grip:
+                continue
+            selected.append(segment); hands.append(hand)
+    result = _try_capsule_contact(((start, end, radius, None),), selected, predicate)
+    return None if result is None else (False if result < 0 else hands[result])
+
+
 def pair_conflict(first, second):
+    if any is _CONTACT_ANY:
+        result = _try_capsule_contact(first, second, segments_within_distance)
+        if result is not None:
+            return result >= 0
     return any(segments_within_distance(a, b, c, d, ar + br + 1e-9)
                for a, b, ar, _ in first for c, d, br, _ in second)

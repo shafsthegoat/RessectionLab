@@ -74,6 +74,27 @@ def trajectory_probe() -> dict:
             "quaternionsSha256": hashlib.sha256(b"".join(substeps)).hexdigest()}
 
 
+def segment_batch_probe() -> dict:
+    """Exercise ordered tool-envelope grouping through its public caller."""
+    import numpy as np
+    from . import native_backend, surgical_motion
+    first, second = [], []
+    for offset, capsules in ((0., first), (10., second)):
+        for y in (0., 1.):
+            capsules.append((np.array([offset, y, 0.]), np.array([offset, y, 1.]), .25, "shaft"))
+    before = native_backend.backend_identity()["counters"]
+    conflict = surgical_motion.pair_conflict(first, second)
+    after = native_backend.backend_identity()["counters"]
+    calls = after["segmentBatchCalls"] - before["segmentBatchCalls"]
+    items = after["segmentBatchItems"] - before["segmentBatchItems"]
+    examined = after["segmentBatchExamined"] - before["segmentBatchExamined"]
+    native = native_backend.cpp_enabled()
+    assert conflict is False and calls == (1 if native else 0)
+    assert items == examined == (4 if native else 0)
+    return {"passed": True, "conflict": conflict, "nativeCalls": calls,
+            "submittedPairs": items, "examinedPairs": examined}
+
+
 def gc_proof_probe() -> dict:
     """Qualify cancellation-style owner cleanup in the actual loaded runtime."""
     import gc
@@ -159,6 +180,7 @@ def probe() -> dict:
     motion = {"sourceQualified": surgical_motion._rotation_captures_genuine,
               "helpersUnchanged": surgical_motion._rotation_helpers_unchanged()}
     assert all(motion.values()), "Stock SciPy angular helpers did not qualify in this runtime"
+    segment_batch = segment_batch_probe()
     trajectory = trajectory_probe()
     replay = replay_probe()
     proof_lifecycle = gc_proof_probe()
@@ -174,6 +196,7 @@ def probe() -> dict:
             "replay": replay,
             "checkpoint": checkpoint,
             "trajectory": trajectory,
+            "segmentBatch": segment_batch,
             "motionCache": motion,
             "proofLifecycle": proof_lifecycle,
             "olderOptionalHelpers": {"idle": idle_identity(), "prefixJson": prefix_identity()}}

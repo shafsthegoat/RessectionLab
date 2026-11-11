@@ -8,6 +8,8 @@
 #include <cstring>
 #include <limits>
 #include <vector>
+#include <stdexcept>
+#include <tuple>
 #include "state_native.hpp"
 
 namespace py = pybind11;
@@ -209,11 +211,7 @@ py::tuple capsule_chunk(const py::array& query_array, const py::array& span_arra
 
 // Return -1 at arithmetic branch/threshold ambiguity; Python then evaluates
 // the original scalar predicate. No approximate distance enters physical state.
-int segment_predicate(const py::array& endpoints, double threshold, double eps) {
-    auto points = checked_array<double>(endpoints, {4, 3}, "endpoints");
-    finite_values(points);
-    if (!std::isfinite(threshold) || threshold < 0. || !std::isfinite(eps) || eps <= 0.)
-        throw py::value_error("invalid segment predicate threshold/epsilon");
+int segment_predicate_values(const double* points, double threshold, double eps) {
     Triple u, v, w;
     for (int axis = 0; axis < 3; ++axis) {
         u[axis] = points[3 + axis] - points[axis];
@@ -239,8 +237,8 @@ int segment_predicate(const py::array& endpoints, double threshold, double eps) 
     double minimum = std::numeric_limits<double>::infinity();
     for (int endpoint = 0; endpoint < 4; ++endpoint) {
         Triple point;
-        std::copy_n(points.data() + 3 * endpoint, 3, point.begin());
-        const double distance = point_distance(point, points.data() + (endpoint < 2 ? 6 : 0), eps);
+        std::copy_n(points + 3 * endpoint, 3, point.begin());
+        const double distance = point_distance(point, points + (endpoint < 2 ? 6 : 0), eps);
         minimum = std::min(minimum, distance);
     }
     const double product = aa * cc, determinant = product - bb * bb;
@@ -265,13 +263,48 @@ int segment_predicate(const py::array& endpoints, double threshold, double eps) 
         }
     }
     double magnitude = 1. + threshold;
-    for (double value : points) magnitude += std::abs(value);
+    for (int index = 0; index < 12; ++index) magnitude += std::abs(points[index]);
     const double uncertainty = 1024. * machine_eps * magnitude * condition;
     if (!std::isfinite(minimum) || !std::isfinite(product) || !std::isfinite(determinant))
         throw std::runtime_error("native segment predicate overflow");
     if (std::abs(minimum - threshold) <= uncertainty) return -1;
     return minimum <= threshold ? 1 : 0;
 }
+int segment_predicate(const py::array& endpoints, double threshold, double eps) {
+    auto points = checked_array<double>(endpoints, {4, 3}, "endpoints");
+    finite_values(points);
+    if (!std::isfinite(threshold) || threshold < 0. || !std::isfinite(eps) || eps <= 0.)
+        throw py::value_error("invalid segment predicate threshold/epsilon");
+    return segment_predicate_values(points.data(), threshold, eps);
+}
+
+std::tuple<int, int, int> segment_predicate_batch(
+    const py::array& endpoints, const py::array& thresholds, double eps) {
+    if (endpoints.ndim() != 3 || endpoints.shape(0) > max_items)
+        throw py::value_error("segment batch shape or item cap exceeded");
+    const auto count = endpoints.shape(0);
+    auto points = checked_array<double>(endpoints, {count, 4, 3}, "endpoints");
+    auto limits = checked_array<double>(thresholds, {count}, "thresholds");
+    if (!std::isfinite(eps) || eps <= 0.)
+        throw py::value_error("invalid segment predicate threshold/epsilon");
+    int first = -1, status = 0, examined = 0;
+    {
+        py::gil_scoped_release release;
+        for (int index = 0; index < count; ++index) {
+            const double* row = points.data() + 12 * index;
+            for (int coordinate = 0; coordinate < 12; ++coordinate)
+                if (!std::isfinite(row[coordinate]))
+                    throw std::invalid_argument("native geometry metadata must be finite");
+            if (!std::isfinite(limits[index]) || limits[index] < 0.)
+                throw std::invalid_argument("invalid segment predicate threshold/epsilon");
+            ++examined;
+            status = segment_predicate_values(row, limits[index], eps);
+            if (status != 0) { first = index; break; }
+        }
+    }
+    return std::make_tuple(first, status, examined);
+}
+
 }  // namespace
 
 PYBIND11_MODULE(_geometry_cpp, module) {
@@ -283,5 +316,7 @@ PYBIND11_MODULE(_geometry_cpp, module) {
         py::arg("cell_radius"), py::arg("eps"));
     module.def("segment_predicate", &segment_predicate, py::arg("endpoints").noconvert(),
                py::arg("threshold"), py::arg("eps"));
+    module.def("segment_predicate_batch", &segment_predicate_batch,
+               py::arg("endpoints").noconvert(), py::arg("thresholds").noconvert(), py::arg("eps"));
     bind_state_native(module);
 }

@@ -8,7 +8,7 @@ from __future__ import annotations
 import numpy as np
 from .core import semantic_digest
 from .geometry import segments_within_distance
-from .surgical_motion import envelopes,swept_envelopes
+from .surgical_motion import envelopes,swept_envelopes,_held_cell_contact
 from .surgical_rl_protection import cell_radius
 from .surgical_tools import TOOLS
 HOLDER='membrane_forceps'
@@ -219,6 +219,11 @@ def check_sweep(engine, key, new_offset, end_pose):
         occupied = set(owner.material_ids(engine.cells(start, end, radius)))-own
         if any(not _original_rim_contact_only(engine,contract,source_id,candidate,before[index],after[index],boundary_cut) for candidate in occupied):
             raise ValueError('MEMBRANE_PATCH_SWEPT_ANATOMY_COLLISION')
+        contact = _held_cell_contact(start, end, radius, capsules, key, source_id, grip, segments_within_distance)
+        if contact is not None:
+            if contact is not False:
+                raise ValueError('MEMBRANE_PATCH_SHAFT_COLLISION' if contact == key else 'MEMBRANE_PATCH_OTHER_TOOL_COLLISION:'+contact)
+            continue
         for hand, segments in capsules.items():
             for u, v, width, part in segments:
                 if hand == key and part != 'shaft' and source_id in grip:

@@ -9,6 +9,7 @@ import hashlib
 import importlib
 import importlib.util
 import json
+import math
 import os
 from pathlib import Path
 import platform
@@ -105,7 +106,8 @@ def _load():
         for path in (binary, manifest_path):
             _files[path] = (_stat(path), _digest(path))
         _entry_points = tuple((name, getattr(module, name)) for name in
-                              ('capsule_chunk', 'copy_builtin_json', 'segment_predicate', 'copy_engine_graph'))
+                              ('capsule_chunk', 'copy_builtin_json', 'segment_predicate', 'copy_engine_graph',
+                               'segment_predicate_batch'))
         if (sys.modules.get(_MODULE_NAME) is not module
                 or Path(module.__spec__.origin).resolve() != binary
                 or any(type(function) is not BuiltinFunctionType
@@ -129,7 +131,8 @@ _counters = {}
 def reset_counters():
     _counters.clear()
     _counters.update(bindingCalls=0, geometryBindingCalls=0, segmentPredicateCalls=0,
-                     segmentPredicateRefinements=0, batchCalls=0, batchItems=0, maxBatchItems=0,
+                     segmentPredicateRefinements=0, segmentBatchCalls=0, segmentBatchItems=0,
+                     segmentBatchExamined=0, batchCalls=0, batchItems=0, maxBatchItems=0,
                      primitiveCandidates=0, maxPrimitiveCandidates=0, ambiguousCandidates=0,
                      referenceCalls=0, unsupportedCalls=0, jsonCopyCalls=0, jsonCopyFallbackCalls=0,
                      engineCopyCalls=0, engineCopyFallbackCalls=0, batchSizes={})
@@ -248,4 +251,20 @@ def try_segment_predicate(a0, a1, b0, b1, threshold, eps):
     result = _module.segment_predicate(endpoints, threshold, eps)
     if result < 0:
         _counters['segmentPredicateRefinements'] += 1
+    return result
+
+
+def try_segment_batch(endpoints, thresholds, eps):
+    """First HIT/AMBIGUOUS in at most 64 rows; unsupported EPS retains scalar dispatch."""
+    _check_live()
+    if _module is None or type(eps) is not float or not math.isfinite(eps) or eps <= 0.:
+        return None
+    submitted = len(endpoints)
+    _counters['bindingCalls'] += 1
+    _counters['geometryBindingCalls'] += 1
+    _counters['segmentBatchCalls'] += 1
+    _counters['segmentBatchItems'] += submitted
+    result = _module.segment_predicate_batch(endpoints, thresholds, eps)
+    _counters['segmentBatchExamined'] += result[2]
+    _check_live()
     return result

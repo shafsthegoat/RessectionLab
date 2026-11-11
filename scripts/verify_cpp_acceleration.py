@@ -73,7 +73,9 @@ def main():
         run('build-tools', [python, '-m', 'pip', 'install', 'setuptools>=77', 'pybind11>=3,<4'], clean=True)
         run('source-extension', [python, 'setup.py', 'build_ext', '--inplace'])
         focused = ['tests/test_generated_cpp_fixture.py', 'tests/test_cpp_geometry.py',
-            'tests/test_cpp_state.py', 'tests/test_cpp_motion.py', 'tests/test_cpp_trajectory.py', 'tests/test_cpp_independent_acceptance.py',
+            'tests/test_cpp_state.py', 'tests/test_cpp_motion.py', 'tests/test_cpp_trajectory.py',
+            'tests/test_cpp_predicate_batch_native.py', 'tests/test_cpp_predicate_contacts.py',
+            'tests/test_cpp_independent_acceptance.py',
             'tests/test_cpp_engine_copy.py', 'tests/test_generated_cpp_supplement.py',
             'tests/test_surgical_geometry_batch.py', 'tests/test_geometry.py',
             'tests/test_surgical_geometry_cache.py', 'tests/test_surgical_replay_cache.py',
@@ -96,6 +98,7 @@ def main():
             extra={'RESSECTIONLAB_NUMERICAL_BACKEND': 'cpp'})
         run('source-tests-reference', [python, '-m', 'pytest', '-q',
             'tests/test_cpp_motion.py', 'tests/test_cpp_trajectory.py',
+            'tests/test_cpp_predicate_contacts.py',
             'tests/test_geometry.py', 'tests/test_surgical_geometry_cache.py',
             'tests/test_surgical_cancellation.py', 'tests/test_surgical_rl_contract.py',
             'tests/test_surgical_occupancy_lookup.py', 'tests/test_surgical_occupancy_key.py',

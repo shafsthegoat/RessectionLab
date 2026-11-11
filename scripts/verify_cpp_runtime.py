@@ -53,6 +53,10 @@ def successful(record: dict, native: bool, package_root: Path) -> None:
     assert trajectory["passed"] and trajectory["physicalSubsteps"] == 33
     assert trajectory["batchSizes"] == ([32, 1] if native else [])
     assert trajectory["scalarCalls"] == (0 if native else 33)
+    segment_batch = record["segmentBatch"]
+    assert segment_batch["passed"] and segment_batch["conflict"] is False
+    assert segment_batch["nativeCalls"] == (1 if native else 0)
+    assert segment_batch["submittedPairs"] == segment_batch["examinedPairs"] == (4 if native else 0)
     assert Path(record["runtime"]["packagePath"]).is_relative_to(package_root), record["runtime"]
     backend = record["backend"]
     assert backend["selected"] == ("cpp" if native else "reference"), backend

@@ -6,6 +6,9 @@ Useful correct improvements are retained; kernel speedups do not complete that g
 All controls are generated engineering cases. Patient validation is unavailable;
 the project still has zero completed patient tumor tasks and makes no clinical claim.
 
+The matrix and result tables below describe the last accepted `40693c6d` delivery.
+The v6 predicate trial at the end is pending verification and measured retention.
+
 ## Acceptance matrix
 
 | Gate | Status | Evidence / remaining dependency |
@@ -488,6 +491,88 @@ Implementation, measurement, packaging and independent review owners have finish
 this increment. No heavyweight job remains. The next port requires a new measured
 seam with enough numerical work to justify its complexity; the bounded current
 pass does not support a wholesale rewrite or removing authoritative checks.
+
+## Predicate batching feasibility after `ce9e348d`
+
+The preceding goal turn made verified progress: the retained trajectory/guard
+increment and its independent delivery/performance evidence were pushed. The
+preceding checkout and target both resolved to `ce9e348d` before this trial.
+A fresh timed-only Generate profile retains the exact frozen result and physical
+work. It covers 21.253 s of profiled work; these times are attribution only.
+
+The 106,046 scalar segment predicates take 1.168 s inclusive: 0.994 s is their
+live integrity checking and only 0.0239 s is existing C++ arithmetic. The
+pair-conflict consumer takes 0.512 s; bone and membrane per-cell tool checks
+attribute another 0.247 / 0.423 s to predicates. Their 1.182 s combined region is
+5.56% of the profile, so even eliminating it entirely implies only 1.059×; a
+hypothetical threefold complete-region improvement implies 1.039×. The required
+checks cannot be discarded. Bounded independent numerical grouping could
+amortize crossings and checks while retaining the exact scalar algorithm.
+
+The native owner completed the isolated, at-most-64-row first-hit/ambiguity
+prototype: 35 net C++ lines reuse the existing arithmetic; 32 checks pass. Its
+all-clear N5 helper improves 29.080 → 7.692 µs including packing/copy/binding and
+one live check, but first-hit N5 regresses to 0.778×. Consumer qualification and
+a post-call check are still excluded. Consumed-invalid error messages and
+invalid-EPS error priority require correction/fallback before promotion. These
+are prototype limits, not production changes or accepted improvements.
+
+A non-mutating observer of the unchanged Generate retains the exact result.
+It records 21,638 actual candidate groups: bone N3/N5 945/4,200; membrane N3/N5
+1,593/7,080; pair N4/N6 2,852/4,968. All 7,820 pair results are clear, and
+transport consumes every candidate (23,835 / 40,179 logical predicates). Eight
+reservoir samples per consumer/size preserve 48 numeric input groups. No speed
+claim uses this observation. It omits hand/part/grip metadata, so standalone
+filtering controls must be declared synthetic rather than reconstructed evidence.
+
+Five alternating qualification-inclusive helper pairs admit all 48 captured
+numeric groups. Typed threshold construction, packing/copying, counters and two
+live checks are included. Bone N3/N5 improve 17.888/29.581 → 14.872/16.380 µs;
+membrane N3/N5 17.843/29.741 → 14.861/16.480 µs; pair N4/N6
+23.807/35.665 → 15.430/16.977 µs. Weighting by the observed distribution gives
+0.625218 → 0.351550 s (1.77846×), only a modeled helper saving. The additional
+fifth-entry generator iteration is slightly optimistic, and transport metadata
+uses a declared synthetic filter skeleton. These measurements justify a production
+trial, not retention or an integrated performance claim.
+
+The native C++/adapter owner has frozen the bounded production API: 49 focused
+checks and 3,000 scalar statuses against the preceding binary pass. Consumed
+invalid strings now match the scalar API; custom/invalid EPS retains scalar
+authority. Final affected checks pass: 192 C++; 179 reference and 13 intentional
+skips. Broader transport/cancellation runs before the last admission-only fix
+pass 189 C++ / 188 reference plus one skip. Static review found and corrected
+public-wrapper, math-owner and new-adapter binding dispatch issues; the geometry
+adapter owner is also checked. All five source runtime variants pass, including
+a real public four-pair native batch. The coordinator now owns the heavy slot for
+the predeclared timing trial. Grouping stays inside one source cell after
+protection/occupancy, retaining failure
+priority, grip exemptions and every 32-cell cancellation boundary. Unusual inputs,
+changed hooks and numerical ambiguity retain the original scalar loop.
+
+All 334 preceding C++ source/binary files were captured before production edits.
+The predeclared retention runner uses ten alternating fresh-process pairs and one
+warmup per role, with the unchanged Generate workers. Retention requires exact
+frozen work, memory/hard caps, positive median gain and a lower 95% paired-bootstrap
+geometric-speedup bound above one. Repetitions will not be extended after seeing
+results. Five additional alternating pairs compare complete simulation and RL
+against the same preceding C++ capture, under the existing exactness and 10%
+latency/memory limits. This is declared before timing. The original baseline,
+manifests and 2× objective remain unchanged.
+The ten-pair planning trial passes the predeclared retention rule:
+**12.772866 → 12.399290 s**, **1.03013×**, with paired bootstrap 95% speedup
+**[1.02707, 1.03525]**. Exact frozen outcomes/work and memory pass
+(141,910,016 → 141,778,944 B median RSS). All ten after samples beat all ten
+before samples. This measures the complete integrated increment, including
+qualification, packing, copies and both integrity checks. Actual Generate
+submits 105,230 predicate rows through 21,638 batch bindings, leaving 816 scalar
+predicate calls. Five additional pairs pass: complete simulation **1.128473 → 1.099755 s**
+(1.02611×), complete RL **1.163588 → 1.134377 s** (1.02575×), with exact outputs
+and latency/memory gates passing. These compare only the increment against the
+preceding C++ capture; protocol shorthand `simulation`/`rl` names select the
+unchanged manifest workloads `simulation-steps`/`rl-episodes`. The increment is
+retained. Refreshed full delivery, original/cumulative comparisons and independent
+execution remain pending. See the
+[feasibility receipt](../artifacts/cpp-acceleration-v1/predicate-batch-feasibility-v6.json).
 
 Delivery target is `origin/shaf/decision-system-v1`, using a normal fast-forward
 push. Verify local/remote identity with `git rev-parse HEAD` and
