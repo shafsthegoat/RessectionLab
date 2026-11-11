@@ -67,6 +67,22 @@ test('advanced staged playback and inspection expose the existing rehearsal cont
  }finally{h.close();}
 });
 
+test('manual legacy CUSA controls omit unsupported duty while V2 retains it',()=>{
+ for(const v2 of [false,true]){
+  const f=fixture(),pose={position:[0,0,0],quaternion:[0,0,0,1]};
+  Object.assign(f.c.view.scene,{resolutionMm:[1,1,1]});
+  Object.assign(f.c.view,{catalog:[{id:'cusa',name:'CUSA',category:'Research',effect:'aspirate',geometry:'capsule',radiusMm:1.5,materials:['tumor']}],slots:{left:{instrument:'cusa',inserted:false,active:false,grip:[]}},metrics:{elapsedSeconds:0},history:[],physics:{cusaV3:{enabled:true,profile:{schema:'resectionlab.cusa-contact.v3'}},...(v2?{profile:{schema:'resectionlab.tissue-physics.v2'}}:{})}});
+  Object.assign(f.c,{slot:'left',pose,parameters:{power:.8,duty:.5},path:[],setPlaybackDisplay(){},stopPlayback(){},pausePlayback(){},pauseFullCase(){},canStartFullCase(){return false;},action(operation,parameters,duration){return {slot:'left',operation,parameters,duration};}});
+  const h=harness(SurgicalPanel),props={c:f.c,onFixture(){},available:true};
+  try{
+   let tree=h.render(props);assert.equal(!!find(tree,node=>node.props?.label==='CUSA duty fraction'),v2);
+   find(tree,node=>node.props?.['aria-label']==='Instrument action').props.onChange({target:{value:'extract'}});tree=h.render(props);
+   find(tree,node=>node.type==='button'&&node.props.children==='Apply').props.onClick();
+   assert.deepEqual(f.calls.at(-1),{command:'step',action:{slot:'left',operation:'extract',parameters:{radiusMm:1.5,power:.8,...(v2?{duty:.5}:{})},duration:1}});
+  }finally{h.close();}
+ }
+});
+
 test('accepted cranial root display preserves Inspect destination and resets only for a new source',()=>{
  const f=fixture();Object.assign(f.c.view.scene,{resolutionMm:[1,1,1]});Object.assign(f.c.view,{catalog:[],slots:{},metrics:{elapsedSeconds:0},history:[]});Object.assign(f.c,{slot:'left',pose:{position:[0,0,0],quaternion:[0,0,0,1]},parameters:{},path:[],setPlaybackDisplay(){},stopPlayback(){},pausePlayback(){},pauseFullCase(){},canStartFullCase(){return false;}});
  f.c.result.cranialPlanningAvailability={sourceSceneId:'common-source'};

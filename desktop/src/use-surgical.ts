@@ -15,6 +15,7 @@ import {SurgicalReplayPrefetch} from './surgical-replay-prefetch.ts';
 import type {SurgicalReplaySelection} from './surgical-replay-prefetch';
 import {checkedSurgicalPlayback,checkedSurgicalPlaybackWire,nextSurgicalPlaybackFrame,surgicalCursorCommand,updatesEditableSurgicalCursor} from './surgical-playback.ts';
 import {modeledVolume} from './modeled-volume.ts';
+import {cusaActionParameters} from './cusa-research.ts';
 export {modeledVolume} from './modeled-volume.ts';
 import type {SurgicalAction,SurgicalOutcome,SurgicalApi,SurgicalPose,SurgicalRegion,SurgicalResponse,SurgicalView,SurgicalInteraction} from './surgical-types';
 
@@ -248,7 +249,7 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
     else setPath(p=>p.length<512?[...p,{position:point,quaternion:pose.quaternion}]:p);
     setRawPose({...pose,position:point});clearPreview();
   }
-  function action(operation:string,params:Record<string,number>=parameters,duration=1):SurgicalAction{return {slot,operation,parameters:params,duration,...(['apply','move','hold','grasp','place'].includes(operation)?{path:path.length?path:[pose]}:{})};}
+  function action(operation:string,params:Record<string,number>=parameters,duration=1):SurgicalAction{return {slot,operation,parameters:cusaActionParameters(view,slot,params),duration,...(['apply','move','hold','grasp','place'].includes(operation)?{path:path.length?path:[pose]}:{})};}
   return {result,view,volume,previewVolume,approachPreview:displayedPreview&&approachPreview?.view===displayedPreview?approachPreview:null,pending,pendingCommand:requestPending?pendingCommand:replayRequestPending?(replayOwner.current?.prefix?'seekPrefixFrame':'seekFrame'):pendingCommand,simulationPending:requestPending||replayRequestPending,displayPending,error,slot,pose,path,mode,preview:displayedPreview,previewOutcome,parameters,setPose,setMode,selectSlot,run,action,
     fullCaseReadiness:view?boundFullCaseReadiness(result,source?.caseHash):null,canStartFullCase,
     canCancelComputation:requestPending&&!!activeRequest.current?.cancel,cancelling,cancelComputation,
