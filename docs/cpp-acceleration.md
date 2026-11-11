@@ -340,18 +340,68 @@ source roles, counters, memory, order and statistics. No code defect remains in
 the review; the original 2× acceptance gap remains open. See the
 [occupancy receipt](../artifacts/cpp-acceleration-v1/occupancy-fastpath-acceptance-v3.json).
 
-Other investigated seams: a no-copy native state-hash admission walk has only a
-3.6% ideal profile ceiling and would need new caller/hook qualification; defer it
-behind this smaller measured fix. CUSA search repeats a tip-contact query, but
+Other investigated seams: the no-copy native state-hash admission estimate used
+Python self time only (about 3.6% ideal gain), excluding validation child costs.
+It would need new caller/hook qualification; the v4 investigation below measures
+it separately. CUSA search repeats a tip-contact query, but
 removing it must preserve dynamically replaced callbacks and cancellation checks;
 no shortcut is added to its authoritative contact intersection.
 
-All implementation and review owners have finished this increment. The next
-bounded experiment, if continuing toward 2×, is to measure the recoverable
-owned-state validation cost before adding any native admission API. The 3.6%
-ceiling above is not a measured gain or a path to 2× by itself. Reuse the existing
-JSON/hash operations and preserve customized helper callbacks. No additional
-native port is justified without an integrated improvement.
+The implementation and review owners have finished the occupancy increment.
+
+## Owned-state validation investigation at `aae12ac3`
+
+The fresh timed-only profile preserves the exact frozen Generate result. Its
+21.876 s of profiled work includes 3,838 state-ID hashes (1.541 s inclusive;
+0.787 s self) and 63,208 small occupancy hashes. The earlier 3.6% estimate used
+only Python self time, not all validation children. Current self-time elimination
+would imply 1.0373×; removing the entire state-ID hash, including required encoding
+and hashing, would imply only 1.0758×. These are ideal profile estimates, not
+measured speedups. The original 2× target still requires another 32.6% elapsed-time
+reduction from the current integrated result.
+
+Five alternating helper samples (1,000 calls/sample) compare the unchanged owned
+hash, existing compiled JSON copy plus hash, and encoding/hash without validation.
+The existing copier improves the actual completed 35 KB state 247.9 → 184.8 µs,
+but slows the fresh state 11.32 → 12.14 µs and a tiny occupancy key 1.37 → 6.17 µs.
+An encoder callback also distinguishes the original root from the detached copy
+and produces different hashes. A blanket substitution is rejected. No new native
+surface or production code has been added by this investigation.
+
+An isolated C++ no-copy validator, built with the existing setup, preserves the
+encoder's original input and passes its bounded type/alias/cycle/error controls.
+Five alternating helper samples measure fresh state 11.494 → 11.177 µs, completed
+state 248.619 → 155.044 µs, and tiny occupancy 1.330 → 6.646 µs. The fresh-state
+saving is only 0.317 µs before caller/builtin/prefix qualification; routing the
+63,208 small occupancy hashes through it would regress them. Applying the
+completed-input saving to all 3,838 state-ID calls yields a hypothetical 0.359 s
+before qualification. Inputs evolve, so this is neither a bound nor a prediction
+or an integrated speedup. Production
+promotion is declined: the helper win does not justify the required selection and
+callback machinery. The isolated prototype is retained only as experimental
+evidence; no new adapter, installed/frozen qualification or accepted native API
+was added.
+
+Read-only review of the other large categories found no new high-impact numerical
+seam. Contract validation mixes compiled hashing/NumPy and required source checks;
+its largest simple cell-validation loop is 0.403 s (1.84% of this profile).
+Effect validation is 0.528 s (2.41%) of authoritative edge/set checks. Checked
+export replay is 6.712 s but includes required physics/proof execution and its
+physical calls. Geometry implementation qualification is 1.835 s. The capsule
+adapter takes 0.303 s including checks; the actual C++ binding takes 0.055 s.
+These inclusive costs
+overlap; porting whole categories or skipping replay/checks cannot be justified
+from their headline times.
+
+The bounded implementation/review owners have finished and released the heavy
+slot. Independent audit passes: 105 helper samples, current timed-only profile,
+full frozen Generate result/seal/work, production/capture isolation, source and
+binary identities, callback controls and all reported statistics. Current evidence is in the
+[ROI receipt](../artifacts/cpp-acceleration-v1/owned-admission-roi-v4.json).
+The prior integrated acceptance remains current because production source,
+headers and binaries are unchanged. The next action is to consider a further
+port only when a new measured numerical bottleneck supports a concrete design
+that preserves behavior. The original 2× target remains unmet.
 
 Delivery target is `origin/shaf/decision-system-v1`, using a normal fast-forward
 push. Verify local/remote identity with `git rev-parse HEAD` and

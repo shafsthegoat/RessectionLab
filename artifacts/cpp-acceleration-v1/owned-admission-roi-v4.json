@@ -1,0 +1,636 @@
+{
+  "schema": "resectionlab-owned-admission-roi-v4",
+  "sourceCommit": "aae12ac307e8807a2b2b68f5af49ee2f5654c95f",
+  "status": "Bounded current profile, existing-helper control, isolated no-copy C++ prototype and independent metadata audit complete. Both production promotions declined on ROI/compatibility evidence; production source and integrated acceptance unchanged. Original2x gate remains unmet.",
+  "goalComplete": false,
+  "original2xGate": "unmet; no thresholds or workloads changed",
+  "profile": {
+    "json": {
+      "path": "outputs/cpp-acceleration-v1/owned-admission-profile-v4/generate-profile.json",
+      "sha256": "3a61a5492b0a54b8950c287498dca95b4b90d5b49a7baa10df7cbe4cd6cf81b8"
+    },
+    "pstats": {
+      "path": "outputs/cpp-acceleration-v1/owned-admission-profile-v4/generate-profile.prof",
+      "sha256": "5c4a66981caeece453e1558e033b705abb9e1c9b19b84ee95abe9afa5d3f325a"
+    },
+    "scope": "Timed fixture and public computation only; profiler overhead means attribution,not speed measurement.",
+    "profileSeconds": 21.875800097999925,
+    "completeProfiledElapsedSeconds": 21.950006458035205,
+    "exactDigest": "sha256:78246b9c6a0be381afc15cd1b6b2c6dac82442253669c6fe16cf374c1afcc3ec",
+    "ownedDigestCalls": 67046,
+    "ownedDigestSelfSeconds": 0.961671644,
+    "ownedDigestCumulativeSeconds": 2.015246223,
+    "stateIdEdge": {
+      "primitiveCalls": 3838,
+      "totalCalls": 3838,
+      "selfSeconds": 0.786905843,
+      "cumulativeSeconds": 1.5408978990000002
+    },
+    "occupancyEdge": {
+      "primitiveCalls": 63208,
+      "totalCalls": 63208,
+      "selfSeconds": 0.174765801,
+      "cumulativeSeconds": 0.47434832400000004
+    },
+    "stateIdSelfOnlyEliminationCeiling": 1.0373137554527514,
+    "entireStateIdHashEliminationCeiling": 1.0757760172102417,
+    "ceilingLimit": "Profile-derived estimates only. Self time omits validation child costs; the entire-hash ceiling includes required encoding/hash that a validator cannot eliminate.",
+    "fixedPlanningAdditionalElapsedReductionRequiredFor2x": 0.3256383110479164
+  },
+  "existingNativeCopy": {
+    "receipt": {
+      "path": "outputs/cpp-acceleration-v1/owned-admission-budget-v4/result.json",
+      "sha256": "554b3ffb1d6786ff623163ea2a7103dafce81752260830d30f0ba49e3596436b"
+    },
+    "script": {
+      "path": "outputs/cpp-acceleration-v1/owned-admission-budget-v4/run.py",
+      "sha256": "e69a084c4416ed17271820b901511237f186c7053621a04b868b954992fe8b83"
+    },
+    "protocol": {
+      "process": "one fresh process, alternating helper order,20warmups/role/input,5samples/role/input,1000calls/sample",
+      "threads": 1,
+      "profile": false
+    },
+    "cases": {
+      "fresh-state-id": {
+        "jsonBytes": 999,
+        "exactDigest": "sha256:f86490695f86107781d51a5cee422830ea25e7e08ce8d97cb206e438ab80d5c1",
+        "iterationsPerSample": 1000,
+        "samplesSeconds": {
+          "owned": [
+            0.011349625012371689,
+            0.011319707962684333,
+            0.011335874965880066,
+            0.01119633304188028,
+            0.011208250012714416
+          ],
+          "existing-native-copy": [
+            0.011894040973857045,
+            0.012230082997120917,
+            0.012105458998121321,
+            0.012373957957606763,
+            0.012136625009588897
+          ],
+          "encoding-only-floor": [
+            0.005250625021290034,
+            0.0050942079978995025,
+            0.004989041015505791,
+            0.005148667027242482,
+            0.00503770902287215
+          ]
+        },
+        "mediansSeconds": {
+          "owned": 0.011319707962684333,
+          "existing-native-copy": 0.012136625009588897,
+          "encoding-only-floor": 0.0050942079978995025
+        },
+        "speedupByExistingNativeCopy": 0.9326899326411474,
+        "maxRecoverablePerCallSeconds": 6.2254999647848305e-06
+      },
+      "complete-state-id": {
+        "jsonBytes": 34810,
+        "exactDigest": "sha256:3554272e4e6ea1905ff7cef76ac1d75724c89d3b98dc694b0c3618b746b90a23",
+        "iterationsPerSample": 1000,
+        "samplesSeconds": {
+          "owned": [
+            0.24934816698078066,
+            0.2479045420186594,
+            0.24586383398855105,
+            0.2511502080014907,
+            0.2463744169799611
+          ],
+          "existing-native-copy": [
+            0.1863599589560181,
+            0.18543804198270664,
+            0.18389529100386426,
+            0.18479266698705032,
+            0.18342870799824595
+          ],
+          "encoding-only-floor": [
+            0.1436126249609515,
+            0.14475650002714247,
+            0.14229262503795326,
+            0.1416242080158554,
+            0.1423093750490807
+          ]
+        },
+        "mediansSeconds": {
+          "owned": 0.2479045420186594,
+          "existing-native-copy": 0.18479266698705032,
+          "encoding-only-floor": 0.1423093750490807
+        },
+        "speedupByExistingNativeCopy": 1.3415280273866699,
+        "maxRecoverablePerCallSeconds": 0.00010559516696957871
+      },
+      "tiny-occupancy-key": {
+        "jsonBytes": 13,
+        "exactDigest": "sha256:e04d0aa91c989624726d8ec8bbcd9545c40fb48cf0b351e7184681c3d6adbca6",
+        "iterationsPerSample": 1000,
+        "samplesSeconds": {
+          "owned": [
+            0.0013865419896319509,
+            0.0013380839955061674,
+            0.0013663750141859055,
+            0.00133275002008304,
+            0.0013850409886799753
+          ],
+          "existing-native-copy": [
+            0.006330874981358647,
+            0.006174832989927381,
+            0.006346084002871066,
+            0.006160332995932549,
+            0.006149124994408339
+          ],
+          "encoding-only-floor": [
+            0.0009454579558223486,
+            0.0009406249737367034,
+            0.0009478749707341194,
+            0.0009637089679017663,
+            0.0009419580455869436
+          ]
+        },
+        "mediansSeconds": {
+          "owned": 0.0013663750141859055,
+          "existing-native-copy": 0.006174832989927381,
+          "encoding-only-floor": 0.0009454579558223486
+        },
+        "speedupByExistingNativeCopy": 0.22128129075147254,
+        "maxRecoverablePerCallSeconds": 4.2091705836355687e-07
+      }
+    },
+    "qualificationCostsIncluded": false,
+    "integratedImprovementClaim": false,
+    "decision": "Blanket replacement rejected: fresh input slower,tiny occupancy4.5x slower,encoderinput identity differs. Large-input helper win alone does not justify new production branching."
+  },
+  "encoderIdentityControl": {
+    "path": "outputs/cpp-acceleration-v1/owned-admission-budget-v4/encoder-identity.json",
+    "sha256": "64658f20098b01d1c24a19426323e161e44d80afa5c71bb53ec5f24bcd3f0c63"
+  },
+  "nativePrototype": {
+    "raw": {
+      "path": "outputs/cpp-acceleration-v1/owned-admission-prototype-v4/result.json",
+      "sha256": "ae6829ea15a4b3f39f6f526931aa1d28cfe558335f5ffd3fc511409cd11c7255"
+    },
+    "patch": {
+      "path": "outputs/cpp-acceleration-v1/owned-admission-prototype-v4/patch.diff",
+      "sha256": "a091fa30df525822e08ae75965319af6fec3f14bd9d434eea6ff890915fe21fa"
+    },
+    "capture": {
+      "path": "outputs/cpp-acceleration-v1/owned-admission-prototype-v4/capture.json",
+      "sha256": "d007d072415a69318e62f977dc02262ac091c2b678cf3f899152b91261ad52dc"
+    },
+    "experiment": {
+      "path": "outputs/cpp-acceleration-v1/owned-admission-prototype-v4/run.py",
+      "sha256": "473779048160307398042839756d804c6f3ab633098c6879480f8853d6ef51a1"
+    },
+    "assessment": {
+      "path": "outputs/cpp-acceleration-v1/owned-admission-prototype-v4/assessment.json",
+      "sha256": "b1cc62a3e8fd102090607938c25fd4afb6295e1523d1a9c4ea3b7c464432ce54"
+    },
+    "addedCppLines": 30,
+    "protocol": {
+      "samples": 5,
+      "alternatingRoleOrder": true,
+      "iterationsPerSample": 1000,
+      "warmupsPerRole": 20,
+      "threads": 1,
+      "profile": false,
+      "processes": 1,
+      "includesOneFullExistingLiveCheck": true
+    },
+    "cases": {
+      "fresh-state-id": {
+        "jsonBytes": 906,
+        "exactDigest": "sha256:f86490695f86107781d51a5cee422830ea25e7e08ce8d97cb206e438ab80d5c1",
+        "iterationsPerSample": 1000,
+        "warmupsPerMethod": 20,
+        "sampleOrder": [
+          [
+            "owned",
+            "prototype-no-copy",
+            "existing-native-copy",
+            "encoding-only-floor"
+          ],
+          [
+            "encoding-only-floor",
+            "existing-native-copy",
+            "prototype-no-copy",
+            "owned"
+          ],
+          [
+            "owned",
+            "prototype-no-copy",
+            "existing-native-copy",
+            "encoding-only-floor"
+          ],
+          [
+            "encoding-only-floor",
+            "existing-native-copy",
+            "prototype-no-copy",
+            "owned"
+          ],
+          [
+            "owned",
+            "prototype-no-copy",
+            "existing-native-copy",
+            "encoding-only-floor"
+          ]
+        ],
+        "samplesSeconds": {
+          "owned": [
+            0.011658209026791155,
+            0.011516165977809578,
+            0.011494249978568405,
+            0.01146149996202439,
+            0.011337957985233516
+          ],
+          "prototype-no-copy": [
+            0.011140374990645796,
+            0.011177083011716604,
+            0.011199125030543655,
+            0.011174082988873124,
+            0.011201125045772642
+          ],
+          "existing-native-copy": [
+            0.012633000034838915,
+            0.012695875018835068,
+            0.012688582995906472,
+            0.012856457964517176,
+            0.01278195803752169
+          ],
+          "encoding-only-floor": [
+            0.005128292017616332,
+            0.0050294160027988255,
+            0.005352874984964728,
+            0.0051574999815784395,
+            0.005233082978520542
+          ]
+        },
+        "medianSeconds": {
+          "owned": 0.011494249978568405,
+          "prototype-no-copy": 0.011177083011716604,
+          "existing-native-copy": 0.012695875018835068,
+          "encoding-only-floor": 0.0051574999815784395
+        },
+        "perCallMedianSeconds": {
+          "owned": 1.1494249978568406e-05,
+          "prototype-no-copy": 1.1177083011716604e-05,
+          "existing-native-copy": 1.2695875018835068e-05,
+          "encoding-only-floor": 5.15749998157844e-06
+        },
+        "speedupByNoCopy": 1.0283765421192026,
+        "speedupByExistingCopy": 0.9053531136306885
+      },
+      "complete-state-id": {
+        "jsonBytes": 30817,
+        "exactDigest": "sha256:3554272e4e6ea1905ff7cef76ac1d75724c89d3b98dc694b0c3618b746b90a23",
+        "iterationsPerSample": 1000,
+        "warmupsPerMethod": 20,
+        "sampleOrder": [
+          [
+            "owned",
+            "prototype-no-copy",
+            "existing-native-copy",
+            "encoding-only-floor"
+          ],
+          [
+            "encoding-only-floor",
+            "existing-native-copy",
+            "prototype-no-copy",
+            "owned"
+          ],
+          [
+            "owned",
+            "prototype-no-copy",
+            "existing-native-copy",
+            "encoding-only-floor"
+          ],
+          [
+            "encoding-only-floor",
+            "existing-native-copy",
+            "prototype-no-copy",
+            "owned"
+          ],
+          [
+            "owned",
+            "prototype-no-copy",
+            "existing-native-copy",
+            "encoding-only-floor"
+          ]
+        ],
+        "samplesSeconds": {
+          "owned": [
+            0.24911824997980148,
+            0.2486192500218749,
+            0.24794550001388416,
+            0.2486420410568826,
+            0.24849041702691466
+          ],
+          "prototype-no-copy": [
+            0.15808162494795397,
+            0.1550437500118278,
+            0.1551400419557467,
+            0.1549949159962125,
+            0.1550056670093909
+          ],
+          "existing-native-copy": [
+            0.18563204200472683,
+            0.18514650000724941,
+            0.18439395795576274,
+            0.1839537089690566,
+            0.18461012496845797
+          ],
+          "encoding-only-floor": [
+            0.1425992909935303,
+            0.1431856660055928,
+            0.14308879198506474,
+            0.14328912500059232,
+            0.14297229202929884
+          ]
+        },
+        "medianSeconds": {
+          "owned": 0.2486192500218749,
+          "prototype-no-copy": 0.1550437500118278,
+          "existing-native-copy": 0.18461012496845797,
+          "encoding-only-floor": 0.14308879198506474
+        },
+        "perCallMedianSeconds": {
+          "owned": 0.0002486192500218749,
+          "prototype-no-copy": 0.0001550437500118278,
+          "existing-native-copy": 0.00018461012496845795,
+          "encoding-only-floor": 0.00014308879198506475
+        },
+        "speedupByNoCopy": 1.6035425484929804,
+        "speedupByExistingCopy": 1.346725972177059
+      },
+      "tiny-occupancy-key": {
+        "jsonBytes": 12,
+        "exactDigest": "sha256:e04d0aa91c989624726d8ec8bbcd9545c40fb48cf0b351e7184681c3d6adbca6",
+        "iterationsPerSample": 1000,
+        "warmupsPerMethod": 20,
+        "sampleOrder": [
+          [
+            "owned",
+            "prototype-no-copy",
+            "existing-native-copy",
+            "encoding-only-floor"
+          ],
+          [
+            "encoding-only-floor",
+            "existing-native-copy",
+            "prototype-no-copy",
+            "owned"
+          ],
+          [
+            "owned",
+            "prototype-no-copy",
+            "existing-native-copy",
+            "encoding-only-floor"
+          ],
+          [
+            "encoding-only-floor",
+            "existing-native-copy",
+            "prototype-no-copy",
+            "owned"
+          ],
+          [
+            "owned",
+            "prototype-no-copy",
+            "existing-native-copy",
+            "encoding-only-floor"
+          ]
+        ],
+        "samplesSeconds": {
+          "owned": [
+            0.0013637089869007468,
+            0.0013296250253915787,
+            0.0013255830272100866,
+            0.0013196670333854854,
+            0.001337708963546902
+          ],
+          "prototype-no-copy": [
+            0.006690291978884488,
+            0.006645790999755263,
+            0.0067240839707665145,
+            0.0066386660328134894,
+            0.0065905420342460275
+          ],
+          "existing-native-copy": [
+            0.006699083955027163,
+            0.006905917020048946,
+            0.006800292001571506,
+            0.006647999980486929,
+            0.0067802079720422626
+          ],
+          "encoding-only-floor": [
+            0.0009027919732034206,
+            0.0009067500359378755,
+            0.0008947909809648991,
+            0.0009011669899336994,
+            0.0008849999867379665
+          ]
+        },
+        "medianSeconds": {
+          "owned": 0.0013296250253915787,
+          "prototype-no-copy": 0.006645790999755263,
+          "existing-native-copy": 0.0067802079720422626,
+          "encoding-only-floor": 0.0009011669899336994
+        },
+        "perCallMedianSeconds": {
+          "owned": 1.3296250253915787e-06,
+          "prototype-no-copy": 6.645790999755264e-06,
+          "existing-native-copy": 6.780207972042262e-06,
+          "encoding-only-floor": 9.011669899336994e-07
+        },
+        "speedupByNoCopy": 0.20007024377392296,
+        "speedupByExistingCopy": 0.19610387039368102
+      }
+    },
+    "assertions": [
+      "root-atoms-decline",
+      "exact-containers-tuples-aliases-float-bits-hashes-unchanged",
+      "nonfinite-deferred-to-original-encoder-error-fallback",
+      "unsupported-key-and-numpy-full-original-fallback",
+      "subclass-probe-invokes-no-hooks-original-fallback-traces-match",
+      "cycles-decline-with-original-error",
+      "work-and-depth-limits-fall-back-without-changing-valid-hashes",
+      "no-copy-keeps-original-encoder-input-identity-copy-does-not"
+    ],
+    "boundedRawCalls": [
+      {
+        "case": "near-item-cap",
+        "admitted": true,
+        "samplesSeconds": [
+          0.000422417011577636,
+          0.0004272919613867998,
+          0.00043291697511449456,
+          0.0004337090067565441,
+          0.00043104198994114995
+        ],
+        "maximumSeconds": 0.0004337090067565441
+      },
+      {
+        "case": "over-item-cap",
+        "admitted": false,
+        "samplesSeconds": [
+          1.25030055642128e-07,
+          4.202593117952347e-08,
+          8.399365469813347e-08,
+          8.405186235904694e-08,
+          8.399365469813347e-08
+        ],
+        "maximumSeconds": 1.25030055642128e-07
+      }
+    ],
+    "encoderInputIdentity": {
+      "owned": [
+        true
+      ],
+      "prototype-no-copy": [
+        true
+      ],
+      "existing-native-copy": [
+        false
+      ],
+      "encoding-only-floor": [
+        true
+      ]
+    },
+    "nativeBinarySha256": "c2d620436b318ee5dc79163c65ea0330f8359333c77b5d3531044aa47d0de3e7",
+    "nativeSources": {
+      "geometry_native.cpp": "4975f886b32c604fe45b0266b0882b34aee6a9859ca32e8588e9101e8b50b32c",
+      "state_native.hpp": "04a0803927319e1ec38abbe12c74c7b1635cc975cd281c28ced2cbe18343b551"
+    },
+    "qualificationCostsIncluded": false,
+    "productionAdapterOrEntryPointQualificationAdded": false,
+    "installedOrFrozenQualificationPerformed": false,
+    "integratedMeasurementPerformed": false,
+    "integratedImprovementClaim": false,
+    "decision": "NO-GO for production promotion from this experiment; retain isolated evidence only.",
+    "reason": "The primitive is clean (28 added C++ lines), but helper gains exclude caller/builtin/prefix qualification and provide no plausible route to the remaining 2x whole-workload gap. Tiny and fresh inputs have no useful qualification headroom.",
+    "requiredBeforeAnyPromotion": [
+      "Original one-argument _owned_digest hooks remain observable",
+      "Skipped builtin dispatch qualified including actual copied __builtins__ mapping",
+      "Prefix hash dependency qualification prevents bypassing new helper/integrity semantics",
+      "No new occupancy-small-digest native crossings",
+      "Independent exact/error/callback tests plus integrated five-pair original workload and delivery gates"
+    ],
+    "completeStateOptimisticPerCallSavingSeconds": 9.35755000100471e-05,
+    "freshStateOptimisticPerCallSavingSeconds": 3.1716696685180167e-07,
+    "hypotheticalAllStateCallsAtCompleteInputSavingSeconds": 0.3591427690385608,
+    "hypotheticalLimitation": "Not a bound or prediction: actual evolving inputs differ, and call admission/guards/prefix changes are excluded.",
+    "addedNonblankCppLines": 28
+  },
+  "productionNativeSurfaceChanged": false,
+  "priorIntegratedAcceptance": "artifacts/cpp-acceleration-v1/occupancy-fastpath-acceptance-v3.json",
+  "remainingHotspotReview": {
+    "scope": "Read-only source/profile analysis; inclusive categories overlap; no claimed speedups.",
+    "craniotomyContractValidationSeconds": 1.693548888,
+    "craniotomyCellsSeconds": 0.403261916,
+    "effectValidationSeconds": 0.527715239,
+    "exportReplaySeconds": 6.711623250000001,
+    "geometryImplementationQualificationSeconds": 1.835444324,
+    "capsuleBindingSeconds": 0.055223423,
+    "decisions": [
+      "Contract validation combines compiled hashing/NumPy,parsing and required public-source checks; its pure _cells loop is only1.84%ofprofile and needs unusual-input/error/callback qualification.",
+      "Effect validation preserves authoritative edge/set checks for public mutations; modest2.41%profilecost does not justify a broad rewrite.",
+      "Checked export replay includes actual physics/proof work; skipping/collapsing it changes required execution and physical-call accounting.",
+      "Geometry caller costs include qualification,conversions and cancellation around existing compiled kernels; category size does not equal migratable Python work."
+    ],
+    "capsuleAdapterSeconds": 0.302920128
+  },
+  "nextAction": "Do not add another port from these inclusive hotspot categories. Revisit only with a new measured numerical bottleneck and a concrete behavior-preserving design; retain original2x gate as unmet.",
+  "verificationReuse": "No production source/header/binary changed. Existingv3source/wheel/frozen/signed,exactness,cancellation,regression and memory evidence remains applicable; no heavy delivery rerun.",
+  "independentReview": {
+    "raw": {
+      "path": "outputs/cpp-acceleration-v1/independent-owned-admission-roi-v4/review.json",
+      "sha256": "629821b0a31d219d42b7b79772456e986a897ab165fa2c2f1485612c1db2e2a2"
+    },
+    "schema": "resectionlab-independent-owned-admission-roi-review-v4",
+    "passed": true,
+    "sourceCommit": "aae12ac307e8807a2b2b68f5af49ee2f5654c95f",
+    "productionSourceMatchesHead": true,
+    "productionSourceFilesVerified": 335,
+    "isolatedTrackedSourceDifferences": [
+      "src/resectionlab/state_native.hpp"
+    ],
+    "archiveFilesMatchedHead": 328,
+    "productionNativeBinarySha256": "bfc5b7054f87f31a253cdd4b1e9e7e54d71035d07fbb3b69d4ad52327999775a",
+    "isolatedNativeBinarySha256": "c2d620436b318ee5dc79163c65ea0330f8359333c77b5d3531044aa47d0de3e7",
+    "patchLines": {
+      "physicalAdded": 30,
+      "nonblankAdded": 28,
+      "rawCapture28Meaning": "28 nonblank lines; compact receipt correctly records30 physical added lines, including2 blanks."
+    },
+    "frozenPlanningDigest": "sha256:78246b9c6a0be381afc15cd1b6b2c6dac82442253669c6fe16cf374c1afcc3ec",
+    "profileScopeAndAuditExclusionVerified": true,
+    "profileCallerCostsAndCapsuleAdapterVsBindingVerified": true,
+    "helperSamplesVerified": 105,
+    "helperCallsPerSample": 1000,
+    "freshProcessesPerExperiment": 1,
+    "sampleOrdering": "Alternating forward/reverse role order within each single process; not independent process per helper sample.",
+    "warmupsPerRoleInput": 20,
+    "samePayloadDifferentWhitespaceByteCountsVerified": true,
+    "stateIdIdealEstimates": {
+      "selfOnlySpeedup": 1.0373137554527514,
+      "entireHashSpeedup": 1.0757760172102417,
+      "interpretation": "Self-only is not a full-validation upper bound. Entire-hash deletion includes required encoding/hash; neither is a measured speedup or achievable validator saving.",
+      "additionalElapsedReductionForOriginal2x": 0.32563831104920815,
+      "coordinatorRoundedRatioDifference": 1.2917444891513696e-12
+    },
+    "encoderIdentityCounterexample": {
+      "path": "outputs/cpp-acceleration-v1/independent-owned-admission-roi-v4/encoder-control.json",
+      "sha256": "9f292ee88cf473a3156c12d3faa5772ab4ee309b2f5318f42539331420ff6dad"
+    },
+    "requiredQualificationExcluded": true,
+    "newProductionPortAccepted": false,
+    "newIntegratedPerformanceClaim": false,
+    "fullGoalComplete": false,
+    "recommendation": "NO-GO for either production promotion from this isolated helper experiment.",
+    "findings": [],
+    "correctedDocumentation": "Earlier ambiguous3.6% ceiling sentence now explicitly describes Python self time and excludes child costs.",
+    "coordinatorReceipt": {
+      "path": "outputs/cpp-acceleration-v1/independent-owned-admission-roi-v4/coordinator-receipt-reviewed-snapshot.json",
+      "sha256": "1b540cad8d5ea948d461ff96acb4b9fde2f4c55ead12592f6d1129eea78d6a53",
+      "originalPath": "artifacts/cpp-acceleration-v1/owned-admission-roi-v4.json",
+      "snapshotReason": "Preserve reviewed bytes before independent-review annotation; avoids circular hash dependencies."
+    },
+    "evidence": {
+      "profileJson": {
+        "path": "outputs/cpp-acceleration-v1/owned-admission-profile-v4/generate-profile.json",
+        "sha256": "3a61a5492b0a54b8950c287498dca95b4b90d5b49a7baa10df7cbe4cd6cf81b8"
+      },
+      "profilePstats": {
+        "path": "outputs/cpp-acceleration-v1/owned-admission-profile-v4/generate-profile.prof",
+        "sha256": "5c4a66981caeece453e1558e033b705abb9e1c9b19b84ee95abe9afa5d3f325a"
+      },
+      "budget": {
+        "path": "outputs/cpp-acceleration-v1/owned-admission-budget-v4/result.json",
+        "sha256": "554b3ffb1d6786ff623163ea2a7103dafce81752260830d30f0ba49e3596436b"
+      },
+      "prototype": {
+        "path": "outputs/cpp-acceleration-v1/owned-admission-prototype-v4/result.json",
+        "sha256": "ae6829ea15a4b3f39f6f526931aa1d28cfe558335f5ffd3fc511409cd11c7255"
+      },
+      "capture": {
+        "path": "outputs/cpp-acceleration-v1/owned-admission-prototype-v4/capture.json",
+        "sha256": "d007d072415a69318e62f977dc02262ac091c2b678cf3f899152b91261ad52dc"
+      },
+      "patch": {
+        "path": "outputs/cpp-acceleration-v1/owned-admission-prototype-v4/patch.diff",
+        "sha256": "a091fa30df525822e08ae75965319af6fec3f14bd9d434eea6ff890915fe21fa"
+      },
+      "assessment": {
+        "path": "outputs/cpp-acceleration-v1/owned-admission-prototype-v4/assessment.json",
+        "sha256": "b1cc62a3e8fd102090607938c25fd4afb6295e1523d1a9c4ea3b7c464432ce54"
+      }
+    },
+    "auditCommand": [
+      ".venv/bin/python",
+      "outputs/cpp-acceleration-v1/independent-owned-admission-roi-v4/audit.py"
+    ],
+    "heavyExecutionPerformed": false,
+    "buildsPlanningWorkloadOrPerformanceReruns": false,
+    "trackedFileEditsByReviewer": false
+  }
+}
