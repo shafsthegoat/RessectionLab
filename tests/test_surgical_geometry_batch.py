@@ -2,7 +2,7 @@
 import numpy as np
 import pytest
 
-from resectionlab import geometry, native_backend
+from resectionlab import geometry, native_backend, surgical_geometry_cache
 from resectionlab.surgical_engine import SurgicalEngine
 from resectionlab.surgical_geometry_cache import SurgicalCellCoverCache
 from resectionlab.surgical_scene import SurgicalScene
@@ -82,6 +82,34 @@ def test_touched_batch_keeps_replaced_occupancy_callback_between_geometry_querie
     assert first and not second
 
 
+def test_touched_batch_keeps_identity_helper_callback_between_geometry_queries(monkeypatch):
+    actual, sequential = source(), source()
+    query = ([3., 3., 3.], [3., 3., 3.], .1)
+    for engine in (actual, sequential):
+        assert engine.touched(*query)
+    original = surgical_geometry_cache._function_identity
+    active = [actual]
+    def replacement(function):
+        active[0].cells = lambda *args: np.empty(0, dtype=np.int64)
+        return original(function)
+    monkeypatch.setattr(surgical_geometry_cache, '_function_identity', replacement)
+    observed = actual.touched_many((query, query))
+    active[0] = sequential
+    expected = tuple(sequential.touched(*q) for q in (query, query))
+    assert expected[0] and not expected[1]
+    assert observed == expected
+
+
+def test_touched_batch_rejects_in_place_identity_helper_code_change(monkeypatch):
+    from resectionlab.surgical_drilling_v2 import _stock_contact_queries
+    engine = source()
+    assert _stock_contact_queries(engine)
+    def replacement(function):
+        return None
+    monkeypatch.setattr(surgical_geometry_cache._function_identity, '__code__', replacement.__code__)
+    assert not _stock_contact_queries(engine)
+
+
 def test_cache_identity_includes_selected_native_build(monkeypatch):
     engine = source()
     query = ([3., 3., 3.], [3., 3., 3.], .1)
@@ -112,7 +140,11 @@ def test_cache_in_place_geometry_code_change_invalidates_and_restores_membership
         return np.full(len(indices), np.inf)
     with monkeypatch.context() as patch:
         patch.setattr(geometry._segment_cell_distances, '__code__', no_contacts.__code__)
-        assert not len(engine.cells(*query))
+        if native_backend.backend_identity()['requested'] == 'cpp' and native_backend.cpp_enabled():
+            with pytest.raises(native_backend.NativeUnsupportedError):
+                engine.cells(*query)
+        else:
+            assert not len(engine.cells(*query))
     np.testing.assert_array_equal(engine.cells(*query), original)
     assert engine._cell_cover_cache.stats()['misses'] == 3
     assert engine._cell_cover_cache.stats()['hits'] == 0

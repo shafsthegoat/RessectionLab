@@ -1374,7 +1374,7 @@ _DRILL_CONTACT_QUERY_ORIGINALS = (
               (vars(_drill_contact_geometry), ('capsule_voxel_indices', 'capsule_voxel_indices_batch',
                   '_capsule_voxel_indices_reference', '_native_capsule_supported', '_vector', '_immutable',
                   'point_segment_distances', '_segment_cell_distances', '_capsule_candidate_grid')),
-              (vars(_drill_contact_cache), ('immutable_array',)),
+              (vars(_drill_contact_cache), ('immutable_array', '_function_identity')),
               (vars(_drill_contact_cache.SurgicalCellCoverCache), ('query', 'query_many', '_query_values',
                   '_implementation_key', '_validate_frame', '_remember', '_frame_identity', '_candidate_grid')),
               (vars(GeometryScene), ('world_to_voxel', 'voxel_to_world')),

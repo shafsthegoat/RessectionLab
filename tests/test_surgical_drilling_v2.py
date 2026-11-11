@@ -270,6 +270,12 @@ def test_contact_replacement_dependencies_mutating_state_keep_dynamic_queries(mo
         for current in (actual, reference):
             current._cell_cover_cache.query = MethodType(replacement, current._cell_cover_cache)
     assert not drill._stock_contact_queries(actual)
+    if dependency == 'candidate-helper' and geometry.native_backend.backend_identity()['requested'] == 'cpp':
+        before = actual.snapshot()
+        with pytest.raises(geometry.native_backend.NativeUnsupportedError):
+            drill.contact_limited_pose(actual, [0., 1., 1.], [8., 1., 1.], .1)
+        assert actual.snapshot() == before
+        return
     results = []
     for current, implementation in ((actual, drill.contact_limited_pose), (reference, _legacy_contact_pose)):
         active[:] = [current, 0]
