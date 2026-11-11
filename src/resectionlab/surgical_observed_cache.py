@@ -24,6 +24,7 @@ from .surgical_verified_cache import (VerifiedSurgicalCache, STATE_SCHEMA, MAX_J
     implementation_fingerprint, _MODULES, _code_signature)
 from .surgical_replay_cache import _owned_bytes
 from .surgical_flow_display import validate_flow_display, trim_frame_flows
+from .native_backend import NativeIntegrityError
 
 SCHEMA = 'resectionlab.observed-surgical-frames.v1'
 DEFAULT_DIRECTORY = Path(__file__).resolve().parents[2] / 'testcases/outputs/.observed-surgical-frames'
@@ -80,9 +81,10 @@ def light_implementation_seal():
     """
     try:
         from .surgical_idle_native import strict_live_identity
-        native_identity = strict_live_identity()
-    except (ValueError, OSError, ImportError, AttributeError) as error:
-        raise ImplementationChanged('Optional idle thermal implementation changed or is unavailable') from error
+        from .native_backend import strict_live_identity as cpp_identity
+        native_identity = (strict_live_identity(), cpp_identity())
+    except (ValueError, OSError, ImportError, AttributeError, NativeIntegrityError) as error:
+        raise ImplementationChanged('Numerical implementation changed or is unavailable') from error
     digest = hashlib.sha256(json.dumps(native_identity, sort_keys=True,
         separators=(',', ':'), allow_nan=False).encode())
     root = Path(__file__).resolve().parent

@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=77"]
+requires = ["setuptools>=77", "pybind11>=3.0,<4"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -36,7 +36,7 @@ resectionlab-legacy-qt = "resectionlab.app:main"
 where = ["src"]
 
 [tool.setuptools.package-data]
-resectionlab = ["surface_policy.json", "surgical_idle_native.c", "surgical_prefix_json_native.c"]
+resectionlab = ["surface_policy.json", "surgical_idle_native.c", "surgical_prefix_json_native.c", "*_native.cpp", "*_native.hpp", "_geometry_cpp.build.json", "native-notices/*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

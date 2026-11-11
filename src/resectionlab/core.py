@@ -20,6 +20,8 @@ from typing import Any, TYPE_CHECKING
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
+from .native_backend import native_json_copy
+
 if TYPE_CHECKING:
     from .critical_evidence import CriticalStructureEvidence
     from .functional_evidence import FunctionalEvidence
@@ -124,10 +126,12 @@ def _copy_builtin_json(value: Any, depth: int = 0) -> Any:
 
 def semantic_digest(value: Any) -> str:
     """Content digest for JSON metadata; mapping insertion order is irrelevant."""
-    try:
-        copied = _copy_builtin_json(value)
-    except RecursionError:
-        copied = _JSON_COPY_FALLBACK
+    copied = native_json_copy(value, _JSON_COPY_FALLBACK)
+    if copied is _JSON_COPY_FALLBACK:
+        try:
+            copied = _copy_builtin_json(value)
+        except RecursionError:
+            copied = _JSON_COPY_FALLBACK
     if copied is _JSON_COPY_FALLBACK:
         copied = thaw_json(freeze_json(value))
     payload = json.dumps(copied, sort_keys=True, separators=(",", ":"), allow_nan=False)

@@ -46,7 +46,8 @@ _MODULES = ('core', 'geometry', 'surgical_scene', 'surgical_engine', 'surgical_t
             'surgical_vascular_graph', 'surgical_bipolar_thermal',
             'surgical_occupancy', 'surgical_rl_protection', 'surgical_geometry_cache',
             'surgical_verified_cache', 'surgical_cusa_v3', 'surgical_clock', 'surgical_idle_native',
-            'build_surgical_idle_native', 'surgical_cranial_stages', 'surgical_membrane_transport')
+            'build_surgical_idle_native', 'surgical_cranial_stages', 'surgical_membrane_transport',
+            'native_backend')
 
 
 def _code_signature(code):
@@ -129,6 +130,9 @@ def _fingerprint():
     # rejects changed disk bytes rather than calling them the loaded code.
     from .surgical_idle_native import strict_live_identity
     add('optional-idle-native', json.dumps(strict_live_identity(), sort_keys=True,
+        separators=(',', ':'), allow_nan=False).encode())
+    from .native_backend import strict_live_identity as cpp_identity
+    add('cpp-backend', json.dumps(cpp_identity(), sort_keys=True,
         separators=(',', ':'), allow_nan=False).encode())
     globals()['_last_components'] = components
     return digest.hexdigest()

@@ -511,11 +511,28 @@ class SurgicalEngine:
         return owner
 
     def cells(self, a, b, radius):
-        return self._cell_cover_cache.query(self.grid, a, b, radius, kernel=capsule_voxel_indices)
+        return self._cell_cover_cache.query(self.grid, a, b, radius, kernel=capsule_voxel_indices,
+            check=getattr(self, '_transition_check', None))
+
+    def cells_many(self, queries):
+        from .surgical_drilling_v2 import _stock_contact_queries
+        if not _stock_contact_queries(self):
+            return tuple(self.cells(*query) for query in queries)
+        return self._cell_cover_cache.query_many(self.grid, queries, kernel=capsule_voxel_indices,
+            check=getattr(self, '_transition_check', None))
 
     def touched(self, a, b, radius):
         cells = self.cells(a, b, radius)
         return self.occupancy().material_ids(cells)
+
+    def touched_many(self, queries):
+        from .surgical_drilling_v2 import _stock_contact_queries, _stock_contact_owner
+        if (not _stock_contact_queries(self) or self._occupancy_cache is None or
+                not _stock_contact_owner(self._occupancy_cache[1], _DRILL_CONTACT_QUERY_ORIGINALS[3][2])):
+            return tuple(self.touched(*query) for query in queries)
+        covers = self._cell_cover_cache.query_many(self.grid, queries, kernel=capsule_voxel_indices,
+            check=getattr(self, '_transition_check', None))
+        return tuple(self.occupancy().material_ids(cells) for cells in covers)
 
     def parameters(self, slot):
         tool = TOOLS[slot['instrument']]
@@ -971,9 +988,10 @@ class SurgicalEngine:
         shaft_cells = set()
         revised_contact = self.state.get('toolMechanicsRevision') in (1, 2) and tool['effect'] not in ('remove', 'suction', 'irrigate', 'probe')
         working_cells = set() if revised_contact else set(tip_cells)
-        for a, b, radius, part in swept:
-            if part == 'shaft': shaft_cells.update(self.touched(a, b, radius))
-            else: working_cells.update(self.touched(a, b, radius))
+        covers = self.touched_many(tuple((a, b, radius) for a, b, radius, _ in swept))
+        for (_, _, _, part), cells in zip(swept, covers):
+            if part == 'shaft': shaft_cells.update(cells)
+            else: working_cells.update(cells)
         if revised_contact: tip_cells = sorted(working_cells)
         if self._cranial_access is not None:
             from .surgical_cranial_guards import enforce
@@ -1342,20 +1360,23 @@ from .surgical_occupancy import MaterialOccupancy as _DrillContactOccupancy
 _DRILL_CONTACT_QUERY_ORIGINALS = (
     SurgicalEngine, SurgicalEngine.__getattribute__,
     tuple((name, method, method.__code__, method.__defaults__, method.__kwdefaults__)
-          for name in ('touched', 'cells', 'occupancy')
+          for name in ('touched', 'cells', 'cells_many', 'touched_many', 'occupancy')
           for method in (getattr(SurgicalEngine, name),)),
     tuple((cls, cls.__getattribute__, tuple((name, vars(cls)[name]) for name in names)) for cls, names in (
-        (_drill_contact_cache.SurgicalCellCoverCache, ('query', '_frame_identity', '_candidate_grid')),
+        (_drill_contact_cache.SurgicalCellCoverCache, ('query', 'query_many', '_query_values',
+            '_implementation_key', '_validate_frame', '_remember', '_frame_identity', '_candidate_grid')),
         (GeometryScene, ('world_to_voxel', 'voxel_to_world', 'shape')),
         (_DrillContactOccupancy, ('material_ids', '__getitem__')))),
     tuple((namespace, name, function, function.__code__, function.__defaults__,
            None if function.__kwdefaults__ is None else tuple(function.__kwdefaults__.items()))
           for namespace, names in (
               (globals(), ('capsule_voxel_indices',)),
-              (vars(_drill_contact_geometry), ('capsule_voxel_indices', '_vector', '_immutable',
+              (vars(_drill_contact_geometry), ('capsule_voxel_indices', 'capsule_voxel_indices_batch',
+                  '_capsule_voxel_indices_reference', '_native_capsule_supported', '_vector', '_immutable',
                   'point_segment_distances', '_segment_cell_distances', '_capsule_candidate_grid')),
               (vars(_drill_contact_cache), ('immutable_array',)),
-              (vars(_drill_contact_cache.SurgicalCellCoverCache), ('query', '_frame_identity', '_candidate_grid')),
+              (vars(_drill_contact_cache.SurgicalCellCoverCache), ('query', 'query_many', '_query_values',
+                  '_implementation_key', '_validate_frame', '_remember', '_frame_identity', '_candidate_grid')),
               (vars(GeometryScene), ('world_to_voxel', 'voxel_to_world')),
               ({'shape': GeometryScene.shape.fget}, ('shape',)),
               (vars(_DrillContactOccupancy), ('material_ids', '__getitem__')))

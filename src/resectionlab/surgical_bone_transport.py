@@ -9,7 +9,7 @@ from __future__ import annotations
 import numpy as np
 
 from .core import semantic_digest
-from .geometry import segment_segment_distance
+from .geometry import segments_within_distance
 from .surgical_motion import envelopes, swept_envelopes
 from .surgical_rl_protection import cell_radius
 from .surgical_tools import TOOLS
@@ -99,7 +99,7 @@ def grasp(engine, key, cells, position, quaternion):
     # axis. Freeze only this local conservative jaw region, never the full flap
     # or a shaft exemption. Exact native material contacts remain separate.
     region = [source_id for source_id, point in zip(fragment, centers)
-              if any(segment_segment_distance(point, point, a, b) <= 2*radius+width+1e-9
+              if any(segments_within_distance(point, point, a, b, 2*radius+width+1e-9)
                      for a, b, width, _ in jaws)]
     hold.update(gripCells=region, gripContactCells=sorted(contacts),
                 holderSlot=key,
@@ -141,7 +141,7 @@ def check_sweep(engine, key, new_offset, end_pose):
     jaws = [segment for segment in envelopes(TOOLS[HOLDER], engine.parameters(engine.state['slots'][key]),
             end_pose['position'], end_pose['quaternion']) if segment[3] != 'shaft']
     if not witness or not witness <= grip <= own or not any(
-            source_id in witness and any(segment_segment_distance(point, point, u, v) <= 2*radius+width+1e-9
+            source_id in witness and any(segments_within_distance(point, point, u, v, 2*radius+width+1e-9)
                                         for u, v, width, _ in jaws)
             for source_id, point in zip(hold['cells'], b)):
         raise ValueError('BONE_FLAP_GRIP_CONTACT_LOST')
@@ -165,7 +165,7 @@ def check_sweep(engine, key, new_offset, end_pose):
             for u, v, width, part in segments:
                 if hand == key and part != 'shaft' and source_id in grip:
                     continue  # Only the witnessed jaw contact may hold its bone.
-                if segment_segment_distance(start, end, u, v) <= radius+width+1e-9:
+                if segments_within_distance(start, end, u, v, radius+width+1e-9):
                     raise ValueError('BONE_FLAP_SHAFT_COLLISION' if hand == key else 'BONE_FLAP_OTHER_TOOL_COLLISION:'+hand)
 
 
@@ -189,7 +189,7 @@ def check_tool_sweep(engine, key, end_pose, operation):
                             operation in ('release', 'deactivate', 'withdraw', 'inspect') and
                             source_id in hold['gripCells']):
                         continue
-                if segment_segment_distance(point, point, a, b) <= radius+width+1e-9:
+                if segments_within_distance(point, point, a, b, radius+width+1e-9):
                     raise ValueError('BONE_FLAP_MOVING_TOOL_COLLISION:'+key)
 
 
@@ -221,7 +221,7 @@ def check_detached(engine):
                 for a, b, width, part in envelopes(TOOLS[slot['instrument']], engine.parameters(slot), slot['position'], slot['quaternion']):
                     if key == hold.get('holderSlot') and slot['instrument'] == HOLDER and part != 'shaft' and source_id in hold['gripCells']:
                         continue
-                    if segment_segment_distance(point, point, a, b) <= radius+width+1e-9:
+                    if segments_within_distance(point, point, a, b, radius+width+1e-9):
                         raise ValueError('BONE_FLAP_DETACHED_TOOL_COLLISION:'+key)
 
 

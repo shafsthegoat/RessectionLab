@@ -20,6 +20,8 @@ import numpy as np
 from numpy.typing import ArrayLike, NDArray
 from scipy.spatial import cKDTree
 
+from . import native_backend
+
 GEOMETRY_VERSION = "rigid-capsules-exact-orthogonal-cells-v2"
 _EPS = 1e-9
 _CLEARANCE_CAP_MM = 10.0
@@ -306,6 +308,24 @@ def segment_segment_distance(a0: ArrayLike, a1: ArrayLike, b0: ArrayLike, b1: Ar
     return min(candidates)
 
 
+_segment_predicate_reference = segment_segment_distance
+_segment_predicate_point = point_segment_distances
+_segment_predicate_codes = (segment_segment_distance.__code__, point_segment_distances.__code__)
+
+
+def segments_within_distance(a0: ArrayLike, a1: ArrayLike, b0: ArrayLike, b1: ArrayLike,
+                             threshold: float) -> bool:
+    """Exact established collision predicate, with native arithmetic screening."""
+    if (type(threshold) in (float, np.float64)
+            and segment_segment_distance is _segment_predicate_reference
+            and point_segment_distances is _segment_predicate_point
+            and (segment_segment_distance.__code__, point_segment_distances.__code__) == _segment_predicate_codes):
+        result = native_backend.try_segment_predicate(a0, a1, b0, b1, threshold, _EPS)
+        if result is not None and result >= 0:
+            return bool(result)
+    return segment_segment_distance(a0, a1, b0, b1) <= threshold
+
+
 def tool_capsules(tool: ToolGeometry, pose: ToolPose, inflation_mm: float = 0.0
                   ) -> tuple[tuple[NDArray, NDArray, float, str], ...]:
     """Proximal shaft and distal active tip capsules forming one rigid object."""
@@ -378,8 +398,8 @@ def _capsule_candidate_grid(scene: GeometryScene, lo, hi):
     return grid, scene.voxel_to_world(grid)
 
 
-def capsule_voxel_indices(scene: GeometryScene, start_mm: ArrayLike, end_mm: ArrayLike,
-                          radius_mm: float, *, _candidate_grid=None) -> NDArray[np.int64]:
+def _capsule_voxel_indices_reference(scene: GeometryScene, start_mm: ArrayLike, end_mm: ArrayLike,
+                          radius_mm: float, *, _candidate_grid=None, check=None) -> NDArray[np.int64]:
     """Cell supercover for a capsule; exact for orthogonal, conservative for shear.
 
     Bounding-box slabs limit temporary arrays even for long oblique instruments.
@@ -399,6 +419,7 @@ def capsule_voxel_indices(scene: GeometryScene, start_mm: ArrayLike, end_mm: Arr
     found = []
     candidates_for = _capsule_candidate_grid if _candidate_grid is None else _candidate_grid
     for x in range(int(lo[0]), int(hi[0]) + 1, slab_size):
+        if check is not None: check()
         slab_lo = (x, lo[1], lo[2])
         slab_hi = (min(x + slab_size - 1, hi[0]), hi[1], hi[2])
         grid, world = candidates_for(scene, slab_lo, slab_hi)
@@ -406,8 +427,115 @@ def capsule_voxel_indices(scene: GeometryScene, start_mm: ArrayLike, end_mm: Arr
         candidates = grid[distances <= radius + _EPS]
         exact_distances = _segment_cell_distances(scene, candidates, start, end)
         found.append(candidates[exact_distances <= radius_mm + _EPS])
-    return _immutable(np.concatenate(found).astype(np.int64, copy=False))
+    if check is not None: check()
+    result = _immutable(np.concatenate(found).astype(np.int64, copy=False))
+    if check is not None: check()
+    return result
 
+
+
+_capsule_helpers = tuple((name, globals()[name], globals()[name].__code__) for name in
+    ('_vector', '_immutable', 'point_segment_distances', '_segment_cell_distances', '_capsule_candidate_grid'))
+_capsule_transforms = (GeometryScene.world_to_voxel, GeometryScene.voxel_to_world)
+
+
+def _native_capsule_supported(scene, queries):
+    return (type(scene) is GeometryScene
+        and all(globals()[name] is function and function.__code__ is code
+                for name, function, code in _capsule_helpers)
+        and (GeometryScene.world_to_voxel, GeometryScene.voxel_to_world) == _capsule_transforms
+        and all(np.ndim(radius) == 0 for _, _, radius in queries))
+
+
+def capsule_voxel_indices(scene: GeometryScene, start_mm: ArrayLike, end_mm: ArrayLike,
+                          radius_mm: float, *, _candidate_grid=None, check=None) -> NDArray[np.int64]:
+    """The selected implementation of the established ordered full-cell cover."""
+    return capsule_voxel_indices_batch(scene, ((start_mm, end_mm, radius_mm),),
+                                      check=check, _candidate_grid=_candidate_grid)[0]
+
+
+def capsule_voxel_indices_batch(scene: GeometryScene, queries, *, check=None,
+                                _candidate_grid=None) -> tuple[NDArray[np.int64], ...]:
+    """Bounded, independent capsule queries; results publish only after all checks.
+
+    Native calls share one primitive budget across query spans. Near-threshold
+    cells use the original predicates, preserving its exact boundary decisions.
+    """
+    if type(queries) not in (tuple, list) or len(queries) > native_backend.MAX_BATCH_ITEMS:
+        raise ValueError('Capsule batch must be a list or tuple of at most 64 independent queries')
+    queries = tuple(queries)
+    if check is not None: check()
+    if not queries:
+        return ()
+    enabled = native_backend.cpp_enabled()
+    supported = _native_capsule_supported(scene, queries) if enabled else False
+    if not enabled or not supported:
+        native_backend.reference_call(len(queries), unsupported=enabled)
+        result = tuple(_capsule_voxel_indices_reference(scene, start, end, radius,
+            _candidate_grid=_candidate_grid, check=check) for start, end, radius in queries)
+        if check is not None: check()
+        return result
+    prepared = []
+    for first, last, radius_mm in queries:
+        start, end = _vector(first, 'start_mm'), _vector(last, 'end_mm')
+        if not np.isfinite(radius_mm) or radius_mm < 0:
+            raise ValueError('radius_mm must be finite and nonnegative')
+        radius = radius_mm + scene._cell_radius_mm
+        extent = np.linalg.norm(scene._inverse[:3, :3], axis=1) * radius
+        endpoints = scene.world_to_voxel(np.stack([start, end]))
+        lo = np.maximum(0, np.ceil(endpoints.min(axis=0) - extent - _EPS).astype(np.int64))
+        hi = np.minimum(np.array(scene.shape) - 1,
+                        np.floor(endpoints.max(axis=0) + extent + _EPS).astype(np.int64))
+        start_voxel = scene.world_to_voxel(start)
+        delta = (scene.world_to_voxel(end) - start_voxel)
+        if scene._orthogonal_spacing is not None:
+            delta *= scene._orthogonal_spacing
+        metadata = np.concatenate((start, end, start_voxel, delta,
+                                   [radius_mm + _EPS, radius + _EPS]))
+        if not np.all(np.isfinite(metadata)):
+            native_backend.reference_call(len(queries), unsupported=True)
+            return tuple(_capsule_voxel_indices_reference(scene, a, b, radius,
+                         _candidate_grid=_candidate_grid, check=check) for a, b, radius in queries)
+        count = 0 if np.any(lo > hi) else int(np.prod(hi - lo + 1, dtype=object))
+        prepared.append((metadata, lo, hi, count, start, end, radius_mm))
+    spacing = np.zeros(3) if scene._orthogonal_spacing is None else np.array(scene._orthogonal_spacing)
+    affine = np.array(scene.affine)
+    found = [[] for _ in queries]
+    cursors = [0] * len(queries)
+    active = [index for index, item in enumerate(prepared) if item[3]]
+    while active:
+        if check is not None: check()
+        # Reserve room for several independent items even when one spans a grid.
+        selected = active[:native_backend.MAX_BATCH_ITEMS]
+        per_item = max(1, native_backend.MAX_PRIMITIVES // len(selected))
+        spans, metadata = [], []
+        for index in selected:
+            item = prepared[index]
+            count = min(per_item, item[3] - cursors[index])
+            spans.append((*item[1], *item[2], cursors[index], count))
+            metadata.append(item[0])
+        results = native_backend.capsule_chunk(np.array(metadata, dtype=np.float64),
+            np.array(spans, dtype=np.int64), affine, spacing, scene._cell_radius_mm, _EPS)
+        if check is not None: check()
+        for index, span, (hits, ambiguous) in zip(selected, spans, results):
+            if len(ambiguous):
+                item = prepared[index]
+                distances = point_segment_distances(scene.voxel_to_world(ambiguous), item[4], item[5])
+                candidates = ambiguous[distances <= item[6] + scene._cell_radius_mm + _EPS]
+                exact = _segment_cell_distances(scene, candidates, item[4], item[5])
+                candidates = candidates[exact <= item[6] + _EPS]
+                hits = np.concatenate((hits, candidates))
+                if len(candidates):
+                    order = np.lexsort((hits[:, 2], hits[:, 1], hits[:, 0]))
+                    hits = hits[order]
+            found[index].append(hits)
+            cursors[index] += span[7]
+        active = [index for index in active if cursors[index] < prepared[index][3]]
+    if check is not None: check()
+    result = tuple(_immutable(np.concatenate(items) if items else np.empty((0, 3), np.int64))
+                   for items in found)
+    if check is not None: check()
+    return result
 
 def _failure(reason: str, position: ArrayLike, detail: str, fraction: float | None) -> GeometryFailure:
     return GeometryFailure(reason, tuple(float(x) for x in position), detail, fraction)

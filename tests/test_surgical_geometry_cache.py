@@ -4,11 +4,17 @@ import numpy as np
 import pytest
 from scipy.spatial.transform import Rotation
 
-from resectionlab import geometry
+from resectionlab import geometry, native_backend
 from resectionlab.evaluation import segment_box_distance_sq
 from resectionlab.surgical_engine import SurgicalEngine
 from resectionlab.surgical_geometry_cache import SurgicalCellCoverCache
 from resectionlab.surgical_scene import SurgicalScene
+
+
+@pytest.fixture
+def reference_candidate_cache(monkeypatch):
+    # These tests qualify the reference slab cache; native fused covers have no slabs.
+    monkeypatch.setattr(native_backend, 'cpp_enabled', lambda: False)
 
 
 def engine(affine=None):
@@ -103,6 +109,7 @@ def test_generic_engine_deepcopy_owns_an_empty_compatible_cache():
 
 
 @pytest.mark.parametrize('kind', ['identity', 'oblique', 'mirrored', 'shear'])
+@pytest.mark.usefixtures('reference_candidate_cache')
 def test_distinct_capsules_reuse_only_exact_candidate_slabs(kind):
     affine = np.eye(4)
     if kind == 'oblique':
@@ -126,6 +133,7 @@ def test_distinct_capsules_reuse_only_exact_candidate_slabs(kind):
 
 @pytest.mark.parametrize('limits', [dict(max_candidate_entries=1), dict(max_candidate_bytes=1),
     dict(max_candidate_entries=0), dict(max_candidate_bytes=0)])
+@pytest.mark.usefixtures('reference_candidate_cache')
 def test_candidate_storage_limits_and_eviction_never_change_membership(limits):
     e = engine(); cache = SurgicalCellCoverCache(e.grid, e.scene.identity, **limits)
     for position in (1., 3., 5., 1.001):
@@ -139,7 +147,7 @@ def test_candidate_storage_limits_and_eviction_never_change_membership(limits):
     assert stats['candidateEvictions'] + stats['candidateBypasses'] > 0
 
 
-def test_candidate_helpers_invalidate_both_caches_and_custom_kernel_keeps_four_argument_contract(monkeypatch):
+def test_candidate_helpers_invalidate_both_caches_and_custom_kernel_keeps_four_argument_contract(monkeypatch, reference_candidate_cache):
     e = engine(); a = np.array([3., 3., 3.]); e.cells(a, a, .1)
     previous = dict(e._cell_cover_cache._candidate_entries)
     original = geometry._capsule_candidate_grid
@@ -156,7 +164,7 @@ def test_candidate_helpers_invalidate_both_caches_and_custom_kernel_keeps_four_a
     assert e._cell_cover_cache.stats()['candidateEntries'] == 0
 
 
-def test_long_capsules_reuse_exact_slab_partition_and_order():
+def test_long_capsules_reuse_exact_slab_partition_and_order(reference_candidate_cache):
     labels = np.zeros((40, 80, 80), np.uint16)
     scene = SurgicalScene(labels, np.eye(4), [], {}, {})
     e = SurgicalEngine(scene)
@@ -169,7 +177,7 @@ def test_long_capsules_reuse_exact_slab_partition_and_order():
     assert stats['candidateHits'] >= 2 and stats['candidateEntries'] >= 2
 
 
-def test_candidate_grazing_contacts_and_transform_replacement_match_uncached(monkeypatch):
+def test_candidate_grazing_contacts_and_transform_replacement_match_uncached(monkeypatch, reference_candidate_cache):
     e = engine()
     for point in (np.array([2.5, 3., 3.]), np.array([np.nextafter(2.5, np.inf), 3., 3.]),
                   np.array([np.nextafter(2.5, -np.inf), 3., 3.])):
@@ -186,7 +194,7 @@ def test_candidate_grazing_contacts_and_transform_replacement_match_uncached(mon
     assert calls and e._cell_cover_cache.stats()['candidateEntries'] == 1
 
 
-def test_public_drilling_receipts_match_with_candidate_reuse_disabled():
+def test_public_drilling_receipts_match_with_candidate_reuse_disabled(reference_candidate_cache):
     from resectionlab.surgical_physics_v2 import default_profile
     labels = np.zeros((16, 16, 16), np.uint16)
     labels[4:7, 4:7, 8] = 1

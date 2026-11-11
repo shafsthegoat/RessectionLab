@@ -233,13 +233,14 @@ def implementation_epoch():
     from .surgical_observed_cache import light_implementation_seal
     try:
         from .surgical_idle_native import strict_live_identity
+        from .native_backend import strict_live_identity as cpp_identity
         modules = [importlib.import_module('resectionlab.'+name) for name in dict.fromkeys((*_MODULES, *_DOMAIN, *_LIGHT_MODULES))]
         if any(type(module) is not ModuleType for module in modules): return None
         if any(getattr(module.__spec__, '_initializing', False) for module in modules): return None
         # Qualify defaults before the existing physics seal can format them.
         dispatch = []
         namespaces = tuple((m, m.__name__, vars(m).get('__file__'), _namespace(m, dispatch)) for m in modules)
-        native = _default(strict_live_identity())
+        native = _default((strict_live_identity(), cpp_identity()))
         files = _files()
         fast = (namespaces, native, files)
         with _LOCK:
