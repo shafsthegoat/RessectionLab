@@ -4,7 +4,7 @@
   "previousGoalTurn": "progress: retained trajectory/guard implementation, complete independently verified delivery and measured improvement, normal push.",
   "goalComplete": false,
   "productionChanged": true,
-  "status": "Measured native predicate increment retained after fixed planning and simulation/RL trials. Refreshed full delivery, unchanged original/cumulative comparisons and final independent execution/audit remain pending.",
+  "status": "Bounded predicate investigation, retained integrated improvement, full delivery and independent final acceptance complete. Original2x target remains unmet; normal publication recorded separately.",
   "profile": {
     "path": "outputs/cpp-acceleration-v1/post-trajectory-planning-profile-v6/generate-profile.json",
     "sha256": "58955b650e8281db3820dc7e54a3b486b22d07df7604f9e2b4b0679f7a14806d",
@@ -329,16 +329,12 @@
     "Only keep production change if complete integrated measurements pass fixed contracts and justify complexity."
   ],
   "owners": {
-    "native_kernels": "Production C++/adapter/new native tests frozen: 49 focused checks pass and 3,000 scalar statuses match the captured preceding binary. Heavy slot released.",
-    "motion_efficiency": "Final owned source/tests frozen and focused suites pass; heavyweight slot released.",
-    "independent_review": "Prototype/capture static review complete; production trial review pending.",
-    "coordinator": "Integrated retention passed; preparing verified source commit and sequential full delivery."
+    "native_kernels": "Finished; no heavyweight job active.",
+    "motion_efficiency": "Finished; no heavyweight job active.",
+    "independent_review": "Finished; no heavyweight job active.",
+    "coordinator": "Finished; no heavyweight job active."
   },
-  "pending": [
-    "complete source/wheel/frozen/signed delivery",
-    "unchanged original and cumulative supplementary comparisons",
-    "independent final execution/evidence review and normal push"
-  ],
+  "pending": [],
   "isolatedNativePrototype": {
     "assessment": {
       "path": "outputs/cpp-acceleration-v1/predicate-batch-prototype-v6/assessment.json",
@@ -607,5 +603,31 @@
         "memoryRegressionPassed": true
       }
     }
+  },
+  "codeCommit": "9da0ef8a4cc1d7ea877ce71bdac7c07571c3038a",
+  "completeDelivery": {
+    "raw": {
+      "path": "testcases/outputs/cpp-predicate-final-verification-v6/verification.json",
+      "sha256": "46da5da5a6b2297509d52a247567ef48f99e357e1ac01662a8d9fc588bfe41d3"
+    },
+    "passed": true,
+    "stages": 23,
+    "seconds": 322.9480216241209,
+    "sourceCppTests": {
+      "passed": 854,
+      "skipped": 77
+    },
+    "sourceReferenceTests": {
+      "passed": 334,
+      "skipped": 1
+    },
+    "actualSignedWorkflows": 4,
+    "fourRuntimesFiveVariants": true,
+    "strictSignaturePassed": true
+  },
+  "currentAcceptance": "artifacts/cpp-acceleration-v1/predicate-batch-acceptance-v6.json",
+  "independentFinalReview": {
+    "path": "outputs/cpp-acceleration-v1/independent-predicate-final-v6/review.json",
+    "sha256": "8fae1f4cb694ab809837563b72eb7b419e7a39a7c8e85cf9731a6052826ad976"
   }
 }
