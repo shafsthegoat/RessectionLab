@@ -116,6 +116,7 @@ def parent_fixture():
 
 class Tests(unittest.TestCase):
     def setUp(self):
+        (b.ROOT/'testcases/outputs/rl-readiness-20261022').mkdir(parents=True,exist_ok=True)
         self.temp=tempfile.TemporaryDirectory(dir=b.ROOT/'testcases/outputs/rl-readiness-20261022')
         self.root=Path(self.temp.name)
     def tearDown(self): self.temp.cleanup()

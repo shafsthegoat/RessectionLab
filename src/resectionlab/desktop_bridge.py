@@ -435,6 +435,8 @@ class BridgeSession:
             self._run_key = key_path.read_bytes()
             if len(self._run_key) != 32:
                 raise BridgeError("INVALID_RUN_DIR", "Run integrity key is invalid")
+        self.surgical_cache_root = ((self.run_dir or self.transfers.root) / "surgical-cache"
+                                    if getattr(sys, "frozen", False) else None)
 
     def _get_case(self, value: Any) -> _CaseEntry:
         case_hash = _string(value, "caseHash", maximum=128)
@@ -1862,9 +1864,18 @@ class BridgeRuntime:
                 self._seen.add(request_id)
                 if operation == "ping":
                     _keys(args, set())
+                    from .native_backend import backend_identity
+                    from .surgical_bridge import cache_directories
+                    import platform
                     self.emit({"id": request_id, "event": "result", "result": {"protocolVersion": PROTOCOL_VERSION,
                                "operations": sorted(OPERATIONS), "tools": [asdict(tool) for tool in GENERIC_TOOLS],
-                               "nativeResearchTools": [asdict(tool) for tool in NATIVE_GENERIC_TOOLS]}})
+                               "nativeResearchTools": [asdict(tool) for tool in NATIVE_GENERIC_TOOLS],
+                               "numericalBackend": backend_identity(),
+                               "cacheDirectories": cache_directories(self.session),
+                               "runtime": {"executable": sys.executable, "architecture": platform.machine(),
+                                           "frozen": bool(getattr(sys, "frozen", False)),
+                                           "cacheRoot": str(self.session.surgical_cache_root) if self.session.surgical_cache_root else None,
+                                           "modulePath": str(Path(__file__).resolve())}}})
                     return
                 if operation == "cancel":
                     _keys(args, {"requestId"})

@@ -20,6 +20,31 @@ _NATIVE_PREVIEW = SurgicalEngine.preview
 PREFIX_COMMANDS = frozenset({'seekPrefix', 'seekPrefixFrame'})
 
 
+def _cache_directory(session, name):
+    root = getattr(session, 'surgical_cache_root', None)
+    return root / name if root is not None else None
+
+
+def _verified_cache(session):
+    from .surgical_verified_cache import VerifiedSurgicalCache
+    return VerifiedSurgicalCache(directory=_cache_directory(session, 'verified'))
+
+
+def cache_directories(session):
+    """Report actual cache owners without touching or admitting their contents."""
+    paths = {}
+    replay = getattr(session, 'surgical_replay_cache', None)
+    if replay is not None and replay.verified_cache is not None:
+        paths['verified'] = replay.verified_cache.directory
+    frames = getattr(session, 'surgical_frame_cache', None)
+    if frames is not None:
+        paths['observed'] = frames.store.owner.directory
+    prefix = getattr(session, 'surgical_prefix_session', None)
+    if prefix is not None and prefix[3]._prepared_store is not None:
+        paths['prepared'] = prefix[3]._prepared_store.directory
+    return {name: str(path.resolve()) for name, path in paths.items()}
+
+
 def display_timeline(history):
     """Bound redundant UI event samples; canonical replay history stays exact."""
     def detach(value):
@@ -374,7 +399,7 @@ def dispatch(session, operation, args, request, progress):
                 'Read-only replay source, branch or session changed; explicitly restart from the beginning before continuing.')
         if not matches_owner:
             from .surgical_prefix_replay import SurgicalPrefixReplay
-            from .surgical_prefix_cache import PreparedPrefixStore
+            from .surgical_prefix_cache import PreparedPrefixStore, DIRECTORY_ENV
             # This branch belongs to the bundle's privately frozen artifact.
             # Future reads retain that exact origin, independently of edits or
             # canonical session state.
@@ -389,7 +414,8 @@ def dispatch(session, operation, args, request, progress):
                 prefix_scene = resolve_branch_scene(prefix_scene, raw, selected)
             owner = SurgicalPrefixReplay._borrow_frozen_snapshot(prefix_scene, frozen_snapshot,
                 max_input_bytes=128 * 1024**2, max_frame_bytes=64 * 1024**2,
-                _display_row_projection=display_receipt, _prepared_store=PreparedPrefixStore(),
+                _display_row_projection=display_receipt, _prepared_store=PreparedPrefixStore(
+                    directory=os.environ.get(DIRECTORY_ENV) or _cache_directory(session, 'prepared')),
                 _cache_only=args.get('cacheOnly', False))
             request.check()
             owned = (entry, entry.artifacts, selected, owner)
@@ -455,11 +481,11 @@ def dispatch(session, operation, args, request, progress):
     cache = getattr(session, 'surgical_sessions', {})
     replay_cache = getattr(session, 'surgical_replay_cache', None)
     if replay_cache is None:
-        replay_cache = SurgicalReplayCache(verified_cache=bool(raw and raw.get('fullCase')))
+        replay_cache = SurgicalReplayCache(verified_cache=_verified_cache(session)
+            if raw and raw.get('fullCase') else False)
         session.surgical_replay_cache = replay_cache
     elif raw and raw.get('fullCase') and replay_cache.verified_cache is None:
-        from .surgical_verified_cache import VerifiedSurgicalCache
-        replay_cache.verified_cache = VerifiedSurgicalCache()
+        replay_cache.verified_cache = _verified_cache(session)
     cached = cache.get(identity)
     # Bundle artifacts are recursively immutable and privately constructed by
     # freeze_json at this boundary. Only an exact object we installed may reuse
@@ -494,7 +520,9 @@ def dispatch(session, operation, args, request, progress):
         base_scene = scene_builder(record['mapping'])
         scene = (resolve_branch_scene(base_scene, record, record['branchId'])
             if record.get('cranialPlanningRoots') is not None else base_scene)
-        full = SurgicalEngine.restore(scene, record['branches'][record['branchId']], check=request.check, use_cache=bool(record.get('fullCase')))
+        full = SurgicalEngine.restore(scene, record['branches'][record['branchId']], check=request.check,
+            use_cache=bool(record.get('fullCase')), verified_cache=replay_cache.verified_cache
+            if getattr(session, 'surgical_cache_root', None) is not None else None)
         engine, timeline = replay_cache.seek(full, record['branches'][record['branchId']], record['position'], check=request.check, include_history=True)
         record.setdefault('timeline', {})[record['branchId']] = timeline
     def owner_for_branch(branch_id, current_engine):
@@ -503,7 +531,8 @@ def dispatch(session, operation, args, request, progress):
             return current_engine
         selected_scene = resolve_branch_scene(base_scene, record, branch_id)
         return SurgicalEngine.restore(selected_scene, snapshot, check=request.check,
-            use_cache=bool(record.get('fullCase')))
+            use_cache=bool(record.get('fullCase')), verified_cache=replay_cache.verified_cache
+            if getattr(session, 'surgical_cache_root', None) is not None else None)
 
     def inherit_root(branch_id, parent_branch_id):
         registry = record.get('cranialPlanningRoots')
@@ -556,7 +585,7 @@ def dispatch(session, operation, args, request, progress):
         from .surgical_frame_replay import SurgicalFrameCache
         frames = getattr(session, 'surgical_frame_cache', None)
         if frames is None:
-            frames = session.surgical_frame_cache = SurgicalFrameCache()
+            frames = session.surgical_frame_cache = SurgicalFrameCache(directory=_cache_directory(session, 'observed'))
         branch_id = args.get('branchId', record['branchId'])
         if branch_id not in record['branches']: raise ValueError('Unknown playback branch')
         owned = getattr(session, 'surgical_frame_admissions', {}).get((identity, branch_id))
