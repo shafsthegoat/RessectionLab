@@ -288,6 +288,24 @@ function modelWorkerMock(){
     }};
   return {workers,restore(){globalThis.Worker=previous;}};
 }
+test('exact unacted inspection source publishes actual tools/state at the frame fence without remeshing its overlapping annotations',async()=>{
+  const {modeledVolume,registerSourceInspection}=await server.ssrLoadModule('/src/modeled-volume.ts');
+  const mock=modelWorkerMock();try{
+    const {r,source}=modeledFixture(),names=source.compartments.map(l=>l.name);
+    const hashes=Object.fromEntries(names.map((name,i)=>[name,'sha256:'+String(i+1).repeat(64)]));
+    const marker={schema:'resectionlab.cranial-planning-candidate.v1',status:'inspection-only',sourcePatientGroup:'generated',sourceCollectionHash:'generated-collection',targetLayerIds:['brain'],patientTaskAdmission:false,officialTrainClaim:false,annotationAuthority:false,physicalProtectionIndexConstructed:false};
+    registerSourceInspection(source,marker,Object.fromEntries(names.map(name=>[name,{maskHash:hashes[name]}])));
+    const view={stateId:'actual-unacted',scene:{shape:source.shape,affine:source.affine,regions:names.map((name,i)=>({id:i+1,name,material:name==='brain'?'tumor':'unknown',target:name==='brain'})),source:{caseId:source.caseId,caseHash:source.caseHash,annotationHashes:hashes,adapter:{type:'native-patient-source-inspection',sourceRole:'DEVELOPMENT_CANDIDATE',sourcePatient:'generated',sourceCollectionHash:'generated-collection',physicalProtectionIndexConstructed:false}}},history:[],removed:[],moved:[],slots:{},metrics:{elapsedSeconds:0,targetRemovedMm3:0,nonTargetRemovedMm3:0},protection:{configured:false}};
+    const surfaces=[...r.surfaces.values()],geometry=[...r.surfaceGeometry.values()],texture=r.labelTexture,bytes=texture.image.data.slice(),ready=[];
+    const input={view,onDisplayReady:value=>ready.push(value)};
+    assert.equal(r.installSurgicalState(modeledVolume(source,view),input),true);
+    assert.equal(r.installedInteraction,input);assert.equal(r.modelStage,null);assert.equal(mock.workers.length,0);assert.equal(ready.length,0);
+    submitPreparedState(r);
+    assert.deepEqual(ready,[view]);assert.equal(r.publishedSurgicalView,view);assert.equal(r.volume,source);
+    assert.deepEqual([...r.surfaces.values()],surfaces);assert.deepEqual([...r.surfaceGeometry.values()],geometry);
+    assert.equal(r.labelTexture,texture);assert.deepEqual(texture.image.data,bytes);assert.equal(r.displayWork.modelRemeshedLayers,0);
+  }finally{mock.restore();}
+});
 test('modeled tissue stages labels/surfaces/tools atomically, reuses unchanged MRI/layers, and backward seek reuses resident geometry',()=>{
   const mock=modelWorkerMock();try{
     const {r,source,derive}=modeledFixture(),a=derive([22]),b=derive([22,23]),oldBrain=r.surfaces.get('brain'),vessel=r.surfaces.get('vessel'),texture=r.labelTexture,sourceCopy=source.compartments[0].mask.slice();

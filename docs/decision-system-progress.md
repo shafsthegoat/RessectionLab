@@ -229,7 +229,26 @@ verified acquired image archive; model outputs below are proposals.
   attempt's binary-uint8 assumption and monitor temporary-rename failure remain
   preserved; its whole wall/peak memory are UNKNOWN. The corrected attempt reuses
   content-addressed arrays. CT registration remains unreviewed; source inspection
-  does not grant execution. Actual desktop/cold inspection remains to be checked.
+  does not grant execution. The first hidden desktop attempt loads source/surfaces
+  but exposes a verifier ordering error: it waits for the workflow before clicking
+  the new project's Prepare instrument scene. Its174.574s/3.247GB attempt is
+  preserved. V2 performs the real create in1.457s, then establishes an application
+  display failure: converting unchanged overlapping inspection masks into exclusive
+  material masks triggers remeshing and Invalid array length. The accepted source
+  display is retained. Exact failing allocation is not established because the
+  worker drops its stack. V2 ends at50.02s external wall; logged aggregate RSS is
+  at least3.043GB, final peak UNKNOWN because parent terminal cleanup raisesEPERM
+  after the child exits. All logged processes are independently verified absent.
+  The checked case loader now privately binds the source marker, grid and exact
+  MRI/mask identities. Only a matching pristine native view reuses the unchanged
+  source masks/surfaces; any tissue effect/history or adapter-only claim refuses.
+  Ordinary executable modeled-volume reconstruction is unchanged. Native
+  tools/state still publish through the existing frame fence without remeshing
+  inspection exclusions.56 focused checks,714 renderer and275 viewer tests pass;
+  TypeScript/production build passes. The general failing allocation primitive
+  remains unproven; this fixes the unnecessary inspection representation change.
+  Hidden V3 and separate terminal-cleanup repair remain pending. Neither earlier
+  attempt grants native effects, treatment or cold evidence.
   No native patient action or complete tumor task exists.
 - **Meningioma06:** preexisting unreviewed full proposal360280 cells/45035mm³.
   Three source-aligned windows pass engineering surface fit, but the best whole
@@ -247,12 +266,19 @@ local AGENTS.md is committed.
 
 ## Next substantive dependencies
 
-1. Correct source02's local table estimator using the reviewed continuous band
-   and exact outer-edge occupancy, then qualify every original required node. Preserve all other
+1. The corrected local table study now passes all1117 required nodes, preserves
+   the leading cell and reproduces the full closed-cell cover. It still cannot
+   admit an opening:1748 original target cells lie in the cover,948 in its dense
+   subset;2274 nondense cells remain unclassified and17 other-positive UNKNOWN
+   cells lie behind. The1029 local positives in the behind cover also lie in the
+   proposed removal subset; they are closed-face overlap, not retained islands.
+   Study34.320s/1.020GB; saved-ID/SAT audit11045 checks pass in4.95s/431MB. Next:
+   qualify six prospective adjacent openings without filtering target/guards or
+   expanding the reviewed source scope silently. Preserve all other
    density as target/protected/collidable UNKNOWN; no whole-component anatomical
    promotion, largest-component deletion, island skipping or guard change.
-2. Verify actual source inspection/blocked Generate/cold reopen in the desktop;
-   qualify calvarium, local critical/venous/dural and exterior data. Preserve
+2. Verify the fixed unchanged inspection-mask display, actual blocked Generate,
+   Save and cold reopen. Qualify calvarium, local critical/venous/dural and exterior data. Preserve
    candidate-role proof without promoting a reserved case or annotation authority.
 3. Construct and compare genuinely different source-qualified opening/work/exit
    alternatives, freeze patient tasks and fair baseline/search budgets, and run

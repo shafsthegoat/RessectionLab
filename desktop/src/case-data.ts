@@ -5,6 +5,7 @@ import type {
   Vec3,
   ViewerCase,
 } from "./types";
+import {registerSourceInspection} from './modeled-volume.ts';
 
 export function anatomyColor(name: string): string {
   const key = name.toLowerCase();
@@ -217,7 +218,7 @@ export async function hydrateCase(
     affine[0] = affine[0].map((value) => -value);
     affine[1] = affine[1].map((value) => -value);
   }
-  return {
+  const result: ViewerCase = {
     caseId: payload.caseId,
     caseHash: payload.caseHash,
     frame: "RAS+",
@@ -254,6 +255,10 @@ export async function hydrateCase(
       };
     }),
   };
+  const properties=payload.metadata.surgical_properties;
+  if(properties&&typeof properties==='object'&&!Array.isArray(properties)&&Object.prototype.hasOwnProperty.call(properties,'cranialPlanningCandidateV1'))
+    registerSourceInspection(result,(properties as Record<string,unknown>).cranialPlanningCandidateV1,payload.metadata.source_inspection_annotations);
+  return result;
 }
 
 export function initialCursor(caseData: ViewerCase): Vec3 {
