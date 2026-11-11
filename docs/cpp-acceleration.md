@@ -13,11 +13,11 @@ the project still has zero completed patient tumor tasks and makes no clinical c
 | M1 fixed workloads, contracts, actual profiles | passed | Original frozen manifest and portable fixture; supplementary simulation/RL manifest qualified and frozen |
 | M2 production C++ integration | passed | Exact native cover, scalar collision and JSON results; source, installed and frozen execution |
 | M3 production multi-item batches | passed | Fresh planner uses batches of up to three, exact 370-call trace; bounded cancellation below 100 ms |
-| M4 source, external clean wheel, frozen app | passed | Current 23-stage delivery refresh passes all four runtimes, including stock motion-source qualification and actual native checkpoint; independently reproduced |
-| M5 actual lifecycle and independent acceptance | passed | Four actual signed C++/reference warm/cold flows; valid domain refusal, cancellation, exact restore, final codesign; independent C++ warm/cold, saved-case replay and all 70 measured samples reproduce |
-| Original representative ≥2× throughput | pending; measured below target | Final five-pair result 17.433692 → 12.926069 s, **1.3487×**, unchanged 2× fails |
+| M4 source, external clean wheel, frozen app | passed | Current 23-stage delivery passes all four runtimes; independent source/new wheel/signed variants reproduce checkpoint and trajectory dispatch |
+| M5 actual lifecycle and independent acceptance | passed | Four actual signed C++/reference warm/cold flows, refusal, cancellation, exact restore and codesign; independent C++ warm/cold, three saved-case full replays and all 80 measured / 14 warmup samples pass |
+| Original representative ≥2× throughput | pending; measured below target | Final five-pair result 17.421058 → 12.740213 s, **1.3674×**, unchanged 2× fails |
 | Original other latency and memory limits | passed | All four current exact workloads, ≤10% latency/memory gates and 1 GiB hard cap pass |
-| Supplementary second-pass improvement | passed | Copier retained: simulation 1.0266× and complete RL episodes 1.0258×; five paired fresh processes, exactness and memory pass |
+| Supplementary second-pass improvement | passed | Current code vs frozen first C++: simulation 1.0647× and complete RL episodes 1.0760×; five paired fresh processes, exactness and memory pass |
 
 Host: Apple M2 Pro arm64, 16 GiB, Apple Clang 21.0.0, CPython 3.12.14 arm64.
 Use this checkout's `src` explicitly: the available development environment is
@@ -26,16 +26,18 @@ All numerical pools are fixed to one thread; only one heavy job runs at a time.
 
 ## Fixed comparison and results
 
-Baseline/fetched target is `27f59e85c5b0d6f5b918989bec32976789bf391a` on
-`origin/shaf/decision-system-v1`. The original manifest SHA256 remains
+The original comparison baseline is `27f59e85c5b0d6f5b918989bec32976789bf391a`.
+Delivery targets `origin/shaf/decision-system-v1`; it is fetched and reconciled
+before each normal push. The original manifest SHA256 remains
 `f507080eb60f214fd4f050e1595d551bff6222b6fef6cad6d6f7b7a98abb0f67`.
 Five alternating fresh-process pairs follow one warmup per backend/workload.
 Complete fixture creation plus public computation is timed; imports, audits and
 output encoding are separate. Original stress also includes five state digests;
 its result is not a mechanics-only speedup. All current samples, variability, exact
 hashes, counters, setup/compute splits and memory are retained in the compact
-[current occupancy receipt](../artifacts/cpp-acceleration-v1/occupancy-fastpath-acceptance-v3.json).
-The [previous motion receipt](../artifacts/cpp-acceleration-v1/motion-followup-acceptance-v2.json) and
+[current trajectory receipt](../artifacts/cpp-acceleration-v1/trajectory-followup-acceptance-v5.json).
+The [previous occupancy receipt](../artifacts/cpp-acceleration-v1/occupancy-fastpath-acceptance-v3.json),
+[previous motion receipt](../artifacts/cpp-acceleration-v1/motion-followup-acceptance-v2.json) and
 [previous final receipt](../artifacts/cpp-acceleration-v1/final-performance-acceptance.json)
 retain the earlier five-pair runs separately; versions are never pooled.
 The [first-increment receipt](../artifacts/cpp-acceleration-v1/first-increment-acceptance.json)
@@ -43,10 +45,10 @@ retains the earlier 1.2313× working increment before the bounded second port.
 
 | Original workload | Pre-port reference median | C++ median | Speedup | Exact / memory / latency |
 |---|---:|---:|---:|---|
-| Small geometry | 1.910 ms | 1.442 ms | 1.325× | pass |
-| Fresh Generate | 17.433692 s | 12.926069 s | 1.349× | exact/memory pass; 2× fails |
-| Standard-physics refusal | 1.399488 s | 1.078434 s | 1.298× | pass |
-| Geometry + active continuum + state recording | 0.977829 s | 0.515335 s | 1.897× | pass |
+| Small geometry | 1.881 ms | 1.446 ms | 1.301× | pass |
+| Fresh Generate | 17.421058 s | 12.740213 s | 1.367× | exact/memory pass; 2× fails |
+| Standard-physics refusal | 1.393655 s | 1.057359 s | 1.318× | pass |
+| Geometry + active continuum + state recording | 0.974171 s | 0.517436 s | 1.883× | pass |
 
 The representative performs 370 physical calls (129 previews, 241 steps), exports
 112 actions, treats 18/27 target cells and records 334 mm³ other removal in both
@@ -127,27 +129,29 @@ graph helpers improve 3.31× / 4.05×; smaller helpers improve 1.60–2.42×, be
 Late unsupported graphs cost ~23% more than reference; this limit is retained in
 the [helper receipt](../artifacts/cpp-acceleration-v1/native-engine-copy-evidence.json).
 
-| Second pass complete workload | Captured first C++ median | Retained copier median | Gain | Timed-work RSS before → after |
+| Second pass complete workload | Captured first C++ median | Current C++ median | Gain | Timed-work RSS before → after |
 |---|---:|---:|---:|---:|
-| Six simulation families | 1.197241 s | 1.166272 s | 2.66% throughput | 109,854,720 → 110,002,176 B |
-| Six complete Gym episodes | 1.248815 s | 1.217429 s | 2.58% throughput | 101,646,336 → 101,777,408 B |
+| Six simulation families | 1.216864 s | 1.142910 s | 6.47% throughput | 109,969,408 → 109,969,408 B |
+| Six complete Gym episodes | 1.248829 s | 1.160598 s | 7.60% throughput | 101,613,568 → 101,695,488 B |
 
 These are five alternating fresh-process pairs, including bindings/conversion and
 production copies/hashes. Every after sample is faster than every before sample;
-all exact frozen outcomes and memory gates pass. Simulation: 44.27 → 45.44 public
-attempts/s; RL: 4.805 → 4.928 complete episodes/s. Actual engine graph calls:
+all exact frozen outcomes and memory gates pass. Simulation: 43.55 → 46.37 public
+attempts/s; RL: 4.804 → 5.170 complete episodes/s. Actual engine graph calls:
 1,566 simulation / 2,334 RL, zero fallback. Original planning uses 11,901 native
 graph copies, zero graph/geometry fallback; JSON detachment has seven documented
 unsupported identity-graph fallbacks. Final planning median memory falls
-150,044,672 → 142,737,408 B in the current follow-up. Supplementary memory uses
+150,192,128 → 141,983,744 B in the current follow-up. Supplementary memory uses
 the pre-audit high-water mark; full-process restore audit still enforces the
 1 GiB cap. Earlier five-pair
 runs remain retained: before the copy startup guard (2.92% simulation / 2.46% RL),
 after it (2.59% / 2.87%), and after motion qualification (3.26% / 3.51%). The
-current v3 run includes the guarded occupancy fix and directly measures fresh
-process memory. These supplementary controls do not isolate the new occupancy
-change; its 3.91% planning gain is measured separately below. Versions are never
-pooled, and variation between versions is not attributed to an individual fix.
+previous v3 run includes the guarded occupancy fix; the current v5 run also
+includes trajectory batching and shared guard corrections. These supplementary
+controls measure the accumulated changes from the first C++ capture and do not
+isolate one optimization. The occupancy and trajectory planning increments are
+measured separately below. Versions are never pooled, and variation between
+versions is not attributed to an individual fix.
 No additional port is justified by this bounded pass.
 
 ## Residual profile and compatibility follow-up
@@ -193,20 +197,20 @@ failure, present-corrupt-auto failure, genuine GC within proof scope, and replay
 Actual signed executable workflows use the existing Electron harness through a
 pre-main debugger launcher, detached before computation. They run
 `app.isPackaged=true` with original sidecar routing and real renderer/preload.
-The current complete 23-step verifier passes. Source: **696 passed / 77 intentional
-older-helper skips**; reference: **192 passed**. Desktop main/renderer/viewer:
+The current complete 23-step verifier passes at `40693c6d`. Source: **747 passed / 77 intentional
+older-helper skips**; reference: **276 passed / one skip**. Desktop main/renderer/viewer:
 **325 / 716 / 275 passed**; TypeScript and production build pass. All runtime
 variants in source, clean wheel, frozen sidecar and signed app pass. Captured
-source digest `f180d8cd…fa83ac`, source native `bfc5b705…9775a`, signed native
-`32fd4fdb…db338`; the current engine is `a9b1e0cd…e5dac7` and app CDHash
-`70f88acd…4e8eb5`. Exact identities are in the current follow-up receipt. The app
+source digest `8bdfc3e2…0bbacb`, source native `bfc5b705…9775a`, signed native
+`32fd4fdb…db338`; the current engine is `aade4161…1c76a6` and app CDHash
+`763c7f15…ca35d0`. Exact identities are in the current follow-up receipt. The app
 is locally ad hoc signed, not notarized.
 
 C++ and reference each complete fresh Generate → Compare → select → replay,
 pause/seek → Save → terminate → cold Open. Comparison, insertion order, selected
 branch, full view/timeline, actions, ledger and source anatomy restore; reopening
 performs no planning. App signature remains valid after execution. The compact
-[current delivery receipt](../artifacts/cpp-acceleration-v1/occupancy-fastpath-acceptance-v3.json)
+[current delivery receipt](../artifacts/cpp-acceleration-v1/trajectory-followup-acceptance-v5.json)
 identifies actual files and retained logs. The [previous delivery receipt](../artifacts/cpp-acceleration-v1/packaged-delivery-evidence.json)
 retains the prior increment separately. A narrow legacy-CUSA request correction
 omits unsupported duty in legacy mode and retains it in V2. Both warm flows now
@@ -398,12 +402,11 @@ slot. Independent audit passes: 105 helper samples, current timed-only profile,
 full frozen Generate result/seal/work, production/capture isolation, source and
 binary identities, callback controls and all reported statistics. Current evidence is in the
 [ROI receipt](../artifacts/cpp-acceleration-v1/owned-admission-roi-v4.json).
-The prior integrated acceptance remains current because production source,
-headers and binaries are unchanged. The next action is to consider a further
-port only when a new measured numerical bottleneck supports a concrete design
-that preserves behavior. The original 2× target remains unmet.
+At that v4 investigation, the prior integrated acceptance remained applicable
+because production source, headers and binaries were unchanged. The next bounded
+increment follows below. The original 2× target remains unmet.
 
-## Trajectory batching candidate after `43b4d6aa`
+## Retained trajectory increment at `40693c6d`
 
 The next measured seam is repeated scalar SciPy interpolation: 7,816 calls take
 0.574 s inclusive in the current timed-only planning profile. This work is
@@ -415,14 +418,15 @@ Before implementation, 56,165 quaternion rows in 219 generated trajectories and
 1,869 chunks match scalar output bits exactly. Coverage includes the actual
 fixture orientations/counts, signed zeros, random/near-zero/near-pi/antipodal
 rotations and two full 20,000-step controls. Each returned row is privately owned.
-With selection and helper qualification repeated per row, five paired helper
-samples improve about 2.1×. These are supporting measurements, not integrated
+Before the final guard corrections, with selection and helper qualification
+repeated per row, five paired helper samples improve about 2.1×. These are
+supporting measurements, not the retained helper's performance, integrated
 acceptance or evidence for the original 2× gate.
 
 The preceding C++ source/binary is captured at
 `outputs/cpp-acceleration-v1/trajectory-prepass-cpp-v5`, with all 334 files checked.
-The unchanged workers will run ten alternating fresh-process pairs with one
-warmup per role. Before timing, retention requires exact frozen work, memory and
+The unchanged workers ran ten alternating fresh-process pairs with one
+warmup per role. Before timing, retention required exact frozen work, memory and
 hard caps, a positive median gain, and a positive lower 95% paired-bootstrap
 geometric-speedup interval. No post-hoc extension of repetitions is planned.
 The original pre-port comparison and target remain separate and unchanged.
@@ -463,10 +467,27 @@ Python integration control and compiled array operations. RL observations take
 self time. The new underflow qualification costs 0.0063 / 0.0114 s inclusive.
 These overlapping attribution values are not before/after speed evidence. The
 six-area inventory above remains applicable: no further numerical port is
-justified by these small residual seams. Refreshed delivery and paired complete
-simulation/RL results remain pending; the prior packaged acceptance still applies
-to the captured production version. See the
+justified by these small residual seams. The refreshed 23-stage delivery now
+passes at `40693c6d`, including all four runtimes, all four actual signed workflows
+and the final strict signature check. The unchanged five-pair original comparison
+now measures 1.3674× Generate, below 2×, with all other gates passing. Five-pair
+supplementary measurements show 1.0647× simulation and 1.0760× complete RL
+throughput against the frozen first C++ capture. Independent execution passes
+85 C++ / 84 reference focused tests and one reference skip, 15 source/new-wheel/
+signed runtime variants, signed C++ warm/cold flows, strict codesign and three
+saved-case native seals/full replays. All 80 measured samples and 14 separate
+warmups pass the receipt audit, including original raw report seals, goal
+registrations, exact work, source roles, order, counters, RSS and statistics.
+The ten-pair improvement is supported by nine faster pairs; no claim is made that
+every after sample beats every before sample. No delivered-code defect remains.
+The engineering gates pass; the original 2× performance gate remains open and
+requires another 31.6% elapsed-time reduction from the current C++ median. See the
 [trajectory receipt](../artifacts/cpp-acceleration-v1/trajectory-followup-acceptance-v5.json).
+
+Implementation, measurement, packaging and independent review owners have finished
+this increment. No heavyweight job remains. The next port requires a new measured
+seam with enough numerical work to justify its complexity; the bounded current
+pass does not support a wholesale rewrite or removing authoritative checks.
 
 Delivery target is `origin/shaf/decision-system-v1`, using a normal fast-forward
 push. Verify local/remote identity with `git rev-parse HEAD` and
