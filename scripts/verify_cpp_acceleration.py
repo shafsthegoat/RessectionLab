@@ -12,6 +12,7 @@ import importlib.metadata
 import json
 import os
 from pathlib import Path
+import runpy
 import shutil
 import subprocess
 import sys
@@ -121,6 +122,7 @@ def main():
             '--package-root', site, '--output', str(output / 'wheel-runtime.json')], clean=True)
 
         run('frozen-build', [python, 'scripts/build_electron_sidecar.py'])
+        shutil.copy2(ROOT / 'build/electron-sidecar/build-report.json', output / 'frozen-build-report.json')
         engine = desktop / 'sidecar/ressectionlab-engine/ressectionlab-engine'
         run('frozen-runtime', [*probe, '--runtime', 'frozen', '--executable', str(engine),
             '--output', str(output / 'frozen-runtime.json')], clean=True)
@@ -132,6 +134,7 @@ def main():
                 *map(str, sorted(desktop.glob(pattern)))], cwd=desktop)
         run('app-package', [str(node), 'electron/package-macos.cjs'], cwd=desktop)
         build = json.loads((desktop / 'release/build-report.json').read_text())
+        shutil.copy2(desktop / 'release/build-report.json', output / 'app-build-report.json')
         packaged_engine = Path(build['appPath']) / 'Contents/Resources/research-engine/ressectionlab-engine'
         run('packaged-runtime', [*probe, '--runtime', 'frozen', '--executable', str(packaged_engine),
             '--output', str(output / 'packaged-runtime.json')], clean=True)
@@ -154,6 +157,14 @@ def main():
                 'WORKFLOW_OUTPUT': str(output / (backend + '-cold')), 'WORKFLOW_REOPEN': '1',
                 'WORKFLOW_EXPECT_REPORT': str(warm / 'report.json')})
             assert json.loads((output / (backend + '-cold') / 'report.json').read_text())['passed']
+        cpp, reference = [json.loads((output / (backend + '-warm/report.json')).read_text())['cranialSnapshot']
+                          for backend in ('cpp', 'reference')]
+        assert {k: v for k, v in cpp.items() if k != 'comparison'} == {
+            k: v for k, v in reference.items() if k != 'comparison'}, 'Backend workflow snapshots differ'
+        canonical_result = runpy.run_path(str(ROOT / 'scripts/benchmark_cpp_acceleration.py'))['canonical_result']
+        assert canonical_result({'report': cpp['comparison']}) == canonical_result({
+            'report': reference['comparison']}), 'Backend workflow comparisons differ'
+        report['crossBackendWorkflowExact'] = True
         run('app-signature-after-workflows', ['/usr/bin/codesign', '--verify', '--deep', '--strict', build['appPath']])
         report['passed'] = True
         save()
