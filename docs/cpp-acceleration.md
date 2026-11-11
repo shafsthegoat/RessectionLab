@@ -6,11 +6,134 @@ Useful correct improvements are retained; kernel speedups do not complete that g
 All controls are generated engineering cases. Patient validation is unavailable;
 the project still has zero completed patient tumor tasks and makes no clinical claim.
 
-The retained numerical source is `9da0ef8a`. Current measured retention and
-23-stage delivery and final independent execution/audit pass. The original
-performance objective remains incomplete.
+The current numerical implementation is `2d9712f8`. Its complete 23-stage delivery
+and independent code review pass. The original performance objective remains
+incomplete. Earlier v6 results are retained below as history.
 
-## Acceptance matrix
+## Executor increment v9 — integrated and verified
+
+The physical substep and ordered trajectory/rollback loops now execute in the
+same C++17 extension, behind the existing Python engine interface. This is an
+execution port, not another geometry-only binding. Python retains transaction
+publication, proposal policy, specialized physics hooks, and existing compiled
+NumPy/SciPy solvers. Public state remains the authoritative Python data graph;
+this increment does not introduce a separate unsynchronized native state mirror.
+
+The executor also uses native owned-JSON validation, batched live function
+signatures, and typed occupancy lookup. Occupancy checks the existing proven
+immutable integer ledger directly, preserving shape/order, negative indexing,
+moved ownership, shared memberships and owned outputs without per-cell Python
+membership generators or temporary NumPy arrays. Cache admission still inspects
+live implementation metadata; it does not skip invalidation. Custom region rows
+retain both ordered material lookup passes and function metadata retains getter
+and id audit events. Original reference execution remains available.
+
+On-disk native source/binary qualification now occurs at entry and exit of each
+bounded physical substep, including exceptional exits, before the candidate can
+be published. Environment, loaded module, origin and binding identities remain
+checked at every inner binding. The scope is thread-local and is reset during
+unwinding. A transient on-disk change restored entirely within one substep is
+outside this transaction-boundary qualification; this is not a promise to sample
+every intermediate filesystem state. No collision, evidence, protection or
+physical effect check was removed.
+
+The first direct executor translation was exact but did not improve elapsed time
+(12.518 s versus a contemporaneous prior-C++ pilot of 12.087 s). Native state and
+occupancy/signature work plus bounded qualification reduced pilots to 11.113 s
+and then 10.412 s. These are diagnostics, not accepted paired results. A direct
+scalar SciPy-backend motion experiment was exact on 408 generated envelope cases
+but its complete pilot was 10.557 s; its code and extra qualification were dropped.
+Review found and fixed custom-region lookup reuse and missing getter audit events;
+two focused regressions cover these. The corrected source passes 103 focused execution/trajectory/cancellation/cache/
+occupancy checks and the complete existing verifier: **885 C++ tests / 77 intentional
+skips**, **355 reference tests / one skip**, and unchanged desktop suites
+**325 / 716 / 275**. All four source/wheel/frozen/signed runtimes exercise exactly
+one native trajectory and 33 native physical substeps in the public runtime probe;
+reference and absent-auto fallback exercise zero. The actual signed app passes
+four C++/reference Generate → Save → terminate → cold Open flows, exact comparison,
+cancellation, valid refusal, zero cold planning and final strict signature checks.
+The app remains locally ad hoc signed and is not notarized.
+
+[Current compact receipt](../artifacts/cpp-acceleration-v1/executor-acceptance-v9.json)
+retains all paired samples, setup/compute splits, variability, memory, exact hashes,
+counters, runtime identities and rejected trial. The original frozen manifests,
+workloads, physical call trace, exact contracts and 2× target are unchanged.
+Five fresh-process paired repetitions follow one warmup per role, alternating
+original/current and previous/current order in the same three-role Generate run.
+All numerical pools remain one thread; no heavy jobs overlap these measurements.
+Production binding/conversion/copy/hash work is timed; profiling/audits/builds are not.
+
+| Current fixed workload | Baseline | Current C++ | Whole-workload speedup |
+|---|---:|---:|---:|
+| Fresh Generate, original pre-port | 17.620566 s | 11.187825 s | 1.57498× |
+| Fresh Generate, preceding C++ | 12.754084 s | 11.187825 s | 1.14000× |
+| Small geometry, original pre-port | 0.001948 s | 0.001538 s | 1.26653× |
+| Standard-physics refusal, original pre-port | 1.409376 s | 1.005235 s | 1.40204× |
+| Geometry + active continuum + state, original pre-port | 0.995906 s | 0.522693 s | 1.90534× |
+| Six simulation families, preceding C++ | 1.151278 s | 1.079518 s | 1.06647× |
+| Six complete Gym episodes, preceding C++ | 1.168096 s | 1.075495 s | 1.08610× |
+
+The executor increment saves **1.566260 seconds** on complete planning, a **12.28%
+latency reduction / 14.00% throughput increase** over the preceding C++ build.
+The original reference/current comparison is **1.57498×**, so the unchanged 2×
+gate and the requested sub-five-second target remain **unmet**. All exactness,
+other latency, memory regression and 1 GiB hard-cap checks pass. Planning median
+peak RSS is 150,421,504 B original / 142,032,896 B preceding C++ / 142,458,880 B
+current. Supplementary timed-work memory is 110,002,176 → 110,034,944 B simulation
+and 101,761,024 → 101,777,408 B RL. No policy training or patient validation ran.
+
+The fixed fresh Generate still performs **370 evaluations**, **7,820 physical
+substeps**, exports **112 actions**, treats **18/27** target cells and records
+**334 mm³** other removal. It uses 361 native trajectory loops, 55,860 native
+signature batches, 68,648 occupancy queries and 67,046 owned-state hashes.
+Geometry work remains 16,697 capsule batches (max three items), 21,638 predicate
+batches / 105,230 predicate rows and 2,918,780 primitive candidates. These are
+actual production counters; no attempts, replay, checks or accounting were
+replaced by cached successful outcomes.
+
+| Current acceptance gate | Status |
+|---|---|
+| M1 frozen data-free workloads / exact comparisons | passed |
+| M2 complete native execution integration | passed |
+| M3 real bounded production batches / ordering / cancellation | passed |
+| M4 source, clean wheel, frozen sidecar, signed app | passed |
+| M5 actual lifecycle and independent review | passed |
+| Original ≥2× complete planning / sub-five seconds | pending; 1.57498× / 11.187825 s |
+| Exactness, other latency and memory regressions | passed |
+
+Qualified implementation: `2d9712f80f7152ef03aae7d6234cbfd256f00dcd`.
+Capture began with parent `c5cc16ed` plus the implementation diff; **all 335 captured
+inputs byte-match the implementation commit and current checkout**. Thus its
+older capture revision is not an assertion that the old executor was packaged.
+Captured source digest `61fd3511…0c2f9`, executor header `15473d8e…1044`, source/wheel
+native `2a491260…e543`, frozen/signed native `cb962b37…56f2`, engine
+`81bb09fd…1953c`, app CDHash `7093e40168def00ea62ede60978fba6e4aeea777`.
+[Complete delivery receipt](../testcases/outputs/cpp-executor-reviewed-verification-v9/verification.json)
+SHA256 `8347b18c5a834b8a76fae81f250be23c2f4b94168d5907c507e9a981f246b725`.
+The separate longer desktop control exports 119 actions; its complete warm flows
+were 28.973 s C++ / 41.708 s reference, with cold flows 7.226 / 9.575 s. These UI
+observations are not mixed into the fixed 112-action benchmark.
+
+Reproduce full data-free verification with the existing runner:
+
+```sh
+PYTHONPATH=src .venv/bin/python scripts/verify_cpp_acceleration.py --output testcases/outputs/cpp-executor-verification-repeat --node /absolute/path/to/node
+```
+
+Reproduce the unchanged original comparison (baseline source captured from the
+original revision using the existing baseline instructions below):
+
+```sh
+.venv/bin/python scripts/benchmark_cpp_acceleration.py --mode compare --baseline-source outputs/cpp-acceleration-v1/baseline/source/src --output outputs/cpp-acceleration-v1/executor-original-repeat
+```
+
+The supplementary runner also accepts `--supplemental --baseline-backend cpp`
+with the preceding source capture; these workloads are additive and do not
+replace the original acceptance benchmark. The new measured increment is retained;
+no further small motion/caching trial is part of this delivery. The remaining
+performance gate is explicitly open.
+
+## Earlier v6 acceptance matrix
 
 | Gate | Status | Evidence / remaining dependency |
 |---|---|---|
@@ -29,7 +152,7 @@ Use this checkout's `src` explicitly: the available development environment is
 shared with a neighboring editable checkout. System Python 3.9 is unsupported.
 All numerical pools are fixed to one thread; only one heavy job runs at a time.
 
-## Fixed comparison and results
+## Earlier v6 comparison and results
 
 The original comparison baseline is `27f59e85c5b0d6f5b918989bec32976789bf391a`.
 Delivery targets `origin/shaf/decision-system-v1`; it is fetched and reconciled
