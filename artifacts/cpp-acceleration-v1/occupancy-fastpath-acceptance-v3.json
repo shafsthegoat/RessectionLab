@@ -1,0 +1,1676 @@
+{
+  "schema": "resectionlab-residual-occupancy-experiment-v3",
+  "baseCommit": "37e81badb23287673911e2f44be6dd93480c8160",
+  "status": "Current guarded occupancy increment, original/supplementary measurements,23-stage delivery and independent execution/audit complete. Original2x gate remains incomplete; final normal push recorded separately.",
+  "goalComplete": false,
+  "investigations": {
+    "occupancy": {
+      "rawPath": "outputs/cpp-acceleration-v1/occupancy-diagnostic-v1/result.json",
+      "sha256": "943c28c1f118e762344748edb27bc4d55f12372948322cf6734c407a526dcecc",
+      "method": "sys.setprofile observes original constructor, lookup and occupancy frames; no replacement or result substitution; weak owner references avoid extending lifetime",
+      "exactDigest": "sha256:78246b9c6a0be381afc15cd1b6b2c6dac82442253669c6fe16cf374c1afcc3ec",
+      "physicalCalls": 370,
+      "exportedActions": [
+        112
+      ],
+      "ownerTypes": {
+        "empty": 3,
+        "builtins.int": 247,
+        "builtins.int,numpy.int64": 51
+      },
+      "queries": {
+        "exactNdarray": 68648,
+        "no-cleared": 84,
+        "calls": 68648,
+        "sorted-search": 927,
+        "hash-fromiter": 53291,
+        "np-isin": 14346,
+        "withMoved": 14346,
+        "npIsinConvertibleByInternalIntNormalization": 14346
+      },
+      "maxClearedCells": 357,
+      "maxQueryItems": 921,
+      "selectedChange": "Box the internally constructed exact int64 retained array into Python integers once; existing lookup strategies remain authoritative. Direct caller NumPy scalars and unusual representations retain legacy fallback."
+    },
+    "endpointGrouping": {
+      "rawPath": "outputs/cpp-acceleration-v1/endpoint-batch-exactness-v1/result.json",
+      "sha256": "de8fd2e0581632ec4b2232445aa7070af77db1d3ae253821461a6229380ac5b6",
+      "decision": "rejected before implementation: different scalar/grouped SciPy matrix paths change an actual endpoint by1ULP",
+      "performanceTiming": false,
+      "seed": 817,
+      "casesExamined": 97,
+      "firstMismatch": {
+        "tool": "brain_retractor",
+        "parameters": {
+          "radiusMm": 3.0,
+          "depthMm": 2.75,
+          "jawOpeningMm": 1.3,
+          "contactGeometryRevision": 1,
+          "retractorFaceContactRevision": 1
+        },
+        "position": {
+          "dtype": "<f8",
+          "shape": [
+            3
+          ],
+          "hexBytes": "000000000000000000000000000000000000000000000000",
+          "values": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "quaternion": {
+          "dtype": "<f8",
+          "shape": [
+            4
+          ],
+          "hexBytes": "622f14bc1c8de23ff0092865204efe3f0169d3463b0ff4bf0f145fab35f7e83f",
+          "values": [
+            0.5797256158270836,
+            1.8940738631650866,
+            -1.2537186400064118,
+            0.7801769587609914
+          ]
+        },
+        "inflation": 0.125,
+        "revision": 1,
+        "repetition": 0,
+        "endpointIndex": 9,
+        "axis": 1,
+        "capsulePart": "working",
+        "localVector": {
+          "dtype": "<f8",
+          "shape": [
+            3
+          ],
+          "hexBytes": "00000000000008400000000000000000000000000000e8bf",
+          "values": [
+            3.0,
+            0.0,
+            -0.75
+          ]
+        },
+        "scalarApplied": {
+          "dtype": "<f8",
+          "shape": [
+            3
+          ],
+          "hexBytes": "84556d8f080c02c0d20308ae7500ea3f799ae5d0823effbf",
+          "values": [
+            -2.2558757024041274,
+            0.812556114106082,
+            -1.9527614746126842
+          ]
+        },
+        "groupedApplied": {
+          "dtype": "<f8",
+          "shape": [
+            3
+          ],
+          "hexBytes": "84556d8f080c02c0d10308ae7500ea3f799ae5d0823effbf",
+          "values": [
+            -2.2558757024041274,
+            0.8125561141060819,
+            -1.9527614746126842
+          ]
+        },
+        "originalWorldEndpoint": {
+          "dtype": "<f8",
+          "shape": [
+            3
+          ],
+          "hexBytes": "84556d8f080c02c0d20308ae7500ea3f799ae5d0823effbf",
+          "values": [
+            -2.2558757024041274,
+            0.812556114106082,
+            -1.9527614746126842
+          ]
+        },
+        "candidateWorldEndpoint": {
+          "dtype": "<f8",
+          "shape": [
+            3
+          ],
+          "hexBytes": "84556d8f080c02c0d10308ae7500ea3f799ae5d0823effbf",
+          "values": [
+            -2.2558757024041274,
+            0.8125561141060819,
+            -1.9527614746126842
+          ]
+        },
+        "worldEndpointExact": false
+      }
+    },
+    "ownedStateJsonAdmission": {
+      "decision": "defer behind existing occupancy fastpath restoration",
+      "implementationAdded": false,
+      "measuredImplementationBenefit": null,
+      "profileSelfSeconds": 0.775358965,
+      "profileTotalSeconds": 22.583641396999962,
+      "idealSpeedupCeiling": 1.0355534172586784,
+      "constraints": "A new no-copy C++ exact-type graph validator would require bounded traversal, no Python callbacks/GC, unchanged canonical stdlib encoder/hash, unusual-type fallback and original one-argument helper/hook qualification. Do not add calls to63208 tiny occupancy hashes."
+    },
+    "cusaDuplicateContactQuery": {
+      "observedPureSearchDuplicates": 5156,
+      "decision": "defer; removing a current-tip query must preserve dynamically replaced callbacks and cancellation checks. Authoritative apply intersection remains unchanged.",
+      "implementationAdded": false
+    }
+  },
+  "implementation": {
+    "file": "src/resectionlab/surgical_engine.py",
+    "change": "retained.tolist() only for exact-builtin-int cleared sets; otherwise retain original ndarray iteration",
+    "newCppSurface": false,
+    "newDependencies": false,
+    "verification": "One generated held/released/removed ownership regression; existing complete verifier now includes occupancy lookup/key/query groups in both modes."
+  },
+  "capture": {
+    "rawPath": "outputs/cpp-acceleration-v1/occupancy-prepass-cpp-v3/capture.json",
+    "sha256": "d2919b2523bca0ff8e248405d291ac607fd9fba123b9f1549227d02fc03eb286",
+    "purpose": "Immediately preceding working C++ baseline; separate from original pre-port reference and pre-copier supplement."
+  },
+  "pending": [],
+  "reviewCorrection": {
+    "defect": "Unconditional boxing changes equality operands for an existing custom int-subclass removed key with a colliding hash, changing cleared membership and ownership.",
+    "oldQueryOwners": [
+      31,
+      31
+    ],
+    "unconditionalQueryOwners": [
+      0,
+      31
+    ],
+    "retainedReproduction": "outputs/cpp-acceleration-v1/occupancy-normalization-v1/subclass-repro-before.json",
+    "sha256": "7cddb09f12043b8df92cc4a2f95b05d040bf42f90590e13c043004b59edf0d56",
+    "correction": "Normalize only when the existing cleared set contains exact builtin integers; preserve the original NumPy iteration for unusual keys.",
+    "status": "Guarded regression and exact planner passed; reviewer accepted the corrected source."
+  },
+  "focusedValidation": {
+    "rawPath": "outputs/cpp-acceleration-v1/occupancy-normalization-v1/validation-receipt.json",
+    "sha256": "105be55cd2aef3161bd7fa1b98f3a5c1953df951838d9327e11348971988a40f",
+    "correctedCpp": {
+      "passed": 83,
+      "skipped": 2
+    },
+    "correctedReference": {
+      "passed": 83,
+      "skipped": 2
+    },
+    "precedingTransportCpp": {
+      "passed": 184,
+      "skipped": 2
+    },
+    "precedingTransportReference": {
+      "passed": 183,
+      "skipped": 3
+    },
+    "guardedGenerateExactDigest": "sha256:78246b9c6a0be381afc15cd1b6b2c6dac82442253669c6fe16cf374c1afcc3ec",
+    "physicalCalls": 370,
+    "actions": 112,
+    "reviewerAccepted": true,
+    "performanceClaim": false
+  },
+  "codeCommit": "8438a046873fdb7ea45ef89823ebc26766308c09",
+  "incrementMeasurement": {
+    "rawPath": "outputs/cpp-acceleration-v1/occupancy-incremental-v3/summary.json",
+    "sha256": "842a502ec4f86411536b5c07047bde70ddd5b90fdfc7cee6a15e5e0341326edd",
+    "runnerPath": "outputs/cpp-acceleration-v1/occupancy-incremental-v3/run.py",
+    "runnerSha256": "888b1b2a3577ce1d0392274bc1dec25ff543f1dda080110b4ce7d86e6f805876",
+    "purpose": "Isolate internal occupancy ID normalization against immediately preceding C++; does not replace the original pre-port reference benchmark or its2x target.",
+    "manifestSha256": "f507080eb60f214fd4f050e1595d551bff6222b6fef6cad6d6f7b7a98abb0f67",
+    "protocol": {
+      "workload": "generate",
+      "pairedRepetitions": 5,
+      "alternatingOrder": true,
+      "warmupsPerRole": 1,
+      "freshProcess": true,
+      "threads": 1,
+      "profile": false
+    },
+    "roles": {
+      "reference": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/occupancy-prepass-cpp-v3/src",
+      "cpp": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src"
+    },
+    "selection": {
+      "reference": "cpp",
+      "cpp": "cpp"
+    },
+    "pairs": [
+      {
+        "index": 0,
+        "order": [
+          "reference",
+          "cpp"
+        ]
+      },
+      {
+        "index": 1,
+        "order": [
+          "cpp",
+          "reference"
+        ]
+      },
+      {
+        "index": 2,
+        "order": [
+          "reference",
+          "cpp"
+        ]
+      },
+      {
+        "index": 3,
+        "order": [
+          "cpp",
+          "reference"
+        ]
+      },
+      {
+        "index": 4,
+        "order": [
+          "reference",
+          "cpp"
+        ]
+      }
+    ],
+    "backends": {
+      "reference": {
+        "medianSeconds": 13.304752291936893,
+        "minSeconds": 13.127179083006922,
+        "maxSeconds": 13.386777749983594,
+        "stdevSeconds": 0.10308067490356829,
+        "sampleCount": 5,
+        "samplesSeconds": [
+          13.28121749998536,
+          13.127179083006922,
+          13.386777749983594,
+          13.370069500000682,
+          13.304752291936893
+        ],
+        "medianPeakRssBytes": 142737408,
+        "peakRssBytes": 142966784
+      },
+      "cpp": {
+        "medianSeconds": 12.803883249987848,
+        "minSeconds": 12.599351665994618,
+        "maxSeconds": 12.913729625928681,
+        "stdevSeconds": 0.12723355196995575,
+        "sampleCount": 5,
+        "samplesSeconds": [
+          12.599351665994618,
+          12.664860083023086,
+          12.803883249987848,
+          12.913729625928681,
+          12.825935750035569
+        ],
+        "medianPeakRssBytes": 142245888,
+        "peakRssBytes": 144523264
+      }
+    },
+    "speedup": 1.0391185261666238,
+    "exactEquivalent": true,
+    "memoryRegressionPassed": true,
+    "everyAfterBelowEveryBefore": true,
+    "notOriginal2xAcceptance": true,
+    "meaning": "Both comparison roles select C++; the reference role is the immediately preceding captured working version, not original Python."
+  },
+  "delivery": {
+    "passed": true,
+    "rawPath": "testcases/outputs/cpp-occupancy-final-verification-v3/verification.json",
+    "sha256": "3b378ad04b56b5269c4bd0f67e5347035e21e4fffac89356ddab828b0d2a46ec",
+    "stageCount": 23,
+    "stages": [
+      {
+        "name": "build-tools",
+        "exitCode": 0,
+        "elapsedSeconds": 0.3678421250078827
+      },
+      {
+        "name": "source-extension",
+        "exitCode": 0,
+        "elapsedSeconds": 0.1432597079547122
+      },
+      {
+        "name": "source-tests-cpp",
+        "exitCode": 0,
+        "elapsedSeconds": 61.94191337499069
+      },
+      {
+        "name": "source-tests-reference",
+        "exitCode": 0,
+        "elapsedSeconds": 8.238624208024703
+      },
+      {
+        "name": "source-runtime",
+        "exitCode": 0,
+        "elapsedSeconds": 3.3329332909779623
+      },
+      {
+        "name": "wheel-build",
+        "exitCode": 0,
+        "elapsedSeconds": 1.231230083038099
+      },
+      {
+        "name": "wheel-install",
+        "exitCode": 0,
+        "elapsedSeconds": 12.714143667020835
+      },
+      {
+        "name": "wheel-runtime",
+        "exitCode": 0,
+        "elapsedSeconds": 12.5450311669847
+      },
+      {
+        "name": "frozen-build",
+        "exitCode": 0,
+        "elapsedSeconds": 57.077687167038675
+      },
+      {
+        "name": "frozen-runtime",
+        "exitCode": 0,
+        "elapsedSeconds": 24.597595957980957
+      },
+      {
+        "name": "desktop-types",
+        "exitCode": 0,
+        "elapsedSeconds": 0.4178930420312099
+      },
+      {
+        "name": "desktop-build",
+        "exitCode": 0,
+        "elapsedSeconds": 0.491293958039023
+      },
+      {
+        "name": "desktop-tests-main",
+        "exitCode": 0,
+        "elapsedSeconds": 3.396220666996669
+      },
+      {
+        "name": "desktop-tests-renderer",
+        "exitCode": 0,
+        "elapsedSeconds": 6.421738917008042
+      },
+      {
+        "name": "desktop-tests-viewer",
+        "exitCode": 0,
+        "elapsedSeconds": 2.512881834001746
+      },
+      {
+        "name": "app-package",
+        "exitCode": 0,
+        "elapsedSeconds": 11.551121167023666
+      },
+      {
+        "name": "packaged-runtime",
+        "exitCode": 0,
+        "elapsedSeconds": 14.870475083997007
+      },
+      {
+        "name": "fixture-export",
+        "exitCode": 0,
+        "elapsedSeconds": 0.37621095799840987
+      },
+      {
+        "name": "workflow-cpp-warm",
+        "exitCode": 0,
+        "elapsedSeconds": 31.681102792033926
+      },
+      {
+        "name": "workflow-cpp-cold",
+        "exitCode": 0,
+        "elapsedSeconds": 7.797238832979929
+      },
+      {
+        "name": "workflow-reference-warm",
+        "exitCode": 0,
+        "elapsedSeconds": 41.09401079203235
+      },
+      {
+        "name": "workflow-reference-cold",
+        "exitCode": 0,
+        "elapsedSeconds": 9.436144625011366
+      },
+      {
+        "name": "app-signature-after-workflows",
+        "exitCode": 0,
+        "elapsedSeconds": 0.43088066700147465
+      }
+    ],
+    "sourceCpp": {
+      "passed": 696,
+      "skipped": 77
+    },
+    "sourceReference": {
+      "passed": 192
+    },
+    "desktop": {
+      "main": 325,
+      "renderer": 716,
+      "viewer": 275
+    },
+    "cleanWheelEnvironment": "/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/resectionlab-cpp-wheel-e0n82cn5",
+    "crossBackendWorkflowExact": true,
+    "captureRevision": "8438a046873fdb7ea45ef89823ebc26766308c09",
+    "sourceDigest": "f180d8cd26bcc794aa8007e3caf77837cd185aada296b452fd0054a136fa83ac",
+    "engineSha256": "a9b1e0cd4bc888344e297a8c2d09e67481da55d04cb5daf6d345de8ae1e5dac7",
+    "appCodeDirectoryHash": "70f88acd68e7a11135c21d72f1fe85d3aa4e8eb5",
+    "notarized": false,
+    "runtimes": {
+      "source": {
+        "rawPath": "testcases/outputs/cpp-occupancy-final-verification-v3/source-runtime.json",
+        "sha256": "64d06b2bb28e43b359d80973e0d301186b45895612538016d57fad9235d5149a",
+        "passed": true,
+        "variantNames": [
+          "cpp",
+          "reference",
+          "unavailableAuto",
+          "unavailableCpp",
+          "integrityAuto"
+        ],
+        "nativeSha256": "bfc5b7054f87f31a253cdd4b1e9e7e54d71035d07fbb3b69d4ad52327999775a",
+        "checkpoint": {
+          "componentExemptionPreserved": true,
+          "nativeCalls": 1,
+          "nativeFallbackCalls": 0,
+          "passed": true,
+          "selected": "cpp",
+          "stockCopyHooksQualified": true,
+          "stockCopyHooksUnchanged": true
+        },
+        "motionCache": {
+          "helpersUnchanged": true,
+          "sourceQualified": true
+        },
+        "packagePath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src/resectionlab"
+      },
+      "wheel": {
+        "rawPath": "testcases/outputs/cpp-occupancy-final-verification-v3/wheel-runtime.json",
+        "sha256": "51d89c3d834cdc3bb16b28990bcb674958e436dad7771067db6e4663e7cf3ce1",
+        "passed": true,
+        "variantNames": [
+          "cpp",
+          "reference",
+          "unavailableAuto",
+          "unavailableCpp",
+          "integrityAuto"
+        ],
+        "nativeSha256": "bfc5b7054f87f31a253cdd4b1e9e7e54d71035d07fbb3b69d4ad52327999775a",
+        "checkpoint": {
+          "componentExemptionPreserved": true,
+          "nativeCalls": 1,
+          "nativeFallbackCalls": 0,
+          "passed": true,
+          "selected": "cpp",
+          "stockCopyHooksQualified": true,
+          "stockCopyHooksUnchanged": true
+        },
+        "motionCache": {
+          "helpersUnchanged": true,
+          "sourceQualified": true
+        },
+        "packagePath": "/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/resectionlab-cpp-wheel-e0n82cn5/lib/python3.12/site-packages/resectionlab"
+      },
+      "frozen": {
+        "rawPath": "testcases/outputs/cpp-occupancy-final-verification-v3/frozen-runtime.json",
+        "sha256": "0c686365530d70308eaea58348ecf4dac0345b8b445c8957ea3e23b1049c08f5",
+        "passed": true,
+        "variantNames": [
+          "cpp",
+          "reference",
+          "unavailableAuto",
+          "unavailableCpp",
+          "integrityAuto"
+        ],
+        "nativeSha256": "32fd4fdba25b75efc8ebba0668ee44ddcb070014ca0524a32dd7461d70adb338",
+        "checkpoint": {
+          "componentExemptionPreserved": true,
+          "nativeCalls": 1,
+          "nativeFallbackCalls": 0,
+          "passed": true,
+          "selected": "cpp",
+          "stockCopyHooksQualified": true,
+          "stockCopyHooksUnchanged": true
+        },
+        "motionCache": {
+          "helpersUnchanged": true,
+          "sourceQualified": true
+        },
+        "packagePath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/sidecar/ressectionlab-engine/_internal/resectionlab"
+      },
+      "packaged": {
+        "rawPath": "testcases/outputs/cpp-occupancy-final-verification-v3/packaged-runtime.json",
+        "sha256": "c8dec79aa720b54dacb9d65bda1983c7440cd641d751bd7d26300a3cacba2e36",
+        "passed": true,
+        "variantNames": [
+          "cpp",
+          "reference",
+          "unavailableAuto",
+          "unavailableCpp",
+          "integrityAuto"
+        ],
+        "nativeSha256": "32fd4fdba25b75efc8ebba0668ee44ddcb070014ca0524a32dd7461d70adb338",
+        "checkpoint": {
+          "componentExemptionPreserved": true,
+          "nativeCalls": 1,
+          "nativeFallbackCalls": 0,
+          "passed": true,
+          "selected": "cpp",
+          "stockCopyHooksQualified": true,
+          "stockCopyHooksUnchanged": true
+        },
+        "motionCache": {
+          "helpersUnchanged": true,
+          "sourceQualified": true
+        },
+        "packagePath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/research-engine/_internal/resectionlab"
+      }
+    }
+  },
+  "currentComparisons": {
+    "original": {
+      "rawPath": "outputs/cpp-acceleration-v1/occupancy-original-comparison-v3/summary.json",
+      "sha256": "8e057d6ca6cea4e8e481a9b679bf1a6786f16ad8f516a00f96d965ee5a697ec4",
+      "manifestSha256": "f507080eb60f214fd4f050e1595d551bff6222b6fef6cad6d6f7b7a98abb0f67",
+      "comparisonRoles": {
+        "reference": {
+          "meaning": "baseline",
+          "selectedBackend": "reference",
+          "sourceRoot": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/baseline/source/src"
+        },
+        "cpp": {
+          "meaning": "current",
+          "selectedBackend": "cpp",
+          "sourceRoot": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src"
+        }
+      },
+      "allFrozenGatesPassed": false,
+      "workloads": {
+        "small": {
+          "pairs": [
+            {
+              "index": 0,
+              "order": [
+                "reference",
+                "cpp"
+              ]
+            },
+            {
+              "index": 1,
+              "order": [
+                "cpp",
+                "reference"
+              ]
+            },
+            {
+              "index": 2,
+              "order": [
+                "reference",
+                "cpp"
+              ]
+            },
+            {
+              "index": 3,
+              "order": [
+                "cpp",
+                "reference"
+              ]
+            },
+            {
+              "index": 4,
+              "order": [
+                "reference",
+                "cpp"
+              ]
+            }
+          ],
+          "backends": {
+            "reference": {
+              "medianSeconds": 0.001910374965518713,
+              "minSeconds": 0.0017817909829318523,
+              "maxSeconds": 0.001988207979593426,
+              "stdevSeconds": 8.283180930941043e-05,
+              "sampleCount": 5,
+              "samplesSeconds": [
+                0.0018211660208180547,
+                0.001910374965518713,
+                0.001988207979593426,
+                0.0019227080047130585,
+                0.0017817909829318523
+              ],
+              "medianPeakRssBytes": 67633152,
+              "peakRssBytes": 67665920
+            },
+            "cpp": {
+              "medianSeconds": 0.0014419170329347253,
+              "minSeconds": 0.0014163749874569476,
+              "maxSeconds": 0.001557542011141777,
+              "stdevSeconds": 5.587322706488883e-05,
+              "sampleCount": 5,
+              "samplesSeconds": [
+                0.001557542011141777,
+                0.0014419170329347253,
+                0.0014583750162273645,
+                0.001432624994777143,
+                0.0014163749874569476
+              ],
+              "medianPeakRssBytes": 67616768,
+              "peakRssBytes": 67846144
+            }
+          },
+          "exactEquivalent": true,
+          "exactDigests": [
+            "sha256:4aed87ce69a4646b601926d14c2ad9ac4bc81ad9a1ed774082f5c7c7343fbfec"
+          ],
+          "memoryHardCapPassed": true,
+          "speedup": 1.3248854974897815,
+          "latencyPassed": true,
+          "memoryRegressionPassed": true,
+          "nativeExecutionPassed": true,
+          "nativeUsage": {
+            "selected": [
+              "cpp"
+            ],
+            "binarySha256": [
+              "bfc5b7054f87f31a253cdd4b1e9e7e54d71035d07fbb3b69d4ad52327999775a"
+            ],
+            "counterRanges": {
+              "bindingCalls": [
+                16,
+                16
+              ],
+              "engineCopyCalls": [
+                0,
+                0
+              ],
+              "engineCopyFallbackCalls": [
+                0,
+                0
+              ],
+              "batchCalls": [
+                16,
+                16
+              ],
+              "batchItems": [
+                16,
+                16
+              ],
+              "maxBatchItems": [
+                1,
+                1
+              ],
+              "segmentPredicateCalls": [
+                0,
+                0
+              ]
+            },
+            "batchHistogram": {
+              "1": 16
+            }
+          },
+          "setupAndComputeMedians": {
+            "reference": {
+              "fixtureSeconds": 0.0,
+              "computeSeconds": 0.001910374965518713
+            },
+            "cpp": {
+              "fixtureSeconds": 0.0,
+              "computeSeconds": 0.0014419170329347253
+            }
+          }
+        },
+        "generate": {
+          "pairs": [
+            {
+              "index": 0,
+              "order": [
+                "reference",
+                "cpp"
+              ]
+            },
+            {
+              "index": 1,
+              "order": [
+                "cpp",
+                "reference"
+              ]
+            },
+            {
+              "index": 2,
+              "order": [
+                "reference",
+                "cpp"
+              ]
+            },
+            {
+              "index": 3,
+              "order": [
+                "cpp",
+                "reference"
+              ]
+            },
+            {
+              "index": 4,
+              "order": [
+                "reference",
+                "cpp"
+              ]
+            }
+          ],
+          "backends": {
+            "reference": {
+              "medianSeconds": 17.433691499987617,
+              "minSeconds": 17.377945457934402,
+              "maxSeconds": 17.439632916939445,
+              "stdevSeconds": 0.02956718950313618,
+              "sampleCount": 5,
+              "samplesSeconds": [
+                17.433691499987617,
+                17.377945457934402,
+                17.439632916939445,
+                17.38853024999844,
+                17.436620332999155
+              ],
+              "medianPeakRssBytes": 150044672,
+              "peakRssBytes": 150323200
+            },
+            "cpp": {
+              "medianSeconds": 12.92606904101558,
+              "minSeconds": 12.828247541037854,
+              "maxSeconds": 13.017978792020585,
+              "stdevSeconds": 0.07961993052305937,
+              "sampleCount": 5,
+              "samplesSeconds": [
+                12.957228126004338,
+                12.842038791975938,
+                12.828247541037854,
+                12.92606904101558,
+                13.017978792020585
+              ],
+              "medianPeakRssBytes": 142737408,
+              "peakRssBytes": 143245312
+            }
+          },
+          "exactEquivalent": true,
+          "exactDigests": [
+            "sha256:78246b9c6a0be381afc15cd1b6b2c6dac82442253669c6fe16cf374c1afcc3ec"
+          ],
+          "memoryHardCapPassed": true,
+          "preportEquivalent": true,
+          "speedup": 1.3487233779015837,
+          "latencyPassed": false,
+          "memoryRegressionPassed": true,
+          "nativeExecutionPassed": true,
+          "productionMultiItemBatchPassed": true,
+          "nativeUsage": {
+            "selected": [
+              "cpp"
+            ],
+            "binarySha256": [
+              "bfc5b7054f87f31a253cdd4b1e9e7e54d71035d07fbb3b69d4ad52327999775a"
+            ],
+            "counterRanges": {
+              "bindingCalls": [
+                150740,
+                150740
+              ],
+              "engineCopyCalls": [
+                11901,
+                11901
+              ],
+              "engineCopyFallbackCalls": [
+                0,
+                0
+              ],
+              "batchCalls": [
+                16697,
+                16697
+              ],
+              "batchItems": [
+                20693,
+                20693
+              ],
+              "maxBatchItems": [
+                3,
+                3
+              ],
+              "segmentPredicateCalls": [
+                106046,
+                106046
+              ]
+            },
+            "batchHistogram": {
+              "1": 12709,
+              "2": 3980,
+              "3": 8
+            }
+          },
+          "setupAndComputeMedians": {
+            "reference": {
+              "fixtureSeconds": 0.15353062498616055,
+              "computeSeconds": 17.278198040963616
+            },
+            "cpp": {
+              "fixtureSeconds": 0.1491126250475645,
+              "computeSeconds": 12.776956415968016
+            }
+          }
+        },
+        "standardized-refusal": {
+          "pairs": [
+            {
+              "index": 0,
+              "order": [
+                "reference",
+                "cpp"
+              ]
+            },
+            {
+              "index": 1,
+              "order": [
+                "cpp",
+                "reference"
+              ]
+            },
+            {
+              "index": 2,
+              "order": [
+                "reference",
+                "cpp"
+              ]
+            },
+            {
+              "index": 3,
+              "order": [
+                "cpp",
+                "reference"
+              ]
+            },
+            {
+              "index": 4,
+              "order": [
+                "reference",
+                "cpp"
+              ]
+            }
+          ],
+          "backends": {
+            "reference": {
+              "medianSeconds": 1.3994884169660509,
+              "minSeconds": 1.3851662919623777,
+              "maxSeconds": 1.4081141669885255,
+              "stdevSeconds": 0.010849601130409883,
+              "sampleCount": 5,
+              "samplesSeconds": [
+                1.4050699169747531,
+                1.4081141669885255,
+                1.385309666977264,
+                1.3851662919623777,
+                1.3994884169660509
+              ],
+              "medianPeakRssBytes": 116752384,
+              "peakRssBytes": 116948992
+            },
+            "cpp": {
+              "medianSeconds": 1.0784335409407504,
+              "minSeconds": 1.0732985419454053,
+              "maxSeconds": 1.0820651240064763,
+              "stdevSeconds": 0.0035831799530041814,
+              "sampleCount": 5,
+              "samplesSeconds": [
+                1.0732985419454053,
+                1.0784335409407504,
+                1.0798954160418361,
+                1.0820651240064763,
+                1.074947624001652
+              ],
+              "medianPeakRssBytes": 116555776,
+              "peakRssBytes": 116703232
+            }
+          },
+          "exactEquivalent": true,
+          "exactDigests": [
+            "sha256:b069195c72729b847f4faa91585cc941b818b1b3f23bf1139bf16fe74be9e8d1"
+          ],
+          "memoryHardCapPassed": true,
+          "speedup": 1.2977048319039062,
+          "latencyPassed": true,
+          "memoryRegressionPassed": true,
+          "nativeExecutionPassed": true,
+          "nativeUsage": {
+            "selected": [
+              "cpp"
+            ],
+            "binarySha256": [
+              "bfc5b7054f87f31a253cdd4b1e9e7e54d71035d07fbb3b69d4ad52327999775a"
+            ],
+            "counterRanges": {
+              "bindingCalls": [
+                7600,
+                7600
+              ],
+              "engineCopyCalls": [
+                1092,
+                1092
+              ],
+              "engineCopyFallbackCalls": [
+                0,
+                0
+              ],
+              "batchCalls": [
+                1338,
+                1338
+              ],
+              "batchItems": [
+                1691,
+                1691
+              ],
+              "maxBatchItems": [
+                2,
+                2
+              ],
+              "segmentPredicateCalls": [
+                3772,
+                3772
+              ]
+            },
+            "batchHistogram": {
+              "1": 985,
+              "2": 353
+            }
+          },
+          "setupAndComputeMedians": {
+            "reference": {
+              "fixtureSeconds": 0.15596758399624377,
+              "computeSeconds": 1.2439442919567227
+            },
+            "cpp": {
+              "fixtureSeconds": 0.152307957992889,
+              "computeSeconds": 0.9268989999545738
+            }
+          }
+        },
+        "stress": {
+          "pairs": [
+            {
+              "index": 0,
+              "order": [
+                "reference",
+                "cpp"
+              ]
+            },
+            {
+              "index": 1,
+              "order": [
+                "cpp",
+                "reference"
+              ]
+            },
+            {
+              "index": 2,
+              "order": [
+                "reference",
+                "cpp"
+              ]
+            },
+            {
+              "index": 3,
+              "order": [
+                "cpp",
+                "reference"
+              ]
+            },
+            {
+              "index": 4,
+              "order": [
+                "reference",
+                "cpp"
+              ]
+            }
+          ],
+          "backends": {
+            "reference": {
+              "medianSeconds": 0.9778291659895331,
+              "minSeconds": 0.9744540830142796,
+              "maxSeconds": 0.9858146250480786,
+              "stdevSeconds": 0.005029157351633215,
+              "sampleCount": 5,
+              "samplesSeconds": [
+                0.9858146250480786,
+                0.9764304999844171,
+                0.9778291659895331,
+                0.9744540830142796,
+                0.9844020000309683
+              ],
+              "medianPeakRssBytes": 152256512,
+              "peakRssBytes": 152338432
+            },
+            "cpp": {
+              "medianSeconds": 0.5153347090235911,
+              "minSeconds": 0.5089613330201246,
+              "maxSeconds": 0.5160844170022756,
+              "stdevSeconds": 0.003045971719540419,
+              "sampleCount": 5,
+              "samplesSeconds": [
+                0.5160844170022756,
+                0.5089613330201246,
+                0.515821875014808,
+                0.5153347090235911,
+                0.512359291955363
+              ],
+              "medianPeakRssBytes": 112050176,
+              "peakRssBytes": 112132096
+            }
+          },
+          "exactEquivalent": true,
+          "exactDigests": [
+            "sha256:0d46e29fa50ea3c893a9859fc465022aeda7a2fdf724214bd6535c71c0f61a6e"
+          ],
+          "memoryHardCapPassed": true,
+          "speedup": 1.8974642089259501,
+          "latencyPassed": true,
+          "memoryRegressionPassed": true,
+          "nativeExecutionPassed": true,
+          "nativeUsage": {
+            "selected": [
+              "cpp"
+            ],
+            "binarySha256": [
+              "bfc5b7054f87f31a253cdd4b1e9e7e54d71035d07fbb3b69d4ad52327999775a"
+            ],
+            "counterRanges": {
+              "bindingCalls": [
+                719,
+                719
+              ],
+              "engineCopyCalls": [
+                0,
+                0
+              ],
+              "engineCopyFallbackCalls": [
+                0,
+                0
+              ],
+              "batchCalls": [
+                696,
+                696
+              ],
+              "batchItems": [
+                696,
+                696
+              ],
+              "maxBatchItems": [
+                1,
+                1
+              ],
+              "segmentPredicateCalls": [
+                0,
+                0
+              ]
+            },
+            "batchHistogram": {
+              "1": 696
+            }
+          },
+          "setupAndComputeMedians": {
+            "reference": {
+              "fixtureSeconds": 0.0,
+              "computeSeconds": 0.9778291659895331
+            },
+            "cpp": {
+              "fixtureSeconds": 0.0,
+              "computeSeconds": 0.5153347090235911
+            }
+          }
+        }
+      }
+    },
+    "supplementary": {
+      "rawPath": "outputs/cpp-acceleration-v1/occupancy-supplement-comparison-v3/summary.json",
+      "sha256": "96fcb96330c5ee10706f23dce8d6823a44448e7a410bb35eb49f280aa64749ec",
+      "manifestSha256": "7c4eb89e4b1061f2d3ed08d39c53dc1396f549c93b842e8b0dc4c7b157cd177a",
+      "comparisonRoles": {
+        "reference": {
+          "meaning": "baseline",
+          "selectedBackend": "cpp",
+          "sourceRoot": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/supplement-prepass-cpp/src"
+        },
+        "cpp": {
+          "meaning": "current",
+          "selectedBackend": "cpp",
+          "sourceRoot": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src"
+        }
+      },
+      "allFrozenGatesPassed": true,
+      "workloads": {
+        "simulation-steps": {
+          "pairs": [
+            {
+              "index": 0,
+              "order": [
+                "reference",
+                "cpp"
+              ]
+            },
+            {
+              "index": 1,
+              "order": [
+                "cpp",
+                "reference"
+              ]
+            },
+            {
+              "index": 2,
+              "order": [
+                "reference",
+                "cpp"
+              ]
+            },
+            {
+              "index": 3,
+              "order": [
+                "cpp",
+                "reference"
+              ]
+            },
+            {
+              "index": 4,
+              "order": [
+                "reference",
+                "cpp"
+              ]
+            }
+          ],
+          "backends": {
+            "reference": {
+              "medianSeconds": 1.1972409160225652,
+              "minSeconds": 1.1905275420285761,
+              "maxSeconds": 1.2049994579865597,
+              "stdevSeconds": 0.00627504498419434,
+              "sampleCount": 5,
+              "samplesSeconds": [
+                1.2049994579865597,
+                1.2034712089807726,
+                1.193287333007902,
+                1.1905275420285761,
+                1.1972409160225652
+              ],
+              "medianPeakRssBytes": 109854720,
+              "peakRssBytes": 110067712,
+              "medianTimedWorkPeakRssBytes": 109854720
+            },
+            "cpp": {
+              "medianSeconds": 1.1662715830025263,
+              "minSeconds": 1.1588224170263857,
+              "maxSeconds": 1.1721608340158127,
+              "stdevSeconds": 0.004961182084508354,
+              "sampleCount": 5,
+              "samplesSeconds": [
+                1.162584124947898,
+                1.1588224170263857,
+                1.1663590000243858,
+                1.1721608340158127,
+                1.1662715830025263
+              ],
+              "medianPeakRssBytes": 110002176,
+              "peakRssBytes": 110100480,
+              "medianTimedWorkPeakRssBytes": 110002176
+            }
+          },
+          "exactEquivalent": true,
+          "exactDigests": [
+            "sha256:91819f86b18115336f3ca366675b79d0ddceea51ff1a3756bdfdc36f7cf8143f"
+          ],
+          "memoryHardCapPassed": true,
+          "frozenExactEquivalent": true,
+          "throughput": {
+            "reference": {
+              "attemptsPerSecond": 44.268450309963406,
+              "committedNativeActionsPerSecond": 42.597942751096866,
+              "episodesPerSecond": 0.0
+            },
+            "cpp": {
+              "attemptsPerSecond": 45.44396071415314,
+              "committedNativeActionsPerSecond": 43.72909427210963,
+              "episodesPerSecond": 0.0
+            }
+          },
+          "speedup": 1.0265541349642675,
+          "latencyPassed": true,
+          "memoryRegressionPassed": true,
+          "memoryComparisonBasis": "Pre-audit timedWorkPeakRssBytes; whole-process audit/restore peak is diagnostic and remains under the hard cap.",
+          "nativeExecutionPassed": true,
+          "nativeUsage": {
+            "selected": [
+              "cpp"
+            ],
+            "binarySha256": [
+              "bfc5b7054f87f31a253cdd4b1e9e7e54d71035d07fbb3b69d4ad52327999775a"
+            ],
+            "counterRanges": {
+              "bindingCalls": [
+                11755,
+                11755
+              ],
+              "engineCopyCalls": [
+                1566,
+                1566
+              ],
+              "engineCopyFallbackCalls": [
+                0,
+                0
+              ],
+              "batchCalls": [
+                1178,
+                1178
+              ],
+              "batchItems": [
+                1509,
+                1509
+              ],
+              "maxBatchItems": [
+                3,
+                3
+              ],
+              "segmentPredicateCalls": [
+                6494,
+                6494
+              ]
+            },
+            "batchHistogram": {
+              "1": 881,
+              "2": 263,
+              "3": 34
+            }
+          },
+          "work": {
+            "requestedAttempts": 53,
+            "publicPreviewAttempts": 6,
+            "episodes": 0,
+            "committedNativeActions": 51
+          },
+          "everyAfterBelowEveryBefore": true,
+          "setupAndComputeMedians": {
+            "reference": {
+              "fixtureSeconds": 0.02485987392719835,
+              "computeSeconds": 1.1718706240644678
+            },
+            "cpp": {
+              "fixtureSeconds": 0.02488533512223512,
+              "computeSeconds": 1.141425249981694
+            }
+          }
+        },
+        "rl-episodes": {
+          "pairs": [
+            {
+              "index": 0,
+              "order": [
+                "reference",
+                "cpp"
+              ]
+            },
+            {
+              "index": 1,
+              "order": [
+                "cpp",
+                "reference"
+              ]
+            },
+            {
+              "index": 2,
+              "order": [
+                "reference",
+                "cpp"
+              ]
+            },
+            {
+              "index": 3,
+              "order": [
+                "cpp",
+                "reference"
+              ]
+            },
+            {
+              "index": 4,
+              "order": [
+                "reference",
+                "cpp"
+              ]
+            }
+          ],
+          "backends": {
+            "reference": {
+              "medianSeconds": 1.2488151250290684,
+              "minSeconds": 1.2374443750013597,
+              "maxSeconds": 1.2533605830394663,
+              "stdevSeconds": 0.006028267832768331,
+              "sampleCount": 5,
+              "samplesSeconds": [
+                1.247178708028514,
+                1.2533605830394663,
+                1.2374443750013597,
+                1.2503444160101935,
+                1.2488151250290684
+              ],
+              "medianPeakRssBytes": 139034624,
+              "peakRssBytes": 139132928,
+              "medianTimedWorkPeakRssBytes": 101646336
+            },
+            "cpp": {
+              "medianSeconds": 1.217428874981124,
+              "minSeconds": 1.2030418329522945,
+              "maxSeconds": 1.234767165966332,
+              "stdevSeconds": 0.01200296143522241,
+              "sampleCount": 5,
+              "samplesSeconds": [
+                1.2030418329522945,
+                1.234767165966332,
+                1.217428874981124,
+                1.2205241249757819,
+                1.2097046669805422
+              ],
+              "medianPeakRssBytes": 139018240,
+              "peakRssBytes": 139067392,
+              "medianTimedWorkPeakRssBytes": 101777408
+            }
+          },
+          "exactEquivalent": true,
+          "exactDigests": [
+            "sha256:7d98d39947eb060788920b184a767d5b4959086dc1fe7deeb974a1a262242143"
+          ],
+          "memoryHardCapPassed": true,
+          "frozenExactEquivalent": true,
+          "throughput": {
+            "reference": {
+              "attemptsPerSecond": 35.23339773689546,
+              "committedNativeActionsPerSecond": 30.428843500046078,
+              "episodesPerSecond": 4.8045542368493805
+            },
+            "cpp": {
+              "attemptsPerSecond": 36.141741751182145,
+              "committedNativeActionsPerSecond": 31.213322421475493,
+              "episodesPerSecond": 4.9284193297066565
+            }
+          },
+          "speedup": 1.0257807669038828,
+          "latencyPassed": true,
+          "memoryRegressionPassed": true,
+          "memoryComparisonBasis": "Pre-audit timedWorkPeakRssBytes; whole-process audit/restore peak is diagnostic and remains under the hard cap.",
+          "nativeExecutionPassed": true,
+          "nativeUsage": {
+            "selected": [
+              "cpp"
+            ],
+            "binarySha256": [
+              "bfc5b7054f87f31a253cdd4b1e9e7e54d71035d07fbb3b69d4ad52327999775a"
+            ],
+            "counterRanges": {
+              "bindingCalls": [
+                13642,
+                13642
+              ],
+              "engineCopyCalls": [
+                2334,
+                2334
+              ],
+              "engineCopyFallbackCalls": [
+                0,
+                0
+              ],
+              "batchCalls": [
+                2547,
+                2547
+              ],
+              "batchItems": [
+                2547,
+                2547
+              ],
+              "maxBatchItems": [
+                1,
+                1
+              ],
+              "segmentPredicateCalls": [
+                8712,
+                8712
+              ]
+            },
+            "batchHistogram": {
+              "1": 2547
+            }
+          },
+          "work": {
+            "requestedAttempts": 44,
+            "publicPreviewAttempts": 0,
+            "episodes": 6,
+            "committedNativeActions": 38
+          },
+          "everyAfterBelowEveryBefore": true,
+          "setupAndComputeMedians": {
+            "reference": {
+              "fixtureSeconds": 0.03899149806238711,
+              "computeSeconds": 1.2083386240410618
+            },
+            "cpp": {
+              "fixtureSeconds": 0.03906091599492356,
+              "computeSeconds": 1.1769437919138
+            }
+          }
+        }
+      },
+      "meaning": "Captured pre-copier first C++ versus current. These gains support the retained copier and do not isolate this occupancy fix or claim policy training speedup."
+    }
+  },
+  "acceptance": {
+    "M1": "passed",
+    "M2": "passed",
+    "M3": "passed",
+    "M4": "passed",
+    "M5": "passed",
+    "originalRepresentative2x": "unmet",
+    "originalRepresentativeSpeedup": 1.3487233779015837,
+    "originalOtherLatencyMemoryAndHardCaps": "passed",
+    "supplementaryExactnessMemoryAndImprovement": "passed",
+    "incrementExactnessMemoryAndImprovement": "passed",
+    "fullGoalComplete": false,
+    "patientValidation": "unavailable; zero completed patient tumor tasks; generated engineering controls only",
+    "pushEvidence": "Final normal fast-forward push and remote reachability recorded separately after this receipt is committed."
+  },
+  "independentReview": {
+    "rawPath": "outputs/cpp-acceleration-v1/independent-occupancy-final-v3/review.json",
+    "sha256": "ab03ecb4eca4e0a1a89f920d9adcae61e4a2738d5728e78ff5fb8273ac5587f8",
+    "schema": "resectionlab-independent-occupancy-final-review-v3",
+    "reviewedCodeCommit": "8438a046873fdb7ea45ef89823ebc26766308c09",
+    "correctnessDeliveryAndFairnessPassed": true,
+    "fullGoalComplete": false,
+    "findings": [
+      {
+        "severity": "acceptance-gap",
+        "gate": "fixed complete Generate >=2x",
+        "status": "unmet",
+        "speedup": 1.3487233779015837,
+        "originalSummaryFailureExpected": true
+      }
+    ],
+    "resolvedReviewDefect": {
+      "location": "src/resectionlab/surgical_engine.py:543",
+      "problem": "Unconditional boxing changed custom removed-key equality operands and ownership31,31 to0,31.",
+      "correction": "Only normalize when existing cleared keys are exact builtin int; unusual owners retain original NumPy iteration.",
+      "independentRegressionPassedBothBackends": true
+    },
+    "focused": {
+      "cpp": {
+        "passed": 83,
+        "skipped": 2,
+        "junit": {
+          "path": "outputs/cpp-acceleration-v1/independent-occupancy-final-v3/occupancy-cpp.xml",
+          "sha256": "1dcebd2591d9856f71dbc0dbec1b00e5f96e087901ec3ea5af12c9e0ef8a971f"
+        }
+      },
+      "reference": {
+        "passed": 83,
+        "skipped": 2,
+        "junit": {
+          "path": "outputs/cpp-acceleration-v1/independent-occupancy-final-v3/occupancy-reference.xml",
+          "sha256": "fa44dfb64b0f3cc5a97b5f8a1014454cc19c48aea3bbb8648108272f3589e990"
+        }
+      }
+    },
+    "runtimes": {
+      "source": {
+        "path": "outputs/cpp-acceleration-v1/independent-occupancy-final-v3/source-runtime.json",
+        "sha256": "2074a1aed76c476f9b332c821c76002ebd6fb51fe33cb57170e6023811339add",
+        "fiveVariantsPassed": true,
+        "motionCache": {
+          "helpersUnchanged": true,
+          "sourceQualified": true
+        },
+        "checkpoint": {
+          "componentExemptionPreserved": true,
+          "nativeCalls": 1,
+          "nativeFallbackCalls": 0,
+          "passed": true,
+          "selected": "cpp",
+          "stockCopyHooksQualified": true,
+          "stockCopyHooksUnchanged": true
+        },
+        "nativeBinarySha256": "bfc5b7054f87f31a253cdd4b1e9e7e54d71035d07fbb3b69d4ad52327999775a",
+        "packagePath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src/resectionlab"
+      },
+      "wheel": {
+        "path": "outputs/cpp-acceleration-v1/independent-occupancy-final-v3/wheel-runtime.json",
+        "sha256": "2c8c0d78e884abc55912cad739e25c4bdcf1081e29af2723e15d10e4c27e10f0",
+        "fiveVariantsPassed": true,
+        "motionCache": {
+          "helpersUnchanged": true,
+          "sourceQualified": true
+        },
+        "checkpoint": {
+          "componentExemptionPreserved": true,
+          "nativeCalls": 1,
+          "nativeFallbackCalls": 0,
+          "passed": true,
+          "selected": "cpp",
+          "stockCopyHooksQualified": true,
+          "stockCopyHooksUnchanged": true
+        },
+        "nativeBinarySha256": "bfc5b7054f87f31a253cdd4b1e9e7e54d71035d07fbb3b69d4ad52327999775a",
+        "packagePath": "/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/resectionlab-cpp-wheel-e0n82cn5/lib/python3.12/site-packages/resectionlab"
+      },
+      "packaged": {
+        "path": "outputs/cpp-acceleration-v1/independent-occupancy-final-v3/packaged-runtime.json",
+        "sha256": "96ed3071a58fb8522e556e831781bd6bce597979839a1a4b52639e02dce2222e",
+        "fiveVariantsPassed": true,
+        "motionCache": {
+          "helpersUnchanged": true,
+          "sourceQualified": true
+        },
+        "checkpoint": {
+          "componentExemptionPreserved": true,
+          "nativeCalls": 1,
+          "nativeFallbackCalls": 0,
+          "passed": true,
+          "selected": "cpp",
+          "stockCopyHooksQualified": true,
+          "stockCopyHooksUnchanged": true
+        },
+        "nativeBinarySha256": "32fd4fdba25b75efc8ebba0668ee44ddcb070014ca0524a32dd7461d70adb338",
+        "packagePath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/research-engine/_internal/resectionlab"
+      }
+    },
+    "actualSignedWorkflows": {
+      "cpp-warm": {
+        "path": "testcases/outputs/cpp-independent-occupancy-final-v3/cpp-warm/report.json",
+        "sha256": "40856454ae56d733b26fddec82231ca8118dba8eb00ee137e4de3aa5a0625bc3",
+        "passed": true,
+        "isPackaged": true,
+        "originalPackagedEngineOptions": true,
+        "actualSignedApp": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/MacOS/RessectionLab",
+        "checks": [
+          "Case \u2192 Plan \u2192 Compare \u2192 Rehearse/edit navigation preserves accepted state without native calls",
+          "Real cranial Generate cancellation terminates its owned request without accepted-state or branch mutation",
+          "Fresh Generate \u2192 Compare \u2192 selected real branch \u2192 observed replay/pause/seek preserves complete task ledger; valid native refusal and draft navigation preserve accepted anatomy"
+        ]
+      },
+      "cpp-cold": {
+        "path": "testcases/outputs/cpp-independent-occupancy-final-v3/cpp-cold/report.json",
+        "sha256": "a25f54a3ee2fb26e4e2de30d99320dd99ac75dee3d90386717844416eadf7327",
+        "passed": true,
+        "isPackaged": true,
+        "originalPackagedEngineOptions": true,
+        "actualSignedApp": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/MacOS/RessectionLab",
+        "checks": [
+          "Case \u2192 Plan \u2192 Compare \u2192 Rehearse/edit navigation preserves accepted state without native calls",
+          "Cold Open restores the exact comparison, selected native branch, complete action history, ledger, anatomy and replay cursor with zero Plan commands"
+        ]
+      }
+    },
+    "strictCodeSignAfterIndependentWorkflows": true,
+    "rawNativeSavedCaseSealsAndPublicReplay": {
+      "path": "outputs/cpp-acceleration-v1/independent-occupancy-final-v3/native-saved-validation.json",
+      "sha256": "86db3e28f32f409cfeae76b55e6161538397639a3c5df3557b630929d11a0da2",
+      "cases": 3,
+      "crossBackendAndIndependentCppExact": true
+    },
+    "pairedReceiptAudit": {
+      "measuredSamples": 70,
+      "separateWarmups": 14,
+      "originalAndSupplement": {
+        "path": "outputs/cpp-acceleration-v1/independent-occupancy-final-v3/pair-audit.json",
+        "sha256": "0bdaab06b972f745cc04e0dbca5e58fcace2f352fd319c0d2374664d187a4781"
+      },
+      "separateIncrement": {
+        "path": "outputs/cpp-acceleration-v1/independent-occupancy-final-v3/increment-audit.json",
+        "sha256": "c3093b9a53d510681d81525a4b2eac51fc7a9297745880672917b9ce43c6276f"
+      },
+      "rawReportSealsVerified": 36,
+      "rawGoalContractsVerified": 36,
+      "fullCanonicalBytesEqual": true,
+      "memoryLatencyCountersOrderAndSourceRolesVerified": true,
+      "baselineRoles": {
+        "original": "Original27f59e85 Python source; tracked blobs independently verified.",
+        "supplementary": "Captured pre-copierCPP source and binary; every captured file verified.",
+        "incrementOnly": "Immediately preceding37e81badCPP source and binary; every captured file verified."
+      },
+      "manifestsUnchanged": true,
+      "versionsNotPooled": true
+    },
+    "coordinatorCompactReceipt": {
+      "path": "outputs/cpp-acceleration-v1/independent-occupancy-final-v3/owner-receipt-reviewed-snapshot.json",
+      "sha256": "0713660dace5e34273af785a81c8c2e84a428f54c5d65a4ff7aabf8426008eb5",
+      "originalPath": "artifacts/cpp-acceleration-v1/occupancy-fastpath-acceptance-v3.json",
+      "allRawFieldsRangesAndHashesVerified": true,
+      "snapshotReason": "Preserve reviewed bytes before independent-status annotation, avoiding circular receipt hashes."
+    },
+    "capture": {
+      "allCapturedSourceFilesMatchReviewedCode": true,
+      "filesVerified": 334,
+      "sourceDigest": "f180d8cd26bcc794aa8007e3caf77837cd185aada296b452fd0054a136fa83ac",
+      "engineSha256": "a9b1e0cd4bc888344e297a8c2d09e67481da55d04cb5daf6d345de8ae1e5dac7",
+      "engineSourceSha256": "86359440032a738eb3ba33e620eaf8f991a14167f4c79b1f6a326c1e11049398"
+    },
+    "commandsAndLogs": {
+      "path": "outputs/cpp-acceleration-v1/independent-occupancy-final-v3/execution.json",
+      "sha256": "4defb1355e6098b695539bf5336b57ab35b89ffd32298f3181dff016c1678c3a"
+    },
+    "metadataFinalizer": {
+      "command": [
+        ".venv/bin/python",
+        "outputs/cpp-acceleration-v1/independent-occupancy-final-v3/finalize-review.py"
+      ],
+      "exitCode": 0
+    },
+    "reusedUnchangedEvidence": [
+      {
+        "path": "artifacts/cpp-acceleration-v1/independent-final-review.json",
+        "sha256": "6d6f174336247f450ce9304741d79a1229d07bc803788e00104f8c3a8d829be7",
+        "scope": "Unchanged C++ geometry/scalar/RL/graph safety, actual native entrypoint tamper/proof checks and final bounded cancellation."
+      },
+      {
+        "path": "outputs/cpp-acceleration-v1/independent-motion-final-v2/review.json",
+        "sha256": "e7a9c1ccf470c81344d1af9329a1bc10e7c406e05c5fe3ec02db1dbc44b74f23",
+        "scope": "Unchanged motion fresh preimport/live hook regression and proof stability."
+      }
+    ],
+    "productionDocumentArtifactEditsByReviewer": false,
+    "heavySlotReleased": true
+  }
+}
