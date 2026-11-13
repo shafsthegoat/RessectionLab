@@ -92,6 +92,20 @@ test('rejects changed internal payload links even when the target bytes match', 
   await assert.rejects(capturePythonNotices(f.source, f.output, f.executable), /payload link changed/);
 });
 
+test('verifies framework directory aliases and rejects retargeting', async t => {
+  const root = await temporary(t); const f = await engineFixture(root);
+  await fs.mkdir(path.join(root, 'engine/_internal/Versions/3.12/Resources'), { recursive: true });
+  const alias = path.join(root, 'engine/_internal/Resources');
+  await fs.symlink('Versions/3.12/Resources', alias);
+  f.manifest.collected_payload['_internal/Resources'] = {
+    kind: 'SYMLINK', symlink: 'Versions/3.12/Resources', directory: true };
+  await write(root, 'source/inventory.json', f.manifest);
+  await capturePythonNotices(f.source, f.output, f.executable);
+  await fs.unlink(alias);
+  await fs.symlink('Versions/3.12', alias);
+  await assert.rejects(capturePythonNotices(f.source, path.join(root, 'other-output'), f.executable), /payload link changed/);
+});
+
 test('rejects notice inventory traversal and external symlinks', async t => {
   const root = await temporary(t); const f = await engineFixture(root);
   f.manifest.files['../outside'] = { sha256: sha(Buffer.from('x')), bytes: 1 };

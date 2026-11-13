@@ -53,6 +53,24 @@ def test_collected_payload_refuses_escape_symlink(tmp_path):
         notices.collected_payload(engine, [("lib.dylib", "elsewhere", "BINARY")])
 
 
+def test_collected_framework_directory_links_bind_targets_and_reject_escape(tmp_path):
+    root = tmp_path / "bundle"
+    resources = root / "_internal/Python.framework/Versions/3.12/Resources"
+    resources.mkdir(parents=True)
+    engine = root / "engine"
+    engine.write_bytes(b"executable")
+    alias = root / "_internal/Python.framework/Resources"
+    alias.symlink_to("Versions/3.12/Resources", target_is_directory=True)
+    rows = [("Python.framework/Resources", "Versions/3.12/Resources", "SYMLINK")]
+    assert notices.collected_payload(engine, rows) == {
+        "_internal/Python.framework/Resources": {
+            "kind": "SYMLINK", "symlink": "Versions/3.12/Resources", "directory": True}}
+    alias.unlink()
+    alias.symlink_to(tmp_path, target_is_directory=True)
+    with pytest.raises(ValueError, match="escapes"):
+        notices.collected_payload(engine, rows)
+
+
 def test_copy_preserves_upstream_bytes_and_rejects_traversal(tmp_path):
     source = tmp_path / "LICENSE"
     source.write_bytes(b"Upstream\r\nCopyright\n")

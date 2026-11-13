@@ -126,10 +126,18 @@ def collected_payload(engine: Path, rows: list[tuple]) -> dict:
     for name, _, kind in rows:
         relative = safe_relative(Path(name))
         filename = root / relative if kind == "EXECUTABLE" else root / "_internal" / relative
-        if not filename.is_file():
+        if not filename.exists():
             raise ValueError(f"Collected runtime file is missing: {name}")
         if not filename.resolve().is_relative_to(root):
             raise ValueError(f"Collected runtime file escapes engine: {name}")
+        if kind == "SYMLINK" and filename.is_symlink() and filename.is_dir():
+            # Framework aliases point to directories. Their collected children
+            # retain separate byte hashes; bind the alias itself to its target.
+            result[filename.relative_to(root).as_posix()] = {
+                "kind": kind, "symlink": str(filename.readlink()), "directory": True}
+            continue
+        if not filename.is_file():
+            raise ValueError(f"Collected runtime file is not a file: {name}")
         record = {"kind": kind, "sha256": sha256(filename), "bytes": filename.stat().st_size}
         if filename.is_symlink():
             record["symlink"] = str(filename.readlink())
