@@ -34,8 +34,8 @@ async function verifyLinks(root, current = root) {
   }
   return count;
 }
-function run(command, args, cwd) {
-  const result = spawnSync(command, args, { cwd, encoding: 'utf8', stdio: 'pipe', maxBuffer: 16 * 1024 * 1024 });
+function run(command, args, cwd, env) {
+  const result = spawnSync(command, args, { cwd, ...(env?{env}:{}), encoding: 'utf8', stdio: 'pipe', maxBuffer: 16 * 1024 * 1024 });
   if (result.status !== 0) throw new Error(`${command} failed: ${result.stdout}\n${result.stderr}`);
   return result.stdout;
 }
@@ -130,10 +130,17 @@ async function main() {
     const internalSymlinks = await verifyLinks(appPath);
     run('/usr/bin/codesign', ['--force', '--deep', '--sign', '-', appPath], repo);
     run('/usr/bin/codesign', ['--verify', '--deep', '--strict', appPath], repo);
+    const probeEnvironment={...process.env,RESSECTIONLAB_NUMERICAL_BACKEND:'cpp',PYTHONNOUSERSITE:'1'};
+    for(const name of ['PYTHONPATH','PYTHONHOME','RESSECTIONLAB_IDLE_THERMAL_BUILD','RESSECTIONLAB_PREFIX_JSON_BUILD'])delete probeEnvironment[name];
+    const packagedEngine=path.join(appPath,'Contents/Resources/research-engine/ressectionlab-engine');
+    const nativeRuntime=JSON.parse(run(packagedEngine,['--native-probe'],input,probeEnvironment).trim().split('\n').at(-1));
+    if(!nativeRuntime.passed||!nativeRuntime.runtime.frozen||nativeRuntime.runtime.architecture!=='arm64'
+       ||nativeRuntime.backend.selected!=='cpp'||nativeRuntime.backend.counters.bindingCalls<=nativeRuntime.before.counters.bindingCalls
+       ||!nativeRuntime.backend.binaryPath.startsWith(path.dirname(packagedEngine)+path.sep))throw Error('Signed packaged engine did not execute its own C++ binary');
     const finalDirectory = path.join(release, 'RessectionLab-darwin-arm64');
     const { previousDirectory } = await publishBundle(paths[0], finalDirectory);
     appPath = path.join(finalDirectory, 'RessectionLab.app');
-    await fs.writeFile(reportPath, JSON.stringify({ status: 'built_unverified', appPath, architecture: 'arm64', signing: 'local_ad_hoc', notarized: false, internalSymlinks, previousDirectory, sourceDigest: manifest.sourceDigest, noticeSourceCompleteness: noticeIndex.source_completeness, unresolvedNotices, noticeLocation: 'Contents/Resources/ThirdPartyNotices', inputSnapshot: input, elapsedSeconds: (Date.now()-started)/1000 }, null, 2));
+    await fs.writeFile(reportPath, JSON.stringify({ status: 'built_unverified', appPath, architecture: 'arm64', signing: 'local_ad_hoc', notarized: false, internalSymlinks, previousDirectory, sourceDigest: manifest.sourceDigest, nativeRuntime, noticeSourceCompleteness: noticeIndex.source_completeness, unresolvedNotices, noticeLocation: 'Contents/Resources/ThirdPartyNotices', inputSnapshot: input, elapsedSeconds: (Date.now()-started)/1000 }, null, 2));
     process.stdout.write(appPath + '\n');
   } catch (error) { await fs.writeFile(reportPath, JSON.stringify({ status: 'failed', error: error.message })); throw error; }
 }

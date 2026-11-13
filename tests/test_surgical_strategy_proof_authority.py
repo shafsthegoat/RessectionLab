@@ -17,6 +17,33 @@ def record_for(case, engine, source, comparison):
     return record
 
 
+def test_collecting_genuine_stage_owners_keeps_empty_workspace_proof_epoch_stable():
+    import gc
+    import numpy as np
+    from resectionlab.generated_cpp_fixture import joint_source
+    from resectionlab.surgical_scene import SurgicalScene
+    from resectionlab import surgical_proof_cache as proofs
+    enabled = gc.isenabled()
+    gc.collect()
+    gc.disable()
+    try:
+        # The cancelled forest can leave genuine private witnesses in a cycle.
+        # Collect their owners without replacing code, constants or inputs.
+        garbage = [joint_source()]
+        garbage.append(garbage)
+        del garbage
+        scene = SurgicalScene(np.zeros((4, 4, 4), np.uint16), np.eye(4), [], {}, {})
+        epoch = proofs.implementation_epoch()
+        assert epoch is not None
+        with proofs.proof_scope(scene, {}):
+            assert gc.collect() > 0
+            assert proofs.implementation_epoch() == epoch
+        assert proofs.implementation_epoch() == epoch
+    finally:
+        if enabled:
+            gc.enable()
+
+
 def test_warm_workspace_does_not_hide_changed_report_validator(qualified, comparison, monkeypatch):
     case, engine, source, _ = qualified
     record = record_for(case, engine, source, comparison)

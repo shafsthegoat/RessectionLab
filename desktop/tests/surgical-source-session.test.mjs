@@ -79,6 +79,35 @@ function replayFixture(intercept=()=>undefined,options={}){
 const selection=(frameIndex,position=0,branchId='main')=>({branchId,position,frameIndex});
 const deferred=()=>{let resolve,reject;const promise=new Promise((a,b)=>{resolve=a;reject=b;});return {promise,resolve,reject};};
 
+test('cancel targets the owned request and retains the accepted checkpoint until terminal acknowledgement',async()=>{
+  const gate=deferred(),cancelled=[];let f;
+  f=replayFixture(q=>q.command==='inspect'?readyReceipt(f):q.command==='plan'?gate.promise:undefined);
+  f.api.cancel=async requestId=>{cancelled.push(requestId);return {requestId,cancelled:true};};
+  try{
+    let c=await f.open();const accepted=c.view;
+    const running=c.run('plan',{opponent:'anatomy-staged-strategy',planningHorizon:2});await f.flush();c=f.render();
+    assert(c.canCancelComputation);assert.equal(c.view,accepted);const request=f.calls.at(-1);
+    assert.match(request.requestId,/^surgical-/);assert.equal(await c.cancelComputation(),true);
+    assert.deepEqual(cancelled,[request.requestId]);c=f.render();assert(c.pending&&c.cancelling);
+    gate.reject(Error('Operation cancelled'));assert.equal(await running,false);c=f.render();
+    assert.equal(c.view,accepted);assert.equal(c.pending,false);assert.equal(c.cancelling,false);
+    assert.match(c.error,/Operation cancelled/);
+  }finally{f.harness.close();}
+});
+
+test('too-late cancellation still admits the committed result and preserves the next state binding',async()=>{
+  const gate=deferred();let f;
+  f=replayFixture(q=>q.command==='inspect'?readyReceipt(f):q.command==='plan'?gate.promise:undefined);
+  f.api.cancel=async()=>({cancelled:false});
+  try{
+    let c=await f.open();const running=c.run('plan',{opponent:'anatomy-staged-strategy',planningHorizon:2});await f.flush();c=f.render();
+    assert.equal(await c.cancelComputation(),false);c=f.render();assert(c.pending&&!c.cancelling);
+    const committed=readyReceipt(f);committed.view={...committed.view,stateId:'committed-after-cancel'};
+    gate.resolve(committed);assert.equal(await running,true);c=f.admit();assert.equal(c.view.stateId,'committed-after-cancel');
+    await c.run('branch');assert.equal(f.calls.at(-1).expectedStateId,'committed-after-cancel');
+  }finally{f.harness.close();}
+});
+
 function readyReceipt(f){
   const receipt=f.frame(selection(0));delete receipt.playback;
   receipt.view={...receipt.view,stateId:'editable',scene:{...receipt.view.scene,sceneId:'scene'}};

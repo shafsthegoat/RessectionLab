@@ -46,7 +46,8 @@ _MODULES = ('core', 'geometry', 'surgical_scene', 'surgical_engine', 'surgical_t
             'surgical_vascular_graph', 'surgical_bipolar_thermal',
             'surgical_occupancy', 'surgical_rl_protection', 'surgical_geometry_cache',
             'surgical_verified_cache', 'surgical_cusa_v3', 'surgical_clock', 'surgical_idle_native',
-            'build_surgical_idle_native')
+            'build_surgical_idle_native', 'surgical_cranial_stages', 'surgical_membrane_transport',
+            'native_backend', 'surgical_native_engine', 'surgical_native_control')
 
 
 def _code_signature(code):
@@ -130,6 +131,9 @@ def _fingerprint():
     from .surgical_idle_native import strict_live_identity
     add('optional-idle-native', json.dumps(strict_live_identity(), sort_keys=True,
         separators=(',', ':'), allow_nan=False).encode())
+    from .native_backend import strict_live_identity as cpp_identity
+    add('cpp-backend', json.dumps(cpp_identity(), sort_keys=True,
+        separators=(',', ':'), allow_nan=False).encode())
     globals()['_last_components'] = components
     return digest.hexdigest()
 
@@ -152,7 +156,7 @@ def _encode(value):
 
 
 def _encode_sized(value):
-    raw = json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False).encode()
+    raw = json.dumps(value, separators=(',', ':'), allow_nan=False).encode()
     if len(raw) > MAX_JSON_BYTES:
         raise ValueError('Verified cache JSON exceeds transient decode budget')
     return gzip.compress(raw, compresslevel=1, mtime=0), len(raw)
@@ -309,6 +313,8 @@ class VerifiedSurgicalCache:
         _check(check)
         scene.require_cache_source()
         from .surgical_engine import SurgicalEngine
+        if 'cranialStagesContract' in record:
+            return None  # Stage boundary proofs must be rederived by public replay.
         if cls is not SurgicalEngine:
             return None  # A subclass's transitions are a different implementation.
         try:

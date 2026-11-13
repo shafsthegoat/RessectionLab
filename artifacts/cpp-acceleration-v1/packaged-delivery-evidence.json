@@ -1,0 +1,823 @@
+{
+  "application": {
+    "architecture": "arm64",
+    "archiveSha256": "288b11a7a02d5a74d73469f7e059b159d6f0063244f024e69ddc4ec3f4d9e1a6",
+    "buildReport": {
+      "path": "testcases/outputs/cpp-final-verification-v1/app-build-report.json",
+      "sha256": "c33f1fdd45c0e7a00ecf80bcb6b45d311e728eaf424f5b0072acbf0a5982f80e"
+    },
+    "codeDirectoryHash": "1e08ed37900c314c49d742a931257cf0a5d04b82",
+    "engineSha256": "c6d6aebeef21ea29e0a54df370dc34617ea3cb3130420bb5de200ef1cf39ea58",
+    "mainExecutableSha256": "5c3a3be443219dc404cc2d32f0e032b76e09517a0db56d95aa542f83fb88933f",
+    "notarized": false,
+    "noticeSourceCompleteness": "incomplete",
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app",
+    "signing": "local_ad_hoc",
+    "strictSignatureAfterAllFourWorkflows": {
+      "command": [
+        "/usr/bin/codesign",
+        "--verify",
+        "--deep",
+        "--strict",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app"
+      ],
+      "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp",
+      "elapsedSeconds": 0.42987070797244087,
+      "exitCode": 0,
+      "log": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/testcases/outputs/cpp-final-verification-v1/app-signature-after-workflows.log",
+      "name": "app-signature-after-workflows"
+    },
+    "unresolvedNotices": [
+      {
+        "component": "react-remove-scroll-bar@2.3.8",
+        "reason": "Installed runtime package declares a license but contains no upstream root license/notice text. Its package.json is retained; no substitute license is invented."
+      },
+      {
+        "component": "CPython 3.12.14 static vendor libraries",
+        "reason": "No verified static-vendor notice/version manifest has been configured for this exact runtime. Its upstream build provenance must supply that closure; copying CPython LICENSE.txt alone does not resolve the gap."
+      }
+    ]
+  },
+  "applicationWorkflows": {
+    "cpp-cold": {
+      "acceptedViewSha256": "1fd710ba1c1e288b52598da223c078d2fd5b3a8521ceb39470e55083de169cd6",
+      "appCode": {
+        "archiveSha256": "288b11a7a02d5a74d73469f7e059b159d6f0063244f024e69ddc4ec3f4d9e1a6",
+        "files": {
+          "main.cjs": {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar/electron/main.cjs",
+            "sha256": "f75709fc161a84a9d281122e5057becdc07d6d1cc7cf8fbc5a864e09fb334108"
+          },
+          "preload.cjs": {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar/electron/preload.cjs",
+            "sha256": "9ac9998756baac30944a48d5e9f6481d726315111f9d32a9a825e37dd0137f33"
+          },
+          "sidecar.cjs": {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar/electron/sidecar.cjs",
+            "sha256": "731362563043cfab3ce35369aa2f6e9da1386e08a6931268aa1ee7916fd32002"
+          }
+        },
+        "loadedUrl": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar/dist/index.html",
+        "packagedApp": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app",
+        "preloadApiAvailable": true,
+        "root": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar"
+      },
+      "cacheDirectories": {},
+      "checks": [
+        "Case \u2192 Plan \u2192 Compare \u2192 Rehearse/edit navigation preserves accepted state without native calls",
+        "Cold Open restores the exact comparison, selected native branch, complete action history, ledger, anatomy and replay cursor with zero Plan commands"
+      ],
+      "completeLauncherSeconds": 7.922508375020698,
+      "engineTermination": {
+        "exitCode": 0,
+        "signal": null
+      },
+      "launcher": {
+        "executable": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/MacOS/RessectionLab",
+        "isPackaged": true,
+        "originalPackagedEngineOptions": {
+          "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/testcases/outputs/cpp-final-verification-v1/cpp-cold/hidden-profile",
+          "executable": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/research-engine/ressectionlab-engine",
+          "runDir": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/testcases/outputs/cpp-final-verification-v1/cpp-cold/hidden-profile/research-runs"
+        }
+      },
+      "launcherReceipt": {
+        "path": "testcases/outputs/cpp-final-verification-v1/cpp-cold.launcher.json",
+        "sha256": "b838d719d24610998f71efa30c5f9af99afcc7176473a355597b2114f1081360"
+      },
+      "nativeBindingCalls": 51353,
+      "nativeEngineCopyCalls": 3056,
+      "observedFrameRequests": 0,
+      "passed": true,
+      "planRequests": 0,
+      "receipt": {
+        "path": "testcases/outputs/cpp-final-verification-v1/cpp-cold/report.json",
+        "sha256": "b31879083fa1bbd6d5fd927643bf630454fef1a085cb1a88889397845fdc9a75"
+      },
+      "savedSha256": "03cdd31d7d45d2a903d8909c518cf2d9dc7335202eaaf1fe17cf641fc20d5dca",
+      "selectedBackend": "cpp",
+      "snapshotSha256": "1362b4a217f8c740332786c07dc7b55338a5818011645fa1726281bce59c8c18",
+      "timelineSha256": "045ffb205462c4ef46f30fcbc3ee17ce2d3c2679e6cd61b65733b3e511390553"
+    },
+    "cpp-warm": {
+      "acceptedViewSha256": "1fd710ba1c1e288b52598da223c078d2fd5b3a8521ceb39470e55083de169cd6",
+      "appCode": {
+        "archiveSha256": "288b11a7a02d5a74d73469f7e059b159d6f0063244f024e69ddc4ec3f4d9e1a6",
+        "files": {
+          "main.cjs": {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar/electron/main.cjs",
+            "sha256": "f75709fc161a84a9d281122e5057becdc07d6d1cc7cf8fbc5a864e09fb334108"
+          },
+          "preload.cjs": {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar/electron/preload.cjs",
+            "sha256": "9ac9998756baac30944a48d5e9f6481d726315111f9d32a9a825e37dd0137f33"
+          },
+          "sidecar.cjs": {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar/electron/sidecar.cjs",
+            "sha256": "731362563043cfab3ce35369aa2f6e9da1386e08a6931268aa1ee7916fd32002"
+          }
+        },
+        "loadedUrl": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar/dist/index.html",
+        "packagedApp": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app",
+        "preloadApiAvailable": true,
+        "root": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar"
+      },
+      "cacheDirectories": {
+        "observed": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/testcases/outputs/cpp-final-verification-v1/cpp-warm/hidden-profile/research-runs/surgical-cache/observed"
+      },
+      "checks": [
+        "Case \u2192 Plan \u2192 Compare \u2192 Rehearse/edit navigation preserves accepted state without native calls",
+        "Real cranial Generate cancellation terminates its owned request without accepted-state or branch mutation",
+        "Fresh Generate \u2192 Compare \u2192 selected real branch \u2192 observed replay/pause/seek preserves complete task ledger; valid native refusal and draft navigation preserve accepted anatomy"
+      ],
+      "completeLauncherSeconds": 32.64769329101546,
+      "engineTermination": {
+        "exitCode": 0,
+        "signal": null
+      },
+      "generate": {
+        "directStepCalls": 384,
+        "physicalCalls": 537,
+        "previewCalls": 153,
+        "wallSeconds": 20.459803416975774
+      },
+      "launcher": {
+        "executable": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/MacOS/RessectionLab",
+        "isPackaged": true,
+        "originalPackagedEngineOptions": {
+          "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/testcases/outputs/cpp-final-verification-v1/cpp-warm/hidden-profile",
+          "executable": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/research-engine/ressectionlab-engine",
+          "runDir": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/testcases/outputs/cpp-final-verification-v1/cpp-warm/hidden-profile/research-runs"
+        }
+      },
+      "launcherReceipt": {
+        "path": "testcases/outputs/cpp-final-verification-v1/cpp-warm.launcher.json",
+        "sha256": "704d46d6d038fa7049292a34fa9732a758502923c2cab68d3cb612b3bc8ba936"
+      },
+      "multiItemBatchInvocationsDuringGenerate": 5999,
+      "nativeBindingCalls": 271667,
+      "nativeEngineCopyCalls": 21070,
+      "nativeRefusal": {
+        "reason": "UNSUPPORTED_EXTRACTION",
+        "stateId": "sha256:20d6ebcdc1379a53eb5f6e765613ee4e1233d6d48dd7db74cc97d2c910918c36",
+        "status": "rejected"
+      },
+      "nativeRefusalAction": {
+        "duration": 1,
+        "operation": "extract",
+        "parameters": {
+          "power": 1,
+          "radiusMm": 1.5
+        },
+        "slot": "left"
+      },
+      "observedFrameRequests": 3,
+      "passed": true,
+      "planRequests": 2,
+      "receipt": {
+        "path": "testcases/outputs/cpp-final-verification-v1/cpp-warm/report.json",
+        "sha256": "db8b39a2d041a17656e616196b293a4e59bc797e729d95f098c3b63464dd463b"
+      },
+      "savedSha256": "5c898543b343b538a9ae7dd65d8341ff6d14be8a3a92d58cfac1986276e4eced",
+      "selected": {
+        "actions": 119,
+        "branchId": "cranial-opening-0-20d6ebcdc1379a53",
+        "stateId": "sha256:20d6ebcdc1379a53eb5f6e765613ee4e1233d6d48dd7db74cc97d2c910918c36"
+      },
+      "selectedBackend": "cpp",
+      "snapshotSha256": "1362b4a217f8c740332786c07dc7b55338a5818011645fa1726281bce59c8c18",
+      "timelineSha256": "045ffb205462c4ef46f30fcbc3ee17ce2d3c2679e6cd61b65733b3e511390553"
+    },
+    "reference-cold": {
+      "acceptedViewSha256": "1fd710ba1c1e288b52598da223c078d2fd5b3a8521ceb39470e55083de169cd6",
+      "appCode": {
+        "archiveSha256": "288b11a7a02d5a74d73469f7e059b159d6f0063244f024e69ddc4ec3f4d9e1a6",
+        "files": {
+          "main.cjs": {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar/electron/main.cjs",
+            "sha256": "f75709fc161a84a9d281122e5057becdc07d6d1cc7cf8fbc5a864e09fb334108"
+          },
+          "preload.cjs": {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar/electron/preload.cjs",
+            "sha256": "9ac9998756baac30944a48d5e9f6481d726315111f9d32a9a825e37dd0137f33"
+          },
+          "sidecar.cjs": {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar/electron/sidecar.cjs",
+            "sha256": "731362563043cfab3ce35369aa2f6e9da1386e08a6931268aa1ee7916fd32002"
+          }
+        },
+        "loadedUrl": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar/dist/index.html",
+        "packagedApp": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app",
+        "preloadApiAvailable": true,
+        "root": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar"
+      },
+      "cacheDirectories": {},
+      "checks": [
+        "Case \u2192 Plan \u2192 Compare \u2192 Rehearse/edit navigation preserves accepted state without native calls",
+        "Cold Open restores the exact comparison, selected native branch, complete action history, ledger, anatomy and replay cursor with zero Plan commands"
+      ],
+      "completeLauncherSeconds": 9.616932833974715,
+      "engineTermination": {
+        "exitCode": 0,
+        "signal": null
+      },
+      "launcher": {
+        "executable": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/MacOS/RessectionLab",
+        "isPackaged": true,
+        "originalPackagedEngineOptions": {
+          "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/testcases/outputs/cpp-final-verification-v1/reference-cold/hidden-profile",
+          "executable": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/research-engine/ressectionlab-engine",
+          "runDir": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/testcases/outputs/cpp-final-verification-v1/reference-cold/hidden-profile/research-runs"
+        }
+      },
+      "launcherReceipt": {
+        "path": "testcases/outputs/cpp-final-verification-v1/reference-cold.launcher.json",
+        "sha256": "cee386a5dccf92fed67c205a7037dc40a72beaf5fa17f846409982a74824148f"
+      },
+      "nativeBindingCalls": 0,
+      "nativeEngineCopyCalls": 0,
+      "observedFrameRequests": 0,
+      "passed": true,
+      "planRequests": 0,
+      "receipt": {
+        "path": "testcases/outputs/cpp-final-verification-v1/reference-cold/report.json",
+        "sha256": "85d8be94782fe74024e971eecf5f7f3cc8af479958de9c2aefcfcb16b3aa838e"
+      },
+      "savedSha256": "0ca07b8d4e1a37cbc11aae45d1c1a183c29d9fc9280666d09b09f1ea6f2481ed",
+      "selectedBackend": "reference",
+      "snapshotSha256": "9c4a79e52f26be57dd29cdb15389722e2932c59ad385871ecaaa26200d5145ce",
+      "timelineSha256": "045ffb205462c4ef46f30fcbc3ee17ce2d3c2679e6cd61b65733b3e511390553"
+    },
+    "reference-warm": {
+      "acceptedViewSha256": "1fd710ba1c1e288b52598da223c078d2fd5b3a8521ceb39470e55083de169cd6",
+      "appCode": {
+        "archiveSha256": "288b11a7a02d5a74d73469f7e059b159d6f0063244f024e69ddc4ec3f4d9e1a6",
+        "files": {
+          "main.cjs": {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar/electron/main.cjs",
+            "sha256": "f75709fc161a84a9d281122e5057becdc07d6d1cc7cf8fbc5a864e09fb334108"
+          },
+          "preload.cjs": {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar/electron/preload.cjs",
+            "sha256": "9ac9998756baac30944a48d5e9f6481d726315111f9d32a9a825e37dd0137f33"
+          },
+          "sidecar.cjs": {
+            "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar/electron/sidecar.cjs",
+            "sha256": "731362563043cfab3ce35369aa2f6e9da1386e08a6931268aa1ee7916fd32002"
+          }
+        },
+        "loadedUrl": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar/dist/index.html",
+        "packagedApp": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app",
+        "preloadApiAvailable": true,
+        "root": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar"
+      },
+      "cacheDirectories": {
+        "observed": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/testcases/outputs/cpp-final-verification-v1/reference-warm/hidden-profile/research-runs/surgical-cache/observed"
+      },
+      "checks": [
+        "Case \u2192 Plan \u2192 Compare \u2192 Rehearse/edit navigation preserves accepted state without native calls",
+        "Real cranial Generate cancellation terminates its owned request without accepted-state or branch mutation",
+        "Fresh Generate \u2192 Compare \u2192 selected real branch \u2192 observed replay/pause/seek preserves complete task ledger; valid native refusal and draft navigation preserve accepted anatomy"
+      ],
+      "completeLauncherSeconds": 41.89249979198212,
+      "engineTermination": {
+        "exitCode": 0,
+        "signal": null
+      },
+      "generate": {
+        "directStepCalls": 384,
+        "physicalCalls": 537,
+        "previewCalls": 153,
+        "wallSeconds": 28.009300250036176
+      },
+      "launcher": {
+        "executable": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/MacOS/RessectionLab",
+        "isPackaged": true,
+        "originalPackagedEngineOptions": {
+          "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/testcases/outputs/cpp-final-verification-v1/reference-warm/hidden-profile",
+          "executable": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/research-engine/ressectionlab-engine",
+          "runDir": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/testcases/outputs/cpp-final-verification-v1/reference-warm/hidden-profile/research-runs"
+        }
+      },
+      "launcherReceipt": {
+        "path": "testcases/outputs/cpp-final-verification-v1/reference-warm.launcher.json",
+        "sha256": "98d69018f64da3d4fbf904cf8036b940f89ba0c14904d3f9c13ecc88a3e04f84"
+      },
+      "multiItemBatchInvocationsDuringGenerate": 0,
+      "nativeBindingCalls": 0,
+      "nativeEngineCopyCalls": 0,
+      "nativeRefusal": {
+        "reason": "UNSUPPORTED_EXTRACTION",
+        "stateId": "sha256:20d6ebcdc1379a53eb5f6e765613ee4e1233d6d48dd7db74cc97d2c910918c36",
+        "status": "rejected"
+      },
+      "nativeRefusalAction": {
+        "duration": 1,
+        "operation": "extract",
+        "parameters": {
+          "power": 1,
+          "radiusMm": 1.5
+        },
+        "slot": "left"
+      },
+      "observedFrameRequests": 3,
+      "passed": true,
+      "planRequests": 2,
+      "receipt": {
+        "path": "testcases/outputs/cpp-final-verification-v1/reference-warm/report.json",
+        "sha256": "2217394d6417cb7a7feb7c3ea794126f2993c1009442f981f3f804612366105d"
+      },
+      "savedSha256": "b541f3175bf3cc1146428dce93acf9397fec65792b710b53ff2315c5f9aed9bf",
+      "selected": {
+        "actions": 119,
+        "branchId": "cranial-opening-0-20d6ebcdc1379a53",
+        "stateId": "sha256:20d6ebcdc1379a53eb5f6e765613ee4e1233d6d48dd7db74cc97d2c910918c36"
+      },
+      "selectedBackend": "reference",
+      "snapshotSha256": "9c4a79e52f26be57dd29cdb15389722e2932c59ad385871ecaaa26200d5145ce",
+      "timelineSha256": "045ffb205462c4ef46f30fcbc3ee17ce2d3c2679e6cd61b65733b3e511390553"
+    }
+  },
+  "capturedBuild": {
+    "architecture": "arm64",
+    "buildReport": {
+      "path": "testcases/outputs/cpp-final-verification-v1/frozen-build-report.json",
+      "sha256": "e61fea42a81658ae5539b1d4120cacc3d46a6066fe2ac6131e62285c72981dd8"
+    },
+    "dependencySources": [
+      {
+        "captured": "dependency-images/scipy/spatial/transform/_rotation.py",
+        "destination": "scipy/spatial/transform/_rotation.py",
+        "module": "scipy.spatial.transform._rotation",
+        "origin": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/scipy/spatial/transform/_rotation.py",
+        "sha256": "5116c2fb5ad125968e4ee16995737e23547baf31fa6a7ae188ae51404d9f60f8"
+      }
+    ],
+    "frozenNative": {
+      "binaryName": "_geometry_cpp.cpython-312-darwin.so",
+      "binarySha256": "32fd4fdba25b75efc8ebba0668ee44ddcb070014ca0524a32dd7461d70adb338",
+      "buildIdentity": {
+        "compiler": {
+          "path": "/usr/bin/clang++",
+          "version": "Apple clang version 21.0.0 (clang-2100.1.1.101)"
+        },
+        "cppStandard": 17,
+        "flags": [
+          "-fvisibility=hidden",
+          "-g0",
+          "-std=c++17",
+          "-mmacosx-version-min=10.14",
+          "-O3",
+          "-fno-fast-math",
+          "-ffp-contract=off"
+        ],
+        "platform": {
+          "machine": "arm64",
+          "system": "Darwin"
+        },
+        "pybind11": "3.1.0",
+        "python": {
+          "abi": "cpython-312-darwin",
+          "version": "3.12.14"
+        },
+        "recipeSha256": "d81266ac59c3e7dbf2459666af0aa38b568b3ecba204d373de71e3729876a83c",
+        "schema": "resectionlab-geometry-cpp-v1",
+        "sources": {
+          "geometry_native.cpp": "4975f886b32c604fe45b0266b0882b34aee6a9859ca32e8588e9101e8b50b32c",
+          "state_native.hpp": "90877501a659920b1af0543a317e4b9fb9d6a55b23a8750d7910b243e037b8d3"
+        }
+      },
+      "wheelBinarySha256": "bfc5b7054f87f31a253cdd4b1e9e7e54d71035d07fbb3b69d4ad52327999775a"
+    },
+    "manifestSha256": "14b58b0ed51c9b75e0f06c0db09b96c4d5cb4c781024cf50db0c8af7a4b0ddda",
+    "revision": "01ffb88086aa3b3afc5bf4ac13bd80dc733edbbf",
+    "sourceDigest": "69ace5549647a589e325904ebbcb29e86ad03e9545ae87b39d5b47b7b41959f5"
+  },
+  "crossBackend": {
+    "benchmarkDistinction": "UI defaults use horizon5/beam3 and select119actions; frozen original benchmark uses horizon3/beam3 and selects112actions. UI timings are single instrumented observations, not performance samples.",
+    "directStepCalls": 384,
+    "excludedFields": [
+      [
+        "report",
+        "cost",
+        "wallSeconds"
+      ],
+      [
+        "report",
+        "alternatives",
+        "[]",
+        "ledger",
+        "wallSecondsSinceMeterCreation"
+      ],
+      [
+        "report",
+        "comparisonSeal"
+      ],
+      [
+        "report",
+        "alternatives",
+        "[]",
+        "goalAssessment",
+        "goalHash"
+      ]
+    ],
+    "nativeActions": 119,
+    "normalizedComparisonExact": true,
+    "normalizedComparisonSha256": "34d26cffe2e855fad7d89838abb56640deb154810b3be053a10cafa879db56e7",
+    "normalizer": "scripts/benchmark_cpp_acceleration.py:canonical_result",
+    "physicalCalls": 537,
+    "previewCalls": 153,
+    "sameAcceptedViewTimelineBranchesAndSequenceOutcome": true,
+    "selectedStateId": "sha256:20d6ebcdc1379a53eb5f6e765613ee4e1233d6d48dd7db74cc97d2c910918c36",
+    "timelineSha256": "045ffb205462c4ef46f30fcbc3ee17ce2d3c2679e6cd61b65733b3e511390553",
+    "uiSettings": {
+      "beamWidth": 3,
+      "opponent": "anatomy-cranial-strategy",
+      "planningHorizon": 5
+    },
+    "viewSha256": "1fd710ba1c1e288b52598da223c078d2fd5b3a8521ceb39470e55083de169cd6"
+  },
+  "focusedChecks": [
+    {
+      "elapsedSeconds": 60.85785870801192,
+      "log": {
+        "path": "testcases/outputs/cpp-final-verification-v1/source-tests-cpp.log",
+        "sha256": "40e3a3813e0deafb6e12097b95cf7076444cef6df2c4ef161e7e11abebd11f7b"
+      },
+      "passed": 644,
+      "scope": "All focused native/source integration, transport/cache/replay/GC and generated supplementary controls",
+      "skipped": 77,
+      "warnings": 2
+    },
+    {
+      "elapsedSeconds": 7.317824958998244,
+      "log": {
+        "path": "testcases/outputs/cpp-final-verification-v1/source-tests-reference.log",
+        "sha256": "606e5cde65b2bd2416e77d463e63b67ff071efc8d9fb2300ea95a71efe982985"
+      },
+      "passed": 146,
+      "scope": "Reference geometry/cancellation/RL/graph/supplement/valid-refusal controls",
+      "warnings": 2
+    },
+    {
+      "elapsedSeconds": 3.4242827499983832,
+      "log": {
+        "path": "testcases/outputs/cpp-final-verification-v1/desktop-tests-main.log",
+        "sha256": "9a3d678d6a943c07034de0cb320841a9c539b8f1fd620822dbf521a53413a62f"
+      },
+      "passed": 325,
+      "scope": "Desktop main"
+    },
+    {
+      "elapsedSeconds": 4.968931582989171,
+      "log": {
+        "path": "testcases/outputs/cpp-final-verification-v1/desktop-tests-renderer.log",
+        "sha256": "6fa6400c466745bb1bb6be3a330801da632102dd40a22350238a5db4be9f08fc"
+      },
+      "passed": 716,
+      "scope": "Desktop renderer"
+    },
+    {
+      "elapsedSeconds": 2.2855926250340417,
+      "log": {
+        "path": "testcases/outputs/cpp-final-verification-v1/desktop-tests-viewer.log",
+        "sha256": "1d4a2723619e86bb8317b84c53a1cc5ba4d4baf00d471ba7f7fe2b3393b25850"
+      },
+      "passed": 275,
+      "scope": "Desktop viewer"
+    }
+  ],
+  "independentReviewStatus": "Passed: independent-final-review.json records 82 focused checks, 15 runtime variants, actual signed C++ warm/cold, strict codesign and exact native saved-case/public replay comparisons. The separate original 2x planning gate remains unmet.",
+  "passed": true,
+  "pendingChecks": [],
+  "previousCheckpoint": {
+    "codeDirectoryHash": "c9b0c5f9505eea7f982884c3472679dcba3f2f5c",
+    "rawEvidence": {
+      "path": "testcases/outputs/cpp-gc-delivery-v1/phase.json",
+      "sha256": "b847f7b3fe064d8d3483645bb05b4c8852d649e2f05cabcea192022a2bbeacdc"
+    },
+    "sourceDigest": "17449bc734bea240eb185df619af53ca03b5def7671a4501deaeee12f6216b74",
+    "validNativeRefusalQualified": false
+  },
+  "priorFailuresRetained": [
+    "testcases/outputs/cpp-verification-v1",
+    "testcases/outputs/cpp-verification-v2",
+    "testcases/outputs/cpp-cache-delivery-v1",
+    "testcases/outputs/cpp-final-delivery-v1",
+    "testcases/outputs/cpp-replay-delivery-v1",
+    "testcases/outputs/cpp-packaged-workflow-v1",
+    "testcases/outputs/cpp-packaged-workflow-v2",
+    "testcases/outputs/cpp-packaged-workflow-v3",
+    "testcases/outputs/cpp-ordered-delivery-v1",
+    {
+      "path": "testcases/outputs/cpp-gc-delivery-v1",
+      "reason": "Previous actual signed lifecycle checkpoint recorded malformed-request validation only; final valid-domain refusal now separately qualified."
+    }
+  ],
+  "rawEvidence": {
+    "path": "testcases/outputs/cpp-final-verification-v1/verification.json",
+    "sha256": "28db6f66b34c99639c1e935561c00e3f95d77214d27c28deb7dfe1797db9131b"
+  },
+  "reproduce": ".venv/bin/python scripts/verify_cpp_acceleration.py --output testcases/outputs/<fresh-name> --node /absolute/path/to/node",
+  "runtimeVariants": {
+    "frozen": {
+      "abi": "cpython-312-darwin",
+      "architecture": "arm64",
+      "binaryPath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/sidecar/ressectionlab-engine/_internal/resectionlab/_geometry_cpp.cpython-312-darwin.so",
+      "binarySha256": "32fd4fdba25b75efc8ebba0668ee44ddcb070014ca0524a32dd7461d70adb338",
+      "checkpoint": {
+        "componentExemptionPreserved": true,
+        "nativeCalls": 1,
+        "nativeFallbackCalls": 0,
+        "passed": true,
+        "selected": "cpp",
+        "stockCopyHooksQualified": true,
+        "stockCopyHooksUnchanged": true
+      },
+      "corruptionAuto": "NativeIntegrityError",
+      "explicitReference": "reference",
+      "genuineOwnerGc": {
+        "genuineOwnerGcEpochStable": true,
+        "passed": true
+      },
+      "missingAuto": {
+        "reason": "extension-unavailable",
+        "selected": "reference"
+      },
+      "missingAutoCheckpoint": {
+        "componentExemptionPreserved": true,
+        "nativeCalls": 0,
+        "nativeFallbackCalls": 0,
+        "passed": true,
+        "selected": "reference",
+        "stockCopyHooksQualified": true,
+        "stockCopyHooksUnchanged": true
+      },
+      "missingExplicitCpp": "NativeUnavailableError",
+      "nativeBindingsAfter": 2212,
+      "nativeBindingsBefore": 0,
+      "nativeEngineCopyCalls": 99,
+      "oldOptionalHelpers": {
+        "idle": {
+          "mode": "python",
+          "schema": "surgical-idle-native.v1",
+          "selection": "unconfigured-fixed-fallback"
+        },
+        "prefixJson": {
+          "mode": "python",
+          "schema": "surgical-prefix-json-native.v2",
+          "selection": "unconfigured-fixed-fallback"
+        }
+      },
+      "oneAcceptedActionReplay": {
+        "acceptedActions": 1,
+        "acceptedStateUnchanged": true,
+        "endpointStateId": "sha256:95f4c5cfc10cb9bc64936adfcee5b7eb18b4add2461c19b0b943dc1bb7ff9782",
+        "frameCount": 2,
+        "initialStateId": "sha256:6de944f788e821b4fc58d1417d7fdffbfc86f732388b39a9470c8ce72b00109c",
+        "passed": true
+      },
+      "packagePath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/sidecar/ressectionlab-engine/_internal/resectionlab",
+      "passed": true,
+      "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+      "receipt": {
+        "path": "testcases/outputs/cpp-final-verification-v1/frozen-runtime.json",
+        "sha256": "f985439b292fe354bda34372f1427fdaa1552d2dbd3f5344e0821e078de5498e"
+      },
+      "referenceCheckpoint": {
+        "componentExemptionPreserved": true,
+        "nativeCalls": 0,
+        "nativeFallbackCalls": 0,
+        "passed": true,
+        "selected": "reference",
+        "stockCopyHooksQualified": true,
+        "stockCopyHooksUnchanged": true
+      }
+    },
+    "packaged": {
+      "abi": "cpython-312-darwin",
+      "architecture": "arm64",
+      "binaryPath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/research-engine/_internal/resectionlab/_geometry_cpp.cpython-312-darwin.so",
+      "binarySha256": "32fd4fdba25b75efc8ebba0668ee44ddcb070014ca0524a32dd7461d70adb338",
+      "checkpoint": {
+        "componentExemptionPreserved": true,
+        "nativeCalls": 1,
+        "nativeFallbackCalls": 0,
+        "passed": true,
+        "selected": "cpp",
+        "stockCopyHooksQualified": true,
+        "stockCopyHooksUnchanged": true
+      },
+      "corruptionAuto": "NativeIntegrityError",
+      "explicitReference": "reference",
+      "genuineOwnerGc": {
+        "genuineOwnerGcEpochStable": true,
+        "passed": true
+      },
+      "missingAuto": {
+        "reason": "extension-unavailable",
+        "selected": "reference"
+      },
+      "missingAutoCheckpoint": {
+        "componentExemptionPreserved": true,
+        "nativeCalls": 0,
+        "nativeFallbackCalls": 0,
+        "passed": true,
+        "selected": "reference",
+        "stockCopyHooksQualified": true,
+        "stockCopyHooksUnchanged": true
+      },
+      "missingExplicitCpp": "NativeUnavailableError",
+      "nativeBindingsAfter": 2212,
+      "nativeBindingsBefore": 0,
+      "nativeEngineCopyCalls": 99,
+      "oldOptionalHelpers": {
+        "idle": {
+          "mode": "python",
+          "schema": "surgical-idle-native.v1",
+          "selection": "unconfigured-fixed-fallback"
+        },
+        "prefixJson": {
+          "mode": "python",
+          "schema": "surgical-prefix-json-native.v2",
+          "selection": "unconfigured-fixed-fallback"
+        }
+      },
+      "oneAcceptedActionReplay": {
+        "acceptedActions": 1,
+        "acceptedStateUnchanged": true,
+        "endpointStateId": "sha256:95f4c5cfc10cb9bc64936adfcee5b7eb18b4add2461c19b0b943dc1bb7ff9782",
+        "frameCount": 2,
+        "initialStateId": "sha256:6de944f788e821b4fc58d1417d7fdffbfc86f732388b39a9470c8ce72b00109c",
+        "passed": true
+      },
+      "packagePath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/research-engine/_internal/resectionlab",
+      "passed": true,
+      "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+      "receipt": {
+        "path": "testcases/outputs/cpp-final-verification-v1/packaged-runtime.json",
+        "sha256": "3ffd5763e1f84c4b8fb357482c4610f5bff4a6b37a826c0110128fde64e9add4"
+      },
+      "referenceCheckpoint": {
+        "componentExemptionPreserved": true,
+        "nativeCalls": 0,
+        "nativeFallbackCalls": 0,
+        "passed": true,
+        "selected": "reference",
+        "stockCopyHooksQualified": true,
+        "stockCopyHooksUnchanged": true
+      }
+    },
+    "source": {
+      "abi": "cpython-312-darwin",
+      "architecture": "arm64",
+      "binaryPath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src/resectionlab/_geometry_cpp.cpython-312-darwin.so",
+      "binarySha256": "bfc5b7054f87f31a253cdd4b1e9e7e54d71035d07fbb3b69d4ad52327999775a",
+      "checkpoint": {
+        "componentExemptionPreserved": true,
+        "nativeCalls": 1,
+        "nativeFallbackCalls": 0,
+        "passed": true,
+        "selected": "cpp",
+        "stockCopyHooksQualified": true,
+        "stockCopyHooksUnchanged": true
+      },
+      "corruptionAuto": "NativeIntegrityError",
+      "explicitReference": "reference",
+      "genuineOwnerGc": {
+        "genuineOwnerGcEpochStable": true,
+        "passed": true
+      },
+      "missingAuto": {
+        "reason": "extension-unavailable",
+        "selected": "reference"
+      },
+      "missingAutoCheckpoint": {
+        "componentExemptionPreserved": true,
+        "nativeCalls": 0,
+        "nativeFallbackCalls": 0,
+        "passed": true,
+        "selected": "reference",
+        "stockCopyHooksQualified": true,
+        "stockCopyHooksUnchanged": true
+      },
+      "missingExplicitCpp": "NativeUnavailableError",
+      "nativeBindingsAfter": 2456,
+      "nativeBindingsBefore": 0,
+      "nativeEngineCopyCalls": 99,
+      "oldOptionalHelpers": {
+        "idle": {
+          "mode": "python",
+          "schema": "surgical-idle-native.v1",
+          "selection": "unconfigured-fixed-fallback"
+        },
+        "prefixJson": {
+          "mode": "python",
+          "schema": "surgical-prefix-json-native.v2",
+          "selection": "unconfigured-fixed-fallback"
+        }
+      },
+      "oneAcceptedActionReplay": {
+        "acceptedActions": 1,
+        "acceptedStateUnchanged": true,
+        "endpointStateId": "sha256:95f4c5cfc10cb9bc64936adfcee5b7eb18b4add2461c19b0b943dc1bb7ff9782",
+        "frameCount": 2,
+        "initialStateId": "sha256:6de944f788e821b4fc58d1417d7fdffbfc86f732388b39a9470c8ce72b00109c",
+        "passed": true
+      },
+      "packagePath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src/resectionlab",
+      "passed": true,
+      "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+      "receipt": {
+        "path": "testcases/outputs/cpp-final-verification-v1/source-runtime.json",
+        "sha256": "2a7be096f249d969b92e4123a3d666053ed4f799b63f35d7e8a6e3b6c0daf370"
+      },
+      "referenceCheckpoint": {
+        "componentExemptionPreserved": true,
+        "nativeCalls": 0,
+        "nativeFallbackCalls": 0,
+        "passed": true,
+        "selected": "reference",
+        "stockCopyHooksQualified": true,
+        "stockCopyHooksUnchanged": true
+      }
+    },
+    "wheel": {
+      "abi": "cpython-312-darwin",
+      "architecture": "arm64",
+      "binaryPath": "/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/resectionlab-cpp-wheel-e5s3vjo2/lib/python3.12/site-packages/resectionlab/_geometry_cpp.cpython-312-darwin.so",
+      "binarySha256": "bfc5b7054f87f31a253cdd4b1e9e7e54d71035d07fbb3b69d4ad52327999775a",
+      "checkpoint": {
+        "componentExemptionPreserved": true,
+        "nativeCalls": 1,
+        "nativeFallbackCalls": 0,
+        "passed": true,
+        "selected": "cpp",
+        "stockCopyHooksQualified": true,
+        "stockCopyHooksUnchanged": true
+      },
+      "corruptionAuto": "NativeIntegrityError",
+      "explicitReference": "reference",
+      "genuineOwnerGc": {
+        "genuineOwnerGcEpochStable": true,
+        "passed": true
+      },
+      "missingAuto": {
+        "reason": "extension-unavailable",
+        "selected": "reference"
+      },
+      "missingAutoCheckpoint": {
+        "componentExemptionPreserved": true,
+        "nativeCalls": 0,
+        "nativeFallbackCalls": 0,
+        "passed": true,
+        "selected": "reference",
+        "stockCopyHooksQualified": true,
+        "stockCopyHooksUnchanged": true
+      },
+      "missingExplicitCpp": "NativeUnavailableError",
+      "nativeBindingsAfter": 2456,
+      "nativeBindingsBefore": 0,
+      "nativeEngineCopyCalls": 99,
+      "oldOptionalHelpers": {
+        "idle": {
+          "mode": "python",
+          "schema": "surgical-idle-native.v1",
+          "selection": "unconfigured-fixed-fallback"
+        },
+        "prefixJson": {
+          "mode": "python",
+          "schema": "surgical-prefix-json-native.v2",
+          "selection": "unconfigured-fixed-fallback"
+        }
+      },
+      "oneAcceptedActionReplay": {
+        "acceptedActions": 1,
+        "acceptedStateUnchanged": true,
+        "endpointStateId": "sha256:95f4c5cfc10cb9bc64936adfcee5b7eb18b4add2461c19b0b943dc1bb7ff9782",
+        "frameCount": 2,
+        "initialStateId": "sha256:6de944f788e821b4fc58d1417d7fdffbfc86f732388b39a9470c8ce72b00109c",
+        "passed": true
+      },
+      "packagePath": "/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/resectionlab-cpp-wheel-e5s3vjo2/lib/python3.12/site-packages/resectionlab",
+      "passed": true,
+      "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+      "receipt": {
+        "path": "testcases/outputs/cpp-final-verification-v1/wheel-runtime.json",
+        "sha256": "7b5852d1319b628525277774237255e420ce0a7928686d53c9d63b6f212ad969"
+      },
+      "referenceCheckpoint": {
+        "componentExemptionPreserved": true,
+        "nativeCalls": 0,
+        "nativeFallbackCalls": 0,
+        "passed": true,
+        "selected": "reference",
+        "stockCopyHooksQualified": true,
+        "stockCopyHooksUnchanged": true
+      }
+    }
+  },
+  "schema": "resectionlab-cpp-packaged-delivery-evidence-v1",
+  "scope": "Final engineering delivery of retained copier increment: source, external clean wheel, frozen engine and actual signed Mac application. All controls are generated without external assets. This delivery receipt does not establish the separate 2x planning performance objective or patient readiness.",
+  "validNativeRefusalQualified": true
+}

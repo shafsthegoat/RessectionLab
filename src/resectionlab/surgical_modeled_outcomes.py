@@ -51,24 +51,49 @@ def _bounds(points):
             'maxRasMm':[float(x) for x in np.max(points,axis=0)]}
 
 
-def _target_distribution(scene, target_ids, removed, baseline_removed):
-    if not target_ids:
-        return _unavailable('no_source_target_region','mm3')
-    flat = scene.labels.ravel()
-    ids = np.flatnonzero(np.isin(flat, target_ids))
+def _source_geometry(scene, target_ids, *, use_cache=True):
+    """Reuse immutable source geometry, never a state-dependent outcome.
+
+    The scene verifies labels, affine, regions, properties and source identity
+    before reuse. Tool/constraint/state changes are deliberately not cached.
+    Keep the cache on its scene owner so closing a case releases the arrays.
+    """
+    scene.require_cache_source()
+    key = (scene.identity, tuple(target_ids))
+    cached = getattr(scene, '_outcome_source_geometry', None)
+    if use_cache and cached is not None and cached[0] == key:
+        return cached[1]
+    labels, counts = np.unique(scene.labels, return_counts=True)
+    ids = np.flatnonzero(np.isin(scene.labels.ravel(), target_ids))
     if len(ids) > MAX_TARGET_CELLS:
         raise ValueError('Target spatial summary exceeds bounded cell limit')
+    points = scene.points(ids)
+    center = points.mean(axis=0) if len(points) else np.zeros(3)
+    octant = ((points[:,0]>=center[0]).astype(np.int8)*4 +
+              (points[:,1]>=center[1]).astype(np.int8)*2 +
+              (points[:,2]>=center[2]).astype(np.int8))
+    for value in (ids, points, center, octant):
+        value.flags.writeable = False
+    result = {'counts': dict(zip(map(int, labels), map(int, counts))),
+              'ids': ids, 'points': points, 'center': center, 'octant': octant}
+    if use_cache:
+        scene._outcome_source_geometry = (key, result)
+    return result
+
+
+def _target_distribution(scene, target_ids, removed, baseline_removed, *, use_cache=True):
+    if not target_ids:
+        return _unavailable('no_source_target_region','mm3')
+    geometry = _source_geometry(scene, target_ids, use_cache=use_cache)
+    ids = geometry['ids']
     if not len(ids):
         return _unavailable('mapped_target_region_has_no_source_cells','mm3')
-    points = scene.points(ids)
-    center = np.mean(points,axis=0)
+    points, center = geometry['points'], geometry['center']
     removed_mask = np.isin(ids,np.fromiter(removed,dtype=np.int64,count=len(removed)))
     baseline_mask = np.isin(ids,np.fromiter(baseline_removed,dtype=np.int64,count=len(baseline_removed)))
     if np.any(baseline_mask & ~removed_mask):
         raise ValueError('Baseline target removal is absent from endpoint')
-    octant = ((points[:,0]>=center[0]).astype(np.int8)*4 +
-              (points[:,1]>=center[1]).astype(np.int8)*2 +
-              (points[:,2]>=center[2]).astype(np.int8))
+    octant = geometry['octant']
     source_counts = np.bincount(octant,minlength=8)
     removed_counts = np.bincount(octant[removed_mask],minlength=8)
     baseline_counts = np.bincount(octant[baseline_mask],minlength=8)
@@ -131,7 +156,8 @@ def _source_regions(scene):
     return rows
 
 
-def summarize_engine_outcomes(engine: SurgicalEngine, *, baseline: SurgicalEngine | None = None) -> dict:
+def summarize_engine_outcomes(engine: SurgicalEngine, *, baseline: SurgicalEngine | None = None,
+                              use_geometry_cache: bool = True) -> dict:
     """Summarize one actual state; baseline defaults to intact same-scene state.
 
     Input is an engine, never a patient mask or a claimed planner score. A
@@ -169,9 +195,8 @@ def summarize_engine_outcomes(engine: SurgicalEngine, *, baseline: SurgicalEngin
         raise ValueError('Endpoint removal must extend the baseline without duplicate cells')
     counts=_count_by_label(scene,removed)
     base_counts=_count_by_label(scene,baseline_removed)
-    source_labels,source_counts=np.unique(scene.labels,return_counts=True)
-    source_count={int(key):int(value) for key,value in zip(source_labels,source_counts)}
     target_ids=tuple(r['id'] for r in scene.regions if r.get('target'))
+    source_count=_source_geometry(scene,target_ids,use_cache=use_geometry_cache)['counts']
     non_target=[]
     mapped_materials=set()
     for region in scene.regions:
@@ -191,7 +216,7 @@ def summarize_engine_outcomes(engine: SurgicalEngine, *, baseline: SurgicalEngin
             'residualMm3':float(source_volume-removed_volume)})
     metrics=engine.metrics()
     baseline_metrics=base.metrics()
-    target=_target_distribution(scene,target_ids,removed,baseline_removed)
+    target=_target_distribution(scene,target_ids,removed,baseline_removed,use_cache=use_geometry_cache)
     if target['status']=='measured' and not math.isclose(target['removedMm3'],
             metrics['targetRemovedMm3'],abs_tol=1e-7):
         raise ValueError('Target source cells disagree with authoritative engine metrics')
@@ -274,6 +299,9 @@ def summarize_engine_outcomes(engine: SurgicalEngine, *, baseline: SurgicalEngin
     else:
         vessel={'status':'unavailable','reason':'mapped_vessels_and_tissue_physics_v2_required',
                 'value':None}
+    from .surgical_sequence_outcomes import sequence_ledger
+    sequence = sequence_ledger(engine, base, target=target, metrics=metrics,
+                               baseline_metrics=baseline_metrics, mapped_materials=mapped_materials)
     return {'schema':SCHEMA,'sceneId':scene.identity,'sourceCaseHash':scene.source.get('caseHash'),
         'sourceLabelsHash':array_digest(scene.labels),
         'frame':'RAS+','stateId':engine.state_id,'baselineStateId':base.state_id,
@@ -282,7 +310,7 @@ def summarize_engine_outcomes(engine: SurgicalEngine, *, baseline: SurgicalEngin
         'voxelVolumeMm3':float(scene.voxel_mm3),
         'sourceRegions':_source_regions(scene),
         'mappedAnatomy':mapped,'protection':protection,
-        'target':target,'nonTargetByLabel':non_target,
+        'target':target,'nonTargetByLabel':non_target,'sequence':sequence,
         'nonTargetRemovedMm3':_measured(non_volume,'mm3'),
         'incrementalNonTargetRemovedMm3':_measured(sum(row['incrementalRemovedMm3'] for row in non_target),'mm3'),
         'contact':{'workingToolCellSecondsByMaterial':contact,

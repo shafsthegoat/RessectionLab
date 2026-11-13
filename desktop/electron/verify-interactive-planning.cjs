@@ -10,7 +10,7 @@ for(const value of [input,output])assert(value.startsWith(path.join(root,'testca
 assert(!fs.existsSync(output),'Preserve prior evidence; choose a new output directory');fs.mkdirSync(output,{recursive:true});
 const sha=file=>crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
 const original=sha(input),saved=path.join(output,'desktop-planning.ressectionlab');
-const report={schema:'resectionlab.interactive-planning-hidden-native.v1',input,output,windowEverVisible:false,ipc:[],checks:[],states:[],passed:false};
+const report={schema:'resectionlab.approach-planning-hidden-native.v1',input,output,windowEverVisible:false,ipc:[],checks:[],states:[],passed:false};
 let lastResponse=null;
 const originalHandle=ipcMain.handle.bind(ipcMain);
 ipcMain.handle=(channel,handler)=>originalHandle(channel,async(...args)=>{
@@ -35,8 +35,8 @@ app.on('browser-window-created',(_event,window)=>{
     const click=async(label,scope='document')=>{await js(`(()=>{const root=${scope},b=[...root.querySelectorAll('button,input[type=checkbox]')].find(b=>b.textContent.trim().replace(/^●\\s*/,'')===${JSON.stringify(label)}||b.getAttribute('aria-label')===${JSON.stringify(label)});if(!b||b.disabled)throw Error('Missing enabled control '+${JSON.stringify(label)});for(let e=b.parentElement;e;e=e.parentElement)if(e.tagName==='DETAILS')e.open=true;b.click();})()`);await delay(50);};
     const inputValue=async(label,value)=>{await js(`(()=>{const e=[...document.querySelectorAll('input')].find(e=>e.getAttribute('aria-label')===${JSON.stringify(label)});if(!e||e.disabled)throw Error('Missing enabled input '+${JSON.stringify(label)});for(let p=e.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(e,${JSON.stringify(String(value))});e.dispatchEvent(new Event('input',{bubbles:true}));e.dispatchEvent(new Event('change',{bubbles:true}));})()`);await delay(80);};
     const ready=()=>wait(`!!document.querySelector('.surgical-panel')&&!!document.querySelector('.rl-viewer canvas')&&!document.querySelector('.viewer-loading')&&document.querySelector('.rl-viewer').dataset.surfacesPending==='0'&&![...document.querySelectorAll('.surgical-panel [role="status"]')].some(n=>/^(Computing instrument action|Preparing an exact recorded state|Preparing accepted display|Verifying saved source-bound rehearsal)/.test(n.textContent.trim()))`);
-    const state=()=>js(`(()=>{const panel=document.querySelector('.interactive-planning'),draft=panel?.querySelector('[data-planning-status]');return {stateId:document.querySelector('.surgical-panel')?.dataset.stateId,branch:document.querySelector('[aria-label="Surgical branch"]')?.value,position:Number(document.querySelector('[aria-label="Surgical timeline"]')?.value),status:draft?.dataset.planningStatus,rows:[...document.querySelectorAll('[data-planning-candidate]')].map(n=>({id:n.dataset.planningCandidate,text:n.textContent})),text:panel?.textContent,overlays:[...document.querySelectorAll('[data-planning-routes]')].map(n=>n.dataset.planningRoutes),alerts:[...document.querySelectorAll('.surgical-panel [role=alert]')].map(n=>n.textContent)}})()`);
-    const capture=async name=>{await ready();await js(`document.querySelector('.interactive-planning')?.scrollIntoView({block:'start'})`);await delay(100);
+    const state=()=>js(`(()=>{const panel=document.querySelector('.approach-planning'),draft=panel?.querySelector('[data-planning-status]');return {stateId:document.querySelector('.surgical-panel')?.dataset.stateId,branch:document.querySelector('[aria-label="Surgical branch"]')?.value,position:Number(document.querySelector('[aria-label="Surgical timeline"]')?.value),status:draft?.dataset.planningStatus,rows:[...document.querySelectorAll('[data-planning-candidate]')].map(n=>({id:n.dataset.planningCandidate,text:n.textContent})),text:panel?.textContent,overlays:[...document.querySelectorAll('[data-planning-routes]')].map(n=>n.dataset.planningRoutes),alerts:[...document.querySelectorAll('.approach-planning [role=alert]')].map(n=>n.textContent)}})()`);
+    const capture=async(name,selector='.approach-planning')=>{await ready();await js(`document.querySelector(${JSON.stringify(selector)})?.scrollIntoView({block:'start'})`);await delay(100);
       assert.equal(window.isVisible(),false);const before=await state();
       fs.writeFileSync(path.join(output,name+'.png'),(await window.webContents.capturePage(undefined,{stayHidden:true,stayAwake:true})).toPNG());
       assert.deepEqual(await state(),before);report.states.push({name,...before});return before;};
@@ -56,12 +56,48 @@ app.on('browser-window-created',(_event,window)=>{
       if(process.env.INTERACTIVE_PLANNING_REOPEN==='1'){
         await capture('01-cold-reopened-installed-branch');
         assert(lastResponse?.interactivePlanning&&!lastResponse.interactivePlanning.current);
+        if(process.env.DECISION_SYSTEM_CHECK==='1'){
+          const replayStart=report.ipc.length;
+          await click('Play replay');
+          const start=Date.now();while(!report.ipc.slice(replayStart).some(row=>row.command==='seekFrame')){if(Date.now()-start>120000)throw Error('Recorded replay frame missing');await delay(80);}
+          await click('Pause replay');await ready();
+          await click('Return to recorded boundary');await ready();
+          report.checks.push('Fresh desktop plays native recorded frames and pauses before returning to planning');
+        }
         await click('Open planning checkpoint');await ready();
         const current=await capture('02-cold-reopened-current-comparison');assert.equal(current.rows.length,3);assert.equal(current.status,'current');
+        if(process.env.DECISION_SYSTEM_CHECK==='1'){
+          await click('Calculate sequence breakdown');await wait(`!!document.querySelector('[aria-label="Complete sequence quantities"]')`);await ready();
+          report.sequenceOutcome=lastResponse.sequenceOutcome;
+          assert.equal(report.sequenceOutcome.stateId,current.stateId);
+          await capture('03-cold-complete-sequence-ledger','[aria-label="Complete sequence quantities"]');
+        }
         report.checks.push('Fresh desktop reopen canonically replays installed branch and restores saved comparison at its exact source checkpoint');
       }else{
         const initial=await capture('01-saved-current-comparison');assert.equal(initial.status,'current');assert.equal(initial.rows.length,3);
         const baseline=initial.stateId;
+        if(process.env.DECISION_SYSTEM_CHECK==='1'){
+          const index=report.ipc.length;
+          await click('Acknowledge interactive planning unknowns');
+          await click('Generate approaches');
+          await wait(`[...document.querySelectorAll('button')].some(b=>b.textContent.trim()==='Cancel computation'&&!b.disabled)`);
+          await click('Cancel computation');
+          const cancelledAt=Date.now();
+          while(!report.ipc.slice(index).some(e=>e.command==='generateApproaches'&&/cancelled/i.test(e.error??''))){if(Date.now()-cancelledAt>120000)throw Error('Cancellation terminal result missing');await delay(80);}
+          await ready();assert.equal((await state()).stateId,baseline);
+          assert(report.ipc.slice(index).some(e=>e.command==='generateApproaches'&&/cancelled/i.test(e.error??'')));
+          await click('Acknowledge interactive planning unknowns');
+          report.checks.push('Actual Generate approaches was cancelled through its owned backend request; accepted anatomy and prior comparison remained exact');
+          await click('Calculate sequence breakdown');
+          await wait(`!!document.querySelector('[aria-label="Complete sequence quantities"]')`);await ready();
+          assert.equal(lastResponse.sequenceOutcome.stateId,baseline);
+          assert.equal(lastResponse.sequenceOutcome.dimensions.targetRemovedMm3.cumulative,lastResponse.view.metrics.targetRemovedMm3);
+          assert.equal(lastResponse.sequenceOutcome.dimensions.nonTargetRemovedMm3.cumulative,lastResponse.view.metrics.nonTargetRemovedMm3);
+          assert(lastResponse.sequenceOutcome.missingEvidence.includes('motorEncounterMm3'));
+          report.sequenceOutcome=lastResponse.sequenceOutcome;
+          await capture('01b-complete-sequence-ledger','[aria-label="Complete sequence quantities"]');
+          report.checks.push('Expanded sequence ledger binds exact native state, retains access burdens, and reports missing motor evidence');
+        }
         // Use the real linked-cursor selection controls for the target region.
         const regionScope=`[...document.querySelectorAll('.approach-region')].find(e=>e.querySelector('legend')?.textContent==='Target region')`;
         await click('Show in linked views',regionScope);await click('Use linked MRI cursor',regionScope);

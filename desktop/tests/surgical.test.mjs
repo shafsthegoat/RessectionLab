@@ -46,19 +46,21 @@ test('unchanged source meshes survive rehearsal and changed ownership/material i
   const changed=modeledVolume(s,view({removed:[1]}));assert.equal(changed.compartments[0].surface,surface);assert.equal(changed.compartments[1].surface,undefined);
   const mapped=modeledVolume(s,view({scene:{...view().scene,regions:[regions[0],{...regions[1],material:'unknown'}]}}));assert.equal(mapped.compartments[1].surface,undefined);
 });
-test('all 15 tools have distinct visible research geometry with exact xyzw pose and ghost transparency',()=>{
-  const ids=['cranial_drill','cusa','brain_retractor','scalpel','periosteal_elevator','craniotome','dural_scissors','dissector','frazier_suction','bipolar_forceps','micro_scissors','tumor_forceps','irrigation','cortical_probe','subcortical_probe'];
-  const signatures=new Set();
+test('catalog tools retain exact xyzw pose and ghost transparency with shared generic holding forceps',()=>{
+  const ids=['cranial_drill','cusa','brain_retractor','scalpel','periosteal_elevator','craniotome','dural_scissors','dissector','frazier_suction','bipolar_forceps','micro_scissors','tumor_forceps','bone_flap_holder','irrigation','cortical_probe','subcortical_probe'];
+  const signatures=new Map();
   for(const id of ids){const mesh=surgicalToolMesh({id,radiusMm:2,shaftRadiusMm:.5,workingLengthMm:40},{position:[1,2,3],quaternion:[0,0,1,0],parameters:{jawOpeningMm:3}},true);
     assert.deepEqual(mesh.position.toArray(),[1,2,3]);assert.deepEqual(mesh.quaternion.toArray(),[0,0,1,0]);
     assert.ok(mesh.children.length>=3);
     const parts=[];mesh.updateMatrixWorld(true);mesh.traverse(part=>{if(part.isMesh)parts.push(part);});
     assert.ok(parts.length>=3);
     assert.ok(parts.every(m=>m.material.transparent&&m.material.opacity<1));
-    signatures.add(JSON.stringify(parts.map(m=>[m.geometry.type,m.geometry.parameters,m.matrixWorld.toArray()])));
+    signatures.set(id,JSON.stringify(parts.map(m=>[m.geometry.type,m.geometry.parameters,m.matrixWorld.toArray()])));
     mesh.traverse(o=>{o.geometry?.dispose();o.material?.dispose();});
   }
-  assert.equal(signatures.size,15);
+  assert.equal(signatures.size,16);
+  assert.equal(new Set(signatures.values()).size,15);
+  assert.equal(signatures.get('bone_flap_holder'),signatures.get('tumor_forceps'),'The generic bone holder intentionally shares stock forceps geometry');
 });
 
 test('effect markers share authoritative state, transform source IDs through displacement, and keep fluid spatial',async()=>{

@@ -1,3 +1,6 @@
+import {WorkflowAlternatives,WorkflowPlanningShell} from './WorkflowAlternatives';
+import type {WorkflowPlanningPresentation} from './WorkflowAlternatives';
+import {preparationWorkflowAlternative} from './surgical-workflow-data';
 import {useEffect,useRef,useState} from 'react';
 import type {SurgicalController} from './use-surgical';
 import type {Point3} from './viewer/coordinates';
@@ -13,12 +16,12 @@ import type {ContextOption} from './two-tool-data';
 const number=(n:number|undefined)=>typeof n==='number'&&Number.isFinite(n)?n.toFixed(2):'—';
 const pendingText:Record<string,string>={suggestPreparation:'Finding a public source-ray suggestion…',generatePreparations:'Comparing finite preparations and complete sequences…',previewPreparation:'Checking preparation preview…',applyPreparation:'Installing checked branch…'};
 
-export function PreparationPlanningPanel({c,pause,cursor=null,onCursor}:{c:SurgicalController;pause:()=>void;cursor?:Point3|null;onCursor?:(p:Point3)=>void}){
+export function PreparationPlanningPanel({c,pause,cursor=null,onCursor,stage,onCompared,onInstalled}:WorkflowPlanningPresentation&{c:SurgicalController;pause:()=>void;cursor?:Point3|null;onCursor?:(p:Point3)=>void}){
   const response=c.result as PreparationResponse|null,a=response?.preparationPlanningAvailability,saved=response?.preparationPlanning;
   const bound=!!saved&&saved.current===true&&saved.sourceSceneId===response?.view.scene.sceneId&&saved.startStateId===response?.view.stateId&&saved.prefixActions===response?.position&&saved.sourcePosition===response?.position;
-  return <details className="preparation-planning interactive-planning"><summary>Compare preparation and complete plans</summary>
+  return <WorkflowPlanningShell stage={stage} className="preparation-planning interactive-planning" title="Compare preparation and complete plans">
     <p className="surgical-note">Compare declared local sweeps or paired working lanes along the same source ray, then test CUSA and suction access, finite contact and withdrawal. Preparation removes mapped non-target tissue and remains a cost even when the full sequence STOPs.</p>
-    {a?.available&&a.defaults?<PreparationDraft key={planningBinding(response)} c={c} pause={pause} cursor={cursor} onCursor={onCursor} defaults={bound?saved!.controls:a.defaults} saved={bound?saved:null} contexts={a.contextOptions??[]}/>:<p role="status">{a?.reason??'Inspect a source-qualified native checkpoint to check preparation availability.'}</p>}
+    {a?.available&&a.defaults?<PreparationDraft key={planningBinding(response)} stage={stage} onCompared={onCompared} onInstalled={onInstalled} c={c} pause={pause} cursor={cursor} onCursor={onCursor} defaults={bound?saved!.controls:a.defaults} saved={bound?saved:null} contexts={a.contextOptions??[]}/>:<p role="status">{a?.reason??'Inspect a source-qualified native checkpoint to check preparation availability.'}</p>}
     {saved&&(!bound||preparationLocked(response)||!a?.available)&&<details open><summary>Saved preparation comparison</summary><p>{saved.rows.length} recorded width alternatives. {saved.scope}</p>
       {preparationBaselineText(saved)&&<p className="surgical-note" aria-label="Prior preparation burdens">{preparationBaselineText(saved)}</p>}
       <p>{preparationFamilyName(saved.controls.preparationFamily)}</p>
@@ -31,7 +34,7 @@ export function PreparationPlanningPanel({c,pause,cursor=null,onCursor}:{c:Surgi
         <p className="surgical-note">{preparationFamilyName(app.preparationFamily)}. Recorded preparation cost: {number(app.preparationSummary.additionalNonTargetMm3)} mm³ non-target + {number(app.preparationSummary.additionalTargetMm3)} mm³ target; {number(app.preparationSummary.elapsedSeconds)} s. Comparison revision {app.revision}.</p>
       </li>)}</ul>
     </section>}
-  </details>;
+  </WorkflowPlanningShell>;
 }
 
 function SourcePoint({name,value,onChange,cursor,onCursor,scene,disabled}:{name:string;value:Point3|null;onChange:(p:Point3)=>void;cursor:Point3|null;onCursor?:(p:Point3)=>void;scene:PreparationResponse['view']['scene'];disabled:boolean}){
@@ -44,7 +47,7 @@ function SourcePoint({name,value,onChange,cursor,onCursor,scene,disabled}:{name:
   </fieldset>;
 }
 
-function PreparationDraft({c,pause,cursor,onCursor,defaults,saved,contexts}:{c:SurgicalController;pause:()=>void;cursor:Point3|null;onCursor?:(p:Point3)=>void;defaults:PreparationControls;saved:PreparationComparison|null|undefined;contexts:ContextOption[]}){
+function PreparationDraft({c,pause,cursor,onCursor,defaults,saved,contexts,stage,onCompared,onInstalled}:WorkflowPlanningPresentation&{c:SurgicalController;pause:()=>void;cursor:Point3|null;onCursor?:(p:Point3)=>void;defaults:PreparationControls;saved:PreparationComparison|null|undefined;contexts:ContextOption[]}){
   const response=c.result as PreparationResponse|null;
   const [draft,setDraft]=useState(()=>structuredClone(defaults)),[revision,setRevision]=useState(0);
   const [submitted,setSubmitted]=useState<PreparationSubmission|null>(saved?{binding:planningBinding(response),revision:0}:null);
@@ -59,6 +62,7 @@ function PreparationDraft({c,pause,cursor,onCursor,defaults,saved,contexts}:{c:S
   const id=selected??report?.policies.completePlanAware.selectedPreparationId??report?.policies.corridorFirst.selectedPreparationId??report?.rows[0]?.id;
   const row=report?.rows.find(r=>r.id===id),attempt=preparationAttempt(row),cost=preparationCost(row),suffix=preparationPhaseAvailable(row,'withdraw',draft.preparationFamily)?preparationSuffix(row):null;
   const suggestion=currentPreparationSuggestion(response);
+  useEffect(()=>{if(report){const preferred=report.rows.find(r=>r.id===(report.policies.completePlanAware.selectedPreparationId??report.rows[0]?.id));setPhase(preparationPhaseAvailable(preferred,'withdraw',draft.preparationFamily)?'withdraw':'prepared');}},[report?.reportSeal]);
   let issue=preparationDraftIssue(draft,contexts);
   if(!issue&&draft.sourceRay&&response&&!(['surfaceMm','sourceTargetMm'] as const).every(k=>preparationPointIsCell(draft.sourceRay![k],response.view.scene)))issue='Source ray points must be cell centres inside the current source grid.';
   const actions=preparationActions({response,draft,submitted,revision,candidateId:id,phase,preview:c.approachPreview as PreparationPreview|null,displayed:c.preview,pending:c.pending,acknowledged:ack,contexts});
@@ -74,13 +78,13 @@ function PreparationDraft({c,pause,cursor,onCursor,defaults,saved,contexts}:{c:S
     setNotice('Suggested cells and common target region are ready for review.');
   },[response?.preparationSuggestion]);
   useEffect(()=>{
-    if(!showRay||issue||locked||c.preview||!draft.sourceRay||!draft.target||!response)return;
+    if(stage&&stage!=='plan'&&stage!=='compare'||!showRay||issue||locked||c.preview||!draft.sourceRay||!draft.target||!response)return;
     const start=draft.sourceRay.surfaceMm,end=draft.sourceRay.sourceTargetMm;
     const pose=(position:Point3)=>({position:[...position] as Point3,quaternion:[0,0,0,1] as [number,number,number,number]});
     const overlay:InteractivePlanningOverlay={binding:planningBinding(response),constraints:{target:draft.target,entry:{centerMm:start,radiusMm:draft.entryRadiusMm},tool:{instrument:'cusa',radiusMm:1.5},requiredEvidence:draft.requiredEvidence,candidateCount:2,nonTargetClearanceMm:0},
       routes:[{id:'declared-preparation-ray',label:'Declared source ray · not an executable approach',outsidePose:pose(start),entryPose:pose(start),targetPose:pose(end),actionProgram:[],metrics:{},scope:'Declared source-cell centre line; not a cleared trajectory.'}],selectedId:'declared-preparation-ray',limitingStructures:[]};
     c.setPlanningOverlay(overlay);return ()=>c.setPlanningOverlay(null);
-  },[showRay,draft,issue,locked,c.preview]);
+  },[showRay,draft,issue,locked,c.preview,stage]);
   async function suggest(){
     if(locked||!ack||c.preview)return;pause();c.clearPreview();suggestionRequest.current={binding:bindingRef.current,revision:revisionRef.current};setNotice(null);
     const ok=await c.run('suggestPreparation',{acknowledgeResearchUnknowns:true});
@@ -90,15 +94,16 @@ function PreparationDraft({c,pause,cursor,onCursor,defaults,saved,contexts}:{c:S
     if(locked||issue||!ack||c.preview)return;pause();c.clearPreview();setSubmitted(null);setNotice(null);
     const request={binding:bindingRef.current,revision:revisionRef.current};
     const ok=await c.run('generatePreparations',{constraints:structuredClone(draft),acknowledgeResearchUnknowns:true});
-    if(alive.current&&ok&&request.binding===bindingRef.current&&request.revision===revisionRef.current){setSubmitted(request);setSelected(null);setPhase('prepared');}
+    if(alive.current&&ok&&request.binding===bindingRef.current&&request.revision===revisionRef.current){setSubmitted(request);setSelected(null);setPhase('withdraw');onCompared?.();}
   }
   function rayPoint(key:'surfaceMm'|'sourceTargetMm',point:Point3){edit({...draft,sourceRay:{surfaceMm:draft.sourceRay?.surfaceMm??[NaN,NaN,NaN],sourceTargetMm:draft.sourceRay?.sourceTargetMm??[NaN,NaN,NaN],[key]:point}});}
   const context=contexts.find(x=>x.layerId===draft.encounter?.layerId);
   return <section className="preparation-draft approach-draft" aria-label="Preparation comparison draft" data-preparation-seal={report?.reportSeal} data-preparation-family={draft.preparationFamily??'cardinal-v1'}>
     <fieldset disabled={locked}><legend>Source qualification and research acceptance</legend>
       <label><input aria-label="Acknowledge preparation research scope" type="checkbox" checked={ack} onChange={e=>{setAck(e.target.checked);c.clearPreview();}}/>I accept modeled non-target removal and missing skull, vascular and functional evidence for this research comparison.</label>
-      <button disabled={!ack||!!c.preview} onClick={()=>void suggest()}>Suggest source ray from public anatomy</button>
+      <button hidden={!!stage&&stage!=='plan'} disabled={!ack||!!c.preview} onClick={()=>void suggest()}>Suggest source ray from public anatomy</button>
     </fieldset>
+    <div hidden={!!stage&&stage!=='plan'}>
     {response&&<><SourcePoint name="Source surface cell" value={draft.sourceRay?.surfaceMm??null} onChange={p=>rayPoint('surfaceMm',p)} cursor={cursor} onCursor={onCursor} scene={response.view.scene} disabled={locked}/>
       <SourcePoint name="Source target-boundary cell" value={draft.sourceRay?.sourceTargetMm??null} onChange={p=>rayPoint('sourceTargetMm',p)} cursor={cursor} onCursor={onCursor} scene={response.view.scene} disabled={locked}/></>}
     {draft.target?<RegionEditor name="Common target region" value={draft.target} onChange={target=>edit({...draft,target})} cursor={cursor} onCursor={onCursor} disabled={locked}/>:<button disabled={locked} onClick={()=>edit({...draft,target:{centerMm:[...(cursor??draft.sourceRay?.sourceTargetMm??[0,0,0])],radiusMm:6}})}>Define common target region</button>}
@@ -123,11 +128,17 @@ function PreparationDraft({c,pause,cursor,onCursor,defaults,saved,contexts}:{c:S
     {c.pending&&<p role="status">{pendingText[c.pendingCommand??'']??'Checking the current request…'}</p>}
     <div className="surgical-actions"><button disabled={locked||!!issue||!!c.preview||!onCursor} onClick={()=>{pause();setShowRay(true);if(draft.sourceRay)onCursor?.([...draft.sourceRay.surfaceMm]);}}>Show declared source ray in linked MRI views</button>
       <button className="primary-button" disabled={locked||!!issue||!ack||!!c.preview} onClick={()=>void generate()}>Compare preparations and complete plans</button></div>
+    </div>
+    {stage==='compare'&&!report&&<p role="status">No current comparison for this draft. Return to Plan and generate after reviewing edits and source eligibility.</p>}
+    <div hidden={!!stage&&stage!=='compare'}>
     {report&&<>{preparationBaselineText(report)&&<p className="surgical-note" aria-label="Prior preparation burdens">{preparationBaselineText(report)}</p>}
       <p role="status" aria-label="Preparation policy decisions">Corridor-first: {report.policies.corridorFirst.selectedPreparationId??'STOP before preparation'}; complete-plan-aware: {report.policies.completePlanAware.selectedPreparationId??'STOP before preparation'}.</p>
       <p className="surgical-note">Both rules use the same finite offline table. Preparation costs include setup, finite tissue removal and parking; optional sequence costs are separate. No runtime efficiency or clinical preference is assessed.</p>
       {report.rows.some(preparationIncomplete)&&<p role="alert">A computation budget ended a search. Complete-plan feasibility remains unresolved.</p>}
+      {stage&&<WorkflowAlternatives rows={report.rows.map(item=>preparationWorkflowAlternative(item,report))} selectedId={id} disabled={locked} onSelect={candidateId=>{c.clearPreview();setSelected(candidateId);const item=report.rows.find(r=>r.id===candidateId);setPhase(preparationPhaseAvailable(item,'withdraw',draft.preparationFamily)?'withdraw':'prepared');}}/>}
+      <details open={!stage}><summary>Detailed preparation comparison</summary>
       <div className="approach-table" role="region" aria-label="Preparation comparison table" tabIndex={0}><table aria-label="Preparation comparison"><thead><tr><th title={paired?'Lane-center separation along tool-frame Y':undefined}>{paired?'Lane offset':'Local sweep'}</th><th>Preparation</th><th>Complete sequence</th></tr></thead><tbody>{report.rows.map(item=>{const a=preparationAttempt(item),cost=preparationCost(item),plan=item.comparison?.publicPlan;return <tr key={item.id} data-preparation-candidate={item.id} aria-selected={item.id===id}><th><button disabled={locked} onClick={()=>{c.clearPreview();setSelected(item.id);setPhase('prepared');}} aria-label={`Select preparation width ${item.widthMm} mm`}>{item.widthMm} mm</button></th><td><strong>{number(cost?.additionalNonTargetMm3)} mm³</strong><p>{number(cost?.elapsedSeconds)} s</p><p>{plan&&Array.isArray(plan.approaches.routes)?plan.approaches.routes.length?'Checked route':'No checked route':'Not tested'}</p></td><td>{!item.preparation?'Evidence refusal':!item.preparation.publicPlan.attempts.length?'Generator geometric refusal':!a?'Preparation incomplete':preparationPhaseAvailable(item,'withdraw',report.controls.preparationFamily)?'Complete checked sequence':'STOP'}</td></tr>;})}</tbody></table></div>
+      </details>
       {row&&<section className="approach-selection" aria-label="Selected preparation"><strong>{preparationFamilyName(draft.preparationFamily)} · {row.widthMm} mm {paired?'lane separation':'local sweep'}</strong>
         {cost&&<p>{attempt?'Preparation':'Incomplete preparation attempt'}: {number(cost.additionalNonTargetMm3)} mm³ non-target + {number(cost.additionalTargetMm3)} mm³ target; {number(cost.elapsedSeconds)} s.</p>}
         {attempt?<>
@@ -137,11 +148,12 @@ function PreparationDraft({c,pause,cursor,onCursor,defaults,saved,contexts}:{c:S
         {row.reason&&<p role="status">Recorded refusal: {row.reason}</p>}
         <label>Preview and installation checkpoint<select aria-label="Preparation checkpoint phase" disabled={locked} value={phase} onChange={e=>{c.clearPreview();setPhase(e.target.value as PreparationPhase);}}><option value="prepared" disabled={!preparationPhaseAvailable(row,'prepared',draft.preparationFamily)}>Preparation complete · costs only</option><option value="withdraw" disabled={!preparationPhaseAvailable(row,'withdraw',draft.preparationFamily)}>Preparation + complete sequence + withdrawal</option></select></label>
         <div className="surgical-actions"><button disabled={!canPreview||previewBusy} onClick={()=>{pause();void c.run('previewPreparation',{candidateId:row.id,expectedPlanSeal:report.reportSeal,phase});}}>Preview preparation checkpoint</button>
-          <button disabled={!actions.installAllowed} onClick={()=>{pause();void c.run('applyPreparation',{candidateId:row.id,expectedPlanSeal:report.reportSeal,phase});}}>{phase==='prepared'?'Install preparation branch':'Install complete plan branch'}</button></div>
+          <button className="primary-button" disabled={!actions.installAllowed} onClick={()=>{pause();void c.run('applyPreparation',{candidateId:row.id,expectedPlanSeal:report.reportSeal,phase}).then(ok=>{if(ok)onInstalled?.();});}}>{phase==='prepared'?'Install preparation branch':'Install complete plan branch'}</button></div>
         {previewBusy&&<button disabled={c.pending} onClick={()=>c.clearPreview()}>Cancel other preview</button>}
         {matchingPreview&&<p role="status">Uncommitted {phase==='prepared'?'preparation':'complete withdrawal'} checkpoint shown. Installation creates this checked native branch.</p>}
       </section>}
       <details><summary>Preparation evidence and failed attempts</summary><p>{report.scope}</p><pre>{JSON.stringify({reportSeal:report.reportSeal,revision:report.revision,policies:report.policies,rows:report.rows.map(({id,widthMm,reason,missingEvidence,preparation,comparison})=>({id,widthMm,reason,missingEvidence,preparation,comparison})),previewReceipt:(c.approachPreview as PreparationPreview|null)?.receipt},null,2)}</pre></details>
     </>}
+    </div>
   </section>;
 }

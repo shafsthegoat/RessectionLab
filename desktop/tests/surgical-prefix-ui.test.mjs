@@ -155,14 +155,14 @@ test('expanded entry exploration is explicit and retains intact-source and ackno
   c.result.sectorPlanning={task:'anatomy-strategy',sourceSceneId:scene,startStateId:start,sourceAccessComparisonSeal:seal('3'),alternatives:[{}]};
   const render=(ack,faces,cumulative=false)=>{
     const internals=React.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE,previous=internals.H;
-    let index=0;const values=[ack,false,faces,cumulative];
+    let index=0;const values=[ack,false,faces,cumulative,2];
     internals.H={useState:()=>[values[index++],()=>{}],useEffect:()=>{}};
     try{return StagedStrategiesPanel({c,artifact:null,pause:()=>{},play:()=>{}});}finally{internals.H=previous;}
   };
   let tree=render(true,false);find(tree,'button','Generate staged source strategies').props.onClick();
   assert.equal(Object.hasOwn(c.calls.at(-1),'exploreExteriorFaces'),false);
   tree=render(true,true);find(tree,'button','Generate staged source strategies').props.onClick();
-  assert.deepEqual(c.calls.at(-1),{command:'plan',opponent:'anatomy-staged-strategy',acknowledgeResearchUnknowns:true,exploreExteriorFaces:true});
+  assert.deepEqual(c.calls.at(-1),{command:'plan',opponent:'anatomy-staged-strategy',acknowledgeResearchUnknowns:true,planningHorizon:2,beamWidth:3,exploreExteriorFaces:true});
   tree=render(true,true,true);find(tree,'button','Generate staged source strategies').props.onClick();
   assert.deepEqual(c.calls.at(-1),{command:'plan',opponent:'anatomy-staged-strategy',acknowledgeResearchUnknowns:true,cumulativeReentry:true});
   assert.equal(find(tree,'select','Staged initial access configuration').props.disabled,true);

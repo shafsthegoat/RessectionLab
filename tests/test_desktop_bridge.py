@@ -103,6 +103,10 @@ def test_cancel_and_ping_are_immediate_while_worker_busy(bridge, monkeypatch):
     assert entered.wait(1)
     runtime.submit({"id": "ping", "op": "ping", "args": {}})
     assert events[-1]["result"]["protocolVersion"] == 1
+    from resectionlab.native_backend import backend_identity
+    assert events[-1]["result"]["numericalBackend"] == backend_identity()
+    assert events[-1]["result"]["runtime"]["executable"] == sys.executable
+    assert Path(events[-1]["result"]["runtime"]["modulePath"]).name == "desktop_bridge.py"
     runtime.submit({"id": "cancel", "op": "cancel", "args": {"requestId": "slow"}})
     assert runtime.wait_idle(1)
     assert [event["event"] for event in events if event["id"] == "slow"] == ["started", "cancelled"]

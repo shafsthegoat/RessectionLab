@@ -5,6 +5,9 @@ is explicitly available for inspection/tests, never required by the engine.
 """
 import numpy as np
 from .core import immutable_array
+from . import native_backend
+
+_native_fallback = object()
 
 
 _MAX_SORTED_CLEARED_BYTES = 8 * 1024**2
@@ -25,6 +28,10 @@ class MaterialOccupancy:
             i = int(indices)
             return self.moved.get(i, 0 if i in self.cleared or not self.labels[i] else i + 1)
         ids = np.asarray(indices, dtype=np.int64)
+        if self.cleared is self._integer_cleared:
+            native = native_backend.occupancy_values(self.labels, ids, self.cleared, self.moved, _native_fallback)
+            if native is not _native_fallback:
+                return native
         values = np.where(self.labels[ids] != 0, ids + 1, 0)
         if self.cleared:
             if self.cleared is self._integer_cleared and ids.size <= len(self.cleared):

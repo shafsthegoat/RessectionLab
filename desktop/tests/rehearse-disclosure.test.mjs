@@ -55,7 +55,7 @@ test('preview, read-only, inspection and partial/refused states remain explicit 
   c.result.outcome={status:'partial',reason:'SHAFT_COLLISION',events:[],completedFraction:.25};tree=render(c);result=nodes(tree).find(n=>n.type?.name==='ActionResult');assert(text(result.type(result.props)).includes('25% completed · accepted partial state is displayed.'));
 });
 test('pending cancellation, running pause, stopped reason and actual readiness recovery stay exposed',()=>{
-  const c=controller();c.pending=true;c.simulationPending=true;c.pendingCommand='step';let tree=render(c);assert.equal(find(tree,'button','Apply').props.disabled,true);assert.equal(find(tree,'button','Cancel').props.disabled,undefined);assert(text(tree).includes('Computing instrument action'));
+  const c=controller();c.pending=true;c.simulationPending=true;c.pendingCommand='step';c.canCancelComputation=true;c.cancelComputation=()=>c.calls.push('cancel-computation');let tree=render(c);assert.equal(find(tree,'button','Apply').props.disabled,true);assert.equal(find(tree,'button','Cancel computation').props.disabled,undefined);find(tree,'button','Cancel computation').props.onClick();assert.equal(c.calls.at(-1),'cancel-computation');assert(!text(tree).includes('current request continues'));assert(text(tree).includes('Computing instrument action'));
   c.computingFullCase='primary';let full=FullCase({c,pause(){}});assert(find(full,'button','Pause computation'));assert.equal(find(full,'button','Pause computation').props.disabled,undefined);
   c.pending=false;c.computingFullCase=null;c.result.fullCase={scenario:'primary',status:'stopped',phases:[],stopReason:'ENGINE_MODEL_LIMIT'};full=FullCase({c,pause(){}});const stopped=[...walk(full)].find(({node})=>node.type==='p'&&text(node)==='ENGINE MODEL LIMIT');assert(stopped);assert(!stopped.parents.some(p=>p.type==='details'));c.simulationPending=false;c.result.fullCase.status='running';full=FullCase({c,pause(){}});assert(text(full).includes('computation paused'),'recorded running status must not imply active computation');
   c.fullCaseReadiness={status:'blocked',availableActions:['attachProtection'],blockers:[{code:'missing',message:'Matching evidence missing',details:[]}],recovery:{action:'attachProtection',label:'Attach matching protection'},protectionContractId:null};c.canStartFullCase=()=>false;full=FullCase({c,pause(){}});assert.equal(find(full,'button','Resume primary rehearsal').props.disabled,true);find(full,'button','Attach matching protection').props.onClick();assert.deepEqual(c.calls.at(-1),{command:'attachProtection'});
@@ -63,6 +63,49 @@ test('pending cancellation, running pause, stopped reason and actual readiness r
 test('one outcome readout distinguishes unknown from measured zero and follows preview anatomy',()=>{
   const c=controller();let tree=Outcome({c});assert.equal(text(find(tree,'strong','0.00')),'0.00');let fluid=nodes(tree).find(n=>n.props['data-surgical-metric']==='fluidPresentMm3');assert.equal(text(fluid),'Unknown');
   c.preview={...c.view,stateId:'preview',metrics:{...c.view.metrics,targetRemovedMm3:1.5,fluidPresentMm3:0}};tree=Outcome({c});assert(text(tree).includes('Preview modeled outcome'));assert.equal(text(nodes(tree).find(n=>n.props['data-surgical-metric']==='targetRemovedMm3')),'1.50');assert.equal(text(nodes(tree).find(n=>n.props['data-surgical-metric']==='fluidPresentMm3')),'0.00');assert.equal(c.view.metrics.targetRemovedMm3,0);
+});
+test('native bone opening summary uses aperture and withdrawal flags independently of bone count',()=>{
+  const c=controller();
+  assert.equal(find(Outcome({c}),'div','Native bone opening'),undefined);
+  c.view.craniotomy={contractHash:'contract',phase:'EVACUATED',kerfRemovedMm3:236,flapEvacuatedMm3:49,declaredBoneRemovedMm3:285,apertureEvacuated:true,openingComplete:false,clinicalValidation:'none'};
+  let tree=Outcome({c}),opening=find(tree,'div','Native bone opening');
+  assert(opening);assert(text(opening).includes('Opening stage: Flap removed; withdrawal pending'));
+  assert(text(opening).includes('Aperture: Evacuated. Opening with both hands withdrawn: Incomplete.'));
+  for(const [key,value]of [['kerfRemovedMm3','236.00'],['flapEvacuatedMm3','49.00'],['declaredBoneRemovedMm3','285.00']])assert.equal(text(nodes(opening).find(n=>n.props['data-craniotomy-metric']===key)),value);
+  assert(text(opening).includes('Tumor-task completion and clinical safety remain unassessed.'));
+  c.view.craniotomy={...c.view.craniotomy,phase:'HOLDER_WITHDRAWN',openingComplete:true};
+  assert(text(find(Outcome({c}),'div','Native bone opening')).includes('Opening with both hands withdrawn: Complete.'));
+  assert.deepEqual(c.calls,[]);
+});
+test('native bone opening follows preview status and preserves missing quantities as unknown',()=>{
+  const c=controller();
+  c.view.craniotomy={phase:'HOLDER_WITHDRAWN',kerfRemovedMm3:236,flapEvacuatedMm3:49,declaredBoneRemovedMm3:285,apertureEvacuated:true,openingComplete:true};
+  c.preview={...c.view,stateId:'preview',craniotomy:{phase:'BOUND',kerfRemovedMm3:0,flapEvacuatedMm3:0,declaredBoneRemovedMm3:0,apertureEvacuated:false,openingComplete:false}};
+  let opening=find(Outcome({c}),'div','Native bone opening');
+  assert(text(opening).includes('Opening stage: Opening not started.'));
+  assert(text(opening).includes('Aperture: Not evacuated. Opening with both hands withdrawn: Incomplete.'));
+  assert.equal(text(nodes(opening).find(n=>n.props['data-craniotomy-metric']==='declaredBoneRemovedMm3')),'0.00');
+  c.preview.craniotomy={phase:'UNRECOGNIZED_INTERNAL_PHASE'};opening=find(Outcome({c}),'div','Native bone opening');
+  assert(text(opening).includes('Opening stage: Unknown.'));assert(!text(opening).includes('UNRECOGNIZED_INTERNAL_PHASE'));
+  c.preview.craniotomy.phase='constructor';assert(text(find(Outcome({c}),'div','Native bone opening')).includes('Opening stage: Unknown.'));
+  assert(text(opening).includes('Aperture: Unknown. Opening with both hands withdrawn: Unknown.'));
+  assert.equal(text(nodes(opening).find(n=>n.props['data-craniotomy-metric']==='flapEvacuatedMm3')),'Unknown');
+  assert.equal(c.view.craniotomy.openingComplete,true);assert.deepEqual(c.calls,[]);
+});
+test('milling reports actual collected and remaining debris without a flap removal claim',()=>{
+  const c=controller();
+  c.view.craniotomy={method:'milling',phase:'MILLING_DEBRIS_RETAINED',kerfRemovedMm3:0,flapEvacuatedMm3:0,milledBoneMm3:81,declaredBoneRemovedMm3:81,apertureEvacuated:false,openingComplete:false,milling:{debrisRemovedMm3:0,debrisPresentMm3:81,debrisEscapedMm3:0,treatmentEntrySupported:false}};
+  let opening=find(Outcome({c}),'div','Native bone opening');
+  assert(text(opening).includes('Bone removed; debris collection pending'));
+  assert(!text(opening).includes('Flap evacuated'));
+  for(const [key,value]of [['milledBoneMm3','81.00'],['debrisRemovedMm3','0.00'],['debrisPresentMm3','81.00']])assert.equal(text(nodes(opening).find(n=>n.props['data-craniotomy-metric']===key)),value);
+  c.view.craniotomy={...c.view.craniotomy,phase:'MILLING_WITHDRAWN',apertureEvacuated:true,openingComplete:true,milling:{debrisRemovedMm3:81,debrisPresentMm3:0,debrisEscapedMm3:0,treatmentEntrySupported:false}};
+  opening=find(Outcome({c}),'div','Native bone opening');
+  assert(text(opening).includes('Bone and debris cleared; instruments withdrawn'));
+  assert(text(opening).includes('Dural opening and tumor entry remain unsupported.'));
+  delete c.view.craniotomy.milling;
+  assert.equal(text(nodes(find(Outcome({c}),'div','Native bone opening')).find(n=>n.props['data-craniotomy-metric']==='debrisRemovedMm3')),'Unknown');
+  assert.deepEqual(c.calls,[]);
 });
 test('inspection notice reflects active optical state and remains outside settings disclosures',()=>{
   assert.equal(inspectionNotice({}),null);assert.match(inspectionNotice({layerOpacity:{brain:.1}}),/transparent anatomy/);assert.match(inspectionNotice({clipping:{enabled:true}}),/cutaway/);
@@ -101,4 +144,25 @@ test('entire rendered toolbox has one workflow and authoritative displayed-state
   c.preview={...c.preview,metrics:{nonTargetRemovedMm3:0}};
   check(html(),'Unknown','Unknown');
   assert.equal(c.view.metrics.targetRemovedMm3,0);assert.deepEqual(c.calls,[]);
+});
+
+function nativeMembrane(c,extra={}){return {schema:'resectionlab.cranial-stages.v1',contractHash:'stage',stateId:c.view.stateId,sceneId:c.view.scene.sceneId,phase:'CUT_RETAINED',assessmentCurrent:true,startingExposure:'conditional_post_scalp_exposure',sourceUnknowns:['Uncalibrated membrane mechanics','Clinical outcomes unknown'],patchCells:49,requiredBoundaryEdges:28,cutBoundaryEdges:28,boundaryCutComplete:true,patchHeld:false,patchDetached:false,patchExtracted:false,bonePrefixVerified:true,duraCleared:false,workEntrySupported:false,wholeExitComplete:false,clinicalValidation:'none',reason:null,membrane:{removedMembraneMm3:0,actualNativeExtractionEvents:0,retainedRimIntact:true},...extra};}
+test('native membrane stage distinguishes retained cuts, held/released pieces and real extraction',()=>{
+  const c=controller();c.view.cranialStages=nativeMembrane(c);
+  let stage=find(Outcome({c}),'div','Native membrane stage');assert(stage);assert(text(stage).includes('Boundary cut; membrane retained'));assert(text(stage).includes('Work-region entry: Not permitted'));assert(text(stage).includes('Conditional post-scalp exposure; scalp opening was not simulated and prior exposure cost unknown.'));assert(text(stage).includes('Clinical outcomes unknown'));
+  for(const [phase,label] of [['HELD','Membrane held or lifted'],['RELEASED_IN_FIELD','Membrane released in field']]){c.view.cranialStages=nativeMembrane(c,{phase});assert(text(find(Outcome({c}),'div','Native membrane stage')).includes(label));}
+  c.view.cranialStages=nativeMembrane(c,{phase:'EXTRACTED',patchExtracted:true,duraCleared:true,workEntrySupported:true,membrane:{removedMembraneMm3:49,actualNativeExtractionEvents:1,retainedRimIntact:true}});
+  stage=find(Outcome({c}),'div','Native membrane stage');assert(text(stage).includes('Membrane extracted; instrument exit pending'));assert(text(stage).includes('Permitted by native stage checks'));assert(text(stage).includes('Both instruments withdrawn: No'));assert.equal(text(nodes(stage).find(n=>n.props['data-membrane-metric']==='removedMembraneMm3')),'49.00');assert.deepEqual(c.calls,[]);
+});
+test('membrane readout binds displayed preview state and scene; unknown or stale permission is never shown',()=>{
+  const c=controller();c.view.cranialStages=nativeMembrane(c,{workEntrySupported:true});c.preview={...c.view,stateId:'preview'};
+  assert.equal(find(Outcome({c}),'div','Native membrane stage'),undefined);
+  c.preview.cranialStages=nativeMembrane(c,{stateId:'preview',phase:'constructor',assessmentCurrent:false,workEntrySupported:true});
+  let stage=find(Outcome({c}),'div','Native membrane stage');assert(text(stage).includes('Membrane stage: Unknown'));assert(text(stage).includes('Work-region entry: Unassessed'));assert(!text(stage).includes('constructor'));
+  c.preview.cranialStages.sceneId='other';assert.equal(find(Outcome({c}),'div','Native membrane stage'),undefined);assert.equal(c.view.cranialStages.workEntrySupported,true);assert.deepEqual(c.calls,[]);
+});
+test('plain milling remains bone-only while a current stage frame reports separate membrane permission',()=>{
+  const c=controller();c.view.craniotomy={method:'milling',phase:'MILLING_WITHDRAWN',milledBoneMm3:81,declaredBoneRemovedMm3:81,apertureEvacuated:true,openingComplete:true,milling:{debrisRemovedMm3:81,debrisPresentMm3:0,debrisEscapedMm3:0,treatmentEntrySupported:false}};
+  assert(text(Outcome({c})).includes('Dural opening and tumor entry remain unsupported.'));
+  c.view.cranialStages=nativeMembrane(c);assert(text(Outcome({c})).includes('Bone clearance alone does not permit work-region entry.'));assert(text(Outcome({c})).includes('Work-region entry: Not permitted'));assert(!text(Outcome({c})).includes('Dural opening and tumor entry remain unsupported.'));
 });

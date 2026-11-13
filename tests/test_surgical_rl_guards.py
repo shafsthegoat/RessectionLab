@@ -44,7 +44,7 @@ def test_remote_critical_overlap_cannot_move_with_forceps_and_replays():
     result = env.step_action(dict(slot='left', operation='move', duration=1.,
                                  pose=pose([10., 22., 20.])))
     outcome = result[4]['outcome']
-    assert outcome['status'] == 'partial'
+    assert outcome['status'] == 'rejected'
     assert outcome['reasonCode'] == 'PROTECTED_STRUCTURE'
     assert env.engine.state['holds']['left']['offset'] == [0, 0, 0]
     assert not env.engine.state['removed']
@@ -63,8 +63,8 @@ def test_explicit_displacement_allowance_tracks_lattice_geometry():
     result = env.step_action(dict(slot='left', operation='move', duration=1.,
                                  pose=pose([10., 22., 20.])))
     assert result[4]['outcome']['reasonCode'] == 'PROTECTED_STRUCTURE'
-    assert env.engine.state['holds']['left']['offset'] == [0, 1, 0]
-    np.testing.assert_array_equal(env.engine._positions(), [[29., 21., 20.]])
+    assert env.engine.state['holds']['left']['offset'] == [0, 0, 0]
+    assert env.engine._positions() is None
     assert env.measurements['deformation_injury_mm3'] == pytest.approx(0.)
     # A freely translated detached fragment has no internal strain; the
     # critical displacement cap still constrains it independently of reward.

@@ -152,6 +152,22 @@ def _models(engine):
             'toolMechanicsRevision': 2, 'physicalClockRevision': 1}
 
 
+def _compatible_models(engine, models):
+    current = _models(engine)
+    if models == current:
+        return True
+    # This task has an exact, validated CUSA-only inactive action contract.
+    # Adding the unrelated holder does not alter any of its tools or physics.
+    # Recompute the complete preceding catalog, rather than accepting a caller's
+    # arbitrary old hash; any change to an existing instrument still refuses.
+    for extra_ids in ({'membrane_forceps'}, {'membrane_forceps', 'bone_flap_holder'}):
+        preceding = dict(current, instrumentCatalogHash=semantic_digest(
+            [tool for tool in catalog() if tool['id'] not in extra_ids]))
+        if models == preceding:
+            return True
+    return False
+
+
 def _source_members(scene):
     adapter = scene.source['adapter']; manifest = adapter['sourceManifest']
     originals = [row['original'] for row in manifest['series']]
@@ -268,7 +284,7 @@ def validate_admission(engine, value, *, require_baseline=True):
     _require(value['sourceSceneId'] == engine.scene.identity, 'source scene differs')
     _require(value['sourceEvidence'] == source_evidence(engine.scene), 'source evidence or DEVELOPMENT declaration changed')
     _validate_task(value['task'])
-    _require(value['models'] == _models(engine), 'physics, clock or instrument-model declaration differs')
+    _require(_compatible_models(engine, value['models']), 'physics, clock or instrument-model declaration differs')
     verification = value['verification']
     _require(type(verification) is dict and set(verification) == {'nativeCollectionPath', 'nativeManifestSha256', 'verifiedOriginalSha256', 'verifiedArraySha256', 'scope'}
              and type(verification['nativeCollectionPath']) is str and Path(verification['nativeCollectionPath']).is_absolute()

@@ -37,7 +37,9 @@ export interface StagedBranch {
   unassignedPostAccessTargetMm3:number;
 }
 export interface StagedDisplay {
-  controllerMode?:'cumulative-reentry';
+  maxContactReplansPerSkill?:number;
+  controllerMode?:'cumulative-reentry'|'bounded-sequence-lookahead';
+  sequenceSearch?:{horizon:2|3;beamWidth:2|3|4;maxExpansionsPerSearch:number;baseline:string;preference:string};
   sourceRole?:'DEVELOPMENT';
   comparisonScope:'source-routes'|'same-route-configurations';notes:string[];
   exportRecovery:{additionalReplayCalls:number|null;fullRunWithinWallCap:boolean|null}|null;
@@ -59,6 +61,8 @@ function compactFullReport(report:Record<string,unknown>):Record<string,unknown>
     optimizerUpdates:report.optimizerUpdates,task:report.task,
     cusaModel:report.cusaModel,
     controllerMode:report.controllerMode,
+    sequenceSearch:report.sequenceSearch,
+    maxContactReplansPerSkill:report.maxContactReplansPerSkill,
     comparisonScope:report.configurationAlias!==undefined?'same-route-configurations':report.comparisonScope,
     limitations:report.limitations,exportRecovery:report.exportRecovery,
     sourceAccessPlans:report.sourceAccessPlans,
@@ -132,7 +136,14 @@ export function stagedStrategyDisplay(artifact:unknown,response:SurgicalResponse
       summary.cost.physicalCalls!==summary.cost.previewCalls+summary.cost.directStepCalls)return null;
   const task=summary.task;
   const notes=summary.limitations??[];
-  if(summary.controllerMode!==undefined&&summary.controllerMode!=='cumulative-reentry')return null;
+  if(summary.maxContactReplansPerSkill!==undefined&&(!count(summary.maxContactReplansPerSkill)||summary.maxContactReplansPerSkill>8))return null;
+  if(summary.controllerMode!==undefined&&!['cumulative-reentry','bounded-sequence-lookahead'].includes(String(summary.controllerMode)))return null;
+  if(summary.controllerMode==='bounded-sequence-lookahead'){
+    const search=summary.sequenceSearch;
+    if(!object(search)||![2,3].includes(search.horizon as number)||![2,3,4].includes(search.beamWidth as number)||
+        !count(search.maxExpansionsPerSearch)||search.maxExpansionsPerSearch===0||search.maxExpansionsPerSearch>24||
+        !text(search.baseline)||!text(search.preference))return null;
+  }else if(summary.sequenceSearch!==undefined)return null;
   if(!Array.isArray(notes)||notes.length>16||notes.some(note=>typeof note!=='string'||note.length>1024))return null;
   let exportRecovery:StagedDisplay['exportRecovery']=null;
   if(summary.exportRecovery!==undefined){
@@ -286,6 +297,8 @@ export function stagedStrategyDisplay(artifact:unknown,response:SurgicalResponse
         legacy.additionalNonTargetMm3>20||
         Object.values(zones).filter(value=>(value as number)>=(task.minimumTargetPerZoneMm3 as number)).length<3||
         Object.values(configs).filter(value=>(value as number)>=(task.minimumTargetPerConfigurationMm3 as number)).length<2))return null;
+    // A checked bounded sequence may retain costful preparation with no immediate
+    // target removal. Zero remains zero credit; all native/source/task checks apply.
     const stages:StagedStage[]=[];
     let prior=-1,position=0;
     for(const value of raw.stages){
@@ -293,7 +306,7 @@ export function stagedStrategyDisplay(artifact:unknown,response:SurgicalResponse
           !text(value.tileId)||!configuration(value.configuration)||
           !sealed(value.stateId)||!count(value.nativeActions)||value.nativeActions<=position||
           value.nativeActions>raw.nativeActions||!amount(value.targetIncrementMm3)||
-          value.targetIncrementMm3===0||!sealed(value.checkedExitStateId)||
+          (value.targetIncrementMm3===0&&summary.controllerMode!=='bounded-sequence-lookahead')||!sealed(value.checkedExitStateId)||
           !count(value.checkedExitActions))return null;
       if(value.executionMode!==undefined&&(
           !['requested_motion','checked_collision_prefix'].includes(String(value.executionMode))||
@@ -321,7 +334,9 @@ export function stagedStrategyDisplay(artifact:unknown,response:SurgicalResponse
       stages,outcome:{...outcome,legacyTask:legacy}} as StagedBranch);
   }
   return {caseHash:response.caseHash,sceneId:summary.sourceSceneId as string,
+    ...(summary.maxContactReplansPerSkill!==undefined?{maxContactReplansPerSkill:summary.maxContactReplansPerSkill as number}:{}),
     ...(summary.controllerMode==='cumulative-reentry'?{controllerMode:'cumulative-reentry' as const}:{}),
+    ...(summary.controllerMode==='bounded-sequence-lookahead'?{controllerMode:'bounded-sequence-lookahead' as const,sequenceSearch:summary.sequenceSearch as StagedDisplay['sequenceSearch']}:{}),
     ...(summary.sourceRole==='DEVELOPMENT'?{sourceRole:'DEVELOPMENT' as const}:{}),
     comparisonScope:summary.comparisonScope==='same-route-configurations'?'same-route-configurations':'source-routes',
     notes,exportRecovery,

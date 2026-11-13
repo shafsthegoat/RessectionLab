@@ -385,6 +385,15 @@ class _Request:
     timer: threading.Timer | None = None
     committing: bool = False
     lock: threading.Lock = field(default_factory=threading.Lock)
+    _native_stop: Any = field(default=None, init=False, repr=False, compare=False)
+
+    def __post_init__(self):
+        if type(self) is _Request and _Request.check is _NATIVE_REQUEST_CHECK[0] and _Request.check.__code__ is _NATIVE_REQUEST_CHECK[1]:
+            from . import native_backend
+            if native_backend.cpp_enabled():
+                from .surgical_native_control import NativeCheck
+                self._native_stop = native_backend._module.SimulationStopToken()
+                self.check = NativeCheck(self.check, self._native_stop)
 
     def check(self) -> None:
         if self.cancelled.is_set():
@@ -400,7 +409,12 @@ class _Request:
             if self.committing:
                 return False
             self.cancelled.set()
+            if self._native_stop is not None:
+                self._native_stop.cancel()
             return True
+
+
+_NATIVE_REQUEST_CHECK = (_Request.check, _Request.check.__code__)
 
 
 class BridgeSession:
@@ -435,6 +449,8 @@ class BridgeSession:
             self._run_key = key_path.read_bytes()
             if len(self._run_key) != 32:
                 raise BridgeError("INVALID_RUN_DIR", "Run integrity key is invalid")
+        self.surgical_cache_root = ((self.run_dir or self.transfers.root) / "surgical-cache"
+                                    if getattr(sys, "frozen", False) else None)
 
     def _get_case(self, value: Any) -> _CaseEntry:
         case_hash = _string(value, "caseHash", maximum=128)
@@ -1862,9 +1878,18 @@ class BridgeRuntime:
                 self._seen.add(request_id)
                 if operation == "ping":
                     _keys(args, set())
+                    from .native_backend import backend_identity
+                    from .surgical_bridge import cache_directories
+                    import platform
                     self.emit({"id": request_id, "event": "result", "result": {"protocolVersion": PROTOCOL_VERSION,
                                "operations": sorted(OPERATIONS), "tools": [asdict(tool) for tool in GENERIC_TOOLS],
-                               "nativeResearchTools": [asdict(tool) for tool in NATIVE_GENERIC_TOOLS]}})
+                               "nativeResearchTools": [asdict(tool) for tool in NATIVE_GENERIC_TOOLS],
+                               "numericalBackend": backend_identity(),
+                               "cacheDirectories": cache_directories(self.session),
+                               "runtime": {"executable": sys.executable, "architecture": platform.machine(),
+                                           "frozen": bool(getattr(sys, "frozen", False)),
+                                           "cacheRoot": str(self.session.surgical_cache_root) if self.session.surgical_cache_root else None,
+                                           "modulePath": str(Path(__file__).resolve())}}})
                     return
                 if operation == "cancel":
                     _keys(args, {"requestId"})

@@ -1,0 +1,611 @@
+{
+  "schema": "resectionlab-native-engine-copy-evidence-v1",
+  "status": "helper-qualified prototype; retention requires complete paired workload gates",
+  "sourceFreezeSha256": {
+    "src/resectionlab/state_native.hpp": "90877501a659920b1af0543a317e4b9fb9d6a55b23a8750d7910b243e037b8d3",
+    "src/resectionlab/surgical_engine.py": "ff1751e0bbcff2f196bf2abb752fcdd744ae24d246cc1b10b9144205dcc65b15",
+    "src/resectionlab/native_backend.py": "e654ca1d70a26d5f70dd5ade1f1aa0df74a424972b35c17aea1d782345766674",
+    "tests/test_cpp_engine_copy.py": "469397c734f157e6e2b10e9fe40860cefa0c1f384d415fd2d0727e2cfa84d917"
+  },
+  "binary": {
+    "binaryPath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src/resectionlab/_geometry_cpp.cpython-312-darwin.so",
+    "binarySha256": "bfc5b7054f87f31a253cdd4b1e9e7e54d71035d07fbb3b69d4ad52327999775a",
+    "buildIdentity": {
+      "compiler": {
+        "path": "/usr/bin/clang++",
+        "version": "Apple clang version 21.0.0 (clang-2100.1.1.101)"
+      },
+      "cppStandard": 17,
+      "flags": [
+        "-fvisibility=hidden",
+        "-g0",
+        "-std=c++17",
+        "-mmacosx-version-min=10.14",
+        "-O3",
+        "-fno-fast-math",
+        "-ffp-contract=off"
+      ],
+      "platform": {
+        "machine": "arm64",
+        "system": "Darwin"
+      },
+      "pybind11": "3.1.0",
+      "python": {
+        "abi": "cpython-312-darwin",
+        "version": "3.12.14"
+      },
+      "recipeSha256": "d81266ac59c3e7dbf2459666af0aa38b568b3ecba204d373de71e3729876a83c",
+      "schema": "resectionlab-geometry-cpp-v1",
+      "sources": {
+        "geometry_native.cpp": "4975f886b32c604fe45b0266b0882b34aee6a9859ca32e8588e9101e8b50b32c",
+        "state_native.hpp": "90877501a659920b1af0543a317e4b9fb9d6a55b23a8750d7910b243e037b8d3"
+      }
+    }
+  },
+  "referenceAndInputsSha256": {
+    "outputs/cpp-acceleration-v1/supplement-prepass-cpp/src/resectionlab/surgical_engine.py": "d7cec6e61f6009c2f4aa19d16956cd254dac8ffba30369b6d5c5b0ce442a0c68",
+    "outputs/cpp-acceleration-v1/first-integrated/generate-cpp.json": "b6ee4e25c497811c4ef85408c34d7fcc4abf733b26095fe316967ee834b50a90",
+    "outputs/cpp-acceleration-v1/supplement-qualify-v1/simulation-steps-qualify-cpp.json": "692f4c42bf0913a0663c384bd6321e0796f6b8e815979cf54e57ba7caf81f80b",
+    "outputs/cpp-acceleration-v1/supplement-qualify-v1/rl-episodes-qualify-cpp.json": "3a29057998891b85560fe0473554bebfab5925833bac44d7a0fc1965864b879a"
+  },
+  "contracts": [
+    "Exact builtin int/float/bool/str/None, lists and dictionaries with exact atomic keys; nonfinite floats remain immutable scalar values.",
+    "Preserve scalar types/bits, dictionary insertion order, shared aliases, cycles, existing memo values and existing flapComponents exemption.",
+    "Unsupported subclasses/objects/tuples, unusual memo keys and resource limits return the supplied marker without caller memo publication or custom-hook invocation.",
+    "Private memo, owned source snapshots and strong original keepalive; GIL remains held. Computational/integrity errors propagate.",
+    "Unchanged reference copier retained. Checkpoints preserve prior flat-field admission and mutable deepcopy function/code/default/dispatch hooks."
+  ],
+  "bounds": {
+    "visitedItems": 262144,
+    "containerDepth": 64,
+    "measuredUninterruptibleBudgetSeconds": 0.1,
+    "boundaryInterpretation": "Five observed complete helper calls, no tail-latency claim and no worst-case guarantee for arbitrary caller finalizers."
+  },
+  "focusedChecks": [
+    {
+      "backend": "cpp",
+      "path": "outputs/cpp-acceleration-v1/engine-copy-focused-cpp.xml",
+      "sha256": "8afe147095724e571ab81cee827c1b5df9dc84e30d083173b1bc86367ed403d5",
+      "tests": 170,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "backend": "reference",
+      "path": "outputs/cpp-acceleration-v1/engine-copy-focused-reference.xml",
+      "sha256": "166b56f89ed6bb15eeb0691cbff7a6f436a5867cc68a00d84e356db8e72d379a",
+      "tests": 170,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "helperSamples": [
+    {
+      "state": "planning-final",
+      "helper": "_copy_engine_data",
+      "encodedInputBytes": 30627,
+      "iterationsPerSample": 100,
+      "repetitions": 5,
+      "warmupsPerMethod": 1,
+      "pairedAlternatingOrder": true,
+      "seconds": {
+        "before": [
+          0.019289374991785735,
+          0.019179540977347642,
+          0.01910949999000877,
+          0.01925737503916025,
+          0.019321999978274107
+        ],
+        "after": [
+          0.004787000012584031,
+          0.004750041989609599,
+          0.004809792037121952,
+          0.004725500009953976,
+          0.00475449999794364
+        ]
+      },
+      "medianSeconds": {
+        "before": 0.01925737503916025,
+        "after": 0.00475449999794364
+      },
+      "speedup": 4.05034704963492,
+      "native": {
+        "calls": 500,
+        "fallbacks": 0,
+        "supported": 500
+      }
+    },
+    {
+      "state": "planning-final",
+      "helper": "_microstep_checkpoint",
+      "encodedInputBytes": 30627,
+      "iterationsPerSample": 100,
+      "repetitions": 5,
+      "warmupsPerMethod": 1,
+      "pairedAlternatingOrder": true,
+      "seconds": {
+        "before": [
+          0.01316629204666242,
+          0.013000916049350053,
+          0.01308329199673608,
+          0.012884332973044366,
+          0.012987624970264733
+        ],
+        "after": [
+          0.00395600002957508,
+          0.003937083994969726,
+          0.003918167029041797,
+          0.0039016669616103172,
+          0.003923083015251905
+        ]
+      },
+      "medianSeconds": {
+        "before": 0.013000916049350053,
+        "after": 0.003923083015251905
+      },
+      "speedup": 3.313953846708302,
+      "native": {
+        "calls": 500,
+        "fallbacks": 0,
+        "supported": 500
+      }
+    },
+    {
+      "state": "simulation-drill-thermal",
+      "helper": "_copy_engine_data",
+      "encodedInputBytes": 1936,
+      "iterationsPerSample": 100,
+      "repetitions": 5,
+      "warmupsPerMethod": 1,
+      "pairedAlternatingOrder": true,
+      "seconds": {
+        "before": [
+          0.0019852499826811254,
+          0.00198395800543949,
+          0.0019945420208387077,
+          0.0020459169754758477,
+          0.0022037499584257603
+        ],
+        "after": [
+          0.0009300410165451467,
+          0.0009215409518219531,
+          0.0009303750121034682,
+          0.0009010409703478217,
+          0.0009825839661061764
+        ]
+      },
+      "medianSeconds": {
+        "before": 0.0019945420208387077,
+        "after": 0.0009300410165451467
+      },
+      "speedup": 2.1445742557117504,
+      "native": {
+        "calls": 500,
+        "fallbacks": 0,
+        "supported": 500
+      }
+    },
+    {
+      "state": "simulation-drill-thermal",
+      "helper": "_microstep_checkpoint",
+      "encodedInputBytes": 1936,
+      "iterationsPerSample": 100,
+      "repetitions": 5,
+      "warmupsPerMethod": 1,
+      "pairedAlternatingOrder": true,
+      "seconds": {
+        "before": [
+          0.002146249986253679,
+          0.0021248330012895167,
+          0.0021560000022873282,
+          0.002168209000956267,
+          0.00215404195478186
+        ],
+        "after": [
+          0.0012007919722236693,
+          0.0011908329906873405,
+          0.0012001660070382059,
+          0.0011772920261137187,
+          0.0011921669938601553
+        ]
+      },
+      "medianSeconds": {
+        "before": 0.00215404195478186,
+        "after": 0.0011921669938601553
+      },
+      "speedup": 1.8068290481748863,
+      "native": {
+        "calls": 500,
+        "fallbacks": 0,
+        "supported": 500
+      }
+    },
+    {
+      "state": "simulation-cusa-v3",
+      "helper": "_copy_engine_data",
+      "encodedInputBytes": 1014,
+      "iterationsPerSample": 100,
+      "repetitions": 5,
+      "warmupsPerMethod": 1,
+      "pairedAlternatingOrder": true,
+      "seconds": {
+        "before": [
+          0.0013644580030813813,
+          0.0013589999871328473,
+          0.0013835830031894147,
+          0.0013485419913195074,
+          0.0013473749859258533
+        ],
+        "after": [
+          0.0007911669672466815,
+          0.0007723330054432154,
+          0.0007768750074319541,
+          0.0008024999988265336,
+          0.0007751249941065907
+        ]
+      },
+      "medianSeconds": {
+        "before": 0.0013589999871328473,
+        "after": 0.0007768750074319541
+      },
+      "speedup": 1.7493161372576154,
+      "native": {
+        "calls": 500,
+        "fallbacks": 0,
+        "supported": 500
+      }
+    },
+    {
+      "state": "simulation-cusa-v3",
+      "helper": "_microstep_checkpoint",
+      "encodedInputBytes": 1014,
+      "iterationsPerSample": 100,
+      "repetitions": 5,
+      "warmupsPerMethod": 1,
+      "pairedAlternatingOrder": true,
+      "seconds": {
+        "before": [
+          0.0015236670151352882,
+          0.0014924590359441936,
+          0.0014793750015087426,
+          0.00148320896551013,
+          0.0015331670292653143
+        ],
+        "after": [
+          0.0009685829863883555,
+          0.0009250000002793968,
+          0.000932082999497652,
+          0.000930959009565413,
+          0.0009424169547855854
+        ]
+      },
+      "medianSeconds": {
+        "before": 0.0014924590359441936,
+        "after": 0.000932082999497652
+      },
+      "speedup": 1.601208300922297,
+      "native": {
+        "calls": 500,
+        "fallbacks": 0,
+        "supported": 500
+      }
+    },
+    {
+      "state": "simulation-continuum",
+      "helper": "_copy_engine_data",
+      "encodedInputBytes": 77494,
+      "iterationsPerSample": 100,
+      "repetitions": 5,
+      "warmupsPerMethod": 1,
+      "pairedAlternatingOrder": true,
+      "seconds": {
+        "before": [
+          0.06607150001218542,
+          0.06233399995835498,
+          0.0650474579888396,
+          0.06186495895963162,
+          0.06458133301930502
+        ],
+        "after": [
+          0.026717124972492456,
+          0.02993929199874401,
+          0.026590083027258515,
+          0.02970524999545887,
+          0.026636374997906387
+        ]
+      },
+      "medianSeconds": {
+        "before": 0.06458133301930502,
+        "after": 0.026717124972492456
+      },
+      "speedup": 2.417226145619971,
+      "native": {
+        "calls": 500,
+        "fallbacks": 0,
+        "supported": 500
+      }
+    },
+    {
+      "state": "simulation-continuum",
+      "helper": "_microstep_checkpoint",
+      "encodedInputBytes": 77494,
+      "iterationsPerSample": 100,
+      "repetitions": 5,
+      "warmupsPerMethod": 1,
+      "pairedAlternatingOrder": true,
+      "seconds": {
+        "before": [
+          0.06580954202217981,
+          0.06656129099428654,
+          0.06595879199448973,
+          0.06256537500303239,
+          0.06636029202491045
+        ],
+        "after": [
+          0.028569834015797824,
+          0.0325312499771826,
+          0.02947733399923891,
+          0.03263024997431785,
+          0.028824750042986125
+        ]
+      },
+      "medianSeconds": {
+        "before": 0.06595879199448973,
+        "after": 0.02947733399923891
+      },
+      "speedup": 2.2376104974823283,
+      "native": {
+        "calls": 500,
+        "fallbacks": 0,
+        "supported": 500
+      }
+    },
+    {
+      "state": "rl-success-episode",
+      "helper": "_copy_engine_data",
+      "encodedInputBytes": 1400,
+      "iterationsPerSample": 100,
+      "repetitions": 5,
+      "warmupsPerMethod": 1,
+      "pairedAlternatingOrder": true,
+      "seconds": {
+        "before": [
+          0.0019495830056257546,
+          0.0018714580219238997,
+          0.001902832998894155,
+          0.001987249997910112,
+          0.002072083007078618
+        ],
+        "after": [
+          0.0008844579569995403,
+          0.0008696669829078019,
+          0.0008730419795028865,
+          0.0008679999737069011,
+          0.0009112500119954348
+        ]
+      },
+      "medianSeconds": {
+        "before": 0.0019495830056257546,
+        "after": 0.0008730419795028865
+      },
+      "speedup": 2.233091937613189,
+      "native": {
+        "calls": 500,
+        "fallbacks": 0,
+        "supported": 500
+      }
+    },
+    {
+      "state": "rl-success-episode",
+      "helper": "_microstep_checkpoint",
+      "encodedInputBytes": 1400,
+      "iterationsPerSample": 100,
+      "repetitions": 5,
+      "warmupsPerMethod": 1,
+      "pairedAlternatingOrder": true,
+      "seconds": {
+        "before": [
+          0.0020164590096101165,
+          0.0020019589574076235,
+          0.0020212079980410635,
+          0.0021113749826326966,
+          0.0019871669937856495
+        ],
+        "after": [
+          0.0011313339928165078,
+          0.0011211250093765557,
+          0.001141957996878773,
+          0.0011684170458465815,
+          0.0011095409863628447
+        ]
+      },
+      "medianSeconds": {
+        "before": 0.0020164590096101165,
+        "after": 0.0011313339928165078
+      },
+      "speedup": 1.7823728646127297,
+      "native": {
+        "calls": 500,
+        "fallbacks": 0,
+        "supported": 500
+      }
+    }
+  ],
+  "boundarySamples": [
+    {
+      "graph": "near-cap-flat",
+      "seconds": {
+        "before": [
+          0.007541082974057645,
+          0.0076304160174913704,
+          0.007855125004425645,
+          0.007652833010070026,
+          0.007529874972533435
+        ],
+        "after": [
+          0.0016910830163396895,
+          0.0014696670114062726,
+          0.0013387079816311598,
+          0.0013618330121971667,
+          0.0013319170102477074
+        ]
+      },
+      "maxAfterSeconds": 0.0016910830163396895,
+      "medianSeconds": {
+        "before": 0.0076304160174913704,
+        "after": 0.0013618330121971667
+      },
+      "afterOverBefore": 0.17847428096651702,
+      "native": {
+        "calls": 5,
+        "fallbacks": 0,
+        "supported": 5
+      }
+    },
+    {
+      "graph": "near-cap-distinct-containers",
+      "seconds": {
+        "before": [
+          0.08492349996231496,
+          0.0768249579705298,
+          0.07744491699850187,
+          0.07796633301768452,
+          0.07723374996567145
+        ],
+        "after": [
+          0.021904666034970433,
+          0.02047225000569597,
+          0.020742250024341047,
+          0.020786917011719197,
+          0.020274584006983787
+        ]
+      },
+      "maxAfterSeconds": 0.021904666034970433,
+      "medianSeconds": {
+        "before": 0.07744491699850187,
+        "after": 0.020742250024341047
+      },
+      "afterOverBefore": 0.2678322971763569,
+      "native": {
+        "calls": 5,
+        "fallbacks": 0,
+        "supported": 5
+      }
+    },
+    {
+      "graph": "max-depth",
+      "seconds": {
+        "before": [
+          0.0022275419905781746,
+          4.833302227780223e-05,
+          4.3584033846855164e-05,
+          4.008301766589284e-05,
+          3.9041973650455475e-05
+        ],
+        "after": [
+          4.8916961532086134e-05,
+          3.8624973967671394e-05,
+          4.8874993808567524e-05,
+          3.733299672603607e-05,
+          4.891701973974705e-05
+        ]
+      },
+      "maxAfterSeconds": 4.891701973974705e-05,
+      "medianSeconds": {
+        "before": 4.3584033846855164e-05,
+        "after": 4.8874993808567524e-05
+      },
+      "afterOverBefore": 1.1213967477242617,
+      "native": {
+        "calls": 5,
+        "fallbacks": 0,
+        "supported": 5
+      }
+    },
+    {
+      "graph": "unsupported-near-end",
+      "seconds": {
+        "before": [
+          0.002687125001102686,
+          0.0028213339974172413,
+          0.0026775000151246786,
+          0.0026497080107219517,
+          0.002647290995810181
+        ],
+        "after": [
+          0.0032866670517250896,
+          0.003332416992634535,
+          0.0032423330121673644,
+          0.0032891249866224825,
+          0.0032372919959016144
+        ]
+      },
+      "maxAfterSeconds": 0.003332416992634535,
+      "medianSeconds": {
+        "before": 0.0026775000151246786,
+        "after": 0.0032866670517250896
+      },
+      "afterOverBefore": 1.227513364391912,
+      "native": {
+        "calls": 5,
+        "fallbacks": 5,
+        "supported": 0
+      }
+    }
+  ],
+  "actualUsageSamples": [
+    {
+      "workload": "simulation-steps",
+      "sample": "outputs/cpp-acceleration-v1/supplement-before-after-v1/simulation-steps-pair-0-cpp.json",
+      "sha256": "f18c451d96af6a33677dd655938b4f91d26a8382beed948b925e433274293cc5",
+      "counterBoundary": "immediately after timed work, before audit projection/restore/hash",
+      "native": {
+        "calls": 1566,
+        "fallbacks": 0,
+        "supported": 1566
+      },
+      "exactDigest": "sha256:91819f86b18115336f3ca366675b79d0ddceea51ff1a3756bdfdc36f7cf8143f",
+      "status": "One usage sample only; complete paired acceptance belongs to the coordinator."
+    },
+    {
+      "workload": "rl-episodes",
+      "sample": "outputs/cpp-acceleration-v1/supplement-before-after-v1/rl-episodes-pair-0-cpp.json",
+      "sha256": "a501d275d82b1d2918c893228535aee9b939a354590083abf37aa00f6a99301c",
+      "counterBoundary": "immediately after timed work, before audit projection/restore/hash",
+      "native": {
+        "calls": 2334,
+        "fallbacks": 0,
+        "supported": 2334
+      },
+      "exactDigest": "sha256:7d98d39947eb060788920b184a767d5b4959086dc1fe7deeb974a1a262242143",
+      "status": "One usage sample only; complete paired acceptance belongs to the coordinator."
+    }
+  ],
+  "rawHelperReceipt": {
+    "path": "outputs/cpp-acceleration-v1/native-engine-copy-microbenchmark.json",
+    "sha256": "3f91581ca4dcd7da57fd305fc2dd071ea0b52d86117c8c1e4f56e20d2e263c6c"
+  },
+  "commands": {
+    "compile": "python setup.py build_ext --inplace --force",
+    "focused": "RESSECTIONLAB_NUMERICAL_BACKEND={cpp|reference} PYTHONPATH=src python -m pytest -q tests/test_cpp_engine_copy.py tests/test_cpp_state.py tests/test_semantic_digest.py tests/test_surgical_clone.py tests/test_surgical_rollback_copy.py tests/test_surgical_continuum_vector_kernels.py tests/test_surgical_cusa_v3.py",
+    "supportingHelperBenchmark": "RESSECTIONLAB_NUMERICAL_BACKEND=cpp PYTHONPATH=src python outputs/cpp-acceleration-v1/native-engine-copy-microbenchmark.py"
+  },
+  "limitations": [
+    "Helper timings exclude whole planning/simulation/RL throughput and separate-process peak-memory acceptance.",
+    "Late unsupported graph measured about23% slower because the bounded native attempt precedes unchanged reference copying.",
+    "Smaller acted CUSA/drill/RL helpers improve1.6\u20132.2x, below the3x supporting aim; no claim every migrated call is3x."
+  ],
+  "startupHookQualification": {
+    "mechanism": "Unexecuted standard copy module loader CodeType constants and stock default relationships; unavailable or mismatched code keeps original checkpoint path. Runtime mutable function/code/default/dispatch checks remain.",
+    "hotPathChangedSinceHelperTimings": false,
+    "coverage": "Fresh process: stock source enabled; pre-import dict code/default hooks preserved; unavailable loader falls back. SciPy dependencies load before global hook injection and surgical_engine imports afterward.",
+    "remainingDeliveryGate": "Final runtime probe must establish checkpoint-native enabled and executing in source, clean wheel and frozen runtime."
+  },
+  "retainedSetupFailure": {
+    "path": "outputs/cpp-acceleration-v1/engine-copy-preimport-setup-failure-cpp.xml",
+    "sha256": "0de8bb5e04d7aa47f1a87d56b8e3b1162a0ef5fdb2c5e2f9c6128812e29c9e42",
+    "reason": "Initial fixture patched global copy before SciPy dependency imports, breaking SciPy documentation initialization before surgical_engine could import. Corrected setup preloads dependency before injecting the pre-engine hook."
+  }
+}

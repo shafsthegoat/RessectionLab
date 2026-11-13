@@ -124,6 +124,8 @@ def inspect_archive_checkpoint(scene, record: Mapping, *, branch_id: str | None 
                 raise ValueError('Imported protection contract must be an object')
             protection, config = restore_protection_contract(scene, contract)
             options = {'protection': protection, 'guard_config': config}
+        if 'cranialStagesContract' in snapshot:
+            options['cranial_stages'] = thaw_json(freeze_json(snapshot['cranialStagesContract']))
         shell = _ArchiveDisplayShell(scene, **options)
         _state_shape(state, scene, shell.state)
         shell.state = state

@@ -1,0 +1,633 @@
+{
+  "schema": "resectionlab-predicate-batch-feasibility-v6",
+  "baseCommit": "ce9e348daf23d9a2ddc1f1f9efc94251d84cb1fa",
+  "previousGoalTurn": "progress: retained trajectory/guard implementation, complete independently verified delivery and measured improvement, normal push.",
+  "goalComplete": false,
+  "productionChanged": true,
+  "status": "Bounded predicate investigation, retained integrated improvement, full delivery and independent final acceptance complete. Original2x target remains unmet; normal publication recorded separately.",
+  "profile": {
+    "path": "outputs/cpp-acceleration-v1/post-trajectory-planning-profile-v6/generate-profile.json",
+    "sha256": "58955b650e8281db3820dc7e54a3b486b22d07df7604f9e2b4b0679f7a14806d",
+    "rawStats": {
+      "path": "outputs/cpp-acceleration-v1/post-trajectory-planning-profile-v6/generate-profile.prof",
+      "sha256": "499b5307986af467fb83fd890fdbe9845bc8919905c149661c4ab007d07cdfbb"
+    },
+    "totalSeconds": 21.25259476799994,
+    "scope": "timed fixture and public computation only",
+    "auditExcluded": true,
+    "exactDigest": "sha256:78246b9c6a0be381afc15cd1b6b2c6dac82442253669c6fe16cf374c1afcc3ec",
+    "functions": [
+      {
+        "file": "native_backend.py",
+        "line": 240,
+        "function": "try_segment_predicate",
+        "calls": 106046,
+        "selfSeconds": 0.051806469,
+        "inclusiveSeconds": 1.1259246790000002,
+        "callers": [
+          {
+            "file": "geometry.py",
+            "line": 316,
+            "function": "segments_within_distance",
+            "countsAndSeconds": [
+              106046,
+              106046,
+              0.051806469,
+              1.1259246790000002
+            ]
+          }
+        ]
+      },
+      {
+        "file": "surgical_motion.py",
+        "line": 261,
+        "function": "pair_conflict",
+        "calls": 7820,
+        "selfSeconds": 0.0024340240000000003,
+        "inclusiveSeconds": 0.512173155,
+        "callers": [
+          {
+            "file": "surgical_engine.py",
+            "line": 1017,
+            "function": "_physical_substep",
+            "countsAndSeconds": [
+              7820,
+              7820,
+              0.0024340240000000003,
+              0.512173155
+            ]
+          }
+        ]
+      },
+      {
+        "file": "geometry.py",
+        "line": 316,
+        "function": "segments_within_distance",
+        "calls": 106046,
+        "selfSeconds": 0.042529880000000006,
+        "inclusiveSeconds": 1.1684545590000002,
+        "callers": [
+          {
+            "file": "surgical_bone_transport.py",
+            "line": 102,
+            "function": "<genexpr>",
+            "countsAndSeconds": [
+              267,
+              267,
+              8.6567e-05,
+              0.002632922
+            ]
+          },
+          {
+            "file": "surgical_bone_transport.py",
+            "line": 144,
+            "function": "<genexpr>",
+            "countsAndSeconds": [
+              105,
+              105,
+              7.917e-05,
+              0.001511835
+            ]
+          },
+          {
+            "file": "surgical_membrane_transport.py",
+            "line": 157,
+            "function": "<genexpr>",
+            "countsAndSeconds": [
+              267,
+              267,
+              8.7304e-05,
+              0.0026869090000000003
+            ]
+          },
+          {
+            "file": "surgical_membrane_transport.py",
+            "line": 200,
+            "function": "<genexpr>",
+            "countsAndSeconds": [
+              177,
+              177,
+              0.000115983,
+              0.0024558310000000003
+            ]
+          },
+          {
+            "file": "surgical_motion.py",
+            "line": 262,
+            "function": "<genexpr>",
+            "countsAndSeconds": [
+              41216,
+              41216,
+              0.019284598,
+              0.489250766
+            ]
+          },
+          {
+            "file": "surgical_bone_transport.py",
+            "line": 128,
+            "function": "check_sweep",
+            "countsAndSeconds": [
+              23835,
+              23835,
+              0.008383444,
+              0.24729177700000002
+            ]
+          },
+          {
+            "file": "surgical_membrane_transport.py",
+            "line": 183,
+            "function": "check_sweep",
+            "countsAndSeconds": [
+              40179,
+              40179,
+              0.014492814000000001,
+              0.42262451900000003
+            ]
+          }
+        ]
+      },
+      {
+        "file": "native_backend.py",
+        "line": 141,
+        "function": "_check_live",
+        "calls": 262673,
+        "selfSeconds": 0.411881739,
+        "inclusiveSeconds": 2.6681081100000004,
+        "callers": [
+          {
+            "file": "native_backend.py",
+            "line": 184,
+            "function": "cpp_enabled",
+            "countsAndSeconds": [
+              56073,
+              56073,
+              0.094705675,
+              0.606840358
+            ]
+          },
+          {
+            "file": "native_backend.py",
+            "line": 173,
+            "function": "implementation_identity",
+            "countsAndSeconds": [
+              55860,
+              55860,
+              0.088731006,
+              0.57798128
+            ]
+          },
+          {
+            "file": "native_backend.py",
+            "line": 240,
+            "function": "try_segment_predicate",
+            "countsAndSeconds": [
+              106046,
+              106046,
+              0.152680631,
+              0.9944493000000001
+            ]
+          },
+          {
+            "file": "native_backend.py",
+            "line": 215,
+            "function": "native_json_copy",
+            "countsAndSeconds": [
+              16096,
+              16096,
+              0.028876445,
+              0.1841357
+            ]
+          },
+          {
+            "file": "native_backend.py",
+            "line": 227,
+            "function": "native_engine_copy",
+            "countsAndSeconds": [
+              11901,
+              11901,
+              0.020204035000000002,
+              0.12866042700000002
+            ]
+          },
+          {
+            "file": "native_backend.py",
+            "line": 196,
+            "function": "capsule_chunk",
+            "countsAndSeconds": [
+              16697,
+              16697,
+              0.026683947000000003,
+              0.176041045
+            ]
+          }
+        ]
+      },
+      {
+        "file": "surgical_engine.py",
+        "line": 142,
+        "function": "_owned_digest",
+        "calls": 67046,
+        "selfSeconds": 0.9505116010000001,
+        "inclusiveSeconds": 2.001940026,
+        "callers": [
+          {
+            "file": "surgical_engine.py",
+            "line": 445,
+            "function": "state_id",
+            "countsAndSeconds": [
+              3838,
+              3838,
+              0.78062697,
+              1.536009267
+            ]
+          },
+          {
+            "file": "surgical_engine.py",
+            "line": 495,
+            "function": "occupancy",
+            "countsAndSeconds": [
+              63208,
+              63208,
+              0.169884631,
+              0.465930759
+            ]
+          }
+        ]
+      },
+      {
+        "file": "surgical_geometry_cache.py",
+        "line": 20,
+        "function": "_function_identity",
+        "calls": 782040,
+        "selfSeconds": 0.45786095400000004,
+        "inclusiveSeconds": 1.012019443,
+        "callers": [
+          {
+            "file": "surgical_geometry_cache.py",
+            "line": 122,
+            "function": "<genexpr>",
+            "countsAndSeconds": [
+              782040,
+              782040,
+              0.45786095400000004,
+              1.012019443
+            ]
+          }
+        ]
+      },
+      {
+        "file": "surgical_geometry_cache.py",
+        "line": 113,
+        "function": "_implementation_key",
+        "calls": 55860,
+        "selfSeconds": 0.10002796800000001,
+        "inclusiveSeconds": 1.8149781800000002,
+        "callers": [
+          {
+            "file": "surgical_geometry_cache.py",
+            "line": 146,
+            "function": "query",
+            "countsAndSeconds": [
+              48040,
+              48040,
+              0.08501852600000001,
+              1.5434630360000001
+            ]
+          },
+          {
+            "file": "surgical_geometry_cache.py",
+            "line": 165,
+            "function": "query_many",
+            "countsAndSeconds": [
+              7820,
+              7820,
+              0.015009442000000001,
+              0.27151514400000004
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "hypothesis": {
+    "scope": "Existing segment predicates in pair_conflict and tool capsules for one held cell after authoritative protection/occupancy checks.",
+    "measuredRegionSeconds": 1.182089451,
+    "fraction": 0.05562094717864162,
+    "infiniteIdealWholeProfileSpeedup": 1.0588968455118446,
+    "hypotheticalThreefoldRegionSpeedup": 1.0385085529106748,
+    "batchItemsBound": 64,
+    "noAcrossCellBatching": true,
+    "existingAlgorithmAndRefinementRetained": true,
+    "notPerformanceEvidence": true
+  },
+  "requiredContracts": [
+    "Same ordered first-hit or ambiguity; no later-row numerical error after an earlier hit.",
+    "Scalar fallback for custom/replaced hooks, unusual inputs or unsupported qualification; no mutation before fallback.",
+    "Retain per-cell protection/occupancy and first-hand/part exception priority.",
+    "Keep every physical call and existing cancellation/deadline boundaries.",
+    "Full dtype/shape/strides/finite/ownership validation and pure-owned computation under released GIL.",
+    "Only keep production change if complete integrated measurements pass fixed contracts and justify complexity."
+  ],
+  "owners": {
+    "native_kernels": "Finished; no heavyweight job active.",
+    "motion_efficiency": "Finished; no heavyweight job active.",
+    "independent_review": "Finished; no heavyweight job active.",
+    "coordinator": "Finished; no heavyweight job active."
+  },
+  "pending": [],
+  "isolatedNativePrototype": {
+    "assessment": {
+      "path": "outputs/cpp-acceleration-v1/predicate-batch-prototype-v6/assessment.json",
+      "sha256": "d2178f2bfa56d7acf66dbb25ce784a2217f81b570ae5a151a9b1a63204be04e5"
+    },
+    "results": {
+      "path": "outputs/cpp-acceleration-v1/predicate-batch-prototype-v6/result.json",
+      "sha256": "40a6dbadb3de543aee8af98a06e1baa6990c9923e11d09eb2bbd3ce5a3e6c2ad"
+    },
+    "patch": {
+      "path": "outputs/cpp-acceleration-v1/predicate-batch-prototype-v6/patch.diff",
+      "sha256": "1e2e6a502c29fb83a8465e0123d638e30f99fdcf8e0cfd6c61a0d9f1c716ceba"
+    },
+    "tests": {
+      "path": "outputs/cpp-acceleration-v1/predicate-batch-prototype-v6/tests.log",
+      "sha256": "3da70909118ae2c3828ee5665227f1de3ffc3099bc38d24d1b90624506ba4c58"
+    },
+    "testsPassed": 32,
+    "netCppLines": 35,
+    "productionFilesOrBinaryChanged": false,
+    "knownPromotionRequirements": [
+      "Consumed-invalid error strings must preserve original scalar messages.",
+      "Invalid/custom EPS must preserve finite-before-configuration error priority through fallback.",
+      "Current helper gains omit actual consumer qualification and only include one pre-call live check.",
+      "Early-hit regressions remain retained; use actual distribution, not only all-clear synthetic groups."
+    ],
+    "allClearHelperMedianMicroseconds": {
+      "N5": [
+        29.08,
+        7.692
+      ],
+      "N8": [
+        46.945,
+        8.892
+      ],
+      "N16": [
+        93.907,
+        11.71
+      ]
+    },
+    "firstHitSpeedups": {
+      "N5": 0.778,
+      "N8": 0.672,
+      "N16": 0.532
+    },
+    "notIntegratedImprovement": true
+  },
+  "actualCallerObservation": {
+    "receipt": {
+      "path": "outputs/cpp-acceleration-v1/predicate-caller-observation-v6/result.json",
+      "sha256": "8f8194a4f31947adf515ee0ddb56734b47f32d709f07e93cb03052fd18f9da16"
+    },
+    "script": {
+      "path": "outputs/cpp-acceleration-v1/predicate-caller-observation-v6/capture.py",
+      "sha256": "0721ded2029db3f69309910b4f1a1754555d231a4cda454338b25f5aaa3f9218"
+    },
+    "generateReceipt": {
+      "path": "outputs/cpp-acceleration-v1/predicate-caller-observation-v6/generate.json",
+      "sha256": "6de099823837993eb936c0c072cfc19b00a7f436d2846994190f606766e23188"
+    },
+    "exactDigest": "sha256:78246b9c6a0be381afc15cd1b6b2c6dac82442253669c6fe16cf374c1afcc3ec",
+    "scope": "Existing timed fixture/public computation only; profiler observation not performance evidence.",
+    "groupCounts": [
+      {
+        "kind": "bone-cell",
+        "candidateCount": 3,
+        "groups": 945
+      },
+      {
+        "kind": "bone-cell",
+        "candidateCount": 5,
+        "groups": 4200
+      },
+      {
+        "kind": "membrane-cell",
+        "candidateCount": 3,
+        "groups": 1593
+      },
+      {
+        "kind": "membrane-cell",
+        "candidateCount": 5,
+        "groups": 7080
+      },
+      {
+        "kind": "pair",
+        "candidateCount": 4,
+        "groups": 2852
+      },
+      {
+        "kind": "pair",
+        "candidateCount": 6,
+        "groups": 4968
+      }
+    ],
+    "groupsTotal": 21638,
+    "sampleGroups": 48,
+    "sampling": {
+      "seed": 817,
+      "reservoirPerConsumerAndCandidateCount": 8
+    },
+    "consumedTransportPredicates": {
+      "bone-cell": 23835,
+      "membrane-cell": 40179
+    },
+    "pairOutcomes": {
+      "pair-False": 7820
+    },
+    "allTransportCandidateCountsConsumed": true,
+    "limitation": "Records preserve full qualified numeric candidate rows and radius/array types, but do not store hand/part/grip metadata; any standalone filtering control must be declared synthetic, and integrated behavior still requires validation."
+  },
+  "qualificationInclusiveHelper": {
+    "receipt": {
+      "path": "outputs/cpp-acceleration-v1/predicate-consumer-probe-v6/result.json",
+      "sha256": "a5adc13e5fd5a98d27122ef27c3eee94c1fad3b28c2c5f9b262d6c2ce018f2fb"
+    },
+    "script": {
+      "path": "outputs/cpp-acceleration-v1/predicate-consumer-probe-v6/probe.py",
+      "sha256": "0d0e3c82a0f14113ee1cdb03ea4952c0e2865c2b3928cd577b03dce2b2ade10e"
+    },
+    "hookControls": {
+      "path": "outputs/cpp-acceleration-v1/predicate-consumer-probe-v6/hook-controls.json",
+      "sha256": "c37a67c3b4eeb70154f0b3ecc92c8cc44b2c195430c11695db3bca9281c82627"
+    },
+    "protocol": {
+      "pairedSamples": 5,
+      "alternatingOrder": true,
+      "warmupPassesPerMethod": 4,
+      "passesPerSample": 256,
+      "sourceGroupsPerBucket": 8,
+      "callsPerBucketSample": 2048,
+      "postPublishLiveCheck": true,
+      "fifthEntrypointCheckedBeforeAndAfter": true
+    },
+    "admittedCapturedGroups": 48,
+    "weightedObservedGroupCostSeconds": {
+      "scalar-original-consumer": 0.62521840113601,
+      "guarded-batch-consumer": 0.3515503939323139
+    },
+    "weightedHelperSpeedup": 1.7784602490201933,
+    "limitations": [
+      "Transport hand/part/grip metadata and omitted capsules were not captured. Both paths include a declared ordinary five-capsule filter skeleton; numeric eligible rows/types are exact.",
+      "The fifth entrypoint was checked with explicit identity lookups alongside the existing four-entry live-check generator. The extra generator-iteration cost of registering a fifth production entrypoint and a nonauthorizing CPP-presence hint are not measured exactly; treat the supporting timings as slightly optimistic for that difference.",
+      "Consumed nonfinite native prototype messages differ from scalar and require two string fixes before production; exceptions are never caught for fallback.",
+      "No protection, occupancy, full transition, cancellation, packaging or integrated performance gate is exercised."
+    ],
+    "supports": "Production trial only; does not establish an integrated improvement."
+  },
+  "retentionProtocol": {
+    "script": {
+      "path": "outputs/cpp-acceleration-v1/predicate-incremental-v6/run.py",
+      "sha256": "482cadb1c387de3b0548f731f42c6294fbe3c16e603dcfe4d59fa37efc92e663"
+    },
+    "prepassCapture": {
+      "path": "outputs/cpp-acceleration-v1/predicate-prepass-cpp-v6/capture.json",
+      "sha256": "e426466f6a41229083c67aa0a6b3700390caa97d2ef7497a6bb3fe7c16034279"
+    },
+    "fileCount": 334,
+    "baselineRole": "immediately preceding CPP, independent of original Python baseline",
+    "pairedFreshProcesses": 10,
+    "alternating": true,
+    "warmupsPerRole": 1,
+    "criteria": "Exact frozen work, memory/hard caps, positive median gain and lower95% paired bootstrap geometric speedup>1; no posthoc repeat extension.",
+    "status": "Both predeclared planning retention and complete simulation/RL increment regression pass.",
+    "additionalSimulationRlRegression": {
+      "path": "outputs/cpp-acceleration-v1/predicate-incremental-v6/additional-regression-protocol.json",
+      "sha256": "6f6282c7814da4502354c3f18ae66da8353e8afa9ebbaf6c8e63d1bc8c3fae38"
+    }
+  },
+  "staticReview": {
+    "path": "outputs/cpp-acceleration-v1/independent-predicate-static-v6/review.json",
+    "sha256": "9237f03393ff65f6f16ae5b62917405de25dc06ab225173dffed0b79d36f23cb"
+  },
+  "focusedValidation": {
+    "finalCpp": {
+      "passed": 192,
+      "raw": {
+        "path": "outputs/cpp-acceleration-v1/predicate-consumer-probe-v6/focused-cpp-final.log",
+        "sha256": "061efcceb981bb91d48a7510a8257631455fe4d03291533c6656e3a9c92caaf5"
+      }
+    },
+    "finalReference": {
+      "passed": 179,
+      "skipped": 13,
+      "raw": {
+        "path": "outputs/cpp-acceleration-v1/predicate-consumer-probe-v6/focused-reference-final.log",
+        "sha256": "00d9e932a2b7677958e94f4d3630591055c3a57d67a02dbd7e0d6edff9f28e98"
+      }
+    },
+    "preFinalFullTransportCpp": {
+      "passed": 189,
+      "raw": {
+        "path": "outputs/cpp-acceleration-v1/predicate-consumer-probe-v6/focused-cpp-v1.log",
+        "sha256": "a70e4f62ae6d3644c485b682d7bc5bf887b287fc93ec1d3504daf187af437889"
+      }
+    },
+    "preFinalFullTransportReference": {
+      "passed": 188,
+      "skipped": 1,
+      "raw": {
+        "path": "outputs/cpp-acceleration-v1/predicate-consumer-probe-v6/focused-reference-v1.log",
+        "sha256": "f162fdad5c599843113914f93c55708e23d213855e423493114257982467707f"
+      }
+    },
+    "scope": "Full transport runs precede final admission-only binding guard; final suites cover contacts, motion, trajectory and native API in both modes. Later full verification still required."
+  },
+  "scalarCompatibility": {
+    "raw": {
+      "path": "outputs/cpp-acceleration-v1/predicate-native-production-v6/compare-scalar-result.json",
+      "sha256": "83a15017f7c911a0e7738c5982ec1de95aaa27e49570f1ced5f2c35796a8f8e1"
+    },
+    "script": {
+      "path": "outputs/cpp-acceleration-v1/predicate-native-production-v6/compare-scalar.py",
+      "sha256": "0f7870317a40a018ff18d4d374feab935796aa7522fd8b09c36cf11be5e7d5fb"
+    },
+    "comparisons": 3000,
+    "allEqual": true
+  },
+  "sourceRuntime": {
+    "path": "outputs/cpp-acceleration-v1/predicate-source-runtime-v6.json",
+    "sha256": "5894604ee453d53d3cd347be11c0be5ff0307e8bb04f532c5bdd64ed76619ea3"
+  },
+  "finalPreTimingSourceSnapshot": {
+    "path": "outputs/cpp-acceleration-v1/predicate-incremental-v6/source-snapshot-final.json",
+    "sha256": "cf314fb445d3b335aa34299adec6fb5061650e8471039a45321dcba605662af6"
+  },
+  "integratedPlanningTrial": {
+    "path": "outputs/cpp-acceleration-v1/predicate-incremental-v6/summary.json",
+    "sha256": "f7b3d90006659755c27309445f705ba89ae98ba79f2e01d0816d96e0ea4cccca",
+    "medianBeforeSeconds": 12.772866187471664,
+    "medianAfterSeconds": 12.399289646011312,
+    "medianSpeedup": 1.0301288664210313,
+    "pairedBootstrap95PercentSpeedup": [
+      1.0270741456737167,
+      1.0352529588967232
+    ],
+    "exactEquivalent": true,
+    "memoryRegressionPassed": true,
+    "improvementSupported": true
+  },
+  "additionalIntegratedRegression": {
+    "raw": {
+      "path": "outputs/cpp-acceleration-v1/predicate-supplement-incremental-v6/summary.json",
+      "sha256": "6787d1b2f4c8adb395826969db058f5808e665d852a3051a051d88ead288cc3f"
+    },
+    "passed": true,
+    "comparison": "Immediately prior CPP versus integrated candidate, not original Python baseline.",
+    "protocolLabelMapping": {
+      "simulation": "simulation-steps",
+      "rl": "rl-episodes"
+    },
+    "workloads": {
+      "simulation-steps": {
+        "beforeSeconds": 1.128472582960967,
+        "afterSeconds": 1.0997551669715904,
+        "speedup": 1.0261125538227351,
+        "exactEquivalent": true,
+        "latencyPassed": true,
+        "memoryRegressionPassed": true
+      },
+      "rl-episodes": {
+        "beforeSeconds": 1.163588333001826,
+        "afterSeconds": 1.1343772909604013,
+        "speedup": 1.025750728857322,
+        "exactEquivalent": true,
+        "latencyPassed": true,
+        "memoryRegressionPassed": true
+      }
+    }
+  },
+  "codeCommit": "9da0ef8a4cc1d7ea877ce71bdac7c07571c3038a",
+  "completeDelivery": {
+    "raw": {
+      "path": "testcases/outputs/cpp-predicate-final-verification-v6/verification.json",
+      "sha256": "46da5da5a6b2297509d52a247567ef48f99e357e1ac01662a8d9fc588bfe41d3"
+    },
+    "passed": true,
+    "stages": 23,
+    "seconds": 322.9480216241209,
+    "sourceCppTests": {
+      "passed": 854,
+      "skipped": 77
+    },
+    "sourceReferenceTests": {
+      "passed": 334,
+      "skipped": 1
+    },
+    "actualSignedWorkflows": 4,
+    "fourRuntimesFiveVariants": true,
+    "strictSignaturePassed": true
+  },
+  "currentAcceptance": "artifacts/cpp-acceleration-v1/predicate-batch-acceptance-v6.json",
+  "independentFinalReview": {
+    "path": "outputs/cpp-acceleration-v1/independent-predicate-final-v6/review.json",
+    "sha256": "8fae1f4cb694ab809837563b72eb7b419e7a39a7c8e85cf9731a6052826ad976"
+  }
+}

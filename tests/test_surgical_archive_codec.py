@@ -39,6 +39,59 @@ def manifest(path):
         return json.loads(archive.read('manifest.json'))
 
 
+@pytest.mark.parametrize('workspace', [False, True])
+@pytest.mark.parametrize('full_case', [False, True])
+def test_save_open_preserves_branch_and_nested_checkpoint_mapping_order(tmp_path, workspace, full_case):
+    case, _, artifacts = fixture()
+    toolbox = artifacts['surgical_toolbox']
+    if not full_case:
+        del toolbox['fullCase']
+    original = copy.deepcopy(artifacts)
+    path = tmp_path / 'ordered.ressectionlab'
+    if workspace:
+        save_workspace(case, path, sources=[], imaging=None, episode=None, selection=None, artifacts=artifacts)
+        reopened, actual, _ = load_workspace(path)
+    else:
+        save_case(case, path, artifacts=artifacts)
+        reopened, actual = load_case(path), read_case_artifacts(path)
+    assert reopened.semantic_hash == case.semantic_hash
+    def check_order(before, after):
+        if isinstance(before, dict):
+            assert list(after) == list(before)
+            for key in before:
+                check_order(before[key], after[key])
+        elif isinstance(before, list):
+            assert len(after) == len(before)
+            for left, right in zip(before, after):
+                check_order(left, right)
+        else:
+            assert after == before
+    check_order(original, actual)
+    assert artifacts == original
+
+
+@pytest.mark.parametrize('full_case', [False, True])
+def test_historical_sorted_transport_remains_readable(tmp_path, full_case):
+    case, _, artifacts = fixture()
+    if not full_case:
+        del artifacts['surgical_toolbox']['fullCase']
+    path = save_case(case, tmp_path / 'historical.ressectionlab', artifacts=artifacts)
+    with ZipFile(path) as archive:
+        members = {name: archive.read(name) for name in archive.namelist()}
+    stored = json.loads(members['manifest.json'])
+    if full_case:
+        raw = json.dumps(artifacts['surgical_toolbox'], sort_keys=True, separators=(',', ':')).encode()
+        stored['artifacts']['surgical_toolbox'] = {'schema': codec.SCHEMA, 'encoding': codec.ENCODING,
+            'sha256': sha256(raw).hexdigest(), 'uncompressedBytes': len(raw),
+            'payload': base64.b64encode(gzip.compress(raw, mtime=0)).decode()}
+    members['manifest.json'] = json.dumps(stored, sort_keys=True, separators=(',', ':')).encode()
+    with ZipFile(path, 'w', compression=ZIP_DEFLATED) as archive:
+        for name, payload in members.items():
+            archive.writestr(name, payload)
+    assert load_case(path).semantic_hash == case.semantic_hash
+    assert read_case_artifacts(path) == artifacts
+
+
 def test_actual_workspace_roundtrip_retains_all_branches_arrays_and_source_bytes(tmp_path):
     case, engine, artifacts = fixture()
     original = tmp_path / 'original.ressectionlab'

@@ -26,7 +26,7 @@ async function integration(base,mode){
   if(mode==='missing')await fs.unlink(filename);
   if(mode==='bad-checksum')await fs.writeFile(filename,Buffer.alloc(bytes.length,1));
   if(mode==='symlink'){await fs.rename(filename,path.join(archive,'target'));await fs.symlink(path.join(archive,'target'),filename);}
-  const events={compiles:0,packager:0,signs:0,publishes:0,localOptions:[],downloads:0,prechecks:0,postchecks:0};
+  const events={compiles:0,packager:0,signs:0,nativeProbes:0,publishes:0,localOptions:[],downloads:0,prechecks:0,postchecks:0};
   const notices={
     async captureRendererNotices(_input,output){await fs.writeFile(path.join(output,'renderer-generated.json'),'{}');return {unresolved:[]};},
     async capturePythonNotices(_input,output){await fs.writeFile(path.join(output,'python-generated.json'),'{}');return {unresolved:[]};},
@@ -44,6 +44,7 @@ async function integration(base,mode){
     'electron/package.json':{version},'electron/checksums.json':checksums,
     'node:child_process':{spawnSync(command,args,options){
       if(command==='/usr/bin/codesign')events.signs++;
+      else if(args[0]==='--native-probe'){events.nativeProbes++;if(mode==='native-probe-refusal')return {status:1,stdout:'NativeIntegrityError: signed binary changed',stderr:''};return {status:0,stdout:JSON.stringify({passed:true,runtime:{frozen:true,architecture:'arm64'},before:{counters:{bindingCalls:0}},backend:{selected:'cpp',counters:{bindingCalls:1},binaryPath:path.join(path.dirname(command),'_internal/resectionlab/native.so')}}),stderr:''};}
       else if(command==='git')return {status:0,stdout:args[0]==='rev-parse'?'generated-revision\n':'',stderr:''};
       else {events.compiles++;if(args[0].endsWith('vite.js')){
         sync.mkdirSync(path.join(options.cwd,'dist'),{recursive:true});sync.writeFileSync(path.join(options.cwd,'dist/index.html'),'generated render');
@@ -69,13 +70,14 @@ async function integration(base,mode){
   const report=JSON.parse(await fs.readFile(path.join(desktop,'release/build-report.json'),'utf8'));
   if(['valid','default'].includes(mode)){
     assert.equal(error,null);assert.equal(report.status,'built_unverified');assert.equal(events.compiles,2);
-    assert.equal(events.packager,1);assert.equal(events.signs,2);assert.equal(events.publishes,1);
+    assert.equal(events.packager,1);assert.equal(events.signs,2);assert.equal(events.nativeProbes,1);assert.equal(events.publishes,1);
     assert.deepEqual(events.localOptions,[mode==='default'?null:archive]);assert.equal(events.postchecks,2);
     const manifest=JSON.parse(await fs.readFile(path.join(report.inputSnapshot,'runtime/BUILD_INPUT_MANIFEST.json'),'utf8'));
     assert.equal(manifest.electronArchiveSource.mode,mode==='default'?'checksum_managed_download_cache':'explicit_local');
     if(mode==='valid'){assert.equal(manifest.electronArchiveSource.sha256,expected);assert(!JSON.stringify(manifest).includes(archive));}
   }else{
-    assert(error);assert.equal(report.status,'failed');assert.equal(events.signs,0);assert.equal(events.publishes,0);
+    assert(error);assert.equal(report.status,'failed');assert.equal(events.signs,mode==='native-probe-refusal'?2:0);assert.equal(events.publishes,0);
+    if(mode==='native-probe-refusal')assert.equal(events.nativeProbes,1);
     if(['missing','bad-checksum','symlink','empty'].includes(mode)){assert.equal(events.compiles,0);assert.equal(events.packager,0);}
     if(mode==='changed-before-packager'){assert.equal(events.compiles,2);assert.equal(events.packager,0);}
     if(mode.includes('during-packager')||mode==='packager-refusal')assert.equal(events.packager,1);
@@ -116,7 +118,7 @@ async function main(){
       try{await assert.rejects(helper.localElectronArchive(archive,version,checksums),/changed while reading/);}finally{fs.open=originalOpen;await fs.writeFile(filename,bytes);}
     });
     for(const mode of ['valid','default','empty','missing','bad-checksum','symlink','changed-before-packager',
-      'changed-during-packager','replaced-during-packager','removed-during-packager','packager-refusal']){
+      'changed-during-packager','replaced-during-packager','removed-during-packager','packager-refusal','native-probe-refusal']){
       await test('whole package integration '+mode,async()=>results.push(await integration(base,mode)));
     }
     // Source-basis check of installed packager: explicit local branch throws for

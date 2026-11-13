@@ -6,7 +6,7 @@ only an explicit new-environment operation selects the standard V2 profile.
 import copy
 import numpy as np
 from .core import semantic_digest
-from .surgical_scene import SurgicalScene
+from .surgical_scene import SurgicalScene, propagate_original_target_memberships
 from .surgical_physics_v2 import default_profile
 
 SCHEMA = 'resectionlab.surgical-environment.v1'
@@ -15,7 +15,17 @@ COLORS = {'soft_tissue': '#b9c5c9', 'tumor': '#9863db', 'bone': '#e5d6b8',
           'vessel': '#e54491', 'membrane': '#82c8d8', 'unknown': '#92a7b8'}
 
 
-def load_environment(path):
+def resolve_branch_scene(base_scene, record, branch_id=None):
+    """Resolve a registered immutable cranial root before native branch restore.
+
+    The returned scene grants no execution authority. Editable, archive and
+    prefix owners must still restore the exact branch through the native engine.
+    """
+    from .surgical_cranial_planning_roots import scene_for_branch
+    return scene_for_branch(base_scene, record, branch_id if branch_id is not None else record.get('branchId'))
+
+
+def load_environment(path, *, branch_id=None):
     """Read the same initial environment selected in a saved desktop workspace.
 
     Reset starts with intact anatomy, not the saved action prefix. Legacy files
@@ -26,8 +36,13 @@ def load_environment(path):
     case = load_case(path)
     record = read_case_artifacts(path).get('surgical_toolbox')
     if not record or record.get('environmentSchema') != SCHEMA:
-        return from_case(case)
+        scene = from_case(case, record.get('mapping') if record else None)
+        if record and 'cranialPlanningRoots' in record:
+            return resolve_branch_scene(scene, record, branch_id)
+        return scene
     scene = standardize(from_case(case, record['mapping']), physics_profile=record['physicsProfile'])
+    if 'cranialPlanningRoots' in record:
+        return resolve_branch_scene(scene, record, branch_id)
     snapshots = record['branches'].values()
     if not record['branches'] or any(snapshot.get('sceneId') != scene.identity for snapshot in snapshots):
         raise ValueError('Saved environment does not match the source, mapping and physics profile')
@@ -65,7 +80,8 @@ def standardize(scene, target_names=None, physics_profile=None):
         region['color'] = COLORS.get(region['material'], region.get('color', '#92a7b8'))
         if target_names is not None:
             region['target'] = region['name'] in target_names
-    return SurgicalScene(scene.labels, scene.affine, regions, source, properties)
+    return propagate_original_target_memberships(scene,
+        SurgicalScene(scene.labels, scene.affine, regions, source, properties))
 
 
 def descriptor(scene):

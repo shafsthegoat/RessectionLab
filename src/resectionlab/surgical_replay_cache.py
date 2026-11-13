@@ -99,11 +99,20 @@ class SurgicalReplayCache:
     @staticmethod
     def _shell(engine):
         result = copy.copy(engine)
+        from .surgical_native_engine import detach
+        detach(result)
         result.state, result.actions, result.history = {}, [], []
         result._occupancy_cache = None
         result.__dict__.pop('_deformation_system_v2', None)
         result.__dict__.pop('_drill_step_powers', None)
         return result
+
+    @staticmethod
+    def _checkpoint_runtime(engine):
+        if getattr(engine, '_cranial_stages', None) is not None:
+            from .surgical_cranial_stages import rebind_checkpoint_runtime
+            rebind_checkpoint_runtime(engine)
+        return engine
 
     def _template(self, full):
         template = self._shell(full)
@@ -114,7 +123,8 @@ class SurgicalReplayCache:
             template.grid = shared.grid
             if hasattr(shared, '_cell_cover_cache'):
                 template._cell_cover_cache = shared._cell_cover_cache
-            if template._protection_contract == shared._protection_contract:
+            if (getattr(template, '_cranial_stages', None) is None
+                    and template._protection_contract == shared._protection_contract):
                 template.protection = shared.protection
                 template.guard_config = shared.guard_config
                 template._protected_ids = shared._protected_ids
@@ -207,9 +217,17 @@ class SurgicalReplayCache:
             result.actions = copy.deepcopy(archive['snapshot']['actions'][:start])
             result.history = copy.deepcopy(archive['history'][:start])
             archive['checkpoints'].move_to_end(start)
-        for action in archive['snapshot']['actions'][start:position]:
+        self._checkpoint_runtime(result)
+        for index, action in enumerate(archive['snapshot']['actions'][start:position], start):
             check()
-            if result.step(action, check=check)['status'] == 'rejected':
+            observed = archive['history'][index]
+            result._restoring_legacy_guard_partial = (observed.get('status') == 'partial'
+                and str(observed.get('reason', '')).split(':', 1)[0] == 'PROTECTED_STRUCTURE')
+            try:
+                outcome = result.step(action, check=check)
+            finally:
+                result.__dict__.pop('_restoring_legacy_guard_partial', None)
+            if outcome['status'] == 'rejected':
                 raise ValueError('Saved action no longer replays')
             check()
         if result.state_id != expected:

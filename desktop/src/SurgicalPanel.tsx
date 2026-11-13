@@ -1,6 +1,6 @@
-import {TwoToolStrategyPanel} from './TwoToolStrategyPanel';
-import {PreparationPlanningPanel} from './PreparationPlanningPanel';
-import {InteractivePlanningPanel} from './InteractivePlanningPanel';
+import {SurgicalWorkflow} from './SurgicalWorkflow';
+import {workflowPlannerOptions} from './surgical-workflow-data';
+import type {SurgicalWorkflowStage} from './surgical-workflow-data';
 import type {Point3} from './viewer/coordinates';
 import {PatientPositionControls} from './PatientPositionControls';
 import {useEffect,useRef,useState} from 'react';
@@ -165,11 +165,13 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
   const [importOptions,setImportOptions]=useState<SurgicalImportOptions>({frame:'RAS+',units:'mm',material:'unknown',resolution:1,topology:'solid',thicknessMm:1});
   const [importing,setImporting]=useState(false),[importError,setImportError]=useState<string|null>(null);
   const [search,setSearch]=useState(''),[duration,setDuration]=useState(1),[operation,setOperation]=useState('apply'),[playing,setPlaying]=useState(false),[playbackSpeed,setPlaybackSpeed]=useState(1);
+  const [workflowStage,setWorkflowStage]=useState<SurgicalWorkflowStage>('case');
   const [mapping,setMapping]=useState<SurgicalRegion[]|null>(null),[seekTarget,setSeekTarget]=useState<number|null>(null);
   const playbackClock=useRef(new SurgicalPlaybackClock());
   useEffect(()=>{c.setPlaybackDisplay({playing,speed:playbackSpeed});},[playing,playbackSpeed]);
   useEffect(()=>()=>c.stopPlayback(),[]);
   const v=c.view,selected=v?.slots[c.slot],tool=v?.catalog.find(t=>t.id===selected?.instrument),r=c.result;
+  const workflowSceneId=r?.cranialPlanningAvailability?.sourceSceneId??v?.scene.sceneId;
   const displayed=c.preview??v;
   const routes=surgicalReplayRoutes(r),prefix=reconstructedPrefix(r),observed=r?.playback,imported=routes.imported,unverifiedImport=imported&&!prefix,readOnly=!!observed||imported||r?.readOnly===true,position=surgicalPlaybackPosition(observed,r?.position??0);
   const freshOrigin=!!prefix&&!!r?.prefixOrigin,preparedOnly=prefix?.preparedCache?.mode==='only'&&!freshOrigin;
@@ -182,7 +184,10 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
   const observation=displayed?.observations?.at(-1);
   const q=new Euler().setFromQuaternion(new Quaternion(...c.pose.quaternion));
   const steps=r?.branches.find(b=>b.id===r.branchId)?.steps??0;
-  useEffect(()=>{setMapping(null);setPlaying(false);setImportError(null);setOperation('apply');setDuration(1);},[v?.scene.sceneId]);
+  // Registered openings share one case workflow despite distinct native scenes.
+  // Reset navigation for a new source, after which Inspect owns its destination.
+  useEffect(()=>{setWorkflowStage('case');setPlaying(false);},[workflowSceneId]);
+  useEffect(()=>{setMapping(null);setImportError(null);setOperation('apply');setDuration(1);},[v?.scene.sceneId]);
   useEffect(()=>setPlaying(false),[c.playbackVersion]);
   useEffect(()=>{if(!c.pending)setSeekTarget(null);},[c.pending,r?.position,r?.branchId]);
   const playback=r?nextSurgicalPlaybackFrame(r,steps,playbackSpeed):null;
@@ -190,19 +195,21 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
     if(!c.startPlayback()){setPlaying(false);return;}
     const delay=playbackClock.current.delay(observed?.observedTimeSeconds??Number(v?.metrics.elapsedSeconds),playback.milliseconds,playbackSpeed,performance.now());
     const timer=setTimeout(()=>{void c.runPlayback({branchId:playback.branchId,position:playback.position,frameIndex:playback.frameIndex}).then(ok=>{if(!ok)setPlaying(false);});},delay);return()=>clearTimeout(timer);},[playing,c.pending,r,steps,playbackSpeed]);
-  const keys=['radiusMm',...(cusaSelected?['power','duty']:[]),...(v2&&tool?.id==='cranial_drill'?['rpm','forceN','duty']:v2&&tool?.materials.includes('vessel')?['forceN']:[]),...(tool?.effect==='probe'?['amplitudeMa','frequencyHz','pulseWidthUs']:[]),...(['incise','kerf','sheet_cut','transect','irrigate'].includes(tool?.effect??'')?['depthMm']:[]),...(['suction','irrigate'].includes(tool?.effect??'')?['flowMm3PerSecond']:[]),...(tool?.effect==='coagulate'?['power']:[]),...(['forceps','scissors'].includes(tool?.geometry??'')?['jawOpeningMm']:[])];
+  const keys=['radiusMm',...(cusaSelected?['power',...(v2?['duty']:[])]:[]),...(v2&&tool?.id==='cranial_drill'?['rpm','forceN','duty']:v2&&tool?.materials.includes('vessel')?['forceN']:[]),...(tool?.effect==='probe'?['amplitudeMa','frequencyHz','pulseWidthUs']:[]),...(['incise','kerf','sheet_cut','transect','irrigate'].includes(tool?.effect??'')?['depthMm']:[]),...(['suction','irrigate'].includes(tool?.effect??'')?['flowMm3PerSecond']:[]),...(tool?.effect==='coagulate'?['power']:[]),...(['forceps','scissors'].includes(tool?.geometry??'')?['jawOpeningMm']:[])];
   const params=Object.fromEntries(keys.map(k=>[k,cusaSelected&&k==='radiusMm'?1.5:c.parameters[k]??(k==='radiusMm'?tool?.radiusMm:undefined)??specs[k].default]));
   const compatible=tool?.materials.length===0||v?.scene.regions.some(row=>tool?.materials.includes(row.material));
   const changeMap=(fn:(rows:SurgicalRegion[])=>void)=>{const rows=structuredClone(mapping??v?.scene.regions??[]);fn(rows);setMapping(rows);};
   const stopRun=(command:string,extra:Record<string,unknown>={})=>{setPlaying(false);void c.run(command,extra);};
+  const pauseAdvanced=()=>{setPlaying(false);c.pausePlayback();setWorkflowStage('rehearse');};
+  const playRecordedBranch=(branchId:string)=>{setPlaying(false);c.pausePlayback();void c.run('selectBranch',{branchId,position:0}).then(ok=>{if(ok){setWorkflowStage('rehearse');setPlaying(true);}});};
   return <section className="surgical-panel" aria-label="Surgical instrument toolbox" data-state-id={displayed?.stateId} data-recorded-position={r?.position}>
-    <header className="rehearsal-heading"><h2>Rehearse</h2><span className="surgical-note">Research model · uncalibrated</span></header>
+    <header className="rehearsal-heading"><h2>Case planning and rehearsal</h2><span className="surgical-note">Research model · uncalibrated</span></header>
     {v&&<section className="rehearsal-state" aria-label="Current rehearsal state" role="status">
       <strong>{c.preview?'Preview · uncommitted':observed?'Read-only replay':readOnly?'Read-only recorded state':'Committed state · editable'}</strong>
       <p>Action {position} / {steps} · {r?.branchId}</p>
       {inspectionNotice&&<p className="surgical-warning">{inspectionNotice}</p>}
       {c.preview&&<><p>{c.approachPreview?'Install checked branch below commits this plan. Cancel returns to the planning checkpoint.':'Apply commits; Cancel returns to committed anatomy.'}</p><button onClick={c.cancel}>Cancel preview</button></>}
-      {c.pending&&<><button onClick={c.cancel}>Cancel</button><p>Cancel clears the draft. The current request continues.</p></>}
+      {c.canCancelComputation&&<button disabled={c.cancelling} onClick={()=>void c.cancelComputation()}>{c.cancelling?'Cancelling…':'Cancel computation'}</button>}
       {observed&&<button disabled={c.pending} onClick={()=>stopRun(routes.boundary,{branchId:r?.branchId,position})}>Return to recorded boundary</button>}
       {imported&&!observed&&<button disabled={c.pending} onClick={()=>stopRun('inspect',{branchId:r?.branchId})}>Verify saved replay</button>}
     </section>}
@@ -210,15 +217,13 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
     {!v?<button className="primary-button" disabled={!available||c.pending||importing} onClick={()=>void c.create()}>Prepare instrument scene</button>:<>
 
     {latestOutcome&&importantOutcome&&<ActionResult outcome={latestOutcome} title={c.preview?'Preview result':observed?'Recorded action endpoint result':'Last action result'} onWithdraw={!readOnly?()=>{setOperation('withdraw');c.clearPreview();}:undefined}/>}
+    {!v.planarBladeManeuver&&<SurgicalWorkflow key={workflowSceneId} c={c} artifact={cusaLearning} playRecorded={playRecordedBranch} stage={workflowStage} onStage={setWorkflowStage} cursor={planningCursor} onCursor={onPlanningCursor} pause={()=>{setPlaying(false);c.pauseFullCase();c.pausePlayback();}}/>}
+    <div hidden={!v.planarBladeManeuver&&workflowStage!=='rehearse'} className="workflow-rehearsal" aria-label="Rehearse and edit branch">
     <div className="surgical-slots">{Object.entries(v.slots).map(([s,t])=><button key={s} disabled={c.pending||playing||readOnly} aria-pressed={c.slot===s} onClick={()=>c.selectSlot(s)}><strong>{s} hand</strong><span>{t.instrument==='cusa'?'CUSA':v.catalog.find(x=>x.id===t.instrument)?.name}</span><small>{t.inserted?'Inserted':'Withdrawn'}{(observed?.effectiveActivation?.[s]??t.active)?' · active':t.inserted?' · inactive':''}{observed?' · observed':''}</small>{v.holds?.[s]&&<small>{v.holds[s].cells.length?`Holding ${v.holds[s].cells.length} source cell${v.holds[s].cells.length===1?'':'s'}`:'Hold empty · no retained tissue'}</small>}</button>)}</div>
     <details><summary>Exchange instrument</summary><input aria-label="Search instruments" placeholder="Search instruments…" value={search} onChange={e=>setSearch(e.target.value)}/>
     <div className="surgical-toolbox">{v.catalog.filter(t=>(t.name+' '+t.category).toLowerCase().includes(search.toLowerCase())).map(t=><button key={t.id} aria-pressed={selected?.instrument===t.id} disabled={c.pending||playing||readOnly||!!v.planarBladeManeuver||selected?.instrument===t.id} onClick={()=>{if(selected?.instrument!==t.id)stopRun('step',{action:{slot:c.slot,operation:'exchange',instrument:t.id,duration:1}})}}><small>{t.category}</small>{t.name}</button>)}</div>
     <p className="surgical-note">Choosing a different instrument commits an exchange. The selected instrument does not advance time.</p></details>
 
-    {!v.planarBladeManeuver&&<PreparationPlanningPanel c={c} cursor={planningCursor} onCursor={onPlanningCursor} pause={()=>{setPlaying(false);c.pauseFullCase();}}/>}
-    {!v.planarBladeManeuver&&<TwoToolStrategyPanel c={c} cursor={planningCursor} onCursor={onPlanningCursor} pause={()=>{setPlaying(false);c.pauseFullCase();}}/>}
-    {!v.planarBladeManeuver&&<InteractivePlanningPanel c={c} cursor={planningCursor} onCursor={onPlanningCursor} pause={()=>{setPlaying(false);c.pauseFullCase();}}/>}
-    {!v.planarBladeManeuver&&<FullCaseRehearsalPanel c={c} pause={()=>setPlaying(false)}/>}
     {v.planarBladeManeuver&&<PlanarBladeManeuverPanel c={c} disabled={playing||readOnly} pause={()=>{setPlaying(false);c.pauseFullCase();}}/>}
     <section className="manual-actions" aria-label="Manual instrument actions"><h3>Manual action</h3>{c.approachPreview&&<p className="surgical-note">Install or cancel the checked plan preview before a manual instrument action.</p>}
     {v.planarBladeManeuver&&<p className="surgical-note">Use the declared fixed blade maneuver above. Other instrument actions are unavailable in this scene.</p>}
@@ -270,31 +275,34 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
       </>:<p>Transfer records are unavailable for this observation. Static field markers show the recorded endpoint.</p>}
     </section>}
     </details></section>
-    <SurgicalOutcomeSummary c={c}/>
     {latestOutcome&&!importantOutcome&&<details><summary>{c.preview?'Preview action events':'Last action result'} · {latestOutcome.status}</summary><ActionResult outcome={latestOutcome} title={c.preview?'Preview result':observed?'Recorded action endpoint result':'Last action result'}/></details>}
     {observation&&<StimulationObservation observation={observation} preview={!!c.preview}/>}
 
+    </div>
+    <details className="workflow-checkpoint-burdens" open={workflowStage==='rehearse'||!!v.planarBladeManeuver} hidden={!v.planarBladeManeuver&&workflowStage!=='compare'&&workflowStage!=='rehearse'}><summary>Checkpoint and preview burdens</summary><SurgicalOutcomeSummary c={c}/></details>
     <section className="rehearsal-view-controls" aria-label="View and inspection controls">
       {microscopeControls}
       <details><summary>Field and anatomy display</summary>{onFrameField&&<button onClick={onFrameField}>Frame operative field</button>}{fieldDisplayControls}{anatomyControls}</details>
     </section>
     <details className="rehearsal-secondary"><summary>Advanced research workflows</summary>
-    <RescueLearningPanel c={c} report={learningReport} pause={()=>setPlaying(false)}/>
-    <ConsequenceComparisonPanel c={c} pause={()=>setPlaying(false)}/>
-    <LearnedExecutionPanel c={c} report={executionReport} pause={()=>setPlaying(false)}/>
-    <LearnedSectorExecutionPanel c={c} artifact={cusaLearning} pause={()=>{setPlaying(false);c.pausePlayback();}}/>
-    <PatientCusaLearningPanel c={c} artifact={cusaLearning} pause={()=>setPlaying(false)}/>
-    <FrozenCusaExecutionPanel c={c} pending={frozenCusaPending} onRun={onRunFrozenCusa} onRunSector={onRunFrozenSector} pause={()=>{setPlaying(false);c.pausePlayback();}}/>
-    <JointStrategiesPanel c={c} artifact={cusaLearning} pause={()=>{setPlaying(false);c.pausePlayback();}}/>
-    <RetractionStudyPanel c={c} pause={()=>{setPlaying(false);c.pausePlayback();}}/>
-    <StagedStrategiesPanel c={c} artifact={cusaLearning}
-      pause={()=>{setPlaying(false);c.pausePlayback();}}
-      play={branchId=>{setPlaying(false);c.pausePlayback();void c.run('selectBranch',{branchId,position:0}).then(ok=>{if(ok)setPlaying(true);});}}/>
+    {!v.planarBladeManeuver&&<FullCaseRehearsalPanel c={c} pause={()=>{setPlaying(false);setWorkflowStage('rehearse');}}/>}
+    <RescueLearningPanel c={c} report={learningReport} pause={pauseAdvanced}/>
+    <ConsequenceComparisonPanel c={c} pause={pauseAdvanced}/>
+    <LearnedExecutionPanel c={c} report={executionReport} pause={pauseAdvanced}/>
+    <LearnedSectorExecutionPanel c={c} artifact={cusaLearning} pause={pauseAdvanced}/>
+    <PatientCusaLearningPanel c={c} artifact={cusaLearning} pause={pauseAdvanced}/>
+    <FrozenCusaExecutionPanel c={c} pending={frozenCusaPending} onRun={onRunFrozenCusa} onRunSector={onRunFrozenSector} pause={pauseAdvanced}/>
+    <JointStrategiesPanel c={c} artifact={cusaLearning} pause={pauseAdvanced}/>
+    <RetractionStudyPanel c={c} pause={pauseAdvanced}/>
+    {!workflowPlannerOptions(r,cusaLearning).includes('staged')&&<StagedStrategiesPanel c={c} artifact={cusaLearning}
+      pause={pauseAdvanced}
+      play={playRecordedBranch}/>}
+
     <PrecisionContinuationPanel c={c} artifact={cusaLearning}
-      pause={()=>{setPlaying(false);c.pausePlayback();}}
-      play={branchId=>{setPlaying(false);c.pausePlayback();void c.run('selectBranch',{branchId,position:0}).then(ok=>{if(ok)setPlaying(true);});}}/>
-    <fieldset disabled={readOnly} className="surgical-controls"><ResearchPlanningPanel c={c} pause={()=>setPlaying(false)}/></fieldset>
-    <fieldset disabled={readOnly} className="surgical-controls"><SectorStrategiesPanel c={c} pause={()=>{setPlaying(false);c.pausePlayback();}}/></fieldset>
+      pause={pauseAdvanced}
+      play={playRecordedBranch}/>
+    <fieldset disabled={readOnly} className="surgical-controls"><ResearchPlanningPanel c={c} pause={pauseAdvanced}/></fieldset>
+    <fieldset disabled={readOnly} className="surgical-controls"><SectorStrategiesPanel c={c} pause={pauseAdvanced}/></fieldset>
     </details>
     <RecordedDetails summary="Source provenance and research assumptions">{()=><SceneResearchDetails view={displayed??v} preview={!!c.preview}/>}</RecordedDetails>
     <details><summary>Mechanics, fluid ledgers and effect records</summary>

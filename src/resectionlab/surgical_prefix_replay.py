@@ -162,7 +162,7 @@ def _stock_prefix_hash_path(engine):
 
 def _prefix_state_id(engine):
     """Rehash complete private state; custom engines retain their own property."""
-    if not _stock_prefix_hash_path(engine):
+    if getattr(engine, '_cranial_stages', None) is not None or not _stock_prefix_hash_path(engine):
         return engine.state_id
     payload = {'scene': engine.scene.identity, 'state': engine.state,
                **({'protectionContract': engine._protection_contract['contentHash']}
@@ -644,6 +644,8 @@ class SurgicalPrefixReplay:
                 or max_history_bytes < _owned_bytes([])):
             raise PrefixBudgetExceeded('Empty frame/history owner exceeds retention budget')
         scene.require_cache_source()
+        if 'cranialStagesContract' in snapshot:
+            raise ValueError('CRANIAL_STAGE_PREFIX_REPLAY_UNSUPPORTED: use canonical recorded-state replay')
         if _owned_bytes(snapshot) > max_input_bytes:
             raise PrefixBudgetExceeded('Immutable input budget exceeded')
         self._borrowed_input = _frozen_input_authority is _FROZEN_INPUT_AUTHORITY

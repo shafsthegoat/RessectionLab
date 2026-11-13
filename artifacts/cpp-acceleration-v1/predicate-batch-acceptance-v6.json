@@ -1,0 +1,962 @@
+{
+  "schema": "resectionlab-predicate-batch-acceptance-v6",
+  "baseCommit": "ce9e348daf23d9a2ddc1f1f9efc94251d84cb1fa",
+  "codeCommit": "9da0ef8a4cc1d7ea877ce71bdac7c07571c3038a",
+  "goalComplete": false,
+  "status": "Retained measured native increment, full delivery and independent execution/fairness audit pass. Original2x target remains incomplete. Publication is recorded separately after this acceptance commit.",
+  "manifests": {
+    "original": {
+      "path": "manifests/experiments/cpp-acceleration-v1.json",
+      "sha256": "f507080eb60f214fd4f050e1595d551bff6222b6fef6cad6d6f7b7a98abb0f67"
+    },
+    "supplement": {
+      "path": "manifests/experiments/cpp-acceleration-simulation-v1.json",
+      "sha256": "7c4eb89e4b1061f2d3ed08d39c53dc1396f549c93b842e8b0dc4c7b157cd177a"
+    }
+  },
+  "implementation": {
+    "change": "Reuse the existing scalar C++ algorithm in owned bounded first-hit/ambiguity batches beneath public pair conflict and per-cell bone/membrane tool checks.",
+    "maximumRows": 64,
+    "newConcurrency": false,
+    "retainedLibraries": [
+      "NumPy",
+      "SciPy",
+      "PyTorch"
+    ],
+    "pythonRlInterfaceUnchanged": true,
+    "preserved": [
+      "physics",
+      "typed threshold expression and collision boundaries",
+      "ordered first hit and exact scalar ambiguity authority",
+      "per-cell protection/occupancy/hand-part priority/grip exemption",
+      "370 physical calls and112 actions",
+      "32-cell cancellation boundaries",
+      "rewards, observations, termination, RNG and ordering",
+      "checkpoint/rollback and same/cross-build save/load contracts"
+    ],
+    "realGenerate": {
+      "predicateBatchCalls": 21638,
+      "predicateBatchItems": 105230,
+      "predicateBatchExamined": 105230,
+      "remainingScalarPredicateCalls": 816,
+      "originalScalarPredicateCalls": 106046,
+      "capsuleBatchCalls": 16697,
+      "capsuleBatchItems": 20693,
+      "capsuleBatchSizes": {
+        "1": 12709,
+        "2": 3980,
+        "3": 8
+      },
+      "physicalCalls": 370,
+      "previews": 129,
+      "steps": 241,
+      "acceptedActions": 112,
+      "exactDigest": "sha256:78246b9c6a0be381afc15cd1b6b2c6dac82442253669c6fe16cf374c1afcc3ec"
+    }
+  },
+  "retention": {
+    "protocol": {
+      "path": "outputs/cpp-acceleration-v1/predicate-incremental-v6/run.py",
+      "sha256": "482cadb1c387de3b0548f731f42c6294fbe3c16e603dcfe4d59fa37efc92e663"
+    },
+    "additionalProtocol": {
+      "path": "outputs/cpp-acceleration-v1/predicate-incremental-v6/additional-regression-protocol.json",
+      "sha256": "6f6282c7814da4502354c3f18ae66da8353e8afa9ebbaf6c8e63d1bc8c3fae38"
+    },
+    "prepassCapture": {
+      "path": "outputs/cpp-acceleration-v1/predicate-prepass-cpp-v6/capture.json",
+      "sha256": "e426466f6a41229083c67aa0a6b3700390caa97d2ef7497a6bb3fe7c16034279"
+    },
+    "sourceSnapshot": {
+      "path": "outputs/cpp-acceleration-v1/predicate-incremental-v6/source-snapshot-final.json",
+      "sha256": "cf314fb445d3b335aa34299adec6fb5061650e8471039a45321dcba605662af6"
+    },
+    "sourceSnapshotStillMatches": true,
+    "prepassFiles": 334,
+    "planning": {
+      "raw": {
+        "path": "outputs/cpp-acceleration-v1/predicate-incremental-v6/summary.json",
+        "sha256": "f7b3d90006659755c27309445f705ba89ae98ba79f2e01d0816d96e0ea4cccca"
+      },
+      "protocol": {
+        "workload": "generate",
+        "pairedRepetitions": 10,
+        "alternatingOrder": true,
+        "warmupsPerRole": 1,
+        "freshProcess": true,
+        "threads": 1,
+        "profile": false,
+        "retentionCriteria": "Exact frozen outcomes and physical work,memory/hardcaps,and positive median gain plus lower95%paired bootstrap geometric speedup>1. No posthoc repeat extension.",
+        "bootstrap": {
+          "method": "paired bootstrap of mean log(before/after)",
+          "seed": 817,
+          "resamples": 10000,
+          "percentiles": [
+            2.5,
+            97.5
+          ]
+        }
+      },
+      "backends": {
+        "reference": {
+          "medianSeconds": 12.772866187471664,
+          "minSeconds": 12.570811333018355,
+          "maxSeconds": 13.003944542026147,
+          "stdevSeconds": 0.13230086085132542,
+          "sampleCount": 10,
+          "samplesSeconds": [
+            12.570811333018355,
+            12.652256833040155,
+            12.57453808299033,
+            12.760935001075268,
+            12.781210249988362,
+            13.003944542026147,
+            12.805026040994562,
+            12.764522124954965,
+            12.860147583996877,
+            12.820835084072314
+          ],
+          "medianPeakRssBytes": 141910016.0,
+          "peakRssBytes": 143327232
+        },
+        "cpp": {
+          "medianSeconds": 12.399289646011312,
+          "minSeconds": 12.220396333024837,
+          "maxSeconds": 12.47212762502022,
+          "stdevSeconds": 0.09233444992717305,
+          "sampleCount": 10,
+          "samplesSeconds": [
+            12.220396333024837,
+            12.229673833004199,
+            12.308250417001545,
+            12.47212762502022,
+            12.39408341696253,
+            12.435214375029318,
+            12.404495875060093,
+            12.456508875009604,
+            12.453475459013134,
+            12.38814708404243
+          ],
+          "medianPeakRssBytes": 141778944.0,
+          "peakRssBytes": 142278656
+        }
+      },
+      "speedup": 1.0301288664210313,
+      "pairedGeometricSpeedup": 1.0309374389791122,
+      "pairedBootstrap95PercentSpeedup": [
+        1.0270741456737167,
+        1.0352529588967232
+      ],
+      "exactEquivalent": true,
+      "memoryRegressionPassed": true,
+      "improvementSupported": true
+    },
+    "simulationRl": {
+      "raw": {
+        "path": "outputs/cpp-acceleration-v1/predicate-supplement-incremental-v6/summary.json",
+        "sha256": "6787d1b2f4c8adb395826969db058f5808e665d852a3051a051d88ead288cc3f"
+      },
+      "baseline": "Immediately preceding CPP capture at ce9e348d; declared shorthand simulation/rl maps unchanged simulation-steps/rl-episodes workloads.",
+      "passed": true,
+      "workloads": {
+        "simulation-steps": {
+          "backends": {
+            "reference": {
+              "medianSeconds": 1.128472582960967,
+              "minSeconds": 1.1270086669828743,
+              "maxSeconds": 1.1383712909882888,
+              "stdevSeconds": 0.004725625871012488,
+              "sampleCount": 5,
+              "samplesSeconds": [
+                1.1270086669828743,
+                1.128472582960967,
+                1.1290130839915946,
+                1.1383712909882888,
+                1.1273538329987787
+              ],
+              "medianPeakRssBytes": 110084096,
+              "peakRssBytes": 110198784,
+              "medianTimedWorkPeakRssBytes": 110084096
+            },
+            "cpp": {
+              "medianSeconds": 1.0997551669715904,
+              "minSeconds": 1.0952167909708805,
+              "maxSeconds": 1.1081764160189778,
+              "stdevSeconds": 0.005331817727351325,
+              "sampleCount": 5,
+              "samplesSeconds": [
+                1.0972103330423124,
+                1.0952167909708805,
+                1.0997551669715904,
+                1.1045855410047807,
+                1.1081764160189778
+              ],
+              "medianPeakRssBytes": 110100480,
+              "peakRssBytes": 110149632,
+              "medianTimedWorkPeakRssBytes": 110100480
+            }
+          },
+          "speedup": 1.0261125538227351,
+          "exactEquivalent": true,
+          "latencyPassed": true,
+          "memoryRegressionPassed": true,
+          "memoryHardCapPassed": true
+        },
+        "rl-episodes": {
+          "backends": {
+            "reference": {
+              "medianSeconds": 1.163588333001826,
+              "minSeconds": 1.1582639999687672,
+              "maxSeconds": 1.1777663750108331,
+              "stdevSeconds": 0.007786433754978818,
+              "sampleCount": 5,
+              "samplesSeconds": [
+                1.163588333001826,
+                1.1582639999687672,
+                1.1680098330252804,
+                1.1777663750108331,
+                1.1600462920032442
+              ],
+              "medianPeakRssBytes": 138985472,
+              "peakRssBytes": 139149312,
+              "medianTimedWorkPeakRssBytes": 101711872
+            },
+            "cpp": {
+              "medianSeconds": 1.1343772909604013,
+              "minSeconds": 1.127374040952418,
+              "maxSeconds": 1.1389841249911115,
+              "stdevSeconds": 0.004608712906759041,
+              "sampleCount": 5,
+              "samplesSeconds": [
+                1.1343772909604013,
+                1.127374040952418,
+                1.1324151669978164,
+                1.1377023750101216,
+                1.1389841249911115
+              ],
+              "medianPeakRssBytes": 139067392,
+              "peakRssBytes": 139083776,
+              "medianTimedWorkPeakRssBytes": 101761024
+            }
+          },
+          "speedup": 1.025750728857322,
+          "exactEquivalent": true,
+          "latencyPassed": true,
+          "memoryRegressionPassed": true,
+          "memoryHardCapPassed": true
+        }
+      }
+    }
+  },
+  "original": {
+    "raw": {
+      "path": "outputs/cpp-acceleration-v1/predicate-original-comparison-v6/summary.json",
+      "sha256": "639b60f8b8f107818b7dc36a20d75633d44180f1bc659d251ab7bb0ca33680c5"
+    },
+    "baseline": "Original pre-port Python source27f59e85; unchanged manifest and2x representative target.",
+    "passed": false,
+    "workloads": {
+      "small": {
+        "backends": {
+          "reference": {
+            "medianSeconds": 0.0019793339888565242,
+            "minSeconds": 0.0018372919876128435,
+            "maxSeconds": 0.0020220420556142926,
+            "stdevSeconds": 7.758937562022415e-05,
+            "sampleCount": 5,
+            "samplesSeconds": [
+              0.0019113750313408673,
+              0.0020220420556142926,
+              0.002012167009525001,
+              0.0019793339888565242,
+              0.0018372919876128435
+            ],
+            "medianPeakRssBytes": 67518464,
+            "peakRssBytes": 67616768
+          },
+          "cpp": {
+            "medianSeconds": 0.0014519999967887998,
+            "minSeconds": 0.0013878330355510116,
+            "maxSeconds": 0.0014827909762971103,
+            "stdevSeconds": 3.850742441821715e-05,
+            "sampleCount": 5,
+            "samplesSeconds": [
+              0.0014698330196551979,
+              0.0014827909762971103,
+              0.0014205420156940818,
+              0.0013878330355510116,
+              0.0014519999967887998
+            ],
+            "medianPeakRssBytes": 67829760,
+            "peakRssBytes": 67895296
+          }
+        },
+        "speedup": 1.3631776812906065,
+        "exactEquivalent": true,
+        "latencyPassed": true,
+        "memoryRegressionPassed": true,
+        "memoryHardCapPassed": true
+      },
+      "generate": {
+        "backends": {
+          "reference": {
+            "medianSeconds": 17.438286625023466,
+            "minSeconds": 17.327372750034556,
+            "maxSeconds": 17.628461792017333,
+            "stdevSeconds": 0.13606134466134068,
+            "sampleCount": 5,
+            "samplesSeconds": [
+              17.610379167017527,
+              17.628461792017333,
+              17.327372750034556,
+              17.438286625023466,
+              17.379875750048086
+            ],
+            "medianPeakRssBytes": 151109632,
+            "peakRssBytes": 151388160
+          },
+          "cpp": {
+            "medianSeconds": 12.393772791023366,
+            "minSeconds": 12.364320084045175,
+            "maxSeconds": 12.492112666019239,
+            "stdevSeconds": 0.05105806987586212,
+            "sampleCount": 5,
+            "samplesSeconds": [
+              12.385400666971691,
+              12.393772791023366,
+              12.492112666019239,
+              12.364320084045175,
+              12.439211167045869
+            ],
+            "medianPeakRssBytes": 142065664,
+            "peakRssBytes": 142966784
+          }
+        },
+        "speedup": 1.4070200349044457,
+        "exactEquivalent": true,
+        "latencyPassed": false,
+        "memoryRegressionPassed": true,
+        "memoryHardCapPassed": true
+      },
+      "standardized-refusal": {
+        "backends": {
+          "reference": {
+            "medianSeconds": 1.393382375012152,
+            "minSeconds": 1.387910874967929,
+            "maxSeconds": 1.4044892489910126,
+            "stdevSeconds": 0.006539219033623239,
+            "sampleCount": 5,
+            "samplesSeconds": [
+              1.393382375012152,
+              1.3893922499846667,
+              1.395561876008287,
+              1.4044892489910126,
+              1.387910874967929
+            ],
+            "medianPeakRssBytes": 116948992,
+            "peakRssBytes": 117129216
+          },
+          "cpp": {
+            "medianSeconds": 1.0482232489739545,
+            "minSeconds": 1.0410852080094628,
+            "maxSeconds": 1.0515260409447365,
+            "stdevSeconds": 0.004604889702474117,
+            "sampleCount": 5,
+            "samplesSeconds": [
+              1.0515260409447365,
+              1.0508736669435166,
+              1.0482232489739545,
+              1.0410852080094628,
+              1.0434150829678401
+            ],
+            "medianPeakRssBytes": 116850688,
+            "peakRssBytes": 116883456
+          }
+        },
+        "speedup": 1.3292801665828857,
+        "exactEquivalent": true,
+        "latencyPassed": true,
+        "memoryRegressionPassed": true,
+        "memoryHardCapPassed": true
+      },
+      "stress": {
+        "backends": {
+          "reference": {
+            "medianSeconds": 0.9861014579655603,
+            "minSeconds": 0.9605129590490833,
+            "maxSeconds": 1.0170212089433335,
+            "stdevSeconds": 0.020859012086580146,
+            "sampleCount": 5,
+            "samplesSeconds": [
+              0.9605129590490833,
+              0.987697999982629,
+              1.0170212089433335,
+              0.9861014579655603,
+              0.9746500410255976
+            ],
+            "medianPeakRssBytes": 152223744,
+            "peakRssBytes": 152371200
+          },
+          "cpp": {
+            "medianSeconds": 0.5156097500002943,
+            "minSeconds": 0.5102733750245534,
+            "maxSeconds": 0.5162717920029536,
+            "stdevSeconds": 0.0025422731463894616,
+            "sampleCount": 5,
+            "samplesSeconds": [
+              0.5102733750245534,
+              0.5156097500002943,
+              0.5128617500304244,
+              0.5157412079861388,
+              0.5162717920029536
+            ],
+            "medianPeakRssBytes": 111984640,
+            "peakRssBytes": 112115712
+          }
+        },
+        "speedup": 1.9124957547156496,
+        "exactEquivalent": true,
+        "latencyPassed": true,
+        "memoryRegressionPassed": true,
+        "memoryHardCapPassed": true
+      }
+    }
+  },
+  "cumulativeSupplement": {
+    "raw": {
+      "path": "outputs/cpp-acceleration-v1/predicate-supplement-comparison-v6/summary.json",
+      "sha256": "06b86528af2998ee2bfafa69178e6595b19f22a032913246cd1bee39d4c8ac9e"
+    },
+    "baseline": "Frozen first CPP source/binary capture supplement-prepass-cpp, before native graph copier; not original Python.",
+    "passed": true,
+    "workloads": {
+      "simulation-steps": {
+        "backends": {
+          "reference": {
+            "medianSeconds": 1.195483957999386,
+            "minSeconds": 1.1945125419879332,
+            "maxSeconds": 1.2073461660183966,
+            "stdevSeconds": 0.005677492867322253,
+            "sampleCount": 5,
+            "samplesSeconds": [
+              1.201687375025358,
+              1.195483957999386,
+              1.2073461660183966,
+              1.1945312920142896,
+              1.1945125419879332
+            ],
+            "medianPeakRssBytes": 109936640,
+            "peakRssBytes": 110215168,
+            "medianTimedWorkPeakRssBytes": 109936640
+          },
+          "cpp": {
+            "medianSeconds": 1.1226744579616934,
+            "minSeconds": 1.1106099580065347,
+            "maxSeconds": 1.1255091250059195,
+            "stdevSeconds": 0.006120876498940889,
+            "sampleCount": 5,
+            "samplesSeconds": [
+              1.1251707089832053,
+              1.1226744579616934,
+              1.1106099580065347,
+              1.1196790829999372,
+              1.1255091250059195
+            ],
+            "medianPeakRssBytes": 109969408,
+            "peakRssBytes": 110116864,
+            "medianTimedWorkPeakRssBytes": 109969408
+          }
+        },
+        "speedup": 1.064853617646102,
+        "exactEquivalent": true,
+        "latencyPassed": true,
+        "memoryRegressionPassed": true,
+        "memoryHardCapPassed": true
+      },
+      "rl-episodes": {
+        "backends": {
+          "reference": {
+            "medianSeconds": 1.2472362919943407,
+            "minSeconds": 1.2398221669718623,
+            "maxSeconds": 1.2580067919916473,
+            "stdevSeconds": 0.006695459831202272,
+            "sampleCount": 5,
+            "samplesSeconds": [
+              1.2398221669718623,
+              1.2499333749874495,
+              1.245173583040014,
+              1.2472362919943407,
+              1.2580067919916473
+            ],
+            "medianPeakRssBytes": 138821632,
+            "peakRssBytes": 139001856,
+            "medianTimedWorkPeakRssBytes": 101548032
+          },
+          "cpp": {
+            "medianSeconds": 1.1406028750352561,
+            "minSeconds": 1.1369470829959027,
+            "maxSeconds": 1.1482388750300743,
+            "stdevSeconds": 0.005163069001577622,
+            "sampleCount": 5,
+            "samplesSeconds": [
+              1.1369470829959027,
+              1.1482388750300743,
+              1.1476639169850387,
+              1.1389508750289679,
+              1.1406028750352561
+            ],
+            "medianPeakRssBytes": 139034624,
+            "peakRssBytes": 139165696,
+            "medianTimedWorkPeakRssBytes": 101728256
+          }
+        },
+        "speedup": 1.0934886447272794,
+        "exactEquivalent": true,
+        "latencyPassed": true,
+        "memoryRegressionPassed": true,
+        "memoryHardCapPassed": true
+      }
+    }
+  },
+  "sampleAuditScope": {
+    "measured": 100,
+    "warmups": 18,
+    "allSamplesRetained": true,
+    "noPoolingBetweenVersionsOrBaselines": true,
+    "profileTimingsNotSpeedEvidence": true,
+    "bindingConversionCopyingAndIntegrityCostsIncluded": true,
+    "threads": 1,
+    "oneHeavyJobAtATime": true,
+    "hardCapBytes": 1073741824
+  },
+  "delivery": {
+    "raw": {
+      "path": "testcases/outputs/cpp-predicate-final-verification-v6/verification.json",
+      "sha256": "46da5da5a6b2297509d52a247567ef48f99e357e1ac01662a8d9fc588bfe41d3"
+    },
+    "passed": true,
+    "stages": 23,
+    "stageSeconds": 322.9480216241209,
+    "sourceCppTests": {
+      "passed": 854,
+      "skipped": 77
+    },
+    "sourceReferenceTests": {
+      "passed": 334,
+      "skipped": 1
+    },
+    "desktopTests": [
+      325,
+      716,
+      275
+    ],
+    "runtimes": {
+      "source": {
+        "path": "testcases/outputs/cpp-predicate-final-verification-v6/source-runtime.json",
+        "sha256": "d4259df638f8d10df1dae949a076b558515c1750c57fb558d41f1a420d1fedc8"
+      },
+      "wheel": {
+        "path": "testcases/outputs/cpp-predicate-final-verification-v6/wheel-runtime.json",
+        "sha256": "7758ce79ce2e94a91c7e6509b3de429371bfc8a64c5ec1bf2b2fa1d4a6dfbe2a"
+      },
+      "frozen": {
+        "path": "testcases/outputs/cpp-predicate-final-verification-v6/frozen-runtime.json",
+        "sha256": "a00323b1b1b34e85999e4c72d9b45e5fb9184ecc8b5ce14db44f5a38ef8323ce"
+      },
+      "packaged": {
+        "path": "testcases/outputs/cpp-predicate-final-verification-v6/packaged-runtime.json",
+        "sha256": "cf031d9a9649caef16e8e470160ea2a090310bff003fcad16d4889a2372ec862"
+      }
+    },
+    "variantsPerRuntime": 5,
+    "publicBatchProbe": {
+      "cppCalls": 1,
+      "cppPairs": 4,
+      "referenceCalls": 0
+    },
+    "actualSignedWorkflows": {
+      "cpp-warm": {
+        "path": "testcases/outputs/cpp-predicate-final-verification-v6/cpp-warm/report.json",
+        "sha256": "391e4509f62eb5f1b863355ba48235a16bc8c0f992f7f3f7a0d834513ec949e8"
+      },
+      "cpp-cold": {
+        "path": "testcases/outputs/cpp-predicate-final-verification-v6/cpp-cold/report.json",
+        "sha256": "f389c75cf2e8684254997f6ea63ac2cdc6c4f2d02de15da1fa9652e085bc766a"
+      },
+      "reference-warm": {
+        "path": "testcases/outputs/cpp-predicate-final-verification-v6/reference-warm/report.json",
+        "sha256": "20a798f473cc4d0b920be5f010b3ac470ec0a43c3b8bbaef59eff9888f7ded0f"
+      },
+      "reference-cold": {
+        "path": "testcases/outputs/cpp-predicate-final-verification-v6/reference-cold/report.json",
+        "sha256": "950a71d705440d2079c28083ad0c163907621283f9a97e785204108d501e67d9"
+      }
+    },
+    "crossBackendWorkflowExact": true,
+    "signaturePassed": true,
+    "codeCommit": "9da0ef8a4cc1d7ea877ce71bdac7c07571c3038a",
+    "capturedGitStatus": [],
+    "engineSourceDigest": "c58b4a210b9062147f671a0033b6e26d2d65f53d64de0f854b106e65556ede46",
+    "appSourceDigest": "caa39c769388e80a61fabf19fa5ce7bf664a026c2153bc416bc49685536162b6",
+    "sourceAndWheelNativeSha256": "3977ba5a4234dd57e6c222affc676eeb92df4a959307e81469f43eea37fa3907",
+    "signedNativeSha256": "f463eab21ed9a06121e8d9e6b251268bedce1ee21ffaa6c674d011425165fa35",
+    "engineSha256": "f4f3179c61e229492e2c1817e3265d492954504b39bed0cb23ff23862ea5b47c",
+    "appCdHash": "308f8caf17c0eb41fc043520a2e8bebc52fb4a5a",
+    "signing": "local_ad_hoc",
+    "notarized": false,
+    "cleanWheelEnvironment": "/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/resectionlab-cpp-wheel-wqy324re"
+  },
+  "compatibility": {
+    "nativeScalarComparison": {
+      "path": "outputs/cpp-acceleration-v1/predicate-native-production-v6/compare-scalar-result.json",
+      "sha256": "83a15017f7c911a0e7738c5982ec1de95aaa27e49570f1ced5f2c35796a8f8e1"
+    },
+    "scalarComparisons": 3000,
+    "allEqual": true,
+    "staticReview": {
+      "path": "outputs/cpp-acceleration-v1/independent-predicate-static-v6/review.json",
+      "sha256": "9237f03393ff65f6f16ae5b62917405de25dc06ab225173dffed0b79d36f23cb"
+    },
+    "focusedCpp": {
+      "passed": 192,
+      "raw": {
+        "path": "outputs/cpp-acceleration-v1/predicate-consumer-probe-v6/focused-cpp-final.log",
+        "sha256": "061efcceb981bb91d48a7510a8257631455fe4d03291533c6656e3a9c92caaf5"
+      }
+    },
+    "focusedReference": {
+      "passed": 179,
+      "skipped": 13,
+      "raw": {
+        "path": "outputs/cpp-acceleration-v1/predicate-consumer-probe-v6/focused-reference-final.log",
+        "sha256": "00d9e932a2b7677958e94f4d3630591055c3a57d67a02dbd7e0d6edff9f28e98"
+      }
+    },
+    "fixedReviewFindings": [
+      "Callable wrapper around public pair function must preserve delegation.",
+      "Math module/properties must not introduce callback dispatch.",
+      "Only genuine effective type/float/len bindings may enter the new adapter.",
+      "Geometry backend owner must match the adapter being qualified."
+    ]
+  },
+  "profiles": {
+    "planning": {
+      "raw": {
+        "path": "outputs/cpp-acceleration-v1/post-predicate-planning-profile-v6/generate-profile.json",
+        "sha256": "eb9db4cb01aa6dac5cf37557bd05d3b69474dfa2cba39bbcf33441eb264d901b"
+      },
+      "totalSeconds": 21.88518524299997,
+      "exactDigest": "sha256:78246b9c6a0be381afc15cd1b6b2c6dac82442253669c6fe16cf374c1afcc3ec",
+      "auditExcluded": true,
+      "selectedFunctions": [
+        {
+          "file": "native_backend.py",
+          "line": 144,
+          "function": "_check_live",
+          "calls": 200719,
+          "selfSeconds": 0.355834894,
+          "cumulativeSeconds": 2.2639252510000003
+        },
+        {
+          "file": "surgical_engine.py",
+          "line": 142,
+          "function": "_owned_digest",
+          "calls": 67046,
+          "selfSeconds": 0.98036959,
+          "cumulativeSeconds": 2.079893287
+        },
+        {
+          "file": "surgical_engine.py",
+          "line": 445,
+          "function": "state_id",
+          "calls": 3838,
+          "selfSeconds": 0.006404496,
+          "cumulativeSeconds": 1.5972774730000001
+        },
+        {
+          "file": "surgical_geometry_cache.py",
+          "line": 20,
+          "function": "_function_identity",
+          "calls": 782040,
+          "selfSeconds": 0.483594222,
+          "cumulativeSeconds": 1.066328788
+        },
+        {
+          "file": "surgical_motion.py",
+          "line": 355,
+          "function": "_try_capsule_contact",
+          "calls": 21638,
+          "selfSeconds": 0.12102274600000001,
+          "cumulativeSeconds": 0.8082520280000001
+        },
+        {
+          "file": "surgical_motion.py",
+          "line": 382,
+          "function": "_held_cell_contact",
+          "calls": 13818,
+          "selfSeconds": 0.043366493000000006,
+          "cumulativeSeconds": 0.5627436060000001
+        },
+        {
+          "file": "native_backend.py",
+          "line": 257,
+          "function": "try_segment_batch",
+          "calls": 21638,
+          "selfSeconds": 0.022283494,
+          "cumulativeSeconds": 0.504295261
+        },
+        {
+          "file": "surgical_motion.py",
+          "line": 403,
+          "function": "pair_conflict",
+          "calls": 7820,
+          "selfSeconds": 0.0034757850000000003,
+          "cumulativeSeconds": 0.324978139
+        },
+        {
+          "file": "surgical_motion.py",
+          "line": 328,
+          "function": "_contact_helpers_unchanged",
+          "calls": 21638,
+          "selfSeconds": 0.078283963,
+          "cumulativeSeconds": 0.12249211400000001
+        },
+        {
+          "file": "native_backend.py",
+          "line": 243,
+          "function": "try_segment_predicate",
+          "calls": 816,
+          "selfSeconds": 0.00047085700000000004,
+          "cumulativeSeconds": 0.009461041
+        }
+      ]
+    },
+    "supplement": {
+      "simulation-steps": {
+        "raw": {
+          "path": "outputs/cpp-acceleration-v1/post-predicate-supplement-profile-v6/simulation-steps-profile.json",
+          "sha256": "19d4fd492f4c5f48f0455b17e7cf1b39fc2eee073c8748b4d40105c6e7b611e8"
+        },
+        "totalSeconds": 1.9798352939999977,
+        "exactDigest": "sha256:91819f86b18115336f3ca366675b79d0ddceea51ff1a3756bdfdc36f7cf8143f",
+        "attribution": {
+          "exclusiveStageSeconds": {
+            "builtinOrExtensionCalls": 0.331837566,
+            "productionHashingAndCopying": 0.014451862,
+            "otherPythonAndDispatch": 0.458450236,
+            "compiledLibraryInterfacesIncludingPythonWrappers": 0.29988765100000003,
+            "continuumPythonAndDispatch": 0.09844029300000001,
+            "knownCompiledNumericEntryPoints": 0.247264214,
+            "geometryAndMotionPythonAndDispatch": 0.37298056099999993,
+            "physicalModelsPythonAndDispatch": 0.13221891800000005,
+            "newCppKernelEntryPoints": 0.024303993
+          },
+          "interpretation": "Module buckets identify allocation/control and dispatch locations. Inclusive Python caller time can include compiled NumPy/SciPy work; it is not proof of interpreted arithmetic. Raw extension/builtin entries and cumulative call paths remain available.",
+          "auditExcluded": true,
+          "pytorchExecuted": false
+        },
+        "selectedFunctions": [
+          {
+            "file": "ivp.py",
+            "line": 160,
+            "function": "solve_ivp",
+            "calls": 581,
+            "selfSeconds": 0.004131079,
+            "cumulativeSeconds": 0.11880836500000001
+          },
+          {
+            "file": "surgical_motion.py",
+            "line": 355,
+            "function": "_try_capsule_contact",
+            "calls": 1333,
+            "selfSeconds": 0.007469941000000001,
+            "cumulativeSeconds": 0.051260894
+          },
+          {
+            "file": "surgical_continuum.py",
+            "line": 362,
+            "function": "exposure_increment",
+            "calls": 72,
+            "selfSeconds": 0.013608216000000001,
+            "cumulativeSeconds": 0.045269586
+          },
+          {
+            "file": "surgical_engine.py",
+            "line": 329,
+            "function": "_microstep_checkpoint",
+            "calls": 1333,
+            "selfSeconds": 0.007054935,
+            "cumulativeSeconds": 0.044948622
+          },
+          {
+            "file": "native_backend.py",
+            "line": 257,
+            "function": "try_segment_batch",
+            "calls": 1333,
+            "selfSeconds": 0.0015044050000000001,
+            "cumulativeSeconds": 0.032211929
+          },
+          {
+            "file": "surgical_continuum.py",
+            "line": 191,
+            "function": "assemble",
+            "calls": 1,
+            "selfSeconds": 0.000536902,
+            "cumulativeSeconds": 0.023380667
+          },
+          {
+            "file": "surgical_continuum.py",
+            "line": 315,
+            "function": "_unpack",
+            "calls": 12,
+            "selfSeconds": 0.006013663000000001,
+            "cumulativeSeconds": 0.011083665000000001
+          },
+          {
+            "file": "surgical_motion.py",
+            "line": 328,
+            "function": "_contact_helpers_unchanged",
+            "calls": 1333,
+            "selfSeconds": 0.005119903,
+            "cumulativeSeconds": 0.007901522000000001
+          },
+          {
+            "file": "surgical_engine.py",
+            "line": 479,
+            "function": "_transition_clone",
+            "calls": 59,
+            "selfSeconds": 6.3166e-05,
+            "cumulativeSeconds": 0.003720997
+          },
+          {
+            "file": "surgical_continuum.py",
+            "line": 139,
+            "function": "voxel_mesh",
+            "calls": 1,
+            "selfSeconds": 0.002251243,
+            "cumulativeSeconds": 0.003373
+          },
+          {
+            "file": "surgical_continuum.py",
+            "line": 352,
+            "function": "_pack",
+            "calls": 12,
+            "selfSeconds": 0.0010982560000000001,
+            "cumulativeSeconds": 0.001587917
+          }
+        ]
+      },
+      "rl-episodes": {
+        "raw": {
+          "path": "outputs/cpp-acceleration-v1/post-predicate-supplement-profile-v6/rl-episodes-profile.json",
+          "sha256": "e31349f340ed5d77c4bd593f14714e318cc92b12cd3f4c234b5fe7b9ad0a81be"
+        },
+        "totalSeconds": 2.2397537739999955,
+        "exactDigest": "sha256:7d98d39947eb060788920b184a767d5b4959086dc1fe7deeb974a1a262242143",
+        "attribution": {
+          "exclusiveStageSeconds": {
+            "builtinOrExtensionCalls": 0.441875958,
+            "productionHashingAndCopying": 0.015859228000000003,
+            "otherPythonAndDispatch": 0.5738204590000003,
+            "newCppKernelEntryPoints": 0.020731697,
+            "compiledLibraryInterfacesIncludingPythonWrappers": 0.327048259,
+            "continuumPythonAndDispatch": 0.017981722,
+            "knownCompiledNumericEntryPoints": 0.17693529100000005,
+            "geometryAndMotionPythonAndDispatch": 0.5436080260000001,
+            "physicalModelsPythonAndDispatch": 0.05067699400000002,
+            "rlObservationRewardAndCodecPython": 0.07121613999999998
+          },
+          "interpretation": "Module buckets identify allocation/control and dispatch locations. Inclusive Python caller time can include compiled NumPy/SciPy work; it is not proof of interpreted arithmetic. Raw extension/builtin entries and cumulative call paths remain available.",
+          "auditExcluded": true,
+          "pytorchExecuted": false
+        },
+        "selectedFunctions": [
+          {
+            "file": "surgical_rl_env.py",
+            "line": 328,
+            "function": "_observe",
+            "calls": 50,
+            "selfSeconds": 0.055401677,
+            "cumulativeSeconds": 0.089390208
+          },
+          {
+            "file": "surgical_motion.py",
+            "line": 355,
+            "function": "_try_capsule_contact",
+            "calls": 2178,
+            "selfSeconds": 0.01126978,
+            "cumulativeSeconds": 0.081134499
+          },
+          {
+            "file": "surgical_engine.py",
+            "line": 329,
+            "function": "_microstep_checkpoint",
+            "calls": 2179,
+            "selfSeconds": 0.01174851,
+            "cumulativeSeconds": 0.06851996
+          },
+          {
+            "file": "native_backend.py",
+            "line": 257,
+            "function": "try_segment_batch",
+            "calls": 2178,
+            "selfSeconds": 0.0023751230000000003,
+            "cumulativeSeconds": 0.051216299
+          },
+          {
+            "file": "surgical_motion.py",
+            "line": 328,
+            "function": "_contact_helpers_unchanged",
+            "calls": 2178,
+            "selfSeconds": 0.008680598000000001,
+            "cumulativeSeconds": 0.013389371
+          },
+          {
+            "file": "surgical_engine.py",
+            "line": 479,
+            "function": "_transition_clone",
+            "calls": 39,
+            "selfSeconds": 4.6132000000000005e-05,
+            "cumulativeSeconds": 0.002382794
+          }
+        ]
+      }
+    },
+    "interpretation": "Attribution only; profiler timings cannot be compared as speed measurements. No additional port justified by small residual seams or mixed required-check/library costs."
+  },
+  "independentReview": {
+    "status": "passed engineering; sole original2x acceptance gap remains",
+    "raw": {
+      "path": "outputs/cpp-acceleration-v1/independent-predicate-final-v6/review.json",
+      "sha256": "8fae1f4cb694ab809837563b72eb7b419e7a39a7c8e85cf9731a6052826ad976"
+    },
+    "reviewedOwnerReceiptSnapshot": {
+      "path": "outputs/cpp-acceleration-v1/independent-predicate-final-v6/owner-receipt-reviewed-snapshot.json",
+      "sha256": "d5abdbd9e37414014199c60834bdfae617587768d24f19def96a492a06b94835",
+      "originalPath": "artifacts/cpp-acceleration-v1/predicate-batch-acceptance-v6.json",
+      "snapshotPrecedesFinalIndependentAnnotation": true,
+      "rawReferenceHashesAndCopiedFieldsVerified": 27
+    },
+    "focusedCpp": 230,
+    "focusedReference": 217,
+    "referenceSkips": 13,
+    "runtimeVariants": 20,
+    "measuredAudited": 100,
+    "separateWarmupsAudited": 18,
+    "actualOldBuildFullRestoreAndObservedNamespaceRegenerationPassed": true,
+    "noProductionDefect": true,
+    "metadataAnnotationOnly": "Numeric results and raw evidence references are unchanged from the reviewed snapshot; final review pointer/status added afterward to avoid a circular hash."
+  },
+  "remaining": {
+    "originalRepresentative2xPassed": false,
+    "originalOtherLatencyAndAllMemoryPassed": true,
+    "additionalReductionNeededFromCurrentCppMedianFraction": 0.29648998254777714,
+    "patientValidation": "Unavailable and not attempted; zero completed patient tumor tasks.",
+    "policyTraining": "Not executed; generated complete Gym episodes only.",
+    "push": {
+      "receiptPath": "outputs/cpp-acceleration-v1/predicate-push-v6.json",
+      "target": "origin/shaf/decision-system-v1",
+      "policy": "Normal fast-forward after this acceptance commit; final response records verified remote HEAD."
+    }
+  }
+}

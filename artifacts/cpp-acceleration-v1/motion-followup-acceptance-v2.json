@@ -1,0 +1,1611 @@
+{
+  "schema": "resectionlab-motion-followup-acceptance-v2",
+  "codeCommit": "a0d2cd05efbaa23488b69acbda29dbab255c569e",
+  "scope": "Final delivered compatibility follow-up to the retained C++ increment. No additional speculative native kernel or result cache; generated engineering cases only.",
+  "goalComplete": false,
+  "unchangedUnmetGate": "Original fixed fresh Generate must reach 2x original reference throughput.",
+  "verification": {
+    "passed": true,
+    "rawPath": "testcases/outputs/cpp-motion-final-verification-v2/verification.json",
+    "sha256": "eb58f715265e87240e527c95c5999aea1df5104c4e83dc4de53489bd8cf0ef12",
+    "steps": [
+      {
+        "name": "build-tools",
+        "exitCode": 0,
+        "elapsedSeconds": 0.37330475001363084
+      },
+      {
+        "name": "source-extension",
+        "exitCode": 0,
+        "elapsedSeconds": 0.14306274999398738
+      },
+      {
+        "name": "source-tests-cpp",
+        "exitCode": 0,
+        "elapsedSeconds": 59.84298349998426
+      },
+      {
+        "name": "source-tests-reference",
+        "exitCode": 0,
+        "elapsedSeconds": 7.021131167013664
+      },
+      {
+        "name": "source-runtime",
+        "exitCode": 0,
+        "elapsedSeconds": 3.318316582997795
+      },
+      {
+        "name": "wheel-build",
+        "exitCode": 0,
+        "elapsedSeconds": 1.244083541969303
+      },
+      {
+        "name": "wheel-install",
+        "exitCode": 0,
+        "elapsedSeconds": 12.797939249954652
+      },
+      {
+        "name": "wheel-runtime",
+        "exitCode": 0,
+        "elapsedSeconds": 12.30611687497003
+      },
+      {
+        "name": "frozen-build",
+        "exitCode": 0,
+        "elapsedSeconds": 56.88295033405302
+      },
+      {
+        "name": "frozen-runtime",
+        "exitCode": 0,
+        "elapsedSeconds": 25.38874379202025
+      },
+      {
+        "name": "desktop-types",
+        "exitCode": 0,
+        "elapsedSeconds": 0.459634458005894
+      },
+      {
+        "name": "desktop-build",
+        "exitCode": 0,
+        "elapsedSeconds": 0.5495444589760154
+      },
+      {
+        "name": "desktop-tests-main",
+        "exitCode": 0,
+        "elapsedSeconds": 3.388314249983523
+      },
+      {
+        "name": "desktop-tests-renderer",
+        "exitCode": 0,
+        "elapsedSeconds": 5.944591542007402
+      },
+      {
+        "name": "desktop-tests-viewer",
+        "exitCode": 0,
+        "elapsedSeconds": 2.411311041971203
+      },
+      {
+        "name": "app-package",
+        "exitCode": 0,
+        "elapsedSeconds": 11.727777166001033
+      },
+      {
+        "name": "packaged-runtime",
+        "exitCode": 0,
+        "elapsedSeconds": 13.583732958999462
+      },
+      {
+        "name": "fixture-export",
+        "exitCode": 0,
+        "elapsedSeconds": 0.3797644580481574
+      },
+      {
+        "name": "workflow-cpp-warm",
+        "exitCode": 0,
+        "elapsedSeconds": 32.50750641699415
+      },
+      {
+        "name": "workflow-cpp-cold",
+        "exitCode": 0,
+        "elapsedSeconds": 7.942706667003222
+      },
+      {
+        "name": "workflow-reference-warm",
+        "exitCode": 0,
+        "elapsedSeconds": 41.61682049999945
+      },
+      {
+        "name": "workflow-reference-cold",
+        "exitCode": 0,
+        "elapsedSeconds": 9.577132124977652
+      },
+      {
+        "name": "app-signature-after-workflows",
+        "exitCode": 0,
+        "elapsedSeconds": 0.43658616696484387
+      }
+    ],
+    "sourceCpp": {
+      "passed": 650,
+      "skipped": 77
+    },
+    "sourceReference": {
+      "passed": 146
+    },
+    "desktopTests": {
+      "main": 325,
+      "renderer": 716,
+      "viewer": 275
+    },
+    "crossBackendWorkflowExact": true,
+    "signedWarmColdWorkflows": [
+      "cpp-warm",
+      "cpp-cold",
+      "reference-warm",
+      "reference-cold"
+    ],
+    "signedSignatureAfterWorkflows": true
+  },
+  "capture": {
+    "revision": "11aaa79c64608c659e3cec547521cb5bb745ef7b",
+    "includedUncommittedCodeNowInCodeCommit": true,
+    "sourceDigest": "bfca67fdd668a6625bd4547ceba1f3c527dcd6ad084955f78d48393d0caaa2ff",
+    "frozenNative": {
+      "binaryName": "_geometry_cpp.cpython-312-darwin.so",
+      "binarySha256": "32fd4fdba25b75efc8ebba0668ee44ddcb070014ca0524a32dd7461d70adb338",
+      "wheelBinarySha256": "bfc5b7054f87f31a253cdd4b1e9e7e54d71035d07fbb3b69d4ad52327999775a",
+      "buildIdentity": {
+        "compiler": {
+          "path": "/usr/bin/clang++",
+          "version": "Apple clang version 21.0.0 (clang-2100.1.1.101)"
+        },
+        "cppStandard": 17,
+        "flags": [
+          "-fvisibility=hidden",
+          "-g0",
+          "-std=c++17",
+          "-mmacosx-version-min=10.14",
+          "-O3",
+          "-fno-fast-math",
+          "-ffp-contract=off"
+        ],
+        "platform": {
+          "machine": "arm64",
+          "system": "Darwin"
+        },
+        "pybind11": "3.1.0",
+        "python": {
+          "abi": "cpython-312-darwin",
+          "version": "3.12.14"
+        },
+        "recipeSha256": "d81266ac59c3e7dbf2459666af0aa38b568b3ecba204d373de71e3729876a83c",
+        "schema": "resectionlab-geometry-cpp-v1",
+        "sources": {
+          "geometry_native.cpp": "4975f886b32c604fe45b0266b0882b34aee6a9859ca32e8588e9101e8b50b32c",
+          "state_native.hpp": "90877501a659920b1af0543a317e4b9fb9d6a55b23a8750d7910b243e037b8d3"
+        }
+      }
+    },
+    "frozenBuildReport": "testcases/outputs/cpp-motion-final-verification-v2/frozen-build-report.json",
+    "frozenBuildReportSha256": "e94f36c6c19d2baf25bb99e3bc2fd3b9947eeaeff80c3bc1a5571633e71d8655",
+    "appBuildReport": "testcases/outputs/cpp-motion-final-verification-v2/app-build-report.json",
+    "appBuildReportSha256": "dc38457cc096afede51ea7c479bf8feaf924537f4b8ce6e104add2c5cae13717",
+    "engineSha256": "84f13e8bb696cac596ba5a40195eff2248fceef8f4cbe3fb9ff2fe85cdbc3966",
+    "appCodeDirectoryHash": "853b85e956619bbd69c0060031f948184ba2fefb",
+    "notarized": false
+  },
+  "runtimes": {
+    "source": {
+      "passed": true,
+      "rawPath": "testcases/outputs/cpp-motion-final-verification-v2/source-runtime.json",
+      "sha256": "eb34f3a6d549192d4efd36daa8793cd52b09d7b7fbe54a02b053460c278352e7",
+      "variants": {
+        "cpp": {
+          "passed": true,
+          "selected": "cpp",
+          "motionCache": {
+            "helpersUnchanged": true,
+            "sourceQualified": true
+          },
+          "checkpoint": {
+            "componentExemptionPreserved": true,
+            "nativeCalls": 1,
+            "nativeFallbackCalls": 0,
+            "passed": true,
+            "selected": "cpp",
+            "stockCopyHooksQualified": true,
+            "stockCopyHooksUnchanged": true
+          },
+          "nativeSha256": "bfc5b7054f87f31a253cdd4b1e9e7e54d71035d07fbb3b69d4ad52327999775a",
+          "packagePath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src/resectionlab"
+        },
+        "reference": {
+          "passed": true,
+          "selected": "reference",
+          "motionCache": {
+            "helpersUnchanged": true,
+            "sourceQualified": true
+          },
+          "checkpoint": {
+            "componentExemptionPreserved": true,
+            "nativeCalls": 0,
+            "nativeFallbackCalls": 0,
+            "passed": true,
+            "selected": "reference",
+            "stockCopyHooksQualified": true,
+            "stockCopyHooksUnchanged": true
+          },
+          "nativeSha256": null,
+          "packagePath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src/resectionlab"
+        },
+        "unavailableAuto": {
+          "passed": true,
+          "selected": "reference",
+          "motionCache": {
+            "helpersUnchanged": true,
+            "sourceQualified": true
+          },
+          "checkpoint": {
+            "componentExemptionPreserved": true,
+            "nativeCalls": 0,
+            "nativeFallbackCalls": 0,
+            "passed": true,
+            "selected": "reference",
+            "stockCopyHooksQualified": true,
+            "stockCopyHooksUnchanged": true
+          },
+          "nativeSha256": null,
+          "packagePath": "/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/ressectionlab-runtime-no9evl94/package/resectionlab"
+        },
+        "unavailableCpp": {
+          "passed": false,
+          "exitCode": 1,
+          "errorType": "NativeUnavailableError"
+        },
+        "integrityAuto": {
+          "passed": false,
+          "exitCode": 1,
+          "errorType": "NativeIntegrityError"
+        }
+      }
+    },
+    "wheel": {
+      "passed": true,
+      "rawPath": "testcases/outputs/cpp-motion-final-verification-v2/wheel-runtime.json",
+      "sha256": "8ae79bf8360502fb9975e4873ea89e2e2b9eca25a3aaf98778806c02d813bedd",
+      "variants": {
+        "cpp": {
+          "passed": true,
+          "selected": "cpp",
+          "motionCache": {
+            "helpersUnchanged": true,
+            "sourceQualified": true
+          },
+          "checkpoint": {
+            "componentExemptionPreserved": true,
+            "nativeCalls": 1,
+            "nativeFallbackCalls": 0,
+            "passed": true,
+            "selected": "cpp",
+            "stockCopyHooksQualified": true,
+            "stockCopyHooksUnchanged": true
+          },
+          "nativeSha256": "bfc5b7054f87f31a253cdd4b1e9e7e54d71035d07fbb3b69d4ad52327999775a",
+          "packagePath": "/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/resectionlab-cpp-wheel-f0so7cm8/lib/python3.12/site-packages/resectionlab"
+        },
+        "reference": {
+          "passed": true,
+          "selected": "reference",
+          "motionCache": {
+            "helpersUnchanged": true,
+            "sourceQualified": true
+          },
+          "checkpoint": {
+            "componentExemptionPreserved": true,
+            "nativeCalls": 0,
+            "nativeFallbackCalls": 0,
+            "passed": true,
+            "selected": "reference",
+            "stockCopyHooksQualified": true,
+            "stockCopyHooksUnchanged": true
+          },
+          "nativeSha256": null,
+          "packagePath": "/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/resectionlab-cpp-wheel-f0so7cm8/lib/python3.12/site-packages/resectionlab"
+        },
+        "unavailableAuto": {
+          "passed": true,
+          "selected": "reference",
+          "motionCache": {
+            "helpersUnchanged": true,
+            "sourceQualified": true
+          },
+          "checkpoint": {
+            "componentExemptionPreserved": true,
+            "nativeCalls": 0,
+            "nativeFallbackCalls": 0,
+            "passed": true,
+            "selected": "reference",
+            "stockCopyHooksQualified": true,
+            "stockCopyHooksUnchanged": true
+          },
+          "nativeSha256": null,
+          "packagePath": "/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/ressectionlab-runtime-qjrbly80/package/resectionlab"
+        },
+        "unavailableCpp": {
+          "passed": false,
+          "exitCode": 1,
+          "errorType": "NativeUnavailableError"
+        },
+        "integrityAuto": {
+          "passed": false,
+          "exitCode": 1,
+          "errorType": "NativeIntegrityError"
+        }
+      }
+    },
+    "frozen": {
+      "passed": true,
+      "rawPath": "testcases/outputs/cpp-motion-final-verification-v2/frozen-runtime.json",
+      "sha256": "e5476fa586b1f4d85ce89d1e1d25940e4ba7478b3b68c54e3b9b19725c1a1157",
+      "variants": {
+        "cpp": {
+          "passed": true,
+          "selected": "cpp",
+          "motionCache": {
+            "helpersUnchanged": true,
+            "sourceQualified": true
+          },
+          "checkpoint": {
+            "componentExemptionPreserved": true,
+            "nativeCalls": 1,
+            "nativeFallbackCalls": 0,
+            "passed": true,
+            "selected": "cpp",
+            "stockCopyHooksQualified": true,
+            "stockCopyHooksUnchanged": true
+          },
+          "nativeSha256": "32fd4fdba25b75efc8ebba0668ee44ddcb070014ca0524a32dd7461d70adb338",
+          "packagePath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/sidecar/ressectionlab-engine/_internal/resectionlab"
+        },
+        "reference": {
+          "passed": true,
+          "selected": "reference",
+          "motionCache": {
+            "helpersUnchanged": true,
+            "sourceQualified": true
+          },
+          "checkpoint": {
+            "componentExemptionPreserved": true,
+            "nativeCalls": 0,
+            "nativeFallbackCalls": 0,
+            "passed": true,
+            "selected": "reference",
+            "stockCopyHooksQualified": true,
+            "stockCopyHooksUnchanged": true
+          },
+          "nativeSha256": null,
+          "packagePath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/sidecar/ressectionlab-engine/_internal/resectionlab"
+        },
+        "unavailableAuto": {
+          "passed": true,
+          "selected": "reference",
+          "motionCache": {
+            "helpersUnchanged": true,
+            "sourceQualified": true
+          },
+          "checkpoint": {
+            "componentExemptionPreserved": true,
+            "nativeCalls": 0,
+            "nativeFallbackCalls": 0,
+            "passed": true,
+            "selected": "reference",
+            "stockCopyHooksQualified": true,
+            "stockCopyHooksUnchanged": true
+          },
+          "nativeSha256": null,
+          "packagePath": "/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/ressectionlab-runtime-683m97nj/engine/_internal/resectionlab"
+        },
+        "unavailableCpp": {
+          "passed": false,
+          "exitCode": 1,
+          "errorType": "NativeUnavailableError"
+        },
+        "integrityAuto": {
+          "passed": false,
+          "exitCode": 1,
+          "errorType": "NativeIntegrityError"
+        }
+      }
+    },
+    "packaged": {
+      "passed": true,
+      "rawPath": "testcases/outputs/cpp-motion-final-verification-v2/packaged-runtime.json",
+      "sha256": "1d0c442b736053a88a3b3ec53ee615bcbc17a49953d0781604629df7e721de30",
+      "variants": {
+        "cpp": {
+          "passed": true,
+          "selected": "cpp",
+          "motionCache": {
+            "helpersUnchanged": true,
+            "sourceQualified": true
+          },
+          "checkpoint": {
+            "componentExemptionPreserved": true,
+            "nativeCalls": 1,
+            "nativeFallbackCalls": 0,
+            "passed": true,
+            "selected": "cpp",
+            "stockCopyHooksQualified": true,
+            "stockCopyHooksUnchanged": true
+          },
+          "nativeSha256": "32fd4fdba25b75efc8ebba0668ee44ddcb070014ca0524a32dd7461d70adb338",
+          "packagePath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/research-engine/_internal/resectionlab"
+        },
+        "reference": {
+          "passed": true,
+          "selected": "reference",
+          "motionCache": {
+            "helpersUnchanged": true,
+            "sourceQualified": true
+          },
+          "checkpoint": {
+            "componentExemptionPreserved": true,
+            "nativeCalls": 0,
+            "nativeFallbackCalls": 0,
+            "passed": true,
+            "selected": "reference",
+            "stockCopyHooksQualified": true,
+            "stockCopyHooksUnchanged": true
+          },
+          "nativeSha256": null,
+          "packagePath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/research-engine/_internal/resectionlab"
+        },
+        "unavailableAuto": {
+          "passed": true,
+          "selected": "reference",
+          "motionCache": {
+            "helpersUnchanged": true,
+            "sourceQualified": true
+          },
+          "checkpoint": {
+            "componentExemptionPreserved": true,
+            "nativeCalls": 0,
+            "nativeFallbackCalls": 0,
+            "passed": true,
+            "selected": "reference",
+            "stockCopyHooksQualified": true,
+            "stockCopyHooksUnchanged": true
+          },
+          "nativeSha256": null,
+          "packagePath": "/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/ressectionlab-runtime-ugi3a9k0/engine/_internal/resectionlab"
+        },
+        "unavailableCpp": {
+          "passed": false,
+          "exitCode": 1,
+          "errorType": "NativeUnavailableError"
+        },
+        "integrityAuto": {
+          "passed": false,
+          "exitCode": 1,
+          "errorType": "NativeIntegrityError"
+        }
+      }
+    }
+  },
+  "fixedComparisons": {
+    "status": "complete; original 2x gate fails, all other frozen gates pass",
+    "protocol": {
+      "pairedRepetitions": 5,
+      "alternatingOrder": true,
+      "warmupsPerBackendPerWorkload": 1,
+      "freshProcess": true,
+      "threads": 1,
+      "hardMemoryCapBytes": 1073741824,
+      "noProfiler": true,
+      "latencyRegressionLimit": 1.1,
+      "memoryRegressionLimit": 1.1,
+      "tinyMemoryAbsoluteAllowanceBytes": 16777216,
+      "supplementMemoryBasis": "Pre-audit timedWorkPeakRssBytes, with whole-process audit/restore still subject to1GiB hard cap."
+    },
+    "runs": {
+      "motion-final-comparison-v2": {
+        "rawPath": "outputs/cpp-acceleration-v1/motion-final-comparison-v2/summary.json",
+        "sha256": "0c3b6ecf1a9e300ea6f70434aa5e8af1e9eb76bb6559c89e58a628ee757c767f",
+        "manifestSha256": "f507080eb60f214fd4f050e1595d551bff6222b6fef6cad6d6f7b7a98abb0f67",
+        "comparisonRoles": {
+          "reference": {
+            "meaning": "baseline",
+            "selectedBackend": "reference",
+            "sourceRoot": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/baseline/source/src"
+          },
+          "cpp": {
+            "meaning": "current",
+            "selectedBackend": "cpp",
+            "sourceRoot": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src"
+          }
+        },
+        "allFrozenGatesPassed": false,
+        "workloads": {
+          "small": {
+            "pairs": [
+              {
+                "index": 0,
+                "order": [
+                  "reference",
+                  "cpp"
+                ]
+              },
+              {
+                "index": 1,
+                "order": [
+                  "cpp",
+                  "reference"
+                ]
+              },
+              {
+                "index": 2,
+                "order": [
+                  "reference",
+                  "cpp"
+                ]
+              },
+              {
+                "index": 3,
+                "order": [
+                  "cpp",
+                  "reference"
+                ]
+              },
+              {
+                "index": 4,
+                "order": [
+                  "reference",
+                  "cpp"
+                ]
+              }
+            ],
+            "backends": {
+              "reference": {
+                "medianSeconds": 0.0018746249843388796,
+                "minSeconds": 0.001841625024098903,
+                "maxSeconds": 0.001990624994505197,
+                "stdevSeconds": 6.267293597699949e-05,
+                "sampleCount": 5,
+                "samplesSeconds": [
+                  0.0018746249843388796,
+                  0.001926374970935285,
+                  0.001841625024098903,
+                  0.001990624994505197,
+                  0.0018467909540049732
+                ],
+                "medianPeakRssBytes": 67403776,
+                "peakRssBytes": 67649536
+              },
+              "cpp": {
+                "medianSeconds": 0.0014319170149974525,
+                "minSeconds": 0.0013941249926574528,
+                "maxSeconds": 0.0014917500084266067,
+                "stdevSeconds": 3.5840751684423455e-05,
+                "sampleCount": 5,
+                "samplesSeconds": [
+                  0.001419540960341692,
+                  0.0014917500084266067,
+                  0.0013941249926574528,
+                  0.0014319170149974525,
+                  0.0014348329859785736
+                ],
+                "medianPeakRssBytes": 67682304,
+                "peakRssBytes": 67862528
+              }
+            },
+            "exactEquivalent": true,
+            "exactDigests": [
+              "sha256:4aed87ce69a4646b601926d14c2ad9ac4bc81ad9a1ed774082f5c7c7343fbfec"
+            ],
+            "memoryHardCapPassed": true,
+            "speedup": 1.3091715264953498,
+            "latencyPassed": true,
+            "memoryRegressionPassed": true,
+            "nativeExecutionPassed": true,
+            "currentBackendUsage": {
+              "selected": [
+                "cpp"
+              ],
+              "nativeSha256": [
+                "bfc5b7054f87f31a253cdd4b1e9e7e54d71035d07fbb3b69d4ad52327999775a"
+              ],
+              "counterRanges": {
+                "bindingCalls": [
+                  16,
+                  16
+                ],
+                "engineCopyCalls": [
+                  0,
+                  0
+                ],
+                "engineCopyFallbackCalls": [
+                  0,
+                  0
+                ],
+                "batchCalls": [
+                  16,
+                  16
+                ],
+                "batchItems": [
+                  16,
+                  16
+                ],
+                "maxBatchItems": [
+                  1,
+                  1
+                ],
+                "maxPrimitiveCandidates": [
+                  1728,
+                  1728
+                ],
+                "segmentPredicateCalls": [
+                  0,
+                  0
+                ],
+                "jsonCopyFallbackCalls": [
+                  0,
+                  0
+                ]
+              },
+              "batchHistogram": {
+                "1": 16
+              }
+            },
+            "setupAndComputeMedians": {
+              "reference": {
+                "fixtureSeconds": 0.0,
+                "computeSeconds": 0.0018746249843388796
+              },
+              "cpp": {
+                "fixtureSeconds": 0.0,
+                "computeSeconds": 0.0014319170149974525
+              }
+            }
+          },
+          "generate": {
+            "pairs": [
+              {
+                "index": 0,
+                "order": [
+                  "reference",
+                  "cpp"
+                ]
+              },
+              {
+                "index": 1,
+                "order": [
+                  "cpp",
+                  "reference"
+                ]
+              },
+              {
+                "index": 2,
+                "order": [
+                  "reference",
+                  "cpp"
+                ]
+              },
+              {
+                "index": 3,
+                "order": [
+                  "cpp",
+                  "reference"
+                ]
+              },
+              {
+                "index": 4,
+                "order": [
+                  "reference",
+                  "cpp"
+                ]
+              }
+            ],
+            "backends": {
+              "reference": {
+                "medianSeconds": 17.353597667010035,
+                "minSeconds": 17.317503417027183,
+                "maxSeconds": 17.608671624970157,
+                "stdevSeconds": 0.12671006513888564,
+                "sampleCount": 5,
+                "samplesSeconds": [
+                  17.332982833031565,
+                  17.353597667010035,
+                  17.498506957956124,
+                  17.608671624970157,
+                  17.317503417027183
+                ],
+                "medianPeakRssBytes": 149143552,
+                "peakRssBytes": 151371776
+              },
+              "cpp": {
+                "medianSeconds": 13.34047425002791,
+                "minSeconds": 13.268827166000847,
+                "maxSeconds": 13.355562250013463,
+                "stdevSeconds": 0.035616986365805736,
+                "sampleCount": 5,
+                "samplesSeconds": [
+                  13.268827166000847,
+                  13.318949208012782,
+                  13.355562250013463,
+                  13.34047425002791,
+                  13.352063540951349
+                ],
+                "medianPeakRssBytes": 141819904,
+                "peakRssBytes": 142786560
+              }
+            },
+            "exactEquivalent": true,
+            "exactDigests": [
+              "sha256:78246b9c6a0be381afc15cd1b6b2c6dac82442253669c6fe16cf374c1afcc3ec"
+            ],
+            "memoryHardCapPassed": true,
+            "preportEquivalent": true,
+            "speedup": 1.3008231447973995,
+            "latencyPassed": false,
+            "memoryRegressionPassed": true,
+            "nativeExecutionPassed": true,
+            "productionMultiItemBatchPassed": true,
+            "currentBackendUsage": {
+              "selected": [
+                "cpp"
+              ],
+              "nativeSha256": [
+                "bfc5b7054f87f31a253cdd4b1e9e7e54d71035d07fbb3b69d4ad52327999775a"
+              ],
+              "counterRanges": {
+                "bindingCalls": [
+                  150740,
+                  150740
+                ],
+                "engineCopyCalls": [
+                  11901,
+                  11901
+                ],
+                "engineCopyFallbackCalls": [
+                  0,
+                  0
+                ],
+                "batchCalls": [
+                  16697,
+                  16697
+                ],
+                "batchItems": [
+                  20693,
+                  20693
+                ],
+                "maxBatchItems": [
+                  3,
+                  3
+                ],
+                "maxPrimitiveCandidates": [
+                  1125,
+                  1125
+                ],
+                "segmentPredicateCalls": [
+                  106046,
+                  106046
+                ],
+                "jsonCopyFallbackCalls": [
+                  7,
+                  7
+                ]
+              },
+              "batchHistogram": {
+                "1": 12709,
+                "2": 3980,
+                "3": 8
+              }
+            },
+            "setupAndComputeMedians": {
+              "reference": {
+                "fixtureSeconds": 0.15492062497651204,
+                "computeSeconds": 17.200515375006944
+              },
+              "cpp": {
+                "fixtureSeconds": 0.1482374159968458,
+                "computeSeconds": 13.191280291997828
+              }
+            }
+          },
+          "standardized-refusal": {
+            "pairs": [
+              {
+                "index": 0,
+                "order": [
+                  "reference",
+                  "cpp"
+                ]
+              },
+              {
+                "index": 1,
+                "order": [
+                  "cpp",
+                  "reference"
+                ]
+              },
+              {
+                "index": 2,
+                "order": [
+                  "reference",
+                  "cpp"
+                ]
+              },
+              {
+                "index": 3,
+                "order": [
+                  "cpp",
+                  "reference"
+                ]
+              },
+              {
+                "index": 4,
+                "order": [
+                  "reference",
+                  "cpp"
+                ]
+              }
+            ],
+            "backends": {
+              "reference": {
+                "medianSeconds": 1.400620790955145,
+                "minSeconds": 1.3899535819655284,
+                "maxSeconds": 1.4077476669917814,
+                "stdevSeconds": 0.007112636752192603,
+                "sampleCount": 5,
+                "samplesSeconds": [
+                  1.4036059999489225,
+                  1.4077476669917814,
+                  1.400620790955145,
+                  1.3899535819655284,
+                  1.3944672090001404
+                ],
+                "medianPeakRssBytes": 116817920,
+                "peakRssBytes": 117227520
+              },
+              "cpp": {
+                "medianSeconds": 1.0786598750273697,
+                "minSeconds": 1.073640458052978,
+                "maxSeconds": 1.0872790419962257,
+                "stdevSeconds": 0.005194436700804767,
+                "sampleCount": 5,
+                "samplesSeconds": [
+                  1.0786598750273697,
+                  1.0763803750742227,
+                  1.073640458052978,
+                  1.0811357909697108,
+                  1.0872790419962257
+                ],
+                "medianPeakRssBytes": 116752384,
+                "peakRssBytes": 116817920
+              }
+            },
+            "exactEquivalent": true,
+            "exactDigests": [
+              "sha256:b069195c72729b847f4faa91585cc941b818b1b3f23bf1139bf16fe74be9e8d1"
+            ],
+            "memoryHardCapPassed": true,
+            "speedup": 1.2984823329222346,
+            "latencyPassed": true,
+            "memoryRegressionPassed": true,
+            "nativeExecutionPassed": true,
+            "currentBackendUsage": {
+              "selected": [
+                "cpp"
+              ],
+              "nativeSha256": [
+                "bfc5b7054f87f31a253cdd4b1e9e7e54d71035d07fbb3b69d4ad52327999775a"
+              ],
+              "counterRanges": {
+                "bindingCalls": [
+                  7600,
+                  7600
+                ],
+                "engineCopyCalls": [
+                  1092,
+                  1092
+                ],
+                "engineCopyFallbackCalls": [
+                  0,
+                  0
+                ],
+                "batchCalls": [
+                  1338,
+                  1338
+                ],
+                "batchItems": [
+                  1691,
+                  1691
+                ],
+                "maxBatchItems": [
+                  2,
+                  2
+                ],
+                "maxPrimitiveCandidates": [
+                  1125,
+                  1125
+                ],
+                "segmentPredicateCalls": [
+                  3772,
+                  3772
+                ],
+                "jsonCopyFallbackCalls": [
+                  7,
+                  7
+                ]
+              },
+              "batchHistogram": {
+                "1": 985,
+                "2": 353
+              }
+            },
+            "setupAndComputeMedians": {
+              "reference": {
+                "fixtureSeconds": 0.15570074995048344,
+                "computeSeconds": 1.2449200410046615
+              },
+              "cpp": {
+                "fixtureSeconds": 0.15064108301885426,
+                "computeSeconds": 0.9262457080185413
+              }
+            }
+          },
+          "stress": {
+            "pairs": [
+              {
+                "index": 0,
+                "order": [
+                  "reference",
+                  "cpp"
+                ]
+              },
+              {
+                "index": 1,
+                "order": [
+                  "cpp",
+                  "reference"
+                ]
+              },
+              {
+                "index": 2,
+                "order": [
+                  "reference",
+                  "cpp"
+                ]
+              },
+              {
+                "index": 3,
+                "order": [
+                  "cpp",
+                  "reference"
+                ]
+              },
+              {
+                "index": 4,
+                "order": [
+                  "reference",
+                  "cpp"
+                ]
+              }
+            ],
+            "backends": {
+              "reference": {
+                "medianSeconds": 0.9682897089514881,
+                "minSeconds": 0.9608386670006439,
+                "maxSeconds": 0.9753341249888763,
+                "stdevSeconds": 0.00584455881092481,
+                "sampleCount": 5,
+                "samplesSeconds": [
+                  0.9670639999676496,
+                  0.9753341249888763,
+                  0.9682897089514881,
+                  0.9740720830159262,
+                  0.9608386670006439
+                ],
+                "medianPeakRssBytes": 152485888,
+                "peakRssBytes": 152666112
+              },
+              "cpp": {
+                "medianSeconds": 0.5153058330179192,
+                "minSeconds": 0.5133206250029616,
+                "maxSeconds": 0.5186236670124345,
+                "stdevSeconds": 0.0019757289463588324,
+                "sampleCount": 5,
+                "samplesSeconds": [
+                  0.5153058330179192,
+                  0.5133206250029616,
+                  0.5167806250392459,
+                  0.5152491250191815,
+                  0.5186236670124345
+                ],
+                "medianPeakRssBytes": 112017408,
+                "peakRssBytes": 112181248
+              }
+            },
+            "exactEquivalent": true,
+            "exactDigests": [
+              "sha256:0d46e29fa50ea3c893a9859fc465022aeda7a2fdf724214bd6535c71c0f61a6e"
+            ],
+            "memoryHardCapPassed": true,
+            "speedup": 1.8790583123824582,
+            "latencyPassed": true,
+            "memoryRegressionPassed": true,
+            "nativeExecutionPassed": true,
+            "currentBackendUsage": {
+              "selected": [
+                "cpp"
+              ],
+              "nativeSha256": [
+                "bfc5b7054f87f31a253cdd4b1e9e7e54d71035d07fbb3b69d4ad52327999775a"
+              ],
+              "counterRanges": {
+                "bindingCalls": [
+                  719,
+                  719
+                ],
+                "engineCopyCalls": [
+                  0,
+                  0
+                ],
+                "engineCopyFallbackCalls": [
+                  0,
+                  0
+                ],
+                "batchCalls": [
+                  696,
+                  696
+                ],
+                "batchItems": [
+                  696,
+                  696
+                ],
+                "maxBatchItems": [
+                  1,
+                  1
+                ],
+                "maxPrimitiveCandidates": [
+                  32768,
+                  32768
+                ],
+                "segmentPredicateCalls": [
+                  0,
+                  0
+                ],
+                "jsonCopyFallbackCalls": [
+                  0,
+                  0
+                ]
+              },
+              "batchHistogram": {
+                "1": 696
+              }
+            },
+            "setupAndComputeMedians": {
+              "reference": {
+                "fixtureSeconds": 0.0,
+                "computeSeconds": 0.9682897089514881
+              },
+              "cpp": {
+                "fixtureSeconds": 0.0,
+                "computeSeconds": 0.5153058330179192
+              }
+            }
+          }
+        }
+      },
+      "motion-final-supplement-comparison-v2": {
+        "rawPath": "outputs/cpp-acceleration-v1/motion-final-supplement-comparison-v2/summary.json",
+        "sha256": "68a32f4d644109f5914fb6dbd9a4ba47daea5c9f3664ff3553818dc7bd9881c1",
+        "manifestSha256": "7c4eb89e4b1061f2d3ed08d39c53dc1396f549c93b842e8b0dc4c7b157cd177a",
+        "comparisonRoles": {
+          "reference": {
+            "meaning": "baseline",
+            "selectedBackend": "cpp",
+            "sourceRoot": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/supplement-prepass-cpp/src"
+          },
+          "cpp": {
+            "meaning": "current",
+            "selectedBackend": "cpp",
+            "sourceRoot": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src"
+          }
+        },
+        "allFrozenGatesPassed": true,
+        "workloads": {
+          "simulation-steps": {
+            "pairs": [
+              {
+                "index": 0,
+                "order": [
+                  "reference",
+                  "cpp"
+                ]
+              },
+              {
+                "index": 1,
+                "order": [
+                  "cpp",
+                  "reference"
+                ]
+              },
+              {
+                "index": 2,
+                "order": [
+                  "reference",
+                  "cpp"
+                ]
+              },
+              {
+                "index": 3,
+                "order": [
+                  "cpp",
+                  "reference"
+                ]
+              },
+              {
+                "index": 4,
+                "order": [
+                  "reference",
+                  "cpp"
+                ]
+              }
+            ],
+            "backends": {
+              "reference": {
+                "medianSeconds": 1.200788832968101,
+                "minSeconds": 1.191191040968988,
+                "maxSeconds": 1.203403374995105,
+                "stdevSeconds": 0.004994885468935606,
+                "sampleCount": 5,
+                "samplesSeconds": [
+                  1.200788832968101,
+                  1.203403374995105,
+                  1.197886958019808,
+                  1.191191040968988,
+                  1.2029069590498693
+                ],
+                "medianPeakRssBytes": 109854720,
+                "peakRssBytes": 109936640,
+                "medianTimedWorkPeakRssBytes": 109854720
+              },
+              "cpp": {
+                "medianSeconds": 1.1628271249937825,
+                "minSeconds": 1.1572721249540336,
+                "maxSeconds": 1.1681410419987515,
+                "stdevSeconds": 0.0039277018414454815,
+                "sampleCount": 5,
+                "samplesSeconds": [
+                  1.1572721249540336,
+                  1.1681410419987515,
+                  1.164516624994576,
+                  1.1628271249937825,
+                  1.1625958329532295
+                ],
+                "medianPeakRssBytes": 110002176,
+                "peakRssBytes": 110067712,
+                "medianTimedWorkPeakRssBytes": 110002176
+              }
+            },
+            "exactEquivalent": true,
+            "exactDigests": [
+              "sha256:91819f86b18115336f3ca366675b79d0ddceea51ff1a3756bdfdc36f7cf8143f"
+            ],
+            "memoryHardCapPassed": true,
+            "frozenExactEquivalent": true,
+            "throughput": {
+              "reference": {
+                "attemptsPerSecond": 44.137652303940065,
+                "committedNativeActionsPerSecond": 42.472080518885726,
+                "episodesPerSecond": 0.0
+              },
+              "cpp": {
+                "attemptsPerSecond": 45.57857213752507,
+                "committedNativeActionsPerSecond": 43.858626019127904,
+                "episodesPerSecond": 0.0
+              }
+            },
+            "speedup": 1.032646046139078,
+            "latencyPassed": true,
+            "memoryRegressionPassed": true,
+            "memoryComparisonBasis": "Pre-audit timedWorkPeakRssBytes; whole-process audit/restore peak is diagnostic and remains under the hard cap.",
+            "nativeExecutionPassed": true,
+            "currentBackendUsage": {
+              "selected": [
+                "cpp"
+              ],
+              "nativeSha256": [
+                "bfc5b7054f87f31a253cdd4b1e9e7e54d71035d07fbb3b69d4ad52327999775a"
+              ],
+              "counterRanges": {
+                "bindingCalls": [
+                  11755,
+                  11755
+                ],
+                "engineCopyCalls": [
+                  1566,
+                  1566
+                ],
+                "engineCopyFallbackCalls": [
+                  0,
+                  0
+                ],
+                "batchCalls": [
+                  1178,
+                  1178
+                ],
+                "batchItems": [
+                  1509,
+                  1509
+                ],
+                "maxBatchItems": [
+                  3,
+                  3
+                ],
+                "maxPrimitiveCandidates": [
+                  1300,
+                  1300
+                ],
+                "segmentPredicateCalls": [
+                  6494,
+                  6494
+                ],
+                "jsonCopyFallbackCalls": [
+                  0,
+                  0
+                ]
+              },
+              "batchHistogram": {
+                "1": 881,
+                "2": 263,
+                "3": 34
+              }
+            },
+            "setupAndComputeMedians": {
+              "reference": {
+                "fixtureSeconds": 0.02486850001150742,
+                "computeSeconds": 1.1760802489588968
+              },
+              "cpp": {
+                "fixtureSeconds": 0.02471841697115451,
+                "computeSeconds": 1.1386791669065133
+              }
+            },
+            "work": {
+              "requestedAttempts": 53,
+              "publicPreviewAttempts": 6,
+              "episodes": 0,
+              "committedNativeActions": 51
+            }
+          },
+          "rl-episodes": {
+            "pairs": [
+              {
+                "index": 0,
+                "order": [
+                  "reference",
+                  "cpp"
+                ]
+              },
+              {
+                "index": 1,
+                "order": [
+                  "cpp",
+                  "reference"
+                ]
+              },
+              {
+                "index": 2,
+                "order": [
+                  "reference",
+                  "cpp"
+                ]
+              },
+              {
+                "index": 3,
+                "order": [
+                  "cpp",
+                  "reference"
+                ]
+              },
+              {
+                "index": 4,
+                "order": [
+                  "reference",
+                  "cpp"
+                ]
+              }
+            ],
+            "backends": {
+              "reference": {
+                "medianSeconds": 1.2460605829837732,
+                "minSeconds": 1.2405924170161597,
+                "maxSeconds": 1.2818489169585519,
+                "stdevSeconds": 0.0169059234900857,
+                "sampleCount": 5,
+                "samplesSeconds": [
+                  1.2405924170161597,
+                  1.2460605829837732,
+                  1.2818489169585519,
+                  1.2491704999702051,
+                  1.2431123330025002
+                ],
+                "medianPeakRssBytes": 138739712,
+                "peakRssBytes": 139001856,
+                "medianTimedWorkPeakRssBytes": 101597184
+              },
+              "cpp": {
+                "medianSeconds": 1.203755958005786,
+                "minSeconds": 1.1992877909797244,
+                "maxSeconds": 1.2195121250115335,
+                "stdevSeconds": 0.00802325008131412,
+                "sampleCount": 5,
+                "samplesSeconds": [
+                  1.2195121250115335,
+                  1.203755958005786,
+                  1.202156624989584,
+                  1.1992877909797244,
+                  1.2097450830042362
+                ],
+                "medianPeakRssBytes": 138838016,
+                "peakRssBytes": 138985472,
+                "medianTimedWorkPeakRssBytes": 101646336
+              }
+            },
+            "exactEquivalent": true,
+            "exactDigests": [
+              "sha256:7d98d39947eb060788920b184a767d5b4959086dc1fe7deeb974a1a262242143"
+            ],
+            "memoryHardCapPassed": true,
+            "frozenExactEquivalent": true,
+            "throughput": {
+              "reference": {
+                "attemptsPerSecond": 35.31128470065166,
+                "committedNativeActionsPerSecond": 30.496109514199162,
+                "episodesPerSecond": 4.8151751864525
+              },
+              "cpp": {
+                "attemptsPerSecond": 36.55225937397895,
+                "committedNativeActionsPerSecond": 31.567860368436367,
+                "episodesPerSecond": 4.984399005542584
+              }
+            },
+            "speedup": 1.0351438551116887,
+            "latencyPassed": true,
+            "memoryRegressionPassed": true,
+            "memoryComparisonBasis": "Pre-audit timedWorkPeakRssBytes; whole-process audit/restore peak is diagnostic and remains under the hard cap.",
+            "nativeExecutionPassed": true,
+            "currentBackendUsage": {
+              "selected": [
+                "cpp"
+              ],
+              "nativeSha256": [
+                "bfc5b7054f87f31a253cdd4b1e9e7e54d71035d07fbb3b69d4ad52327999775a"
+              ],
+              "counterRanges": {
+                "bindingCalls": [
+                  13642,
+                  13642
+                ],
+                "engineCopyCalls": [
+                  2334,
+                  2334
+                ],
+                "engineCopyFallbackCalls": [
+                  0,
+                  0
+                ],
+                "batchCalls": [
+                  2547,
+                  2547
+                ],
+                "batchItems": [
+                  2547,
+                  2547
+                ],
+                "maxBatchItems": [
+                  1,
+                  1
+                ],
+                "maxPrimitiveCandidates": [
+                  200,
+                  200
+                ],
+                "segmentPredicateCalls": [
+                  8712,
+                  8712
+                ],
+                "jsonCopyFallbackCalls": [
+                  0,
+                  0
+                ]
+              },
+              "batchHistogram": {
+                "1": 2547
+              }
+            },
+            "setupAndComputeMedians": {
+              "reference": {
+                "fixtureSeconds": 0.03916362498421222,
+                "computeSeconds": 1.2073249169625342
+              },
+              "cpp": {
+                "fixtureSeconds": 0.03939437499502674,
+                "computeSeconds": 1.1642683729878627
+              }
+            },
+            "work": {
+              "requestedAttempts": 44,
+              "publicPreviewAttempts": 0,
+              "episodes": 6,
+              "committedNativeActions": 38
+            }
+          }
+        }
+      }
+    },
+    "selection": "These two v2 runs are current. All earlier runs, failures and v1 medians remain separately retained in final-performance-acceptance.json and ignored raw folders; samples are never pooled.",
+    "meaningOfSupplementBaseline": "Supplement reference comparison role runs the captured first C++ implementation. It measures the retained copier increment; it is not an original-Python versus C++ or training comparison."
+  },
+  "independentReview": {
+    "passed": true,
+    "rawPath": "outputs/cpp-acceleration-v1/independent-motion-final-v2/review.json",
+    "sha256": "e7a9c1ccf470c81344d1af9329a1bc10e7c406e05c5fe3ec02db1dbc44b74f23",
+    "reviewedCodeCommit": "a0d2cd05efbaa23488b69acbda29dbab255c569e",
+    "correctnessDeliveryAndFairnessPassed": true,
+    "fullGoalComplete": false,
+    "focused": {
+      "cpp": {
+        "tests": 34,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "reference": {
+        "tests": 34,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 1
+      }
+    },
+    "runtimes": {
+      "source": {
+        "path": "outputs/cpp-acceleration-v1/independent-motion-final-v2/source-runtime.json",
+        "sha256": "d4566070d373fb1764d453b63a5f5a2bc033ca5e53baae703c0b084dab5659e4",
+        "fiveVariantsPassed": true,
+        "motionCache": {
+          "helpersUnchanged": true,
+          "sourceQualified": true
+        },
+        "nativeCheckpointCalls": 1,
+        "nativeBinarySha256": "bfc5b7054f87f31a253cdd4b1e9e7e54d71035d07fbb3b69d4ad52327999775a",
+        "publicOrderedCells": {
+          "cells": 68,
+          "name": "geometry.capsule_voxel_indices",
+          "orderedCellsSha256": "44787892aa26038b17e2d9492d6b4ff66d15209c1c9caabcb242262b79d2c1af"
+        },
+        "packagePath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/src/resectionlab"
+      },
+      "wheel": {
+        "path": "outputs/cpp-acceleration-v1/independent-motion-final-v2/wheel-runtime.json",
+        "sha256": "7be6736d0126098c1f3f5a6f8e8cd9c0a725c89b342b11ef588d9eb95ac09af9",
+        "fiveVariantsPassed": true,
+        "motionCache": {
+          "helpersUnchanged": true,
+          "sourceQualified": true
+        },
+        "nativeCheckpointCalls": 1,
+        "nativeBinarySha256": "bfc5b7054f87f31a253cdd4b1e9e7e54d71035d07fbb3b69d4ad52327999775a",
+        "publicOrderedCells": {
+          "cells": 68,
+          "name": "geometry.capsule_voxel_indices",
+          "orderedCellsSha256": "44787892aa26038b17e2d9492d6b4ff66d15209c1c9caabcb242262b79d2c1af"
+        },
+        "packagePath": "/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/resectionlab-cpp-wheel-f0so7cm8/lib/python3.12/site-packages/resectionlab"
+      },
+      "packaged": {
+        "path": "outputs/cpp-acceleration-v1/independent-motion-final-v2/packaged-runtime.json",
+        "sha256": "9bedb20882e43eea3640be8f5104e4509cd4b3fdabd6367c77e821232f8f40e0",
+        "fiveVariantsPassed": true,
+        "motionCache": {
+          "helpersUnchanged": true,
+          "sourceQualified": true
+        },
+        "nativeCheckpointCalls": 1,
+        "nativeBinarySha256": "32fd4fdba25b75efc8ebba0668ee44ddcb070014ca0524a32dd7461d70adb338",
+        "publicOrderedCells": {
+          "cells": 68,
+          "name": "geometry.capsule_voxel_indices",
+          "orderedCellsSha256": "44787892aa26038b17e2d9492d6b4ff66d15209c1c9caabcb242262b79d2c1af"
+        },
+        "packagePath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/research-engine/_internal/resectionlab"
+      }
+    },
+    "actualSignedWorkflows": {
+      "cpp-warm": {
+        "path": "testcases/outputs/cpp-independent-motion-final-v2/cpp-warm/report.json",
+        "sha256": "33cc24008b9a494b1e8e7b0f74c29d013aa8398f898be74d0c14ab9cf2fd3a75",
+        "passed": true,
+        "actualSignedApp": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/MacOS/RessectionLab",
+        "isPackaged": true,
+        "originalPackagedEngineOptions": true,
+        "checks": [
+          "Case \u2192 Plan \u2192 Compare \u2192 Rehearse/edit navigation preserves accepted state without native calls",
+          "Real cranial Generate cancellation terminates its owned request without accepted-state or branch mutation",
+          "Fresh Generate \u2192 Compare \u2192 selected real branch \u2192 observed replay/pause/seek preserves complete task ledger; valid native refusal and draft navigation preserve accepted anatomy"
+        ]
+      },
+      "cpp-cold": {
+        "path": "testcases/outputs/cpp-independent-motion-final-v2/cpp-cold/report.json",
+        "sha256": "67f90dad8492b7a7f190ca2e9d276d1e4fe1662f90e481c281c4a48d01689335",
+        "passed": true,
+        "actualSignedApp": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/MacOS/RessectionLab",
+        "isPackaged": true,
+        "originalPackagedEngineOptions": true,
+        "checks": [
+          "Case \u2192 Plan \u2192 Compare \u2192 Rehearse/edit navigation preserves accepted state without native calls",
+          "Cold Open restores the exact comparison, selected native branch, complete action history, ledger, anatomy and replay cursor with zero Plan commands"
+        ]
+      }
+    },
+    "strictCodeSignAfterIndependentWorkflows": true,
+    "rawNativeSavedCaseSealsAndPublicReplay": {
+      "path": "outputs/cpp-acceleration-v1/independent-motion-final-v2/native-saved-validation.json",
+      "sha256": "36e96ebe3e12159bea94293b9f04e95d46aca40061b042e1a3e39cf317992ce9"
+    },
+    "pairedReceiptAudit": {
+      "path": "outputs/cpp-acceleration-v1/independent-motion-final-v2/pair-audit.json",
+      "sha256": "daff50d388852b82e028187fb1a4b37c118f6978e3525f370e9e4cd43fc90bf2",
+      "measuredSamples": 60,
+      "separateWarmups": 12,
+      "rawReportSealsVerified": 24,
+      "rawGoalContractsVerified": 24,
+      "original27fTrackedBlobsVerified": 319,
+      "supplementPrepassFilesVerified": 334,
+      "fullCanonicalBytesEqual": true,
+      "memoryLatencyCountersOrderAndSourceRolesVerified": true
+    },
+    "rootCompactReceipt": {
+      "path": "outputs/cpp-acceleration-v1/independent-motion-final-v2/owner-receipt-reviewed-snapshot.json",
+      "sha256": "6adfc60371902f8521958099d7e4ac8420fdb7c436961c7df8717fb8edca0eee",
+      "originalPath": "artifacts/cpp-acceleration-v1/motion-followup-acceptance-v2.json",
+      "snapshotReason": "Preserve reviewed bytes before the coordinator adds this independent result; avoids a circular receipt hash.",
+      "allRawFieldsRangesAndHashesVerified": true
+    },
+    "capture": {
+      "allCapturedSourceFilesMatchReviewedCode": true,
+      "filesVerified": 334,
+      "sourceDigest": "bfca67fdd668a6625bd4547ceba1f3c527dcd6ad084955f78d48393d0caaa2ff",
+      "engineSha256": "84f13e8bb696cac596ba5a40195eff2248fceef8f4cbe3fb9ff2fe85cdbc3966",
+      "motionSourceSha256": "2a0e2b8f15ac124c1cba711aed3b081b359099619ec7eee3913bcb362088849f"
+    },
+    "reusedUnchangedEvidence": {
+      "path": "artifacts/cpp-acceleration-v1/independent-final-review.json",
+      "sha256": "6d6f174336247f450ce9304741d79a1229d07bc803788e00104f8c3a8d829be7",
+      "scope": "Prior82 independent native/scalar/RL/graph/cancellation checks, including five final bounded cancellation latencies; compiled bytes/header unchanged."
+    },
+    "findings": [
+      {
+        "severity": "acceptance-gap",
+        "message": "Original fixed complete Generate remains1.3008231448x versus required2x; no full-goal completion claimed."
+      }
+    ],
+    "scope": "The reviewer saved a byte-exact snapshot of the compact receipt before this final review annotation; measured data and runtime/capture fields did not change."
+  },
+  "previousAcceptance": "final-performance-acceptance.json",
+  "residualProfile": "postcopy-profile-review-v1.json",
+  "acceptance": {
+    "M1": "passed",
+    "M2": "passed",
+    "M3": "passed",
+    "M4": "passed",
+    "M5": "passed",
+    "original2xPlanningGate": "incomplete; measured1.3008231447973995x",
+    "allOtherOriginalLatencyAndMemoryGates": "passed",
+    "supplementaryExactnessThroughputAndMemory": "passed",
+    "patientValidation": "unavailable, separate task; no clinical or policy-training claim",
+    "additionalCache": "deferred; limited profile ceiling and unproven integrated benefit do not justify added key/ownership/qualification complexity"
+  }
+}

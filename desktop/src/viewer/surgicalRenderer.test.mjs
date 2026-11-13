@@ -149,7 +149,7 @@ test('retrospective animation never replays on pause, resume, pose edits or scru
   r.setSurgical({...input,flowDisplay:undefined,playbackDisplay:undefined});assert.equal(r.surgicalFlow,null);assert.equal(r.advanceSurgicalAnimation(performance.now()),false);
 });
 test('working-part animation respects explicit activation and leaves recorded root poses exact',()=>{
-  for(const id of ['micro_scissors','dural_scissors','bipolar_forceps','tumor_forceps']){
+  for(const id of ['micro_scissors','dural_scissors','bipolar_forceps','tumor_forceps','bone_flap_holder','membrane_forceps']){
     const recorded={...slot(id),active:true},group=surgicalToolMesh(tool(id),recorded),jaws=group.children.filter(o=>typeof o.userData.jawBaseX==='number');
     assert.equal(jaws.length,2);const exact=jaws.map(o=>o.position.x),pose=group.matrix.clone();
     updateSurgicalToolAnimation(group,.1,.5);assert(jaws.every((o,i)=>Math.abs(o.position.x)<Math.abs(exact[i])));assert(group.matrix.equals(pose));assert.deepEqual(group.position.toArray(),recorded.position);
@@ -160,6 +160,29 @@ test('working-part animation respects explicit activation and leaves recorded ro
   updateSurgicalToolAnimation(drill,.25,.5);assert(Math.abs(bit.rotation.z-Math.PI/2)<1e-9);
   updateSurgicalToolAnimation(drill,null,null);assert.equal(bit.rotation.z,0);
   delete drill.userData.recordedRpm;updateSurgicalToolAnimation(drill,.25,.5);assert.equal(bit.rotation.z,0,'missing RPM has no inferred spin');
+});
+for(const id of ['bone_flap_holder','membrane_forceps'])test(`stock ${id} shares generic forceps while native contact capsules remain exact during playback`,()=>{
+  const holder={id,name:'Bone flap holder',category:'Bone',geometry:'forceps',materials:['bone'],effect:'grasp',radiusMm:1.5,shaftRadiusMm:.5,workingLengthMm:40};
+  const recorded={...slot(holder.id),active:true,parameters:{radiusMm:1.5,depthMm:2,jawOpeningMm:.35},quaternion:[0,0,1,0]};
+  const before=structuredClone(recorded),signature=group=>{group.updateMatrixWorld(true);const meshes=[];group.traverse(o=>{if(o.isMesh)meshes.push([o.geometry.type,o.geometry.parameters,o.matrixWorld.toArray()]);});return meshes;};
+  for(const ghost of [false,true]){
+    const mesh=surgicalToolMesh(holder,recorded,ghost),reference=surgicalToolMesh({...holder,id:'tumor_forceps'},{...recorded,instrument:'tumor_forceps'},ghost);
+    assert.equal(mesh.name,'instrument:'+id);assert.deepEqual(signature(mesh),signature(reference));
+    assert.deepEqual(mesh.position.toArray(),recorded.position);assert.deepEqual(mesh.quaternion.toArray(),recorded.quaternion);
+    assert.deepEqual(mesh.children.filter(o=>typeof o.userData.jawBaseX==='number').map(o=>o.position.x),[-.175,.175]);
+    for(const group of [mesh,reference])group.traverse(o=>{o.geometry?.dispose();o.material?.dispose();});
+  }
+  const contactGeometry=[{a:[0,0,-40],b:[0,0,-2],radiusMm:.5,part:'shaft'},...[-1,1].map(sign=>({a:[sign*.175,0,-2],b:[sign*.175,0,0],radiusMm:.35,part:'working'}))];
+  const accepted={...recorded,contactGeometry},mesh=surgicalToolMesh(holder,accepted),nativeBefore=structuredClone(accepted);
+  assert.equal(mesh.userData.physicsContactGeometry,true);assert.equal(mesh.children.length,3);
+  for(const [index,part] of mesh.children.entries()){
+    const capsule=part.children[0],envelope=contactGeometry[index];assert.equal(capsule.geometry.type,'CapsuleGeometry');
+    assert.equal(capsule.geometry.parameters.radius,envelope.radiusMm);assert.equal(capsule.geometry.parameters.height,index===0?38:2);
+    assert.deepEqual(capsule.position.toArray(),index===0?[0,0,-21]:[index===1?-.175:.175,0,-1]);
+  }
+  const exact=signature(mesh);updateSurgicalToolAnimation(mesh,.1,.5);assert.deepEqual(signature(mesh),exact,'Recorded native contact geometry does not acquire illustrative jaw closure');
+  assert.deepEqual(accepted,nativeBefore);assert.deepEqual(recorded,before);
+  mesh.traverse(o=>{o.geometry?.dispose();o.material?.dispose();});
 });
 test('resident recorded transfers retain buffers on pose edits, clear on preview/toggle and release instance allocations',()=>{
   const r=renderer(),input=flowInteraction();r.setSurgical(input);const group=r.surgicalFlow;let disposed=0,instances=0;
@@ -265,6 +288,24 @@ function modelWorkerMock(){
     }};
   return {workers,restore(){globalThis.Worker=previous;}};
 }
+test('exact unacted inspection source publishes actual tools/state at the frame fence without remeshing its overlapping annotations',async()=>{
+  const {modeledVolume,registerSourceInspection}=await server.ssrLoadModule('/src/modeled-volume.ts');
+  const mock=modelWorkerMock();try{
+    const {r,source}=modeledFixture(),names=source.compartments.map(l=>l.name);
+    const hashes=Object.fromEntries(names.map((name,i)=>[name,'sha256:'+String(i+1).repeat(64)]));
+    const marker={schema:'resectionlab.cranial-planning-candidate.v1',status:'inspection-only',sourcePatientGroup:'generated',sourceCollectionHash:'generated-collection',targetLayerIds:['brain'],patientTaskAdmission:false,officialTrainClaim:false,annotationAuthority:false,physicalProtectionIndexConstructed:false};
+    registerSourceInspection(source,marker,Object.fromEntries(names.map(name=>[name,{maskHash:hashes[name]}])));
+    const view={stateId:'actual-unacted',scene:{shape:source.shape,affine:source.affine,regions:names.map((name,i)=>({id:i+1,name,material:name==='brain'?'tumor':'unknown',target:name==='brain'})),source:{caseId:source.caseId,caseHash:source.caseHash,annotationHashes:hashes,adapter:{type:'native-patient-source-inspection',sourceRole:'DEVELOPMENT_CANDIDATE',sourcePatient:'generated',sourceCollectionHash:'generated-collection',physicalProtectionIndexConstructed:false}}},history:[],removed:[],moved:[],slots:{},metrics:{elapsedSeconds:0,targetRemovedMm3:0,nonTargetRemovedMm3:0},protection:{configured:false}};
+    const surfaces=[...r.surfaces.values()],geometry=[...r.surfaceGeometry.values()],texture=r.labelTexture,bytes=texture.image.data.slice(),ready=[];
+    const input={view,onDisplayReady:value=>ready.push(value)};
+    assert.equal(r.installSurgicalState(modeledVolume(source,view),input),true);
+    assert.equal(r.installedInteraction,input);assert.equal(r.modelStage,null);assert.equal(mock.workers.length,0);assert.equal(ready.length,0);
+    submitPreparedState(r);
+    assert.deepEqual(ready,[view]);assert.equal(r.publishedSurgicalView,view);assert.equal(r.volume,source);
+    assert.deepEqual([...r.surfaces.values()],surfaces);assert.deepEqual([...r.surfaceGeometry.values()],geometry);
+    assert.equal(r.labelTexture,texture);assert.deepEqual(texture.image.data,bytes);assert.equal(r.displayWork.modelRemeshedLayers,0);
+  }finally{mock.restore();}
+});
 test('modeled tissue stages labels/surfaces/tools atomically, reuses unchanged MRI/layers, and backward seek reuses resident geometry',()=>{
   const mock=modelWorkerMock();try{
     const {r,source,derive}=modeledFixture(),a=derive([22]),b=derive([22,23]),oldBrain=r.surfaces.get('brain'),vessel=r.surfaces.get('vessel'),texture=r.labelTexture,sourceCopy=source.compartments[0].mask.slice();

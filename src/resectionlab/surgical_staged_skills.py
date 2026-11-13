@@ -413,6 +413,24 @@ def _metered_candidate(engine, meter, limits):
     return candidate, meter
 
 
+def _preview_removal_refusal(engine, preview, limits, *, cells=None, labels=None):
+    """One shared removal predicate; it never authorizes a native transition."""
+    cells = (sorted(set(map(int, preview.get('deltas', {}).get('removedCells', ()))))
+             if cells is None else cells)
+    labels = _allowed_labels(engine, limits) if labels is None else labels
+    other = preview['metrics']['nonTargetRemovedMm3']
+    if other > limits.max_total_non_target_mm3+1e-9:
+        return 'TOTAL_NON_TARGET_CAP'
+    if (limits.max_additional_non_target_mm3 is not None and
+            other-limits.baseline_non_target_mm3 > limits.max_additional_non_target_mm3+1e-9):
+        return 'ADDITIONAL_NON_TARGET_CAP'
+    if any(int(engine.scene.labels.flat[cell]) not in labels for cell in cells):
+        return 'REMOVAL_LABEL_NOT_ALLOWED'
+    if set(cells).intersection(limits.forbidden_removed_cell_ids):
+        return 'FORBIDDEN_SOURCE_CELL_REMOVAL'
+    return None
+
+
 def checked_actions(engine, actions, *, limits: SkillLimits, check=None,
                     meter: TransitionMeter | None = None, phase='staged.work'):
     """Append only checked native actions; return stopped prefixes on refusals.
@@ -478,18 +496,10 @@ def checked_actions(engine, actions, *, limits: SkillLimits, check=None,
                     permitted = (preview['status'] == 'accepted' or
                         preview['status'] == 'partial' and
                         preview.get('reason') == 'TISSUE_ASPIRATION_IN_PROGRESS')
-                    if permitted and preview['metrics']['nonTargetRemovedMm3'] > \
-                            limits.max_total_non_target_mm3+1e-9:
-                        permitted, reason = False, 'TOTAL_NON_TARGET_CAP'
-                    if permitted and limits.max_additional_non_target_mm3 is not None and \
-                            preview['metrics']['nonTargetRemovedMm3']-limits.baseline_non_target_mm3 > \
-                            limits.max_additional_non_target_mm3+1e-9:
-                        permitted, reason = False, 'ADDITIONAL_NON_TARGET_CAP'
-                    if permitted and any(int(candidate.scene.labels.flat[cell]) not in labels
-                                         for cell in cells):
-                        permitted, reason = False, 'REMOVAL_LABEL_NOT_ALLOWED'
-                    if permitted and set(cells).intersection(limits.forbidden_removed_cell_ids):
-                        permitted, reason = False, 'FORBIDDEN_SOURCE_CELL_REMOVAL'
+                    if permitted:
+                        reason = _preview_removal_refusal(candidate, preview, limits,
+                            cells=cells, labels=labels)
+                        permitted = reason is None
                     if not permitted:
                         reason = reason or preview.get('reason') or preview['status']
                         entry.update(status='refused', reason=str(reason))
@@ -520,7 +530,8 @@ def checked_actions(engine, actions, *, limits: SkillLimits, check=None,
                             slot['position'], endpoint['position']))
                         angle_error = (Rotation.from_quat(slot['quaternion'])*
                             Rotation.from_quat(endpoint['quaternion']).inv()).magnitude()
-                        if position_error > 1e-6 or angle_error > 1e-6:
+                        if (outcome['status'] != 'accepted' or
+                                position_error > 1e-6 or angle_error > 1e-6):
                             status, reason = 'interrupted', 'PARTIAL_MOTION_REPLAN_REQUIRED'
                             entry.update(endpointReached=False, reason=reason)
                         else:
@@ -559,7 +570,7 @@ def checked_actions(engine, actions, *, limits: SkillLimits, check=None,
     return candidate, receipt
 
 
-def _clip_cusa_motion(engine, action, preview):
+def _clip_native_motion(engine, action, preview, *, instrument):
     """Propose a shorter command from the observed successful native pose.
 
     The failed contactPosition is deliberately ignored. Native completed-step
@@ -569,7 +580,7 @@ def _clip_cusa_motion(engine, action, preview):
     """
     if (preview.get('status') != 'partial' or preview.get('reason') != 'SHAFT_COLLISION' or
             action.get('operation') != 'apply' or
-            engine.state['slots'][action['slot']]['instrument'] != 'cusa'):
+            engine.state['slots'][action['slot']]['instrument'] != instrument):
         return None
     view = preview.get('view')
     if not isinstance(view, dict) or view.get('stateId') != preview.get('stateId'):
@@ -624,19 +635,183 @@ def _clip_cusa_motion(engine, action, preview):
     return clipped
 
 
+def _clip_cusa_motion(engine, action, preview):
+    return _clip_native_motion(engine, action, preview, instrument='cusa')
+
+
+def checked_kerf_motion(engine, motion, *, limits, meter=None, check=None,
+                        phase='staged.kerf'):
+    """A stock bone-only kerf, optionally shortened and checked again.
+
+    An obstructed preview is never treatment. Only its actually observed safe
+    prefix may propose another command, which must finish a new full native
+    preview/commit. This cannot shorten protection/domain refusals, change the
+    tool, enlarge allowed removal, or admit a speculative geometry estimate.
+    """
+    motion = motion if isinstance(motion, SkillAction) else SkillAction(motion)
+    motion = replace(motion, require_endpoint=True)
+    candidate, meter = _metered_candidate(engine, meter, limits)
+    hand = motion.action.get('slot')
+    if hand not in candidate.state['slots'] or motion.action.get('operation') != 'apply':
+        raise ValueError('Checked kerf motion requires an apply in a native slot')
+    slot = candidate.state['slots'][hand]
+    parameters = {**candidate.parameters(slot), **motion.action.get('parameters', {})}
+    if (slot['instrument'] != 'craniotome' or candidate.state.get('toolMechanicsRevision') != 2
+            or parameters['radiusMm'] != TOOLS['craniotome']['radiusMm']
+            or parameters['depthMm'] != 2.):
+        raise ValueError('STOCK_KERF_GEOMETRY_REQUIRED')
+    bone = tuple(row['id'] for row in candidate.scene.regions if row['material'] == 'bone')
+    if not bone:
+        raise ValueError('Checked kerf requires mapped bone')
+    # Intersect caller eligibility; never widen an existing source-label rule.
+    allowed = set(bone) if limits.allowed_removed_label_ids is None else set(bone) & set(limits.allowed_removed_label_ids)
+    if not allowed:
+        raise ValueError('Checked kerf has no permitted bone removal label')
+    limits = replace(limits, allowed_removed_label_ids=tuple(sorted(allowed)))
+    baseline = _ledger(candidate, limits, meter)
+    start_state, start_actions, start_calls = candidate.state_id, len(candidate.actions), meter.calls
+    attempts, clipped = [], None
+    receipt = None
+    status, reason = 'accepted', None
+    try:
+        if check is not None: check()
+        if len(candidate.actions) >= limits.max_native_actions:
+            raise TransitionBudgetExceeded('NATIVE_ACTION_BUDGET')
+        if limits.prior_public_calls+meter.calls >= limits.max_public_calls:
+            raise TransitionBudgetExceeded('Staged public native-call cap reached')
+        with meter.phase(phase+'.boundary_probe'):
+            preview = candidate.preview(motion.action, check=check,
+                include_view=True, include_history=False)
+        observed = preview['view']['slots'][hand]
+        attempts.append({'status': 'uncommitted_motion_probe',
+            'action': copy.deepcopy(motion.action), 'previewStatus': preview['status'],
+            'previewReason': preview.get('reason'), 'previewStateId': preview['stateId'],
+            'previewRemovedCellIds': preview.get('deltas', {}).get('removedCells', []),
+            'observedEndPose': {key: copy.deepcopy(observed[key]) for key in ('position', 'quaternion')},
+            'completedFraction': preview.get('completedFraction')})
+        clipped = _clip_native_motion(candidate, motion.action, preview, instrument='craniotome')
+        command = SkillAction(clipped, require_endpoint=True) if clipped is not None else motion
+        candidate, receipt = checked_actions(candidate, [command], limits=limits,
+            meter=meter, check=check, phase=phase+'.motion')
+        status, reason = receipt['status'], receipt['reason']
+        attempts.extend(receipt['attempts'])
+    except _INTERRUPTIONS as error:
+        status, reason = 'interrupted', type(error).__name__+': '+str(error)
+    ledger = _ledger(candidate, limits, meter)
+    requested = motion.action.get('pose') or motion.action.get('path', [None])[-1]
+    actual = candidate.state['slots'][hand]
+    observed_end = {key: copy.deepcopy(actual[key]) for key in ('position', 'quaternion')}
+    reached = requested is not None and (
+        np.linalg.norm(np.subtract(actual['position'], requested['position'])) <= 1e-6 and
+        (Rotation.from_quat(actual['quaternion'])*Rotation.from_quat(requested['quaternion']).inv()).magnitude() <= 1e-6)
+    return candidate, {'schema': SCHEMA, 'status': status, 'reason': reason,
+        'phase': phase, 'sourceStateId': start_state, 'finalStateId': candidate.state_id,
+        'sourceNativeActions': start_actions, 'nativeActionsAppended': len(candidate.actions)-start_actions,
+        'executionMode': 'checked_collision_prefix' if clipped is not None else 'requested_motion',
+        'requestedPoseReached': bool(reached), 'observedEndPose': observed_end,
+        'requestedEndPose': copy.deepcopy(requested), 'clippedProposal': clipped,
+        'attempts': attempts, 'retentionRole': 'accepted_native_skill' if status == 'accepted' else 'stopped_native_prefix_not_admitted',
+        'admittedSkillProgressMm3': ledger['targetRemovedMm3']-baseline['targetRemovedMm3'] if status == 'accepted' else 0.,
+        'committedPrefix': {'nativeActions': len(candidate.actions), 'stateId': candidate.state_id,
+                            'actionPrefixSeal': semantic_digest(candidate.actions)},
+        'ledger': ledger, 'transitionTrace': copy.deepcopy(meter.trace[start_calls:meter.calls]),
+        'physicalCallCost': {'publicCalls': meter.calls-start_calls,
+            'previewCalls': sum(x['kind'] == 'preview' for x in meter.trace[start_calls:meter.calls]),
+            'directStepCalls': sum(x['kind'] == 'step' for x in meter.trace[start_calls:meter.calls])}}
+
+
+def _remaining_contact_action(action, start_pose, observed_pose, history):
+    """Keep every unreached leg after a native finite-aspiration stop.
+
+    Native TISSUE_ASPIRATION_IN_PROGRESS reports geometric path progress. Match
+    it against the actual accepted pose; a contactPosition field alone cannot
+    authorize skipping a waypoint or moving to an unobserved point.
+    """
+    if (history.get('status') != 'partial' or
+            history.get('reason') != 'TISSUE_ASPIRATION_IN_PROGRESS'):
+        return None
+    fraction = history.get('completedFraction')
+    if type(fraction) not in (int, float) or not math.isfinite(fraction) or not 0 <= fraction < 1:
+        return None
+    path = action.get('path', [action.get('pose')])
+    if not isinstance(path, list) or not path or any(pose is None for pose in path):
+        return None
+    poses = [_finite_pose(start_pose), *[_finite_pose(pose) for pose in path]]
+    lengths = [float(np.linalg.norm(np.subtract(b['position'], a['position'])))
+               for a, b in zip(poses, poses[1:])]
+    total = sum(lengths)
+    if total <= 1e-12:
+        return None
+    progress = float(fraction)*total
+    completed = 0.
+    for index, length in enumerate(lengths):
+        if length == 0.:
+            continue  # A completed stationary-orientation leg has no arc length.
+        # At an exact leg boundary the native path has already completed that
+        # waypoint (and any stationary rotation before the next stalled leg).
+        if progress < completed+length-1e-8:
+            local = min(1., max(0., (progress-completed)/length))
+            expected = ((1.-local)*np.asarray(poses[index]['position'])+
+                        local*np.asarray(poses[index+1]['position']))
+            if np.linalg.norm(np.subtract(observed_pose['position'], expected)) > 1e-5:
+                return None
+            remaining = copy.deepcopy(path[index:])
+            result = copy.deepcopy(action)
+            if 'path' in action:
+                result['path'] = remaining
+            else:
+                result['pose'] = remaining[-1]
+            return result
+        completed += length
+    return None
+
+
+def _contact_clearance_action(engine, hand, motion, minimum_seconds):
+    """Propose finite dwell using current contacts and the declared native rate.
+
+    This is a duration proposal, not a clearance assertion. Native preview/step
+    and the same cumulative limits must admit it before any continuation.
+    """
+    from .surgical_cusa_v3 import profile, validate_parameters
+    settings = profile(engine)
+    if settings is None:
+        return None
+    slot = engine.state['slots'][hand]
+    parameters = {**engine.parameters(slot), **motion.get('parameters', {})}
+    activation, duty = validate_parameters(parameters)
+    rate = settings['capacityMm3PerSecond']*activation*duty
+    if rate <= 0.:
+        return None
+    cells = engine.touched(slot['position'], slot['position'], parameters['radiusMm'])
+    compatible = [int(cell) for cell in cells
+                  if engine.by_label[int(engine.scene.labels.flat[cell])]['material']
+                  in TOOLS['cusa']['materials']]
+    pending = engine.state.get('cusaV3', {}).get('progressMm3', {})
+    required = sum(max(0., engine.scene.voxel_mm3-pending.get(str(cell), 0.))
+                   for cell in compatible)
+    seconds = min(30., max(float(minimum_seconds), math.nextafter(required/rate, math.inf)))
+    return {'slot': hand, 'operation': 'apply', 'duration': seconds,
+            'pose': {key: copy.deepcopy(slot[key]) for key in ('position', 'quaternion')},
+            'parameters': copy.deepcopy(motion.get('parameters', {}))}
+
+
 def checked_cusa_motion(engine, motion, *, limits, meter=None, check=None,
-                        dwell_seconds=.6, phase='staged.motion'):
+                        dwell_seconds=.6, max_contact_replans=0, phase='staged.motion'):
     """Checked motion, optional collision-shortening, then dwell at actual pose.
 
     The original partial collision is never committed. Its successfully reached
     pose may seed a shorter command which must complete under unchanged native
     guards. A dwell uses the newly observed accepted pose, so it cannot jump to
     an unreached requested waypoint. Failed shortening remains a failed probe.
+    Optional finite-contact continuation clears current contacts at the accepted
+    pose, then retries only unreached legs. Every partial, dwell and retry is
+    charged and guarded; zero preserves the original one-motion controller.
     """
     motion = motion if isinstance(motion, SkillAction) else SkillAction(motion)
     motion = replace(motion, require_endpoint=True)
     if (motion.action.get('operation') != 'apply' or
-            type(dwell_seconds) not in (int, float) or not 0 < dwell_seconds <= 30.):
+            type(dwell_seconds) not in (int, float) or not 0 < dwell_seconds <= 30. or
+            type(max_contact_replans) is not int or not 0 <= max_contact_replans <= 8):
         raise ValueError('Checked CUSA motion requires an apply and bounded dwell')
     candidate, meter = _metered_candidate(engine, meter, limits)
     hand = motion.action['slot']
@@ -644,8 +819,11 @@ def checked_cusa_motion(engine, motion, *, limits, meter=None, check=None,
         raise ValueError('Checked CUSA motion requires the current CUSA instrument')
     baseline = _ledger(candidate, limits, meter)
     start_state, start_actions, start_calls = candidate.state_id, len(candidate.actions), meter.calls
-    attempts, parts = [], []
+    attempts, parts, contact_continuations = [], [], []
     clipped_action = None
+    command = motion
+    start_pose = {key: copy.deepcopy(candidate.state['slots'][hand][key])
+                  for key in ('position', 'quaternion')}
     status, reason = 'accepted', None
     try:
         if _inserted_geometry_change(candidate, motion.action) or len(candidate.actions) >= limits.max_native_actions:
@@ -676,10 +854,53 @@ def checked_cusa_motion(engine, motion, *, limits, meter=None, check=None,
                 command = SkillAction(clipped_action, retries, require_endpoint=True)
             else:
                 command = motion
-            candidate, part = checked_actions(candidate, [command], limits=limits,
-                meter=meter, check=check, phase=phase+'.motion')
+            refusal = (_preview_removal_refusal(candidate, preview, limits)
+                if clipped_action is None and (preview['status'] == 'accepted' or
+                    preview['status'] == 'partial' and
+                    preview.get('reason') == 'TISSUE_ASPIRATION_IN_PROGRESS') else None)
+            if refusal is not None:
+                # A second simulation of this unchanged command cannot make
+                # its measured removal admissible. Never reuse for admission,
+                # and never apply this shortcut to a newly clipped command.
+                if check is not None: check()
+                status, reason = 'refused', refusal
+                attempts[-1].update(removalConstraintRefusal=refusal,
+                    previewNonTargetRemovedMm3=preview['metrics']['nonTargetRemovedMm3'])
+            else:
+                candidate, part = checked_actions(candidate, [command], limits=limits,
+                    meter=meter, check=check, phase=phase+'.motion')
+                parts.append(part)
+                status, reason = part['status'], part['reason']
+        while (status == 'interrupted' and reason == 'PARTIAL_MOTION_REPLAN_REQUIRED'
+               and len(contact_continuations) < max_contact_replans):
+            history = candidate.history[-1] if candidate.history else {}
+            actual = candidate.state['slots'][hand]
+            observed = {key: copy.deepcopy(actual[key]) for key in ('position', 'quaternion')}
+            remaining = _remaining_contact_action(command.action, start_pose, observed, history)
+            clearance = _contact_clearance_action(candidate, hand, command.action, dwell_seconds)
+            if remaining is None or clearance is None:
+                break
+            continuation = {'contactStateId': candidate.state_id, 'observedPose': observed,
+                'clearanceAction': copy.deepcopy(clearance),
+                'remainingAction': copy.deepcopy(remaining),
+                'remainingActionSeal': semantic_digest(remaining)}
+            contact_continuations.append(continuation)
+            candidate, part = checked_actions(candidate,
+                [SkillAction(clearance, require_endpoint=True)], limits=limits,
+                meter=meter, check=check, phase=f'{phase}.contact{len(contact_continuations)}.clear')
             parts.append(part)
             status, reason = part['status'], part['reason']
+            continuation['clearanceStatus'] = status
+            if status != 'accepted':
+                break
+            start_pose = {key: copy.deepcopy(candidate.state['slots'][hand][key])
+                          for key in ('position', 'quaternion')}
+            command = SkillAction(remaining, require_endpoint=True)
+            candidate, part = checked_actions(candidate, [command], limits=limits,
+                meter=meter, check=check, phase=f'{phase}.contact{len(contact_continuations)}.resume')
+            parts.append(part)
+            status, reason = part['status'], part['reason']
+            continuation.update(resumeStatus=status, finalStateId=candidate.state_id)
         if status == 'accepted':
             actual = candidate.state['slots'][hand]
             dwell = {'slot': hand, 'operation': 'apply', 'duration': float(dwell_seconds),
@@ -708,6 +929,8 @@ def checked_cusa_motion(engine, motion, *, limits, meter=None, check=None,
         'executionMode': 'checked_collision_prefix' if clipped_action is not None else 'requested_motion',
         'requestedPoseReached': bool(reached), 'observedEndPose': observed_end,
         'requestedEndPose': copy.deepcopy(requested),
+        'maxContactReplans': max_contact_replans,
+        'contactContinuations': contact_continuations,
         'clippedProposal': clipped_action, 'attempts': attempts,
         'retentionRole': 'accepted_native_skill' if status == 'accepted' else 'stopped_native_prefix_not_admitted',
         'admittedSkillProgressMm3': ledger['targetRemovedMm3']-baseline['targetRemovedMm3'] if status == 'accepted' else 0.,

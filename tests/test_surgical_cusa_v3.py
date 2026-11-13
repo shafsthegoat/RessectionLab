@@ -30,6 +30,25 @@ def fixture(points=((9, 9, 9),), *, rate=2., enabled=True, material='tumor', spa
     return engine, cells
 
 
+def test_well_formed_legacy_cusa_extraction_reaches_native_refusal_without_mutation():
+    engine, _ = fixture()
+    for action in [
+        {'slot': 'left', 'operation': 'configure', 'mechanicsRevision': 2,
+         'clockRevision': 1, 'duration': .1},
+        {'slot': 'left', 'operation': 'exchange', 'instrument': 'cusa', 'duration': .1},
+    ]:
+        assert engine.step(action)['status'] == 'accepted'
+    action = {'slot': 'left', 'operation': 'extract', 'duration': 1.,
+              'parameters': {'radiusMm': 1.5, 'power': .8}}
+    before = copy.deepcopy((engine.snapshot(), engine.actions, engine.history))
+    outcome = engine.step(action)
+    assert outcome['status'] == 'rejected' and outcome['reason'] == 'UNSUPPORTED_EXTRACTION'
+    assert (engine.snapshot(), engine.actions, engine.history) == before
+    malformed = {**action, 'parameters': {**action['parameters'], 'duty': .5}}
+    assert engine.step(malformed)['reason'] == 'Unsupported instrument parameters'
+    assert (engine.snapshot(), engine.actions, engine.history) == before
+
+
 def test_public_motion_stops_at_tissue_and_persists_pending_contact_before_clearance():
     engine, cells = fixture()
     original = engine.scene.labels.copy()

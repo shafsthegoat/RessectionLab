@@ -182,7 +182,10 @@ def test_unversioned_scene_changes_cannot_reuse_cached_acceptance(field):
         cache.seek(full, snapshot, 3)
 
 
-def test_branch_archives_share_one_pure_runtime_but_never_effect_state():
+def test_branch_archives_share_one_pure_runtime_but_never_effect_state(monkeypatch):
+    from resectionlab import native_backend
+    # Shared candidate slabs belong to the retained reference implementation.
+    monkeypatch.setattr(native_backend, 'cpp_enabled', lambda: False)
     full = engine()
     cache = SurgicalReplayCache(max_checkpoints=8, max_archives=4)
     first = cache.seek(full, full.snapshot(), 3)

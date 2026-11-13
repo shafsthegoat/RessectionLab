@@ -1,3 +1,4 @@
+import {cranialGenerationIssue} from './cranial-workflow-data.ts';
 import {planningOverlayForView} from './interactive-planning-data.ts';
 import type {InteractivePlanningOverlay} from './interactive-planning-data';
 import {useEffect,useMemo,useRef,useState} from 'react';
@@ -14,6 +15,7 @@ import {SurgicalReplayPrefetch} from './surgical-replay-prefetch.ts';
 import type {SurgicalReplaySelection} from './surgical-replay-prefetch';
 import {checkedSurgicalPlayback,checkedSurgicalPlaybackWire,nextSurgicalPlaybackFrame,surgicalCursorCommand,updatesEditableSurgicalCursor} from './surgical-playback.ts';
 import {modeledVolume} from './modeled-volume.ts';
+import {cusaActionParameters} from './cusa-research.ts';
 export {modeledVolume} from './modeled-volume.ts';
 import type {SurgicalAction,SurgicalOutcome,SurgicalApi,SurgicalPose,SurgicalRegion,SurgicalResponse,SurgicalView,SurgicalInteraction} from './surgical-types';
 
@@ -39,6 +41,8 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
   const [mode,setMode]=useState<SurgicalInteraction['mode']>('navigate'),[preview,setPreview]=useState<SurgicalView|null>(null);
   const [previewOutcome,setPreviewOutcome]=useState<SurgicalOutcome|null>(null);
   const [pendingCommand,setPendingCommand]=useState<string|null>(null);
+  const [cancelling,setCancelling]=useState(false);
+  const activeRequest=useRef<{id:string;cancel?:SurgicalApi['cancel']}|null>(null);
   const backendResult=useRef<SurgicalResponse|null>(null);
   const timelineStream=useRef(new SurgicalTimelineStream());
   const comparisonContext=useRef(new SurgicalComparisonContext());
@@ -88,6 +92,10 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
   async function execute(command:string,extra:Record<string,unknown>,isCurrent:()=>boolean):Promise<boolean>{
     const c=current.current;if(!c.enabled||!c.source||!c.api?.surgicalRehearsal||busy.current)return false;
     if(prefixCommand(command)&&(responseSource.current!==c.source||acceptedResponseSource.current!==c.source||c.result?.caseHash!==c.source.caseHash)){setError('Inspect this source checkpoint before reconstructing a read-only prefix.');return false;}
+    if(command==='plan'&&extra.opponent==='anatomy-cranial-strategy'){
+      const issue=cranialGenerationIssue(c.result);
+      if(issue||!acceptedFullCaseState()){setError(issue??'Return to the accepted editable checkpoint and cancel any preview before planning cranial strategies.');return false;}
+    }
     const authorityIssue=surgicalAuthorityIssue(c.result,command,extra);if(authorityIssue){setError(authorityIssue);return false;}
     if(command==='fullCase'&&(!acceptedFullCaseState()||!['primary','vascular'].includes(String(extra.scenario))||
       !fullCaseScenarioAvailable(c.result,c.source.caseHash,extra.scenario as 'primary'|'vascular'))){setError('Full-case rehearsal is blocked for the accepted case state. Review readiness before starting.');return false;}
@@ -104,11 +112,13 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
     }
     const prefixRestart=command==='seekPrefix'&&extra.position===0;
     const token=generation.current;busy.current=true;setPending(true);setPendingCommand(command);setError(null);
+    const request={id:'surgical-'+crypto.randomUUID(),cancel:!prefixCommand(command)&&!frameCommand(command)?c.api.cancel:undefined};
+    activeRequest.current=request;setCancelling(false);
     try{
       if(prefixRestart)timelineStream.current.clear();
       const branchId=String(extra.branchId??c.result?.branchId??''),timelineToken=frameCommand(command)?timelineStream.current.token(c.source.caseHash,branchId):undefined;
       const requestExtra=prefixCommand(command)?{branchId,position:extra.position,...(prefixRestart&&Object.hasOwn(extra,'cacheOnly')?{cacheOnly:extra.cacheOnly as boolean}:{}),...(command==='seekPrefixFrame'?{frameIndex:extra.frameIndex,prefixToken:timelineToken,prefixFieldTokens:timelineStream.current.fieldTokens(c.source.caseHash,branchId,timelineToken)}:{})}:extra;
-      let next=await c.api.surgicalRehearsal({caseHash:c.source.caseHash,command,...(!prefixCommand(command)?{expectedStateId:backendResult.current?.view.stateId}:{}),...requestExtra,
+      let next=await c.api.surgicalRehearsal({caseHash:c.source.caseHash,command,...(!prefixCommand(command)?{expectedStateId:backendResult.current?.view.stateId}:{}),...requestExtra,...(request.cancel?{requestId:request.id}:{}),
         ...(command==='seekFrame'?{timelineToken,viewFieldTokens:timelineStream.current.fieldTokens(c.source.caseHash,branchId,timelineToken)}:{})});
       if(token!==generation.current||!current.current.enabled||current.current.source!==c.source)return false;
       if(command==='attachProtection'&&!next)return false;
@@ -135,7 +145,19 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
       if(command==='preview'){const response=next as unknown as (SurgicalOutcome&{view:SurgicalView})|null;setDesiredPreview(response?.view??null);setDesiredPreviewOutcome(response?{status:response.status,reason:response.reason,completedFraction:response.completedFraction,events:response.events}:null);return !!response;}
       setDesiredPreview(null);setDesiredPreviewOutcome(null);pendingPoseView.current=next?.view??null;responseSource.current=c.source;setDesiredResult(next);
       return !!next;
-    }catch(e){if(token===generation.current){timelineStream.current.clear();setError(String(e));}return false;}finally{if(token===generation.current){busy.current=false;setPending(false);setPendingCommand(null);}}
+    }catch(e){if(token===generation.current){timelineStream.current.clear();setError(String(e));}return false;}finally{if(activeRequest.current===request){activeRequest.current=null;setCancelling(false);}if(token===generation.current){busy.current=false;setPending(false);setPendingCommand(null);}}
+  }
+  async function cancelComputation(){
+    const request=activeRequest.current;if(!request?.cancel||cancelling)return false;
+    setCancelling(true);
+    try{
+      const response=await request.cancel(request.id) as {cancelled?:boolean}|null;
+      if(activeRequest.current!==request)return true;
+      // A request which has begun committing cannot be cancelled. Its normal
+      // result must still be accepted so the displayed/backend cursors agree.
+      if(response?.cancelled!==true){setCancelling(false);setError('The request is finishing its commit. Its accepted result will be displayed.');return false;}
+      return true;
+    }catch(error){if(activeRequest.current===request){setCancelling(false);setError(String(error));}return false;}
   }
   if(!requestQueue.current)requestQueue.current=new SurgicalRequestQueue(async(item,isCurrent)=>{
     if(item.generation!==generation.current||current.current.source!==item.source)return false;
@@ -227,9 +249,10 @@ export function useSurgical(source:ViewerVolume|null,api:Partial<SurgicalApi>|nu
     else setPath(p=>p.length<512?[...p,{position:point,quaternion:pose.quaternion}]:p);
     setRawPose({...pose,position:point});clearPreview();
   }
-  function action(operation:string,params:Record<string,number>=parameters,duration=1):SurgicalAction{return {slot,operation,parameters:params,duration,...(['apply','move','hold','grasp','place'].includes(operation)?{path:path.length?path:[pose]}:{})};}
+  function action(operation:string,params:Record<string,number>=parameters,duration=1):SurgicalAction{return {slot,operation,parameters:cusaActionParameters(view,slot,params),duration,...(['apply','move','hold','grasp','place'].includes(operation)?{path:path.length?path:[pose]}:{})};}
   return {result,view,volume,previewVolume,approachPreview:displayedPreview&&approachPreview?.view===displayedPreview?approachPreview:null,pending,pendingCommand:requestPending?pendingCommand:replayRequestPending?(replayOwner.current?.prefix?'seekPrefixFrame':'seekFrame'):pendingCommand,simulationPending:requestPending||replayRequestPending,displayPending,error,slot,pose,path,mode,preview:displayedPreview,previewOutcome,parameters,setPose,setMode,selectSlot,run,action,
     fullCaseReadiness:view?boundFullCaseReadiness(result,source?.caseHash):null,canStartFullCase,
+    canCancelComputation:requestPending&&!!activeRequest.current?.cancel,cancelling,cancelComputation,
     playbackVersion,startPlayback,runPlayback,stopPlayback,showFlowTransfers,setShowFlowTransfers,setPlaybackDisplay,
     pausePlayback:()=>{stopPlayback();setPlaybackVersion(n=>n+1);},
     computingFullCase:fullCaseComputation.current.scenario,pauseFullCase,

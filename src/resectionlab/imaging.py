@@ -448,7 +448,8 @@ def save_case(case: CaseData, path: str | Path, *, artifacts: Mapping[str, Any] 
         manifest["functional_evidence"] = {"array_keys": functional_keys, "manifest": functional.to_manifest()}
     # Persist growing episode branches within the same limit enforced on open.
     # Whitespace can otherwise turn valid bounded data into an unreadable save.
-    encoded_manifest = json.dumps(manifest, separators=(",", ":"), sort_keys=True, allow_nan=False).encode("utf-8")
+    # Artifact map order also supplies branch/display ordering after cold Open.
+    encoded_manifest = json.dumps(manifest, separators=(",", ":"), allow_nan=False).encode("utf-8")
     if len(encoded_manifest) > MAX_MANIFEST_BYTES:
         raise ImagingError("MANIFEST_TOO_LARGE", "Episode metadata exceeds the 16 MiB save/open budget; preserve this file and shorten the saved history.")
     temporary: Path | None = None

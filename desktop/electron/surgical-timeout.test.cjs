@@ -42,3 +42,16 @@ test('anatomy reconstruction accepts its bounded model job budget through the re
   await assert.rejects(engine.request('anatomyReconstruct',{},1800001),/Invalid operation time budget/);
   await assert.rejects(engine.request('anatomyImport',{},1800000),/Invalid operation time budget/);
 });
+test('owned surgical request identifiers bind cancellation and never enter action arguments',async t=>{
+  const engine=Object.create(Sidecar.prototype),messages=[];
+  Object.assign(engine,{closed:false,pending:new Map(),child:{stdin:{write:message=>messages.push(JSON.parse(message))}}});
+  t.after(()=>{for(const pending of engine.pending.values())clearTimeout(pending.timeout);});
+  const requestId='surgical-6d97b9f1-fd14-4fe2-96e2-a9dc43bb8b83';
+  const request=engine.request('surgicalRehearsal',{requestId,command:'plan',caseHash:'case'});
+  assert.equal(messages[0].id,requestId);assert.equal(Object.hasOwn(messages[0].args,'requestId'),false);
+  await assert.rejects(engine.request('surgicalRehearsal',{requestId,command:'plan'}),/Invalid surgical request/);
+  await assert.rejects(engine.request('surgicalRehearsal',{requestId:'another-operation',command:'plan'}),/Invalid surgical request/);
+  const cancellation=engine.request('cancel',{requestId});assert.equal(messages[1].args.requestId,requestId);
+  for(const [message,result] of [[messages[1],{cancelled:true}],[messages[0],null]]){const pending=engine.pending.get(message.id);clearTimeout(pending.timeout);engine.pending.delete(message.id);pending.resolve(result);}
+  assert.deepEqual(await cancellation,{cancelled:true});assert.equal(await request,null);
+});

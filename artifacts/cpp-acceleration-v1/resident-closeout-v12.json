@@ -1,0 +1,642 @@
+{
+  "schema": "resectionlab-resident-closeout-v12",
+  "passed": false,
+  "status": "user-requested-stop-and-commit; original-complete-acceptance-not-claimed",
+  "baseCommit": "2e7b42116b8581372f4eded734c7478e8f5121e9",
+  "userDecision": "Stop optimization and commit/push. User accepts the reported remaining RL latency regression as long as correctness is preserved. No further physics expansion or benchmark tuning.",
+  "planning": {
+    "receipt": "artifacts/cpp-acceleration-v1/resident-working-increment-v12.json",
+    "meaning": "Frozen working resident increment, before final compatibility and guard fixes; not retimed after closeout.",
+    "manifestSha256": "f507080eb60f214fd4f050e1595d551bff6222b6fef6cad6d6f7b7a98abb0f67",
+    "comparisonRoles": {
+      "reference": {
+        "meaning": "baseline",
+        "selectedBackend": "reference",
+        "sourceRoot": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/baseline/source/src"
+      },
+      "cpp": {
+        "meaning": "current",
+        "selectedBackend": "cpp",
+        "sourceRoot": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/resident-working-capture-v12/src"
+      }
+    },
+    "protocol": {
+      "repeats": 5,
+      "warmups": 1,
+      "threadPools": 1,
+      "freshAlternatingProcesses": true
+    },
+    "workloads": {
+      "small": {
+        "pairs": [
+          {
+            "index": 0,
+            "order": [
+              "reference",
+              "cpp"
+            ]
+          },
+          {
+            "index": 1,
+            "order": [
+              "cpp",
+              "reference"
+            ]
+          },
+          {
+            "index": 2,
+            "order": [
+              "reference",
+              "cpp"
+            ]
+          },
+          {
+            "index": 3,
+            "order": [
+              "cpp",
+              "reference"
+            ]
+          },
+          {
+            "index": 4,
+            "order": [
+              "reference",
+              "cpp"
+            ]
+          }
+        ],
+        "backends": {
+          "reference": {
+            "medianSeconds": 0.001791750080883503,
+            "minSeconds": 0.0017775410087779164,
+            "maxSeconds": 0.0019112089648842812,
+            "stdevSeconds": 5.7372480409816094e-05,
+            "sampleCount": 5,
+            "samplesSeconds": [
+              0.0018597081070765853,
+              0.0017906669527292252,
+              0.0019112089648842812,
+              0.001791750080883503,
+              0.0017775410087779164
+            ],
+            "medianPeakRssBytes": 67321856,
+            "peakRssBytes": 67682304
+          },
+          "cpp": {
+            "medianSeconds": 0.0025751249631866813,
+            "minSeconds": 0.0024966660421341658,
+            "maxSeconds": 0.0026208340423181653,
+            "stdevSeconds": 4.716330759585204e-05,
+            "sampleCount": 5,
+            "samplesSeconds": [
+              0.0025787909980863333,
+              0.0026208340423181653,
+              0.0025751249631866813,
+              0.0024966660421341658,
+              0.002535250037908554
+            ],
+            "medianPeakRssBytes": 68386816,
+            "peakRssBytes": 68698112
+          }
+        },
+        "exactEquivalent": true,
+        "exactDigests": [
+          "sha256:4aed87ce69a4646b601926d14c2ad9ac4bc81ad9a1ed774082f5c7c7343fbfec"
+        ],
+        "memoryHardCapPassed": true,
+        "speedup": 0.6957915077900675,
+        "latencyPassed": false,
+        "memoryRegressionPassed": true,
+        "nativeExecutionPassed": true
+      },
+      "generate": {
+        "pairs": [
+          {
+            "index": 0,
+            "order": [
+              "reference",
+              "cpp"
+            ]
+          },
+          {
+            "index": 1,
+            "order": [
+              "cpp",
+              "reference"
+            ]
+          },
+          {
+            "index": 2,
+            "order": [
+              "reference",
+              "cpp"
+            ]
+          },
+          {
+            "index": 3,
+            "order": [
+              "cpp",
+              "reference"
+            ]
+          },
+          {
+            "index": 4,
+            "order": [
+              "reference",
+              "cpp"
+            ]
+          }
+        ],
+        "backends": {
+          "reference": {
+            "medianSeconds": 17.15606354305055,
+            "minSeconds": 16.879171542008407,
+            "maxSeconds": 17.357232374022715,
+            "stdevSeconds": 0.17377020975850238,
+            "sampleCount": 5,
+            "samplesSeconds": [
+              16.879171542008407,
+              17.216864499961957,
+              17.15606354305055,
+              17.357232374022715,
+              17.149789332877845
+            ],
+            "medianPeakRssBytes": 149504000,
+            "peakRssBytes": 151207936
+          },
+          "cpp": {
+            "medianSeconds": 4.274004707927816,
+            "minSeconds": 4.266500332974829,
+            "maxSeconds": 4.372928667115048,
+            "stdevSeconds": 0.04671307274421653,
+            "sampleCount": 5,
+            "samplesSeconds": [
+              4.3273438739124686,
+              4.2701961669372395,
+              4.274004707927816,
+              4.372928667115048,
+              4.266500332974829
+            ],
+            "medianPeakRssBytes": 153305088,
+            "peakRssBytes": 153911296
+          }
+        },
+        "exactEquivalent": true,
+        "exactDigests": [
+          "sha256:78246b9c6a0be381afc15cd1b6b2c6dac82442253669c6fe16cf374c1afcc3ec"
+        ],
+        "memoryHardCapPassed": true,
+        "preportEquivalent": true,
+        "speedup": 4.0140488173136335,
+        "latencyPassed": true,
+        "memoryRegressionPassed": true,
+        "nativeExecutionPassed": true,
+        "productionMultiItemBatchPassed": true
+      },
+      "standardized-refusal": {
+        "pairs": [
+          {
+            "index": 0,
+            "order": [
+              "reference",
+              "cpp"
+            ]
+          },
+          {
+            "index": 1,
+            "order": [
+              "cpp",
+              "reference"
+            ]
+          },
+          {
+            "index": 2,
+            "order": [
+              "reference",
+              "cpp"
+            ]
+          },
+          {
+            "index": 3,
+            "order": [
+              "cpp",
+              "reference"
+            ]
+          },
+          {
+            "index": 4,
+            "order": [
+              "reference",
+              "cpp"
+            ]
+          }
+        ],
+        "backends": {
+          "reference": {
+            "medianSeconds": 1.3892104170517996,
+            "minSeconds": 1.3743921669665724,
+            "maxSeconds": 1.4291862910613418,
+            "stdevSeconds": 0.021649356925642287,
+            "sampleCount": 5,
+            "samplesSeconds": [
+              1.3913889169925824,
+              1.3787529169349,
+              1.4291862910613418,
+              1.3743921669665724,
+              1.3892104170517996
+            ],
+            "medianPeakRssBytes": 117047296,
+            "peakRssBytes": 117145600
+          },
+          "cpp": {
+            "medianSeconds": 1.0887705000350252,
+            "minSeconds": 1.0841757499147207,
+            "maxSeconds": 1.1036807909840718,
+            "stdevSeconds": 0.008655992805491201,
+            "sampleCount": 5,
+            "samplesSeconds": [
+              1.0841757499147207,
+              1.0994088320294395,
+              1.1036807909840718,
+              1.0858796670800075,
+              1.0887705000350252
+            ],
+            "medianPeakRssBytes": 124911616,
+            "peakRssBytes": 124944384
+          }
+        },
+        "exactEquivalent": true,
+        "exactDigests": [
+          "sha256:b069195c72729b847f4faa91585cc941b818b1b3f23bf1139bf16fe74be9e8d1"
+        ],
+        "memoryHardCapPassed": true,
+        "speedup": 1.2759442113899204,
+        "latencyPassed": true,
+        "memoryRegressionPassed": true,
+        "nativeExecutionPassed": true
+      },
+      "stress": {
+        "pairs": [
+          {
+            "index": 0,
+            "order": [
+              "reference",
+              "cpp"
+            ]
+          },
+          {
+            "index": 1,
+            "order": [
+              "cpp",
+              "reference"
+            ]
+          },
+          {
+            "index": 2,
+            "order": [
+              "reference",
+              "cpp"
+            ]
+          },
+          {
+            "index": 3,
+            "order": [
+              "cpp",
+              "reference"
+            ]
+          },
+          {
+            "index": 4,
+            "order": [
+              "reference",
+              "cpp"
+            ]
+          }
+        ],
+        "backends": {
+          "reference": {
+            "medianSeconds": 0.9732561249984428,
+            "minSeconds": 0.9606285420013592,
+            "maxSeconds": 1.1333673340268433,
+            "stdevSeconds": 0.07317767068217408,
+            "sampleCount": 5,
+            "samplesSeconds": [
+              0.9732561249984428,
+              0.9685255419462919,
+              0.9606285420013592,
+              1.1333673340268433,
+              0.9794261659262702
+            ],
+            "medianPeakRssBytes": 153092096,
+            "peakRssBytes": 164331520
+          },
+          "cpp": {
+            "medianSeconds": 0.5348253340926021,
+            "minSeconds": 0.5303423330187798,
+            "maxSeconds": 0.539644124917686,
+            "stdevSeconds": 0.0035201469538633395,
+            "sampleCount": 5,
+            "samplesSeconds": [
+              0.5340991669800133,
+              0.5374106660019606,
+              0.539644124917686,
+              0.5348253340926021,
+              0.5303423330187798
+            ],
+            "medianPeakRssBytes": 112721920,
+            "peakRssBytes": 113328128
+          }
+        },
+        "exactEquivalent": true,
+        "exactDigests": [
+          "sha256:0d46e29fa50ea3c893a9859fc465022aeda7a2fdf724214bd6535c71c0f61a6e"
+        ],
+        "memoryHardCapPassed": true,
+        "speedup": 1.8197644407583893,
+        "latencyPassed": true,
+        "memoryRegressionPassed": true,
+        "nativeExecutionPassed": true
+      }
+    }
+  },
+  "simulationAndRL": {
+    "receipt": "outputs/cpp-acceleration-v1/resident-closeout-supplement-v12/summary.json",
+    "sha256": "c850fe564e2165bc00998ce74adb2a3f2b501290f35ea4666327588b5208886b",
+    "meaning": "Five final frozen closeout pairs before the last two equivalent guard-overhead edits. All numerical outputs match the frozen reference.",
+    "comparisonRoles": {
+      "reference": {
+        "meaning": "baseline",
+        "selectedBackend": "cpp",
+        "sourceRoot": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/native-prepass-v11/src"
+      },
+      "cpp": {
+        "meaning": "current",
+        "selectedBackend": "cpp",
+        "sourceRoot": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/resident-closeout-capture-v12/src"
+      }
+    },
+    "workloads": {
+      "simulation-steps": {
+        "pairs": [
+          {
+            "index": 0,
+            "order": [
+              "reference",
+              "cpp"
+            ]
+          },
+          {
+            "index": 1,
+            "order": [
+              "cpp",
+              "reference"
+            ]
+          },
+          {
+            "index": 2,
+            "order": [
+              "reference",
+              "cpp"
+            ]
+          },
+          {
+            "index": 3,
+            "order": [
+              "cpp",
+              "reference"
+            ]
+          },
+          {
+            "index": 4,
+            "order": [
+              "reference",
+              "cpp"
+            ]
+          }
+        ],
+        "backends": {
+          "reference": {
+            "medianSeconds": 1.036963582970202,
+            "minSeconds": 1.0289902079384774,
+            "maxSeconds": 1.1941220000153407,
+            "stdevSeconds": 0.07107074774385495,
+            "sampleCount": 5,
+            "samplesSeconds": [
+              1.0289902079384774,
+              1.036963582970202,
+              1.1941220000153407,
+              1.0391234579728916,
+              1.03666325006634
+            ],
+            "medianPeakRssBytes": 109953024,
+            "peakRssBytes": 110116864,
+            "medianTimedWorkPeakRssBytes": 109953024
+          },
+          "cpp": {
+            "medianSeconds": 1.0536246659466997,
+            "minSeconds": 1.0488877919269726,
+            "maxSeconds": 1.0820331249851733,
+            "stdevSeconds": 0.013511703250427916,
+            "sampleCount": 5,
+            "samplesSeconds": [
+              1.0507587090833113,
+              1.0536246659466997,
+              1.0820331249851733,
+              1.0578318330226466,
+              1.0488877919269726
+            ],
+            "medianPeakRssBytes": 116736000,
+            "peakRssBytes": 116752384,
+            "medianTimedWorkPeakRssBytes": 116736000
+          }
+        },
+        "exactEquivalent": true,
+        "exactDigests": [
+          "sha256:91819f86b18115336f3ca366675b79d0ddceea51ff1a3756bdfdc36f7cf8143f"
+        ],
+        "memoryHardCapPassed": true,
+        "frozenExactEquivalent": true,
+        "throughput": {
+          "reference": {
+            "attemptsPerSecond": 51.11076306864192,
+            "committedNativeActionsPerSecond": 49.18205502831581,
+            "episodesPerSecond": 0.0
+          },
+          "cpp": {
+            "attemptsPerSecond": 50.302542938645615,
+            "committedNativeActionsPerSecond": 48.40433377114955,
+            "episodesPerSecond": 0.0
+          }
+        },
+        "speedup": 0.9841868897767998,
+        "latencyPassed": true,
+        "memoryRegressionPassed": true,
+        "memoryComparisonBasis": "Pre-audit timedWorkPeakRssBytes; whole-process audit/restore peak is diagnostic and remains under the hard cap.",
+        "nativeExecutionPassed": true
+      },
+      "rl-episodes": {
+        "pairs": [
+          {
+            "index": 0,
+            "order": [
+              "reference",
+              "cpp"
+            ]
+          },
+          {
+            "index": 1,
+            "order": [
+              "cpp",
+              "reference"
+            ]
+          },
+          {
+            "index": 2,
+            "order": [
+              "reference",
+              "cpp"
+            ]
+          },
+          {
+            "index": 3,
+            "order": [
+              "cpp",
+              "reference"
+            ]
+          },
+          {
+            "index": 4,
+            "order": [
+              "reference",
+              "cpp"
+            ]
+          }
+        ],
+        "backends": {
+          "reference": {
+            "medianSeconds": 1.0602442079689354,
+            "minSeconds": 1.0467165419831872,
+            "maxSeconds": 1.0660562500124797,
+            "stdevSeconds": 0.007623604286898463,
+            "sampleCount": 5,
+            "samplesSeconds": [
+              1.0524169170530513,
+              1.0602442079689354,
+              1.0606638330500573,
+              1.0467165419831872,
+              1.0660562500124797
+            ],
+            "medianPeakRssBytes": 139214848,
+            "peakRssBytes": 139214848,
+            "medianTimedWorkPeakRssBytes": 101793792
+          },
+          "cpp": {
+            "medianSeconds": 1.2542976670665666,
+            "minSeconds": 1.2502627919893712,
+            "maxSeconds": 1.3978768329834566,
+            "stdevSeconds": 0.06350194260748596,
+            "sampleCount": 5,
+            "samplesSeconds": [
+              1.2524388750316575,
+              1.2715945419622585,
+              1.2502627919893712,
+              1.2542976670665666,
+              1.3978768329834566
+            ],
+            "medianPeakRssBytes": 146800640,
+            "peakRssBytes": 146866176,
+            "medianTimedWorkPeakRssBytes": 102825984
+          }
+        },
+        "exactEquivalent": true,
+        "exactDigests": [
+          "sha256:7d98d39947eb060788920b184a767d5b4959086dc1fe7deeb974a1a262242143"
+        ],
+        "memoryHardCapPassed": true,
+        "frozenExactEquivalent": true,
+        "throughput": {
+          "reference": {
+            "attemptsPerSecond": 41.49987301914992,
+            "committedNativeActionsPerSecond": 35.84079942562948,
+            "episodesPerSecond": 5.659073593520444
+          },
+          "cpp": {
+            "attemptsPerSecond": 35.07939236058938,
+            "committedNativeActionsPerSecond": 30.295838856872646,
+            "episodesPerSecond": 4.783553503716734
+          }
+        },
+        "speedup": 0.8452891493041956,
+        "latencyPassed": false,
+        "memoryRegressionPassed": true,
+        "memoryComparisonBasis": "Pre-audit timedWorkPeakRssBytes; whole-process audit/restore peak is diagnostic and remains under the hard cap.",
+        "nativeExecutionPassed": true
+      }
+    }
+  },
+  "postMeasurementChanges": [
+    "Use tuple(_files.items()) for unfiltered source identity inventory; retain original filtered inventory for legacy substeps.",
+    "Check None directly for the five contact helpers without keyword defaults; retain captured keyword identity for _check_live. Both reviewed for semantic equivalence; no new speedup claim."
+  ],
+  "correctness": {
+    "focusedFinal": "123 passed in 12.42s",
+    "earlierBroadCpp": "1084 passed, 77 skipped, 2 warnings in 82.28s",
+    "earlierBroadReference": "355 passed, 1 skipped, 3 warnings in 13.02s",
+    "affectedReplay": "50 passed in 10.93s",
+    "focusedBeforeReplayFix": "90 passed in 7.44s",
+    "independentReview": "Scoped GO; native bone-prefix loss in replay shell fixed through existing detach and actual generated endpoint regression.",
+    "focusedFinalLog": "outputs/cpp-acceleration-v1/resident-closeout-final-focused-v12.log",
+    "focusedFinalLogSha256": "4d08d93a712c2263665044a64c2a50060481a916ce39002c3c66718e97a6475a"
+  },
+  "delivery": {
+    "status": "pending for final source; source and clean-wheel probes passed in superseded run, frozen build interrupted after replay fix; no final signed Mac pass claimed",
+    "supersededReport": "testcases/outputs/cpp-resident-closeout-v12b/verification.json",
+    "command": "PYTHONPATH=src .venv/bin/python scripts/verify_cpp_acceleration.py --output testcases/outputs/cpp-resident-closeout-next --node /Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node"
+  },
+  "milestones": {
+    "M1": "passed: frozen generated contracts/workloads/profiles retained",
+    "M2": "supported native legacy/CUSA/craniotomy path passes differential checks; unsupported physics retain existing executor",
+    "M3": "passed in frozen planning increment: 370 evaluations, 7820 native physical substeps and genuine multi-item geometry batches, exact work/output",
+    "M4": "pending current final source wheel/frozen delivery",
+    "M5": "scoped independent review passes; current final signed application workflow pending"
+  },
+  "remainingGates": [
+    "Small control unchanged 10% latency gate failed by 0.783ms in planning capture; user explicitly declined further work.",
+    "Complete RL latency 1.060244208 -> 1.254297667s, +18.3%, fails unchanged 10% gate; user accepts stop/commit. Memory and exactness pass.",
+    "Final full packaging/application verification is not complete."
+  ],
+  "deferred": {
+    "path": "outputs/cpp-acceleration-v1/deferred-native-physics-v12",
+    "meaning": "77 unverified future physics/provider files plus worktree patch, removed from active package at user stop. No native V2/continuum/vascular/RL-complete claim."
+  },
+  "preservedFailedEvidence": [
+    "outputs/cpp-acceleration-v1/resident-final-supplement-v12/summary.json",
+    "outputs/cpp-acceleration-v1/resident-final-supplement-reviewed-v12/summary.json (mixed source diagnostic only)",
+    "testcases/outputs/cpp-resident-closeout-v12/verification.json",
+    "testcases/outputs/cpp-resident-closeout-v12b/verification.json",
+    "outputs/cpp-acceleration-v1/resident-closeout-focused-v12b.log"
+  ],
+  "changedImplementationAndTestsSha256": {
+    "scripts/verify_cpp_acceleration.py": "01bdfbf40bea32158e25a581fa830e33eede2ed11d00e6320160c3281375e1ad",
+    "setup.py": "1d7fbc5b473b66cc0b0bf3fee21acc2562f0fecf760b1d31b3b3532465f32a35",
+    "src/resectionlab/geometry_native.cpp": "0757576f0b0f4031b6ceca4f0974d2d8a746d1b4e35f8ad18325df75cf9c1e4a",
+    "src/resectionlab/native_backend.py": "2e691d5a55a3dcf79a8ff666bfe392dea75d27fd2380f80f99af78147cb45186",
+    "src/resectionlab/simulation_bindings_native.hpp": "901a1761fad441ac2a80e3f809174ee40c14e6095758560eb3e8fc72ffb4ba65",
+    "src/resectionlab/surgical_engine.py": "39df3cf00caf5f895261338932ddb845759a6c45be895a3f847995c100d7c890",
+    "src/resectionlab/surgical_frame_replay.py": "7b51705be3438059d0e51002b4ade3e49bfecbe4c02b2a14737cb389b1f19a2e",
+    "src/resectionlab/surgical_motion.py": "a719ec26dc04bd0cb249358975f007d609a66bbc48e7688d0b33a19aea50130e",
+    "src/resectionlab/surgical_native_engine.py": "c3415462f61b20c1dd591b6f2a5a33738e75b8ad27349294b36f393c5422509e",
+    "src/resectionlab/surgical_native_numeric_profile.py": "137312598b8fe2208477b8904c453047bcded2795239ae3f37f4a18f271b4f70",
+    "src/resectionlab/surgical_replay_cache.py": "6ce97dad8fab328aafa0386b58679d8a5990f5162c0315ebeb1e251eb0ef6134",
+    "tests/test_cpp_executor.py": "caa436e7e8befd291ac1b68fa541fae572137458054f9a14b5f1aa44bec5ca25",
+    "tests/test_cpp_resident.py": "cd9aa48918c200c3532906d241dbac3c6531917522c079c13966f2a42bbf20b2",
+    "tests/test_surgical_frame_replay.py": "e38ef61e7161cda284fcde89637ae2cc4240a2a0e6fe55e9c4f70e437951310d",
+    "src/resectionlab/file_identity_native.hpp": "de107a656f7f3933080d624c15f3af3ceb61fa9a7b9752514dac0971cc7f71a5",
+    "tests/test_cpp_file_identity.py": "bce3c965a7e325036bbec9ab2d52fdd1d34b28d34dd1fd3588313c0ff92c7994"
+  },
+  "limitations": [
+    "Generated data only; no patient validation or policy training.",
+    "No final performance claim for the last two guard edits.",
+    "Application remains locally ad hoc signed, not notarized."
+  ]
+}

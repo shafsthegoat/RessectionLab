@@ -1,0 +1,353 @@
+{
+  "schema": "resectionlab.cpp-first-increment-acceptance.v1",
+  "sourceEvidence": "outputs/cpp-acceleration-v1/first-increment-acceptance-v1/summary.json",
+  "sourceEvidenceSha256": "c16956efd95b5c7bb61ca8099c4e0ebd95ca8ff3dcc42bad698acb196e0ba7b4",
+  "manifestSha256": "f507080eb60f214fd4f050e1595d551bff6222b6fef6cad6d6f7b7a98abb0f67",
+  "sourceCapture": "outputs/cpp-acceleration-v1/supplement-prepass-cpp/capture.json",
+  "comparisonRoles": {
+    "reference": {
+      "meaning": "baseline",
+      "selectedBackend": "reference",
+      "sourceRoot": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/baseline/source/src"
+    },
+    "cpp": {
+      "meaning": "current",
+      "selectedBackend": "cpp",
+      "sourceRoot": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab-cpp/outputs/cpp-acceleration-v1/supplement-prepass-cpp/src"
+    }
+  },
+  "passed": false,
+  "workloads": {
+    "small": {
+      "pairs": [
+        {
+          "index": 0,
+          "order": [
+            "reference",
+            "cpp"
+          ]
+        },
+        {
+          "index": 1,
+          "order": [
+            "cpp",
+            "reference"
+          ]
+        },
+        {
+          "index": 2,
+          "order": [
+            "reference",
+            "cpp"
+          ]
+        },
+        {
+          "index": 3,
+          "order": [
+            "cpp",
+            "reference"
+          ]
+        },
+        {
+          "index": 4,
+          "order": [
+            "reference",
+            "cpp"
+          ]
+        }
+      ],
+      "backends": {
+        "reference": {
+          "medianSeconds": 0.0018380419933237135,
+          "minSeconds": 0.001796416996512562,
+          "maxSeconds": 0.001916249981150031,
+          "stdevSeconds": 4.570450751917405e-05,
+          "sampleCount": 5,
+          "samplesSeconds": [
+            0.0018162500346079469,
+            0.001916249981150031,
+            0.0018380419933237135,
+            0.0018521249876357615,
+            0.001796416996512562
+          ],
+          "medianPeakRssBytes": 67485696,
+          "peakRssBytes": 67665920
+        },
+        "cpp": {
+          "medianSeconds": 0.0014095830265432596,
+          "minSeconds": 0.0013530830037780106,
+          "maxSeconds": 0.0016289170016534626,
+          "stdevSeconds": 0.00010775994384908953,
+          "sampleCount": 5,
+          "samplesSeconds": [
+            0.0014033750048838556,
+            0.0016289170016534626,
+            0.0014881659881211817,
+            0.0014095830265432596,
+            0.0013530830037780106
+          ],
+          "medianPeakRssBytes": 67665920,
+          "peakRssBytes": 67747840
+        }
+      },
+      "exactEquivalent": true,
+      "exactDigests": [
+        "sha256:4aed87ce69a4646b601926d14c2ad9ac4bc81ad9a1ed774082f5c7c7343fbfec"
+      ],
+      "memoryHardCapPassed": true,
+      "speedup": 1.3039614969195321,
+      "latencyPassed": true,
+      "memoryRegressionPassed": true,
+      "nativeExecutionPassed": true
+    },
+    "generate": {
+      "pairs": [
+        {
+          "index": 0,
+          "order": [
+            "reference",
+            "cpp"
+          ]
+        },
+        {
+          "index": 1,
+          "order": [
+            "cpp",
+            "reference"
+          ]
+        },
+        {
+          "index": 2,
+          "order": [
+            "reference",
+            "cpp"
+          ]
+        },
+        {
+          "index": 3,
+          "order": [
+            "cpp",
+            "reference"
+          ]
+        },
+        {
+          "index": 4,
+          "order": [
+            "reference",
+            "cpp"
+          ]
+        }
+      ],
+      "backends": {
+        "reference": {
+          "medianSeconds": 17.292879666027147,
+          "minSeconds": 16.92945341707673,
+          "maxSeconds": 17.438986374996603,
+          "stdevSeconds": 0.19350011731920888,
+          "sampleCount": 5,
+          "samplesSeconds": [
+            16.92945341707673,
+            17.196625250042416,
+            17.292879666027147,
+            17.438986374996603,
+            17.33521633403143
+          ],
+          "medianPeakRssBytes": 150306816,
+          "peakRssBytes": 151404544
+        },
+        "cpp": {
+          "medianSeconds": 14.044220125069842,
+          "minSeconds": 13.82861095899716,
+          "maxSeconds": 14.473971042956691,
+          "stdevSeconds": 0.25806318085569174,
+          "sampleCount": 5,
+          "samplesSeconds": [
+            13.868645041016862,
+            13.82861095899716,
+            14.044220125069842,
+            14.13098583300598,
+            14.473971042956691
+          ],
+          "medianPeakRssBytes": 141852672,
+          "peakRssBytes": 142737408
+        }
+      },
+      "exactEquivalent": true,
+      "exactDigests": [
+        "sha256:78246b9c6a0be381afc15cd1b6b2c6dac82442253669c6fe16cf374c1afcc3ec"
+      ],
+      "memoryHardCapPassed": true,
+      "preportEquivalent": true,
+      "speedup": 1.2313164783823232,
+      "latencyPassed": false,
+      "memoryRegressionPassed": true,
+      "nativeExecutionPassed": true,
+      "productionMultiItemBatchPassed": true
+    },
+    "standardized-refusal": {
+      "pairs": [
+        {
+          "index": 0,
+          "order": [
+            "reference",
+            "cpp"
+          ]
+        },
+        {
+          "index": 1,
+          "order": [
+            "cpp",
+            "reference"
+          ]
+        },
+        {
+          "index": 2,
+          "order": [
+            "reference",
+            "cpp"
+          ]
+        },
+        {
+          "index": 3,
+          "order": [
+            "cpp",
+            "reference"
+          ]
+        },
+        {
+          "index": 4,
+          "order": [
+            "reference",
+            "cpp"
+          ]
+        }
+      ],
+      "backends": {
+        "reference": {
+          "medianSeconds": 1.401735792052932,
+          "minSeconds": 1.389501167985145,
+          "maxSeconds": 1.5349267499987036,
+          "stdevSeconds": 0.060442441263882124,
+          "sampleCount": 5,
+          "samplesSeconds": [
+            1.389501167985145,
+            1.5349267499987036,
+            1.401735792052932,
+            1.4211259160074405,
+            1.3969485010602511
+          ],
+          "medianPeakRssBytes": 116932608,
+          "peakRssBytes": 118882304
+        },
+        "cpp": {
+          "medianSeconds": 1.087830501026474,
+          "minSeconds": 1.0855338749825023,
+          "maxSeconds": 1.0941701660049148,
+          "stdevSeconds": 0.0032310727628445464,
+          "sampleCount": 5,
+          "samplesSeconds": [
+            1.089223709073849,
+            1.0941701660049148,
+            1.087830501026474,
+            1.0855338749825023,
+            1.0877144999685697
+          ],
+          "medianPeakRssBytes": 116703232,
+          "peakRssBytes": 117309440
+        }
+      },
+      "exactEquivalent": true,
+      "exactDigests": [
+        "sha256:b069195c72729b847f4faa91585cc941b818b1b3f23bf1139bf16fe74be9e8d1"
+      ],
+      "memoryHardCapPassed": true,
+      "speedup": 1.288560847237008,
+      "latencyPassed": true,
+      "memoryRegressionPassed": true,
+      "nativeExecutionPassed": true
+    },
+    "stress": {
+      "pairs": [
+        {
+          "index": 0,
+          "order": [
+            "reference",
+            "cpp"
+          ]
+        },
+        {
+          "index": 1,
+          "order": [
+            "cpp",
+            "reference"
+          ]
+        },
+        {
+          "index": 2,
+          "order": [
+            "reference",
+            "cpp"
+          ]
+        },
+        {
+          "index": 3,
+          "order": [
+            "cpp",
+            "reference"
+          ]
+        },
+        {
+          "index": 4,
+          "order": [
+            "reference",
+            "cpp"
+          ]
+        }
+      ],
+      "backends": {
+        "reference": {
+          "medianSeconds": 0.974044457951095,
+          "minSeconds": 0.967167624970898,
+          "maxSeconds": 0.9781738750170916,
+          "stdevSeconds": 0.0050194688653247685,
+          "sampleCount": 5,
+          "samplesSeconds": [
+            0.9763200000161305,
+            0.967670000041835,
+            0.9781738750170916,
+            0.974044457951095,
+            0.967167624970898
+          ],
+          "medianPeakRssBytes": 152633344,
+          "peakRssBytes": 153370624
+        },
+        "cpp": {
+          "medianSeconds": 0.5151689579943195,
+          "minSeconds": 0.5094048749888316,
+          "maxSeconds": 0.5193041250458919,
+          "stdevSeconds": 0.0036659525888185674,
+          "sampleCount": 5,
+          "samplesSeconds": [
+            0.5168287919950671,
+            0.5142562499968335,
+            0.5094048749888316,
+            0.5193041250458919,
+            0.5151689579943195
+          ],
+          "medianPeakRssBytes": 111886336,
+          "peakRssBytes": 111919104
+        }
+      },
+      "exactEquivalent": true,
+      "exactDigests": [
+        "sha256:0d46e29fa50ea3c893a9859fc465022aeda7a2fdf724214bd6535c71c0f61a6e"
+      ],
+      "memoryHardCapPassed": true,
+      "speedup": 1.8907281637140785,
+      "latencyPassed": true,
+      "memoryRegressionPassed": true,
+      "nativeExecutionPassed": true
+    }
+  },
+  "interpretation": "Exactness, original pre-port outcome, production multi-item batching, memory and other-workload latency gates pass. The fixed representative planning speedup is below the unchanged 2x requirement. This qualifies the first engineering increment, not overall goal completion."
+}

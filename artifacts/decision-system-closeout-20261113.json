@@ -1,0 +1,401 @@
+{
+  "schema": "resectionlab-decision-system-engineering-closeout-v1",
+  "date": "2026-11-13",
+  "recommendation": "MERGE READY",
+  "scope": "Finite engineering closeout of existing branch; zero completed patient tumor tasks. No merge performed.",
+  "branch": "shaf/decision-system-v1",
+  "synchronization": {
+    "initialHead": "27f59e85c5b0d6f5b918989bec32976789bf391a",
+    "fetchedAndFastForwardedHead": "ea8dbac2daf9028eb542d9d001c1be6704eee754",
+    "mainAtReview": "53c490190deae09abad4326ebf6fc08b1e871678",
+    "cleanBeforeWork": true,
+    "worktreeCount": 1,
+    "newWorktreesCreated": 0
+  },
+  "verifiedApplicationSourceCommit": "c11f6a33d8104fbaf75a6fc61b89fd055c1cdd4a",
+  "verifiedFrozenSourceCommit": "5d66273e8cd760e4a92107d780d2d978a0a0e57b",
+  "allFrozenAndDesktopInputsMatchCheckout": true,
+  "fixes": [
+    {
+      "commit": "3984eaa0293866c543b67cac72c470ca3d92eeac",
+      "change": "Run inspection refusal before resident preparation; nine operation controls prevent native-owner preparation. Add bounded packaged inspection workflow."
+    },
+    {
+      "commit": "dc24f6dead64a7e09ed356f2620bc82c29a4102d",
+      "change": "Handle contained framework directory symlinks while preserving exact target and payload verification."
+    },
+    {
+      "commit": "5d66273e8cd760e4a92107d780d2d978a0a0e57b",
+      "change": "Pin already collected pydicom 3.0.2 in runtime lock; align existing build environment to locked hook/iniconfig versions."
+    },
+    {
+      "commit": "c11f6a33d8104fbaf75a6fc61b89fd055c1cdd4a",
+      "change": "Witness genuine production batching through resident execution counters after the resident port."
+    }
+  ],
+  "toolchain": {
+    "python": "3.12.12",
+    "node": "v22.17.1",
+    "electron": "44.5.1",
+    "compiler": "Apple clang version 21.0.0 (clang-2100.1.1.101)",
+    "pybind11": "3.1.0",
+    "pyinstaller": "6.22.3",
+    "pyinstallerHooks": "2026.8",
+    "iniconfig": "2.3.0"
+  },
+  "tests": {
+    "cpp": {
+      "passed": 1120,
+      "skipped": 77,
+      "seconds": 137.49,
+      "skipReasons": {
+        "optionalIdleThermalBuildReceiptAbsent": 42,
+        "optionalPrefixJsonBuildReceiptAbsent": 35
+      }
+    },
+    "reference": {
+      "passed": 390,
+      "skipped": 1,
+      "seconds": 23.17,
+      "skipReason": "test_cpp_motion.py::test_cache_preserves_real_implementation_qualification requires compiled backend"
+    },
+    "noticePython": {
+      "passed": 6
+    },
+    "desktop": {
+      "main": 326,
+      "renderer": 716,
+      "viewer": 275,
+      "total": 1317,
+      "skipped": 0,
+      "failed": 0
+    },
+    "typescript": "passed",
+    "viteBuild": "passed",
+    "decisionOrderRootsWithdrawal": {
+      "passed": 110,
+      "seconds": 17.4,
+      "receipt": {
+        "path": "testcases/decision-system-v1/closeout-2026-11-13/decision-targeted/pytest-final.log",
+        "sha256": "320aa5c56d2188492ecf8902910f878d9343f5908664313a0386ce3679d9415d"
+      },
+      "strategyProofFailureReproduced": false,
+      "scope": "Original order plus root persistence/withdrawal. Known GC registry mechanism fixed previously in 15b17f05; original historical cause unproven."
+    },
+    "supplementaryDecisionReference": {
+      "passed": 640,
+      "skipped": 1,
+      "seconds": 938.76,
+      "receipt": {
+        "path": "testcases/outputs/decision-system-closeout-20261113/decision-regression-reference.log",
+        "sha256": "83864e4e7facb48942a43d60d278e53a8a0ca0337d95ce3a8f7502c4af64e8a8"
+      },
+      "commandAndScope": {
+        "path": "testcases/outputs/decision-system-closeout-20261113/decision-regression-command.json",
+        "sha256": "e87388607265e5985b7378e4bbb393d69a35ccf20d457ecd969041aa19f07406"
+      },
+      "scope": "Broader generated regression started before guard-order-only edit; final-source and targeted suites independently verify that fix."
+    },
+    "overlappingScopes": true
+  },
+  "delivery": {
+    "finalGatesPassed": 23,
+    "runtimeVariantsPassed": 20,
+    "method": "Stable numerical/source/wheel stages plus targeted packaging repairs and reproducible remaining-stage continuations. Original failed receipts remain failed.",
+    "originalFullVerifierPassed": false,
+    "successfulCoverageReceipt": {
+      "path": "testcases/outputs/cpp-final-closeout-20261113-final/workflow-verification.json",
+      "sha256": "3abca81d1fec23b10e560fc4f0ce77a9e3797d098d7c33880391d8da7c0853f3"
+    },
+    "nativeSummary": {
+      "path": "testcases/outputs/cpp-final-closeout-20261113-final/native-summary.json",
+      "sha256": "3674d57f7eb9180029b5378bafba8b73182c01fd9d1ceaf91aed909db341572b"
+    },
+    "runtimes": {
+      "source": {
+        "passed": true,
+        "variants": 5,
+        "receipt": "testcases/outputs/cpp-final-closeout-20261113-final/source-runtime.json",
+        "receiptSha256": "42f6b0f13920367c480fdab973ab8a0c81017984ae6e25240dca6fd60622c833",
+        "nativeBinarySha256": "304dea4eae193865a3fcb7e87a288ba58f4812174bfa70dcd7c6e9367e719e78",
+        "nativeBuildIdentitySha256": "a22b0fcd9f7978b75315733082cc5fe7c3af96cd9b10c6e4fc78ceebeddf72fb",
+        "residentPhysicalSubsteps": 33,
+        "exactCppReference": true,
+        "unavailableAutoFallback": true,
+        "unavailableCppRefusal": true,
+        "integrityAutoRefusal": true
+      },
+      "wheel": {
+        "passed": true,
+        "variants": 5,
+        "receipt": "testcases/outputs/cpp-final-closeout-20261113-final/wheel-runtime.json",
+        "receiptSha256": "1a47fb867f6492b78477d59310a19f89b156e2468914b73a7f594ec483a61da7",
+        "nativeBinarySha256": "304dea4eae193865a3fcb7e87a288ba58f4812174bfa70dcd7c6e9367e719e78",
+        "nativeBuildIdentitySha256": "a22b0fcd9f7978b75315733082cc5fe7c3af96cd9b10c6e4fc78ceebeddf72fb",
+        "residentPhysicalSubsteps": 33,
+        "exactCppReference": true,
+        "unavailableAutoFallback": true,
+        "unavailableCppRefusal": true,
+        "integrityAutoRefusal": true
+      },
+      "frozen": {
+        "passed": true,
+        "variants": 5,
+        "receipt": "testcases/outputs/cpp-final-closeout-20261113-final/frozen-runtime.json",
+        "receiptSha256": "f2d923c6b4c09bbd2c62bbbf562536c5732044f5607be8ddb5d976caf2d0fbf9",
+        "nativeBinarySha256": "c7fd3634100236e9544004a34b219545d2d0cd50c30664e16236b0fdcf2d47de",
+        "nativeBuildIdentitySha256": "a22b0fcd9f7978b75315733082cc5fe7c3af96cd9b10c6e4fc78ceebeddf72fb",
+        "residentPhysicalSubsteps": 33,
+        "exactCppReference": true,
+        "unavailableAutoFallback": true,
+        "unavailableCppRefusal": true,
+        "integrityAutoRefusal": true
+      },
+      "signedApplication": {
+        "passed": true,
+        "variants": 5,
+        "receipt": "testcases/outputs/cpp-final-closeout-20261113-final/packaged-runtime-final.json",
+        "receiptSha256": "050ff26c717b1e6e1baaa56cd926e7850eb23555d7aab65492bef12f5d09c89a",
+        "nativeBinarySha256": "c7fd3634100236e9544004a34b219545d2d0cd50c30664e16236b0fdcf2d47de",
+        "nativeBuildIdentitySha256": "a22b0fcd9f7978b75315733082cc5fe7c3af96cd9b10c6e4fc78ceebeddf72fb",
+        "residentPhysicalSubsteps": 33,
+        "exactCppReference": true,
+        "unavailableAutoFallback": true,
+        "unavailableCppRefusal": true,
+        "integrityAutoRefusal": true
+      }
+    },
+    "application": {
+      "path": "/Users/shaf/coding_projects/RessectionLab/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app",
+      "archiveSha256": "e4f396e65da8a647e76e18a974481359ab92f00f8cf2cc8a0a29dfd0996bd445",
+      "executableSha256": "dfa4430187ff6c1ccd1dd6c07f6e214480e67f9c21206a40f35ea7827f8d7b34",
+      "engineSha256": "1f2d63683e77834d95a7b8b5c8535bea7d51fbe8bf269288a01a852c9adb0440",
+      "desktopSourceDigest": "642805f0b4d9df15e522a3fbcc88c64766ba4f47d80928d940085f3e29a6a80f",
+      "frozenSourceDigest": "76d6c6713ec44acdeaa5a67e71c79b2306b62cf6843e8fd972ab02665281dd62"
+    },
+    "signature": {
+      "kind": "local_ad_hoc",
+      "notarized": false,
+      "CDHash": "efe7406dbe154bb6734dd8a9c1d9f91e18ae28e9"
+    },
+    "allCurrentRuntimeSourcesUnchangedAfterValidation": true
+  },
+  "generatedSignedWorkflows": {
+    "passed": true,
+    "actualApplicationLaunches": 4,
+    "cppReferenceAcceptedSnapshotsAndCanonicalComparisonsExact": true,
+    "case": "Maintained generated declared-legacy cranial control; conditional post-scalp start retains unknown prior exposure burden.",
+    "workflows": {
+      "cpp-warm": {
+        "passed": true,
+        "receipt": "testcases/outputs/cpp-final-closeout-20261113-final/cpp-warm-final/report.json",
+        "receiptSha256": "d3eeb0257368a5b3afdece25848193a8a750c9f606be09eabd9132e6fdc5d5f5",
+        "savedCaseSha256": "1e053d583470b4f8f7ad9775680f0c34e8423a44e251cf14c5cc0ea9710e8609",
+        "windowEverVisible": false,
+        "planCommands": 2,
+        "exactColdOpen": false,
+        "selectedBranch": "cranial-opening-0-20d6ebcdc1379a53",
+        "selectedPosition": 119,
+        "physicalCalls": 537,
+        "previewCalls": 153,
+        "directStepCalls": 384,
+        "actions": 119,
+        "ledger": {
+          "boneRemovedMm3": 285,
+          "preparationNonboneRemovedMm3": 49,
+          "workNonTargetRemovedMm3": 0,
+          "targetRemovedMm3": 27,
+          "wholeNonTargetRemovedMm3": 334,
+          "uniqueRemovedSourceCells": 361,
+          "unauthorizedRemovedSourceCells": 0,
+          "withinLimits": true,
+          "refusalReasons": [],
+          "nativeActions": 119,
+          "spentPublicCalls": 306,
+          "modeledElapsedSeconds": 76.75000000000003,
+          "priorExposureCost": "unknown for an assumed conditional post-scalp start",
+          "clinicalValidation": "none"
+        },
+        "originalTargetFractionRemoved": 1,
+        "refusalReason": "UNSUPPORTED_EXTRACTION",
+        "residentGenerateExecution": {
+          "actions": 537,
+          "trajectories": 525,
+          "physicalSubsteps": 12107,
+          "clones": 1403,
+          "rollbacks": 0,
+          "stateHashes": 6051,
+          "geometryBatches": 12107,
+          "geometryBatchItems": 30838,
+          "geometryBatchMaxItems": 3
+        },
+        "selectedViewSha256": "1fd710ba1c1e288b52598da223c078d2fd5b3a8521ceb39470e55083de169cd6",
+        "selectedStateId": "sha256:20d6ebcdc1379a53eb5f6e765613ee4e1233d6d48dd7db74cc97d2c910918c36"
+      },
+      "cpp-cold": {
+        "passed": true,
+        "receipt": "testcases/outputs/cpp-final-closeout-20261113-final/cpp-cold-final/report.json",
+        "receiptSha256": "0c516efde8a838c1f3bad7102571982f26f44bd867d9c73d25eba9e71046f91d",
+        "savedCaseSha256": "fa9c3cc92125abffeb5611242fdc983ec65d0cf70f29b7f34a17a79642c45ca5",
+        "windowEverVisible": false,
+        "planCommands": 0,
+        "exactColdOpen": true,
+        "selectedBranch": "cranial-opening-0-20d6ebcdc1379a53",
+        "selectedPosition": 119,
+        "selectedViewSha256": "1fd710ba1c1e288b52598da223c078d2fd5b3a8521ceb39470e55083de169cd6",
+        "selectedStateId": "sha256:20d6ebcdc1379a53eb5f6e765613ee4e1233d6d48dd7db74cc97d2c910918c36"
+      },
+      "reference-warm": {
+        "passed": true,
+        "receipt": "testcases/outputs/cpp-final-closeout-20261113-final/reference-warm-final/report.json",
+        "receiptSha256": "1c1f5391f80c288299d78b201893a5351c5e5b7dfea9dd0fce568168f62b3ed8",
+        "savedCaseSha256": "a577a8a122926ede17d118dd3e313049f2ed4e25cd0f7a792dd1188befbeeb0e",
+        "windowEverVisible": false,
+        "planCommands": 2,
+        "exactColdOpen": false,
+        "selectedBranch": "cranial-opening-0-20d6ebcdc1379a53",
+        "selectedPosition": 119,
+        "physicalCalls": 537,
+        "previewCalls": 153,
+        "directStepCalls": 384,
+        "actions": 119,
+        "ledger": {
+          "boneRemovedMm3": 285,
+          "preparationNonboneRemovedMm3": 49,
+          "workNonTargetRemovedMm3": 0,
+          "targetRemovedMm3": 27,
+          "wholeNonTargetRemovedMm3": 334,
+          "uniqueRemovedSourceCells": 361,
+          "unauthorizedRemovedSourceCells": 0,
+          "withinLimits": true,
+          "refusalReasons": [],
+          "nativeActions": 119,
+          "spentPublicCalls": 306,
+          "modeledElapsedSeconds": 76.75000000000003,
+          "priorExposureCost": "unknown for an assumed conditional post-scalp start",
+          "clinicalValidation": "none"
+        },
+        "originalTargetFractionRemoved": 1,
+        "refusalReason": "UNSUPPORTED_EXTRACTION",
+        "selectedViewSha256": "1fd710ba1c1e288b52598da223c078d2fd5b3a8521ceb39470e55083de169cd6",
+        "selectedStateId": "sha256:20d6ebcdc1379a53eb5f6e765613ee4e1233d6d48dd7db74cc97d2c910918c36"
+      },
+      "reference-cold": {
+        "passed": true,
+        "receipt": "testcases/outputs/cpp-final-closeout-20261113-final/reference-cold-final/report.json",
+        "receiptSha256": "8a8bfb7166f407f1928ae1c75997a7dc19ef96250989f5361f0143349b5be378",
+        "savedCaseSha256": "57696fe9584fdce66efce6e7081861b04383d143cf38ff69108d0d85e828f3ed",
+        "windowEverVisible": false,
+        "planCommands": 0,
+        "exactColdOpen": true,
+        "selectedBranch": "cranial-opening-0-20d6ebcdc1379a53",
+        "selectedPosition": 119,
+        "selectedViewSha256": "1fd710ba1c1e288b52598da223c078d2fd5b3a8521ceb39470e55083de169cd6",
+        "selectedStateId": "sha256:20d6ebcdc1379a53eb5f6e765613ee4e1233d6d48dd7db74cc97d2c910918c36"
+      }
+    },
+    "visualReview": "Comparison, selected 119-action branch, B/P/W ledger, both withdrawn hands and cold comparison visually accepted."
+  },
+  "patientInspection": {
+    "passed": true,
+    "scope": "Actual acquired-source inspection/refusal, Save and independent cold Open. No patient execution or treatment.",
+    "input": {
+      "path": "testcases/decision-system-v1/sub02-source-inspection-desktop-v3/future-run/warm/workflow-saved.ressectionlab",
+      "sha256": "97280471bb23c03bcef57e162cf50ceaea8a10b1d761d6b740615d78c47dcaca"
+    },
+    "canonicalInput": {
+      "path": "testcases/cases/sub-02-source-inspection-v1.ressectionlab",
+      "sha256": "b70eead101fcf939ef697238e506422e900671e31a4da29aa91af5f10b5778bc"
+    },
+    "warm": {
+      "path": "testcases/outputs/decision-system-closeout-20261113/patient-warm/report.json",
+      "sha256": "d3c63faf73bc39abbc239c415ad3ad498c8c2cc7e504c61d0f0431c4518bebbf"
+    },
+    "cold": {
+      "path": "testcases/outputs/decision-system-closeout-20261113/patient-cold/report.json",
+      "sha256": "4fcc48a45e7067ac37d194db9e8466764e4d0ba3ab9eb6e4b751cd0c406b69f5"
+    },
+    "postSaveManifestChecks": {
+      "allFourDeclaredSemanticHashesMatch": true,
+      "allOriginalSourceRefsMatch": true,
+      "allNamedMaskInventoriesMatch": true,
+      "inspectionMarkersMatchExactly": true,
+      "fullOriginalTargetCells": 148526,
+      "fullOriginalTargetIdsSha256": "71ac9e05c335b0b70169ea93a01060e2332224c3c30dab163abeec74ed5bb8a9",
+      "arrayZipByteIdentityClaimed": false
+    },
+    "acceptedNativeActions": 0,
+    "physicalOrPlanningIPC": 0,
+    "acknowledgedGenerateDisabled": true,
+    "patientTaskSuccess": false,
+    "physicalProtectionIndexConstructed": false,
+    "coldSnapshotExact": true,
+    "warmEngineTerminatedBeforeCold": true,
+    "windowsEverVisible": false,
+    "strictDeepSignatureAfterPatient": {
+      "path": "testcases/outputs/decision-system-closeout-20261113/signature-after-patient.log",
+      "sha256": "0c43a4d3e5619f653d3fc92dd60e9f0e480770134e439acacd3fee4a070f68cd"
+    },
+    "sourceAndSignedArchiveHashesUnchanged": true,
+    "visualReview": "Source slices/target overlay and explicit unresolved blockers are legible; no treatment success claim."
+  },
+  "localDataReuse": {
+    "inventory": {
+      "path": "testcases/decision-system-closeout-20261113/data-inventory.json",
+      "sha256": "5a50d65ce7e729f6049bf78aa6bf163c00ddcc85984a7dd71d78233a90cedf3a"
+    },
+    "declaredReleaseCases": 368,
+    "casePathsAndSizesChecked": {
+      "checked": 368,
+      "missing": 0,
+      "sizeMismatch": 0
+    },
+    "selectedSha256Checks": 8,
+    "liveVolumeMatchesMarker": true,
+    "datasetsDownloaded": 0,
+    "originalsOrAnnotationsModified": false,
+    "scope": "Detailed inventory, provenance, local paths and dataset documentation remain Git-ignored. No whole-cohort hash or clinical qualification claim."
+  },
+  "preservedFailures": [
+    {
+      "receipt": "testcases/decision-system-v1/closeout-2026-11-13/decision-targeted/pytest.log",
+      "cause": "Inspection marker reached native preparation and unrelated target-evidence error; guard order fixed."
+    },
+    {
+      "receipt": "testcases/outputs/cpp-final-closeout-20261113/superseded-diagnostic.json",
+      "cause": "Source edit during live cache proof test caused safe fresh-process cache miss. Unchanged-source 36-test rerun passed; stable final suite authoritative."
+    },
+    {
+      "receipt": "testcases/outputs/cpp-final-closeout-20261113-final/verification.json",
+      "cause": "Framework directory-link notice collector failed. Targeted Python/Node tests and repaired frozen retry pass."
+    },
+    {
+      "receipt": "testcases/outputs/cpp-final-closeout-20261113-final/cpp-warm/report.json",
+      "cause": "Verifier watched older helper counters; actual resident Generate succeeded. Corrected native witness and fresh final workflows pass."
+    }
+  ],
+  "remainingEngineeringBlockers": [],
+  "limitations": {
+    "completedPatientTumorTasks": 0,
+    "clinicalValidation": false,
+    "patientAnatomyPhysiologyAndRLQualification": "Unchanged holds; automatic patient-window qualification and additional physics ports deferred.",
+    "finalBinaryPerformanceRetimed": false,
+    "historicalPlanningSpeedup": "17.156064 to 4.274005 seconds, 4.01405x, frozen pre-closeout workload only.",
+    "acceptedPerformanceExceptions": [
+      "Original small-control latency gate remains failed.",
+      "Original approximately 18.3 percent RL latency regression accepted by user; optimization remains closed."
+    ],
+    "signing": "Local ad hoc; not notarized.",
+    "noticeSourceCompleteness": "incomplete",
+    "unresolvedNoticeComponents": [
+      "react-remove-scroll-bar@2.3.8",
+      "/opt/homebrew/Cellar/mpdecimal/4.0.1/lib/libmpdec.4.0.1.dylib",
+      "/opt/homebrew/Cellar/openssl@3/3.6.2/lib/libcrypto.3.dylib",
+      "/opt/homebrew/Cellar/openssl@3/3.6.2/lib/libssl.3.dylib",
+      "/opt/homebrew/Cellar/sqlite/3.53.2/lib/libsqlite3.3.53.2.dylib",
+      "CPython 3.12.12 static vendor libraries"
+    ],
+    "publicDistributionApprovalClaimed": false,
+    "legacyCompatibility": "Stage-bound direct-prefix replay and unsupported legacy extraction refusals remain intentional; no safety guards relaxed."
+  }
+}

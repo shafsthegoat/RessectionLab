@@ -99,6 +99,14 @@ class ObservedFrameCollector:
 
 
 class _ObservedFrames(SurgicalEngine):
+    @classmethod
+    def from_engine(cls, engine):
+        result = engine.clone()
+        from .surgical_native_engine import detach
+        detach(result)
+        result.__class__ = cls
+        return result
+
     def clone(self):
         other = super().clone()
         other._frames = self._frames[:]
@@ -179,6 +187,7 @@ class SurgicalFrameCache:
             result.actions = thaw_json(admission.snapshot['actions'][:count])
             result.history = thaw_json(admission.history[:count])
             history = thaw_json(admission.history)
+        SurgicalReplayCache._checkpoint_runtime(result)
         return result, history
 
     @staticmethod
@@ -227,8 +236,7 @@ class SurgicalFrameCache:
                 verified_history=admission.history, admission=admission)
             baseline, _ = boundary if boundary is not None else replay_cache.seek(
                 current, snapshot, position, check=check, include_history=True)
-            observed = _ObservedFrames(baseline.scene, protection=baseline.protection, guard_config=baseline.guard_config)
-            observed.__dict__.update(baseline.clone().__dict__)
+            observed = _ObservedFrames.from_engine(baseline)
             observed._frames = []
             observed._frame_max_bytes = self.max_bytes
             observed._last_effective_activation = None
@@ -297,6 +305,7 @@ class SurgicalFrameCache:
         position = item['receipt']['position'] + int(final)
         result.actions = copy.deepcopy(snapshot['actions'][:position])
         result.history = copy.deepcopy(history[:position])
+        SurgicalReplayCache._checkpoint_runtime(result)
         if final and result.state_id != item['receipt']['stateAfter']:
             raise ValueError('Playback boundary identity differs')
         if frame_index == 0 and result.state_id != item['receipt']['stateBefore']:
@@ -343,8 +352,7 @@ class SurgicalFrameCache:
             self._ancestry(snapshot, history)
             if history[position]['stateBefore'] != baseline.state_id:
                 raise ValueError('Playback action ancestry differs from canonical admission')
-            observed = _ObservedFrames(baseline.scene, protection=baseline.protection, guard_config=baseline.guard_config)
-            observed.__dict__.update(baseline.clone().__dict__)
+            observed = _ObservedFrames.from_engine(baseline)
             observed._frames = []
             observed._frame_max_bytes = self.max_bytes
             observed._last_effective_activation = None

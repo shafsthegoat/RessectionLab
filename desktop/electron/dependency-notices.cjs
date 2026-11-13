@@ -113,6 +113,10 @@ async function verifyFiles(root, files) {
     const actual = await fs.realpath(filename);
     if (!actual.startsWith(capturedRoot + path.sep)) throw new Error('Notice path escapes its capture');
     if (expected.symlink !== undefined && await fs.readlink(filename) !== expected.symlink) throw new Error(`Collected payload link changed: ${relative}`);
+    if (expected.directory === true) {
+      if (expected.kind !== 'SYMLINK' || typeof expected.symlink !== 'string' || !(await fs.lstat(filename)).isSymbolicLink() || !(await fs.stat(actual)).isDirectory()) throw new Error(`Invalid collected directory link: ${relative}`);
+      continue;
+    }
     const bytes = await fs.readFile(actual);
     if (sha(bytes) !== expected.sha256 || bytes.length !== expected.bytes) throw new Error(`Notice hash mismatch: ${relative}`);
   }

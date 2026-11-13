@@ -126,10 +126,18 @@ def collected_payload(engine: Path, rows: list[tuple]) -> dict:
     for name, _, kind in rows:
         relative = safe_relative(Path(name))
         filename = root / relative if kind == "EXECUTABLE" else root / "_internal" / relative
-        if not filename.is_file():
+        if not filename.exists():
             raise ValueError(f"Collected runtime file is missing: {name}")
         if not filename.resolve().is_relative_to(root):
             raise ValueError(f"Collected runtime file escapes engine: {name}")
+        if kind == "SYMLINK" and filename.is_symlink() and filename.is_dir():
+            # Framework aliases point to directories. Their collected children
+            # retain separate byte hashes; bind the alias itself to its target.
+            result[filename.relative_to(root).as_posix()] = {
+                "kind": kind, "symlink": str(filename.readlink()), "directory": True}
+            continue
+        if not filename.is_file():
+            raise ValueError(f"Collected runtime file is not a file: {name}")
         record = {"kind": kind, "sha256": sha256(filename), "bytes": filename.stat().st_size}
         if filename.is_symlink():
             record["symlink"] = str(filename.readlink())
@@ -154,6 +162,15 @@ def collect(engine: Path, work: Path, snapshot: Path, output: Path) -> dict:
         for name, source, kind in group:
             if source and Path(source).is_absolute() and Path(source).is_file():
                 included.setdefault(Path(source).resolve(), []).append({"name": name, "kind": kind})
+    # Raw identity images are immutable copies of installed dependency files.
+    # Preserve their RECORD ownership instead of classifying them as project code.
+    for item in captured.get("dependency_sources", []):
+        source = (snapshot / item["captured"]).resolve()
+        origin = Path(item["origin"]).resolve()
+        if sha256(source) != item["sha256"] or sha256(origin) != item["sha256"]:
+            raise ValueError("Captured dependency source differs from installed owner")
+        if source in included:
+            included.setdefault(origin, []).extend(included.pop(source))
 
     # RECORD file ownership disambiguates import names such as PIL/skimage and
     # bundled vendor modules such as setuptools._vendor. No top-level-name guess.
@@ -208,6 +225,16 @@ def collect(engine: Path, work: Path, snapshot: Path, output: Path) -> dict:
             unresolved.append({"component": str(source), "reason": "Frozen third-party file has no installed distribution owner"})
         elif not source.is_relative_to(snapshot) and not source.is_relative_to(work):
             unresolved.append({"component": str(source), "reason": "Unclassified frozen source outside captured project/build/runtime"})
+    # pybind11 contributes compiled headers; it has no imported runtime module.
+    native_notices = snapshot / "src/resectionlab/native-notices"
+    compiled_dependencies = []
+    if native_notices.is_dir():
+        for source in sorted(native_notices.iterdir()):
+            if source.is_file():
+                relative = "compiled-dependencies/" + source.name
+                files[relative] = copy_notice(source, output / relative,
+                    origin="Captured compiled dependency notice: " + source.name)
+                compiled_dependencies.append({"notice": relative, "sha256": files[relative]["sha256"]})
     # This runtime statically links vendors; its installed PSF notice is not a
     # substitute for absent vendor attribution. Keep the gap machine-readable.
     runtime_config = stdlib / f"{sysconfig._get_sysconfigdata_name()}.py"
@@ -222,6 +249,7 @@ def collect(engine: Path, work: Path, snapshot: Path, output: Path) -> dict:
         "source_table_sha256": {name: sha256(path) for name, path in tables.items()},
         "captured_lock_sha256": sha256(snapshot / "requirements-lock.txt"),
         "archive_verification": archive, "distributions": distributions,
+        "compiled_dependencies": compiled_dependencies,
         "collected_payload": payload,
         "native_version_basis": "Captured build lock and COLLECT source ownership. Actual relocated/signed frozen payload bytes are hashed here; they are not expected to equal upstream wheel binaries after PyInstaller relocation/signing.",
         "python_runtime": {"version": sys.version.split()[0], "included_members": runtime_sources},

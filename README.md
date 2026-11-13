@@ -1,5 +1,19 @@
 # RessectionLab
 
+The [decision-system contract](docs/decision-system-objective.md) and
+[progress record](docs/decision-system-progress.md) describe the current cranial
+Case → Plan → Generate → Compare → Rehearse → Save → cold Open integration,
+including source-bound opening roots, native B/P/W accounting and explicit
+refusals. The [November 13 engineering closeout](artifacts/decision-system-closeout-20261113.json)
+records final validation and package identities. Generated workflow success does
+not qualify patient treatment: zero completed patient tumor tasks, missing anatomy
+and the existing scientific/RL holds remain.
+
+The examples and dated artifact links below retain earlier research milestones;
+their test counts, app snapshots and performance measurements apply to their
+recorded source versions. See [C++ delivery and limitations](docs/cpp-acceleration.md)
+for native scope, accepted latency regressions and historical benchmark limits.
+
 The [interactive patient approach planner](docs/interactive-patient-planning.md)
 generates new, source-bound post-exposure CUSA approaches from edited target,
 entry, tool and mapped-tissue constraints. The desktop compares trajectories,
@@ -92,11 +106,12 @@ behavior-measurement framework. The [bounded learning pilot](docs/surgical-pilot
 keeps its actual optimizer updates, baselines, costs and limitations separate
 from anatomical or clinical validation.
 
-Current work follows the [October 16 first-release gate ledger](docs/poc-first-gate-ledger.md)
+Earlier anatomy foundation work follows the [October 16 first-release gate ledger](docs/poc-first-gate-ledger.md)
 and [patient corpus construction plan](docs/patient-corpus-plan.md): actual
 anatomical reconstruction, then one stateful two-tool rehearsal in Electron,
 then diverse real patients and explicitly labeled virtual gliomas. The merged
-native workbench from PR #12 is the integration base.
+native workbench from PR #12 was its integration base; the later integrated
+rehearsal branch was merged through PR #15.
 
 The [local Apple Silicon app](artifacts/poc-first-local-package-build-v1/RESULT.md)
 now runs the current workbench with its bundled numerical engine. Actual app
@@ -177,8 +192,9 @@ for the walkthrough, model records, acceptance results, and remaining gaps.
 The [full surgical planning/rehearsal supergoal](docs/SUPERGOAL_REAL_OBSERVATIONS.md),
 [execution ledger](docs/REAL_OBSERVATION_EXECUTION_LEDGER.md),
 [master plan](MASTER_PLAN.md), and [handoff](IMPLEMENTING_AGENT_HANDOFF.md)
-remain historical context. Simulation and RL work resumes only after the anatomy
-gate; this milestone does not establish surgical or clinical validity.
+remain historical context. Those anatomy gates remain scientific requirements;
+later generated simulation integration does not establish surgical or clinical
+validity.
 
 The active Mac application uses **Electron, React and TypeScript**. The Python
 engine handles physical geometry, evidence and independent validation. Legacy
@@ -204,8 +220,9 @@ now reports generated annotation encounters and unknown coverage for the exact
 recorded full-tool paths, separately from removal and clinical injury.
 The [matched generated search control](artifacts/shared-search-width4-generated-v1/RESULT.md)
 slightly outperforms that actor on one fixed task. No patient generalization is established.
-This revised desktop has not been repackaged; see [Electron packaging](docs/electron-packaging.md)
-for building and validating each complete app snapshot.
+That historical desktop snapshot was not repackaged at its milestone; see the
+current closeout receipt above and [Electron packaging](docs/electron-packaging.md)
+for validation of each complete app snapshot.
 
 ## Local development
 

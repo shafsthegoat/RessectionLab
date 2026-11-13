@@ -91,7 +91,15 @@ class Sidecar extends EventEmitter {
     if (op === 'evaluateDevelopmentEpisodeVascular') {
       try { args=vascularRequest(args); } catch(error) { return Promise.reject(error); }
     }
-    const id = randomUUID();
+    // A renderer-owned surgical request identity lets Cancel target this
+    // exact request, including the interval before its first progress event.
+    // It is transport metadata and never enters the surgical action contract.
+    let id = randomUUID();
+    if (op === 'surgicalRehearsal' && Object.hasOwn(args, 'requestId')) {
+      const {requestId, ...payload} = args;
+      if (typeof requestId !== 'string' || !/^surgical-[a-f0-9-]{36}$/.test(requestId) || this.pending.has(requestId)) return Promise.reject(new Error('Invalid surgical request identifier'));
+      id = requestId; args = payload;
+    }
     const message = JSON.stringify({ id, op, args, timeoutMs });
     if (Buffer.byteLength(message) > 1024 * 1024) return Promise.reject(new Error('Operation request is too large'));
     if (lease) lease.id = id;

@@ -66,7 +66,7 @@ def advance_instruments(engine, key, op, p, q, active, dt, working_cells, eligib
             for a, b, radius, part in envelopes(tool, params, position, quaternion):
                 cells = set(engine.touched(a, b, radius))
                 if part == 'shaft':
-                    if cells - set(engine.state['holds'].get(hand, {}).get('cells', ())):
+                    if cells - engine._shaft_held_cells(hand):
                         raise ValueError('SHAFT_COLLISION:' + hand)
                 else:
                     contacts.update(cells)
@@ -85,7 +85,13 @@ def advance_instruments(engine, key, op, p, q, active, dt, working_cells, eligib
     v2 = bool(engine.scene.properties.get('tissuePhysicsV2'))
     for hand, tool, params, position, quaternion, effective, contacts, effect_cells in records:
         if effective:
-            events.extend(engine._effect(hand, op if hand == key else 'apply', effect_cells, position, quaternion, dt))
+            operation = op if hand == key else 'apply'
+            effects = engine._effect(hand, operation, effect_cells, position, quaternion, dt)
+            if getattr(engine._cranial_access, 'method', None) == 'milling':
+                effects = [{**effect, 'sourceSlot': hand,
+                            'instrumentId': engine.state['slots'][hand]['instrument'],
+                            'effectOperation': operation} for effect in effects]
+            events.extend(effects)
         vessel_cells = []
         for cell in sorted(contacts):
             material = engine.by_label[int(engine.scene.labels.flat[cell])]['material']

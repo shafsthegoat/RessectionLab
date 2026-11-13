@@ -11,6 +11,58 @@ type Cache={mappingKey:string;base:Base;current:State;frames:Map<string,State>};
 const caches=new WeakMap<ViewerVolume,Cache>();
 export interface ModeledVolumeWork {fullBuild:boolean;sourceCellsScanned:number;copiedMaskBytes:number;patchedCells:number;baseOwnerBytes:number}
 const work=new WeakMap<ViewerVolume,ModeledVolumeWork>();
+type InspectionBinding={caseHash:string;caseId:string;grid:string;group:string;collection:string;hashes:Readonly<Record<string,string>>;
+  layers:ReadonlyArray<{name:string;kind:string|undefined;mask:Uint8Array;sourceIdentity:string|undefined}>;targets:ReadonlySet<string>};
+// Registered only by the checked source loader. App may shallow-copy its viewer
+// wrapper, but must retain the exact MRI/mask arrays. No timeline/adapter string
+// alone can select this representation or grant any numerical permission.
+const inspectionSources=new WeakMap<Float32Array,InspectionBinding>();
+const record=(value:unknown):value is Record<string,unknown>=>!!value&&typeof value==='object'&&!Array.isArray(value);
+export function registerSourceInspection(source:ViewerVolume,marker:unknown,annotations:unknown):void {
+  if(!record(marker)||marker.schema!=='resectionlab.cranial-planning-candidate.v1'||marker.status!=='inspection-only'||
+    marker.patientTaskAdmission!==false||marker.officialTrainClaim!==false||marker.annotationAuthority!==false||marker.physicalProtectionIndexConstructed!==false||
+    typeof marker.sourcePatientGroup!=='string'||!marker.sourcePatientGroup||typeof marker.sourceCollectionHash!=='string'||!marker.sourceCollectionHash||
+    !Array.isArray(marker.targetLayerIds)||!marker.targetLayerIds.length||!marker.targetLayerIds.every(name=>typeof name==='string')||!record(annotations))throw Error('Invalid source-owned inspection declaration');
+  const hashes:Record<string,string>={};
+  if(Object.keys(annotations).length!==source.compartments.length)throw Error('Inspection annotation binding differs from its source');
+  for(const layer of source.compartments){const row=annotations[layer.name];
+    if(!record(row)||typeof row.maskHash!=='string'||!/^sha256:[0-9a-f]{64}$/.test(row.maskHash))throw Error('Inspection annotation hash is unavailable');
+    hashes[layer.name]=row.maskHash;
+  }
+  if(marker.targetLayerIds.some(name=>!(name in hashes)))throw Error('Inspection target binding differs from its source');
+  inspectionSources.set(source.mri,{caseHash:source.caseHash,caseId:source.caseId,grid:JSON.stringify([source.shape,source.affine,source.frame]),
+    group:marker.sourcePatientGroup,collection:marker.sourceCollectionHash,hashes:Object.freeze(hashes),targets:new Set(marker.targetLayerIds as string[]),
+    layers:source.compartments.map(layer=>({name:layer.name,kind:layer.kind,mask:layer.mask,sourceIdentity:layer.sourceIdentity}))});
+}
+function inspectionSourceVolume(source:ViewerVolume,view:SurgicalView):ViewerVolume|undefined {
+  const binding=inspectionSources.get(source.mri),native=view.scene.source,adapter=native?.adapter;
+  if(!binding){if(adapter?.type==='native-patient-source-inspection')throw Error('Source-owned inspection marker is unavailable');return;}
+  const hashes=native?.annotationHashes;
+  if(source.caseHash!==binding.caseHash||source.caseId!==binding.caseId||JSON.stringify([source.shape,source.affine,source.frame])!==binding.grid||
+    native?.caseHash!==binding.caseHash||native.caseId!==binding.caseId||adapter?.type!=='native-patient-source-inspection'||adapter.sourceRole!=='DEVELOPMENT_CANDIDATE'||
+    adapter.sourcePatient!==binding.group||adapter.sourceCollectionHash!==binding.collection||adapter.physicalProtectionIndexConstructed!==false||!record(hashes)||
+    Object.keys(hashes).length!==binding.layers.length||source.compartments.length!==binding.layers.length||view.scene.regions.length!==binding.layers.length||
+    binding.layers.some((layer,i)=>{const actual=source.compartments[i],region=view.scene.regions.find(r=>r.name===layer.name);return !actual||actual.name!==layer.name||actual.mask!==layer.mask||actual.kind!==layer.kind||actual.sourceIdentity!==layer.sourceIdentity||hashes[layer.name]!==binding.hashes[layer.name]||
+      !region||region.target!==binding.targets.has(layer.name)||region.material!==(binding.targets.has(layer.name)?'tumor':'unknown');}))throw Error('Source inspection image/grid/annotation binding changed');
+  const empty=(value:unknown)=>value===undefined||value===null||(Array.isArray(value)?value.length===0:record(value)&&Object.keys(value).length===0);
+  const zero=(value:unknown)=>value===undefined||value===0;
+  const arrays=[view.history,view.removed,view.moved,view.cuts,view.cutEdges,view.meshCutEdges,view.meshSeams,view.transectedEdges,view.separatedAttachments,view.flapComponents,view.observations,view.contact];
+  const fields=[view.holds,view.deformation,view.thermal,view.fluid,view.debris,view.vesselConnections,view.vesselWounds,
+    view.deformationModel?.velocities,view.drillingV2?.workJ,view.drillingV2?.temperatureC,view.drillingV2?.thermalDoseCSeconds,
+    view.vesselsV2?.faces,view.vesselsV2?.wounds,view.vesselsV2?.contactDose];
+  const amounts=[view.metrics.elapsedSeconds,view.metrics.targetRemovedMm3,view.metrics.nonTargetRemovedMm3,
+    view.deformationModel?.remainderSeconds,view.deformationModel?.elasticEnergyNmm,
+    view.drillingV2?.inputEnergyJ,view.drillingV2?.cuttingWorkJ,view.drillingV2?.heatGeneratedJ,view.drillingV2?.coolingLossJ,view.drillingV2?.unusedEnergyJ,view.drillingV2?.removedVolumeMm3,
+    view.vesselsV2?.generatedMm3,view.vesselsV2?.refilledMm3,view.vesselsV2?.elapsedSeconds];
+  if(!Array.isArray(view.history)||!Array.isArray(view.removed)||!Array.isArray(view.moved)||arrays.some(value=>!empty(value))||fields.some(value=>!empty(value))||amounts.some(value=>!zero(value))||
+    !empty(view.deformationModel?.active)||!empty(view.deformationModel?.anchors)||view.craniotomy||view.cranialStages||view.planarBladeManeuver||view.protection?.configured!==false||
+    Object.values(view.slots).some(slot=>slot.active||slot.inserted||slot.grip.length)||
+    (view.vesselsV2&&view.vesselsV2.remainingMm3!==view.vesselsV2.initialMm3))throw Error('Inspection display requires an unacted source without modeled effects');
+  // Exact source arrays, all overlaps, packed labels and prepared surfaces stay
+  // resident. Native state/tools still publish through the ordinary frame fence.
+  work.set(source,{fullBuild:false,sourceCellsScanned:0,copiedMaskBytes:0,patchedCells:0,baseOwnerBytes:0});
+  return source;
+}
 export const modeledVolumeWork=(volume:ViewerVolume)=>work.get(volume);
 export function modeledVolumeCacheStatistics(source:ViewerVolume){
   const cache=caches.get(source);return {frames:cache?.frames.size??0,maxFrames:3,baseOwnerBytes:cache?.base.owner.byteLength??0};
@@ -72,6 +124,7 @@ function overrides(base:Base,view:SurgicalView,coupled:boolean):Map<number,numbe
  * One mapping/source plus three demanded frames bounds retained ownership. */
 export function modeledVolume(source:ViewerVolume,view:SurgicalView):ViewerVolume {
   validateGrid(source,view);
+  const inspection=inspectionSourceVolume(source,view);if(inspection)return inspection;
   const coupled=view.physics?.profile?.schema==='resectionlab.tissue-physics.v2',key=stateKey(view,coupled),mappingKey=JSON.stringify([view.scene.regions,coupled]);
   let cache=caches.get(source);
   if(cache?.mappingKey===mappingKey){const existing=cache.frames.get(key);if(existing){

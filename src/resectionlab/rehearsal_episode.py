@@ -20,7 +20,7 @@ from .critical_evidence import resolve_critical_evidence
 from .evaluation import independent_check_motion
 from .geometry import (GeometryScene, ToolGeometry, ToolPose, capsule_voxel_indices,
                        check_motion, check_pose, interpolate_pose, tool_capsules,
-                       segment_segment_distance)
+                       segments_within_distance)
 from .structural_evidence import structural_frame_hash
 
 SCHEMA = "resectionlab.source-bound-rehearsal.v2"
@@ -77,7 +77,7 @@ def _synchronized_collision(tools, starts, ends, intervals):
                 pa, pb = interpolate_pose(starts[first], ends[first], t), interpolate_pose(starts[second], ends[second], t)
                 for a0, a1, ar, _ in tool_capsules(a, pa, da):
                     for b0, b1, br, _ in tool_capsules(b, pb, db):
-                        if segment_segment_distance(a0, a1, b0, b1) <= ar + br + 1e-9:
+                        if segments_within_distance(a0, a1, b0, b1, ar + br + 1e-9):
                             return f"TOOL_COLLISION: swept full tools {first} and {second}"
     return None
 

@@ -1,0 +1,8 @@
+{
+  "schema": "resectionlab.cpp-measurement-notes.v1",
+  "manifestSha256": "f507080eb60f214fd4f050e1595d551bff6222b6fef6cad6d6f7b7a98abb0f67",
+  "clarification": "The frozen stress workload measures geometry/continuum with state recording. Its timed operations include five canonical state-recording semantic_digest calls after the three hold ticks, source removal/topology tick and release tick. These operations have been present since the first frozen workload and remain unchanged. JSON acceleration therefore contributes to stress throughput; no mechanics-only speedup follows.",
+  "unchanged": ["workloads", "timer boundaries", "paired samples", "performance targets", "regression gates"],
+  "outsideTiming": "Final cross-backend equality projection/digest and output serialization remain outside the workload timer.",
+  "supplementaryPolicy": "Complete-step and RL measurements include endogenous production receipts/state-ID work, and exclude additional comparison hashes and snapshot/restore audits after the timer stops."
+}

@@ -1,0 +1,251 @@
+{
+  "schema": "resectionlab.cpp-supplement-profile-summary.v1",
+  "status": "Historical pre-port qualification/profile record. Copier retained after exact paired gains; current outcomes are in final-performance-acceptance.json.",
+  "scope": "Generated engineering controls only. Original 2x planning target and frozen workloads remain unchanged; patient/RL readiness is not established.",
+  "evidenceColumns": ["repositoryRelativePath", "sha256"],
+  "evidence": [
+    ["manifests/experiments/cpp-acceleration-v1.json", "f507080eb60f214fd4f050e1595d551bff6222b6fef6cad6d6f7b7a98abb0f67"],
+    ["manifests/experiments/cpp-acceleration-simulation-v1.json", "7c4eb89e4b1061f2d3ed08d39c53dc1396f549c93b842e8b0dc4c7b157cd177a"],
+    ["outputs/cpp-acceleration-v1/supplement-prepass-cpp/capture.json", "97205d27a592c5a054ad1444aa8270f5909edb5f759e99e0e99d31c693f99884"],
+    ["outputs/cpp-acceleration-v1/supplement-qualify-v1/summary.json", "f140776b056b1f754361bc7916c0ce341512ecdc3fce2e248accb6baeb16b200"],
+    ["outputs/cpp-acceleration-v1/supplement-qualify-v1/simulation-steps-qualify-reference.json", "7f2843970063adb352e37075cf9de4290b57fc108a467bbfa01b5938c32a419d"],
+    ["outputs/cpp-acceleration-v1/supplement-qualify-v1/simulation-steps-qualify-cpp.json", "692f4c42bf0913a0663c384bd6321e0796f6b8e815979cf54e57ba7caf81f80b"],
+    ["outputs/cpp-acceleration-v1/supplement-qualify-v1/rl-episodes-qualify-reference.json", "620e9ed7af405208a31d92e0daf7663a77c1f44e11a0654b3e086b8ec4ebd959"],
+    ["outputs/cpp-acceleration-v1/supplement-qualify-v1/rl-episodes-qualify-cpp.json", "3a29057998891b85560fe0473554bebfab5925833bac44d7a0fc1965864b879a"],
+    ["outputs/cpp-acceleration-v1/latest-planning-profile-v1/generate-profile.json", "6812b27cd06f83a077fb2c1a553015b42c1324dbd3c729f028456e2b0bbe708e"],
+    ["outputs/cpp-acceleration-v1/latest-planning-profile-v1/generate-profile.prof", "bae24b3553b662060089c18e96f8595965abbe8f5e28fef28b218c05999ddff8"],
+    ["outputs/cpp-acceleration-v1/supplement-profile-v1/simulation-steps-profile.json", "fe96dee432c47d53aa4fa759aac4c46da0aa8a15ebaffa70a2e497bdfcfdcf41"],
+    ["outputs/cpp-acceleration-v1/supplement-profile-v1/simulation-steps-profile.prof", "075d6eb10163e937c6c28b06d0d9dcf860465badc24bc6edce43e99084e8ec64"],
+    ["outputs/cpp-acceleration-v1/supplement-profile-v1/rl-episodes-profile.json", "b01abdc5ffbb74c9e232ffeecfd9723c95ca16245dc236f67c2c8b6bef61f3a1"],
+    ["outputs/cpp-acceleration-v1/supplement-profile-v1/rl-episodes-profile.prof", "f11027e51ebe31b4622d377adda9bc2422d3ae3183904e710d261814cd16999c"]
+  ],
+  "capturedBackend": {
+    "sourceCommit": "15b17f055ee4410f80f7283f0524ff5e3db525c3",
+    "sourceRoot": "outputs/cpp-acceleration-v1/supplement-prepass-cpp/src",
+    "binarySha256": "cd9ef617e414c2a268ca7efac637afcaab6717b7ac66496f627ba6cb0d41ae9e",
+    "buildManifestSha256": "1756e2672b16e17e0aa813f33fb20ac9196b0f6ac35badf12dfd59df4c40d6e6",
+    "runnerSha256AtCapture": "0232fa192ad06d9f3b8d4e9339bb0ed8da18ea6bc7d5bb66617109a3d6d4ca72",
+    "selected": "cpp",
+    "nativeThreads": 1,
+    "identityDetails": "Compiler, ABI, flags and source-file hashes remain in capture.json; no duplicated build manifest here."
+  },
+  "qualification": {
+    "interpretation": "One fresh-process exact pair per suite; diagnostic timings only, not five-pair performance acceptance.",
+    "workColumns": ["suite", "exactEquivalent", "exactDigest", "requestedAttempts", "publicPreviews", "completeEpisodes", "committedPublicActions"],
+    "work": [
+      ["simulation-steps", true, "sha256:91819f86b18115336f3ca366675b79d0ddceea51ff1a3756bdfdc36f7cf8143f", 53, 6, 0, 51],
+      ["rl-episodes", true, "sha256:7d98d39947eb060788920b184a767d5b4959086dc1fe7deeb974a1a262242143", 44, 0, 6, 38]
+    ],
+    "sampleColumns": ["suite", "backend", "fixtureSeconds", "computeSeconds", "completeSeconds", "timedWorkPeakRssBytes", "fullProcessTreePeakRssBytes", "auditProjectionRestoreSeconds", "auditEqualityHashSeconds"],
+    "samples": [
+      ["simulation-steps", "reference", 0.03531791502609849, 1.2273259600042365, 1.262643875030335, 111640576, 111640576, 0.01788841694360599, 0.01056933298241347],
+      ["simulation-steps", "cpp", 0.02355970797361806, 1.1070262500434183, 1.1305859580170363, 109887488, 109887488, 0.015126415994018316, 0.008649750030599535],
+      ["rl-episodes", "reference", 0.05320404190570116, 1.3815627490985207, 1.4347667910042219, 105807872, 144146432, 1.4233832079917192, 0.016409250034485012],
+      ["rl-episodes", "cpp", 0.03884783195098862, 1.1423447100096382, 1.1811925419606268, 101711872, 123633664, 1.1842982079833746, 0.014399459003470838]
+    ],
+    "memoryPolicy": "Supplement regression gates use pre-audit timedWorkPeakRssBytes; full-process peak includes restore audits and remains diagnostic plus 1 GiB hard cap. Original planning memory policy is unchanged.",
+    "counterColumns": ["suite", "allBindings", "geometryBindings", "jsonCopies", "segmentPredicates", "capsuleBatchCalls", "capsuleItems", "maxBatchItems", "primitiveCandidates", "maxPrimitiveCandidates", "ambiguousCandidates", "batchSize:count"],
+    "cppCountersBeforeAudit": [
+      ["simulation-steps", 10189, 7672, 2517, 6494, 1178, 1509, 3, 107372, 1300, 33, "1:881,2:263,3:34"],
+      ["rl-episodes", 11308, 11259, 49, 8712, 2547, 2547, 1, 263320, 200, 0, "1:2547"]
+    ],
+    "zeroCounters": "Both CPP suites: no reference/unsupported/JSON fallback calls and no segment refinements. Reference mode bypassed the new extension. These are actual public/native counters, not an instrumented private physical-call trace.",
+    "familyColumns": ["family", "seedOrNull", "referenceCompleteSeconds", "cppCompleteSeconds"],
+    "familyTimes": [
+      ["simulation-target-episode", null, 0.25282062496989965, 0.20118495804490522],
+      ["simulation-drill-thermal", null, 0.12961945799179375, 0.1047355419723317],
+      ["simulation-cusa-v3", null, 0.0738156660227105, 0.061388208996504545],
+      ["simulation-vascular", null, 0.21198341698618606, 0.1975306670065038],
+      ["simulation-vascular-wound", null, 0.39484520797850564, 0.36550254200119525],
+      ["simulation-continuum", null, 0.19955666700843722, 0.2002415000461042],
+      ["rl-success-episode", 318, 0.28051199996843934, 0.23021429195068777],
+      ["rl-protected-attempt-episode", 318, 0.21438404195941985, 0.15914499998325482],
+      ["rl-independent-instances", 318, 0.2337235000450164, 0.19702520803548396],
+      ["rl-independent-instances", 319, 0.23170137498527765, 0.19874954200349748],
+      ["rl-independent-instances", 320, 0.23222504201112315, 0.1982247920241207],
+      ["rl-independent-instances", 321, 0.2422175410320051, 0.1978304999647662]
+    ],
+    "ownership": "Post-timer exact audits cover typed observation/action bytes including signed zero, snapshots, rewards/termination, RNG/restore, nested state and independent buffer ownership; no policy training.",
+    "endogenousHashing": "Production receipts, state IDs and required proof/semantic hashes remain inside timing and profiles.",
+    "finalSnapshots": "Final engine snapshots, equality projections, restore checks and audit hashes are collected after the timer/profiler stops."
+  },
+  "profiles": {
+    "interpretation": "cProfile attribution only. Inclusive caller times overlap and include compiled work; self time is exclusive. Supplement audit projection/restore/hash runs after profiler and timer. Reused original planning profile retains its original audit scope.",
+    "columns": ["workload", "profiledSeconds", "exactDigest", "reusedExistingProfile", "auditExcluded", "copyPyExclusiveSeconds"],
+    "rows": [
+      ["planning", 27.77356638399985, "sha256:78246b9c6a0be381afc15cd1b6b2c6dac82442253669c6fe16cf374c1afcc3ec", true, false, 3.201227591],
+      ["simulation", 2.221909756999996, "sha256:91819f86b18115336f3ca366675b79d0ddceea51ff1a3756bdfdc36f7cf8143f", false, true, 0.14218127500000002],
+      ["rl", 2.484776189999997, "sha256:7d98d39947eb060788920b184a767d5b4959086dc1fe7deeb974a1a262242143", false, true, 0.175143919]
+    ],
+    "cppEntryColumns": ["workload", "function", "calls", "selfSeconds"],
+    "cppEntries": [
+      ["planning", "copy_builtin_json", 16102, 0.157659776],
+      ["planning", "capsule_chunk", 16697, 0.055793157],
+      ["planning", "segment_predicate", 106046, 0.024435184000000002],
+      ["simulation", "copy_builtin_json", 2517, 0.008967354],
+      ["simulation", "capsule_chunk", 1178, 0.0030874400000000003],
+      ["simulation", "segment_predicate", 6494, 0.0017478270000000002],
+      ["rl", "capsule_chunk", 2547, 0.006740993000000001],
+      ["rl", "segment_predicate", 8712, 0.002160141],
+      ["rl", "copy_builtin_json", 49, 8.8837e-05]
+    ],
+    "functionColumns": ["workload", "file", "function", "calls", "selfSeconds", "cumulativeSeconds"]
+  },
+  "areas": {
+    "collisionSweptMathAndQueries": {
+      "finding": "Python motion/query callers include conversion, allocation, cache admission, live integrity and compiled math. Keep measured scalar/multi-item kernels; no additional port justified solely by overlapping caller costs.",
+      "rows": [
+        ["planning", "surgical_motion.py", "swept_envelopes", 31562, 0.152282358, 3.0170288700000003],
+        ["planning", "surgical_motion.py", "envelopes", 44958, 0.06809378, 2.071132969],
+        ["planning", "surgical_geometry_cache.py", "query", 48040, 0.11375323000000001, 3.7031022100000004],
+        ["planning", "surgical_geometry_cache.py", "query_many", 7820, 0.076886042, 1.217707793],
+        ["planning", "surgical_geometry_cache.py", "_implementation_key", 55860, 0.10662018000000001, 1.896864075],
+        ["planning", "surgical_geometry_cache.py", "_function_identity", 782040, 0.475931659, 1.0516990400000001],
+        ["planning", "geometry.py", "capsule_voxel_indices_batch", 16697, 0.422667858, 1.915174047],
+        ["planning", "surgical_engine.py", "occupancy", 63208, 0.114519567, 0.9507101160000001],
+        ["simulation", "surgical_motion.py", "swept_envelopes", 1333, 0.006615226, 0.12690249],
+        ["simulation", "surgical_motion.py", "envelopes", 3631, 0.006337225, 0.164994851],
+        ["simulation", "surgical_geometry_cache.py", "query", 5162, 0.01056222, 0.413179279],
+        ["simulation", "surgical_geometry_cache.py", "query_many", 1333, 0.010222731, 0.202611217],
+        ["simulation", "surgical_geometry_cache.py", "_implementation_key", 6495, 0.011708779, 0.21565102200000003],
+        ["simulation", "surgical_geometry_cache.py", "_function_identity", 90930, 0.053556095000000005, 0.11866784600000001],
+        ["simulation", "geometry.py", "capsule_voxel_indices_batch", 3941, 0.07727840600000001, 0.299831463],
+        ["simulation", "surgical_engine.py", "occupancy", 11314, 0.021401273000000002, 0.18242919900000001],
+        ["rl", "surgical_motion.py", "swept_envelopes", 2913, 0.013605756, 0.25235855900000004],
+        ["rl", "surgical_motion.py", "envelopes", 5091, 0.009400968, 0.201990949],
+        ["rl", "surgical_geometry_cache.py", "query", 8195, 0.02061015, 0.872263199],
+        ["rl", "surgical_geometry_cache.py", "_implementation_key", 8195, 0.014623114000000001, 0.267081831],
+        ["rl", "surgical_geometry_cache.py", "_function_identity", 114730, 0.06598345, 0.146865611],
+        ["rl", "geometry.py", "capsule_voxel_indices_batch", 7974, 0.121046253, 0.493042497],
+        ["rl", "surgical_engine.py", "occupancy", 12601, 0.02480165, 0.20194003000000002]
+      ]
+    },
+    "stateCopyCheckpointAndEndogenousHashing": {
+      "finding": "Checkpoint copying is the defensible next narrow seam: 14.44% planning, 9.90% simulation, 10.63% RL inclusive. A true native alias/cycle-preserving memo copier is under qualification; the earlier 1.207x helper trial was Python-only.",
+      "rows": [
+        ["planning", "surgical_engine.py", "_microstep_checkpoint", 7814, 0.031750211, 4.011856128000001],
+        ["planning", "surgical_engine.py", "_copy_engine_data", 739074, 0.414675092, 1.305905522],
+        ["planning", "surgical_engine.py", "_owned_digest", 67048, 0.9787598660000001, 2.070212139],
+        ["planning", "copy.py", "deepcopy", 6372227, 2.0167250500000002, 4.2633190690000005],
+        ["simulation", "surgical_engine.py", "_microstep_checkpoint", 1333, 0.007938596000000001, 0.219947933],
+        ["simulation", "surgical_engine.py", "_copy_engine_data", 17335, 0.016768121, 0.036674503000000004],
+        ["simulation", "surgical_engine.py", "_owned_digest", 11429, 0.037743344000000005, 0.098477992],
+        ["simulation", "copy.py", "deepcopy", 279832, 0.09020700400000001, 0.185969721],
+        ["rl", "surgical_engine.py", "_microstep_checkpoint", 2179, 0.012823216, 0.264024656],
+        ["rl", "surgical_engine.py", "_copy_engine_data", 16359, 0.013578788000000001, 0.027250793000000002],
+        ["rl", "surgical_engine.py", "_owned_digest", 12777, 0.035750032, 0.097087695],
+        ["rl", "copy.py", "deepcopy", 330942, 0.10992523400000001, 0.228315032]
+      ]
+    },
+    "continuumTopologyAssemblyHistory": {
+      "finding": "Public continuum actions exercise 129 elements/840 DOF and nonzero history/exposure. Tick is 9.44% of simulation, topology 0.15%, assembly 1.05%, exposure 2.02%; retain existing NumPy/SciPy sparse/vector operators.",
+      "rows": [
+        ["simulation", "surgical_continuum.py", "voxel_mesh", 1, 0.0021968630000000003, 0.0032231250000000003],
+        ["simulation", "surgical_continuum.py", "assemble", 1, 0.000536469, 0.02337275],
+        ["simulation", "surgical_continuum.py", "_pack", 12, 0.001341402, 0.001834834],
+        ["simulation", "surgical_continuum.py", "_unpack", 12, 0.00596782, 0.010976125000000002],
+        ["simulation", "surgical_continuum.py", "exposure_increment", 72, 0.013436172000000001, 0.044851666000000005],
+        ["simulation", "surgical_continuum.py", "tick", 6, 0.006934506, 0.20971883300000002]
+      ]
+    },
+    "drillingThermalAspirationVascular": {
+      "finding": "Drilling apply, thermal and CUSA apply each cost <1% of simulation. Vascular tick is 6.99%, including SciPy solve_ivp 5.19%; no broad physics rewrite or integrator changes.",
+      "rows": [
+        ["planning", "surgical_cusa_v3.py", "apply", 2240, 0.017949833000000002, 0.29993764100000003],
+        ["simulation", "surgical_drilling_v2.py", "apply", 126, 0.000847106, 0.002356876],
+        ["simulation", "surgical_drilling_v2.py", "_thermal", 1212, 0.002639769, 0.008204736],
+        ["simulation", "surgical_drilling_v2.py", "_dose_integral", 1510, 0.000656366, 0.0013096000000000002],
+        ["simulation", "surgical_cusa_v3.py", "apply", 92, 0.000628849, 0.010125044000000001],
+        ["simulation", "surgical_vessels_v2.py", "tick", 1212, 0.0025912020000000003, 0.202412967],
+        ["simulation", "surgical_vascular_graph.py", "tick", 581, 0.008583706, 0.15536047],
+        ["simulation", "ivp.py", "solve_ivp", 581, 0.004035441, 0.11536112000000001],
+        ["rl", "surgical_drilling_v2.py", "_thermal", 2178, 0.0024615730000000003, 0.007543277],
+        ["rl", "surgical_vessels_v2.py", "tick", 2178, 0.005165397, 0.018173015]
+      ]
+    },
+    "repeatedStepsAndIndependentEnvironments": {
+      "finding": "53 simulation steps plus six previews; 44 Gym attempts complete six episodes, including four independent seeded success environments advanced sequentially. No concurrency claim; authoritative order and accounting stay unchanged.",
+      "rows": [
+        ["planning", "surgical_engine.py", "step", 241, 0.000537041, 15.720702377],
+        ["planning", "surgical_engine.py", "_prepare_step", 370, 0.013061035, 24.380050219],
+        ["planning", "surgical_engine.py", "_physical_substep", 7820, 0.18260198900000002, 16.890606546],
+        ["simulation", "surgical_engine.py", "step", 53, 7.287400000000001e-05, 2.057273168],
+        ["simulation", "surgical_engine.py", "_prepare_step", 59, 0.000759888, 2.1903506200000002],
+        ["simulation", "surgical_engine.py", "_physical_substep", 1333, 0.026259673, 1.810837645],
+        ["rl", "surgical_engine.py", "step", 39, 6.403700000000001e-05, 2.3399098780000003],
+        ["rl", "surgical_engine.py", "_prepare_step", 39, 0.00047898600000000004, 2.338052877],
+        ["rl", "surgical_engine.py", "_physical_substep", 2178, 0.037711310000000005, 1.737006819],
+        ["rl", "surgical_rl_env.py", "step", 44, 4.405e-05, 2.4374929180000002],
+        ["rl", "surgical_rl_env.py", "step_action", 39, 8.936600000000001e-05, 2.4277799570000003],
+        ["rl", "surgical_rl_env.py", "_substep", 2179, 0.006032162000000001, 1.8830473200000002]
+      ]
+    },
+    "observationsFeaturesRewardsAndCodec": {
+      "finding": "Skip porting: _observe is 3.48% of RL inclusive (2.16% self); reward, info and codec costs are smaller. Even infinite observation acceleration alone estimates only 1.036x whole-episode speedup.",
+      "rows": [
+        ["rl", "surgical_rl_env.py", "_observe", 50, 0.053729635000000005, 0.086444002],
+        ["rl", "surgical_rl_env.py", "_measure", 50, 7.1115e-05, 0.002285456],
+        ["rl", "surgical_rl_env.py", "_info", 50, 0.000174878, 0.009674089],
+        ["rl", "surgical_rl_env.py", "encode_action", 44, 0.00014986600000000002, 0.000253251],
+        ["rl", "surgical_rl_env.py", "decode_action", 44, 0.000159872, 0.001806869],
+        ["rl", "surgical_rl_rewards.py", "deformation_scores", 2228, 0.0031813640000000003, 0.004056232]
+      ]
+    },
+    "nativeBoundaryIntegrityChecks": {
+      "finding": "Required liveness and implementation-key checks overlap other callers. Fractions are observed costs, not a removable 9–12% recovery budget; preserve integrity, mutation visibility, callbacks, cancellation and method-override admission.",
+      "rows": [
+        ["planning", "native_backend.py", "_check_live", 242965, 0.40142324700000004, 2.518505963],
+        ["planning", "native_backend.py", "_stat", 971860, 0.16341591600000002, 1.5894273],
+        ["simulation", "native_backend.py", "_check_live", 21958, 0.035934312, 0.225803313],
+        ["simulation", "native_backend.py", "_stat", 87832, 0.014760362, 0.142031086],
+        ["rl", "native_backend.py", "_check_live", 30390, 0.048103493000000004, 0.305806501],
+        ["rl", "native_backend.py", "_stat", 121560, 0.019776987000000003, 0.193929547]
+      ]
+    }
+  },
+  "compiledAttribution": {
+    "columns": ["exclusiveStage", "simulationSeconds", "rlSeconds"],
+    "rows": [
+      ["builtinOrExtensionCalls", 0.3819649110000002, 0.48081090299999996],
+      ["productionHashingAndCopying", 0.15300724500000007, 0.18308945699999998],
+      ["otherPythonAndDispatch", 0.4792780019999998, 0.5688437749999998],
+      ["compiledLibraryInterfacesIncludingPythonWrappers", 0.3645444370000002, 0.427782165],
+      ["continuumPythonAndDispatch", 0.09789858100000003, 0.017040123],
+      ["knownCompiledNumericEntryPoints", 0.24792423299999997, 0.17641157699999999],
+      ["geometryAndMotionPythonAndDispatch", 0.35417070900000014, 0.504287773],
+      ["physicalModelsPythonAndDispatch", 0.129319018, 0.04860391900000001],
+      ["newCppKernelEntryPoints", 0.013802621000000001, 0.008989971000000001],
+      ["rlObservationRewardAndCodecPython", 0, 0.068916527]
+    ],
+    "interpretation": "Disjoint exclusive buckets locate allocation/control and dispatch. Generic builtin/extension calls are not all numerical kernels. Python library wrappers can call compiled NumPy/SciPy operators; caller cumulative time does not prove interpreted arithmetic.",
+    "newCpp": "Kernel self totals are 0.01380 s simulation and 0.00899 s RL (<1% each); conversion, ownership, crossings and admission remain outside those kernel totals.",
+    "pytorch": "No policy, inference or training executed. Retain orchestration and effective compiled NumPy/SciPy operations."
+  },
+  "isolatedCeilings": {
+    "columns": ["workload", "area", "inclusiveProfileFraction", "hypothetical3xKernelWholeWorkload", "infiniteKernelWholeWorkloadUpperEstimate"],
+    "rows": [
+      ["planning", "checkpoint", 0.1444487205039394, 1.1065608676623726, 1.1688370106687505],
+      ["simulation", "checkpoint", 0.09899048883829191, 1.070656543049597, 1.1098661974285482],
+      ["rl", "checkpoint", 0.10625691644284482, 1.0762385246581119, 1.118889777608052],
+      ["rl", "observation", 0.034789452002918664, 1.0237436538048919, 1.0360433814934062]
+    ],
+    "caution": "Inclusive costs overlap and profiler overhead distorts Python/native weighting. Checkpoint and observation estimates are isolated attribution bounds, not additive and not measured speedups. Required integrity/liveness and implementation-key checks are reported only as observed caller costs; no recoverable fraction is asserted."
+  },
+  "nextPortContract": "Only the narrow memo copier is proposed: preserve aliases/cycles, strong ownership, array/subclass deepcopy fallbacks and the existing read-only component exemption. No private CPython API, concurrency, physics or qualification changes. Isolated ceilings cannot satisfy original 2x alone.",
+  "actedStatePrefixes": {
+    "imports": "from resectionlab.generated_cpp_supplement import simulation_fixture, rl_fixture",
+    "columns": ["factory", "publicActionPrefix", "statePurpose"],
+    "rows": [
+      ["simulation_fixture(\"simulation-drill-thermal\")", "actions[:3] through engine.step", "Actual heated/eroded bone/debris rollback state"],
+      ["simulation_fixture(\"simulation-cusa-v3\")", "actions[:4] through engine.step", "Actual pending aspiration/capacity state"],
+      ["simulation_fixture(\"simulation-continuum\")", "actions[:1] through engine.step", "Actual nonzero corner/history fields, not the untouched fixture-only initial hold"],
+      ["rl_fixture(\"rl-success-episode\",318)", "reset(seed=318); encode_action and env.step for actions[:4]", "Actual acted protected-engine/reward metadata; use env.engine.state"]
+    ]
+  },
+  "futureCommands": {
+    "beforeAfterCpp": "PYTHONPATH=src .venv/bin/python scripts/benchmark_cpp_acceleration.py --supplemental --baseline-source outputs/cpp-acceleration-v1/supplement-prepass-cpp/src --baseline-backend cpp --output outputs/cpp-acceleration-v1/supplement-before-after-v1",
+    "originalFivePairs": "PYTHONPATH=src .venv/bin/python scripts/benchmark_cpp_acceleration.py --baseline-source outputs/cpp-acceleration-v1/baseline/source/src --output outputs/cpp-acceleration-v1/final-comparison-v1"
+  },
+  "remaining": "After the selected port qualifies, collect at least five alternating fresh-process CPP-before/CPP-after pairs, with conversion/copy and memory included. Original planning final gates also remain required. No extra profiles or runs were performed while compacting this packet.",
+  "planningScopeCorrection": {"supersededBy": "postcopy-profile-review-v1.json", "reason": "Historical planning profiling enabled outside perform(), so included untimed imports and goal/report/snapshot audits. Its original observations are retained, but its fractions and derived planning ceiling are not timed-work attribution or a before/after measurement. Supplementary profiling already excluded audits; ordinary timing boundaries and all frozen benchmark workloads remain unchanged."}
+}
