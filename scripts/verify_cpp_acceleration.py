@@ -96,6 +96,7 @@ def main():
             'tests/test_surgical_frame_replay.py', 'tests/test_surgical_prefix_cache.py',
             'tests/test_imaging.py', 'tests/test_workspace_persistence.py',
             'tests/test_surgical_strategy_proof_authority.py',
+            'tests/test_surgical_source_inspection.py',
             'tests/test_surgical_cusa_v3.py::test_well_formed_legacy_cusa_extraction_reaches_native_refusal_without_mutation',
             'tests/test_desktop_bridge.py::test_cancel_and_ping_are_immediate_while_worker_busy']
         run('source-tests-cpp', [python, '-m', 'pytest', '-q', *focused],
@@ -108,6 +109,7 @@ def main():
             'tests/test_surgical_occupancy_lookup.py', 'tests/test_surgical_occupancy_key.py',
             'tests/test_surgical_query_optimization.py', 'tests/test_surgical_cranial_stages.py',
             'tests/test_cpp_engine_copy.py', 'tests/test_generated_cpp_supplement.py',
+            'tests/test_surgical_source_inspection.py',
             'tests/test_surgical_cusa_v3.py::test_well_formed_legacy_cusa_extraction_reaches_native_refusal_without_mutation',
             'tests/test_generated_cpp_fixture.py'], extra={'RESSECTIONLAB_NUMERICAL_BACKEND': 'reference'})
         probe = [python, 'scripts/verify_cpp_runtime.py']

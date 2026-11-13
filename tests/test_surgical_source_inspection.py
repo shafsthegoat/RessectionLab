@@ -75,9 +75,12 @@ def test_exact_grid_all_originals_arbitrary_masks_full_target_and_provenance_ret
 
 @pytest.mark.parametrize('operation', ['configure', 'exchange', 'place', 'move', 'apply', 'withdraw', 'inspect', 'deactivate', 'activate'])
 def test_every_direct_native_action_and_preview_is_rejected_before_transition(source, monkeypatch, operation):
+    from resectionlab import surgical_native_engine
     engine = SurgicalEngine(from_case(built(source)))
     before = copy.deepcopy(engine.snapshot()); metrics = engine.metrics()
     monkeypatch.setattr(engine, '_transition_clone', lambda: pytest.fail('Inspection cannot start a native transition'))
+    monkeypatch.setattr(surgical_native_engine, 'prepare',
+        lambda *_: pytest.fail('Inspection cannot create or prepare a resident native owner'))
     action = {'slot': 'left', 'operation': operation}
     result = engine.step(action)
     assert result['status'] == 'rejected' and result['reason'] == REASON and result['completedFraction'] == 0

@@ -741,16 +741,16 @@ class SurgicalEngine:
         candidate; preview consumes it without changing the authoritative owner.
         """
         if check is not None: check()
-        from .surgical_native_engine import prepare
-        prepared = prepare(self, action, check)
-        if prepared is not NotImplemented:
-            return prepared
         from .surgical_source_inspection import inspection_only, REASON
         if self._source_inspection_only or inspection_only(self.scene):
             self.scene.require_cache_source()
             return None, {'status': 'rejected', 'reason': REASON, 'reasonCode': REASON,
                 'completedFraction': 0., 'elapsedSeconds': 0., 'stateId': self.state_id,
                 'events': [], 'deltas': {}, 'metrics': self.metrics()}
+        from .surgical_native_engine import prepare
+        prepared = prepare(self, action, check)
+        if prepared is not NotImplemented:
+            return prepared
         before = self.state_id
         after = before
         before_time = self.state['elapsedSeconds']

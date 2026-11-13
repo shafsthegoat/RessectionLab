@@ -63,6 +63,9 @@ const objectSha=value=>crypto.createHash('sha256').update(canonical(value)).dige
 const acceptedSnapshot=value=>({caseHash:value.caseHash,branchId:value.branchId,position:value.position,branches:value.branches,
  viewSha256:objectSha(value.view),timelineSha256:objectSha(value.timeline),
  comparison:value.cranialPlanning,sequenceOutcome:value.sequenceOutcome});
+const sourceInspection=process.env.WORKFLOW_SOURCE_INSPECTION==='1';
+assert(!sourceInspection||!['WORKFLOW_CRANIAL_GENERATE','WORKFLOW_RECORDED_ONLY','WORKFLOW_STAGED_ONLY'].some(key=>process.env[key]==='1'),'Select one workflow scope');
+const frozenWorkflow=sourceInspection||process.env.WORKFLOW_CRANIAL_GENERATE==='1';
 let millingCheckpoints,millingCheckpointPath;
 if(process.env.WORKFLOW_MILLING==='1'){
  assert.equal(process.env.WORKFLOW_RECORDED_ONLY,'1','Milling harness verifies recorded native controls only');
@@ -115,7 +118,7 @@ app.on('browser-window-created',(_event,window)=>{
    await wait(`!!document.querySelector('.rl-viewer canvas')&&!document.querySelector('.viewer-loading')`,'source load');await click('Rehearse');await ready();
    if(await js(`[...document.querySelectorAll('button')].some(e=>e.textContent.trim()==='Verify saved replay'&&!e.disabled&&e.checkVisibility())`)){await request('Verify saved replay','inspect');}
    report.initial=await state();if(process.env.WORKFLOW_EXPECT_INITIAL_STATE)assert.equal(last.view.stateId,process.env.WORKFLOW_EXPECT_INITIAL_STATE);report.patient=last?.interactivePlanningAvailability?.admission?.sourceEvidence?.patientId;
-   if(process.env.WORKFLOW_CRANIAL_GENERATE==='1'){
+   if(frozenWorkflow){
     const ping=await workflowSidecar.request('ping');report.backendBefore=ping.numericalBackend;report.runtime=ping.runtime;
     assert.equal(report.backendBefore.selected,process.env.WORKFLOW_EXPECT_BACKEND||'cpp');
     if(process.env.WORKFLOW_ENGINE){assert.equal(ping.runtime.frozen,true);assert(!ping.runtime.modulePath.startsWith(path.join(root,'src')+path.sep));assert(ping.runtime.cacheRoot&&!ping.runtime.cacheRoot.startsWith(path.dirname(report.engine.executable)+path.sep),'Frozen cache root must be outside the signed engine');}
@@ -174,6 +177,38 @@ app.on('browser-window-created',(_event,window)=>{
      report.checks.push('Fresh Generate → Compare → selected real branch → observed replay/pause/seek preserves complete task ledger; valid native refusal and draft navigation preserve accepted anatomy');
     }
     await capture('06-cranial-save-cursor','.workflow-rehearsal');
+   }else if(sourceInspection){
+    const inspectAccepted=async()=>{last=await workflowSidecar.request('surgicalRehearsal',{caseHash:last.caseHash,command:'inspect',expectedStateId:last.view.stateId},300000);return JSON.parse(JSON.stringify(acceptedSnapshot(last)));};
+    const assertUnacted=()=>{
+     const a=last.cranialPlanningAvailability,s=last.view.scene,adapter=s.source.adapter;
+     assert.equal(last.branchId,'main');assert.equal(last.position,0);assert(last.branches.every(row=>row.steps===0));assert.deepEqual(last.view.history,[]);
+     assert.equal(last.view.metrics.targetRemovedMm3,0);assert.equal(last.view.metrics.nonTargetRemovedMm3,0);assert.equal(last.view.metrics.elapsedSeconds,0);
+     assert(!last.cranialPlanning&&!last.stagedPlanning&&!last.jointPlanning);assert.equal(last.view.protection.configured,false);
+     assert.equal(adapter.type,'native-patient-source-inspection');assert.equal(adapter.sourceRole,'DEVELOPMENT_CANDIDATE');assert.equal(adapter.physicalProtectionIndexConstructed,false);
+     assert(a.present&&!a.available);assert.deepEqual(a.roots,[]);assert(a.blockers.some(row=>row.code==='SOURCE_INSPECTION_ONLY'));
+     const targets=s.regions.filter(row=>row.target);assert(targets.length>0);assert(targets.every(row=>adapter.sourceLayers[row.name]?.cells>0));
+     if(process.env.WORKFLOW_EXPECT_TARGET_CELLS)assert.equal(targets.reduce((total,row)=>total+adapter.sourceLayers[row.name].cells,0),Number(process.env.WORKFLOW_EXPECT_TARGET_CELLS));
+     if(process.env.WORKFLOW_EXPECT_CASE_HASH)assert.equal(last.caseHash,process.env.WORKFLOW_EXPECT_CASE_HASH);
+    };
+    report.inspectionSnapshot=await inspectAccepted();assertUnacted();
+    report.sourceInspection={caseHash:last.caseHash,scene:last.view.scene,availability:last.cranialPlanningAvailability,patientTaskSuccess:false,acceptedNativeActions:0};
+    if(process.env.WORKFLOW_REOPEN==='1'){
+     assert(process.env.WORKFLOW_EXPECT_REPORT);const expected=JSON.parse(fs.readFileSync(process.env.WORKFLOW_EXPECT_REPORT,'utf8'));assert(expected.passed);
+     assert(expected.engineTermination&&(expected.engineTermination.exitCode!==null||expected.engineTermination.signal!==null));
+     assert.deepEqual(report.inspectionSnapshot,expected.inspectionSnapshot,'Cold inspection retains source identity, complete target declarations, blockers and unacted native state');
+    }
+    await stage('Plan');assert.equal(await js(`document.querySelector('.surgical-workflow').dataset.workflowPlanner`),'cranial');
+    const blockers=await js(`document.querySelector('[aria-label="Cranial planning blockers"]').innerText`);
+    for(const row of last.cranialPlanningAvailability.blockers){assert(blockers.includes(row.code));assert(blockers.includes(row.message));}
+    await click('Acknowledge cranial research context');const before=report.requests.length;
+    assert(await js(`(()=>{const e=[...document.querySelectorAll('.cranial-strategies button')].find(e=>e.textContent.trim()==='Generate strategies');return !!e&&e.checkVisibility()&&e.disabled})()`));
+    await js(`(()=>{const e=[...document.querySelectorAll('.cranial-strategies button')].find(e=>e.textContent.trim()==='Generate strategies');e.click()})()`);await delay(250);assert.equal(report.requests.length,before);
+    assert.deepEqual(await inspectAccepted(),report.inspectionSnapshot);assertUnacted();await capture('02-inspection-generate-blocked');
+    await stage('Compare');assert(await js(`document.querySelector('.cranial-strategies').innerText.includes('No complete tumor-treatment sequence has been established')`));
+    assert.equal(await js(`document.querySelectorAll('.cranial-strategies .workflow-alternative').length`),0);await capture('03-inspection-no-treatment');
+    await stage('Rehearse/edit');await capture('04-inspection-unacted');
+    assert(report.requests.every(row=>['inspect','inspectArchive','create'].includes(row.command)),'Inspection never dispatches physical actions or planning');
+    report.checks.push('Patient source inspection retains full source/target declarations and blockers; acknowledged Generate stays disabled with zero physical/planning IPC and no treatment claim');
    }else if(process.env.WORKFLOW_RECORDED_ONLY==='1'){
     await stage('Rehearse/edit');report.recordedInitialBranch=last.branchId;await capture('02-recorded-endpoint','.workflow-rehearsal');
     const replayStart=report.requests.length;await click('Play replay');const playStarted=Date.now();while(!report.requests.slice(replayStart).some(row=>row.command==='seekFrame')){if(Date.now()-playStarted>120000)throw Error('Missing actual recorded replay frame');await delay(80);}
@@ -353,16 +388,16 @@ app.on('browser-window-created',(_event,window)=>{
     await capture('06-complete-sequence-ledger','.workflow-checkpoint-burdens');report.checks.push('Compare expands the single accepted-state sequence ledger, retaining access burden and unknown evidence');
    }
    await click('Save');await wait(`true`,'save dispatch');const savedAt=Date.now();while(!fs.existsSync(saved)){if(Date.now()-savedAt>30000)throw Error('Missing native save');await delay(80);}report.saved=saved;report.savedSha256=sha(saved);report.savedState=await state();
-   if(process.env.WORKFLOW_CRANIAL_GENERATE==='1'){
+   if(frozenWorkflow){
     const ping=await workflowSidecar.request('ping');report.backendAfter=ping.numericalBackend;
     report.cacheDirectories=ping.cacheDirectories;
-    if(process.env.WORKFLOW_ENGINE){if(process.env.WORKFLOW_REOPEN!=='1')assert(report.cacheDirectories.observed,'Actual replay must report its observed-frame cache owner');for(const directory of Object.values(report.cacheDirectories))assert(!directory.startsWith(path.dirname(report.engine.executable)+path.sep),'A replay cache must not write inside the signed engine');}
-    if(report.backendAfter.selected==='cpp')assert(report.backendAfter.counters.bindingCalls>(process.env.WORKFLOW_REOPEN==='1'?0:report.backendBefore.counters.bindingCalls),'The actual workflow must execute native geometry');
+    if(process.env.WORKFLOW_ENGINE){if(!sourceInspection&&process.env.WORKFLOW_REOPEN!=='1')assert(report.cacheDirectories.observed,'Actual replay must report its observed-frame cache owner');for(const directory of Object.values(report.cacheDirectories))assert(!directory.startsWith(path.dirname(report.engine.executable)+path.sep),'A replay cache must not write inside the signed engine');}
+    if(!sourceInspection&&report.backendAfter.selected==='cpp')assert(report.backendAfter.counters.bindingCalls>(process.env.WORKFLOW_REOPEN==='1'?0:report.backendBefore.counters.bindingCalls),'The actual workflow must execute native geometry');
     if(process.env.WORKFLOW_REOPEN==='1')assert.equal(report.requests.filter(row=>row.command==='plan').length,0,'No automatic cold planning');
    }
    assert.equal(sha(input),original);if(packagedApp)assert.equal(sha(appCode),report.appCode.archiveSha256);if(millingCheckpointPath)assert.equal(sha(millingCheckpointPath),report.millingCheckpointSha256);if(membraneCheckpointPath)assert.equal(sha(membraneCheckpointPath),report.membraneCheckpointSha256);assert.deepEqual(backendSourceHashes(),report.backendSourceSha256,'Backend source must remain frozen throughout this run');assert(!window.isVisible()&&!report.windowEverVisible);report.backendSourceStable=true;report.sourcePreserved=true;report.passed=true;
   }catch(error){report.error=String(error);report.sourcePreserved=sha(input)===original;report.failureState=await state().catch(()=>null);report.body=await js('document.body.innerText').catch(()=>null);fs.writeFileSync(path.join(output,'failure.png'),(await window.webContents.capturePage(undefined,{stayHidden:true,stayAwake:true})).toPNG());console.error(error);}
-  if(process.env.WORKFLOW_CRANIAL_GENERATE==='1'&&workflowSidecar){
+  if(frozenWorkflow&&workflowSidecar){
    try{await workflowSidecar.stop();report.engineTermination={exitCode:workflowSidecar.child.exitCode,signal:workflowSidecar.child.signalCode};assert(report.engineTermination.exitCode!==null||report.engineTermination.signal!==null,'Engine must terminate before cold Open');}
    catch(error){report.passed=false;report.error=String(error);}
   }
