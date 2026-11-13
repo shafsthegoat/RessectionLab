@@ -154,7 +154,13 @@ app.on('browser-window-created',(_event,window)=>{
      report.backendBeforeGenerate=(await workflowSidecar.request('ping')).numericalBackend;
      await request('Generate strategies','plan');await wait(`document.querySelector('.surgical-workflow').dataset.workflowStage==='compare'`,'fresh cranial Compare');
      report.backendAfterGenerate=(await workflowSidecar.request('ping')).numericalBackend;
-     if(report.backendAfterGenerate.selected==='cpp'){const multi=identity=>Object.entries(identity.counters.batchSizes).reduce((sum,[size,count])=>sum+(Number(size)>1?count:0),0);assert(multi(report.backendAfterGenerate)>multi(report.backendBeforeGenerate),'Fresh production Generate must submit a genuine multi-item native batch');}
+     if(report.backendAfterGenerate.selected==='cpp'){
+      const before=report.backendBeforeGenerate.residentExecution,after=report.backendAfterGenerate.residentExecution;
+      const counts=Object.fromEntries(Object.entries(after).map(([name,value])=>[name,value-(before[name]||0)]));
+      assert(counts.actions>0&&counts.trajectories>0&&counts.physicalSubsteps>0,'Fresh production Generate must execute resident native actions and physical substeps');
+      assert(counts.geometryBatchItems>counts.geometryBatches&&counts.geometryBatches>0,'Fresh production Generate must execute genuine multi-item resident native geometry batches');
+      report.residentGenerateExecution=counts;
+     }
      const comparison=last.cranialPlanning;assert(comparison);assert.equal(last.position,0);assert.equal(last.view.stateId,report.initial.stateId);
      assert.equal(comparison.schema,'resectionlab.cranial-strategy-comparison.v1');assert.equal(comparison.cost.physicalCalls,comparison.cost.previewCalls+comparison.cost.directStepCalls);
      const row=comparison.alternatives.find(row=>row.completedFrozenTask&&row.nativeActions>0);assert(row,'Declared generated engineering control must retain a complete task alternative');
