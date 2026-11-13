@@ -1,19 +1,50 @@
 # C++ acceleration acceptance record
 
-The C++17 backend is integrated into the Python simulator and actual signed Mac
-application. The resident engine's frozen source comparison exceeds the original
+The C++17 backend is integrated into the Python simulator. Earlier signed Mac
+delivery and the resident engine's frozen source comparison are distinct
+acceptance records. That frozen comparison exceeds the original
 **2× complete fresh planning target**. The user explicitly ended further
 optimization and requested a working closeout and commit. Remaining physics ports
 are deferred; the unchanged small-control regression is recorded separately.
 All controls are generated engineering cases. Patient validation is unavailable;
 the project still has zero completed patient tumor tasks and makes no clinical claim.
 
-The resident source increment is `2e7b4211`, following the pushed v11 helper
-increment `4aab223e`. Final closeout evidence is recorded below; historical v9
-delivery does not qualify the resident engine. Earlier failed runs and all selected
+The resident source increment is `2e7b4211`, followed by compatibility/replay
+closeout `ea8dbac2`; the v11 helper increment is `4aab223e`. The
+[November 13 engineering closeout](../artifacts/decision-system-closeout-20261113.json)
+records current final-source delivery checks. The v12 record below is historical;
+v9 delivery does not qualify the resident engine. Earlier failed runs and all selected
 benchmark samples remain available.
 
-## Final user-requested closeout
+## November 13 final delivery verification
+
+The current delivery passes all 23 final verifier gates, including 20 runtime
+variants across source, clean installed wheel, frozen sidecar and signed app.
+The actual hidden C++ and reference applications each complete fresh Generate →
+Compare → Rehearse → Save → cold Open; accepted snapshots and canonical
+comparisons match exactly. Strict deep signature verification passes afterward.
+The app source revision is `c11f6a33`; frozen inputs are `5d66273e`. Their captured
+inputs match the checkout. The linked closeout receipt records full source and
+binary identities, commands, raw receipt hashes and the separate patient smoke.
+
+Current checks pass 1,120 C++ tests / 77 optional-helper skips, 390 reference tests /
+one compiled-only skip, and 1,317 desktop tests. TypeScript and production build
+pass. The 77 skips require separate older thermal/prefix C build receipts; they
+do not skip the resident C++ delivery checks.
+
+Closeout fixes preserve the source-inspection refusal before resident preparation,
+record contained Homebrew framework directory links without weakening target or
+payload verification, pin the already collected DICOM runtime, and check actual
+resident batching counters. The original frozen notice and stale-counter workflow
+failures remain preserved; targeted repairs and reproducible continuations finish
+the remaining stages without repeating unchanged numerical suites. No final
+binary performance comparison was run. Accepted latency regressions remain below.
+
+This is local ad hoc signing, without notarization. The notice inventory retains
+six explicit attribution gaps (five numerical/runtime and one renderer); complete
+notice closure and public distribution approval are not claimed.
+
+## Historical v12 user-requested closeout
 
 The user accepted stopping with the reported remaining RL slowdown and requested
 commit/push. No more ports, profiling or millisecond tuning will be performed.
@@ -50,7 +81,7 @@ The superseded packaging run was stopped so its pre-fix wheel is not represented
 as final acceptance. The complete verifier remains available:
 
 ```sh
-PYTHONPATH=src .venv/bin/python scripts/verify_cpp_acceleration.py --output testcases/outputs/cpp-resident-closeout-next --node /Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node
+PYTHONPATH=src .venv/bin/python scripts/verify_cpp_acceleration.py --output testcases/outputs/cpp-resident-closeout-next --node "$(command -v node)"
 ```
 
 The original benchmark command remains unchanged (the captured original baseline
@@ -60,9 +91,11 @@ is local ignored evidence); use a new output directory to preserve all samples:
 PYTHONPATH=src .venv/bin/python scripts/benchmark_cpp_acceleration.py --baseline-source outputs/cpp-acceleration-v1/baseline/source/src --output outputs/cpp-acceleration-v1/next-comparison
 ```
 
-Original complete engineering acceptance is **not claimed**: final packaged Mac
-verification and the two latency regression gates remain open. Remaining native
-physics work and patient validation are deferred. The user-approved deliverable
+At the v12 stop, original complete engineering acceptance was **not claimed**:
+final packaged Mac verification was pending and two latency gates failed. The
+user accepted those latency regressions; they are not new optimization tasks.
+Current package status is recorded in the November 13 receipt linked above.
+Remaining native physics work and patient validation are deferred. The user-approved deliverable
 is the correct, reviewed working increment committed to the requested branch.
 
 ## Top-three native pass v11 — verified source increment

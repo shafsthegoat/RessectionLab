@@ -1,20 +1,52 @@
 # Decision-system progress and next dependency
 
-Primary checkout, branch `shaf/decision-system-v1`; baseline `53c49019`.
+Primary checkout, branch `shaf/decision-system-v1`; historical implementation
+baseline `53c49019`. The live merge comparison on November 13 is 57 commits
+ahead of `origin/main` before closeout edits, at `ea8dbac2`.
+The [November 13 closeout receipt](../artifacts/decision-system-closeout-20261113.json)
+is the authority for final checks, binary identities and remaining blockers.
+The milestone timings and pass counts below are historical unless explicitly
+repeated in that receipt.
 **Goal open: zero completed patient tumor tasks. No clinical validation.**
 The objective contract is `docs/decision-system-objective.md`. Detailed results,
 source inventories, reproduction commands and retained failures are indexed in
 ignored `testcases/decision-system-v1/milestone-results.json` and
 `craniotomy-v4/milestone-results.json`; bulk originals remain on the external drive.
 
+The November 13 closeout fixes source-inspection refusal routing in `3984eaa0`:
+malformed or false inspection markers previously reached native preparation
+before returning the wrong refusal. No transition succeeded. The inspection-only
+check now precedes native preparation, and nine operation controls prohibit
+preparation for those step/preview requests. The combined decision regression
+passes 110 tests in17.40s; final delivery evidence is linked above.
+
+Final delivery passes 23 gates and 20 runtime variants across source, installed
+wheel, frozen sidecar and signed app. Current checks pass 1,120 C++ tests / 77
+optional-helper skips, 390 reference tests / one compiled-only skip, and 1,317
+desktop tests; TypeScript and production build pass. Four actual hidden C++ and
+reference warm/cold workflows preserve exact accepted snapshots and canonical
+comparisons. The selected generated control has 119 actions, B/P/W 285/49/0 mm³,
+27/27 original target cells treated and both tools withdrawn. Prior scalp exposure
+cost stays unknown. This remains declared-legacy generated engineering evidence.
+
+The final signed app also opens the existing sub-02 source inspection, keeps
+acknowledged Generate disabled, saves and cold opens with zero physical/planning
+IPC or accepted actions. The complete 148,526-cell target declarations, source
+references, inspection marker and accepted snapshot persist; no physical
+protection or patient admission is granted. All 368 external release paths/sizes
+and selected source hashes were checked without downloading data. Detailed local
+inventory and raw receipts remain ignored. Post-workflow strict deep signature
+verification passes; local ad hoc signing, notice gaps and scientific holds remain.
+
 The user clarified that the unlocated incident was an implausible access route,
 possibly posterior/inferior, not an established named-structure injury. No replay
 or annotation exists. Preserve case-specific entry constraints, actual skull
 removal and critical exclusions; there is no blanket posterior ban.
 
-Current priority is complete patient opening → preparation → tumor work → exit,
-with alternative feasible openings and the existing desktop Generate workflow.
-Further isolated milling optimization is deferred unless it unblocks a patient.
+The research objective remains complete patient opening → preparation → tumor
+work → exit, with alternative feasible openings and the existing desktop Generate
+workflow. The finite engineering closeout verifies the existing implementation;
+it does not attempt to finish patient qualification or restart optimization.
 Skull-only results never count as patient-task success.
 
 ## Implemented execution and planning
@@ -57,8 +89,13 @@ Skull-only results never count as patient-task success.
   It prevents an unqualified target-only export falling into exposed-tissue
   planning. Inspection exclusions remain exact masks and declarations; they are
   explicitly not an executable physical protection index. Root80 focused checks
-  pass in6.42s;35 new and60 compatibility checks also pass. An earlier combined
-  test-order STRATEGY_PROOF failure remains unexplained and recorded.
+  pass in6.42s;35 new and60 compatibility checks also pass. The earlier combined
+  test-order STRATEGY_PROOF failure remains historical evidence. `15b17f05` fixed
+  a known mechanism: GC cleanup could mutate private owner registries accidentally
+  included in implementation-proof constants. Its explicit GC regression remains;
+  absent the original trace, that mechanism is not proven to explain the old run.
+  The November 13 combined original-order rerun plus planning-root/withdrawal
+  checks passes 110 tests in17.40s, without STRATEGY_PROOF failure.
 - Existing Case → Plan → Compare → Rehearse/edit controls show complete B/P/W,
   original-target credit/residuals, whole exit, unknowns and failed attempts.
   Stage-bound direct prefix replay keeps its existing refusal; canonical recorded

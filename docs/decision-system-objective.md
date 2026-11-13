@@ -1,5 +1,12 @@
 # Decision-system objective and execution contract
 
+This is the implemented research contract, not a completed clinical objective.
+The [November 13 engineering closeout](../artifacts/decision-system-closeout-20261113.json)
+records the current source/build checks; historical milestones and remaining
+patient dependencies are in [the progress record](decision-system-progress.md).
+Zero completed patient tumor tasks and all anatomical, physiological and RL
+qualification holds remain.
+
 The desktop executes `App → useSurgical → Electron IPC → Python surgical_bridge →
 SurgicalEngine`. The engine owns material checks, complete-tool swept geometry,
 both instruments, declared protection, reviewed task boxes, physical effects and
@@ -233,12 +240,15 @@ distinct alternatives. Cancellation or the final readout crossing a bound preven
 plan admission. A local finite-contact controller failure can leave other search
 branches available.
 
-This API uses a caller-supplied skill inventory and one fixed source opening
-contract; it does not generate another patient window. Horizon one is an immediate-
-target ablation, not the strongest applicable patient baseline. The existing
-desktop Generate path is not yet wired to this new search. Later export and
-verification replay must use the same meter with prospectively reserved calls.
-Generated opening/preparation/work results do not qualify patient tasks.
+This search API uses a caller-supplied skill inventory and one fixed source
+opening contract; it does not generate another patient window. The desktop
+cranial Generate path now calls the source-bound forest adapter, which compares
+up to three qualified opening roots using a shared outer budget and exactly
+replayed native endpoints. Opening contracts still require qualified source
+preparation. Horizon one is an immediate-target ablation, not the strongest
+applicable patient baseline. Export and verification replay use the same meter
+with prospectively reserved calls. Generated opening/preparation/work results
+do not qualify patient tasks.
 
 Replay adapters bind derived opening proofs to the exact returned checkpoint's
 accepted ancestry. Rewinding drops a future proof; a genuine earlier bone proof
