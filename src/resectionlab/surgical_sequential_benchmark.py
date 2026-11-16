@@ -127,7 +127,12 @@ def constrained_skill_search(task, engine, used, ledger):
     to supplied post-access scenes. Every discarded branch is charged.
     """
     started = time.monotonic(); frontier = [(engine, (), set(used))]
-    nodes, attempts = [_node(task,engine,())], []
+    stop_engine=engine.clone();stop_skill=next(s for s in task.skills if s.kind=='stop')
+    stop_receipt=execute_skill(task,stop_engine,stop_skill,charge=lambda:ledger.charge(True),check=ledger.planning_wall_check)
+    ledger.canceled_requests+=int(bool(stop_receipt['interruption'] and stop_receipt['interruption']['canceledRequest']))
+    ledger.previews.append(dict(sourceStateId=engine.state_id,skillId=stop_skill.id,receipt=stop_receipt,
+        prefixSnapshot=stop_engine.snapshot() if stop_receipt['status']!='accepted' else None))
+    nodes, attempts = ([_node(task,stop_engine,())] if stop_receipt['status']=='accepted' else []), []
     expansions = 0
     try:
         for depth in range(ledger.tier.horizon):
@@ -206,7 +211,8 @@ FEATURE_NAMES = ('kind_prepare','kind_work','kind_stop','current_radius','reques
     'global_target_remaining','global_motor_remaining','global_cst_remaining',
     'remaining_neural_budget','remaining_motor_budget','remaining_cst_budget',
     'remaining_attempts','remaining_seconds','remaining_skills',
-    'maximum_route_remaining_target','minimum_route_neural_distance','mean_route_neural_distance')
+    'maximum_route_remaining_target','minimum_route_neural_distance','mean_route_neural_distance',
+    'right_inserted','right_active','right_placed','withdrawal_height_distance')
 
 
 def feature_matrix(observed, skills):
@@ -239,7 +245,10 @@ def feature_matrix(observed, skills):
         (limits['maximumStructureRemovalMm3']['motor-cortex']-len(motor & removed)*27.)/108.,
         (limits['maximumStructureRemovalMm3']['corticospinal']-len(cst & removed)*27.)/108.,
         remaining['attempts']/512.,remaining['seconds']/240.,remaining['skills']/8.,
-        max(r[4] for r in workstats),min(r[5] for r in workstats),float(np.mean([r[5] for r in workstats]))]
+        max(r[4] for r in workstats),min(r[5] for r in workstats),float(np.mean([r[5] for r in workstats])),
+        float(state['slots']['right']['inserted']),float(state['slots']['right']['active']),
+        float(any(a['slot']=='right' and a['operation'] in ('place','move','apply','withdraw') for a in observed['accepted_history'])),
+        abs(state['slots']['right']['position'][2]-observed['exterior_withdrawal_plane_ras_mm'])/60.]
     rows=[]
     for skill, spatial in zip(skills,stats):
         rows.append([float(skill.kind==k) for k in ('prepare','work','stop')] +
@@ -281,8 +290,7 @@ def run_episode(task, method, tier, *, selector=None, stochastic=False, seed=0,
             skill=task.skills[index]
             receipt=execute_skill(task,engine,skill,charge=ledger.charge,check=ledger.wall_check)
             ledger.canceled_requests+=int(bool(receipt['interruption'] and receipt['interruption']['canceledRequest']))
-            attempts+=receipt['attemptsConsumed']; invalid+=sum(r['outcome']['status']=='rejected' for r in receipt['receipts'])
-            if skill.kind=='stop' and receipt['status']=='rejected':invalid+=1
+            attempts+=receipt['attemptsConsumed']; invalid+=receipt['invalidAttemptsConsumed']
             # A failed skill retains its accepted prefix and remains an
             # attempted inventory member; no reset/refund/teleport occurs.
             used.add(skill.id)
@@ -350,7 +358,7 @@ def _verify_replay_core(task,row, *, deadline=None,counters):
             if result[4]['outcome']['status']!=actual['status'] or adapter.engine.state_id!=native.state_id:
                 raise ValueError('Matched primitive replay differs')
             if result[2] or result[3]:adapter_stopped=True
-        if skill['kind']=='stop' and not adapter_stopped:
+        if skill['kind']=='stop' and skill['checkedStopAttempted'] and not adapter_stopped:
             counters['adapterStopRequests']+=1
             result=adapter.stop('Finite generated inventory exhausted');adapter_stopped=result[2] or result[3]
     if native.snapshot()!=row['snapshot'] or native.state_id!=adapter.engine.state_id:

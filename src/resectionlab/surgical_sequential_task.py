@@ -19,7 +19,7 @@ from .surgical_rl_env import SurgicalRLEnv, RLConfig
 from .surgical_scene import SurgicalScene
 
 TASK_PROPERTY = 'sequentialSkillTaskV1'
-SCHEMA = 'resectionlab.generated-sequential-skills.v1'
+SCHEMA = 'resectionlab.generated-sequential-skills.v2'
 
 
 class SkillExecutionInterrupted(RuntimeError):
@@ -294,6 +294,8 @@ def generated_task(parent: int, *, config=COMMON_CONFIG, neural_budget=None, mot
     rng.shuffle(skills)
     declaration = dict(schema=SCHEMA, config=asdict(config), configHash=config.fingerprint,
         inventory=[asdict(s) for s in skills], start='supplied-post-access', earlierAccessCosts='unknown',
+        exteriorWithdrawalPlaneRasMm=60.,
+        stopExpansion='Required checked withdrawal at current RAS x/y to the supplied exterior plane, then checked STOP; every primitive, attempt and time increment is charged.',
         physics='discrete-compatible-cell-removal', excluded=list(EXCLUDED),
         motorMeaning='Generated source memberships/direct removal only. Functional motor/language and encounter unknown.')
     scene = SurgicalScene(labels, affine, regions, source, {PROPERTY:raw, TASK_PROPERTY:declaration})
@@ -309,6 +311,7 @@ def training_admission(task):
     declaration = task.scene.properties.get(TASK_PROPERTY)
     if (source_classification(task.scene) != 'generated-engineering' or declaration is None or
             declaration.get('schema') != SCHEMA or declaration.get('configHash') != task.config.fingerprint or
+            declaration.get('exteriorWithdrawalPlaneRasMm')!=60. or
             declaration.get('inventory') != [asdict(s) for s in task.skills] or
             set(task.scene.properties)!={PROPERTY,TASK_PROPERTY} or
             any(name in task.scene.properties for name in EXCLUDED) or
@@ -343,15 +346,18 @@ def observation(task, engine, *, attempts=0, invalid=0, selections=0):
         accepted_history=[copy.deepcopy(a) for a in engine.actions],
         declared_limits={k: copy.deepcopy(v) for k, v in task.scene.properties[PROPERTY].items()
             if k.startswith('maximum')},
+        exterior_withdrawal_plane_ras_mm=task.scene.properties[TASK_PROPERTY]['exteriorWithdrawalPlaneRasMm'],
         remaining=dict(attempts=task.config.max_attempts-attempts,
             invalid=task.config.max_invalid_actions-invalid, skills=task.config.max_skills-selections,
             seconds=task.config.max_modeled_seconds-engine.state['elapsedSeconds']))
 
 
 def available_mask(task, engine, used):
-    radius = engine.parameters(engine.state['slots']['right'])['radiusMm']
+    slot=engine.state['slots']['right']
+    radius = engine.parameters(slot)['radiusMm']
+    can_exchange=not (slot['inserted'] or slot['active'] or slot['grip'] or 'right' in engine.state['holds'])
     return np.array([s.kind == 'stop' or s.id not in used and
-        (s.kind != 'prepare' or abs(radius-s.radius)>1e-8) for s in task.skills], bool)
+        (s.kind != 'prepare' or can_exchange and abs(radius-s.radius)>1e-8) for s in task.skills], bool)
 
 
 def execute_skill(task, engine, skill, *, charge=None, check=None):
@@ -374,8 +380,14 @@ def execute_skill(task, engine, skill, *, charge=None, check=None):
     engine._sequential_accounting = accounting
     accounting['skills'] += 1
     before = evaluate_procedure_sequence(engine)['outcome']['dimensions']
+    invalid_before=accounting['invalid']
     started = time.monotonic(); receipts = []; interruption=None
-    for template in skill.actions:
+    commands=list(skill.actions)
+    if skill.kind=='stop' and not endpoint_assessment(engine,task.config)['validWithdrawal']:
+        slot=engine.state['slots']['right']
+        commands=[action('withdraw',[slot['position'][0],slot['position'][1],
+            task.scene.properties[TASK_PROPERTY]['exteriorWithdrawalPlaneRasMm']],duration=1.)]
+    for template in commands:
         command=copy.deepcopy(template)
         from .surgical_task_domain import _posed
         if command['operation']=='place' and _posed(engine,command['slot']):
@@ -409,13 +421,16 @@ def execute_skill(task, engine, skill, *, charge=None, check=None):
     # Rejected attempts incur the explicit attempt charge, no treatment credit.
     target, neural, bone, seconds = (delta(k) for k in
         ('targetRemovedMm3', 'neuralRemovedMm3', 'boneRemovedMm3', 'elapsedSeconds'))
-    attempts_consumed = len(receipts) + int(skill.kind=='stop')
-    if skill.kind=='stop': accounting['attempts']+=1
-    if skill.kind=='stop' and not endpoint_assessment(engine,task.config)['validWithdrawal']:
+    stop_attempted=(skill.kind=='stop' and interruption is None and
+        all(r['outcome']['status']=='accepted' for r in receipts) and len(receipts)==len(commands) and
+        accounting['attempts']<task.config.max_attempts and accounting['invalid']<task.config.max_invalid_actions)
+    attempts_consumed = len(receipts) + int(stop_attempted)
+    if stop_attempted: accounting['attempts']+=1
+    if stop_attempted and not endpoint_assessment(engine,task.config)['validWithdrawal']:
         accounting['invalid']+=1
     endpoint = endpoint_assessment(engine, task.config, attempts=accounting['attempts'],
-        invalid_actions=accounting['invalid'], stopped=skill.kind=='stop',
-        externally_truncated=interruption is not None or accounting['skills']>=task.config.max_skills and skill.kind!='stop')
+        invalid_actions=accounting['invalid'], stopped=stop_attempted,
+        externally_truncated=interruption is not None or accounting['skills']>=task.config.max_skills and not stop_attempted)
     accounting['stopped'] = endpoint['terminated'] or endpoint['truncated']
     reward = target/27. - neural/27. - .05*bone/27. - .01*seconds - .01*attempts_consumed
     return dict(skillId=skill.id, kind=skill.kind, receipts=receipts,
@@ -423,6 +438,7 @@ def execute_skill(task, engine, skill, *, charge=None, check=None):
             receipts[-1]['outcome']['status'] if receipts and receipts[-1]['outcome']['status']!='accepted' else
             'rejected' if skill.kind=='stop' and not endpoint['validWithdrawal'] else 'accepted',
         attemptsConsumed=attempts_consumed,
+        invalidAttemptsConsumed=accounting['invalid']-invalid_before,checkedStopAttempted=stop_attempted,
         interruption=interruption,
         reward=reward, elapsedSeconds=seconds, discount=task.config.discount_per_second**seconds,
         targetIncrementMm3=target, neuralIncrementMm3=neural, boneIncrementMm3=bone,

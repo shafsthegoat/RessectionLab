@@ -65,3 +65,22 @@ saved under testcases. Actual compiled numerical backend: C++ extension SHA256
 304dea4eae193865a3fcb7e87a288ba58f4812174bfa70dcd7c6e9367e719e78,
 single native thread, with Python procedure authority. Resident procedure
 execution remains unavailable. Learning and held-out results are still pending.
+
+At12:18UTC independent review admitted generated task v2. A64-update v1 training
+diagnostic exposed a missing recovery skill after a refused later work action:
+the preceding accepted exterior move retained inserted=True. The incomplete
+prototype, weights and negative validation records remain preserved and are
+excluded from the formal comparison; held-out outcomes were never evaluated.
+V2 adds actual checked withdrawal/STOP, charges its costs, exposes four current
+tool-state features (28 total), and uses the same macro for the search STOP
+baseline. Twelve task/runner checks and independent limits6/7/default512 replay
+probes pass. Hard harm bounds, anatomy and the common endpoint are unchanged.
+
+The original training campaign clock continues from11:50:07UTC, so training
+ends by13:50:07UTC including repair/pilot time. Prior known requests681 plus an
+upper bound704 for the interrupted validation block are charged as1,385 against
+the20,000-call ceiling. The final budget is six epochs/192 episodes per seed,
+keeping all32/8/16 layouts and seeds17/43/71. Online tiers stay56calls/25s and
+88calls/40s. No optimizer/reward/harm-bound tuning or v1 weight warm start is
+used. `sequential-training-admission-review-v2.json` binds the reviewed sources;
+the v1 receipt remains historical. The v2 pilot's200 transitions finish in347.8s.

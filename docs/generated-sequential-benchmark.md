@@ -31,10 +31,13 @@ and functional motor/language consequences are unavailable. The existing
 population-prior FunctionalEvidence class is not relabelled as patient evidence.
 
 All methods receive the same supplied anatomy/coverage, removal/tool state,
-budgets, accepted history and inventory masks. The learned scorer uses24
+budgets, accepted history and inventory masks. The learned scorer uses28
 documented deterministic spatial/state features; IDs, splits, pattern labels,
 hashes and future branch outcomes are excluded. Candidate order is independently
-shuffled. Skill IDs hash programs rather than rank them. Greedy selects immediate
+shuffled. Skill IDs hash programs rather than rank them. V2 STOP executes a
+checked withdrawal to the independently supplied exterior plane when required,
+then checked STOP. Inserted/active/placed state and exterior distance are policy
+features; the shared mask forbids instrument exchange while inserted. Greedy selects immediate
 admissible target gain with the shared harm priority and STOP. Search adapts the
 existing constrained Pareto/beam retention to the same inventory and replans
 after checked prefixes under its original online ledger. Lookahead bounds
@@ -54,6 +57,18 @@ The campaign is capped at three seeds,20,000 requested transitions and two wall
 hours including validation. All eight validation cases must finish before a
 checkpoint can replace the incumbent. An untouched fallback is explicitly
 untrained and cannot be labelled RL.
+
+The preserved v1 diagnostic stopped after64 seed17 updates because refused work
+could leave an accepted exterior move flagged as inserted without a recovery
+skill. It never evaluated held-out outcomes. V2 repairs that shared interface
+with real withdrawal and retained costs. The formal study freezes six epochs
+(192 training episodes per seed), unchanged width/optimizer/reward and all three
+seeds. Its200-transition pilot passed. The original11:50:07UTC campaign origin
+and20,000-call limit continue across the repair;13:50:07UTC is the absolute
+training cutoff.681 prior requests are measured, with at most704 additional
+requests in the interrupted validation block;1,385 are conservatively charged.
+The final records distinguish that upper bound from measured requests. Per-case
+validation files now preserve a block interrupted before checkpoint selection.
 
 Source classification is shared by policy, planning and new-episode admission.
 Patient/source markers take precedence even with freshly rebound policy hashes.
@@ -77,7 +92,8 @@ From a fresh checkout with the installed project/RL dependencies:
 ```sh
 PYTHONPATH=src .venv/bin/python scripts/run_sequential_milestone.py --generated-only --stage pilot --output testcases/overnight-sequential-v1/reproduction
 PYTHONPATH=src .venv/bin/python scripts/run_sequential_milestone.py --generated-only --stage protocol --output testcases/overnight-sequential-v1/reproduction
-PYTHONPATH=src .venv/bin/python scripts/run_sequential_milestone.py --generated-only --stage train --training-admission-review docs/sequential-training-admission-review.json --output testcases/overnight-sequential-v1/reproduction
+cp docs/sequential-milestone-protocol.json testcases/overnight-sequential-v1/reproduction/protocol.json
+PYTHONPATH=src .venv/bin/python scripts/run_sequential_milestone.py --generated-only --stage train --training-admission-review docs/sequential-training-admission-review-v2.json --output testcases/overnight-sequential-v1/reproduction
 PYTHONPATH=src .venv/bin/python scripts/run_sequential_milestone.py --generated-only --stage evaluate --output testcases/overnight-sequential-v1/reproduction
 ```
 

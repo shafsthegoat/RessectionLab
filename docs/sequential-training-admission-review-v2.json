@@ -1,0 +1,134 @@
+{
+  "admittedScope": {
+    "exit": "Conditional real guarded withdrawal at current RAS x/y to source-declared exterior z=60 mm, followed by checked STOP; preserve accepted prefixes and all withdrawal/time/attempt/reward costs",
+    "guard": "Fresh eight-source pilot/protocol, exact taskSchema/featureNames/config/seeds/regenerated-cohort validation and this v2 receipt required before fitting",
+    "information": "28 analytic candidate features expose inserted/active/placed state and height from declared exterior plane; shared mask forbids exchange while inserted/active/gripped/holding; no future-state or evaluator-only information",
+    "model": "28-input / 32-hidden-unit candidate actor and mean-feature critic; unchanged optimizer, reward, discount and hard constraints; fresh initialization, no v1 checkpoint warm start",
+    "onlineTiers": [
+      {
+        "beam_width": 2,
+        "horizon": 2,
+        "max_expansions": 8,
+        "max_physical_calls": 56,
+        "max_wall_seconds": 25,
+        "name": "low"
+      },
+      {
+        "beam_width": 2,
+        "horizon": 3,
+        "max_expansions": 16,
+        "max_physical_calls": 88,
+        "max_wall_seconds": 40,
+        "name": "high"
+      }
+    ],
+    "source": "Generated discrete post-access finite-skill task v2 only; same 32 TRAIN / 8 VALIDATION / 16 held-out geometry groups, earlier access costs unknown",
+    "training": "6 epochs / 192 training episodes per final seed, frozen before v2 fitting; unchanged distinct seeds 17/43/71; all eight validation cases required for checkpoint selection"
+  },
+  "campaignConstraints": {
+    "absoluteTrainingDeadlineUtc": "2026-11-16T13:50:07Z",
+    "campaignStartedUtc": "2026-11-16T11:50:07Z",
+    "maximumContinuousWallSeconds": 7200,
+    "maximumRequestedCallsIncludingPrior": 20000,
+    "priorPhysicalCallsChargedUpperBound": 1385,
+    "priorPhysicalCallsKnown": 681,
+    "priorTrainingCostsRequired": true,
+    "requiredInvocation": "Pass --prior-training-costs with the 1385-call upper bound and original continuous campaign origin; no fresh two-hour or 20,000-call allowance",
+    "unfinishedValidationRequestUpperBound": 704
+  },
+  "clinicalValidation": false,
+  "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+  "currentPilot": {
+    "path": "testcases/overnight-sequential-v1/benchmark-task-v2/pilot.json",
+    "primitiveTransitions": 200,
+    "sha256": "08c5148ac0d8875095305d011c14b3fcef9fb9d8d3fd62a738138453ab1c8836",
+    "sourceChanged": false,
+    "wallSeconds": 347.82111237500794
+  },
+  "dynamicPhysicsTrainingAdmitted": false,
+  "findings": [
+    {
+      "evidence": "First validation exposed later accepted move retaining inserted=True after refused apply. V2 adds a real exit capability; no constraint relaxation, tool reset, prefix refund or fabricated cleanup. Preserve v1 diagnosis, logs and checkpoints; no held-out evaluation occurred.",
+      "status": "resolved",
+      "topic": "v1 interface gap"
+    },
+    {
+      "evidence": "Independent easy work -> later refused move/apply -> STOP retains 27 mm3 treatment, then performs a real 1-second withdrawal. STOP consumes two attempts and reward -0.03 with zero new treatment/injury. Actual native/matched adapter state, counters and endpoint replay agree.",
+      "status": "passed",
+      "topic": "exit and parity"
+    },
+    {
+      "evidence": "Attempt limit 6 allows withdrawal but no logical STOP and remains truncated; limit 7 executes checked STOP at the boundary and still remains truncated. Earlier treatment and actual exterior tool state survive; neither endpoint becomes success.",
+      "status": "passed",
+      "topic": "strict boundaries"
+    },
+    {
+      "evidence": "Search previews the same exit macro on a clone and charges the actual withdrawal request, one modeled second and two attempts; real source state remains unchanged. No free read-only cleanup baseline.",
+      "status": "passed",
+      "topic": "search exit fairness"
+    },
+    {
+      "evidence": "Four direct current-state features plus shared tool-state exchange mask expose the state omitted by v1. Exterior plane is declared before planning. Observation copy and candidate-order equivariance remain tested.",
+      "status": "passed",
+      "topic": "observable tool state"
+    },
+    {
+      "evidence": "All 56 geometry hashes and common config hashes match v1. V2 explicitly changes task/source scene identity. Source classification/proof, anatomical/bone limits, zero endpoint debris/fluid, target denominator and patient/dynamic-physics holds remain unchanged.",
+      "status": "passed",
+      "topic": "unchanged geometry and safety"
+    },
+    {
+      "evidence": "Runner charges prior requested-call upper bound and max(recorded wall, UTC elapsed since original origin) into new monotonic deadline. Per-case validation saves preserve incomplete block costs. Six epochs and conservative original online tiers are frozen before v2 fitting for measured-throughput reasons, without held-out outcome use.",
+      "status": "passed",
+      "topic": "campaign continuity"
+    }
+  ],
+  "generalPrimitiveTrainingAdmitted": false,
+  "historicalReview": "docs/sequential-training-admission-review.json remains historical v1; it does not authorize v2",
+  "limitations": [
+    "V1 is a preserved negative interface prototype, not the final task. This repair does not establish learning superiority or permit relabeling old results.",
+    "Vertical exit is qualified only for this generated source/inventory; a refused withdrawal must retain state and be reported. It is not a general patient exit planner.",
+    "No patient/acquired, vascular graph, thermal, continuum, CUSA v3, resident C++ policy or general primitive training admission. Existing primitive adapter stays evaluation-only.",
+    "Motor/CST memberships and direct removal are stylized constraints, not neurological function, paralysis probability or clinical validation. Unknown earlier access costs remain unknown; no whole-procedure success claim.",
+    "Frozen validation-selected checkpoints, all 16 held-out layouts, exact replay and honest failure/negative-result reporting remain required; admission makes no performance claim."
+  ],
+  "openTrainingBlockers": [],
+  "optimizerUpdatesDuringReview": 0,
+  "patientTrainingAdmitted": false,
+  "reviewedCommit": "9d46bf3ef217a4d38e446ed23d469ea07d244ecf",
+  "reviewedUtc": "2026-11-16T12:18:23.704222+00:00",
+  "reviewer": "Independent /root/source_packet; no source edits or optimizer updates during review",
+  "schema": "resectionlab.independent-generated-training-review.v2",
+  "scope": "resectionlab.generated-sequential-skills.v2",
+  "sourceHashes": {
+    "scripts/run_sequential_milestone.py": "5d02d3a53e54f3aa9c43789cb0f2db13c6ae7dd412edde6edabe98f4534096d0",
+    "src/resectionlab/surgical_consequences.py": "75bafa6a5f93b6ab2f9a2bc8bd0d4eaad32b7a3afca625da7efc034dee9298ef",
+    "src/resectionlab/surgical_joint_cranial_search.py": "2403818cb0961b99ac477077284a74508e09500bf03b9d7b039a9cbbd1ed7c4a",
+    "src/resectionlab/surgical_planning_admission.py": "0aeb039e458260f5e06a27d2e4e278a47578ce8e72a9f6133493d4e08d42c330",
+    "src/resectionlab/surgical_procedure_policy.py": "22f43c971f3eaeffb4328eff2c12ec7f8d2b42fded294c932619a5ab14a4ce4f",
+    "src/resectionlab/surgical_rl_env.py": "ac4aa96e8f0b9b309c13feed64e1594e99b12fbd3b049916e31613b24eaebf57",
+    "src/resectionlab/surgical_sequential_benchmark.py": "ffb931b0e3ae62d4e39aae03c0e1b8e9b357f12622bfdd64d1ff5a1c547cb7f0",
+    "src/resectionlab/surgical_sequential_task.py": "175a6c22137ec86742e0156ca1a8d5dfb088bdfb0c97fb9873bfe2822dc083d3"
+  },
+  "tests": [
+    {
+      "command": "PYTHONPATH=src .venv/bin/python -m pytest -q tests/test_surgical_sequential_task.py tests/test_sequential_milestone_runner.py",
+      "result": "12 passed in 62.60 seconds"
+    },
+    {
+      "command": "Independent real-engine/matched-adapter exit probes at attempt limits 512/6/7",
+      "evidence": "testcases/overnight-sequential-v1/independent-exit-v2-review/probes.json",
+      "result": "Exact replay passes; normal STOP reward -0.03; both boundary cases truncated"
+    },
+    {
+      "command": "Independent constrained-search inserted-state STOP baseline",
+      "evidence": "testcases/overnight-sequential-v1/independent-exit-v2-review/search-stop-preview.json",
+      "result": "Real 1-second/two-attempt exit; requested planning call charged; source state unchanged"
+    },
+    {
+      "command": "Regenerated geometry/config hash comparison; no held-out outcome evaluation",
+      "result": "All 56 geometry hashes and common config unchanged"
+    }
+  ],
+  "trainingAdmitted": true
+}

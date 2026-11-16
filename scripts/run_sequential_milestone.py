@@ -7,6 +7,7 @@ training. Acquired packet is an optional inspection reference only.
 from __future__ import annotations
 
 import argparse
+import datetime
 from dataclasses import asdict
 import hashlib
 import json
@@ -23,7 +24,7 @@ import torch
 from torch import nn
 
 from resectionlab.surgical_sequential_task import (COMMON_CONFIG, generated_task,
-    execute_skill, observation, training_admission)
+    execute_skill, observation, training_admission, SCHEMA as TASK_SCHEMA)
 from resectionlab.surgical_sequential_benchmark import (ComputeTier, FEATURE_NAMES,
     OnlineLimit, feature_matrix, run_episode, verify_replay)
 
@@ -153,7 +154,7 @@ def protocol(out,pilot_report):
         sourceHashes=source_hashes(),config=asdict(COMMON_CONFIG),configHash=COMMON_CONFIG.fingerprint,
         cohort=cohort,seeds=list(SEEDS),onlineTiers=pilot_report['tiers'],
         training=dict(algorithm='masked finite-skill episodic actor-critic / REINFORCE with learned baseline',
-            model='shared candidate MLP24→32tanh→1; separate mean-feature value MLP24→32tanh→1',
+            model='shared candidate MLP28→32tanh→1; separate mean-feature value MLP28→32tanh→1',
             optimizer='Adam',learningRate=.003,entropyCoefficient=.02,valueCoefficient=.5,
             epochs=8,episodesPerSeed=256,transitionCeilingCampaign=20000,maxWallSecondsCampaign=7200,
             discountPerSecond=COMMON_CONFIG.discount_per_second,warmStart=False,
@@ -162,6 +163,7 @@ def protocol(out,pilot_report):
         skillRewards='accepted target/27 - accepted neural/27 - .05 bone/27 - .01 modeled seconds - .01 primitive attempts (including STOP)',
         exclusions=['acquired anatomy','graph vascular','thermal','continuum','CUSA v3','resident C++ policy','whole-procedure success','clinical motor/language outcome'],
         information='full supplied source memberships/coverage, removal/tool/current native state, cumulative costs, budgets and accepted history; IDs/split/pattern/hashes and branch outcomes excluded from features',
+        featureNames=list(FEATURE_NAMES),taskSchema=TASK_SCHEMA,
         compute='all speculative/executed primitive requests charged, canceled atomic requests separately labeled and receive no treatment/attempt reward; inventory/feature/policy/search wall time included; replay/training separate',
         targetScope='supplied post-access continuation, earlier access costs unknown',
         hardware=dict(platform=platform.platform(),python=sys.version,torch=torch.__version__,cpu='Apple M2 Pro',memoryGiB=16,device='cpu',threads=1),
@@ -172,7 +174,8 @@ def protocol(out,pilot_report):
 
 def validate_protocol(record):
     if (record.get('sourceHashes')!=source_hashes() or record.get('config')!=asdict(COMMON_CONFIG) or
-            record.get('configHash')!=COMMON_CONFIG.fingerprint or record.get('seeds')!=list(SEEDS)):
+            record.get('configHash')!=COMMON_CONFIG.fingerprint or record.get('seeds')!=list(SEEDS) or
+            record.get('taskSchema')!=TASK_SCHEMA or record.get('featureNames')!=list(FEATURE_NAMES)):
         raise ValueError('CURRENT_SOURCE_AND_TASK_PROTOCOL_REQUIRED')
     expected=[dict(split=split,**generated_task(parent).audit) for split,parents in
         [('train',TRAIN),('validation',VALIDATION),('heldout',HELDOUT)] for parent in parents]
@@ -183,15 +186,26 @@ def require_review(path,protocol_record):
     validate_protocol(protocol_record)
     if not path:raise ValueError('INDEPENDENT_GENERATED_TRAINING_REVIEW_REQUIRED')
     review=read(path)
-    if (review.get('trainingAdmitted') is not True or review.get('scope')!='resectionlab.generated-sequential-skills.v1' or
+    if (review.get('trainingAdmitted') is not True or review.get('scope')!=TASK_SCHEMA or
             review.get('sourceHashes')!=source_hashes() or review.get('configHash')!=COMMON_CONFIG.fingerprint):
         raise ValueError('INDEPENDENT_TRAINING_REVIEW_NOT_CURRENT_OR_NOT_ADMITTED')
     return dict(path=str(Path(path).resolve()),sha256=sha(path))
 
 
-def train(out,record,review_path):
+def train(out,record,review_path,prior_costs_path=None):
     reviewed=require_review(review_path,record)
-    started=time.monotonic();calls=0;logs=[];checkpoints=[]
+    prior=None;prior_calls=0;prior_wall=0.
+    if prior_costs_path:
+        prior=read(prior_costs_path)
+        prior_calls=prior['physicalCallsUpperBound'];prior_wall=prior['wallSeconds']
+        if (type(prior_calls) is not int or not 0<=prior_calls<20000 or
+                type(prior_wall) not in (int,float) or not 0<=prior_wall<7200 or prior.get('heldoutEvaluated') is not False):
+            raise ValueError('VALID_PRIOR_CAMPAIGN_COST_BOUND_REQUIRED')
+        origin=datetime.datetime.fromisoformat(prior['campaignStartedUtc'].replace('Z','+00:00')).timestamp()
+        prior_wall=max(prior_wall,time.time()-origin)
+        prior={**prior,'path':str(Path(prior_costs_path).resolve()),'sha256':sha(prior_costs_path),
+            'chargedWallSecondsAtRestart':prior_wall}
+    started=time.monotonic()-prior_wall;calls=prior_calls;logs=[];checkpoints=[]
     train_tier=ComputeTier('training',64,45.,1,2,1)
     val_tier=ComputeTier(**record['onlineTiers'][-1])
     for seed in SEEDS:
@@ -236,6 +250,7 @@ def train(out,record,review_path):
                     row=run_episode(generated_task(parent),'learned',bounded_tier,selector=model.select,seed=seed,
                         deadline=started+7200)
                     validation.append(row);calls+=row['computation']['physicalCalls']
+                    save(seed_out/f'validation-{epoch:02d}-{parent}.json',row)
             save(seed_out/f'validation-{epoch:02d}.json',validation)
             if len(validation)!=len(VALIDATION):
                 save(seed_out/f'validation-{epoch:02d}-incomplete.json',dict(
@@ -247,7 +262,8 @@ def train(out,record,review_path):
             if score>best:
                 best=score;torch.save(model.state_dict(),seed_out/'selected.pt');selected_epoch=epoch;selected_updates=updates
             last=epoch
-            save(out/'training-progress.json',dict(logs=logs,physicalCalls=calls,wallSeconds=time.monotonic()-started,review=reviewed))
+            save(out/'training-progress.json',dict(logs=logs,physicalCalls=calls,currentPhysicalCalls=calls-prior_calls,
+                wallSeconds=time.monotonic()-started,priorTrainingCosts=prior,review=reviewed))
             if time.monotonic()-started>=7200 or calls>=20000:break
         selected=seed_out/'selected.pt'
         checkpoints.append(dict(seed=seed,path=str(selected.resolve()),sha256=sha(selected),
@@ -255,11 +271,13 @@ def train(out,record,review_path):
             initialSha256=sha(seed_out/'initial.pt'),rewardDrivenUpdates=selected_updates>0,
             label='reward-updated-selector' if selected_updates>0 else 'untrained-initial-fallback'))
         save(out/'training.json',dict(checkpoints=checkpoints,physicalCalls=calls,
+            currentPhysicalCalls=calls-prior_calls,priorTrainingCosts=prior,
             wallSeconds=time.monotonic()-started,review=reviewed,logs=logs))
         if time.monotonic()-started>=7200 or calls>=20000:break
     frozen=dict(schema='resectionlab.frozen-sequential-checkpoints.v1',protocolSha256=sha(out/'protocol.json'),
         sourceHashes=source_hashes(),configHash=COMMON_CONFIG.fingerprint,checkpoints=checkpoints,
         trainingPhysicalCalls=calls,trainingWallSeconds=time.monotonic()-started,review=reviewed,
+        currentTrainingPhysicalCalls=calls-prior_calls,priorTrainingCosts=prior,
         unmetCriteria=[f"seed-{c['seed']}-selected-checkpoint-has-no-reward-updates" for c in checkpoints if not c['rewardDrivenUpdates']] +
             ([f'only-{len(checkpoints)}-of-three-seeds-completed'] if len(checkpoints)!=3 else []))
     save(out/'freeze.json',frozen);return frozen
@@ -322,6 +340,7 @@ def main():
     parser.add_argument('--output',type=Path,default=ROOT/'testcases/overnight-sequential-v1/benchmark')
     parser.add_argument('--stage',choices=('pilot','protocol','train','evaluate','controls','all'),default='pilot')
     parser.add_argument('--training-admission-review',type=Path)
+    parser.add_argument('--prior-training-costs',type=Path,help='charge preserved earlier campaign work and its continuous wall origin')
     parser.add_argument('--generated-only',action='store_true',default=True)
     parser.add_argument('--acquired-packet',type=Path,help='optional inspection packet; never an executable task')
     args=parser.parse_args();args.output.mkdir(parents=True,exist_ok=True)
@@ -330,7 +349,7 @@ def main():
     try:
         if args.stage in ('pilot','all'):pilot(args.output)
         if args.stage in ('protocol','all'):protocol(args.output,read(args.output/'pilot.json'))
-        if args.stage in ('train','all'):train(args.output,read(args.output/'protocol.json'),args.training_admission_review)
+        if args.stage in ('train','all'):train(args.output,read(args.output/'protocol.json'),args.training_admission_review,args.prior_training_costs)
         if args.stage in ('evaluate','all','controls'):
             rows=evaluate(args.output,read(args.output/'protocol.json'),controls_only=args.stage=='controls')
             summary['rows']=len(rows)

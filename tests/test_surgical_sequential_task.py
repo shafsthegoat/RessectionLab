@@ -70,6 +70,7 @@ def test_rejection_zero_credit_prefix_and_real_work_withdraw_stop_parity():
             got=execute_skill(task,engine,s)
             for r in got['receipts']:adapter.step_action(r['action'])
     stopped=execute_skill(task,engine,skill(task,'stop'))
+    for r in stopped['receipts']:adapter.step_action(r['action'])
     final=adapter.stop('Finite generated inventory exhausted')
     assert final[2:4]==(True,False)
     assert adapter.engine.state_id==engine.state_id
@@ -83,7 +84,7 @@ def test_observation_reset_no_ids_or_future_and_candidate_order_equivariance():
     observed=observation(task,a);other=observation(task,b)
     for name in ('source_labels','affine'):np.testing.assert_array_equal(observed[name],other[name])
     assert observed['native_state']==other['native_state'] and a.state_id==b.state_id
-    assert set(observed)=={'source_labels','affine','memberships','native_state','accepted_history','declared_limits','remaining'}
+    assert set(observed)=={'source_labels','affine','memberships','native_state','accepted_history','declared_limits','remaining','exterior_withdrawal_plane_ras_mm'}
     features=feature_matrix(observed,task.skills)
     order=np.arange(len(task.skills))[::-1]
     np.testing.assert_array_equal(feature_matrix(observed,tuple(task.skills[i] for i in order)),features[order])
@@ -130,3 +131,30 @@ def test_later_work_relocates_tool_with_checked_motion():
             if r['status']=='accepted':accepted.append(r)
     assert accepted[0]['receipts'][0]['action']['operation']=='place'
     assert all(r['receipts'][0]['action']['operation']=='move' for r in accepted[1:])
+
+
+def test_withdrawal_stop_recovers_refused_move_prefix_with_real_cost_and_adapter_parity():
+    from resectionlab.surgical_sequential_benchmark import FEATURE_NAMES,feature_matrix
+    task=generated_task(0);engine=task.initial_engine();adapter=SequentialPrimitiveAdapter(task.scene);adapter.reset(seed=0)
+    easy=min((s for s in task.skills if s.kind=='work'),key=lambda s:s.route[1][2])
+    blocked=next(s for s in task.skills if s.kind=='work' and s is not easy)
+    for s in (easy,blocked):
+        r=execute_skill(task,engine,s)
+        for p in r['receipts']:adapter.step_action(p['action'])
+    assert r['status']=='rejected' and r['receipts'][0]['action']['operation']=='move'
+    assert engine.state['slots']['right']['inserted']
+    matrix=feature_matrix(observation(task,engine),task.skills)
+    assert matrix[0,FEATURE_NAMES.index('right_inserted')]==1
+    mask=available_mask(task,engine,set())
+    assert not any(mask[i] for i,s in enumerate(task.skills) if s.kind=='prepare')
+    before=engine.state['elapsedSeconds'];target=endpoint_assessment(engine)['progress']['originalTargetTreatmentMm3']
+    stopped=execute_skill(task,engine,skill(task,'stop'))
+    assert stopped['status']=='accepted' and stopped['checkedStopAttempted']
+    assert stopped['attemptsConsumed']==2 and len(stopped['receipts'])==1
+    assert stopped['receipts'][0]['action']['operation']=='withdraw'
+    assert engine.state['elapsedSeconds']==pytest.approx(before+1.)
+    assert stopped['reward']==pytest.approx(-.03) and stopped['targetIncrementMm3']==0
+    for p in stopped['receipts']:adapter.step_action(p['action'])
+    adapter.stop('Recovery after refused work')
+    assert adapter.engine.state_id==engine.state_id and adapter.completion_assessment==stopped['endpoint']
+    assert stopped['endpoint']['progress']['originalTargetTreatmentMm3']==target
