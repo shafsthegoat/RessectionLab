@@ -29,7 +29,7 @@ def delayed_cavity():
     scene = SurgicalScene(labels, np.eye(4), [
         {'id': 1, 'name': 'brain', 'material': 'soft_tissue'},
         {'id': 2, 'name': 'target', 'material': 'tumor', 'target': True}],
-        {'kind': 'generated delayed cavity engineering control'},
+        {'kind': 'generated delayed cavity engineering control', 'evidenceClass': 'generated-engineering'},
         {'tissuePhysicsV2': default_profile()})
     engine = SurgicalEngine(scene)
     pose = lambda p: {'position': list(p), 'quaternion': [0., 0., 0., 1.]}
@@ -159,7 +159,7 @@ def test_actual_staged_entry_preserves_baseline_native_branch_and_validates_resu
     labels[15, 10, 10] = 0
     labels[10, 10, 12] = 2
     source = SurgicalEngine(SurgicalScene(labels, engine.scene.affine,
-        engine.scene.regions, {'kind': 'generated baseline preservation control'},
+        engine.scene.regions, {'kind': 'generated baseline preservation control', 'evidenceClass': 'generated-engineering'},
         engine.scene.properties))
     for action in engine.actions:
         assert source.step(copy.deepcopy(action))['status'] == 'accepted'

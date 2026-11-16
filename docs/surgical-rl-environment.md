@@ -2,9 +2,34 @@
 
 `SurgicalRLEnv` wraps the existing deterministic `SurgicalEngine` and explicit V2 tissue profile. It provides reset, actions, observations, decomposed reward, episode boundaries, and replayable snapshots. It does not train a policy. Mechanics and reward weights are research assumptions, not calibrated patient outcomes or surgical recommendations.
 
-The [verification receipt](surgical-rl-verification.json) records the checked source hashes, patient results, runtime measurements, and regression counts.
+## Current admission and episode version
 
-## Run and inspect
+New episodes require explicit generated engineering provenance or admission to
+the source-bound procedure task. Patient-derived or unverified anatomy cannot
+fall back to legacy RL by omitting the policy. `from_patient()` therefore refuses
+unqualified patient sources; existing protection masks or research acknowledgements
+do not supply that qualification. Native engine archives remain inspectable and
+replayable. The historical spatial learner also refuses patient anatomy because
+it does not consume the procedure harm contract.
+
+The procedure adapter is **evaluation-only v4**. Its fixed action codec appends
+`stop` after the unchanged twelve legacy operations; read `env.operations` or the
+snapshot's `fixedSpaceCodec` instead of assuming the legacy constant's length.
+`env.encode_action({'slot': 'left', 'operation': 'stop'})` encodes checked STOP.
+It adds no modeled time, motion or removal credit and refuses until both tools
+have actually completed exterior withdrawal and cleanup. Residual target stays
+in the complete-sequence outcome. Procedure v3 episode snapshots are explicitly
+incompatible because they lack this fixed-space STOP codec; legacy generated v2
+episodes retain their original operation IDs. Existing physics/training holds
+remain active. See the [next experiment proposal](motor-risk-and-planning-evaluation-next.md).
+
+The [older verification receipt](surgical-rl-verification.json) records historical
+source hashes and software trajectories. Its patient episodes do not establish
+current planning admission or completed patient tasks. The recipes and patient
+API example below describe that historical verifier, which now refuses an
+unqualified patient source before starting a new episode.
+
+## Historical verification recipe
 
 Install the optional RL dependency with `.venv/bin/python -m pip install -e '.[rl]'`. From the repository root run:
 
@@ -53,7 +78,7 @@ The fixed action is a Gymnasium `Dict`:
 | Field | Meaning |
 | --- | --- |
 | `slot` | Left or right instrument slot |
-| `operation` | Index into exported `OPERATIONS` |
+| `operation` | Index into `env.operations` (`OPERATIONS` for legacy generated episodes) |
 | `instrument` | Index into exported `INSTRUMENTS`, all fifteen tools |
 | `pose` | Seven float64 values: RAS millimeters xyz and xyzw unit quaternion |
 | `use_pose` | Whether the pose participates in this action |

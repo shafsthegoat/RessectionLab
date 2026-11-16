@@ -108,6 +108,10 @@ def full_case_readiness(engine):
         'missing-protection', 'missing-critical-annotations', 'initial-checkpoint-required') for b in blockers)
 
     intrinsic_blockers = []
+    if not blockers:
+        from .surgical_planning_admission import planning_admission
+        source_admission = planning_admission(engine.scene, engine.protection)
+        intrinsic_blockers.extend({**b, 'details': []} for b in source_admission['blockers'])
     if not any(r.get('target') and r['material'] == 'tumor'
                and np.any(engine.scene.labels == r['id']) for r in engine.scene.regions):
         intrinsic_blockers.append({'code': 'missing-owned-tumor-target',

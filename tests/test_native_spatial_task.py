@@ -13,9 +13,10 @@ from resectionlab.native_spatial_task import (
     DEFAULT_NATIVE_SPATIAL_REWARD, NativeSpatialCase, NativeSpatialTask,
     OPENING_TOOLS, make_native_opening_task, native_spatial_task_from_case,
     reconcile_native_grid_roundoff, _validate_provisional_proposal_binding,
+    _provisional_proposal_support, generated_legacy_planning_evidence,
 )
 from resectionlab.simulation import InvalidActionError
-from resectionlab.structural_evidence import structural_frame_hash
+from resectionlab.structural_evidence import planning_brain_support, structural_frame_hash
 
 
 def action(task, tool, voxel):
@@ -60,6 +61,12 @@ def annotated_source(*, support=True, assumption=True, frame="RAS+"):
             "rationale": "explicit artificial geometry contract, no medical approval", "cortical_access_permitted": False}
         case = case.revised(metadata={**case.metadata, "brain_mask_support_assumption": declaration})
     return case
+
+
+def generated_source(case):
+    """Separate explicit generated version of these locally fabricated arrays."""
+    return replace(case, source_refs=(SourceRef('generated-unit', 'synthetic://native-io-contract',
+        provenance='simulated'),), metadata={**dict(case.metadata), 'generated': True, 'is_synthetic': True})
 
 
 def test_complete_unit_inventory_requires_costly_opening_then_distinct_tool():
@@ -139,8 +146,8 @@ def test_teacher_clone_does_not_replay_geometry_or_copy_full_source(monkeypatch)
     assert task.metrics()["target_removed_mm3"] == 0.
 
 
-def test_real_io_track_uses_supplied_targets_without_any_intensity_threshold():
-    case = annotated_source()
+def test_generated_annotation_io_track_uses_supplied_targets_without_any_intensity_threshold():
+    case = generated_source(annotated_source())
     task = native_spatial_task_from_case(case, access=make_native_opening_task().case.access, tools=OPENING_TOOLS)
     observation = task.observation()
     assert observation.track == "annotation_assisted"
@@ -153,7 +160,12 @@ def test_real_io_track_uses_supplied_targets_without_any_intensity_threshold():
 @pytest.mark.parametrize("support,assumption", [(False, False), (True, False)])
 def test_full_head_or_unreviewed_support_never_becomes_working_anatomy(support, assumption):
     case = annotated_source(support=support, assumption=assumption)
-    with pytest.raises(ValueError, match="ESSENTIAL_EVIDENCE_MISSING|BRAIN_MASK_REVIEW_REQUIRED"):
+    if support:
+        with pytest.raises(ValueError, match='BRAIN_MASK_REVIEW_REQUIRED'):
+            planning_brain_support(case)
+    else:
+        assert planning_brain_support(case)[0] is None
+    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
         native_spatial_task_from_case(case, access=make_native_opening_task().case.access, tools=OPENING_TOOLS)
 
 
@@ -161,12 +173,13 @@ def test_inference_only_requires_explicit_nominal_target_for_teacher():
     case = annotated_source()
     # A research assumption alone cannot relabel supplied anatomy as an image
     # model. This unit source explicitly declares its artificial model output.
-    with pytest.raises(ValueError, match="reference annotations"):
+    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
         native_spatial_task_from_case(case, access=make_native_opening_task().case.access,
             tools=OPENING_TOOLS, track="inference_only")
     source = NativeSpatialCase(case.mri, case.brain_mask, case.compartments["provided_target"], case.affine,
         make_native_opening_task().case.access, OPENING_TOOLS, track="inference_only",
-        support_source_kind="derived_from_scan", support_derivation="explicit artificial unit-model output")
+        support_source_kind="derived_from_scan", support_derivation="explicit artificial unit-model output",
+        support_provenance={'generatedLegacyPlanningEvidence': generated_legacy_planning_evidence(generated_source(case))})
     task = NativeSpatialTask(source)
     assert not task.observation().channel_available[2]
     with pytest.raises(ValueError, match="no MRI threshold fallback"):
@@ -292,11 +305,14 @@ def test_provisional_support_rejects_unverified_model_before_task_creation(monke
         pytest.fail("No native task or candidate inventory may be created from an unverified model")
     monkeypatch.setattr(native_task_module, "NativeSpatialTask", forbidden_task)
     with pytest.raises(DataPolicyError, match="WEIGHT_LINEAGE_UNVERIFIED"):
+        _provisional_proposal_support(case, acknowledgment)
+    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
         native_spatial_task_from_case(case, access=access, tools=OPENING_TOOLS,
             research_support_acknowledgment=acknowledgment)
     assert case.brain_mask is None and item.review is None and item.review_status == "review_required"
     assert case.semantic_hash == original_hash and case.planning_hash == original_planning_hash
-    with pytest.raises(ValueError, match="ESSENTIAL_EVIDENCE_MISSING"):
+    assert planning_brain_support(case)[0] is None
+    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
         native_spatial_task_from_case(case, access=access, tools=OPENING_TOOLS)
 
 
@@ -336,7 +352,10 @@ def test_provisional_support_refuses_missing_or_promotional_declarations(change)
         "unacknowledged": "PROVISIONAL_SUPPORT_RESEARCH_ONLY",
         "track": "PROVISIONAL_SUPPORT_TRACK",
     }
-    with pytest.raises(ValueError, match=expected[change]):
+    if change != 'track':
+        with pytest.raises(ValueError, match=expected[change]):
+            _provisional_proposal_support(case, acknowledgment)
+    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
         native_spatial_task_from_case(case, access=make_native_opening_task().case.access, tools=OPENING_TOOLS,
             track="inference_only" if change == "track" else "annotation_assisted",
             research_support_acknowledgment=acknowledgment)

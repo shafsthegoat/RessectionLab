@@ -16,6 +16,9 @@ from test_surgical_task_admission import prepared
 @pytest.fixture(scope='module')
 def qualified(prepared):
     case, original, record, native = prepared[0]
+    from resectionlab.surgical_planning_admission import planning_admission
+    if not planning_admission(original.scene, original.protection)['available']:
+        pytest.skip('Historical patient-style native fixture needs a separate generated-native planning contract')
     # Distinct generated software case: a replayed wider/deeper exposure gives
     # the paired working parts room. The original narrow baseline is retained.
     engine = original.fresh()
@@ -31,6 +34,23 @@ def qualified(prepared):
     record['position'] = len(engine.actions); record['timeline'][record['branchId']] = copy.deepcopy(engine.history)
     controls = defaults(engine)['defaults']; controls['geometry'].update(candidateCount=1, maxCandidates=8)
     return case, engine, record, controls
+
+
+def test_patient_style_generated_native_fixture_cannot_authorize_new_two_tool_planning(prepared, monkeypatch):
+    from resectionlab.surgical_planning_admission import planning_admission
+    _, engine, _, _ = prepared[0]
+    before = engine.snapshot()
+    admission_result = planning_admission(engine.scene, engine.protection)
+    assert not admission_result['available'] and admission_result['sourceClass'] == 'patient-or-unverified'
+    available = defaults(engine)
+    assert not available['available'] and available['defaults'] is None
+    def forbidden(*_args, **_kwargs):
+        pytest.fail('Unsupported native fixture executed native or preview work')
+    monkeypatch.setattr(SurgicalEngine, 'step', forbidden)
+    monkeypatch.setattr(SurgicalEngine, 'preview', forbidden)
+    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
+        generate_comparison(engine, {})
+    assert engine.snapshot() == before
 
 
 @pytest.fixture(scope='module')

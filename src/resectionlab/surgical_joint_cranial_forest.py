@@ -135,6 +135,9 @@ def search_opening_forest(roots, *, budget, horizon=5, beam_width=3,
     from .surgical_procedure_policy import PROPERTY as PROCEDURE_PROPERTY
     if not isinstance(budget, OpeningComparisonBudget) or not isinstance(roots, (list, tuple)) or not 1 <= len(roots) <= 3:
         raise ValueError('CRANIAL_FOREST_ONE_TO_THREE_ROOTS_REQUIRED')
+    from .surgical_planning_admission import require_planning_admission
+    for root in roots:
+        require_planning_admission(root['engine'])
     candidates, failures, searches, sources, meters = [], [], [], {}, {}
     policy_hash, target_partition, source_hash, guard_hash = None, None, None, None
     prepared = []

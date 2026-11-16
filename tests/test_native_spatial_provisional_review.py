@@ -12,8 +12,9 @@ from resectionlab.geometry import AccessWindow
 from resectionlab.native_spatial_task import (
     OPENING_TOOLS, NativeSpatialCase, NativeSpatialTask,
     _validate_provisional_proposal_binding, native_spatial_task_from_case,
+    _provisional_proposal_support, generated_legacy_planning_evidence,
 )
-from resectionlab.structural_evidence import BrainEnvelopeReview, StructuralEvidence, structural_frame_hash
+from resectionlab.structural_evidence import BrainEnvelopeReview, StructuralEvidence, planning_brain_support, structural_frame_hash
 
 
 def proposal_case(*, varied=False):
@@ -54,11 +55,16 @@ def acknowledgment(case, proposal):
 def generated_task(case, proposal, **kwargs):
     """Exercise native geometry on artificial arrays, without model admission."""
     reference = case.compartments["supplied_target"]
+    generated = replace(case, source_refs=tuple(replace(ref,
+        uri='synthetic://provisional-native-unit/' + ref.source_id, provenance='simulated')
+        for ref in case.source_refs),
+        metadata={**dict(case.metadata), 'generated': True, 'is_synthetic': True})
     native = NativeSpatialCase(case.mri, proposal.mask, reference, np.eye(4), access(), OPENING_TOOLS,
         track="annotation_assisted", support_source_kind="supplied_annotation",
         support_derivation="constructed unit geometry; no anatomical model",
         nominal_target=reference, target_source_kind="supplied_annotation",
-        target_derivation="constructed unit reference; no scan estimator", **kwargs)
+        target_derivation="constructed unit reference; no scan estimator",
+        support_provenance={'generatedLegacyPlanningEvidence': generated_legacy_planning_evidence(generated)}, **kwargs)
     return NativeSpatialTask(native)
 
 
@@ -69,6 +75,8 @@ def test_reviewed_model_support_still_requires_admitted_weight_lineage():
     approved = replace(proposal, review=review)
     case = source.revised(brain_mask=approved.mask, structural_evidence={approved.evidence_id: approved})
     with pytest.raises(DataPolicyError, match="WEIGHT_LINEAGE_UNVERIFIED"):
+        planning_brain_support(case)
+    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
         native_spatial_task_from_case(case, access=access(), tools=OPENING_TOOLS)
     assert case.structural_evidence[proposal.evidence_id].review_status == "accepted"
 
@@ -79,10 +87,13 @@ def test_explicit_selection_cannot_admit_unverified_model_or_change_source():
     declaration = acknowledgment(case, proposal)
     assert _validate_provisional_proposal_binding(case, proposal, declaration) is None
     with pytest.raises(DataPolicyError, match="WEIGHT_LINEAGE_UNVERIFIED"):
+        _provisional_proposal_support(case, declaration)
+    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
         native_spatial_task_from_case(case, access=access(), tools=OPENING_TOOLS,
             research_support_acknowledgment=declaration)
     assert case.to_manifest() == before and case.brain_mask is None and proposal.review is None
-    with pytest.raises(ValueError, match="ESSENTIAL_EVIDENCE_MISSING"):
+    assert planning_brain_support(case)[0] is None
+    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
         native_spatial_task_from_case(case, access=access(), tools=OPENING_TOOLS)
 
 

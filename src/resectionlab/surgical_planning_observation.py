@@ -252,6 +252,8 @@ def project_observation(engine, task, available_evidence):
     ``task`` is the validated native inactive task. Public consumers receive
     only PlanningObservation, never this wrapper's rich engine arguments.
     """
+    from .surgical_planning_admission import require_planning_admission
+    require_planning_admission(engine)
     _require(task.get('id') == 'post-exposure-inactive-access-v1' and task.get('inputContract') == 'annotation-assisted-source-geometry-v1',
              'unsupported task/observation contract')
     _require(type(available_evidence) is list and all(type(x) is str for x in available_evidence), 'evidence roles must be declared')

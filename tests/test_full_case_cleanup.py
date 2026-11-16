@@ -17,7 +17,7 @@ def setup_field():
     scene = SurgicalScene(labels, np.eye(4), [
         {'id': 1, 'name': 'bone', 'material': 'bone'},
         {'id': 2, 'name': 'target', 'material': 'tumor', 'target': True}],
-        {'kind': 'explicit-cleanup-engineering-fixture'}, {'tissuePhysicsV2': default_profile()})
+        {'evidenceClass': 'generated-engineering', 'kind': 'explicit-cleanup-engineering-fixture'}, {'tissuePhysicsV2': default_profile()})
     engine = SurgicalEngine(scene)
     pose = lambda z: {'position': [42., 20., float(z)], 'quaternion': [1., 0., 0., 0.]}
     def step(operation, *, slot='left', **values):
@@ -140,7 +140,7 @@ def recorded_access(axis=2, signed=False, *, partial=False):
                 labels[tuple(index)] = 1
     affine = np.eye(4); affine[:3, 3] = [70., -40., 12.]
     scene = SurgicalScene(labels, affine, [{'id': 1, 'name': 'bone', 'material': 'bone'}],
-        {'kind': 'translated-recorded-cleanup-fixture'}, {'tissuePhysicsV2': default_profile()})
+        {'evidenceClass': 'generated-engineering', 'kind': 'translated-recorded-cleanup-fixture'}, {'tissuePhysicsV2': default_profile()})
     engine = SurgicalEngine(scene)
     q = ({0: Rotation.from_euler('y', -90, degrees=True),
           1: Rotation.from_euler('x', 90, degrees=True),

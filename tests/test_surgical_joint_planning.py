@@ -18,7 +18,7 @@ def _engine():
     return SurgicalEngine(SurgicalScene(labels, np.eye(4), [
         {'id': 1, 'name': 'brain', 'material': 'soft_tissue'},
         {'id': 2, 'name': 'target', 'material': 'tumor', 'target': True}],
-        {'caseHash': 'generated joint orchestration test'}, {}))
+        {'kind': 'generated-control', 'fixtureId': 'joint orchestration test'}, {}))
 
 
 def test_insufficient_source_routes_preserve_intact_state_and_json_seals():

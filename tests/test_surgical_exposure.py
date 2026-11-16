@@ -66,12 +66,39 @@ def hashes(collection):
 @pytest.fixture(scope='module')
 def completed(intact, controls):
     engine,native=intact; before=engine.snapshot(); files=hashes(native)
+    from resectionlab.surgical_planning_admission import planning_admission
+    if not planning_admission(engine.scene, engine.protection)['available']:
+        pytest.skip('Historical patient-style native fixture needs a separate generated-native planning contract')
     selected,report=exposure.prepare(engine,controls,native_collection=native.root)
     assert selected is not None, report['publicPlan']
     assert before==engine.snapshot() and hashes(native)==files
     return selected,report
 
 
+@pytest.fixture(scope='module')
+def planning_intact(intact):
+    from resectionlab.surgical_planning_admission import planning_admission
+    engine, _ = intact
+    if not planning_admission(engine.scene, engine.protection)['available']:
+        pytest.skip('Historical patient-style native fixture needs a separate generated-native planning contract')
+    return intact
+
+
+def test_generated_native_exposure_fixture_refuses_new_projection_before_work(intact, monkeypatch):
+    from resectionlab.surgical_planning_admission import planning_admission
+    engine, _ = intact; before = engine.snapshot()
+    admission_result = planning_admission(engine.scene, engine.protection)
+    assert not admission_result['available'] and admission_result['sourceClass'] == 'patient-or-unverified'
+    def forbidden(*_args, **_kwargs):
+        pytest.fail('Unsupported native fixture executed native or preview work')
+    monkeypatch.setattr(SurgicalEngine, 'step', forbidden)
+    monkeypatch.setattr(SurgicalEngine, 'preview', forbidden)
+    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
+        exposure.project_exposure(engine)
+    assert engine.snapshot() == before
+
+
+@pytest.mark.usefixtures('planning_intact')
 def test_actual_public_native_prefixes_and_irreversible_burdens_match(intact, controls, completed):
     baseline,native=intact; selected,report=completed
     public=report['publicPlan']; chosen=public['attempts'][public['decision']['selectedIndex']]
@@ -127,6 +154,7 @@ def test_public_task_cannot_reset_observed_anatomy_or_capacity(completed,control
     assert model.snapshot()==before
 
 
+@pytest.mark.usefixtures('planning_intact')
 @pytest.mark.parametrize('change',['slot','operation','instrument','radius','parameter','activation','duration'])
 def test_public_actions_cannot_escape_preparation_capability(intact,controls,change):
     model=exposure.project_exposure(intact[0]).planning_engine(controls); before=model.snapshot()
@@ -143,6 +171,7 @@ def test_public_actions_cannot_escape_preparation_capability(intact,controls,cha
     assert result['status']=='rejected' and model.snapshot()==before
 
 
+@pytest.mark.usefixtures('planning_intact')
 @pytest.mark.parametrize('limitation',['actions','time','remaining-native-actions','no-proposal'])
 def test_failed_or_incomplete_execution_never_becomes_selected(intact,controls,limitation):
     observation=exposure.project_exposure(intact[0]); raw=copy.deepcopy(controls)
@@ -157,6 +186,7 @@ def test_failed_or_incomplete_execution_never_becomes_selected(intact,controls,l
     assert not any(a['complete'] for a in public['attempts'])
 
 
+@pytest.mark.usefixtures('planning_intact')
 def test_incomplete_attempt_is_replayed_natively_but_no_state_is_installed(intact,controls):
     engine,native=intact; before=engine.snapshot(); raw={**controls,'maxActions':6}
     selected,report=exposure.prepare(engine,raw,native_collection=native.root)
@@ -165,6 +195,7 @@ def test_incomplete_attempt_is_replayed_natively_but_no_state_is_installed(intac
     assert engine.snapshot()==before
 
 
+@pytest.mark.usefixtures('planning_intact')
 def test_unexecuted_baseline_removal_cannot_acquire_forward_replay_authority(intact,controls):
     original,native=intact; engine=original.clone()
     cell=int(np.flatnonzero(engine.scene.labels.ravel())[0])
@@ -174,6 +205,7 @@ def test_unexecuted_baseline_removal_cannot_acquire_forward_replay_authority(int
     assert original.state['removed']==[]
 
 
+@pytest.mark.usefixtures('planning_intact')
 @pytest.mark.parametrize('change',['schema','scope','inputs','seal','decision','complete','radius','duration','route-endpoint'])
 def test_native_boundary_rejects_resealed_producer_claims(intact,controls,completed,monkeypatch,change):
     baseline,native=intact; public=copy.deepcopy(completed[1]['publicPlan'])
@@ -195,6 +227,7 @@ def test_native_boundary_rejects_resealed_producer_claims(intact,controls,comple
     assert baseline.snapshot()==before
 
 
+@pytest.mark.usefixtures('planning_intact')
 def test_empty_route_with_only_parking_cannot_claim_complete_preparation(intact,controls,monkeypatch):
     baseline,native=intact; public=exposure.plan_observed(exposure.project_exposure(baseline),controls)
     attempt=public['attempts'][public['decision']['selectedIndex']]; model=baseline.clone()
@@ -213,6 +246,7 @@ def test_empty_route_with_only_parking_cannot_claim_complete_preparation(intact,
     assert not exposure._complete_program([],{'paths':[]},baseline.state['slots']['right'])
 
 
+@pytest.mark.usefixtures('planning_intact')
 def test_side_sweep_uses_multiple_real_fixed_radius_paths(intact,controls):
     observation=exposure.project_exposure(intact[0])
     raw={**controls,'lateralSweepMm':.3,'maxNonTargetMm3':200.,'maxActions':128,'maxSeconds':180.}
@@ -230,6 +264,7 @@ def test_side_sweep_uses_multiple_real_fixed_radius_paths(intact,controls):
     assert attempt['complete'] or attempt['failure'] is not None
 
 
+@pytest.mark.usefixtures('planning_intact')
 @pytest.mark.parametrize('burden',['target','non-target'])
 def test_compiler_preserves_failed_burden_evidence_instead_of_selecting_it(intact,controls,burden):
     observation=exposure.project_exposure(intact[0])
@@ -245,6 +280,7 @@ def test_compiler_preserves_failed_burden_evidence_instead_of_selecting_it(intac
     assert intact[0].state['removed']==[]
 
 
+@pytest.mark.usefixtures('planning_intact')
 def test_private_references_and_caller_control_callback_cannot_change_frozen_plan(intact,controls,completed):
     engine,native=intact; changed=engine.clone()
     changed._private_evaluation_truth=np.ones(engine.scene.shape,bool)
@@ -260,6 +296,7 @@ def test_private_references_and_caller_control_callback_cannot_change_frozen_pla
     assert selected.snapshot()==completed[0].snapshot()
 
 
+@pytest.mark.usefixtures('planning_intact')
 def test_cancellation_during_native_attempt_propagates_without_changing_source(intact,controls,monkeypatch):
     engine,native=intact; before=engine.snapshot(); original=SurgicalEngine.step; native_attempts=[]
     def cancel_native(model,action,**kwargs):
@@ -272,6 +309,7 @@ def test_cancellation_during_native_attempt_propagates_without_changing_source(i
     assert native_attempts and engine.snapshot()==before
 
 
+@pytest.mark.usefixtures('planning_intact')
 def test_wall_budget_cannot_publish_a_partial_study(intact,controls,monkeypatch):
     engine,native=intact; before=engine.snapshot(); ticks=iter([0.,1000.])
     monkeypatch.setattr(exposure.time,'monotonic',lambda:next(ticks))
@@ -280,6 +318,7 @@ def test_wall_budget_cannot_publish_a_partial_study(intact,controls,monkeypatch)
     assert engine.snapshot()==before
 
 
+@pytest.mark.usefixtures('planning_intact')
 def test_callback_native_state_mutation_is_refused(intact,controls):
     original,native=intact; engine=original.clone(); changed=False
     def callback():

@@ -46,7 +46,7 @@ def shell(*, proof_status='reviewed', obstacle=None, source_gap=False, protected
                {'id': 2, 'name': 'Generated target', 'material': 'tumor', 'target': True}]
     if obstacle is not None:
         regions.append({'id': 3, 'name': 'Transport obstacle', 'material': 'soft_tissue', 'protected': protected})
-    source = {'kind': 'generated closed-shell craniotomy control; not a patient'}
+    source = {'kind': 'generated closed-shell craniotomy control; not a patient', 'evidenceClass': 'generated-engineering'}
     anchor = int(np.ravel_multi_index((20, 20, 75), labels.shape))
     properties = {'attachments': copy.deepcopy(list(attachments)), 'boneAnchors': [anchor]}
     base = SurgicalScene(labels, np.eye(4), regions, source, properties)

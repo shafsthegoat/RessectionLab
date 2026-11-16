@@ -12,7 +12,7 @@ def fixture():
     labels = np.zeros((24, 24, 20), np.uint16)
     labels[8:11, 8:11, 8:11] = 1
     return SurgicalScene(labels, np.eye(4), [{'id': 1, 'name': 'Synthetic target',
-        'material': 'tumor', 'target': True}], {'provenance': 'generated test geometry'},
+        'material': 'tumor', 'target': True}], {'kind': 'generated-control', 'provenance': 'generated test geometry'},
         {'tissuePhysicsV2': default_profile()})
 
 

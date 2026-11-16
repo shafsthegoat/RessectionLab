@@ -53,6 +53,8 @@ def rescue_recipes(engine, record):
 
 def rescue_availability(engine, record):
     try:
+        from .surgical_planning_admission import require_planning_admission
+        require_planning_admission(engine)
         rescue_recipes(engine, record)
         return {'rescueAvailable': True, 'rescueReason': None}
     except ValueError as error:
@@ -66,6 +68,8 @@ def compare_rescue(engine, record, *, acknowledge_unknowns=False, check=lambda:N
     starts from a detached copy of that admitted state; no imported checkpoint
     grants authority. The full native action log is retained for later reopening.
     """
+    from .surgical_planning_admission import require_planning_admission
+    require_planning_admission(engine)
     if acknowledge_unknowns is not True:
         raise ValueError('Explicitly acknowledge missing anatomy and research assumptions')
     started=time.perf_counter(); outer_check=check

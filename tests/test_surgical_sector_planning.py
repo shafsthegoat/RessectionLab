@@ -10,8 +10,8 @@ from resectionlab.surgical_environment import load_environment, standardize
 from resectionlab.surgical_engine import SurgicalEngine
 from resectionlab.surgical_scene import SurgicalScene
 from resectionlab.surgical_sector_planning import (
-    _plan_seal, _sector_cells, compare_sector_strategies, execute_strategy_option,
-    intact_strategy_observation, strategy_observation,
+    _sector_cells, compare_sector_strategies, execute_strategy_option,
+    intact_strategy_observation,
     validate_saved_sector_comparison)
 from resectionlab.workspace_bundle import load_workspace
 
@@ -34,7 +34,7 @@ def test_generated_source_target_sectors_are_disjoint_and_affine_bound():
     affine[:3, 3] = [10., -20., 30.]
     scene = standardize(SurgicalScene(labels, affine,
         [{'id': 2, 'name': 'supplied target', 'material': 'tumor', 'target': True}],
-        {'provenance': 'generated sector geometry test'}, {}))
+        {'evidenceClass': 'generated-engineering', 'provenance': 'generated sector geometry test'}, {}))
     route = {'sourceSceneId': scene.identity, 'pathType': 'oblique_mapped_brain',
              'accessCompleteness': 'unsupported_skull_access_brain_corridor',
              'surfacePose': {'position': [10., -10., 40.]},
@@ -55,7 +55,7 @@ def test_source_sector_capacity_refuses_before_any_native_traversal():
     labels[5, 5, 5] = 2
     scene = standardize(SurgicalScene(labels, np.eye(4),
         [{'id': 2, 'name': 'target', 'material': 'tumor', 'target': True}],
-        {'provenance': 'generated impossible-sector test'}, {}))
+        {'evidenceClass': 'generated-engineering', 'provenance': 'generated impossible-sector test'}, {}))
     engine = SurgicalEngine(scene)
     before = engine.snapshot()
     route = {'sourceSceneId': scene.identity, 'pathType': 'oblique_mapped_brain',
@@ -76,122 +76,25 @@ def test_source_sector_capacity_refuses_before_any_native_traversal():
 
 
 @pytest.mark.skipif(not FRESH_0007.is_file(), reason='Ignored fresh-development case is unavailable')
-def test_verified_corridor_has_two_true_sector_orders_and_both_physical_hands():
+def test_historical_patient_sector_comparison_requires_procedure_policy():
     _, artifacts, _ = load_workspace(FRESH_0007)
-    record = artifacts['surgical_toolbox']
-    scene = load_environment(FRESH_0007)
+    record = artifacts['surgical_toolbox']; scene = load_environment(FRESH_0007)
     intact = SurgicalEngine.restore(scene, record['branches']['main'])
     before = intact.snapshot()
-    source = copy.deepcopy(record['planning'])
-    source['alternatives'] = source['alternatives'][:1]
-    branches, comparison = compare_sector_strategies(
-        intact, source, record['branches'], acknowledge_unknowns=True)
-    assert intact.snapshot() == before and len(branches) == comparison['passedCount'] == 4
-    assert comparison['totalWallSeconds'] <= 120.
-    assert {tuple(plan['continuationOutcome']['observedFirstProgressOrder'])
-            for _, plan in branches} == {('near', 'far'), ('far', 'near')}
-    assert {plan['strategy']['hand'] for _, plan in branches} == {'left', 'right'}
-    for candidate, plan in branches:
-        outcome = plan['continuationOutcome']
-        assert outcome['taskGateMet'] and outcome['cleanupComplete']
-        assert outcome['deltaTargetMm3'] >= 30.
-        assert outcome['deltaNonTargetMm3'] <= 20.
-        assert all(volume >= 10. for volume in outcome['perSectorRemovedMm3'].values())
-        assert plan['sourceAccessPrefixActions'] < len(candidate.actions) <= 48
-        assert plan['verification']['independentIntactSourceReplay']
-        assert plan['modeledOutcomes']['schema'] == 'resectionlab.surgical-modeled-outcomes.v1'
-        active = plan['strategy']['hand']
-        assert all(action['slot'] == active for action in candidate.actions)
-        assert plan['leftSourcePrefixPreserved'] == (active == 'left')
-        first = plan['strategy']['sectorOrder'][0]
-        opposite = plan['strategy']['sectorOrder'][1]
-        first_phase = plan['sectorPhases'][0]
-        assert first_phase['sector'] == first
-        assert first_phase['perSectorDeltaMm3'][first] >= 10.
-        assert first_phase['perSectorDeltaMm3'][opposite] == 0.
-    assert next(plan for _, plan in branches if plan['strategy']['sectorOrder'][0] == 'near')[
-        'continuationOutcome']['deltaNonTargetMm3'] != next(
-        plan for _, plan in branches if plan['strategy']['sectorOrder'][0] == 'far')[
-        'continuationOutcome']['deltaNonTargetMm3']
-
-    copied = copy.deepcopy(record)
-    for index, (candidate, plan) in enumerate(branches):
-        identity = 'sector-test-'+str(index)
-        plan['branchId'] = identity
-        copied['branches'][identity] = candidate.snapshot()
-    comparison['comparisonSeal'] = semantic_digest(comparison)
-    assert validate_saved_sector_comparison(scene, copied, comparison, replay=True)['verified']
-    tampered = copy.deepcopy(comparison)
-    tampered['alternatives'][0]['decisions'][-1]['sectorDeltaMm3']['near'] += 1.
-    tampered['comparisonSeal'] = semantic_digest({k: v for k, v in tampered.items()
-                                                  if k != 'comparisonSeal'})
-    with pytest.raises(ValueError, match='strategy seal'):
-        validate_saved_sector_comparison(scene, copied, tampered)
-    false_pass = copy.deepcopy(comparison)
-    option = false_pass['alternatives'][0]
-    option['continuationOutcome']['perSectorRemovedMm3']['near'] = 5.
-    for row in option['decisions'][option['sourceAccessPrefixActions']:]:
-        if row['sectorDeltaMm3']['near'] > 0:
-            row['sectorDeltaMm3']['near'] -= 6.
-            break
-    option['planSeal'] = _plan_seal(scene.identity, option['startStateId'],
-        option['strategy'], option['decisions'], option['sectors'])
-    false_pass['comparisonSeal'] = semantic_digest({k: v for k, v in false_pass.items()
-                                                   if k != 'comparisonSeal'})
-    with pytest.raises(ValueError, match='task gate'):
-        validate_saved_sector_comparison(scene, copied, false_pass)
+    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
+        compare_sector_strategies(intact, record['planning'], record['branches'], acknowledge_unknowns=True)
+    assert intact.snapshot() == before
 
 
 @pytest.mark.skipif(not FRESH_0007.is_file(), reason='Ignored fresh-development case is unavailable')
-def test_post_corridor_observation_disallows_retroactive_hand_change():
+def test_historical_patient_sector_observation_requires_procedure_policy():
     _, artifacts, _ = load_workspace(FRESH_0007)
-    record = artifacts['surgical_toolbox']
-    scene = load_environment(FRESH_0007)
-    access = record['planning']['alternatives'][0]
+    record = artifacts['surgical_toolbox']; scene = load_environment(FRESH_0007)
     intact = SurgicalEngine.restore(scene, record['branches']['main'])
-    intact_view = intact_strategy_observation(intact, access)
-    assert intact_view['boundary'] == 'intact_before_access'
-    assert [row['id'] for row in intact_view['options']] == [
-        'corridor:left', 'corridor:right', 'STOP']
-    assert all(row['structurallyAvailable'] for row in intact_view['options'])
-    withdrawn, stop = execute_strategy_option(intact, access, 'STOP')
-    assert stop['status'] == 'accepted' and stop['taskGateMet'] is False
-    assert stop['nativeActionsAppended'] == 0 and withdrawn.state_id == intact.state_id
-    engine, corridor = execute_strategy_option(intact, access, 'corridor:left')
-    assert corridor['status'] == 'accepted' and intact.actions == []
-    assert corridor['corridorBinding']['hand'] == 'left'
-    sectors, evidence = _sector_cells(scene, access['route'])
-    dto = strategy_observation(engine, evidence, sectors,
-        prefix_metrics=corridor['corridorBinding']['prefixMetrics'],
-        prefix_sector_removed_mm3=corridor['corridorBinding']['prefixSectorRemovedMm3'],
-        active_hand='left')
-    assert dto['boundary'] == 'post_corridor'
-    assert dto['ledger']['additionalPerSectorRemovedMm3'] == {'near': 0., 'far': 0.}
-    assert [option['id'] for option in dto['options']] == [
-        'near:left', 'near:right', 'far:left', 'far:right', 'STOP']
-    assert all(not option['structurallyAvailable'] for option in dto['options']
-               if option['hand'] == 'right')
-    assert 'sourceCellSha256' not in str(dto['ledger'])
-    with pytest.raises(ValueError, match='retroactively change hands'):
-        execute_strategy_option(engine, access, 'near:right',
-                                corridor_binding=corridor['corridorBinding'])
-    near, receipt = execute_strategy_option(engine, access, 'near:left',
-                                            corridor_binding=corridor['corridorBinding'])
-    assert receipt['status'] == 'accepted' and receipt['sectorDeltaMm3']['near'] >= 10.
-    assert near.actions[:len(engine.actions)] == engine.actions
-    far, receipt = execute_strategy_option(near, access, 'far:left',
-                                           corridor_binding=corridor['corridorBinding'])
-    assert receipt['status'] == 'accepted' and receipt['sectorDeltaMm3']['far'] >= 10.
-    finished, receipt = execute_strategy_option(far, access, 'STOP',
-                                                corridor_binding=corridor['corridorBinding'])
-    assert receipt['status'] == 'accepted' and receipt['cleanupComplete']
-    assert receipt['cleanupMode'] == 'generic' and not receipt['sourceCleanupReused']
-    assert finished.actions[:len(far.actions)] == far.actions
-    with pytest.raises(ValueError, match='post_corridor'):
-        strategy_observation(engine, evidence, sectors,
-            prefix_metrics=corridor['corridorBinding']['prefixMetrics'],
-            prefix_sector_removed_mm3=corridor['corridorBinding']['prefixSectorRemovedMm3'],
-            active_hand='left', boundary='pre_access')
+    before = intact.snapshot()
+    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
+        intact_strategy_observation(intact, record['planning']['alternatives'][0])
+    assert intact.snapshot() == before
 
 
 @pytest.mark.skipif(not FRESH_0005.is_file(), reason='Ignored fresh-development case is unavailable')
@@ -369,48 +272,45 @@ def test_cleanup_budget_is_probed_before_admitting_sector_macro():
 
 
 @pytest.mark.skipif(not FRESH_0005.is_file(), reason='Ignored fresh-development case is unavailable')
-def test_comparison_counts_checked_preflights_and_single_source_replay(monkeypatch):
+def test_patient_comparison_refuses_before_any_preview_or_native_transition(monkeypatch):
     _, artifacts, _ = load_workspace(FRESH_0005)
-    record = artifacts['surgical_toolbox']
-    scene = load_environment(FRESH_0005)
+    record = artifacts['surgical_toolbox']; scene = load_environment(FRESH_0005)
     intact = SurgicalEngine.restore(scene, record['branches']['main'])
-    source = copy.deepcopy(record['planning'])
-    source['alternatives'] = source['alternatives'][:1]
-    source_replay_actions = len(record['branches'][source['alternatives'][0]['branchId']]['actions'])
-    actual = {'preview': 0, 'step': 0, 'inside_preview': 0}
-    preview = SurgicalEngine.preview
-    step = SurgicalEngine.step
+    before = intact.snapshot()
+    def forbidden(*_args, **_kwargs):
+        pytest.fail('Patient admission refusal executed native or preview work')
+    monkeypatch.setattr(SurgicalEngine, 'preview', forbidden)
+    monkeypatch.setattr(SurgicalEngine, 'step', forbidden)
+    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
+        compare_sector_strategies(intact, record['planning'], record['branches'], acknowledge_unknowns=True)
+    assert intact.snapshot() == before
 
-    def traced_preview(self, action, **kwargs):
-        actual['preview'] += 1
-        actual['inside_preview'] += 1
-        try:
-            return preview(self, action, **kwargs)
-        finally:
-            actual['inside_preview'] -= 1
 
-    def traced_step(self, action, **kwargs):
-        if not actual['inside_preview']:
-            actual['step'] += 1
-        return step(self, action, **kwargs)
+@pytest.mark.skipif(not JOINT_0005.is_file(), reason='Ignored historical joint case is unavailable')
+def test_saved_patient_sector_comparison_remains_readable_without_new_planning():
+    _, artifacts, _ = load_workspace(JOINT_0005)
+    record = artifacts['surgical_toolbox']; scene = load_environment(JOINT_0005)
+    comparison = record['sectorPlanning']
+    before = copy.deepcopy(record)
+    assert validate_saved_sector_comparison(scene, record, comparison, replay=True)['verified']
+    assert comparison['passedCount'] == 0
+    assert all(not plan['continuationOutcome']['taskGateMet'] for plan in comparison['alternatives'])
+    assert record == before
 
-    monkeypatch.setattr(SurgicalEngine, 'preview', traced_preview)
-    monkeypatch.setattr(SurgicalEngine, 'step', traced_step)
-    branches, report = compare_sector_strategies(intact, source, record['branches'],
-        acknowledge_unknowns=True)
-    assert len(branches) == 4 and report['passedCount'] == 0
-    assert report['cost']['sourceValidationReplayCalls'] == source_replay_actions
-    assert report['cost']['physicalInventoryComplete']
-    assert report['cost']['aggregateTotalPhysicalCalls'] == \
-        actual['preview'] + actual['step']
-    assert report['cost']['strategyPhysicalCalls'] == \
-        sum(plan['cost']['totalPhysicalCalls'] for _, plan in branches)
-    for _, plan in branches:
-        assert plan['continuationOutcome']['cleanupComplete']
-        assert plan['escapePreflights']
-        assert plan['cost']['totalPhysicalCalls'] == sum(plan['cost'][key] for key in (
-            'executionCalls', 'previewCalls', 'preflightPreviewCalls',
-            'preflightCommittedCalls', 'freshReplayCalls'))
-        if plan['strategy']['sectorOrder'][0] == 'far':
-            assert plan['escapePreflights'][0]['status'] == 'refused'
-            assert 'ESCAPE_PREFLIGHT_' in plan['failureReasons'][0]
+
+@pytest.mark.skipif(not JOINT_0005.is_file(), reason='Ignored historical joint case is unavailable')
+def test_saved_patient_sector_seal_and_task_gate_cannot_be_promoted():
+    _, artifacts, _ = load_workspace(JOINT_0005)
+    record = artifacts['surgical_toolbox']; scene = load_environment(JOINT_0005)
+    original = record['sectorPlanning']
+    changed = copy.deepcopy(original)
+    changed['alternatives'][0]['decisions'][-1]['sectorDeltaMm3']['near'] += 1.
+    changed['comparisonSeal'] = semantic_digest({k: v for k, v in changed.items() if k != 'comparisonSeal'})
+    with pytest.raises(ValueError, match='strategy seal'):
+        validate_saved_sector_comparison(scene, record, changed)
+    changed = copy.deepcopy(original)
+    changed['alternatives'][0]['continuationOutcome']['taskGateMet'] = True
+    changed['alternatives'][0]['status'] = 'passed'
+    changed['comparisonSeal'] = semantic_digest({k: v for k, v in changed.items() if k != 'comparisonSeal'})
+    with pytest.raises(ValueError, match='task gate'):
+        validate_saved_sector_comparison(scene, record, changed)

@@ -242,6 +242,7 @@ def _harm_key(node):
     return (value('neuralRemovedMm3'), value('neuralCutSourceMm3'),
         *[float('inf') if v is None else v for _,v in sorted(structures.items())],
         value('protectedRemovedMm3'),
+        value('supplyDeficitSeconds'), value('drainageDeficitSeconds'),
         value('nonbonePreparationRemovedMm3',node.ledger['preparationNonboneRemovedMm3']),
         node.ledger['boneRemovedMm3'], node.ledger['modeledElapsedSeconds'])
 
@@ -300,13 +301,14 @@ def _comparison_vector(node):
             values.append(value)
     for name in ('toolExchanges', 'brainStrainSquaredMm3S', 'brainStressSquaredPa2Mm3S',
             'thermalPeakC', 'thermalExposureMm3KS', 'bloodGeneratedMm3',
-            'motorEncounterMm3', 'languageEncounterMm3'):
-        d = dimensions[name]
+            'motorEncounterMm3', 'languageEncounterMm3',
+            'supplyDeficitSeconds', 'drainageDeficitSeconds'):
+        d = dimensions.get(name, {'status': 'unavailable', 'cumulative': None})
         value = d.get('cumulative')
+        names.append((name, d['status'], d.get('aggregation', 'cumulative')))
         if value is not None:
             if type(value) not in (float, int) or not np.isfinite(value):
                 raise ValueError('Joint comparison requires finite supported outcome dimensions')
-            names.append((name, d['status'], d.get('aggregation', 'cumulative')))
             values.append(value)
     return tuple(names), tuple(values)
 
@@ -334,7 +336,8 @@ def _compare_checked_nodes(nodes, stop, limits):
     # zero or discarding that dimension from the entire frontier.
     source_dimensions = samples[0]['vector']['dimensions']
     for metric in ('brainStrainSquaredMm3S', 'brainStressSquaredPa2Mm3S',
-            'thermalPeakC', 'thermalExposureMm3KS', 'bloodGeneratedMm3'):
+            'thermalPeakC', 'thermalExposureMm3KS', 'bloodGeneratedMm3',
+            'supplyDeficitSeconds', 'drainageDeficitSeconds'):
         if source_dimensions[metric]['status'] != 'unavailable':
             policy['objectives'].append(metric)
             policy['requiredMetrics'].append(metric)
@@ -425,6 +428,8 @@ def checked_joint_sequence_search(engine, route=None, *, propose, limits, goal,
     branch from work; they are not inserted between
     consecutive skills in the selected program.
     """
+    from .surgical_planning_admission import require_planning_admission
+    require_planning_admission(engine)
     from .surgical_joint_cranial_exit import find_checked_joint_exit
     if (not callable(propose) or not callable(check) or
             type(horizon) is not int or not 1 <= horizon <= 5 or

@@ -71,6 +71,8 @@ class SurgicalScene:
         self._original_target_proof = None
 
     def require_cache_source(self):
+        from .surgical_planning_admission import validate_source_binding
+        validate_source_binding(self)
         arrays = (self.labels, self.affine, self.inverse, self.spacing)
         if (self.identity != self._cache_identity or self.voxel_mm3 != self._cache_voxel_mm3 or any(
                 current is not original or current.shape != shape or current.dtype.str != dtype or current.strides != strides
@@ -235,6 +237,8 @@ def from_case(case, mapping=None):
            if 'working_grid_refinement' in case.metadata else {})}, properties)
     _bind_original_target_memberships(scene, {r['name']: immutable_array(
         np.flatnonzero(masks[r['name']]), np.int64) for r in regions if r.get('target')})
+    from .surgical_planning_admission import bind_case_source
+    bind_case_source(scene, case)
     return scene
 
 
@@ -271,6 +275,8 @@ def propagate_original_target_memberships(source, target):
             and np.array_equal(target.affine, source.affine)
             and target.source.get('annotationHashes') == source.source.get('annotationHashes')):
         _bind_original_target_memberships(target, retained)
+    from .surgical_planning_admission import propagate_source_binding
+    propagate_source_binding(source, target)
     return target
 
 
@@ -286,6 +292,6 @@ def engineering_scene():
                (2, 'Block Q', 'soft_tissue', '#c799b0'), (3, 'Insert 9', 'tumor', '#db6b95'),
                (4, 'Sheet A', 'membrane', '#82c8d8'), (5, 'Strand B', 'vessel', '#e7645c')]]
     from .surgical_effects import fixture_properties
-    return SurgicalScene(labels, np.eye(4), regions, {'caseId': 'instrument-engineering-fixture',
+    return SurgicalScene(labels, np.eye(4), regions, {'caseId': 'instrument-engineering-fixture', 'evidenceClass': 'generated-engineering',
         'provenance': 'explicit generated engineering geometry; not patient anatomy'},
         fixture_properties(labels))

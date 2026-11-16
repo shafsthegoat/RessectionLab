@@ -16,7 +16,7 @@ def _engine(labels, affine=None):
         {'id': 8, 'material': 'vessel'},
         {'id': 9, 'material': 'bone'},
         {'id': 42, 'material': 'tumor'},
-    ], {'kind': 'explicit-route-ranking-fixture'}, {})
+    ], {'evidenceClass': 'generated-engineering', 'kind': 'explicit-route-ranking-fixture'}, {})
     return SimpleNamespace(scene=scene, state={'removed': [], 'deformation': {}, 'holds': {}},
                            state_id='fixture-state-0')
 

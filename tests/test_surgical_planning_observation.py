@@ -15,12 +15,13 @@ from resectionlab.surgical_interactive_planning import plan_observed_approaches,
 
 @pytest.fixture(scope='module')
 def baseline():
+    # These literal arrays have private fixture IDs, not patient provenance.
     labels = np.zeros((36, 36, 36), np.uint16)
     labels[7:29, 7:29, 10:34] = 1; labels[14:23, 14:23, 20:32] = 2
     scene = SurgicalScene(labels, np.eye(4), [
         {'id': 1, 'name': 'private original brain name', 'material': 'soft_tissue'},
         {'id': 2, 'name': 'private original tumor name', 'material': 'tumor', 'target': True}],
-        {'kind': 'generated', 'patientId': 'private-patient-A', 'path': '/private/A'}, {'tissuePhysicsV2': default_profile()})
+        {'kind': 'generated-control', 'fixtureId': 'private-generated-A', 'path': '/private/A'}, {'tissuePhysicsV2': default_profile()})
     e = SurgicalEngine(scene)
     actions = [
         {'slot': 'left', 'operation': 'place', 'pose': {'position': [-20., -20., -20.], 'quaternion': [0., 0., 0., 1.]}},
@@ -57,7 +58,7 @@ class NoClone:
 
 
 def private_variant(e):
-    source = {'kind': 'generated', 'patientId': 'private-patient-B', 'path': '/private/B', 'evaluationHash': 'private-hash'}
+    source = {'kind': 'generated-control', 'fixtureId': 'private-generated-B', 'path': '/private/B', 'evaluationHash': 'private-hash'}
     props = copy.deepcopy(e.scene.properties)
     props['tissuePhysicsV2']['provenance']['description'] = 'Private provenance changed'
     props['tissuePhysicsV2']['provenance']['extra_private_metadata'] = 'not an input'

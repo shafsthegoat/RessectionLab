@@ -476,6 +476,8 @@ def execute_strategy_option(engine, access_plan, option_id, *, corridor_binding=
     clone. A failed macro or exit leaves the caller's accepted prefix intact.
     Clone probes use the same public preview/step transitions and action caps.
     """
+    from .surgical_planning_admission import require_planning_admission
+    require_planning_admission(engine)
     if isinstance(option_id, str) and option_id.startswith(('near:', 'far:')):
         candidate, proposed, preflight = _escape_preflight(engine, access_plan,
             option_id, corridor_binding=corridor_binding, max_actions=max_actions,
@@ -935,6 +937,8 @@ def compare_sector_strategies(engine, source_comparison, saved_branches, *,
                               max_wall_seconds=120., check=lambda: None,
                               progress=lambda *_: None):
     """Compare all route/order/hand options and preserve every attempted result."""
+    from .surgical_planning_admission import require_planning_admission
+    require_planning_admission(engine)
     if acknowledge_unknowns is not True:
         raise ValueError('Explicit acknowledgment of missing anatomy is required')
     if type(max_actions_per_strategy) is not int or not 1 <= max_actions_per_strategy <= 48 or \

@@ -29,7 +29,7 @@ def _inserted_cusa(*, pivot=False, obstacle=False):
         labels[8, 4, 10] = 2
     scene = SurgicalScene(labels, np.eye(4),
         [{'id': 2, 'name': 'generated target', 'material': 'tumor', 'target': True}],
-        {'kind': 'generated staged exit native test'}, {})
+        {'evidenceClass': 'generated-engineering', 'kind': 'generated staged exit native test'}, {})
     engine = SurgicalEngine(scene)
     outside = _pose(4, 4, 8)
     for action in (

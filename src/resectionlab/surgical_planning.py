@@ -148,6 +148,9 @@ def validate_modeled_outcome_binding(scene, snapshot, outcome, baseline_state_id
 def availability(engine):
     """Fail visibly before execution; unknown coverage never becomes complete."""
     reasons = []
+    from .surgical_planning_admission import planning_admission
+    plan_admission = planning_admission(engine.scene, engine.protection)
+    reasons.extend(b['code']+': '+b['message'] for b in plan_admission['blockers'])
     if importlib.util.find_spec('gymnasium') is None:
         reasons.append('The local observation runtime requires the installed RL extra.')
     if engine.scene.identity not in SOURCE_SCENES:
@@ -338,6 +341,8 @@ def _run(base, method, scorer, check):
 
 def compare_continuations(engine, *, acknowledge_unknowns=False, opponent='stop', check=lambda: None, progress=lambda *_: None):
     """Build alternatives atomically; leave the live source branch untouched."""
+    from .surgical_planning_admission import require_planning_admission
+    require_planning_admission(engine)
     started = time.perf_counter()
     cancellation = check
     def check():

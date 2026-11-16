@@ -22,7 +22,7 @@ def bent_entry(*, cleanup_marker=True):
         {'id': 1, 'name': 'bone', 'material': 'bone'},
         {'id': 2, 'name': 'target', 'material': 'tumor', 'target': True},
         {'id': 3, 'name': 'healthy', 'material': 'soft_tissue'},
-    ], {'kind': 'explicit-bent-entry-engineering-fixture'}, {})
+    ], {'evidenceClass': 'generated-engineering', 'kind': 'explicit-bent-entry-engineering-fixture'}, {})
     engine = SurgicalEngine(source)
     q = [1., 0., 0., 0.]
     pose = lambda z: {'position': [30., 16., z], 'quaternion': q}

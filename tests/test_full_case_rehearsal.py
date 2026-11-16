@@ -27,7 +27,7 @@ def _engine(*, healthy=False, target=True):
         labels[7:10, 7:10, 9] = 1
         regions.append({'id': 1, 'name': 'brain', 'material': 'soft_tissue'})
     return SurgicalEngine(SurgicalScene(labels, np.eye(4), regions,
-                                       {'kind': 'explicit-engineering-fixture'}, {}))
+                                       {'evidenceClass': 'generated-engineering', 'kind': 'explicit-engineering-fixture'}, {}))
 
 
 def _prepared(*, healthy=False):
@@ -140,7 +140,7 @@ def _cleanup_engine(*, residual):
         {'id': 1, 'name': 'healthy', 'material': 'soft_tissue'},
         {'id': 2, 'name': 'target', 'material': 'tumor', 'target': True},
         {'id': 3, 'name': 'bone', 'material': 'bone'}],
-        {'kind': 'explicit-director-cleanup-fixture'}, {'tissuePhysicsV2': default_profile()}))
+        {'evidenceClass': 'generated-engineering', 'kind': 'explicit-director-cleanup-fixture'}, {'tissuePhysicsV2': default_profile()}))
     pose = lambda z: {'position': [42., 20., float(z)], 'quaternion': [1., 0., 0., 0.]}
     actions = [
         {'operation': 'place', 'pose': pose(45.), 'parameters': {'radiusMm': 1.5, 'forceN': 20., 'rpm': 80000.}},
@@ -284,7 +284,7 @@ def test_directional_fallback_preserves_endpoint_and_uses_public_access_actions(
     engine = SurgicalEngine(SurgicalScene(labels, np.eye(4), [
         {'id': 2, 'name': 'target', 'material': 'tumor', 'target': True},
         {'id': 3, 'name': 'bone', 'material': 'bone'}],
-        {'kind': 'explicit-directional-director-fixture'}, {'tissuePhysicsV2': default_profile()}))
+        {'evidenceClass': 'generated-engineering', 'kind': 'explicit-directional-director-fixture'}, {'tissuePhysicsV2': default_profile()}))
     meta = director.new_director(engine)
     meta['stage'] = 'cleanup'
     engine, meta = director.run_slice(engine, meta, max_actions=8)
@@ -344,7 +344,7 @@ def test_blocked_exterior_transition_retains_actual_pose_and_stops_before_rotati
     engine = SurgicalEngine(SurgicalScene(labels, np.eye(4), [
         {'id': 1, 'name': 'healthy wall', 'material': 'soft_tissue'},
         {'id': 2, 'name': 'target', 'material': 'tumor', 'target': True}],
-        {'kind': 'explicit-blocked-exterior-transit-fixture'}, {}))
+        {'evidenceClass': 'generated-engineering', 'kind': 'explicit-blocked-exterior-transit-fixture'}, {}))
     # This legal outside-material placement has a free 40 mm shaft, but the
     # subsequent outward extension encounters a real wall beyond that shaft.
     assert engine.step({'slot': 'left', 'operation': 'place', 'duration': .2,
@@ -410,7 +410,7 @@ def test_exhausted_dry_opening_defers_to_remaining_routes_but_keeps_revisits(
     labels = base.scene.labels.copy()
     labels[14, 14, 8] = 2  # Retain a real target outside the removed pocket.
     engine = SurgicalEngine(SurgicalScene(labels, np.eye(4), base.scene.regions,
-                                         {'kind': 'explicit-deferral-fixture'}, {}))
+                                         {'evidenceClass': 'generated-engineering', 'kind': 'explicit-deferral-fixture'}, {}))
     for action in _prepared().actions:
         assert engine.step(action)['status'] == 'accepted'
     assert engine.step({'slot': 'left', 'operation': 'apply', 'pose': _pose(7.),
@@ -458,7 +458,7 @@ def test_new_drill_cycle_resets_and_counts_only_actual_owned_bone(monkeypatch, l
     labels[7:10, 7:10, 11] = 3
     engine = SurgicalEngine(SurgicalScene(labels, np.eye(4), [*base.scene.regions,
         {'id': 3, 'name': 'skull estimate', 'material': 'bone'}],
-        {'kind': 'explicit-cycle-drill-fixture'}, {'tissuePhysicsV2': default_profile()}))
+        {'evidenceClass': 'generated-engineering', 'kind': 'explicit-cycle-drill-fixture'}, {'tissuePhysicsV2': default_profile()}))
     access = {'id': 'drill-fixture', 'drillRadiusMm': 3.,
               'outsidePose': {'position': [8., 8., 27.], 'quaternion': [1., 0., 0., 0.]},
               'entryPose': {'position': [8., 8., 8.], 'quaternion': [1., 0., 0., 0.]}}
@@ -516,7 +516,7 @@ def _saved_workspace(path, *, case_id, branch_history=False, v2=False):
     from resectionlab.workspace_bundle import save_workspace
     mask = np.zeros((12, 12, 12), bool)
     mask[4:8, 4:8, 4:8] = True
-    metadata = {'anatomy_layers': {'target': {'kind': 'tumor'}}}
+    metadata = {'generated': True, 'is_synthetic': True, 'anatomy_layers': {'target': {'kind': 'tumor'}}}
     if v2:
         from resectionlab.surgical_physics_v2 import default_profile
         metadata['surgical_properties'] = {'tissuePhysicsV2': default_profile()}
@@ -629,7 +629,7 @@ def _opened_assistant_field():
         {'id': 1, 'name': 'brain', 'material': 'soft_tissue'},
         {'id': 2, 'name': 'target', 'material': 'tumor', 'target': True},
         {'id': 3, 'name': 'bone', 'material': 'bone'},
-    ], {'kind': 'explicit-assistant-engineering-fixture'}, {'tissuePhysicsV2': default_profile()})
+    ], {'evidenceClass': 'generated-engineering', 'kind': 'explicit-assistant-engineering-fixture'}, {'tissuePhysicsV2': default_profile()})
     engine = SurgicalEngine(scene)
     def pose(x, z):
         return {'position': [float(x), 20., float(z)], 'quaternion': [1., 0., 0., 0.]}
@@ -797,7 +797,7 @@ def test_checked_core_pocket_shrinks_before_checked_withdrawal():
     engine = SurgicalEngine(SurgicalScene(labels, np.eye(4), [
         {'id': 1, 'name': 'brain', 'material': 'soft_tissue'},
         {'id': 2, 'name': 'target', 'material': 'tumor', 'target': True},
-    ], {'kind': 'explicit-core-engineering-fixture'}, {'tissuePhysicsV2': default_profile()}))
+    ], {'evidenceClass': 'generated-engineering', 'kind': 'explicit-core-engineering-fixture'}, {'tissuePhysicsV2': default_profile()}))
     pose = lambda z: {'position': [10., 10., float(z)], 'quaternion': [0., 0., 0., 1.]}
     for action in [
         {'operation': 'exchange', 'instrument': 'cusa'},
@@ -853,7 +853,7 @@ def test_two_frontier_batch_is_bounded_and_removes_only_actual_target():
     engine = SurgicalEngine(SurgicalScene(labels, np.eye(4), [
         {'id': 1, 'name': 'brain', 'material': 'soft_tissue'},
         {'id': 2, 'name': 'target', 'material': 'tumor', 'target': True},
-    ], {'kind': 'explicit-batching-engineering-fixture'}, {}))
+    ], {'evidenceClass': 'generated-engineering', 'kind': 'explicit-batching-engineering-fixture'}, {}))
     pose = lambda x, z: {'position': [float(x), 9., float(z)], 'quaternion': [1., 0., 0., 0.]}
     for action in [{'operation': 'exchange', 'instrument': 'cusa'},
                    {'operation': 'place', 'pose': pose(9, 35), 'parameters': {'radiusMm': 1.5}}]:
@@ -898,7 +898,7 @@ def test_frontier_batch_preserves_fine_collar_return_or_declines_when_over_budge
     engine = SurgicalEngine(SurgicalScene(labels, np.eye(4), [
         {'id': 2, 'name': 'target', 'material': 'tumor', 'target': True},
         {'id': 3, 'name': 'bone', 'material': 'bone'},
-    ], {'kind': 'explicit-fine-collar-engineering-fixture'}, {}))
+    ], {'evidenceClass': 'generated-engineering', 'kind': 'explicit-fine-collar-engineering-fixture'}, {}))
     pose = lambda x, z: {'position': [float(x), 10.08, float(z)], 'quaternion': [1., 0., 0., 0.]}
     for action in [{'operation': 'exchange', 'instrument': 'cusa'},
                    {'operation': 'place', 'pose': pose(10.08, 35), 'parameters': {'radiusMm': 1.5}}]:
@@ -941,7 +941,7 @@ def test_vascular_endpoint_requires_actual_bleeding_then_source_control(reservoi
     engine = SurgicalEngine(SurgicalScene(labels, np.eye(4), [
         {'id': 1, 'name': 'vessel', 'material': 'vessel'},
         {'id': 2, 'name': 'target', 'material': 'tumor', 'target': True},
-    ], {'kind': 'explicit-vascular-endpoint-engineering-fixture'}, {'tissuePhysicsV2': physics}))
+    ], {'evidenceClass': 'generated-engineering', 'kind': 'explicit-vascular-endpoint-engineering-fixture'}, {'tissuePhysicsV2': physics}))
     def endpoint(current):
         meta = director.new_director(current, 'vascular')
         meta['stage'] = 'endpoint'

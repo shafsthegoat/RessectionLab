@@ -124,6 +124,8 @@ def compare_joint_strategies(engine, *, acknowledge_unknowns=False,
     public physics call, including discarded probes and failed paths, shares
     this cap. Export serialization itself performs no native transitions.
     """
+    from .surgical_planning_admission import require_planning_admission
+    require_planning_admission(engine)
     if acknowledge_unknowns is not True:
         raise ValueError('Explicit acknowledgment of missing anatomy is required')
     if (max_native_actions != 48 or type(max_native_actions) is not int or

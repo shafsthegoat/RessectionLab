@@ -20,7 +20,7 @@ its rate, capture and tissue response remain uncalibrated. Without that profile,
 the shared legacy engine retains instant compatible-cell deletion. Neither
 path establishes patient-calibrated mechanics or full RL readiness.
 
-The opt-in procedure-evaluation v3 contract supplies the same full source
+The opt-in procedure-evaluation v4 contract supplies the same full source
 anatomy, declared budgets and complete-sequence outcomes as canonical planning.
 It previews hard constraints before publishing any physical or reward state.
 The shared procedure limits replace the historical healthy/vessel/bleeding
@@ -51,10 +51,13 @@ from .surgical_rl_rewards import RewardConfig, RewardTracker, compute_reward
 # v2 deliberately invalidates v1 episode snapshots: success now includes
 # cleanup, and the observation declares the remaining episode budgets.
 SCHEMA = 'resectionlab.surgical-rl.v2'
-PROCEDURE_SCHEMA = 'resectionlab.surgical-rl.procedure-evaluation.v3'
+PROCEDURE_SCHEMA = 'resectionlab.surgical-rl.procedure-evaluation.v4'
+PREVIOUS_PROCEDURE_SCHEMA = 'resectionlab.surgical-rl.procedure-evaluation.v3'
 MAX_PROCEDURE_OBSERVATION_CELLS = 2_000_000
 ACTION_CONTRACT = 'catalog-radius-fixed-while-inserted.v2-membrane17'
 OPERATIONS = ('place','move','activate','deactivate','apply','hold','grasp','release','exchange','withdraw','extract','inspect')
+PROCEDURE_OPERATIONS = OPERATIONS + ('stop',)
+FIXED_SPACE_STOP_REASON = 'Fixed-space policy requested STOP'
 INSTRUMENTS = tuple(TOOLS)
 PARAMETERS = ('radiusMm','depthMm','flowMm3PerSecond','power','jawOpeningMm','amplitudeMa','frequencyHz','pulseWidthUs','rpm','forceN','duty')
 PARAMETER_LOW = np.array([.1,.1,0,0,0,0,0,0,0,0,0],dtype=np.float64)
@@ -135,12 +138,15 @@ class SurgicalRLEnv(gym.Env):
     metadata = {'render_modes':['ansi']}
     def __init__(self,scene,*,protection=None,config=None,reward_config=None,render_mode=None,
             cranial_stages=None):
+        from .surgical_planning_admission import require_planning_admission
+        require_planning_admission(scene, protection)
         self.scene = scene
         self.config = config or RLConfig()
         self.reward_config = reward_config or RewardConfig()
         self.procedure_enabled = 'surgicalProcedurePolicyV1' in scene.properties
         self.schema = PROCEDURE_SCHEMA if self.procedure_enabled else SCHEMA
         self.evaluation_only = self.procedure_enabled
+        self.operations = PROCEDURE_OPERATIONS if self.procedure_enabled else OPERATIONS
         if cranial_stages is not None and not self.procedure_enabled:
             raise ValueError('RL_CRANIAL_STAGES_REQUIRE_PROCEDURE_EVALUATION_CONTRACT')
         self._cranial_stage_record=(cranial_stages.as_dict() if hasattr(cranial_stages,'as_dict')
@@ -188,10 +194,14 @@ class SurgicalRLEnv(gym.Env):
         self._radius_caps = {name:float(tool['radiusMm']) for name,tool in TOOLS.items()}
         self.action_contract = {'id':ACTION_CONTRACT,'radiusCapsMm':self._radius_caps.copy(),
             'radiusChanges':'withdrawn, inactive and released only'}
+        if self.procedure_enabled:
+            self.action_contract['fixedSpaceCodec'] = {'schema': 'resectionlab.procedure-action-codec.v1',
+                'operations': list(self.operations), 'stopReason': FIXED_SPACE_STOP_REASON,
+                'stopSemantics': 'Checked exterior exit required; no physical motion or modeled time.'}
         self.environment_id = semantic_digest({'schema':self.schema,'scene':scene.identity,'protection':self.protection_id,'config':asdict(self.config),'reward':asdict(self.reward_config),'actionContract':self.action_contract,
             **({'procedurePolicy':self.procedure_admission,'cranialStages':self._cranial_stage_record}
                 if self.procedure_enabled else {})})
-        self.action_space = spaces.Dict({'slot':spaces.Discrete(2),'operation':spaces.Discrete(len(OPERATIONS)),
+        self.action_space = spaces.Dict({'slot':spaces.Discrete(2),'operation':spaces.Discrete(len(self.operations)),
             'instrument':spaces.Discrete(len(INSTRUMENTS)), 'pose':spaces.Box(-1e6,1e6,(7,),np.float64),
             'use_pose':spaces.Discrete(2), 'parameters':spaces.Box(PARAMETER_LOW,PARAMETER_HIGH,dtype=np.float64),
             'parameter_mask':spaces.MultiBinary(len(PARAMETERS)),
@@ -404,7 +414,11 @@ class SurgicalRLEnv(gym.Env):
     def encode_action(self,action):
         if self.engine is None: raise RuntimeError('Call reset before encoding actions')
         slot = ('left','right').index(action['slot'])
-        operation = OPERATIONS.index(action['operation'])
+        operation = self.operations.index(action['operation'])
+        if action['operation'] == 'stop' and set(action) - {'slot', 'operation', 'reason'}:
+            raise ValueError('PROCEDURE_STOP_CANNOT_MOVE_OR_CHANGE_TOOLS')
+        if action['operation'] == 'stop' and action.get('reason', FIXED_SPACE_STOP_REASON) != FIXED_SPACE_STOP_REASON:
+            raise ValueError('Fixed-space STOP uses its declared reason; use stop(reason) for a narrative reason')
         points = action.get('path',[action['pose']] if 'pose' in action else [])
         if len(points)>1: raise ValueError('Fixed-space actions contain one endpoint; use step_action for checked paths')
         pose = points[0] if points else self.engine.state['slots'][action['slot']]
@@ -413,11 +427,16 @@ class SurgicalRLEnv(gym.Env):
             i=PARAMETERS.index(k);parameters[i]=v;mask[i]=1
         return dict(slot=slot,operation=operation,instrument=INSTRUMENTS.index(action.get('instrument',self.engine.state['slots'][action['slot']]['instrument'])),
             pose=np.array([*pose['position'],*pose['quaternion']],np.float64),use_pose=int(bool(points)),parameters=parameters,
-            parameter_mask=mask,duration=np.array([action.get('duration',1.)],np.float64))
+            parameter_mask=mask,duration=np.array([.01 if action['operation']=='stop' else action.get('duration',1.)],np.float64))
 
     def decode_action(self,action):
         if not self.action_space.contains(action): raise ValueError('Action is outside its declared space')
-        op=OPERATIONS[int(action['operation'])]
+        op=self.operations[int(action['operation'])]
+        if op == 'stop':
+            # Other fixed-space fields are unused for STOP. They cannot move a
+            # tool, change its parameters, advance time or add treatment credit.
+            return {'slot': ('left','right')[int(action['slot'])], 'operation': 'stop',
+                'reason': FIXED_SPACE_STOP_REASON}
         result={'slot':('left','right')[int(action['slot'])],'operation':op,'duration':float(action['duration'][0]),
             'parameters':{k:float(v) for k,v,used in zip(PARAMETERS,action['parameters'],action['parameter_mask']) if used}}
         if op=='exchange': result['instrument']=INSTRUMENTS[int(action['instrument'])]
@@ -692,6 +711,8 @@ class SurgicalRLEnv(gym.Env):
             'actionRng':{k:copy.deepcopy(space.np_random.bit_generator.state) for k,space in self.action_space.spaces.items()}}
 
     def restore(self,record):
+        if record.get('schema') == PREVIOUS_PROCEDURE_SCHEMA:
+            raise ValueError('RL snapshot procedure v3 lacks the fixed-space STOP codec; historical policies require their original evaluator')
         if record.get('schema')!=self.schema or record.get('environmentId')!=self.environment_id:raise ValueError('RL snapshot environment identity mismatch; historical policies and snapshots cannot be migrated to the procedure evaluation contract')
         if record.get('actionContract')!=self.action_contract:raise ValueError('RL snapshot action contract differs')
         if self.procedure_enabled and record.get('procedurePolicy') != self.procedure_admission:

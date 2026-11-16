@@ -100,6 +100,18 @@ def sequence_ledger(engine, baseline, *, target, metrics, baseline_metrics, mapp
     if mapped_vessels and ('vascularGraphV1' in engine.state or 'vesselsV2' in engine.state):
         dimensions['bloodGeneratedMm3'] = _quantity(metrics['vesselPhysicsV2']['generatedMm3'],
             baseline_metrics['vesselPhysicsV2']['generatedMm3'], 'mm3', status='modeled_unvalidated')
+    # Add the graph's existing interface exposures only when that model is
+    # declared. Preserve historical non-graph ledgers byte for byte. These are
+    # maxima over declared interfaces, never perfusion or neurological injury.
+    if 'vascularGraphV1' in engine.state and 'vascularGraphV1' in baseline.state:
+        regions = metrics['vesselPhysicsV2']['regions']
+        before_regions = baseline_metrics['vesselPhysicsV2']['regions']
+        for name in ('supplyDeficitSeconds', 'drainageDeficitSeconds'):
+            dimensions[name] = _unknown('No declared vascular interfaces; absence is not zero deficit.', 's')
+            if regions and before_regions and regions.keys() == before_regions.keys():
+                dimensions[name] = _quantity(max(r[name] for r in regions.values()),
+                    max(r[name] for r in before_regions.values()), 's', status='modeled_unvalidated')
+                dimensions[name]['scope'] = 'Maximum cumulative deficit across declared vascular interfaces; uncalibrated, not tissue perfusion or functional injury.'
     withdrawn = not engine.state['holds'] and not any(
         slot['inserted'] or slot['active'] or slot['grip'] for slot in engine.state['slots'].values())
     guard = engine.guard_report()

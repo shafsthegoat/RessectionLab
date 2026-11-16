@@ -549,7 +549,12 @@ def dispatch(session, operation, args, request, progress):
             bind_branch_root(base_scene, record, branch_id, root_id)
 
     cranial_computation = None
-    if record.get('preparationComparisons') or record.get('preparationApplications'):
+    from .surgical_planning_admission import require_planning_admission, planning_admission
+    if command in {'plan','fullCase','recoverExit','generateApproaches','previewApproach','applyApproach',
+            'generateStrategies','previewStrategy','applyStrategy','analyzeStrategySensitivity',
+            'suggestPreparation','generatePreparations','previewPreparation','applyPreparation'}:
+        require_planning_admission(engine)
+    if planning_admission(engine.scene, engine.protection)['available'] and (record.get('preparationComparisons') or record.get('preparationApplications')):
         from .surgical_preparation_workspace import bind_for_branch
         bind_for_branch(engine,record,identity,check=request.check)
     elif record.get('taskAdmission') is not None:
@@ -1100,6 +1105,7 @@ def dispatch(session, operation, args, request, progress):
         shown_timeline = display_timeline(shown_timeline)
         shown_view['history'] = shown_timeline[:len(engine.actions)]
     result = {'caseHash': identity, 'view': shown_view, 'outcome': outcome,
+              'planningAdmission': planning_admission(engine.scene, engine.protection),
               'changed': command == 'recoverExit' or command not in {'inspect', 'previewApproach', 'previewStrategy','suggestPreparation','previewPreparation'} and not unchanged_tool and (outcome is None or outcome['status'] != 'rejected'),
               'timeline': shown_timeline,
               'previousScenes': [{'index': i, 'label': f"Environment {i + 1}", 'branches': len(s.get('branches', {}))} for i, s in enumerate(artifacts.get('surgical_prior_scenes', []))],
@@ -1119,18 +1125,21 @@ def dispatch(session, operation, args, request, progress):
     result['planningAvailability'].update(access_availability(engine))
     from .surgical_interactive_planning import interactive_planning_availability
     from .surgical_interactive_workspace import planning_view
-    if record.get('preparationComparisons') or record.get('preparationApplications'):
+    if result['planningAdmission']['available'] and (record.get('preparationComparisons') or record.get('preparationApplications')):
         from .surgical_preparation_workspace import bind_for_branch
         bind_for_branch(engine,record,identity,check=request.check)
     elif record.get('taskAdmission') is not None:
         from .surgical_task_admission import bind_admission
         bind_admission(engine, record['taskAdmission'])
     result['interactivePlanningAvailability'] = interactive_planning_availability(engine)
-    result['interactivePlanning'] = planning_view(engine, record, identity)
+    # Old patient research branches remain inspectable/replayable. Do not
+    # regenerate or authorize their planner reports through a public-observation
+    # projection that intentionally excludes patient provenance.
+    result['interactivePlanning'] = planning_view(engine, record, identity) if result['planningAdmission']['available'] else None
     from .surgical_two_tool import defaults as strategy_availability
     from .surgical_strategy_workspace import planning_view as strategy_view
     result['strategyPlanningAvailability'] = strategy_availability(engine)
-    result['strategyPlanning'] = strategy_view(engine, record, identity, check=request.check)
+    result['strategyPlanning'] = strategy_view(engine, record, identity, check=request.check) if result['planningAdmission']['available'] else None
     from .surgical_cranial_planning import cranial_planning_availability
     cranial_available = cranial_planning_availability(base_scene, record)
     if entry is not None:
@@ -1144,7 +1153,7 @@ def dispatch(session, operation, args, request, progress):
         try:native_path=preparation_source(entry.case,engine.scene)
         except ValueError:native_path=None
         result['preparationPlanningAvailability']=preparation_availability(engine,record,native_path)
-        result['preparationPlanning']=preparation_view(engine,record,identity,check=request.check)
+        result['preparationPlanning']=preparation_view(engine,record,identity,check=request.check) if result['planningAdmission']['available'] else None
     if preparation_suggestion is not None:result['preparationSuggestion']=preparation_suggestion
     if approach_preview is not None:
         result['approachPreview'] = approach_preview

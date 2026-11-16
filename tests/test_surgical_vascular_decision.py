@@ -1,0 +1,88 @@
+"""Declared vascular exposures affect decisions; no motor-risk calibration."""
+import copy
+from types import SimpleNamespace
+
+import pytest
+
+from resectionlab import surgical_consequences as consequences
+from resectionlab.surgical_engine import SurgicalEngine
+from resectionlab.surgical_joint_cranial_search import _compare_checked_nodes, _dominates, _retain_beam
+from resectionlab.surgical_sequence_outcomes import sequence_outcome
+from test_surgical_procedure_policy import source
+from test_surgical_vascular_graph import engine as graph_fixture
+
+
+@pytest.mark.parametrize('metric', ['supplyDeficitSeconds', 'drainageDeficitSeconds'])
+def test_equal_treatment_and_zero_bleeding_cannot_hide_declared_deficit(metric, monkeypatch):
+    # Controlled typed decision vectors, separate from physical model evidence.
+    baseline = SurgicalEngine(source())
+    template = consequences.consequence_vector(baseline, baseline)
+    nodes, vectors = [], {}
+    for tag, target, deficit in [('stop', 0., 0.), ('deficit', 100., 20.), ('preserved', 100., 0.)]:
+        node = SimpleNamespace(exited=SimpleNamespace(scene=baseline.scene, tag=tag),
+            goal_assessment={'originalTargetTreatmentMm3': target})
+        vector = copy.deepcopy(template)
+        for name in ('bloodGeneratedMm3', 'supplyDeficitSeconds', 'drainageDeficitSeconds'):
+            value = deficit if name == metric else 0.
+            vector['dimensions'][name].update(status='modeled_unvalidated', cumulative=value, incremental=value, reason=None)
+        vectors[tag] = vector
+        nodes.append(node)
+    monkeypatch.setattr(consequences, 'consequence_vector', lambda e, _: copy.deepcopy(vectors[e.tag]))
+    selected, frontier, decision = _compare_checked_nodes(nodes[1:], nodes[0], SimpleNamespace(_source_engine=baseline))
+    assert selected is nodes[2] and list(frontier) == [nodes[2]]
+    assert metric in decision['policy']['objectives']
+    assert metric in decision['policy']['requiredMetrics']
+
+
+def test_beam_retains_lower_vascular_exposure_and_does_not_treat_unknown_as_zero():
+    def node(tag, deficit):
+        return SimpleNamespace(goal_assessment={'originalTargetTreatmentMm3': 1.},
+            ledger=dict(boneRemovedMm3=0., preparationNonboneRemovedMm3=0.,
+                workNonTargetRemovedMm3=0., modeledElapsedSeconds=1.),
+            sequence_outcome={'dimensions': {'supplyDeficitSeconds': {
+                'status': 'unavailable' if deficit is None else 'modeled_unvalidated', 'cumulative': deficit}}},
+            path=({'proposalId': tag, 'preparationOnly': False},))
+    damaging, preserved, unknown = node('first', 20.), node('second', 0.), node('unknown', None)
+    assert _dominates(preserved, damaging)
+    assert not _dominates(unknown, damaging) and not _dominates(preserved, unknown)
+    assert _retain_beam([damaging, preserved], 2) == [preserved]
+
+
+def test_actual_zero_bleed_occlusion_ledgers_match_graph_and_cold_replay():
+    engine = SurgicalEngine(graph_fixture().scene)
+    baseline = engine.clone()
+    def act(operation, point=None, **extra):
+        action = {'slot': 'left', 'operation': operation, 'duration': .1, **extra}
+        if point is not None:
+            action['pose'] = {'position': point, 'quaternion': [0., 0., 0., 1.]}
+        result = engine.step(action)
+        assert result['status'] == 'accepted', result
+    act('configure', mechanicsRevision=2)
+    act('exchange', instrument='bipolar_forceps')
+    act('place', [2.5, 1., -4.], parameters={'jawOpeningMm': .5, 'forceN': 0., 'power': 0., 'depthMm': 1.})
+    act('apply', [2.5, 1., 1.8], duration=.5)
+    act('apply', parameters={'power': 1.}, duration=2.1)
+    act('withdraw')
+    result = sequence_outcome(engine, baseline=baseline)
+    dims = result['dimensions']
+    assert dims['bloodGeneratedMm3']['cumulative'] == 0.
+    for metric in ('supplyDeficitSeconds', 'drainageDeficitSeconds'):
+        expected = max(r[metric] for r in engine.metrics()['vesselPhysicsV2']['regions'].values())
+        assert dims[metric]['cumulative'] == expected
+        assert dims[metric]['incremental'] == expected - dims[metric]['baseline']
+        assert dims[metric]['status'] == 'modeled_unvalidated'
+    assert dims['supplyDeficitSeconds']['cumulative'] > 0
+    assert dims['motorEncounterMm3']['cumulative'] is None
+    restored = SurgicalEngine.restore(engine.scene, engine.snapshot())
+    assert sequence_outcome(restored, baseline=baseline) == result
+
+
+def test_graph_without_declared_interfaces_keeps_exposure_unknown():
+    from test_surgical_vascular_graph import profile
+    declaration = profile()
+    declaration['regions'] = []
+    result = sequence_outcome(SurgicalEngine(graph_fixture(declaration).scene))
+    for metric in ('supplyDeficitSeconds', 'drainageDeficitSeconds'):
+        assert result['dimensions'][metric]['status'] == 'unavailable'
+        assert result['dimensions'][metric]['cumulative'] is None
+        assert metric in result['missingEvidence']

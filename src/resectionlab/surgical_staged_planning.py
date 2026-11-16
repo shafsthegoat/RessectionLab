@@ -555,6 +555,8 @@ def compare_staged_strategies(engine, record, *, acknowledge_unknowns=False,
                               cumulative_reentry=False,
                               planning_horizon=1, beam_width=3, max_contact_replans=8):
     """Execute source-defined work with bounded lookahead and checked exit."""
+    from .surgical_planning_admission import require_planning_admission
+    require_planning_admission(engine)
     from .surgical_staged_exit import find_checked_exit
     from .surgical_joint_geometry import select_joint_corridors
     if acknowledge_unknowns is not True:

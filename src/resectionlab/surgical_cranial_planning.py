@@ -93,9 +93,9 @@ def _planning_errors(base_scene, root, base_snapshot):
     if not isinstance(planning, dict):
         return [_block('SOURCE_PLANNING_INVENTORY_REQUIRED')]
     errors = []
-    from .surgical_procedure_policy import PROPERTY, procedure_admission
-    if base_scene is not None and PROPERTY in base_scene.properties:
-        admission = procedure_admission(base_scene)
+    from .surgical_planning_admission import planning_admission
+    if base_scene is not None:
+        admission = planning_admission(base_scene)
         errors.extend(copy.deepcopy(admission['blockers']))
     evidence_sets = (root.get('openingContract', {}).get('evidence'),
         root['sourceSnapshot'].get('cranialStagesContract', {}).get('evidence'))
@@ -236,6 +236,8 @@ def _proposer(planning):
 
 def compare_cranial_strategies(base_scene, record, *, check=lambda: None,
         progress=lambda *args: None, planning_horizon=5, beam_width=3, started_at=None):
+    from .surgical_planning_admission import require_planning_admission
+    require_planning_admission(base_scene)
     from .surgical_engine import SurgicalEngine
     if check is _DEFAULT_NATIVE_CHECK:
         from . import native_backend
@@ -304,7 +306,7 @@ def compare_cranial_strategies(base_scene, record, *, check=lambda: None,
                 else 'NO_RESIDUAL' if selected_state is not None else 'NO_EXECUTABLE_CHECKED_SEQUENCE'))
         report['limitations'].extend(procedure['limitations'])
     else:
-        report['limitations'].append('Historical generated research workflow; not the versioned supratentorial procedure task.')
+        report['limitations'].append('Legacy engineering research workflow; not the versioned supratentorial procedure task.')
     report['comparisonSeal'] = semantic_digest(report)
     budget.check()
     return {'report': report, 'branches': branches, 'budget': budget}
