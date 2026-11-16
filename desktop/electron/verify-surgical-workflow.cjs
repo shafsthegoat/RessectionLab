@@ -28,7 +28,9 @@ const backendFiles=['surgical_staged_skills.py','surgical_sequence_search.py','s
  'surgical_craniotomy.py','surgical_bone_transport.py','surgical_cranial_guards.py','surgical_craniotomy_skills.py',
  'surgical_cranial_stages.py','surgical_membrane_transport.py','surgical_joint_cranial_skills.py',
  'surgical_replay_cache.py','surgical_frame_replay.py','surgical_observed_cache.py','surgical_prefix_replay.py',
- 'surgical_milling.py','surgical_transition_meter.py','surgical_drilling_v2.py','surgical_physics_v2.py','surgical_task_admission.py'].map(name=>path.join(root,'src/resectionlab',name));
+ 'surgical_milling.py','surgical_transition_meter.py','surgical_drilling_v2.py','surgical_physics_v2.py','surgical_task_admission.py',
+ 'surgical_procedure_policy.py','surgical_sequence_outcomes.py','surgical_consequences.py','surgical_cranial_planning.py',
+ 'surgical_joint_cranial_search.py','surgical_joint_cranial_forest.py'].map(name=>path.join(root,'src/resectionlab',name));
 const backendSourceHashes=()=>Object.fromEntries(backendFiles.map(file=>[path.basename(file),sha(file)]));
 const report={input,output,sourceSha256:original,backendSourceSha256:backendSourceHashes(),rendererIndexSha256:sha(path.join(appCode,'dist/index.html')),
  launcher:{executable:process.execPath,isPackaged:app.isPackaged},appCode:{root:appCode,packagedApp,
@@ -154,7 +156,8 @@ app.on('browser-window-created',(_event,window)=>{
      report.backendBeforeGenerate=(await workflowSidecar.request('ping')).numericalBackend;
      await request('Generate strategies','plan');await wait(`document.querySelector('.surgical-workflow').dataset.workflowStage==='compare'`,'fresh cranial Compare');
      report.backendAfterGenerate=(await workflowSidecar.request('ping')).numericalBackend;
-     if(report.backendAfterGenerate.selected==='cpp'){
+     const procedureWorkflow=process.env.WORKFLOW_PROCEDURE==='1';
+     if(report.backendAfterGenerate.selected==='cpp'&&!procedureWorkflow){
       const before=report.backendBeforeGenerate.residentExecution,after=report.backendAfterGenerate.residentExecution;
       const counts=Object.fromEntries(Object.entries(after).map(([name,value])=>[name,value-(before[name]||0)]));
       assert(counts.actions>0&&counts.trajectories>0&&counts.physicalSubsteps>0,'Fresh production Generate must execute resident native actions and physical substeps');
@@ -162,13 +165,21 @@ app.on('browser-window-created',(_event,window)=>{
       report.residentGenerateExecution=counts;
      }
      const comparison=last.cranialPlanning;assert(comparison);assert.equal(last.position,0);assert.equal(last.view.stateId,report.initial.stateId);
-     assert.equal(comparison.schema,'resectionlab.cranial-strategy-comparison.v1');assert.equal(comparison.cost.physicalCalls,comparison.cost.previewCalls+comparison.cost.directStepCalls);
-     const row=comparison.alternatives.find(row=>row.completedFrozenTask&&row.nativeActions>0);assert(row,'Declared generated engineering control must retain a complete task alternative');
+     assert.equal(comparison.schema,procedureWorkflow?'resectionlab.cranial-strategy-comparison.v2':'resectionlab.cranial-strategy-comparison.v1');assert.equal(comparison.cost.physicalCalls,comparison.cost.previewCalls+comparison.cost.directStepCalls);
+     const row=comparison.alternatives.find(row=>procedureWorkflow?row.branchId===comparison.selectedBranchId&&row.nativeActions>0:row.completedFrozenTask&&row.nativeActions>0);assert(row,'Generated control must retain its declared checked alternative');
+     if(procedureWorkflow){
+      assert.equal(comparison.procedurePolicy.schema,'resectionlab.supratentorial-procedure-policy.v1');
+      assert.equal(row.ledger.neuralRemovedMm3,0);assert(row.goalAssessment.residualOriginalTargetMm3>0);
+      assert.equal(comparison.stopReason,'BOUNDED_INVENTORY_OR_HORIZON_STOP_WITH_RESIDUAL');
+      assert(await js(`document.querySelector('[aria-label="Recorded procedure policy"]')?.checkVisibility()`));
+      report.procedurePolicy=comparison.procedurePolicy;report.procedureStopReason=comparison.stopReason;
+      report.executionScope='Python authoritative policy transactions with compiled geometry kernels; no resident C++ procedure execution';
+     }
      report.cranialGenerated={comparisonSeal:comparison.comparisonSeal,decision:comparison.decision,cost:comparison.cost,alternativeCount:comparison.alternatives.length};
      await capture('03-cranial-generated-comparison');await click('Inspect '+row.label);await ready();
      await wait(`document.querySelector('.surgical-workflow').dataset.workflowStage==='rehearse'`,'selected cranial Rehearse');
      assert.equal(last.branchId,row.branchId);assert.equal(last.position,row.nativeActions);assert.equal(last.view.stateId,row.finalStateId);
-     assert(row.wholeExitComplete&&row.sequenceOutcome.withdrawalComplete&&row.ledger.withinLimits);assert(row.goalAssessment.originalTargetTreatmentFraction>=.5);
+     assert(row.wholeExitComplete&&row.sequenceOutcome.withdrawalComplete&&row.ledger.withinLimits);assert(row.goalAssessment.originalTargetTreatmentFraction>=(procedureWorkflow?Number.MIN_VALUE:.5));
      report.cranialSelected={branchId:row.branchId,actions:row.nativeActions,stateId:row.finalStateId,ledger:row.ledger,goalAssessment:row.goalAssessment};
      await capture('04-cranial-selected-branch','.workflow-rehearsal');
      const replayStart=report.requests.length;await click('Play replay');const playStarted=Date.now();while(!report.requests.slice(replayStart).some(row=>row.command==='seekFrame')){if(Date.now()-playStarted>120000)throw Error('Missing actual cranial replay frame');await delay(80);}

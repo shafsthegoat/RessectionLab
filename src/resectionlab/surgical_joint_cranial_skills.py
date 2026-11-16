@@ -210,6 +210,12 @@ def _burden(engine, limits, removed):
         'wholeNonTargetRemovedMm3': len(cells-target)*volume,
         'uniqueRemovedSourceCells': len(cells),
         'unauthorizedRemovedSourceCells': len(cells-bone-prep-work)}
+    from .surgical_procedure_policy import PROPERTY, procedure_source_memberships
+    if PROPERTY in engine.scene.properties:
+        memberships = procedure_source_memberships(engine.scene)
+        result['neuralRemovedMm3'] = len(cells & memberships['neural'])*volume
+        result['structureRemovedMm3'] = {k.removeprefix('structure:'): len(cells & ids)*volume
+            for k, ids in memberships.items() if k.startswith('structure:')}
     reasons = []
     if result['unauthorizedRemovedSourceCells']:
         reasons.append('REMOVAL_OUTSIDE_JOINT_SOURCE_PARTITIONS')
@@ -236,6 +242,11 @@ def joint_cranial_ledger(engine, limits):
         reasons.append('PUBLIC_CALL_BUDGET')
     if elapsed > limits.max_wall_seconds:
         reasons.append('WALL_BUDGET')
+    from .surgical_procedure_policy import PROPERTY, evaluate_procedure_sequence
+    if PROPERTY in engine.scene.properties:
+        assessment = evaluate_procedure_sequence(engine, baseline=limits._source_engine)
+        reasons.extend(v['code'] + (':' + v['metric'] if 'metric' in v else '')
+            for v in assessment['violations'])
     return {**result, 'withinLimits': not reasons, 'refusalReasons': reasons,
         'nativeActions': len(engine.actions), 'spentPublicCalls': limits._meter.calls,
         'wallSecondsSinceMeterCreation': elapsed,
@@ -318,6 +329,8 @@ def checked_joint_actions(engine, actions, *, limits, meter=None, check=None,
                         raise ValueError('Joint preview changed accepted prefix')
                     entry.update(previewStatus=preview['status'], previewReason=preview.get('reason'),
                                  previewStateId=preview['stateId'])
+                    if preview.get('constraintViolations'):
+                        entry['constraintViolations'] = copy.deepcopy(preview['constraintViolations'])
                     bone_partial = _joint_bone_capacity_partial(candidate, original, preview)
                     tissue_partial = (_allow_tissue_partial and original.get('operation') == 'apply' and
                         candidate.state['slots'][original['slot']]['instrument'] == 'cusa' and
@@ -380,6 +393,7 @@ def checked_joint_actions(engine, actions, *, limits, meter=None, check=None,
         'retentionRole': 'checked_native_program' if status == 'accepted' else 'stopped_native_prefix_not_admitted',
         'nativeActionsAppended': len(candidate.actions)-start_actions,
         'publicCalls': meter.calls-start_calls, 'attempts': attempts, 'ledger': ledger,
+        'constraintViolations': copy.deepcopy(attempts[-1].get('constraintViolations', [])) if attempts else [],
         'limits': {**limits.declaration(), 'contentHash': limits.content_hash},
         'stageReadiness': readiness, 'sequenceOutcome': outcome,
         'clinicalValidation': 'none'}
@@ -460,4 +474,5 @@ def checked_joint_cusa_motion(engine, motion, *, limits, meter=None, check=None,
         'nativeActionsAppended': len(candidate.actions)-start_actions,
         'publicCalls': meter.calls-start_calls, 'parts': parts, 'contactContinuations': continuations,
         'ledger': ledger, 'stageReadiness': readiness, 'sequenceOutcome': outcome,
+        'constraintViolations': copy.deepcopy(part.get('constraintViolations', [])),
         'admittedPatientTask': False, 'caseQualificationRequired': True, 'clinicalValidation': 'none'}

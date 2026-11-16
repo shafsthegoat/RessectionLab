@@ -132,11 +132,13 @@ def search_opening_forest(roots, *, budget, horizon=5, beam_width=3,
         checked_joint_sequence_search, freeze_joint_resection_goal, _dominates, _key, _physical_key)
     from .surgical_joint_cranial_skills import freeze_joint_cranial_limits
     from .surgical_cranial_planning_roots import source_binding
+    from .surgical_procedure_policy import PROPERTY as PROCEDURE_PROPERTY
     if not isinstance(budget, OpeningComparisonBudget) or not isinstance(roots, (list, tuple)) or not 1 <= len(roots) <= 3:
         raise ValueError('CRANIAL_FOREST_ONE_TO_THREE_ROOTS_REQUIRED')
     candidates, failures, searches, sources, meters = [], [], [], {}, {}
     policy_hash, target_partition, source_hash, guard_hash = None, None, None, None
     prepared = []
+    procedure_mode = PROCEDURE_PROPERTY in roots[0]['engine'].scene.properties
     # Validate the entire forest before its first native call. A later root
     # cannot replace the patient, target, protection or comparison policy.
     for root in roots:
@@ -177,13 +179,15 @@ def search_opening_forest(roots, *, budget, horizon=5, beam_width=3,
             check=budget.check, phase='cranial.desktop.' + root_id)
         searches.append({'rootId': root_id, 'evidence': result.evidence,
                          'attempts': result.attempts})
-        for node in (*result.alternatives, *result.progress):
+        retained_nodes = result.alternatives if procedure_mode else (*result.alternatives, *result.progress)
+        for node in retained_nodes:
             if node.ledger['withinLimits']:
                 candidates.append((root_id, node))
         for attempt in result.attempts:
             if attempt.get('failureCategory'):
                 failures.append({'rootId': root_id, 'code': attempt['failureCategory'],
-                                 'message': str(attempt.get('work', {}).get('reason') or attempt.get('reason'))})
+                                 'message': str(attempt.get('work', {}).get('reason') or attempt.get('reason')),
+                                 'constraintViolations': copy.deepcopy(attempt.get('work', {}).get('constraintViolations', []))})
         if result.evidence.get('interrupted'):
             raise InterruptedError('CRANIAL_FOREST_SEARCH_INTERRUPTED')
     # Only equivalent evidence availability is Pareto-comparable. Preserve
@@ -193,10 +197,15 @@ def search_opening_forest(roots, *, budget, horizon=5, beam_width=3,
         signature = (root_id, _physical_key(node.exited))
         unique.setdefault(signature, (root_id, node))
     ordered = sorted(unique.values(), key=lambda item: (
-        not item[1].goal_assessment['completedFrozenTask'], *_key(item[1]), item[0]))
+        False if procedure_mode else not item[1].goal_assessment['completedFrozenTask'],
+        *_key(item[1]), item[0]))
     complete = [item for item in ordered if item[1].goal_assessment['completedFrozenTask']]
     frontier = [item for item in complete if not any(
         _dominates(other[1], item[1]) for other in complete if other is not item)]
+    if procedure_mode:
+        positive = [item for item in ordered if item[1].goal_assessment['creditedOriginalTargetCells'] > 0]
+        frontier = [item for item in positive if not any(
+            _dominates(other[1], item[1]) for other in positive if other is not item)]
     pool = frontier if frontier else ordered
     exported = []
     with budget.export():
@@ -210,8 +219,12 @@ def search_opening_forest(roots, *, budget, horizon=5, beam_width=3,
             replayed = replay_export(sources[root_id], node.exited, meters[root_id], check=budget.check)
             exported.append({'rootId': root_id, 'engine': replayed, 'node': node})
     budget.check()
-    selected = next((item for item in exported if item['node'].goal_assessment['completedFrozenTask']), None)
+    selected = (next(iter(exported), None) if procedure_mode else
+        next((item for item in exported if item['node'].goal_assessment['completedFrozenTask']), None))
+    decision = ('COMPLETED_FROZEN_TASK' if selected['node'].goal_assessment['completedFrozenTask'] else
+        'STOP_WITH_RESIDUAL' if selected['node'].goal_assessment['creditedOriginalTargetCells'] > 0 else 'STOP') if selected else (
+        'CHECKED_PROGRESS_ONLY' if exported else 'STOP')
     return {'selected': selected, 'branches': exported, 'failures': failures,
             'searches': searches, 'cost': budget.report(),
-            'decision': 'COMPLETED_FROZEN_TASK' if selected else 'CHECKED_PROGRESS_ONLY' if exported else 'STOP',
+            'decision': decision,
             'admittedPatientTask': False, 'clinicalValidation': 'none'}

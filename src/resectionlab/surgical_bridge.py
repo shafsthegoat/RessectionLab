@@ -122,7 +122,7 @@ def _cranial_critical_blockers(record, root_ids=None):
             continue
         guard = row['sourceSnapshot'].get('protectionContract') or {}
         annotations = {a['structureId']: a for a in guard.get('annotations', [])}
-        for structure in sorted({'brainstem', *guard.get('required', [])}):
+        for structure in sorted({'brainstem', 'cerebellum', *guard.get('required', [])}):
             annotation = annotations.get(structure)
             if annotation is None or not annotation.get('cells'):
                 code = 'MISSING_CRITICAL_ANNOTATIONS'
@@ -139,6 +139,13 @@ def _cranial_context_availability(case, record, available):
     if available is None or _cranial_generated_control(case):
         return available
     result = copy.deepcopy(available)
+    qualification = {'code': 'PROCEDURE_ACQUIRED_SOURCE_QUALIFICATION_UNAVAILABLE',
+        'message': 'The supratentorial task requires trusted complete intracranial, brainstem and cerebellar source review; existing acquired cases have no qualified receipt.'}
+    result['available'] = False
+    result.setdefault('blockers', []).append(qualification)
+    for row in result.get('roots', []):
+        row['available'] = False
+        row.setdefault('blockers', []).append(copy.deepcopy(qualification))
     blockers = _cranial_critical_blockers(record)
     for row in result.get('roots', []):
         failed = [b for b in blockers if b['rootId'] == row['rootId']]
@@ -834,13 +841,8 @@ def dispatch(session, operation, args, request, progress):
             raise ValueError('Acknowledge the complete cranial sequence research assumptions and missing evidence')
         source_role = _cranial_source_role(session, entry.case)
         if source_role != 'GENERATED_CONTROL':
-            from .surgical_cranial_planning import cranial_planning_availability
-            available = cranial_planning_availability(base_scene, record)
-            eligible = {r['rootId'] for r in (available or {}).get('roots', []) if r['available']}
-            critical = _cranial_critical_blockers(record, eligible)
-            if critical:
-                raise BridgeError('CRANIAL_CRITICAL_EVIDENCE_REQUIRED',
-                    '; '.join(b['code']+': '+b['message'] for b in critical))
+            raise BridgeError('PROCEDURE_ACQUIRED_SOURCE_QUALIFICATION_UNAVAILABLE',
+                'No existing acquired case has trusted complete intracranial and critical-anatomy coverage for the supported supratentorial task.')
         if (record['position'] != 0 or engine.actions or engine.scene.identity != base_scene.identity or
                 record['branches'][record['branchId']]['actions'] or
                 record.get('cranialPlanningRoots', {}).get('branchRoots', {}).get(record['branchId']) is not None):

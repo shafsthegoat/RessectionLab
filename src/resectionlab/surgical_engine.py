@@ -415,11 +415,22 @@ class SurgicalEngine:
         self._cranial_access = resolve_contract(scene)
         from .surgical_rl_protection import GuardConfig, ProtectionSet, missing_critical, protection_contract, declared_scene_protection
         declared = protection if self._source_inspection_only else declared_scene_protection(scene, protection)
+        from .surgical_procedure_policy import PROPERTY as PROCEDURE_PROPERTY, procedure_protection, procedure_admission
+        self._procedure_policy = None
+        if PROCEDURE_PROPERTY in scene.properties:
+            admission = procedure_admission(scene, declared)
+            if not admission['available']:
+                block = admission['blockers'][0]
+                raise ValueError(block['code'] + ': ' + block['message'])
+            declared = procedure_protection(scene, declared)
+            self._procedure_policy = {'schema': admission['schema'], 'policyId': admission['policyId'],
+                'policyHash': admission['policyHash']}
         if declared is not protection:
             # Missing evidence remains explicit unknown coverage. Declared
             # memberships are nevertheless mandatory for every live caller.
             protection = declared
-            if guard_config is None: guard_config = GuardConfig(require_critical_coverage=False)
+            if guard_config is None:
+                guard_config = GuardConfig(require_critical_coverage=self._procedure_policy is not None)
         self.protection = protection
         self.guard_config = guard_config
         self._protection_contract = None
@@ -741,6 +752,10 @@ class SurgicalEngine:
         candidate; preview consumes it without changing the authoritative owner.
         """
         if check is not None: check()
+        from .surgical_procedure_policy import procedure_action_rejection
+        refusal = procedure_action_rejection(self, action, check=check or (lambda: None))
+        if refusal is not None:
+            return None, refusal
         from .surgical_source_inspection import inspection_only, REASON
         if self._source_inspection_only or inspection_only(self.scene):
             self.scene.require_cache_source()
@@ -797,6 +812,14 @@ class SurgicalEngine:
             candidate.actions.append(copy.deepcopy(action))
             candidate.history.append({'action': copy.deepcopy(action), 'stateBefore': before,
                                       'stateAfter': after, **_copy_engine_data(result)})
+            if self._procedure_policy is not None:
+                from .surgical_procedure_policy import procedure_transition_assessment, _refusal
+                assessment = procedure_transition_assessment(candidate, source=self)
+                if not assessment['admissible']:
+                    first = assessment['violations'][0]
+                    return None, _refusal(self, first['code'],
+                        'The proposed transition violates the declared complete-sequence procedure constraints.',
+                        violations=assessment['violations'])
             if check is not None: check()
             return candidate, {**result, 'stateId': after}
         return None, {**result, 'stateId': after, 'metrics': self.metrics()}
@@ -1385,6 +1408,7 @@ class SurgicalEngine:
                 return native_backend._module.simulation_data(self.__dict__['_resident'], 'snapshot')
         legacy = self._historical_guard_partials()
         return {'schema': SCHEMA, 'sceneId': self.scene.identity, 'actions': copy.deepcopy(self.actions), 'stateId': self.state_id,
+                **({'procedurePolicy': copy.deepcopy(self._procedure_policy)} if self._procedure_policy is not None else {}),
                 **({'hardConstraintPolicy': 'atomic-protection-v1',
                     **({'legacyGuardPartialActions': sorted(legacy)} if legacy else {})}
                    if self._protected_ids else {}),
@@ -1396,6 +1420,16 @@ class SurgicalEngine:
     def restore(cls, scene, record, *, check=None, use_cache=False, force_verify=False, verified_cache=None):
         if check is not None: check()
         if record['schema'] != SCHEMA or record['sceneId'] != scene.identity: raise ValueError('Saved scene or engine version differs')
+        from .surgical_procedure_policy import PROPERTY as PROCEDURE_PROPERTY, procedure_admission
+        if PROCEDURE_PROPERTY in scene.properties:
+            admission = procedure_admission(scene)
+            expected = {'schema': admission.get('schema'), 'policyId': admission['policyId'], 'policyHash': admission['policyHash']}
+            if not admission['available'] or record.get('procedurePolicy') != expected:
+                raise ValueError('PROCEDURE_SNAPSHOT_INCOMPATIBLE: exact versioned procedure binding required')
+            if record.get('hardConstraintPolicy') != 'atomic-protection-v1' or record.get('legacyGuardPartialActions'):
+                raise ValueError('PROCEDURE_SNAPSHOT_INCOMPATIBLE: historical partial protection is not admitted')
+        elif 'procedurePolicy' in record:
+            raise ValueError('PROCEDURE_SNAPSHOT_INCOMPATIBLE: source scene has no procedure policy')
         from .surgical_source_inspection import inspection_only
         if inspection_only(scene) and (record.get('actions') != []
                 or 'protectionContract' in record or 'cranialStagesContract' in record):

@@ -20,6 +20,7 @@ from .surgical_cranial_planning_roots import (
 from .surgical_joint_cranial_forest import OpeningComparisonBudget, search_opening_forest
 
 SCHEMA = 'resectionlab.cranial-strategy-comparison.v1'
+PROCEDURE_SCHEMA = 'resectionlab.cranial-strategy-comparison.v2'
 _LIMIT_FIELDS = frozenset(('max_bone_mm3', 'max_preparation_nonbone_mm3',
     'max_work_nonbone_mm3', 'max_native_actions', 'max_public_calls',
     'max_wall_seconds', 'max_bone_contact_replans', 'max_tissue_contact_replans',
@@ -33,6 +34,12 @@ def _require(value, reason):
 
 def _block(code, message=None):
     return {'code': code, 'message': message or code.replace('_', ' ').capitalize() + '.'}
+
+
+def _sequence_stop_reason(goal, procedure):
+    if procedure:
+        return 'BOUNDED_INVENTORY_OR_HORIZON_STOP_WITH_RESIDUAL' if goal['residualOriginalTargetCells'] else 'NO_RESIDUAL'
+    return 'COMPLETED_FROZEN_ENGINEERING_TASK' if goal['completedFrozenTask'] else '; '.join(goal['reasons']) or 'CHECKED_PROGRESS_ONLY'
 
 
 def _reviewed_evidence(rows):
@@ -86,6 +93,10 @@ def _planning_errors(base_scene, root, base_snapshot):
     if not isinstance(planning, dict):
         return [_block('SOURCE_PLANNING_INVENTORY_REQUIRED')]
     errors = []
+    from .surgical_procedure_policy import PROPERTY, procedure_admission
+    if base_scene is not None and PROPERTY in base_scene.properties:
+        admission = procedure_admission(base_scene)
+        errors.extend(copy.deepcopy(admission['blockers']))
     evidence_sets = (root.get('openingContract', {}).get('evidence'),
         root['sourceSnapshot'].get('cranialStagesContract', {}).get('evidence'))
     if not all(_reviewed_evidence(rows) for rows in evidence_sets):
@@ -163,6 +174,9 @@ def cranial_planning_availability(base_scene, record):
     current = record.get('branches', {}).get(record.get('branchId'), {})
     result = {'present': True, 'available': False, 'roots': [],
         'sourceSceneId': base_scene.identity, 'sourceStateId': current.get('stateId', base_scene.identity), 'blockers': []}
+    from .surgical_procedure_policy import PROPERTY, procedure_admission
+    if PROPERTY in base_scene.properties:
+        result['procedurePolicy'] = procedure_admission(base_scene)
     if FIELD not in record:
         result['blockers'] = [_block('QUALIFIED_SOURCE_OPENING_ROOT_REQUIRED')]
         return result
@@ -251,6 +265,8 @@ def compare_cranial_strategies(base_scene, record, *, check=lambda: None,
             'propose': _proposer(row['planning']), 'outside_poses': copy.deepcopy(row['planning']['outsidePoses'])})
     result = search_opening_forest(roots, budget=budget, horizon=planning_horizon,
         beam_width=beam_width, progress=progress)
+    from .surgical_procedure_policy import PROPERTY as PROCEDURE_PROPERTY, procedure_admission
+    procedure = procedure_admission(base_scene) if PROCEDURE_PROPERTY in base_scene.properties else None
     branches, alternatives = [], []
     for item in result['branches']:
         engine, node = item['engine'], item['node']
@@ -265,20 +281,30 @@ def compare_cranial_strategies(base_scene, record, *, check=lambda: None,
             'completedFrozenTask': goal['completedFrozenTask'], 'goalAssessment': goal,
             'ledger': copy.deepcopy(node.ledger), 'sequenceOutcome': copy.deepcopy(node.sequence_outcome),
             'wholeExitComplete': joint_exit_complete(engine),
-            'stopReason': 'COMPLETED_FROZEN_ENGINEERING_TASK' if goal['completedFrozenTask'] else
-                '; '.join(goal['reasons']) or 'CHECKED_PROGRESS_ONLY',
+            'stopReason': _sequence_stop_reason(goal,procedure),
             'snapshotHash': semantic_digest(engine.snapshot()), 'nativeHistory': copy.deepcopy(engine.history),
             'admittedPatientTask': False}
         branches.append((engine, row)); alternatives.append(row)
-    report = {'schema': SCHEMA, 'sourceSceneId': base_scene.identity,
+    selected_state = result['selected']['engine'].state_id if result['selected'] is not None else None
+    report = {'schema': PROCEDURE_SCHEMA if procedure else SCHEMA, 'sourceSceneId': base_scene.identity,
         'sourceBranchId': record['branchId'],
         'sourceStateId': available['sourceStateId'], 'sourceBinding': source_binding(base_scene),
         'rootSeals': {r['id']: r['rootSeal'] for r in rows}, 'decision': result['decision'],
-        'selectedBranchId': next((r['branchId'] for r in alternatives if r['completedFrozenTask']), None),
+        'selectedBranchId': next((r['branchId'] for r in alternatives if r['finalStateId'] == selected_state), None),
         'alternatives': alternatives, 'failures': copy.deepcopy(result['failures'])[:128],
         'limitations': ['Opening and preparation are charged over the whole sequence; skull clearance is not target treatment.',
             'Source qualification, registration and clinical consequences require independent evidence. No patient-task admission.'],
         'cost': result['cost'], 'admittedPatientTask': False}
+    if procedure:
+        report.update(procedurePolicy=procedure, selectionRule='max_treatment_within_harm_bounds',
+            searchEvidence=[{'rootId': r['rootId'], 'evidence': copy.deepcopy(r['evidence'])} for r in result['searches']],
+            scenarios=['nominal'],
+            stopReason=('BOUNDED_INVENTORY_OR_HORIZON_STOP_WITH_RESIDUAL' if any(
+                r['finalStateId'] == selected_state and r['goalAssessment']['residualOriginalTargetCells'] for r in alternatives)
+                else 'NO_RESIDUAL' if selected_state is not None else 'NO_EXECUTABLE_CHECKED_SEQUENCE'))
+        report['limitations'].extend(procedure['limitations'])
+    else:
+        report['limitations'].append('Historical generated research workflow; not the versioned supratentorial procedure task.')
     report['comparisonSeal'] = semantic_digest(report)
     budget.check()
     return {'report': report, 'branches': branches, 'budget': budget}
@@ -355,10 +381,16 @@ def validate_cranial_report(base_scene, record, report):
     from .surgical_engine import SurgicalEngine
     from .surgical_membrane_transport import clearance
     report = thaw_json(report)
-    _require(report.get('schema') == SCHEMA and report.get('comparisonSeal') == semantic_digest(
+    from .surgical_procedure_policy import PROPERTY, procedure_admission, direct_removal_dimensions
+    procedure = PROPERTY in getattr(base_scene, 'properties', {})
+    _require(report.get('schema') == (PROCEDURE_SCHEMA if procedure else SCHEMA) and report.get('comparisonSeal') == semantic_digest(
         {k: v for k, v in report.items() if k != 'comparisonSeal'}) and
         report.get('sourceSceneId') == base_scene.identity and report.get('sourceBinding') == source_binding(base_scene) and
         report.get('admittedPatientTask') is False, 'REPORT_SOURCE_OR_SEAL_CHANGED')
+    if procedure:
+        _require(report.get('procedurePolicy') == procedure_admission(base_scene) and
+            report.get('selectionRule') == 'max_treatment_within_harm_bounds' and
+            report.get('scenarios') == ['nominal'], 'REPORT_PROCEDURE_CHANGED')
     _require(report.get('sourceStateId') == _base_snapshot(base_scene, record)['stateId'],
         'REPORT_COMMON_SOURCE_CHANGED')
     original = record['branches'].get(report.get('sourceBranchId'), {})
@@ -414,6 +446,33 @@ def validate_cranial_report(base_scene, record, report):
         dimensions = outcome['dimensions']
         _require(dimensions['targetRemovedMm3']['cumulative'] == ledger['targetRemovedMm3'] and
             dimensions['nonTargetRemovedMm3']['cumulative'] == ledger['wholeNonTargetRemovedMm3'], 'REPORT_SEQUENCE_COUNTS_CHANGED')
+        if procedure:
+            from .surgical_sequence_outcomes import sequence_outcome
+            endpoint = source.clone()
+            endpoint.state = copy.deepcopy(snapshot['checkpoint']['state'])
+            endpoint.actions = copy.deepcopy(snapshot['actions'])
+            endpoint.history = copy.deepcopy(history)
+            # Read-only remeasurement of the already source/hash/history-bound
+            # endpoint preserves every supported quantity and every null.
+            _require(outcome == sequence_outcome(endpoint, baseline=source),
+                'REPORT_COMPLETE_SEQUENCE_OUTCOME_CHANGED')
+            direct = direct_removal_dimensions(SimpleNamespace(scene=scene,
+                state=snapshot['checkpoint']['state'], protection=source.protection), source)
+            _require(outcome.get('schema') == 'resectionlab.sequence-outcome.v2' and
+                snapshot.get('procedurePolicy') == source.snapshot().get('procedurePolicy') and
+                all(dimensions.get(k) == value for k, value in direct.items()),
+                'REPORT_ANATOMICAL_HARM_CHANGED')
+            _require(row['ledger'].get('neuralRemovedMm3') == direct['neuralRemovedMm3']['cumulative'] and
+                row['ledger'].get('structureRemovedMm3') == {k:v['cumulative'] for k,v in direct['structureRemovedMm3'].items()},
+                'REPORT_ANATOMICAL_LEDGER_CHANGED')
+            policy = scene.properties[PROPERTY]
+            _require(direct['neuralRemovedMm3']['cumulative'] <= policy['maximumNeuralRemovalMm3']+1e-9 and
+                direct['boneRemovedMm3']['cumulative'] <= policy['maximumBoneRemovalMm3']+1e-9 and
+                direct['nonbonePreparationRemovedMm3']['cumulative'] <= policy['maximumNonbonePreparationRemovalMm3']+1e-9 and
+                ledger['modeledElapsedSeconds'] <= policy['maximumModeledElapsedSeconds']+1e-9 and
+                direct['protectedRemovedMm3']['cumulative'] == 0 and all(
+                    direct['structureRemovedMm3'][name]['cumulative'] <= cap+1e-9
+                    for name,cap in policy['maximumStructureRemovalMm3'].items()), 'REPORT_PROCEDURE_BUDGET_VIOLATION')
         view = SimpleNamespace(scene=scene, state=snapshot['checkpoint']['state'],
             actions=snapshot['actions'], history=history)
         dura = clearance(view, source._cranial_stages)['cleared']
@@ -430,11 +489,32 @@ def validate_cranial_report(base_scene, record, report):
         _require(row['completedFrozenTask'] == row['goalAssessment']['completedFrozenTask'] == completed and
             row['goalAssessment']['reasons'] == reasons and row.get('admittedPatientTask') is False,
             'REPORT_COMPLETION_CHANGED')
+        if procedure:
+            _require(row['stopReason'] == _sequence_stop_reason(row['goalAssessment'],True), 'REPORT_ROW_STOP_REASON_CHANGED')
     selected = report['selectedBranchId']
-    _require(selected is None or any(r['branchId'] == selected and r['completedFrozenTask'] for r in alternatives), 'REPORT_SELECTION_CHANGED')
+    _require(selected is None or any(r['branchId'] == selected and (procedure or r['completedFrozenTask']) for r in alternatives), 'REPORT_SELECTION_CHANGED')
     complete = next((r['branchId'] for r in alternatives if r['completedFrozenTask']), None)
-    _require(selected == complete and report['decision'] == ('COMPLETED_FROZEN_TASK' if complete else
-        'CHECKED_PROGRESS_ONLY' if alternatives else 'STOP'), 'REPORT_DECISION_CHANGED')
+    if procedure:
+        from .surgical_joint_cranial_search import _key, _dominates
+        nodes = [(r, SimpleNamespace(goal_assessment=r['goalAssessment'], ledger=r['ledger'],
+            sequence_outcome=r['sequenceOutcome'], path=())) for r in alternatives]
+        positive = [(r,n) for r,n in nodes if r['goalAssessment']['creditedOriginalTargetCells'] > 0]
+        frontier = [(r,n) for r,n in positive if not any(_dominates(o,n) for _,o in positive)]
+        pool = frontier or nodes
+        # Numeric preference is shared with live selection; retained row order
+        # resolves an exact tie without inventing a different cold path ID.
+        preferred = min(pool, key=lambda item: _key(item[1]))[0] if pool else None
+        _require(selected == (preferred['branchId'] if preferred else None), 'REPORT_PROCEDURE_SELECTION_CHANGED')
+        expected_decision = ('COMPLETED_FROZEN_TASK' if preferred['completedFrozenTask'] else
+            'STOP_WITH_RESIDUAL' if preferred['goalAssessment']['creditedOriginalTargetCells'] > 0 else 'STOP') if preferred else 'STOP'
+        _require(report['decision'] == expected_decision, 'REPORT_PROCEDURE_DECISION_CHANGED')
+        expected_stop = ('BOUNDED_INVENTORY_OR_HORIZON_STOP_WITH_RESIDUAL' if preferred and
+            preferred['goalAssessment']['residualOriginalTargetCells'] else
+            'NO_RESIDUAL' if preferred else 'NO_EXECUTABLE_CHECKED_SEQUENCE')
+        _require(report.get('stopReason') == expected_stop, 'REPORT_STOP_REASON_CHANGED')
+    else:
+        _require(selected == complete and report['decision'] == ('COMPLETED_FROZEN_TASK' if complete else
+            'CHECKED_PROGRESS_ONLY' if alternatives else 'STOP'), 'REPORT_DECISION_CHANGED')
     cost = report['cost']
     _require(cost['physicalCalls'] == cost['previewCalls']+cost['directStepCalls'] and
         0 <= cost['physicalCalls'] <= cost['maxPhysicalCalls'] and
@@ -453,6 +533,9 @@ def cranial_summary(report):
     public['alternatives'] = [{k: copy.deepcopy(v) for k, v in row.items()
         if k not in ('snapshotHash', 'nativeHistory')} for row in report['alternatives']]
     public['cost'] = copy.deepcopy(report['cost'])
+    for name in ('procedurePolicy', 'selectionRule', 'scenarios', 'stopReason'):
+        if name in report:
+            public[name] = copy.deepcopy(report[name])
     public.update(admittedPatientTask=False, clinicalValidation='none')
     return public
 

@@ -4,6 +4,9 @@ Source-grid geometry stays authoritative while the actor sees a fixed crop
 chosen from the scan frame and declared access. No MRI intensity threshold is a
 target estimator. Contact is reported, with zero history-dependent cost because
 the frozen six-channel policy does not yet observe prior contact history.
+This historical geometric adapter cannot execute the versioned supratentorial
+procedure/harm task. Explicit policy bindings, including patient metadata, are
+refused before loading/native execution; use SurgicalRLEnv evaluation instead.
 """
 from __future__ import annotations
 
@@ -47,6 +50,17 @@ DERIVED_OCCUPANCY_SOURCE_KIND = "derived_occupancy_assumption"
 DEFAULT_NATIVE_SPATIAL_REWARD = RewardSpec(target_per_mm3=1., normal_per_mm3=.2,
     motor_per_mm3=0., language_per_mm3=0., action_cost=.03,
     motion_per_mm=.001, tool_change_cost=.03, graph_edge_cost=0.)
+PROCEDURE_POLICY_INCOMPATIBLE = (
+    "PROCEDURE_POLICY_INCOMPATIBLE: historical native spatial learners do not consume "
+    "the versioned supratentorial procedure, structure harm budgets or complete-sequence "
+    "outcomes; use the evaluation-only SurgicalRLEnv adapter")
+
+
+def _reject_procedure_policy(policy):
+    if policy is not None:
+        raise ValueError(PROCEDURE_POLICY_INCOMPATIBLE)
+
+
 OPENING_TOOLS = (
     ToolGeometry("short-wide-opener", 2.25, .45, 2.2, 35., .75),
     ToolGeometry("long-narrow-cutter", .9, 1.1, 12., 35., 3.),
@@ -632,10 +646,16 @@ class NativeSpatialStep:
 
 class NativeSpatialTask:
     """Canonical native execution, geometric objective, evaluator-only labels."""
+    supported_procedure_policy = False
+
     def __init__(self, case: NativeSpatialCase, *, max_steps: int = 3,
                  reward: RewardSpec = DEFAULT_NATIVE_SPATIAL_REWARD,
                  cancelled: Callable[[], bool] | None = None, _planning: bool = False,
-                 tool_modes: Mapping[str, str] | None = None):
+                 tool_modes: Mapping[str, str] | None = None, procedure_policy=None):
+        _reject_procedure_policy(procedure_policy)
+        provenance = getattr(case, 'support_provenance', {})
+        if isinstance(provenance, Mapping) and 'surgicalProcedurePolicyV1' in provenance:
+            raise ValueError(PROCEDURE_POLICY_INCOMPATIBLE)
         if (not isinstance(case, NativeSpatialCase) or type(max_steps) is not int
                 or not 1 <= max_steps <= MAX_NATIVE_SPATIAL_STEPS):
             raise ValueError(f"A typed native source and horizon1–{MAX_NATIVE_SPATIAL_STEPS} are required")
@@ -1217,12 +1237,14 @@ class NativeSpatialTask:
 
 
 def make_native_opening_task(*, tools=OPENING_TOOLS, max_steps=2, cancelled=None,
-                             generated_cut_union: CutUnionSpec | None = None):
+                             generated_cut_union: CutUnionSpec | None = None,
+                             procedure_policy=None):
     """Six tissue cells inside a 9×9×7 workspace; exact tool-complementarity fixture.
 
     The offset short opener clears a shaft obstacle. The long narrow tool can
     then reach two distal target cells. This is not an anatomical brain model.
     """
+    _reject_procedure_policy(procedure_policy)
     support = np.zeros((9, 9, 7), bool)
     support[4, 4, 1:6], support[5, 5, 1] = True, True
     target = np.zeros(support.shape, bool)
@@ -1299,7 +1321,8 @@ def native_spatial_task_from_case(case, *, access, tools, max_steps=3,
                                   track="annotation_assisted", nominal_target=None,
                                   nominal_target_derivation="", crop_shape=(32, 32, 32), cancelled=None,
                                   research_support_acknowledgment=None, intensity_normalization="raw",
-                                  native_grid_reconciliation="none", proposal_mode="fixed_lattice", proposal_config=None):
+                                  native_grid_reconciliation="none", proposal_mode="fixed_lattice", proposal_config=None,
+                                  procedure_policy=None):
     """Load a real source case with existing support gates and explicit target role.
 
     ``access`` is canonical RAS+. Annotation-assisted defaults to the supplied
@@ -1309,8 +1332,13 @@ def native_spatial_task_from_case(case, *, access, tools, max_steps=3,
     unreviewed model proposal in annotation-assisted mode only. It never edits
     working anatomy or grants cortical/clinical approval on the source case.
     """
+    _reject_procedure_policy(procedure_policy)
     from .structural_evidence import planning_brain_support
     from .critical_evidence import resolve_critical_evidence
+    metadata = getattr(case, 'metadata', {})
+    properties = metadata.get('surgical_properties', {}) if isinstance(metadata, Mapping) else {}
+    if isinstance(properties, Mapping) and 'surgicalProcedurePolicyV1' in properties:
+        raise ValueError(PROCEDURE_POLICY_INCOMPATIBLE)
     if resolve_critical_evidence(case).planning_binding is not None:
         raise ValueError("CRITICAL_EVIDENCE_UNSUPPORTED: this historical spatial-learning adapter does not consume critical annotations")
     if track not in {"annotation_assisted", "inference_only"}:

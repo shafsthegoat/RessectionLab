@@ -15,6 +15,7 @@ from .surgical_modeled_outcomes import summarize_engine_outcomes
 
 SCHEMA = 'resectionlab.surgical-consequence-comparison.v1'
 VECTOR_SCHEMA = 'resectionlab.surgical-consequence-vector.v1'
+PROCEDURE_VECTOR_SCHEMA = 'resectionlab.surgical-consequence-vector.v2'
 APP_DECLARATION_HASH = 'sha256:cb075f189f9455508a7ec454dda0e2bfe38809b2a0fed0b0a824b225aad3f3f9'
 DECLARATION_KEYS = ('sourceArchiveSha256', 'sourceSceneId', 'sourceGeometryHash', 'prefixBranch', 'prefixActions',
                     'alternativeBranches', 'stopBranch', 'scenarios', 'policies')
@@ -36,6 +37,37 @@ METRICS = {
     'motorEncounterMm3': ('mm3', 'min'), 'languageEncounterMm3': ('mm3', 'min'),
     'patientShiftErrorMm': ('mm', 'min'),
 }
+PROCEDURE_METRICS = {name: ('mm3', 'min') for name in (
+    'boneRemovedMm3', 'nonbonePreparationRemovedMm3', 'neuralRemovedMm3', 'protectedRemovedMm3', 'neuralCutSourceMm3')}
+SOURCE_COUNTS = frozenset(('targetRemovedMm3', 'nonTargetRemovedMm3', 'elapsedSeconds'))
+
+
+def _metric_spec(name):
+    if name in METRICS:
+        return METRICS[name]
+    if name in PROCEDURE_METRICS:
+        return PROCEDURE_METRICS[name]
+    if (type(name) is str and name.startswith('structure:') and name.endswith((':removedMm3', ':cutSourceMm3')) and
+            0 < len(name[len('structure:'):name.rfind(':')]) <= 100):
+        return ('mm3', 'min')
+    raise ValueError('Unknown consequence dimension')
+
+
+def _vector_metrics(vector):
+    if vector.get('schema') == VECTOR_SCHEMA:
+        return METRICS
+    if vector.get('schema') != PROCEDURE_VECTOR_SCHEMA:
+        raise ValueError('Complete typed consequence vector required')
+    ids = vector.get('structureIds')
+    if (type(ids) is not list or not ids or len(ids) != len(set(ids)) or
+            any(type(name) is not str or not 0 < len(name) <= 100 for name in ids)):
+        raise ValueError('Explicit structure identities required in procedure consequence vector')
+    return {**METRICS, **PROCEDURE_METRICS,
+        **{'structure:' + name + ':' + effect: ('mm3', 'min') for name in ids for effect in ('removedMm3', 'cutSourceMm3')}}
+
+
+def _source_count(name):
+    return name in SOURCE_COUNTS or name in PROCEDURE_METRICS or name.startswith('structure:')
 UNKNOWN = {
     'motorEncounterMm3': 'No admitted source-bound motor encounter evaluator in this task; missing mapping is not negative mapping.',
     'languageEncounterMm3': 'No admitted source-bound language encounter evaluator in this task; cortical/subcortical probe type does not identify language.',
@@ -93,7 +125,21 @@ def consequence_vector(engine, baseline):
             'cumulative': None if unknown else _finite(value),
             'incremental': None if unknown else _finite(value) - _finite(initial),
             'reason': UNKNOWN.get(name, 'Required explicit mechanism or mapped source coverage is absent.') if unknown else None}
-    return {'schema': VECTOR_SCHEMA, 'sourceSceneId': engine.scene.identity,
+    from .surgical_procedure_policy import PROPERTY
+    procedure = PROPERTY in engine.scene.properties
+    structure_ids = []
+    if procedure:
+        complete = outcomes['sequence']['dimensions']
+        for name in PROCEDURE_METRICS:
+            d = complete[name]
+            dimensions[name] = {**copy.deepcopy(d), 'direction': 'min'}
+        for name, d in complete['structureRemovedMm3'].items():
+            structure_ids.append(name)
+            dimensions['structure:' + name + ':removedMm3'] = {**copy.deepcopy(d), 'direction': 'min'}
+            dimensions['structure:' + name + ':cutSourceMm3'] = {**copy.deepcopy(complete['structureCutSourceMm3'][name]), 'direction': 'min'}
+    return {'schema': PROCEDURE_VECTOR_SCHEMA if procedure else VECTOR_SCHEMA,
+        **({'structureIds': structure_ids, 'procedurePolicyHash': engine.scene.properties[PROPERTY]['policyHash']} if procedure else {}),
+        'sourceSceneId': engine.scene.identity,
         'sourceGeometryHash': semantic_digest({'labels': array_digest(engine.scene.labels), 'affine': engine.scene.affine.tolist()}),
         'stateId': engine.state_id, 'baselineStateId': baseline.state_id,
         'prefixActions': len(baseline.actions), 'nativeActions': len(engine.actions),
@@ -111,22 +157,25 @@ def validate_policy(policy):
         raise ValueError('Explicit bounded research comparison policy required')
     for key in ('objectives', 'requiredMetrics'):
         values = policy[key]
-        if (not isinstance(values, list) or len(values) > len(METRICS)
-                or any(type(v) is not str or v not in METRICS for v in values)
+        if (not isinstance(values, list) or len(values) > 200
+                or any(type(v) is not str for v in values)
                 or len(set(values)) != len(values)):
             raise ValueError('Unknown or duplicate consequence dimension')
+        for name in values:
+            _metric_spec(name)
     if not policy['objectives']: raise ValueError('At least one objective required')
-    if not isinstance(policy['constraints'], list) or len(policy['constraints']) > 30:
+    if not isinstance(policy['constraints'], list) or len(policy['constraints']) > 200:
         raise ValueError('Bounded research constraints required')
     for c in policy['constraints']:
         if (not isinstance(c, dict) or set(c) != {'metric', 'scope', 'operator', 'value'}
-                or c['metric'] not in METRICS or c['scope'] not in ('cumulative', 'incremental')
+                or type(c['metric']) is not str or c['scope'] not in ('cumulative', 'incremental')
                 or c['operator'] not in ('at_most', 'at_least')):
             raise ValueError('Unknown consequence constraint, scope or operator')
         _finite(c['value'])
+        _metric_spec(c['metric'])
 
 
-def compare_samples(samples, policy, *, stop_branch, scenario_ids, branch_ids):
+def compare_samples(samples, policy, *, stop_branch, scenario_ids, branch_ids, selection_rule=None):
     """Pair every plan with every declared world; no averaging or probability.
 
     This pure comparison is downstream of canonical engine replays. The report
@@ -134,6 +183,8 @@ def compare_samples(samples, policy, *, stop_branch, scenario_ids, branch_ids):
     Missing/failed worlds may not be silently dropped from a plan.
     """
     validate_policy(policy)
+    if selection_rule not in (None, 'max_treatment_within_harm_bounds'):
+        raise ValueError('Unknown consequence selection rule')
     if not isinstance(samples, list) or not 1 <= len(samples) <= 64:
         raise ValueError('Bounded consequence samples required')
     if any(not isinstance(r, dict) or type(r.get('branchId')) is not str or not 0 < len(r['branchId']) <= 100
@@ -150,7 +201,8 @@ def compare_samples(samples, policy, *, stop_branch, scenario_ids, branch_ids):
         raise ValueError('Every explicitly declared alternative must be retained')
     if set(worlds) != set(scenario_ids):
         raise ValueError('Declared scenario is missing or an undeclared world was added')
-    if not 2 <= len(branches) <= 8 or not 1 <= len(worlds) <= 8 or stop_branch not in branches:
+    maximum_branches = 25 if selection_rule is not None else 8
+    if not 2 <= len(branches) <= maximum_branches or not 1 <= len(worlds) <= 8 or stop_branch not in branches:
         raise ValueError('A bounded alternative set and explicit STOP branch are required')
     matrix = {(r['branchId'], r['scenarioId']): r for r in samples}
     if len(matrix) != len(samples) or len(matrix) != len(branches) * len(worlds):
@@ -164,13 +216,14 @@ def compare_samples(samples, policy, *, stop_branch, scenario_ids, branch_ids):
             raise ValueError('Paired scenarios must share the same scene and exact prefix')
     for row in samples:
         v = row['vector']
-        if v.get('schema') != VECTOR_SCHEMA or set(v['dimensions']) != set(METRICS):
+        metric_contract = _vector_metrics(v)
+        if set(v['dimensions']) != set(metric_contract):
             raise ValueError('Complete typed consequence vector required')
         if type(v.get('cleanupComplete')) is not bool or v.get('clinicalValidation') is not False:
             raise ValueError('Exact cleanup boolean and nonclinical consequence scope required')
         if type(v.get('prefixActions')) is not int or not 0 <= v['prefixActions'] <= 10000:
             raise ValueError('Bounded integer prefix action count required')
-        for name, (unit, direction) in METRICS.items():
+        for name, (unit, direction) in metric_contract.items():
             d = v['dimensions'][name]
             if d['unit'] != unit or d['direction'] != direction:
                 raise ValueError('Consequence units or direction changed')
@@ -180,25 +233,38 @@ def compare_samples(samples, policy, *, stop_branch, scenario_ids, branch_ids):
             elif d['status'] in ('source_count', 'modeled_unvalidated'):
                 if name in UNKNOWN:
                     raise ValueError('Unsupported evidence cannot become an available consequence')
-                expected = 'source_count' if name in ('targetRemovedMm3', 'nonTargetRemovedMm3', 'elapsedSeconds') else 'modeled_unvalidated'
+                expected = 'source_count' if _source_count(name) else 'modeled_unvalidated'
                 if d['status'] != expected:
                     raise ValueError('Source count and unvalidated model status cannot be exchanged')
                 if _finite(d['cumulative']) < 0 or _finite(d['incremental']) < 0:
                     raise ValueError('Source count, time and cumulative exposure cannot be negative')
             else: raise ValueError('Unknown consequence status')
     required = set(policy['objectives']) | set(policy['requiredMetrics']) | {c['metric'] for c in policy['constraints']}
+    if any(not required <= row['vector']['dimensions'].keys() for row in samples):
+        raise ValueError('Required consequence dimension absent from versioned vector')
+    if selection_rule is not None and (any(row['vector'].get('schema') != PROCEDURE_VECTOR_SCHEMA for row in samples) or
+            'targetRemovedMm3' not in policy['objectives']):
+        raise ValueError('Treatment-within-harm selection requires versioned procedure outcomes and a target objective')
+    if selection_rule is not None and (len({row['vector'].get('procedurePolicyHash') for row in samples}) != 1 or
+            any(type(row['vector'].get('procedurePolicyHash')) is not str for row in samples)):
+        raise ValueError('Compared procedure outcomes must retain the same declared policy binding')
     reasons = {}
     for branch in branches:
         violations = []
         for world in worlds:
             vector = matrix[branch, world]['vector']; dimensions = vector['dimensions']
             if not vector['cleanupComplete']: violations.append({'scenario': world, 'reason': 'cleanup_incomplete'})
+            if (selection_rule is not None and branch != stop_branch and
+                    dimensions['targetRemovedMm3']['incremental'] is not None and
+                    dimensions['targetRemovedMm3']['incremental'] <= 0):
+                violations.append({'scenario': world, 'reason': 'no_additional_target_treatment'})
             for name in sorted(required):
                 if dimensions[name]['status'] == 'unavailable':
                     violations.append({'scenario': world, 'reason': 'unknown_required_consequence', 'metric': name})
             for c in policy['constraints']:
                 value = dimensions[c['metric']][c['scope']]
-                if value is not None and (value > c['value'] if c['operator'] == 'at_most' else value < c['value']):
+                tolerance = 1e-9 if selection_rule is not None else 0.
+                if value is not None and (value > c['value'] + tolerance if c['operator'] == 'at_most' else value < c['value'] - tolerance):
                     violations.append({'scenario': world, 'reason': 'declared_research_constraint', **c, 'actual': value})
         reasons[branch] = violations
     # A valid STOP is an executed cleanup with zero additional source removal.
@@ -212,19 +278,33 @@ def compare_samples(samples, policy, *, stop_branch, scenario_ids, branch_ids):
             for key in policy['objectives']:
                 va = matrix[a, world]['vector']['dimensions'][key][objective_scope(key)]
                 vb = matrix[b, world]['vector']['dimensions'][key][objective_scope(key)]
-                sign = -1 if METRICS[key][1] == 'max' else 1
+                sign = -1 if _metric_spec(key)[1] == 'max' else 1
                 if sign * va > sign * vb: return False
                 strict |= sign * va < sign * vb
         return strict
     dominators = {b: [a for a in eligible if a != b and dominates(a, b)] for b in eligible}
     frontier = [b for b in eligible if not dominators[b]]
     selected = frontier[0] if len(frontier) == 1 else stop_branch if stop_valid else None
+    if selection_rule is not None and frontier:
+        # Treatment is maximized only after hard bounds. For equal treatment,
+        # neural and structure removal precede preparation, bone and time.
+        # Every Pareto alternative stays visible; no sum exchanges bone for brain.
+        harm_order = ['neuralRemovedMm3', 'neuralCutSourceMm3'] + sorted(k for k in required if k.startswith('structure:')) + [
+            'protectedRemovedMm3', 'nonbonePreparationRemovedMm3', 'boneRemovedMm3', 'elapsedSeconds']
+        def selection_key(branch):
+            rows = [matrix[branch, world]['vector']['dimensions'] for world in worlds]
+            treatment = min(d['targetRemovedMm3']['incremental'] for d in rows)
+            harm = [max(d[key]['cumulative'] for d in rows) for key in harm_order if key in required]
+            return (-treatment, *harm, branch)
+        selected = min(frontier, key=selection_key)
     return {'policy': copy.deepcopy(policy), 'scenarios': worlds, 'feasibleContinuations': eligible,
         'pairedScenarioParetoFront': frontier, 'dominatedBy': dominators, 'violations': reasons,
         'selectedBranchId': selected, 'stopFallback': selected == stop_branch,
         'stopExecutable': stop_valid, 'taskSatisfied': selected in eligible,
         'objectiveScopes': {key: objective_scope(key) for key in policy['objectives']},
-        'reason': 'unique_paired_scenario_frontier' if len(frontier) == 1 else
+        **({'selectionRule': selection_rule} if selection_rule is not None else {}),
+        'reason': 'max_treatment_within_harm_bounds' if selection_rule is not None and frontier else
+            'unique_paired_scenario_frontier' if len(frontier) == 1 else
             'no_executable_stop' if not stop_valid else 'unresolved_tradeoff_stop_with_residual' if frontier else 'no_qualified_continuation_stop_with_residual',
         'dominanceMeaning': 'No worse in every objective in every paired declared world; strictly better in at least one. No scalar weights, averages or clinical probabilities.'}
 
@@ -237,13 +317,16 @@ def seal_report(scene, samples, scenarios, policies, *, baseline_branch, stop_br
             or len({p['id'] for p in policies}) != len(policies)):
         raise ValueError('A nominal world and nonempty unique research policies are required')
     declaration = comparison_declaration(declaration)
+    from .surgical_procedure_policy import PROPERTY
+    selection_rule = scene.properties[PROPERTY]['selectionRule'] if PROPERTY in scene.properties else None
     report = {'schema': SCHEMA, 'sourceSceneId': scene.identity, 'sourceArchiveSha256': source_archive_sha256,
         'declarationHash': semantic_digest(declaration), 'declaration': declaration,
         'alternativeBranchIds': copy.deepcopy(declaration['alternativeBranches']),
         'sourceLabelsHash': array_digest(scene.labels), 'baselineBranchId': baseline_branch,
         'stopBranchId': stop_branch, 'sourceRole': 'DEVELOPMENT', 'scenarios': copy.deepcopy(scenarios),
         'samples': copy.deepcopy(samples), 'decisions': [compare_samples(samples, p, stop_branch=stop_branch,
-            scenario_ids=[s['id'] for s in scenarios], branch_ids=declaration['alternativeBranches']) for p in policies],
+            scenario_ids=[s['id'] for s in scenarios], branch_ids=declaration['alternativeBranches'],
+            selection_rule=selection_rule) for p in policies],
         'optimizerUpdates': 0, 'physicalValidationPassed': False, 'physiologicalRL': 'hold',
         'limitations': ['Compared parameter worlds are declared sensitivity scenarios, not a patient distribution or confidence interval.',
             'Full cumulative source removal includes shared exposure. Incremental values describe the exact post-exposure decision prefix.',
@@ -300,8 +383,10 @@ def validate_saved_comparison(scene, record, report, *, declaration=None):
         raise ValueError('Consequence native alternative is missing')
     # Validate the complete typed rectangle before any per-row metadata lookup.
     for decision in decisions:
+        from .surgical_procedure_policy import PROPERTY
+        selection_rule = scene.properties[PROPERTY]['selectionRule'] if PROPERTY in scene.properties else None
         expected = compare_samples(report['samples'], decision['policy'], stop_branch=report['stopBranchId'],
-            scenario_ids=[s['id'] for s in scenarios], branch_ids=declaration['alternativeBranches'])
+            scenario_ids=[s['id'] for s in scenarios], branch_ids=declaration['alternativeBranches'], selection_rule=selection_rule)
         if decision != expected:
             raise ValueError('Consequence comparison decision differs from sealed vectors')
     targets = {r['id'] for r in scene.regions if r.get('target')}
@@ -355,17 +440,38 @@ def validate_saved_comparison(scene, record, report, *, declaration=None):
         # without treating that hash as proof of causality for an unselected branch.
         from .surgical_engine import SurgicalEngine
         def checkpoint_values(item):
-            shell = SurgicalEngine(scene)
+            options = {}
+            if 'protectionContract' in item:
+                from .surgical_rl_protection import restore_protection_contract
+                protection, guard = restore_protection_contract(scene, item['protectionContract'])
+                options.update(protection=protection, guard_config=guard)
+            if 'cranialStagesContract' in item:
+                options['cranial_stages'] = item['cranialStagesContract']
+            shell = SurgicalEngine(scene, **options)
             shell.state = copy.deepcopy(item['checkpoint']['state'])
             shell._protection_contract = item.get('protectionContract')
             if shell.state_id != item['stateId']:
                 raise ValueError('Consequence checkpoint content differs from state identity')
-            return _values(shell), shell.state
-        values, state = checkpoint_values(snapshot); initial, _ = checkpoint_values(baseline)
+            return _values(shell), shell.state, shell
+        values, state, endpoint_shell = checkpoint_values(snapshot)
+        initial, _, initial_shell = checkpoint_values(baseline)
         for key in METRICS:
             d = vector['dimensions'][key]
             if d['cumulative'] != values[key] or d['incremental'] != (None if values[key] is None or initial[key] is None else values[key] - initial[key]):
                 raise ValueError('Nominal consequence ledger differs from native checkpoint')
+        if vector['schema'] == PROCEDURE_VECTOR_SCHEMA:
+            from .surgical_procedure_policy import direct_removal_dimensions
+            if vector.get('procedurePolicyHash') != scene.properties[PROPERTY]['policyHash']:
+                raise ValueError('Consequence procedure policy binding differs')
+            direct = direct_removal_dimensions(endpoint_shell, initial_shell)
+            measured = {key: direct[key] for key in PROCEDURE_METRICS}
+            for structure in vector['structureIds']:
+                measured['structure:' + structure + ':removedMm3'] = direct['structureRemovedMm3'][structure]
+                measured['structure:' + structure + ':cutSourceMm3'] = direct['structureCutSourceMm3'][structure]
+            for key, measurement in measured.items():
+                if any(vector['dimensions'][key].get(field) != measurement.get(field)
+                        for field in ('status', 'cumulative', 'incremental')):
+                    raise ValueError('Nominal direct structure consequence differs from source checkpoint')
         cleanup = not state['holds'] and not any(s['active'] or s['inserted'] or s['grip'] for s in state['slots'].values())
         if vector['cleanupComplete'] != cleanup:
             raise ValueError('Consequence cleanup differs from native checkpoint')

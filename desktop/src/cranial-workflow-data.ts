@@ -2,12 +2,14 @@ import type {SurgicalResponse,SurgicalSequenceOutcome} from './surgical-types';
 import type {WorkflowAlternative} from './surgical-workflow-data';
 
 export interface CranialBlocker {code:string;message:string}
+export interface ProcedurePolicy {schema:string;policyId:string;policyHash:string;available:boolean;startStage:string;requiredCoverage:string[];scenarios:string[];limitations:string[]}
 export interface CranialRootAvailability {rootId:string;label:string;openingMethod:string;available:boolean;blockers:CranialBlocker[];sceneId?:string;sourceStateId?:string}
 export interface CranialPlanningAvailability {present:true;available:boolean;rootId?:string;roots:CranialRootAvailability[];sourceSceneId:string;sourceStateId:string;blockers:CranialBlocker[]}
+export interface CranialPlanningAvailability {procedurePolicy?:ProcedurePolicy}
 export interface CranialGoalAssessment {targetBasis:string;originalTargetCells:number;originalTargetVolumeMm3:number;residualOriginalTargetMm3:number;creditedOriginalTargetCells:number;removedOriginalTargetCells:number;residualOriginalTargetCells:number;originalTargetFractionRemoved:number;originalTargetRemovedMm3:number;originalTargetTreatmentFraction:number;originalTargetTreatmentMm3:number;completedFrozenTask:boolean;reasons:string[];[key:string]:unknown}
 export interface CranialLedger {boneRemovedMm3:number;preparationNonboneRemovedMm3:number;workNonTargetRemovedMm3:number;wholeNonTargetRemovedMm3:number;modeledElapsedSeconds:number;withinLimits:boolean;refusalReasons:string[];[key:string]:unknown}
 export interface CranialAlternative {rootId:string;sceneId:string;branchId:string;finalStateId:string;nativeActions:number;label:string;completedFrozenTask:boolean;stopReason:string;goalAssessment:CranialGoalAssessment;ledger:CranialLedger;sequenceOutcome:SurgicalSequenceOutcome;wholeExitComplete:boolean}
-export interface CranialPlanningComparison {schema:'resectionlab.cranial-strategy-comparison.v1';comparisonSeal:string;sourceSceneId:string;sourceStateId:string;rootId?:string;decision:string;selectedBranchId:string|null;alternatives:CranialAlternative[];failures:CranialBlocker[];limitations:string[];cost:{physicalCalls:number;previewCalls:number;directStepCalls:number;wallSeconds:number}}
+export interface CranialPlanningComparison {schema:'resectionlab.cranial-strategy-comparison.v1'|'resectionlab.cranial-strategy-comparison.v2';procedurePolicy?:ProcedurePolicy;selectionRule?:string;stopReason?:string;comparisonSeal:string;sourceSceneId:string;sourceStateId:string;rootId?:string;decision:string;selectedBranchId:string|null;alternatives:CranialAlternative[];failures:CranialBlocker[];limitations:string[];cost:{physicalCalls:number;previewCalls:number;directStepCalls:number;wallSeconds:number}}
 const object=(v:unknown):v is Record<string,unknown>=>v!==null&&typeof v==='object'&&!Array.isArray(v);
 const amount=(v:unknown):v is number=>typeof v==='number'&&Number.isFinite(v)&&v>=0;
 const count=(v:unknown):v is number=>amount(v)&&Number.isSafeInteger(v);
@@ -38,7 +40,9 @@ export function cranialGenerationIssue(r:SurgicalResponse|null|undefined):string
 /** Reject mismatched/malformed bridge evidence rather than deriving credit from accessibility. */
 export function cranialComparison(r:SurgicalResponse|null|undefined):CranialPlanningComparison|null {
   const c=r?.cranialPlanning,a=cranialAvailability(r);
-  if(!r||!c||!a||c.schema!=='resectionlab.cranial-strategy-comparison.v1'||!text(c.comparisonSeal)||c.sourceSceneId!==a.sourceSceneId||c.sourceStateId!==a.sourceStateId||!text(c.decision)||!blockers(c.failures)||!strings(c.limitations)||!Array.isArray(c.alternatives)||c.alternatives.length>3||!object(c.cost))return null;
+  if(!r||!c||!a||!['resectionlab.cranial-strategy-comparison.v1','resectionlab.cranial-strategy-comparison.v2'].includes(c.schema)||!text(c.comparisonSeal)||c.sourceSceneId!==a.sourceSceneId||c.sourceStateId!==a.sourceStateId||!text(c.decision)||!blockers(c.failures)||!strings(c.limitations)||!Array.isArray(c.alternatives)||c.alternatives.length>3||!object(c.cost))return null;
+  const procedure=c.schema==='resectionlab.cranial-strategy-comparison.v2';
+  if(procedure&&(!object(c.procedurePolicy)||c.procedurePolicy.schema!=='resectionlab.supratentorial-procedure-policy.v1'||!text(c.procedurePolicy.policyId)||!text(c.procedurePolicy.policyHash)||c.procedurePolicy.policyHash!==a.procedurePolicy?.policyHash||c.selectionRule!=='max_treatment_within_harm_bounds'||!text(c.stopReason)))return null;
   if(!count(c.cost.physicalCalls)||!count(c.cost.previewCalls)||!count(c.cost.directStepCalls)||c.cost.physicalCalls!==c.cost.previewCalls+c.cost.directStepCalls||!amount(c.cost.wallSeconds))return null;
   const ids=new Set<string>();
   for(const row of c.alternatives){
@@ -46,10 +50,12 @@ export function cranialComparison(r:SurgicalResponse|null|undefined):CranialPlan
     ids.add(row.branchId);const g=row.goalAssessment,l=row.ledger,s=row.sequenceOutcome;
     if(!object(g)||!text(g.targetBasis)||!count(g.originalTargetCells)||g.originalTargetCells===0||!count(g.creditedOriginalTargetCells)||!count(g.removedOriginalTargetCells)||!count(g.residualOriginalTargetCells)||g.creditedOriginalTargetCells>g.removedOriginalTargetCells||g.removedOriginalTargetCells+g.residualOriginalTargetCells!==g.originalTargetCells||![g.originalTargetFractionRemoved,g.originalTargetTreatmentFraction,g.originalTargetRemovedMm3,g.originalTargetTreatmentMm3,g.originalTargetVolumeMm3,g.residualOriginalTargetMm3].every(amount)||g.originalTargetFractionRemoved>1||g.originalTargetTreatmentFraction>1||g.originalTargetVolumeMm3<=0||!close(g.originalTargetVolumeMm3,g.originalTargetRemovedMm3+g.residualOriginalTargetMm3)||!close(g.originalTargetTreatmentMm3,g.originalTargetTreatmentFraction*g.originalTargetVolumeMm3)||!close(g.originalTargetRemovedMm3,g.originalTargetFractionRemoved*g.originalTargetVolumeMm3)||!close(g.originalTargetFractionRemoved,g.removedOriginalTargetCells/g.originalTargetCells)||!close(g.originalTargetTreatmentFraction,g.creditedOriginalTargetCells/g.originalTargetCells)||typeof g.completedFrozenTask!=='boolean'||!strings(g.reasons))return null;
     if(!object(l)||![l.boneRemovedMm3,l.preparationNonboneRemovedMm3,l.workNonTargetRemovedMm3,l.wholeNonTargetRemovedMm3,l.modeledElapsedSeconds].every(amount)||typeof l.withinLimits!=='boolean'||!strings(l.refusalReasons)||!close(l.wholeNonTargetRemovedMm3,l.boneRemovedMm3+l.preparationNonboneRemovedMm3+l.workNonTargetRemovedMm3))return null;
-    if(!object(s)||s.schema!=='resectionlab.sequence-outcome.v1'||s.sceneId!==row.sceneId||s.stateId!==row.finalStateId||!object(s.dimensions)||!strings(s.missingEvidence)||!strings(s.limitations)||typeof s.withdrawalComplete!=='boolean')return null;
+    if(!object(s)||s.schema!==(procedure?'resectionlab.sequence-outcome.v2':'resectionlab.sequence-outcome.v1')||s.sceneId!==row.sceneId||s.stateId!==row.finalStateId||!object(s.dimensions)||!strings(s.missingEvidence)||!strings(s.limitations)||typeof s.withdrawalComplete!=='boolean')return null;
+    const neuralValue=(s.dimensions.neuralRemovedMm3 as {cumulative?:unknown}|undefined)?.cumulative;
+    if(procedure&&(!amount(l.neuralRemovedMm3)||neuralValue!==l.neuralRemovedMm3||!row.wholeExitComplete||!s.withdrawalComplete||!l.withinLimits))return null;
     if(row.completedFrozenTask!==g.completedFrozenTask||row.completedFrozenTask&&(!row.wholeExitComplete||!s.withdrawalComplete||!l.withinLimits||g.creditedOriginalTargetCells===0||g.reasons.length>0))return null;
   }
-  if(c.selectedBranchId!==null&&(!text(c.selectedBranchId)||!c.alternatives.some(x=>x.branchId===c.selectedBranchId&&x.completedFrozenTask)))return null;
+  if(c.selectedBranchId!==null&&(!text(c.selectedBranchId)||!c.alternatives.some(x=>x.branchId===c.selectedBranchId&&(procedure||x.completedFrozenTask))))return null;
   return c;
 }
 export function cranialTargetBasisLabel(basis:string):string {

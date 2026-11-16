@@ -205,14 +205,17 @@ def test_acquired_critical_floor_cannot_be_acknowledged_away(status, cells, expe
     from resectionlab.surgical_bridge import _cranial_critical_blockers, _cranial_context_availability
     record = {'cranialPlanningRoots': {'roots': [{'id': 'source-opening', 'sourceSnapshot': {
         'protectionContract': {'required': [], 'annotations': [{'structureId': 'brainstem',
-            'reviewStatus': status, 'cells': cells}]}}}]}}
+        'reviewStatus': status, 'cells': cells}, {'structureId':'cerebellum',
+        'reviewStatus': status, 'cells': cells}]}}}]}}
     available = {'present': True, 'available': True, 'blockers': [],
         'roots': [{'rootId': 'source-opening', 'available': True, 'blockers': []}]}
     acquired = SimpleNamespace(metadata={}, source_refs=())
     result = _cranial_context_availability(acquired, record, available)
     errors = _cranial_critical_blockers(record, {'source-opening'})
     assert bool(errors) == bool(expected)
-    assert result['available'] == (expected is None)
+    assert result['available'] is False
+    assert result['blockers'][0]['code']=='PROCEDURE_ACQUIRED_SOURCE_QUALIFICATION_UNAVAILABLE'
     assert available['available'] is True  # Projection never mutates saved qualification.
     if expected:
-        assert errors[0]['code'] == result['roots'][0]['blockers'][0]['code'] == expected
+        assert errors[0]['code'] == expected
+        assert any(b['code']==expected for b in result['roots'][0]['blockers'])

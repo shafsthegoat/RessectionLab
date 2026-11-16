@@ -24,3 +24,16 @@ test('cards preserve credited-vs-removed quantities, full denominator and missin
 test('root IDs are unique; frame metadata is source-bound and explicit null clears',()=>{
  const r=fixture();r.cranialPlanningAvailability.roots.push({...r.cranialPlanningAvailability.roots[0]});assert.equal(cranialAvailability(r),null);const source={},context=new SurgicalComparisonContext(),original=fixture();context.accept(original,source,false);const frame={...original,playback:{readOnly:true}};delete frame.cranialPlanning;delete frame.cranialPlanningAvailability;const h=context.accept(frame,source,true);assert.equal(h.cranialPlanning,original.cranialPlanning);assert.equal(h.cranialPlanningAvailability,original.cranialPlanningAvailability);assert.equal(context.accept({...frame,cranialPlanning:null},source,true).cranialPlanning,null);assert.equal(context.accept({...frame,caseHash:'another'},source,true).cranialPlanning,undefined);
 });
+
+test('versioned policy preserves selected partial treatment and rejects changed harm evidence',()=>{
+ const r=fixture(),c=r.cranialPlanning,row=c.alternatives[0];
+ const policy={schema:'resectionlab.supratentorial-procedure-policy.v1',policyId:'declared-task',policyHash:'bound-policy',available:true,startStage:'post-scalp',requiredCoverage:['brainstem','cerebellum','intracranial'],scenarios:['nominal'],limitations:['Nominal only']};
+ c.schema='resectionlab.cranial-strategy-comparison.v2';c.procedurePolicy=policy;r.cranialPlanningAvailability.procedurePolicy=structuredClone(policy);
+ c.selectionRule='max_treatment_within_harm_bounds';c.stopReason='BOUNDED_INVENTORY_OR_HORIZON_STOP_WITH_RESIDUAL';
+ row.sequenceOutcome.schema='resectionlab.sequence-outcome.v2';row.ledger.neuralRemovedMm3=0;
+ row.sequenceOutcome.dimensions.neuralRemovedMm3={unit:'mm3',status:'source_count',cumulative:0};
+ row.completedFrozenTask=row.goalAssessment.completedFrozenTask=false;row.goalAssessment.reasons=['ORIGINAL_SPATIAL_PROGRESS_BELOW_GOAL'];
+ assert(cranialComparison(r));assert.equal(c.selectedBranchId,'actual-branch');
+ c.procedurePolicy={...policy,policyHash:'changed'};assert.equal(cranialComparison(r),null);
+ c.procedurePolicy=policy;row.sequenceOutcome.dimensions.neuralRemovedMm3.cumulative=null;assert.equal(cranialComparison(r),null);
+});

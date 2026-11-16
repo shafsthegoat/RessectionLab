@@ -200,6 +200,18 @@ def from_case(case, mapping=None):
     affine = case.affine.copy()
     if case.frame == 'LPS+': affine = np.diag([-1., -1., 1., 1.]) @ affine
     cranial_source = {}
+    procedure_adapter = thaw_json(case.metadata).get('surgical_adapter') or {}
+    if 'surgicalProcedurePolicyV1' in properties or procedure_adapter.get('type') == 'generated-engineering-control':
+        generated_refs = bool(case.source_refs) and all(ref.provenance == 'simulated' and
+            ref.uri.startswith('synthetic://') for ref in case.source_refs)
+        cranial_source['procedurePolicySourceClass'] = 'generated-engineering' if generated_refs else 'acquired-or-unknown'
+    if 'surgicalProcedurePolicyV1' in properties:
+        # The procedure declaration is metadata, hence part of caseHash. Bind
+        # the complete case before that declaration to avoid a hash cycle while
+        # retaining image pixels, masks, acquisition references and assumptions.
+        procedure_base = case.to_manifest(include_hash=False)
+        procedure_base['metadata']['surgical_properties'].pop('surgicalProcedurePolicyV1')
+        cranial_source['procedurePolicyBaseCaseHash'] = semantic_digest(procedure_base)
     declarations = [name for name in ('cranialAccessV1', 'cranialMillingV1') if name in properties]
     if declarations:
         # The contract is stored in metadata, which also contributes to the
