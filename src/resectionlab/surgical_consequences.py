@@ -40,6 +40,38 @@ METRICS = {
 PROCEDURE_METRICS = {name: ('mm3', 'min') for name in (
     'boneRemovedMm3', 'nonbonePreparationRemovedMm3', 'neuralRemovedMm3', 'protectedRemovedMm3', 'neuralCutSourceMm3')}
 SOURCE_COUNTS = frozenset(('targetRemovedMm3', 'nonTargetRemovedMm3', 'elapsedSeconds'))
+EXPOSURE_METRICS = ('brainStrainSquaredMm3S', 'brainStressSquaredPa2Mm3S',
+    'thermalPeakC', 'thermalExposureMm3KS', 'bloodGeneratedMm3',
+    'supplyDeficitSeconds', 'drainageDeficitSeconds')
+PROCEDURE_PRIORITY = {
+    'schema': 'resectionlab.procedure-selection-priority.v2',
+    'order': ['declared-hard-bounds', 'maximum-worst-world-target-treatment',
+        'componentwise-neural-and-structure-effects', 'componentwise-supported-exposures',
+        'nonbone-preparation', 'bone', 'modeled-time'],
+    'unresolved': 'Incomparable neural or exposure vectors require explicit unresolved STOP; bone/time cannot resolve them.',
+    'thresholdMeaning': 'Declared engineering bounds only; no clinical weights or thresholds.'}
+
+
+def procedure_priority_choice(branches, values, required):
+    """Prioritize checked outcomes without scalarizing neural/exposure effects."""
+    remaining = list(branches)
+    best = max(values(b, 'targetRemovedMm3') for b in remaining)
+    remaining = [b for b in remaining if values(b, 'targetRemovedMm3') == best]
+    neural = [k for k in ('neuralRemovedMm3', 'neuralCutSourceMm3', 'protectedRemovedMm3') if k in required]
+    neural += sorted(k for k in required if k.startswith('structure:'))
+    for group, label in ((neural, 'neural'), ([k for k in EXPOSURE_METRICS if k in required], 'exposure')):
+        def vector(branch):
+            return tuple(values(branch, key) for key in group)
+        remaining = [b for b in remaining if not any(
+            all(x <= y for x, y in zip(vector(a), vector(b))) and
+            any(x < y for x, y in zip(vector(a), vector(b))) for a in remaining)]
+        if len({vector(b) for b in remaining}) > 1:
+            return None, 'unresolved_' + label + '_tradeoff_stop_with_residual'
+    for metric in ('nonbonePreparationRemovedMm3', 'boneRemovedMm3', 'elapsedSeconds'):
+        if metric in required:
+            best = min(values(b, metric) for b in remaining)
+            remaining = [b for b in remaining if values(b, metric) == best]
+    return sorted(remaining)[0], 'max_treatment_within_harm_bounds'
 
 
 def _metric_spec(name):
@@ -285,25 +317,21 @@ def compare_samples(samples, policy, *, stop_branch, scenario_ids, branch_ids, s
     dominators = {b: [a for a in eligible if a != b and dominates(a, b)] for b in eligible}
     frontier = [b for b in eligible if not dominators[b]]
     selected = frontier[0] if len(frontier) == 1 else stop_branch if stop_valid else None
+    selection_reason = None
     if selection_rule is not None and frontier:
-        # Treatment is maximized only after hard bounds. For equal treatment,
-        # neural and structure removal precede preparation, bone and time.
-        # Every Pareto alternative stays visible; no sum exchanges bone for brain.
-        harm_order = ['neuralRemovedMm3', 'neuralCutSourceMm3'] + sorted(k for k in required if k.startswith('structure:')) + [
-            'protectedRemovedMm3', 'nonbonePreparationRemovedMm3', 'boneRemovedMm3', 'elapsedSeconds']
-        def selection_key(branch):
-            rows = [matrix[branch, world]['vector']['dimensions'] for world in worlds]
-            treatment = min(d['targetRemovedMm3']['incremental'] for d in rows)
-            harm = [max(d[key]['cumulative'] for d in rows) for key in harm_order if key in required]
-            return (-treatment, *harm, branch)
-        selected = min(frontier, key=selection_key)
+        def worst_value(branch, metric):
+            values = [matrix[branch, world]['vector']['dimensions'][metric][objective_scope(metric)] for world in worlds]
+            return min(values) if metric == 'targetRemovedMm3' else max(values)
+        selected, selection_reason = procedure_priority_choice(frontier, worst_value, required)
+        if selected is None and stop_valid:
+            selected = stop_branch
     return {'policy': copy.deepcopy(policy), 'scenarios': worlds, 'feasibleContinuations': eligible,
         'pairedScenarioParetoFront': frontier, 'dominatedBy': dominators, 'violations': reasons,
         'selectedBranchId': selected, 'stopFallback': selected == stop_branch,
         'stopExecutable': stop_valid, 'taskSatisfied': selected in eligible,
         'objectiveScopes': {key: objective_scope(key) for key in policy['objectives']},
-        **({'selectionRule': selection_rule} if selection_rule is not None else {}),
-        'reason': 'max_treatment_within_harm_bounds' if selection_rule is not None and frontier else
+        **({'selectionRule': selection_rule, 'selectionPriority': copy.deepcopy(PROCEDURE_PRIORITY)} if selection_rule is not None else {}),
+        'reason': selection_reason if selection_reason else
             'unique_paired_scenario_frontier' if len(frontier) == 1 else
             'no_executable_stop' if not stop_valid else 'unresolved_tradeoff_stop_with_residual' if frontier else 'no_qualified_continuation_stop_with_residual',
         'dominanceMeaning': 'No worse in every objective in every paired declared world; strictly better in at least one. No scalar weights, averages or clinical probabilities.'}

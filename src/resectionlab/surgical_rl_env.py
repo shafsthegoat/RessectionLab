@@ -720,11 +720,12 @@ class SurgicalRLEnv(gym.Env):
         if self.procedure_enabled and record.get('cranialStages') != self._cranial_stage_record:
             raise ValueError('RL snapshot cranial stages differ')
         candidate=type(self)(self.scene,protection=self.protection,config=self.config,reward_config=self.reward_config,
-            render_mode=self.render_mode,cranial_stages=self._cranial_stage_record)
+            render_mode=self.render_mode,cranial_stages=self._cranial_stage_record, **self._reconstruction_kwargs())
         candidate.reset(seed=0)
         for item in record['attempts']:
             candidate._transition(item['action'],item.get('decodeError'))
             if candidate.attempts[-1]!=item:raise ValueError('RL attempted transition replay differs')
+        candidate._restore_episode_boundary(record)
         if candidate.engine.state_id!=record['stateId'] or candidate.measurements!=record['measurements'] or candidate.total_reward!=record['totalReward'] or candidate.terminated!=record['terminated'] or candidate.truncated!=record['truncated']:
             raise ValueError('RL replay identity or reward ledger differs')
         if self.procedure_enabled:
@@ -756,7 +757,7 @@ class SurgicalRLEnv(gym.Env):
         """Replay a physical prefix and fork the caller's current random streams."""
         if type(position) is not int or not 0<=position<=len(self.attempts):raise ValueError('Invalid attempt position')
         result=type(self)(self.scene,protection=self.protection,config=self.config,reward_config=self.reward_config,
-            render_mode=self.render_mode,cranial_stages=self._cranial_stage_record)
+            render_mode=self.render_mode,cranial_stages=self._cranial_stage_record, **self._reconstruction_kwargs())
         result.reset(seed=0)
         for item in self.attempts[:position]:result._transition(item['action'],item.get('decodeError'))
         result.np_random.bit_generator.state=copy.deepcopy(self.np_random.bit_generator.state)
@@ -770,3 +771,11 @@ class SurgicalRLEnv(gym.Env):
 
     def close(self):
         self.engine=None
+
+    def _reconstruction_kwargs(self):
+        """Specialized evaluation adapters retain their versioned task config."""
+        return {}
+
+    def _restore_episode_boundary(self, record):
+        """Optional external boundary owned by a specialized task wrapper."""
+        return None

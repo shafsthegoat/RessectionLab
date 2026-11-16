@@ -1270,7 +1270,12 @@ export class VolumeRenderer {
       this.planningOverlaySource=interaction.planningOverlay;
       this.planningGroup=interaction.planningOverlay?interactivePlanningGroup(interaction.planningOverlay):null;
       if(this.planningGroup)this.surgicalGroup.add(this.planningGroup);
-      if(this.panes?.anatomy)this.panes.anatomy.dataset.planningRoutes=JSON.stringify(interaction.planningOverlay?.routes.map(r=>r.id)??[]);
+      if(this.panes?.anatomy){
+        this.panes.anatomy.dataset.planningRoutes=JSON.stringify(interaction.planningOverlay?.routes.map(r=>r.id)??[]);
+        this.panes.anatomy.dataset.recordedGeometrySeal=interaction.planningOverlay?.recorded?.geometrySeal??'';
+        this.panes.anatomy.dataset.recordedPolicyHash=interaction.planningOverlay?.recorded?.policyHash??'';
+        this.panes.anatomy.dataset.recordedSelectedBranch=interaction.planningOverlay?.recorded?.selectedBranchId??'';
+      }
     }
     this.clipSurgicalFieldEffects();
     const retained=new Set<string>();

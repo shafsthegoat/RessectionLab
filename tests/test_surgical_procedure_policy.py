@@ -216,6 +216,33 @@ def test_acquired_adapter_cannot_self_assert_generated_or_reviewed_coverage(revi
     assert procedure_admission(acquired)['blockers'][0]['code'] == 'PROCEDURE_ACQUIRED_SOURCE_QUALIFICATION_UNAVAILABLE'
 
 
+@pytest.mark.parametrize('marker', [
+    {'patientId': 'supplied'}, {'patient_id': 'supplied'}, {'source_patient_id': 'supplied'}, {'source_patient': 'supplied'},
+    {'source_manifest': {}}, {'source_collection_hash': 'b'*64},
+    {'adapter': {'patientId': 'supplied'}}, {'adapter': {'patient_id': 'supplied'}}, {'adapter': {'source_patient': 'supplied'}},
+    *[{'adapter': {'type': kind}} for kind in ('nifti', 'nifti-import', 'mesh', 'mesh-derived', 'native-patient')],
+])
+def test_freshly_bound_policy_cannot_override_shared_patient_source_class(marker):
+    from resectionlab.surgical_planning_admission import planning_admission
+    from resectionlab.surgical_procedure_policy import procedure_source_binding
+    original = source()
+    provenance = {**original.source, **marker}
+    unbound = SurgicalScene(original.labels, original.affine, original.regions, provenance, {})
+    raw = copy.deepcopy(original.properties[PROPERTY])
+    raw['sourceBinding'] = procedure_source_binding(unbound)
+    raw['policyHash'] = semantic_digest({k: v for k, v in raw.items() if k != 'policyHash'})
+    contradictory = SurgicalScene(original.labels, original.affine, original.regions, provenance, {PROPERTY: raw})
+    admitted = planning_admission(contradictory)
+    assert admitted['sourceClass'] == 'patient-or-unverified' and not admitted['available']
+    reason = 'PROCEDURE_ACQUIRED_SOURCE_QUALIFICATION_UNAVAILABLE'
+    assert procedure_admission(contradictory)['blockers'][0]['code'] == reason
+    with pytest.raises(ValueError, match=reason):
+        SurgicalEngine(contradictory)
+    from resectionlab.surgical_rl_env import SurgicalRLEnv
+    with pytest.raises(ValueError, match=reason):
+        SurgicalRLEnv(contradictory)
+
+
 def test_observable_memberships_are_explicit_frozen_source_sets_and_protection_is_idempotent():
     scene = source()
     memberships = procedure_source_memberships(scene)

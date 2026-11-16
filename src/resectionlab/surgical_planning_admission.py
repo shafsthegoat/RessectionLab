@@ -5,7 +5,8 @@ from .core import semantic_digest
 SCHEMA = 'resectionlab.planning-admission.v1'
 REQUIRED = 'PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'
 _PATIENT_KEYS = frozenset(('patient', 'sourcePatient', 'patientId', 'sourceManifest',
-    'sourceCollectionHash', 'source_patient', 'source_manifest', 'source_collection_hash'))
+    'sourceCollectionHash', 'source_patient', 'source_manifest', 'source_collection_hash',
+    'patient_id', 'source_patient_id', 'sourcePatientId'))
 
 
 def _acquired_markers(source):
@@ -61,6 +62,8 @@ def source_classification(scene):
         return 'patient-or-unverified'
     if (source.get('evidenceClass') == 'generated-engineering' or
             source.get('kind') in ('generated-control', 'engineering-control') or
+            isinstance(source.get('adapter'), dict) and
+            source['adapter'].get('type') == 'generated-engineering-control' or
             source.get('kind') == 'public-planning-observation' and
             source.get('track') == 'annotation-assisted-inactive-access-v1'):
         return 'generated-engineering'

@@ -239,10 +239,11 @@ def _harm_key(node):
     structures = {f'structure:{name}:{effect}': q.get('cumulative')
         for field,effect in (('structureRemovedMm3','removedMm3'),('structureCutSourceMm3','cutSourceMm3'))
         for name,q in dimensions.get(field, {}).items()}
+    from .surgical_consequences import EXPOSURE_METRICS
     return (value('neuralRemovedMm3'), value('neuralCutSourceMm3'),
         *[float('inf') if v is None else v for _,v in sorted(structures.items())],
         value('protectedRemovedMm3'),
-        value('supplyDeficitSeconds'), value('drainageDeficitSeconds'),
+        *[value(name) for name in EXPOSURE_METRICS],
         value('nonbonePreparationRemovedMm3',node.ledger['preparationNonboneRemovedMm3']),
         node.ledger['boneRemovedMm3'], node.ledger['modeledElapsedSeconds'])
 
@@ -251,6 +252,18 @@ def _retain_beam(children, beam_width):
     """Reserve treatment, lower-harm and delayed-preparation continuations."""
     frontier = [n for n in children if not any(_dominates(o, n) for o in children)]
     ordered = sorted(frontier, key=_key)
+    # Reserve different neural/exposure vectors before a second lower-burden
+    # representative of the same vector. Otherwise bone/time can erase an
+    # unresolved tradeoff before the canonical final comparison sees it.
+    representatives, duplicates, seen = [], [], set()
+    for node in ordered:
+        harm = _harm_key(node)
+        signature = (node.goal_assessment['originalTargetTreatmentMm3'], harm[:-3])
+        if signature in seen:
+            duplicates.append(node)
+        else:
+            seen.add(signature); representatives.append(node)
+    ordered = representatives + duplicates
     retained = ordered[:1]
     lower_harm = min(frontier, key=lambda n: (*_harm_key(n), _key(n)))
     if not any(n is lower_harm for n in retained):
@@ -606,7 +619,7 @@ def checked_joint_sequence_search(engine, route=None, *, propose, limits, goal,
             'STOP_WITH_RESIDUAL' if selected.goal_assessment['creditedOriginalTargetCells'] > 0 else 'STOP')
             if selected is not None else 'CHECKED_PROGRESS_ONLY' if progress else 'STOP',
         'selectedProposalIds': [r['proposalId'] for r in selected.path] if selected else [],
-        'preference': 'Exclude native or source-policy violations first. Retain owned treatment credit against the full original target, separate neural, bone, B/P/W, time and available exposure Pareto outcomes. Reserve a beam slot for a lower-neural-loss continuation. Different evidence availability is incomparable; unavailable values never become zero. Among admissible frontier members prefer greater original-target treatment, then less neural loss, work non-target loss, preparation loss, bone and time, in that order; no combined bone/neural tie-break or clinical optimality claim.',
+        'preference': 'Exclude native or source-policy violations first. Retain owned treatment credit against the full original target, separate neural, bone, B/P/W, time and available exposure Pareto outcomes. Reserve a beam slot for a lower-neural-loss continuation. Different evidence availability is incomparable; unavailable values never become zero. Among admissible frontier members prefer greater original-target treatment, then componentwise neural/structure effects and supported exposures before preparation, bone and time; incomparable neural/exposure effects require explicit unresolved STOP. Distinct harm vectors receive beam slots before duplicate burden variants. Finite beam truncation is a computation limit, never proof of clinical optimality.',
         'openingConfigurationScope': 'The source-bound opening and anatomy contract are fixed. Proposal programs may choose supported physical opening, preparation, tool configuration and work order; this search does not invent another source window.',
         'proposalScope': 'Caller-supplied source geometry/native skill inventory; not automatic patient access generation. A declarative milling_opening spec invokes the bounded adaptive checked skill as one search expansion, including all internal contact/debris batches on this same policy and meter.',
         'costScope': 'All search previews, commits, discarded candidates and exit probes share the original meter. Later export/verification replay must use that same meter and be reported separately; the caller must reserve it prospectively.',

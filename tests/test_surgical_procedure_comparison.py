@@ -49,6 +49,40 @@ def test_no_progress_is_not_a_successful_continuation_and_stop_retains_residual(
     assert result['violations']['passive-observation'][0]['reason'] == 'no_additional_target_treatment'
 
 
+def exposure_comparison(exposures):
+    baseline = SurgicalEngine(source())
+    template = consequence_vector(baseline, baseline)
+    policy = procedure_comparison_policy(baseline.scene)
+    for c in policy['constraints']:
+        if c['metric'] == 'boneRemovedMm3': c['value'] = 200.
+    for metric in ('supplyDeficitSeconds', 'drainageDeficitSeconds'):
+        policy['objectives'].append(metric); policy['requiredMetrics'].append(metric)
+    rows = []
+    for branch, target, bone, supply, drainage in [('STOP', 0., 0., 0., 0.), *exposures]:
+        vector = copy.deepcopy(template)
+        for key, value in dict(targetRemovedMm3=target, boneRemovedMm3=bone,
+                supplyDeficitSeconds=supply, drainageDeficitSeconds=drainage).items():
+            vector['dimensions'][key].update(cumulative=value, incremental=value,
+                status='modeled_unvalidated' if key.endswith('Seconds') else 'source_count')
+        rows.append(dict(branchId=branch, scenarioId='nominal', vector=vector))
+    return compare_samples(rows, policy, stop_branch='STOP', scenario_ids=['nominal'],
+        branch_ids=[r['branchId'] for r in rows], selection_rule='max_treatment_within_harm_bounds')
+
+
+def test_arithmetic_exposure_witness_cannot_trade_twenty_deficit_seconds_for_one_bone_mm3():
+    result = exposure_comparison([('bone-saving', 10., 1., 20., 0.), ('no-deficit', 10., 2., 0., 0.)])
+    assert result['selectedBranchId'] == 'no-deficit'
+    assert set(result['pairedScenarioParetoFront']) == {'bone-saving', 'no-deficit'}
+    assert result['selectionPriority']['schema'].endswith('.v2')
+
+
+def test_incomparable_exposure_vectors_require_explicit_unresolved_result():
+    result = exposure_comparison([('supply', 10., 1., 20., 0.), ('drainage', 10., 2., 0., 20.)])
+    assert result['selectedBranchId'] == 'STOP'
+    assert result['reason'] == 'unresolved_exposure_tradeoff_stop_with_residual'
+    assert len(result['pairedScenarioParetoFront']) == 2 and not result['taskSatisfied']
+
+
 def test_versioned_comparison_remeasures_structure_counts_when_saved_report_is_resealed():
     import pytest
     from resectionlab.core import semantic_digest

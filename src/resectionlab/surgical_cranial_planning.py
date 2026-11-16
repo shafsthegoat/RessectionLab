@@ -286,6 +286,13 @@ def compare_cranial_strategies(base_scene, record, *, check=lambda: None,
             'stopReason': _sequence_stop_reason(goal,procedure),
             'snapshotHash': semantic_digest(engine.snapshot()), 'nativeHistory': copy.deepcopy(engine.history),
             'admittedPatientTask': False}
+        if procedure:
+            from .surgical_cranial_geometry import recorded_cranial_geometry
+            root = next(r for r in rows if r['id'] == item['rootId'])
+            row['recordedGeometry'] = recorded_cranial_geometry(base_scene, engine.scene,
+                root['sourceSnapshot'], engine.snapshot(), row, available['sourceStateId'])
+            from .surgical_sequential_task import COMMON_CONFIG, endpoint_assessment
+            row['endpointAssessment'] = endpoint_assessment(engine, COMMON_CONFIG, stopped=True)
         branches.append((engine, row)); alternatives.append(row)
     selected_state = result['selected']['engine'].state_id if result['selected'] is not None else None
     report = {'schema': PROCEDURE_SCHEMA if procedure else SCHEMA, 'sourceSceneId': base_scene.identity,
@@ -467,6 +474,15 @@ def validate_cranial_report(base_scene, record, report):
             _require(row['ledger'].get('neuralRemovedMm3') == direct['neuralRemovedMm3']['cumulative'] and
                 row['ledger'].get('structureRemovedMm3') == {k:v['cumulative'] for k,v in direct['structureRemovedMm3'].items()},
                 'REPORT_ANATOMICAL_LEDGER_CHANGED')
+            if 'recordedGeometry' in row:
+                from .surgical_cranial_geometry import recorded_cranial_geometry
+                _require(row['recordedGeometry'] == recorded_cranial_geometry(base_scene, scene,
+                    roots[root_id]['sourceSnapshot'], snapshot, row, report['sourceStateId']),
+                    'REPORT_RECORDED_GEOMETRY_CHANGED')
+            if 'endpointAssessment' in row:
+                from .surgical_sequential_task import COMMON_CONFIG, endpoint_assessment
+                _require(row['endpointAssessment'] == endpoint_assessment(endpoint, COMMON_CONFIG, stopped=True),
+                    'REPORT_COMMON_ENDPOINT_CHANGED')
             policy = scene.properties[PROPERTY]
             _require(direct['neuralRemovedMm3']['cumulative'] <= policy['maximumNeuralRemovalMm3']+1e-9 and
                 direct['boneRemovedMm3']['cumulative'] <= policy['maximumBoneRemovalMm3']+1e-9 and

@@ -478,3 +478,15 @@ test('planning display hides only withdrawn tools while retaining canonical pose
   r.setSurgical({...input,planningOverlay,preview});assert.equal(r.surgicalSlots.size,1);assert(r.surgicalSlots.has('left'));assert.deepEqual(input.view,before);
   r.setSurgical(input);assert.equal(r.surgicalSlots.size,2);assert.deepEqual(input.view,before);
 });
+
+test('recorded cranial guides render exact accepted polylines and overlapping source memberships without draft region spheres',()=>{
+ const r=renderer(),input=interaction(),pose=position=>({position,quaternion:[0,0,0,1]});input.view.metrics={};const before=structuredClone(input.view);r.panes={anatomy:{dataset:{}}};
+ const route={id:'branch:7',label:'Checked work',outsidePose:pose([0,0,0]),entryPose:pose([0,0,0]),targetPose:pose([9,9,9]),pointsRasMm:[[1,2,3],[2,2,4],[3,2,5]],selected:true,colorIndex:1,metrics:{},actionProgram:[],scope:'Accepted native path'};
+ const planningOverlay={binding:'bound-source',constraints:{target:{centerMm:[9,9,9],radiusMm:0},entry:{centerMm:[0,0,0],radiusMm:0},tool:{instrument:'cusa',radiusMm:1.5},requiredEvidence:[],candidateCount:2,nonTargetClearanceMm:0},routes:[route],selectedId:null,limitingStructures:[],recorded:{comparisonSeal:'comparison',geometrySeal:'geometry',policyHash:'policy',selectedBranchId:'branch',scope:'Generated',structures:[{id:'motor-cortex',pointsRasMm:[[2,2,4]]},{id:'corticospinal-tract',pointsRasMm:[[2,2,4]]}],targetPointsRasMm:[[3,2,5]],residualPointsRasMm:[[4,2,5]]}};
+ r.setSurgical({...input,planningOverlay});const group=r.planningGroup;
+ assert.deepEqual([...group.getObjectByName('approach:branch:7').geometry.attributes.position.array],[1,2,3,2,2,4,3,2,5]);
+ assert.equal(group.getObjectByName('planning-target-region'),undefined);assert.equal(group.getObjectByName('planning-entry-region'),undefined);
+ const cortex=group.getObjectByName('declared-source:motor-cortex'),cst=group.getObjectByName('declared-source:corticospinal-tract');assert.deepEqual([...cortex.geometry.attributes.position.array],[2,2,4]);assert.deepEqual([...cst.geometry.attributes.position.array],[2,2,4]);assert(cst.renderOrder>cortex.renderOrder);assert(cortex.material.size>cst.material.size);
+ assert.equal(r.panes.anatomy.dataset.recordedPolicyHash,'policy');assert.equal(r.panes.anatomy.dataset.recordedSelectedBranch,'branch');assert.equal(r.panes.anatomy.dataset.recordedGeometrySeal,'geometry');assert.deepEqual(input.view,before);
+ r.setSurgical(input);assert.equal(r.panes.anatomy.dataset.recordedGeometrySeal,'');assert.equal(r.panes.anatomy.dataset.recordedSelectedBranch,'');
+});

@@ -125,6 +125,11 @@ def make_procedure_policy(scene, *, policy_id, evidence, structures,
 def _validated(scene):
     """Return a checked immutable-source declaration or raise a specific code."""
     scene.require_cache_source()
+    # Admission and policy validation must classify the same immutable source.
+    # Do this before the parsed-policy cache, including its CaseData proof.
+    from .surgical_planning_admission import source_classification
+    if PROPERTY in scene.properties and source_classification(scene) != 'generated-engineering':
+        raise ValueError('PROCEDURE_ACQUIRED_SOURCE_QUALIFICATION_UNAVAILABLE')
     cached = getattr(scene, '_procedure_policy_parsed', None)
     if cached is not None:
         return cached
@@ -149,22 +154,6 @@ def _validated(scene):
     if raw['evidence'].get('reviewStatus') not in ('reviewed', 'generated-engineering'):
         raise ValueError('PROCEDURE_SOURCE_REVIEW_REQUIRED')
     review_status = raw['evidence']['reviewStatus']
-    adapter = scene.source.get('adapter') or {}
-    generated = (scene.source.get('evidenceClass') == 'generated-engineering' or
-        scene.source.get('kind') in ('generated-control', 'engineering-control') or
-        (type(adapter) is dict and adapter.get('type') == 'generated-engineering-control'))
-    acquired = (type(adapter) is dict and (adapter.get('type') in (
-        'native-patient-research-derivative', 'native-patient-source-inspection') or
-        any(key in adapter for key in ('sourcePatient', 'sourceManifest', 'sourceCollectionHash'))))
-    acquired |= any(key in scene.source for key in ('sourcePatient', 'sourceManifest', 'sourceCollectionHash', 'patient'))
-    acquired |= scene.source.get('procedurePolicySourceClass') == 'acquired-or-unknown'
-    if 'caseHash' in scene.source and scene.source.get('procedurePolicySourceClass') != 'generated-engineering':
-        acquired = True
-    if acquired or not generated:
-        # Existing source receipts do not yet join complete intracranial and
-        # critical coverage to this new task. A caller-set review string or
-        # generated marker cannot supply that missing independent qualification.
-        raise ValueError('PROCEDURE_ACQUIRED_SOURCE_QUALIFICATION_UNAVAILABLE')
     intracranial = _cells(raw.get('intracranialCells'), scene, 'intracranial_coverage', nonempty=True)
     observed = _cells(raw.get('observedCells'), scene, 'observed_coverage', nonempty=True)
     if not intracranial <= observed:
