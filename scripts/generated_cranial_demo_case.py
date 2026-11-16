@@ -170,7 +170,8 @@ def cleanup_program():
     return actions
 
 
-def build_generated_cranial_case(neural_limit=0., *, cerebellar_shortcut=False):
+def build_generated_cranial_case(neural_limit=0., *, cerebellar_shortcut=False,
+        include_cleanup=True, endpoint_fluid_source=False):
     """Prospective anatomy/route inventory; no expected outcome enters search."""
     from resectionlab.surgical_engine import SurgicalEngine
     from resectionlab.surgical_craniotomy import binding, contract_hash
@@ -189,6 +190,14 @@ def build_generated_cranial_case(neural_limit=0., *, cerebellar_shortcut=False):
     regions = template.scene.regions + [dict(id=4, name='Declared generated neural tissue', material='soft_tissue')]
     props = copy.deepcopy(template.scene.properties)
     opening = props.pop('cranialAccessV1')
+    if endpoint_fluid_source:
+        # Supplied initial field, distinct from the clean source. Native field
+        # ticks deposit this nonbleeding reservoir; no unsupported irrigation
+        # tool is added to the cranial-stage inventory.
+        props['bleedingSources'] = [{'id':'generated-nonbleeding-fluid-reservoir',
+            'cell':int(np.ravel_multi_index((21,21,50),labels.shape)),
+            'rateMm3PerSecond':0., 'reservoirMm3':1., 'bleedingActive':False,
+            'coagulationExposure':1.}]
     case = CaseData(case_id='generated-structure-aware-approaches', mri=labels.astype(np.float32),
         compartments={r['name']: labels == r['id'] for r in regions}, affine=template.scene.affine,
         source_refs=(SourceRef('generated', 'synthetic://structure-aware-approaches', provenance='simulated'),),
@@ -245,7 +254,9 @@ def build_generated_cranial_case(neural_limit=0., *, cerebellar_shortcut=False):
         work_cells=sorted([*stage.work_cells,flat(neural_position)]), evidence=stage.as_dict()['evidence'])
     native = SurgicalEngine(scene, protection=native.protection, guard_config=native.guard_config, cranial_stages=contract)
     opening_actions = bone_actions(contour)
-    prep = preparation_program(native,contract,contour)[len(opening_actions):] + cleanup_program() + [request('exchange',instrument='cusa'), request('place',pose=pose())]
+    prep = preparation_program(native,contract,contour)[len(opening_actions):]
+    if include_cleanup:prep += cleanup_program()
+    prep += [request('exchange',instrument='cusa'), request('place',pose=pose())]
     center = base.points(sorted(contract.original_target_cells)).mean(axis=0)
     routes = [{'id':name, 'motion':request('apply',pose=pose(float(center[0]+offset),float(center[1]),66.5),duration=30.)}
         for name,offset in [('central',0.),('lateral',-1.5)]]
@@ -261,3 +272,80 @@ def build_generated_cranial_case(neural_limit=0., *, cerebellar_shortcut=False):
     record = {'mapping':regions,'branches':{'main':common},'branchId':'main','position':0,
         'parents':{'main':None},'timeline':{'main':[]},FIELD:create_registry(base,roots)}
     return case, base, record
+
+
+def add_translated_opening(base, record, *, x_offset=-1):
+    """A second generated source window, with unchanged anatomy and harm caps.
+
+    The existing 285 mm³ contour/flap is translated one source cell. Its real
+    cut and suction geometry move with it; membrane and target stay fixed.
+    Feasibility is determined by native Generate, never by this declaration.
+    """
+    from resectionlab.surgical_cranial_planning_roots import FIELD, candidate_scene, create_registry
+    from resectionlab.surgical_cranial_stages import freeze_cranial_stage_contract
+    if type(x_offset) is not int or x_offset not in (-1,1):
+        raise ValueError('One declared source-cell translation required')
+    registry=thaw_json(record[FIELD]);original=registry['roots'][0]
+    raw=copy.deepcopy(original['openingContract']);labels=base.labels
+    contour=[pose(x+x_offset,y,58.3) for x,y in ((26,26),(38,26),(38,38),(26,38),(26,26))]
+    grid=GeometryScene(np.zeros(base.shape,bool),base.affine);kerf=set()
+    for start,end in zip(contour,contour[1:]):
+        points=capsule_voxel_indices(grid,start['position'],end['position'],2.)
+        ids=np.ravel_multi_index(points.T,base.shape)
+        kerf.update(map(int,ids[labels.ravel()[ids]==1]))
+    flap=set()
+    for cell in raw['flapCells']:
+        point=list(np.unravel_index(cell,base.shape));point[0]+=x_offset
+        flap.add(int(np.ravel_multi_index(point,base.shape)))
+    bone=set(map(int,np.flatnonzero(labels==1)))
+    raw.update(windowCells=sorted(flap|kerf),flapCells=sorted(flap),kerfCells=sorted(kerf),
+        retainedSkullCells=sorted(bone-flap-kerf))
+    raw['entry']['centerRasMm'][0]+=x_offset
+    raw.update(binding(base));raw['contentHash']=contract_hash(raw)
+    scene=candidate_scene(base,'cranialAccessV1',raw);native=SurgicalEngine(scene)
+    prior=original['sourceSnapshot']['cranialStagesContract']
+    stage=freeze_cranial_stage_contract(native,membrane_cells=prior['membraneCells'],
+        retained_membrane_cells=prior['retainedMembraneCells'],membrane_anchor_cells=prior['membraneAnchorCells'],
+        work_cells=prior['workCells'],evidence=prior['evidence'])
+    native=SurgicalEngine(scene,protection=native.protection,guard_config=native.guard_config,cranial_stages=stage)
+    planning=copy.deepcopy(original['planning']);planning['openingSkill']['actions']=bone_actions(contour)
+    translating=False
+    for command in planning['preparationActions']:
+        if command['operation']=='exchange':translating=command.get('instrument')=='frazier_suction'
+        if translating:
+            for position in ([command['pose']] if 'pose' in command else command.get('path',())):
+                position['position'][0]+=x_offset
+    root={'id':'translated-opening','label':f'Translated superior opening ({x_offset:+d} mm)',
+        'openingProperty':'cranialAccessV1','openingContract':raw,'sourceSnapshot':native.snapshot(),'planning':planning}
+    declarations=[{k:v for k,v in r.items() if k not in ('sceneId','rootSeal')} for r in registry['roots']]
+    record[FIELD]=create_registry(base,[*declarations,root],registry['branchRoots'])
+    return record
+
+
+def add_lateral_entry_root(base,record):
+    """Two source entry contracts, one shared window and distinct work paths.
+
+    This bounded alternative preserves the original executable opening after a
+    translated-window attempt proved unproductive. It makes no claim of two
+    different bone windows or a physical vascular-exposure experiment.
+    """
+    from resectionlab.surgical_cranial_planning_roots import FIELD,candidate_scene,create_registry
+    from resectionlab.surgical_cranial_stages import freeze_cranial_stage_contract
+    registry=thaw_json(record[FIELD]);original=registry['roots'][0]
+    first={k:copy.deepcopy(v) for k,v in original.items() if k not in ('sceneId','rootSeal')}
+    first['label']='Central source entry and work path'
+    first['planning']['workRoutes']=[r for r in first['planning']['workRoutes'] if r['id']=='central']
+    raw=copy.deepcopy(original['openingContract']);raw['entry']['centerRasMm'][0]-=1.5
+    raw.update(binding(base));raw['contentHash']=contract_hash(raw)
+    scene=candidate_scene(base,'cranialAccessV1',raw);native=SurgicalEngine(scene)
+    prior=original['sourceSnapshot']['cranialStagesContract']
+    stage=freeze_cranial_stage_contract(native,membrane_cells=prior['membraneCells'],
+        retained_membrane_cells=prior['retainedMembraneCells'],membrane_anchor_cells=prior['membraneAnchorCells'],
+        work_cells=prior['workCells'],evidence=prior['evidence'])
+    native=SurgicalEngine(scene,protection=native.protection,guard_config=native.guard_config,cranial_stages=stage)
+    planning=copy.deepcopy(original['planning'])
+    planning['workRoutes']=[r for r in planning['workRoutes'] if r['id']=='lateral']
+    second={'id':'lateral-entry','label':'Lateral source entry and work path',
+        'openingProperty':'cranialAccessV1','openingContract':raw,'sourceSnapshot':native.snapshot(),'planning':planning}
+    record[FIELD]=create_registry(base,[first,second],registry['branchRoots'])
+    return record

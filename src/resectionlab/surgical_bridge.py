@@ -530,6 +530,9 @@ def dispatch(session, operation, args, request, progress):
         full = SurgicalEngine.restore(scene, record['branches'][record['branchId']], check=request.check,
             use_cache=bool(record.get('fullCase')), verified_cache=replay_cache.verified_cache
             if getattr(session, 'surgical_cache_root', None) is not None else None)
+        if record.get('sequentialEpisodes') is not None:
+            from .surgical_recorded_sequential import validate_episode_record
+            validate_episode_record(scene, record, identity, check=request.check)
         engine, timeline = replay_cache.seek(full, record['branches'][record['branchId']], record['position'], check=request.check, include_history=True)
         record.setdefault('timeline', {})[record['branchId']] = timeline
     def owner_for_branch(branch_id, current_engine):
@@ -1053,6 +1056,8 @@ def dispatch(session, operation, args, request, progress):
                 if (value := evidence.get(field)) is not None)
             from .surgical_interactive_workspace import protected_branches
             planned_ids.update(protected_branches(record))
+            planned_ids.update(r['branchId'] for r in (record.get('sequentialEpisodes') or {}).get('episodes', []))
+            if record.get('sequentialEpisodes') is not None: planned_ids.add('main')
             from .surgical_strategy_workspace import protected_branches as strategy_branches
             planned_ids.update(strategy_branches(record))
             from .surgical_preparation_workspace import protected_branches as preparation_branches
@@ -1098,6 +1103,9 @@ def dispatch(session, operation, args, request, progress):
         inherit_root(record['branchId'], parent['branchId'])
         record['position'] = len(engine.actions)
         record.setdefault('timeline', {})[record['branchId']] = copy.deepcopy(engine.history)
+    if record.get('sequentialEpisodes') is not None:
+        from .surgical_recorded_sequential import validate_episode_boundary
+        validate_episode_boundary(engine, record)
     full_case = bool(record.get('fullCase'))
     shown_view = engine.view(_state_id=verified_display_state_id, include_history=not full_case)
     shown_timeline = record.get('timeline', {}).get(record['branchId'], engine.history)

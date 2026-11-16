@@ -161,6 +161,7 @@ def consequence_vector(engine, baseline):
     procedure = PROPERTY in engine.scene.properties
     structure_ids = []
     if procedure:
+        from .surgical_sequential_task import endpoint_physical_state
         complete = outcomes['sequence']['dimensions']
         for name in PROCEDURE_METRICS:
             d = complete[name]
@@ -176,7 +177,8 @@ def consequence_vector(engine, baseline):
         'stateId': engine.state_id, 'baselineStateId': baseline.state_id,
         'prefixActions': len(baseline.actions), 'nativeActions': len(engine.actions),
         'actionHash': semantic_digest(engine.actions),
-        'cleanupComplete': not engine.state['holds'] and not any(s['active'] or s['inserted'] or s['grip'] for s in engine.state['slots'].values()),
+        'cleanupComplete': (endpoint_physical_state(engine)['cleanupComplete'] if procedure else
+            not engine.state['holds'] and not any(s['active'] or s['inserted'] or s['grip'] for s in engine.state['slots'].values())),
         'residualTargetMm3': outcomes['target'].get('residualMm3'),
         'dimensions': dimensions, 'clinicalValidation': False,
         'scope': 'Source annotation counts and explicitly modeled consequences; not injury, histological margins or neurological outcome.'}
@@ -477,6 +479,7 @@ def validate_saved_comparison(scene, record, report, *, declaration=None):
                 options['cranial_stages'] = item['cranialStagesContract']
             shell = SurgicalEngine(scene, **options)
             shell.state = copy.deepcopy(item['checkpoint']['state'])
+            shell.actions = copy.deepcopy(item['actions'])
             shell._protection_contract = item.get('protectionContract')
             if shell.state_id != item['stateId']:
                 raise ValueError('Consequence checkpoint content differs from state identity')
@@ -501,5 +504,8 @@ def validate_saved_comparison(scene, record, report, *, declaration=None):
                         for field in ('status', 'cumulative', 'incremental')):
                     raise ValueError('Nominal direct structure consequence differs from source checkpoint')
         cleanup = not state['holds'] and not any(s['active'] or s['inserted'] or s['grip'] for s in state['slots'].values())
+        if vector['schema'] == PROCEDURE_VECTOR_SCHEMA:
+            from .surgical_sequential_task import endpoint_physical_state
+            cleanup = endpoint_physical_state(endpoint_shell)['cleanupComplete']
         if vector['cleanupComplete'] != cleanup:
             raise ValueError('Consequence cleanup differs from native checkpoint')

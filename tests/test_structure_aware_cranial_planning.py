@@ -10,7 +10,7 @@ from resectionlab.surgical_scene import from_case
 from resectionlab.surgical_procedure_policy import PROPERTY, make_procedure_policy
 
 
-def procedure_case(neural_limit=0., *, cerebellar_shortcut=False):
+def procedure_case(neural_limit=0., *, cerebellar_shortcut=False, cleanup=True):
     """Prospective anatomy/route inventory; no expected outcome enters search."""
     from test_surgical_membrane_transport import joint_source, bone_actions
     from test_surgical_joint_cranial_skills import preparation_program
@@ -75,7 +75,11 @@ def procedure_case(neural_limit=0., *, cerebellar_shortcut=False):
         work_cells=sorted([*stage.work_cells,flat(neural_position)]), evidence=stage.as_dict()['evidence'])
     native = SurgicalEngine(scene, protection=native.protection, guard_config=native.guard_config, cranial_stages=contract)
     opening_actions = bone_actions(contour)
-    prep = preparation_program(native,contract,contour)[len(opening_actions):] + [request('exchange',instrument='cusa'), request('place',pose=pose())]
+    prep = preparation_program(native,contract,contour)[len(opening_actions):]
+    if cleanup:
+        from scripts.generated_cranial_demo_case import cleanup_program
+        prep += cleanup_program()
+    prep += [request('exchange',instrument='cusa'), request('place',pose=pose())]
     center = base.points(sorted(contract.original_target_cells)).mean(axis=0)
     routes = [{'id':name, 'motion':request('apply',pose=pose(float(center[0]+offset),float(center[1]),66.5),duration=30.)}
         for name,offset in [('central',0.),('lateral',-1.5)]]
@@ -201,7 +205,8 @@ def test_supported_exposure_tradeoff_survives_canonical_consequence_selection(mo
     nodes=[];vectors={}
     for tag,target,peak in [('stop',0.,37.),('more-treatment',101.,50.),('less-exposure',100.,37.)]:
         node=SimpleNamespace(exited=SimpleNamespace(scene=baseline.scene,tag=tag),
-            goal_assessment={'originalTargetTreatmentMm3':target})
+            goal_assessment={'originalTargetTreatmentMm3':target, 'endpointAssessment':{
+                'terminated':True,'truncated':False,'validWithdrawal':True,'classification':'valid-stop-with-residual'}})
         vectors[tag]=copy.deepcopy(template)
         vectors[tag]['dimensions']['thermalPeakC'].update(status='modeled_unvalidated',cumulative=peak,incremental=peak-37.,reason=None)
         nodes.append(node)

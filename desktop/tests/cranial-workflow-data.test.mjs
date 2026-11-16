@@ -37,3 +37,26 @@ test('versioned policy preserves selected partial treatment and rejects changed 
  c.procedurePolicy={...policy,policyHash:'changed'};assert.equal(cranialComparison(r),null);
  c.procedurePolicy=policy;row.sequenceOutcome.dimensions.neuralRemovedMm3.cumulative=null;assert.equal(cranialComparison(r),null);
 });
+
+function canonical(){
+ const r=fixture(),c=r.cranialPlanning,row=c.alternatives[0];c.schema='resectionlab.cranial-strategy-comparison.v3';
+ const e={schema:'resectionlab.sequential-task-config.v1',configHash:'shared-config',classification:'successful-treatment',completedTask:true,completeOriginalTargetRemoval:false,validWithdrawal:true,cleanupComplete:true,pending:[],fluidMm3:0,debrisMm3:0,terminated:true,truncated:false};
+ Object.assign(row,{candidateKey:'checked-program',validStop:true,recommendationEligible:true,endpointAssessment:e});row.goalAssessment.endpointAssessment=structuredClone(e);
+ c.endpointContract={schema:'resectionlab.canonical-cranial-endpoint.v1',configHash:'shared-config'};
+ c.selectionEvidence={schema:'resectionlab.opening-forest-priority.v1',candidateCount:1,eligibleCount:1,selectedCandidateKey:'checked-program',reason:'max_treatment_within_harm_bounds',candidates:[{candidateKey:'checked-program',rootId:row.rootId,sceneId:row.sceneId,finalStateId:row.finalStateId,eligible:true}]};return r;
+}
+test('canonical endpoint and complete-forest certificate bind adapter recommendation',()=>{
+ const r=canonical();assert(cranialComparison(r));assert(cranialWorkflowAlternative(r.cranialPlanning.alternatives[0],'actual-branch').recommended);
+ for(const change of [c=>delete c.endpointContract,c=>c.selectionEvidence.candidateCount++,c=>c.selectionEvidence.selectedCandidateKey='other',c=>c.selectionEvidence.candidates[0].eligible=false,c=>c.alternatives[0].candidateKey='other']){const altered=canonical();change(altered.cranialPlanning);assert.equal(cranialComparison(altered),null);}
+});
+test('dirty or truncated canonical endpoint cannot retain an old completed flag',()=>{
+ for(const kind of ['debris','fluid','truncated']){const r=canonical(),row=r.cranialPlanning.alternatives[0],e=row.endpointAssessment;e.completedTask=false;e.classification=kind==='truncated'?'truncated':'in-progress';e.truncated=kind==='truncated';e.terminated=false;if(kind!=='truncated'){e.cleanupComplete=false;e.validWithdrawal=false;e.pending=[kind];e[kind+'Mm3']=1;}assert.equal(cranialComparison(r),null);}
+});
+test('clean canonical STOP with residual can be selected without becoming completed treatment',()=>{
+ const r=canonical(),row=r.cranialPlanning.alternatives[0];row.completedFrozenTask=row.goalAssessment.completedFrozenTask=false;row.goalAssessment.reasons=['ORIGINAL_SPATIAL_PROGRESS_BELOW_GOAL'];row.endpointAssessment.completedTask=false;row.endpointAssessment.classification='valid-stop-with-residual';
+ assert(cranialComparison(r));assert(cranialWorkflowAlternative(row,'actual-branch').recommended);
+ r.cranialPlanning.selectedBranchId=null;r.cranialPlanning.decision='STOP';r.cranialPlanning.selectionEvidence.selectedCandidateKey=null;r.cranialPlanning.selectionEvidence.reason='unresolved_exposure_tradeoff_stop_with_residual';assert(cranialComparison(r));
+});
+test('historical comparisons retain inspection quantities and never imply current recommendation',()=>{
+ const original=fixture(),c=cranialComparison(original);assert(c.historicalInspectionOnly);assert.equal(c.selectedBranchId,null);assert.equal(c.historicalSelectedBranchId,'actual-branch');assert(!c.alternatives[0].completedFrozenTask);assert(!cranialWorkflowAlternative(c.alternatives[0],'actual-branch').recommended);assert.equal(c.alternatives[0].goalAssessment.originalTargetTreatmentMm3,10);assert.equal(original.cranialPlanning.selectedBranchId,'actual-branch');
+});

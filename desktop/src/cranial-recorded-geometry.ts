@@ -30,13 +30,13 @@ export function checkedCranialGeometry(response:SurgicalResponse,row:NonNullable
 }
 export function cranialRecordedOverlay(response:SurgicalResponse|null,view:SurgicalView|null):InteractivePlanningOverlay|undefined {
   if(!response||!view||response.view!==view)return;
-  const comparison=cranialComparison(response);if(!comparison||comparison.schema!=='resectionlab.cranial-strategy-comparison.v2')return;
+  const comparison=cranialComparison(response);if(!comparison||!['resectionlab.cranial-strategy-comparison.v2','resectionlab.cranial-strategy-comparison.v3'].includes(comparison.schema))return;
   const current=comparison.alternatives.find(r=>r.branchId===response.branchId);
   // The intact common checkpoint or an exact saved branch/replay prefix owns
   // the overlay. A user-edited continuation cannot retain recorded guides.
   const source=response.branchId===comparison.sourceBranchId&&view.scene.sceneId===comparison.sourceSceneId&&view.stateId===comparison.sourceStateId&&response.position===0;
   if(!source&&(!current||view.scene.sceneId!==current.sceneId||response.position>current.nativeActions||(!response.playback&&view.stateId!==current.finalStateId&&view.stateId!==current.recordedGeometry?.rootSourceStateId&&!current.recordedGeometry?.acceptedStateIds?.includes(view.stateId))))return;
-  const selected=current??comparison.alternatives.find(r=>r.branchId===comparison.selectedBranchId);
+  const selected=current??comparison.alternatives.find(r=>r.branchId===(comparison.historicalInspectionOnly?comparison.historicalSelectedBranchId:comparison.selectedBranchId));
   if(!selected)return;
   const g=checkedCranialGeometry(response,selected);if(!g)return;
   const routes:InteractivePlanningRoute[]=[];

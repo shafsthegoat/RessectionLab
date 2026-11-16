@@ -1,0 +1,1394 @@
+{
+  "schema": "resectionlab.canonical-planning-endpoint-manifest.v1",
+  "baseCommit": "6e04f98c0ac512dc932dc2aaf993df9e9ebc561f",
+  "branch": "shaf/structure-aware-harm-v1",
+  "scope": "Generated engineering cases only; no patient execution, clinical outcome, new training, new physics or resident C++ policy support.",
+  "commonConfigHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+  "canonicalSchema": "resectionlab.cranial-strategy-comparison.v3",
+  "sourceHashes": {
+    "scripts/generated_cranial_demo_case.py": "705381ead8db013ca267c8f241c974e80f8990d74cde1117e895693039dac005",
+    "scripts/verify_canonical_endpoints.py": "b44789410e76cf0d39237baa20bf45945b780de5ac3a7e268d9f10224f7ffaa4",
+    "src/resectionlab/surgical_cranial_planning.py": "37d5ea4156db0f71bdaa9cc554af7b6ae1ce0a85a57843a0c6ac351db4540f0a",
+    "src/resectionlab/surgical_joint_cranial_search.py": "9ec1ef64184edd1b9f9e238ea56835472664439232c0845b8890894f0ef44aaf",
+    "src/resectionlab/surgical_joint_cranial_forest.py": "36c0285151e0ec89c4eb153daa4867380019a2899c27008bccc6d46074a10493",
+    "src/resectionlab/surgical_consequences.py": "46bc832521d29fdac4afdbe6ccbb7858206645cc8b8cb51a03b08c834a2113be",
+    "src/resectionlab/surgical_sequential_task.py": "55645d240bc2e5f2b00b8d4c18ee9ca60b81b2c7612211d51e0f428a51d6050a"
+  },
+  "producerSummary": {
+    "path": "testcases/canonical-endpoint-control-v1/canonical-freeze-v1/summary.json",
+    "sha256": "062ad547806d17aebfc898f5dfed60d93863cc8be4859f3a0b2561f3a60fb67c",
+    "bytes": 2768546
+  },
+  "producerPassed": true,
+  "producerCodeStable": true,
+  "producerWallSeconds": 522.1504709578585,
+  "producerCosts": {
+    "onlinePhysicalRequests": 2270,
+    "verificationPhysicalRequests": 1984,
+    "logicalAdapterStops": 12
+  },
+  "cases": [
+    {
+      "variant": "clean",
+      "case": {
+        "path": "testcases/canonical-endpoint-control-v1/canonical-freeze-v1/clean/comparison.ressectionlab",
+        "sha256": "c083e1b7c0019e0526f8a67caf857a9df297ae8d198267e63b37d8801e2eccba",
+        "bytes": 310400
+      },
+      "sourceCase": {
+        "path": "testcases/canonical-endpoint-control-v1/canonical-freeze-v1/clean/source.ressectionlab",
+        "sha256": "0bbc5ce282d65ed991fa70f04095e6d11716f15ed5f868c98d7bbc890bd6e005",
+        "bytes": 47186
+      },
+      "adapterNativeProof": {
+        "path": "testcases/canonical-endpoint-control-v1/canonical-freeze-v1/clean/adapter-native-proof.json",
+        "sha256": "ab2af0a5bd4da8cbf16ca0d7fd7539f610e735344d21d45c34696e8af4fc9737",
+        "bytes": 7428
+      },
+      "decision": "COMPLETED_FROZEN_TASK",
+      "selectionReason": "max_treatment_within_harm_bounds",
+      "selectedBranchId": "cranial-superior-opening-23c80d450da5b27e",
+      "checkedCandidates": 5,
+      "coldValidation": {
+        "verified": true,
+        "alternatives": 3,
+        "admittedPatientTask": false,
+        "recommendationVerified": true,
+        "historicalInspectionOnly": false
+      },
+      "initialFluidMeaning": "No supplied fluid reservoir.",
+      "cost": {
+        "physicalCalls": 522,
+        "previewCalls": 133,
+        "directStepCalls": 389,
+        "wallSeconds": 47.38711720891297,
+        "maxPhysicalCalls": 1800,
+        "maxWallSeconds": 240.0,
+        "exportReplayReserveCalls": 350
+      },
+      "alternatives": [
+        {
+          "branchId": "cranial-superior-opening-23c80d450da5b27e",
+          "rootId": "superior-opening",
+          "nativeActions": 128,
+          "targetMm3": 18.0,
+          "residualMm3": 9.0,
+          "neuralMm3": 1.0,
+          "recommendationEligible": true,
+          "endpoint": {
+            "schema": "resectionlab.sequential-task-config.v1",
+            "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+            "progress": {
+              "targetBasis": "original_annotation",
+              "originalTargetCells": 27,
+              "removedOriginalTargetCells": 18,
+              "ownedOriginalTargetCells": 27,
+              "creditedOriginalTargetCells": 18,
+              "residualOriginalTargetCells": 9,
+              "originalTargetFractionRemoved": 0.6666666666666666,
+              "originalTargetRemovedMm3": 18.0,
+              "originalTargetTreatmentFraction": 0.6666666666666666,
+              "originalTargetTreatmentMm3": 18.0,
+              "zoneRemovedCells": [
+                1,
+                2,
+                2,
+                4,
+                1,
+                2,
+                2,
+                4
+              ],
+              "zoneResidualCells": [
+                0,
+                0,
+                0,
+                0,
+                1,
+                2,
+                2,
+                4
+              ],
+              "zoneTreatmentCreditCells": [
+                1,
+                2,
+                2,
+                4,
+                1,
+                2,
+                2,
+                4
+              ],
+              "zonesReachingRequiredOriginalFraction": 6,
+              "completedProgressRequirement": true,
+              "reasons": []
+            },
+            "completedTask": true,
+            "completeOriginalTargetRemoval": false,
+            "validWithdrawal": true,
+            "cleanupComplete": true,
+            "pending": [],
+            "fluidMm3": 0,
+            "debrisMm3": 0.0,
+            "classification": "successful-treatment",
+            "terminated": true,
+            "truncated": false,
+            "clinicalValidation": false
+          },
+          "nativeReplay": true,
+          "adapterReplay": true,
+          "verificationPhysicalCalls": 256,
+          "checkedAdapterStopAttempts": 1
+        },
+        {
+          "branchId": "cranial-superior-opening-7f0fbd1da2e6e505",
+          "rootId": "superior-opening",
+          "nativeActions": 128,
+          "targetMm3": 10.0,
+          "residualMm3": 17.0,
+          "neuralMm3": 0.0,
+          "recommendationEligible": true,
+          "endpoint": {
+            "schema": "resectionlab.sequential-task-config.v1",
+            "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+            "progress": {
+              "targetBasis": "original_annotation",
+              "originalTargetCells": 27,
+              "removedOriginalTargetCells": 10,
+              "ownedOriginalTargetCells": 27,
+              "creditedOriginalTargetCells": 10,
+              "residualOriginalTargetCells": 17,
+              "originalTargetFractionRemoved": 0.37037037037037035,
+              "originalTargetRemovedMm3": 10.0,
+              "originalTargetTreatmentFraction": 0.37037037037037035,
+              "originalTargetTreatmentMm3": 10.0,
+              "zoneRemovedCells": [
+                1,
+                1,
+                2,
+                2,
+                1,
+                0,
+                2,
+                1
+              ],
+              "zoneResidualCells": [
+                0,
+                1,
+                0,
+                2,
+                1,
+                4,
+                2,
+                7
+              ],
+              "zoneTreatmentCreditCells": [
+                1,
+                1,
+                2,
+                2,
+                1,
+                0,
+                2,
+                1
+              ],
+              "zonesReachingRequiredOriginalFraction": 3,
+              "completedProgressRequirement": false,
+              "reasons": [
+                "ORIGINAL_TARGET_FRACTION_BELOW_GOAL"
+              ]
+            },
+            "completedTask": false,
+            "completeOriginalTargetRemoval": false,
+            "validWithdrawal": true,
+            "cleanupComplete": true,
+            "pending": [],
+            "fluidMm3": 0,
+            "debrisMm3": 0.0,
+            "classification": "valid-stop-with-residual",
+            "terminated": true,
+            "truncated": false,
+            "clinicalValidation": false
+          },
+          "nativeReplay": true,
+          "adapterReplay": true,
+          "verificationPhysicalCalls": 256,
+          "checkedAdapterStopAttempts": 1
+        },
+        {
+          "branchId": "cranial-superior-opening-c28aa84296740967",
+          "rootId": "superior-opening",
+          "nativeActions": 0,
+          "targetMm3": 0.0,
+          "residualMm3": 27.0,
+          "neuralMm3": 0.0,
+          "recommendationEligible": true,
+          "endpoint": {
+            "schema": "resectionlab.sequential-task-config.v1",
+            "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+            "progress": {
+              "targetBasis": "original_annotation",
+              "originalTargetCells": 27,
+              "removedOriginalTargetCells": 0,
+              "ownedOriginalTargetCells": 27,
+              "creditedOriginalTargetCells": 0,
+              "residualOriginalTargetCells": 27,
+              "originalTargetFractionRemoved": 0.0,
+              "originalTargetRemovedMm3": 0.0,
+              "originalTargetTreatmentFraction": 0.0,
+              "originalTargetTreatmentMm3": 0.0,
+              "zoneRemovedCells": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "zoneResidualCells": [
+                1,
+                2,
+                2,
+                4,
+                2,
+                4,
+                4,
+                8
+              ],
+              "zoneTreatmentCreditCells": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "zonesReachingRequiredOriginalFraction": 0,
+              "completedProgressRequirement": false,
+              "reasons": [
+                "ORIGINAL_TARGET_FRACTION_BELOW_GOAL",
+                "ORIGINAL_SPATIAL_PROGRESS_BELOW_GOAL"
+              ]
+            },
+            "completedTask": false,
+            "completeOriginalTargetRemoval": false,
+            "validWithdrawal": true,
+            "cleanupComplete": true,
+            "pending": [],
+            "fluidMm3": 0,
+            "debrisMm3": 0.0,
+            "classification": "valid-stop-with-residual",
+            "terminated": true,
+            "truncated": false,
+            "clinicalValidation": false
+          },
+          "nativeReplay": true,
+          "adapterReplay": true,
+          "verificationPhysicalCalls": 0,
+          "checkedAdapterStopAttempts": 1
+        }
+      ]
+    },
+    {
+      "variant": "debris",
+      "case": {
+        "path": "testcases/canonical-endpoint-control-v1/canonical-freeze-v1/debris/comparison.ressectionlab",
+        "sha256": "1f433ea8aefe1b9cf74b0ceaaa8c5cc659f86e3d588963f9e1bc6f21ac003b13",
+        "bytes": 286440
+      },
+      "sourceCase": {
+        "path": "testcases/canonical-endpoint-control-v1/canonical-freeze-v1/debris/source.ressectionlab",
+        "sha256": "7f41a491d6bdaa96397761af0c2fcdf4596f66f8dcd470a550a8bfc858f78501",
+        "bytes": 47085
+      },
+      "adapterNativeProof": {
+        "path": "testcases/canonical-endpoint-control-v1/canonical-freeze-v1/debris/adapter-native-proof.json",
+        "sha256": "df8d7106a9e3066e5319ea562d58cb949d8032dd35a3927a0228ab4f90fbde32",
+        "bytes": 7469
+      },
+      "decision": "STOP",
+      "selectionReason": "max_treatment_within_harm_bounds",
+      "selectedBranchId": "cranial-superior-opening-c28aa84296740967",
+      "checkedCandidates": 5,
+      "coldValidation": {
+        "verified": true,
+        "alternatives": 3,
+        "admittedPatientTask": false,
+        "recommendationVerified": true,
+        "historicalInspectionOnly": false
+      },
+      "initialFluidMeaning": "No supplied fluid reservoir.",
+      "cost": {
+        "physicalCalls": 458,
+        "previewCalls": 117,
+        "directStepCalls": 341,
+        "wallSeconds": 46.23739416594617,
+        "maxPhysicalCalls": 1800,
+        "maxWallSeconds": 240.0,
+        "exportReplayReserveCalls": 350
+      },
+      "alternatives": [
+        {
+          "branchId": "cranial-superior-opening-c28aa84296740967",
+          "rootId": "superior-opening",
+          "nativeActions": 0,
+          "targetMm3": 0.0,
+          "residualMm3": 27.0,
+          "neuralMm3": 0.0,
+          "recommendationEligible": true,
+          "endpoint": {
+            "schema": "resectionlab.sequential-task-config.v1",
+            "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+            "progress": {
+              "targetBasis": "original_annotation",
+              "originalTargetCells": 27,
+              "removedOriginalTargetCells": 0,
+              "ownedOriginalTargetCells": 27,
+              "creditedOriginalTargetCells": 0,
+              "residualOriginalTargetCells": 27,
+              "originalTargetFractionRemoved": 0.0,
+              "originalTargetRemovedMm3": 0.0,
+              "originalTargetTreatmentFraction": 0.0,
+              "originalTargetTreatmentMm3": 0.0,
+              "zoneRemovedCells": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "zoneResidualCells": [
+                1,
+                2,
+                2,
+                4,
+                2,
+                4,
+                4,
+                8
+              ],
+              "zoneTreatmentCreditCells": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "zonesReachingRequiredOriginalFraction": 0,
+              "completedProgressRequirement": false,
+              "reasons": [
+                "ORIGINAL_TARGET_FRACTION_BELOW_GOAL",
+                "ORIGINAL_SPATIAL_PROGRESS_BELOW_GOAL"
+              ]
+            },
+            "completedTask": false,
+            "completeOriginalTargetRemoval": false,
+            "validWithdrawal": true,
+            "cleanupComplete": true,
+            "pending": [],
+            "fluidMm3": 0,
+            "debrisMm3": 0.0,
+            "classification": "valid-stop-with-residual",
+            "terminated": true,
+            "truncated": false,
+            "clinicalValidation": false
+          },
+          "nativeReplay": true,
+          "adapterReplay": true,
+          "verificationPhysicalCalls": 0,
+          "checkedAdapterStopAttempts": 1
+        },
+        {
+          "branchId": "cranial-superior-opening-2a3efbb966b0925f",
+          "rootId": "superior-opening",
+          "nativeActions": 112,
+          "targetMm3": 18.0,
+          "residualMm3": 9.0,
+          "neuralMm3": 1.0,
+          "recommendationEligible": false,
+          "endpoint": {
+            "schema": "resectionlab.sequential-task-config.v1",
+            "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+            "progress": {
+              "targetBasis": "original_annotation",
+              "originalTargetCells": 27,
+              "removedOriginalTargetCells": 18,
+              "ownedOriginalTargetCells": 27,
+              "creditedOriginalTargetCells": 18,
+              "residualOriginalTargetCells": 9,
+              "originalTargetFractionRemoved": 0.6666666666666666,
+              "originalTargetRemovedMm3": 18.0,
+              "originalTargetTreatmentFraction": 0.6666666666666666,
+              "originalTargetTreatmentMm3": 18.0,
+              "zoneRemovedCells": [
+                1,
+                2,
+                2,
+                4,
+                1,
+                2,
+                2,
+                4
+              ],
+              "zoneResidualCells": [
+                0,
+                0,
+                0,
+                0,
+                1,
+                2,
+                2,
+                4
+              ],
+              "zoneTreatmentCreditCells": [
+                1,
+                2,
+                2,
+                4,
+                1,
+                2,
+                2,
+                4
+              ],
+              "zonesReachingRequiredOriginalFraction": 6,
+              "completedProgressRequirement": true,
+              "reasons": []
+            },
+            "completedTask": false,
+            "completeOriginalTargetRemoval": false,
+            "validWithdrawal": false,
+            "cleanupComplete": false,
+            "pending": [
+              "debris"
+            ],
+            "fluidMm3": 0,
+            "debrisMm3": 236.0,
+            "classification": "in-progress",
+            "terminated": false,
+            "truncated": false,
+            "clinicalValidation": false
+          },
+          "nativeReplay": true,
+          "adapterReplay": true,
+          "verificationPhysicalCalls": 224,
+          "checkedAdapterStopAttempts": 1
+        },
+        {
+          "branchId": "cranial-superior-opening-edeaf115d0c3251b",
+          "rootId": "superior-opening",
+          "nativeActions": 112,
+          "targetMm3": 10.0,
+          "residualMm3": 17.0,
+          "neuralMm3": 0.0,
+          "recommendationEligible": false,
+          "endpoint": {
+            "schema": "resectionlab.sequential-task-config.v1",
+            "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+            "progress": {
+              "targetBasis": "original_annotation",
+              "originalTargetCells": 27,
+              "removedOriginalTargetCells": 10,
+              "ownedOriginalTargetCells": 27,
+              "creditedOriginalTargetCells": 10,
+              "residualOriginalTargetCells": 17,
+              "originalTargetFractionRemoved": 0.37037037037037035,
+              "originalTargetRemovedMm3": 10.0,
+              "originalTargetTreatmentFraction": 0.37037037037037035,
+              "originalTargetTreatmentMm3": 10.0,
+              "zoneRemovedCells": [
+                1,
+                1,
+                2,
+                2,
+                1,
+                0,
+                2,
+                1
+              ],
+              "zoneResidualCells": [
+                0,
+                1,
+                0,
+                2,
+                1,
+                4,
+                2,
+                7
+              ],
+              "zoneTreatmentCreditCells": [
+                1,
+                1,
+                2,
+                2,
+                1,
+                0,
+                2,
+                1
+              ],
+              "zonesReachingRequiredOriginalFraction": 3,
+              "completedProgressRequirement": false,
+              "reasons": [
+                "ORIGINAL_TARGET_FRACTION_BELOW_GOAL"
+              ]
+            },
+            "completedTask": false,
+            "completeOriginalTargetRemoval": false,
+            "validWithdrawal": false,
+            "cleanupComplete": false,
+            "pending": [
+              "debris"
+            ],
+            "fluidMm3": 0,
+            "debrisMm3": 236.0,
+            "classification": "in-progress",
+            "terminated": false,
+            "truncated": false,
+            "clinicalValidation": false
+          },
+          "nativeReplay": true,
+          "adapterReplay": true,
+          "verificationPhysicalCalls": 224,
+          "checkedAdapterStopAttempts": 1
+        }
+      ]
+    },
+    {
+      "variant": "fluid",
+      "case": {
+        "path": "testcases/canonical-endpoint-control-v1/canonical-freeze-v1/fluid/comparison.ressectionlab",
+        "sha256": "b25471148d899ed1d67f4be2f859f8eb347186525dc976ea1ac96225d0dfa4a3",
+        "bytes": 310577
+      },
+      "sourceCase": {
+        "path": "testcases/canonical-endpoint-control-v1/canonical-freeze-v1/fluid/source.ressectionlab",
+        "sha256": "f90059fae4f51f0597f9134ba305999a9b87217efdc685806f0b57b290a516cd",
+        "bytes": 47460
+      },
+      "adapterNativeProof": {
+        "path": "testcases/canonical-endpoint-control-v1/canonical-freeze-v1/fluid/adapter-native-proof.json",
+        "sha256": "ee425b38aba027a4296a097f3296a925d5880bc839ebb2eb225032c97b61aac9",
+        "bytes": 7478
+      },
+      "decision": "STOP",
+      "selectionReason": "no_verified_endpoint_stop_unavailable",
+      "selectedBranchId": null,
+      "checkedCandidates": 5,
+      "coldValidation": {
+        "verified": true,
+        "alternatives": 3,
+        "admittedPatientTask": false,
+        "recommendationVerified": true,
+        "historicalInspectionOnly": false
+      },
+      "initialFluidMeaning": "Supplied 1 mm3 nonbleeding source reservoir; native deposition, not an irrigation operation.",
+      "cost": {
+        "physicalCalls": 522,
+        "previewCalls": 133,
+        "directStepCalls": 389,
+        "wallSeconds": 50.21443979209289,
+        "maxPhysicalCalls": 1800,
+        "maxWallSeconds": 240.0,
+        "exportReplayReserveCalls": 350
+      },
+      "alternatives": [
+        {
+          "branchId": "cranial-superior-opening-f7f69f567fb82f4c",
+          "rootId": "superior-opening",
+          "nativeActions": 128,
+          "targetMm3": 18.0,
+          "residualMm3": 9.0,
+          "neuralMm3": 1.0,
+          "recommendationEligible": false,
+          "endpoint": {
+            "schema": "resectionlab.sequential-task-config.v1",
+            "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+            "progress": {
+              "targetBasis": "original_annotation",
+              "originalTargetCells": 27,
+              "removedOriginalTargetCells": 18,
+              "ownedOriginalTargetCells": 27,
+              "creditedOriginalTargetCells": 18,
+              "residualOriginalTargetCells": 9,
+              "originalTargetFractionRemoved": 0.6666666666666666,
+              "originalTargetRemovedMm3": 18.0,
+              "originalTargetTreatmentFraction": 0.6666666666666666,
+              "originalTargetTreatmentMm3": 18.0,
+              "zoneRemovedCells": [
+                1,
+                2,
+                2,
+                4,
+                1,
+                2,
+                2,
+                4
+              ],
+              "zoneResidualCells": [
+                0,
+                0,
+                0,
+                0,
+                1,
+                2,
+                2,
+                4
+              ],
+              "zoneTreatmentCreditCells": [
+                1,
+                2,
+                2,
+                4,
+                1,
+                2,
+                2,
+                4
+              ],
+              "zonesReachingRequiredOriginalFraction": 6,
+              "completedProgressRequirement": true,
+              "reasons": []
+            },
+            "completedTask": false,
+            "completeOriginalTargetRemoval": false,
+            "validWithdrawal": false,
+            "cleanupComplete": false,
+            "pending": [
+              "fluid"
+            ],
+            "fluidMm3": 1.0,
+            "debrisMm3": 0.0,
+            "classification": "in-progress",
+            "terminated": false,
+            "truncated": false,
+            "clinicalValidation": false
+          },
+          "nativeReplay": true,
+          "adapterReplay": true,
+          "verificationPhysicalCalls": 256,
+          "checkedAdapterStopAttempts": 1
+        },
+        {
+          "branchId": "cranial-superior-opening-5ad44b20b4d0a95a",
+          "rootId": "superior-opening",
+          "nativeActions": 128,
+          "targetMm3": 10.0,
+          "residualMm3": 17.0,
+          "neuralMm3": 0.0,
+          "recommendationEligible": false,
+          "endpoint": {
+            "schema": "resectionlab.sequential-task-config.v1",
+            "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+            "progress": {
+              "targetBasis": "original_annotation",
+              "originalTargetCells": 27,
+              "removedOriginalTargetCells": 10,
+              "ownedOriginalTargetCells": 27,
+              "creditedOriginalTargetCells": 10,
+              "residualOriginalTargetCells": 17,
+              "originalTargetFractionRemoved": 0.37037037037037035,
+              "originalTargetRemovedMm3": 10.0,
+              "originalTargetTreatmentFraction": 0.37037037037037035,
+              "originalTargetTreatmentMm3": 10.0,
+              "zoneRemovedCells": [
+                1,
+                1,
+                2,
+                2,
+                1,
+                0,
+                2,
+                1
+              ],
+              "zoneResidualCells": [
+                0,
+                1,
+                0,
+                2,
+                1,
+                4,
+                2,
+                7
+              ],
+              "zoneTreatmentCreditCells": [
+                1,
+                1,
+                2,
+                2,
+                1,
+                0,
+                2,
+                1
+              ],
+              "zonesReachingRequiredOriginalFraction": 3,
+              "completedProgressRequirement": false,
+              "reasons": [
+                "ORIGINAL_TARGET_FRACTION_BELOW_GOAL"
+              ]
+            },
+            "completedTask": false,
+            "completeOriginalTargetRemoval": false,
+            "validWithdrawal": false,
+            "cleanupComplete": false,
+            "pending": [
+              "fluid"
+            ],
+            "fluidMm3": 1.0,
+            "debrisMm3": 0.0,
+            "classification": "in-progress",
+            "terminated": false,
+            "truncated": false,
+            "clinicalValidation": false
+          },
+          "nativeReplay": true,
+          "adapterReplay": true,
+          "verificationPhysicalCalls": 256,
+          "checkedAdapterStopAttempts": 1
+        },
+        {
+          "branchId": "cranial-superior-opening-3111a9cc7d232892",
+          "rootId": "superior-opening",
+          "nativeActions": 0,
+          "targetMm3": 0.0,
+          "residualMm3": 27.0,
+          "neuralMm3": 0.0,
+          "recommendationEligible": false,
+          "endpoint": {
+            "schema": "resectionlab.sequential-task-config.v1",
+            "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+            "progress": {
+              "targetBasis": "original_annotation",
+              "originalTargetCells": 27,
+              "removedOriginalTargetCells": 0,
+              "ownedOriginalTargetCells": 27,
+              "creditedOriginalTargetCells": 0,
+              "residualOriginalTargetCells": 27,
+              "originalTargetFractionRemoved": 0.0,
+              "originalTargetRemovedMm3": 0.0,
+              "originalTargetTreatmentFraction": 0.0,
+              "originalTargetTreatmentMm3": 0.0,
+              "zoneRemovedCells": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "zoneResidualCells": [
+                1,
+                2,
+                2,
+                4,
+                2,
+                4,
+                4,
+                8
+              ],
+              "zoneTreatmentCreditCells": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "zonesReachingRequiredOriginalFraction": 0,
+              "completedProgressRequirement": false,
+              "reasons": [
+                "ORIGINAL_TARGET_FRACTION_BELOW_GOAL",
+                "ORIGINAL_SPATIAL_PROGRESS_BELOW_GOAL"
+              ]
+            },
+            "completedTask": false,
+            "completeOriginalTargetRemoval": false,
+            "validWithdrawal": false,
+            "cleanupComplete": false,
+            "pending": [
+              "fluid"
+            ],
+            "fluidMm3": 1.0,
+            "debrisMm3": 0.0,
+            "classification": "in-progress",
+            "terminated": false,
+            "truncated": false,
+            "clinicalValidation": false
+          },
+          "nativeReplay": true,
+          "adapterReplay": true,
+          "verificationPhysicalCalls": 0,
+          "checkedAdapterStopAttempts": 1
+        }
+      ]
+    },
+    {
+      "variant": "two-roots",
+      "case": {
+        "path": "testcases/canonical-endpoint-control-v1/canonical-freeze-v1/two-roots/comparison.ressectionlab",
+        "sha256": "3ec90b0ef48721b4e23fa0d1d7701f114969ce6be8beeefb3585092a017d115a",
+        "bytes": 381517
+      },
+      "sourceCase": {
+        "path": "testcases/canonical-endpoint-control-v1/canonical-freeze-v1/two-roots/source.ressectionlab",
+        "sha256": "38d8001825e767fc897cf03108d720504ce7cbdaa27a40c2bc47fac4d0a713e0",
+        "bytes": 62469
+      },
+      "adapterNativeProof": {
+        "path": "testcases/canonical-endpoint-control-v1/canonical-freeze-v1/two-roots/adapter-native-proof.json",
+        "sha256": "a6691891cd4f08bc5f772aa1feda2e95ad6001d910a8e401fb7bd4a52ab83c4d",
+        "bytes": 7423
+      },
+      "decision": "COMPLETED_FROZEN_TASK",
+      "selectionReason": "max_treatment_within_harm_bounds",
+      "selectedBranchId": "cranial-superior-opening-23c80d450da5b27e",
+      "checkedCandidates": 8,
+      "coldValidation": {
+        "verified": true,
+        "alternatives": 3,
+        "admittedPatientTask": false,
+        "recommendationVerified": true,
+        "historicalInspectionOnly": false
+      },
+      "initialFluidMeaning": "No supplied fluid reservoir.",
+      "cost": {
+        "physicalCalls": 768,
+        "previewCalls": 256,
+        "directStepCalls": 512,
+        "wallSeconds": 70.42900000000373,
+        "maxPhysicalCalls": 1800,
+        "maxWallSeconds": 240.0,
+        "exportReplayReserveCalls": 350
+      },
+      "alternatives": [
+        {
+          "branchId": "cranial-superior-opening-23c80d450da5b27e",
+          "rootId": "superior-opening",
+          "nativeActions": 128,
+          "targetMm3": 18.0,
+          "residualMm3": 9.0,
+          "neuralMm3": 1.0,
+          "recommendationEligible": true,
+          "endpoint": {
+            "schema": "resectionlab.sequential-task-config.v1",
+            "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+            "progress": {
+              "targetBasis": "original_annotation",
+              "originalTargetCells": 27,
+              "removedOriginalTargetCells": 18,
+              "ownedOriginalTargetCells": 27,
+              "creditedOriginalTargetCells": 18,
+              "residualOriginalTargetCells": 9,
+              "originalTargetFractionRemoved": 0.6666666666666666,
+              "originalTargetRemovedMm3": 18.0,
+              "originalTargetTreatmentFraction": 0.6666666666666666,
+              "originalTargetTreatmentMm3": 18.0,
+              "zoneRemovedCells": [
+                1,
+                2,
+                2,
+                4,
+                1,
+                2,
+                2,
+                4
+              ],
+              "zoneResidualCells": [
+                0,
+                0,
+                0,
+                0,
+                1,
+                2,
+                2,
+                4
+              ],
+              "zoneTreatmentCreditCells": [
+                1,
+                2,
+                2,
+                4,
+                1,
+                2,
+                2,
+                4
+              ],
+              "zonesReachingRequiredOriginalFraction": 6,
+              "completedProgressRequirement": true,
+              "reasons": []
+            },
+            "completedTask": true,
+            "completeOriginalTargetRemoval": false,
+            "validWithdrawal": true,
+            "cleanupComplete": true,
+            "pending": [],
+            "fluidMm3": 0,
+            "debrisMm3": 0.0,
+            "classification": "successful-treatment",
+            "terminated": true,
+            "truncated": false,
+            "clinicalValidation": false
+          },
+          "nativeReplay": true,
+          "adapterReplay": true,
+          "verificationPhysicalCalls": 256,
+          "checkedAdapterStopAttempts": 1
+        },
+        {
+          "branchId": "cranial-lateral-entry-df04d7a746118ad9",
+          "rootId": "lateral-entry",
+          "nativeActions": 128,
+          "targetMm3": 10.0,
+          "residualMm3": 17.0,
+          "neuralMm3": 0.0,
+          "recommendationEligible": true,
+          "endpoint": {
+            "schema": "resectionlab.sequential-task-config.v1",
+            "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+            "progress": {
+              "targetBasis": "original_annotation",
+              "originalTargetCells": 27,
+              "removedOriginalTargetCells": 10,
+              "ownedOriginalTargetCells": 27,
+              "creditedOriginalTargetCells": 10,
+              "residualOriginalTargetCells": 17,
+              "originalTargetFractionRemoved": 0.37037037037037035,
+              "originalTargetRemovedMm3": 10.0,
+              "originalTargetTreatmentFraction": 0.37037037037037035,
+              "originalTargetTreatmentMm3": 10.0,
+              "zoneRemovedCells": [
+                1,
+                1,
+                2,
+                2,
+                1,
+                0,
+                2,
+                1
+              ],
+              "zoneResidualCells": [
+                0,
+                1,
+                0,
+                2,
+                1,
+                4,
+                2,
+                7
+              ],
+              "zoneTreatmentCreditCells": [
+                1,
+                1,
+                2,
+                2,
+                1,
+                0,
+                2,
+                1
+              ],
+              "zonesReachingRequiredOriginalFraction": 3,
+              "completedProgressRequirement": false,
+              "reasons": [
+                "ORIGINAL_TARGET_FRACTION_BELOW_GOAL"
+              ]
+            },
+            "completedTask": false,
+            "completeOriginalTargetRemoval": false,
+            "validWithdrawal": true,
+            "cleanupComplete": true,
+            "pending": [],
+            "fluidMm3": 0,
+            "debrisMm3": 0.0,
+            "classification": "valid-stop-with-residual",
+            "terminated": true,
+            "truncated": false,
+            "clinicalValidation": false
+          },
+          "nativeReplay": true,
+          "adapterReplay": true,
+          "verificationPhysicalCalls": 256,
+          "checkedAdapterStopAttempts": 1
+        },
+        {
+          "branchId": "cranial-superior-opening-c28aa84296740967",
+          "rootId": "superior-opening",
+          "nativeActions": 0,
+          "targetMm3": 0.0,
+          "residualMm3": 27.0,
+          "neuralMm3": 0.0,
+          "recommendationEligible": true,
+          "endpoint": {
+            "schema": "resectionlab.sequential-task-config.v1",
+            "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+            "progress": {
+              "targetBasis": "original_annotation",
+              "originalTargetCells": 27,
+              "removedOriginalTargetCells": 0,
+              "ownedOriginalTargetCells": 27,
+              "creditedOriginalTargetCells": 0,
+              "residualOriginalTargetCells": 27,
+              "originalTargetFractionRemoved": 0.0,
+              "originalTargetRemovedMm3": 0.0,
+              "originalTargetTreatmentFraction": 0.0,
+              "originalTargetTreatmentMm3": 0.0,
+              "zoneRemovedCells": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "zoneResidualCells": [
+                1,
+                2,
+                2,
+                4,
+                2,
+                4,
+                4,
+                8
+              ],
+              "zoneTreatmentCreditCells": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "zonesReachingRequiredOriginalFraction": 0,
+              "completedProgressRequirement": false,
+              "reasons": [
+                "ORIGINAL_TARGET_FRACTION_BELOW_GOAL",
+                "ORIGINAL_SPATIAL_PROGRESS_BELOW_GOAL"
+              ]
+            },
+            "completedTask": false,
+            "completeOriginalTargetRemoval": false,
+            "validWithdrawal": true,
+            "cleanupComplete": true,
+            "pending": [],
+            "fluidMm3": 0,
+            "debrisMm3": 0.0,
+            "classification": "valid-stop-with-residual",
+            "terminated": true,
+            "truncated": false,
+            "clinicalValidation": false
+          },
+          "nativeReplay": true,
+          "adapterReplay": true,
+          "verificationPhysicalCalls": 0,
+          "checkedAdapterStopAttempts": 1
+        }
+      ]
+    }
+  ],
+  "ordinaryGenerateUi": {
+    "warmGenerate": {
+      "report": {
+        "path": "testcases/canonical-endpoint-control-v1/canonical-ui-generate-v2/report.json",
+        "sha256": "b69aa461c1359844d7859136327befdb0495fca636a1b5209df2267ea499dcf7",
+        "bytes": 57839
+      },
+      "case": {
+        "path": "testcases/canonical-endpoint-control-v1/canonical-ui-generate-v2/desktop-saved.ressectionlab",
+        "sha256": "11b6b3744f44fff93c01354642af1955308b76204a88c7cf043fa25d72a923bb",
+        "bytes": 7160652
+      },
+      "initialCursor": {
+        "caseHash": "sha256:d53450d18fc53cb521dd9f362a9878db7d45da3e7db57fec29e60d604d644932",
+        "sceneId": "sha256:e0f72b04c13260af95dbea96a86b643e0be33eb4e92f5cd3ff9c93efa9e64d7e",
+        "branchId": "main",
+        "position": 0,
+        "stateId": "sha256:55a67493aca89074b659ca21496e2d147ba5e94e4b8196544a65861e0ae342e1"
+      },
+      "savedCursor": {
+        "caseHash": "sha256:d53450d18fc53cb521dd9f362a9878db7d45da3e7db57fec29e60d604d644932",
+        "sceneId": "sha256:c4ef67f46d6dbc3e695600001b6f50c5a8f784e1ce8c8624c635c7e3ef7be2ac",
+        "branchId": "cranial-superior-opening-23c80d450da5b27e",
+        "position": 128,
+        "stateId": "sha256:558583c429934d62382e0d504df0cf8a2df27a177b4bb4bfa8169c462ab6a0aa"
+      },
+      "codeStable": true,
+      "windowEverVisible": false,
+      "engineTermination": {
+        "exitCode": 0,
+        "signal": null
+      },
+      "captures": [
+        {
+          "path": "testcases/canonical-endpoint-control-v1/canonical-ui-generate-v2/01-generated-comparison.png",
+          "sha256": "bdd366ca3471d0925c50f398c8dd91b03622a9ecbd4bb0ac522c289f963b53ef",
+          "bytes": 197384
+        },
+        {
+          "path": "testcases/canonical-endpoint-control-v1/canonical-ui-generate-v2/02-selected-endpoint.png",
+          "sha256": "a8dfd20c016fd7d9ff000157b37045899eed7d62a69754166e681ffdb0a470ea",
+          "bytes": 176861
+        }
+      ]
+    },
+    "coldReopen": {
+      "report": {
+        "path": "testcases/canonical-endpoint-control-v1/canonical-ui-cold-v1/report.json",
+        "sha256": "06556411e2226a856ab50672a5d638a285ad4eb6f862aff936df84b83ad43e3d",
+        "bytes": 57696
+      },
+      "case": {
+        "path": "testcases/canonical-endpoint-control-v1/canonical-ui-cold-v1/desktop-saved.ressectionlab",
+        "sha256": "c84e546fffd5595aa42a725158e88ca534f35db2331c64b2f1d480d1a413e7d8",
+        "bytes": 7160652
+      },
+      "initialCursor": {
+        "caseHash": "sha256:d53450d18fc53cb521dd9f362a9878db7d45da3e7db57fec29e60d604d644932",
+        "sceneId": "sha256:c4ef67f46d6dbc3e695600001b6f50c5a8f784e1ce8c8624c635c7e3ef7be2ac",
+        "branchId": "cranial-superior-opening-23c80d450da5b27e",
+        "position": 128,
+        "stateId": "sha256:558583c429934d62382e0d504df0cf8a2df27a177b4bb4bfa8169c462ab6a0aa"
+      },
+      "savedCursor": {
+        "caseHash": "sha256:d53450d18fc53cb521dd9f362a9878db7d45da3e7db57fec29e60d604d644932",
+        "sceneId": "sha256:c4ef67f46d6dbc3e695600001b6f50c5a8f784e1ce8c8624c635c7e3ef7be2ac",
+        "branchId": "cranial-superior-opening-23c80d450da5b27e",
+        "position": 128,
+        "stateId": "sha256:558583c429934d62382e0d504df0cf8a2df27a177b4bb4bfa8169c462ab6a0aa"
+      },
+      "codeStable": true,
+      "windowEverVisible": false,
+      "engineTermination": {
+        "exitCode": 0,
+        "signal": null
+      },
+      "captures": [
+        {
+          "path": "testcases/canonical-endpoint-control-v1/canonical-ui-cold-v1/01-generated-comparison.png",
+          "sha256": "a36bd18667a2ce21804c5a9abd1a5d67cf97c959143c14e18a89f48f0becc974",
+          "bytes": 209755
+        },
+        {
+          "path": "testcases/canonical-endpoint-control-v1/canonical-ui-cold-v1/02-selected-endpoint.png",
+          "sha256": "35a12e86a9ac167bf4c8736e5690589c9f9641fe51453d295cefc35576a6a8ef",
+          "bytes": 176788
+        }
+      ]
+    }
+  },
+  "independentPlanningReview": {
+    "path": "docs/canonical-planning-independent-review.json",
+    "sha256": "0be37011305eb15d151a3e4d37a30d1c46fa75acc225d946d63cf359c65aad29",
+    "bytes": 6765
+  },
+  "coordinatorBindingAudit": {
+    "path": "testcases/canonical-endpoint-control-v1/coordinator-binding-audit-v3.json",
+    "sha256": "a1cdb0b5a876fe886cb6fb4188c6d662c146ac7623f5cd8af7c99ac225a23481",
+    "bytes": 1119
+  },
+  "tests": [
+    {
+      "log": {
+        "path": "testcases/canonical-endpoint-control-v1/root-focused-final.log",
+        "sha256": "9c937125da0677c0a7dca8f8cc98f018aedb25da6bf1bf6b98673c7124dcfb78",
+        "bytes": 272
+      },
+      "passed": true,
+      "tests": 173,
+      "overlap": "Suites overlap; do not sum as unique coverage"
+    },
+    {
+      "log": {
+        "path": "testcases/canonical-endpoint-control-v1/root-reference-final.log",
+        "sha256": "7d0d1a62eb1dbde64e91fdd8f11938e2f369c1f4b8989824d888339a694eafc3",
+        "bytes": 100
+      },
+      "passed": true,
+      "tests": 25,
+      "overlap": "Suites overlap; do not sum as unique coverage"
+    },
+    {
+      "log": {
+        "path": "testcases/canonical-endpoint-control-v1/root-cranial-renderer-tests-v4.log",
+        "sha256": "4f7b93dc86fb08bda3562d18c7f7ffa44fb654b8d7d9a54c780a0a26ad882aca",
+        "bytes": 1503
+      },
+      "passed": true,
+      "tests": 14,
+      "overlap": "Suites overlap; do not sum as unique coverage"
+    },
+    {
+      "log": {
+        "path": "testcases/canonical-endpoint-control-v1/root-tsc-v3.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "passed": true,
+      "tests": null,
+      "overlap": "Suites overlap; do not sum as unique coverage"
+    },
+    {
+      "log": {
+        "path": "testcases/canonical-endpoint-control-v1/final-desktop-tests.log",
+        "sha256": "4f73984a0dc3b31522b528022fd12bb730bf0625f3d5df1bb74e59f26d6e612e",
+        "bytes": 129958
+      },
+      "passed": true,
+      "tests": 1341,
+      "suites": {
+        "main": 326,
+        "renderer": 739,
+        "viewer": 276
+      },
+      "failures": 0,
+      "skips": 0,
+      "command": "cd desktop && pnpm test",
+      "overlap": "Focused suites overlap this full desktop suite"
+    }
+  ],
+  "arithmeticFixture": {
+    "source": {
+      "path": "tests/test_canonical_forest_priority.py",
+      "sha256": "da354b3e142f04fd5cf37732f01885d4f4775c7634ef376e89fc993a5c57e59d",
+      "bytes": 6693
+    },
+    "scope": "Controlled checked-node fixture, not physical vascular operations",
+    "properties": [
+      "Complete checked set before display3",
+      "Opposing supply/drainage remains unresolved",
+      "Lower bone cannot buy modeled exposure",
+      "Opposing structural harm remains unresolved",
+      "Required unknown unavailable",
+      "Root reorder and branch rename do not manufacture winner",
+      "Same-state distinct causal programs preserve branch identity"
+    ]
+  },
+  "limits": [
+    "Two physical roots share one bone window; distinct declared entries and actual workpaths.",
+    "Supplied initial1mm3 nonbleeding fluid reservoir, not an executable irrigation primitive.",
+    "Fluid case decision STOP signifies no continuation recommendation; no checked candidate has a valid STOP.",
+    "Declared completion18/27 is not100% original-target removal.",
+    "Oldv1/v2 packages remain historical inspection-only, without rewriting bytes."
+  ],
+  "reproduce": "PYTHONPATH=src .venv/bin/python -u scripts/verify_canonical_endpoints.py --output testcases/canonical-endpoint-control-v1/canonical-reproduction",
+  "openCommand": "./scripts/launch_poc.sh --case \"$PWD/testcases/canonical-endpoint-control-v1/canonical-ui-cold-v1/desktop-saved.ressectionlab\"",
+  "unmetRequiredCriteria": [],
+  "patientOperations": 0,
+  "optimizerUpdates": 0,
+  "independentOrdinaryUiReview": {
+    "path": "docs/canonical-generate-ui-independent-review.json",
+    "sha256": "94a37bb1e73494154830787be8a9156935388638354bd2c9c23589f981355398",
+    "bytes": 4475
+  },
+  "index": {
+    "path": "testcases/canonical-endpoint-control-v1/index.html",
+    "sha256": "1c142f04da49414ba39b66581266ac0bae53bae30f4adae46c7ab9825a79b185",
+    "bytes": 5388
+  },
+  "attempts": [
+    {
+      "attempt": "Initial physical pytest interrupted",
+      "evidence": {
+        "path": "testcases/canonical-endpoint-control-v1/root-initial-tests.log",
+        "sha256": "8877b7ca736a467cfb320e71c425618cf1912b91a0875ab97c2dc11afe4b4916",
+        "bytes": 3340
+      },
+      "outcome": "Administrative timing-isolation stop; retained partial failures, followed by fixes and173passing final checks."
+    },
+    {
+      "attempt": "Cold stage readout prototype",
+      "evidence": {
+        "path": "testcases/canonical-endpoint-control-v1/root-canonical-physical-tests.log",
+        "sha256": "48bf61e4c2081426ec791a9481c698f85888eea7d0e2a5fcf3939621f3276298",
+        "bytes": 1951
+      },
+      "outcome": "Mismatch repaired by physical source-membership/ancestry readout; execution permission unchanged."
+    },
+    {
+      "attempt": "Unsupported irrigation probe",
+      "evidence": {
+        "path": "testcases/canonical-endpoint-control-v1/root-canonical-physical-tests-v2.log",
+        "sha256": "cc020211da50fd12abfe3857b8163259ea04123808ef97c7daed6e28ee0da1a1",
+        "bytes": 1300
+      },
+      "outcome": "Refused CRANIAL_STAGE_TOOL_SCOPE; not admitted. Explicit supplied initial fluid field used separately."
+    },
+    {
+      "attempt": "Translated bone-window second root",
+      "evidence": {
+        "path": "testcases/canonical-endpoint-control-v1/root-two-root-tests.log",
+        "sha256": "e7c656bfb684122c4712274ca0f9acd1d797cbecec23984e620c530b59901d26",
+        "bytes": 1647
+      },
+      "outcome": "No useful second-root work; retained negative attempt. Same-window distinct-entry alternative physically passed."
+    },
+    {
+      "attempt": "Ordinary Generate verifier v1",
+      "evidence": {
+        "path": "testcases/canonical-endpoint-control-v1/canonical-ui-generate-v1/report.json",
+        "sha256": "6aa9eeaecb4f75ae4d4b1fe039c2b88300a1a01dfd84a5420c0051439aacadbb",
+        "bytes": 60222
+      },
+      "outcome": "Real Generate completed; verifier captured previous main display before Save enabled. Reviewed readiness/hidden-bootstrap/cold-binding repair; v2 andcold-v1 pass."
+    },
+    {
+      "attempt": "Generic SHA audit v1",
+      "evidence": {
+        "path": "testcases/canonical-endpoint-control-v1/coordinator-binding-audit-v1.json",
+        "sha256": "99bf1b2ebbfe10d55ae3d02f9bdcb38723cfefd7398398e9bff6014e71dbf3db",
+        "bytes": 667
+      },
+      "outcome": "Checker directory/regular-file mismatch; bundle receipt semantics corrected, all1401bindings pass without artifact edits."
+    }
+  ],
+  "trackedDiagnosticResults": [
+    {
+      "path": "docs/fixed-preparation-diagnostic-results.csv",
+      "sha256": "18a4ea6f04a9649a24267cb80cc28acd285eada46af08e24e7e3d2bb7020e657",
+      "bytes": 28600
+    },
+    {
+      "path": "docs/fixed-preparation-diagnostic-paired.csv",
+      "sha256": "ce36cd095e45f7a28fb6341229f698a41c97252defc6dddbe830325eb4528e3b",
+      "bytes": 43537
+    },
+    {
+      "path": "docs/fixed-preparation-diagnostic-families.csv",
+      "sha256": "24268be0ef4ed8d97058c31ef7957cad87f8fb74c88c9fc608fcaae752fa90d5",
+      "bytes": 10330
+    },
+    {
+      "path": "docs/fixed-preparation-diagnostic-paired-families.csv",
+      "sha256": "4055cb3acabdc0d4e4847201636e29e087e80c6f60b5e112bc6043dda4b0c0ce",
+      "bytes": 8643
+    }
+  ],
+  "diagnosticManifest": {
+    "path": "docs/fixed-preparation-diagnostic.json",
+    "sha256": "85d0ebe985bb7193d7b8904482611c5467d75ad1dbed38b3637e8812c8868662",
+    "bytes": 14896
+  },
+  "actualEpisodeManifest": {
+    "path": "docs/recorded-sequential-replay-manifest.json",
+    "sha256": "c5784c4a4437c9f5ececfc87100355d0b40ae0e181a9e70bfc0ec18f9d2be483",
+    "bytes": 23204
+  },
+  "independentActualEpisodeReview": {
+    "path": "docs/recorded-sequential-replay-independent-review.json",
+    "sha256": "8b56c6ae00dbab3e8f37bb47c26ee1875215f73611e9af33f9d90268b5f64460",
+    "bytes": 9801
+  }
+}

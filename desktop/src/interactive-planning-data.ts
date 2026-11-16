@@ -103,8 +103,8 @@ export function planningSphereSliceRadius(center:Point3,radius:number,axis:0|1|2
 }
 
 export function declaredStructureColor(id:string):string {
-  return id==='motor-cortex'?'#65e6ff':id==='corticospinal-tract'?'#c6a2ff':id==='brainstem'?'#ff6e80':id==='cerebellum'?'#ffbd6e':'#9beb9b';
+  return id==='motor-cortex'?'#65e6ff':(id==='corticospinal-tract'||id==='corticospinal')?'#c6a2ff':id==='brainstem'?'#ff6e80':id==='cerebellum'?'#ffbd6e':'#9beb9b';
 }
 export function planningSliceMemberships(overlay:InteractivePlanningOverlay,axis:0|1|2,position:number,halfThickness:number):Array<{id:string;label:string;positionMm:Point3;color:string;radiusPx:number}> {
-  return (overlay.recorded?.structures??[]).flatMap(s=>s.pointsRasMm.filter(p=>Math.abs(p[axis]-position)<=halfThickness).map((p,i)=>({id:`${s.id}:${i}`,label:`${s.label}: generated source membership`,positionMm:p,color:declaredStructureColor(s.id),radiusPx:s.id==='motor-cortex'?7:s.id==='corticospinal-tract'?4:5})));
+  return (overlay.recorded?.structures??[]).flatMap(s=>s.pointsRasMm.filter(p=>Math.abs(p[axis]-position)<=halfThickness).map((p,i)=>({id:`${s.id}:${i}`,label:`${s.label}: generated source membership`,positionMm:p,color:declaredStructureColor(s.id),radiusPx:s.id==='motor-cortex'?7:(s.id==='corticospinal-tract'||s.id==='corticospinal')?4:5})));
 }

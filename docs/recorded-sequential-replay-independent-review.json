@@ -1,0 +1,155 @@
+{
+  "actualEpisodes": [
+    {
+      "endpoint": "successful-treatment",
+      "matchedCheckpointChoices": 7,
+      "method": "learned",
+      "physicalRequests": 14,
+      "refusals": 0,
+      "seed": 17,
+      "targetMm3": 243.0
+    },
+    {
+      "endpoint": "valid-stop-with-residual",
+      "matchedCheckpointChoices": 5,
+      "method": "learned",
+      "physicalRequests": 10,
+      "refusals": 3,
+      "seed": 43,
+      "targetMm3": 27.0
+    },
+    {
+      "endpoint": "valid-stop-with-residual",
+      "matchedCheckpointChoices": 0,
+      "method": "greedy",
+      "physicalRequests": 3,
+      "refusals": 0,
+      "seed": 0,
+      "targetMm3": 27.0
+    },
+    {
+      "endpoint": "valid-stop-with-residual",
+      "matchedCheckpointChoices": 0,
+      "method": "search",
+      "physicalRequests": 7,
+      "refusals": 0,
+      "seed": 0,
+      "targetMm3": 108.0
+    },
+    {
+      "endpoint": "successful-treatment",
+      "matchedCheckpointChoices": 0,
+      "method": "fixed-narrow-greedy",
+      "physicalRequests": 7,
+      "refusals": 0,
+      "seed": 0,
+      "targetMm3": 162.0
+    }
+  ],
+  "bindings": {
+    "auditSource": {
+      "path": "testcases/canonical-endpoint-control-v1/independent-replay-review/verify.py",
+      "sha256": "f7771857dd78b8949b0aeb86a2689fbd4fa1d49bc467a40adc71a9a4ee8ecd23"
+    },
+    "finalUiAudit": {
+      "path": "testcases/canonical-endpoint-control-v1/independent-replay-review/final-ui-verification.json",
+      "sha256": "029673e31a214556a64fc9b3e116116de268c08dd0b476021ab020d1c158f6b8"
+    },
+    "nativeAudit": {
+      "path": "testcases/canonical-endpoint-control-v1/independent-replay-review/verification.json",
+      "sha256": "b9efce5a4411952d05b235a777319c2fb899f6305ebb8d707fe1927b39c0330c"
+    },
+    "replayManifest": {
+      "path": "docs/recorded-sequential-replay-manifest.json",
+      "sha256": "c5784c4a4437c9f5ececfc87100355d0b40ae0e181a9e70bfc0ec18f9d2be483"
+    },
+    "uiAuditSource": {
+      "path": "testcases/canonical-endpoint-control-v1/independent-replay-review/verify_final_ui.py",
+      "sha256": "b1ef5232814872fb556047e2d5963f463e438e50b169204f3ebacf7f16f24274"
+    }
+  },
+  "caseHash": "sha256:e4fa4460d902d41a2812a10948252381c96ccd348fc9d6da4f839275d65d305f",
+  "checks": [
+    "All5original episode bytes, source/policy/config/tier/computation, snapshot histories/endpoints, frozencheckpoint weights and selected-update identities verified. No search substitution.",
+    "Independent native replay of41original accepted/refused requests matches complete original outcomes and final snapshots. Seed17 all7choices and43 all5choices match frozen192/96selected-update weights under the same current source/state observations and masks.",
+    "Actual target/residual values243/0,27/216,27/216,108/135,162/81mm3; seed43 has3actual refusals preserved apart from7accepted actions.",
+    "Final warm-v5 andcold-v3 pass, codeStable/requireFrozenCode/hidden/exit0; all23runtime/UI hashes match current. Save/cold path/hash/case/scene/policy/branch/snapshot joins preserve all5original packets and histories.",
+    "Every method has useful native interior frames; accepted paths/motor/CST memberships/residual source and actualrefusal list inspected in saved screenshots. Endpoint text remains distinct from current partial-frame progress.",
+    "Exact synthetic transport checks ordinary source classification, provenance aliases, generator definition, fullMRI/affine/masks/regions/properties before restoring original scene. Existing acquired holds are not bypassed.",
+    "All33file bindings in final replay manifest verified; earlier unused-canonical-module provenance drift is closed by finalpair.",
+    "Tracked32control results equal local filter;160pairs andboth family tables are exact local copies. Main execution report central counts, conclusions and scope match audited evidence, including CST-only parent202difference, same-window root limit and finite-inventory development caveat."
+  ],
+  "exportSourceHashes": {
+    "scripts/export_sequential_episodes.py": "0e1aeb058017839aa0b5ce7ca9635dcbcbb1cb0de38aace76d8261f6748e9824",
+    "src/resectionlab/surgical_consequences.py": "46bc832521d29fdac4afdbe6ccbb7858206645cc8b8cb51a03b08c834a2113be",
+    "src/resectionlab/surgical_recorded_sequential.py": "cef2e3b7b7d7047f1a4254c825f7eff95a2cd45d254b671e7aa67b002a5bce94",
+    "src/resectionlab/surgical_scene.py": "b1f4ac6c79d54a4c389bdce63af56a86c891bc2652fc3e2c8a430739303f7f9a",
+    "src/resectionlab/surgical_sequential_benchmark.py": "ffb931b0e3ae62d4e39aae03c0e1b8e9b357f12622bfdd64d1ff5a1c547cb7f0",
+    "src/resectionlab/surgical_sequential_task.py": "55645d240bc2e5f2b00b8d4c18ee9ca60b81b2c7612211d51e0f428a51d6050a"
+  },
+  "finalUiProofs": [
+    {
+      "report": {
+        "path": "testcases/canonical-endpoint-control-v1/replay/hidden-warm-v5/report.json",
+        "sha256": "ab74be634a2c5029f886583bcccac88d3b2b6cbeda84d88e53575ecfc2207e1a"
+      },
+      "savedCase": {
+        "path": "testcases/canonical-endpoint-control-v1/replay/hidden-warm-v5/desktop-saved.ressectionlab",
+        "sha256": "e8c1e3b013dc3e06943773ebb2caabd081babd5540ae79706283b5717f60d911"
+      }
+    },
+    {
+      "report": {
+        "path": "testcases/canonical-endpoint-control-v1/replay/hidden-cold-v3/report.json",
+        "sha256": "838ac6c001d8d4017110cbad3caf47412cd2b7e64909f76927c1e5be5a2b4f92"
+      },
+      "savedCase": {
+        "path": "testcases/canonical-endpoint-control-v1/replay/hidden-cold-v3/desktop-saved.ressectionlab",
+        "sha256": "215722cb66b495cbc65705da786ab44847577f76cff40d918bc5529da0ddd9d9"
+      }
+    }
+  ],
+  "independentPhysicalRequests": 41,
+  "independentWallSeconds": 7.526953333988786,
+  "limitations": [
+    "Generated post-access episode inspection only; prior access costs, functional outcomes and unsupported physics remain unknown. No patient execution or new training.",
+    "External originalepisode/checkpoint/producer bytes are verified in this trusted export pipeline; arbitrary malicious re-signing of all metadata is outside this receipt.",
+    "41requests are independent verification replays, not new policy rollouts or development outcomes. Final UI seek/frame reconstruction has its own producer receipts.",
+    "A fixed preparation explains much target gain; seed instability, extra controlCSTremoval and computation tradeoffs preclude robust learned/harm dominance claims."
+  ],
+  "nativeCaseHash": "42c2be60f795f8e446d79740f94cf2fe0839daa9e85229a588b8f92c33453c64",
+  "openMaterialBlockers": [],
+  "optimizerUpdates": 0,
+  "packetHash": "sha256:349f737bd41cf760cd8d6d0f889b2337cd9d08d546c76c14ba6a2b6e2a1eecec",
+  "passed": true,
+  "reviewedUtc": "2026-11-16T21:47:52.621221+00:00",
+  "reviewer": "Independent /root/source_packet; no replay-owner code edits",
+  "runtimeSourceHashes": {
+    "desktop/dist/assets/incrementalSurface.worker-C_8M3AWK.js": "ecc32fa0f86cfee5a9ed52e15957129d9fd01ad0a2114637803e65817784d3e2",
+    "desktop/dist/assets/index-6Ws0JzGI.css": "5b2080d61b763238edf0582aa97583211a6c31c8fece3b1e6f6d733cf41debd6",
+    "desktop/dist/assets/index-DaNAGWwM.js": "d2c4f264a4abd025fd3a0d58eb804b6b326c8e198cee8505bf227ec6ee992ece",
+    "desktop/dist/assets/labelPacking.worker-B9d7FlLL.js": "a8971e96fa942ddf75f29f3d3c08d1034608cfea1fc50dee239e1b314be8205a",
+    "desktop/dist/assets/sourcePickingBvh.worker-DycEjoGd.js": "16f67b463bfdd5a9609a3c0b6775b81212ded8e1f907a2b75ab7e5aa215f2866",
+    "desktop/dist/assets/surface.worker-C9u5xXVU.js": "bc2f39e874ecbdf4f52475af9064292d5dd2d064efda726826581425a0362010",
+    "desktop/dist/index.html": "63b65855c4ed591293c2922b55ed55c0949015c0072d928031e3a9c3eb6a381c",
+    "desktop/electron/main.cjs": "f75709fc161a84a9d281122e5057becdc07d6d1cc7cf8fbc5a864e09fb334108",
+    "desktop/electron/preload.cjs": "9ac9998756baac30944a48d5e9f6481d726315111f9d32a9a825e37dd0137f33",
+    "desktop/electron/sidecar.cjs": "731362563043cfab3ce35369aa2f6e9da1386e08a6931268aa1ee7916fd32002",
+    "desktop/electron/verify-sequential-episodes.cjs": "2dc701d1a6fd968695474fecab352cd22ae82a8613d8a8d5800ad1f91d392e17",
+    "src/resectionlab/surgical_bridge.py": "e7d0a6889c87a4e3527101af6514073372b65253fee24d6cf0fa3a1b01d13999",
+    "src/resectionlab/surgical_consequences.py": "46bc832521d29fdac4afdbe6ccbb7858206645cc8b8cb51a03b08c834a2113be",
+    "src/resectionlab/surgical_cranial_geometry.py": "13dd3b70a2e39b4bedb4d8bc34b510cb1c5ad614750efb8b8860cef6ad429a40",
+    "src/resectionlab/surgical_cranial_planning.py": "37d5ea4156db0f71bdaa9cc554af7b6ae1ce0a85a57843a0c6ac351db4540f0a",
+    "src/resectionlab/surgical_engine.py": "70bb2cca5e9bc993e00843a39c9a4252a49fe8fdf643c4d0eb78ac740b3bc038",
+    "src/resectionlab/surgical_planning_admission.py": "0aeb039e458260f5e06a27d2e4e278a47578ce8e72a9f6133493d4e08d42c330",
+    "src/resectionlab/surgical_procedure_policy.py": "22f43c971f3eaeffb4328eff2c12ec7f8d2b42fded294c932619a5ab14a4ce4f",
+    "src/resectionlab/surgical_recorded_sequential.py": "cef2e3b7b7d7047f1a4254c825f7eff95a2cd45d254b671e7aa67b002a5bce94",
+    "src/resectionlab/surgical_rl_env.py": "ac4aa96e8f0b9b309c13feed64e1594e99b12fbd3b049916e31613b24eaebf57",
+    "src/resectionlab/surgical_scene.py": "b1f4ac6c79d54a4c389bdce63af56a86c891bc2652fc3e2c8a430739303f7f9a",
+    "src/resectionlab/surgical_sequence_outcomes.py": "1f7c9d7ecc79d6bb8425bd09c37b59812db684ed81b2b234f72d3698b33449ca",
+    "src/resectionlab/surgical_sequential_task.py": "55645d240bc2e5f2b00b8d4c18ee9ca60b81b2c7612211d51e0f428a51d6050a"
+  },
+  "schema": "resectionlab.independent-recorded-episode-review.v1",
+  "scope": "Actual original generated learned17/43,greedy,search,fixed-control episodes and final hiddenSave/cold runtime",
+  "sourceSceneId": "sha256:71f9b08892a681e71231437131ef5318d00cd09e3d93c28312f532f560ef3d1b"
+}

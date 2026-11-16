@@ -86,3 +86,20 @@ test('two-tool evidence survives observed frames as historical and cannot cross 
   cache.accept({...full(),strategyPlanning:strategy},source,false);
   assert.equal(cache.accept({...frame(),strategyPlanning:null},source,true).strategyPlanning,null);
 });
+
+
+test('admitted policy hash survives only same-source read-only frames without admission',()=>{
+ const cache=new SurgicalComparisonContext(),source={},admission={policyHash:'sha256:policy',available:true,sourceClass:'generated-engineering',blockers:[]};
+ cache.accept({...full(),planningAdmission:admission},source,false);
+ const wire=frame(),display=cache.accept(wire,source,true);
+ assert.equal(display.planningAdmission.policyHash,admission.policyHash);assert.equal(display.planningAdmission.available,false);
+ assert.equal(display.planningAdmission.blockers[0].code,'READ_ONLY_RECORDED_FRAME');
+ assert.equal(admission.available,true);assert.equal(wire.planningAdmission,undefined);
+ for(const [owner,change] of [[{},{}],[source,{caseHash:'other'}],[source,{view:{scene:{sceneId:'other'}}}],[source,{playback:undefined}]]){
+  cache.accept({...full(),planningAdmission:admission},source,false);
+  assert.equal(cache.accept({...frame(),planningAdmission:admission,...change},owner,true).planningAdmission,undefined);
+ }
+ cache.accept({...full(),planningAdmission:admission},source,false);
+ assert.equal(cache.accept({...frame(),planningAdmission:undefined},source,true).planningAdmission,undefined);
+ assert.equal(cache.accept(frame(),source,true).planningAdmission,undefined);
+});

@@ -76,22 +76,18 @@ class SequentialTaskConfig:
 COMMON_CONFIG = SequentialTaskConfig()
 
 
-def endpoint_assessment(engine, config=COMMON_CONFIG, *, attempts=None, invalid_actions=0,
-        stopped=False, externally_truncated=False):
-    """Shared native/adapter classification, including complete-tool exterior."""
+def endpoint_physical_state(engine, config=COMMON_CONFIG):
+    """Shared physical cleanup and whole-body withdrawal; no state changes."""
     from .surgical_task_domain import _posed
     from .surgical_motion import envelopes
     from .surgical_tools import TOOLS
     from .surgical_rl_protection import ProtectionSet, ProtectionAnnotation, grid_binding
-    progress = assess_original_target_progress(engine,
-        minimum_target_fraction=config.minimum_target_fraction, minimum_zones=config.minimum_zones,
-        minimum_zone_fraction_of_original=config.minimum_zone_fraction_of_original)
-    evaluation = evaluate_procedure_sequence(engine)
+    procedure = PROPERTY in engine.scene.properties
     state = engine.state
     pending = []
-    intracranial = procedure_source_memberships(engine.scene)['intracranial']
+    intracranial = procedure_source_memberships(engine.scene)['intracranial'] if procedure else None
     index = getattr(engine.scene, '_sequential_exterior_index', None)
-    if index is None:
+    if procedure and index is None:
         annotation = ProtectionAnnotation('sequential-intracranial', tuple(sorted(intracranial)),
             grid_binding(engine.scene), 'Generated declared intracranial coverage', 'unreviewed', 'intracranial')
         index = ProtectionSet(engine.scene, [annotation], required=(), clearance_mm=0.)
@@ -99,20 +95,45 @@ def endpoint_assessment(engine, config=COMMON_CONFIG, *, attempts=None, invalid_
     for key, slot in state['slots'].items():
         if slot['active'] or slot['inserted'] or slot['grip'] or key in state['holds']:
             pending.append(key + ':withdrawal')
-        if _posed(engine, key) and any(len(index.capsule_hits(a, b, radius)) for a, b, radius, _ in
+        if procedure and _posed(engine, key) and any(len(index.capsule_hits(a, b, radius)) for a, b, radius, _ in
                 envelopes(TOOLS[slot['instrument']], engine.parameters(slot), slot['position'], slot['quaternion'])):
             pending.append(key + ':not-exterior')
+        elif not procedure and _posed(engine, key):
+            from .surgical_cranial_guards import tool_is_exterior
+            if getattr(engine, '_cranial_access', None) is None or not tool_is_exterior(engine, key):
+                pending.append(key + ':not-exterior')
     if state.get('detachedFragments'): pending.append('detached-fragments')
     fluid = sum(state['fluid'].values()) + sum(s.get('reservoirMm3', 0.) for s in state['sources'])
     if fluid > config.maximum_endpoint_fluid_mm3 + 1e-9: pending.append('fluid')
     if state['debrisMm3'] > config.maximum_endpoint_debris_mm3 + 1e-9: pending.append('debris')
     if any(s.get('bleedingActive', True) for s in state['sources']): pending.append('bleeding')
+    return dict(pending=pending, cleanupComplete=not pending, fluidMm3=fluid, debrisMm3=float(state['debrisMm3']))
+
+
+def endpoint_assessment(engine, config=COMMON_CONFIG, *, attempts=None, invalid_actions=0,
+        stopped=False, externally_truncated=False, additional_violations=(), completion_blockers=()):
+    """Shared native/adapter classification, including complete-tool exterior."""
+    progress = assess_original_target_progress(engine,
+        minimum_target_fraction=config.minimum_target_fraction, minimum_zones=config.minimum_zones,
+        minimum_zone_fraction_of_original=config.minimum_zone_fraction_of_original)
+    if (not isinstance(additional_violations, (list, tuple)) or
+            not isinstance(completion_blockers, (list, tuple)) or
+            any(not isinstance(v, str) or not v for v in (*additional_violations, *completion_blockers))):
+        raise ValueError('Endpoint blockers must be explicit additional reasons')
+    procedure = PROPERTY in engine.scene.properties
+    if not procedure:
+        from .surgical_planning_admission import require_planning_admission
+        require_planning_admission(engine)
+    evaluation = evaluate_procedure_sequence(engine) if procedure else {'admissible': True}
+    physical = endpoint_physical_state(engine, config)
+    state = engine.state;pending = physical['pending'];fluid = physical['fluidMm3']
     attempts = len(engine.actions) if attempts is None else attempts
     truncated = bool(externally_truncated or attempts >= config.max_attempts or
         invalid_actions >= config.max_invalid_actions or state['elapsedSeconds'] >= config.max_modeled_seconds - 1e-9)
-    valid = not pending and evaluation['admissible']
-    completed = valid and progress['completedProgressRequirement'] and stopped
-    classification = ('constraint-failure' if not evaluation['admissible'] else
+    admissible = evaluation['admissible'] and not additional_violations
+    valid = not pending and admissible
+    completed = valid and progress['completedProgressRequirement'] and stopped and not completion_blockers
+    classification = ('constraint-failure' if not admissible else
         'truncated' if truncated else 'successful-treatment' if completed else
         'valid-stop-with-residual' if stopped and valid else 'in-progress')
     return dict(schema=config.schema, configHash=config.fingerprint, progress=progress,

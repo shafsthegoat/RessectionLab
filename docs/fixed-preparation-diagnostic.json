@@ -1,0 +1,474 @@
+{
+  "acceptedHistoryAudit": {
+    "failures": [],
+    "physicalRequests": 199,
+    "uniqueSnapshots": 22,
+    "wallSeconds": 36.30039754090831
+  },
+  "allAttemptCost": {
+    "canceledRequests": 0,
+    "executionPhysicalCalls": 393,
+    "physicalCalls": 1604,
+    "planningPhysicalCalls": 1211,
+    "wallSeconds": 733.7656843783334
+  },
+  "allAttemptReplay": {
+    "requests": 786,
+    "seconds": 378.3386451639235
+  },
+  "baselineChallenge": "Fixed narrow preparation explains high-budget target-treatment gain:75.63% vs seed17 73.55%,15ties/1win; delayed family matches100%. Low control65.49% vs seed17 73.55% reflects charged greedy preview costs. No robust learned superiority established.",
+  "decision": "Redesign/challenge benchmark with simple controls before more learning; retain seed17 online efficiency and two non-improving seeds.",
+  "developmentStateIntervention": {
+    "additionalRuns": 2,
+    "evaluation": {
+      "path": "testcases/canonical-endpoint-control-v1/development-state-intervention-v1/evaluation.json",
+      "sha256": "d4e86b651d87ed606e5f39cce90676cc40b285144d1721f6ef31f4128f2c6526"
+    },
+    "independentReview": {
+      "path": "testcases/canonical-endpoint-control-v1/independent-review/development-state-intervention-review-v1.json",
+      "sha256": "380a5ede11404e9d21ed28aa4aa1250bdd0083e441db026eaf5699f18a281803"
+    },
+    "limitation": "Conditional order under common one-use available_mask and8selections, not physical impossibility of another exchange. Conditional hand-coded schedules remain baselines; no fitting/generalization claim.",
+    "onlineRequests": 19,
+    "plan": {
+      "path": "testcases/canonical-endpoint-control-v1/development-state-intervention-v1/plan.json",
+      "sha256": "8cfce6c6cbb03f4df917b23d261ac843d04b600ccedd471029d5634340ad1bb2"
+    },
+    "replayRequests": 38,
+    "source": {
+      "path": "scripts/run_preparation_state_intervention.py",
+      "sha256": "4dcbe2b1297a15b04bc2bea27ba039f4eb6ea2dea64b6968ce338bb341478c16"
+    },
+    "sourceGeometryUnchanged": true,
+    "summary": [
+      {
+        "actualExchanges": [
+          0.4,
+          1.5
+        ],
+        "calls": 14,
+        "classification": "successful-treatment",
+        "fraction": 1.0,
+        "method": "adaptive-current-tip-geometry",
+        "neural": 0.0,
+        "replayRequests": 28,
+        "replaySeconds": 12.843909749994054,
+        "seconds": 6.673098749946803
+      },
+      {
+        "actualExchanges": [
+          0.4,
+          1.5
+        ],
+        "calls": 5,
+        "classification": "valid-stop-with-residual",
+        "fraction": 0.14285714285714285,
+        "method": "fixed-wide-then-narrow",
+        "neural": 0.0,
+        "replayRequests": 10,
+        "replaySeconds": 5.013389500090852,
+        "seconds": 3.459887458011508
+      }
+    ]
+  },
+  "developmentVariation": {
+    "evaluation": {
+      "path": "testcases/canonical-endpoint-control-v1/development-variation-v1/evaluation.json",
+      "sha256": "ec0c90cecb21ca841562501ccdd29e55ddb1ac2271e0590db562ed733b1c6bc9"
+    },
+    "futureProposedGroups": {
+      "assessment": [
+        8200,
+        8201,
+        8202,
+        8203,
+        8204,
+        8205,
+        8206,
+        8207,
+        8208,
+        8209,
+        8210,
+        8211,
+        8212,
+        8213,
+        8214,
+        8215
+      ],
+      "train": [
+        8000,
+        8001,
+        8002,
+        8003,
+        8004,
+        8005,
+        8006,
+        8007,
+        8008,
+        8009,
+        8010,
+        8011,
+        8012,
+        8013,
+        8014,
+        8015,
+        8016,
+        8017,
+        8018,
+        8019,
+        8020,
+        8021,
+        8022,
+        8023,
+        8024,
+        8025,
+        8026,
+        8027,
+        8028,
+        8029,
+        8030,
+        8031
+      ],
+      "validation": [
+        8100,
+        8101,
+        8102,
+        8103,
+        8104,
+        8105,
+        8106,
+        8107
+      ]
+    },
+    "laterAdmission": false,
+    "limitation": "Two development cases only. Actual wide work then narrow exchange achieves100%; a fixed two-stage rule still solves both. No learning/generalization evidence.",
+    "plan": {
+      "path": "testcases/canonical-endpoint-control-v1/development-variation-v1/plan.json",
+      "sha256": "3e9622793c7f1a490e0d228d0a3db35affa33a3109806639174429fca07b72cf"
+    },
+    "summary": [
+      {
+        "calls": 20,
+        "classification": "valid-stop-with-residual",
+        "failure": null,
+        "fraction": 0.14285714285714285,
+        "method": "greedy",
+        "neural": 0.0,
+        "parent": 4000,
+        "seconds": 8.911429666914046
+      },
+      {
+        "calls": 44,
+        "classification": "successful-treatment",
+        "failure": null,
+        "fraction": 0.8571428571428571,
+        "method": "fixed-narrow-greedy",
+        "neural": 0.0,
+        "parent": 4000,
+        "seconds": 17.53561404114589
+      },
+      {
+        "calls": 13,
+        "classification": "successful-treatment",
+        "failure": null,
+        "fraction": 1.0,
+        "method": "source-state-geometry-rule",
+        "neural": 0.0,
+        "parent": 4000,
+        "seconds": 5.670097041875124
+      },
+      {
+        "calls": 20,
+        "classification": "valid-stop-with-residual",
+        "failure": null,
+        "fraction": 0.125,
+        "method": "greedy",
+        "neural": 0.0,
+        "parent": 4004,
+        "seconds": 9.173664583126083
+      },
+      {
+        "calls": 44,
+        "classification": "successful-treatment",
+        "failure": null,
+        "fraction": 0.875,
+        "method": "fixed-narrow-greedy",
+        "neural": 0.0,
+        "parent": 4004,
+        "seconds": 18.06308845919557
+      },
+      {
+        "calls": 13,
+        "classification": "successful-treatment",
+        "failure": null,
+        "fraction": 1.0,
+        "method": "source-state-geometry-rule",
+        "neural": 0.0,
+        "parent": 4004,
+        "seconds": 5.95842579100281
+      }
+    ]
+  },
+  "environment": {
+    "path": "testcases/canonical-endpoint-control-v1/diagnostic/environment-verification.json",
+    "sha256": "a034388ac38626aadf641e7f0eb081d0eb503eabb69aaf1d4508e4fcf58a0d81"
+  },
+  "evidence": [
+    {
+      "path": "testcases/canonical-endpoint-control-v1/diagnostic/summary.json",
+      "sha256": "dd3a0e586ee587998cb7095375804d3a7d1683b874d738331cec1e6318f3a96b"
+    },
+    {
+      "path": "testcases/canonical-endpoint-control-v1/diagnostic/rows.csv",
+      "sha256": "508628033548280559b6eea4868baa2b479e55a81f32ccb81645a1b87f8f8d31"
+    },
+    {
+      "path": "testcases/canonical-endpoint-control-v1/diagnostic/family-summary.csv",
+      "sha256": "24268be0ef4ed8d97058c31ef7957cad87f8fb74c88c9fc608fcaae752fa90d5"
+    },
+    {
+      "path": "testcases/canonical-endpoint-control-v1/diagnostic/paired.csv",
+      "sha256": "ce36cd095e45f7a28fb6341229f698a41c97252defc6dddbe830325eb4528e3b"
+    },
+    {
+      "path": "testcases/canonical-endpoint-control-v1/diagnostic/paired-family-summary.csv",
+      "sha256": "4055cb3acabdc0d4e4847201636e29e087e80c6f60b5e112bc6043dda4b0c0ce"
+    },
+    {
+      "path": "testcases/canonical-endpoint-control-v1/diagnostic/index.html",
+      "sha256": "e8d271349ca96c7e22fbff9595647aaa2eefb088561282ad2ae1b1b9a1ea0e2f"
+    }
+  ],
+  "executedRunner": {
+    "path": "testcases/canonical-endpoint-control-v1/diagnostic/implementation/run_fixed_preparation_diagnostic.py",
+    "sha256": "aa49db33c874ea2cfcaac7dfb820c93490efd64499609421d3454b586927fdf5"
+  },
+  "harmCaveat": "No dominance: parent202 control54mm3 CST vs seed17 0, both tiers; same54mm3 permitted neural/motor removal. Hard violations0; bounds unchanged.",
+  "historicalTiming": "Prior comparator times are historical; no matched retiming claim.",
+  "implementation": {
+    "scripts/rerun_fixed_preparation_attempts.py": "0dcd5209deabd8c66fe95ab14f4e10f6962f8ebc556d9ac18a99172ec264b2bc",
+    "scripts/run_fixed_preparation_diagnostic.py": "aab4ac939a2ab4b8b51efcdc91ed480773b0a51a4b816cb585af396177324ddd",
+    "scripts/run_preparation_state_intervention.py": "4dcbe2b1297a15b04bc2bea27ba039f4eb6ea2dea64b6968ce338bb341478c16",
+    "scripts/run_preparation_variation.py": "c323afdd0a316b4295b6d1789a49367aca78644c437539529919f826fda65a14",
+    "scripts/summarize_fixed_preparation_diagnostic.py": "afa4b52ebaf3cf1711aefc7f27ddded60f89f3f877c5b868392bd357d5873b1a",
+    "src/resectionlab/surgical_fixed_preparation_control.py": "24e182559d8969f56a2c050229cd075cc082d0df3984963272f7ba54c7996632",
+    "src/resectionlab/surgical_preparation_variation.py": "5b2c8a7531d6c4e7d5ebff2832cee48aa80e3e3a14e5fbb4f1b21b91a7c0cdf8",
+    "tests/test_fixed_preparation_control.py": "58ab00907d67c965049439d4e261071e523af163e1c297e2d3dc3c8c5c2833bd",
+    "tests/test_preparation_variation.py": "5258bee63028aa78eb42a050b9836958704f56658c8e20daea5fbd96465ef4ea"
+  },
+  "independentReview": {
+    "path": "testcases/canonical-endpoint-control-v1/independent-review/diagnostic-review-v2.json",
+    "sha256": "6354b92d82e6082ac615b985a701ea201f96e4ec1e39d8b59eced6bbbf0c8e77"
+  },
+  "means": [
+    {
+      "actualRefusals": 0,
+      "calls": 26.1875,
+      "controller": "greedy",
+      "cst": 8.4375,
+      "neural": 13.5,
+      "previewRefusals": 69,
+      "seconds": 11.951738226547604,
+      "tier": "low",
+      "treatment": 0.4103422619047619
+    },
+    {
+      "actualRefusals": 0,
+      "calls": 34.75,
+      "controller": "search",
+      "cst": 6.75,
+      "neural": 13.5,
+      "previewRefusals": 97,
+      "seconds": 20.680565971386386,
+      "tier": "low",
+      "treatment": 0.5621279761904762
+    },
+    {
+      "actualRefusals": 17,
+      "calls": 12.9375,
+      "controller": "learned-s17",
+      "cst": 5.0625,
+      "neural": 13.5,
+      "previewRefusals": 0,
+      "seconds": 5.810397429711884,
+      "tier": "low",
+      "treatment": 0.7354910714285714
+    },
+    {
+      "actualRefusals": 37,
+      "calls": 10.6875,
+      "controller": "learned-s43",
+      "cst": 8.4375,
+      "neural": 13.5,
+      "previewRefusals": 0,
+      "seconds": 4.805235437437659,
+      "tier": "low",
+      "treatment": 0.4103422619047619
+    },
+    {
+      "actualRefusals": 36,
+      "calls": 10.75,
+      "controller": "learned-s71",
+      "cst": 5.0625,
+      "neural": 13.5,
+      "previewRefusals": 0,
+      "seconds": 4.772091320439358,
+      "tier": "low",
+      "treatment": 0.4103422619047619
+    },
+    {
+      "actualRefusals": 0,
+      "calls": 32.625,
+      "controller": "fixed-narrow-greedy",
+      "cst": 8.4375,
+      "neural": 13.5,
+      "previewRefusals": 27,
+      "seconds": 15.26301326311659,
+      "tier": "low",
+      "treatment": 0.6548859126984127
+    },
+    {
+      "actualRefusals": 0,
+      "calls": 27.375,
+      "controller": "greedy",
+      "cst": 8.4375,
+      "neural": 13.5,
+      "previewRefusals": 76,
+      "seconds": 12.2003628671373,
+      "tier": "high",
+      "treatment": 0.4103422619047619
+    },
+    {
+      "actualRefusals": 0,
+      "calls": 60.6875,
+      "controller": "search",
+      "cst": 8.4375,
+      "neural": 13.5,
+      "previewRefusals": 147,
+      "seconds": 33.45240191926132,
+      "tier": "high",
+      "treatment": 0.7563244047619048
+    },
+    {
+      "actualRefusals": 17,
+      "calls": 12.9375,
+      "controller": "learned-s17",
+      "cst": 5.0625,
+      "neural": 13.5,
+      "previewRefusals": 0,
+      "seconds": 5.891797929536551,
+      "tier": "high",
+      "treatment": 0.7354910714285714
+    },
+    {
+      "actualRefusals": 37,
+      "calls": 10.6875,
+      "controller": "learned-s43",
+      "cst": 8.4375,
+      "neural": 13.5,
+      "previewRefusals": 0,
+      "seconds": 4.876374630170176,
+      "tier": "high",
+      "treatment": 0.4103422619047619
+    },
+    {
+      "actualRefusals": 36,
+      "calls": 10.75,
+      "controller": "learned-s71",
+      "cst": 5.0625,
+      "neural": 13.5,
+      "previewRefusals": 0,
+      "seconds": 4.863434229278937,
+      "tier": "high",
+      "treatment": 0.4103422619047619
+    },
+    {
+      "actualRefusals": 0,
+      "calls": 39.875,
+      "controller": "fixed-narrow-greedy",
+      "cst": 8.4375,
+      "neural": 13.5,
+      "previewRefusals": 44,
+      "seconds": 17.43943673184549,
+      "tier": "high",
+      "treatment": 0.7563244047619048
+    }
+  ],
+  "optimizerUpdates": 0,
+  "originalEvidenceUnchanged": true,
+  "originalMeasurements": {
+    "evaluationSha256": "d4a42070d3509b4dda24875f8eb031a11633d0f53d5a95a0b9a4dbc8f9434f51",
+    "protocolSha256": "6a0399a9690d8fe8077568c07bc59d25ba14f3cb72a336fa71d1b83ff09f7ac0",
+    "resultsCsvSha256": "55740b325c05a69c5820706f503a63a72adbc4b98eca53e438c986d9d81f7de5",
+    "unchanged": true
+  },
+  "patientExecution": false,
+  "primaryCost": {
+    "actual_attempts": {
+      "known": 316,
+      "missing": 0
+    },
+    "actual_refusals": {
+      "known": 0,
+      "missing": 0
+    },
+    "canceled_requests": {
+      "known": 0,
+      "missing": 0
+    },
+    "execution_requests": {
+      "known": 284,
+      "missing": 0
+    },
+    "online_wall_seconds": {
+      "known": 523.2391999193933,
+      "missing": 0
+    },
+    "physical_requests": {
+      "known": 1160,
+      "missing": 0
+    },
+    "planning_requests": {
+      "known": 876,
+      "missing": 0
+    },
+    "preview_refusals": {
+      "known": 71,
+      "missing": 0
+    }
+  },
+  "primaryJobs": 32,
+  "recordedAttempts": 45,
+  "reproductionGuardUpdate": {
+    "path": "testcases/canonical-endpoint-control-v1/diagnostic/runner-preservation-update.json",
+    "sha256": "2f228eddbab653bc25d8255c5a981d9e134a2ed1e1d1069f38a61990bfd69184"
+  },
+  "schema": "resectionlab.fixed-preparation-diagnostic-delivery.v1",
+  "scope": "Previously inspected layouts; diagnostic, not untouched evaluation",
+  "sourceBundle": {
+    "path": "/Users/shaf/coding_projects/RessectionLab/testcases/canonical-endpoint-control-v1/diagnostic/source-bundle-6e04",
+    "sha256": "11e95324d9d3efda1743136af35084df56618d738758a51fe286d76ece669a9c"
+  },
+  "sourceCommit": "6e04f98c0ac512dc932dc2aaf993df9e9ebc561f",
+  "tests": [
+    "2 physical/boundary controls passed36.53s",
+    "2 development source/admission tests passed0.91s",
+    "Output-preservation guard test passed0.73s",
+    "3 development source/state-observation tests passed; observation fixture adds0physical requests"
+  ],
+  "timingRetry": {
+    "initialAttemptsRetained": true,
+    "path": "/Users/shaf/coding_projects/RessectionLab/testcases/canonical-endpoint-control-v1/diagnostic/clean-attempt-v2/evaluation.json",
+    "planSha256": "6512241a80f61695dc39620773378258c24edc95266dab0f80e57e293fd94a6e",
+    "sha256": "58cd984f2f078fd2d1df0f182746922d5928450a4b7f452a8a37be01a3706fd1"
+  },
+  "unknownEvidence": [
+    "bloodGeneratedMm3",
+    "brainStrainSquaredMm3S",
+    "brainStressSquaredPa2Mm3S",
+    "languageEncounterMm3",
+    "motorEncounterMm3",
+    "thermalExposureMm3KS",
+    "thermalPeakC"
+  ]
+}

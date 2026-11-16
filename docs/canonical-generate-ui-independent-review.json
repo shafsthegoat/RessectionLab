@@ -1,0 +1,76 @@
+{
+  "schema": "resectionlab.canonical-generate-ui-independent-review.v1",
+  "status": "approved",
+  "reviewedUtc": "2026-11-16T21:36:32.761948+00:00",
+  "reviewer": "Independent desktop/replay worker; coordinator authored this verifier",
+  "readOnlyReview": true,
+  "runtimeEdits": false,
+  "independentAdditionalCanonicalPhysicsRuns": 0,
+  "harness": {
+    "path": "desktop/electron/verify-canonical-generate.cjs",
+    "sha256": "ee91c3268f8b78987dd6f6baeddbfeeaa13d57ea45168a2c2b0c1099815b9b97"
+  },
+  "warmProof": {
+    "path": "testcases/canonical-endpoint-control-v1/canonical-ui-generate-v2/report.json",
+    "sha256": "b69aa461c1359844d7859136327befdb0495fca636a1b5209df2267ea499dcf7"
+  },
+  "coldProof": {
+    "path": "testcases/canonical-endpoint-control-v1/canonical-ui-cold-v1/report.json",
+    "sha256": "06556411e2226a856ab50672a5d638a285ad4eb6f862aff936df84b83ad43e3d"
+  },
+  "findingsRepaired": [
+    {
+      "finding": "Bootstrap errors could open a default native dialog before guards",
+      "repair": "Fatal/dialog override, automation-hidden argument and accessory activation policy precede filesystem work"
+    },
+    {
+      "finding": "Cold comparison seal alone did not authenticate actual Save/cursor preservation",
+      "repair": "Exact warm Save realpath/SHA plus initial case/scene/branch/position/state equality; selected endpoint and post-Save cursor asserted"
+    },
+    {
+      "finding": "Ready returned before renderer admitted selected state; warm-v1 captured old main state and Save failed disabled",
+      "repair": "Renderer data-state-id/recorded-position match native result; pending display statuses clear and surfaces ready before capture/Save"
+    }
+  ],
+  "runtimeChecks": {
+    "all15RuntimeSourceAndBuildBindingsMatchCurrent": true,
+    "warmColdRuntimeMapsIdentical": true,
+    "actualCanonicalGenerateRequests": 1,
+    "coldGenerateRequests": 0,
+    "actualSavePathAndShaBound": true,
+    "exactInitialColdCursorMatchesWarmSave": true,
+    "comparisonSealAndSelectionEvidencePreserved": true,
+    "codeStableBothRuns": true,
+    "windowEverVisible": false,
+    "engineExitCodes": [
+      0,
+      0
+    ]
+  },
+  "savedCursor": {
+    "caseHash": "sha256:d53450d18fc53cb521dd9f362a9878db7d45da3e7db57fec29e60d604d644932",
+    "sceneId": "sha256:c4ef67f46d6dbc3e695600001b6f50c5a8f784e1ce8c8624c635c7e3ef7be2ac",
+    "branchId": "cranial-superior-opening-23c80d450da5b27e",
+    "position": 128,
+    "stateId": "sha256:558583c429934d62382e0d504df0cf8a2df27a177b4bb4bfa8169c462ab6a0aa"
+  },
+  "comparisonSeal": "sha256:dd531d496470c6c8d30fb061e7f252fa52c11539f793515049edc5f37c594f98",
+  "runtimeSourceHashes": {
+    "src/resectionlab/surgical_cranial_planning.py": "37d5ea4156db0f71bdaa9cc554af7b6ae1ce0a85a57843a0c6ac351db4540f0a",
+    "src/resectionlab/surgical_joint_cranial_search.py": "9ec1ef64184edd1b9f9e238ea56835472664439232c0845b8890894f0ef44aaf",
+    "src/resectionlab/surgical_joint_cranial_forest.py": "36c0285151e0ec89c4eb153daa4867380019a2899c27008bccc6d46074a10493",
+    "src/resectionlab/surgical_consequences.py": "46bc832521d29fdac4afdbe6ccbb7858206645cc8b8cb51a03b08c834a2113be",
+    "src/resectionlab/surgical_sequential_task.py": "55645d240bc2e5f2b00b8d4c18ee9ca60b81b2c7612211d51e0f428a51d6050a",
+    "src/resectionlab/surgical_bridge.py": "e7d0a6889c87a4e3527101af6514073372b65253fee24d6cf0fa3a1b01d13999",
+    "src/resectionlab/surgical_scene.py": "b1f4ac6c79d54a4c389bdce63af56a86c891bc2652fc3e2c8a430739303f7f9a",
+    "desktop/electron/verify-canonical-generate.cjs": "ee91c3268f8b78987dd6f6baeddbfeeaa13d57ea45168a2c2b0c1099815b9b97",
+    "desktop/dist/index.html": "63b65855c4ed591293c2922b55ed55c0949015c0072d928031e3a9c3eb6a381c",
+    "desktop/dist/assets/incrementalSurface.worker-C_8M3AWK.js": "ecc32fa0f86cfee5a9ed52e15957129d9fd01ad0a2114637803e65817784d3e2",
+    "desktop/dist/assets/index-6Ws0JzGI.css": "5b2080d61b763238edf0582aa97583211a6c31c8fece3b1e6f6d733cf41debd6",
+    "desktop/dist/assets/index-DaNAGWwM.js": "d2c4f264a4abd025fd3a0d58eb804b6b326c8e198cee8505bf227ec6ee992ece",
+    "desktop/dist/assets/labelPacking.worker-B9d7FlLL.js": "a8971e96fa942ddf75f29f3d3c08d1034608cfea1fc50dee239e1b314be8205a",
+    "desktop/dist/assets/sourcePickingBvh.worker-DycEjoGd.js": "16f67b463bfdd5a9609a3c0b6775b81212ded8e1f907a2b75ab7e5aa215f2866",
+    "desktop/dist/assets/surface.worker-C9u5xXVU.js": "bc2f39e874ecbdf4f52475af9064292d5dd2d064efda726826581425a0362010"
+  },
+  "unmetCriteria": []
+}

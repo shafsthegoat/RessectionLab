@@ -12,13 +12,16 @@ from test_surgical_joint_cranial_skills import prepared, preparation_program
 from test_surgical_membrane_transport import bone_actions
 
 
-def inventory(engine, contract, contour):
+def inventory(engine, contract, contour, *, cleanup=True):
     removed = set(engine.state['removed'])
     if not set(contract.bone_cells) <= removed:
         kind, commands = 'opening', bone_actions(contour)
     elif not set(contract.membrane_cells) <= removed:
         kind = 'preparation'
         commands = preparation_program(engine, contract, contour)[len(bone_actions(contour)):]
+        if cleanup:
+            from scripts.generated_cranial_demo_case import cleanup_program
+            commands += cleanup_program()
         commands += [request('exchange', instrument='cusa'), request('place', pose=pose())]
     else:
         return [{'id': 'unreached-long-work', 'sourceStateId': engine.state_id, 'kind': 'cusa',
@@ -28,11 +31,11 @@ def inventory(engine, contract, contour):
     return [{'id': kind, 'sourceStateId': engine.state_id, 'kind': kind, 'actions': commands}]
 
 
-def run_search(horizon):
+def run_search(horizon, *, cleanup=True):
     source, contract, contour, _, _, meter, limits = prepared(max_public_calls=1200)
     goal = freeze_joint_resection_goal(source, limits=limits)
     before = source.snapshot()
-    result = checked_joint_sequence_search(source, propose=lambda e: inventory(e, contract, contour),
+    result = checked_joint_sequence_search(source, propose=lambda e: inventory(e, contract, contour, cleanup=cleanup),
         limits=limits, goal=goal, meter=meter, horizon=horizon, max_expansions=6)
     assert source.snapshot() == before
     return source, contract, meter, limits, goal, result

@@ -30,8 +30,8 @@ export function interactivePlanningGroup(overlay:InteractivePlanningOverlay):THR
     dots('recorded-original-target',overlay.recorded.targetPointsRasMm,'#ffb6cd',3,18);
     dots('recorded-residual-target',overlay.recorded.residualPointsRasMm,'#ff6b9e',5,19);
     for(const s of overlay.recorded.structures){
-      const rank=s.id==='motor-cortex'?1:s.id==='corticospinal-tract'?2:0;
-      dots(`declared-source:${s.id}`,s.pointsRasMm,declaredStructureColor(s.id),s.id==='motor-cortex'?11:s.id==='corticospinal-tract'?6:s.id==='supratentorial-neural'?3:8,23+rank);
+      const rank=s.id==='motor-cortex'?1:(s.id==='corticospinal-tract'||s.id==='corticospinal')?2:0;
+      dots(`declared-source:${s.id}`,s.pointsRasMm,declaredStructureColor(s.id),s.id==='motor-cortex'?11:(s.id==='corticospinal-tract'||s.id==='corticospinal')?6:s.id==='supratentorial-neural'?3:8,23+rank);
     }
   }
   return group;

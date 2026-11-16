@@ -239,6 +239,9 @@ def from_case(case, mapping=None):
         np.flatnonzero(masks[r['name']]), np.int64) for r in regions if r.get('target')})
     from .surgical_planning_admission import bind_case_source
     bind_case_source(scene, case)
+    if 'recordedSequentialEpisodeV1' in case.metadata:
+        from .surgical_recorded_sequential import restore_recorded_source
+        return restore_recorded_source(case, scene, mapping)
     return scene
 
 

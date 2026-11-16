@@ -190,18 +190,69 @@ def joint_goal_assessment(engine, *, goal, limits, exit_receipt):
         credit_labels=limits._target_labels, minimum_target_fraction=goal.minimum_target_fraction,
         minimum_zones=goal.minimum_zones,
         minimum_zone_fraction_of_original=goal.minimum_zone_fraction_of_original)
-    readiness = _readiness(engine) or {}
+    readiness = canonical_stage_state(engine)
     ledger = joint_cranial_ledger(engine, limits)
+    from .surgical_joint_cranial_exit import joint_exit_complete
+    stop_checked = (exit_receipt.get('status') == 'accepted' and
+        exit_receipt.get('finalStateId') == engine.state_id and joint_exit_complete(engine))
+    endpoint = canonical_endpoint_assessment(engine, within_limits=ledger['withinLimits'],
+        refusal_reasons=ledger['refusalReasons'], stop_checked=bool(stop_checked),
+        minimum_target_fraction=goal.minimum_target_fraction, minimum_zones=goal.minimum_zones,
+        minimum_zone_fraction_of_original=goal.minimum_zone_fraction_of_original)
     reasons = list(progress['reasons'])
-    if (exit_receipt.get('status') != 'accepted' or
-            exit_receipt.get('finalStateId') != engine.state_id or
-            not readiness.get('wholeExitComplete') or not readiness.get('workEntrySupported')):
+    if not stop_checked or not readiness.get('workEntrySupported'):
         reasons.append('NATIVE_WORK_AND_WHOLE_EXIT_REQUIRED')
+    reasons.extend('ENDPOINT_'+name.upper().replace(':','_').replace('-','_') for name in endpoint['pending'])
+    if endpoint['truncated']:
+        reasons.append('SHARED_ENDPOINT_TRUNCATED')
     if not ledger['withinLimits']:
         reasons.extend(ledger['refusalReasons'])
     return {**progress, 'goalHash': goal.content_hash, 'targetBasis': goal.target_basis,
-        'completedFrozenTask': not reasons, 'reasons': reasons,
+        'completedFrozenTask': endpoint['completedTask'], 'reasons': reasons,
+        'endpointAssessment': endpoint, 'validStop': endpoint_eligible(endpoint),
         'admittedPatientTask': False, 'caseQualificationRequired': True}
+
+
+def endpoint_eligible(endpoint):
+    return bool(endpoint and endpoint.get('terminated') and not endpoint.get('truncated') and
+        endpoint.get('validWithdrawal') and endpoint.get('classification') in
+        ('successful-treatment', 'valid-stop-with-residual'))
+
+
+def canonical_stage_state(engine):
+    """Read final source geometry without recreating execution permissions.
+
+    Native stage_readiness also requires ephemeral registered causal caches.
+    Those are rederived by actual replay, never invented for a cold display.
+    Completion instead checks immutable bone/membrane memberships and whole-tool
+    geometry after the source/history/state binding has been checked.
+    """
+    from .surgical_membrane_transport import clearance
+    from .surgical_joint_cranial_exit import joint_exit_complete
+    contract = getattr(engine, '_cranial_stages', None)
+    ready = bool(contract and set(contract.bone_cells) <= set(engine.state['removed']) and
+        clearance(engine, contract)['cleared'])
+    return {'workEntrySupported': ready, 'wholeExitComplete': joint_exit_complete(engine)}
+
+
+def canonical_endpoint_assessment(engine, *, within_limits, refusal_reasons=(), stop_checked=True,
+        minimum_target_fraction=.5, minimum_zones=3, minimum_zone_fraction_of_original=.05,
+        externally_truncated=False):
+    """One endpoint readout for native candidates and source-bound cold views.
+
+    Native stage/whole-sequence limits only add requirements to the shared
+    endpoint; they cannot relax cleanup, withdrawal, progress or harm bounds.
+    """
+    from dataclasses import replace
+    from .surgical_sequential_task import COMMON_CONFIG, endpoint_assessment
+    config = replace(COMMON_CONFIG, minimum_target_fraction=minimum_target_fraction,
+        minimum_zones=minimum_zones, minimum_zone_fraction_of_original=minimum_zone_fraction_of_original)
+    ready = canonical_stage_state(engine)
+    return endpoint_assessment(engine, config, attempts=len(engine.actions)+int(stop_checked),
+        stopped=stop_checked, externally_truncated=externally_truncated,
+        additional_violations=list(refusal_reasons or ['JOINT_SEQUENCE_LIMITS']) if not within_limits else (),
+        completion_blockers=() if ready.get('workEntrySupported') and ready.get('wholeExitComplete') else
+            ('NATIVE_WORK_AND_WHOLE_EXIT_REQUIRED',))
 
 
 @dataclass
@@ -222,6 +273,7 @@ class JointSearchResult:
     stopped_prefixes: tuple
     attempts: tuple
     evidence: dict
+    checked_nodes: tuple = ()
 
 
 def _key(node):
@@ -330,6 +382,10 @@ def _compare_checked_nodes(nodes, stop, limits):
     """Drive the existing consequence comparator with actual exited engines."""
     from .surgical_consequences import compare_samples, consequence_vector
     from .surgical_procedure_policy import procedure_comparison_policy
+    nodes = [n for n in nodes if endpoint_eligible(n.goal_assessment.get('endpointAssessment'))]
+    if not endpoint_eligible(stop.goal_assessment.get('endpointAssessment')):
+        return None, (), {'selectedBranchId': None, 'pairedScenarioParetoFront': [],
+            'reason': 'checked_stop_endpoint_unavailable', 'stopExecutable': False, 'scenarios': ['nominal']}
     samples, by_id = [], {}
     for index, node in enumerate([stop, *nodes]):
         branch = 'STOP' if index == 0 else 'candidate-' + str(index)
@@ -605,7 +661,7 @@ def checked_joint_sequence_search(engine, route=None, *, propose, limits, goal,
             initial_stop, limits)
         pareto = sorted(frontier_nodes, key=_key)
         if selected is initial_stop:
-            pareto = [initial_stop]
+            pareto = [initial_stop, *[n for n in pareto if n is not initial_stop]]
         elif selected is not None:
             pareto = [selected, *[n for n in pareto if n is not selected]]
     evidence = {'schema': SCHEMA, 'horizon': horizon, 'beamWidth': beam_width,
@@ -635,7 +691,7 @@ def checked_joint_sequence_search(engine, route=None, *, propose, limits, goal,
     final_wall = time.monotonic()-limits.frozen_at
     over_wall = final_wall >= limits.max_wall_seconds
     over_calls = meter.calls > min(limits.max_public_calls, meter.max_calls)
-    for node in nodes:
+    for node in [*nodes, *([initial_stop] if initial_stop is not None else [])]:
         node.ledger.update(spentPublicCalls=meter.calls, wallSecondsSinceMeterCreation=final_wall)
         for failed, reason in ((over_wall, 'WALL_BUDGET'), (over_calls, 'PUBLIC_CALL_BUDGET'),
                 (interrupted, 'SEARCH_CANCELLED_OR_INTERRUPTED_NOT_ADMITTED')):
@@ -647,11 +703,23 @@ def checked_joint_sequence_search(engine, route=None, *, propose, limits, goal,
                 node.goal_assessment['completedFrozenTask'] = False
                 if reason not in node.goal_assessment['reasons']:
                     node.goal_assessment['reasons'].append(reason)
+                node.goal_assessment['endpointAssessment'] = canonical_endpoint_assessment(node.exited,
+                    within_limits=node.ledger['withinLimits'], refusal_reasons=node.ledger['refusalReasons'],
+                    externally_truncated=True)
+                node.goal_assessment['validStop'] = False
     if over_wall or over_calls or interrupted:
         selected, pareto = None, []
         evidence.update(decision='STOP', selectedProposalIds=[], budgetExhausted=True,
             stopReason=stop_reason or ('WALL_BUDGET_AT_FINAL_READOUT' if over_wall else 'PUBLIC_CALL_BUDGET'))
     evidence['wallSecondsSinceMeterCreation'] = final_wall
     evidence['returnedFrozenTask'] = bool(selected and selected.goal_assessment['completedFrozenTask'])
-    return JointSearchResult(selected, tuple(pareto[:3]), tuple(progress),
-        tuple(stopped), tuple(attempts), evidence)
+    checked_nodes = [*nodes, *([initial_stop] if initial_stop is not None else [])]
+    evidence['checkedCandidates'] = [{'sceneId': n.exited.scene.identity, 'finalStateId': n.exited.state_id,
+        'actionHash': semantic_digest(n.exited.actions), 'withinLimits': n.ledger['withinLimits'],
+        'endpointHash': semantic_digest(n.goal_assessment['endpointAssessment'])} for n in checked_nodes]
+    evidence['checkedCandidateCount'] = len(checked_nodes)
+    alternatives = [*pareto]
+    if initial_stop is not None and not any(n is initial_stop for n in alternatives):
+        alternatives.append(initial_stop)
+    return JointSearchResult(selected, tuple(alternatives), tuple(progress),
+        tuple(stopped), tuple(attempts), evidence, tuple(checked_nodes))
