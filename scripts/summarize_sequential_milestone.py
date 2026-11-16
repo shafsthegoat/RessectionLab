@@ -28,6 +28,17 @@ def write_csv(path,rows):
         writer=csv.DictWriter(stream,fieldnames=list(rows[0]));writer.writeheader();writer.writerows(rows)
 
 
+def learning_interpretation(delta,per_seed,search_delta):
+    if delta is None:return 'Delayed-preparation improvement is unavailable; inspect retained failures.'
+    positive=sum(r['paired_qualified_difference']>1e-10 for r in per_seed)
+    seeds='; '.join(f"seed {r['seed']}: {100*r['paired_qualified_difference']:+.1f} points" for r in per_seed)
+    comparison=(f" Learned mean treatment is {'below' if search_delta<0 else 'above' if search_delta>0 else 'equal to'} search "
+        f"({100*search_delta:+.1f} percentage points).") if search_delta is not None else ''
+    return (f"Mean delayed-preparation difference versus greedy: {100*delta:+.1f} percentage points. "
+        f"Improvement occurred in {positive}/{len(per_seed)} seeds ({seeds})."+comparison+
+        ' These results do not establish robust learned superiority.')
+
+
 def validate_job_grid(raw_rows,protocol,freeze):
     parents=[c['parent'] for c in protocol['cohort'] if c['split']=='heldout']
     jobs=[('greedy',0),('search',0)]+[
@@ -351,12 +362,13 @@ def main():
         per_seed=[dict(seed=seed,paired_qualified_difference=mean([r['qualified_fraction_difference'] for r in delayed if r['seed']==seed]))
             for seed in sorted({r['seed'] for r in delayed})]
         delta=mean([r['qualified_fraction_difference'] for r in delayed])
+        search_delta=next((r['mean_qualified_difference'] for r in paired_summary
+            if r['tier']==tier and r['baseline']=='search'),None)
         learning_findings.append(dict(tier=tier,delayedBenefitMeanPairedDifference=delta,
             delayedBenefitPerSeed=per_seed,
             positiveMeanDelayedBenefit=delta is not None and delta>1e-10,
             allSeedsPositiveDelayedBenefit=bool(per_seed) and all(r['paired_qualified_difference']>1e-10 for r in per_seed),
-            interpretation='Mean delayed-benefit gain observed; inspect every seed and the quality/compute tradeoff.' if delta is not None and delta>1e-10 else
-                'Learning improvement on delayed preparation was not demonstrated; a completed negative experiment remains a valid delivery.'))
+            interpretation=learning_interpretation(delta,per_seed,search_delta)))
     unmet=list(freeze.get('unmetCriteria',[]))
     if len(rows)!=160:unmet.append(f'Expected160 formal rows; retained{len(rows)}')
     if not all(r['replay_verified'] for r in rows):unmet.append('Some frozen rows lack verified replay')

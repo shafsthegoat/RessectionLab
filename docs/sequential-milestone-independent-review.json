@@ -1,0 +1,116 @@
+{
+  "bindings": {
+    "evaluation": {
+      "path": "testcases/overnight-sequential-v1/benchmark-task-v2/evaluation.json",
+      "sha256": "d4a42070d3509b4dda24875f8eb031a11633d0f53d5a95a0b9a4dbc8f9434f51"
+    },
+    "freeze": {
+      "path": "testcases/overnight-sequential-v1/benchmark-task-v2/freeze.json",
+      "sha256": "85425f495007e4565161ebe2e6bb4613ed016ec12ef9a522f6afc64d151560f7"
+    },
+    "pairedCsv": {
+      "path": "docs/sequential-milestone-paired.csv",
+      "sha256": "4e30e9fb41992cb14dd69776851da399c9747041d0922f3e73f9ed72a3abf7f3"
+    },
+    "protocol": {
+      "path": "testcases/overnight-sequential-v1/benchmark-task-v2/protocol.json",
+      "sha256": "6a0399a9690d8fe8077568c07bc59d25ba14f3cb72a336fa71d1b83ff09f7ac0"
+    },
+    "resultsCsv": {
+      "path": "docs/sequential-milestone-results.csv",
+      "sha256": "55740b325c05a69c5820706f503a63a72adbc4b98eca53e438c986d9d81f7de5"
+    },
+    "resultsManifest": {
+      "path": "docs/sequential-milestone-manifest.json",
+      "sha256": "e4886d0b753ec76fdb47c9cca69e6c9774e4b3ed96e3dea975807f5e28c9b1fd"
+    },
+    "savedHtml": {
+      "path": "testcases/overnight-sequential-v1/benchmark-task-v2/index.html",
+      "sha256": "5ff6260207a592ead8437e203e5fd97d2cd2228553a0d2cb02cad3a00e448cb6"
+    },
+    "scientificFigure": {
+      "path": "testcases/overnight-sequential-v1/benchmark-task-v2/quality-compute.png",
+      "sha256": "5a192d17fa25d057f0ede4b3cdd3358a1c1c5162cc376e4984689d75b33c27fc"
+    },
+    "summarySource": {
+      "path": "scripts/summarize_sequential_milestone.py",
+      "sha256": "8fdf2d1ee4c9818b23049c0732eb0ee511928b7fb6907a0031db9e61b1e481a0"
+    }
+  },
+  "checks": [
+    "All56 source/cohort audits regenerated:32train/8validation/16heldout disjoint geometry groups; exact160unique heldout jobs retained.",
+    "All3seeds have192 reward updates. Independently recomputed all6 complete8-case validation scores per seed and earliest-best epochs17:5,43:2,71:0; selected tensors equal saved epoch tensors. Checkpoint/protocol/source/config/review/prior bytes match.",
+    "Every case artifact equals aggregate row. All accepted receipt programs equal snapshot actions; all replay cache keys/sharing flags/state/classification/attempt/refusal joins independently verified.72 successful native/adapter programs,0 execution/replay failures.",
+    "Immutable source target denominators and direct neural/motor/CST/brainstem/cerebellum counts independently remeasured. Source-specific permitted harm caps respected, including54mm3 maximum neural/motor removal;0 committed hard violations.",
+    "All160 explicit checked STOPs preserve whole-tool withdrawal and0 endpoint debris/fluid; no truncation. Unsupported strain/stress/thermal/blood/functional-encounter fields remain missing in every row; earlier access costs remain unknown.",
+    "All160CSV rows,192paired differences,6seed and6method/tier summaries, wins/ties/losses, cost totals and artifact hashes independently recomputed and matched.",
+    "Online3484requests=1960planning+1524execution;1684attempts include160logicalSTOPs and180actual refusals.1canceled speculative request charged without physical attempt. All call/wall caps respected; maxima22.03s low/37.99s high.",
+    "Training5518episode+1567validation=7085current +1385prior upper bound=8470requests; continuous5691.51s<7200s includes prior/repair interval. Evaluation2383.67s; replay1360requests/618.19s. NativeAudit618requests/96.61s separately reported.",
+    "Figure visually inspected. Final HTML/Markdown visibly retain seed instability and lower learned mean treatment than search at both tiers; presentation-only revision inspected and bound."
+  ],
+  "conclusion": {
+    "computeTradeoff": "Learned averages11.46online requests/case, below both controls, but mean treatment is below search at both tiers.",
+    "delayedPairedLearnedMinusGreedy": 0.29133597883597884,
+    "pairedLearnedMinusGreedy": 0.10838293650793651,
+    "qualifiedTreatmentMeans": {
+      "greedy": 0.4103422619047619,
+      "highSearch": 0.7563244047619048,
+      "learned": 0.5187251984126984,
+      "lowSearch": 0.5621279761904762
+    },
+    "seedStability": "Gain is driven by seed17:73.55% overall/100% delayed. Seeds43/71:41.03% overall/12.60% delayed, matching greedy. Improvement in1/3seeds; robust learned superiority not established."
+  },
+  "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+  "evidence": [
+    {
+      "path": "testcases/overnight-sequential-v1/independent-final-results-review/verify.py",
+      "sha256": "158201ed6685d98ff34b58b6246a51978d28f69dacd4cedfcc7f9282fd368d77"
+    },
+    {
+      "path": "testcases/overnight-sequential-v1/independent-final-results-review/raw-verification.json",
+      "sha256": "9efdf9dc4fd4f11afd66bd56a48290cbd030f814ea69f1d95c16e0eee409f119"
+    },
+    {
+      "path": "testcases/overnight-sequential-v1/independent-final-results-review/verify_summary.py",
+      "sha256": "406b3008a0c467bd16ebc6492aa18bcb9539d667c7f90e8d77fc02e476bc9319"
+    },
+    {
+      "path": "testcases/overnight-sequential-v1/independent-final-results-review/summary-verification.json",
+      "sha256": "cc66e52ceda60442556bc6f37567f9687f8255742cb5f8f55d449cd7b8c6141f"
+    }
+  ],
+  "findings": [],
+  "frozenSourceFilesEditedDuringReview": false,
+  "limitations": [
+    "Descriptive16layout/3seed generated cohort. Baseline controls repeat across seed pairs;192paired rows are not192independent layouts. No statistical superiority or broad generalization claim.",
+    "Production NativeAudit force-replays72unique accepted snapshots. This independent review inspected that code/receipts and checked all source counts/program/cache joins; it did not duplicate another full native/adapter campaign.",
+    "Generated anatomical memberships, permitted budgets, direct removal and cut incidence do not predict neurological function. No clinical/patient, general primitive, CUSA v3 or unsupported dynamic-physics training admission; whole-procedure success false and patient operations0.",
+    "Acquired UCSF-PDGM-0004 remains inspection-only. Prior v1 incomplete-exit prototype remains preserved and separate. Desktop geometry/source-qualification and final hidden UI QA have separate review evidence."
+  ],
+  "optimizerUpdatesDuringReview": 0,
+  "resultsReviewPassed": true,
+  "reviewedUtc": "2026-11-16T14:15:39.732731+00:00",
+  "reviewer": "Independent /root/source_packet",
+  "schema": "resectionlab.independent-sequential-results-review.v1",
+  "scope": "Completed generated post-access finite-skill v2 experiment; desktop hidden-render QA is separately owned",
+  "sourceHashes": {
+    "scripts/run_sequential_milestone.py": "5d02d3a53e54f3aa9c43789cb0f2db13c6ae7dd412edde6edabe98f4534096d0",
+    "src/resectionlab/surgical_consequences.py": "75bafa6a5f93b6ab2f9a2bc8bd0d4eaad32b7a3afca625da7efc034dee9298ef",
+    "src/resectionlab/surgical_joint_cranial_search.py": "2403818cb0961b99ac477077284a74508e09500bf03b9d7b039a9cbbd1ed7c4a",
+    "src/resectionlab/surgical_planning_admission.py": "0aeb039e458260f5e06a27d2e4e278a47578ce8e72a9f6133493d4e08d42c330",
+    "src/resectionlab/surgical_procedure_policy.py": "22f43c971f3eaeffb4328eff2c12ec7f8d2b42fded294c932619a5ab14a4ce4f",
+    "src/resectionlab/surgical_rl_env.py": "ac4aa96e8f0b9b309c13feed64e1594e99b12fbd3b049916e31613b24eaebf57",
+    "src/resectionlab/surgical_sequential_benchmark.py": "ffb931b0e3ae62d4e39aae03c0e1b8e9b357f12622bfdd64d1ff5a1c547cb7f0",
+    "src/resectionlab/surgical_sequential_task.py": "175a6c22137ec86742e0156ca1a8d5dfb088bdfb0c97fb9873bfe2822dc083d3"
+  },
+  "tests": [
+    {
+      "command": "pytest -q tests/test_sequential_milestone_summary.py tests/test_sequential_milestone_runner.py",
+      "result": "5passed in15.27s"
+    },
+    {
+      "command": "pytest -q tests/test_sequential_milestone_summary.py after final presentation delta",
+      "result": "3passed in0.53s"
+    }
+  ]
+}
