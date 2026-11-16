@@ -6,8 +6,9 @@ to the separate desktop opening demonstration or counted as patient operations.
 
 `surgical_sequential_task.COMMON_CONFIG` versions the common endpoint:512
 primitive attempts,240 modeled seconds,30 seconds per primitive,16 invalid
-attempts and eight skill selections. STOP consumes an attempt and supplies no
-motion, time or removal. Zero fluid/debris and complete exterior withdrawal are
+attempts and eight skill selections. The primitive STOP consumes an attempt and
+supplies no motion, time or removal; the shared v2 STOP skill first performs a
+charged checked withdrawal when needed. Zero fluid/debris and complete exterior withdrawal are
 required. Successful declared treatment retains the existing full-original-
 target criterion: at least50% treatment and three original RAS octants each
 contributing at least5% of the original target. Report100% removal separately.

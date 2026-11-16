@@ -1,6 +1,7 @@
 """A useful but failed prefix cannot become a successful quality advantage."""
 import importlib.util
 from pathlib import Path
+import json
 
 
 def test_paired_summary_keeps_raw_gain_and_penalizes_failed_endpoint_separately():
@@ -36,3 +37,15 @@ def test_duplicate_development_rows_cannot_masquerade_as_full_frozen_cohort():
     assert module.validate_job_grid(rows,protocol,freeze)['verified']
     wrong=dict(checkpoints=[dict(seed=s,selectedUpdates=32,rewardDrivenUpdates=True) for s in (17,43,999)])
     assert not module.validate_job_grid(rows,protocol,wrong)['checkpointSeedsMatchProtocol']
+
+
+def test_minimal_failed_delayed_case_keeps_pattern_and_zero_qualified_credit(tmp_path):
+    path=Path(__file__).resolve().parents[1]/'scripts/summarize_sequential_milestone.py'
+    spec=importlib.util.spec_from_file_location('summary_failure_test',path)
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    row=dict(parent=200,method='learned',seed=17,tier='low',failure=dict(error='global evaluation timeout'))
+    (tmp_path/'results').mkdir();(tmp_path/'results/low-200-learned-17.json').write_text(json.dumps(row))
+    result=module.compact(row,tmp_path)
+    assert result['pattern']==0 and result['qualified_treatment_fraction']==0
+    assert result['treatment_fraction'] is None and result['neural_removed_mm3'] is None
+    assert not result['declared_task_complete'] and not result['valid_stop_withdrawal']
