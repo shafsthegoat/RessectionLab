@@ -1,0 +1,591 @@
+{
+  "acceptance": {
+    "cleanupDebrisMm3": 0,
+    "committedHardViolations": 0,
+    "heldoutLayouts": 16,
+    "learningClaim": "requires measured paired improvement over greedy and useful online compute tradeoff; negative result retained"
+  },
+  "cohort": [
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:11f4728a3ef06b581cd2d0b7a277b8fbd857a82c4a5a85aad553146542f58127",
+      "parent": 0,
+      "pattern": 0,
+      "sourceSceneId": "sha256:df43f9df23fd39cc496d55bfc44b5fd61733e83f7af320b144aa5eabb2c1a4d0",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:cac614a45e26e5af7d4069ebf18b18258e27995b585eff9e05e60c4e85b1e85f",
+      "parent": 1,
+      "pattern": 1,
+      "sourceSceneId": "sha256:86c5595fbafccf8eb90dce178991840a33a905f7f632e3db54755c834abcd824",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:5d6a2359b32f179f9b2b6f420a95d4f3c3fb9c884ba6a8e2e02ea6d86215dffd",
+      "parent": 2,
+      "pattern": 2,
+      "sourceSceneId": "sha256:e6e0879268182bb2e24705a8f37be7f7214271e0db4c36e672322ef508981688",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:a4b79b3f1ea41bc081178b0620b2b30e32571bda656c8dd9a3bcfbedbdf9be81",
+      "parent": 3,
+      "pattern": 3,
+      "sourceSceneId": "sha256:96616c76cc86f4b857f9d81d6117de8fbdfdf7fb3c9c8f958d8d416f1748d7b0",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:1b830cbc1a6653375aa105a6ea8820c50dbf4712aa8e50b4a94604915e867eee",
+      "parent": 4,
+      "pattern": 0,
+      "sourceSceneId": "sha256:fdfaddad325a7ac1c77924fb02952488397ae0085c0af73b023e325c296039fd",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:f73004098655451487f190c11eda952216ae7eb972f338183c54d23fabe968e8",
+      "parent": 5,
+      "pattern": 1,
+      "sourceSceneId": "sha256:27ff8d4265ffabc872f523a160759d4a8c543984dd3679693f12e5c7469c0b43",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:f2411d40a7e81fb49b1396ab5df83c0d4aa3cef0f344cba2573326be3f125a18",
+      "parent": 6,
+      "pattern": 2,
+      "sourceSceneId": "sha256:4b9b33043545752c1a8e3e4d50f27b8a06c77e43f140195987f7c9df27a439a2",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:12134cc0b330c58ecfe13d08dff719c4ab025cbc835065ce1e8acc823f45b673",
+      "parent": 7,
+      "pattern": 3,
+      "sourceSceneId": "sha256:66f92068a784858a9ce76eb958375280d745d1cf3a4e6e2f4e8ae42f74d13f6c",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:e52ce404c4a2956bd9755047f9a70255cc0a26d58eaee2979c29ab07e143ab1d",
+      "parent": 8,
+      "pattern": 0,
+      "sourceSceneId": "sha256:e8dd5c0f5d36203ee4797a915a3aa6f4b723038abf14fd923faba61039d4570a",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:6a43952c0c0d2909f7d4fd59f00f953ece950dffbc163786f57e15e94a4e001b",
+      "parent": 9,
+      "pattern": 1,
+      "sourceSceneId": "sha256:8eff59a85e22f4e1364b0c2f0e602665bc08112937b2c1f219526fbb78777d4a",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:281e9bff2aada53ea03e3debbee0c782c107e897828db7f1382a112cfbe0ab5e",
+      "parent": 10,
+      "pattern": 2,
+      "sourceSceneId": "sha256:44d44fd2aa164bf4b9daa761c8623b05a5151200f04e6de5ce75b1ac8d75257b",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:1e3834472f74d80e4a45cc0a70fe966c5e277fb04fcf1429bcfd91e7fc32bf08",
+      "parent": 11,
+      "pattern": 3,
+      "sourceSceneId": "sha256:7d9f257141039a3435f5de0fccca4c7d97693a795e48f2cae7f38e49e6aad23d",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:dddab95a0e89cfae7412fd2f6c0b44efb64fefb2559407c29650a86923185335",
+      "parent": 12,
+      "pattern": 0,
+      "sourceSceneId": "sha256:b42c70b6904c615df898ac9428c27fba59e3f3b769f57cc621e44e2e4e338217",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:7b649c3502d24f04cc7de555daa22ee884e42696b8c9eef536d87059b0bcfd0d",
+      "parent": 13,
+      "pattern": 1,
+      "sourceSceneId": "sha256:7cfacf4876a1886f565ff84c376eb0ee38d85b17b876ee87facda3c9c3d2eff8",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:b3ac3c5585c3dc81f0ac583409308be14b227f78bdea5c5acf5ac123c40d15f3",
+      "parent": 14,
+      "pattern": 2,
+      "sourceSceneId": "sha256:2c23c7f9836be4fb190a417ce0cf7b8a1c8b03819f159167577f7a65e12e235c",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:13f6137a8b1eb90f9397dd76123670b62e34a5660029f39d997a45b29d9eb570",
+      "parent": 15,
+      "pattern": 3,
+      "sourceSceneId": "sha256:5f740731828e8992fb3453914c39fc75f5a341834672cebbbdde3a63f2d5c842",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:bb36add033d8dad16c06ef372ea7b6211d1a97e419ece9b121380e66ca13cc16",
+      "parent": 16,
+      "pattern": 0,
+      "sourceSceneId": "sha256:e2b2bbcc62afee023a1c93f264169002358df4819936765f9eebd436e09e9874",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:8ced1448dcd5fa94c5506d96d88f607412888416f5555615cc23aa98f8bd8c37",
+      "parent": 17,
+      "pattern": 1,
+      "sourceSceneId": "sha256:4abb5d1bcc63e058164996a985ee247df8b9801f50b61d77665a53c3b2ff70d7",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:3ffd939eaba6587bce6387699c0463f0e42580113d3fb2149786ba176fada4f6",
+      "parent": 18,
+      "pattern": 2,
+      "sourceSceneId": "sha256:3e920911ee9b15739dbc472bb36781d813a62f132ecf016e46c1c1e5631c72eb",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:d3fcf32c7f52908803f8a65b65456371ca72e9950554f3a68b193535773d9214",
+      "parent": 19,
+      "pattern": 3,
+      "sourceSceneId": "sha256:9abc557df89a2f30d917f161cbf941543b81be536652f36a5c16642f9786b4bd",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:affda0f7bf0d97396915e4f4e5d09e5019c3e01b93f79f1aec056ae91d6ddcbf",
+      "parent": 20,
+      "pattern": 0,
+      "sourceSceneId": "sha256:dd529562152e6735a6cd8776aaac63c2acee5fa48a113de6773d33be29119ca0",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:1ba06ba561f55a83591f1281dfe545376ddb99edfdf41058b95926902031c4ff",
+      "parent": 21,
+      "pattern": 1,
+      "sourceSceneId": "sha256:2ab851db5fad8bb5305160fb0bfe901f1b101ff140d10c2123c93600b4a99a21",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:b781661b83a74e029ec07c4048baa8d185b9422528891e591ca34f65ac839b00",
+      "parent": 22,
+      "pattern": 2,
+      "sourceSceneId": "sha256:8aebecb41970eb4408005b3819f75f211c49ec37a8685a6967f56bcf3835f4c1",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:48a8e25280b6264fc5910bb51b9e9b2899818d8f62dcf12bbd6d134423fd8390",
+      "parent": 23,
+      "pattern": 3,
+      "sourceSceneId": "sha256:f888e0816c10003e625c0f116777b8da5484f479a80c7ad305bfc7f1deecea81",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:3ff34810da48f57a35c1f8b6ec51596b0fe899a1d12cd48558df4785731020bc",
+      "parent": 24,
+      "pattern": 0,
+      "sourceSceneId": "sha256:9483ff9ef584e4b317fc09d1b8463ad4818eb2db0151a083a887ab15183ce6e4",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:2d0e925e9391b29355ebcacca4b982039a6ce99544ea1369a95733b4ef8c988f",
+      "parent": 25,
+      "pattern": 1,
+      "sourceSceneId": "sha256:a0f3d396e89ede1b8ffcca01f0133066547aecef8209db8926a1f6d6c0a1e53d",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:bc913df5d2d122ed2a2f8f92302f6c71a02f2a717aa9e4d090869d79ac82465e",
+      "parent": 26,
+      "pattern": 2,
+      "sourceSceneId": "sha256:7c8351bf253b0762068a7fd5e3ccc227c1f637c52ec04a3c0ea02ad0678f80ed",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:8ed333691184b22090e912f7e79d5305c9245893906041b8aedeafab94f40c9d",
+      "parent": 27,
+      "pattern": 3,
+      "sourceSceneId": "sha256:dd31daf502597fe899a3765fa12f078ae0ecceaaffe8e2fcfa9a34b4c50e2899",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:b3f51d6b9c2b574c9c7a1e491ce317a0026f07b94dfa98e77280938b4130f705",
+      "parent": 28,
+      "pattern": 0,
+      "sourceSceneId": "sha256:15295e94840cae08b7ce83b21d376ff69039e29b094a51fa06881fbd245ba4be",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:455b597d5f03728c47baab95566a3b11c8f1a36f4ede5c27cb9e606bc597a4f2",
+      "parent": 29,
+      "pattern": 1,
+      "sourceSceneId": "sha256:2d87b16740e02a281a4fd5a733447ab8e34418a2e34a3af02a1c9ff27b413683",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:eb7fa03233bc2ddac13c9179cd6862b476af68bbd631977f773a26e06c975de3",
+      "parent": 30,
+      "pattern": 2,
+      "sourceSceneId": "sha256:fc66606c498baca28d8c5de6b63f0dbf1de22997dc668751c09743562b62f508",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:b7bcc1c71c9f60c5f64602664b868d712b3c28485358cd410b48ce5a030c587c",
+      "parent": 31,
+      "pattern": 3,
+      "sourceSceneId": "sha256:18786dd697982f8c678045693116c47929c246b3242a187e8366b8234c5e0136",
+      "split": "train"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:804228cd10c6d99b9da61190134c3ad26356c324d04b51be527487b165e1b901",
+      "parent": 100,
+      "pattern": 0,
+      "sourceSceneId": "sha256:04dc9d31d9714ca47f18d01bacf74721efc78b1d0f4aa6be7e790cfd2e013a9a",
+      "split": "validation"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:cc2a82451c8459290e266cf841dadf3f9d29d7656e0a2b393ce298968f9d6d7e",
+      "parent": 101,
+      "pattern": 1,
+      "sourceSceneId": "sha256:7eb0733ccc1831a1e8ad4b328fc9b8c617453074ae635668434320b40c4d7641",
+      "split": "validation"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:2aef25bcc4aac768d756c28e5b67df57db59b9df2c72c62b1db99c2a2bb54773",
+      "parent": 102,
+      "pattern": 2,
+      "sourceSceneId": "sha256:71948a2d6b9678380a70948af9ede4d4924b894c8e1d07f957b28f7e0ee2aafe",
+      "split": "validation"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:cf8f02d34574263e7aaca2249cbdb8bf09bd2a91727a2a350bc849299b31faf7",
+      "parent": 103,
+      "pattern": 3,
+      "sourceSceneId": "sha256:e95dfbbdff05689203fe80f8ab80e09d335f689f82f83e23962f1b5a3698c3d5",
+      "split": "validation"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:fc23c365847e089eaf5d164fef645a547fff14ba66df3ec65b5dec7395d160e0",
+      "parent": 104,
+      "pattern": 0,
+      "sourceSceneId": "sha256:8b59a68ae770c9a894fb7a1521ed2a0cf323395ba85cd9e47e968c821a0f024f",
+      "split": "validation"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:c30539c03cadd84f8a71b97462ef89d1852ad036701fc0673a1e76fd3ebdb932",
+      "parent": 105,
+      "pattern": 1,
+      "sourceSceneId": "sha256:4b98b4dbd067f053c2ffa5f266886597c4ab73bae7cef63c7c272551fe8b9172",
+      "split": "validation"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:23cdf87bc884cbb6a336fa01672857ae8e8cf7e11088a0afa65259c1873bceb7",
+      "parent": 106,
+      "pattern": 2,
+      "sourceSceneId": "sha256:c032f896bc4e20c2adadfa2ad830c104b1f13ffe5df8a35e3db863cd066b58fd",
+      "split": "validation"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:0247387e896a17bb2ec76ab5db5c721b9fd2a36b79e07ae3c0cab9891debbb77",
+      "parent": 107,
+      "pattern": 3,
+      "sourceSceneId": "sha256:30192bc90823d64cc9cae9b4243461cc42b88e48f648e212a503ff6e35545197",
+      "split": "validation"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:b946aaf997d6d61c0ee08ea7aa33c355ac44ee6e8549f60157e194f4f4529d2e",
+      "parent": 200,
+      "pattern": 0,
+      "sourceSceneId": "sha256:71f9b08892a681e71231437131ef5318d00cd09e3d93c28312f532f560ef3d1b",
+      "split": "heldout"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:1151df3dcb5786a9da9a28da12c717ea80d7ca1acdded4b71617caf8922b9a42",
+      "parent": 201,
+      "pattern": 1,
+      "sourceSceneId": "sha256:5ce4efc4876de4c810b4cfaba8ba9431ea61ff335f6b96637f0f1aa05d21ce1c",
+      "split": "heldout"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:a986c598b9769fc3d4bfcbdfad4723554cc5621a03fb662cc267fb5b843ef1f9",
+      "parent": 202,
+      "pattern": 2,
+      "sourceSceneId": "sha256:9137843c128c18e026189ed40b1d5176749f1d684fef0420925b9c459fd8e874",
+      "split": "heldout"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:fbefe159b6036b02ae8f1f0a1dcc4a744dddd4412e051942704591d29d7530e1",
+      "parent": 203,
+      "pattern": 3,
+      "sourceSceneId": "sha256:de4f30433966851f99aed22f26f15b3806f74d14103edc65b19a31c13ed510c4",
+      "split": "heldout"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:b13d66cf279fc3287712efe5c31419fd62e67d0e798ee76b8e746fb989e8308e",
+      "parent": 204,
+      "pattern": 0,
+      "sourceSceneId": "sha256:0662d64526553842b5767907576b7b7ab70491fba327b043170ff63f2abdacda",
+      "split": "heldout"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:e1f72e42e9fed6da6dfe40ed2536308fc139497ebb637596a8f7379beac7c09b",
+      "parent": 205,
+      "pattern": 1,
+      "sourceSceneId": "sha256:29cda01e2c7b821ec589f53c5646b53daf8e834d01237dfe530ee27dc05d034a",
+      "split": "heldout"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:10a88d18d1db664575b90e189b9ac066a02061e294ce7ddf490b8c275a468e2c",
+      "parent": 206,
+      "pattern": 2,
+      "sourceSceneId": "sha256:7ef3f35ac824c0c93d56b7e2d06933d41a75ae1c83385b5215499cd4cc3fb440",
+      "split": "heldout"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:bc6a618974b938006fafddf7dc99a519415c81144ae6c7e58575cfd0f7b69ab8",
+      "parent": 207,
+      "pattern": 3,
+      "sourceSceneId": "sha256:f53da52f3afbdd01049b85c40dd460a9a485fb91d2e7d1deb34b7a0bd2af015d",
+      "split": "heldout"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:3efca152f060024e9993a53cb6cf988c512bd6e18831ac78009599b109304a06",
+      "parent": 208,
+      "pattern": 0,
+      "sourceSceneId": "sha256:7b8b55ccf2a7ddeea2eed08ddadaeda99bf7920afa2d577fc2c430e10028440f",
+      "split": "heldout"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:172d9af4f5364afc40a20414944962b8fd965762551550640b9bc7381d39e080",
+      "parent": 209,
+      "pattern": 1,
+      "sourceSceneId": "sha256:2f5481ded38ade2080f8918f8846857f6015f093f8c92dc4d8045f4aabd9dc16",
+      "split": "heldout"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:a9032b9ab8a594efb2be2de1e01bf3c18cdd39c8ba9bf233459196301ddb2d13",
+      "parent": 210,
+      "pattern": 2,
+      "sourceSceneId": "sha256:e955e1f2987bf9915a027b79d85ca96dfb666eb1d37f4a3844604dbc3927e328",
+      "split": "heldout"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:24b12533061ef07643936c7b570a0aee19a5d1af036c2489ae8e4705fd26e690",
+      "parent": 211,
+      "pattern": 3,
+      "sourceSceneId": "sha256:a5d116131e40b7a27f8356b6dc15ff949ffb3bf6a7a29c83216856b8dbd77124",
+      "split": "heldout"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:85de5c856180f91c2225ec896c78c40f4b4e3e4d200dc3470564d2436566089a",
+      "parent": 212,
+      "pattern": 0,
+      "sourceSceneId": "sha256:16774fdec4cf7b0b5822a8ebbdb8a964d9f788bf397b854adb11e29a1112ec81",
+      "split": "heldout"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:f0ba251caa31219047deabb4a9200481398334f3bff6cd3bace91f39ede237db",
+      "parent": 213,
+      "pattern": 1,
+      "sourceSceneId": "sha256:74470fc1dbd90c96554c1e3cddd7de03afa94869988914e9ecdef4daf851a228",
+      "split": "heldout"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:0e8b69a97f75d982a567a7ebd280111f7a75bed8cb06c82b0025aee704b94ca2",
+      "parent": 214,
+      "pattern": 2,
+      "sourceSceneId": "sha256:95373abf724f5d0498cb19423309037538714a78c6fb4153fa1dab6938c90542",
+      "split": "heldout"
+    },
+    {
+      "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+      "geometryHash": "sha256:6cc8a2d856d93ae0d5cf91e1f7c8384e8dc448379d274a34815b46d72e318906",
+      "parent": 215,
+      "pattern": 3,
+      "sourceSceneId": "sha256:5807cbb62d1050fe905d519434327c6d2a05d6952d3d20bf4ae4d1ed83487154",
+      "split": "heldout"
+    }
+  ],
+  "compute": "all speculative/executed primitive requests charged, canceled atomic requests separately labeled and receive no treatment/attempt reward; inventory/feature/policy/search wall time included; replay/training separate",
+  "config": {
+    "discount_per_second": 0.997,
+    "max_attempts": 512,
+    "max_invalid_actions": 16,
+    "max_modeled_seconds": 240.0,
+    "max_primitive_seconds": 30.0,
+    "max_skills": 8,
+    "maximum_endpoint_debris_mm3": 0.0,
+    "maximum_endpoint_fluid_mm3": 0.0,
+    "minimum_target_fraction": 0.5,
+    "minimum_zone_fraction_of_original": 0.05,
+    "minimum_zones": 3,
+    "require_explicit_stop": true,
+    "schema": "resectionlab.sequential-task-config.v1"
+  },
+  "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+  "endpoint": "explicit checked STOP; zero debris/fluid, whole-tool withdrawal; canonical original-target .5 /3 octants each .05",
+  "exclusions": [
+    "acquired anatomy",
+    "graph vascular",
+    "thermal",
+    "continuum",
+    "CUSA v3",
+    "resident C++ policy",
+    "whole-procedure success",
+    "clinical motor/language outcome"
+  ],
+  "featureNames": [
+    "kind_prepare",
+    "kind_work",
+    "kind_stop",
+    "current_radius",
+    "requested_radius",
+    "route_target_cells",
+    "route_motor_cells",
+    "route_cst_cells",
+    "route_critical_cells",
+    "route_remaining_target_cells",
+    "route_min_neural_distance",
+    "route_length",
+    "global_target_remaining",
+    "global_motor_remaining",
+    "global_cst_remaining",
+    "remaining_neural_budget",
+    "remaining_motor_budget",
+    "remaining_cst_budget",
+    "remaining_attempts",
+    "remaining_seconds",
+    "remaining_skills",
+    "maximum_route_remaining_target",
+    "minimum_route_neural_distance",
+    "mean_route_neural_distance",
+    "right_inserted",
+    "right_active",
+    "right_placed",
+    "withdrawal_height_distance"
+  ],
+  "hardware": {
+    "cpu": "Apple M2 Pro",
+    "device": "cpu",
+    "memoryGiB": 16,
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "python": "3.12.12 (main, Oct  9 2025, 11:07:00) [Clang 17.0.0 (clang-1700.6.3.2)]",
+    "threads": 1,
+    "torch": "2.14.1"
+  },
+  "information": "full supplied source memberships/coverage, removal/tool/current native state, cumulative costs, budgets and accepted history; IDs/split/pattern/hashes and branch outcomes excluded from features",
+  "onlineTierFreezeRationale": "Retain conservative56/88tiers from prior measured timing; current projection near55min is within measurement noise. Reduce search rather than sacrifice replay/delivery reserve.",
+  "onlineTiers": [
+    {
+      "beam_width": 2,
+      "horizon": 2,
+      "max_expansions": 8,
+      "max_physical_calls": 56,
+      "max_wall_seconds": 25,
+      "name": "low"
+    },
+    {
+      "beam_width": 2,
+      "horizon": 3,
+      "max_expansions": 16,
+      "max_physical_calls": 88,
+      "max_wall_seconds": 40,
+      "name": "high"
+    }
+  ],
+  "priorTrainingCosts": {
+    "chargedRequestsUpperBound": 1385,
+    "continuousOriginUtc": "2026-11-16T11:50:07Z",
+    "knownRequests": 681,
+    "path": "/Users/shaf/coding_projects/RessectionLab/testcases/overnight-sequential-v1/benchmark-frozen-v3/preserved-contract-diagnosis.json",
+    "sha256": "9c2c40f3993b891ba4eda99a868673391420ba40b25abae76ff8793de2cbf7fe",
+    "unloggedValidationRequestsUpperBound": 704
+  },
+  "schema": "resectionlab.sequential-benchmark-protocol.v1",
+  "seeds": [
+    17,
+    43,
+    71
+  ],
+  "skillRewards": "accepted target/27 - accepted neural/27 - .05 bone/27 - .01 modeled seconds - .01 primitive attempts (including STOP)",
+  "sourceCommit": "3872c99fdc93b73d16143b6058818eca20ef4bfb",
+  "sourceHashes": {
+    "scripts/run_sequential_milestone.py": "5d02d3a53e54f3aa9c43789cb0f2db13c6ae7dd412edde6edabe98f4534096d0",
+    "src/resectionlab/surgical_consequences.py": "75bafa6a5f93b6ab2f9a2bc8bd0d4eaad32b7a3afca625da7efc034dee9298ef",
+    "src/resectionlab/surgical_joint_cranial_search.py": "2403818cb0961b99ac477077284a74508e09500bf03b9d7b039a9cbbd1ed7c4a",
+    "src/resectionlab/surgical_planning_admission.py": "0aeb039e458260f5e06a27d2e4e278a47578ce8e72a9f6133493d4e08d42c330",
+    "src/resectionlab/surgical_procedure_policy.py": "22f43c971f3eaeffb4328eff2c12ec7f8d2b42fded294c932619a5ab14a4ce4f",
+    "src/resectionlab/surgical_rl_env.py": "ac4aa96e8f0b9b309c13feed64e1594e99b12fbd3b049916e31613b24eaebf57",
+    "src/resectionlab/surgical_sequential_benchmark.py": "ffb931b0e3ae62d4e39aae03c0e1b8e9b357f12622bfdd64d1ff5a1c547cb7f0",
+    "src/resectionlab/surgical_sequential_task.py": "175a6c22137ec86742e0156ca1a8d5dfb088bdfb0c97fb9873bfe2822dc083d3"
+  },
+  "targetScope": "supplied post-access continuation, earlier access costs unknown",
+  "taskSchema": "resectionlab.generated-sequential-skills.v2",
+  "training": {
+    "absoluteDeadlineUtc": "2026-11-16T13:50:07Z",
+    "algorithm": "masked finite-skill episodic actor-critic / REINFORCE with learned baseline",
+    "campaignStartedUtc": "2026-11-16T11:50:07Z",
+    "checkpointSelection": "validation mean treatment fraction with valid withdrawal and no truncation, then fewer refusals; earliest tie",
+    "countsFreezeRationale": "Freeze before v2 fitting from measured prototype throughput and continuous remaining campaign time; retain all32/8/16 layouts and3seeds. No optimizer/reward/harm-bound tuning.",
+    "discountPerSecond": 0.997,
+    "entropyCoefficient": 0.02,
+    "episodesPerSeed": 192,
+    "epochs": 6,
+    "learningRate": 0.003,
+    "maxWallSecondsCampaign": 7200,
+    "model": "shared candidate MLP28\u219232tanh\u21921; separate mean-feature value MLP28\u219232tanh\u21921",
+    "optimizer": "Adam",
+    "transitionCeilingCampaign": 20000,
+    "valueCoefficient": 0.5,
+    "warmStart": false
+  }
+}

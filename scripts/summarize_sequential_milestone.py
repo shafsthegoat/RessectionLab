@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+from collections import Counter
 import hashlib
 import json
 from pathlib import Path
@@ -25,6 +26,26 @@ def write_csv(path,rows):
         writer=csv.DictWriter(stream,fieldnames=list(rows[0]));writer.writeheader();writer.writerows(rows)
 
 
+def validate_job_grid(raw_rows,protocol,freeze):
+    parents=[c['parent'] for c in protocol['cohort'] if c['split']=='heldout']
+    jobs=[('greedy',0),('search',0)]+[
+        ('learned' if c.get('selectedUpdates',0)>0 and c.get('rewardDrivenUpdates') else 'untrained',c['seed'])
+        for c in freeze['checkpoints']]
+    expected={(tier['name'],parent,method,seed) for tier in protocol['onlineTiers'] for parent in parents for method,seed in jobs}
+    actual=[(r.get('tier'),r.get('parent'),r.get('method'),r.get('seed')) for r in raw_rows]
+    typed=all(type(k[1]) is int and type(k[3]) is int and isinstance(k[0],str) and isinstance(k[2],str) for k in actual)
+    counts=Counter(actual)
+    checkpoint_seeds=[c['seed'] for c in freeze['checkpoints']]
+    seed_grid=(len(checkpoint_seeds)==len(set(checkpoint_seeds)) and set(checkpoint_seeds)==set(protocol['seeds']))
+    return dict(verified=seed_grid and typed and set(actual)==expected and len(actual)==len(expected) and all(n==1 for n in counts.values()),
+        expectedJobs=len(expected),actualRows=len(actual),heldoutParents=parents,
+        checkpointSeedsMatchProtocol=seed_grid,requiredSeeds=protocol['seeds'],checkpointSeeds=checkpoint_seeds,
+        learnedSeeds=sorted(seed for method,seed in jobs if method=='learned'),
+        missing=[list(k) for k in sorted(expected-set(actual))],
+        unexpected=[list(k) for k in sorted(set(actual)-expected,key=str)],
+        duplicates=[dict(job=list(k),copies=n) for k,n in counts.items() if n>1],typed=typed)
+
+
 def compact(row,evidence):
     p=row.get('progress',{});e=row.get('endpoint',{});c=row.get('computation',{})
     previews=c.get('previews',[])
@@ -40,6 +61,7 @@ def compact(row,evidence):
         raise ValueError('Frozen result source differs from the current protocol generator')
     voxel=source.voxel_mm3
     artifact=evidence/'results'/f"{row['tier']}-{row['parent']}-{row['method']}-{row['seed']}.json"
+    if read(artifact)!=row:raise ValueError('Aggregate row differs from its saved case artifact')
     return dict(parent=row['parent'],pattern=row.get('pattern'),method=row['method'],seed=row['seed'],tier=row['tier'],
         original_target_mm3=target*voxel if target is not None else None,
         treated_mm3=p.get('originalTargetTreatmentMm3'),
@@ -116,8 +138,16 @@ def main():
     args=parser.parse_args();evidence=args.evidence.resolve();docs=args.docs.resolve();docs.mkdir(exist_ok=True,parents=True)
     started=time.monotonic()
     evaluation=read(evidence/'evaluation.json');protocol=read(evidence/'protocol.json');freeze=read(evidence/'freeze.json')
+    if (freeze['protocolSha256']!=sha(evidence/'protocol.json') or freeze['configHash']!=protocol['configHash'] or
+            freeze['sourceHashes']!=protocol['sourceHashes']):
+        raise ValueError('Frozen checkpoint/protocol bindings differ')
+    for checkpoint in freeze['checkpoints']:
+        if sha(checkpoint['path'])!=checkpoint['sha256']:raise ValueError('Frozen checkpoint bytes changed')
     if any(sha(ROOT/path)!=digest for path,digest in protocol['sourceHashes'].items()):
         raise ValueError('Frozen source hashes differ; use the recorded implementation checkout')
+    coverage=validate_job_grid(evaluation['rows'],protocol,freeze)
+    save(docs/'sequential-milestone-cohort-check.json',coverage)
+    if not coverage['verified']:raise ValueError('Exact unique frozen job grid is incomplete or changed; see cohort-check.json')
     rows=[compact(r,evidence) for r in evaluation['rows']];summary=aggregate(rows);differences=paired(rows)
     csv_path=docs/'sequential-milestone-results.csv';paired_path=docs/'sequential-milestone-paired.csv'
     write_csv(csv_path,rows)
@@ -158,6 +188,7 @@ def main():
         resultRows=dict(path=str(csv_path),sha256=sha(csv_path),count=len(rows)),
         pairedRows=dict(path=str(paired_path),sha256=sha(paired_path) if differences else None,count=len(differences)),
         summary=summary,seedSummaries=seed_summaries,pairedSummary=paired_summary,unmetCriteria=unmet,
+        cohortCheck=coverage,
         exclusions=protocol['exclusions'],earlierAccessCosts=None,patientOperationsCompleted=0,
         analysisWallSeconds=time.monotonic()-started,
         prototypeDiagnosis='Preserved v1 interface diagnostic; no held-out evaluation. Actual recovery withdrawal added to all v2 methods before formal fitting.',
@@ -166,7 +197,7 @@ def main():
             summarize=f'PYTHONPATH=src .venv/bin/python scripts/summarize_sequential_milestone.py --evidence {evidence}'))
     save(docs/'sequential-milestone-manifest.json',manifest)
     lines=['# Generated sequential decision results','',
-        'All16 held-out layouts are retained. Learned rows include all three validation-selected seeds. Treatment is measured against the full original target; declared-task completion and100% removal are separate. Earlier access costs are unknown.','',
+        f"Retained the exact {coverage['actualRows']}-row job grid across {len(coverage['heldoutParents'])} held-out layouts. Validation-selected learned seeds: {coverage['learnedSeeds']}. Treatment uses the full original target; declared-task completion and 100% removal are separate. Earlier access costs are unknown.",'',
         '| Tier | Method | Target treated | Task complete |100% removed | Valid STOP/exit | Neural mm³ | Calls | Online seconds |',
         '|---|---|---:|---:|---:|---:|---:|---:|---:|']
     for r in summary:

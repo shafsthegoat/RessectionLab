@@ -229,13 +229,13 @@
       "savedPath": "testcases/overnight-sequential-v1/desktop/hidden-warm-v2/desktop-saved.ressectionlab",
       "savedSha256": "e2273fbcb7574a200baa01dfc860be356000e4b5528b9c15d0d492a0616f31de"
     },
-    "frozen-cold-v1": {
-      "path": "testcases/overnight-sequential-v1/desktop/frozen-cold-v1/report.json",
-      "sha256": "da636abe2ead068314ebac5579d038b4acf7b8fcb306147f06de61a28f149606",
-      "runIdentityPath": "testcases/overnight-sequential-v1/desktop/frozen-cold-v1/run-identity.json",
-      "runIdentitySha256": "f286cbe0e32809c0031961cfa207eca5d9bc434a6ddc8f9f1ca543239a97166b",
-      "implementationCommit": "4cddd05f6b0b69bb5742687513851504a830489c",
-      "codeBindingsSha256": "67bef262ea2cf169e821311c44ee192260d39c1fa7ebd1665813c049a73129b3",
+    "frozen-cold-v2": {
+      "path": "testcases/overnight-sequential-v1/desktop/frozen-cold-v2/report.json",
+      "sha256": "ee0bd2d05d70728566a53fdac2b87eebd09dc0b954d8867de27ae4fa04af818e",
+      "runIdentityPath": "testcases/overnight-sequential-v1/desktop/frozen-cold-v2/run-identity.json",
+      "runIdentitySha256": "7d63a2725e48b432dd36435cff13df024605e730cd304912767ab8bbd7181f62",
+      "implementationCommit": "3872c99fdc93b73d16143b6058818eca20ef4bfb",
+      "codeBindingsSha256": "b705f584ef83c5c3cab2c5932ab50c6eeac1a717870d760dc1591315b44f76a8",
       "passed": true,
       "requireFrozenCode": true,
       "codeStable": true,
@@ -244,16 +244,16 @@
         "exitCode": 0,
         "signal": null
       },
-      "savedPath": "testcases/overnight-sequential-v1/desktop/frozen-cold-v1/desktop-saved.ressectionlab",
-      "savedSha256": "5e0905de6947f11a3d777264ab509a6a47a98bdc5881c15400d6e7fa53fdad39"
+      "savedPath": "testcases/overnight-sequential-v1/desktop/frozen-cold-v2/desktop-saved.ressectionlab",
+      "savedSha256": "77c8bf121d3b7aca6b0410d2692f7ddec9f5936ea5901c197cc805393905ec10"
     },
-    "frozen-harm0-v1": {
-      "path": "testcases/overnight-sequential-v1/desktop/frozen-harm0-v1/report.json",
-      "sha256": "aca3920cd83be76e79799aed76be6c4505eefc50ebbb982655499a5edb9f0b86",
-      "runIdentityPath": "testcases/overnight-sequential-v1/desktop/frozen-harm0-v1/run-identity.json",
-      "runIdentitySha256": "1e861bb192e1e38c0352afca0368a85f39b2964996230c4657a5a5db11415523",
-      "implementationCommit": "4cddd05f6b0b69bb5742687513851504a830489c",
-      "codeBindingsSha256": "67bef262ea2cf169e821311c44ee192260d39c1fa7ebd1665813c049a73129b3",
+    "frozen-harm0-v2": {
+      "path": "testcases/overnight-sequential-v1/desktop/frozen-harm0-v2/report.json",
+      "sha256": "65cce63641cc4925c9dd47fc9f4957d18d580bc16e1a84d85421be2758b64de2",
+      "runIdentityPath": "testcases/overnight-sequential-v1/desktop/frozen-harm0-v2/run-identity.json",
+      "runIdentitySha256": "03e5009f8105feda0e81034fc2de1289003b7a1e2e8560ddcbe801a430cedf2d",
+      "implementationCommit": "3872c99fdc93b73d16143b6058818eca20ef4bfb",
+      "codeBindingsSha256": "b705f584ef83c5c3cab2c5932ab50c6eeac1a717870d760dc1591315b44f76a8",
       "passed": true,
       "requireFrozenCode": true,
       "codeStable": true,
@@ -262,18 +262,18 @@
         "exitCode": 0,
         "signal": null
       },
-      "savedPath": "testcases/overnight-sequential-v1/desktop/frozen-harm0-v1/desktop-saved.ressectionlab",
-      "savedSha256": "ead0a9aa0d87ce5eb740cc2b415874811c4c475c7e15c47c2f2c77f843a0f10b"
+      "savedPath": "testcases/overnight-sequential-v1/desktop/frozen-harm0-v2/desktop-saved.ressectionlab",
+      "savedSha256": "827059f11eb0d3316c16e18bb24b4985872f41265322d5d54bca181f810a38d2"
     }
   },
-  "openCommand": "./scripts/launch_poc.sh --case \"$PWD/testcases/overnight-sequential-v1/desktop/frozen-cold-v1/desktop-saved.ressectionlab\"",
+  "openCommand": "./scripts/launch_poc.sh --case \"$PWD/testcases/overnight-sequential-v1/desktop/frozen-cold-v2/desktop-saved.ressectionlab\"",
   "generateCommand": "PYTHONPATH=src .venv/bin/python scripts/demonstrate_sequential_cranial.py --generated-only --output testcases/overnight-sequential-v1/desktop/fresh-generated-v1",
   "hiddenCommand": "CRANIAL_DEMO_CASE=\"$PWD/testcases/overnight-sequential-v1/desktop/generated-v7/harm-1/comparison.ressectionlab\" CRANIAL_DEMO_OUTPUT=\"$PWD/testcases/overnight-sequential-v1/desktop/fresh-hidden-warm-v1\" desktop/node_modules/.bin/electron desktop/electron/verify-sequential-cranial.cjs",
   "visualEvidence": [
-    "testcases/overnight-sequential-v1/desktop/frozen-cold-v1/02-checked-alternatives.png",
-    "testcases/overnight-sequential-v1/desktop/frozen-cold-v1/plan-1-physical-replay-frame.png",
-    "testcases/overnight-sequential-v1/desktop/frozen-cold-v1/plan-2-physical-replay-frame.png",
-    "testcases/overnight-sequential-v1/desktop/frozen-harm0-v1/04-checked-refusals.png"
+    "testcases/overnight-sequential-v1/desktop/frozen-cold-v2/02-checked-alternatives.png",
+    "testcases/overnight-sequential-v1/desktop/frozen-cold-v2/plan-1-physical-replay-frame.png",
+    "testcases/overnight-sequential-v1/desktop/frozen-cold-v2/plan-2-physical-replay-frame.png",
+    "testcases/overnight-sequential-v1/desktop/frozen-harm0-v2/04-checked-refusals.png"
   ],
   "focusedValidation": [
     "Python cranial geometry/cold tamper:2 passed",
@@ -323,13 +323,13 @@
     "docs/sequential-cranial-desktop-manifest.json"
   ],
   "generationSourceCommit": "8a69c88493cd4076c52685336705344065a33eb9",
-  "implementationCommit": "4cddd05f6b0b69bb5742687513851504a830489c",
+  "implementationCommit": "3872c99fdc93b73d16143b6058818eca20ef4bfb",
   "generationSummary": {
     "path": "testcases/overnight-sequential-v1/desktop/generated-v7/summary.json",
     "sha256": "a2608d4bc92b58d4a512813e795f37dbc06269bc5f53b1187034633742006645"
   },
   "compactness": "Full native actions, voxel memberships and per-call search traces remain in the hash-bound ignored artifacts. This index retains every result row and scalar cost summary.",
-  "frozenVerificationCommit": "4cddd05f6b0b69bb5742687513851504a830489c",
+  "frozenVerificationCommit": "3872c99fdc93b73d16143b6058818eca20ef4bfb",
   "frozenCodeBindings": {
     "src/resectionlab/surgical_engine.py": "70bb2cca5e9bc993e00843a39c9a4252a49fe8fdf643c4d0eb78ac740b3bc038",
     "src/resectionlab/surgical_scene.py": "c5d2a55c57a07ddba6c4b86c88b7dcd886500a7cf0e53ba14bfc5b3855e4b66c",
@@ -338,7 +338,7 @@
     "src/resectionlab/surgical_consequences.py": "75bafa6a5f93b6ab2f9a2bc8bd0d4eaad32b7a3afca625da7efc034dee9298ef",
     "src/resectionlab/surgical_cranial_planning.py": "16f851383e44fd8a1ab3187ebb4ecf137df8152181b0992e1e300954af831b73",
     "src/resectionlab/surgical_cranial_geometry.py": "13dd3b70a2e39b4bedb4d8bc34b510cb1c5ad614750efb8b8860cef6ad429a40",
-    "src/resectionlab/surgical_sequential_task.py": "f1363df2f70a22b349526dfc574815c27dd52d1d6179eed0ebb41528a141890a",
+    "src/resectionlab/surgical_sequential_task.py": "175a6c22137ec86742e0156ca1a8d5dfb088bdfb0c97fb9873bfe2822dc083d3",
     "src/resectionlab/surgical_rl_env.py": "ac4aa96e8f0b9b309c13feed64e1594e99b12fbd3b049916e31613b24eaebf57",
     "src/resectionlab/surgical_bridge.py": "91be4d440c0746cf499e71cf371387dec51459389257d75b2252ef85fdb5f5b5",
     "src/resectionlab/surgical_sequence_outcomes.py": "1f7c9d7ecc79d6bb8425bd09c37b59812db684ed81b2b234f72d3698b33449ca",
@@ -354,17 +354,75 @@
     "desktop/dist/assets/sourcePickingBvh.worker-DycEjoGd.js": "16f67b463bfdd5a9609a3c0b6775b81212ded8e1f907a2b75ab7e5aa215f2866",
     "desktop/dist/assets/surface.worker-C9u5xXVU.js": "bc2f39e874ecbdf4f52475af9064292d5dd2d064efda726826581425a0362010"
   },
-  "frozenCodeBindingsSha256": "67bef262ea2cf169e821311c44ee192260d39c1fa7ebd1665813c049a73129b3",
-  "frozenColdCommand": "CRANIAL_DEMO_CASE=\"$PWD/testcases/overnight-sequential-v1/desktop/hidden-warm-v2/desktop-saved.ressectionlab\" CRANIAL_DEMO_OUTPUT=\"$PWD/testcases/overnight-sequential-v1/desktop/fresh-frozen-cold-v1\" CRANIAL_DEMO_EXPECT_REPORT=\"$PWD/testcases/overnight-sequential-v1/desktop/hidden-warm-v2/report.json\" CRANIAL_DEMO_REQUIRE_FROZEN=1 desktop/node_modules/.bin/electron desktop/electron/verify-sequential-cranial.cjs",
-  "frozenHarm0Command": "CRANIAL_DEMO_CASE=\"$PWD/testcases/overnight-sequential-v1/desktop/generated-v7/harm-0/comparison.ressectionlab\" CRANIAL_DEMO_OUTPUT=\"$PWD/testcases/overnight-sequential-v1/desktop/fresh-frozen-harm0-v1\" CRANIAL_DEMO_MIN_ALTERNATIVES=1 CRANIAL_DEMO_REQUIRE_FROZEN=1 desktop/node_modules/.bin/electron desktop/electron/verify-sequential-cranial.cjs",
+  "frozenCodeBindingsSha256": "b705f584ef83c5c3cab2c5932ab50c6eeac1a717870d760dc1591315b44f76a8",
+  "frozenColdCommand": "CRANIAL_DEMO_CASE=\"$PWD/testcases/overnight-sequential-v1/desktop/hidden-warm-v2/desktop-saved.ressectionlab\" CRANIAL_DEMO_OUTPUT=\"$PWD/testcases/overnight-sequential-v1/desktop/fresh-frozen-cold-v2\" CRANIAL_DEMO_EXPECT_REPORT=\"$PWD/testcases/overnight-sequential-v1/desktop/hidden-warm-v2/report.json\" CRANIAL_DEMO_REQUIRE_FROZEN=1 desktop/node_modules/.bin/electron desktop/electron/verify-sequential-cranial.cjs",
+  "frozenHarm0Command": "CRANIAL_DEMO_CASE=\"$PWD/testcases/overnight-sequential-v1/desktop/generated-v7/harm-0/comparison.ressectionlab\" CRANIAL_DEMO_OUTPUT=\"$PWD/testcases/overnight-sequential-v1/desktop/fresh-frozen-harm0-v2\" CRANIAL_DEMO_MIN_ALTERNATIVES=1 CRANIAL_DEMO_REQUIRE_FROZEN=1 desktop/node_modules/.bin/electron desktop/electron/verify-sequential-cranial.cjs",
   "frozenVerificationSummary": {
     "allV7CasesReused": true,
-    "currentRendererRebuiltFromFrozenCheckout": true,
     "frozenRunsPassed": 2,
     "codeIdentitiesPerRun": 22,
     "bothAlternativeReplayInColdProcess": true,
     "harm0NumericRefusalVisible": true,
     "noPlanCommands": true,
-    "allOwnedHarnessAndEngineProcessesExited": true
+    "allOwnedHarnessAndEngineProcessesExited": true,
+    "viewerManualStagesVerified": 3,
+    "viewerOriginalImagesVerified": 6,
+    "rendererArtifactMatchesFrozenDesktopSource": true
+  },
+  "initialImplementationCommit": "4cddd05f6b0b69bb5742687513851504a830489c",
+  "priorFrozenEvidence": [
+    {
+      "name": "frozen-cold-v1",
+      "path": "testcases/overnight-sequential-v1/desktop/frozen-cold-v1/report.json",
+      "sha256": "da636abe2ead068314ebac5579d038b4acf7b8fcb306147f06de61a28f149606",
+      "runIdentityPath": "testcases/overnight-sequential-v1/desktop/frozen-cold-v1/run-identity.json",
+      "runIdentitySha256": "f286cbe0e32809c0031961cfa207eca5d9bc434a6ddc8f9f1ca543239a97166b",
+      "implementationCommit": "4cddd05f6b0b69bb5742687513851504a830489c",
+      "codeBindingsSha256": "67bef262ea2cf169e821311c44ee192260d39c1fa7ebd1665813c049a73129b3",
+      "passed": true,
+      "requireFrozenCode": true,
+      "codeStable": true,
+      "windowEverVisible": false,
+      "engineTermination": {
+        "exitCode": 0,
+        "signal": null
+      },
+      "savedPath": "testcases/overnight-sequential-v1/desktop/frozen-cold-v1/desktop-saved.ressectionlab",
+      "savedSha256": "5e0905de6947f11a3d777264ab509a6a47a98bdc5881c15400d6e7fa53fdad39"
+    },
+    {
+      "name": "frozen-harm0-v1",
+      "path": "testcases/overnight-sequential-v1/desktop/frozen-harm0-v1/report.json",
+      "sha256": "aca3920cd83be76e79799aed76be6c4505eefc50ebbb982655499a5edb9f0b86",
+      "runIdentityPath": "testcases/overnight-sequential-v1/desktop/frozen-harm0-v1/run-identity.json",
+      "runIdentitySha256": "1e861bb192e1e38c0352afca0368a85f39b2964996230c4657a5a5db11415523",
+      "implementationCommit": "4cddd05f6b0b69bb5742687513851504a830489c",
+      "codeBindingsSha256": "67bef262ea2cf169e821311c44ee192260d39c1fa7ebd1665813c049a73129b3",
+      "passed": true,
+      "requireFrozenCode": true,
+      "codeStable": true,
+      "windowEverVisible": false,
+      "engineTermination": {
+        "exitCode": 0,
+        "signal": null
+      },
+      "savedPath": "testcases/overnight-sequential-v1/desktop/frozen-harm0-v1/desktop-saved.ressectionlab",
+      "savedSha256": "ead0a9aa0d87ce5eb740cc2b415874811c4c475c7e15c47c2f2c77f843a0f10b"
+    }
+  ],
+  "localFrameViewer": {
+    "path": "testcases/overnight-sequential-v1/desktop/replay-viewer-v2.html",
+    "sha256": "8f0a831a2789c7058ebdcc3dfad464612c8a05f62d2b9020164205972e8c9dd5",
+    "metadataPath": "testcases/overnight-sequential-v1/desktop/replay-viewer-v2.json",
+    "metadataSha256": "48b94bae6f6976106ed8959d967503ee3d0a3467a73d0f710d24ab374b233f22",
+    "qaPath": "testcases/overnight-sequential-v1/desktop/replay-viewer-qa-v2/report.json",
+    "qaSha256": "59aef86dafa755968576eacd881d933927acdbbcd4af70f2bed6931c4016f234",
+    "implementationCommit": "3872c99fdc93b73d16143b6058818eca20ef4bfb",
+    "codeBindingsSha256": "b705f584ef83c5c3cab2c5932ab50c6eeac1a717870d760dc1591315b44f76a8",
+    "plans": 2,
+    "actualFramesPerPlan": 3,
+    "imageCopies": 0,
+    "automaticPlayback": false,
+    "hiddenQaPassed": true
   }
 }
