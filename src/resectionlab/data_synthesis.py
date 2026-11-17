@@ -11,7 +11,7 @@ from scipy.ndimage import distance_transform_edt, gaussian_filter, map_coordinat
 RECIPE = "physical-irregular-compartments-v2"
 
 
-def geometry(brain, affine, *, seed, variant=0, placement_support=None):
+def geometry(brain, affine, *, seed, variant=0, placement_support=None, random_placement=False):
     brain = np.asarray(brain, bool)
     affine = np.asarray(affine, float)
     if brain.ndim != 3 or not brain.any() or affine.shape != (4, 4) or not np.isfinite(affine).all():
@@ -40,7 +40,8 @@ def geometry(brain, affine, *, seed, variant=0, placement_support=None):
     world = candidates @ affine[:3, :3].T + affine[:3, 3]
     fractions = [(0.25, .65, .65), (.75, .65, .5), (.3, .35, .45), (.7, .4, .7)]
     desired = world.min(0) + np.ptp(world, axis=0) * fractions[variant % len(fractions)]
-    center = candidates[np.argmin(np.sum((world - desired) ** 2, axis=1))]
+    center = (candidates[rng.integers(len(candidates))] if random_placement else
+              candidates[np.argmin(np.sum((world - desired) ** 2, axis=1))])
     center_ras = affine[:3, :3] @ center + affine[:3, 3]
     # Allocate only the lesion ROI. A sphere enclosing the largest axis bounds
     # oblique ellipsoids, so the crop cannot clip a compartment.
@@ -72,7 +73,9 @@ def geometry(brain, affine, *, seed, variant=0, placement_support=None):
     return compartments, {"recipe": RECIPE, "seed": int(seed), "variant": int(variant),
         "center_voxel": center.tolist(), "center_ras_mm": center_ras.tolist(), "radii_mm": radii.tolist(),
         "requested_radii_mm":requested_radii.tolist(),"support_fit_scale":fit_scale,
-        "rotation_ras": rotation.tolist(), "phase": phase.tolist(), "placement": "normalized RAS bounds of admitted interior; no lobe inference",
+        "rotation_ras": rotation.tolist(), "phase": phase.tolist(),
+        "placement": ("seeded uniform random admitted interior voxel; no lobe inference" if random_placement else
+                      "normalized RAS bounds of admitted interior; no lobe inference"),
         "brain_margin_mm": margin, "outside_brain_voxels": 0, "donors": [],
         "clinical_parameter_distribution": False, "tissue_class_constraint": "brain-envelope estimate only" if placement_support is None else "conservative high-T1-signal support estimate; not validated parenchyma or GM/WM/CSF classification"}
 
@@ -98,6 +101,10 @@ def appearance(baseline, brain, compartments, *, seed, modality="T1"):
     for (name, mask), level in zip(compartments.items(), levels):
         signal[mask] = low + (high - low) * (level + .035 * noise[mask])
     mixed = image * (1. - support) + signal * support
+    # Both terms contain the identical baseline outside the compartments, but
+    # separate float32 multiplications can still round differently. Preserve
+    # acquired background values exactly rather than altering distant tissue.
+    mixed[~union] = image[~union]
     # The smoothing support blends only existing compartment signal; pixels
     # outside it remain exactly acquired. No synthetic T1ce/FLAIR is invented.
     if not np.isfinite(mixed).all():
