@@ -80,7 +80,7 @@ export class OrientationGuide {
     this.light.position.set(-3,4,5).applyQuaternion(this.cameraRotation).add(this.centre);
     this.light.target.position.copy(this.centre);
     for(const side of this.sides){
-      this.projected.set(side.dataset.guideSide==='right'?.255:-.255,0,-.16).applyMatrix4(this.bodyRotation).project(this.camera);
+      this.projected.set(side.dataset.guideSide==='right'?.355:-.355,0,-.16).applyMatrix4(this.bodyRotation).project(this.camera);
       side.style.left=`${(this.projected.x+1)*width/2}px`;side.style.top=`${(1-this.projected.y)*height/2}px`;
     }
     if(this.down&&this.gravity){
