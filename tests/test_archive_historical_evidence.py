@@ -50,7 +50,7 @@ def test_complete_restore_preserves_hashes_modes_nanoseconds_links_and_sparse_da
     manifest_path.write_text(json.dumps(manifest))
     receipt = {'archiveSha256': archive.digest(packed), 'manifestSha256': archive.digest(manifest_path)}
     (tmp_path / 'receipt.json').write_text(json.dumps(receipt))
-    restored = tmp_path / 'restored'
+    restored = tmp_path / 'new-parent' / 'restored'
     result = archive.verify(packed, manifest_path, destination=restored)
     assert result['files'] == 2
     assert archive.inventory(restored, ['case/data', 'case/sparse', 'case/link']) == rows

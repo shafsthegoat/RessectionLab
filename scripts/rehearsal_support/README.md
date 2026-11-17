@@ -8,10 +8,10 @@ retained. Only locations, CLI bindings and default report destinations changed.
 `readonly_step_monitor.py` is an exact byte copy of its original. Its generated
 controls now run as `tests/test_readonly_step_monitor.py` in ordinary discovery.
 
-Use the current wrapper from the checkout:
+After restoring the optional bundle, use the current wrapper from the checkout:
 
 ```sh
-.venv/bin/python scripts/verify_shared_rehearsal.py --data-only
+.venv/bin/python scripts/verify_shared_rehearsal.py --data-only --bundle-root /absolute/restored-root
 .venv/bin/python -m pytest tests/test_readonly_step_monitor.py tests/test_shared_rehearsal_support.py -q
 ```
 
@@ -19,8 +19,10 @@ The first command checks every one of the 581 original data files, source arrays
 saved state hashes, protection, accounting and withdrawal, with zero physics
 actions. It does **not** prove execution under the historical producer source.
 The unchanged default/`--files-only` whole-source check still rejects changed
-source bytes; it already failed before this cleanup because development changed
-131 pinned files. The original manifest must not be updated to make it pass.
+source bytes. The earlier support-pass baseline had 131 mismatches; the pushed
+pre-migration revision `6547ad74` has 135 of 1,030 historical source files changed
+by subsequent development. The original manifest must not be updated to make it
+pass. All 581 original data files still pass their separate exact-byte check.
 
 `--bundle-root /absolute/data-root` chooses an existing, checkout-shaped **data**
 root independently of the executing source checkout. The corresponding environment
@@ -84,7 +86,7 @@ the episode, three-action trace and baseline with zero physics actions:
 
 ```sh
 baseline_archive_root='/Volumes/shafrir/old coding projects/RessectionLabData/archive/closed-evidence/rehearsal-profiler-baseline-20261022-v1'
-baseline_root="$PWD/testcases/cleanup-execution-20261116/restored-profiler-baseline-v1"
+baseline_root="$PWD/testcases/restored-rehearsal-profiler-baseline-20261022"
 python3 scripts/archive_historical_evidence.py restore \
   --archive "$baseline_archive_root/archive.tar.gz" \
   --manifest "$baseline_archive_root/manifest.json" \

@@ -213,7 +213,7 @@ def verify(archive, manifest_path, receipt_path=None, destination=None):
     destination = Path(destination).absolute()
     require(not destination.exists() and not destination.is_symlink(), 'Restore destination already exists; refusing overwrite')
     consume(archive, manifest)
-    destination.mkdir(mode=0o700)
+    destination.mkdir(mode=0o700, parents=True)
     return consume(archive, manifest, destination)
 
 

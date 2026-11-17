@@ -29,6 +29,8 @@ Historical disabled planners and the optional Qt prototype remain available;
 `app/reslice.py` is also used by current registration. Do not reopen guarded
 planning/training paths while reproducing earlier work.
 
-The [bounded cleanup record](cleanup-20261116.md) explains current tooling changes,
-KEEP decisions and deferred archival. It does not replace the research goal.
+The [cleanup execution record](cleanup-execution-20261116.md) explains the verified
+historical archives, checkout reduction, restoration and remaining KEEP decisions.
+The [earlier support pass](cleanup-20261116.md) remains dated context. Neither
+replaces the research goal.
 Earlier status documents retain their dated narratives and requirements.

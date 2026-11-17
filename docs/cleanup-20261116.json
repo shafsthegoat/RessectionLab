@@ -795,5 +795,230 @@
   "trackedCheckoutDelta": {
     "files": 14,
     "bytes": 138493
+  },
+  "subsequentExecution20261116": {
+    "scope": "Subsequent actual archival execution; earlier bounded-pass fields above retain their original dated meaning.",
+    "baselineCommit": "6547ad746787283f9f9159ddf3235d0820c9c382",
+    "preservationTag": "preservation/cleanup-execution-20261116",
+    "branch": "shaf/cleanup-execution-20261116",
+    "implementationCommits": [
+      "4d9ad383",
+      "caa08d2b",
+      "b55ddf5a"
+    ],
+    "before": {
+      "files": 17608,
+      "trackedBytes": 1885429107
+    },
+    "after": {
+      "files": 16742,
+      "trackedBytes": 389883950,
+      "netReductionBytes": 1495545157,
+      "reductionPercent": 79.321209,
+      "largestGroups": [
+        {
+          "path": "artifacts",
+          "files": 14109,
+          "bytes": 351703241
+        },
+        {
+          "path": "tests",
+          "files": 768,
+          "bytes": 8324262
+        },
+        {
+          "path": "scripts",
+          "files": 430,
+          "bytes": 7117699
+        },
+        {
+          "path": "src",
+          "files": 367,
+          "bytes": 6890821
+        },
+        {
+          "path": "manifests",
+          "files": 185,
+          "bytes": 5522456
+        },
+        {
+          "path": "desktop",
+          "files": 525,
+          "bytes": 5402110
+        },
+        {
+          "path": "docs",
+          "files": 307,
+          "bytes": 3492365
+        },
+        {
+          "path": "packaging",
+          "files": 7,
+          "bytes": 489418
+        }
+      ]
+    },
+    "grossRemoved": {
+      "files": 872,
+      "bytes": 1495634359,
+      "rehearsalFiles": 581,
+      "rehearsalBytes": 1312252037,
+      "visualFiles": 291,
+      "visualBytes": 183382322
+    },
+    "archiveIndex": "manifests/historical-archives-20261116.json",
+    "archiveIndexSha256": "ae7cff9e08c34fb8947393fe59ab72bf777ba8e42a2fc276f4004c09d28c3f02",
+    "preservation": {
+      "externalArchives": "Three complete verified gzip/PAX archives and full restored inventories;see index for exactpaths andSHA256.",
+      "trackedIndependentCopy": "Pushed preserved Git tag;every removed file compared to its exact preserved Git blob.",
+      "uniqueIgnoredFilesRetained": 5539,
+      "uniqueIgnoredLinksRetained": 339,
+      "retainedVisualFiles": 259,
+      "originalScientificManifestsRewritten": false,
+      "mountedVolumeUuidManualCheck": "9CC3623C-E38B-3EEE-B6BB-B9A06C193700",
+      "builderVolumeCheck": "Mounted independent device+existingrootmarker+archivecontainment;UUID checked separately usingdiskutil.",
+      "ownership": "Restores as currentuser;permemberbytes/mode/nsmtime/links exact."
+    },
+    "gitObjectMeasurements": {
+      "before": {
+        "looseObjects": 4373,
+        "packedObjects": 25127,
+        "objectFileBytes": 379840512,
+        "scope": "git count-objects allocated KiB converted to bytes;history retained, no pruning"
+      },
+      "afterArchivalImplementationCommits": {
+        "looseObjects": 4448,
+        "packedObjects": 25127,
+        "objectFileBytes": 380401664,
+        "scope": "git count-objects allocated KiB converted to bytes;history retained, no pruning"
+      },
+      "installedAppPayloadChanged": false
+    },
+    "sourcePreservation": {
+      "scientificSrcUnchanged": true,
+      "frontendImplementationUnchanged": true,
+      "edenSourceAndPermanentDataUntouched": true,
+      "historicalSourceBaselineMismatchCount": 135,
+      "historicalSourceEntries": 1030,
+      "historicalManifestSha256": "13063dc8674548813100da32076b48e23d13a9cb0f0b6a2b4d5f794b5d9aef89"
+    },
+    "checks": {
+      "desktop": {
+        "main": 330,
+        "renderer": 739,
+        "viewer": 276,
+        "failures": 0,
+        "skips": 0,
+        "beforeAndAfterDiscoveryIdentical": true
+      },
+      "compiledCoreSupportArchive": 364,
+      "referenceCore": 311,
+      "vascularGenerated": 42,
+      "packageMockedChecks": 18,
+      "typescriptBuild": "passed;existingchunkadvisory",
+      "restoredDataFiles": 581,
+      "restoredSavedRecords": "passed",
+      "actualPrefixProfiler": {
+        "actions": 3,
+        "allOriginalFrameIdsExact": 12,
+        "wallSeconds": 29.00249108299613,
+        "timedReadPhysicsSteps": 0,
+        "oldPayloadAndOriginalBaselineReadsForbidden": true
+      },
+      "currentAppNoArchive": {
+        "hiddenWarmCold": "passed",
+        "sameState": true,
+        "optionalRootUnavailable": true
+      },
+      "independentReview": "Independentfullarchive/restore/Git/originalcomparisons;postremovalignoredandretainedinventories;lateprovided-referenceprovenancefix;currentappreceipts reviewed. No blocking findings.",
+      "freshCloneRestoreParent": "Missing parent directories are created;14archivecontrols pass including existing-target/symlink refusal."
+    },
+    "candidateUpdates": {
+      "rehearsal": "ARCHIVE581tracked files;KEEPalluniqueignoredoriginals",
+      "renderer-evidence": "ARCHIVEreviewedmedia;KEEPlivenumericalinputs+representativeproof",
+      "electron-evidence": "ARCHIVEreviewedmedia;KEEPallnonmedia+representativeproof",
+      "source-snapshots": "KEEPsource/path-boundbytes;futureproducercontent-hashreuse deferred",
+      "frontend": "KEEPexplicitexperimentalcontracts+independentfixture",
+      "legacy-backends": "KEEPguardedimplementations+Qtnumericalreslice",
+      "experiment-tooling": "KEEPexactHBEancestry/distinctfrozenpackagercontracts"
+    },
+    "evidence": [
+      {
+        "path": "testcases/cleanup-execution-20261116/baseline.json",
+        "bytes": 2171778,
+        "sha256": "88a33103e264ab6a28572e652d134082398c363887775780819693ba9048225e"
+      },
+      {
+        "path": "testcases/cleanup-execution-20261116/historical-source-baseline.json",
+        "bytes": 5964,
+        "sha256": "13346101770356215b6748b84a0f0aa287bb88dd23e7591ca709a0d4536f5e95"
+      },
+      {
+        "path": "testcases/cleanup-execution-20261116/rehearsal-post-removal-verification-summary.json",
+        "bytes": 2999,
+        "sha256": "18dfecaa45ac1ea7350fa30ab04b7f7b0c700de27c1b8f13351a19938002e395"
+      },
+      {
+        "path": "testcases/cleanup-execution-20261116/desktop-before-removal.log",
+        "bytes": 326906,
+        "sha256": "d439e11d9a032adbae17ef3b910d0db41b846304c5ae68d007d1f01b8b73508e"
+      },
+      {
+        "path": "testcases/cleanup-execution-20261116/desktop-after-removal.log",
+        "bytes": 326906,
+        "sha256": "a4362c75bde072511cc9fa5404c3214387670e017f2aea3af48443fb93458cde"
+      },
+      {
+        "path": "testcases/cleanup-execution-20261116/compiled-after.log",
+        "bytes": 501,
+        "sha256": "2300620b1af57ec0fae96aa53abc760e7dbf67072e6ed4a6a576468e0a1d90e5"
+      },
+      {
+        "path": "testcases/cleanup-execution-20261116/reference-after.log",
+        "bytes": 421,
+        "sha256": "aec0e4789c737e29f3631049babdeff38e1bac138f0eba246aebb4b045dbd153"
+      },
+      {
+        "path": "testcases/cleanup-execution-20261116/build-after-removal.log",
+        "bytes": 1078,
+        "sha256": "9a01d8789863bc9aab5cf9d060d4d641fcead5e24311964b5dd9fe7f01176427"
+      },
+      {
+        "path": "testcases/cleanup-execution-20261116/package-archive-qa.json",
+        "bytes": 7042,
+        "sha256": "233a1c00e627b69473bf550f39a8e15b65c4763a39d4b5cbd0cde4483ea70628"
+      },
+      {
+        "path": "testcases/cleanup-execution-20261116/current-app-no-archive.json",
+        "bytes": 4805,
+        "sha256": "872d84e9bdff95f2520c974693561ecedcabd228a00310928a8648d743f7aa0c"
+      },
+      {
+        "path": "testcases/cleanup-execution-20261116/rehearsal-restore.json",
+        "bytes": 69,
+        "sha256": "47d9c84fd14cfd5d714d729c3d4d76b152ce513776d4da3b025cdb9210e8c96a"
+      },
+      {
+        "path": "testcases/cleanup-execution-20261116/visual-restore.json",
+        "bytes": 66,
+        "sha256": "2e5b3c58c2cf8ae17c0101f8d8132d973d5062398bee411dfcba48f313833457"
+      },
+      {
+        "path": "testcases/cleanup-execution-20261116/profiler-baseline-restore.json",
+        "bytes": 59,
+        "sha256": "7a61ffb422dd04f313db051ecad464b1d03aab253bbe9f6080fad4bf84884852"
+      },
+      {
+        "path": "testcases/cleanup-execution-20261116/approved-removed-paths.txt",
+        "bytes": 74836,
+        "sha256": "fef67d22f71c043d58b3fa8abcdf008f7f3c1687169993e1222dc774a73d4874"
+      },
+      {
+        "path": "testcases/cleanup-execution-20261116/archive-tool-fresh-parent.log",
+        "bytes": 99,
+        "sha256": "029eb1704925b65f1fdfc5dca600ddd45949eebb6cd06736ff6cd451d7a137e4"
+      }
+    ],
+    "record": "docs/cleanup-execution-20261116.md"
   }
 }

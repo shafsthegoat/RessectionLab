@@ -476,3 +476,11 @@ including prior hydration receipts, are unchanged. Other verifier output
 policies are retained. Promote selected proof into `artifacts/` deliberately,
 with its source identity and limitations; keep the complete run in ignored data.
 See the [cleanup record](cleanup-20261116.md) for exact validation and limits.
+
+The [archive execution](cleanup-execution-20261116.md) subsequently removed
+historical rehearsal data and selected capture media from the tracked checkout.
+Live numerical reference receipts and six representative images remain in place;
+the [visual archive guide](visual-evidence-archive-20261116.md) restores complete
+old sessions. The runtime allowlist and installed app payload are unchanged by
+this archival pass. Current-source hidden startup, Save and separate cold reopen
+also pass with the optional rehearsal root unavailable.
