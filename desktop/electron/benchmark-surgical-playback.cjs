@@ -19,7 +19,7 @@ if(closeToolMode&&!prefixMode)throw Error('Close-tool check requires the bounded
 if(prefixMode&&(source!==path.join(root,'src')||bridgeSource||process.env.PLAYBACK_IMPORT_ONLY||process.env.PLAYBACK_ORBIT||process.env.PLAYBACK_FIELD_SIZES))throw Error('Prefix qualification requires current production source and no bridge substitution, import-only or observers');
 const sourcePath=process.argv[process.argv.indexOf('--case')+1];
 if(!process.argv.includes('--case')||!sourcePath)throw Error('Supply an existing saved --case');
-const monitor=path.join(root,'testcases/outputs/full-case-rehearsal-20261020/review');
+const monitor=path.join(root,'scripts/rehearsal_support');
 const runner=path.join(output,'guarded-bridge.py');
 const bridgeSetup=bridgeSource?`import importlib.util\nimport resectionlab.surgical_bridge as original_bridge\nspec=importlib.util.spec_from_file_location('resectionlab._measured_transport_bridge', ${JSON.stringify(bridgeSource)})\nmeasured_bridge=importlib.util.module_from_spec(spec)\nspec.loader.exec_module(measured_bridge)\noriginal_bridge.dispatch=measured_bridge.dispatch\n`:'';
 const prefixSetup=prefixMode?`sys.path.insert(0, ${JSON.stringify(__dirname)})\nfrom prefix_playback_monitor import PrefixPlaybackMonitor\nfrom resectionlab import surgical_prefix_replay\nfrom resectionlab.desktop_bridge import BridgeSession\nguard=PrefixPlaybackMonitor(SurgicalEngine)\nguard.install(BridgeSession)\n`:'guard=ReadOnlyStepMonitor(SurgicalEngine)\n';
