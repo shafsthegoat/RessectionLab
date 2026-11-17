@@ -206,3 +206,32 @@ def test_edit_and_reassessment_preserve_comparison_order(native):
     assert changed['approaches'][0]['radiusMm']==1
     refreshed=dispatch_plan(c,{'action':'assess','approachId':ids[0]})
     assert [row['id'] for row in refreshed['approaches']]==ids
+
+
+def test_saved_entry_patch_edits_recompute_failures_and_survive_reopen(native, tmp_path):
+    c = native
+    a = c.patient_affine(c.series('t1'))
+    entry, target = world(a, [10, 26, 15]), world(a, [10, 11, 15])
+    value = {'id': 'patch-edited', 'name': 'Editable patch', 'entry': entry.tolist(),
+             'target': target.tolist(), 'radiusMm': .5,
+             'entryPatch': {'center': (entry + [2, 0, 0]).tolist(), 'normal': [0, 0, -1], 'radiusMm': 4},
+             'constraints': {'maxLengthMm': 50, 'minClearanceMm': 0}}
+    first = dispatch_plan(c, {'action': 'upsert', 'approach': value})['approaches'][0]
+    assert not any('entry-centre disk' in f for f in first['measurements']['constraintFailures'])
+    edited = {**first, 'entryPatch': {**first['entryPatch'], 'radiusMm': 1}}
+    changed = dispatch_plan(c, {'action': 'upsert', 'approach': edited})['approaches'][0]
+    assert changed['parameterHash'] != first['parameterHash']
+    assert changed['measurementHash'] != first['measurementHash']
+    assert changed['measurements']['lengthMm'] == first['measurements']['lengthMm']
+    assert changed['measurements']['status'] == 'known-conflict'
+    assert any('entry-centre disk' in f for f in changed['measurements']['constraintFailures'])
+    assert changed['sourceSnapshotId'] == first['sourceSnapshotId'] == c.identity()
+    assert read_approaches(Collection(c.root))[0] == changed
+    archive = tmp_path / 'patch.rsworkspace'
+    save_package(c, archive)
+    restored = Collection(open_package(archive, tmp_path / 'cold-working').parent)
+    assert read_approaches(restored)[0] == changed
+    tightened = dispatch_plan(c, {'action': 'upsert', 'approach': {
+        **changed, 'constraints': {**changed['constraints'], 'maxLengthMm': 1}}})['approaches'][0]
+    assert any('maximum length' in f for f in tightened['measurements']['constraintFailures'])
+    assert tightened['parameterHash'] != changed['parameterHash']

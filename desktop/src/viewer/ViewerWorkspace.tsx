@@ -651,6 +651,12 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
       onPointerCancelCapture={()=>engine.current?.endInteraction()}
       data-layout={layout}
       data-source-case-hash={caseData?.caseHash}
+      data-source-display-identity={caseData?.displayIdentity}
+      data-source-modality={props.sourceLabel}
+      data-selected-structure={props.selectedStructure??''}
+      data-visible-layer-ids={JSON.stringify(Object.keys(visibleLayers).filter(id=>visibleLayers[id]))}
+      data-approach-view-mode={approachViewMode??''}
+      data-approach-routes={JSON.stringify(routes)}
       data-renderer-ready={ready&&!error&&!modelDisplayPending&&remaining===0?'true':'false'}
       data-surfaces-pending={remaining}
       data-expanded={expanded ?? undefined}

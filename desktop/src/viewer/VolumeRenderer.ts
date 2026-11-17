@@ -159,6 +159,15 @@ function intensityWindow(values: Float32Array): [number, number] {
 }
 
 /** One GPU context shares the source textures across the 3-D scene and all MPRs. */
+const sourceSignalSamples=new WeakMap<Float32Array,string>();
+/** Bounded fingerprint of immutable source samples; not a replacement for the source SHA. */
+function sourceSignalFingerprint(data:Float32Array):string {
+  const cached=sourceSignalSamples.get(data);if(cached)return cached;
+  const bits=new Uint32Array(data.buffer,data.byteOffset,data.length),count=Math.min(4096,data.length);
+  let hash=2166136261;for(let i=0;i<count;i++){const index=count>1?Math.floor(i*(data.length-1)/(count-1)):0;hash=Math.imul(hash^bits[index],16777619)>>>0;}
+  const value=`sampled-f32:${data.length}:${hash.toString(16).padStart(8,'0')}`;sourceSignalSamples.set(data,value);return value;
+}
+
 export class VolumeRenderer {
   readonly bounds: Bounds3;
   private readonly sliceSupportBounds: Bounds3;
@@ -2173,6 +2182,7 @@ export class VolumeRenderer {
     const surgicalAnimationActive=this.advanceSurgicalAnimation(performance.now());
     // Capture before any synchronous telemetry listener can replace the view.
     const publication=this.pendingSurgicalPublication,renderedView=this.surgicalInteraction?.preview??this.surgicalInteraction?.view??null;
+    const displayIdentity=this.volume.displayIdentity,sourceShape=[...this.volume.shape],sourceSignal=sourceSignalFingerprint(this.volume.mri),routeSignature=this.routeSignature,cursor=[...this.cursor],selectedStructure=this.selectedStructure;
     const sourceCaseHash=this.volume.caseHash,surgicalStateId=renderedView?.stateId??null,surgicalFrame=this.surgicalInteraction?.recordedFrame??null;
     this.labelTextureUpdates?.sync(this.renderer,this.labelTexture);
     // Interaction quality changes only offscreen 3D targets. The shared canvas
@@ -2232,13 +2242,13 @@ export class VolumeRenderer {
     this.renderer.setScissorTest(false);
     this.gpuTimer?.end();
     this.lastSubmittedSurgicalView=renderedView;
-    const interactive=this.interacting,cpuMs=performance.now()-frameStarted;
+    const interactive=this.interacting,cpuMs=performance.now()-frameStarted,cameraState=this.getCameraState(),renderedTractIds=this.tractObjects?[...this.tractObjects].filter(([,object])=>object.visible&&(object.geometry.getAttribute('position')?.count??0)>0).map(([id])=>id):[];
     this.canvas.dispatchEvent(new CustomEvent('anatomy-frame',{bubbles:true,detail:{serial,at:frameStarted,cpuMs,cpuMeasurement:'CPU-frame-submission',interactive,volume:this.scanVolume.active,sliceDraws,longEdge:interactive?this.budget.longEdge:1300,
       resources:{...this.renderer.info.memory},drawCalls:this.renderer.info.render.calls,drawStatistics:{...this.renderer.info.render},gpuTimingSupported:this.gpuTimer?.supported??false,
       estimatedAllocation:this.estimateAllocation(),displayWork:{...this.displayWork},workers:{source:this.sourceWorkerActive?1:0,replay:this.replayWorker?1:0,modeled:this.modelWorker?1:0,picking:this.picking?.stats().workerLive??0},surfaceQuality,
       surfaceCache:{budgetBytes:RETIRED_SURFACE_BUDGET_BYTES,retiredBytes:this.retiredSurfaces.reduce((sum,entry)=>sum+entry.bytes,0),retiredEntries:this.retiredSurfaces.length},
       labelUploads:this.labelTextureUpdates?.work??null,
-      sourceCaseHash,surgicalStateId,surgicalFrame,
+      sourceCaseHash,displayIdentity,sourceShape,sourceSignalFingerprint:sourceSignal,cameraState,cursor,selectedStructure,routeSignature,renderedTractIds,surgicalStateId,surgicalFrame,
       recordedFlow:this.surgicalFlowSource?{startSeconds:this.surgicalFlowSource.startSeconds,endSeconds:this.surgicalFlowSource.endSeconds,operations:this.surgicalFlowSource.operations.length,truncated:this.surgicalFlowSource.truncated,
         animated:surgicalAnimationActive,approximation:'Retrospective source-interval overlay; 3x radius display gain',
         glyphInstances:this.surgicalFlow?.children.reduce((sum,object)=>sum+(object instanceof THREE.InstancedMesh&&object.name!=='flow:ledger-droplets'?object.count:0),0)??0,
@@ -2264,7 +2274,7 @@ export class VolumeRenderer {
       const elapsed=performance.now()-frameStarted;
       if(interactive&&(status===gl.ALREADY_SIGNALED||status===gl.CONDITION_SATISFIED))this.budget.sample(elapsed);
       const completed=status===gl.ALREADY_SIGNALED||status===gl.CONDITION_SATISFIED;
-      this.canvas.dispatchEvent(new CustomEvent('anatomy-gpu',{bubbles:true,detail:{serial,sourceCaseHash,surgicalStateId,surgicalFrame,completed,milliseconds:elapsed,completionPollMs:elapsed,measurement:'submission-to-fence-poll-upper-bound'}}));
+      this.canvas.dispatchEvent(new CustomEvent('anatomy-gpu',{bubbles:true,detail:{serial,sourceCaseHash,displayIdentity,sourceSignalFingerprint:sourceSignal,surgicalStateId,surgicalFrame,completed,milliseconds:elapsed,completionPollMs:elapsed,measurement:'submission-to-fence-poll-upper-bound'}}));
       if(this.disposed||this.graphicsLost)return;
       if(completed)this.finishSurgicalFrame(publication,serial);
       else this.failSurgicalFrame(publication,'The GPU did not complete the requested image frame. Reopen the source before continuing.');

@@ -31,7 +31,8 @@ magnitude/phase or a validated venous segmentation. T1 vein estimates retain the
 T1 provenance and do not become SWI-derived veins.
 
 Use the structure legend to show, isolate, recolor, change opacity or focus a
-named bundle. Source slices share a physical RAS cursor with 3D; slab-clipped
+named bundle. Source slices share a physical RAS cursor with 3D and retain that cursor when
+switching scans (contrast and camera remain scan-specific); slab-clipped
 fiber previews provide slice context. Reversible scalar previews and complete
 streamline subsets bound display load; measurements use original grids and
 streamline segments. Source-bound imported registrations survive automatic
@@ -46,11 +47,19 @@ retain at most three distinct alternatives. Fewer eligible paths produce an
 explanation. Length, available-label proximity and target-centre coverage drive
 transparent preferences; no universal safety score is computed.
 
+Each comparison card separates the observed geometric finding (detected
+intersection, no detected intersection in assessed anatomy, or unavailable
+measurement) from evidence completeness and declared constraint failures. Missing
+labels, limited coverage and unmeasured registration remain explicit uncertainties.
+
 A selected approach shows its capsule, entry region and illustrative virtual
 axis. **Along corridor** and **Corridor oblique** reuse the existing camera.
 The entry region is hypothetical, with no measured CT skull opening. Edits
-recompute source-bound comparisons; selecting a concern highlights and centres
-that anatomy. Measurements include full capsule field-of-view containment,
+recompute source-bound comparisons, including edits to the saved entry-patch
+radius. Selecting a path initializes all editor fields from that object; switching
+paths and saving flush valid pending edits. The patch centre and plane stay fixed
+when its entry moves, and disk violations are displayed as constraint failures.
+Selecting a concern highlights and centres that anatomy. Measurements include full capsule field-of-view containment,
 per-label conservative voxel-cell proximity/intersections, supplied streamline
 proximity, target voxel-centre reach and supported brain traversal. These are
 static geometric quantities, not clinical margins, tissue removal, functional
@@ -67,8 +76,13 @@ anatomy revisions. The existing `anatomyPlan` operation accepts `list`, `suggest
 
 `desktop/electron/verify-eden-planning.cjs` drives the actual React/preload/Python
 workflow with hidden windows. Supply `RESSECTIONLAB_DATA_ROOT`, `EDEN_STUDY` and a
-fresh `EDEN_OUTPUT`; `EDEN_PHASE=reopen` checks the saved comparison in a fresh
-process. It captures real app frames and records source bindings and interactions.
+fresh `EDEN_OUTPUT`; `EDEN_PHASE=reopen` with `EDEN_EXPECTED` pointing to the
+preceding successful report checks exact geometry, measurements, selection,
+camera, layers and source signal in a distinct process. Select changes dispatch
+React-compatible change events. Source verification requires controlled React
+state, the requested source response, matching rendered/GPU-completed identities,
+source-signal fingerprints and visibly different source-pane pixels. A successful
+API call or a changed DOM selector alone cannot establish a modality switch.
 The private `testcases/eden2020-planning-v1/README.md` identifies the verified
 app build, recording, primary case and second-study results. The packaged
 walkthrough exercises library opening, named tract focus, three proposals,

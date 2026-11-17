@@ -1472,7 +1472,7 @@ export default function App() {
   }
 
   return (
-    <div className={`app-shell poc-workbench ${native.binding?"native-workspace":""} ${workbenchTab === "research" && !native.binding ? "research-open" : "anatomy-only"} ${casePanel ? "" : "case-panel-collapsed"}`}>
+    <div data-native-series={native.binding?native.series:undefined} data-native-view-state={native.binding?JSON.stringify(native.viewState):undefined} className={`app-shell poc-workbench ${native.binding?"native-workspace":""} ${workbenchTab === "research" && !native.binding ? "research-open" : "anatomy-only"} ${casePanel ? "" : "case-panel-collapsed"}`}>
       <header className="app-header">
         <div className="window-traffic-space" />
         <div className="brand">

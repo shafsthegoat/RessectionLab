@@ -11,7 +11,7 @@ test('structural contrast retains study angiography availability and derived dif
   assert.match(sourceEvidenceLabel(series[0],[series[0]]),/no acquired angiography in this study/);
 });
 
-test('scan switches retain shared anatomy and appearance while restoring scan-specific contrast',()=>{
+test('scan switches retain the physical cursor and anatomy while restoring scan-specific contrast',()=>{
   const current={cursor:[1,2,3],visible:{brain:true,tumor:true,vessels:false},settings:{contrast:2,contextStyle:'shell',sliceFraming:{fit:'anatomy',zoom:2},layerOpacity:{brain:.15},layerColor:{tumor:'#aa00ff'}}};
   const saved={cursor:[4,5,6],visible:{brain:false,tumor:false,vessels:true},settings:{contrast:4,sliceFraming:{fit:'image',zoom:.75},volumeRendering:{preset:'ct-bone'}}};
   const next=nextScanState(current,saved);
@@ -21,7 +21,8 @@ test('scan switches retain shared anatomy and appearance while restoring scan-sp
   assert.equal(next.settings.volumeRendering.preset,'ct-bone');
   assert.equal(next.settings.contextStyle,'shell');
   assert.deepEqual(next.settings.sliceFraming,{fit:'image',zoom:.75});
-  assert.deepEqual(next.cursor,saved.cursor);
+  assert.deepEqual(next.cursor,current.cursor);
+  next.cursor[0]=99;assert.deepEqual(current.cursor,[1,2,3]);assert.deepEqual(saved.cursor,[4,5,6]);
   next.visible.brain=false;
   assert.equal(current.visible.brain,true);
 });
@@ -92,4 +93,9 @@ test('saved context and physical slice framing reopen detached and reject malfor
   for(const sliceFraming of [null,[],{}, {fit:'brain',zoom:1},{fit:'image',zoom:true},{fit:'image',zoom:.49},{fit:'anatomy',zoom:4.01},{fit:'image',zoom:NaN},{fit:'image',zoom:1,alterSource:true}])
     assert.throws(()=>checkedViewerSettings(source,{sliceFraming}));
   for(const contextStyle of [null,{},[],'unknown'])assert.throws(()=>checkedViewerSettings(source,{contextStyle}));
+});
+
+test('a study without a current cursor initializes from the saved scan without aliasing it',()=>{
+  const saved={cursor:[4,5,6],visible:{},settings:{contrast:3}},current={cursor:null,visible:{},settings:{}};
+  const next=nextScanState(current,saved);assert.deepEqual(next.cursor,saved.cursor);next.cursor[0]=99;assert.deepEqual(saved.cursor,[4,5,6]);
 });

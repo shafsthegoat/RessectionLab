@@ -44,7 +44,7 @@ after(async()=>{await server?.close();if(cache)await fs.rm(cache,{recursive:true
 function renderer(){
   const r=Object.create(VolumeRenderer.prototype),mesh=new THREE.Mesh(new THREE.BoxGeometry(),new THREE.MeshStandardMaterial());
   const uniforms={uColors:{value:[new THREE.Color()]},uSliceContours:{value:0},uLayerOpacities:{value:new Float32Array(8)},uClipEnabled:{value:0},uClipPlane:{value:new THREE.Vector4()},uFusionOpacity:{value:.5},uFusionActive:{value:0},uFusion:{value:null},uFusionShape:{value:new THREE.Vector3()},uWorldToFusion:{value:new THREE.Matrix4()},uFusionWindow:{value:new THREE.Vector2()}};
-  Object.assign(r,{beginInteraction(){},endInteraction(){},scanVolume:{configure(){},labels(){}},volume:{...source,compartments:[{name:'brain',color:'#778899',mask:new Uint8Array(60)}]},bounds:[[-20,-30,-40],[80,90,100]],surfaces:new Map([['brain',mesh]]),materials:()=>[{uniforms}],requestRender(){},fusionTexture:{dispose(){}},renderer:{getContext:()=>({MAX_3D_TEXTURE_SIZE:1,getParameter:()=>2048})}});
+  Object.assign(r,{camera:new THREE.PerspectiveCamera(34,1,.1,1000),controls:{target:new THREE.Vector3(),update(){}},cursor:[0,0,0],beginInteraction(){},endInteraction(){},scanVolume:{configure(){},labels(){}},volume:{...source,compartments:[{name:'brain',color:'#778899',mask:new Uint8Array(60)}]},bounds:[[-20,-30,-40],[80,90,100]],surfaces:new Map([['brain',mesh]]),materials:()=>[{uniforms}],requestRender(){},fusionTexture:{dispose(){}},renderer:{getContext:()=>({MAX_3D_TEXTURE_SIZE:1,getParameter:()=>2048})}});
   return {r,mesh,uniforms};
 }
 test('real renderer updates source material and all image uniforms without touching source data',()=>{
@@ -240,7 +240,7 @@ test('GPU backpressure coalesces input and submits the latest pending frame only
     const {r}=renderer(),empty={getBoundingClientRect:()=>({left:0,top:0,width:0,height:0})};
     const gl={SYNC_GPU_COMMANDS_COMPLETE:1,TIMEOUT_EXPIRED:2,WAIT_FAILED:3,ALREADY_SIGNALED:4,CONDITION_SATISFIED:5,fenceSync:()=>({}),flush(){},clientWaitSync:()=>ready?4:2,deleteSync(){deleted++}};
     Object.assign(r,{requestRender:VolumeRenderer.prototype.requestRender,disposed:false,frame:0,renderSerial:0,width:100,height:100,sliceRevision:0,interacting:false,refinementStarted:0,budget:{longEdge:360},gpuSync:null,estimateAllocation:()=>({}),retiredSurfaces:[],
-      container:{getBoundingClientRect:()=>({left:0,top:0,width:100,height:100})},panes:{anatomy:empty,axial:empty,coronal:empty,sagittal:empty},canvas:{dispatchEvent(){}},scanVolume:{active:false},controls:{update(){}},
+      container:{getBoundingClientRect:()=>({left:0,top:0,width:100,height:100})},panes:{anatomy:empty,axial:empty,coronal:empty,sagittal:empty},canvas:{dispatchEvent(){}},scanVolume:{active:false},controls:{target:new THREE.Vector3(),update(){}},
       renderer:{info:{reset(){resets++},memory:{},render:{calls:0}},getContext:()=>gl,getPixelRatio:()=>1,setScissorTest(){},clear(){}}});
     r.render();for(let i=0;i<100;i++)r.requestRender(false);assert.equal(r.renderSerial,1);assert.equal(callbacks.size,1);
     const tick=()=>{const [key,callback]=callbacks.entries().next().value;callbacks.delete(key);callback()};
@@ -261,7 +261,7 @@ function fencedFrame(run){
       fenceSync(){if(gl.noFence)return null;if(gl.throwFence)throw Error('fence');assert.equal(live.size,0,'one live GPU fence');const sync={id:++syncId};live.add(sync);return sync},
       flush(){if(gl.throwFlush)throw Error('flush')},clientWaitSync(sync){if(gl.throwWait)throw Error('wait');return status.get(sync)??gl.TIMEOUT_EXPIRED},deleteSync(sync){assert(live.delete(sync))}};
     Object.assign(r,{requestRender:VolumeRenderer.prototype.requestRender,disposed:false,graphicsLost:false,frame:0,renderSerial:0,width:100,height:100,sliceRevision:0,interacting:false,refinementStarted:0,budget:{longEdge:360},gpuSync:null,estimateAllocation:()=>({}),retiredSurfaces:[],
-      container:{getBoundingClientRect:()=>({left:0,top:0,width:100,height:100})},panes:{anatomy:empty,axial:empty,coronal:empty,sagittal:empty},canvas:{dispatchEvent(event){events.push(event);f.onEvent?.(event)}},scanVolume:{active:false},controls:{update(){}},
+      container:{getBoundingClientRect:()=>({left:0,top:0,width:100,height:100})},panes:{anatomy:empty,axial:empty,coronal:empty,sagittal:empty},canvas:{dispatchEvent(event){events.push(event);f.onEvent?.(event)}},scanVolume:{active:false},controls:{target:new THREE.Vector3(),update(){}},
       renderer:{info:{reset(){},memory:{},render:{calls:0}},getContext:()=>gl,getPixelRatio:()=>1,setScissorTest(){},clear(){}}});
     const f={r,gl,callbacks,events,ready,errors,live,onEvent:null,
       request(name,onReady){const interaction={view:{stateId:name},onDisplayReady:view=>{ready.push(view.stateId);events.push({type:'accepted',detail:{stateId:view.stateId}});onReady?.()},onDisplayError:(view,message)=>errors.push({stateId:view.stateId,message})};r.surgicalInteraction=interaction;r.queueSurgicalPublication(interaction);return interaction},
@@ -315,4 +315,16 @@ test('publication telemetry supersession cannot admit a stale callback',()=>fenc
 test('publication telemetry disposal cannot admit a view',()=>fencedFrame(f=>{
   f.onEvent=event=>{if(event.type==='anatomy-surgical-display')f.r.disposed=true};
   f.request('A');f.tick();f.complete();assert.deepEqual(f.ready,[]);assert.equal(f.r.renderSerial,1);
+}));
+
+test('completed frame telemetry retains the actual submitted source identity across a queued source change',()=>fencedFrame(f=>{
+  f.r.volume={...f.r.volume,displayIdentity:'source-a',mri:new Float32Array(60).fill(1)};
+  f.r.requestRender(false);f.tick();
+  const submitted=f.events.find(e=>e.type==='anatomy-frame').detail;
+  assert.equal(submitted.displayIdentity,'source-a');assert.deepEqual(submitted.sourceShape,[3,4,5]);
+  assert.deepEqual(submitted.cursor,[0,0,0]);assert(submitted.cameraState.position.length===3);
+  f.r.volume={...f.r.volume,displayIdentity:'source-b',mri:new Float32Array(60).fill(2)};
+  f.complete();const completed=f.events.find(e=>e.type==='anatomy-gpu').detail;
+  assert(completed.completed);assert.equal(completed.serial,submitted.serial);
+  assert.equal(completed.displayIdentity,'source-a');assert.equal(completed.sourceSignalFingerprint,submitted.sourceSignalFingerprint);
 }));
