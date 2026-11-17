@@ -48,7 +48,11 @@ recorded. The full-head grid adapts its spacing to remain below the existing
 1GiB expanded workspace cap; it does not silently replace the native scan.
 Every project includes the exact native healthy T1 reference and original bytes.
 
-VesselFM runs on a declared0.6mm MRA derivative. Its estimates, baseline FLAIR
+VesselFM runs on a declared0.6mm MRA derivative. The rehearsal layer selects
+its intersection with estimated intracranial tissue/CSF plus a2mm physical
+margin, excluding extracranial predictions. Raw model output and the selection
+receipt remain preserved. Neither the raw nor selected mask establishes
+vascular completeness. Its estimates, baseline FLAIR
 and SWI are rigidly registered to the rehearsal grid. Each registration retains
 the source forms, physical forward/pull maps, coverage and an unreviewed status.
 Source qform/sform conflicts are explicitly recorded; registration uses the
