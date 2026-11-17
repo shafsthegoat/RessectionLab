@@ -277,6 +277,13 @@ native open/save and scientific operations run in Electron.
 
 ## Public development cases
 
+The [EDEN2020 segmented synthetic-cohort guide](docs/eden2020-healthy-synthetic.md)
+describes 15 healthy baselines and 120 organic-tumor projects, their segmentation
+layers, preparation commands and verified desktop workflow. The prepared files
+are optional assets on Shafrir's personal HDD; cloning this repository does not
+provide them. They are DEVELOPMENT engineering rehearsals with estimated
+anatomy, not clinically validated cases or admitted training data.
+
 The creator-source BTC case can be acquired and prepared with:
 
 ```sh
