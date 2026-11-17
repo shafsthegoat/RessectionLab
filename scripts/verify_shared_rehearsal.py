@@ -18,7 +18,7 @@ TASK = ROOT / 'testcases/outputs/full-case-rehearsal-20261020'
 MANIFEST = ROOT / 'artifacts/full-case-rehearsal-20261020/manifest.json'
 sys.path.insert(0, str(ROOT / 'src'))
 sys.path.insert(0, str(ROOT / 'scripts/rehearsal_support'))
-from bundle_paths import data_root
+from bundle_paths import data_root, require_data_file
 
 
 def require(condition, message):
@@ -44,6 +44,8 @@ def check_files(bundle_root=None, *, data_only=False):
         if data_only and not is_data:
             continue
         path = (data_root(bundle_root) if is_data else ROOT) / relative
+        if is_data:
+            require_data_file(path)
         require(path.is_file() and not path.is_symlink(), 'Missing regular file: ' + str(relative))
         require(path.stat().st_size == row['bytes'] and sha(path) == row['sha256'],
                 'File differs: ' + str(relative))

@@ -1,5 +1,12 @@
 # Rehearsal performance and remaining gates
 
+The October 20 episode is optional archived research data. [Restore the complete
+bundle](../scripts/rehearsal_support/README.md) and select
+`RESSECTIONLAB_REHEARSAL_BUNDLE_ROOT` before historical profiler or vascular
+benchmark runs. `profile_surgical_replay_prefix.py --check-inputs --bundle-root
+/root --baseline /path/to/report.json` reads and verifies profiler inputs with
+zero physics actions; measured replay still requires an explicit output run.
+
 The latest [exact polynomial dependency halo](local-surface-filter.md) reduces
 changed brain preparation from 1.97 to 1.16 seconds against `84c94507` across
 the complete 120-action episode, with all 528 preparations exact. Its raw-cache

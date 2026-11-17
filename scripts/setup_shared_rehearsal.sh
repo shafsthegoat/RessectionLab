@@ -16,4 +16,5 @@ if [ ! -d "$rehearsal_root/.venv" ]; then "$rehearsal_python" -m venv "$rehearsa
 "$rehearsal_root/.venv/bin/python" -m pip install -r "$rehearsal_root/requirements-lock.txt"
 "$rehearsal_root/.venv/bin/python" -m pip install -e "$rehearsal_root" --no-deps
 pnpm --dir "$rehearsal_root/desktop" install --frozen-lockfile
-echo 'Dependencies installed. Run .venv/bin/python scripts/verify_shared_rehearsal.py, then scripts/open_shared_rehearsal.sh.'
+echo 'Dependencies installed. Restore the optional historical bundle using scripts/rehearsal_support/README.md and set RESSECTIONLAB_REHEARSAL_BUNDLE_ROOT.'
+echo 'Then run .venv/bin/python scripts/verify_shared_rehearsal.py --data-only and scripts/open_shared_rehearsal.sh.'

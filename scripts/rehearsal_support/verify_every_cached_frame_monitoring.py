@@ -18,7 +18,7 @@ import time
 
 ROOT = next(p for p in Path(__file__).resolve().parents if (p / 'src/resectionlab').is_dir())
 sys.path.insert(0, str(ROOT / 'src'))
-from bundle_paths import data_root
+from bundle_paths import data_root, require_data_file
 from resectionlab.core import array_digest
 from resectionlab.surgical_engine import SurgicalEngine
 from resectionlab.surgical_environment import load_environment
@@ -33,7 +33,7 @@ from readonly_step_monitor import ReadOnlyStepMonitor
 
 def sha(path):
     h = hashlib.sha256()
-    with Path(path).open('rb') as stream:
+    with require_data_file(path).open('rb') as stream:
         for chunk in iter(lambda: stream.read(1024 ** 2), b''):
             h.update(chunk)
     return h.hexdigest()

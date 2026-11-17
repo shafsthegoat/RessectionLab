@@ -13,8 +13,11 @@ import os
 from pathlib import Path
 import shutil
 import subprocess
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'scripts/rehearsal_support'))
+from bundle_paths import data_root, require_data_file
 
 
 def within_testcases(value):
@@ -58,6 +61,8 @@ def main():
         return
     if args.phase != 'optimized' and not baseline.exists():
         raise ValueError('Capture a baseline before editing, using --capture-baseline')
+    if any(workload in ('dense', 'large') for workload in args.workloads):
+        require_data_file(data_root() / 'testcases/cases/meningioma-sub-06-standard-v2.ressectionlab')
     build()
     optimized = output / f'{args.series}-optimized-build'
     if optimized.exists():
@@ -88,7 +93,7 @@ def main():
                 else:env.pop('INTERACTION_VERIFY',None)
                 print(label, flush=True)
                 entry='electron/benchmark-rehearsal-transport.cjs' if args.trace_transport else 'electron/benchmark-interactions.cjs'
-                result=subprocess.run([args.node,'node_modules/electron/cli.js',entry,'--case',str(ROOT/'testcases/cases'/filename)],cwd=desktop,env=env)
+                result=subprocess.run([args.node,'node_modules/electron/cli.js',entry,'--case',str((data_root() if workload in ('dense', 'large') else ROOT)/'testcases/cases'/filename)],cwd=desktop,env=env)
                 report_path=directory/'report.json'
                 passed=report_path.exists() and json.loads(report_path.read_text()).get('passed') is True
                 results.append({'label':label,'exitCode':result.returncode,'passed':passed,'report':str(report_path)})

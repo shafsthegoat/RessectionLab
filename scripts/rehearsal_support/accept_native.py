@@ -20,7 +20,7 @@ import uuid
 
 ROOT = next(p for p in Path(__file__).resolve().parents if (p / 'src/resectionlab').is_dir())
 sys.path.insert(0, str(ROOT / 'src'))
-from bundle_paths import data_root
+from bundle_paths import data_root, require_data_file
 import numpy as np
 from scipy import ndimage
 from resectionlab.core import array_digest, semantic_digest
@@ -29,10 +29,10 @@ from resectionlab.surgical_environment import load_environment
 from resectionlab.surgical_verified_cache import VerifiedSurgicalCache, implementation_fingerprint
 from resectionlab.workspace_bundle import load_workspace
 
-SOURCE = data_root() / 'testcases/cases/meningioma-sub-06-standard-v2.ressectionlab'
+SOURCE = data_root(must_exist=False) / 'testcases/cases/meningioma-sub-06-standard-v2.ressectionlab'
 SOURCE_SHA256 = 'ff5a49b8706a8ccda08d8c3e82dad3e079f85dea98cb6bd40783d2262eec9838'
 SCENE_ID = 'sha256:7a5d368382fe2a66192bdef88ff6af3a55cd533c9ba3787c68a1d1e3cb48f856'
-PROTECTION = data_root() / 'testcases/environments/meningioma-sub-06/rl-protection.json'
+PROTECTION = data_root(must_exist=False) / 'testcases/environments/meningioma-sub-06/rl-protection.json'
 PROTECTION_MANIFEST_ID = 'sha256:d7abac452a30c7487cd52d7b3f841466bf16b66ad61e0901afcd0a051845d0c5'
 
 
@@ -43,7 +43,7 @@ def require(condition, message):
 
 def file_hash(path):
     h = hashlib.sha256()
-    with Path(path).open('rb') as stream:
+    with require_data_file(path).open('rb') as stream:
         for chunk in iter(lambda: stream.read(1024 ** 2), b''):
             h.update(chunk)
     return h.hexdigest()
@@ -72,7 +72,7 @@ def protection_audit(scene, snapshot, *, protection=None):
     """Compare every protected source cell to the existing patient evidence."""
     from resectionlab.surgical_rl_protection import GuardConfig, load_protection, protection_contract
     protection = Path(protection) if protection is not None else PROTECTION
-    document = json.loads(protection.read_text())
+    document = json.loads(require_data_file(protection).read_text())
     require(document['contentHash'] == PROTECTION_MANIFEST_ID, 'Patient protection manifest differs')
     protected = load_protection(scene, protection, strict=True)
     expected = protection_contract(protected, GuardConfig())

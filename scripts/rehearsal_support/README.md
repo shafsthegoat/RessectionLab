@@ -1,7 +1,7 @@
 # Maintained rehearsal support
 
 These are supported copies of the October 20 review helpers. Their historical
-originals remain unchanged in
+originals are preserved unchanged in the optional rehearsal archive under
 `testcases/outputs/full-case-rehearsal-20261020/review/`. The original scientific
 identities, refusal predicates, scene/source hashes and protection contracts are
 retained. Only locations, CLI bindings and default report destinations changed.
@@ -34,8 +34,32 @@ testcases/environments/meningioma-sub-06/<its referenced arrays and metadata>
 testcases/outputs/full-case-rehearsal-20261020/<complete historical payload>
 ```
 
-There is no archive or relocation in this pass. The default remains the existing
-checkout. A directory containing only `final/` is not a valid complete data root.
+The default data root remains the executing checkout for compatibility with a
+locally restored bundle. The archived historical payload is optional; ordinary
+application use and generated regressions do not require it. A directory
+containing only `final/` is not a valid complete data root.
+
+Restore the versioned archive from the mounted external data root into a new,
+absent destination. The standard restore tool refuses overwrites, validates
+paths and verifies every restored file against the archive manifest:
+
+```sh
+archive_root='/Volumes/shafrir/old coding projects/RessectionLabData/archive/closed-evidence/rehearsal-20261020-v1'
+python3 scripts/archive_historical_evidence.py restore \
+  --archive "$archive_root/archive.tar.gz" \
+  --manifest "$archive_root/manifest.json" \
+  --destination "$PWD/testcases/restored-rehearsal-20261020"
+export RESSECTIONLAB_REHEARSAL_BUNDLE_ROOT="$PWD/testcases/restored-rehearsal-20261020"
+.venv/bin/python scripts/verify_shared_rehearsal.py --data-only
+scripts/open_shared_rehearsal.sh --bundle-root "$RESSECTIONLAB_REHEARSAL_BUNDLE_ROOT"
+```
+
+The destination contains all 581 manifest-selected files with their original
+checkout-relative paths, including source case, protection arrays and historical
+review code. Current helper imports always come from this maintained directory.
+The archive manifest/receipt and execution cleanup record identify the exact
+archive hashes and preservation Git reference. Existing unique ignored October
+review/test evidence remains local and is not removed by this migration.
 Strict historical-source checks still read executing-checkout source paths;
 `--bundle-root` redirects only data. No authority or physics guard is relaxed.
 
@@ -52,3 +76,43 @@ environment variable; the standalone vascular spool audit also accepts
 `--bundle-root`. The normal generated prefix/guard tests need neither the patient
 bundle nor its historical `review/` directory. The old helpers remain available
 for exact historical inspection and must not be overwritten by these copies.
+
+The independent October 22 playback baseline is a separate, optional profiler
+component. Restore it independently into a new destination, then explicitly
+select its report together with the October 20 bundle. These input checks read
+the episode, three-action trace and baseline with zero physics actions:
+
+```sh
+baseline_archive_root='/Volumes/shafrir/old coding projects/RessectionLabData/archive/closed-evidence/rehearsal-profiler-baseline-20261022-v1'
+baseline_root="$PWD/testcases/cleanup-execution-20261116/restored-profiler-baseline-v1"
+python3 scripts/archive_historical_evidence.py restore \
+  --archive "$baseline_archive_root/archive.tar.gz" \
+  --manifest "$baseline_archive_root/manifest.json" \
+  --destination "$baseline_root"
+rehearsal_baseline="$baseline_root/testcases/outputs/rl-readiness-20261022/desktop-baseline/playback-authenticated/report.json"
+.venv/bin/python scripts/profile_surgical_replay_prefix.py --check-inputs \
+  --bundle-root "$RESSECTIONLAB_REHEARSAL_BUNDLE_ROOT" \
+  --baseline "$rehearsal_baseline"
+```
+
+The restore tool refuses an existing destination; reuse a previously verified
+restore or choose a new path. Omitting `--check-inputs` still requires `--output`
+and explicitly profiles the bounded three-action prefix; it does not qualify
+the full patient episode. For example:
+
+```sh
+.venv/bin/python scripts/profile_surgical_replay_prefix.py \
+  --bundle-root "$RESSECTIONLAB_REHEARSAL_BUNDLE_ROOT" \
+  --baseline "$rehearsal_baseline" \
+  --output "$PWD/testcases/outputs/restored-rehearsal-prefix-profile" \
+  --max-wall-seconds 120
+```
+
+The vascular monitor and benchmark can also validate restored input bindings
+without launching Electron or executing any episode actions:
+
+```sh
+PYTHONPATH=src .venv/bin/python desktop/electron/vascular_playback_monitor.py \
+  check-inputs --bundle-root "$RESSECTIONLAB_REHEARSAL_BUNDLE_ROOT"
+node -e 'console.log(JSON.stringify(require("./desktop/electron/benchmark-surgical-vascular.cjs").checkRehearsalInputs(), null, 2))'
+```
