@@ -20,7 +20,8 @@ import sys
 import time
 
 from check_surgical_rl_readiness import ROOT, Budget, require, write_json
-sys.path.insert(0, str(ROOT / 'testcases/outputs/full-case-rehearsal-20261020/review'))
+sys.path.insert(0, str(ROOT / 'scripts/rehearsal_support'))
+from bundle_paths import data_root
 from readonly_step_monitor import ReadOnlyStepMonitor
 from resectionlab.core import freeze_json, thaw_json
 from resectionlab.desktop_bridge import BridgeSession, _Request
@@ -73,10 +74,10 @@ class PreparationSteps:
         self.monitor.free_tool_id(self.tool)
 
 
-def run(output, budget):
+def run(output, budget, baseline=BASELINE):
     require(sys.implementation.name == 'cpython' and sys.version_info[:2] == (3, 12), 'CPython 3.12 required')
     require(file_sha(NATIVE) == NATIVE_SHA, 'Preserved episode bytes differ')
-    expected = {row['frameIndex']: row['stateId'] for row in json.loads(BASELINE.read_text())['playbackIpc']}
+    expected = {row['frameIndex']: row['stateId'] for row in json.loads(baseline.read_text())['playbackIpc']}
     with TRACE.open() as stream:
         original = [json.loads(next(stream)) for _ in range(3)]
     session = BridgeSession(output / 'transfers')
@@ -145,7 +146,12 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--max-wall-seconds', type=float, default=120.)
+    parser.add_argument('--bundle-root', type=Path, help='Checkout-shaped historical data root')
+    parser.add_argument('--baseline', type=Path, default=BASELINE, help='Independent playback baseline report')
     args = parser.parse_args()
+    global NATIVE, TRACE
+    NATIVE = data_root(args.bundle_root) / 'testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab'
+    TRACE = NATIVE.parent / 'primary-canonical.actions.jsonl'
     if not math.isfinite(args.max_wall_seconds) or not 0 < args.max_wall_seconds <= 180:
         parser.error('Wall-time cap must be in (0,180] seconds')
     output = args.output.resolve()
@@ -160,7 +166,7 @@ def main():
     code = 0
     try:
         signal.setitimer(signal.ITIMER_REAL, args.max_wall_seconds)
-        report.update(run(output, budget), status='passed')
+        report.update(run(output, budget, args.baseline), status='passed')
     except Exception as error:
         report.update(status='incomplete' if isinstance(error, TimeoutError) else 'failed', error={'type': type(error).__name__, 'message': str(error)})
         code = 1

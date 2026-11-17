@@ -6,6 +6,8 @@ and the first action-2 frame preparation; every later frame read is step-free.
 No engine method or cache is replaced.
 """
 import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'scripts/rehearsal_support'))
 import resource
 import time
 

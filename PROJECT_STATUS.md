@@ -1,5 +1,9 @@
 # Project status
 
+Use [current status](docs/current-status.md) for maintained entry points. Dated
+narratives and requirements below remain historical context (navigation updated
+November 16, 2026).
+
 **Bounded PAT22 TRAIN source recovery, October 19:**
 The [recovery packager](docs/btc-recovery-workspace.md) now reuses the original
 pinned BTC source receipt, exact acquired T1 and fractional tumor annotation.

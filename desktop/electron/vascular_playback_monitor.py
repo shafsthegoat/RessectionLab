@@ -20,12 +20,13 @@ import zlib
 from types import SimpleNamespace
 
 ROOT = Path(__file__).resolve().parents[2]
-REVIEW = ROOT / 'testcases/outputs/full-case-rehearsal-20261020/review'
+REVIEW = ROOT / 'scripts/rehearsal_support'
 sys.path.insert(0, str(REVIEW))
 from readonly_step_monitor import ForbiddenPhysicsStep, ReadOnlyStepMonitor
+from bundle_paths import data_root
 
 BRANCH = 'full-vascular'
-NATIVE = ROOT / 'testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab'
+NATIVE = data_root() / 'testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab'
 NATIVE_SHA = '095659e54f381355e8f5655b6c5907990b2ac4767dc9ce58297e3bc4d6f3268d'
 REFERENCE = NATIVE.parent / 'vascular-canonical.actions.jsonl'
 FRAME_COUNTS = (3,152,152,117,2,2,2,15,2,2,2,48,2,2,2,11,33,36,35,3,3,3,3,48,3,3,3,3,3,52,50,3,3,3,3,3,52,31,3,3,3,13,3,3,13,3,3,7,3,12,27,3,3,3,7,17,3,27,3,3,3,7,12,3,3,3,3,7,12,3,3,27,3)
@@ -715,7 +716,11 @@ if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('mode',choices=['audit']);parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--audit-output',type=Path,help='Separate diagnostic results directory; input spool remains untouched')
+    parser.add_argument('--bundle-root',type=Path,help='Checkout-shaped data root')
     arguments=parser.parse_args()
+    if arguments.bundle_root is not None:
+        NATIVE = data_root(arguments.bundle_root) / 'testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab'
+        REFERENCE = NATIVE.parent / 'vascular-canonical.actions.jsonl'
     try:
         audit_spool(arguments.output,arguments.audit_output)
     except BaseException as error:
