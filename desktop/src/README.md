@@ -1,5 +1,8 @@
 # Renderer contracts
 
+Repository upkeep follows the [maintenance policy](../../CONTRIBUTING.md): keep current-use material,
+retire obsolete code/docs/artifacts, and archive useful history outside the tracked tree.
+
 The React shell owns case review, source visibility, route comparison, and local optimization controls. Numerical computation runs in the Python sidecar through the named `window.resectionApi` methods; the renderer never receives an arbitrary file path or executable operation.
 
 - `App.tsx`: workspace state, operation status, native menu actions, case lifecycle and A/B route choices. A newer case load invalidates older hydration; route results must match the active source fingerprint.
@@ -45,6 +48,14 @@ Run renderer boundary checks with `npm run test:renderer`; run `npm run build` f
 `node --experimental-strip-types desktop/tests/benchmark-hydration.mjs <report.json>` (from repository root) requires the optional local public-case preview export. It checks all recorded source checksums outside the timed renderer work and reports three sequential warm-cache Node/V8 runs. This is a CPU/filesystem microbenchmark, not GPU or application responsiveness evidence.
 
 For the 62,496,000-byte UCSF-PDGM-0004 export, replacing typed-array iterator/callback validation with indexed loops reduced median hydration-plus-cursor time from 351.65 ms to 134.23 ms in the first comparison (62% reduction). A subsequent source-checksum-verified run measured 113.36 ms. Both retain identical finite-MRI, binary-mask, affine, identity, byte-count and physical-volume gates; the cursor remained identical. Raw reports are under `artifacts/desktop-renderer/`. These development measurements are specific to this local machine and warm-cache workload.
+
+Numerical reports and the live `ucsf-seven-prior-hydration.json` verifier input
+remain in the checkout. Most historical renderer images and recordings are in
+the [visual evidence archive](../../docs/visual-evidence-archive-20261116.md).
+Shared desktop verifiers and the interaction benchmark default to unique ignored
+runs under `testcases/outputs/desktop-verification/`. Use `--report-dir` or the
+verifier's documented output environment variable to choose another location;
+review and explicitly promote evidence intended for version control.
 
 ## Registered prior display
 

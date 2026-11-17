@@ -6,6 +6,7 @@ const vm=require('node:vm'),assert=require('node:assert/strict'),{createHash}=re
 const root=path.resolve(__dirname,'..'),electron=path.join(root,'desktop/electron');
 const helper=require(path.join(electron,'local-electron-archive.cjs'));
 const {assertLockedElectronVersion}=require(path.join(electron,'electron-version.cjs'));
+const {runtimeFiles,stageElectronRuntime}=require(path.join(electron,'runtime-files.cjs'));
 const sha=b=>createHash('sha256').update(b).digest('hex');
 const version='44.5.1',name=`electron-v${version}-darwin-arm64.zip`;
 const bytes=Buffer.from('PK\x03\x04independent inert archive bytes; not extracted');
@@ -17,7 +18,9 @@ async function integration(base,mode){
   const fixtureDir=path.join(desktop,'electron');await fs.mkdir(fixtureDir,{recursive:true});await fs.mkdir(archive);
   for(const directory of ['src','node_modules','sidecar/ressectionlab-engine','sidecar/notices'])await fs.mkdir(path.join(desktop,directory),{recursive:true});
   for(const filename of ['index.html','vite.config.ts','tsconfig.json'])await fs.writeFile(path.join(desktop,filename),'generated');
-  await fs.writeFile(path.join(desktop,'src/app.ts'),'generated');await fs.writeFile(path.join(fixtureDir,'fixture.cjs'),'generated');
+  await fs.writeFile(path.join(desktop,'src/app.ts'),'generated');
+  for(const name of runtimeFiles)await fs.copyFile(path.join(electron,name),path.join(fixtureDir,name));
+  await fs.writeFile(path.join(fixtureDir,'fixture.cjs'),'generated development-only fixture');
   await fs.writeFile(path.join(desktop,'pnpm-lock.yaml'),lock);
   await fs.writeFile(path.join(desktop,'package.json'),JSON.stringify({name:'generated',version:'0.0.0',main:'electron/main.cjs'}));
   await fs.writeFile(path.join(desktop,'sidecar/ressectionlab-engine/ressectionlab-engine'),'inert engine');
@@ -36,6 +39,7 @@ async function integration(base,mode){
   const modules={
     'node:fs/promises':fs,'node:path':path,'node:crypto':require('node:crypto'),
     './electron-version.cjs':{assertLockedElectronVersion},
+    './runtime-files.cjs':{stageElectronRuntime},
     './local-electron-archive.cjs':{
       async localElectronArchive(...args){events.prechecks++;return helper.localElectronArchive(...args);},
       async verifyLocalElectronArchive(...args){events.postchecks++;return helper.verifyLocalElectronArchive(...args);}},
@@ -74,6 +78,8 @@ async function integration(base,mode){
     assert.deepEqual(events.localOptions,[mode==='default'?null:archive]);assert.equal(events.postchecks,2);
     const manifest=JSON.parse(await fs.readFile(path.join(report.inputSnapshot,'runtime/BUILD_INPUT_MANIFEST.json'),'utf8'));
     assert.equal(manifest.electronArchiveSource.mode,mode==='default'?'checksum_managed_download_cache':'explicit_local');
+    assert.equal(manifest.electronRuntime.fileCount,runtimeFiles.length);
+    assert.deepEqual((await fs.readdir(path.join(report.inputSnapshot,'runtime/electron'))).sort(),[...runtimeFiles].sort());
     if(mode==='valid'){assert.equal(manifest.electronArchiveSource.sha256,expected);assert(!JSON.stringify(manifest).includes(archive));}
   }else{
     assert(error);assert.equal(report.status,'failed');assert.equal(events.signs,mode==='native-probe-refusal'?2:0);assert.equal(events.publishes,0);
@@ -86,7 +92,7 @@ async function integration(base,mode){
 }
 
 async function main(){
-  const output=path.resolve(process.argv[2]||'');assert(output.startsWith(path.join(root,'artifacts/poc-first-local-package-independent-v1/')));
+  const output=path.resolve(process.argv[2]||'');assert(output.startsWith(path.join(root,'artifacts/poc-first-local-package-independent-v1/')) || output.startsWith(path.join(root,'testcases')+path.sep));
   const base=await fs.realpath(await fs.mkdtemp(path.join(os.tmpdir(),'rsl-independent-archive-'))),checks=[],results=[];
   const test=async(name,fn)=>{await fn();checks.push(name);};
   try{
@@ -129,7 +135,7 @@ async function main(){
     assert(branch.includes('throw new Error')&&branch.includes('return zipPath')&&branch.includes('else {')&&branch.includes('downloadElectronZip(downloadOpts)'));
     checks.push('installed packager explicit local branch does not call downloader fallback');
     const files=['desktop/electron/package-macos.cjs','desktop/electron/local-electron-archive.cjs',
-      'desktop/electron/local-electron-archive.test.cjs','desktop/electron/electron-version.cjs','tests/first_local_package_archive_qa.cjs'];
+      'desktop/electron/local-electron-archive.test.cjs','desktop/electron/electron-version.cjs','desktop/electron/runtime-files.cjs','desktop/electron/runtime-files.test.cjs','tests/first_local_package_archive_qa.cjs'];
     const pins=Object.fromEntries(await Promise.all(files.map(async p=>[p,sha(await fs.readFile(path.join(root,p)))])));
     const report={schema:'local-package-independent-offline-archive-qa-v1',status:'pass',checks_passed:checks.length,checks,pins,
       installed_packager_source_sha256:sha(await fs.readFile(packagerSource)),generated_integration:results,

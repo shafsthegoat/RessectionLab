@@ -1,5 +1,17 @@
 # Project status
 
+Repository upkeep follows the [maintenance policy](CONTRIBUTING.md): keep current-use material,
+retire obsolete code/docs/artifacts, and archive useful history outside the tracked tree.
+
+Use [current status](docs/current-status.md) for maintained entry points. Dated
+narratives and requirements below remain historical context (navigation updated
+November 16, 2026).
+
+The [cleanup execution record](docs/cleanup-execution-20261116.md) indexes the
+optional October rehearsal and historical visual archives, exact restoration,
+measured reduction and current verification. Dated narratives below remain
+unchanged; the research requirements and qualification holds remain open.
+
 **Bounded PAT22 TRAIN source recovery, October 19:**
 The [recovery packager](docs/btc-recovery-workspace.md) now reuses the original
 pinned BTC source receipt, exact acquired T1 and fractional tumor annotation.

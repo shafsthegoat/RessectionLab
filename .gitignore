@@ -35,6 +35,14 @@ outputs/
 *.app/
 *.dmg
 *.zip
+# Historical visual collections are archived. New captures stay local; promote
+# selected proof deliberately with git add -f and its source-bound receipt.
+/artifacts/desktop-renderer/**/*.png
+/artifacts/desktop-renderer/**/*.jpg
+/artifacts/desktop-renderer/**/*.mp4
+/artifacts/electron-*/**/*.png
+/artifacts/electron-*/**/*.jpg
+/artifacts/electron-*/**/*.mp4
 # Local validation archives retain exact bytes; compact receipts are versioned.
 /artifacts/validation/procedural-transfer-*/baseline.tar
 /artifacts/validation/procedural-transfer-*/frozen-source/

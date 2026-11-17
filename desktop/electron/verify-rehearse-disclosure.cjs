@@ -3,9 +3,12 @@
 const {app,ipcMain}=require('electron');
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto');
 const root=path.resolve(__dirname,'../..'),base=path.join(root,'testcases');
-const input=path.resolve(process.env.DISCLOSURE_CASE||path.join(base,'cases/meningioma-sub-06-standard-v2.ressectionlab'));
+const bundleBase=path.join(path.resolve(process.env.RESSECTIONLAB_REHEARSAL_BUNDLE_ROOT||root),'testcases');
+const input=path.resolve(process.env.DISCLOSURE_CASE||path.join(bundleBase,'cases/meningioma-sub-06-standard-v2.ressectionlab'));
+if(!fs.existsSync(input))throw Error('Optional historical rehearsal source is missing. Restore the archive and set RESSECTIONLAB_REHEARSAL_BUNDLE_ROOT; see scripts/rehearsal_support/README.md');
 const output=path.resolve(process.env.DISCLOSURE_OUTPUT||path.join(base,'outputs/rehearse-disclosure-20261030/proof-local'));
-for(const p of [input,output])if(!p.startsWith(base+path.sep))throw Error('Use testcases paths');
+if(!input.startsWith(base+path.sep)&&!input.startsWith(bundleBase+path.sep))throw Error('Use an input under checkout or restored-bundle testcases');
+if(!output.startsWith(base+path.sep))throw Error('Use output under checkout testcases');
 if(fs.existsSync(output))throw Error('Preserve previous evidence; choose fresh output');
 fs.mkdirSync(output,{recursive:true});app.commandLine.appendSwitch('force-device-scale-factor','1');app.setPath('userData',path.join(output,'hidden-profile'));
 const sha=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex'),original=sha(input);

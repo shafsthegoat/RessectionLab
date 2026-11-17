@@ -30,7 +30,9 @@ from resectionlab.surgical_scene import from_case
 from resectionlab.workspace_bundle import load_workspace, save_workspace
 
 DEFAULT_SOURCE=ROOT/'testcases/outputs/product-first-20261023/rescue-v2/rescue-strategies.ressectionlab'
-DEFAULT_REFERENCE=ROOT/'testcases/outputs/full-case-rehearsal-20261020/final/vascular-canonical.actions.jsonl'
+sys.path.insert(0,str(ROOT/'scripts/rehearsal_support'))
+from bundle_paths import data_root, require_data_file
+DEFAULT_REFERENCE=data_root(must_exist=False)/'testcases/outputs/full-case-rehearsal-20261020/final/vascular-canonical.actions.jsonl'
 
 
 def sha(path):
@@ -178,7 +180,7 @@ def main():
     try:
         case,artifacts,workspace=load_workspace(source);old=artifacts['surgical_toolbox'];original_arrays=numeric_hashes(case)
         derived,scene,old_scene,protection,config,contract=derive(case,old,source,report['sourceSha256']);check()
-        reference=[json.loads(line) for line in args.reference.read_text().splitlines()]
+        reference=[json.loads(line) for line in require_data_file(args.reference).read_text().splitlines()]
         screen=recipe_and_screen(scene,old,reference,protection,check)
         report.update(sourceCaseHash=case.semantic_hash,derivedCaseHash=derived.semantic_hash,sourceSceneId=old_scene.identity,
             derivedSceneId=scene.identity,arrayHashes=original_arrays,sourceRefsPreserved=True,

@@ -1,5 +1,8 @@
 # Electron Mac app packaging
 
+Repository upkeep follows the [maintenance policy](../CONTRIBUTING.md): keep current-use material,
+retire obsolete code/docs/artifacts, and archive useful history outside the tracked tree.
+
 The current desktop target is Electron, React and Three.js. The older Qt build
 remains a reference artifact; it is not the current desktop architecture.
 
@@ -456,3 +459,31 @@ accessibility snapshots are preserved separately. The previous application
 remains recoverable at the publication path in `app-build.json`. Existing
 source-provenance limitations, two notice-source gaps and lack of
 notarization remain unchanged.
+## Runtime staging maintenance · November 16, 2026
+
+`desktop/electron/runtime-files.cjs` now stages the explicit transitive main,
+preload and sidecar dependency closure (34 files). The packager still captures
+the complete Electron source tree and `sourceHashes`; the separate
+`electronRuntime` build-manifest field records installed file sizes/hashes and
+each excluded development source path. Tests, benchmarks, verifiers, fixtures
+and Python bytecode remain available in the repository/source snapshot.
+Missing, changed, computed or unreviewed runtime dependencies refuse packaging.
+Renderer `dist/`, preload and the separately bundled numerical engine remain
+required resources. Dormant prefix/frozen-runtime adapters remain installed.
+
+New output defaults from `verification-output.cjs` and
+`verify-visual-fidelity.cjs` use unique ignored runs under
+`testcases/outputs/desktop-verification/`. `--report-dir` and `FIDELITY_OUTPUT`
+still select explicit destinations. Existing evidence and reference reads,
+including prior hydration receipts, are unchanged. Other verifier output
+policies are retained. Promote selected proof into `artifacts/` deliberately,
+with its source identity and limitations; keep the complete run in ignored data.
+See the [cleanup record](cleanup-20261116.md) for exact validation and limits.
+
+The [archive execution](cleanup-execution-20261116.md) subsequently removed
+historical rehearsal data and selected capture media from the tracked checkout.
+Live numerical reference receipts and six representative images remain in place;
+the [visual archive guide](visual-evidence-archive-20261116.md) restores complete
+old sessions. The runtime allowlist and installed app payload are unchanged by
+this archival pass. Current-source hidden startup, Save and separate cold reopen
+also pass with the optional rehearsal root unavailable.

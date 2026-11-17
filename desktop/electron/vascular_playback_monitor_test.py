@@ -40,6 +40,11 @@ class MonitorTests(unittest.TestCase):
         self.guard.spool.close();self.temp.cleanup()
     def context(self,i,**extra):
         return {'operation':'surgicalRehearsal','caseHash':'generated-fixture','command':'seekPrefixFrame','branchId':BRANCH,'position':i,'frameIndex':0,**extra}
+    def test_injected_reference_receipt_binds_generated_records_without_historical_files(self):
+        import hashlib
+        evidence = self.guard.receipt()['reference']
+        self.assertEqual(evidence, {'path': None, 'scope': 'provided-records',
+            'sha256': hashlib.sha256(canonical_json(self.reference).encode()).hexdigest()})
     def test_actual_monitor_permits_exact73_generated_entries_and_refuses74_before_body(self):
         engine=FakeEngine()
         with self.assertRaises(ForbiddenPhysicsStep):

@@ -5,6 +5,11 @@ implemented behavior and retained evidence, not a surgical recommendation or a
 claim of clinical readiness. Requirements remain in the three specification
 documents; ongoing work is tracked in [PROJECT_STATUS](../PROJECT_STATUS.md).
 
+Historical capture receipts remain at their original repository paths. Most
+screenshots and recordings are in the [verified visual evidence archive](visual-evidence-archive-20261116.md);
+restore that archive to inspect every image named by a receipt. Six representative
+images remain in the checkout. Their original package identities still apply.
+
 ## Identified application and purpose
 
 The inspected arm64 Electron application uses renderer `c09ee50` (source digest

@@ -1,0 +1,115 @@
+{
+  "schema": "resectionlab.historical-archive-index.v1",
+  "date": "2026-11-16",
+  "preservationReference": "refs/tags/preservation/cleanup-execution-20261116",
+  "preservationCommit": "6547ad746787283f9f9159ddf3235d0820c9c382",
+  "remote": "https://github.com/shafsthegoat/RessectionLab.git",
+  "entries": [
+    {
+      "schema": "resectionlab.historical-evidence.v1",
+      "archiveSha256": "1267f7dd3816dc63354e4d5244d096a632e5671850b9ae254b6fccfb0a4a8edb",
+      "archiveBytes": 1244571639,
+      "manifestSha256": "c8fc94120343b52a3338a24b9dcc68ab6f605ea62e060413269a0e9703b55917",
+      "sourceRevision": "6547ad746787283f9f9159ddf3235d0820c9c382",
+      "preservationRef": "preservation/cleanup-execution-20261116",
+      "verified": {
+        "members": 7402,
+        "files": 6122,
+        "contentBytes": 6750822938
+      },
+      "id": "rehearsal-20261020-v1",
+      "purpose": "Original rehearsal/source/protection/review code and all local historical ignored files/links",
+      "directory": "/Volumes/shafrir/old coding projects/RessectionLabData/archive/closed-evidence/rehearsal-20261020-v1",
+      "receiptSha256": "6faab2ff1686ce37171420830a04ee8e158227b777d4504977f5a9740ec89d4e",
+      "restoreCommand": [
+        "python3",
+        "scripts/archive_historical_evidence.py",
+        "restore",
+        "--archive",
+        "/Volumes/shafrir/old coding projects/RessectionLabData/archive/closed-evidence/rehearsal-20261020-v1/archive.tar.gz",
+        "--manifest",
+        "/Volumes/shafrir/old coding projects/RessectionLabData/archive/closed-evidence/rehearsal-20261020-v1/manifest.json",
+        "--destination",
+        "/absolute/new-parent/restored-rehearsal-20261020-v1"
+      ]
+    },
+    {
+      "schema": "resectionlab.historical-evidence.v1",
+      "archiveSha256": "5c1c26ec69db9ac4a58e95b1885d945027c58390e0130542693ead437fd24241",
+      "archiveBytes": 174994429,
+      "manifestSha256": "4d3d5438736772670422ca7dfa94bfeccf0a49edf47990e21ff816a1758f0c72",
+      "sourceRevision": "6547ad746787283f9f9159ddf3235d0820c9c382",
+      "preservationRef": "preservation/cleanup-execution-20261116",
+      "verified": {
+        "members": 587,
+        "files": 550,
+        "contentBytes": 194640539
+      },
+      "id": "desktop-visual-evidence-20261116-v1",
+      "purpose": "Complete renderer/Electron sessions and original filename mappings",
+      "directory": "/Volumes/shafrir/old coding projects/RessectionLabData/archive/closed-evidence/desktop-visual-evidence-20261116-v1",
+      "receiptSha256": "2fa6c4f32edb3b443c5e5ceb2111388f964106e0ff426f7e29c9c10d4dab9b3b",
+      "restoreCommand": [
+        "python3",
+        "scripts/archive_historical_evidence.py",
+        "restore",
+        "--archive",
+        "/Volumes/shafrir/old coding projects/RessectionLabData/archive/closed-evidence/desktop-visual-evidence-20261116-v1/archive.tar.gz",
+        "--manifest",
+        "/Volumes/shafrir/old coding projects/RessectionLabData/archive/closed-evidence/desktop-visual-evidence-20261116-v1/manifest.json",
+        "--destination",
+        "/absolute/new-parent/restored-desktop-visual-evidence-20261116-v1"
+      ]
+    },
+    {
+      "schema": "resectionlab.historical-evidence.v1",
+      "archiveSha256": "8f1f5fd723e563dc4e96f9d256391cfb030cb03000ab4c459bce1c7c609a4c1d",
+      "archiveBytes": 25318,
+      "manifestSha256": "e922b8d973f2a8287626fd31371b362555165f32ba8a9a117ddc29038b94aed1",
+      "sourceRevision": "6547ad746787283f9f9159ddf3235d0820c9c382",
+      "preservationRef": "preservation/cleanup-execution-20261116",
+      "verified": {
+        "members": 6,
+        "files": 1,
+        "contentBytes": 389091
+      },
+      "id": "rehearsal-profiler-baseline-20261022-v1",
+      "purpose": "Independent later twelve-frame profiler baseline; ignored original retained",
+      "directory": "/Volumes/shafrir/old coding projects/RessectionLabData/archive/closed-evidence/rehearsal-profiler-baseline-20261022-v1",
+      "receiptSha256": "9c452088d8e52b67575eae286be6559ba688b435ce6948daa26091b9373bb07d",
+      "restoreCommand": [
+        "python3",
+        "scripts/archive_historical_evidence.py",
+        "restore",
+        "--archive",
+        "/Volumes/shafrir/old coding projects/RessectionLabData/archive/closed-evidence/rehearsal-profiler-baseline-20261022-v1/archive.tar.gz",
+        "--manifest",
+        "/Volumes/shafrir/old coding projects/RessectionLabData/archive/closed-evidence/rehearsal-profiler-baseline-20261022-v1/manifest.json",
+        "--destination",
+        "/absolute/new-parent/restored-rehearsal-profiler-baseline-20261022-v1"
+      ]
+    }
+  ],
+  "retirementPolicy": "Explicit tracked paths only after pushed-Git/archive/restore/consumer checks and independent review. No ignored originals removed.",
+  "rehearsalTrackedPaths": {
+    "manifest": "artifacts/full-case-rehearsal-20261020/manifest.json",
+    "filter": "files[].path starts with testcases/",
+    "files": 581,
+    "bytes": 1312252037
+  },
+  "visualTrackedRemovalPaths": "manifests/archived-visual-media-20261116.txt",
+  "visualRetainedProofPaths": [
+    "artifacts/desktop-renderer/medivis-fidelity-v2/mri-final/segmentation.png",
+    "artifacts/desktop-renderer/medivis-fidelity-v2/cta-final/cta-polished-default.png",
+    "artifacts/electron-route-empty-state-v1/ucsf-selected-routes-wide.jpg",
+    "artifacts/electron-route-empty-state-v1/ucsf-selected-routes-minimum.jpg",
+    "artifacts/electron-priors-v1/final-prior-ready.jpg",
+    "artifacts/electron-case-identity-v1/pat20-final-mri-review-wide.jpg"
+  ],
+  "discovery": [
+    "docs/cleanup-execution-20261116.md",
+    "docs/visual-evidence-archive-20261116.md",
+    "scripts/rehearsal_support/README.md"
+  ],
+  "uniqueIgnoredMaterial": "Copied externally and retained in place. Git preservation is asserted only for tracked material."
+}

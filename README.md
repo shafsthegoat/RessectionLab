@@ -1,5 +1,18 @@
 # RessectionLab
 
+Repository upkeep follows the [maintenance policy](CONTRIBUTING.md): keep current-use material,
+retire obsolete code/docs/artifacts, and archive useful history outside the tracked tree.
+
+Start with the [current status and working entry points](docs/current-status.md)
+for architecture, workflow, verification, experimental features and dated history.
+The [cleanup execution record](docs/cleanup-execution-20261116.md) documents the
+archived historical data, measured checkout reduction and verified restoration.
+The [earlier support pass](docs/cleanup-20261116.md) retains its original scope.
+
+Additional datasets, models and historical archives may be on Shafrir's optional
+HDD. The [local storage ledger](docs/local-storage-ledger.md) records its location
+and contents. This storage is unavailable to Sayem Kamal and other collaborators.
+
 The [decision-system contract](docs/decision-system-objective.md) and
 [progress record](docs/decision-system-progress.md) describe the current cranial
 Case → Plan → Generate → Compare → Rehearse → Save → cold Open integration,
@@ -60,13 +73,16 @@ changed brain preparation from 1.97 to 1.16 seconds in the latest paired
 120-action comparison, retaining exact buffers. Global graph/face work, initial
 admission, responsive replay and physiological RL readiness remain open.
 
-The [full case rehearsal collaborator handoff](artifacts/full-case-rehearsal-20261020/README.md)
-includes the saved meningioma source and substantial primary resection, same-case
-vascular rescue, checkpoints, action histories, audit evidence and portable macOS
-setup/launch/check commands on `codex/poc-first-rehearsal`. It removed 81.34% of
+The [historical full case rehearsal handoff](artifacts/full-case-rehearsal-20261020/README.md)
+describes the saved meningioma source and substantial primary resection, same-case
+vascular rescue, checkpoints, action histories and audit evidence. Its original
+data and review code now live in the verified optional archive; use the
+[current restore, launch and check commands](scripts/rehearsal_support/README.md).
+The recorded rehearsal removed 81.34% of
 the owned target before a budget-limited stop. Playback is very slow; full final
 GUI playthrough and frame-audit limitations are explicitly retained. These
-selected data files are a tracked exception to the usual local `testcases/` rule.
+selected data files are preserved by the external archive and pushed pre-cleanup
+Git reference, with their original relative paths and hashes intact.
 
 The [Research Planning desktop integration](docs/research-planning.md) now
 compares observation-only greedy and a frozen learned continuation in the
