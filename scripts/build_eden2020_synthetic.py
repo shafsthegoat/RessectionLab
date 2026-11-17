@@ -21,7 +21,7 @@ from scipy.ndimage import gaussian_filter, distance_transform_edt
 from resectionlab.core import SourceRef, array_digest, thaw_json
 from resectionlab.data_root import checked_root, atomic_json, sha256_file
 from resectionlab.data_synthesis import geometry, appearance
-from resectionlab.imaging import load_nifti_case, inspect_nifti
+from resectionlab.imaging import load_nifti_case, inspect_nifti, ImagingError
 from resectionlab.poc_models import run as infer
 from resectionlab.surgical_scene import from_case
 from resectionlab.workspace_bundle import OriginalFile, save_workspace, load_workspace, view_state
@@ -204,6 +204,12 @@ def build_subject(root,subject):
     # projects include these useful 3D source sequences on their separate grids.
     for suffix,modality in [('3D_FLAIR_Tra','FLAIR'),('s3DI_MC_HR','MRA'),('SWIp_axial','SWI')]:
         p=source_path(directory,subject,suffix)
+        try:inspect_nifti(p)
+        except ImagingError as error:
+            data.setdefault('withheld_reference_channels',[]).append({'modality':modality,'original_path':str(p.relative_to(root)),
+                'original_sha256':sha256_file(p),'reason':str(error),'source_original_preserved':True})
+            originals.append(OriginalFile.from_path(p,role='imaging'))
+            continue
         display_path=p
         original_header=nib.load(p)
         if np.prod(original_header.shape)*4>MAX_IMAGE_BYTES:
@@ -221,6 +227,7 @@ def build_subject(root,subject):
             metadata={'selected_modality':modality,'display_label':'Acquired baseline '+modality+(' · 1mm display LOD, original retained' if display_path!=p else ' · native grid')+'; registration unreviewed','is_synthetic':False,'observation_role':'baseline_native_reference'})
         aux.append(DisplaySource(observation,modality,'none'))
         originals.append(OriginalFile.from_path(p,role='imaging'))
+    host=replace(host,metadata={**thaw_json(host.metadata),'data_case':data})
     records=[package(root,host,aux,originals,host.mri,out)]
     hemispheres,support_recipe=support_for(host)
     prior_centers=[]; distance_cache={}

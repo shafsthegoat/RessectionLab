@@ -44,8 +44,9 @@ or operability judgments.
 The T1 appearance is a generated observation model. Baseline values outside the
 lesion stay exact. There is no mass effect, growth, modeled vessel displacement
 or calibrated tissue response. Every variant includes the original healthy T1
-reference. Baseline projects additionally include FLAIR/MRA/SWI references on
-separate grids. Oversized reference channels have an explicitly labeled 1 mm
+reference. Baseline projects additionally include eligible FLAIR/MRA/SWI references on
+separate grids. A conflicting original qform/sform is recorded and its channel
+is withheld from display before any resampling; its original bytes remain preserved. Oversized reference channels have an explicitly labeled 1 mm
 display derivative; full original bytes remain preserved. Supplied FLAIR-based
 tracts and raw diffusion are retained without inventing a T1 registration.
 
