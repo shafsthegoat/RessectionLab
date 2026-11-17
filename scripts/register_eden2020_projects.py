@@ -13,7 +13,9 @@ while True:
   source=root/r['path'];link=repo/'testcases/cases'/source.name
   if not source.is_file() or source.stat().st_size!=r['bytes']:raise ValueError('Verified source package unavailable or changed')
   if link.exists() and not link.is_symlink():raise ValueError('Preserve conflicting prepared project')
-  if not link.is_symlink() and not link.exists():link.symlink_to(source)
+  if not link.is_symlink() and not link.exists():
+   try:link.symlink_to(source)
+   except FileExistsError:pass  # A concurrent registrar may have installed the same verified link.
   if link.is_symlink() and link.resolve()!=source:raise ValueError('Conflicting prepared project link')
  count=sum(r['synthetic'] for r in records)
  status={'verified_native_projects':len(records),'synthetic_projects':count,'baseline_projects':len(records)-count,'source_volunteers':len(set(r['person_id'] for r in records)),'complete':count==120 and len(records)==135}
