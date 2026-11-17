@@ -1,3 +1,5 @@
+import {cranialComparison,cranialDecisionExplanation} from './cranial-workflow-data.ts';
+import {SequentialEpisodePanel} from './SequentialEpisodePanel';
 import {CranialStrategiesPanel} from './CranialStrategiesPanel';
 import {useState} from 'react';
 import type {SurgicalController} from './use-surgical';
@@ -18,6 +20,7 @@ export function SurgicalWorkflow({c,stage,onStage,pause,cursor,onCursor,artifact
   const [requested,setRequested]=useState<SurgicalWorkflowPlanner|null>(null);
   const planner=requested&&options.includes(requested)?requested:preferred;
   const r=c.result,v=c.view;if(!v)return null;
+  const cranialExplanation=cranialDecisionExplanation(cranialComparison(r));
   const report=planner==='preparation'?r?.preparationPlanning:planner==='strategy'?r?.strategyPlanning:planner==='approach'?r?.interactivePlanning:null;
   const staged=planner==='staged'?stagedStrategyDisplay(artifact,c.result):null;
   const current=workflowReportCurrent(r,report),qualification=r?.interactivePlanningAvailability?.admission;
@@ -30,6 +33,7 @@ export function SurgicalWorkflow({c,stage,onStage,pause,cursor,onCursor,artifact
   return <section className="surgical-workflow" aria-label="Case planning workflow" data-workflow-stage={stage} data-workflow-planner={planner??'unavailable'}>
     <nav aria-label="Surgical workflow stages">{stages.map((item,index)=><button key={item.id} aria-label={`${item.label} stage`} aria-current={stage===item.id?'step':undefined} onClick={()=>{pause();onStage(item.id);}}><span>{index+1}</span>{item.label}</button>)}</nav>
     <p className="surgical-note workflow-identity">{qualification?.sourceEvidence.patientId??v.scene.source?.caseId??'Current case'} · branch {r?.branchId} · action {r?.position??0}</p>
+    {(stage==='compare'||stage==='rehearse')&&cranialExplanation&&<p className="surgical-note" aria-label="Canonical cranial decision">{cranialExplanation}</p>}
     <section hidden={stage!=='case'} aria-label="Case anatomy and evidence"><h3>Review this case</h3>
       <p>Inspect source planes and 3D anatomy in the linked views before planning.</p>
       <dl><div><dt>Declared target</dt><dd>{target.length?target.join(', '):'No target mapped'}</dd></div>
@@ -45,6 +49,7 @@ export function SurgicalWorkflow({c,stage,onStage,pause,cursor,onCursor,artifact
       {!!report&&!current&&<p role="status" className="surgical-warning">Saved comparison · historical checkpoint. Anatomy, tools, accepted actions or constraints may have changed. Open its saved checkpoint below or return to Plan and regenerate.</p>}
       {!planner&&<p role="status">No checked planning task is available at this checkpoint. Inspect source qualification or verify the saved replay. Rehearse/edit retains recorded playback and supported manual actions.</p>}
     </div>
+    <SequentialEpisodePanel c={c} artifact={artifact} visible={stage==='compare'||stage==='rehearse'} pause={pause} play={playRecorded} onInspect={()=>onStage('rehearse')} onCursor={onCursor}/>
     {planner==='cranial'&&<CranialStrategiesPanel {...presentation} play={playRecorded}/>}
     {planner==='preparation'&&<PreparationPlanningPanel {...presentation}/>}
     {planner==='strategy'&&<TwoToolStrategyPanel {...presentation}/>}

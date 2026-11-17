@@ -18,7 +18,7 @@ def rescue():
     scene=SurgicalScene(labels,np.eye(4),[
         dict(id=1,name='Generated target',material='tumor',target=True),
         dict(id=2,name='Generated vessel',material='vessel',target=False)],
-        dict(provenance='generated rescue contract fixture'),{'tissuePhysicsV2':default_profile()})
+        dict(kind='generated-control', provenance='generated rescue contract fixture'),{'tissuePhysicsV2':default_profile()})
     mask=np.zeros(scene.shape,bool);mask[0,0,0]=True
     protection=ProtectionSet(scene,[ProtectionAnnotation.from_mask(scene,'brainstem',mask,provenance='generated exclusion')])
     engine=SurgicalEngine(scene,protection=protection,guard_config=GuardConfig())

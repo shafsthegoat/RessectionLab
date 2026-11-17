@@ -83,7 +83,8 @@ def _stock(engine):
         return False
     if type(engine.scene.properties) is dict and any(name in engine.scene.properties
             for name in ('tissuePhysicsV2', 'brainContinuumV1', 'vascularGraphV1',
-                         'bipolarThermalV1', 'planarBladeManeuverV1', 'retractorSurfaceContactV1')):
+                         'bipolarThermalV1', 'planarBladeManeuverV1', 'retractorSurfaceContactV1',
+                         'surgicalProcedurePolicyV1')):
         return False
     if not _numeric_qualified():
         return False

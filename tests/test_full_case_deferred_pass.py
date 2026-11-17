@@ -25,7 +25,7 @@ def fixture(monkeypatch, *, legacy=False):
     for x in (10, 24, 38): labels[x - 1:x + 2, 23:26, 16:19] = 2
     scene = SurgicalScene(labels, np.eye(4), [
         {'id': 2, 'name': 'target', 'material': 'tumor', 'target': True}],
-        {'kind': 'explicit-access-deferral-engineering-fixture'}, {})
+        {'evidenceClass': 'generated-engineering', 'kind': 'explicit-access-deferral-engineering-fixture'}, {})
     engine = SurgicalEngine(scene)
     q = [1., 0., 0., 0.]
     accesses = [{'id': 'fixture-' + str(x), 'outsidePose': {'position': [x, 24., 55.], 'quaternion': q[:]},

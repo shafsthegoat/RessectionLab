@@ -208,6 +208,7 @@ export function SurgicalPanel({c,onFixture,onImport,available,anatomyControls,on
       <strong>{c.preview?'Preview · uncommitted':observed?'Read-only replay':readOnly?'Read-only recorded state':'Committed state · editable'}</strong>
       <p>Action {position} / {steps} · {r?.branchId}</p>
       {inspectionNotice&&<p className="surgical-warning">{inspectionNotice}</p>}
+      {r?.planningAdmission&&<p aria-label="Planning source admission" className={r.planningAdmission.available?'surgical-note':'surgical-warning'}>{r.planningAdmission.scope==='legacy-engineering'?'Legacy engineering planning · generated source only.':r.planningAdmission.available?'Source-bound procedure planning.':`Planning unavailable: ${r.planningAdmission.blockers.map(b=>b.message).join('; ')}`} Historical replay and manual research rehearsal do not establish patient task admission.</p>}
       {c.preview&&<><p>{c.approachPreview?'Install checked branch below commits this plan. Cancel returns to the planning checkpoint.':'Apply commits; Cancel returns to committed anatomy.'}</p><button onClick={c.cancel}>Cancel preview</button></>}
       {c.canCancelComputation&&<button disabled={c.cancelling} onClick={()=>void c.cancelComputation()}>{c.cancelling?'Cancelling…':'Cancel computation'}</button>}
       {observed&&<button disabled={c.pending} onClick={()=>stopRun(routes.boundary,{branchId:r?.branchId,position})}>Return to recorded boundary</button>}

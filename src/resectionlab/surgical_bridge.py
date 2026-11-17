@@ -122,7 +122,7 @@ def _cranial_critical_blockers(record, root_ids=None):
             continue
         guard = row['sourceSnapshot'].get('protectionContract') or {}
         annotations = {a['structureId']: a for a in guard.get('annotations', [])}
-        for structure in sorted({'brainstem', *guard.get('required', [])}):
+        for structure in sorted({'brainstem', 'cerebellum', *guard.get('required', [])}):
             annotation = annotations.get(structure)
             if annotation is None or not annotation.get('cells'):
                 code = 'MISSING_CRITICAL_ANNOTATIONS'
@@ -139,6 +139,13 @@ def _cranial_context_availability(case, record, available):
     if available is None or _cranial_generated_control(case):
         return available
     result = copy.deepcopy(available)
+    qualification = {'code': 'PROCEDURE_ACQUIRED_SOURCE_QUALIFICATION_UNAVAILABLE',
+        'message': 'The supratentorial task requires trusted complete intracranial, brainstem and cerebellar source review; existing acquired cases have no qualified receipt.'}
+    result['available'] = False
+    result.setdefault('blockers', []).append(qualification)
+    for row in result.get('roots', []):
+        row['available'] = False
+        row.setdefault('blockers', []).append(copy.deepcopy(qualification))
     blockers = _cranial_critical_blockers(record)
     for row in result.get('roots', []):
         failed = [b for b in blockers if b['rootId'] == row['rootId']]
@@ -523,6 +530,9 @@ def dispatch(session, operation, args, request, progress):
         full = SurgicalEngine.restore(scene, record['branches'][record['branchId']], check=request.check,
             use_cache=bool(record.get('fullCase')), verified_cache=replay_cache.verified_cache
             if getattr(session, 'surgical_cache_root', None) is not None else None)
+        if record.get('sequentialEpisodes') is not None:
+            from .surgical_recorded_sequential import validate_episode_record
+            validate_episode_record(scene, record, identity, check=request.check)
         engine, timeline = replay_cache.seek(full, record['branches'][record['branchId']], record['position'], check=request.check, include_history=True)
         record.setdefault('timeline', {})[record['branchId']] = timeline
     def owner_for_branch(branch_id, current_engine):
@@ -542,7 +552,12 @@ def dispatch(session, operation, args, request, progress):
             bind_branch_root(base_scene, record, branch_id, root_id)
 
     cranial_computation = None
-    if record.get('preparationComparisons') or record.get('preparationApplications'):
+    from .surgical_planning_admission import require_planning_admission, planning_admission
+    if command in {'plan','fullCase','recoverExit','generateApproaches','previewApproach','applyApproach',
+            'generateStrategies','previewStrategy','applyStrategy','analyzeStrategySensitivity',
+            'suggestPreparation','generatePreparations','previewPreparation','applyPreparation'}:
+        require_planning_admission(engine)
+    if planning_admission(engine.scene, engine.protection)['available'] and (record.get('preparationComparisons') or record.get('preparationApplications')):
         from .surgical_preparation_workspace import bind_for_branch
         bind_for_branch(engine,record,identity,check=request.check)
     elif record.get('taskAdmission') is not None:
@@ -834,13 +849,8 @@ def dispatch(session, operation, args, request, progress):
             raise ValueError('Acknowledge the complete cranial sequence research assumptions and missing evidence')
         source_role = _cranial_source_role(session, entry.case)
         if source_role != 'GENERATED_CONTROL':
-            from .surgical_cranial_planning import cranial_planning_availability
-            available = cranial_planning_availability(base_scene, record)
-            eligible = {r['rootId'] for r in (available or {}).get('roots', []) if r['available']}
-            critical = _cranial_critical_blockers(record, eligible)
-            if critical:
-                raise BridgeError('CRANIAL_CRITICAL_EVIDENCE_REQUIRED',
-                    '; '.join(b['code']+': '+b['message'] for b in critical))
+            raise BridgeError('PROCEDURE_ACQUIRED_SOURCE_QUALIFICATION_UNAVAILABLE',
+                'No existing acquired case has trusted complete intracranial and critical-anatomy coverage for the supported supratentorial task.')
         if (record['position'] != 0 or engine.actions or engine.scene.identity != base_scene.identity or
                 record['branches'][record['branchId']]['actions'] or
                 record.get('cranialPlanningRoots', {}).get('branchRoots', {}).get(record['branchId']) is not None):
@@ -1046,6 +1056,8 @@ def dispatch(session, operation, args, request, progress):
                 if (value := evidence.get(field)) is not None)
             from .surgical_interactive_workspace import protected_branches
             planned_ids.update(protected_branches(record))
+            planned_ids.update(r['branchId'] for r in (record.get('sequentialEpisodes') or {}).get('episodes', []))
+            if record.get('sequentialEpisodes') is not None: planned_ids.add('main')
             from .surgical_strategy_workspace import protected_branches as strategy_branches
             planned_ids.update(strategy_branches(record))
             from .surgical_preparation_workspace import protected_branches as preparation_branches
@@ -1091,6 +1103,9 @@ def dispatch(session, operation, args, request, progress):
         inherit_root(record['branchId'], parent['branchId'])
         record['position'] = len(engine.actions)
         record.setdefault('timeline', {})[record['branchId']] = copy.deepcopy(engine.history)
+    if record.get('sequentialEpisodes') is not None:
+        from .surgical_recorded_sequential import validate_episode_boundary
+        validate_episode_boundary(engine, record)
     full_case = bool(record.get('fullCase'))
     shown_view = engine.view(_state_id=verified_display_state_id, include_history=not full_case)
     shown_timeline = record.get('timeline', {}).get(record['branchId'], engine.history)
@@ -1098,6 +1113,7 @@ def dispatch(session, operation, args, request, progress):
         shown_timeline = display_timeline(shown_timeline)
         shown_view['history'] = shown_timeline[:len(engine.actions)]
     result = {'caseHash': identity, 'view': shown_view, 'outcome': outcome,
+              'planningAdmission': planning_admission(engine.scene, engine.protection),
               'changed': command == 'recoverExit' or command not in {'inspect', 'previewApproach', 'previewStrategy','suggestPreparation','previewPreparation'} and not unchanged_tool and (outcome is None or outcome['status'] != 'rejected'),
               'timeline': shown_timeline,
               'previousScenes': [{'index': i, 'label': f"Environment {i + 1}", 'branches': len(s.get('branches', {}))} for i, s in enumerate(artifacts.get('surgical_prior_scenes', []))],
@@ -1117,18 +1133,21 @@ def dispatch(session, operation, args, request, progress):
     result['planningAvailability'].update(access_availability(engine))
     from .surgical_interactive_planning import interactive_planning_availability
     from .surgical_interactive_workspace import planning_view
-    if record.get('preparationComparisons') or record.get('preparationApplications'):
+    if result['planningAdmission']['available'] and (record.get('preparationComparisons') or record.get('preparationApplications')):
         from .surgical_preparation_workspace import bind_for_branch
         bind_for_branch(engine,record,identity,check=request.check)
     elif record.get('taskAdmission') is not None:
         from .surgical_task_admission import bind_admission
         bind_admission(engine, record['taskAdmission'])
     result['interactivePlanningAvailability'] = interactive_planning_availability(engine)
-    result['interactivePlanning'] = planning_view(engine, record, identity)
+    # Old patient research branches remain inspectable/replayable. Do not
+    # regenerate or authorize their planner reports through a public-observation
+    # projection that intentionally excludes patient provenance.
+    result['interactivePlanning'] = planning_view(engine, record, identity) if result['planningAdmission']['available'] else None
     from .surgical_two_tool import defaults as strategy_availability
     from .surgical_strategy_workspace import planning_view as strategy_view
     result['strategyPlanningAvailability'] = strategy_availability(engine)
-    result['strategyPlanning'] = strategy_view(engine, record, identity, check=request.check)
+    result['strategyPlanning'] = strategy_view(engine, record, identity, check=request.check) if result['planningAdmission']['available'] else None
     from .surgical_cranial_planning import cranial_planning_availability
     cranial_available = cranial_planning_availability(base_scene, record)
     if entry is not None:
@@ -1142,7 +1161,7 @@ def dispatch(session, operation, args, request, progress):
         try:native_path=preparation_source(entry.case,engine.scene)
         except ValueError:native_path=None
         result['preparationPlanningAvailability']=preparation_availability(engine,record,native_path)
-        result['preparationPlanning']=preparation_view(engine,record,identity,check=request.check)
+        result['preparationPlanning']=preparation_view(engine,record,identity,check=request.check) if result['planningAdmission']['available'] else None
     if preparation_suggestion is not None:result['preparationSuggestion']=preparation_suggestion
     if approach_preview is not None:
         result['approachPreview'] = approach_preview

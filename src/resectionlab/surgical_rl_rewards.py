@@ -8,6 +8,7 @@ are restricted to sparse changed source cells, bonds and action histories.
 from __future__ import annotations
 
 from dataclasses import dataclass, fields
+import copy
 import math
 import numpy as np
 
@@ -56,13 +57,15 @@ class RewardTracker:
     and near_contact_exposure_mm3_seconds from a separate anatomical evaluator.
     deformation_cell_peaks accepts cumulative microstep maxima by source ID.
     """
-    def __init__(self, engine, protected_source_ids=()):
+    def __init__(self, engine, protected_source_ids=(), *, procedure_evaluation=False):
         if 'brainContinuumV1' in engine.scene.properties:
             raise ValueError('CONTINUUM_RL_HOLD: material/contact, artificial boundaries and cumulative exposure reward remain unqualified')
         if 'bipolarThermalV1' in engine.scene.properties:
             raise ValueError('BIPOLAR_THERMAL_RL_HOLD: device response and heat-aware reward remain unqualified')
         if 'vascularGraphV1' in engine.scene.properties:
             raise ValueError('VASCULAR_GRAPH_RL_HOLD: existing reward omits declared supply/drainage consequences')
+        if 'surgicalProcedurePolicyV1' in engine.scene.properties and procedure_evaluation is not True:
+            raise ValueError('PROCEDURE_POLICY_INCOMPATIBLE: historical reward consumers cannot evaluate the supported procedure; use the versioned evaluation-only SurgicalRLEnv contract')
         self.scene = engine.scene
         self.protected = frozenset(map(int, protected_source_ids))
         if any(c < 0 or c >= self.scene.labels.size for c in self.protected):
@@ -72,6 +75,13 @@ class RewardTracker:
         self._ledger = {}
         self._history_position = 0
         self._irrigation = 0.
+
+    def clone(self):
+        """Detach a preview ledger while retaining the immutable source owner."""
+        result = copy.copy(self)
+        for name in ('_strain', '_thermal', '_ledger'):
+            setattr(result, name, getattr(self, name).copy())
+        return result
 
     def _target(self, engine, cell):
         region = engine.by_label.get(int(self.scene.labels.flat[cell]), {})
@@ -240,6 +250,10 @@ def compute_reward(before, after, outcome, config=None):
         ('near_contact', 'near_contact_exposure_mm3_seconds', -config.near_contact_weight, config.near_contact_scale_mm3_seconds),
         ('time', 'elapsed_seconds', -config.time_cost, config.time_scale_seconds))
     terms = {name: weight * delta(key) / scale for name, key, weight, scale in specifications}
+    # Feasibility is authoritative. A rejected proposal never buys treatment
+    # credit, even if a caller supplies a speculative endpoint as ``after``.
+    if outcome.get('status') == 'rejected':
+        terms['tumor_removal'] = 0.
     terms['action'] = -config.action_cost
     terms['invalid_action'] = -config.invalid_action_cost if outcome.get('status') == 'rejected' else 0.
     blocked = str(outcome.get('reasonCode') or outcome.get('reason') or '').startswith('PROTECTED_STRUCTURE')

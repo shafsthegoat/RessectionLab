@@ -7,6 +7,17 @@ patient dependencies are in [the progress record](decision-system-progress.md).
 Zero completed patient tumor tasks and all anatomical, physiological and RL
 qualification holds remain.
 
+For the opt-in November 16 supratentorial task, the
+[versioned procedure policy](supratentorial-procedure-policy.md) now supersedes
+the historical tumor-first pruning and combined non-target tie-break described
+below. It enforces independently supplied entry/compartment/coverage assumptions
+and cumulative source harm limits before selection or reward, retains separate
+neural/bone/structure Pareto alternatives, and permits useful work followed by
+STOP with residual. The full original-target denominator and unavailable
+functional outcomes remain explicit. Acquired task admission requires evidence
+not present in existing cases and therefore refuses; historical research
+workflows retain their separately identified semantics.
+
 The desktop executes `App → useSurgical → Electron IPC → Python surgical_bridge →
 SurgicalEngine`. The engine owns material checks, complete-tool swept geometry,
 both instruments, declared protection, reviewed task boxes, physical effects and

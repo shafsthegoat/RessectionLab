@@ -31,7 +31,7 @@ def test_contact_limited_corridor_replans_from_observed_tip_instead_of_requested
     scene=SurgicalScene(labels,np.eye(4),[
         {'id':1,'name':'brain','material':'soft_tissue'},
         {'id':2,'name':'target','material':'tumor','target':True}],
-        {'kind':'generated contact-limited corridor'}, {'cusaV3':profile})
+        {'evidenceClass':'generated-engineering','kind':'generated contact-limited corridor'}, {'cusaV3':profile})
     engine=SurgicalEngine(standardize(scene))
     pose=lambda point:{'position':list(map(float,point)),'quaternion':q}
     route={'nativeAxis':2,'targetEntryIndex':entry,
@@ -68,7 +68,7 @@ def _engine(*, skull=True, axis0_barrier=False, affine=None):
         labels[14, :, :] = 1
         regions.append({'id': 1, 'name': 'generated obstruction', 'material': 'soft_tissue'})
     scene = standardize(SurgicalScene(labels, np.eye(4) if affine is None else affine,
-        regions, {'provenance': 'generated software test; no patient observation'}, {}))
+        regions, {'evidenceClass': 'generated-engineering', 'provenance': 'generated software test; no patient observation'}, {}))
     return SurgicalEngine(scene)
 
 
@@ -79,7 +79,7 @@ def test_contact_limited_corridor_accumulates_capacity_then_resects_and_withdraw
     scene=standardize(SurgicalScene(labels,np.eye(4),[
         {'id':1,'name':'brain','material':'soft_tissue'},
         {'id':2,'name':'target','material':'tumor','target':True}],
-        {'kind':'generated native CUSA contact continuation'}, {'cusaV3':default_profile()}))
+        {'evidenceClass':'generated-engineering','kind':'generated native CUSA contact continuation'}, {'cusaV3':default_profile()}))
     engine=SurgicalEngine(scene)
     pose=lambda z:{'position':[9.,9.,z],'quaternion':[1.,0.,0.,0.]}
     route={'nativeAxis':2,'targetEntryIndex':[9,9,9],
@@ -217,7 +217,7 @@ def test_skull_stripped_target_behind_mapped_brain_keeps_three_failures_and_no_b
     scene = standardize(SurgicalScene(labels, np.eye(4), [
         {'id': 1, 'name': 'mapped brain barrier', 'material': 'soft_tissue'},
         {'id': 2, 'name': 'source target', 'material': 'tumor', 'target': True}],
-        {'provenance': 'generated software test; no patient observation'}, {}))
+        {'evidenceClass': 'generated-engineering', 'provenance': 'generated software test; no patient observation'}, {}))
     engine = SurgicalEngine(scene)
     before = engine.snapshot()
     branches, report = _compare(engine)
@@ -255,7 +255,7 @@ def _brain_shell_engine():
     scene = standardize(SurgicalScene(labels, np.eye(4), [
         {'id': 1, 'name': 'mapped brain', 'material': 'soft_tissue'},
         {'id': 2, 'name': 'source target', 'material': 'tumor', 'target': True}],
-        {'provenance': 'generated software test; no patient observation'}, {}))
+        {'evidenceClass': 'generated-engineering', 'provenance': 'generated software test; no patient observation'}, {}))
     return SurgicalEngine(scene)
 
 
@@ -297,7 +297,7 @@ def test_near_duplicate_brain_entries_do_not_fill_three_route_gate():
     scene = standardize(SurgicalScene(labels, np.eye(4), [
         {'id': 1, 'name': 'mapped brain', 'material': 'soft_tissue'},
         {'id': 2, 'name': 'source target', 'material': 'tumor', 'target': True}],
-        {'provenance': 'generated near-duplicate route test'}, {}))
+        {'evidenceClass': 'generated-engineering', 'provenance': 'generated near-duplicate route test'}, {}))
     engine = SurgicalEngine(scene)
     branches, report = compare_access_approaches(engine, acknowledge_unknowns=True,
         allow_modeled_brain_corridor=True, max_actions_per_approach=16)
@@ -341,7 +341,7 @@ def test_arbitrary_soft_tissue_cannot_be_recast_as_brain_corridor():
     scene = standardize(SurgicalScene(labels, np.eye(4), [
         {'id': 1, 'name': 'mapped fascia', 'material': 'soft_tissue'},
         {'id': 2, 'name': 'source target', 'material': 'tumor', 'target': True}],
-        {'provenance': 'generated software test; no patient observation'}, {}))
+        {'evidenceClass': 'generated-engineering', 'provenance': 'generated software test; no patient observation'}, {}))
     engine = SurgicalEngine(scene)
     assert not access_availability(engine)['modeledBrainLayerAvailable']
     branches, report = compare_access_approaches(engine, acknowledge_unknowns=True,
@@ -358,7 +358,7 @@ def test_checked_slow_withdrawal_recovers_a_tight_oblique_corridor():
     scene = standardize(SurgicalScene(labels, np.eye(4), [
         {'id': 1, 'name': 'brain', 'material': 'soft_tissue'},
         {'id': 2, 'name': 'tumor', 'material': 'tumor', 'target': True}],
-        {'provenance': 'generated tight-corridor software test'}, {}))
+        {'evidenceClass': 'generated-engineering', 'provenance': 'generated tight-corridor software test'}, {}))
     engine = SurgicalEngine(scene)
     surface = np.array([20., 20., 26.])
     goal = np.array([15., 18., 14.])
@@ -404,8 +404,8 @@ def test_desktop_bridge_installs_selectable_source_tissue_routes_without_skull(t
     labels[7:13, 7:13, 7:13] = 1
     case = CaseData('generated-access-bridge', labels.astype('float32'),
         {'target': labels == 1}, np.eye(4),
-        (SourceRef('generated', 'simulated:access-bridge', provenance='simulated'),),
-        metadata={'anatomy_layers': {'target': {'kind': 'tumor'}}})
+        (SourceRef('generated', 'synthetic://access-bridge', provenance='simulated'),),
+        metadata={'generated': True, 'is_synthetic': True, 'anatomy_layers': {'target': {'kind': 'tumor'}}})
     session = BridgeSession(tmp_path / 'transfers')
     try:
         session._install_case(case, {}, _Request('fixture-install'))

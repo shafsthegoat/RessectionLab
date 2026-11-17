@@ -1,4 +1,4 @@
-import {planningSliceSegments,planningSphereSliceRadius} from '../interactive-planning-data';
+import {planningSliceSegments,planningSphereSliceRadius,planningSliceMemberships} from '../interactive-planning-data';
 import {surgicalEffectMarkers,clipSurgicalMarkersToSlab,surgicalMarkerRadiusPx} from './surgicalGeometry';
 import {modeledSourceIdentity,modeledAnatomy} from './modeledAnatomy';
 import type {SurgicalInteraction} from '../surgical-types';
@@ -857,10 +857,11 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         const marks=view?clipSurgicalMarkersToSlab(surgicalMarkers,axis as 0|1|2,currentCursor[axis],slab).map(m=>({color:m.color,radius:surgicalMarkerRadiusPx(m,pxPerMm),points:m.points.map(p=>mprPixel(view,plane,p))})):[];
         const planning=displayedSurgical?.planningOverlay;
         const planningSegments=planning&&view?planningSliceSegments(planning,axis as 0|1|2,currentCursor[axis],slab).map(segment=>({...segment,pixels:segment.points.map(p=>mprPixel(view,plane,p))})):[];
-        const planningRegions=planning&&view?([['Target region',planning.constraints.target,'#ff91ae'],['Entry region',planning.constraints.entry,'#70e0ff']] as const).flatMap(([name,region,color])=>{
+        const planningRegions=planning&&!planning.recorded&&view?([['Target region',planning.constraints.target,'#ff91ae'],['Entry region',planning.constraints.entry,'#70e0ff']] as const).flatMap(([name,region,color])=>{
           const radius=planningSphereSliceRadius(region.centerMm,region.radiusMm,axis as 0|1|2,currentCursor[axis]);
           return radius===null?[]:[{name,color,center:mprPixel(view,plane,region.centerMm),radius:radius*pxPerMm}];
         }):[];
+        const planningMemberships=planning&&view?planningSliceMemberships(planning,axis as 0|1|2,currentCursor[axis],slab).map(mark=>({...mark,pixel:mprPixel(view,plane,mark.positionMm)})):[];
         const planningLimits=planning&&view?planning.limitingStructures.filter(s=>Math.abs(s.positionMm[axis]-currentCursor[axis])<=slab).map(s=>({...s,pixel:mprPixel(view,plane,s.positionMm)})):[];
         return (
           <div
@@ -916,6 +917,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               {planning&&<svg aria-label="Approach guides intersecting current MRI slab" width="100%" height="100%" style={{position:'absolute',inset:0,pointerEvents:'none',zIndex:3}}>
                 {planningRegions.map(region=><circle key={region.name} cx={region.center[0]} cy={region.center[1]} r={Math.max(2,region.radius)} stroke={region.color} strokeDasharray="4 3" strokeWidth={1.5} fill="none"><title>{region.name}</title></circle>)}
                 {planningSegments.map(segment=>Math.hypot(segment.pixels[0][0]-segment.pixels[1][0],segment.pixels[0][1]-segment.pixels[1][1])<1?<circle key={segment.id} cx={segment.pixels[0][0]} cy={segment.pixels[0][1]} r={segment.selected?4:2.5} fill={segment.color}/>:<polyline key={segment.id} points={segment.pixels.map(p=>p.join(',')).join(' ')} stroke={segment.color} strokeWidth={segment.selected?4:2} opacity={segment.selected?1:.65} fill="none"/>)}
+                {planningMemberships.map(mark=><circle key={mark.id} cx={mark.pixel[0]} cy={mark.pixel[1]} r={mark.radiusPx} stroke={mark.color} strokeWidth={2} fill="none"><title>{mark.label}</title></circle>)}
                 {planningLimits.map((limit,i)=><g key={i}><title>{limit.name}: {limit.reason}</title><path d={`M${limit.pixel[0]-5},${limit.pixel[1]-5}l10,10m-10,0l10,-10`} stroke="#ffb65c" strokeWidth="2"/></g>)}
               </svg>}
               {goalPixel && <span aria-label="Declared public goal" style={{position:'absolute',left:goalPixel[0],top:goalPixel[1],transform:'translate(-50%,-50%)',color:PUBLIC_GOAL_COLOR,fontSize:20,lineHeight:1,pointerEvents:'none',zIndex:4}}>◇</span>}

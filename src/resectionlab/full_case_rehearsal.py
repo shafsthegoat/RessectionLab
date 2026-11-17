@@ -65,6 +65,8 @@ def bind_case_protection(engine, protection_path=None):
 
 
 def new_director(engine, scenario='primary', *, full_annotation_target_mm3=None):
+    from .surgical_planning_admission import require_planning_admission
+    require_planning_admission(engine)
     if scenario not in ('primary', 'vascular'):
         raise ValueError('Choose primary or vascular full-case scenario')
     if not any(r.get('target') and r['material'] == 'tumor' and np.any(engine.scene.labels == r['id']) for r in engine.scene.regions):
@@ -550,6 +552,8 @@ def run_slice(engine, director, *, max_actions=12, check=None, progress=None):
     A preview is never promoted into committed state. Every admitted action is
     executed through step and must match its preview identity exactly.
     """
+    from .surgical_planning_admission import require_planning_admission
+    require_planning_admission(engine)
     from .full_case_path_variants import cusa_path_variants
     if type(max_actions) is not int or not 1 <= max_actions <= 64:
         raise ValueError('Full rehearsal slice requires 1..64 actions')

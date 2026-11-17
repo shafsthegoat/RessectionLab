@@ -529,6 +529,8 @@ def plan_observed_strategies(observation, raw, *, check=lambda: None, progress=l
 
 
 def generate_comparison(engine, raw, *, check=lambda: None, progress=lambda *_: None):
+    from .surgical_planning_admission import require_planning_admission
+    require_planning_admission(engine)
     value = admission(engine); _require(value is not None, 'source/baseline admission is required')
     validate_admission(engine, value)
     available = defaults(engine); _require(available['available'], available['reason'])

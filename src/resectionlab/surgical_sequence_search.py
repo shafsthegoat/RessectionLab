@@ -51,6 +51,8 @@ def checked_sequence_search(engine, route, *, propose, motion, hand, radius,
     Full native work states continue; exit probes are verification alternatives,
     not an action prefix committed between consecutive work skills.
     """
+    from .surgical_planning_admission import require_planning_admission
+    require_planning_admission(engine)
     if (type(horizon) is not int or not 1 <= horizon <= 3 or
             type(beam_width) is not int or not 2 <= beam_width <= 4 or
             type(max_expansions) is not int or not 1 <= max_expansions <= 24 or

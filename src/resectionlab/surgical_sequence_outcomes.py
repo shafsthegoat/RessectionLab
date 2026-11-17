@@ -9,6 +9,7 @@ from __future__ import annotations
 import numpy as np
 
 SCHEMA = 'resectionlab.sequence-outcome.v1'
+PROCEDURE_SCHEMA = 'resectionlab.sequence-outcome.v2'
 
 
 def _quantity(value, baseline, unit, *, aggregation='cumulative', status='source_count'):
@@ -61,6 +62,8 @@ def sequence_ledger(engine, baseline, *, target, metrics, baseline_metrics, mapp
     dimensions['elapsedSeconds']['status'] = 'modeled_unvalidated'
     dimensions['toolExchanges'] = _quantity(_exchanges(engine), _exchanges(baseline), 'count')
     dimensions['acceptedActions'] = _quantity(len(engine.actions), len(baseline.actions), 'count')
+    from .surgical_procedure_policy import direct_removal_dimensions, PROPERTY, procedure_admission
+    dimensions.update(direct_removal_dimensions(engine, baseline))
     dimensions['workingMaterialExposureMm3S'] = {
         name: _quantity(value*engine.scene.voxel_mm3,
             baseline_metrics['exposureByMaterialCellSeconds'].get(name, 0.)*engine.scene.voxel_mm3,
@@ -97,15 +100,28 @@ def sequence_ledger(engine, baseline, *, target, metrics, baseline_metrics, mapp
     if mapped_vessels and ('vascularGraphV1' in engine.state or 'vesselsV2' in engine.state):
         dimensions['bloodGeneratedMm3'] = _quantity(metrics['vesselPhysicsV2']['generatedMm3'],
             baseline_metrics['vesselPhysicsV2']['generatedMm3'], 'mm3', status='modeled_unvalidated')
+    # Add the graph's existing interface exposures only when that model is
+    # declared. Preserve historical non-graph ledgers byte for byte. These are
+    # maxima over declared interfaces, never perfusion or neurological injury.
+    if 'vascularGraphV1' in engine.state and 'vascularGraphV1' in baseline.state:
+        regions = metrics['vesselPhysicsV2']['regions']
+        before_regions = baseline_metrics['vesselPhysicsV2']['regions']
+        for name in ('supplyDeficitSeconds', 'drainageDeficitSeconds'):
+            dimensions[name] = _unknown('No declared vascular interfaces; absence is not zero deficit.', 's')
+            if regions and before_regions and regions.keys() == before_regions.keys():
+                dimensions[name] = _quantity(max(r[name] for r in regions.values()),
+                    max(r[name] for r in before_regions.values()), 's', status='modeled_unvalidated')
+                dimensions[name]['scope'] = 'Maximum cumulative deficit across declared vascular interfaces; uncalibrated, not tissue perfusion or functional injury.'
     withdrawn = not engine.state['holds'] and not any(
         slot['inserted'] or slot['active'] or slot['grip'] for slot in engine.state['slots'].values())
     guard = engine.guard_report()
     missing = [name for name, value in dimensions.items()
                if isinstance(value, dict) and value.get('status') == 'unavailable']
-    return {'schema': SCHEMA, 'sceneId': engine.scene.identity,
+    return {'schema': PROCEDURE_SCHEMA if PROPERTY in engine.scene.properties else SCHEMA, 'sceneId': engine.scene.identity,
         'stateId': engine.state_id, 'baselineStateId': baseline.state_id,
         'target': target, 'targetScope': 'owned categorical target labels',
         'originalTarget': _original_target(engine, baseline), 'dimensions': dimensions,
+        **({'procedure': procedure_admission(engine.scene, engine.protection)} if PROPERTY in engine.scene.properties else {}),
         'withdrawalComplete': withdrawn,
         'protection': {'contractId': guard.get('contractId'), 'status': guard.get('status', 'unknown-coverage'),
                        'missingRequired': list(guard['missingRequired'])},

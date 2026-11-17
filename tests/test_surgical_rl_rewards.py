@@ -42,6 +42,18 @@ def test_target_credit_independent_of_display_label():
     assert tracker.measure(e) == after
 
 
+def test_rejected_preview_cannot_earn_tumor_reward_and_tracker_is_detached():
+    e = engine(); tracker = RewardTracker(e); before = tracker.measure(e)
+    preview = e.clone(); preview.state['removed'] = [13]
+    candidate_tracker = tracker.clone()
+    after = candidate_tracker.measure(preview)
+    config = RewardConfig(tumor_removal_weight=1e12)
+    assert compute_reward(before, after, {'status': 'accepted'}, config)[0] > 0
+    reward, terms = compute_reward(before, after, {'status': 'rejected'}, config)
+    assert reward <= 0 and terms['tumor_removal'] == 0
+    assert tracker.measure(e) == before
+
+
 def test_physical_face_area_union_and_severity_not_clot():
     affine = np.eye(4); affine[:3, :3] = [[2, 1, 0], [0, 3, 0], [0, 0, 4]]
     e = engine(affine); tracker = RewardTracker(e)

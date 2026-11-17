@@ -53,6 +53,10 @@ def native_collection(case, scene):
 
 def availability(engine, record, collection_path):
     value={'available':False,'reason':None,'scope':SCOPE,'defaults':None,'contextOptions':[]}
+    from .surgical_planning_admission import planning_admission
+    source_admission=planning_admission(engine.scene,engine.protection)
+    if not source_admission['available']:
+        return {**value,'reason':'; '.join(b['code']+': '+b['message'] for b in source_admission['blockers'])}
     if (engine.scene.source.get('adapter') or {}).get('type')!='native-patient-research-derivative':
         return {**value,'reason':'An acquired native source derivative is required.'}
     if record.get('taskAdmission') is not None:
@@ -109,6 +113,8 @@ def configured_source(engine, *, check):
 
 
 def suggest(engine, collection_path, *, check=lambda:None):
+    from .surgical_planning_admission import require_planning_admission
+    require_planning_admission(engine)
     before=engine.snapshot();verify_source(engine.scene,native_collection=collection_path,check=check)
     candidate=configured_source(engine,check=check)
     controls={**DEFAULTS,'maxNonTargetMm3':200.,'maxActions':128,'maxSeconds':180.,'maxCandidates':1}
@@ -155,6 +161,8 @@ def incomplete_search_rows(public):
 
 
 def generate(engine, raw, collection_path, *, check=lambda:None, progress=lambda *_:None):
+    from .surgical_planning_admission import require_planning_admission
+    require_planning_admission(engine)
     controls=normalize_controls(copy.deepcopy(raw));before=engine.snapshot()
     verification=verify_source(engine.scene,native_collection=collection_path,check=check)
     source=configured_source(engine,check=check);configured=source.snapshot();started=time.monotonic()

@@ -85,6 +85,7 @@ function compactFullReport(report:Record<string,unknown>):Record<string,unknown>
 }
 
 export function stagedGenerationEligibility(artifact:unknown,response:SurgicalResponse|null):{ready:boolean;reason:string} {
+  if(response?.planningAdmission?.available===false)return {ready:false,reason:response.planningAdmission.blockers.map(b=>b.message).join('; ')};
   if(!response||!text(response.caseHash)||!sealed(response.view?.scene?.sceneId))
     return {ready:false,reason:'Open a native source case first.'};
   const record=object(artifact)?artifact:null;

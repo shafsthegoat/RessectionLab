@@ -83,3 +83,15 @@
 .workflow-alternative dd{overflow-wrap:normal}
 /* Author styles may otherwise override the browser's hidden display rule. */
 .surgical-panel [hidden]{display:none!important}
+
+.sequential-episodes{min-width:0;overflow-wrap:anywhere}
+.sequential-episodes>p,.sequential-episodes>div,.sequential-episodes>details{margin-top:9px}
+.sequential-episodes .rescue-comparison table{table-layout:fixed;font-size:11px}
+.sequential-episodes .rescue-comparison th,.sequential-episodes .rescue-comparison td{vertical-align:top;white-space:normal;padding:6px 3px}
+.sequential-episodes .rescue-comparison th:first-child{width:40%}
+.sequential-episodes .rescue-comparison th:nth-child(2){width:25%}
+.sequential-episodes .rescue-comparison th:nth-child(3){width:35%}
+.sequential-episodes .rescue-comparison button{white-space:normal;overflow-wrap:normal;font-size:11px;max-width:100%}
+.sequential-episodes pre{max-width:100%;overflow:auto;white-space:pre-wrap;font-size:10px}
+.sequential-attempts ol{padding-left:18px}.sequential-attempts li{margin-bottom:10px}
+.sequential-attempts [data-request-status=rejected]{color:#f2d5a5}

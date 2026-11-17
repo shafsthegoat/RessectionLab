@@ -41,6 +41,17 @@ def _inspect(engine):
     assert engine.step({'slot': 'right', 'operation': 'inspect', 'duration': .2})['status'] == 'accepted'
 
 
+def test_protection_does_not_make_unqualified_anatomical_source_ready_for_planning():
+    scene = _scene(source='unqualified-anatomical-source')
+    engine = SurgicalEngine(scene, protection=_protection(scene), guard_config=GuardConfig())
+    before = engine.snapshot()
+    result = full_case_readiness(engine)
+    assert result['status'] == 'blocked'
+    assert result['availableActions'] == ['inspect', 'replay']
+    assert result['blockers'][0]['code'] == 'PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'
+    assert result['recovery'] is None and engine.snapshot() == before
+
+
 @pytest.mark.parametrize('config', [GuardConfig(), GuardConfig(require_critical_coverage=False),
                                    GuardConfig(critical_max_displacement_mm=.1)])
 def test_initial_saved_source_bound_evidence_is_ready_and_binds_exact_default_policy(config):

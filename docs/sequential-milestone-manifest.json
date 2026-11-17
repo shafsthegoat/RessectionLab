@@ -1,0 +1,581 @@
+{
+  "analysisWallSeconds": 154.61818079208024,
+  "campaignWallSeconds": 5691.508921993896,
+  "checkpoints": [
+    {
+      "initialSha256": "ff013e5ebd8efa4760f05c9956a37ad814dc3406d324dbb106e9894b77562b54",
+      "label": "reward-updated-selector",
+      "lastEpoch": 5,
+      "path": "/Users/shaf/coding_projects/RessectionLab/testcases/overnight-sequential-v1/benchmark-task-v2/checkpoints/17/selected.pt",
+      "rewardDrivenUpdates": true,
+      "seed": 17,
+      "selectedEpoch": 5,
+      "selectedUpdates": 192,
+      "sha256": "bfbffdac0cd2631542bf2de71647eab1604e72ac81f15f7424d7650768d9b79f",
+      "updates": 192,
+      "validationScore": [
+        0.552579365079365,
+        -1.5
+      ]
+    },
+    {
+      "initialSha256": "42a13767f5edcf1223ad45d9952f8ac48e72d2347227e304b56e885b36f2340d",
+      "label": "reward-updated-selector",
+      "lastEpoch": 5,
+      "path": "/Users/shaf/coding_projects/RessectionLab/testcases/overnight-sequential-v1/benchmark-task-v2/checkpoints/43/selected.pt",
+      "rewardDrivenUpdates": true,
+      "seed": 43,
+      "selectedEpoch": 2,
+      "selectedUpdates": 96,
+      "sha256": "fb6fa0a3f56ab5eaa8c7524ebe1ad2d5a57d9ef0693ead0a98742ac2345c52d9",
+      "updates": 192,
+      "validationScore": [
+        0.4052579365079365,
+        -2.25
+      ]
+    },
+    {
+      "initialSha256": "04d3410f1f9af835a02628a757e52bdda95347f24d70b7789ad5d60a60ea78e2",
+      "label": "reward-updated-selector",
+      "lastEpoch": 5,
+      "path": "/Users/shaf/coding_projects/RessectionLab/testcases/overnight-sequential-v1/benchmark-task-v2/checkpoints/71/selected.pt",
+      "rewardDrivenUpdates": true,
+      "seed": 71,
+      "selectedEpoch": 0,
+      "selectedUpdates": 32,
+      "sha256": "8f320376fe687fab3a39324749f98ec101477e705e9325b8eff9681e6ea08ad8",
+      "updates": 192,
+      "validationScore": [
+        0.4052579365079365,
+        -2.25
+      ]
+    }
+  ],
+  "cohortCheck": {
+    "actualRows": 160,
+    "checkpointSeeds": [
+      17,
+      43,
+      71
+    ],
+    "checkpointSeedsMatchProtocol": true,
+    "declaredStudyScopeMatches": true,
+    "duplicates": [],
+    "expectedJobs": 160,
+    "heldoutParents": [
+      200,
+      201,
+      202,
+      203,
+      204,
+      205,
+      206,
+      207,
+      208,
+      209,
+      210,
+      211,
+      212,
+      213,
+      214,
+      215
+    ],
+    "learnedSeeds": [
+      17,
+      43,
+      71
+    ],
+    "missing": [],
+    "requiredSeeds": [
+      17,
+      43,
+      71
+    ],
+    "typed": true,
+    "unexpected": [],
+    "verified": true
+  },
+  "commands": {
+    "evaluate": "PYTHONPATH=src .venv/bin/python scripts/run_sequential_milestone.py --stage evaluate --generated-only --output /Users/shaf/coding_projects/RessectionLab/testcases/overnight-sequential-v1/benchmark-task-v2",
+    "summarize": "PYTHONPATH=src .venv/bin/python scripts/summarize_sequential_milestone.py --evidence /Users/shaf/coding_projects/RessectionLab/testcases/overnight-sequential-v1/benchmark-task-v2"
+  },
+  "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+  "currentTrainingPhysicalCalls": 7085,
+  "earlierAccessCosts": null,
+  "evaluationCostTotals": {
+    "canceled_requests": {
+      "knownTotal": 1,
+      "missingRows": 0
+    },
+    "candidate_seconds": {
+      "knownTotal": 0.0054409189615398645,
+      "missingRows": 0
+    },
+    "execution_requests": {
+      "knownTotal": 1524,
+      "missingRows": 0
+    },
+    "online_wall_seconds": {
+      "knownTotal": 1748.8703993745148,
+      "missingRows": 0
+    },
+    "physical_requests": {
+      "knownTotal": 3484,
+      "missingRows": 0
+    },
+    "planning_requests": {
+      "knownTotal": 1960,
+      "missingRows": 0
+    },
+    "policy_feature_seconds": {
+      "knownTotal": 0.3719737879000604,
+      "missingRows": 0
+    },
+    "reset_seconds": {
+      "knownTotal": 4.291403663577512,
+      "missingRows": 0
+    }
+  },
+  "evaluationSha256": "d4a42070d3509b4dda24875f8eb031a11633d0f53d5a95a0b9a4dbc8f9434f51",
+  "evaluationWallSeconds": 2383.669218625175,
+  "evidenceRoot": "/Users/shaf/coding_projects/RessectionLab/testcases/overnight-sequential-v1/benchmark-task-v2",
+  "exclusions": [
+    "acquired anatomy",
+    "graph vascular",
+    "thermal",
+    "continuum",
+    "CUSA v3",
+    "resident C++ policy",
+    "whole-procedure success",
+    "clinical motor/language outcome"
+  ],
+  "figure": {
+    "meaning": "Qualified treatment is actual treatment with valid STOP/exterior exit, no truncation and no committed hard violation; raw treatment is retained separately.",
+    "png": "/Users/shaf/coding_projects/RessectionLab/testcases/overnight-sequential-v1/benchmark-task-v2/quality-compute.png",
+    "pngSha256": "5a192d17fa25d057f0ede4b3cdd3358a1c1c5162cc376e4984689d75b33c27fc",
+    "svg": "/Users/shaf/coding_projects/RessectionLab/testcases/overnight-sequential-v1/benchmark-task-v2/quality-compute.svg",
+    "svgSha256": "e0157f4a9050bb8ef2a6074c6b747bf4fcd293d50fc7160808d8c25da68d9163"
+  },
+  "freezeSha256": "85425f495007e4565161ebe2e6bb4613ed016ec12ef9a522f6afc64d151560f7",
+  "independentNativeAudit": {
+    "failures": [],
+    "physicalRequests": 618,
+    "uniqueSnapshots": 72,
+    "wallSeconds": 96.6144133771304
+  },
+  "learningFindings": [
+    {
+      "allSeedsPositiveDelayedBenefit": false,
+      "delayedBenefitMeanPairedDifference": 0.29133597883597884,
+      "delayedBenefitPerSeed": [
+        {
+          "paired_qualified_difference": 0.8740079365079365,
+          "seed": 17
+        },
+        {
+          "paired_qualified_difference": 0.0,
+          "seed": 43
+        },
+        {
+          "paired_qualified_difference": 0.0,
+          "seed": 71
+        }
+      ],
+      "interpretation": "Mean delayed-preparation difference versus greedy: +29.1 percentage points. Improvement occurred in 1/3 seeds (seed 17: +87.4 points; seed 43: +0.0 points; seed 71: +0.0 points). Learned mean treatment is below search (-4.3 percentage points). These results do not establish robust learned superiority.",
+      "positiveMeanDelayedBenefit": true,
+      "tier": "low"
+    },
+    {
+      "allSeedsPositiveDelayedBenefit": false,
+      "delayedBenefitMeanPairedDifference": 0.29133597883597884,
+      "delayedBenefitPerSeed": [
+        {
+          "paired_qualified_difference": 0.8740079365079365,
+          "seed": 17
+        },
+        {
+          "paired_qualified_difference": 0.0,
+          "seed": 43
+        },
+        {
+          "paired_qualified_difference": 0.0,
+          "seed": 71
+        }
+      ],
+      "interpretation": "Mean delayed-preparation difference versus greedy: +29.1 percentage points. Improvement occurred in 1/3 seeds (seed 17: +87.4 points; seed 43: +0.0 points; seed 71: +0.0 points). Learned mean treatment is below search (-23.8 percentage points). These results do not establish robust learned superiority.",
+      "positiveMeanDelayedBenefit": true,
+      "tier": "high"
+    }
+  ],
+  "pairedRows": {
+    "count": 192,
+    "path": "/Users/shaf/coding_projects/RessectionLab/docs/sequential-milestone-paired.csv",
+    "sha256": "4e30e9fb41992cb14dd69776851da399c9747041d0922f3e73f9ed72a3abf7f3"
+  },
+  "pairedSummary": [
+    {
+      "baseline": "greedy",
+      "delayed_benefit_difference": 0.29133597883597884,
+      "losses": 0,
+      "mean_qualified_difference": 0.10838293650793651,
+      "pairs": 48,
+      "tier": "high",
+      "ties": 40,
+      "wins": 8
+    },
+    {
+      "baseline": "search",
+      "delayed_benefit_difference": -0.5826719576719577,
+      "losses": 17,
+      "mean_qualified_difference": -0.23759920634920634,
+      "pairs": 48,
+      "tier": "high",
+      "ties": 31,
+      "wins": 0
+    },
+    {
+      "baseline": "greedy",
+      "delayed_benefit_difference": 0.29133597883597884,
+      "losses": 0,
+      "mean_qualified_difference": 0.10838293650793651,
+      "pairs": 48,
+      "tier": "low",
+      "ties": 40,
+      "wins": 8
+    },
+    {
+      "baseline": "search",
+      "delayed_benefit_difference": -0.05092592592592592,
+      "losses": 17,
+      "mean_qualified_difference": -0.043402777777777776,
+      "pairs": 48,
+      "tier": "low",
+      "ties": 21,
+      "wins": 10
+    }
+  ],
+  "patientOperationsCompleted": 0,
+  "priorTrainingCosts": {
+    "accounting": "Unfinished validation block not persisted: conservatively charge all8 possible in-flight validation episodes at88calls each. This is an upper bound, not measured calls. Preserve continuous campaign wall origin including repair/pilot time; do not reset the two-hour campaign clock.",
+    "campaignStartedUtc": "2026-11-16T11:50:07Z",
+    "chargedWallSecondsAtRestart": 2231.970216035843,
+    "heldoutEvaluated": false,
+    "hyperparametersChanged": false,
+    "knownPhysicalCalls": 681,
+    "optimizerUpdates": 64,
+    "path": "/Users/shaf/coding_projects/RessectionLab/testcases/overnight-sequential-v1/benchmark-frozen-v3/preserved-contract-diagnosis.json",
+    "physicalCalls": 681,
+    "physicalCallsUpperBound": 1385,
+    "reason": "Refused later work retains checked exterior move with inserted flag; finite skill inventory lacks an explicit recovery withdrawal. Preserve before generated task v2 adds actual checked withdrawal/STOP; no held-out evaluation occurred.",
+    "schema": "resectionlab.preserved-training-contract-diagnosis.v1",
+    "sha256": "9c2c40f3993b891ba4eda99a868673391420ba40b25abae76ff8793de2cbf7fe",
+    "sourceCommit": "9d46bf3ef217a4d38e446ed23d469ea07d244ecf",
+    "sourceProtocolSha256": "b7254c4345c8ef04399b01275b33ab0233c9b7593014addb518728a6540b4b16",
+    "trainingEpisodes": 64,
+    "unloggedValidationCallsUpperBound": 704,
+    "validationEpisodes": 8,
+    "wallSeconds": 410.0
+  },
+  "protocolSha256": "6a0399a9690d8fe8077568c07bc59d25ba14f3cb72a336fa71d1b83ff09f7ac0",
+  "protocolSourceCommit": "3872c99fdc93b73d16143b6058818eca20ef4bfb",
+  "prototypeDiagnosis": "Preserved v1 interface diagnostic; no held-out evaluation. Actual recovery withdrawal added to all v2 methods before formal fitting.",
+  "qualifications": "All source anatomical constraints/exposures are generated engineering declarations; functional motor/language and unsupported dynamics remain unknown.",
+  "replayPhysicalCalls": 1360,
+  "replayWallSeconds": 618.1923098734114,
+  "reportPresentationRevision": {
+    "additionalPhysicalRequests": 0,
+    "originalPackage": {
+      "path": "/Users/shaf/coding_projects/RessectionLab/testcases/overnight-sequential-v1/benchmark-task-v2/index.html",
+      "sha256": "80ebb88f3fd71f71b546496ba549f14971238c540cb2b319453097afbc35db4d"
+    },
+    "originalSummarySourceSha256": "cda66c405d5df6dd989b510f823544d9f9e471e6c5c913f0316b5a6931a4902a",
+    "reason": "Independent review requested explicit seed instability and comparison with search in visible prose.",
+    "summarySourceSha256": "8fdf2d1ee4c9818b23049c0732eb0ee511928b7fb6907a0031db9e61b1e481a0",
+    "wallSeconds": 0.3242393338587135
+  },
+  "resultRows": {
+    "count": 160,
+    "path": "/Users/shaf/coding_projects/RessectionLab/docs/sequential-milestone-results.csv",
+    "sha256": "55740b325c05a69c5820706f503a63a72adbc4b98eca53e438c986d9d81f7de5"
+  },
+  "savedPackage": {
+    "path": "/Users/shaf/coding_projects/RessectionLab/testcases/overnight-sequential-v1/benchmark-task-v2/index.html",
+    "sha256": "5ff6260207a592ead8437e203e5fd97d2cd2228553a0d2cb02cad3a00e448cb6"
+  },
+  "schema": "resectionlab.sequential-milestone-delivery.v1",
+  "scope": "generated post-access continuation",
+  "seedSummaries": [
+    {
+      "delayed_benefit_mean": 1.0,
+      "mean_qualified_treatment_fraction": 0.7354910714285714,
+      "mean_treatment_fraction": 0.7354910714285714,
+      "seed": 17,
+      "tier": "high",
+      "valid_stops": 16
+    },
+    {
+      "delayed_benefit_mean": 0.1259920634920635,
+      "mean_qualified_treatment_fraction": 0.4103422619047619,
+      "mean_treatment_fraction": 0.4103422619047619,
+      "seed": 43,
+      "tier": "high",
+      "valid_stops": 16
+    },
+    {
+      "delayed_benefit_mean": 0.1259920634920635,
+      "mean_qualified_treatment_fraction": 0.4103422619047619,
+      "mean_treatment_fraction": 0.4103422619047619,
+      "seed": 71,
+      "tier": "high",
+      "valid_stops": 16
+    },
+    {
+      "delayed_benefit_mean": 1.0,
+      "mean_qualified_treatment_fraction": 0.7354910714285714,
+      "mean_treatment_fraction": 0.7354910714285714,
+      "seed": 17,
+      "tier": "low",
+      "valid_stops": 16
+    },
+    {
+      "delayed_benefit_mean": 0.1259920634920635,
+      "mean_qualified_treatment_fraction": 0.4103422619047619,
+      "mean_treatment_fraction": 0.4103422619047619,
+      "seed": 43,
+      "tier": "low",
+      "valid_stops": 16
+    },
+    {
+      "delayed_benefit_mean": 0.1259920634920635,
+      "mean_qualified_treatment_fraction": 0.4103422619047619,
+      "mean_treatment_fraction": 0.4103422619047619,
+      "seed": 71,
+      "tier": "low",
+      "valid_stops": 16
+    }
+  ],
+  "seeds": [
+    17,
+    43,
+    71
+  ],
+  "sourceHashes": {
+    "scripts/run_sequential_milestone.py": "5d02d3a53e54f3aa9c43789cb0f2db13c6ae7dd412edde6edabe98f4534096d0",
+    "src/resectionlab/surgical_consequences.py": "75bafa6a5f93b6ab2f9a2bc8bd0d4eaad32b7a3afca625da7efc034dee9298ef",
+    "src/resectionlab/surgical_joint_cranial_search.py": "2403818cb0961b99ac477077284a74508e09500bf03b9d7b039a9cbbd1ed7c4a",
+    "src/resectionlab/surgical_planning_admission.py": "0aeb039e458260f5e06a27d2e4e278a47578ce8e72a9f6133493d4e08d42c330",
+    "src/resectionlab/surgical_procedure_policy.py": "22f43c971f3eaeffb4328eff2c12ec7f8d2b42fded294c932619a5ab14a4ce4f",
+    "src/resectionlab/surgical_rl_env.py": "ac4aa96e8f0b9b309c13feed64e1594e99b12fbd3b049916e31613b24eaebf57",
+    "src/resectionlab/surgical_sequential_benchmark.py": "ffb931b0e3ae62d4e39aae03c0e1b8e9b357f12622bfdd64d1ff5a1c547cb7f0",
+    "src/resectionlab/surgical_sequential_task.py": "175a6c22137ec86742e0156ca1a8d5dfb088bdfb0c97fb9873bfe2822dc083d3"
+  },
+  "summary": [
+    {
+      "actual_attempts": 97,
+      "actual_refusal_rate": 0.0,
+      "actual_refusals": 0,
+      "canceled_requests": 0,
+      "committed_hard_violations": 0,
+      "declared_task_completion_rate": 0.4375,
+      "failures": 0,
+      "full_original_removal_rate": 0.0,
+      "layouts": 16,
+      "maximum_debris_mm3": 0.0,
+      "maximum_fluid_mm3": 0,
+      "mean_cst_mm3": 8.4375,
+      "mean_execution_requests": 5.0625,
+      "mean_motor_cortex_mm3": 13.5,
+      "mean_neural_mm3": 13.5,
+      "mean_online_seconds": 12.2003628671373,
+      "mean_physical_requests": 27.375,
+      "mean_planning_requests": 22.3125,
+      "mean_qualified_treatment_fraction": 0.4103422619047619,
+      "mean_residual_mm3_known": 126.5625,
+      "mean_treated_mm3_known": 86.0625,
+      "mean_treatment_fraction_known": 0.4103422619047619,
+      "method": "greedy",
+      "missing_computation_outcomes": 0,
+      "missing_harm_outcomes": 0,
+      "missing_treatment_outcomes": 0,
+      "preview_refusals": 76,
+      "replay_passes": 16,
+      "runs": 16,
+      "tier": "high",
+      "truncations": 0,
+      "valid_stop_withdrawal_rate": 1.0
+    },
+    {
+      "actual_attempts": 598,
+      "actual_refusal_rate": 0.1505016722408027,
+      "actual_refusals": 90,
+      "canceled_requests": 0,
+      "committed_hard_violations": 0,
+      "declared_task_completion_rate": 0.5833333333333334,
+      "failures": 0,
+      "full_original_removal_rate": 0.08333333333333333,
+      "layouts": 16,
+      "maximum_debris_mm3": 0.0,
+      "maximum_fluid_mm3": 0,
+      "mean_cst_mm3": 6.1875,
+      "mean_execution_requests": 11.458333333333334,
+      "mean_motor_cortex_mm3": 13.5,
+      "mean_neural_mm3": 13.5,
+      "mean_online_seconds": 5.210535596328555,
+      "mean_physical_requests": 11.458333333333334,
+      "mean_planning_requests": 0,
+      "mean_qualified_treatment_fraction": 0.5187251984126984,
+      "mean_residual_mm3_known": 102.9375,
+      "mean_treated_mm3_known": 109.6875,
+      "mean_treatment_fraction_known": 0.5187251984126984,
+      "method": "learned",
+      "missing_computation_outcomes": 0,
+      "missing_harm_outcomes": 0,
+      "missing_treatment_outcomes": 0,
+      "preview_refusals": 0,
+      "replay_passes": 48,
+      "runs": 48,
+      "tier": "high",
+      "truncations": 0,
+      "valid_stop_withdrawal_rate": 1.0
+    },
+    {
+      "actual_attempts": 165,
+      "actual_refusal_rate": 0.0,
+      "actual_refusals": 0,
+      "canceled_requests": 1,
+      "committed_hard_violations": 0,
+      "declared_task_completion_rate": 0.9375,
+      "failures": 0,
+      "full_original_removal_rate": 0.25,
+      "layouts": 16,
+      "maximum_debris_mm3": 0.0,
+      "maximum_fluid_mm3": 0,
+      "mean_cst_mm3": 8.4375,
+      "mean_execution_requests": 9.3125,
+      "mean_motor_cortex_mm3": 13.5,
+      "mean_neural_mm3": 13.5,
+      "mean_online_seconds": 33.45240191926132,
+      "mean_physical_requests": 60.6875,
+      "mean_planning_requests": 51.375,
+      "mean_qualified_treatment_fraction": 0.7563244047619048,
+      "mean_residual_mm3_known": 50.625,
+      "mean_treated_mm3_known": 162.0,
+      "mean_treatment_fraction_known": 0.7563244047619048,
+      "method": "search",
+      "missing_computation_outcomes": 0,
+      "missing_harm_outcomes": 0,
+      "missing_treatment_outcomes": 0,
+      "preview_refusals": 147,
+      "replay_passes": 16,
+      "runs": 16,
+      "tier": "high",
+      "truncations": 0,
+      "valid_stop_withdrawal_rate": 1.0
+    },
+    {
+      "actual_attempts": 97,
+      "actual_refusal_rate": 0.0,
+      "actual_refusals": 0,
+      "canceled_requests": 0,
+      "committed_hard_violations": 0,
+      "declared_task_completion_rate": 0.4375,
+      "failures": 0,
+      "full_original_removal_rate": 0.0,
+      "layouts": 16,
+      "maximum_debris_mm3": 0.0,
+      "maximum_fluid_mm3": 0,
+      "mean_cst_mm3": 8.4375,
+      "mean_execution_requests": 5.0625,
+      "mean_motor_cortex_mm3": 13.5,
+      "mean_neural_mm3": 13.5,
+      "mean_online_seconds": 11.951738226547604,
+      "mean_physical_requests": 26.1875,
+      "mean_planning_requests": 21.125,
+      "mean_qualified_treatment_fraction": 0.4103422619047619,
+      "mean_residual_mm3_known": 126.5625,
+      "mean_treated_mm3_known": 86.0625,
+      "mean_treatment_fraction_known": 0.4103422619047619,
+      "method": "greedy",
+      "missing_computation_outcomes": 0,
+      "missing_harm_outcomes": 0,
+      "missing_treatment_outcomes": 0,
+      "preview_refusals": 69,
+      "replay_passes": 16,
+      "runs": 16,
+      "tier": "low",
+      "truncations": 0,
+      "valid_stop_withdrawal_rate": 1.0
+    },
+    {
+      "actual_attempts": 598,
+      "actual_refusal_rate": 0.1505016722408027,
+      "actual_refusals": 90,
+      "canceled_requests": 0,
+      "committed_hard_violations": 0,
+      "declared_task_completion_rate": 0.5833333333333334,
+      "failures": 0,
+      "full_original_removal_rate": 0.08333333333333333,
+      "layouts": 16,
+      "maximum_debris_mm3": 0.0,
+      "maximum_fluid_mm3": 0,
+      "mean_cst_mm3": 6.1875,
+      "mean_execution_requests": 11.458333333333334,
+      "mean_motor_cortex_mm3": 13.5,
+      "mean_neural_mm3": 13.5,
+      "mean_online_seconds": 5.129241395862967,
+      "mean_physical_requests": 11.458333333333334,
+      "mean_planning_requests": 0,
+      "mean_qualified_treatment_fraction": 0.5187251984126984,
+      "mean_residual_mm3_known": 102.9375,
+      "mean_treated_mm3_known": 109.6875,
+      "mean_treatment_fraction_known": 0.5187251984126984,
+      "method": "learned",
+      "missing_computation_outcomes": 0,
+      "missing_harm_outcomes": 0,
+      "missing_treatment_outcomes": 0,
+      "preview_refusals": 0,
+      "replay_passes": 48,
+      "runs": 48,
+      "tier": "low",
+      "truncations": 0,
+      "valid_stop_withdrawal_rate": 1.0
+    },
+    {
+      "actual_attempts": 129,
+      "actual_refusal_rate": 0.0,
+      "actual_refusals": 0,
+      "canceled_requests": 0,
+      "committed_hard_violations": 0,
+      "declared_task_completion_rate": 0.5,
+      "failures": 0,
+      "full_original_removal_rate": 0.0,
+      "layouts": 16,
+      "maximum_debris_mm3": 0.0,
+      "maximum_fluid_mm3": 0,
+      "mean_cst_mm3": 6.75,
+      "mean_execution_requests": 7.0625,
+      "mean_motor_cortex_mm3": 13.5,
+      "mean_neural_mm3": 13.5,
+      "mean_online_seconds": 20.680565971386386,
+      "mean_physical_requests": 34.75,
+      "mean_planning_requests": 27.6875,
+      "mean_qualified_treatment_fraction": 0.5621279761904762,
+      "mean_residual_mm3_known": 92.8125,
+      "mean_treated_mm3_known": 119.8125,
+      "mean_treatment_fraction_known": 0.5621279761904762,
+      "method": "search",
+      "missing_computation_outcomes": 0,
+      "missing_harm_outcomes": 0,
+      "missing_treatment_outcomes": 0,
+      "preview_refusals": 97,
+      "replay_passes": 16,
+      "runs": 16,
+      "tier": "low",
+      "truncations": 0,
+      "valid_stop_withdrawal_rate": 1.0
+    }
+  ],
+  "trainingPhysicalCallsChargedUpperBound": 8470,
+  "uniqueSuccessfulReplays": 72,
+  "unmetCriteria": []
+}

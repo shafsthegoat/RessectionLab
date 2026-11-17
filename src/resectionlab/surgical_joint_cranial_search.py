@@ -21,7 +21,7 @@ from .surgical_joint_cranial_skills import (
 from .surgical_transition_meter import TransitionBudgetExceeded
 
 
-SCHEMA = 'resectionlab.joint-cranial-search.v1'
+SCHEMA = 'resectionlab.joint-cranial-search.v2'
 _GOALS = weakref.WeakValueDictionary()
 _GOAL_FACTS = {}
 _INTERRUPTIONS = (TransitionBudgetExceeded, TimeoutError, InterruptedError,
@@ -31,6 +31,73 @@ _MILLING_STAGING_LIMITS = frozenset(('JOINT_MILLING_INITIAL_STAGING_UNQUALIFIED'
     'JOINT_MILLING_POSED_ATTITUDE_STAGING_UNQUALIFIED',
     'JOINT_MILLING_INITIAL_STOCK_STAGING_UNQUALIFIED',
     'JOINT_MILLING_DECLARED_GLOBAL_START_POSE_DIFFERS'))
+
+
+def assess_original_target_progress(engine, *, original_target_cells=None, credit_labels=None,
+        minimum_target_fraction=.5, minimum_zones=3, minimum_zone_fraction_of_original=.05):
+    """Pure shared progress assessment over the full immutable source target.
+
+    A protected or later-owned overlap stays in the denominator. Treatment
+    credit requires original membership and source-owned target. This assesses
+    progress only; native stage, checked exit and harm constraints remain
+    separate requirements for task completion.
+    """
+    from .surgical_scene import original_target_memberships
+    scene = engine.scene
+    scene.require_cache_source()
+    if (type(minimum_target_fraction) not in (int, float) or not .5 <= minimum_target_fraction <= 1.
+            or type(minimum_zones) is not int or not 3 <= minimum_zones <= 8
+            or type(minimum_zone_fraction_of_original) not in (int, float)
+            or not .05 <= minimum_zone_fraction_of_original <= 1.):
+        raise ValueError('Original target progress requires fraction .5..1, zones 3..8 and zone fraction .05..1')
+    memberships = original_target_memberships(scene)
+    basis = 'original_annotation'
+    if original_target_cells is None:
+        if memberships is not None:
+            target = frozenset(int(c) for cells in memberships.values() for c in cells)
+        elif (scene.source.get('evidenceClass') == 'generated-engineering' or
+                scene.source.get('kind') in ('generated-control', 'engineering-control')):
+            labels = [r['id'] for r in scene.regions if r.get('target')]
+            target = frozenset(map(int, np.flatnonzero(np.isin(scene.labels, labels))))
+            basis = 'generated_owned_target_labels_fallback'
+        else:
+            return {'targetBasis': 'unavailable', 'originalTargetCells': None,
+                'residualOriginalTargetCells': None, 'originalTargetTreatmentFraction': None,
+                'completedProgressRequirement': False, 'reasons': ['ORIGINAL_TARGET_MEMBERSHIPS_UNAVAILABLE']}
+    else:
+        target = frozenset(map(int, original_target_cells))
+        if memberships is None:
+            basis = 'explicit_frozen_source_target'
+    if not target or any(c < 0 or c >= scene.labels.size for c in target):
+        raise ValueError('ORIGINAL_TARGET_SOURCE_MEMBERSHIPS_REQUIRED')
+    if credit_labels is None:
+        credit_labels = {r['id'] for r in scene.regions if r.get('target') and
+            r['material']=='tumor' and not r.get('protected') and not r.get('critical')}
+    credit = {c for c in target if int(scene.labels.flat[c]) in credit_labels}
+    removed = set(engine.state['removed']) & target
+    credited = removed & credit
+    cells = sorted(target); points = scene.points(cells)
+    codes = ((points >= points.mean(axis=0)).astype(np.int8) @ np.asarray([1, 2, 4])).tolist()
+    zones = tuple(frozenset(c for c, code in zip(cells, codes) if code==i) for i in range(8))
+    zone_removed = [len(removed & zone) for zone in zones]
+    zone_credit = [len(credited & zone) for zone in zones]
+    total = len(target)
+    reached = sum(n/total+1e-12 >= minimum_zone_fraction_of_original for n in zone_credit)
+    reasons = []
+    if len(credited)/total+1e-12 < minimum_target_fraction:
+        reasons.append('ORIGINAL_TARGET_FRACTION_BELOW_GOAL')
+    if reached < minimum_zones:
+        reasons.append('ORIGINAL_SPATIAL_PROGRESS_BELOW_GOAL')
+    return {'targetBasis': basis, 'originalTargetCells': total,
+        'removedOriginalTargetCells': len(removed), 'ownedOriginalTargetCells': len(credit),
+        'creditedOriginalTargetCells': len(credited), 'residualOriginalTargetCells': total-len(removed),
+        'originalTargetFractionRemoved': len(removed)/total,
+        'originalTargetRemovedMm3': len(removed)*scene.voxel_mm3,
+        'originalTargetTreatmentFraction': len(credited)/total,
+        'originalTargetTreatmentMm3': len(credited)*scene.voxel_mm3,
+        'zoneRemovedCells': zone_removed, 'zoneResidualCells': [len(z)-n for z,n in zip(zones,zone_removed)],
+        'zoneTreatmentCreditCells': zone_credit, 'zonesReachingRequiredOriginalFraction': reached,
+        'completedProgressRequirement': not reasons, 'reasons': reasons}
 
 
 @dataclass(frozen=True)
@@ -119,39 +186,73 @@ def joint_goal_assessment(engine, *, goal, limits, exit_receipt):
     """Assess actual unique removals against the prospectively frozen target."""
     _require(engine, limits, limits._meter)
     _require_goal(goal, limits)
-    removed = set(engine.state['removed']) & goal._target
-    credited = removed & goal._credit
-    total = len(goal._target)
-    zone_removed = [len(removed & z) for z in goal._zones]
-    zone_credit = [len(credited & z) for z in goal._zones]
-    reached = sum(n/total+1e-12 >= goal.minimum_zone_fraction_of_original for n in zone_credit)
-    readiness = _readiness(engine) or {}
+    progress = assess_original_target_progress(engine, original_target_cells=goal._target,
+        credit_labels=limits._target_labels, minimum_target_fraction=goal.minimum_target_fraction,
+        minimum_zones=goal.minimum_zones,
+        minimum_zone_fraction_of_original=goal.minimum_zone_fraction_of_original)
+    readiness = canonical_stage_state(engine)
     ledger = joint_cranial_ledger(engine, limits)
-    reasons = []
-    if len(credited)/total+1e-12 < goal.minimum_target_fraction:
-        reasons.append('ORIGINAL_TARGET_FRACTION_BELOW_GOAL')
-    if reached < goal.minimum_zones:
-        reasons.append('ORIGINAL_SPATIAL_PROGRESS_BELOW_GOAL')
-    if (exit_receipt.get('status') != 'accepted' or
-            exit_receipt.get('finalStateId') != engine.state_id or
-            not readiness.get('wholeExitComplete') or not readiness.get('workEntrySupported')):
+    from .surgical_joint_cranial_exit import joint_exit_complete
+    stop_checked = (exit_receipt.get('status') == 'accepted' and
+        exit_receipt.get('finalStateId') == engine.state_id and joint_exit_complete(engine))
+    endpoint = canonical_endpoint_assessment(engine, within_limits=ledger['withinLimits'],
+        refusal_reasons=ledger['refusalReasons'], stop_checked=bool(stop_checked),
+        minimum_target_fraction=goal.minimum_target_fraction, minimum_zones=goal.minimum_zones,
+        minimum_zone_fraction_of_original=goal.minimum_zone_fraction_of_original)
+    reasons = list(progress['reasons'])
+    if not stop_checked or not readiness.get('workEntrySupported'):
         reasons.append('NATIVE_WORK_AND_WHOLE_EXIT_REQUIRED')
+    reasons.extend('ENDPOINT_'+name.upper().replace(':','_').replace('-','_') for name in endpoint['pending'])
+    if endpoint['truncated']:
+        reasons.append('SHARED_ENDPOINT_TRUNCATED')
     if not ledger['withinLimits']:
         reasons.extend(ledger['refusalReasons'])
-    return {'goalHash': goal.content_hash, 'targetBasis': goal.target_basis,
-        'originalTargetCells': total, 'removedOriginalTargetCells': len(removed),
-        'ownedOriginalTargetCells': len(goal._credit), 'creditedOriginalTargetCells': len(credited),
-        'residualOriginalTargetCells': total-len(removed),
-        'originalTargetFractionRemoved': len(removed)/total,
-        'originalTargetRemovedMm3': len(removed)*engine.scene.voxel_mm3,
-        'originalTargetTreatmentFraction': len(credited)/total,
-        'originalTargetTreatmentMm3': len(credited)*engine.scene.voxel_mm3,
-        'zoneRemovedCells': zone_removed, 'zoneResidualCells':
-            [len(z)-n for z, n in zip(goal._zones, zone_removed)],
-        'zoneTreatmentCreditCells': zone_credit,
-        'zonesReachingRequiredOriginalFraction': reached,
-        'completedFrozenTask': not reasons, 'reasons': reasons,
+    return {**progress, 'goalHash': goal.content_hash, 'targetBasis': goal.target_basis,
+        'completedFrozenTask': endpoint['completedTask'], 'reasons': reasons,
+        'endpointAssessment': endpoint, 'validStop': endpoint_eligible(endpoint),
         'admittedPatientTask': False, 'caseQualificationRequired': True}
+
+
+def endpoint_eligible(endpoint):
+    return bool(endpoint and endpoint.get('terminated') and not endpoint.get('truncated') and
+        endpoint.get('validWithdrawal') and endpoint.get('classification') in
+        ('successful-treatment', 'valid-stop-with-residual'))
+
+
+def canonical_stage_state(engine):
+    """Read final source geometry without recreating execution permissions.
+
+    Native stage_readiness also requires ephemeral registered causal caches.
+    Those are rederived by actual replay, never invented for a cold display.
+    Completion instead checks immutable bone/membrane memberships and whole-tool
+    geometry after the source/history/state binding has been checked.
+    """
+    from .surgical_membrane_transport import clearance
+    from .surgical_joint_cranial_exit import joint_exit_complete
+    contract = getattr(engine, '_cranial_stages', None)
+    ready = bool(contract and set(contract.bone_cells) <= set(engine.state['removed']) and
+        clearance(engine, contract)['cleared'])
+    return {'workEntrySupported': ready, 'wholeExitComplete': joint_exit_complete(engine)}
+
+
+def canonical_endpoint_assessment(engine, *, within_limits, refusal_reasons=(), stop_checked=True,
+        minimum_target_fraction=.5, minimum_zones=3, minimum_zone_fraction_of_original=.05,
+        externally_truncated=False):
+    """One endpoint readout for native candidates and source-bound cold views.
+
+    Native stage/whole-sequence limits only add requirements to the shared
+    endpoint; they cannot relax cleanup, withdrawal, progress or harm bounds.
+    """
+    from dataclasses import replace
+    from .surgical_sequential_task import COMMON_CONFIG, endpoint_assessment
+    config = replace(COMMON_CONFIG, minimum_target_fraction=minimum_target_fraction,
+        minimum_zones=minimum_zones, minimum_zone_fraction_of_original=minimum_zone_fraction_of_original)
+    ready = canonical_stage_state(engine)
+    return endpoint_assessment(engine, config, attempts=len(engine.actions)+int(stop_checked),
+        stopped=stop_checked, externally_truncated=externally_truncated,
+        additional_violations=list(refusal_reasons or ['JOINT_SEQUENCE_LIMITS']) if not within_limits else (),
+        completion_blockers=() if ready.get('workEntrySupported') and ready.get('wholeExitComplete') else
+            ('NATIVE_WORK_AND_WHOLE_EXIT_REQUIRED',))
 
 
 @dataclass
@@ -172,12 +273,64 @@ class JointSearchResult:
     stopped_prefixes: tuple
     attempts: tuple
     evidence: dict
+    checked_nodes: tuple = ()
 
 
 def _key(node):
     return (-node.goal_assessment['originalTargetTreatmentMm3'],
-        node.ledger['wholeNonTargetRemovedMm3'], node.ledger['modeledElapsedSeconds'],
+        *_harm_key(node),
         tuple(row['proposalId'] for row in node.path))
+
+
+def _harm_key(node):
+    """Neural source loss and bone burden cannot substitute for one another."""
+    dimensions = node.sequence_outcome['dimensions']
+    def value(name, fallback=float('inf')):
+        v = dimensions.get(name, {}).get('cumulative')
+        return fallback if v is None else v
+    structures = {f'structure:{name}:{effect}': q.get('cumulative')
+        for field,effect in (('structureRemovedMm3','removedMm3'),('structureCutSourceMm3','cutSourceMm3'))
+        for name,q in dimensions.get(field, {}).items()}
+    from .surgical_consequences import EXPOSURE_METRICS
+    return (value('neuralRemovedMm3'), value('neuralCutSourceMm3'),
+        *[float('inf') if v is None else v for _,v in sorted(structures.items())],
+        value('protectedRemovedMm3'),
+        *[value(name) for name in EXPOSURE_METRICS],
+        value('nonbonePreparationRemovedMm3',node.ledger['preparationNonboneRemovedMm3']),
+        node.ledger['boneRemovedMm3'], node.ledger['modeledElapsedSeconds'])
+
+
+def _retain_beam(children, beam_width):
+    """Reserve treatment, lower-harm and delayed-preparation continuations."""
+    frontier = [n for n in children if not any(_dominates(o, n) for o in children)]
+    ordered = sorted(frontier, key=_key)
+    # Reserve different neural/exposure vectors before a second lower-burden
+    # representative of the same vector. Otherwise bone/time can erase an
+    # unresolved tradeoff before the canonical final comparison sees it.
+    representatives, duplicates, seen = [], [], set()
+    for node in ordered:
+        harm = _harm_key(node)
+        signature = (node.goal_assessment['originalTargetTreatmentMm3'], harm[:-3])
+        if signature in seen:
+            duplicates.append(node)
+        else:
+            seen.add(signature); representatives.append(node)
+    ordered = representatives + duplicates
+    retained = ordered[:1]
+    lower_harm = min(frontier, key=lambda n: (*_harm_key(n), _key(n)))
+    if not any(n is lower_harm for n in retained):
+        retained.append(lower_harm)
+    preparation = next((n for n in sorted(children, key=_key)
+                        if n.path[-1]['preparationOnly']), None)
+    if preparation is not None and len(retained) < beam_width and not any(
+            n is preparation for n in retained):
+        retained.append(preparation)
+    for node in ordered:
+        if len(retained) >= beam_width:
+            break
+        if not any(node is n for n in retained):
+            retained.append(node)
+    return retained
 
 
 def _dominates(a, b):
@@ -196,17 +349,72 @@ def _comparison_vector(node):
     values = [-node.goal_assessment['originalTargetTreatmentMm3'],
         *[node.ledger[k] for k in names[1:]]]
     dimensions = node.sequence_outcome['dimensions']
+    anatomical = {'neuralRemovedMm3': dimensions.get('neuralRemovedMm3',
+        {'status': 'unavailable', 'cumulative': None}),
+        'neuralCutSourceMm3': dimensions.get('neuralCutSourceMm3',
+        {'status': 'unavailable', 'cumulative': None})}
+    anatomical.update({'structure:' + name + ':removedMm3': d for name, d in
+        dimensions.get('structureRemovedMm3', {}).items()})
+    anatomical.update({'structure:' + name + ':cutSourceMm3': d for name, d in
+        dimensions.get('structureCutSourceMm3', {}).items()})
+    for name, d in sorted(anatomical.items()):
+        value = d.get('cumulative')
+        names.append((name, d['status'], d.get('aggregation', 'cumulative')))
+        if value is not None:
+            if type(value) not in (float, int) or not np.isfinite(value):
+                raise ValueError('Joint comparison requires finite source consequences')
+            values.append(value)
     for name in ('toolExchanges', 'brainStrainSquaredMm3S', 'brainStressSquaredPa2Mm3S',
             'thermalPeakC', 'thermalExposureMm3KS', 'bloodGeneratedMm3',
-            'motorEncounterMm3', 'languageEncounterMm3'):
-        d = dimensions[name]
+            'motorEncounterMm3', 'languageEncounterMm3',
+            'supplyDeficitSeconds', 'drainageDeficitSeconds'):
+        d = dimensions.get(name, {'status': 'unavailable', 'cumulative': None})
         value = d.get('cumulative')
+        names.append((name, d['status'], d.get('aggregation', 'cumulative')))
         if value is not None:
             if type(value) not in (float, int) or not np.isfinite(value):
                 raise ValueError('Joint comparison requires finite supported outcome dimensions')
-            names.append((name, d['status'], d.get('aggregation', 'cumulative')))
             values.append(value)
     return tuple(names), tuple(values)
+
+
+def _compare_checked_nodes(nodes, stop, limits):
+    """Drive the existing consequence comparator with actual exited engines."""
+    from .surgical_consequences import compare_samples, consequence_vector
+    from .surgical_procedure_policy import procedure_comparison_policy
+    nodes = [n for n in nodes if endpoint_eligible(n.goal_assessment.get('endpointAssessment'))]
+    if not endpoint_eligible(stop.goal_assessment.get('endpointAssessment')):
+        return None, (), {'selectedBranchId': None, 'pairedScenarioParetoFront': [],
+            'reason': 'checked_stop_endpoint_unavailable', 'stopExecutable': False, 'scenarios': ['nominal']}
+    samples, by_id = [], {}
+    for index, node in enumerate([stop, *nodes]):
+        branch = 'STOP' if index == 0 else 'candidate-' + str(index)
+        by_id[branch] = node
+        vector = consequence_vector(node.exited, limits._source_engine)
+        # Treatment credit stays within the full original annotation.
+        d = vector['dimensions']['targetRemovedMm3']
+        d['cumulative'] = d['incremental'] = node.goal_assessment['originalTargetTreatmentMm3']
+        samples.append({'branchId': branch, 'scenarioId': 'nominal', 'vector': vector})
+    if not nodes:
+        return stop, (), {'selectedBranchId': 'STOP', 'pairedScenarioParetoFront': [],
+            'reason': 'no_qualified_continuation_stop_with_residual', 'stopExecutable': True,
+            'scenarios': ['nominal']}
+    policy = procedure_comparison_policy(stop.exited.scene)
+    # The source's declared evaluators determine required supported exposures.
+    # If a continuation loses one, comparison refuses it instead of assigning
+    # zero or discarding that dimension from the entire frontier.
+    source_dimensions = samples[0]['vector']['dimensions']
+    for metric in ('brainStrainSquaredMm3S', 'brainStressSquaredPa2Mm3S',
+            'thermalPeakC', 'thermalExposureMm3KS', 'bloodGeneratedMm3',
+            'supplyDeficitSeconds', 'drainageDeficitSeconds'):
+        if source_dimensions[metric]['status'] != 'unavailable':
+            policy['objectives'].append(metric)
+            policy['requiredMetrics'].append(metric)
+    decision = compare_samples(samples, policy,
+        stop_branch='STOP', scenario_ids=['nominal'], branch_ids=list(by_id),
+        selection_rule='max_treatment_within_harm_bounds')
+    selected = by_id.get(decision['selectedBranchId'])
+    return selected, tuple(by_id[b] for b in decision['pairedScenarioParetoFront']), decision
 
 
 def _physical_key(engine):
@@ -217,6 +425,8 @@ def _physical_key(engine):
 
 def _failure_category(reason):
     text = str(reason)
+    if text.startswith(('PROCEDURE_HARM_', 'PROCEDURE_TISSUE_', 'PROCEDURE_CRITICAL_')):
+        return 'DECLARED_ANATOMICAL_HARM_CONSTRAINT'
     if text in _MILLING_STAGING_LIMITS or any(s in text for s in ('CONTACT_CONTINUATION', 'ENDPOINT', 'NO_PHYSICAL_PROGRESS',
             'MILLING_CONTACT_CONTROLLER_DEFICIT', 'MILLING_NO_ACTUAL_BONE_OR_DEBRIS_PROGRESS',
             'MILLING_BATCH_BUDGET', 'POSED_ATTITUDE_STAGING_UNQUALIFIED')):
@@ -287,6 +497,8 @@ def checked_joint_sequence_search(engine, route=None, *, propose, limits, goal,
     branch from work; they are not inserted between
     consecutive skills in the selected program.
     """
+    from .surgical_planning_admission import require_planning_admission
+    require_planning_admission(engine)
     from .surgical_joint_cranial_exit import find_checked_joint_exit
     if (not callable(propose) or not callable(check) or
             type(horizon) is not int or not 1 <= horizon <= 5 or
@@ -298,11 +510,23 @@ def checked_joint_sequence_search(engine, route=None, *, propose, limits, goal,
     meter = limits._meter if meter is None else meter
     _require(engine, limits, meter)
     _require_goal(goal, limits)
+    from .surgical_procedure_policy import PROPERTY as PROCEDURE_PROPERTY
+    supported_procedure = PROCEDURE_PROPERTY in engine.scene.properties
     first_calls = meter.calls
     attempts, stopped, nodes = [], [], []
     frontier = [(engine, ())]
     expansions, deepest, exhausted, interrupted = 0, 0, False, False
     stop_reason = None
+    initial_stop = None
+    if supported_procedure:
+        exited, receipt = find_checked_joint_exit(engine, route, limits=limits,
+            meter=meter, hand=hand, outside_poses=outside_poses, check=check,
+            max_candidates=max_exit_candidates, phase=phase+'.initial-stop')
+        if receipt['status'] != 'accepted':
+            raise ValueError('PROCEDURE_EXECUTABLE_INITIAL_STOP_REQUIRED: ' + str(receipt.get('reason')))
+        initial_stop = JointSequenceNode(engine, exited, (), joint_cranial_ledger(exited, limits),
+            joint_goal_assessment(exited, goal=goal, limits=limits, exit_receipt=receipt),
+            receipt['sequenceOutcome'])
 
     def guard():
         check()
@@ -412,11 +636,7 @@ def checked_joint_sequence_search(engine, route=None, *, propose, limits, goal,
                 deepest = depth+1
             if not children or exhausted:
                 break
-            ordered = sorted(children, key=_key)
-            retained = ordered[:beam_width]
-            preparation = next((n for n in ordered if n.path[-1]['preparationOnly']), None)
-            if preparation is not None and not any(n is preparation for n in retained):
-                retained[-1] = preparation
+            retained = _retain_beam(children, beam_width)
             frontier = [(n.work, n.path) for n in retained]
     except _INTERRUPTIONS as error:
         exhausted, stop_reason = True, type(error).__name__+': '+str(error)
@@ -434,6 +654,16 @@ def checked_joint_sequence_search(engine, route=None, *, propose, limits, goal,
     pareto = distinct
     progress = sorted([n for n in nodes if n.goal_assessment['creditedOriginalTargetCells'] > 0], key=_key)
     selected = pareto[0] if pareto else None
+    consequence_decision = None
+    if supported_procedure:
+        # Useful work plus withdrawal may be selected with an honest residual.
+        selected, frontier_nodes, consequence_decision = _compare_checked_nodes(progress,
+            initial_stop, limits)
+        pareto = sorted(frontier_nodes, key=_key)
+        if selected is initial_stop:
+            pareto = [initial_stop, *[n for n in pareto if n is not initial_stop]]
+        elif selected is not None:
+            pareto = [selected, *[n for n in pareto if n is not selected]]
     evidence = {'schema': SCHEMA, 'horizon': horizon, 'beamWidth': beam_width,
         'maxExpansions': max_expansions, 'expansions': expansions, 'maxProposalsPerNode': 6,
         'maxExitCandidatesPerNode': max_exit_candidates, 'deepestCheckedDepth': deepest,
@@ -441,19 +671,27 @@ def checked_joint_sequence_search(engine, route=None, *, propose, limits, goal,
         'physicalCallsDuringSearch': meter.calls-first_calls, 'spentPublicCalls': meter.calls,
         'sourceStateId': limits.source_state_id, 'limitsHash': limits.content_hash,
         'goal': {**goal.declaration(), 'contentHash': goal.content_hash},
-        'decision': 'COMPLETED_FROZEN_TASK' if selected else 'CHECKED_PROGRESS_ONLY' if progress else 'STOP',
+        'decision': ('COMPLETED_FROZEN_TASK' if selected.goal_assessment['completedFrozenTask'] else
+            'STOP_WITH_RESIDUAL' if selected.goal_assessment['creditedOriginalTargetCells'] > 0 else 'STOP')
+            if selected is not None else 'CHECKED_PROGRESS_ONLY' if progress else 'STOP',
         'selectedProposalIds': [r['proposalId'] for r in selected.path] if selected else [],
-        'preference': 'Exclude native or source-policy violations first. Retain owned treatment credit against the full original target, separate B/P/W costs, modeled time, exchanges and available shared mechanical/thermal/vascular consequence Pareto outcomes. Different evidence availability is incomparable; unavailable values never become zero. Recommend greatest original-target treatment credit, then least whole source non-target removal, then least modeled time; no scalar weights.',
+        'preference': 'Exclude native or source-policy violations first. Retain owned treatment credit against the full original target, separate neural, bone, B/P/W, time and available exposure Pareto outcomes. Reserve a beam slot for a lower-neural-loss continuation. Different evidence availability is incomparable; unavailable values never become zero. Among admissible frontier members prefer greater original-target treatment, then componentwise neural/structure effects and supported exposures before preparation, bone and time; incomparable neural/exposure effects require explicit unresolved STOP. Distinct harm vectors receive beam slots before duplicate burden variants. Finite beam truncation is a computation limit, never proof of clinical optimality.',
         'openingConfigurationScope': 'The source-bound opening and anatomy contract are fixed. Proposal programs may choose supported physical opening, preparation, tool configuration and work order; this search does not invent another source window.',
         'proposalScope': 'Caller-supplied source geometry/native skill inventory; not automatic patient access generation. A declarative milling_opening spec invokes the bounded adaptive checked skill as one search expansion, including all internal contact/debris batches on this same policy and meter.',
         'costScope': 'All search previews, commits, discarded candidates and exit probes share the original meter. Later export/verification replay must use that same meter and be reported separately; the caller must reserve it prospectively.',
         'admittedPatientTask': False, 'caseQualificationRequired': True,
         'scope': 'Finite proposal inventory and controller; search failure does not prove anatomical impossibility.',
         'clinicalValidation': 'none'}
+    if consequence_decision is not None:
+        evidence.update(consequenceDecision=consequence_decision,
+            procedurePolicyHash=engine.scene.properties[PROCEDURE_PROPERTY]['policyHash'],
+            scenarios=['nominal'], uncertaintyLimitation='Nominal deterministic source only; existing stress evaluators do not yet qualify this procedure contract.',
+            residualStopReason=('BOUNDED_INVENTORY_OR_HORIZON_STOP_WITH_RESIDUAL'
+                if selected and selected.goal_assessment['residualOriginalTargetCells'] else None))
     final_wall = time.monotonic()-limits.frozen_at
     over_wall = final_wall >= limits.max_wall_seconds
     over_calls = meter.calls > min(limits.max_public_calls, meter.max_calls)
-    for node in nodes:
+    for node in [*nodes, *([initial_stop] if initial_stop is not None else [])]:
         node.ledger.update(spentPublicCalls=meter.calls, wallSecondsSinceMeterCreation=final_wall)
         for failed, reason in ((over_wall, 'WALL_BUDGET'), (over_calls, 'PUBLIC_CALL_BUDGET'),
                 (interrupted, 'SEARCH_CANCELLED_OR_INTERRUPTED_NOT_ADMITTED')):
@@ -465,11 +703,23 @@ def checked_joint_sequence_search(engine, route=None, *, propose, limits, goal,
                 node.goal_assessment['completedFrozenTask'] = False
                 if reason not in node.goal_assessment['reasons']:
                     node.goal_assessment['reasons'].append(reason)
+                node.goal_assessment['endpointAssessment'] = canonical_endpoint_assessment(node.exited,
+                    within_limits=node.ledger['withinLimits'], refusal_reasons=node.ledger['refusalReasons'],
+                    externally_truncated=True)
+                node.goal_assessment['validStop'] = False
     if over_wall or over_calls or interrupted:
         selected, pareto = None, []
         evidence.update(decision='STOP', selectedProposalIds=[], budgetExhausted=True,
             stopReason=stop_reason or ('WALL_BUDGET_AT_FINAL_READOUT' if over_wall else 'PUBLIC_CALL_BUDGET'))
     evidence['wallSecondsSinceMeterCreation'] = final_wall
-    evidence['returnedFrozenTask'] = selected is not None
-    return JointSearchResult(selected, tuple(pareto[:3]), tuple(progress),
-        tuple(stopped), tuple(attempts), evidence)
+    evidence['returnedFrozenTask'] = bool(selected and selected.goal_assessment['completedFrozenTask'])
+    checked_nodes = [*nodes, *([initial_stop] if initial_stop is not None else [])]
+    evidence['checkedCandidates'] = [{'sceneId': n.exited.scene.identity, 'finalStateId': n.exited.state_id,
+        'actionHash': semantic_digest(n.exited.actions), 'withinLimits': n.ledger['withinLimits'],
+        'endpointHash': semantic_digest(n.goal_assessment['endpointAssessment'])} for n in checked_nodes]
+    evidence['checkedCandidateCount'] = len(checked_nodes)
+    alternatives = [*pareto]
+    if initial_stop is not None and not any(n is initial_stop for n in alternatives):
+        alternatives.append(initial_stop)
+    return JointSearchResult(selected, tuple(alternatives), tuple(progress),
+        tuple(stopped), tuple(attempts), evidence, tuple(checked_nodes))

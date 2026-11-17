@@ -1,0 +1,119 @@
+{
+  "cases": [
+    {
+      "case": {
+        "path": "testcases/canonical-endpoint-control-v1/canonical-freeze-v1/clean/comparison.ressectionlab",
+        "sha256": "c083e1b7c0019e0526f8a67caf857a9df297ae8d198267e63b37d8801e2eccba"
+      },
+      "checkedCandidates": 5,
+      "variant": "clean"
+    },
+    {
+      "case": {
+        "path": "testcases/canonical-endpoint-control-v1/canonical-freeze-v1/debris/comparison.ressectionlab",
+        "sha256": "1f433ea8aefe1b9cf74b0ceaaa8c5cc659f86e3d588963f9e1bc6f21ac003b13"
+      },
+      "checkedCandidates": 5,
+      "variant": "debris"
+    },
+    {
+      "case": {
+        "path": "testcases/canonical-endpoint-control-v1/canonical-freeze-v1/fluid/comparison.ressectionlab",
+        "sha256": "b25471148d899ed1d67f4be2f859f8eb347186525dc976ea1ac96225d0dfa4a3"
+      },
+      "checkedCandidates": 5,
+      "variant": "fluid"
+    },
+    {
+      "case": {
+        "path": "testcases/canonical-endpoint-control-v1/canonical-freeze-v1/two-roots/comparison.ressectionlab",
+        "sha256": "3ec90b0ef48721b4e23fa0d1d7701f114969ce6be8beeefb3585092a017d115a"
+      },
+      "checkedCandidates": 8,
+      "variant": "two-roots"
+    }
+  ],
+  "checks": [
+    "Current7source hashes match frozen producer start/end.",
+    "All4actualgenerated Save/cold cases and exported branches revalidated; source target/neural memberships independently counted.",
+    "Native/adapter proof files match source-bound case histories/endpoints and account2requests per accepted native action plus separate logical STOP.",
+    "Dirty debris/fluid useful branches never qualify; clean residual STOP/completed endpoints stay distinct.",
+    "Both physical roots share anatomy/policy/window and have distinct declared entry/work geometries; actual18/10target and1/0neural outcomes.",
+    "Global wall-overrun corruption rejects every case; earlier global-cap/reserve/typed-count probes also reject.",
+    "All checked nodes plus initialSTOP are tied to complete qualified root/search evidence by finalstate/program/endpoint hashes before display limits.",
+    "Bounds\u2192target\u2192componentwise neural/structure\u2192supported exposures\u2192preparation/bone/time; arithmetic opposing effects stay unresolved under reordering/renaming.",
+    "Same-state distinct programs preserve distinct candidate/branch IDs; common candidate_branch_id helper inspected.",
+    "Cold stage readout uses source bone membership, native membrane-extraction ancestry and whole-tool exterior without inventing execution permissions.",
+    "Patient/inspection admission preserved; exact synthetic transport checks precede generated-source reconstruction.",
+    "Oldv1/v2 bytes stay historical; public DTO cannot promote them to current recommendations."
+  ],
+  "findings": [
+    {
+      "evidence": {
+        "path": "testcases/canonical-endpoint-control-v1/independent-planning-review/cold-global-budget-recheck.json",
+        "sha256": "d99d2730f9b8e484519aa032f169bf5c0a053de245789562d4123c0eb0a375ba"
+      },
+      "status": "fixed/reprobed",
+      "topic": "Global cold-budget binding"
+    },
+    {
+      "evidence": {
+        "path": "testcases/canonical-endpoint-control-v1/independent-planning-review/cold-omitted-unshown-proof.json",
+        "sha256": "149e2e49511d72607e804985c8a2012fa13974d700706a64adc17dd089d7da80"
+      },
+      "status": "fixed/reprobed",
+      "topic": "Unshown candidate omission"
+    },
+    {
+      "evidence": {
+        "path": "testcases/canonical-endpoint-control-v1/independent-planning-review/arithmetic-probes.json",
+        "sha256": "8a7bede26699a70921b5872fcc3dca3003225894017376399c5542b2f2254833"
+      },
+      "status": "fixed/helper+regression inspected",
+      "topic": "Same-state program/branch identity"
+    }
+  ],
+  "independentVerification": {
+    "path": "testcases/canonical-endpoint-control-v1/independent-planning-review/frozen-verification.json",
+    "sha256": "36e66bd5d35ae46c918b79088ab4e7f87d9b7bb57903909f5f7dee42dd928124"
+  },
+  "limitations": [
+    "Two actual roots use distinct entry/work geometries over one bone window, not two verified craniotomy windows; translated-window negative attempt stays separate.",
+    "Vascular/structural opposing-effect priority is arithmetic fixture evidence, not physical vascular or clinical functional validation.",
+    "Fluid case supplies1mm3 nonbleeding reservoir under existing native fields; unsupported irrigation refusal is separate retained evidence.",
+    "Independent review revalidated saved sources/memberships/proof joins/cold readouts; producer executed literal native/adapter replays, without another duplicate1984-request review campaign.",
+    "Generated-only; acquired holds and functional/physics/training unknowns remain. Ordinary hiddenUI Generate and learned packet/replay have separate final verification."
+  ],
+  "openMaterialBlockers": [],
+  "optimizerUpdates": 0,
+  "passed": true,
+  "physicalEvidence": {
+    "independentAdditionalPhysicalRequests": 0,
+    "logicalAdapterStops": 12,
+    "onlineRequests": 2270,
+    "verificationRequests": 1984,
+    "verificationSeconds": 297.6500757499598
+  },
+  "producerSummary": {
+    "path": "testcases/canonical-endpoint-control-v1/canonical-freeze-v1/summary.json",
+    "sha256": "062ad547806d17aebfc898f5dfed60d93863cc8be4859f3a0b2561f3a60fb67c"
+  },
+  "reviewedUtc": "2026-11-16T21:24:12.384666+00:00",
+  "reviewer": "Independent /root/source_packet; no root source edits",
+  "schema": "resectionlab.independent-canonical-planning-review.v1",
+  "scope": "Generated canonical endpoint/full-forest recommendation and source-bound cold validation",
+  "sourceHashes": {
+    "scripts/generated_cranial_demo_case.py": "705381ead8db013ca267c8f241c974e80f8990d74cde1117e895693039dac005",
+    "scripts/verify_canonical_endpoints.py": "b44789410e76cf0d39237baa20bf45945b780de5ac3a7e268d9f10224f7ffaa4",
+    "src/resectionlab/surgical_consequences.py": "46bc832521d29fdac4afdbe6ccbb7858206645cc8b8cb51a03b08c834a2113be",
+    "src/resectionlab/surgical_cranial_planning.py": "37d5ea4156db0f71bdaa9cc554af7b6ae1ce0a85a57843a0c6ac351db4540f0a",
+    "src/resectionlab/surgical_joint_cranial_forest.py": "36c0285151e0ec89c4eb153daa4867380019a2899c27008bccc6d46074a10493",
+    "src/resectionlab/surgical_joint_cranial_search.py": "9ec1ef64184edd1b9f9e238ea56835472664439232c0845b8890894f0ef44aaf",
+    "src/resectionlab/surgical_sequential_task.py": "55645d240bc2e5f2b00b8d4c18ee9ca60b81b2c7612211d51e0f428a51d6050a"
+  },
+  "tests": [
+    "Frozen producer4variants passed/codeStable.",
+    "Root173focused Python passed447.33s;25reference passed49.04s;14renderer+tsc passed.",
+    "Independent all-source/count/cold/proof joins and bounded corruption probes passed;0additional physical requests."
+  ]
+}

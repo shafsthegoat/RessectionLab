@@ -71,6 +71,8 @@ class SurgicalScene:
         self._original_target_proof = None
 
     def require_cache_source(self):
+        from .surgical_planning_admission import validate_source_binding
+        validate_source_binding(self)
         arrays = (self.labels, self.affine, self.inverse, self.spacing)
         if (self.identity != self._cache_identity or self.voxel_mm3 != self._cache_voxel_mm3 or any(
                 current is not original or current.shape != shape or current.dtype.str != dtype or current.strides != strides
@@ -200,6 +202,18 @@ def from_case(case, mapping=None):
     affine = case.affine.copy()
     if case.frame == 'LPS+': affine = np.diag([-1., -1., 1., 1.]) @ affine
     cranial_source = {}
+    procedure_adapter = thaw_json(case.metadata).get('surgical_adapter') or {}
+    if 'surgicalProcedurePolicyV1' in properties or procedure_adapter.get('type') == 'generated-engineering-control':
+        generated_refs = bool(case.source_refs) and all(ref.provenance == 'simulated' and
+            ref.uri.startswith('synthetic://') for ref in case.source_refs)
+        cranial_source['procedurePolicySourceClass'] = 'generated-engineering' if generated_refs else 'acquired-or-unknown'
+    if 'surgicalProcedurePolicyV1' in properties:
+        # The procedure declaration is metadata, hence part of caseHash. Bind
+        # the complete case before that declaration to avoid a hash cycle while
+        # retaining image pixels, masks, acquisition references and assumptions.
+        procedure_base = case.to_manifest(include_hash=False)
+        procedure_base['metadata']['surgical_properties'].pop('surgicalProcedurePolicyV1')
+        cranial_source['procedurePolicyBaseCaseHash'] = semantic_digest(procedure_base)
     declarations = [name for name in ('cranialAccessV1', 'cranialMillingV1') if name in properties]
     if declarations:
         # The contract is stored in metadata, which also contributes to the
@@ -223,6 +237,11 @@ def from_case(case, mapping=None):
            if 'working_grid_refinement' in case.metadata else {})}, properties)
     _bind_original_target_memberships(scene, {r['name']: immutable_array(
         np.flatnonzero(masks[r['name']]), np.int64) for r in regions if r.get('target')})
+    from .surgical_planning_admission import bind_case_source
+    bind_case_source(scene, case)
+    if 'recordedSequentialEpisodeV1' in case.metadata:
+        from .surgical_recorded_sequential import restore_recorded_source
+        return restore_recorded_source(case, scene, mapping)
     return scene
 
 
@@ -259,6 +278,8 @@ def propagate_original_target_memberships(source, target):
             and np.array_equal(target.affine, source.affine)
             and target.source.get('annotationHashes') == source.source.get('annotationHashes')):
         _bind_original_target_memberships(target, retained)
+    from .surgical_planning_admission import propagate_source_binding
+    propagate_source_binding(source, target)
     return target
 
 
@@ -274,6 +295,6 @@ def engineering_scene():
                (2, 'Block Q', 'soft_tissue', '#c799b0'), (3, 'Insert 9', 'tumor', '#db6b95'),
                (4, 'Sheet A', 'membrane', '#82c8d8'), (5, 'Strand B', 'vessel', '#e7645c')]]
     from .surgical_effects import fixture_properties
-    return SurgicalScene(labels, np.eye(4), regions, {'caseId': 'instrument-engineering-fixture',
+    return SurgicalScene(labels, np.eye(4), regions, {'caseId': 'instrument-engineering-fixture', 'evidenceClass': 'generated-engineering',
         'provenance': 'explicit generated engineering geometry; not patient anatomy'},
         fixture_properties(labels))

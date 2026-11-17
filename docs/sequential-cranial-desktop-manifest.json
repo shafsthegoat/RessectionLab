@@ -1,0 +1,428 @@
+{
+  "schema": "resectionlab.sequential-cranial-desktop-index.v1",
+  "generatedOnly": true,
+  "clinicalValidation": false,
+  "protocol": {
+    "source": "Generated closed-shell post-scalp native case; earlier scalp costs unknown",
+    "geometry": "Independent superior entry, source-owned immutable opening root and central/lateral target-work proposals",
+    "motorMeaning": "Independently supplied stylized overlapping source memberships and direct removal/cut incidence only; motor encounter and functional effects unavailable",
+    "sharedConfigHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+    "nativePhysicalActionsPerAlternative": 128,
+    "checkedAdapterStopAttempts": 1,
+    "maximumEndpointFluidMm3": 0,
+    "maximumEndpointDebrisMm3": 0,
+    "residentCppProcedureExecution": false
+  },
+  "resultRows": [
+    {
+      "neuralLimitMm3": 0.0,
+      "policyHash": "sha256:f8b3fcfa524bff97cfd4eea9a80665701e7c427acf297b7942746024dcc39e45",
+      "selected": true,
+      "branchId": "cranial-superior-opening-45c3fe502394af97",
+      "nativeActions": 128,
+      "targetMm3": 10.0,
+      "residualMm3": 17.0,
+      "neuralMm3": 0.0,
+      "boneMm3": 285.0,
+      "preparationMm3": 49.0,
+      "modeledSeconds": 100.27987067514908,
+      "structureRemovedMm3": {
+        "brainstem": 0.0,
+        "cerebellum": 0.0,
+        "supratentorial-neural": 0.0,
+        "motor-cortex": 0.0,
+        "corticospinal-tract": 0.0
+      },
+      "cleanup": {
+        "debrisPresentMm3": 0.0,
+        "debrisRemovedMm3": 235.99999999999991,
+        "fluidPresentMm3": 0.0,
+        "activeBleedingSources": 0
+      },
+      "endpoint": {
+        "schema": "resectionlab.sequential-task-config.v1",
+        "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+        "completedTask": false,
+        "completeOriginalTargetRemoval": false,
+        "validWithdrawal": true,
+        "cleanupComplete": true,
+        "pending": [],
+        "fluidMm3": 0,
+        "debrisMm3": 0.0,
+        "classification": "valid-stop-with-residual",
+        "terminated": true,
+        "truncated": false,
+        "clinicalValidation": false,
+        "progressSummary": {
+          "targetBasis": "original_annotation",
+          "originalTargetCells": 27,
+          "creditedOriginalTargetCells": 10,
+          "residualOriginalTargetCells": 17,
+          "originalTargetTreatmentFraction": 0.37037037037037035,
+          "zonesReachingRequiredOriginalFraction": 3
+        }
+      }
+    },
+    {
+      "neuralLimitMm3": 1.0,
+      "policyHash": "sha256:b6ca7ed1a987180d8e4a44449cbe2406f0d14e529fd79944e8a35178c79268a7",
+      "selected": true,
+      "branchId": "cranial-superior-opening-558583c429934d62",
+      "nativeActions": 128,
+      "targetMm3": 18.0,
+      "residualMm3": 9.0,
+      "neuralMm3": 1.0,
+      "boneMm3": 285.0,
+      "preparationMm3": 49.0,
+      "modeledSeconds": 100.27499999999884,
+      "structureRemovedMm3": {
+        "brainstem": 0.0,
+        "cerebellum": 0.0,
+        "supratentorial-neural": 1.0,
+        "motor-cortex": 1.0,
+        "corticospinal-tract": 1.0
+      },
+      "cleanup": {
+        "debrisPresentMm3": 0.0,
+        "debrisRemovedMm3": 235.99999999999991,
+        "fluidPresentMm3": 0.0,
+        "activeBleedingSources": 0
+      },
+      "endpoint": {
+        "schema": "resectionlab.sequential-task-config.v1",
+        "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+        "completedTask": true,
+        "completeOriginalTargetRemoval": false,
+        "validWithdrawal": true,
+        "cleanupComplete": true,
+        "pending": [],
+        "fluidMm3": 0,
+        "debrisMm3": 0.0,
+        "classification": "successful-treatment",
+        "terminated": true,
+        "truncated": false,
+        "clinicalValidation": false,
+        "progressSummary": {
+          "targetBasis": "original_annotation",
+          "originalTargetCells": 27,
+          "creditedOriginalTargetCells": 18,
+          "residualOriginalTargetCells": 9,
+          "originalTargetTreatmentFraction": 0.6666666666666666,
+          "zonesReachingRequiredOriginalFraction": 6
+        }
+      }
+    },
+    {
+      "neuralLimitMm3": 1.0,
+      "policyHash": "sha256:b6ca7ed1a987180d8e4a44449cbe2406f0d14e529fd79944e8a35178c79268a7",
+      "selected": false,
+      "branchId": "cranial-superior-opening-dd316a7e010b05ce",
+      "nativeActions": 128,
+      "targetMm3": 10.0,
+      "residualMm3": 17.0,
+      "neuralMm3": 0.0,
+      "boneMm3": 285.0,
+      "preparationMm3": 49.0,
+      "modeledSeconds": 100.27987067514908,
+      "structureRemovedMm3": {
+        "brainstem": 0.0,
+        "cerebellum": 0.0,
+        "supratentorial-neural": 0.0,
+        "motor-cortex": 0.0,
+        "corticospinal-tract": 0.0
+      },
+      "cleanup": {
+        "debrisPresentMm3": 0.0,
+        "debrisRemovedMm3": 235.99999999999991,
+        "fluidPresentMm3": 0.0,
+        "activeBleedingSources": 0
+      },
+      "endpoint": {
+        "schema": "resectionlab.sequential-task-config.v1",
+        "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+        "completedTask": false,
+        "completeOriginalTargetRemoval": false,
+        "validWithdrawal": true,
+        "cleanupComplete": true,
+        "pending": [],
+        "fluidMm3": 0,
+        "debrisMm3": 0.0,
+        "classification": "valid-stop-with-residual",
+        "terminated": true,
+        "truncated": false,
+        "clinicalValidation": false,
+        "progressSummary": {
+          "targetBasis": "original_annotation",
+          "originalTargetCells": 27,
+          "creditedOriginalTargetCells": 10,
+          "residualOriginalTargetCells": 17,
+          "originalTargetTreatmentFraction": 0.37037037037037035,
+          "zonesReachingRequiredOriginalFraction": 3
+        }
+      }
+    }
+  ],
+  "searchCosts": [
+    {
+      "neuralLimitMm3": 0.0,
+      "cost": {
+        "physicalCalls": 385,
+        "previewCalls": 129,
+        "directStepCalls": 256,
+        "wallSeconds": 34.85132020898163,
+        "maxPhysicalCalls": 1800,
+        "maxWallSeconds": 240.0,
+        "exportReplayReserveCalls": 350,
+        "scope": "All opening roots, rejected/discarded calls and export replay; no reset between roots.",
+        "roots": {
+          "superior-opening": {
+            "maxPhysicalCalls": 1800,
+            "physicalCalls": 385,
+            "remainingPhysicalCalls": 1415,
+            "previewCalls": 129,
+            "directStepCalls": 256
+          }
+        }
+      },
+      "completeTraceArtifact": {
+        "path": "testcases/overnight-sequential-v1/desktop/generated-v7/harm-0/comparison-report.json",
+        "sha256": "0fdf0656577e524b1e2e0e0784fe655f587c917052ef21bcdb1f61337092d627"
+      }
+    },
+    {
+      "neuralLimitMm3": 1.0,
+      "cost": {
+        "physicalCalls": 522,
+        "previewCalls": 133,
+        "directStepCalls": 389,
+        "wallSeconds": 48.84249525004998,
+        "maxPhysicalCalls": 1800,
+        "maxWallSeconds": 240.0,
+        "exportReplayReserveCalls": 350,
+        "scope": "All opening roots, rejected/discarded calls and export replay; no reset between roots.",
+        "roots": {
+          "superior-opening": {
+            "maxPhysicalCalls": 1800,
+            "physicalCalls": 522,
+            "remainingPhysicalCalls": 1278,
+            "previewCalls": 133,
+            "directStepCalls": 389
+          }
+        }
+      },
+      "completeTraceArtifact": {
+        "path": "testcases/overnight-sequential-v1/desktop/generated-v7/harm-1/comparison-report.json",
+        "sha256": "e21260095ba59e9b954105f6aea3dc86002d093ffbc8c5422dbdacbc9faca750"
+      }
+    }
+  ],
+  "artifacts": {
+    "hidden-warm-v2": {
+      "path": "testcases/overnight-sequential-v1/desktop/hidden-warm-v2/report.json",
+      "sha256": "1fff523f09415eaecfdf1ae6af344ce692221b0d8cefb6b2fcdf7c3bfac3b398",
+      "passed": true,
+      "windowEverVisible": false,
+      "engineTermination": {
+        "exitCode": 0,
+        "signal": null
+      },
+      "savedPath": "testcases/overnight-sequential-v1/desktop/hidden-warm-v2/desktop-saved.ressectionlab",
+      "savedSha256": "e2273fbcb7574a200baa01dfc860be356000e4b5528b9c15d0d492a0616f31de"
+    },
+    "frozen-cold-v2": {
+      "path": "testcases/overnight-sequential-v1/desktop/frozen-cold-v2/report.json",
+      "sha256": "ee0bd2d05d70728566a53fdac2b87eebd09dc0b954d8867de27ae4fa04af818e",
+      "runIdentityPath": "testcases/overnight-sequential-v1/desktop/frozen-cold-v2/run-identity.json",
+      "runIdentitySha256": "7d63a2725e48b432dd36435cff13df024605e730cd304912767ab8bbd7181f62",
+      "implementationCommit": "3872c99fdc93b73d16143b6058818eca20ef4bfb",
+      "codeBindingsSha256": "b705f584ef83c5c3cab2c5932ab50c6eeac1a717870d760dc1591315b44f76a8",
+      "passed": true,
+      "requireFrozenCode": true,
+      "codeStable": true,
+      "windowEverVisible": false,
+      "engineTermination": {
+        "exitCode": 0,
+        "signal": null
+      },
+      "savedPath": "testcases/overnight-sequential-v1/desktop/frozen-cold-v2/desktop-saved.ressectionlab",
+      "savedSha256": "77c8bf121d3b7aca6b0410d2692f7ddec9f5936ea5901c197cc805393905ec10"
+    },
+    "frozen-harm0-v2": {
+      "path": "testcases/overnight-sequential-v1/desktop/frozen-harm0-v2/report.json",
+      "sha256": "65cce63641cc4925c9dd47fc9f4957d18d580bc16e1a84d85421be2758b64de2",
+      "runIdentityPath": "testcases/overnight-sequential-v1/desktop/frozen-harm0-v2/run-identity.json",
+      "runIdentitySha256": "03e5009f8105feda0e81034fc2de1289003b7a1e2e8560ddcbe801a430cedf2d",
+      "implementationCommit": "3872c99fdc93b73d16143b6058818eca20ef4bfb",
+      "codeBindingsSha256": "b705f584ef83c5c3cab2c5932ab50c6eeac1a717870d760dc1591315b44f76a8",
+      "passed": true,
+      "requireFrozenCode": true,
+      "codeStable": true,
+      "windowEverVisible": false,
+      "engineTermination": {
+        "exitCode": 0,
+        "signal": null
+      },
+      "savedPath": "testcases/overnight-sequential-v1/desktop/frozen-harm0-v2/desktop-saved.ressectionlab",
+      "savedSha256": "827059f11eb0d3316c16e18bb24b4985872f41265322d5d54bca181f810a38d2"
+    }
+  },
+  "openCommand": "./scripts/launch_poc.sh --case \"$PWD/testcases/overnight-sequential-v1/desktop/frozen-cold-v2/desktop-saved.ressectionlab\"",
+  "generateCommand": "PYTHONPATH=src .venv/bin/python scripts/demonstrate_sequential_cranial.py --generated-only --output testcases/overnight-sequential-v1/desktop/fresh-generated-v1",
+  "hiddenCommand": "CRANIAL_DEMO_CASE=\"$PWD/testcases/overnight-sequential-v1/desktop/generated-v7/harm-1/comparison.ressectionlab\" CRANIAL_DEMO_OUTPUT=\"$PWD/testcases/overnight-sequential-v1/desktop/fresh-hidden-warm-v1\" desktop/node_modules/.bin/electron desktop/electron/verify-sequential-cranial.cjs",
+  "visualEvidence": [
+    "testcases/overnight-sequential-v1/desktop/frozen-cold-v2/02-checked-alternatives.png",
+    "testcases/overnight-sequential-v1/desktop/frozen-cold-v2/plan-1-physical-replay-frame.png",
+    "testcases/overnight-sequential-v1/desktop/frozen-cold-v2/plan-2-physical-replay-frame.png",
+    "testcases/overnight-sequential-v1/desktop/frozen-harm0-v2/04-checked-refusals.png"
+  ],
+  "focusedValidation": [
+    "Python cranial geometry/cold tamper:2 passed",
+    "Structure-aware cranial planning + geometry pre-final metadata:13 passed",
+    "Renderer/data/panel focused checks:13 passed",
+    "Viewer exact path/overlap/disposal checks:3 passed",
+    "Final compact display: 13 renderer/data/panel checks and 3 viewer path/overlap/disposal checks passed; TypeScript/Vite build passed."
+  ],
+  "sourceModuleReview": [
+    "Geometry is regenerated from cold-validated immutable source/accepted action chains; refreshing seals cannot replace remeasurement.",
+    "Only accepted complete paths and native single-stroke contact-dwell prefixes are drawn; other partial geometry is omitted.",
+    "Tool placement jumps are omitted from route overlays. Real observed native frames provide animation.",
+    "Exact source memberships and target/residual source IDs are retained; display points cap at 4096 per mask without changing native limits.",
+    "Edited/unbound source, policy, branch and accepted-state views cannot retain recorded guides.",
+    "Unknown functional/encounter endpoints remain unavailable. Overlapping direct structure quantities are never summed as neural volume."
+  ],
+  "limitations": [
+    "Generated coupon only; no acquired procedure or clinical functional-risk claim.",
+    "Two alternatives share one checked opening/preparation and differ in actual CUSA geometry; no third alternative is claimed.",
+    "Task success is 50%+three octants under the shared config; complete original target removal remains false.",
+    "Training/greedy/search comparisons belong to the separate post-access benchmark."
+  ],
+  "additionalVerificationCost": {
+    "adapterPrimitiveTransitions": 384,
+    "adapterCheckedStopAttempts": 3,
+    "uncachedColdNativeReplaySteps": 384,
+    "scope": "Additional verification beyond the 385/522 comparison physical-call ledgers; all three retained sequences are independently replayed through adapter and cold native engine."
+  },
+  "changedPaths": [
+    "desktop/electron/verify-sequential-cranial.cjs",
+    "desktop/src/CranialStrategiesPanel.tsx",
+    "desktop/src/cranial-workflow-data.ts",
+    "desktop/src/cranial-recorded-geometry.ts",
+    "desktop/src/interactive-planning-data.ts",
+    "desktop/src/styles.css",
+    "desktop/src/use-surgical.ts",
+    "desktop/src/viewer/ViewerWorkspace.tsx",
+    "desktop/src/viewer/VolumeRenderer.ts",
+    "desktop/src/viewer/interactivePlanningGeometry.ts",
+    "desktop/src/viewer/surgicalRenderer.test.mjs",
+    "desktop/tests/cranial-recorded-geometry.test.mjs",
+    "scripts/generated_cranial_demo_case.py",
+    "scripts/demonstrate_sequential_cranial.py",
+    "src/resectionlab/surgical_cranial_geometry.py",
+    "src/resectionlab/surgical_cranial_planning.py",
+    "tests/test_surgical_cranial_geometry.py",
+    "docs/sequential-cranial-desktop-manifest.json"
+  ],
+  "generationSourceCommit": "8a69c88493cd4076c52685336705344065a33eb9",
+  "implementationCommit": "3872c99fdc93b73d16143b6058818eca20ef4bfb",
+  "generationSummary": {
+    "path": "testcases/overnight-sequential-v1/desktop/generated-v7/summary.json",
+    "sha256": "a2608d4bc92b58d4a512813e795f37dbc06269bc5f53b1187034633742006645"
+  },
+  "compactness": "Full native actions, voxel memberships and per-call search traces remain in the hash-bound ignored artifacts. This index retains every result row and scalar cost summary.",
+  "frozenVerificationCommit": "3872c99fdc93b73d16143b6058818eca20ef4bfb",
+  "frozenCodeBindings": {
+    "src/resectionlab/surgical_engine.py": "70bb2cca5e9bc993e00843a39c9a4252a49fe8fdf643c4d0eb78ac740b3bc038",
+    "src/resectionlab/surgical_scene.py": "c5d2a55c57a07ddba6c4b86c88b7dcd886500a7cf0e53ba14bfc5b3855e4b66c",
+    "src/resectionlab/surgical_procedure_policy.py": "22f43c971f3eaeffb4328eff2c12ec7f8d2b42fded294c932619a5ab14a4ce4f",
+    "src/resectionlab/surgical_planning_admission.py": "0aeb039e458260f5e06a27d2e4e278a47578ce8e72a9f6133493d4e08d42c330",
+    "src/resectionlab/surgical_consequences.py": "75bafa6a5f93b6ab2f9a2bc8bd0d4eaad32b7a3afca625da7efc034dee9298ef",
+    "src/resectionlab/surgical_cranial_planning.py": "16f851383e44fd8a1ab3187ebb4ecf137df8152181b0992e1e300954af831b73",
+    "src/resectionlab/surgical_cranial_geometry.py": "13dd3b70a2e39b4bedb4d8bc34b510cb1c5ad614750efb8b8860cef6ad429a40",
+    "src/resectionlab/surgical_sequential_task.py": "175a6c22137ec86742e0156ca1a8d5dfb088bdfb0c97fb9873bfe2822dc083d3",
+    "src/resectionlab/surgical_rl_env.py": "ac4aa96e8f0b9b309c13feed64e1594e99b12fbd3b049916e31613b24eaebf57",
+    "src/resectionlab/surgical_bridge.py": "91be4d440c0746cf499e71cf371387dec51459389257d75b2252ef85fdb5f5b5",
+    "src/resectionlab/surgical_sequence_outcomes.py": "1f7c9d7ecc79d6bb8425bd09c37b59812db684ed81b2b234f72d3698b33449ca",
+    "desktop/electron/main.cjs": "f75709fc161a84a9d281122e5057becdc07d6d1cc7cf8fbc5a864e09fb334108",
+    "desktop/electron/preload.cjs": "9ac9998756baac30944a48d5e9f6481d726315111f9d32a9a825e37dd0137f33",
+    "desktop/electron/sidecar.cjs": "731362563043cfab3ce35369aa2f6e9da1386e08a6931268aa1ee7916fd32002",
+    "desktop/electron/verify-sequential-cranial.cjs": "a3eb07cd67a73ce78b23decc2ea36cc88abc02b486340fb945f6ef13192b8eb0",
+    "desktop/dist/index.html": "af1316a4c8b8e45fda8c64e3ef22fd5ecda37c29ad7fc16a1d1a474225d6f283",
+    "desktop/dist/assets/incrementalSurface.worker-C_8M3AWK.js": "ecc32fa0f86cfee5a9ed52e15957129d9fd01ad0a2114637803e65817784d3e2",
+    "desktop/dist/assets/index-CZCzluTT.css": "3ff5cd9a8dc9c39776630abe7d128dd5d79b701226383ce7fedd5df6731747c1",
+    "desktop/dist/assets/index-affnnMzE.js": "3ea64749891ca7a384f0cf3bb346632ce1a64aa3d4472ece4876d6e578230b6e",
+    "desktop/dist/assets/labelPacking.worker-B9d7FlLL.js": "a8971e96fa942ddf75f29f3d3c08d1034608cfea1fc50dee239e1b314be8205a",
+    "desktop/dist/assets/sourcePickingBvh.worker-DycEjoGd.js": "16f67b463bfdd5a9609a3c0b6775b81212ded8e1f907a2b75ab7e5aa215f2866",
+    "desktop/dist/assets/surface.worker-C9u5xXVU.js": "bc2f39e874ecbdf4f52475af9064292d5dd2d064efda726826581425a0362010"
+  },
+  "frozenCodeBindingsSha256": "b705f584ef83c5c3cab2c5932ab50c6eeac1a717870d760dc1591315b44f76a8",
+  "frozenColdCommand": "CRANIAL_DEMO_CASE=\"$PWD/testcases/overnight-sequential-v1/desktop/hidden-warm-v2/desktop-saved.ressectionlab\" CRANIAL_DEMO_OUTPUT=\"$PWD/testcases/overnight-sequential-v1/desktop/fresh-frozen-cold-v2\" CRANIAL_DEMO_EXPECT_REPORT=\"$PWD/testcases/overnight-sequential-v1/desktop/hidden-warm-v2/report.json\" CRANIAL_DEMO_REQUIRE_FROZEN=1 desktop/node_modules/.bin/electron desktop/electron/verify-sequential-cranial.cjs",
+  "frozenHarm0Command": "CRANIAL_DEMO_CASE=\"$PWD/testcases/overnight-sequential-v1/desktop/generated-v7/harm-0/comparison.ressectionlab\" CRANIAL_DEMO_OUTPUT=\"$PWD/testcases/overnight-sequential-v1/desktop/fresh-frozen-harm0-v2\" CRANIAL_DEMO_MIN_ALTERNATIVES=1 CRANIAL_DEMO_REQUIRE_FROZEN=1 desktop/node_modules/.bin/electron desktop/electron/verify-sequential-cranial.cjs",
+  "frozenVerificationSummary": {
+    "allV7CasesReused": true,
+    "frozenRunsPassed": 2,
+    "codeIdentitiesPerRun": 22,
+    "bothAlternativeReplayInColdProcess": true,
+    "harm0NumericRefusalVisible": true,
+    "noPlanCommands": true,
+    "allOwnedHarnessAndEngineProcessesExited": true,
+    "viewerManualStagesVerified": 3,
+    "viewerOriginalImagesVerified": 6,
+    "rendererArtifactMatchesFrozenDesktopSource": true
+  },
+  "initialImplementationCommit": "4cddd05f6b0b69bb5742687513851504a830489c",
+  "priorFrozenEvidence": [
+    {
+      "name": "frozen-cold-v1",
+      "path": "testcases/overnight-sequential-v1/desktop/frozen-cold-v1/report.json",
+      "sha256": "da636abe2ead068314ebac5579d038b4acf7b8fcb306147f06de61a28f149606",
+      "runIdentityPath": "testcases/overnight-sequential-v1/desktop/frozen-cold-v1/run-identity.json",
+      "runIdentitySha256": "f286cbe0e32809c0031961cfa207eca5d9bc434a6ddc8f9f1ca543239a97166b",
+      "implementationCommit": "4cddd05f6b0b69bb5742687513851504a830489c",
+      "codeBindingsSha256": "67bef262ea2cf169e821311c44ee192260d39c1fa7ebd1665813c049a73129b3",
+      "passed": true,
+      "requireFrozenCode": true,
+      "codeStable": true,
+      "windowEverVisible": false,
+      "engineTermination": {
+        "exitCode": 0,
+        "signal": null
+      },
+      "savedPath": "testcases/overnight-sequential-v1/desktop/frozen-cold-v1/desktop-saved.ressectionlab",
+      "savedSha256": "5e0905de6947f11a3d777264ab509a6a47a98bdc5881c15400d6e7fa53fdad39"
+    },
+    {
+      "name": "frozen-harm0-v1",
+      "path": "testcases/overnight-sequential-v1/desktop/frozen-harm0-v1/report.json",
+      "sha256": "aca3920cd83be76e79799aed76be6c4505eefc50ebbb982655499a5edb9f0b86",
+      "runIdentityPath": "testcases/overnight-sequential-v1/desktop/frozen-harm0-v1/run-identity.json",
+      "runIdentitySha256": "1e861bb192e1e38c0352afca0368a85f39b2964996230c4657a5a5db11415523",
+      "implementationCommit": "4cddd05f6b0b69bb5742687513851504a830489c",
+      "codeBindingsSha256": "67bef262ea2cf169e821311c44ee192260d39c1fa7ebd1665813c049a73129b3",
+      "passed": true,
+      "requireFrozenCode": true,
+      "codeStable": true,
+      "windowEverVisible": false,
+      "engineTermination": {
+        "exitCode": 0,
+        "signal": null
+      },
+      "savedPath": "testcases/overnight-sequential-v1/desktop/frozen-harm0-v1/desktop-saved.ressectionlab",
+      "savedSha256": "ead0a9aa0d87ce5eb740cc2b415874811c4c475c7e15c47c2f2c77f843a0f10b"
+    }
+  ],
+  "localFrameViewer": {
+    "path": "testcases/overnight-sequential-v1/desktop/replay-viewer-v2.html",
+    "sha256": "8f0a831a2789c7058ebdcc3dfad464612c8a05f62d2b9020164205972e8c9dd5",
+    "metadataPath": "testcases/overnight-sequential-v1/desktop/replay-viewer-v2.json",
+    "metadataSha256": "48b94bae6f6976106ed8959d967503ee3d0a3467a73d0f710d24ab374b233f22",
+    "qaPath": "testcases/overnight-sequential-v1/desktop/replay-viewer-qa-v2/report.json",
+    "qaSha256": "59aef86dafa755968576eacd881d933927acdbbcd4af70f2bed6931c4016f234",
+    "implementationCommit": "3872c99fdc93b73d16143b6058818eca20ef4bfb",
+    "codeBindingsSha256": "b705f584ef83c5c3cab2c5932ab50c6eeac1a717870d760dc1591315b44f76a8",
+    "plans": 2,
+    "actualFramesPerPlan": 3,
+    "imageCopies": 0,
+    "automaticPlayback": false,
+    "hiddenQaPassed": true
+  }
+}

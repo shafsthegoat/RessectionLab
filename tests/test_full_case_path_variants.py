@@ -63,7 +63,7 @@ def prepared(*, collar=False, healthy=False):
         {'id': 1, 'name': 'healthy', 'material': 'soft_tissue'},
         {'id': 2, 'name': 'target', 'material': 'tumor', 'target': True},
         {'id': 3, 'name': 'bone', 'material': 'bone'},
-    ], {'kind': 'explicit-axial-path-engineering-fixture'}, {})
+    ], {'evidenceClass': 'generated-engineering', 'kind': 'explicit-axial-path-engineering-fixture'}, {})
     engine = SurgicalEngine(scene)
     for a in [
         {'operation': 'exchange', 'instrument': 'cusa'},
@@ -91,6 +91,10 @@ def meta_with_candidates(monkeypatch, engine, actions, stage):
 
 
 def preview_count(engine, proposed):
+    # Count Python substeps on a detached authority control. A resident C++
+    # trajectory correctly emits no Python _substep profile events.
+    engine = engine.clone()
+    engine._native_disabled = 'python-substep-profile-control'
     calls = []
     previous = sys.getprofile()
     def profile(frame, event, _arg):

@@ -260,6 +260,8 @@ def _source_row(engine, record):
 def continue_precision_reentry(engine, record, *, acknowledge_unknowns=False,
                                check=lambda: None, progress=lambda *_: None):
     """One bounded continuation; original approach baseline never resets."""
+    from .surgical_planning_admission import require_planning_admission
+    require_planning_admission(engine)
     if acknowledge_unknowns is not True:
         raise ValueError('Explicit acknowledgment of unsupported anatomy is required')
     if 'precisionPlanning' in record:

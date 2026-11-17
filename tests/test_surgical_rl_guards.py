@@ -14,7 +14,7 @@ def fragment_env(displacement_limit=0.):
     labels = np.zeros((50, 50, 50), np.uint16)
     labels[10:30, 20, 20] = 1
     scene = SurgicalScene(labels, np.eye(4), [dict(id=1, name='Engineering target',
-        material='tumor', target=True)], {}, dict(attachments=[]))
+        material='tumor', target=True)], {'kind': 'generated-control'}, dict(attachments=[]))
     mask = np.zeros(scene.shape, bool)
     mask[29, 20, 20] = True
     protection = ProtectionSet(scene, [ProtectionAnnotation.from_mask(scene, 'brainstem',

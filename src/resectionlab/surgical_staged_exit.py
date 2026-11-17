@@ -496,6 +496,8 @@ def recover_checked_cusa(engine, *, check=lambda: None):
     The last actual outside placement supplies the route. No caller-provided
     endpoint, anatomy baseline, or guard override enters this operation.
     """
+    from .surgical_planning_admission import require_planning_admission
+    require_planning_admission(engine)
     import time
     from .core import semantic_digest
     from .surgical_sector_planning import _cleanup_pending

@@ -21,7 +21,7 @@ def source():
     return SurgicalScene(labels, np.diag([-1., 1., 1., 1.]), [
         {'id': 1, 'name': 'brain', 'material': 'soft_tissue'},
         {'id': 2, 'name': 'enhancing target', 'material': 'tumor', 'target': True}],
-        {'caseHash': 'generated native inventory fixture'}, {})
+        {'kind': 'generated-control', 'fixtureId': 'native inventory fixture'}, {})
 
 
 def record(scene):
@@ -61,7 +61,7 @@ def _current_contact_coupon():
         labels[point]=1
     engine=SurgicalEngine(SurgicalScene(labels,np.eye(4),[
         {'id':1,'name':'target','material':'tumor','target':True}],
-        {'kind':'generated current-contact scoring coupon'},{}))
+        {'kind':'generated-control','fixtureId':'current-contact scoring coupon'},{}))
     pose=lambda point:{'position':list(point),'quaternion':[0.,0.,0.,1.]}
     for action in (
         {'slot':'left','operation':'exchange','instrument':'cusa','duration':.1},
@@ -181,7 +181,7 @@ def _native_report():
     labels[6:9, 6:9, 6:9] = 1
     scene = SurgicalScene(labels, np.eye(4),
         [{'id': 1, 'name': 'target', 'material': 'tumor', 'target': True}],
-        {'kind': 'generated native report validation'}, {})
+        {'kind': 'generated-control', 'fixtureId': 'native report validation'}, {})
     engine = SurgicalEngine(scene)
     pose = lambda z: {'position': [6., 6., z], 'quaternion': [0., 0., 0., 1.]}
     route = {'sourceSceneId': scene.identity, 'pathType': 'oblique_mapped_brain',

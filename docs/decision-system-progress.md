@@ -1,5 +1,17 @@
 # Decision-system progress and next dependency
 
+The November 16 bounded harm milestone is on `shaf/structure-aware-harm-v1`,
+based on merged `main` at `19d532cf`. The new
+[supratentorial procedure contract](supratentorial-procedure-policy.md) connects
+source-bound permissions, separate neural/bone consequences, precommit hard
+budgets, the existing consequence comparator, canonical Generate and an
+evaluation-only RL adapter. Generated software controls demonstrate changed
+executable decisions and checked stopping with residual. Independent review and
+hidden Generate/Compare/Save/cold reopen are recorded under ignored
+`testcases/structure-aware-harm-v1/`. Acquired execution is unsupported pending
+trusted complete source coverage; zero patient tasks and all clinical/physics/RL
+qualification holds remain. Earlier progress below is historical.
+
 Primary checkout, branch `shaf/decision-system-v1`; historical implementation
 baseline `53c49019`. The live merge comparison on November 13 is 57 commits
 ahead of `origin/main` before closeout edits, at `ea8dbac2`.

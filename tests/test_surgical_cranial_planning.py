@@ -89,9 +89,11 @@ def test_one_unreviewed_source_proof_blocks_only_that_sibling_root(monkeypatch, 
     evidence = (roots[1]['openingContract']['evidence'] if where == 'opening' else
         roots[1]['sourceSnapshot']['cranialStagesContract']['evidence'])
     next(iter(evidence.values()))['status'] = 'unreviewed'
-    scene = SimpleNamespace(identity='base', regions=[], properties={})
+    from resectionlab.surgical_scene import SurgicalScene
+    scene = SurgicalScene(np.zeros((1, 1, 1), np.uint16), np.eye(4), [],
+        {'kind': 'generated-control'}, {})
     record = {'branchId': 'source', 'position': 0, 'branches': {
-        'source': {'sceneId': 'base', 'stateId': 'common', 'actions': []}},
+        'source': {'sceneId': scene.identity, 'stateId': 'common', 'actions': []}},
         planning.FIELD: {'roots': roots, 'branchRoots': {}}}
     dto = planning.cranial_planning_availability(scene, record)
     assert dto['available'] and dto['roots'][0]['available'] and not dto['roots'][1]['available']

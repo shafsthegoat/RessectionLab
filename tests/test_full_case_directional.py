@@ -33,7 +33,7 @@ def _engine(axis, *, barrier=None, protected=False, skull=True, spacing=(1., 1.,
         {'id': 5, 'name': 'vessel', 'material': 'vessel'},
         {'id': 7, 'name': 'target', 'material': 'tumor', 'target': True},
         {'id': 9, 'name': 'bone', 'material': 'bone'},
-    ], {'kind': 'explicit-directional-engineering-fixture'}, {})
+    ], {'evidenceClass': 'generated-engineering', 'kind': 'explicit-directional-engineering-fixture'}, {})
     if protected:
         cells = tuple(map(int, np.flatnonzero(scene.labels == 7)))
         annotation = ProtectionAnnotation('brainstem', cells, grid_binding(scene), 'explicit fixture only')
@@ -215,7 +215,7 @@ def _nearby_frontier(axis, blocker=None):
         {'id': 1, 'name': 'brain', 'material': 'soft_tissue'},
         {'id': 7, 'name': 'target', 'material': 'tumor', 'target': True},
         {'id': 9, 'name': 'bone', 'material': 'bone'},
-    ], {'kind': 'explicit-short-directional-fixture'}, {}))
+    ], {'evidenceClass': 'generated-engineering', 'kind': 'explicit-short-directional-fixture'}, {}))
     def point(depth, first=10, second=10):
         index = [first, second]; index.insert(axis, depth)
         return (affine[:3, :3] @ index + affine[:3, 3]).tolist()

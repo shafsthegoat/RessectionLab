@@ -57,6 +57,9 @@ def access_availability(engine):
     """Cheap necessary conditions; physical route viability is tested by execution."""
     scene = engine.scene
     reasons = []
+    from .surgical_planning_admission import planning_admission
+    plan_admission = planning_admission(engine.scene, engine.protection)
+    reasons.extend(b['code']+': '+b['message'] for b in plan_admission['blockers'])
     if engine.actions or engine.state['removed'] or engine.state['holds'] or any(
             s['inserted'] or s['active'] or s['grip'] for s in engine.state['slots'].values()):
         reasons.append('Compare access from an intact, withdrawn initial state.')
@@ -602,6 +605,8 @@ def compare_access_approaches(engine, *, acknowledge_unknowns=False,
                               max_actions_per_approach=48, max_healthy_removed_mm3=200.,
                               max_wall_seconds=120., check=lambda: None, progress=lambda *_: None):
     """Compare independent source directions and retain completed branches on timeout."""
+    from .surgical_planning_admission import require_planning_admission
+    require_planning_admission(engine)
     if acknowledge_unknowns is not True:
         raise ValueError('Explicitly acknowledge missing anatomy and uncalibrated simulation')
     if type(max_actions_per_approach) is not int or not 1 <= max_actions_per_approach <= 64:

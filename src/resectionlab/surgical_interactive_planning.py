@@ -156,6 +156,11 @@ def _defaults(engine, exposure):
 
 
 def interactive_planning_availability(engine):
+    from .surgical_planning_admission import planning_admission
+    source_admission = planning_admission(engine.scene, engine.protection)
+    if not source_admission['available']:
+        return {'available': False, 'reason': '; '.join(b['code']+': '+b['message'] for b in source_admission['blockers']),
+            'defaults': None, 'evidence': None, 'scope': _SCOPE}
     reasons = []
     admitted = admission(engine)
     if admitted is not None:
@@ -248,6 +253,8 @@ def _binding(engine):
 
 
 def generate_interactive_approaches(engine, constraints, *, check=lambda: None, progress=lambda *_: None):
+    from .surgical_planning_admission import require_planning_admission
+    require_planning_admission(engine)
     available = interactive_planning_availability(engine)
     if not available['available']:
         raise ValueError(available['reason'])

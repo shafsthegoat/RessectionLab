@@ -1,3 +1,4 @@
+import type {CranialSourceStructure} from './cranial-recorded-geometry';
 import type {Point3} from './viewer/coordinates';
 import type {SurgicalPose,SurgicalResponse,SurgicalView} from './surgical-types';
 export interface InteractivePlanningConstraints {
@@ -28,6 +29,7 @@ export function currentSourcePreflight(response:SurgicalResponse|null|undefined)
     report.sourceSceneId===response.view.scene.sceneId&&report.startStateId===response.view.stateId&&report.prefixActions===response.position?report:null;
 }
 export interface InteractivePlanningRoute {
+  pointsRasMm?:Point3[];selected?:boolean;colorIndex?:number;
   id:string;label:string;entryPose:SurgicalPose;targetPose:SurgicalPose;outsidePose:SurgicalPose;
   actionProgram:unknown[];metrics:Record<string,unknown>;separationComparisons?:Array<{routeId:string;entrySeparationMm:number;angleDeg:number}>;requiredTargetRemoval?:{sourceCells:number[];additionalNonTargetTraversalAllowedMm3:number;status:string};scope:string;
 }
@@ -40,6 +42,7 @@ export interface InteractivePlanningReport {
   missingRequiredEvidence?:string[];rejections:Array<Record<string,unknown>>;reportSeal:string;limitingStructures?:InteractivePlanningLimit[];
 }
 export interface InteractivePlanningOverlay {
+  recorded?:{comparisonSeal:string;geometrySeal:string;policyHash:string;selectedBranchId:string;structures:CranialSourceStructure[];targetPointsRasMm:Point3[];residualPointsRasMm:Point3[];scope:string};
   binding:string;constraints:InteractivePlanningConstraints;routes:InteractivePlanningRoute[];selectedId:string|null;
   limitingStructures:InteractivePlanningLimit[];
 }
@@ -77,7 +80,7 @@ export function planningOverlayForView(overlay:InteractivePlanningOverlay|null,r
 export const PLANNING_ROUTE_COLORS=['#70e0ff','#ffcf70','#caa1ff','#9beb9b','#ff94c2','#d3e7ef'];
 
 export function planningRoutePoints(route:InteractivePlanningRoute):Point3[]{
-  return [route.outsidePose.position,route.entryPose.position,route.targetPose.position];
+  return route.pointsRasMm??[route.outsidePose.position,route.entryPose.position,route.targetPose.position];
 }
 export interface PlanningSliceSegment {id:string;color:string;selected:boolean;points:[Point3,Point3]}
 /** Every shown segment intersects this MRI slab; full projected routes would imply false slice occupancy. */
@@ -91,10 +94,17 @@ export function planningSliceSegments(overlay:InteractivePlanningOverlay,axis:0|
       if(Math.abs(delta)<1e-12){if(Math.abs(a[axis]-position)>halfThickness)continue;}
       else {const t1=(position-halfThickness-a[axis])/delta,t2=(position+halfThickness-a[axis])/delta;low=Math.max(0,Math.min(t1,t2));high=Math.min(1,Math.max(t1,t2));if(low>high)continue;}
       const at=(t:number)=>a.map((n,j)=>j===axis?position:n+t*(b[j]-n)) as Point3;
-      out.push({id:`${route.id}:${i}`,color:PLANNING_ROUTE_COLORS[index%PLANNING_ROUTE_COLORS.length],selected:route.id===overlay.selectedId,points:[at(low),at(high)]});
+      out.push({id:`${route.id}:${i}`,color:PLANNING_ROUTE_COLORS[(route.colorIndex??index)%PLANNING_ROUTE_COLORS.length],selected:route.selected??route.id===overlay.selectedId,points:[at(low),at(high)]});
     }
   });return out;
 }
 export function planningSphereSliceRadius(center:Point3,radius:number,axis:0|1|2,position:number):number|null {
   const d=center[axis]-position;return Math.abs(d)<=radius?Math.sqrt(Math.max(0,radius*radius-d*d)):null;
+}
+
+export function declaredStructureColor(id:string):string {
+  return id==='motor-cortex'?'#65e6ff':(id==='corticospinal-tract'||id==='corticospinal')?'#c6a2ff':id==='brainstem'?'#ff6e80':id==='cerebellum'?'#ffbd6e':'#9beb9b';
+}
+export function planningSliceMemberships(overlay:InteractivePlanningOverlay,axis:0|1|2,position:number,halfThickness:number):Array<{id:string;label:string;positionMm:Point3;color:string;radiusPx:number}> {
+  return (overlay.recorded?.structures??[]).flatMap(s=>s.pointsRasMm.filter(p=>Math.abs(p[axis]-position)<=halfThickness).map((p,i)=>({id:`${s.id}:${i}`,label:`${s.label}: generated source membership`,positionMm:p,color:declaredStructureColor(s.id),radiusPx:s.id==='motor-cortex'?7:(s.id==='corticospinal-tract'||s.id==='corticospinal')?4:5})));
 }

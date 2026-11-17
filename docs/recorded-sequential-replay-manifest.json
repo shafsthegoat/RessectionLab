@@ -1,0 +1,515 @@
+{
+  "schema": "resectionlab.recorded-sequential-replay-delivery.v1",
+  "verificationCommit": "6e04f98c0ac512dc932dc2aaf993df9e9ebc561f",
+  "scope": "Generated supplied post-access continuation. Earlier opening/access costs unknown; no acquired operation or functional outcome.",
+  "caseHash": "sha256:e4fa4460d902d41a2812a10948252381c96ccd348fc9d6da4f839275d65d305f",
+  "sourceSceneId": "sha256:71f9b08892a681e71231437131ef5318d00cd09e3d93c28312f532f560ef3d1b",
+  "policyHash": "sha256:606a15f4de430cfec713f7d2a38be89154c0b46f9c489d93493d57e85994b175",
+  "configHash": "sha256:4445f613a00e3abb2c9490353471abc7f46c7992364e7cc4cf64bb08f3c97767",
+  "parent": 200,
+  "tier": "low",
+  "nativeCase": {
+    "path": "testcases/canonical-endpoint-control-v1/replay/hidden-cold-v3/desktop-saved.ressectionlab",
+    "sha256": "215722cb66b495cbc65705da786ab44847577f76cff40d918bc5529da0ddd9d9",
+    "bytes": 146630
+  },
+  "episodeIndex": {
+    "path": "testcases/canonical-endpoint-control-v1/replay/export-v3/episode-index.json",
+    "sha256": "d1e7571b5e48cbe0aa562ce99e87f6b651fbfcadd48d2cd8285650ce0acc77a5",
+    "bytes": 104859
+  },
+  "warmProof": {
+    "path": "testcases/canonical-endpoint-control-v1/replay/hidden-warm-v5/report.json",
+    "sha256": "ab74be634a2c5029f886583bcccac88d3b2b6cbeda84d88e53575ecfc2207e1a",
+    "bytes": 167392
+  },
+  "coldProof": {
+    "path": "testcases/canonical-endpoint-control-v1/replay/hidden-cold-v3/report.json",
+    "sha256": "838ac6c001d8d4017110cbad3caf47412cd2b7e64909f76927c1e5be5a2b4f92",
+    "bytes": 168492
+  },
+  "originalProtocol": {
+    "path": "/Users/shaf/coding_projects/RessectionLab/testcases/overnight-sequential-v1/benchmark-task-v2/protocol.json",
+    "sha256": "6a0399a9690d8fe8077568c07bc59d25ba14f3cb72a336fa71d1b83ff09f7ac0"
+  },
+  "originalFreeze": {
+    "path": "/Users/shaf/coding_projects/RessectionLab/testcases/overnight-sequential-v1/benchmark-task-v2/freeze.json",
+    "sha256": "85425f495007e4565161ebe2e6bb4613ed016ec12ef9a522f6afc64d151560f7"
+  },
+  "openCommand": "./scripts/launch_poc.sh --case \"$PWD/testcases/canonical-endpoint-control-v1/replay/hidden-cold-v3/desktop-saved.ressectionlab\"",
+  "episodes": [
+    {
+      "branchId": "recorded-learned-17",
+      "method": "learned",
+      "seed": 17,
+      "nativeActions": 14,
+      "actualPhysicalRequests": 14,
+      "actualRefusals": 0,
+      "targetMm3": 243.0,
+      "residualMm3": 0.0,
+      "neuralMm3": 0.0,
+      "structureRemovedMm3": {
+        "brainstem": 0.0,
+        "cerebellum": 0.0,
+        "corticospinal": 0.0,
+        "motor-cortex": 0.0
+      },
+      "endpoint": "successful-treatment",
+      "cleanup": {
+        "debrisMm3": 0.0,
+        "fluidMm3": 0,
+        "debrisCollectedMm3": 0.0
+      },
+      "onlineCost": {
+        "physicalCalls": 14,
+        "planningPhysicalCalls": 0,
+        "executionPhysicalCalls": 14,
+        "wallSeconds": 6.214045124826953,
+        "tier": {
+          "beam_width": 2,
+          "horizon": 2,
+          "max_expansions": 8,
+          "max_physical_calls": 56,
+          "max_wall_seconds": 25,
+          "name": "low"
+        },
+        "canceledRequests": 0,
+        "previewSkillAttempts": 0,
+        "previewRefusals": 0
+      },
+      "originalEpisode": {
+        "path": "/Users/shaf/coding_projects/RessectionLab/testcases/overnight-sequential-v1/benchmark-task-v2/results/low-200-learned-17.json",
+        "sha256": "fd8a9f8a54775fea292c80c014671726af26a9017abe75bddfdc17b88268fab7"
+      },
+      "checkpoint": {
+        "path": "/Users/shaf/coding_projects/RessectionLab/testcases/overnight-sequential-v1/benchmark-task-v2/checkpoints/17/selected.pt",
+        "sha256": "bfbffdac0cd2631542bf2de71647eab1604e72ac81f15f7424d7650768d9b79f",
+        "seed": 17,
+        "selectedUpdates": 192
+      },
+      "finalStateId": "sha256:7090fda7db1ea2712f4a0f6c0da074d6712cfc3fcdc7610f5c2f77abb23bd857",
+      "historyHash": "sha256:15d684bf28b19d31dc2f76e480f99abe2c6e5b6cd4f1903c8136d94b5676ee13",
+      "frames": [
+        {
+          "phase": "Work start",
+          "path": "testcases/canonical-endpoint-control-v1/replay/hidden-cold-v3/episode-1-work-start.png",
+          "sha256": "0d217f1501435c38bfca25533ccd751fa54e1f91b7f0dc88384fba717e904b96",
+          "bytes": 198863,
+          "branchId": "recorded-learned-17",
+          "stateId": "sha256:af685b2c9e204a04225d523dbfda0e75e37cdefcda7dc0a0a7211e6a1a9e760c",
+          "position": 2,
+          "interior": false
+        },
+        {
+          "phase": "Native interior",
+          "path": "testcases/canonical-endpoint-control-v1/replay/hidden-cold-v3/episode-1-interior.png",
+          "sha256": "183c882a098505c944584afa746a67fb4a5396325f61ec1e79831591cd6d64f8",
+          "bytes": 201334,
+          "branchId": "recorded-learned-17",
+          "stateId": "sha256:be17f31dfaca707b6b9255e0fa58524fee7d363d302bac540d2694d051b2dfa6",
+          "position": 2,
+          "interior": true
+        },
+        {
+          "phase": "Endpoint",
+          "path": "testcases/canonical-endpoint-control-v1/replay/hidden-cold-v3/episode-1-endpoint.png",
+          "sha256": "2c676069c8420931ca159a6a10ca83159a6ed55bd0e88eb919a9abf8906d2f15",
+          "bytes": 190371,
+          "branchId": "recorded-learned-17",
+          "stateId": "sha256:7090fda7db1ea2712f4a0f6c0da074d6712cfc3fcdc7610f5c2f77abb23bd857",
+          "position": 14,
+          "interior": false
+        }
+      ]
+    },
+    {
+      "branchId": "recorded-learned-43",
+      "method": "learned",
+      "seed": 43,
+      "nativeActions": 7,
+      "actualPhysicalRequests": 10,
+      "actualRefusals": 3,
+      "targetMm3": 27.0,
+      "residualMm3": 216.0,
+      "neuralMm3": 0.0,
+      "structureRemovedMm3": {
+        "brainstem": 0.0,
+        "cerebellum": 0.0,
+        "corticospinal": 0.0,
+        "motor-cortex": 0.0
+      },
+      "endpoint": "valid-stop-with-residual",
+      "cleanup": {
+        "debrisMm3": 0.0,
+        "fluidMm3": 0,
+        "debrisCollectedMm3": 0.0
+      },
+      "onlineCost": {
+        "physicalCalls": 10,
+        "planningPhysicalCalls": 0,
+        "executionPhysicalCalls": 10,
+        "wallSeconds": 4.64596112514846,
+        "tier": {
+          "beam_width": 2,
+          "horizon": 2,
+          "max_expansions": 8,
+          "max_physical_calls": 56,
+          "max_wall_seconds": 25,
+          "name": "low"
+        },
+        "canceledRequests": 0,
+        "previewSkillAttempts": 0,
+        "previewRefusals": 0
+      },
+      "originalEpisode": {
+        "path": "/Users/shaf/coding_projects/RessectionLab/testcases/overnight-sequential-v1/benchmark-task-v2/results/low-200-learned-43.json",
+        "sha256": "c422f9c6e674563b26978fb2f2c0cc9b76bcd4c95c0c1fc9e0253cca0e7ff0b6"
+      },
+      "checkpoint": {
+        "path": "/Users/shaf/coding_projects/RessectionLab/testcases/overnight-sequential-v1/benchmark-task-v2/checkpoints/43/selected.pt",
+        "sha256": "fb6fa0a3f56ab5eaa8c7524ebe1ad2d5a57d9ef0693ead0a98742ac2345c52d9",
+        "seed": 43,
+        "selectedUpdates": 96
+      },
+      "finalStateId": "sha256:43275b8edd2e5a9876f88eb4f6ef871df20832028d8c6917699812f9f780acbd",
+      "historyHash": "sha256:47800e072daaae6d7e84b61fa657c2191a6e02650a08b646ea3ecb028e5bb859",
+      "frames": [
+        {
+          "phase": "Work start",
+          "path": "testcases/canonical-endpoint-control-v1/replay/hidden-cold-v3/episode-2-work-start.png",
+          "sha256": "6dd51114e7defe93479155ee84542e43a141c814a1f3d66c83722e0d296cf562",
+          "bytes": 201620,
+          "branchId": "recorded-learned-43",
+          "stateId": "sha256:0952d6bcb92ab9f2aa053823b9ae49f56e3353dff1c0a9ae07715eb5c9cb78a7",
+          "position": 3,
+          "interior": false
+        },
+        {
+          "phase": "Native interior",
+          "path": "testcases/canonical-endpoint-control-v1/replay/hidden-cold-v3/episode-2-interior.png",
+          "sha256": "28c8f5eab482ec1187ff9bcd405470212bb61a51511eb31b78b637d6241129e5",
+          "bytes": 203973,
+          "branchId": "recorded-learned-43",
+          "stateId": "sha256:512ccece28344384be5a698b0e8dbab34c2bd45c2e0b6a5df42dfae7f5f9b88a",
+          "position": 3,
+          "interior": true
+        },
+        {
+          "phase": "Endpoint",
+          "path": "testcases/canonical-endpoint-control-v1/replay/hidden-cold-v3/episode-2-endpoint.png",
+          "sha256": "17317d0ee2ad5c67a310d597f59611fc869be6d0175b8cbfe19f783a79a7974a",
+          "bytes": 196387,
+          "branchId": "recorded-learned-43",
+          "stateId": "sha256:43275b8edd2e5a9876f88eb4f6ef871df20832028d8c6917699812f9f780acbd",
+          "position": 7,
+          "interior": false
+        }
+      ]
+    },
+    {
+      "branchId": "recorded-greedy-0",
+      "method": "greedy",
+      "seed": 0,
+      "nativeActions": 3,
+      "actualPhysicalRequests": 3,
+      "actualRefusals": 0,
+      "targetMm3": 27.0,
+      "residualMm3": 216.0,
+      "neuralMm3": 0.0,
+      "structureRemovedMm3": {
+        "brainstem": 0.0,
+        "cerebellum": 0.0,
+        "corticospinal": 0.0,
+        "motor-cortex": 0.0
+      },
+      "endpoint": "valid-stop-with-residual",
+      "cleanup": {
+        "debrisMm3": 0.0,
+        "fluidMm3": 0,
+        "debrisCollectedMm3": 0.0
+      },
+      "onlineCost": {
+        "physicalCalls": 20,
+        "planningPhysicalCalls": 17,
+        "executionPhysicalCalls": 3,
+        "wallSeconds": 8.808285207953304,
+        "tier": {
+          "beam_width": 2,
+          "horizon": 2,
+          "max_expansions": 8,
+          "max_physical_calls": 56,
+          "max_wall_seconds": 25,
+          "name": "low"
+        },
+        "canceledRequests": 0,
+        "previewSkillAttempts": 9,
+        "previewRefusals": 6
+      },
+      "originalEpisode": {
+        "path": "/Users/shaf/coding_projects/RessectionLab/testcases/overnight-sequential-v1/benchmark-task-v2/results/low-200-greedy-0.json",
+        "sha256": "3e95a7f25d07bd2ef2f9f7bb09c81fa0039fcdcb2151e9676234d38e6c5642b1"
+      },
+      "checkpoint": null,
+      "finalStateId": "sha256:5f011292ff3059c35eb99a07bd5ccb57565f8f427abe9444ae8dfaba2d7431d5",
+      "historyHash": "sha256:c97b878fd1a453f0a499685d0f8ae288a88f6eb4ebaf81e9fc178764c30a939f",
+      "frames": [
+        {
+          "phase": "Work start",
+          "path": "testcases/canonical-endpoint-control-v1/replay/hidden-cold-v3/episode-3-work-start.png",
+          "sha256": "0ef449a473d427a4bd35ef8f1623da0374ca26d396342abbfb32bb85af0e09e8",
+          "bytes": 196843,
+          "branchId": "recorded-greedy-0",
+          "stateId": "sha256:333a87cfe999570899cbec708a7de8333e9b124015e7566443449f802994f38a",
+          "position": 1,
+          "interior": false
+        },
+        {
+          "phase": "Native interior",
+          "path": "testcases/canonical-endpoint-control-v1/replay/hidden-cold-v3/episode-3-interior.png",
+          "sha256": "5dc141b8ba10903ffe8ccbaec974584d8afcb25024f00d49fd723626f46bd754",
+          "bytes": 205628,
+          "branchId": "recorded-greedy-0",
+          "stateId": "sha256:5e0b42180e34b737ddb35414e58c89b1fa932d506013cff7da7d395bcfd73e08",
+          "position": 1,
+          "interior": true
+        },
+        {
+          "phase": "Endpoint",
+          "path": "testcases/canonical-endpoint-control-v1/replay/hidden-cold-v3/episode-3-endpoint.png",
+          "sha256": "52a009d9a433adac18ebd3b6a8372a5a553fcd29abcbc56f805f16a88c98a46f",
+          "bytes": 196404,
+          "branchId": "recorded-greedy-0",
+          "stateId": "sha256:5f011292ff3059c35eb99a07bd5ccb57565f8f427abe9444ae8dfaba2d7431d5",
+          "position": 3,
+          "interior": false
+        }
+      ]
+    },
+    {
+      "branchId": "recorded-search-0",
+      "method": "search",
+      "seed": 0,
+      "nativeActions": 7,
+      "actualPhysicalRequests": 7,
+      "actualRefusals": 0,
+      "targetMm3": 108.0,
+      "residualMm3": 135.0,
+      "neuralMm3": 0.0,
+      "structureRemovedMm3": {
+        "brainstem": 0.0,
+        "cerebellum": 0.0,
+        "corticospinal": 0.0,
+        "motor-cortex": 0.0
+      },
+      "endpoint": "valid-stop-with-residual",
+      "cleanup": {
+        "debrisMm3": 0.0,
+        "fluidMm3": 0,
+        "debrisCollectedMm3": 0.0
+      },
+      "onlineCost": {
+        "physicalCalls": 36,
+        "planningPhysicalCalls": 29,
+        "executionPhysicalCalls": 7,
+        "wallSeconds": 21.04431533301249,
+        "tier": {
+          "beam_width": 2,
+          "horizon": 2,
+          "max_expansions": 8,
+          "max_physical_calls": 56,
+          "max_wall_seconds": 25,
+          "name": "low"
+        },
+        "canceledRequests": 0,
+        "previewSkillAttempts": 18,
+        "previewRefusals": 8
+      },
+      "originalEpisode": {
+        "path": "/Users/shaf/coding_projects/RessectionLab/testcases/overnight-sequential-v1/benchmark-task-v2/results/low-200-search-0.json",
+        "sha256": "71acdcd80d945e138df18415cfbddaa043789a5386cc646a1e4c62c02675bdc0"
+      },
+      "checkpoint": null,
+      "finalStateId": "sha256:6b72a339c6a7cfd27ee062ef4e31010b6ab8dfbb21fde88d8da4e1398c9837e1",
+      "historyHash": "sha256:74fe1b8eb36f142565ed377c8e5e13f18e0184671e7d0f6818d49aed56fe53b1",
+      "frames": [
+        {
+          "phase": "Work start",
+          "path": "testcases/canonical-endpoint-control-v1/replay/hidden-cold-v3/episode-4-work-start.png",
+          "sha256": "c529afc1c190c38ac2971b3ec1864c6f7d73b5314901699d1b07b080c8a79447",
+          "bytes": 197687,
+          "branchId": "recorded-search-0",
+          "stateId": "sha256:333a87cfe999570899cbec708a7de8333e9b124015e7566443449f802994f38a",
+          "position": 1,
+          "interior": false
+        },
+        {
+          "phase": "Native interior",
+          "path": "testcases/canonical-endpoint-control-v1/replay/hidden-cold-v3/episode-4-interior.png",
+          "sha256": "c938d4dd5dd67f6af4e3863ab3319f597ee00e3d4dfbe3f681472a0ea768b030",
+          "bytes": 206370,
+          "branchId": "recorded-search-0",
+          "stateId": "sha256:5e0b42180e34b737ddb35414e58c89b1fa932d506013cff7da7d395bcfd73e08",
+          "position": 1,
+          "interior": true
+        },
+        {
+          "phase": "Endpoint",
+          "path": "testcases/canonical-endpoint-control-v1/replay/hidden-cold-v3/episode-4-endpoint.png",
+          "sha256": "625ada0ae7b24242f347939cddeca9eb592292669c58cf47221dd9a36331b55d",
+          "bytes": 194585,
+          "branchId": "recorded-search-0",
+          "stateId": "sha256:6b72a339c6a7cfd27ee062ef4e31010b6ab8dfbb21fde88d8da4e1398c9837e1",
+          "position": 7,
+          "interior": false
+        }
+      ]
+    },
+    {
+      "branchId": "recorded-fixed-narrow-greedy-0",
+      "method": "fixed-narrow-greedy",
+      "seed": 0,
+      "nativeActions": 7,
+      "actualPhysicalRequests": 7,
+      "actualRefusals": 0,
+      "targetMm3": 162.0,
+      "residualMm3": 81.0,
+      "neuralMm3": 0.0,
+      "structureRemovedMm3": {
+        "brainstem": 0.0,
+        "cerebellum": 0.0,
+        "corticospinal": 0.0,
+        "motor-cortex": 0.0
+      },
+      "endpoint": "successful-treatment",
+      "cleanup": {
+        "debrisMm3": 0.0,
+        "fluidMm3": 0,
+        "debrisCollectedMm3": 0.0
+      },
+      "onlineCost": {
+        "physicalCalls": 32,
+        "planningPhysicalCalls": 25,
+        "executionPhysicalCalls": 7,
+        "wallSeconds": 15.312174916965887,
+        "tier": {
+          "beam_width": 2,
+          "horizon": 2,
+          "max_expansions": 8,
+          "max_physical_calls": 56,
+          "max_wall_seconds": 25,
+          "name": "low"
+        },
+        "canceledRequests": 0,
+        "previewSkillAttempts": 12,
+        "previewRefusals": 0
+      },
+      "originalEpisode": {
+        "path": "/Users/shaf/coding_projects/RessectionLab/testcases/canonical-endpoint-control-v1/diagnostic/results/low-200-fixed-narrow-greedy-0.json",
+        "sha256": "cf3c7738cd6c51d69b75366e2ab6f260260abfdd13c4b17dc4f7ddbada73e7fe"
+      },
+      "checkpoint": null,
+      "finalStateId": "sha256:6127cfd54b57534cb95a5d1785a90de4b36088989bd5f8b0f21c129adfd5ccf2",
+      "historyHash": "sha256:8dcd595fdffb8c5b606f5e32db21cf4b625741625b1f8136507051f84fe1cf8b",
+      "frames": [
+        {
+          "phase": "Work start",
+          "path": "testcases/canonical-endpoint-control-v1/replay/hidden-cold-v3/episode-5-work-start.png",
+          "sha256": "9627c8c9ee0b3888cc95417a296dd74d955d256c5ed212521d1c450ba5a8c0d3",
+          "bytes": 197629,
+          "branchId": "recorded-fixed-narrow-greedy-0",
+          "stateId": "sha256:af685b2c9e204a04225d523dbfda0e75e37cdefcda7dc0a0a7211e6a1a9e760c",
+          "position": 2,
+          "interior": false
+        },
+        {
+          "phase": "Native interior",
+          "path": "testcases/canonical-endpoint-control-v1/replay/hidden-cold-v3/episode-5-interior.png",
+          "sha256": "297768c1a443a668bc6f5e5c2834959942408efd88c4e852233ef44d2f53f08b",
+          "bytes": 199865,
+          "branchId": "recorded-fixed-narrow-greedy-0",
+          "stateId": "sha256:be17f31dfaca707b6b9255e0fa58524fee7d363d302bac540d2694d051b2dfa6",
+          "position": 2,
+          "interior": true
+        },
+        {
+          "phase": "Endpoint",
+          "path": "testcases/canonical-endpoint-control-v1/replay/hidden-cold-v3/episode-5-endpoint.png",
+          "sha256": "838ae2df44cb34823ba2ec487ba3f655e1d433a2b747804643706c447798a274",
+          "bytes": 191803,
+          "branchId": "recorded-fixed-narrow-greedy-0",
+          "stateId": "sha256:6127cfd54b57534cb95a5d1785a90de4b36088989bd5f8b0f21c129adfd5ccf2",
+          "position": 7,
+          "interior": false
+        }
+      ]
+    }
+  ],
+  "sourceFiles": {
+    "scripts/export_sequential_episodes.py": "0e1aeb058017839aa0b5ce7ca9635dcbcbb1cb0de38aace76d8261f6748e9824",
+    "scripts/build_sequential_replay_index.py": "bf6f69e81597a55f199a969f0722fe3798b352e92b6014205963a1dfb890286a",
+    "src/resectionlab/surgical_recorded_sequential.py": "cef2e3b7b7d7047f1a4254c825f7eff95a2cd45d254b671e7aa67b002a5bce94",
+    "src/resectionlab/surgical_scene.py": "b1f4ac6c79d54a4c389bdce63af56a86c891bc2652fc3e2c8a430739303f7f9a",
+    "src/resectionlab/surgical_bridge.py": "e7d0a6889c87a4e3527101af6514073372b65253fee24d6cf0fa3a1b01d13999",
+    "desktop/src/SequentialEpisodePanel.tsx": "fee544e559764a71ef61eb59e6c918929a4728acfe0aeb3065d901a6a9c21f51",
+    "desktop/src/sequential-episode-data.ts": "f7203c505d2e1ec5cbab2b9e4b37364745a479e8416ee6d8b5030859b0033b80",
+    "desktop/src/SurgicalWorkflow.tsx": "48194b7a6e854920c7b3a6fe22d7b97ca22814159c658655f0c63910350d789d",
+    "desktop/src/SurgicalPanel.css": "affe5492151dccfecddb48cfae22e2cdd3ef36d54b46e1e1fa350b2227301ec3",
+    "desktop/src/interactive-planning-data.ts": "9c9372e0ff6a15b4abf364ed1f68a83fe18ee8fb2b883b49d7bc7a09c4435824",
+    "desktop/src/viewer/interactivePlanningGeometry.ts": "717b493b3c2fd7208c8bd66d281ddec3783d5d9af68507c4d725ab2505f7e5b1",
+    "desktop/src/surgical-comparison-context.ts": "57b4fe789f9b55a44963841315e0a7350c3e5c43565777eb00d9f88d5b038893",
+    "desktop/electron/verify-sequential-episodes.cjs": "2dc701d1a6fd968695474fecab352cd22ae82a8613d8a8d5800ad1f91d392e17"
+  },
+  "unmetCriteria": [],
+  "index": {
+    "path": "testcases/canonical-endpoint-control-v1/replay/index-v2.html",
+    "sha256": "a0a7dc8807a9c68641a47e4690920902a5ae8cf349ab71ac1b296325ecb17edb",
+    "bytes": 51296
+  },
+  "exportVerification": {
+    "path": "testcases/canonical-endpoint-control-v1/replay/export-v3/export-report.json",
+    "sha256": "1c94f7e8b6fd6011c742ac47c52c8dcf674184bda0455f211014ead4cb4495b4",
+    "bytes": 15321
+  },
+  "visualQa": {
+    "path": "testcases/canonical-endpoint-control-v1/replay/index-qa-v2/report.json",
+    "sha256": "c60e054c52ceb7e02319a8a1fc06e79d733e063a6d179179f8b7f5014372745e",
+    "bytes": 24758
+  },
+  "visualReview": {
+    "path": "testcases/canonical-endpoint-control-v1/replay/visual-review-v2.json",
+    "sha256": "6d263314fa2f25577ff28120fc701c1b0f179d1926a2083392a7a1832718e5ac",
+    "bytes": 2682
+  },
+  "runtimeBindingVerification": {
+    "path": "testcases/canonical-endpoint-control-v1/replay/runtime-binding-check-v1.json",
+    "sha256": "afe35049847719a6b4ad0620326a93dec3d00cd27c7f6817ede5fea16ce87a41",
+    "bytes": 636
+  },
+  "runtimeHashes": {
+    "src/resectionlab/surgical_recorded_sequential.py": "cef2e3b7b7d7047f1a4254c825f7eff95a2cd45d254b671e7aa67b002a5bce94",
+    "src/resectionlab/surgical_engine.py": "70bb2cca5e9bc993e00843a39c9a4252a49fe8fdf643c4d0eb78ac740b3bc038",
+    "src/resectionlab/surgical_scene.py": "b1f4ac6c79d54a4c389bdce63af56a86c891bc2652fc3e2c8a430739303f7f9a",
+    "src/resectionlab/surgical_procedure_policy.py": "22f43c971f3eaeffb4328eff2c12ec7f8d2b42fded294c932619a5ab14a4ce4f",
+    "src/resectionlab/surgical_planning_admission.py": "0aeb039e458260f5e06a27d2e4e278a47578ce8e72a9f6133493d4e08d42c330",
+    "src/resectionlab/surgical_consequences.py": "46bc832521d29fdac4afdbe6ccbb7858206645cc8b8cb51a03b08c834a2113be",
+    "src/resectionlab/surgical_cranial_planning.py": "37d5ea4156db0f71bdaa9cc554af7b6ae1ce0a85a57843a0c6ac351db4540f0a",
+    "src/resectionlab/surgical_cranial_geometry.py": "13dd3b70a2e39b4bedb4d8bc34b510cb1c5ad614750efb8b8860cef6ad429a40",
+    "src/resectionlab/surgical_sequential_task.py": "55645d240bc2e5f2b00b8d4c18ee9ca60b81b2c7612211d51e0f428a51d6050a",
+    "src/resectionlab/surgical_rl_env.py": "ac4aa96e8f0b9b309c13feed64e1594e99b12fbd3b049916e31613b24eaebf57",
+    "src/resectionlab/surgical_bridge.py": "e7d0a6889c87a4e3527101af6514073372b65253fee24d6cf0fa3a1b01d13999",
+    "src/resectionlab/surgical_sequence_outcomes.py": "1f7c9d7ecc79d6bb8425bd09c37b59812db684ed81b2b234f72d3698b33449ca",
+    "desktop/electron/main.cjs": "f75709fc161a84a9d281122e5057becdc07d6d1cc7cf8fbc5a864e09fb334108",
+    "desktop/electron/preload.cjs": "9ac9998756baac30944a48d5e9f6481d726315111f9d32a9a825e37dd0137f33",
+    "desktop/electron/sidecar.cjs": "731362563043cfab3ce35369aa2f6e9da1386e08a6931268aa1ee7916fd32002",
+    "desktop/electron/verify-sequential-episodes.cjs": "2dc701d1a6fd968695474fecab352cd22ae82a8613d8a8d5800ad1f91d392e17",
+    "desktop/dist/index.html": "63b65855c4ed591293c2922b55ed55c0949015c0072d928031e3a9c3eb6a381c",
+    "desktop/dist/assets/incrementalSurface.worker-C_8M3AWK.js": "ecc32fa0f86cfee5a9ed52e15957129d9fd01ad0a2114637803e65817784d3e2",
+    "desktop/dist/assets/index-6Ws0JzGI.css": "5b2080d61b763238edf0582aa97583211a6c31c8fece3b1e6f6d733cf41debd6",
+    "desktop/dist/assets/index-DaNAGWwM.js": "d2c4f264a4abd025fd3a0d58eb804b6b326c8e198cee8505bf227ec6ee992ece",
+    "desktop/dist/assets/labelPacking.worker-B9d7FlLL.js": "a8971e96fa942ddf75f29f3d3c08d1034608cfea1fc50dee239e1b314be8205a",
+    "desktop/dist/assets/sourcePickingBvh.worker-DycEjoGd.js": "16f67b463bfdd5a9609a3c0b6775b81212ded8e1f907a2b75ab7e5aa215f2866",
+    "desktop/dist/assets/surface.worker-C9u5xXVU.js": "bc2f39e874ecbdf4f52475af9064292d5dd2d064efda726826581425a0362010"
+  },
+  "originalNumericalBinarySha256": "304dea4eae193865a3fcb7e87a288ba58f4812174bfa70dcd7c6e9367e719e78",
+  "nativeProcedureAuthority": "Python policy authority with original compiled numerical kernels; resident C++ procedure execution remains unsupported."
+}

@@ -22,7 +22,7 @@ def coupon():
     labels[10, 10, 7:15] = 2
     scene = SurgicalScene(labels, np.eye(4), [
         {'id': 2, 'name': 'generated enhancing target', 'material': 'tumor', 'target': True}],
-        {'kind': 'generated narrow precision entry coupon'}, {'tissuePhysicsV2': default_profile()})
+        {'evidenceClass': 'generated-engineering', 'kind': 'generated narrow precision entry coupon'}, {'tissuePhysicsV2': default_profile()})
     engine = SurgicalEngine(scene)
     intact = engine.state_id
     assert engine.step({'slot': 'left', 'operation': 'exchange', 'instrument': 'cusa', 'duration': .2})['status'] == 'accepted'

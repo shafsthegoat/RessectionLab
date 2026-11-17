@@ -74,8 +74,16 @@ def prepared(tmp_path_factory):
         patch.undo()
 
 
+@pytest.fixture(scope='module')
+def planning_prepared(prepared):
+    from resectionlab.surgical_planning_admission import planning_admission
+    if any(not planning_admission(engine.scene, engine.protection)['available'] for _, engine, _, _ in prepared):
+        pytest.skip('Historical patient-style native fixture needs a separate generated-native planning contract')
+    return prepared
+
+
 @pytest.mark.parametrize('index', [0, 1])
-def test_same_declarative_interface_admits_two_distinct_sources(prepared, index):
+def test_native_source_contract_does_not_authorize_patient_style_planning(prepared, index):
     case, e, record, _ = prepared[index]
     before = e.snapshot(); contract = record['taskAdmission']
     assert admission.validate_admission(e, contract)
@@ -85,9 +93,10 @@ def test_same_declarative_interface_admits_two_distinct_sources(prepared, index)
     assert contract['sourceEvidence']['anatomy']['brain']['reviewStatus'] == 'unreviewed'
     assert contract['task']['inputContract'] == admission.INPUT_CONTRACT
     available = interactive_planning_availability(e)
-    assert available['available'] and available['admission'] == contract
-    assert available['evidence']['sourcePatient'] == contract['sourceEvidence']['patientId']
-    assert available['defaults']['entry'] == contract['task']['entry']
+    assert not available['available'] and available['defaults'] is None
+    assert 'PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING' in available['reason']
+    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
+        generate_interactive_approaches(e, {})
     assert e.snapshot() == before and case.semantic_hash == e.scene.source['caseHash']
 
 
@@ -160,8 +169,11 @@ def test_resealed_source_label_exchange_fails_native_ownership_reconstruction(pr
 
 @pytest.mark.parametrize('name', ['entry', 'target'])
 def test_edited_regions_cannot_escape_admitted_bounds(prepared, name):
-    _, e, _, _ = prepared[0]
-    defaults = interactive_planning_availability(e)['defaults']; defaults[name]['centerMm'][0] += .1
+    _, e, record, _ = prepared[0]
+    task = record['taskAdmission']['task']
+    defaults = {key: copy.deepcopy(task[key]) for key in ('entry', 'target', 'requiredEvidence')}
+    defaults['tool'] = {'instrument': 'cusa', 'radiusMm': 1.5}
+    defaults[name]['centerMm'][0] += .1
     from resectionlab.surgical_interactive_planning import normalize_constraints
     with pytest.raises(ValueError, match='exceeds the admitted task region'):
         normalize_constraints(e, defaults)
@@ -170,7 +182,7 @@ def test_edited_regions_cannot_escape_admitted_bounds(prepared, name):
 def test_missing_target_has_explicit_refusal_in_common_interface():
     from resectionlab.surgical_scene import SurgicalScene
     labels = np.ones((4, 4, 4), np.uint16)
-    e = SurgicalEngine(SurgicalScene(labels, np.eye(4), [{'id': 1, 'name': 'brain', 'material': 'soft_tissue'}], {}, {}))
+    e = SurgicalEngine(SurgicalScene(labels, np.eye(4), [{'id': 1, 'name': 'brain', 'material': 'soft_tissue'}], {'kind': 'generated-control'}, {}))
     available = interactive_planning_availability(e)
     assert not available['available'] and 'tumor target is required' in available['reason']
     with pytest.raises(ValueError, match='source-declared tumor target'):
@@ -203,7 +215,7 @@ def test_interior_goal_uses_first_contact_and_preserves_historical_geometry_reje
     from resectionlab.surgical_joint_geometry import post_exposure_proposal
     labels = np.zeros((40, 40, 40), np.uint16); labels[16:21, 16:21, 20:31] = 1
     scene = SurgicalScene(labels, np.eye(4), [{'id': 1, 'name': 'target', 'material': 'tumor', 'target': True}],
-        {'kind': 'generated first-contact geometry'}, {})
+        {'kind': 'generated-control', 'fixtureId': 'first-contact geometry'}, {})
     e = SurgicalEngine(scene)
     step(e, 'configure', mechanicsRevision=2, clockRevision=1)
     entry, goal = np.array([18., 18., 12.]), np.array([18., 18., 27.])
@@ -229,7 +241,7 @@ def test_first_contact_refuses_earlier_constraints_with_correct_reason(obstacle,
     if obstacle == 'blocked-start': labels[18, 18, 30] = 2
     affine = np.eye(4); affine[2, 3] = -50.
     scene = SurgicalScene(labels, affine, [{'id': 1, 'name': 'target', 'material': 'tumor', 'target': True},
-        {'id': 2, 'name': 'retained brain', 'material': 'soft_tissue'}], {'kind': 'generated first-contact refusal'}, {})
+        {'id': 2, 'name': 'retained brain', 'material': 'soft_tissue'}], {'kind': 'generated-control', 'fixtureId': 'first-contact refusal'}, {})
     options = {}
     if obstacle == 'protected':
         mask = np.zeros(labels.shape, bool); mask[18, 18, 70] = True
@@ -242,41 +254,40 @@ def test_first_contact_refuses_earlier_constraints_with_correct_reason(obstacle,
     assert route is None and rejection['reason'] == reason
 
 
-def test_missing_required_evidence_is_a_sealed_refusal(prepared):
+def test_native_task_required_evidence_cannot_bypass_procedure_policy(prepared):
     _, e, _, _ = prepared[0]
-    defaults = interactive_planning_availability(e)['defaults']; defaults['requiredEvidence'].append('functional')
-    report = generate_interactive_approaches(e, defaults)
-    assert report['schema'].endswith('.v3') and report['status'] == 'required_evidence_unavailable'
-    assert report['missingRequiredEvidence'] == ['functional'] and not report['routes']
-    assert validate_saved_interactive_report(e.scene, e.snapshot(), report)
+    before = e.snapshot()
+    with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
+        generate_interactive_approaches(e, {'requiredEvidence': ['functional']})
+    assert e.snapshot() == before
 
 
-def test_generation_exact_native_materialization_and_workspace_reopen(prepared, tmp_path):
+
+def test_native_task_workspace_reopens_without_authorizing_new_planning(prepared, tmp_path):
     from resectionlab.desktop_bridge import BridgeSession, _Request
     case, e, record, _ = prepared[0]
-    before = e.snapshot(); report = generate_interactive_approaches(e, interactive_planning_availability(e)['defaults'])
-    assert report['schema'].endswith('.v3') and report['routes'], report['rejections'][:5]
-    candidate, receipt = materialize_interactive_approach(e, report, report['routes'][0]['id'])
-    assert receipt['publicAccessAccepted'] and receipt['publicWithdrawalAccepted']
-    assert candidate.state['removed'] == e.state['removed'] and e.snapshot() == before
-    assert validate_saved_interactive_report(e.scene, before, report)
+    before = e.snapshot()
     path = tmp_path/'admitted.ressectionlab'; save_case(case, path, artifacts={'surgical_toolbox': record})
     session = BridgeSession(tmp_path/'transfers')
     def call(op, **values): return session.execute(op, values, _Request('admission'), lambda *_: None)
     try:
         loaded = call('loadCase', path=str(path))
         opened = call('surgicalRehearsal', caseHash=loaded['caseHash'], command='inspect')
-        assert opened['interactivePlanningAvailability']['available']
-        assert opened['interactivePlanningAvailability']['admission'] == record['taskAdmission']
-        generated = call('surgicalRehearsal', caseHash=loaded['caseHash'], command='generateApproaches',
-            expectedStateId=opened['view']['stateId'], constraints=report['constraints'], acknowledgeResearchUnknowns=True)
-        assert generated['interactivePlanning']['routes']
-        save = tmp_path/'saved.ressectionlab'; call('saveCase', caseHash=loaded['caseHash'], path=str(save))
-        assert read_case_artifacts(save)['surgical_toolbox']['taskAdmission'] == record['taskAdmission']
+        assert not opened['interactivePlanningAvailability']['available']
+        assert opened['interactivePlanningAvailability']['defaults'] is None
+        assert 'PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING' in opened['interactivePlanningAvailability']['reason']
+        with pytest.raises(ValueError, match='PROCEDURE_POLICY_REQUIRED_FOR_PATIENT_PLANNING'):
+            call('surgicalRehearsal', caseHash=loaded['caseHash'], command='generateApproaches',
+                expectedStateId=opened['view']['stateId'], constraints={}, acknowledgeResearchUnknowns=True)
+        saved = tmp_path/'saved.ressectionlab'; call('saveCase', caseHash=loaded['caseHash'], path=str(saved))
+        assert read_case_artifacts(saved)['surgical_toolbox']['taskAdmission'] == record['taskAdmission']
+        assert e.snapshot() == before
     finally:
         session.close()
 
 
+
+@pytest.mark.usefixtures('planning_prepared')
 @pytest.mark.parametrize('field', ['publicObservation', 'publicExecution', 'publicPlanSeal', 'decision'])
 def test_resealed_v3_public_bindings_cannot_be_exchanged(prepared, field):
     _, e, _, _ = prepared[0]
@@ -321,6 +332,7 @@ def test_holder_catalog_extension_preserves_only_unchanged_historical_models(mon
     assert not admission._compatible_models(engine, preceding)
 
 
+@pytest.mark.usefixtures('planning_prepared')
 @pytest.mark.parametrize('change', ['invented-missing', 'wrong-status', 'stop-with-routes'])
 def test_self_resealed_v3_refusal_must_match_public_evidence_and_count(prepared, change):
     from resectionlab.surgical_interactive_planning import _public_report_body

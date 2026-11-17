@@ -10,8 +10,9 @@ import numpy as np
 import pytest
 
 from resectionlab.geometry import AccessWindow
+from resectionlab.core import CaseData, SourceRef
 from resectionlab.native_spatial_task import (DEFAULT_NATIVE_SPATIAL_REWARD, NativeSpatialCase,
-    NativeSpatialTask, OPENING_TOOLS)
+    NativeSpatialTask, OPENING_TOOLS, generated_legacy_planning_evidence)
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location("review_real_spatial_preflight", ROOT / "scripts/preflight_real_spatial_policy.py")
@@ -36,11 +37,16 @@ def analytic_case(*, private_target=False):
     access_voxel = np.array([3.9, 4, .5]) + shift
     access = AccessWindow(rotation @ access_voxel + affine[:3, 3], rotation @ [0, 0, 1], 2.4,
                           "independent-analytic-hypothetical-aperture")
-    source = NativeSpatialCase(np.full(shape, 100., np.float32), support, reference, affine, access,
+    image = np.full(shape, 100., np.float32)
+    generated = CaseData('generated-independent-native-review', image, {'nominal': nominal > 0}, affine,
+        (SourceRef('generated', 'synthetic://independent-native-review', provenance='simulated'),),
+        metadata={'generated': True, 'is_synthetic': True})
+    source = NativeSpatialCase(image, support, reference, affine, access,
         OPENING_TOOLS, track="inference_only", support_source_kind="derived_from_scan",
         support_derivation="declared analytic source generator; no human anatomy",
         nominal_target=nominal, target_source_kind="derived_from_scan",
-        target_derivation="declared analytic estimator held fixed across private references", crop_shape=(5, 5, 5))
+        target_derivation="declared analytic estimator held fixed across private references", crop_shape=(5, 5, 5),
+        support_provenance={'generatedLegacyPlanningEvidence': generated_legacy_planning_evidence(generated)})
     return source, shift
 
 

@@ -4,21 +4,22 @@ import type {SurgicalResponse} from './surgical-types';
  * It never grants edit/replay authority or crosses a source installation.
  */
 export class SurgicalComparisonContext {
-  private resident:{source:object;caseHash:string;sceneId:string;cranialPlanningAvailability:SurgicalResponse['cranialPlanningAvailability'];cranialPlanning:SurgicalResponse['cranialPlanning'];strategyPlanning:SurgicalResponse['strategyPlanning'];planning:SurgicalResponse['planning'];sectorPlanning:SurgicalResponse['sectorPlanning'];jointPlanning:SurgicalResponse['jointPlanning'];jointBaselineHistory:SurgicalResponse['jointBaselineHistory'];stagedPlanning:SurgicalResponse['stagedPlanning'];precisionPlanning:SurgicalResponse['precisionPlanning'];exitRecovery:SurgicalResponse['exitRecovery'];retractionStudy:SurgicalResponse['retractionStudy'];consequenceComparison:SurgicalResponse['consequenceComparison'];consequenceAnalysis:SurgicalResponse['consequenceAnalysis']}|null=null;
+  private resident:{planningAdmission:SurgicalResponse['planningAdmission'];source:object;caseHash:string;sceneId:string;cranialPlanningAvailability:SurgicalResponse['cranialPlanningAvailability'];cranialPlanning:SurgicalResponse['cranialPlanning'];strategyPlanning:SurgicalResponse['strategyPlanning'];planning:SurgicalResponse['planning'];sectorPlanning:SurgicalResponse['sectorPlanning'];jointPlanning:SurgicalResponse['jointPlanning'];jointBaselineHistory:SurgicalResponse['jointBaselineHistory'];stagedPlanning:SurgicalResponse['stagedPlanning'];precisionPlanning:SurgicalResponse['precisionPlanning'];exitRecovery:SurgicalResponse['exitRecovery'];retractionStudy:SurgicalResponse['retractionStudy'];consequenceComparison:SurgicalResponse['consequenceComparison'];consequenceAnalysis:SurgicalResponse['consequenceAnalysis']}|null=null;
   clear(){this.resident=null;}
   accept(response:SurgicalResponse,source:object,frame:boolean):SurgicalResponse{
     const prior=this.resident;
     if(!frame){
-      this.resident={source,caseHash:response.caseHash,sceneId:response.view.scene.sceneId,
+      this.resident={planningAdmission:response.planningAdmission,source,caseHash:response.caseHash,sceneId:response.view.scene.sceneId,
         cranialPlanningAvailability:response.cranialPlanningAvailability,cranialPlanning:response.cranialPlanning,strategyPlanning:response.strategyPlanning,planning:response.planning,sectorPlanning:response.sectorPlanning,
         jointPlanning:response.jointPlanning,jointBaselineHistory:response.jointBaselineHistory,
         stagedPlanning:response.stagedPlanning,precisionPlanning:response.precisionPlanning,exitRecovery:response.exitRecovery,retractionStudy:response.retractionStudy,consequenceComparison:response.consequenceComparison,consequenceAnalysis:response.consequenceAnalysis};
       return response;
     }
     if(!prior||prior.source!==source||prior.caseHash!==response.caseHash||prior.sceneId!==response.view.scene.sceneId||response.playback?.readOnly!==true){
-      this.clear();return response;
+      this.clear();return Object.hasOwn(response,'planningAdmission')?{...response,planningAdmission:undefined}:response;
     }
     this.resident={...prior,
+      ...(Object.hasOwn(response,'planningAdmission')?{planningAdmission:response.planningAdmission}:{}),
       ...(Object.hasOwn(response,'cranialPlanningAvailability')?{cranialPlanningAvailability:response.cranialPlanningAvailability}:{}),
       ...(Object.hasOwn(response,'cranialPlanning')?{cranialPlanning:response.cranialPlanning}:{}),
       ...(Object.hasOwn(response,'strategyPlanning')?{strategyPlanning:response.strategyPlanning}:{}),
@@ -32,6 +33,8 @@ export class SurgicalComparisonContext {
       ...(Object.hasOwn(response,'retractionStudy')?{retractionStudy:response.retractionStudy}:{}),
       ...(Object.hasOwn(response,'consequenceComparison')?{consequenceComparison:response.consequenceComparison}:{}),
       ...(Object.hasOwn(response,'consequenceAnalysis')?{consequenceAnalysis:response.consequenceAnalysis}:{})};
+    const admittedPolicy=this.resident.planningAdmission;
+    const historicalAdmission=admittedPolicy?{...admittedPolicy,available:false,blockers:[{code:'READ_ONLY_RECORDED_FRAME',message:'Recorded policy context only. Return to an accepted boundary before planning.'}]}:admittedPolicy;
     const savedAnalysis=this.resident.consequenceAnalysis;
     // Retain saved policy evidence during observed frames, but never carry
     // current/editable analysis authority into another viewed state.
@@ -41,6 +44,7 @@ export class SurgicalComparisonContext {
       reason:'Read-only observed replay. Return to the accepted common checkpoint and explicitly reassess.'
     }:savedAnalysis;
     return {...response,
+      ...(historicalAdmission!==undefined?{planningAdmission:historicalAdmission}:{}),
       ...(!Object.hasOwn(response,'cranialPlanningAvailability')&&this.resident.cranialPlanningAvailability!==undefined?{cranialPlanningAvailability:this.resident.cranialPlanningAvailability}:{}),
       ...(!Object.hasOwn(response,'cranialPlanning')&&this.resident.cranialPlanning!==undefined?{cranialPlanning:this.resident.cranialPlanning}:{}),
       ...(!Object.hasOwn(response,'strategyPlanning')&&this.resident.strategyPlanning!==undefined?

@@ -4,6 +4,9 @@ Source-grid geometry stays authoritative while the actor sees a fixed crop
 chosen from the scan frame and declared access. No MRI intensity threshold is a
 target estimator. Contact is reported, with zero history-dependent cost because
 the frozen six-channel policy does not yet observe prior contact history.
+This historical geometric adapter cannot execute the versioned supratentorial
+procedure/harm task. Explicit policy bindings, including patient metadata, are
+refused before loading/native execution; use SurgicalRLEnv evaluation instead.
 """
 from __future__ import annotations
 
@@ -47,6 +50,63 @@ DERIVED_OCCUPANCY_SOURCE_KIND = "derived_occupancy_assumption"
 DEFAULT_NATIVE_SPATIAL_REWARD = RewardSpec(target_per_mm3=1., normal_per_mm3=.2,
     motor_per_mm3=0., language_per_mm3=0., action_cost=.03,
     motion_per_mm=.001, tool_change_cost=.03, graph_edge_cost=0.)
+PROCEDURE_POLICY_INCOMPATIBLE = (
+    "PROCEDURE_POLICY_INCOMPATIBLE: historical native spatial learners do not consume "
+    "the versioned supratentorial procedure, structure harm budgets or complete-sequence "
+    "outcomes; use the evaluation-only SurgicalRLEnv adapter")
+GENERATED_LEGACY_ADMISSION_SCHEMA = 'resectionlab.generated-native-legacy-admission.v1'
+
+
+def _reject_procedure_policy(policy):
+    if policy is not None:
+        raise ValueError(PROCEDURE_POLICY_INCOMPATIBLE)
+
+
+def generated_legacy_planning_evidence(case):
+    """Explicit engineering declaration from actual generated CaseData inputs.
+
+    This authorizes only the historical geometry task, never patient planning
+    or the procedure harm model. Observed references cannot use this adapter.
+    """
+    from .surgical_planning_admission import require_case_planning_admission
+    require_case_planning_admission(case)
+    affine = np.asarray(case.affine)
+    if case.frame == 'LPS+':
+        affine = np.diag([-1., -1., 1., 1.]) @ affine
+    return {'schema': GENERATED_LEGACY_ADMISSION_SCHEMA, 'sourceClass': 'generated-engineering',
+        'sourceCaseHash': case.semantic_hash,
+        'sourceReferencesHash': semantic_digest([ref.to_dict() for ref in case.source_refs]),
+        'sourceImageHash': array_digest(np.asarray(case.mri, np.float32)),
+        'sourceAffineHash': array_digest(np.asarray(affine, np.float64)),
+        'provenance': 'Explicit generated-source legacy geometry task; no patient qualification.'}
+
+
+def _require_native_planning_source(case):
+    from .surgical_planning_admission import REQUIRED, _acquired_markers
+    provenance = case.support_provenance
+    acquired = {'patient', 'sourcePatient', 'patientId', 'sourceManifest', 'sourceCollectionHash',
+        'source_patient', 'source_manifest', 'source_collection_hash', 'public_manifest_sha256',
+        'public_source_bindings'}
+    if acquired.intersection(provenance) or _acquired_markers(thaw_json(provenance)):
+        raise ValueError(REQUIRED + ': acquired native source cannot use the historical spatial learner')
+    if case.track == 'synthetic_scan':
+        return
+    evidence = provenance.get('generatedLegacyPlanningEvidence')
+    if (isinstance(evidence, Mapping) and
+            set(evidence) == {'schema', 'sourceClass', 'sourceCaseHash', 'sourceReferencesHash',
+                'sourceImageHash', 'sourceAffineHash', 'provenance'} and
+            evidence.get('schema') == GENERATED_LEGACY_ADMISSION_SCHEMA and
+            evidence.get('sourceClass') == 'generated-engineering' and
+            evidence.get('sourceImageHash') == array_digest(case.structural_intensity) and
+            evidence.get('sourceAffineHash') == array_digest(case.affine_ras_mm) and
+            all(type(evidence.get(key)) is str and evidence[key].startswith('sha256:') and
+                len(evidence[key]) == 71 and all(c in '0123456789abcdef' for c in evidence[key][7:])
+                for key in ('sourceCaseHash', 'sourceReferencesHash')) and
+            type(evidence.get('provenance')) is str and evidence['provenance'].strip()):
+        return
+    raise ValueError(REQUIRED + ': direct native anatomy requires explicit generated legacy evidence; annotation-assisted and inference-only tracks do not consume the procedure harm contract')
+
+
 OPENING_TOOLS = (
     ToolGeometry("short-wide-opener", 2.25, .45, 2.2, 35., .75),
     ToolGeometry("long-narrow-cutter", .9, 1.1, 12., 35., 3.),
@@ -184,9 +244,10 @@ def reconcile_native_grid_roundoff(affine, shape):
 class NativeSpatialCase:
     """Explicit observed geometry and separate evaluator labels on one source grid.
 
-    The CaseData adapter below applies existing anatomical support gates. Direct
-    construction requires an explicit provenance/track declaration; it does not
-    confer expert review or cortical access approval on a supplied mask.
+    The CaseData adapter below applies existing anatomical support gates. The
+    historical task accepts synthetic_scan or explicit generated legacy source
+    evidence; anatomical track names confer no planning admission. Neither
+    route supplies expert review or cortical access approval for a patient.
     """
     structural_intensity: np.ndarray
     observed_support: np.ndarray
@@ -631,14 +692,21 @@ class NativeSpatialStep:
 
 
 class NativeSpatialTask:
-    """Canonical native execution, geometric objective, evaluator-only labels."""
+    """Legacy engineering execution, geometric objective, evaluator-only labels."""
+    supported_procedure_policy = False
+
     def __init__(self, case: NativeSpatialCase, *, max_steps: int = 3,
                  reward: RewardSpec = DEFAULT_NATIVE_SPATIAL_REWARD,
                  cancelled: Callable[[], bool] | None = None, _planning: bool = False,
-                 tool_modes: Mapping[str, str] | None = None):
+                 tool_modes: Mapping[str, str] | None = None, procedure_policy=None):
+        _reject_procedure_policy(procedure_policy)
+        provenance = getattr(case, 'support_provenance', {})
+        if isinstance(provenance, Mapping) and 'surgicalProcedurePolicyV1' in provenance:
+            raise ValueError(PROCEDURE_POLICY_INCOMPATIBLE)
         if (not isinstance(case, NativeSpatialCase) or type(max_steps) is not int
                 or not 1 <= max_steps <= MAX_NATIVE_SPATIAL_STEPS):
             raise ValueError(f"A typed native source and horizon1–{MAX_NATIVE_SPATIAL_STEPS} are required")
+        _require_native_planning_source(case)
         if case.proposal_config is not None and case.proposal_config.obstruction_page_size is not None:
             from .paged_obstruction import PagedObstructionTask
             from .focused_paged_task import FocusedPagedObstructionTask
@@ -1217,12 +1285,14 @@ class NativeSpatialTask:
 
 
 def make_native_opening_task(*, tools=OPENING_TOOLS, max_steps=2, cancelled=None,
-                             generated_cut_union: CutUnionSpec | None = None):
+                             generated_cut_union: CutUnionSpec | None = None,
+                             procedure_policy=None):
     """Six tissue cells inside a 9×9×7 workspace; exact tool-complementarity fixture.
 
     The offset short opener clears a shaft obstacle. The long narrow tool can
     then reach two distal target cells. This is not an anatomical brain model.
     """
+    _reject_procedure_policy(procedure_policy)
     support = np.zeros((9, 9, 7), bool)
     support[4, 4, 1:6], support[5, 5, 1] = True, True
     target = np.zeros(support.shape, bool)
@@ -1299,8 +1369,9 @@ def native_spatial_task_from_case(case, *, access, tools, max_steps=3,
                                   track="annotation_assisted", nominal_target=None,
                                   nominal_target_derivation="", crop_shape=(32, 32, 32), cancelled=None,
                                   research_support_acknowledgment=None, intensity_normalization="raw",
-                                  native_grid_reconciliation="none", proposal_mode="fixed_lattice", proposal_config=None):
-    """Load a real source case with existing support gates and explicit target role.
+                                  native_grid_reconciliation="none", proposal_mode="fixed_lattice", proposal_config=None,
+                                  procedure_policy=None):
+    """Adapt explicit generated source with support gates and target role.
 
     ``access`` is canonical RAS+. Annotation-assisted defaults to the supplied
     active source compartments. Inference-only never substitutes those labels
@@ -1309,8 +1380,14 @@ def native_spatial_task_from_case(case, *, access, tools, max_steps=3,
     unreviewed model proposal in annotation-assisted mode only. It never edits
     working anatomy or grants cortical/clinical approval on the source case.
     """
+    _reject_procedure_policy(procedure_policy)
     from .structural_evidence import planning_brain_support
     from .critical_evidence import resolve_critical_evidence
+    metadata = getattr(case, 'metadata', {})
+    properties = metadata.get('surgical_properties', {}) if isinstance(metadata, Mapping) else {}
+    if isinstance(properties, Mapping) and 'surgicalProcedurePolicyV1' in properties:
+        raise ValueError(PROCEDURE_POLICY_INCOMPATIBLE)
+    generated_planning = generated_legacy_planning_evidence(case)
     if resolve_critical_evidence(case).planning_binding is not None:
         raise ValueError("CRITICAL_EVIDENCE_UNSUPPORTED: this historical spatial-learning adapter does not consume critical annotations")
     if track not in {"annotation_assisted", "inference_only"}:
@@ -1349,7 +1426,8 @@ def native_spatial_task_from_case(case, *, access, tools, max_steps=3,
         support_source_kind=support_kind, support_derivation=record["method"] + "; cortical access unverified",
         nominal_target=nominal_target, target_source_kind="supplied_annotation" if track == "annotation_assisted" else "derived_from_scan",
         target_derivation=nominal_target_derivation, crop_shape=crop_shape,
-        support_provenance=record if research_support_acknowledgment is not None else {},
+        support_provenance={**(record if research_support_acknowledgment is not None else {}),
+            'generatedLegacyPlanningEvidence': generated_planning},
         intensity_normalization=intensity_normalization, native_grid_reconciliation=native_grid_reconciliation,
         proposal_mode=proposal_mode, proposal_config=proposal_config)
     return NativeSpatialTask(source, max_steps=max_steps, cancelled=cancelled)
