@@ -258,8 +258,11 @@ real-patient transfer or physical fidelity. Each new real-case slice needs its o
 source-bound checks.
 
 `requirements-lock.txt` pins the current numerical engine, research tools,
-tests and build tools without Qt or VTK. The active Electron app does not need
-either toolkit. Versions were retained from the installed development
+tests and build tools without Qt or VTK. The Electron interface uses Three.js;
+preparing uncached native anatomy surfaces additionally needs VTK. For source
+runs, install it with `.venv/bin/python -m pip install vtk==9.7.1`. The packaged
+numerical engine includes the VTK geometry modules without Qt. Versions were
+retained from the installed development
 environment; a new clean-environment installation of this separated lock has not
 been performed. See [dependency validation](docs/dependency-lock-separation.md)
 for the import checks and their limits. Mac packaging remains a separate

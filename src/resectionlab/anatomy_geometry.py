@@ -23,16 +23,17 @@ def _save_cache(path, values):
 
 
 def _poly(values, probability):
-    import vtk
-    from vtk.util.numpy_support import numpy_to_vtk
-    image = vtk.vtkImageData()
+    from vtkmodules.vtkCommonDataModel import vtkImageData
+    from vtkmodules.vtkFiltersCore import vtkFlyingEdges3D, vtkSurfaceNets3D
+    from vtkmodules.util.numpy_support import numpy_to_vtk
+    image = vtkImageData()
     image.SetDimensions(*values.shape)
     image.GetPointData().SetScalars(numpy_to_vtk(np.asarray(values).ravel(order="F"), deep=True))
     if probability:
-        contour = vtk.vtkFlyingEdges3D()
+        contour = vtkFlyingEdges3D()
         contour.SetValue(0, 0.5)
     else:
-        contour = vtk.vtkSurfaceNets3D()
+        contour = vtkSurfaceNets3D()
         contour.SetValue(0, 1)
         contour.SetOutputMeshTypeToQuads()
         contour.SmoothingOff()
@@ -42,7 +43,7 @@ def _poly(values, probability):
 
 
 def _arrays(poly):
-    from vtk.util.numpy_support import vtk_to_numpy
+    from vtkmodules.util.numpy_support import vtk_to_numpy
 
     if not poly.GetNumberOfPoints():
         return np.empty((0, 3), np.float32), np.empty((0, 3), np.uint32)

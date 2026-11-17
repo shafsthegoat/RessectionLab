@@ -6,7 +6,8 @@ engine plus research, test, and build tools. It does not install Qt or VTK.
 No retained package version was changed.
 
 `requirements-legacy-qt-lock.txt` includes the default file and adds only the
-five packages required by the historical interface:
+five packages required by the historical interface. VTK also supports uncached
+native anatomy surface preparation in the current engine:
 
 | Package | Existing pinned version |
 | --- | --- |
@@ -28,19 +29,21 @@ on these five packages.
 
 ## Import and packaging evidence
 
-Static inspection of Python source, scripts, tests, and packaging entry points
-found direct toolkit imports confined to the historical UI modules,
-`scripts/build_macos.py`, and `packaging/macos_entry.py`. The old
+The historical UI modules, `scripts/build_macos.py`, and `packaging/macos_entry.py`
+use the legacy display toolkits. Native anatomy surface preparation additionally
+uses VTK data/filter bindings through direct `vtkmodules` imports; source runs
+that prepare uncached meshes need VTK even though the Electron interface uses
+Three.js. The old
 `scripts/launch_app.sh` launches that historical application. The reusable
 annotation, refinement, and physical-reslicing helpers under `app/` do not
 require a toolkit; importing `resectionlab.app` itself is lazy.
 
-`scripts/build_electron_sidecar.py` already explicitly excludes PySide6, PyQt6,
-VTK and vtkmodules. Existing packaged-build evidence is described in
-[electron-packaging.md](electron-packaging.md). The currently present frozen
-engine payload was also scanned for toolkit directories/libraries, with no
-matches. Retained historical source files are separate from runtime toolkit
-binaries. No new app build was performed for this lock-file change.
+`scripts/build_electron_sidecar.py` includes the VTK geometry dependency closure
+for cold native-study opening, while excluding PySide6, PyQt6 and the `vtk`
+umbrella import. Packaging evidence and the current runtime scope are described
+in [electron-packaging.md](electron-packaging.md). The earlier lock separation
+was checked against a frozen payload without toolkit binaries; that historical
+scan does not describe the current geometry-enabled bundle.
 
 To test source behavior without modifying the shared environment, fresh Python
 subprocesses loaded a temporary import blocker that makes all five toolkit

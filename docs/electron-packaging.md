@@ -78,7 +78,10 @@ snapshot as the executable; they are not read from the live checkout.
 The first validated engine supported imaging, complete-instrument route search,
 evidence inspection and workspace persistence. Torch, Qt, VTK, DIPY and plotting
 libraries were excluded in that initial baseline. The subsequent numerical
-build includes Torch; Qt, VTK, DIPY and plotting libraries remain excluded.
+build includes Torch and the VTK data/filter modules needed to prepare uncached
+native anatomy meshes. Direct `vtkmodules` imports keep the VTK umbrella and
+Qt display stacks excluded; the Electron renderer remains Three.js. DIPY and
+plotting libraries remain excluded.
 Route accessibility stays distinct from removal, and unsupported clinical
 probabilities remain absent. Imported saved metrics require current evaluation;
 matching image hashes alone do not certify arbitrary saved route artifacts.
