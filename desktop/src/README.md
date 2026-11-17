@@ -46,6 +46,14 @@ Run renderer boundary checks with `npm run test:renderer`; run `npm run build` f
 
 For the 62,496,000-byte UCSF-PDGM-0004 export, replacing typed-array iterator/callback validation with indexed loops reduced median hydration-plus-cursor time from 351.65 ms to 134.23 ms in the first comparison (62% reduction). A subsequent source-checksum-verified run measured 113.36 ms. Both retain identical finite-MRI, binary-mask, affine, identity, byte-count and physical-volume gates; the cursor remained identical. Raw reports are under `artifacts/desktop-renderer/`. These development measurements are specific to this local machine and warm-cache workload.
 
+Numerical reports and the live `ucsf-seven-prior-hydration.json` verifier input
+remain in the checkout. Most historical renderer images and recordings are in
+the [visual evidence archive](../../docs/visual-evidence-archive-20261116.md).
+Shared desktop verifiers and the interaction benchmark default to unique ignored
+runs under `testcases/outputs/desktop-verification/`. Use `--report-dir` or the
+verifier's documented output environment variable to choose another location;
+review and explicitly promote evidence intended for version control.
+
 ## Registered prior display
 
 Prior titles and value legends follow `docs/prior-registration.md`: four functional concordance maps (unitless 0–1) and three released structural network masks (binary membership). The atlas field of view is not patient functional coverage. Cursor readouts share the renderer’s coverage-aware sampler; tiny positive values use scientific notation rather than rounding to a displayed zero. Historical registration case identity is retained separately from the enriched current case; current MRI, physical frame and planning-input identity must still match. A small recorded prior/source affine difference is preserved explicitly, with the existing 0.01 mm source-corner bound checked before display. This is an integrity tolerance, not alignment validation.
