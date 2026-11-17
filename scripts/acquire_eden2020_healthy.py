@@ -38,11 +38,13 @@ def acquire(root=None, workers=18):
             with path.open('rb') as stream: digest=hashlib.file_digest(stream,'md5').hexdigest()
             if path.stat().st_size!=row['size'] or digest!=row['checksum'][4:]:
                 raise ValueError('Existing source differs: '+str(path))
+            atomic_json(provenance/(row['key']+'.json'),{**row,'sha256':sha256_file(path),
+                'verified_utc':datetime.now(timezone.utc).isoformat(),'published_md5_verified':True,'path':str(path)})
             continue
         partial=path.with_name(path.name+'.part')
         offset=partial.stat().st_size if partial.exists() else 0
         if offset>row['size']:raise ValueError('Oversized partial')
-        block=16*1024**2
+        block=4*1024**2
         jobs=[(start,min(start+block,row['size'])) for start in range(offset,row['size'],block)]
         print('acquiring '+row['key']+'; retained prefix '+str(offset),flush=True)
         def transfer(bounds):
