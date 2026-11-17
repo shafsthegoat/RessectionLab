@@ -36,7 +36,7 @@ def test_semantic_sequence_required_for_nifti_and_dicom_family():
     for raw in (None, "MRI", "MR", "PET", ""):
         with pytest.raises(ValueError, match="Unsupported imaging sequence"):
             imaging_modality(raw)
-    for sequence in ("T1", "T1CE", "T2", "FLAIR", "MRA", "TOF"):
+    for sequence in ("T1", "T1CE", "T2", "FLAIR", "MRA", "TOF", "SWI", "SWI_MAGNITUDE", "SWI_PHASE"):
         assert imaging_modality(sequence, dicom_modality="MR") == sequence
     assert imaging_modality(None, dicom_modality="CT") == "CT"
     assert imaging_modality("CTA", dicom_modality="CT") == "CTA"
@@ -44,6 +44,52 @@ def test_semantic_sequence_required_for_nifti_and_dicom_family():
         imaging_modality("CT", dicom_modality="MR")
     with pytest.raises(ValueError, match="Unsupported DICOM Modality"):
         imaging_modality("T1", dicom_modality="SEG")
+
+
+def test_swi_components_remain_distinct_and_diffusion_is_not_flattened(tmp_path):
+    c = collection(tmp_path)
+    source = volume(tmp_path / "swi.nii.gz", np.ones((8, 8, 8), np.float32))
+    for sequence, component in (("SWI", "processed susceptibility-weighted image"),
+                                ("SWI_MAGNITUDE", "magnitude"), ("SWI_PHASE", "phase")):
+        row = import_nifti_series(c, source, series_id=sequence.lower(), modality=sequence)
+        assert row["modality"] == sequence
+        assert row["susceptibility_component"] == component
+    diffusion = volume(tmp_path / "raw_dti.nii.gz", np.ones((8, 8, 8, 4), np.float32))
+    with pytest.raises(ValueError, match="bounded 3D anatomical volume"):
+        import_nifti_series(c, diffusion, series_id="dti", modality="T1")
+    assert len(c.document["series"]) == 4
+    assert not c.document["layers"]
+    c.save("distinct susceptibility contrasts")
+    assert PatientImagingCollection(c.root).series("swi_phase")["susceptibility_component"] == "phase"
+
+
+@pytest.mark.parametrize("extension", ["trk", "tck"])
+def test_supplied_tract_file_coordinates_roundtrip_in_source_ras_mm(tmp_path, extension):
+    c = collection(tmp_path)
+    source_affine = np.array([[0, -2, 0, 31], [1.5, 0, 0, -17], [0, 0, 3, 9], [0, 0, 0, 1]], float)
+    source = volume(tmp_path / "flair.nii.gz", np.ones((8, 8, 8), np.float32), source_affine)
+    import_nifti_series(c, source, series_id="flair", modality="FLAIR")
+    voxels = [np.array([[1, 2, 3], [2, 2, 3], [3, 4, 4]], np.float32),
+              np.array([[1, 1, 1], [2, 1, 1]], np.float32)]
+    physical = [nib.affines.apply_affine(source_affine, v).astype(np.float32) for v in voxels]
+    tractogram = nib.streamlines.Tractogram(physical, affine_to_rasmm=np.eye(4))
+    path = tmp_path / ("supplied_bundle." + extension)
+    if extension == "trk":
+        header = nib.streamlines.TrkFile.create_empty_header()
+        header["voxel_to_rasmm"] = source_affine
+        header["voxel_sizes"] = nib.affines.voxel_sizes(source_affine)
+        header["dimensions"] = [8, 8, 8]
+        nib.streamlines.TrkFile(tractogram, header=header).save(path)
+    else:
+        nib.streamlines.save(tractogram, path)
+    row = import_anatomy_derivative(c, path, source_series="flair", kind="tractography", label="Supplied bundle")
+    np.testing.assert_allclose(c.array(row["points_ras_mm"]), np.concatenate(physical), atol=1e-5)
+    np.testing.assert_array_equal(c.array(row["offsets"]), [0, 3, 5])
+    assert row["source_series"] == "flair" and row["label"] == "Supplied bundle"
+    assert "unreviewed" in row["review_status"]
+    c.save("source tract geometry")
+    reopened = PatientImagingCollection(c.root)
+    np.testing.assert_allclose(reopened.array(row["points_ras_mm"]), np.concatenate(physical), atol=1e-5)
 
 
 def test_dicom_requires_explicit_mr_series_identity_and_retains_originals(tmp_path, monkeypatch):

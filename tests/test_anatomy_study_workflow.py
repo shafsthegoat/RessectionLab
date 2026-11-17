@@ -235,3 +235,25 @@ def test_full_source_preserves_continuous_vessel_across_unknown_skull_slice(tmp_
             assert 'Unknown skull coverage' in result['displayFilter']['reason']
     assert c.document == before
     assert Collection(c.root).document == before
+
+
+def test_named_tract_display_and_selected_approach_survive_native_view_roundtrip(patient, tmp_path):
+    import nibabel as nib
+    from resectionlab.anatomy_import import import_anatomy_derivative
+    from resectionlab.anatomy_workspace import save_view, read_view
+    points = world(patient.patient_affine(patient.series('mri')), np.array([[8, 8, 8], [12, 12, 12]]))
+    filename = tmp_path / 'named.trk'
+    nib.streamlines.save(nib.streamlines.Tractogram([points], affine_to_rasmm=np.eye(4)), filename)
+    tract = import_anatomy_derivative(patient, filename, source_series='mri', kind='tractography', label='Supplied CST')
+    patient.save()
+    identity = patient.identity()
+    state = {'schema': 'patient-anatomy-view-v1', 'patientId': patient.document['patient_id'],
+             'snapshotId': identity, 'seriesId': 'mri', 'selectedStructure': tract['id'],
+             'selectedApproachId': 'manual-source-path', 'states': {'mri': {
+                 'cursor': points[0].tolist(), 'visible': {tract['id']: False, 'brain': True},
+                 'settings': {'layerOpacity': {tract['id']: .35}, 'layerColor': {tract['id']: '#65bfd3'}}}}}
+    save_view(patient, state)
+    assert read_view(Collection(patient.root)) == state
+    assert patient.identity() == identity
+    with pytest.raises(ValueError, match='visibility'):
+        save_view(patient, {**state, 'states': {'mri': {**state['states']['mri'], 'visible': {'invented-tract': True}}}})

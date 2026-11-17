@@ -109,6 +109,7 @@ async function pick(title, extensions) {
 
 function bindOperations() {
   const openWorkspace = async filename => {
+    filename=await fs.realpath(filename);
     if (!await rehearsalUnsaved.allowNavigation()) return null;
     const native = path.basename(filename)==='patient-anatomy.json'||filename.endsWith('.rsworkspace');
     const result=await engine.request(native?'anatomyOpen':'loadCase',{path:filename,...(filename.endsWith('.rsworkspace')?{workingRoot:path.join(app.getPath('userData'),'patient-studies')}:{})},300000);
@@ -149,7 +150,7 @@ function bindOperations() {
     anatomyComponents: ['layerId'],
     anatomyGraph: ['layerId','point'],
     anatomyReconstruct: ['seriesId','model','synthsegVersion','brainLayerId'],
-    anatomyPlan: ['start','end','radiusMm'], anatomyRemoval: ['point','radiusMm','reset'],
+    anatomyPlan: ['action','approach','approachId','assess','start','end','radiusMm','patchRadiusMm','constraints'], anatomyRemoval: ['point','radiusMm','reset'],
     anatomySection: ['seriesId','center','normal','spacingMm','movingId','checkerboard','layers'],
     anatomyView: ['seriesId','layers','original','highlightLayer','highlightComponents','reviewId','previewAlignment','vesselScope'],
     anatomyEdit: ['action','layerId','author','points','radiusMm','threshold','reviewId','componentIds'],

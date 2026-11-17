@@ -1,3 +1,4 @@
+import {NativeStructureControls} from './NativeStructureControls';
 import {layerAppearance} from './viewer/workspaceSettings';
 import {useEffect,useState} from 'react';
 import {scanLabel,studyTimepoint,studyLabel,sourceEvidenceLabel} from './native-study-state';
@@ -19,11 +20,12 @@ export function NativeSidebar({workspace:w,tab}:{workspace:NativeWorkspace;tab:'
   const source=b.document.series.find(s=>s.id===w.series),layer=b.document.layers.find(l=>l.id===selected);
   const blocked=w.busy||!!w.draft;
   const groups=[{name:'Structures',kinds:null},{name:'Brain regions',kinds:['brain-region']},{name:'Review layers',kinds:['review-region','head-envelope']}];
-  const choose=(id:string)=>{if(w.draft&&id!==w.editLayer)return;setSelected(id);setEditing(false);w.setTool('navigate');w.setEditLayer(id)};
+  const choose=(id:string)=>{w.setSelectedStructure(id);if(w.draft&&id!==w.editLayer)return;setSelected(id);setEditing(false);w.setTool('navigate');w.setEditLayer(id)};
   return <div className="unified-sidebar">
     <div className="study-badge">{studyLabel(timepoint)} study <span>{b.document.series.length} scans</span></div>
     <h1 title={b.document.patient_id}>{b.document.patient_id.replace(/^ZENODO-17486320-/,'')}</h1>
     <label className="unified-source">Displayed scan<select aria-label="Source scan" value={w.series} disabled={blocked} onChange={e=>w.selectScan(e.target.value)}>{b.document.series.map(s=><option key={s.id} value={s.id}>{scanLabel(s)}</option>)}</select></label>
+    {tab==='anatomy'&&<NativeStructureControls volume={w.volume} visibleLayers={w.state.visible} onVisibilityChange={w.setVisible} settings={w.state.settings} onSettingsChange={w.setSettings} selectedStructure={w.selectedStructure} onSelectStructure={w.setSelectedStructure} onFocusStructure={w.focusStructure}/>}
     {tab==='data'?<>
       <div className="scan-cards">{b.document.series.map(s=><button key={s.id} className={w.series===s.id?'selected':''} disabled={blocked} onClick={()=>w.selectScan(s.id)}><strong>{scanLabel(s)} <small>{w.series===s.id?'Viewing':''}</small></strong><span>{s.modality} · {s.grid_spacing_mm.join(' × ')} mm grid</span></button>)}</div>
       <p className="subtle">Scans share the selected structures. Each scan keeps its own contrast and view.</p>

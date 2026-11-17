@@ -50,7 +50,7 @@ class CaseLibrary {
     const recent = await this.read();
     let names = [];
     try { names = await fs.readdir(this.preparedRoot); } catch (error) { if (error.code !== 'ENOENT') throw error; }
-    const prepared = names.filter(n => n.endsWith('.ressectionlab')).sort().map(n => path.join(this.preparedRoot, n));
+    const prepared = names.filter(n => n.endsWith('.ressectionlab') || n.endsWith('.rsworkspace') || n.endsWith('.anatomy.json')).sort().map(n => path.join(this.preparedRoot, n));
     const rows = [];
     this.paths.clear();
     const addedCatalog = new Set(), addedFiles = new Set();
@@ -68,7 +68,7 @@ class CaseLibrary {
         const stat = await fs.stat(filename);
         if (!stat.isFile() || addedFiles.has(canonical)) continue;
         const id = require('node:crypto').createHash('sha256').update(canonical).digest('hex');
-        const native=path.basename(filename)==='patient-anatomy.json';
+        const native=path.basename(canonical)==='patient-anatomy.json'||filename.endsWith('.anatomy.json');
         const doc=native?await readMetadata(filename,16*1024*1024):null;
         if(native&&doc.schema!=='patient-anatomy-v1')continue;
         addedFiles.add(canonical);

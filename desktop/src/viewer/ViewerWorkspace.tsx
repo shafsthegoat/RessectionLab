@@ -1,6 +1,8 @@
 import {planningSliceSegments,planningSphereSliceRadius,planningSliceMemberships} from '../interactive-planning-data';
 import {surgicalEffectMarkers,clipSurgicalMarkersToSlab,surgicalMarkerRadiusPx} from './surgicalGeometry';
 import {modeledSourceIdentity,modeledAnatomy} from './modeledAnatomy';
+import {tractColor,tractPreview,TractSliceIndex} from './tractDisplay';
+import {approachCamera} from './approachView';
 import type {SurgicalInteraction} from '../surgical-types';
 import {SliceScrollAccumulator} from './interactionBudget';
 import {TransferEditor} from './TransferEditor';
@@ -8,7 +10,7 @@ import {sampleDiagnosticLayer} from "./diagnosticLayer";
 import type {CheckedDiagnosticLayer} from "./diagnosticLayer";
 import {checkedPublicGoal,PUBLIC_GOAL_COLOR} from './publicGoal';
 import {mprView,mprPoint,mprPixel,sliceFraming,sourceSignalBounds} from './mprFraming';
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import {
   Columns2,
   SlidersHorizontal,
@@ -131,6 +133,11 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const [modelDisplayPending,setModelDisplayPending]=useState(false);
   const [modelDisplayError,setModelDisplayError]=useState<string|null>(null);
   const lastCameraFitRequest=useRef(props.cameraFitRequest??0);
+  const lastStructureFocusRequest=useRef(props.structureFocusRequest??0);
+  const previousApproachCamera=useRef<import('./workspaceSettings').ViewerCameraState|null>(null);
+  const [approachViewMode,setApproachViewMode]=useState<'along'|'oblique'|null>(null);
+  const [showSliceTracts,setShowSliceTracts]=useState(true);
+  const tractClipId=useId();
   const activePlane=settings.activePlane??'axial',contrast=settings.contrast??1,showPlane=settings.showPlane??false;
   const displayedSurgical=committedSurgical?.identity===rendererIdentity?committedSurgical.interaction:null;
   const surgicalView=displayedSurgical?.preview??displayedSurgical?.view;
@@ -184,6 +191,26 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           (v, i) => (v + geometry.bounds[1][i]) / 2,
         ) as Point3)
       : [0, 0, 0]);
+  const tractDisplays=useMemo(()=>geometrySource&&geometry?(geometrySource.tractography??[]).map((tract,index)=>({tract,color:tractColor(index),index:new TractSliceIndex(tractPreview(tract,geometry.affine))})):[],[geometrySource?.tractography,geometry?.affine]);
+  const selectedApproach=routes.find(route=>route.scope==='geometric-approach'&&route.selected)??routes.find(route=>route.scope==='geometric-approach');
+  const setApproachView=(mode:'along'|'oblique')=>{
+    if(!selectedApproach||!caseData)return;
+    const rect=anatomy.current?.getBoundingClientRect();
+    const camera=approachCamera(selectedApproach,caseData.frame,mode,(rect?.width??1)/Math.max(1,rect?.height??1));
+    if(!camera)return;
+    if(!previousApproachCamera.current)previousApproachCamera.current=engine.current?.getCameraState()??null;
+    changeSettings({...latestSettings.current,camera});setApproachViewMode(mode);
+    onCursorChange(selectedApproach.target_mm.map((v,i)=>v*(caseData.frame.startsWith('LPS')&&i<2?-1:1)) as Point3);
+  };
+  const restoreApproachView=()=>{if(previousApproachCamera.current)changeSettings({...latestSettings.current,camera:previousApproachCamera.current});previousApproachCamera.current=null;setApproachViewMode(null);};
+  const approachViewSignature=selectedApproach?JSON.stringify([selectedApproach.route_id,selectedApproach.entry_mm,selectedApproach.target_mm,selectedApproach.tool]):null;
+  useEffect(()=>{previousApproachCamera.current=null;setApproachViewMode(null);},[rendererIdentity]);
+  useEffect(()=>{
+    if(!approachViewMode||!selectedApproach||!caseData)return;
+    const rect=anatomy.current?.getBoundingClientRect();
+    const camera=approachCamera(selectedApproach,caseData.frame,approachViewMode,(rect?.width??1)/Math.max(1,rect?.height??1));
+    if(camera)changeSettings({...latestSettings.current,camera});
+  },[approachViewMode,approachViewSignature]);
   const priorSample = useMemo(() => {
     if (!displayedPrior || displayedPrior.caseHash !== caseData?.caseHash)
       return null;
@@ -263,6 +290,12 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
 
   useEffect(()=>{engine.current?.setWorkspaceSettings(settings);},[ready,graphicsGeneration,caseData,settings]);
   useEffect(()=>{engine.current?.restoreCamera(settings.camera);},[ready,graphicsGeneration,caseData,settings.camera]);
+  useEffect(()=>{engine.current?.setSelectedStructure(props.selectedStructure??null);},[ready,graphicsGeneration,caseData,props.selectedStructure]);
+  useEffect(()=>{
+    const request=props.structureFocusRequest??0;
+    if(!engine.current||request===lastStructureFocusRequest.current)return;
+    if(props.selectedStructure){const point=engine.current.focusStructure(props.selectedStructure,props.structureFocusPoint);if(point){lastStructureFocusRequest.current=request;onCursorChange(point);}}
+  },[ready,graphicsGeneration,caseData,props.selectedStructure,props.structureFocusRequest,props.structureFocusPoint]);
   useEffect(()=>{
     const renderer=engine.current,requested=props.surgicalInteraction??null;if(!renderer||!caseData)return;
     if(!requested?.view){setCommittedSurgical({identity:rendererIdentity,interaction:null});setModelDisplayPending(false);setModelDisplayError(null);}
@@ -640,6 +673,12 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             );
           })}
           <button onClick={()=>engine.current?.cameraPreset('oblique')} aria-label="Fit 3D view"><Focus size={14}/>Fit 3D</button>
+          {selectedApproach&&<>
+            <span className="viewer-tool-divider"/>
+            <button aria-label="Look along selected corridor" aria-pressed={approachViewMode==='along'} onClick={()=>setApproachView('along')}>Along corridor</button>
+            <button aria-label="Oblique view of selected corridor" aria-pressed={approachViewMode==='oblique'} onClick={()=>setApproachView('oblique')}>Corridor oblique</button>
+            {approachViewMode&&<button onClick={restoreApproachView}>Restore view</button>}
+          </>}
           <span className="viewer-tool-divider"/>
           <button aria-label="Show structures only" aria-pressed={!scanVolume.enabled} onClick={()=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:false}})}><Layers3 size={14}/>Structures</button>
           <button aria-label="Show scan volume with structures" aria-pressed={scanVolume.enabled} disabled={props.segmentationOnly||props.generatedSignal||Boolean(replay)||passiveRequested||rehearsalRequested} onClick={()=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,enabled:true}})}><Box size={14}/>Volume</button>
@@ -667,6 +706,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             <label><input type="checkbox" aria-label="Smooth 3D surfaces" checked={smoothSurfaces} onChange={e=>setSmoothSurfaces(e.target.checked)}/>Smooth surfaces</label>
             <label>Context appearance<select aria-label="Context appearance" value={settings.contextStyle??'uniform'} onChange={e=>changeSettings({...settings,contextStyle:e.target.value as 'shell'|'uniform'})}><option value="shell">Edge shell · structures visible</option><option value="uniform">Uniform transparency</option></select></label>
             <label>Slice annotations<select aria-label="Slice annotation style" value={settings.sliceOverlay??'fill'} onChange={e=>changeSettings({...settings,sliceOverlay:e.target.value as 'contour'|'fill'})}><option value="contour">Contours · source detail</option><option value="fill">Filled labels</option></select></label>
+            {tractDisplays.length>0&&<label><input type="checkbox" checked={showSliceTracts} onChange={e=>setShowSliceTracts(e.target.checked)}/>Supplied tracts in source slices</label>}
             <label><input type="checkbox" checked={settings.volumeRendering?.shadows!==false} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,shadows:e.target.checked}})}/>Volume shadows</label>
             <label><input type="checkbox" checked={settings.volumeRendering?.isolateLabels===true} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,isolateLabels:e.target.checked}})}/>Isolate selected tissue</label>
             {diagnosticLayer&&<label><input type="checkbox" checked={diagnosticVisible} onChange={e=>setDiagnosticVisible(e.target.checked)}/>Diagnostic overlay</label>}
@@ -782,7 +822,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               <span className="rl-viewer-route-key">Tool extends beyond imaged anatomy · outside tissue unassessed</span>
             )}
             {!modeled && !passiveRequested && !rehearsalRequested && !inspected &&
-              routes.slice(0, 2).map((route, index) => {
+              routes.slice(0, 3).map((route, index) => {
                 const { slot, color } = routeAppearance(route, index);
                 return (
                   <span
@@ -790,11 +830,14 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
                     className="rl-viewer-route-key"
                     style={{ color }}
                   >
-                    ● Route {slot}
+                    ● {route.scope==='geometric-approach'?(route.label??`Approach ${slot}`):`Route ${slot}`}
+                    {route.selected ? ' · selected' : ''}
                     {route.category === "rejected" ? " · rejected" : ""}
                   </span>
                 );
               })}
+            {selectedApproach&&<span className="rl-viewer-route-key">Corridor + virtual axis · geometric planning only · no tissue removed</span>}
+            {tractDisplays.length>0&&<span className="rl-viewer-route-key">Supplied tract bundles · streamline display preview</span>}
             {!modeled && !passiveRequested && !rehearsalRequested && !inspected &&
               routes.some((route) => route.geometry?.failures?.length) && (
                 <span
@@ -863,6 +906,13 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         }):[];
         const planningMemberships=planning&&view?planningSliceMemberships(planning,axis as 0|1|2,currentCursor[axis],slab).map(mark=>({...mark,pixel:mprPixel(view,plane,mark.positionMm)})):[];
         const planningLimits=planning&&view?planning.limitingStructures.filter(s=>Math.abs(s.positionMm[axis]-currentCursor[axis])<=slab).map(s=>({...s,pixel:mprPixel(view,plane,s.positionMm)})):[];
+        const tractPaths=showSliceTracts&&view?tractDisplays.filter(({tract})=>visibleLayers[tract.id]!==false).map(({tract,color,index})=>{
+          const selected=props.selectedStructure===tract.id;
+          const opacity=settings.layerOpacity?.[tract.id]??.66;
+          const segments=index.segments(axis as 0|1|2,currentCursor[axis],.65,1600);
+          const dimmed=Boolean(props.selectedStructure&&tractDisplays.some(t=>t.tract.id===props.selectedStructure));
+          return {id:tract.id,label:tract.label,color:settings.layerColor?.[tract.id]??color,selected,opacity:Math.min(1,opacity)*(dimmed&&!selected ? .4 : 1),path:segments.map(points=>points.map((point,i)=>`${i?'L':'M'}${mprPixel(view,plane,point).map(n=>n.toFixed(1)).join(',')}`).join('')).join('')};
+        }):[];
         return (
           <div
             key={plane}
@@ -913,6 +963,10 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               onPointerCancel={() => {engine.current?.endInteraction();props.onSliceStroke?.(null, 'end');}}
               onKeyDown={(event) => keySlice(event, plane)}
             >
+              {tractPaths.length>0&&image&&<svg aria-label="Supplied tract intersections with source slice" width="100%" height="100%" style={{position:'absolute',inset:0,pointerEvents:'none',zIndex:2}}>
+                <defs><clipPath id={`${tractClipId}-${plane}`}><rect x={image.left} y={image.top} width={image.width} height={image.height}/></clipPath></defs>
+                <g clipPath={`url(#${tractClipId}-${plane})`}>{tractPaths.map(tract=><path key={tract.id} d={tract.path} stroke={tract.color} strokeWidth={tract.selected?2:1} opacity={tract.opacity} fill="none"><title>{tract.label} · fibers within ±0.65 mm of this source plane · display preview</title></path>)}</g>
+              </svg>}
               {surgicalView&&<svg aria-label="Modeled surgical effects" width="100%" height="100%" style={{position:'absolute',inset:0,pointerEvents:'none',zIndex:3}}>{marks.map((m,i)=>m.points.length===1?<circle key={i} cx={m.points[0][0]} cy={m.points[0][1]} r={m.radius} fill={m.color}/>:<polyline key={i} points={m.points.map(p=>p.join(',')).join(' ')} stroke={m.color} strokeWidth={2} fill="none"/>)}</svg>}
               {planning&&<svg aria-label="Approach guides intersecting current MRI slab" width="100%" height="100%" style={{position:'absolute',inset:0,pointerEvents:'none',zIndex:3}}>
                 {planningRegions.map(region=><circle key={region.name} cx={region.center[0]} cy={region.center[1]} r={Math.max(2,region.radius)} stroke={region.color} strokeDasharray="4 3" strokeWidth={1.5} fill="none"><title>{region.name}</title></circle>)}

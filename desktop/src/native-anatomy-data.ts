@@ -3,7 +3,7 @@ import type {Point3} from './viewer/coordinates';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
 import type {ArrayDescriptor,ResectionApi,CasePayload} from './types';
 export type Layer={id:string;label:string;kind:string;role:string;color:string;review_status:string;source_series:string;probability?:unknown;provenance:unknown;coverage:string};
-export type Document={patient_id:string;study_timepoint?:string;snapshot_id:string;reference_series:string;revision:number;layers:Layer[];missing:string[];series:Array<{id:string;label?:string;modality:string;grid_spacing_mm:number[];timepoint:string}>;transforms:Record<string,{status:string;parent_series?:string|null}>};
+export type Document={display?:{initial_layers?:string[];cursor_ras_mm?:Point3;entry_ras_mm?:Point3};source_assets?:unknown[];patient_id:string;study_timepoint?:string;snapshot_id:string;reference_series:string;revision:number;layers:Layer[];missing:string[];series:Array<{id:string;label?:string;modality:string;grid_spacing_mm:number[];timepoint:string}>;transforms:Record<string,{status:string;parent_series?:string|null}>};
 export type Binding={collectionId:string;document:Document;viewState?:NativeViewState|null};
 export type Draft={layerId:string;undo:number;redo:number;changedVoxels:number}|null;
 export type Args=Record<string,unknown>;
@@ -58,7 +58,7 @@ export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cached
 }
 
 export interface NativeScanState {cursor:Point3|null;visible:Record<string,boolean>;settings:ViewerWorkspaceSettings}
-export interface NativeViewState {schema:'patient-anatomy-view-v1';patientId:string;snapshotId:string;seriesId:string;states:Record<string,NativeScanState>;vesselScope?:VesselScope;vesselDisplayVersion?:2}
+export interface NativeViewState {schema:'patient-anatomy-view-v1';patientId:string;snapshotId:string;seriesId:string;states:Record<string,NativeScanState>;vesselScope?:VesselScope;vesselDisplayVersion?:2;selectedApproachId?:string|null;selectedStructure?:string|null}
 export interface ComponentReview {reviewId:string;layerId:string;components:Array<{id:number;voxels:number;volumeMm3:number;center:Point3}>}
 export function isNativeBinding(value:unknown):value is Binding {return !!value&&typeof value==='object'&&'collectionId' in value&&'document' in value;}
 

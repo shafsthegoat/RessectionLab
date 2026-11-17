@@ -1,3 +1,4 @@
+import {NativeApproachPanel} from './NativeApproachPanel';
 import {useSurgical} from "./use-surgical";
 import {caseImageEvidence,caseLayerEvidence,conditionalRehearsalNotice} from './data-case-evidence';
 import {SurgicalPanel} from "./SurgicalPanel";
@@ -720,7 +721,7 @@ export default function App() {
     : imaging.selected ? "Select the reference scan before preparing a rehearsal."
     : !payload.brainMask || !Object.values((payload.metadata.anatomy_layers??{}) as Record<string,{kind?:string}>).some(layer=>layer.kind==='tumor')
       ? "This episode requires brain support and a named tumor layer. Missing anatomy remains unassessed." : undefined;
-  const busy = frozenCusaPending || surgical.pending || rehearsal.pending || native.busy || !!operation || hydrating || episodePending || imaging.pending || diagnostic.pending;
+  const busy = frozenCusaPending || surgical.pending || rehearsal.pending || native.busy || native.planning.pending || !!operation || hydrating || episodePending || imaging.pending || diagnostic.pending;
   const readonly = !!api?.readOnly;
   const controlsBlocked = !!native.binding || busy || engineStopped || !display.planningInteractionPermitted;
   const comparisonAvailable = !readonly && !engineStopped && engineOperations.has("inspectDevelopmentEpisodeComparison");
@@ -1515,13 +1516,13 @@ export default function App() {
       </header>
 
       <nav className="navigation-rail" aria-label="Workspace navigation">
-        {([{id:"cases",label:"Cases",icon:FolderOpen},{id:"data",label:"Data",icon:Scan},{id:"anatomy",label:"Anatomy",icon:Layers3},{id:"rehearsal",label:"Rehearse",icon:Target}] as const).map(item=><button key={item.id}
+        {([{id:"cases",label:"Cases",icon:FolderOpen},{id:"data",label:"Data",icon:Scan},{id:"anatomy",label:"Anatomy",icon:Layers3},...(native.binding?[{id:'research' as const,label:'Plan',icon:Target}]:[]),{id:"rehearsal",label:"Rehearse",icon:Target}] as const).map(item=><button key={item.id}
           className={`rail-button ${workbenchTab===item.id?"selected":""}`} aria-label={item.id==='anatomy'?'3D workspace':item.label}
           aria-current={workbenchTab===item.id?'page':undefined} title={item.id==='anatomy'?'3D workspace':item.label}
           onClick={()=>{if(item.id==='rehearsal'){resetDisplayToPrimary();setEpisodeVisible(false);setCertifiedReplay(null);setCameraMode('instruments')}else rehearsal.hide();setWorkbenchTab(item.id);setCasePanel(true)}}><item.icon size={19}/><span>{item.label}</span></button>)}
         <div className="rail-spacer" />
-        <button className={`rail-button ${workbenchTab==='research'?'selected':''}`} aria-label="Advanced research workflows"
-          title="Earlier experimental workflows" onClick={()=>{setWorkbenchTab('research');setCasePanel(true)}}><FlaskConical size={18}/><span>Research</span></button>
+        {!native.binding&&<button className={`rail-button ${workbenchTab==='research'?'selected':''}`} aria-label="Advanced research workflows"
+          title="Earlier experimental workflows" onClick={()=>{setWorkbenchTab('research');setCasePanel(true)}}><FlaskConical size={18}/><span>Research</span></button>}
         <span className="rail-local" title="Processing stays on this Mac"><ShieldCheck size={17}/></span>
       </nav>
 
@@ -1545,8 +1546,8 @@ export default function App() {
           </>}
         </>:native.binding&&workbenchTab!=='cases'?<>
           <div className="panel-heading"><span className="eyebrow">PATIENT WORKSPACE</span><button className="icon-button" aria-label="Collapse case panel" onClick={()=>setCasePanel(false)}><PanelLeftClose size={15}/></button></div>
-          <div className="workspace-tabs"><button className={workbenchTab==='data'?'selected':''} onClick={()=>setWorkbenchTab('data')}>Scans</button><button className={workbenchTab==='anatomy'?'selected':''} onClick={()=>setWorkbenchTab('anatomy')}>Anatomy</button></div>
-          {workbenchTab==='research'?<NativeResearch workspace={native}/>:<NativeSidebar workspace={native} tab={workbenchTab==='data'?'data':'anatomy'}/>}
+          <div className="workspace-tabs"><button className={workbenchTab==='data'?'selected':''} onClick={()=>setWorkbenchTab('data')}>Scans</button><button className={workbenchTab==='anatomy'?'selected':''} onClick={()=>setWorkbenchTab('anatomy')}>Anatomy</button><button className={workbenchTab==='research'?'selected':''} onClick={()=>setWorkbenchTab('research')}>Plan & compare</button></div>
+          {workbenchTab==='research'?<NativeApproachPanel workspace={native}/>:<NativeSidebar workspace={native} tab={workbenchTab==='data'?'data':'anatomy'}/>}
         </>:<>
         {workbenchTab!=="research" && <>
           <div className="panel-heading"><span className="eyebrow">{workbenchTab==='cases'?'PATIENT LIBRARY':workbenchTab==='data'?'DATA & REGISTRATION':'ANATOMY LAYERS'}</span>
@@ -1895,7 +1896,10 @@ export default function App() {
               overlayOpacity={overlayOpacity}
               cursor={displayedCursor}
               onCursorChange={native.binding ? native.setCursor : imaging.selected ? imaging.setCursor : setCursor}
-              routes={!native.binding && display.primaryOverlaysPermitted ? viewerRoutes : []}
+              routes={native.binding?native.planning.routes:display.primaryOverlaysPermitted?viewerRoutes:[]}
+              selectedStructure={native.binding?native.selectedStructure:null}
+              structureFocusRequest={native.structureFocusRequest}
+              structureFocusPoint={native.structureFocusPoint}
               cameraMode={cameraMode}
               cameraFitRequest={cameraFitRequest}
               replay={!native.binding && display.primaryOverlaysPermitted ? viewerReplay : null}

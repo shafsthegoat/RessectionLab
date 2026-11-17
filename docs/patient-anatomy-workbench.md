@@ -1,5 +1,85 @@
 # Native patient anatomy workbench
 
+
+## EDEN source anatomy and saved approaches (2026-11-17)
+
+The normal **Cases → Anatomy → Plan & compare** workflow now opens prepared
+EDEN2020 healthy-volunteer studies. The primary demonstration is
+`EDEN2020:CTRL_1277`; `CTRL_0866` checks portability. Preparation reuses existing
+T1, original TOF (not MIP), FLAIR, SWI, head labels, registration receipts,
+and seven publisher-named tract bundles. The separate synthetic target reuses
+an existing core/rim annotation. Healthy source scans and streamlines remain
+unchanged; no disease displacement, edema or postoperative recovery is inferred.
+
+Private studies live under the configured HDD root at
+`prepared/eden2020-planning-v1/<subject>/patient-anatomy.json`. Local prepared
+library links end in `.anatomy.json`; opaque library IDs resolve their canonical
+manifest without duplicating recent cards. The preparation command is:
+
+```sh
+.venv/bin/python scripts/prepare_eden2020_planning.py --subjects CTRL_1277 CTRL_0866
+```
+
+It verifies the mounted data-root marker, reuses existing conversions, and writes
+source-to-package maps beside each study. Existing completed native studies are
+reused. Inventory, checksums, private review evidence and captures stay under
+ignored `testcases/eden2020-planning-v1`, linked to the HDD. No imaging or weights
+belong in Git. Raw 4D diffusion, gradients and reverse-phase acquisitions remain
+source assets, never flattened structural scans. SWI, SWI magnitude and SWI phase
+are separate import choices; EDEN's processed SWIp does not supply separate
+magnitude/phase or a validated venous segmentation. T1 vein estimates retain their
+T1 provenance and do not become SWI-derived veins.
+
+Use the structure legend to show, isolate, recolor, change opacity or focus a
+named bundle. Source slices share a physical RAS cursor with 3D; slab-clipped
+fiber previews provide slice context. Reversible scalar previews and complete
+streamline subsets bound display load; measurements use original grids and
+streamline segments. Source-bound imported registrations survive automatic
+opening; **Estimate** is still an explicit replacement operation. Their
+independent anatomical accuracy remains unmeasured.
+
+In **Plan**, choose entry/target at the cursor or edit their coordinates, set a
+corridor radius and declared clearance/length constraints, then create a manual
+path or **Suggest approaches**. Suggestions enumerate a bounded selected entry
+patch, exclude inferior entries and known cerebellar/brainstem conflicts, and
+retain at most three distinct alternatives. Fewer eligible paths produce an
+explanation. Length, available-label proximity and target-centre coverage drive
+transparent preferences; no universal safety score is computed.
+
+A selected approach shows its capsule, entry region and illustrative virtual
+axis. **Along corridor** and **Corridor oblique** reuse the existing camera.
+The entry region is hypothetical, with no measured CT skull opening. Edits
+recompute source-bound comparisons; selecting a concern highlights and centres
+that anatomy. Measurements include full capsule field-of-view containment,
+per-label conservative voxel-cell proximity/intersections, supplied streamline
+proximity, target voxel-centre reach and supported brain traversal. These are
+static geometric quantities, not clinical margins, tissue removal, functional
+outcomes or execution permission. Unlabeled anatomy, limited sensitivity and
+unmeasured alignment remain unknown; empty labels stay unassessed. Existing
+physical/simulator refusals are unchanged.
+
+**Save** preserves view state, selected structure/approach and comparison sidecar;
+**Save patient study file…** includes them in the existing portable `.rsworkspace`
+format. Source, assessment-engine or parameter changes mark cached assessments
+stale. Geometry lives in `anatomy-approaches.json`, separately from immutable
+anatomy revisions. The existing `anatomyPlan` operation accepts `list`, `suggest`,
+`upsert`, `assess` and `delete`; its original direct-clearance request still works.
+
+`desktop/electron/verify-eden-planning.cjs` drives the actual React/preload/Python
+workflow with hidden windows. Supply `RESSECTIONLAB_DATA_ROOT`, `EDEN_STUDY` and a
+fresh `EDEN_OUTPUT`; `EDEN_PHASE=reopen` checks the saved comparison in a fresh
+process. It captures real app frames and records source bindings and interactions.
+The private `testcases/eden2020-planning-v1/README.md` identifies the verified
+app build, recording, primary case and second-study results. The packaged
+walkthrough exercises library opening, named tract focus, three proposals,
+radius-driven recomputation, saving, cold reopening, concern focus and along-axis
+viewing; the independent source/display and geometry reviews are stored beside it.
+
+Workflow references: [EDEN2020 source](https://zenodo.org/records/3994749),
+[Medivis Studio](https://www.medivis.com/studio), and
+[Brainlab cranial planning](https://www.brainlab.com/surgery-products/overview-neurosurgery-products/cranial-planning/).
+
+
 ## Automatic alignment and skull display (2026-10-15)
 
 Native workspace opening, imports, and scan selection now ensure source-bound

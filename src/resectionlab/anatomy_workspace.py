@@ -18,7 +18,10 @@ def checked_view(collection, state):
     if 'vesselDisplayVersion' in state and (type(state['vesselDisplayVersion']) is not int or state['vesselDisplayVersion'] != 2):
         raise ValueError('Unsupported vessel display version')
     series = {s['id'] for s in collection.document['series']}
-    layers = {s['id'] for s in collection.document['layers']}
+    layers = {s['id'] for s in collection.document['layers']} | {s['id'] for s in collection.document.get('tractography', [])}
+    for key in ('selectedApproachId', 'selectedStructure'):
+        if state.get(key) is not None and (not isinstance(state[key], str) or len(state[key]) > 256):
+            raise ValueError('Invalid selected planning display object')
     if state.get('seriesId') not in series or not isinstance(state.get('states'), dict) or not set(state['states']) <= series:
         raise ValueError('View references an unknown scan')
     # Bound nesting/size and reject non-finite JSON before admitting display preferences.

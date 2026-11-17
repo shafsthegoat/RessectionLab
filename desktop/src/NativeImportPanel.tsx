@@ -2,7 +2,7 @@ import {useState} from 'react';
 import type {NativeWorkspace} from './use-native-workspace';
 import {studyLabel} from './native-study-state';
 
-export const importSequences=['T1','T1CE','T2','FLAIR','CT','MRA','CTA','TOF'] as const;
+export const importSequences=['T1','T1CE','T2','FLAIR','CT','MRA','CTA','TOF','SWI','SWI_MAGNITUDE','SWI_PHASE'] as const;
 export const importRoles=['tumor','brain','bone','vessels','context'] as const;
 type RoleRow={value:string;role:string};
 

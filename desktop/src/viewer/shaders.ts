@@ -53,17 +53,19 @@ uniform vec2 uWindow;
 uniform float uOverlay;
 uniform int uSliceContours;
 uniform float uLayerOpacities[128];
+uniform int uSelectedLayer;
 uniform int uClipEnabled;
 uniform vec4 uClipPlane;
 uniform int uThreeD;
 uniform int uVisibleBits;
 uniform vec3 uColors[128];
 uniform int uRouteCount;
-uniform vec3 uShaftStart[2];
-uniform vec3 uShaftEnd[2];
-uniform vec3 uTipEnd[2];
-uniform vec2 uRadii[2];
-uniform vec3 uRouteColors[2];
+uniform int uSelectedRoute;
+uniform vec3 uShaftStart[3];
+uniform vec3 uShaftEnd[3];
+uniform vec3 uTipEnd[3];
+uniform vec2 uRadii[3];
+uniform vec3 uRouteColors[3];
 
 float scalar(ivec3 index) {
   // NumPy xyz C order has z fastest; the GL texture uses z as its width.
@@ -231,6 +233,7 @@ void main() {
   for(int i=0;i<128;i++) { if(i>=uLayerCount)break;
     if(removed || uLayerEnabled[i]<0.5 || !hasLabel(packed,i))continue;
     float layerAlpha=clamp(uOverlay*uLayerOpacities[i]/0.66,0.0,1.0);
+    if(i==uSelectedLayer)layerAlpha=min(1.0,layerAlpha*1.4);
     if(contours){
       bool interior=hasLabel(contourA,i)&&hasLabel(contourB,i)&&hasLabel(contourC,i)&&hasLabel(contourD,i);
       if(!interior)color=mix(color,uColors[i],min(0.95,layerAlpha*1.65));
@@ -244,7 +247,9 @@ void main() {
   if(effect==2) color=mix(color,vec3(0.72,0.65,0.91),0.58);
   if(effect==3) color=mix(color,vec3(0.94,0.71,0.40),0.66);
   if(effect==4) color=mix(color,vec3(0.93,0.80,0.54),0.36);
-  for(int i=0;i<2;i++) if(i<uRouteCount) {
+  // Selected planning geometry is composed last at overlaps, independently of
+  // stable A/B/C identity and the order in which alternatives are presented.
+  for(int pass=0;pass<2;pass++) for(int i=0;i<3;i++) if(i<uRouteCount && ((pass==0 && i!=uSelectedRoute)||(pass==1 && i==uSelectedRoute))) {
     float shaft=capsuleDistance(world,uShaftStart[i],uShaftEnd[i])-uRadii[i].x;
     float tip=capsuleDistance(world,uShaftEnd[i],uTipEnd[i])-uRadii[i].y;
     if(min(shaft,tip)<=0.0) color=mix(color,uRouteColors[i],0.82);

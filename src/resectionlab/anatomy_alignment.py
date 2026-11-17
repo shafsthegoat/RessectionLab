@@ -285,6 +285,20 @@ def ensure_alignment(c, *, force=False, cancelled=lambda: False, progress=lambda
     def grid(row):
         if row['id'] not in grids: grids[row['id']] = load_grid(c, row, cancelled)
         return grids[row['id']]
+    supplied = set()
+    if not force:
+        for row in rows:
+            existing = c.document['transforms'].get(row['id'], {})
+            if existing.get('status') != 'source-provided':
+                continue
+            try:
+                # Imported transforms have their own provenance, not this
+                # optimizer's input_key/quality cache. Preserve the explicit
+                # source association without promoting anatomical review.
+                rigid(c.registration_matrix(row['id']))
+            except ValueError:
+                continue
+            supplied.add(row['id'])
     with alignment_lock(cancelled, progress):
         for row in [reference]+rows:
             check_cancel(cancelled)
@@ -297,12 +311,17 @@ def ensure_alignment(c, *, force=False, cancelled=lambda: False, progress=lambda
             if header.header.get_xyzt_units()[0] != 'mm':
                 raise ValueError('Automatic alignment requires declared millimetre source units')
             q, qc = header.get_qform(coded=True); s, sc = header.get_sform(coded=True)
-            if qc and sc and not np.allclose(q, s, atol=1e-3):
+            if qc and sc and not np.allclose(q, s, atol=1e-3) and row['id'] not in supplied:
                 raise ValueError('Conflicting NIfTI qform/sform; resolve source geometry before alignment')
             if not np.allclose(header.affine, row['affine'], atol=1e-5):
                 raise ValueError('Source header geometry changed before alignment')
         for i, row in enumerate(rows):
             check_cancel(cancelled)
+            if row['id'] in supplied:
+                # Revalidate after earlier parent edges; a changed graph must
+                # not silently preserve an obsolete composed transform.
+                rigid(c.registration_matrix(row['id']))
+                continue
             parent = anchor if anchor is not None and row in cts and row is not anchor else reference
             key = input_key(c, row, parent)
             old = c.document['transforms'].get(row['id'])

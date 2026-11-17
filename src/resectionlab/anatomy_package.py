@@ -33,6 +33,10 @@ def save_package(collection, destination, *, check=lambda: None, progress=lambda
         files[name] = checksum
     if (collection.root / 'workspace-view.json').exists():
         files['workspace-view.json'] = None
+    if (collection.root / 'anatomy-approaches.json').exists():
+        from .anatomy_approaches import read_approaches
+        read_approaches(collection)
+        files['anatomy-approaches.json'] = file_hash(collection.root / 'anatomy-approaches.json')
     if (collection.root / 'surgical-toolbox.json').exists():
         if (collection.root / 'surgical-toolbox.json').stat().st_size > 32 * 1024**2:
             raise ValueError('Surgical history exceeds archive budget')
@@ -82,8 +86,8 @@ def open_package(filename, working_root, *, check=lambda: None):
             if (len(members) > 10000 or len(names) != len(set(names)) or
                     sum(m.file_size for m in members) > MAX_BYTES or 'patient-anatomy.json' not in names):
                 raise ValueError('Invalid or oversized patient study file')
-            if any(m.file_size > (16 * 1024**2 if m.filename == 'patient-anatomy.json' else 256 * 1024)
-                   for m in members if m.filename in {'patient-anatomy.json', 'workspace-view.json'}):
+            if any(m.file_size > (16 * 1024**2 if m.filename == 'patient-anatomy.json' else 2 * 1024**2 if m.filename == 'anatomy-approaches.json' else 256 * 1024)
+                   for m in members if m.filename in {'patient-anatomy.json', 'workspace-view.json', 'anatomy-approaches.json'}):
                 raise ValueError('Oversized patient study metadata')
             for member in members:
                 check()
@@ -98,6 +102,8 @@ def open_package(filename, working_root, *, check=lambda: None):
                         check()
                         out.write(block)
         collection = PatientImagingCollection(temporary)
+        from .anatomy_approaches import read_approaches
+        read_approaches(collection)
         for name, checksum in referenced_files(collection.document):
             check()
             if file_hash(collection.path(name)) != checksum:

@@ -7,7 +7,10 @@ import numpy as np
 from .patient_anatomy import affine, world, reconstruction_lock, file_hash
 
 
-MRI_SEQUENCES = {"T1", "T1CE", "T2", "FLAIR", "MRA", "TOF"}
+MRI_SEQUENCES = {
+    "T1", "T1CE", "T2", "FLAIR", "MRA", "TOF",
+    "SWI", "SWI_MAGNITUDE", "SWI_PHASE",
+}
 CT_SEQUENCES = {"CT", "CTA"}
 IMAGING_MODALITIES = MRI_SEQUENCES | CT_SEQUENCES
 OPERATIVE_LABELS = {
@@ -66,7 +69,7 @@ def imaging_modality(modality, *, dicom_modality=None):
     value = str(modality).strip().upper() if modality is not None else ""
     if value not in IMAGING_MODALITIES:
         raise ValueError(
-            f"Unsupported imaging sequence {modality!r}; choose T1, T1CE, T2, FLAIR, CT, MRA, TOF or CTA explicitly"
+            f"Unsupported imaging sequence {modality!r}; choose T1, T1CE, T2, FLAIR, SWI, SWI_MAGNITUDE, SWI_PHASE, CT, MRA, TOF or CTA explicitly"
         )
     if source == "MR" and value not in MRI_SEQUENCES:
         raise ValueError(f"DICOM MR cannot be imported as {value}; choose an MRI sequence")
@@ -77,10 +80,46 @@ def imaging_modality(modality, *, dicom_modality=None):
 
 def import_nifti_series(collection, path, *, series_id, modality, timepoint="preoperative", patient_id=None):
     """Add a typed NIfTI source without guessing sequence from its filename."""
-    return collection.add_series(
+    row = collection.add_series(
         path, series_id=series_id, modality=imaging_modality(modality),
         timepoint=timepoint, patient_id=patient_id,
     )
+    _swi_component(row)
+    return row
+
+
+def _swi_component(row):
+    components = {"SWI": "processed susceptibility-weighted image",
+                  "SWI_MAGNITUDE": "magnitude", "SWI_PHASE": "phase"}
+    if row["modality"] in components:
+        row["susceptibility_component"] = components[row["modality"]]
+        row["susceptibility_interpretation"] = (
+            "supplied source contrast; no venous segmentation or phase units inferred"
+        )
+
+
+def tractography_geometry(path):
+    """Decode supported streamline formats into their declared physical RAS frame.
+
+    Nibabel applies the TrackVis voxel-centre convention and header transform;
+    callers must separately establish registration to the associated source MRI.
+    """
+    import nibabel as nib
+    from .patient_anatomy import MAX_ARRAY
+
+    tractogram = nib.streamlines.load(path, lazy_load=False).tractogram.to_world()
+    streamlines = tractogram.streamlines
+    if streamlines._data.nbytes > MAX_ARRAY:
+        raise ValueError("Tractography exceeds local geometry limit")
+    points = np.asarray(streamlines._data, dtype=np.float32)
+    lengths = np.asarray([len(s) for s in streamlines], dtype=np.uint64)
+    if (points.ndim != 2 or points.shape[1] != 3 or not np.isfinite(points).all()
+            or np.any(lengths < 2) or int(lengths.sum()) != len(points)):
+        raise ValueError("Tractography requires finite RAS-mm polylines with at least two points")
+    offsets = np.concatenate([np.zeros(1, np.uint64), np.cumsum(lengths)])
+    if offsets.nbytes > MAX_ARRAY or offsets[-1] > np.iinfo(np.uint32).max:
+        raise ValueError("Tractography exceeds local geometry limit")
+    return points, offsets.astype(np.uint32)
 
 
 def import_dicom(collection, directory, *, modality=None, sequence_by_series=None, timepoint="preoperative"):
@@ -148,6 +187,7 @@ def import_dicom(collection, directory, *, modality=None, sequence_by_series=Non
             modality=sequence,
             timepoint=timepoint,
         )
+        _swi_component(row)
         row["label"] = str(getattr(header, "SeriesDescription", "")) or f"{row['modality']} series {len(imported) + 1}"
         row["dicom_modality"] = source_modality
         row["dicom_originals"] = [collection.original(p) for p in files]
@@ -299,21 +339,11 @@ def import_anatomy_derivative(
     if role_map is not None and kind != "labels":
         raise ValueError("roleMap applies only to categorical labels")
     if kind == "tractography":
+        points, offsets = tractography_geometry(p)
         original = c.original(p)
-        tractogram = nib.streamlines.load(p, lazy_load=False).tractogram
-        tractogram = tractogram.to_world()
-        streamlines = tractogram.streamlines
-        if streamlines._data.nbytes > MAX_ARRAY:
-            raise ValueError("Tractography exceeds local geometry limit")
-        points = np.asarray(streamlines._data, dtype=np.float32)
-        offsets = np.concatenate(
-            [
-                np.array([0], np.uint32),
-                np.cumsum([len(s) for s in streamlines], dtype=np.uint32),
-            ]
-        )
         item = {
             "id": identity,
+            "patient_id": c.document["patient_id"],
             "kind": kind,
             "label": label,
             "source_series": source_series,
@@ -322,6 +352,8 @@ def import_anatomy_derivative(
             "offsets": c.put_array(offsets),
             "review_status": "unreviewed source registration and tractography",
             "role": "context",
+            "coordinate_basis": "source physical RAS+ millimeters; file header interpreted by nibabel",
+            "identity_basis": "explicit supplied label; functional identity not independently verified",
         }
         c.document.setdefault("tractography", []).append(item)
         return item

@@ -76,3 +76,17 @@ test('prepared HDD links and a canonical recent selection remain one stable loca
   await fs.unlink(source);
   assert.deepEqual(await library.list(),[]);
 });
+
+test('prepared native manifest aliases and portable studies are discoverable without duplicate cards', async t => {
+  const root=await fs.mkdtemp(path.join(os.tmpdir(),'rsl-native-prepared-'));
+  t.after(()=>fs.rm(root,{recursive:true,force:true}));
+  const prepared=path.join(root,'prepared'),source=path.join(root,'source');await fs.mkdir(prepared);await fs.mkdir(source);
+  const manifest=path.join(source,'patient-anatomy.json');
+  await fs.writeFile(manifest,JSON.stringify({schema:'patient-anatomy-v1',patient_id:'EDEN:fixture',series:[{timepoint:'preoperative'}]}));
+  const alias=path.join(prepared,'EDEN-fixture.anatomy.json');await fs.symlink(manifest,alias);
+  await fs.writeFile(path.join(prepared,'portable.rsworkspace'),'portable');
+  const library=new CaseLibrary(path.join(root,'user'),prepared);await library.remember(manifest);
+  const rows=await library.list();assert.equal(rows.length,2);
+  assert.equal(rows.filter(row=>row.native).length,1);assert.equal(rows.find(row=>row.native).scanCount,1);
+  assert(rows.some(row=>row.portable));assert.equal(await fs.realpath(await library.resolve(rows.find(row=>row.native).id)),await fs.realpath(manifest));
+});

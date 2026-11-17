@@ -128,7 +128,7 @@ export class InstrumentDisplayState {
   private routes: readonly InstrumentCapsuleDisplay[] = [];
   private inspection: InspectionToolDisplay | null = null;
   private replay = false;
-  setRoutes(routes: readonly InstrumentCapsuleDisplay[]): void { this.routes = routes.slice(0, 2); }
+  setRoutes(routes: readonly InstrumentCapsuleDisplay[]): void { this.routes = routes.slice(0, 3); }
   setInspection(volume: ViewerVolume, input: ViewerInspectionTool | null): InspectionToolDisplay | null {
     this.inspection = null; // Invalid replacements must never retain the prior tool.
     if (input && !this.replay) this.inspection = validateInspectionTool(volume, input);

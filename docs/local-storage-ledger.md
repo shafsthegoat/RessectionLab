@@ -22,7 +22,7 @@ establish scientific readiness or a completed build; consult each run's receipts
 | Area | Locations and contents |
 | --- | --- |
 | Acquired originals | `sources/`: RESECT, UCSF-PDGM, EDEN2020 healthy record 3994749, IXI, IXI vascular record 17393202, Lausanne, meningioma and TopBrain collections, with acquisition provenance. |
-| EDEN projects/work | `prepared/eden2020-synthetic-v1/` and `prepared/eden2020-anatomy-v2/`: original synthetic cohort and completed segmented/organic-tumor projects, verification and prior attempts. Permanent requested deliverables remain distinct from temporary run output. |
+| EDEN projects/work | `prepared/eden2020-synthetic-v1/` and `prepared/eden2020-anatomy-v2/`: original synthetic cohort and completed segmented/organic-tumor projects. `prepared/eden2020-planning-v1/collection.json`: native patient-anatomy studies for CTRL_1277 (primary) and CTRL_0866, retaining native T1/TOF/FLAIR/SWI grids, cached estimates, seven supplied named tract bundles each and separate existing synthetic targets; per-study `source-map.json` records exact reuse and limits. Permanent requested deliverables remain distinct from temporary run output. |
 | Other preparation | `prepared/`: `header-precision/`, `placement-support/`, `recipes/`, `synthetic-fields/`, `topbrain/`. |
 | Case library | `cases/real/`, `cases/synthetic/`, `cases/controls/`: native projects; use their manifests for roles and supported capabilities. |
 | Model assets | `cache/models/`: `synthstrip-v1/`, `poc-vesselfm-base/`, `poc-totalsegmentator/`, `supersynth-source/`; availability, terms and installation state are in local receipts. |

@@ -43,6 +43,7 @@ def dispatch(session, operation, args, request, progress):
         session.anatomy_transfer_paths = set()
         session.anatomy_removal = {}
     if operation == "anatomyCreate":
+        session.anatomy_plan_cache = None
         c = PatientImagingCollection.create(args["path"], args["patientId"], timepoint=args.get("timepoint"))
         request.begin_commit()
         c.save("create patient imaging collection")
@@ -53,6 +54,7 @@ def dispatch(session, operation, args, request, progress):
         session.anatomy_removal = {}
         return {"collectionId": key, "document": c.document, "viewState": read_view(c)}
     if operation == "anatomyOpen":
+        session.anatomy_plan_cache = None
         path = Path(args["path"]).resolve()
         package_path = path if path.suffix == ".rsworkspace" else None
         if path.suffix == ".rsworkspace":
@@ -112,6 +114,11 @@ def dispatch(session, operation, args, request, progress):
             raise ValueError(
                 "Select up to 128 anatomical layers"
             )
+        tract_ids = {row["id"] for row in c.document.get("tractography", [])}
+        known_ids = {row["id"] for row in c.document["layers"]} | tract_ids
+        if not set(requested) <= known_ids:
+            raise ValueError("Unknown anatomical layer or tract bundle")
+        requested = [name for name in requested if name not in tract_ids]
         native = affine(reference["affine"])
         t = c.document["transforms"].get(reference["id"])
         preview_alignment = args.get("previewAlignment") is True
@@ -124,8 +131,20 @@ def dispatch(session, operation, args, request, progress):
         except ValueError:
             displayed, estimated, registered = native, False, False
         alignment_previews = [reference["id"]] if estimated else []
-        shape = tuple(reference["data"]["shape"])
-        cache_key = (key, c.identity(), reference["id"], reference["data"]["sha256"],
+        image_data = reference["data"]
+        preview = next((item for item in reference.get("preview_pyramid", [])
+                        if item.get("factor") == 2), None)
+        # MRI acceleration is reversible and never feeds source measurements.
+        # Native layer geometry is transformed into this displayed voxel frame.
+        if preview and np.prod(reference["data"]["shape"]) > 16_000_000:
+            relative = np.linalg.inv(native) @ affine(preview["affine"])
+            native = affine(preview["affine"])
+            displayed = displayed @ relative
+            image_data = preview["data"]
+        else:
+            preview = None
+        shape = tuple(image_data["shape"])
+        cache_key = (key, c.identity(), reference["id"], image_data["sha256"],
                      displayed.tobytes(), bool(args.get("original")), preview_alignment, vessel_scope)
         cacheable = not (session.anatomy_drafts.get(key) or key in session.anatomy_removal
                          or args.get("highlightComponents"))
@@ -285,6 +304,15 @@ def dispatch(session, operation, args, request, progress):
                     and t["status"] in {"reference", "reviewed", "source-provided"}
                 ):
                     transform = np.linalg.inv(displayed) @ affine(t["matrix"])
+                elif registered and t and preview_alignment and t["status"] == "unreviewed":
+                    # Streamlines share their source scan's explicit alignment
+                    # preview; this path remains display-only and never changes
+                    # quantitative or physical source admission.
+                    _, estimated_tract = display_affine(c, c.series(sid), preview=True)
+                    if not estimated_tract:
+                        raise ValueError("Tract preview alignment is not available")
+                    transform = np.linalg.inv(displayed) @ c.registration_matrix(sid)
+                    alignment_previews.append(sid)
                 else:
                     continue
                 points = world(transform, c.array(tract["points_ras_mm"])).astype(
@@ -304,7 +332,7 @@ def dispatch(session, operation, args, request, progress):
         if cache["tracts"] is None:
             cache["tracts"] = tracts
         if cache["mri"] is None:
-            cache["mri"] = transfer(c.array(reference["data"]), "float32")
+            cache["mri"] = transfer(c.array(image_data), "float32")
         result = {
             "tractography": cache["tracts"],
             "caseId": c.document["patient_id"],
@@ -316,6 +344,7 @@ def dispatch(session, operation, args, request, progress):
             "compartments": layers,
             "labelSets": list(label_sets.values()),
             "modality": reference["modality"],
+            "displayPreview": None if preview is None else {"factor": 2, "meaning": "reversible source-image display preview; anatomical measurements retain native grids"},
             "unavailableLayers": unavailable,
             "registrationStatus": ("alignment preview" if alignment_previews else "patient frame")
             if registered else "independent source frame",
@@ -398,6 +427,16 @@ def dispatch(session, operation, args, request, progress):
     if operation == "anatomyPlan":
         if key in session.anatomy_drafts:
             raise ValueError("Commit or reject the correction before planning")
+        if args.get("action"):
+            from .anatomy_approaches import dispatch_plan, NativeRouteGeometry
+
+            cache = getattr(session, "anatomy_plan_cache", None)
+            if cache is None or cache.snapshot.snapshot_id != c.identity() or cache.c.root != c.root:
+                cache = NativeRouteGeometry(PatientAnatomySnapshot.capture(c), check=request.check)
+                session.anatomy_plan_cache = cache
+            else:
+                cache.check = request.check
+            return dispatch_plan(c, args, geometry=cache, commit=request.begin_commit)
         from .anatomy_planning import route_clearance
 
         return route_clearance(

@@ -1,12 +1,10 @@
 """Snapshot-to-existing-planner adapter. Context is never a resection target."""
 
-from pathlib import Path
 import numpy as np
-from scipy.spatial import cKDTree
 from .core import CaseData, SourceRef, array_digest
-from .critical_evidence import CriticalStructureEvidence, resolve_critical_evidence
+from .critical_evidence import CriticalStructureEvidence
 from .data_policy import ANATOMY_PRETRAINED_POLICY
-from .patient_anatomy import world, affine, digest, file_hash
+from .patient_anatomy import world, digest, file_hash
 
 
 def planning_case(snapshot, *, removed=None):
@@ -129,55 +127,29 @@ def planning_case(snapshot, *, removed=None):
 
 
 def route_clearance(snapshot, start, end, radius_mm=1.0):
-    """Conservative voxel-cell capsule query against the canonical critical resolver."""
-    if (
-        not np.isfinite([*start, *end, radius_mm]).all()
-        or np.asarray(start).shape != (3,)
-        or np.asarray(end).shape != (3,)
-        or not 0 < radius_mm <= 50
-    ):
-        raise ValueError(
-            "A finite physical route and positive radius <=50 mm are required"
-        )
-    case = planning_case(snapshot)
-    constraints = resolve_critical_evidence(case)
-    a = case.affine
-    spacing = np.linalg.norm(a[:3, :3], axis=0)
-    length = np.linalg.norm(np.asarray(end) - start)
-    if length > 1000:
-        raise ValueError("Route exceeds bounded patient workspace")
-    count = max(2, int(np.ceil(length / (spacing.min() * 0.25))) + 1)
-    points = np.linspace(start, end, count)
-    step = length / (count - 1)
-    results = {}
-    for name, mask in constraints.masks.items():
-        if mask is None:
-            results[name] = {"available": False}
+    """Native inspection independent of simulator admission, with whole-cell bounds."""
+    from .anatomy_approaches import NativeRouteGeometry, VASCULAR_KINDS
+
+    measured = NativeRouteGeometry(snapshot).measure(start, end, radius_mm)
+    results = {name: {"available": False} for name in ("vessels", "motor", "language")}
+    for item in measured["structures"]:
+        name = "vessels" if item["kind"] in VASCULAR_KINDS else item["kind"]
+        if not item["available"]:
+            results.setdefault(name, {"available": False})
             continue
-        indices = np.argwhere(mask)
-        if not len(indices):
-            results[name] = {"available": False}
-            continue
-        distance = cKDTree(world(a, indices)).query(points)[0]
-        # Circumscribed cell radius plus half sample step; never treats a thin
-        # obstacle as safe merely because a centreline sample missed its cell.
-        cell_radius = 0.5 * sum(np.linalg.norm(a[:3, i]) for i in range(3))
-        clearance = float(distance.min() - radius_mm - cell_radius - step * 0.5)
-        results[name] = {
-            "available": True,
-            "clearance_lower_bound_mm": clearance,
-            "intersects_or_unresolved": clearance <= 0,
-        }
-    voxel = world(np.linalg.inv(a), points)
-    covered = bool(
-        np.all(voxel >= -0.5) and np.all(voxel < np.array(case.mri.shape) - 0.5)
-    )
+        previous = results.get(name, {})
+        bound = item["clearanceLowerBoundMm"]
+        if previous.get("available"):
+            bound = min(bound, previous["clearance_lower_bound_mm"])
+        results[name] = {"available": True, "clearance_lower_bound_mm": bound,
+                         "intersects_or_unresolved": item["intersectsOrUnresolved"] or previous.get("intersects_or_unresolved", False)}
     return {
         "snapshot_id": snapshot.snapshot_id,
-        "planning_hash": case.planning_hash,
+        "planning_hash": digest({"snapshot": snapshot.snapshot_id, "geometry": measured["geometryVersion"]}),
         "constraints": results,
-        "within_source_image": covered,
-        "missing": list(case.unknowns),
+        "within_source_image": measured["coverage"]["withinReferenceEnvelope"],
+        "missing": measured["unknowns"],
+        "measurements": measured,
         "clinical_clearance": False,
         "meaning": "conservative geometric capsule test; unlabelled anatomy remains unknown",
     }

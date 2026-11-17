@@ -84,6 +84,37 @@ def test_graph_cache_history_and_atomic_cancellation(patient, tmp_path, monkeypa
     with pytest.raises(ValueError, match='source changed'): ensure_alignment(c)
 
 
+def test_imported_source_provided_transform_survives_automatic_ensure(patient, tmp_path, monkeypatch):
+    c=patient
+    c.add_series(tmp_path/'mri.nii.gz',series_id='flair',modality='FLAIR')
+    matrix=np.eye(4);matrix[:3,3]=[3,-2,1]
+    c.set_registration('flair',matrix,status='source-provided',method='Imported cached rigid estimate')
+    c.document['transforms']['flair'].update(clinical_alignment_validated=False,review_status='unreviewed cached estimate')
+    before=deepcopy(c.document)
+    calls=[]
+    def estimate(*args,**kwargs):
+        calls.append(True)
+        return np.eye(4),{'status':'consistent','warnings':[],'metrics':{},'candidates':[]}
+    monkeypatch.setattr('resectionlab.anatomy_alignment.estimate_pair',estimate)
+    assert not ensure_alignment(c)
+    assert c.document==before and not calls
+    np.testing.assert_array_equal(c.registration_matrix('flair'),matrix)
+    assert ensure_alignment(c,force=True)
+    assert calls and c.document['transforms']['flair']['status']=='unreviewed'
+    assert c.document['registration_history'][-1]['transform']==before['transforms']['flair']
+
+
+def test_imported_source_transform_still_requires_bound_original_identity(patient, tmp_path, monkeypatch):
+    c=patient
+    c.add_series(tmp_path/'mri.nii.gz',series_id='flair',modality='FLAIR')
+    c.set_registration('flair',np.eye(4),status='source-provided',method='supplied')
+    c.series('flair')['original']['sha256']='0'*64
+    def forbidden(*args,**kwargs):pytest.fail('Changed source reached the optimizer')
+    monkeypatch.setattr('resectionlab.anatomy_alignment.estimate_pair',forbidden)
+    with pytest.raises(ValueError,match='source changed'):
+        ensure_alignment(c)
+
+
 def test_review_rejects_large_residual_and_preserves_automatic_provenance(patient, tmp_path):
     c = patient; c.add_series(tmp_path/'mri.nii.gz', series_id='ct', modality='CT')
     c.set_registration('ct', np.eye(4), status='unreviewed', method='test')

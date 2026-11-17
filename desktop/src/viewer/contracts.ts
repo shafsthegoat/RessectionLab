@@ -20,6 +20,8 @@ export interface ViewerVolume {
   tractography?: Array<{id:string;label:string;points:Float32Array;offsets:Uint32Array}>;
   compartments: Array<{
     name: string;
+    /** Source-facing anatomical name; name remains the stable layer identifier. */
+    label?: string;
     kind?: string;
     sourceIdentity?: string;
     qa?: AnatomyQuality;
@@ -44,7 +46,11 @@ export interface AnatomyQuality {
 
 export interface ViewerRoute {
   route_id: string;
-  comparisonSlot?: "A" | "B";
+  comparisonSlot?: "A" | "B" | "C";
+  /** Research planning geometry only; never a physical execution admission. */
+  scope?: "geometric-approach";
+  label?: string;
+  selected?: boolean;
   entry_mm: number[];
   target_mm: number[];
   category?: string;
@@ -83,6 +89,12 @@ export interface ViewerWorkspaceProps {
   cameraMode: "anatomy" | "instruments";
   /** Explicit framing command; mode changes alone preserve a restored camera. */
   cameraFitRequest?:number;
+  /** A compartment name or supplied tract id. Display selection never changes assessment. */
+  selectedStructure?: string | null;
+  /** Explicit focus command; selecting a row alone does not move a restored camera. */
+  structureFocusRequest?: number;
+  /** An assessed source-RAS concern location, when focusing a local intersection. */
+  structureFocusPoint?: Point3 | null;
   replay?: ViewerReplay | null;
   /** Separate source-bound patient research state; never legacy replay acceptance. */
   rehearsalState?: ViewerRehearsalState | null;
