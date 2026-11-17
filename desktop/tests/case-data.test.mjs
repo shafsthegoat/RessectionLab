@@ -52,6 +52,15 @@ function api(overrides = {}) {
   return { readAsset: async (id) => assets[id] };
 }
 
+test("full-head80-layer inventory hydrates independently and refuses81", async () => {
+  const input=fixture();input.compartments=Array.from({length:80},(_,i)=>({name:`structure_${i}`,volumeMm3:24,array:descriptor('uint8','mask')}));
+  const data=await hydrateCase(input,api());
+  assert.equal(data.compartments.length,80);
+  assert.deepEqual([...data.compartments[79].mask],[0,0,0,0,0,0,0,1]);
+  input.compartments.push({name:'excess',volumeMm3:24,array:descriptor('uint8','mask')});
+  assert.throws(()=>validateCaseDescriptor(input),/layer inventory/);
+});
+
 test("valid anisotropic affine preserves C-order arrays and physical cursor", async () => {
   const data = await hydrateCase(fixture(), api());
   assert.deepEqual([...data.mri], [0, 1, 2, 3, 4, 5, 6, 7]);
