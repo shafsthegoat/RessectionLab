@@ -48,6 +48,13 @@ def test_frozen_manifest_binds_relocated_binary_without_changing_build_identity(
     assert json.loads(manifest.read_text())["buildIdentity"] == identity
 
 
+def test_vtk_geometry_dynamic_array_registrations_are_included_in_frozen_engine(builder):
+    import vtkmodules
+    required = {name for module in ('vtkCommonCore', 'vtkCommonDataModel', 'vtkCommonExecutionModel')
+                for name in vtkmodules.MODULE_MAPPER[module]}
+    assert required <= set(builder.VTK_ARRAY_IMPORTS)
+
+
 def test_snapshot_captures_raw_replay_dependency_source_not_extension_binary(builder, tmp_path, monkeypatch):
     policy = tmp_path / "snapshot/src/resectionlab/surgical_proof_cache.py"
     policy.parent.mkdir(parents=True)

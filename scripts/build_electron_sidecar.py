@@ -21,6 +21,14 @@ import time
 
 ROOT = Path(__file__).resolve().parents[1]
 BUILD = ROOT / "build" / "electron-sidecar"
+# VTK imports these adapters by strings in MODULE_MAPPER. Static analysis alone
+# leaves cold frozen arrays without the same NumPy overrides as source runs.
+VTK_ARRAY_IMPORTS = (
+    "vtkmodules.numpy_interface.array_overrides",
+    "vtkmodules.util.data_array_selection",
+    "vtkmodules.util.data_model",
+    "vtkmodules.util.execution_model",
+)
 
 
 def digest(path: Path) -> str:
@@ -148,6 +156,8 @@ def main() -> int:
             env = dict(os.environ, PYTHONPATH=str(installed), PYTHONNOUSERSITE="1")
             env.pop("PYTHONHOME", None)
             command = [sys.executable, "-m", "PyInstaller", "--noconfirm", "--clean", "--onedir", "--console", "--name", "ressectionlab-engine", "--distpath", str(destination), "--workpath", str(BUILD / "work"), "--specpath", str(BUILD), "--paths", str(installed), "--target-architecture", platform.machine(), "--add-data", f"{manifest_path}:build_info", "--add-data", f"{data}:resectionlab", "--collect-binaries", "resectionlab", "--hidden-import", "resectionlab._geometry_cpp"]
+            for module in VTK_ARRAY_IMPORTS:
+                command += ["--hidden-import", module]
             for item in dependency_sources:
                 command += ["--add-data", f"{snapshot / item['captured']}:{Path(item['destination']).parent}"]
             # Native cold-start meshes need VTK data/filter bindings. Keep the
