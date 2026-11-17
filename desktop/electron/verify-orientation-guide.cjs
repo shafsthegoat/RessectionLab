@@ -98,7 +98,10 @@ app.on('browser-window-created',(_event,window)=>{
           report.checks.push('Graphics context recovery recreates the guide');
         }
         await checkbox(false);assert.equal((await frame()).orientationGuide,null);assert.equal(await js('document.querySelector(".rl-body-guide").hidden'),true);
-        await click('Save');await wait(`document.body.innerText.includes(${JSON.stringify(native?'Workspace saved · scans, layers and views preserved':'Workspace saved locally')})`);assert(fs.existsSync(saved));report.saved=saved;
+        const previousSave=fs.existsSync(saved)?sha(saved):null;
+        await click('Save');const saveStarted=Date.now();
+        while((!fs.existsSync(saved)||sha(saved)===previousSave)&&Date.now()-saveStarted<180000)await delay(100);
+        assert(fs.existsSync(saved)&&sha(saved)!==previousSave,'Save did not commit a changed workspace');report.saved=saved;
         report.checks.push('Appearance hides guide and normal Save writes a disposable workspace');
       }
       report.inputPreserved=sha(input)===original;assert(report.inputPreserved);assert(!report.windowEverVisible);
