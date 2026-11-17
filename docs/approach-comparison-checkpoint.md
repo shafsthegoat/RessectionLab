@@ -22,7 +22,7 @@ export RESSECTIONLAB_DATA_ROOT='/Volumes/shafrir/old coding projects/RessectionL
 | Milestone | State | Evidence |
 | --- | --- | --- |
 | Native comparison | Prepared and profiled, desktop verification in progress | `eden-source-verification.json` binds all six masks. CTRL_0933 was the first sorted remaining DEVELOPMENT host after CTRL_1277 and CTRL_0866. The first profile measured 129 approaches and 34 scenarios per finalist in 23.48 s with 1.29 GiB peak RSS. |
-| Generated procedure | Cold engine replay verified, desktop verification in progress | `procedure-attempt-02/report.json` records a native protection refusal for inferior/posterior ingress. The superior approach treated 54 of 108 mm³, retained 54 mm³ and exited with checked STOP and zero source neural or bone removal. |
+| Generated procedure | Cold engine replay and hidden Electron verified | `procedure-attempt-02/report.json` records the two checked STOPs, source quantities and the inferior/posterior native protection refusal. The superior approach treated 54 of 108 mm³, retained 54 mm³ and exited with checked STOP and zero source neural or bone removal. `procedure-ui-04/report.json` and its captures show the accepted replay and the renderer's live refusal on unchanged state. |
 | Matched baseline | Frozen and running | `baseline-profile.log` records 181.87 s and 132 MiB peak RSS. `baseline-v1/protocol.json` freezes five conditions from four generated groups, four methods and two matched budgets. `baseline-v1/progress.json` tracks committed rows and budget. |
 | Gated learning | Pending gate decision | Zero optimizer updates. The decision requires useful baseline progress, a measurable advantage to test and agreement between endpoint objectives and reward. |
 
@@ -36,6 +36,18 @@ Acquired-scene entry, instrument work and exit under `surgicalProcedurePolicyV1`
 remain pending. EDEN lacks reviewed complete negative coverage of critical
 structures, independent working entry and access evidence, and tissue/effect
 evidence across the whole two-hand action domain.
+
+## Generated procedure reproduction
+
+From the primary checkout, use new output directories for new attempts. The
+post-access program exercises the shared procedure policy, a deliberate tool
+preparation, a two-hand state, target work, and physical withdrawal with checked
+STOP. The accepted endpoint retains residual target outside its work compartment.
+
+```sh
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 .venv/bin/python scripts/demonstrate_approach_procedure.py --output testcases/approach-comparison-goal-v1/procedure-repro
+PROCEDURE_DEMO_REPORT=testcases/approach-comparison-goal-v1/procedure-repro/report.json PROCEDURE_DEMO_OUTPUT=testcases/approach-comparison-goal-v1/procedure-ui-repro desktop/node_modules/.bin/electron desktop/electron/verify-approach-procedure.cjs
+```
 
 The source is acquired healthy anatomy with separately generated geometry. The
 Mac is an M2 Pro with 16 GiB physical memory and 10 CPU cores. The installed
