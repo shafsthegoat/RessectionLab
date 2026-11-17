@@ -14,26 +14,27 @@ app.setActivationPolicy('accessory');
 dialog.showErrorBox=(title,message)=>fatal(Error(title+' '+message));
 process.on('uncaughtException',fatal);process.on('unhandledRejection',fatal);
 
-const root=fs.realpathSync(process.env.RESSECTIONLAB_DATA_ROOT||''),mount='/Volumes/shafrir';
-const volumeUuid='9CC3623C-E38B-3EEE-B6BB-B9A06C193700';
-assert.equal(fs.realpathSync(mount),mount);assert(inside(mount,root));
-assert(execFileSync('/sbin/mount',[],{encoding:'utf8'}).split('\n').some(line=>line.startsWith('/dev/')&&line.includes(' on '+mount+' (')));
-const disk=execFileSync('/usr/sbin/diskutil',['info','-plist',mount]);
-const volume=JSON.parse(execFileSync('/usr/bin/plutil',['-convert','json','-o','-','-'],{input:disk,encoding:'utf8'}));
-assert.equal(volume.MountPoint,mount);assert.equal(volume.VolumeUUID,volumeUuid);
-assert.equal(volume.WritableVolume,true);assert.equal(volume.Internal,false);
-assert.equal(fs.statSync(root).dev,fs.statSync(mount).dev);
-const marker=path.join(root,'.ressectionlab-data-root.json');
-assert(!fs.lstatSync(marker).isSymbolicLink()&&fs.statSync(marker).size<16384);
-const identity=read(marker);
-assert.equal(identity.schema,'ressectionlab-data-root-v1');assert.equal(identity.mount_point,mount);assert.equal(identity.volume_uuid,volumeUuid);
+const checkout=path.resolve(__dirname,'../..');
+const root=execFileSync(path.join(checkout,'.venv/bin/python'),['-c',
+  'from resectionlab.data_root import checked_root; print(checked_root(expected_uuid="9CC3623C-E38B-3EEE-B6BB-B9A06C193700"))'],
+  {cwd:checkout,encoding:'utf8',timeout:8000}).trim();
 
 const prepared=fs.realpathSync(path.join(root,'prepared/eden2020-approach-comparison-goal-v1'));
 const source=fs.realpathSync(process.env.EDEN_STUDY||''),targetLayerId=process.env.EDEN_TARGET;
 assert(inside(prepared,source)&&path.basename(source)==='patient-anatomy.json');
 assert(['synthetic-target','synthetic-target-08'].includes(targetLayerId));
+const requestedRadius=process.env.EDEN_CORRIDOR_RADIUS;
+const corridorRadius=Number(requestedRadius??2);
+assert(Number.isFinite(corridorRadius)&&corridorRadius>0&&corridorRadius<=50,
+  'Use a finite corridor radius in (0, 50] mm');
 const document=read(source);assert(document.display.planning_targets[targetLayerId]);
-const verified=path.join(prepared,'verification');
+const localEvidence=process.env.EDEN_VERIFICATION_ROOT;
+const verified=localEvidence?fs.realpathSync(localEvidence):path.join(prepared,'verification');
+if(localEvidence){
+  const testcases=fs.realpathSync(path.join(checkout,'testcases'));
+  assert(inside(testcases,verified)&&fs.statSync(verified).dev===fs.statSync(testcases).dev,
+    'Local verification root must be an existing directory on the checkout testcases volume');
+}
 fs.mkdirSync(verified,{recursive:true});assert.equal(fs.realpathSync(verified),verified);
 const label=process.env.EDEN_RUN;
 assert(/^[A-Za-z0-9_-]{1,120}$/.test(label??''));
@@ -49,6 +50,7 @@ const output=path.join(verified,label);fs.mkdirSync(output);
 const shared=process.env.EDEN_WORKSPACE&&fs.realpathSync(process.env.EDEN_WORKSPACE);
 const study=prior?fs.realpathSync(prior.study):shared||path.join(output,'workspace','patient-anatomy.json');
 assert(inside(verified,study)&&study!==source&&path.basename(study)==='patient-anatomy.json');
+if(localEvidence)assert(prior||shared,'Stage a checked local workspace before launching Electron');
 if(resumed)assert.equal(resumed.study,study);
 const report={schema:'ressectionlab.eden-approach-comparison-ui.v1',source,study,targetLayerId,patientId:document.patient_id,
   snapshotId:document.snapshot_id,pid:process.pid,priorFile,started:new Date().toISOString(),windowEverVisible:false,
@@ -67,7 +69,11 @@ library.CaseLibrarySelection=class extends Library {
 };
 const sidecar=require('./sidecar.cjs'),Sidecar=sidecar.Sidecar;
 sidecar.Sidecar=class extends Sidecar {
-  constructor(options){super(options);report.sidecarPid=this.child.pid;}
+  constructor(options){
+    if(localEvidence)assert.equal(fs.statSync(options.transferDir).dev,fs.statSync(verified).dev,
+      'Temporary renderer transfers must stay on the local verification volume');
+    super(options);report.sidecarPid=this.child.pid;
+  }
 };
 const setup=performance.now();
 if(!prior&&!shared){
@@ -80,6 +86,9 @@ if(!prior&&!shared){
 }
 assert.equal(sha(study),sha(source),'Working copy starts from exact prepared source manifest');
 report.timingsMs.prepareWorkingCopy=Math.round(performance.now()-setup);
+// The source root is verified above. Local runs use the isolated library and
+// the app's normal local transfer directory, including for generated previews.
+if(localEvidence)delete process.env.RESSECTIONLAB_DATA_ROOT;
 
 let active=0,openCount=0,lastPlan=null,planVersion=0,lastPlanAction=null,savedView=null;
 const originalHandle=ipcMain.handle.bind(ipcMain);
@@ -213,13 +222,16 @@ app.on('browser-window-created',(_event,win)=>{
         let suggestion;
         if(resumed){
           const scene=await ready();assert(lastPlan.proposalReport?.assessmentStatus==='current');
-          assert.equal(lastPlan.proposalReport.task.radiusMm,2);
           assert.deepEqual(lastPlan.proposalReport.task.sensitivityConfig,{translationMm:1,boundaryMm:.5});
           report.resumedSuggestion={report:resumeFile,ms:resumed.timingsMs.suggest};
           suggestion={scene,plan:{...lastPlan,selectedId:scene.selected}};
-        }else suggestion=await measure('suggest','suggest','Suggest approaches');
+        }else{
+          if(requestedRadius!==undefined)await select('Corridor radius',corridorRadius);
+          suggestion=await measure('suggest','suggest','Suggest approaches');
+        }
         const proposals=suggestion.plan.proposalReport;
         assert.equal(proposals.task.targetLayerId,targetLayerId);
+        assert.equal(proposals.task.radiusMm,corridorRadius);
         assert.deepEqual(proposals.task.target,targetOptions.find(row=>row.layerId===targetLayerId).target);
         assert.equal(proposals.task.entryPatch.radiusMm,15);
         assert.equal(proposals.candidates.length,proposals.enumerated);
