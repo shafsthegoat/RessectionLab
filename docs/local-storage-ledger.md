@@ -22,7 +22,7 @@ establish scientific readiness or a completed build; consult each run's receipts
 | Area | Locations and contents |
 | --- | --- |
 | Acquired originals | `sources/`: RESECT, UCSF-PDGM, EDEN2020 healthy record 3994749, IXI, IXI vascular record 17393202, Lausanne, meningioma and TopBrain collections, with acquisition provenance. |
-| EDEN projects/work | `prepared/eden2020-synthetic-v1/` and `prepared/eden2020-anatomy-v2/`: original synthetic cohort and ongoing segmented/organic-tumor preparation, verification and prior attempts. Permanent requested deliverables remain distinct from temporary run output. |
+| EDEN projects/work | `prepared/eden2020-synthetic-v1/` and `prepared/eden2020-anatomy-v2/`: original synthetic cohort and completed segmented/organic-tumor projects, verification and prior attempts. Permanent requested deliverables remain distinct from temporary run output. |
 | Other preparation | `prepared/`: `header-precision/`, `placement-support/`, `recipes/`, `synthetic-fields/`, `topbrain/`. |
 | Case library | `cases/real/`, `cases/synthetic/`, `cases/controls/`: native projects; use their manifests for roles and supported capabilities. |
 | Model assets | `cache/models/`: `synthstrip-v1/`, `poc-vesselfm-base/`, `poc-totalsegmentator/`, `supersynth-source/`; availability, terms and installation state are in local receipts. |
