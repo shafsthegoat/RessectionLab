@@ -17,6 +17,22 @@ and all v1 projects remain preserved on the data drive. Local ignored `testcases
 HDD projects visible in the checkout app's **Cases** list; search **EDEN2020**.
 They are local generated projects, not independently accepted release entries.
 
+The prepared v2 collection contains135 verified projects:15 healthy baselines
+with62 segmentation layers and120 synthetic variants with65. All54 present
+head-model classes and all seven published tract bundles per person are
+retained. Each native package passes source-original, array, shape, material
+ownership and production save/reopen checks. An independent checksum/manifest
+audit covers all135 files. Actual signed packaged-app tests open both a
+synthetic case and a healthy baseline through a135-entry unique Cases library,
+initialize rehearsal, inspect/cancel, save and reopen, with windows hidden
+throughout. These are software/data checks, not clinical validation.
+
+Use the current Electron package at
+`desktop/release/RessectionLab-darwin-arm64/RessectionLab.app` and search
+**SEGMENTED-v2**. The index links all source/shape previews, the fifteen-person
+anatomy contact sheet and final verification receipts. Native v2 packages total
+about56GB; source collections and previous versions remain separate on the HDD.
+
 From the primary checkout with `RESSECTIONLAB_DATA_ROOT` set to the mounted
 RessectionLabData folder:
 
