@@ -1,5 +1,10 @@
 # RessectionLab
 
+Start with the [current status and working entry points](docs/current-status.md)
+for architecture, workflow, verification, experimental features and dated history.
+The [November 16 cleanup record](docs/cleanup-20261116.md) documents the bounded
+maintenance pass and retained evidence.
+
 The [decision-system contract](docs/decision-system-objective.md) and
 [progress record](docs/decision-system-progress.md) describe the current cranial
 Case → Plan → Generate → Compare → Rehearse → Save → cold Open integration,
