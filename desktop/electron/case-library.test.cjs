@@ -56,3 +56,23 @@ test('native collections retain distinct source identities and exclude invalid o
   await assert.rejects(() => library.resolve(rows[0].id), /current library/);
   assert.equal((await library.list()).length, 1);
 });
+
+test('prepared HDD links and a canonical recent selection remain one stable local card', async t => {
+  const root=await fs.mkdtemp(path.join(os.tmpdir(),'rsl-hdd-links-'));
+  t.after(()=>fs.rm(root,{recursive:true,force:true}));
+  const prepared=path.join(root,'prepared'),external=path.join(root,'external');
+  await fs.mkdir(prepared);await fs.mkdir(external);
+  const source=path.join(external,'EDEN2020-CTRL_0866-SYNTHETIC-01-v1.ressectionlab');
+  await fs.writeFile(source,'native source');
+  await fs.symlink(source,path.join(prepared,path.basename(source)));
+  await fs.symlink(source,path.join(prepared,'second-link.ressectionlab'));
+  const library=new CaseLibrary(path.join(root,'user'),prepared);
+  const before=await library.list();assert.equal(before.length,1);
+  await library.remember(source);
+  const after=await library.list();assert.equal(after.length,1);
+  assert.equal(after[0].id,before[0].id);assert.equal(after[0].recent,true);
+  assert.equal(await library.resolve(after[0].id),await fs.realpath(source));
+  assert.equal(after[0].reviewedExternal,undefined);
+  await fs.unlink(source);
+  assert.deepEqual(await library.list(),[]);
+});

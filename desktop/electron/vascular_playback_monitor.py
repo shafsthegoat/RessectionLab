@@ -20,12 +20,13 @@ import zlib
 from types import SimpleNamespace
 
 ROOT = Path(__file__).resolve().parents[2]
-REVIEW = ROOT / 'testcases/outputs/full-case-rehearsal-20261020/review'
+REVIEW = ROOT / 'scripts/rehearsal_support'
 sys.path.insert(0, str(REVIEW))
 from readonly_step_monitor import ForbiddenPhysicsStep, ReadOnlyStepMonitor
+from bundle_paths import data_root, require_data_file
 
 BRANCH = 'full-vascular'
-NATIVE = ROOT / 'testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab'
+NATIVE = data_root(must_exist=False) / 'testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab'
 NATIVE_SHA = '095659e54f381355e8f5655b6c5907990b2ac4767dc9ce58297e3bc4d6f3268d'
 REFERENCE = NATIVE.parent / 'vascular-canonical.actions.jsonl'
 FRAME_COUNTS = (3,152,152,117,2,2,2,15,2,2,2,48,2,2,2,11,33,36,35,3,3,3,3,48,3,3,3,3,3,52,50,3,3,3,3,3,52,31,3,3,3,13,3,3,13,3,3,7,3,12,27,3,3,3,7,17,3,27,3,3,3,7,12,3,3,3,3,7,12,3,3,27,3)
@@ -43,7 +44,7 @@ def require(ok, message):
 
 
 def file_sha(path):
-    with Path(path).open('rb') as stream:
+    with require_data_file(path).open('rb') as stream:
         return hashlib.file_digest(stream, 'sha256').hexdigest()
 
 
@@ -290,7 +291,8 @@ class VascularPlaybackMonitor(ReadOnlyStepMonitor):
         self.cache_directory = os.environ.get('RESSECTIONLAB_PREPARED_PREFIX_CACHE_DIRECTORY')
         self.output = Path(output)
         self.output.mkdir(parents=True, exist_ok=True)
-        self.reference = reference if reference is not None else [json.loads(line) for line in REFERENCE.read_text().splitlines()]
+        self.reference_path = REFERENCE if reference is None else None
+        self.reference = reference if reference is not None else [json.loads(line) for line in require_data_file(REFERENCE).read_text().splitlines()]
         require(len(self.reference) == 73, 'Exactly 73 original vascular actions required')
         self.clock, self.rss = clock, rss
         self.began = clock()
@@ -582,7 +584,9 @@ class VascularPlaybackMonitor(ReadOnlyStepMonitor):
             'ownership':self.ownership,'ownerMetadata':self.owner_metadata,'retentionPeaks':self.retention_peaks,
             'processPeakResidentBytes':self.rss(),'maxProcessResidentBytes':MAX_RSS,
             'wallSeconds':self.clock()-self.began,'maxWallSeconds':MAX_SECONDS,
-            'spool':self.spool.statistics,'reference':{'path':str(REFERENCE),'sha256':file_sha(REFERENCE)},
+            'spool':self.spool.statistics,'reference':({'path':str(self.reference_path),'sha256':file_sha(self.reference_path)}
+                if self.reference_path is not None else {'path':None, 'scope':'provided-records',
+                    'sha256':hashlib.sha256(canonical_json(self.reference).encode()).hexdigest()}),
             'nativeJson':self.json_counter.receipt() if self.json_counter is not None else None,
             'nativeCanonicalJson':self.canonical_json_counter.receipt() if self.canonical_json_counter is not None else None,
             'residentMeaning':'Whole Python peak RSS; macOS bytes / Linux KiB converted to bytes. Source geometry/runtime/transient allocations included.'}
@@ -621,7 +625,8 @@ def audit_spool(output, audit_output=None):
     require(guard.get('qualificationMode', 'fresh') in ('fresh','prepared-only'), 'Unexpected qualification mode')
     require(metadata.get('observationOrigin', 'fresh-public-actions') ==
             ('prepared-cache' if prepared_only else 'fresh-public-actions'), 'Spool observation origin differs')
-    require(guard['reference']['sha256'] == file_sha(REFERENCE), 'Canonical reference changed')
+    require(isinstance(guard['reference'].get('path'), str) and guard['reference']['sha256'] == file_sha(REFERENCE),
+            'Canonical reference changed or is not the historical file')
     require(metadata['sourceArchiveSha256']==NATIVE_SHA and metadata['canonicalReferenceSha256']==file_sha(REFERENCE) and metadata['expectedEndpointStateId']==END_STATE,'Spool owner/source/reference binding differs')
     require(file_sha(NATIVE) == NATIVE_SHA, 'Original native changed')
     expected = [json.loads(line) for line in REFERENCE.read_text().splitlines()]
@@ -711,11 +716,34 @@ def audit_spool(output, audit_output=None):
     return report
 
 
+def check_bundle_inputs():
+    """Read the original vascular branch/reference without replay or cache use."""
+    from resectionlab.workspace_bundle import load_workspace
+    require(file_sha(NATIVE) == NATIVE_SHA, 'Original native bytes differ')
+    reference = [json.loads(line) for line in require_data_file(REFERENCE).read_text().splitlines()]
+    _, artifacts, _ = load_workspace(NATIVE)
+    branch = artifacts['surgical_toolbox']['branches'][BRANCH]
+    require(len(reference) == 73 and branch['stateId'] == END_STATE, 'Vascular endpoint differs')
+    require(canonical_json([row['action'] for row in reference]) == canonical_json(branch['actions']),
+            'Original vascular actions differ')
+    return {'status': 'passed', 'scope': 'preserved vascular monitor inputs only',
+            'native': str(NATIVE), 'reference': str(REFERENCE), 'actions': len(reference), 'physicsActions': 0}
+
+
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('mode',choices=['audit']);parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('mode',choices=['audit','check-inputs']);parser.add_argument('--output',type=Path)
     parser.add_argument('--audit-output',type=Path,help='Separate diagnostic results directory; input spool remains untouched')
+    parser.add_argument('--bundle-root',type=Path,help='Checkout-shaped data root')
     arguments=parser.parse_args()
+    if arguments.bundle_root is not None:
+        NATIVE = data_root(arguments.bundle_root) / 'testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab'
+        REFERENCE = NATIVE.parent / 'vascular-canonical.actions.jsonl'
+    if arguments.mode == 'check-inputs':
+        print(json.dumps(check_bundle_inputs(), indent=2))
+        raise SystemExit(0)
+    if arguments.output is None:
+        parser.error('--output is required for audit')
     try:
         audit_spool(arguments.output,arguments.audit_output)
     except BaseException as error:

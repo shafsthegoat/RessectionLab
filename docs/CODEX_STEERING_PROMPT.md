@@ -1,5 +1,8 @@
 # /goal — Deliver probabilistic glioma route planning, then demonstrate useful learning
 
+Repository upkeep follows the [maintenance policy](../CONTRIBUTING.md): keep current-use material,
+retire obsolete code/docs/artifacts, and archive useful history outside the tracked tree.
+
 Continue on `codex/patient-specific-planner` in `shafsthegoat/RessectionLab`. Reconcile this steering note with current HEAD before acting. The review baseline is `5ca02451d63412d074281f8fde5407420a2f0903`; preserve newer work and unrelated changes. Read the three existing specification documents, the current status, `docs/rl-observation-gap.md`, and the completed feature-unit and native-axis pilot reports. Do not rewrite the entire architecture or repeat already completed investigations.
 
 ## Actual objective

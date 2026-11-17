@@ -22,8 +22,37 @@ export function packAnatomyLabels(volume:Pick<ViewerVolume,'shape'|'compartments
     for(let i=0;i<count;i++)data[i*4+channel]=lut[source[i]];
     channel++;
   }
+  const independent=volume.compartments.flatMap((l,index)=>l.labelSet?[]:[index]);
+  for(const index of independent)if(volume.compartments[index].mask.length!==count)throw Error('A source compartment does not match the MRI grid');
+  const categorical=new Set<number>();
+  if(independent.length>(4-channel)*8){
+    // Losslessly compact mutually disjoint masks when a full-head inventory
+    // exceeds32 independent bits. Overlapping masks remain separate. This is
+    // storage encoding only: original masks, membership and visibility survive.
+    const groups:Array<{indices:number[];values:Uint8Array}>=[];
+    for(const index of independent){
+      const mask=volume.compartments[index].mask;
+      let selected:typeof groups[number]|undefined;
+      for(const group of groups){
+        let overlap=false;for(let i=0;i<count;i++)if(mask[i]&&group.values[i]){overlap=true;break;}
+        if(!overlap&&group.indices.length<255){selected=group;break;}
+      }
+      if(!selected){selected={indices:[],values:new Uint8Array(count)};groups.push(selected);}
+      selected.indices.push(index);const code=selected.indices.length;
+      for(let i=0;i<count;i++)if(mask[i])selected.values[i]=code;
+    }
+    groups.sort((a,b)=>b.indices.length-a.indices.length);
+    let remaining=independent.length;
+    for(const group of groups){
+      if(Math.ceil(remaining/8)<=4-channel)break;
+      if(group.indices.length<=8||channel>=4)throw Error('The selected independent masks exceed the GPU texture budget');
+      group.indices.forEach((index,i)=>{codes[index]=[channel,i+1];categorical.add(index);});
+      for(let i=0;i<count;i++)data[i*4+channel]=group.values[i];
+      remaining-=group.indices.length;channel++;
+    }
+  }
   let bit=0;
-  volume.compartments.forEach((l,index)=>{if(l.labelSet)return;
+  volume.compartments.forEach((l,index)=>{if(l.labelSet||categorical.has(index))return;
     if(l.mask.length!==count)throw Error('A source compartment does not match the MRI grid');
     if(bit===8){channel++;bit=0;}
     if(channel>=4)throw Error('The selected independent masks exceed the GPU texture budget');

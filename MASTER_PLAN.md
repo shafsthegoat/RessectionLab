@@ -1,5 +1,8 @@
 # Brain RL: patient-specific, instrument-aware glioma resection planning
 
+Repository upkeep follows the [maintenance policy](CONTRIBUTING.md): keep current-use material,
+retire obsolete code/docs/artifacts, and archive useful history outside the tracked tree.
+
 ## Research and product master plan
 
 Prepared for Shafrir | Original research snapshot: **October 2, 2026**

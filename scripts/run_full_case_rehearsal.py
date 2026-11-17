@@ -2,6 +2,8 @@
 """Run/resume one source-bound full-case research episode; never train a policy."""
 from __future__ import annotations
 import argparse
+from datetime import datetime, timezone
+import uuid
 import copy
 import hashlib
 import json
@@ -16,8 +18,9 @@ from resectionlab.full_case_rehearsal import bind_case_protection, new_director,
 from resectionlab.workspace_bundle import load_workspace, save_workspace
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_CASE = ROOT / 'testcases/cases/meningioma-sub-06-standard-v2.ressectionlab'
-DEFAULT_OUTPUT = ROOT / 'testcases/outputs/full-case-rehearsal-20261020/primary'
+sys.path.insert(0, str(ROOT / 'scripts/rehearsal_support'))
+from bundle_paths import data_root, require_data_file
+DEFAULT_CASE = data_root(must_exist=False) / 'testcases/cases/meningioma-sub-06-standard-v2.ressectionlab'
 
 
 def persist(case, artifacts, workspace, engine, director, destination, branch_id, parent):
@@ -35,7 +38,7 @@ def persist(case, artifacts, workspace, engine, director, destination, branch_id
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--case', type=Path, default=DEFAULT_CASE)
-    parser.add_argument('--output', type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument('--output', type=Path, help='New outputs default to a unique ignored full-case-rehearsal-runs directory')
     parser.add_argument('--scenario', choices=['primary', 'vascular'], default='primary')
     parser.add_argument('--resume', type=Path)
     parser.add_argument('--protection', type=Path,
@@ -43,6 +46,10 @@ def main():
     parser.add_argument('--max-slices', type=int, default=1000)
     parser.add_argument('--slice-actions', type=int, default=2)
     args = parser.parse_args()
+    require_data_file(args.case)
+    if args.output is None:
+        stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ') + '-' + uuid.uuid4().hex[:8]
+        args.output = ROOT / 'testcases/outputs/full-case-rehearsal-runs' / stamp
     args.output.mkdir(parents=True, exist_ok=True)
     destination = args.output / (args.scenario + '.ressectionlab')
     if destination.resolve() == args.case.resolve() or (destination.exists() and destination.samefile(args.case)):

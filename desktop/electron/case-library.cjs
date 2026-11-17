@@ -53,7 +53,7 @@ class CaseLibrary {
     const prepared = names.filter(n => n.endsWith('.ressectionlab')).sort().map(n => path.join(this.preparedRoot, n));
     const rows = [];
     this.paths.clear();
-    const addedCatalog = new Set();
+    const addedCatalog = new Set(), addedFiles = new Set();
     const addCatalog = (row,wasRecent=false) => {
       if (addedCatalog.has(row.id)) return;
       addedCatalog.add(row.id);this.paths.set(row.id,{catalog:true,external:row.id.startsWith('external-')});
@@ -62,14 +62,16 @@ class CaseLibrary {
     };
     for (const filename of [...new Set([...recent, ...this.nativePaths, ...prepared])]) {
       try {
-        const catalogRow = catalogAliases.get(path.resolve(filename)) || catalogAliases.get(await fs.realpath(filename));
+        const canonical = await fs.realpath(filename);
+        const catalogRow = catalogAliases.get(path.resolve(filename)) || catalogAliases.get(canonical);
         if (catalogRow) {addCatalog(catalogRow,recent.includes(filename));continue;}
         const stat = await fs.stat(filename);
-        if (!stat.isFile()) continue;
-        const id = require('node:crypto').createHash('sha256').update(filename).digest('hex');
+        if (!stat.isFile() || addedFiles.has(canonical)) continue;
+        const id = require('node:crypto').createHash('sha256').update(canonical).digest('hex');
         const native=path.basename(filename)==='patient-anatomy.json';
         const doc=native?await readMetadata(filename,16*1024*1024):null;
         if(native&&doc.schema!=='patient-anatomy-v1')continue;
+        addedFiles.add(canonical);
         this.paths.set(id, filename);
         rows.push({id, title: native?doc.patient_id:path.basename(filename, '.ressectionlab'), recent: recent.includes(filename), bytes: stat.size, ...(native?{native:true,timepoint:doc.study_timepoint??doc.series?.[0]?.timepoint,scanCount:doc.series?.length??0}:filename.endsWith('.rsworkspace')?{portable:true}:{})});
       } catch (error) { if (error.code !== 'ENOENT' && !(error instanceof SyntaxError)) throw error; }

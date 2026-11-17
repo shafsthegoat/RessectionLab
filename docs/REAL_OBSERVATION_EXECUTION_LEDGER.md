@@ -1,5 +1,8 @@
 # Real-observation execution ledger
 
+Repository upkeep follows the [maintenance policy](../CONTRIBUTING.md): keep current-use material,
+retire obsolete code/docs/artifacts, and archive useful history outside the tracked tree.
+
 ## Bounded PAT22 storage exception, October 19
 
 The user explicitly approved recovery of the one pinned public BTC PAT22 TRAIN

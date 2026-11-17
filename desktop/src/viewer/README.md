@@ -1,5 +1,8 @@
 # Patient imaging viewer
 
+Repository upkeep follows the [maintenance policy](../../../CONTRIBUTING.md): keep current-use material,
+retire obsolete code/docs/artifacts, and archive useful history outside the tracked tree.
+
 One WebGL2 context shares original MRI and annotation textures across the 3D scene and three linked MRI views. Source arrays use NumPy XYZ C order (Z fastest); texture dimensions reverse this order. Source affine transforms are retained, including oblique spacing. LPS inputs convert once to the RAS display frame. Cursor positions and complete instrument dimensions are millimeters.
 
 The default 3D focus layout and optional equal-pane image review layout reuse the same renderer, camera, source textures, and linked physical cursor. Each source view can expand and restore within either layout. Controls and pane headers sit outside the rendered image areas; actual image-area bounds drive GPU scissoring, slice aspect ratio, scale bars, and pointer mapping. Hidden panes submit no draw calls. Layout changes do not reset the camera or alter routes, images, masks, or measurements.

@@ -1,6 +1,13 @@
 # Using the Mac workspace
 
+Repository upkeep follows the [maintenance policy](../CONTRIBUTING.md): keep current-use material,
+retire obsolete code/docs/artifacts, and archive useful history outside the tracked tree.
+
 RessectionLab is a local research app. This guide follows the current Electron interface; [project status](../PROJECT_STATUS.md) and the [packaging records](electron-packaging.md) identify which app snapshots have been tested. A modeled geometry check does not establish clinical suitability.
+
+Historical capture receipts remain available at the links below. Most images
+and recordings now require the [visual evidence archive](visual-evidence-archive-20261116.md),
+which restores their original filenames beside the unchanged receipts.
 
 The [workspace persistence follow-up](../artifacts/integrated-workspace-persistence-v1/RESULT.md)
 passes 310 desktop and 55 relevant backend/imaging checks. Actual native Save and

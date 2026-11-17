@@ -806,7 +806,7 @@ export class VolumeRenderer {
       // Restore the published tools/effects while a newer tissue state prepares.
       if(this.pendingSurgicalPublication){this.pendingSurgicalPublication=null;this.setSurgical(this.publishedSurgicalInteraction);}
       ++this.sourceSurfaceGeneration;this.worker.terminate();this.sourceWorkerActive=false;this.sourceRemaining=0;this.initialSurgicalInteraction=null;
-      const sameLayout=!!a&&!!b&&a.mappingKey===b.mappingKey&&!next.labelSets&&!this.volume.labelSets&&
+      const sameLayout=!!a&&!!b&&a.mappingKey===b.mappingKey&&!next.labelSets&&!this.volume.labelSets&&this.labelCodes.slice(0,next.compartments.length).every(([,code])=>code<0)&&
         next.compartments.length===this.volume.compartments.length&&next.compartments.every((l,i)=>l.name===this.volume.compartments[i].name&&l.kind===this.volume.compartments[i].kind);
       const candidates=sameLayout?[...new Set([...a!.modifiedIndices,...b!.modifiedIndices])].sort((x,y)=>x-y):null;
       const stage:ModelStage={generation:++this.modelGeneration,next,interaction,prepared:new Map(),jobs:[],pack:!sameLayout,changedLayers:0,changedIndices:0,

@@ -5,10 +5,23 @@ const ROOT=path.resolve(__dirname,'../..');
 const BRANCH='full-vascular';
 const COUNTS=[3,152,152,117,2,2,2,15,2,2,2,48,2,2,2,11,33,36,35,3,3,3,3,48,3,3,3,3,3,52,50,3,3,3,3,3,52,31,3,3,3,13,3,3,13,3,3,7,3,12,27,3,3,3,7,17,3,27,3,3,3,7,12,3,3,3,3,7,12,3,3,27,3];
 const END_STATE='sha256:af496ffbde3ca2ab71477c9226fe9f846f08171efd308362431414584cd3c87e';
-const NATIVE=path.join(ROOT,'testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab');
+function rehearsalPaths(env=process.env){
+  const bundleRoot=path.resolve(env.RESSECTIONLAB_REHEARSAL_BUNDLE_ROOT||ROOT);
+  const task=path.join(bundleRoot,'testcases/outputs/full-case-rehearsal-20261020');
+  return {native:path.join(task,'final/rehearsal.ressectionlab'),reference:path.join(task,'final/vascular-canonical.actions.jsonl'),historical:path.join(task,'review/vascular-observability-28962e66-every-frame.json')};
+}
+const NATIVE=rehearsalPaths().native;
 const NATIVE_SHA='095659e54f381355e8f5655b6c5907990b2ac4767dc9ce58297e3bc4d6f3268d';
 const hash=file=>crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
 const tuple=row=>JSON.stringify([row.branchId,row.position,row.frameIndex,row.stateId]);
+function checkRehearsalInputs(env=process.env){
+  const files=rehearsalPaths(env);
+  for(const file of Object.values(files))if(!fs.existsSync(file))throw Error('Optional historical rehearsal data is missing: '+file+'. Restore the archive and set RESSECTIONLAB_REHEARSAL_BUNDLE_ROOT; see scripts/rehearsal_support/README.md');
+  if(hash(files.native)!==NATIVE_SHA)throw Error('Original native bytes differ');
+  const historicalCounts=JSON.parse(fs.readFileSync(files.historical)).actionsVerified.map(row=>row.frames);
+  if(JSON.stringify(historicalCounts)!==JSON.stringify(COUNTS))throw Error('Historical observed counts differ');
+  return {native:{path:files.native,sha256:NATIVE_SHA},reference:{path:files.reference,sha256:hash(files.reference)},historicalFrameCountAudit:{path:files.historical,sha256:hash(files.historical)}};
+}
 function expectedSequence(){return COUNTS.flatMap((count,position)=>Array.from({length:count},(_,frameIndex)=>({branchId:BRANCH,position,frameIndex})));}
 function submittedVascularPlayback(requests,frames,{rendererReceipts=[],startedRenderer}){
   const delivered=new Map();
@@ -109,7 +122,7 @@ function qualifiedFlowCapture(before,after){
     Number.isFinite(flow.startSeconds)&&Number.isFinite(flow.endSeconds)&&flow.startSeconds>=0&&flow.endSeconds>=flow.startSeconds&&typeof flow.truncated==='boolean'&&
     ['startSeconds','endSeconds','operations','truncated','glyphInstances'].every(key=>flow[key]===after.flow[key]);
 }
-module.exports={COUNTS,END_STATE,BRANCH,expectedSequence,submittedVascularPlayback,exactSequence,checkedVascularAuthority,hardBudgetStop,isVascularBenchmarkEntry,vascularPreparedOnly,vascularPipelineMode,checkedVascularPipelineOrigin,vascularGuardedRunner,vascularStartButton,vascularPreparationChecks,qualifiedFlowCapture};
+module.exports={rehearsalPaths,checkRehearsalInputs,COUNTS,END_STATE,BRANCH,expectedSequence,submittedVascularPlayback,exactSequence,checkedVascularAuthority,hardBudgetStop,isVascularBenchmarkEntry,vascularPreparedOnly,vascularPipelineMode,checkedVascularPipelineOrigin,vascularGuardedRunner,vascularStartButton,vascularPreparationChecks,qualifiedFlowCapture};
 
 if(isVascularBenchmarkEntry(process,__filename,require.main===module))run();
 function run(){
@@ -127,14 +140,11 @@ function run(){
   const output=path.resolve(process.env.PLAYBACK_OUTPUT||path.join(ROOT,'testcases/outputs/rl-readiness-20261022/desktop-vascular-qualified'));
   if(!output.startsWith(path.join(ROOT,'testcases/outputs/rl-readiness-20261022')+path.sep)||fs.existsSync(output))throw Error('Supply a fresh ignored PLAYBACK_OUTPUT under rl-readiness-20261022');
   const caseIndex=process.argv.indexOf('--case'),sourcePath=caseIndex>=0?path.resolve(process.argv[caseIndex+1]||''):NATIVE;
+  if(!fs.existsSync(sourcePath))throw Error('Optional historical rehearsal is missing. Restore the archive and set RESSECTIONLAB_REHEARSAL_BUNDLE_ROOT; see scripts/rehearsal_support/README.md');
   if(caseIndex<0||sourcePath!==NATIVE||hash(sourcePath)!==NATIVE_SHA)throw Error('Only the exact preserved original archive is permitted');
   fs.mkdirSync(output,{recursive:false});
   const source=path.join(ROOT,'src'),monitor=path.join(__dirname,pipeline?'vascular_pipeline_monitor.py':'vascular_playback_monitor.py');
-  const reference=path.join(path.dirname(NATIVE),'vascular-canonical.actions.jsonl');
-  const historical=path.join(ROOT,'testcases/outputs/full-case-rehearsal-20261020/review/vascular-observability-28962e66-every-frame.json');
-  const historicalCounts=JSON.parse(fs.readFileSync(historical)).actionsVerified.map(row=>row.frames);
-  if(JSON.stringify(historicalCounts)!==JSON.stringify(COUNTS))throw Error('Historical observed counts differ');
-  const originalFiles={native:{path:NATIVE,sha256:NATIVE_SHA},reference:{path:reference,sha256:hash(reference)},historicalFrameCountAudit:{path:historical,sha256:hash(historical)}};
+  const originalFiles=checkRehearsalInputs();
   const codeFiles=()=>{const result={};for(const directory of [source,path.join(ROOT,'desktop/dist')]){const visit=dir=>{for(const entry of fs.readdirSync(dir,{withFileTypes:true}).sort((a,b)=>a.name.localeCompare(b.name))){if(entry.name==='__pycache__')continue;const file=path.join(dir,entry.name);if(entry.isDirectory())visit(file);else if(directory.endsWith('dist')||entry.name.endsWith('.py'))result[path.relative(ROOT,file)]=hash(file);}};visit(directory);}return result;};
   const frozenFiles=codeFiles();
   const report={schema:'resectionlab.full-vascular-prefix-gui.v1',recordedAt:new Date().toISOString(),

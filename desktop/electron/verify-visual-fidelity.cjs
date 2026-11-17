@@ -3,6 +3,7 @@
  * original manifest and every source array are checked with SHA-256. */
 const {app,dialog}=require('electron');
 const fs=require('node:fs'),os=require('node:os'),path=require('node:path'),crypto=require('node:crypto');
+const {verificationDirectory}=require('./verification-output.cjs');
 const caseKind=process.env.FIDELITY_CTA?'cta':process.env.FIDELITY_MRA?'mra':'mri';
 const profiles={
   mri:{source:/T1CE|T1C|T1[-_ ]?POST/i,presentation:'Segmentation',before:'mri',presented:'segmentation',provenance:/no acquired angiography/,ct:false},
@@ -14,7 +15,7 @@ const showcaseOnly=Boolean(process.env.FIDELITY_SHOWCASE_ONLY);
 const motionOnly=Boolean(process.env.FIDELITY_MOTION_ONLY);
 const captureRecheck=Boolean(process.env.FIDELITY_RECHECK&&process.env.FIDELITY_CAPTURE_MOTION);
 const fluidMotion=Boolean(process.env.FIDELITY_FLUID_MOTION);
-const output=path.resolve(process.env.FIDELITY_OUTPUT||path.join(__dirname,'../../artifacts/desktop-renderer/medivis-fidelity-v2',caseKind));
+const output=path.resolve(process.env.FIDELITY_OUTPUT||path.join(verificationDirectory(path.resolve(__dirname,'../..')),'medivis-fidelity',caseKind));
 fs.mkdirSync(output,{recursive:true});
 const userData=fs.mkdtempSync(path.join(os.tmpdir(),'rslab-fidelity-user-'));
 app.setPath('userData',userData);

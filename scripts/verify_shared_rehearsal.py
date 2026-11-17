@@ -17,6 +17,8 @@ ROOT = Path(__file__).resolve().parents[1]
 TASK = ROOT / 'testcases/outputs/full-case-rehearsal-20261020'
 MANIFEST = ROOT / 'artifacts/full-case-rehearsal-20261020/manifest.json'
 sys.path.insert(0, str(ROOT / 'src'))
+sys.path.insert(0, str(ROOT / 'scripts/rehearsal_support'))
+from bundle_paths import data_root, require_data_file
 
 
 def require(condition, message):
@@ -32,13 +34,18 @@ def sha(path):
     return h.hexdigest()
 
 
-def check_files():
+def check_files(bundle_root=None, *, data_only=False):
     manifest = json.loads(MANIFEST.read_text())
     total = 0
     for row in manifest['files']:
         relative = Path(row['path'])
         require(not relative.is_absolute() and '..' not in relative.parts, 'Invalid manifest path')
-        path = ROOT / relative
+        is_data = relative.parts[0] == 'testcases'
+        if data_only and not is_data:
+            continue
+        path = (data_root(bundle_root) if is_data else ROOT) / relative
+        if is_data:
+            require_data_file(path)
         require(path.is_file() and not path.is_symlink(), 'Missing regular file: ' + str(relative))
         require(path.stat().st_size == row['bytes'] and sha(path) == row['sha256'],
                 'File differs: ' + str(relative))
@@ -46,15 +53,16 @@ def check_files():
     return manifest, total
 
 
-def quick_records():
+def quick_records(bundle_root=None):
     # Match the historical source-only audit. No engine constructor/restore/step.
     from resectionlab.core import semantic_digest
     from resectionlab.surgical_environment import load_environment
     from resectionlab.workspace_bundle import load_workspace
-    helper = TASK / 'review/accept_native.py'
+    helper = ROOT / 'scripts/rehearsal_support/accept_native.py'
     spec = importlib.util.spec_from_file_location('shared_native_audit', helper)
     audit = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(audit)
+    audit.SOURCE = data_root(bundle_root) / 'testcases/cases/meningioma-sub-06-standard-v2.ressectionlab'
 
     def no_engine(frame, event, arg):
         if (event == 'call' and frame.f_globals.get('__name__') == 'resectionlab.surgical_engine'
@@ -64,7 +72,7 @@ def quick_records():
     require(sys.getprofile() is None, 'Run the quick check without an existing profiler')
     sys.setprofile(no_engine)
     try:
-        native = TASK / 'final/rehearsal.ressectionlab'
+        native = data_root(bundle_root) / 'testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab'
         source, _, source_workspace = load_workspace(audit.SOURCE)
         case, artifacts, workspace = load_workspace(native)
         require(audit.array_hashes(source) == audit.array_hashes(case), 'Source arrays differ')
@@ -85,7 +93,7 @@ def quick_records():
                                        'protectionContract': snapshot['protectionContract']['contentHash']})
             require(state_id == snapshot['stateId'] == snapshot['checkpoint']['stateId'], 'State hash differs')
             require(snapshot['checkpoint']['position'] == len(snapshot['actions']), 'Position differs')
-            audit.protection_audit(scene, snapshot)
+            audit.protection_audit(scene, snapshot, protection=data_root(bundle_root) / 'testcases/environments/meningioma-sub-06/rl-protection.json')
             if name in ('full-primary', 'full-vascular'):
                 accounting = audit.source_accounting(scene, state)
                 records[name] = {'actions': len(snapshot['actions']), 'stateId': state_id,
@@ -117,11 +125,15 @@ def main():
     mode.add_argument('--prepare-frames', choices=('primary', 'vascular'), help='Explicit .2s replay; requires local canonical cache')
     mode.add_argument('--audit-frames', choices=('primary', 'vascular'), help='Cache-only every-frame audit; no physics fallback')
     parser.add_argument('--canonical-report', type=Path, help='Local canonical report required with --audit-frames')
+    parser.add_argument('--bundle-root', type=Path, help='Checkout-shaped historical data root; executing code stays in this checkout')
+    parser.add_argument('--data-only', action='store_true', help='Explicit current-code check: verify all 581 historical data files, without asserting historical source-byte identity')
     args = parser.parse_args()
     require(__debug__, 'Do not run verification with Python -O')
     require(not args.canonical_report or args.audit_frames, '--canonical-report requires --audit-frames')
-    manifest, total = check_files()
-    result = {'publishedFileIntegrity': 'passed', 'files': len(manifest['files']), 'bytes': total,
+    manifest, total = check_files(args.bundle_root, data_only=args.data_only)
+    count = manifest['payloadFiles'] if args.data_only else len(manifest['files'])
+    result = {'publishedFileIntegrity': 'passed', 'files': count, 'bytes': total,
+              'integrityScope': 'historical-data-only; current source is not the historical producer' if args.data_only else 'historical-data-and-source',
               'historicalEngineCommit': manifest['engineCommit'], 'publicPhysicsReplayRequested': False}
     role = args.canonical or args.prepare_frames or args.audit_frames
     if role:
@@ -130,8 +142,8 @@ def main():
         output = ROOT / 'testcases/outputs/shared-rehearsal-verification' / stamp
         output.mkdir(parents=True, exist_ok=False)
         branch = 'full-' + role
-        native = TASK / 'final/rehearsal.ressectionlab'
-        review = TASK / 'review'
+        native = data_root(args.bundle_root) / 'testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab'
+        review = ROOT / 'scripts/rehearsal_support'
         if args.canonical:
             command = [sys.executable, str(review / 'accept_native.py'), str(native), branch,
                        '--report', str(output / (role + '-canonical.json'))]
@@ -142,13 +154,14 @@ def main():
             command = [sys.executable, str(review / 'verify_every_cached_frame_monitoring.py'), str(native),
                        branch, str(args.canonical_report.resolve()), str(output / (role + '-every-frame.json'))]
         env = dict(os.environ, RESSECTIONLAB_VERIFIED_CACHE_MAX_DISK_BYTES='8589934592',
-                   RESSECTIONLAB_OBSERVED_CACHE_MAX_DISK_BYTES='8589934592')
+                   RESSECTIONLAB_OBSERVED_CACHE_MAX_DISK_BYTES='8589934592',
+                   RESSECTIONLAB_REHEARSAL_BUNDLE_ROOT=str(data_root(args.bundle_root)))
         print(json.dumps({**result, 'operation': parser.prog, 'branch': branch,
                           'output': str(output), 'slowOperationExplicitlyRequested': True}), flush=True)
         subprocess.run(command, cwd=ROOT, env=env, check=True)
         return
     if not args.files_only:
-        records = quick_records()
+        records = quick_records(args.bundle_root)
         result['savedSourceRecords'] = 'passed'
         result['branches'] = {name: {'actions': row['actions'], 'stateId': row['stateId'],
                              'removedOwnedTargetCells': row['target']['removedOwnedCells'],

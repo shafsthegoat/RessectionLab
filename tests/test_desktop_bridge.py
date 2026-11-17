@@ -37,6 +37,23 @@ def synthetic(bridge, identity="load"):
     return result["result"]
 
 
+def test_full_head_layer_inventory_keeps_separate_count_and_byte_bounds(bridge,tmp_path,monkeypatch):
+    from dataclasses import replace
+    from resectionlab.desktop_bridge import MAX_COMPARTMENTS,MAX_CASE_BYTES
+    base=create_synthetic_case((24,24,24));masks={}
+    for index in range(MAX_COMPARTMENTS+1):
+        mask=np.zeros(base.mri.shape,bool);mask.flat[index]=True;masks[f'structure_{index}']=mask
+    path=tmp_path/'full-head.ressectionlab'
+    case=replace(base,compartments=dict(list(masks.items())[:MAX_COMPARTMENTS]),source_compartments=None)
+    save_case(case,path)
+    result=request(bridge,'head','loadCase',{'path':str(path)})
+    assert result['event']=='result' and len(result['result']['compartments'])==MAX_COMPARTMENTS
+    excess=tmp_path/'too-many.ressectionlab';save_case(replace(case,compartments=masks,source_compartments=None),excess)
+    assert request(bridge,'count-bound','loadCase',{'path':str(excess)})['error']['code']=='LAYER_COUNT_LIMIT'
+    monkeypatch.setattr(bridge[0].session,'_case_array_bytes',lambda value:MAX_CASE_BYTES+1)
+    assert request(bridge,'byte-bound','loadCase',{'path':str(path)})['error']['code']=='CASE_SIZE_LIMIT'
+
+
 def test_case_binary_roundtrip_versions_and_null_clinical_fields(bridge):
     value = synthetic(bridge)
     descriptor = value["mri"]

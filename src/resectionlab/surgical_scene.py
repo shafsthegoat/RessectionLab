@@ -169,7 +169,12 @@ def from_case(case, mapping=None):
         masks = {name: masks[name] for name in precedence}
     if not masks:
         raise ValueError('No segmentation supplied; import a labelmap or assign regions first')
-    regions = mapping or [{'id': i + 1, 'name': name, 'material': KINDS.get(layers.get(name, {}).get('kind'), 'unknown'),
+    declared_materials = adapter.get('materialByRegion')
+    if not mapping and declared_materials is not None:
+        if (not isinstance(declared_materials, dict) or set(declared_materials) != set(masks)
+                or any(value not in MATERIALS for value in declared_materials.values())):
+            raise ValueError('Saved material declarations must name every source region with a supported material')
+    regions = mapping or [{'id': i + 1, 'name': name, 'material': (declared_materials[name] if declared_materials is not None else KINDS.get(layers.get(name, {}).get('kind'), 'unknown')),
                            'target': layers.get(name, {}).get('kind') == 'tumor',
                            'color': layers.get(name, {}).get('color', '#92a7b8')}
                           for i, name in enumerate(masks)]

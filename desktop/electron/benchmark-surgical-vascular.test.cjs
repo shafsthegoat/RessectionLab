@@ -145,3 +145,14 @@ test('generated pipeline runner selects guarded roles from the actual trusted CL
   assert.match(pipeline,/else 'normal'/);assert.match(pipeline,/guard=PipelineVascularMonitor/);
   for(const code of [fresh,prepared,pipeline])assert.match(code,/initialize_guard_inventory\(\)\n[\s\S]*guard.install\(BridgeSession\)\ntry:\n    with guard:\n        main\(\)\nfinally:\n    guard.finish\(\)\n$/);
 });
+
+test('historical vascular inputs bind native/reference/count audit to the selected restored root',()=>{
+  const path=require('node:path');
+  const {rehearsalPaths,checkRehearsalInputs}=require('./benchmark-surgical-vascular.cjs');
+  const root=path.resolve('testcases/generated-missing-restored-bundle');
+  const files=rehearsalPaths({RESSECTIONLAB_REHEARSAL_BUNDLE_ROOT:root});
+  assert.equal(files.native,path.join(root,'testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab'));
+  assert.equal(files.reference,path.join(path.dirname(files.native),'vascular-canonical.actions.jsonl'));
+  assert.equal(files.historical,path.join(root,'testcases/outputs/full-case-rehearsal-20261020/review/vascular-observability-28962e66-every-frame.json'));
+  assert.throws(()=>checkRehearsalInputs({RESSECTIONLAB_REHEARSAL_BUNDLE_ROOT:root}),/Restore the archive.*RESSECTIONLAB_REHEARSAL_BUNDLE_ROOT/);
+});

@@ -9,6 +9,7 @@ const { publishBundle } = require('./publish.cjs');
 const { assertLockedElectronVersion } = require('./electron-version.cjs');
 const { localElectronArchive, verifyLocalElectronArchive } = require('./local-electron-archive.cjs');
 const { captureRendererNotices, capturePythonNotices, captureElectronNotices } = require('./dependency-notices.cjs');
+const { stageElectronRuntime } = require('./runtime-files.cjs');
 
 async function hashes(root, relative = '') {
   const result = {};
@@ -82,7 +83,8 @@ async function main() {
     const sourcePackage = JSON.parse(await fs.readFile(path.join(input, 'package.json'), 'utf8'));
     const stage = path.join(input, 'runtime');
     await fs.mkdir(stage);
-    for (const item of ['dist', 'electron']) await fs.cp(path.join(input, item), path.join(stage, item), { recursive: true });
+    await fs.cp(path.join(input, 'dist'), path.join(stage, 'dist'), { recursive: true });
+    const electronRuntime = await stageElectronRuntime(path.join(input, 'electron'), path.join(stage, 'electron'), sourceHashes);
     await fs.writeFile(path.join(stage, 'package.json'), JSON.stringify({ name: sourcePackage.name, version: sourcePackage.version, main: sourcePackage.main }));
     const engineInput = path.join(input, 'research-engine');
     const originalEngine = path.join(root, 'sidecar/ressectionlab-engine');
@@ -104,7 +106,7 @@ async function main() {
     await fs.writeFile(path.join(noticeInput, 'inventory.json'), JSON.stringify(noticeIndex, null, 2) + '\n');
     await fs.writeFile(path.join(noticeInput, 'README.txt'), 'Third-party dependency notices\n\nUpstream texts are copied without alteration. Consult inventory.json for exact component versions, source hashes and unresolved source gaps. Renderer packages form a conservative runtime dependency closure. Numerical entries identify the actual frozen modules and collected payload. These files do not select a license for RessectionLab or establish clinical or distribution approval.\n\nElectron and Chromium: electron/\nRenderer library notices: renderer/ and renderer-inventory.json\nFrozen Python and native wheel notices: numerical-engine/\n');
     const noticeHashes = await hashes(noticeInput);
-    const manifest = { sourceHashes, engineHashes, noticeHashes, noticeSourceCompleteness: noticeIndex.source_completeness, appIconSha256: iconSha256, electronVersion, electronArchiveSha256, sourceDigest: crypto.createHash('sha256').update(JSON.stringify(sourceHashes)).digest('hex'),
+    const manifest = { sourceHashes, electronRuntime, engineHashes, noticeHashes, noticeSourceCompleteness: noticeIndex.source_completeness, appIconSha256: iconSha256, electronVersion, electronArchiveSha256, sourceDigest: crypto.createHash('sha256').update(JSON.stringify(sourceHashes)).digest('hex'),
       electronArchiveSource: localArchive ? { mode: 'explicit_local', fileName: localArchive.fileName, bytes: localArchive.bytes, sha256: localArchive.sha256 } : { mode: 'checksum_managed_download_cache' },
       revision: run('git', ['rev-parse', 'HEAD'], repo).trim(), gitStatus: run('git', ['status', '--porcelain'], repo).split('\n').filter(Boolean), createdUtc: new Date().toISOString() };
     await fs.writeFile(path.join(stage, 'BUILD_INPUT_MANIFEST.json'), JSON.stringify(manifest));

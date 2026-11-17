@@ -19,13 +19,13 @@ sampling does not change physical fields, action receipts or RL observations.
 The recorder changes implementation seals, so caches prepared before this
 change require fresh reconstruction with the current source/native selections.
 
-For an isolated local cache, launch from the primary checkout:
+For the optional October 20 historical case, first [restore its archived bundle](../scripts/rehearsal_support/README.md) and set `RESSECTIONLAB_REHEARSAL_BUNDLE_ROOT`. For an isolated local cache, launch from the primary checkout:
 
 ```sh
 pnpm --dir desktop build
 RESSECTIONLAB_PREPARED_PREFIX_CACHE_DIRECTORY="$PWD/testcases/outputs/prepared-prefix-local" \
 desktop/node_modules/.bin/electron desktop \
-  --case "$PWD/testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab"
+  --case "$RESSECTIONLAB_REHEARSAL_BUNDLE_ROOT/testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab"
 ```
 
 For the bounded vascular qualification, select the saved **full-vascular** branch
@@ -148,7 +148,7 @@ RESSECTIONLAB_IDLE_THERMAL_BUILD="$PWD/testcases/outputs/rl-readiness-20261022/i
 RESSECTIONLAB_PREFIX_JSON_BUILD="$PWD/testcases/outputs/rl-readiness-20261022/prefix-json-canonical-native-production-build/build-receipt.json" \
 RESSECTIONLAB_PREPARED_PREFIX_CACHE_DIRECTORY="$PWD/testcases/outputs/rl-readiness-20261022/prepared-vascular-v7-cache" \
 desktop/node_modules/.bin/electron desktop \
-  --case "$PWD/testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab"
+  --case "$RESSECTIONLAB_REHEARSAL_BUNDLE_ROOT/testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab"
 ```
 
 Choose **full-vascular**, then **Replay prepared observations · read only**.
@@ -197,7 +197,7 @@ RESSECTIONLAB_IDLE_THERMAL_BUILD="$PWD/testcases/outputs/rl-readiness-20261022/i
 RESSECTIONLAB_PREFIX_JSON_BUILD="$PWD/testcases/outputs/rl-readiness-20261022/prefix-json-canonical-native-production-build/build-receipt.json" \
 RESSECTIONLAB_PREPARED_PREFIX_CACHE_DIRECTORY="$PWD/testcases/outputs/rl-readiness-20261022/prepared-vascular-v15-cache" \
 desktop/node_modules/.bin/electron desktop \
-  --case "$PWD/testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab"
+  --case "$RESSECTIONLAB_REHEARSAL_BUNDLE_ROOT/testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab"
 ```
 
 Choose **full-vascular**, then **Replay prepared observations · read only**.
@@ -221,7 +221,7 @@ checkout with `RESSECTIONLAB_PREFIX_PIPELINE=1`; keep an isolated cache:
 RESSECTIONLAB_PREFIX_PIPELINE=1 \
 RESSECTIONLAB_PREPARED_PREFIX_CACHE_DIRECTORY="$PWD/testcases/outputs/pipeline-prefix-local" \
 desktop/node_modules/.bin/electron desktop \
-  --case "$PWD/testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab"
+  --case "$RESSECTIONLAB_REHEARSAL_BUNDLE_ROOT/testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab"
 ```
 
 Choose the recorded branch and **Replay from start · read only**. The default

@@ -143,7 +143,7 @@ export function validateCaseDescriptor(payload: CasePayload): {
       throw new Error(`${name} has an invalid transfer identity.`);
   };
   validateArray(payload.mri, "float32", "MRI");
-  if (!Array.isArray(payload.compartments) || payload.compartments.length > 32)
+  if (!Array.isArray(payload.compartments) || payload.compartments.length > 80)
     throw new Error("Invalid target layer inventory.");
   const names = new Set<string>();
   payload.compartments.forEach((layer) => {

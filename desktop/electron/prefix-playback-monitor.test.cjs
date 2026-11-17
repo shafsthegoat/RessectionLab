@@ -3,10 +3,10 @@ const test=require('node:test'),assert=require('node:assert/strict');
 const {spawnSync}=require('node:child_process');
 const path=require('node:path'),fs=require('node:fs');
 const root=path.resolve(__dirname,'../..'),python=path.join(root,'.venv/bin/python');
-const monitor=path.join(root,'testcases/outputs/full-case-rehearsal-20261020/review');
+const monitor=path.join(root,'scripts/rehearsal_support');
 
 test('prefix audit permits only three ordered preparations and forbids warm/fourth steps before entry',
-  {skip:!fs.existsSync(python)||!fs.existsSync(monitor)},()=>{
+  {skip:!fs.existsSync(python)},()=>{
   const probe=spawnSync(python,['-c',`
 import sys
 sys.path[:0]=[${JSON.stringify(__dirname)},${JSON.stringify(monitor)}]

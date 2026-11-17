@@ -20,7 +20,8 @@ import sys
 import time
 
 from check_surgical_rl_readiness import ROOT, Budget, require, write_json
-sys.path.insert(0, str(ROOT / 'testcases/outputs/full-case-rehearsal-20261020/review'))
+sys.path.insert(0, str(ROOT / 'scripts/rehearsal_support'))
+from bundle_paths import data_root, require_data_file
 from readonly_step_monitor import ReadOnlyStepMonitor
 from resectionlab.core import freeze_json, thaw_json
 from resectionlab.desktop_bridge import BridgeSession, _Request
@@ -73,12 +74,23 @@ class PreparationSteps:
         self.monitor.free_tool_id(self.tool)
 
 
-def run(output, budget):
-    require(sys.implementation.name == 'cpython' and sys.version_info[:2] == (3, 12), 'CPython 3.12 required')
-    require(file_sha(NATIVE) == NATIVE_SHA, 'Preserved episode bytes differ')
-    expected = {row['frameIndex']: row['stateId'] for row in json.loads(BASELINE.read_text())['playbackIpc']}
-    with TRACE.open() as stream:
+def load_inputs(baseline=BASELINE):
+    """Read exact preserved inputs without constructing or stepping an engine."""
+    require(file_sha(require_data_file(NATIVE)) == NATIVE_SHA, 'Preserved episode bytes differ')
+    expected = {row['frameIndex']: row['stateId'] for row in json.loads(baseline.read_text())['playbackIpc']}
+    with require_data_file(TRACE).open() as stream:
         original = [json.loads(next(stream)) for _ in range(3)]
+    require(all(index in expected for index in range(12)), 'Playback baseline is missing prefix frames')
+    from resectionlab.workspace_bundle import load_workspace
+    _, artifacts, _ = load_workspace(NATIVE)
+    actions = artifacts['surgical_toolbox']['branches']['full-primary']['actions'][:3]
+    require([row['action'] for row in original] == actions, 'Preserved prefix actions differ')
+    return expected, original
+
+
+def run(output, budget, baseline=BASELINE):
+    require(sys.implementation.name == 'cpython' and sys.version_info[:2] == (3, 12), 'CPython 3.12 required')
+    expected, original = load_inputs(baseline)
     session = BridgeSession(output / 'transfers')
     session.surgical_replay_cache = SurgicalReplayCache(verified_cache=VerifiedSurgicalCache(output / 'verified-cache'))
     session.surgical_frame_cache = SurgicalFrameCache(directory=output / 'observed-cache')
@@ -143,11 +155,25 @@ def run(output, budget):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--output', type=Path)
+    parser.add_argument('--check-inputs', action='store_true', help='Read/hash preserved episode, prefix and baseline only; zero physics actions')
     parser.add_argument('--max-wall-seconds', type=float, default=120.)
+    parser.add_argument('--bundle-root', type=Path, help='Checkout-shaped historical data root')
+    parser.add_argument('--baseline', type=Path, default=BASELINE, help='Independent playback baseline report')
     args = parser.parse_args()
+    global NATIVE, TRACE
+    NATIVE = data_root(args.bundle_root) / 'testcases/outputs/full-case-rehearsal-20261020/final/rehearsal.ressectionlab'
+    TRACE = NATIVE.parent / 'primary-canonical.actions.jsonl'
     if not math.isfinite(args.max_wall_seconds) or not 0 < args.max_wall_seconds <= 180:
         parser.error('Wall-time cap must be in (0,180] seconds')
+    if args.check_inputs:
+        expected, original = load_inputs(args.baseline)
+        print(json.dumps({'status': 'passed', 'scope': 'preserved profiler inputs only',
+                          'native': str(NATIVE), 'trace': str(TRACE), 'baseline': str(args.baseline.resolve()),
+                          'prefixActions': len(original), 'baselineFrames': len(expected), 'physicsActions': 0}, indent=2))
+        return 0
+    if args.output is None:
+        parser.error('--output is required unless --check-inputs is selected')
     output = args.output.resolve()
     if output.exists() or not output.is_relative_to((ROOT / 'testcases/outputs').resolve()):
         parser.error('Use a new output directory below testcases/outputs')
@@ -160,7 +186,7 @@ def main():
     code = 0
     try:
         signal.setitimer(signal.ITIMER_REAL, args.max_wall_seconds)
-        report.update(run(output, budget), status='passed')
+        report.update(run(output, budget, args.baseline), status='passed')
     except Exception as error:
         report.update(status='incomplete' if isinstance(error, TimeoutError) else 'failed', error={'type': type(error).__name__, 'message': str(error)})
         code = 1

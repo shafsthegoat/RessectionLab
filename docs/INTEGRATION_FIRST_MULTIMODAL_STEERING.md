@@ -1,4 +1,8 @@
 RessectionLab: Integration-First, Multimodal Surgical Simulation and RL Steering Directive
+
+Repository upkeep follows the [maintenance policy](../CONTRIBUTING.md): keep current-use material,
+retire obsolete code/docs/artifacts, and archive useful history outside the tracked tree.
+
 0. Authority, scope and intent
 This is a steering directive for executing the existing RessectionLab supergoal. It is not a new supergoal, a replacement research plan, or permission to abandon any previously specified capability.
 
