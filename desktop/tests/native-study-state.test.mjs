@@ -99,3 +99,16 @@ test('a study without a current cursor initializes from the saved scan without a
   const saved={cursor:[4,5,6],visible:{},settings:{contrast:3}},current={cursor:null,visible:{},settings:{}};
   const next=nextScanState(current,saved);assert.deepEqual(next.cursor,saved.cursor);next.cursor[0]=99;assert.deepEqual(saved.cursor,[4,5,6]);
 });
+
+test('body orientation guide saves per scan, accepts old settings and rejects non-boolean flags',()=>{
+  const source={compartments:[],brainMask:null,metadata:{}};
+  assert.equal(checkedViewerSettings(source,{}).showOrientationGuide,undefined);
+  for(const enabled of [true,false]){
+    const saved=checkedViewerSettings(source,JSON.parse(JSON.stringify({showOrientationGuide:enabled})));
+    assert.equal(saved.showOrientationGuide,enabled);
+    const current={cursor:null,visible:{},settings:{showOrientationGuide:!enabled}},scan={cursor:null,visible:{},settings:saved};
+    assert.equal(nextScanState(current,scan).settings.showOrientationGuide,enabled);
+    assert.equal(anatomyPresentation(saved,[],'segmentation','T1').showOrientationGuide,enabled);
+  }
+  for(const value of [null,0,1,'false',[],{}])assert.throws(()=>checkedViewerSettings(source,{showOrientationGuide:value}));
+});

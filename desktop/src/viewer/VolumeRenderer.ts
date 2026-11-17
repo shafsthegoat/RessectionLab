@@ -66,6 +66,7 @@ import { surfaceCameraDistance } from './surfaceCameraFit';
 import { ScanVolumeRenderer } from './ScanVolumeRenderer';
 import type { VolumeRenderingSettings } from './volumeTransfer';
 import { paneViewport } from "./layout";
+import {OrientationGuide} from './orientationGuide';
 import {
   PRIOR_COLORS,
   priorSamplingTolerance,
@@ -83,7 +84,7 @@ import {
   routeAppearance,
 } from "./routeAppearance";
 
-type Panes = { anatomy: HTMLElement } & Record<SlicePlane, HTMLElement>;
+type Panes = { anatomy: HTMLElement; orientationGuide: HTMLElement } & Record<SlicePlane, HTMLElement>;
 type SurfacePair={mesh:THREE.Mesh;source:THREE.BufferGeometry;smooth:THREE.BufferGeometry;smoothingPrepared?:boolean};
 type ModelStage={generation:number;next:ViewerVolume;interaction:SurgicalInteraction|null;
   prepared:Map<string,SurfacePair|null>;jobs:Array<{layer:ViewerVolume['compartments'][number];indices?:Uint32Array;values?:Uint8Array}>;
@@ -187,6 +188,7 @@ export class VolumeRenderer {
   private interacting = false;
   private readonly scene = new THREE.Scene();
   private readonly camera = new THREE.PerspectiveCamera(34, 1, 0.1, 5000);
+  private readonly orientationGuide:OrientationGuide;
   private readonly controls: OrbitControls;
   private readonly slices = new Map<
     SlicePlane,
@@ -374,6 +376,7 @@ export class VolumeRenderer {
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = .95;
+    this.orientationGuide=new OrientationGuide(panes.orientationGuide);
     const lighting=new RoomEnvironment(),pmrem=new THREE.PMREMGenerator(this.renderer);
     this.environmentTarget=pmrem.fromScene(lighting,.04);
     this.scene.environment=this.environmentTarget.texture;this.scene.environmentIntensity=.45;
@@ -997,6 +1000,7 @@ export class VolumeRenderer {
   }
 
   setWorkspaceSettings(settings: ViewerWorkspaceSettings): void {
+    if(this.workspaceSettings?.showOrientationGuide!==settings.showOrientationGuide)this.requestRender(false);
     this.workspaceSettings = settings;
     if(this.surgicalGhost)this.surgicalGhost.visible=!!this.surgicalInteraction&&!this.surgicalInteraction.readOnly&&(settings.operativeView!=='surgeon'||this.surgicalInteraction.mode!=='navigate');
     const surgeon=settings.operativeView==='surgeon'&&settings.microscope;
@@ -2210,6 +2214,7 @@ export class VolumeRenderer {
       return { w: rect.width, h: rect.height };
     };
     const main = viewport(this.panes.anatomy);
+    let orientationGuideVisible=false;
     let surfaceQuality:{adaptive:boolean;width:number;height:number}|null=null;
     if (main) {
       if (this.pendingFit) this.fitCamera(this.pendingFit);
@@ -2218,6 +2223,10 @@ export class VolumeRenderer {
       if (this.replayActive || this.passiveActive||!this.scanVolume.active)
         surfaceQuality=this.surfaceInteraction.render(this.renderer,this.scene,this.camera,main.w,main.h,this.interacting,this.budget.longEdge,()=>{viewport(this.panes.anatomy);});
       else this.scanVolume.render(this.scene,this.camera,main.w,main.h,this.interacting,()=>{viewport(this.panes.anatomy);},this.budget.longEdge);
+      if(this.workspaceSettings.showOrientationGuide!==false){
+        this.orientationGuide.setPosture(renderedView?.positionEffects);
+        orientationGuideVisible=this.orientationGuide.render(this.renderer,this.camera,root,this.paneBounds!.panes.get(this.panes.orientationGuide)!);
+      }
     }
     let sliceDraws=0;
     for (const plane of SLICE_PLANES) {
@@ -2249,6 +2258,7 @@ export class VolumeRenderer {
       surfaceCache:{budgetBytes:RETIRED_SURFACE_BUDGET_BYTES,retiredBytes:this.retiredSurfaces.reduce((sum,entry)=>sum+entry.bytes,0),retiredEntries:this.retiredSurfaces.length},
       labelUploads:this.labelTextureUpdates?.work??null,
       sourceCaseHash,displayIdentity,sourceShape,sourceSignalFingerprint:sourceSignal,cameraState,cursor,selectedStructure,routeSignature,renderedTractIds,surgicalStateId,surgicalFrame,
+      orientationGuide:orientationGuideVisible?this.orientationGuide.snapshot():null,
       recordedFlow:this.surgicalFlowSource?{startSeconds:this.surgicalFlowSource.startSeconds,endSeconds:this.surgicalFlowSource.endSeconds,operations:this.surgicalFlowSource.operations.length,truncated:this.surgicalFlowSource.truncated,
         animated:surgicalAnimationActive,approximation:'Retrospective source-interval overlay; 3x radius display gain',
         glyphInstances:this.surgicalFlow?.children.reduce((sum,object)=>sum+(object instanceof THREE.InstancedMesh&&object.name!=='flow:ledger-droplets'?object.count:0),0)??0,
@@ -2328,6 +2338,7 @@ export class VolumeRenderer {
     this.mriTexture.dispose();
     this.scanVolume.dispose();
     this.surfaceInteraction.dispose();
+    this.orientationGuide.dispose();
     this.environmentTarget.dispose();
     this.fusionTexture.dispose();
     this.labelTexture.dispose();

@@ -158,6 +158,7 @@ def test_anatomy_presentation_survives_native_and_portable_reopen(patient, tmp_p
              'snapshotId': patient.identity(), 'seriesId': 'mri', 'vesselScope': 'all',
              'states': {'mri': {'cursor': [0., 0., 0.], 'visible': {'vessels': True, 'tumor': True},
                                 'settings': {'sliceOverlay': style, 'presentation': mode,
+                                             'showOrientationGuide': mode == 'segmentation',
                                              'contextStyle': 'shell', 'sliceFraming': {'fit': 'anatomy', 'zoom': 1.25},
                                              'volumeRendering': {'preset': 'auto', 'density': .085}}}}}
     save_view(patient, state)
@@ -175,6 +176,11 @@ def test_anatomy_presentation_survives_native_and_portable_reopen(patient, tmp_p
             broken['states']['mri']['settings'][key] = invalid
             with pytest.raises(ValueError, match='Invalid (slice annotation style|anatomy presentation)'):
                 save_view(patient, broken)
+    for invalid in (None, 0, 1, 'false', [], {}):
+        broken = deepcopy(state)
+        broken['states']['mri']['settings']['showOrientationGuide'] = invalid
+        with pytest.raises(ValueError, match='orientation guide'):
+            save_view(patient, broken)
     assert read_view(patient) == state
 
 

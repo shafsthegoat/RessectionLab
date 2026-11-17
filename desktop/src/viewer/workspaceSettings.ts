@@ -27,6 +27,7 @@ export function validMicroscopeSettings(value:unknown):value is MicroscopeSettin
 export interface ViewerClipping { axis: 'x'|'y'|'z'; value: number; enabled: boolean; flipped?: boolean }
 /** Display choices only. No setting changes source arrays, masks or registration. */
 export interface ViewerWorkspaceSettings {
+  showOrientationGuide?: boolean;
   smoothSurfaces?: boolean;
   skullMode?: 'exterior'|'transparent'|'cutaway';
   volumeRendering?: import('./volumeTransfer').VolumeRenderingSettings;
