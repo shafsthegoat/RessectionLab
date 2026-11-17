@@ -1,5 +1,8 @@
 # Electron Mac app packaging
 
+Repository upkeep follows the [maintenance policy](../CONTRIBUTING.md): keep current-use material,
+retire obsolete code/docs/artifacts, and archive useful history outside the tracked tree.
+
 The current desktop target is Electron, React and Three.js. The older Qt build
 remains a reference artifact; it is not the current desktop architecture.
 

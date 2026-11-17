@@ -1,5 +1,8 @@
 # RessectionLab: evidence-grounded hybrid world model and RL steering
 
+Repository upkeep follows the [maintenance policy](../CONTRIBUTING.md): keep current-use material,
+retire obsolete code/docs/artifacts, and archive useful history outside the tracked tree.
+
 Prepared October 10, 2026. This is a proposed steering addendum for the existing autonomous project, not a replacement for its full destination. Paste the directive below into the running project's next steering message, or provide this file as that message's attachment. No repository changes, training jobs, downloads of surgical videos, or task scheduling were performed by preparing this review.
 
 ## Review basis and decision

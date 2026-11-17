@@ -1,5 +1,8 @@
 # Project status
 
+Repository upkeep follows the [maintenance policy](CONTRIBUTING.md): keep current-use material,
+retire obsolete code/docs/artifacts, and archive useful history outside the tracked tree.
+
 Use [current status](docs/current-status.md) for maintained entry points. Dated
 narratives and requirements below remain historical context (navigation updated
 November 16, 2026).

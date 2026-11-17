@@ -1,5 +1,8 @@
 # RessectionLab
 
+Repository upkeep follows the [maintenance policy](CONTRIBUTING.md): keep current-use material,
+retire obsolete code/docs/artifacts, and archive useful history outside the tracked tree.
+
 Start with the [current status and working entry points](docs/current-status.md)
 for architecture, workflow, verification, experimental features and dated history.
 The [cleanup execution record](docs/cleanup-execution-20261116.md) documents the

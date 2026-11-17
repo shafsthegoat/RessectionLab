@@ -1,3 +1,6 @@
+Repository upkeep follows the [maintenance policy](../CONTRIBUTING.md): keep current-use material,
+retire obsolete code/docs/artifacts, and archive useful history outside the tracked tree.
+
 /goal Transform RessectionLab into a deeply researched, runnable, patient-anatomy-aware glioma surgery planning and rehearsal platform that compares granular, executable, multi-instrument surgical strategies under anatomical, technical, physiological, and observational uncertainty. Make broad use of eligible real datasets a central deliverable: expand patient, institution, modality and recorded-trajectory coverage, and prove which data actually contribute to learning. Never use synthetic data. Train RL only from eligible recorded real experience under the policy in section 1; images alone do not constitute RL trajectories. Use coordinated gpt-6-astra subagents at xhigh reasoning to research, implement, integrate, and independently evaluate the work. Continue through working software and reproducible demonstrations; a literature review, architecture document, attractive viewer, larger dataset catalog, or improved scalar reward is not completion.
 
 # SUPERGOAL: real-data-driven glioma surgery planning, learning and rehearsal

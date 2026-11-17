@@ -1,5 +1,8 @@
 # Renderer contracts
 
+Repository upkeep follows the [maintenance policy](../../CONTRIBUTING.md): keep current-use material,
+retire obsolete code/docs/artifacts, and archive useful history outside the tracked tree.
+
 The React shell owns case review, source visibility, route comparison, and local optimization controls. Numerical computation runs in the Python sidecar through the named `window.resectionApi` methods; the renderer never receives an arbitrary file path or executable operation.
 
 - `App.tsx`: workspace state, operation status, native menu actions, case lifecycle and A/B route choices. A newer case load invalidates older hydration; route results must match the active source fingerprint.

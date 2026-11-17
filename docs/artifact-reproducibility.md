@@ -1,5 +1,8 @@
 # Reproducing reports and historical audits
 
+Repository upkeep follows the [maintenance policy](../CONTRIBUTING.md): keep current-use material,
+retire obsolete code/docs/artifacts, and archive useful history outside the tracked tree.
+
 This note records a static inspection of tracked files, ignored paths, entry
 points and recorded source identities on October 4, 2026. No installation,
 training, application launch, test run or audit execution was performed for this

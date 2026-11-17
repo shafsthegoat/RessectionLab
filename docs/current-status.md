@@ -1,5 +1,8 @@
 # Current status and working entry points
 
+Repository upkeep follows the [maintenance policy](../CONTRIBUTING.md): keep current-use material,
+retire obsolete code/docs/artifacts, and archive useful history outside the tracked tree.
+
 As of November 16, 2026, the maintained application is Electron/React/TypeScript
 with the Python engine and optional compiled C++ backend. The November 16
 structure-aware harm and canonical endpoint work was merged in `b80d2e9e` (PR
