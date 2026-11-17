@@ -6,36 +6,48 @@ import { mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
 // +X is right, +Y is anterior, and +Z is superior.
 type Ring = [z: number, halfWidth: number, halfDepth: number, x: number, y: number];
 
+// Cross-sections ascend from the pelvis through the waist, ribcage and collar.
 const torso: Ring[] = [
-  [-.805, .025, .045, 0, .001], [-.755, .115, .083, 0, .002],
-  [-.662, .151, .096, 0, -.007], [-.548, .133, .082, 0, -.004],
-  [-.423, .141, .089, 0, -.011], [-.307, .166, .102, 0, -.006],
-  [-.202, .184, .099, 0, -.004], [-.110, .168, .081, 0, -.008],
-  [-.054, .113, .068, 0, -.01], [-.021, .075, .055, 0, -.011],
-  [.018, .058, .048, 0, -.011],
+  [-.795, .041, .049, 0, -.004], [-.747, .119, .088, 0, -.014],
+  [-.670, .167, .106, 0, -.016], [-.608, .161, .097, 0, -.012],
+  [-.540, .123, .078, 0, -.009], [-.474, .120, .080, 0, -.007],
+  [-.390, .145, .097, 0, -.004], [-.308, .176, .113, 0, .005],
+  [-.224, .190, .110, 0, .001], [-.162, .186, .093, 0, -.009],
+  [-.106, .157, .071, 0, -.013], [-.054, .098, .065, 0, -.013],
+  [-.020, .073, .051, 0, -.011], [.021, .060, .048, 0, -.011],
 ];
+// The hand flares below a thin wrist. The forearm changes direction at the
+// elbow, and the deltoid has its own rounded peak above the upper arm.
 const arm: Ring[] = [
-  [-.837, .01, .01, .297, .018], [-.805, .026, .018, .296, .013],
-  [-.744, .03, .023, .29, .013], [-.703, .025, .022, .284, .01],
-  [-.627, .036, .031, .273, .007], [-.522, .041, .04, .252, -.006],
-  [-.435, .038, .038, .236, -.014], [-.323, .049, .047, .214, -.009],
-  [-.213, .052, .056, .193, -.004], [-.144, .032, .036, .181, -.007],
+  [-.848, .012, .010, .339, .036], [-.821, .028, .018, .340, .030],
+  [-.773, .035, .025, .336, .023], [-.721, .022, .022, .323, .012],
+  [-.662, .027, .030, .313, .005], [-.585, .041, .040, .303, -.004],
+  [-.535, .040, .040, .295, -.020], [-.490, .031, .035, .287, -.031],
+  [-.442, .040, .044, .273, -.018], [-.369, .048, .051, .256, -.004],
+  [-.304, .045, .050, .241, -.003], [-.246, .058, .057, .225, -.006],
+  [-.194, .063, .059, .211, -.008], [-.144, .046, .043, .196, -.010],
+  [-.115, .018, .020, .176, -.012],
 ];
+// The knee leads the calf in profile. The ankle sits above the rear of the
+// foot, whose flatter sole and dropping forefoot create the wedge.
 const leg: Ring[] = [
-  [-1.507, .028, .057, .11, .055], [-1.481, .042, .098, .11, .057],
-  [-1.448, .039, .088, .11, .044], [-1.402, .026, .039, .11, .002],
-  [-1.338, .029, .037, .11, -.005], [-1.236, .049, .052, .106, -.016],
-  [-1.135, .043, .05, .102, -.001], [-1.053, .044, .053, .097, .01],
-  [-.942, .059, .068, .09, .002], [-.818, .072, .083, .08, -.001],
-  [-.708, .079, .082, .072, -.003], [-.633, .044, .047, .083, -.007],
+  [-1.535, .033, .086, .119, .049], [-1.518, .046, .109, .119, .058],
+  [-1.477, .043, .091, .116, .044], [-1.440, .035, .060, .113, .018],
+  [-1.391, .027, .032, .111, -.008], [-1.337, .030, .039, .108, -.015],
+  [-1.245, .051, .061, .106, -.030], [-1.184, .050, .055, .103, -.023],
+  [-1.131, .038, .042, .097, -.007], [-1.081, .044, .050, .099, .011],
+  [-1.025, .050, .055, .097, .002], [-.959, .062, .067, .092, -.003],
+  [-.856, .079, .085, .090, -.003], [-.770, .084, .098, .087, -.010],
+  [-.690, .080, .087, .081, -.012], [-.619, .034, .042, .076, -.014],
 ];
 const headProfile: Ring[] = [
-  [-.044, .057, .047, 0, -.009], [-.013, .058, .051, 0, -.009],
-  [.009, .057, .057, 0, -.006], [.021, .051, .065, 0, .006],
-  [.045, .069, .076, 0, .008], [.083, .087, .089, 0, .004],
-  [.130, .098, .097, 0, -.001], [.175, .101, .103, 0, -.007],
-  [.217, .091, .098, 0, -.01], [.250, .072, .078, 0, -.01],
-  [.273, .039, .046, 0, -.009], [.283, .001, .001, 0, -.008],
+  [-.044, .059, .049, 0, -.010], [-.013, .060, .051, 0, -.010],
+  [.007, .056, .054, 0, -.006], [.025, .044, .067, 0, .011],
+  [.049, .059, .079, 0, .010], [.077, .074, .082, 0, .004],
+  [.115, .084, .090, 0, -.002], [.154, .089, .092, 0, -.011],
+  [.196, .092, .099, 0, -.015], [.244, .085, .094, 0, -.016],
+  [.278, .067, .076, 0, -.018], [.300, .038, .045, 0, -.018],
+  [.310, .001, .001, 0, -.017],
 ];
 
 function profileAt(profile: Ring[], z: number): Ring {
@@ -54,9 +66,14 @@ function profileAt(profile: Ring[], z: number): Ring {
   return [z, sample(1), sample(2), sample(3), sample(4)];
 }
 
-function profileDistance(profile: Ring[], ring: Ring, x: number, y: number): number {
+function profileDistance(profile: Ring[], ring: Ring, x: number, y: number, squareness = 0): number {
   const [z, width, depth, centreX, centreY] = ring;
-  const side = (Math.hypot((x - centreX) / width, (y - centreY) / depth) - 1) * Math.min(width, depth);
+  const u = (x - centreX) / width, v = (y - centreY) / depth;
+  // A rounded rectangular cross-section gives the chest and pelvis broad
+  // planes, and gives the foot a sole that reads from above as well as the side.
+  const ellipse = Math.hypot(u, v);
+  const radius = squareness > 0 ? THREE.MathUtils.lerp(ellipse, Math.sqrt(Math.hypot(u * u, v * v)), squareness) : ellipse;
+  const side = (radius - 1) * Math.min(width, depth);
   return Math.max(side, profile[0][0] - z, z - profile[profile.length - 1][0]);
 }
 
@@ -65,27 +82,36 @@ function blend(a: number, b: number, radius: number): number {
   return Math.min(a, b) - overlap * overlap * radius * .25;
 }
 
+function thumbDistance(x: number, y: number, z: number): number {
+  const offset = z + .779;
+  const centreX = .300 - .24 * offset;
+  return (Math.hypot((x - centreX) / .020, (y - .036) / .018, offset / .041) - 1) * .018;
+}
+
 let bodyGeometry: THREE.BufferGeometry | undefined;
 function sculptBody(): THREE.BufferGeometry {
   if (bodyGeometry) return bodyGeometry.clone();
 
-  // Blend the shoulders and hips before extracting the surface so the figure
-  // has the continuous finish of a molded mannequin at any viewing angle.
+  // Keep the narrow seams at the armpits and groin while blending the joints
+  // themselves into one molded surface.
   const resolution = 50, maxTriangles = 18000;
   const material = new THREE.MeshBasicMaterial();
   const surface = new MarchingCubes(resolution, material, false, false, maxTriangles);
   surface.isolation = 0;
-  const halfWidth = .4, halfDepth = .21, halfHeight = .85, centreZ = -.73;
+  const halfWidth = .43, halfDepth = .22, halfHeight = .88, centreZ = -.75;
   const axis = (index: number) => index * 2 / resolution - 1;
   for (let iz = 0; iz < resolution; iz++) {
     const z = axis(iz) * halfHeight + centreZ;
     const torsoRing = profileAt(torso, z), armRing = profileAt(arm, z), legRing = profileAt(leg, z);
+    const footShape = 1 - THREE.MathUtils.smoothstep(z, -1.48, -1.40);
     for (let iy = 0; iy < resolution; iy++) {
       const y = axis(iy) * halfDepth;
       for (let ix = 0; ix < resolution; ix++) {
         const x = Math.abs(axis(ix) * halfWidth);
-        const upper = blend(profileDistance(torso, torsoRing, x, y), profileDistance(arm, armRing, x, y), .066);
-        const distance = blend(upper, profileDistance(leg, legRing, x, y), .055);
+        const core = profileDistance(torso, torsoRing, x, y, .70);
+        const armDistance = blend(profileDistance(arm, armRing, x, y), thumbDistance(x, y, z), .014);
+        const legDistance = profileDistance(leg, legRing, x, y, footShape);
+        const distance = blend(blend(core, armDistance, .026), legDistance, .028);
         surface.field[(iz * resolution + iy) * resolution + ix] = -distance;
       }
     }
@@ -95,6 +121,14 @@ function sculptBody(): THREE.BufferGeometry {
   geometry.setAttribute('position', new THREE.BufferAttribute(surface.positionArray.slice(0, surface.count * 3), 3));
   geometry.scale(halfWidth, halfDepth, halfHeight).translate(0, 0, centreZ);
   bodyGeometry = mergeVertices(geometry);
+  // An isovalue that meets a grid corner can emit a face that welds to a line.
+  const welded = bodyGeometry.getIndex()!;
+  const triangles: number[] = [];
+  for (let i = 0; i < welded.count; i += 3) {
+    const a = welded.getX(i), b = welded.getX(i + 1), c = welded.getX(i + 2);
+    if (a !== b && b !== c && a !== c) triangles.push(a, b, c);
+  }
+  bodyGeometry.setIndex(triangles);
   bodyGeometry.computeVertexNormals();
   bodyGeometry.computeBoundingSphere();
   geometry.dispose();
@@ -119,14 +153,13 @@ function sculptHead(): THREE.BufferGeometry {
       const angle = side * 2 * Math.PI / sides;
       const forward = Math.sin(angle), x = width * Math.cos(angle);
       const face = THREE.MathUtils.smoothstep(forward, .30, .95);
-      // Sculpt the nose and closed mouth directly into the surface. Shallow
-      // eye contours make the face legible without painted eyes or expression.
-      const bridge = .021 * gaussian(x, .019) * gaussian(z - .121, .060);
-      const noseTip = .027 * gaussian(x, .024) * gaussian(z - .094, .017);
-      const eyes = .010 * gaussian(Math.abs(x) - .042, .026) * gaussian(z - .136, .018);
-      const mouth = gaussian(x, .035) * (.005 * gaussian(z - .051, .009) - .004 * gaussian(z - .047, .0035));
-      const ear = .010 * gaussian(forward + .04, .27) * gaussian(z - .111, .034);
-      positions.push(x + Math.cos(angle) * ear, centreY + depth * forward + face * (bridge + noseTip - eyes + mouth), z);
+      // Chin and brow establish a profile. A shallow ridge keeps the front
+      // recognizable while the face stays smooth and expressionless.
+      const chin = .012 * gaussian(x, .051) * gaussian(z - .043, .019);
+      const nose = .026 * gaussian(x, .023) * gaussian(z - .109, .031);
+      const forehead = .008 * gaussian(x, .070) * gaussian(z - .184, .047);
+      const ear = .008 * gaussian(forward + .12, .24) * gaussian(z - .125, .031);
+      positions.push(x + Math.cos(angle) * ear, centreY + depth * forward + face * (chin + nose + forehead), z);
       colors.push(tint.r, tint.g, tint.b);
       if (row < rows) {
         const a = row * sides + side, b = row * sides + (side + 1) % sides;
