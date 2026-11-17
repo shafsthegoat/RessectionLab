@@ -118,6 +118,7 @@ def registration(path,fixed,brain,out):
     if receipt.exists():
         row=json.loads(receipt.read_text())
         if row['source_sha256']!=source_sha:raise ValueError('Registration source changed')
+        if row['fixed_grid_shape']!=list(fixed.shape)or not np.array_equal(row['fixed_affine'],fixed.affine):raise ValueError('Registration target grid changed; preserve a distinct attempt')
         for name,digest in row['output_sha256'].items():
             if sha256_file(out/name)!=digest:raise ValueError('Registration output changed')
         return row
@@ -230,7 +231,7 @@ def package(root,out,case,sources,originals,healthy,recipe):
     for s in state['states'].values():
         s['visibleLayers']={name:False for name in s['visibleLayers']}
     primary=state['states']['primary'];primary['visibleLayers']['brain']=True
-    for name in ['synthetic_core','synthetic_rim','synthetic_edema','mra_vessels']:
+    for name in ['synthetic_core','synthetic_rim','synthetic_edema']:
         if name in primary['visibleLayers']:primary['visibleLayers'][name]=True
     if recipe:primary['cursor']=recipe['center_ras_mm']
     primary['viewer']={'smoothSurfaces':True,'layerOpacity':{'brain':.12,'synthetic_core':1.,'synthetic_rim':.85,'synthetic_edema':.15,'mra_vessels':.8},'sliceOverlay':'contour'}
@@ -300,10 +301,22 @@ def build_subject(root,subject,head_attempt='head-model-v2b'):
     vessel_path=vessels(root,mra,subject,working/'vesselfm-0p6mm')
     registrations={mod:registration(path,fixed,brain,working/('rigid-'+mod))for mod,path in [('MRA',mra),('FLAIR',flair),('SWI',swi)]}
     v=nib.load(vessel_path);forward=np.array(registrations['MRA']['moving_RAS_to_fixed_RAS_forward'])
-    vascular=sample((np.asarray(v.dataobj)>0).astype(np.uint8),forward@v.affine,grid,0)>0
+    raw_vascular=sample((np.asarray(v.dataobj)>0).astype(np.uint8),forward@v.affine,grid,0)>0
+    from scipy.ndimage import distance_transform_edt
+    intracranial=np.isin(head_labels,list(BRAIN_IDS|CSF_IDS))
+    intracranial_margin=distance_transform_edt(~intracranial,sampling=(spacing,)*3)<=2.
+    vascular=raw_vascular&intracranial_margin
+    selection={'rule':'raw registered vesselFM mask intersected with estimated intracranial tissue/CSF plus2mm physical margin',
+        'raw_registered_voxels':int(raw_vascular.sum()),'selected_voxels':int(vascular.sum()),'excluded_voxels':int((raw_vascular&~vascular).sum()),
+        'scope':'intracranial estimate only; extracranial circulation excluded from this layer; raw model output retained',
+        'clinical_validation':False,'complete_vessels':False,'signal_threshold_added':False}
+    selected_path=working/'intracranial-MRA-vessels.nii.gz'
+    if not selected_path.exists():save_nii(selected_path,vascular.astype(np.uint8),fixed.affine)
+    elif not np.array_equal(np.asarray(nib.load(selected_path).dataobj)>0,vascular):raise ValueError('Previous vascular selection changed')
+    atomic_json(working/'vascular-selection.json',selection)
     if not vascular.any():raise ValueError('Empty registered vascular estimate')
     compartments['mra_vessels']=vascular;materials['mra_vessels']='vessel'
-    layers['mra_vessels']={'kind':'vessels','label':'MRA vessels · vesselFM ESTIMATE','color':'#ef5454','provenance':'estimated','protected':True,'review_status':'unreviewed'}
+    layers['mra_vessels']={'kind':'vessels','label':'MRA vessels · intracranial vesselFM ESTIMATE','color':'#ef5454','provenance':'estimated','protected':True,'review_status':'unreviewed','selection':selection}
     tract_rows=[];flair_image=nib.load(flair);forward=np.array(registrations['FLAIR']['moving_RAS_to_fixed_RAS_forward'])
     for p in tracts:
         native_tract,image,interpretation=tract_overlay_mask(p,flair_image)
@@ -326,15 +339,16 @@ def build_subject(root,subject,head_attempt='head-model-v2b'):
             'head_model_receipt':str((head/'inference.json').relative_to(root)),'head_model_receipt_sha256':sha256_file(head/'inference.json'),
             'head_model_labels_present_1mm':present,'model_labels_absent_on_rehearsal_grid':lost,'rehearsal_grid':{'spacing_mm':spacing,'shape':list(fixed.shape),
                 'image_interpolation':'linear','label_interpolation':'nearest-neighbor','full_source_FOV':True,'original_native_T1_retained':True},
-            'registrations':registrations,'published_tracts':tract_rows,'missing_anatomy':['dura','measured_CT_bone','functional_mapping','reviewed_complete_vessels'],
+            'registrations':registrations,'vascular_selection':selection,'published_tracts':tract_rows,'missing_anatomy':['dura','measured_CT_bone','functional_mapping','reviewed_complete_vessels'],
             'components':{'brain_and_head':'SuperSynth estimates','vessels':'T1 SuperSynth and MRA vesselFM estimates','tracts':'published reconstructions with estimated rigid registration','tumor':'absent_healthy_baseline'}}}
     refs=(SourceRef('structural',t1.as_uri(),sha256_file(t1),LICENSE,'RAS+','observed'),
         SourceRef('head_model',head_path.as_uri(),sha256_file(head_path),'FreeSurfer model; research estimates','RAS+','estimated'),
-        SourceRef('mra_vessels',vessel_path.as_uri(),sha256_file(vessel_path),'OpenRAIL++M, research use','RAS+','estimated'))
+        SourceRef('mra_vessels',vessel_path.as_uri(),sha256_file(vessel_path),'OpenRAIL++M, research use','RAS+','estimated'),
+        SourceRef('intracranial_vessels',selected_path.as_uri(),sha256_file(selected_path),'OpenRAIL++M derivative; research estimate','RAS+','estimated'))
     healthy=np.asarray(fixed.dataobj,np.float32);base_id='EDEN2020-'+subject+'-BASELINE-SEGMENTED-v2'
     host=CaseData(base_id,healthy,compartments,fixed.affine,refs,brain_mask=brain,metadata=metadata,
         unknowns=('functional_mapping_missing','segmentation_unreviewed','registration_unreviewed','MRI_bone_estimate_not_CT','vascular_completeness_unknown','mass_effect_not_simulated'))
-    source_paths=[t1,head_path,mra,flair,swi,*tracts,*[Path(r['tract_only_source'])for r in tract_rows],head/'inference.json',working/'vesselfm-0p6mm/inference.json',source/'provenance/zenodo-record.json']
+    source_paths=[t1,head_path,mra,flair,swi,vessel_path,selected_path,working/'vascular-selection.json',*tracts,*[Path(r['tract_only_source'])for r in tract_rows],head/'inference.json',working/'vesselfm-0p6mm/inference.json',source/'provenance/zenodo-record.json']
     for mod in registrations:source_paths.append(working/('rigid-'+mod)/'registration.json')
     originals=[OriginalFile.from_path(p,role='imaging'if p==t1 or p in [mra,flair,swi]else'model-result'if p.suffix=='.gz'else'metadata')for p in source_paths]
     acquired=load_nifti_case(t1,case_id=subject+'-native-healthy',license=LICENSE,source_url=URL,
