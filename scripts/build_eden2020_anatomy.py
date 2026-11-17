@@ -99,7 +99,7 @@ def tract_overlay_mask(path,flair_image):
     if image.shape!=flair_image.shape or not np.allclose(image.affine,flair_image.affine,rtol=0,atol=1e-4):raise ValueError('Tract does not match claimed source FLAIR grid')
     if not np.isfinite(values).all()or values.min()<0 or np.any((values>=10000)&(values<30000)):raise ValueError('Unresolved tract overlay intensity encoding')
     mask=values>=30000
-    if not mask.any()or values[mask].min()<32000:raise ValueError('Expected separated publisher fiber overlay values')
+    if not mask.any():raise ValueError('Expected separated publisher fiber overlay values')
     trk=path.with_name(path.name.replace('_on_','_to_').removesuffix('.nii.gz')+'.trk')
     fibers=nib.streamlines.load(trk)
     if not np.allclose(fibers.header['voxel_to_rasmm'],image.affine,rtol=0,atol=1e-4):raise ValueError('TRK and overlay coordinate frames differ')
@@ -107,7 +107,7 @@ def tract_overlay_mask(path,flair_image):
     voxels=np.rint(points@inverse[:3,:3].T+inverse[:3,3]).astype(int);inside=np.all((voxels>=0)&(voxels<image.shape),axis=1)
     agreement=float(mask[tuple(voxels[inside].T)].mean())if inside.any()else 0.
     if not inside.all()or agreement<.99:raise ValueError('Published tract-only coordinates fail overlay cross-check')
-    return mask,image,{'foreground_rule':'publisher high-value fiber overlay >=30000; all foreground >=32000 and no values in [10000,30000)',
+    return mask,image,{'foreground_rule':'publisher high-value fiber overlay >=30000; no values in [10000,30000); independently checked against matching TRK points',
         'background_max':float(values[~mask].max()),'foreground_min':float(values[mask].min()),'foreground_max':float(values[mask].max()),
         'tract_only_source':str(trk),'tract_only_sha256':sha256_file(trk),'tract_points':len(points),'tract_points_inside_overlay_fraction':agreement}
 

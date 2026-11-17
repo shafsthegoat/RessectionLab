@@ -44,5 +44,10 @@ def test_published_tract_overlay_never_turns_its_background_mri_into_a_tract(tmp
     nib.streamlines.save(nib.streamlines.TrkFile(tractogram,header),tmp_path/'CTRL_0001_CSTs_to_3DFLAIR.trk')
     mask,_,receipt=builder.tract_overlay_mask(path,image)
     assert mask.sum()==3 and receipt['tract_points_inside_overlay_fraction']==1.
+    # Some source overlays encode one side in the31000 band and the other in
+    #32000. The same physical TRK/gap checks, not a single code band, govern it.
+    values[3,4,5]=31001;nib.save(nib.Nifti1Image(values,np.eye(4)),path)
+    both,_,receipt=builder.tract_overlay_mask(path,image)
+    assert np.array_equal(both,mask) and receipt['foreground_min']==31001
     values[2,2,2]=20000;nib.save(nib.Nifti1Image(values,np.eye(4)),path)
     with pytest.raises(ValueError,match='intensity encoding'):builder.tract_overlay_mask(path,image)
