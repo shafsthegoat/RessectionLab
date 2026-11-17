@@ -3,6 +3,7 @@ import importlib.util
 from pathlib import Path
 import numpy as np
 import nibabel as nib
+import pytest
 
 spec=importlib.util.spec_from_file_location('eden_anatomy',Path(__file__).resolve().parents[1]/'scripts/build_eden2020_anatomy.py')
 builder=importlib.util.module_from_spec(spec);spec.loader.exec_module(builder)
@@ -32,3 +33,16 @@ def test_label_sampling_uses_physical_translation_and_header_conflict_stays_visi
     assert header['maximum_qform_sform_corner_difference_mm']==2.
     assert header['working_basis']=='coded sform' and header['clinical_frame_adjudicated']is False
     assert builder.material(915)=='bone' and builder.material(4)=='fluid'
+
+
+def test_published_tract_overlay_never_turns_its_background_mri_into_a_tract(tmp_path):
+    values=np.full((12,12,12),100.,np.float32);values[3:6,4,5]=32001
+    image=nib.Nifti1Image(values,np.eye(4));image.header.set_xyzt_units('mm')
+    path=tmp_path/'CTRL_0001_CSTs_on_3DFLAIR.nii.gz';nib.save(image,path)
+    header=nib.streamlines.TrkFile.create_empty_header();header['voxel_to_rasmm']=np.eye(4);header['dimensions']=[12,12,12];header['voxel_sizes']=[1,1,1];header['voxel_order']=b'RAS'
+    tractogram=nib.streamlines.Tractogram([np.array([[3,4,5],[4,4,5],[5,4,5]],np.float32)],affine_to_rasmm=np.eye(4))
+    nib.streamlines.save(nib.streamlines.TrkFile(tractogram,header),tmp_path/'CTRL_0001_CSTs_to_3DFLAIR.trk')
+    mask,_,receipt=builder.tract_overlay_mask(path,image)
+    assert mask.sum()==3 and receipt['tract_points_inside_overlay_fraction']==1.
+    values[2,2,2]=20000;nib.save(nib.Nifti1Image(values,np.eye(4)),path)
+    with pytest.raises(ValueError,match='intensity encoding'):builder.tract_overlay_mask(path,image)

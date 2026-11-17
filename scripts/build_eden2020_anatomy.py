@@ -88,6 +88,30 @@ def normalize(data):
     lo,hi=np.percentile(data[data>0],[1,99.5]);return np.clip((data-lo)/max(float(hi-lo),1e-6),0,1).astype(np.float32)
 
 
+def tract_overlay_mask(path,flair_image):
+    """Decode the publisher's high-value fiber overlay, never threshold the MRI.
+
+    Readme describes *_on_* as fibers superimposed on MRI. Require a clean
+    intensity gap and independently verify against the matching tract-only TRK
+    in physical RAS mm before accepting the overlay's fiber voxels.
+    """
+    image=nib.load(path);values=np.asarray(image.dataobj)
+    if image.shape!=flair_image.shape or not np.allclose(image.affine,flair_image.affine,rtol=0,atol=1e-4):raise ValueError('Tract does not match claimed source FLAIR grid')
+    if not np.isfinite(values).all()or values.min()<0 or np.any((values>=10000)&(values<30000)):raise ValueError('Unresolved tract overlay intensity encoding')
+    mask=values>=30000
+    if not mask.any()or values[mask].min()<32000:raise ValueError('Expected separated publisher fiber overlay values')
+    trk=path.with_name(path.name.replace('_on_','_to_').removesuffix('.nii.gz')+'.trk')
+    fibers=nib.streamlines.load(trk)
+    if not np.allclose(fibers.header['voxel_to_rasmm'],image.affine,rtol=0,atol=1e-4):raise ValueError('TRK and overlay coordinate frames differ')
+    points=fibers.tractogram.to_world().streamlines.get_data();inverse=np.linalg.inv(image.affine)
+    voxels=np.rint(points@inverse[:3,:3].T+inverse[:3,3]).astype(int);inside=np.all((voxels>=0)&(voxels<image.shape),axis=1)
+    agreement=float(mask[tuple(voxels[inside].T)].mean())if inside.any()else 0.
+    if not inside.all()or agreement<.99:raise ValueError('Published tract-only coordinates fail overlay cross-check')
+    return mask,image,{'foreground_rule':'publisher high-value fiber overlay >=30000; all foreground >=32000 and no values in [10000,30000)',
+        'background_max':float(values[~mask].max()),'foreground_min':float(values[mask].min()),'foreground_max':float(values[mask].max()),
+        'tract_only_source':str(trk),'tract_only_sha256':sha256_file(trk),'tract_points':len(points),'tract_points_inside_overlay_fraction':agreement}
+
+
 def registration(path,fixed,brain,out):
     """Retain original header ambiguities; explicitly estimate a working rigid map."""
     out.mkdir(parents=True,exist_ok=True);receipt=out/'registration.json';source_sha=sha256_file(path)
@@ -282,18 +306,15 @@ def build_subject(root,subject,head_attempt='head-model-v2b'):
     layers['mra_vessels']={'kind':'vessels','label':'MRA vessels · vesselFM ESTIMATE','color':'#ef5454','provenance':'estimated','protected':True,'review_status':'unreviewed'}
     tract_rows=[];flair_image=nib.load(flair);forward=np.array(registrations['FLAIR']['moving_RAS_to_fixed_RAS_forward'])
     for p in tracts:
-        image=nib.load(p)
-        if image.shape!=flair_image.shape or not np.allclose(image.affine,flair_image.affine,rtol=0,atol=1e-4):raise ValueError('Tract does not match claimed source FLAIR grid')
-        values=np.asarray(image.dataobj)
-        if not np.isfinite(values).all()or not np.isin(values,[0,1]).all():raise ValueError('Tract labels require explicit binary source semantics')
+        native_tract,image,interpretation=tract_overlay_mask(p,flair_image)
         name='tract_'+p.name.split(subject+'_',1)[1].split('_on_')[0]
-        mask=sample((values>0).astype(np.uint8),forward@image.affine,grid,0)>0
+        mask=sample(native_tract.astype(np.uint8),forward@image.affine,grid,0)>0
         if not mask.any():raise ValueError('Published tract lost on registered rehearsal grid')
         compartments[name]=mask;materials[name]='functional_region'
         layers[name]={'kind':'tract','label':name.removeprefix('tract_')+' · PUBLISHED BASELINE TRACT','color':'#70c6b1','provenance':'estimated',
             'protected':True,'review_status':'unreviewed_registration','functional_validation':False}
         tract_rows.append({'layer':name,'source':str(p),'source_sha256':sha256_file(p),'native_header':source_header(image),
-            'units_inherited_from_exact_source_FLAIR_grid':image.header.get_xyzt_units()[0]=='unknown','foreground_rule':'binary source >0',
+            'units_inherited_from_exact_source_FLAIR_grid':image.header.get_xyzt_units()[0]=='unknown',**interpretation,
             'registered_voxels':int(mask.sum()),'clinical_functional_mapping':False})
     layers['brain']={'kind':'brain','label':'Brain overview · MODEL ESTIMATE','color':'#9eb8cd','provenance':'estimated'}
     metadata={'patient_group':'EDEN2020:'+subject,'patient_id':subject,'split':{'role':'DEVELOPMENT'},'training_admitted':False,
@@ -313,7 +334,7 @@ def build_subject(root,subject,head_attempt='head-model-v2b'):
     healthy=np.asarray(fixed.dataobj,np.float32);base_id='EDEN2020-'+subject+'-BASELINE-SEGMENTED-v2'
     host=CaseData(base_id,healthy,compartments,fixed.affine,refs,brain_mask=brain,metadata=metadata,
         unknowns=('functional_mapping_missing','segmentation_unreviewed','registration_unreviewed','MRI_bone_estimate_not_CT','vascular_completeness_unknown','mass_effect_not_simulated'))
-    source_paths=[t1,head_path,mra,flair,swi,*tracts,head/'inference.json',working/'vesselfm-0p6mm/inference.json',source/'provenance/zenodo-record.json']
+    source_paths=[t1,head_path,mra,flair,swi,*tracts,*[Path(r['tract_only_source'])for r in tract_rows],head/'inference.json',working/'vesselfm-0p6mm/inference.json',source/'provenance/zenodo-record.json']
     for mod in registrations:source_paths.append(working/('rigid-'+mod)/'registration.json')
     originals=[OriginalFile.from_path(p,role='imaging'if p==t1 or p in [mra,flair,swi]else'model-result'if p.suffix=='.gz'else'metadata')for p in source_paths]
     acquired=load_nifti_case(t1,case_id=subject+'-native-healthy',license=LICENSE,source_url=URL,

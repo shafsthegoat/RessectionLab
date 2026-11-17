@@ -44,6 +44,9 @@ PROTOCOL_VERSION = 1
 MAX_REQUEST_BYTES = 1024 * 1024
 MAX_ARRAY_BYTES = 512 * 1024 * 1024
 MAX_CASE_BYTES = 1024 * 1024 * 1024
+# Full-head models exceed the former32-layer inventory. Keep the1GiB byte cap;
+#80 remains below the renderer's128-layer and bundle's256-array limits.
+MAX_COMPARTMENTS = 80
 MAX_WORKSPACE_BYTES = 512 * 1024
 MAX_PENDING = 8
 MAX_PRIOR_PROPOSALS = 16
@@ -527,7 +530,9 @@ class BridgeSession:
             raise BridgeError("INVALID_ARGUMENT", "A transient contact episode cannot import workspace replay")
         if case.mri.size * 4 > MAX_ARRAY_BYTES:
             raise BridgeError("ARRAY_SIZE_LIMIT", "Selected MRI is too large for this desktop view")
-        if (len(case.compartments) > 32 or len(case.structural_evidence) > 8 or len(case.critical_evidence) > 3
+        if len(case.compartments) > MAX_COMPARTMENTS:
+            raise BridgeError("LAYER_COUNT_LIMIT", f"At most {MAX_COMPARTMENTS} primary segmentation layers are supported")
+        if (len(case.structural_evidence) > 8 or len(case.critical_evidence) > 3
                 or len(case.prior_proposals) > MAX_PRIOR_PROPOSALS or self._case_array_bytes(case) > MAX_CASE_BYTES):
             raise BridgeError("CASE_SIZE_LIMIT", "Expanded case arrays exceed the desktop cache limit")
         restored=self._workspace_fields(case,workspace)
