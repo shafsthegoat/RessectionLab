@@ -44,6 +44,7 @@ def dispatch(session, operation, args, request, progress):
         session.anatomy_removal = {}
     if operation == "anatomyCreate":
         session.anatomy_plan_cache = None
+        session.anatomy_plan_target_cache = None
         c = PatientImagingCollection.create(args["path"], args["patientId"], timepoint=args.get("timepoint"))
         request.begin_commit()
         c.save("create patient imaging collection")
@@ -55,6 +56,7 @@ def dispatch(session, operation, args, request, progress):
         return {"collectionId": key, "document": c.document, "viewState": read_view(c)}
     if operation == "anatomyOpen":
         session.anatomy_plan_cache = None
+        session.anatomy_plan_target_cache = None
         path = Path(args["path"]).resolve()
         package_path = path if path.suffix == ".rsworkspace" else None
         if path.suffix == ".rsworkspace":
@@ -430,6 +432,16 @@ def dispatch(session, operation, args, request, progress):
         if args.get("action"):
             from .anatomy_approaches import dispatch_plan, NativeRouteGeometry
 
+            if args["action"] == "list":
+                from .anatomy_planning import native_target_options
+
+                result = dispatch_plan(c, args)
+                target_cache = getattr(session, "anatomy_plan_target_cache", None)
+                if target_cache is None or target_cache[:2] != (c.root, c.identity()):
+                    target_cache = (c.root, c.identity(), native_target_options(c, check=request.check))
+                    session.anatomy_plan_target_cache = target_cache
+                result["targetOptions"] = target_cache[2]
+                return result
             cache = getattr(session, "anatomy_plan_cache", None)
             if cache is None or cache.snapshot.snapshot_id != c.identity() or cache.c.root != c.root:
                 cache = NativeRouteGeometry(PatientAnatomySnapshot.capture(c), check=request.check)

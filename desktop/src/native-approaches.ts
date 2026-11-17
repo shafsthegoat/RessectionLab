@@ -1,22 +1,105 @@
 import type {Point3} from './viewer/coordinates';
 import type {ViewerRoute} from './viewer/contracts';
+
+export interface ApproachSensitivityConfig {translationMm:number;boundaryMm:number}
+export const defaultApproachSensitivity:ApproachSensitivityConfig={translationMm:1,boundaryMm:.5};
+
+export interface ApproachTargetOption {
+  layerId:string;label:string;target:Point3|null;entry?:Point3;
+  provenance?:string|null;focusMeaning?:string;reason?:string;
+}
+
+export interface SensitivityMetric {
+  units:string;adverseDirection:string;nominal:number|null;worst:number|null;
+  worstScenarioId:string|null;tailMean:number|null;tailFraction:number;
+  assessedCount:number;unknownCount:number;
+}
+
+export interface SensitivityScenarioResult {
+  id:string;status:string;values:Record<string,number|null>;unknowns?:string[];
+  conflictLayerIds?:string[];constraintFailures?:string[];
+  sourceReadings?:Record<string,ApproachSourceReading>;
+}
+export type ApproachSourceReading=[coverage:string,clearanceLowerBoundMm:number|null,contact:string|null,count:number|null];
+
+export interface ApproachSensitivity {
+  scenarioSetId:string;scenarioCount:number;metrics:Record<string,SensitivityMetric>;
+  scenarios:SensitivityScenarioResult[];scenarioSet?:ApproachScenarioSet;assumptions?:string[];meaning?:string;
+}
+
+export interface ApproachScenarioSet {
+  id:string;config:ApproachSensitivityConfig;assumptions:string[];
+  scenarios:Array<{id:string;sourceTranslationsMm?:Record<string,Point3>;boundaryMm?:number}>;
+}
+
+export interface ApproachProposalCandidate {
+  id:string;entry:Point3;target:Point3;radiusMm:number;direction:Point3|null;disposition:string;
+  reasons?:string[];objectives?:Record<string,number|null>;pareto?:boolean;detectedConflictLayerIds?:string[];
+  sourceReadings?:Record<string,ApproachSourceReading>;
+  scenarioGuard?:ApproachScenarioGuard;
+}
+export interface ApproachScenarioGuard {disposition:string;vetoScenarioIds:string[];incompleteScenarioIds:string[];meaning?:string}
+
+export interface ApproachProposalReport {
+  evaluated:number;accepted:number;eligible?:number;enumerated?:number;rejected:number;
+  reasons:unknown;selectionRule:string;whyFewer?:string|null;targetLayerId?:string|null;
+  candidates?:ApproachProposalCandidate[];scenarioSet?:ApproachScenarioSet;
+  selectedCandidateIds?:string[];sourceSnapshotId?:string;assessmentStatus?:string;invalidationReason?:string;
+  finalistOutcomes?:Record<string,{metrics:Record<string,SensitivityMetric>;violatedScenarioIds:string[];unassessedScenarioIds:string[]}>;
+  task?:ApproachTask;
+}
+
+export interface ApproachTask {
+  targetLayerId?:string|null; entry?:Point3; target?:Point3; radiusMm?:number;
+  entryPatch?:NativeApproach['entryPatch']; constraints?:NativeApproach['constraints'];
+  sensitivityConfig?:ApproachSensitivityConfig;
+}
+
+export interface ApproachInputNomination {
+  candidateId:string;status:'refused'|'eligible-static';reasons:string[];
+  objectives?:Record<string,number|null>;detectedConflictLayerIds?:string[];sensitivity?:ApproachSensitivity;
+  scenarioGuard?:ApproachScenarioGuard;
+}
+
+export interface ApproachInputArm {
+  inputWhitelist:string[];layerIds:string[];sourceSeriesIds:string[];tractIds:string[];
+  selectedCandidateIds:string[];candidates:ApproachProposalCandidate[];nominated:ApproachInputNomination[];
+  refusalCount:number;abstentionCount:number;
+}
+
+export interface ApproachInputComparisonReport {
+  arms:{rich:ApproachInputArm;restricted:ApproachInputArm};task?:ApproachTask;
+  candidateBudget:number;scenarioSet:ApproachScenarioSet;candidateFreeze?:{id:string};guardProtection?:string;
+  sourceSnapshotId?:string;assessmentStatus?:string;
+}
+
 export interface ApproachStructure {
   layerId:string;label:string;kind:string;available:boolean;
   clearanceLowerBoundMm?:number|null;intersectsOrUnresolved?:boolean;confirmedIntersection?:boolean;
+  excluded?:boolean;reason?:string;reviewStatus?:string;sourceSeries?:string;coverageMeaning?:string;
+  sourceIdentity?:{dataSha256?:string;[key:string]:unknown};
+  coverage?:ApproachCoverage;acquisitionCoverage?:ApproachCoverage;
   closestPointRasMm?:Point3;nearestPoint?:Point3;[key:string]:unknown;
 }
+export interface ApproachCoverage {wholeEnvelopeWithinField?:boolean;outsideFaces?:string[]}
 export interface NativeApproach {
   id:string;name:string;sourceSnapshotId:string;parameterHash:string;
   entry:Point3;target:Point3;radiusMm:number;direction:Point3;
   entryPatch?:{center:Point3;normal:Point3;radiusMm:number};
+  targetLayerId?:string; sensitivityConfig?:ApproachSensitivityConfig;
   constraints:{maxLengthMm?:number;minClearanceMm?:number;excludedLayerIds?:string[]};
   assessmentStatus:'current'|'stale'|'unassessed';
   measurements?:{lengthMm:number;orientation:{azimuthDeg:number;elevationDeg:number};structures:ApproachStructure[];
-    coverage:Record<string,unknown>;targets:Array<Record<string,unknown>>;normalTraversal:Record<string,unknown>;
+    coverage:Record<string,unknown>;targets:Array<Record<string,unknown>>;normalTraversal:Record<string,unknown>&{coverage?:ApproachCoverage;acquisitionCoverage?:ApproachCoverage};
+    sensitivity?:ApproachSensitivity;
     status:'known-conflict'|'incomplete'|'no-detected-conflict';unknowns:string[];assumptions:string[];constraintFailures?:string[];[key:string]:unknown};
   [key:string]:unknown;
 }
-export interface ApproachResponse {snapshotId:string;approaches:NativeApproach[];selectedId?:string;proposalReport?:{evaluated:number;accepted:number;rejected:number;reasons:unknown;selectionRule:string;whyFewer?:string|null};}
+export interface ApproachResponse {
+  snapshotId:string;approaches:NativeApproach[];selectedId?:string|null;targetOptions?:ApproachTargetOption[];
+  activeTargetLayerId?:string|null;
+  proposalReport?:ApproachProposalReport|null;inputComparison?:ApproachInputComparisonReport|null;
+}
 export const approachStatus=(a:NativeApproach)=>a.assessmentStatus!=='current'?a.assessmentStatus:a.measurements?.status??'unassessed';
 
 /** Separate observations from evidence gaps and user-declared constraint failures. */

@@ -7,6 +7,76 @@ from .data_policy import ANATOMY_PRETRAINED_POLICY
 from .patient_anatomy import world, digest, file_hash
 
 
+def _target_focus(data, label_value, transform, check):
+    """Find a labelled voxel centre nearest the physical label centroid."""
+    def labelled_centers():
+        slab = max(1, 131072 // np.prod(data.shape[1:]))
+        for start in range(0, data.shape[0], slab):
+            check()
+            indices = np.argwhere(data[start:start + slab] == label_value)
+            indices[:, 0] += start
+            if len(indices):
+                yield world(transform, indices)
+
+    total, count = np.zeros(3), 0
+    for points in labelled_centers():
+        total += points.sum(axis=0)
+        count += len(points)
+    if not count:
+        return None
+    centroid = total / count
+    nearest, distance = None, float("inf")
+    for points in labelled_centers():
+        distances = np.sum((points - centroid) ** 2, axis=1)
+        index = int(distances.argmin())
+        if distances[index] < distance:
+            nearest, distance = points[index], distances[index]
+    return nearest.tolist()
+
+
+def native_target_options(collection, *, check=lambda: None):
+    """Source-bound target choices independent of display or planner caches."""
+    rows = [row for row in collection.document["layers"] if row["role"] == "target"]
+    display = collection.document.get("display", {})
+    hints = display.get("planning_targets", {})
+
+    def point(value):
+        if isinstance(value, list) and len(value) == 3 and all(
+            type(coordinate) in (int, float) and np.isfinite(coordinate) for coordinate in value
+        ):
+            return value
+        return None
+
+    result = []
+    for row in rows:
+        check()
+        layer_id = row["id"]
+        option = {"layerId": layer_id, "label": row["label"], "target": None,
+                  "provenance": row.get("provenance", {}).get("kind")}
+        hint = hints.get(layer_id) if isinstance(hints, dict) else None
+        hint = hint if isinstance(hint, dict) else display if len(rows) == 1 else {}
+        try:
+            transform = collection.patient_affine(row)
+            data = collection.array(row["data"])
+            focus = point(hint.get("cursor_ras_mm"))
+            if focus is not None:
+                index = np.floor(world(np.linalg.inv(transform), focus) + 0.5)
+                if np.all((index >= 0) & (index < data.shape)) and data[tuple(index.astype(int))] == row["label_value"]:
+                    option.update(target=focus, focusMeaning="Prepared point inside the supplied target label")
+            if option["target"] is None:
+                focus = _target_focus(data, row["label_value"], transform, check)
+                if focus is None:
+                    raise ValueError("Empty target label")
+                option.update(target=focus, focusMeaning="Labelled voxel centre nearest the physical label centroid")
+            entry = point(hint.get("entry_ras_mm"))
+            if entry is not None and np.linalg.norm(np.asarray(entry) - option["target"]) > 1e-6:
+                option["entry"] = entry
+        except (ValueError, OSError) as error:
+            option["reason"] = str(error)
+        result.append(option)
+    return result
+
+
 def planning_case(snapshot, *, removed=None):
     snapshot._check()
     c = snapshot.collection

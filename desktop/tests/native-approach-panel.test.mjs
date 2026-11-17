@@ -139,3 +139,48 @@ test('a completed mutation cannot restore an older selection made while it was i
     h.render();await flush();h.render();const pending=planning.request({action:'upsert',approach:approaches[0]});h.render();planning.select('b');h.render();resolve({approaches,selectedId:'a'});await pending;h.render();assert.equal(planning.selectedId,'b');
   }finally{h.close();}
 });
+
+test('switching target restores its saved selection and receipt without remeasuring either target',async()=>{
+  const a=approach('a'), b=approach('b'), c=approach('c');
+  a.targetLayerId='target-1';b.targetLayerId=c.targetLayerId='target-2';
+  const f=fixture([a,b,c]);
+  f.binding.viewState={snapshotId:'revision',selectedApproachId:'c',selectedPlanningTargetId:'target-2',selectedApproachIds:{'target-1':'a','target-2':'c'}};
+  const targetOptions=[{layerId:'target-1',label:'Target one',target:a.target,entry:a.entry},{layerId:'target-2',label:'Target two',target:b.target,entry:b.entry}];
+  const reports={'target-1':{task:{targetLayerId:'target-1'},accepted:1},'target-2':{task:{targetLayerId:'target-2'},accepted:2}};
+  f.api.anatomyPlan=async args=>{
+    f.calls.push(structuredClone(args));
+    return {activeTargetLayerId:args.targetLayerId,approaches:[a,b,c].filter(route=>route.targetLayerId===args.targetLayerId),
+      targetOptions,proposalReport:reports[args.targetLayerId]};
+  };
+  const h=await ready(f);
+  const picker=tree=>[...walk(tree)].find(node=>node.type==='select'&&node.props['aria-label']==='Planning target');
+  try{
+    assert.equal(picker(h.render()).props.value,'target-2');
+    assert.equal(f.planning.selectedId,'c');assert.equal(f.planning.report.accepted,2);
+    picker(h.render()).props.onChange({target:{value:'target-1'}});await flush();h.render();
+    assert.equal(f.planning.selectedId,'a');assert.equal(f.planning.report.accepted,1);
+    picker(h.render()).props.onChange({target:{value:'target-2'}});await flush();h.render();
+    assert.equal(f.planning.selectedId,'c');assert.equal(f.planning.report.accepted,2);
+    assert.deepEqual(f.calls.map(call=>[call.action,call.targetLayerId]),[['list','target-2'],['list','target-1'],['list','target-2']]);
+    assert.deepEqual(f.planning.selectedApproachIds,{'target-1':'a','target-2':'c'});
+  }finally{h.close();}
+});
+
+test('a saved zero-alternative comparison restores its task and can be saved again',async()=>{
+  const f=fixture([]);
+  f.binding.viewState={snapshotId:'revision',selectedApproachId:null,selectedPlanningTargetId:'target-2',selectedApproachIds:{'target-2':null}};
+  f.api.anatomyPlan=async()=>({activeTargetLayerId:'target-2',approaches:[],
+    targetOptions:[{layerId:'target-2',label:'Target two',target:[5,8,9],entry:[5,8,40]}],
+    proposalReport:{assessmentStatus:'current',accepted:0,task:{targetLayerId:'target-2',entry:[5,8,42],target:[5,8,10],radiusMm:2.5,
+      entryPatch:{center:[5,8,41],normal:[0,0,-1],radiusMm:4},sensitivityConfig:{translationMm:2,boundaryMm:1}}}});
+  const h=await ready(f);
+  try{
+    const tree=h.render();
+    assert.equal(input(tree,'Entry patch radius').props.value,4);
+    assert.equal(input(tree,'Corridor radius').props.value,2.5);
+    assert.equal(input(tree,'Registration translation').props.value,2);
+    assert.deepEqual(point(tree,'Target').props.value,[5,8,10]);
+    assert.equal(button(tree,'Save study & comparison').props.disabled,false);
+    assert.equal(f.planning.selectedId,null);
+  }finally{h.close();}
+});

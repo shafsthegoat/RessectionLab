@@ -235,3 +235,144 @@ def test_saved_entry_patch_edits_recompute_failures_and_survive_reopen(native, t
         **changed, 'constraints': {**changed['constraints'], 'maxLengthMm': 1}}})['approaches'][0]
     assert any('maximum length' in f for f in tightened['measurements']['constraintFailures'])
     assert tightened['parameterHash'] != changed['parameterHash']
+
+
+def test_native_shared_scenarios_keep_fixed_capsule_and_report_contact(native):
+    c = native
+    reference = c.series('t1')
+    a = c.patient_affine(reference)
+    c.add_series(c.path(reference['original']['path']), series_id='flair', modality='FLAIR')
+    c.set_registration('flair', np.eye(4), status='source-provided', method='declared fixture')
+    mask = np.zeros((32, 32, 32), np.uint8)
+    mask[12, 20, 15] = 1
+    c.add_layer(mask, a, layer_id='registered-vein', source_series='flair', kind='vein', role='critical', color='#ff0000')
+    points = world(a, [[12, 20, 15], [12, 21, 15]])
+    c.document['tractography'] = [{
+        'id': 'registered-tract', 'label': 'Registered fixture tract', 'source_series': 'flair',
+        'points_ras_mm': c.put_array(points.astype(np.float32)),
+        'offsets': c.put_array(np.array([0, 2], np.uint32)),
+    }]
+    c.save()
+    args = {'action': 'suggest', 'start': world(a, [10, 26, 15]).tolist(), 'end': world(a, [10, 11, 15]).tolist(),
+            'targetLayerId': 'target', 'radiusMm': .6, 'patchRadiusMm': 0,
+            'sensitivityConfig': {'translationMm': 1.5, 'boundaryMm': .2}}
+    reply = dispatch_plan(c, args)
+    assert not reply['approaches']
+    report = reply['proposalReport']
+    assert report['nominalEligible'] == report['scenarioVetoCount'] == report['rejected'] == 1
+    assert report['scenarioGuardEligible'] == report['returned'] == 0 and report['whyFewer']
+    rejected, = report['candidates']
+    assert rejected['nominalEligible'] and rejected['disposition'] == 'scenario-vetoed'
+    assert report['candidateFreeze']['candidates'][0]['id'] == rejected['id']
+    assert dispatch_plan(Collection(c.root), {'action': 'list'})['proposalReport'] == report
+    edited = dispatch_plan(c, {**args, 'action': 'upsert'})
+    approach, = edited['approaches']
+    measured = approach['measurements']
+    assert measured['capsule']['start'] == args['start']
+    assert measured['capsule']['radiusMm'] == .6
+    assert measured['simulatedRemovedTargetVolumeMm3'] is None
+    result = measured['sensitivity']
+    design = reply['proposalReport']['scenarioSet']
+    assert result['scenarioSetId'] == design['id']
+    assert design['registrationGroups'] == {'flair': ['flair']}
+    shifted_id = next(s['id'] for s in design['scenarios']
+                      if s['sourceTranslationsMm'].get('flair') == [1.5, 0, 0] and s['boundaryMm'] == 0)
+    shifted = next(s for s in result['scenarios'] if s['id'] == shifted_id)
+    nominal = result['scenarios'][0]
+    assert nominal['status'] == 'partial-coverage'
+    assert shifted['status'] == 'constraint-violation'
+    assert {'registered-vein', 'registered-tract'} <= set(shifted['conflictLayerIds'])
+    assert shifted['sourceReadings']['registered-vein'][1] < nominal['sourceReadings']['registered-vein'][1]
+    assert shifted['sourceReadings']['registered-tract'][1] < nominal['sourceReadings']['registered-tract'][1]
+    assert shifted['values']['targetReachMm3'] == nominal['values']['targetReachMm3']
+    assert shifted['values']['nonTargetTraversalMm3'] == nominal['values']['nonTargetTraversalMm3']
+    metric = result['metrics']['vascularClearanceMm']
+    assert metric['worst'] <= metric['tailMean'] < metric['nominal']
+    assert result['metrics']['otherCriticalClearanceMm']['unknownCount'] == result['scenarioCount']
+    frozen = report['finalistOutcomes'][rejected['id']]
+    assert shifted_id in frozen['violatedScenarioIds']
+    compact = next(s for s in frozen['scenarios'] if s['id'] == shifted_id)
+    assert compact['conflictLayerIds'] == shifted['conflictLayerIds']
+    assert 'otherCriticalClearanceMm' in compact['missingMetrics']
+
+    paired = dispatch_plan(c, {**args, 'action': 'compareInputs'})['inputComparison']
+    for arm in paired['arms'].values():
+        assert arm['refusalCount'] == 1 and arm['abstentionCount'] == 2
+        nomination, = arm['nominated']
+        assert nomination['nominalEligible'] and nomination['status'] == 'refused'
+        assert 'nominal' not in nomination['scenarioGuard']['vetoScenarioIds']
+        assert shifted_id in nomination['scenarioGuard']['vetoScenarioIds']
+
+
+def test_restricted_proposals_invariant_to_withheld_geometry_and_veto_without_retry(native):
+    c = native
+    a = c.patient_affine(c.series('t1'))
+    args = {'action': 'compareInputs', 'start': world(a, [10, 26, 15]).tolist(), 'end': world(a, [10, 11, 15]).tolist(),
+            'targetLayerId': 'target', 'radiusMm': .5, 'patchRadiusMm': 0}
+    first = dispatch_plan(c, args)['inputComparison']
+    contact = np.zeros((32, 32, 32), np.uint8)
+    contact[10, 20, 15] = 1
+    c.layer('artery')['data'] = c.put_array(contact)
+    c.save()
+    second = dispatch_plan(c, args)['inputComparison']
+    rich, restricted = second['arms']['rich'], second['arms']['restricted']
+    assert first['candidateBudget'] == second['candidateBudget'] == 1
+    assert first['arms']['restricted']['candidates'] == restricted['candidates']
+    assert first['arms']['restricted']['selectedCandidateIds'] == restricted['selectedCandidateIds']
+    assert restricted['sourceSeriesIds'] == ['t1'] and restricted['tractIds'] == []
+    assert 'artery' not in restricted['layerIds']
+    assert rich['abstentionCount'] == 3 and rich['refusalCount'] == 0
+    assert restricted['abstentionCount'] == 2 and restricted['refusalCount'] == 1
+    refused, = restricted['nominated']
+    assert refused['status'] == 'refused' and refused['detectedConflictLayerIds'] == ['artery']
+    assert not second['simulationExecutionAuthorized']
+
+
+def test_per_target_comparison_receipts_round_trip_and_go_stale(native, tmp_path):
+    c = native
+    a = c.patient_affine(c.series('t1'))
+    extra = np.zeros((32, 32, 32), np.uint8)
+    extra[19:22, 9:14, 13:18] = 1
+    c.add_layer(extra, a, layer_id='target-08', source_series='t1', kind='synthetic-target', role='target', color='#abcdef')
+    c.save()
+
+    def task(target_id, x, **extra):
+        start  = world(a, [x, 26, 15]).tolist()
+        return {'action': 'suggest', 'start': start, 'end': world(a, [x, 11, 15]).tolist(),
+                'radiusMm': .5, 'targetLayerId': target_id,
+                'entryPatch': {'center': start, 'normal': [2., -3., 4.], 'radiusMm': 0.}, **extra}
+
+    first = dispatch_plan(c, task('target', 10))
+    paired = dispatch_plan(c, task('target', 10, action='compareInputs'))['inputComparison']
+    rejected = dispatch_plan(c, task('target-08', 20, constraints={'maxLengthMm': 1.}))
+    assert not rejected['approaches'] and rejected['proposalReport']['whyFewer']
+    assert rejected['savedTargetLayerIds'] == ['target', 'target-08']
+    assert len(rejected['proposalReport']['candidates']) == 1
+    assert rejected['proposalReport']['candidates'][0]['disposition'] == 'rejected'
+
+    pack = tmp_path / 'paired-native.rsworkspace'
+    save_package(c, pack)
+    reopened = Collection(open_package(pack, tmp_path / 'cold-paired').parent)
+    latest = dispatch_plan(reopened, {'action': 'list'})
+    assert latest['activeTargetLayerId'] == 'target-08'
+    assert latest['proposalReport'] == rejected['proposalReport']
+    restored = dispatch_plan(reopened, {'action': 'list', 'targetLayerId': 'target'})
+    assert restored['approaches'] == first['approaches']
+    assert restored['proposalReport'] == first['proposalReport']
+    assert restored['inputComparison'] == paired
+    assert restored['approaches'][0]['measurements']['targets'][0]['layerId'] == 'target'
+    reopened.save('source revision')
+    stale = dispatch_plan(reopened, {'action': 'list', 'targetLayerId': 'target'})
+    assert stale['approaches'][0]['assessmentStatus'] == 'stale'
+    assert stale['proposalReport']['assessmentStatus'] == stale['inputComparison']['assessmentStatus'] == 'stale'
+
+
+def test_portable_study_accepts_comparison_metadata_above_legacy_limit(native, tmp_path):
+    from resectionlab.anatomy_approaches import _bound_report, save_approaches
+
+    report = _bound_report(native, {'diagnostics': 'A' * (2 * 1024**2)})
+    save_approaches(native, [], comparisons={'target': {'proposalReport': report}}, target_id='target')
+    pack = tmp_path / 'extended-metadata.rsworkspace'
+    save_package(native, pack)
+    restored = Collection(open_package(pack, tmp_path / 'extended-metadata-cold').parent)
+    assert dispatch_plan(restored, {'action': 'list'})['proposalReport'] == report

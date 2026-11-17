@@ -1,21 +1,82 @@
 import {useEffect,useRef,useState} from 'react';
 import type {Binding,NativeAnatomyApi,Args} from './native-anatomy-data';
-import type {ApproachResponse,NativeApproach} from './native-approaches';
+import type {ApproachResponse} from './native-approaches';
 import {approachRoutes} from './native-approaches';
+
+const targetKey=(id?:string|null)=>id??'';
+type Selection={key:string;id:string|null;byTarget:Record<string,string|null>};
+
 export function useNativeApproaches(binding:Binding|null,api:NativeAnatomyApi|null,ready:boolean){
-  const [approaches,setApproaches]=useState<NativeApproach[]>([]),[selectedId,setSelectedId]=useState<string|null>(null);
-  const [pending,setPending]=useState(false),[error,setError]=useState(''),[report,setReport]=useState<ApproachResponse['proposalReport']>();
-  const generation=useRef(0),active=useRef(false),selectionVersion=useRef(0);
-  const loadedKey=useRef('');
-  useEffect(()=>{const seq=++generation.current,key=binding?.collectionId+'/'+binding?.document.snapshot_id;
-    if(key!==loadedKey.current){setApproaches([]);setError('');setReport(undefined);setSelectedId(binding?.viewState?.selectedApproachId??null);loadedKey.current=key;}
-    if(!binding||!api||!ready)return;
-    void api.anatomyPlan({collectionId:binding.collectionId,snapshotId:binding.document.snapshot_id,action:'list'}).then(raw=>{if(seq!==generation.current)return;const result=raw as ApproachResponse;setApproaches(result.approaches);setSelectedId(id=>result.approaches.some(a=>a.id===id)?id:result.approaches[0]?.id??null)}).catch(e=>{if(seq===generation.current)setError(String(e))});
-  },[binding?.collectionId,binding?.document.snapshot_id,api,ready]);
-  function select(id:string|null){selectionVersion.current++;setSelectedId(id)}
-  async function request(input:Args){if(!api||!binding||active.current)return;const seq=++generation.current,selection=selectionVersion.current;active.current=true;setPending(true);setError('');try{
-    const result=await api.anatomyPlan({collectionId:binding.collectionId,snapshotId:binding.document.snapshot_id,...input}) as ApproachResponse;
-    if(seq!==generation.current)return;setApproaches(result.approaches);setSelectedId(id=>selection===selectionVersion.current&&result.selectedId?result.selectedId:result.approaches.some(a=>a.id===id)?id:result.approaches[0]?.id??null);setReport(result.proposalReport);return result;
-  }catch(e){if(seq===generation.current)setError(e instanceof Error?e.message:String(e))}finally{active.current=false;setPending(false)}}
-  return {approaches,selectedId,select,pending,error,report,request,selected:approaches.find(a=>a.id===selectedId)??null,routes:approachRoutes(approaches,selectedId)};
+  const key=binding?binding.collectionId+'/'+binding.document.snapshot_id:'';
+  const view=binding?.viewState;
+  const savedSelection=view?.selectedApproachId;
+  const savedTarget=view?.selectedPlanningTargetId;
+  const [result,setResult]=useState<{key:string;data:ApproachResponse}>();
+  const [selection,setSelection]=useState<Selection>();
+  const [pending,setPending]=useState(false),[error,setError]=useState('');
+  const load=useRef<{key:string;api:NativeAnatomyApi}|null>(null),active=useRef(false),selectionVersion=useRef(0);
+  const liveKey=useRef(key);
+  liveKey.current=key;
+
+  function install(data:ApproachResponse,action:unknown,version:number){
+    setResult(previous=>({key,data:{...(previous?.key===key?previous.data:undefined),...data}}));
+    setSelection(current=>{
+      if(current?.key===key&&selectionVersion.current!==version)return current;
+      const scope=targetKey(data.activeTargetLayerId);
+      const byTarget=current?.key===key?current.byTarget:{...view?.selectedApproachIds};
+      const previous=Object.hasOwn(byTarget,scope)?byTarget[scope]:
+        (action==='initial'&&(savedTarget===undefined||targetKey(savedTarget)===scope)?savedSelection:undefined);
+      const preferred=action==='suggest'||data.selectedId?data.selectedId:previous;
+      const first=data.approaches.find(a=>targetKey(a.targetLayerId)===scope)??data.approaches[0];
+      const id=preferred===null?null:data.approaches.find(a=>a.id===preferred)?.id??first?.id??null;
+      return {key,id,byTarget:{...byTarget,[scope]:id}};
+    });
+  }
+
+  useEffect(()=>{
+    if(load.current?.key!==key||load.current.api!==api)setError('');
+    if(!binding||!api||!ready||(load.current?.key===key&&load.current.api===api))return;
+    const started={key,api},version=selectionVersion.current;
+    load.current=started;
+    void api.anatomyPlan({collectionId:binding.collectionId,snapshotId:binding.document.snapshot_id,action:'list',
+      ...(savedTarget===undefined?{}:{targetLayerId:savedTarget})}).then(raw=>{
+      if(liveKey.current===key&&load.current===started)install(raw as ApproachResponse,'initial',version);
+    }).catch(e=>{
+      if(liveKey.current===key&&load.current===started)setError(e instanceof Error?e.message:String(e));
+    });
+  },[key,api,ready]);
+
+  const data=result?.key===key?result.data:undefined;
+  const activeTargetLayerId=data?.activeTargetLayerId;
+  function select(id:string|null){
+    selectionVersion.current++;
+    setSelection(current=>({key,id,byTarget:{...(current?.key===key?current.byTarget:view?.selectedApproachIds),[targetKey(activeTargetLayerId)]:id}}));
+  }
+
+  async function request(input:Args){
+    if(!api||!binding||!ready||active.current)return;
+    const version=selectionVersion.current;
+    active.current=true;
+    setPending(true);
+    setError('');
+    try{
+      const response=await api.anatomyPlan({collectionId:binding.collectionId,snapshotId:binding.document.snapshot_id,...input}) as ApproachResponse;
+      if(liveKey.current!==key)return;
+      install(response,input.action,version);
+      return response;
+    }catch(e){
+      if(liveKey.current===key)setError(e instanceof Error?e.message:String(e));
+    }finally{
+      active.current=false;
+      setPending(false);
+    }
+  }
+
+  const approaches=data?.approaches??[],selectedId=selection?.key===key?selection.id:null;
+  return {
+    approaches,selectedId,select,pending,error,loading:!!binding&&!data&&!error,activeTargetLayerId,
+    selectedApproachIds:selection?.key===key?selection.byTarget:view?.selectedApproachIds,
+    targetOptions:data?.targetOptions??[],report:data?.proposalReport,inputComparison:data?.inputComparison,request,
+    selected:approaches.find(a=>a.id===selectedId)??null,routes:approachRoutes(approaches,selectedId),
+  };
 }

@@ -5,3 +5,24 @@
 .approach-concerns{max-height:280px;overflow:auto;overscroll-behavior:contain}
 
 .approach-observed{font-size:11px;line-height:1.5;color:#c6dce4;font-weight:500}.approach-observed.intersection,.approach-card-concern,.approach-constraint-failure{color:#f0a5a2}.approach-observed.no-intersection{color:#bddbd7}.approach-observed.unavailable{color:#a3afba}.approach-evidence{font-size:10px;line-height:1.5;color:#d4be8d}.approach-card-metric{line-height:1.6}.approach-card-metric b{font-weight:500;color:#c7dce3}.approach-card-concern,.approach-constraint-failure{line-height:1.6}.native-approaches h3{font-size:10px;font-weight:600;margin:0 0 6px}.approach-constraint-failures{margin:12px 0;padding:10px;border-left:2px solid #da8f8d;background:#2b232a;color:#f0b7b2;font-size:10px;line-height:1.6}.approach-constraint-failures ul,.approach-proposal-report ul{margin:0;padding-left:16px}.approach-limitations{margin-top:12px;color:#cbb890;font-size:10px;line-height:1.6}.approach-limitations>p{margin:0;color:#bda983}.approach-cards .approach-card:disabled{opacity:.7}.approach-measurements>.approach-observed{margin-bottom:5px}.approach-measurements>.approach-evidence{margin-top:0}
+
+.approach-target-picker,.approach-target-picker select{width:100%;min-width:0}
+.approach-input-comparison,.approach-sensitivity{margin-top:16px;padding-top:12px;border-top:1px solid #263b45}
+.approach-sensitivity h3,.approach-input-result section h3{font-size:12px;color:#d0e5eb}
+.approach-sensitivity p,.approach-input-result p,.approach-diagnostics-list{color:#a2b7c1;font-size:10px;line-height:1.55}
+.approach-metric-results{display:grid;gap:6px}
+.approach-metric-results article,.approach-input-result section{padding:9px;border:1px solid #2c3b44;border-radius:5px;background:#101b22}
+.approach-metric-results h4{margin:0 0 6px;color:#d0e5eb;font-size:11px;font-weight:600}
+.approach-metric-results article p{margin:5px 0 0}
+.approach-value-list{margin:4px 0 0;color:#a2b7c1;font-size:10px}
+.approach-value-list div{display:flex;justify-content:space-between;gap:8px;padding:3px 0}
+.approach-value-list dd{margin:0;text-align:right;color:#d0e5eb;flex-shrink:0}
+.approach-diagnostics-list{list-style:none;padding:0;margin:4px 0;max-height:330px;overflow:auto;overscroll-behavior:contain}
+.approach-diagnostics-list>li{border-bottom:1px solid #263b45}
+.approach-diagnostics-list>li details{margin:6px 0}
+.approach-input-result section{margin-top:8px}
+.approach-identity{overflow-wrap:anywhere}
+.approach-source-row{padding:6px 0;border-bottom:1px solid #263b45}
+.approach-source-row p{margin:3px 0}
+.approach-source-values dt,.approach-source-values dd{min-width:0;max-width:55%;overflow-wrap:anywhere}
+.approach-source-values>div+div{border-top:1px solid #263b45}

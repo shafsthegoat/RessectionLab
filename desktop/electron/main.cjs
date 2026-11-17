@@ -150,7 +150,7 @@ function bindOperations() {
     anatomyComponents: ['layerId'],
     anatomyGraph: ['layerId','point'],
     anatomyReconstruct: ['seriesId','model','synthsegVersion','brainLayerId'],
-    anatomyPlan: ['action','approach','approachId','assess','start','end','radiusMm','patchRadiusMm','entryPatch','constraints'], anatomyRemoval: ['point','radiusMm','reset'],
+    anatomyPlan: ['action','approach','approachId','assess','start','end','radiusMm','patchRadiusMm','entryPatch','constraints','targetLayerId','sensitivityConfig'], anatomyRemoval: ['point','radiusMm','reset'],
     anatomySection: ['seriesId','center','normal','spacingMm','movingId','checkerboard','layers'],
     anatomyView: ['seriesId','layers','original','highlightLayer','highlightComponents','reviewId','previewAlignment','vesselScope'],
     anatomyEdit: ['action','layerId','author','points','radiusMm','threshold','reviewId','componentIds'],

@@ -11,6 +11,11 @@ and seven publisher-named tract bundles. The separate synthetic target reuses
 an existing core/rim annotation. Healthy source scans and streamlines remain
 unchanged; no disease displacement, edema or postoperative recovery is inferred.
 
+The paired evaluation uses CTRL_1277, CTRL_0866 and CTRL_0933, with two existing
+target options per study. Variants 01 and 08 have independent target-layer IDs
+and share the healthy acquired anatomy. The [comparison checkpoint](approach-comparison-checkpoint.md)
+links the prepared collection, execution receipts and verification commands.
+
 Private studies live under the configured HDD root at
 `prepared/eden2020-planning-v1/<subject>/patient-anatomy.json`. Local prepared
 library links end in `.anatomy.json`; opaque library IDs resolve their canonical
@@ -43,14 +48,29 @@ In **Plan**, choose entry/target at the cursor or edit their coordinates, set a
 corridor radius and declared clearance/length constraints, then create a manual
 path or **Suggest approaches**. Suggestions enumerate a bounded selected entry
 patch, exclude inferior entries and known cerebellar/brainstem conflicts, and
-retain at most three distinct alternatives. Fewer eligible paths produce an
-explanation. Length, available-label proximity and target-centre coverage drive
-transparent preferences; no universal safety score is computed.
+retain at most three distinct alternatives. Automatic suggestions keep the sampled
+ledger and freeze up to eight finalists for shared sensitivity checks. Supported
+objectives include length, source proximity, target reach and non-target traversal.
+Pareto filtering groups paths with comparable evidence. A detected hard violation
+in a declared scenario vetoes the route. The report explains any shortfall and
+counts nominally eligible paths outside the sensitivity budget.
 
 Each comparison card separates the observed geometric finding (detected
 intersection, no detected intersection in assessed anatomy, or unavailable
 measurement) from evidence completeness and declared constraint failures. Missing
 labels, limited coverage and unmeasured registration remain explicit uncertainties.
+
+Inspect nominal, worst assessed, and empirical adverse fifth results where
+perturbed measurements are complete. The default design translates registered
+sources in coherent 1 mm scenarios and pads critical voxel boundaries by 0.5 mm,
+distances near the source grid scale. Registration distributions, model
+completeness and postoperative outcomes remain unmeasured. [Uncertainty in path planning](https://scholar.harvard.edu/files/sfrisken/files/incorporating_uncertainty_into_path_planning.pdf) · [Registration uncertainty visualization](https://link.springer.com/article/10.1007/s11548-025-03407-z)
+
+**Compare input sets** freezes rich and restricted nominations on the same task
+and sample budget. The restricted arm receives the reference, selected target,
+brain, head surface and listed brainstem/cerebellar estimates. The same richer
+reference evaluator may veto either arm. Every refusal and abstention is retained
+without replacement. Execution authorization remains with the procedure engine.
 
 A selected approach shows its capsule, entry region and illustrative virtual
 axis. **Along corridor** and **Corridor oblique** reuse the existing camera.
@@ -67,12 +87,14 @@ outcomes or execution permission. Unlabeled anatomy, limited sensitivity and
 unmeasured alignment remain unknown; empty labels stay unassessed. Existing
 physical/simulator refusals are unchanged.
 
-**Save** preserves view state, selected structure/approach and comparison sidecar;
+**Save study & comparison** preserves view state, the active target, per-target
+approach selections and exact comparison receipts;
 **Save patient study file…** includes them in the existing portable `.rsworkspace`
 format. Source, assessment-engine or parameter changes mark cached assessments
 stale. Geometry lives in `anatomy-approaches.json`, separately from immutable
 anatomy revisions. The existing `anatomyPlan` operation accepts `list`, `suggest`,
-`upsert`, `assess` and `delete`; its original direct-clearance request still works.
+`compareInputs`, `upsert`, `assess` and `delete`. Its original direct-clearance
+request remains available.
 
 `desktop/electron/verify-eden-planning.cjs` drives the actual React/preload/Python
 workflow with hidden windows. Supply `RESSECTIONLAB_DATA_ROOT`, `EDEN_STUDY` and a

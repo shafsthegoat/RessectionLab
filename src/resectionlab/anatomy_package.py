@@ -70,6 +70,8 @@ def save_package(collection, destination, *, check=lambda: None, progress=lambda
 
 
 def open_package(filename, working_root, *, check=lambda: None):
+    from .anatomy_approaches import FILENAME as approaches_name, MAX_APPROACH_METADATA_BYTES
+
     filename, working_root = Path(filename), Path(working_root)
     identity = file_hash(filename)
     destination = working_root / identity
@@ -86,8 +88,10 @@ def open_package(filename, working_root, *, check=lambda: None):
             if (len(members) > 10000 or len(names) != len(set(names)) or
                     sum(m.file_size for m in members) > MAX_BYTES or 'patient-anatomy.json' not in names):
                 raise ValueError('Invalid or oversized patient study file')
-            if any(m.file_size > (16 * 1024**2 if m.filename == 'patient-anatomy.json' else 2 * 1024**2 if m.filename == 'anatomy-approaches.json' else 256 * 1024)
-                   for m in members if m.filename in {'patient-anatomy.json', 'workspace-view.json', 'anatomy-approaches.json'}):
+            metadata_limits = {'patient-anatomy.json': 16 * 1024**2,
+                               'workspace-view.json': 256 * 1024,
+                               approaches_name: MAX_APPROACH_METADATA_BYTES}
+            if any(m.file_size > metadata_limits[m.filename] for m in members if m.filename in metadata_limits):
                 raise ValueError('Oversized patient study metadata')
             for member in members:
                 check()

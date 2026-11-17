@@ -568,6 +568,7 @@ export default function App() {
   const [workbenchTab,setWorkbenchTab] = useState<"cases"|"data"|"anatomy"|"rehearsal"|"research">("anatomy");
   const [rehearsalModel,setRehearsalModel]=useState<'standard'|'legacy'>('standard');
   const [libraryCases,setLibraryCases] = useState<LibraryCase[]>([]);
+  const [openingStartupWorkspace,setOpeningStartupWorkspace] = useState(!!window.resectionApi);
   const [libraryFolder,setLibraryFolder] = useState<CaseLibraryFolder|null>(null);
   const [libraryError,setLibraryError] = useState<string|null>(null);
   const [choosingLibrary,setChoosingLibrary] = useState(false);
@@ -733,7 +734,7 @@ export default function App() {
   const publicGoalMarker = useMemo(() => episodeVisible && activeContactView && activeContactView.source.caseHash === payload?.caseHash ? contactGoalMarker(activeContactView,activeContactStep) : null,
     [episodeVisible,activeContactView,activeContactStep,payload?.caseHash]);
   const actorReplayVisible = useRef(false);
-  const fileNavigationBlocked = !!native.draft || !api || busy || comparison.pending || engineStopped || readonly;
+  const fileNavigationBlocked = openingStartupWorkspace || !!native.draft || !api || busy || comparison.pending || engineStopped || readonly;
   const restoreSourceView = () => {
     resetDisplayToPrimary();
     setEpisodeVisible(false);
@@ -1037,7 +1038,8 @@ export default function App() {
         .then(async (source) => {
           if(source&&!disposed){if(isNativeBinding(source)){setPayload(null);setCaseData(null);return native.install(source)}await installCase(source,runtime);}
         })
-        .catch((failure) => setError(String(failure)));
+        .catch((failure) => {if(!disposed)setError(String(failure));})
+        .finally(() => {if(!disposed)setOpeningStartupWorkspace(false);});
       return () => {
         disposed = true;
         mounted.current = false;

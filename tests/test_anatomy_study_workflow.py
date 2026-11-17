@@ -10,6 +10,26 @@ from resectionlab.anatomy_package import save_package, open_package
 from resectionlab.desktop_bridge import BridgeSession, _Request
 
 
+def test_native_planning_target_uses_label_when_prepared_focus_is_outside(patient, tmp_path):
+    target = patient.layer('tumor')
+    labels = np.zeros(target['data']['shape'], dtype=np.uint8)
+    labels[3, 5, 5] = labels[7, 5, 5] = target['label_value']
+    target['data'] = patient.put_array(labels)
+    transform = patient.patient_affine(target)
+    prepared = world(transform, [5, 5, 5]).tolist()
+    entry = world(transform, [5, 5, 12]).tolist()
+    patient.document['display'] = {'planning_targets': {'tumor': {'cursor_ras_mm': prepared, 'entry_ras_mm': entry}}}
+    patient.save('target picker sources')
+    bridge = BridgeSession(tmp_path / 'target-options-transfer')
+    opened = bridge.execute('anatomyOpen', {'path': str(patient.root / 'patient-anatomy.json')}, _Request('open'), lambda *args: None)
+    plan = bridge.execute('anatomyPlan', {'collectionId': opened['collectionId'], 'snapshotId': patient.identity(), 'action': 'list'}, _Request('plan'), lambda *args: None)
+    option = next(row for row in plan['targetOptions'] if row['layerId'] == 'tumor')
+    assert option['target'] in [world(transform, [3, 5, 5]).tolist(), world(transform, [7, 5, 5]).tolist()]
+    assert option['entry'] == entry
+    assert 'nearest' in option['focusMeaning']
+    assert not (patient.root / 'anatomy-approaches.json').exists()
+
+
 def test_estimated_display_alignment_does_not_authorize_patient_operations(patient, tmp_path):
     c = patient
     c.add_series(tmp_path/'mri.nii.gz', series_id='ct', modality='CT')
