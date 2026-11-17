@@ -10,9 +10,9 @@ const torso: Ring[] = [
   [-.805, .025, .045, 0, .001], [-.755, .115, .083, 0, .002],
   [-.662, .151, .096, 0, -.007], [-.548, .133, .082, 0, -.004],
   [-.423, .141, .089, 0, -.011], [-.307, .166, .102, 0, -.006],
-  [-.202, .184, .099, 0, -.004], [-.122, .168, .081, 0, -.008],
-  [-.071, .104, .064, 0, -.01], [-.036, .063, .054, 0, -.011],
-  [.025, .059, .05, 0, -.011],
+  [-.202, .184, .099, 0, -.004], [-.110, .168, .081, 0, -.008],
+  [-.054, .113, .068, 0, -.01], [-.021, .075, .055, 0, -.011],
+  [.018, .058, .048, 0, -.011],
 ];
 const arm: Ring[] = [
   [-.837, .01, .01, .297, .018], [-.805, .026, .018, .296, .013],
@@ -30,12 +30,12 @@ const leg: Ring[] = [
   [-.708, .079, .082, .072, -.003], [-.633, .044, .047, .083, -.007],
 ];
 const headProfile: Ring[] = [
-  [-.036, .057, .047, 0, -.009], [.023, .058, .051, 0, -.009],
-  [.066, .057, .057, 0, -.006], [.089, .051, .065, 0, .006],
-  [.113, .069, .076, 0, .008], [.151, .087, .089, 0, .004],
-  [.198, .098, .097, 0, -.001], [.243, .101, .103, 0, -.007],
-  [.285, .091, .098, 0, -.01], [.318, .072, .078, 0, -.01],
-  [.341, .039, .046, 0, -.009], [.351, .001, .001, 0, -.008],
+  [-.044, .057, .047, 0, -.009], [-.013, .058, .051, 0, -.009],
+  [.009, .057, .057, 0, -.006], [.021, .051, .065, 0, .006],
+  [.045, .069, .076, 0, .008], [.083, .087, .089, 0, .004],
+  [.130, .098, .097, 0, -.001], [.175, .101, .103, 0, -.007],
+  [.217, .091, .098, 0, -.01], [.250, .072, .078, 0, -.01],
+  [.273, .039, .046, 0, -.009], [.283, .001, .001, 0, -.008],
 ];
 
 function profileAt(profile: Ring[], z: number): Ring {
@@ -114,18 +114,18 @@ function sculptHead(): THREE.BufferGeometry {
   for (let row = 0; row <= rows; row++) {
     const z = THREE.MathUtils.lerp(headProfile[0][0], headProfile.at(-1)![0], row / rows);
     const [, width, depth, , centreY] = profileAt(headProfile, z);
-    tint.copy(bodyColor).lerp(headColor, THREE.MathUtils.smoothstep(z, .08, .22));
+    tint.copy(bodyColor).lerp(headColor, THREE.MathUtils.smoothstep(z, .012, .152));
     for (let side = 0; side < sides; side++) {
       const angle = side * 2 * Math.PI / sides;
       const forward = Math.sin(angle), x = width * Math.cos(angle);
       const face = THREE.MathUtils.smoothstep(forward, .30, .95);
       // Sculpt the nose and closed mouth directly into the surface. Shallow
       // eye contours make the face legible without painted eyes or expression.
-      const bridge = .021 * gaussian(x, .019) * gaussian(z - .189, .060);
-      const noseTip = .027 * gaussian(x, .024) * gaussian(z - .162, .017);
-      const eyes = .010 * gaussian(Math.abs(x) - .042, .026) * gaussian(z - .204, .018);
-      const mouth = gaussian(x, .035) * (.005 * gaussian(z - .119, .009) - .004 * gaussian(z - .115, .0035));
-      const ear = .010 * gaussian(forward + .04, .27) * gaussian(z - .179, .034);
+      const bridge = .021 * gaussian(x, .019) * gaussian(z - .121, .060);
+      const noseTip = .027 * gaussian(x, .024) * gaussian(z - .094, .017);
+      const eyes = .010 * gaussian(Math.abs(x) - .042, .026) * gaussian(z - .136, .018);
+      const mouth = gaussian(x, .035) * (.005 * gaussian(z - .051, .009) - .004 * gaussian(z - .047, .0035));
+      const ear = .010 * gaussian(forward + .04, .27) * gaussian(z - .111, .034);
       positions.push(x + Math.cos(angle) * ear, centreY + depth * forward + face * (bridge + noseTip - eyes + mouth), z);
       colors.push(tint.r, tint.g, tint.b);
       if (row < rows) {
