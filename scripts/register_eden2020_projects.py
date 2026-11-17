@@ -54,6 +54,11 @@ while True:
    r=variants[index%len(variants)];caption=html.escape(person+' · '+r['recipe']['placement_stratum'])
    gallery.append('<figure style="margin:0"><a href="'+html.escape((root/r['contact_sheet']).as_uri())+'"><img loading="lazy" alt="'+caption+' · MRI comparison and organic target surface" style="width:100%;border-radius:8px" src="'+html.escape((root/r['contact_sheet']).as_uri())+'"></a><figcaption>'+caption+'</figcaption></figure>')
   doc=doc.replace('<table>','<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin:32px 0">'+''.join(gallery)+'</div><table>',1)
+  evidence=[]
+  for relative,label in [('README.md','Local case guide'),('qc/all15-anatomy-source-overlays.png','All15 anatomy overlays'),('final-verification.json','135-project verification'),('desktop-qa/complete.json','Packaged-app verification')]:
+   p=base/relative
+   if p.is_file():evidence.append('<a href="'+html.escape(p.as_uri())+'">'+label+'</a>')
+  doc=doc.replace('<div style="display:grid','<p>'+(' · '.join(evidence))+'</p><div style="display:grid',1)
  tmp=base/f'index.html.{os.getpid()}.partial';tmp.write_text(doc);tmp.replace(base/'index.html')
  if status['complete'] or not args.watch:print(json.dumps(status),flush=True);break
  time.sleep(20)
