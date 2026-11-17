@@ -1,23 +1,10 @@
 # Native approach comparison and procedure experiment
 
-## Resume
-
-Work in the primary checkout on `shaf/next-changes-20261117`. The starting revision is
-`aa41441f`. The verified external mount is `/Volumes/shafrir` with volume UUID
-`9CC3623C-E38B-3EEE-B6BB-B9A06C193700` and data-root marker ID
-`756c4d3b-aabf-4837-a354-52aa500af3f9`. Evidence for this experiment belongs in
-ignored `testcases/approach-comparison-goal-v1/` or an indexed external location.
-
-Check code and data identities before continuing the first unfinished milestone.
-
-```sh
-git status --short --branch
-git rev-parse HEAD
-export RESSECTIONLAB_DATA_ROOT='/Volumes/shafrir/old coding projects/RessectionLabData'
-.venv/bin/python -c 'from resectionlab.data_root import checked_root; print(checked_root())'
-```
-
-## Milestones
+The verified workflow is in commit `e6549a66` on `shaf/next-changes-20261117`.
+Local evidence is under ignored `testcases/approach-comparison-goal-v1/`.
+The prepared source is on the [personal data drive](local-storage-ledger.md).
+Its `archive/desktop-builds-20261117/README.md` indexes the retired
+working-branch package and build snapshot, with checked restore instructions.
 
 | Milestone | State | Evidence |
 | --- | --- | --- |
@@ -28,11 +15,11 @@ export RESSECTIONLAB_DATA_ROOT='/Volumes/shafrir/old coding projects/RessectionL
 
 ## Hidden EDEN verification
 
+Each verification directory contains `report.json` and hidden app captures.
 The original CTRL_1277 receipts are under the prepared collection's
 `verification/` directory. Use `CTRL_1277-01-v3`, `CTRL_1277-08-v2`, and
-`CTRL_1277-cold-v1`. The reconnected runs use
-`testcases/approach-comparison-goal-v1/eden-serial/`. Each run has a
-`report.json`, hidden app captures, and a pointer to its workspace.
+`CTRL_1277-cold-v1`. The other receipts and workspaces are under
+`testcases/approach-comparison-goal-v1/eden-serial/`.
 
 All three hosts restored both target comparisons in a fresh process. At a
 2 mm capsule radius and 15 mm entry patch, the six tasks returned zero
@@ -57,11 +44,18 @@ Python peak was 1.72 GiB for the 1 mm run and 3.20 GiB across all completed
 EDEN runs. The final passes used a single job at a time. The CTRL_1277
 working copy took 141.60 s to stage at the throttled rate.
 
-Use one study at a time. Build the desktop, verify the mounted source root,
-and stage a local workspace when it is absent. This path keeps working
-comparisons and temporary renderer transfers on the internal disk. The
-prepared imaging is read at up to 16 MiB/s, without rebuilding it.
-Use a fresh output label for each verification attempt.
+Saved workspaces retain their exact manifests, plans and view settings.
+Identical imaging copies were reclaimed. Before opening a saved workspace,
+restage its `arrays/`, `originals/`, and `revisions/` from the matching
+prepared study using the copy step below. The default CTRL_1277 workspace is
+`$prepared/verification/CTRL_1277-01-v1/workspace`. The other saved workspaces
+are under `eden-serial/workspaces/`. For recovery of local metadata, the drive
+holds a checksum-verified copy under
+`archive/closed-evidence/eden-approach-comparison-goal-v1-sidecars/`.
+
+For new verification runs, use a fresh output label and one workspace at a time.
+Keep the local workspace and renderer transfers on the internal disk and
+throttle the read of prepared imaging to 16 MiB/s.
 
 ```sh
 pnpm --dir desktop build
@@ -139,9 +133,6 @@ OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 .venv/bin/pyth
 PROCEDURE_DEMO_REPORT=testcases/approach-comparison-goal-v1/procedure-repro/report.json PROCEDURE_DEMO_OUTPUT=testcases/approach-comparison-goal-v1/procedure-ui-repro desktop/node_modules/.bin/electron desktop/electron/verify-approach-procedure.cjs
 ```
 
-The source is acquired healthy anatomy with separately generated geometry. The
-Mac is an M2 Pro with 16 GiB physical memory and 10 CPU cores. The installed
-numerical backend selected C++ with one native thread. Its identity is
-`304dea4eae193865a3fcb7e87a288ba58f4812174bfa70dcd7c6e9367e719e78`.
-The procedure-aware resident executor remains ineligible, so the Python
-engine owns procedure decisions.
+Tests used an M2 Pro with 16 GiB RAM and one C++ numerical thread. The backend
+identity is `304dea4eae193865a3fcb7e87a288ba58f4812174bfa70dcd7c6e9367e719e78`.
+The Python engine owns procedure decisions.
