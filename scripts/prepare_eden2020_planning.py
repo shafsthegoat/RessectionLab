@@ -10,8 +10,12 @@ import argparse
 from copy import deepcopy
 import gc
 import json
+import os
 from pathlib import Path
 import re
+import shutil
+import tempfile
+from zipfile import ZipFile
 
 import nibabel as nib
 from nibabel.spaces import vox2out_vox
@@ -19,11 +23,16 @@ import numpy as np
 from scipy import ndimage as ndi
 
 from resectionlab.anatomy_import import import_anatomy_derivative, import_nifti_series
-from resectionlab.data_root import atomic_json, checked_root
+from resectionlab.data_root import atomic_json, checked_root, safe_path
 from resectionlab.patient_anatomy import PatientImagingCollection, file_hash, world
+from resectionlab.workspace_bundle import extension_layout
 
 URL = "https://zenodo.org/records/3994749"
 LICENSE = "CC-BY-NC-ND-4.0; private noncommercial adaptation; no redistribution"
+SOURCE_COLLECTION = Path("prepared/eden2020-anatomy-v2")
+LEGACY_STUDIES = Path("prepared/eden2020-planning-v1")
+COMPARISON_SUBJECTS = ("CTRL_1277", "CTRL_0866", "CTRL_0933")
+COMPARISON_TARGETS = {1: "synthetic-target", 8: "synthetic-target-08"}
 BRAIN_IDS = {2, 3, 7, 8, 10, 11, 12, 13, 16, 17, 18, 26, 41, 42, 46, 47,
              49, 50, 51, 52, 53, 54, 58, 77, 85, 99, 819, 820, 821, 822,
              843, 844, 865, 866, 869, 870}
@@ -109,16 +118,81 @@ def superior_entry(envelope, native_affine, target):
     return choices[int(np.argmin(score))].tolist()
 
 
-def prepare(root, subject, *, variant=1):
+def subject_sources(root, subject):
     if not re.fullmatch(r"CTRL_[0-9]{4}", subject):
         raise ValueError("Choose an exact recorded EDEN2020 healthy volunteer ID, CTRL_NNNN")
-    prepared = root / "prepared/eden2020-anatomy-v2"
-    complete = prepared / "subjects" / subject / "complete.json"
+    complete = root / SOURCE_COLLECTION / "subjects" / subject / "complete.json"
     subject_row = json.loads(complete.read_text())
     if not subject_row["complete"] or subject_row["subject"] != subject:
         raise ValueError("Existing subject conversion is incomplete or mismatched")
-    synthetic = next(r for r in subject_row["projects"] if r["synthetic"] and f"-SYNTHETIC-{variant:02d}-" in r["case_id"])
-    output = root / "prepared/eden2020-planning-v1" / subject
+    return complete, subject_row
+
+
+def synthetic_source(subject_row, variant):
+    subject = subject_row["subject"]
+    expected = f"EDEN2020-{subject}-SYNTHETIC-{variant:02d}-SEGMENTED-v2"
+    rows = [row for row in subject_row["projects"] if row["case_id"] == expected]
+    if (len(rows) != 1 or rows[0]["synthetic"] is not True
+            or rows[0]["person_id"] != f"EDEN2020:{subject}" or rows[0]["role"] != "DEVELOPMENT"):
+        raise ValueError(f"Missing or mismatched prepared synthetic target {expected}")
+    return rows[0]
+
+
+def verified_target_label(root, synthetic):
+    """Bind the existing label bytes to the archived, recorded synthetic case."""
+    source_case = safe_path(root, synthetic["path"])
+    label_path = safe_path(root, SOURCE_COLLECTION / "labels" / (synthetic["case_id"] + ".nii.gz"))
+    if source_case.stat().st_size != synthetic["bytes"]:
+        raise ValueError("Prepared synthetic case size differs from its receipt")
+    with ZipFile(source_case) as archive:
+        manifest = extension_layout(archive)
+    originals = [row for row in manifest["originalFiles"]
+                 if row["role"] == "annotation" and row["name"] == label_path.name]
+    if (manifest["sessionHash"] != synthetic["session_hash"]
+            or manifest["referenceCaseHash"] != synthetic["case_hash"]
+            or len(originals) != 1 or file_hash(label_path) != originals[0]["sha256"]):
+        raise ValueError("Prepared synthetic label identity differs from its archived case")
+    return label_path, originals[0]["sha256"]
+
+
+def add_synthetic_target(c, root, synthetic, layer_id, label):
+    label_path, label_hash = verified_target_label(root, synthetic)
+    image = nib.load(label_path)
+    mask = np.isin(np.asarray(image.dataobj), [1, 2]).astype(np.uint8)
+    if (list(mask.shape) != synthetic["shape"]
+            or not np.allclose(nib.affines.voxel_sizes(image.affine), synthetic["spacing_mm"], rtol=0, atol=1e-5)
+            or np.count_nonzero(mask) != synthetic["recipe"]["metrics"]["voxel_count"]):
+        raise ValueError("Synthetic target grid or core/rim voxel inventory differs from its receipt")
+    row = c.add_layer(
+        mask, image.affine, layer_id=layer_id, source_series="t1",
+        kind="tumor", role="target", color="#ee92d8", label=label,
+        provenance={"kind": "simulated", "source": c.original(label_path),
+                    "source_case": synthetic["case_id"], "source_package_sha256": synthetic["sha256"],
+                    "recipe": synthetic["recipe"], "included_source_labels": [1, 2],
+                    "edema_label_3_excluded": True, "healthy_anatomy_unchanged": True,
+                    "mass_effect": False, "infiltration": False, "clinical_validation": False},
+    )
+    if row["provenance"]["source"]["sha256"] != label_hash:
+        raise ValueError("Synthetic label source changed during preparation")
+    row.update(units_status="mm", review_status="synthetic engineering target; not acquired pathology",
+               coverage="Existing versioned synthetic geometry only")
+    return target_source_receipt(root, synthetic, row)
+
+
+def target_source_receipt(root, synthetic, layer):
+    recipe = synthetic["recipe"]
+    return {"path": synthetic["path"], "sha256": synthetic["sha256"],
+            "label_source": str(root / SOURCE_COLLECTION / "labels" / (synthetic["case_id"] + ".nii.gz")),
+            "label_sha256": layer["provenance"]["source"]["sha256"], "layer_id": layer["id"],
+            "case_id": synthetic["case_id"], "recipe": recipe,
+            "target_volume_mm3": float(recipe["metrics"]["voxel_count"] * abs(np.linalg.det(np.asarray(layer["affine"])[:3, :3])))}
+
+
+def prepare(root, subject, *, variant=1, output=None):
+    prepared = root / SOURCE_COLLECTION
+    complete, subject_row = subject_sources(root, subject)
+    synthetic = synthetic_source(subject_row, variant)
+    output = output if output is not None else root / LEGACY_STUDIES / subject
     if (output / "patient-anatomy.json").exists():
         c = PatientImagingCollection(output)
         if c.document.get("preparation", {}).get("synthetic_source_case") != synthetic["case_id"]:
@@ -135,8 +209,7 @@ def prepare(root, subject, *, variant=1):
     source_map = {"schema": "eden2020-planning-source-map-v1", "subject": subject, "source_url": URL,
                   "collection": str(output / "patient-anatomy.json"), "extraction_receipt": str(extraction_receipt),
                   "existing_baseline": subject_row["projects"][0]["path"], "series": [], "tractography": [],
-                  "synthetic_source": {"path": synthetic["path"], "sha256": synthetic["sha256"],
-                                       "recipe": synthetic["recipe"]}, "limitations": LIMITS}
+                  "limitations": LIMITS}
     source_specs = [("t1", "T1", "T1_3D_PROSET_Sag"), ("tof", "TOF", "s3DI_MC_HR"),
                     ("flair", "FLAIR", "3D_FLAIR_Tra"), ("swi", "SWI", "SWIp_axial")]
     fixed_shape, fixed_affine = vox2out_vox(
@@ -230,17 +303,8 @@ def prepare(root, subject, *, variant=1):
     row["review_status"] = "unreviewed model and cached rigid registration"
     del vascular
 
-    synthetic_labels = prepared / "labels" / (synthetic["case_id"] + ".nii.gz")
-    target_image = nib.load(synthetic_labels)
-    row = layer(np.isin(np.asarray(target_image.dataobj), [1, 2]).astype(np.uint8), "synthetic-target",
-                "Synthetic target · existing core + rim", kind="tumor", role="target", color="#ee92d8", native_affine=target_image.affine,
-                provenance={"kind": "simulated", "source": c.original(synthetic_labels), "source_case": synthetic["case_id"],
-                            "source_package_sha256": synthetic["sha256"], "recipe": synthetic["recipe"],
-                            "included_source_labels": [1, 2], "edema_label_3_excluded": True, "healthy_anatomy_unchanged": True,
-                            "mass_effect": False, "infiltration": False, "clinical_validation": False})
-    row["review_status"] = "synthetic engineering target; not acquired pathology"
-    row["coverage"] = "Existing versioned synthetic geometry only"
-    source_map["synthetic_source"]["target_volume_mm3"] = float(c.mask(row).sum() * abs(np.linalg.det(target_image.affine[:3, :3])))
+    source_map["synthetic_source"] = add_synthetic_target(
+        c, root, synthetic, "synthetic-target", "Synthetic target · existing core + rim")
 
     flair = nib.load(members[f"{subject}_3D_FLAIR_Tra.nii.gz"]["absolute_path"])
     trks = [members[name] for name in sorted(members) if name.endswith("_to_3DFLAIR.trk")]
@@ -292,26 +356,197 @@ def prepare(root, subject, *, variant=1):
     source_map["source_assets"] = assets
     source_map["layer_count"] = len(c.document["layers"])
     atomic_json(output / "source-map.json", source_map)
+    if output == root / LEGACY_STUDIES / subject:
+        print(f"Saved {output / 'patient-anatomy.json'}", flush=True)
+    return source_map
+
+
+def package_members(document):
+    """Collect portable content-addressed arrays and originals used by this snapshot."""
+    members = {}
+    pending = [document]
+    while pending:
+        item = pending.pop()
+        if isinstance(item, list):
+            pending.extend(item)
+        elif isinstance(item, dict):
+            name = item.get("path")
+            if isinstance(name, str) and name.startswith(("arrays/", "originals/")):
+                identity = item["sha256"]
+                if identity != members.setdefault(name, identity):
+                    raise ValueError("Conflicting package member identity")
+            pending.extend(item.values())
+    return members
+
+
+def copy_immutable_study(source, destination):
+    source_map = json.loads((source / "source-map.json").read_text())
+    identity = source_map["snapshot_id"]
+    if not re.fullmatch(r"[a-f0-9]{64}", identity):
+        raise ValueError("Invalid frozen source snapshot identity")
+    revision_name = f"revisions/{identity}.json"
+    revision = safe_path(source, revision_name)
+    document = json.loads(revision.read_text())
+    collection = PatientImagingCollection(source, document)
+    if document["snapshot_id"] != identity:
+        raise ValueError("Existing source study does not match the frozen source map")
+    output = PatientImagingCollection(destination, document)
+    for name, expected_hash in package_members(document).items():
+        member = output.path(name)
+        member.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(collection.path(name), member)
+        if file_hash(member) != expected_hash:
+            raise ValueError(f"Copied anatomy member does not match its frozen identity: {name}")
+    immutable_revision = output.path(revision_name)
+    immutable_revision.parent.mkdir(exist_ok=True)
+    shutil.copyfile(revision, immutable_revision)
+    return output, source_map
+
+
+def target_receipt(c, root, synthetic, layer_id):
+    row = c.layer(layer_id)
+    source = row["provenance"]["source"]
+    _, label_hash = verified_target_label(root, synthetic)
+    if (row["source_series"] != "t1" or row["role"] != "target" or row["kind"] != "tumor"
+            or row["provenance"]["source_case"] != synthetic["case_id"]
+            or row["provenance"]["source_package_sha256"] != synthetic["sha256"]
+            or source["sha256"] != label_hash or file_hash(c.path(source["path"])) != label_hash):
+        raise ValueError("Existing study target does not match the selected archived target")
+    c.array(row["data"])  # Check the copied derived array identity without rebuilding it.
+    return target_source_receipt(root, synthetic, row)
+
+
+def prepare_comparison(root, subject, output):
+    _, subject_row = subject_sources(root, subject)
+    sources = {layer_id: synthetic_source(subject_row, variant)
+               for variant, layer_id in COMPARISON_TARGETS.items()}
+    if (output / "patient-anatomy.json").is_file():
+        c = PatientImagingCollection(output)
+        source_map = json.loads((output / "source-map.json").read_text())
+        targets = [target_receipt(c, root, synthetic, layer_id)
+                   for layer_id, synthetic in sources.items()]
+        if (c.document["patient_id"] != f"EDEN2020:{subject}"
+                or c.document["snapshot_id"] != source_map["snapshot_id"]
+                or source_map.get("comparison_targets") != targets):
+            raise ValueError("Existing comparison study differs from its preparation receipt")
+        print(f"Reusing {output / 'patient-anatomy.json'}", flush=True)
+        return source_map
+
+    if output.exists() or output.is_symlink():
+        raise ValueError(f"Preserve existing comparison output: {output}")
+    output.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(dir=output.parent, prefix=f".{subject}-") as temp:
+        staged = Path(temp) / subject
+        staged.mkdir()
+        existing = root / LEGACY_STUDIES / subject
+        if (existing / "source-map.json").is_file():
+            c, source_map = copy_immutable_study(existing, staged)
+            reused_snapshot = c.document["snapshot_id"]
+        else:
+            source_map = prepare(root, subject, output=staged)
+            c = PatientImagingCollection(staged)
+            reused_snapshot = None
+        if c.document["patient_id"] != f"EDEN2020:{subject}":
+            raise ValueError("Existing source study belongs to a different volunteer")
+        primary_id = COMPARISON_TARGETS[1]
+        primary = target_receipt(c, root, sources[primary_id], primary_id)
+        c.layer(primary_id)["label"] = "Synthetic target 01 · existing core + rim"
+        secondary_id = COMPARISON_TARGETS[8]
+        secondary = add_synthetic_target(c, root, sources[secondary_id], secondary_id,
+                                         "Synthetic target 08 · existing core + rim")
+        targets = [primary, secondary]
+
+        display = c.document["display"]
+        head = c.layer("head-surface")
+        head_mask = c.mask(head)
+        head_affine = c.patient_affine(head)
+        display["planning_targets"] = {
+            item["layer_id"]: {
+                "cursor_ras_mm": item["recipe"]["center_ras_mm"],
+                "entry_ras_mm": superior_entry(head_mask, head_affine, item["recipe"]["center_ras_mm"]),
+            }
+            for item in targets
+        }
+        c.document["label"] = f"EDEN2020 {subject} · anatomical planning · synthetic targets 01 and 08"
+        c.document["preparation"]["comparison_targets"] = targets
+        c.document["preparation"]["reused_native_snapshot"] = reused_snapshot
+        source_map.update(collection=str(output / "patient-anatomy.json"), display=display,
+                          layer_count=len(c.document["layers"]), comparison_targets=targets,
+                          reused_native_snapshot=reused_snapshot)
+        source_map["snapshot_id"] = c.save("Add a separate existing EDEN synthetic target for anatomical comparison")
+        atomic_json(staged / "source-map.json", source_map)
+        os.rename(staged, output)
     print(f"Saved {output / 'patient-anatomy.json'}", flush=True)
     return source_map
+
+
+def register_comparison_studies(maps, library):
+    library.mkdir(parents=True, exist_ok=True)
+    for item in maps:
+        source = Path(item["collection"]).resolve(strict=True)
+        link = library / f"EDEN2020-{item['subject']}-approach-comparison.anatomy.json"
+        try:
+            link.symlink_to(source)
+        except FileExistsError:
+            if not link.is_symlink() or link.resolve() != source:
+                raise ValueError(f"Preserve existing prepared library entry: {link}") from None
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path)
-    parser.add_argument("--subjects", nargs="+", default=["CTRL_1277", "CTRL_0866"])
-    parser.add_argument("--variant", type=int, default=1)
+    parser.add_argument("--subjects", nargs="+")
+    parser.add_argument("--variant", type=int)
+    parser.add_argument("--comparison-output", type=Path, help="Create isolated studies with existing variants 01 and 08")
+    parser.add_argument("--app-prepared-root", type=Path, help="Register comparison studies in an isolated Cases profile")
     args = parser.parse_args()
-    if args.variant not in range(1, 9):
+    if args.variant is not None and args.variant not in range(1, 9):
         parser.error("Choose an existing synthetic variant 1–8")
-    root = checked_root(args.root, required_bytes=len(args.subjects) * 2 * 1024**3)
-    output = root / "prepared/eden2020-planning-v1"
-    output.mkdir(parents=True, exist_ok=True)
-    maps = [prepare(root, subject, variant=args.variant) for subject in args.subjects]
-    atomic_json(output / "collection.json", {"schema": "eden2020-planning-collection-v1", "primary": maps[0]["collection"],
-                                              "studies": [{"subject": r["subject"], "path": r["collection"], "snapshot_id": r["snapshot_id"],
-                                                           "tract_count": len(r["tractography"])} for r in maps],
-                                              "source_url": URL, "limitations": LIMITS})
+    if args.comparison_output and args.variant is not None:
+        parser.error("Comparison studies always include predeclared variants 01 and 08")
+    if args.app_prepared_root and not args.comparison_output:
+        parser.error("Use --app-prepared-root with --comparison-output")
+    subjects = args.subjects or (COMPARISON_SUBJECTS if args.comparison_output else COMPARISON_SUBJECTS[:2])
+    if len(set(subjects)) != len(subjects):
+        parser.error("Choose each subject once")
+    root = checked_root(args.root, required_bytes=0 if args.comparison_output else len(subjects) * 2 * 1024**3)
+    collection_schema = "eden2020-planning-collection-v1"
+    existing_studies = {}
+    if args.comparison_output:
+        output = args.comparison_output.resolve()
+        for protected in (root / LEGACY_STUDIES, root / SOURCE_COLLECTION):
+            protected = protected.resolve()
+            if output.is_relative_to(protected) or protected.is_relative_to(output):
+                parser.error("Choose a comparison output separate from the existing source collections")
+        collection_file = output / "collection.json"
+        if collection_file.exists():
+            existing = json.loads(collection_file.read_text())
+            rows = existing.get("studies")
+            if (existing.get("schema") != collection_schema or not isinstance(rows, list) or not rows
+                    or not all(isinstance(item, dict) and "subject" in item and "targets" in item for item in rows)):
+                parser.error("The comparison output already contains a different collection")
+            existing_studies = {item["subject"]: item for item in rows}
+        for subject in subjects:
+            subject_sources(root, subject)
+        maps = [prepare_comparison(root, subject, output / subject) for subject in subjects]
+        if args.app_prepared_root:
+            register_comparison_studies(maps, args.app_prepared_root.resolve())
+    else:
+        output = root / LEGACY_STUDIES
+        output.mkdir(parents=True, exist_ok=True)
+        maps = [prepare(root, subject, variant=args.variant or 1) for subject in subjects]
+    existing_studies.update({
+        item["subject"]: {"subject": item["subject"], "path": item["collection"], "snapshot_id": item["snapshot_id"],
+                          "tract_count": len(item["tractography"]),
+                          **({"targets": item["comparison_targets"]} if args.comparison_output else {})}
+        for item in maps
+    })
+    collection_file = output / "collection.json"
+    document = {"schema": collection_schema,
+                "primary": maps[0]["collection"], "studies": list(existing_studies.values()),
+                "source_url": URL, "limitations": LIMITS}
+    if not collection_file.is_file() or json.loads(collection_file.read_text()) != document:
+        atomic_json(collection_file, document)
 
 
 if __name__ == "__main__":

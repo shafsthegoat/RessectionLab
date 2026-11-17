@@ -26,6 +26,7 @@ engineering controls do not close those requirements.
 | --- | --- |
 | Objective, capability boundaries and next dependencies | [Decision-system objective](decision-system-objective.md), [progress and evidence](decision-system-progress.md), [procedure policy](supratentorial-procedure-policy.md) |
 | Current architecture and backend limits | [Desktop architecture/workflow](desktop-workflow.md), [C++ delivery](cpp-acceleration.md), [packaging](electron-packaging.md) |
+| Active native comparison and procedure experiment | [Resumable research checkpoint](approach-comparison-checkpoint.md) |
 | Build and ordinary verification | [README development commands](../README.md#local-development); `pnpm --dir desktop test`, `pnpm --dir desktop build`; focused Python tests for the touched subsystem |
 | Independent replay/monitor tooling | [Maintained rehearsal support](../scripts/rehearsal_support/README.md) |
 | Source collections and data-root workflow | [Local HDD ledger and access limits](local-storage-ledger.md), [EDEN segmented cohort](eden2020-healthy-synthetic.md), [data rebuild](data-rebuild.md); ignored `testcases/README.md` and HDD `catalog/START-HERE.md` |
