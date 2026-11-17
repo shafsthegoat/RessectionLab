@@ -9,6 +9,10 @@ The [cleanup execution record](docs/cleanup-execution-20261116.md) documents the
 archived historical data, measured checkout reduction and verified restoration.
 The [earlier support pass](docs/cleanup-20261116.md) retains its original scope.
 
+Additional datasets, models and historical archives may be on Shafrir's optional
+HDD. The [local storage ledger](docs/local-storage-ledger.md) records its location
+and contents. This storage is unavailable to Sayem Kamal and other collaborators.
+
 The [decision-system contract](docs/decision-system-objective.md) and
 [progress record](docs/decision-system-progress.md) describe the current cranial
 Case → Plan → Generate → Compare → Rehearse → Save → cold Open integration,

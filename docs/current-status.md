@@ -21,7 +21,7 @@ engineering controls do not close those requirements.
 | Current architecture and backend limits | [Desktop architecture/workflow](desktop-workflow.md), [C++ delivery](cpp-acceleration.md), [packaging](electron-packaging.md) |
 | Build and ordinary verification | [README development commands](../README.md#local-development); `pnpm --dir desktop test`, `pnpm --dir desktop build`; focused Python tests for the touched subsystem |
 | Independent replay/monitor tooling | [Maintained rehearsal support](../scripts/rehearsal_support/README.md) |
-| Source collections and data-root workflow | [Data rebuild](data-rebuild.md); ignored `testcases/README.md` and the existing HDD `catalog/START-HERE.md` |
+| Source collections and data-root workflow | [Local HDD ledger and access limits](local-storage-ledger.md), [data rebuild](data-rebuild.md); ignored `testcases/README.md` and HDD `catalog/START-HERE.md` |
 | Experimental features | [Neighboring paths integration contract](neighboring-paths-panel.md), [continuum](voxel-continuum.md), [research planning](research-planning.md), [interactive approaches](interactive-patient-planning.md) |
 | Historical steering, requirements and negative results | [Master plan](../MASTER_PLAN.md), [status narratives](../PROJECT_STATUS.md), [handoff](../IMPLEMENTING_AGENT_HANDOFF.md), [execution ledger](REAL_OBSERVATION_EXECUTION_LEDGER.md) |
 

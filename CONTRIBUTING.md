@@ -30,3 +30,7 @@ It supersedes older instructions to keep obsolete material in the tracked tree.
 Historical documents describe their recorded work; they do not require indefinite
 tracking of every supporting file. Permanent user datasets, active untracked work
 and installed runtimes are separate from repository cleanup.
+
+An optional user-only HDD holds additional datasets, models, projects and archives.
+See the [local storage ledger](docs/local-storage-ledger.md) for its location,
+contents and collaborator access limits; maintain that ledger when assets change.
