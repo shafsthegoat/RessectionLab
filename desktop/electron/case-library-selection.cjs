@@ -20,7 +20,11 @@ class CaseLibrarySelection {
     this.current=this.makeLibrary(defaultRoot);this.admission=null;
   }
   makeLibrary(root){return new CaseLibrary(this.userData,root?path.join(root,'outputs/poc-cases'):this.preparedRoot,this.nativePaths,root,this.externalRoot);}
-  info(){return {folder:this.root,...(this.blocked?{error:this.blocked}:{})};}
+  info(){
+    const error=this.blocked||this.current.externalError;
+    return {folder:this.root,...(error?{error}:{})};
+  }
+  isManagedNativePath(filename){return this.current.isManagedNativePath(filename);}
   async readRecord() {
     let stat;try{stat=await fs.lstat(this.record);}catch(error){if(error.code==='ENOENT')return null;throw error;}
     if(!stat.isFile()||stat.isSymbolicLink()||stat.size===0||stat.size>16*1024)fail('Saved case-library settings are invalid. Choose the library folder again.');

@@ -30,7 +30,7 @@ export function NativeStructureControls({volume,visibleLayers,onVisibilityChange
     onVisibilityChange(Object.fromEntries(structures.map(s=>[s.id,s.id===id])));setIsolated(id);onSelectStructure(id);
   };
   const reset=()=>{onVisibilityChange(Object.fromEntries(structures.map(s=>[s.id,true])));onSettingsChange({...settings,layerOpacity:{},layerColor:{}});onSelectStructure(null);previousVisibility.current=null;setIsolated(null);};
-  const groups=[{id:'anatomy',label:'Anatomical context',items:structures.filter(s=>s.kind!=='tract'&&!['vessel','vessels','artery','vein','sinus'].includes(s.kind))},{id:'vessels',label:'Vessel estimates',items:structures.filter(s=>['vessel','vessels','artery','vein','sinus'].includes(s.kind))},{id:'tracts',label:'Supplied tract bundles',items:structures.filter(s=>s.kind==='tract')}];
+  const groups=[{id:'anatomy',label:'Anatomical context',items:structures.filter(s=>s.kind!=='tract'&&!['vessel','vessels','artery','vein','sinus'].includes(s.kind))},{id:'vessels',label:'Vascular layers',items:structures.filter(s=>['vessel','vessels','artery','vein','sinus'].includes(s.kind))},{id:'tracts',label:'Supplied tract bundles',items:structures.filter(s=>s.kind==='tract')}];
   return <section className="native-structures" aria-label="Anatomical structures">
     <div className="native-structure-heading"><strong>Structures</strong><button title="Restore all structure visibility, opacity and colors" aria-label="Reset structure display" onClick={reset}><RotateCcw size={12}/>Reset</button></div>
     <div className="native-structure-list">{groups.map(group=><div className="native-structure-group" key={group.id}>

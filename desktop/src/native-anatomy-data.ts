@@ -2,11 +2,49 @@ import type {ViewerVolume,VesselDisplayFilter} from './viewer/contracts';
 import type {Point3} from './viewer/coordinates';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
 import type {ArrayDescriptor,ResectionApi,CasePayload} from './types';
-export type Layer={id:string;label:string;kind:string;role:string;color:string;review_status:string;source_series:string;probability?:unknown;provenance:unknown;coverage:string};
-export type Document={display?:{initial_layers?:string[];cursor_ras_mm?:Point3;entry_ras_mm?:Point3};source_assets?:unknown[];patient_id:string;study_timepoint?:string;snapshot_id:string;reference_series:string;revision:number;layers:Layer[];missing:string[];series:Array<{id:string;label?:string;modality:string;grid_spacing_mm:number[];timepoint:string}>;transforms:Record<string,{status:string;parent_series?:string|null}>};
+export type Layer={
+  id:string;label:string;kind:string;role:string;color:string;review_status:string;source_series:string;
+  probability?:unknown;provenance:unknown;coverage:string;
+  affine?:number[][];acquisition_grid_spacing_mm?:number[];output_spacing_mm?:number[];
+  acquisition_resolution?:string|number[];transform_dependencies?:string[];
+  coverage_fields?:{inference_bounds_voxel_inclusive?:number[][];supported_axial_indices?:number[];outside?:string;zero_meaning?:string};
+  availability?:string;uncertainty?:unknown;label_ontology?:unknown;ontology?:unknown;score_meaning?:string;
+};
+export type Series={
+  id:string;label?:string;modality:string;grid_spacing_mm:number[];timepoint:string;
+  acquisition_resolution?:string|number[];coverage?:{status?:string;limitations?:Array<{kind:string;basis?:string}>};
+};
+export type Document={
+  display?:{initial_layers?:string[];cursor_ras_mm?:Point3;entry_ras_mm?:Point3};
+  source_assets?:unknown[];patient_id:string;study_timepoint?:string;snapshot_id:string;reference_series:string;
+  revision:number;layers:Layer[];missing:string[];series:Series[];
+  transforms:Record<string,{status:string;parent_series?:string|null;uncertainty_mm?:number|null;method?:string}>;
+};
+export type EnvironmentRole='brain'|'tumor'|'bone'|'vessels';
+export type EnvironmentOptions={referenceIssue:string|null;layers:Array<{
+  role:EnvironmentRole;layerId:string;status:'ready'|'estimated_alignment'|'unavailable';reason?:string|null;
+}>};
 export type Binding={collectionId:string;document:Document;viewState?:NativeViewState|null};
 export type Draft={layerId:string;undo:number;redo:number;changedVoxels:number}|null;
 export type Args=Record<string,unknown>;
+export type IntakeKind='nifti'|'dicom'|'labels';
+export type IntakeSelection={
+  selectionId:string;
+  kind:IntakeKind;
+  label:string;
+  suggestedRole?:string;
+  candidates?:string[];
+  patientId?:string;
+  studyId?:string;
+  timepoint?:string;
+  warning?:string;
+  supported?:boolean;
+  storage?:'series'|'source-asset';
+};
+export type IntakeItem={selectionId:string;kind:IntakeKind;modality?:string;seriesId?:string;sourceInputIndex?:number;roleMap?:Record<string,string|{kind:string;label:string}>;label?:string};
+export type PreparationStage={id:string;label:string;status:string;reason?:string;seriesId?:string};
+export type PreparationPlan={id:string;stages:PreparationStage[]};
+export type PreparationResponse={document:Document;plan:PreparationPlan};
 export interface NativeAnatomyApi {
   openWorkspace?():Promise<Binding|CasePayload|null>;
   startupWorkspace?():Promise<Binding|CasePayload|null>;
@@ -25,6 +63,9 @@ export interface NativeAnatomyApi {
   anatomyEdit(args:Args):Promise<{document:Document;draft:Draft}>;
   anatomyRegister(args:Args):Promise<{document:Document;result:unknown}>;
   anatomyImport(args:Args):Promise<{document:Document}|null>;
+  anatomyPickIntake(args:Args):Promise<{items:IntakeSelection[]}|null>;
+  anatomyImportBatch(args:Args&{confirmedAssociation:true;sourcePatientId?:string}):Promise<{document:Document}>;
+  anatomyPrepare(args:Args):Promise<PreparationResponse>;
   anatomyExport(args:Args):Promise<unknown>;
   anatomySample(args:Args):Promise<unknown>;
 }

@@ -6,6 +6,7 @@ cell supercover and never call physical planning or authorize tool execution.
 from copy import deepcopy
 import fcntl
 import hashlib
+from itertools import product
 import json
 import os
 import re
@@ -16,6 +17,8 @@ import numpy as np
 from scipy.spatial import cKDTree
 
 from .patient_anatomy import PatientAnatomySnapshot, PatientImagingCollection, affine, digest, world
+from .anatomy_planning import is_native_target, native_target_binding, native_target_options
+from .anatomy_evidence import VASCULAR_KINDS, inference_bounds, is_dural_proxy, vascular_evidence_supported
 from .geometry import (GEOMETRY_VERSION, GeometryScene, native_backend,
                        capsule_voxel_indices, point_segment_distances, _segment_cell_distances, _EPS)
 from .native_approach_comparison import (sensitivity_config, sample_positions, nominal_objectives,
@@ -23,13 +26,12 @@ from .native_approach_comparison import (sensitivity_config, sample_positions, n
                                         assess_sensitivity, candidate_freeze, source_readings,
                                         SOURCE_READING_FIELDS, RICH_INPUTS, RESTRICTED_INPUTS)
 
-VASCULAR_KINDS = {"vessels", "artery", "vein", "sinus"}
 TRACT_KINDS = {"tract", "tractography", "motor", "language", "functional"}
 SCHEMA = "patient-anatomy-approaches-v1"
 FILENAME = "anatomy-approaches.json"
 MAX_SAVED = 32
 MAX_APPROACH_METADATA_BYTES = 8 * 1024**2
-ASSESSMENT_VERSION = "native-source-capsule-assessment-v4"
+ASSESSMENT_VERSION = "native-source-capsule-assessment-v6"
 
 
 def _forbidden_compartment(row):
@@ -43,7 +45,7 @@ def _restricted_layer(row, reference_id, target_id):
     # are excluded from the restricted policy's input collection.
     kind = row["kind"]
     return row["source_series"] == reference_id and (
-        row["id"] == target_id and row["role"] == "target" and kind not in VASCULAR_KINDS | TRACT_KINDS
+        row["id"] == target_id and is_native_target(row) and kind not in VASCULAR_KINDS | TRACT_KINDS
         or row["role"] == "context" and (row["id"], kind) in {("brain", "brain"), ("head-surface", "context")}
         or row["role"] in {"context", "critical"} and (
             (row["id"] in {"head-7", "head-8", "head-16", "head-46", "head-47"} and kind == "brain-region")
@@ -68,7 +70,7 @@ def checked_route(start, end, radius_mm):
     return start, end, radius_mm, length
 
 
-def envelope_coverage(a, shape, start, end, radius_mm):
+def envelope_coverage(a, shape, start, end, radius_mm, *, voxel_bounds=None):
     """Exact capsule containment in a convex affine voxel-cell image field.
 
     A sphere's extent along inverse-affine row i is r*||row_i||. Endpoint
@@ -78,13 +80,16 @@ def envelope_coverage(a, shape, start, end, radius_mm):
     points = world(inverse, np.stack([start, end]))
     extent = radius_mm * np.linalg.norm(inverse[:3, :3], axis=1)
     lo, hi = points.min(axis=0) - extent, points.max(axis=0) + extent
-    lower, upper = lo + .5, np.asarray(shape) - .5 - hi
+    low_cell, high_cell = (np.zeros(3), np.asarray(shape) - 1) if voxel_bounds is None else map(np.asarray, voxel_bounds)
+    lower, upper = lo - low_cell + .5, high_cell + .5 - hi
     return {"wholeEnvelopeWithinField": bool(np.all(lower >= 0) and np.all(upper >= 0)),
-            "centerlineWithinField": bool(np.all(points >= -.5) and np.all(points <= np.asarray(shape) - .5)),
+            "centerlineWithinField": bool(np.all(points >= low_cell - .5) and np.all(points <= high_cell + .5)),
+            **({"inferenceBoundsVoxelInclusive": [low_cell.tolist(), high_cell.tolist()]}
+               if voxel_bounds is not None else {}),
             "envelopeVoxelBounds": [lo.tolist(), hi.tolist()],
             "outsideFaces": [f"{axis}{side}" for axis in range(3)
                              for side, values in (("-", lower), ("+", upper)) if values[axis] < 0],
-            "meaning": "whole capsule in source image field; field coverage does not establish anatomical sensitivity"}
+            "meaning": "whole capsule in the supported field; field coverage does not establish anatomical sensitivity"}
 
 
 def points_in_field(a, shape, points):
@@ -122,6 +127,11 @@ class NativeRouteGeometry:
         document = self.c.document
         self.reference = self.c.series(document["reference_series"])
         self.layers = tuple(document["layers"])
+        self.dural_proxies = {row["id"] for row in self.layers if is_dural_proxy(row)}
+        self.context_vasculature = {
+            row["id"] for row in self.layers
+            if row["kind"] in VASCULAR_KINDS and not vascular_evidence_supported(self.c, row)
+        }
         self.tract_rows = tuple(document.get("tractography", []))
         self.missing = tuple(document.get("missing", []))
         if cache is None:
@@ -144,10 +154,12 @@ class NativeRouteGeometry:
     def registration_groups(self, target_id, excluded):
         relevant = [row for row in self.layers if (row["id"] in excluded or _forbidden_compartment(row)
                     or row["role"] == "critical" or row["kind"] in VASCULAR_KINDS | TRACT_KINDS | {"brain"}
-                    or (row["role"] == "target" and (not target_id or row["id"] == target_id)))]
+                    or (row["id"] == target_id and is_native_target(row)))]
         transforms = self.c.document["transforms"]
         groups = {}
-        for sid in sorted({row["source_series"] for row in (*relevant, *self.tract_rows)} - {self.reference["id"]}):
+        source_ids = {row["source_series"] for row in (*relevant, *self.tract_rows)
+                      if row["id"] not in self.context_vasculature | self.dural_proxies}
+        for sid in sorted(source_ids - {self.reference["id"]}):
             root = sid
             seen = {root}
             parent = transforms.get(root, {}).get("parent_series")
@@ -171,14 +183,45 @@ class NativeRouteGeometry:
             self.grids[key] = GeometryScene(np.zeros(shape, bool), a)
         return key, self.grids[key]
 
+    def layer_coverage(self, row, start, end, radius_mm):
+        return envelope_coverage(
+            self.patient_affine(row), row["data"]["shape"], start, end, radius_mm,
+            voxel_bounds=inference_bounds(row),
+        )
+
     def mask(self, row):
-        key = (row["data"]["sha256"], row["label_value"])
+        key = row["id"]
         if key not in self.masks:
-            self.masks[key] = self.c.mask(row)
+            labels = self.c.array(row["data"])
+            bounds = inference_bounds(row)
+            if bounds is None:
+                lower, upper = (0, 0, 0), tuple(size - 1 for size in labels.shape)
+                supported = labels == row["label_value"]
+            else:
+                lower, upper = bounds
+                supported = np.zeros(labels.shape, dtype=bool)
+                crop = tuple(slice(lo, hi + 1) for lo, hi in zip(lower, upper))
+                supported[crop] = labels[crop] == row["label_value"]
+            source = self.c.series(row["source_series"])
+            source_shape = np.asarray(source["data"]["shape"])
+            relative = np.linalg.inv(self.patient_affine(source)) @ self.patient_affine(row)
+            corners = world(relative, np.asarray(list(product(*zip(lower, upper)))))
+            if np.any(corners < -.5) or np.any(corners >= source_shape - .5):
+                # Filter foreground in slabs when the supported output grid can
+                # include voxel centres outside the acquired source.
+                slab = max(1, 131072 // np.prod(labels.shape[1:]))
+                for start in range(lower[0], upper[0] + 1, slab):
+                    self.check()
+                    indices = np.argwhere(supported[start:min(start + slab, upper[0] + 1)])
+                    indices[:, 0] += start
+                    points = world(relative, indices)
+                    outside = np.any((points < -.5) | (points >= source_shape - .5), axis=1)
+                    supported[tuple(indices[outside].T)] = False
+            self.masks[key] = supported
         return self.masks[key]
 
     def population(self, row):
-        key = (row["data"]["sha256"], row["label_value"])
+        key = row["id"]
         if key not in self.populations:
             self.populations[key] = int(np.count_nonzero(self.mask(row)))
         return self.populations[key]
@@ -213,7 +256,7 @@ class NativeRouteGeometry:
             contained[index] = bool(mask[low[0]:high[0], low[1]:high[1], low[2]:high[2]].all())
         return contained
 
-    def measure(self, start, end, radius_mm, constraints=None, *, target_id=None, scenario=None, memo=None):
+    def measure(self, start, end, radius_mm, constraints=None, *, target_id=None, scenario=None, memo=None, include_legacy_targets=True):
         self.snapshot._check()
         start, end, radius_mm, length = checked_route(start, end, radius_mm)
         constraints = constraints or {}
@@ -228,7 +271,11 @@ class NativeRouteGeometry:
         ref_coverage = envelope_coverage(self.patient_affine(self.reference), self.reference["data"]["shape"], start, end, radius_mm)
         unknowns = list(self.missing)
         structures, targets, source_coverage, covers = [], [], [], {}
-        selected_targets = tuple(r for r in self.layers if r["role"] == "target" and (not target_id or r["id"] == target_id))
+        selected_targets = tuple(
+            row for row in self.layers
+            if (row["id"] == target_id and is_native_target(row)) or
+               (target_id is None and include_legacy_targets and row["role"] == "target" and is_native_target(row))
+        )
         selected_target_ids = {r["id"] for r in selected_targets}
 
         def cover(row, shift, radius):
@@ -264,18 +311,29 @@ class NativeRouteGeometry:
                     "reviewStatus": row.get("review_status", "unreviewed"), "coverageMeaning": row.get("coverage", "unassessed"),
                     "sourceIdentity": {"dataSha256": row["data"]["sha256"], "labelValue": row["label_value"],
                                        "revision": row.get("revision", 0)}}
+            if row["id"] in self.context_vasculature | self.dural_proxies:
+                item["reason"] = (
+                    "Estimated dural envelope is geometric context only" if row["id"] in self.dural_proxies
+                    else "Inferred vascular context. Source-supported vascular anatomy is unassessed."
+                )
+                structures.append(item)
+                unknowns.append(f'{row["id"]}: {item["reason"]}')
+                continue
             try:
                 a = self.patient_affine(row)
                 source = c.series(row["source_series"])
                 lo, hi = start - shift, end - shift
                 guard_radius = probe_radius + minimum_clearance if critical else probe_radius
-                field = envelope_coverage(a, row["data"]["shape"], lo, hi, guard_radius)
+                field = self.layer_coverage(row, lo, hi, guard_radius)
                 acquisition = envelope_coverage(self.patient_affine(source), source["data"]["shape"], lo, hi, guard_radius)
                 item["coverage"] = field
                 item["acquisitionCoverage"] = acquisition
                 source_coverage.append({"layerId": row["id"], **field, "acquisitionCoverage": acquisition})
-                if not field["wholeEnvelopeWithinField"] or not acquisition["wholeEnvelopeWithinField"]:
-                    unknowns.append(row["id"] + ": required envelope outside source field")
+                if not field["wholeEnvelopeWithinField"]:
+                    domain = "inference" if "inferenceBoundsVoxelInclusive" in field else "label"
+                    unknowns.append(f'{row["id"]}: required envelope outside {domain} field')
+                if not acquisition["wholeEnvelopeWithinField"]:
+                    unknowns.append(row["id"] + ": required envelope outside acquisition field")
                 mask = self.mask(row)
                 count = self.population(row)
                 if not count:
@@ -286,7 +344,7 @@ class NativeRouteGeometry:
                     hit = indices[mask[tuple(indices.T)]]
                     orthogonal = scene._orthogonal_spacing is not None
                     center_hits = int(np.count_nonzero(point_segment_distances(world(a, hit), lo, hi) <= probe_radius))
-                    key = (row["data"]["sha256"], row["label_value"], a.tobytes())
+                    key = row["id"]
                     if key not in self.centers:
                         centers = world(a, np.argwhere(mask))
                         self.centers[key] = cKDTree(centers) if count >= 4096 else centers
@@ -463,14 +521,17 @@ class NativeRouteGeometry:
                             acquisition = envelope_coverage(self.patient_affine(source_target),
                                                             source_target["data"]["shape"],
                                                             start - target_shift, end - target_shift, radius_mm)
-                            if acquisition["wholeEnvelopeWithinField"]:
+                            coverage = self.layer_coverage(target, start - target_shift, end - target_shift, radius_mm)
+                            if acquisition["wholeEnvelopeWithinField"] and coverage["wholeEnvelopeWithinField"]:
                                 selected &= ~self.fully_inside_target(scene, indices, target, shift - target_shift)
                             relative_points = points + shift - target_shift
                             points_in_target_grid = world(np.linalg.inv(self.patient_affine(target)), relative_points)
                             cells = np.floor(points_in_target_grid + .5).astype(int)
-                            in_grid = np.all((cells >= 0) & (cells < np.asarray(mask.shape)), axis=1)
-                            known &= in_grid & points_in_field(self.patient_affine(source_target), source_target["data"]["shape"], relative_points)
-                            nontarget[in_grid] &= ~mask[tuple(cells[in_grid].T)]
+                            bounds = inference_bounds(target)
+                            low, high = (0, np.asarray(mask.shape) - 1) if bounds is None else bounds
+                            supported = np.all((cells >= low) & (cells <= high), axis=1)
+                            known &= supported & points_in_field(self.patient_affine(source_target), source_target["data"]["shape"], relative_points)
+                            nontarget[supported] &= ~mask[tuple(cells[supported].T)]
                         except ValueError:
                             # Preserve the whole-cell bound when uncertain target
                             # classification prevents exclusion or centre sampling.
@@ -482,17 +543,17 @@ class NativeRouteGeometry:
                               "conservativeVolumeUpperBoundMm3": float(selected.sum() * scene.voxel_volume_mm3),
                               "supportedNonTargetVoxelCenterVolumeMm3": centre_volume,
                               "unclassifiedBrainVoxelCenterCount": int((within_radius & ~known).sum()),
-                              "coverage": envelope_coverage(scene.affine, scene.shape, start - shift, end - shift, radius_mm),
+                              "coverage": self.layer_coverage(brain, start - shift, end - shift, radius_mm),
                               "acquisitionCoverage": envelope_coverage(self.patient_affine(source), source["data"]["shape"], start - shift, end - shift, radius_mm),
                               "meaning": "Whole-cell upper bound in supplied brain mask; the centre-sampled non-target quantity requires known target classification. Neither quantity measures tissue removal.",
-                              "targetExclusionModel": "Subtract only complete transformed brain cells inside a selected target whose acquisition covers the capsule. Uncertain and partly labelled cells remain in the upper bound."}
+                              "targetExclusionModel": "Subtract only complete transformed brain cells inside a selected target whose acquired and labelled fields cover the capsule. Uncertain and partly labelled cells remain in the upper bound."}
                 except ValueError as exc:
                     normal["reason"] = str(exc)
             memo[normal_key] = normal
         normal = memo[normal_key]
         if normal["available"] and (not normal["coverage"]["wholeEnvelopeWithinField"]
                 or not normal["acquisitionCoverage"]["wholeEnvelopeWithinField"]):
-            unknowns.append(brain["id"] + ": normal traversal outside supplied brain mask or acquisition field")
+            unknowns.append(brain["id"] + ": normal traversal outside supported brain label or acquisition field")
         if not normal["available"]:
             unknowns.append("normal tissue traversal unassessed")
         if not any(s["available"] and s["kind"] in VASCULAR_KINDS for s in structures):
@@ -594,28 +655,55 @@ def checked_approach(collection, value):
     patch = {"center": center.tolist(), "normal": normal.tolist(), "radiusMm": float(patch_radius),
              "meaning": "user-selected hypothetical supratentorial entry-centre disk; cortical/skull suitability unverified"}
     selected = value.get("targetLayerId")
-    if selected is not None and (not isinstance(selected, str) or
-            not any(row["id"] == selected and row["role"] == "target" for row in collection.document["layers"])):
+    row = _target_row(collection, selected)
+    if selected is not None and row is None:
         raise ValueError("Unknown selected target label")
+    binding = value.get("targetCandidateBinding")
+    if binding is not None and (row is None or native_target_binding(collection, row) != binding):
+        raise ValueError("Selected target evidence changed; select the candidate again")
     result = {"id": key, "name": name.strip(), "entry": start.tolist(), "target": end.tolist(),
             "radiusMm": radius, "direction": ((end - start) / length).tolist(),
             "entryPatch": patch, "constraints": constraints}
     if selected is not None:
         result["targetLayerId"] = selected
+    if binding is not None:
+        result["targetCandidateBinding"] = binding
     if "sensitivityConfig" in value:
         result["sensitivityConfig"] = sensitivity_config(value["sensitivityConfig"])
     return result
 
 
 def parameter_hash(approach):
-    return digest({key: approach[key] for key in ("entry", "target", "radiusMm", "entryPatch", "constraints", "targetLayerId", "sensitivityConfig")
+    return digest({key: approach[key] for key in ("entry", "target", "radiusMm", "entryPatch", "constraints", "targetLayerId", "targetCandidateBinding", "sensitivityConfig")
                    if key in approach})
+
+
+def _target_row(collection, layer_id):
+    return next((row for row in collection.document["layers"] if row["id"] == layer_id and is_native_target(row)), None)
+
+
+def _is_binding(value):
+    return isinstance(value, str) and re.fullmatch(r"[a-f0-9]{64}", value) is not None
+
+
+def _selection_issue(collection, active, selection):
+    if selection is None or active is None:
+        return None
+    row = _target_row(collection, active)
+    if row is None:
+        return "The selected lesion layer is no longer available. Select a candidate to continue."
+    try:
+        if native_target_binding(collection, row) == selection["candidateBinding"]:
+            return None
+    except (ValueError, OSError, StopIteration):
+        pass
+    return "The selected lesion mask or its source binding changed. Select a candidate again to continue."
 
 
 def _read_plan(collection):
     path = collection.root / FILENAME
     if not path.exists():
-        return [], {}, None, None
+        return [], {}, None, None, None
     if path.stat().st_size > MAX_APPROACH_METADATA_BYTES:
         raise ValueError("Saved comparison exceeds metadata budget")
     encoded = path.read_bytes()
@@ -634,12 +722,17 @@ def _read_plan(collection):
         retired = set(original_constraints.get("excludedLayerIds", [])) - known
         candidate["constraints"] = {**original_constraints, "excludedLayerIds": [x for x in original_constraints.get("excludedLayerIds", []) if x in known]}
         target_id = candidate.get("targetLayerId")
-        retired_target = target_id is not None and not any(row["id"] == target_id and row["role"] == "target" for row in collection.document["layers"])
+        retired_target = target_id is not None and _target_row(collection, target_id) is None
         if retired_target:
             candidate.pop("targetLayerId")
+        target_binding = candidate.pop("targetCandidateBinding", None)
         checked = checked_approach(collection, candidate)
         if retired_target:
             checked["targetLayerId"] = target_id
+        if target_binding is not None:
+            if not _is_binding(target_binding):
+                raise ValueError("Invalid saved target evidence binding")
+            checked["targetCandidateBinding"] = target_binding
         checked["constraints"] = original_constraints
         if checked["id"] in identities:
             raise ValueError("Duplicate saved approach")
@@ -666,7 +759,13 @@ def _read_plan(collection):
     active = data.get("activeTargetLayerId")
     if active is not None and not isinstance(active, str):
         raise ValueError("Invalid saved selected target")
-    return result, reports, active, hashlib.sha256(encoded).hexdigest()
+    selection = data.get("targetSelection")
+    if selection is not None and (not isinstance(selection, dict)
+            or set(selection) != {"candidateBinding", "selectedAtSnapshotId"}
+            or not _is_binding(selection["selectedAtSnapshotId"])
+            or (selection["candidateBinding"] is not None if active is None else not _is_binding(selection["candidateBinding"]))):
+        raise ValueError("Invalid saved target evidence selection")
+    return result, reports, active, selection, hashlib.sha256(encoded).hexdigest()
 
 
 def read_approaches(collection):
@@ -691,7 +790,7 @@ def _bound_report(collection, report):
                 "sourceLabelAndStreamlineProximity": "numpy-scipy"}}
 
 
-def save_approaches(collection, approaches, *, comparisons=None, target_id=None, expected_revision=..., commit=lambda: None):
+def save_approaches(collection, approaches, *, comparisons=None, target_id=None, target_selection=None, expected_revision=..., commit=lambda: None):
     if len(approaches) > MAX_SAVED:
         raise ValueError("At most 32 saved approaches are supported")
     if comparisons and len(comparisons) > MAX_SAVED:
@@ -702,6 +801,8 @@ def save_approaches(collection, approaches, *, comparisons=None, target_id=None,
                                          if report is not None} for target, pair in comparisons.items()}
     if target_id is not None:
         data["activeTargetLayerId"] = target_id
+    if target_selection is not None:
+        data["targetSelection"] = target_selection
     encoded = json.dumps(data, allow_nan=False, separators=(",", ":")).encode("utf-8")
     if len(encoded) > MAX_APPROACH_METADATA_BYTES:
         raise ValueError("Saved comparison exceeds metadata budget")
@@ -728,7 +829,8 @@ def _constraints_for_geometry(geometry, constraints):
 
 def _measure_approach(geometry, approach, scenario=None, *, memo=None):
     measured = geometry.measure(approach["entry"], approach["target"], approach["radiusMm"], approach["constraints"],
-                                target_id=approach.get("targetLayerId"), scenario=scenario, memo=memo)
+                                target_id=approach.get("targetLayerId"), scenario=scenario, memo=memo,
+                                include_legacy_targets=False)
     failures = measured["constraintFailures"]
     if approach["entry"][2] < approach["target"][2]:
         failures.append("entry inferior to target; outside the declared superior/lateral supratentorial proposal scope")
@@ -771,8 +873,8 @@ def assess_approach(collection, value, geometry=None):
 def _base_for_suggestions(collection, args):
     value = {**args, "entry": args.get("entry", args.get("start")),
              "target": args.get("target", args.get("end"))}
-    targets = [row["id"] for row in collection.document["layers"] if row["role"] == "target"]
-    if len(targets) == 1 and value.get("targetLayerId") is None:
+    targets = [row["id"] for row in collection.document["layers"] if row["role"] == "target" and is_native_target(row)]
+    if len(targets) == 1 and "targetLayerId" not in value:
         value["targetLayerId"] = targets[0]
     value["sensitivityConfig"] = sensitivity_config(args.get("sensitivityConfig", args.get("sensitivity")))
     base = checked_approach(collection, value)
@@ -845,7 +947,8 @@ _SCOPE = "Selected entry patch; inferior entries excluded; supplied cerebellar a
 def _task_fields(collection, base):
     return {"patientId": collection.document["patient_id"], "targetLayerId": base.get("targetLayerId"),
             "entry": base["entry"], "entryPatch": base["entryPatch"], "target": base["target"], "radiusMm": base["radiusMm"],
-            "constraints": base["constraints"], "sensitivityConfig": base["sensitivityConfig"]}
+            "constraints": base["constraints"], "sensitivityConfig": base["sensitivityConfig"],
+            **({"targetCandidateBinding": base["targetCandidateBinding"]} if "targetCandidateBinding" in base else {})}
 
 
 def _measure_frozen(geometry, route, nominal, scenarios):
@@ -991,25 +1094,58 @@ def compare_inputs(collection, args, geometry=None):
             "selectionRule": _SELECTION_RULE, "nominationBudget": 3, "simulationExecutionAuthorized": False}
 
 
-def dispatch_plan(collection, args, *, geometry=None, commit=lambda: None):
+def dispatch_plan(collection, args, *, geometry=None, commit=lambda: None, check=lambda: None):
     action = args.get("action", "list")
-    saved, comparisons, active, revision = _read_plan(collection)
+    saved, comparisons, active, selection, revision = _read_plan(collection)
+    selection_issue = _selection_issue(collection, active, selection)
     selected_id = None
-    if action == "suggest":
-        proposals, report = suggest_approaches(collection, args, geometry)
-        active = report["task"]["targetLayerId"]
-        comparisons.setdefault(active or "", {})["proposalReport"] = _bound_report(collection, report)
+
+    def bind_target(value):
+        target_id = value.get("targetLayerId")
+        if target_id is None:
+            return value
+        row = _target_row(collection, target_id)
+        if selection is None and row is not None and row["role"] == "target":
+            return value  # Compatibility with plans created before explicit binding.
+        if selection is None or target_id != active or selection_issue:
+            raise ValueError("Select this lesion candidate against the current source before planning")
+        return {**value, "targetCandidateBinding": selection["candidateBinding"]}
+
+    if action == "selectTarget":
+        active = args.get("targetLayerId")
+        binding = args.get("candidateBinding")
+        if active is not None:
+            if not isinstance(active, str) or not _is_binding(binding):
+                raise ValueError("Select a target with its source evidence binding")
+            options = native_target_options(collection, layer_id=active, check=check)
+            if not options or options[0].get("candidateBinding") != binding:
+                reason = options[0].get("reason") if options else None
+                raise ValueError(reason or "Selected target evidence changed; reload and select the candidate again")
+        elif binding is not None:
+            raise ValueError("A cleared target cannot carry an evidence binding")
+        selection = {"candidateBinding": binding, "selectedAtSnapshotId": collection.identity()}
+        selection_issue = None
+    elif action == "suggest":
+        value = {**args, "targetLayerId": active} if selection is not None and "targetLayerId" not in args else args
+        proposals, report = suggest_approaches(collection, bind_target(value), geometry)
+        compared_target = report["task"]["targetLayerId"]
+        if selection is None:
+            active = compared_target
+        comparisons.setdefault(compared_target or "", {})["proposalReport"] = _bound_report(collection, report)
         # Refresh only this task's bounded proposal group. Edited candidates
         # may keep their original IDs until the matching proposal is regenerated.
-        saved = [a for a in saved if a.get("origin") != "bounded-native-entry-patch" or a.get("targetLayerId") != active]
+        saved = [a for a in saved if a.get("origin") != "bounded-native-entry-patch" or a.get("targetLayerId") != compared_target]
         generated_ids = {row["id"] for row in proposals}
         saved = [{**row, "id": "manual-" + uuid.uuid4().hex[:16]} if row["id"] in generated_ids else row for row in saved]
         saved.extend(proposals)
         selected_id = proposals[0]["id"] if proposals else None
     elif action == "compareInputs":
-        input_comparison = compare_inputs(collection, args, geometry)
-        active = input_comparison["task"]["targetLayerId"]
-        comparisons.setdefault(active or "", {})["inputComparison"] = _bound_report(collection, input_comparison)
+        value = {**args, "targetLayerId": active} if selection is not None and "targetLayerId" not in args else args
+        input_comparison = compare_inputs(collection, bind_target(value), geometry)
+        compared_target = input_comparison["task"]["targetLayerId"]
+        if selection is None:
+            active = compared_target
+        comparisons.setdefault(compared_target or "", {})["inputComparison"] = _bound_report(collection, input_comparison)
     elif action in {"upsert", "assess"}:
         value = args.get("approach")
         if value is None and action == "assess":
@@ -1018,7 +1154,7 @@ def dispatch_plan(collection, args, *, geometry=None, commit=lambda: None):
                 raise ValueError("Unknown saved approach")
         if value is None:
             value = args
-        approach = checked_approach(collection, value)
+        approach = checked_approach(collection, bind_target(value))
         if args.get("assess", True):
             approach = assess_approach(collection, approach, geometry)
         else:
@@ -1026,7 +1162,8 @@ def dispatch_plan(collection, args, *, geometry=None, commit=lambda: None):
         approach["origin"] = "manual" if action == "upsert" else value.get("origin", "manual")
         if action == "assess" and value.get("tradeoff"):
             approach["tradeoff"] = value["tradeoff"]
-        active = approach.get("targetLayerId") if "targetLayerId" in value else active
+        if selection is None and "targetLayerId" in value:
+            active = approach.get("targetLayerId")
         selected_id = approach["id"]
         position = next((index for index, item in enumerate(saved) if item["id"] == selected_id), None)
         if position is None:
@@ -1043,20 +1180,28 @@ def dispatch_plan(collection, args, *, geometry=None, commit=lambda: None):
         saved = [a for a in saved if a["id"] != key]
         _mark_historical(comparisons, deleted, "A selected corridor was removed after this comparison was frozen.")
     elif action == "list":
-        active = args.get("targetLayerId", active)
+        # Old view preferences can restore legacy role=target plans. The
+        # durable evidence binding owns the active target after explicit selection.
+        if selection is None and "targetLayerId" in args:
+            requested = args["targetLayerId"]
+            row = _target_row(collection, requested)
+            if requested is None or (row is not None and row["role"] == "target"):
+                active = requested
     else:
         raise ValueError("Unknown native approach action")
     if active is not None and not isinstance(active, str):
         raise ValueError("Invalid selected target")
     if action != "list":
-        save_approaches(collection, saved, comparisons=comparisons, target_id=active, expected_revision=revision, commit=commit)
+        save_approaches(collection, saved, comparisons=comparisons, target_id=active, target_selection=selection,
+                        expected_revision=revision, commit=commit)
     visible = [row for row in saved if row.get("targetLayerId") == active or
-               row.get("targetLayerId") is None and row.get("origin") != "bounded-native-entry-patch"]
-    if not active and "targetLayerId" not in args and not comparisons:
+               selection is None and row.get("targetLayerId") is None and row.get("origin") != "bounded-native-entry-patch"]
+    if selection is None and not active and "targetLayerId" not in args and not comparisons:
         visible = saved  # Unbound v1 workspaces may contain untouched manual plans.
     selected_comparisons = comparisons.get(active or "", {})
     return {"snapshotId": collection.identity(), "approaches": visible, "selectedId": selected_id,
-            "activeTargetLayerId": active, "savedTargetLayerIds": sorted({key for key in comparisons if key}
+            "activeTargetLayerId": active if _target_row(collection, active) is not None else None,
+            "targetSelectionIssue": selection_issue, "savedTargetLayerIds": sorted({key for key in comparisons if key}
                 | {row["targetLayerId"] for row in saved if row.get("targetLayerId")}),
             "proposalReport": selected_comparisons.get("proposalReport"), "inputComparison": selected_comparisons.get("inputComparison"),
             "simulationExecutionAuthorized": False}

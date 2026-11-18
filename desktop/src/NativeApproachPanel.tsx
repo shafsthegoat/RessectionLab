@@ -5,6 +5,7 @@ import type {Point3} from './viewer/coordinates';
 import type {ApproachCoverage,ApproachSensitivityConfig,ApproachTargetOption,NativeApproach} from './native-approaches';
 import {approachAssessment,approachStatus,defaultApproachSensitivity,lowerBoundText} from './native-approaches';
 import {NativeStructureControls} from './NativeStructureControls';
+import {rehearsalAvailability} from './NativeStudyEvidence';
 import {ApproachProposalDetails,ApproachSensitivityDetails,ApproachInputComparison} from './NativeApproachReadouts';
 import './native-approaches.css';
 const mm=(value:unknown)=>typeof value==='number'&&Number.isFinite(value)?value.toFixed(1):'—';
@@ -49,6 +50,7 @@ export function NativeApproachPanel({workspace:w}:{workspace:NativeWorkspace}){
   const {translationMm,boundaryMm}=sensitivityConfig;
   useEffect(()=>{setEditor(value=>value.key===editorKey?value:initial())},[editorKey]);
   const blocked=w.busy||!!w.draft||p.pending||p.loading;
+  const canPlan=!p.targetSelectionIssue&&(!!defaultTarget||!!(selected&&!selected.targetLayerId));
   const valid=[...entry,...target,radius,patchRadius,minimum,maximum,translationMm,boundaryMm].every(Number.isFinite)&&radius>0&&radius<=50&&patchRadius>=0&&patchRadius<=40&&minimum>=0&&minimum<=50&&maximum>=.1&&maximum<=1000&&translationMm>=0&&translationMm<=5&&boundaryMm>=0&&boundaryMm<=3&&Math.hypot(...target.map((v,i)=>v-entry[i]))>1e-6;
   function edit(change:Partial<EditorFields>){setEditor({...current,fields:{...fields,...change},dirty:true,attempted:false})}
   const payload=()=>{
@@ -58,7 +60,7 @@ export function NativeApproachPanel({workspace:w}:{workspace:NativeWorkspace}){
   };
   async function commitEdits(){
     if(!dirty)return true;
-    if(blocked||!valid)return false;
+    if(blocked||!valid||!canPlan)return false;
     const submitted=current;
     setEditor(value=>value.key===submitted.key&&value.fields===submitted.fields?{...value,attempted:true}:value);
     const result=await p.request({action:'upsert',approach:payload()});
@@ -66,10 +68,10 @@ export function NativeApproachPanel({workspace:w}:{workspace:NativeWorkspace}){
     return !!result;
   }
   useEffect(()=>{
-    if(!dirty||current.attempted||blocked||!valid)return;
+    if(!dirty||current.attempted||blocked||!valid||!canPlan)return;
     const timer=setTimeout(()=>{void commitEdits()},650);
     return()=>clearTimeout(timer);
-  },[dirty,current.attempted,fields,blocked,valid,editorKey]);
+  },[dirty,current.attempted,fields,blocked,valid,canPlan,editorKey]);
   if(!b)return null;
   async function runComparison(action:'suggest'|'compareInputs'){
     if(!await commitEdits())return;
@@ -82,7 +84,9 @@ export function NativeApproachPanel({workspace:w}:{workspace:NativeWorkspace}){
   async function selectApproach(a:NativeApproach){if(await commitEdits()){p.select(a.id);w.setCursor(a.target)}}
   async function selectTarget(option:ApproachTargetOption|undefined){
     if(!await commitEdits())return;
-    const result=await p.request({action:'list',targetLayerId:option?.layerId??null});
+    const result=await p.request(option&&!option.candidateBinding
+      ?{action:'list',targetLayerId:option.layerId}
+      :{action:'selectTarget',targetLayerId:option?.layerId??null,candidateBinding:option?.candidateBinding??null});
     if(!result)return;
     const preferred=p.selectedApproachIds?.[option?.layerId??''];
     const route=preferred===null?undefined:result.approaches.find(a=>a.id===preferred)??result.approaches.find(a=>a.targetLayerId===option?.layerId);
@@ -98,11 +102,25 @@ export function NativeApproachPanel({workspace:w}:{workspace:NativeWorkspace}){
   const targetLabel=(id?:string|null)=>p.targetOptions.find(option=>option.layerId===id)?.label??id??undefined;
   const layerLabels=Object.fromEntries([...b.document.layers.map(row=>[row.id,row.label]),...(m?.structures??[]).map(row=>[row.layerId,row.label])]);
   return <div className="native-approaches unified-sidebar" data-approach-pending={p.pending} data-approach-dirty={dirty}>
-    <div className="approach-intro"><h1>Compare approaches</h1><p>Static capsule measurements on source anatomy. EDEN cases use healthy acquired scans and separate synthetic targets.</p></div>
-    {p.targetOptions.length>0&&<label className="approach-target-picker">Planning target<select aria-label="Planning target" value={targetLayerId??''} disabled={blocked||(dirty&&!valid)} onChange={event=>void selectTarget(p.targetOptions.find(option=>option.layerId===event.target.value))}>
-      <option value="">Manual target point</option>{p.targetOptions.map(option=><option key={option.layerId} value={option.layerId} disabled={option.target===null}>{option.label}{option.target===null?' · unavailable':''}</option>)}</select></label>}
-    {targetOption?.focusMeaning&&<p className="approach-caption">{targetOption.focusMeaning}. Coordinates are editable.</p>}
-    <section className="approach-editor"><fieldset disabled={blocked}><div className="approach-section-heading"><h2>{selected?'Edit selected approach':'Set the entry patch'}</h2>{selected&&<button aria-label="Focus selected target" onClick={()=>w.setCursor(target)}><Focus size={13}/></button>}</div>
+    <div className="approach-intro"><h1>Compare approaches</h1>
+      {!p.loading&&<>
+        <p>{canPlan?'Source anatomy supports geometric comparison.':
+          p.targetOptions.some(option=>option.target)?'Select a lesion candidate to compare approaches.':'Geometric comparison needs a nonempty lesion label linked to aligned source anatomy.'}</p>
+        <p>{rehearsalAvailability(p.rehearsalOptions)}</p>
+      </>}
+    </div>
+    {p.targetOptions.length>0&&<label className="approach-target-picker">Planning target<select aria-label="Planning target" value={p.targetSelectionIssue?'':p.activeTargetLayerId??''} disabled={blocked||(dirty&&!valid)} onChange={event=>void selectTarget(p.targetOptions.find(option=>option.layerId===event.target.value))}>
+      <option value="">Choose a lesion candidate</option>{p.targetOptions.map(option=><option key={option.layerId} value={option.layerId} disabled={option.target===null}>{option.label}{option.origin?` · ${option.origin}`:''}{option.target===null?' · unavailable':''}</option>)}</select></label>}
+    {p.targetSelectionIssue&&<p className="approach-error" role="status">{p.targetSelectionIssue}</p>}
+    {targetOption&&!p.targetSelectionIssue&&<details><summary>{targetOption.reviewStatus??'Target evidence and review'}</summary>
+      <p>{[targetOption.origin,targetOption.model,targetOption.sourceSeries,`label ${targetOption.labelValue??'unknown'}`,`layer revision ${targetOption.layerRevision??'unknown'}`].filter(Boolean).join(' · ')}</p>
+      {targetOption.coverageMeaning&&<p>{targetOption.coverageMeaning}</p>}
+      {targetOption.focusMeaning&&<p>{targetOption.focusMeaning}. Coordinates are editable.</p>}
+    </details>}
+    {p.targetOptions.some(option=>!option.target)&&<details><summary>Unavailable target candidates</summary>
+      {p.targetOptions.filter(option=>!option.target).map(option=><p key={option.layerId}>{option.label} · {option.reason??'Source geometry unavailable'}</p>)}
+    </details>}
+    <section className="approach-editor"><fieldset disabled={blocked||!canPlan}><div className="approach-section-heading"><h2>{selected?'Edit selected approach':'Set the entry patch'}</h2>{selected&&<button aria-label="Focus selected target" onClick={()=>w.setCursor(target)}><Focus size={13}/></button>}</div>
       <label className="approach-radius">Corridor radius <output>{mm(radius)} mm</output><input aria-label="Corridor radius" type="range" min=".5" max={Math.max(12,radius)} step=".5" disabled={blocked} value={radius} onChange={e=>edit({radius:+e.target.value})}/></label>
       <label>Entry patch radius · mm<input aria-label="Entry patch radius" type="number" min="0" max="40" value={patchRadius} onChange={e=>edit({patchRadius:+e.target.value})}/></label>
       <p className="approach-caption">Patch centre (RAS mm) {ras(fields.patchCenter??entry)}</p>
@@ -121,10 +139,10 @@ export function NativeApproachPanel({workspace:w}:{workspace:NativeWorkspace}){
       </details>
       {selected&&<div className="tool-row"><button disabled={blocked||!valid} onClick={()=>void (dirty?commitEdits():p.request({action:'assess',approachId:selected.id}))}>Reassess</button><button disabled={blocked} onClick={()=>void p.request({action:'delete',approachId:selected.id})}>Delete</button></div>}
     </fieldset></section>
-    <div className="approach-primary-actions"><button className="approach-suggest" disabled={blocked||!valid} onClick={()=>void runComparison('suggest')}><Sparkles size={14}/>Suggest approaches</button><button aria-label="Create manual approach" disabled={blocked||!valid} onClick={async()=>{if(await commitEdits())void p.request({action:'upsert',approach:{...payload(),id:undefined,name:`Manual ${p.approaches.length+1}`}})}}><Plus size={14}/>Manual</button></div>
+    <div className="approach-primary-actions"><button className="approach-suggest" disabled={blocked||!valid||!canPlan} onClick={()=>void runComparison('suggest')}><Sparkles size={14}/>Suggest approaches</button><button aria-label="Create manual approach" disabled={blocked||!valid||!canPlan} onClick={async()=>{if(await commitEdits())void p.request({action:'upsert',approach:{...payload(),id:undefined,name:`Manual ${p.approaches.length+1}`}})}}><Plus size={14}/>Manual</button></div>
     <p className="approach-caption">Up to three distinct paths within the selected superior or lateral entry patch. Opening the skull and procedural effects are unassessed.</p>
     {p.error&&<p className="approach-error" role="alert">{p.error}{dirty?' Edits remain unsaved. Use Save to retry.':''}</p>}
-    {!valid&&<p className="approach-error" role="alert">Use distinct finite endpoints. Supported ranges are corridor radius above 0 to 50 mm, patch radius 0–40 mm, clearance 0–50 mm, length 0.1–1000 mm, translation 0–5 mm and boundary sensitivity 0–3 mm.</p>}
+    {canPlan&&!valid&&<p className="approach-error" role="alert">Use distinct finite endpoints. Supported ranges are corridor radius above 0 to 50 mm, patch radius 0–40 mm, clearance 0–50 mm, length 0.1–1000 mm, translation 0–5 mm and boundary sensitivity 0–3 mm.</p>}
     {p.loading&&<p role="status" className="approach-computing">Loading source-bound comparisons…</p>}
     {p.pending&&<p role="status" className="approach-computing">Measuring source anatomy…</p>}
     <div className="approach-cards" aria-label="Saved approach comparison">{p.approaches.map((a,index)=>{const summary=approachAssessment(a),measured=a.assessmentStatus==='current'?a.measurements:undefined;return <button className={`approach-card ${a.id===p.selectedId?'selected':''}`} key={a.id} aria-pressed={a.id===p.selectedId} data-approach-id={a.id} disabled={blocked||(dirty&&!valid)} onClick={()=>void selectApproach(a)}>
@@ -176,10 +194,10 @@ export function NativeApproachPanel({workspace:w}:{workspace:NativeWorkspace}){
     </section>}
     <section className="approach-input-comparison"><h2>Development input comparison</h2>
       <p className="approach-caption">Run the same target, patch and candidate budget with rich and restricted inputs, then inspect both through shared source-geometry checks.</p>
-      <button disabled={blocked||!valid||!targetLayerId} onClick={()=>void runComparison('compareInputs')}>Compare input sets</button>
+      <button disabled={blocked||!valid||!targetLayerId||!canPlan} onClick={()=>void runComparison('compareInputs')}>Compare input sets</button>
       {p.inputComparison&&<ApproachInputComparison report={p.inputComparison} labels={layerLabels} targetLabel={targetLabel(p.inputComparison.task?.targetLayerId)}/>}
     </section>
-    <button className="approach-save" disabled={blocked||(!selected&&!p.report&&!p.inputComparison)||!valid} onClick={async()=>{if(await commitEdits())await w.save()}}><ArrowDownToLine size={14}/>Save study & comparison</button>
+    <button className="approach-save" disabled={blocked||(!defaultTarget&&!selected&&!p.report&&!p.inputComparison)||(dirty&&!valid)} onClick={async()=>{if(await commitEdits())await w.save()}}><ArrowDownToLine size={14}/>Save study & comparison</button>
     <details className="approach-structure-disclosure"><summary>Structures & named tract legend</summary><NativeStructureControls volume={w.volume} visibleLayers={w.state.visible} onVisibilityChange={w.setVisible} settings={w.state.settings} onSettingsChange={w.setSettings} selectedStructure={w.selectedStructure} onSelectStructure={w.setSelectedStructure} onFocusStructure={w.focusStructure}/></details>
   </div>;
 }

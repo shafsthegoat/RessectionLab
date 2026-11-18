@@ -16,7 +16,8 @@ import traceback
 import nibabel as nib
 import numpy as np
 
-from resectionlab.patient_anatomy import PatientImagingCollection, file_hash
+from resectionlab.patient_anatomy import MAX_ARRAY, ROLES, PatientImagingCollection, affine, file_hash
+from resectionlab.anatomy_import import import_dicom, import_nifti_series, select_intake_reference
 from resectionlab.anatomy_models import reconstruct, import_proposal
 from resectionlab.surgical_patient import prepare_surgical_environment
 from resectionlab.surgical_environment import load_environment
@@ -42,37 +43,126 @@ def write_json(path, value):
 
 def initialize(spec):
     path = Path(spec['collection'])
-    if (path / 'patient-anatomy.json').exists():
+    exists = (path / 'patient-anatomy.json').exists()
+    if exists:
         c = PatientImagingCollection(path)
         if c.document['patient_id'] != spec['patient_id']:
             raise ValueError('Existing collection belongs to another patient')
-        return c
-    c = PatientImagingCollection.create(path, spec['patient_id'], timepoint='preoperative')
-    for source in spec['series']:
-        c.add_series(source['path'], series_id=source['id'], modality=source['modality'],
-                     patient_id=spec['patient_id'])
+        sources = c.source_records()
+        existing_timepoint = c.document.get('study_timepoint', sources[0]['timepoint'] if sources else 'preoperative')
+        timepoint = spec.get('timepoint', existing_timepoint)
+    else:
+        timepoint = spec.get('timepoint', 'preoperative')
+        c = PatientImagingCollection.create(path, spec['patient_id'], timepoint=timepoint)
+    before = c.identity()
+    c.verify_source_association(timepoint, spec['patient_id'])
+    for source in spec.get('series', []):
+        kind = source.get('kind', 'nifti')
+        association = dict(timepoint=timepoint, source_patient_id=source.get('source_patient_id'),
+                           visit_id=source.get('visit_id', spec.get('visit_id')))
+        if kind == 'nifti':
+            row = import_nifti_series(c, source['path'], series_id=source['id'],
+                                      modality=source.get('modality'), patient_id=spec['patient_id'],
+                                      sidecar=source.get('sidecar'), **association)
+            if row['id'] != source['id']:
+                raise ValueError(f"Identical source already uses series ID {row['id']}; reuse that ID")
+        elif kind == 'dicom':
+            import_dicom(c, source['path'], modality=source.get('modality'),
+                         selected_series=source.get('selected_series'),
+                         sequence_by_series=source.get('sequence_by_series'), **association)
+        else:
+            raise ValueError(f"Unsupported batch imaging input: {kind}")
+    select_intake_reference(c)
+    annotations = {}
     for source in spec.get('layers', []):
-        image = nib.load(source['path'])
-        data = np.asanyarray(image.dataobj)
-        if not np.isfinite(data).all() or not np.array_equal(data, np.rint(data)):
-            raise ValueError('Categorical source mask required')
-        provenance = {**source.get('provenance', {}),
-                      'source': c.original(source['path'])}
-        row = c.add_layer(data.astype(np.uint16), image.affine,
-                         layer_id=source['id'], source_series=source['series'],
-                         kind=source['kind'], role=source.get('role', 'context'),
-                         color=source.get('color', '#92a7b8'),
-                         label=source.get('label', source['id']),
-                         label_value=source.get('value', 1), provenance=provenance)
-        if source.get('coverage'):
-            row['coverage'] = source['coverage']
+        import_supplied_layer(c, source, annotations)
     for source in spec.get('registrations', []):
+        if source['series'] in c.document['transforms']:
+            if np.allclose(c.registration_matrix(source['series']), source['matrix'], atol=1e-6):
+                continue
+            raise ValueError(f"Conflicting registration for {source['series']}; review the existing transform")
         c.set_registration(source['series'], source['matrix'], status=source['status'],
                            method=source['method'])
-    c.document['missing'] = spec.get('missing', [])
-    c.document['batch_source_notes'] = spec.get('notes', [])
-    c.save('Explicit same-person source intake for standard environment')
+    for field, key in (('missing', 'missing'), ('batch_source_notes', 'notes')):
+        if key in spec:
+            c.document[field] = spec[key]
+    if not exists or c.identity() != before:
+        c.save('Explicit same-person source intake')
     return c
+
+
+def import_supplied_layer(collection, source, annotations):
+    prior = next((row for row in collection.document['layers'] if row['id'] == source['id']), None)
+    path = Path(source['path']).resolve()
+    threshold = source.get('probability_threshold')
+    label_value = source.get('value', 1)
+    if type(label_value) is not int or not 1 <= label_value <= 65535:
+        raise ValueError('Supplied annotation requires a valid declared label value')
+    if threshold is not None and (type(threshold) not in {int, float} or not 0 < threshold <= 1 or label_value != 1):
+        raise ValueError('Supplied fractional mask requires an explicit threshold in (0,1] and label value 1')
+    key = (path, threshold)
+    if prior:
+        hashes = annotations.setdefault('source_hashes', {})
+        if path not in hashes:
+            hashes[path] = file_hash(path)
+        current_hash = hashes[path]
+        provenance = prior.get('provenance', {})
+        if (prior['source_series'] != source['series'] or prior['kind'] != source['kind']
+                or provenance.get('source', {}).get('sha256') != current_hash
+                or provenance.get('threshold') != threshold
+                or prior.get('original_label_value', prior['label_value']) != label_value):
+            raise ValueError(f"Layer {source['id']} conflicts with existing annotation; use a new layer ID")
+        return prior
+    collection.verify_new_source_id(source['id'])
+    scan = collection.series(source['series'])
+    role = source.get('role', 'context')
+    if role not in ROLES:
+        raise ValueError('Unsupported annotation role')
+    if key not in annotations:
+        original = collection.original(path)
+        image = nib.load(collection.path(original['path']))
+        units = image.header.get_xyzt_units()[0]
+        if units not in {'mm', 'unknown'} or len(image.shape) != 3 or np.prod(image.shape) * 4 > MAX_ARRAY:
+            raise ValueError('Supplied annotation requires bounded 3D millimeter geometry')
+        matrix = affine(image.affine)
+        data = np.asanyarray(image.dataobj)
+        if not np.isfinite(data).all():
+            raise ValueError('Supplied annotation must be finite')
+        probability = None
+        if threshold is not None:
+            if np.any((data < 0) | (data > 1)):
+                raise ValueError('Supplied fractional annotation requires values in [0,1]')
+            scores = data.astype(np.float32)
+            probability = collection.put_array(scores)
+            data = (scores >= threshold).astype(np.uint8)
+        elif np.any((data < 0) | (data > 65535)) or not np.array_equal(data, np.rint(data)):
+            raise ValueError('Categorical source mask requires integer labels')
+        present = {int(value) for value in np.unique(data)}
+        annotations[key] = dict(original=original, units=units, affine=matrix.tolist(),
+                                spacing=nib.affines.voxel_sizes(matrix).tolist(),
+                                data=collection.put_array(data.astype(np.uint16 if max(present) > 255 else np.uint8)),
+                                present=present, probability=probability)
+    annotation = annotations[key]
+    provenance = dict(source.get('provenance', {}), source=annotation['original'])
+    provenance.setdefault('kind', 'observed_source_annotation')
+    provenance.setdefault('label_ontology', {'kind': source['kind'], 'source_label_value': label_value})
+    row = {
+        'id': source['id'], 'patient_id': scan['patient_id'], 'source_series': scan['id'],
+        'kind': source['kind'], 'role': role, 'color': source.get('color', '#92a7b8'),
+        'label': source.get('label', source['id']), 'label_value': label_value,
+        'affine': annotation['affine'], 'units_status': annotation['units'],
+        'data': annotation['data'], 'revision': 0, 'review_status': 'unreviewed imported annotation',
+        'coverage': source.get('coverage', 'supplied annotation field; negative voxels unassessed'),
+        'evidence_status': 'available' if label_value in annotation['present'] else 'empty-output',
+        'source_grid_spacing_mm': scan['grid_spacing_mm'], 'output_grid_spacing_mm': annotation['spacing'],
+        'provenance': provenance,
+    }
+    if annotation['probability'] is not None:
+        row['probability'] = annotation['probability']
+        row['score_meaning'] = 'supplied fractional annotation; no probability calibration asserted'
+        provenance['threshold'] = threshold
+    collection.document['layers'].append(row)
+    return row
 
 
 def process(spec, receipt, checkpoint):

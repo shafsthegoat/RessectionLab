@@ -13,7 +13,7 @@ export class SurfaceVolumePass {
     t.depthTexture=new THREE.DepthTexture(1,1,THREE.UnsignedIntType);return t;
   });
   readonly tail=new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthBuffer:false});
-  private readonly materials=new Map<THREE.Material,{peel:THREE.Material;tail:THREE.Material}>();
+  private readonly materials=new Map<THREE.Material,{peel:THREE.Material;tail:THREE.Material;sourceProgramKey:string}>();
   private readonly uniforms={uPreviousSurface:{value:null as THREE.Texture|null},uOpaqueSurface:{value:null as THREE.Texture|null},uSurfaceSize:{value:new THREE.Vector2()},uFirstSurface:{value:true}};
   private make(original:THREE.Material,tail:boolean){
     const material=original.clone();material.transparent=tail;material.depthWrite=!tail;
@@ -45,7 +45,18 @@ export class SurfaceVolumePass {
     this.uniforms.uSurfaceSize.value.set(w,h);this.uniforms.uOpaqueSurface.value=opaque;
     const target=(t:THREE.WebGLRenderTarget)=>{if(t.width!==w||t.height!==h)t.setSize(w,h);renderer.setRenderTarget(t);renderer.clear();};
     try{
-      for(const s of selected){let pair=this.materials.get(s.material);if(!pair){pair={peel:this.make(s.material,false),tail:this.make(s.material,true)};this.materials.set(s.material,pair);}
+      for(const s of selected){
+        const sourceProgramKey=s.material.customProgramCacheKey();
+        let pair=this.materials.get(s.material);
+        if(!pair){
+          pair={peel:this.make(s.material,false),tail:this.make(s.material,true),sourceProgramKey};
+          this.materials.set(s.material,pair);
+        }else if(pair.sourceProgramKey!==sourceProgramKey){
+          // The existing clones compile the currently selected source variant.
+          pair.sourceProgramKey=sourceProgramKey;
+          pair.peel.needsUpdate=true;
+          pair.tail.needsUpdate=true;
+        }
         // Opacity/color/clip changes update values without rebuilding programs.
         for(const m of [pair.peel,pair.tail]){const p=m as THREE.MeshStandardMaterial,o=s.material as THREE.MeshStandardMaterial;
           p.color.copy(o.color);p.opacity=o.opacity;p.clippingPlanes=o.clippingPlanes;p.roughness=o.roughness;p.metalness=o.metalness;}

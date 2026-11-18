@@ -1,5 +1,30 @@
 # RessectionLab data collection
 
+## Native study migration
+
+Use the private frozen inventory in the configured `testcases/` collection.
+These commands display dispositions, migrate eligible studies serially, and
+report the resulting counts. The data root must identify the mounted, marked HDD.
+
+```sh
+export RESSECTIONLAB_DATA_ROOT="/Volumes/shafrir/old coding projects/RessectionLabData"
+export RESSECTIONLAB_POC_OUTPUT_ROOT="$RESSECTIONLAB_DATA_ROOT/cache/poc-model-results"
+inventory=testcases/adaptive-anatomy-inventory-20261117-v1.json
+destination="$RESSECTIONLAB_DATA_ROOT/prepared/adaptive-anatomy-migration-20261117-v1"
+PYTHONPATH=src .venv/bin/python scripts/migrate_anatomy_library.py "$inventory"
+PYTHONPATH=src .venv/bin/python scripts/migrate_anatomy_library.py "$inventory" --run "$destination"
+PYTHONPATH=src .venv/bin/python scripts/migrate_anatomy_library.py "$inventory" --results "$destination"
+```
+
+Repeat the run command to resume. Use `--only CASE_KEY` for a representative
+and `--retry-failed` to retry failed stages. Open the resulting
+`patient-anatomy.json` in Cases. Migration writes a private versioned study.
+Catalog publication requires a separately admitted native release. EDEN
+healthy acquisitions and synthetic target options share one study per person.
+The ignored inventory and per-study receipts record sources and dispositions.
+`standardize_case_library.py` also supports explicit simulator-export plans.
+
+
 The collection supports source inspection and explicitly scoped surgical-research
 controls. Acquired observations, supplied annotations, algorithmic estimates and
 synthetic components remain separate. Synthetic variants add no real people.

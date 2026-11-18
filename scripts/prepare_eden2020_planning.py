@@ -155,7 +155,7 @@ def verified_target_label(root, synthetic):
     return label_path, originals[0]["sha256"]
 
 
-def add_synthetic_target(c, root, synthetic, layer_id, label):
+def add_synthetic_target(c, root, synthetic, layer_id, label, *, candidate=False):
     label_path, label_hash = verified_target_label(root, synthetic)
     image = nib.load(label_path)
     mask = np.isin(np.asarray(image.dataobj), [1, 2]).astype(np.uint8)
@@ -165,10 +165,11 @@ def add_synthetic_target(c, root, synthetic, layer_id, label):
         raise ValueError("Synthetic target grid or core/rim voxel inventory differs from its receipt")
     row = c.add_layer(
         mask, image.affine, layer_id=layer_id, source_series="t1",
-        kind="tumor", role="target", color="#ee92d8", label=label,
+        kind="tumor", role="context" if candidate else "target", color="#ee92d8", label=label,
         provenance={"kind": "simulated", "source": c.original(label_path),
                     "source_case": synthetic["case_id"], "source_package_sha256": synthetic["sha256"],
                     "recipe": synthetic["recipe"], "included_source_labels": [1, 2],
+                    **({"planning_target_candidate": True} if candidate else {}),
                     "edema_label_3_excluded": True, "healthy_anatomy_unchanged": True,
                     "mass_effect": False, "infiltration": False, "clinical_validation": False},
     )
@@ -188,7 +189,37 @@ def target_source_receipt(root, synthetic, layer):
             "target_volume_mm3": float(recipe["metrics"]["voxel_count"] * abs(np.linalg.det(np.asarray(layer["affine"])[:3, :3])))}
 
 
-def prepare(root, subject, *, variant=1, output=None):
+def add_synthetic_candidates(c, root, subject_row, variants, *, check=lambda: None):
+    targets = []
+    ontology = {1: "Synthetic core", 2: "Synthetic rim", 3: "Synthetic edema"}
+    for variant in variants:
+        check()
+        synthetic = synthetic_source(subject_row, variant)
+        layer_id = f"synthetic-{variant:02d}"
+        target = add_synthetic_target(c, root, synthetic, layer_id,
+                                      f"Synthetic target {variant:02d} · core + rim", candidate=True)
+        label_path = Path(target["label_source"])
+        if file_hash(label_path) != target["label_sha256"]:
+            raise ValueError("Exact synthetic class source changed")
+        image = nib.load(label_path)
+        classes = np.asanyarray(image.dataobj)
+        if not set(np.unique(classes)).issubset({0, *ontology}):
+            raise ValueError("Unexpected EDEN synthetic class code")
+        classes = classes.astype(np.uint8)
+        for value, name in ontology.items():
+            class_id = f"{layer_id}-class-{value}"
+            c.add_layer(classes, image.affine, layer_id=class_id, source_series="t1",
+                        kind="tumor", role="context", color="#ee92d8",
+                        label=f"{name} {variant:02d}", label_value=value,
+                        provenance={"kind": "simulated", "source_case": synthetic["case_id"],
+                                    "source": c.original(label_path), "label_ontology": ontology,
+                                    "healthy_anatomy_unchanged": True, "clinical_validation": False,
+                                    "planning_target_candidate": False})
+        targets.append(target)
+    return targets
+
+
+def prepare(root, subject, *, variant=1, output=None, candidate_variants=(), check=lambda: None):
     prepared = root / SOURCE_COLLECTION
     complete, subject_row = subject_sources(root, subject)
     synthetic = synthetic_source(subject_row, variant)
@@ -200,7 +231,8 @@ def prepare(root, subject, *, variant=1, output=None):
         print(f"Reusing {output / 'patient-anatomy.json'}", flush=True)
         return json.loads((output / "source-map.json").read_text())
     members, extraction_receipt = extraction_members(root, subject)
-    c = PatientImagingCollection.create(output, "EDEN2020:" + subject, timepoint="preoperative")
+    timepoint = None if candidate_variants else "preoperative"
+    c = PatientImagingCollection.create(output, "EDEN2020:" + subject, timepoint=timepoint)
     c.document.update({"label": f"EDEN2020 {subject} · anatomical planning · synthetic target",
                        "source_url": URL, "source_license": LICENSE, "role": "DEVELOPMENT",
                        "clinical_validation": False, "training_admitted": False, "limitations": LIMITS,
@@ -217,10 +249,11 @@ def prepare(root, subject, *, variant=1, output=None):
         subject_row["projects"][0]["spacing_mm"],
     )
     for sid, modality, suffix in source_specs:
+        check()
         member = members[f"{subject}_{suffix}.nii.gz"]
         path = Path(member["absolute_path"])
         print(f"Importing unchanged native {subject} {modality}: {nib.load(path).shape}", flush=True)
-        row = import_nifti_series(c, path, series_id=sid, modality=modality)
+        row = import_nifti_series(c, path, series_id=sid, modality=modality, timepoint=timepoint)
         if row["original"]["sha256"] != member["sha256"]:
             raise ValueError(f"Source differs from extraction receipt: {path}")
         row.update({"label": f"{modality} · acquired healthy source", "source_url": URL,
@@ -234,13 +267,22 @@ def prepare(root, subject, *, variant=1, output=None):
             if (list(fixed_shape) != receipt["fixed_grid_shape"]
                     or not np.allclose(fixed_affine, receipt["fixed_affine"], rtol=0, atol=1e-6)):
                 raise ValueError("Cached rigid map reference geometry differs from this native T1")
-            c.set_registration(sid, receipt["moving_RAS_to_fixed_RAS_forward"], status="source-provided",
+            c.set_registration(sid, receipt["moving_RAS_to_fixed_RAS_forward"],
+                               status="unreviewed" if candidate_variants else "source-provided",
                                method="Imported cached rigid estimate: " + receipt["method"])
             c.document["transforms"][sid].update({"review_status": "unreviewed cached rigid estimate",
                                                  "clinical_alignment_validated": False,
                                                  "source_receipt": str(receipt_path), "source_receipt_sha256": file_hash(receipt_path),
                                                  "source_header_conflict_retained": receipt.get("source_header_conflict_retained", False),
-                                                 "meaning": "source-provided pipeline estimate; source binding verified, independent accuracy unmeasured"})
+                                                 "meaning": "source-bound pipeline estimate; independent accuracy unmeasured"
+                                                 if candidate_variants else "source-provided pipeline estimate; source binding verified, independent accuracy unmeasured"})
+            if candidate_variants:
+                transform = c.document["transforms"][sid]
+                transform["quality"] = {
+                    "status": "warning", "warnings": ["Cached estimate needs alignment review"],
+                    "metrics": {"coverage": receipt.get("brain_scan_coverage_fraction")},
+                    "meaning": "Prior algorithm and source identities verified; display alignment only",
+                }
         c.preview_pyramid(sid, levels=(2, 4) if sid in {"tof", "swi"} else (2,))
         source_map["series"].append({"id": sid, "modality": modality, "source": str(path),
                                      "sha256": member["sha256"], "native_shape": row["data"]["shape"],
@@ -258,6 +300,12 @@ def prepare(root, subject, *, variant=1, output=None):
     common = {"kind": "model_estimate", "model": "SuperSynth", "source": c.original(head_path),
               "inference_receipt": str(head / "inference.json"), "source_resolution_mm": [1, 1, 1],
               "clinical_validation": False, "inference_parameters": head_receipt["parameters"]}
+    if candidate_variants:
+        common.update(preparation_cache_verified=True, source_sha256=head_receipt["source_sha256"],
+                      output_sha256=head_receipt["output_sha256"], model_identity=head_receipt["identity"],
+                      inference_receipt_sha256=file_hash(head / "inference.json"),
+                      inference_receipt_original=c.original(head / "inference.json"),
+                      source_array_sha256=c.series("t1")["data"]["sha256"])
     def layer(data, layer_id, label, *, kind="context", role="context", color="#91b8c9", native_affine=None, source_series="t1", provenance=None):
         row = c.add_layer(data, image.affine if native_affine is None else native_affine,
                           layer_id=layer_id, source_series=source_series, kind=kind, role=role,
@@ -265,15 +313,34 @@ def prepare(root, subject, *, variant=1, output=None):
         row["units_status"] = "mm"
         return row
     brain = np.isin(labels, list(BRAIN_IDS))
-    layer(brain.astype(np.uint8), "brain", "Brain · T1 model estimate", kind="brain", color="#a3bed1")
+    brain_row = layer(brain.astype(np.uint8), "brain",
+                      "Brain envelope · T1 model estimate" if candidate_variants else "Brain · T1 model estimate",
+                      kind="brain", color="#a3bed1")
     head_envelope = ndi.binary_fill_holes(labels > 0)
-    layer(head_envelope.astype(np.uint8), "head-surface", "Head surface · T1 model estimate · no CT", color="#bead98")
+    envelope_row = layer(head_envelope.astype(np.uint8), "head-surface",
+                         "Head surface · T1 model estimate · no CT", color="#bead98")
+    lut = root / "cache/models/supersynth-source/FreeSurferColorLUT.txt"
+    if candidate_variants:
+        lut_sha256 = file_hash(lut)
+        brain_row["provenance"].update(
+            prepared_array_sha256=brain_row["data"]["sha256"], evidence_use="context_only",
+            label_ontology={"name": "SuperSynth composite brain envelope",
+                            "value": 1, "source_codes": sorted(BRAIN_IDS), "lut_sha256": lut_sha256},
+        )
+        envelope_row["provenance"].update(
+            prepared_array_sha256=envelope_row["data"]["sha256"], evidence_use="context_only",
+            label_ontology={"name": "SuperSynth head envelope from positive labels and closed internal holes",
+                            "value": 1, "lut_sha256": lut_sha256},
+        )
     names = {}
-    for line in (root / "cache/models/supersynth-source/FreeSurferColorLUT.txt").read_text().splitlines():
+    for line in lut.read_text().splitlines():
         fields = line.split()
         if len(fields) > 5 and fields[0].isdigit():
             names[int(fields[0])] = (fields[1], "#" + "".join(f"{int(v):02x}" for v in fields[2:5]))
     shared = c.put_array(labels)
+    typed_regions = {7: "cerebellar-white-matter", 8: "cerebellar-cortex", 16: "brainstem",
+                     46: "cerebellar-white-matter", 47: "cerebellar-cortex",
+                     911: "scalp", 915: "skull", 916: "skull"}
     for code in sorted(int(v) for v in np.unique(labels) if v):
         name, color = names[code]
         sid = "t1-arteries" if code == 902 else "t1-veins" if code == 914 else f"head-{code}"
@@ -284,31 +351,66 @@ def prepare(root, subject, *, variant=1, output=None):
                "affine": image.affine.tolist(), "data": shared, "label_value": code, "revision": 0,
                "units_status": "mm", "review_status": "unreviewed model estimate",
                "coverage": "T1 model field; anatomical sensitivity unmeasured", "provenance": common}
+        if candidate_variants:
+            row["kind"] = typed_regions.get(code, row["kind"])
+            if code in {7, 8, 46, 47}:
+                row["role"] = "critical"
+            row["provenance"] = {
+                **common, "prepared_array_sha256": shared["sha256"], "evidence_use": "context_only",
+                "label_ontology": {"name": name, "value": code, "lut_sha256": lut_sha256},
+            }
         c.document["layers"].append(row)
     del labels
 
     work = prepared / "subjects" / subject
-    inference = json.loads((work / "vesselfm-0p6mm/inference.json").read_text())
+    vascular_receipt = work / "vesselfm-0p6mm/inference.json"
+    inference = json.loads(vascular_receipt.read_text())
     vessel = next(r for r in inference["outputs"] if r["name"].endswith("_mask.nii.gz"))
     vessel_path = Path(vessel["path"])
     if file_hash(vessel_path) != vessel["sha256"]:
         raise ValueError("Existing vesselFM mask identity differs")
     vascular = nib.load(vessel_path)
-    row = layer((np.asarray(vascular.dataobj) > 0).astype(np.uint8), "tof-arteries", "Arteries · TOF vesselFM estimate",
-                kind="artery", role="critical", color="#f06269", native_affine=vascular.affine, source_series="tof",
+    vessel_layer_id = "tof-vessel-candidates" if candidate_variants else "tof-arteries"
+    row = layer((np.asarray(vascular.dataobj) > 0).astype(np.uint8), vessel_layer_id,
+                "Unclassified vessels · TOF vesselFM estimate" if candidate_variants else "Arteries · TOF vesselFM estimate",
+                kind="vessels" if candidate_variants else "artery", role="critical",
+                color="#f06269", native_affine=vascular.affine, source_series="tof",
                 provenance={"kind": "model_estimate", "source": c.original(vessel_path), "modality": "TOF",
                             "inference_receipt": str(work / "vesselfm-0p6mm/inference.json"),
                             "clinical_validation": False, "complete_vessels": False})
+    if candidate_variants:
+        preprocessing_path = work / "vesselfm-0p6mm/input.json"
+        preprocessing = json.loads(preprocessing_path.read_text())
+        if (preprocessing["source_sha256"] != c.series("tof")["original"]["sha256"]
+                or preprocessing["output_sha256"] != inference["input"]["sha256"]):
+            raise ValueError("Existing VesselFM result does not bind the acquired TOF")
+        row["provenance"].update(
+            preparation_cache_verified=True, source_sha256=preprocessing["source_sha256"],
+            output_sha256=vessel["sha256"], model=inference["model_id"], model_identity=inference["model"],
+            weights=inference["weights"], inference_receipt_sha256=file_hash(vascular_receipt),
+            preprocessing_receipt_sha256=file_hash(preprocessing_path),
+            inference_receipt_original=c.original(vascular_receipt),
+            preprocessing_receipt_original=c.original(preprocessing_path),
+            prepared_array_sha256=row["data"]["sha256"],
+            source_array_sha256=c.series("tof")["data"]["sha256"], evidence_use="positive_labels_only",
+            label_ontology={"name": "vesselFM binary unclassified vessel candidates", "value": 1},
+        )
     row["coverage"] = "Partial acquired TOF field; model sensitivity and unlabeled vessels unassessed"
     row["review_status"] = "unreviewed model and cached rigid registration"
     del vascular
 
-    source_map["synthetic_source"] = add_synthetic_target(
-        c, root, synthetic, "synthetic-target", "Synthetic target · existing core + rim")
+    if candidate_variants:
+        source_map["synthetic_candidates"] = add_synthetic_candidates(
+            c, root, subject_row, candidate_variants, check=check)
+        source_map["synthetic_source"] = source_map["synthetic_candidates"][0]
+    else:
+        source_map["synthetic_source"] = add_synthetic_target(
+            c, root, synthetic, "synthetic-target", "Synthetic target · existing core + rim")
 
     flair = nib.load(members[f"{subject}_3D_FLAIR_Tra.nii.gz"]["absolute_path"])
     trks = [members[name] for name in sorted(members) if name.endswith("_to_3DFLAIR.trk")]
     for index, member in enumerate(trks):
+        check()
         path = Path(member["absolute_path"])
         name = path.name.removeprefix(subject + "_").removesuffix("_to_3DFLAIR.trk")
         print(f"Verifying supplied {subject} tract {name}", flush=True)
@@ -342,15 +444,22 @@ def prepare(root, subject, *, variant=1, output=None):
                        **({"source_geometry": header_geometry(nib.load(path))} if name.endswith(".nii.gz") else {})})
     c.document["source_assets"] = assets
     center = synthetic["recipe"]["center_ras_mm"]
-    c.document["display"] = {"initial_layers": ["brain", "synthetic-target", "tof-arteries"], "cursor_ras_mm": center,
+    c.document["display"] = {"initial_layers": ["brain", source_map["synthetic_source"]["layer_id"], vessel_layer_id], "cursor_ras_mm": center,
                               "entry_ras_mm": superior_entry(head_envelope, image.affine, center),
                               "entry_basis": "local superior outer estimated head surface; editable geometric starting point, no skull opening inferred",
-                              "layer_opacity": {"brain": 0.18, "synthetic-target": 0.9, "tof-arteries": 0.85},
+                              "layer_opacity": {"brain": 0.18, source_map["synthetic_source"]["layer_id"]: 0.9, vessel_layer_id: 0.85},
                               "source_series": "t1", "head_surface_available": True, "measured_skull_available": False}
     c.document["preparation"] = {"version": "eden2020-planning-v1", "subject": subject,
                                  "source_subject_manifest": str(complete), "synthetic_source_case": synthetic["case_id"],
                                  "synthetic_source_sha256": synthetic["sha256"], "registration_recomputed": False,
                                  "model_inference_run": False, "source_resolution_preserved": True}
+    if candidate_variants:
+        from resectionlab.anatomy_alignment import input_key
+        for sid in ("tof", "flair", "swi"):
+            transform = c.document["transforms"][sid]
+            transform["input_key"] = input_key(c, c.series(sid), c.series("t1"))
+            c.registration_matrix(sid)
+    check()
     source_map["snapshot_id"] = c.save("Reuse EDEN sources, cached estimates, supplied named tracts and separate synthetic target")
     source_map["display"] = c.document["display"]
     source_map["source_assets"] = assets

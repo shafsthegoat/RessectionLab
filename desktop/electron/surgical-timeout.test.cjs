@@ -55,3 +55,22 @@ test('owned surgical request identifiers bind cancellation and never enter actio
   for(const [message,result] of [[messages[1],{cancelled:true}],[messages[0],null]]){const pending=engine.pending.get(message.id);clearTimeout(pending.timeout);engine.pending.delete(message.id);pending.resolve(result);}
   assert.deepEqual(await cancellation,{cancelled:true});assert.equal(await request,null);
 });
+
+test('preparation owns its cancellable transport identity, with short review and bounded run',async t=>{
+  const engine=Object.create(Sidecar.prototype),messages=[];
+  Object.assign(engine,{closed:false,pending:new Map(),child:{stdin:{write:message=>messages.push(JSON.parse(message))}}});
+  t.after(()=>{for(const pending of engine.pending.values())clearTimeout(pending.timeout);});
+  const requestId='prepare-6d97b9f1-fd14-4fe2-96e2-a9dc43bb8b83';
+  const request=engine.request('anatomyPrepare',{action:'run',collectionId:'patient',requestId},3600000);
+  assert.deepEqual(messages[0],{id:requestId,op:'anatomyPrepare',args:{action:'run',collectionId:'patient'},timeoutMs:3600000});
+  await assert.rejects(engine.request('anatomyPrepare',{action:'run',requestId},3600000),/Invalid prepare request/);
+  await assert.rejects(engine.request('anatomyPrepare',{action:'plan'},3600000),/Invalid operation time budget/);
+  const cancel=engine.request('cancel',{requestId});
+  assert.equal(messages[1].args.requestId,requestId);
+  for(const [message,result] of [[messages[1],{cancelled:true}],[messages[0],null]]){
+    const pending=engine.pending.get(message.id);
+    clearTimeout(pending.timeout);engine.pending.delete(message.id);pending.resolve(result);
+  }
+  assert.deepEqual(await cancel,{cancelled:true});
+  assert.equal(await request,null);
+});

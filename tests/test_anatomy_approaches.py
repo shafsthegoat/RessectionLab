@@ -51,8 +51,14 @@ def test_labels_radius_sensitivity_empty_unknown(native):
 
 
 def test_shear_contact_remains_conservative(native):
-    c=native;a=np.eye(4);a[0,1]=.4;mask=np.zeros((20,20,20),np.uint8);mask[10,10,10]=1
-    c.add_layer(mask,a,layer_id='sheared',source_series='t1',kind='vein',role='critical',color='#ff0000');c.save()
+    c = native
+    shear = np.eye(4)
+    shear[0, 1] = .4
+    a = c.patient_affine(c.series('t1')) @ shear
+    mask = np.zeros((20, 20, 20), np.uint8)
+    mask[10, 10, 10] = 1
+    c.add_layer(mask, a, layer_id='sheared', source_series='t1', kind='vein', role='critical', color='#ff0000')
+    c.save()
     measured=NativeRouteGeometry(Snapshot.capture(c)).measure(world(a,[4,10,10]),world(a,[16,10,10]),.2)
     row=next(s for s in measured['structures'] if s['layerId']=='sheared')
     assert row['confirmedIntersection'] and 'shear' in row['intersectionModel'] and row['clearanceLowerBoundMm']<0
@@ -450,3 +456,178 @@ def test_portable_study_accepts_comparison_metadata_above_legacy_limit(native, t
     save_package(native, pack)
     restored = Collection(open_package(pack, tmp_path / 'extended-metadata-cold').parent)
     assert dispatch_plan(restored, {'action': 'list'})['proposalReport'] == report
+
+
+def test_explicit_lesion_candidate_selection_preserves_evidence_and_reopens(native, tmp_path):
+    from resectionlab.anatomy_planning import native_target_options
+
+    c = native
+    a = c.patient_affine(c.series("t1"))
+    labels = np.zeros((32, 32, 32), np.uint8)
+    labels[20:23, 9:14, 13:18] = 4
+    proposal = c.add_layer(
+        labels, a, layer_id="enhancing-proposal", source_series="t1",
+        kind="enhancing-lesion", role="context", color="#abcdef",
+        label="Enhancing lesion", label_value=4,
+        provenance={"model": "test-research-estimate", "ontology": "enhancing lesion, class 4"},
+    )
+    c.add_layer(
+        np.zeros_like(labels), a, layer_id="empty-lesion", source_series="t1",
+        kind="tumor", role="context", color="#abcdef",
+    )
+    c.add_series(tmp_path / "source.nii.gz", series_id="flair", modality="FLAIR")
+    c.set_registration("flair", np.eye(4), status="unreviewed", method="test estimate")
+    c.add_layer(
+        labels, a, layer_id="unaligned-lesion", source_series="flair",
+        kind="nonenhancing-abnormality", role="context", color="#abcdef", label_value=4,
+    )
+    snapshot_id = c.save("native target candidates")
+    assert dispatch_plan(c, {"action": "list"})["activeTargetLayerId"] is None
+    options = {item["layerId"]: item for item in native_target_options(c)}
+    option = options["enhancing-proposal"]
+    assert option["reviewStatus"] == "unreviewed"
+    assert option["origin"] == "Model estimate"
+    assert option["labelValue"] == 4
+    assert options["empty-lesion"]["reason"] == "Empty target label"
+    assert "needs review" in options["unaligned-lesion"]["reason"]
+    start, end = world(a, [[21, 26, 15], [21, 11, 15]]).tolist()
+    target_id = option["layerId"]
+    task = {"action": "suggest", "start": start, "end": end, "radiusMm": .5,
+            "patchRadiusMm": 0, "targetLayerId": target_id}
+    selection = {"action": "selectTarget", "targetLayerId": target_id,
+                 "candidateBinding": option["candidateBinding"]}
+    with pytest.raises(ValueError, match="Select this lesion"):
+        dispatch_plan(c, task)
+    with pytest.raises(ValueError, match="Empty target label"):
+        dispatch_plan(c, {**selection, "targetLayerId": "empty-lesion"})
+    assert dispatch_plan(c, selection)["activeTargetLayerId"] == target_id
+    assert c.identity() == snapshot_id
+    assert c.layer(target_id) == proposal
+    assert target_id not in Snapshot.capture(c).simulation_grid()["targets"]
+
+    result = dispatch_plan(c, task)
+    report = result["proposalReport"]
+    assert report["task"]["targetCandidateBinding"] == option["candidateBinding"]
+    approach, = result["approaches"]
+    assert approach["targetCandidateBinding"] == option["candidateBinding"]
+    target, = approach["measurements"]["targets"]
+    assert target["layerId"] == target_id
+    assert target["sourceIdentity"]["labelValue"] == 4
+    assert target["reviewStatus"] == "unreviewed"
+    assert target["targetPointInsideLabel"]
+    assert not approach["measurements"]["simulationExecutionAuthorized"]
+
+    pack = tmp_path / "explicit-target.rsworkspace"
+    save_package(c, pack)
+    restored = Collection(open_package(pack, tmp_path / "cold-target").parent)
+    reopened = dispatch_plan(restored, {"action": "list", "targetLayerId": None})
+    assert reopened["activeTargetLayerId"] == target_id
+    assert reopened["approaches"] == result["approaches"]
+    assert reopened["proposalReport"] == report
+
+    restored.save("unrelated anatomy revision")
+    stale = dispatch_plan(restored, {"action": "list"})
+    assert stale["targetSelectionIssue"] is None
+    assert stale["activeTargetLayerId"] == target_id
+    assert stale["approaches"][0]["assessmentStatus"] == "stale"
+    assert stale["proposalReport"]["assessmentStatus"] == "stale"
+
+    corrected = labels == 4
+    corrected[21, 11, 15] = False
+    restored.commit_edit(
+        target_id, corrected, expected=restored.identity(), author="fixture", operations=["erase"]
+    )
+    assert "changed" in dispatch_plan(restored, {"action": "list"})["targetSelectionIssue"]
+    with pytest.raises(ValueError, match="Select this lesion"):
+        dispatch_plan(restored, task)
+    with pytest.raises(ValueError, match="evidence changed"):
+        dispatch_plan(restored, selection)
+    option = next(item for item in native_target_options(restored) if item["layerId"] == target_id)
+    reselection = dispatch_plan(restored, {**selection, "candidateBinding": option["candidateBinding"]})
+    assert reselection["targetSelectionIssue"] is None
+    assert reselection["proposalReport"]["assessmentStatus"] == "stale"
+    assert restored.layer(target_id)["review_status"] == "edited; anatomical review pending"
+
+
+def test_routine_mri_vascular_estimate_stays_unassessed_in_native_planning(native, tmp_path):
+    c = native
+    a = c.patient_affine(c.series("t1"))
+    same_field = np.ones((32, 32, 32), np.uint8)
+    c.add_layer(
+        same_field, a, layer_id="inferred-artery", source_series="t1", kind="artery",
+        role="critical", color="#ff0000", provenance={"model": "SuperSynth", "kind": "model_estimate"},
+    )
+    c.add_series(tmp_path / "source.nii.gz", series_id="cta", modality="CTA")
+    c.set_registration("cta", np.eye(4), status="source-provided", method="fixture")
+    c.add_layer(
+        same_field, a, layer_id="angiographic-vessels", source_series="cta", kind="vessels",
+        role="critical", color="#ff0000", provenance={"model": "vesselfm", "kind": "model_estimate"},
+    )
+    c.save()
+    start, end = world(a, [[10, 26, 15], [10, 11, 15]])
+    geometry = NativeRouteGeometry(Snapshot.capture(c))
+    m = geometry.measure(start, end, .5)
+    supplied = next(row for row in m["structures"] if row["layerId"] == "artery")
+    estimate = next(row for row in m["structures"] if row["layerId"] == "inferred-artery")
+    angiographic = next(row for row in m["structures"] if row["layerId"] == "angiographic-vessels")
+    assert supplied["available"]
+    assert not estimate["available"] and "Inferred vascular context" in estimate["reason"]
+    assert "clearanceLowerBoundMm" not in estimate
+    assert "inferred-artery" not in m["detectedConflictLayerIds"]
+    assert angiographic["available"] and angiographic["confirmedIntersection"]
+    assert "angiographic-vessels" in m["detectedConflictLayerIds"]
+    guarded = geometry.measure(start, end, .5, {"excludedLayerIds": ["inferred-artery"]})
+    assert any("explicit exclusion is unassessed" in reason for reason in guarded["constraintFailures"])
+
+
+def test_cropped_inference_does_not_turn_padding_into_observed_anatomy(native):
+    from resectionlab.anatomy_planning import native_target_options
+
+    c = native
+    a = c.patient_affine(c.series("t1"))
+    crop = [[6, 10, 5], [24, 20, 26]]
+    for key, kind, positions in [
+        ("cropped-brainstem", "brainstem", [[10, 16, 15], [10, 25, 15]]),
+        ("cropped-target", "tumor", [[10, 12, 15], [10, 25, 15]]),
+        ("padding-only-target", "tumor", [[10, 25, 15]]),
+    ]:
+        label = np.zeros((32, 32, 32), np.uint8)
+        label[tuple(np.asarray(positions).T)] = 1
+        row = c.add_layer(
+            label, a, layer_id=key, source_series="t1", kind=kind,
+            role="context", color="#abcdef", provenance={"model": "fixture"},
+        )
+        row["coverage_fields"] = {"inference_bounds_voxel_inclusive": crop}
+    c.add_layer(
+        np.ones((32, 32, 32), np.uint8), a, layer_id="dura-proxy", source_series="t1",
+        kind="dura", role="context", color="#abcdef",
+        provenance={"model": "dural-envelope", "evidence_use": "context_only", "supported_axial_indices": [15]},
+    )
+    c.document["display"] = {"planning_targets": {
+        "cropped-target": {"cursor_ras_mm": world(a, [10, 25, 15]).tolist()},
+    }}
+    c.save()
+    options = {row["layerId"]: row for row in native_target_options(c)}
+    assert options["cropped-target"]["target"] == world(a, [10, 12, 15]).tolist()
+    assert options["padding-only-target"]["target"] is None
+    assert "inference" in options["padding-only-target"]["reason"]
+    assert "dura-proxy" not in options
+
+    geometry = NativeRouteGeometry(Snapshot.capture(c))
+    start, end = world(a, [[10, 26, 15], [10, 12, 15]])
+    measured = geometry.measure(start, end, .5, {"excludedLayerIds": ["dura-proxy"]}, target_id="cropped-target")
+    brainstem = next(row for row in measured["structures"] if row["layerId"] == "cropped-brainstem")
+    assert brainstem["confirmedIntersection"] and brainstem["intersectedCellCount"] == 1
+    assert brainstem["acquisitionCoverage"]["wholeEnvelopeWithinField"]
+    assert not brainstem["coverage"]["wholeEnvelopeWithinField"]
+    assert brainstem["coverage"]["inferenceBoundsVoxelInclusive"] == crop
+    assert "cropped-brainstem" in measured["detectedConflictLayerIds"]
+    assert "cropped-brainstem: required envelope outside inference field" in measured["unknowns"]
+    target, = measured["targets"]
+    assert target["targetPointInsideLabel"]
+    assert not target["coverage"]["wholeEnvelopeWithinField"]
+    assert measured["normalTraversal"]["unclassifiedBrainVoxelCenterCount"] > 0
+    dura = next(row for row in measured["structures"] if row["layerId"] == "dura-proxy")
+    assert not dura["available"] and not dura["confirmedIntersection"]
+    assert "geometric context only" in dura["reason"]
+    assert any("dura-proxy: explicit exclusion is unassessed" in failure for failure in measured["constraintFailures"])

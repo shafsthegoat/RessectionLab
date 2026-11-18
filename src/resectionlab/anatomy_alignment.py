@@ -262,25 +262,41 @@ def estimate_pair(fixed, moving, existing=None, cancelled=lambda: False):
                     'meaning': 'Automated display checks; not anatomical or clinical certification'}
 
 
-def input_key(c, row, parent):
+def input_key(c, row, parent, *, legacy=False):
     return digest({'version': VERSION, 'patient': c.document['patient_id'], 'reference': c.document['reference_series'],
                    'source': {k: row.get(k) for k in ['id', 'original', 'data', 'affine', 'timepoint', 'modality', 'units_status']},
                    'parent': {k: parent.get(k) for k in ['id', 'original', 'data', 'affine', 'timepoint', 'modality', 'units_status']},
                    'parent_transform': c.document['transforms'].get(parent['id']),
                    'coverage_notes': c.document.get('coverage_notes'),
-                   'brain_masks': [{k: l.get(k) for k in ['data', 'affine', 'source_series']} for l in c.document['layers'] if l['kind'] == 'brain']})
+                   'brain_masks': [{k: l.get(k) for k in ['data', 'affine', 'source_series']} for l in c.document['layers'] if l['kind'] == 'brain' and (legacy or l['source_series'] in {row['id'], parent['id']})]})
 
 
-def ensure_alignment(c, *, force=False, cancelled=lambda: False, progress=lambda *args: None):
-    """Updates an in-memory candidate document; caller commits once, atomically."""
-    reference = c.series(c.document['reference_series'])
-    rows = [s for s in c.document['series'] if s['id'] != reference['id']]
-    if not rows: return False
-    # Soft-kernel CT is preferable for CT/MRI. Other CTs connect to it by a
-    # measured same-modality edge, never an assumed equal-grid identity.
+def matches_alignment_key(collection, row, parent, current_key):
+    transform = collection.document['transforms'].get(row['id'], {})
+    saved = transform.get('input_key')
+    # Older optimizers included brain masks on unrelated series. That broader
+    # dependency set is still sufficient when every recorded input matches.
+    return bool(transform.get('quality') and saved and
+                (saved == current_key or saved == input_key(collection, row, parent, legacy=True)))
+
+
+def alignment_pairs(collection):
+    """Order CT reconstruction edges after their soft-kernel anchor."""
+    reference = collection.series(collection.document['reference_series'])
+    rows = [s for s in collection.document['series'] if s['id'] != reference['id']]
     cts = [s for s in rows if s['modality'].upper() == 'CT']
     anchor = min(cts, key=lambda s: ('brain' not in (s['id']+' '+s.get('label', '')+' '+s['original'].get('name', '')).lower(), s['id'])) if cts else None
-    rows.sort(key=lambda s: (s is not anchor, s['id']))
+    return [(row, anchor if anchor is not None and row in cts and row is not anchor else reference)
+            for row in sorted(rows, key=lambda s: (s is not anchor, s['id']))]
+
+
+def ensure_alignment(c, *, force=False, cancelled=lambda: False, progress=lambda *args: None, series_id=None):
+    """Updates an in-memory candidate document; caller commits atomically."""
+    reference = c.series(c.document['reference_series'])
+    pairs = [(row, parent) for row, parent in alignment_pairs(c) if series_id in (None, row['id'])]
+    if not pairs:
+        return False
+    rows = [row for row, _ in pairs]
     grids = {}; changed = False
     def grid(row):
         if row['id'] not in grids: grids[row['id']] = load_grid(c, row, cancelled)
@@ -289,7 +305,7 @@ def ensure_alignment(c, *, force=False, cancelled=lambda: False, progress=lambda
     if not force:
         for row in rows:
             existing = c.document['transforms'].get(row['id'], {})
-            if existing.get('status') != 'source-provided':
+            if existing.get('status') not in {'source-provided', 'reviewed'}:
                 continue
             try:
                 # Imported transforms have their own provenance, not this
@@ -300,7 +316,7 @@ def ensure_alignment(c, *, force=False, cancelled=lambda: False, progress=lambda
                 continue
             supplied.add(row['id'])
     with alignment_lock(cancelled, progress):
-        for row in [reference]+rows:
+        for row in {s['id']: s for s in [reference, *rows, *(parent for _, parent in pairs)]}.values():
             check_cancel(cancelled)
             if row.get('patient_id') != c.document['patient_id'] or row['timepoint'] != reference['timepoint']:
                 raise ValueError('Alignment inputs must belong to the same patient and timepoint')
@@ -315,17 +331,16 @@ def ensure_alignment(c, *, force=False, cancelled=lambda: False, progress=lambda
                 raise ValueError('Conflicting NIfTI qform/sform; resolve source geometry before alignment')
             if not np.allclose(header.affine, row['affine'], atol=1e-5):
                 raise ValueError('Source header geometry changed before alignment')
-        for i, row in enumerate(rows):
+        for i, (row, parent) in enumerate(pairs):
             check_cancel(cancelled)
             if row['id'] in supplied:
                 # Revalidate after earlier parent edges; a changed graph must
                 # not silently preserve an obsolete composed transform.
                 rigid(c.registration_matrix(row['id']))
                 continue
-            parent = anchor if anchor is not None and row in cts and row is not anchor else reference
             key = input_key(c, row, parent)
             old = c.document['transforms'].get(row['id'])
-            if not force and old and old.get('input_key') == key and old.get('quality'):
+            if not force and old and matches_alignment_key(c, row, parent, key):
                 try:
                     c.registration_matrix(row['id']); continue
                 except ValueError:

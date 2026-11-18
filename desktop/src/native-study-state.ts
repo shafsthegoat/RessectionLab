@@ -28,7 +28,7 @@ export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Bind
 }
 
 export function studyTimepoint(b:Binding):string {
-  return b.document.study_timepoint??b.document.series[0]?.timepoint??'preoperative';
+  return b.document.study_timepoint??b.document.series[0]?.timepoint??'source-session-unknown';
 }
 export function studyLabel(value:string):string {
   return value==='postoperative'?'Post-op':value==='preoperative'?'Pre-op':value==='source-session-unknown'?'Unspecified':value;

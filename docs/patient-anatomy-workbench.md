@@ -1,6 +1,35 @@
 # Native patient anatomy workbench
 
 
+## Prepare a patient study
+
+Launch the desktop with `pnpm --dir desktop build` and `pnpm --dir desktop start`.
+In **Cases**, create a patient study or open a native manifest or portable
+`.rsworkspace` file. In **Scans**, add NIfTI files or DICOM folders, attach
+annotations to their source scan, review sequence roles, and confirm patient
+and visit. Untagged images require an explicit local association. Each nonzero
+source label keeps its supplied meaning. Diffusion series and projections are
+retained as source assets. Use separate studies for separate visits.
+
+Choose **Review preparation plan** and **Prepare anatomy**. The plan lists
+eligible models and explains unavailable anatomy. Each completed stage has
+a checkpoint. Cancellation leaves admitted layers available. Retry acts on
+failed or empty stages. Adding scans keeps the reference fixed and marks
+dependent comparisons stale.
+
+Use **Anatomy** to inspect overlays against source slices and correct a layer.
+In **Plan & compare**, explicitly select a nonempty lesion label. The selection
+binds the mask, source and registration chain. Missing vascular and functional
+coverage remains unassessed. Quantitative comparison needs an admissible
+source-to-reference transform. Compatible studies can use the separate research
+environment export under **Rehearse**. MRI skull estimates and the optional
+geometric dural envelope provide display context. Surface smoothing is a
+display setting.
+
+**Save patient study file…** includes native data, preparation checkpoints, view
+settings, the selected target and comparison receipts. For hidden verification
+commands, see the [fresh patient reproduction](fresh-patient-reproduction.md).
+
 ## EDEN source anatomy and saved approaches (2026-11-17)
 
 The normal **Cases → Anatomy → Plan & compare** workflow now opens prepared

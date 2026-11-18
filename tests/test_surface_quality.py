@@ -62,3 +62,57 @@ def test_empty_native_mesh_has_explicit_descriptor_without_zero_length_transfer(
     view=bridge.execute('anatomyView',{'collectionId':opened['collectionId'],'snapshotId':c.identity(),'seriesId':'t1','layers':['empty']},request,progress)
     assert view['compartments'][0]['surface']=={'empty':True}
     assert view['compartments'][0]['qa']['voxelCount']==0
+
+
+def test_native_anisotropic_context_moves_across_coarse_slices_with_bounded_topology(monkeypatch):
+    from resectionlab.anatomy_geometry import _arrays, _poly
+    from resectionlab.surface_fairing import NATIVE_POLICY
+
+    grid = np.indices((33, 35, 15))
+    mask = (((grid - np.array([16, 17, 7])[:, None, None, None])
+             / np.array([11, 13, 5])[:, None, None, None]) ** 2).sum(0) < 1
+    # The surface's opening and disconnected thin fragment exercise the
+    # unchanged categorical connectivity and the independent contact audit.
+    mask[15:17, 17, 9:13] = False
+    mask[2, 4:8, 4] = True
+    points, faces = _arrays(_poly(mask.astype(np.uint8), False))
+    before = faces.copy()
+    affine = np.diag([1.2, 1.2, 4., 1.])
+    positions, diagnostics = fair_surface(points, faces, affine, 'brain', native=True)
+    displacement = (positions - points) @ affine[:3, :3].T
+    assert np.abs(displacement[:, 2]).max() > .65
+    assert .65 < diagnostics['maxDisplacementMm'] <= 1.
+    assert np.linalg.norm(positions-points, axis=1).max() <= .7
+    assert not len(intersection_vertices(points @ affine[:3, :3].T, positions @ affine[:3, :3].T, faces))
+    np.testing.assert_array_equal(faces, before)
+    original = points[faces] @ affine[:3, :3].T
+    display = positions[faces] @ affine[:3, :3].T
+    original_normals, display_normals = (np.cross(f[:, 1]-f[:, 0], f[:, 2]-f[:, 0]) for f in (original, display))
+    assert np.all(np.einsum('ij,ij->i', original_normals, display_normals) > 0)
+
+    monkeypatch.setitem(NATIVE_POLICY, 'maxContextTriangles', len(faces)-1)
+    unchanged, fallback = fair_surface(points, faces, affine, 'brain', native=True)
+    np.testing.assert_array_equal(unchanged, points)
+    assert fallback['maxDisplacementMm'] == 0
+    assert 'audit budget' in fallback['fallbackReason']
+
+
+def test_native_display_lesion_volume_is_bounded_per_closed_component():
+    from resectionlab.anatomy_geometry import _arrays, _poly
+    from resectionlab.surface_fairing import NATIVE_POLICY
+
+    grid = np.indices((31, 31, 31))
+    solid = ((grid - 15) ** 2).sum(0) < 81
+    solid[2, 3:5, 3] = True
+    points, faces = _arrays(_poly(solid.astype(np.uint8), False))
+    before = faces.copy()
+    positions, diagnostics = fair_surface(points, faces, np.eye(4), 'tumor', native=True)
+    assert 0 < diagnostics['maxDisplacementMm'] <= 1
+    assert diagnostics['maxComponentVolumeChangeFraction'] <= NATIVE_POLICY['lesionComponentVolumeTolerance']
+    np.testing.assert_array_equal(faces, before)
+    for mask in ((points[:, 0] < 5)[faces[:, 0]], (points[:, 0] > 5)[faces[:, 0]]):
+        def six_times_volume(buffer):
+            a, b, c = buffer[faces[mask]].transpose(1, 0, 2).astype(float)
+            return np.einsum('ij,ij->', a, np.cross(b, c))
+        change = abs(six_times_volume(positions) / six_times_volume(points) - 1)
+        assert change <= NATIVE_POLICY['lesionComponentVolumeTolerance']

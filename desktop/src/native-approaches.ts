@@ -1,12 +1,14 @@
 import type {Point3} from './viewer/coordinates';
 import type {ViewerRoute} from './viewer/contracts';
+import type {EnvironmentOptions} from './native-anatomy-data';
 
 export interface ApproachSensitivityConfig {translationMm:number;boundaryMm:number}
 export const defaultApproachSensitivity:ApproachSensitivityConfig={translationMm:1,boundaryMm:.5};
 
 export interface ApproachTargetOption {
   layerId:string;label:string;target:Point3|null;entry?:Point3;
-  provenance?:string|null;focusMeaning?:string;reason?:string;
+  candidateBinding?:string;kind?:string;origin?:string;sourceSeries?:string;layerRevision?:number;labelValue?:number;
+  reviewStatus?:string;coverageMeaning?:string;model?:string|null;provenance?:string|null;focusMeaning?:string;reason?:string;
 }
 
 export interface SensitivityMetric {
@@ -102,8 +104,9 @@ export interface NativeApproach {
   [key:string]:unknown;
 }
 export interface ApproachResponse {
+  rehearsalOptions?:EnvironmentOptions;
   snapshotId:string;approaches:NativeApproach[];selectedId?:string|null;targetOptions?:ApproachTargetOption[];
-  activeTargetLayerId?:string|null;
+  activeTargetLayerId?:string|null;targetSelectionIssue?:string|null;
   proposalReport?:ApproachProposalReport|null;inputComparison?:ApproachInputComparisonReport|null;
 }
 export const approachStatus=(a:NativeApproach)=>a.assessmentStatus!=='current'?a.assessmentStatus:a.measurements?.status??'unassessed';

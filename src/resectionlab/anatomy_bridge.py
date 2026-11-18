@@ -46,6 +46,7 @@ def dispatch(session, operation, args, request, progress):
         session.anatomy_plan_cache = None
         session.anatomy_plan_target_cache = None
         c = PatientImagingCollection.create(args["path"], args["patientId"], timepoint=args.get("timepoint"))
+        c.document["preparation_workflow"] = "native-adaptive-v1"
         request.begin_commit()
         c.save("create patient imaging collection")
         key = str(uuid.uuid4())
@@ -70,7 +71,7 @@ def dispatch(session, operation, args, request, progress):
         session.anatomy_drafts = {}
         session.anatomy_removal = {}
         session.anatomy_transfer_paths = set()
-        session.anatomy_packages = {key: package_path} if package_path else {}
+        session.anatomy_packages = {key: package_path} if package_path and not args.get("readOnlyPackage") else {}
         return {"collectionId": key, "document": c.document, "viewState": read_view(c)}
     key = args.get("collectionId")
     if key not in session.anatomy_collections:
@@ -79,9 +80,38 @@ def dispatch(session, operation, args, request, progress):
     current_id = json.loads((c.root / "patient-anatomy.json").read_text()).get(
         "snapshot_id"
     )
+    if operation == "anatomyPrepare" and args.get("action") == "plan" and args.get("snapshotId") is None:
+        # A cancelled worker may have completed some stages before stopping.
+        if current_id != c.identity():
+            if key in session.anatomy_drafts:
+                raise ValueError("Resolve the active correction before refreshing")
+            c = PatientImagingCollection(c.root)
+            session.anatomy_collections[key] = c
+        args = {**args, "snapshotId": c.identity()}
     if args.get("snapshotId") != c.identity() or current_id != c.identity():
         raise ValueError("Anatomy changed; reload the patient")
     request.check()
+    if operation == "anatomyInspectIntake":
+        from .anatomy_intake import inspect_intake
+        return inspect_intake(args["kind"], args["paths"], check=request.check)
+    if operation in {"anatomyImportBatch", "anatomyPrepare"}:
+        if key in session.anatomy_drafts:
+            raise ValueError("Accept or reject the active correction first")
+        if operation == "anatomyImportBatch":
+            from .anatomy_intake import reviewed_intake
+            c = reviewed_intake(c, args, check=request.check, commit=request.begin_commit, progress=progress)
+            session.anatomy_collections[key] = c
+            return {"document": c.document}
+        from .anatomy_preparation import preparation_plan, prepare_anatomy
+        options = dict(indication=args.get("tumorIndication"),
+                       full_head_confirmed=args.get("fullHeadConfirmed") is True,
+                       include_dural_proxy=args.get("includeDuralProxy") is True)
+        if args.get("action") == "plan":
+            return {"document": c.document, "plan": preparation_plan(c, **options)}
+        if args.get("action") != "run" or not isinstance(args.get("planId"), str):
+            raise ValueError("Review the proposed preparation plan before running")
+        return prepare_anatomy(c, plan_id=args["planId"], cancelled=request.cancelled.is_set,
+                               progress=progress, retry_failed=args.get("retryFailed") is True, **options)
     if operation == "anatomySavePackage":
         if key in session.anatomy_drafts:
             raise ValueError("Accept or reject the correction before saving")
@@ -241,11 +271,18 @@ def dispatch(session, operation, args, request, progress):
                 "sourceIdentity": quality["sourceIdentity"],
                 "qa": quality,
                 "surfaceDiagnostics": {"policy": str(geometry.get("policy_version", "legacy")),
-                    "kind": "tumor" if row["kind"] == "tumor" else "vessel" if row["kind"] in {"vessels", "artery", "vein", "sinus"} else "context",
+                    "kind": "tumor" if row["kind"] in {"tumor", "lesion-context"} else "vessel" if row["kind"] in {"vessels", "artery", "vein", "sinus"} else "context",
                     "maxDisplacementMm": float(geometry["max_displacement_mm"]),
                     "restoredComponents": int(geometry.get("restored_components", 0)),
                     "backedOffVertices": int(geometry.get("backed_off_vertices", 0)),
                     "fallbackReason": str(geometry.get("fallback_reason", "")),
+                    "cacheHit": bool(geometry["cache_hit"]),
+                    "preparationMs": float(geometry["preparation_ms"]),
+                    "triangles": int(len(geometry["indices"])),
+                    **({
+                        "maxComponentVolumeChangeFraction": float(geometry["max_component_volume_change_fraction"]),
+                        "volumeRestoredComponents": int(geometry["volume_restored_components"]),
+                    } if "max_component_volume_change_fraction" in geometry else {}),
                     "intersectionCheck": "source-restored" if bool(geometry.get("smoothing_rejected", False)) or str(geometry.get("fallback_reason", "")) else "passed"},
                 "label": row["label"],
                 "color": row["color"],
@@ -432,15 +469,18 @@ def dispatch(session, operation, args, request, progress):
         if args.get("action"):
             from .anatomy_approaches import dispatch_plan, NativeRouteGeometry
 
-            if args["action"] == "list":
+            if args["action"] in {"list", "selectTarget"}:
                 from .anatomy_planning import native_target_options
+                from .surgical_patient import surgical_environment_options
 
-                result = dispatch_plan(c, args)
+                result = dispatch_plan(c, args, commit=request.begin_commit, check=request.check)
                 target_cache = getattr(session, "anatomy_plan_target_cache", None)
                 if target_cache is None or target_cache[:2] != (c.root, c.identity()):
-                    target_cache = (c.root, c.identity(), native_target_options(c, check=request.check))
+                    target_cache = (c.root, c.identity(), native_target_options(c, check=request.check),
+                                    surgical_environment_options(c, check=request.check))
                     session.anatomy_plan_target_cache = target_cache
                 result["targetOptions"] = target_cache[2]
+                result["rehearsalOptions"] = target_cache[3]
                 return result
             cache = getattr(session, "anatomy_plan_cache", None)
             if cache is None or cache.snapshot.snapshot_id != c.identity() or cache.c.root != c.root:
@@ -513,6 +553,13 @@ def dispatch(session, operation, args, request, progress):
         session.anatomy_collections[key] = c
         return {"document": c.document, "result": result}
     if operation == "anatomyRegister":
+        if args.get("action") == "ensure" and (
+            c.document.get("preparation_workflow") or c.document.get("migration_source")
+            or c.path("anatomy-preparation.json").is_file()
+        ):
+            # Prepare owns registration and its retry checkpoints. Source viewing
+            # revalidates stored transforms and can open an independent scan.
+            return {"document": c.document, "result": {"changed": False}}
         c = PatientImagingCollection(c.root, c.document)
         previous_view = read_view(c)
         from .anatomy_import import review_registration

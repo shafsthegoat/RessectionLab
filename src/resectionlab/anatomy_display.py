@@ -9,8 +9,12 @@ def display_affine(collection, row, *, preview=False):
     sid = row.get('source_series', row['id'])
     transform = collection.document['transforms'].get(sid)
     if transform and transform['status'] in {'reference', 'reviewed', 'source-provided'}:
-        return collection.patient_affine(row), False
-    if preview and transform and transform['status'] == 'unreviewed':
+        try:
+            return collection.patient_affine(row), False
+        except ValueError:
+            if not preview:
+                raise
+    if preview and transform and transform['status'] in {'reviewed', 'source-provided', 'unreviewed'}:
         source = collection.series(sid)
         reference = collection.series(collection.document['reference_series'])
         if (source['timepoint'] != reference['timepoint'] or

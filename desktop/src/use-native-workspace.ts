@@ -4,7 +4,7 @@ import type {AnatomyPresentation} from './native-study-state';
 import {drainLayerRequests} from './native-layer-queue';
 import {mergeResidentLayers,prepareNativeLabels} from './native-layer-residency';
 import {useCallback,useEffect,useRef,useState} from 'react';
-import type {ResectionApi} from './types';
+import type {BridgeEvent,ResectionApi} from './types';
 import {hydrateAnatomy} from './native-anatomy-data';
 import type {Binding,Draft,NativeAnatomyApi,NativeScanState,NativeViewState,ComponentReview,Args,VesselScope} from './native-anatomy-data';
 import type {ViewerVolume} from './viewer/contracts';
@@ -19,6 +19,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   const [series,setSeries]=useState(''),[states,setStates]=useState<Record<string,NativeScanState>>({});
   const [busy,setBusy]=useState(false),[message,setMessage]=useState(''),[registration,setRegistration]=useState('');
   const planning=useNativeApproaches(binding,api,!!volume&&!busy);
+  const [progress,setProgress]=useState<BridgeEvent['progress']>();
   const [structureFocusPoint,setStructureFocusPoint]=useState<Point3|null>(null);
   const [vesselScope,setVesselScope]=useState<VesselScope>('all');
   const scopeRef=useRef<VesselScope>('all');
@@ -30,9 +31,22 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   const packing=useRef<AbortController|null>(null),failedLayers=useRef<Record<string,string>>({}),unavailableRef=useRef<string[]>([]);
   const sourceImage=useRef<{key:string;data:Float32Array}|null>(null);
   const generation=useRef(0),active=useRef(false),requestId=useRef<string|null>(null),stroke=useRef<Point3[]>([]);
+  const preparationRequest=useRef<string|null>(null);
   const live=useRef({binding,series,states});live.current={binding,series,states};
   useEffect(()=>()=>{generation.current++;packing.current?.abort()},[]);
-  useEffect(()=>api?.onEvent(e=>{if(e.op?.startsWith('anatomy')){if(e.event==='started')requestId.current=e.id;if(e.event==='progress'&&e.progress)setMessage(e.progress.message);if(['result','error','cancelled'].includes(e.event))requestId.current=null;}}),[api]);
+  useEffect(()=>api?.onEvent(e=>{
+    if(!e.op?.startsWith('anatomy')||(preparationRequest.current&&e.id!==preparationRequest.current))return;
+    if(e.event==='started'){
+      requestId.current=e.id;
+      setProgress(undefined);
+    }
+    if(e.id!==requestId.current)return;
+    if(e.event==='progress'&&e.progress){
+      setProgress(e.progress);
+      setMessage(e.progress.message);
+    }
+    if(['result','error','cancelled'].includes(e.event))requestId.current=null;
+  }),[api]);
   const args=(b=live.current.binding)=>({collectionId:b!.collectionId,snapshotId:b!.document.snapshot_id});
   const initial=(b:Binding,s:string):NativeScanState=>{
     const modality=b.document.series.find(scan=>scan.id===s)?.modality??'MRI';
@@ -72,21 +86,32 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     scopeRef.current=vesselScopeForView(saved);setVesselScope(scopeRef.current);
     const s=saved?.seriesId??b.document.reference_series??'';setSeries(s);
     const views=saved?.states??{};const v=migrateSkullView(views[s]??initial(b,s),b.document.layers);setStates(s?{...views,[s]:v}:{});
-    if(s)await run(async()=>{setMessage('Checking study alignment…');const result=await api!.anatomyRegister({...args(b),action:'ensure'});const next={...b,document:result.document};setBinding(next);await loadView(next,s,v)});else setMessage('Add a source scan to begin.');
+    if(s)await run(async()=>{
+      let next=b,alignmentError='';
+      try{
+        setMessage('Checking study alignment…');
+        const result=await api!.anatomyRegister({...args(b),action:'ensure'});
+        next={...b,document:result.document};setBinding(next);
+      }catch(error){alignmentError=error instanceof Error?error.message:String(error);}
+      await loadView(next,s,v);
+      if(alignmentError)setMessage('Source available · Alignment check failed · '+alignmentError);
+    });else setMessage('Add a source scan to begin.');
   },[api]);
-  async function create(patientId:string,timepoint='preoperative'){let result:Binding|null=null;await run(async()=>{result=await api!.anatomyCreate({patientId,timepoint})});if(result)await install(result);return result;}
+  async function create(patientId:string,timepoint='preoperative'):Promise<Binding|null>{let result:Binding|null=null;await run(async()=>{result=await api!.anatomyCreate({patientId,timepoint})});if(result)await install(result);return result;}
   function clear(){sourceImage.current=null;generation.current++;resetLayers();setBinding(null);installVolume(null);setDraft(null);setReview(null);setEditLayer(null);}
   function selectScan(s:string){if(!binding||busy||draft||s===series)return;
     const v=migrateSkullView(nextScanState(state,states[s]??initial(binding,s)),binding.document.layers);
     generation.current++;resetLayers();installVolume(null);setSeries(s);setStates(all=>({...all,[s]:v}));setReview(null);setComponents([]);setEditLayer(null);
     void run(async()=>{
       let b=binding;
-      if(s!==b.document.reference_series){
-        setMessage('Aligning scan to this study…');
+      let alignmentError='';
+      if(s!==b.document.reference_series&&b.document.transforms[s]){
+        setMessage('Checking source alignment…');
         try{const r=await api!.anatomyRegister({...args(b),seriesId:s,action:'ensure'});b={...b,document:r.document};setBinding(b)}
-        catch(e){throw Error(`Alignment unavailable: ${e instanceof Error?e.message:String(e)}`)}
+        catch(e){alignmentError=e instanceof Error?e.message:String(e);}
       }
       await loadView(b,s,v);
+      if(alignmentError)setMessage('Source available · Alignment check failed · '+alignmentError);
     });
   }
   function present(mode:AnatomyPresentation){
@@ -178,13 +203,44 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   }
   function highlight(ids:number[]){if(!binding||!review||busy)return;setComponents(ids);const next={...state,cursor:ids.length===1?review.components.find(c=>c.id===ids[0])?.center??state.cursor:state.cursor};void run(()=>loadView(binding,series,next,original,{highlightLayer:editLayer,highlightComponents:ids,reviewId:review.reviewId}));}
   function compare(){if(!binding)return;setOriginal(!original);void run(()=>loadView(binding,series,state,!original));}
-  async function change(job:()=>Promise<{document:Binding['document']}|null>){if(!binding)return;await run(async()=>{const r=await job();if(!r)return;const imported={...binding,document:r.document};setBinding(imported);const aligned=await api!.anatomyRegister({...args(imported),action:'ensure'});const b={...imported,document:aligned.document};setBinding(b);const s=series||b.document.reference_series||'';setSeries(s);if(s){
+  async function change(job:()=>Promise<{document:Binding['document']}|null>,{align=true}={}){
+    if(!binding||!api)return;
+    await run(async()=>{
+      const result=await job();
+      if(!result||(!align&&result.document.snapshot_id===binding.document.snapshot_id))return;
+      let next={...binding,document:result.document};
+      setBinding(next);
+      if(align){
+        const aligned=await api.anatomyRegister({...args(next),action:'ensure'});
+        next={...next,document:aligned.document};setBinding(next);
+      }
+      const source=next.document.series.some(scan=>scan.id===series)?series:next.document.reference_series??'';
+      setSeries(source);
+      if(!source)return;
       const previousLayers=new Set(binding.document.layers.map(layer=>layer.id));
-      const added=Object.fromEntries(b.document.layers.filter(layer=>!previousLayers.has(layer.id)).map(layer=>[layer.id,!['brain-region','review-region','head-envelope'].includes(layer.kind)]));
-      const current=states[s]??initial(b,s);
-      const next={...current,visible:{...current.visible,...added}};
-      await loadView(b,s,migrateSkullView(next,b.document.layers));
-    }});}
+      const added=Object.fromEntries(next.document.layers.filter(layer=>!previousLayers.has(layer.id)).map(layer=>[layer.id,!['brain-region','review-region','head-envelope'].includes(layer.kind)]));
+      const current=states[source]??initial(next,source);
+      await loadView(next,source,migrateSkullView({...current,visible:{...current.visible,...added}},next.document.layers));
+    });
+  }
+  async function runPreparation(input:Args){
+    if(!api)throw Error('Anatomy preparation is unavailable');
+    const requestId='prepare-'+crypto.randomUUID();
+    preparationRequest.current=requestId;
+    setProgress(undefined);
+    try{return await api.anatomyPrepare({...input,action:'run',requestId});}
+    finally{if(preparationRequest.current===requestId)preparationRequest.current=null;}
+  }
+  function cancel(){
+    const preparationId=preparationRequest.current;
+    if(preparationId){
+      setMessage('Cancelling preparation…');
+      void api?.cancel(preparationId).catch(error=>setMessage(error instanceof Error?error.message:String(error)));
+      return;
+    }
+    generation.current++;resetLayers();setMessage('Operation cancelled');
+    if(requestId.current)void api?.cancel(requestId.current);
+  }
   function changeVesselScope(scope:VesselScope){
     if(active.current||busy||draft||!binding||scope===scopeRef.current)return;
     // Invalidate incremental requests before waiting for them; old filtered layers
@@ -204,6 +260,6 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     const value=state.cursor?.[2]??0;
     updateState({settings:{...state.settings,skullMode:mode,layerOpacity:{...state.settings.layerOpacity,...bone},clipping:{axis:'z',value,enabled:mode==='cutaway',flipped:true},clipBox:state.settings.clipBox?{...state.settings.clipBox,enabled:false}:undefined,obliqueClip:state.settings.obliqueClip?{...state.settings.obliqueClip,enabled:false}:undefined}});
   }
-  return {viewState:currentViewState(),planning,selectedStructure,setSelectedStructure,structureFocusRequest,structureFocusPoint,focusStructure:(id:string,point?:Point3)=>{setStructureFocusPoint(point??null);setSelectedStructure(id);setStructureFocusRequest(n=>n+1);},present,changeSkullMode,canEditLayer,vesselScope,changeVesselScope,savePackage,api,binding,volume,series,state,busy,pendingLayers,layerErrors,retryLayer,message,registration,unavailable,draft,original,editLayer,setEditLayer,tool,setTool,radius,setRadius,threshold,setThreshold,author,setAuthor,review,components,args,run,install,create,clear,selectScan,setVisible,refresh,edit,onStroke,save,reviewFragments,highlight,compare,change,setMessage,setCursor:(cursor:Point3)=>updateState({cursor}),setSettings:(settings:ViewerWorkspaceSettings)=>{const clipped=settings.clipping?.enabled||settings.clipBox?.enabled||settings.obliqueClip?.enabled;const transparent=binding?.document.layers.some(l=>['bone','skull'].includes(l.kind)&&(settings.layerOpacity?.[l.id]??1)<1);updateState({settings:{...settings,skullMode:clipped?'cutaway':transparent?'transparent':'exterior'}})},cancel:()=>{generation.current++;resetLayers();setMessage('Operation cancelled');if(requestId.current)void api?.cancel(requestId.current)}};
+  return {viewState:currentViewState(),planning,selectedStructure,setSelectedStructure,structureFocusRequest,structureFocusPoint,focusStructure:(id:string,point?:Point3)=>{setStructureFocusPoint(point??null);setSelectedStructure(id);setStructureFocusRequest(n=>n+1);},present,changeSkullMode,canEditLayer,vesselScope,changeVesselScope,savePackage,api,binding,volume,series,state,busy,progress,pendingLayers,layerErrors,retryLayer,message,registration,unavailable,draft,original,editLayer,setEditLayer,tool,setTool,radius,setRadius,threshold,setThreshold,author,setAuthor,review,components,args,run,install,create,clear,selectScan,setVisible,refresh,edit,onStroke,save,reviewFragments,highlight,compare,change,runPreparation,setMessage,setCursor:(cursor:Point3)=>updateState({cursor}),setSettings:(settings:ViewerWorkspaceSettings)=>{const clipped=settings.clipping?.enabled||settings.clipBox?.enabled||settings.obliqueClip?.enabled;const transparent=binding?.document.layers.some(l=>['bone','skull'].includes(l.kind)&&(settings.layerOpacity?.[l.id]??1)<1);updateState({settings:{...settings,skullMode:clipped?'cutaway':transparent?'transparent':'exterior'}})},cancel};
 }
 export type NativeWorkspace=ReturnType<typeof useNativeWorkspace>;

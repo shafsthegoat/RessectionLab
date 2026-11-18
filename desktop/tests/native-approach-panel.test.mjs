@@ -185,3 +185,27 @@ test('a saved zero-alternative comparison restores its task and can be saved aga
     assert.equal(f.planning.selectedId,null);
   }finally{h.close();}
 });
+
+test('a prepared lesion requires explicit selection and sends its evidence binding before comparison',async()=>{
+  const f=fixture([]);
+  const lesion={layerId:'lesion',label:'Enhancing lesion',target:[5,8,9],origin:'Model estimate',
+    reviewStatus:'unreviewed',candidateBinding:'a'.repeat(64),sourceSeries:'t1ce',layerRevision:1,labelValue:4};
+  f.api.anatomyPlan=async args=>{
+    f.calls.push(structuredClone(args));
+    return {activeTargetLayerId:args.action==='selectTarget'?args.targetLayerId:null,approaches:[],targetOptions:[lesion]};
+  };
+  const h=await ready(f);
+  try{
+    let tree=h.render();
+    assert.equal(button(tree,'Suggest approaches').props.disabled,true);
+    const picker=[...walk(tree)].find(node=>node.type==='select'&&node.props['aria-label']==='Planning target');
+    assert.equal(picker.props.value,'');
+    picker.props.onChange({target:{value:'lesion'}});await flush();tree=h.render();
+    const selection=f.calls.at(-1);
+    assert.equal(selection.action,'selectTarget');
+    assert.equal(selection.targetLayerId,lesion.layerId);
+    assert.equal(selection.candidateBinding,lesion.candidateBinding);
+    assert.equal(button(tree,'Suggest approaches').props.disabled,false);
+    assert(text(tree).includes('unreviewed'));
+  }finally{h.close();}
+});

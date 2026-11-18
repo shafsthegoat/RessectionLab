@@ -27,7 +27,7 @@ MODEL_CONFIG = {
     "totalsegmentator-skull": {
         "name": "TotalSegmentator", "version": "2.12.0 / Dataset297 v2.0.0-weights",
         "license": "Apache-2.0", "license_url": "https://github.com/wasserth/TotalSegmentator#subtasks",
-        "modality": ["CT"], "requirements": "Acquired CT in Hounsfield units; fast model at 3 mm",
+        "modality": ["CT", "CTA"], "requirements": "Acquired CT-family volume in Hounsfield units; fast model at 3 mm",
         "weights_glob": "data/models/poc-totalsegmentator/weights/**/checkpoint_final.pth",
         "parameters": {"task": "total", "fast": True, "tta": False, "skull_label": 91, "brain_label": 90},
     },
@@ -197,10 +197,12 @@ def _run(image: Path, case: str, model_id: str, modality: str, device: str="mps"
     key = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()[:20]
     if not case or Path(case).name != case or case in {".", ".."}:
         raise ValueError("Case must be a single safe directory name")
+    output_root = output_root or os.environ.get("RESSECTIONLAB_POC_OUTPUT_ROOT")
     cache_root = ROOT / "outputs/poc-models" if output_root is None else Path(output_root).resolve()
     if output_root is not None and not cache_root.is_relative_to((ROOT / 'testcases').resolve()):
         from .data_root import checked_root
-        if not cache_root.is_relative_to(checked_root(required_bytes=2*1024**3)):
+        if (not os.environ.get("RESSECTIONLAB_DATA_ROOT")
+                or not cache_root.is_relative_to(checked_root(required_bytes=2*1024**3))):
             raise ValueError('Inference output must remain under testcases/ or the verified external data root')
     output = cache_root / case / model_id / key
     # Cancelled/failed stages are retained. Resume starts a fresh attempt and
@@ -228,8 +230,13 @@ def _run(image: Path, case: str, model_id: str, modality: str, device: str="mps"
     environment = dict(os.environ, PYTHONPATH=str(ROOT / "src"), OMP_NUM_THREADS="2", OPENBLAS_NUM_THREADS="2",
                        PYTORCH_ENABLE_MPS_FALLBACK="1", MPLBACKEND="Agg", nnUNet_compile="false")
     if os.environ.get("RESSECTIONLAB_DATA_ROOT") and cache_root.is_relative_to(Path(os.environ["RESSECTIONLAB_DATA_ROOT"]).resolve()):
-        temporary_root = Path(os.environ["RESSECTIONLAB_DATA_ROOT"]) / "staging" / "tmp"
-        temporary_root.mkdir(exist_ok=True)
+        if model_id == "totalsegmentator-skull":
+            # nnUNet creates multiprocessing AF_UNIX sockets in TMPDIR.
+            # Keep its transient work on APFS even when ExFAT holds the output.
+            temporary_root = Path("/private/tmp")
+        else:
+            temporary_root = Path(os.environ["RESSECTIONLAB_DATA_ROOT"]) / "staging" / "tmp"
+            temporary_root.mkdir(exist_ok=True)
         environment.update(TMPDIR=str(temporary_root), TEMP=str(temporary_root), TMP=str(temporary_root))
     start = time.monotonic()
     maximum_rss = 0
@@ -265,13 +272,13 @@ def _run(image: Path, case: str, model_id: str, modality: str, device: str="mps"
             data = np.asanyarray(mask.dataobj)
             if mask.shape != reference.shape or not np.allclose(mask.affine, reference.affine, atol=1e-5):
                 failure = "native_geometry_mismatch"
-            if not np.isin(data, [0,1]).all() or not data.any():
-                failure = "invalid_or_empty_mask"
+            if not np.isin(data, [0,1]).all():
+                failure = "invalid_mask"
             outputs.append({"path": str(mask_path), "sha256": sha256(mask_path), "name": mask_path.name,
                             "foreground_voxels": int(np.count_nonzero(data)), "shape": list(mask.shape),
                             "affine_ras_mm": mask.affine.tolist(), "provenance": "model_inference_unreviewed"})
     if not outputs:
-        failure = failure or "no_saved_masks"
+        failure = failure or (f"worker_exit_{process.returncode}" if process.returncode else "no_saved_masks")
     probability = output / 'vessels_probability.nii.gz'
     probability_record = None if not probability.exists() else {"path": str(probability), "sha256": sha256(probability), "meaning": "uncalibrated_model_score"}
     record = {"schema": "resectionlab-poc-inference-v1", "status": "failed" if failure else "succeeded",
@@ -289,8 +296,11 @@ def _run(image: Path, case: str, model_id: str, modality: str, device: str="mps"
     for line in (output / "inference.log").read_text().splitlines():
         if line.startswith("RESECTIONLAB_MPS_MEMORY "):
             record["synthstrip_mps_allocator_samples"] = json.loads(line.split(" ", 1)[1])
-    record_path.write_text(json.dumps(record, indent=2)+"\n")
+    from .data_root import atomic_json
+    atomic_json(record_path, record)
     print(json.dumps({"status": record["status"], "record": str(record_path), "elapsed_seconds": record["elapsed_seconds"]}))
+    if failure == "cancelled":
+        raise InterruptedError("Inference cancelled before admission")
     if failure:
         raise RuntimeError(f"{failure}; inspect {output / 'inference.log'}")
     return record

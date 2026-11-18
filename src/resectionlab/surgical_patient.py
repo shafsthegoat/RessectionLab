@@ -86,6 +86,105 @@ def _resample(array, source_affine, target_affine, shape, *, label=None, conserv
     return result
 
 
+ENVIRONMENT_KINDS = {
+    'brain': {'brain'}, 'tumor': {'tumor'}, 'bone': {'bone', 'skull'},
+    'vessels': {'vessel', 'vessels', 'artery', 'vein'},
+}
+REVIEWED_REGISTRATION = {'reference', 'reviewed', 'source-provided'}
+
+
+def _check_layer_export(collection, role, row):
+    from .anatomy_evidence import vascular_evidence_supported
+
+    provenance = row.get('provenance', {})
+    if (row['kind'] == 'dura' or provenance.get('model') == 'dural-envelope'
+            or not vascular_evidence_supported(collection, row)):
+        raise ValueError(f"{row['label']} supplies display context only")
+    if role == 'bone':
+        if row['kind'] not in ENVIRONMENT_KINDS['bone']:
+            raise ValueError("Bone material requires a source-associated bone or skull layer")
+        modality = collection.series(row['source_series'])['modality']
+        if modality not in {'CT', 'CTA'} and (
+                provenance.get('model') or provenance.get('evidence_use') == 'context_only'
+                or row['id'] in {'cortical-bone', 'cancellous-bone'}):
+            raise ValueError("MRI skull estimates cannot supply measured bone")
+    if row.get('units_status', 'mm') != 'mm':
+        raise ValueError('Selected anatomy layer requires declared millimeter units: ' + role)
+    if row.get('availability') == 'empty_output':
+        raise ValueError('Selected anatomy layer is empty')
+
+
+def _source_registration(collection, series):
+    sid = series['id']
+    if series.get('units_status') != 'mm':
+        raise ValueError('Every source series must declare millimeter units')
+    transforms = collection.document['transforms']
+    if sid not in transforms:
+        raise ValueError('Missing registration for ' + sid)
+    matrix = collection.registration_matrix(sid)
+    unreviewed, current = [], sid
+    while current:
+        record = transforms[current]
+        if record['status'] not in REVIEWED_REGISTRATION:
+            unreviewed.append(current)
+        current = record.get('parent_series')
+    return matrix, unreviewed
+
+
+def _research_grid(collection, reference, resolution_mm):
+    reference_affine = collection.patient_affine(reference)
+    spacing = np.linalg.norm(reference_affine[:3, :3], axis=0)
+    # Preserve original voxel axes, including handedness and obliquity.
+    target_affine = reference_affine.copy()
+    target_affine[:3, :3] = reference_affine[:3, :3] / spacing * resolution_mm
+    ratio = resolution_mm / spacing
+    target_affine[:3, 3] = (reference_affine @ np.r_[((ratio - 1) / 2), 1])[:3]
+    shape = tuple(np.ceil(np.asarray(reference['data']['shape']) / ratio).astype(int))
+    if np.prod(shape) > 80_000_000:
+        raise ValueError('Requested derivative exceeds 80 million cells')
+    return reference_affine, target_affine, shape
+
+
+def surgical_environment_options(collection, *, check=lambda: None):
+    """Source and role preflight for the separate limited rehearsal derivative."""
+    result = {'referenceIssue': None, 'layers': []}
+    try:
+        reference = collection.series(collection.document['reference_series'])
+        _source_registration(collection, reference)
+        _research_grid(collection, reference, 1.)
+    except (ValueError, StopIteration) as error:
+        result['referenceIssue'] = str(error) or 'An acquired reference scan is required'
+        return result
+    registration = {}
+    for role, kinds in ENVIRONMENT_KINDS.items():
+        for row in collection.document['layers']:
+            if row['kind'] not in kinds:
+                continue
+            check()
+            option = {'role': role, 'layerId': row['id'], 'status': 'unavailable', 'reason': None}
+            try:
+                _check_layer_export(collection, role, row)
+                sid = row['source_series']
+                if sid not in registration:
+                    registration[sid] = _source_registration(collection, collection.series(sid))[1]
+                unreviewed = registration[sid]
+                data = collection.array(row['data'])
+                slab = max(1, 262_144 // max(1, np.prod(data.shape[1:])))
+                for offset in range(0, len(data), slab):
+                    check()
+                    if np.any(data[offset:offset + slab] == row['label_value']):
+                        break
+                else:
+                    raise ValueError('Selected anatomy layer is empty')
+                option.update(status='estimated_alignment' if unreviewed else 'ready')
+                if unreviewed:
+                    option['reason'] = 'Estimated source alignment requires an explicit research choice'
+            except (ValueError, OSError, StopIteration) as error:
+                option['reason'] = str(error) or 'Source series unavailable'
+            result['layers'].append(option)
+    return result
+
+
 def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
                              resolution_mm=1., allow_unreviewed_registration=False,
                              tissue_physics=None, require_complete=True):
@@ -113,20 +212,10 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
     manifest_hash = _sha(manifest_path)
     manifest = copy.deepcopy(collection.document)
     reference = collection.series(manifest['reference_series'])
-    reference_affine = collection.patient_affine(reference)
-    spacing = np.linalg.norm(reference_affine[:3, :3], axis=0)
-    # Preserve original voxel axes, including handedness and obliquity.
-    target_affine = reference_affine.copy()
-    target_affine[:3, :3] = reference_affine[:3, :3] / spacing * resolution_mm
-    ratio = resolution_mm / spacing
-    target_affine[:3, 3] = (reference_affine @ np.r_[((ratio - 1) / 2), 1])[:3]
-    shape = tuple(np.ceil(np.asarray(reference['data']['shape']) / ratio).astype(int))
-    if np.prod(shape) > 80_000_000:
-        raise ValueError('Requested derivative exceeds 80 million cells')
+    reference_affine, target_affine, shape = _research_grid(collection, reference, resolution_mm)
     rows = {name: collection.layer(layer_ids[name]) for name in selected_order}
     for name, row in rows.items():
-        if row.get('units_status', 'mm') != 'mm':
-            raise ValueError('Selected anatomy layer requires declared millimeter units: ' + name)
+        _check_layer_export(collection, name, row)
     warnings = ['Research derivative of source annotations and segmentation estimates; provenance and review status are retained, not independently validated.',
                 'Bone/vessel any-hit coarse occupancy can enlarge boundaries and still miss structures smaller than 0.5 mm.',
                 'Wound aperture and flow parameters are explicit assumptions, not measured vessel diameter or patient physiology.']
@@ -135,19 +224,9 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
     used_series = {reference['id'], *(r['source_series'] for r in rows.values())}
     for sid in sorted(used_series):
         series = collection.series(sid)
-        if series.get('units_status') != 'mm':
-            raise ValueError('Every source series must declare millimeter units')
-        transform = manifest['transforms'].get(sid)
-        if not transform:
-            raise ValueError('Missing registration for ' + sid)
         # Validate source hashes, transform digest and parent graph regardless of status.
-        matrix = collection.registration_matrix(sid)
-        chain, current = [], sid
-        while current:
-            record = manifest['transforms'][current]
-            chain.append((current, record['status']))
-            current = record.get('parent_series')
-        unreviewed = [name for name, status in chain if status not in ('reference', 'reviewed', 'source-provided')]
+        matrix, unreviewed = _source_registration(collection, series)
+        transform = manifest['transforms'][sid]
         if unreviewed:
             if not allow_unreviewed_registration:
                 raise ValueError('Unreviewed registration requires explicit research opt-in: ' + ', '.join(unreviewed))
