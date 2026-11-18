@@ -236,19 +236,26 @@ void main() {
   }
   int effect=uReplayActive==1?int(round(texelFetch(uRemoved,nearest.zyx,0).r*255.0)):0;
   bool removed=effect==1 || effect==2;
+  bool selectedContour=false;
   for(int i=0;i<128;i++) { if(i>=uLayerCount)break;
     if(removed || uLayerEnabled[i]<0.5 || !hasLabel(packed,i))continue;
     float layerAlpha=clamp(uOverlay*uLayerOpacities[i]/0.66,0.0,1.0);
     if(i==uSelectedLayer)layerAlpha=min(1.0,layerAlpha*1.4);
     if(contours){
       bool interior=hasLabel(contourA,i)&&hasLabel(contourB,i)&&hasLabel(contourC,i)&&hasLabel(contourD,i);
-      if(!interior)color=mix(color,uColors[i],min(0.95,layerAlpha*1.65));
+      if(!interior && uLayerOpacities[i]>0.0){
+        // Thin slice outlines have their own contrast. A translucent 3D
+        // shell can still be located against acquired grayscale.
+        if(i==uSelectedLayer)selectedContour=true;
+        else color=mix(color,uColors[i],min(.95,max(layerAlpha*1.65,1.65*uOverlay)));
+      }
       continue;
     }
     bool interior=hasLabel(labels(nearest+ivec3(1,0,0)),i)&&hasLabel(labels(nearest-ivec3(1,0,0)),i)&&hasLabel(labels(nearest+ivec3(0,1,0)),i)&&hasLabel(labels(nearest-ivec3(0,1,0)),i)&&hasLabel(labels(nearest+ivec3(0,0,1)),i)&&hasLabel(labels(nearest-ivec3(0,0,1)),i);
     float edge=!interior?min(0.9,layerAlpha+0.3*uLayerOpacities[i]/0.66):layerAlpha;
     color=mix(color,uColors[i],edge);
   }
+  if(selectedContour && uSelectedLayer>=0)color=mix(color,uColors[uSelectedLayer],min(1.0,2.8*uOverlay));
   if(effect==1) color=mix(color,vec3(0.66,0.94,0.82),0.70);
   if(effect==2) color=mix(color,vec3(0.72,0.65,0.91),0.58);
   if(effect==3) color=mix(color,vec3(0.94,0.71,0.40),0.66);

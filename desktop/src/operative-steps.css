@@ -41,7 +41,7 @@
 .operative-legend [data-tissue=bone] {--tissue: #e5d8bc;}
 .operative-legend [data-tissue=dura] {--tissue: #d7b2a0;}
 .operative-legend [data-tissue=brain] {--tissue: #c68788;}
-.operative-legend [data-tissue=tumor] {--tissue: #b67cae;}
+.operative-legend [data-tissue=tumor] {--tissue: #65bfd3;}
 .operative-legend [data-tissue=vessels] {--tissue: #be4349;}
 .operative-transport {padding: 11px 16px; border-top: 1px solid #313a35; background: #171d1b;}
 .operative-stage-title {justify-content: space-between; color: #dce6df;}
@@ -69,3 +69,14 @@
 .operative-up {top:0;left:50%;}
 .operative-right {top:42%;right:2px;}
 .operative-legend {max-width:calc(100% - 112px);}
+.operative-overview-plane {position:relative;}
+.operative-overview-plane canvas {max-height:none;}
+.operative-overview-plane svg {position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:#fff3bb;stroke-width:1.5;}
+.operative-overview figcaption {border-top:1px solid #35403a;padding:2px 4px;}
+.operative-image > .operative-legend {
+  inset:auto auto 8px 12px; width:max-content; height:max-content; min-height:0; align-content:flex-end;
+}
+.operative-picked {position:absolute;z-index:2;top:32px;right:10px;max-width:min(260px,48%);max-height:50%;overflow:auto;background:#17201ef2;border:1px solid #405249;border-radius:4px;padding:8px 10px;font-size:11px;overflow-wrap:anywhere}
+.operative-picked small,.operative-picked strong{display:block}
+.operative-picked button{float:right;margin-left:6px;cursor:pointer}
+.operative-topline .operative-frame-choice {margin-left:auto;min-height:24px;padding:2px 7px;color:#c2d8cc;font-size:11px;}

@@ -5,9 +5,10 @@ import './native-planning-presentation.css';
 
 const roles:EnvironmentRole[]=['brain','tumor','bone','vessels'];
 const roleNames:Record<EnvironmentRole,string>={brain:'Brain',tumor:'Tumor',bone:'Bone',vessels:'Vessels'};
-export interface EnvironmentApproach {approachId:string;parameterHash:string;targetLayerId:string;snapshotId:string}
+export interface EnvironmentApproach {approachId:string;measurementHash?:string;parameterHash:string;targetLayerId:string;snapshotId:string}
 export interface EnvironmentPreparation {approach?:EnvironmentApproach;collectionId:string;snapshotId:string;layers:Record<string,string>;allowUnreviewedRegistration:boolean}
-export function EnvironmentPreparationPanel({binding,approach,options,busy,onPrepare,onAnatomy}:{
+export function EnvironmentPreparationPanel({binding,approach,routeName,measurements,options,busy,onPrepare,onAnatomy}:{
+  routeName?:string;measurements?:import('./native-approaches').NativeApproach['measurements'];
   binding:Binding;approach?:EnvironmentApproach;options?:EnvironmentOptions;busy:boolean;onPrepare:(options:EnvironmentPreparation)=>Promise<void>;onAnatomy:()=>void;
 }) {
   const [layers,setLayers]=useState<Record<string,string>>(()=>Object.fromEntries(roles.map(role=>[
@@ -21,6 +22,8 @@ export function EnvironmentPreparationPanel({binding,approach,options,busy,onPre
   const canPrepare=!!options&&!options.referenceIssue&&selected.length>0&&(!approach||selected.some(layer=>layer.role==='tumor'))&&
     selected.every(layer=>layer.status==='ready'||layer.status==='estimated_alignment'&&allow);
   const missing=roles.filter(role=>!selected.some(layer=>layer.role===role));
+  const forecast=approach?options?.selectedRouteForecast:undefined;
+  const crossing=measurements?.normalTraversal?.supportedNonTargetVoxelCenterVolumeMm3;
   const alignmentRequired=unreviewed.length>0&&!allow;
   const readiness=canPrepare?'ready':options&&!options.referenceIssue&&alignmentRequired?'review':'unavailable';
   const status=canPrepare?'Ready to prepare':!options||options.referenceIssue?'Preparation unavailable':alignmentRequired?'Alignment choice required':'Select source anatomy';
@@ -48,7 +51,17 @@ export function EnvironmentPreparationPanel({binding,approach,options,busy,onPre
         <p className="surgical-warning">Estimated alignment for {unreviewed.map(layer=>label(layer.layerId)).join(', ')}.</p>
         <label><input aria-label="Allow estimated alignment for research" type="checkbox" checked={allow} onChange={e=>setAllow(e.target.checked)}/><span>Use estimated alignment for this research derivative.</span></label>
       </div>}
-      {approach&&<p className="surgical-note">The saved path and target will stay bound to this source revision. New instrument actions require a qualified operative task.</p>}
+      {forecast&&approach&&<section aria-label="Selected route forecast" className="environment-route-decision">
+        <h3>Predicted decision · STOP before access</h3>
+        <p>{binding.document.patient_id} · {routeName} · {label(approach.targetLayerId)}</p>
+        {measurements&&<p>{measurements.lengthMm.toFixed(2)} mm path{typeof crossing==='number'&&` · ${crossing.toLocaleString()} mm³ mapped non-target brain by voxel centers in the corridor`}. Physical access and withdrawal costs for treatment are unknown.</p>}
+        <p>{forecast.reason} Stopping now predicts {forecast.preparationActions} preparation actions, {forecast.nonTargetRemovedMm3} mm³ removed and {forecast.withdrawalActions} withdrawal actions. The entire sampled target remains.</p>
+        <details><summary>Admission and search limits</summary>
+          <p>Physical treatment candidates examined: {forecast.physicalCandidatesExamined}. Other approaches remain untested.</p>
+          <ul>{forecast.requiredEvidence.map(item=><li key={item}>{item}</li>)}</ul>
+          <p>Source revision <code>{approach.snapshotId}</code></p>
+        </details>
+      </section>}
       <div className="environment-preparation-actions"><button className="primary-button" disabled={!canPrepare} onClick={async()=>{
         setPreparing(true);setError(null);
         try{

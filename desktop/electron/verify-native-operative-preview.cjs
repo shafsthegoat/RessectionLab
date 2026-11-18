@@ -19,7 +19,7 @@ const {studyScanSelectionScript} = require('./verify-study-ui-helpers.cjs');
 const {inputScript} = require('./verify-eden-planning-helpers.cjs');
 const root = path.resolve(__dirname, '../..');
 const [, , manifestArg, outputArg, mode = 'preview'] = process.argv;
-assert(['preview','baseline','prepare','no-target','stale','reopen'].includes(mode),'Unknown verification mode');
+assert(['preview','baseline','prepare','no-target','stale','reopen','reopen-decision'].includes(mode),'Unknown verification mode');
 assert(manifestArg && outputArg, 'Pass a disposable native manifest, new evidence directory, and baseline or preview');
 const manifest = fs.realpathSync(manifestArg);
 const fixtureRoot = fs.realpathSync(path.join(root, 'testcases/outputs')) + path.sep;
@@ -64,9 +64,10 @@ ipcMain.handle = (channel, handler) => handle(channel, async (...args) => {
     if(channel==='research:prepareSurgicalEnvironment') {
       report.engineInspection={request:args[1],caseHash:result.caseHash};
     }
+    if(channel==='research:surgicalRehearsal' && mode==='reopen-decision' && result?.selectedPlanDecision) report.coldDecision=result.selectedPlanDecision;
     if(channel==='research:surgicalRehearsal' && report.engineInspection && result?.view) {
       report.engineInspection.engine={position:result.position,state:result.view.stateId,
-        admission:result.planningAdmission,metrics:result.view.metrics};
+        admission:result.planningAdmission,metrics:result.view.metrics,decision:result.selectedPlanDecision};
     }
     if(channel==='research:anatomyView' && process.argv.includes('--source-support')) {
       (report.anatomyViews ??= []).push({series:args[1].seriesId,sourceHash:result.mri.sha256,
@@ -84,7 +85,7 @@ ipcMain.handle = (channel, handler) => handle(channel, async (...args) => {
         routes:result.approaches?.map(r=>({id:r.id,origin:r.origin,status:r.assessmentStatus,entry:r.entry,target:r.target,parameterHash:r.parameterHash,
           lengthMm:r.measurements?.lengthMm,coveredTargetMm3:r.measurements?.targets?.find(t=>t.layerId===r.targetLayerId)?.coveredVoxelCenterVolumeMm3,
           normalTraversalMm3:r.measurements?.normalTraversal?.supportedNonTargetVoxelCenterVolumeMm3})),
-        spacingMm:result.spacingMm,shape:result.shape,stations:result.stations,
+        spacingMm:result.spacingMm,shape:result.shape,stations:result.stations,fieldLabelSha256:result.labels?.sha256,
         intensity:result.intensity && {series:result.intensity.sourceSeries,modality:result.intensity.modality,
           sourceHash:result.intensity.sourceSha256,dataHash:result.intensity.dataSha256,signalHash:result.intensity.signal?.sha256,
           covered:result.intensity.coveredVoxels,window:result.intensity.window,shape:result.intensity.shape},
@@ -183,16 +184,61 @@ app.on('browser-window-created', (_, win) => {
     try {
       report.rendererAsset = await js("document.querySelector('script[type=module][src]')?.src.split('/').pop()");
       await until(`document.querySelector('footer')?.textContent.includes('Add a source scan')`);
-      if(process.argv.includes('--source-support')) await js(`document.addEventListener('anatomy-frame',event=>{
+      if(process.argv.includes('--source-support') || process.argv.includes('--visual-review')) await js(`document.addEventListener('anatomy-frame',event=>{
         const {cameraState,cursor,sourceSignalFingerprint}=event.detail;
         window.operativeVerificationFrame={cameraState,cursor,sourceSignalFingerprint};
       })`);
+      if(process.argv.includes('--visual-review'))await js(`(()=>{
+        // Read the actual matrices sent to the color pass on both renderer builds.
+        const gl=WebGL2RenderingContext.prototype,locations=new WeakMap(),buffers=new WeakMap();
+        const locate=gl.getUniformLocation,bind=gl.bindFramebuffer,upload=gl.uniformMatrix4fv;
+        gl.getUniformLocation=function(program,name){const result=locate.call(this,program,name);if(result)locations.set(result,name);return result};
+        gl.bindFramebuffer=function(target,buffer){if(target!==this.READ_FRAMEBUFFER)buffers.set(this,buffer);return bind.call(this,target,buffer)};
+        gl.uniformMatrix4fv=function(location,...rest){
+          const name=locations.get(location);
+          if(!buffers.get(this)&&(name==='viewMatrix'||name==='projectionMatrix')&&this.canvas.closest('.operative-field-canvas')){
+            (window.operativeCameraMatrices??={})[name]=Array.from(rest[1]);
+          }
+          return upload.call(this,location,...rest);
+        };
+      })()`);
       await click('Open');
+      if(mode==='reopen-decision') {
+        const prior=flagValue('--decision-report');
+        assert(prior?.startsWith(fixtureRoot) && archive);
+        const expected=JSON.parse(fs.readFileSync(prior,'utf8'));
+        assert(expected.passed && expected.engineArchive.sha256===report.openedArchive.sha256);
+        await until(`document.body.innerText.includes(${JSON.stringify(document.patient_id)})`);
+        await click('Rehearse');
+        await until(`!!document.querySelector('[aria-label="Selected route engine result"]')`);
+        assert.deepEqual(report.coldDecision,expected.engineInspection.engine.decision);
+        report.resultText=await js(`document.querySelector('[aria-label="Selected route engine result"]').innerText`);
+        assert.equal(report.resultText,expected.resultText);
+        await js(`document.querySelector('[aria-label="Selected route engine result"]').scrollIntoView({block:'center'})`);
+        await both('cold-selected-decision');
+        finish();
+        return;
+      }
       await until(`JSON.parse(document.querySelector('.rl-viewer')?.dataset.sourceDisplayIdentity || '[]')[3]===${JSON.stringify(document.snapshot_id)}`);
       await ready();
       await click('Anatomy');
       await ready();
       await both('anatomy');
+      if(process.argv.includes('--visual-review')){
+        await js("document.querySelector('.anatomy-presets button:nth-child(2)').click()");
+        await ready();
+        await capture('structures');
+        report.nativeFrame=await js("window.operativeVerificationFrame");
+        const geometry=`document.querySelector('select[aria-label="Native surface representation"]')`;
+        if(await js(`!!(${geometry})`)){
+          await js(`(${geometry}).value='source';(${geometry}).dispatchEvent(new Event('change',{bubbles:true}));`);
+          await ready();await capture('structures-source');
+          report.nativeSourceFrame=await js("window.operativeVerificationFrame");
+          assert.deepEqual(report.nativeFrame,report.nativeSourceFrame);
+          await js(`(${geometry}).value='conditioned';(${geometry}).dispatchEvent(new Event('change',{bubbles:true}));`);
+          await ready();
+        }
+      }
       if(process.argv.includes('--source-support')) {
         await js("document.querySelector('.anatomy-presets button:nth-child(2)').click()");
         await ready();
@@ -385,6 +431,71 @@ app.on('browser-window-created', (_, win) => {
         const field = report.plans.findLast(p=>p.action==='operativeField');
         assert.equal(field.approach,report.selected);
         assert.equal(field.target,targetLayer.id);
+        if(process.argv.includes('--visual-review')){
+          const setting=label=>`[...document.querySelectorAll('.operative-options label')].find(l=>l.textContent.trim()===${JSON.stringify(label)})?.querySelector('input')`;
+          const toggle=async(label,checked)=>{
+            const expr=setting(label);
+            const present=await js(`!!(${expr})`);
+            if(present&&await js(`(${expr}).checked`)!==checked)await js(`(${expr}).click()`);
+            return present;
+          };
+          const fieldState=()=>js(`(()=>{
+            const el=document.querySelector('.operative-playback'),canvas=document.querySelector('.operative-field-canvas canvas');
+            return {phase:el.dataset.operativePhase,progress:el.dataset.operativeProgress,
+              removed:Number(el.querySelector('[data-removed-cells]')?.dataset.removedCells??0),
+              submittedCamera:window.operativeCameraMatrices,
+              camera:canvas.dataset.camera?JSON.parse(canvas.dataset.camera):null,
+              surroundingLayers:canvas.parentElement.dataset.surroundingLayers?JSON.parse(canvas.parentElement.dataset.surroundingLayers):null,
+              extent:canvas.getBoundingClientRect().toJSON()};
+          })()`);
+          report.layout=await js(`(()=>{
+            const el=document.querySelector('.operative-legend'),style=getComputedStyle(el);
+            return {position:style.position,rect:el.getBoundingClientRect().toJSON(),styles:Object.fromEntries(['top','right','bottom','left','width','height','minHeight','display','alignSelf'].map(k=>[k,style[k]])),
+              matches:Array.from(document.styleSheets).flatMap(s=>Array.from(s.cssRules).filter(r=>r.selectorText&&el.matches(r.selectorText)).map(r=>r.cssText)).slice(-30)}
+          })()`);
+          await capture('opening-default');
+          const fit=button('Fit source anatomy');
+          if(await js(`!!(${fit})`)){
+            await click('Fit source anatomy');await capture('whole-source');
+            await click('Follow operative step');
+          }
+          await toggle('Inspection cutaway',true);
+          await click('Tumor aspiration');
+          await capture('teaching-end');
+          report.teachingState=await fieldState();
+          await toggle('Inspection cutaway',false);
+          await capture('exterior-end');
+          report.exteriorState=await fieldState();
+          if(await toggle('Field voxel faces',true)){
+            await capture('exterior-source-voxels');
+            report.rawState=await fieldState();
+            assert.deepEqual(report.rawState,report.exteriorState);
+            await toggle('Field voxel faces',false);
+          }
+          await click('Reset operative steps');
+          await capture('exterior-start');
+          const canvas="document.querySelector('.operative-field-canvas canvas')";
+          if(await js(`(${canvas}).getAttribute('aria-label').includes('Enter inspects')`)){
+            await js(`(${canvas}).dispatchEvent(new KeyboardEvent('keydown',{key:'Enter'}))`);
+            await until("!!document.querySelector('.operative-picked')");
+            report.pickedTissue=await js("document.querySelector('.operative-picked').innerText");
+            assert.match(report.pickedTissue,/Rest position RAS/);assert.match(report.pickedTissue,/voxel/);
+            await capture('picked-source');
+            await click('Close picked tissue');
+          }
+          report.framesMs=await js(`new Promise(resolve=>{
+            const times=[];let previous;
+            const tick=now=>{if(previous!==undefined)times.push(now-previous);previous=now;
+              document.querySelector('.operative-field-canvas canvas').dispatchEvent(new KeyboardEvent('keydown',{key:times.length%2?'ArrowLeft':'ArrowRight'}));
+              if(times.length<40)requestAnimationFrame(tick);else resolve(times)};
+            requestAnimationFrame(tick);
+          })`);
+          if(process.argv.includes('--review-video')){
+            report.recording=await recordOperativePlayback(win,js,output,null);
+            report.video=report.recording.filename;
+          }
+          finish();return;
+        }
         if(process.argv.includes('--source-support')) {
           assert(field.spacingMm<=.35,'Expected the refined BITE field');
           const source=document.series.find(row=>row.id===field.intensity?.series);
@@ -471,14 +582,14 @@ app.on('browser-window-created', (_, win) => {
             const toggle="[...document.querySelectorAll('.operative-options label')].find(l=>l.textContent.trim()==='Inspection cutaway').querySelector('input')";
             const identity=()=>js("({phase:document.querySelector('.operative-playback').dataset.operativePhase,progress:document.querySelector('.operative-playback').dataset.operativeProgress,removed:document.querySelector('[data-removed-cells]')?.dataset.removedCells})");
             const before=await identity();
-            assert(await js(`(${toggle}).checked`));
+            assert.equal(await js(`(${toggle}).checked`),false,'Exterior exposure is the initial view');
             await js(`(${toggle}).click()`);
-            const intactView=await captureField('cutaway-off-'+width);
-            assert.equal(await js(`(${toggle}).checked`),false);
+            const teaching=await captureField('teaching-cutaway-'+width);
+            assert.equal(await js(`(${toggle}).checked`),true);
             assert.deepEqual(await identity(),before);
             assert(await js("!!document.querySelector('.operative-overview canvas')&&document.querySelector('.operative-scale').textContent.includes('mm')"));
-            readout.cutawayOff={...before,changedPixels:delta(prior,intactView),scale:await js("document.querySelector('.operative-scale').textContent")};
-            assert(readout.cutawayOff.changedPixels>30);
+            readout.teachingCutaway={...before,changedPixels:delta(prior,teaching),scale:await js("document.querySelector('.operative-scale').textContent")};
+            assert(readout.teachingCutaway.changedPixels>30);
             await js(`(${toggle}).click()`);
           }
           const timeline = 'input[aria-label="Operative timeline"]';
@@ -537,6 +648,12 @@ app.on('browser-window-created', (_, win) => {
         await both('reopened');
         if(process.argv.includes('--engine-inspection')) {
           await click('Open instrument environment');
+          const forecastSelector='[aria-label="Selected route forecast"]';
+          await until(`!!document.querySelector(${JSON.stringify(forecastSelector)})`);
+          await js(`document.querySelector(${JSON.stringify(forecastSelector)}).scrollIntoView({block:'center'})`);
+          report.forecast=await js(`document.querySelector(${JSON.stringify(forecastSelector)}).innerText`);
+          assert(report.forecast.includes('STOP before access'));
+          await both('selected-route-forecast');
           await click('Inspect approach in engine');
           await until("!!document.querySelector('.surgical-panel[data-state-id]')",300000);
           const check=report.engineInspection;
@@ -547,7 +664,25 @@ app.on('browser-window-created', (_, win) => {
           assert.equal(check.engine.metrics.targetRemovedMm3,0);
           assert.equal(check.engine.metrics.nonTargetRemovedMm3,0);
           assert.equal(check.engine.admission?.available,false);
+          const decision=check.engine.decision;
+          assert.equal(decision.routeId,report.selected);
+          assert.equal(decision.sourceSnapshotId,document.snapshot_id);
+          assert.equal(decision.measurementHash,check.request.approach.measurementHash);
+          assert.equal(decision.caseHash,check.caseHash);
+          assert.equal(decision.stateId,check.engine.state);
+          assert.equal(decision.measured.actions,0);
+          assert(decision.measured.originalTargetResidualMm3>0);
+          await until(`!!document.querySelector('[aria-label="Selected route engine result"]')`);
+          await js(`document.querySelector('[aria-label="Selected route engine result"]').scrollIntoView({block:'center'})`);
+          report.resultText=await js(`document.querySelector('[aria-label="Selected route engine result"]').innerText`);
+          assert(report.resultText.includes('target remains'));
           await both('planned-engine-inspection');
+          if(saveTo) {
+            await click('Save');
+            await until("document.body.innerText.includes('Workspace saved locally')");
+            assert(fs.statSync(saveTo).size>0);
+            report.engineArchive={path:saveTo,sha256:hash(fs.readFileSync(saveTo))};
+          }
         }
       }
       if(mode==='stale') {

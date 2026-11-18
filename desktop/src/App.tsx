@@ -1702,8 +1702,9 @@ export default function App() {
               </div>}
             </section>
             {!showOperative&&<EnvironmentPreparationPanel key={native.binding.collectionId+"/"+native.binding.document.snapshot_id+"/"+!!native.planning.rehearsalOptions+"/"+routeKey}
-            approach={!operativeIssue&&nativeRoute?.targetLayerId?{approachId:nativeRoute.id,parameterHash:nativeRoute.parameterHash,
+            approach={!operativeIssue&&nativeRoute?.targetLayerId?{approachId:nativeRoute.id,parameterHash:nativeRoute.parameterHash,measurementHash:nativeRoute.measurementHash,
               targetLayerId:nativeRoute.targetLayerId,snapshotId:nativeRoute.sourceSnapshotId}:undefined}
+            routeName={nativeRoute?.name} measurements={nativeRoute?.measurements}
             binding={native.binding} options={native.planning.rehearsalOptions} busy={busy} onAnatomy={()=>setWorkbenchTab('data')} onPrepare={async options=>{
             if(!api?.prepareSurgicalEnvironment)throw Error('Restart the app to load environment preparation.');
             const prepared=await api.prepareSurgicalEnvironment(options);
@@ -2040,7 +2041,7 @@ export default function App() {
         {native.binding&&!showOperative&&native.registration==='alignment preview'&&<div className="workspace-alignment-banner" role="status">Estimated scan alignment <span>{Object.values(native.volume?.alignmentQuality??{}).flatMap(q=>q.warnings)[0]??'Shared structures · verify in Scans before planning'}</span></div>}
         <NativeCorrectionBar workspace={native}/>
         <div className="viewer-shell">
-          {showOperative && native.binding && nativeApi && nativeRoute && <OperativeSteps key={routeKey} api={nativeApi} collectionId={native.binding.collectionId} route={nativeRoute}/>}
+          {showOperative && native.binding && nativeApi && nativeRoute && <OperativeSteps key={routeKey} api={nativeApi} collectionId={native.binding.collectionId} route={nativeRoute} sourceVolume={native.registration==='patient frame'?native.volume:null}/>}
           {!showOperative && displayedCase && (
             <ViewerWorkspace
               surgicalInteraction={workbenchTab==="rehearsal"?surgical.interaction:undefined}
@@ -2063,6 +2064,7 @@ export default function App() {
               onCursorChange={native.binding ? native.setCursor : imaging.selected ? imaging.setCursor : setCursor}
               routes={native.binding?(native.patientFrameReady?native.planning.routes:[]):display.primaryOverlaysPermitted?viewerRoutes:[]}
               selectedStructure={native.binding?native.selectedStructure:null}
+              onPickStructure={native.binding?native.setSelectedStructure:undefined}
               structureFocusRequest={native.structureFocusRequest}
               structureFocusPoint={native.structureFocusPoint}
               cameraMode={cameraMode}

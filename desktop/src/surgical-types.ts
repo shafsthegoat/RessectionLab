@@ -84,3 +84,13 @@ export interface AnatomyComparisonResult {
   delta:{matchedPrefixObservationChangedValues:Record<string,number>;matchedPrefixLocalChannels:Record<string,number>;policyActionsChanged:boolean;targetVolumeMm3:number};
   limitations:string[];
 }
+
+export interface SelectedPlanDecision {
+  schema:'resectionlab.native-route-decision.v1';decisionId:string;patientId:string;sourceSnapshotId:string;planRevision:string;
+  routeId:string;routeName:string;parameterHash:string;measurementHash:string;targetLayerId:string;targetBinding:string;
+  caseHash:string;sceneId:string;branchId:string;stateId:string;admissionCodes:string[];forecast:import('./native-anatomy-data').SelectedRouteForecast;
+  geometry:{lengthMm:number;traversedNonTargetMm3:number|null;unknowns:string[]};
+  preparation:{gridSpacingMm:number;allowEstimatedAlignment:boolean;layers:Record<string,{layerId:string;sampledMaskHash:string}>};
+  measured:{actions:number;nonTargetRemovedMm3:number;targetRemovedMm3:number;originalTargetResidualMm3:number;elapsedSeconds:number;insertedTools:number;activeTools:number};
+}
+export interface SurgicalResponse {selectedPlanDecision?:SelectedPlanDecision}

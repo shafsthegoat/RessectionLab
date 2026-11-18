@@ -1,4 +1,5 @@
 import {OperativeSourceLocator} from './OperativeSourceLocator';
+import {OperativeLegend} from './OperativeLegend';
 import {planningSliceSegments,planningSphereSliceRadius,planningSliceMemberships} from '../interactive-planning-data';
 import {surgicalEffectMarkers,clipSurgicalMarkersToSlab,surgicalMarkerRadiusPx} from './surgicalGeometry';
 import {modeledSourceIdentity,modeledAnatomy} from './modeledAnatomy';
@@ -152,6 +153,8 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const activePlane=settings.activePlane??'axial',contrast=settings.contrast??1,showPlane=settings.showPlane??false;
   const displayedSurgical=committedSurgical?.identity===rendererIdentity?committedSurgical.interaction:null;
   const surgicalView=displayedSurgical?.preview??displayedSurgical?.view;
+  const [pickedLayer,setPickedLayer]=useState<{sceneId:string;name:string}|null>(null);
+  const inspectRegion=(name:string|null)=>setPickedLayer(name&&surgicalView?{sceneId:surgicalView.scene.sceneId,name}:null);
   const surgicalMarkers=useMemo(()=>surgicalView?surgicalEffectMarkers(surgicalView,displayedSurgical?.outcome):[],[surgicalView,displayedSurgical?.outcome]);
   const setActivePlane=(activePlane:SlicePlane)=>changeSettings({...latestSettings.current,activePlane});
   const setContrast=(contrast:number)=>changeSettings({...latestSettings.current,contrast});
@@ -772,7 +775,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             <label><input type="checkbox" checked={settings.volumeRendering?.shadows!==false} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,shadows:e.target.checked}})}/>Volume shadows</label>
             <label><input type="checkbox" checked={settings.volumeRendering?.isolateLabels===true} onChange={e=>changeSettings({...settings,volumeRendering:{...settings.volumeRendering,isolateLabels:e.target.checked}})}/>{fusedContext?'Show selected structures only':'Isolate selected tissue'}</label>
             {diagnosticLayer&&<label><input type="checkbox" checked={diagnosticVisible} onChange={e=>setDiagnosticVisible(e.target.checked)}/>Diagnostic overlay</label>}
-            <details aria-label="Anatomy display quality"><summary>Anatomy quality</summary><p>Source slices and masks remain the basis for review. Anatomical accuracy is unmeasured.</p>{caseData.compartments.map(layer=>{const d=surfaceReports[layer.name]?.diagnostics??layer.surfaceDiagnostics;return <div key={layer.name}><strong>{layer.name}</strong>{layer.qa?.issues.map(issue=><p key={issue}>{issue}</p>)}{d&&<p>{d.fallbackReason?d.fallbackReason:d.restoredComponents?`${d.restoredComponents} components use their original surface after geometry checks.`:'Surface geometry checks passed.'}{d.backedOffVertices?` Smoothing reduced locally at ${d.backedOffVertices.toLocaleString()} vertices.`:''}{d.volumeRestoredComponents?` Lesion volume checks restored ${d.volumeRestoredComponents} source components.`:''}</p>}{surfaceReports[layer.name]?.empty&&<p>Empty segmentation: anatomy is unavailable.</p>}</div>})}</details>
+            <details aria-label="Anatomy display quality"><summary>Anatomy quality</summary><p>Source slices and masks remain the basis for review. Anatomical accuracy is unmeasured.</p>{caseData.compartments.map(layer=>{const d=surfaceReports[layer.name]?.diagnostics??layer.surfaceDiagnostics;return <div key={layer.name}><strong>{layer.name}</strong>{layer.qa?.issues.map(issue=><p key={issue}>{issue}</p>)}{d?.policy==='engine-shared-implicit-v1'&&<p>Shared material interfaces · maximum display displacement {d.maxDisplacementMm.toFixed(3)} mm{d.displacementLimitMm!=null&&<> of {d.displacementLimitMm.toFixed(3)} mm allowed</>}.</p>}{d&&<p>{d.fallbackReason?d.fallbackReason:d.restoredComponents?`${d.restoredComponents} components use their original surface after geometry checks.`:'Surface geometry checks passed.'}{d.backedOffVertices?` Smoothing reduced locally at ${d.backedOffVertices.toLocaleString()} vertices.`:''}{d.volumeRestoredComponents?` Lesion volume checks restored ${d.volumeRestoredComponents} source components.`:''}</p>}{surfaceReports[layer.name]?.empty&&<p>Empty segmentation: anatomy is unavailable.</p>}</div>})}</details>
             <TransferEditor value={settings.volumeRendering??{}} onChange={volumeRendering=>changeSettings({...settings,volumeRendering})}/>
           </>}
           {controlPanel==='clip'&&<>
@@ -840,12 +843,18 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           onPointerMove={event=>{if(event.buttons===1&&props.surgicalInteraction?.mode==='draw'){const p=engine.current?.pick(event.clientX,event.clientY);if(p)props.surgicalInteraction.onStroke(p,'move');}}}
           onPointerUp={event=>{if(props.surgicalInteraction?.mode==='draw'){const p=engine.current?.pick(event.clientX,event.clientY);if(p)props.surgicalInteraction.onStroke(p,'end');}}}
           onDoubleClick={(event) => {
-            const point = engine.current?.pick(event.clientX, event.clientY);
+            const point = engine.current?.pick(event.clientX, event.clientY, name=>{
+              if (surgicalView) inspectRegion(name);
+              else if (name) props.onPickStructure?.(name);
+            });
             if (point && geometry)
               onCursorChange(fusedContext?point:clampCursor(point, geometry.bounds));
           }}
           aria-label={props.surgicalInteraction?.mode==='draw'?'3-D source anatomy. Drag on anatomy to draw a proposed instrument stroke.':`3-D source anatomy. Drag to ${navigationMode==='pan'?'pan':'rotate'}, scroll to zoom, double-click to set linked cursor.`}
         >
+          {surgicalView&&<OperativeLegend scene={surgicalView.scene} settings={settings} cursor={currentCursor}
+            visible={visibleLayers} picked={pickedLayer?.sceneId===surgicalView.scene.sceneId?pickedLayer.name:null}
+            onPick={inspectRegion} onSmooth={setSmoothSurfaces}/>}
           {settings.operativeView==='surgeon'&&settings.microscope&&geometrySource&&geometry&&surgicalView&&
             (!displayedSurgical?.preview||displayedSurgical.recordedFrame)&&
             <OperativeSourceLocator source={geometrySource} bounds={geometry.bounds} inverse={geometry.inverse}

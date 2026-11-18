@@ -28,10 +28,10 @@ export const tissueColors = {
   perilesionalSignal:'#cb9e60',tumorCore:'#b289bd',wholeAbnormality:'#a686ad',lesionContext:'#a487ad',
 };
 const tissues = {
-  bone: { color: '#e5d8bc', roughness: 0.68, contrast: 0.48, section: 0.2 },
+  bone: { color: '#e5d8bc', roughness: 0.76, contrast: 0.68, section: 0.2 },
   dura: { color: '#d7b2a0', roughness: 0.46, contrast: 0.64, section: 0.32 },
   brain: { color: '#c68788', roughness: 0.6, contrast: 1.4, section: 0.83 },
-  tumor: { color: '#b67cae', roughness: 0.55, contrast: 1.02, section: 0.64 },
+  tumor: { color: '#65bfd3', roughness: 0.55, contrast: 1.02, section: 0.64 },
   vessel: { color: '#be4349', roughness: 0.38, contrast: 0.4, section: 0.16 },
 };
 
@@ -101,7 +101,7 @@ export function operativeTissueMaterial(
           // layer color to identify the tissue across the cut.
           vec3 edge=min(abs(vRestPosition-uCropMin),abs(vRestPosition-uCropMax));
           float distanceToFace=min(min(edge.x,edge.y),min(edge.z,abs(vRestPosition.y-uSectionY)));
-          float section=1.-smoothstep(.02*uBoundaryWidth,uBoundaryWidth,distanceToFace);
+          float section=step(uCropMin.y-.1*uBoundaryWidth,uSectionY)*(1.-smoothstep(.02*uBoundaryWidth,uBoundaryWidth,distanceToFace));
           vec3 tint=mix(vec3(1.),diffuse,0.42);
           vec3 scanColor=(.014+.68*pow(brightness,2.2))*tint;
           diffuseColor.rgb=mix(diffuseColor.rgb,scanColor,uSectionMix*section);

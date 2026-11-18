@@ -113,8 +113,11 @@ app.on('browser-window-created',(_event,win)=>{
       fs.writeFileSync(path.join(output,file+'.png'),shot.resize({width:1440,height:900}).toPNG());
       const crop=await win.webContents.capturePage(Object.fromEntries(Object.entries(snap.rect).map(([key,v])=>[key,Math.round(v)])),{stayHidden:true,stayAwake:true});
       fs.writeFileSync(path.join(output,file+'-field.png'),crop.toPNG());
+      const {width,height}=crop.getSize();
+      const center=crop.crop({x:Math.floor(width*.23),y:Math.floor(height*.34),
+        width:Math.floor(width*.53),height:Math.floor(height*.40)});
       report.captures.push({file,i,appearance,smoothed,...snap,ledger,displayToCaptureMs:performance.now()-started,
-        fieldPixelsSha256:hash(crop.toBitmap())});
+        centerFieldPixelsSha256:hash(center.toBitmap()),fieldPixelsSha256:hash(crop.toBitmap())});
       console.log('Captured',file);
     };
     try{
@@ -137,6 +140,15 @@ app.on('browser-window-created',(_event,win)=>{
       report.performance=await js(`(()=>{const frames=window.contourQA.frames.filter(f=>f.surgicalStateId);
         return {count:frames.length,cpuSubmissionMs:frames.map(f=>f.cpuMs),fencePollUpperMs:window.contourQA.gpu.filter(g=>g.completed&&g.surgicalStateId).map(g=>g.completionPollMs)}})()`);
       if(matchingReport){
+        const conditioned=report.surfaces.filter(s=>s.diagnostics?.policy==='engine-shared-implicit-v1');
+        assert(conditioned.length,'Missing live engine shared-field diagnostics');
+        for(const layer of conditioned)assert(layer.diagnostics.maxDisplacementMm<=layer.diagnostics.displacementLimitMm);
+        for(const position of positions){
+          const labelViews=report.captures.filter(c=>c.i===position && c.appearance==='labels');
+          assert.equal(labelViews.length,2);
+          assert.notEqual(labelViews[0].centerFieldPixelsSha256,labelViews[1].centerFieldPixelsSha256,
+            'Raw and conditioned views must differ inside the operative field');
+        }
         const legend='[aria-label="Operative anatomy legend"]';
         await wait(`!!document.querySelector('${legend}')`);
         report.legend=await js(`(()=>{const el=document.querySelector('${legend}'),r=el.getBoundingClientRect();
@@ -170,7 +182,7 @@ app.on('browser-window-created',(_event,win)=>{
             if(!detail?.includes(layer.layerId))continue;
             const ras=await js('window.contourQA.frames.at(-1).cursor');
             const voxel=sourceVoxel(layer.registeredAffine,ras).map(Math.round);
-            assert(detail.includes('Source voxel '+voxel.join(', ')),detail);
+            assert(detail.toLowerCase().includes('source voxel '+voxel.join(', ')),detail);
             for(const fact of [layer.provenance.model||layer.provenance.method,layer.reviewStatus,layer.sampling])assert(detail.includes(fact));
             const evidence={relativeField:[u,v],ras,voxel,detail};
             const nativeRoot=process.env.CONTOUR_NATIVE_STUDY;

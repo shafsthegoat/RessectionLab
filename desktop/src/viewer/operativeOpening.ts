@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import type { OperativeModel } from './operativeFieldModel.ts';
+import { operativeVoxelSurface } from './operativeVoxelSurface.ts';
 import { operativeSurface } from './operativeSurface.ts';
 
 type Opening = 'bone' | 'dura';
@@ -60,6 +61,7 @@ export function prepareOperativeOpening(
   intact.parent?.add(cut);
   const limit = { value: -1 };
   for (const mesh of [intact, cut]) {
+    mesh.userData.sourceLayer={role:kind,openingLimit:limit,kerf:mesh===cut};
     mesh.customDepthMaterial = new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking });
     angularClip(mesh.material, limit, mesh === cut);
     angularClip(mesh.customDepthMaterial, limit, mesh === cut);
@@ -68,8 +70,11 @@ export function prepareOperativeOpening(
   const stationary = model.layers[kind];
   const movingKind = kind === 'bone' ? 'boneFlap' : 'duraFlap';
   const moving = model.layers[movingKind];
-  function prepare(row: number): Surfaces {
-    const extract = () => operativeSurface(model.field, stationary.mask, stationary.bounds, row, kind);
+  function prepare(row: number, raw: boolean): Surfaces {
+    const surface = (layer:typeof stationary, name:string) => raw
+      ? operativeVoxelSurface(model.field, layer.mask, layer.bounds, row)
+      : operativeSurface(model.field, layer.mask, layer.bounds, row, name);
+    const extract = () => surface(stationary, kind);
     const original = extract();
     if (model.field.stations[kind] === null)
       return { intact: original, cut: original, detached: original, flap: null };
@@ -78,18 +83,19 @@ export function prepareOperativeOpening(
       const kerfed = extract();
       model.applyOpening(kind, 128, true);
       const detached = extract();
-      const patch = operativeSurface(model.field, moving.mask, moving.bounds, row, movingKind);
+      const patch = surface(moving, movingKind);
       patch.translate(-flapOrigin.x, -flapOrigin.y, -flapOrigin.z);
       return { intact: original, cut: kerfed, detached, flap: patch };
     } finally {
       model.applyOpening(kind, 0, false);
     }
   }
-  function update(row: number, amount: number) {
-    let surfaces = sections.get(row);
+  function update(row: number, amount: number, raw = false) {
+    const key = raw ? -1-row : row;
+    let surfaces = sections.get(key);
     if (!surfaces) {
-      surfaces = prepare(row);
-      sections.set(row, surfaces);
+      surfaces = prepare(row,raw);
+      sections.set(key, surfaces);
     }
     if (model.field.stations[kind] === null) amount = 0;
     const sweep = model.openingState(kind, amount);
