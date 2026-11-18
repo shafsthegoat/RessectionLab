@@ -15,7 +15,7 @@ from .patient_anatomy import (
 )
 from .anatomy_editor import AnatomyDraft
 from .anatomy_workspace import read_view, save_view, component_review
-from .anatomy_geometry import mesh, normals
+from .anatomy_geometry import mesh, normals, display_surface_kind
 from .anatomy_qa import layer_quality
 from .anatomy_display import display_affine, brain_vessel_display, source_lattice_annotation_preview
 
@@ -166,11 +166,11 @@ def dispatch(session, operation, args, request, progress):
         patient_context = None
         if args.get("patientModel") is True and registered:
             from .anatomy_display import patient_display_context
-            context_key = (key, c.identity(), preview_alignment)
+            context_key = (key, c.identity(), preview_alignment, bool(args.get("original")))
             cached = getattr(session, "anatomy_context_cache", None)
             if cached is None or cached[0] != context_key or (
                     cached[1].get("signal") and not Path(cached[1]["signal"]["path"]).is_file()):
-                patient_context, signal = patient_display_context(c, preview=preview_alignment, check=request.check)
+                patient_context, signal = patient_display_context(c, preview=preview_alignment, check=request.check, original=bool(args.get("original")))
                 if signal is not None:
                     patient_context["signal"] = session.transfers.array(signal, "float32")
                 session.anatomy_context_cache = (context_key, patient_context)
@@ -276,12 +276,17 @@ def dispatch(session, operation, args, request, progress):
             if source_grid_preview:
                 message = "Annotation header omits spatial units. Preview on its supplied source grid; physical measurements unavailable."
                 quality = {**quality, "issues": [message, *quality["issues"]]}
+            from .anatomy_siam_display import supported_tissue_layer
+            source_support = None
+            if not (draft and draft.layer_id == name) and args.get("highlightLayer") != name:
+                row, source_support = supported_tissue_layer(c, row, check=request.check, raw_qc=bool(args.get("original")))
+            raw_siam = bool(source_support and source_support["status"] == "unfiltered")
             display_filter = None
             # Correction review always shows the complete editable source.
-            if (not source_grid_preview and vessel_scope == "brain" and row["kind"] in {"vessels", "artery", "vein", "sinus"}
+            if (not raw_siam and not source_grid_preview and vessel_scope == "brain" and row["kind"] in {"vessels", "artery", "vein", "sinus"}
                     and not draft and not args.get("highlightLayer")):
                 row, display_filter = brain_vessel_display(c, row)
-            if (not source_grid_preview and vessel_scope in {"intracranial", "excluded"} and row["kind"] in {"vessels", "artery", "vein", "sinus"}
+            if (not raw_siam and not source_grid_preview and vessel_scope in {"intracranial", "excluded"} and row["kind"] in {"vessels", "artery", "vein", "sinus"}
                     and not draft and not args.get("highlightLayer")):
                 from .anatomy_intracranial import intracranial_vessels
                 row, display_filter = intracranial_vessels(c, row, excluded=vessel_scope == "excluded", cancelled=request.cancelled.is_set)
@@ -299,6 +304,7 @@ def dispatch(session, operation, args, request, progress):
             record = {
                 "name": name,
                 "kind": row["kind"],
+                "displayKind": display_surface_kind(row),
                 "sourceSeries": row["source_series"],
                 "alignment": ("source-grid preview" if source_grid_preview else "independent" if not registered
                               else "estimated" if row_previews else c.document["transforms"][row["source_series"]]["status"]),
@@ -322,6 +328,7 @@ def dispatch(session, operation, args, request, progress):
                 "color": row["color"],
                 "alignmentPreviews": row_previews,
                 "displayFilter": display_filter,
+                **({"sourceSupport": source_support} if source_support else {}),
                 **({"labelSet": set_id, "labelValue": row["label_value"]} if shared else {"mask": transfer(mask, "uint8")}),
                 **({"volumeMm3": source_volume} if source_volume is not None else {}),
             }
@@ -407,6 +414,12 @@ def dispatch(session, operation, args, request, progress):
         alignment_previews.extend(t["sourceSeries"] for t in cache["tracts"] if t["alignment"] == "estimated")
         if cache["mri"] is None:
             cache["mri"] = transfer(c.array(image_data), "float32")
+            from .anatomy_siam_display import source_head_support
+            support = None if args.get("original") else source_head_support(c, reference, check=request.check)
+            if support is not None:
+                if preview:
+                    support = resample(support, affine(reference["affine"]), shape, native, order=0)
+                cache["headSupport"] = transfer(support, "uint8")
         result = {
             "tractography": cache["tracts"],
             **({"patientContext": patient_context} if patient_context else {}),
@@ -416,6 +429,7 @@ def dispatch(session, operation, args, request, progress):
             "shape": list(shape),
             "affine": displayed.tolist(),
             "mri": cache["mri"],
+            **({"headSupport": cache["headSupport"]} if "headSupport" in cache else {}),
             "compartments": layers,
             "labelSets": list(label_sets.values()),
             "modality": reference["modality"],
@@ -509,6 +523,9 @@ def dispatch(session, operation, args, request, progress):
 
             result = operative_field(c, args, check=request.check)
             result["labels"] = session.transfers.array(result["labels"], "uint8")
+            if "intensity" in result:
+                image = result["intensity"]
+                image["signal"] = session.transfers.array(image["signal"], "uint8")
             _retain(session, result)
             return result
         if args.get("action"):
@@ -571,6 +588,8 @@ def dispatch(session, operation, args, request, progress):
             spacing_mm=args.get("spacingMm", 0.5),
             moving_id=args.get("movingId"),
             checkerboard=args.get("checkerboard", True),
+            original=bool(args.get("original")),
+            check=request.check,
             layers=args.get("layers", []),
         )
         result["pixels"] = session.transfers.array(result["pixels"], "uint8")

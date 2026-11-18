@@ -1,10 +1,15 @@
 import type { Affine, Point3, Shape3 } from "./coordinates";
 
 export interface AlignmentQuality {status:string;warnings:string[];notes?:string[];metrics:Record<string,number|null>;selected?:string}
+export interface TissueDisplaySupport {
+  version:string; status:'supported'|'unfiltered'|'unavailable'; reason?:string;
+  sourceSha256:string; rawDataSha256:string; sampledDataSha256:string;
+  sourceVoxels?:number; retainedVoxels?:number; hiddenVoxels?:number;
+}
 export interface VesselDisplayFilter {scope:string;hiddenVoxels?:number;reason?:string;excludedVolumeMm3?:number;excludedFragments?:number;outsideVoxels?:number;boneConflictVoxels?:number;uncertainVoxels?:number}
 export interface PatientContextSource {
   seriesId:string; modality:string; sourceSha256:string; alignment:string; reason?:string;
-  voxelToPatientRasMm?:Affine; displayWindow?:[number,number];windowUnits?:string;
+  voxelToPatientRasMm?:Affine; displayWindow?:[number,number];windowUnits?:string;headSupport?:boolean;
 }
 export interface PatientContext {
   sources:PatientContextSource[];
@@ -12,6 +17,7 @@ export interface PatientContext {
 }
 export interface ViewerVolume {
   patientContext?:PatientContext;
+  headSupport?:{data:Uint8Array;sha256:string};
   sourceFrameIssue?:string|null;
   displayPreview?:{factor:number;meaning:string}|null;
   alignmentQuality?:Record<string,AlignmentQuality>;
@@ -35,6 +41,7 @@ export interface ViewerVolume {
     label?: string;
     kind?: string;
     sourceIdentity?: string;
+    displayKind?: string;
     sourceSeries?:string;
     alignment?:string;
     qa?: AnatomyQuality;
@@ -45,6 +52,7 @@ export interface ViewerVolume {
     color: string;
     volumeMm3?: number;
     displayFilter?: VesselDisplayFilter;
+    sourceSupport?: TissueDisplaySupport;
     /** Cached indexed display geometry. Masks remain the quantitative source. */
     surface?: {positions: Float32Array; source: Float32Array; normals: Float32Array; sourceNormals: Float32Array; indices: Uint32Array};
   }>;
@@ -78,6 +86,7 @@ export interface ViewerRoute {
 }
 
 export interface ViewerWorkspaceProps {
+  readCamera?: import('react').Ref<()=>import('./workspaceSettings').ViewerCameraState|null>;
   surgicalInteraction?: import("../surgical-types").SurgicalInteraction;
   onSliceStroke?: (point: Point3 | null, phase: 'start' | 'move' | 'end') => void;
   workspaceSettings?: import('./workspaceSettings').ViewerWorkspaceSettings;

@@ -109,3 +109,29 @@ test('aspiration brush cannot cross a one-cell vessel or empty wall to another t
     assert.equal(m.applyAspiration(0),0);assert.equal(count(m.layers.tumor.mask),12);
   }
 });
+
+test('exposed skull display omits only separated superficial vessel labels in supported columns',()=>{
+  const f=field(); f.voxels.fill(0); f.stations.bone=3;
+  const examples=[
+    [12,12,15,16],    // Two intervening cells above this column's outer skull.
+    [12,12,13,16],    // Immediately adjacent to skull.
+    [12,12,12,1|16],  // Overlapping the outer bone cell.
+    [12,12,11,16],    // Deep to outer skull.
+    [12,12,17,4|16],  // Conflicting brain and vascular labels.
+    [12,12,18,2|16],  // Dura and vessel overlap.
+    [12,12,19,8|16],  // Tumor-vessel overlap remains protected.
+    [13,12,15,16],    // Neighboring column has no sampled bone.
+    [14,12,15,16],    // This column's only bone is behind the target.
+  ];
+  for(const [x,y,z,bits] of examples) f.voxels[index(x,y,z)]=bits;
+  f.voxels[index(14,12,8)]=1;
+  const raw=f.voxels.slice(),m=buildOperativeModel(f);
+  assert.deepEqual(m.vesselDisplay,{sourceVoxels:9,visibleVoxels:8,superficialVoxels:1});
+  examples.forEach(([x,y,z],n)=>assert.equal(m.layers.vessel.mask[index(x,y,z)],n===0?0:1));
+  m.applyOpening('bone',128,true); m.applyAspiration(m.stepCount);
+  assert.deepEqual(f.voxels,raw);
+  assert.equal(m.layers.tumor.mask[index(12,12,19)],0);
+  f.stations.bone=null;
+  const incomplete=buildOperativeModel(f);
+  assert.deepEqual(incomplete.vesselDisplay,{sourceVoxels:9,visibleVoxels:9,superficialVoxels:0});
+});

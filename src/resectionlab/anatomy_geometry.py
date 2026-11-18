@@ -8,7 +8,7 @@ import numpy as np
 from scipy import ndimage as ndi
 from skimage.morphology import skeletonize
 from .patient_anatomy import digest, affine, world
-from .surface_fairing import fair_surface, surface_kind, NATIVE_POLICY, POLICY
+from .surface_fairing import fair_surface, surface_kind, broad_context_surface, NATIVE_POLICY, POLICY
 
 
 def _save_cache(path, values):
@@ -75,12 +75,23 @@ def normals(points, faces):
     return result.astype(np.float32)
 
 
+def display_surface_kind(row):
+    ontology = row.get("label_ontology") or row.get("provenance", {}).get("label_ontology") or {}
+    if (row["kind"] == "context" and row.get("provenance", {}).get("model") == "siam-v2"
+            and isinstance(ontology, dict) and ontology.get("value") == 16):
+        return "outer-head-tissue"
+    return row["kind"]
+
+
 def mesh(collection, row, *, cancelled=lambda: False):
     """Separate source/display mesh; same connectivity, bounded local movement."""
     started = perf_counter()
-    profile = surface_kind(row["kind"])
+    display_kind = display_surface_kind(row)
+    profile = surface_kind(display_kind)
     native = profile != "vessel"
     version = NATIVE_POLICY["version"] if native else POLICY["version"]
+    if broad_context_surface(display_kind):
+        version = NATIVE_POLICY["broadContext"]["version"]
     key = digest(
         {
             "algorithm": version,
@@ -142,7 +153,7 @@ def mesh(collection, row, *, cancelled=lambda: False):
     offset = lo - 1
     raw = (raw + offset).astype(np.float32)
     smoothed, diagnostics = fair_surface(
-        raw, faces, a, row["kind"], mask=np.pad(cropped, 1) if profile == "vessel" else None,
+        raw, faces, a, display_kind, mask=np.pad(cropped, 1) if profile == "vessel" else None,
         mask_origin=offset, native=native, cancelled=cancelled,
     )
     rejected = diagnostics["restoredComponents"] > 0

@@ -29,6 +29,11 @@
     "contextPassBand": 0.065,
     "contextVoxelAltitudes": 0.7,
     "contextMaximumMm": 1.0,
-    "lesionComponentVolumeTolerance": 0.01
+    "lesionComponentVolumeTolerance": 0.01,
+    "broadContext": {
+      "version": "native-bounded-exterior-v1",
+      "passBand": 0.1,
+      "tangentRetention": 0.67
+    }
   }
 }

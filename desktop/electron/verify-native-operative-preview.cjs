@@ -3,10 +3,12 @@
 // preview exercises fused scan switching and operative playback. --video records the
 // real hidden compositor. --export FILE saves a portable study. Reopen it in a
 // second process with mode reopen and --open-archive FILE.
+// --reuse-selection replays a saved route. --stage-detail captures intermediate poses.
+// --source-support checks the raw/supported MRI and SIAM receipts on a real tumor fixture.
 // baseline, prepare, stale and no-target exercise simpler study states.
 const {app, dialog, ipcMain} = require('electron');
-const {execFileSync,spawn} = require('node:child_process');
-const {once} = require('node:events');
+const {execFileSync} = require('node:child_process');
+const {recordingSize,framePixels,recordOperativePlayback} = require('./verify-operative-recording.cjs');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
@@ -41,7 +43,10 @@ const flagValue = name => {
   return index<0 ? null : path.resolve(process.argv[index+1]);
 };
 const archive = flagValue('--open-archive');
-if(archive) assert(archive.startsWith(fixtureRoot) && fs.statSync(archive).isFile());
+if(archive) {
+  assert(archive.startsWith(fixtureRoot) && fs.statSync(archive).isFile());
+  report.openedArchive={filename:archive,sha256:hash(fs.readFileSync(archive))};
+}
 const saveTo = flagValue('--export');
 if(saveTo) assert(saveTo.startsWith(fixtureRoot) && !fs.existsSync(saveTo));
 dialog.showOpenDialog = async () => ({canceled:false, filePaths:[archive ?? manifest]});
@@ -55,6 +60,10 @@ ipcMain.handle = (channel, handler) => handle(channel, async (...args) => {
   activeRequests++;
   try {
     const result = await handler(...args);
+    if(channel==='research:anatomyView' && process.argv.includes('--source-support')) {
+      (report.anatomyViews ??= []).push({series:args[1].seriesId,sourceHash:result.mri.sha256,
+        layers:result.compartments.map(l=>({id:l.name,kind:l.kind,volumeMm3:l.volumeMm3,sourceSupport:l.sourceSupport}))});
+    }
     if(channel==='research:anatomyView' && result.patientContext?.signal) {
       (report.patientViews ??= {})[args[1].seriesId] = {
         contextHash:result.patientContext.signal.sha256,sourceHash:result.mri.sha256,
@@ -65,7 +74,11 @@ ipcMain.handle = (channel, handler) => handle(channel, async (...args) => {
       const action = args[1].action;
       (report.plans ??= []).push({action,selectedId:result.selectedId,
         routes:result.approaches?.map(r=>({id:r.id,origin:r.origin,status:r.assessmentStatus,entry:r.entry,target:r.target,parameterHash:r.parameterHash})),
-        stations:result.stations, layers:result.layers?.map(l=>({id:l.id,evidence:l.evidence,voxels:l.sampledVoxels})),
+        spacingMm:result.spacingMm,shape:result.shape,stations:result.stations,
+        intensity:result.intensity && {series:result.intensity.sourceSeries,modality:result.intensity.modality,
+          sourceHash:result.intensity.sourceSha256,dataHash:result.intensity.dataSha256,signalHash:result.intensity.signal?.sha256,
+          covered:result.intensity.coveredVoxels,window:result.intensity.window,shape:result.intensity.shape},
+        layers:result.layers?.map(l=>({id:l.id,role:l.role,evidence:l.evidence,voxels:l.sampledVoxels,sourceSupport:l.sourceSupport})),
         target:result.targetLayerId,approach:result.approachId,excluded:result.excluded,issues:result.stationIssues,
         stationEvidence:result.stationEvidence,stationLayerIds:result.stationLayerIds,
         distinctEntryReport:result.distinctEntryReport?{status:result.distinctEntryReport.status,shortfall:result.distinctEntryReport.shortfall}:undefined});
@@ -80,7 +93,9 @@ const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
 const reportPath = path.join(output,'report.json');
 function finish(error) {
   report.sourceUnchanged = hash(fs.readFileSync(manifest)) === original;
-  report.passed = !error && report.sourceUnchanged && !report.everVisible && !report.errors.length;
+  const archiveUnchanged=!archive || hash(fs.readFileSync(archive))===report.openedArchive.sha256;
+  if(archive) report.openedArchive.unchanged=archiveUnchanged;
+  report.passed = !error && report.sourceUnchanged && archiveUnchanged && !report.everVisible && !report.errors.length;
   if(error) report.error = error.stack || String(error);
   fs.writeFileSync(reportPath, JSON.stringify(report,null,2)+'\n');
   console.log(report.passed ? reportPath : JSON.stringify(report));
@@ -95,6 +110,11 @@ dialog.showErrorBox = (title,message) => finish(Error(title+' '+message));
 process.on('uncaughtException',finish);
 process.on('unhandledRejection',finish);
 app.on('browser-window-created', (_, win) => {
+  win.webContents.on('console-message',detail=>{
+    if(detail.level==='error' || /shader error|VALIDATE_STATUS false/i.test(detail.message)) {
+      report.errors.push({channel:'renderer console',message:detail.message});
+    }
+  });
   win.on('show', () => { report.everVisible = true; finish(Error('Window became visible')); });
   win.webContents.once('did-finish-load', async () => {
     win.webContents.setBackgroundThrottling(false);
@@ -151,13 +171,64 @@ app.on('browser-window-created', (_, win) => {
       win.setContentSize(1440,900);
     };
     try {
+      report.rendererAsset = await js("document.querySelector('script[type=module][src]')?.src.split('/').pop()");
       await until(`document.querySelector('footer')?.textContent.includes('Add a source scan')`);
+      if(process.argv.includes('--source-support')) await js(`document.addEventListener('anatomy-frame',event=>{
+        const {cameraState,cursor,sourceSignalFingerprint}=event.detail;
+        window.operativeVerificationFrame={cameraState,cursor,sourceSignalFingerprint};
+      })`);
       await click('Open');
       await until(`JSON.parse(document.querySelector('.rl-viewer')?.dataset.sourceDisplayIdentity || '[]')[3]===${JSON.stringify(document.snapshot_id)}`);
       await ready();
       await click('Anatomy');
       await ready();
       await both('anatomy');
+      if(process.argv.includes('--source-support')) {
+        await js("document.querySelector('.anatomy-presets button:nth-child(2)').click()");
+        await ready();
+        const toggle = `[...document.querySelectorAll('input[type=checkbox]')].find(i=>
+          /Unfiltered SIAM estimates/i.test(i.getAttribute('aria-label')||i.closest('label')?.textContent||''))`;
+        await until(`!!(${toggle})`);
+        await js(`(()=>{for(let p=(${toggle}).parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;})()`);
+        const read = () => js(`({checked:(${toggle}).checked,
+          source:JSON.parse(document.querySelector('.rl-viewer').dataset.sourceDisplayIdentity),
+          layers:JSON.parse(document.querySelector('.rl-viewer').dataset.visibleLayerIds||'[]'),
+          frame:window.operativeVerificationFrame,rect:document.querySelector('.rl-viewer-anatomy-image').getBoundingClientRect().toJSON()})`);
+        const status = await read();
+        assert.equal(status.checked,false,'BITE opens with source-supported estimates');
+        const cleaned = await capture('source-supported-anatomy');
+        await js(`(${toggle}).click()`);
+        await ready();
+        const raw = await read();
+        report.sourceComparison = {supportedView:status, unfilteredView:raw};
+        assert(raw.checked,'The source QC control must apply explicit unfiltered estimates');
+        const unfiltered = await capture('unfiltered-anatomy');
+        assert.deepEqual(status.source.slice(0,4),raw.source.slice(0,4),'Linked source identity changed');
+        assert.equal(status.source[4],false);
+        assert.equal(raw.source[4],true);
+        assert.deepEqual(status.layers,raw.layers,'Visibility changed in addition to filtering');
+        assert(status.frame?.cameraState && raw.frame?.cameraState,'Missing submitted camera state');
+        for(const key of ['position','target','up']) {
+          assert(status.frame.cameraState[key].every((value,i)=>Math.abs(value-raw.frame.cameraState[key][i])<1e-4),
+            'Filtering changed the '+key+' of the source comparison camera');
+        }
+        assert.deepEqual(status.frame.cursor,raw.frame.cursor);
+        assert.deepEqual(status.frame.sourceSignalFingerprint,raw.frame.sourceSignalFingerprint);
+        const r=status.rect,region={x:Math.ceil(r.x+r.width*.05),y:Math.ceil(r.y+r.height*.07),
+          width:Math.floor(r.width*.90),height:Math.floor(r.height*.82)};
+        assert.deepEqual(raw.rect,status.rect);
+        const left=cleaned.crop(region).toBitmap(),right=unfiltered.crop(region).toBitmap();
+        assert.equal(left.length,right.length);
+        let changed=0;
+        for(let i=0;i<left.length;i+=4)
+          if(Math.max(Math.abs(left[i]-right[i]),Math.abs(left[i+1]-right[i+1]),Math.abs(left[i+2]-right[i+2]))>=8)changed++;
+        assert(changed>100,'Meaningful 3D geometry change must be visible under identical source, layers and viewport');
+        Object.assign(report.sourceComparison,{changedPixels:changed,pixels:left.length/4});
+        await js(`(${toggle}).click()`);
+        await ready();
+        assert.equal((await read()).checked,false);
+      }
+
       if(mode==='preview' && document.series.length>1) {
         const reference = document.reference_series;
         await js(studyScanSelectionScript(reference));
@@ -280,11 +351,59 @@ app.on('browser-window-created', (_, win) => {
           assert(await js("!!document.querySelector('.operative-field-canvas canvas')"),await js("document.querySelector('.operative-placeholder')?.innerText"));
           assert.equal(await js("document.querySelector('.operative-field-canvas [role=alert]')?.innerText"),undefined);
         };
+        let intro=null;
+        if(process.argv.includes('--video')) {
+          await recordingSize(win,js);
+          await ready();
+          await click('Layout');
+          await js(`(()=>{const select=document.querySelector('select[aria-label="Camera preset"]');
+            select.value='left';select.dispatchEvent(new Event('change',{bubbles:true}));})()`);
+          await click('Close view controls');
+          await ready();
+          await capture('selected-approach-1080p');
+          intro=await framePixels(win);
+        }
         await click('Preview operative steps');
         await previewReady();
         const field = report.plans.findLast(p=>p.action==='operativeField');
         assert.equal(field.approach,report.selected);
         assert.equal(field.target,targetLayer.id);
+        if(process.argv.includes('--source-support')) {
+          assert(field.spacingMm<=.35,'Expected the refined BITE field');
+          const source=document.series.find(row=>row.id===field.intensity?.series);
+          assert(source,'Expected an acquired intensity source');
+          assert.equal(field.intensity.sourceHash,source.original.sha256);
+          assert.equal(field.intensity.dataHash,source.data.sha256);
+          assert(field.intensity.covered>0 && field.intensity.signalHash);
+          const skull=document.layers.find(l=>l.kind==='skull'&&l.provenance?.model==='siam-v2');
+          assert(skull,'Expected a native SIAM skull estimate');
+          const readings=report.anatomyViews.flatMap(view=>view.layers).filter(l=>l.id===skull.id);
+          const rawSkull=readings.find(l=>l.sourceSupport?.status==='unfiltered')?.sourceSupport;
+          const supportedSkull=readings.find(l=>l.sourceSupport?.status==='supported')?.sourceSupport;
+          const operativeSkull=field.layers.find(l=>l.id===skull.id)?.sourceSupport;
+          for(const record of [rawSkull,supportedSkull,operativeSkull]) {
+            assert(record,'Expected skull provenance in the raw, supported and operative views');
+            assert.equal(record.sourceSha256,source.original.sha256);
+            assert.equal(record.rawDataSha256,skull.data.sha256);
+          }
+          assert.equal(rawSkull.sampledDataSha256,skull.data.sha256);
+          assert.equal(operativeSkull.sampledDataSha256,supportedSkull.sampledDataSha256);
+          assert.notEqual(supportedSkull.sampledDataSha256,skull.data.sha256);
+          assert(supportedSkull.hiddenVoxels>0 && supportedSkull.retainedVoxels>0);
+          assert.equal(supportedSkull.sourceVoxels,supportedSkull.retainedVoxels+supportedSkull.hiddenVoxels);
+          const tumor=field.layers.find(l=>l.id===targetLayer.id);
+          assert(tumor?.voxels>0 && !tumor.sourceSupport && /supplied/i.test(tumor.evidence));
+          report.sourceComparison.skullSupport={raw:rawSkull,supported:supportedSkull,operative:operativeSkull};
+
+          await js("document.querySelector('.operative-sources').open=true");
+          const evidenceText=await js("document.querySelector('.operative-sources').innerText");
+          const superficial=evidenceText.match(/([\d,]+) superficial vessel samples are hidden/);
+          assert(superficial && Number(superficial[1].replaceAll(',',''))>0,
+            'BITE surface-vessel handling needs an explicit count in Field evidence');
+          report.sourceComparison.superficialVesselSamples=Number(superficial[1].replaceAll(',',''));
+          await capture('operative-source-provenance');
+          await js("document.querySelector('.operative-sources').open=false");
+        }
         const captureField = async name => {
           const im = await capture(name);
           const rect = await js(`(()=>{const r=document.querySelector('.operative-field-canvas canvas').getBoundingClientRect();
@@ -314,6 +433,14 @@ app.on('browser-window-created', (_, win) => {
             if(!enabled) continue;
             await click(name);
             await until(`document.querySelector('.operative-playback').dataset.operativePhase===${JSON.stringify(role)}`);
+            if(process.argv.includes('--stage-detail')) {
+              const endpoint=Number(await js(`document.querySelector('[aria-label="Operative timeline"]').value`));
+              await js(inputScript('Operative timeline',endpoint-.55));
+              await until(`document.querySelector('.operative-playback').dataset.operativeProgress==='0.450'`);
+              await capture(role+'-mid-'+width);
+              await click(name);
+              await until(`document.querySelector('.operative-playback').dataset.operativeProgress==='1.000'`);
+            }
             const frame = await captureField(role+'-'+width);
             const changed = delta(prior,frame);
             assert(changed>30,'Missing rendered transition at '+role+' ('+changed+' changed pixels)');
@@ -341,31 +468,9 @@ app.on('browser-window-created', (_, win) => {
           report.animation.push(readout);
         }
         if(process.argv.includes('--video')) {
-          win.setContentSize(1280,800);
-          await until('innerWidth===1280&&innerHeight===800');
-          const max = Number(await js(`document.querySelector('[aria-label="Operative timeline"]').max`));
-          const dest = path.join(output,'operative-walkthrough.mp4');
-          const encoder = spawn('ffmpeg',['-hide_banner','-loglevel','error','-n','-f','image2pipe','-framerate','10',
-            '-c:v','png','-i','pipe:0','-c:v','libx264','-preset','veryfast','-crf','19','-pix_fmt','yuv420p',
-            '-movflags','+faststart',dest],{stdio:['pipe','ignore','inherit']});
-          const encoded = once(encoder,'close');
-          try {
-            for(let index=0;index<=max*34;index++) {
-              const position = Number((index/34).toFixed(2));
-              await js(inputScript('Operative timeline',position));
-              await js('new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)))');
-              assert.equal(win.isVisible(),false);
-              const actual = await win.webContents.capturePage(undefined,{stayHidden:true,stayAwake:true});
-              const frame = actual.getSize().width===1280?actual:actual.resize({width:1280,height:800});
-              const bytes = frame.toPNG();
-              const repeats = index===0||index===max*34 ? 8 : 1;
-              for(let hold=0;hold<repeats;hold++) if(!encoder.stdin.write(bytes)) await once(encoder.stdin,'drain');
-            }
-            encoder.stdin.end();
-            const [code] = await encoded;
-            assert.equal(code,0);
-            report.video = dest;
-          } finally { if(encoder.exitCode===null) encoder.kill(); }
+          report.recording=await recordOperativePlayback(win,js,output,intro);
+          report.video=report.recording.filename;
+          const max=Number(await js(`document.querySelector('[aria-label="Operative timeline"]').max`));
           await js(inputScript('Operative timeline',max-1+.05));
           assert.equal(await js("Number(document.querySelector('[data-removed-cells]').dataset.removedCells)"),0);
           await click('Reset operative steps');

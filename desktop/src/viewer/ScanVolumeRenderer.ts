@@ -31,6 +31,7 @@ export class ScanVolumeRenderer {
   private spacing:number;
   private readonly sourceGrid:{inverse:THREE.Matrix4;shape:THREE.Vector3;spacing:number};
   private readonly patientGrid?:{inverse:THREE.Matrix4;shape:THREE.Vector3;spacing:number;texture:THREE.Data3DTexture};
+  readonly supportTexture?:THREE.Data3DTexture;
   get patientTexture(){return this.patientGrid?.texture;}
   private layers: ViewerVolume["compartments"];
   private readonly ownsTexture: boolean;
@@ -58,6 +59,12 @@ export class ScanVolumeRenderer {
     const linear=renderer.extensions.has('OES_texture_float_linear');
     this.texture.minFilter=this.texture.magFilter=linear?THREE.LinearFilter:THREE.NearestFilter;
     this.texture.unpackAlignment=1;this.texture.needsUpdate=true;
+    if(volume.headSupport){
+      this.supportTexture=new THREE.Data3DTexture(volume.headSupport.data,volume.shape[2],volume.shape[1],volume.shape[0]);
+      this.supportTexture.format=THREE.RedFormat;this.supportTexture.type=THREE.UnsignedByteType;
+      this.supportTexture.minFilter=this.supportTexture.magFilter=THREE.NearestFilter;
+      this.supportTexture.unpackAlignment=1;this.supportTexture.needsUpdate=true;
+    }
     const field=volume.patientContext?.field;
     if(field){
       const texture=new THREE.Data3DTexture(field.signal,field.shape[2],field.shape[1],field.shape[0]);
@@ -70,6 +77,7 @@ export class ScanVolumeRenderer {
     this.volumeTarget=new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthBuffer:false});
     this.material=new THREE.ShaderMaterial({glslVersion:THREE.GLSL3,vertexShader:volumeVertexShader,
       fragmentShader:volumeFragmentShader,depthTest:false,depthWrite:false,toneMapped:false,uniforms:{
+        uHeadSupport:{value:this.supportTexture??null},uUseHeadSupport:{value:!!this.supportTexture},
         uVolume:{value:this.texture},uTransfer:{value:null},uScene:{value:this.sceneTarget.texture},
         uLabelWorldToVoxel:{value:this.sourceGrid.inverse},uLabelShape:{value:this.sourceGrid.shape},
         uDepth:{value:this.sceneTarget.depthTexture},uWorldToVoxel:{value:new THREE.Matrix4().set(...inverse.flat() as Parameters<THREE.Matrix4['set']>)},
@@ -98,6 +106,7 @@ export class ScanVolumeRenderer {
     this.material.uniforms.uWorldToVoxel.value=grid.inverse;
     this.material.uniforms.uShape.value=grid.shape;
     this.material.uniforms.uVolume.value=fused?.texture??this.texture;
+    this.material.uniforms.uUseHeadSupport.value=!fused&&!!this.supportTexture;
     this.spacing=grid.spacing;
     if(fused)modality='Normalized patient context';
     const settings=volumeSettings(input,modality);this.enabled=settings.enabled&&settings.density>0&&!(fused&&input?.isolateLabels);
@@ -123,7 +132,7 @@ export class ScanVolumeRenderer {
     this.material.uniforms.uScanPresentation.value=settings.presentation==='scan'&&settings.operativeView!=='surgeon';
     this.material.uniforms.uGradientOpacity.value=this.automaticMriTransfer&&this.shellContext;
     const u=this.material.uniforms;u.uLabels.value=texture;u.uSkullMode.value=settings.skullMode==='transparent'?2:settings.skullMode?1:0;let bits=0,all=0,active=0,context=0;
-    this.layers.forEach((layer,i)=>{const a=layerAppearance(layer.name,layer.color,settings,layer.kind);
+    this.layers.forEach((layer,i)=>{const a=layerAppearance(layer.name,layer.color,settings,layer.displayKind??layer.kind);
       // Keep declared context even when hidden: the scalar threshold fallback
       // must not resurrect a hidden source label or classify contrast as bone.
       if(layer.kind==='bone'||layer.kind==='skull')u.uContextLayers.value[context++]=i;
@@ -208,7 +217,7 @@ export class ScanVolumeRenderer {
     this.renderer.render(this.blitScene,this.camera);
   }
   dispose(){
-    this.sceneTarget.dispose();this.volumeTarget.dispose();if(this.ownsTexture)this.texture.dispose();this.patientGrid?.texture.dispose();this.transfer?.dispose();
+    this.sceneTarget.dispose();this.volumeTarget.dispose();if(this.ownsTexture)this.texture.dispose();this.patientGrid?.texture.dispose();this.supportTexture?.dispose();this.transfer?.dispose();
     this.interactionTargets?.scene.dispose();this.interactionTargets?.volume.dispose();
     this.surfacePass.dispose();this.accumulation.forEach(t=>t.dispose());this.accumulateMaterial.dispose();
     for(const scene of [this.rayScene,this.blitScene,this.accumulateScene])scene.traverse(child=>{if(child instanceof THREE.Mesh)child.geometry.dispose();});

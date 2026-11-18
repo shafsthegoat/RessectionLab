@@ -13,7 +13,7 @@ import {sampleDiagnosticLayer} from "./diagnosticLayer";
 import type {CheckedDiagnosticLayer} from "./diagnosticLayer";
 import {checkedPublicGoal,PUBLIC_GOAL_COLOR} from './publicGoal';
 import {mprView,mprPoint,mprPixel,sliceFraming,sourceSignalBounds} from './mprFraming';
-import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useImperativeHandle, useMemo, useRef, useState } from "react";
 import {
   Columns2,
   SlidersHorizontal,
@@ -130,6 +130,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const engine = useRef<VolumeRenderer | null>(null),
     latestProps = useRef(props);
   latestProps.current = props;
+  useImperativeHandle(props.readCamera,()=>()=>engine.current?.getCameraState()??null,[]);
   const inspectionSelection = useRef(new InspectionSelectionGate());
   const [displayedInspection, setDisplayedInspection] = useState<InspectionToolDisplay | null>(null);
   const [inspectionError, setInspectionError] = useState<string | null>(null);

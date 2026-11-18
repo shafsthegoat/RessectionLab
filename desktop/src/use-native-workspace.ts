@@ -10,9 +10,10 @@ import type {Binding,Draft,NativeAnatomyApi,NativeScanState,NativeViewState,Comp
 import type {ViewerVolume} from './viewer/contracts';
 import type {Point3} from './viewer/coordinates';
 import {transformPoint} from './viewer/coordinates';
-import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
+import type {ViewerWorkspaceSettings,ViewerCameraState} from './viewer/workspaceSettings';
 export const nativeDefaults=():ViewerWorkspaceSettings=>({layout:'3d-focus',showPlane:false,sliceOverlay:'contour',layerOpacity:{brain:.06,tumor:1,vessels:1,bone:1,'scalp-envelope':.02,__fragment_review:1},volumeRendering:{enabled:true,density:.18}});
 export function useNativeWorkspace(runtime:ResectionApi|null){
+  const readCamera=useRef<(()=>ViewerCameraState|null)|null>(null);
   const api=runtime as (ResectionApi&NativeAnatomyApi)|null;
   const [binding,setBinding]=useState<Binding|null>(null),[volume,setVolume]=useState<ViewerVolume|null>(null);
   const [selectedStructure,setSelectedStructure]=useState<string|null>(null),[structureFocusRequest,setStructureFocusRequest]=useState(0);
@@ -67,7 +68,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   async function prepared(next:ViewerVolume){const controller=new AbortController();packing.current=controller;try{return await prepareNativeLabels(next,controller.signal)}finally{if(packing.current===controller)packing.current=null;}}
   const run=async(job:()=>Promise<void>)=>{if(active.current)return;active.current=true;setBusy(true);try{await layerTask.current;await job()}catch(e){setMessage(e instanceof Error?e.message:String(e))}finally{active.current=false;setBusy(false)}};
   async function loadView(b:Binding,s:string,view:NativeScanState,raw=false,extra:Args={}){
-    if(!api)return;const seq=++generation.current;
+    if(!api)return;setOriginal(raw);const seq=++generation.current;
     resetLayers();installVolume(null);setUnavailable([]);setMessage('Preparing anatomy…');
     const ids=Object.keys(view.visible).filter(id=>view.visible[id]);
     try{
@@ -197,7 +198,12 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     });
   }
   function highlight(ids:number[]){if(!binding||!review||busy)return;setComponents(ids);const next={...state,cursor:ids.length===1?review.components.find(c=>c.id===ids[0])?.center??state.cursor:state.cursor};void run(()=>loadView(binding,series,next,original,{highlightLayer:editLayer,highlightComponents:ids,reviewId:review.reviewId}));}
-  function compare(){if(!binding)return;setOriginal(!original);void run(()=>loadView(binding,series,state,!original));}
+  function compare(){
+    if(!binding)return;
+    const camera=readCamera.current?.()??state.settings.camera;
+    const view={...state,settings:{...state.settings,camera}};
+    void run(()=>loadView(binding,series,view,!original));
+  }
   async function change(job:()=>Promise<{document:Binding['document']}|null>,{align=true}={}){
     if(!binding||!api)return;
     await run(async()=>{
@@ -215,7 +221,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
       const previousLayers=new Set(binding.document.layers.map(layer=>layer.id));
       const added=Object.fromEntries(next.document.layers.filter(layer=>!previousLayers.has(layer.id)).map(layer=>[layer.id,!['brain-region','review-region','head-envelope'].includes(layer.kind)]));
       let current=states[source]??initial(next,source);
-      if(binding.document.series.length<2&&next.document.series.length>1){
+      if((binding.document.series.length<2&&next.document.series.length>1)||(!binding.document.layers.length&&next.document.layers.length)){
         const modality=next.document.series.find(scan=>scan.id===source)!.modality;
         current={...current,settings:anatomyPresentation(current.settings,next.document.layers,'segmentation',modality)};
       }
@@ -259,6 +265,6 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
     const value=state.cursor?.[2]??0;
     updateState({settings:{...state.settings,skullMode:mode,layerOpacity:{...state.settings.layerOpacity,...bone},clipping:{axis:'z',value,enabled:mode==='cutaway',flipped:true},clipBox:state.settings.clipBox?{...state.settings.clipBox,enabled:false}:undefined,obliqueClip:state.settings.obliqueClip?{...state.settings.obliqueClip,enabled:false}:undefined}});
   }
-  return {viewState:currentViewState(),patientFrameReady,planning,selectedStructure,setSelectedStructure,structureFocusRequest,structureFocusPoint,focusStructure:(id:string,point?:Point3)=>{setStructureFocusPoint(point??null);setSelectedStructure(id);setStructureFocusRequest(n=>n+1);},present,changeSkullMode,canEditLayer,vesselScope,changeVesselScope,savePackage,api,binding,volume,series,state,busy,progress,pendingLayers,layerErrors,retryLayer,message,registration,unavailable,draft,original,editLayer,setEditLayer,tool,setTool,radius,setRadius,threshold,setThreshold,author,setAuthor,review,components,args,run,install,create,clear,selectScan,setVisible,refresh,edit,onStroke,save,reviewFragments,highlight,compare,change,runPreparation,setMessage,setCursor:(cursor:Point3)=>updateState({cursor}),setSettings:(settings:ViewerWorkspaceSettings)=>{const clipped=settings.clipping?.enabled||settings.clipBox?.enabled||settings.obliqueClip?.enabled;const transparent=binding?.document.layers.some(l=>['bone','skull'].includes(l.kind)&&(settings.layerOpacity?.[l.id]??1)<1);updateState({settings:{...settings,skullMode:clipped?'cutaway':transparent?'transparent':'exterior'}})},cancel};
+  return {readCamera,viewState:currentViewState(),patientFrameReady,planning,selectedStructure,setSelectedStructure,structureFocusRequest,structureFocusPoint,focusStructure:(id:string,point?:Point3)=>{setStructureFocusPoint(point??null);setSelectedStructure(id);setStructureFocusRequest(n=>n+1);},present,changeSkullMode,canEditLayer,vesselScope,changeVesselScope,savePackage,api,binding,volume,series,state,busy,progress,pendingLayers,layerErrors,retryLayer,message,registration,unavailable,draft,original,editLayer,setEditLayer,tool,setTool,radius,setRadius,threshold,setThreshold,author,setAuthor,review,components,args,run,install,create,clear,selectScan,setVisible,refresh,edit,onStroke,save,reviewFragments,highlight,compare,change,runPreparation,setMessage,setCursor:(cursor:Point3)=>updateState({cursor}),setSettings:(settings:ViewerWorkspaceSettings)=>{const clipped=settings.clipping?.enabled||settings.clipBox?.enabled||settings.obliqueClip?.enabled;const transparent=binding?.document.layers.some(l=>['bone','skull'].includes(l.kind)&&(settings.layerOpacity?.[l.id]??1)<1);updateState({settings:{...settings,skullMode:clipped?'cutaway':transparent?'transparent':'exterior'}})},cancel};
 }
 export type NativeWorkspace=ReturnType<typeof useNativeWorkspace>;

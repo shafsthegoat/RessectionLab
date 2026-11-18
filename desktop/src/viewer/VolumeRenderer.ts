@@ -93,7 +93,7 @@ type ModelStage={generation:number;next:ViewerVolume;interaction:SurgicalInterac
   waiting?:ViewerVolume['compartments'][number]|'pack';ready?:boolean;changedLayers:number;changedIndices:number;initialMapping:boolean;smoothing:boolean};
 const SLICE_PLANES: SlicePlane[] = ["axial", "coronal", "sagittal"];
 const RETIRED_SURFACE_BUDGET_BYTES=256*1024*1024;
-const CONTEXT_SURFACES = new Set(['brain', 'head-envelope', 'bone', 'skull']);
+const CONTEXT_SURFACES = new Set(['brain', 'head-envelope', 'outer-head-tissue', 'bone', 'skull']);
 
 function matrix(affine: Affine): THREE.Matrix4 {
   return new THREE.Matrix4().set(
@@ -705,9 +705,10 @@ export class VolumeRenderer {
     }
     if(smoothingPrepared)smooth.setAttribute("position", new THREE.BufferAttribute(smoothPositions!, 3));
     const vessel=surfaceKind(layer.kind)==='vessel';
-    const fairNormals=vessel||CONTEXT_SURFACES.has(layer.kind??'');
+    const displayKind=layer.displayKind??layer.kind??'';
+    const fairNormals=vessel||CONTEXT_SURFACES.has(displayKind)||Boolean(layer.surface&&['brain-region','gray-matter','white-matter','cerebellar-cortex','dura','csf','ventricles'].includes(displayKind));
     if(smoothingPrepared)smooth.setAttribute("normal", new THREE.BufferAttribute(fairNormals&&buffers.indices ? displaySurfaceNormals(smoothNormals!,buffers.indices,this.affine) : smoothNormals!, 3));
-    const appearance = layerAppearance(layer.name,layer.color,this.workspaceSettings,layer.kind);
+    const appearance = layerAppearance(layer.name,layer.color,this.workspaceSettings,layer.displayKind??layer.kind);
     const mesh = new THREE.Mesh(
       this.surfaceSmoothing ? smooth : geometry,
       new THREE.MeshStandardMaterial({
@@ -725,7 +726,8 @@ export class VolumeRenderer {
     mesh.castShadow=true;mesh.receiveShadow=true;
     applyOperativeSurface(mesh.material,layer.kind,this.workspaceSettings);
     if(vessel)applyVesselDepthMaterial(mesh.material,this.patientBounds??this.bounds);
-    applySourceContextMaterial(mesh.material,this.workspaceSettings.contextStyle==='shell'&&CONTEXT_SURFACES.has(layer.kind??''));
+    applySourceContextMaterial(mesh.material,this.workspaceSettings.contextStyle==='shell'&&CONTEXT_SURFACES.has(layer.displayKind??layer.kind??''),
+      this.workspaceSettings.presentation==='segmentation'&&['bone','skull'].includes(layer.kind??''));
     mesh.visible = this.surfaceVisible(layer.name);
     mesh.userData.compartment = layer.name;
     this.picking?.install(mesh,geometry,eagerPicking);
@@ -1073,7 +1075,7 @@ export class VolumeRenderer {
       const n=new THREE.Vector3(...oblique.normal);this.extraClipPlanes.push(new THREE.Plane(n,oblique.offset).normalize());
     }
     this.volume.compartments.forEach((layer,index)=>{
-      const appearance=layerAppearance(layer.name,layer.color,settings,layer.kind);
+      const appearance=layerAppearance(layer.name,layer.color,settings,layer.displayKind??layer.kind);
       const mesh=this.surfaces.get(layer.name);
       if(mesh){
         mesh.visible=this.surfaceVisible(layer.name);
@@ -1081,7 +1083,8 @@ export class VolumeRenderer {
         material.color.set(appearance.color);material.opacity=appearance.opacity;
         setNativeContextLighting(material,this.surfaceSmoothing && settings.operativeView !== 'surgeon');
         applyOperativeSurface(material,layer.kind,settings);
-        applySourceContextMaterial(material,settings.contextStyle==='shell'&&CONTEXT_SURFACES.has(layer.kind??''));
+        applySourceContextMaterial(material,settings.contextStyle==='shell'&&CONTEXT_SURFACES.has(layer.displayKind??layer.kind??''),
+          settings.presentation==='segmentation'&&['bone','skull'].includes(layer.kind??''));
         const transparent = appearance.opacity < 1;
         if (material.transparent !== transparent) {
           material.transparent = transparent;
@@ -1185,7 +1188,7 @@ export class VolumeRenderer {
     const material = object.material as THREE.MeshStandardMaterial;
     const layer = this.volume.compartments.find(item => item.name === object.userData.compartment);
     if (layer) {
-      const appearance = layerAppearance(layer.name, layer.color, this.workspaceSettings,layer.kind);
+      const appearance = layerAppearance(layer.name, layer.color, this.workspaceSettings,layer.displayKind??layer.kind);
       material.color.set(appearance.color);
       applyOperativeSurface(material,layer.kind,this.workspaceSettings);
       material.opacity = appearance.opacity;
@@ -2172,7 +2175,7 @@ export class VolumeRenderer {
     if(this.pendingReplayGroup)gather(this.pendingReplayGroup);
     for(const entry of this.retiredSurfaces){geometries.add(entry.pair.source);geometries.add(entry.pair.smooth);}
     if(this.modelStage)for(const pair of this.modelStage.prepared.values())if(pair){geometries.add(pair.source);geometries.add(pair.smooth);}
-    const textures=[...(this.scanVolume.patientTexture?[this.scanVolume.patientTexture]:[]),this.mriTexture,this.labelTexture,this.fusionTexture,this.removedTexture,this.proposalTexture,
+    const textures=[...(this.scanVolume.supportTexture?[this.scanVolume.supportTexture]:[]),...(this.scanVolume.patientTexture?[this.scanVolume.patientTexture]:[]),this.mriTexture,this.labelTexture,this.fusionTexture,this.removedTexture,this.proposalTexture,
       this.diagnosticStateTexture,this.diagnosticCoverageTexture,this.priorTexture,this.priorCoverageTexture];
     const geometryBytes=geometryBufferBytes(geometries),textureBytes=[...new Set(textures)].reduce((sum,texture)=>{
       const data=texture.image?.data as ArrayBufferView|undefined;return sum+(data?.byteLength??0);

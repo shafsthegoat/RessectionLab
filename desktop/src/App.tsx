@@ -2017,6 +2017,7 @@ export default function App() {
               surgicalInteraction={workbenchTab==="rehearsal"?surgical.interaction:undefined}
               rehearsalState={surgical.interaction.view?null:rehearsal.viewerState}
               workspaceSettings={viewerSettings}
+              readCamera={native.binding?native.readCamera:undefined}
               onWorkspaceSettingsChange={setViewerSettings}
               sourceLabel={native.binding?native.binding.document.series.find(s=>s.id===native.series)?.modality:String(displayedSource?.metadata.selected_modality??'Image')}
               onSliceStroke={native.binding?native.onStroke:undefined}

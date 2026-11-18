@@ -54,6 +54,10 @@ export function layerAppearance(name: string, color: string, settings: ViewerWor
   const opacity = settings.layerOpacity?.[name];
   const chosenColor = settings.layerColor?.[name];
   const defaultOpacity=kind==='tumor'||['vessel','vessels','artery','vein','sinus'].includes(kind??'')?1:
+    kind==='outer-head-tissue'?(settings.presentation==='scan'?.035:.14):
+    kind==='dura'?(settings.presentation==='scan'?.04:.16):
+    kind==='csf'?(settings.presentation==='scan'?.025:.07):
+    kind==='ventricles'?(settings.presentation==='scan'?.055:.26):
     ['brain','tissue','soft_tissue','head-envelope'].includes(kind??'')?.08:['bone','skull'].includes(kind??'')?.12:.66;
   return { opacity: settings.operativeView==='surgeon'&&!settings.microscope?.inspectionTransparency?1:typeof opacity === 'number' && Number.isFinite(opacity) ? Math.min(1, Math.max(0, opacity)) : defaultOpacity,
     color: chosenColor && /^#[\da-f]{6}$/i.test(chosenColor) ? chosenColor : color };

@@ -64,6 +64,18 @@ separate geometric dural envelope has its own optional stage and provenance.
 Inspect boundaries against the source slices. The vascular class combines
 vessel types, and the skull label does not measure bone density.
 
+The default SIAM display hides predictions beyond a coarse head envelope
+derived from that acquisition. The envelope connects the dominant MRI tissue
+signal in each axial section and includes a physical margin. In the outer
+margin, dark estimates more than 2 mm from continuous native MRI tissue
+signal are suppressed. Above-threshold signal, the acquisition borders and
+the filled interior stay protected, including dark skull and disconnected vessels. Anatomy,
+slice overlays and the operative field use the same native categorical result.
+**Anatomy → Display & fragments → Unfiltered SIAM estimates (QC)** shows the
+original predictions. Supplied tumor masks and manual corrections retain
+their source voxels. The study archives the original model labels and source
+MRI. An older study rebuilds its display cache locally when opened.
+
 The bounded Metal adapter uses one of the five publisher folds, 128³
 float32 inference tiles, CPU logit accumulation and Gaussian blending. Its estimates are
 unreviewed inspection context. Training used synthetic contrasts derived
@@ -74,10 +86,12 @@ model assets, adaptation and exclusion from training and benchmark inputs.
 In a development check on MNI BITE case 09, the preoperative contrast MRI
 produced all 16 classes. The study authors' tumor mask, on its original
 cropped grid, supplied the rehearsal target. The chosen corridor intersected
-the estimated skull, dura and brain as well as the annotated tumor. Slice
-review also revealed isolated skull predictions outside the head. Inspect
-source overlays before interpreting a surface, especially for thin tissues
-and small vessels. This check measured workflow behavior and model runtime.
+the estimated skull, dura and brain as well as the annotated tumor. The raw
+predictions included detached skull and dura in six sampled background regions.
+The supported display removed those skull/dura predictions and preserved
+every raw label in a 2.38-million-voxel central intracranial region. All
+16,096 supplied tumor voxels remained in place. Thin tissues and small
+vessels still need anatomical review.
 [MNI BITE source collection](https://nist.mni.mcgill.ca/bite-brain-images-of-tumors-for-evaluation-database/)
 
 ### Evidence from the adaptive workflow

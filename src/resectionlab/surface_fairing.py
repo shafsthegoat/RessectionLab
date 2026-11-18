@@ -18,10 +18,12 @@ def surface_kind(kind):
     return 'tumor' if kind == 'tumor' else 'vessel' if kind in {'vessel', 'vessels', 'artery', 'vein', 'sinus'} else 'context'
 
 
-def coefficients(kind, *, native_context=False):
+def coefficients(kind, *, native_context=False, broad_context=False):
     profile = POLICY['profiles'][surface_kind(kind)]
     n, pass_band = (NATIVE_POLICY['contextIterations'], NATIVE_POLICY['contextPassBand']) if native_context else (
         profile['iterations'], profile['passBand'])
+    if broad_context:
+        pass_band = NATIVE_POLICY['broadContext']['passBand']
     theta = np.arccos(1-pass_band)
     j = np.arange(1, n+1, dtype=float)
     c = np.r_[theta/np.pi, 2*np.sin(j*theta)/(np.pi*j)*(.5+.5*np.cos(np.pi*j/(n+1)))]
@@ -90,6 +92,36 @@ def _intersection_vertices(source, candidate, faces, cancelled, changed_points=N
     return np.array(sorted(bad), int)
 
 
+def broad_context_surface(kind):
+    return kind in {"brain", "skull", "bone", "head-envelope", "outer-head-tissue"}
+
+
+def retain_normal_displacement(delta, filtered, faces, cancelled):
+    """Prefer physical normal movement on broad native envelopes.
+
+    A large tangential slide can spend the cell displacement allowance without
+    removing the stair step. Keep some tangential relaxation for triangle
+    quality and pass the resulting positions through the original safety audit.
+    """
+    normals = np.zeros_like(filtered)
+    for start in range(0, len(faces), 65536):
+        if cancelled():
+            raise InterruptedError('Display smoothing cancelled')
+        ids = faces[start:start + 65536]
+        tri = filtered[ids]
+        area = np.cross(tri[:, 1] - tri[:, 0], tri[:, 2] - tri[:, 0])
+        for corner in range(3):
+            np.add.at(normals, ids[:, corner], area)
+    keep = NATIVE_POLICY["broadContext"]["tangentRetention"]
+    for start in range(0, len(delta), 65536):
+        normal = normals[start:start + 65536]
+        normal /= np.maximum(np.linalg.norm(normal, axis=1), 1.e-20)[:, None]
+        block = delta[start:start + 65536]
+        along_normal = np.einsum("ij,ij->i", block, normal)
+        block *= keep
+        block += (1 - keep) * along_normal[:, None] * normal
+
+
 def fair_surface(points, faces, affine, kind, *, mask=None, mask_origin=None, native=False, cancelled=lambda: False):
     points, faces = np.asarray(points, np.float32), np.asarray(faces, np.uint32)
     if points.ndim != 2 or points.shape[1] != 3 or faces.ndim != 2 or faces.shape[1] != 3:
@@ -98,7 +130,8 @@ def fair_surface(points, faces, affine, kind, *, mask=None, mask_origin=None, na
         raise ValueError('Invalid indexed display surface')
     profile_kind = 'tumor' if native and kind == 'lesion-context' else surface_kind(kind)
     native_context = native and profile_kind == 'context'
-    policy_version = NATIVE_POLICY['version'] if native else POLICY['version']
+    broad_context = native_context and broad_context_surface(kind)
+    policy_version = NATIVE_POLICY['broadContext']['version'] if broad_context else NATIVE_POLICY['version'] if native else POLICY['version']
     triangle_budget = NATIVE_POLICY['maxContextTriangles'] if native_context else POLICY['maxContextTriangles']
     if profile_kind == 'context' and len(faces) > triangle_budget:
         return points.copy(), {'policy':policy_version, 'kind':'context', 'maxDisplacementMm':0.,
@@ -141,7 +174,7 @@ def fair_surface(points, faces, affine, kind, *, mask=None, mask_origin=None, na
     _, components = connected_components(adjacency, directed=False)
     operator = sparse.diags(1/np.maximum(degree, 1)) @ adjacency
     del adjacency
-    c = coefficients(profile_kind, native_context=native_context)
+    c = coefficients(profile_kind, native_context=native_context, broad_context=broad_context)
     filtered = c[0]*original
     previous, current = original.copy(), np.zeros_like(original)
     for j in range(1, len(c)):
@@ -183,6 +216,8 @@ def fair_surface(points, faces, affine, kind, *, mask=None, mask_origin=None, na
         return ratio
 
     delta = filtered-original
+    if broad_context:
+        retain_normal_displacement(delta, filtered, faces, cancelled)
     filtered = original+delta*np.minimum(1, .999/np.maximum(cap_ratio(delta), 1e-30))[:, None]
     del delta
 

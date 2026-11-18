@@ -1,7 +1,7 @@
 import type { OperativeField, OperativePhase } from '../operative-field';
 import { aspirationSeedIndex, eligibleTumor } from './operativeSeed.ts';
 export { hasAspirationSeed } from './operativeSeed.ts';
-import { emptyVoxelBounds, extendVoxelBounds } from './operativeSurface.ts';
+import { emptyVoxelBounds, extendVoxelBounds, registerOperativeEdits, markOperativeEdits } from './operativeSurface.ts';
 
 type XYZ = [number, number, number];
 export const layerNames = ['bone','boneFlap','dura','duraFlap','brain','tumor','vessel'] as const;
@@ -28,7 +28,7 @@ export function operativeDimensions(field: OperativeField) {
  * nor receive a removal time. A brush affects only eligible source labels. */
 function aspiration(field: OperativeField, tipRadius: number) {
   const {shape: [nx,ny,nz], voxels, spacingMm: s} = field, yz = ny*nz;
-  const firstHit = new Uint32Array(voxels.length), path: number[] = [];
+  const firstHit = new Map<number,number>(), path: number[] = [];
   const allowed = (i:number) => eligibleTumor(voxels[i]);
   const seed=aspirationSeedIndex(field);
   if(seed===null)return {path,firstHit,seed:null};
@@ -44,7 +44,7 @@ function aspiration(field: OperativeField, tipRadius: number) {
     const queue=[i], seen=new Set(queue);
     for(let cursor=0;cursor<queue.length;cursor++) {
       const j=queue[cursor], x=Math.floor(j/yz), y=Math.floor(j/nz)%ny, z=j%nz;
-      if(!firstHit[j]) firstHit[j]=path.length;
+      if(!firstHit.has(j)) firstHit.set(j,path.length);
       for(const [dx,dy,dz] of neighbors) {
         const xx=x+dx, yy=y+dy, zz=z+dz;
         if(xx<0||xx>=nx||yy<0||yy>=ny||zz<0||zz>=nz) continue;
@@ -87,13 +87,21 @@ export function buildOperativeModel(field: OperativeField) {
     layers[name].mask[i]=1; extendVoxelBounds(layers[name].bounds,x,y,z);
   };
   const cutIndices = {bone:[] as number[], dura:[] as number[]};
-  const cutAt = new Uint8Array(field.voxels.length), duralCutAt = new Uint8Array(field.voxels.length);
+  const cutTimes = {bone:[] as number[],dura:[] as number[]};
   const flapIndices = {bone:[] as number[], dura:[] as number[]};
-  const swept = aspiration(field, tipRadius), affected: number[]=[];
+  const swept = aspiration(field, tipRadius), affected=Array.from(swept.firstHit);
   const maxOffset = Math.max(8,opening*.9,4*s);
+  const vesselDisplay = {sourceVoxels:0, visibleVoxels:0, superficialVoxels:0};
+  const targetSlice=Math.max(0,Math.round(-origin[2]/s));
   for(let x=0,i=0;x<nx;x++) for(let y=0;y<ny;y++) {
     const px=origin[0]+x*s, py=origin[1]+y*s, r=Math.hypot(px,py);
     const angle=(Math.atan2(py,px)+TAU)%TAU;
+    // The operative view starts at exposed skull. A sampled near-side bone
+    // cell in this column separates superficial labels from the field below.
+    let outerBone=-1;
+    if(stations.bone!==null) for(let z=nz-1;z>=targetSlice;z--){
+      if(field.voxels[i+z]&1){outerBone=z;break;}
+    }
     for(let z=0;z<nz;z++,i++) {
       const bits=field.voxels[i]; if(!bits) continue;
       const pz=origin[2]+z*s;
@@ -105,34 +113,56 @@ export function buildOperativeModel(field: OperativeField) {
         const hinge=kind==='dura' && px>radius*.74;
         if(!hinge && Math.abs(r-radius)<=kerf) {
           const fraction=kind==='bone'?angle/TAU:clamp01((angle-.70)/(TAU-1.40));
-          (kind==='bone'?cutAt:duralCutAt)[i]=1+Math.round(fraction*127); cutIndices[kind].push(i);
+          cutTimes[kind].push(1+Math.round(fraction*127)); cutIndices[kind].push(i);
         } else if(!hinge && r<radius) {
           flapIndices[kind].push(i); source(kind==='bone'?'boneFlap':'duraFlap',i,x,y,z);
         }
       }
-      if(bits&16) source('vessel',i,x,y,z);
+      if(bits&16){
+        vesselDisplay.sourceVoxels++;
+        // Keep contact with bone, ambiguous tissue overlaps, and columns
+        // without supporting skull. Tool eligibility always uses field.voxels.
+        if(outerBone>=0 && z>outerBone+1 && !(bits&(2|4|8))) vesselDisplay.superficialVoxels++;
+        else {source('vessel',i,x,y,z);vesselDisplay.visibleVoxels++;}
+      }
       if(eligibleTumor(bits)) source('tumor',i,x,y,z);
       if((bits&4) && !(bits&(1|2|8|16))) source('brain',i,x,y,z);
-      if(swept.firstHit[i]) affected.push(i);
     }
+  }
+  const targets=emptyVoxelBounds();
+  for(const [i] of affected)extendVoxelBounds(targets,Math.floor(i/(ny*nz)),Math.floor(i/nz)%ny,i%nz);
+  registerOperativeEdits(layers.tumor.mask,targets);
+  for(const kind of ['bone','dura'] as const){
+    const edits=emptyVoxelBounds();
+    for(const list of [cutIndices[kind],flapIndices[kind]])for(const i of list)extendVoxelBounds(edits,Math.floor(i/(ny*nz)),Math.floor(i/nz)%ny,i%nz);
+    registerOperativeEdits(layers[kind].mask,edits);
   }
   function openingState(kind: 'bone'|'dura', amount:number) {
     const cutEnd=kind==='bone'?.68:.50;
-    return {cut:Math.round(clamp01(amount/cutEnd)*128),lift:smooth((amount-cutEnd)/(1-cutEnd))};
+    const fraction=clamp01(amount/cutEnd),start=kind==='dura'?.70:0;
+    return {cut:Math.round(fraction*128),lift:smooth((amount-cutEnd)/(1-cutEnd)),fraction,
+      angle:start+fraction*(TAU-2*start),cutting:amount<=cutEnd};
   }
   function applyOpening(kind:'bone'|'dura',cut:number,lifted:boolean) {
-    const target=layers[kind].mask, timing=kind==='bone'?cutAt:duralCutAt;
-    for(const i of cutIndices[kind]) target[i]=Number(timing[i]>cut);
-    for(const i of flapIndices[kind]) target[i]=Number(!lifted);
+    const target=layers[kind].mask, cells=cutIndices[kind], timing=cutTimes[kind];
+    const dirty=emptyVoxelBounds();
+    const write=(i:number,value:number)=>{
+      if(target[i]===value)return;
+      target[i]=value;extendVoxelBounds(dirty,Math.floor(i/(ny*nz)),Math.floor(i/nz)%ny,i%nz);
+    };
+    for(let k=0;k<cells.length;k++)write(cells[k],Number(timing[k]>cut));
+    for(const i of flapIndices[kind])write(i,Number(!lifted));
+    markOperativeEdits(target,dirty);
   }
   function applyAspiration(step:number) {
-    let removed=0;
-    for(const i of affected){
-      const intact=swept.firstHit[i]>step;
+    let removed=0;const dirty=emptyVoxelBounds();
+    for(const [i,first] of affected){
+      const intact=first>step;
+      if(layers.tumor.mask[i]!==Number(intact))extendVoxelBounds(dirty,Math.floor(i/(ny*nz)),Math.floor(i/nz)%ny,i%nz);
       layers.tumor.mask[i]=Number(intact);
       if(!intact)removed++;
     }
-    return removed;
+    markOperativeEdits(layers.tumor.mask,dirty);return removed;
   }
   function surfaceHeight(kind:'bone'|'dura',px:number,py:number): number|null {
     const station=stations[kind]; if(station===null) return null;
@@ -152,7 +182,7 @@ export function buildOperativeModel(field: OperativeField) {
   }
   const tipAt=(step:number)=>swept.path.length?pointAt(field,swept.path[Math.max(0,Math.min(swept.path.length-1,step-1))]):null;
   const sectionY = (swept.seed?.[1]??0) - tipRadius*.45;
-  return {field,layers,opening,duralOpening,tipRadius,openingState,applyOpening,applyAspiration,surfaceHeight,tipAt,stepCount:swept.path.length,
+  return {field,layers,vesselDisplay,opening,duralOpening,tipRadius,openingState,applyOpening,applyAspiration,surfaceHeight,tipAt,stepCount:swept.path.length,
     firstSectionRow:Math.max(0,Math.ceil((sectionY-origin[1])/s))};
 }
 export type OperativeModel = ReturnType<typeof buildOperativeModel>;

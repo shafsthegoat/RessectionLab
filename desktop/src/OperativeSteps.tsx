@@ -45,6 +45,7 @@ export function OperativeSteps({api,collectionId,route}:{
 function OperativePlayback({field}:{field:OperativeField}){
   const [retract,setRetract]=useState(true),[cutaway,setCutaway]=useState(true);
   const [value,setValue]=useState(0),[playing,setPlaying]=useState(false);
+  const [superficialVessels,setSuperficialVessels]=useState(0);
   const clock=useRef(0),steps=playableSteps(field,retract),end=steps.length;
   const pose=timelinePose(steps,value);
   const proxies=field.layers.filter(l=>l.role==='dura'&&l.sampledVoxels>0);
@@ -82,13 +83,15 @@ function OperativePlayback({field}:{field:OperativeField}){
   return <section className="operative-playback" aria-label="Operative steps" data-operative-phase={pose.phase} data-operative-progress={pose.progress.toFixed(3)}>
     <div className="operative-topline"><div><strong>Operative field</strong><small>{field.spacingMm.toFixed(2)} mm display grid · Geometric rehearsal</small></div>
       <details className="operative-sources"><summary>Field evidence</summary><div>
+        {field.intensity&&<p><b>Surface contrast</b><br/>{field.intensity.modality} · {field.intensity.sourceSeries} · acquired scan intensities</p>}
+        {superficialVessels>0&&<p><b>Exposed skull</b><br/>{superficialVessels.toLocaleString()} superficial vessel samples are hidden with the overlying tissue. Anatomy shows the source estimates.</p>}
         <h3>Layers in this field</h3>
         {field.layers.map(layer=><p key={layer.id}><b>{layer.label}</b><br/>{layer.sourceSeries} · {layer.evidence}{layer.reviewStatus?' · '+layer.reviewStatus.replaceAll('_',' '):''}{layer.sampledVoxels===0?' · No labeled cells in this field':''}</p>)}
         {field.excluded.length>0&&<><h3>Excluded layers</h3>{field.excluded.map(l=><p key={l.id}>{l.label} · {l.reason}</p>)}</>}
         {[...new Set([...field.blockers,...field.stationIssues,...field.unknowns])].map(reason=><p key={reason}>{reason}</p>)}
       </div></details>
     </div>
-    <div className="operative-image"><OperativeFieldCanvas field={field} phase={pose.phase} progress={pose.progress} withRetraction={retract} cutaway={cutaway}/>
+    <div className="operative-image"><OperativeFieldCanvas field={field} phase={pose.phase} progress={pose.progress} withRetraction={retract} cutaway={cutaway} onSuperficialVessels={setSuperficialVessels}/>
       <div className="operative-legend" aria-label="Visible tissues">{tissues.map(role=><span key={role} data-tissue={role}>{role==='dura'&&duralProxy?'Dural proxy':legend[role]}</span>)}
         {!tissues.includes('vessels')&&<small>Vessels unmapped here</small>}
       </div>

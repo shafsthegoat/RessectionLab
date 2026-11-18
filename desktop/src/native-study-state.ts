@@ -6,6 +6,11 @@ export type AnatomyPresentation = 'scan'|'segmentation'|'vascular';
 export function defaultAnatomyPresentation(modality:string):AnatomyPresentation {
   return /segmentation only|analytic signal|generated image signal|diagnostic/i.test(modality)?'segmentation':'scan';
 }
+export function studyLayerDisplayKind(layer:Binding['document']['layers'][number]):string {
+  const provenance=layer.provenance as {model?:string;label_ontology?:{value?:number}}|null;
+  const ontology=layer.label_ontology as {value?:number}|undefined;
+  return layer.kind==='context'&&provenance?.model==='siam-v2'&&(ontology??provenance.label_ontology)?.value===16?'outer-head-tissue':layer.kind;
+}
 /** Presentation derivatives only; all selected structures and source masks stay intact. */
 export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Binding['document']['layers'],mode:AnatomyPresentation,modality:string):ViewerWorkspaceSettings {
   if(mode==='scan'&&defaultAnatomyPresentation(modality)!=='scan')mode='segmentation';
@@ -13,19 +18,23 @@ export function anatomyPresentation(settings:ViewerWorkspaceSettings,layers:Bind
   const layerOpacity={...settings.layerOpacity},layerColor={...settings.layerColor};
   for(const layer of layers){
     if(['vessels','vessel','artery','vein','sinus'].includes(layer.kind)){
-      layerColor[layer.id]='#ad4730';layerOpacity[layer.id]=scan?.16:vascular?1:.42;
+      layerColor[layer.id]='#ad4730';layerOpacity[layer.id]=scan?.16:vascular?1:.28;
       if(['vein','sinus'].includes(layer.kind)){layerColor[layer.id]='#6188a8';layerOpacity[layer.id]=scan?.08:vascular?.65:.18;}
     }else if(layer.kind==='tumor'){
       layerColor[layer.id]='#65bfd3';layerOpacity[layer.id]=scan?.32:1;
     }else if(['bone','skull'].includes(layer.kind)){
-      layerColor[layer.id]='#ece2ca';layerOpacity[layer.id]=scan?.015:.035;
+      layerColor[layer.id]='#ece2ca';layerOpacity[layer.id]=scan?.015:vascular?.06:.52;
     }else if(['brain','tissue','soft_tissue'].includes(layer.kind)){
       const brainRim=!vascular&&layer.kind==='brain';
       layerColor[layer.id]=brainRim?'#b8a8b6':'#c8d0d5';layerOpacity[layer.id]=scan?.012:brainRim?.12:vascular?.035:.055;
     }else if(layer.kind==='head-envelope')layerOpacity[layer.id]=scan?.008:.035;
+    else if(studyLayerDisplayKind(layer)==='outer-head-tissue')layerOpacity[layer.id]=scan?.035:vascular?.065:.14;
+    else if(layer.kind==='dura')layerOpacity[layer.id]=scan?.04:vascular?.06:.16;
+    else if(layer.kind==='csf')layerOpacity[layer.id]=scan?.025:vascular?.035:.07;
+    else if(layer.kind==='ventricles')layerOpacity[layer.id]=scan?.055:vascular?.08:.26;
     else if(['brain-region','cerebellar-white-matter','cerebellar-cortex','brainstem'].includes(layer.kind))layerOpacity[layer.id]=scan?.035:vascular?.055:.42;
   }
-  return {...settings,presentation:mode,layout:'3d-focus',sliceOverlay:'contour',sliceFraming:{fit:'anatomy',zoom:1},contextStyle:scan?'uniform':'shell',smoothSurfaces:scan?(settings.smoothSurfaces??false):true,showPlane:false,
+  return {...settings,presentation:mode,layout:'3d-focus',sliceOverlay:'contour',sliceFraming:{fit:'anatomy',zoom:1},contextStyle:scan?'uniform':'shell',smoothSurfaces:scan?(settings.smoothSurfaces??true):true,showPlane:false,
     skullMode:'transparent',layerColor,layerOpacity,
     // Explicit presentation action only. Saved contrast, opacity and transfer
     // choices are otherwise restored verbatim; source signal is never altered.

@@ -148,3 +148,35 @@ def test_sidecar_only_scout_stays_independent_after_import_and_reopen(tmp_path):
     reopened = PatientImagingCollection(c.root)
     assert not source_volume(reopened.series("series-a"))
     assert source_volume(reopened.series("series-b"))
+
+
+def test_head_support_restricts_only_the_3d_native_and_fused_scalar(tmp_path, monkeypatch):
+    from resectionlab import anatomy_siam_display
+    c = PatientImagingCollection.create(tmp_path / "study", "patient")
+    shape = (10, 10, 10)
+    raw = np.zeros(shape, dtype=np.float32)
+    raw[2:5, 2:6, 2:6] = 100
+    raw[8, 8, 8] = 1500
+    support = (raw == 100).astype(np.uint8)
+    image = nib.Nifti1Image(raw, np.eye(4))
+    image.header.set_xyzt_units("mm")
+    path = tmp_path / "signal.nii"
+    nib.save(image, path)
+    c.add_series(path, series_id="t1", modality="T1")
+    c.save()
+    monkeypatch.setattr(anatomy_siam_display, 'source_head_support', lambda c, row, check: support)
+    bridge = BridgeSession(tmp_path / "transfers")
+    call = lambda op, args: bridge.execute(op, args, _Request("head-support"), lambda *_: None)
+    opened = call("anatomyOpen", {"path": str(c.root / "patient-anatomy.json")})
+    args = {"collectionId": opened["collectionId"], "snapshotId": c.identity(), "patientModel": True, "seriesId":"t1"}
+    for original in [False,True,False]:
+        view = call("anatomyView", {**args, "original":original})
+        assert view['patientContext']['sources'][0]['headSupport'] is (not original)
+        assert np.array_equal(np.fromfile(view['mri']['path'],np.float32).reshape(shape), raw)
+        field = np.fromfile(view['patientContext']['signal']['path'],np.float32).reshape(shape)
+        assert field[3, 3, 3] > 0
+        assert (field[8, 8, 8] > 0) == original
+        if original:
+            assert 'headSupport' not in view
+        else:
+            assert np.array_equal(np.fromfile(view['headSupport']['path'],np.uint8).reshape(shape), support)

@@ -10,6 +10,9 @@ test('shell context retains the source silhouette and configured opacity without
   assert.equal(sourceContextOpacity(.2,1),.012);
   assert.equal(sourceContextOpacity(.2,-1),.012,'front/back source boundaries have the same response');
   assert.ok(sourceContextOpacity(.2,.5)<.05);
+  assert.equal(sourceContextOpacity(.52,1,true),.52*.48,'bone transmits enough front-face shading to show curvature');
+  assert.equal(sourceContextOpacity(.52,0,true),.52);
+  assert.equal(sourceContextOpacity(1,1,true),1);
   assert.equal(sourceContextOpacity(1,1),1,'explicit opaque context stays solid');
 });
 

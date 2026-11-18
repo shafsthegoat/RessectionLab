@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {nextScanState,scanLabel,studyTimepoint,migrateSkullView,anatomyPresentation,defaultAnatomyPresentation,sourceEvidenceLabel} from '../src/native-study-state.ts';
+import {studyLayerDisplayKind,nextScanState,scanLabel,studyTimepoint,migrateSkullView,anatomyPresentation,defaultAnatomyPresentation,sourceEvidenceLabel} from '../src/native-study-state.ts';
 import {checkedViewerSettings} from '../src/workspace-view-settings.ts';
 
 test('structural contrast retains study angiography availability and derived diffusion status',()=>{
@@ -79,6 +79,17 @@ test('presentation choices preserve source identities, selected anatomy, camera 
     assert.deepEqual(JSON.parse(JSON.stringify(next)).presentation,mode);
   }
   assert.deepEqual({settings,layers},original);
+});
+
+test('SIAM residual head tissue uses its anatomical context style while other source labels retain their kind',()=>{
+  const provenance={model:'siam-v2',label_ontology:{value:16}};
+  const tissue={id:'head-other',kind:'context',provenance};
+  assert.equal(studyLayerDisplayKind(tissue),'outer-head-tissue');
+  assert.equal(studyLayerDisplayKind({...tissue,provenance:{...provenance,model:'different'}}),'context');
+  assert.equal(studyLayerDisplayKind({...tissue,label_ontology:{value:3}}),'context');
+  assert.equal(anatomyPresentation({},[tissue],'scan','T1').smoothSurfaces,true);
+  assert.equal(anatomyPresentation({smoothSurfaces:false},[tissue],'scan','T1').smoothSurfaces,false);
+  assert.equal(anatomyPresentation({},[tissue],'segmentation','T1').layerOpacity[tissue.id],.14);
 });
 
 test('Scan explicitly restores acquired signal and restrained overlays without overwriting stored settings',()=>{

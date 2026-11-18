@@ -44,3 +44,33 @@ test('timeline skips missing layers, optionally omits retraction, and keeps the 
   assert.deepEqual(playableSteps({...field,voxels:voxels.map(v=>v|16)},true).map(s=>s.id),['brain']);
   assert.equal(timelinePose([],2).phase,'overview');
 });
+
+test('operative scan texture verifies its local frame, source identity, coverage, and transferred bytes',async()=>{
+  const brightness=Uint8Array.of(0,25,72,102,140,211,222,255);
+  const descriptor={...bytes,assetId:'brightness',sha256:createHash('sha256').update(brightness).digest('hex')};
+  const intensity={signal:descriptor,shape:[2,2,2],origin:[-1,-1,0],spacingMm:[1,1,1],unknownValue:0,
+    sourceSeries:'t1',sourceSha256:'c'.repeat(64),dataSha256:'b'.repeat(64),modality:'T1',
+    window:[3,225],windowUnits:'source intensity',windowMethod:'Local measured percentiles',coveredVoxels:7,
+    sourceShape:[9,9,9],sourceVoxelToPatientRasMm:[[0,-1,0,2],[1,0,0,-3],[0,0,1,4],[0,0,0,1]]};
+  const read=async id=>id==='a'?voxels:brightness;
+  const field=await readOperativeField({...packet,intensity},route,read);
+  assert.deepEqual(field.intensity.voxels,brightness);
+  assert.deepEqual(field.voxels,voxels);
+  assert.equal(field.intensity.signal,undefined);
+  assert.equal((await readOperativeField(packet,route,read)).intensity,undefined);
+  const fine=Uint8Array.from({length:18},(_,i)=>i+1);
+  const fineShape=[3,2,3];
+  const fineDescriptor={...descriptor,shape:fineShape,byteLength:fine.length,sha256:createHash('sha256').update(fine).digest('hex')};
+  const finer=await readOperativeField({...packet,intensity:{...intensity,shape:fineShape,spacingMm:[.5,1,.5],
+    signal:fineDescriptor,coveredVoxels:fine.length}},route,async id=>id==='a'?voxels:fine);
+  assert.deepEqual(finer.intensity.voxels,fine);
+  for(const shape of [[257,2,2],[126,126,126]]){
+    await assert.rejects(()=>readOperativeField({...packet,intensity:{...intensity,shape,
+      spacingMm:shape.map(n=>1/(n-1))}},route,read),/intensity grid/);
+  }
+  for(const bad of [{origin:[1,-1,0]},{spacingMm:[1,1,.5]},{shape:[2,2,3]},
+    {unknownValue:255},{coveredVoxels:8},{sourceSha256:'unknown'},{modality:'MIP'},
+    {sourceVoxelToPatientRasMm:[[0,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]},{window:[34,4]},{windowUnits:'HU'},{signal:{...descriptor,order:'F'}},{signal:{...descriptor,sha256:'a'.repeat(64)}}]){
+    await assert.rejects(()=>readOperativeField({...packet,intensity:{...intensity,...bad}},route,read),/intensity|scan/i);
+  }
+});

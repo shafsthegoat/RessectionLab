@@ -1,12 +1,15 @@
 """Sample native labels in a target-centred RAS frame for visual rehearsal."""
 
 import json
+from itertools import product
 
 import numpy as np
 
 from .anatomy_approaches import FILENAME, _read_plan
 from .anatomy_evidence import VASCULAR_KINDS, inference_bounds, is_dural_proxy, vascular_evidence_supported
+from .anatomy_operative_intensity import operative_intensity
 from .anatomy_planning import native_target_binding
+from .anatomy_siam_display import supported_tissue_layer
 from .native_consequence_evidence import _source_class
 from .patient_anatomy import file_hash, world
 
@@ -75,9 +78,9 @@ def _field_grid(collection, route):
     outer = length + np.clip(exit_depth - length + 3, 32, 160)
     radius = max(24., route["radiusMm"] + 7., route.get("entryPatch", {}).get("radiusMm", 0.) + 5.)
     behind = max(15., min(radius, 30.))
-    # Odd transverse dimensions and an integer depth index anchor the target
-    # exactly. Even the longest supported routes fit a 97 x 97 x 224 field.
-    spacing = float(max(.625, radius / 48, (outer + behind) / 220))
+    # Anchor the target at a display voxel center. Ordinary fields use
+    # 0.3125 mm spacing; large trajectories stay below 161 x 161 x 399 cells.
+    spacing = float(max(.3125, radius / 80, (outer + behind) / 396))
     half, below, above = (int(np.ceil(value / spacing)) for value in (radius, behind, outer))
     origin = -spacing * np.array([half, half, below])
     shape = (2 * half + 1, 2 * half + 1, below + above + 1)
@@ -123,42 +126,79 @@ def _evidence(row):
             "unclassified_source": "Source-associated label"}[_source_class(row)]
 
 
-def _inside(points, shape):
-    return np.all((points >= -.5) & (points < np.asarray(shape) - .5), axis=-1)
+def _coordinate(matrix, axis, coords):
+    return (matrix[axis, 0] * coords[0] + matrix[axis, 1] * coords[1]
+            + matrix[axis, 2] * coords[2] + matrix[axis, 3])
 
 
-def _sample(collection, row, grid, shape, check):
-    """Nearest native cell at each display centre, bounded by all source fields."""
-    source = collection.series(row["source_series"])
-    native = collection.patient_affine(row)
+def _sample_values(data, native, source_affine, source_shape, grid, shape, bounds, slices, check):
+    """Pull a categorical grid once, preserving source-cell and acquisition support."""
     layer_from_field = np.linalg.solve(native, grid)
-    source_from_field = np.linalg.solve(collection.patient_affine(source), grid)
-    source_from_layer = np.linalg.solve(collection.patient_affine(source), native)
-    data = collection.array(row["data"])
-    bounds = inference_bounds(row) or ([0, 0, 0], np.asarray(data.shape) - 1)
-    slices = row.get("coverage_fields", {}).get("supported_axial_indices")
-    if slices is not None and (not isinstance(slices, list)
-            or any(type(index) is not int or not 0 <= index < data.shape[2] for index in slices)):
-        raise ValueError("Invalid supported axial slice indices")
-    sampled = np.zeros(shape, bool)
-    covered = np.zeros(shape, bool)
-    source_shape = source["data"]["shape"]
-    slab_size = max(1, 65536 // (shape[1] * shape[2]))
+    source_from_layer = np.linalg.solve(source_affine, native)
+    source_from_field = np.linalg.solve(source_affine, grid)
+    low, high = map(np.asarray, bounds)
+    # Omit redundant acquisition tests only when whole label cells are
+    # contained. Cropped or tilted labels can protrude past acquired voxels.
+    corners = world(source_from_layer, list(product(*zip(low - .5, high + .5))))
+    contained = ((np.array_equal(native, source_affine) and np.all(high < source_shape))
+                 or (np.all(corners > -.5) and np.all(corners < source_shape - .5)))
+    axial = None
+    if slices is not None:
+        axial = np.zeros(data.shape[2], dtype=bool)
+        axial[list(slices)] = True
+
+    values = np.zeros(shape, dtype=data.dtype)
+    covered = np.zeros(shape, dtype=bool)
+    y = np.arange(shape[1])[None, :, None]
+    z = np.arange(shape[2])[None, None, :]
+    # Bound intermediate coordinates independently of trajectory and study size.
+    slab_size = max(1, 262144 // (shape[1] * shape[2]))
     for start in range(0, shape[0], slab_size):
         check()
-        slab = slice(start, min(start + slab_size, shape[0]))
-        field_cells = np.moveaxis(np.indices(sampled[slab].shape), 0, -1)
-        field_cells[..., 0] += start
-        cells = np.floor(world(layer_from_field, field_cells) + .5).astype(np.intp)
-        valid = np.all((cells >= bounds[0]) & (cells <= bounds[1]), axis=-1)
-        valid &= _inside(world(source_from_field, field_cells), source_shape)
-        # A padded/restored output voxel can straddle the edge of acquisition.
-        valid &= _inside(world(source_from_layer, cells), source_shape)
-        if slices is not None:
-            valid &= np.isin(cells[..., 2], slices)
-        covered[slab] = valid
-        sampled[slab][valid] = data[tuple(cells[valid].T)] == row["label_value"]
-    return sampled, covered
+        stop = min(start + slab_size, shape[0])
+        coords = (np.arange(start, stop)[:, None, None], y, z)
+        cells = [np.floor(_coordinate(layer_from_field, axis, coords) + .5).astype(np.int32) for axis in range(3)]
+        valid = np.ones((stop - start, *shape[1:]), dtype=bool)
+        for axis, cell in enumerate(cells):
+            valid &= (cell >= low[axis]) & (cell <= high[axis])
+        if not valid.any():
+            continue
+        if not contained:
+            for axis, size in enumerate(source_shape):
+                point = _coordinate(source_from_field, axis, coords)
+                center = _coordinate(source_from_layer, axis, cells)
+                valid &= (point >= -.5) & (point < size - .5) & (center >= -.5) & (center < size - .5)
+        for axis, cell in enumerate(cells):
+            np.clip(cell, 0, data.shape[axis] - 1, out=cell)
+        if axial is not None:
+            valid &= axial[cells[2]]
+        covered[start:stop] = valid
+        values[start:stop] = data[tuple(cells)]
+    return values, covered
+
+
+def _sample(collection, row, grid, shape, check, cache):
+    source = collection.series(row["source_series"])
+    native = collection.patient_affine(row)
+    source_affine = collection.patient_affine(source)
+    data = collection.array(row["data"])
+    bounds = inference_bounds(row) or ((0, 0, 0), tuple(size - 1 for size in data.shape))
+    slices = row.get("coverage_fields", {}).get("supported_axial_indices")
+    if slices is not None:
+        if (not isinstance(slices, list)
+                or any(type(index) is not int or not 0 <= index < data.shape[2] for index in slices)):
+            raise ValueError("Invalid supported axial slice indices")
+        slices = tuple(slices)
+    source_shape = tuple(source["data"]["shape"])
+    key = (row["data"]["sha256"], native.tobytes(), source_affine.tobytes(), source_shape, bounds, slices)
+    if cache.get("key") != key:
+        # A segmentation can represent many separately attributed tissues in
+        # one categorical array. Keep just the current native grid in memory.
+        cache.clear()
+        values, covered = _sample_values(data, native, source_affine, np.asarray(source_shape),
+                                         grid, shape, bounds, slices, check)
+        cache.update(key=key, values=values, covered=covered)
+    return (cache["values"] == row["label_value"]) & cache["covered"], cache["covered"]
 
 
 def _runs(mask, depths):
@@ -230,7 +270,9 @@ def operative_field(collection, args, *, check=lambda: None):
     middle = shape[0] // 2
     layers, excluded = [], []
     direct_dura = np.zeros(shape, bool)
-    for row in sorted(collection.document["layers"], key=is_dural_proxy):
+    cache = {}
+    source_rows = sorted(collection.document["layers"], key=is_dural_proxy)
+    for row in sorted(source_rows, key=lambda item: (is_dural_proxy(item), item["data"]["sha256"])):
         role = _material(row, target)
         if not role:
             continue
@@ -242,7 +284,11 @@ def operative_field(collection, args, *, check=lambda: None):
                 raise ValueError("Source reported an empty output")
             if vascular_context and str(model).lower() not in {"siam-v2", "supersynth"}:
                 raise ValueError("Vascular estimate lacks supported positive geometry")
-            occupied, covered = _sample(collection, row, grid, shape, check)
+            display_row, support = row, None
+            if role != "tumor" and model == "siam-v2":
+                collection.patient_affine(row)
+                display_row, support = supported_tissue_layer(collection, row, check=check)
+            occupied, covered = _sample(collection, display_row, grid, shape, check, cache)
         except InterruptedError:
             raise
         except (ValueError, OSError, StopIteration) as error:
@@ -254,7 +300,7 @@ def operative_field(collection, args, *, check=lambda: None):
         if role == "dura":
             if proxy:
                 occupied &= ~direct_dura
-                covered &= ~direct_dura
+                covered = covered & ~direct_dura
                 if not covered.any():
                     excluded.append({**identity, "reason": "Proxy support coincides with direct dural labels"})
                     continue
@@ -269,13 +315,19 @@ def operative_field(collection, args, *, check=lambda: None):
                        "vascularContextOnly": vascular_context,
                        "model": row["provenance"].get("model"), "sourceSeries": source["id"],
                        "sourceSha256": source["original"]["sha256"], "dataSha256": row["data"]["sha256"],
+                       "sampledDataSha256": display_row["data"]["sha256"], "sourceSupport": support,
                        "labelValue": row["label_value"], "revision": row.get("revision", 0),
                        "coverageMeaning": row.get("coverage"), "reviewStatus": row.get("review_status"),
                        "sourceModality": source["modality"],
                        "registrationStatus": collection.document["transforms"][source["id"]]["status"],
                        "coveredCenterlineRunsMm": _runs(covered[middle, middle], depths),
-                       "timepoint": source["timepoint"], "sampledVoxels": int(occupied.sum()),
-                       "coveredVoxels": int(covered.sum()), "centerlineRunsMm": _runs(occupied[middle, middle], depths)})
+                       "timepoint": source["timepoint"], "sampledVoxels": int(np.count_nonzero(occupied)),
+                       "coveredVoxels": int(np.count_nonzero(covered)), "centerlineRunsMm": _runs(occupied[middle, middle], depths)})
+    # Group native reads by array while preserving collection order in the UI.
+    source_order = {row["id"]: index for index, row in enumerate(source_rows)}
+    layers.sort(key=lambda item: source_order[item["id"]])
+    excluded.sort(key=lambda item: source_order[item["id"]])
+    cache.clear()
     measured = route["measurements"]
     target_endpoint_supported = any(item.get("targetPointInsideLabel") and item["layerId"] == target
                                     for item in measured["targets"])
@@ -284,11 +336,12 @@ def operative_field(collection, args, *, check=lambda: None):
     for layer in layers:
         if layer["role"] == "vessels" and any(hi > frame["entryDepthMm"] for _, hi in layer["centerlineRunsMm"]):
             issues.append(f"{layer['label']} sampled on the centerline beyond the assessed entry")
+    intensity = operative_intensity(collection, collection.layer(target)["source_series"], grid, frame, check=check)
     check()
     if (json.loads((collection.root / "patient-anatomy.json").read_text())["snapshot_id"] != args["snapshotId"]
             or file_hash(collection.root / FILENAME) != revision):
         raise ValueError("The anatomy or saved plan changed while sampling the operative field")
-    return {**frame, "snapshotId": args["snapshotId"], "approachId": route["id"], "parameterHash": route["parameterHash"],
+    return {**frame, **({"intensity": intensity} if intensity is not None else {}), "snapshotId": args["snapshotId"], "approachId": route["id"], "parameterHash": route["parameterHash"],
             "targetLayerId": target, "candidateBinding": binding, "labels": labels, "materialBits": dict(MATERIAL_BITS),
             "layers": layers, "excluded": excluded, "stations": stations, "stationRuns": runs, "stationIssues": issues,
             "stationLayerIds": station_ids, "stationEvidence": station_evidence,

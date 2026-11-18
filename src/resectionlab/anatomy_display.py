@@ -105,7 +105,7 @@ def brain_vessel_display(collection, row):
     return row, {'scope': 'all', 'reason': 'No aligned brain mask; showing the full vessel estimate', 'sourcePreserved': True}
 
 
-def patient_display_context(collection, *, preview, check):
+def patient_display_context(collection, *, preview, check, original=False):
     """Bounded display texture on the union of the source-bound patient fields.
 
     Each source first maps to unitless display brightness. The brightest
@@ -141,9 +141,12 @@ def patient_display_context(collection, *, preview, check):
     shape = tuple(np.clip(np.ceil((high - low) / spacing).astype(int), 2, 192))
     frame = np.diag([spacing, spacing, spacing, 1.])
     frame[:3, 3] = low + spacing / 2
+    from .anatomy_siam_display import source_head_support
     signal = np.zeros(shape, dtype=np.float32)
     for scan, source, entry in admitted:
         check()
+        support = None if original else source_head_support(collection, scan, check=check)
+        entry["headSupport"] = support is not None
         data = collection.array(scan["data"])
         units = str(scan.get("intensity_units") or scan.get("metadata", {}).get("Units", "")).upper()
         if re.match(r"^\s*CTA?(?:\b|[-_])", scan["modality"], re.I) and units in {"HU", "HOUNSFIELD", "HOUNSFIELD UNITS"}:
@@ -151,7 +154,12 @@ def patient_display_context(collection, *, preview, check):
             window = [0., 1000.]
         else:
             entry["windowUnits"] = "source intensity"
-            sample = data.ravel()[::max(1, data.size // 100000)]
+            stride = max(1, data.size // 100000)
+            sample = data.ravel()[::stride]
+            if support is not None:
+                inside = sample[support.ravel()[::stride] != 0]
+                if inside.size:
+                    sample = inside
             window = [float(min(0., np.percentile(sample, 1))), float(np.percentile(sample, 99))]
             if window[1] <= window[0]:
                 window[1] = max(window[0] + 1., float(data.max()))
@@ -165,6 +173,11 @@ def patient_display_context(collection, *, preview, check):
                         output_shape=block.shape, output=np.float32, order=1, prefilter=False,
                         mode="constant", cval=window[0])
             np.clip((sampled - window[0]) / (window[1] - window[0]), 0, 1, out=sampled)
+            if support is not None:
+                covered = ndi.affine_transform(support, transform[:3, :3],
+                            offset=transform[:3, 3] + start * transform[:3, 0],
+                            output_shape=block.shape, output=np.uint8, order=0, prefilter=False)
+                sampled[covered == 0] = 0
             np.maximum(block, sampled, out=block)
     context.update(affine=frame.tolist(), shape=list(map(int, shape)))
     return context, signal

@@ -22,6 +22,16 @@ Use the right-hand slice controls to move the linked cursor. In the 3D pane, **C
 5. Press **Play steps** or scrub the **Operative timeline**. The field shows the bone flap lifting, the dural flap opening, optional brain retraction and a modeled ultrasonic aspirator advancing into the labeled lesion. Stages need corresponding tissue on the path. A dural envelope proxy is identified at the opening step. Toggle **Include retraction** to explore the same path without a held blade. **Inspection cutaway** exposes the instrument and cavity. The tissue motion and cavity are illustrative geometry. Patient-specific forces, bleeding, functional outcomes and surgical feasibility remain unassessed. [Operative simulation study](https://link.springer.com/article/10.1007/s00701-020-04359-w) · [Retraction in selected deep lesions](https://pmc.ncbi.nlm.nih.gov/articles/PMC6529054/)
 6. Use **Return to plan** to select and preview another path. **Save study & comparison** retains the selected approach with its source study. The choice is yours. The metrics describe geometric tradeoffs within the available evidence.
 
+The operative field reports its display spacing above the 3D view. On the
+MNI BITE 09 study the field uses a 0.3125 mm grid. The renderer smooths the
+tissue surfaces and samples the acquired scan to shade them, including cut
+faces. The inspection plane sections the vessels along with the surrounding
+tissues. In the exposed-skull field, superficial vascular estimates above a
+supported outer bone surface are hidden with the scalp. **Field evidence**
+reports that count and identifies the scan supplying the tissue contrast.
+The full vascular estimates are available in **Anatomy**. Original scan
+spacing and supplied contours are available in **Scans**.
+
 Historical capture receipts remain available at the links below. Most images
 and recordings now require the [visual evidence archive](visual-evidence-archive-20261116.md),
 which restores their original filenames beside the unchanged receipts.

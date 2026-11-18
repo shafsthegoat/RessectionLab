@@ -3,6 +3,7 @@
 import numpy as np
 from scipy import ndimage as ndi
 from .patient_anatomy import affine, world
+from .anatomy_siam_display import supported_tissue_layer
 
 
 def section(
@@ -16,6 +17,8 @@ def section(
     moving_id=None,
     checkerboard=True,
     layers=(),
+    original=False,
+    check=lambda: None,
 ):
     c = collection
     row = c.series(series_id)
@@ -105,6 +108,7 @@ def section(
                 transform = affine(layer["affine"])
         except ValueError:
             continue
+        layer, _support = supported_tissue_layer(c, layer, raw_qc=original, check=check)
         values, covered = sample(c.array(layer["data"]), transform, 0)
         if layer.get("score"):
             scores = c.array(layer["score"])

@@ -9,6 +9,8 @@ precision highp sampler3D;
 in vec2 vUv;
 out vec4 outColor;
 uniform sampler3D uVolume;
+uniform sampler3D uHeadSupport;
+uniform bool uUseHeadSupport;
 uniform sampler2D uTransfer;
 uniform sampler2D uScene;
 uniform sampler2D uDepth;
@@ -154,6 +156,11 @@ void main(){
     if(boundary<uSurfaceCount)dt=min(dt,max(0.0,surfaceT[boundary]-t));
     float sampleT=t+(0.25+0.5*jitter)*dt;
     vec3 p=voxelOrigin+voxelDirection*sampleT;
+    // This mask lives on the selected scalar grid. The fused display grid
+    // already applied each contributing source's own support during sampling.
+    if(uUseHeadSupport && texture(uHeadSupport,((p+0.5)/uShape).zyx).r<=0.0){
+      t+=dt;continue;
+    }
     float value=scalar(p);
     vec4 tissue=texture(uTransfer,vec2(clamp((value-uRange.x)/(uRange.y-uRange.x),0.0,1.0),0.5));
     ivec4 packed=ivec4(0);
