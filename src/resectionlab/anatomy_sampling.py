@@ -59,10 +59,9 @@ def _sample_values(data, native, source_affine, source_shape, grid, shape, bound
     return values, covered
 
 
-def sample_layer(collection, row, grid, shape, check, cache):
+def sample_layer(collection, row, grid, shape, check, cache, *, frames=None):
     source = collection.series(row["source_series"])
-    native = collection.patient_affine(row)
-    source_affine = collection.patient_affine(source)
+    native, source_affine = frames if frames is not None else (collection.patient_affine(row), collection.patient_affine(source))
     data = collection.array(row["data"])
     bounds = inference_bounds(row) or ((0, 0, 0), tuple(size - 1 for size in data.shape))
     slices = row.get("coverage_fields", {}).get("supported_axial_indices")

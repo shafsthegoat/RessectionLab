@@ -202,3 +202,87 @@ def test_new_acquisition_retires_previous_snapshot_removal_preview(patient, tmp_
         assert restored["volumeMm3"] == original["volumeMm3"]
     finally:
         b.close()
+
+
+def test_acquisition_baseline_is_portable_and_rotates_only_on_new_acquisitions(patient, tmp_path):
+    from resectionlab.anatomy_package import open_package, save_package
+    from resectionlab.patient_anatomy import PatientImagingCollection
+
+    c = patient
+    old = c.identity()
+    c.add_series(tmp_path / "mri.nii.gz", series_id="second", modality="T2")
+    c.save("Add a second scan")
+    before = c.document["before_acquisition"]
+    assert before["snapshotId"] == old
+    assert [r["id"] for r in before["sources"]] == ["mri"]
+    previous = next(r for r in before["layers"] if r["id"] == "tumor")
+    assert previous["arraySha256"] == c.layer("tumor")["data"]["sha256"]
+    c.set_registration("second", np.eye(4), status="reviewed", method="fixture")
+    c.save()
+    archive = tmp_path / "two.rsworkspace"
+    save_package(c, archive)
+    reopened = PatientImagingCollection(open_package(archive, tmp_path / "reopen").parent)
+    assert reopened.document["before_acquisition"] == before
+
+
+def test_fresh_and_stale_multimodal_dependencies_are_separate_from_source_labels(patient):
+    c = patient
+    source = c.series("mri")
+    tumor = c.layer("tumor")
+    channel = {"series_id": "mri", "original_sha256": source["original"]["sha256"], "array_sha256": source["data"]["sha256"]}
+    tumor["provenance"]["inputs"] = {"channels": [channel]}
+    targets = [{"layerId": "tumor", "target": [1, 1, 1]}]
+    row, = acquisition_contributions(c, targets, {"layers": []})
+    assert row["modelInputs"] == [tumor["label"]]
+    channel["array_sha256"] = "a"*64
+    row, = acquisition_contributions(c, targets, {"layers": []})
+    link = next(r for r in row["structures"] if r["layerId"] == "tumor")
+    assert link == {"layerId": "tumor", "anchor": True, "channel": True, "staleInputs": ["mri: array_sha256 changed"]}
+    assert not row["modelInputs"] and not row["uses"]
+
+
+def test_single_layer_pick_reports_exact_ijk_and_independent_frame_restriction(patient, tmp_path):
+    c = patient
+    r = c.add_series(tmp_path / "mri.nii.gz", series_id="independent", modality="CT")
+    c.add_layer(np.ones(r["data"]["shape"], np.uint8), r["affine"], layer_id="independent-skull",
+                source_series=r["id"], kind="skull", color="#ffffff", role="context")
+    c.save()
+    snap = PatientAnatomySnapshot.capture(c)
+    p = world(np.array(r["affine"]), [3, 5, 6])
+    def reading(frame):
+        return snap.sample(p, layer_id="independent-skull", independent_series=frame)["layers"]["independent-skull"]
+    assert reading(None)["reason"] == "registration_unreviewed"
+    assert "another source" in reading("mri")["detail"]
+    assert reading("independent")["sourceVoxel"] == [3, 5, 6] and reading("independent")["occupied"]
+
+
+def test_distinct_named_arteries_do_not_disagree_on_complementary_voxels(patient):
+    from resectionlab.anatomy_adjudication import structure_disagreements
+    c = patient
+    r = c.series("mri")
+    data = np.ones(r["data"]["shape"], np.uint8)
+    for name in ["BA", "R-Pcom"]:
+        c.add_layer(data, r["affine"], layer_id=name, source_series="mri", kind="artery", color="#ffffff",
+                    role="context", provenance={"ontology_class": name})
+    readings = {row["id"]: {"known": True, "occupied": row["id"] == "BA"} for row in c.document["layers"]}
+    assert not structure_disagreements(c, readings)
+
+
+def test_section_contours_and_cursor_respect_the_same_declared_slices(patient):
+    c = patient
+    grid = c.patient_affine(c.series("mri"))
+    shape = c.series("mri")["data"]["shape"]
+    mask = np.zeros(shape, np.uint8)
+    mask[4:8, 4:8, 5:7] = 1
+    row = c.add_layer(mask, grid, layer_id="limited", kind="artery", source_series="mri",
+                      color="#ff0000", role="context")
+    row["coverage_fields"] = {"supported_axial_indices": [5]}
+    c.save()
+    for z, covered in [(5, True), (6, False)]:
+        point = world(grid, [5, 5, z])
+        args = {"center": point, "normal": grid[:3, 2], "size": 32, "spacing_mm": .5, "series_id": "mri"}
+        plain = section(c, **args)["pixels"]
+        contour = section(c, **args, layers=["limited"])["pixels"]
+        assert (not np.array_equal(plain, contour)) == covered
+        reading = PatientAnatomySnapshot.capture(c).sample(point, layer_id="limited")["layers"]["limited"]
+        assert reading["known"] == covered and reading["sourceVoxel"] == [5, 5, z]

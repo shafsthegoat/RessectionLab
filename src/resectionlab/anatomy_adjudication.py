@@ -1,4 +1,4 @@
-"""Source precedence for research bone display on an explicitly sampled field."""
+"""Source-bound contribution, comparison and local label evidence."""
 
 import numpy as np
 
@@ -133,10 +133,17 @@ def structure_disagreements(collection, readings):
     for row in collection.document["layers"]:
         state = readings[row["id"]]
         kind = row["kind"]
-        if kind not in comparable or not state.get("known") or state.get("occupied") is None:
+        p = row.get("provenance", {})
+        if p.get("method") == "Pinned source BraTS compartment labels" and p.get("annotation_value") == 4:
+            kind = "enhancing-tumor"
+        if kind not in comparable | {"enhancing-tumor", "tumor-core", "tumor-whole"}:
+            continue
+        if not state.get("known") or state.get("occupied") is None:
             continue
         kind = "vessels" if kind == "vessel" else kind
-        p = row.get("provenance", {})
+        # Distinct named vessels in a multiclass annotation are complementary.
+        if p.get("ontology_class"):
+            kind += " · " + str(p["ontology_class"])
         groups.setdefault(kind, []).append({
             "layerId": row["id"], "seriesId": row["source_series"], "positiveLabel": state["occupied"],
             "method": str(p.get("model") or p.get("method") or p.get("kind") or "source-associated label"),
@@ -147,6 +154,72 @@ def structure_disagreements(collection, readings):
             for kind, sources in groups.items() if len({s["positiveLabel"] for s in sources}) > 1]
 
 
+def acquisition_baseline(document):
+    """Keep a compact, portable inventory for the last incremental acquisition."""
+    from .patient_anatomy import digest
+    sources = document["series"] + [r for r in document.get("source_assets", []) if r.get("storage") == "source-asset"]
+    return {
+        "snapshotId": document.get("snapshot_id") or digest(document), "revision": document["revision"],
+        "sources": [{"id": r["id"], "label": r.get("label") or r["id"], "modality": r["modality"],
+                     "originalSha256": r["original"]["sha256"], "shape": r.get("data", {}).get("shape"),
+                     "registration": document["transforms"].get(r["id"], {}).get("status", "unregistered")} for r in sources],
+        "layers": [{"id": r["id"], "label": r["label"], "sourceSeries": r["source_series"],
+                    "arraySha256": r["data"]["sha256"], "labelValue": r["label_value"],
+                    "review": r["review_status"]} for r in document["layers"]],
+    }
+
+
+def channel_issues(layer, document):
+    """Compare recorded multimodal inputs with the current study manifest."""
+    inputs = layer.get("provenance", {}).get("inputs")
+    if not isinstance(inputs, dict):
+        return []
+    by_id = {r["id"]: r for r in document["series"]}
+    issues = []
+    for channel in inputs.get("channels", []):
+        if not isinstance(channel, dict):
+            continue
+        sid = channel.get("series_id")
+        row = by_id.get(sid)
+        if not row:
+            issues.append(f"{sid}: input missing")
+            continue
+        expected = {"original_sha256": row["original"]["sha256"], "array_sha256": row["data"]["sha256"],
+                    "patient_id": row["patient_id"], "timepoint": row["timepoint"], "shape": row["data"]["shape"],
+                    "modality": row["modality"], "affine": row["affine"]}
+        for field, value in expected.items():
+            if field in channel and channel[field] != value:
+                issues.append(f"{sid}: {field} changed")
+        if isinstance(channel.get("registration"), dict) and channel["registration"] != document["transforms"].get(sid):
+            issues.append(f"{sid}: registration changed")
+        coverage = {**document.get("coverage_notes", {}), **row.get("coverage_notes", {}), **row.get("coverage", {})}
+        if "coverage" in channel and channel["coverage"] != coverage:
+            issues.append(f"{sid}: coverage changed")
+    return issues
+
+
+def sampled_acquisitions(collection, point):
+    """Locate a patient cursor on each reviewed scalar field, including explicit exclusions."""
+    from .patient_anatomy import world
+    rows = {}
+    for source in collection.source_records():
+        sid = source["id"]
+        if source.get("storage") == "source-asset":
+            rows[sid] = {"covered": None, "reason": "Archived acquisition without a scalar image"}
+            continue
+        try:
+            matrix = collection.patient_affine(source)
+        except ValueError as error:
+            rows[sid] = {"covered": None, "reason": str(error)}
+            continue
+        cell = np.floor(world(np.linalg.inv(matrix), point) + .5).astype(int)
+        inside = bool(np.all(cell >= 0) and np.all(cell < source["data"]["shape"]))
+        rows[sid] = {"covered": inside, "sourceVoxel": cell.tolist()}
+        if inside:
+            rows[sid]["intensity"] = float(collection.array(source["data"])[tuple(cell)])
+    return rows
+
+
 def acquisition_contributions(collection, target_options, environment_options):
     """Describe observed outcomes and the precise geometric uses already preflighted."""
     from .anatomy_evidence import is_siam_context, vascular_evidence_supported
@@ -155,6 +228,7 @@ def acquisition_contributions(collection, target_options, environment_options):
     ready = {r["layerId"] for r in environment_options["layers"] if r["status"] == "ready"}
     doc = collection.document
     rows = []
+    stale = {r["id"]: channel_issues(r, doc) for r in doc["layers"]}
     for source in collection.source_records():
         sid = source["id"]
         modality = source.get("modality", "unknown")
@@ -169,17 +243,20 @@ def acquisition_contributions(collection, target_options, environment_options):
         except (ValueError, StopIteration) as error:
             reason = str(error) or "Source registration unavailable"
         layers = [r for r in doc["layers"] if r["source_series"] == sid]
-        model_inputs = []
+        model_inputs, linked_ids = [], set()
         for layer in doc["layers"]:
             channels = (layer.get("provenance", {}).get("inputs") or {})
             if not isinstance(channels, dict):
                 continue
-            if any(ch.get("series_id") == sid and ch.get("original_sha256") == source["original"]["sha256"]
-                   for ch in channels.get("channels", []) if isinstance(ch, dict)):
-                model_inputs.append(layer["label"])
+            if any(ch.get("series_id") == sid for ch in channels.get("channels", []) if isinstance(ch, dict)):
+                linked_ids.add(layer["id"])
+                if not stale[layer["id"]]:
+                    model_inputs.append(layer["label"])
         tracts = [r["label"] for r in doc.get("tractography", []) if r["source_series"] == sid]
         uses, unavailable = [], []
         for layer in layers:
+            if stale[layer["id"]]:
+                continue
             if layer.get("availability") == "empty_output" or layer.get("evidence_status") == "empty-output":
                 unavailable.append(layer["label"])
             elif not reason and layer["id"] in targets:
@@ -193,8 +270,12 @@ def acquisition_contributions(collection, target_options, environment_options):
             "seriesId": sid, "label": source.get("label") or sid, "modality": modality,
             "anatomicalRoles": sorted({r["kind"] for r in layers}),
             "registration": status, "qc": quality.get("status"), "warnings": quality.get("warnings", []),
-            "disposition": "unsupported" if asset else "quantitative geometry" if uses else "inspection context",
+            "disposition": ("unsupported" if asset else "quantitative geometry" if uses else
+                            "multimodal model input" if model_inputs else "inspection context"),
             "reason": reason, "layerCount": len(layers), "emptyLayers": unavailable,
+            "structures": [{"layerId": layer["id"], "anchor": layer["source_series"] == sid, "channel": layer["id"] in linked_ids,
+                            "staleInputs": stale[layer["id"]]}
+                           for layer in doc["layers"] if layer["source_series"] == sid or layer["id"] in linked_ids],
             "uses": uses, "suppliedTracts": tracts, "modelInputs": model_inputs, "asset": asset,
         })
     # Migrated studies may retain external diffusion volumes as inventory notes.

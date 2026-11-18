@@ -90,6 +90,28 @@ If verification stops after preparation, a new create run with
 `ADAPTIVE_RESUME=/absolute/path/to/the/preceding/report.json` continues through
 the normal **Open** control using a copy of the exact prepared study.
 
+For a bounded acquisition-contribution check, reuse the successful two-scan
+`create/report.json` and set `ADAPTIVE_PHASE=source-review` in the incremental
+command. Choose a fresh output directory. This opens **Scans → Acquisition
+contributions**, records the original inventory, imports the two additional
+sequences and inspects the supplied enhancing lesion on its source slices.
+The saved study carries the last pre-addition inventory, source identities and
+individual label hashes through portable reopen. The `reopen` phase accepts this
+source-review receipt and compares the inventory and cursor readings from a
+fresh process. The November 18 development
+run retained all 35 original masks and marked the three prior route assessments
+stale. At patient RAS (−97, 113, 85) mm, source voxel (97, 126, 85) contained
+the supplied enhancing-lesion label. The test measures an intake change. A
+new model estimate requires running its eligible preparation stage.
+
+On the separate UCSF-0004 development case, the saved four-channel
+`monai-brats-0.5.4` model and supplied labels share the checksum-verified
+preprocessed grid. The positive-set Dice coefficients were 0.908 for enhancing
+tumor, 0.967 for core and 0.934 for whole abnormality. The enhancing estimate
+contained 548 voxels outside the supplied annotation and omitted 2,197 supplied
+positive voxels. The source has known BraTS2021 overlap and overlap with the
+BraTS2018 checkpoint remains unresolved. [Pinned model and data provenance](poc-brats-model-manifest.json)
+
 Use the `create` and `reopen` commands with
 `source_case="$PWD/testcases/downloaded-datasets/RessectionLab-Full-Anatomy-Patient/candidate-sub-06"`
 and a separate evidence directory to exercise the acquired meningioma T1

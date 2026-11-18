@@ -32,9 +32,8 @@ def _retain(session, result):
 
 
 def dispatch(session, operation, args, request, progress):
-    # Only one immutable displayed source is cached. Any operation outside a
-    # view conservatively invalidates descriptors (including edits/registration).
-    if operation != "anatomyView":
+    # A source read does not change the cached view or its transfer descriptors.
+    if operation not in {"anatomyView", "anatomySample"}:
         session.anatomy_view_cache = None
     if not hasattr(session, "anatomy_collections"):
         session.anatomy_packages = {}
@@ -612,7 +611,11 @@ def dispatch(session, operation, args, request, progress):
         _retain(session, result)
         return result
     if operation == "anatomySample":
-        return PatientAnatomySnapshot.capture(c).sample(args["point"])
+        cached = getattr(session, "anatomy_sample_snapshot", None)
+        if cached is None or cached.collection.root != c.root or cached.snapshot_id != current_id:
+            cached = session.anatomy_sample_snapshot = PatientAnatomySnapshot.capture(c)
+        return cached.sample(args["point"], layer_id=args.get("layerId"), independent_series=args.get("independentSeries"),
+                             inspect_sources=True)
     if operation == "anatomyReconstruct":
         if key in session.anatomy_drafts:
             raise ValueError("Commit or reject the correction before reconstruction")

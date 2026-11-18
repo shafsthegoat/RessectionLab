@@ -4,7 +4,7 @@ import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
 import type {ArrayDescriptor,ResectionApi,CasePayload} from './types';
 export type Layer={
   id:string;label:string;kind:string;role:string;color:string;review_status:string;source_series:string;
-  probability?:unknown;provenance:unknown;coverage:string;
+  probability?:unknown;provenance:unknown;coverage:string;data?:{shape:number[];sha256:string};label_value?:number;
   affine?:number[][];acquisition_grid_spacing_mm?:number[];output_spacing_mm?:number[];
   acquisition_resolution?:string|number[];transform_dependencies?:string[];
   coverage_fields?:{inference_bounds_voxel_inclusive?:number[][];supported_axial_indices?:number[];outside?:string;zero_meaning?:string};
@@ -15,6 +15,8 @@ export type Series={
   acquisition_resolution?:string|number[];coverage?:{status?:string;limitations?:Array<{kind:string;basis?:string}>};
 };
 export type Document={
+  before_acquisition?:{snapshotId:string;revision:number;sources:Array<{id:string;label:string;modality:string;originalSha256:string}>;
+    layers:Array<{id:string;label:string;sourceSeries:string;arraySha256:string;labelValue:number;review:string}>};
   display?:{initial_layers?:string[];cursor_ras_mm?:Point3;entry_ras_mm?:Point3};
   source_assets?:unknown[];patient_id:string;study_timepoint?:string;snapshot_id:string;reference_series:string;
   tractography?:Array<{id:string;label:string;source_series:string}>;
@@ -24,10 +26,16 @@ export type Document={
 };
 export type EnvironmentRole='brain'|'tumor'|'bone'|'vessels';
 export type AcquisitionContribution={seriesId:string;label:string;modality:string;anatomicalRoles:string[];registration:string;
+  structures?:Array<{layerId:string;anchor:boolean;channel:boolean;staleInputs:string[]}>;
   qc:string|null;warnings:string[];disposition:string;reason:string;layerCount:number;emptyLayers:string[];uses:string[];modelInputs:string[];suppliedTracts:string[];asset:boolean};
 export type RegistrationSection={pixels:ArrayDescriptor;size:number;frame:string;movingStatus:string|null;
   center:Point3;u:Point3;v:Point3;spacingMm:number;sourceFromSection?:number[][];voxelFromSection?:number[][];sourceShape?:number[]};
-export type EnvironmentOptions={acquisitions?:AcquisitionContribution[];referenceIssue:string|null;layers:Array<{
+export interface SelectedRouteForecast {
+  schema:'resectionlab.native-route-forecast.v1';decision:'STOP';stage:'before-access';reason:string;
+  preparationActions:number;withdrawalActions:number;targetRemovedMm3:number;nonTargetRemovedMm3:number;
+  elapsedSeconds:number;physicalCandidatesExamined:number;requiredEvidence:string[];
+}
+export type EnvironmentOptions={selectedRouteForecast?:SelectedRouteForecast;acquisitions?:AcquisitionContribution[];referenceIssue:string|null;layers:Array<{
   role:EnvironmentRole;layerId:string;status:'ready'|'estimated_alignment'|'unavailable';reason?:string|null;
 }>};
 export type Binding={collectionId:string;document:Document;viewState?:NativeViewState|null};

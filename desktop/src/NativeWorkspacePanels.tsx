@@ -78,7 +78,7 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
         </div>}
         {selectedDisplay?.alignment&&<p className="subtle">Model placement · {selectedDisplay.alignment}</p>}
         {layer.source_series!==w.series&&<button disabled={blocked} onClick={()=>w.selectScan(layer.source_series)}>Review {scanLabel(b.document.series.find(s=>s.id===layer.source_series)!)} slices</button>}
-        <NativeLayerEvidence layer={layer} document={b.document}/>
+        <NativeLayerEvidence layer={layer} document={b.document} workspace={w}/>
       </section>;
   return <div className={`unified-sidebar study-inspector study-inspector-${tab}`}>
     <div className="study-badge">{studyLabel(timepoint)} study <span>{b.document.series.length} {b.document.series.length===1?'scan':'scans'}</span></div>
@@ -102,7 +102,12 @@ export function NativeSidebar({workspace:w,tab,onOpenAnatomy,onOpenPlan,onOpenSc
         {source.coverage?.status&&<div><dt>Recorded coverage</dt><dd>{source.coverage.status.replaceAll('_',' ')}</dd></div>}
         {!!b.document.source_assets?.length&&<div><dt>Archived source files</dt><dd>{b.document.source_assets.length}</dd></div>}
       </dl>{source.coverage?.limitations?.map((item,index)=><p key={index}>{item.kind.replaceAll('_',' ')}{item.basis?' · '+item.basis:''}</p>)}</details>}
-      <AcquisitionContributions workspace={w}/>
+      <AcquisitionContributions workspace={w} onInspect={layer=>{
+        choose(layer.id);
+        if(layer.source_series!==w.series)w.selectScan(layer.source_series,undefined,layer.id);
+        else if(!w.state.visible[layer.id])w.setVisible({...w.state.visible,[layer.id]:true});
+        onOpenAnatomy();
+      }}/>
       <NativeImportPanel workspace={w} timepoint={timepoint}/>
       <NativePreparePanel workspace={w} onReviewAnatomy={onOpenAnatomy}/>
       <button className="wide-button" disabled={blocked} onClick={w.savePackage}>Save patient study file…</button>

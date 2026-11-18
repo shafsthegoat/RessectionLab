@@ -567,6 +567,13 @@ class PatientImagingCollection:
             if current_id != self._base_snapshot or (expected is not None and current_id != expected):
                 raise ValueError("Patient changed; reload before committing")
             document = dict(self.document)
+            if published:
+                previous_ids = {r["id"] for r in published["series"]} | {
+                    r["id"] for r in published.get("source_assets", []) if r.get("storage") == "source-asset"
+                }
+                if previous_ids and any(r["id"] not in previous_ids for r in self.source_records()):
+                    from .anatomy_adjudication import acquisition_baseline
+                    document["before_acquisition"] = acquisition_baseline(published)
             document["revision"] += 1
             document["history"] = [
                 *document["history"],
@@ -694,24 +701,45 @@ class PatientAnatomySnapshot:
         if self.collection.identity() != self.snapshot_id:
             raise ValueError("Immutable anatomy snapshot was modified")
 
-    def sample(self, point):
+    def sample(self, point, *, layer_id=None, independent_series=None, inspect_sources=False):
         self._check()
         if np.asarray(point).shape != (3,) or not np.isfinite(point).all():
             raise ValueError("A finite physical point is required")
         from .anatomy_evidence import inference_bounds
         from .anatomy_adjudication import sampled_bone_evidence, structure_disagreements
         result = {}
-        for row in self.collection.document["layers"]:
+        rows = [self.collection.layer(layer_id)] if layer_id else self.collection.document["layers"]
+        if independent_series and not layer_id:
+            raise ValueError("Select one layer for independent source inspection")
+        for row in rows:
+            source = self.collection.series(row["source_series"])
+            index_linked = False
             try:
-                layer_frame = self.collection.patient_affine(row)
-                source = self.collection.series(row["source_series"])
-                source_inverse = np.linalg.inv(self.collection.patient_affine(source))
+                if layer_id or inspect_sources:
+                    if independent_series and independent_series != source["id"]:
+                        raise ValueError("This layer belongs to another source frame")
+                    if independent_series:
+                        self.collection.require_native_geometry(source)
+                        placement = np.eye(4)
+                    else:
+                        placement = self.collection.registration_matrix(source["id"], require_review=True, require_geometry=True)
+                    source_frame = placement @ affine(source["affine"])
+                    try:
+                        self.collection.require_native_geometry(row, allow_legacy_annotation_grid=True)
+                        layer_frame = placement @ affine(row["affine"])
+                    except ValueError:
+                        from .anatomy_display import source_lattice_annotation_preview
+                        if not source_lattice_annotation_preview(self.collection, row, source):
+                            raise
+                        index_linked = True
+                        layer_frame = source_frame
+                else:
+                    layer_frame = self.collection.patient_affine(row)
+                    source_frame = self.collection.patient_affine(source)
+                source_inverse = np.linalg.inv(source_frame)
                 p = world(np.linalg.inv(layer_frame), point)
-            except ValueError:
-                result[row["id"]] = {
-                    "known": False,
-                    "reason": "registration_unreviewed",
-                }
+            except ValueError as error:
+                result[row["id"]] = {"known": False, "reason": "registration_unreviewed", "detail": str(error)}
                 continue
             shape = np.array(row["data"]["shape"])
             inside = bool(np.all(p >= -0.5) and np.all(p < shape - 0.5))
@@ -727,8 +755,10 @@ class PatientAnatomySnapshot:
             slices = coverage.get("supported_axial_indices")
             if slices is not None:
                 inside = inside and int(index[2]) in slices
-            if row.get("availability") == "empty_output":
-                result[row["id"]] = {"known": False, "occupied": None, "reason": "empty_output"}
+            location = {"sourceVoxel": np.floor(world(source_inverse, point) + .5).astype(int).tolist(),
+                        "layerVoxel": index.tolist(), "sourceGridInspection": index_linked} if layer_id else {}
+            if row.get("availability") == "empty_output" or row.get("evidence_status") == "empty-output":
+                result[row["id"]] = {**location, "known": False, "occupied": None, "reason": "empty_output"}
                 continue
             value = (
                 None
@@ -741,6 +771,7 @@ class PatientAnatomySnapshot:
                 )
             )
             result[row["id"]] = {
+                **location,
                 "known": inside,
                 "occupied": value,
                 "role": row["role"],
@@ -757,11 +788,13 @@ class PatientAnatomySnapshot:
                     ]
                 )
                 result[row["id"]]["score_meaning"] = row.get("score_meaning")
+        from .anatomy_adjudication import sampled_acquisitions
         return {
+            **({"acquisitions": sampled_acquisitions(self.collection, point)} if inspect_sources and not layer_id else {}),
             "snapshot_id": self.snapshot_id,
             "layers": result,
-            "boneAdjudication": sampled_bone_evidence(self.collection, result, point),
-            "structureDisagreements": structure_disagreements(self.collection, result),
+            "boneAdjudication": None if layer_id else sampled_bone_evidence(self.collection, result, point),
+            "structureDisagreements": [] if layer_id else structure_disagreements(self.collection, result),
             "missing": self.collection.document["missing"],
         }
 

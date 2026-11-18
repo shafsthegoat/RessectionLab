@@ -151,7 +151,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
   },[api]);
   async function create(patientId:string,timepoint='preoperative'):Promise<Binding|null>{let result:Binding|null=null;await run(async()=>{result=await api!.anatomyCreate({patientId,timepoint})});if(result)await install(result);return result;}
   function clear(){contextCache.current=undefined;sourceImage.current=null;generation.current++;resetLayers();setBinding(null);installVolume(null);setPatientCutaway({});setDraft(null);setReview(null);setEditLayer(null);}
-  function selectScan(s:string,mode?:AnatomyPresentation){if(!binding||busy||draft||s===series)return;
+  function selectScan(s:string,mode?:AnatomyPresentation,inspectLayer?:string){if(!binding||busy||draft||s===series)return;
     const alignment=volume?.patientContext?.sources.find(source=>source.seriesId===s)?.alignment??'unavailable';
     const linked=patientFrameReady&&['reference','reviewed','source-provided'].includes(alignment);
     let v=migrateSkullView(nextScanState(scanState,states[s]??initial(binding,s),linked),binding.document.layers);
@@ -160,6 +160,7 @@ export function useNativeWorkspace(runtime:ResectionApi|null){
       const modality=binding.document.series.find(scan=>scan.id===s)?.modality??'MRI';
       v={...v,settings:skullDisplay({...anatomyPresentation(v.settings,binding.document.layers,mode,modality),...viewerCutaway(v.settings)})};
     }
+    if(inspectLayer)v={...v,visible:{...v.visible,[inspectLayer]:true}};
     generation.current++;resetLayers();installVolume(null);setSeries(s);setStates(all=>({...all,[s]:v}));setReview(null);setComponents([]);setEditLayer(null);
     void run(()=>loadView(binding,s,v));
   }

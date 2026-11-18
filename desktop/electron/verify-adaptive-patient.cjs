@@ -36,7 +36,7 @@ const source=fs.realpathSync(process.env.ADAPTIVE_SOURCE||'');
 const requestedOutput=path.resolve(process.env.ADAPTIVE_OUTPUT||'');
 const output=path.join(fs.realpathSync(path.dirname(requestedOutput)),path.basename(requestedOutput));
 const within=(parent,filename)=>filename.startsWith(parent+path.sep);
-assert(['create','reopen','incremental','refresh-comparison','migrated'].includes(phase),'Unknown verification phase');
+assert(['create','reopen','incremental','source-review','refresh-comparison','migrated'].includes(phase),'Unknown verification phase');
 assert((phase==='migrated'||within(testcases,source))&&within(testcases,output),
   'Set ADAPTIVE_SOURCE and a new ADAPTIVE_OUTPUT under ignored testcases/');
 assert(!fs.existsSync(output),'Verification output is already present');
@@ -111,7 +111,7 @@ function sourceProfile(){
 }
 const study=phase==='migrated'?migratedSource():sourceProfile();
 const {patient,paths:sourcePaths,hashes:sourceHashes}=study;
-assert(phase!=='incremental'||sourcePaths.mask,'Incremental verification uses the multi-scan UCSF source profile');
+assert(!['incremental','source-review'].includes(phase)||sourcePaths.mask,'Incremental verification uses the multi-scan UCSF source profile');
 const resumeFile=phase==='create'&&process.env.ADAPTIVE_RESUME
   ?fs.realpathSync(process.env.ADAPTIVE_RESUME):null;
 const resume=resumeFile?read(resumeFile):null;
@@ -124,7 +124,7 @@ if(resume){
 }
 const previous=(phase==='create'||phase==='migrated')?null:read(fs.realpathSync(process.env.ADAPTIVE_EXPECTED||''));
 if(previous){
-  assert(previous.passed&&(previous.phase==='create'||phase==='reopen'&&previous.phase==='refresh-comparison'),'Expected finished create or refreshed comparison receipt');
+  assert(previous.passed&&(previous.phase==='create'||phase==='reopen'&&['refresh-comparison','source-review'].includes(previous.phase)),'Expected finished create or refreshed comparison receipt');
   assert.equal(previous.source,source);
   assert.deepEqual(previous.sourceHashes,sourceHashes);
   assert.notEqual(previous.pid,process.pid,'Reopen must be a fresh process');
@@ -773,6 +773,27 @@ app.on('browser-window-created',(_event, win)=>{
         await click('Close view controls');
         mark('Display smoothing leaves target, route geometry and exact measurements unchanged');
         await save();
+      }else if(phase==='reopen'&&previous.phase==='source-review'){
+        const opened=await openNormal(previous.saved.path);
+        assert.equal(opened.document.snapshot_id,previous.afterSnapshot);
+        assert(opened.document.before_acquisition);
+        assert.equal(opened.viewState.selectedPlanningTargetId,previous.target.id);
+        await click('Scans');
+        await openDetails('Acquisition contributions');
+        await openDetails('Before and after the last scan addition');
+        const panel='details[aria-label="Last scan addition"]';
+        await js(`document.querySelector(${JSON.stringify(panel)}).scrollIntoView()`);
+        report.change=await js(`document.querySelector(${JSON.stringify(panel)}).innerText`);
+        assert.equal(report.change,previous.change);
+        await click('Compare source labels at cursor');
+        await wait(`document.querySelector('[data-acquisition-id]')?.innerText.includes('Cursor ·')`,'reopened acquisition coverage');
+        report.cursorCoverage=await js(`[...document.querySelectorAll('[data-acquisition-id]')].map(node=>({series:node.dataset.acquisitionId,reading:[...node.querySelectorAll('span')].find(s=>s.textContent.startsWith('Cursor ·'))?.textContent}))`);
+        assert.deepEqual(report.cursorCoverage,previous.cursorCoverage);
+        assert.deepEqual(plan('list').approaches.filter(r=>r.assessmentStatus==='stale').map(r=>r.id),previous.staleApproaches);
+        report.packageSha256=sha(previous.saved.path);
+        assert.equal(report.packageSha256,previous.saved.sha256);
+        await capture('01-reopened-source-review');
+        mark('Fresh process retained the exact before/after inventory, cursor coverage, target and stale assessments');
       }else if(phase==='reopen'){
         const opened=await openNormal(previous.saved.path);
         assert.equal(opened.document.snapshot_id,previous.preparedSnapshot);
@@ -834,6 +855,13 @@ app.on('browser-window-created',(_event, win)=>{
         await openNormal(manifestFile);
         const before=manifest();
         assert.equal(before.snapshot_id,previous.preparedSnapshot);
+        if(phase==='source-review'){
+          await click('Scans');
+          await openDetails('Acquisition contributions');
+          await wait('document.querySelectorAll("[data-acquisition-id]").length===2','two original acquisitions');
+          await js(`document.querySelector('details[aria-label="Acquisition contributions"]').scrollIntoView()`);
+          await capture('01-before-source-addition');
+        }
         await importBatch(['T1','FLAIR','T2']);
         const added=manifest();
         verifySources(added,['T1CE','T2','T1','FLAIR']);
@@ -847,21 +875,55 @@ app.on('browser-window-created',(_event, win)=>{
         assert(stale.approaches.some(row=>row.id===previous.selectedApproachId&&row.assessmentStatus==='stale'),'Prior approach must be stale after anatomy changes');
         mark('Later additions preserve the reference and existing source layers, deduplicate T2 and invalidate the old assessment');
         await click('Scans');
-        await prepare({cancel:process.env.ADAPTIVE_CANCEL==='1'});
-        const updated=manifest();
-        report.target=verifySources(updated,['T1CE','T2','T1','FLAIR']);
-        assert.equal(updated.reference_series,before.reference_series);
-        assert.deepEqual(serialized(updated.layers.find(row=>row.id===previous.brain.id)),previous.brain);
-        verifyNativeGeometry(updated);
-        await click('Plan & compare');
-        await ready();
-        await click('Reassess');
-        await until(()=>!!plan('assess'),'reassessment of the stale approach',420);
-        await ready();
-        report.comparison=currentRoutes(plan('assess'),updated,report.target);
-        await capture('03-reassessed-after-addition');
-        await save();
-        mark('Incremental preparation kept the existing brain estimate and restored a current comparison on the new snapshot');
+        if(phase==='source-review'){
+          await openDetails('Acquisition contributions');
+          await openDetails('Before and after the last scan addition');
+          const panel='details[aria-label="Last scan addition"]';
+          await js(`document.querySelector(${JSON.stringify(panel)}).scrollIntoView()`);
+          report.change=await js(`document.querySelector(${JSON.stringify(panel)}).innerText`);
+          assert(report.change.includes(before.layers.length+' identical, 0 added, 0 changed, 0 removed'));
+          assert.equal(added.before_acquisition.snapshotId,before.snapshot_id);
+          assert.equal(added.before_acquisition.layers.length,before.layers.length);
+          report.afterSnapshot=added.snapshot_id;
+          await click('Compare source labels at cursor');
+          await wait(`document.querySelector('[data-acquisition-id]')?.innerText.includes('Cursor ·')`,'per-acquisition spatial coverage');
+          report.cursorCoverage=await js(`[...document.querySelectorAll('[data-acquisition-id]')].map(node=>({series:node.dataset.acquisitionId,reading:[...node.querySelectorAll('span')].find(s=>s.textContent.startsWith('Cursor ·'))?.textContent}))`);
+          assert(report.cursorCoverage.length===4&&report.cursorCoverage.every(row=>row.reading));
+          assert(report.cursorCoverage.some(row=>row.reading.includes('inside acquired grid at voxel')));
+          report.target=verifySources(added,['T1CE','T2','T1','FLAIR']);
+          report.staleApproaches=stale.approaches.filter(r=>r.assessmentStatus==='stale').map(r=>r.id);
+          const storedSource=added.series.find(r=>r.id===report.target.source_series);
+          await capture('02-after-source-addition');
+          const row='[data-acquisition-id="'+storedSource.id+'"]';
+          await js(`[...document.querySelector(${JSON.stringify(row)}).querySelectorAll('summary')].find(s=>s.textContent.startsWith('Structures and spatial coverage')).click()`);
+          await click('Inspect '+report.target.label+' on source slices');
+          await wait(`document.querySelector('[aria-label="Linked source location"]')?.innerText.includes('Native scan voxel')`,'source coordinate of selected layer');
+          await js(`document.querySelector('[aria-label="Linked source location"]').scrollIntoView({block:'center'})`);
+          report.linkedLocation=await js(`document.querySelector('[aria-label="Linked source location"]').innerText`);
+          await capture('03-linked-source-inspection');
+          await save();
+          const reopened=await openNormal(saveTo);
+          assert.deepEqual(serialized(reopened.document.before_acquisition),added.before_acquisition);
+          await delay(350);
+          await ready();
+          mark('Before and after inventories and native source coordinates inspected; baseline survived portable reopen');
+        }else{
+          await prepare({cancel:process.env.ADAPTIVE_CANCEL==='1'});
+          const updated=manifest();
+          report.target=verifySources(updated,['T1CE','T2','T1','FLAIR']);
+          assert.equal(updated.reference_series,before.reference_series);
+          assert.deepEqual(serialized(updated.layers.find(row=>row.id===previous.brain.id)),previous.brain);
+          verifyNativeGeometry(updated);
+          await click('Plan & compare');
+          await ready();
+          await click('Reassess');
+          await until(()=>!!plan('assess'),'reassessment of the stale approach',420);
+          await ready();
+          report.comparison=currentRoutes(plan('assess'),updated,report.target);
+          await capture('03-reassessed-after-addition');
+          await save();
+          mark('Incremental preparation kept the existing brain estimate and restored a current comparison on the new snapshot');
+        }
       }
       for(const [role,filename] of Object.entries(sourcePaths))assert.equal(sha(filename),sourceHashes[role],'Source modified: '+filename);
       assert(!report.windowEverVisible&&!win.isVisible());
