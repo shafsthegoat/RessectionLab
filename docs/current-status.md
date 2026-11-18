@@ -38,6 +38,9 @@ access assessment and named preservation decisions. The matched generated
 overlap control retained the same treatment and residual with less CST
 membership removal. The critical-residual control recorded a supported
 boundary and checked withdrawal. [Results and reproduction](approach-comparison-checkpoint.md#evidence-aware-planning-milestone).
+The subsequent native integration displays source-bound comparisons for
+UCSF-PDGM and EDEN, with explicit reassessment and unavailable procedural
+outcomes. [Native glioma evidence](approach-comparison-checkpoint.md#native-glioma-evidence-integration).
 
 | Need | Entry point |
 | --- | --- |

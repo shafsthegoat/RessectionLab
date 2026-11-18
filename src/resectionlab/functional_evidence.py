@@ -222,7 +222,8 @@ def _native_probe_evidence(engine, baseline):
                      " Probe type identifies sampling location class only."}
 
 
-def functional_consequence_evidence(engine, baseline, *, direct_dimensions=None) -> dict[str, Any]:
+def functional_consequence_evidence(engine, baseline, *, direct_dimensions=None,
+                                    all_declared_neural=False) -> dict[str, Any]:
     """Serialize source annotations and native ledger effects for a checked replay pair."""
     from .surgical_procedure_policy import PROPERTY, direct_removal_dimensions, procedure_source_memberships
     from .surgical_sequence_outcomes import _quantity, _unknown
@@ -241,6 +242,8 @@ def functional_consequence_evidence(engine, baseline, *, direct_dimensions=None)
         annotation.structure_id: annotation for annotation in engine.protection.annotations}
     names = _CORE_STRUCTURES + tuple(name for name in _OPTIONAL_LANGUAGE_STRUCTURES
                                     if name in declarations or name in supplemental)
+    if all_declared_neural:
+        names += tuple(sorted(declarations.keys() - set(names)))
     if direct_dimensions is None and any(name in declarations for name in names):
         direct_dimensions = direct_removal_dimensions(engine, baseline)
 

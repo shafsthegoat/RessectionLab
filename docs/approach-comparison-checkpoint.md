@@ -544,3 +544,104 @@ spans and prefix source removals, and disclosing projection and peak
 semantics. The separately probed historical functional suite has two
 pre-existing failures, reproduced against the base code, involving the
 hard-exclusion admission contract and a closed training entry point.
+
+## Native glioma evidence integration
+
+**Plan & compare** now derives a consequence readout for up to three saved
+approaches. Its packet binds the current snapshot, selected lesion, approach
+parameters, and measurement hashes. It carries the geometric quantity, unit,
+source type, coverage and available source identity. Older v7 measurements stay
+readable. A stored positive segment encounter needs reassessment to obtain a
+distinct streamline count. Out-of-field or unavailable quantities stay
+explicitly qualified. Registration reports separate sampled landmark residual
+from unmeasured whole-field error. Perturbation scenarios describe sensitivity
+to stated offsets.
+
+| Prepared study | Target membership | Corridor target reach A / B / C (mm³) | Brain traversal upper bound A / B / C (mm³) | Nominal supplied tract encounters |
+| --- | ---: | ---: | ---: | --- |
+| UCSF-PDGM-0005, enhancing label supplied with the study | 2,974.0 mm³ | 33 / 14 / 21 | 328 / 320 / 311 | Unknown, no supplied bundle |
+| EDEN CTRL_1277, generated core + rim on a healthy scan | 9,174.7 mm³ | 24.6 / 51.7 / 29.5 | 16.0 / 20.0 / 8.0 | Zero detected among seven supplied bundles per route |
+
+A has the most geometric reach in the UCSF comparison and the greatest
+traversal bound. EDEN B reaches the most labelled centres and C has the lowest
+traversal bound. All six routes remain at **reassess before treatment**. The
+source masks lack the required cortical-access evidence, and these static
+comparisons have unknown treatment, residual, functional, flow, load and
+clinical outcomes. Derived brain and vascular labels retain their model
+provenance. The supplied glioma label is an imaging compartment with the
+annotation limits described in the [UCSF-PDGM methods](https://pmc.ncbi.nlm.nih.gov/articles/PMC9748624/).
+Geometric tract encounters cover the supplied reconstructions and their
+acquisition fields. [Maier-Hein et al.](https://pmc.ncbi.nlm.nih.gov/articles/PMC5677006/)
+
+The bounded generated controller now accepts an explicit named removal
+priority. Source membership, treatment eligibility, candidate inventory,
+scope of nominal tip contact, and modeled time and attempt limits bind its
+projections. Native replay verifies the projection against the recorded
+prefix. At the same initial overlap geometry, the motor-cortex priority
+returns **reassess**. The measured frontier preserves the 54 mm³ treatment
+with 27 mm³ projected motor membership option and the 81/54 option. The
+CST-only priority returns **continue**, retaining the same four entries in the
+full treatment–harm frontier. Under an explicit motor-cortex priority, the
+executed critical-residual control treated 135/216 mm³ and retained 81 mm³ at
+its independently declared cerebellar boundary with checked STOP. The matched
+conditional/preservation/search executions used 10/11/10 physical requests
+and 0/0/74 previews. The evidence-aware controller projects nominal contact,
+while search evaluates explicit physical previews. Reports keep these costs,
+replay requests and timing separate from the treatment and harm comparison.
+
+The extended consequence vector identifies source and prefix for functional
+removal, cut-edge incidence and retained contact. Its revised mechanism rows
+include the vascular region and arterial/venous interface, or the mechanical
+region and material, with units and aggregation. In the generated controls,
+arterial and venous occlusions each produced zero bleeding with different
+supply/drainage deficits (2.319/0.244 and 0.244/2.319 deficit-seconds).
+Arterial cut generated 1.509 mm³ of modeled blood. An extra 0.05 s of
+retraction left peak stress at 245.024 Pa and increased the force integral
+from 6.421 to 44.236 µN·s. Ambiguous force attribution across tissue
+boundaries remains unknown. The mechanism comparison keeps the v3 archive
+reader for earlier vectors.
+
+### Reproduce this integration
+
+The ignored local results are under `testcases/native-glioma-integration-v1/`.
+Use the prepared study paths from [Launch and reproduce](#launch-and-reproduce)
+or the existing local comparison copies. If the external drive is absent,
+use the local EDEN copy when available and run UCSF and the generated checks
+independently. Choose fresh output directories.
+
+```sh
+export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1
+pnpm --dir desktop build
+mkdir -p testcases/native-evidence-repro
+PLANNING_NATIVE_COMPARISON=1 PLANNING_EXPECT=incomplete \
+  PLANNING_INPUT=testcases/evidence-aware-planning-desktop-v1/ucsf-0005-local/comparison.rsworkspace \
+  PLANNING_OUTPUT=testcases/native-evidence-repro/ucsf \
+  desktop/node_modules/.bin/electron desktop/electron/verify-planning-evidence.cjs
+PLANNING_NATIVE_COMPARISON=1 PLANNING_EXPECT=incomplete \
+  PLANNING_INPUT=testcases/evidence-aware-planning-desktop-v1/eden-1277-local/study/patient-anatomy.json \
+  PLANNING_OUTPUT=testcases/native-evidence-repro/eden \
+  desktop/node_modules/.bin/electron desktop/electron/verify-planning-evidence.cjs
+.venv/bin/python scripts/demonstrate_evidence_aware_planning.py --case permitted-overlap \
+  --preservation-metric structure:motor-cortex:removedMm3 --projection-only \
+  --output testcases/native-evidence-repro/motor-preference
+.venv/bin/python scripts/demonstrate_evidence_aware_planning.py --case critical-residual \
+  --preservation-metric structure:motor-cortex:removedMm3 \
+  --output testcases/native-evidence-repro/configured-residual
+RESSECTIONLAB_MECHANISM_RECEIPT=testcases/native-evidence-repro/mechanisms.json \
+  .venv/bin/python -m pytest -q tests/test_surgical_mechanism_comparison.py
+```
+
+Run the reviewed three-case script from `119b8e68` for historical
+reproduction, or omit the case and preservation switches for the default
+protocol. The reviewed run independently verified all nine episodes, twelve
+portable branches and seventeen decision prefixes. The nine rows agreed in
+treatment, harm, physical request counts and verified endpoints. The five
+resealed source/coverage/residual/prefix-harm/skill corruptions were refused.
+
+Clinician review needs case-specific lesion definitions, access and registration
+review, and evidence appropriate to tract preservation and vascular territory
+assessment. Validating simulated effects needs matched observations of
+instrument use, intraoperative function and flow, and tissue response.
+Domain-specific outcome validation requires linked baseline, severity, timing
+and follow-up, with independent patient-level evaluation. Clinical deficit
+probabilities remain unavailable.
