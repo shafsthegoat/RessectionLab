@@ -60,7 +60,8 @@ and second functional maps qualify this case.
 | Geometric playback | BITE-09 contributed a gadolinium T1 and source tumor mask. SIAM DS715_NODA fold 1 supported illustrative flap, dura, retraction and aspiration. The 0.3125 mm display grid sampled MRI acquired at 1 × 0.547 × 0.547 mm and model output from 0.75 mm inference. | The sweep removed 98.4 mm³ of local display labels. Whole-lesion removal and physical response remain unassessed. |
 | Acquired engine recording | The separate UCSF preparation on `prepared-task-1` replayed 53 actions over 43.2 simulated seconds. It removed 66 mm³ of mapped non-target tissue and 0 mm³ of target. Both instruments withdrew. All 15,672 mm³ of the original engine-grid target remained. | The comparison stopped because no tested two-tool continuation was admissible. The newly inspected left-superior window has no executed trajectory. |
 | Controlled treatment and refusal | A generated post-access superior route treated 54 of 108 mm³ and withdrew. The inferior/posterior attempt hit protected clearance. The rejected preview retained its state. | This control starts after access. Acquired exterior-to-target treatment remains open. |
-| Opening through treatment | A separate generated, post-scalp alternative replayed 119 actions. Bone and membrane opening cost 285 mm³ bone and 49 mm³ other tissue. It removed 27/27 mm³ of target and mechanically withdrew. | The current planner recommended STOP. The alternative retained 236 mm³ of debris and failed the canonical withdrawal endpoint. Scalp exposure cost was unknown. |
+| Opening through treatment | A separate generated, post-scalp alternative replayed 119 actions. Bone and membrane opening cost 285 mm³ bone and 49 mm³ other tissue. It removed 27/27 mm³ of target and mechanically withdrew. The hidden desktop verified all 120 boundaries and matched all 42 states in the cutaway-off film. | The current planner recommended STOP. The alternative retained 236 mm³ of debris and failed the canonical withdrawal endpoint. Scalp exposure cost was unknown. |
+| Vascular consequences | On a generated arterial-occlusion control, the shared evaluator recorded 2.319 supply-deficit seconds and 0.244 drainage-deficit seconds with zero bleeding. Venous occlusion reversed the values. | The reward requires a declared generated graph and regional coverage. The acquired preparations lack qualified vascular and functional outcome evidence. |
 | Matched RL and search | On previously evaluated generated parent 200, the frozen seed-17 actor treated 243/243 mm³ in 14 physical calls. One-ply search treated 27/243 in eight calls with two refusals. Both stopped and withdrew. Each had 56 calls and 25 s available and saw the same 28 features and legal-action mask. | This single result establishes no patient-level advantage. Acquired policy inference was refused. |
 
 Full acquired completion remains **0**. It requires an independently reviewed
@@ -70,7 +71,8 @@ prerequisites and swept instrument access. The current supratentorial policy
 admits generated controls. Adding labels alone cannot lift its acquired-source
 qualification hold. Postoperative deficits, perfusion and outcome probabilities
 remain unvalidated. The source build passed 277 integrated Python tests
-and 1,460 desktop tests. [Demonstration files](local-storage-ledger.md) ·
+and 1,460 desktop tests. A forward-scrub repair also passed 64 stage and
+replay tests and 60 integration checks. [Demonstration files](local-storage-ledger.md) ·
 [Reproduction commands](desktop-workflow.md#reproduce-the-acquired-replay-and-generated-comparison).
 
 The November 18 evidence-aware planning milestone adds an opt-in cortical
