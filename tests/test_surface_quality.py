@@ -120,3 +120,33 @@ def test_native_display_lesion_volume_is_bounded_per_closed_component():
             return np.einsum('ij,ij->', a, np.cross(b, c))
         change = abs(six_times_volume(positions) / six_times_volume(points) - 1)
         assert change <= NATIVE_POLICY['lesionComponentVolumeTolerance']
+
+
+def test_whole_anatomy_exterior_reduces_staircase_without_relaxing_source_bounds():
+    from resectionlab.anatomy_geometry import _arrays, _poly, display_surface_kind
+    grid = np.indices((43, 43, 39), dtype=float)
+    radius = np.array([17., 15., 14.])
+    center = np.array([21.3, 20.2, 18.8])
+    affine = np.diag([1., 1., 1.45, 1.])
+    spacing = np.diag(affine)[:3]
+    mask = np.sum((((grid-center[:, None, None, None])*spacing[:, None, None, None])
+                   /radius[:, None, None, None])**2, axis=0) <= 1
+    source, faces = _arrays(_poly(mask.astype(np.uint8), False))
+    baseline, _ = fair_surface(source, faces, affine, 'context', native=True)
+    updated, diagnostics = fair_surface(source, faces, affine, 'skull', native=True)
+
+    def error(points):
+        physical = points * spacing
+        triangles = physical[faces]
+        facet = np.cross(triangles[:, 1]-triangles[:, 0], triangles[:, 2]-triangles[:, 0])
+        normal = (triangles.mean(axis=1) - center * spacing)/radius**2
+        cosine = np.abs((facet*normal).sum(1)/(np.linalg.norm(normal, axis=1)*np.linalg.norm(facet, axis=1)))
+        radial = abs(np.linalg.norm((physical - center*spacing)/radius, axis=1)-1)*radius.mean()
+        return np.degrees(np.arccos(cosine.clip(-1, 1))).mean(), np.percentile(radial, 90), radial.max()
+    before, after = error(baseline), error(updated)
+    assert after[0] < before[0] * .8
+    assert after[1] < before[1] and after[2] < before[2]
+    assert diagnostics['maxDisplacementMm'] <= 1
+    assert np.linalg.norm(updated-source, axis=1).max() <= .7
+    assert display_surface_kind({'kind':'context', 'provenance':{'model':'siam-v2','label_ontology':{'value':16}}}) == 'outer-head-tissue'
+    assert display_surface_kind({'kind':'context','label_value':16}) == 'context'

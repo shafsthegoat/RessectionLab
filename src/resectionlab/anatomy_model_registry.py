@@ -10,7 +10,7 @@ import nibabel as nib
 import numpy as np
 from scipy import ndimage as ndi
 
-from .patient_anatomy import file_hash
+from .patient_anatomy import file_hash, projection_or_localizer, source_metadata_phrases
 
 ROOT = Path(__file__).resolve().parents[2]
 SYNTHSEG_MAX_PADDED_CELLS = 192 * 192 * 160
@@ -132,6 +132,20 @@ def model_environment(model, *, include_paths=False, **options):
         )}}
         paths = [packages / "raidionicsseg/fit.py", *sorted((packages / "raidionicsseg").rglob("*.py"))]
         assets.update({f"bundle/{path.relative_to(packages).as_posix()}": path for path in paths})
+    elif model == "siam-v2":
+        from . import anatomy_siam, siam_worker
+        if sys.platform != "darwin":
+            raise ValueError("The bounded SIAM v2 adapter requires the Metal runtime")
+        python, home = anatomy_siam.assets()
+        weights = {name: home / name for name in siam_worker.ASSETS}
+        if not all(path.is_file() for path in weights.values()):
+            raise FileNotFoundError("Local SIAM v2 weights or plans are missing. Run scripts/install_siam_v2.py explicitly.")
+        verified = _identities(weights.values())
+        if any(verified[str(path)] != siam_worker.ASSETS[name] for name, path in weights.items()):
+            raise ValueError("SIAM weights or plans differ from the pinned publisher release")
+        assets = {"python": python, "siam_worker": Path(siam_worker.__file__),
+                  "siam_adapter": Path(anatomy_siam.__file__), **weights, **anatomy_siam.runtime_files(python)}
+        configuration.update(parameters=siam_worker.PARAMETERS, runtime=siam_worker.RUNTIME)
     elif model == "supersynth":
         if sys.platform != "darwin":
             raise ValueError("The pinned tiled SuperSynth worker requires MPS")
@@ -156,21 +170,10 @@ def model_environment(model, *, include_paths=False, **options):
     return configuration
 
 
-def _metadata_phrases(row):
-    metadata = row.get("metadata", {})
-    return " ".join(str(value).lower() for value in (
-        row.get("label", ""), row.get("original", {}).get("name", ""), row.get("source_kind", ""),
-        row.get("image_type", ""), row.get("dicom_image_type", ""), row.get("series_description", ""),
-        metadata.get("ImageType", ""), metadata.get("SeriesDescription", ""),
-        metadata.get("ProtocolName", ""), metadata.get("DerivationDescription", ""),
-    ))
-
-
 def source_volume(row):
-    """Recognize source volumes and exclude declared projections."""
-    return (len(row["data"]["shape"]) == 3 and min(row["data"]["shape"]) >= 8
-            and not re.search(r"\b(?:mip|minip|projection|localizer|scout)\b|maximum.intensity",
-                              _metadata_phrases(row).replace("_", " ")))
+    """Recognize acquired volumes and exclude projections and localizers."""
+    return (not row.get("synthetic") and len(row["data"]["shape"]) == 3 and min(row["data"]["shape"]) >= 8
+            and not projection_or_localizer(row))
 
 
 def ct_intensities(c, row):
@@ -184,8 +187,13 @@ def ct_intensities(c, row):
         return True
     data = c.array(row["data"])
     step = np.maximum(1, np.ceil(np.asarray(data.shape) / 96).astype(int))
-    low, middle, high = np.percentile(data[tuple(slice(None, None, s) for s in step)], (2, 50, 98))
-    return -1100 <= low <= -850 and -1000 <= middle <= 300 and high >= 250
+    sample = data[tuple(slice(None, None, s) for s in step)]
+    low, middle, high = np.percentile(sample, (2, 50, 98))
+    if not (-1100 <= low <= -850 and high >= 250):
+        return False
+    # A large air-padded field can put the median at the scanner floor.
+    # Retain the air/dense-bone checks and require a soft-tissue population.
+    return -1000 <= middle <= 300 or (middle < -1000 and np.mean((sample >= -150) & (sample <= 150)) >= .05)
 
 def head_coverage(c, row, *, confirmed=False, brain=None):
     """Withhold whole-head estimates on ambiguous, truncated or altered MRI."""
@@ -198,7 +206,7 @@ def head_coverage(c, row, *, confirmed=False, brain=None):
             for key in ("privacy_redacted", "defaced", "skull_stripped", "cropped")):
         return unsupported("Source metadata indicates redaction, skull stripping or cropping")
     if re.search(r"mri_brain|skull.?stripp|brain.?extract|brain.?only|defac|redact|crop|(?:^|[_. -])strip(?:[_. -]|$)",
-                 _metadata_phrases(row)):
+                 source_metadata_phrases(row)):
         return unsupported("Source designation indicates redaction, skull stripping or cropping")
     if row["modality"] not in STRUCTURAL_MRI or not source_volume(row):
         return unsupported("A full-head structural source volume is required")
@@ -282,8 +290,11 @@ def preparation_model_jobs(c, *, indication=None, full_head_confirmed=False, inc
     series = sorted((row for row in c.document["series"] if not reference
                      or row["timepoint"] == reference["timepoint"]), key=lambda r: r["id"] != reference_id)
 
-    def pick(modalities, predicate=source_volume):
-        return next((r for mod in modalities for r in series if r["modality"] == mod and predicate(r)), None)
+    def sources(modalities):
+        return (r for mod in modalities for r in series if r["modality"] == mod)
+
+    def pick(modalities):
+        return next((row for row in sources(modalities) if source_volume(row)), None)
 
     def job(job_id, capability, row=None, model=None, *, status="ready", reason=None,
             options=None, depends_on=(), existing=None):
@@ -308,11 +319,27 @@ def preparation_model_jobs(c, *, indication=None, full_head_confirmed=False, inc
         return stage
 
     mri = reference if reference and reference["modality"] in STRUCTURAL_MRI and source_volume(reference) else pick(STRUCTURAL_MRI)
-    ct = pick(("CT", "CTA"), lambda row: ct_intensities(c, row))
-    ct_present = any(row["modality"] in {"CT", "CTA"} for row in series)
-    ct_status = "unsupported_input" if ct_present else "missing_input"
-    if ct:
-        job("ct-skull", "skull", ct, "totalsegmentator-skull", existing=matching_layer(c, ct, {"skull"}, supplied_only=True))
+    ct_sources = list(sources(("CT", "CTA")))
+    calibrated = [row for row in ct_sources if ct_intensities(c, row)]
+    ct = next(iter(calibrated), None)
+    ct_status = "unsupported_input" if ct_sources else "missing_input"
+    calibrated_ids = {row["id"] for row in calibrated}
+    unsupported_ct = [row for row in ct_sources if row["id"] not in calibrated_ids]
+    for index, row in enumerate([*calibrated, *unsupported_ct]):
+        stage_id = "ct-skull" if index == 0 else "ct-skull:" + row["id"]
+        label = f"Skull and brain · {row.get('label') or row['id']} ({row['modality']})"
+        if row["id"] not in calibrated_ids:
+            job(stage_id, "skull", row, status="unsupported_input",
+                reason="An acquired volumetric CT with supported HU intensities is required")["label"] = label
+            continue
+        # The CT adapter returns both masks. A supplied skull alone leaves its
+        # same-acquisition brain estimate useful for viewing and dural context.
+        skull = matching_layer(c, row, {"skull"}, supplied_only=True)
+        brain = matching_layer(c, row, {"brain"}, supplied_only=True) if skull else None
+        stage = job(stage_id, "skull", row, "totalsegmentator-skull", existing=skull if brain else None)
+        if skull and brain:
+            stage["layer_ids"].append(brain["id"])
+        stage["label"] = label
     brain_jobs = {}
 
     region_kinds = {"brain-region", "brainstem", "cerebellum", "cerebellar-white-matter", "cerebellar-cortex"}
@@ -359,12 +386,8 @@ def preparation_model_jobs(c, *, indication=None, full_head_confirmed=False, inc
         job("brain-regions", "brain_regions", status="unsupported_input",
             reason="Regional estimates are configured for structural MRI")
 
-    head_sources = [row for row in series if row["modality"] in STRUCTURAL_MRI and (
-        row is mri or row.get("coverage", {}).get("full_head_acquired")
-        or row.get("coverage_notes", {}).get("full_head_acquired")
-    )]
-    head_profiles = [(row, head_coverage(c, row, confirmed=full_head_confirmed and row is mri))
-                     for row in head_sources]
+    head_profiles = [(row, head_coverage(c, row, confirmed=full_head_confirmed))
+                     for row in series if row["modality"] in STRUCTURAL_MRI]
     head = next((row for row, profile in head_profiles if profile["status"] == "eligible"), None)
     reused_head = next((existing for row, profile in head_profiles if profile["status"] in {"eligible", "unprocessed"}
                        if (existing := reusable_model_layer(c, row, {"context", "scalp"}, model="supersynth"))), None)
@@ -373,35 +396,59 @@ def preparation_model_jobs(c, *, indication=None, full_head_confirmed=False, inc
         job("mri-head", "outer_head", head, "supersynth", existing=reused_head)
     elif head:
         brain = matching_layer(c, head, {"brain"}, native=True)
-        options = {"include_mri_skull": not bool(ct), "full_head_confirmed": full_head_confirmed}
+        # An acquired CT has its own field and may exclude part of the skull.
+        options = {"include_mri_skull": True, "full_head_confirmed": full_head_confirmed}
         if brain:
             options["brain_layer_id"] = brain["id"]
         job("mri-head", "outer_head", head, "supersynth", options=options,
             depends_on=[] if brain else [brain_job(head)])
     else:
-        profile = next((profile for row, profile in head_profiles if row is mri), None)
-        job("mri-head", "outer_head", mri, status=profile["status"] if profile else "missing_input",
+        # If the reference is cropped, identify the other scan which passed
+        # the measured screen and is waiting for coverage confirmation.
+        row, profile = next(((row, profile) for row, profile in head_profiles if profile["status"] == "unprocessed"),
+                            next(iter(head_profiles), (None, None)))
+        job("mri-head", "outer_head", row, status=profile["status"] if profile else "missing_input",
             reason=profile["reason"] if profile else "Full-head structural MRI required")
+    # A reduced-field reference cannot hide an intact acquisition. Each MRI
+    # retains its own native labels, coverage result and checkpoint.
+    priority = {"eligible": 0, "unprocessed": 1}
+    if not head_profiles:
+        stage = job("siam-tissues", "cranial_tissues", model="siam-v2", status="missing_input",
+                    reason="Acquired full-head structural MRI required")
+        stage["label"] = "SIAM v2 · dura, skull, vessels and brain tissues"
+    for index, (row, profile) in enumerate(sorted(head_profiles, key=lambda item: priority.get(item[1]["status"], 2))):
+        eligible = profile["status"] == "eligible"
+        stage_id = "siam-tissues" if index == 0 else "siam-tissues:" + row["id"]
+        stage = job(stage_id, "cranial_tissues", row, "siam-v2",
+                    status="ready" if eligible else profile["status"],
+                    reason=None if eligible else profile["reason"],
+                    options={"full_head_confirmed": full_head_confirmed})
+        stage["label"] = f"SIAM v2 dura, skull, vessels and brain tissues · {row.get('label') or row['id']} ({row['modality']})"
+
     if not ct and not head:
         job("skull", "skull", status=ct_status, reason="Acquired HU-calibrated CT or covered full-head MRI required")
 
-    angio = pick(("CTA", "TOF", "MRA"))
-    if angio:
-        existing = matching_layer(c, angio, {"vessels", "artery", "vein", "sinus"}, supplied_only=True)
-        if existing is None:
-            existing = reusable_model_layer(c, angio, {"vessels"}, model="vesselfm-base")
-        job("vascular", "vessels", angio, "vesselfm", existing=existing)
-    else:
-        declared = (any(row["modality"] in ANGIOGRAPHY for row in series)
-                    or any(row["modality"] == "MIP" for row in c.document.get("source_assets", [])))
-        job("vascular", "vessels", status="unsupported_input" if declared else "missing_input",
-            reason="Vascular proposals require volumetric CTA, TOF or MRA source images")
-    venous = pick(("MRV", "SWI", "SWI_MAGNITUDE", "SWI_PHASE"))
-    supplied_venous = next((layer for row in series
-                            if (layer := matching_layer(c, row, {"vein", "sinus"}, supplied_only=True))), None)
-    job("venous", "veins_and_sinuses", c.series(supplied_venous["source_series"]) if supplied_venous else venous,
-        status="unsupported_input" if venous else "missing_input", existing=supplied_venous,
-        reason="No installed venous adapter supports this source contrast" if venous else "Dedicated venous source images unavailable")
+    # Supplied annotations label positive anatomy only. Neither a named
+    # artery nor an unclassified mask accounts for the remaining vessels.
+    angiograms = sorted(sources(("CTA", "TOF", "MRA")), key=lambda row: not source_volume(row))
+    angio_reason = "Vascular proposals require acquired volumetric CTA, TOF or MRA source images"
+    for index, row in enumerate(angiograms):
+        eligible = source_volume(row)
+        existing = reusable_model_layer(c, row, {"vessels"}, model="vesselfm-base") if eligible else None
+        stage = job("vascular" if index == 0 else "vascular:" + row["id"], "vessels", row, "vesselfm",
+                    status="ready" if eligible else "unsupported_input", reason=None if eligible else angio_reason,
+                    existing=existing)
+        stage["label"] = f"Vessel candidates · {row.get('label') or row['id']} ({row['modality']})"
+    if not angiograms:
+        projection = any(row["modality"] == "MIP" and (not reference or row.get("timepoint") == reference["timepoint"])
+                         for row in c.document.get("source_assets", []))
+        job("vascular", "vessels", status="unsupported_input" if projection else "missing_input", reason=angio_reason)
+    venous = next(sources(("MRV", "SWI", "SWI_MAGNITUDE", "SWI_PHASE")), None)
+    for stage_id, capability, kind in (("venous", "veins", "vein"), ("sinuses", "dural_venous_sinuses", "sinus")):
+        supplied = next((layer for row in series if (layer := matching_layer(c, row, {kind}, supplied_only=True))), None)
+        job(stage_id, capability, c.series(supplied["source_series"]) if supplied else venous,
+            status="unsupported_input" if venous else "missing_input", existing=supplied,
+            reason="No installed venous adapter supports this source contrast" if venous else "Dedicated venous source images unavailable")
 
     tumor_kinds = {"tumor", "enhancing-tumor", "nonenhancing-tumor", "lesion", "tumor-core", "tumor-whole"}
     supplied = next((layer for row in series

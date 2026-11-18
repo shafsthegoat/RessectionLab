@@ -308,6 +308,30 @@ def test_label_role_map_reaches_simulation_grid_and_reopens(tmp_path):
     assert Path(report["casePath"]).exists()
 
 
+def test_named_dura_and_vascular_annotations_share_patient_geometry_and_keep_their_meanings(tmp_path):
+    c = collection(tmp_path)
+    labels = np.zeros((8, 8, 8), np.uint8)
+    for code in range(1, 5):
+        labels[code, 2:5, 3:6] = code
+    path = volume(tmp_path / "named.nii.gz", labels)
+    kinds = ["dura", "artery", "vein", "sinus"]
+    rows = import_anatomy_derivative(c, path, source_series="t1", kind="labels", label="supplied",
+                                     role_map={i: kind for i, kind in enumerate(kinds, 1)})
+    c.save("supplied intraoperative anatomy")
+    assert [row["kind"] for row in rows] == kinds
+    assert [row["role"] for row in rows] == ["context", "critical", "critical", "critical"]
+    assert all(row["provenance"]["kind"] == "observed_source_annotation" for row in rows)
+    bridge = BridgeSession(tmp_path / "transfers")
+    call = lambda op, args: bridge.execute(op, args, _Request("named-annotations"), lambda *_: None)
+    opened = call("anatomyOpen", {"path": str(c.root / "patient-anatomy.json")})
+    view = call("anatomyView", {"collectionId": opened["collectionId"], "snapshotId": c.identity(),
+                               "seriesId": "t1", "layers": [row["id"] for row in rows]})
+    assert view["unavailableLayers"] == []
+    assert {part["name"]: part["qa"]["voxelCount"] for part in view["compartments"]} == {
+        row["id"]: 9 for row in rows
+    }
+
+
 def test_imported_layer_units_must_be_mm_for_scene(tmp_path):
     c = collection(tmp_path)
     segmentation = volume(tmp_path / "unknown-units.nii.gz", np.ones((8, 8, 8), np.uint8))

@@ -1,0 +1,63 @@
+.operative-inspector {
+  display: grid; gap: 8px; padding: 16px; border-bottom: 1px solid #303632;
+}
+.operative-inspector h2, .operative-inspector p, .operative-topline h3 {margin: 0;}
+.operative-inspector h2 {font-size: 12px;color: #bbc5bf;}
+.operative-inspector strong {font-size: 15px;}
+.operative-inspector p {font-size: 12px; line-height: 1.5; color: #aab5ae;}
+.operative-inspector button, .native-approaches .approach-preview {min-height: 32px;}
+.operative-playback, .operative-placeholder {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  color: #dfebe5; background: #101514; font: 13px/1.45 "Inter",sans-serif;
+}
+.operative-placeholder {align-items: center; justify-content: center; gap: 6px; padding: 20px; text-align: center;}
+.operative-placeholder p {margin: 0; color: #acb7b0;}
+.operative-topline, .operative-stage-title, .operative-scrub, .operative-options, .operative-legend {
+  display: flex; align-items: center; gap: 12px;
+}
+.operative-topline {
+  padding: 10px 16px; justify-content: space-between; border-bottom: 1px solid #313a35;
+  background: #171d1b; position: relative; z-index: 2;
+}
+.operative-topline strong {font-size: 15px; font-weight: 600;}
+.operative-topline small, .operative-chapters small {display: block; color: #9caaa2; font-size: 11px;}
+.operative-sources summary {cursor: pointer; color: #c2d2c8;}
+.operative-sources > div {
+  position: absolute; top: 100%; right: 4px; width: min(340px,90%); max-height: 45vh;
+  overflow: auto; background: #202723; border: 1px solid #414a44; padding: 14px;
+  box-shadow: 0 6px 18px #0008; font-size: 12px;
+}
+.operative-image {position: relative; flex: 1; min-height: 0; overflow: hidden;}
+.operative-field-canvas {position: absolute; inset: 0; background: #090c10;}
+.operative-cavity {
+  position: absolute; z-index: 1; right: 12px; top: 8px; padding: 4px 8px; border-radius: 4px;
+  color: #e0e9e4; background: #101514df; font-size: 11px; pointer-events: none; font-variant-numeric: tabular-nums;
+}
+.operative-legend {
+  pointer-events: none; position: absolute; bottom: 8px; left: 12px;
+  flex-wrap: wrap; max-width: 94%; gap: 9px; padding: 4px 8px; border-radius: 4px; background: #101514df; font-size: 11px;
+}
+.operative-legend span::before {content: ''; width: 8px; height: 8px; margin-right: 5px; border-radius: 50%; display: inline-block; background: var(--tissue);}
+.operative-legend [data-tissue=bone] {--tissue: #e5d8bc;}
+.operative-legend [data-tissue=dura] {--tissue: #d7b2a0;}
+.operative-legend [data-tissue=brain] {--tissue: #c68788;}
+.operative-legend [data-tissue=tumor] {--tissue: #b67cae;}
+.operative-legend [data-tissue=vessels] {--tissue: #be4349;}
+.operative-transport {padding: 11px 16px; border-top: 1px solid #313a35; background: #171d1b;}
+.operative-stage-title {justify-content: space-between; color: #dce6df;}
+.operative-stage-title span {color: #9eafa4; font-variant-numeric: tabular-nums;}
+.operative-scrub {gap: 5px; margin: 6px 0;}
+.operative-scrub input {flex: 1; min-width: 80px; accent-color: #8dd9b7;}
+.operative-scrub button {width: 30px; height: 28px; display: grid; place-items: center;}
+.operative-chapters {display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 4px;}
+.operative-chapters button {
+  padding: 5px 6px; text-align: left; line-height: 1.35; font-size: 12px; min-height: 32px;
+  color: #c7d3cc; background: #1f2622; border: 1px solid #38423b; border-radius: 4px;
+}
+.operative-chapters button[aria-pressed=true] {color: #adedd2; border-color: #75b998; box-shadow: inset 0 -2px #75b998;}
+.operative-chapters button:disabled {opacity: .62;}
+.operative-options {margin-top: 8px; flex-wrap: wrap; color: #b9c6be; font-size: 12px;}
+.operative-options label {display: flex; align-items: center; gap: 5px;}
+.operative-options input {accent-color: #8dd9b7;}
+.operative-conflict {color: #f2c89a; font-size: 12px; padding-bottom: 5px; max-height: 4em; overflow: auto;}
+.operative-playback :is(button,input,summary):focus-visible {outline: 2px solid #9fe1c0; outline-offset: 1px;}

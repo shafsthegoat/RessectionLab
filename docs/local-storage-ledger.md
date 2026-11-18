@@ -9,7 +9,7 @@ instructions or an explicitly agreed transfer for collaborator workflows.
 - RessectionLab root: `/Volumes/shafrir/old coding projects/RessectionLabData`
 - Volume UUID: `9CC3623C-E38B-3EEE-B6BB-B9A06C193700`
 
-Last location check: **November 17, 2026**. The drive may be disconnected.
+Last location check: **November 18, 2026**. The drive may be disconnected.
 Verify the real mount and `.ressectionlab-data-root.json` before writing; never
 create a substitute mount directory. Ignored `testcases/` links may be dangling
 while it is absent. Ordinary development must not require this private drive;
@@ -44,6 +44,7 @@ establish scientific readiness or a completed build; consult each run's receipts
 | Historical archives | `archive/closed-evidence/`: October 19 rehearsal tar, generated-control tar, October 20 rehearsal, desktop visual evidence and profiler-baseline archives. [Exact newer archive identities/restoration](../manifests/historical-archives-20261116.json). |
 | Archived desktop builds | `archive/desktop-builds-20261117/`: older macOS app bundles, packaging inputs and staging directories. `README.md` provides restore commands beside the per-archive checksums. |
 | Archived sidecar and test runs | `archive/closed-evidence/local-build-and-test-archives-20261117/`: prior orientation-guide sidecar and 16 older vascular test runs. `README.md` links the verified archives and the existing evidence archives used to retire the local restore-test copies. |
+| November 18 operative rehearsal examples | Open `archive/closed-evidence/operative-rehearsal-20261118/README.md` for the BITE-09, UCSF-0005, EDEN CTRL_1277 and synthetic workspaces, recordings and comparison images. Its `SHA256SUMS` covers the archived media, earlier diagnostic captures and test logs. The guide lists the working-study restore paths and identifies the five fixtures kept locally for verification. |
 | Integrated research | `integrated-v1/`: cases, anatomy hosts, replay experiments, QC, reports and reproduction records; start at its `START-HERE.md`. |
 | Catalog and review | `catalog/START-HERE.md`, `catalog/releases/`, `catalog/inventory/`, `catalog/work-ledger.json`; `qc/`, `quarantine/`, `staging/` hold review/recovery/work areas. Catalog releases and ledgers have their own dates and scope. |
 

@@ -6,14 +6,14 @@ import type {Affine} from './coordinates';
  * same response. No vertex, triangle, source normal or mask is changed, and
  * disconnected (even coincident) vertices never exchange a normal. */
 export function displaySurfaceNormals(normals:Float32Array,indices:Uint32Array,affine:Affine,passes=3):Float32Array {
-  const n=normals.length/3,inverse=inverseAffine(affine),original=new Float64Array(normals.length);
+  const n=normals.length/3,inverse=inverseAffine(affine),original=new Float32Array(normals.length);
   for(let i=0;i<normals.length;i+=3){
     for(let a=0;a<3;a++)original[i+a]=inverse[0][a]*normals[i]+inverse[1][a]*normals[i+1]+inverse[2][a]*normals[i+2];
     const length=Math.hypot(original[i],original[i+1],original[i+2]);
     if(length)for(let a=0;a<3;a++)original[i+a]/=length;
   }
-  let current=original.slice(),next=new Float64Array(normals.length);
-  const weight=new Float64Array(n),minimumCosine=Math.cos(Math.PI/6);
+  let current=original.slice(),next=new Float32Array(normals.length);
+  const weight=new Float32Array(n),minimumCosine=Math.cos(Math.PI/6);
   for(let pass=0;pass<passes;pass++){
     next.fill(0);weight.fill(0);
     // Every contribution follows a supplied face edge. An angular bilateral
@@ -33,14 +33,17 @@ export function displaySurfaceNormals(normals:Float32Array,indices:Uint32Array,a
       if(length)for(let k=0;k<3;k++)next[i+k]/=length;
       const cosine=next[i]*original[i]+next[i+1]*original[i+1]+next[i+2]*original[i+2];
       if(cosine<minimumCosine){
-        const tangent=[0,1,2].map(k=>next[i+k]-cosine*original[i+k]);
-        length=Math.hypot(...tangent);
-        for(let k=0;k<3;k++)next[i+k]=minimumCosine*original[i+k]+(length ? .5*tangent[k]/length : 0);
+        const x=next[i]-cosine*original[i],y=next[i+1]-cosine*original[i+1],z=next[i+2]-cosine*original[i+2];
+        length=Math.hypot(x,y,z);
+        const scale=length ? .5/length : 0;
+        next[i]=minimumCosine*original[i]+scale*x;
+        next[i+1]=minimumCosine*original[i+1]+scale*y;
+        next[i+2]=minimumCosine*original[i+2]+scale*z;
       }
     }
     [current,next]=[next,current];
   }
-  const output=new Float32Array(normals.length);
+  const output=next;
   for(let i=0;i<normals.length;i+=3){
     for(let a=0;a<3;a++)output[i+a]=affine[0][a]*current[i]+affine[1][a]*current[i+1]+affine[2][a]*current[i+2];
     const length=Math.hypot(output[i],output[i+1],output[i+2]);

@@ -38,3 +38,11 @@ test('comparison quantities preserve measured zero and hide unavailable target a
  const partial={...target,acquisitionCoverage:{wholeEnvelopeWithinField:false}};
  assert.equal(approachAssessment({ ...a, measurements:{...a.measurements,targets:[partial]} }).targetReachedMm3,null);
 });
+test('selecting a surface entry compares all three geometry alternatives from its saved group',()=>{
+  const patch=['a','b','c'].map(approach);
+  const windows=['d','e','f'].map(id=>({...approach(id),origin:'native-source-entry-windows'}));
+  const combined=[...patch,...windows];
+  assert.deepEqual(approachRoutes(combined,'e').map(r=>[r.route_id,r.comparisonSlot]),
+    [['d','A'],['e','B'],['f','C']]);
+  assert.deepEqual(approachRoutes(combined,'b').map(r=>r.route_id),['a','b','c']);
+});

@@ -7,7 +7,7 @@ import {fileURLToPath} from 'node:url';
 import {createServer} from 'vite';
 import * as THREE from 'three';
 import {checkedFusionTransform} from './registeredFusion.ts';
-import {transformPoint} from './coordinates.ts';
+import {transformPoint,volumeBounds} from './coordinates.ts';
 import {validCameraState,clippingForBounds} from './workspaceSettings.ts';
 
 const identity=[[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]];
@@ -27,10 +27,10 @@ test('matching dimensions never authorize unreviewed, wrong-patient or singular 
     const layer=fusion();mutate(layer);assert.throws(()=>checkedFusionTransform(source,layer));
   }
 });
-test('camera rejects collapsed or collinear views and cutaway stays in physical bounds',()=>{
+test('camera rejects collapsed or collinear views and out-of-bounds cutaways stay inactive',()=>{
   assert.equal(validCameraState({position:[0,0,0],target:[0,0,0],up:[0,0,1]}),false);
   assert.equal(validCameraState({position:[0,0,50],target:[0,0,0],up:[0,0,1]}),false);
-  assert.deepEqual(clippingForBounds({axis:'x',value:999,enabled:true},[[-20,-30,-40],[80,90,100]]),{axis:'x',value:80,enabled:true,flipped:false});
+  assert.deepEqual(clippingForBounds({axis:'x',value:999,enabled:true},[[-20,-30,-40],[80,90,100]]),{axis:'x',value:30,enabled:false,flipped:false});
 });
 
 let server,cache,VolumeRenderer,ScanVolumeRenderer;
@@ -58,6 +58,19 @@ test('real renderer updates source material and all image uniforms without touch
   assert.equal(mesh.material.clippingPlanes[0].distanceToPoint(new THREE.Vector3(11,0,0)),1);
   r.setWorkspaceSettings({});assert.equal(mesh.material.clippingPlanes.length,0);assert.equal(uniforms.uClipEnabled.value,0);
   assert.deepEqual(r.volume.mri,data);assert.deepEqual(r.volume.compartments[0].mask,mask);
+});
+test('shared cutaway reaches the field edge without being shifted onto the selected scan',()=>{
+  const {r,uniforms}=renderer();
+  r.sourceClipBounds=volumeBounds([10,10,10],identity,true);
+  r.patientClipBounds=volumeBounds([30,10,10],identity,true);
+  for(const value of [20,29.5]){
+    r.setWorkspaceSettings({presentation:'segmentation',clipping:{axis:'x',value,enabled:true}});
+    assert.deepEqual(uniforms.uClipPlane.value.toArray(),[1,0,0,-value]);
+    r.setWorkspaceSettings({presentation:'scan',clipping:{axis:'x',value,enabled:true}});
+    assert.equal(uniforms.uClipEnabled.value,0);
+  }
+  r.setWorkspaceSettings({presentation:'scan',clipping:{axis:'x',value:9.5,enabled:true}});
+  assert.deepEqual(uniforms.uClipPlane.value.toArray(),[1,0,0,-9.5]);
 });
 test('real renderer drops old fusion before refusing a stale replacement',()=>{
   const {r,uniforms}=renderer();r.setRegisteredFusion(fusion());assert.equal(uniforms.uFusionActive.value,1);

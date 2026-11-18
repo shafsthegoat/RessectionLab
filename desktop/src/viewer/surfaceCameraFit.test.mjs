@@ -48,3 +48,13 @@ test('stable source IDs fit active indexed corners without historical extreme ve
   }
   assert.deepEqual(stable.attributes.position.array,historical);assert.deepEqual([...stable.index.array],[1,2,3,1,3,4]);
 });
+
+test('patient fit includes a remote supplied tract beyond the linked scan and mesh',()=>{
+  const anatomy=new THREE.Group();
+  anatomy.add(new THREE.Mesh(new THREE.BoxGeometry(2,2,2)));
+  const fibres=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(5,0,0),new THREE.Vector3(95,0,0)]);
+  anatomy.add(new THREE.LineSegments(fibres));
+  const distance=surfaceCameraDistance(anatomy,new THREE.Vector3(),new THREE.Vector3(0,0,1),
+    new THREE.Vector3(1,0,0),new THREE.Vector3(0,1,0),Math.PI/3,1);
+  assert.ok(distance>=95/(Math.tan(Math.PI/6)*.92));
+});

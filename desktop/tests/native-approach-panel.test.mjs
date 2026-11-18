@@ -34,7 +34,7 @@ function harness(renderBody){
 }
 const wholeField={wholeEnvelopeWithinField:true};
 function approach(id,patchRadius=15){return {id,name:`Approach ${id}`,sourceSnapshotId:'revision',parameterHash:`initial-${id}`,assessmentStatus:'current',entry:id==='b'?[9,8,60]:[1,2,50],target:id==='b'?[7,6,20]:[1,2,20],radiusMm:id==='b'?4:2,direction:[0,0,-1],entryPatch:{center:id==='b'?[8,8,60]:[0,2,50],normal:[0,0,-1],radiusMm:patchRadius},constraints:{minClearanceMm:id==='b'?3:0,maxLengthMm:id==='b'?80:150,excludedLayerIds:['tract']},measurements:{lengthMm:30,orientation:{azimuthDeg:0,elevationDeg:-90},status:'incomplete',structures:[{layerId:'tract',label:'Supplied CST',kind:'tractography',available:true,clearanceLowerBoundMm:4,confirmedIntersection:false}],coverage:{withinReferenceEnvelope:true},targets:[{available:true,label:'Target',coveredVoxelCenterVolumeMm3:0,coveredVoxelCenterFraction:0,coverage:wholeField,acquisitionCoverage:wholeField}],normalTraversal:{available:true,conservativeVolumeUpperBoundMm3:120},unknowns:['Registration accuracy unmeasured'],assumptions:['Static straight capsule']}};}
-function fixture(initial=[approach('a',7),approach('b',22)]){
+function fixture(initial=[approach('a',7),approach('b',22)],{patientFrameReady=true,onEditStateChange,setCursor=()=>{}}={}){
   let saved=structuredClone(initial),revision=0,planning,workspace;
   const calls=[],binding={collectionId:'patient',document:{snapshot_id:'revision',display:{entry_ras_mm:[0,0,90],cursor_ras_mm:[0,0,30]},layers:[]},viewState:{selectedApproachId:'a'}};
   const api={async anatomyPlan(args){calls.push(structuredClone(args));if(args.action==='upsert'){
@@ -44,8 +44,8 @@ function fixture(initial=[approach('a',7),approach('b',22)]){
   }return {approaches:structuredClone(saved)};}};
   function open(){return harness(()=>{
     planning=useNativeApproaches(binding,api,true);
-    workspace={planning,binding,busy:false,draft:null,state:{cursor:[4,5,60],visible:{},settings:{}},volume:null,selectedStructure:null,setCursor(){},setSelectedStructure(){},setVisible(){},focusStructure(){},setSettings(){},async save(){calls.push({action:'save',selectedId:planning.selectedId});binding.viewState.selectedApproachId=planning.selectedId;}};
-    return Panel({workspace});
+    workspace={planning,binding,patientFrameReady,busy:false,draft:null,state:{cursor:[4,5,60],visible:{},settings:{}},volume:null,selectedStructure:null,setCursor,setSelectedStructure(){},setVisible(){},focusStructure(){},setSettings(){},async save(){calls.push({action:'save',selectedId:planning.selectedId});binding.viewState.selectedApproachId=planning.selectedId;}};
+    return Panel({workspace,onEditStateChange});
   });}
   return {binding,api,calls,open,get planning(){return planning;},get workspace(){return workspace;},get saved(){return saved;}};
 }
@@ -131,6 +131,81 @@ test('comparison cards show observed anatomy, incomplete evidence, quantities an
     assert(!text(tree).includes('Known geometric conflict'),'the aggregate backend status does not obscure separate observations and constraints');
   }finally{h.close();}
 });
+test('switching patch and surface entries binds cards, viewer geometry and consequence columns to the same route',async()=>{
+  const target='target',binding='target-binding',slots=['A','B','C'];
+  const approaches=['patch','surface'].flatMap(group=>[0,1,2].map(index=>{
+    const id=`${group}-${index}`,value=(group==='patch'?10:20)+index;
+    const row={...approach(id),origin:group==='patch'?'bounded-native-entry-patch':'native-source-entry-windows',
+      entry:[1,2,20+value],targetLayerId:target,measurementHash:`measurements-${id}`};
+    row.measurements.lengthMm=value;
+    row.measurements.targets[0].coveredVoxelCenterVolumeMm3=value-5;
+    row.measurements.normalTraversal.conservativeVolumeUpperBoundMm3=value+10;
+    return row;
+  }));
+  const metric=(label,unit,value)=>({label,unit,value,status:'geometric_estimate'});
+  const f=fixture(approaches);
+  f.binding.viewState.selectedApproachId='patch-0';
+  let finishRequest;
+  f.api.anatomyPlan=args=>{
+    f.calls.push(structuredClone(args));
+    const start=args.reviewApproachId?.startsWith('surface')?3:0;
+    const response={approaches,activeTargetLayerId:target,consequenceEvidence:{sourceSnapshotId:'revision',
+      targetLayerId:target,targetCandidateBinding:binding,routes:approaches.slice(start,start+3).map((row,index)=>({
+        approachId:row.id,name:row.name,comparisonSlot:slots[index],parameterHash:row.parameterHash,measurementHash:row.measurementHash,
+        sourceSnapshotId:'revision',targetLayerId:target,targetCandidateBinding:binding,target:{label:'Target',evidenceClass:'supplied_annotation'},
+        dimensions:{lengthMm:metric('Corridor length','mm',row.measurements.lengthMm),
+          targetVoxelCenterCoverageMm3:metric('Target voxel centres reached','mm3',row.measurements.targets[0].coveredVoxelCenterVolumeMm3),
+          nonTargetTraversalUpperBoundMm3:metric('Brain traversal volume upper bound','mm3',row.measurements.normalTraversal.conservativeVolumeUpperBoundMm3)},
+        researchDisposition:{reasons:[`Evidence for ${row.id}`]},warnings:{criticalContacts:[],constraintFailures:[],missingEvidence:[]},
+        registrations:[],uncertainty:{limitations:[]},sources:[],
+      })).reverse()}};
+    return f.calls.length===1?Promise.resolve(response):new Promise(resolve=>{finishRequest=()=>resolve(response);});
+  };
+  const h=await ready(f);
+  const card=(tree,id)=>[...walk(tree)].find(node=>node.props['data-approach-id']===id);
+  const readout=tree=>{
+    const node=[...walk(tree)].find(item=>item.type?.name==='NativeConsequenceReadout');
+    return node?.type(node.props);
+  };
+  function verify(group,index){
+    const tree=h.render(),evidence=readout(tree);
+    const expected=approaches.filter(row=>row.id.startsWith(group));
+    const viewer=f.planning.routes;
+    assert.deepEqual(viewer.map(row=>[row.route_id,row.comparisonSlot,row.label,row.entry_mm,row.target_mm,row.tool.working_length_mm]),
+      expected.map((row,i)=>[row.id,slots[i],`${slots[i]} · ${row.name}`,row.entry,row.target,row.measurements.lengthMm]));
+    assert.equal(viewer.find(route=>route.selected)?.route_id,expected[index].id);
+    assert.deepEqual([...walk(evidence)].filter(node=>node.props['data-native-consequence-route'])
+      .map(node=>[node.props['data-native-consequence-route'],text(node)]),expected.map((row,i)=>[row.id,slots[i]]));
+    assert.deepEqual([...walk(evidence)].filter(node=>node.type==='td').map(text),
+      [row=>row.lengthMm,row=>row.targets[0].coveredVoxelCenterVolumeMm3,row=>row.normalTraversal.conservativeVolumeUpperBoundMm3]
+        .flatMap(measure=>expected.map(row=>String(measure(row.measurements)))));
+    for(const [i,row] of expected.entries()){
+      assert(text(card(tree,row.id)).startsWith(`${slots[i]} · ${row.name}${row.measurements.lengthMm}.0 mm`));
+    }
+    assert(text(evidence).includes(`Evidence for ${expected[index].id}`));
+    assert(text(evidence).includes(`Coverage, warnings and registration · ${slots[index]}`));
+  }
+  async function select(id){
+    await card(h.render(),id).props.onClick();
+    return h.render();
+  }
+  try{
+    verify('patch',0);
+    await select('patch-2');verify('patch',2);
+    assert.equal(f.calls.length,1);
+    let tree=await select('surface-1');
+    assert.equal(f.planning.routes.find(row=>row.selected)?.route_id,'surface-1');
+    assert.equal(readout(tree),null,'patch evidence cannot appear under surface slots while loading');
+    assert.equal(f.calls.at(-1).reviewApproachId,'surface-1');
+    finishRequest();await flush();verify('surface',1);
+    await select('surface-2');verify('surface',2);
+    assert.equal(f.calls.length,2);
+    tree=await select('patch-1');
+    assert.equal(readout(tree),null);
+    assert.equal(f.calls.at(-1).reviewApproachId,'patch-1');
+    finishRequest();await flush();verify('patch',1);
+  }finally{h.close()}
+});
 test('a completed mutation cannot restore an older selection made while it was in flight',async()=>{
   const binding={collectionId:'patient',document:{snapshot_id:'revision'},viewState:{selectedApproachId:'a'}},approaches=[approach('a'),approach('b')];
   let planning,resolve;
@@ -207,5 +282,37 @@ test('a prepared lesion requires explicit selection and sends its evidence bindi
     assert.equal(selection.candidateBinding,lesion.candidateBinding);
     assert.equal(button(tree,'Suggest approaches').props.disabled,false);
     assert(text(tree).includes('unreviewed'));
+  }finally{h.close();}
+});
+
+test('independent scan cursor stays in its own frame while selecting a saved route',async()=>{
+  const cursorWrites=[];
+  const f=fixture(undefined,{patientFrameReady:false,setCursor:p=>cursorWrites.push(p)}),h=await ready(f);
+  try{
+    const tree=h.render();
+    for(const label of ['Place patch at cursor','Entry at cursor','Target at cursor','Focus selected target']){
+      assert.equal(button(tree,label).props.disabled,true,label);
+    }
+    await [...walk(tree)].find(n=>n.props['data-approach-id']==='b').props.onClick();
+    assert.equal(f.planning.selectedId,'a');
+    h.render();
+    assert.equal(f.planning.selectedId,'b');
+    assert.deepEqual(cursorWrites,[]);
+  }finally{h.close();}
+});
+
+test('discarding an invalid saved-route edit restores the geometry and clears the navigation guard',async()=>{
+  const changes=[];
+  const f=fixture(undefined,{onEditStateChange:flag=>changes.push(flag)}),h=await ready(f);
+  try{
+    const tree=h.render();
+    input(tree,'Entry patch radius').props.onChange({target:{value:'-1'}});
+    assert.equal(changes.at(-1),true);
+    const dirty=h.render();
+    assert.equal(button(dirty,'Reassess').props.disabled,true);
+    button(dirty,'Discard edits').props.onClick();
+    assert.equal(input(h.render(),'Entry patch radius').props.value,7);
+    assert.equal(changes.at(-1),false);
+    assert.equal(f.calls.some(c=>c.action==='upsert'||c.action==='delete'),false);
   }finally{h.close();}
 });

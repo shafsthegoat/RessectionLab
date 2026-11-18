@@ -1,0 +1,130 @@
+import type {ArrayDescriptor} from './types';
+import type {Point3} from './viewer/coordinates';
+import {inverseAffine,rasAffine} from './viewer/coordinates.ts';
+import type {NativeApproach} from './native-approaches';
+import {sha256Bytes} from './source-integrity.ts';
+import {hasAspirationSeed} from './viewer/operativeSeed.ts';
+
+export type OperativePhase = 'overview' | 'bone' | 'dura' | 'brain' | 'tumor';
+type Tissue = Exclude<OperativePhase,'overview'>;
+export interface FieldLayer {
+  id:string; label:string; role:Tissue|'vessels'; evidence:string; sourceSeries:string;
+  reviewStatus:string; sampledVoxels:number; proxy:boolean;
+}
+export interface OperativeIntensity {
+  shape:Point3; origin:Point3; spacingMm:Point3; unknownValue:0; voxels:Uint8Array;
+  sourceSeries:string; modality:string; sourceSha256:string; dataSha256:string;
+  window:[number,number]; windowUnits:'HU'|'source intensity'; windowMethod:string;
+  coveredVoxels:number; sourceShape:Point3; sourceVoxelToPatientRasMm:number[][];
+}
+type IntensityPacket=Omit<OperativeIntensity,'voxels'>&{signal:ArrayDescriptor};
+interface FieldPacket {
+  snapshotId:string; approachId:string; parameterHash:string; targetLayerId:string;
+  shape:Point3; origin:Point3; spacingMm:number; radiusMm:number; routeRadiusMm:number;
+  entryDepthMm:number; stations:Record<Tissue,number|null>; labels:ArrayDescriptor;
+  intensity?:IntensityPacket;
+  stationEvidence:Record<Tissue,'source'|'proxy'|null>;
+  units:'mm'; targetRasMm:Point3; basisRas:[Point3,Point3,Point3];
+  materialBits:Record<Tissue|'vessels',number>;
+  layers:FieldLayer[]; excluded:{id:string;label:string;reason:string}[];
+  encounters:{id:string;label:string;status:string}[]; blockers:string[]; unknowns:string[]; stationIssues:string[];
+  simulationExecutionAuthorized:false;
+}
+export type OperativeField = Omit<FieldPacket,'labels'|'intensity'> & {voxels:Uint8Array;intensity?:OperativeIntensity};
+
+export const operativeSteps = [
+  {id:'bone',label:'Bone flap'}, {id:'dura',label:'Dural opening'},
+  {id:'brain',label:'Brain retraction'}, {id:'tumor',label:'Tumor aspiration'},
+] as const;
+
+export function operativeRouteIssue(route:NativeApproach|null, activeTarget:string|null|undefined, snapshot:string) {
+  if (!route) return 'Generate or select an approach in Plan.';
+  if (route.sourceSnapshotId!==snapshot || route.assessmentStatus!=='current')
+    return 'Reassess the selected approach against the current study in Plan.';
+  if (!route.targetLayerId || route.targetLayerId!==activeTarget)
+    return 'Select a lesion and an approach assessed for that lesion in Plan.';
+  return null;
+}
+
+const triple=(value:unknown):value is Point3=>Array.isArray(value)&&value.length===3&&value.every(Number.isFinite);
+const bits = {bone:1,dura:2,brain:4,tumor:8,vessels:16} as const;
+
+async function readIntensity(packet:IntensityPacket, field:Pick<FieldPacket,'shape'|'origin'|'spacingMm'>,
+                             readAsset:(id:string)=>Promise<Uint8Array>):Promise<OperativeIntensity> {
+  const hash=(s:unknown)=>typeof s==='string'&&/^[0-9a-f]{64}$/.test(s);
+  const supported=['T1','T1CE','T2','FLAIR','MRI','CT','CTA'];
+  if (!packet || packet.unknownValue!==0 || !supported.includes(packet.modality) ||
+      typeof packet.sourceSeries!=='string' || !packet.sourceSeries.trim() ||
+      !hash(packet.sourceSha256) || !hash(packet.dataSha256) || !triple(packet.sourceShape) ||
+      !packet.sourceShape.every(n=>Number.isInteger(n)&&n>0))
+    throw Error('The operative intensity source is invalid.');
+  try {
+    inverseAffine(rasAffine(packet.sourceVoxelToPatientRasMm,'RAS+'));
+  } catch {
+    throw Error('The operative intensity source affine is invalid.');
+  }
+  if (!triple(packet.shape) || !packet.shape.every(n=>Number.isInteger(n)&&n>=2&&n<=256) ||
+      packet.shape.reduce((a,b)=>a*b,1)>2_000_000 ||
+      !triple(packet.origin) || !triple(packet.spacingMm) || !packet.spacingMm.every((step,i)=>step>0&&
+        Math.abs(packet.origin[i]-field.origin[i])<1e-5&&
+        Math.abs(step*(packet.shape[i]-1)-field.spacingMm*(field.shape[i]-1))<1e-5))
+    throw Error('The operative intensity grid does not span the local field.');
+  if (!Array.isArray(packet.window) || packet.window.length!==2 || !packet.window.every(Number.isFinite) ||
+      packet.window[1]<=packet.window[0] || typeof packet.windowMethod!=='string' || !packet.windowMethod.trim() ||
+      packet.windowUnits!==(['CT','CTA'].includes(packet.modality)?'HU':'source intensity'))
+    throw Error('The operative intensity window is invalid.');
+  const {signal,...metadata}=packet;
+  const size=packet.shape.reduce((a,b)=>a*b,1);
+  if(!signal||typeof signal.assetId!=='string'||!signal.assetId||signal.dtype!=='uint8'||signal.byteOrder!=='little'||signal.order!=='C'||!hash(signal.sha256)||
+      !triple(signal.shape)||!signal.shape.every((n,i)=>n===packet.shape[i])||signal.byteLength!==size||
+      !Number.isInteger(packet.coveredVoxels)||packet.coveredVoxels<1||packet.coveredVoxels>size)
+    throw Error('The operative intensity transfer does not match its field.');
+  const voxels=await readAsset(signal.assetId);
+  if(voxels.length!==size||await sha256Bytes(voxels)!==signal.sha256||
+      voxels.reduce((count,value)=>count+Number(value!==0),0)!==packet.coveredVoxels)
+    throw Error('Could not verify the operative scan intensity.');
+  return {...metadata,voxels};
+}
+
+export async function readOperativeField(raw:unknown, route:NativeApproach, readAsset:(id:string)=>Promise<Uint8Array>):Promise<OperativeField> {
+  const data=raw as FieldPacket;
+  if (!data || data.simulationExecutionAuthorized!==false || data.snapshotId!==route.sourceSnapshotId ||
+      data.approachId!==route.id || data.parameterHash!==route.parameterHash || data.targetLayerId!==route.targetLayerId)
+    throw Error('The operative field belongs to another study revision or approach. Reopen it from Plan.');
+  const {labels,intensity:packet,...field}=data;
+  if (field.units!=='mm' || !triple(field.targetRasMm) || !Array.isArray(field.basisRas) ||
+      field.basisRas.length!==3 || !field.basisRas.every(triple) ||
+      !field.materialBits || !Object.entries(bits).every(([role,bit])=>field.materialBits[role as keyof typeof bits]===bit) ||
+      !triple(field.shape) || !field.shape.every(n=>Number.isInteger(n)&&n>=1) || !triple(field.origin) ||
+      ![field.spacingMm,field.radiusMm,field.routeRadiusMm,field.entryDepthMm].every(n=>Number.isFinite(n)&&n>0) ||
+      !field.stations || !field.stationEvidence ||
+      ![field.layers,field.excluded,field.encounters,field.blockers,field.unknowns,field.stationIssues].every(Array.isArray))
+    throw Error('The operative field geometry is incomplete.');
+  const maxDepth=field.origin[2]+(field.shape[2]-1)*field.spacingMm;
+  for(const {id} of operativeSteps){
+    const station=field.stations[id], evidence=field.stationEvidence[id];
+    if(station===null ? evidence!==null : !Number.isFinite(station) || station<field.origin[2]-1.e-6 ||
+       station>maxDepth+1.e-6 || !(evidence==='source'||(id==='dura'&&evidence==='proxy')))
+      throw Error('The operative station is outside its tissue evidence.');
+  }
+  const size=field.shape.reduce((a,b)=>a*b,1);
+  if (!labels || size>16*1024**2 || labels.byteLength!==size || labels.dtype!=='uint8' || labels.order!=='C' ||
+      labels.byteOrder!=='little' || !triple(labels.shape) || labels.shape.some((v,i)=>v!==field.shape[i]))
+    throw Error('The operative tissue grid does not match the field.');
+  const voxels=await readAsset(labels.assetId);
+  if (voxels.length!==size || await sha256Bytes(voxels)!==labels.sha256 || voxels.some(value=>value>31))
+    throw Error('Could not verify the operative tissue labels.');
+  const intensity=packet===undefined?undefined:await readIntensity(packet,field,readAsset);
+  return {...field,voxels,...(intensity?{intensity}:{})};
+}
+
+export function playableSteps(field:OperativeField, retract:boolean) {
+  return operativeSteps.filter(({id})=>field.stations[id]!==null && (id!=='brain'||retract) &&
+    (id!=='tumor'||hasAspirationSeed(field)));
+}
+
+export function timelinePose(steps:ReturnType<typeof playableSteps>,value:number):{phase:OperativePhase;progress:number} {
+  if (!steps.length || value<=0) return {phase:'overview',progress:0};
+  const position=Math.min(value,steps.length), index=Math.ceil(position)-1;
+  return {phase:steps[index].id, progress:position-index};
+}

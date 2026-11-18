@@ -103,17 +103,17 @@ subprocess.Popen([sys.executable, "-c", sys.argv[3], sys.argv[2]])
 time.sleep(60)
 '''
 
-    def rss(_):
+    def memory(_, measure_footprint):
         if termination == "monitor_error" and child_pid.exists():
             raise subprocess.CalledProcessError(1, "ps")
-        return 0
+        return 0, None
 
     def alive(pid):
         result = subprocess.run(["ps", "-p", str(pid), "-o", "stat="], text=True, capture_output=True)
         state = result.stdout.strip()
         return bool(state) and not state.startswith("Z")
 
-    monkeypatch.setattr(poc_worker_supervision, "_family_rss", rss)
+    monkeypatch.setattr(poc_worker_supervision, "_family_memory", memory)
     log = tmp_path / "worker.log"
 
     def run():
@@ -146,12 +146,52 @@ def test_supervision_only_compatibility_is_bound_to_exact_audited_sources(monkey
     assert anatomy_preparation._environment_identity(after) != anatomy_preparation._environment_identity(before)
 
 
+@pytest.mark.parametrize("rss_gib, footprint_gib", [(2, 9), (9, 2)])
+def test_cpu_synthstrip_records_either_memory_limit(fake_runtime, monkeypatch, rss_gib, footprint_gib):
+    image, output = fake_runtime
+    gib = 1024**3
+    monkeypatch.setattr(poc_models.platform, "system", lambda: "Darwin")
+
+    def sample(_, measure_footprint):
+        assert measure_footprint
+        return rss_gib * gib, footprint_gib * gib
+
+    monkeypatch.setattr(poc_worker_supervision, "_family_memory", sample)
+    with pytest.raises(RuntimeError, match="memory_budget_exceeded"):
+        poc_models._run(image, "bounded", "synthstrip-main", "T1", device="cpu", timeout=10, output_root=output)
+    record = json.loads(next(output.rglob("inference.json")).read_text())
+    assert record["memory_guard"] == {"metric": record["identity"]["memory_guard"], "limit_bytes": 8 * gib,
+                                      "peak_family_phys_footprint_bytes_sampled": footprint_gib * gib,
+                                      "peak_family_rss_bytes_sampled": rss_gib * gib}
+    assert record["status"] == "failed" and record["failure"] == "memory_budget_exceeded"
+
+
+@pytest.mark.skipif(sys.platform != "darwin", reason="Darwin libproc memory accounting")
+def test_darwin_worker_footprint_measures_touched_pages(tmp_path, monkeypatch):
+    # Exercise the real family and libproc sampler with a small controlled
+    # allocation. The production budget remains 8 GiB.
+    monkeypatch.setattr(poc_worker_supervision, "MEMORY_LIMIT_BYTES", 64 * 1024**2)
+    code = "import time; data=bytearray(b'x' * (80 * 1024**2)); time.sleep(5)"
+    result = poc_worker_supervision.supervise_worker(
+        [sys.executable, "-c", code], os.environ, tmp_path / "worker.log",
+        timeout=4, cancelled=lambda: False, measure_footprint=True)
+    assert result.failure == "memory_budget_exceeded" and result.peak_footprint > 64 * 1024**2
+
+
+def test_mps_synthstrip_keeps_existing_cache_identity(fake_runtime):
+    image, output = fake_runtime
+    record = poc_models._run(image, "finished", "synthstrip-main", "T1", device="mps", timeout=10, output_root=output)
+    assert {"image_sha256", "weights", "model_id", "parameters", "device", "runner_sha256"} == set(record["identity"])
+    assert record["identity"]["runner_sha256"] == anatomy_model_identity.LEGACY_POC_LAUNCHER_SHA
+    assert "memory_guard" not in record
+
+
 
 def test_crop_admission_preserves_only_audited_model_asset_keys(monkeypatch):
     from resectionlab import anatomy_models
 
     adapter = poc_models.sha256(Path(anatomy_models.__file__))
-    assert adapter == anatomy_model_identity.AUDITED_CROP_ADAPTER_SHA
+    assert adapter == anatomy_model_identity.SIAM_DISPATCH_SHA
     before = {"files": {"adapter": anatomy_model_identity.LEGACY_ADAPTER_SHA}}
     after = {"files": {"adapter": adapter}}
     assert anatomy_preparation._environment_identity(before) == anatomy_preparation._environment_identity(after)

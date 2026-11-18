@@ -3,6 +3,8 @@ import {useSurgical} from "./use-surgical";
 import {caseImageEvidence,caseLayerEvidence,conditionalRehearsalNotice} from './data-case-evidence';
 import {SurgicalPanel} from "./SurgicalPanel";
 import {EnvironmentPreparationPanel} from './EnvironmentPreparationPanel';
+import {OperativeSteps} from './OperativeSteps';
+import {operativeRouteIssue} from './operative-field';
 import {rehearsalPresentation,initialRehearsalPresentation} from './rehearsal-presentation';
 import {operativeFieldFrame} from './full-case-presentation';
 import {SurgicalCloseViewControls} from './SurgicalCloseViewControls';
@@ -570,6 +572,19 @@ export default function App() {
   const [overlayOpacity, setOverlayOpacity] = useState(0.32);
   const [primaryViewer, setPrimaryViewer] = useState<ViewerWorkspaceSettings>({});
   const [workbenchTab,setWorkbenchTab] = useState<"cases"|"data"|"anatomy"|"rehearsal"|"research">("anatomy");
+  const [operativeKey,setOperativeKey]=useState<string|null>(null);
+  const [planningEditsPending,setPlanningEditsPending]=useState(false);
+  const nativeRoute=native.planning.selected;
+  const routeKey=native.binding && nativeRoute
+    ? JSON.stringify([native.binding.collectionId,native.binding.document.snapshot_id,nativeRoute.id,nativeRoute.parameterHash,nativeRoute.targetLayerId])
+    : null;
+  const operativeIssue=native.binding && (native.planning.targetSelectionIssue ||
+    operativeRouteIssue(nativeRoute,native.planning.activeTargetLayerId,native.binding.document.snapshot_id));
+  const showOperative=workbenchTab==='rehearsal' && !!routeKey && operativeKey===routeKey && !operativeIssue && !native.draft;
+  function openOperative(){
+    if(!routeKey||operativeIssue||native.draft||planningEditsPending)return;
+    setOperativeKey(routeKey);setWorkbenchTab('rehearsal');setCasePanel(true);
+  }
   const [rehearsalModel,setRehearsalModel]=useState<'standard'|'legacy'>('standard');
   const [libraryCases,setLibraryCases] = useState<LibraryCase[]>([]);
   const [openingStartupWorkspace,setOpeningStartupWorkspace] = useState(!!window.resectionApi);
@@ -1595,9 +1610,12 @@ export default function App() {
         ] as const).map(item => <button key={item.id}
           className={`rail-button ${activeTab === item.id ? 'selected' : ''}`}
           aria-label={item.name} aria-current={activeTab === item.id ? 'page' : undefined}
-          title={item.name} disabled={!hasStudy && (item.id === 'data' || item.id === 'anatomy')}
+          title={planningEditsPending && workbenchTab==='research' && item.id!=='research' ? 'Save or discard the approach edits first' : item.name}
+          disabled={(!hasStudy && (item.id === 'data' || item.id === 'anatomy')) ||
+            (planningEditsPending && workbenchTab==='research' && item.id!=='research')}
           onClick={() => {
             if (item.id === 'rehearsal') {
+              if(native.binding && workbenchTab!=='rehearsal')setOperativeKey(operativeIssue?null:routeKey);
               resetDisplayToPrimary();
               setEpisodeVisible(false);
               setCertifiedReplay(null);
@@ -1655,12 +1673,24 @@ export default function App() {
         {conditionalNotice&&<p className="poc-caution" role="status">{conditionalNotice}</p>}
         {alignmentUncertain&&<p className="poc-caution" role="status">Derived MRA alignment is reviewed for overlays with unresolved quantitative accuracy. Precise navigation and clinical vascular clearance are unsupported; skull CT is unavailable.</p>}
         {workbenchTab==='rehearsal'?<>
-          {native.binding ? <EnvironmentPreparationPanel key={native.binding.collectionId+"/"+native.binding.document.snapshot_id+"/"+!!native.planning.rehearsalOptions}
+          {native.binding ? <>
+            <section className="operative-inspector">
+              <h2>Selected approach</h2>
+              {nativeRoute&&<strong>{nativeRoute.name}</strong>}
+              {native.planning.loading?<p role="status">Loading saved approaches…</p>:operativeIssue?<p>{operativeIssue}</p>:native.draft?<p>Finish the anatomy correction to preview this approach.</p>:<>
+                <p>{native.binding.document.layers.find(l=>l.id===nativeRoute?.targetLayerId)?.label} · {nativeRoute?.measurements?.lengthMm.toFixed(1)} mm path</p>
+                {showOperative?<p>The animation uses the selected path and tissue labels. Displacement and aspiration illustrate the tool actions. Tissue response and outcomes remain unassessed.</p>
+                  :<button className="primary-button" onClick={openOperative}>Preview operative steps</button>}
+              </>}
+              <button onClick={()=>setWorkbenchTab('research')}>{showOperative?'Return to plan':'Open plan'}</button>
+              {showOperative&&<button onClick={()=>setOperativeKey(null)}>Open instrument environment</button>}
+            </section>
+            {!showOperative&&<EnvironmentPreparationPanel key={native.binding.collectionId+"/"+native.binding.document.snapshot_id+"/"+!!native.planning.rehearsalOptions}
             binding={native.binding} options={native.planning.rehearsalOptions} busy={busy} onAnatomy={()=>setWorkbenchTab('data')} onPrepare={async options=>{
             if(!api?.prepareSurgicalEnvironment)throw Error('Restart the app to load environment preparation.');
             const prepared=await api.prepareSurgicalEnvironment(options);
             if(prepared&&await installCase(prepared,api))setWorkbenchTab('rehearsal');
-          }}/> : <>
+          }}/>}</> : <>
             <details className="rehearsal-environment"><summary>Environment · {rehearsalModel==='standard'?'standard':'legacy'}</summary><label className="rehearsal-model">Rehearsal model<select aria-label="Rehearsal model" value={rehearsalModel} onChange={e=>{rehearsal.pause();surgical.cancel();setRehearsalModel(e.target.value as typeof rehearsalModel)}}><option value="standard">Standard instrument environment</option><option value="legacy">Legacy bounded episode</option></select></label></details>
             {rehearsalModel==='standard'?<>
               {frozenCusaRunning&&<button onClick={()=>void api?.cancelFrozenCusa?.()}>Cancel frozen policy execution</button>}<fieldset disabled={frozenCusaPending} style={{border:0,padding:0,margin:0,minWidth:0}}><SurgicalPanel c={surgical} planningCursor={displayedCursor} onPlanningCursor={point=>{if(imaging.selected)imaging.setCursor(point);else setCursor(point);}} inspectionNotice={inspectionNotice(viewerSettings)} onRunFrozenCusa={api?.executeFrozenCusa?executeFrozenCusa:undefined} onRunFrozenSector={api?.executeFrozenCusa?(method=>executeFrozenCusa(method,'sector')):undefined} frozenCusaPending={frozenCusaPending} learningReport={payload?.artifacts?.patient_rescue_learning} executionReport={payload?.artifacts?.patient_rescue_ppo_bc??payload?.artifacts?.patient_rescue_bc} cusaLearning={payload?.artifacts?.surgical_toolbox} microscopeControls={<><SurgeonViewControls c={surgical} settings={viewerSettings} onSettings={setViewerSettings}/>{viewerSettings.operativeView!=='surgeon'&&<SurgicalCloseViewControls c={surgical} source={displayedCase} settings={viewerSettings} cursor={displayedCursor} onSettings={setViewerSettings} onCursor={point=>{if(imaging.selected&&point)imaging.setCursor(point);else setCursor(point);}} onFitAnatomy={()=>{setCameraMode('anatomy');setCameraFitRequest(request=>request+1);}}/>}</>} fieldDisplayControls={<label><input type="checkbox" checked={viewerSettings.smoothSurfaces!==false} onChange={e=>setViewerSettings({...viewerSettings,smoothSurfaces:e.target.checked})}/>Smooth 3D surfaces</label>} onFrameField={()=>{if(surgical.view){const field=operativeFieldFrame(surgical.view,imaging.selected?null:annotationCenterMm,viewerSettings,displayedCase);if(field){if(imaging.selected)imaging.setCursor(field.center);else setCursor(field.center);setViewerSettings(field.settings);setMessage(field.anchor==='target'?'Framed supplied annotation.':'Framed accepted instrument in source scan.');}else setMessage('No accepted instrument or supplied annotation lies within this source scan.');}}} anatomyControls={!!surgical.view&&<details className="rehearsal-anatomy"><summary>Anatomy visibility and appearance</summary><button onClick={()=>setViewerSettings(rehearsalPresentation(surgical.view!.scene.regions,viewerSettings))}>Reference appearance</button>
@@ -1670,7 +1700,7 @@ export default function App() {
             </>:<RehearsalPanel controller={rehearsal} unavailableReason={rehearsalUnavailable}/>}
           </>}
         </>:native.binding?<>
-          {workbenchTab==='research'?<NativeApproachPanel workspace={native}/>:<NativeSidebar workspace={native} tab={workbenchTab==='data'?'data':'anatomy'}
+          {workbenchTab==='research'?<NativeApproachPanel workspace={native} onPreview={openOperative} onEditStateChange={setPlanningEditsPending}/>:<NativeSidebar workspace={native} tab={workbenchTab==='data'?'data':'anatomy'}
             onOpenAnatomy={()=>setWorkbenchTab('anatomy')} onOpenPlan={()=>setWorkbenchTab('research')} onOpenScans={()=>setWorkbenchTab('data')}/>}
         </>:<>
         {workbenchTab!=="research" && <>
@@ -1978,14 +2008,16 @@ export default function App() {
         {episodeVisible&&episodeWorkflow==='passive'&&passiveView&&caseData&&passiveView.source.caseHash===caseData.caseHash&&
           <div className="modeled-replay-notice" role="status"><span>GENERATED · two persistent tool poses · state {passiveStep}/5 · declared {passiveView.frames[passiveStep].elapsedGeneratedSeconds.toFixed(1)} s · no patient admission</span>
             <button className="text-button" onClick={restoreSourceView}>Source view <X size={12}/></button></div>}
-        {native.binding&&native.registration==='alignment preview'&&<div className="workspace-alignment-banner" role="status">Estimated scan alignment <span>{Object.values(native.volume?.alignmentQuality??{}).flatMap(q=>q.warnings)[0]??'Shared structures · verify in Scans before planning'}</span></div>}
+        {native.binding&&!showOperative&&native.registration==='alignment preview'&&<div className="workspace-alignment-banner" role="status">Estimated scan alignment <span>{Object.values(native.volume?.alignmentQuality??{}).flatMap(q=>q.warnings)[0]??'Shared structures · verify in Scans before planning'}</span></div>}
         <NativeCorrectionBar workspace={native}/>
         <div className="viewer-shell">
-          {displayedCase && (
+          {showOperative && native.binding && nativeApi && nativeRoute && <OperativeSteps key={routeKey} api={nativeApi} collectionId={native.binding.collectionId} route={nativeRoute}/>}
+          {!showOperative && displayedCase && (
             <ViewerWorkspace
               surgicalInteraction={workbenchTab==="rehearsal"?surgical.interaction:undefined}
               rehearsalState={surgical.interaction.view?null:rehearsal.viewerState}
               workspaceSettings={viewerSettings}
+              readCamera={native.binding?native.readCamera:undefined}
               onWorkspaceSettingsChange={setViewerSettings}
               sourceLabel={native.binding?native.binding.document.series.find(s=>s.id===native.series)?.modality:String(displayedSource?.metadata.selected_modality??'Image')}
               onSliceStroke={native.binding?native.onStroke:undefined}
@@ -2000,7 +2032,7 @@ export default function App() {
               overlayOpacity={overlayOpacity}
               cursor={displayedCursor}
               onCursorChange={native.binding ? native.setCursor : imaging.selected ? imaging.setCursor : setCursor}
-              routes={native.binding?native.planning.routes:display.primaryOverlaysPermitted?viewerRoutes:[]}
+              routes={native.binding?(native.patientFrameReady?native.planning.routes:[]):display.primaryOverlaysPermitted?viewerRoutes:[]}
               selectedStructure={native.binding?native.selectedStructure:null}
               structureFocusRequest={native.structureFocusRequest}
               structureFocusPoint={native.structureFocusPoint}

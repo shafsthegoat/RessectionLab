@@ -4,9 +4,9 @@ import {scanLabel,studyLabel} from './native-study-state';
 import type {NativeWorkspace} from './use-native-workspace';
 
 export const importSequences=['T1','T1CE','T2','FLAIR','CT','CTA','MRA','TOF','MRV','SWI','SWI_MAGNITUDE','SWI_PHASE'] as const;
-export const importRoles=['tumor','brain','bone','vessels','context'] as const;
+export const importRoles=['tumor','brain','bone','dura','vessels','artery','vein','sinus','context'] as const;
 const sequenceLabels:Record<string,string>={T1CE:'T1 post-contrast',SWI:'Processed SWI',SWI_MAGNITUDE:'SWI magnitude',SWI_PHASE:'SWI phase'};
-const roleLabels:Record<string,string>={tumor:'Lesion candidate',bone:'Skull / bone',context:'Context / unclassified'};
+const roleLabels:Record<string,string>={tumor:'Lesion candidate',bone:'Skull / bone',dura:'Dura mater',vessels:'Vessels (unclassified)',artery:'Artery',vein:'Vein',sinus:'Dural venous sinus',context:'Context / unclassified'};
 type LabelRow={value:string;role:string;name?:string};
 type ReviewRow=IntakeSelection&{modality:string;source:string;roles:LabelRow[]};
 

@@ -14,21 +14,91 @@ retained as source assets. Use separate studies for separate visits.
 Choose **Review preparation plan** and **Prepare anatomy**. The plan lists
 eligible models and explains unavailable anatomy. Each completed stage has
 a checkpoint. Cancellation leaves admitted layers available. Retry acts on
-failed or empty stages. Adding scans keeps the reference fixed and marks
-dependent comparisons stale.
+failed or empty stages. Adding scans keeps an established patient reference
+fixed and marks dependent comparisons stale. A scout or localizer can be
+reviewed independently until an eligible acquisition establishes the patient
+frame. For an older study with both scans already loaded, select the diagnostic
+scan and choose **Recalculate alignment** to replace the scout reference and
+rebuild alignment against the diagnostic scan.
 
-Use **Anatomy** to inspect overlays against source slices and correct a layer.
+Use **Anatomy → Structures** to view registered layers together. The source
+selector changes the linked scan for slice review. A layer can extend beyond
+that scan's field of view in 3D. The study-wide intensity backdrop uses the
+brightest separately windowed contribution at each location. Read quantitative
+signal values on the original scan. An unaligned series stays independently
+inspectable until its transform is resolved. The fused view shares one cutaway
+in patient RAS across aligned scans. Single-scan inspection keeps separate
+cutaway settings for each source. Both settings are saved in the patient study.
 In **Plan & compare**, explicitly select a nonempty lesion label. The selection
 binds the mask, source and registration chain. Missing vascular and functional
 coverage remains unassessed. Quantitative comparison needs an admissible
-source-to-reference transform. Compatible studies can use the separate research
-environment export under **Rehearse**. MRI skull estimates and the optional
-geometric dural envelope provide display context. Surface smoothing is a
-display setting.
+source-to-reference transform. **Preview operative steps** opens a reversible
+geometric animation for the selected approach. It uses the supported tissue
+on the line from entry to target. **Rehearse → Open instrument environment**
+accesses the separate research mechanics workflow for compatible studies.
+The [desktop walkthrough](desktop-workflow.md#from-patient-scans-to-operative-steps)
+describes stage controls, source evidence and approach selection.
 
 **Save patient study file…** includes native data, preparation checkpoints, view
 settings, the selected target and comparison receipts. For hidden verification
 commands, see the [fresh patient reproduction](fresh-patient-reproduction.md).
+
+### Direct MRI tissue estimates with SIAM v2
+
+On an Apple Silicon host, install the pinned inference environment and the
+SIAM weights explicitly from the project root. An existing original archive
+can be supplied with `--archive /path/to/DS715_NODA.tar.gz`.
+
+```sh
+.venv/bin/python scripts/poc_model_setup.py
+.venv/bin/python scripts/install_siam_v2.py
+```
+
+The installer verifies Romain Valabregue’s 5.31 GB archive and retains the
+1.13 GB fold-1 checkpoint, dataset ontology and nnU-Net plan. The default
+asset directory is `data/models/siam-v2/DS715_NODA`. Set
+`RESECTIONLAB_SIAM_HOME` to an existing installation or
+`RESECTIONLAB_SIAM_PYTHON` to the interpreter of the pinned runtime.
+
+For intact structural MRI, confirm full-head coverage under **Preparation
+options**, review the **SIAM v2** stage for each acquisition and choose
+**Prepare anatomy**. Each source has its own coverage screen and checkpoint.
+A cropped reference can remain open while another acquisition supplies
+cranial tissue estimates. Each positive class appears on its acquisition grid. Classes include dura mater,
+skull, vascular tissue, residual head tissue, CSF and brain tissues. The
+separate geometric dural envelope has its own optional stage and provenance.
+Inspect boundaries against the source slices. The vascular class combines
+vessel types, and the skull label does not measure bone density.
+
+The default SIAM display hides predictions beyond a coarse head envelope
+derived from that acquisition. The envelope connects the dominant MRI tissue
+signal in each axial section and includes a physical margin. In the outer
+margin, dark estimates more than 2 mm from continuous native MRI tissue
+signal are suppressed. Above-threshold signal, the acquisition borders and
+the filled interior stay protected, including dark skull and disconnected vessels. Anatomy,
+slice overlays and the operative field use the same native categorical result.
+**Anatomy → Display & fragments → Unfiltered SIAM estimates (QC)** shows the
+original predictions. Supplied tumor masks and manual corrections retain
+their source voxels. The study archives the original model labels and source
+MRI. An older study rebuilds its display cache locally when opened.
+
+The bounded Metal adapter uses one of the five publisher folds, 128³
+float32 inference tiles, CPU logit accumulation and Gaussian blending. Its estimates are
+unreviewed inspection context. Training used synthetic contrasts derived
+from six anatomical templates. Layer provenance records the source scan,
+model assets, adaptation and exclusion from training and benchmark inputs.
+[Publisher implementation](https://github.com/romainVala/SIAM/tree/52baf64d51275a949d46ee36967b76f8ceaa99d8) · [SIAM v2 weights, CC BY 4.0](https://doi.org/10.5281/zenodo.15780983)
+
+In a development check on MNI BITE case 09, the preoperative contrast MRI
+produced all 16 classes. The study authors' tumor mask, on its original
+cropped grid, supplied the rehearsal target. The chosen corridor intersected
+the estimated skull, dura and brain as well as the annotated tumor. The raw
+predictions included detached skull and dura in six sampled background regions.
+The supported display removed those skull/dura predictions and preserved
+every raw label in a 2.38-million-voxel central intracranial region. All
+16,096 supplied tumor voxels remained in place. Thin tissues and small
+vessels still need anatomical review.
+[MNI BITE source collection](https://nist.mni.mcgill.ca/bite-brain-images-of-tumors-for-evaluation-database/)
 
 ### Evidence from the adaptive workflow
 
@@ -102,6 +172,14 @@ Pareto filtering groups paths with comparable evidence. A detected hard violatio
 in a declared scenario vetoes the route. The report explains any shortfall and
 counts nominally eligible paths outside the sensitivity budget.
 
+**Suggest distinct entries** searches five superior-facing directions from the
+selected target for an observed skull or brain surface. It records the source
+layer and native voxel for each entry, applies the same comparison checks,
+and saves the resulting group alongside the existing patch alternatives.
+A cropped field ending inside a label cannot supply its exterior boundary.
+The viewer, approach cards and consequence table use the same A/B/C order
+for the selected group.
+
 Each comparison card separates the observed geometric finding (detected
 intersection, no detected intersection in assessed anatomy, or unavailable
 measurement) from evidence completeness and declared constraint failures. Missing
@@ -115,7 +193,10 @@ perturbed measurements are complete. The default design translates registered
 sources in coherent 1 mm scenarios and pads critical voxel boundaries by 0.5 mm,
 distances near the source grid scale. Every registration root is stressed in
 each signed cardinal direction. Three or more roots use joint translations to
-keep the evaluation budget bounded. Registration distributions, model
+keep the evaluation budget bounded. When a surface-entry source moves, each
+scenario checks the selected direction against that source again and measures
+the resulting corridor. If the shifted label supplies no observed exterior
+face, that scenario is unassessed. Registration distributions, model
 completeness and postoperative outcomes remain unmeasured. [Uncertainty in path planning](https://scholar.harvard.edu/files/sfrisken/files/incorporating_uncertainty_into_path_planning.pdf) · [Registration uncertainty visualization](https://link.springer.com/article/10.1007/s11548-025-03407-z)
 
 **Compare input sets** freezes rich and restricted nominations on the same task
@@ -149,9 +230,39 @@ approach selections and exact comparison receipts;
 **Save patient study file…** includes them in the existing portable `.rsworkspace`
 format. Source, assessment-engine or parameter changes mark cached assessments
 stale. Geometry lives in `anatomy-approaches.json`, separately from immutable
-anatomy revisions. The existing `anatomyPlan` operation accepts `list`, `suggest`,
-`compareInputs`, `upsert`, `assess` and `delete`. Its original direct-clearance
-request remains available.
+anatomy revisions. The `anatomyPlan` operation supports target selection,
+patch and distinct-entry suggestions, comparison, editing and assessment.
+Its `operativeField` action samples tissue from the saved route and selected
+target at their recorded revision.
+
+
+### Verify a saved operative rehearsal
+
+From the repository root, build the desktop app and run the hidden Electron
+verifier against a writable test copy with a selected, assessed approach.
+The example uses the retained BITE-09 fixture. Each output directory must
+be new. The video option requires `ffmpeg` on PATH.
+
+```sh
+pnpm --dir desktop run build
+output_root="$PWD/testcases/outputs"
+study="$output_root/operative-preview-20261118"
+manifest="$study/MNI-BITE-09-with-SIAM/patient-anatomy.json"
+workspace="$study/MNI-BITE-09-supplied-tumor-SIAM.rsworkspace"
+run=$(mktemp -d "$output_root/rehearsal-check.XXXXXX")
+electron=desktop/node_modules/.bin/electron
+verify=desktop/electron/verify-native-operative-preview.cjs
+"$electron" "$verify" "$manifest" "$run/preview" preview --reuse-selection --source-support --video
+"$electron" "$verify" "$manifest" "$run/reopen" reopen --open-archive "$workspace"
+```
+
+Check `report.json` in both directories for a passing result, the same selected
+route and source snapshot, and an empty renderer error list. The preview also
+checks MRI identity and the filtered skull against the original estimates, and
+records motion in each available chapter. For another prepared study, supply
+its matching manifest and workspace and omit the BITE-specific
+`--source-support` assertions. The optional drive holds the recorded examples
+and fixture restore instructions. [Storage ledger](local-storage-ledger.md)
 
 `desktop/electron/verify-eden-planning.cjs` drives the actual React/preload/Python
 workflow with hidden windows. Supply `RESSECTIONLAB_DATA_ROOT`, `EDEN_STUDY` and a

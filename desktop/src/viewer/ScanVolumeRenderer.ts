@@ -28,7 +28,11 @@ export class ScanVolumeRenderer {
   private automaticMriTransfer=false;
   private shellContext=false;
   private enabled = true;
-  private readonly spacing: number;
+  private spacing:number;
+  private readonly sourceGrid:{inverse:THREE.Matrix4;shape:THREE.Vector3;spacing:number};
+  private readonly patientGrid?:{inverse:THREE.Matrix4;shape:THREE.Vector3;spacing:number;texture:THREE.Data3DTexture};
+  readonly supportTexture?:THREE.Data3DTexture;
+  get patientTexture(){return this.patientGrid?.texture;}
   private layers: ViewerVolume["compartments"];
   private readonly ownsTexture: boolean;
   private readonly background = new THREE.Color();
@@ -47,18 +51,35 @@ export class ScanVolumeRenderer {
     this.layers=volume.compartments;
     const affine=rasAffine(volume.affine,volume.frame),inverse=inverseAffine(affine);
     this.spacing=1/Math.max(...inverse.slice(0,3).map(row=>Math.hypot(...row.slice(0,3))));
+    const matrix=(a:number[][])=>new THREE.Matrix4().set(...a.flat() as Parameters<THREE.Matrix4['set']>);
+    this.sourceGrid={inverse:matrix(inverse),shape:new THREE.Vector3(...volume.shape),spacing:this.spacing};
     this.ownsTexture=!sourceTexture;
     this.texture=sourceTexture??new THREE.Data3DTexture(volume.mri,volume.shape[2],volume.shape[1],volume.shape[0]);
     this.texture.format=THREE.RedFormat;this.texture.type=THREE.FloatType;
     const linear=renderer.extensions.has('OES_texture_float_linear');
     this.texture.minFilter=this.texture.magFilter=linear?THREE.LinearFilter:THREE.NearestFilter;
     this.texture.unpackAlignment=1;this.texture.needsUpdate=true;
+    if(volume.headSupport){
+      this.supportTexture=new THREE.Data3DTexture(volume.headSupport.data,volume.shape[2],volume.shape[1],volume.shape[0]);
+      this.supportTexture.format=THREE.RedFormat;this.supportTexture.type=THREE.UnsignedByteType;
+      this.supportTexture.minFilter=this.supportTexture.magFilter=THREE.NearestFilter;
+      this.supportTexture.unpackAlignment=1;this.supportTexture.needsUpdate=true;
+    }
+    const field=volume.patientContext?.field;
+    if(field){
+      const texture=new THREE.Data3DTexture(field.signal,field.shape[2],field.shape[1],field.shape[0]);
+      texture.format=THREE.RedFormat;texture.type=THREE.FloatType;
+      texture.minFilter=texture.magFilter=this.texture.minFilter;texture.unpackAlignment=1;texture.needsUpdate=true;
+      this.patientGrid={inverse:matrix(inverseAffine(field.affine)),shape:new THREE.Vector3(...field.shape),spacing:field.affine[0][0],texture};
+    }
     this.sceneTarget=new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthBuffer:true});
     this.sceneTarget.depthTexture=new THREE.DepthTexture(1,1,THREE.UnsignedIntType);
     this.volumeTarget=new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType,depthBuffer:false});
     this.material=new THREE.ShaderMaterial({glslVersion:THREE.GLSL3,vertexShader:volumeVertexShader,
       fragmentShader:volumeFragmentShader,depthTest:false,depthWrite:false,toneMapped:false,uniforms:{
+        uHeadSupport:{value:this.supportTexture??null},uUseHeadSupport:{value:!!this.supportTexture},
         uVolume:{value:this.texture},uTransfer:{value:null},uScene:{value:this.sceneTarget.texture},
+        uLabelWorldToVoxel:{value:this.sourceGrid.inverse},uLabelShape:{value:this.sourceGrid.shape},
         uDepth:{value:this.sceneTarget.depthTexture},uWorldToVoxel:{value:new THREE.Matrix4().set(...inverse.flat() as Parameters<THREE.Matrix4['set']>)},
         uCameraWorld:{value:new THREE.Matrix4()},uInverseProjection:{value:new THREE.Matrix4()},
         uShape:{value:new THREE.Vector3(...volume.shape)},uRange:{value:new THREE.Vector2()},
@@ -79,11 +100,19 @@ export class ScanVolumeRenderer {
     this.blitScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2),this.blitMaterial));
     this.accumulateScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2),this.accumulateMaterial));
   }
-  configure(input: VolumeRenderingSettings | undefined, modality: string, clip: THREE.Plane | null) {
-    const settings=volumeSettings(input,modality);this.enabled=settings.enabled&&settings.density>0;
+  configure(input: VolumeRenderingSettings | undefined, modality: string, clip: THREE.Plane | null, patientModel=false) {
+    const fused=patientModel?this.patientGrid:undefined;
+    const grid=fused??this.sourceGrid;
+    this.material.uniforms.uWorldToVoxel.value=grid.inverse;
+    this.material.uniforms.uShape.value=grid.shape;
+    this.material.uniforms.uVolume.value=fused?.texture??this.texture;
+    this.material.uniforms.uUseHeadSupport.value=!fused&&!!this.supportTexture;
+    this.spacing=grid.spacing;
+    if(fused)modality='Normalized patient context';
+    const settings=volumeSettings(input,modality);this.enabled=settings.enabled&&settings.density>0&&!(fused&&input?.isolateLabels);
     const signature=JSON.stringify([settings.preset,input?.window,input?.points,modality]);
     if(signature!==this.preset){
-      const lut=volumeTransfer(settings.preset,this.window,input,modality);
+      const lut=volumeTransfer(settings.preset,fused?[0,1]:this.window,input,modality);
       this.transfer?.dispose();this.transfer=new THREE.DataTexture(lut.data,1024,1,THREE.RGBAFormat,THREE.FloatType);
       this.transfer.minFilter=this.transfer.magFilter=this.material.uniforms.uLinear.value?THREE.LinearFilter:THREE.NearestFilter;this.transfer.needsUpdate=true;
       this.material.uniforms.uTransfer.value=this.transfer;
@@ -103,7 +132,7 @@ export class ScanVolumeRenderer {
     this.material.uniforms.uScanPresentation.value=settings.presentation==='scan'&&settings.operativeView!=='surgeon';
     this.material.uniforms.uGradientOpacity.value=this.automaticMriTransfer&&this.shellContext;
     const u=this.material.uniforms;u.uLabels.value=texture;u.uSkullMode.value=settings.skullMode==='transparent'?2:settings.skullMode?1:0;let bits=0,all=0,active=0,context=0;
-    this.layers.forEach((layer,i)=>{const a=layerAppearance(layer.name,layer.color,settings,layer.kind);
+    this.layers.forEach((layer,i)=>{const a=layerAppearance(layer.name,layer.color,settings,layer.displayKind??layer.kind);
       // Keep declared context even when hidden: the scalar threshold fallback
       // must not resurrect a hidden source label or classify contrast as bone.
       if(layer.kind==='bone'||layer.kind==='skull')u.uContextLayers.value[context++]=i;
@@ -188,7 +217,7 @@ export class ScanVolumeRenderer {
     this.renderer.render(this.blitScene,this.camera);
   }
   dispose(){
-    this.sceneTarget.dispose();this.volumeTarget.dispose();if(this.ownsTexture)this.texture.dispose();this.transfer?.dispose();
+    this.sceneTarget.dispose();this.volumeTarget.dispose();if(this.ownsTexture)this.texture.dispose();this.patientGrid?.texture.dispose();this.supportTexture?.dispose();this.transfer?.dispose();
     this.interactionTargets?.scene.dispose();this.interactionTargets?.volume.dispose();
     this.surfacePass.dispose();this.accumulation.forEach(t=>t.dispose());this.accumulateMaterial.dispose();
     for(const scene of [this.rayScene,this.blitScene,this.accumulateScene])scene.traverse(child=>{if(child instanceof THREE.Mesh)child.geometry.dispose();});

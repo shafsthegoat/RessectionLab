@@ -214,9 +214,38 @@ def _jobs(collection, options):
     return jobs
 
 
+def _source_jobs(collection, options, receipts):
+    """Keep the original single-source stage ID bound across incremental imports."""
+    jobs = _jobs(collection, options)
+    renamed = {}
+    for base in ("ct-skull", "vascular", "siam-tissues"):
+        receipt = receipts.get(base)
+        if not receipt:
+            continue
+        family = [job for job in jobs if job["id"] == base or job["id"].startswith(base + ":")]
+        if len(family) < 2:
+            continue
+        output_ids = {item["id"] for item in receipt["outputs"]}
+        owners = {row["source_series"] for row in collection.document["layers"] if row["id"] in output_ids}
+        if not owners:
+            # Failed and interrupted attempts have no output layer lineage.
+            owners = {job["series_id"] for job in family if _model_input(collection, job) == receipt["inputKey"]}
+        previous = next((job for job in family if owners == {job["series_id"]}), None)
+        if previous is None or previous["id"] == base:
+            continue
+        preferred = next(job for job in family if job["id"] == base)
+        renamed[base] = base + ":" + preferred["series_id"]
+        renamed[previous["id"]] = base
+    if renamed:
+        for job in jobs:
+            job["id"] = renamed.get(job["id"], job["id"])
+            job["depends_on"] = [renamed.get(dep, dep) for dep in job.get("depends_on", [])]
+    return jobs
+
+
 def _plan(collection, options, receipts):
     stages = []
-    for job in _jobs(collection, options):
+    for job in _source_jobs(collection, options, receipts):
         stage = _stage(collection, job, receipts)
         stages.append(stage)
         if fallback := offer_cpu_retry(collection, stage, receipts, _stage):
@@ -260,10 +289,16 @@ def _run_stage(candidate, stage, cancelled, progress):
     before = {row["id"] for row in candidate.document["layers"]}
     result = anatomy_models.import_proposal(candidate, stage["series_id"], record)
     outputs = []
+    extras = {(item["kind"], item["output_sha256"]) for item in record.get("extra_outputs", [])}
     for row in candidate.document["layers"]:
-        if row["id"] not in before or row["id"] == result or (
-                row.get("provenance", {}).get("output_sha256") == record.get("output_sha256")
-                and row.get("source_series") == stage["series_id"] and record.get("output_sha256")):
+        provenance = row.get("provenance", {})
+        checksum = provenance.get("output_sha256")
+        same_model = row["source_series"] == stage["series_id"] and provenance.get("model") == record["model"]
+        # Categorical adapters return a shared array. Binary adapters return
+        # the layer ID and may also admit separately hashed companion masks.
+        categorical = isinstance(result, dict) and checksum == record["output_sha256"]
+        if (row["id"] not in before or row["id"] == result
+                or (same_model and (categorical or (row["kind"], checksum) in extras))):
             outputs.append({"id": row["id"], "sha256": row.get("original_data", row["data"])["sha256"]})
             if row["id"] not in before:
                 row["preparation_input"] = stage["inputKey"]
@@ -298,7 +333,7 @@ def prepare_anatomy(collection, *, on_stage=None, cancelled=None, retry_failed=F
             if cancelled():
                 raise InterruptedError("Preparation cancelled; completed stages are saved")
             if initial.get("depends_on") or initial.get("model") == "rigid-registration":
-                jobs = {j["id"]: j for j in _jobs(collection, options)}
+                jobs = {j["id"]: j for j in _source_jobs(collection, options, receipts)}
                 stage = _stage(collection, jobs.get(initial["id"], initial), receipts)
             else:
                 stage = initial

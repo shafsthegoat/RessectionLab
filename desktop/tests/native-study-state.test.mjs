@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {nextScanState,scanLabel,studyTimepoint,migrateSkullView,anatomyPresentation,defaultAnatomyPresentation,sourceEvidenceLabel} from '../src/native-study-state.ts';
+import {studyLayerDisplayKind,nextScanState,scanLabel,studyTimepoint,migrateSkullView,anatomyPresentation,defaultAnatomyPresentation,sourceEvidenceLabel} from '../src/native-study-state.ts';
 import {checkedViewerSettings} from '../src/workspace-view-settings.ts';
 
 test('structural contrast retains study angiography availability and derived diffusion status',()=>{
@@ -81,6 +81,17 @@ test('presentation choices preserve source identities, selected anatomy, camera 
   assert.deepEqual({settings,layers},original);
 });
 
+test('SIAM residual head tissue uses its anatomical context style while other source labels retain their kind',()=>{
+  const provenance={model:'siam-v2',label_ontology:{value:16}};
+  const tissue={id:'head-other',kind:'context',provenance};
+  assert.equal(studyLayerDisplayKind(tissue),'outer-head-tissue');
+  assert.equal(studyLayerDisplayKind({...tissue,provenance:{...provenance,model:'different'}}),'context');
+  assert.equal(studyLayerDisplayKind({...tissue,label_ontology:{value:3}}),'context');
+  assert.equal(anatomyPresentation({},[tissue],'scan','T1').smoothSurfaces,true);
+  assert.equal(anatomyPresentation({smoothSurfaces:false},[tissue],'scan','T1').smoothSurfaces,false);
+  assert.equal(anatomyPresentation({},[tissue],'segmentation','T1').layerOpacity[tissue.id],.14);
+});
+
 test('Scan explicitly restores acquired signal and restrained overlays without overwriting stored settings',()=>{
   const layers=[{id:'brain',kind:'brain'},{id:'cerebellum',kind:'cerebellar-cortex'},{id:'brainstem',kind:'brainstem'},{id:'review',kind:'review-region'},{id:'tumor',kind:'tumor'},{id:'bone',kind:'bone'}];
   const saved={presentation:'segmentation',smoothSurfaces:false,volumeRendering:{enabled:false,density:.025,points:[[0,0,0,0,0],[1,1,1,1,.1]]},layerOpacity:{tumor:1}};
@@ -138,4 +149,16 @@ test('body orientation guide saves per scan, accepts old settings and rejects no
     assert.equal(anatomyPresentation(saved,[],'segmentation','T1').showOrientationGuide,enabled);
   }
   for(const value of [null,0,1,'false',[],{}])assert.throws(()=>checkedViewerSettings(source,{showOrientationGuide:value}));
+});
+
+test('patient 3D camera and density follow linked slices while unaligned scans keep a separate cursor',()=>{
+  const current={cursor:[32,15,11],visible:{lesion:true,artery:true},settings:{
+    presentation:'segmentation',camera:{position:[0,0,100],target:[4,3,2],up:[0,1,0]},volumeRendering:{density:.12},contrast:1}};
+  const saved={cursor:[1,2,3],visible:{},settings:{contrast:2,volumeRendering:{density:.7}}};
+  const linked=nextScanState(current,saved);
+  assert.deepEqual(linked.cursor,current.cursor);
+  assert.deepEqual(linked.settings.camera,current.settings.camera);
+  assert.deepEqual(linked.settings.volumeRendering,current.settings.volumeRendering);
+  assert.equal(linked.settings.contrast,2);
+  assert.deepEqual(nextScanState(current,saved,false).cursor,saved.cursor);
 });

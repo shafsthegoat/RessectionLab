@@ -19,7 +19,7 @@ export function surfaceCameraDistance(
   let distance = 40, count = 0;
   anatomy.updateWorldMatrix(true,true);
   anatomy.traverse(object=>{
-    if(!(object instanceof THREE.Mesh))return;
+    if(!(object instanceof THREE.Mesh)&&!(object instanceof THREE.Line))return;
     const positions=object.geometry.getAttribute('position');
     if(!positions)return;
     const m=object.matrixWorld.elements;

@@ -18,7 +18,8 @@ from scipy.spatial import cKDTree
 
 from .patient_anatomy import PatientAnatomySnapshot, PatientImagingCollection, affine, digest, world
 from .anatomy_planning import is_native_target, native_target_binding, native_target_options
-from .anatomy_evidence import VASCULAR_KINDS, inference_bounds, is_dural_proxy, vascular_evidence_supported
+from .anatomy_evidence import VASCULAR_KINDS, inference_bounds, is_dural_proxy, is_siam_context, vascular_evidence_supported
+from .anatomy_entry_windows import ORIGIN as WINDOW_ORIGIN, entry_windows, translated_window, verify_window
 from .anatomy_cortical_access import (assess_cortical_access, cortical_role, protected_compartment,
                                       qualified_cortical_source)
 from .native_consequence_evidence import consequence_evidence_view
@@ -35,6 +36,7 @@ FILENAME = "anatomy-approaches.json"
 MAX_SAVED = 32
 MAX_APPROACH_METADATA_BYTES = 8 * 1024**2
 ASSESSMENT_VERSION = "native-source-capsule-assessment-v7"
+WINDOW_ASSESSMENT_VERSION = "native-source-entry-assessment-v1"
 METRIC_EVIDENCE_POLICY = "native-metric-evidence-v1"
 
 
@@ -128,11 +130,14 @@ class NativeRouteGeometry:
         for row in self.layers:
             if qualified_cortical_source(row):
                 self.cortical_sources.setdefault(cortical_role(row), []).append(row)
-        self.dural_proxies = {row["id"] for row in self.layers if is_dural_proxy(row)}
-        self.context_vasculature = {
-            row["id"] for row in self.layers
-            if row["kind"] in VASCULAR_KINDS and not vascular_evidence_supported(self.c, row)
-        }
+        self.context_reasons = {}
+        for row in self.layers:
+            if is_siam_context(row):
+                self.context_reasons[row["id"]] = "SIAM v2 tissue estimate supplies image context only"
+            elif is_dural_proxy(row):
+                self.context_reasons[row["id"]] = "Estimated dural envelope is geometric context only"
+            elif row["kind"] in VASCULAR_KINDS and not vascular_evidence_supported(self.c, row):
+                self.context_reasons[row["id"]] = "Inferred vascular context. Source-supported vascular anatomy is unassessed."
         self.tract_rows = tuple(document.get("tractography", []))
         self.missing = tuple(document.get("missing", []))
         if cache is None:
@@ -152,15 +157,15 @@ class NativeRouteGeometry:
         })
         return NativeRouteGeometry(PatientAnatomySnapshot.capture(projected), check=self.check, cache=self)
 
-    def registration_groups(self, target_id, excluded):
+    def registration_groups(self, target_id, excluded, entry_sources=()):
         relevant = [row for row in self.layers if (row["id"] in excluded or row["id"] in self.protected_compartment_ids
                     or row["role"] == "critical" or row["kind"] in VASCULAR_KINDS | TRACT_KINDS | {"brain"}
                     or qualified_cortical_source(row)
                     or (row["id"] == target_id and is_native_target(row)))]
         transforms = self.c.document["transforms"]
         groups = {}
-        source_ids = {row["source_series"] for row in (*relevant, *self.tract_rows)
-                      if row["id"] not in self.context_vasculature | self.dural_proxies}
+        source_ids = set(entry_sources) | {row["source_series"] for row in (*relevant, *self.tract_rows)
+                                           if row["id"] not in self.context_reasons}
         for sid in sorted(source_ids - {self.reference["id"]}):
             root = sid
             seen = {root}
@@ -313,11 +318,8 @@ class NativeRouteGeometry:
                     "reviewStatus": row.get("review_status", "unreviewed"), "coverageMeaning": row.get("coverage", "unassessed"),
                     "sourceIdentity": {"dataSha256": row["data"]["sha256"], "labelValue": row["label_value"],
                                        "revision": row.get("revision", 0)}}
-            if row["id"] in self.context_vasculature | self.dural_proxies:
-                item["reason"] = (
-                    "Estimated dural envelope is geometric context only" if row["id"] in self.dural_proxies
-                    else "Inferred vascular context. Source-supported vascular anatomy is unassessed."
-                )
+            if row["id"] in self.context_reasons:
+                item["reason"] = self.context_reasons[row["id"]]
                 structures.append(item)
                 unknowns.append(f'{row["id"]}: {item["reason"]}')
                 continue
@@ -725,6 +727,8 @@ def _measured_reading_ids(record):
 
 def _measurement_dependency_ids(measurements):
     result = {field["layerId"] for field in measurements.get("coverage", {}).get("sources", [])}
+    if measurements.get("entrySupport"):
+        result.add(measurements["entrySupport"]["layerId"])
     result.update(_access_layer_ids(measurements))
     for row in (*measurements.get("structures", ()), *measurements.get("targets", ()),
                 measurements.get("normalTraversal", {})):
@@ -744,6 +748,8 @@ def _report_dependency_ids(report):
     result = {target_id} if target_id else set()
     for group in (report, *report.get("arms", {}).values()):
         for candidate in group.get("candidates", ()):
+            if candidate.get("entrySupport"):
+                result.add(candidate["entrySupport"]["layerId"])
             result.update(_measured_reading_ids(candidate))
             result.update(_access_layer_ids(candidate))
             for values in candidate.get("evidence", {}).values():
@@ -766,7 +772,7 @@ def _metric_evidence_current(collection, dependency_ids, policy):
                 collection.patient_affine(collection.series(tracts[key]["source_series"]))
                 continue
             row = layers[key]
-            if row["kind"] in VASCULAR_KINDS and not vascular_evidence_supported(collection, row):
+            if is_siam_context(row) or (row["kind"] in VASCULAR_KINDS and not vascular_evidence_supported(collection, row)):
                 return False
             collection.patient_affine(row)
             if qualified_cortical_source(row):
@@ -825,10 +831,11 @@ def _read_plan(collection):
         identities.add(checked["id"])
         checked.update({key: deepcopy(saved[key]) for key in ("sourceSnapshotId", "parameterHash", "measurementHash", "measurements",
                                                               "metricEvidencePolicy", "origin", "tradeoff") if key in saved})
+        assessment_version = WINDOW_ASSESSMENT_VERSION if checked.get("origin") == WINDOW_ORIGIN else ASSESSMENT_VERSION
         valid = (not retired and not retired_target and saved.get("sourceSnapshotId") == collection.identity()
                  and saved.get("parameterHash") == parameter_hash(checked)
                  and saved.get("measurements", {}).get("geometryVersion") == GEOMETRY_VERSION
-                 and saved.get("measurements", {}).get("assessmentVersion") == ASSESSMENT_VERSION
+                 and saved.get("measurements", {}).get("assessmentVersion") == assessment_version
                  and saved.get("measurementHash") == digest(saved.get("measurements"))
                  and _metric_evidence_current(collection, _measurement_dependency_ids(saved["measurements"]),
                                               saved.get("metricEvidencePolicy")))
@@ -844,7 +851,7 @@ def _read_plan(collection):
         if not isinstance(pair, dict):
             raise ValueError("Invalid saved target comparison")
         reports[target] = {key: _read_report(collection, entry) for key, entry in pair.items()
-                           if key in {"proposalReport", "inputComparison"}}
+                           if key in {"proposalReport", "inputComparison", "distinctEntryReport"}}
     active = data.get("activeTargetLayerId")
     if active is not None and not isinstance(active, str):
         raise ValueError("Invalid saved selected target")
@@ -867,14 +874,18 @@ def _read_report(collection, entry):
     if not isinstance(entry, dict) or not isinstance(entry.get("report"), dict) or digest(entry["report"]) != entry.get("hash"):
         raise ValueError("Saved native comparison report integrity differs")
     report = entry["report"]
-    if (report.get("sourceSnapshotId") != collection.identity() or report.get("assessmentVersion") != ASSESSMENT_VERSION
+    if (report.get("sourceSnapshotId") != collection.identity() or report.get("assessmentVersion") != _report_assessment_version(report)
             or not _metric_evidence_current(collection, _report_dependency_ids(report), report.get("metricEvidencePolicy"))):
         report = {**report, "assessmentStatus": "stale", "invalidationReason": "Source anatomy or assessment engine changed; regenerate the comparison."}
     return report
 
 
+def _report_assessment_version(report):
+    return WINDOW_ASSESSMENT_VERSION if report.get("task", {}).get("entrySampling") == WINDOW_ORIGIN else ASSESSMENT_VERSION
+
+
 def _bound_report(collection, report):
-    return {**report, "sourceSnapshotId": collection.identity(), "assessmentVersion": ASSESSMENT_VERSION,
+    return {**report, "sourceSnapshotId": collection.identity(), "assessmentVersion": _report_assessment_version(report),
             "assessmentStatus": "current", "metricEvidencePolicy": METRIC_EVIDENCE_POLICY, "geometryKernels": {
                 "capsuleVoxelSupercover": "compiled-cpp" if native_backend.cpp_enabled() else "reference-python",
                 "sourceLabelAndStreamlineProximity": "numpy-scipy"}}
@@ -934,10 +945,10 @@ def _measure_approach(geometry, approach, scenario=None, *, memo=None):
     return measured
 
 
-def _scenario_set(geometry, approach):
+def _scenario_set(geometry, approach, *, entry_sources=(), surface_entries=False):
     config = sensitivity_config(approach.get("sensitivityConfig"))
-    groups = geometry.registration_groups(approach.get("targetLayerId"), approach["constraints"]["excludedLayerIds"])
-    return freeze_scenarios(config, groups)
+    groups = geometry.registration_groups(approach.get("targetLayerId"), approach["constraints"]["excludedLayerIds"], entry_sources)
+    return freeze_scenarios(config, groups, surface_entries=surface_entries)
 
 
 def _record_measurements(collection, approach, measured):
@@ -946,14 +957,16 @@ def _record_measurements(collection, approach, measured):
             "metricEvidencePolicy": METRIC_EVIDENCE_POLICY}
 
 
-def assess_approach(collection, value, geometry=None):
+def assess_approach(collection, value, geometry=None, *, entry_support=None):
     approach = checked_approach(collection, value)
     geometry = geometry or NativeRouteGeometry(PatientAnatomySnapshot.capture(collection))
     geometry.snapshot._check()
-    memo = {}
-    measured = _measure_approach(geometry, approach, memo=memo)
-    scenarios = _scenario_set(geometry, approach)
-    measured["sensitivity"] = assess_sensitivity(measured, scenarios, lambda scenario: _measure_approach(geometry, approach, scenario, memo=memo), check=geometry.check)
+    measured = _measure_approach(geometry, approach)
+    if entry_support:
+        measured.update(entrySupport=entry_support, assessmentVersion=WINDOW_ASSESSMENT_VERSION)
+    sources = (entry_support["sourceSeries"],) if entry_support else ()
+    scenarios = _scenario_set(geometry, approach, entry_sources=sources, surface_entries=bool(entry_support))
+    measured["sensitivity"] = _measure_frozen(geometry, approach, measured, scenarios)
     measured["sensitivity"]["scenarioSet"] = scenarios
     measured["scenarioGuard"] = _scenario_guard(measured["sensitivity"])
     return _record_measurements(collection, approach, measured)
@@ -981,24 +994,28 @@ def _geometry_fields(measured):
     return reasons, objectives, evidence
 
 
-def _generate_nominal(geometry, base):
+def _generate_nominal(geometry, base, windows=None):
     """Freeze proposals using only this arm's own anatomy projection."""
     geometry.snapshot._check()
     base = {**base, "constraints": _constraints_for_geometry(geometry, base["constraints"])}
     rows, evaluated, eligible = [], {}, []
     target = np.asarray(base["target"])
-    for index, entry in enumerate(sample_positions(base["entryPatch"])):
+    entries = windows if windows is not None else ((entry, None) for entry in sample_positions(base["entryPatch"]))
+    for index, (entry, support) in enumerate(entries):
         geometry.check()
         axis = target - entry
         length = float(np.linalg.norm(axis))
         parameters = {"entry": entry.tolist(), "target": base["target"], "radiusMm": base["radiusMm"]}
         # ID and tie-breaking inputs contain no withheld image identities.
-        key = "proposal-" + digest([parameters, base.get("targetLayerId")])[:16]
+        key = ("window-" + digest([parameters, base.get("targetLayerId"), support])[:16] if support
+               else "proposal-" + digest([parameters, base.get("targetLayerId")])[:16])
         row = {"id": key, "sampleIndex": index, **parameters,
                "direction": (axis / length).tolist() if length > 1e-6 else None,
                "disposition": "rejected", "reasons": [], "objectives": {"lengthMm": length},
                "evidence": {}, "pareto": None, "dominatorCount": None, "nominalEligible": False}
         rows.append(row)
+        if support:
+            row["entrySupport"] = support
         if length <= 1e-6:
             row["reasons"].append("entry and target coincide")
         elif length > min(base["constraints"].get("maxLengthMm", 1000), 1000):
@@ -1006,7 +1023,11 @@ def _generate_nominal(geometry, base):
         if row["reasons"]:
             continue
         route = {**base, **parameters, "id": key, "direction": row["direction"]}
+        if support:
+            route["entryPatch"] = {**base["entryPatch"], "center": parameters["entry"], "normal": row["direction"]}
         nominal = _measure_approach(geometry, route)
+        if support:
+            nominal.update(entrySupport=support, assessmentVersion=WINDOW_ASSESSMENT_VERSION)
         evaluated[key] = (route, nominal)
         row["reasons"], row["objectives"], row["evidence"] = _geometry_fields(nominal)
         row["sourceReadings"] = source_readings(nominal)
@@ -1041,7 +1062,27 @@ def _task_fields(collection, base):
 
 def _measure_frozen(geometry, route, nominal, scenarios):
     memo = {}
-    return assess_sensitivity(nominal, scenarios, lambda scenario: _measure_approach(geometry, route, scenario, memo=memo), check=geometry.check)
+    support = nominal.get("entrySupport")
+    source = support["sourceSeries"] if support else None
+
+    def measure(scenario):
+        translation = scenario["sourceTranslationsMm"].get(source)
+        if translation is None:
+            return _measure_approach(geometry, route, scenario, memo=memo)
+        window = translated_window(geometry, route, support, np.asarray(translation))
+        moved = {**route, "entry": window["entry"], "entryPatch": {**route["entryPatch"], "center": window["entry"]}}
+        # The per-route memo assumes a fixed capsule. Recompute all readings for a moved entry.
+        return {**_measure_approach(geometry, moved, scenario), "entryWindow": window}
+
+    sensitivity = assess_sensitivity(nominal, scenarios, measure, check=geometry.check)
+    if source and source != geometry.reference["id"]:
+        tested = {row["id"] for row in scenarios["scenarios"] if source in row["sourceTranslationsMm"]}
+        assessed = sum("entryWindow" in row for row in sensitivity["scenarios"] if row["id"] in tested)
+        sensitivity["entryRegistration"] = {
+            "sourceSeriesId": source, "layerId": support["layerId"], "assessedCount": assessed, "scenarioCount": len(tested),
+            "status": "unassessed" if not assessed else "partially-assessed" if assessed < len(tested) else "assessed",
+        }
+    return sensitivity
 
 
 def _scenario_guard(sensitivity):
@@ -1050,22 +1091,31 @@ def _scenario_guard(sensitivity):
     incomplete = [row["id"] for row in sensitivity["scenarios"]
                   if row.get("coverageIncomplete") or row["missingMetrics"]
                   or row["unknownSourceLayerIds"] or row["status"] == "unassessed"]
-    disposition = "vetoed" if vetoes else "incomplete-coverage" if incomplete else "no-detected-hard-violation"
+    entry_status = sensitivity.get("entryRegistration", {}).get("status")
+    disposition = ("vetoed" if vetoes else "incomplete-coverage" if incomplete or entry_status == "unassessed"
+                   else "no-detected-hard-violation")
     return {"disposition": disposition, "vetoScenarioIds": vetoes, "incompleteScenarioIds": incomplete,
             "meaning": "Guard disposition in declared scenarios. Unknown anatomy and untested scenarios remain unassessed."}
 
 
-def suggest_approaches(collection, args, geometry=None):
+def suggest_approaches(collection, args, geometry=None, *, distinct_entries=False):
     """Enumerate the declared patch, then test frozen finalists on shared scenarios."""
     base = _base_for_suggestions(collection, args)
     geometry = geometry or NativeRouteGeometry(PatientAnatomySnapshot.capture(collection))
-    rows, evaluated, ordered, nominally_selected = _generate_nominal(geometry, base)
+    windows, issues = entry_windows(geometry, base) if distinct_entries else (None, [])
+    rows, evaluated, ordered, nominally_selected = _generate_nominal(geometry, base, windows)
     finalists = [*nominally_selected, *(row for row in ordered if row["disposition"] == "eligible")][:8]
     for row in ordered:
         row["nominalPareto"] = row["pareto"]
         row["disposition"] = "eligible"
-    scenarios = _scenario_set(geometry, base)
-    frozen = candidate_freeze(finalists, scenarios, {"sourceSnapshotId": collection.identity(), "task": _task_fields(collection, base)})
+    entry_sources = {row["entrySupport"]["sourceSeries"] for row in finalists if "entrySupport" in row}
+    scenarios = _scenario_set(geometry, base, entry_sources=entry_sources, surface_entries=distinct_entries)
+    task = _task_fields(collection, base)
+    if distinct_entries:
+        task.pop("entry")
+        task["patchRadiusMm"] = task.pop("entryPatch")["radiusMm"]
+        task["entrySampling"] = WINDOW_ORIGIN
+    frozen = candidate_freeze(finalists, scenarios, {"sourceSnapshotId": collection.identity(), "task": task})
     results, assessed, viable = {}, {}, []
     for row in finalists:
         route, nominal = evaluated[row["id"]]
@@ -1078,6 +1128,8 @@ def suggest_approaches(collection, args, geometry=None):
                                "scenarios": [{key: s[key] for key in ("id", "status", "conflictLayerIds", "constraintFailures",
                                                                     "unknownSourceLayerIds", "missingMetrics", "coverageIncomplete")}
                                              for s in sensitivity["scenarios"]]}
+        if "entryRegistration" in sensitivity:
+            results[row["id"]]["entryRegistration"] = sensitivity["entryRegistration"]
         if guard["vetoScenarioIds"]:
             row["disposition"] = "scenario-vetoed"
             row["reasons"].append(f'Declared hard guard failed in {len(guard["vetoScenarioIds"])} sensitivity scenarios')
@@ -1096,12 +1148,20 @@ def suggest_approaches(collection, args, geometry=None):
         values = row["objectives"]
         measured_clearances = [structure["clearanceLowerBoundMm"] for structure in nominal["structures"] if structure["available"]]
         label = "Distinct Pareto alternative" if row["pareto"] else "Distinct entry alternative"
+        support = row.get("entrySupport")
+        if support:
+            label = f"{support['direction']} · {support['kind']} entry"
         tradeoff = {"selectionReason": label, "lengthMm": values["lengthMm"], "targetVoxelCenterCoverageMm3": values["targetReachMm3"],
                     "minimumAvailableClearanceLowerBoundMm": min(measured_clearances, default=None), "objectives": values,
                     "meaning": "Separate static geometry objectives for supplied anatomy after declared stress guards."}
-        proposals.append(_record_measurements(collection, {**route, "name": label, "origin": "bounded-native-entry-patch", "tradeoff": tradeoff},
+        if support:
+            tradeoff["entrySupport"] = support
+        proposals.append(_record_measurements(collection, {**route, "name": label,
+                                             "origin": WINDOW_ORIGIN if support else "bounded-native-entry-patch", "tradeoff": tradeoff},
                                              {**nominal, "sensitivity": sensitivity, "scenarioGuard": row["scenarioGuard"]}))
     reasons = {}
+    for issue in issues:
+        reasons[issue] = reasons.get(issue, 0) + 1
     for row in rows:
         for reason in row["reasons"]:
             reasons[reason] = reasons.get(reason, 0) + 1
@@ -1123,6 +1183,10 @@ def suggest_approaches(collection, args, geometry=None):
               "sourceReadingFields": SOURCE_READING_FIELDS,
               "finalistOutcomes": results, "selectionRule": _SELECTION_RULE, "scope": _SCOPE,
               "whyFewer": shortfall, "clinicalRanking": False}
+    if distinct_entries:
+        report["scope"] = "Five superior-facing patient RAS directions from the selected target, up to 200 mm."
+        report["selectionRule"] = (report["scope"] + " Each observed label boundary defines one entry centre. "
+                                   "A patch centre alone does not establish cortical access. " + _SELECTION_RULE)
     return proposals, report
 
 
@@ -1214,16 +1278,19 @@ def dispatch_plan(collection, args, *, geometry=None, commit=lambda: None, check
             raise ValueError("A cleared target cannot carry an evidence binding")
         selection = {"candidateBinding": binding, "selectedAtSnapshotId": collection.identity()}
         selection_issue = None
-    elif action == "suggest":
+    elif action in {"suggest", "suggestDistinctEntries"}:
         value = {**args, "targetLayerId": active} if selection is not None and "targetLayerId" not in args else args
-        proposals, report = suggest_approaches(collection, bind_target(value), geometry)
+        distinct_entries = action == "suggestDistinctEntries"
+        proposals, report = suggest_approaches(collection, bind_target(value), geometry, distinct_entries=distinct_entries)
         compared_target = report["task"]["targetLayerId"]
         if selection is None:
             active = compared_target
-        comparisons.setdefault(compared_target or "", {})["proposalReport"] = _bound_report(collection, report)
+        report_key = "distinctEntryReport" if distinct_entries else "proposalReport"
+        comparisons.setdefault(compared_target or "", {})[report_key] = _bound_report(collection, report)
         # Refresh only this task's bounded proposal group. Edited candidates
         # may keep their original IDs until the matching proposal is regenerated.
-        saved = [a for a in saved if a.get("origin") != "bounded-native-entry-patch" or a.get("targetLayerId") != compared_target]
+        origin = WINDOW_ORIGIN if distinct_entries else "bounded-native-entry-patch"
+        saved = [a for a in saved if a.get("origin") != origin or a.get("targetLayerId") != compared_target]
         generated_ids = {row["id"] for row in proposals}
         saved = [{**row, "id": "manual-" + uuid.uuid4().hex[:16]} if row["id"] in generated_ids else row for row in saved]
         saved.extend(proposals)
@@ -1244,8 +1311,12 @@ def dispatch_plan(collection, args, *, geometry=None, commit=lambda: None, check
         if value is None:
             value = args
         approach = checked_approach(collection, bind_target(value))
+        entry_support = None
+        if action == "assess" and value.get("origin") == WINDOW_ORIGIN:
+            geometry = geometry or NativeRouteGeometry(PatientAnatomySnapshot.capture(collection), check=check)
+            entry_support = verify_window(geometry, {**approach, "tradeoff": value.get("tradeoff", {})})
         if args.get("assess", True):
-            approach = assess_approach(collection, approach, geometry)
+            approach = assess_approach(collection, approach, geometry, entry_support=entry_support)
         else:
             approach.update(sourceSnapshotId=collection.identity(), parameterHash=parameter_hash(approach), assessmentStatus="unassessed")
         approach["origin"] = "manual" if action == "upsert" else value.get("origin", "manual")
@@ -1296,11 +1367,13 @@ def dispatch_plan(collection, args, *, geometry=None, commit=lambda: None, check
             "targetSelectionIssue": selection_issue, "savedTargetLayerIds": sorted({key for key in comparisons if key}
                 | {row["targetLayerId"] for row in saved if row.get("targetLayerId")}),
             "proposalReport": selected_comparisons.get("proposalReport"), "inputComparison": selected_comparisons.get("inputComparison"),
+            "distinctEntryReport": selected_comparisons.get("distinctEntryReport"),
             "simulationExecutionAuthorized": False}
 
 
 def _mark_historical(comparisons, row, reason):
     pair = comparisons.get(row.get("targetLayerId") or "", {})
-    report = pair.get("proposalReport")
-    if report and row["id"] in report["selectedCandidateIds"] and report["assessmentStatus"] == "current":
-        pair["proposalReport"] = {**report, "assessmentStatus": "historical", "invalidationReason": reason}
+    for key in ("proposalReport", "distinctEntryReport"):
+        report = pair.get(key)
+        if report and row["id"] in report["selectedCandidateIds"] and report["assessmentStatus"] == "current":
+            pair[key] = {**report, "assessmentStatus": "historical", "invalidationReason": reason}

@@ -1,13 +1,19 @@
 """Display derivatives. These never authorize quantitative patient-frame operations."""
 from copy import deepcopy
+from itertools import product
+import re
 import nibabel as nib
 import numpy as np
 from scipy import ndimage as ndi
-from .patient_anatomy import affine, file_hash, nifti_geometry, resample
+from .patient_anatomy import affine, file_hash, nifti_geometry, projection_or_localizer, resample, world
 
 
 def display_affine(collection, row, *, preview=False):
     sid = row.get('source_series', row['id'])
+    source = collection.series(sid)
+    reference = collection.series(collection.document["reference_series"])
+    if projection_or_localizer(source) or projection_or_localizer(reference):
+        raise ValueError("Projection or localizer supports independent source review only")
     transform = collection.document['transforms'].get(sid)
     if transform and transform['status'] in {'reference', 'reviewed', 'source-provided'}:
         try:
@@ -16,20 +22,41 @@ def display_affine(collection, row, *, preview=False):
             if not preview:
                 raise
     if preview and transform and transform['status'] in {'reviewed', 'source-provided', 'unreviewed'}:
-        source = collection.series(sid)
-        reference = collection.series(collection.document['reference_series'])
         if (source['timepoint'] != reference['timepoint'] or
                 transform.get('source_sha256') != source['original']['sha256'] or
                 transform.get('reference_sha256') != reference['original']['sha256']):
             raise ValueError('Alignment preview does not match these source scans')
         if sid != row['id']:
             collection.require_native_geometry(row)
+        # A valid child receipt cannot make an ineligible ancestor displayable.
         matrix = collection.registration_matrix(sid, require_geometry=True)
+        parent = transform.get("parent_series")
+        while parent:
+            ancestor = collection.document["transforms"][parent]
+            if ancestor["status"] not in {"reference", "reviewed", "source-provided", "unreviewed"}:
+                raise ValueError(f"No usable alignment for {parent}")
+            parent = ancestor.get("parent_series")
         if (not np.allclose(matrix[:3, :3].T @ matrix[:3, :3], np.eye(3), atol=1e-5)
                 or np.linalg.det(matrix[:3, :3]) < 0):
             raise ValueError('Alignment preview requires a rigid transform')
         return matrix @ affine(row['affine']), True
     raise ValueError(f'No usable alignment for {sid}')
+
+
+def source_display_grid(scan, displayed):
+    """Choose the displayed lattice without changing the retained native source."""
+    native = affine(scan["affine"])
+    data = scan["data"]
+    preview = next((item for item in scan.get("preview_pyramid", [])
+                    if item.get("factor") == 2), None)
+    if preview and np.prod(data["shape"]) > 16_000_000:
+        sampled = affine(preview["affine"])
+        return preview["data"], sampled, displayed @ np.linalg.solve(native, sampled), preview
+    return data, native, displayed, None
+
+
+def voxel_edge_corners(shape, frame):
+    return world(np.asarray(frame), list(product(*[(-.5, n - .5) for n in shape])))
 
 
 def source_lattice_annotation_preview(collection, row, selected):
@@ -92,3 +119,84 @@ def brain_vessel_display(collection, row):
                         'brainLayer': brain['id'], 'sourcePreserved': True,
                         'reason': f'{int(mask.sum() - filtered.sum()):,} source voxels hidden by the brain-only filter.'}
     return row, {'scope': 'all', 'reason': 'No aligned brain mask; showing the full vessel estimate', 'sourcePreserved': True}
+
+
+def patient_display_grid(collection, *, preview, check=lambda: None):
+    """Resolve the same registered display lattice for rendering and view validation."""
+    sources, admitted, corners = [], [], []
+    for scan in collection.document["series"]:
+        check()
+        entry = {"seriesId": scan["id"], "modality": scan["modality"],
+                 "sourceSha256": scan["original"]["sha256"]}
+        sources.append(entry)
+        try:
+            frame, estimated = display_affine(collection, scan, preview=preview)
+        except ValueError as exc:
+            entry.update(alignment="unavailable", reason=str(exc))
+            continue
+        entry.update(alignment="estimated" if estimated else collection.document["transforms"][scan["id"]]["status"],
+                     voxelToPatientRasMm=frame.tolist())
+        if scan.get("synthetic") or re.search(
+                r"diagnostic|segmentation only|analytic signal|generated image signal",
+                scan["modality"], re.I):
+            entry["reason"] = "Source excluded from the 3D intensity context"
+            continue
+        admitted.append((scan, frame, entry))
+        corners.extend(voxel_edge_corners(scan["data"]["shape"], frame))
+    context = {"sources": sources}
+    if not admitted:
+        return context, admitted
+    low, high = np.min(corners, axis=0), np.max(corners, axis=0)
+    spacing = max(1., float(np.max((high - low) / 192)))
+    shape = tuple(np.clip(np.ceil((high - low) / spacing).astype(int), 2, 192))
+    frame = np.diag([spacing, spacing, spacing, 1.])
+    frame[:3, 3] = low + spacing / 2
+    context.update(affine=frame.tolist(), shape=list(map(int, shape)))
+    return context, admitted
+
+
+def patient_display_context(collection, *, preview, check, original=False):
+    """Window the source signals into a bounded 3D display texture."""
+    context, admitted = patient_display_grid(collection, preview=preview, check=check)
+    if not admitted:
+        return context, None
+    frame, shape = np.asarray(context["affine"]), context["shape"]
+    from .anatomy_siam_display import source_head_support
+    signal = np.zeros(shape, dtype=np.float32)
+    for scan, source, entry in admitted:
+        check()
+        support = None if original else source_head_support(collection, scan, check=check)
+        entry["headSupport"] = support is not None
+        data = collection.array(scan["data"])
+        units = str(scan.get("intensity_units") or scan.get("metadata", {}).get("Units", "")).upper()
+        if re.match(r"^\s*CTA?(?:\b|[-_])", scan["modality"], re.I) and units in {"HU", "HOUNSFIELD", "HOUNSFIELD UNITS"}:
+            entry["windowUnits"] = "HU"
+            window = [0., 1000.]
+        else:
+            entry["windowUnits"] = "source intensity"
+            stride = max(1, data.size // 100000)
+            sample = data.ravel()[::stride]
+            if support is not None:
+                inside = sample[support.ravel()[::stride] != 0]
+                if inside.size:
+                    sample = inside
+            window = [float(min(0., np.percentile(sample, 1))), float(np.percentile(sample, 99))]
+            if window[1] <= window[0]:
+                window[1] = max(window[0] + 1., float(data.max()))
+        entry["displayWindow"] = window
+        transform = np.linalg.inv(source) @ frame
+        for start in range(0, shape[0], 16):
+            check()
+            block = signal[start:start+16]
+            sampled = ndi.affine_transform(data, transform[:3, :3],
+                        offset=transform[:3, 3] + start * transform[:3, 0],
+                        output_shape=block.shape, output=np.float32, order=1, prefilter=False,
+                        mode="constant", cval=window[0])
+            np.clip((sampled - window[0]) / (window[1] - window[0]), 0, 1, out=sampled)
+            if support is not None:
+                covered = ndi.affine_transform(support, transform[:3, :3],
+                            offset=transform[:3, 3] + start * transform[:3, 0],
+                            output_shape=block.shape, output=np.uint8, order=0, prefilter=False)
+                sampled[covered == 0] = 0
+            np.maximum(block, sampled, out=block)
+    return context, signal

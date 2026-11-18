@@ -3,6 +3,7 @@ import type {ReactNode} from 'react';
 import {Eye,EyeOff,Focus,RotateCcw,Search} from 'lucide-react';
 import type {ViewerVolume} from './viewer/contracts';
 import type {Layer} from './native-anatomy-data';
+import {studyLayerDisplayKind} from './native-study-state';
 import {tractColor} from './viewer/tractDisplay';
 import {layerAppearance} from './viewer/workspaceSettings';
 import type {ViewerWorkspaceSettings} from './viewer/workspaceSettings';
@@ -11,6 +12,7 @@ import './native-structure-controls.css';
 export interface NativeStructureControlsProps {
   volume:ViewerVolume|null;
   layers?:ReadonlyArray<Layer>;
+  tracts?:ReadonlyArray<{id:string;label:string;source_series:string}>;
   visibleLayers:Record<string,boolean>;
   onVisibilityChange:(visible:Record<string,boolean>)=>void;
   settings:ViewerWorkspaceSettings;
@@ -27,13 +29,13 @@ export interface NativeStructureControlsProps {
   selectionInspector?:ReactNode;
 }
 
-export function NativeStructureControls({volume,layers,visibleLayers,onVisibilityChange,settings,onSettingsChange,selectedStructure,onSelectStructure,onFocusStructure,unavailable=[],pendingLayers=[],layerErrors={},onRetryLayer,disabled=false,showSelectionControls=true,selectionInspector}:NativeStructureControlsProps){
+export function NativeStructureControls({volume,layers,tracts,visibleLayers,onVisibilityChange,settings,onSettingsChange,selectedStructure,onSelectStructure,onFocusStructure,unavailable=[],pendingLayers=[],layerErrors={},onRetryLayer,disabled=false,showSelectionControls=true,selectionInspector}:NativeStructureControlsProps){
   const previousVisibility=useRef<Record<string,boolean>|null>(null);
   const [isolated,setIsolated]=useState<string|null>(null),[search,setSearch]=useState('');
   if(!volume&&!layers)return null;
   const resident=volume?.compartments??[];
-  const structures=[...(layers?layers.map(layer=>({id:layer.id,label:layer.label,kind:layer.kind,color:layer.color,source:layer.source_series,qa:resident.find(row=>row.name===layer.id)?.qa})):
-    resident.map(layer=>({id:layer.name,label:layer.label??layer.name.replaceAll('_',' '),kind:layer.kind??'label',color:layer.color,source:layer.sourceIdentity,qa:layer.qa}))),...(volume?.tractography??[]).map((tract,index)=>({id:tract.id,label:tract.label,kind:'tract',color:tractColor(index),source:undefined,qa:undefined}))];
+  const structures=[...(layers?layers.map(layer=>({id:layer.id,label:layer.label,kind:layer.kind,displayKind:studyLayerDisplayKind(layer),color:layer.color,source:layer.source_series,qa:resident.find(row=>row.name===layer.id)?.qa})):
+    resident.map(layer=>({id:layer.name,label:layer.label??layer.name.replaceAll('_',' '),kind:layer.kind??'label',displayKind:layer.displayKind??layer.kind,color:layer.color,source:layer.sourceIdentity,qa:layer.qa}))),...(tracts??(volume?.tractography??[]).map(t=>({...t,source_series:t.sourceSeries}))).map((tract,index)=>({id:tract.id,label:tract.label,kind:'tract',displayKind:'tract',color:tractColor(index),source:tract.source_series,qa:undefined}))];
   const selected=structures.find(structure=>structure.id===selectedStructure);
   const select=(id:string)=>{if(visibleLayers[id]===false)onVisibilityChange({...visibleLayers,[id]:true});onSelectStructure(id);};
   const isolate=(id:string)=>{
@@ -46,15 +48,15 @@ export function NativeStructureControls({volume,layers,visibleLayers,onVisibilit
   const groups=[{id:'targets',label:'Lesion candidates',items:structures.filter(s=>s.kind==='tumor')},{id:'anatomy',label:'Anatomical context',items:structures.filter(s=>!vascular(s.kind)&&!['tumor','tract','brain-region','review-region','head-envelope'].includes(s.kind))},{id:'vessels',label:'Vascular layers',items:structures.filter(s=>vascular(s.kind))},{id:'regions',label:'Brain regions',items:structures.filter(s=>s.kind==='brain-region')},{id:'tracts',label:'Supplied tract bundles',items:structures.filter(s=>s.kind==='tract')},{id:'review',label:'Review layers',items:structures.filter(s=>['review-region','head-envelope'].includes(s.kind))}];
   const query=search.trim().toLowerCase(),matches=(label:string,kind:string)=>(label+' '+kind).toLowerCase().includes(query);
   return <section className="native-structures" aria-label="Anatomical structures">
-    <div className="native-structure-heading"><div><strong>Manage structures</strong><span>{structures.filter(s=>visibleLayers[s.id]!==false).length} / {structures.length} shown</span></div><button disabled={disabled} title="Restore all structure visibility, opacity and colors" aria-label="Reset structure display" onClick={reset}><RotateCcw size={12}/></button></div>
+    <div className="native-structure-heading"><div><strong>Manage structures</strong><span>{structures.filter(s=>visibleLayers[s.id]!==false&&!unavailable.includes(s.id)&&!layerErrors[s.id]&&!pendingLayers.includes(s.id)).length} / {structures.length} shown</span></div><button disabled={disabled} title="Restore all structure visibility, opacity and colors" aria-label="Reset structure display" onClick={reset}><RotateCcw size={12}/></button></div>
     {structures.length>7&&<label className="native-structure-search"><Search size={13}/><input aria-label="Search anatomy" placeholder="Find a structure…" value={search} onChange={event=>setSearch(event.target.value)}/></label>}
     {!structures.length&&<p className="native-structure-empty">No structures prepared. Open Scans to add supplied labels or review preparation.</p>}
     <div className="native-structure-list">{groups.filter(group=>group.items.length>0).map(group=>{const items=group.items.filter(s=>matches(s.label,s.kind));if(!items.length)return null;return <details className="native-structure-group" key={group.id+(query?'search':'browse')} open={query?true:!['regions','review'].includes(group.id)}>
       <summary className="native-structure-group-title"><span>{group.label}</span><small>{group.items.length}</small><button disabled={disabled} aria-label={`${group.items.every(s=>visibleLayers[s.id]!==false)?'Hide':'Show'} all ${group.label.toLowerCase()}`} title="Toggle group visibility" onClick={event=>{event.preventDefault();const visible=!group.items.every(s=>visibleLayers[s.id]!==false);onVisibilityChange({...visibleLayers,...Object.fromEntries(group.items.map(s=>[s.id,visible]))});}}>{group.items.every(s=>visibleLayers[s.id]!==false)?<Eye size={12}/>:<EyeOff size={12}/>}</button></summary>
       {items.map(structure=>{
-        const appearance=layerAppearance(structure.id,structure.color,settings,structure.kind),visible=visibleLayers[structure.id]!==false,needsAlignment=unavailable.includes(structure.id),pending=pendingLayers.includes(structure.id),failure=layerErrors[structure.id];
+        const appearance=layerAppearance(structure.id,structure.color,settings,structure.displayKind),visible=visibleLayers[structure.id]!==false,needsAlignment=unavailable.includes(structure.id),pending=pendingLayers.includes(structure.id),failure=layerErrors[structure.id];
         return <Fragment key={structure.id}><div data-structure-id={structure.id} data-structure-label={structure.label} className={`native-structure-row${selectedStructure===structure.id?' is-selected':''}${visible?'':' is-hidden'}`}>
-          <button className="native-structure-name" disabled={disabled} title={structure.label} aria-pressed={selectedStructure===structure.id} onClick={()=>select(structure.id)}><i style={{background:appearance.color}}/><span>{structure.label}{(needsAlignment||pending)&&<small className={needsAlignment?'needs-alignment':''} {...(pending?{role:'status','data-layer-pending':true}:{})}>{needsAlignment?'Alignment required':'Loading…'}</small>}</span></button>
+          <button className="native-structure-name" disabled={disabled} title={structure.label} aria-pressed={selectedStructure===structure.id} onClick={()=>select(structure.id)}><i style={{background:appearance.color}}/><span>{structure.label}{(needsAlignment||pending||structure.qa?.voxelCount===0)&&<small className={needsAlignment?'needs-alignment':''} {...(pending?{role:'status','data-layer-pending':true}:{})}>{needsAlignment?'Alignment required':pending?'Loading…':'Empty source mask'}</small>}</span></button>
           {failure&&onRetryLayer?<button disabled={disabled} data-layer-error="true" title={failure} onClick={()=>onRetryLayer(structure.id)}>Retry</button>:<button className="native-structure-focus" disabled={disabled||needsAlignment||!resident.some(row=>row.name===structure.id)&&structure.kind!=='tract'} title={`Center ${structure.label} in linked views`} aria-label={`Focus ${structure.label}`} onClick={()=>{select(structure.id);onFocusStructure(structure.id);}}><Focus size={13}/></button>}
           <button className="native-structure-visibility" disabled={disabled} aria-label={`${visible?'Hide':'Show'} ${structure.label}`} aria-pressed={visible} onClick={()=>onVisibilityChange({...visibleLayers,[structure.id]:!visible})}>{visible?<Eye size={15}/>:<EyeOff size={15}/>}</button>
         </div>{selectedStructure===structure.id&&selectionInspector}</Fragment>;
@@ -63,8 +65,8 @@ export function NativeStructureControls({volume,layers,visibleLayers,onVisibilit
     {query&&!structures.some(s=>matches(s.label,s.kind))&&<p className="native-structure-empty">No matching structures.</p>}
     {selected&&showSelectionControls&&<div className="native-structure-selection">
       <div><strong>{selected.label}</strong><button aria-pressed={isolated===selected.id} onClick={()=>isolate(selected.id)}>{isolated===selected.id?'Restore others':'Isolate'}</button></div>
-      <label>Opacity<input aria-label={`${selected.label} opacity`} type="range" min="0" max="1" step=".01" value={layerAppearance(selected.id,selected.color,settings,selected.kind).opacity} onChange={event=>onSettingsChange({...settings,layerOpacity:{...settings.layerOpacity,[selected.id]:+event.target.value}})}/><output>{Math.round(layerAppearance(selected.id,selected.color,settings,selected.kind).opacity*100)}%</output></label>
-      <label>Color<input aria-label={`${selected.label} color`} type="color" value={layerAppearance(selected.id,selected.color,settings,selected.kind).color} onChange={event=>onSettingsChange({...settings,layerColor:{...settings.layerColor,[selected.id]:event.target.value}})}/></label>
+      <label>Opacity<input aria-label={`${selected.label} opacity`} type="range" min="0" max="1" step=".01" value={layerAppearance(selected.id,selected.color,settings,selected.displayKind).opacity} onChange={event=>onSettingsChange({...settings,layerOpacity:{...settings.layerOpacity,[selected.id]:+event.target.value}})}/><output>{Math.round(layerAppearance(selected.id,selected.color,settings,selected.displayKind).opacity*100)}%</output></label>
+      <label>Color<input aria-label={`${selected.label} color`} type="color" value={layerAppearance(selected.id,selected.color,settings,selected.displayKind).color} onChange={event=>onSettingsChange({...settings,layerColor:{...settings.layerColor,[selected.id]:event.target.value}})}/></label>
     </div>}
     {showSelectionControls&&<details className="native-structure-details"><summary>Source & display details</summary><p>Visibility and opacity change the display only. Measurements retain all available source labels.</p><p>Tracts keep supplied bundle names and registration. Streamline previews reduce display load; source data remains unchanged. Slice fibers lie within ±0.65 mm of each source plane.</p>{selected&&<p>{selected.kind==='tract'?'Supplied tractography · independent registration accuracy unmeasured.':`${selected.kind.replaceAll('-',' ')} · inspect source evidence for provenance`}{selected.qa?` · ${selected.qa.reviewStatus}`:''}</p>}{selected?.source&&<p className="native-structure-source">{selected.source}</p>}</details>}
   </section>;

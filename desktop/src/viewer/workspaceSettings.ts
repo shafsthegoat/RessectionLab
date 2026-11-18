@@ -50,19 +50,42 @@ export interface ViewerWorkspaceSettings {
   obliqueClip?: {enabled:boolean;normal:Point3;offset:number};
   fusion?: { seriesId: string|null; opacity: number };
 }
+export type ViewerCutaway = Pick<ViewerWorkspaceSettings,'clipping'|'clipBox'|'obliqueClip'>;
+
+export function viewerCutaway({clipping,clipBox,obliqueClip}:ViewerWorkspaceSettings):ViewerCutaway {
+  return {clipping,clipBox,obliqueClip};
+}
+
+export function usesPatientContext(settings:ViewerWorkspaceSettings,hasField:boolean):boolean {
+  return hasField&&settings.presentation!=='scan';
+}
+
+export function clippingPositionInBounds(axis:ViewerClipping['axis'],value:number,bounds:Bounds3):boolean {
+  const i={x:0,y:1,z:2}[axis];
+  return Number.isFinite(value)&&value>=bounds[0][i]-1e-5&&value<=bounds[1][i]+1e-5;
+}
+
+export function newClippingPosition(axis:ViewerClipping['axis'],bounds:Bounds3,position?:number):number {
+  const i={x:0,y:1,z:2}[axis];
+  return position!==undefined&&clippingPositionInBounds(axis,position,bounds)?position:(bounds[0][i]+bounds[1][i])/2;
+}
+
 export function layerAppearance(name: string, color: string, settings: ViewerWorkspaceSettings = {},kind?:string) {
   const opacity = settings.layerOpacity?.[name];
   const chosenColor = settings.layerColor?.[name];
   const defaultOpacity=kind==='tumor'||['vessel','vessels','artery','vein','sinus'].includes(kind??'')?1:
+    kind==='outer-head-tissue'?(settings.presentation==='scan'?.035:.14):
+    kind==='dura'?(settings.presentation==='scan'?.04:.16):
+    kind==='csf'?(settings.presentation==='scan'?.025:.07):
+    kind==='ventricles'?(settings.presentation==='scan'?.055:.26):
     ['brain','tissue','soft_tissue','head-envelope'].includes(kind??'')?.08:['bone','skull'].includes(kind??'')?.12:.66;
   return { opacity: settings.operativeView==='surgeon'&&!settings.microscope?.inspectionTransparency?1:typeof opacity === 'number' && Number.isFinite(opacity) ? Math.min(1, Math.max(0, opacity)) : defaultOpacity,
     color: chosenColor && /^#[\da-f]{6}$/i.test(chosenColor) ? chosenColor : color };
 }
 export function clippingForBounds(settings: ViewerClipping|undefined, bounds: Bounds3): ViewerClipping {
   const axis = settings && ['x','y','z'].includes(settings.axis) ? settings.axis : 'z';
-  const index = {x:0,y:1,z:2}[axis];
-  const value = settings && Number.isFinite(settings.value) ? settings.value : (bounds[0][index]+bounds[1][index])/2;
-  return {axis, value: Math.max(bounds[0][index], Math.min(bounds[1][index],value)), enabled: settings?.enabled === true, flipped: settings?.flipped === true};
+  const valid = settings!==undefined&&clippingPositionInBounds(axis,settings.value,bounds);
+  return {axis,value:valid?settings.value:newClippingPosition(axis,bounds),enabled:valid&&settings.enabled===true,flipped:settings?.flipped===true};
 }
 export function validCameraState(input: ViewerCameraState|null|undefined): input is ViewerCameraState {
   if (!input || ![input.position,input.target,input.up].every(p=>Array.isArray(p)&&p.length===3&&p.every(n=>Number.isFinite(n)&&Math.abs(n)<1e6))) return false;

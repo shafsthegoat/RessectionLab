@@ -6,7 +6,7 @@ import json
 import re
 from tempfile import TemporaryDirectory
 import numpy as np
-from .patient_anatomy import affine, world, reconstruction_lock, file_hash, digest, nifti_geometry, nifti_geometry_issue
+from .patient_anatomy import affine, world, reconstruction_lock, file_hash, digest, nifti_geometry, nifti_geometry_issue, projection_or_localizer
 
 
 MRI_SEQUENCES = {
@@ -22,6 +22,10 @@ OPERATIVE_LABELS = {
     "skull": ("skull", "context", "#d8e7f8"),
     "vessels": ("vessels", "critical", "#ef5679"),
     "vessel": ("vessels", "critical", "#ef5679"),
+    "artery": ("artery", "critical", "#e86c62"),
+    "vein": ("vein", "critical", "#678fde"),
+    "sinus": ("sinus", "critical", "#8078ce"),
+    "dura": ("dura", "context", "#eccca7"),
     "context": ("context", "context", "#97bdcf"),
 }
 
@@ -326,6 +330,8 @@ def import_nifti_series(collection, path, *, series_id, modality=None, timepoint
         "sequence_assignment": {"basis": "explicit" if modality is not None else "metadata and name",
                                 "candidates": details["candidates"], "issues": details["issues"]},
     }
+    if projection_or_localizer({"metadata": metadata, "label": Path(path).name}):
+        imaging["projection_or_localizer"] = True
     if retained:
         imaging["companions"] = retained
     acquisition = metadata.get("AcquisitionDateTime")
@@ -352,26 +358,54 @@ def import_nifti_series(collection, path, *, series_id, modality=None, timepoint
 
 
 def select_intake_reference(collection):
-    """Choose the initial patient frame before registration; later imports keep it."""
+    """Keep an established patient frame, or replace an independent scout anchor."""
     document = collection.document
-    if collection.published_reference or not document["series"] or len(document["transforms"]) != 1:
-        return document.get("reference_series")
+    current = document.get("reference_series")
+    if current is None:
+        return None
+    provisional = projection_or_localizer(collection.series(current))
+    if not provisional and (collection.published_reference or len(document["transforms"]) != 1):
+        return current
     order = ("T1", "T1CE", "T2", "FLAIR", "CT", "CTA", "TOF", "MRA", "MRV",
              "SWI", "SWI_MAGNITUDE", "SWI_PHASE")
-    candidates = [row for row in document["series"] if row["modality"] in order]
-    if not candidates:
-        return document.get("reference_series")
-    reference = min(candidates, key=lambda row: (
+    candidates = [row for row in document["series"] if row["modality"] in order and not projection_or_localizer(row)]
+    candidates.sort(key=lambda row: (
         (nifti_geometry_issue(row["native_geometry"]) is not None if "native_geometry" in row
          else row.get("units_status") != "mm"),
         row.get("coverage", {}).get("status") == "limited",
         order.index(row["modality"]), row["id"],
-    ))["id"]
-    current = document["reference_series"]
+    ))
+    if provisional:
+        # A placeholder can be displayed independently, but only a verified
+        # metric acquisition can establish the replacement patient frame.
+        candidates = (row for row in candidates if _verified_reference_geometry(collection, row))
+    reference = next((row["id"] for row in candidates), current)
     if reference != current:
-        document["transforms"][reference] = document["transforms"].pop(current)
+        transforms = document["transforms"]
+        if provisional and (collection.published_reference or set(transforms) != {current}
+                            or transforms[current]["status"] != "reference"):
+            document.setdefault("registration_history", []).extend(
+                {"series_id": series_id, "reference_series": current, "transform": transform,
+                 "invalidation_reason": "Previous reference was a projection or localizer"}
+                for series_id, transform in transforms.items()
+            )
+        document["transforms"] = {
+            reference: {"matrix": np.eye(4).tolist(), "status": "reference", "uncertainty_mm": None}
+        }
         document["reference_series"] = reference
+        if provisional and (display := document.get("display")):
+            display.pop("cursor_ras_mm", None)
+            display.pop("entry_ras_mm", None)
     return reference
+
+
+def _verified_reference_geometry(collection, row):
+    try:
+        collection.require_native_geometry(row)
+        original = row["original"]
+        return file_hash(collection.path(original["path"])) == original["sha256"]
+    except (OSError, ValueError):
+        return False
 
 
 def _swi_component(row):
@@ -446,6 +480,8 @@ def _dicom_sources(directory, selected_series=None):
         header_hints = set().union(*(_sequence_hints(value) for value in descriptions))
         metadata["SequenceRole"] = " ".join(sorted(header_hints & {"MIP", "DWI"}))
         details = _describe_sequence("", metadata, source_family=family.upper())
+        details["projection_or_localizer"] = (projection_or_localizer({"metadata": metadata}) or
+            any(projection_or_localizer({"ImageType": getattr(h, "ImageType", "")}) for h in headers[1:]))
         if not patient or not re.fullmatch(r"[0-9]+(?:\.[0-9]+)*", study):
             details["issues"].append("DICOM patient and StudyInstanceUID are required for study association")
             details["supported"] = False
@@ -540,6 +576,8 @@ def import_dicom(collection, directory, *, modality=None, sequence_by_series=Non
             sequence_assignment={"basis": "explicit" if explicit is not None else "acquisition metadata",
                                  "candidates": details["candidates"], "issues": details["issues"]},
         )
+        if details.get("projection_or_localizer"):
+            metadata["projection_or_localizer"] = True
         if details["storage"] == "source-asset":
             row = dict(id=uid, patient_id=c.document["patient_id"], modality=sequence, timepoint=timepoint,
                        storage="source-asset", original=originals[0], **metadata)

@@ -22,18 +22,26 @@ _MAX_EVIDENCE_BYTES = 5 * 1024**2
 def _cache_roots():
     from .poc_models import ROOT
 
-    default = (ROOT / "outputs/poc-models").resolve()
+    default = ROOT / "outputs/poc-models"
+    local_cache = ROOT / "testcases/reconstruction-runs"
+    roots = {}
+    resolved = default.resolve()
+    if resolved == default or (default.is_symlink() and resolved == local_cache):
+        roots = {default: resolved, resolved: resolved}
     configured = os.environ.get("RESSECTIONLAB_POC_OUTPUT_ROOT")
     if not configured:
-        return [default]
+        return roots
     candidate = Path(configured).resolve()
     if candidate.is_relative_to((ROOT / "testcases").resolve()):
-        return [default, candidate]
-    from .data_root import checked_root
-    try:
-        return [default, candidate] if candidate.is_relative_to(checked_root()) else [default]
-    except (OSError, ValueError):
-        return [default]
+        roots[candidate] = candidate
+    else:
+        from .data_root import checked_root
+        try:
+            if candidate.is_relative_to(checked_root()):
+                roots[candidate] = candidate
+        except (OSError, ValueError):
+            pass
+    return roots
 
 
 def _proof(c, source, mps, environment):
@@ -44,14 +52,17 @@ def _proof(c, source, mps, environment):
         return None
     case = "anatomy-" + digest(c.document["patient_id"])[:16]
     path = Path(reason.removeprefix(_ERROR_PREFIX))
-    if not path.is_absolute() or path.name != "inference.log":
+    if not path.is_absolute() or path.name != "inference.log" or ".." in path.parts:
         return None
     try:
         log = path.resolve(strict=True)
-        root = next((root for root in _cache_roots() if log.is_relative_to(root)), None)
-        if root is None or log != path:
+        # Only the known root alias may differ from the physical path. The
+        # case, model, attempt and evidence files must still resolve literally.
+        roots = _cache_roots()
+        root = next((root for root in path.parents if root in roots), None)
+        if root is None or log != roots[root] / path.relative_to(root):
             return None
-        case_part, model_part, attempt_part, _ = log.relative_to(root).parts
+        case_part, model_part, attempt_part, _ = path.relative_to(root).parts
         if case_part != case or model_part != "synthstrip-main":
             return None
         receipt = log.with_name("inference.json")

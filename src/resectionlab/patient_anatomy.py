@@ -31,6 +31,25 @@ ROLES = {"context", "target", "critical"}
 NIFTI_FORM_TOLERANCE_MM = 0.01
 
 
+def source_metadata_phrases(row):
+    original = row.get("original", {})
+    values = [row.get("id"), row.get("modality"), row.get("label"), row.get("source_kind"),
+              original.get("name") or Path(original.get("path") or "").name]
+    keys = ("ImageType", "SeriesDescription", "ProtocolName", "SequenceName", "DerivationDescription",
+            "image_type", "dicom_image_type", "series_description", "protocol_name", "derivation_description")
+    for record in (row, row.get("metadata") or {}, row.get("dicom") or {}):
+        values.extend(record.get(key) for key in keys)
+    return " ".join(str(value).lower() for value in values if value)
+
+
+def projection_or_localizer(row):
+    """A projected or scout image can be inspected, but cannot place anatomy in 3D."""
+    if row.get("projection_or_localizer") is True:
+        return True
+    phrases = source_metadata_phrases(row).replace("_", " ")
+    return bool(re.search(r"\b(?:(?:tof)?mips?|minip|projections?|locali[sz]er|scout)\b|(?:maximum|minimum).intensity", phrases))
+
+
 def digest(value):
     return hashlib.sha256(
         json.dumps(
@@ -486,6 +505,8 @@ class PatientImagingCollection:
         if source["timepoint"] != reference["timepoint"]:
             raise ValueError("Registration requires the same study timepoint")
         if require_geometry:
+            if projection_or_localizer(source) or projection_or_localizer(reference):
+                raise ValueError("Projection or localizer supports independent source review only")
             self.require_native_geometry(source)
             if not seen and source is not reference:
                 self.require_native_geometry(reference)
@@ -751,6 +772,10 @@ class PatientAnatomySnapshot:
         self._check()
         from scipy.spatial import cKDTree
 
+        from .anatomy_evidence import is_siam_context
+        row = self.collection.layer(layer_id)
+        if is_siam_context(row):
+            return {"snapshot_id": self.snapshot_id, "available": False, "reason": "SIAM tissue estimate is context only"}
         state = self.sample(point)["layers"][layer_id]
         if not state["known"]:
             return {
@@ -758,7 +783,6 @@ class PatientAnatomySnapshot:
                 "available": False,
                 "reason": state.get("reason", "outside_source_coverage"),
             }
-        row = self.collection.layer(layer_id)
         a = self.collection.patient_affine(row)
         indices = np.argwhere(self.collection.mask(row))
         if not len(indices):

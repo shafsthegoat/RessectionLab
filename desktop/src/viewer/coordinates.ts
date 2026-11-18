@@ -67,12 +67,13 @@ export function inverseAffine(m: Affine): Affine {
   ];
 }
 
-export function volumeBounds(shape: Shape3, affine: Affine): Bounds3 {
+export function volumeBounds(shape: Shape3, affine: Affine, voxelEdges=false): Bounds3 {
   const low: Point3 = [Infinity, Infinity, Infinity],
     high: Point3 = [-Infinity, -Infinity, -Infinity];
-  for (const x of [0, shape[0] - 1])
-    for (const y of [0, shape[1] - 1])
-      for (const z of [0, shape[2] - 1]) {
+  const edge = voxelEdges ? .5 : 0;
+  for (const x of [-edge, shape[0] - 1 + edge])
+    for (const y of [-edge, shape[1] - 1 + edge])
+      for (const z of [-edge, shape[2] - 1 + edge]) {
         const p = transformPoint(affine, [x, y, z]);
         for (let axis = 0; axis < 3; axis++) {
           low[axis] = Math.min(low[axis], p[axis]);

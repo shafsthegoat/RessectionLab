@@ -4,7 +4,7 @@ import numpy as np
 from .core import CaseData, SourceRef, array_digest
 from .critical_evidence import CriticalStructureEvidence
 from .data_policy import ANATOMY_PRETRAINED_POLICY
-from .anatomy_evidence import inference_bounds, is_dural_proxy
+from .anatomy_evidence import inference_bounds, is_dural_proxy, is_siam_context
 from .patient_anatomy import world, digest, file_hash
 
 
@@ -16,7 +16,7 @@ LESION_CANDIDATE_KINDS = {
 
 
 def is_native_target(row):
-    if is_dural_proxy(row):
+    if is_dural_proxy(row) or is_siam_context(row):
         return False
     return row["role"] == "target" or (
         row["role"] == "context" and row["kind"] in LESION_CANDIDATE_KINDS
