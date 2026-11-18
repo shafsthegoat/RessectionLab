@@ -39,17 +39,13 @@ def _lattice_faces(origin, vector, shape, depth):
     return distances[np.r_[True, np.diff(distances) > 1.e-8]]
 
 
-def _entry(c, row, source, target, direction, depth):
-    data = c.array(row["data"])
-    a = c.patient_affine(row)
-    inverse = np.linalg.inv(a)
+def _entry(row, source, data, inverse, source_from_label, target, direction, depth):
     origin, vector = world(inverse, target), inverse[:3, :3] @ direction
     faces = _lattice_faces(origin, vector, data.shape, depth)
     points = origin + ((faces[1:] + faces[:-1]) * .5)[:, None] * vector
     cells = np.floor(points + .5).astype(int)
     lower, upper = inference_bounds(row) or (np.zeros(3), np.asarray(data.shape) - 1)
     known = np.all((cells >= lower) & (cells <= upper), axis=1)
-    source_from_label = np.linalg.solve(c.patient_affine(source), a)
     for samples in (cells, points):
         native = world(source_from_label, samples)
         known &= np.all((native >= -.5) & (native < np.asarray(source["data"]["shape"]) - .5), axis=1)
@@ -95,14 +91,18 @@ def entry_windows(geometry, base):
                 continue
             if inspected >= 3 or len(candidates) == len(DIRECTIONS):
                 break
-            inspected += 1
             try:
+                layer_frame = c.patient_affine(row)
+                source_from_label = np.linalg.solve(c.patient_affine(source), layer_frame)
+                inverse = np.linalg.inv(layer_frame)
+                data = c.array(row["data"])
+                inspected += 1
                 for name, axis in DIRECTIONS.items():
                     geometry.check()
                     if name in candidates:
                         continue
                     direction = np.asarray(axis) / np.linalg.norm(axis)
-                    found = _entry(c, row, source, target, direction, depth)
+                    found = _entry(row, source, data, inverse, source_from_label, target, direction, depth)
                     if found is None:
                         continue
                     entry, voxel = found

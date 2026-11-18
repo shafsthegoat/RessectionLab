@@ -996,6 +996,18 @@ def test_distinct_entries_withhold_clipped_field_and_unknown_alignment(native):
     assert any('register' in reason.lower() or 'review' in reason.lower() for reason in unregistered['distinctEntryReport']['reasons'])
     assert any('SIAM v2' in reason for reason in unregistered['distinctEntryReport']['reasons'])
 
+    # Several layers from an unaligned acquisition cannot exhaust the budget
+    # before the planner reaches a separate aligned skull source.
+    for label_id in ('skull-b', 'skull-c'):
+        c.add_layer(mask, other['affine'], layer_id=label_id, source_series='ct',
+                    kind='bone', role='context', color='#dddddd')
+    aligned = c.add_series(c.path(scan['original']['path']), series_id='ct-aligned', modality='CT')
+    c.set_registration('ct-aligned', np.eye(4), status='source-provided', method='fixture source geometry')
+    c.add_layer(mask, aligned['affine'], layer_id='skull-z', source_series='ct-aligned',
+                kind='skull', role='context', color='#dddddd')
+    c.save()
+    assert dispatch_plan(c, task)['distinctEntryReport']['evaluated'] > 0
+
 
 def test_intersecting_siam_cerebellum_and_explicit_tissue_exclusions_are_context_only(native):
     from resectionlab.anatomy_approaches import _metric_evidence_current, METRIC_EVIDENCE_POLICY

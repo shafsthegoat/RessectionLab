@@ -248,6 +248,26 @@ app.on('browser-window-created', (_, win) => {
         await js(`document.querySelector('.approach-card[data-approach-id="${route}"]').click()`);
         await until(`document.querySelector('.approach-card.selected')?.dataset.approachId===${JSON.stringify(route)}`);
         report.selected = route;
+        if(process.argv.includes('--distinct')) {
+          const overlayIds = () => js("JSON.parse(document.querySelector('.rl-viewer').dataset.approachRoutes).map(r=>r.route_id)");
+          await until(`JSON.parse(document.querySelector('.rl-viewer').dataset.approachRoutes).some(r=>r.selected&&r.route_id===${JSON.stringify(route)})`);
+          report.windowOverlay=await overlayIds();
+          assert.deepEqual([...report.windowOverlay].sort(),[...cards].sort());
+          const patch=report.plans.findLast(row=>row.action==='suggest').routes.find(row=>row.origin==='bounded-native-entry-patch');
+          if(patch) {
+            console.log('Checking return to patch routes');
+            await ready();
+            await until(`!document.querySelector('.approach-card[data-approach-id="${patch.id}"]').disabled`);
+            await js(`document.querySelector('.approach-card[data-approach-id="${patch.id}"]').click()`);
+            await until(`JSON.parse(document.querySelector('.rl-viewer').dataset.approachRoutes).some(r=>r.selected&&r.route_id===${JSON.stringify(patch.id)})`);
+            report.patchOverlay=await overlayIds();
+            assert(report.patchOverlay.every(id=>!report.windowOverlay.includes(id)));
+            await ready();
+            await until(`!document.querySelector('.approach-card[data-approach-id="${route}"]').disabled`);
+            await js(`document.querySelector('.approach-card[data-approach-id="${route}"]').click()`);
+            await until(`JSON.parse(document.querySelector('.rl-viewer').dataset.approachRoutes).some(r=>r.selected&&r.route_id===${JSON.stringify(route)})`);
+          }
+        }
         await both('selected');
       }
       if(mode==='preview') {
