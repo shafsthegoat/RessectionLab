@@ -80,3 +80,94 @@ test('changing a populated study reveals new structures without restoring hidden
     assert.deepEqual(requests.at(-1).layers,['brain','skull']);
   }finally{internals.H=previous;globalThis.Worker=previousWorker;}
 });
+
+test('native workspace keeps the shared cutaway through source switches and preserves independent inspection',async()=>{
+  const mriShape=[10,10,10],patientShape=[30,10,10];
+  const affine=x=>[[1,0,0,x],[0,1,0,0],[0,0,1,0],[0,0,0,1]];
+  const scans=[{id:'mri',modality:'T1'},{id:'ct',modality:'CT'},{id:'scout',modality:'scout'}];
+  const transforms={mri:{status:'reference'},ct:{status:'source-provided'}};
+  const document={patient_id:'P',snapshot_id:'snapshot',reference_series:'mri',series:scans,layers:[],transforms};
+  const sources=scans.map(({id,modality})=>({seriesId:id,modality,alignment:transforms[id]?.status??'unavailable'}));
+  const asset=(assetId,byteLength)=>({assetId,byteLength,byteOrder:'little',order:'C',sha256:assetId});
+  const patientContext={sources,shape:patientShape,affine:affine(0),signal:asset('patient',12000)};
+  let saved,packaged=false;
+  const api={
+    anatomyRegister:async()=>({document}),
+    anatomyView:async({seriesId})=>({
+      mri:asset(seriesId,4000),shape:mriShape,affine:affine({mri:0,ct:20,scout:80}[seriesId]),frame:'RAS+',compartments:[],
+      modality:scans.find(scan=>scan.id===seriesId).modality,
+      registrationStatus:seriesId==='scout'?'independent source frame':'patient frame',unavailableLayers:[],
+      ...(seriesId==='scout'?{}:{patientContext}),
+    }),
+    readAsset:async id=>new Uint8Array(id==='patient'?12000:4000),
+    anatomySaveView:async({viewState})=>{saved=JSON.parse(JSON.stringify(viewState));},
+    anatomySavePackage:async()=>{packaged=true;return {path:'/testcases/fused-cutaway.rsworkspace'};},
+  };
+  const internals=React.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+  const previous=internals.H,previousWorker=globalThis.Worker,slots=[];
+  let cursor=0;
+  internals.H={
+    useState(initial){const index=cursor++;if(!(index in slots))slots[index]=typeof initial==='function'?initial():initial;
+      return [slots[index],value=>{slots[index]=typeof value==='function'?value(slots[index]):value;}];},
+    useRef(initial){const index=cursor++;if(!(index in slots))slots[index]={current:initial};return slots[index];},
+    useEffect(){},
+    useCallback(fn){return fn;},
+  };
+  globalThis.Worker=class {postMessage(){queueMicrotask(()=>this.onmessage({data:{}}));}terminate(){}};
+  const render=()=>{cursor=0;return useNativeWorkspace(api);};
+  const select=async id=>{
+    render().selectScan(id);
+    for(let turn=0;turn<20&&render().busy;turn++)await new Promise(setImmediate);
+    assert.equal(render().busy,false);
+    assert.equal(render().series,id);
+  };
+  const clipping=(value,enabled=true)=>({axis:'x',value,enabled});
+  const cut=()=>render().state.settings.clipping;
+  const setCut=clipping=>{const w=render();w.setSettings({...w.state.settings,clipping});};
+  try{
+    await render().install({collectionId:'study',document});
+    assert.equal(render().state.settings.presentation,'segmentation');
+    setCut(clipping(20));
+    render().present('scan');
+    assert.equal(cut(),undefined);
+    setCut(clipping(3));
+    render().present('segmentation');
+    assert.deepEqual(cut(),clipping(20));
+    await select('ct');
+    assert.deepEqual(cut(),clipping(20));
+    setCut(clipping(20,false));
+    await select('scout');
+    assert.equal(cut(),undefined);
+    setCut(clipping(84));
+    await render().savePackage();
+    assert.ok(packaged);
+    assert.equal(saved.seriesId,'scout');
+    assert.deepEqual(saved.patientCutaway.clipping,clipping(20,false));
+    assert.deepEqual(saved.states.mri.settings.clipping,clipping(3));
+    assert.deepEqual(saved.states.scout.settings.clipping,clipping(84));
+    assert.equal(saved.states.ct.settings.clipping,undefined);
+
+    await render().install({collectionId:'cold-reopen',document,viewState:saved});
+    assert.deepEqual(cut(),clipping(84));
+    await select('mri');
+    assert.deepEqual(cut(),clipping(20,false));
+    render().present('scan');
+    assert.deepEqual(cut(),clipping(3));
+
+    await render().change(async()=>({document:{...document,snapshot_id:'realigned'},
+      retiredClipping:[{seriesId:null,cutaway:{clipping:clipping(20,false)}}]}),{align:false});
+    assert.match(render().message,/cutaway outside the new field was cleared/);
+    assert.deepEqual(cut(),clipping(3));
+    render().present('segmentation');
+    assert.equal(cut(),undefined);
+
+    const legacy=structuredClone(saved);
+    delete legacy.patientCutaway;
+    legacy.seriesId='mri';
+    legacy.states.mri.settings={...legacy.states.mri.settings,clipping:clipping(7),skullMode:'cutaway'};
+    await render().install({collectionId:'legacy',document,viewState:legacy});
+    assert.deepEqual(cut(),clipping(7));
+    assert.deepEqual(render().viewState.patientCutaway.clipping,clipping(7));
+    assert.equal(render().viewState.states.mri.settings.clipping,undefined);
+  }finally{internals.H=previous;globalThis.Worker=previousWorker;}
+});

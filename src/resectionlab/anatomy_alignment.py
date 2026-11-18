@@ -282,7 +282,10 @@ def matches_alignment_key(collection, row, parent, current_key):
 
 def alignment_pairs(collection):
     """Order CT reconstruction edges after their soft-kernel anchor."""
-    reference = collection.series(collection.document['reference_series'])
+    reference_id = collection.document.get('reference_series')
+    if reference_id is None:
+        return []
+    reference = collection.series(reference_id)
     if projection_or_localizer(reference):
         return []
     rows = [s for s in collection.document['series'] if s['id'] != reference['id'] and not projection_or_localizer(s)]
@@ -294,12 +297,26 @@ def alignment_pairs(collection):
 
 def ensure_alignment(c, *, force=False, cancelled=lambda: False, progress=lambda *args: None, series_id=None):
     """Updates an in-memory candidate document; caller commits atomically."""
-    reference = c.series(c.document['reference_series'])
+    reference_id = c.document.get('reference_series')
+    if reference_id is None:
+        return False
+    reference = c.series(reference_id)
+    changed = False
+    if projection_or_localizer(reference):
+        from .anatomy_import import select_intake_reference
+
+        # Older studies could already have committed a scout alongside an
+        # eligible acquisition. Repair their reference before forming pairs.
+        check_cancel(cancelled)
+        promoted = select_intake_reference(c)
+        if promoted != reference_id:
+            reference = c.series(promoted)
+            changed = True
     pairs = [(row, parent) for row, parent in alignment_pairs(c) if series_id in (None, row['id'])]
     if not pairs:
-        return False
+        return changed
     rows = [row for row, _ in pairs]
-    grids = {}; changed = False
+    grids = {}
     def grid(row):
         if row['id'] not in grids: grids[row['id']] = load_grid(c, row, cancelled)
         return grids[row['id']]

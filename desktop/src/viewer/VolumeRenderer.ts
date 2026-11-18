@@ -30,7 +30,7 @@ import {checkedPublicGoal,PUBLIC_GOAL_COLOR} from './publicGoal';
 import type {ViewerPublicGoal} from './publicGoal';
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { clippingForBounds, layerAppearance, validCameraState } from './workspaceSettings';
+import { clippingForBounds, layerAppearance, usesPatientContext, validCameraState } from './workspaceSettings';
 import type { ViewerCameraState, ViewerWorkspaceSettings } from './workspaceSettings';
 import { checkedFusionTransform } from './registeredFusion';
 import type { ViewerRegisteredFusion } from './registeredFusion';
@@ -173,6 +173,8 @@ function sourceSignalFingerprint(data:Float32Array):string {
 
 export class VolumeRenderer {
   readonly bounds: Bounds3;
+  private readonly sourceClipBounds: Bounds3;
+  private readonly patientClipBounds?: Bounds3;
   private readonly sliceSupportBounds: Bounds3;
   private sliceFramingSignature = '';
   readonly defaultWindow: [number, number];
@@ -350,6 +352,7 @@ export class VolumeRenderer {
     this.affine = rasAffine(volume.affine, volume.frame);
     const inverse = inverseAffine(this.affine);
     this.bounds = volumeBounds(volume.shape, this.affine);
+    this.sourceClipBounds = volumeBounds(volume.shape, this.affine, true);
     this.sliceSupportBounds = sourceSignalBounds(volume.mri,volume.shape,this.affine);
     this.cursor = this.bounds[0].map(
       (x, i) => (x + this.bounds[1][i]) / 2,
@@ -359,6 +362,7 @@ export class VolumeRenderer {
     const field=volume.patientContext?.field;
     if(field){
       this.patientBounds=volumeBounds(field.shape,field.affine);
+      this.patientClipBounds=volumeBounds(field.shape,field.affine,true);
       this.patientFramingPoints=scanFitPoints({mri:field.signal,affine:field.affine,frame:'RAS+',shape:field.shape},[0,1]);
     }
     this.renderer = new THREE.WebGLRenderer({
@@ -1056,7 +1060,8 @@ export class VolumeRenderer {
     if(this.appearanceSignature!=null){this.beginInteraction();this.endInteraction();}
     this.appearanceSignature = signature;
     const operativeOcclusion=settings.operativeView==='surgeon'&&!settings.microscope?.inspectionCutaway;
-    const clipping = clippingForBounds(operativeOcclusion?undefined:settings.clipping,settings.presentation==='scan'?this.bounds:this.patientBounds??this.bounds);
+    const clipBounds=usesPatientContext(settings,!!this.patientClipBounds)?this.patientClipBounds!:this.sourceClipBounds??this.bounds;
+    const clipping = clippingForBounds(operativeOcclusion?undefined:settings.clipping,clipBounds);
     const normal = new THREE.Vector3();
     normal.setComponent({x:0,y:1,z:2}[clipping.axis],clipping.flipped ? -1 : 1);
     this.clipPlane = clipping.enabled ? new THREE.Plane(normal,clipping.flipped ? clipping.value : -clipping.value) : null;

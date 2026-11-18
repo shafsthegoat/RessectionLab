@@ -65,10 +65,9 @@ export function sourceEvidenceLabel(source:{modality:string}|undefined,series:Re
 /** Scan contrast/camera stays per scan; selected anatomy belongs to the study. */
 export function nextScanState(current:NativeScanState, saved:NativeScanState,linked=true):NativeScanState {
   return {...saved,cursor:linked&&current.cursor?[...current.cursor]:saved.cursor?[...saved.cursor]:null,visible:{...current.visible},settings:{...saved.settings,
-    presentation:current.settings.presentation,
+    ...(linked?{presentation:current.settings.presentation}:{}),
     ...(linked&&current.settings.presentation&&current.settings.presentation!=='scan'?{camera:current.settings.camera,volumeRendering:current.settings.volumeRendering}:{}),
     sliceOverlay:current.settings.sliceOverlay,contextStyle:current.settings.contextStyle,
-    skullMode:current.settings.skullMode,clipping:current.settings.clipping,clipBox:current.settings.clipBox,obliqueClip:current.settings.obliqueClip,
     layerColor:current.settings.layerColor,layerOpacity:current.settings.layerOpacity}};
 }
 

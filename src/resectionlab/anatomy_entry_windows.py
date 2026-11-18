@@ -129,3 +129,28 @@ def verify_window(geometry, route):
     if not any(current == support and np.allclose(entry, route["entry"], atol=1e-6, rtol=0)
                for entry, current in windows):
         raise ValueError("The saved entry surface changed. Suggest distinct entries again for the current anatomy.")
+    return support
+
+
+def translated_window(geometry, route, support, translation):
+    """Recast the same patient-space direction against the translated entry label."""
+    c = geometry.c
+    row = c.layer(support["layerId"])
+    source = c.series(support["sourceSeries"])
+    direction = np.asarray(DIRECTIONS[support["direction"]])
+    direction = direction / np.linalg.norm(direction)
+    depth = min(route["constraints"].get("maxLengthMm", MAX_DEPTH_MM), MAX_DEPTH_MM)
+    try:
+        layer_frame = geometry.patient_affine(row)
+        source_from_label = np.linalg.solve(geometry.patient_affine(source), layer_frame)
+        target = np.asarray(route["target"]) - translation
+        found = _entry(row, source, c.array(row["data"]), np.linalg.inv(layer_frame),
+                       source_from_label, target, direction, depth)
+    except InterruptedError:
+        raise
+    except (ValueError, OSError) as exc:
+        raise ValueError(f"Entry registration unassessed for {row['label']}: {exc}") from exc
+    if found is None:
+        raise ValueError(f"Entry registration unassessed for {row['label']}: no observed exterior face after translation")
+    entry, voxel = found
+    return {"entry": (entry + translation).tolist(), "voxel": voxel}

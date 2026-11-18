@@ -131,6 +131,81 @@ test('comparison cards show observed anatomy, incomplete evidence, quantities an
     assert(!text(tree).includes('Known geometric conflict'),'the aggregate backend status does not obscure separate observations and constraints');
   }finally{h.close();}
 });
+test('switching patch and surface entries binds cards, viewer geometry and consequence columns to the same route',async()=>{
+  const target='target',binding='target-binding',slots=['A','B','C'];
+  const approaches=['patch','surface'].flatMap(group=>[0,1,2].map(index=>{
+    const id=`${group}-${index}`,value=(group==='patch'?10:20)+index;
+    const row={...approach(id),origin:group==='patch'?'bounded-native-entry-patch':'native-source-entry-windows',
+      entry:[1,2,20+value],targetLayerId:target,measurementHash:`measurements-${id}`};
+    row.measurements.lengthMm=value;
+    row.measurements.targets[0].coveredVoxelCenterVolumeMm3=value-5;
+    row.measurements.normalTraversal.conservativeVolumeUpperBoundMm3=value+10;
+    return row;
+  }));
+  const metric=(label,unit,value)=>({label,unit,value,status:'geometric_estimate'});
+  const f=fixture(approaches);
+  f.binding.viewState.selectedApproachId='patch-0';
+  let finishRequest;
+  f.api.anatomyPlan=args=>{
+    f.calls.push(structuredClone(args));
+    const start=args.reviewApproachId?.startsWith('surface')?3:0;
+    const response={approaches,activeTargetLayerId:target,consequenceEvidence:{sourceSnapshotId:'revision',
+      targetLayerId:target,targetCandidateBinding:binding,routes:approaches.slice(start,start+3).map((row,index)=>({
+        approachId:row.id,name:row.name,comparisonSlot:slots[index],parameterHash:row.parameterHash,measurementHash:row.measurementHash,
+        sourceSnapshotId:'revision',targetLayerId:target,targetCandidateBinding:binding,target:{label:'Target',evidenceClass:'supplied_annotation'},
+        dimensions:{lengthMm:metric('Corridor length','mm',row.measurements.lengthMm),
+          targetVoxelCenterCoverageMm3:metric('Target voxel centres reached','mm3',row.measurements.targets[0].coveredVoxelCenterVolumeMm3),
+          nonTargetTraversalUpperBoundMm3:metric('Brain traversal volume upper bound','mm3',row.measurements.normalTraversal.conservativeVolumeUpperBoundMm3)},
+        researchDisposition:{reasons:[`Evidence for ${row.id}`]},warnings:{criticalContacts:[],constraintFailures:[],missingEvidence:[]},
+        registrations:[],uncertainty:{limitations:[]},sources:[],
+      })).reverse()}};
+    return f.calls.length===1?Promise.resolve(response):new Promise(resolve=>{finishRequest=()=>resolve(response);});
+  };
+  const h=await ready(f);
+  const card=(tree,id)=>[...walk(tree)].find(node=>node.props['data-approach-id']===id);
+  const readout=tree=>{
+    const node=[...walk(tree)].find(item=>item.type?.name==='NativeConsequenceReadout');
+    return node?.type(node.props);
+  };
+  function verify(group,index){
+    const tree=h.render(),evidence=readout(tree);
+    const expected=approaches.filter(row=>row.id.startsWith(group));
+    const viewer=f.planning.routes;
+    assert.deepEqual(viewer.map(row=>[row.route_id,row.comparisonSlot,row.label,row.entry_mm,row.target_mm,row.tool.working_length_mm]),
+      expected.map((row,i)=>[row.id,slots[i],`${slots[i]} · ${row.name}`,row.entry,row.target,row.measurements.lengthMm]));
+    assert.equal(viewer.find(route=>route.selected)?.route_id,expected[index].id);
+    assert.deepEqual([...walk(evidence)].filter(node=>node.props['data-native-consequence-route'])
+      .map(node=>[node.props['data-native-consequence-route'],text(node)]),expected.map((row,i)=>[row.id,slots[i]]));
+    assert.deepEqual([...walk(evidence)].filter(node=>node.type==='td').map(text),
+      [row=>row.lengthMm,row=>row.targets[0].coveredVoxelCenterVolumeMm3,row=>row.normalTraversal.conservativeVolumeUpperBoundMm3]
+        .flatMap(measure=>expected.map(row=>String(measure(row.measurements)))));
+    for(const [i,row] of expected.entries()){
+      assert(text(card(tree,row.id)).startsWith(`${slots[i]} · ${row.name}${row.measurements.lengthMm}.0 mm`));
+    }
+    assert(text(evidence).includes(`Evidence for ${expected[index].id}`));
+    assert(text(evidence).includes(`Coverage, warnings and registration · ${slots[index]}`));
+  }
+  async function select(id){
+    await card(h.render(),id).props.onClick();
+    return h.render();
+  }
+  try{
+    verify('patch',0);
+    await select('patch-2');verify('patch',2);
+    assert.equal(f.calls.length,1);
+    let tree=await select('surface-1');
+    assert.equal(f.planning.routes.find(row=>row.selected)?.route_id,'surface-1');
+    assert.equal(readout(tree),null,'patch evidence cannot appear under surface slots while loading');
+    assert.equal(f.calls.at(-1).reviewApproachId,'surface-1');
+    finishRequest();await flush();verify('surface',1);
+    await select('surface-2');verify('surface',2);
+    assert.equal(f.calls.length,2);
+    tree=await select('patch-1');
+    assert.equal(readout(tree),null);
+    assert.equal(f.calls.at(-1).reviewApproachId,'patch-1');
+    finishRequest();await flush();verify('patch',1);
+  }finally{h.close()}
+});
 test('a completed mutation cannot restore an older selection made while it was in flight',async()=>{
   const binding={collectionId:'patient',document:{snapshot_id:'revision'},viewState:{selectedApproachId:'a'}},approaches=[approach('a'),approach('b')];
   let planning,resolve;

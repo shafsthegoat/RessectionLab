@@ -15,6 +15,7 @@ export function useNativeApproaches(binding:Binding|null,api:NativeAnatomyApi|nu
   const [selection,setSelection]=useState<Selection>();
   const [pending,setPending]=useState(false),[error,setError]=useState('');
   const load=useRef<{key:string;api:NativeAnatomyApi}|null>(null),active=useRef(false),selectionVersion=useRef(0);
+  const comparisonRefresh=useRef<{key:string;api:NativeAnatomyApi}|null>(null);
   const liveKey=useRef(key);
   liveKey.current=key;
 
@@ -78,11 +79,23 @@ export function useNativeApproaches(binding:Binding|null,api:NativeAnatomyApi|nu
   const evidence=data?.consequenceEvidence;
   const consequenceEvidence=evidence&&evidence.sourceSnapshotId===binding?.document.snapshot_id
     &&evidence.targetLayerId===activeTargetLayerId?evidence:null;
+  const routes=approachRoutes(approaches,selectedId,activeTargetLayerId);
+  const needsComparison=!!consequenceEvidence&&(routes.length!==consequenceEvidence.routes.length||
+    routes.some(view=>!consequenceEvidence.routes.some(row=>row.approachId===view.route_id&&row.comparisonSlot===view.comparisonSlot)));
+  // Selection updates the geometry immediately. Fetch evidence when the displayed group changes.
+  const comparisonKey=JSON.stringify([key,activeTargetLayerId,selectedId,selectionVersion.current,routes.map(route=>route.route_id)]);
+  useEffect(()=>{
+    if(!needsComparison){comparisonRefresh.current=null;return;}
+    if(!api||!ready||pending||active.current||
+      (comparisonRefresh.current?.key===comparisonKey&&comparisonRefresh.current.api===api))return;
+    comparisonRefresh.current={key:comparisonKey,api};
+    void request({action:'list',targetLayerId:activeTargetLayerId,reviewApproachId:selectedId??undefined});
+  },[needsComparison,comparisonKey,api,ready,pending]);
   return {
     approaches,selectedId,select,pending,error,loading:!!binding&&!data&&!error,activeTargetLayerId,targetSelectionIssue:data?.targetSelectionIssue,
     selectedApproachIds:selection?.key===key?selection.byTarget:view?.selectedApproachIds,
     targetOptions:data?.targetOptions??[],rehearsalOptions:data?.rehearsalOptions,report:data?.proposalReport,distinctEntryReport:data?.distinctEntryReport,inputComparison:data?.inputComparison,
     consequenceEvidence,request,
-    selected:approaches.find(a=>a.id===selectedId)??null,routes:approachRoutes(approaches,selectedId),
+    selected:approaches.find(a=>a.id===selectedId)??null,routes,
   };
 }

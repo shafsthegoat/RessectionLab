@@ -22,12 +22,19 @@ export interface SensitivityScenarioResult {
   coverageIncomplete?:boolean;
   conflictLayerIds?:string[];constraintFailures?:string[];
   sourceReadings?:Record<string,ApproachSourceReading>;
+  entryWindow?:{entry:Point3;voxel:Point3};
 }
 export type ApproachSourceReading=[coverage:string,clearanceLowerBoundMm:number|null,contact:string|null,count:number|null];
+
+export interface EntryRegistrationSensitivity {
+  sourceSeriesId:string;layerId:string;status:'assessed'|'partially-assessed'|'unassessed';
+  assessedCount:number;scenarioCount:number;
+}
 
 export interface ApproachSensitivity {
   scenarioSetId:string;scenarioCount:number;metrics:Record<string,SensitivityMetric>;
   scenarios:SensitivityScenarioResult[];scenarioSet?:ApproachScenarioSet;assumptions?:string[];meaning?:string;
+  entryRegistration?:EntryRegistrationSensitivity;
 }
 
 export interface ApproachScenarioSet {
@@ -51,6 +58,7 @@ export interface ApproachProposalReport {
   candidates?:ApproachProposalCandidate[];scenarioSet?:ApproachScenarioSet;
   selectedCandidateIds?:string[];sourceSnapshotId?:string;assessmentStatus?:string;invalidationReason?:string;
   finalistOutcomes?:Record<string,{metrics:Record<string,SensitivityMetric>;
+    entryRegistration?:EntryRegistrationSensitivity;
     scenarios?:Array<Pick<SensitivityScenarioResult,'id'|'constraintFailures'>>}>;
   task?:ApproachTask;
 }
@@ -101,6 +109,7 @@ export interface CorticalAccessAssessment {
 }
 export interface NativeApproach {
   id:string;name:string;sourceSnapshotId:string;parameterHash:string;
+  measurementHash?:string;origin?:string;
   entry:Point3;target:Point3;radiusMm:number;direction:Point3;
   entryPatch?:{center:Point3;normal:Point3;radiusMm:number};
   targetLayerId?:string; sensitivityConfig?:ApproachSensitivityConfig;
@@ -118,6 +127,7 @@ export interface ApproachConsequenceMetric {
 }
 export interface ApproachConsequenceRoute {
   approachId:string;name:string;parameterHash:string;measurementHash:string;
+  comparisonSlot:NonNullable<ViewerRoute['comparisonSlot']>;
   sourceSnapshotId:string;targetLayerId:string|null;targetCandidateBinding:string|null;
   researchDisposition:{status:'reassess';reasons:string[]};
   dimensions:Record<string,ApproachConsequenceMetric>;
@@ -128,7 +138,8 @@ export interface ApproachConsequenceRoute {
     landmarkResidual:ApproachConsequenceMetric;wholeFieldError:ApproachConsequenceMetric}>;
   warnings:{criticalContacts:Array<{layerId:string;label:string;contact:string}>;
     constraintFailures:string[];access:CorticalAccessAssessment|null;missingEvidence:string[]};
-  uncertainty:{scenarioCount:number|null;scenarioSetId?:string|null;limitations:string[]};
+  entrySupport?:{label:string;sourceSeries:string}|null;
+  uncertainty:{scenarioCount:number|null;scenarioSetId?:string|null;limitations:string[];entryRegistration?:EntryRegistrationSensitivity|null};
 }
 export interface ApproachConsequenceEvidence {
   schema:'native-approach-consequence-evidence-v1';sourceSnapshotId:string;targetLayerId:string|null;
@@ -172,15 +183,22 @@ export function approachAssessment(a:NativeApproach){
     traversalMm3:m?.normalTraversal?.available&&finite(m.normalTraversal.conservativeVolumeUpperBoundMm3)?m.normalTraversal.conservativeVolumeUpperBoundMm3:null};
 }
 
-export function approachRoutes(approaches:NativeApproach[],selectedId:string|null):ViewerRoute[]{
+const comparisonSlots=['A','B','C'] as const;
+export function approachRoutes(approaches:NativeApproach[],selectedId:string|null,activeTargetLayerId?:string|null):ViewerRoute[]{
   const selected=approaches.find(a=>a.id===selectedId);
-  const surfaceEntries=selected?.origin==='native-source-entry-windows';
-  const comparison=selected?approaches.filter(a=>(a.origin==='native-source-entry-windows')===surfaceEntries):approaches;
-  const displayed=comparison.slice(0,3);
-  if(selected&&!displayed.includes(selected))displayed[2]=selected;
-  return displayed.map((a,index)=>({route_id:a.id,comparisonSlot:(['A','B','C'] as const)[index],scope:'geometric-approach',label:a.name,selected:a.id===selectedId,entry_mm:a.entry,target_mm:a.target,
-  tool:{working_length_mm:Math.hypot(...a.target.map((v,i)=>v-a.entry[i])),tip_length_mm:0,shaft_radius_mm:a.radiusMm,tip_radius_mm:a.radiusMm},
-  window:a.entryPatch?{center_mm:a.entryPatch.center,normal_inward:a.entryPatch.normal,radius_mm:a.entryPatch.radiusMm}:undefined}));}
+  const anchor=selected??approaches.find(a=>(a.targetLayerId??null)===(activeTargetLayerId??null))??approaches[0];
+  const surfaceEntries=anchor?.origin==='native-source-entry-windows';
+  const comparison=approaches.filter(a=>(a.origin==='native-source-entry-windows')===surfaceEntries);
+  const displayed=comparison.slice(0,comparisonSlots.length);
+  if(selected&&!displayed.includes(selected))displayed[comparisonSlots.length-1]=selected;
+  return displayed.map((a,index)=>{
+    const comparisonSlot=comparisonSlots[index];
+    return {route_id:a.id,comparisonSlot,scope:'geometric-approach',label:`${comparisonSlot} · ${a.name}`,
+      selected:a.id===selectedId,entry_mm:a.entry,target_mm:a.target,
+      tool:{working_length_mm:Math.hypot(...a.target.map((v,i)=>v-a.entry[i])),tip_length_mm:0,shaft_radius_mm:a.radiusMm,tip_radius_mm:a.radiusMm},
+      window:a.entryPatch?{center_mm:a.entryPatch.center,normal_inward:a.entryPatch.normal,radius_mm:a.entryPatch.radiusMm}:undefined};
+  });
+}
 
 /** Round down so a displayed lower bound never overstates source clearance. */
 export const lowerBoundText=(value:unknown)=>typeof value==='number'&&Number.isFinite(value)?(Math.floor(value*10)/10).toFixed(1):'—';

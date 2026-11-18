@@ -43,6 +43,22 @@ def display_affine(collection, row, *, preview=False):
     raise ValueError(f'No usable alignment for {sid}')
 
 
+def source_display_grid(scan, displayed):
+    """Choose the displayed lattice without changing the retained native source."""
+    native = affine(scan["affine"])
+    data = scan["data"]
+    preview = next((item for item in scan.get("preview_pyramid", [])
+                    if item.get("factor") == 2), None)
+    if preview and np.prod(data["shape"]) > 16_000_000:
+        sampled = affine(preview["affine"])
+        return preview["data"], sampled, displayed @ np.linalg.solve(native, sampled), preview
+    return data, native, displayed, None
+
+
+def voxel_edge_corners(shape, frame):
+    return world(np.asarray(frame), list(product(*[(-.5, n - .5) for n in shape])))
+
+
 def source_lattice_annotation_preview(collection, row, selected):
     """Admit an undeclared-unit annotation by index on its own acquired source."""
     provenance = row.get("provenance", {})
@@ -105,13 +121,8 @@ def brain_vessel_display(collection, row):
     return row, {'scope': 'all', 'reason': 'No aligned brain mask; showing the full vessel estimate', 'sourcePreserved': True}
 
 
-def patient_display_context(collection, *, preview, check, original=False):
-    """Bounded display texture on the union of the source-bound patient fields.
-
-    Each source first maps to unitless display brightness. The brightest
-    contribution at a cell supplies its context. Source masks, surfaces and
-    acquired signal stay on their original grids.
-    """
+def patient_display_grid(collection, *, preview, check=lambda: None):
+    """Resolve the same registered display lattice for rendering and view validation."""
     sources, admitted, corners = [], [], []
     for scan in collection.document["series"]:
         check()
@@ -131,16 +142,25 @@ def patient_display_context(collection, *, preview, check, original=False):
             entry["reason"] = "Source excluded from the 3D intensity context"
             continue
         admitted.append((scan, frame, entry))
-        shape = np.asarray(scan["data"]["shape"])
-        corners.extend(world(frame, list(product(*zip(np.full(3, -.5), shape - .5)))))
+        corners.extend(voxel_edge_corners(scan["data"]["shape"], frame))
     context = {"sources": sources}
     if not admitted:
-        return context, None
+        return context, admitted
     low, high = np.min(corners, axis=0), np.max(corners, axis=0)
     spacing = max(1., float(np.max((high - low) / 192)))
     shape = tuple(np.clip(np.ceil((high - low) / spacing).astype(int), 2, 192))
     frame = np.diag([spacing, spacing, spacing, 1.])
     frame[:3, 3] = low + spacing / 2
+    context.update(affine=frame.tolist(), shape=list(map(int, shape)))
+    return context, admitted
+
+
+def patient_display_context(collection, *, preview, check, original=False):
+    """Window the source signals into a bounded 3D display texture."""
+    context, admitted = patient_display_grid(collection, preview=preview, check=check)
+    if not admitted:
+        return context, None
+    frame, shape = np.asarray(context["affine"]), context["shape"]
     from .anatomy_siam_display import source_head_support
     signal = np.zeros(shape, dtype=np.float32)
     for scan, source, entry in admitted:
@@ -179,5 +199,4 @@ def patient_display_context(collection, *, preview, check, original=False):
                             output_shape=block.shape, output=np.uint8, order=0, prefilter=False)
                 sampled[covered == 0] = 0
             np.maximum(block, sampled, out=block)
-    context.update(affine=frame.tolist(), shape=list(map(int, shape)))
     return context, signal

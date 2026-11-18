@@ -29,7 +29,7 @@ import {
 } from "lucide-react";
 import type { KeyboardEvent, PointerEvent } from "react";
 import { VolumeRenderer } from "./VolumeRenderer";
-import { clippingForBounds } from './workspaceSettings';
+import { clippingForBounds, clippingPositionInBounds, newClippingPosition, usesPatientContext } from './workspaceSettings';
 import type { ViewerWorkspaceSettings } from './workspaceSettings';
 import { volumeSettings, isCtModality } from './volumeTransfer';
 import type { VolumePreset } from './volumeTransfer';
@@ -111,7 +111,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const signalName = props.segmentationOnly ? 'segmentation only' : props.generatedSignal ? "generated image signal" : (props.sourceLabel ?? "MRI");
   const [localSettings,setLocalSettings] = useState<ViewerWorkspaceSettings>({});
   const settings=props.workspaceSettings ?? localSettings;
-  const fusedContext=!!caseData?.patientContext?.field&&settings.presentation!=='scan';
+  const fusedContext=usesPatientContext(settings,!!caseData?.patientContext?.field);
   const contextName=fusedContext?'Normalized patient context':signalName;
   const scanVolume=volumeSettings(settings.volumeRendering,contextName);
   const latestSettings=useRef(settings);latestSettings.current=settings;
@@ -175,8 +175,8 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const toggleControls=(panel:NonNullable<typeof controlPanel>,trigger:HTMLButtonElement,forceOpen=false)=>{controlTrigger.current=trigger;setControlPanel(controlPanel===panel&&!forceOpen?null:panel);};
   const closeControls=()=>{setControlPanel(null);controlTrigger.current?.focus({preventScroll:true});};
   useEffect(()=>{if(controlPanel)controlPanelElement.current?.querySelector<HTMLButtonElement>('button')?.focus({preventScroll:true});},[controlPanel]);
-  const [sourceSection,setSourceSection]=useState<{identity:typeof rendererIdentity;previous:SourceSectionSnapshot}|null>(null);
-  const sourceSectionActive=Boolean(sourceSection&&sourceSection.identity===rendererIdentity);
+  const [sourceSection,setSourceSection]=useState<{identity:typeof rendererIdentity;fused:boolean;previous:SourceSectionSnapshot}|null>(null);
+  const sourceSectionActive=Boolean(sourceSection&&sourceSection.identity===rendererIdentity&&sourceSection.fused===fusedContext);
   const sourceSectionAllowed=!props.segmentationOnly&&settings.operativeView!=='surgeon';
   const [obliqueAngle,setObliqueAngle]=useState(0);
   const smoothSurfaces=settings.smoothSurfaces!==false;
@@ -196,13 +196,15 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         affine,
         inverse: inverseAffine(affine),
         bounds: volumeBounds(geometrySource.shape, affine),
-        patientBounds:geometrySource.patientContext?.field?volumeBounds(geometrySource.patientContext.field.shape,geometrySource.patientContext.field.affine):undefined,
+        sourceClipBounds:volumeBounds(geometrySource.shape,affine,true),
+        patientClipBounds:geometrySource.patientContext?.field?volumeBounds(geometrySource.patientContext.field.shape,geometrySource.patientContext.field.affine,true):undefined,
         support: sourceSignalBounds(geometrySource.mri,geometrySource.shape,affine),
       };
     } catch {
       return null;
     }
   }, [geometrySource]);
+  const cutawayBounds=(fusedContext?geometry?.patientClipBounds:undefined)??geometry?.sourceClipBounds;
   const currentCursor =
     cursor ??
     (geometry
@@ -216,21 +218,21 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   };
   const toggleSourceSection=()=>{
     if(sourceSectionActive){exitSourceSection();return;}
-    if(!sourceSectionAllowed||!geometry)return;
+    if(!sourceSectionAllowed||!cutawayBounds)return;
     const previous=sourceSectionSnapshot(latestSettings.current);
     const cameraPosition=engine.current?.getCameraState()?.position??settings.camera?.position;
-    changeSettings(sourceSectionAtCursor(latestSettings.current,currentCursor,geometry.bounds,cameraPosition));
-    setSourceSection({identity:rendererIdentity,previous});
+    changeSettings(sourceSectionAtCursor(latestSettings.current,currentCursor,cutawayBounds,cameraPosition));
+    setSourceSection({identity:rendererIdentity,fused:fusedContext,previous});
   };
   useEffect(()=>{
     if(!sourceSection)return;
     // A source/presentation change or an explicit manual hide ends the shortcut
     // without overwriting the newly selected display with its previous state.
     if(!sourceSectionActive||!sourceSectionAllowed||!showPlane||!settings.clipping?.enabled){setSourceSection(null);return;}
-    if(!geometry)return;
-    const next=followSourceSection(settings,currentCursor,geometry.bounds);
+    if(!cutawayBounds)return;
+    const next=followSourceSection(settings,currentCursor,cutawayBounds);
     if(next!==settings)changeSettings(next);
-  },[sourceSection,sourceSectionActive,sourceSectionAllowed,showPlane,settings.clipping,activePlane,geometry,currentCursor[0],currentCursor[1],currentCursor[2]]);
+  },[sourceSection,sourceSectionActive,sourceSectionAllowed,showPlane,settings.clipping,activePlane,cutawayBounds,currentCursor[0],currentCursor[1],currentCursor[2]]);
   const tractDisplays=useMemo(()=>geometrySource&&geometry?(geometrySource.tractography??[]).map((tract,index)=>({tract,color:tractColor(index),index:new TractSliceIndex(tractPreview(tract,geometry.affine))})):[],[geometrySource?.tractography,geometry?.affine]);
   const selectedApproach=routes.find(route=>route.scope==='geometric-approach'&&route.selected)??routes.find(route=>route.scope==='geometric-approach');
   const setApproachView=(mode:'along'|'oblique')=>{
@@ -670,7 +672,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     );
 
   const refs = { axial, coronal, sagittal };
-  const displayBounds=(fusedContext?geometry?.patientBounds:undefined)??geometry?.bounds??[[0,0,0],[1,1,1]] as [Point3,Point3];
+  const displayBounds=cutawayBounds??[[0,0,0],[1,1,1]] as [Point3,Point3];
   const clipping=clippingForBounds(settings.clipping,displayBounds);
   const clipAxis={x:0,y:1,z:2}[clipping.axis];
   const modeled = replay && !replayError;
@@ -776,7 +778,11 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             <button className="rl-section-action" aria-label={sourceSectionActive?'Exit section':'Section at cursor'} aria-pressed={sourceSectionActive} disabled={!sourceSectionAllowed} onClick={toggleSourceSection}><ScanLine size={16}/>{sourceSectionActive?'Exit section':'Section at cursor'}</button>
             <p className="rl-section-help">{props.segmentationOnly?'Segmentation only · no acquired image to section.':!sourceSectionAllowed?'Exit the operative view to inspect a source image section.':sourceSectionActive?`${props.generatedSignal?'Generated image signal':`Source ${signalName}`} · ${TITLES[activePlane]} section follows the linked cursor. Exit restores the previous cut.`:'Show the source image across the cut, at the linked cursor. Choose its plane below.'}</p>
             <label><input type="checkbox" checked={clipping.enabled} onChange={e=>changeSettings({...settings,clipping:{...clipping,enabled:e.target.checked}})}/>Cutaway</label>
-            <label>Plane<select aria-label="Cutaway axis" value={clipping.axis} onChange={e=>changeSettings({...settings,clipping:{...clipping,axis:e.target.value as 'x'|'y'|'z'}})}><option value="z">Axial</option><option value="y">Coronal</option><option value="x">Sagittal</option></select></label>
+            <label>Plane<select aria-label="Cutaway axis" value={clipping.axis} onChange={e=>{
+              const axis=e.target.value as 'x'|'y'|'z',i={x:0,y:1,z:2}[axis];
+              changeSettings({...settings,clipping:{...clipping,axis,value:newClippingPosition(axis,displayBounds,currentCursor[i])}});
+            }}><option value="z">Axial</option><option value="y">Coronal</option><option value="x">Sagittal</option></select></label>
+            {settings.clipping&&!clippingPositionInBounds(settings.clipping.axis,settings.clipping.value,displayBounds)&&<p role="status">Cutaway is outside this field. Choose a new plane or turn Cutaway on to reset its position.</p>}
             <input aria-label="Cutaway position" type="range" min={displayBounds[0][clipAxis]} max={displayBounds[1][clipAxis]} step=".1" value={clipping.value} disabled={!clipping.enabled||sourceSectionActive} title={sourceSectionActive?'Section follows the linked cursor':'Cutaway position'} onChange={e=>changeSettings({...settings,clipping:{...clipping,value:+e.target.value}})}/>
             <button disabled={!clipping.enabled} onClick={()=>changeSettings({...settings,clipping:{...clipping,flipped:!clipping.flipped}})}>Flip side</button>
             <label><input type="checkbox" checked={showPlane} disabled={props.segmentationOnly} onChange={e=>setShowPlane(e.target.checked)}/>Source plane in 3D</label><select aria-label="Source plane orientation" value={activePlane} disabled={sourceSectionActive||props.segmentationOnly} onChange={e=>setActivePlane(e.target.value as SlicePlane)}>{PLANES.map(p=><option key={p} value={p}>{TITLES[p]}</option>)}</select>

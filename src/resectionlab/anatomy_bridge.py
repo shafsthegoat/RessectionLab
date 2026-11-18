@@ -17,7 +17,7 @@ from .anatomy_editor import AnatomyDraft
 from .anatomy_workspace import read_view, save_view, component_review
 from .anatomy_geometry import mesh, normals, display_surface_kind
 from .anatomy_qa import layer_quality
-from .anatomy_display import display_affine, brain_vessel_display, source_lattice_annotation_preview
+from .anatomy_display import display_affine, brain_vessel_display, source_display_grid, source_lattice_annotation_preview
 
 
 def _retain(session, result):
@@ -99,7 +99,10 @@ def dispatch(session, operation, args, request, progress):
             raise ValueError("Accept or reject the active correction first")
         if operation == "anatomyImportBatch":
             from .anatomy_intake import reviewed_intake
+            reference_id = c.document.get("reference_series")
             c = reviewed_intake(c, args, check=request.check, commit=request.begin_commit, progress=progress)
+            if c.document.get("reference_series") != reference_id:
+                session.anatomy_removal.pop(key, None)
             session.anatomy_collections[key] = c
             return {"document": c.document}
         from .anatomy_preparation import preparation_plan, prepare_anatomy
@@ -181,18 +184,9 @@ def dispatch(session, operation, args, request, progress):
         if patient_context:
             alignment_previews.extend(s["seriesId"] for s in patient_context["sources"]
                                       if s["alignment"] == "estimated" and "displayWindow" in s)
-        image_data = reference["data"]
-        preview = next((item for item in reference.get("preview_pyramid", [])
-                        if item.get("factor") == 2), None)
         # MRI acceleration is reversible and never feeds source measurements.
         # Native layer geometry is transformed into this displayed voxel frame.
-        if preview and np.prod(reference["data"]["shape"]) > 16_000_000:
-            relative = np.linalg.inv(native) @ affine(preview["affine"])
-            native = affine(preview["affine"])
-            displayed = displayed @ relative
-            image_data = preview["data"]
-        else:
-            preview = None
+        image_data, native, displayed, preview = source_display_grid(reference, displayed)
         shape = tuple(image_data["shape"])
         cache_key = (key, c.identity(), reference["id"], image_data["sha256"],
                      displayed.tobytes(), bool(args.get("original")), preview_alignment, vessel_scope, bool(patient_context))
@@ -624,6 +618,7 @@ def dispatch(session, operation, args, request, progress):
             # Prepare owns registration and its retry checkpoints. Source viewing
             # revalidates stored transforms and can open an independent scan.
             return {"document": c.document, "result": {"changed": False}}
+        reference_id = c.document.get("reference_series")
         c = PatientImagingCollection(c.root, c.document)
         previous_view = read_view(c)
         from .anatomy_import import review_registration
@@ -644,13 +639,18 @@ def dispatch(session, operation, args, request, progress):
                 return {"document": c.document, "result": result}
         request.begin_commit()
         c.save("registration " + args.get("seriesId", "study"), expected=args["snapshotId"])
-        if previous_view:
-            previous_view["snapshotId"] = c.identity()
-            save_view(c, previous_view)
         session.anatomy_collections[key] = c
         session.anatomy_drafts.pop(key, None)
-        return {"document": c.document, "result": result}
+        retired_clipping = []
+        if c.document.get("reference_series") != reference_id:
+            session.anatomy_removal.pop(key, None)
+        elif previous_view:
+            previous_view["snapshotId"] = c.identity()
+            retired_clipping = save_view(c, previous_view, after_registration=True)
+        return {"document": c.document, "result": result,
+                **({"retiredClipping": retired_clipping} if retired_clipping else {})}
     if operation == "anatomyImport":
+        reference_id = c.document.get("reference_series")
         c = PatientImagingCollection(c.root, c.document)
         if args.get("kind") in {
             "labels",
@@ -693,8 +693,14 @@ def dispatch(session, operation, args, request, progress):
                 patient_id=args["patientId"],
             )
             imported["label"] = Path(args["path"]).name.removesuffix(".gz").removesuffix(".nii")
+        if args.get("kind") in {"nifti", "dicom"}:
+            from .anatomy_import import select_intake_reference
+
+            select_intake_reference(c)
         request.begin_commit()
         c.save("import patient imaging", expected=args["snapshotId"])
+        if c.document.get("reference_series") != reference_id:
+            session.anatomy_removal.pop(key, None)
         session.anatomy_collections[key] = c
         return {"document": c.document}
     if operation == "anatomyExport":

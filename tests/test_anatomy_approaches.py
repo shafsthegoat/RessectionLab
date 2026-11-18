@@ -938,8 +938,9 @@ def test_distinct_surface_entries_bound_to_native_faces_and_persist_separately(n
                         source_series="t1", kind="skull", role="context", color="#cccaaa")
     c.save()
     task = {'targetLayerId':'target', 'start':world(a,[10,20,15]).tolist(),'end':world(a,[10,11,15]).tolist(),
-            'radiusMm':.3,'patchRadiusMm':0,'sensitivityConfig':{'translationMm':0,'boundaryMm':0}}
+            'radiusMm':.3,'patchRadiusMm':5,'sensitivityConfig':{'translationMm':0,'boundaryMm':0}}
     patch = dispatch_plan(c, {**task, 'action':'suggest'})
+    assert len(patch['approaches']) == 3
     result = dispatch_plan(c, {**task, 'action':'suggestDistinctEntries'})
     report = result['distinctEntryReport']
     assert result['proposalReport'] == patch['proposalReport']
@@ -962,6 +963,18 @@ def test_distinct_surface_entries_bound_to_native_faces_and_persist_separately(n
     reopened = Collection(c.root)
     restored = dispatch_plan(reopened, {'action':'list'})
     assert restored['distinctEntryReport'] == report and restored['approaches'] == result['approaches']
+    for group in (selected, patch['approaches'], selected):
+        for chosen in (group[2], group[0]):
+            evidence = dispatch_plan(reopened, {'action':'list','reviewApproachId':chosen['id']})['consequenceEvidence']
+            assert [row['approachId'] for row in evidence['routes']] == [route['id'] for route in group]
+            for slot, row, route in zip('ABC', evidence['routes'], group, strict=True):
+                assert row['comparisonSlot'] == slot
+                assert row['entry'] == route['entry'] and row['targetPoint'] == route['target']
+                assert row['parameterHash'] == route['parameterHash']
+                assert row['measurementHash'] == route['measurementHash']
+                assert row['dimensions']['lengthMm']['value'] == route['measurements']['lengthMm']
+                assert row['dimensions']['targetVoxelCenterCoverageMm3']['value'] == route['measurements']['targets'][0]['coveredVoxelCenterVolumeMm3']
+                assert row['dimensions']['nonTargetTraversalUpperBoundMm3']['value'] == route['measurements']['normalTraversal']['conservativeVolumeUpperBoundMm3']
     repeat = dispatch_plan(reopened, {**task, 'action':'suggestDistinctEntries'})
     assert repeat['approaches'] == restored['approaches'] and repeat['distinctEntryReport'] == report
     skull['revision'] += 1
@@ -1007,6 +1020,73 @@ def test_distinct_entries_withhold_clipped_field_and_unknown_alignment(native):
                 kind='skull', role='context', color='#dddddd')
     c.save()
     assert dispatch_plan(c, task)['distinctEntryReport']['evaluated'] > 0
+
+
+def test_distinct_entry_sensitivity_recasts_registered_ct_skull(native):
+    c = native
+    t1 = c.series('t1')
+    a = c.patient_affine(t1)
+    ct = c.add_series(c.path(t1['original']['path']), series_id='ct', modality='CT')
+    transform = np.eye(4)
+    transform[2, 3] = .25
+    c.set_registration('ct', transform, status='source-provided', method='fixture CT transform')
+    x, y, z = np.indices((32, 32, 32))
+    shell = (x - 14)**2 + (y - 14)**2 + (z - 15)**2
+    c.add_layer(((shell >= 10**2) & (shell <= 12**2)).astype(np.uint8), ct['affine'],
+                layer_id='ct-skull', source_series='ct', kind='skull', role='context', color='#dddddd')
+    c.save()
+    task = {'action': 'suggestDistinctEntries', 'targetLayerId': 'target',
+            'start': world(a, [10, 20, 15]).tolist(), 'end': world(a, [10, 11, 15]).tolist(),
+            'radiusMm': .3, 'sensitivityConfig': {'translationMm': 2, 'boundaryMm': 0}}
+    result = dispatch_plan(c, task)
+    design = result['distinctEntryReport']['scenarioSet']
+    assert design['registrationGroups'] == {'ct': ['ct']}
+    assert len(result['approaches']) == 3
+    route = next(row for row in result['approaches'] if row['tradeoff']['entrySupport']['direction'] == 'Superior')
+    shifted_id = next(row['id'] for row in design['scenarios'] if row['sourceTranslationsMm'].get('ct') == [0, 0, 2])
+    sensitivity = route['measurements']['sensitivity']
+    shifted = next(row for row in sensitivity['scenarios'] if row['id'] == shifted_id)
+    assert shifted['entryWindow']['entry'] == pytest.approx(np.array(route['entry']) + [0, 0, 2])
+    assert shifted['entryWindow']['voxel'] == route['tradeoff']['entrySupport']['voxel']
+    assert shifted['values']['lengthMm'] == pytest.approx(route['measurements']['lengthMm'] + 2)
+    assert shifted['values']['nonTargetTraversalMm3'] > route['measurements']['normalTraversal']['conservativeVolumeUpperBoundMm3']
+    assert sensitivity['entryRegistration']['status'] == 'assessed'
+    reopened = dispatch_plan(Collection(c.root), {'action': 'assess', 'approachId': route['id']})
+    packet = next(row for row in reopened['consequenceEvidence']['routes'] if row['approachId'] == route['id'])
+    assert packet['entrySupport']['layerId'] == 'ct-skull'
+    assert {row['sourceSeriesId'] for row in packet['registrations']} == {'t1', 'ct'}
+    reassessed = next(row for row in reopened['approaches'] if row['id'] == route['id'])
+    assert packet['uncertainty']['entryRegistration'] == reassessed['measurements']['sensitivity']['entryRegistration']
+
+    nominal = dispatch_plan(c, {**task, 'sensitivityConfig': {'translationMm': 0, 'boundaryMm': 0}})
+    for row in nominal['approaches']:
+        assert row['measurements']['sensitivity']['entryRegistration']['status'] == 'unassessed'
+        assert row['measurements']['scenarioGuard']['disposition'] == 'incomplete-coverage'
+
+
+def test_translated_entry_without_observed_face_leaves_consequences_unassessed(native):
+    c = native
+    t1 = c.series('t1')
+    a = c.patient_affine(t1)
+    ct = c.add_series(c.path(t1['original']['path']), series_id='ct', modality='CT')
+    c.set_registration('ct', np.eye(4), status='source-provided', method='fixture CT transform')
+    mask = np.zeros((32, 32, 32), np.uint8)
+    mask[10, 20, 15] = 1
+    c.add_layer(mask, ct['affine'], layer_id='ct-skull', source_series='ct', kind='skull', role='context', color='#dddddd')
+    c.save()
+    result = dispatch_plan(c, {'action': 'suggestDistinctEntries', 'targetLayerId': 'target',
+                               'start': world(a, [10, 20, 15]).tolist(), 'end': world(a, [10, 11, 15]).tolist(),
+                               'radiusMm': .3, 'sensitivityConfig': {'translationMm': 2, 'boundaryMm': 0}})
+    route, = result['approaches']
+    scenarios = result['distinctEntryReport']['scenarioSet']['scenarios']
+    shifted_id = next(row['id'] for row in scenarios if row['sourceTranslationsMm'].get('ct') == [2, 0, 0])
+    sensitivity = route['measurements']['sensitivity']
+    shifted = next(row for row in sensitivity['scenarios'] if row['id'] == shifted_id)
+    assert shifted['status'] == 'unassessed' and 'entryWindow' not in shifted
+    assert 'no observed exterior face after translation' in shifted['unknowns'][0]
+    assert all(value is None for value in shifted['values'].values())
+    assert sensitivity['entryRegistration']['status'] == 'partially-assessed'
+    assert shifted_id in route['measurements']['scenarioGuard']['incompleteScenarioIds']
 
 
 def test_intersecting_siam_cerebellum_and_explicit_tissue_exclusions_are_context_only(native):

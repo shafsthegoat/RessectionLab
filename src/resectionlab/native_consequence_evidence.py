@@ -2,11 +2,12 @@
 
 import numpy as np
 
+from .anatomy_entry_windows import ORIGIN as WINDOW_ORIGIN
 from .anatomy_planning import native_target_binding
 from .patient_anatomy import digest, world
 
 SCHEMA = "native-approach-consequence-evidence-v1"
-REVIEW_LIMIT = 3
+COMPARISON_SLOTS = "ABC"
 GEOMETRY = "derived_geometry"
 UNREVIEWED = "unclassified_source"
 UNKNOWN_MEASUREMENT = "Current source-bound route measurement is unavailable."
@@ -173,12 +174,13 @@ def _registration(collection, series_id):
                                         reason="No measured whole-field registration error.")}
 
 
-def _route_readouts(collection, approach, descriptors, registrations, target_bindings):
+def _route_readouts(collection, approach, slot, descriptors, registrations, target_bindings):
     current = approach["assessmentStatus"] == "current"
     measured = approach.get("measurements", {}) if current else {}
     target_id = approach.get("targetLayerId")
     target = next((row for row in measured.get("targets", []) if row["layerId"] == target_id), {})
     normal = measured.get("normalTraversal", {})
+    entry_support = measured.get("entrySupport")
     access = measured.get("accessAssessment")
     structures = measured.get("structures", [])
     sources = [_source_readout(descriptors[row["layerId"]], row, "protection")
@@ -193,6 +195,8 @@ def _route_readouts(collection, approach, descriptors, registrations, target_bin
             sources.append(_source_readout(descriptors[key], {}, "access"))
 
     route_registration_ids = {row["sourceSeriesId"] for row in sources}
+    if entry_support:
+        route_registration_ids.add(entry_support["sourceSeries"])
     if current:
         route_registration_ids.add(collection.document["reference_series"])
     route_registrations = {}
@@ -234,7 +238,8 @@ def _route_readouts(collection, approach, descriptors, registrations, target_bin
     binding = approach.get("targetCandidateBinding")
     reference = measured.get("coverage", {}).get("reference", {})
     return {
-        "approachId": approach["id"], "name": approach["name"], "parameterHash": approach.get("parameterHash"),
+        "approachId": approach["id"], "comparisonSlot": slot,
+        "name": approach["name"], "parameterHash": approach.get("parameterHash"),
         "measurementHash": approach.get("measurementHash"), "sourceSnapshotId": approach.get("sourceSnapshotId"),
         "entry": approach["entry"], "targetPoint": approach["target"], "radiusMm": approach["radiusMm"],
         "targetLayerId": target_id,
@@ -242,6 +247,7 @@ def _route_readouts(collection, approach, descriptors, registrations, target_bin
         "assessmentStatus": approach["assessmentStatus"],
         "researchDisposition": {"status": "reassess", "reasons": reasons},
         "target": target_source, "dimensions": dimensions, "sources": sources,
+        "entrySupport": entry_support,
         "registrations": list(route_registrations.values()),
         "referenceCoverage": {"wholeEnvelopeWithinField": reference.get("wholeEnvelopeWithinField"),
                               "outsideFaces": reference.get("outsideFaces", [])},
@@ -251,19 +257,29 @@ def _route_readouts(collection, approach, descriptors, registrations, target_bin
                      "constraintFailures": measured.get("constraintFailures", []),
                      "access": access, "missingEvidence": missing},
         "uncertainty": {"scenarioSetId": sensitivity.get("scenarioSetId"), "scenarioCount": sensitivity.get("scenarioCount"),
+                        "entryRegistration": sensitivity.get("entryRegistration"),
                         "metrics": sensitivity.get("metrics", {}), "guard": measured.get("scenarioGuard"),
                         "limitations": measured.get("unknowns", []),
                         "meaning": "Declared stress scenarios probe geometric sensitivity. Anatomical detection sensitivity and clinical probabilities are unmeasured."},
     }
 
 
+def _comparison_routes(approaches, active_target, review_id):
+    # Keep the same group and saved order as the viewer, including its C-slot overflow.
+    if not approaches:
+        return []
+    chosen = next((row for row in approaches if row["id"] == review_id), None)
+    anchor = chosen or next((row for row in approaches if row.get("targetLayerId") == active_target), approaches[0])
+    is_surface_entry = anchor.get("origin") == WINDOW_ORIGIN
+    routes = [row for row in approaches if (row.get("origin") == WINDOW_ORIGIN) == is_surface_entry][:len(COMPARISON_SLOTS)]
+    if chosen is not None and all(row["id"] != review_id for row in routes):
+        routes[-1] = chosen
+    return routes
+
+
 def consequence_evidence_view(collection, approaches, active_target, review_id=None):
     """Reuse current measurements and leave historical route readouts unavailable."""
-    routes = approaches[:REVIEW_LIMIT]
-    if isinstance(review_id, str) and all(row["id"] != review_id for row in routes):
-        chosen = next((row for row in approaches if row["id"] == review_id), None)
-        if chosen is not None:
-            routes[-1] = chosen
+    routes = _comparison_routes(approaches, active_target, review_id)
     descriptors = {row["id"]: row for row in (*collection.document["layers"], *collection.document.get("tractography", []))}
     target_ids = {row.get("targetLayerId") for row in routes} | {active_target}
     target_bindings = {}
@@ -277,4 +293,5 @@ def consequence_evidence_view(collection, approaches, active_target, review_id=N
             "sourceSnapshotId": collection.identity(), "targetLayerId": active_target,
             "targetCandidateBinding": target_bindings.get(active_target), "simulationExecutionAuthorized": False,
             "clinicalValidation": False,
-            "routes": [_route_readouts(collection, route, descriptors, registrations, target_bindings) for route in routes]}
+            "routes": [_route_readouts(collection, route, slot, descriptors, registrations, target_bindings)
+                       for slot, route in zip(COMPARISON_SLOTS, routes)]}

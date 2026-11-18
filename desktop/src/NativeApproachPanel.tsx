@@ -88,10 +88,6 @@ export function NativeApproachPanel({workspace:w,onPreview,onEditStateChange}:{w
     if(!await commitEdits())return;
     p.select(a.id);
     if(w.patientFrameReady)w.setCursor(a.target);
-    if(a.assessmentStatus==='current'&&p.consequenceEvidence
-      &&!p.consequenceEvidence.routes.some(route=>route.approachId===a.id)){
-      await p.request({action:'list',targetLayerId:p.activeTargetLayerId,reviewApproachId:a.id});
-    }
   }
   async function selectTarget(option:ApproachTargetOption|undefined){
     if(!await commitEdits())return;
@@ -172,7 +168,7 @@ export function NativeApproachPanel({workspace:w,onPreview,onEditStateChange}:{w
     </button>})}</div>
     {onPreview&&selected&&<button className="approach-preview" disabled={blocked||dirty||!!p.targetSelectionIssue||
       !!operativeRouteIssue(selected,p.activeTargetLayerId,b.document.snapshot_id)} onClick={onPreview}>Preview operative steps</button>}
-    {!dirty&&p.consequenceEvidence&&<NativeConsequenceReadout packet={p.consequenceEvidence} approaches={p.approaches} selectedId={p.selectedId}/>}
+    {!dirty&&p.consequenceEvidence&&<NativeConsequenceReadout packet={p.consequenceEvidence} approaches={p.approaches} comparison={p.routes}/>}
     {p.report&&<ApproachProposalDetails report={p.report} targetLabel={targetLabel(p.report.task?.targetLayerId??p.report.targetLayerId)} labels={layerLabels}/>}
     {p.distinctEntryReport&&<ApproachProposalDetails report={p.distinctEntryReport} title="distinct surface entries" targetLabel={targetLabel(p.distinctEntryReport.task?.targetLayerId)} labels={layerLabels}/>}
     {assessment&&<section className="approach-measurements" data-assessment-status={status}><h2>Source-bound assessment</h2>
@@ -210,7 +206,7 @@ export function NativeApproachPanel({workspace:w,onPreview,onEditStateChange}:{w
             <div><dt>Brain mask field</dt><dd>{fieldCoverage(m.normalTraversal.coverage)}</dd></div><div><dt>Acquired brain scan field</dt><dd>{fieldCoverage(m.normalTraversal.acquisitionCoverage)}</dd></div></dl>
           <p>Simulated treatment, tissue removal, brain shift and functional outcome are unassessed.</p>
         </details>
-        {m.sensitivity&&<ApproachSensitivityDetails sensitivity={m.sensitivity} scenarioSet={p.report?.scenarioSet} labels={layerLabels} referenceBound={!!referenceBound}/>}
+        {m.sensitivity&&<ApproachSensitivityDetails sensitivity={m.sensitivity} scenarioSet={selected?.origin==='native-source-entry-windows'?p.distinctEntryReport?.scenarioSet:p.report?.scenarioSet} labels={layerLabels} referenceBound={!!referenceBound}/>}
       </>}
       {assessment.limitations.length>0&&<div className="approach-limitations"><h3>Evidence limitations</h3><p>{assessment.limitations[0]}</p><details><summary>All {assessment.limitations.length} limitations & assumptions</summary>{assessment.limitations.map((text,i)=><p key={i}>{text}</p>)}{(m?.assumptions??[]).map((text,i)=><p key={`assumption-${i}`}>{text}</p>)}</details></div>}
       {!m&&<p className="approach-caption">Reassess this path against the current source anatomy to display geometric measurements.</p>}

@@ -3,13 +3,15 @@ import hashlib
 import json
 import os
 import tempfile
+from types import SimpleNamespace
 import numpy as np
 from scipy import ndimage as ndi
 from .patient_anatomy import affine, world
 from .anatomy_planning import is_native_target
+from .anatomy_display import display_affine, patient_display_grid, source_display_grid, voxel_edge_corners
 
 
-def checked_view(collection, state):
+def checked_view(collection, state, *, retired_clipping=None):
     if not isinstance(state, dict) or state.get('schema') != 'patient-anatomy-view-v1':
         raise ValueError('Unsupported patient view state')
     if state.get('patientId') != collection.document['patient_id'] or state.get('snapshotId') != collection.identity():
@@ -40,6 +42,27 @@ def checked_view(collection, state):
     encoded = json.dumps(state, allow_nan=False)
     if len(encoded) > 256 * 1024:
         raise ValueError('View state exceeds the size budget')
+    from .workspace_bundle import ClippingBoundsError, _viewer_cutaway, _viewer_state
+    scoped = 'patientCutaway' in state
+    if scoped:
+        cutaway = state['patientCutaway']
+        if not isinstance(cutaway, dict) or set(cutaway) - {'clipping', 'clipBox', 'obliqueClip'}:
+            raise ValueError('Invalid shared patient cutaway settings')
+        if any(value is not None for value in cutaway.values()):
+            context, _ = patient_display_grid(collection, preview=True)
+            if len(series) < 2 or 'shape' not in context:
+                if retired_clipping is None:
+                    raise ValueError('Shared patient cutaway requires a patient display grid')
+                retired_clipping.append({'seriesId': None, 'cutaway': cutaway})
+                state['patientCutaway'] = {}
+            else:
+                corners = voxel_edge_corners(context['shape'], context['affine'])
+                try:
+                    _viewer_cutaway(cutaway, corners=corners, frame_name='shared patient context')
+                except ClippingBoundsError:
+                    if retired_clipping is None:
+                        raise
+                    retired_clipping.append({'seriesId': None, 'cutaway': {'clipping': cutaway.pop('clipping')}})
     for series_id, view in state['states'].items():
         if not isinstance(view, dict):
             raise ValueError('Invalid scan view')
@@ -51,15 +74,28 @@ def checked_view(collection, state):
             raise ValueError('Invalid anatomy visibility')
         if not isinstance(view.get('settings'), dict):
             raise ValueError('Invalid display settings')
-        from types import SimpleNamespace
-        from .workspace_bundle import _viewer_state
-        source=collection.series(series_id)
+        source = collection.series(series_id)
         try:
-            a = collection.patient_affine(source)
+            a = display_affine(collection, source, preview=True)[0] if scoped else collection.patient_affine(source)
         except ValueError:
             a = affine(source['affine'])  # Independent review preferences use the original grid.
-        proxy=SimpleNamespace(compartments={name:None for name in layers|{'__fragment_review','brain','tumor','vessels','bone','scalp-envelope'}},brain_mask=None,frame='RAS+',affine=a,mri=SimpleNamespace(shape=source['data']['shape']))
-        _viewer_state(proxy,view['settings'],{})
+        data = source['data']
+        if scoped:
+            data, _, a, _ = source_display_grid(source, a)
+        proxy=SimpleNamespace(compartments={name:None for name in layers|{'__fragment_review','brain','tumor','vessels','bone','scalp-envelope'}},brain_mask=None,frame='RAS+',affine=a,mri=SimpleNamespace(shape=data['shape']))
+        try:
+            _viewer_state(proxy,view['settings'],{})
+        except ClippingBoundsError:
+            if retired_clipping is None:
+                raise
+            retired_clipping.append({'seriesId': series_id, 'cutaway': {'clipping': view['settings'].pop('clipping')}})
+            if view['settings'].get('skullMode') == 'cutaway' and not any(
+                    (view['settings'].get(key) or {}).get('enabled') for key in ('clipBox', 'obliqueClip')):
+                opacity = view['settings'].get('layerOpacity', {})
+                transparent = any(layer['kind'] in {'bone', 'skull'} and opacity.get(layer['id'], 1) < 1
+                                  for layer in collection.document['layers'])
+                view['settings']['skullMode'] = 'transparent' if transparent else 'exterior'
+            _viewer_state(proxy,view['settings'],{})
     return state
 
 
@@ -70,12 +106,15 @@ def read_view(collection):
         return None
 
 
-def save_view(collection, state):
-    checked_view(collection, state)
+def save_view(collection, state, *, after_registration=False):
+    # Registration may replace the grid behind an already validated saved view.
+    retired = [] if after_registration else None
+    checked_view(collection, state, retired_clipping=retired)
     with tempfile.NamedTemporaryFile(dir=collection.root, mode='w', delete=False) as out:
         json.dump(state, out, allow_nan=False, indent=2)
         filename = out.name
     os.replace(filename, collection.root / 'workspace-view.json')
+    return retired
 
 
 def component_review(collection, layer_id, mask=None):

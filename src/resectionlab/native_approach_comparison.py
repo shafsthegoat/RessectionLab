@@ -157,7 +157,7 @@ def distinct_alternatives(ordered):
     return best_pair or [ordered[0]]
 
 
-def freeze_scenarios(config, groups):
+def freeze_scenarios(config, groups, *, surface_entries=False):
     """Freeze shared coherent translations and an outer boundary band."""
     translations, boundary = config["translationMm"], config["boundaryMm"]
     keys = sorted(groups)
@@ -192,14 +192,22 @@ def freeze_scenarios(config, groups):
         if signature not in seen:
             scenarios.append(row)
             seen.add(signature)
+    registration_assumption = "The capsule and patient reference are fixed. Registered source fields, labels and streamlines under the same registration root translate together in patient RAS."
+    reach_assumption = "Target reach and brain traversal remain unchanged when both layers are in the patient reference frame."
+    if surface_entries:
+        registration_assumption = (
+            "The patient reference and selected target point stay fixed. Registered source fields, labels and streamlines "
+            "under the same root translate together in patient RAS. If a route's entry source moves, its original direction "
+            "is recast against that source and the corridor is measured again. An unavailable face leaves the scenario unassessed.")
+        reach_assumption = "Reach and traversal can change when the route entry moves, including for labels in the fixed patient reference frame."
     definition = {"version": "shared-native-registration-boundary-v2", "config": config,
                   "registrationGroups": groups, "scenarios": scenarios,
                   "assumptions": [
-                      "The capsule and patient reference are fixed. Registered source fields, labels and streamlines under the same registration root translate together in patient RAS.",
+                      registration_assumption,
                       "The design tests all six signed cardinal directions per registration root. With three or more roots, cardinal tests translate roots jointly to keep the scenario budget bounded.",
                       "The configurable 1 mm default translation is near the label grid scale. Rotations and a calibrated registration distribution are unassessed.",
                       "Boundary sensitivity pads critical voxel labels by 0.5 mm by default for clearance and contact checks. Boundary padding leaves the capsule, tract polylines, targets and brain traversal geometry unchanged.",
-                      "Target reach and brain traversal remain unchanged when both layers are in the patient reference frame.",
+                      reach_assumption,
                       _DISCLOSURE]}
     return {"id": digest(definition), **definition}
 
@@ -216,8 +224,10 @@ def assess_sensitivity(nominal, scenario_set, measure, *, check):
     readings = []
     for scenario in scenario_set["scenarios"]:
         check()
+        entry_window = None
         try:
             measured = nominal if scenario["id"] == "nominal" else measure(scenario)
+            entry_window = measured.get("entryWindow")
             values, _ = nominal_objectives(measured)
             failures = measured["constraintFailures"]
             reference_covered = measured["coverage"]["withinReferenceEnvelope"]
@@ -240,7 +250,8 @@ def assess_sensitivity(nominal, scenario_set, measure, *, check):
         readings.append({"id": scenario["id"], "status": status, "values": dict(outcome.costs),
                          "unknowns": list(outcome.unknowns), "conflictLayerIds": conflicts, "constraintFailures": failures,
                          "sourceReadings": observations, "unknownSourceLayerIds": unknown_sources, "coverageIncomplete": incomplete,
-                         "missingMetrics": [key for key, value in outcome.costs.items() if value is None]})
+                         "missingMetrics": [key for key, value in outcome.costs.items() if value is None],
+                         **({"entryWindow": entry_window} if entry_window is not None else {})})
     metrics = {}
     for name, (units, direction) in METRICS.items():
         adverse = 1 if direction == "higher" else -1

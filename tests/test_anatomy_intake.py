@@ -12,8 +12,8 @@ from resectionlab.desktop_bridge import BridgeSession, _Request
 from resectionlab.patient_anatomy import PatientAnatomySnapshot, PatientImagingCollection
 
 
-def _image(path, data):
-    im = nib.Nifti1Image(np.asarray(data), np.eye(4))
+def _image(path, data, affine=None):
+    im = nib.Nifti1Image(np.asarray(data), np.eye(4) if affine is None else affine)
     im.header.set_xyzt_units("mm")
     nib.save(im, path)
     return path
@@ -118,6 +118,142 @@ def _view(c, tmp_path, layers=()):
     return bridge.execute("anatomyView", {"collectionId": opened["collectionId"],
                           "snapshotId": c.identity(), "layers": list(layers)},
                           _Request("view"), lambda *_: None)
+
+
+@pytest.mark.parametrize("separate_batches", [False, True])
+def test_scout_does_not_lock_the_study_reference(tmp_path, separate_batches):
+    from resectionlab.anatomy_model_registry import source_volume
+
+    c = _study(tmp_path)
+    signal = np.indices((8, 8, 8), dtype=np.float32).sum(axis=0)
+    scout = _image(tmp_path / "scout.nii.gz", signal)
+    scout.with_name("scout.json").write_text('{"ProtocolName":"Sagittal localizer"}')
+    diagnostic_affine = np.eye(4)
+    diagnostic_affine[:3, 3] = [18, -12, 3]
+    diagnostic = _image(tmp_path / "diagnostic_T1w.nii.gz", signal + 50, diagnostic_affine)
+    scout_item, diagnostic_item = _item(scout, modality="T1"), _item(diagnostic, modality="T1")
+    bridge = BridgeSession(tmp_path / "transfers")
+
+    def call(operation, args, *, session=bridge):
+        return session.execute(operation, args, _Request(operation), lambda *_: None)
+
+    opened = call("anatomyOpen", {"path": str(c.root / "patient-anatomy.json")})
+    binding = {"collectionId": opened["collectionId"], "snapshotId": c.identity()}
+    if separate_batches:
+        first = call("anatomyImportBatch", {**_request(c, [scout_item]), **binding})["document"]
+        c = PatientImagingCollection(c.root)
+        assert c.document == first
+        scout_id = first["series"][0]["id"]
+        binding["snapshotId"] = c.identity()
+        preview = call("anatomyView", {**binding, "seriesId": scout_id, "patientModel": True})
+        assert preview["registrationStatus"] == "independent source frame"
+        assert "patientContext" not in preview
+        assert not call("anatomyRegister", {**binding, "action": "estimate"})["result"]["changed"]
+        items = [diagnostic_item]
+    else:
+        items = [scout_item, diagnostic_item]
+    revised = call("anatomyImportBatch", {**_request(c, items), **binding})["document"]
+    binding["snapshotId"] = revised["snapshot_id"]
+    scout_row, diagnostic_row = revised["series"]
+    scout_id, diagnostic_id = scout_row["id"], diagnostic_row["id"]
+    assert revised["reference_series"] == diagnostic_id
+    assert set(revised["transforms"]) == {diagnostic_id}
+    assert not source_volume(scout_row) and source_volume(diagnostic_row)
+    result = call("anatomyRegister", {**binding, "seriesId": scout_id, "action": "estimate"})
+    assert result["document"] == revised and not result["result"]["changed"]
+
+    archive = tmp_path / "portable.rsworkspace"
+    call("anatomySavePackage", {**binding, "path": str(archive)})
+    fresh = BridgeSession(tmp_path / "fresh-transfers")
+    reopened = call("anatomyOpen", {"path": str(archive), "workingRoot": str(tmp_path / "imported")}, session=fresh)
+    restored = reopened["document"]
+    assert restored == revised
+    view = call("anatomyView", {"collectionId": reopened["collectionId"], "snapshotId": restored["snapshot_id"],
+                                "seriesId": diagnostic_id, "patientModel": True, "original": True}, session=fresh)
+    assert view["patientFrameReady"]
+    np.testing.assert_array_equal(view["affine"], diagnostic_affine)
+    assert [source["alignment"] for source in view["patientContext"]["sources"]] == ["unavailable", "reference"]
+
+
+def test_uncoded_scan_cannot_replace_a_scout_reference(tmp_path):
+    c = _study(tmp_path)
+    signal = np.ones((8, 8, 8), np.float32)
+    scout = _image(tmp_path / "scout.nii.gz", signal)
+    c = reviewed_intake(c, _request(c, [_item(scout, modality="T1")]))
+    scout_id = c.document["reference_series"]
+
+    uncoded = tmp_path / "uncoded_T1w.nii.gz"
+    image = nib.Nifti1Image(signal + 10, np.eye(4))
+    image.header.set_xyzt_units("mm")
+    image.set_sform(None, code=0)
+    nib.save(image, uncoded)
+    c = reviewed_intake(c, _request(c, [_item(uncoded, modality="T1")]))
+    assert c.document["reference_series"] == scout_id
+    assert set(c.document["transforms"]) == {scout_id}
+
+
+def test_recalculate_repairs_old_scout_reference_and_rebuilds_registration(tmp_path, monkeypatch):
+    from resectionlab.anatomy_workspace import read_view, save_view
+
+    c = _study(tmp_path)
+    signal = np.indices((8, 8, 8), dtype=np.float32).sum(axis=0)
+    t1_affine = np.eye(4)
+    t1_affine[:3, 3] = [20, -12, 5]
+    for sid, modality, intensity, affine in (
+        ("scout", "T1", signal, np.eye(4)),
+        ("flair", "FLAIR", signal + 10, np.eye(4)),
+        ("t1", "T1", signal + 20, t1_affine),
+    ):
+        path = _image(tmp_path / f"{sid}.nii.gz", intensity, affine)
+        c.add_series(path, series_id=sid, modality=modality)
+        if sid != "scout":
+            c.set_registration(sid, np.eye(4), status="reviewed", method="Old scout-based transform")
+    layer = c.add_layer((signal > 10).astype(np.uint8), np.eye(4), layer_id="brain", source_series="flair",
+                        kind="brain", role="context", color="#91c4b6")
+    c.document["display"] = {"cursor_ras_mm": [2, 3, 4], "entry_ras_mm": [1, 2, 3], "initial_layers": ["brain"]}
+    c.save("Legacy scout reference")
+    old_graph = c.document["transforms"]
+    save_view(c, {"schema": "patient-anatomy-view-v1", "snapshotId": c.identity(), "patientId": "patient-a",
+                  "seriesId": "scout", "states": {"scout": {"cursor": [2, 3, 4], "settings": {}}}})
+
+    registrations = []
+
+    def estimate(fixed, moving, existing, _cancelled):
+        assert existing is None
+        registrations.append((fixed.affine.copy(), moving.affine.copy()))
+        return t1_affine.copy(), {"status": "consistent", "warnings": [], "metrics": {}, "candidates": []}
+
+    monkeypatch.setattr("resectionlab.anatomy_alignment.estimate_pair", estimate)
+    bridge = BridgeSession(tmp_path / "transfers")
+
+    def call(operation, args):
+        return bridge.execute(operation, args, _Request(operation), lambda *_: None)
+
+    opened = call("anatomyOpen", {"path": str(c.root / "patient-anatomy.json")})
+    binding = {"collectionId": opened["collectionId"], "snapshotId": c.identity()}
+    result = call("anatomyRegister", {**binding, "seriesId": "t1", "action": "estimate"})
+    assert result["result"]["changed"] and len(registrations) == 1
+    fixed_affine, moving_affine = registrations[0]
+    np.testing.assert_array_equal(fixed_affine[:3, 3] - moving_affine[:3, 3], t1_affine[:3, 3])
+
+    reopened = PatientImagingCollection(c.root)
+    restored = reopened.document
+    assert restored == result["document"]
+    assert restored["reference_series"] == "t1"
+    assert set(restored["transforms"]) == {"t1", "flair"}
+    assert restored["transforms"]["flair"]["status"] == "unreviewed"
+    assert restored["transforms"]["flair"]["reference_series"] == "t1"
+    for retired in restored["registration_history"]:
+        assert retired["reference_series"] == "scout"
+    assert {retired["series_id"]: retired["transform"] for retired in restored["registration_history"]} == old_graph
+    assert restored["display"] == {"initial_layers": ["brain"]} and read_view(reopened) is None
+    assert reopened.layer("brain") == layer
+    np.testing.assert_array_equal(reopened.registration_matrix("flair"), t1_affine)
+    with pytest.raises(ValueError, match="needs review"):
+        reopened.patient_affine(layer)
+    preview = call("anatomyView", {**binding, "snapshotId": reopened.identity(), "seriesId": "t1",
+                                   "patientModel": True, "original": True, "previewAlignment": True})
+    assert [source["alignment"] for source in preview["patientContext"]["sources"]] == ["unavailable", "estimated", "reference"]
 
 
 @pytest.mark.parametrize(("problem", "reason"), [

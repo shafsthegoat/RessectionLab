@@ -14,15 +14,21 @@ retained as source assets. Use separate studies for separate visits.
 Choose **Review preparation plan** and **Prepare anatomy**. The plan lists
 eligible models and explains unavailable anatomy. Each completed stage has
 a checkpoint. Cancellation leaves admitted layers available. Retry acts on
-failed or empty stages. Adding scans keeps the reference fixed and marks
-dependent comparisons stale.
+failed or empty stages. Adding scans keeps an established patient reference
+fixed and marks dependent comparisons stale. A scout or localizer can be
+reviewed independently until an eligible acquisition establishes the patient
+frame. For an older study with both scans already loaded, select the diagnostic
+scan and choose **Recalculate alignment** to replace the scout reference and
+rebuild alignment against the diagnostic scan.
 
 Use **Anatomy → Structures** to view registered layers together. The source
 selector changes the linked scan for slice review. A layer can extend beyond
 that scan's field of view in 3D. The study-wide intensity backdrop uses the
 brightest separately windowed contribution at each location. Read quantitative
 signal values on the original scan. An unaligned series stays independently
-inspectable until its transform is resolved.
+inspectable until its transform is resolved. The fused view shares one cutaway
+in patient RAS across aligned scans. Single-scan inspection keeps separate
+cutaway settings for each source. Both settings are saved in the patient study.
 In **Plan & compare**, explicitly select a nonempty lesion label. The selection
 binds the mask, source and registration chain. Missing vascular and functional
 coverage remains unassessed. Quantitative comparison needs an admissible
@@ -171,6 +177,8 @@ selected target for an observed skull or brain surface. It records the source
 layer and native voxel for each entry, applies the same comparison checks,
 and saves the resulting group alongside the existing patch alternatives.
 A cropped field ending inside a label cannot supply its exterior boundary.
+The viewer, approach cards and consequence table use the same A/B/C order
+for the selected group.
 
 Each comparison card separates the observed geometric finding (detected
 intersection, no detected intersection in assessed anatomy, or unavailable
@@ -185,7 +193,10 @@ perturbed measurements are complete. The default design translates registered
 sources in coherent 1 mm scenarios and pads critical voxel boundaries by 0.5 mm,
 distances near the source grid scale. Every registration root is stressed in
 each signed cardinal direction. Three or more roots use joint translations to
-keep the evaluation budget bounded. Registration distributions, model
+keep the evaluation budget bounded. When a surface-entry source moves, each
+scenario checks the selected direction against that source again and measures
+the resulting corridor. If the shifted label supplies no observed exterior
+face, that scenario is unassessed. Registration distributions, model
 completeness and postoperative outcomes remain unmeasured. [Uncertainty in path planning](https://scholar.harvard.edu/files/sfrisken/files/incorporating_uncertainty_into_path_planning.pdf) · [Registration uncertainty visualization](https://link.springer.com/article/10.1007/s11548-025-03407-z)
 
 **Compare input sets** freezes rich and restricted nominations on the same task

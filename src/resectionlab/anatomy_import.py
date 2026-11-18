@@ -358,26 +358,54 @@ def import_nifti_series(collection, path, *, series_id, modality=None, timepoint
 
 
 def select_intake_reference(collection):
-    """Choose the initial patient frame before registration; later imports keep it."""
+    """Keep an established patient frame, or replace an independent scout anchor."""
     document = collection.document
-    if collection.published_reference or not document["series"] or len(document["transforms"]) != 1:
-        return document.get("reference_series")
+    current = document.get("reference_series")
+    if current is None:
+        return None
+    provisional = projection_or_localizer(collection.series(current))
+    if not provisional and (collection.published_reference or len(document["transforms"]) != 1):
+        return current
     order = ("T1", "T1CE", "T2", "FLAIR", "CT", "CTA", "TOF", "MRA", "MRV",
              "SWI", "SWI_MAGNITUDE", "SWI_PHASE")
     candidates = [row for row in document["series"] if row["modality"] in order and not projection_or_localizer(row)]
-    if not candidates:
-        return document.get("reference_series")
-    reference = min(candidates, key=lambda row: (
+    candidates.sort(key=lambda row: (
         (nifti_geometry_issue(row["native_geometry"]) is not None if "native_geometry" in row
          else row.get("units_status") != "mm"),
         row.get("coverage", {}).get("status") == "limited",
         order.index(row["modality"]), row["id"],
-    ))["id"]
-    current = document["reference_series"]
+    ))
+    if provisional:
+        # A placeholder can be displayed independently, but only a verified
+        # metric acquisition can establish the replacement patient frame.
+        candidates = (row for row in candidates if _verified_reference_geometry(collection, row))
+    reference = next((row["id"] for row in candidates), current)
     if reference != current:
-        document["transforms"][reference] = document["transforms"].pop(current)
+        transforms = document["transforms"]
+        if provisional and (collection.published_reference or set(transforms) != {current}
+                            or transforms[current]["status"] != "reference"):
+            document.setdefault("registration_history", []).extend(
+                {"series_id": series_id, "reference_series": current, "transform": transform,
+                 "invalidation_reason": "Previous reference was a projection or localizer"}
+                for series_id, transform in transforms.items()
+            )
+        document["transforms"] = {
+            reference: {"matrix": np.eye(4).tolist(), "status": "reference", "uncertainty_mm": None}
+        }
         document["reference_series"] = reference
+        if provisional and (display := document.get("display")):
+            display.pop("cursor_ras_mm", None)
+            display.pop("entry_ras_mm", None)
     return reference
+
+
+def _verified_reference_geometry(collection, row):
+    try:
+        collection.require_native_geometry(row)
+        original = row["original"]
+        return file_hash(collection.path(original["path"])) == original["sha256"]
+    except (OSError, ValueError):
+        return False
 
 
 def _swi_component(row):

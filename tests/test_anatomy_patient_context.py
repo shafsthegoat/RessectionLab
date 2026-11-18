@@ -1,4 +1,5 @@
 """Disjoint native fields in a single, source-bound patient scene."""
+from copy import deepcopy
 from pathlib import Path
 
 import nibabel as nib
@@ -7,6 +8,102 @@ import pytest
 
 from resectionlab.desktop_bridge import BridgeSession, _Request
 from resectionlab.patient_anatomy import PatientImagingCollection, world
+
+
+@pytest.mark.parametrize("ct_alignment", ["source-provided", "unreviewed"])
+def test_shared_cutaway_saves_and_reopens_independently_of_selected_source(tmp_path, ct_alignment, monkeypatch):
+    c = PatientImagingCollection.create(tmp_path / "study", "patient")
+    volume = np.arange(1000, dtype=np.float32).reshape((10, 10, 10))
+    for sid, modality, offset in (("mri", "T1", 0), ("ct", "CT", 0), ("scout", "scout", 80)):
+        path = tmp_path / f"{sid}.nii"
+        frame = np.eye(4)
+        frame[0, 3] = offset
+        image = nib.Nifti1Image(volume, frame)
+        image.header.set_xyzt_units("mm")
+        nib.save(image, path)
+        c.add_series(path, series_id=sid, modality=modality)
+    matrix = np.eye(4)
+    matrix[0, 3] = 20
+    c.set_registration("ct", matrix, status=ct_alignment, method="fixture")
+    c.save()
+
+    def client(directory):
+        session = BridgeSession(tmp_path / directory)
+        return lambda op, args: session.execute(op, args, _Request("cutaway"), lambda *_: None)
+
+    call = client("transfers")
+    opened = call("anatomyOpen", {"path": str(c.root / "patient-anatomy.json")})
+    args = {"collectionId": opened["collectionId"], "snapshotId": c.identity()}
+    view_args = {"patientModel": True, "previewAlignment": True}
+    mri = call("anatomyView", {**args, **view_args, "seriesId": "mri"})
+    assert mri["shape"] == [10, 10, 10]
+    assert mri["patientContext"]["shape"] == [30, 10, 10]
+    assert mri["patientContext"]["affine"] == np.eye(4).tolist()
+
+    def scan_view(mode, x):
+        return {"cursor": None, "visible": {}, "settings": {"presentation": mode,
+                "clipping": {"axis": "x", "value": x, "enabled": True}}}
+
+    saved = {"schema": "patient-anatomy-view-v1", "patientId": "patient",
+             "snapshotId": c.identity(), "seriesId": "mri",
+             "states": {"mri": scan_view("segmentation", 3), "ct": scan_view("scan", 29.5),
+                        "scout": scan_view("scan", 89.5)},
+             "patientCutaway": {"clipping": {"axis": "x", "value": 20, "enabled": True, "flipped": True}}}
+    # Putting the shared plane in the per-scan preference reproduces the old failure.
+    invalid = deepcopy(saved)
+    invalid["states"]["mri"]["settings"]["clipping"] = saved["patientCutaway"]["clipping"]
+    with pytest.raises(ValueError, match="outside the source image"):
+        call("anatomySaveView", {**args, "viewState": invalid})
+    for selected in ("mri", "ct", "scout"):
+        for enabled in (True, False):
+            state = deepcopy(saved)
+            state["seriesId"] = selected
+            state["patientCutaway"]["clipping"]["enabled"] = enabled
+            assert call("anatomySaveView", {**args, "viewState": state, "saveArchive": False})["saved"]
+            archive = tmp_path / f"{selected}-{enabled}.rsworkspace"
+            call("anatomySavePackage", {**args, "path": str(archive)})
+            reopen = client(f"cold-{selected}-{enabled}")
+            result = reopen("anatomyOpen", {"path": str(archive), "workingRoot": str(tmp_path / "reopen")})
+            assert result["viewState"] == state
+            restored = reopen("anatomyView", {**args, **view_args, "collectionId": result["collectionId"],
+                                             "seriesId": selected})
+            if selected == "scout":
+                assert restored["registrationStatus"] == "independent source frame"
+                assert "patientContext" not in restored
+                assert restored["affine"][0][3] == 80
+            else:
+                assert restored["patientContext"]["shape"] == [30, 10, 10]
+    for enabled in (True, False):
+        invalid = deepcopy(saved)
+        invalid["patientCutaway"]["clipping"].update(value=29.6, enabled=enabled)
+        with pytest.raises(ValueError, match="outside the shared patient context"):
+            call("anatomySaveView", {**args, "viewState": invalid})
+        invalid = deepcopy(saved)
+        invalid["states"]["scout"]["settings"]["clipping"].update(value=20, enabled=enabled)
+        with pytest.raises(ValueError, match="outside the source image"):
+            call("anatomySaveView", {**args, "viewState": invalid})
+
+    # A newly estimated transform can shrink the patient grid. Retire only the
+    # old preferred planes that would no longer fit and keep the live study open.
+    def realign(collection, **_):
+        collection.set_registration("ct", np.eye(4), status="unreviewed", method="fixture recalculation")
+        return True
+
+    monkeypatch.setattr("resectionlab.anatomy_alignment.ensure_alignment", realign)
+    call("anatomySaveView", {**args, "viewState": saved, "saveArchive": False})
+    registered = call("anatomyRegister", {**args, "action": "estimate", "seriesId": "ct"})
+    assert registered["retiredClipping"] == [
+        {"seriesId": None, "cutaway": saved["patientCutaway"]},
+        {"seriesId": "ct", "cutaway": {"clipping": saved["states"]["ct"]["settings"]["clipping"]}},
+    ]
+    updated = call("anatomyView", {**args, **view_args, "seriesId": "mri",
+                                  "snapshotId": registered["document"]["snapshot_id"]})
+    assert updated["patientContext"]["shape"] == [10, 10, 10]
+    restored = call("anatomyOpen", {"path": str(c.root / "patient-anatomy.json")})["viewState"]
+    assert restored["patientCutaway"] == {}
+    assert restored["states"]["mri"] == saved["states"]["mri"]
+    assert restored["states"]["scout"] == saved["states"]["scout"]
+    assert restored["states"]["ct"]["settings"] == {"presentation": "scan"}
 
 
 def test_unified_patient_context_and_surfaces_survive_linked_scan_switch(tmp_path):

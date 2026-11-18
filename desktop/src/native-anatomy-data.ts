@@ -62,7 +62,7 @@ export interface NativeAnatomyApi {
   anatomyOpen():Promise<Binding|null>;
   anatomyView(args:Args):Promise<ViewPayload>;
   anatomyEdit(args:Args):Promise<{document:Document;draft:Draft}>;
-  anatomyRegister(args:Args):Promise<{document:Document;result:unknown}>;
+  anatomyRegister(args:Args):Promise<{document:Document;result:unknown;retiredClipping?:RetiredClipping[]}>;
   anatomyImport(args:Args):Promise<{document:Document}|null>;
   anatomyPickIntake(args:Args):Promise<{items:IntakeSelection[]}|null>;
   anatomyImportBatch(args:Args&{confirmedAssociation:true;sourcePatientId?:string}):Promise<{document:Document}>;
@@ -118,7 +118,8 @@ export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cached
 }
 
 export interface NativeScanState {cursor:Point3|null;visible:Record<string,boolean>;settings:ViewerWorkspaceSettings}
-export interface NativeViewState {schema:'patient-anatomy-view-v1';patientId:string;snapshotId:string;seriesId:string;states:Record<string,NativeScanState>;vesselScope?:VesselScope;vesselDisplayVersion?:2;selectedApproachId?:string|null;selectedPlanningTargetId?:string|null;selectedApproachIds?:Record<string,string|null>;selectedStructure?:string|null}
+export interface RetiredClipping {seriesId:string|null;cutaway:import('./viewer/workspaceSettings').ViewerCutaway}
+export interface NativeViewState {schema:'patient-anatomy-view-v1';patientId:string;snapshotId:string;seriesId:string;states:Record<string,NativeScanState>;patientCutaway?:import('./viewer/workspaceSettings').ViewerCutaway;vesselScope?:VesselScope;vesselDisplayVersion?:2;selectedApproachId?:string|null;selectedPlanningTargetId?:string|null;selectedApproachIds?:Record<string,string|null>;selectedStructure?:string|null}
 export interface ComponentReview {reviewId:string;layerId:string;components:Array<{id:number;voxels:number;volumeMm3:number;center:Point3}>}
 export function isNativeBinding(value:unknown):value is Binding {return !!value&&typeof value==='object'&&'collectionId' in value&&'document' in value;}
 
