@@ -1166,6 +1166,12 @@ def dispatch(session, operation, args, request, progress):
               'branchId': record['branchId'], 'position': record['position'],
               'fullCase': copy.deepcopy(record.get('fullCase', {}).get(record['branchId'])),
               'branches': [{'id': k, 'steps': len(v['actions']), 'parent': record.get('parents', {}).get(k)} for k, v in record['branches'].items()]}
+    if (engine.scene.source.get('adapter') or {}).get('selectedApproach'):
+        from .surgical_selected_decision import selected_plan_decision
+        decision = selected_plan_decision(engine, result['planningAdmission'], branch_id=record['branchId'])
+        if decision is not None:
+            result['selectedPlanDecision'] = decision
+            result['readOnly'] = True
     if study_replay:
         result['readOnly'] = True
         result['branches'] = [b for b in result['branches'] if b['id'] == study_replay['branchId']]

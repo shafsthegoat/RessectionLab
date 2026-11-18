@@ -103,9 +103,20 @@ def test_selected_plan_export_preserves_target_and_current_revision_without_acti
     with pytest.raises(ValueError, match='approach parameters changed'):
         prepare_surgical_environment(native.root, tmp_path/'stale',
             layer_ids={'brain': 'brain', 'tumor': 'lesion'}, approach={**approach, 'parameterHash': 'stale'})
+    with pytest.raises(ValueError, match='route measurements changed'):
+        prepare_surgical_environment(native.root, tmp_path/'stale-measurements',
+            layer_ids={'brain': 'brain', 'tumor': 'lesion'}, approach={**approach, 'measurementHash': 'stale'})
     report = prepare_surgical_environment(native.root, tmp_path/'bound',
         layer_ids={'brain': 'brain', 'tumor': 'lesion'}, approach=approach)
     case = load_case(report['casePath'])
+    # A freshly extracted portable native study has different absolute paths.
+    # The same route, source bytes and grid must still name the same decision.
+    import shutil
+    restored = shutil.copytree(native.root, tmp_path/'other-extraction')
+    exported_again = prepare_surgical_environment(restored, tmp_path/'bound-again',
+        layer_ids={'brain': 'brain', 'tumor': 'lesion'}, approach=approach)
+    assert exported_again['caseHash'] == report['caseHash']
+    assert exported_again['environment']['sceneId'] == report['environment']['sceneId']
     proposed = case.metadata['surgical_adapter']['selectedApproach']
     assert proposed['targetLayerId'] == 'lesion' and proposed['sourceSnapshotId'] == native.identity()
     assert proposed['id'] == approach['approachId'] and proposed['parameterHash'] == approach['parameterHash']
@@ -126,3 +137,38 @@ def test_selected_plan_export_preserves_target_and_current_revision_without_acti
     original = engine.state_id
     outcome = engine.step({'slot': 'right', 'operation': 'inspect', 'duration': 1.})
     assert outcome['status'] == 'rejected' and engine.state_id == original
+
+    # The intact decision survives a portable save and is measured independently
+    # again on fresh-process hydration. A geometric corridor is never tissue loss.
+    from resectionlab.surgical_selected_decision import selected_plan_decision
+    from resectionlab.surgical_patient import surgical_environment_options
+    with pytest.raises(ValueError, match='admission or source binding'):
+        selected_plan_decision(engine, {'available': True}, branch_id='main')
+    session = BridgeSession(tmp_path/'selected-transfers')
+    def call(operation, args):
+        return session.execute(operation, args, _Request(operation), lambda *_: None)
+    try:
+        call('loadCase', {'path': report['casePath']})
+        response = call('surgicalRehearsal', {'caseHash': case.semantic_hash, 'command': 'inspect'})
+        decision = response['selectedPlanDecision']
+        assert response['readOnly'] and decision['stateId'] == response['view']['stateId'] == original
+        assert decision['caseHash'] == case.semantic_hash and decision['sceneId'] == scene.identity
+        assert decision['forecast'] == surgical_environment_options(native)['selectedRouteForecast']
+        assert decision['forecast']['physicalCandidatesExamined'] == 0
+        assert decision['geometry']['lengthMm'] > 0
+        assert decision['measured'] == {'actions': 0, 'targetRemovedMm3': 0., 'nonTargetRemovedMm3': 0.,
+            'originalTargetResidualMm3': response['view']['originalTargetResidualMm3'], 'elapsedSeconds': 0.,
+            'activeTools': 0, 'insertedTools': 0}
+        assert decision['measured']['originalTargetResidualMm3'] == pytest.approx(case.compartments['tumor'].sum()*scene.voxel_mm3)
+        assert decision['preparation']['layers']['tumor']['sampledMaskHash'] == case.metadata['surgical_adapter']['sourceLayers']['tumor']['sampledMaskHash']
+        saved = tmp_path/'selected-stop.ressectionlab'
+        call('saveCase', {'caseHash': case.semantic_hash, 'path': str(saved), 'workspace': {}, 'overwrite': False})
+    finally:
+        session.close()
+    session = BridgeSession(tmp_path/'cold-transfers')
+    try:
+        call('loadCase', {'path': str(saved)})
+        assert call('surgicalRehearsal', {'caseHash': case.semantic_hash,
+                    'command': 'inspect'})['selectedPlanDecision'] == decision
+    finally:
+        session.close()

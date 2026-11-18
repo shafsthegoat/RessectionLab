@@ -10,6 +10,7 @@ import hashlib
 import itertools
 import json
 from pathlib import Path
+from urllib.parse import quote
 import numpy as np
 from scipy.ndimage import affine_transform
 from .core import CaseData, SourceRef, array_digest
@@ -148,7 +149,8 @@ def _research_grid(collection, reference, resolution_mm):
 
 def surgical_environment_options(collection, *, check=lambda: None):
     """Source and role preflight for the separate limited rehearsal derivative."""
-    result = {'referenceIssue': None, 'layers': []}
+    from .surgical_selected_decision import selected_route_forecast
+    result = {'referenceIssue': None, 'layers': [], 'selectedRouteForecast': selected_route_forecast()}
     try:
         reference = collection.series(collection.document['reference_series'])
         _source_registration(collection, reference)
@@ -212,12 +214,21 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
     manifest_path = root / 'patient-anatomy.json'
     def selected_approach():
         from .anatomy_operative_field import _saved_route
-        if type(approach) is not dict or set(approach) != {'approachId', 'parameterHash', 'targetLayerId', 'snapshotId'}:
+        required = {'approachId', 'parameterHash', 'targetLayerId', 'snapshotId'}
+        if type(approach) is not dict or not required <= set(approach) <= required | {'measurementHash'}:
             raise ValueError('Select a current saved approach and target')
         if layer_ids.get('tumor') != approach['targetLayerId']:
             raise ValueError('Environment tumor differs from the selected approach target')
         route, binding, revision = _saved_route(collection, approach)
+        if 'measurementHash' in approach and approach['measurementHash'] != route['measurementHash']:
+            raise ValueError('The selected route measurements changed; review the forecast again')
+        from .surgical_selected_decision import selected_route_forecast
+        measured = route['measurements']
+        geometry = {'lengthMm': measured['lengthMm'],
+                    'traversedNonTargetMm3': measured['normalTraversal'].get('supportedNonTargetVoxelCenterVolumeMm3'),
+                    'unknowns': list(measured['unknowns'])}
         return {'schema': 'resectionlab.native-environment-approach.v1', 'planRevision': revision,
+            'geometry': geometry, 'forecast': selected_route_forecast(),
             'targetBinding': binding, **{key: copy.deepcopy(route[key]) for key in
                 ('id', 'name', 'sourceSnapshotId', 'targetLayerId', 'parameterHash', 'measurementHash',
                  'entry', 'target', 'radiusMm', 'direction')}}
@@ -250,8 +261,12 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
         original_path = collection.path(original['path'])
         if _sha(original_path) != original['sha256']:
             raise ValueError('Source original checksum differs')
-        source_refs.append(SourceRef(sid, original_path.as_uri(), original['sha256'], native_frame='RAS+'))
-    source_refs.append(SourceRef('source-manifest', manifest_path.resolve().as_uri(), manifest_hash, native_frame='RAS+'))
+        # The native package may be extracted under a new directory on each open.
+        # Relative references resolve within the hash-bound source manifest.
+        uri = quote(original['path']) if planned else original_path.as_uri()
+        source_refs.append(SourceRef(sid, uri, original['sha256'], native_frame='RAS+'))
+    manifest_uri = 'patient-anatomy.json' if planned else manifest_path.resolve().as_uri()
+    source_refs.append(SourceRef('source-manifest', manifest_uri, manifest_hash, native_frame='RAS+'))
     mri = _resample(collection.array(reference['data']), reference_affine, target_affine, shape)
     masks, layer_report = {}, {}
     for name in selected_order:

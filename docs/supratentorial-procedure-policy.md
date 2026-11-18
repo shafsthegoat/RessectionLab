@@ -8,6 +8,39 @@ currently unsupported (`PROCEDURE_ACQUIRED_SOURCE_QUALIFICATION_UNAVAILABLE`):
 existing receipts do not yet bind complete intracranial and critical coverage to
 this task. A review string or research acknowledgement cannot supply that join.
 
+On the November 18 four-channel UCSF-PDGM-0004 study, the selected left-superior
+path ends at the intact admission boundary. The geometric comparison evaluated
+five windows and returned three. The selected 16.32 mm corridor contains
+151 mm³ of source-supported non-target brain by voxel centers. Physical costs
+for traversing and withdrawing through that corridor are unknown. The inspection
+derivative samples the T1c reference, selected brain mask and supplied enhancing
+target. All four acquisitions and the separate BraTS estimates remain bound
+through the native reconstruction revision. The exporter forecasts STOP before access. The engine measures zero
+actions, zero target and mapped non-target removal and 15,672 mm³ of original
+target remaining. Both tools start and finish outside. No physical treatment
+candidate was examined on this revision. The historical preparation on the
+earlier revision incurred 66 mm³ of mapped non-target removal over 53 actions.
+
+The current local release review gives UCSF-0004 structural MRI and supplied
+tumor inspection capability. Its brain estimate and structural-MRI vessel
+candidates lack independent operative review. The reviewed TopCoW-001 CTA
+release covers a different person with no tumor target and partial vascular
+coverage. Neither release supplies reviewed operative permissions. The current
+integrated catalog contains 368 rows and reports zero subjects with matched
+acquired tumor MRI, skull CT and dedicated angiography. A particular modality
+combination would still require task-specific review.
+
+A future acquired admission needs a versioned, independently issued decision
+that binds the exact patient, timepoint, input checksums, geometry, registration,
+sampled original memberships and coverage domains to this procedure. The
+importer must verify that decision against an independently maintained release,
+rebuild its masks and protection on the engine grid, and match the declared
+stage, permitted entry, working compartments, swept instrument domain, tissue
+permissions and harm limits. Acceptance needs a reviewed positive case and
+refusals for changed pixels, patient, revision, partial critical coverage and
+foreign or withdrawn review decisions. A study-supplied assertion of review
+cannot supply release authority. [Private release and demonstration guide](local-storage-ledger.md)
+
 The versioned declaration independently binds entry masks, permitted compartment
 masks, the whole-tool work box, observed source coverage, tissue effect permissions,
 and budgets. Brainstem and cerebellum are required neural memberships with
