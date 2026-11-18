@@ -177,6 +177,11 @@ def create(engine):
     """Copy a validated source once; all action work then owns native data."""
     if not native_backend.cpp_enabled():
         return None, 'reference-selected'
+    if getattr(engine, '_cranial_stage_bone_prefix', None) is not None:
+        # The resident constructor imports physical state, actions and history.
+        # A verified stage witness is private runtime state. A detached owner
+        # must continue through the reference transition that validates it.
+        return None, 'detached-cranial-stage-witness'
     scene = engine.scene
     scene.require_cache_source()
     from .surgical_craniotomy import _original_targets, validate_contract
@@ -280,7 +285,9 @@ def detach(engine):
     engine.__dict__['_resident'] = None
     if prefix is not None:
         from . import surgical_cranial_stages as stages
-        proof = stages.NativeBonePrefix(**{key: value for key, value in prefix.items() if key != 'opening_summary'})
+        fields = {key: value for key, value in prefix.items() if key != 'opening_summary'}
+        fields['removed_bone_cells'] = tuple(fields['removed_bone_cells'])
+        proof = stages.NativeBonePrefix(**fields)
         stages._prefixes[id(proof)] = proof
         stages._prefix_facts[id(proof)] = tuple((f.name, getattr(proof, f.name)) for f in stages.fields(proof))
         stages.weakref.finalize(proof, stages._prefix_facts.pop, id(proof), None)
