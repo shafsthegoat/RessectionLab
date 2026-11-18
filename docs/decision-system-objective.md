@@ -4,8 +4,45 @@ This is the implemented research contract, not a completed clinical objective.
 The [November 13 engineering closeout](../artifacts/decision-system-closeout-20261113.json)
 records the current source/build checks; historical milestones and remaining
 patient dependencies are in [the progress record](decision-system-progress.md).
-Zero completed patient tumor tasks and all anatomical, physiological and RL
-qualification holds remain.
+Zero acquired cases have completed the qualified supratentorial tumor task.
+
+## Scan-to-procedure acceptance
+
+Begin with the available scans of one person at a declared timepoint. Retain
+the original geometry and annotated compartments, inspect corrections on the
+original slices and account for each added acquisition. Keep acquired signal,
+supplied labels, model estimates and synthetic additions identifiable through
+save and reopen. Separate missing coverage, unlabelled tissue and assessed
+negative evidence in each structure's contribution.
+
+An acquired-case demonstration requires all of the following in the desktop.
+
+1. Add same-patient imaging and show what changed. Withhold a failed
+   registration or an out-of-coverage result. Record the source and target revision.
+2. Compare at least two entry strategies against the same target, evidence and
+   constraints. Keep residual enhancing target, surrounding FLAIR abnormality
+   and necrotic core distinguishable where the annotation supports them.
+3. Execute an admitted episode with complete instrument and swept-path checks.
+   Record a rejected action, its reason and the unchanged physical state.
+4. Play the accepted actions in 3D with a cutaway-off view of exposure. Show
+   the tools, tissue changes, cavity, whole-target residual and consequences
+   at their recorded states. Pause, step, scrub, save and cold reopen. Match
+   tool, state and cumulative-ledger identities at selected positions.
+5. Compare search and an eligible policy from the same state with matched
+   observations and explicit compute budgets. Include STOP and checked exit.
+   Report direct neural injury, mechanical exposure, arterial supply or venous
+   drainage effects, and motor plus a case-supported second functional domain.
+   Unmeasured outcomes stay unknown. An advantage requires a measured result.
+
+The geometric preview and its removal animation remain available on cases
+with insufficient engine evidence. Generated controls test implementation.
+The acquired completion count uses the full sequence above. Outcome claims
+require their own clinical validation. Anatomical teaching references inform
+orientation, paired intraoperative landmarks support registration evaluation,
+and tumor compartment selection depends on indication and imaging.
+[Rhoton Collection](https://www.aans.org/education-publications/references/the-rhoton-collection/) ·
+[RESECT acquisition and landmarks](https://pubmed.ncbi.nlm.nih.gov/28391601/) ·
+[EANS–EANO glioma resection guidelines](https://doi.org/10.1093/neuonc/noaf217).
 
 For the opt-in November 16 supratentorial task, the
 [versioned procedure policy](supratentorial-procedure-policy.md) now supersedes

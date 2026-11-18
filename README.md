@@ -5,8 +5,13 @@ retire obsolete code/docs/artifacts, and archive useful history outside the trac
 
 Start with the [current status and working entry points](docs/current-status.md)
 for architecture, workflow, verification, experimental features and dated history.
-To combine a patient's MRI and CT series, compare approaches and play the
-operative steps for a selected path, follow the [scan-to-rehearsal workflow](docs/desktop-workflow.md#from-patient-scans-to-operative-steps).
+The workbench follows one patient from acquired scans and supplied annotations
+through reconstruction, source-slice inspection, approach comparison and 3D
+rehearsal. Every input needs an anatomical contribution or an exclusion reason.
+Watching the operation, pausing, scrubbing and reopening the recorded procedure
+are permanent product requirements. The geometric preview illustrates a selected
+route. Executed replay shows the actions and tissue changes recorded by
+`SurgicalEngine`. [Use the scan-to-rehearsal workflow](docs/desktop-workflow.md#from-patient-scans-to-operative-steps).
 The [cleanup execution record](docs/cleanup-execution-20261116.md) documents the
 archived historical data, measured checkout reduction and verified restoration.
 The [earlier support pass](docs/cleanup-20261116.md) retains its original scope.
