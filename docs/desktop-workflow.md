@@ -22,6 +22,41 @@ Use the right-hand slice controls to move the linked cursor. In the 3D pane, **C
 5. Press **Play steps** or scrub the **Operative timeline**. The field shows the bone flap lifting, the dural flap opening, optional brain retraction and a modeled ultrasonic aspirator advancing into the labeled lesion. Stages need corresponding tissue on the path. A dural envelope proxy is identified at the opening step. Toggle **Include retraction** to explore the same path without a held blade. **Inspection cutaway** exposes the instrument and cavity. The tissue motion and cavity are illustrative geometry. Patient-specific forces, bleeding, functional outcomes and surgical feasibility remain unassessed. [Operative simulation study](https://link.springer.com/article/10.1007/s00701-020-04359-w) · [Retraction in selected deep lesions](https://pmc.ncbi.nlm.nih.gov/articles/PMC6529054/)
 6. Use **Return to plan** to select and preview another path. **Save study & comparison** retains the selected approach with its source study. The choice is yours. The metrics describe geometric tradeoffs within the available evidence.
 
+In **Scans → Acquisition contributions**, inspect the acquisition role, registration
+and processing outcomes. Compare a moving scan with its reference in
+**Alignment & registration**. Pick corresponding anatomical points on both
+source views and inspect their residuals near the route. Opening a study
+or selecting another acquisition preserves its source revision.
+
+For a preprocessed glioma study with aligned T1CE, T1, T2 and FLAIR, choose
+the four-channel MONAI option under **Prepare anatomy**. It retains enhancing,
+core and whole abnormality as nested unreviewed estimates alongside supplied
+labels. Incomplete inputs keep the compatible single-sequence options.
+The BraTS bundle requires four channels. Methods evaluated on missing-modality
+subsets require a separate verified implementation. Supplied tract bundles
+can be inspected. Raw DWI, MRV and SWI alone do not produce named tracts,
+veins or sinuses in this build. [MONAI bundle](https://huggingface.co/MONAI/brats_mri_segmentation/blob/main/docs/README.md)
+· [mmFormer subset evaluation](https://arxiv.org/abs/2206.02425).
+
+### Watch a recorded engine procedure
+
+Select the study's target in **Plan**. In **Rehearse**, choose **Open recorded
+engine episode** and pick the matching recorded environment. The app checks
+the native patient, revision, target, source masks, registered reference image,
+instrument configuration and branch replay. The selected geometric route stays
+in the native study. The episode uses its recorded path. **Surgeon / Microscope**
+shows the operative field. Leave **Inspection-only cutaway** and **Inspection-only
+transparency** off to see the actual modeled exposure. Play, pause, step or
+scrub to a recorded state. Use **Save** to persist the episode and view, and
+**Open** to restore them. Each frame carries its cumulative effects.
+
+To inspect the current proposal in the engine, choose **Open instrument
+environment** from the preview and **Inspect approach in engine**. The derivative
+records the approach, target, source revision and physical geometry. A full
+procedure requires reviewed entry, operative compartment, brainstem, cerebellum,
+coverage and swept instrument workspace evidence. A selected path by itself
+authorizes zero actions. [Acquired case and measured results](current-status.md#acquired-scan-to-procedure-demonstration).
+
 The operative field reports its display spacing above the 3D view. On the
 MNI BITE 09 study the field uses a 0.3125 mm grid. The renderer smooths the
 tissue surfaces and samples the acquired scan to shade them, including cut
@@ -31,6 +66,60 @@ supported outer bone surface are hidden with the scalp. **Field evidence**
 reports that count and identifies the scan supplying the tissue contrast.
 The full vascular estimates are available in **Anatomy**. Original scan
 spacing and supplied contours are available in **Scans**.
+
+### Reproduce the acquired replay and generated comparison
+
+Run from the repository root on the configured Mac with the Python environment,
+desktop dependencies and FFmpeg installed. The local test guide locates the
+UCSF source and original episode. The output link below resolves to the verified
+personal HDD. The commands create a new run and a disposable APFS clone of the
+source. Both Electron entry points use hidden windows.
+
+```sh
+set -e
+pnpm --dir desktop build
+evidence="$PWD/testcases/outputs/scan-to-engine-20261118"
+test -f "$evidence/README.md"
+run=$(mktemp -d "$evidence/reproduce-XXXXXX")
+scratch=$(mktemp -d "$PWD/testcases/outputs/scan-to-engine-input-XXXXXX")
+cp -cR testcases/environments/native/UCSF-PDGM-0004 "$scratch/native"
+native="$scratch/native/patient-anatomy.json"
+episode="$PWD/testcases/matched-exposure-v1/desktop-reopen-01/strategies-saved.ressectionlab"
+electron="$PWD/desktop/node_modules/.bin/electron"
+plan=desktop/electron/verify-native-operative-preview.cjs
+replay=desktop/electron/verify-study-engine-replay.cjs
+"$electron" "$plan" "$native" "$run/plan" preview --distinct --inspect-shortest --export "$run/selected.rsworkspace"
+"$electron" "$plan" "$native" "$run/inspect" reopen --open-archive "$run/selected.rsworkspace" --engine-inspection
+"$electron" "$replay" "$native" "$episode" "$run/recording" enhancing_target
+"$electron" "$replay" "$native" "$episode" "$run/recording" enhancing_target --cold
+"$electron" "$replay" "$native" "$episode" "$run/recording" enhancing_target --cold-midpoint
+.venv/bin/python scripts/demonstrate_approach_procedure.py --output "$scratch/generated-approaches"
+cp -R "$scratch/generated-approaches" "$run/generated-approaches"
+.venv/bin/python scripts/compare_observed_skill_policies.py "$run/generated-search-and-rl"
+```
+
+To repeat the comparison on the four-channel revision saved after inference,
+open its portable source in the same harness. The manifest supplies the
+expected revision for the verifier. The app opens the full archive through
+its normal study chooser.
+
+```sh
+bundle="$scratch/brats.rsworkspace"
+qc="/Volumes/shafrir/old coding projects/RessectionLabData/qc"
+ln -s "$qc/brats-native-0004-20261118/UCSF-PDGM-0004-BraTS-compartments.rsworkspace" "$bundle"
+unzip -p "$bundle" patient-anatomy.json > "$scratch/brats-manifest.json"
+"$electron" "$plan" "$scratch/brats-manifest.json" "$run/four-channel" preview --open-archive "$bundle" --distinct --inspect-shortest --export "$run/four-channel.rsworkspace"
+"$electron" "$plan" "$scratch/brats-manifest.json" "$run/four-channel-inspection" reopen --open-archive "$run/four-channel.rsworkspace" --engine-inspection
+```
+
+The plan check saves the shortest of three measured windows. The recording
+check opens the historical preparation through **Rehearse**, captures every
+accepted boundary, verifies the visible tools and cumulative ledger, and writes
+`engine-preparation.mp4`. The two fresh processes restore the endpoint and the
+midpoint. The generated comparison reads the frozen seed-17 checkpoint under
+`testcases/overnight-sequential-v1/benchmark-task-v2`. After checking the
+outputs, discard the disposable input clone. The saved study contains the scan
+arrays and planning selections. [Case results and qualification](current-status.md#acquired-scan-to-procedure-demonstration) · [Private asset locations](local-storage-ledger.md).
 
 Historical capture receipts remain available at the links below. Most images
 and recordings now require the [visual evidence archive](visual-evidence-archive-20261116.md),

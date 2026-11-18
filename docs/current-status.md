@@ -35,11 +35,43 @@ study keeps eight synthetic targets separate from its healthy anatomy.
 [Reproduce the desktop checks](fresh-patient-reproduction.md#desktop-workflow-and-smoke-test) ·
 [Resume the versioned migration](data-rebuild.md#native-study-migration).
 
-The research objective remains source Case → opening/preparation → tumor work →
-checked exit → Save/cold Open, with alternative feasible approaches. There are
-zero qualified patient tumor-task completions. Missing source anatomy,
-physiological calibration and physical/RL qualification remain open. Generated
-engineering controls do not close those requirements.
+## Acquired scan-to-procedure demonstration
+
+The selected development case is preoperative **UCSF-PDGM-0004**, revision
+`557b567cecdc3b109cd86873cc74c30c957b35876532a63f882eb8cca62c5844`.
+Four preprocessed structural MRI volumes and supplied tumor labels are available.
+The four-channel preparation produced revision
+`4ffe2dc58f994485f092da208be175dad432f0f1372881448dc33ccad838cd34`.
+That portable study holds all four acquisitions, the supplied target, three
+additional model estimates and the selected geometric window together.
+It cold reopened in the engine at boundary zero. Loading the historical
+preparation against this newer revision was refused. The original revision
+reproduced all 54 recorded boundaries, including a fresh-process midpoint
+at action 26 with 46 mm³ of mapped non-target removal.
+The selected target is `enhancing_target` (label 4). Core and FLAIR signal
+remain separate. No paired CT, dedicated angiography or patient-specific motor
+and second functional maps qualify this case.
+
+| Acceptance item | Demonstrated result | Remaining boundary |
+| --- | --- | --- |
+| MRI preparation | MONAI BraTS 0.5.4 produced 14,023 enhancing, 22,561 core and 37,595 whole-abnormality voxels. All three estimates reopened alongside the supplied labels. Missing FLAIR, cropped T2 and unreviewed shifted T1 each withheld inference. | The masks are nested. The case overlaps BraTS2021. Membership in the checkpoint's training set is unresolved. |
+| Incremental same-patient evidence | On separate meningioma sub-13, adding CT revealed 341,425.75 mm³ of density-labelled tissue. The two CT reconstructions disagreed at 699,679 thresholded voxels. Deliberately mismatched landmarks had residuals of 42.30, 42.30 and 41.40 mm. Refusal preserved the revision. | The proposal includes teeth and extracranial bone. The CT reconstructions are correlated. Cross-frame quantitative fusion remains withheld. Automatic local source precedence currently covers bone. Other structure disagreements remain available for review. |
+| Distinct entry windows | The left-superior, posterior-superior and anterior-superior routes measured 16.32, 26.36 and 59.15 mm. Their capsule samples contained 151, 213 and 559 mm³ of estimated non-target brain and 44, 94 and 103 mm³ of target, respectively. The shortest window was selected for inspection and cold reopened. | These geometric intersections do not establish vascular clearance, injury or treatment. |
+| Geometric playback | BITE-09 contributed a gadolinium T1 and source tumor mask. SIAM DS715_NODA fold 1 supported illustrative flap, dura, retraction and aspiration. The 0.3125 mm display grid sampled MRI acquired at 1 × 0.547 × 0.547 mm and model output from 0.75 mm inference. | The sweep removed 98.4 mm³ of local display labels. Whole-lesion removal and physical response remain unassessed. |
+| Acquired engine recording | The separate UCSF preparation on `prepared-task-1` replayed 53 actions over 43.2 simulated seconds. It removed 66 mm³ of mapped non-target tissue and 0 mm³ of target. Both instruments withdrew. All 15,672 mm³ of the original engine-grid target remained. | The comparison stopped because no tested two-tool continuation was admissible. The newly inspected left-superior window has no executed trajectory. |
+| Controlled treatment and refusal | A generated post-access superior route treated 54 of 108 mm³ and withdrew. The inferior/posterior attempt hit protected clearance. The rejected preview retained its state. | This control starts after access. Acquired exterior-to-target treatment remains open. |
+| Opening through treatment | A separate generated, post-scalp alternative replayed 119 actions. Bone and membrane opening cost 285 mm³ bone and 49 mm³ other tissue. It removed 27/27 mm³ of target and mechanically withdrew. | The current planner recommended STOP. The alternative retained 236 mm³ of debris and failed the canonical withdrawal endpoint. Scalp exposure cost was unknown. |
+| Matched RL and search | On previously evaluated generated parent 200, the frozen seed-17 actor treated 243/243 mm³ in 14 physical calls. One-ply search treated 27/243 in eight calls with two refusals. Both stopped and withdrew. Each had 56 calls and 25 s available and saw the same 28 features and legal-action mask. | This single result establishes no patient-level advantage. Acquired policy inference was refused. |
+
+Full acquired completion remains **0**. It requires an independently reviewed
+procedure contract with intracranial coverage, brainstem and cerebellar exclusion,
+permitted entry and compartment, treatment and work domains, operative
+prerequisites and swept instrument access. The current supratentorial policy
+admits generated controls. Adding labels alone cannot lift its acquired-source
+qualification hold. Postoperative deficits, perfusion and outcome probabilities
+remain unvalidated. The source build passed 277 integrated Python tests
+and 1,460 desktop tests. [Demonstration files](local-storage-ledger.md) ·
+[Reproduction commands](desktop-workflow.md#reproduce-the-acquired-replay-and-generated-comparison).
 
 The November 18 evidence-aware planning milestone adds an opt-in cortical
 access assessment and named preservation decisions. The matched generated
