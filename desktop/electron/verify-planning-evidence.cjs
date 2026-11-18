@@ -106,6 +106,15 @@ app.once('browser-window-created',(_event,window)=>{
         await capture('matched-alternatives','.planning-evidence');
         await capture(expected==='overlap'?'preservation-choice':'finish-with-residual',
           expected==='overlap'?'[data-intent="continue"]':'[data-intent="stop_with_residual"]');
+        if(expected==='overlap'){
+          await click('Inspect decision at action 0');
+          await wait(()=>lastSurgical?.branchId==='harm-aware'&&lastSurgical.position===0
+            &&lastSurgical.view.stateId===aware.intentDecisions[0].sourceStateId,'bound choice checkpoint');
+          await capture('choice-checkpoint','[data-intent="continue"]');
+          await click('Inspect Named preservation controller');
+          await wait(()=>lastSurgical?.view.stateId===aware.stateId,'checked endpoint after decision inspection');
+          report.decisionInspection=true;
+        }
         if(!prior){
           const menu=Menu.getApplicationMenu().items.find(item=>item.label==='File');
           menu.submenu.items.find(item=>item.label==='Save Workspace…').click();

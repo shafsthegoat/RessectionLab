@@ -478,7 +478,9 @@ the state where CST preservation changes the continuation. Open
 The actual hidden desktop runs saved portable copies and opened them in
 fresh processes. See `testcases/evidence-aware-planning-desktop-v1/`
 under `matched-overlap-cold` and `critical-stop-cold` for decisions, captures
-and verification receipts. To reproduce the hidden save and reopen:
+and verification receipts. The `matched-overlap-inspected` capture also
+verifies selecting the exact pre-treatment decision state and returning to
+the checked endpoint. To reproduce the hidden save and reopen:
 
 ```sh
 mkdir -p testcases/evidence-aware-ui-repro
