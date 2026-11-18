@@ -32,6 +32,11 @@ and records both SHA-256 digests. Running, cancelled, and unprocessed rows keep
 the report pending. A complete report can include failures and protected or
 retained studies. `--only` filters the printed counts. The joined export always
 includes the full inventory and can be regenerated from the same frozen inputs.
+When later source review changes an alignment, inspect the affected row's
+`migration.postmigration_review`. It identifies the reviewed working archive,
+the original snapshot it came from, and the checksummed decision. Open the
+linked working archive to see the corrected registration and saved comparison.
+
 For a hand-authored native study, use a plan with schema
 `resectionlab.local-standardization-plan.v2`. Its `cases` contain `id`,
 `patient_id`, `collection`, and a list of `series` with their source paths.

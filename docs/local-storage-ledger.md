@@ -23,6 +23,12 @@ require separate admission. `catalog/native-release.json` lists the reviewed
 TopCoW-001 CTA workspace and binds its allowed uses to the checksummed decision
 under `qc/native-study-reviews/`. [Run and resume the migration](data-rebuild.md#native-study-migration).
 
+The private corrected EDEN CTRL_0866 study and its review receipt are in
+`prepared/adaptive-anatomy-qa-20261118-v1/`. Open
+`EDEN2020-CTRL_0866-tof-refused-v1.rsworkspace` for independent TOF inspection
+and the refreshed T1-based comparison.
+Its migration row links the acquired source snapshot to this reviewed version.
+
 Paths below are relative to the RessectionLab root. This compact ledger covers
 that area, not unrelated personal files elsewhere on the HDD. Presence does not
 establish scientific readiness or a completed build; consult each run's receipts.
