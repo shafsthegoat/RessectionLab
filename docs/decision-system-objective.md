@@ -6,6 +6,24 @@ records the current source/build checks; historical milestones and remaining
 patient dependencies are in [the progress record](decision-system-progress.md).
 Zero acquired cases have completed the qualified supratentorial tumor task.
 
+Validate four properties separately. **Visual quality** is measured at fixed
+source, camera, state and hardware, including the time to settle after a change.
+**Anatomical fidelity** uses source voxels, original sampling, annotations,
+review status, thin-structure continuity and uncertainty. **Physical validity**
+requires agreement between the accepted actions, intermediate observations,
+contacts, tissue and field ledgers, STOP and exit. **Outcome validity** requires
+independent evidence for each claimed patient effect. A successful generated
+episode tests the declared engineering endpoint.
+
+The linked imaging and corridor examples in Medivis informed the decision to
+keep original slices beside an opaque operative field. Slicer's separate
+labelmap and surface representations informed source-exact picking and the raw
+edge comparison. VTK's shared material interfaces informed the bounded display
+reconstruction. The curved control measures interface separation and membrane
+thickness independently of image appearance. Rhoton is an orientation reference
+for cranial relationships. Source scans supply the visible patient anatomy.
+[Medivis Studio](https://www.medivis.com/studio) · [Cranial navigation](https://www.medivis.com/navigation/cranial) · [3D Slicer segmentations](https://slicer.readthedocs.io/en/latest/user_guide/modules/segmentations.html) · [Segment Editor](https://slicer.readthedocs.io/en/latest/user_guide/modules/segmenteditor.html) · [VTK Surface Nets](https://vtk.org/doc/nightly/html/classvtkSurfaceNets3D.html) · [Rhoton Collection](https://www.aans.org/education-publications/references/the-rhoton-collection/).
+
 ## Scan-to-procedure acceptance
 
 Begin with the available scans of one person at a declared timepoint. Retain

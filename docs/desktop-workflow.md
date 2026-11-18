@@ -32,6 +32,9 @@ For a preprocessed glioma study with aligned T1CE, T1, T2 and FLAIR, choose
 the four-channel MONAI option under **Prepare anatomy**. It retains enhancing,
 core and whole abnormality as nested unreviewed estimates alongside supplied
 labels. Incomplete inputs keep the compatible single-sequence options.
+The four inputs must be distinct brain-extracted, spatially qualified images
+on the supported common grid. An arbitrary set of four uploads can fail
+that check. Inspect the reason for each withheld stage in the study.
 The BraTS bundle requires four channels. Methods evaluated on missing-modality
 subsets require a separate verified implementation. Supplied tract bundles
 can be inspected. Raw DWI, MRV and SWI alone do not produce named tracts,
@@ -49,6 +52,22 @@ shows the operative field. Leave **Inspection-only cutaway** and **Inspection-on
 transparency** off to see the actual modeled exposure. Play, pause, step or
 scrub to a recorded state. Use **Save** to persist the episode and view, and
 **Open** to restore them. Each frame carries its cumulative effects.
+
+Use **Export observed replay** to save a captioned MP4. Select a destination
+with space for temporary compositor images. The exporter seeks the engine's
+recorded observations, waits for the matching tool and surface state, then
+encodes their simulated times. A one-second hold shows the endpoint. The
+operation restores the prior timeline cursor. The installed FFmpeg must
+support H.264 and subtitles.
+
+Choose **Source edges** or **Conditioned edges** in the operative legend to
+compare display surfaces at the same camera and engine state. Inspect a legend
+entry or double-click a surface for its layer and linked source coordinates.
+On the historical UCSF preparation the violet source label is supplied contrast
+enhancement. Magenta on the MRI slices identifies the experimental vesselFM
+estimate. The microscope shows that estimate in muted rose with a separate
+slice swatch. Its positive signal does not measure vascular clearance.
+[VesselFM's published scope](https://github.com/bwittmann/vesselFM).
 
 To inspect the current proposal in the engine, choose **Open instrument
 environment** from the preview and **Inspect approach in engine**. The derivative
@@ -120,6 +139,56 @@ midpoint. The generated comparison reads the frozen seed-17 checkpoint under
 `testcases/overnight-sequential-v1/benchmark-task-v2`. After checking the
 outputs, discard the disposable input clone. The saved study contains the scan
 arrays and planning selections. [Case results and qualification](current-status.md#acquired-scan-to-procedure-demonstration) · [Private asset locations](local-storage-ledger.md).
+
+### Reproduce continuous rehearsal
+
+Open the generated `generated-cleanup/final/complete.ressectionlab` from
+**Cases → Open** and choose **Rehearse → Surgeon / Microscope**. Leave the
+inspection cutaway off. Play from boundary zero, pause during action 108
+to inspect the first measured target removal, and scrub between boundaries
+119 and 200 to see 236 mm³ of debris cleared. The endpoint records both tools
+outside. Export from the same view with **Export observed replay**. For the
+acquired decision, open `selected-decision/UCSF-0004-intact-stop.ressectionlab`.
+The four-channel source study is the earlier
+`UCSF-0004-four-channel-selected-window.rsworkspace`. The older acquired MP4
+uses a separately bound trajectory. The [storage ledger](local-storage-ledger.md)
+locates these private assets and the reproduction guides for comparing them.
+
+From the project root, choose a new, empty ignored output directory. When
+using the personal HDD, create it below the verified archive link. The generated
+case can be recreated from source. Hidden desktop runs use the installed
+Electron binary and the same controls as the application.
+
+```sh
+run=testcases/outputs/continuous-rehearsal-rerun
+mkdir "$run"
+pnpm --dir desktop build
+.venv/bin/python scripts/demonstrate_generated_kerf_cleanup.py --output "$run/cleanup"
+.venv/bin/python scripts/generate_curved_render_case.py "$run/curved"
+.venv/bin/python scripts/verify_curved_render_geometry.py "$run/geometry.json"
+electron=desktop/node_modules/.bin/electron
+"$electron" desktop/electron/verify-engine-contours.cjs "$run/curved/curved-field.ressectionlab" "$run/contours" 2 1,2
+replay=desktop/electron/verify-study-engine-replay.cjs
+casefile="$run/cleanup/complete.ressectionlab"
+"$electron" "$replay" --workspace "$casefile" "$run/movie" generated-target
+"$electron" "$replay" --workspace "$casefile" "$run/movie" generated-target --cold
+"$electron" "$replay" --workspace "$casefile" "$run/movie" generated-target --cold-midpoint
+```
+
+For the frozen comparison, the previous run's `freeze.json` and
+`checkpoints/17/selected.pt` must be present under
+`testcases/overnight-sequential-v1/benchmark-task-v2/`. The HDD review
+copy under `evaluation/reproduction-inputs/` includes checksums. The evaluation
+checks the protocol and weights on entry. Each selector receives the same 28
+features and legal skill mask. Each post-access arm has up to eight selections,
+56 physical calls and 25 online seconds. Each closed-shell arm has one route
+selection, 600 public calls, 300 accepted actions and 180 online seconds.
+The original engine independently replays each recorded sequence.
+
+```sh
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONPATH=src \
+  .venv/bin/python scripts/compare_complete_generated_plans.py "$run/matched"
+```
 
 Historical capture receipts remain available at the links below. Most images
 and recordings now require the [visual evidence archive](visual-evidence-archive-20261116.md),

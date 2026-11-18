@@ -35,9 +35,64 @@ study keeps eight synthetic targets separate from its healthy anatomy.
 [Reproduce the desktop checks](fresh-patient-reproduction.md#desktop-workflow-and-smoke-test) ·
 [Resume the versioned migration](data-rebuild.md#native-study-migration).
 
+## Continuous operative rehearsal
+
+The previous milestone established four-channel MRI preparation, revision-bound
+playback and a retained acquired refusal. Its films showed that native anatomy
+was difficult to read and the recording held one image between action boundaries.
+The selected four-sequence route lacked an intact-state decision, and the
+generated opening left debris. The desktop now exposes the following outcomes.
+[Workflow and reproduction](desktop-workflow.md#reproduce-continuous-rehearsal) · [Private evidence index](local-storage-ledger.md).
+
+| Starting evidence | What the desktop demonstrates | Evidence boundary |
+| --- | --- | --- |
+| UCSF-PDGM-0004, preprocessed T1CE/T1/T2/FLAIR, supplied enhancing target (label 4), MONAI BraTS 0.5.4 | Three entry windows measured 16.32, 26.36 and 59.15 mm. The shortest left-superior corridor contains 151 mm³ of sampled non-target tissue. Its revision, target, route and preparation bind to an intact STOP that reopens with both tools outside, zero actions and all 15,672 mm³ of engine-grid target remaining. | No physical treatment candidate was evaluated on this revision. No reviewed acquired case qualified for a full procedure. [Admission requirements](supratentorial-procedure-policy.md) |
+| Original UCSF-0004 recording, separate revision and trajectory | Over 43.2 simulated seconds, 53 actions removed 66 mm³ of mapped non-target tissue and zero enhancing target. Purple identifies the supplied target. Magenta on the slices identifies a vesselFM estimate. | The historical refusal measures a different preparation. Vascular clearance and postoperative function remain unknown. |
+| Generated post-scalp square shell | The planner compares immediate STOP with complete access, treatment, suction and exit. Its accepted 200-action branch charges 285 mm³ bone and 49 mm³ membrane, treats 27/27 mm³ target, clears 236 mm³ debris and withdraws both tools. It satisfies the frozen canonical endpoint. | The original 119-action alternative still fails with 236 mm³ retained debris. Scalp exposure cost is outside this starting state. |
+| BITE-09 MRI, supplied tumor and SIAM DS715_NODA fold 1 estimates | The whole-head view links to native slices. Operative Steps offers raw or conditioned surfaces, a registered exterior and an optional teaching cutaway. The matched endpoint keeps the same camera and 3,224 removed display cells (98.4 mm³). | Opening, retraction and aspiration here are geometric illustrations. Most tissue boundaries come from an unreviewed estimate. |
+| UCSF-0005 same-patient acquisition addition | Adding T1 and FLAIR to T1CE and T2 preserved 35 masks and marked three routes stale. At RAS (−97, 113, 85) mm the supplied enhancing label is positive at T1CE voxel (97, 126, 85). Each other acquisition explains why registration review is required there. | A newly listed scan need not change a mask. Source grid, coverage and provenance remain available after reopening. [Source comparison](fresh-patient-reproduction.md) |
+| TopCoW-001, a separate patient's CTA and supplied masks | The superior sagittal sinus has one 26-neighbor component and ten face-connected components. The geometry retains the sampled diagonal links. | Empty anterior communicating artery masks leave presence unknown. This CTA supplies no evidence for UCSF. [Vascular review](native-vascular-geometry.md) |
+
+**Recorded motion.** Live playback and MP4 export seek accepted observations at
+their recorded times. The completed shell has 862 observations, 462 inside
+actions, with 309 interior pose changes and 25 interior removal changes. An
+attempted exchange with an inserted tool preserves the rejected state. Backward
+seeks reproduce the earlier tool, tissue and cumulative ledger.
+
+**Display accuracy and cost.** On the curved generated fixture, mean cap-normal
+error went from 7.11° to 6.47°. Mean tangent-plane error increased from 0.069
+to 0.107 mm. Groove depth remained underestimated (2.96 mm displayed, 3.48 mm
+analytic). All 87 branch samples, the 1 mm membrane, both target components
+and 1,377 coincident material-interface vertices were preserved. On an Apple
+M2 Pro with 16 GiB, a 15,180-triangle CPU benchmark went from 77.77 to 11.31 ms
+for a full rebuild and 52.59 to 13.99 ms for a local update. The curved case
+settled in 167.26 ms against a 166.73 ms target with 50 ms sampling. A repeat on the integrated build took
+111 ms for the curved case, 1,403 ms for the square and 181 ms for the acquired case. These
+measurements assess the display. Anatomical and biomechanical validity require
+independent evidence.
+
+**Held-out planning.** Six generated comparisons used a prospectively committed
+freeze and the existing seed-17 actor. On both unseen 22 mm³ targets in the
+known square shell, the actor and one-ply search chose the central route,
+treated 14 mm³ and retained 8 mm³. Each run paid for the same opening, cleared
+236 mm³ debris, recorded 1 mm³ of overlapping neural/motor/CST removal, stopped
+and withdrew both tools. Opening, cleanup and exit used shared scripted skills.
+Across four post-access layouts, the actor treated 459 mm³ versus 297 mm³ for
+search, using 50 versus 23 physical requests. On the neural-overlap case it
+removed more neural tissue (54 versus 27 mm³). These results do not establish
+an overall advantage. Vascular and observed functional outcomes were unavailable.
+A stable-source repetition reproduced all 12 trajectories, including refusals and
+endpoints. Neither method was tested on a patient.
+
+Next work requires independently reviewed acquired operative compartments,
+positive and negative coverage, task permissions and swept access and exit
+evidence with corresponding admission and refusal controls. Independent geometry
+and functional references, source-resolution fold recovery and interactive
+frame-time tails remain open.
+
 ## Acquired scan-to-procedure demonstration
 
-The selected development case is preoperative **UCSF-PDGM-0004**, revision
+The earlier demonstration at `b05a5534` used preoperative **UCSF-PDGM-0004**, revision
 `557b567cecdc3b109cd86873cc74c30c957b35876532a63f882eb8cca62c5844`.
 Four preprocessed structural MRI volumes and supplied tumor labels are available.
 The four-channel preparation produced revision
