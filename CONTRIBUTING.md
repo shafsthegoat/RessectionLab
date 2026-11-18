@@ -34,3 +34,11 @@ and installed runtimes are separate from repository cleanup.
 An optional user-only HDD holds additional datasets, models, projects and archives.
 See the [local storage ledger](docs/local-storage-ledger.md) for its location,
 contents and collaborator access limits; maintain that ledger when assets change.
+
+## Desktop interface changes
+
+Use the [desktop UI principles and review checklist](desktop/src/README.md#desktop-ui-principles)
+when changing a visible workflow. In the change description, identify the task
+that gets easier and where the action fits in the existing workspace. For a
+layout or rendering change, describe what you saw in the actual app at normal
+and compact window sizes.
