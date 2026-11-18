@@ -18,6 +18,7 @@ from .surgical_rl_protection import (
 
 PROPERTY = 'surgicalProcedurePolicyV1'
 SCHEMA = 'resectionlab.supratentorial-procedure-policy.v1'
+LEGACY_SELECTION_RULE = 'max_treatment_within_harm_bounds'
 REQUIRED_STRUCTURES = frozenset(('brainstem', 'cerebellum'))
 MAX_CELLS = 2_000_000
 _SHA = re.compile('[a-f0-9]{64}')
@@ -86,7 +87,9 @@ def make_procedure_policy(scene, *, policy_id, evidence, structures,
         work_domain, tissue_permissions, neural_max_mm3, structure_max_mm3,
         start_stage='post-access', bone_max_mm3=None,
         preparation_nonbone_max_mm3=None, modeled_time_max_seconds=None,
-        neural_cut_max_mm3=0., structure_cut_max_mm3=None):
+        neural_cut_max_mm3=0., structure_cut_max_mm3=None,
+        selection_rule=LEGACY_SELECTION_RULE, preservation_preference=None,
+        treatment_intent=None):
     """Serialize independently supplied source declarations; infer no anatomy.
 
     Every evidence/region row supplies provenance, evidenceSha256 and
@@ -110,8 +113,12 @@ def make_procedure_policy(scene, *, policy_id, evidence, structures,
         'maximumStructureCutSourceMm3': copy.deepcopy(structure_cut_max_mm3 if structure_cut_max_mm3 is not None else
             {'brainstem': 0., 'cerebellum': 0.}),
         'maximumStructureRemovalMm3': copy.deepcopy(structure_max_mm3),
-        'selectionRule': 'max_treatment_within_harm_bounds',
+        'selectionRule': selection_rule,
         'scenarios': ['nominal'], 'clinicalValidation': False}
+    if preservation_preference is not None:
+        record['preservationPreference'] = copy.deepcopy(preservation_preference)
+    if treatment_intent is not None:
+        record['treatmentIntent'] = copy.deepcopy(treatment_intent)
     for row in record['structures'].values():
         row['cells'] = _packed(row['cells'])
         row['coverageCells'] = _packed(row['coverageCells'])
@@ -128,6 +135,7 @@ def _validated(scene):
     # Admission and policy validation must classify the same immutable source.
     # Do this before the parsed-policy cache, including its CaseData proof.
     from .surgical_planning_admission import source_classification
+    from .surgical_treatment_intent import PRESERVATION_SELECTION_RULE, validate_preservation_preference
     if PROPERTY in scene.properties and source_classification(scene) != 'generated-engineering':
         raise ValueError('PROCEDURE_ACQUIRED_SOURCE_QUALIFICATION_UNAVAILABLE')
     cached = getattr(scene, '_procedure_policy_parsed', None)
@@ -148,8 +156,11 @@ def _validated(scene):
             raw.get('workflow') != 'supratentorial-tumor-resection' or
             raw.get('startStage') not in ('post-scalp', 'post-access') or
             raw.get('clinicalValidation') is not False or
-            raw.get('selectionRule') != 'max_treatment_within_harm_bounds' or raw.get('scenarios') != ['nominal']):
+            raw.get('selectionRule') not in (LEGACY_SELECTION_RULE, PRESERVATION_SELECTION_RULE)
+            or raw.get('scenarios') != ['nominal']):
         raise ValueError('PROCEDURE_WORKFLOW_UNSUPPORTED')
+    if raw['selectionRule'] == PRESERVATION_SELECTION_RULE or 'preservationPreference' in raw:
+        validate_preservation_preference(raw.get('preservationPreference'))
     _evidence(raw.get('evidence'), 'procedure assumptions and intracranial/observed coverage')
     if raw['evidence'].get('reviewStatus') not in ('reviewed', 'generated-engineering'):
         raise ValueError('PROCEDURE_SOURCE_REVIEW_REQUIRED')
@@ -159,12 +170,11 @@ def _validated(scene):
     if not intracranial <= observed:
         raise ValueError('PROCEDURE_INTRACRANIAL_COVERAGE_INCOMPLETE')
     target_labels = {r['id'] for r in scene.regions if r.get('target')}
-    targets = set(map(int, np.flatnonzero(np.isin(scene.labels, list(target_labels)))))
+    owned_targets = frozenset(map(int, np.flatnonzero(np.isin(scene.labels, list(target_labels)))))
     from .surgical_scene import original_target_memberships
     originals = original_target_memberships(scene)
-    if originals is not None:
-        targets.update(int(cell) for cells in originals.values() for cell in cells)
-    if not targets <= intracranial:
+    original_targets = None if originals is None else frozenset(int(cell) for cells in originals.values() for cell in cells)
+    if not owned_targets <= intracranial or (original_targets is not None and not original_targets <= intracranial):
         raise ValueError('PROCEDURE_TARGET_OUTSIDE_INTRACRANIAL_COVERAGE')
     structures = raw.get('structures')
     if type(structures) is not dict or len(structures) > 64:
@@ -248,6 +258,10 @@ def _validated(scene):
         'entries': frozenset(entries), 'permitted': frozenset(permitted), 'neural': frozenset(neural),
         'structureCells': structure_cells,
         'domain': TaskDomain(tuple(low), tuple(high), domain['evidenceSha256'], domain['evidenceSha256'])}
+    if 'treatmentIntent' in raw:
+        from .surgical_treatment_intent import validate_source_intent
+        parsed['treatmentIntent'] = validate_source_intent(scene, raw['treatmentIntent'], parsed,
+            owned_targets=owned_targets, original_targets=original_targets)
     scene._procedure_policy_parsed = parsed
     return parsed
 
@@ -515,8 +529,16 @@ def procedure_comparison_policy(scene):
         'operator': 'at_most', 'value': value} for name, value in raw['maximumStructureRemovalMm3'].items()]
     constraints += [{'metric': 'structure:' + name + ':cutSourceMm3', 'scope': 'cumulative',
         'operator': 'at_most', 'value': value} for name, value in raw['maximumStructureCutSourceMm3'].items()]
+    preference_metrics = raw.get('preservationPreference', {}).get('metrics', [])
     return {'id': raw['id'], 'basis': 'declared_research_task_not_clinical_threshold',
         'objectives': ['targetRemovedMm3', 'neuralRemovedMm3', 'neuralCutSourceMm3', 'boneRemovedMm3',
             'nonbonePreparationRemovedMm3', 'elapsedSeconds'] +
             ['structure:' + name + ':' + effect for name in raw['structures'] for effect in ('removedMm3', 'cutSourceMm3')],
-        'constraints': constraints, 'requiredMetrics': ['neuralRemovedMm3', 'boneRemovedMm3', 'protectedRemovedMm3']}
+        'constraints': constraints, 'requiredMetrics': list(dict.fromkeys(
+            ['neuralRemovedMm3', 'boneRemovedMm3', 'protectedRemovedMm3'] + preference_metrics))}
+
+
+def procedure_preservation_preference(scene):
+    """Return an independent declaration of the named research preference axes."""
+    policy = _validated(scene)
+    return None if policy is None else copy.deepcopy(policy['record'].get('preservationPreference'))

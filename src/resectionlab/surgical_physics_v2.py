@@ -52,12 +52,15 @@ def raster(engine):
 
 def descriptor(engine):
     from .surgical_continuum import descriptor as continuum_descriptor
+    from .surgical_mechanical_exposure import summarize as mechanical_exposure
     from .surgical_vascular_graph import enabled as graph_enabled
     from .surgical_bipolar_thermal import descriptor as thermal_descriptor
+    exposure = mechanical_exposure(engine)
     return {'enabled': True, 'profile': copy.deepcopy(engine.scene.properties['tissuePhysicsV2']),
         'capabilities': {'patientCalibratedPhysiology': False, 'globalPerfusion': False,
             'damageTriggeredVesselWounds': True, 'coupledDeformation': True, 'workLimitedDrilling': True},
         'brain': continuum_descriptor(engine) or {'model': brain.profile()['model']}, 'bone': bone.descriptor(engine), 'vessel': vessel.descriptor(engine),
+        **({'mechanicalExposure': exposure} if exposure is not None else {}),
         **({'bipolarThermal': thermal_descriptor(engine)} if 'bipolarThermalV1' in engine.scene.properties else {}),
         'limits': ['Uncalibrated research mechanics; no clinical outcome prediction.',
             'Continuous local displacements rasterized to the common source grid for collision, surfaces and slices.',

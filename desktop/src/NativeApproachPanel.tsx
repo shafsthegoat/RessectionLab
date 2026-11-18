@@ -6,7 +6,8 @@ import type {ApproachCoverage,ApproachSensitivityConfig,ApproachTargetOption,Nat
 import {approachAssessment,approachStatus,defaultApproachSensitivity,lowerBoundText} from './native-approaches';
 import {NativeStructureControls} from './NativeStructureControls';
 import {rehearsalAvailability} from './NativeStudyEvidence';
-import {ApproachProposalDetails,ApproachSensitivityDetails,ApproachInputComparison} from './NativeApproachReadouts';
+import {NativeConsequenceReadout} from './NativeConsequenceReadout';
+import {ApproachProposalDetails,ApproachSensitivityDetails,ApproachInputComparison,CorticalAccessReadout} from './NativeApproachReadouts';
 import './native-approaches.css';
 const mm=(value:unknown)=>typeof value==='number'&&Number.isFinite(value)?value.toFixed(1):'—';
 const bound=lowerBoundText;
@@ -81,7 +82,15 @@ export function NativeApproachPanel({workspace:w}:{workspace:NativeWorkspace}){
       patchRadiusMm:patchRadius,constraints:value.constraints,targetLayerId,sensitivityConfig});
     if(action==='suggest'&&result?.selectedId){w.setCursor(result.approaches.find(a=>a.id===result.selectedId)?.target??target);w.setSelectedStructure(null)}
   }
-  async function selectApproach(a:NativeApproach){if(await commitEdits()){p.select(a.id);w.setCursor(a.target)}}
+  async function selectApproach(a:NativeApproach){
+    if(!await commitEdits())return;
+    p.select(a.id);
+    w.setCursor(a.target);
+    if(a.assessmentStatus==='current'&&p.consequenceEvidence
+      &&!p.consequenceEvidence.routes.some(route=>route.approachId===a.id)){
+      await p.request({action:'list',targetLayerId:p.activeTargetLayerId,reviewApproachId:a.id});
+    }
+  }
   async function selectTarget(option:ApproachTargetOption|undefined){
     if(!await commitEdits())return;
     const result=await p.request(option&&!option.candidateBinding
@@ -140,7 +149,7 @@ export function NativeApproachPanel({workspace:w}:{workspace:NativeWorkspace}){
       {selected&&<div className="tool-row"><button disabled={blocked||!valid} onClick={()=>void (dirty?commitEdits():p.request({action:'assess',approachId:selected.id}))}>Reassess</button><button disabled={blocked} onClick={()=>void p.request({action:'delete',approachId:selected.id})}>Delete</button></div>}
     </fieldset></section>
     <div className="approach-primary-actions"><button className="approach-suggest" disabled={blocked||!valid||!canPlan} onClick={()=>void runComparison('suggest')}><Sparkles size={14}/>Suggest approaches</button><button aria-label="Create manual approach" disabled={blocked||!valid||!canPlan} onClick={async()=>{if(await commitEdits())void p.request({action:'upsert',approach:{...payload(),id:undefined,name:`Manual ${p.approaches.length+1}`}})}}><Plus size={14}/>Manual</button></div>
-    <p className="approach-caption">Up to three distinct paths within the selected superior or lateral entry patch. Opening the skull and procedural effects are unassessed.</p>
+    <p className="approach-caption">Up to three sampled paths in the selected geometric entry patch. The access assessment checks each candidate against supplied anatomy.</p>
     {p.error&&<p className="approach-error" role="alert">{p.error}{dirty?' Edits remain unsaved. Use Save to retry.':''}</p>}
     {canPlan&&!valid&&<p className="approach-error" role="alert">Use distinct finite endpoints. Supported ranges are corridor radius above 0 to 50 mm, patch radius 0–40 mm, clearance 0–50 mm, length 0.1–1000 mm, translation 0–5 mm and boundary sensitivity 0–3 mm.</p>}
     {p.loading&&<p role="status" className="approach-computing">Loading source-bound comparisons…</p>}
@@ -157,12 +166,19 @@ export function NativeApproachPanel({workspace:w}:{workspace:NativeWorkspace}){
       <span className="approach-card-metric">Radius <b>{mm(a.radiusMm)} mm</b> · minimum supplied clearance bound <b>{bound(summary.minimumBoundMm)} mm</b></span>
       <span className="approach-card-metric">Target voxel centres reached <b>{mm(summary.targetReachedMm3)} mm³</b> · brain traversal upper bound <b>{mm(summary.traversalMm3)} mm³</b></span>
     </button>})}</div>
+    {!dirty&&p.consequenceEvidence&&<NativeConsequenceReadout packet={p.consequenceEvidence} approaches={p.approaches} selectedId={p.selectedId}/>}
     {p.report&&<ApproachProposalDetails report={p.report} targetLabel={targetLabel(p.report.task?.targetLayerId??p.report.targetLayerId)} labels={layerLabels}/>}
     {assessment&&<section className="approach-measurements" data-assessment-status={status}><h2>Source-bound assessment</h2>
       <p className={`approach-observed ${assessment.observed}`} data-observed-result={assessment.observed}>{assessment.observedLabel}</p>
       <p className="approach-evidence" data-assessment-completeness={assessment.completeness}>{assessment.completenessLabel} · {assessment.assessedCount}/{assessment.totalCount} structures measured.</p>
       {assessment.constraintFailures.length>0&&<div className="approach-constraint-failures" role="status"><h3>Geometric constraint failures</h3><ul>{assessment.constraintFailures.map((failure,i)=><li key={i}>{failure}</li>)}</ul></div>}
       {m&&<>
+        {m.accessAssessment&&<CorticalAccessReadout assessment={m.accessAssessment}/>}
+        <dl className="approach-value-list" aria-label="Lesion burden and treatment evidence">
+          {m.targets.filter(t=>t.available&&typeof t.totalVolumeMm3==='number').map((t,i)=><div key={i}><dt>Original supplied lesion label{m.targets.length>1?` · ${t.label??'target'}`:''}</dt><dd>{mm(t.totalVolumeMm3)} mm³ of labelled voxels</dd></div>)}
+          <div><dt>Residual after treatment</dt><dd>Unassessed in this geometric comparison</dd></div>
+          <div><dt>Functional outcomes</dt><dd>Unassessed</dd></div>
+        </dl>
         <div className="approach-metrics"><span>Length<b>{mm(m.lengthMm)} mm</b></span><span>Azimuth / elevation<b>{mm(m.orientation.azimuthDeg)}° / {mm(m.orientation.elevationDeg)}°</b></span><span>Whole capsule inside reference field<b>{m.coverage.withinReferenceEnvelope===true?'Yes':m.coverage.withinReferenceEnvelope===false?'No · unassessed outside':'Unknown'}</b></span></div>
         {selected&&<details><summary>Capsule geometry & source identity</summary><dl className="approach-value-list">
           <div><dt>Entry (RAS mm)</dt><dd>{ras(selected.entry)}</dd></div><div><dt>Target (RAS mm)</dt><dd>{ras(selected.target)}</dd></div>

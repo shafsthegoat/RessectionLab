@@ -127,6 +127,11 @@ def test_intact_arterial_occlusion_has_no_bleeding_but_loses_declared_delivery()
     assert region['supplyDeficitMm3'] == pytest.approx(5., abs=1e-9)
     assert region['supplyDeficitSeconds'] == pytest.approx(20., abs=1e-9)
     assert region['storageChangeMm3'] < 0.
+    evidence = graph.consequence_evidence(e)
+    artery = evidence['segments']['artery']
+    assert artery['kind'] == 'artery' and artery['continuity'] == 'intact'
+    assert artery['occlusionFraction'] == 1. and artery['wounds'] == []
+    assert evidence['regions']['declared-region']['supplyDeficitSeconds'] > region['drainageDeficitSeconds']
 
 
 def test_venous_occlusion_raises_upstream_storage_and_separates_drainage_signal():
@@ -136,15 +141,62 @@ def test_venous_occlusion_raises_upstream_storage_and_separates_drainage_signal(
     assert m['generatedMm3'] == 0. and r['storageChangeMm3'] > 0
     assert r['drainageDeficitSeconds'] == pytest.approx(20., abs=1e-9)
     assert r['supplyDeficitSeconds'] < r['drainageDeficitSeconds']
+    evidence = graph.consequence_evidence(e)
+    vein = evidence['segments']['vein']
+    assert vein['kind'] == 'vein' and vein['occlusionFraction'] == 1.
+    assert evidence['regions']['declared-region']['drainage'] == [{'edge': 'vein', 'direction': 1}]
+    assert evidence['regions']['declared-region']['supply'] == [{'edge': 'artery', 'direction': 1}]
+    assert evidence['regions']['declared-region']['drainageDeficitSeconds'] == r['drainageDeficitSeconds']
 
 
 def test_sealing_both_ports_stops_bleed_but_does_not_reconnect_cut_edge():
     e = engine(); edge = cut(e, 'artery'); advance(e, 1.)
-    before = graph.metrics(e)['generatedMm3']; graph.coagulate(e, edge['sourceCells'], 1., 2.); advance(e, 4.)
+    before = graph.consequence_evidence(e)
+    graph.coagulate(e, edge['sourceCells'], 1., 2.); advance(e, 4.)
     m = graph.metrics(e)
-    assert m['generatedMm3'] == before and m['cutEdgeCount'] == 1
+    assert m['generatedMm3'] == before['bloodGeneratedMm3'] and m['cutEdgeCount'] == 1
     assert e.state[graph.PROPERTY]['edgeFlowMm3PerSecond']['artery'] == 0.
     assert m['regions']['declared-region']['supplyDeficitSeconds'] == pytest.approx(5.)
+    evidence = graph.consequence_evidence(e)
+    artery = evidence['segments']['artery']
+    assert artery['continuity'] == 'severed' and artery['signedFlowMm3PerSecond'] == 0.
+    assert all(port['modeledFlowMm3PerSecond'] > 0. for port in before['segments']['artery']['wounds'])
+    assert len(artery['wounds']) == 2
+    assert all(port['sealFraction'] == 1. and port['modeledFlowMm3PerSecond'] == 0. for port in artery['wounds'])
+    assert evidence['regions']['declared-region']['supplyDeficitSeconds'] == pytest.approx(5.)
+
+
+def test_regional_evidence_retains_declarations_without_assigning_anatomical_roles():
+    p = profile()
+    second_region = {**copy.deepcopy(p['regions'][0]), 'id': 'second-region', 'referenceSupplyMm3PerSecond': .125}
+    p['regions'].append(second_region)
+    e = engine(p)
+    evidence = graph.consequence_evidence(e)
+    assert evidence['territoryStatus'] == 'declared_model_interfaces'
+    assert evidence['coverage'] == p['coverage']
+    assert set(evidence['regions']) == {'declared-region', 'second-region'}
+    region = evidence['regions']['declared-region']
+    assert region['source'] == SOURCE and region['storageChangeMm3'] == 0.
+    assert region['supplyMm3PerSecond'] == pytest.approx(.25)
+    assert region['drainageMm3PerSecond'] == pytest.approx(.25)
+    assert evidence['regions']['second-region']['referenceSupplyMm3PerSecond'] == .125
+    assert region['supplyDeficitSeconds'] == region['drainageDeficitSeconds'] == 0.
+    assert evidence['segments']['artery']['sourceFace'] == p['edges'][0]['sourceFace']
+    assert all(row['supplyRole'] == 'unknown' for row in evidence['segments'].values())
+    region['supply'].clear()
+    evidence['coverage']['missing'].clear()
+    graph.initialize(e)
+    assert p['regions'][0]['supply'] and p['coverage']['missing']
+
+
+def test_missing_graph_or_territory_stays_unknown():
+    absent = graph.consequence_evidence(SimpleNamespace(scene=SimpleNamespace(properties={})))
+    assert absent['status'] == 'unavailable' and absent['regions'] == absent['segments'] == {}
+    p = profile(); p['regions'] = []
+    evidence = graph.consequence_evidence(engine(p))
+    assert evidence['status'] == 'declared_partial_graph_model_only'
+    assert evidence['territoryStatus'] == 'unknown' and evidence['regions'] == {}
+    assert set(evidence['segments']) == {'artery', 'vein'}
 
 
 def test_only_contacted_stump_seals_and_distal_backbleeding_is_retained():
@@ -248,6 +300,11 @@ def test_alternate_venous_drain_carries_reversed_signed_flow_and_limits_storage_
     assert collateral.state[graph.PROPERTY]['edgeFlowMm3PerSecond']['collateral'] < 0
     assert graph.metrics(collateral)['regions']['declared-region']['storageChangeMm3'] < graph.metrics(sole)['regions']['declared-region']['storageChangeMm3']
     assert graph.metrics(collateral)['regions']['declared-region']['drainageDeficitSeconds'] < 1e-7
+    evidence = graph.consequence_evidence(collateral)
+    assert evidence['segments']['collateral']['kind'] == 'assumed-link'
+    assert evidence['segments']['collateral']['sourceCells'] == []
+    assert evidence['segments']['collateral']['signedFlowMm3PerSecond'] < 0.
+    assert evidence['regions']['declared-region']['drainage'][-1] == {'edge': 'collateral', 'direction': -1}
 
 
 def test_public_bipolar_geometry_compression_release_occlusion_export_and_replay():
@@ -267,8 +324,14 @@ def test_public_bipolar_geometry_compression_release_occlusion_export_and_replay
     row = e.state[graph.PROPERTY]['edges']['artery']
     assert row['compressionFraction'] == 1. and row['occlusionFraction'] == 0.
     assert graph.metrics(e)['generatedMm3'] == 0. and sum(e.state['thermal'].values()) == 0.
+    held = graph.consequence_evidence(e)
+    assert held['segments']['artery']['compressionFraction'] == 1.
+    assert held['segments']['artery']['signedFlowMm3PerSecond'] == 0.
     act('apply', parameters={'jawOpeningMm':2.})
     assert e.state[graph.PROPERTY]['edges']['artery']['compressionFraction'] == 0.
+    released = graph.consequence_evidence(e)
+    assert released['segments']['artery']['signedFlowMm3PerSecond'] > 0.
+    assert released['regions']['declared-region']['supplyDeficitSeconds'] >= held['regions']['declared-region']['supplyDeficitSeconds']
     act('apply', parameters={'jawOpeningMm':.5, 'forceN':0., 'power':0.})
     act('apply', parameters={'power':1.}, duration=2.1)
     assert e.state[graph.PROPERTY]['edges']['artery']['occlusionFraction'] == 1.

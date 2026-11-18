@@ -10,18 +10,31 @@ from resectionlab.surgical_physics_v2 import default_profile
 from resectionlab.surgical_continuum import research_profile,PROPERTY as CONTINUUM
 from resectionlab.surgical_continuum_solve import profile as solve_profile
 from resectionlab.surgical_retractor_runtime import profile,PROPERTY
+from resectionlab import surgical_mechanical_exposure as exposure
 
 H=1/120
 
 
-def source(mode='nonadhesive-frictionless-face'):
+def source(mode='nonadhesive-frictionless-face', *, track_exposure=False, two_regions=False):
     labels=np.zeros((15,15,8),np.uint16);labels[4:11,4:11,1:4]=1
     physics=default_profile();physics['brain']['radiusMm']=2.
-    return SurgicalScene(labels,np.eye(4),[{'id':1,'name':'Generated supported slab','material':'soft_tissue'}],
-        {'kind':'generated numerical contact control; not patient anatomy'},
-        {'tissuePhysicsV2':physics,CONTINUUM:research_profile({'1':{'shearPa':1000.,'poissonRatio':.3,
-            'relaxationShearPa':[500.],'source':'Generated engineering control; not a human fit'}},relaxation_seconds=[.5]),
-            'continuumLinearSolveV1':solve_profile(tensor_contraction='blas-contiguous'),PROPERTY:profile(mode)})
+    regions = [{'id': 1, 'name': 'Generated supported slab', 'material': 'soft_tissue'}]
+    if two_regions:
+        labels[7:11, 4:11, 1:4] = 2
+        regions.append({'id': 2, 'name': 'Second slab region', 'material': 'soft_tissue'})
+    props = {'tissuePhysicsV2': physics}
+    if track_exposure:
+        props[exposure.PROPERTY] = exposure.profile()
+    if mode != 'lattice':
+        material = {'shearPa': 1000., 'poissonRatio': .3, 'relaxationShearPa': [500.],
+                    'source': 'Generated engineering control; not a human fit'}
+        props.update({
+            CONTINUUM: research_profile({str(r['id']): copy.deepcopy(material) for r in regions},
+                relaxation_seconds=[.5]),
+            'continuumLinearSolveV1': solve_profile(tensor_contraction='blas-contiguous'),
+            PROPERTY: profile(mode),
+        })
+    return SurgicalScene(labels,np.eye(4),regions,{'kind':'generated numerical contact control; not patient anatomy'}, props)
 
 
 def action(operation,position=None,**extra):
@@ -35,8 +48,8 @@ def accepted(e,a):
     return result
 
 
-def prepare(mode='nonadhesive-frictionless-face'):
-    e=SurgicalEngine(source(mode))
+def prepare(mode='nonadhesive-frictionless-face', *, track_exposure=False, two_regions=False):
+    e=SurgicalEngine(source(mode, track_exposure=track_exposure, two_regions=two_regions))
     for a in [action('configure',mechanicsRevision=2),action('exchange',instrument='brain_retractor'),
         action('place',[7.,2.,1.9],parameters={'radiusMm':1.,'depthMm':2.}),
         action('hold',[7.,3.1,1.9],duration=4*H)]:accepted(e,a)
@@ -104,3 +117,58 @@ def test_profile_cannot_silently_fall_back_to_legacy():
     p=copy.deepcopy(s.properties);p[PROPERTY]['halfThicknessMm']=.3
     with pytest.raises(ValueError,match='COMPLETE_RETRACTOR_SURFACE_PROFILE_REQUIRED'):
         SurgicalScene(s.labels,s.affine,s.regions,s.source,p)
+
+
+def test_sampled_touch_precedes_load_and_separation_stops_force_exposure():
+    engine = prepare(track_exposure=True)
+    row = lambda: exposure.summarize(engine)['regions']['1']
+    unloaded = row()
+    assert unloaded['retractorTouchCellSeconds'] > 0
+    assert unloaded['retractorLoadedCellSeconds'] == unloaded['retractorForceTimeNs'] == 0
+    accepted(engine, action('move', [7., 3.16, 1.9]))
+    pushed = row()
+    assert pushed['retractorForcePeakN'] == pytest.approx(engine.state[PROPERTY]['last']['summedNormalForceN'])
+    accepted(engine, action('inspect', duration=6 * H))
+    sustained = row()
+    for key in ('retractorTouchCellSeconds', 'retractorLoadedCellSeconds', 'retractorForceTimeNs',
+                'strainSquaredVolumeTimeMm3Seconds', 'stressSquaredVolumeTimePa2Mm3Seconds'):
+        assert sustained[key] > pushed[key]
+    assert sustained['peakStressNormPa'] == pushed['peakStressNormPa'] > 0
+    accepted(engine, action('move', [7., 2.9, 1.9]))
+    separated = row()
+    accepted(engine, action('inspect', duration=6 * H))
+    assert row()['retractorForceTimeNs'] == separated['retractorForceTimeNs']
+    assert row()['retractorLoadedCellSeconds'] == separated['retractorLoadedCellSeconds']
+    assert row()['contactCellSeconds'] == separated['contactCellSeconds']
+    assert engine.observe()['physics']['mechanicalExposure'] == exposure.summarize(engine)
+    restored = SurgicalEngine.restore(engine.scene, engine.snapshot())
+    assert exposure.summarize(restored) == exposure.summarize(engine)
+
+
+@pytest.mark.parametrize('mode,integral,peak,unavailable', [
+    ('bonded-centroid-control', 'strainSquaredVolumeTimeMm3Seconds', 'peakStrainNorm', 'peakNeighborDisplacementRatio'),
+    ('lattice', 'neighborDisplacementRatioSquaredBondSeconds', 'peakNeighborDisplacementRatio', 'peakStressNormPa'),
+])
+def test_bonded_load_duration_accumulates_separate_model_specific_exposure(mode, integral, peak, unavailable):
+    engine = prepare(mode, track_exposure=True)
+    accepted(engine, action('move', [7., 3.16, 1.9]))
+    pushed = exposure.summarize(engine)['regions']['1']
+    accepted(engine, action('inspect', duration=6 * H))
+    sustained = exposure.summarize(engine)['regions']['1']
+    assert sustained[integral] > pushed[integral] > 0
+    assert sustained[peak] >= pushed[peak] > 0
+    assert sustained['retractorForceTimeNs'] > pushed['retractorForceTimeNs'] > 0
+    assert sustained[unavailable] is None
+
+
+def test_boundary_spanning_contact_retains_exposure_without_attributing_the_resultant():
+    engine = prepare(track_exposure=True, two_regions=True)
+    accepted(engine, action('move', [7., 3.16, 1.9]))
+    assert engine.state[PROPERTY]['last']['summedNormalForceN'] > 0
+    rows = exposure.summarize(engine)['regions']
+    for row in rows.values():
+        assert row['retractorTouchCellSeconds'] > 0
+        assert row['retractorLoadedCellSeconds'] > 0
+        assert row['retractorForcePeakN'] is None
+        assert row['retractorForceTimeNs'] is None
+        assert row['strainSquaredVolumeTimeMm3Seconds'] > 0

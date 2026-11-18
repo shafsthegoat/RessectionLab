@@ -16,6 +16,7 @@ import numpy as np
 from scipy import sparse
 from scipy.sparse.linalg import factorized
 
+from . import surgical_mechanical_exposure as mechanical
 from .core import semantic_digest
 
 PROPERTY = 'brainContinuumV1'
@@ -359,7 +360,7 @@ def update_memory(memories, displacement, relaxation_seconds, h):
     return [(t * z + h * displacement) / (t + h) for z, t in zip(memories, relaxation_seconds)]
 
 
-def exposure_increment(scene, mesh, gradients, displacement, memories, materials, h):
+def exposure_increment(scene, mesh, gradients, displacement, memories, materials, h, *, include_peaks=False):
     """Integrate modeled strain/stress squared over volume/time; NOT injury.
 
     Full Gauss integration matches the element's constitutive quadrature. The
@@ -380,8 +381,30 @@ def exposure_increment(scene, mesh, gradients, displacement, memories, materials
         lam = 2 * mu * nu / (1 - 2 * nu)
         stress += 2 * mu[:, None, None, None] * eps + lam[:, None, None, None] * np.trace(eps, axis1=2, axis2=3)[:, :, None, None] * np.eye(3)
     weight = mesh.volume_mm3 * h / 8.
-    return {str(label): {'strainSquaredVolumeTimeMm3Seconds': float(np.sum(strain[labels == label]**2) * weight),
-        'stressSquaredVolumeTimePa2Mm3Seconds': float(np.sum(stress[labels == label]**2) * weight)} for label in sorted(set(labels))}
+    result = {}
+    for label in sorted(set(labels)):
+        strain_sq = strain[labels == label] ** 2
+        stress_sq = stress[labels == label] ** 2
+        row = {'strainSquaredVolumeTimeMm3Seconds': float(np.sum(strain_sq) * weight),
+               'stressSquaredVolumeTimePa2Mm3Seconds': float(np.sum(stress_sq) * weight)}
+        if include_peaks:
+            row.update(peakStrainNorm=float(np.sqrt(strain_sq.sum(axis=(2, 3)).max())),
+                       peakStressNormPa=float(np.sqrt(stress_sq.sum(axis=(2, 3)).max())))
+        result[str(label)] = row
+    return result
+
+
+def record_exposure_step(engine, mesh, gradients, u, memories, materials, h, *, include_peaks):
+    rows = engine.state[PROPERTY]['exposureBySourceLabel']
+    for label, values in exposure_increment(engine.scene, mesh, gradients, u, memories, materials, h,
+                                            include_peaks=include_peaks).items():
+        if include_peaks:
+            mechanical.record_continuum_peaks(engine, label, values)
+            values.pop('peakStrainNorm')
+            values.pop('peakStressNormPa')
+        ledger = rows.setdefault(label, {key: 0. for key in values})
+        for key, value in values.items():
+            ledger[key] += value
 
 
 def _cell_energy(scene, p, cell, displacement, memories):
@@ -471,7 +494,9 @@ def tick(engine, dt, diagnostic=None):
             for n in nodes: gravity[3*n:3*n+3] += force / 8.
     if surface_contact:
         return retractor.advance(engine,system,u,memories,gravity,steps,h,diagnostic)
+    track_mechanics = mechanical.enabled(engine)
     handle_rhs = np.zeros_like(u); targets = []
+    retractor_cells = []
     for key, c, nodes, k in system['contacts']:
         hold = engine.state['holds'][key]
         target = np.subtract(hold['target'], hold['origin']) + np.asarray(hold.get('baseDisplacements', {}).get(str(c), [0., 0., 0.]))
@@ -479,6 +504,8 @@ def tick(engine, dt, diagnostic=None):
             raise ValueError('CONTINUUM_TARGET_DOMAIN: no target clipping is allowed')
         for n in nodes: handle_rhs[3*n:3*n+3] += k * target / 8.
         targets.append((key, nodes, k, target))
+        if track_mechanics:
+            retractor_cells.append(c if engine.state['slots'][key]['instrument'] == 'brain_retractor' else None)
     external = gravity + handle_rhs
     rest = engine.scene.points(ids)
     max_residual = state.get('maxFreeResidualN', 0.)
@@ -517,8 +544,13 @@ def tick(engine, dt, diagnostic=None):
             if old._obstacle_collision(engine, vox, inside, removed_array, labels):
                 raise ValueError('CONTINUUM_OBSTACLE_COLLISION: coupled increment rejected')
         reactions = {}
-        for key, nodes, k, target in targets:
-            reactions[key] = reactions.get(key, np.zeros(3)) + k * (target - nodal[nodes].mean(axis=0))
+        loaded_cells, retractor_forces = [], []
+        for i, (key, nodes, k, target) in enumerate(targets):
+            force = k * (target - nodal[nodes].mean(axis=0))
+            reactions[key] = reactions.get(key, np.zeros(3)) + force
+            if track_mechanics and retractor_cells[i] is not None:
+                loaded_cells.append(retractor_cells[i])
+                retractor_forces.append(force)
         if any(np.linalg.norm(force) > settings['maxForceN'] for force in reactions.values()):
             raise ValueError('CONTINUUM_FORCE_DOMAIN: no force clipping is allowed')
         delta = u - before
@@ -544,9 +576,10 @@ def tick(engine, dt, diagnostic=None):
             raise ValueError('CONTINUUM_NUMERICAL_RESIDUAL')
         dissipation += max(0., float(viscous))
         numerical_total += max(0., float(numerical_dissipation))
-        for label, increments in exposure_increment(engine.scene, mesh, system['gradients'], u, memories, p['materials'], h).items():
-            ledger = state['exposureBySourceLabel'].setdefault(label, {key: 0. for key in increments})
-            for key, value in increments.items(): ledger[key] += value
+        if loaded_cells:
+            mechanical.record_bonded_step(engine, loaded_cells, retractor_forces, h)
+        record_exposure_step(engine, mesh, system['gradients'], u, memories, p['materials'], h,
+                             include_peaks=track_mechanics)
     state['cornerDisplacementMm'] = _pack(mesh, u)
     state['memoryDisplacementMm'] = [_pack(mesh, z) for z in memories]
     state['dissipatedEnergyNmm'] = dissipation

@@ -325,6 +325,46 @@ def generated_task(parent: int, *, config=COMMON_CONFIG, neural_budget=None, mot
         sourceSceneId=scene.identity, configHash=config.fingerprint), config=config)
 
 
+def generated_preservation_task(parent, *, preservation_metrics, config=COMMON_CONFIG):
+    """Bind researcher-selected removal metrics and independent lesion evidence."""
+    from .surgical_procedure_policy import REQUIRED_STRUCTURES, _validated
+    from .surgical_treatment_intent import (
+        PRESERVATION_PREFERENCE_SCHEMA, PRESERVATION_SELECTION_RULE,
+        make_treatment_intent, validate_preservation_preference,
+    )
+
+    task = generated_task(parent, config=config)
+    scene = task.scene
+    policy = _validated(scene)
+    raw = copy.deepcopy(policy['record'])
+    preference = {'schema': PRESERVATION_PREFERENCE_SCHEMA, 'metrics': list(preservation_metrics)}
+    validate_preservation_preference(preference)
+    supported = {'neuralRemovedMm3',
+        *(f'structure:{name}:removedMm3' for name in policy['structureCells'])}
+    if not set(preference['metrics']) <= supported:
+        raise ValueError('Generated preservation requires declared source-removal metrics')
+    target_labels = [row['id'] for row in scene.regions if row.get('target')]
+    original = frozenset(map(int, np.flatnonzero(np.isin(scene.labels, target_labels))))
+    boundaries = {}
+    for name in sorted(REQUIRED_STRUCTURES):
+        cells = original & policy['structureCells'][name]
+        if cells:
+            evidence = raw['structures'][name]
+            boundaries[name] = {key: evidence[key] for key in (
+                'origin', 'reviewStatus', 'provenance', 'evidenceSha256')}
+            boundaries[name].update(label=f'Generated {name} preservation boundary',
+                                    structure=name, cells=cells)
+    raw.update(selectionRule=PRESERVATION_SELECTION_RULE, preservationPreference=preference,
+        treatmentIntent=make_treatment_intent(lesion_id=f'generated-lesion-{parent}', revision='v1',
+            original_cells=original, eligible_cells=original & policy['permitted'],
+            evidence=raw['evidence'], boundaries=boundaries))
+    raw.pop('policyHash')
+    raw['policyHash'] = semantic_digest(raw)
+    declared = SurgicalScene(scene.labels, scene.affine, scene.regions, scene.source,
+        {**scene.properties, PROPERTY: raw})
+    return GeneratedTask(declared, task.skills, {**task.audit, 'sourceSceneId': declared.identity}, config)
+
+
 def training_admission(task):
     """Narrow generated-only admission, distinct from general primitive RL."""
     from .surgical_planning_admission import source_classification, require_planning_admission

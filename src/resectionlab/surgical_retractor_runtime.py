@@ -8,6 +8,8 @@ import copy
 
 import numpy as np
 
+from . import surgical_mechanical_exposure as mechanical
+
 PROPERTY='retractorSurfaceContactV1'
 SCHEMA='resectionlab.retractor-surface-contact.v1'
 MODES=('nonadhesive-frictionless-face','bonded-centroid-control')
@@ -98,6 +100,7 @@ def advance(engine,system,u,memories,gravity,steps,h,diagnostic=None):
     rest=engine.scene.points(mesh.cells);labels=np.array([label for label,region in engine.by_label.items()
         if region['material'] in ('bone','vessel','unknown')],dtype=engine.scene.labels.dtype)
     removed_array=np.asarray(sorted(removed),dtype=np.int64)
+    track_mechanics=mechanical.enabled(engine)
     for _ in range(steps):
         endpoint=_consume(state,h);key=next(iter(endpoint),None);old_blade=blade=None
         if key is not None:
@@ -139,9 +142,10 @@ def advance(engine,system,u,memories,gravity,steps,h,diagnostic=None):
         # These are actual sampled contact owners, not the initial hold's seeds.
         for cell in result['contactSourceIds']:
             cell=str(cell);engine.state['contact'][cell]=engine.state['contact'].get(cell,0.)+h
-        for label,increments in continuum.exposure_increment(engine.scene,mesh,system['gradients'],u,memories,p['materials'],h).items():
-            ledger=physical['exposureBySourceLabel'].setdefault(label,{k:0. for k in increments})
-            for field,value in increments.items():ledger[field]+=value
+        if track_mechanics:
+            mechanical.record_surface_step(engine,result,h)
+        continuum.record_exposure_step(engine,mesh,system['gradients'],u,memories,p['materials'],h,
+            include_peaks=track_mechanics)
         physical.update(maxGradientNorm=max(physical.get('maxGradientNorm',0.),maximum),
             maxFreeResidualN=max(physical.get('maxFreeResidualN',0.),result['maxFreeResidualN']),
             maxEnergyBalanceResidualNmm=max(physical.get('maxEnergyBalanceResidualNmm',0.),abs(result['energyBalanceResidualNmm'])))

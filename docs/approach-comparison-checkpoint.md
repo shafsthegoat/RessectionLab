@@ -333,3 +333,326 @@ python3 testcases/approach-comparison-audit-v1/audit_frozen_baseline.py
 (cd desktop && node --experimental-strip-types --test --test-concurrency=1 src/viewer/*.test.mjs)
 pnpm --dir desktop build
 ```
+
+## Evidence-aware planning milestone
+
+The new decision rule, `named_harm_pareto_preservation_v1`, retains the full
+treatment–harm frontier and shows which declared priority controls selection.
+A candidate that increases a prioritized harm must resolve that tradeoff
+before continuation. Unknown required evidence triggers reassessment. No
+clinical exchange rate or optimizer updates were used. The treatment-first
+`max_treatment_within_harm_bounds` rule remains available as the baseline.
+
+Original lesion membership and eligible treatment credit are separate.
+Protected target stays in original burden. Source declarations can name
+enhancing, nonenhancing and indeterminate compartments and baseline function.
+An edema-like or uncertain signal alone supplies no treatment credit. The
+decision to continue, reassess or finish is separate from the physical
+endpoint. The desktop replays the compared action histories on cold admission
+and reruns the canonical zero-motion STOP check on the final withdrawn state.
+
+The geometric planner checks an explicitly sourced ipsilateral supratentorial
+cortical access class. Revision-bound hemisphere, cortical entry face, falx,
+tentorium and workspace evidence constrain the route. The oblique engineering
+control enters below its target in RAS and passes. The same geometric planner
+rejects a posterior-fossa shortcut, contralateral crossing and a disk placed
+inside the simulated brain. A native study without the required evidence
+supports scoped geometry inspection with an incomplete cortical assessment.
+The route capsule and target voxel-centre counts do not authorize physical
+treatment. Existing acquired-procedure, full-tool and mechanism holds apply.
+
+### Bounded matched results
+
+Three predeclared generated post-access cases, one nominal world each, three
+arms with a common finite inventory and observations. The legacy conditional
+controller, named preservation controller and bounded search each had a
+128-physical-request and 90-second online cap. Independent replay used a
+30-second per-row cap. Nine of nine episodes replayed and passed checked
+whole-tool STOP. All twelve portable archive branches, including the three
+baselines, cold replayed. Values below are simulated treatment and original
+residual. Request pairs are execution and preview.
+
+| Case | Original / treated / residual (mm³), all arms | Legacy conditional | Named preservation | Bounded search |
+| --- | ---: | ---: | ---: | ---: |
+| Gated work | 243 / 243 / 0 | 13 / 0 | 13 / 0 | 13 / 82 |
+| Critical residual | 216 / 135 / 81 | 10 / 0 | 11 / 0 | 10 / 74 |
+| Permitted overlap | 189 / 81 / 108 | 11 / 0 | 8 / 0 | 6 / 70 |
+
+The overlap controller chose a different continuation at the initial state.
+CST membership removal was 54 → 0 mm³ relative to the legacy conditional arm,
+and bounded search also removed zero. All three removed 54 mm³ of overlapping
+aggregate neural and motor-cortex membership. These quantities describe
+annotation membership, with overlap counted once within each named quantity.
+The critical-residual controller finished with 81 mm³ left at the declared
+generated cerebellar boundary, with no neural membership removal. The
+permitted-overlap controller finished under its declared aggregate neural
+limit. The gated control continued through complete treatment. Separate
+missing-coverage and unresolved-tradeoff controls both reassessed.
+
+Online totals were 321 physical requests, comprising 95 execution and 226
+preview calls, with three execution and 41 preview refusals. Logical STOP and
+eight preview STOP checks were recorded separately. Replay verification billed
+190 additional physical requests. Archive verification replayed 92 accepted
+native actions. The preservation controller made extra radius exchanges when
+equivalent plans tied across prefixes. Its overlap episode used fewer physical
+requests than the conditional arm and ran longer in simulated time
+(4.40 versus 3.50 s). Computation is a separate comparison axis.
+
+The historical matched 40-row report remains byte-identical. The new report
+lives in `testcases/evidence-aware-planning-v2/report.json` (SHA-256
+`b3a29bd74b17b191d59505877ba348316f4fcc3956c40ae3df7e8c72aa07240b`). The
+protocol identity is
+`sha256:4085a83b53b15c2725d37abee41b0abd98873eb3354f8ada6386d6293556c191`.
+The run took 285.3 seconds with peak RSS of 133.5 MB on the M2 Pro. A startup
+attempt stopped before engine calls on a mistyped baseline pin. The accepted
+run used the corrected pin. Changes to the intent module during integration
+were rechecked against all 17 recorded decisions and the two abstention
+controls in `intent-source-reaudit.json`. The contact projections and stopping
+boundaries are engineering hypotheses for this finite inventory. They do not
+establish equivalent exposure for arbitrary routes or acquired anatomy.
+
+### Scientific basis and limits
+
+| Claim | Source and section consulted | Implementation and supporting control | Limit |
+| --- | --- | --- | --- |
+| The chosen route must respect the hemisphere, exposed surface and meningeal compartment relationships. | [Rhoton, The Cerebrum, pp. S1-1 and S1-7, The Hemispheres and Hemispheric Surfaces](https://doi.org/10.1227/01.NEU.0000028086.48597.4F) | `anatomy_cortical_access.py` checks revision-bound surface and compartment masks. `test_anatomy_approaches.py` covers oblique entry, intracerebral entry, renamed labels, contralateral and posterior-fossa crossings, and source revision invalidation. | Voxel-face entry, capsule containment and boundary padding are declared geometric engineering assumptions. |
+| Record absolute residual, respect disease-specific compartment evidence and preserve function. | [EANS–EANO extent of resection guideline, Definitions and EOR recommendations](https://doi.org/10.1093/neuonc/noaf217), [Zakaria and Prabhu, cortical mapping chapter, mapping and monitoring](https://exonpublications.com/index.php/exon/article/view/135) | `surgical_treatment_intent.py` binds original burden, eligibility and named boundaries. `test_surgical_treatment_intent.py` and `test_surgical_procedure_comparison.py` check protected residual, tradeoffs, actual continuation and checked withdrawal/STOP. | The shipped controls have stylized anatomy and declared engineering bounds. No simulated quantity is a guideline threshold. |
+| Reconstruction, stimulation response and observed postoperative function answer different questions. | [Maier-Hein et al., tractography challenge results](https://www.nature.com/articles/s41467-017-01285-x), [Sanai et al., awake language mapping and postoperative assessments](https://pubmed.ncbi.nlm.nih.gov/18172171/) | `functional_evidence.py` reports direct removal, cut-source incidence and retained contact separately. `test_functional_consequence_evidence.py` checks overlap accounting and unavailable mechanisms. | Reconstructed streamlines do not count axons. Generated memberships do not imply functional loss. Native probes lack admitted patient mapping or monitoring outcomes. |
+| Flow interruption and bleeding require separate observations. Venous outflow can matter independently of arterial supply. | [Gempt et al., ischemia and MEP results](https://pubmed.ncbi.nlm.nih.gov/23829818/), [Ghare et al., vessel preservation](https://pubmed.ncbi.nlm.nih.gov/37178915/), [Biswas et al., vascular complications](https://pmc.ncbi.nlm.nih.gov/articles/PMC11144144/), [Narayan et al., Complications of Venous Injury in Nanda, chapter 20](https://www.us.elsevierhealth.com/media/wysiwyg/us/pdf/sample-chapter-9780323509619.pdf) | `surgical_vascular_graph.py` exposes regional supply and drainage deficit-seconds, segment continuity and individual wound sealing. `test_surgical_vascular_graph.py` distinguishes arterial and venous occlusion and sealed transection. | Declared resistances and interfaces model a partial generated graph. No observed patient conductance, microvasculature, anatomical supply role or infarction probability follows. |
+| Retractor contact and sustained load can have different mechanical consequences. Shift validation needs observed landmarks or imaging. | [Kretschmer et al., Retractorless Surgery, §30.1 and retraction discussion](https://link.springer.com/chapter/10.1007/978-981-10-8950-3_30), [Miga et al., model-based intraoperative shift compensation](https://pmc.ncbi.nlm.nih.gov/articles/PMC4834281/) | The opt-in `surgical_mechanical_exposure.py` reports regional peak and integrated load, strain or lattice exposure. `test_surgical_retractor_runtime.py` checks touch before load, sustained loading, separation, ambiguous force attribution and cold replay. | The lattice displacement ratio is dimensionless and supplies no stress estimate. A cumulative peak change does not recover a within-interval peak. Registration perturbations are sensitivity scenarios. |
+
+In the generated vascular control at six modeled seconds, arterial
+occlusion had 6.00 supply and 1.28 drainage deficit-seconds. The venous
+occlusion reversed these values. Sealing the transected artery stopped
+wound flow and left the segment severed, with 6.00 supply deficit-seconds.
+In the mechanically loaded slab, a further 0.05 s dwell raised the modeled
+force integral from 6.42 to 44.24 µN·s and the stress² volume–time integral
+from 1,832 to 12,425 Pa²·mm³·s. The peak stress remained 245 Pa. These are
+bounded engineering exposures under declared parameters.
+
+For clinical prediction, the [RHUH label audit](rhuh-outcome-audit.md)
+found 26 No, six Transient, six Minor Persistent and two Major Persistent
+records. Clinical assessment time, new or worsened deficit relative to
+baseline, functional domain and severity rubric are unavailable. The 72-hour
+imaging window does not date the clinical label. A future domain-specific
+endpoint needs baseline, domain, severity, treatment context, assessment
+timing and follow-up. Ninety-day persistence and permanent deficit are
+different endpoints. Group all visits and generated siblings by source
+patient before splitting.
+
+[ReMIND, Data Records and Technical Validation](https://pmc.ncbi.nlm.nih.gov/articles/PMC11093985/)
+supports observed shift and residual geometry experiments. Its released
+cohort has 114 cases, 113 preoperative whole-tumor labels, three separate
+planned subtotal target labels and 58 intraoperative residual annotations.
+These data do not identify a force-to-injury relation. The UCSF-PDGM source
+provides preoperative multimodal imaging and tumor labels. EDEN2020 provides
+healthy development anatomy, with synthetic lesions added locally. Neither
+study comparison is held-out patient validation. [UCSF-PDGM methods](https://pmc.ncbi.nlm.nih.gov/articles/PMC9748624/) · [EDEN2020 source](https://zenodo.org/records/3994749)
+
+An observed-care predictor targets outcomes under the data-generating
+treatment practices. Estimating risk under an unperformed plan requires a
+specified intervention and additional identification assumptions and
+validation data. [Keogh and van Geloven, evaluation under interventions](https://pmc.ncbi.nlm.nih.gov/articles/PMC11332371/) · [van Geloven et al., treatment in prediction](https://pmc.ncbi.nlm.nih.gov/articles/PMC7387325/)
+Use [TRIPOD+AI](https://www.bmj.com/content/385/bmj-2023-078378) for transparent
+reporting and [PROBAST+AI](https://www.bmj.com/content/388/bmj-2024-082505) for
+bias and applicability assessment. Patient-specific deficit probabilities
+remain unavailable.
+
+### Launch and reproduce
+
+From the primary checkout, build the desktop and choose fresh ignored output
+paths. Run one engine-heavy command at a time.
+
+```sh
+export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1
+pnpm --dir desktop build
+.venv/bin/python scripts/demonstrate_evidence_aware_planning.py \
+  --output testcases/evidence-aware-repro
+desktop/node_modules/.bin/electron desktop --case \
+  "$PWD/testcases/evidence-aware-repro/permitted-overlap.ressectionlab"
+```
+
+In **Rehearse → Compare**, use **Inspect decision at action 0** to return to
+the state where CST preservation changes the continuation. Open
+`critical-residual.ressectionlab` in the same way for the residual decision.
+The actual hidden desktop runs saved portable copies and opened them in
+fresh processes. See `testcases/evidence-aware-planning-desktop-v1/`
+under `matched-overlap-cold` and `critical-stop-cold` for decisions, captures
+and verification receipts. The `matched-overlap-inspected` capture also
+verifies selecting the exact pre-treatment decision state and returning to
+the checked endpoint. To reproduce the hidden save and reopen:
+
+```sh
+mkdir -p testcases/evidence-aware-ui-repro
+PLANNING_INPUT=testcases/evidence-aware-repro/permitted-overlap.ressectionlab \
+PLANNING_OUTPUT=testcases/evidence-aware-ui-repro/overlap \
+PLANNING_EXPECT=overlap desktop/node_modules/.bin/electron desktop/electron/verify-planning-evidence.cjs
+PLANNING_INPUT=testcases/evidence-aware-ui-repro/overlap/saved.ressectionlab \
+PLANNING_OUTPUT=testcases/evidence-aware-ui-repro/overlap-cold \
+PLANNING_PRIOR=testcases/evidence-aware-ui-repro/overlap/report.json \
+PLANNING_EXPECT=overlap desktop/node_modules/.bin/electron desktop/electron/verify-planning-evidence.cjs
+```
+
+Use `scripts/stage_planning_evidence.py --output testcases/cortical-access-repro`
+for the generated access control. Open the produced `comparison.rsworkspace`
+and choose **Plan & compare**. For a completed native study, pass
+`--source /path/to/patient-anatomy.json --target <layer-id> --radius 1`.
+The script uses a private source copy. It also accepts a previously saved
+`.rsworkspace`. For example, these are the exact source and target inputs:
+
+```sh
+drive=$(.venv/bin/python -c 'from resectionlab.data_root import checked_root; print(checked_root(expected_uuid="9CC3623C-E38B-3EEE-B6BB-B9A06C193700"))')
+.venv/bin/python scripts/stage_planning_evidence.py \
+  --source "$drive/prepared/eden2020-approach-comparison-goal-v1/CTRL_1277/patient-anatomy.json" \
+  --target synthetic-target --radius 1 --output testcases/eden-1277-evidence-repro
+.venv/bin/python scripts/stage_planning_evidence.py \
+  --source testcases/outputs/adaptive-patient-usc-0005-20261117.ecg5sS/refresh-v6/patient.rsworkspace \
+  --target f59e515c-197f-4d11-ba97-2b0a9ac45ed1-4 --radius 1 --output testcases/ucsf-0005-evidence-repro
+```
+
+Cortical receipts now use the v7 geometry evaluator. Older receipts remain
+available as historical measurements and require reassessment for current
+results. Rich/restricted nomination still freezes each arm using its own
+inputs before shared reference assessment. A reference veto is reported
+separately from raw nomination. The bounded cohort above is a separate
+simulation comparison and makes no rich-versus-restricted performance claim.
+
+### Native and desktop verification
+
+Hidden desktop inspection opened three current geometric alternatives each
+for the EDEN CTRL_1277 synthetic target and UCSF-PDGM-0005 supplied enhancing
+lesion. The measured label volumes were 9,174.7 and 2,974.0 mm³ respectively.
+Both explicitly reported missing cortical surface, compartment and hemisphere
+evidence. Residual after treatment was unassessed. No study-owned files were
+changed. The EDEN result used a private copy of the native study because its
+older manifest references a package in the external collection. The UCSF
+comparison is portable. A separate generated cortical workspace reopened with
+its supported oblique access assessment and 27 mm³ synthetic lesion label.
+
+In `testcases/evidence-aware-planning-desktop-v1/`, see `eden-1277-view-02`,
+`ucsf-0005-view` and `generated-access-reopened` for hidden screenshots and
+source bindings. The first EDEN view reached its time limit while the
+preparation thread held the reconstruction slot. The bounded rerun passed
+using the same measurement and untouched study source.
+
+Focused regressions passed 295 Python tests, including the native geometry,
+procedure, source accounting, mechanics, vascular, STOP and C++ geometry
+checks. The desktop suite passed 1,400 tests and the production build passed.
+An independent integration review led to checking all recorded histories
+and canonical STOP on cold admission, tying decisions to executed skill
+spans and prefix source removals, and disclosing projection and peak
+semantics. The separately probed historical functional suite has two
+pre-existing failures, reproduced against the base code, involving the
+hard-exclusion admission contract and a closed training entry point.
+
+## Native glioma evidence integration
+
+**Plan & compare** now derives a consequence readout for up to three saved
+approaches. Its packet binds the current snapshot, selected lesion, approach
+parameters, and measurement hashes. It carries the geometric quantity, unit,
+source type, coverage and available source identity. Older v7 measurements stay
+readable. A stored positive segment encounter needs reassessment to obtain a
+distinct streamline count. Out-of-field or unavailable quantities stay
+explicitly qualified. Registration reports separate sampled landmark residual
+from unmeasured whole-field error. Perturbation scenarios describe sensitivity
+to stated offsets.
+
+| Prepared study | Target membership | Corridor target reach A / B / C (mm³) | Brain traversal upper bound A / B / C (mm³) | Nominal supplied tract encounters |
+| --- | ---: | ---: | ---: | --- |
+| UCSF-PDGM-0005, enhancing label supplied with the study | 2,974.0 mm³ | 33 / 14 / 21 | 328 / 320 / 311 | Unknown, no supplied bundle |
+| EDEN CTRL_1277, generated core + rim on a healthy scan | 9,174.7 mm³ | 24.6 / 51.7 / 29.5 | 16.0 / 20.0 / 8.0 | Zero detected among seven supplied bundles per route |
+
+A has the most geometric reach in the UCSF comparison and the greatest
+traversal bound. EDEN B reaches the most labelled centres and C has the lowest
+traversal bound. All six routes remain at **reassess before treatment**. The
+source masks lack the required cortical-access evidence, and these static
+comparisons have unknown treatment, residual, functional, flow, load and
+clinical outcomes. Derived brain and vascular labels retain their model
+provenance. The supplied glioma label is an imaging compartment with the
+annotation limits described in the [UCSF-PDGM methods](https://pmc.ncbi.nlm.nih.gov/articles/PMC9748624/).
+Geometric tract encounters cover the supplied reconstructions and their
+acquisition fields. [Maier-Hein et al.](https://pmc.ncbi.nlm.nih.gov/articles/PMC5677006/)
+
+The bounded generated controller now accepts an explicit named removal
+priority. Source membership, treatment eligibility, candidate inventory,
+scope of nominal tip contact, and modeled time and attempt limits bind its
+projections. Native replay verifies the projection against the recorded
+prefix. At the same initial overlap geometry, the motor-cortex priority
+returns **reassess**. The measured frontier preserves the 54 mm³ treatment
+with 27 mm³ projected motor membership option and the 81/54 option. The
+CST-only priority returns **continue**, retaining the same four entries in the
+full treatment–harm frontier. Under an explicit motor-cortex priority, the
+executed critical-residual control treated 135/216 mm³ and retained 81 mm³ at
+its independently declared cerebellar boundary with checked STOP. The matched
+conditional/preservation/search executions used 10/11/10 physical requests
+and 0/0/74 previews. The evidence-aware controller projects nominal contact,
+while search evaluates explicit physical previews. Reports keep these costs,
+replay requests and timing separate from the treatment and harm comparison.
+
+The extended consequence vector identifies source and prefix for functional
+removal, cut-edge incidence and retained contact. Its revised mechanism rows
+include the vascular region and arterial/venous interface, or the mechanical
+region and material, with units and aggregation. In the generated controls,
+arterial and venous occlusions each produced zero bleeding with different
+supply/drainage deficits (2.319/0.244 and 0.244/2.319 deficit-seconds).
+Arterial cut generated 1.509 mm³ of modeled blood. An extra 0.05 s of
+retraction left peak stress at 245.024 Pa and increased the force integral
+from 6.421 to 44.236 µN·s. Ambiguous force attribution across tissue
+boundaries remains unknown. The mechanism comparison keeps the v3 archive
+reader for earlier vectors.
+
+### Reproduce this integration
+
+The ignored local results are under `testcases/native-glioma-integration-v1/`.
+The compact `case-comparison.json` indexes the two native cases, the configured
+decisions, and their separate generated mechanism controls. See `final-ucsf`,
+`final-eden` and `final-configured-residual-cold` for hidden desktop captures
+with the exact candidate build.
+Use the prepared study paths from [Launch and reproduce](#launch-and-reproduce)
+or the existing local comparison copies. If the external drive is absent,
+use the local EDEN copy when available and run UCSF and the generated checks
+independently. Choose fresh output directories.
+
+```sh
+export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1
+pnpm --dir desktop build
+mkdir -p testcases/native-evidence-repro
+PLANNING_NATIVE_COMPARISON=1 PLANNING_EXPECT=incomplete \
+  PLANNING_INPUT=testcases/evidence-aware-planning-desktop-v1/ucsf-0005-local/comparison.rsworkspace \
+  PLANNING_OUTPUT=testcases/native-evidence-repro/ucsf \
+  desktop/node_modules/.bin/electron desktop/electron/verify-planning-evidence.cjs
+PLANNING_NATIVE_COMPARISON=1 PLANNING_EXPECT=incomplete \
+  PLANNING_INPUT=testcases/evidence-aware-planning-desktop-v1/eden-1277-local/study/patient-anatomy.json \
+  PLANNING_OUTPUT=testcases/native-evidence-repro/eden \
+  desktop/node_modules/.bin/electron desktop/electron/verify-planning-evidence.cjs
+.venv/bin/python scripts/demonstrate_evidence_aware_planning.py --case permitted-overlap \
+  --preservation-metric structure:motor-cortex:removedMm3 --projection-only \
+  --output testcases/native-evidence-repro/motor-preference
+.venv/bin/python scripts/demonstrate_evidence_aware_planning.py --case critical-residual \
+  --preservation-metric structure:motor-cortex:removedMm3 \
+  --output testcases/native-evidence-repro/configured-residual
+RESSECTIONLAB_MECHANISM_RECEIPT=testcases/native-evidence-repro/mechanisms.json \
+  .venv/bin/python -m pytest -q tests/test_surgical_mechanism_comparison.py
+```
+
+Run the reviewed three-case script from `119b8e68` for historical
+reproduction, or omit the case and preservation switches for the default
+protocol. The reviewed run independently verified all nine episodes, twelve
+portable branches and seventeen decision prefixes. The nine rows agreed in
+treatment, harm, physical request counts and verified endpoints. The five
+resealed source/coverage/residual/prefix-harm/skill corruptions were refused.
+The reviewed snapshot passed the original 295 focused Python tests and 1,400
+desktop tests. The candidate passed 344 focused Python tests, 1,400 desktop
+tests and the production build. The initial candidate omitted the functional
+serializer change, which caused five exact-snapshot failures. The corrected
+candidate passed those tests. The separate `test_functional_evidence.py` and
+`test_functional_native_bridge.py` probes each reproduced two reviewed failures
+under the same source-exclusion and recorded-experience guards.
+
+Clinician review needs case-specific lesion definitions, access and registration
+review, and evidence appropriate to tract preservation and vascular territory
+assessment. Validating simulated effects needs matched observations of
+instrument use, intraoperative function and flow, and tissue response.
+Domain-specific outcome validation requires linked baseline, severity, timing
+and follow-up, with independent patient-level evaluation. Clinical deficit
+probabilities remain unavailable.

@@ -33,6 +33,15 @@ zero qualified patient tumor-task completions. Missing source anatomy,
 physiological calibration and physical/RL qualification remain open. Generated
 engineering controls do not close those requirements.
 
+The November 18 evidence-aware planning milestone adds an opt-in cortical
+access assessment and named preservation decisions. The matched generated
+overlap control retained the same treatment and residual with less CST
+membership removal. The critical-residual control recorded a supported
+boundary and checked withdrawal. [Results and reproduction](approach-comparison-checkpoint.md#evidence-aware-planning-milestone).
+The subsequent native integration displays source-bound comparisons for
+UCSF-PDGM and EDEN, with explicit reassessment and unavailable procedural
+outcomes. [Native glioma evidence](approach-comparison-checkpoint.md#native-glioma-evidence-integration).
+
 | Need | Entry point |
 | --- | --- |
 | Objective, capability boundaries and next dependencies | [Decision-system objective](decision-system-objective.md), [progress and evidence](decision-system-progress.md), [procedure policy](supratentorial-procedure-policy.md) |

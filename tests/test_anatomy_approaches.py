@@ -31,6 +31,132 @@ def test_whole_envelope_and_sheared_inverse_support():
     assert envelope_coverage(a,(20,20,20),world(a,[5,5,5]),world(a,[5,12,5]),1)['wholeEnvelopeWithinField']
 
 
+@pytest.fixture
+def cortical(native):
+    affine = native.patient_affine(native.series('t1'))
+    x, y, z = np.indices((32, 32, 32))
+    cerebral = (3 <= y) & (y < 28) & (4 <= z) & (z < 28)
+    masks = {
+        'right-cerebral-hemisphere': cerebral & (4 <= x) & (x < 16),
+        'left-cerebral-hemisphere': cerebral & (18 <= x) & (x < 27),
+        'cortical-entry-surface': cerebral & ((x == 4) | (x == 26)),
+        'supratentorial-compartment': y >= 3,
+        'falx-cerebri': cerebral & (x == 17),
+        'tentorium-cerebelli': y == 2,
+        'posterior-fossa': y < 2,
+    }
+    for role, mask in masks.items():
+        row = native.add_layer(mask.astype(np.uint8), affine, layer_id=role, label='Generated evidence ' + role,
+                               source_series='t1', kind='context', role='context', color='#abcdef',
+                               provenance={'cortical_access_role': role, 'cortical_access_evidence': 'generated-reference'})
+        row['review_status'] = 'generated-engineering'
+    native.save()
+    return native
+
+
+def _cortical_route(collection, entry, target=(10, 11, 15), radius=.4):
+    affine = collection.patient_affine(collection.series('t1'))
+    return {'entry': world(affine, entry).tolist(), 'target': world(affine, target).tolist(),
+            'radiusMm': radius, 'targetLayerId': 'target', 'patchRadiusMm': 0}
+
+
+def test_oblique_lower_entry_supported_and_revision_bound(cortical):
+    route = _cortical_route(cortical, [3.5, 6, 16])
+    assert route['entry'][2] < route['target'][2]
+    result = dispatch_plan(cortical, {'action': 'suggest', **route})
+    proposal, = result['approaches']
+    access = proposal['measurements']['accessAssessment']
+    assert access['status'] == 'supported' and access['hemisphere'] == 'right'
+    assert access['scope'] == 'ipsilateral-supratentorial-cortical'
+    assert not access['missingEvidence'] and not access['violations']
+    assert access['postEntryEnvelopeSupported'] and access['distalCapSupported']
+    assert access['surfaceEntry']['point'] == pytest.approx(route['entry'])
+    assert access['surfaceEntry']['hemisphereCell'] == [4, 6, 16]
+    assert access['surfaceEntry']['surfaceLayerId'] == 'cortical-entry-surface'
+    assert access['sourceSnapshotId'] == result['snapshotId'] == cortical.identity()
+    assert not access['simulationExecutionAuthorized'] and not result['simulationExecutionAuthorized']
+    reopened = Collection(cortical.root)
+    assert dispatch_plan(reopened, {'action': 'list'})['approaches'][0] == proposal
+    assert dispatch_plan(reopened, {'action': 'list'})['proposalReport'] == result['proposalReport']
+    surface = cortical.layer('cortical-entry-surface')
+    surface['revision'] += 1
+    cortical.save('Revise source cortical surface')
+    reopened = dispatch_plan(Collection(cortical.root), {'action': 'list'})
+    assert reopened['approaches'][0]['assessmentStatus'] == 'stale'
+    assert reopened['proposalReport']['assessmentStatus'] == 'stale'
+
+
+def test_missing_access_source_keeps_native_geometric_comparison(native):
+    route = _cortical_route(native, [3.5, 6, 16])
+    result = dispatch_plan(native, {'action': 'suggest', **route})
+    proposal, = result['approaches']
+    access = proposal['measurements']['accessAssessment']
+    assert access['status'] == 'incomplete' and access['surfaceEntry'] is None
+    assert {'left-cerebral-hemisphere', 'right-cerebral-hemisphere', 'falx-cerebri', 'tentorium-cerebelli',
+            'cortical-entry-surface'}.issubset(access['missingEvidence'])
+    comparison = dispatch_plan(native, {'action': 'compareInputs', **route})['inputComparison']
+    for arm in comparison['arms'].values():
+        nomination, = arm['nominated']
+        assert nomination['nominalEligible'] and nomination['accessAssessment'] == access
+
+
+@pytest.mark.parametrize(('entry', 'reason'), [
+    ([9, 1, 15], 'posterior-fossa'),
+    ([10, 2.5, 15], 'tentorium-cerebelli'),
+    ([26.5, 7, 16], 'contralateral cerebral hemisphere'),
+    ([25, 7, 16], 'falx-cerebri'),
+    ([9, 15, 16], 'Entry must cross from outside to inside'),
+])
+def test_source_established_wrong_access_rejected(cortical, entry, reason):
+    route = _cortical_route(cortical, entry)
+    manual = dispatch_plan(cortical, {'action': 'upsert', 'approach': route})['approaches'][0]['measurements']
+    assert manual['status'] == 'known-conflict'
+    assert manual['accessAssessment']['status'] == 'rejected'
+    assert any(reason in violation for violation in manual['accessAssessment']['violations'])
+    receipt = dispatch_plan(cortical, {'action': 'suggest', **route})['proposalReport']
+    assert receipt['returned'] == 0 and receipt['candidates'][0]['accessAssessment'] == manual['accessAssessment']
+
+
+def test_distal_cap_and_partial_boundary_evidence(cortical):
+    hemisphere = cortical.layer('right-cerebral-hemisphere')
+    mask = cortical.mask(hemisphere).astype(np.uint8)
+    # The target point stays in the hemisphere but the distal spherical cap
+    # touches its source-labelled boundary.
+    mask[11, 11, 15] = 0
+    hemisphere['data'] = cortical.put_array(mask)
+    hemisphere['revision'] += 1
+    cortical.save()
+    route = _cortical_route(cortical, [3.5, 6, 16], radius=.6)
+    access = dispatch_plan(cortical, {'action': 'upsert', 'approach': route})['approaches'][0]['measurements']['accessAssessment']
+    assert access['status'] == 'rejected' and access['surfaceEntry'] is not None
+    assert access['distalCapSupported'] is False
+
+    tentorium = cortical.layer('tentorium-cerebelli')
+    tentorium['coverage_fields'] = {'supported_axial_indices': [8, 9, 10]}
+    cortical.save()
+    route = _cortical_route(cortical, [3.5, 6, 16])
+    access = dispatch_plan(cortical, {'action': 'upsert', 'approach': route})['approaches'][-1]['measurements']['accessAssessment']
+    assert access['status'] == 'incomplete' and 'tentorium-cerebelli-corridor-coverage' in access['missingEvidence']
+
+
+def test_protection_uses_kind_and_legacy_source_id_not_display_labels(native):
+    affine = native.patient_affine(native.series('t1'))
+    mask = np.zeros((32, 32, 32), np.uint8)
+    mask[10, 18, 15] = 1
+    for key, kind, label in (('region-a', 'brainstem', 'Renamed A'), ('head-7', 'brain-region', 'Renamed B'),
+                             ('context', 'context', 'Brainstem cerebellum pons')):
+        native.add_layer(mask, affine, layer_id=key, source_series='t1', kind=kind, role='context',
+                         color='#abcdef', label=label)
+    native.save()
+    route = _cortical_route(native, [10, 26, 15])
+    measured = dispatch_plan(native, {'action': 'upsert', 'approach': route})['approaches'][0]['measurements']
+    assert set(measured['detectedConflictLayerIds']) == {'region-a', 'head-7'}
+    assert measured['accessAssessment']['status'] == 'rejected'
+    for row in measured['structures']:
+        if row['layerId'] in {'region-a', 'head-7'}:
+            assert row['excluded'] and row['confirmedIntersection']
+
+
 def test_labels_radius_sensitivity_empty_unknown(native):
     c=native;a=c.patient_affine(c.series('t1'));g=NativeRouteGeometry(Snapshot.capture(c))
     start,end=world(a,[10,26,15]),world(a,[10,11,15])
@@ -147,6 +273,119 @@ def test_streamline_paths_not_bridged_and_segment_math(native):
     assert row['available'] and not row['confirmedIntersection'] and row['clearanceLowerBoundMm']>5
     values=_segment_bundle_distances(np.array([0.,0,0]),np.array([10.,0,0]),np.array([[5.,-3,0],[2.,2,0]]),np.array([[5.,3,0],[2.,2,0]]))
     assert values==pytest.approx([0,2])
+
+
+def test_consequence_evidence_binds_current_route_and_keeps_outcomes_unknown(cortical):
+    from resectionlab.anatomy_planning import native_target_options
+
+    cortical.layer("brain")["provenance"] = {"kind": "model_estimate", "model": "Fixture model"}
+    cortical.layer("artery")["provenance"] = {"kind": "supplied_annotation"}
+    cortical.save("Set fixture source categories")
+    option, = native_target_options(cortical, layer_id="target")
+    binding = option["candidateBinding"]
+    dispatch_plan(cortical, {"action": "selectTarget", "targetLayerId": "target", "candidateBinding": binding})
+    result = dispatch_plan(cortical, {"action": "suggest", **_cortical_route(cortical, [3.5, 6, 16])})
+    evidence = result["consequenceEvidence"]
+    route, = evidence["routes"]
+    approach, = result["approaches"]
+    assert evidence["sourceSnapshotId"] == route["sourceSnapshotId"] == result["snapshotId"]
+    assert evidence["targetCandidateBinding"] == route["targetCandidateBinding"] == binding
+    assert route["approachId"] == approach["id"]
+    assert route["parameterHash"] == approach["parameterHash"]
+    assert route["measurementHash"] == approach["measurementHash"]
+    assert route["target"]["evidenceClass"] == "generated_evidence"
+    assert route["warnings"]["access"]["status"] == "supported"
+    sources = {row["layerId"]: row["evidenceClass"] for row in route["sources"]}
+    assert sources["brain"] == "model_estimate" and sources["artery"] == "supplied_annotation"
+    assert sources["cortical-entry-surface"] == "generated_evidence"
+    assert route["dimensions"]["targetLabelVolumeMm3"]["value"] > 0
+    assert route["dimensions"]["targetPointInsideLabel"]["value"] is True
+    for key in ("targetRemovedMm3", "targetResidualMm3", "motorEncounterMm3", "languageEncounterMm3",
+                "bloodGeneratedMm3", "drainageDeficitSeconds", "brainStrainSquaredMm3S", "clinicalDeficitProbability"):
+        readout = route["dimensions"][key]
+        assert readout["status"] == "unavailable" and readout["value"] is None and readout["reason"]
+    assert route["researchDisposition"]["status"] == "reassess"
+    assert evidence["simulationExecutionAuthorized"] is evidence["clinicalValidation"] is False
+    assert dispatch_plan(Collection(cortical.root), {"action": "list"})["consequenceEvidence"] == evidence
+
+    cortical.layer("cortical-entry-surface")["revision"] += 1
+    cortical.save("Revise fixture access evidence")
+    stale = dispatch_plan(Collection(cortical.root), {"action": "list"})["consequenceEvidence"]
+    old_route, = stale["routes"]
+    assert old_route["assessmentStatus"] == "stale"
+    assert old_route["sourceSnapshotId"] != stale["sourceSnapshotId"]
+    assert all(readout["value"] is None for readout in old_route["dimensions"].values())
+    assert not old_route["sources"] and not old_route["registrations"]
+
+
+def test_consequence_evidence_distinct_streamlines_partial_fields_and_reviewed_landmarks(native, tmp_path):
+    from resectionlab.anatomy_import import review_registration
+
+    affine = native.patient_affine(native.series("t1"))
+    image = nib.Nifti1Image(np.ones((32, 20, 32), np.float32), affine)
+    image.header.set_xyzt_units("mm")
+    path = tmp_path / "flair.nii.gz"
+    nib.save(image, path)
+    native.add_series(path, series_id="flair", modality="FLAIR")
+    native.set_registration("flair", np.eye(4), status="unreviewed", method="Fixture transform")
+    moving = np.array([[1., 1., 1.], [2., 1., 1.], [1., 2., 1.]])
+    review_registration(native, "flair", moving, moving + [.25, 0., 0.], "Fixture reviewer")
+    points = world(affine, [[10, 17, 14], [10, 17, 15], [10, 17, 16],
+                            [9, 18, 15], [11, 18, 15], [2, 19, 15], [3, 19, 15]])
+    native.document["tractography"] = [{"id": "tract-A", "label": "Bundle A", "source_series": "flair",
+                                       "provenance": {"kind": "supplied_annotation"},
+                                       "points_ras_mm": native.put_array(points.astype(np.float32)),
+                                       "offsets": native.put_array(np.array([0, 3, 5, 7], np.uint32))}]
+    native.save()
+    result = dispatch_plan(native, {"action": "upsert", "approach": _cortical_route(native, [10, 26, 15])})
+    route, = result["consequenceEvidence"]["routes"]
+    bundle, = [row for row in route["sources"] if row["kind"] == "tractography"]
+    assert bundle["coverage"]["status"] == "partial-field" and bundle["contact"] == "detected"
+    assert bundle["coverage"]["labelFieldComplete"] is None
+    assert bundle["readouts"]["intersectedSegmentCount"]["value"] == 3
+    assert bundle["readouts"]["intersectedStreamlineCount"]["value"] == 2
+    assert bundle["readouts"]["intersectedStreamlineCount"]["status"] == "partial_coverage"
+    assert route["tractEncounterLayerIds"] == ["tract-A"]
+    assert route["dimensions"]["tractBundlesEncountered"]["value"] == 1
+    assert route["warnings"]["criticalContacts"] == [{"layerId": "tract-A", "label": "Bundle A", "contact": "detected"}]
+    review = next(row for row in route["registrations"] if row["sourceSeriesId"] == "flair")
+    assert review["landmarkSampleCount"] == 3
+    assert review["landmarkResidual"]["value"] == pytest.approx(.25)
+    assert review["wholeFieldError"]["value"] is None
+    assert route["uncertainty"]["scenarioCount"] > 1
+    assert route["uncertainty"]["guard"]["disposition"] == "vetoed"
+
+    # A v7 receipt predating path incidence still exposes its segment evidence.
+    from json import dumps, loads
+    from resectionlab.anatomy_approaches import FILENAME
+    from resectionlab.patient_anatomy import digest
+
+    sidecar = native.root / FILENAME
+    saved = loads(sidecar.read_text())
+    old, = saved["approaches"]
+    tract = next(row for row in old["measurements"]["structures"] if row["layerId"] == "tract-A")
+    tract.pop("intersectedStreamlineCount")
+    old["measurementHash"] = digest(old["measurements"])
+    sidecar.write_text(dumps(saved))
+    before = sidecar.read_bytes()
+    evidence = dispatch_plan(Collection(native.root), {"action": "list"})["consequenceEvidence"]
+    older, = evidence["routes"]
+    assert older["assessmentStatus"] == "current"
+    bundle, = [row for row in older["sources"] if row["kind"] == "tractography"]
+    assert bundle["readouts"]["intersectedSegmentCount"]["value"] == 3
+    assert bundle["readouts"]["intersectedStreamlineCount"]["value"] is None
+    assert sidecar.read_bytes() == before
+
+
+def test_consequence_evidence_limits_review_routes_and_keeps_requested_approach(native):
+    route = _cortical_route(native, [4, 6, 16])
+    ids = [f"manual-{i}" for i in range(5)]
+    for key in ids:
+        result = dispatch_plan(native, {"action": "upsert", "approach": {**route, "id": key}, "assess": False})
+    assert len(result["approaches"]) == 5
+    assert [row["approachId"] for row in result["consequenceEvidence"]["routes"]] == [*ids[:2], ids[-1]]
+    reopened = dispatch_plan(Collection(native.root), {"action": "list", "reviewApproachId": ids[3]})
+    assert [row["approachId"] for row in reopened["consequenceEvidence"]["routes"]] == [*ids[:2], ids[3]]
 
 
 def test_save_reopen_edits_and_source_invalidation(native,tmp_path):
