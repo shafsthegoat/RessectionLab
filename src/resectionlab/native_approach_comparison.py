@@ -4,6 +4,7 @@ import math
 
 import numpy as np
 
+from .anatomy_evidence import VASCULAR_KINDS
 from .evaluation import WorldOutcome, upper_tail_cvar
 from .patient_anatomy import digest
 
@@ -21,7 +22,6 @@ METRICS = {
     "tractClearanceMm": ("mm", "lower"),
     "otherCriticalClearanceMm": ("mm", "lower"),
 }
-_VASCULAR = {"vessels", "artery", "vein", "sinus"}
 _TRACT = {"tract", "tractography", "motor", "language", "functional"}
 _TAIL_FRACTION = .2
 _DISCLOSURE = "Finite declared sensitivity design. Registration accuracy and anatomical detection sensitivity are unmeasured."
@@ -96,7 +96,7 @@ def nominal_objectives(measurements):
         evidence["nonTargetTraversalMm3"] = [brain["layerId"], *sorted(row["layerId"] for row in targets)]
     groups = {name: [] for name in ("vascularClearanceMm", "tractClearanceMm", "otherCriticalClearanceMm")}
     for row in measurements["structures"]:
-        name = ("vascularClearanceMm" if row["kind"] in _VASCULAR else
+        name = ("vascularClearanceMm" if row["kind"] in VASCULAR_KINDS else
                 "tractClearanceMm" if row["kind"] in _TRACT else "otherCriticalClearanceMm")
         groups[name].append(row)
     for name, rows in groups.items():

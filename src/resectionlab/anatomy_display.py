@@ -1,8 +1,9 @@
 """Display derivatives. These never authorize quantitative patient-frame operations."""
 from copy import deepcopy
+import nibabel as nib
 import numpy as np
 from scipy import ndimage as ndi
-from .patient_anatomy import affine, resample
+from .patient_anatomy import affine, file_hash, nifti_geometry, resample
 
 
 def display_affine(collection, row, *, preview=False):
@@ -21,12 +22,41 @@ def display_affine(collection, row, *, preview=False):
                 transform.get('source_sha256') != source['original']['sha256'] or
                 transform.get('reference_sha256') != reference['original']['sha256']):
             raise ValueError('Alignment preview does not match these source scans')
-        matrix = collection.registration_matrix(sid)
+        if sid != row['id']:
+            collection.require_native_geometry(row)
+        matrix = collection.registration_matrix(sid, require_geometry=True)
         if (not np.allclose(matrix[:3, :3].T @ matrix[:3, :3], np.eye(3), atol=1e-5)
                 or np.linalg.det(matrix[:3, :3]) < 0):
             raise ValueError('Alignment preview requires a rigid transform')
         return matrix @ affine(row['affine']), True
     raise ValueError(f'No usable alignment for {sid}')
+
+
+def source_lattice_annotation_preview(collection, row, selected):
+    """Admit an undeclared-unit annotation by index on its own acquired source."""
+    provenance = row.get("provenance", {})
+    original = provenance.get("source")
+    if (row.get("units_status") != "unknown" or selected.get("units_status") != "mm"
+            or row.get("source_series") != selected["id"]
+            or provenance.get("kind") not in {"supplied_annotation", "observed_source_annotation"}
+            or not isinstance(original, dict) or not isinstance(original.get("path"), str)
+            or row["data"]["shape"] != selected["data"]["shape"]
+            or not np.array_equal(row["affine"], selected["affine"])):
+        return False
+    try:
+        collection.require_native_geometry(selected)
+        path = collection.path(original["path"])
+        label = nib.load(path)
+        geometry = nifti_geometry(label)
+        # With no units declared, compare every active form against the known
+        # source lattice. Matching only the selected form can conceal conflict.
+        return (geometry["spatial_units"] == "unknown" and geometry["frame_status"] == "coded"
+                and tuple(row["data"]["shape"]) == label.shape
+                and all(np.allclose(geometry[key], selected["affine"], atol=1e-5, rtol=0)
+                        for key in ("qform", "sform") if geometry[key + "_code"])
+                and file_hash(path) == original.get("sha256"))
+    except (OSError, ValueError, nib.filebasedimages.ImageFileError):
+        return False
 
 
 def brain_vessel_display(collection, row):
@@ -42,6 +72,8 @@ def brain_vessel_display(collection, row):
             continue
         try:
             if brain['source_series'] == row['source_series']:
+                collection.require_native_geometry(brain)
+                collection.require_native_geometry(row)
                 source, target = affine(brain['affine']), affine(row['affine'])
             else:
                 source, target = collection.patient_affine(brain), collection.patient_affine(row)

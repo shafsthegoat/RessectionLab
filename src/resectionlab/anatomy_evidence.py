@@ -1,6 +1,6 @@
 """Eligibility for native geometric vascular constraints."""
 
-VASCULAR_KINDS = {"vessels", "artery", "vein", "sinus"}
+VASCULAR_KINDS = {"vessel", "vessels", "artery", "vein", "sinus"}
 
 
 def vascular_evidence_supported(collection, layer):
@@ -8,7 +8,8 @@ def vascular_evidence_supported(collection, layer):
     if layer["kind"] not in VASCULAR_KINDS:
         return True
     provenance = layer.get("provenance", {})
-    if layer.get("availability") == "empty_output" or provenance.get("evidence_use") == "context_only":
+    if (layer.get("availability") == "empty_output" or layer.get("evidence_status") == "empty-output"
+            or provenance.get("evidence_use") == "context_only"):
         return False
     inferred = provenance.get("kind") in {"model_estimate", "image_derived_estimate", "geometric_estimate"}
     inferred = inferred or bool(provenance.get("model") or provenance.get("inference"))
@@ -23,9 +24,9 @@ def vascular_evidence_supported(collection, layer):
 
     source = collection.series(layer["source_series"])
     model = str(provenance.get("model", "")).lower()
-    if "supersynth" in model or "experimental" in model or provenance.get("kind") == "geometric_estimate":
-        return False
-    return source["modality"] in ANGIOGRAPHY and source_volume(source)
+    return (model in {"vesselfm", "vesselfm-base"} and layer["kind"] in {"vessel", "vessels"}
+            and provenance.get("kind") != "geometric_estimate"
+            and source["modality"] in ANGIOGRAPHY and source_volume(source))
 
 
 def inference_bounds(layer):

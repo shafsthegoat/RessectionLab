@@ -2,7 +2,9 @@
 from contextlib import contextmanager
 import fcntl
 import json
+import math
 import os
+import re
 from pathlib import Path
 import tempfile
 import time
@@ -15,27 +17,90 @@ RECEIPTS = "anatomy-preparation.json"
 SCHEMA = "native-anatomy-preparation-v1"
 
 
-def _receipts(collection):
-    path = collection.path(RECEIPTS)
-    if not path.exists():
-        return {}
-    if path.stat().st_size > 4 * 1024**2:
-        raise ValueError("Preparation checkpoint exceeds its size budget")
-    record = json.loads(path.read_text())
-    if record.get("schema") != SCHEMA or record.get("patient") != collection.document["patient_id"]:
+MAX_CHECKPOINT_BYTES = 4 * 1024**2
+MAX_STAGE_REASON = 1500
+CHECKPOINT_STATUSES = {"cached", "failed", "empty_output", "interrupted"}
+RETRY_STATUSES = {"failed", "empty_output"}
+RUNNABLE_STATUSES = {"ready", "interrupted"}
+SATISFIED_STATUSES = {"cached", "available"}
+
+
+def _receipt_key(value):
+    return isinstance(value, str) and re.fullmatch(r"[a-f0-9]{64}", value) is not None
+
+
+def _unique_object(pairs):
+    values = dict(pairs)
+    if len(values) != len(pairs):
+        raise ValueError("Duplicate preparation checkpoint field")
+    return values
+
+
+def _validate_receipts(record, patient):
+    if not isinstance(record, dict) or set(record) != {"schema", "patient", "stages"}:
+        raise ValueError("Invalid preparation checkpoint")
+    if record["schema"] != SCHEMA or record["patient"] != patient:
         raise ValueError("Preparation checkpoint belongs to a different study")
-    return record["stages"]
+    receipts = record["stages"]
+    if not isinstance(receipts, dict):
+        raise ValueError("Invalid preparation checkpoint stage list")
+    for stage_id, receipt in receipts.items():
+        if not isinstance(stage_id, str) or not stage_id.strip() or not isinstance(receipt, dict) or set(receipt) != {
+            "status", "reason", "inputKey", "outputs", "elapsedSeconds",
+        }:
+            raise ValueError("Invalid preparation checkpoint stage")
+        status, reason, elapsed = receipt["status"], receipt["reason"], receipt["elapsedSeconds"]
+        if (not isinstance(status, str) or status not in CHECKPOINT_STATUSES
+                or not isinstance(reason, str) or len(reason) > MAX_STAGE_REASON
+                or not _receipt_key(receipt["inputKey"]) or type(elapsed) not in {int, float}
+                or elapsed < 0 or (isinstance(elapsed, float) and not math.isfinite(elapsed))):
+            raise ValueError("Invalid preparation checkpoint stage status or identity")
+        outputs = receipt["outputs"]
+        if not isinstance(outputs, list) or (status in {"failed", "interrupted"} and outputs):
+            raise ValueError("Invalid preparation checkpoint outputs")
+        seen = set()
+        for output in outputs:
+            if not isinstance(output, dict) or set(output) != {"id", "sha256"}:
+                raise ValueError("Invalid preparation checkpoint output")
+            layer_id = output["id"]
+            if (not isinstance(layer_id, str) or not layer_id.strip() or layer_id in seen
+                    or not _receipt_key(output["sha256"])):
+                raise ValueError("Invalid or duplicate preparation checkpoint output")
+            seen.add(layer_id)
+    return receipts
+
+
+def _receipts(collection):
+    try:
+        with collection.path(RECEIPTS).open("rb") as checkpoint:
+            payload = checkpoint.read(MAX_CHECKPOINT_BYTES + 1)
+    except FileNotFoundError:
+        return {}
+    if len(payload) > MAX_CHECKPOINT_BYTES:
+        raise ValueError("Preparation checkpoint exceeds its size budget")
+    try:
+        record = json.loads(payload, object_pairs_hook=_unique_object)
+    except (ValueError, RecursionError) as error:
+        raise ValueError("Invalid preparation checkpoint JSON") from error
+    return _validate_receipts(record, collection.document["patient_id"])
 
 
 def _checkpoint(collection, receipts):
-    record = {"schema": SCHEMA, "patient": collection.document["patient_id"], "stages": receipts}
-    with tempfile.NamedTemporaryFile(dir=collection.root, mode="w", delete=False) as out:
+    patient = collection.document["patient_id"]
+    record = {"schema": SCHEMA, "patient": patient, "stages": receipts}
+    _validate_receipts(record, patient)
+    payload = json.dumps(record, allow_nan=False, separators=(",", ":")).encode()
+    if len(payload) > MAX_CHECKPOINT_BYTES:
+        raise ValueError("Preparation checkpoint exceeds its size budget")
+    with tempfile.NamedTemporaryFile(dir=collection.root, mode="wb", delete=False) as out:
+        temporary = Path(out.name)
         try:
-            json.dump(record, out, allow_nan=False)
+            out.write(payload)
             out.flush()
-            os.replace(out.name, collection.path(RECEIPTS))
+            os.fsync(out.fileno())
+            os.replace(temporary, collection.path(RECEIPTS))
         finally:
-            Path(out.name).unlink(missing_ok=True)
+            temporary.unlink(missing_ok=True)
 
 
 @contextmanager
@@ -46,6 +111,12 @@ def _exclusive(collection):
         except BlockingIOError as exc:
             raise ValueError("Preparation is already running for this study") from exc
         yield
+
+
+def _environment_identity(environment):
+    if isinstance(environment, dict) and "file_paths" in environment:
+        return {key: value for key, value in environment.items() if key != "file_paths"}
+    return environment
 
 
 def _model_input(collection, job):
@@ -59,7 +130,7 @@ def _model_input(collection, job):
             row = collection.layer(value)
             dependencies[key] = {k: row.get(k) for k in ("id", "revision", "data", "affine", "label_value")}
     return digest({"service": SCHEMA, "source": inputs, "model": job.get("model"),
-                   "environment": job.get("environment"), "options": job.get("options", {}),
+                   "environment": _environment_identity(job.get("environment")), "options": job.get("options", {}),
                    "layers": dependencies, "transforms": job.get("transform_dependencies", {})})
 
 
@@ -67,6 +138,7 @@ def _stage(collection, job, receipts):
     stage = dict(job)
     stage.setdefault("label", stage.get("capability", stage["id"]).replace("_", " ").capitalize())
     stage["seriesId"] = stage.get("series_id")
+    environment = stage.get("environment")
     if stage.get("model") == "rigid-registration":
         row = collection.series(stage["series_id"])
         parent = collection.series(stage["parent"])
@@ -82,21 +154,38 @@ def _stage(collection, job, receipts):
                 stage.update(status="cached", reason="Source-bound " + transform["status"] + " alignment")
                 return stage
     else:
+        if "environment" in stage:
+            stage["environment"] = _environment_identity(environment)
         stage["inputKey"] = _model_input(collection, stage)
     receipt = receipts.get(stage["id"], {})
-    if receipt.get("inputKey") == stage["inputKey"]:
-        if receipt["status"] in {"failed", "empty_output"} and stage["status"] in {"ready", "available"}:
+    matches = receipt.get("inputKey") == stage["inputKey"]
+    if not matches and receipt and stage.get("model") != "rigid-registration":
+        from .anatomy_model_cache import legacy_model_environments
+
+        output_ids = {output["id"] for output in receipt.get("outputs", [])}
+        lineage = (row for row in collection.document["layers"] if row["id"] in output_ids
+                   and row.get("source_series") == stage["seriesId"]
+                   and row.get("preparation_input") == receipt["inputKey"])
+        matches = any(receipt["inputKey"] == _model_input(collection, {**stage, "environment": legacy})
+                      for legacy in legacy_model_environments(stage.get("model"), environment, lineage))
+    if matches:
+        if receipt["status"] in RETRY_STATUSES and stage["status"] in {"ready", "available"}:
             stage.update(status=receipt["status"], reason=receipt["reason"])
-        elif receipt["status"] == "cached" and receipt.get("outputs"):
+        elif receipt["status"] == "interrupted" and stage["status"] == "ready":
+            stage.update(status="interrupted", reason=receipt["reason"])
+        elif receipt["status"] == "cached" and receipt["outputs"]:
             rows = {r["id"]: r for r in collection.document["layers"]}
-            valid = True
-            for output in receipt["outputs"]:
-                row = rows.get(output["id"])
-                if row is None or output["sha256"] != row.get("original_data", row["data"])["sha256"]:
-                    valid = False
-                    break
-                collection.array(row.get("original_data", row["data"]))
-            if valid:
+            try:
+                for output in receipt["outputs"]:
+                    row = rows[output["id"]]
+                    stored = row.get("original_data", row["data"])
+                    if output["sha256"] != stored["sha256"]:
+                        raise ValueError("Output identity changed")
+                    collection.array(stored)
+            except (KeyError, OSError, ValueError):
+                if stage["status"] == "ready":
+                    stage["reason"] = "Previously prepared output is missing or changed; recompute from the source"
+            else:
                 stage.update(status="cached", reason="Prepared layers retained", outputs=receipt["outputs"])
     return stage
 
@@ -119,6 +208,15 @@ def _jobs(collection, options):
 
 def _plan(collection, options, receipts):
     stages = [_stage(collection, job, receipts) for job in _jobs(collection, options)]
+    by_id = {stage["id"]: stage for stage in stages}
+    for stage in stages:
+        if stage["status"] not in RUNNABLE_STATUSES:
+            continue
+        for dependency in stage.get("depends_on", []):
+            parent = by_id[dependency]
+            if parent["status"] not in RUNNABLE_STATUSES | SATISFIED_STATUSES:
+                stage.update(status="blocked", reason="Requires usable output from " + parent["label"])
+                break
     return {"id": digest({"snapshot": collection.identity(), "options": options,
                           "stages": [(s["id"], s["inputKey"], s["status"]) for s in stages]}),
             "stages": stages}
@@ -180,30 +278,40 @@ def prepare_anatomy(collection, *, on_stage=None, cancelled=None, retry_failed=F
             else:
                 stage = initial
             state = stage["status"]
-            reason = stage.get("reason", "")
-            if state == "ready" or (retry_failed and state in {"failed", "empty_output"}):
-                if any(completed.get(dep) not in {"cached", "available"} for dep in stage.get("depends_on", [])):
+            reason = stage.get("reason") or ""
+            published = False
+            if state in RUNNABLE_STATUSES or (retry_failed and state in RETRY_STATUSES):
+                if any(completed.get(dep) not in SATISFIED_STATUSES for dep in stage.get("depends_on", [])):
                     state, reason = "blocked", "A required preparation stage did not produce usable anatomy"
                 else:
                     started = time.monotonic()
                     progress(index / len(plan["stages"]), stage["label"])
                     candidate = PatientImagingCollection(collection.root, collection.document)
                     expected = collection.identity()
+                    interrupted = None
                     try:
                         state, reason, outputs = _run_stage(candidate, stage, cancelled,
                             lambda f, m: progress((index + f) / len(plan["stages"]), m))
-                    except (OSError, ValueError, RuntimeError, MemoryError) as exc:
-                        if cancelled() or isinstance(exc, InterruptedError):
-                            raise InterruptedError("Preparation cancelled; completed stages are saved") from exc
-                        state, reason, outputs = "failed", str(exc)[:1500], []
-                    if cancelled():
-                        raise InterruptedError("Preparation cancelled before stage admission")
+                    except InterruptedError as error:
+                        interrupted = error
+                    except Exception as error:
+                        # The adapter is isolated from revision and checkpoint commits.
+                        # A failed optional worker cannot suppress independent stages.
+                        state, reason, outputs = "failed", f"{type(error).__name__}: {error}"[:MAX_STAGE_REASON], []
+                    if interrupted is not None or cancelled():
+                        receipts[stage["id"]] = {
+                            "status": "interrupted", "reason": "Previous attempt interrupted; resume to finish this stage",
+                            "inputKey": stage["inputKey"], "outputs": [], "elapsedSeconds": time.monotonic() - started,
+                        }
+                        _checkpoint(collection, receipts)
+                        raise InterruptedError("Preparation cancelled; completed stages are saved") from interrupted
                     if state != "failed" and candidate.identity() != expected:
                         from .anatomy_workspace import read_view, save_view
                         view = read_view(collection)
                         candidate.save("Prepare anatomy · " + stage["label"], expected=expected)
                         collection.document = candidate.document
                         collection._base_snapshot = candidate.document["snapshot_id"]
+                        published = True
                         if view:
                             save_view(collection, {**view, "snapshotId": collection.identity()})
                     elif PatientImagingCollection(collection.root).identity() != expected:
@@ -212,7 +320,8 @@ def prepare_anatomy(collection, *, on_stage=None, cancelled=None, retry_failed=F
                                                "outputs": outputs, "elapsedSeconds": time.monotonic() - started}
                     _checkpoint(collection, receipts)
             completed[stage["id"]] = state
-            outcome = {"id": stage["id"], "status": state, "reason": reason}
+            outcome_status = "complete" if state == "cached" and published else state
+            outcome = {"id": stage["id"], "label": stage["label"], "status": outcome_status, "reason": reason}
             outcomes.append(outcome)
             if on_stage:
                 on_stage(outcome)

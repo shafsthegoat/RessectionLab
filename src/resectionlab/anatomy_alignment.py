@@ -323,14 +323,9 @@ def ensure_alignment(c, *, force=False, cancelled=lambda: False, progress=lambda
             original_path = c.path(row['original']['path'])
             if file_hash(original_path) != row['original']['sha256']:
                 raise ValueError('Original source changed before alignment')
-            header = nib.load(original_path)
-            if header.header.get_xyzt_units()[0] != 'mm':
-                raise ValueError('Automatic alignment requires declared millimetre source units')
-            q, qc = header.get_qform(coded=True); s, sc = header.get_sform(coded=True)
-            if qc and sc and not np.allclose(q, s, atol=1e-3) and row['id'] not in supplied:
-                raise ValueError('Conflicting NIfTI qform/sform; resolve source geometry before alignment')
-            if not np.allclose(header.affine, row['affine'], atol=1e-5):
-                raise ValueError('Source header geometry changed before alignment')
+            # A retained source-bound working registration does not authorize
+            # metric planning on an unresolved original header.
+            c.require_native_geometry(row, allow_header_conflict=row['id'] in supplied)
         for i, (row, parent) in enumerate(pairs):
             check_cancel(cancelled)
             if row['id'] in supplied:

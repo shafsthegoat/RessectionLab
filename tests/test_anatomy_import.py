@@ -322,6 +322,43 @@ def test_imported_layer_units_must_be_mm_for_scene(tmp_path):
         prepare_surgical_environment(c.root, tmp_path / "scene", layer_ids={"tumor": row["id"]})
 
 
+def test_unknown_units_annotation_preview_stays_on_its_own_source_grid(tmp_path):
+    c = collection(tmp_path)
+    c.add_series(volume(tmp_path / "second-source.nii.gz", np.ones((8, 8, 8), np.float32)),
+                 series_id="tof", modality="TOF")
+    c.set_registration("tof", np.eye(4), status="source-provided", method="fixture")
+    pixels = np.zeros((8, 8, 8), np.uint8)
+    pixels[2:4, 2:5, 2:6] = 1
+    layers = []
+    for label, variant in (("matched", np.eye(4)), ("conflicted", np.diag([2, 1, 1, 1]))):
+        filepath = tmp_path / (label + ".nii.gz")
+        img = nib.Nifti1Image(pixels, np.eye(4))
+        img.header.set_xyzt_units("unknown")
+        img.set_qform(variant, code=1)
+        nib.save(img, filepath)
+        row = import_anatomy_derivative(c, filepath, source_series="t1", kind="labels",
+            label=label, role_map={1: "vessels"})[0]
+        assert row["units_status"] == "unknown"
+        layers.append(row["id"])
+    c.save("supplied exact lattice and conflicting control")
+    with pytest.raises(ValueError, match="declared millimeter"):
+        c.patient_affine(c.layer(layers[0]))
+
+    bridge = BridgeSession(tmp_path / "transfers")
+    call = lambda op, args: bridge.execute(op, args, _Request("source-lattice-preview"), lambda *_: None)
+    opened = call("anatomyOpen", {"path": str(c.root / "patient-anatomy.json")})
+    args = {"collectionId": opened["collectionId"], "snapshotId": opened["document"]["snapshot_id"],
+            "layers": layers, "previewAlignment": True}
+    prepared = call("anatomyView", {**args, "seriesId": "t1"})
+    assert prepared["unavailableLayers"] == layers[1:]
+    (shown,) = prepared["compartments"]
+    assert shown["name"] == layers[0] and shown["label"].endswith("Source-grid preview")
+    assert shown["qa"]["voxelCount"] == 24 and "volumeMm3" not in shown
+    assert any("physical measurements unavailable" in issue for issue in shown["qa"]["issues"])
+    assert call("anatomyView", {**args, "seriesId": "tof"})["unavailableLayers"] == layers
+    assert call("anatomyView", {**args, "seriesId": "t1", "previewAlignment": False})["unavailableLayers"] == layers
+
+
 def test_bridge_import_validates_sequence_and_passes_label_map(tmp_path):
     c = collection(tmp_path)
     bridge = BridgeSession(tmp_path / "transfers")

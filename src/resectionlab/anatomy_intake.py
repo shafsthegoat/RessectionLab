@@ -20,7 +20,7 @@ from .anatomy_import import (
     import_nifti_series,
     select_intake_reference,
 )
-from .patient_anatomy import MAX_ARRAY, PatientImagingCollection, digest, file_hash
+from .patient_anatomy import MAX_ARRAY, PatientImagingCollection, digest, file_hash, nifti_geometry_issue
 
 
 KINDS = {"nifti", "dicom", "labels"}
@@ -49,8 +49,12 @@ def _sources(kind, path, *, selected_series=None, check=lambda: None):
     if kind == "labels":
         bounded = len(details["shape"]) == 3 and 0 < prod(details["shape"]) <= MAX_ARRAY // 4
         valid_units = details["units_status"] in {"mm", "unknown"}
+        issue = nifti_geometry_issue(details["native_geometry"])
+        warnings = [issue] if issue else []
+        if not bounded:
+            warnings.append("Select a bounded 3D NIfTI annotation")
         details.update(modality=None, candidates=[], storage="series", supported=bool(bounded and valid_units),
-                       issues=[] if bounded and valid_units else ["Select a bounded 3D NIfTI annotation with millimeter geometry"])
+                       issues=warnings)
         for key, source_key in (("patient_id", "SourcePatientID"), ("study_uid", "SourceStudyInstanceUID"),
                                 ("visit_id", "SourceSessionID")):
             details[key] = _unique_identity([details.get(key), metadata.get(source_key)], key.replace("_", " "))
@@ -58,7 +62,7 @@ def _sources(kind, path, *, selected_series=None, check=lambda: None):
     elif details["storage"] == "series" and (
         details["units_status"] not in {"mm", "unknown"} or not 0 < prod(details["shape"]) <= MAX_ARRAY // 4
     ):
-        details.update(supported=False, issues=["Select a bounded 3D NIfTI scan with millimeter geometry"])
+        details.update(supported=False, issues=[*details["issues"], "Select a bounded 3D NIfTI scan with millimeter geometry"])
     check()
     members = {"original": file_hash(path)}
     members.update({key: checksum for key, (_path, checksum) in companions.items()})

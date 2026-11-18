@@ -454,7 +454,9 @@ def test_tract_functional_import_and_graph_cache(patient, tmp_path):
     assert np.allclose(patient.array(t["points_ras_mm"]), points)
     scores = np.zeros((24, 25, 26), np.float32)
     scores[12, 12, 12] = 3
-    nib.save(nib.Nifti1Image(scores, a), tmp_path / "functional.nii.gz")
+    functional = nib.Nifti1Image(scores, a)
+    functional.header.set_xyzt_units("mm")
+    nib.save(functional, tmp_path / "functional.nii.gz")
     f = import_anatomy_derivative(
         patient,
         tmp_path / "functional.nii.gz",

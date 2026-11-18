@@ -17,7 +17,7 @@ from .anatomy_editor import AnatomyDraft
 from .anatomy_workspace import read_view, save_view, component_review
 from .anatomy_geometry import mesh, normals
 from .anatomy_qa import layer_quality
-from .anatomy_display import display_affine, brain_vessel_display
+from .anatomy_display import display_affine, brain_vessel_display, source_lattice_annotation_preview
 
 
 def _retain(session, result):
@@ -162,6 +162,7 @@ def dispatch(session, operation, args, request, progress):
             registered = True
         except ValueError:
             displayed, estimated, registered = native, False, False
+        source_displayed = displayed
         alignment_previews = [reference["id"]] if estimated else []
         image_data = reference["data"]
         preview = next((item for item in reference.get("preview_pyramid", [])
@@ -208,12 +209,16 @@ def dispatch(session, operation, args, request, progress):
                 row["edits"] = [{"draft": True}]
                 row["revision"] += 1
             row_previews = []
-            if row["source_series"] == reference["id"]:
-                source = (
-                    affine(row["affine"]) if not registered else display_affine(c, row, preview=preview_alignment)[0]
-                )
-            else:
-                try:
+            source_grid_preview = False
+            try:
+                if row["source_series"] == reference["id"]:
+                    if registered:
+                        source = display_affine(c, row, preview=preview_alignment)[0]
+                    else:
+                        c.require_native_geometry(reference)
+                        c.require_native_geometry(row)
+                        source = affine(row["affine"])
+                else:
                     if not registered:
                         raise ValueError("selected image is unregistered")
                     if c.series(row["source_series"])["timepoint"] != reference["timepoint"]:
@@ -222,9 +227,12 @@ def dispatch(session, operation, args, request, progress):
                     if layer_estimated:
                         row_previews.append(row["source_series"])
                         alignment_previews.extend(row_previews)
-                except ValueError:
+            except ValueError:
+                source_grid_preview = preview_alignment and source_lattice_annotation_preview(c, row, reference)
+                if not source_grid_preview:
                     unavailable.append(name)
                     continue
+                source = source_displayed
             progress(
                 (i + 0.1) / max(1, len(requested)), f"Preparing native {row['label']}"
             )
@@ -245,13 +253,18 @@ def dispatch(session, operation, args, request, progress):
                 row["label_value"] = 1
                 row["edits"] = [{"removal_preview": True}]
             quality = layer_quality(c, row)
-            source_volume = float(c.mask(row).sum() * abs(np.linalg.det(affine(row["affine"])[:3, :3])))
+            source_volume = None if source_grid_preview else float(
+                c.mask(row).sum() * abs(np.linalg.det(affine(row["affine"])[:3, :3]))
+            )
+            if source_grid_preview:
+                message = "Annotation header omits spatial units. Preview on its supplied source grid; physical measurements unavailable."
+                quality = {**quality, "issues": [message, *quality["issues"]]}
             display_filter = None
             # Correction review always shows the complete editable source.
-            if (vessel_scope == "brain" and row["kind"] in {"vessels", "artery", "vein", "sinus"}
+            if (not source_grid_preview and vessel_scope == "brain" and row["kind"] in {"vessels", "artery", "vein", "sinus"}
                     and not draft and not args.get("highlightLayer")):
                 row, display_filter = brain_vessel_display(c, row)
-            if (vessel_scope in {"intracranial", "excluded"} and row["kind"] in {"vessels", "artery", "vein", "sinus"}
+            if (not source_grid_preview and vessel_scope in {"intracranial", "excluded"} and row["kind"] in {"vessels", "artery", "vein", "sinus"}
                     and not draft and not args.get("highlightLayer")):
                 from .anatomy_intracranial import intracranial_vessels
                 row, display_filter = intracranial_vessels(c, row, excluded=vessel_scope == "excluded", cancelled=request.cancelled.is_set)
@@ -284,12 +297,12 @@ def dispatch(session, operation, args, request, progress):
                         "volumeRestoredComponents": int(geometry["volume_restored_components"]),
                     } if "max_component_volume_change_fraction" in geometry else {}),
                     "intersectionCheck": "source-restored" if bool(geometry.get("smoothing_rejected", False)) or str(geometry.get("fallback_reason", "")) else "passed"},
-                "label": row["label"],
+                "label": row["label"] + (" · Source-grid preview" if source_grid_preview else ""),
                 "color": row["color"],
                 "alignmentPreviews": row_previews,
                 "displayFilter": display_filter,
                 **({"labelSet": set_id, "labelValue": row["label_value"]} if shared else {"mask": transfer(mask, "uint8")}),
-                "volumeMm3": source_volume,
+                **({"volumeMm3": source_volume} if source_volume is not None else {}),
             }
             if True:  # Empty geometry is explicit; never rebuild it from a categorical placeholder.
                 transform = np.linalg.inv(displayed) @ source
@@ -336,22 +349,13 @@ def dispatch(session, operation, args, request, progress):
                 sid = tract["source_series"]
                 t = c.document["transforms"].get(sid)
                 if sid == reference["id"]:
+                    c.require_native_geometry(reference)
                     transform = np.linalg.inv(native)
-                elif (
-                    registered
-                    and t
-                    and t["status"] in {"reference", "reviewed", "source-provided"}
-                ):
-                    transform = np.linalg.inv(displayed) @ affine(t["matrix"])
-                elif registered and t and preview_alignment and t["status"] == "unreviewed":
-                    # Streamlines share their source scan's explicit alignment
-                    # preview; this path remains display-only and never changes
-                    # quantitative or physical source admission.
-                    _, estimated_tract = display_affine(c, c.series(sid), preview=True)
-                    if not estimated_tract:
-                        raise ValueError("Tract preview alignment is not available")
+                elif registered and t:
+                    _, estimated_tract = display_affine(c, c.series(sid), preview=preview_alignment)
                     transform = np.linalg.inv(displayed) @ c.registration_matrix(sid)
-                    alignment_previews.append(sid)
+                    if estimated_tract:
+                        alignment_previews.append(sid)
                 else:
                     continue
                 points = world(transform, c.array(tract["points_ras_mm"])).astype(

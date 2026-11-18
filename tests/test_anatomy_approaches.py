@@ -168,6 +168,53 @@ def test_save_reopen_edits_and_source_invalidation(native,tmp_path):
     assert dispatch_plan(c,{'action':'assess','approachId':saved['id']})['approaches'][0]['assessmentStatus']=='current'
 
 
+def test_same_snapshot_cached_measurements_revalidate_geometry(native):
+    c = native
+    reference = c.series('t1')
+    a = c.patient_affine(reference)
+    value = {'entry': world(a, [10, 26, 15]).tolist(), 'target': world(a, [10, 11, 15]).tolist(),
+             'radiusMm': .5, 'name': 'Saved corridor'}
+    saved = dispatch_plan(c, {'action': 'upsert', 'approach': value})['approaches'][0]
+    assert saved['assessmentStatus'] == 'current'
+    path = c.path(reference['original']['path'])
+    image = nib.load(path)
+    changed = nib.Nifti1Image(np.asarray(image.dataobj), image.affine, image.header.copy())
+    changed.header.set_xyzt_units('unknown')
+    nib.save(changed, path)
+    checked, = read_approaches(c)
+    assert checked['assessmentStatus'] == 'stale'
+    assert checked['sourceSnapshotId'] == c.identity() == saved['sourceSnapshotId']
+
+
+def test_saved_vascular_receipts_revalidate_evidence_without_staling_all_v6(native, monkeypatch):
+    c = native
+    a = c.patient_affine(c.series('t1'))
+    entry, end = world(a, [10, 26, 15]).tolist(), world(a, [10, 11, 15]).tolist()
+    args = {'action': 'suggest', 'targetLayerId': 'target', 'start': entry, 'end': end, 'radiusMm': .5,
+            'entryPatch': {'center': entry, 'normal': [0, 1, 0], 'radiusMm': 0.}}
+    generated = dispatch_plan(c, args)
+    assert generated['approaches'][0]['assessmentStatus'] == 'current'
+    assert generated['proposalReport']['assessmentStatus'] == 'current'
+    import json
+    from resectionlab.patient_anatomy import digest
+    path = c.root/'anatomy-approaches.json'
+    previous = json.loads(path.read_text())
+    for approach in previous['approaches']:
+        approach.pop('metricEvidencePolicy')
+    report = previous['comparisons']['target']['proposalReport']
+    report['report'].pop('metricEvidencePolicy')
+    report['hash'] = digest(report['report'])
+    path.write_text(json.dumps(previous))
+    checked = dispatch_plan(c, {'action': 'list'})
+    assert checked['approaches'][0]['assessmentStatus'] == 'current'
+    assert checked['proposalReport']['assessmentStatus'] == 'current'
+    monkeypatch.setattr('resectionlab.anatomy_approaches.vascular_evidence_supported',
+                        lambda _collection, row: row['kind'] != 'artery')
+    checked = dispatch_plan(c, {'action': 'list'})
+    assert checked['approaches'][0]['assessmentStatus'] == 'stale'
+    assert checked['proposalReport']['assessmentStatus'] == 'stale'
+
+
 def test_bounded_distinct_suggestions_and_shortfall(native):
     c=native;a=c.patient_affine(c.series('t1'))
     args={'action':'suggest','start':world(a,[10,26,15]).tolist(),'end':world(a,[10,11,15]).tolist(),'radiusMm':.5,'patchRadiusMm':5}
@@ -563,6 +610,12 @@ def test_routine_mri_vascular_estimate_stays_unassessed_in_native_planning(nativ
         same_field, a, layer_id="angiographic-vessels", source_series="cta", kind="vessels",
         role="critical", color="#ff0000", provenance={"model": "vesselfm", "kind": "model_estimate"},
     )
+    for identity, model, kind in [
+        ("unsupported-inference", "unknown-model", "vessel"),
+        ("unsupported-venous-class", "vesselfm-base", "vein"),
+    ]:
+        c.add_layer(same_field, a, layer_id=identity, source_series="cta", kind=kind,
+                    role="critical", color="#ff0000", provenance={"model": model})
     c.save()
     start, end = world(a, [[10, 26, 15], [10, 11, 15]])
     geometry = NativeRouteGeometry(Snapshot.capture(c))
@@ -576,6 +629,10 @@ def test_routine_mri_vascular_estimate_stays_unassessed_in_native_planning(nativ
     assert "inferred-artery" not in m["detectedConflictLayerIds"]
     assert angiographic["available"] and angiographic["confirmedIntersection"]
     assert "angiographic-vessels" in m["detectedConflictLayerIds"]
+    for identity in ("unsupported-inference", "unsupported-venous-class"):
+        unsupported = next(row for row in m["structures"] if row["layerId"] == identity)
+        assert not unsupported["available"] and "clearanceLowerBoundMm" not in unsupported
+        assert identity not in m["detectedConflictLayerIds"]
     guarded = geometry.measure(start, end, .5, {"excludedLayerIds": ["inferred-artery"]})
     assert any("explicit exclusion is unassessed" in reason for reason in guarded["constraintFailures"])
 

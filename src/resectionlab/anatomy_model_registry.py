@@ -92,59 +92,68 @@ def _identities(paths):
         )
     return result
 
-def model_environment(model, **options):
-    """Read-only preflight without inference, model imports or downloads."""
+def model_environment(model, *, include_paths=False, **options):
+    """Read-only preflight with content hashes keyed by each asset's logical role."""
     from . import anatomy_models, head_segmentation, poc_models
 
+    assets = {}
+    configuration = {}
     if model in POC_ADAPTERS:
         config = poc_models.MODEL_CONFIG[POC_ADAPTERS[model]]
         home = os.environ.get("RESSECTIONLAB_MODEL_ROOT")
+        model_root = Path(home).resolve() if home else ROOT / "data/models"
         if home:
             from .data_root import checked_root
-            model_root = Path(home).resolve()
             if not model_root.is_relative_to(checked_root()):
                 raise ValueError("Configured model cache must be inside the external data root")
-            weights = list(model_root.glob(config["weights_glob"].removeprefix("data/models/")))
-        else:
-            model_root = ROOT / "data/models"
-            weights = list(ROOT.glob(config["weights_glob"]))
+        weights = sorted(model_root.glob(config["weights_glob"].removeprefix("data/models/")))
         if not weights:
             raise FileNotFoundError(f"Local {config['name']} weights are missing")
-        paths = [poc_models.RUNTIME, Path(poc_models.__file__), *sorted(weights)]
+        assets = {"python": poc_models.RUNTIME, "poc_worker": Path(poc_models.__file__)}
+        assets.update({f"weights/{path.relative_to(model_root).as_posix()}": path for path in weights})
         if model == "synthstrip":
-            paths += [model_root / "synthstrip-v1/mri_synthstrip", ROOT / "src/resectionlab/brain_extraction.py"]
+            assets.update({
+                "model/synthstrip-v1/mri_synthstrip": model_root / "synthstrip-v1/mri_synthstrip",
+                "brain_extraction": ROOT / "src/resectionlab/brain_extraction.py",
+            })
         if sys.platform != "darwin":
             raise ValueError(f"The configured {config['name']} workflow requires an MPS runtime")
     elif model == "synthseg":
         python, script, weights = synthseg_assets(options.get("synthseg_version", 2))
         home = script.parents[2]
-        paths = [python, script, *weights, *sorted((home / "data/labels_classes_priors").glob("*.npy"))]
+        paths = [script, *weights, *sorted((home / "data/labels_classes_priors").glob("*.npy"))]
         for folder in ("SynthSeg", "ext"):
             paths += sorted((home / folder).rglob("*.py"))
+        assets = {"python": python, **{f"bundle/{path.relative_to(home).as_posix()}": path for path in paths}}
     elif model in TUMOR_ADAPTERS:
         folder, packages = tumor_assets(model)
-        paths = [Path(sys.executable), packages / "raidionicsseg/fit.py", *(folder / n for n in (
+        assets = {"python": Path(sys.executable), **{f"model/{folder.name}/{name}": folder / name for name in (
             "model.onnx", "pipeline.json", "pre_processing.ini", "model_config.txt",
-        ))]
-        paths += sorted((packages / "raidionicsseg").rglob("*.py"))
+        )}}
+        paths = [packages / "raidionicsseg/fit.py", *sorted((packages / "raidionicsseg").rglob("*.py"))]
+        assets.update({f"bundle/{path.relative_to(packages).as_posix()}": path for path in paths})
     elif model == "supersynth":
         if sys.platform != "darwin":
             raise ValueError("The pinned tiled SuperSynth worker requires MPS")
         home = supersynth_home()
-        paths = [Path(sys.executable), Path(head_segmentation.__file__)]
+        assets = {"python": Path(sys.executable), "head_worker": Path(head_segmentation.__file__)}
         for name in head_segmentation.ASSETS:
             if not (home / name).is_file():
                 raise FileNotFoundError(f"Pinned SuperSynth asset missing: {name}. Configure RESECTIONLAB_SUPERSYNTH_HOME or mount the model cache.")
-        # The worker verifies these exact hashes before inference. Avoid
-        # streaming the checkpoint each time the user opens the preparation list.
-        return {"files": _identities([*paths, Path(__file__), Path(anatomy_models.__file__)]),
-                "pinned_assets": head_segmentation.ASSETS, "parameters": head_segmentation.PARAMETERS}
+        # The worker verifies these exact pinned hashes before inference.
+        configuration.update(pinned_assets=head_segmentation.ASSETS, parameters=head_segmentation.PARAMETERS)
     elif model == "dural-envelope":
         from . import anatomy_dural
-        paths = [Path(anatomy_dural.__file__), ROOT / "src/resectionlab/anatomy_intracranial.py"]
+        assets = {"dural_adapter": Path(anatomy_dural.__file__),
+                  "intracranial_geometry": ROOT / "src/resectionlab/anatomy_intracranial.py"}
     else:
         raise ValueError(f"Unknown preparation adapter: {model}")
-    return {"files": _identities([*paths, Path(anatomy_models.__file__), Path(__file__)])}
+    assets.update(adapter=Path(anatomy_models.__file__), registry=Path(__file__))
+    hashes = _identities(assets.values())
+    configuration["files"] = {role: hashes[str(path)] for role, path in assets.items()}
+    if include_paths:
+        configuration["file_paths"] = {role: str(path) for role, path in assets.items()}
+    return configuration
 
 
 def _metadata_phrases(row):
@@ -287,7 +296,7 @@ def preparation_model_jobs(c, *, indication=None, full_head_confirmed=False, inc
             reason = "Verified existing estimate; review status retained" if estimated else "A supported supplied layer is already present"
         elif status == "ready":
             try:
-                environment = model_environment(model, **options)
+                environment = model_environment(model, include_paths=True, **options)
             except (OSError, ValueError) as error:
                 status, reason = "unavailable", str(error)
         stage = {"id": job_id, "capability": capability, "series_id": row["id"] if row else None,

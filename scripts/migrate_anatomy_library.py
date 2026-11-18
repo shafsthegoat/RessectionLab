@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Inspect a frozen study inventory and migrate admitted rows to native anatomy.
 
-Without --run, print the dispositions without opening any image bytes. New
-native studies stay private until separately admitted to the app catalog.
+Without --run, print the dispositions and optionally export the joined ledger
+from metadata. New native studies stay private until separately admitted to the
+app catalog.
 """
 from __future__ import annotations
 
@@ -25,6 +26,10 @@ from resectionlab.patient_anatomy import PatientImagingCollection
 
 SCHEMA = "resectionlab.anatomy-migration-ledger.v1"
 RECEIPT_SCHEMA = "resectionlab.anatomy-migration-receipt.v1"
+RESULT_SCHEMA = "resectionlab.anatomy-migration-results.v1"
+ATTEMPT_OUTCOMES = {"running", "cancelled", "failed", "migrated", "migrated_with_limitations",
+                    "preserved_newer_or_missing"}
+PENDING_OUTCOMES = {"running", "cancelled", "unprocessed"}
 PROCESSING_ROLES = {"TRAIN", "DEVELOPMENT"}
 RETENTION_OUTCOMES = {"unavailable", "protected", "unsupported", "ambiguous", "retained"}
 LOCAL_OUTPUTS = Path(__file__).resolve().parents[1] / "testcases"
@@ -149,6 +154,25 @@ def validate_members(collection, check):
             raise ValueError(f"Native source member failed verification: {name}")
 
 
+def legacy_member_source(collection, name, checksum):
+    relative = Path(name)
+    if relative.is_absolute() or ".." in relative.parts:
+        raise ValueError("Native member requires a relative path")
+    try:
+        return collection.path(name)
+    except ValueError:
+        original = (collection.root / relative).resolve(strict=True)
+        approved = (LOCAL_OUTPUTS / "downloaded-datasets").resolve()
+        # Earlier local collections linked exact originals in the configured
+        # checkout dataset store. Copy real bytes into the new package and
+        # keep ordinary workspace traversal rules intact.
+        if (len(relative.parts) != 3 or relative.parts[:2] != ("originals", checksum)
+                or relative.name != original.name or not original.is_relative_to(approved)
+                or not original.is_file() or sha256_file(original) != checksum):
+            raise
+        return original
+
+
 def copy_native(row, destination, check):
     source = Path(row["native_manifest"])
     if source.name != "patient-anatomy.json":
@@ -171,7 +195,8 @@ def copy_native(row, destination, check):
             check()
             target = stage / name
             target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(origin.path(name), target)
+            original = legacy_member_source(origin, name, checksum)
+            shutil.copyfile(original, target)
             if sha256_file(target) != checksum:
                 raise ValueError(f"Source member changed during native copy: {name}")
         copied = PatientImagingCollection(stage)
@@ -207,6 +232,19 @@ def open_study(row, destination, initialize, check):
         timepoint = row["timepoint"] if row["timepoint"] in {"preoperative", "postoperative"} else None
         spec = {**row["intake"], "collection": str(destination),
                 "patient_id": row["patient_id"], "timepoint": timepoint}
+        # A frozen BIDS subject alias binds source metadata to the canonical
+        # person identity even when the app uses a namespaced patient ID.
+        subject = re.fullmatch(r"[^:]+:sub-([A-Za-z0-9]+)", row["person_id"])
+        if subject:
+            spec["series"] = [{"source_patient_id": subject[1], **scan} for scan in spec["series"]]
+        annotations = []
+        for source in spec.get("layers", []):
+            annotation = dict(source)
+            if (annotation.get("probability_threshold") is not None
+                    and annotation.get("provenance", {}).get("source_probability_calibrated") is False):
+                annotation["fractional_threshold"] = annotation.pop("probability_threshold")
+            annotations.append(annotation)
+        spec["layers"] = annotations
         if (destination / "patient-anatomy.json").exists():
             collection = initialize(spec)
             verify_raw_intake(row, collection)
@@ -488,6 +526,99 @@ def migrate(ledger, cases, authorities, checksum, output, *, only, retry_failed,
         signal.signal(signal.SIGINT, previous_handler)
 
 
+def reason_ref(path, pointer):
+    return {"path": str(path), "json_pointer": pointer}
+
+
+def pointer_key(value):
+    return value.replace("~", "~0").replace("/", "~1")
+
+
+def join_results(ledger, saved, *, inventory_path, inventory_sha256, receipt_path, receipt_sha256):
+    """Join a single saved receipt to every frozen row without opening source members."""
+    rows = ledger["cases"]
+    admitted = {row["key"] for row in rows if row["outcome"] == "eligible"}
+    if not isinstance(saved, dict) or not saved.keys() <= admitted:
+        raise ValueError("Migration receipt contains a case outside the frozen admitted set")
+
+    joined = []
+    stage_counts = Counter()
+    for index, row in enumerate(rows):
+        key, disposition = row["key"], row["outcome"]
+        outcome, reason = disposition, row["reason"]
+        reasons = [reason_ref(inventory_path, f"/cases/{index}/reason")]
+        attempt = saved.get(key)
+        if key in saved:
+            if not isinstance(attempt, dict) or attempt.get("outcome") not in ATTEMPT_OUTCOMES:
+                raise ValueError(f"Invalid saved migration outcome: {key}")
+            outcome = attempt["outcome"]
+            reason = attempt.get("reason") or f"Migration marked {outcome.replace('_', ' ')}"
+            pointer = f"/cases/{pointer_key(key)}"
+            reason_field = "reason" if attempt.get("reason") else "outcome"
+            reasons.append(reason_ref(receipt_path, f"{pointer}/{reason_field}"))
+            stages = attempt.get("stages", [])
+            if isinstance(stages, dict):
+                entries = stages.items()
+            elif isinstance(stages, list):
+                entries = enumerate(stages)
+            else:
+                raise ValueError(f"Invalid saved migration stages: {key}")
+            stage_rows = []
+            stage_ids = set()
+            for position, stage in entries:
+                if (not isinstance(stage, dict) or not isinstance(stage.get("id"), str)
+                        or not stage["id"] or stage["id"] in stage_ids
+                        or (isinstance(stages, dict) and position != stage["id"])
+                        or not isinstance(stage.get("status"), str) or not stage["status"]):
+                    raise ValueError(f"Invalid or duplicate saved migration stage: {key}")
+                stage_ids.add(stage["id"])
+                stage_counts[stage["status"]] += 1
+                field = "reason" if stage.get("reason") else "status"
+                stage_rows.append({**stage, "reason_path": reason_ref(
+                    receipt_path, f"{pointer}/stages/{pointer_key(str(position))}/{field}")})
+            attempt = {**attempt, "stages": stage_rows}
+        elif disposition == "eligible":
+            outcome = "unprocessed"
+            reason = "Eligible in the frozen inventory; no migration attempt is recorded"
+
+        joined.append({**row, "frozen_outcome": disposition, "frozen_reason": row["reason"],
+                       "outcome": outcome, "reason": reason, "reason_paths": reasons, "migration": attempt})
+
+    counts = Counter(row["outcome"] for row in joined)
+    pending = sum(counts[status] for status in PENDING_OUTCOMES)
+    return {
+        "schema": RESULT_SCHEMA,
+        "version": ledger["version"],
+        "frozen_inventory": {"path": str(inventory_path), "sha256": inventory_sha256,
+                             "metadata": {key: value for key, value in ledger.items() if key != "cases"}},
+        "migration_receipt": {"path": str(receipt_path), "sha256": receipt_sha256},
+        "complete": pending == 0,
+        "summary": {"cases": len(joined), "pending": pending,
+                    "outcomes": dict(sorted(counts.items())), "stage_outcomes": dict(sorted(stage_counts.items()))},
+        "cases": joined,
+    }
+
+
+def write_joined_results(path, result):
+    # The report is replaceable for the same frozen inventory as the receipt grows.
+    # Accepting an unrelated existing filename here could overwrite a frozen input.
+    if path.exists():
+        existing = json.loads(path.read_bytes())
+        prior_inventory = existing.get("frozen_inventory") if isinstance(existing, dict) else None
+        if (not isinstance(prior_inventory, dict) or existing.get("schema") != RESULT_SCHEMA
+                or prior_inventory.get("sha256") != result["frozen_inventory"]["sha256"]):
+            raise ValueError("Choose a new ledger output or a report for this same frozen inventory")
+    if path.is_relative_to("/Volumes"):
+        roots = result["frozen_inventory"]["metadata"]["external_roots"]
+        for root in roots:
+            if path.is_relative_to(root["path"]):
+                guard_root(Path(root["path"]), root["root_id"])
+                break
+        else:
+            raise ValueError("Ledger output must be inside a verified external data root")
+    atomic_json(path, result)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("ledger", type=Path, help="Frozen local migration inventory")
@@ -496,7 +627,11 @@ def main():
     mode.add_argument("--run", type=Path, metavar="OUTPUT", help="Prepare eligible rows sequentially")
     mode.add_argument("--results", type=Path, metavar="OUTPUT", help="Summarize this ledger with saved migration outcomes")
     parser.add_argument("--retry-failed", action="store_true", help="Retry failed cases and recoverable incomplete stages")
+    parser.add_argument("--ledger-output", type=Path, metavar="JSON",
+                        help="With --results, write all frozen rows joined to the saved outcomes")
     args = parser.parse_args()
+    if args.ledger_output and args.results is None:
+        parser.error("--ledger-output requires --results")
     try:
         ledger, cases, authorities, checksum = load_ledger(args.ledger)
         if args.only and not set(args.only) <= cases.keys():
@@ -504,10 +639,17 @@ def main():
         if args.run is None:
             saved = {}
             if args.results:
-                receipt = json.loads((args.results / "migration-receipt.json").read_text())
+                receipt_path = (args.results / "migration-receipt.json").resolve()
+                receipt_bytes = receipt_path.read_bytes()
+                receipt = json.loads(receipt_bytes)
                 if receipt["schema"] != RECEIPT_SCHEMA or receipt["ledger_sha256"] != checksum:
                     raise ValueError("The result directory does not belong to this frozen ledger")
                 saved = receipt["cases"]
+                if args.ledger_output:
+                    report = join_results(ledger, saved, inventory_path=args.ledger.resolve(),
+                                          inventory_sha256=checksum, receipt_path=receipt_path,
+                                          receipt_sha256=hashlib.sha256(receipt_bytes).hexdigest())
+                    write_joined_results(args.ledger_output.expanduser().resolve(), report)
             counts = Counter(saved.get(key, cases[key])["outcome"] for key in args.only or cases)
             print(json.dumps(dict(sorted(counts.items()))))
             return 0

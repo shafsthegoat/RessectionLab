@@ -44,7 +44,7 @@ export type IntakeSelection={
 export type IntakeItem={selectionId:string;kind:IntakeKind;modality?:string;seriesId?:string;sourceInputIndex?:number;roleMap?:Record<string,string|{kind:string;label:string}>;label?:string};
 export type PreparationStage={id:string;label:string;status:string;reason?:string;seriesId?:string};
 export type PreparationPlan={id:string;stages:PreparationStage[]};
-export type PreparationResponse={document:Document;plan:PreparationPlan};
+export type PreparationResponse={document:Document;plan:PreparationPlan;outcomes?:PreparationStage[]};
 export interface NativeAnatomyApi {
   openWorkspace?():Promise<Binding|CasePayload|null>;
   startupWorkspace?():Promise<Binding|CasePayload|null>;
@@ -70,7 +70,7 @@ export interface NativeAnatomyApi {
   anatomySample(args:Args):Promise<unknown>;
 }
 export type Surface=NonNullable<ViewerVolume['compartments'][number]['surface']>;
-export type ViewPayload=Omit<ViewerVolume,'mri'|'compartments'|'tractography'|'labelSets'>&{labelSets?:Array<{id:string;data:ArrayDescriptor}>;tractography?:Array<{id:string;label:string;points:ArrayDescriptor;offsets:ArrayDescriptor}>;mri:ArrayDescriptor;modality:string;registrationStatus:string;alignmentPreviews?:string[];unavailableLayers:string[];compartments:Array<{kind?:string;sourceIdentity?:string;qa?:import('./viewer/contracts').AnatomyQuality;surfaceDiagnostics?:import('./viewer/surfacePolicy').SurfaceDiagnostics;name:string;color:string;volumeMm3:number;displayFilter?:VesselDisplayFilter;mask?:ArrayDescriptor;labelSet?:string;labelValue?:number;surface?:{empty:true}|Record<keyof Surface,ArrayDescriptor>}>};
+export type ViewPayload=Omit<ViewerVolume,'mri'|'compartments'|'tractography'|'labelSets'>&{labelSets?:Array<{id:string;data:ArrayDescriptor}>;tractography?:Array<{id:string;label:string;points:ArrayDescriptor;offsets:ArrayDescriptor}>;mri:ArrayDescriptor;modality:string;registrationStatus:string;alignmentPreviews?:string[];unavailableLayers:string[];compartments:Array<{kind?:string;sourceIdentity?:string;qa?:import('./viewer/contracts').AnatomyQuality;surfaceDiagnostics?:import('./viewer/surfacePolicy').SurfaceDiagnostics;name:string;color:string;volumeMm3?:number;displayFilter?:VesselDisplayFilter;mask?:ArrayDescriptor;labelSet?:string;labelValue?:number;surface?:{empty:true}|Record<keyof Surface,ArrayDescriptor>}>};
 export async function hydrateAnatomy(payload:ViewPayload,api:ResectionApi,cachedImage?:Float32Array,cached?:Pick<ViewerVolume,'labelSets'|'tractography'>):Promise<ViewerVolume>{
   async function bytes(d:ArrayDescriptor){
     if(!d || d.byteLength>512*1024**2 || d.byteOrder!=='little' || d.order!=='C')throw Error('Unsupported anatomy transfer');

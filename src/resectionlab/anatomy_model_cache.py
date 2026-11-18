@@ -6,12 +6,84 @@ from pathlib import Path
 import nibabel as nib
 import numpy as np
 
-from .anatomy_model_registry import TUMOR_ADAPTERS, _identities, source_volume, synthseg_assets, tumor_assets
+from .anatomy_model_registry import POC_ADAPTERS, ROOT, TUMOR_ADAPTERS, _identities, source_volume, synthseg_assets, tumor_assets
 from .head_segmentation import ASSETS, MODEL_SHA, PARAMETERS
 from .poc_models import MODEL_CONFIG
 
 SYNTHSTRIP_SHA = "37417f802196186441aae3e7f385d94f8a98c64a88acaeaa2723af995c653e33"
 VESSELFM_SHA = "6da4fbd06dd9c3b597e5d50cc628deb3026919ff126d01afbd13ac8fe22ee10c"
+
+
+# Registry bytes in the last absolute-path environment format (3e8bacfd).
+# Only this registry translation preserves the legacy job selection and assets.
+# Future registry changes must independently prove compatibility.
+LEGACY_REGISTRY_SHA = "dd81820bcdef1971693722d043e1483b2e7d055e7581203f1730967f959e1ad1"
+PORTABLE_REGISTRY_SHA = "c3e2d789fbc383e2e41f92ad26cf62a8045283794073ee156a6473b12ae2cbc6"
+
+
+def _matching_root(filename, relative):
+    filename, relative = Path(filename), Path(relative)
+    depth = len(relative.parts)
+    if filename.is_absolute() and filename.parts[-depth:] == relative.parts:
+        return filename.parents[depth - 1]
+    return None
+
+
+def _legacy_poc_paths(model, files, paths, layers):
+    """Recover earlier roots as strings using completed stage provenance."""
+    weight_names = {role: role.removeprefix("weights/") for role in files if role.startswith("weights/")}
+    if not weight_names:
+        return
+    first_role, first_name = next(iter(weight_names.items()))
+    for layer in layers:
+        record = layer.get("provenance", {}).get("inference")
+        if not isinstance(record, dict) or record.get("model_id") != POC_ADAPTERS[model]:
+            continue
+        try:
+            saved_weights = {item["path"]: item["sha256"] for item in record["weights"]}
+            old_python = record["command"][0]
+            for name, sha in saved_weights.items():
+                if sha != files[first_role] or (root := _matching_root(name, first_name)) is None:
+                    continue
+                if {str(root / relative): files[role] for role, relative in weight_names.items()} != saved_weights:
+                    continue
+                moves = {}
+                old_repo = _matching_root(old_python, ".tools/poc-model-runtime/venv/bin/python")
+                if old_repo is not None:
+                    moves.update({role: str(old_repo / Path(path).relative_to(ROOT))
+                                  for role, path in paths.items() if Path(path).is_relative_to(ROOT)})
+                if Path(old_python).is_absolute():
+                    moves["python"] = old_python
+                moves.update({role: str(root / relative) for role, relative in weight_names.items()})
+                runner = "model/synthstrip-v1/mri_synthstrip"
+                if runner in paths:
+                    moves[runner] = str(root / runner.removeprefix("model/"))
+                yield moves
+        except (KeyError, TypeError, ValueError, IndexError):
+            # Malformed or insufficient historical provenance cannot qualify a cache hit.
+            continue
+
+
+def legacy_model_environments(model, environment, layers):
+    """Reproduce v1 digests strictly from current hashes and historical paths.
+
+    Keep all non-registry asset digests current. The old digest must match the
+    completed checkpoint exactly, including source, dependencies and options,
+    before its output arrays can be reused.
+    """
+    if not isinstance(environment, dict) or "file_paths" not in environment:
+        return
+    files = environment["files"]
+    if files.get("registry") != PORTABLE_REGISTRY_SHA:
+        return
+    paths = environment["file_paths"]
+    hashes = {**files, "registry": LEGACY_REGISTRY_SHA}
+    configuration = {key: value for key, value in environment.items() if key not in {"files", "file_paths"}}
+    yield {**configuration, "files": {paths[role]: checksum for role, checksum in hashes.items()}}
+    if model in POC_ADAPTERS:
+        for moves in _legacy_poc_paths(model, files, paths, layers):
+            yield {**configuration, "files": {moves.get(role, paths[role]): checksum
+                                              for role, checksum in hashes.items()}}
 
 
 def _check_file(path, expected):

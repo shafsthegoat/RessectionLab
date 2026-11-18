@@ -54,8 +54,12 @@ def test_empty_native_mesh_has_explicit_descriptor_without_zero_length_transfer(
     import nibabel as nib
     from resectionlab.patient_anatomy import PatientImagingCollection
     from resectionlab.desktop_bridge import BridgeSession, _Request
-    source=tmp_path/'source.nii.gz'; nib.save(nib.Nifti1Image(np.ones((6,6,6),np.float32),np.eye(4)),source)
-    empty=tmp_path/'empty.nii.gz';nib.save(nib.Nifti1Image(np.zeros((6,6,6),np.uint8),np.eye(4)),empty)
+    source = tmp_path / 'source.nii.gz'
+    empty = tmp_path / 'empty.nii.gz'
+    for path, values in ((source, np.ones((6, 6, 6), np.float32)), (empty, np.zeros((6, 6, 6), np.uint8))):
+        image = nib.Nifti1Image(values, np.eye(4))
+        image.header.set_xyzt_units('mm')
+        nib.save(image, path)
     c=PatientImagingCollection.create(tmp_path/'native','missing-target');c.add_series(source,series_id='t1',modality='T1');c.add_layer(np.zeros((6,6,6),np.uint8),np.eye(4),layer_id='empty',source_series='t1',kind='tumor',role='target',color='#aabbcc');c.save()
     bridge=BridgeSession(tmp_path/'transfers');request=_Request('empty');progress=lambda *_:None
     opened=bridge.execute('anatomyOpen',{'path':str(c.root/'patient-anatomy.json')},request,progress)

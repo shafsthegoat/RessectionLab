@@ -98,6 +98,22 @@ and explicitly requests the pinned meningioma adapter. Its candidate keeps
 the model's unreviewed status. Set `ADAPTIVE_CANCEL=1` during a create run
 with pending work to exercise cancellation and resume.
 
+## Verify migrated studies
+
+To check a migrated study, build the desktop and set the same guarded
+`RESSECTIONLAB_DATA_ROOT` used for migration. Each invocation opens a private
+copy of the native study in hidden Electron and records source overlays and
+current capabilities. Use a new output name for each run.
+
+```sh
+for case_key in EDEN2020-CTRL_0866 TopCoW-001-CTA; do
+  ADAPTIVE_PHASE=migrated ADAPTIVE_MIGRATED_DATA_ROOT="$RESSECTIONLAB_DATA_ROOT" \
+    ADAPTIVE_SOURCE="$RESSECTIONLAB_DATA_ROOT/prepared/adaptive-anatomy-migration-20261117-v1/$case_key" \
+    ADAPTIVE_OUTPUT="$PWD/testcases/outputs/adaptive-verify-$case_key" \
+    desktop/node_modules/.bin/electron desktop/electron/verify-adaptive-patient.cjs
+done
+```
+
 ## Model weights, runtime and licenses
 
 Weights stay outside Git. Existing `scripts/poc_model_assets.py` installs

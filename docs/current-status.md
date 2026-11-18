@@ -16,6 +16,17 @@ Prepared datasets, model assets and detailed receipts remain on Shafrir's
 optional personal HDD and are unavailable to collaborators through a clone.
 The [storage ledger](local-storage-ledger.md) records discovery and access limits.
 
+Native patient studies now accept scans together in Cases. Prepare anatomy
+uses the available modalities and records an outcome for each stage.
+Plan & compare binds an explicitly selected lesion to its source and revision.
+Hidden desktop runs exercised supplied UCSF glioma labels and a meningioma
+model candidate through geometric comparison, portable save and cold reopen.
+The migrated CTA opens for source and label inspection. The migrated EDEN
+study keeps eight synthetic targets separate from its healthy anatomy.
+[Use the native workbench](patient-anatomy-workbench.md#prepare-a-patient-study) ·
+[Reproduce the desktop checks](fresh-patient-reproduction.md#desktop-workflow-and-smoke-test) ·
+[Resume the versioned migration](data-rebuild.md#native-study-migration).
+
 The research objective remains source Case → opening/preparation → tumor work →
 checked exit → Save/cold Open, with alternative feasible approaches. There are
 zero qualified patient tumor-task completions. Missing source anatomy,

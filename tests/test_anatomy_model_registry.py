@@ -194,3 +194,111 @@ def test_migrated_cache_is_bound_to_native_source_and_ontology(tmp_path):
     p["label_ontology"]["value"] = 16
     p["source_array_sha256"] = "0" * 64
     assert reusable_model_layer(c, source_row, {"brainstem"}, model="supersynth") is None
+
+
+def test_poc_model_key_survives_model_cache_and_python_location_changes(tmp_path, monkeypatch):
+    from shutil import copy2
+
+    from resectionlab import anatomy_preparation as preparation, data_root, poc_models
+    from resectionlab.anatomy_model_cache import LEGACY_REGISTRY_SHA
+
+    repository = tmp_path / "checkout"
+    external = tmp_path / "private-drive"
+    relative = "poc-totalsegmentator/weights/class/fold_0/checkpoint_final.pth"
+    old_weight = external / "models" / relative
+    weight = repository / "data/models" / relative
+    old_runtime = external / "runtime/python"
+    runtime = tmp_path / "new-runtime/interpreter"
+    for target, contents in ((old_weight, b"stable weights"), (old_runtime, b"stable executable")):
+        target.parent.mkdir(parents=True)
+        target.write_bytes(contents)
+    for original, relocated in ((old_weight, weight), (old_runtime, runtime)):
+        relocated.parent.mkdir(parents=True)
+        copy2(original, relocated)
+
+    monkeypatch.setattr(registry, "ROOT", repository)
+    monkeypatch.setattr(registry.sys, "platform", "darwin")
+    monkeypatch.setattr(data_root, "checked_root", lambda: external)
+    monkeypatch.setenv("RESSECTIONLAB_MODEL_ROOT", str(external / "models"))
+    monkeypatch.setattr(poc_models, "RUNTIME", old_runtime)
+    model = "totalsegmentator-skull"
+    old_portable = registry.model_environment(model)
+    assert "file_paths" not in old_portable
+    assert str(old_runtime) not in str(old_portable)
+
+    c = make_study(tmp_path)
+    scan = source(c, tmp_path, "cta", np.ones((8, 8, 8), dtype=np.float32), modality="CTA")
+    job = dict(id="ct-skull", series_id="cta", model=model, status="ready", options={})
+    old_environment = {"files": {
+        str(old_runtime): file_hash(old_runtime), str(old_weight): file_hash(old_weight),
+        poc_models.__file__: file_hash(poc_models.__file__), anatomy_models.__file__: file_hash(anatomy_models.__file__),
+        registry.__file__: LEGACY_REGISTRY_SHA,
+    }}
+    old_key = preparation._model_input(c, {**job, "environment": old_environment})
+    layer = c.add_layer(np.ones((8, 8, 8), dtype=np.uint8), np.eye(4), layer_id="prepared-skull",
+                        source_series=scan["id"], kind="skull", role="context", color="#aaaaaa",
+                        provenance={"inference": {"model_id": model, "command": [str(old_runtime)],
+                                                  "weights": [{"path": str(old_weight), "sha256": file_hash(old_weight)}]}})
+    layer["preparation_input"] = old_key
+    receipt = {"ct-skull": {"inputKey": old_key, "status": "cached",
+                            "outputs": [{"id": layer["id"], "sha256": layer["data"]["sha256"]}]}}
+    old_prediction = preparation._stage(c, {**job, "environment": old_portable}, {})
+    old_runtime.unlink()
+    old_weight.unlink()
+    monkeypatch.delenv("RESSECTIONLAB_MODEL_ROOT")
+    monkeypatch.setattr(poc_models, "RUNTIME", runtime)
+
+    assert registry.model_environment(model) == old_portable
+    relocated = {**job, "environment": registry.model_environment(model, include_paths=True)}
+    cached = preparation._stage(c, relocated, receipt)
+    assert cached["status"] == "cached"
+    assert cached["inputKey"] == old_prediction["inputKey"] != old_key
+    assert "file_paths" not in cached["environment"]
+    assert preparation._stage(c, {**relocated, "options": {"changed": True}}, receipt)["status"] == "ready"
+    modified_environment = {**relocated["environment"],
+                            "files": {**relocated["environment"]["files"], "registry": "a" * 64}}
+    assert preparation._stage(c, {**relocated, "environment": modified_environment}, receipt)["status"] == "ready"
+
+    weight.write_bytes(b"different weight bytes")
+    changed = {**job, "environment": registry.model_environment(model, include_paths=True)}
+    assert preparation._stage(c, changed, receipt)["status"] == "ready"
+    assert preparation._stage(c, changed, {})["inputKey"] != cached["inputKey"]
+
+
+def test_synthseg_identity_preserves_distinct_bundle_paths_and_class_config(tmp_path, monkeypatch):
+    from shutil import copytree
+
+    home = tmp_path / "installed"
+    relocated = tmp_path / "restaged"
+    runtime = tmp_path / "python"
+    runtime.write_bytes(b"test executable")
+    paths = {
+        "scripts/commands/SynthSeg_predict.py": b"prediction code",
+        "models/synthseg_1.0.h5": b"model v1",
+        "models/synthseg_robust_2.0.h5": b"model v2",
+        "models/synthseg_parc_2.0.h5": b"parcellation model",
+        "models/synthseg_qc_2.0.h5": b"qc model",
+        "data/labels_classes_priors/synthseg_segmentation_labels.npy": b"label ontology",
+        "SynthSeg/a/utils.py": b"first utils",
+        "ext/b/utils.py": b"other utils",
+    }
+    for name, contents in paths.items():
+        path = home / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(contents)
+    copytree(home, relocated)
+    monkeypatch.setenv("RESECTIONLAB_SYNTHSEG_HOME", str(home))
+    monkeypatch.setenv("RESECTIONLAB_SYNTHSEG_PYTHON", str(runtime))
+    original = registry.model_environment("synthseg", synthseg_version=1)
+    assert registry.model_environment("synthseg", synthseg_version=2) != original
+    monkeypatch.setenv("RESECTIONLAB_SYNTHSEG_HOME", str(relocated))
+    assert registry.model_environment("synthseg", synthseg_version=1) == original
+
+    (relocated / "SynthSeg/a/utils.py").write_bytes(paths["ext/b/utils.py"])
+    (relocated / "ext/b/utils.py").write_bytes(paths["SynthSeg/a/utils.py"])
+    swapped = registry.model_environment("synthseg", synthseg_version=1)
+    assert sorted(swapped["files"].values()) == sorted(original["files"].values())
+    assert swapped != original
+    copytree(home, relocated, dirs_exist_ok=True)
+    (relocated / "data/labels_classes_priors/synthseg_segmentation_labels.npy").write_bytes(b"changed ontology")
+    assert registry.model_environment("synthseg", synthseg_version=1) != original

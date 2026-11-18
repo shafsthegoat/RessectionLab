@@ -15,6 +15,14 @@ create a substitute mount directory. Ignored `testcases/` links may be dangling
 while it is absent. Ordinary development must not require this private drive;
 report missing inputs explicitly for optional data/reproduction workflows.
 
+Native studies prepared from the November 17 frozen inventory live under
+`prepared/adaptive-anatomy-migration-20261117-v1/<case>/`. Its
+`migration-receipt.json` records progress and source-bound results.
+Each native study can open directly in Cases. External library entries
+require separate admission. `catalog/native-release.json` lists the reviewed
+TopCoW-001 CTA workspace and binds its allowed uses to the checksummed decision
+under `qc/native-study-reviews/`. [Run and resume the migration](data-rebuild.md#native-study-migration).
+
 Paths below are relative to the RessectionLab root. This compact ledger covers
 that area, not unrelated personal files elsewhere on the HDD. Presence does not
 establish scientific readiness or a completed build; consult each run's receipts.

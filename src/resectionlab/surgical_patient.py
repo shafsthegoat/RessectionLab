@@ -110,6 +110,7 @@ def _check_layer_export(collection, role, row):
             raise ValueError("MRI skull estimates cannot supply measured bone")
     if row.get('units_status', 'mm') != 'mm':
         raise ValueError('Selected anatomy layer requires declared millimeter units: ' + role)
+    collection.require_native_geometry(row, allow_legacy_annotation_grid=True)
     if row.get('availability') == 'empty_output':
         raise ValueError('Selected anatomy layer is empty')
 
@@ -121,7 +122,7 @@ def _source_registration(collection, series):
     transforms = collection.document['transforms']
     if sid not in transforms:
         raise ValueError('Missing registration for ' + sid)
-    matrix = collection.registration_matrix(sid)
+    matrix = collection.registration_matrix(sid, require_geometry=True)
     unreviewed, current = [], sid
     while current:
         record = transforms[current]

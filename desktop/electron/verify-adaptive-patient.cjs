@@ -34,8 +34,44 @@ const source=fs.realpathSync(process.env.ADAPTIVE_SOURCE||'');
 const requestedOutput=path.resolve(process.env.ADAPTIVE_OUTPUT||'');
 const output=path.join(fs.realpathSync(path.dirname(requestedOutput)),path.basename(requestedOutput));
 const within=(parent,filename)=>filename.startsWith(parent+path.sep);
-assert(['create','reopen','incremental','refresh-comparison'].includes(phase),'Unknown verification phase');
-assert(within(testcases,source)&&within(testcases,output),'Set ADAPTIVE_SOURCE and a new ADAPTIVE_OUTPUT under ignored testcases/');
+assert(['create','reopen','incremental','refresh-comparison','migrated'].includes(phase),'Unknown verification phase');
+assert((phase==='migrated'||within(testcases,source))&&within(testcases,output),
+  'Set ADAPTIVE_SOURCE and a new ADAPTIVE_OUTPUT under ignored testcases/');
+assert(!fs.existsSync(output),'Verification output is already present');
+const migratedCases={
+  'EDEN2020-CTRL_0866':{patient:'EDEN2020:CTRL_0866',role:'DEVELOPMENT'},
+  'TopCoW-001-CTA':{patient:'TopCoW-001-CTA',role:'DEVELOPMENT'},
+};
+function migratedSource(){
+  const dataRoot=process.env.ADAPTIVE_MIGRATED_DATA_ROOT;
+  assert(dataRoot,'Set ADAPTIVE_MIGRATED_DATA_ROOT to the recorded external data root');
+  const guarded=execFileSync(path.join(root,'.venv/bin/python'),['-c',
+    'from resectionlab.data_root import checked_root; import sys; print(checked_root(sys.argv[1]))',dataRoot],
+    {cwd:root,encoding:'utf8',env:{...process.env,PYTHONPATH:path.join(root,'src')}}).trim();
+  const key=path.basename(source), caseProfile=migratedCases[key];
+  assert(caseProfile&&source===path.join(guarded,'prepared/adaptive-anatomy-migration-20261117-v1',key),
+    'Migration verification needs a named study in the guarded migration output');
+  const filename=path.join(source,'patient-anatomy.json'), document=read(filename);
+  assert.equal(document.patient_id,caseProfile.patient);
+  assert.equal(document.migration_source?.case_id,key);
+  assert.equal(document.migration_source.role,caseProfile.role);
+  assert.equal(document.migration_source.exposure,'private');
+  const references=[...document.series.map(row=>row.original),
+    ...document.layers.map(row=>row.provenance?.source).filter(ref=>ref?.path&&ref?.sha256)];
+  const hashes={manifest:sha(filename)},paths={manifest:filename};
+  for(const ref of references){
+    if(path.isAbsolute(ref.path))continue;
+    const member=path.join(source,ref.path);
+    assert(within(source,member)&&fs.realpathSync(member)===member,'Unsafe migration source member');
+    if(hashes[ref.path]){assert.equal(hashes[ref.path],ref.sha256);continue;}
+    assert.equal(sha(member),ref.sha256,'Migration source changed: '+ref.path);
+    hashes[ref.path]=ref.sha256;
+    paths[ref.path]=member;
+  }
+  return {...caseProfile,key,paths,hashes,timepoint:document.study_timepoint,document,
+    description:key.startsWith('EDEN')?'Acquired healthy MRI and TOF with separate synthetic targets':'Acquired CTA with supplied source labels',
+    revision:document.snapshot_id};
+}
 assert(!fs.existsSync(output),'Verification output is already present');
 function sourceProfile(){
   if(path.basename(source)==='candidate-sub-06'){
@@ -71,7 +107,7 @@ function sourceProfile(){
     description:'Publisher-preprocessed, skull-stripped UCSF-PDGM mirror NIfTIs and supplied multiclass lesion annotation',
     initial:['T1CE','T2'],timepoint:'preoperative'};
 }
-const study=sourceProfile();
+const study=phase==='migrated'?migratedSource():sourceProfile();
 const {patient,paths:sourcePaths,hashes:sourceHashes}=study;
 assert(phase!=='incremental'||sourcePaths.mask,'Incremental verification uses the multi-scan UCSF source profile');
 const resumeFile=phase==='create'&&process.env.ADAPTIVE_RESUME
@@ -84,7 +120,7 @@ if(resume){
   assert.deepEqual(resume.sourceHashes,sourceHashes);
   assert.notEqual(resume.pid,process.pid);
 }
-const previous=phase==='create'?null:read(fs.realpathSync(process.env.ADAPTIVE_EXPECTED||''));
+const previous=(phase==='create'||phase==='migrated')?null:read(fs.realpathSync(process.env.ADAPTIVE_EXPECTED||''));
 if(previous){
   assert(previous.passed&&(previous.phase==='create'||phase==='reopen'&&previous.phase==='refresh-comparison'),'Expected finished create or refreshed comparison receipt');
   assert.equal(previous.source,source);
@@ -154,6 +190,14 @@ ipcMain.handle=(channel,handler)=>handle(channel,async(...args)=>{
   active++;
   try{
     const result=await handler(...args);
+    if(phase==='migrated'&&channel==='research:anatomyView'){
+      responseRows.push({receipt,input,result:{
+        modality:result.modality,sha256:result.mri.sha256,shape:result.shape,registrationStatus:result.registrationStatus,
+        alignmentPreviews:result.alignmentPreviews,preview:result.displayPreview,
+        layers:result.compartments.map(row=>({id:row.name,kind:row.kind,volumeMm3:row.volumeMm3,
+          sourceIdentity:row.sourceIdentity,alignmentPreviews:row.alignmentPreviews}))
+      }});
+    }
     if(channel==='research:anatomyPlan'||channel==='research:anatomySaveView'||
        channel==='research:openWorkspace'||channel.startsWith('research:anatomyPrep')){
       responseRows.push({receipt,input,result});
@@ -480,9 +524,143 @@ app.on('browser-window-created',(_event, win)=>{
       report.saved={path:saveTo,sha256:sha(saveTo),view};
       mark('Saved portable native anatomy, explicit target and comparison');
     };
+    const verifyMigrated=async()=>{
+      const included=new Set(['originals','arrays','meshes','patient-anatomy.json','source-map.json','anatomy-preparation.json']);
+      const preparedCopy=process.env.ADAPTIVE_MIGRATED_REUSE?fs.realpathSync(process.env.ADAPTIVE_MIGRATED_REUSE):source;
+      if(preparedCopy!==source)assert(within(testcases,preparedCopy)&&
+        sha(path.join(preparedCopy,'patient-anatomy.json'))===sourceHashes.manifest,
+        'Reuse requires an exact ignored copy of the current migration manifest');
+      fs.cpSync(preparedCopy,native,{recursive:true,mode:fs.constants.COPYFILE_FICLONE,filter:filename=>{
+        if(filename===preparedCopy)return true;
+        if(!included.has(path.relative(preparedCopy,filename).split(path.sep)[0]))return false;
+        assert(!fs.lstatSync(filename).isSymbolicLink(),'No linked dependency in copied study');
+        return !path.basename(filename).startsWith('._');
+      }});
+      report.native=native;
+      report.migrationIdentity={...study.document.migration_source};
+      assert.equal(sha(manifestFile),sourceHashes.manifest);
+      const opened=await openNormal(manifestFile);
+      const document=opened.document;
+      assert.deepEqual(serialized(document),serialized(study.document));
+      const provenanceLayer=row=>({id:row.id,kind:row.kind,role:row.role,sourceSeries:row.source_series,
+        status:row.review_status,coverage:row.coverage,provenance:row.provenance});
+      report.sourceSeries=document.series.map(row=>({id:row.id,modality:row.modality,shape:row.data.shape,
+        originalSha256:row.original.sha256,affine:row.affine,spacingMm:row.grid_spacing_mm,
+        transform:document.transforms[row.id]}));
+      const captureSource=async(name,id)=>{
+        const state=await capture(name),identity=displayIdentity(state.source);
+        const view=responses('research:anatomyView').filter(item=>item.input.seriesId===id&&item.input.layers.length>0).at(-1);
+        assert(view,'Missing source-bound anatomy response');
+        assert.equal(identity.snapshotId,document.snapshot_id);
+        assert.equal(identity.seriesId,id);
+        assert.equal(identity.sha256,view.result.sha256);
+        const scan=document.series.find(scan=>scan.id===id);
+        assert.equal(view.result.modality,scan.modality);
+        const preview=view.result.preview&&scan.preview_pyramid?.find(item=>item.factor===view.result.preview.factor);
+        assert.deepEqual(view.result.shape,preview?.data.shape??scan.data.shape);
+        return view.result;
+      };
+      await click('Anatomy');
+      if(study.key.startsWith('EDEN')){
+        const target=document.layers.find(row=>row.id==='synthetic-01');
+        const candidates=document.layers.filter(row=>row.provenance?.planning_target_candidate===true);
+        assert.equal(candidates.length,8);
+        assert(candidates.every(row=>row.role==='context'&&row.provenance.kind==='simulated'&&row.provenance.healthy_anatomy_unchanged));
+        assert.equal(document.tractography.length,7);
+        assert.equal(document.transforms.tof.status,'unreviewed');
+        report.target=provenanceLayer(target);
+        report.t1View=await captureSource('01-eden-t1-anatomy','t1');
+        await click('Scans');
+        await set('Source scan','tof');
+        await ready();
+        await openDetails('Alignment & registration');
+        report.tofView=await captureSource('02-eden-tof-alignment-preview','tof');
+        assert.equal(report.tofView.registrationStatus,'alignment preview');
+        assert(report.tofView.alignmentPreviews.includes('tof'));
+        assert(report.tofView.layers.some(row=>row.id==='tof-vessel-candidates'&&row.volumeMm3>0));
+        assert(await js('document.body.innerText.includes("Review landmarks before quantitative planning")'));
+        await set('Source scan','t1');
+        await ready();
+        await click('Plan & compare');
+        await until(()=>!!plan('list'),'available EDEN target options');
+        assert.equal(plan('list').activeTargetLayerId??null,null);
+        assert.equal(plan('list').targetOptions.filter(row=>row.target!==null).length,8);
+        assert.equal(await js(`document.querySelector('select[aria-label="Planning target"]')?.value`),'');
+        await js(inputScript('Planning target',target.id));
+        await until(()=>plan('selectTarget')?.activeTargetLayerId===target.id,'explicit synthetic target selection');
+        const option=plan('selectTarget').targetOptions.find(row=>row.layerId===target.id);
+        assert.equal(option.origin,'Synthetic target');
+        assert.equal(option.provenance,'simulated');
+        assert.equal(option.sourceSeries,'t1');
+        await click('Suggest approaches');
+        await until(()=>!!plan('suggest'),'native geometric alternatives',420);
+        let compared=plan('suggest');
+        if(!compared.approaches.some(row=>row.assessmentStatus==='current')){
+          report.suggestionAbstention=compared.proposalReport;
+          await click('Create manual approach');
+          await until(()=>!!plan('upsert'),'manual native assessment',420);
+          compared=plan('upsert');
+        }
+        report.comparison=currentRoutes(compared,document,target);
+        const vessels=report.comparison.flatMap(row=>row.measurements.structures.filter(item=>item.layerId==='tof-vessel-candidates'));
+        assert(vessels.length>0&&vessels.every(item=>!item.available&&item.sourceSeries==='tof'&&
+          !('clearanceLowerBoundMm' in item)),'Unreviewed TOF must remain unassessed');
+        for(const route of report.comparison){
+          const structures=route.measurements.structures;
+          const tracts=structures.filter(row=>row.kind==='tractography');
+          assert.equal(tracts.length,7);
+          assert(tracts.every(row=>!row.available&&/registration.*needs review/i.test(row.reason)));
+          assert(structures.some(row=>row.kind==='brainstem'&&row.available&&row.excluded));
+          assert(structures.some(row=>row.kind.startsWith('cerebellar')&&row.available&&row.excluded));
+        }
+        await capture('03-eden-current-comparison');
+        await click('Save study & comparison');
+        await until(()=>fs.existsSync(path.join(native,'workspace-view.json'))&&active===0,'saved local EDEN comparison');
+        assert.equal(read(path.join(native,'workspace-view.json')).selectedPlanningTargetId,target.id);
+        mark('Inspected linked T1 and unreviewed TOF, explicitly selected a synthetic target and saved current geometry on the disposable copy');
+      }else{
+        assert.deepEqual(document.series.map(row=>row.modality),['CTA']);
+        assert.equal(document.reference_series,'ct');
+        assert(await js('document.querySelector(".study-badge")?.innerText.includes("Unspecified study")'),
+          'An unknown CTA timepoint must remain unspecified');
+        assert(!document.layers.some(row=>row.role==='target'||['tumor','motor','language','functional'].includes(row.kind)));
+        report.ctaView=await captureSource('01-cta-source-supported-anatomy','ct');
+        assert.equal(report.ctaView.registrationStatus,'patient frame');
+        for(const kind of ['artery','vein','sinus','skull']){
+          const measured=report.ctaView.layers.find(row=>row.kind===kind&&row.volumeMm3>0);
+          assert(measured,'Missing nonempty CTA display layer: '+kind);
+          const layer=document.layers.find(row=>row.id===measured.id);
+          assert.equal(layer.source_series,'ct');
+        }
+        report.ctaLayers=document.layers.filter(row=>['artery','vein','sinus','skull'].includes(row.kind)).map(provenanceLayer);
+        await click('Scans');
+        await click('Review preparation plan');
+        await wait('!!document.querySelector("[data-preparation-stage]")','CTA capability stages');
+        report.proposedStages=await stages();
+        for(const id of ['tumor','functional']){
+          assert(report.proposedStages.some(stage=>(stage.id===id||stage.id.startsWith(id+':'))&&stage.status==='missing_input'),
+            'CTA must disclose missing '+id);
+        }
+        await js(`document.querySelector('[data-preparation-stage="functional"]')?.scrollIntoView({block:'nearest'})`);
+        await capture('02-cta-unavailable-capabilities');
+        await click('Plan & compare');
+        await until(()=>!!plan('list'),'CTA planning availability');
+        assert.deepEqual(plan('list').targetOptions,[]);
+        assert.equal(plan('list').activeTargetLayerId??null,null);
+        assert(await js('document.body.innerText.includes("Geometric comparison needs a nonempty lesion label")'));
+        await capture('03-cta-anatomy-only-planning');
+        mark('Opened CTA without MRI, displayed source-bound bone and supplied vessels, and disclosed missing lesion and functional data');
+      }
+      assert.equal(sha(manifestFile),sourceHashes.manifest,'Display or planning unexpectedly revised anatomical evidence');
+      assert(versions('research:anatomyRegister').every(row=>row.action==='ensure'));
+      assert.equal(versions('research:anatomyReconstruct').length,0);
+      assert(!report.requests.some(row=>row.channel.startsWith('research:anatomyPrep')&&row.action==='run'));
+    };
     try{
       await wait('!!document.querySelector(".native-workspace")&&document.querySelector("footer")?.innerText.includes("Add a source scan")','empty startup');
-      if(phase==='create'){
+      if(phase==='migrated'){
+        await verifyMigrated();
+      }else if(phase==='create'){
         report.native=native;
         let reference;
         if(resume){

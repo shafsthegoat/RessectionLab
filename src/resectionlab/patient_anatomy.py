@@ -13,6 +13,7 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 import fcntl
 import hashlib
+from itertools import product
 import json
 import os
 from pathlib import Path
@@ -27,6 +28,7 @@ from scipy import ndimage as ndi
 SCHEMA = "patient-anatomy-v1"
 MAX_ARRAY = 512 * 1024**2
 ROLES = {"context", "target", "critical"}
+NIFTI_FORM_TOLERANCE_MM = 0.01
 
 
 def digest(value):
@@ -56,6 +58,56 @@ def affine(value):
 
 def world(a, points):
     return np.asarray(points) @ a[:3, :3].T + a[:3, 3]
+
+
+def nifti_geometry(image):
+    """Record active native transforms and the affine used to display the image."""
+    units, time_units = image.header.get_xyzt_units()
+    result = {"spatial_units": units, "temporal_units": time_units}
+    forms = {}
+    invalid = []
+    for name in ("qform", "sform"):
+        code = int(image.header[f"{name}_code"])
+        result[f"{name}_code"] = code
+        if code:
+            try:
+                forms[name] = affine(getattr(image, f"get_{name}")())
+            except (ValueError, np.linalg.LinAlgError):
+                invalid.append(name)
+        result[name] = forms[name].tolist() if name in forms else None
+    result["display_basis"] = ("coded sform" if result["sform_code"] else
+                               "coded qform" if result["qform_code"] else "uncoded header fallback")
+    if invalid:
+        result.update(frame_status="invalid", invalid_forms=invalid)
+    elif not forms:
+        result["frame_status"] = "uncoded"
+    else:
+        result["frame_status"] = "coded"
+        if len(forms) == 2 and units == "mm":
+            shape = (*image.shape, 1, 1, 1)[:3]
+            corners = list(product(*[(0, count - 1) for count in shape]))
+            disagreement = float(np.linalg.norm(world(forms["qform"], corners) - world(forms["sform"], corners), axis=1).max())
+            if np.isfinite(disagreement):
+                result["maximum_qform_sform_corner_difference_mm"] = disagreement
+                if disagreement > NIFTI_FORM_TOLERANCE_MM:
+                    result["frame_status"] = "conflicted"
+            else:
+                result["frame_status"] = "invalid"
+    return result
+
+
+def nifti_geometry_issue(geometry, *, allow_header_conflict=False):
+    units = geometry["spatial_units"]
+    if units != "mm":
+        return f"Geometry requires declared millimeter units (NIfTI declares {units})"
+    status = geometry["frame_status"]
+    if status == "uncoded":
+        return "NIfTI source has no coded qform or sform"
+    if status == "invalid":
+        return "NIfTI source has an invalid coded qform or sform"
+    if status == "conflicted" and not allow_header_conflict:
+        return "Unresolved NIfTI qform/sform disagreement"
+    return None
 
 
 @contextmanager
@@ -106,6 +158,7 @@ class PatientImagingCollection:
             if row.get("role", "context") not in ROLES:
                 raise ValueError("Unknown anatomical role")
         self._verified = set()
+        self._native_headers = {}
         self._base_snapshot = (d.get("snapshot_id") or self.identity()) if manifest.is_file() else None
         self.published_reference = d.get("reference_series") if self._base_snapshot else None
 
@@ -240,7 +293,8 @@ class PatientImagingCollection:
         if len(im.shape) != 3 or np.prod(im.shape) * 4 > MAX_ARRAY:
             raise ValueError("Select a bounded 3D anatomical volume")
         a = affine(im.affine)
-        units = im.header.get_xyzt_units()[0]
+        geometry = nifti_geometry(im)
+        units = geometry["spatial_units"]
         if units not in {"mm", "unknown"}:
             raise ValueError("Import requires millimeter geometry")
         row = {
@@ -255,6 +309,7 @@ class PatientImagingCollection:
             "grid_spacing_mm": nib.affines.voxel_sizes(a).tolist(),
             "acquisition_resolution": "not inferred from supplied grid",
             "units_status": units,
+            "native_geometry": geometry,
         }
         self.document["series"].append(row)
         if len(self.document["series"]) == 1:
@@ -356,12 +411,67 @@ class PatientImagingCollection:
     def mask(self, row):
         return self.array(row["data"]) == row["label_value"]
 
+    def require_native_geometry(self, row, *, allow_header_conflict=False, allow_legacy_annotation_grid=False):
+        """Separate native viewing from permission to interpret a grid in RAS mm."""
+        units = row.get("units_status")
+        if units is not None and units != "mm":
+            raise ValueError(f"Geometry for {row['id']} requires declared millimeter units")
+        is_series = "source_series" not in row
+        provenance = row.get("provenance", {})
+        original = row.get("original") if is_series else provenance.get("source")
+        has_original = isinstance(original, dict) and isinstance(original.get("path"), str)
+        supplied = provenance.get("kind") in {"observed_source_annotation", "supplied_annotation"}
+        functional = row.get("kind") in {"functional", "motor", "language"} and "score" in row
+        # In-memory model/synthetic layers declare their affine through the
+        # RAS-mm add_layer contract. Supplied volumes have a native header.
+        if not is_series and "native_geometry" not in row and not (has_original and (supplied or functional)):
+            return
+        if not has_original:
+            raise ValueError(f"Original geometry for {row['id']} is unavailable")
+        path = self.path(original["path"])
+        try:
+            stat = path.stat()
+            key = (path, stat.st_mtime_ns, stat.st_size)
+            if key not in self._native_headers:
+                image = nib.load(path)
+                self._native_headers[key] = (nifti_geometry(image), image.shape, affine(image.affine))
+            geometry, shape, matrix = self._native_headers[key]
+        except (OSError, ValueError, nib.filebasedimages.ImageFileError) as error:
+            raise ValueError(f"Cannot read original native geometry for {row['id']}") from error
+        problem = nifti_geometry_issue(geometry, allow_header_conflict=allow_header_conflict)
+        if (problem and allow_legacy_annotation_grid and not is_series and "native_geometry" not in row
+                and provenance.get("kind") == "observed_source_annotation"
+                and geometry["spatial_units"] == "unknown" and geometry["frame_status"] == "coded"):
+            source = self.series(row["source_series"])
+            # The older research decoder explicitly supported this exact
+            # source-bound affine and shape case. A shape match alone is
+            # insufficient, and alternate input frames must agree.
+            forms_agree = all(geometry[name] is None or np.allclose(geometry[name], matrix, rtol=0, atol=1e-5)
+                              for name in ("qform", "sform"))
+            if (forms_agree and tuple(source["data"]["shape"]) == shape
+                    and np.array_equal(source["affine"], matrix) and np.array_equal(row["affine"], matrix)):
+                self.require_native_geometry(source)
+                identity = (str(path), stat.st_mtime_ns, original["sha256"])
+                if identity not in self._verified:
+                    if file_hash(path) != original["sha256"]:
+                        raise ValueError(f"Original annotation identity changed: {row['id']}")
+                    self._verified.add(identity)
+                problem = None
+        if problem:
+            raise ValueError(f"{problem}: {row['id']}")
+        if (tuple(row["data"]["shape"]) != shape
+                or not np.allclose(matrix, row["affine"], rtol=0, atol=1e-5)
+                or (row.get("native_geometry") is not None and row["native_geometry"] != geometry)):
+            raise ValueError(f"Original native geometry differs from imported grid: {row['id']}")
+
     def patient_affine(self, row):
         sid = row.get("source_series", row["id"])
-        return self.registration_matrix(sid, require_review=True) @ affine(row["affine"])
+        if sid != row["id"]:
+            self.require_native_geometry(row)
+        return self.registration_matrix(sid, require_review=True, require_geometry=True) @ affine(row["affine"])
 
-    def registration_matrix(self, sid, seen=(), *, require_review=False):
-        """Resolve and validate a source-bound graph, optionally requiring review."""
+    def registration_matrix(self, sid, seen=(), *, require_review=False, require_geometry=False):
+        """Resolve a source-bound graph, optionally requiring reviewed metric geometry."""
         if sid in seen or len(seen) >= 64:
             raise ValueError('Cyclic registration graph')
         t = self.document['transforms'].get(sid)
@@ -375,6 +485,10 @@ class PatientImagingCollection:
         source, reference = self.series(sid), self.series(self.document['reference_series'])
         if source["timepoint"] != reference["timepoint"]:
             raise ValueError("Registration requires the same study timepoint")
+        if require_geometry:
+            self.require_native_geometry(source)
+            if not seen and source is not reference:
+                self.require_native_geometry(reference)
         if t['status'] == 'reference':
             if sid != reference['id'] or not np.allclose(m, np.eye(4)):
                 raise ValueError('Invalid reference registration')
@@ -382,7 +496,8 @@ class PatientImagingCollection:
               t.get('reference_sha256') != reference['original']['sha256']):
             raise ValueError('Registration source identity changed; repeat alignment')
         if t.get('parent_series'):
-            parent = self.registration_matrix(t['parent_series'], (*seen, sid), require_review=require_review)
+            parent = self.registration_matrix(t['parent_series'], (*seen, sid), require_review=require_review,
+                                              require_geometry=require_geometry)
             if t.get('reference_series') != reference['id'] or not np.allclose(parent @ affine(t['source_to_parent']), m, atol=1e-6):
                 raise ValueError('Registration parent changed; repeat alignment')
         if t.get('transform_digest') and t['transform_digest'] != digest({'matrix': t['matrix'], 'relative': t.get('source_to_parent')}):

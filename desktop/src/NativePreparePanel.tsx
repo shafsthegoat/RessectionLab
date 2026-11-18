@@ -1,12 +1,12 @@
 import {useState} from 'react';
-import type {PreparationPlan} from './native-anatomy-data';
+import type {PreparationPlan,PreparationStage} from './native-anatomy-data';
 import {isOperationCancelled,operationMessage} from './operation-feedback';
 import type {NativeWorkspace} from './use-native-workspace';
 
 const stageStatuses:Record<string,string>={
   ready:'Ready',cached:'Reused',available:'Available',missing_input:'Missing input',
   unsupported_input:'Unsupported input',unavailable:'Unavailable',blocked:'Blocked',
-  failed:'Failed',empty_output:'Empty output',complete:'Complete',completed:'Complete',
+  failed:'Failed',empty_output:'Empty output',interrupted:'Interrupted',complete:'Completed',
 };
 const retryable=new Set(['failed','empty_output']);
 
@@ -14,7 +14,7 @@ export function NativePreparePanel({workspace:w,onReviewAnatomy}:{workspace:Nati
   const [tumorIndication,setTumorIndication]=useState('');
   const [fullHeadConfirmed,setFullHeadConfirmed]=useState(false);
   const [includeDuralProxy,setIncludeDuralProxy]=useState(false);
-  const [report,setReport]=useState<{scope:string;plan:PreparationPlan}|null>(null);
+  const [report,setReport]=useState<{scope:string;plan:PreparationPlan;outcomes?:PreparationStage[]}|null>(null);
   const [running,setRunning]=useState(false),[cancelled,setCancelled]=useState(false);
   const [error,setError]=useState('');
   const b=w.binding,api=w.api;
@@ -27,7 +27,13 @@ export function NativePreparePanel({workspace:w,onReviewAnatomy}:{workspace:Nati
   };
   const planScope=(snapshotId:string)=>JSON.stringify([b.collectionId,snapshotId,options]);
   const plan=report?.scope===planScope(b.document.snapshot_id)?report.plan:null;
-  const hasReady=plan?.stages.some(stage=>stage.status==='ready')??false;
+  const interrupted=plan?.stages.some(stage=>stage.status==='interrupted')??false;
+  const hasReady=interrupted||(plan?.stages.some(stage=>stage.status==='ready')??false);
+  const shownStages=new Map(plan?.stages.map(stage=>[stage.id,stage]));
+  if(plan)for(const outcome of report?.outcomes??[]){
+    const proposed=shownStages.get(outcome.id);
+    shownStages.set(outcome.id,{...proposed,...outcome,reason:outcome.reason||proposed?.reason});
+  }
   const hasFailures=plan?.stages.some(stage=>retryable.has(stage.status))??false;
   function updateOption(update:()=>void){update();setCancelled(false);setError('');}
   function prepare(action:'plan'|'run',retryFailed=false){
@@ -42,7 +48,7 @@ export function NativePreparePanel({workspace:w,onReviewAnatomy}:{workspace:Nati
         const result=action==='plan'?await review():await w.runPreparation({
           ...w.args(),planId:plan!.id,retryFailed,...options,
         });
-        setReport({scope:planScope(result.document.snapshot_id),plan:result.plan});
+        setReport({scope:planScope(result.document.snapshot_id),plan:result.plan,outcomes:result.outcomes});
         w.setMessage(action==='plan'?'Preparation plan available':'Preparation complete · Review the stage outcomes');
         return result;
       }catch(failure){
@@ -85,10 +91,12 @@ export function NativePreparePanel({workspace:w,onReviewAnatomy}:{workspace:Nati
         Include a geometric dural envelope where supported</label>
     </details>
     {!running&&<button disabled={blocked} onClick={()=>prepare('plan')}>Review preparation plan</button>}
-    {plan&&<ul className="preparation-stages">{plan.stages.map(stage=><li key={stage.id} data-preparation-stage={stage.id} data-stage-status={stage.status}>
-      <div><strong>{stage.label}</strong><span>{stageStatuses[stage.status]??stage.status.replaceAll('_',' ')}</span></div>
-      {stage.reason&&<p>{stage.reason}</p>}
-    </li>)}</ul>}
+    {plan&&<ul className="preparation-stages">{[...shownStages.values()].map(({id,label,status,reason})=>
+      <li key={id} data-preparation-stage={id} data-stage-status={status}>
+        <div><strong>{label}</strong><span>{stageStatuses[status]??status.replaceAll('_',' ')}</span></div>
+        {reason&&<p>{reason}</p>}
+      </li>
+    )}</ul>}
     {running&&<div className="preparation-progress" role="status">
       <progress max={1} value={w.progress?.fraction}/>
       <span>{w.message}</span>
@@ -96,7 +104,7 @@ export function NativePreparePanel({workspace:w,onReviewAnatomy}:{workspace:Nati
     </div>}
     {cancelled&&<p role="status">Preparation cancelled. Completed stages remain available.</p>}
     {error&&<p role="alert">{error}</p>}
-    {hasReady&&<button disabled={blocked} onClick={()=>prepare('run')}>{cancelled?'Resume preparation':'Prepare anatomy'}</button>}
+    {hasReady&&<button disabled={blocked} onClick={()=>prepare('run')}>{cancelled||interrupted?'Resume preparation':'Prepare anatomy'}</button>}
     {hasFailures&&<button disabled={blocked} onClick={()=>prepare('run',true)}>Retry failed stages</button>}
     {!!b.document.layers.length&&<button disabled={blocked} onClick={onReviewAnatomy}>Inspect anatomy</button>}
   </section>;

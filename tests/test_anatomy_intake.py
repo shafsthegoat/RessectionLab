@@ -7,7 +7,9 @@ import numpy as np
 import pytest
 
 from resectionlab.anatomy_intake import inspect_intake, reviewed_intake
-from resectionlab.patient_anatomy import PatientImagingCollection
+from resectionlab.anatomy_planning import native_target_options, route_clearance
+from resectionlab.desktop_bridge import BridgeSession, _Request
+from resectionlab.patient_anatomy import PatientAnatomySnapshot, PatientImagingCollection
 
 
 def _image(path, data):
@@ -107,3 +109,92 @@ def test_empty_supplied_label_is_retained_with_source_receipt(tmp_path):
     row, = c.document["layers"]
     assert row["evidence_status"] == "empty-output" and not c.mask(row).any()
     assert Path(c.path(row["provenance"]["source"]["path"])).is_file()
+
+
+def _view(c, tmp_path, layers=()):
+    bridge = BridgeSession(tmp_path / "transfers")
+    opened = bridge.execute("anatomyOpen", {"path": str(c.root / "patient-anatomy.json")},
+                            _Request("open"), lambda *_: None)
+    return bridge.execute("anatomyView", {"collectionId": opened["collectionId"],
+                          "snapshotId": c.identity(), "layers": list(layers)},
+                          _Request("view"), lambda *_: None)
+
+
+@pytest.mark.parametrize(("problem", "reason"), [
+    ("units", "declared millimeter units"),
+    ("conflict", "qform/sform disagreement"),
+    ("uncoded", "no coded qform or sform"),
+])
+def test_unresolved_single_series_is_viewable_without_a_metric_reference(tmp_path, problem, reason):
+    c = _study(tmp_path)
+    path = tmp_path / "t1.nii.gz"
+    image = nib.Nifti1Image(np.ones((8, 8, 8), np.float32), np.eye(4))
+    image.header.set_xyzt_units("unknown" if problem == "units" else "mm")
+    if problem == "conflict":
+        shifted = np.eye(4)
+        shifted[0, 3] = 6
+        image.set_qform(shifted, code=1)
+    if problem == "uncoded":
+        image.set_sform(None, code=0)
+    nib.save(image, path)
+    [discovered] = inspect_intake("nifti", [str(path)])["items"]
+    assert discovered["supported"] and reason in discovered["warning"]
+    c = reviewed_intake(c, _request(c, [_item(path, modality="T1")]))
+    row = c.series(c.document["reference_series"])
+    assert row["native_geometry"]["spatial_units"] == row["units_status"]
+    assert _view(c, tmp_path)["registrationStatus"] == "independent source frame"
+    with pytest.raises(ValueError, match=reason):
+        route_clearance(PatientAnatomySnapshot.capture(c), [1, 1, 1], [2, 2, 2])
+    # Older manifests lack the new header descriptor; the preserved original
+    # still determines whether their geometry can support a measurement.
+    row.pop("native_geometry")
+    c.save("Fixture with legacy source geometry fields")
+    reopened = PatientImagingCollection(c.root)
+    with pytest.raises(ValueError, match=reason):
+        reopened.patient_affine(reopened.series(row["id"]))
+
+
+def test_unknown_annotation_geometry_leaves_its_source_viewable(tmp_path):
+    c = _study(tmp_path)
+    path = tmp_path / "t1.nii.gz"
+    scan = nib.Nifti1Image(np.ones((8, 8, 8), np.float32), np.eye(4))
+    scan.header.set_xyzt_units("mm")
+    scan.set_qform(np.eye(4), code=1)
+    scan.set_sform(None, code=0)
+    nib.save(scan, path)
+    annotation = tmp_path / "label.nii.gz"
+    nib.save(nib.Nifti1Image(np.ones((8, 8, 8), np.uint8), np.eye(4)), annotation)
+    c = reviewed_intake(c, _request(c, [
+        _item(path, modality="T1"),
+        _item(annotation, "labels", sourceInputIndex=0, roleMap={"1": "tumor"}),
+    ]))
+    [layer] = c.document["layers"]
+    [target] = native_target_options(c)
+    assert layer["native_geometry"]["spatial_units"] == "unknown"
+    assert target["target"] is None and "declared millimeter units" in target["reason"]
+    np.testing.assert_array_equal(c.patient_affine(c.series(c.document["reference_series"])), np.eye(4))
+    displayed = _view(c, tmp_path, [layer["id"]])
+    assert displayed["registrationStatus"] == "patient frame"
+    assert displayed["unavailableLayers"] == [layer["id"]]
+    layer.pop("native_geometry")
+    layer.pop("units_status")
+    layer["provenance"]["kind"] = "supplied_annotation"
+    with pytest.raises(ValueError, match="declared millimeter units"):
+        c.patient_affine(layer)
+    layer.update(kind="functional", score=layer["data"])
+    layer["provenance"].pop("kind")
+    with pytest.raises(ValueError, match="declared millimeter units"):
+        c.patient_affine(layer)
+
+
+def test_two_dimensional_projection_keeps_its_native_header_as_raw_evidence(tmp_path):
+    c = _study(tmp_path)
+    path = tmp_path / "TOF-MIP.nii.gz"
+    image = nib.Nifti1Image(np.ones((8, 8), np.float32), np.eye(4))
+    image.header.set_xyzt_units("mm")
+    image.set_qform(np.eye(4), code=1)
+    nib.save(image, path)
+    c = reviewed_intake(c, _request(c, [_item(path)]))
+    [raw] = c.document["source_assets"]
+    assert raw["shape"] == [8, 8] and raw["native_geometry"]["frame_status"] == "coded"
+    assert not c.document["series"]

@@ -32,6 +32,7 @@ FILENAME = "anatomy-approaches.json"
 MAX_SAVED = 32
 MAX_APPROACH_METADATA_BYTES = 8 * 1024**2
 ASSESSMENT_VERSION = "native-source-capsule-assessment-v6"
+METRIC_EVIDENCE_POLICY = "native-metric-evidence-v1"
 
 
 def _forbidden_compartment(row):
@@ -700,6 +701,65 @@ def _selection_issue(collection, active, selection):
     return "The selected lesion mask or its source binding changed. Select a candidate again to continue."
 
 
+def _measured_reading_ids(record):
+    return {key for key, value in record.get("sourceReadings", {}).items()
+            if value and value[0] in {"full-field", "partial-field"}}
+
+
+def _measurement_dependency_ids(measurements):
+    result = {field["layerId"] for field in measurements.get("coverage", {}).get("sources", [])}
+    for row in (*measurements.get("structures", ()), *measurements.get("targets", ()),
+                measurements.get("normalTraversal", {})):
+        if row.get("available") and row.get("layerId"):
+            result.add(row["layerId"])
+    for scenario in measurements.get("sensitivity", {}).get("scenarios", ()):
+        result.update(_measured_reading_ids(scenario))
+    return result
+
+
+def _report_dependency_ids(report):
+    target_id = report.get("task", {}).get("targetLayerId")
+    result = {target_id} if target_id else set()
+    for group in (report, *report.get("arms", {}).values()):
+        for candidate in group.get("candidates", ()):
+            result.update(_measured_reading_ids(candidate))
+            for values in candidate.get("evidence", {}).values():
+                result.update(values)
+        for candidate in group.get("nominated", ()):
+            for scenario in candidate.get("sensitivity", {}).get("scenarios", ()):
+                result.update(_measured_reading_ids(scenario))
+    return result
+
+
+def _metric_evidence_current(collection, dependency_ids, policy):
+    """Revalidate the old receipt's measured inputs under current admission."""
+    layers = {row["id"]: row for row in collection.document["layers"]}
+    tracts = {row["id"]: row for row in collection.document.get("tractography", ())}
+    try:
+        collection.patient_affine(collection.series(collection.document["reference_series"]))
+        for key in dependency_ids:
+            if key in tracts:
+                collection.patient_affine(collection.series(tracts[key]["source_series"]))
+                continue
+            row = layers[key]
+            if row["kind"] in VASCULAR_KINDS and not vascular_evidence_supported(collection, row):
+                return False
+            collection.patient_affine(row)
+        if policy != METRIC_EVIDENCE_POLICY:
+            # Older v6 receipts omitted or misgrouped the singular vessel kind.
+            for row in layers.values():
+                if row["kind"] != "vessel" or not vascular_evidence_supported(collection, row):
+                    continue
+                try:
+                    collection.patient_affine(row)
+                except ValueError:
+                    continue
+                return False
+    except (KeyError, ValueError, OSError, StopIteration):
+        return False
+    return True
+
+
 def _read_plan(collection):
     path = collection.root / FILENAME
     if not path.exists():
@@ -737,12 +797,15 @@ def _read_plan(collection):
         if checked["id"] in identities:
             raise ValueError("Duplicate saved approach")
         identities.add(checked["id"])
-        checked.update({key: deepcopy(saved[key]) for key in ("sourceSnapshotId", "parameterHash", "measurementHash", "measurements", "origin", "tradeoff") if key in saved})
+        checked.update({key: deepcopy(saved[key]) for key in ("sourceSnapshotId", "parameterHash", "measurementHash", "measurements",
+                                                              "metricEvidencePolicy", "origin", "tradeoff") if key in saved})
         valid = (not retired and not retired_target and saved.get("sourceSnapshotId") == collection.identity()
                  and saved.get("parameterHash") == parameter_hash(checked)
                  and saved.get("measurements", {}).get("geometryVersion") == GEOMETRY_VERSION
                  and saved.get("measurements", {}).get("assessmentVersion") == ASSESSMENT_VERSION
-                 and saved.get("measurementHash") == digest(saved.get("measurements")))
+                 and saved.get("measurementHash") == digest(saved.get("measurements"))
+                 and _metric_evidence_current(collection, _measurement_dependency_ids(saved["measurements"]),
+                                              saved.get("metricEvidencePolicy")))
         checked["assessmentStatus"] = "current" if valid else "stale" if saved.get("measurements") else "unassessed"
         if not valid:
             checked["invalidationReason"] = "Source anatomy, geometry engine or approach parameters changed; recompute before comparing."
@@ -778,14 +841,15 @@ def _read_report(collection, entry):
     if not isinstance(entry, dict) or not isinstance(entry.get("report"), dict) or digest(entry["report"]) != entry.get("hash"):
         raise ValueError("Saved native comparison report integrity differs")
     report = entry["report"]
-    if report.get("sourceSnapshotId") != collection.identity() or report.get("assessmentVersion") != ASSESSMENT_VERSION:
+    if (report.get("sourceSnapshotId") != collection.identity() or report.get("assessmentVersion") != ASSESSMENT_VERSION
+            or not _metric_evidence_current(collection, _report_dependency_ids(report), report.get("metricEvidencePolicy"))):
         report = {**report, "assessmentStatus": "stale", "invalidationReason": "Source anatomy or assessment engine changed; regenerate the comparison."}
     return report
 
 
 def _bound_report(collection, report):
     return {**report, "sourceSnapshotId": collection.identity(), "assessmentVersion": ASSESSMENT_VERSION,
-            "assessmentStatus": "current", "geometryKernels": {
+            "assessmentStatus": "current", "metricEvidencePolicy": METRIC_EVIDENCE_POLICY, "geometryKernels": {
                 "capsuleVoxelSupercover": "compiled-cpp" if native_backend.cpp_enabled() else "reference-python",
                 "sourceLabelAndStreamlineProximity": "numpy-scipy"}}
 
@@ -854,7 +918,8 @@ def _scenario_set(geometry, approach):
 
 def _record_measurements(collection, approach, measured):
     return {**approach, "sourceSnapshotId": collection.identity(), "parameterHash": parameter_hash(approach),
-            "assessmentStatus": "current", "measurements": measured, "measurementHash": digest(measured)}
+            "assessmentStatus": "current", "measurements": measured, "measurementHash": digest(measured),
+            "metricEvidencePolicy": METRIC_EVIDENCE_POLICY}
 
 
 def assess_approach(collection, value, geometry=None):

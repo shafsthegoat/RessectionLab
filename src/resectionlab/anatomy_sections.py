@@ -82,7 +82,8 @@ def section(
             raise ValueError(
                 "Estimate a source-to-patient transform before checkerboard review"
             )
-        second, covered = image(moving, affine(t["matrix"]) @ affine(moving["affine"]))
+        matrix = c.registration_matrix(moving_id, require_geometry=True)
+        second, covered = image(moving, matrix @ affine(moving["affine"]))
         moving_status = t["status"]
         choose = ((x // 32 + y // 32) % 2).astype(bool)
         if checkerboard:
@@ -94,14 +95,15 @@ def section(
     for name in layers[:8]:
         layer = c.layer(name)
         try:
-            transform = (
-                c.patient_affine(layer)
-                if frame == "patient"
-                else affine(layer["affine"])
-            )
+            if frame == "patient":
+                transform = c.patient_affine(layer)
+            else:
+                if layer["source_series"] != series_id:
+                    continue
+                c.require_native_geometry(row)
+                c.require_native_geometry(layer)
+                transform = affine(layer["affine"])
         except ValueError:
-            continue
-        if frame != "patient" and layer["source_series"] != series_id:
             continue
         values, covered = sample(c.array(layer["data"]), transform, 0)
         if layer.get("score"):

@@ -179,6 +179,6 @@ def test_invalid_source_identity_or_geometry_never_reaches_optimizer(patient, tm
         for source in c.document['series']:
             if c.path(source['original']['path']) == path:
                 source['original']['sha256'] = file_hash(path)
-    with pytest.raises(ValueError, match='same patient|millimetre|qform/sform'):
+    with pytest.raises(ValueError, match='same patient|millimeter|qform/sform'):
         ensure_alignment(c)
     assert 'ct' not in c.document['transforms']

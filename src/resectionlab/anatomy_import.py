@@ -6,7 +6,7 @@ import json
 import re
 from tempfile import TemporaryDirectory
 import numpy as np
-from .patient_anatomy import affine, world, reconstruction_lock, file_hash, digest
+from .patient_anatomy import affine, world, reconstruction_lock, file_hash, digest, nifti_geometry, nifti_geometry_issue
 
 
 MRI_SEQUENCES = {
@@ -216,6 +216,7 @@ def _inspect_nifti(path, sidecar=None):
         if gradient.is_file():
             companions[name] = (gradient, file_hash(gradient))
     im = nib.load(path)
+    geometry = nifti_geometry(im)
     source_family = str(metadata.get("Modality", "")).upper()
     coordinates = re.findall(r"(?:^|_)(sub|ses)-([a-zA-Z0-9]+)(?=_|$)", suffixless)
     subjects = [value for key, value in coordinates if key == "sub"]
@@ -237,7 +238,13 @@ def _inspect_nifti(path, sidecar=None):
     )
     details.update(label=suffixless, patient_id=patient, visit_id=visit, study_uid=study,
                    timepoint=_timepoint(metadata.get("Timepoint"), metadata.get("OperativeTimepoint"), visit, suffixless),
-                   shape=list(im.shape), units_status=im.header.get_xyzt_units()[0])
+                   shape=list(im.shape), units_status=geometry["spatial_units"], native_geometry=geometry)
+    issue = nifti_geometry_issue(geometry)
+    if issue and details["storage"] == "series":
+        if geometry["spatial_units"] in {"mm", "unknown"}:
+            details["issues"].append(issue + "; independent source viewing only")
+        else:
+            details.update(supported=False, issues=[issue, *details["issues"]])
     return details, metadata, companions
 
 
@@ -333,7 +340,7 @@ def import_nifti_series(collection, path, *, series_id, modality=None, timepoint
         matrix = affine(im.affine)
         row = dict(id=series_id, patient_id=collection.document["patient_id"], original=original,
                    modality=sequence, timepoint=timepoint, storage="source-asset", affine=matrix.tolist(),
-                   shape=list(im.shape), units_status=im.header.get_xyzt_units()[0],
+                   shape=list(im.shape), units_status=im.header.get_xyzt_units()[0], native_geometry=nifti_geometry(im),
                    grid_spacing_mm=nib.affines.voxel_sizes(matrix).tolist(), **imaging)
         collection.document.setdefault("source_assets", []).append(row)
     else:
@@ -355,7 +362,9 @@ def select_intake_reference(collection):
     if not candidates:
         return document.get("reference_series")
     reference = min(candidates, key=lambda row: (
-        row.get("units_status") != "mm", row.get("coverage", {}).get("status") == "limited",
+        (nifti_geometry_issue(row["native_geometry"]) is not None if "native_geometry" in row
+         else row.get("units_status") != "mm"),
+        row.get("coverage", {}).get("status") == "limited",
         order.index(row["modality"]), row["id"],
     ))["id"]
     current = document["reference_series"]
@@ -574,6 +583,7 @@ def rigid_registration(collection, moving_id, *, cancelled=lambda: False):
             != row["original"]["sha256"]
         ):
             raise ValueError("Original source changed before registration")
+        collection.require_native_geometry(row)
     with reconstruction_lock():
         f = sitk.ReadImage(
             str(collection.path(fixed["original"]["path"])), sitk.sitkFloat32
@@ -654,7 +664,7 @@ def review_registration(
         or np.linalg.matrix_rank(r - r.mean(axis=0)) < 2
     ):
         raise ValueError("Landmarks must not be coincident or collinear")
-    matrix = collection.registration_matrix(series_id)
+    matrix = collection.registration_matrix(series_id, require_geometry=True)
     t = collection.document["transforms"][series_id]
     if t["status"] == "reference":
         raise ValueError("The reference series defines the patient frame")
@@ -722,7 +732,8 @@ def import_anatomy_derivative(
     im = nib.load(p)
     if len(im.shape) != 3 or np.prod(im.shape) * 4 > MAX_ARRAY:
         raise ValueError("Select a bounded single-volume derivative")
-    units = im.header.get_xyzt_units()[0]
+    geometry = nifti_geometry(im)
+    units = geometry["spatial_units"]
     if units not in {"mm", "unknown"}:
         raise ValueError("Imported anatomy requires millimeter geometry")
     values = im.get_fdata(dtype=np.float32)
@@ -748,6 +759,7 @@ def import_anatomy_derivative(
             "supplied functional values; units and threshold require review"
         )
         item["units_status"] = units
+        item["native_geometry"] = geometry
         return item
     if (
         not np.array_equal(values, np.rint(values))
@@ -772,6 +784,7 @@ def import_anatomy_derivative(
             "color": specification["color"] if specification else "#97bdcf",
             "affine": affine(im.affine).tolist(),
             "units_status": units,
+            "native_geometry": geometry,
             "data": ref,
             "label_value": value,
             "revision": 0,
