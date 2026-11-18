@@ -128,7 +128,19 @@ preserved.
 
 The viewer exposes graph assumptions and separate storage, flow-deficit and
 cut/occlusion/compression summaries. Outcome export and telemetry use graph terms.
-The existing RL reward explicitly refuses graph scenes because its old harm
-vector omits supply and drainage consequences. Measured vascular response,
-acquired connectivity, neurological validation and meaningful vascular RL remain
-on hold.
+Search and the opt-in generated-graph reward integrate the largest declared
+supply and drainage deficits separately over simulated time. A generated
+arterial occlusion produced 2.319 supply-deficit seconds and 0.244
+drainage-deficit seconds with zero bleeding. Venous occlusion reversed these
+measurements. The default RL configuration still refuses graph scenes. The
+opt-in reward requires generated coverage and declared regions. Acquired
+connectivity, measured physiology and neurological outcome calibration remain open.
+
+Partial vascular labels leave unsampled vessels unknown. Compare topology on
+the original source across cropped boundaries. clDice describes a
+centreline-sensitive segmentation metric. The stereotactic trajectory study
+motivates retaining acquisition uncertainty. Its distances apply to its own
+procedure. Postoperative diffusion imaging motivates tracking ischemic effects
+separately from bleeding. [clDice](https://openaccess.thecvf.com/content/CVPR2021/html/Shit_clDice_-_A_Novel_Topology-Preserving_Loss_Function_for_Tubular_Structure_CVPR_2021_paper.html)
+· [Vascular segmentation and SEEG trajectories](https://discovery.ucl.ac.uk/id/eprint/10082723/)
+· [DWI and acquired deficits after glioma resection](https://pubmed.ncbi.nlm.nih.gov/24992634/).

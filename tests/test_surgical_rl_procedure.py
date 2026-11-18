@@ -174,13 +174,14 @@ def test_cancelled_preview_charges_computation_without_patient_mutation_and_repl
     assert restored.engine.state_id==before and restored.computation==e.computation
 
 
-def test_stop_requires_whole_tool_exterior_even_after_shallow_withdraw_sets_flags():
+def test_shallow_withdraw_refuses_before_any_exit_flag_can_enable_stop():
     e=env();prepare(e,x=55.)
     assert e.step_action(command('apply',[55.,40.,100.],duration=1.))[4]['outcome']['status']=='accepted'
-    assert e.step_action(command('withdraw',[55.,40.,99.]))[4]['outcome']['status']=='accepted'
-    assert not e.engine.state['slots']['left']['inserted']
-    result=e.stop('A withdrawal flag alone is insufficient')
-    assert result[4]['outcome']['reasonCode']=='PROCEDURE_STOP_REQUIRES_EXTERIOR_TOOLS'
+    before=e.engine.snapshot()
+    assert e.step_action(command('withdraw',[55.,40.,99.]))[4]['outcome']['reasonCode']=='PROCEDURE_EXTERIOR_WITHDRAWAL_REQUIRED'
+    assert e.engine.snapshot()==before
+    result=e.stop('The tool has not exited')
+    assert result[4]['outcome']['reasonCode']=='PROCEDURE_STOP_REQUIRES_CHECKED_EXIT'
     assert not result[2]
 
 

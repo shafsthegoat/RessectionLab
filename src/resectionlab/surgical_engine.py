@@ -1382,7 +1382,9 @@ class SurgicalEngine:
         if 'deformation' in self.state:
             from .surgical_physics_v2 import raster
             moved.extend(raster(self))
+        from .surgical_sequence_outcomes import original_target_residual_mm3
         return {**self.observe(_state_id=identity), 'scene': self.scene.descriptor(), 'catalog': catalog(),
+                'originalTargetResidualMm3': original_target_residual_mm3(self),
                 'geometryRevision': identity, 'removed': self.state['removed'][:], 'moved': moved, 'cuts': copy.deepcopy(self.state['cuts']),
                 'holds': copy.deepcopy(self.state['holds']),
                 'contact': list(map(int, self.state['contact'])), 'thermal': copy.deepcopy(self.state['thermal']),

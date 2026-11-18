@@ -46,7 +46,7 @@ from .surgical_engine import SurgicalEngine, MAX_STEPS
 from .surgical_tools import TOOLS
 from .surgical_scene import MATERIALS
 from .surgical_rl_protection import ProtectionSet, GuardConfig
-from .surgical_rl_rewards import RewardConfig, RewardTracker, compute_reward
+from .surgical_rl_rewards import GeneratedGraphRewardConfig, RewardConfig, RewardTracker, compute_reward
 
 # v2 deliberately invalidates v1 episode snapshots: success now includes
 # cleanup, and the observation declares the remaining episode budgets.
@@ -143,6 +143,7 @@ class SurgicalRLEnv(gym.Env):
         self.scene = scene
         self.config = config or RLConfig()
         self.reward_config = reward_config or RewardConfig()
+        self.graph_evaluation = isinstance(self.reward_config, GeneratedGraphRewardConfig)
         self.procedure_enabled = 'surgicalProcedurePolicyV1' in scene.properties
         self.schema = PROCEDURE_SCHEMA if self.procedure_enabled else SCHEMA
         self.evaluation_only = self.procedure_enabled
@@ -194,6 +195,12 @@ class SurgicalRLEnv(gym.Env):
         self._radius_caps = {name:float(tool['radiusMm']) for name,tool in TOOLS.items()}
         self.action_contract = {'id':ACTION_CONTRACT,'radiusCapsMm':self._radius_caps.copy(),
             'radiusChanges':'withdrawn, inactive and released only'}
+        if self.graph_evaluation:
+            self.action_contract['vascularReward'] = {
+                'schema': 'resectionlab.generated-interface-deficit-reward.v1',
+                'source': 'declared generated graph; no acquired physiology',
+                'mechanicsRevision': 2, 'aggregation': 'maximum cumulative seconds per interface type',
+                'scope': 'Engineering supply/drainage exposure; tissue perfusion and functional outcomes unknown.'}
         if self.procedure_enabled:
             self.action_contract['fixedSpaceCodec'] = {'schema': 'resectionlab.procedure-action-codec.v1',
                 'operations': list(self.operations), 'stopReason': FIXED_SPACE_STOP_REASON,
@@ -224,12 +231,6 @@ class SurgicalRLEnv(gym.Env):
                 mask.ravel()[list(cells)] = 1
                 mask.flags.writeable = False
                 self._procedure_source_masks[name] = mask
-            from .surgical_rl_protection import ProtectionAnnotation
-            exterior_annotation = ProtectionAnnotation.from_mask(scene,'procedure-intracranial-domain',
-                self._procedure_source_masks['intracranial'].astype(bool),
-                provenance='Independent procedure intracranial source coverage; conservative exterior endpoint check')
-            self._procedure_intracranial_index = ProtectionSet(scene,[exterior_annotation],
-                clearance_mm=0.,required=())
             raw = scene.properties['surgicalProcedurePolicyV1']
             self._procedure_structure_names = tuple(sorted(raw['structures']))
             self._procedure_cost_names = ('boneRemovedMm3','nonbonePreparationRemovedMm3',
@@ -264,8 +265,11 @@ class SurgicalRLEnv(gym.Env):
         from .surgical_environment import load_environment
         from .surgical_rl_protection import load_protection, restore_protection_contract
         from .imaging import read_case_artifacts
+        artifacts = read_case_artifacts(path)
+        if 'nativeStudyReplay' in artifacts:
+            raise ValueError('STUDY_REPLAY_ONLY: a recorded branch cannot be reset into a fresh training environment')
         scene = load_environment(path)
-        record = read_case_artifacts(path).get('surgical_toolbox') or {}
+        record = artifacts.get('surgical_toolbox') or {}
         snapshot = record.get('branches', {}).get(record.get('branchId'), {})
         if 'surgicalProcedurePolicyV1' in scene.properties and snapshot.get('actions'):
             raise ValueError('PROCEDURE_RL_CHECKPOINT_PREFIX_REQUIRED: this archive already contains treatment; replay the complete accepted prefix through the evaluation adapter rather than resetting its costs')
@@ -300,7 +304,12 @@ class SurgicalRLEnv(gym.Env):
         self.engine = _ProtectedEngine(self.scene,self.protection,self.config,
             cranial_stages=copy.deepcopy(self._cranial_stage_record))
         self.tracker = RewardTracker(self.engine,protected_source_ids=self.protection.cells,
-            procedure_evaluation=self.procedure_enabled)
+            procedure_evaluation=self.procedure_enabled, graph_evaluation=self.graph_evaluation)
+        if self.graph_evaluation:
+            # Commit the same recorded setup at reset, restore and every branch.
+            setup = self.engine.step({'slot': 'left', 'operation': 'configure', 'mechanicsRevision': 2})
+            if setup['status'] != 'accepted':
+                raise ValueError('VASCULAR_GRAPH_RL_HOLD: ' + str(setup.get('reason')))
         self.attempts = []; self.invalid_actions = 0; self.total_reward = 0.; self._done=False
         self.computation = {'transitionEvaluations': 0, 'discardedEvaluations': 0,
             'interruptedEvaluations': 0}
@@ -480,14 +489,10 @@ class SurgicalRLEnv(gym.Env):
         if pending or not self.procedure_evaluation['outcome']['withdrawalComplete']:
             raise ValueError('PROCEDURE_STOP_REQUIRES_CHECKED_EXIT: ' + ', '.join(pending))
         from .surgical_task_domain import _posed
-        from .surgical_motion import envelopes
-        for key, slot in self.engine.state['slots'].items():
-            if not _posed(self.engine,key):
-                continue
-            for a,b,radius,_ in envelopes(TOOLS[slot['instrument']],self.engine.parameters(slot),
-                    slot['position'],slot['quaternion']):
-                if len(self._procedure_intracranial_index.capsule_hits(a,b,radius)):
-                    raise ValueError('PROCEDURE_STOP_REQUIRES_EXTERIOR_TOOLS: ' + key)
+        from .surgical_procedure_policy import procedure_tool_exterior
+        for key in self.engine.state['slots']:
+            if _posed(self.engine, key) and not procedure_tool_exterior(self.engine, key):
+                raise ValueError('PROCEDURE_STOP_REQUIRES_EXTERIOR_TOOLS: ' + key)
         if not self.procedure_evaluation['admissible']:
             raise ValueError('PROCEDURE_STOP_CONSTRAINT_FAILURE')
         return {'status': 'accepted', 'reasonCode': 'PROCEDURE_STOP',
@@ -522,6 +527,8 @@ class SurgicalRLEnv(gym.Env):
             if error: raise ValueError(error)
             if not isinstance(action,dict) or not isinstance(action.get('parameters',{}),dict):
                 raise ValueError('INVALID_ACTION: action and parameters must be objects')
+            if self.graph_evaluation and action.get('operation') == 'configure':
+                raise ValueError('GENERATED_GRAPH_MECHANICS_FIXED_AT_RESET')
             if self.procedure_enabled and action.get('operation')=='stop':
                 outcome=self._stop_outcome(action)
                 duration,points=0.,[]

@@ -69,9 +69,9 @@ def test_encoded_stop_cannot_use_pose_duration_or_parameters_to_supply_free_exit
 def test_encoded_stop_requires_whole_instrument_exterior_after_shallow_withdraw():
     e = env(); prepare(e, x=55.)
     assert e.step_action(command('apply', [55., 40., 100.], duration=1.))[4]['outcome']['status'] == 'accepted'
-    assert e.step_action(command('withdraw', [55., 40., 99.]))[4]['outcome']['status'] == 'accepted'
     before = copy.deepcopy(e.engine.snapshot())
-    assert e.step(encoded_stop(e))[4]['outcome']['reasonCode'] == 'PROCEDURE_STOP_REQUIRES_EXTERIOR_TOOLS'
+    assert e.step_action(command('withdraw', [55., 40., 99.]))[4]['outcome']['reasonCode'] == 'PROCEDURE_EXTERIOR_WITHDRAWAL_REQUIRED'
+    assert e.step(encoded_stop(e))[4]['outcome']['reasonCode'] == 'PROCEDURE_STOP_REQUIRES_CHECKED_EXIT'
     assert e.engine.snapshot() == before
 
 

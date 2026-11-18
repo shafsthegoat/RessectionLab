@@ -20,7 +20,9 @@ def test_equal_treatment_and_zero_bleeding_cannot_hide_declared_deficit(metric, 
     nodes, vectors = [], {}
     for tag, target, deficit in [('stop', 0., 0.), ('deficit', 100., 20.), ('preserved', 100., 0.)]:
         node = SimpleNamespace(exited=SimpleNamespace(scene=baseline.scene, tag=tag),
-            goal_assessment={'originalTargetTreatmentMm3': target})
+            goal_assessment={'originalTargetTreatmentMm3': target, 'endpointAssessment': {
+                'terminated': True, 'truncated': False, 'validWithdrawal': True,
+                'classification': 'valid-stop-with-residual'}})
         vector = copy.deepcopy(template)
         for name in ('bloodGeneratedMm3', 'supplyDeficitSeconds', 'drainageDeficitSeconds'):
             value = deficit if name == metric else 0.
@@ -86,3 +88,86 @@ def test_graph_without_declared_interfaces_keeps_exposure_unknown():
         assert result['dimensions'][metric]['status'] == 'unavailable'
         assert result['dimensions'][metric]['cumulative'] is None
         assert metric in result['missingEvidence']
+
+
+def test_generated_graph_reward_charges_both_shared_exposures_after_checked_withdrawal():
+    from resectionlab.surgical_rl_rewards import GeneratedGraphRewardConfig, RewardTracker, compute_reward
+    from test_surgical_mechanism_comparison import vascular_control
+    baseline, branches = vascular_control()
+    config = GeneratedGraphRewardConfig(supply_deficit_weight=2., drainage_deficit_weight=3.)
+    tracker = RewardTracker(baseline, graph_evaluation=True)
+    before = tracker.measure(baseline)
+    for branch in ('arterial-occlusion', 'venous-occlusion', 'arterial-cut'):
+        engine = branches[branch]
+        after = tracker.clone().measure(engine)
+        sequence = sequence_outcome(engine, baseline=baseline)
+        assert sequence['withdrawalComplete']
+        assert after['bleeding_generated_mm3'] == sequence['dimensions']['bloodGeneratedMm3']['cumulative']
+        _, terms = compute_reward(before, after, {'status': 'accepted'}, config)
+        for term, name, weight in [('supply_deficit', 'supplyDeficitSeconds', 2.),
+                                   ('drainage_deficit', 'drainageDeficitSeconds', 3.)]:
+            dim = sequence['dimensions'][name]
+            assert dim['cumulative'] == after[name]
+            assert terms[term] == pytest.approx(-weight * dim['incremental'])
+            assert terms[term] < 0
+        with pytest.raises(ValueError, match='graph reward weights required'):
+            compute_reward(before, after, {'status': 'accepted'})
+
+
+@pytest.mark.parametrize('missing', ['regions', 'generated-coverage', 'generated-source'])
+def test_graph_reward_holds_unqualified_domains(missing):
+    from resectionlab.surgical_rl_rewards import RewardTracker
+    from resectionlab.surgical_scene import SurgicalScene
+    from test_surgical_vascular_graph import profile
+    declaration = profile()
+    if missing == 'regions':
+        declaration['regions'] = []
+    if missing == 'generated-coverage':
+        declaration['coverage']['status'] = 'partial-acquired'
+    source = graph_fixture(declaration).scene
+    if missing == 'generated-source':
+        source = SurgicalScene(source.labels, source.affine, source.regions,
+            {'kind': 'generated-control', 'patientId': 'test'}, source.properties)
+    with pytest.raises(ValueError, match='VASCULAR_GRAPH_RL_HOLD'):
+        RewardTracker(SurgicalEngine(source), graph_evaluation=True)
+
+
+def test_explicit_generated_graph_rl_env_measures_and_replays_refusals():
+    from resectionlab.surgical_rl_env import SurgicalRLEnv, RLConfig
+    from resectionlab.surgical_rl_rewards import GeneratedGraphRewardConfig
+    from resectionlab.surgical_scene import SurgicalScene
+    fixture = graph_fixture().scene
+    labels = fixture.labels.copy()
+    labels[7, 4, 4] = 3
+    scene = SurgicalScene(labels, fixture.affine,
+        [*fixture.regions, {'id': 3, 'name': 'generated target', 'material': 'tumor', 'target': True}],
+        fixture.source, fixture.properties)
+    env = SurgicalRLEnv(scene, config=RLConfig(require_critical_coverage=False),
+                        reward_config=GeneratedGraphRewardConfig())
+    _, initial = env.reset(seed=1)
+    assert env.engine.state['toolMechanicsRevision'] == 2
+    assert len(env.engine.actions) == 1
+    _, _, _, _, rejected = env.step_action({'slot': 'left', 'operation': 'configure', 'mechanicsRevision': 1})
+    assert rejected['outcome']['reasonCode'] == 'GENERATED_GRAPH_MECHANICS_FIXED_AT_RESET'
+    assert rejected['stateId'] == initial['stateId']
+    assert rejected['reward_terms']['drainage_deficit'] == rejected['reward_terms']['supply_deficit'] == 0.
+    def act(operation, point=None, **extra):
+        action = {'slot': 'left', 'operation': operation, 'duration': .1, **extra}
+        if point is not None:
+            action['pose'] = {'position': point, 'quaternion': [0., 0., 0., 1.]}
+        _, _, _, _, info = env.step_action(action)
+        assert info['outcome']['status'] == 'accepted', info['outcome']
+        return info
+    act('exchange', instrument='bipolar_forceps')
+    act('place', [2.5, 1., -4.], parameters={'jawOpeningMm': .5, 'forceN': 0., 'power': 0., 'depthMm': 1.})
+    act('apply', [2.5, 1., 1.8], duration=.5)
+    act('apply', parameters={'power': 1.}, duration=2.1)
+    withdrawn = act('withdraw')
+    assert withdrawn['metrics']['bleeding_generated_mm3'] == 0.
+    assert withdrawn['reward_terms']['supply_deficit'] < 0.
+    assert withdrawn['reward_terms']['drainage_deficit'] < 0.
+    record = env.snapshot()
+    env.reset(seed=2)
+    _, restored = env.restore(record)
+    assert restored['stateId'] == record['stateId']
+    assert restored['metrics'] == record['measurements']

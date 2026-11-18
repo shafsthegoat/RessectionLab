@@ -353,6 +353,57 @@ def _refusal(engine, code, message, *, violations=None):
         'constraintViolations': violations or [{'code': code, 'message': message}]}
 
 
+def procedure_tool_exterior(engine, key, *, pose=None, parameters=None):
+    """Test every tool capsule against original intracranial coverage, even after removal."""
+    from .surgical_motion import envelopes
+    from .surgical_tools import TOOLS
+    policy = _validated(engine.scene)
+    if policy is None:
+        raise ValueError('PROCEDURE_POLICY_REQUIRED')
+    index = policy.get('intracranialIndex')
+    if index is None:
+        annotation = ProtectionAnnotation('procedure-intracranial-domain', tuple(policy['intracranial']),
+            grid_binding(engine.scene), 'Independent procedure intracranial coverage for exterior placements and exits')
+        index = ProtectionSet(engine.scene, [annotation], clearance_mm=0., required=())
+        policy['intracranialIndex'] = index
+    slot = engine.state['slots'][key]
+    pose = slot if pose is None else pose
+    params = engine.parameters(slot) if parameters is None else parameters
+    return all(not len(index.capsule_hits(a, b, radius)) for a, b, radius, _ in
+               envelopes(TOOLS[slot['instrument']], params, pose['position'], pose['quaternion']))
+
+
+def _exterior_action_rejection(engine, action):
+    from .surgical_task_domain import _posed
+    from .surgical_engine import rotation
+    try:
+        _, points = engine._validate(action)
+    except (TypeError, KeyError, OverflowError, ValueError):
+        return None  # Native action validation reports malformed requests.
+    key, operation = action['slot'], action['operation']
+    posed = _posed(engine, key)
+    if not posed and operation not in ('place', 'exchange', 'inspect', 'configure', 'position', 'deactivate', 'release'):
+        return _refusal(engine, 'PROCEDURE_EXTERIOR_PLACEMENT_REQUIRED',
+            'Place the complete instrument in observed exterior space before moving or activating it.')
+    if operation not in ('place', 'withdraw'):
+        return None
+    if operation == 'place' and len(points) != 1:
+        return None
+    if operation == 'place' and posed and not procedure_tool_exterior(engine, key):
+        return _refusal(engine, 'PROCEDURE_EXTERIOR_PLACEMENT_REQUIRED', 'Withdraw the complete tool before repositioning it.')
+    slot = engine.state['slots'][key]
+    if points:
+        pose = points[-1]
+    else:
+        axis = rotation(slot['quaternion']).apply([0, 0, 1])
+        pose = {'position': np.asarray(slot['position']) - 50 * axis, 'quaternion': slot['quaternion']}
+    parameters = {**engine.parameters(slot), **action.get('parameters', {})}
+    if not procedure_tool_exterior(engine, key, pose=pose, parameters=parameters):
+        code = 'PROCEDURE_EXTERIOR_PLACEMENT_REQUIRED' if operation == 'place' else 'PROCEDURE_EXTERIOR_WITHDRAWAL_REQUIRED'
+        return _refusal(engine, code, 'The working tip and entire shaft must clear the original intracranial region.')
+    return None
+
+
 def procedure_action_rejection(engine, action, *, check=lambda: None):
     if PROPERTY not in engine.scene.properties:
         return None
@@ -373,7 +424,7 @@ def procedure_action_rejection(engine, action, *, check=lambda: None):
     refusal = action_rejection(engine, action, domain=policy['domain'], check=check)
     if refusal is not None:
         return _refusal(engine, 'PROCEDURE_WORK_DOMAIN_VIOLATION', refusal['reason'])
-    return None
+    return _exterior_action_rejection(engine, action)
 
 
 def procedure_source_memberships(scene):

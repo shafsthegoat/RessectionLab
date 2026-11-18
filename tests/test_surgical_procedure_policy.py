@@ -357,3 +357,21 @@ def test_critical_shortcut_refusal_is_atomic_with_both_declared_physics_profiles
     assert preview['status']==actual['status']=='rejected'
     assert actual['reasonCode']=='PROTECTED_STRUCTURE'
     assert engine.snapshot()==before
+
+
+def test_free_space_placement_and_withdrawal_require_continuous_exterior_access():
+    # Completely remove the sole target on this axis. Its physical cavity is
+    # free space, but the original intracranial domain still crosses the shaft.
+    engine = prepared(source(neural_limit=125., overlap=True))
+    assert engine.step(action('apply', [55., 40., 100.], duration=1.))['status'] == 'accepted'
+    before = engine.snapshot()
+    # The tip is distal to the cavity; it is the shaft that remains intracranial.
+    inside = action('withdraw', [55., 40., 115.], duration=1.)
+    for result in (engine.preview(inside, include_view=False), engine.step(inside)):
+        assert result['reasonCode'] == 'PROCEDURE_EXTERIOR_WITHDRAWAL_REQUIRED'
+    assert engine.snapshot() == before
+    assert engine.step(action('withdraw', [55., 40., 65.], duration=1.))['status'] == 'accepted'
+    outside = engine.snapshot()
+    result = engine.step(action('place', [55., 40., 115.]))
+    assert result['reasonCode'] == 'PROCEDURE_EXTERIOR_PLACEMENT_REQUIRED'
+    assert engine.snapshot() == outside

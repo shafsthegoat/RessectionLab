@@ -138,6 +138,10 @@ def test_original_target_overlap_remains_residual_even_after_all_owned_target_is
     assert result['originalTarget']['removedMm3'] == 1
     assert result['originalTarget']['residualMm3'] == 1
     assert result['originalTarget']['fractionRemoved'] == .5
+    view = engine.view()
+    assert view['metrics']['targetRemovedMm3'] == 1
+    assert view['originalTargetResidualMm3'] == result['originalTarget']['residualMm3']
+    assert 'originalTargetResidualMm3' not in engine.observe()
     assert result['originalTarget']['residualCentroidRasMm'] == [12., 12., 12.]
     assert result['dimensions']['targetRemovedMm3']['cumulative'] == 1
     restored = SurgicalEngine.restore(scene, engine.snapshot())
@@ -145,7 +149,9 @@ def test_original_target_overlap_remains_residual_even_after_all_owned_target_is
 
 
 def test_categorical_only_scene_does_not_claim_original_target_coverage():
-    result = sequence_outcome(prepared())
+    engine = prepared()
+    result = sequence_outcome(engine)
+    assert engine.view()['originalTargetResidualMm3'] is None
     assert result['targetScope'] == 'owned categorical target labels'
     assert result['originalTarget']['status'] == 'unavailable'
     assert result['originalTarget']['residualMm3'] is None

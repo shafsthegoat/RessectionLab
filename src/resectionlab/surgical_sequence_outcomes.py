@@ -8,6 +8,8 @@ from __future__ import annotations
 
 import numpy as np
 
+from .surgical_vascular_graph import maximum_interface_deficits
+
 SCHEMA = 'resectionlab.sequence-outcome.v1'
 PROCEDURE_SCHEMA = 'resectionlab.sequence-outcome.v2'
 
@@ -27,14 +29,43 @@ def _exchanges(engine):
     return sum(action['operation'] == 'exchange' for action in engine.actions)
 
 
-def _original_target(engine, baseline):
+def _original_target_cells(scene):
     from .surgical_scene import original_target_memberships
-    memberships = original_target_memberships(engine.scene)
+    from .core import immutable_array
+    memberships = original_target_memberships(scene)
     if memberships is None:
+        return None
+    if len(memberships) == 1:
+        return next(iter(memberships.values()))
+    # Distinct target masks may overlap. Reuse their immutable union across
+    # scrubbed frames while the adapter's source proof and active names match.
+    names = tuple(memberships)
+    cached = getattr(scene, '_display_target_union', None)
+    if cached is None or cached[0] is not scene._original_target_proof or cached[1] != names:
+        ids = np.unique(np.concatenate(list(memberships.values()))) if names else np.empty(0, np.int64)
+        cached = (scene._original_target_proof, names, immutable_array(ids, np.int64))
+        scene._display_target_union = cached
+    return cached[2]
+
+
+def original_target_residual_mm3(engine):
+    """Sparse display-only projection of the current source-annotation ledger."""
+    cells = _original_target_cells(engine.scene)
+    if cells is None:
+        return None
+    removed = np.unique(np.asarray(engine.state['removed'], dtype=np.int64))
+    offsets = cells.searchsorted(removed)
+    within = offsets < cells.size
+    removed_count = np.count_nonzero(cells[offsets[within]] == removed[within])
+    return float((cells.size - removed_count) * engine.scene.voxel_mm3)
+
+
+def _original_target(engine, baseline):
+    cells = _original_target_cells(engine.scene)
+    if cells is None:
         return {'status': 'unavailable', 'sourceVolumeMm3': None, 'removedMm3': None,
             'residualMm3': None, 'fractionRemoved': None,
             'reason': 'Original target annotation memberships are unavailable in this categorical-only scene; owned-label target is reported separately.'}
-    cells = np.unique(np.concatenate(list(memberships.values()))) if memberships else np.empty(0, np.int64)
     removed = np.isin(cells, engine.state['removed'])
     before = np.isin(cells, baseline.state['removed'])
     volume = engine.scene.voxel_mm3
@@ -106,11 +137,11 @@ def sequence_ledger(engine, baseline, *, target, metrics, baseline_metrics, mapp
     if 'vascularGraphV1' in engine.state and 'vascularGraphV1' in baseline.state:
         regions = metrics['vesselPhysicsV2']['regions']
         before_regions = baseline_metrics['vesselPhysicsV2']['regions']
-        for name in ('supplyDeficitSeconds', 'drainageDeficitSeconds'):
+        before_deficits = maximum_interface_deficits(before_regions)
+        for name, value in maximum_interface_deficits(regions).items():
             dimensions[name] = _unknown('No declared vascular interfaces; absence is not zero deficit.', 's')
             if regions and before_regions and regions.keys() == before_regions.keys():
-                dimensions[name] = _quantity(max(r[name] for r in regions.values()),
-                    max(r[name] for r in before_regions.values()), 's', status='modeled_unvalidated')
+                dimensions[name] = _quantity(value, before_deficits[name], 's', status='modeled_unvalidated')
                 dimensions[name]['scope'] = 'Maximum cumulative deficit across declared vascular interfaces; uncalibrated, not tissue perfusion or functional injury.'
     withdrawn = not engine.state['holds'] and not any(
         slot['inserted'] or slot['active'] or slot['grip'] for slot in engine.state['slots'].values())

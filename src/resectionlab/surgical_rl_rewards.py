@@ -49,6 +49,19 @@ class RewardConfig:
                 raise ValueError(field.name + ' must be nonnegative (scales positive)')
 
 
+@dataclass(frozen=True)
+class GeneratedGraphRewardConfig(RewardConfig):
+    """Opt-in numerical control. Weights are engineering costs per modeled deficit second."""
+
+    supply_deficit_weight: float = 1.
+    drainage_deficit_weight: float = 1.
+
+    def __post_init__(self):
+        super().__post_init__()
+        if min(self.supply_deficit_weight, self.drainage_deficit_weight) <= 0:
+            raise ValueError('Both declared vascular mechanisms require positive costs')
+
+
 class RewardTracker:
     """Source-identity based ledger with per-source deformation high-water marks.
 
@@ -57,13 +70,20 @@ class RewardTracker:
     and near_contact_exposure_mm3_seconds from a separate anatomical evaluator.
     deformation_cell_peaks accepts cumulative microstep maxima by source ID.
     """
-    def __init__(self, engine, protected_source_ids=(), *, procedure_evaluation=False):
+    def __init__(self, engine, protected_source_ids=(), *, procedure_evaluation=False, graph_evaluation=False):
         if 'brainContinuumV1' in engine.scene.properties:
             raise ValueError('CONTINUUM_RL_HOLD: material/contact, artificial boundaries and cumulative exposure reward remain unqualified')
         if 'bipolarThermalV1' in engine.scene.properties:
             raise ValueError('BIPOLAR_THERMAL_RL_HOLD: device response and heat-aware reward remain unqualified')
-        if 'vascularGraphV1' in engine.scene.properties:
-            raise ValueError('VASCULAR_GRAPH_RL_HOLD: existing reward omits declared supply/drainage consequences')
+        graph = engine.scene.properties.get('vascularGraphV1')
+        self.graph_evaluation = graph_evaluation
+        if graph_evaluation:
+            from .surgical_planning_admission import source_classification
+            if (not graph or source_classification(engine.scene) != 'generated-engineering'
+                    or graph['coverage']['status'] != 'generated-control' or not graph['regions']):
+                raise ValueError('VASCULAR_GRAPH_RL_HOLD: generated anatomy and declared supply/drainage interfaces required')
+        elif graph is not None:
+            raise ValueError('VASCULAR_GRAPH_RL_HOLD: this consumer requires the generated graph reward contract')
         if 'surgicalProcedurePolicyV1' in engine.scene.properties and procedure_evaluation is not True:
             raise ValueError('PROCEDURE_POLICY_INCOMPATIBLE: historical reward consumers cannot evaluate the supported procedure; use the versioned evaluation-only SurgicalRLEnv contract')
         self.scene = engine.scene
@@ -155,6 +175,13 @@ class RewardTracker:
                        protected_damage_mm3=float(protection.get('protected_damage_mm3', 0.)),
                        near_contact_exposure_mm3_seconds=float(protection.get('near_contact_exposure_mm3_seconds', 0.)),
                        elapsed_seconds=float(state['elapsedSeconds']))
+        if self.graph_evaluation:
+            from .surgical_vascular_graph import maximum_interface_deficits
+            if state.get('toolMechanicsRevision') != 2 or 'vascularGraphV1' not in state:
+                raise ValueError('VASCULAR_GRAPH_RL_HOLD: recorded revision-2 graph setup required')
+            graph = state['vascularGraphV1']
+            current.update(maximum_interface_deficits(graph['regions']))
+            current['bleeding_generated_mm3'] = graph['generatedMm3']
         for key, value in current.items():
             if not math.isfinite(value) or value < 0:
                 raise ValueError('Invalid reward measurement: ' + key)
@@ -249,6 +276,15 @@ def compute_reward(before, after, outcome, config=None):
         ('protected_damage', 'protected_damage_mm3', -config.protected_damage_weight, config.volume_scale_mm3),
         ('near_contact', 'near_contact_exposure_mm3_seconds', -config.near_contact_weight, config.near_contact_scale_mm3_seconds),
         ('time', 'elapsed_seconds', -config.time_cost, config.time_scale_seconds))
+    from .surgical_vascular_graph import DEFICIT_METRICS
+    if isinstance(config, GeneratedGraphRewardConfig):
+        if not all(key in before and key in after for key in DEFICIT_METRICS):
+            raise ValueError('Generated vascular graph measurements required')
+        specifications += (
+            ('supply_deficit', 'supplyDeficitSeconds', -config.supply_deficit_weight, config.time_scale_seconds),
+            ('drainage_deficit', 'drainageDeficitSeconds', -config.drainage_deficit_weight, config.time_scale_seconds))
+    elif any(key in before or key in after for key in DEFICIT_METRICS):
+        raise ValueError('VASCULAR_GRAPH_RL_HOLD: graph reward weights required')
     terms = {name: weight * delta(key) / scale for name, key, weight, scale in specifications}
     # Feasibility is authoritative. A rejected proposal never buys treatment
     # credit, even if a caller supplies a speculative endpoint as ``after``.

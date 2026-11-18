@@ -73,7 +73,7 @@ Four separate concepts currently run:
 |Feasibility|`SurgicalEngine`, `surgical_rl_protection`, `surgical_task_domain`, checked staged skills|Hard native constraints plus declared tissue/action/computation limits. Missing anatomy remains unknown.|
 |Planning preference|`surgical_staged_planning`, `surgical_sequence_search`, `surgical_two_tool`, `surgical_preparation_planning`|Staged baseline maximizes immediate target mm³. New lookahead retains target/non-target/time Pareto outcomes and recommends lexicographically: more target, less non-target, less modeled time. Two-tool comparison minimizes seconds after its progress gate; preparation comparison charges the whole prefix and suffix.|
 |Episode reward|`surgical_rl_rewards.RewardTracker/compute_reward`|Illustrative engineering return, separate from treatment outcome and feasibility. No training occurs in this milestone.|
-|Policy training loss|Existing policy-specific BC/PPO fitting code|An optimization objective over observations/returns; no anatomical or outcome certificate. Existing physiological, continuum, heat and vascular RL holds remain.|
+|Policy training loss|Existing policy-specific BC/PPO fitting code|An optimization objective over observations/returns; no anatomical or outcome certificate. Acquired vascular, continuum and heat modes remain gated. Declared generated graphs support separate supply and drainage costs.|
 
 Default reward weights are target +1, healthy removal −2, bone −0.05,
 deformation −1, bleeding −1 and protected damage −5 per 1,000 mm³ of their
