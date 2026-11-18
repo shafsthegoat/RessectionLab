@@ -33,11 +33,14 @@ def _validate_decisions(engine, decisions, states, sequence):
         raise ValueError('Bounded treatment decision receipts required')
     if not decisions:
         return []
-    from .surgical_procedure_policy import procedure_source_memberships
+    from .surgical_procedure_policy import _validated, procedure_source_memberships
+    policy = _validated(engine.scene)
+    source_intent = policy.get('treatmentIntent')
     named = procedure_source_memberships(engine.scene)
     covered = named['intracranial'] <= named['observed']
     target_labels = {row['id'] for row in engine.scene.regions if row.get('target')}
-    originals = sum(int(label) in target_labels for label in engine.scene.labels.ravel())
+    original = (source_intent['original'] if source_intent else
+        {cell for cell, label in enumerate(engine.scene.labels.flat) if int(label) in target_labels})
     inventory = {item['id']: item for item in engine.scene.properties[TASK_PROPERTY]['inventory']}
     removed = set()
     position = 0
@@ -48,8 +51,7 @@ def _validate_decisions(engine, decisions, states, sequence):
         if row['coverageComplete'] != covered:
             raise ValueError('Treatment decision coverage differs from source')
         voxel = engine.scene.voxel_mm3
-        treated = sum(int(engine.scene.labels.flat[c]) in target_labels for c in removed)
-        if row['residual']['residualMm3'] != (originals - treated) * voxel:
+        if row['residual']['residualMm3'] != len(original - removed) * voxel:
             raise ValueError('Decision residual differs from recorded source occupancy')
         for metric, measure in row['incumbent']['harms'].items():
             subject = 'neural' if metric == 'neuralRemovedMm3' else metric.removesuffix(':removedMm3')
@@ -59,10 +61,20 @@ def _validate_decisions(engine, decisions, states, sequence):
         following = row.get('finalStateId', row['sourceStateId'])
         end = states.index(following, position)
         declared = row['decision']
+        projection = row.get('projectionBinding')
+        preference = policy['record'].get('preservationPreference')
+        if preference is not None and (
+                not isinstance(projection, dict)
+                or projection.get('policyHash') != policy['record']['policyHash']
+                or projection.get('sourceSceneId') != engine.scene.identity
+                or projection.get('preservationPreference') != preference
+                or declared['preferenceHarmMetrics'] != preference['metrics']
+                or type(row.get('projectionComplete')) is not bool):
+            raise ValueError('Recorded projection differs from the source preservation declaration')
         expected = decide_treatment_intent(
             row['alternatives'], incumbent=row['incumbent'], required_harms=tuple(row['incumbent']['harms']),
             preference_harms=declared['preferenceHarmMetrics'], residual=row['residual'],
-            coverage_complete=row['coverageComplete'])
+            coverage_complete=row['coverageComplete'], projection_complete=row.get('projectionComplete', True))
         selected = declared['selectedId'].split('+')[0] if declared['selectedId'] else 'STOP'
         if expected != declared or row['selectedSkillId'] != selected or selected not in inventory:
             raise ValueError('Treatment intent differs from declared evidence and alternatives')
@@ -139,7 +151,8 @@ def validate_planning_evidence(scene, record, packet):
         endpoint = endpoint_assessment(
             engine, COMMON_CONFIG, attempts=row['attempts'], invalid_actions=row['refusals'],
             stopped=stopped, externally_truncated=row['endpoint']['truncated'])
-        current = consequence_vector(engine, baseline, extended=True)
+        current = consequence_vector(engine, baseline, extended=True,
+            mechanism_revision=row['consequences'].get('mechanismEvidenceRevision'))
         saved = copy.deepcopy(row['consequences'])
         # The initial receipts predate explicit unknown eligible-removal credit.
         if current['treatmentIntent']['eligibleRemovedMm3'] is None:
@@ -196,3 +209,45 @@ def verify_planning_replay(scene, record, selected_engine, *, check):
             measured = adapter._stop_outcome({'slot': 'left', 'operation': 'stop', 'reason': stop['reason']})
             if measured != stop:
                 raise ValueError('Recorded STOP differs from canonical final-state check')
+    verify_generated_projections(scene, record, packet, check=check)
+
+
+def verify_generated_projections(scene, record, packet, *, check):
+    """Reproject each revised decision at an independently executed skill prefix."""
+    from .surgical_generated_planning import SourceContactProjection
+    from .surgical_procedure_policy import procedure_preservation_preference
+    from .surgical_sequential_task import GeneratedTask, Skill, available_mask, execute_skill, observation
+
+    if procedure_preservation_preference(scene) is None:
+        return
+    row = next(row for row in packet['alternatives'] if row['branchId'] == 'harm-aware')
+    if not row['intentDecisions']:
+        raise ValueError('Source-bound planning branch lacks recorded projections')
+    skills = tuple(Skill(**record) for record in scene.properties[TASK_PROPERTY]['inventory'])
+    task = GeneratedTask(scene, skills, {})
+    projector = SourceContactProjection(task)
+    engine = task.initial_engine()
+    used = set()
+    attempts = invalid = 0
+    for selection, saved in enumerate(row['intentDecisions']):
+        check()
+        observed = observation(task, engine, attempts=attempts, invalid=invalid, selections=selection)
+        index, expected = projector.project(observed, available_mask(task, engine, used))
+        if (saved['sourceStateId'] != engine.state_id
+                or any(saved.get(key) != value for key, value in expected.items())):
+            raise ValueError('Recorded nominal projection differs from the source and checked prefix')
+        if saved['executionStatus'] == 'unexecuted':
+            break
+        skill = skills[index]
+        outcome = execute_skill(task, engine, skill, check=check)
+        if (saved['finalStateId'] != engine.state_id
+                or saved['checkedStopAttempted'] != outcome['checkedStopAttempted']
+                or saved['executionStatus'] != outcome['status']):
+            raise ValueError('Recorded projection selection differs from checked skill execution')
+        used.add(skill.id)
+        attempts += outcome['attemptsConsumed']
+        invalid += outcome['invalidAttemptsConsumed']
+    if (engine.snapshot() != record['branches']['harm-aware']
+            or engine.history != record['timeline']['harm-aware']
+            or row['attempts'] != attempts or row['refusals'] != invalid):
+        raise ValueError('Recorded projection execution differs from the complete branch')

@@ -18,6 +18,7 @@ from .core import CaseData, SourceRef, array_digest, semantic_digest, thaw_json
 
 PROPERTY = 'recordedSequentialEpisodeV1'
 SCHEMA = 'resectionlab.recorded-sequential-source.v1'
+PRESERVATION_SCHEMA = 'resectionlab.recorded-sequential-preservation-source.v1'
 _METADATA = {'generated', 'is_synthetic', 'surgical_adapter', 'surgical_properties',
              'anatomy_layers', PROPERTY}
 _ADAPTER = {'type': 'generated-engineering-control', 'recordedSequentialSource': True}
@@ -30,13 +31,15 @@ def task_implementation_sha256():
     return hashlib.sha256(Path(__file__).with_name('surgical_sequential_task.py').read_bytes()).hexdigest()
 
 
-def generator_definition_sha256():
+def generator_definition_sha256(name='generated_task'):
     tree = ast.parse(Path(__file__).with_name('surgical_sequential_task.py').read_text())
-    node = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'generated_task')
+    node = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == name)
     return hashlib.sha256(ast.dump(node, include_attributes=False).encode()).hexdigest()
 
 
 def declaration(task):
+    from .surgical_procedure_policy import procedure_preservation_preference
+
     scene = task.scene
     value = dict(schema=SCHEMA, parent=task.audit['parent'], sourceSceneId=scene.identity,
         source=copy.deepcopy(scene.source), labelsHash=array_digest(scene.labels),
@@ -44,6 +47,10 @@ def declaration(task):
         propertiesHash=semantic_digest(scene.properties),
         generatorDefinitionSha256=generator_definition_sha256(),
         taskImplementationSha256AtExport=task_implementation_sha256())
+    preference = procedure_preservation_preference(scene)
+    if preference is not None:
+        value.update(schema=PRESERVATION_SCHEMA, preservationPreference=preference,
+            preservationDefinitionSha256=generator_definition_sha256('generated_preservation_task'))
     return {**value, 'contentHash': semantic_digest(value)}
 
 
@@ -77,7 +84,7 @@ def restore_recorded_source(case, ordinary_scene, mapping=None):
             metadata['is_synthetic'] is not True or metadata['surgical_adapter'] != _ADAPTER):
         raise ValueError('RECORDED_SEQUENTIAL_EXACT_METADATA_REQUIRED')
     raw = metadata[PROPERTY]
-    if (type(raw) is not dict or raw.get('schema') != SCHEMA or
+    if (type(raw) is not dict or raw.get('schema') not in (SCHEMA, PRESERVATION_SCHEMA) or
             type(raw.get('parent')) is not int or not 0 <= raw['parent'] < 1_000_000 or
             raw.get('contentHash') != semantic_digest({k:v for k,v in raw.items() if k != 'contentHash'})):
         raise ValueError('RECORDED_SEQUENTIAL_SOURCE_BINDING_CHANGED')
@@ -96,8 +103,16 @@ def restore_recorded_source(case, ordinary_scene, mapping=None):
     if (raw.get('generatorDefinitionSha256') != generator_definition_sha256() or
             re.fullmatch(r'[0-9a-f]{64}', str(raw.get('taskImplementationSha256AtExport'))) is None):
         raise ValueError('RECORDED_SEQUENTIAL_GENERATOR_DEFINITION_CHANGED')
-    from .surgical_sequential_task import generated_task
-    task = generated_task(parent); scene = task.scene
+    from .surgical_sequential_task import generated_preservation_task, generated_task
+    if raw['schema'] == PRESERVATION_SCHEMA:
+        from .surgical_treatment_intent import validate_preservation_preference
+
+        preference = raw.get('preservationPreference')
+        validate_preservation_preference(preference)
+        task = generated_preservation_task(parent, preservation_metrics=preference['metrics'])
+    else:
+        task = generated_task(parent)
+    scene = task.scene
     expected = declaration(task)
     # Full file provenance remains historical when unrelated endpoint helpers
     # evolve. Exact generator AST, resulting scene and native replay stay bound.

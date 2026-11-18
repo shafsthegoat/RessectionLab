@@ -19,11 +19,14 @@ from resectionlab.geometry import GeometryScene, capsule_voxel_indices_batch
 from resectionlab.imaging import load_case, read_case_artifacts, save_case
 from resectionlab.native_backend import backend_identity
 from resectionlab.surgical_engine import SurgicalEngine
+from resectionlab.surgical_generated_planning import SourceContactProjection
 from resectionlab.surgical_procedure_policy import evaluate_procedure_sequence
 from resectionlab.surgical_recorded_sequential import display_case
 from resectionlab.surgical_scene import from_case
 from resectionlab.surgical_sequential_benchmark import ReplayVerificationError, run_episode, verify_replay
-from resectionlab.surgical_sequential_task import generated_task, training_admission
+from resectionlab.surgical_sequential_task import (
+    available_mask, generated_preservation_task, generated_task, observation, training_admission,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -41,8 +44,8 @@ FROZEN_REPORT_SHA256 = '67accb0b99d3c93dbb90f2592f8cc1ccff7d851dbc90983c0f05cdbd
 FROZEN_PROTOCOL_ID = 'sha256:84732c04c3048761ea6972f7b9f82ffccc9d2af46a0408351d42bb33f7678f1a'
 
 
-class SourceContactController:
-    """Screen candidate groups using current nominal contacts and named limits."""
+class HistoricalSourceContactController:
+    """Reproduce the original fixed-preference matched evaluation."""
 
     def __init__(self):
         self.decisions = []
@@ -139,6 +142,23 @@ class SourceContactController:
         return index
 
 
+class SourceContactController:
+    def __init__(self, task):
+        self.projection = SourceContactProjection(task)
+        self.decisions = []
+
+    def __call__(self, observed, skills, mask):
+        index, receipt = self.projection.project(observed, mask)
+        self.decisions.append(dict(receipt, selectionIndex=len(self.decisions)))
+        return index
+
+
+def fixture(parent, preference):
+    if preference:
+        return generated_preservation_task(parent, preservation_metrics=preference)
+    return generated_task(parent)
+
+
 def frozen_baseline(path):
     path = path.resolve()
     protocol = json.loads((path / 'protocol.json').read_text())
@@ -151,7 +171,7 @@ def frozen_baseline(path):
                 protocolSha256=_file_sha(path / 'protocol.json'), completedRows=len(report['rows']))
 
 
-def freeze(out, baseline):
+def freeze(out, baseline, cases=CASES, preference=()):
     source_paths = sorted(path for path in (ROOT / 'src/resectionlab').glob('surgical_*.py')
                           if path.name != 'surgical_planning_evidence.py')
     source_paths.extend(ROOT / 'src/resectionlab' / f'{name}.py'
@@ -160,14 +180,16 @@ def freeze(out, baseline):
         'demonstrate_evidence_aware_planning', 'demonstrate_approach_procedure',
         'run_approach_procedure_baselines'))
     identity = backend_identity()
-    cases = []
-    for label, parent in CASES:
-        task = generated_task(parent)
-        cases.append(dict(id=label, role='DEVELOPMENT', source=task.audit, admission=training_admission(task),
+    declared_cases = []
+    for label, parent in cases:
+        task = fixture(parent, preference)
+        declared_cases.append(dict(id=label, role='DEVELOPMENT', source=task.audit, admission=training_admission(task),
             inventoryHash=semantic_digest([asdict(skill) for skill in task.skills]),
             policyHash=task.initial_engine().snapshot()['procedurePolicy']['policyHash']))
-    protocol = dict(schema='resectionlab.evidence-aware-generated-planning.v1',
-        cases=cases, methods=METHODS, tier=asdict(TIER), seed=0, campaignSeconds=CAMPAIGN_SECONDS,
+        if preference:
+            declared_cases[-1]['projectionBinding'] = SourceContactProjection(task).binding
+    protocol = dict(schema=f'resectionlab.evidence-aware-generated-planning.v{2 if preference else 1}',
+        cases=declared_cases, methods=METHODS, tier=asdict(TIER), seed=0, campaignSeconds=CAMPAIGN_SECONDS,
         replaySecondsPerMethod=REPLAY_SECONDS, scenarios=['nominal'],
         historicalBaseline=baseline, sourceHashes={str(path.relative_to(ROOT)): _file_sha(path)
                                                  for path in source_paths},
@@ -175,15 +197,26 @@ def freeze(out, baseline):
         nomination='Current observed source contacts and named memberships with zero transition previews.',
         scope='Generated supplied post-access engineering controls. Earlier access costs and clinical outcomes are unknown.',
         negativeCoveragePolicy='Abstentions remain distinct from an explained treatment stop.',
-        requiredHarmMetrics=REQUIRED_HARMS, preferenceHarmMetrics=PREFERENCE_HARMS,
+        preferenceHarmMetrics=preference or PREFERENCE_HARMS,
+        informationAndComputation={
+            'shared': 'Same generated source, starting state, skill inventory, episode limits and online caps within each case.',
+            'conditional': 'Legacy route features and geometric queries from current source observation. Capsule queries are not separately instrumented.',
+            'harm-aware': 'Nominal contact projection from current observed state and named source memberships. Capsule queries are recorded separately.',
+            'search': 'Checked state-transition previews from the same starting state and inventory. Preview requests are billed separately.',
+            'comparison': 'Physical requests and wall time are separate measures. Capsule queries and transition previews perform different work.',
+        },
         optimizerUpdates=0, clinicalValidation=False)
+    if not preference:
+        protocol['requiredHarmMetrics'] = REQUIRED_HARMS
     protocol['identity'] = semantic_digest(protocol)
     _write_json(out / 'protocol.json', protocol)
     return protocol
 
 
-def execute(case, task, method, deadline):
-    selector = SourceContactController() if method == 'harm-aware' else conditional_controller
+def execute(case, task, method, deadline, *, configured=False):
+    selector = conditional_controller
+    if method == 'harm-aware':
+        selector = SourceContactController(task) if configured else HistoricalSourceContactController()
     row = run_episode(task, 'conditional' if method == 'harm-aware' else method,
         TIER, retain_engine=True, selector=selector if method != 'search' else None, deadline=deadline)
     engine = row.pop('_engine')
@@ -242,79 +275,105 @@ def archive(out, case_id, task, rows, engines, deadline):
             raise ValueError('Portable accepted replay changed for ' + name)
         cold_branches[name] = dict(stateId=cold.state_id, nativeActions=len(cold.actions),
             snapshotHash=semantic_digest(cold.snapshot()), historyHash=semantic_digest(cold.history))
+    surgical_planning_evidence.verify_generated_projections(
+        cold_scene, saved, saved['planningEvidence'], check=check)
     return dict(case=case_id, package=path.name, packageSha256=_file_sha(path),
         caseHash=case.semantic_hash, sourceSceneId=scene.identity,
         policyHash=initial.snapshot()['procedurePolicy']['policyHash'], branches=cold_branches,
         exportEvidenceImplementationSha256=_file_sha(Path(surgical_planning_evidence.__file__)))
 
 
-def check_result(report):
+def check_result(report, cases=CASES, *, configured=False):
     rows = {(row['case'], row['method']): row for row in report['rows']}
-    if len(rows) != len(CASES) * len(METHODS):
+    if len(rows) != len(cases) * len(METHODS):
         raise ValueError('Matched result incomplete')
-    overlap = rows['permitted-overlap', 'harm-aware']
-    legacy = rows['permitted-overlap', 'conditional']
     equal_fields = ('originalMm3', 'treatmentMm3', 'residualMm3', 'wholeToolExit', 'checkedStop')
-    harm_metric = 'structureRemovedMm3:corticospinal'
     result = dict(
-        overlapMatchedTreatment=all(overlap[k] == legacy[k] for k in equal_fields)
-            and overlap['treatmentMm3'] > 0,
-        overlapLessCst=overlap['harm'][harm_metric] < legacy['harm'][harm_metric]
-            and all(value == legacy['harm'][key] for key, value in overlap['harm'].items() if key != harm_metric),
-        continuedGatedWork=rows['gated-work', 'harm-aware']['residualMm3'] == 0.,
-        justifiedResidual=rows['critical-residual', 'harm-aware']['residualMm3'] > 0
-            and rows['critical-residual', 'harm-aware']['checkedStop']
-            and rows['critical-residual', 'harm-aware']['wholeToolExit']
-            and rows['critical-residual', 'harm-aware']['intentExecution'] == 'justified_residual_stop',
         allPhysicalReplaysVerified=all(row['replayVerified'] for row in rows.values()),
-        allArchiveColdReplaysVerified=len(report['packages']) == len(CASES),
+        allArchiveColdReplaysVerified=len(report['packages']) == len(cases),
         missingCoverageAbstained=report['decisionControls']['missingCoverage']['status'] == 'reassess',
         tradeoffAbstained=report['decisionControls']['unresolvedTradeoff']['status'] == 'reassess',
     )
+    if ('critical-residual', 'harm-aware') in rows:
+        critical = rows['critical-residual', 'harm-aware']
+        result['justifiedResidual'] = (critical['residualMm3'] > 0 and critical['checkedStop']
+            and critical['wholeToolExit'] and critical['intentExecution'] == 'justified_residual_stop')
+    if ('gated-work', 'harm-aware') in rows:
+        result['continuedGatedWork'] = rows['gated-work', 'harm-aware']['residualMm3'] == 0.
+    if not configured and ('permitted-overlap', 'harm-aware') in rows:
+        overlap = rows['permitted-overlap', 'harm-aware']
+        legacy = rows['permitted-overlap', 'conditional']
+        harm_metric = 'structureRemovedMm3:corticospinal'
+        result.update(overlapMatchedTreatment=all(overlap[k] == legacy[k] for k in equal_fields)
+            and overlap['treatmentMm3'] > 0,
+            overlapLessCst=overlap['harm'][harm_metric] < legacy['harm'][harm_metric]
+            and all(value == legacy['harm'][key] for key, value in overlap['harm'].items() if key != harm_metric))
     report['checks'] = result
     return all(result.values())
 
 
-def decision_controls():
+def decision_controls(preference=PREFERENCE_HARMS):
     from resectionlab.surgical_treatment_intent import decide_treatment_intent
 
     empty = dict.fromkeys(REQUIRED_HARMS, 0.)
     incumbent = dict(id='checked-stop', treatmentMm3=0., harms=empty, admissible=True)
-    cst = STRUCTURE['corticospinal']
-    unknown = dict(id='missing-cst-coverage', treatmentMm3=27., harms={**empty, cst: None},
+    metric = preference[0]
+    unknown = dict(id='missing-preservation-coverage', treatmentMm3=27., harms={**empty, metric: None},
                    admissible=None)
     lesser = dict(id='lesser-treatment', treatmentMm3=27., harms=empty, admissible=True)
-    greater = dict(id='greater-treatment', treatmentMm3=54., harms={**empty, cst: 27.},
+    greater = dict(id='greater-treatment', treatmentMm3=54., harms={**empty, metric: 27.},
                    admissible=True)
     return {
         'missingCoverage': decide_treatment_intent([unknown], incumbent=incumbent,
-            required_harms=REQUIRED_HARMS, preference_harms=PREFERENCE_HARMS),
+            required_harms=REQUIRED_HARMS, preference_harms=preference),
         'unresolvedTradeoff': decide_treatment_intent([lesser, greater], incumbent=incumbent,
-            required_harms=REQUIRED_HARMS, preference_harms=PREFERENCE_HARMS, coverage_complete=True),
+            required_harms=REQUIRED_HARMS, preference_harms=preference, coverage_complete=True),
     }
 
 
-def demonstrate(out, historical):
+def matched_comparisons(rows):
+    by_case = {(row['case'], row['method']): row for row in rows}
+    comparisons = []
+    fields = ('originalMm3', 'treatmentMm3', 'residualMm3', 'wholeToolExit', 'checkedStop', 'endpoint')
+    for candidate in (row for row in rows if row['method'] == 'harm-aware'):
+        for method in ('conditional', 'search'):
+            reference = by_case[candidate['case'], method]
+            matched = (candidate['checkedStop'] and candidate['wholeToolExit']
+                and candidate['replayVerified'] and reference['replayVerified']
+                and all(candidate[field] == reference[field] for field in fields))
+            comparisons.append(dict(case=candidate['case'], reference=method, matchedEndpoint=matched,
+                treatmentDifferenceMm3=candidate['treatmentMm3'] - reference['treatmentMm3'],
+                recordedHarmDifferenceMm3={metric: value - reference['harm'][metric]
+                    for metric, value in candidate['harm'].items()},
+                requestDifference={key: candidate[key] - reference[key] for key in (
+                    'previewRequests', 'executionRequests', 'canceledRequests', 'replayRequests')},
+                onlineWallTimeDifferenceSeconds=(candidate['computationSeconds']['wallSeconds']
+                                                 - reference['computationSeconds']['wallSeconds'])))
+    return comparisons
+
+
+def demonstrate(out, historical, cases=CASES, preference=()):
     from resectionlab.surgical_treatment_intent import assess_treatment_execution
 
     started = time.monotonic()
     deadline = started + CAMPAIGN_SECONDS
     frozen = frozen_baseline(historical)
-    protocol = freeze(out, frozen)
+    protocol = freeze(out, frozen, cases, preference)
     report = dict(schema=protocol['schema'], protocolIdentity=protocol['identity'],
         protocolSha256=_file_sha(out / 'protocol.json'), historicalBaseline=frozen,
-        rows=[], packages=[], decisionControls=decision_controls(), failures=[], passed=False)
+        rows=[], packages=[], decisionControls=decision_controls(preference or PREFERENCE_HARMS),
+        failures=[], passed=False)
     try:
         archive_inputs = []
-        for case_id, parent in CASES:
-            task = generated_task(parent)
+        for case_id, parent in cases:
+            task = fixture(parent, preference)
             rows = {}
             engines = {}
             for method in METHODS:
                 if time.monotonic() >= deadline:
                     raise TimeoutError('Campaign deadline before matched row')
                 print(f'{case_id} {method}', flush=True)
-                row, engines[method] = execute(case_id, task, method, deadline)
+                row, engines[method] = execute(case_id, task, method, deadline, configured=bool(preference))
                 rows[method] = row
                 path = out / f'{case_id}-{method}.json'
                 _write_json(path, row)
@@ -336,7 +395,10 @@ def demonstrate(out, historical):
                     intentExecution=row.get('intentExecution', {}).get('executionStatus'),
                     abstentions=sum(item['decision']['status'] == 'reassess' for item in decisions),
                     truncated=row['endpoint']['truncated'], candidateGenerations=row['computation']['candidateGenerations'],
-                    capsuleQueries=sum(item['capsuleQueries'] for item in decisions))
+                    capsuleQueries=(sum(item['capsuleQueries'] for item in decisions)
+                                    if method == 'harm-aware' else None),
+                    computationSeconds={key: row['computation'][key] for key in (
+                        'candidateSeconds', 'policySeconds', 'planningSeconds', 'wallSeconds')})
                 report['rows'].append(summary)
                 _write_json(out / 'report.json', report)
             archive_inputs.append((case_id, task, rows, engines))
@@ -345,12 +407,13 @@ def demonstrate(out, historical):
             _write_json(out / 'report.json', report)
         if frozen_baseline(historical) != frozen:
             raise ValueError('Historical baseline changed during evaluation')
-        report['passed'] = check_result(report)
+        report['matchedComparisons'] = matched_comparisons(report['rows'])
+        report['passed'] = check_result(report, cases, configured=bool(preference))
     except Exception as error:
         report['failures'].append(dict(type=type(error).__name__, message=str(error)))
         raise
     finally:
-        report['missingRows'] = [dict(case=case, method=method) for case, _ in CASES for method in METHODS
+        report['missingRows'] = [dict(case=case, method=method) for case, _ in cases for method in METHODS
             if not any(row['case'] == case and row['method'] == method for row in report['rows'])]
         report['wallSeconds'] = time.monotonic() - started
         report['peakRssBytes'] = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
@@ -363,13 +426,34 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--frozen-baseline', type=Path,
         default=ROOT / 'testcases/approach-comparison-goal-v1/baseline-v1')
+    parser.add_argument('--case', choices=[case for case, _ in CASES], action='append',
+                        help='Repeat to run a subset of matched cases')
+    parser.add_argument('--preservation-metric', action='append', default=[],
+                        help='Opt in to a source-bound harmful removal axis, such as structure:motor-cortex:removedMm3')
+    parser.add_argument('--projection-only', action='store_true',
+                        help='Write scoped initial-state decision receipts without executing any actions')
     args = parser.parse_args()
+    if args.projection_only and not args.preservation_metric:
+        parser.error('--projection-only requires --preservation-metric')
+    cases = tuple((case, parent) for case, parent in CASES if not args.case or case in args.case)
     out = args.output.resolve()
     if not out.is_relative_to(ROOT / 'testcases') or out == ROOT / 'testcases':
         parser.error('Keep generated evidence in a fresh ignored testcases/ directory')
     out.mkdir(parents=True, exist_ok=False)
     try:
-        report = demonstrate(out, args.frozen_baseline)
+        if args.projection_only:
+            receipts = {}
+            for case, parent in cases:
+                task = fixture(parent, args.preservation_metric)
+                engine = task.initial_engine()
+                _, projected = SourceContactProjection(task).project(
+                    observation(task, engine), available_mask(task, engine, set()))
+                receipts[case] = dict(projected, sourceStateId=engine.state_id)
+            report = dict(passed=True, scope='Initial nominal projections', physicalRequests=0,
+                          clinicalValidation=False, receipts=receipts)
+            _write_json(out / 'report.json', report)
+        else:
+            report = demonstrate(out, args.frozen_baseline, cases, args.preservation_metric)
     except Exception as error:
         if not (out / 'report.json').exists():
             _write_json(out / 'failure.json', dict(type=type(error).__name__, message=str(error)))

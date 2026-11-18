@@ -81,6 +81,32 @@ app.once('browser-window-created',(_event,window)=>{
           approach:selected.parameterHash,labelVolume:selected.measurements.targets[0].totalVolumeMm3};
         if(prior)assert.deepEqual(report.binding,prior.binding);
         await capture('source-bound-access',selector);
+        if(process.env.PLANNING_NATIVE_COMPARISON==='1'){
+          const comparison='[data-native-consequence-comparison]';
+          await wait(()=>js(`return document.querySelector('${comparison}')?.checkVisibility()`),'native consequence comparison');
+          const evidence=lastPlan.consequenceEvidence;
+          assert.equal(evidence.schema,'native-approach-consequence-evidence-v1');
+          assert.equal(evidence.sourceSnapshotId,lastPlan.snapshotId);
+          assert.equal(evidence.targetLayerId,lastPlan.activeTargetLayerId);
+          assert.equal(evidence.simulationExecutionAuthorized,false);
+          assert.equal(evidence.clinicalValidation,false);
+          assert(evidence.routes.length>=2&&evidence.routes.length<=3);
+          assert.deepEqual(await js("return [...document.querySelectorAll('[data-native-consequence-route]')].map(row=>row.dataset.nativeConsequenceRoute)"),
+            evidence.routes.map(row=>row.approachId));
+          for(const route of evidence.routes){
+            const source=lastPlan.approaches.find(row=>row.id===route.approachId);
+            assert.equal(route.parameterHash,source.parameterHash);
+            assert.equal(route.measurementHash,source.measurementHash);
+            assert.equal(route.targetCandidateBinding,evidence.targetCandidateBinding);
+            assert.equal(route.researchDisposition.status,'reassess');
+            assert.equal(route.dimensions.targetRemovedMm3.value,null);
+            assert.equal(route.dimensions.targetResidualMm3.value,null);
+            assert.equal(route.dimensions.clinicalDeficitProbability.value,null);
+          }
+          report.consequenceEvidence=evidence;
+          await js(`document.querySelector('${comparison} details').open=true`);
+          await capture('native-consequence-comparison',comparison);
+        }
       }else{
         await wait(()=>js("return document.querySelector('.rl-viewer canvas')&&!document.querySelector('.viewer-loading')&&document.body.innerText.includes('generated-sequential-parent-')"),'loaded source workspace');
         await click('Rehearse');

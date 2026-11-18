@@ -21,6 +21,7 @@ from .anatomy_planning import is_native_target, native_target_binding, native_ta
 from .anatomy_evidence import VASCULAR_KINDS, inference_bounds, is_dural_proxy, vascular_evidence_supported
 from .anatomy_cortical_access import (assess_cortical_access, cortical_role, protected_compartment,
                                       qualified_cortical_source)
+from .native_consequence_evidence import consequence_evidence_view
 from .geometry import (GEOMETRY_VERSION, GeometryScene, native_backend,
                        capsule_voxel_indices, point_segment_distances, _segment_cell_distances, _EPS)
 from .native_approach_comparison import (sensitivity_config, sample_positions, nominal_objectives,
@@ -452,8 +453,11 @@ class NativeRouteGeometry:
                     # still evaluates original transformed source coordinates.
                     tree = cKDTree((first + last) / 2) if len(first) else None
                     half = float(np.linalg.norm(last - first, axis=1).max() / 2) if len(first) else 0
-                    self.tracts[tract["id"]] = (first, last, tree, half)
-                first, last, tree, half = self.tracts[tract["id"]]
+                    # Cumulative segment counts index paths in the compact
+                    # segment arrays, including paths with no segments.
+                    path_ends = np.cumsum(np.maximum(0, np.diff(offsets.astype(np.intp)) - 1))
+                    self.tracts[tract["id"]] = (first, last, tree, half, path_ends)
+                first, last, tree, half, path_ends = self.tracts[tract["id"]]
                 if not len(first):
                     item["reason"] = "empty streamline bundle; unassessed"
                     unknowns.append(tract["id"] + ": empty streamline bundle")
@@ -471,20 +475,27 @@ class NativeRouteGeometry:
                     for sample in samples:
                         self.check()
                         selected[tree.query_ball_point(sample, bound)] = True
-                    first, last = first[selected], last[selected]
+                    selected = np.flatnonzero(selected)
                     minimum, nearest, hits = float("inf"), None, 0
-                    for offset in range(0, len(first), 131072):
+                    path_hits, previous_hit = 0, -1
+                    for offset in range(0, len(selected), 131072):
                         self.check()
-                        aa, bb = first[offset:offset + 131072], last[offset:offset + 131072]
+                        indices = selected[offset:offset + 131072]
+                        aa, bb = first[indices], last[indices]
                         distances = _segment_bundle_distances(lo, hi, aa, bb)
                         index = int(distances.argmin())
                         if distances[index] < minimum:
                             minimum, nearest = float(distances[index]), ((aa[index] + bb[index]) / 2 + shift).tolist()
-                        hits += int(np.count_nonzero(distances <= radius_mm))
+                        contacted = indices[distances <= radius_mm]
+                        hits += len(contacted)
+                        if len(contacted):
+                            paths = np.searchsorted(path_ends, contacted, side="right")
+                            path_hits += int(paths[0] != previous_hit) + int(np.count_nonzero(np.diff(paths)))
+                            previous_hit = paths[-1]
                     item.update(available=True, clearanceLowerBoundMm=float(minimum - radius_mm),
                                 intersectsOrUnresolved=bool(hits), confirmedIntersection=bool(hits),
                                 intersectionModel="capsule versus supplied polyline segments; no inferred bundle thickness",
-                                intersectedSegmentCount=hits, nearestPoint=nearest,
+                                intersectedSegmentCount=hits, intersectedStreamlineCount=path_hits, nearestPoint=nearest,
                                 nearestPointMeaning="midpoint of the closest supplied segment")
             except ValueError as exc:
                 item["reason"] = str(exc)
@@ -1277,8 +1288,11 @@ def dispatch_plan(collection, args, *, geometry=None, commit=lambda: None, check
     if selection is None and not active and "targetLayerId" not in args and not comparisons:
         visible = saved  # Unbound v1 workspaces may contain untouched manual plans.
     selected_comparisons = comparisons.get(active or "", {})
+    active_target = active if _target_row(collection, active) is not None else None
+    evidence = consequence_evidence_view(collection, visible, active_target,
+                                         selected_id or args.get("reviewApproachId"))
     return {"snapshotId": collection.identity(), "approaches": visible, "selectedId": selected_id,
-            "activeTargetLayerId": active if _target_row(collection, active) is not None else None,
+            "activeTargetLayerId": active_target, "consequenceEvidence": evidence,
             "targetSelectionIssue": selection_issue, "savedTargetLayerIds": sorted({key for key in comparisons if key}
                 | {row["targetLayerId"] for row in saved if row.get("targetLayerId")}),
             "proposalReport": selected_comparisons.get("proposalReport"), "inputComparison": selected_comparisons.get("inputComparison"),

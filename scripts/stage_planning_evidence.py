@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 from pathlib import Path
 import shutil
 import time
@@ -91,6 +92,10 @@ def stage(out, source, target_id, *, seconds, radius):
     print(f"Retained measured alternatives: {sum(row['assessmentStatus'] == 'current' for row in result['approaches'])}")
     if summary is not None:
         print(f"Sampled alternatives: {summary.get('enumerated')}")
+    evidence = result.get('consequenceEvidence')
+    if evidence is not None:
+        report = out / 'native-consequence-evidence.json'
+        report.write_text(json.dumps(evidence, indent=2, allow_nan=False) + '\n')
     if source is not None and source.name == 'patient-anatomy.json':
         print(study.root / source.name)
     else:
@@ -110,8 +115,11 @@ if __name__ == '__main__':
     destination = args.output.resolve()
     if not destination.is_relative_to(ROOT / 'testcases'):
         parser.error('Stage portable comparisons under ignored testcases/')
-    destination.mkdir(parents=True, exist_ok=False)
-    source = args.source.resolve(strict=True) if args.source else None
+    try:
+        source = args.source.resolve(strict=True) if args.source else None
+    except OSError:
+        parser.error(f'Prepared study unavailable: {args.source}. Supply a local prepared copy or omit --source for the generated control.')
     if source is not None and source.suffix != '.rsworkspace' and source.name != 'patient-anatomy.json':
         parser.error('Use a prepared patient-anatomy.json or .rsworkspace')
+    destination.mkdir(parents=True, exist_ok=False)
     stage(destination, source, args.target, seconds=args.seconds, radius=args.radius)
