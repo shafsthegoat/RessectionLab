@@ -196,6 +196,9 @@ def _run(image: Path, case: str, model_id: str, modality: str, device: str="mps"
     runner_hash = poc_worker_identity(launcher_hash)
     identity = {"image_sha256": source_hash, "weights": [w["sha256"] for w in weights],
                 "model_id": model_id, "parameters": model["parameters"], "device": device, "runner_sha256": runner_hash}
+    measure_footprint = model_id == "synthstrip-main" and device == "cpu" and platform.system() == "Darwin"
+    if measure_footprint:
+        identity["memory_guard"] = "darwin-family-rss-and-phys-footprint-v1"
     key = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()[:20]
     if not case or Path(case).name != case or case in {".", ".."}:
         raise ValueError("Case must be a single safe directory name")
@@ -241,10 +244,11 @@ def _run(image: Path, case: str, model_id: str, modality: str, device: str="mps"
             temporary_root.mkdir(exist_ok=True)
         environment.update(TMPDIR=str(temporary_root), TEMP=str(temporary_root), TMP=str(temporary_root))
     start = time.monotonic()
-    from .poc_worker_supervision import mps_samples, supervise_worker
+    from .poc_worker_supervision import MEMORY_LIMIT_BYTES, mps_samples, supervise_worker
 
     log_path = output / "inference.log"
-    process = supervise_worker(command, environment, log_path, timeout=timeout, cancelled=cancelled)
+    process = supervise_worker(command, environment, log_path, timeout=timeout, cancelled=cancelled,
+                               measure_footprint=measure_footprint)
     failure = process.failure
     reference = nib.load(image)
     outputs = []
@@ -274,6 +278,10 @@ def _run(image: Path, case: str, model_id: str, modality: str, device: str="mps"
               "peak_process_family_rss_bytes_sampled": process.peak_rss, "log_truncated": process.log_truncated,
               "memory_caveat": "RSS sampled every 0.5 s; MPS allocated memory separately sampled where available; neither is exact peak",
               "host": platform.platform(), "outputs": outputs, "probability": probability_record, "clinical_validation": "none", "command": command}
+    if measure_footprint:
+        record["memory_guard"] = {"metric": identity["memory_guard"], "limit_bytes": MEMORY_LIMIT_BYTES,
+                                  "peak_family_phys_footprint_bytes_sampled": process.peak_footprint,
+                                  "peak_family_rss_bytes_sampled": process.peak_rss}
     worker_path = output / "worker.json"
     if worker_path.exists():
         record["worker"] = json.loads(worker_path.read_text())

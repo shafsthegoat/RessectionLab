@@ -11,7 +11,7 @@ from resectionlab import anatomy_models, anatomy_preparation, anatomy_synthstrip
 from resectionlab.patient_anatomy import PatientImagingCollection, digest, file_hash
 
 
-def setup(tmp_path, monkeypatch, *, oom=True):
+def setup(tmp_path, monkeypatch, *, oom=True, cache_alias=False):
     c = PatientImagingCollection.create(tmp_path / "study", "fixture")
     path = tmp_path / "t1.nii.gz"
     nib.save(nib.Nifti1Image(np.ones((8, 8, 8), np.float32), np.eye(4)), path)
@@ -25,8 +25,14 @@ def setup(tmp_path, monkeypatch, *, oom=True):
         "model": "synthstrip", "options": {}, "environment": env, "status": "ready", "depends_on": [],
     }])
     gpu_input = anatomy_preparation.preparation_plan(c)["stages"][0]["inputKey"]
-    cache_root = tmp_path / "cache"
-    monkeypatch.setattr(anatomy_synthstrip_fallback, "_cache_roots", lambda: [cache_root])
+    monkeypatch.setattr(poc_models, "ROOT", tmp_path)
+    monkeypatch.delenv("RESSECTIONLAB_POC_OUTPUT_ROOT", raising=False)
+    cache_root = tmp_path / "outputs/poc-models"
+    if cache_alias:
+        target = tmp_path / "testcases/reconstruction-runs"
+        target.mkdir(parents=True)
+        cache_root.parent.mkdir()
+        cache_root.symlink_to(target, target_is_directory=True)
     case = "anatomy-" + digest(c.document["patient_id"])[:16]
     config = poc_models.MODEL_CONFIG["synthstrip-main"]
     gpu = {"model_id": "synthstrip-main", "device": "mps", "image_sha256": source["original"]["sha256"],
@@ -97,3 +103,31 @@ def test_unrelated_mps_failure_has_no_cpu_retry(tmp_path, monkeypatch):
     c, _, _, _ = setup(tmp_path, monkeypatch, oom=False)
     stages = anatomy_preparation.preparation_plan(c)["stages"]
     assert len(stages) == 1 and stages[0]["status"] == "failed" and "retryable" not in stages[0]
+
+
+def test_project_cache_alias_offers_cpu_retry(tmp_path, monkeypatch):
+    c, _, _, _ = setup(tmp_path, monkeypatch, cache_alias=True)
+    stages = anatomy_preparation.preparation_plan(c)["stages"]
+    assert [(s["id"], s["status"]) for s in stages] == [("brain:t1", "failed"), ("brain-cpu:t1", "retry_available")]
+
+
+@pytest.mark.parametrize("changed", ["outside", "nested", "traversal", "log", "receipt"])
+def test_cpu_retry_rejects_redirected_evidence(tmp_path, monkeypatch, changed):
+    c, _, prior, log = setup(tmp_path, monkeypatch, cache_alias=True)
+    root = tmp_path / "outputs/poc-models"
+    if changed == "outside":
+        # Even a complete valid cache moved outside the approved destination
+        # cannot be vouched for by repointing the project alias.
+        destination = tmp_path / "other"
+        root.resolve().rename(destination)
+        root.unlink()
+        root.symlink_to(destination, target_is_directory=True)
+    elif changed == "traversal":
+        prior["reason"] = prior["reason"].replace(str(root), str(root / ".." / root.name))
+        anatomy_preparation._checkpoint(c, {"brain:t1": prior})
+    else:
+        member = {"nested": log.parent, "log": log, "receipt": log.with_name("inference.json")}[changed]
+        destination = member.with_name("redirected")
+        member.rename(destination)
+        member.symlink_to(destination, target_is_directory=destination.is_dir())
+    assert [s["id"] for s in anatomy_preparation.preparation_plan(c)["stages"]] == ["brain:t1"]

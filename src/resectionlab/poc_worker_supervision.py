@@ -1,5 +1,8 @@
 """Bounded process supervision and diagnostic collection for POC model attempts."""
 
+import ctypes
+import errno
+from functools import cache
 import json
 import os
 import selectors
@@ -14,6 +17,7 @@ LOG_HEAD_BYTES = MAX_LOG_BYTES // 2
 LOG_TAIL_BYTES = MAX_LOG_BYTES - LOG_HEAD_BYTES
 TRUNCATION = b"\n[Worker log truncated: keeping the beginning and end.]\n"
 MPS_PREFIX = b"RESECTIONLAB_MPS_MEMORY "
+MEMORY_LIMIT_BYTES = 8 * 1024**3
 
 
 class _AttemptLog:
@@ -44,9 +48,38 @@ class WorkerResult(NamedTuple):
     failure: str | None
     peak_rss: int
     log_truncated: bool
+    peak_footprint: int | None
 
 
-def _family_rss(worker_pid):
+class _DarwinRusageV0(ctypes.Structure):
+    """Darwin sys/resource.h rusage_info_v0, in ABI field order."""
+    _fields_ = [("uuid", ctypes.c_uint8 * 16)] + [
+        (name, ctypes.c_uint64) for name in (
+            "user_time", "system_time", "pkg_idle_wkups", "interrupt_wkups", "pageins",
+            "wired_size", "resident_size", "phys_footprint", "proc_start_abstime", "proc_exit_abstime",
+        )
+    ]
+
+
+@cache
+def _darwin_rusage():
+    function = ctypes.CDLL("/usr/lib/libproc.dylib", use_errno=True).proc_pid_rusage
+    function.argtypes = [ctypes.c_int, ctypes.c_int, ctypes.POINTER(_DarwinRusageV0)]
+    function.restype = ctypes.c_int
+    return function
+
+
+def _darwin_footprint(pid):
+    usage = _DarwinRusageV0()
+    if _darwin_rusage()(pid, 0, ctypes.byref(usage)) != 0:
+        error = ctypes.get_errno()
+        if error == errno.ESRCH:  # Process exited between the two samples.
+            return 0
+        raise OSError(error, os.strerror(error))
+    return usage.phys_footprint
+
+
+def _family_memory(worker_pid, measure_footprint):
     # Include child SynthStrip processes. Shared Metal allocations are separate.
     listing = subprocess.run(["ps", "-axo", "pid=,ppid=,rss="], capture_output=True,
                              text=True, check=True, timeout=2)
@@ -54,7 +87,9 @@ def _family_rss(worker_pid):
     family = {worker_pid}
     for _ in range(5):
         family |= {pid for pid, parent, _ in rows if parent in family}
-    return sum(rss * 1024 for pid, _, rss in rows if pid in family)
+    rss = sum(rss * 1024 for pid, _, rss in rows if pid in family)
+    footprint = sum(_darwin_footprint(pid) for pid in family) if measure_footprint else None
+    return rss, footprint
 
 
 def _terminate_group(process):
@@ -83,10 +118,11 @@ def _drain(selector, attempt_log, timeout):
             selector.unregister(event.fd)
 
 
-def supervise_worker(command, environment, log_path, *, timeout, cancelled):
+def supervise_worker(command, environment, log_path, *, timeout, cancelled, measure_footprint=False):
     deadline = time.monotonic() + timeout
     next_sample = 0.0
     peak_rss = 0
+    peak_footprint = None
     failure = None
     with log_path.open("wb") as stream:
         attempt_log = _AttemptLog(stream)
@@ -102,8 +138,16 @@ def supervise_worker(command, environment, log_path, *, timeout, cancelled):
                         if cancelled():
                             failure = "cancelled"
                             break
-                        peak_rss = max(peak_rss, _family_rss(process.pid))
-                        if peak_rss > 8 * 1024**3:
+                        try:
+                            rss, footprint = _family_memory(process.pid, measure_footprint)
+                        except OSError as error:
+                            attempt_log.append(f"Could not measure model memory: {error}\n".encode())
+                            failure = "memory_monitor_unavailable"
+                            break
+                        peak_rss = max(peak_rss, rss)
+                        if footprint is not None:
+                            peak_footprint = max(peak_footprint or 0, footprint)
+                        if max(peak_rss, peak_footprint or 0) > MEMORY_LIMIT_BYTES:
                             failure = "memory_budget_exceeded"
                             break
                         next_sample = time.monotonic() + 0.5
@@ -129,7 +173,7 @@ def supervise_worker(command, environment, log_path, *, timeout, cancelled):
             raise
         finally:
             attempt_log.finish()
-    return WorkerResult(process.returncode, failure, peak_rss, attempt_log.bytes_seen > MAX_LOG_BYTES)
+    return WorkerResult(process.returncode, failure, peak_rss, attempt_log.bytes_seen > MAX_LOG_BYTES, peak_footprint)
 
 
 def mps_samples(log_path):

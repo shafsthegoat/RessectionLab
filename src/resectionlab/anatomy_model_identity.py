@@ -5,8 +5,8 @@ from pathlib import Path
 
 
 LEGACY_POC_LAUNCHER_SHA = "081620aca0fd0f4fe3b9d9ceda541686743392d454b6beb5134c00e45de83e0a"
-AUDITED_LAUNCHER_SHA = "4570f4cfb54254ab62c0aa105beb100ece36c6df5e7fd4adb864dcb5e7cf230a"
-AUDITED_SUPERVISOR_SHA = "f58360e611eaef4885f45346314aa563c9bff994cfa185888f44b28770b7a405"
+AUDITED_LAUNCHER_SHA = "065caba2b0e2073b660f346913cd1bb073f9a5c00e0e439b92f1a9418156a756"
+AUDITED_SUPERVISOR_SHA = "b671b9ae08a1ee1f29051a2f60fa4ae69684b7d68ea3551393b4d3d220eb2003"
 
 
 def _module_sha(name):
@@ -18,7 +18,8 @@ def poc_worker_identity(launcher_sha256):
     if launcher_sha256 == LEGACY_POC_LAUNCHER_SHA:
         return launcher_sha256
     supervisor = _module_sha("poc_worker_supervision.py")
-    # The worker, preprocessing and request were unchanged across this pair.
+    # Worker and preprocessing are unchanged. The Darwin CPU SynthStrip
+    # guard adds its own cache identity field; other executions retain theirs.
     # Any later change to either source must use a distinct cache identity.
     if launcher_sha256 == AUDITED_LAUNCHER_SHA and supervisor == AUDITED_SUPERVISOR_SHA:
         return LEGACY_POC_LAUNCHER_SHA
