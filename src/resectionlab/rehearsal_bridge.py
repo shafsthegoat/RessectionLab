@@ -116,6 +116,9 @@ def dispatch(session, operation, args, request, progress):
     request.check()
     entry = session._get_case(args["caseHash"])
     case = entry.case
+    if operation != 'inspectRehearsal' and ('nativeStudyReplay' in entry.artifacts or
+            'cranialPlanningCandidateV1' in case.metadata.get('surgical_properties', {})):
+        raise BridgeError('STUDY_REPLAY_ONLY', 'Use the recorded engine branch for this study.')
     cache = getattr(session, "rehearsal_sessions", None)
     if cache is None:
         session.rehearsal_sessions = cache = OrderedDict()

@@ -114,6 +114,7 @@ contextBridge.exposeInMainWorld('resectionApi', Object.freeze({
   importStructuralEvidence: args => ipcRenderer.invoke('research:importStructuralEvidence', args || {}),
   saveCase: args => ipcRenderer.invoke('research:saveCase', args || {}),
   workspaceInstalled: args => ipcRenderer.invoke('research:workspaceInstalled', args),
+  openBoundSurgicalReplay: args => ipcRenderer.invoke('research:openBoundSurgicalReplay', args),
   prepareSurgicalEnvironment: args => ipcRenderer.invoke('research:prepareSurgicalEnvironment', args),
   generateRoutes: args => ipcRenderer.invoke('research:generateRoutes', args || {}),
   generateNativeRoutes: args => ipcRenderer.invoke('research:generateNativeRoutes', args || {}),

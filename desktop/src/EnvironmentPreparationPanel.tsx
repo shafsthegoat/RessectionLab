@@ -5,26 +5,27 @@ import './native-planning-presentation.css';
 
 const roles:EnvironmentRole[]=['brain','tumor','bone','vessels'];
 const roleNames:Record<EnvironmentRole,string>={brain:'Brain',tumor:'Tumor',bone:'Bone',vessels:'Vessels'};
-export interface EnvironmentPreparation {collectionId:string;snapshotId:string;layers:Record<string,string>;allowUnreviewedRegistration:boolean}
-export function EnvironmentPreparationPanel({binding,options,busy,onPrepare,onAnatomy}:{
-  binding:Binding;options?:EnvironmentOptions;busy:boolean;onPrepare:(options:EnvironmentPreparation)=>Promise<void>;onAnatomy:()=>void;
+export interface EnvironmentApproach {approachId:string;parameterHash:string;targetLayerId:string;snapshotId:string}
+export interface EnvironmentPreparation {approach?:EnvironmentApproach;collectionId:string;snapshotId:string;layers:Record<string,string>;allowUnreviewedRegistration:boolean}
+export function EnvironmentPreparationPanel({binding,approach,options,busy,onPrepare,onAnatomy}:{
+  binding:Binding;approach?:EnvironmentApproach;options?:EnvironmentOptions;busy:boolean;onPrepare:(options:EnvironmentPreparation)=>Promise<void>;onAnatomy:()=>void;
 }) {
   const [layers,setLayers]=useState<Record<string,string>>(()=>Object.fromEntries(roles.map(role=>[
-    role,options?.layers.find(layer=>layer.role===role&&layer.status==='ready')?.layerId??'',
+    role,role==='tumor'&&approach?approach.targetLayerId:options?.layers.find(layer=>layer.role===role&&layer.status==='ready')?.layerId??'',
   ])));
   const [allow,setAllow]=useState(false),[preparing,setPreparing]=useState(false),[error,setError]=useState<string|null>(null);
   const selected=options?.layers.filter(layer=>layers[layer.role]===layer.layerId)??[];
   const unavailable=options?.layers.filter(layer=>layer.status==='unavailable')??[];
   const unreviewed=selected.filter(layer=>layer.status==='estimated_alignment');
   const label=(id:string)=>binding.document.layers.find(layer=>layer.id===id)?.label??id;
-  const canPrepare=!!options&&!options.referenceIssue&&selected.length>0&&
+  const canPrepare=!!options&&!options.referenceIssue&&selected.length>0&&(!approach||selected.some(layer=>layer.role==='tumor'))&&
     selected.every(layer=>layer.status==='ready'||layer.status==='estimated_alignment'&&allow);
   const missing=roles.filter(role=>!selected.some(layer=>layer.role===role));
   const alignmentRequired=unreviewed.length>0&&!allow;
   const readiness=canPrepare?'ready':options&&!options.referenceIssue&&alignmentRequired?'review':'unavailable';
   const status=canPrepare?'Ready to prepare':!options||options.referenceIssue?'Preparation unavailable':alignmentRequired?'Alignment choice required':'Select source anatomy';
   return <section className="surgical-panel environment-preparation" aria-label="Prepare standard rehearsal environment" aria-busy={preparing}>
-    <h2>Limited research rehearsal</h2>
+    <h2>{approach?'Inspect planned environment':'Limited research rehearsal'}</h2>
     <div className="environment-preparation-status" data-readiness={readiness} role="status">
       <strong>{preparing?'Preparing environment…':status}</strong>
       <p className="surgical-note">{rehearsalAvailability(options)}</p>
@@ -35,7 +36,7 @@ export function EnvironmentPreparationPanel({binding,options,busy,onPrepare,onAn
         const source=selected.find(layer=>layer.role===role);
         return <label className="environment-layer-row" data-layer-status={source?.status??'unknown'} key={role}>
           <span className="environment-layer-role">{roleNames[role]}<small>{source?.status==='ready'?'Ready':source?'Estimated':'Unknown'}</small></span>
-          <select aria-label={'Environment '+role+' layer'} value={layers[role]} onChange={e=>setLayers({...layers,[role]:e.target.value})}>
+          <select disabled={role==='tumor'&&!!approach} aria-label={'Environment '+role+' layer'} value={layers[role]} onChange={e=>setLayers({...layers,[role]:e.target.value})}>
             <option value="">Unknown / not supplied</option>{options?.layers.filter(layer=>layer.role===role&&layer.status!=='unavailable').map(layer=>
               <option key={layer.layerId} value={layer.layerId}>{label(layer.layerId)}{layer.status==='estimated_alignment'?' · estimated alignment':''}</option>)}
           </select>
@@ -47,14 +48,15 @@ export function EnvironmentPreparationPanel({binding,options,busy,onPrepare,onAn
         <p className="surgical-warning">Estimated alignment for {unreviewed.map(layer=>label(layer.layerId)).join(', ')}.</p>
         <label><input aria-label="Allow estimated alignment for research" type="checkbox" checked={allow} onChange={e=>setAllow(e.target.checked)}/><span>Use estimated alignment for this research derivative.</span></label>
       </div>}
+      {approach&&<p className="surgical-note">The saved path and target will stay bound to this source revision. New instrument actions require a qualified operative task.</p>}
       <div className="environment-preparation-actions"><button className="primary-button" disabled={!canPrepare} onClick={async()=>{
         setPreparing(true);setError(null);
         try{
           await onPrepare({collectionId:binding.collectionId,snapshotId:binding.document.snapshot_id,
-            layers:Object.fromEntries(selected.map(layer=>[layer.role,layer.layerId])),allowUnreviewedRegistration:allow});
+            layers:Object.fromEntries(selected.map(layer=>[layer.role,layer.layerId])),allowUnreviewedRegistration:allow,...(approach?{approach}:{})});
         }catch(e){setError(e instanceof Error?e.message:String(e));}
         finally{setPreparing(false);}
-      }}>{preparing?'Preparing environment…':'Prepare standard environment'}</button>
+      }}>{preparing?'Preparing environment…':approach?'Inspect approach in engine':'Prepare standard environment'}</button>
       <button onClick={onAnatomy}>Review anatomy and alignment</button>
       </div>
     </fieldset>

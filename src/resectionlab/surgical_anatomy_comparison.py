@@ -84,6 +84,58 @@ def _compact_outcome(outcome):
     return {k: outcome.get(k) for k in ('status', 'reasonCode', 'reason', 'completedFraction', 'stateId')}
 
 
+def _evaluate_arm(scene, prefix, decisions, config, reward_config, check):
+    """Evaluate public actions after the RL adapter admits this exact scene."""
+    from .surgical_rl_env import SurgicalRLEnv
+    from .surgical_rl_protection import ProtectionSet, cell_radius
+
+    env = SurgicalRLEnv(scene, protection=ProtectionSet(scene), config=config, reward_config=reward_config)
+    observation, _ = env.reset(seed=17)
+    vessel_ids = np.flatnonzero(np.isin(scene.labels, [r['id'] for r in scene.regions if r['material'] == 'vessel']))
+    vessel_tree = cKDTree(scene.points(vessel_ids)) if len(vessel_ids) else None
+    def clearance():
+        slot = env.engine.state['slots']['left']
+        return None if vessel_tree is None else float(vessel_tree.query(slot['position'])[0] - cell_radius(scene.affine) - env.engine.parameters(slot)['radiusMm'])
+    prefix_outcomes = []
+    for action in prefix:
+        check()
+        observation, _, terminated, truncated, info = env.step_action(action, check=check)
+        prefix_outcomes.append(_compact_outcome(info['outcome']))
+        if terminated or truncated:
+            raise ValueError('Fixed setup prefix terminates the episode; select a bounded task')
+    initial_observation = {k: v.copy() for k, v in observation.items()}
+    probe = {'observationHashes': _observation_hashes(observation), 'metrics': env.measurements.copy(),
+             'tipVesselClearanceLowerBoundMm': clearance(), 'vesselEncounters': len(env.engine.state['vesselEncounters']),
+             'contactCells': len(env.engine.state['contact']), 'stateId': env.engine.state_id}
+    policy_rows = []
+    for _ in range(decisions):
+        check()
+        # This is the complete policy boundary. Evaluator geometry below is
+        # never supplied to candidates() or observed_greedy().
+        features, actions = candidates(observation)
+        selected, scores = observed_greedy(features)
+        feasibility = []
+        for action_id, action in zip(ACTION_IDS, actions):
+            check()
+            candidate_engine = env.engine.clone()
+            outcome = candidate_engine.step(action, check=check)
+            feasibility.append({'id': action_id, **_compact_outcome(outcome),
+                'vesselEncounters': len(candidate_engine.state['vesselEncounters']),
+                'targetRemovedMm3': candidate_engine.metrics()['targetRemovedMm3']})
+        before_hashes = _observation_hashes(observation)
+        observation, reward, terminated, truncated, info = env.step_action(actions[selected], check=check)
+        policy_rows.append({'selected': ACTION_IDS[selected], 'action': actions[selected], 'scores': scores,
+            'observationHashes': before_hashes, 'candidateOutcomes': feasibility,
+            'outcome': _compact_outcome(info['outcome']), 'reward': reward, 'stateId': env.engine.state_id})
+        if terminated or truncated or selected == 8:
+            break
+    final = {'stateId': env.engine.state_id, 'metrics': env.measurements.copy(), 'reward': env.total_reward,
+        'tipVesselClearanceLowerBoundMm': clearance(), 'vesselEncounters': len(env.engine.state['vesselEncounters']),
+        'contactCells': len(env.engine.state['contact']), 'guard': env.engine.guard_report()}
+    env.close()
+    return initial_observation, {'prefixOutcomes': prefix_outcomes, 'probe': probe, 'policy': policy_rows, 'final': final}
+
+
 def compare_anatomy(before, after, *, changed_layers=('vessels',), prefix=(), decisions=1, check=lambda: None, progress=lambda *_: None):
     """Run one fixed public prefix and a frozen existing policy on both estimates.
 
@@ -91,9 +143,8 @@ def compare_anatomy(before, after, *, changed_layers=('vessels',), prefix=(), de
     supply complete functional critical anatomy. No evidence is marked reviewed.
     Prefixes are evaluator-defined task setup, disclosed and fixed before runs.
     """
-    from .surgical_rl_env import SurgicalRLEnv, RLConfig, LOCAL_CHANNELS
+    from .surgical_rl_env import RLConfig, LOCAL_CHANNELS
     from .surgical_rl_rewards import RewardConfig
-    from .surgical_rl_protection import ProtectionSet, cell_radius
 
     if type(decisions) is not int or not 1 <= decisions <= 4:
         raise ValueError('Use one to four frozen-policy decisions')
@@ -108,47 +159,8 @@ def compare_anatomy(before, after, *, changed_layers=('vessels',), prefix=(), de
     variants, observations = [], []
     for variant, scene in enumerate(scenes):
         check(); progress(.1 + .4 * variant, 'Replaying fixed task on ' + ('baseline' if variant == 0 else 'refined') + ' source anatomy')
-        env = SurgicalRLEnv(scene, protection=ProtectionSet(scene), config=config, reward_config=reward_config)
-        observation, _ = env.reset(seed=17)
-        vessel_ids = np.flatnonzero(np.isin(scene.labels, [r['id'] for r in scene.regions if r['material'] == 'vessel']))
-        vessel_tree = cKDTree(scene.points(vessel_ids)) if len(vessel_ids) else None
-        def clearance():
-            slot = env.engine.state['slots']['left']
-            return None if vessel_tree is None else float(vessel_tree.query(slot['position'])[0] - cell_radius(scene.affine) - env.engine.parameters(slot)['radiusMm'])
-        prefix_outcomes = []
-        for action in prefix:
-            check()
-            observation, _, terminated, truncated, info = env.step_action(action, check=check)
-            prefix_outcomes.append(_compact_outcome(info['outcome']))
-            if terminated or truncated:
-                raise ValueError('Fixed setup prefix terminates the episode; select a bounded task')
-        initial_observation = {k: v.copy() for k, v in observation.items()}
-        observations.append(initial_observation)
-        probe = {'observationHashes': _observation_hashes(observation), 'metrics': env.measurements.copy(),
-                 'tipVesselClearanceLowerBoundMm': clearance(), 'vesselEncounters': len(env.engine.state['vesselEncounters']),
-                 'contactCells': len(env.engine.state['contact']), 'stateId': env.engine.state_id}
-        policy_rows = []
-        for _ in range(decisions):
-            check()
-            # This is the complete policy boundary. Evaluator geometry below is
-            # never supplied to candidates() or observed_greedy().
-            features, actions = candidates(observation)
-            selected, scores = observed_greedy(features)
-            feasibility = []
-            for action_id, action in zip(ACTION_IDS, actions):
-                check()
-                candidate_engine = env.engine.clone()
-                outcome = candidate_engine.step(action, check=check)
-                feasibility.append({'id': action_id, **_compact_outcome(outcome),
-                    'vesselEncounters': len(candidate_engine.state['vesselEncounters']),
-                    'targetRemovedMm3': candidate_engine.metrics()['targetRemovedMm3']})
-            before_hashes = _observation_hashes(observation)
-            observation, reward, terminated, truncated, info = env.step_action(actions[selected], check=check)
-            policy_rows.append({'selected': ACTION_IDS[selected], 'action': actions[selected], 'scores': scores,
-                'observationHashes': before_hashes, 'candidateOutcomes': feasibility,
-                'outcome': _compact_outcome(info['outcome']), 'reward': reward, 'stateId': env.engine.state_id})
-            if terminated or truncated or selected == 8:
-                break
+        observed, executed = _evaluate_arm(scene, prefix, decisions, config, reward_config, check)
+        observations.append(observed)
         target_ids = [r['id'] for r in scene.regions if r.get('target')]
         variants.append({'caseHash': (before, after)[variant].case.semantic_hash, 'sceneId': scene.identity,
             'sourceSnapshot': adapters[variant]['sourceCollectionHash'],
@@ -157,12 +169,7 @@ def compare_anatomy(before, after, *, changed_layers=('vessels',), prefix=(), de
             'sourceLayers': {name: {k: row.get(k) for k in ('layerId', 'sampledMaskHash', 'provenance', 'reviewStatus', 'revision', 'originalData', 'edits', 'uncertainty', 'scoreMeaning', 'probability', 'sampling')}
                              for name, row in adapters[variant]['sourceLayers'].items()},
             'targetVolumeMm3': float(np.count_nonzero(np.isin(scene.labels, target_ids)) * scene.voxel_mm3),
-            'prefixOutcomes': prefix_outcomes, 'probe': probe, 'policy': policy_rows,
-            'final': {'stateId': env.engine.state_id, 'metrics': env.measurements.copy(), 'reward': env.total_reward,
-                      'tipVesselClearanceLowerBoundMm': clearance(),
-                      'vesselEncounters': len(env.engine.state['vesselEncounters']), 'contactCells': len(env.engine.state['contact']),
-                      'guard': env.engine.guard_report()}})
-        env.close()
+            **executed})
     local_delta = observations[0]['local'] != observations[1]['local']
     return {'schema': SCHEMA, 'patient': adapters[0]['sourcePatient'],
         'controls': {'acquiredSourceHash': semantic_digest(acquired), 'taskMappingHash': semantic_digest(scenes[0].regions),

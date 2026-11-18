@@ -188,7 +188,7 @@ def surgical_environment_options(collection, *, check=lambda: None):
 
 def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
                              resolution_mm=1., allow_unreviewed_registration=False,
-                             tissue_physics=None, require_complete=True):
+                             tissue_physics=None, require_complete=True, approach=None):
     """Save patient.ressectionlab and report.json; return the auditable report.
 
     layer_ids maps exactly brain/tumor/bone/vessels to existing collection IDs.
@@ -210,6 +210,18 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
     if root.is_file(): root = root.parent
     collection = PatientImagingCollection(root)
     manifest_path = root / 'patient-anatomy.json'
+    def selected_approach():
+        from .anatomy_operative_field import _saved_route
+        if type(approach) is not dict or set(approach) != {'approachId', 'parameterHash', 'targetLayerId', 'snapshotId'}:
+            raise ValueError('Select a current saved approach and target')
+        if layer_ids.get('tumor') != approach['targetLayerId']:
+            raise ValueError('Environment tumor differs from the selected approach target')
+        route, binding, revision = _saved_route(collection, approach)
+        return {'schema': 'resectionlab.native-environment-approach.v1', 'planRevision': revision,
+            'targetBinding': binding, **{key: copy.deepcopy(route[key]) for key in
+                ('id', 'name', 'sourceSnapshotId', 'targetLayerId', 'parameterHash', 'measurementHash',
+                 'entry', 'target', 'radiusMm', 'direction')}}
+    planned = selected_approach() if approach is not None else None
     manifest_hash = _sha(manifest_path)
     manifest = copy.deepcopy(collection.document)
     reference = collection.series(manifest['reference_series'])
@@ -278,15 +290,30 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
         'sourceLayers': layer_report, 'overlapCells': overlaps, 'ownershipPrecedence': list(selected_order),
         'ownershipCells': ownership_counts, 'allowUnreviewedRegistration': bool(allow_unreviewed_registration)}
     physics_key = 'tissuePhysicsV2' if physics.get('schema') == 'resectionlab.tissue-physics.v2' else 'tissuePhysics'
+    properties = {physics_key: physics}
+    if planned:
+        from .surgical_source_inspection import PROPERTY
+        adapter['selectedApproach'] = planned
+        # The native guard uses presence of PROPERTY for every inspection variant.
+        # This derivative has sampled materials, unlike the exact-grid annotation export.
+        properties[PROPERTY] = {'schema': 'resectionlab.planned-derivative-inspection.v1',
+            'status': 'inspection-only', 'patientTaskAdmission': False,
+            'sourceSnapshotId': planned['sourceSnapshotId'], 'targetBinding': planned['targetBinding'],
+            'approachId': planned['id'], 'planRevision': planned['planRevision'], 'blockers': [
+            {'code': 'PROCEDURE_ACQUIRED_SOURCE_QUALIFICATION_UNAVAILABLE',
+             'message': 'The saved approach supplies proposed geometry. Executing it requires qualified source coverage, entry, compartments, operative stages and swept instrument workspace.'}]}
     case = CaseData(case_id=manifest['patient_id'] + '-surgical-research', mri=mri,
         compartments=masks, affine=target_affine, frame='RAS+', source_refs=tuple(source_refs),
-        metadata={'surgical_adapter': adapter, 'surgical_properties': {physics_key: physics},
+        metadata={'surgical_adapter': adapter, 'surgical_properties': properties,
+            **({'anatomy_workbench_only': True} if planned else {}),
             'anatomy_layers': {name: _anatomy_metadata(name, rows[name]) for name in selected_order},
             'missing_anatomy': [name for name in ORDER if name not in rows],
             'description': 'Acquired reference image with explicitly selected source annotations and research estimates; missing anatomy remains unknown.'})
     output = Path(output_dir)
     output.mkdir(parents=True, exist_ok=True)
     path = save_case(case, output / 'patient.ressectionlab')
+    if planned is not None and selected_approach() != planned:
+        raise ValueError('Selected approach changed during environment export')
     if _sha(manifest_path) != manifest_hash:
         raise ValueError('Source manifest changed during export')
     report = {'schema': 'resectionlab.surgical-patient-export.v1', 'casePath': str(path.resolve()),
@@ -298,7 +325,7 @@ def prepare_surgical_patient(collection_path, output_dir, *, layer_ids,
 
 
 def prepare_surgical_environment(collection_path, output_dir, *, layer_ids,
-                                 resolution_mm=1., allow_unreviewed_registration=False):
+                                 resolution_mm=1., allow_unreviewed_registration=False, approach=None):
     """One interoperable export path for desktop preparation, CLI, and RL.
 
     Missing roles are explicit. Source manifests are never rewritten. The saved
@@ -311,11 +338,12 @@ def prepare_surgical_environment(collection_path, output_dir, *, layer_ids,
     from .surgical_physics_v2 import default_profile
     report = prepare_surgical_patient(collection_path, output_dir, layer_ids=layer_ids,
         resolution_mm=resolution_mm, allow_unreviewed_registration=allow_unreviewed_registration,
-        tissue_physics=default_profile(), require_complete=False)
+        tissue_physics=default_profile(), require_complete=False, approach=approach)
     case = load_case(report['casePath'])
     scene = standardize(from_case(case))
     from .surgical_rl_protection import GuardConfig
-    engine = SurgicalEngine(scene, guard_config=GuardConfig(require_critical_coverage=False))
+    engine = (SurgicalEngine(scene) if approach is not None else
+              SurgicalEngine(scene, guard_config=GuardConfig(require_critical_coverage=False)))
     record = {'environmentSchema': SCHEMA, 'physicsProfile': copy.deepcopy(scene.properties['tissuePhysicsV2']),
               'mapping': scene.regions, 'branches': {'main': engine.snapshot()}, 'branchId': 'main',
               'position': 0, 'parents': {'main': None}, 'timeline': {'main': []}}

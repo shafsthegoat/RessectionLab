@@ -117,7 +117,13 @@ export interface PriorLayerView {
   proposal: PriorProposal;
 }
 
+export interface VerifiedStudyReplay {
+  patientId:string;sourceSnapshotId:string;targetLayerId:string;branchId:string;actions:number;
+  actionsHash:string;sceneId:string;endpointStateId:string;instrumentCatalogHash:string;
+}
 export interface CasePayload {
+  verifiedStudyReplay?:VerifiedStudyReplay;
+  verifiedTargetSampling?:{nativeAnnotationMm3:number;nativeGridSpacingMm:number[];engineAnnotationMm3:number;engineGridSpacingMm:number[]};
   workspaceSession?: import("./workspace-session-types").WorkspaceSessionPayload;
   caseId: string;
   caseHash: string;
@@ -469,6 +475,7 @@ export interface ResectionApi extends TrainingApi {
   finishFrozenCusa?(args:{admissionId:string;accepted:boolean}):Promise<boolean>;
   cancelFrozenCusa?():Promise<boolean>;
   workspaceInstalled?(args:{caseHash:string;caseId:string}):Promise<boolean>;
+  openBoundSurgicalReplay?(args:{collectionId:string;snapshotId:string;targetLayerId:string}):Promise<CasePayload|null>;
   prepareSurgicalEnvironment?(args:import('./EnvironmentPreparationPanel').EnvironmentPreparation):Promise<CasePayload|null>;
   createSurgicalFixture?: import("./surgical-types").SurgicalApi["createSurgicalFixture"];
   createRehearsal?: import("./rehearsal-types").RehearsalApi["createRehearsal"];

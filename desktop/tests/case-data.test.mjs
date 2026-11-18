@@ -241,3 +241,25 @@ test('segmentation-only import retains zero source intensities with a usable dis
  assert.deepEqual(input.intensityRange,[0,0]);
  input.metadata={};assert.throws(()=>validateCaseDescriptor(input),/intensity range/);
 });
+
+test("planned inspection hydrates sampled material and rejects a mismatched target or source declaration", async () => {
+  const input = fixture();
+  input.compartments[0].name = 'tumor';
+  const marker = {schema:'resectionlab.planned-derivative-inspection.v1', status:'inspection-only',
+    patientTaskAdmission:false, sourceSnapshotId:hash, targetBinding:hash, planRevision:hash, approachId:'route-A'};
+  const route = {schema:'resectionlab.native-environment-approach.v1', id:'route-A', targetLayerId:'lesion',
+    sourceSnapshotId:hash, targetBinding:hash, planRevision:hash, parameterHash:hash, measurementHash:hash};
+  input.metadata = {anatomy_workbench_only:true, anatomy_layers:{tumor:{kind:'tumor'}},
+    surgical_properties:{cranialPlanningCandidateV1:marker}, surgical_adapter:{
+      type:'native-patient-research-derivative', sourceCollectionHash:hash, targetAffine:input.affine,
+      selectedApproach:route, sourceLayers:{tumor:{layerId:'lesion',sampledMaskHash:'sha256:'+hash}}}};
+  const volume = await hydrateCase(input, api());
+  assert.equal(volume.compartments[0].kind, 'tumor');
+  route.targetLayerId = 'other-lesion';
+  await assert.rejects(hydrateCase(input, api()), /planned derivative inspection binding/);
+  route.targetLayerId = 'lesion';
+  marker.schema = 'resectionlab.cranial-planning-candidate.v1';
+  await assert.rejects(hydrateCase(input, api()), /Invalid source-owned inspection declaration/);
+  delete input.metadata.surgical_properties.cranialPlanningCandidateV1;
+  await assert.rejects(hydrateCase(input, api()), /Missing planned derivative inspection binding/);
+});
