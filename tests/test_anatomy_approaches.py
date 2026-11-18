@@ -31,6 +31,132 @@ def test_whole_envelope_and_sheared_inverse_support():
     assert envelope_coverage(a,(20,20,20),world(a,[5,5,5]),world(a,[5,12,5]),1)['wholeEnvelopeWithinField']
 
 
+@pytest.fixture
+def cortical(native):
+    affine = native.patient_affine(native.series('t1'))
+    x, y, z = np.indices((32, 32, 32))
+    cerebral = (3 <= y) & (y < 28) & (4 <= z) & (z < 28)
+    masks = {
+        'right-cerebral-hemisphere': cerebral & (4 <= x) & (x < 16),
+        'left-cerebral-hemisphere': cerebral & (18 <= x) & (x < 27),
+        'cortical-entry-surface': cerebral & ((x == 4) | (x == 26)),
+        'supratentorial-compartment': y >= 3,
+        'falx-cerebri': cerebral & (x == 17),
+        'tentorium-cerebelli': y == 2,
+        'posterior-fossa': y < 2,
+    }
+    for role, mask in masks.items():
+        row = native.add_layer(mask.astype(np.uint8), affine, layer_id=role, label='Generated evidence ' + role,
+                               source_series='t1', kind='context', role='context', color='#abcdef',
+                               provenance={'cortical_access_role': role, 'cortical_access_evidence': 'generated-reference'})
+        row['review_status'] = 'generated-engineering'
+    native.save()
+    return native
+
+
+def _cortical_route(collection, entry, target=(10, 11, 15), radius=.4):
+    affine = collection.patient_affine(collection.series('t1'))
+    return {'entry': world(affine, entry).tolist(), 'target': world(affine, target).tolist(),
+            'radiusMm': radius, 'targetLayerId': 'target', 'patchRadiusMm': 0}
+
+
+def test_oblique_lower_entry_supported_and_revision_bound(cortical):
+    route = _cortical_route(cortical, [3.5, 6, 16])
+    assert route['entry'][2] < route['target'][2]
+    result = dispatch_plan(cortical, {'action': 'suggest', **route})
+    proposal, = result['approaches']
+    access = proposal['measurements']['accessAssessment']
+    assert access['status'] == 'supported' and access['hemisphere'] == 'right'
+    assert access['scope'] == 'ipsilateral-supratentorial-cortical'
+    assert not access['missingEvidence'] and not access['violations']
+    assert access['postEntryEnvelopeSupported'] and access['distalCapSupported']
+    assert access['surfaceEntry']['point'] == pytest.approx(route['entry'])
+    assert access['surfaceEntry']['hemisphereCell'] == [4, 6, 16]
+    assert access['surfaceEntry']['surfaceLayerId'] == 'cortical-entry-surface'
+    assert access['sourceSnapshotId'] == result['snapshotId'] == cortical.identity()
+    assert not access['simulationExecutionAuthorized'] and not result['simulationExecutionAuthorized']
+    reopened = Collection(cortical.root)
+    assert dispatch_plan(reopened, {'action': 'list'})['approaches'][0] == proposal
+    assert dispatch_plan(reopened, {'action': 'list'})['proposalReport'] == result['proposalReport']
+    surface = cortical.layer('cortical-entry-surface')
+    surface['revision'] += 1
+    cortical.save('Revise source cortical surface')
+    reopened = dispatch_plan(Collection(cortical.root), {'action': 'list'})
+    assert reopened['approaches'][0]['assessmentStatus'] == 'stale'
+    assert reopened['proposalReport']['assessmentStatus'] == 'stale'
+
+
+def test_missing_access_source_keeps_native_geometric_comparison(native):
+    route = _cortical_route(native, [3.5, 6, 16])
+    result = dispatch_plan(native, {'action': 'suggest', **route})
+    proposal, = result['approaches']
+    access = proposal['measurements']['accessAssessment']
+    assert access['status'] == 'incomplete' and access['surfaceEntry'] is None
+    assert {'left-cerebral-hemisphere', 'right-cerebral-hemisphere', 'falx-cerebri', 'tentorium-cerebelli',
+            'cortical-entry-surface'}.issubset(access['missingEvidence'])
+    comparison = dispatch_plan(native, {'action': 'compareInputs', **route})['inputComparison']
+    for arm in comparison['arms'].values():
+        nomination, = arm['nominated']
+        assert nomination['nominalEligible'] and nomination['accessAssessment'] == access
+
+
+@pytest.mark.parametrize(('entry', 'reason'), [
+    ([9, 1, 15], 'posterior-fossa'),
+    ([10, 2.5, 15], 'tentorium-cerebelli'),
+    ([26.5, 7, 16], 'contralateral cerebral hemisphere'),
+    ([25, 7, 16], 'falx-cerebri'),
+    ([9, 15, 16], 'Entry must cross from outside to inside'),
+])
+def test_source_established_wrong_access_rejected(cortical, entry, reason):
+    route = _cortical_route(cortical, entry)
+    manual = dispatch_plan(cortical, {'action': 'upsert', 'approach': route})['approaches'][0]['measurements']
+    assert manual['status'] == 'known-conflict'
+    assert manual['accessAssessment']['status'] == 'rejected'
+    assert any(reason in violation for violation in manual['accessAssessment']['violations'])
+    receipt = dispatch_plan(cortical, {'action': 'suggest', **route})['proposalReport']
+    assert receipt['returned'] == 0 and receipt['candidates'][0]['accessAssessment'] == manual['accessAssessment']
+
+
+def test_distal_cap_and_partial_boundary_evidence(cortical):
+    hemisphere = cortical.layer('right-cerebral-hemisphere')
+    mask = cortical.mask(hemisphere).astype(np.uint8)
+    # The target point stays in the hemisphere but the distal spherical cap
+    # touches its source-labelled boundary.
+    mask[11, 11, 15] = 0
+    hemisphere['data'] = cortical.put_array(mask)
+    hemisphere['revision'] += 1
+    cortical.save()
+    route = _cortical_route(cortical, [3.5, 6, 16], radius=.6)
+    access = dispatch_plan(cortical, {'action': 'upsert', 'approach': route})['approaches'][0]['measurements']['accessAssessment']
+    assert access['status'] == 'rejected' and access['surfaceEntry'] is not None
+    assert access['distalCapSupported'] is False
+
+    tentorium = cortical.layer('tentorium-cerebelli')
+    tentorium['coverage_fields'] = {'supported_axial_indices': [8, 9, 10]}
+    cortical.save()
+    route = _cortical_route(cortical, [3.5, 6, 16])
+    access = dispatch_plan(cortical, {'action': 'upsert', 'approach': route})['approaches'][-1]['measurements']['accessAssessment']
+    assert access['status'] == 'incomplete' and 'tentorium-cerebelli-corridor-coverage' in access['missingEvidence']
+
+
+def test_protection_uses_kind_and_legacy_source_id_not_display_labels(native):
+    affine = native.patient_affine(native.series('t1'))
+    mask = np.zeros((32, 32, 32), np.uint8)
+    mask[10, 18, 15] = 1
+    for key, kind, label in (('region-a', 'brainstem', 'Renamed A'), ('head-7', 'brain-region', 'Renamed B'),
+                             ('context', 'context', 'Brainstem cerebellum pons')):
+        native.add_layer(mask, affine, layer_id=key, source_series='t1', kind=kind, role='context',
+                         color='#abcdef', label=label)
+    native.save()
+    route = _cortical_route(native, [10, 26, 15])
+    measured = dispatch_plan(native, {'action': 'upsert', 'approach': route})['approaches'][0]['measurements']
+    assert set(measured['detectedConflictLayerIds']) == {'region-a', 'head-7'}
+    assert measured['accessAssessment']['status'] == 'rejected'
+    for row in measured['structures']:
+        if row['layerId'] in {'region-a', 'head-7'}:
+            assert row['excluded'] and row['confirmedIntersection']
+
+
 def test_labels_radius_sensitivity_empty_unknown(native):
     c=native;a=c.patient_affine(c.series('t1'));g=NativeRouteGeometry(Snapshot.capture(c))
     start,end=world(a,[10,26,15]),world(a,[10,11,15])

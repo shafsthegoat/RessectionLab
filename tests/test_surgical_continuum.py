@@ -189,9 +189,12 @@ def test_volume_time_exposure_matches_independent_homogeneous_shear_integrals():
     source = block(); mesh, _, gradients = kernel(source)
     u = np.zeros_like(mesh.nodes); u[:, 0] = .01 * mesh.nodes[:, 2]
     dt = .2; mu_pa = 1000.
-    values = continuum.exposure_increment(source, mesh, gradients, u.ravel(), [], source.properties[continuum.PROPERTY]['materials'], dt)['1']
+    values = continuum.exposure_increment(source, mesh, gradients, u.ravel(), [],
+        source.properties[continuum.PROPERTY]['materials'], dt, include_peaks=True)['1']
     assert values['strainSquaredVolumeTimeMm3Seconds'] == pytest.approx(.01**2 / 2 * dt, rel=1e-12)
     assert values['stressSquaredVolumeTimePa2Mm3Seconds'] == pytest.approx(2 * (mu_pa * .01)**2 * dt, rel=1e-12)
+    assert values['peakStrainNorm'] == pytest.approx(.01 / np.sqrt(2), rel=1e-12)
+    assert values['peakStressNormPa'] == pytest.approx(np.sqrt(2) * mu_pa * .01, rel=1e-12)
 
 
 def test_source_removal_exports_its_stored_energy_instead_of_hiding_it():

@@ -19,6 +19,8 @@ from scipy.spatial import cKDTree
 from .patient_anatomy import PatientAnatomySnapshot, PatientImagingCollection, affine, digest, world
 from .anatomy_planning import is_native_target, native_target_binding, native_target_options
 from .anatomy_evidence import VASCULAR_KINDS, inference_bounds, is_dural_proxy, vascular_evidence_supported
+from .anatomy_cortical_access import (assess_cortical_access, cortical_role, protected_compartment,
+                                      qualified_cortical_source)
 from .geometry import (GEOMETRY_VERSION, GeometryScene, native_backend,
                        capsule_voxel_indices, point_segment_distances, _segment_cell_distances, _EPS)
 from .native_approach_comparison import (sensitivity_config, sample_positions, nominal_objectives,
@@ -31,13 +33,8 @@ SCHEMA = "patient-anatomy-approaches-v1"
 FILENAME = "anatomy-approaches.json"
 MAX_SAVED = 32
 MAX_APPROACH_METADATA_BYTES = 8 * 1024**2
-ASSESSMENT_VERSION = "native-source-capsule-assessment-v6"
+ASSESSMENT_VERSION = "native-source-capsule-assessment-v7"
 METRIC_EVIDENCE_POLICY = "native-metric-evidence-v1"
-
-
-def _forbidden_compartment(row):
-    identity = (row.get("label", "") + " " + row["id"]).lower()
-    return any(word in identity for word in ("cerebell", "brainstem", "brain-stem", "brain stem", "spinal cord", "medulla", "pons"))
 
 
 def _restricted_layer(row, reference_id, target_id):
@@ -48,10 +45,7 @@ def _restricted_layer(row, reference_id, target_id):
     return row["source_series"] == reference_id and (
         row["id"] == target_id and is_native_target(row) and kind not in VASCULAR_KINDS | TRACT_KINDS
         or row["role"] == "context" and (row["id"], kind) in {("brain", "brain"), ("head-surface", "context")}
-        or row["role"] in {"context", "critical"} and (
-            (row["id"] in {"head-7", "head-8", "head-16", "head-46", "head-47"} and kind == "brain-region")
-            or kind in {"brainstem", "cerebellum", "cerebellar-white-matter", "cerebellar-cortex"}
-        ) and _forbidden_compartment(row)
+        or row["role"] in {"context", "critical"} and protected_compartment(row, reference_inputs_only=True)
     )
 
 
@@ -128,6 +122,11 @@ class NativeRouteGeometry:
         document = self.c.document
         self.reference = self.c.series(document["reference_series"])
         self.layers = tuple(document["layers"])
+        self.protected_compartment_ids = {row["id"] for row in self.layers if protected_compartment(row)}
+        self.cortical_sources = {}
+        for row in self.layers:
+            if qualified_cortical_source(row):
+                self.cortical_sources.setdefault(cortical_role(row), []).append(row)
         self.dural_proxies = {row["id"] for row in self.layers if is_dural_proxy(row)}
         self.context_vasculature = {
             row["id"] for row in self.layers
@@ -153,8 +152,9 @@ class NativeRouteGeometry:
         return NativeRouteGeometry(PatientAnatomySnapshot.capture(projected), check=self.check, cache=self)
 
     def registration_groups(self, target_id, excluded):
-        relevant = [row for row in self.layers if (row["id"] in excluded or _forbidden_compartment(row)
+        relevant = [row for row in self.layers if (row["id"] in excluded or row["id"] in self.protected_compartment_ids
                     or row["role"] == "critical" or row["kind"] in VASCULAR_KINDS | TRACT_KINDS | {"brain"}
+                    or qualified_cortical_source(row)
                     or (row["id"] == target_id and is_native_target(row)))]
         transforms = self.c.document["transforms"]
         groups = {}
@@ -288,7 +288,7 @@ class NativeRouteGeometry:
 
         for row in self.layers:
             self.check()
-            forbidden = _forbidden_compartment(row)
+            forbidden = row["id"] in self.protected_compartment_ids
             critical = row["role"] == "critical" or row["kind"] in VASCULAR_KINDS | TRACT_KINDS or row["id"] in excluded or forbidden
             is_target = row["id"] in selected_target_ids
             if not critical and not is_target:
@@ -587,7 +587,7 @@ class NativeRouteGeometry:
         if target_id and not any(t.get("targetPointInsideLabel") for t in targets):
             failures.append("endpoint is outside or unassessed in the selected target label")
         axis = (end - start) / length
-        return {"geometryVersion": GEOMETRY_VERSION, "assessmentVersion": ASSESSMENT_VERSION, "lengthMm": length, "radiusMm": radius_mm,
+        measured = {"geometryVersion": GEOMETRY_VERSION, "assessmentVersion": ASSESSMENT_VERSION, "lengthMm": length, "radiusMm": radius_mm,
                 "entry": start.tolist(), "target": end.tolist(), "direction": axis.tolist(),
                 "capsule": {"start": start.tolist(), "end": end.tolist(), "radiusMm": radius_mm,
                             "lengthMm": length, "volumeMm3": float(np.pi * radius_mm**2 * (length + 4 * radius_mm / 3)),
@@ -612,6 +612,12 @@ class NativeRouteGeometry:
                                 "A numerical lower bound is not an exact clinical safety margin.",
                                 "Field-of-view containment covers the complete capsule, including spherical ends.",
                                 "Negative labels and streamline gaps never establish absence of critical anatomy."]}
+        access = assess_cortical_access(self, start, end, radius_mm, measured, scenario)
+        measured["accessAssessment"] = access
+        if access["status"] == "rejected":
+            measured["constraintFailures"].extend(access["violations"])
+            measured["status"] = "known-conflict"
+        return measured
 
 
 def checked_approach(collection, value):
@@ -654,7 +660,7 @@ def checked_approach(collection, value):
     if abs(normal_norm - 1.) > 1e-14:
         normal = normal / normal_norm
     patch = {"center": center.tolist(), "normal": normal.tolist(), "radiusMm": float(patch_radius),
-             "meaning": "user-selected hypothetical supratentorial entry-centre disk; cortical/skull suitability unverified"}
+             "meaning": "user-selected entry-centre disk for static geometry sampling; cortical entry requires independent source evidence"}
     selected = value.get("targetLayerId")
     row = _target_row(collection, selected)
     if selected is not None and row is None:
@@ -708,6 +714,7 @@ def _measured_reading_ids(record):
 
 def _measurement_dependency_ids(measurements):
     result = {field["layerId"] for field in measurements.get("coverage", {}).get("sources", [])}
+    result.update(_access_layer_ids(measurements))
     for row in (*measurements.get("structures", ()), *measurements.get("targets", ()),
                 measurements.get("normalTraversal", {})):
         if row.get("available") and row.get("layerId"):
@@ -717,15 +724,21 @@ def _measurement_dependency_ids(measurements):
     return result
 
 
+def _access_layer_ids(record):
+    return {row["layerId"] for row in record.get("accessAssessment", {}).get("sourceLayers", {}).values()}
+
+
 def _report_dependency_ids(report):
     target_id = report.get("task", {}).get("targetLayerId")
     result = {target_id} if target_id else set()
     for group in (report, *report.get("arms", {}).values()):
         for candidate in group.get("candidates", ()):
             result.update(_measured_reading_ids(candidate))
+            result.update(_access_layer_ids(candidate))
             for values in candidate.get("evidence", {}).values():
                 result.update(values)
         for candidate in group.get("nominated", ()):
+            result.update(_access_layer_ids(candidate))
             for scenario in candidate.get("sensitivity", {}).get("scenarios", ()):
                 result.update(_measured_reading_ids(scenario))
     return result
@@ -745,6 +758,8 @@ def _metric_evidence_current(collection, dependency_ids, policy):
             if row["kind"] in VASCULAR_KINDS and not vascular_evidence_supported(collection, row):
                 return False
             collection.patient_affine(row)
+            if qualified_cortical_source(row):
+                collection.array(row["data"])
         if policy != METRIC_EVIDENCE_POLICY:
             # Older v6 receipts omitted or misgrouped the singular vessel kind.
             for row in layers.values():
@@ -896,8 +911,6 @@ def _measure_approach(geometry, approach, scenario=None, *, memo=None):
                                 target_id=approach.get("targetLayerId"), scenario=scenario, memo=memo,
                                 include_legacy_targets=False)
     failures = measured["constraintFailures"]
-    if approach["entry"][2] < approach["target"][2]:
-        failures.append("entry inferior to target; outside the declared superior/lateral supratentorial proposal scope")
     patch = approach["entryPatch"]
     delta = np.asarray(approach["entry"]) - patch["center"]
     normal = np.asarray(patch["normal"])
@@ -979,8 +992,6 @@ def _generate_nominal(geometry, base):
             row["reasons"].append("entry and target coincide")
         elif length > min(base["constraints"].get("maxLengthMm", 1000), 1000):
             row["reasons"].append("corridor exceeds declared maximum length")
-        elif entry[2] < target[2]:
-            row["reasons"].append("inferior entries excluded by supratentorial scope")
         if row["reasons"]:
             continue
         route = {**base, **parameters, "id": key, "direction": row["direction"]}
@@ -989,6 +1000,7 @@ def _generate_nominal(geometry, base):
         row["reasons"], row["objectives"], row["evidence"] = _geometry_fields(nominal)
         row["sourceReadings"] = source_readings(nominal)
         row["detectedConflictLayerIds"] = nominal["detectedConflictLayerIds"]
+        row["accessAssessment"] = nominal["accessAssessment"]
         if not row["reasons"]:
             row["disposition"] = "eligible"
             row["nominalEligible"] = True
@@ -1006,7 +1018,7 @@ _SELECTION_RULE = ("Guard declared constraints and reference field first. Prefer
                    "then compare a frozen shortlist after declared scenario guards. Retain up to three entries separated by at least 4 mm and axes separated by at least 3 degrees. "
                    "Dominated routes may fill a distinct entry when the front alone cannot support three. "
                    "Break remaining ties by evidence coverage, shorter length and sampled order.")
-_SCOPE = "Selected entry patch; inferior entries excluded; supplied cerebellar and brainstem labels guarded. Static source geometry only."
+_SCOPE = "Static geometry sampled on the selected entry patch. Source anatomy assesses ipsilateral supratentorial cortical access independently."
 
 
 def _task_fields(collection, base):
@@ -1147,6 +1159,7 @@ def compare_inputs(collection, args, geometry=None):
                                 "reasons": reasons, "objectives": objectives,
                                 "nominalEligible": nominally_eligible, "scenarioGuard": guard,
                                 "detectedConflictLayerIds": nominal["detectedConflictLayerIds"],
+                                "accessAssessment": nominal["accessAssessment"],
                                 "sensitivity": sensitivity}
     for arm in arms.values():
         arm["nominated"] = [outcomes[key] for key in arm["selectedCandidateIds"]]

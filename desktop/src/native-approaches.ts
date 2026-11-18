@@ -40,6 +40,7 @@ export interface ApproachProposalCandidate {
   reasons?:string[];objectives?:Record<string,number|null>;pareto?:boolean;detectedConflictLayerIds?:string[];
   sourceReadings?:Record<string,ApproachSourceReading>;
   scenarioGuard?:ApproachScenarioGuard;
+  accessAssessment?:CorticalAccessAssessment;
 }
 export interface ApproachScenarioGuard {disposition:string;vetoScenarioIds:string[];incompleteScenarioIds:string[];meaning?:string}
 
@@ -63,6 +64,7 @@ export interface ApproachInputNomination {
   candidateId:string;status:'refused'|'incomplete-coverage'|'eligible-static';reasons:string[];
   objectives?:Record<string,number|null>;detectedConflictLayerIds?:string[];sensitivity?:ApproachSensitivity;
   scenarioGuard?:ApproachScenarioGuard;
+  accessAssessment?:CorticalAccessAssessment;
 }
 
 export interface ApproachInputArm {
@@ -88,7 +90,13 @@ export interface ApproachStructure {
 export interface ApproachCoverage {wholeEnvelopeWithinField?:boolean;outsideFaces?:string[]}
 export interface ApproachTargetMeasurement {
   label?:string;sourceSeries?:string;available:boolean;coverage?:ApproachCoverage;acquisitionCoverage?:ApproachCoverage;
-  coveredVoxelCenterFraction?:number;coveredVoxelCenterVolumeMm3?:number;targetPointInsideLabel?:boolean;
+  totalVolumeMm3?:number;coveredVoxelCenterFraction?:number;coveredVoxelCenterVolumeMm3?:number;targetPointInsideLabel?:boolean;
+}
+export interface CorticalAccessAssessment {
+  status:'supported'|'incomplete'|'rejected';scope:string;hemisphere?:'left'|'right'|null;
+  missingEvidence?:string[];violations?:string[];sourceSnapshotId?:string;surfaceEntry?:unknown;
+  sourceLayers?:Record<string,{layerId:string;sourceSeries:string;revision:number;evidence:string}>;
+  postEntryEnvelopeSupported?:boolean|null;distalCapSupported?:boolean|null;
 }
 export interface NativeApproach {
   id:string;name:string;sourceSnapshotId:string;parameterHash:string;
@@ -100,6 +108,7 @@ export interface NativeApproach {
   measurements?:{lengthMm:number;orientation:{azimuthDeg:number;elevationDeg:number};structures:ApproachStructure[];
     coverage:Record<string,unknown>;targets:ApproachTargetMeasurement[];normalTraversal:Record<string,unknown>&{coverage?:ApproachCoverage;acquisitionCoverage?:ApproachCoverage};
     sensitivity?:ApproachSensitivity;
+    accessAssessment?:CorticalAccessAssessment;
     status:'known-conflict'|'incomplete'|'no-detected-conflict';unknowns:string[];assumptions:string[];constraintFailures?:string[];[key:string]:unknown};
   [key:string]:unknown;
 }

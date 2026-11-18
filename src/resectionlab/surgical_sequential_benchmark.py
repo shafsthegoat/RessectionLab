@@ -375,6 +375,7 @@ def _verify_replay_core(task,row, *, deadline=None,counters):
         if skill['kind']=='stop' and skill['checkedStopAttempted'] and not adapter_stopped:
             counters['adapterStopRequests']+=1
             result=adapter.stop('Finite generated inventory exhausted');adapter_stopped=result[2] or result[3]
+            counters['adapterStopOutcome'] = result[4]['outcome']
     if native.snapshot()!=row['snapshot'] or native.state_id!=adapter.engine.state_id:
         raise ValueError('Final accepted state replay differs')
     stopped=bool(row['skillHistory'] and row['skillHistory'][-1]['kind']=='stop' and row['skillHistory'][-1]['status']=='accepted')
@@ -389,4 +390,5 @@ def _verify_replay_core(task,row, *, deadline=None,counters):
     if evaluate_procedure_sequence(native)!=evaluate_procedure_sequence(adapter.engine):
         raise ValueError('Complete accounting replay differs')
     return dict(verified=True,primitiveActions=compared,
-        wallSeconds=time.monotonic()-started,finalStateId=native.state_id,classification=expected['classification'])
+        wallSeconds=time.monotonic()-started,finalStateId=native.state_id,classification=expected['classification'],
+        adapterTerminationReason=adapter.termination_reason)

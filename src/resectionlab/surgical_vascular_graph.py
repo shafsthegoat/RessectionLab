@@ -236,6 +236,17 @@ def refresh_compression(engine):
             if port['cell'] in contacts: port['compressionFraction'] = max(port['compressionFraction'], fraction)
 
 
+def _edge_conductance(edge, state):
+    if state['cutFace'] is not None:
+        return 0.
+    return edge['conductanceMm3PerPaS'] * (1-state['occlusionFraction']) * (1-state['compressionFraction'])
+
+
+def _wound_flow(port, pressure, clot_rate, time):
+    return (port['conductanceMm3PerPaS'] * (1-port['sealFraction']) * (1-port['compressionFraction'])
+            * math.exp(-clot_rate * (time-port['openedAtSeconds'])) * max(0., pressure))
+
+
 def tick(engine, dt):
     s = initialize(engine); _idle(s); p = engine.scene.properties[PROPERTY]
     _checked_sources(engine, s)
@@ -244,8 +255,7 @@ def tick(engine, dt):
     nodes = p['nodes']; edges = p['edges']; bounds = p['boundaries']; regions = p['regions']
     ids = {n['id']: i for i, n in enumerate(nodes)}; n = len(nodes)
     compliance = np.array([r['complianceMm3PerPa'] for r in nodes])
-    conductance = np.array([e['conductanceMm3PerPaS'] * (1-s['edges'][e['id']]['occlusionFraction'])
-        * (1-s['edges'][e['id']]['compressionFraction']) if s['edges'][e['id']]['cutFace'] is None else 0. for e in edges])
+    conductance = np.array([_edge_conductance(e, s['edges'][e['id']]) for e in edges])
     a = np.array([ids[e['from']] for e in edges], int); b = np.array([ids[e['to']] for e in edges], int)
     edge_ids = {e['id']: i for i, e in enumerate(edges)}
     ports = sorted(s['ports']); port_rows = [s['ports'][k] for k in ports]
@@ -257,9 +267,8 @@ def tick(engine, dt):
 
     def fluxes(t, y):
         pressure = y[:n] / compliance; q = conductance * (pressure[a]-pressure[b])
-        wound = np.array([r['conductanceMm3PerPaS'] * (1-r['sealFraction']) * (1-r['compressionFraction'])
-            * math.exp(-p['clotRatePerSecond'] * (s['elapsedSeconds']+t-r['openedAtSeconds']))
-            * max(0., pressure[i]) for r, i in zip(port_rows, port_nodes)])
+        wound = np.array([_wound_flow(r, pressure[i], p['clotRatePerSecond'], s['elapsedSeconds']+t)
+                          for r, i in zip(port_rows, port_nodes)])
         return pressure, q, wound
 
     def derivative(t, y):
@@ -365,6 +374,64 @@ def metrics(engine):
         'occludedEdgeCount': sum(r['occlusionFraction'] >= 1 for r in s['edges'].values()),
         'compressedEdgeCount': sum(r['compressionFraction'] > 0 for r in s['edges'].values()),
         'unmappedContactCells': len(s['unmappedContactCells']), 'regions': copy.deepcopy(s['regions'])}
+
+
+def consequence_evidence(engine):
+    """Bind terminal segment state and cumulative modeled exposure to declared interfaces."""
+    if not enabled(engine):
+        return {'status': 'unavailable', 'reason': 'No declared vascular graph.',
+                'territoryStatus': 'unknown', 'regions': {}, 'segments': {}}
+
+    state = initialize(engine)
+    profile = engine.scene.properties[PROPERTY]
+    storage = state['storageMm3']
+    initial_storage = {node['id']: node['initialStorageMm3'] for node in profile['nodes']}
+    pressure = {node['id']: storage[node['id']] / node['complianceMm3PerPa'] for node in profile['nodes']}
+    elapsed = state['elapsedSeconds']
+    segments = {}
+    for edge in profile['edges']:
+        edge_id = edge['id']
+        row = state['edges'][edge_id]
+        segments[edge_id] = {
+            'kind': edge['kind'], 'source': edge['source'],
+            'sourceCells': list(edge['sourceCells']), 'sourceFace': list(edge['sourceFace']),
+            'from': edge['from'], 'to': edge['to'],
+            'supplyRole': 'unknown',
+            'continuity': 'intact' if row['cutFace'] is None else 'severed',
+            'compressionFraction': row['compressionFraction'], 'occlusionFraction': row['occlusionFraction'],
+            'signedFlowMm3PerSecond': _edge_conductance(edge, row) * (pressure[edge['from']]-pressure[edge['to']]),
+            'wounds': [],
+        }
+    for port_id, port in sorted(state['ports'].items()):
+        segments[port['edge']]['wounds'].append({
+            'id': port_id, 'node': port['node'], 'cell': port['cell'],
+            'sealFraction': port['sealFraction'], 'compressionFraction': port['compressionFraction'],
+            'generatedMm3': port['generatedMm3'],
+            'modeledFlowMm3PerSecond': _wound_flow(port, pressure[port['node']], profile['clotRatePerSecond'], elapsed),
+        })
+
+    regions = {}
+    for region in profile['regions']:
+        region_id = region['id']
+        row = {**state['regions'][region_id], **copy.deepcopy(region)}
+        for interface in ('supply', 'drainage'):
+            row[interface+'Mm3PerSecond'] = sum(
+                term['direction'] * segments[term['edge']]['signedFlowMm3PerSecond'] for term in region[interface])
+        row['storageMm3'] = sum(storage[node] for node in region['storageNodes'])
+        row['storageChangeMm3'] = row['storageMm3'] - sum(initial_storage[node] for node in region['storageNodes'])
+        regions[region_id] = row
+    return {
+        'status': 'declared_partial_graph_model_only', 'model': SCHEMA,
+        'coverage': copy.deepcopy(profile['coverage']), 'elapsedSeconds': elapsed,
+        'territoryStatus': 'declared_model_interfaces' if regions else 'unknown',
+        'bloodGeneratedMm3': state['generatedMm3'], 'unmappedContactCells': list(state['unmappedContactCells']),
+        'regions': regions, 'segments': segments,
+        'limits': [
+            'Declared regional interfaces and model parameters provide engineering exposure measures only.',
+            'Tumor-feeding, en passant and normal-tissue roles require separate evidence.',
+            'Patient flow, unobserved vascular anatomy and tissue outcomes remain unknown.',
+        ],
+    }
 
 
 def descriptor(engine):

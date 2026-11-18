@@ -533,6 +533,9 @@ def dispatch(session, operation, args, request, progress):
         if record.get('sequentialEpisodes') is not None:
             from .surgical_recorded_sequential import validate_episode_record
             validate_episode_record(scene, record, identity, check=request.check)
+        if record.get('planningEvidence') is not None:
+            from .surgical_planning_evidence import verify_planning_replay
+            verify_planning_replay(scene, record, full, check=request.check)
         engine, timeline = replay_cache.seek(full, record['branches'][record['branchId']], record['position'], check=request.check, include_history=True)
         record.setdefault('timeline', {})[record['branchId']] = timeline
     def owner_for_branch(branch_id, current_engine):
@@ -1058,6 +1061,10 @@ def dispatch(session, operation, args, request, progress):
             planned_ids.update(protected_branches(record))
             planned_ids.update(r['branchId'] for r in (record.get('sequentialEpisodes') or {}).get('episodes', []))
             if record.get('sequentialEpisodes') is not None: planned_ids.add('main')
+            if record.get('planningEvidence') is not None:
+                evidence = record['planningEvidence']
+                planned_ids.add(evidence['baselineBranchId'])
+                planned_ids.update(row['branchId'] for row in evidence['alternatives'])
             from .surgical_strategy_workspace import protected_branches as strategy_branches
             planned_ids.update(strategy_branches(record))
             from .surgical_preparation_workspace import protected_branches as preparation_branches
@@ -1185,6 +1192,9 @@ def dispatch(session, operation, args, request, progress):
         result['consequenceAnalysis'] = analysis_view(engine, record, consequence_comparison, identity)
     elif record.get('consequenceAnalyses'):
         raise ValueError('Saved policy analysis has no bound frozen comparison')
+    if record.get('planningEvidence') is not None:
+        from .surgical_planning_evidence import planning_evidence_view
+        result['planningEvidence'] = planning_evidence_view(engine.scene, record, record['planningEvidence'])
     retraction_study = record.get('retractionStudy')
     if isinstance(retraction_study, dict) and retraction_study.get('schema') == 'resectionlab.retractor-native-study.v1':
         from .surgical_retraction_study import validate_retraction_study

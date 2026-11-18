@@ -114,3 +114,37 @@ def test_versioned_comparison_remeasures_structure_counts_when_saved_report_is_r
     forged[0]['vector']['dimensions']['neuralRemovedMm3'].update(cumulative=1., incremental=1.)
     with pytest.raises(ValueError, match='direct structure consequence'):
         validate_saved_comparison(scene, record, report(forged), declaration=declaration)
+
+
+def test_preservation_comparison_credits_eligible_removal_on_an_executed_prefix():
+    import pytest
+    from resectionlab.surgical_consequences import procedure_comparison_options
+    from test_surgical_procedure_policy import action, prepared
+    from test_surgical_treatment_intent import intent_scene
+
+    scene = intent_scene()
+    prefix = prepared(scene)
+    treated = prefix.clone()
+    assert treated.step(action('apply', [55., 40., 100.], duration=1.))['status'] == 'accepted'
+    stopped = prefix.clone()
+    for program in (treated, stopped):
+        assert program.step(action('withdraw', [55., 40., 65.], duration=1.))['status'] == 'accepted'
+    rows = [dict(branchId=branch, scenarioId='nominal', vector=consequence_vector(engine, prefix, extended=True))
+            for branch, engine in (('work', treated), ('STOP', stopped))]
+    decision = compare_samples(rows, procedure_comparison_policy(scene),
+        stop_branch='STOP', scenario_ids=['nominal'], branch_ids=['work', 'STOP'],
+        **procedure_comparison_options(scene))
+    assert decision['selectedBranchId'] == 'work'
+    assert decision['treatmentDecision']['status'] == 'continue'
+    vector = rows[0]['vector']
+    assert vector['treatmentIntent']['originalBurdenMm3'] == pytest.approx(375.)
+    assert vector['treatmentIntent']['incrementalEligibleRemovedMm3'] == pytest.approx(125.)
+    assert vector['residualTargetMm3'] == pytest.approx(250.)
+
+    incomplete = copy.deepcopy(rows)
+    incomplete[0]['vector']['treatmentIntent'].update(coverageComplete=False, incrementalEligibleRemovedMm3=None)
+    decision = compare_samples(incomplete, procedure_comparison_policy(scene),
+        stop_branch='STOP', scenario_ids=['nominal'], branch_ids=['work', 'STOP'],
+        **procedure_comparison_options(scene))
+    assert decision['selectedBranchId'] is None
+    assert decision['treatmentDecision']['status'] == 'reassess'

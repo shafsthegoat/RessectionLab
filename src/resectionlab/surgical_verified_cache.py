@@ -42,7 +42,7 @@ _MODULES = ('core', 'geometry', 'surgical_scene', 'surgical_engine', 'surgical_t
             'surgical_drilling_v2', 'surgical_vessels_v2', 'surgical_deformation_v2',
             'surgical_continuum', 'surgical_continuum_solve', 'surgical_planar_contact', 'surgical_planar_maneuver',
             'surgical_retractor_runtime', 'surgical_retractor_surface', 'surgical_retractor_contact',
-            'surgical_contact_complementarity', 'surgical_task_domain',
+            'surgical_contact_complementarity', 'surgical_mechanical_exposure', 'surgical_task_domain',
             'surgical_procedure_policy', 'surgical_planning_admission', 'surgical_sequence_outcomes', 'surgical_modeled_outcomes',
             'surgical_vascular_graph', 'surgical_bipolar_thermal',
             'surgical_occupancy', 'surgical_rl_protection', 'surgical_geometry_cache',

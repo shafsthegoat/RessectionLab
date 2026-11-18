@@ -1,4 +1,4 @@
-import type {ApproachInputComparisonReport,ApproachProposalReport,ApproachSensitivity,ApproachScenarioSet,ApproachSourceReading,ApproachScenarioGuard} from './native-approaches';
+import type {ApproachInputComparisonReport,ApproachProposalReport,ApproachSensitivity,ApproachScenarioSet,ApproachSourceReading,ApproachScenarioGuard,CorticalAccessAssessment} from './native-approaches';
 import {lowerBoundText} from './native-approaches';
 
 const metricLabels:Record<string,string>={
@@ -17,6 +17,24 @@ function measurement(key:string,value:number|null,units?:string){
 }
 
 function point(values:number[]){return values.map(v=>v.toFixed(1)).join(', ');}
+
+export function CorticalAccessReadout({assessment}:{assessment:CorticalAccessAssessment}){
+  const {status,hemisphere,missingEvidence,violations,sourceSnapshotId,surfaceEntry,sourceLayers}=assessment;
+  const observed=sourceLayers?.['cortical-entry-surface'];
+  return <section className="approach-access-evidence" data-access-assessment={status}>
+    <h3>Ipsilateral supratentorial cortical access</h3>
+    <p>{status==='supported'?'Supported by the supplied access anatomy':status==='rejected'?'Rejected by the supplied access anatomy':'Incomplete access anatomy'}{hemisphere&&` · ${hemisphere} hemisphere`}</p>
+    {(missingEvidence?.length||violations?.length)?<ul>{[...new Set([...(violations??[]),...(missingEvidence??[])])].map(reason=><li key={reason}>{reason.includes(' ')?reason:reason.replaceAll('-', ' ')}</li>)}</ul>:null}
+    {observed&&<p>Entry surface · {observed.evidence==='generated-reference'?'Generated engineering reference':'Reviewed source'} · layer revision {observed.revision}</p>}
+    {assessment.postEntryEnvelopeSupported&&assessment.distalCapSupported&&<p>Post-entry corridor and distal workspace are inside the supplied compartments.</p>}
+    <p>Access assessment checks intervening anatomy along the corridor and the target workspace. Physical rehearsal has separate admission requirements.</p>
+    {(surfaceEntry!=null||sourceSnapshotId)&&<details><summary>Entry surface and source revision</summary>
+      {sourceSnapshotId&&<p className="approach-identity">Source revision {sourceSnapshotId}</p>}
+      {surfaceEntry!=null&&<pre>{JSON.stringify(surfaceEntry,null,2)}</pre>}
+      {sourceLayers&&Object.keys(sourceLayers).length>0&&<pre>{JSON.stringify(sourceLayers,null,2)}</pre>}
+    </details>}
+  </section>;
+}
 
 function ScenarioGuard({guard}:{guard:ApproachScenarioGuard}){
   return <div className="approach-scenario-guard">
@@ -56,6 +74,7 @@ export function ApproachProposalDetails({report,targetLabel,labels}:{report:Appr
           {!!candidate.detectedConflictLayerIds?.length&&<p>Detected contact · {candidate.detectedConflictLayerIds.map(id=>labels[id]??id).join(', ')}</p>}
           {candidate.reasons?.map(reason=><p key={reason}>{reason}</p>)}
           {candidate.scenarioGuard&&<ScenarioGuard guard={candidate.scenarioGuard}/>}
+          {candidate.accessAssessment&&<CorticalAccessReadout assessment={candidate.accessAssessment}/>}
           {candidate.objectives&&<dl className="approach-value-list">{Object.entries(candidate.objectives).map(([metric,value])=><div key={metric}><dt>{metricLabels[metric]??metric}</dt><dd>{measurement(metric,value)}</dd></div>)}</dl>}
           {candidate.sourceReadings&&<SourceReadings readings={candidate.sourceReadings} labels={labels}/>}
           {vetoes.length>0&&<details className="approach-finalist-vetoes"><summary>Scenario constraint failures</summary>
@@ -133,6 +152,7 @@ export function ApproachInputComparison({report,labels,targetLabel}:{report:Appr
           {geometry&&<p>Entry (RAS mm) {point(geometry.entry)} · capsule radius {geometry.radiusMm} mm</p>}
           {candidate.reasons.map(reason=><p key={reason}>{reason}</p>)}
           {candidate.scenarioGuard&&<ScenarioGuard guard={candidate.scenarioGuard}/>}
+          {candidate.accessAssessment&&<CorticalAccessReadout assessment={candidate.accessAssessment}/>}
           {!!candidate.detectedConflictLayerIds?.length&&<p>Detected contact · {candidate.detectedConflictLayerIds.map(id=>labels[id]??id).join(', ')}</p>}
           {candidate.objectives&&<dl className="approach-value-list">{Object.entries(candidate.objectives).map(([key,value])=><div key={key}><dt>{metricLabels[key]??key}</dt><dd>{measurement(key,value)}</dd></div>)}</dl>}
           {candidate.sensitivity&&<ApproachSensitivityDetails sensitivity={candidate.sensitivity} scenarioSet={report.scenarioSet} labels={labels}/>}
