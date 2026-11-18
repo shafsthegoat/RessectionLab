@@ -241,10 +241,13 @@ def feature_matrix(observed, skills):
     stats=[route_stats(s) for s in skills]
     workstats=[r for s,r in zip(skills,stats) if s.kind=='work']
     limits=observed['declared_limits']; remaining=observed['remaining']
+    # The trained 3-mm isotropic task has 27 mm³ cells. Transferred native
+    # observations may have another affine, while harm limits remain in mm³.
+    voxel_mm3 = abs(float(np.linalg.det(affine[:3, :3])))
     global_values=[len(targets-removed)/16.,len(motor-removed)/8.,len(cst-removed)/8.,
-        (limits['maximumNeuralRemovalMm3']-len(neural & removed)*27.)/108.,
-        (limits['maximumStructureRemovalMm3']['motor-cortex']-len(motor & removed)*27.)/108.,
-        (limits['maximumStructureRemovalMm3']['corticospinal']-len(cst & removed)*27.)/108.,
+        (limits['maximumNeuralRemovalMm3']-len(neural & removed)*voxel_mm3)/108.,
+        (limits['maximumStructureRemovalMm3']['motor-cortex']-len(motor & removed)*voxel_mm3)/108.,
+        (limits['maximumStructureRemovalMm3']['corticospinal']-len(cst & removed)*voxel_mm3)/108.,
         remaining['attempts']/512.,remaining['seconds']/240.,remaining['skills']/8.,
         max(r[4] for r in workstats),min(r[5] for r in workstats),float(np.mean([r[5] for r in workstats])),
         float(state['slots']['right']['inserted']),float(state['slots']['right']['active']),
