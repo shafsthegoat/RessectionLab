@@ -124,6 +124,15 @@ function fieldScene(host:HTMLDivElement, field:OperativeField, lost:()=>void) {
       }
     }
     geometry('brain','source',cutaway);geometry('vessel','source',false);
+    // Keep the entire vascular course visible through the inspection section
+    // while allowing a foreground vessel to reveal the tip and cavity behind it.
+    const vesselMaterial=meshes.vessel.material;
+    if(vesselMaterial.transparent!==cutaway){
+      vesselMaterial.transparent=cutaway;
+      vesselMaterial.opacity=cutaway ? 0.38 : 1;
+      vesselMaterial.depthWrite=!cutaway;
+      vesselMaterial.needsUpdate=true;
+    }
     const retract=withRetraction&&field.stations.brain!==null?phaseAmount(next,progress,'brain'):0;
     const held=smooth((retract-.16)/.84), influence=meshes.brain.morphTargetInfluences;
     if(influence)influence[0]=held;

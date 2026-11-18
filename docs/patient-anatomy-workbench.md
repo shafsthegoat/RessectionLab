@@ -71,6 +71,15 @@ from six anatomical templates. Layer provenance records the source scan,
 model assets, adaptation and exclusion from training and benchmark inputs.
 [Publisher implementation](https://github.com/romainVala/SIAM/tree/52baf64d51275a949d46ee36967b76f8ceaa99d8) · [SIAM v2 weights, CC BY 4.0](https://doi.org/10.5281/zenodo.15780983)
 
+In a development check on MNI BITE case 09, the preoperative contrast MRI
+produced all 16 classes. The study authors' tumor mask, on its original
+cropped grid, supplied the rehearsal target. The chosen corridor intersected
+the estimated skull, dura and brain as well as the annotated tumor. Slice
+review also revealed isolated skull predictions outside the head. Inspect
+source overlays before interpreting a surface, especially for thin tissues
+and small vessels. This check measured workflow behavior and model runtime.
+[MNI BITE source collection](https://nist.mni.mcgill.ca/bite-brain-images-of-tumors-for-evaluation-database/)
+
 ### Evidence from the adaptive workflow
 
 The UCSF development study retained its supplied core, edema-like and enhancing

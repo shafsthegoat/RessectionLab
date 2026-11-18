@@ -193,7 +193,10 @@ app.on('browser-window-created', (_, win) => {
       await click('Plan');
       await until("!!document.querySelector('.native-approaches') && !document.querySelector('.approach-computing')");
       await both('plan');
-      if(['prepare','preview'].includes(mode)) {
+      if(mode==='preview' && process.argv.includes('--reuse-selection')) {
+        await until("!!document.querySelector('.approach-card.selected')");
+        report.selected = await js("document.querySelector('.approach-card.selected').dataset.approachId");
+      } else if(['prepare','preview'].includes(mode)) {
         const target = targetLayer;
         assert(target,'Study requires a target');
         await until(`[...document.querySelectorAll('select[aria-label="Planning target"] option')].some(o=>o.value===${JSON.stringify(target.id)}&&!o.disabled)`);
